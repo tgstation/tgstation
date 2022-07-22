@@ -5870,6 +5870,12 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/main_outpost/seconadry/research)
+"At" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/pod,
+/area/awaymission/caves/third_outpost/pod)
 "Au" = (
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/secpost)
@@ -7169,6 +7175,12 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/tunnel)
+"GM" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/pod,
+/area/awaymission/caves/third_outpost/pod)
 "GO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -7224,6 +7236,12 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost)
+"Hh" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/pod,
+/area/awaymission/caves/third_outpost/pod)
 "Hj" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -8108,11 +8126,6 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/tunnel)
-"Lt" = (
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/south,
-/turf/open/floor/pod,
-/area/awaymission/caves/third_outpost/pod)
 "Lu" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -9838,12 +9851,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/awaymission/caves/third_outpost)
-"Uj" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/catwalk_floor/iron_dark{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/awaymission/caves/bmp_asteroid/level_three)
 "Uk" = (
 /obj/structure/curtain,
 /obj/machinery/shower{
@@ -10312,6 +10319,12 @@
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/research/living)
+"WJ" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/pod,
+/area/awaymission/caves/third_outpost/pod)
 "WL" = (
 /obj/effect/turf_decal/box,
 /obj/structure/closet/crate/internals,
@@ -10807,6 +10820,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/main_outpost/engineering)
+"YW" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/pod,
+/area/awaymission/caves/third_outpost/pod)
 "YY" = (
 /obj/structure/stone_tile/slab/burnt,
 /turf/open/indestructible/boss,
@@ -12683,7 +12701,7 @@ FQ
 bJ
 bJ
 bJ
-Uj
+bJ
 bJ
 ja
 ja
@@ -16282,9 +16300,9 @@ Uo
 zG
 pi
 kB
-AR
+Hh
 QA
-AR
+GM
 kB
 Uu
 Te
@@ -16539,9 +16557,9 @@ Ji
 Ad
 Ad
 jL
-QA
-QA
-Lt
+WJ
+YW
+At
 kB
 Uu
 Uu

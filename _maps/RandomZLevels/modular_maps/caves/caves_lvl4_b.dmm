@@ -82,6 +82,10 @@
 /obj/structure/fluff/clockwork/alloy_shards/small,
 /turf/open/floor/bronze/flat/lavaland,
 /area/template_noop)
+"fM" = (
+/mob/living/simple_animal/hostile/clockwork/cogscarab,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
 "fT" = (
 /obj/structure/clockcult_tower/source{
 	id = "clock4"
@@ -9133,7 +9137,7 @@ lw
 lw
 uS
 lz
-lz
+aM
 lz
 lz
 lz
@@ -11279,7 +11283,7 @@ Mf
 Mf
 oa
 oa
-Mf
+uL
 Mf
 lz
 Ud
@@ -11402,8 +11406,8 @@ lw
 uS
 Mf
 gK
-Mf
 Ud
+Mf
 Mf
 lz
 lz
@@ -11526,10 +11530,10 @@ lw
 lw
 uS
 uL
-gK
-gK
-uL
 Ud
+Wd
+Ud
+Mf
 lz
 lz
 zg
@@ -11652,8 +11656,8 @@ lw
 bD
 uL
 gK
-IX
 Ud
+Mf
 uL
 lz
 Mf
@@ -11777,9 +11781,9 @@ bD
 bD
 oa
 uL
-Ud
-Wd
-cP
+Mf
+Mf
+fM
 lz
 Vu
 Mf
@@ -11903,7 +11907,7 @@ oa
 sY
 lz
 lz
-Ud
+Mf
 uL
 lz
 lz
@@ -12489,11 +12493,11 @@ lz
 Mf
 Mf
 Mf
-ZX
-ZX
-ZX
-ZX
-ZX
+lz
+lz
+lz
+lz
+lz
 Qn
 Mf
 Mf
@@ -12618,7 +12622,7 @@ Mf
 Mf
 Mf
 Mf
-ZX
+lz
 Qn
 Mf
 Mf
@@ -12743,7 +12747,7 @@ Mf
 Mf
 Mf
 Mf
-ZX
+lz
 Qn
 lz
 lz
@@ -12868,7 +12872,7 @@ rL
 Wd
 Mf
 Mf
-ZX
+lz
 Qn
 Mf
 Mf
@@ -12993,7 +12997,7 @@ rL
 rL
 Mf
 Mf
-ZX
+lz
 bD
 wx
 Mf
