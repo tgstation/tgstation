@@ -321,7 +321,7 @@
 	if(!adv_disease.mutable)
 		return FALSE
 	if(adv_disease)
-		var/new_name = sanitize_name(name, allow_numbers = TRUE)
+		var/new_name = sanitize_name(name, allow_numbers = TRUE, cap_after_symbols = FALSE)
 		if(!new_name)
 			return FALSE
 		adv_disease.AssignName(new_name)
