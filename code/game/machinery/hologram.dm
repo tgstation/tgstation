@@ -221,7 +221,7 @@ Possible to do for anyone motivated enough:
 	. = ..()
 	if(isnull(.) || !outgoing_call || anchorvalue)
 		return
-	outgoing_call.ConnectionFailure(src) //disconnect the call if we got moved.
+	outgoing_call.ConnectionFailure(src) //disconnect the call if we got unwrenched.
 
 /obj/machinery/holopad/attackby(obj/item/P, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "holopad_open", "holopad0", P))
