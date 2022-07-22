@@ -157,7 +157,7 @@
 	if(!istype(arrived))
 		return
 
-	var/atom/resolve_parent = src.parent?.resolve()
+	var/atom/resolve_parent = parent?.resolve()
 	if(!resolve_parent)
 		return
 
