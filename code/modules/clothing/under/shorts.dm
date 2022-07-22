@@ -23,6 +23,7 @@
 	greyscale_config_worn = /datum/greyscale_config/jeanshorts_worn
 	greyscale_colors = "#787878#723E0E#4D7EAC"
 	flags_1 = IS_PLAYER_COLORABLE_1
+supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/under/shorts/red
 	name = "athletic shorts"
