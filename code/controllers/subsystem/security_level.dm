@@ -68,11 +68,9 @@ SUBSYSTEM_DEF(security_level)
  */
 /datum/controller/subsystem/security_level/proc/announce_security_level(datum/security_level/selected_level)
 	if(selected_level.number_level > current_security_level.number_level) // We are elevating to this level.
-		minor_announce(selected_level.elevating_to_announcemnt, "Attention! Security level elevated to [selected_level.name]:")
+		minor_announce(selected_level.elevating_to_announcemnt, "Attention! Security level elevated to [selected_level.name]:", sound_override = selected_level.sound)
 	else // Going down
-		minor_announce(selected_level.lowering_to_announcement, "Attention! Security level lowered to [selected_level.name]:")
-	if(selected_level.sound)
-		sound_to_playing_players(selected_level.sound)
+		minor_announce(selected_level.lowering_to_announcement, "Attention! Security level lowered to [selected_level.name]:", sound_override = selected_level.sound)
 
 /**
  * Returns the current security level as a number
