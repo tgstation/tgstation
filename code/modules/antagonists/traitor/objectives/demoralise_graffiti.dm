@@ -70,7 +70,7 @@
  */
 /datum/traitor_objective/demoralise/graffiti/proc/on_rune_destroyed(obj/effect/decal/cleanable/traitor_rune/rune)
 	SIGNAL_HANDLER
-	fail_objective()
+	fail_objective(penalty_cost = telecrystal_penalty)
 
 /datum/traitor_objective/demoralise/graffiti/ungenerate_objective()
 	if (rune)

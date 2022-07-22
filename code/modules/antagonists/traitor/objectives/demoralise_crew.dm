@@ -5,9 +5,10 @@
 /datum/traitor_objective_category/demoralise
 	name = "Demoralise Crew"
 	objectives = list(
-		/datum/traitor_objective/demoralise/poster = 1,
-		/datum/traitor_objective/demoralise/graffiti = 2,
+		/datum/traitor_objective/demoralise/poster = 2,
+		/datum/traitor_objective/demoralise/graffiti = 1,
 	)
+	weight = OBJECTIVE_WEIGHT_TINY
 
 /datum/traitor_objective/demoralise
 	name = "Debug your code."

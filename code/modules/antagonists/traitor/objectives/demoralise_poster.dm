@@ -73,7 +73,7 @@
 	UnregisterSignal(poster, COMSIG_DEMORALISING_EVENT)
 	if (length(posters) <= 0)
 		to_chat(handler.owner, span_warning("The trackers on your propaganda posters have stopped responding."))
-		fail_objective()
+		fail_objective(penalty_cost = telecrystal_penalty)
 
 /obj/item/poster/traitor
 	name = "random traitor poster"
