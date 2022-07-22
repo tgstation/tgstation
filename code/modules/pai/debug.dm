@@ -4,7 +4,7 @@
 	set desc = "Specify a location to spawn a pAI device, then specify a key to play that pAI"
 
 	var/list/available = list()
-	for(var/mob/player in GLOB.player_list)
+	for(var/mob/player as anything in GLOB.player_list)
 		if(player.client && player.key)
 			available.Add(player)
 	var/mob/choice = tgui_input_list(usr, "Choose a player to play the pAI", "Spawn pAI", sort_names(available))
