@@ -116,7 +116,7 @@
 /obj/item/pai_card/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 	if(.)
-		return FALSE
+		return TRUE
 	// Actions that don't require a pAI
 	if(action == "download")
 		download_candidate(usr, params["ckey"])

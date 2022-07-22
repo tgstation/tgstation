@@ -34,7 +34,7 @@ SUBSYSTEM_DEF(pai)
 /datum/controller/subsystem/pai/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 	if(.)
-		return
+		return TRUE
 	var/datum/pai_candidate/candidate = candidates[usr.ckey]
 	if(is_banned_from(usr.ckey, ROLE_PAI))
 		to_chat(usr, span_warning("You are banned from playing pAI!"))

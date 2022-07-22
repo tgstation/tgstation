@@ -26,7 +26,7 @@
 /mob/living/silicon/pai/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 	if(.)
-		return
+		return TRUE
 	if(action == "buy")
 		buy_software(params["selection"])
 		return TRUE
