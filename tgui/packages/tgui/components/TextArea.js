@@ -100,6 +100,9 @@ export class TextArea extends Component {
             '\t' +
             value.substring(selectionEnd);
           e.target.selectionEnd = selectionStart + 1;
+          if(onInput) {
+            onInput(e, e.target.value);
+          }
         }
       }
     };
@@ -168,6 +171,7 @@ export class TextArea extends Component {
       value,
       maxLength,
       placeholder,
+      displayedValue,
       ...boxProps
     } = this.props;
     // Box props
@@ -176,6 +180,18 @@ export class TextArea extends Component {
       <Box
         className={classes(['TextArea', fluid && 'TextArea--fluid', className])}
         {...rest}>
+        {!!displayedValue && (
+          <Box
+            className={
+              classes([
+                "TextArea__textarea",
+                "TextArea__textarea_custom",
+              ])
+            }
+          >
+            {displayedValue}
+          </Box>
+        )}
         <textarea
           ref={this.textareaRef}
           className="TextArea__textarea"
@@ -187,7 +203,10 @@ export class TextArea extends Component {
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
           maxLength={maxLength}
-        />
+          style={{
+            "color": displayedValue? "rgba(0, 0, 0, 0)" : "inherit",
+          }}
+         />
       </Box>
     );
   }

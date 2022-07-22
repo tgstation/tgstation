@@ -86,8 +86,20 @@ export const LuaEditor = (props, context) => {
                   width="700px"
                   height="590px"
                   value={input}
+                  fontFamily="Consolas"
                   onInput={(_, value) => setInput(value)}
-                />
+                  displayedValue={(
+                    <Box
+                      fontFamily="Consolas"
+                      style={{
+                        "pointer-events": "none",
+                      }}
+                      dangerouslySetInnerHTML={{
+                        __html: hljs.highlight(input, { language: 'lua' }).value,
+                      }}
+                    />
+                  )}
+                 />
                 <Button onClick={() => act('runCode', { code: input })}>
                   Run
                 </Button>
