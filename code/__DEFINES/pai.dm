@@ -1,5 +1,5 @@
 /// Time between fold out
-#define HOLOCHASSIS_COOLDOWN 5 SECONDS
+#define HOLOCHASSIS_COOLDOWN (5 SECONDS)
 /// Time it takes a new pAI to fold out
 #define HOLOCHASSIS_INIT_TIME 40 SECONDS
 /// Overloaded or emagged foldout cooldown
