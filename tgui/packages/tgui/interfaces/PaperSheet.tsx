@@ -720,7 +720,7 @@ export class PreviewView extends Component<PreviewViewProps> {
     // This are fields that may potentially be fillable, so we'll use the
     // currently held item's stats for them if possible.
     const { data } = useBackend<PaperContext>(this.context);
-    const { held_item_details } = data;
+    const { held_item_details, max_input_field_length } = data;
 
     const fontColor = held_item_details?.color || color;
     const fontFace = held_item_details?.font || font;
@@ -751,7 +751,7 @@ export class PreviewView extends Component<PreviewViewProps> {
     input.style.minWidth = `${width}px`;
     input.style.maxWidth = `${width}px`;
 
-    input.maxLength = length;
+    input.maxLength = Math.min(max_input_field_length, length);
     input.size = length;
     input.disabled = readOnly;
 
@@ -776,6 +776,9 @@ export class PreviewView extends Component<PreviewViewProps> {
     paperColor: string,
     id: string
   ): string => {
+    const { data } = useBackend<PaperContext>(this.context);
+    const { max_input_field_length } = data;
+
     const fieldData = field.field_data;
 
     let input = document.createElement('input');
@@ -790,7 +793,7 @@ export class PreviewView extends Component<PreviewViewProps> {
     input.style.maxWidth = `${width}px`;
     input.style.backgroundColor = paperColor;
     input.id = id;
-    input.maxLength = length;
+    input.maxLength = Math.min(max_input_field_length, length);
     input.size = length;
     input.defaultValue = fieldData.raw_text;
     input.disabled = true;
