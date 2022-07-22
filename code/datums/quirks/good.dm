@@ -228,7 +228,7 @@
 	name = "Masochist"
 	desc = "Something about physical pain soothes your mind and soul."
 	icon = "brain"
-	value = 2
+	value = 4
 	mob_trait = TRAIT_MASOCHIST
 	mood_quirk = TRUE
 	gain_text = "<span class='notice'>You enjoy the sensation of pain.</span>"

@@ -161,7 +161,7 @@
 	name = "Cry baby"
 	desc = "You are the kind of wimp that gets bothered by pain."
 	icon = "sad-cry"
-	value = -5
+	value = -4
 	mob_trait = TRAIT_CRY_BABY
 	mood_quirk = TRUE
 	gain_text = "<span class='danger'>You feel like crying.</span>"
