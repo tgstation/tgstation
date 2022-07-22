@@ -31,7 +31,7 @@
 
 //temporary
 /datum/chemical_reaction/food/tempehblend
-	required_reagents = list(/datum/reagent/consumable/soymilk = 5, /datum/reagent/blood = 2)
+	required_reagents = list(/datum/reagent/consumable/soymilk = 5, /datum/reagent/vinegar = 2)
 
 /datum/chemical_reaction/food/tempehblend/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)

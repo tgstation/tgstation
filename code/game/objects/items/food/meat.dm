@@ -190,7 +190,7 @@
 //add an icon for slices
 /obj/item/food/tempehslice
 	name = "tempeh slice"
-	desc = "A slice of goodness, a slice of tempeh."
+	desc = "A slice of tempeh, a slice of wkwkwk."
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = "tempehslice"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
@@ -200,7 +200,7 @@
 //add an icon for blends
 /obj/item/food/tempehblend
 	name = "tempeh blend"
-	desc = "a mix of soybeans and mushroom seeds, it's alive, it's moving?."
+	desc = "a mix of soy and joy, it's warm, it's moving?."
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = "tempehslice"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
