@@ -90,8 +90,8 @@
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
 		client.eye = card
-	var/turf/turf = drop_location()
-	card.forceMove(turf)
+	var/turf/target = drop_location()
+	card.forceMove(target)
 	forceMove(card)
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
 	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
