@@ -1,4 +1,0 @@
-author: "Salex08"
-delete-after: True
-changes: 
-  - bugfix: "parrots spawned from strange objects dont come with headsets anymore , like it was intented"

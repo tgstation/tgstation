@@ -743,3 +743,40 @@
   private-tristan:
   - qol: Shutters, Blast doors, and Bluespace Vendors are now in the structures category,
       instead of misc, craft away!
+2022-07-22:
+  13spacemen:
+  - imageadd: Internals action buttons have a gold border and are inserted left-most
+      by default
+  - rscdel: Removed the internals HUD icon (gas mask + tank icon)
+  CoffeeDragon16:
+  - rscadd: New signage on all stations for the AI upload, AI sattelite, telecomms,
+      vault, and the R&D servers.
+  Pickle-Coding:
+  - rscadd: Proto-nitrate bz response can now emit nuclear particles.
+  - balance: Proto-nitrate bz response radiation pulse intensity will get reduced
+      based on how many particles it is creating.
+  RandomGamer123, bug originally reported by Murmic#2120 on Discord:
+  - qol: Makes it more clear that venus human traps can be possessed in the first
+      place
+  - bugfix: Makes it so that venus human traps can be possessed even if they are underneath
+      kudzu
+  - refactor: Moved venus human traps to the same spawning system that spiders used,
+      now, a notification pops up when one is ready to be possessed, and you can possess
+      it by using the ghost role menu, the link in chat, or by clicking on the notification
+  - admin: Venus human traps now respect role bans (for ROLE_LAVALAND as its the default
+      for ghost roles)
+  Salex08:
+  - bugfix: parrots spawned from strange objects dont come with headsets anymore ,
+      like it was intented
+  itseasytosee:
+  - bugfix: Bugs exposed by gunpoint's fixing have been fixed
+  orthography:
+  - rscdel: removed one of the two circuit labs on tramstation
+  - balance: Nanotransen realizes they're losing money by having two of the same niche
+      science on the same station. The Auxiliary Laboratory has been cleared out until
+      there is a new use for it. Hope squatters don't set up in there...
+  - bugfix: gives tramstation science more glass
+  - bugfix: removes one of the tramstation cargo ordering consoles
+  tralezab:
+  - balance: IAA are now flavored around rooting out corruption, rather than just
+      killing syndicates.
