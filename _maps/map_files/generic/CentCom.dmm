@@ -9738,13 +9738,6 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
-"Cj" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/airlock/centcom{
-	name = "Thunderdome Administration"
-	},
-/turf/open/floor/plating,
-/area/centcom/tdome/administration)
 "Ck" = (
 /obj/machinery/door/airlock/maintenance/external{
 	name = "Bunk Room 1"
@@ -15998,7 +15991,7 @@
 /obj/item/clothing/accessory/waistcoat,
 /obj/item/clothing/shoes/jackboots,
 /obj/item/clothing/shoes/laceup,
-/obj/item/clothing/neck/stripedredscarf,
+/obj/item/clothing/neck/large_scarf/red,
 /obj/item/clothing/neck/tie/red,
 /obj/item/clothing/head/helmet/space/beret,
 /obj/item/clothing/suit/jacket/curator,
@@ -66627,7 +66620,7 @@ pO
 HE
 Sl
 SU
-Cj
+Wn
 Vl
 bM
 Wn

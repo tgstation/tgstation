@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Snow golems will no longer be told to put on their wizard robes when trying to throw snowballs!"
