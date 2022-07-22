@@ -314,7 +314,7 @@ effective or pretty fucking useless.
 		return
 
 	balloon_alert(user, "constructing...")
-	if(!attacking_item.use_tool(src, user, 5 SECONDS, volume = 20))
+	if(!attacking_item.use_tool(src, user, 2 SECONDS, volume = 20))
 		return
 
 	balloon_alert(user, "constructed")
