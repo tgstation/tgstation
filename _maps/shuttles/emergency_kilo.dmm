@@ -651,13 +651,13 @@
 /area/shuttle/escape/brig)
 "iA" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "jc" = (
@@ -671,21 +671,21 @@
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/shuttle/escape)
 "jH" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "kc" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "kh" = (
@@ -701,13 +701,13 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "lG" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "lH" = (
@@ -717,21 +717,29 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
+"lV" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/escape)
 "mk" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "mM" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "nm" = (
@@ -759,10 +767,10 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "oj" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "oE" = (
@@ -773,6 +781,16 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/escape)
+"oM" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "oP" = (
@@ -791,21 +809,21 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "pj" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "pp" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "pE" = (
@@ -899,20 +917,13 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "wo" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/turf/open/floor/mineral/titanium/tiled/white,
-/area/shuttle/escape)
-"ww" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "wy" = (
@@ -935,14 +946,6 @@
 	},
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /turf/open/floor/mineral/titanium/tiled/yellow,
-/area/shuttle/escape)
-"zM" = (
-/obj/effect/turf_decal/stripes/corner,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "zN" = (
 /obj/effect/turf_decal/stripes/line{
@@ -975,31 +978,31 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "DM" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "Em" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "EE" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /obj/machinery/light/directional/east,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
 /obj/machinery/vending/wallmed/directional/east{
 	use_power = 0
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "Gq" = (
@@ -1039,11 +1042,11 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "Ht" = (
+/obj/effect/turf_decal/stripes/corner,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/corner,
-/obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "Iq" = (
@@ -1059,11 +1062,11 @@
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/shuttle/escape)
 "Ix" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "IU" = (
@@ -1092,10 +1095,10 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "JN" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "Kl" = (
@@ -1112,6 +1115,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "Le" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -1119,15 +1123,14 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "Lk" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/corner,
-/obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "Lu" = (
@@ -1147,11 +1150,11 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "LM" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "Mo" = (
@@ -1163,6 +1166,22 @@
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
+"Mz" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/escape)
+"MQ" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/escape)
 "NJ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -1175,23 +1194,23 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "NN" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "Od" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "Oz" = (
@@ -1237,25 +1256,25 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "RT" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /obj/item/kirbyplants{
 	icon_state = "plant-10"
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "SE" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
 /obj/machinery/light/directional/west,
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "TQ" = (
@@ -1276,8 +1295,8 @@
 /obj/item/kirbyplants{
 	icon_state = "applebush"
 	},
-/obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "VD" = (
@@ -1288,6 +1307,14 @@
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/shuttle/escape)
+"Wu" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/escape)
 "Wv" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -1297,16 +1324,16 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "Xx" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
+/obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "XD" = (
@@ -1324,8 +1351,8 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "ZO" = (
@@ -1403,7 +1430,7 @@ kB
 kB
 yw
 bm
-Od
+oM
 LM
 jH
 EE
@@ -1462,7 +1489,7 @@ pj
 bK
 bO
 bu
-pj
+MQ
 bZ
 as
 ab
@@ -1489,7 +1516,7 @@ pj
 bK
 bP
 bu
-pj
+MQ
 bK
 cg
 cm
@@ -1538,7 +1565,7 @@ KN
 lH
 aN
 aO
-ww
+Kl
 Cc
 ZO
 TQ
@@ -1566,7 +1593,7 @@ si
 bh
 bo
 Em
-Ix
+Wu
 bK
 as
 bu
@@ -1593,7 +1620,7 @@ ab
 as
 as
 by
-pj
+Mz
 bK
 bO
 bu
@@ -1620,7 +1647,7 @@ aX
 bi
 ab
 bu
-pj
+Mz
 bK
 bP
 bu
@@ -1647,7 +1674,7 @@ sI
 OV
 ac
 JN
-kc
+lV
 bK
 as
 bu
@@ -1673,7 +1700,7 @@ jc
 fN
 Gq
 bp
-zM
+Ht
 lG
 mk
 SE
