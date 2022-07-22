@@ -100,7 +100,7 @@ export class TextArea extends Component {
             '\t' +
             value.substring(selectionEnd);
           e.target.selectionEnd = selectionStart + 1;
-          if(onInput) {
+          if (onInput) {
             onInput(e, e.target.value);
           }
         }
@@ -182,13 +182,10 @@ export class TextArea extends Component {
         {...rest}>
         {!!displayedValue && (
           <Box
-            className={
-              classes([
-                "TextArea__textarea",
-                "TextArea__textarea_custom",
-              ])
-            }
-          >
+            className={classes([
+              'TextArea__textarea',
+              'TextArea__textarea_custom',
+            ])}>
             {displayedValue}
           </Box>
         )}
@@ -204,9 +201,9 @@ export class TextArea extends Component {
           onBlur={this.handleBlur}
           maxLength={maxLength}
           style={{
-            "color": displayedValue? "rgba(0, 0, 0, 0)" : "inherit",
+            'color': displayedValue ? 'rgba(0, 0, 0, 0)' : 'inherit',
           }}
-         />
+        />
       </Box>
     );
   }
