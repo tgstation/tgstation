@@ -69,14 +69,14 @@ modules = ["caves_lvl3segment2_a.dmm", "caves_lvl3segment2_b.dmm", "caves_lvl3se
 #B - Bootleg hell zone
 #C - Abandoned outpost
 [rooms.caves_lvl3segment3]
-modules = ["caves_lvl3segment3_a.dmm", "caves_lvl3segment3_b.dmm", "caves_lvl3segment3_c.dmm"]
+modules = ["caves_lvl3segment3_b.dmm", "caves_lvl3segment3_b.dmm", "caves_lvl3segment3_b.dmm"]
 
 #4th floor leading up to the boss arena
 #A - Lava lake with several islands
 #B - Central cave with multiple tunnels
 #C - Matrix zone (coders HATE ratvar)
 [rooms.caves_lvl4]
-modules = ["caves_lvl4_a.dmm", "caves_lvl4_b.dmm", "caves_lvl4_c.dmm"]
+modules = ["caves_lvl4_b.dmm", "caves_lvl4_b.dmm", "caves_lvl4_b.dmm"]
 
 #4th floor boss arena
 #A - idk yet lol
