@@ -385,13 +385,16 @@ effective or pretty fucking useless.
 
 	else
 		if(atom_integrity == max_integrity)
+			balloon_alert(user, "already repaired")
 			return
 
 		balloon_alert(user, "repairing...")
-		if(!attacking_item.use_tool(src, user, 2 SECONDS, volume = 20))
-			return
+		while(atom_integrity != max_integrity)
+			if(!attacking_item.use_tool(src, user, 2 SECONDS, volume = 20))
+				return
 
-		repair_damage(10)
+			repair_damage(10)
+
 		balloon_alert(user, "repaired")
 
 /obj/machinery/porta_turret/syndicate/toolbox/deconstruct(disassembled)
