@@ -44,10 +44,21 @@
 	desc = "You hit a lot harder with your fists"
 	icon = "fist-raised"
 	value = 6
-	mob_trait = TRAIT_ALCOHOL_TOLERANCE
 	gain_text = "<span class='notice'>Your arms feel strong!</span>"
-	lose_text = "<span class='danger'>Your sarms feel weaker.</span>"
+	lose_text = "<span class='danger'>Your arms feel weaker.</span>"
 	medical_record_text = "Patient displays pugilistic tendancies"
+
+/datum/quirk/brusier/add()
+	if(iscarbon (quirk_holder))
+		var/mob/living/carbon/heavy_hitter = quirk_holder
+		heavy_hitter.dna.species.punchdamagelow *= 2
+		heavy_hitter.dna.species.punchdamagehigh *= 2
+
+/datum/quirk/brusier/remove()
+	if(iscarbon (quirk_holder))
+		var/mob/living/carbon/heavy_hitter = quirk_holder
+		heavy_hitter.dna.species.punchdamagelow /= 2
+		heavy_hitter.dna.species.punchdamagehigh /= 2
 
 /datum/quirk/bullet_dodge
 	name = "Bullet Dodger"
