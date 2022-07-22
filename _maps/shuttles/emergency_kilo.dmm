@@ -718,11 +718,11 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "lV" = (
-/obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "mk" = (
@@ -775,12 +775,12 @@
 /area/shuttle/escape)
 "oE" = (
 /obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "oM" = (
@@ -801,11 +801,11 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "oZ" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/structure/sink/directional/west,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/structure/sink/directional/west,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "pj" = (
@@ -964,11 +964,11 @@
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/shuttle/escape)
 "Cc" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "Dm" = (
@@ -1050,8 +1050,8 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "Iq" = (
-/obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "Iu" = (
@@ -1089,9 +1089,9 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "JM" = (
-/obj/effect/turf_decal/stripes/line,
 /obj/structure/chair/office/light,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "JN" = (
@@ -1166,14 +1166,6 @@
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
-"Mz" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium/tiled/white,
-/area/shuttle/escape)
 "MQ" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/stripes/line{
@@ -1249,10 +1241,10 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "Rk" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "RT" = (
@@ -1278,17 +1270,17 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "TQ" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/machinery/vending/wallmed/directional/east{
 	use_power = 0
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "TT" = (
@@ -1308,19 +1300,19 @@
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/shuttle/escape)
 "Wu" = (
-/obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "Wv" = (
+/obj/structure/chair/office/light,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/structure/chair/office/light,
-/obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "Xx" = (
@@ -1353,16 +1345,6 @@
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/mineral/titanium/tiled/white,
-/area/shuttle/escape)
-"ZO" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 
@@ -1567,9 +1549,9 @@ aN
 aO
 Kl
 Cc
-ZO
+jH
 TQ
-ZO
+jH
 oE
 XM
 TT
@@ -1620,7 +1602,7 @@ ab
 as
 as
 by
-Mz
+MQ
 bK
 bO
 bu
@@ -1647,7 +1629,7 @@ aX
 bi
 ab
 bu
-Mz
+MQ
 bK
 bP
 bu
