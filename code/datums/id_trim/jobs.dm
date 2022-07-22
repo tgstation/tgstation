@@ -946,6 +946,7 @@
 	#define POPULATION_SCALED_ACCESS 1
 	#define ALWAYS_GETS_ACCESS 2
 
+	// If null, then the departmental security officer will not get any elevated access.
 	if(!CONFIG_GET(number/depsec_access_level))
 		return
 
