@@ -90,7 +90,6 @@ export const LuaEditor = (props, context) => {
                   onInput={(_, value) => setInput(value)}
                   displayedValue={
                     <Box
-                      fontFamily="Consolas"
                       style={{
                         'pointer-events': 'none',
                       }}

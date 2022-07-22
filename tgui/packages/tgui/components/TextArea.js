@@ -15,9 +15,10 @@ export class TextArea extends Component {
   constructor(props, context) {
     super(props, context);
     this.textareaRef = props.innerRef || createRef();
-    this.fillerRef = createRef();
+    this.displayedContainerRef = createRef();
     this.state = {
       editing: false,
+      scrolledAmount: 0,
     };
     const { dontUseTabForIndent = false } = props;
     this.handleOnInput = (e) => {
@@ -122,6 +123,14 @@ export class TextArea extends Component {
         }
       }
     };
+    this.handleScroll = (e) => {
+      const { displayedValue } = this.props;
+      const input = this.textareaRef.current;
+      const displayedContainer = this.displayedContainerRef.current;
+      if (displayedValue && input && displayedContainer) {
+        displayedContainer.scrollTop = input.scrollTop;
+      }
+    };
   }
 
   componentDidMount() {
@@ -176,18 +185,23 @@ export class TextArea extends Component {
     } = this.props;
     // Box props
     const { className, fluid, ...rest } = boxProps;
+    const { scrolledAmount } = this.state;
     return (
       <Box
         className={classes(['TextArea', fluid && 'TextArea--fluid', className])}
         {...rest}>
         {!!displayedValue && (
-          <Box
+          <div
             className={classes([
               'TextArea__textarea',
               'TextArea__textarea_custom',
-            ])}>
+            ])}
+            style={{
+              'transform': `translateY(-${scrolledAmount}px)`,
+            }}
+            ref={this.displayedContainerRef}>
             {displayedValue}
-          </Box>
+          </div>
         )}
         <textarea
           ref={this.textareaRef}
@@ -199,6 +213,7 @@ export class TextArea extends Component {
           onInput={this.handleOnInput}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
+          onScroll={this.handleScroll}
           maxLength={maxLength}
           style={{
             'color': displayedValue ? 'rgba(0, 0, 0, 0)' : 'inherit',
