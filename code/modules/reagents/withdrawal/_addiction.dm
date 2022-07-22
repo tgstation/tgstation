@@ -24,6 +24,10 @@
 ///Called when you gain addiction points somehow. Takes a mind as argument and sees if you gained the addiction
 /datum/addiction/proc/on_gain_addiction_points(datum/mind/victim_mind)
 	var/current_addiction_point_amount = victim_mind.addiction_points[type]
+	if(HAS_TRAIT(victim_mind.current, TRAIT_ADDICT_RESISTANCE))
+		current_addiction_point_amount /= 2
+	if(HAS_TRAIT(victim_mind.current, TRAIT_ADDICTIVE_PERSONALITY))
+		current_addiction_point_amount *= 3.5
 	if(current_addiction_point_amount < addiction_gain_threshold) //Not enough to become addicted
 		return
 	if(LAZYACCESS(victim_mind.active_addictions, type)) //Already addicted

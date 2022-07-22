@@ -5,8 +5,10 @@
 	desc = "Its hard for you to take just one hit."
 	icon = "cannabis"
 	value = -4
-	mob_trait = TRAIT_PROSOPAGNOSIA
+	mob_trait = TRAIT_ADDICTIVE_PERSONALITY
 	medical_record_text = "Patient suffers from an addictive personality disorder."
+	gain_text = "<span class='danger'>Your sence of self dependence goes away.</span>"
+	lose_text = "<span class='notice'>You feel a strong sence of self dependence!</span>"
 	hardcore_value = 4
 
 /datum/quirk/asthmatic
@@ -15,7 +17,7 @@
 	icon = "pills"
 	value = -4
 	mob_trait = TRAIT_PROSOPAGNOSIA
-	lose_text = "<span class='notice'>You feel you can breath clearer.</span>"
+	lose_text = "<span class='notice'>You feel you can breath more clearly.</span>"
 	medical_record_text = "Patient suffers from a stong case of Asthma."
 	hardcore_value = 6
 

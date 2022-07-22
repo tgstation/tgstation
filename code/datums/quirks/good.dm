@@ -6,7 +6,7 @@
 	desc = "You have an unaddictive personality."
 	icon = "spa"
 	value = 4
-	mob_trait = TRAIT_ALCOHOL_TOLERANCE
+	mob_trait = TRAIT_ADDICT_RESISTANCE
 	gain_text = "<span class='notice'>You feel a strong sence of self dependence!</span>"
 	lose_text = "<span class='danger'>Your sence of self dependence goes away.</span>"
 	medical_record_text = "Patient demonstrates an abnormaly high level of addiction resistance."
