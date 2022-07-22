@@ -114,14 +114,14 @@
 	. = ..()
 	var/turf/location = get_turf(src)
 	var/area_name = get_area_name(src)
-	message_admins("Exit rift created at [area_name]. [ADMIN_JMP(location)]")
+	message_admins("Exit rift created at [area_name]. [ADMIN_VERBOSEJMP(location)]")
 	log_game("Bluespace Exit Rift was created at [area_name].")
 	investigate_log("created at [area_name].", INVESTIGATE_ENGINE)
 
 /obj/cascade_portal/Destroy(force)
 	var/turf/location = get_turf(src)
 	var/area_name = get_area_name(src)
-	message_admins("Exit rift at [area_name] deleted. [ADMIN_JMP(location)]")
+	message_admins("Exit rift at [area_name] deleted. [ADMIN_VERBOSEJMP(location)]")
 	log_game("Bluespace Exit Rift at [area_name] was deleted.")
 	investigate_log("was deleted.", INVESTIGATE_ENGINE)
 	return ..()
@@ -151,7 +151,7 @@
 		while(!is_safe_turf(arrival_turf))
 
 		var/mob/living/consumed_mob = consumed_object
-		message_admins("[key_name_admin(consumed_mob)] has entered [src] [ADMIN_JMP(src)].")
+		message_admins("[key_name_admin(consumed_mob)] has entered [src] [ADMIN_VERBOSEJMP(src)].")
 		investigate_log("was entered by [key_name(consumed_mob)].", INVESTIGATE_ENGINE)
 		consumed_mob.forceMove(arrival_turf)
 		consumed_mob.Paralyze(100)

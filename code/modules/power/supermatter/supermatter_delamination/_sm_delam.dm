@@ -74,7 +74,7 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 
 	if (sm.damage >= sm.emergency_point && sm.damage_archived < sm.emergency_point)
 		sm.investigate_log("has entered the emergency point.", INVESTIGATE_ENGINE)
-		message_admins("[sm] has entered the emergency point [ADMIN_JMP(sm)].")
+		message_admins("[sm] has entered the emergency point [ADMIN_VERBOSEJMP(sm)].")
 
 	if((REALTIMEOFDAY - sm.lastwarning) < SUPERMATTER_WARNING_DELAY)
 		return FALSE

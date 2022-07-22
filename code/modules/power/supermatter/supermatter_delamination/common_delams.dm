@@ -17,7 +17,7 @@
 	)
 
 /datum/sm_delam/singularity/delaminate(obj/machinery/power/supermatter_crystal/sm)
-	message_admins("Supermatter [sm] at [ADMIN_JMP(sm)] triggered a singularity delam.")
+	message_admins("Supermatter [sm] at [ADMIN_VERBOSEJMP(sm)] triggered a singularity delam.")
 	sm.investigate_log("triggered a singularity delam.", INVESTIGATE_ENGINE)
 
 	effect_irradiate(sm)
@@ -45,7 +45,7 @@
 	)
 
 /datum/sm_delam/tesla/delaminate(obj/machinery/power/supermatter_crystal/sm)
-	message_admins("Supermatter [sm] at [ADMIN_JMP(sm)] triggered a tesla delam.")
+	message_admins("Supermatter [sm] at [ADMIN_VERBOSEJMP(sm)] triggered a tesla delam.")
 	sm.investigate_log("triggered a tesla delam.", INVESTIGATE_ENGINE)
 
 	effect_irradiate(sm)
@@ -63,7 +63,7 @@
 	return TRUE
 
 /datum/sm_delam/explosive/delaminate(obj/machinery/power/supermatter_crystal/sm)
-	message_admins("Supermatter [sm] at [ADMIN_JMP(sm)] triggered a normal delam.")
+	message_admins("Supermatter [sm] at [ADMIN_VERBOSEJMP(sm)] triggered a normal delam.")
 	sm.investigate_log("triggered a normal delam.", INVESTIGATE_ENGINE)
 
 	effect_irradiate(sm)

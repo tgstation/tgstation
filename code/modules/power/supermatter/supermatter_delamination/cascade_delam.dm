@@ -32,7 +32,7 @@
 		to_chat(victim, span_danger(pick(messages)))
 
 /datum/sm_delam/cascade/on_select(obj/machinery/power/supermatter_crystal/sm)
-	message_admins("[sm] is heading towards a cascade. [ADMIN_JMP(sm)]")
+	message_admins("[sm] is heading towards a cascade. [ADMIN_VERBOSEJMP(sm)]")
 	sm.investigate_log("is heading towards a cascade.", INVESTIGATE_ENGINE)
 
 	sm.warp = new(sm)
@@ -43,7 +43,7 @@
 	addtimer(CALLBACK(src, .proc/announce_cascade, sm), 2 MINUTES)
 
 /datum/sm_delam/cascade/on_deselect(obj/machinery/power/supermatter_crystal/sm)
-	message_admins("[sm] will no longer cascade. [ADMIN_JMP(sm)]")
+	message_admins("[sm] will no longer cascade. [ADMIN_VERBOSEJMP(sm)]")
 	sm.investigate_log("will no longer cascade.", INVESTIGATE_ENGINE)
 
 	sm.vis_contents -= sm.warp
@@ -94,7 +94,7 @@
 	delaminate(sm)
 
 /datum/sm_delam/cascade/delaminate(obj/machinery/power/supermatter_crystal/sm)
-	message_admins("Supermatter [sm] at [ADMIN_JMP(sm)] triggered a cascade delam.")
+	message_admins("Supermatter [sm] at [ADMIN_VERBOSEJMP(sm)] triggered a cascade delam.")
 	sm.investigate_log("triggered a cascade delam.", INVESTIGATE_ENGINE)
 
 	effect_explosion(sm)
