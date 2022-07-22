@@ -219,6 +219,6 @@
 		if(VAULT_QUICK)
 			to_chat(H, span_notice("Your arms move as fast as lightning."))
 			H.next_move_modifier = 0.5
-	ADD_TRAIT(H, TRAIT_USED_DNA_VAULT, "dna_vault")
+	ADD_TRAIT(H, TRAIT_USED_DNA_VAULT, DNA_VAULT_TRAIT)
 	power_lottery[H] = list()
 	use_power(active_power_usage)
