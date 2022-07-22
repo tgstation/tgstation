@@ -45,7 +45,7 @@
 	SIGNAL_HANDLER
 	// You fucked up pretty bad if you let this happen
 	if (!rune)
-		fail_objective()
+		fail_objective(penalty_cost = telecrystal_penalty)
 
 /**
  * Called when you managed to draw a traitor rune.
