@@ -971,7 +971,7 @@
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
 	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "pain", /datum/mood_event/pain)
-	if(health_deficiency >= 10)
+	if(health_deficiency >= 10 && (HAS_TRAIT(src, TRAIT_CRY_BABY) || (HAS_TRAIT(src, TRAIT_MASOCHIST))))
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "pain", /datum/mood_event/pain)
 
 

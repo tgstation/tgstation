@@ -397,7 +397,7 @@
 		description = "I'm in a little bit of pain"
 	else if(damage > -40)
 		description = "I'm in quite a bit of pain"
-	else if(damage > -60)
+	else if(damage > -80)
 		description = "I'm in so much pain"
 	else if(damage < -80)
 		if(HAS_TRAIT(owner, TRAIT_MASOCHIST))
