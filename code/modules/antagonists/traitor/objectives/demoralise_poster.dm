@@ -45,11 +45,11 @@
 #undef POSTERS_PROVIDED
 
 /datum/traitor_objective/demoralise/poster/ungenerate_objective()
-	. = ..()
 	for (var/poster in posters)
 		UnregisterSignal(poster, COMSIG_DEMORALISING_EVENT)
 		UnregisterSignal(poster, COMSIG_PARENT_QDELETING)
 	posters.Cut()
+	return ..()
 
 /**
  * Called if someone gets glass stuck in their hand from one of your posters.

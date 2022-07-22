@@ -73,11 +73,11 @@
 	fail_objective()
 
 /datum/traitor_objective/demoralise/graffiti/ungenerate_objective()
-	. = ..()
 	if (rune)
 		UnregisterSignal(rune, COMSIG_PARENT_QDELETING)
 		UnregisterSignal(rune, COMSIG_DEMORALISING_EVENT)
 		rune = null
+	return ..()
 
 // Extending the existing spraycan item was more trouble than it was worth, I don't want or need this to be able to draw arbitrary shapes.
 /obj/item/traitor_spraycan

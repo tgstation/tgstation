@@ -9,7 +9,7 @@
 		/datum/traitor_objective/demoralise/graffiti = 2,
 	)
 
-/datum/traitor_objective/demoralise/
+/datum/traitor_objective/demoralise
 	name = "Debug your code."
 	description = "If you actually get this objective someone fucked up."
 
