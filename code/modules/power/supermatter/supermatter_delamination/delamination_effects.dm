@@ -22,7 +22,7 @@
 		if(ishuman(victim))
 			//Hilariously enough, running into a closet should make you get hit the hardest.
 			var/mob/living/carbon/human/human = victim
-			human.hallucination += max(50, min(300, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(victim, src) + 1)) ) )
+			human.hallucination += max(50, min(300, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(victim, sm) + 1)) ) )
 
 	for(var/mob/victim as anything in GLOB.player_list)
 		var/turf/mob_turf = get_turf(victim)
@@ -85,7 +85,7 @@
 		return FALSE
 	var/obj/singularity/created_singularity = new(sm_turf)
 	created_singularity.energy = 800
-	created_singularity.consume(src)
+	created_singularity.consume(sm)
 	return TRUE
 
 /// Teslas
