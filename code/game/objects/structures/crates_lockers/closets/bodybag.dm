@@ -34,6 +34,7 @@
 		/datum/element/contextual_screentip_bare_hands, \
 		rmb_text = "Fold up", \
 	)
+	AddElement(/datum/element/contextual_screentip_sharpness, lmb_text = "Remove Tag",)
 
 /obj/structure/closet/body_bag/Destroy()
 	// If we have a stored bag, and it's in nullspace (not in someone's hand), delete it.
