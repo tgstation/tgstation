@@ -1,0 +1,5 @@
+author: "13spacemen"
+delete-after: True
+changes: 
+  - imageadd: "Internals action buttons have a gold border and are inserted left-most by default"
+  - rscdel: "Removed the internals HUD icon (gas mask + tank icon)"
