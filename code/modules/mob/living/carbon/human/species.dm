@@ -428,24 +428,18 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	// Drop the items the new species can't wear
 	if((AGENDER in species_traits))
 		C.gender = PLURAL
-	for(var/slot_id in no_equip)
-		var/obj/item/thing = C.get_item_by_slot(slot_id)
-		if(thing && (!thing.species_exception || !is_type_in_list(src,thing.species_exception)))
-			C.dropItemToGround(thing)
 	if(C.hud_used)
 		C.hud_used.update_locked_slots()
-
 
 	C.mob_biotypes = inherent_biotypes
 
 	replace_body(C, src)
 	regenerate_organs(C, old_species, visual_only = C.visual_only_organs)
 
-	var/obj/item/bodypart/chest = C.get_bodypart(BODY_ZONE_CHEST)
-	var/obj/item/uniform = C.get_item_by_slot(ITEM_SLOT_ICLOTHING)
-	if(chest && (chest.bodytype & BODYTYPE_MONKEY) && uniform)
-		if(!(uniform.supports_variations_flags & CLOTHING_MONKEY_VARIATION))
-			C.dropItemToGround(uniform)
+	for(var/obj/item/equipped_item in C.get_equipped_items(include_pockets = TRUE))
+		var/equipped_item_slot = C.get_slot_by_item(equipped_item)
+		if(!can_equip(equipped_item, equipped_item_slot, H = C,  bypass_equip_delay_self = TRUE))
+			C.dropItemToGround(equipped_item)
 
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
 		C.dna.blood_type = exotic_bloodtype
@@ -882,7 +876,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/obj/item/bodypart/chest = H.get_bodypart(BODY_ZONE_CHEST)
 			if(chest && (chest.bodytype & BODYTYPE_MONKEY))
 				if(!(I.supports_variations_flags & CLOTHING_MONKEY_VARIATION))
-					to_chat(H, span_warning("[I] doesn't fit your \the [chest]!"))
+					if(!disable_warning)
+						to_chat(H, span_warning("[I] doesn't fit your \the [chest.name]!"))
 					return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_ID)
