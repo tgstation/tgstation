@@ -192,8 +192,8 @@
 					continue
 				number_of_alphanumeric++
 				last_char_group = NUMBERS_DETECTED
-			// ' -  .
-			if(39, 45,46) //Common name punctuation
+			// '  -  .
+			if(39,45,46) //Common name punctuation
 				if(last_char_group == NO_CHARS_DETECTED)
 					if(strict)
 						return
