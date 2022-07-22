@@ -359,6 +359,10 @@
 	},
 /turf/open/indestructible,
 /area/template_noop)
+"VH" = (
+/obj/structure/fans/tiny/invisible,
+/turf/open/misc/snow,
+/area/template_noop)
 "WM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/rods,
@@ -1288,7 +1292,7 @@ an
 an
 Oe
 Oe
-xa
+VH
 aL
 Oe
 aM
@@ -1310,7 +1314,7 @@ an
 an
 an
 Oe
-aL
+xa
 xa
 Oe
 Fi
@@ -1333,7 +1337,7 @@ Oe
 an
 Oe
 Oe
-aL
+xa
 xa
 xa
 Oe
@@ -1356,7 +1360,7 @@ Oe
 an
 Oe
 Oe
-aL
+xa
 xa
 xa
 Oe
@@ -1379,7 +1383,7 @@ Fi
 Oe
 aM
 Oe
-aL
+xa
 xa
 Oe
 aM

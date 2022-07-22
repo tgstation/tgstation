@@ -24,10 +24,6 @@
 	},
 /turf/template_noop,
 /area/template_noop)
-"g" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/lavaland_atmos,
-/area/template_noop)
 "h" = (
 /obj/structure/fans/tiny/invisible,
 /turf/template_noop,
@@ -164,6 +160,10 @@
 	name = "goliath"
 	},
 /turf/open/misc/asteroid,
+/area/template_noop)
+"D" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
 /area/template_noop)
 "E" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -593,7 +593,7 @@ J
 f
 f
 N
-g
+D
 B
 f
 f
@@ -616,7 +616,7 @@ f
 H
 H
 N
-g
+D
 B
 H
 H
@@ -639,7 +639,7 @@ J
 f
 H
 N
-g
+D
 B
 f
 f
@@ -662,7 +662,7 @@ h
 f
 f
 N
-g
+D
 B
 H
 H
@@ -685,7 +685,7 @@ f
 H
 H
 N
-g
+D
 B
 H
 H
@@ -708,7 +708,7 @@ H
 H
 H
 N
-g
+D
 B
 f
 f
@@ -938,7 +938,7 @@ J
 J
 J
 V
-g
+D
 m
 J
 J
@@ -961,7 +961,7 @@ J
 J
 J
 V
-g
+D
 f
 J
 J
@@ -984,7 +984,7 @@ f
 f
 f
 t
-g
+D
 f
 h
 J

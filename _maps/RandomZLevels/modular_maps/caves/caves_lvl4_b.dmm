@@ -1,4 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"as" = (
+/turf/closed/indestructible/necropolis,
+/area/template_noop)
 "aM" = (
 /turf/closed/indestructible/bronze,
 /area/template_noop)
@@ -38,6 +41,10 @@
 "cP" = (
 /mob/living/simple_animal/hostile/clockwork/cogscarab,
 /turf/open/floor/bronze/flat/lavaland,
+/area/template_noop)
+"dl" = (
+/obj/structure/flora/ash/tall_shroom,
+/turf/open/indestructible/necropolis,
 /area/template_noop)
 "dG" = (
 /obj/structure/flora/ash/cacti,
@@ -101,6 +108,13 @@
 /obj/structure/fluff/clockwork/alloy_shards/small,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
+"gE" = (
+/obj/structure/clockcult_tower{
+	beam_range = 7;
+	id = "clock3"
+	},
+/turf/open/floor/bronze/flat/lavaland,
+/area/template_noop)
 "gK" = (
 /obj/structure/flora/rock/pile,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -124,6 +138,11 @@
 "jJ" = (
 /obj/structure/girder/bronze,
 /turf/open/floor/bronze,
+/area/template_noop)
+"jX" = (
+/obj/structure/table/bronze,
+/obj/item/candle/infinite,
+/turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
 "kd" = (
 /mob/living/simple_animal/hostile/clockwork/ocular_warden{
@@ -326,6 +345,10 @@
 	},
 /turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
+"uI" = (
+/obj/structure/flora/ash/seraka,
+/turf/open/indestructible/necropolis,
+/area/template_noop)
 "uL" = (
 /obj/effect/decal/fakelattice{
 	icon = 'icons/obj/structures.dmi';
@@ -342,6 +365,10 @@
 /obj/machinery/door/airlock/bronze,
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/bronze,
+/area/template_noop)
+"uT" = (
+/obj/structure/flora/ash/leaf_shroom,
+/turf/open/indestructible/necropolis,
 /area/template_noop)
 "uU" = (
 /obj/machinery/door/airlock/bronze,
@@ -368,6 +395,14 @@
 "xc" = (
 /obj/effect/decal/cleanable/ash,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"xj" = (
+/obj/structure/flora/rock/pile,
+/turf/open/indestructible/necropolis,
+/area/template_noop)
+"yg" = (
+/obj/structure/flora/rock,
+/turf/open/indestructible/necropolis,
 /area/template_noop)
 "zg" = (
 /obj/effect/decal/fakelattice{
@@ -525,6 +560,9 @@
 /obj/structure/flora/ash/leaf_shroom,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
+"NC" = (
+/turf/open/indestructible/necropolis,
+/area/template_noop)
 "NX" = (
 /obj/structure/fluff/clockwork/alloy_shards/medium,
 /obj/structure/flora/ash/cacti,
@@ -647,6 +685,11 @@
 	},
 /turf/open/floor/bronze/flat/lavaland,
 /area/template_noop)
+"Wg" = (
+/obj/structure/table/bronze,
+/obj/item/candle/infinite,
+/turf/open/floor/bronze/flat/lavaland,
+/area/template_noop)
 "WK" = (
 /obj/machinery/door/airlock/bronze,
 /obj/structure/fans/tiny/invisible,
@@ -672,9 +715,9 @@
 /obj/structure/fluff/clockwork/clockgolem_remains,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
-"XI" = (
-/obj/structure/table/bronze,
-/turf/open/floor/bronze/filled/lavaland,
+"XQ" = (
+/obj/structure/spawner/lavaland/goliath,
+/turf/open/indestructible/necropolis,
 /area/template_noop)
 "Yk" = (
 /obj/structure/fluff/clockwork/blind_eye,
@@ -703,6 +746,10 @@
 /mob/living/simple_animal/hostile/clockminer/spear,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
+"YT" = (
+/obj/structure/spawner/lavaland/icewatcher,
+/turf/open/indestructible/necropolis,
+/area/template_noop)
 "Za" = (
 /obj/structure/fluff/clockwork/alloy_shards/large,
 /turf/open/floor/bronze/flat/lavaland,
@@ -718,6 +765,10 @@
 "ZC" = (
 /obj/item/stack/tile/bronze,
 /turf/open/floor/plating,
+/area/template_noop)
+"ZT" = (
+/obj/structure/spawner/lavaland/legion,
+/turf/open/indestructible/necropolis,
 /area/template_noop)
 "ZX" = (
 /turf/open/floor/bronze/filled,
@@ -1660,7 +1711,7 @@ Mf
 gK
 gK
 gK
-Mf
+NC
 Mf
 nB
 nB
@@ -1705,12 +1756,12 @@ Mf
 gK
 Mf
 Mf
-Mf
-Dy
+as
+as
 Mf
 Nw
-Dy
-Dy
+as
+as
 Dy
 Dy
 Dy
@@ -1779,13 +1830,13 @@ Mf
 Mf
 Mf
 Mf
-Mf
-Mf
-Mf
-Mf
+NC
+NC
+NC
+NC
 gK
 gK
-Mf
+NC
 Mf
 nB
 nB
@@ -1830,12 +1881,12 @@ Mf
 Mf
 Nw
 gK
-Mf
-Mf
-Mf
-Mf
-Mf
-Dy
+as
+NC
+NC
+NC
+NC
+as
 Dy
 Dy
 Dy
@@ -1904,13 +1955,13 @@ gK
 gK
 Mf
 Mf
-Dy
-Dy
+as
+as
 Mf
-Mf
-gK
-Mf
-Mf
+NC
+xj
+NC
+NC
 gK
 nB
 nB
@@ -1958,8 +2009,8 @@ Mf
 Mf
 Mf
 Nw
-Mf
-Mf
+NC
+NC
 gK
 gK
 gK
@@ -2030,13 +2081,13 @@ Dy
 Dy
 Dy
 Dy
-Dy
+as
 Mf
-Mf
-gK
-Mf
-Mf
-gK
+NC
+xj
+NC
+NC
+xj
 Mf
 nB
 Dy
@@ -2083,9 +2134,9 @@ Mf
 Mf
 Mf
 Mf
-gK
-gK
-gK
+xj
+xj
+xj
 IX
 gK
 Dy
@@ -2155,12 +2206,12 @@ Dy
 Dy
 Dy
 Mf
+NC
+NC
 Mf
-Mf
-Mf
-Mf
-Mf
-Mf
+NC
+NC
+NC
 Mf
 Mf
 Mf
@@ -2210,12 +2261,12 @@ Mf
 Mf
 Mf
 Mf
-Mf
+NC
 gK
 gK
 Dy
-Dy
-Dy
+as
+as
 Mf
 Mf
 Mf
@@ -2281,13 +2332,13 @@ Mf
 Mf
 Mf
 Mf
-Mf
-Mf
-Mf
-Mf
-Mf
-Mf
-Mf
+NC
+NC
+NC
+XQ
+NC
+NC
+NC
 Mf
 Dy
 Dy
@@ -2335,15 +2386,15 @@ gK
 Mf
 Mf
 Mf
-Mf
+NC
 Mf
 gK
 Dy
 Mf
-Mf
-Mf
-gK
-Mf
+NC
+NC
+xj
+NC
 gK
 gK
 QF
@@ -2408,14 +2459,14 @@ gK
 Mf
 Mf
 Mf
+NC
+xj
+xj
+NC
+NC
 Mf
-gK
-gK
-Mf
-Mf
-Mf
-Dy
-Dy
+as
+as
 Dy
 Dy
 gK
@@ -2460,12 +2511,12 @@ Mf
 Mf
 Mf
 gK
-Mf
-Mf
-Mf
-Mf
-Mf
-Mf
+NC
+NC
+NC
+NC
+NC
+NC
 Mf
 Mf
 Mf
@@ -2533,14 +2584,14 @@ Mf
 Mf
 Mf
 nB
-Mf
+NC
 IX
-gK
-gK
-Mf
-Mf
-Mf
-Dy
+xj
+xj
+NC
+NC
+NC
+as
 Dy
 Dy
 Mf
@@ -2581,13 +2632,13 @@ Mf
 Mf
 Mf
 Dy
-Mf
-Dy
-Mf
-Mf
-Mf
-Mf
-Nw
+as
+as
+NC
+NC
+NC
+YT
+uT
 Nw
 Mf
 Nw
@@ -2660,11 +2711,11 @@ nB
 nB
 gK
 gK
-gK
+xj
 Mf
-Mf
-Mf
-Mf
+NC
+NC
+NC
 Mf
 Mf
 Mf
@@ -2706,13 +2757,13 @@ Dy
 Dy
 Dy
 Dy
-Dy
-Dy
-Mf
-Mf
-Mf
-gK
-gK
+as
+NC
+NC
+NC
+NC
+xj
+xj
 Mf
 Nw
 Mf
@@ -2784,8 +2835,8 @@ nB
 nB
 nB
 nB
-nB
-Mf
+as
+NC
 Mf
 Mf
 Mf
@@ -2831,13 +2882,13 @@ Dy
 Dy
 Dy
 Dy
-Dy
-Dy
+as
+as
 gK
 gK
 gK
-IX
-gK
+yg
+xj
 gK
 Mf
 Mf
@@ -2909,8 +2960,8 @@ nB
 nB
 nB
 nB
-nB
-nB
+as
+as
 nB
 nB
 Mf
@@ -2961,8 +3012,8 @@ Dy
 Dy
 Dy
 gK
-gK
-gK
+xj
+xj
 Mf
 Mf
 Dy
@@ -3001,7 +3052,7 @@ Mf
 eu
 oa
 uL
-Mf
+Wg
 Dy
 Dy
 Dy
@@ -3085,11 +3136,11 @@ Dy
 Dy
 Dy
 Dy
-Dy
-Dy
-Dy
-Mf
-Mf
+as
+NC
+NC
+NC
+as
 Mf
 Dy
 Dy
@@ -3210,10 +3261,10 @@ Dy
 Dy
 Dy
 Dy
-Dy
-Dy
-Dy
-Mf
+as
+as
+as
+as
 Mf
 Dy
 Dy
@@ -3624,7 +3675,7 @@ lz
 Mf
 Mf
 eu
-Mf
+Wg
 lz
 uL
 Mf
@@ -4137,7 +4188,7 @@ lz
 Mf
 Mf
 Mf
-Mf
+Wg
 Dy
 Dy
 bD
@@ -4148,7 +4199,7 @@ gK
 Dy
 bD
 bD
-Mf
+Wg
 Mf
 Mf
 oa
@@ -4759,7 +4810,7 @@ Dy
 Dy
 Dy
 Dy
-Mf
+Wg
 Mf
 Mf
 Mf
@@ -5149,7 +5200,7 @@ Dy
 bD
 oa
 oa
-Mf
+Wg
 Dy
 Dy
 Dy
@@ -5787,7 +5838,7 @@ Mf
 lz
 lz
 lz
-Mf
+Wg
 Dy
 Dy
 Dy
@@ -5905,7 +5956,7 @@ Dy
 Dy
 Dy
 oa
-Mf
+Wg
 Ud
 Sp
 cP
@@ -6402,7 +6453,7 @@ lw
 tj
 lw
 bD
-Mf
+Wg
 Mf
 Mf
 Ct
@@ -6777,7 +6828,7 @@ lw
 Pe
 lw
 bD
-oa
+Wg
 Mf
 uL
 Ud
@@ -6813,7 +6864,7 @@ nB
 Ud
 Kk
 Ud
-Mf
+Wg
 Mf
 Mf
 Mf
@@ -7321,7 +7372,7 @@ lz
 lz
 Mf
 Mf
-Mf
+Wg
 Dy
 Mf
 Mf
@@ -8207,8 +8258,8 @@ Dy
 Dy
 Mf
 Mf
-gK
-gK
+xj
+xj
 gK
 IX
 gK
@@ -8330,9 +8381,9 @@ Mf
 Mf
 Mf
 Mf
-Mf
-Mf
-Mf
+NC
+NC
+NC
 Mf
 gK
 gK
@@ -8393,7 +8444,7 @@ Dy
 oa
 uL
 uL
-Mf
+Wg
 Mf
 lz
 lz
@@ -8430,7 +8481,7 @@ bD
 Dy
 Mf
 Dy
-oa
+Wg
 oa
 gK
 Mf
@@ -8453,9 +8504,9 @@ Dy
 Dy
 Mf
 Mf
-gK
-Mf
-Mf
+xj
+NC
+NC
 Mf
 Mf
 Mf
@@ -8562,7 +8613,7 @@ Ud
 Gl
 cP
 Mf
-Mf
+Wg
 Dy
 Dy
 Dy
@@ -8577,9 +8628,9 @@ nB
 Dy
 Mf
 Mf
-Mf
-Mf
-Mf
+NC
+NC
+NC
 Mf
 Mf
 Dy
@@ -8662,7 +8713,7 @@ lz
 Ud
 Ud
 Ud
-XI
+jX
 lz
 uy
 SO
@@ -8699,11 +8750,11 @@ nB
 nB
 nB
 Dy
-Dy
+as
 gK
-Mf
-Mf
-Mf
+NC
+NC
+NC
 Mf
 gK
 Mf
@@ -8788,7 +8839,7 @@ Ud
 Ud
 Ud
 ql
-XI
+jX
 lz
 hb
 lz
@@ -8797,7 +8848,7 @@ Ud
 Gl
 cP
 Mf
-Mf
+Wg
 uL
 uL
 lz
@@ -8824,13 +8875,13 @@ Dy
 nB
 nB
 Dy
-Dy
-gK
-gK
-Mf
-gK
-IX
-gK
+as
+xj
+xj
+XQ
+xj
+yg
+xj
 Mf
 Mf
 Dy
@@ -8949,13 +9000,13 @@ nB
 nB
 Dy
 Dy
-Dy
-gK
-IX
-Mf
-gK
-gK
-gK
+as
+as
+yg
+NC
+xj
+xj
+xj
 Mf
 Mf
 Dy
@@ -9077,10 +9128,10 @@ Dy
 Dy
 gK
 gK
-Mf
-HX
-gK
-Mf
+NC
+uI
+xj
+NC
 Mf
 Mf
 Dy
@@ -9205,8 +9256,8 @@ Mf
 HX
 HX
 gK
-Mf
-Mf
+NC
+NC
 Mf
 HX
 Dy
@@ -9330,8 +9381,8 @@ Dy
 Mf
 Mf
 Mf
-Mf
-Mf
+NC
+NC
 HX
 HX
 Dy
@@ -9456,7 +9507,7 @@ Dy
 Dy
 Mf
 Mf
-Mf
+NC
 gK
 HX
 Dy
@@ -9538,7 +9589,7 @@ Ud
 Ud
 Ud
 ql
-XI
+jX
 lz
 hb
 lz
@@ -9643,7 +9694,7 @@ gK
 gK
 Mf
 bD
-Dy
+Wg
 uL
 lz
 lz
@@ -9662,7 +9713,7 @@ lz
 Ud
 Ud
 Ud
-XI
+jX
 lz
 lz
 uA
@@ -10046,7 +10097,7 @@ gK
 Ud
 VL
 cP
-Ud
+Wg
 uL
 oa
 uL
@@ -10312,7 +10363,7 @@ lz
 lz
 Mf
 Mf
-Mf
+Wg
 Dy
 Dy
 nB
@@ -10555,7 +10606,7 @@ Mf
 Mf
 Dy
 Dy
-gK
+Wg
 gK
 Mf
 Ud
@@ -11279,7 +11330,7 @@ lw
 pC
 lw
 bD
-Mf
+Wg
 Mf
 oa
 oa
@@ -11654,7 +11705,7 @@ lw
 Ic
 lw
 bD
-uL
+Wg
 gK
 Ud
 Mf
@@ -11671,7 +11722,7 @@ oa
 oa
 Dy
 Dy
-Mf
+Wg
 uL
 Mf
 Mf
@@ -11872,7 +11923,7 @@ bD
 oa
 oa
 bD
-gK
+Wg
 gK
 IX
 gK
@@ -12015,7 +12066,7 @@ Ud
 Mf
 Mf
 Mf
-Mf
+Wg
 lz
 oa
 bD
@@ -12055,7 +12106,7 @@ lz
 Mf
 lz
 Mf
-Mf
+Wg
 Dy
 Dy
 Dy
@@ -12155,7 +12206,7 @@ oa
 Dy
 bD
 bD
-Mf
+Wg
 Mf
 Mf
 Ud
@@ -12511,7 +12562,7 @@ Dy
 Dy
 Mf
 Dy
-Dy
+Wg
 lz
 Mf
 Mf
@@ -12525,7 +12576,7 @@ Qn
 Mf
 lz
 Ud
-Wd
+gE
 cP
 lz
 lz
@@ -12627,7 +12678,7 @@ Qn
 Mf
 Mf
 Mf
-Mf
+Wg
 Dy
 Dy
 bD
@@ -12707,7 +12758,7 @@ Mf
 Dy
 Dy
 Dy
-Mf
+Fc
 Mf
 Mf
 Dy
@@ -12781,7 +12832,7 @@ Mf
 Mf
 Mf
 Mf
-Mf
+Wg
 oa
 lz
 lz
@@ -12832,7 +12883,7 @@ Mf
 Dy
 Dy
 Dy
-Mf
+Fc
 gK
 Mf
 Mf
@@ -12960,7 +13011,7 @@ Dy
 Dy
 Mf
 Mf
-Mf
+Fc
 Dy
 Dy
 Dy
@@ -13085,7 +13136,7 @@ Dy
 Dy
 Mf
 Mf
-Mf
+Fc
 Dy
 Dy
 Dy
@@ -13210,7 +13261,7 @@ Dy
 Dy
 Mf
 Mf
-Mf
+Fc
 Dy
 Dy
 Dy
@@ -14336,7 +14387,7 @@ Dy
 Dy
 Dy
 Mf
-Mf
+Fc
 Dy
 Dy
 Dy
@@ -14389,7 +14440,7 @@ nB
 Dy
 Dy
 Mf
-Mf
+NC
 Mf
 Mf
 Dy
@@ -14512,9 +14563,9 @@ nB
 nB
 nB
 Dy
-Dy
+as
 Mf
-Mf
+NC
 Mf
 Mf
 Dy
@@ -14637,9 +14688,9 @@ nB
 nB
 Dy
 Dy
-Dy
-Mf
-gK
+as
+NC
+xj
 Mf
 Mf
 Dy
@@ -14763,9 +14814,9 @@ Dy
 Dy
 Dy
 Dy
-Mf
-gK
-Mf
+as
+xj
+NC
 Mf
 Dy
 Dy
@@ -14888,9 +14939,9 @@ Dy
 Dy
 Dy
 Mf
-Mf
-gK
-Mf
+NC
+xj
+NC
 Mf
 Dy
 Dy
@@ -15014,8 +15065,8 @@ Dy
 Mf
 Mf
 Mf
-Mf
-Mf
+NC
+NC
 Mf
 Dy
 Dy
@@ -15138,9 +15189,9 @@ Mf
 Mf
 Mf
 gK
-Mf
-Mf
-Mf
+NC
+NC
+NC
 Mf
 Dy
 Dy
@@ -15261,14 +15312,14 @@ Mf
 Mf
 gK
 gK
-gK
-IX
-gK
+xj
+yg
+xj
+ZT
+NC
 Mf
-Mf
-Mf
-Mf
-Dy
+as
+as
 Dy
 Dy
 Dy
@@ -15386,14 +15437,14 @@ Mf
 Mf
 Mf
 Mf
-gK
-gK
-gK
-Mf
-Mf
-Mf
-gK
-Dy
+xj
+xj
+xj
+NC
+NC
+NC
+xj
+as
 Dy
 Dy
 Dy
@@ -15510,12 +15561,12 @@ Mf
 Mf
 Mf
 Mf
+dl
+NC
+NC
+NC
 Fc
-Mf
-Mf
-Mf
-Fc
-Mf
+NC
 Mf
 gK
 Dy
@@ -15640,7 +15691,7 @@ Mf
 Mf
 Mf
 Mf
-Mf
+NC
 Mf
 Mf
 Mf
@@ -15765,7 +15816,7 @@ Mf
 Mf
 gK
 Mf
-Mf
+NC
 Mf
 Mf
 Mf
@@ -15890,8 +15941,8 @@ Dy
 Dy
 Dy
 Mf
-Mf
-Mf
+NC
+as
 Mf
 Mf
 Mf
@@ -16014,9 +16065,9 @@ Mf
 Mf
 Dy
 Dy
-Dy
-Dy
-Dy
+as
+as
+as
 Dy
 Dy
 Dy
