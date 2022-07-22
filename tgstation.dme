@@ -357,6 +357,7 @@
 #include "code\__HELPERS\logging\atmos.dm"
 #include "code\__HELPERS\logging\attack.dm"
 #include "code\__HELPERS\logging\debug.dm"
+#include "code\__HELPERS\logging\dynamic.dm"
 #include "code\__HELPERS\logging\economy.dm"
 #include "code\__HELPERS\logging\game.dm"
 #include "code\__HELPERS\logging\manifest.dm"
