@@ -384,3 +384,25 @@
 	description = "I gambled my life and lost! I guess this is the end..."
 	mood_change = -20
 	timeout = 10 MINUTES
+
+/datum/mood_event/pain
+	description = "Ouch"
+	mood_change = -10
+
+/datum/mood_event/pain/add_effects()
+	var/mob/living/pained = owner
+	var/damage = (pained.health - pained.maxHealth)
+	mood_change = (damage * 0.2)
+	if(damage > -20)
+		description = "I'm in a little bit of pain"
+	else if(damage > -40)
+		description = "I'm in quite a bit of pain"
+	else if(damage > -60)
+		description = "I'm in so much pain"
+	else if(damage < -80)
+		if(HAS_TRAIT(owner, TRAIT_MASOCHIST))
+			description = "Pain courses through my veins, my body is crying out in pleasure!"
+		else
+			description = "It hurts so bad, I wish I was dead!"
+	if(HAS_TRAIT(owner, TRAIT_MASOCHIST))
+		mood_change *= -1

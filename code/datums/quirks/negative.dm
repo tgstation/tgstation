@@ -1,5 +1,24 @@
 //predominantly negative traits
 
+/datum/quirk/addictive_personality
+	name = "Addictive Personality"
+	desc = "Its hard for you to take just one hit."
+	icon = "cannabis"
+	value = -4
+	mob_trait = TRAIT_PROSOPAGNOSIA
+	medical_record_text = "Patient suffers from an addictive personality disorder."
+	hardcore_value = 4
+
+/datum/quirk/asthmatic
+	name = "Asthmatic"
+	desc = "You suffer from a particualraly strong case of Asthma. Better keep your inhaler on hand."
+	icon = "pills"
+	value = -4
+	mob_trait = TRAIT_PROSOPAGNOSIA
+	lose_text = "<span class='notice'>You feel you can breath clearer.</span>"
+	medical_record_text = "Patient suffers from a stong case of Asthma."
+	hardcore_value = 6
+
 /datum/quirk/badback
 	name = "Bad Back"
 	desc = "Thanks to your poor posture, backpacks and other bags never sit right on your back. More evently weighted objects are fine, though."
@@ -60,6 +79,16 @@
 	medical_record_text = "Patient requires regular treatment for blood loss due to low production of blood."
 	hardcore_value = 8
 	processing_quirk = TRUE
+
+/datum/quirk/bad_knees
+	name = "Bad knees"
+	desc = "Your suffer from a bad pair of knees. You walk slightly slower, and climbing things is out of the question."
+	icon = "crutch"
+	value = -7
+	gain_text = "<span class='danger'>Youe knees hurt like hell.</span>"
+	lose_text = "<span class='notice'>Your knees feel better.</span>"
+	medical_record_text = "Patient suffers extream athritius in the knees."
+	hardcore_value = 7
 
 /datum/quirk/blooddeficiency/process(delta_time)
 	if(quirk_holder.stat == DEAD)
@@ -128,6 +157,18 @@
 
 	quirk_holder.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2 * delta_time)
 
+/datum/quirk/cry_baby
+	name = "Cry baby"
+	desc = "You are the kind of wimp that gets bothered by pain."
+	icon = "sad-cry"
+	value = -5
+	mob_trait = TRAIT_CRY_BABY
+	mood_quirk = TRUE
+	gain_text = "<span class='danger'>You feel like crying.</span>"
+	lose_text = "<span class='notice'>You toughen up.</span>"
+	medical_record_text = "Patient has been determined to have the pain tolerance of a five year old."
+	hardcore_value = 4
+
 /datum/quirk/deafness
 	name = "Deaf"
 	desc = "You are incurably deaf."
@@ -150,6 +191,17 @@
 	medical_record_text = "Patient has a mild mood disorder causing them to experience acute episodes of depression."
 	mood_quirk = TRUE
 	hardcore_value = 2
+
+/datum/quirk/flimsy
+	name = "Flimsy"
+	desc = "Your body is not made to withstand punishment, making you much easier to kill."
+	icon = "wind"
+	mob_trait = TRAIT_DEPRESSION
+	value = -10
+	gain_text = "<span class='danger'>You feel fragile.</span>"
+	lose_text = "<span class='notice'>You no longer feel fragile.</span>"
+	medical_record_text = "Patient has an exeptionally weak body."
+	hardcore_value = 10
 
 /datum/quirk/item_quirk/family_heirloom
 	name = "Family Heirloom"
@@ -224,6 +276,24 @@
 	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "family_heirloom_missing")
 	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "family_heirloom")
 
+/datum/quirk/glass_jaw
+	name = "Glass Jaw"
+	desc = "Your skull is much more fragile than average.."
+	icon = "tooth"
+	mob_trait = TRAIT_DEPRESSION
+	value = -8
+	medical_record_text = "Patient has abnormally frail jaw and skull bones."
+	hardcore_value = 8
+
+/datum/quirk/paper_ribcage
+	name = "Paper Ribcage"
+	desc = "Damage inflicted on your torso is doubled."
+	icon = "toilet-paper"
+	mob_trait = TRAIT_DEPRESSION
+	value = -8
+	medical_record_text = "Patient has abnormally frail rib cage"
+	hardcore_value = 8
+
 /datum/quirk/frail
 	name = "Frail"
 	desc = "You have skin of paper and bones of glass! You suffer wounds much more easily than most."
@@ -238,13 +308,23 @@
 /datum/quirk/heavy_sleeper
 	name = "Heavy Sleeper"
 	desc = "You sleep like a rock! Whenever you're put to sleep or knocked unconscious, you take a little bit longer to wake up."
+	//reminder for warm milk
 	icon = "bed"
-	value = -2
+	value = -3
 	mob_trait = TRAIT_HEAVY_SLEEPER
 	gain_text = "<span class='danger'>You feel sleepy.</span>"
 	lose_text = "<span class='notice'>You feel awake again.</span>"
 	medical_record_text = "Patient has abnormal sleep study results and is difficult to wake up."
 	hardcore_value = 2
+
+/datum/quirk/heavy_bleeder
+	name = "Heavy Bleeder"
+	desc = "You bleed like a punctured beer keg!"
+	icon = "cut"
+	value = -5
+	mob_trait = TRAIT_HEAVY_SLEEPER
+	medical_record_text = "Patient has extreame hemophilia."
+	hardcore_value = 5
 
 /datum/quirk/hypersensitive
 	name = "Hypersensitive"
@@ -266,6 +346,16 @@
 	if(mood)
 		mood.mood_modifier -= 0.5
 
+/datum/quirk/inflexable_arms
+	name = "Single Jointed Arms"
+	desc = "Your arms are rigid planks. You will need to take off your backpack to access it's contents, and you'll have trouble escaping restraints."
+	icon = "hand-holding"
+	value = -3
+	gain_text = "<span class='danger'>Your arms feel ridgid.</span>"
+	lose_text = "<span class='notice'>Your arms feel more relaxed</span>"
+	medical_record_text = "Patient had very inflexable arms."
+	hardcore_value = 2
+
 /datum/quirk/light_drinker
 	name = "Light Drinker"
 	desc = "You just can't handle your drinks and get drunk very quickly."
@@ -276,6 +366,27 @@
 	lose_text = "<span class='danger'>You're no longer severely affected by alcohol.</span>"
 	medical_record_text = "Patient demonstrates a low tolerance for alcohol. (Wimp)"
 	hardcore_value = 3
+
+/datum/quirk/lactose_intolerance
+	name = "Lactose Intolerant"
+	desc = "Milk and milk products make you vomit."
+	icon = "water"
+	value = -2
+	mob_trait = TRAIT_LIGHT_DRINKER
+	lose_text = "<span class='danger'>You feel like a glass of milk.</span>"
+	medical_record_text = "Patient has a lactose intolerance."
+	hardcore_value = 2
+
+/datum/quirk/languorous
+	name = "Languorous"
+	desc = "You are very easy to tire.."
+	icon = "battery-quarter"
+	value = -6
+	mob_trait = TRAIT_LIGHT_DRINKER
+	gain_text = "<span class='notice'>You feel lazy.</span>"
+	lose_text = "<span class='danger'>You feel more in-shape.</span>"
+	medical_record_text = "Patient was made out of breath by filling out documents relating to their exercise routine."
+	hardcore_value = 6
 
 /datum/quirk/item_quirk/nearsighted
 	name = "Nearsighted"
@@ -493,6 +604,29 @@
 	to_chat(quirk_holder, "<span class='big bold info'>Please note that your dissociation syndrome does NOT give you the right to attack people or otherwise cause any interference to \
 	the round. You are not an antagonist, and the rules will treat you the same as other crewmembers.</span>")
 
+/datum/quirk/skirt_dependance
+	name = "Skirt dependance"
+	desc = "You don't know what you would do without your skirt, you might just explode."
+	icon = "female"
+	value = -6
+	mob_trait = TRAIT_INSANITY
+	gain_text = "<span class='userdanger'>You feel attached to your skirt</span>"
+	lose_text = "<span class='notice'>You feel brave enough to take your skirt off.</span>"
+	medical_record_text = "Patient suffers a irrational dependence on their attire."
+	hardcore_value = 6
+	processing_quirk = TRUE
+
+/datum/quirk/slow
+	name = "Slow"
+	desc = "You've always liked taking your time."
+	icon = "clock"
+	value = -6
+	mob_trait = TRAIT_GRABWEAKNESS
+	gain_text = "<span class='userdanger'>You feel slow</span>"
+	lose_text = "<span class='notice'>You feel faster.</span>"
+	medical_record_text = "Patient suffers a irrational dependence on their attire."
+	hardcore_value = 6
+
 /datum/quirk/social_anxiety
 	name = "Social Anxiety"
 	desc = "Talking to people is very difficult for you, and you often stutter or even lock up."
@@ -606,6 +740,16 @@
 	description = "Sometimes eye contact makes me so nervous..."
 	mood_change = -5
 	timeout = 3 MINUTES
+
+/datum/quirk/squeamish
+	name = "Squeamish"
+	desc = "You're rather disturbed by wearing bloody clothing."
+	icon = "clock"
+	value = -2
+	mood_quirk = TRUE
+	mob_trait = TRAIT_GRABWEAKNESS
+	medical_record_text = "Patient suffers mild gemophobia."
+	hardcore_value = 2
 
 /datum/quirk/item_quirk/junkie
 	name = "Junkie"
@@ -740,6 +884,16 @@
 			return
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "wrong_cigs", /datum/mood_event/wrong_brand)
 
+/datum/quirk/table_manners
+	name = "Table Manners"
+	desc = "The thought of eating without sitting at a table distresses you."
+	icon = "utensils"
+	value = -2
+	mob_trait = TRAIT_UNSTABLE
+	mood_quirk = TRUE
+	medical_record_text = "Patient holds an attration to tables."
+	hardcore_value = 2
+
 /datum/quirk/unstable
 	name = "Unstable"
 	desc = "Due to past troubles, you are unable to recover your sanity if you lose it. Be very careful managing your mood!"
@@ -750,6 +904,15 @@
 	lose_text = "<span class='notice'>Your mind finally feels calm.</span>"
 	medical_record_text = "Patient's mind is in a vulnerable state, and cannot recover from traumatic events."
 	hardcore_value = 9
+
+/datum/quirk/dunce
+	name = "Dunce"
+	desc = "You don't really like this whole learning thing"
+	icon = "tired"
+	value = -1
+	mob_trait = TRAIT_UNSTABLE
+	medical_record_text = "Patient's exibits a lack of desire to learn anything."
+	hardcore_value = 2
 
 /datum/quirk/item_quirk/allergic
 	name = "Extreme Medicine Allergy"

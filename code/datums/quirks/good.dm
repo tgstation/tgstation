@@ -1,6 +1,16 @@
 //predominantly positive traits
 //this file is named weirdly so that positive traits are listed above negative ones
 
+/datum/quirk/addict_resistance
+	name = "Addiction Resistance"
+	desc = "You have an unaddictive personality."
+	icon = "spa"
+	value = 4
+	mob_trait = TRAIT_ALCOHOL_TOLERANCE
+	gain_text = "<span class='notice'>You feel a strong sence of self dependence!</span>"
+	lose_text = "<span class='danger'>Your sence of self dependence goes away.</span>"
+	medical_record_text = "Patient demonstrates an abnormaly high level of addiction resistance."
+
 /datum/quirk/alcohol_tolerance
 	name = "Alcohol Tolerance"
 	desc = "You become drunk more slowly and suffer fewer drawbacks from alcohol."
@@ -28,6 +38,37 @@
 	var/datum/component/mood/mood = quirk_holder.GetComponent(/datum/component/mood)
 	if(mood)
 		mood.mood_modifier += 0.2
+
+/datum/quirk/brusier
+	name = "Bruiser"
+	desc = "You hit a lot harder with your fists"
+	icon = "fist-raised"
+	value = 6
+	mob_trait = TRAIT_ALCOHOL_TOLERANCE
+	gain_text = "<span class='notice'>Your arms feel strong!</span>"
+	lose_text = "<span class='danger'>Your sarms feel weaker.</span>"
+	medical_record_text = "Patient displays pugilistic tendancies"
+
+/datum/quirk/bullet_dodge
+	name = "Bullet Dodger"
+	desc = "Your flips cost stamina, but let you dodge bullets!"
+	icon = "running"
+	value = 6
+	mob_trait = TRAIT_ALCOHOL_TOLERANCE
+	gain_text = "<span class='notice'>You like you could dodge anything!</span>"
+	lose_text = "<span class='danger'>You don't feel like you could dodge anything anymore.</span>"
+	medical_record_text = "Patient's body has been trained for advanced flipping techniques"
+
+/datum/quirk/connoisseur
+	name = "Connoisseur"
+	desc = "You're a fan of fine food and drink."
+	icon = "drumstick-bite"
+	value = 1
+	mob_trait = TRAIT_ALCOHOL_TOLERANCE
+	mood_quirk = TRUE
+	gain_text = "<span class='notice'>Your tastebuds feel lively!</span>"
+	lose_text = "<span class='danger'>Your tastebuds dull.</span>"
+	medical_record_text = "Patient's pallet is exeptionally refined"
 
 /datum/quirk/drunkhealing
 	name = "Drunken Resilience"
@@ -60,6 +101,16 @@
 	gain_text = "<span class='notice'>You feel in tune with those around you.</span>"
 	lose_text = "<span class='danger'>You feel isolated from others.</span>"
 	medical_record_text = "Patient is highly perceptive of and sensitive to social cues, or may possibly have ESP. Further testing needed."
+
+/datum/quirk/expert_sleeper
+	name = "Expert Sleeper"
+	desc = "You are the king of snoozing."
+	icon = "bed"
+	value = 4
+	mob_trait = TRAIT_ALCOHOL_TOLERANCE
+	gain_text = "<span class='notice'>You fell comfortable!</span>"
+	lose_text = "<span class='danger'>You fell less comfortable!</span>"
+	medical_record_text = "Patient has an abnormally consistant circadian rythems"
 
 /datum/quirk/item_quirk/clown_enjoyer
 	name = "Clown Enjoyer"
@@ -116,6 +167,34 @@
 	mood_quirk = TRUE
 	medical_record_text = "Patient demonstrates low-inhibitions for physical contact and well-developed arms. Requesting another doctor take over this case."
 
+/datum/quirk/fireproof
+	name = "Fireproof"
+	desc = "Due to training, natural aptitude, or digesting large quantities of Aerogel as a child, your skin has developed a resistance to fire."
+	icon = "fire"
+	value = 8
+	mob_trait = TRAIT_FREERUNNING
+	gain_text = "<span class='notice'>You feel resistant to fire!</span>"
+	lose_text = "<span class='danger'>You no longer feel resistant to fire.</span>"
+	medical_record_text = "Patient's skin shows natural resistance to fire."
+
+/datum/quirk/indefatigable
+	name = "Indefatigable"
+	desc = "Through consistant exersize and good lifestyle choices you have an increased stamina pool."
+	icon = "heartbeat"
+	value = 8
+	mob_trait = TRAIT_FRIENDLY
+	gain_text = "<span class='notice'>You feel like you could run a mile.</span>"
+	lose_text = "<span class='danger'>You feel tired.</span>"
+	medical_record_text = "Patient has an exelent diet and exersises consistantly, well done."
+
+/datum/quirk/iron_stomach
+	name = "Iron Stomach"
+	desc = "You can handel gross food better than most. Your strong stomach doesn't make it taste any better, but it does help you keep it down."
+	icon = "pizza-slice"
+	value = 2
+	mob_trait = TRAIT_ALCOHOL_TOLERANCE
+	medical_record_text = "Patient has exquisit gastro-intestial fortitude"
+
 /datum/quirk/jolly
 	name = "Jolly"
 	desc = "You sometimes just feel happy, for no reason at all."
@@ -134,6 +213,27 @@
 	gain_text = "<span class='notice'>You walk with a little more litheness.</span>"
 	lose_text = "<span class='danger'>You start tromping around like a barbarian.</span>"
 	medical_record_text = "Patient's dexterity belies a strong capacity for stealth."
+
+/datum/quirk/light_eater
+	name = "Light Eater"
+	desc = "You've never been a a big food guy."
+	icon = "pizza-slice"
+	value = 3
+	mob_trait = TRAIT_ALCOHOL_TOLERANCE
+	gain_text = "<span class='notice'>You don't feel like eating all that much.</span>"
+	lose_text = "<span class='danger'>You feel like you could probably use a bite to eat.</span>"
+	medical_record_text = "Patient has a slower than average matabolism."
+
+/datum/quirk/item_quirk/masochist
+	name = "Masochist"
+	desc = "Something about physical pain soothes your mind and soul."
+	icon = "brain"
+	value = 2
+	mob_trait = TRAIT_MASOCHIST
+	mood_quirk = TRUE
+	gain_text = "<span class='notice'>You enjoy the sensation of pain.</span>"
+	lose_text = "<span class='danger'>You realize that pain hurts.</span>"
+	medical_record_text = "Patient displays machochistic tendencies."
 
 /datum/quirk/item_quirk/musician
 	name = "Musician"
@@ -172,6 +272,26 @@
 	// We've either added or removed TRAIT_NIGHT_VISION before calling this proc. Just refresh the eyes.
 	eyes.refresh()
 
+/datum/quirk/quick_learner
+	name = "Quick Learner"
+	desc = "You pick up on skills quicker than most people."
+	icon = "chalkboard-teacher"
+	value = 3
+	mob_trait = TRAIT_NIGHT_VISION
+	gain_text = "<span class='notice'>You feel ready to learn.</span>"
+	lose_text = "<span class='danger'>You feel like learning if for chumps.</span>"
+	medical_record_text = "Patient shows unwarented enthusiasm for picking up new skills."
+
+/datum/quirk/robust_genetics
+	name = "Robust Genetics"
+	desc = "You have an advanced capacity for genetic mutations."
+	icon = "dna"
+	value = 5
+	mob_trait = TRAIT_NIGHT_VISION
+	gain_text = "<span class='notice'>You feel ready to learn.</span>"
+	lose_text = "<span class='danger'>You feel like learning if for chumps.</span>"
+	medical_record_text = "Patient's DNA is very well structured as resistant to genetic collapse."
+
 /datum/quirk/selfaware
 	name = "Self-Aware"
 	desc = "You know your body well, and can accurately assess the extent of your wounds."
@@ -188,6 +308,14 @@
 	mob_trait = TRAIT_SKITTISH
 	medical_record_text = "Patient demonstrates a high aversion to danger and has described hiding in containers out of fear."
 
+/datum/quirk/skater
+	name = "Skater"
+	desc = "You're a pro skater."
+	icon = "bicycle"
+	value = 6
+	mob_trait = TRAIT_SKITTISH
+	medical_record_text = "Patient wouldn't shut up about how good they are at skateboarding."
+
 /datum/quirk/item_quirk/spiritual
 	name = "Spiritual"
 	desc = "You hold a spiritual belief, whether in God, nature or the arcane rules of the universe. You gain comfort from the presence of holy people, and believe that your prayers are more special than others. Being in the chapel makes you happy."
@@ -201,6 +329,49 @@
 /datum/quirk/item_quirk/spiritual/add_unique()
 	give_item_to_holder(/obj/item/storage/fancy/candle_box, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
 	give_item_to_holder(/obj/item/storage/box/matches, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
+
+/datum/quirk/item_quirk/super_immune
+	name = "Super Immune"
+	desc = "You have a robust immune system."
+	icon = "pills"
+	value = 4
+	mob_trait = TRAIT_SPIRITUAL
+	medical_record_text = "Patient has a hightened immune system."
+
+/datum/quirk/item_quirk/sweet_tooth
+	name = "Sweet tooth"
+	desc = "You have a thing for sweets, they make you feel happy."
+	icon = "cookie-bite"
+	value = 2
+	mob_trait = TRAIT_SPIRITUAL
+	mood_quirk = TRUE
+	gain_text = "<span class='notice'>You want somthing sweet.</span>"
+	lose_text = "<span class='danger'>You loose your drive for something sweet.</span>"
+	medical_record_text = "Patient has poor dental enamel due to an abnormal desire for sugar."
+
+/datum/quirk/item_quirk/thick_skin
+	name = "Thick Skin"
+	desc = "Your skin is tough as leather, leaving you resistant to blunt and slashing wounds."
+	icon = "shield-alt"
+	value = 6
+	mob_trait = TRAIT_SPIRITUAL
+	medical_record_text = "Patient has abnormally thick skin."
+
+/datum/quirk/item_quirk/tough_feet
+	name = "Tough Feet"
+	desc = "The skin on your feet is hard and calloused. You don't suffer the effects of caltrop-like effects while barefoot."
+	icon = "shield-alt"
+	value = 6
+	mob_trait = TRAIT_SPIRITUAL
+	medical_record_text = "Patient has abnormally thick skin."
+
+/datum/quirk/item_quirk/robust_physique
+	name = "Built From Stronger Stuff"
+	desc = "You have robust physique, allowing you to take more punishment"
+	icon = "user-astronaut"
+	value = 10
+	mob_trait = TRAIT_SPIRITUAL
+	medical_record_text = "Patient has a robust physique."
 
 /datum/quirk/item_quirk/tagger
 	name = "Tagger"

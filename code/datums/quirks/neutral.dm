@@ -398,6 +398,14 @@
 /datum/quirk/item_quirk/colorist/add_unique()
 	give_item_to_holder(/obj/item/dyespray, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
 
+/datum/quirk/atheist
+	name = "Atheist"
+	desc = "What's all this nonsense about space gods and holy magic? Surely there is a logical explanation for all this."
+	icon = "atom"
+	value = 0
+	mob_trait = TRAIT_ALCOHOL_TOLERANCE
+	medical_record_text = "Patient reports lack of faith in god."
+
 #define GAMING_WITHDRAWAL_TIME (15 MINUTES)
 /datum/quirk/gamer
 	name = "Gamer"

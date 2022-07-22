@@ -951,6 +951,10 @@
 
 	return ..()
 
+#define minor_pain 15
+#define moderate_pain 40
+#define major_pain 70
+
 /mob/living/carbon/human/updatehealth()
 	. = ..()
 	dna?.species.spec_updatehealth(src)
@@ -958,13 +962,22 @@
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
 		return
-	var/health_deficiency = max((maxHealth - health), staminaloss)
-	if(health_deficiency >= 40)
+	var/health_deficiency = (maxHealth - health)
+	var/movespeed_modifier = max(health_deficiency, staminaloss)
+	if(movespeed_modifier >= 40)
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, TRUE, multiplicative_slowdown = health_deficiency / 75)
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, TRUE, multiplicative_slowdown = health_deficiency / 25)
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
+	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "pain", /datum/mood_event/pain)
+	if(health_deficiency >= 10)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "pain", /datum/mood_event/pain)
+
+
+#undef minor_pain
+#undef moderate_pain
+#undef major_pain
 
 /mob/living/carbon/human/adjust_nutrition(change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER))

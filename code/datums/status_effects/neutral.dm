@@ -149,7 +149,7 @@
 	desc = "You're currently pointing a gun at someone."
 	icon_state = "aimed"
 
-// this status effect is used to negotiate the high-fiving capabilities of all concerned parties
+	// this status effect is used to negotiate the high-fiving capabilities of all concerned parties
 /datum/status_effect/offering
 	id = "offering"
 	duration = -1
