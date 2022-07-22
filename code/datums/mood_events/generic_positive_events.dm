@@ -181,6 +181,7 @@
 	description = "I just love my robotic friends!"
 	mood_change = 3
 	timeout = 5 MINUTES
+	required_job = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST, JOB_GENETICIST)
 
 /datum/mood_event/bottle_flip
 	description = "The bottle landing like that was satisfying."

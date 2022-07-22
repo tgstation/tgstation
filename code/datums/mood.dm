@@ -147,6 +147,8 @@
 	var/mob/living/mob_parent = parent?.resolve()
 	params.Insert(1, mob_parent)
 	the_event = new type(arglist(params))
+	if (QDELETED(the_event)) // the mood event has been deleted for whatever reason (requires a job, etc)
+		return
 
 	mood_events[category] = the_event
 	the_event.category = category
