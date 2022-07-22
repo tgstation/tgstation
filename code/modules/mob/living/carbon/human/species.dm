@@ -436,9 +436,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	replace_body(C, src)
 	regenerate_organs(C, old_species, visual_only = C.visual_only_organs)
 
-	for(var/obj/item/equipped_item in C.get_equipped_items(include_pockets = TRUE))
+	for(var/obj/item/equipped_item in C.get_all_worn_items())
 		var/equipped_item_slot = C.get_slot_by_item(equipped_item)
-		if(!can_equip(equipped_item, equipped_item_slot, H = C,  bypass_equip_delay_self = TRUE))
+		if(!can_equip(equipped_item, equipped_item_slot, H = C,  bypass_equip_delay_self = TRUE, ignore_equipped = TRUE))
 			C.dropItemToGround(equipped_item)
 
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
@@ -800,14 +800,15 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE)
+/datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE)
 	if(slot in no_equip)
 		if(!I.species_exception || !is_type_in_list(src, I.species_exception))
 			return FALSE
 
 	// if there's an item in the slot we want, fail
-	if(H.get_item_by_slot(slot))
-		return FALSE
+	if(!ignore_equipped)
+		if(H.get_item_by_slot(slot))
+			return FALSE
 
 	// this check prevents us from equipping something to a slot it doesn't support, WITH the exceptions of storage slots (pockets, suit storage, and backpacks)
 	// we don't require having those slots defined in the item's slot_flags, so we'll rely on their own checks further down
@@ -877,7 +878,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(chest && (chest.bodytype & BODYTYPE_MONKEY))
 				if(!(I.supports_variations_flags & CLOTHING_MONKEY_VARIATION))
 					if(!disable_warning)
-						to_chat(H, span_warning("[I] doesn't fit your \the [chest.name]!"))
+						to_chat(H, span_warning("[I] doesn't fit your [chest.name]!"))
 					return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_ID)
