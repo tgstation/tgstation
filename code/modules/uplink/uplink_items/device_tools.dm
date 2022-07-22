@@ -147,7 +147,7 @@
 	if(traitor_datum)
 		traitor_datum.antag_memory += "<b>Uplink Failsafe Code:</b> [code]" + "<br>"
 		traitor_datum.update_static_data_for_all_viewers()
-	to_chat(user, span_warning("The new failsafe code for this uplink is now : [code].[traitor_datum ? " You may check your antagonist info to recall this." : null]"))
+	to_chat(user, span_warning("The new failsafe code for this uplink is now: [code].[traitor_datum ? " You may check your antagonist info to recall this." : null]"))
 	return source //For log icon
 
 /datum/uplink_item/device_tools/toolbox
