@@ -317,7 +317,7 @@ effective or pretty fucking useless.
 	if(!attacking_item.use_tool(src, user, 2 SECONDS, volume = 20))
 		return
 
-	balloon_alert(user, "constructed")
+	balloon_alert(user, "constructed!")
 	user.visible_message(span_danger("[user] bashes [src] with [attacking_item]!"), \
 		span_danger("You bash [src] with [attacking_item]!"), null, COMBAT_MESSAGE_RANGE)
 
@@ -381,11 +381,11 @@ effective or pretty fucking useless.
 
 		deconstruct(TRUE)
 		attacking_item.play_tool_sound(src, 50)
-		balloon_alert(user, "deconstructed")
+		balloon_alert(user, "deconstructed!")
 
 	else
 		if(atom_integrity == max_integrity)
-			balloon_alert(user, "already repaired")
+			balloon_alert(user, "already repaired!")
 			return
 
 		balloon_alert(user, "repairing...")
@@ -395,7 +395,7 @@ effective or pretty fucking useless.
 
 			repair_damage(10)
 
-		balloon_alert(user, "repaired")
+		balloon_alert(user, "repaired!")
 
 /obj/machinery/porta_turret/syndicate/toolbox/deconstruct(disassembled)
 	if(disassembled)
