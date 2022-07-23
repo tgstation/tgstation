@@ -328,7 +328,7 @@
 			toggle_breaker(usr)
 			. = TRUE
 		if("toggle_nightshift")
-			toggle_nightshift_lights()
+			toggle_nightshift_lights(usr)
 			. = TRUE
 		if("charge")
 			chargemode = !chargemode
