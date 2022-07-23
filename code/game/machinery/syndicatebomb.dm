@@ -230,7 +230,7 @@
 	if(payload && !istype(payload, /obj/item/bombcore/training))
 		log_bomber(user, "has primed a", src, "for detonation (Payload: [payload.name])")
 		payload.adminlog = "The [name] that [key_name(user)] had primed detonated!"
-		user.log_message("primed the [src]. (Payload: [payload.name])", GAME_LOG, log_globally = FALSE)
+		user.log_message("primed the [src]. (Payload: [payload.name])", LOG_GAME, log_globally = FALSE)
 
 ///Bomb Subtypes///
 

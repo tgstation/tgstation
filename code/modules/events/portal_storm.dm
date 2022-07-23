@@ -94,7 +94,7 @@
 
 /datum/round_event/portal_storm/proc/spawn_effects(turf/T)
 	if(!T)
-		log_game("Portal Storm at [T.loc_name] failed to spawn effect due to an invalid location.")
+		log_game("Portal Storm failed to spawn effect due to an invalid location.")
 		return
 	T = get_step(T, SOUTHWEST) //align center of image with turf
 	flick_overlay_static(storm, T, 15)

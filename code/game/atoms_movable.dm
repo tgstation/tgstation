@@ -432,7 +432,7 @@
 		else if(!isturf(loc))
 			stop_pulling()
 		else if(pulling && !isturf(pulling.loc) && pulling.loc != loc) //to be removed once all code that changes an object's loc uses forceMove().
-			src.log_message("'s pull on [pulling] wasn't broken despite [pulling] being in [pulling.loc]. Pull stopped manually.", LOG_ERROR)
+			log_game("DEBUG:[src]'s pull on [pulling] wasn't broken despite [pulling] being in [pulling.loc]. Pull stopped manually.")
 			stop_pulling()
 		else if(pulling.anchored || pulling.move_resist > move_force)
 			stop_pulling()

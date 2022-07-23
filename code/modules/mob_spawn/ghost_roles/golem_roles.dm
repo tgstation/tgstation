@@ -55,7 +55,7 @@
 		try_keep_home(new_spawn)
 	else
 		new_spawn.mind.enslave_mind_to_creator(owner)
-		new_spawn("possessed a golem shell enslaved to [key_name(owner)].", LOG_GAME)
+		new_spawn.log_message("possessed a golem shell enslaved to [key_name(owner)].", LOG_GAME)
 		log_admin("[key_name(new_spawn)] possessed a golem shell enslaved to [key_name(owner)].")
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn

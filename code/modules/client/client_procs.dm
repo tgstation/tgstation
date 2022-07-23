@@ -59,7 +59,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			if (minute != topiclimiter[ADMINSWARNED_AT]) //only one admin message per-minute. (if they spam the admins can just boot/ban them)
 				topiclimiter[ADMINSWARNED_AT] = minute
 				msg += " Administrators have been informed."
-				src.log_message("has hit the per-minute topic limit of [mtl] topic calls in a given game minute.", LOG_ADMIN)
+				log_game("[key_name(src)] Has hit the per-minute topic limit of [mtl] topic calls in a given game minute")
 				message_admins("[ADMIN_LOOKUPFLW(usr)] [ADMIN_KICK(usr)] Has hit the per-minute topic limit of [mtl] topic calls in a given game minute")
 			to_chat(src, span_danger("[msg]"))
 			return
@@ -909,10 +909,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 				msg += " Administrators have been informed."
 				if (ab)
-					src.log_message("is using the middle click aimbot exploit.", LOG_ADMIN)
+					log_game("[key_name(src)] is using the middle click aimbot exploit")
 					message_admins("[ADMIN_LOOKUPFLW(usr)] [ADMIN_KICK(usr)] is using the middle click aimbot exploit</span>")
 					add_system_note("aimbot", "Is using the middle click aimbot exploit")
-				src.log_message("has hit the per-minute click limit of [mcl] clicks in a given game minute.", LOG_ADMIN)
+				log_game("[key_name(src)] Has hit the per-minute click limit of [mcl] clicks in a given game minute")
 				message_admins("[ADMIN_LOOKUPFLW(usr)] [ADMIN_KICK(usr)] Has hit the per-minute click limit of [mcl] clicks in a given game minute")
 			to_chat(src, span_danger("[msg]"))
 			return

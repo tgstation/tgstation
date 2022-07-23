@@ -24,7 +24,7 @@
 
 /datum/brain_trauma/hypnosis/on_gain()
 	message_admins("[ADMIN_LOOKUPFLW(owner)] was hypnotized with the phrase '[hypnotic_phrase]'.")
-	user.log_message("was hypnotized with the phrase '[hypnotic_phrase]'.", LOG_GAME)
+	owner.log_message("was hypnotized with the phrase '[hypnotic_phrase]'.", LOG_GAME)
 	to_chat(owner, "<span class='reallybig hypnophrase'>[hypnotic_phrase]</span>")
 	to_chat(owner, "<span class='notice'>[pick("You feel your thoughts focusing on this phrase... you can't seem to get it out of your head.",\
 												"Your head hurts, but this is all you can think of. It must be vitally important.",\
