@@ -160,7 +160,7 @@
 	quirk_holder.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2 * delta_time)
 
 /datum/quirk/cry_baby
-	name = "Cry baby"
+	name = "Cry Baby"
 	desc = "You are the kind of wimp that gets bothered by pain."
 	icon = "sad-cry"
 	value = -4
