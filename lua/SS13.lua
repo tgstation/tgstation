@@ -65,12 +65,25 @@ function SS13.register_signal(datum, signal, func, make_easy_clear_function)
 	local path = {"SS13", "signal_handlers", ref, signal, callback_ref, "func"}
 	callback:set_var("arguments", {path})
 	if not SS13.signal_handlers[ref]["_cleanup"] then
-		local cleanup_path = {"SS13", "signal_handlers", ref, "_cleanup"}
+		local cleanup_path = {"SS13", "signal_handlers", ref, "_cleanup", "func"}
 		local cleanup_callback = SS13.new("/datum/callback", SS13.state, "call_function_return_first", cleanup_path)
 		cleanup_callback:call_proc("RegisterSignal", datum, "parent_qdeleting", "Invoke")
-		SS13.signal_handlers[ref]["_cleanup"] = function(datum)
+		SS13.signal_handlers[ref]["_cleanup"] = {func=function(datum)
 			SS13.signal_handler_cleanup(datum)
 			dm.global_proc("qdel", cleanup_callback)
+		end, callback=cleanup_callback}
+	end
+	if signal == "parent_qdeleting" then --We want to make sure that the cleanup function is the very last signal handler called.
+		local comp_lookup = datum:get_var("comp_lookup")
+		if comp_lookup then
+			local lookup_table = comp_lookup:to_table()
+			local lookup_for_signal = lookup_table.parent_qdeleting
+			if pcall(function() return lookup_for_signal.len end) then
+				local cleanup_callback_index = dm.global_proc("_list_find", lookup_for_signal, SS13.signal_handlers[ref]["_cleanup"].callback)
+				if cleanup_callback_index ~= 0 then
+					dm.global_proc("_list_swap", lookup_for_signal, cleanup_callback_index, lookup_for_signal.len)
+				end
+			end
 		end
 	end
 	SS13.signal_handlers[ref][signal][callback_ref] = {func=func, callback=callback}

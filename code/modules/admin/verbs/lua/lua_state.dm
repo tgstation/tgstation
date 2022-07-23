@@ -55,7 +55,7 @@ GLOBAL_PROTECT(lua_usr)
 				append_to_log = FALSE
 				break
 	if(append_to_log)
-		log += list(result)
+		log += list(weakrefify_list(result))
 
 /datum/lua_state/proc/load_script(script)
 	GLOB.IsLuaCall = TRUE
@@ -91,6 +91,10 @@ GLOBAL_PROTECT(lua_usr)
 	if(istext(result))
 		result = list("status" = "errored", "param" = result, "name" = islist(function) ? jointext(function, ".") : function)
 	check_if_slept(result)
+	var/list/editor_list = LAZYACCESS(SSlua.editors, "\ref[src]")
+	if(editor_list)
+		for(var/datum/lua_editor/editor in editor_list)
+			SStgui.update_uis(editor)
 	return result
 
 /datum/lua_state/proc/call_function_return_first(function, ...)
@@ -126,7 +130,7 @@ GLOBAL_PROTECT(lua_usr)
 	return result
 
 /datum/lua_state/proc/get_globals()
-	globals = __lua_get_globals(internal_id)
+	globals = weakrefify_list(__lua_get_globals(internal_id))
 
 /datum/lua_state/proc/get_tasks()
 	return __lua_get_tasks(internal_id)
