@@ -183,10 +183,19 @@
 	desc = "Due to training, natural aptitude, or digesting large quantities of Aerogel as a child, your skin has developed a resistance to fire."
 	icon = "fire"
 	value = 8
-	mob_trait = TRAIT_FREERUNNING
 	gain_text = "<span class='notice'>You feel resistant to fire!</span>"
 	lose_text = "<span class='danger'>You no longer feel resistant to fire.</span>"
 	medical_record_text = "Patient's skin shows natural resistance to fire."
+
+/datum/quirk/fireproof/add()
+	if(iscarbon(quirk_holder))
+		var/mob/living/carbon/fire_man = quirk_holder
+		fire_man.dna.species.heatmod *= 0.25
+
+/datum/quirk/fireproof/remove()
+	if(iscarbon(quirk_holder))
+		var/mob/living/carbon/fire_man = quirk_holder
+		fire_man.dna.species.heatmod *= 4
 
 /datum/quirk/indefatigable
 	name = "Indefatigable"
