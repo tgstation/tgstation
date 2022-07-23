@@ -481,7 +481,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	if(obj_flags & EMAGGED)
 		new /obj/item/orion_ship(loc)
 		message_admins("[ADMIN_LOOKUPFLW(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
-		log_game("[key_name(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
+		usr.log_message("made it to Orion on an emagged machine and got an explosive toy ship.", LOG_GAME)
 	else
 		prizevend(user)
 	obj_flags &= ~EMAGGED

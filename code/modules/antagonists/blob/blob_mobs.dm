@@ -167,7 +167,7 @@
 		to_chat(user, span_warning("Someone else already took this spore!"))
 		return
 	key = user.key
-	log_game("[key_name(src)] took control of [name].")
+	src.log_message("took control of [name].", LOG_GAME)
 
 /mob/living/simple_animal/hostile/blob/blobspore/proc/Zombify(mob/living/carbon/human/H)
 	is_zombie = 1

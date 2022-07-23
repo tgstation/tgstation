@@ -218,7 +218,7 @@
 		return
 
 	if(rune.log_when_erased)
-		log_game("[rune.cultist_name] rune erased by [key_name(cultist)] with [parent].")
+		cultist.log_message("erased a [rune.cultist_name] rune with [parent].", LOG_GAME)
 		message_admins("[ADMIN_LOOKUPFLW(cultist)] erased a [rune.cultist_name] rune with [parent].")
 
 	to_chat(cultist, span_notice("You carefully erase the [lowertext(rune.cultist_name)] rune."))

@@ -136,7 +136,7 @@
 	var/turf/current_turf = get_turf(src)
 	var/turf/target_turf = get_turf(target)
 	message_admins("Blastcannon transfer valve opened by [ADMIN_LOOKUPFLW(user)] at [ADMIN_VERBOSEJMP(current_turf)] while aiming at [ADMIN_VERBOSEJMP(target_turf)] (target).")
-	log_game("Blastcannon transfer valve opened by [key_name(user)] at [AREACOORD(current_turf)] while aiming at [AREACOORD(target_turf)] (target).")
+	user.log_message("opened blastcannon transfer valve at [AREACOORD(current_turf)] while aiming at [AREACOORD(target_turf)] (target).", LOG_GAME)
 	bomb.toggle_valve()
 	update_appearance()
 	return
@@ -221,7 +221,8 @@
 	var/turf/start_turf = get_turf(src)
 	var/turf/target_turf = get_turf(target)
 	message_admins("Blast wave fired from [ADMIN_VERBOSEJMP(start_turf)] at [ADMIN_VERBOSEJMP(target_turf)] ([target]) by [ADMIN_LOOKUPFLW(firer)] with power [heavy]/[medium]/[light].")
-	log_game("Blast wave fired from [AREACOORD(start_turf)] at [AREACOORD(target_turf)] ([target]) by [key_name(firer)] with power [heavy]/[medium]/[light].")
+	firer.log_message("fired a blast wave from [AREACOORD(start_turf)] at [AREACOORD(target_turf)] ([target]) with power [heavy]/[medium]/[light].", LOG_GAME)
+	firer.log_message("fired a blast wave from [AREACOORD(start_turf)] at [AREACOORD(target_turf)] ([target]) with power [heavy]/[medium]/[light].", LOG_ATTACK, log_globally = FALSE)
 	fire_blastwave(target, heavy, medium, light, modifiers)
 	return
 

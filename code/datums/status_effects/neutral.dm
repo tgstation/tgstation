@@ -410,6 +410,7 @@
 			to_chat(owner, span_userdanger("You feel your eigenstate settle, as \"you\" become an alternative version of yourself!"))
 			owner.emote("me",1,"flashes into reality suddenly, gasping as they gaze around in a bewildered and highly confused fashion!",TRUE)
 			log_game("FERMICHEM: [owner] ckey: [owner.key] has become an alternative universe version of themselves.")
+			owner.log_message("has become an alternative universe version of themselves via EIGENSTASIUM.", LOG_GAME, log_globally = FALSE)
 			//new you new stuff
 			SSquirks.randomise_quirks(owner)
 			owner.reagents.remove_all(1000)

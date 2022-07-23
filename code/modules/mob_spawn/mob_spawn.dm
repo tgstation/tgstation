@@ -163,7 +163,7 @@
 		return
 	if(QDELETED(src) || QDELETED(user))
 		return
-	log_game("[key_name(user)] became a [prompt_name]")
+	user.log_message("became a [prompt_name].", LOG_GAME)
 	create(user)
 
 /obj/effect/mob_spawn/ghost_role/special(mob/living/spawned_mob, mob/mob_possessor)

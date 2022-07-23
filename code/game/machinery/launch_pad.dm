@@ -242,7 +242,7 @@
 /obj/machinery/launchpad/briefcase/Initialize(mapload, _briefcase)
 	. = ..()
 	if(!_briefcase)
-		log_game("[src] has been spawned without a briefcase.")
+		src.log_message("has been spawned without a briefcase.", LOG_GAME)
 		return INITIALIZE_HINT_QDEL
 	briefcase = _briefcase
 

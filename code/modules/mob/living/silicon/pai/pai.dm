@@ -279,7 +279,7 @@
 		return
 	to_chat(user, span_notice("You override [pai]'s directive system, clearing its master string and supplied directive."))
 	to_chat(pai, span_userdanger("Warning: System override detected, check directive sub-system for any changes."))
-	log_game("[key_name(user)] emagged [key_name(pai)], wiping their master DNA and supplemental directive.")
+	user.log_message("emagged [key_name(pai)], wiping their master DNA and supplemental directive.", LOG_GAME)
 	pai.emagged = TRUE
 	pai.master = null
 	pai.master_dna = null
