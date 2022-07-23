@@ -607,7 +607,7 @@ There are several things that need to be remembered:
 
 	var/list/hands = list()
 	for(var/obj/item/worn_item in held_items)
-		if(((worn_item.type in GLOB.crafting_recipe_items) || ((worn_item.parent_type in GLOB.crafting_recipe_items) && !(worn_item.type in GLOB.crafting_recipe_items_blacklist))) && hud_used)
+		if((is_type_in_typecache(worn_item, GLOB.crafting_recipe_items) || (is_type_in_typecache(worn_item.parent_type, GLOB.crafting_recipe_items) && !is_type_in_typecache(worn_item.type, GLOB.crafting_recipe_items_blacklist)) || is_type_in_typecache(worn_item, GLOB.crafting_recipe_items_results)) && hud_used)
 			for(var/atom/movable/screen/craft/crafting_button in hud_used.static_inventory)
 				crafting_button.icon = 'icons/hud/screen_gen.dmi'
 				crafting_button.icon_state = "can_craft"

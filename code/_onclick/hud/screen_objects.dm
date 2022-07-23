@@ -118,7 +118,7 @@
 	var/recipe_line = ""
 	var/all_recipes = ""
 	for(var/datum/crafting_recipe/recipe in GLOB.crafting_recipes)
-		if((item.type in recipe.reqs) || ((item.parent_type in recipe.reqs) && !(item.type in recipe.blacklist)))
+		if((item.type in recipe.reqs) || ((item.parent_type in recipe.reqs) && !(item.type in recipe.blacklist)) || item.type == recipe.result)
 			possible_recipes += recipe
 
 	if(!length(possible_recipes))
@@ -137,7 +137,7 @@
 			reqs_text += "[span_notice("[initial(recipe_item.name)]")] ([span_red("[amount][recipe_reagent ? "u" : null]")])"
 		if(length(recipe.tool_paths))
 			for(var/obj/item/tool_other as anything in recipe.tool_paths)
-				tools_other_text += tool_other.name
+				tools_other_text += initial(tool_other.name)
 		if(length(recipe.tool_behaviors))
 			for(var/tool in recipe.tool_behaviors)
 				tools_text += tool
