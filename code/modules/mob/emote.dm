@@ -73,6 +73,11 @@
 	if(.)
 		user.SpinAnimation(7,1)
 
+		if(iscarbon(user) && HAS_TRAIT(user, TRAIT_BULLET_DODGER))
+			ADD_TRAIT(user, TRAIT_BULLET_PASSTHROUGH, TRAIT_EMOTE)
+			sleep(2 SECONDS)
+			REMOVE_TRAIT(user, TRAIT_BULLET_PASSTHROUGH, TRAIT_EMOTE)
+
 /datum/emote/flip/check_cooldown(mob/user, intentional)
 	. = ..()
 	if(.)
@@ -89,6 +94,7 @@
 			)
 			if(prob(50))
 				flippy_mcgee.adjustBruteLoss(1)
+			return
 		else
 			flippy_mcgee.visible_message(
 				span_notice("[flippy_mcgee] stumbles a bit after their flip."),

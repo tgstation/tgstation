@@ -54,6 +54,8 @@
 
 
 /mob/living/carbon/human/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
+	if(HAS_TRAIT(src, TRAIT_BULLET_PASSTHROUGH))
+		return BULLET_ACT_FORCE_PIERCE
 	if(dna?.species)
 		var/spec_return = dna.species.bullet_act(P, src)
 		if(spec_return)

@@ -588,6 +588,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SMOKER "smoker"
 #define TRAIT_ADDICT_RESISTANCE "addict_resistance"
 #define TRAIT_ADDICTIVE_PERSONALITY "addictive_personality"
+#define TRAIT_BULLET_DODGER "bullet_dodger"
+#define TRAIT_BULLET_PASSTHROUGH "bullet_passthrough"
 /// Gives you the Shifty Eyes quirk, rarely making people who examine you think you examined them back even when you didn't
 #define TRAIT_SHIFTY_EYES "shifty_eyes"
 
@@ -831,6 +833,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define ITEM_SCALING_TRAIT "item_scaling"
 /// Trait given by Objects that provide blindsight
 #define ITEM_BLIND_TRAIT "blind_item_trait"
+/// temporary trait fram an emote
+#define TRAIT_EMOTE "emote"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and

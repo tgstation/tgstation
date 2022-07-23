@@ -65,8 +65,8 @@
 	desc = "Your flips cost stamina, but let you dodge bullets!"
 	icon = "running"
 	value = 6
-	mob_trait = TRAIT_ALCOHOL_TOLERANCE
-	gain_text = "<span class='notice'>You like you could dodge anything!</span>"
+	mob_trait = TRAIT_BULLET_DODGER
+	gain_text = "<span class='notice'>You feel like you could dodge anything!</span>"
 	lose_text = "<span class='danger'>You don't feel like you could dodge anything anymore.</span>"
 	medical_record_text = "Patient's body has been trained for advanced flipping techniques"
 
