@@ -16,7 +16,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	///An assoc list of quirks that can be obtained as a hardcore character, and their hardcore value.
 	var/list/hardcore_quirks = list()
 
-	/// A list of quirks that can not be used with each other. Format: list(quirk1,quirk2),list(quirk3,quirk4)
+	/// A list of quirks that can not be used with each other. Format: list(quirk1,quirk2),list(quirk3,quirk4),list(quirk5,quirk6,quirk7)
 	var/static/list/quirk_blacklist = list(
 		list("Blind","Nearsighted"),
 		list("Jolly","Depression","Apathetic","Hypersensitive"),
@@ -26,12 +26,12 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Clown Enjoyer","Mime Fan"),
 		list("Bad Touch", "Friendly"),
 		list("Extrovert", "Introvert"),
-		list("Cry Baby", "Masochist"),
-		list("Tough Skin", "Frail"),
-		list("Addiction Resistance", "Addictive Personality", "Junkie"),
-		list("Connoisseur", "Sweet Tooth"),
-		list("Expert Sleeper", "Heavy Sleeper"),
-
+		//list("Cry Baby", "Masochist"),
+		//list("Tough Skin", "Frail"),
+		//list("Addiction Resistance", "Addictive Personality", "Junkie"),
+		//list("Connoisseur", "Sweet Tooth"),
+		//list("Expert Sleeper", "Heavy Sleeper"),
+		//list("Indefatigable", "Languorous"),
 	)
 
 /datum/controller/subsystem/processing/quirks/Initialize(timeofday)
