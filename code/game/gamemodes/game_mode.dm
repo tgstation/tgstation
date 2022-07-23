@@ -187,7 +187,7 @@
 	var/list/possible = subtypesof(/datum/station_goal)
 	if(!(SSmapping.empty_space))
 		for(var/datum/station_goal/goal in possible)
-			if(goal.requires_space == 1)
+			if(goal.requires_space)
 				///Removes all goals that require space if space is not present
 				possible -= goal
 	var/goal_weights = 0
