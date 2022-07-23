@@ -86,6 +86,7 @@
 # stylemistake (explicitly disowned)
 
 /tgui/packages/tgui/interfaces/
+/tgui/packages/tgui/styles/interfaces/
 /tgui/packages/tgui-panel/styles/goon/chat-dark.scss
 /tgui/packages/tgui-panel/styles/goon/chat-light.scss
 

@@ -21669,9 +21669,6 @@
 /obj/machinery/door/airlock/engineering{
 	name = "Utilities Room"
 	},
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 1
-	},
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plating,

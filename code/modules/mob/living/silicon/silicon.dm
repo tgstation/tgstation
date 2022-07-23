@@ -226,6 +226,7 @@
 	return
 
 /mob/living/silicon/proc/statelaws(force = 0)
+	laws_sanity_check()
 	// Create a cache of our laws and lawcheck flags before we do anything else.
 	// These are used to prevent weirdness when laws are changed when the AI is mid-stating.
 	var/lawcache_zeroth = laws.zeroth
@@ -287,6 +288,7 @@
 
 ///Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew.
 /mob/living/silicon/proc/checklaws()
+	laws_sanity_check()
 	var/list = "<b>Which laws do you want to include when stating them for the crew?</b><br><br>"
 
 	var/law_display = "Yes"
