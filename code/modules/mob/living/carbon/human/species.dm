@@ -413,6 +413,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			// organ.Insert will qdel any current organs in that slot, so we don't need to.
 			replacement.Insert(C, TRUE, FALSE)
 
+/datum/species/proc/worn_items_fit_body_check(mob/living/carbon/wearer)
+	for(var/obj/item/equipped_item in wearer.get_all_worn_items())
+		var/equipped_item_slot = wearer.get_slot_by_item(equipped_item)
+		if(!can_equip(equipped_item, equipped_item_slot, H = wearer,  bypass_equip_delay_self = TRUE, ignore_equipped = TRUE))
+			wearer.dropItemToGround(equipped_item)
+
 /**
  * Proc called when a carbon becomes this species.
  *
@@ -431,15 +437,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(C.hud_used)
 		C.hud_used.update_locked_slots()
 
+
 	C.mob_biotypes = inherent_biotypes
 
 	replace_body(C, src)
 	regenerate_organs(C, old_species, visual_only = C.visual_only_organs)
 
-	for(var/obj/item/equipped_item in C.get_all_worn_items())
-		var/equipped_item_slot = C.get_slot_by_item(equipped_item)
-		if(!can_equip(equipped_item, equipped_item_slot, H = C,  bypass_equip_delay_self = TRUE, ignore_equipped = TRUE))
-			C.dropItemToGround(equipped_item)
+	INVOKE_ASYNC(src, .proc/worn_items_fit_body_check, C)
 
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
 		C.dna.blood_type = exotic_bloodtype
