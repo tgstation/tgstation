@@ -115,13 +115,13 @@
 
 /datum/quirk/expert_sleeper
 	name = "Expert Sleeper"
-	desc = "You are the king of snoozing."
+	desc = "You are a king of snoozing."
 	icon = "bed"
-	value = 4
-	mob_trait = TRAIT_ALCOHOL_TOLERANCE
-	gain_text = "<span class='notice'>You fell comfortable!</span>"
-	lose_text = "<span class='danger'>You fell less comfortable!</span>"
-	medical_record_text = "Patient has an abnormally consistant circadian rythems"
+	value = 6
+	mob_trait = TRAIT_EXPERT_SLEEPER
+	gain_text = "<span class='notice'>You feel comfortable!</span>"
+	lose_text = "<span class='danger'>You feel less comfortable!</span>"
+	medical_record_text = "Patient has an abnormally consistent circadian rhythms"
 
 /datum/quirk/item_quirk/clown_enjoyer
 	name = "Clown Enjoyer"

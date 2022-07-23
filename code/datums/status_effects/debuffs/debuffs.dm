@@ -211,6 +211,11 @@
 			healing += 0.1
 			break //Only count the first bedsheet
 
+		// We might have a snoozing champion on our hands
+		if(HAS_TRAIT(src, TRAIT_EXPERT_SLEEPER))
+			healing += 0.2
+			health_ratio += 0.2
+
 		if(healing > 0 && health_ratio > 0.8)
 			owner.adjustBruteLoss(-1 * healing)
 			owner.adjustFireLoss(-1 * healing)

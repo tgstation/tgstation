@@ -29,6 +29,9 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Cry Baby", "Masochist"),
 		list("Tough Skin", "Frail"),
 		list("Addiction Resistance", "Addictive Personality", "Junkie"),
+		list("Connoisseur", "Sweet Tooth"),
+		list("Expert Sleeper", "Heavy Sleeper"),
+
 	)
 
 /datum/controller/subsystem/processing/quirks/Initialize(timeofday)

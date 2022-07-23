@@ -19,11 +19,15 @@
 	amount = dna.species.spec_stun(src,amount)
 	if(HAS_TRAIT(src, TRAIT_HEAVY_SLEEPER))
 		amount *= (rand(125, 130) * 0.01)
+	if(HAS_TRAIT(src, TRAIT_EXPERT_SLEEPER))
+		amount *= (rand(70, 75) * 0.01)
 	return ..()
 
 /mob/living/carbon/human/Sleeping(amount)
 	if(HAS_TRAIT(src, TRAIT_HEAVY_SLEEPER))
 		amount *= (rand(125, 130) * 0.01)
+	if(HAS_TRAIT(src, TRAIT_EXPERT_SLEEPER))
+		amount *= (rand(70, 75) * 0.01)
 	return ..()
 
 /mob/living/carbon/human/cure_husk(list/sources)

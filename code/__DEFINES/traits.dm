@@ -836,7 +836,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// temporary trait fram an emote
 #define TRAIT_EMOTE "emote"
 #define TRAIT_CONNOISSEUR "connoisseur"
-
+#define TRAIT_EXPERT_SLEEPER "expert_sleeper"
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and
 * granted/removed by [/obj/item/organ/internal/tongue]
