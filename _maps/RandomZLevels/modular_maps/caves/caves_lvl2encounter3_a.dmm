@@ -91,13 +91,13 @@
 "P" = (
 /obj/effect/decal/remains/human,
 /obj/effect/gibspawner/human/bodypartless,
-/obj/item/clothing/suit/xenos,
 /obj/item/clothing/head/xenos,
 /obj/structure/alien/weeds,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
 "R" = (
 /obj/effect/decal/remains/xeno,
+/obj/item/clothing/suit/costume/xenos,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
 "S" = (

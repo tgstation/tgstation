@@ -221,18 +221,6 @@
 "nI" = (
 /turf/closed/mineral/random/volcanic/lava_land_surface/hardened/labormineral,
 /area/template_noop)
-"oc" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/wideplating_new,
-/obj/effect/turf_decal/siding/wideplating_new{
-	dir = 1
-	},
-/obj/effect/landmark/tram/right_part{
-	destination_id = "caves_drill_left";
-	tram_id = "caves_drill"
-	},
-/turf/open/floor/plating/lavaland_atmos,
-/area/template_noop)
 "ox" = (
 /turf/closed/mineral/random/volcanic/lava_land_surface/hardened/high_chance,
 /area/template_noop)
@@ -648,10 +636,6 @@
 /turf/open/floor/plating/lavaland_atmos,
 /area/template_noop)
 "KN" = (
-/obj/machinery/computer/tram_controls{
-	dir = 4;
-	tram_id = "caves_drill"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 8
@@ -6606,7 +6590,7 @@ lA
 aL
 rb
 tb
-oc
+CD
 bT
 rx
 Rc
