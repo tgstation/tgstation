@@ -174,7 +174,6 @@
 /obj/structure/stone_tile/slab,
 /obj/structure/closet/crate,
 /obj/item/clothing/head/helmet/chaplain/ancient,
-/obj/item/clothing/suit/armor/riot/chaplain/ancient,
 /obj/item/skeleton_key,
 /turf/open/indestructible/boss,
 /area/template_noop)
@@ -202,7 +201,7 @@
 "oa" = (
 /obj/structure/stone_tile/slab,
 /mob/living/simple_animal/hostile/giant_spider/hunter{
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy"=0,"max_oxy"=0,"min_plas"=0,"max_plas"=0,"min_co2"=0,"max_co2"=0,"min_n2"=0,"max_n2"=0)
 	},
 /obj/structure/spider/stickyweb,
 /turf/open/indestructible/boss,
@@ -440,7 +439,7 @@
 "CP" = (
 /obj/structure/stone_tile/slab,
 /mob/living/simple_animal/hostile/giant_spider/hunter{
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy"=0,"max_oxy"=0,"min_plas"=0,"max_plas"=0,"min_co2"=0,"max_co2"=0,"min_n2"=0,"max_n2"=0)
 	},
 /turf/open/indestructible/boss,
 /area/template_noop)
@@ -627,7 +626,7 @@
 /obj/structure/stone_tile/slab,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /mob/living/simple_animal/hostile/giant_spider/hunter{
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy"=0,"max_oxy"=0,"min_plas"=0,"max_plas"=0,"min_co2"=0,"max_co2"=0,"min_n2"=0,"max_n2"=0)
 	},
 /obj/structure/spider/stickyweb,
 /turf/open/indestructible/boss,
@@ -655,14 +654,8 @@
 /turf/open/indestructible/boss,
 /area/template_noop)
 "TR" = (
-/obj/modular_map_connector,
-/turf/closed/indestructible/riveted/boss,
-/area/template_noop)
-"Ue" = (
-/obj/structure/necropolis_gate{
-	open = 1
-	},
 /obj/structure/stone_tile/slab,
+/obj/modular_map_connector,
 /turf/open/indestructible/boss,
 /area/template_noop)
 "UJ" = (
@@ -708,9 +701,6 @@
 	},
 /obj/structure/stone_tile/block{
 	dir = 8
-	},
-/obj/structure/necropolis_gate{
-	open = 1
 	},
 /turf/open/indestructible/boss,
 /area/template_noop)
@@ -946,13 +936,13 @@ Ia
 jC
 cU
 RQ
+hh
 RQ
-RQ
-uQ
+dr
+dr
 Ia
 Ia
-Ia
-Ia
+de
 zJ
 "}
 (7,1,1) = {"
@@ -985,14 +975,14 @@ Ia
 Ia
 cU
 RQ
-hh
 RQ
-dr
-dr
-Ia
-Ia
+uS
 de
-zJ
+de
+de
+de
+de
+de
 "}
 (8,1,1) = {"
 Ia
@@ -1024,9 +1014,9 @@ Ia
 Ia
 RQ
 RQ
-RQ
-uS
-de
+cU
+Ji
+xo
 de
 de
 de
@@ -1063,14 +1053,14 @@ cU
 cU
 cU
 uQ
-cU
-Ji
+DP
+hL
+tS
 xo
 de
 de
 de
-de
-de
+GP
 "}
 (10,1,1) = {"
 Ia
@@ -1102,14 +1092,14 @@ cU
 cU
 cU
 cU
-DP
-hL
-tS
-xo
-de
-de
-de
-GP
+zt
+Vw
+Vw
+eC
+eC
+eC
+Xy
+Kt
 "}
 (11,1,1) = {"
 Ia
@@ -1141,14 +1131,14 @@ cU
 cU
 uQ
 RQ
-zt
-Vw
-Vw
+DP
 eC
-eC
-eC
-Xy
-Kt
+mD
+xo
+de
+de
+de
+if
 "}
 (12,1,1) = {"
 Ia
@@ -1180,14 +1170,14 @@ cU
 RQ
 cU
 cU
+cU
 DP
-eC
-mD
 xo
 de
 de
 de
-if
+de
+de
 "}
 (13,1,1) = {"
 Ia
@@ -1219,9 +1209,9 @@ RQ
 RQ
 RQ
 uQ
-cU
-DP
-xo
+fh
+kd
+de
 de
 de
 de
@@ -1259,13 +1249,13 @@ hh
 fh
 fh
 fh
-kd
+fh
+tq
+tq
+Ia
+Ia
 de
-de
-de
-de
-de
-de
+zJ
 "}
 (15,1,1) = {"
 Ia
@@ -1299,11 +1289,11 @@ fh
 fh
 fh
 fh
-tq
-tq
+fh
+fh
 Ia
 Ia
-de
+Ia
 zJ
 "}
 (16,1,1) = {"
@@ -4466,8 +4456,8 @@ Ia
 zJ
 "}
 (97,1,1) = {"
-de
-de
+DC
+DC
 GP
 DC
 DC
@@ -4506,7 +4496,7 @@ zJ
 "}
 (98,1,1) = {"
 DC
-Ue
+DC
 Kt
 xo
 DC
@@ -4545,7 +4535,7 @@ zJ
 "}
 (99,1,1) = {"
 TR
-de
+DC
 if
 DC
 DC

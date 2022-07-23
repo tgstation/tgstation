@@ -1,4 +1,13 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ad" = (
+/obj/structure/clockcult_tower{
+	id = "clock4"
+	},
+/obj/structure/clockcult_tower{
+	id = "clock4"
+	},
+/turf/open/floor/bronze/flat/lavaland,
+/area/template_noop)
 "as" = (
 /turf/closed/indestructible/necropolis,
 /area/template_noop)
@@ -69,7 +78,8 @@
 "eL" = (
 /mob/living/simple_animal/hostile/lizard{
 	dir = 8;
-	name = "Breaks-Game-Balance"
+	name = "Breaks-Game-Balance";
+	faction = list("clockwork")
 	},
 /turf/open/floor/plating,
 /area/template_noop)
@@ -80,7 +90,6 @@
 "fH" = (
 /obj/effect/bump_teleporter{
 	id = "lvl4spawn";
-	id_target = null;
 	name = "lvl4 spawn"
 	},
 /turf/open/floor/bronze/flat/lavaland,
@@ -88,10 +97,6 @@
 "fI" = (
 /obj/structure/fluff/clockwork/alloy_shards/small,
 /turf/open/floor/bronze/flat/lavaland,
-/area/template_noop)
-"fM" = (
-/mob/living/simple_animal/hostile/clockwork/cogscarab,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
 "fT" = (
 /obj/structure/clockcult_tower/source{
@@ -141,7 +146,9 @@
 /area/template_noop)
 "jX" = (
 /obj/structure/table/bronze,
-/obj/item/candle/infinite,
+/obj/item/candle/infinite{
+	light_range = 5
+	},
 /turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
 "kd" = (
@@ -249,6 +256,10 @@
 /obj/structure/table/bronze,
 /turf/open/floor/bronze/flat/lavaland,
 /area/template_noop)
+"qN" = (
+/obj/item/storage/toolbox/mechanical/old/clean,
+/turf/open/floor/plating,
+/area/template_noop)
 "qT" = (
 /obj/structure/fluff/clockwork/fallen_armor,
 /turf/open/floor/bronze/filled/lavaland,
@@ -291,6 +302,14 @@
 /obj/machinery/power/floodlight,
 /turf/open/floor/bronze,
 /area/template_noop)
+"sG" = (
+/mob/living/simple_animal/hostile/lizard{
+	dir = 8;
+	name = "Lays-The-Floor";
+	faction = list("clockwork")
+	},
+/turf/open/floor/plating,
+/area/template_noop)
 "sY" = (
 /obj/structure/girder/bronze,
 /turf/open/floor/bronze/lavaland,
@@ -321,10 +340,6 @@
 	},
 /obj/structure/fluff/clockwork/alloy_shards/medium_gearbit,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/template_noop)
-"tN" = (
-/obj/structure/fluff/clockwork/alloy_shards/medium,
-/turf/open/floor/bronze/flat/lavaland,
 /area/template_noop)
 "tY" = (
 /obj/structure/flora/rock/pile,
@@ -457,6 +472,12 @@
 "Dy" = (
 /turf/closed/mineral/volcanic/lava_land_surface/hardened,
 /area/template_noop)
+"Dz" = (
+/obj/item/candle/infinite{
+	light_range = 5
+	},
+/turf/open/floor/plating,
+/area/template_noop)
 "DO" = (
 /mob/living/simple_animal/hostile/clockminer/spear,
 /obj/effect/decal/fakelattice{
@@ -556,6 +577,13 @@
 	},
 /turf/open/floor/bronze/flat,
 /area/template_noop)
+"Ne" = (
+/obj/item/plate/large,
+/obj/item/food/cheese_sandwich{
+	pixel_y = 7
+	},
+/turf/open/floor/plating,
+/area/template_noop)
 "Nw" = (
 /obj/structure/flora/ash/leaf_shroom,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -608,13 +636,16 @@
 /area/template_noop)
 "Rq" = (
 /mob/living/simple_animal/hostile/lizard{
-	name = "Builds-The-Arena"
+	name = "Builds-The-Arena";
+	faction = list("clockwork")
 	},
 /obj/item/clothing/head/hardhat,
 /turf/open/floor/bronze,
 /area/template_noop)
 "Rt" = (
-/mob/living/simple_animal/hostile/boss/clockmaster/map_maker,
+/mob/living/simple_animal/hostile/boss/clockmaster/map_maker{
+	aggro_vision_range = 5
+	},
 /turf/open/floor/bronze,
 /area/template_noop)
 "RP" = (
@@ -624,6 +655,12 @@
 "RQ" = (
 /obj/structure/fluff/clockwork/clockgolem_remains,
 /turf/open/floor/bronze/flat/lavaland,
+/area/template_noop)
+"Si" = (
+/obj/item/candle/infinite{
+	light_range = 5
+	},
+/turf/open/floor/bronze,
 /area/template_noop)
 "Sp" = (
 /obj/structure/clockcult_tower{
@@ -659,7 +696,7 @@
 /turf/open/floor/bronze/flat/lavaland,
 /area/template_noop)
 "Ve" = (
-/obj/item/clothing/suit/armor/riot/chaplain/clock,
+/obj/item/clothing/suit/chaplainsuit/armor/clock,
 /obj/item/clothing/head/helmet/chaplain/clock,
 /turf/open/floor/bronze/flat/lavaland,
 /area/template_noop)
@@ -687,7 +724,9 @@
 /area/template_noop)
 "Wg" = (
 /obj/structure/table/bronze,
-/obj/item/candle/infinite,
+/obj/item/candle/infinite{
+	light_range = 5
+	},
 /turf/open/floor/bronze/flat/lavaland,
 /area/template_noop)
 "WK" = (
@@ -698,8 +737,10 @@
 "WT" = (
 /mob/living/simple_animal/hostile/lizard{
 	dir = 8;
-	name = "Lays-The-Floor"
+	name = "Takes-Excessive-Breaks";
+	faction = list("clockwork")
 	},
+/obj/structure/chair/stool/directional/west,
 /turf/open/floor/plating,
 /area/template_noop)
 "WV" = (
@@ -725,7 +766,6 @@
 /area/template_noop)
 "Yx" = (
 /obj/effect/bump_teleporter{
-	id = null;
 	id_target = "riftexit";
 	name = "boss arena exit"
 	},
@@ -6956,7 +6996,7 @@ bD
 lz
 lz
 Ud
-Sp
+ad
 cP
 Mf
 lz
@@ -8548,8 +8588,8 @@ Dy
 aM
 lw
 lw
-pe
-pe
+qN
+sG
 pe
 pe
 rh
@@ -8800,7 +8840,7 @@ jJ
 bn
 Rq
 jJ
-lw
+Si
 mB
 lw
 pe
@@ -9048,7 +9088,7 @@ Dy
 aM
 lw
 bn
-Yx
+lw
 lw
 lw
 ZC
@@ -9171,11 +9211,11 @@ Dy
 Dy
 Dy
 aM
-lw
+Yx
 bn
-lw
-lw
 Rt
+lw
+lw
 lw
 lw
 lw
@@ -9424,8 +9464,8 @@ aM
 pe
 bn
 lw
-pe
-pe
+Ne
+Dz
 pe
 sF
 lw
@@ -11457,8 +11497,8 @@ lw
 uS
 Mf
 gK
-Ud
 Mf
+Ud
 Mf
 lz
 lz
@@ -11581,10 +11621,10 @@ lw
 lw
 uS
 uL
+Mf
 Ud
 Wd
-Ud
-Mf
+cP
 lz
 lz
 zg
@@ -11707,8 +11747,8 @@ lw
 bD
 Wg
 gK
-Ud
 Mf
+Ud
 uL
 lz
 Mf
@@ -11834,7 +11874,7 @@ oa
 uL
 Mf
 Mf
-fM
+Mf
 lz
 Vu
 Mf
@@ -12078,8 +12118,8 @@ Dy
 Dy
 Dy
 Dy
-bD
-bD
+oa
+oa
 oa
 oa
 Mf
@@ -12203,9 +12243,9 @@ Dy
 Dy
 oa
 oa
-Dy
-bD
-bD
+Mf
+oa
+oa
 Wg
 Mf
 Mf
@@ -12457,7 +12497,7 @@ Mf
 Mf
 Mf
 uL
-Ud
+Mf
 lz
 uL
 lz
@@ -12581,9 +12621,9 @@ cP
 lz
 lz
 lz
-Ud
-Wd
-cP
+Mf
+Mf
+Mf
 lz
 lz
 Mf
@@ -12707,7 +12747,7 @@ Mf
 Mf
 lz
 uL
-tN
+rf
 lz
 uL
 lz

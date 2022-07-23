@@ -4,10 +4,14 @@
 	loadmap = TRUE
 
 //Map objects
+/obj/effect/mapping_helpers/ztrait_injector/caves
+	name = "caves mission traits"
+	traits_to_add = list(ZTRAIT_SECRET, ZTRAIT_BASETURF = /turf/open/misc/asteroid/basalt/lava_land_surface)
+
 /obj/structure/clockcult_tower
 	name = "energy relay"
 	desc = "A strange bronze tower capable of transmitting energy through other towers."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "clocktower_on"
 	density = TRUE
 	anchored = TRUE
@@ -17,6 +21,13 @@
 	var/obj/structure/clockcult_tower/linking_to //reference of tower we're currently linking up to
 	var/datum/beam/tower_beam = null //keeping track of the beam we make
 	var/are_we_linked = FALSE //whether or not our tower is being connected to by another tower
+	light_color = LIGHT_COLOR_ORANGE
+	light_range = 5
+	light_power = 0.75
+
+
+/obj/effect/ebeam/clockwork
+	name = "otherworldly stream of energy"
 
 /obj/structure/clockcult_tower/proc/link_up() //find nearby tower, create beam to tower
 	are_we_linked = TRUE
@@ -24,13 +35,13 @@
 		if(!T.are_we_linked && T.id == id)
 			linking_to = T
 			linking_to.link_up()
-			tower_beam = src.Beam(linking_to, icon_state="medbeam", time = INFINITY, maxdistance = beam_range, beam_type = /obj/effect/ebeam/medical)
+			tower_beam = src.Beam(linking_to, icon_state="nzcrentrs_power", time = INFINITY, maxdistance = beam_range, beam_type = /obj/effect/ebeam/clockwork)
 			return
 		if(istype(T, /obj/structure/clockcult_tower/target))
 			var/obj/structure/clockcult_tower/target/B = T
 			linking_to = B
 			B.active_beams++
-			tower_beam = src.Beam(linking_to, icon_state="medbeam", time = INFINITY, maxdistance = beam_range, beam_type = /obj/effect/ebeam/medical)
+			tower_beam = src.Beam(linking_to, icon_state="nzcrentrs_power", time = INFINITY, maxdistance = beam_range, beam_type = /obj/effect/ebeam/clockwork)
 
 /obj/structure/clockcult_tower/proc/break_link() //break the beam fully, normally only for when you break the source tower so it propagates down the line
 	if(tower_beam)
@@ -61,7 +72,7 @@
 /obj/structure/clockcult_tower/target
 	name = "energy consumer"
 	desc = "A strange bronze tower capable of sucking up energy beams to power something really cool."
-	var/active_beams = 0 //how many beams attached to us, will do something when it hits 0
+	var/active_beams = 1 //how many beams attached to us, will do something when it hits 0
 
 /obj/structure/clockcult_tower/target/link_up()
 	return
@@ -70,7 +81,7 @@
 	active_beams--
 	if(active_beams < 1)
 		say("oye i die..")
-		qdel()
+		qdel(src)
 
 //Cave tram controls for 1st floor
 /obj/machinery/computer/tram_controls/caves
@@ -610,3 +621,16 @@
 /obj/item/paper/fluff/awaymissions/caves/researchfluff
 	name = "random research document"
 	info = "<center>*The paper itself dictates various research scribblings ranging from the local populace to rocks. You try to read on, but you stop yourself as your eyes begin to glaze over.*</center>"
+
+/obj/item/disk/holodisk/caves/doorstuck
+	name = "Security Recording"
+	preset_image_type = /datum/preset_holoimage/researcher
+	preset_record_text = {"
+	NAME Jacob Ullman
+	DELAY 10
+	SAY LET ME IN YOU ASSHOLES! I HAVE SECURITY CLEARANCE!
+	DELAY 35
+	SAY OPEN THE GODDAMN DOOR! THE TUNNEL IS COLLAPSING!
+	DELAY 25
+	SAY Oh you MOTHERFUCKERS WILL HEAR FROM MY LAWYERS IF I GET OUT OF TH
+	DELAY 30;"}

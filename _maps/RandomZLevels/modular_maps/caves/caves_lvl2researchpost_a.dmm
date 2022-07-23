@@ -113,6 +113,7 @@
 /obj/effect/turf_decal/tile/purple/opposingcorners{
 	dir = 8
 	},
+/obj/item/card/id/away/caves/site_director,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/caves/second_outpost/researchcenter/sitedirector)
 "cD" = (
@@ -206,6 +207,9 @@
 	pixel_y = 2
 	},
 /obj/item/pen,
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/second_outpost/researchcenter/work)
 "ey" = (
@@ -257,6 +261,9 @@
 /area/awaymission/caves/second_outpost/researchcenter/dorm)
 "ff" = (
 /obj/machinery/computer/terminal/caves/research,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/second_outpost/researchcenter/work)
 "fv" = (
@@ -417,6 +424,10 @@
 /obj/structure/table,
 /obj/structure/sign/poster/official/pda_ad{
 	pixel_x = -32
+	},
+/obj/item/card/id/away/caves/sec,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/second_outpost/researchcenter/work)
@@ -598,6 +609,9 @@
 /obj/structure/table,
 /obj/structure/window/reinforced/spawner/east,
 /obj/item/reagent_containers/food/drinks/waterbottle,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/second_outpost/researchcenter/work)
 "lS" = (
@@ -636,6 +650,10 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/caves/second_outpost/researchcenter/sitedirector)
+"ms" = (
+/obj/effect/turf_decal/tile/red/half/contrasted,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/second_outpost/researchcenter/work)
 "mx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -779,7 +797,8 @@
 "ou" = (
 /obj/structure/curtain,
 /obj/machinery/shower{
-	dir = 1
+	dir = 1;
+	pixel_y = -16
 	},
 /obj/item/soap,
 /turf/open/floor/iron/freezer,
@@ -934,6 +953,9 @@
 /obj/structure/filingcabinet,
 /obj/item/paper/fluff/awaymissions/caves/seismic_log,
 /obj/item/paper/fluff/awaymissions/caves/researchfluff,
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/second_outpost/researchcenter/work)
 "sE" = (
@@ -1298,6 +1320,7 @@
 /obj/machinery/door/window/left/directional/east{
 	name = "Jacob Ullman's Desk"
 	},
+/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/second_outpost/researchcenter/work)
 "xw" = (
@@ -1313,6 +1336,7 @@
 "xD" = (
 /obj/item/kitchen/rollingpin,
 /obj/structure/table/reinforced,
+/obj/item/sharpener,
 /turf/open/floor/iron/kitchen,
 /area/awaymission/caves/second_outpost/researchcenter/messhall)
 "xO" = (
@@ -1457,6 +1481,9 @@
 "BC" = (
 /obj/structure/table,
 /obj/item/clipboard,
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/second_outpost/researchcenter/work)
 "BJ" = (
@@ -2196,7 +2223,8 @@
 "Sj" = (
 /obj/structure/curtain,
 /obj/machinery/shower{
-	dir = 1
+	dir = 1;
+	pixel_y = -16
 	},
 /turf/open/floor/iron/freezer,
 /area/awaymission/caves/second_outpost/researchcenter/dorm)
@@ -2516,6 +2544,7 @@
 "ZP" = (
 /obj/structure/table,
 /obj/structure/window/reinforced/spawner/west,
+/obj/item/card/id/away/caves/sci,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/second_outpost/researchcenter/work)
 "ZS" = (
@@ -2696,7 +2725,7 @@ fO
 sa
 ff
 Qc
-KI
+ms
 sa
 aa
 aa

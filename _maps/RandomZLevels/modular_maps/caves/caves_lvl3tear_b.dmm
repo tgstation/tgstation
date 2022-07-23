@@ -262,7 +262,8 @@
 	desc = "A humanoid figure shrouded by erratic static.";
 	icon = 'icons/effects/effects.dmi';
 	icon_state = "static";
-	name = "humanoid figure"
+	name = "humanoid figure";
+	dir = 4
 	},
 /obj/machinery/light/red/directional,
 /turf/open/indestructible,
@@ -326,7 +327,9 @@
 "Lg" = (
 /mob/living/simple_animal/hostile/illusion{
 	deathmessage = "vanishes into thin air!";
-	multiply_chance = 25
+	multiply_chance = 25;
+	health = 25;
+	name = "architect"
 	},
 /turf/open/misc/asteroid,
 /area/template_noop)
@@ -354,7 +357,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/bump_teleporter{
 	id = "riftenter";
-	id_target = null;
 	name = "rift start"
 	},
 /turf/open/indestructible,
@@ -377,7 +379,6 @@
 	name = "fluxating rift"
 	},
 /obj/effect/bump_teleporter{
-	id = null;
 	id_target = "riftexit";
 	name = "rift end"
 	},

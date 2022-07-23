@@ -50,6 +50,13 @@
 	},
 /turf/open/floor/carpet/purple,
 /area/awaymission/caves/second_outpost/researchcenter/dorm)
+"by" = (
+/obj/effect/turf_decal/tile/purple/half/contrasted{
+	dir = 1
+	},
+/obj/item/food/beef_wellington,
+/turf/open/floor/iron,
+/area/awaymission/caves/second_outpost/researchcenter)
 "bD" = (
 /obj/structure/chair/office/light,
 /turf/open/floor/iron/dark,
@@ -108,6 +115,12 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/caves/second_outpost/researchcenter/engineering)
+"cL" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/table,
+/obj/item/card/id/away/caves/sci,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/second_outpost/researchcenter/work)
 "cW" = (
 /obj/structure/chair/office/light,
 /obj/effect/decal/cleanable/dirt,
@@ -401,6 +414,7 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/south,
+/obj/item/card/id/away/caves/site_director,
 /turf/open/floor/iron/cafeteria{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
@@ -657,6 +671,7 @@
 /obj/structure/table,
 /obj/item/knife/butcher,
 /obj/item/kitchen/rollingpin,
+/obj/item/sharpener,
 /turf/open/floor/iron/kitchen,
 /area/awaymission/caves/second_outpost/researchcenter/messhall)
 "lW" = (
@@ -975,6 +990,12 @@
 /obj/machinery/firealarm/directional/north,
 /turf/open/chasm/lavaland,
 /area/awaymission/caves/second_outpost/researchcenter/work)
+"su" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/item/food/cannoli,
+/turf/open/floor/iron/kitchen,
+/area/awaymission/caves/second_outpost/researchcenter/messhall)
 "sv" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/purple/half/contrasted,
@@ -1214,6 +1235,10 @@
 "zs" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/table,
+/obj/item/plate,
+/obj/item/food/cheese_sandwich{
+	pixel_y = 13
+	},
 /turf/open/floor/iron,
 /area/awaymission/caves/second_outpost/researchcenter/messhall)
 "zA" = (
@@ -1571,6 +1596,7 @@
 "FT" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/item/plate,
 /turf/open/floor/iron,
 /area/awaymission/caves/second_outpost/researchcenter/messhall)
 "FW" = (
@@ -1970,6 +1996,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet,
 /area/awaymission/caves/second_outpost/researchcenter/dorm)
+"PO" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/item/food/cornchips,
+/turf/open/floor/iron,
+/area/awaymission/caves/second_outpost/researchcenter/messhall)
 "PV" = (
 /obj/structure/railing{
 	dir = 8
@@ -2138,7 +2169,8 @@
 "TU" = (
 /obj/structure/curtain,
 /obj/machinery/shower{
-	dir = 1
+	dir = 1;
+	pixel_y = -16
 	},
 /turf/open/floor/iron/freezer,
 /area/awaymission/caves/second_outpost/researchcenter/dorm)
@@ -2440,6 +2472,7 @@
 /obj/item/book/manual/wiki/security_space_law,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/fourcorners,
+/obj/item/card/id/away/caves/sec,
 /turf/open/floor/iron,
 /area/awaymission/caves/second_outpost/researchcenter)
 
@@ -2836,7 +2869,7 @@ Md
 zs
 YT
 hs
-NE
+by
 fc
 Bs
 qG
@@ -2926,7 +2959,7 @@ OU
 eo
 pU
 ck
-WJ
+cL
 je
 rG
 kn
@@ -2986,7 +3019,7 @@ Yl
 FT
 TL
 fG
-Yn
+PO
 Zk
 NE
 Wa
@@ -3059,7 +3092,7 @@ hX
 hX
 hX
 hs
-sk
+su
 sk
 ro
 sk

@@ -4,7 +4,7 @@
 /turf/template_noop,
 /area/template_noop)
 "aq" = (
-/turf/open/water/beach,
+/turf/open/water/beach/biodome,
 /area/template_noop)
 "aJ" = (
 /turf/template_noop,
@@ -26,6 +26,16 @@
 /turf/open/misc/beach/coastline_t{
 	dir = 9
 	},
+/area/template_noop)
+"cz" = (
+/obj/structure/fluff{
+	desc = "A humanoid figure shrouded by erratic static.";
+	icon = 'icons/effects/effects.dmi';
+	icon_state = "static";
+	name = "humanoid figure";
+	dir = 8
+	},
+/turf/open/floor/wood/large,
 /area/template_noop)
 "da" = (
 /turf/open/misc/beach/coastline_b{
@@ -96,7 +106,8 @@
 /obj/effect/turf_decal/siding/wood,
 /mob/living/simple_animal/hostile/illusion{
 	deathmessage = "vanishes into thin air!";
-	multiply_chance = 25
+	multiply_chance = 25;
+	health = 25
 	},
 /turf/open/floor/wood,
 /area/template_noop)
@@ -216,7 +227,8 @@
 	},
 /mob/living/simple_animal/hostile/illusion{
 	deathmessage = "vanishes into thin air!";
-	multiply_chance = 25
+	multiply_chance = 25;
+	health = 25
 	},
 /turf/open/floor/wood,
 /area/template_noop)
@@ -314,7 +326,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/water/beach,
+/turf/open/water/beach/biodome,
 /area/template_noop)
 "LR" = (
 /turf/open/misc/beach/coastline_t/sandwater_inner{
@@ -330,11 +342,19 @@
 	name = "fluxating rift"
 	},
 /obj/effect/bump_teleporter{
-	id = null;
 	id_target = "riftexit";
 	name = "rift end"
 	},
 /turf/open/floor/carpet,
+/area/template_noop)
+"MJ" = (
+/obj/structure/fans/tiny/invisible,
+/mob/living/simple_animal/hostile/illusion{
+	deathmessage = "vanishes into thin air!";
+	multiply_chance = 25;
+	health = 25
+	},
+/turf/template_noop,
 /area/template_noop)
 "ML" = (
 /turf/open/misc/beach/coastline_t/sandwater_inner{
@@ -418,7 +438,6 @@
 "Xr" = (
 /obj/effect/bump_teleporter{
 	id = "riftenter";
-	id_target = null;
 	name = "rift start"
 	},
 /turf/open/misc/beach/sand,
@@ -1518,7 +1537,7 @@ wd
 aJ
 Ig
 Ig
-hl
+MJ
 aJ
 aJ
 aJ
@@ -1697,7 +1716,7 @@ hl
 hl
 hl
 Ig
-Ie
+cz
 hl
 aJ
 aJ

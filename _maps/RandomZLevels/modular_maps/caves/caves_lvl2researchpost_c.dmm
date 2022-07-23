@@ -14,10 +14,11 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/second_outpost/researchcenter/engineering)
 "aw" = (
-/obj/machinery/shower{
-	dir = 1
-	},
 /obj/structure/curtain,
+/obj/machinery/shower{
+	dir = 1;
+	pixel_y = -16
+	},
 /turf/open/floor/iron/freezer,
 /area/awaymission/caves/second_outpost/researchcenter/dorm)
 "ay" = (
@@ -526,6 +527,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
+/obj/item/card/id/away/caves/sec,
 /turf/open/floor/iron,
 /area/awaymission/caves/second_outpost/researchcenter)
 "mc" = (
@@ -914,6 +916,7 @@
 "vc" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor/closed,
+/obj/item/sharpener,
 /turf/open/floor/iron/kitchen{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
@@ -1491,6 +1494,7 @@
 /area/awaymission/caves/second_outpost/researchcenter/engineering)
 "Hn" = (
 /obj/structure/table,
+/obj/item/card/id/away/caves/sci,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/second_outpost/researchcenter/work)
 "Hq" = (
@@ -1548,6 +1552,7 @@
 	pixel_y = 32
 	},
 /obj/structure/table,
+/obj/item/card/id/away/caves/site_director,
 /turf/open/floor/iron/cafeteria{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},

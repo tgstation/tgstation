@@ -31,7 +31,6 @@
 "i" = (
 /obj/effect/bump_teleporter{
 	id = "riftenter";
-	id_target = null;
 	name = "rift start"
 	},
 /turf/open/misc/asteroid/basalt,
@@ -189,7 +188,6 @@
 	name = "fluxating rift"
 	},
 /obj/effect/bump_teleporter{
-	id = null;
 	id_target = "riftexit";
 	name = "rift end"
 	},
@@ -222,7 +220,9 @@
 /obj/effect/decal/cleanable/blood/old,
 /mob/living/simple_animal/hostile/illusion{
 	deathmessage = "vanishes into thin air!";
-	multiply_chance = 25
+	multiply_chance = 25;
+	health = 25;
+	name = "architect"
 	},
 /turf/open/misc/asteroid/basalt,
 /area/template_noop)
@@ -273,7 +273,9 @@
 "Y" = (
 /mob/living/simple_animal/hostile/illusion{
 	deathmessage = "vanishes into thin air!";
-	multiply_chance = 25
+	multiply_chance = 25;
+	health = 25;
+	name = "architect"
 	},
 /turf/open/misc/asteroid/basalt,
 /area/template_noop)

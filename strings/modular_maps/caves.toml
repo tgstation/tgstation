@@ -53,28 +53,28 @@ modules = ["caves_lvl3tear_a.dmm", "caves_lvl3tear_b.dmm", "caves_lvl3tear_c.dmm
 #1st segment of 3 on the 3rd floor
 #A - Ashwalker village (stealth optional?)
 #B - Mining strip with blocked passage that needs blown up
-#C - Mining post with mass driver jumps
+#C - Mining post with mass driver jumps - disabled atm need to do more testing on the jumps so they aren't bad
 [rooms.caves_lvl3segment1]
-modules = ["caves_lvl3segment1_a.dmm", "caves_lvl3segment1_b.dmm", "caves_lvl3segment1_c.dmm"]
+modules = ["caves_lvl3segment1_a.dmm", "caves_lvl3segment1_b.dmm"]
 
 #2nd segment of 3 on the 3rd floor
 #A - Undead crypt
-#B - Ayylmao zone
+#B - Ayylmao zone - - disabled atm button being lame on toggle
 #C - Research away mission but less bad
 [rooms.caves_lvl3segment2]
-modules = ["caves_lvl3segment2_a.dmm", "caves_lvl3segment2_b.dmm", "caves_lvl3segment2_c.dmm"]
+modules = ["caves_lvl3segment2_a.dmm", "caves_lvl3segment2_c.dmm"]
 
 #3rd segment of 3 on the 3rd floor
-#A - Ant nest
+#A - Ant nest - disabled atm not done enough
 #B - Bootleg hell zone
-#C - Abandoned outpost
+#C - Abandoned outpost - disabled atm not done enough
 [rooms.caves_lvl3segment3]
 modules = ["caves_lvl3segment3_b.dmm", "caves_lvl3segment3_b.dmm", "caves_lvl3segment3_b.dmm"]
 
 #4th floor leading up to the boss arena
-#A - Lava lake with several islands
+#A - Lava lake with several islands - disabled atm, needs redone
 #B - Central cave with multiple tunnels
-#C - Matrix zone (coders HATE ratvar)
+#C - Matrix zone (coders HATE ratvar) - disabled atm, sekrit 
 [rooms.caves_lvl4]
 modules = ["caves_lvl4_b.dmm", "caves_lvl4_b.dmm", "caves_lvl4_b.dmm"]
 

@@ -9,7 +9,7 @@
 /obj/structure/bed/dogbed,
 /mob/living/simple_animal/hostile/lightgeist,
 /turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "aI" = (
 /obj/modular_map_connector,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -49,7 +49,7 @@
 /obj/structure/bed/dogbed,
 /mob/living/simple_animal/hostile/asteroid/elite/herald,
 /turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "bR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/abductor,
@@ -64,7 +64,8 @@
 /area/awaymission/caves/misc/ayylmao)
 "cn" = (
 /obj/machinery/door/poddoor{
-	id = "exhibitstorage"
+	id = "ayylmaozone";
+	max_integrity = 5000
 	},
 /obj/effect/turf_decal/siding/purple{
 	dir = 8
@@ -74,10 +75,11 @@
 	},
 /obj/effect/turf_decal/delivery/white,
 /turf/open/floor/plating,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "cp" = (
 /obj/machinery/door/poddoor{
-	id = "exhibitstorage"
+	id = "ayylmaozone";
+	max_integrity = 5000
 	},
 /obj/effect/turf_decal/siding/purple{
 	dir = 4
@@ -87,11 +89,7 @@
 	},
 /obj/effect/turf_decal/delivery/white,
 /turf/open/floor/plating,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
-"cC" = (
-/obj/effect/turf_decal/siding/purple,
-/turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "cD" = (
 /obj/machinery/door/airlock/abductor,
 /obj/effect/turf_decal/siding/purple{
@@ -103,14 +101,14 @@
 /obj/structure/bed/dogbed,
 /mob/living/simple_animal/hostile/faithless,
 /turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "cN" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 1
 	},
 /obj/structure/table/abductor,
 /turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "cW" = (
 /obj/effect/turf_decal/siding/purple,
 /obj/machinery/light/dim{
@@ -196,7 +194,7 @@
 /obj/structure/bed/dogbed,
 /mob/living/simple_animal/hostile/bear/russian,
 /turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "ek" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 8
@@ -240,7 +238,7 @@
 "eS" = (
 /obj/structure/chair/stool/bar/directional/north,
 /turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "fA" = (
 /obj/machinery/door/puzzle/keycard{
 	open_message = "The door hums ominously and slides open.";
@@ -262,12 +260,11 @@
 	name = "fluxating rift"
 	},
 /obj/effect/bump_teleporter{
-	id = null;
 	id_target = "riftenter";
 	name = "rift entrance"
 	},
 /turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "gm" = (
 /obj/effect/turf_decal/siding/purple,
 /turf/open/floor/vault/alien,
@@ -326,7 +323,7 @@
 "hG" = (
 /obj/structure/chair/stool/bar/directional/south,
 /turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "hK" = (
 /obj/structure/table/abductor,
 /obj/machinery/recharger,
@@ -350,13 +347,6 @@
 	},
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao)
-"io" = (
-/turf/closed/indestructible/riveted{
-	base_icon_state = "alienvault";
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "alienvault"
-	},
-/area/awaymission/caves/misc/ayylmao/holding_cell)
 "iq" = (
 /obj/structure/table/abductor,
 /obj/effect/turf_decal/tile/purple/fourcorners,
@@ -367,7 +357,7 @@
 	name = "Cannot-Be-Contained"
 	},
 /turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "iu" = (
 /obj/effect/turf_decal/siding/purple/corner{
 	dir = 4
@@ -377,29 +367,17 @@
 	},
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao)
-"iw" = (
-/obj/effect/turf_decal/siding/purple{
-	dir = 8
-	},
-/turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
 "iy" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 8
 	},
 /obj/machinery/button/door/directional/north{
-	id = "exhibitstorage";
+	id = "ayylmaozone";
 	name = "Exhibit Exit Lockdown Toggle";
 	pixel_y = 28
 	},
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao)
-"iI" = (
-/obj/effect/turf_decal/siding/purple{
-	dir = 1
-	},
-/turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
 "jl" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 10
@@ -493,8 +471,8 @@
 /obj/effect/turf_decal/delivery/white,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/poddoor{
-	id = "exhibitstorage";
-	name = "Exhibit Exit Lockdown"
+	id = "ayylmaozone";
+	max_integrity = 5000
 	},
 /turf/open/floor/plating,
 /area/awaymission/caves/misc/ayylmao)
@@ -510,9 +488,6 @@
 /obj/structure/closet/emcloset,
 /turf/open/floor/iron/smooth,
 /area/awaymission/caves/misc/ayylmao)
-"ml" = (
-/turf/closed/indestructible/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
 "mz" = (
 /obj/structure/chair/office/tactical{
 	dir = 1
@@ -546,27 +521,17 @@
 /obj/machinery/cell_charger,
 /turf/open/floor/iron/smooth,
 /area/awaymission/caves/misc/ayylmao)
-"oi" = (
-/obj/machinery/door/airlock/abductor,
-/obj/effect/turf_decal/siding/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/siding/purple{
-	dir = 8
-	},
-/turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/office)
 "ow" = (
 /obj/structure/toilet{
 	dir = 8
 	},
 /turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "oy" = (
 /obj/structure/bed/dogbed,
 /mob/living/simple_animal/hostile/lizard,
 /turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "oT" = (
 /obj/structure/flora/rock/pile,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -584,7 +549,7 @@
 	bulb_colour = "#8142F5"
 	},
 /turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "pl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/abductor,
@@ -767,7 +732,7 @@
 /obj/effect/turf_decal/siding/purple,
 /obj/structure/table/abductor,
 /turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "uu" = (
 /obj/structure/closet{
 	icon_state = "abductor";
@@ -830,16 +795,7 @@
 "wC" = (
 /mob/living/simple_animal/hostile/russian/ranged/trooper,
 /turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
-"wD" = (
-/obj/effect/turf_decal/siding/purple/corner{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/purple/corner{
-	dir = 8
-	},
-/turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "wI" = (
 /obj/structure/table/abductor,
 /obj/item/oar{
@@ -862,14 +818,16 @@
 /area/awaymission/caves/misc/ayylmao/office)
 "xl" = (
 /obj/structure/bed/dogbed,
-/mob/living/simple_animal/hostile/asteroid/lobstrosity/lava,
+/mob/living/simple_animal/hostile/asteroid/lobstrosity/lava{
+	environment_smash = 0
+	},
 /turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "xD" = (
 /obj/structure/bed/dogbed,
 /mob/living/simple_animal/hostile/carp/ranged/chaos,
 /turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "xF" = (
 /obj/structure/table/abductor,
 /obj/item/mmi/syndie{
@@ -890,7 +848,7 @@
 	icon = 'icons/obj/smooth_structures/rplasma_window.dmi';
 	icon_state = "rplasma_window-0"
 	},
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "yt" = (
 /obj/effect/turf_decal/siding/purple/corner{
 	dir = 8
@@ -950,11 +908,12 @@
 /area/awaymission/caves/misc/ayylmao)
 "BP" = (
 /obj/machinery/door/poddoor{
-	id = "exhibitstorage"
+	id = "ayylmaozone";
+	max_integrity = 5000
 	},
 /obj/effect/turf_decal/delivery/white,
 /turf/open/floor/plating,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "Cx" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/indestructible/vault/alien,
@@ -1084,14 +1043,11 @@
 /area/awaymission/caves/misc/ayylmao/office)
 "Ga" = (
 /obj/machinery/door/poddoor/preopen{
-	id = "exhibitstorage"
+	id = "ayylmaozone"
 	},
 /obj/effect/turf_decal/delivery/white,
 /turf/open/floor/plating,
 /area/awaymission/caves/misc/ayylmao)
-"Gh" = (
-/turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
 "Gj" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 8
@@ -1100,9 +1056,11 @@
 /area/awaymission/caves/misc/ayylmao/office)
 "Gn" = (
 /obj/structure/bed/dogbed,
-/mob/living/simple_animal/hostile/netherworld/statue,
+/mob/living/simple_animal/hostile/netherworld/statue{
+	environment_smash = 0
+	},
 /turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "GG" = (
 /obj/structure/toilet{
 	dir = 4;
@@ -1113,7 +1071,7 @@
 "GH" = (
 /obj/effect/turf_decal/delivery/white,
 /obj/machinery/door/poddoor/preopen{
-	id = "exhibitstorage"
+	id = "ayylmaozone"
 	},
 /turf/open/floor/plating,
 /area/awaymission/caves/misc/ayylmao)
@@ -1209,14 +1167,15 @@
 /area/template_noop)
 "JA" = (
 /obj/machinery/door/poddoor{
-	id = "exhibitstorage"
+	id = "ayylmaozone";
+	max_integrity = 5000
 	},
 /obj/effect/turf_decal/siding/purple{
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/purple,
 /turf/open/floor/plating,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "JW" = (
 /obj/structure/table/abductor,
 /obj/structure/cursed_slot_machine{
@@ -1241,7 +1200,7 @@
 "KN" = (
 /mob/living/simple_animal/hostile/pirate/melee,
 /turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "KY" = (
 /obj/structure/table/abductor,
 /obj/item/hand_labeler_refill{
@@ -1254,7 +1213,7 @@
 	bulb_colour = "#8142F5"
 	},
 /turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "Ld" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 4
@@ -1269,16 +1228,7 @@
 	bulb_colour = "#8142F5"
 	},
 /turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
-"LD" = (
-/obj/effect/turf_decal/siding/purple/corner{
-	dir = 4
-	},
-/obj/effect/turf_decal/siding/purple/corner{
-	dir = 1
-	},
-/turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "LJ" = (
 /obj/structure/table/abductor,
 /obj/effect/turf_decal/siding/purple{
@@ -1298,7 +1248,7 @@
 /obj/structure/bed/dogbed,
 /mob/living/simple_animal/hostile/tree,
 /turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "LW" = (
 /turf/open/floor/plating/abductor{
 	initial_gas_mix = "LAVALAND_ATMOS"
@@ -1335,7 +1285,7 @@
 	max_integrity = 10000
 	},
 /turf/open/floor/plating,
-/area/awaymission/caves/misc/ayylmao/office)
+/area/awaymission/caves/misc/ayylmao)
 "MK" = (
 /obj/effect/turf_decal/siding/purple,
 /obj/effect/turf_decal/stripes/white/corner,
@@ -1350,13 +1300,6 @@
 	},
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao)
-"MP" = (
-/obj/effect/turf_decal/siding/purple/corner,
-/obj/effect/turf_decal/siding/purple/corner{
-	dir = 8
-	},
-/turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
 "MZ" = (
 /turf/closed/indestructible/alien,
 /area/awaymission/caves/misc/ayylmao)
@@ -1465,7 +1408,7 @@
 /obj/structure/bed/dogbed,
 /mob/living/simple_animal/hostile/giant_spider/hunter,
 /turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "PL" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 9
@@ -1477,7 +1420,7 @@
 	dir = 4
 	},
 /turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "PZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/abductor,
@@ -1516,7 +1459,7 @@
 	bulb_colour = "#8142F5"
 	},
 /turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "QI" = (
 /obj/structure/railing{
 	dir = 4
@@ -1544,7 +1487,7 @@
 /obj/structure/bed/dogbed,
 /mob/living/simple_animal/hostile/gorilla,
 /turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "RR" = (
 /obj/structure/table/abductor,
 /obj/structure/chess/whiteknight{
@@ -1554,7 +1497,7 @@
 /area/awaymission/caves/misc/ayylmao/office)
 "Sa" = (
 /obj/machinery/door/poddoor/preopen{
-	id = "exhibitstorage"
+	id = "ayylmaozone"
 	},
 /obj/effect/turf_decal/siding/purple{
 	dir = 4
@@ -1591,13 +1534,6 @@
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao)
-"Tz" = (
-/obj/effect/turf_decal/siding/purple/corner{
-	dir = 4
-	},
-/obj/effect/turf_decal/siding/purple/corner,
-/turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
 "TB" = (
 /obj/effect/spawner/structure/window/plasma,
 /turf/open/floor/plating,
@@ -1623,7 +1559,7 @@
 /obj/structure/bed/abductor,
 /obj/item/bedsheet/purple,
 /turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "UK" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 1
@@ -1659,18 +1595,12 @@
 /obj/structure/bed/dogbed,
 /mob/living/simple_animal/hostile/asteroid/goldgrub,
 /turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "Vl" = (
 /obj/structure/table/abductor,
 /obj/effect/turf_decal/siding/purple,
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao/office)
-"Vp" = (
-/obj/effect/turf_decal/siding/purple{
-	dir = 4
-	},
-/turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
 "VK" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor/iron_dark,
@@ -1690,7 +1620,7 @@
 	name = "Jerry"
 	},
 /turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
+/area/awaymission/caves/misc/ayylmao)
 "WX" = (
 /obj/structure/table/abductor,
 /obj/item/spear/grey_tide{
@@ -1773,27 +1703,12 @@
 /area/awaymission/caves/misc/ayylmao/office)
 "Zu" = (
 /obj/machinery/door/poddoor/preopen{
-	id = "exhibitstorage"
+	id = "ayylmaozone"
 	},
 /obj/effect/turf_decal/siding/purple{
 	dir = 8
 	},
 /obj/effect/turf_decal/delivery/white,
-/turf/open/floor/plating,
-/area/awaymission/caves/misc/ayylmao)
-"Zz" = (
-/obj/machinery/door/poddoor{
-	id = "exhibitstorage";
-	name = "Exhibit Exit Lockdown"
-	},
-/obj/effect/turf_decal/siding/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/siding/purple{
-	dir = 8
-	},
-/obj/effect/turf_decal/delivery/white,
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/awaymission/caves/misc/ayylmao)
 "ZB" = (
@@ -2288,7 +2203,7 @@ Sa
 db
 gQ
 oW
-Zz
+lR
 ax
 aR
 "}
@@ -2585,20 +2500,20 @@ ZZ
 ZZ
 ZZ
 aa
-ml
-ml
-ml
-ml
-ml
+TO
+TO
+TO
+TO
+TO
 qw
 EN
 EN
 hr
-ml
-ml
-ml
-ml
-ml
+TO
+TO
+TO
+TO
+TO
 VK
 TO
 aa
@@ -2624,7 +2539,7 @@ aa
 aa
 aa
 aa
-ml
+TO
 UC
 hG
 ut
@@ -2634,10 +2549,10 @@ EN
 EN
 MK
 yq
-iI
-Gh
+DX
+EN
 PY
-ml
+TO
 VK
 TO
 aa
@@ -2663,20 +2578,20 @@ aa
 TO
 TO
 TO
-ml
+TO
 LB
 VX
-MP
+dz
 cn
 kA
 EN
 EN
 yt
 cp
-LD
-Gh
+iu
+EN
 KZ
-ml
+TO
 VK
 TO
 aa
@@ -2702,10 +2617,10 @@ TO
 TO
 ZB
 ZB
-ml
+TO
 ow
-Gh
-cC
+EN
+hr
 yq
 XQ
 EN
@@ -2715,7 +2630,7 @@ yq
 cN
 eS
 UC
-ml
+TO
 VK
 TO
 aa
@@ -2741,20 +2656,20 @@ eF
 ZT
 ef
 eC
-ml
-ml
-ml
-ml
-ml
+TO
+TO
+TO
+TO
+TO
 YZ
 EN
 EN
 nw
-ml
-ml
-ml
-ml
-ml
+TO
+TO
+TO
+TO
+TO
 VK
 TO
 aa
@@ -2790,9 +2705,9 @@ EN
 EN
 hr
 TO
-aa
-aa
-aa
+ZN
+ZN
+ZN
 TO
 VK
 TO
@@ -2829,9 +2744,9 @@ EN
 EN
 hr
 TO
-aa
-aa
-aa
+ZN
+ZN
+ZN
 TO
 VK
 TO
@@ -2858,20 +2773,20 @@ eF
 zI
 pN
 lO
-ml
-ml
-ml
-ml
-ml
+TO
+TO
+TO
+TO
+TO
 qw
 EN
 EN
 Jl
-ml
-ml
-ml
-ml
-ml
+TO
+TO
+TO
+TO
+TO
 VK
 TO
 aa
@@ -2897,20 +2812,20 @@ TO
 TO
 Tv
 LL
-ml
-Gh
-Gh
-cC
+TO
+EN
+EN
+hr
 yq
 GN
 EN
 EN
 SG
 BP
-Gh
-Gh
-Gh
-ml
+EN
+EN
+EN
+TO
 VK
 TO
 aa
@@ -2936,20 +2851,20 @@ aa
 TO
 TO
 TO
-ml
+TO
 LB
 bz
-MP
+dz
 cn
 kA
 EN
 EN
 nH
 BP
-Gh
+EN
 Gn
 KZ
-ml
+TO
 VK
 TO
 aa
@@ -2975,20 +2890,20 @@ aa
 aa
 aa
 aa
-ml
-Gh
-Gh
-cC
+TO
+EN
+EN
+hr
 yq
 XQ
 EN
 EN
 qc
 BP
-Gh
-Gh
-Gh
-ml
+EN
+EN
+EN
+TO
 VK
 TO
 aa
@@ -3014,20 +2929,20 @@ aa
 aa
 aa
 aa
-ml
-ml
-ml
-ml
-ml
+TO
+TO
+TO
+TO
+TO
 DX
 EN
 EN
 cW
-ml
-ml
-ml
-ml
-ml
+TO
+TO
+TO
+TO
+TO
 VK
 TO
 aa
@@ -3124,27 +3039,27 @@ jl
 En
 Xt
 En
-ml
-ml
-ml
-ml
-ml
+TO
+TO
+TO
+TO
+TO
 aa
 aa
-ml
-ml
-ml
-ml
-ml
+TO
+TO
+TO
+TO
+TO
 qw
 EN
 EN
 hr
-ml
-ml
-ml
-ml
-ml
+TO
+TO
+TO
+TO
+TO
 VK
 TO
 aa
@@ -3163,14 +3078,14 @@ Nf
 Gj
 Gj
 OT
-ml
-Gh
+TO
+EN
 oY
-Gh
-ml
+EN
+TO
 aa
 aa
-ml
+TO
 UC
 hG
 ut
@@ -3180,10 +3095,10 @@ EN
 EN
 MK
 yq
-iI
-Gh
-Gh
-ml
+DX
+EN
+EN
+TO
 VK
 TO
 aa
@@ -3202,27 +3117,27 @@ zJ
 zJ
 NH
 EY
-ml
-Gh
+TO
+EN
 aA
-Gh
-ml
+EN
+TO
 aa
 aa
-ml
+TO
 LB
 wC
-MP
+dz
 cn
 kA
 EN
 EN
 yt
 cp
-LD
+iu
 Ve
 KZ
-ml
+TO
 VK
 TO
 aa
@@ -3241,27 +3156,27 @@ sD
 sC
 zJ
 Vl
-ml
-Vp
-Tz
-Vp
-ml
+TO
+pN
+mE
+pN
+TO
 aa
 aa
-ml
+TO
 ow
-Gh
-cC
+EN
+hr
 yq
 XQ
 EN
 EN
 ca
 yq
-iI
-Gh
-Gh
-ml
+DX
+EN
+EN
+TO
 VK
 TO
 aa
@@ -3280,27 +3195,27 @@ SM
 HN
 sC
 gm
-ml
+TO
 yq
 JA
 yq
-ml
 TO
 TO
-ml
-ml
-ml
-ml
-ml
+TO
+TO
+TO
+TO
+TO
+TO
 xK
 lf
 lf
 YA
-ml
-ml
-ml
-ml
-ml
+TO
+TO
+TO
+TO
+TO
 VK
 TO
 aa
@@ -3358,7 +3273,7 @@ iq
 SM
 PF
 ba
-oi
+dN
 sF
 EN
 EN
@@ -3436,27 +3351,27 @@ SM
 PL
 QX
 gm
-ml
+TO
 yq
 JA
 yq
-ml
 TO
 TO
-ml
-ml
-ml
-ml
-ml
+TO
+TO
+TO
+TO
+TO
+TO
 xK
 lf
 lf
 YA
-ml
-ml
-ml
-ml
-ml
+TO
+TO
+TO
+TO
+TO
 VK
 TO
 aa
@@ -3475,17 +3390,17 @@ Gj
 QX
 zJ
 Vl
-ml
-iw
-wD
-iw
-ml
+TO
+ef
+Th
+ef
+TO
 aa
 aa
-ml
-Gh
-Gh
-cC
+TO
+EN
+EN
+hr
 yq
 GN
 EN
@@ -3495,7 +3410,7 @@ yq
 cN
 eS
 UC
-ml
+TO
 VK
 TO
 aa
@@ -3514,27 +3429,27 @@ zJ
 zJ
 NH
 kM
-ml
-Gh
+TO
+EN
 oy
-Gh
-ml
+EN
+TO
 aa
 aa
-ml
+TO
 LB
 LS
-MP
+dz
 cn
 kA
 EN
 EN
 yt
 cp
-LD
+iu
 KN
 KZ
-ml
+TO
 VK
 TO
 aa
@@ -3553,27 +3468,27 @@ Fy
 sD
 sD
 hc
-ml
-Gh
+TO
+EN
 QH
-Gh
-ml
+EN
+TO
 aa
 aa
-ml
-Gh
-Gh
-cC
+TO
+EN
+EN
+hr
 yq
 XQ
 EN
 EN
 ca
 yq
-iI
-Gh
+DX
+EN
 ow
-ml
+TO
 VK
 TO
 aa
@@ -3592,27 +3507,27 @@ UU
 En
 Xt
 En
-ml
-ml
-ml
-ml
-ml
+TO
+TO
+TO
+TO
+TO
 aa
 aa
-ml
-ml
-ml
-ml
-ml
+TO
+TO
+TO
+TO
+TO
 UK
 EN
 EN
 hr
-io
-io
-io
-io
-ml
+Mn
+Mn
+Mn
+Mn
+Mn
 VK
 TO
 aa
@@ -3651,7 +3566,7 @@ Mn
 aa
 aa
 aa
-TO
+Mn
 VK
 TO
 aa
@@ -3690,7 +3605,7 @@ Mn
 aa
 aa
 aa
-TO
+Mn
 VK
 TO
 aa
@@ -3716,20 +3631,20 @@ ZZ
 ZZ
 ZZ
 aa
-ml
-ml
-ml
-ml
-ml
+TO
+TO
+TO
+TO
+TO
 DX
 EN
 EN
 nw
-io
-io
-io
-io
-ml
+Mn
+Mn
+Mn
+Mn
+Mn
 VK
 TO
 aa
@@ -3755,20 +3670,20 @@ ZZ
 aa
 aa
 aa
-ml
-Gh
-Gh
-cC
+TO
+EN
+EN
+hr
 yq
 GN
 EN
 EN
 MK
 yq
-iI
-Gh
-Gh
-ml
+DX
+EN
+EN
+TO
 VK
 TO
 aa
@@ -3794,20 +3709,20 @@ aa
 TO
 TO
 TO
-ml
+TO
 LB
 xD
-MP
+dz
 cn
 kA
 EN
 EN
 yt
 cp
-LD
+iu
 PI
 KZ
-ml
+TO
 VK
 TO
 aa
@@ -3833,20 +3748,20 @@ TO
 TO
 ZB
 ZB
-ml
-Gh
-Gh
-cC
+TO
+EN
+EN
+hr
 yq
 XQ
 EN
 EN
 ca
 yq
-iI
-Gh
-Gh
-ml
+DX
+EN
+EN
+TO
 VK
 TO
 aa
@@ -3872,20 +3787,20 @@ eF
 ZT
 ef
 eC
-ml
-ml
-ml
-ml
-ml
+TO
+TO
+TO
+TO
+TO
 qw
 EN
 EN
 hr
-io
-io
-io
-io
-ml
+Uo
+Uo
+Uo
+Uo
+TO
 VK
 TO
 aa
@@ -3989,20 +3904,20 @@ eF
 zI
 pN
 lO
-ml
-ml
-ml
-ml
-ml
+TO
+TO
+TO
+TO
+TO
 YZ
 EN
 EN
 nw
-ml
-ml
-ml
-ml
-ml
+TO
+TO
+TO
+TO
+TO
 VK
 TO
 aa
@@ -4028,20 +3943,20 @@ TO
 TO
 la
 la
-ml
-Gh
-Gh
-cC
+TO
+EN
+EN
+hr
 yq
 GN
 EN
 EN
 MK
 yq
-iI
-Gh
-Gh
-ml
+DX
+EN
+EN
+TO
 VK
 TO
 aa
@@ -4067,20 +3982,20 @@ aa
 TO
 TO
 TO
-ml
+TO
 LB
 ei
-MP
+dz
 cn
 kA
 EN
 EN
 yt
 cp
-LD
+iu
 xl
 KZ
-ml
+TO
 VK
 TO
 aa
@@ -4106,20 +4021,20 @@ aa
 aa
 aa
 aa
-ml
-Gh
-Gh
-cC
+TO
+EN
+EN
+hr
 yq
 XQ
 EN
 EN
 ca
 yq
-iI
-Gh
-Gh
-ml
+DX
+EN
+EN
+TO
 VK
 TO
 aa
@@ -4145,20 +4060,20 @@ aa
 aa
 aa
 aa
-ml
-ml
-ml
-ml
-ml
+TO
+TO
+TO
+TO
+TO
 qw
 EN
 EN
 hr
-ml
-ml
-ml
-ml
-ml
+TO
+TO
+TO
+TO
+TO
 VK
 TO
 aa
@@ -4262,20 +4177,20 @@ ZZ
 ZZ
 ZZ
 aa
-ml
-ml
-ml
-ml
-ml
+TO
+TO
+TO
+TO
+TO
 DX
 EN
 EN
 nw
-ml
-io
-io
-io
-ml
+TO
+Uo
+Uo
+Uo
+TO
 VK
 TO
 aa
@@ -4301,20 +4216,20 @@ ZZ
 ZZ
 ZZ
 aa
-ml
-Gh
-Gh
-cC
+TO
+EN
+EN
+hr
 yq
 GN
 EN
 EN
 MK
 yq
-iI
-Gh
-Gh
-ml
+DX
+EN
+EN
+TO
 VK
 TO
 aa
@@ -4340,20 +4255,20 @@ ZZ
 ZZ
 ZZ
 aa
-ml
+TO
 LB
 RM
-MP
+dz
 cn
 kA
 EN
 EN
 yt
 cp
-LD
+iu
 fP
 KZ
-ml
+TO
 VK
 TO
 aa
@@ -4379,20 +4294,20 @@ ZZ
 ZZ
 ZZ
 aa
-ml
-Gh
-Gh
-cC
+TO
+EN
+EN
+hr
 yq
 XQ
 EN
 EN
 ca
 yq
-iI
-Gh
-Gh
-ml
+DX
+EN
+EN
+TO
 VK
 TO
 aa
@@ -4418,20 +4333,20 @@ ZZ
 ZZ
 ZZ
 aa
-ml
-ml
-ml
-ml
-ml
+TO
+TO
+TO
+TO
+TO
 UK
 EN
 EN
 hr
-ml
-ml
-ml
-ml
-ml
+TO
+TO
+TO
+TO
+TO
 VK
 TO
 aa
@@ -4535,20 +4450,20 @@ ZZ
 ZZ
 ZZ
 aa
-ml
-ml
-ml
-ml
-ml
+TO
+TO
+TO
+TO
+TO
 DX
 EN
 EN
 nw
-ml
-ml
-ml
-ml
-ml
+TO
+TO
+TO
+TO
+TO
 VK
 TO
 aa
@@ -4574,7 +4489,7 @@ ZZ
 ZZ
 ZZ
 aa
-ml
+TO
 UC
 hG
 ut
@@ -4584,10 +4499,10 @@ EN
 EN
 MK
 yq
-iI
-Gh
-Gh
-ml
+DX
+EN
+EN
+TO
 VK
 TO
 aa
@@ -4613,20 +4528,20 @@ ZZ
 ZZ
 ZZ
 aa
-ml
+TO
 LB
 ir
-MP
+dz
 cn
 kA
 EN
 EN
 yt
 cp
-LD
+iu
 cL
 KZ
-ml
+TO
 VK
 TO
 aa
@@ -4652,20 +4567,20 @@ ZZ
 ZZ
 ZZ
 aa
-ml
+TO
 ow
-Gh
-cC
+EN
+hr
 yq
 XQ
 EN
 EN
 ca
 yq
-iI
-Gh
-Gh
-ml
+DX
+EN
+EN
+TO
 VK
 TO
 aa
@@ -4691,20 +4606,20 @@ ZZ
 ZZ
 ZZ
 aa
-ml
-ml
-ml
-ml
-ml
+TO
+TO
+TO
+TO
+TO
 qw
 EN
 EN
 hr
-ml
-ml
-ml
-ml
-ml
+TO
+TO
+TO
+TO
+TO
 VK
 TO
 aa
