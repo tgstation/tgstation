@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Floors repaired by floorbots will now have their overlays updated properly."
