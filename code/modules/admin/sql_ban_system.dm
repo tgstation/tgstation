@@ -200,7 +200,7 @@
 			<input type='radio' id='minor' name='radioseverity' value='minor'[edit_id ? " disabled" : ""]>
 			<div class='inputbox'></div></label>
 			<label class='inputlabel radio'>High
-			<input type='radio' id='high' name='radioseverity' value='high'[edit_id ? " disabled" : ""]>
+			<input type='radio' id='high' name='radioseverity' value='high'[role == "High" ? "" : " checked"][edit_id ? " disabled" : ""]>
 			<div class='inputbox'></div></label>
 		</div>
 		<div class='column'>
