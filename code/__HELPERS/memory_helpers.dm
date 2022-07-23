@@ -42,7 +42,8 @@
 		extra_info[DETAIL_WHERE] = get_area(victim)
 
 	if(!(memory_flags & MEMORY_FLAG_NOMOOD))
-		victim_mood = current.mob_mood.mood_level
+		if (current.mob_mood)
+			victim_mood = current.mob_mood.mood_level
 
 		if(victim == current)
 			story_mood = victim_mood
