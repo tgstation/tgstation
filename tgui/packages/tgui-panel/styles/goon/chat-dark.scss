@@ -534,26 +534,50 @@ em {
 }
 
 .brass {
-  color: #BE8700;
+  color: #be8700;
 }
 
 @keyframes ratvarcolor {
-  0% { color: #0d0d0d; }
-  9% { color: #BE8700; }
-  18% { color: #0d0d0d; }
-  27% { color: #42474D; }
-  36% { color: #0d0d0d; }
-  45% { color: #AF0AAF; }
-  54% { color: #0d0d0d; }
-  63% { color: #1E8CE1; }
-  72% { color: #0d0d0d; }
-  81% { color: #DAAA18; }
-  90% { color: #0d0d0d; }
-  100% { color: #6E001A; }
+  0% {
+    color: #0d0d0d;
+  }
+  9% {
+    color: #be8700;
+  }
+  18% {
+    color: #0d0d0d;
+  }
+  27% {
+    color: #42474d;
+  }
+  36% {
+    color: #0d0d0d;
+  }
+  45% {
+    color: #af0aaf;
+  }
+  54% {
+    color: #0d0d0d;
+  }
+  63% {
+    color: #1e8ce1;
+  }
+  72% {
+    color: #0d0d0d;
+  }
+  81% {
+    color: #daaa18;
+  }
+  90% {
+    color: #0d0d0d;
+  }
+  100% {
+    color: #6e001a;
+  }
 }
 
 .ratvar {
-  color: #BE8700;
+  color: #be8700;
   font-size: 28px;
   font-weight: bold;
   font-style: italic;
