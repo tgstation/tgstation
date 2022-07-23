@@ -22,13 +22,13 @@
 	allowed_buildtypes = PROTOLATHE
 
 /obj/machinery/rnd/production/protolathe/deconstruct(disassembled)
-	usr.log_message("[disassembled ? "disassembled" : "deconstructed"] protolathe of type [type] at [get_area_name(src, TRUE)].", LOG_GAME)
+	log_game("Protolathe of type [type] [disassembled ? "disassembled" : "deconstructed"] by [key_name(usr)] at [get_area_name(src, TRUE)]")
 
 	return ..()
 
 /obj/machinery/rnd/production/protolathe/Initialize(mapload)
 	if(!mapload)
-		usr.log_message("constructed protolathe of type [type] at [get_area_name(src, TRUE)].", LOG_GAME)
+		log_game("Protolathe of type [type] constructed by [key_name(usr)] at [get_area_name(src, TRUE)]")
 
 	return ..()
 
