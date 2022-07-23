@@ -107,10 +107,16 @@
 /obj/machinery/launchpad/proc/set_offset(x, y)
 	if(teleporting)
 		return
-	if(!isnull(x))
+	if(!isnull(x) && !isnull(y))
 		x_offset = clamp(x, -range, range)
-	if(!isnull(y))
 		y_offset = clamp(y, -range, range)
+		usr.log_message("changed the launchpad's x and y-offset parameters to X:[x] Y:[y].", LOG_GAME)
+	else if(!isnull(x))
+		x_offset = clamp(x, -range, range)
+		usr.log_message("changed the launchpad's x-offset parameter to X:[x].", LOG_GAME)
+	else if(!isnull(y))
+		y_offset = clamp(y, -range, range)
+		usr.log_message("changed the launchpad's y-offset parameter to Y:[y].", LOG_GAME)
 	update_indicator()
 
 /obj/effect/ebeam/launchpad/Initialize(mapload)

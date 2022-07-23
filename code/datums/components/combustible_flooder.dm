@@ -41,17 +41,16 @@
 
 	// Logging-related
 	var/admin_message = "[parent] ignited in [ADMIN_VERBOSEJMP(flooded_turf)]"
-	var/log_message = "ignited [parent] at [AREACOORD(flooded_turf)]"
+	var/log_message = "ignited [parent]"
 	if(user)
 		admin_message += " by [ADMIN_LOOKUPFLW(user)]"
-		user.log_message(log_message, LOG_GAME)//only individual log
-		log_message = "[key_name(user)] " + log_message
+		user.log_message(log_message, LOG_GAME, log_globally = FALSE)//only individual log
 	else
+		log_message = "[key_name(user)] " + log_message
 		admin_message += " by fire"
 		log_message += " by fire"
+		log_game(log_message)
 	message_admins(admin_message)
-	if(!user)
-		log_game(log_message) //log to global log only if no user logging done, which logs globally
 
 	if(delete_parent && !QDELETED(parent))
 		qdel(parent) // For things with the explodable component like plasma mats this isn't necessary, but there's no harm.

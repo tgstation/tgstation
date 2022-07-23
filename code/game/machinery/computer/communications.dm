@@ -209,7 +209,7 @@
 			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 
 			// Only notify people if an actual change happened
-			usr.log_message("changed the security level to [params["newSecurityLevel"]] with [src] at [AREACOORD(usr)].", LOG_GAME)
+			usr.log_message("changed the security level to [params["newSecurityLevel"]] with [src].", LOG_GAME)
 			message_admins("[ADMIN_LOOKUPFLW(usr)] has changed the security level to [params["newSecurityLevel"]] with [src] at [AREACOORD(usr)].")
 			deadchat_broadcast(" has changed the security level to [params["newSecurityLevel"]] with [src] at [span_name("[get_area_name(usr, TRUE)]")].", span_name("[usr.real_name]"), usr, message_type=DEADCHAT_ANNOUNCEMENT)
 

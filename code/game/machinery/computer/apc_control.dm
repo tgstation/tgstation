@@ -114,7 +114,7 @@
 			auth_id = "\[NULL\]"
 		if("toggle-logs")
 			should_log = !should_log
-			operator.log_message("set the logs of [src] in [AREACOORD(src)] [should_log ? "On" : "Off"]")
+			operator.log_message("set the logs of [src] [should_log ? "On" : "Off"].")
 		if("restore-console")
 			restoring = TRUE
 			addtimer(CALLBACK(src, .proc/restore_comp), rand(3,5) * 9)
@@ -136,7 +136,7 @@
 			APC.remote_control = src
 			APC.ui_interact(operator)
 			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
-			operator.log_message("remotely accessed [APC] from [src] at [AREACOORD(src)].")
+			operator.log_message("remotely accessed [APC] from [src].")
 			log_activity("[auth_id] remotely accessed APC in [get_area_name(APC.area, TRUE)]")
 			if(APC.locked)
 				APC.say("Remote access detected. Interface unlocked.")
@@ -191,7 +191,7 @@
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
-	usr.log_message("emagged [src] at [AREACOORD(src)]", LOG_GAME)
+	usr.log_message("emagged [src].", LOG_GAME)
 	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/machinery/computer/apc_control/proc/log_activity(log_text)
@@ -202,7 +202,7 @@
 /obj/machinery/computer/apc_control/proc/restore_comp()
 	obj_flags &= ~EMAGGED
 	should_log = TRUE
-	operator.log_message("restored the logs of [src] in [AREACOORD(src)]")
+	operator.log_message("restored the logs of [src].")
 	log_activity("-=- Logging restored to full functionality at this point -=-")
 	restoring = FALSE
 

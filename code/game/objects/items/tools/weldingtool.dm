@@ -152,7 +152,7 @@
 		var/mob/living/attacked_mob = attacked_atom
 		if(attacked_mob.ignite_mob())
 			message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(attacked_mob)] on fire with [src] at [AREACOORD(user)]")
-			user.log_message("[key_name(user)] set [key_name(attacked_mob)] on fire with [src] at [AREACOORD(user)]", LOG_ATTACK)
+			user.log_message("set [key_name(attacked_mob)] on fire with [src].", LOG_ATTACK)
 
 	if(!status && attacked_atom.is_refillable())
 		reagents.trans_to(attacked_atom, reagents.total_volume, transfered_by = user)

@@ -378,7 +378,6 @@
 	message_admins(span_notice("[ADMIN_LOOKUPFLW(usr)] detonated [key_name_admin(src, client)] at [ADMIN_VERBOSEJMP(groundzero)]!"))
 	usr.log_message("detonated [key_name(src)]!", LOG_GAME)
 	usr.log_message("detonated [key_name(src)]!", LOG_ATTACK, log_globally = FALSE)
-	src.log_message("was detonated by [key_name(usr)]!", LOG_VICTIM)
 	src.log_message("was detonated by [key_name(usr)]!", LOG_ATTACK, log_globally = FALSE)
 
 	log_combat(usr, src, "detonated cyborg")
