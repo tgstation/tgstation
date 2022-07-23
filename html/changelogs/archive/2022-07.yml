@@ -780,3 +780,49 @@
   tralezab:
   - balance: IAA are now flavored around rooting out corruption, rather than just
       killing syndicates.
+2022-07-23:
+  CoffeeDragon16:
+  - bugfix: maintenance-adapted eyes will now display properly
+  CursedBirb:
+  - bugfix: Dutch jacket shows hands again
+  FernandoJ8:
+  - bugfix: the appearance of broken plating now updates after repairing it
+  Fikou:
+  - qol: entrenching tool now tells you on examine how to switch config
+  Jackraxxus:
+  - bugfix: Tramstation chemfactory's meson left pair of meson goggles no longer slow
+      you down.
+  JohnFulpWillard:
+  - bugfix: The Veteran's cloak now only respects people who meet the requirements,
+      rather than being the other way around.
+  - spellcheck: Fixes a minor spelling error in seperation when you eat a red pill.
+  Melbert:
+  - bugfix: Blue, Red, and Delta alerts make the right sound again
+  - bugfix: Fixes a runtime error preventing Ion Storms from triggering occasionally
+  Mickyan:
+  - qol: Blacklight and red light fixtures are slightly brighter
+  MidoriWroth:
+  - bugfix: Fixed brownies and breadsticks not being bakeable
+  - bugfix: Brownie sheets are now sliceable again.
+  Profakos:
+  - bugfix: If you toggle night shift mode on an APC too fast, you'll see the balloon
+      message
+  Y0SH1M4S73R:
+  - bugfix: calling the lua function "print" when there are multiple lua states will
+      no longer crash the server
+  dragomagol:
+  - admin: moved dynamic logging into its own file
+  lizardqueenlexi:
+  - bugfix: added missing flag to captain's jumpskirt
+  magatsuchi:
+  - bugfix: fixes storage item icons not updating properly
+  necromanceranne:
+  - balance: Syndicate encryption keys protect your headset from radio jammers.
+  orthography:
+  - bugfix: fixes the highfive memory saying deuteragonist instead of the name of
+      the second actor.
+  san7890:
+  - bugfix: The KiloStation Emergency Shuttle now uses appropriate flooring to complement
+      the floor decalling work.
+  - bugfix: On MetaStation, the Quartermaster's Office no longer owns a conveyor belt.
+      Greedy bastard.

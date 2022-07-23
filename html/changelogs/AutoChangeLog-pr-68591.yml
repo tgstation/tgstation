@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "Having the Supermatter Engine detonate will no longer make all traitor final objectives unavailable. (Only the Supermatter Cascade objective is made unavailable.)"

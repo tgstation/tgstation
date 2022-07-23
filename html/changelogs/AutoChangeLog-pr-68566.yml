@@ -1,4 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes: 
-  - bugfix: "If you toggle night shift mode on an APC too fast, you'll see the balloon message"

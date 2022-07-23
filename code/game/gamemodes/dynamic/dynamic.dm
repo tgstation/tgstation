@@ -379,16 +379,16 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	mid_round_budget = threat_level - round_start_budget
 
 /datum/game_mode/dynamic/proc/setup_parameters()
-	log_game("DYNAMIC: Dynamic mode parameters for the round:")
-	log_game("DYNAMIC: Centre is [threat_curve_centre], Width is [threat_curve_width], Forced extended is [GLOB.dynamic_forced_extended ? "Enabled" : "Disabled"], No stacking is [GLOB.dynamic_no_stacking ? "Enabled" : "Disabled"].")
-	log_game("DYNAMIC: Stacking limit is [GLOB.dynamic_stacking_limit].")
+	log_dynamic("Dynamic mode parameters for the round:")
+	log_dynamic("Centre is [threat_curve_centre], Width is [threat_curve_width], Forced extended is [GLOB.dynamic_forced_extended ? "Enabled" : "Disabled"], No stacking is [GLOB.dynamic_no_stacking ? "Enabled" : "Disabled"].")
+	log_dynamic("Stacking limit is [GLOB.dynamic_stacking_limit].")
 	if(GLOB.dynamic_forced_threat_level >= 0)
 		threat_level = round(GLOB.dynamic_forced_threat_level, 0.1)
 	else
 		generate_threat()
 	generate_budgets()
 	set_cooldowns()
-	log_game("DYNAMIC: Dynamic Mode initialized with a Threat Level of... [threat_level]! ([round_start_budget] round start budget)")
+	log_dynamic("Dynamic Mode initialized with a Threat Level of... [threat_level]! ([round_start_budget] round start budget)")
 	return TRUE
 
 /datum/game_mode/dynamic/proc/setup_shown_threat()
@@ -427,9 +427,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind && player.check_preferences())
 			roundstart_pop_ready++
 			candidates.Add(player)
-	log_game("DYNAMIC: Listing [roundstart_rules.len] round start rulesets, and [candidates.len] players ready.")
+	log_dynamic("Listing [roundstart_rules.len] round start rulesets, and [candidates.len] players ready.")
 	if (candidates.len <= 0)
-		log_game("DYNAMIC: [candidates.len] candidates.")
+		log_dynamic("[candidates.len] candidates.")
 		return TRUE
 
 	if(GLOB.dynamic_forced_roundstart_ruleset.len > 0)
@@ -437,14 +437,14 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	else
 		roundstart(roundstart_rules)
 
-	log_game("DYNAMIC: [round_start_budget] round start budget was left, donating it to midrounds.")
+	log_dynamic("[round_start_budget] round start budget was left, donating it to midrounds.")
 	threat_log += "[worldtime2text()]: [round_start_budget] round start budget was left, donating it to midrounds."
 	mid_round_budget += round_start_budget
 
 	var/starting_rulesets = ""
 	for (var/datum/dynamic_ruleset/roundstart/DR in executed_rules)
 		starting_rulesets += "[DR.name], "
-	log_game("DYNAMIC: Picked the following roundstart rules: [starting_rulesets]")
+	log_dynamic("Picked the following roundstart rules: [starting_rulesets]")
 	candidates.Cut()
 	return TRUE
 
@@ -484,11 +484,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /// A simple roundstart proc used when dynamic_forced_roundstart_ruleset has rules in it.
 /datum/game_mode/dynamic/proc/rigged_roundstart()
 	message_admins("[GLOB.dynamic_forced_roundstart_ruleset.len] rulesets being forced. Will now attempt to draft players for them.")
-	log_game("DYNAMIC: [GLOB.dynamic_forced_roundstart_ruleset.len] rulesets being forced. Will now attempt to draft players for them.")
+	log_dynamic("[GLOB.dynamic_forced_roundstart_ruleset.len] rulesets being forced. Will now attempt to draft players for them.")
 	for (var/datum/dynamic_ruleset/roundstart/rule in GLOB.dynamic_forced_roundstart_ruleset)
 		configure_ruleset(rule)
 		message_admins("Drafting players for forced ruleset [rule.name].")
-		log_game("DYNAMIC: Drafting players for forced ruleset [rule.name].")
+		log_dynamic("Drafting players for forced ruleset [rule.name].")
 		rule.mode = src
 		rule.acceptable(roundstart_pop_ready, threat_level) // Assigns some vars in the modes, running it here for consistency
 		rule.candidates = candidates.Copy()
@@ -504,7 +504,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 /datum/game_mode/dynamic/proc/roundstart(list/roundstart_rules)
 	if (GLOB.dynamic_forced_extended)
-		log_game("DYNAMIC: Starting a round of forced extended.")
+		log_dynamic("Starting a round of forced extended.")
 		return TRUE
 	var/list/drafted_rules = list()
 	for (var/datum/dynamic_ruleset/roundstart/rule in roundstart_rules)
@@ -524,7 +524,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	while (round_start_budget_left > 0)
 		var/datum/dynamic_ruleset/roundstart/ruleset = pick_weight(drafted_rules)
 		if (isnull(ruleset))
-			log_game("DYNAMIC: No more rules can be applied, stopping with [round_start_budget] left.")
+			log_dynamic("No more rules can be applied, stopping with [round_start_budget] left.")
 			break
 
 		var/cost = (ruleset in rulesets_picked) ? ruleset.scaling_cost : ruleset.cost
@@ -561,7 +561,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 /// Initializes the round start ruleset provided to it. Returns how much threat to spend.
 /datum/game_mode/dynamic/proc/picking_roundstart_rule(datum/dynamic_ruleset/roundstart/ruleset, scaled_times = 0, forced = FALSE)
-	log_game("DYNAMIC: Picked a ruleset: [ruleset.name], scaled [scaled_times] times")
+	log_dynamic("Picked a ruleset: [ruleset.name], scaled [scaled_times] times")
 
 	ruleset.trim_candidates()
 	var/added_threat = ruleset.scale_up(roundstart_pop_ready, scaled_times)
@@ -629,13 +629,13 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 					high_impact_ruleset_executed = TRUE
 				else if(new_rule.flags & ONLY_RULESET)
 					only_ruleset_executed = TRUE
-				log_game("DYNAMIC: Making a call to a specific ruleset...[new_rule.name]!")
+				log_dynamic("Making a call to a specific ruleset...[new_rule.name]!")
 				executed_rules += new_rule
 				if (new_rule.persistent)
 					current_rules += new_rule
 				return TRUE
 		else if (forced)
-			log_game("DYNAMIC: The ruleset [new_rule.name] couldn't be executed due to lack of elligible players.")
+			log_dynamic("The ruleset [new_rule.name] couldn't be executed due to lack of elligible players.")
 	return FALSE
 
 /datum/game_mode/dynamic/process()
@@ -659,7 +659,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			for(var/_executed in rule_list)
 				var/datum/executed = _executed
 				if(blocking == executed.type)
-					log_game("DYNAMIC: FAIL: check_blocking - [blocking] conflicts with [executed.type]")
+					log_dynamic("FAIL: check_blocking - [blocking] conflicts with [executed.type]")
 					return TRUE
 	return FALSE
 
@@ -672,7 +672,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if (forced_latejoin_rule)
 		forced_latejoin_rule.candidates = list(newPlayer)
 		forced_latejoin_rule.trim_candidates()
-		log_game("DYNAMIC: Forcing ruleset [forced_latejoin_rule]")
+		log_dynamic("Forcing ruleset [forced_latejoin_rule]")
 		if (forced_latejoin_rule.ready(TRUE))
 			if (!forced_latejoin_rule.repeatable)
 				latejoin_rules = remove_from_list(latejoin_rules, forced_latejoin_rule.type)
@@ -772,7 +772,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /// Log to messages and to the game
 /datum/game_mode/dynamic/proc/dynamic_log(text)
 	message_admins("DYNAMIC: [text]")
-	log_game("DYNAMIC: [text]")
+	log_dynamic("[text]")
 
 #undef FAKE_REPORT_CHANCE
 #undef FAKE_GREENSHIFT_FORM_CHANCE
