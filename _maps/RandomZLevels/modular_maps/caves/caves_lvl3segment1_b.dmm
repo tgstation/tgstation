@@ -663,10 +663,6 @@
 /obj/effect/turf_decal/siding/wideplating_new{
 	dir = 1
 	},
-/obj/effect/landmark/tram/right_part{
-	destination_id = "caves_drill_mid";
-	tram_id = "caves_drill"
-	},
 /turf/open/floor/plating/lavaland_atmos,
 /area/template_noop)
 "NH" = (
