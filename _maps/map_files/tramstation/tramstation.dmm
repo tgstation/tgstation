@@ -30972,9 +30972,7 @@
 /obj/item/pickaxe,
 /obj/item/storage/bag/ore,
 /obj/item/shovel,
-/obj/item/clothing/glasses/meson{
-	slowdown = 2
-	},
+/obj/item/clothing/glasses/meson,
 /obj/item/stack/marker_beacon/ten,
 /obj/item/clothing/gloves/color/yellow/heavy,
 /turf/open/floor/iron/white,
