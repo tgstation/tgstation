@@ -247,7 +247,7 @@
 			playsleepseconds = mytape.timestamp[i + 1] - mytape.timestamp[i]
 		if(playsleepseconds > 14 SECONDS)
 			sleep(1 SECONDS)
-			say("Skipping [playsleepseconds/10] seconds of silence.")
+			say("Skipping [playsleepseconds/(1 SECONDS)] seconds of silence.")
 			playsleepseconds = 1 SECONDS
 		i++
 
