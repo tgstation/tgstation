@@ -72,10 +72,10 @@
 
 /datum/quirk/connoisseur
 	name = "Connoisseur"
-	desc = "You're a fan of fine food and drink."
+	desc = "You're a fan of fine food and drink. You'll be more upset when hungry, or after eating poor food, but will be happier by eating good food and being full."
 	icon = "drumstick-bite"
 	value = 1
-	mob_trait = TRAIT_ALCOHOL_TOLERANCE
+	mob_trait = TRAIT_CONNOISSEUR
 	mood_quirk = TRUE
 	gain_text = "<span class='notice'>Your tastebuds feel lively!</span>"
 	lose_text = "<span class='danger'>Your tastebuds dull.</span>"

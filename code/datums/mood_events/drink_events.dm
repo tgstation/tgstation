@@ -12,27 +12,34 @@
 	REMOVE_TRAIT(owner, TRAIT_BLUSHING, "[type]")
 	owner.update_body()
 
-/datum/mood_event/quality_nice
+/datum/mood_event/drink
+	description = "That drink tasted like bade code!"
+
+/datum/mood_event/drink/add_effects(param)
+	if(HAS_TRAIT(owner, TRAIT_CONNOISSEUR))
+		mood_change *= 2
+
+/datum/mood_event/drink/quality_nice
 	description = "That drink wasn't bad at all."
 	mood_change = 2
 	timeout = 7 MINUTES
 
-/datum/mood_event/quality_good
+/datum/mood_event/drink/quality_good
 	description = "That drink was pretty good."
 	mood_change = 4
 	timeout = 7 MINUTES
 
-/datum/mood_event/quality_verygood
+/datum/mood_event/drink/quality_verygood
 	description = "That drink was great!"
 	mood_change = 6
 	timeout = 7 MINUTES
 
-/datum/mood_event/quality_fantastic
+/datum/mood_event/drink/quality_fantastic
 	description = "That drink was amazing!"
 	mood_change = 8
 	timeout = 7 MINUTES
 
-/datum/mood_event/amazingtaste
+/datum/mood_event/drink/amazingtaste
 	description = "Amazing taste!"
 	mood_change = 50
 	timeout = 10 MINUTES

@@ -835,6 +835,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define ITEM_BLIND_TRAIT "blind_item_trait"
 /// temporary trait fram an emote
 #define TRAIT_EMOTE "emote"
+#define TRAIT_CONNOISSEUR "connoisseur"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and
