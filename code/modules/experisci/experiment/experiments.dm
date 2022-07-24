@@ -325,7 +325,7 @@
 
 /datum/experiment/scanning/random/mecha_damage_scan/final_contributing_index_checks(atom/target, typepath)
 	var/found_percent = round(target.get_integrity() / target.max_integrity, 0.01) * 100
-	return ..() && (found_percent <= damage_percent)
+	return ..() && (found_percent <= (damage_percent + 5) && found_percent >= (damage_percent - 5))
 
 /datum/experiment/scanning/random/mecha_destroyed_scan
 	name = "Exosuit Materials 2: Excessive Damage Test"
