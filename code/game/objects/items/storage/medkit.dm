@@ -281,7 +281,7 @@
 
 	//Making a medibot!
 	if(contents.len >= 1)
-		to_chat(user, span_warning("You need to empty [src] out first!"))
+		balloon_alert(user, "items inside!")
 		return
 
 	var/obj/item/bot_assembly/medbot/medbot_assembly = new
@@ -296,7 +296,7 @@
 	else if (istype(src, /obj/item/storage/medkit/advanced))
 		medbot_assembly.set_skin("advanced")
 	user.put_in_hands(medbot_assembly)
-	to_chat(user, span_notice("You add [bodypart] to [src]."))
+	medbot_assembly.balloon_alert(user, "arm added")
 	medbot_assembly.robot_arm = bodypart.type
 	medbot_assembly.medkit_type = type
 	qdel(bodypart)
@@ -598,12 +598,12 @@
 		var/obj/item/reagent_containers/RC = I
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transfered_by = user)
 		if(units)
-			to_chat(user, span_notice("You transfer [units] units of the solution to [src]."))
+			balloon_alert(user, "[units]u transferred")
 			return
 	if(istype(I, /obj/item/plunger))
-		to_chat(user, span_notice("You start furiously plunging [name]."))
+		balloon_alert(user, "plunging...")
 		if(do_after(user, 10, target = src))
-			to_chat(user, span_notice("You finish plunging the [name]."))
+			balloon_alert(user, "plunged")
 			reagents.clear_reagents()
 		return
 	return ..()

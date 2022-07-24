@@ -56,25 +56,25 @@
 /obj/item/storage/secure/screwdriver_act(mob/living/user, obj/item/tool)
 	if(tool.use_tool(src, user, 20))
 		panel_open = !panel_open
-		to_chat(user, span_notice("You [panel_open ? "open" : "close"] the service panel."))
+		balloon_alert(user, "panel [panel_open ? "opened" : "closed"]")
 		return TRUE
 
 /obj/item/storage/secure/multitool_act(mob/living/user, obj/item/tool)
 	. = TRUE
 	if(lock_hacking)
-		to_chat(user, span_danger("This safe is already being hacked."))
+		balloon_alert(user, "already hacking!")
 		return
 	if(panel_open == TRUE)
-		to_chat(user, span_danger("Now attempting to reset internal memory, please hold."))
+		balloon_alert(user, "hacking...")
 		lock_hacking = TRUE
 		if (tool.use_tool(src, user, 400))
-			to_chat(user, span_danger("Internal memory reset - lock has been disengaged."))
+			balloon_alert(user, "hacked")
 			lock_set = FALSE
 
 		lock_hacking = FALSE
 		return
 
-	to_chat(user, span_warning("You must <b>unscrew</b> the service panel before you can pulse the wiring!"))
+	balloon_alert(user, "unscrew panel!")
 
 /obj/item/storage/secure/attack_self(mob/user)
 	var/locked = atom_storage.locked

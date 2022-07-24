@@ -24,27 +24,27 @@
 	var/locked = atom_storage.locked
 	if(W.GetID())
 		if(broken)
-			to_chat(user, span_danger("It appears to be broken."))
+			balloon_alert(user, "broken!")
 			return
 		if(allowed(user))
 			atom_storage.locked = !locked
 			locked = atom_storage.locked
 			if(locked)
 				icon_state = icon_locked
-				to_chat(user, span_danger("You lock the [src.name]!"))
 				atom_storage.close_all()
-				return
 			else
 				icon_state = icon_closed
-				to_chat(user, span_danger("You unlock the [src.name]!"))
-				return
+
+			balloon_alert(user, "[locked ? "locked" : "unlocked"]")
+			return
+
 		else
-			to_chat(user, span_danger("Access Denied."))
+			balloon_alert(user, "access denied!")
 			return
 	if(!locked)
 		return ..()
 	else
-		to_chat(user, span_danger("It's locked!"))
+		balloon_alert(user, "locked!")
 
 /obj/item/storage/lockbox/emag_act(mob/user)
 	if(!broken)
@@ -233,7 +233,7 @@
 		add_fingerprint(user)
 
 	if(id_card.registered_account != buyer_account)
-		to_chat(user, span_warning("Bank account does not match with buyer!"))
+		balloon_alert(user, "incorrect bank account!")
 		return
 
 	atom_storage.locked = !privacy_lock

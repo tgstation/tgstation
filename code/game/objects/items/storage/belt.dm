@@ -802,7 +802,7 @@
 		user.put_in_hands(I)
 		update_appearance()
 	else
-		to_chat(user, span_warning("[src] is empty!"))
+		balloon_alert(user, "empty!")
 
 /obj/item/storage/belt/sabre/update_icon_state()
 	icon_state = initial(inhand_icon_state)
