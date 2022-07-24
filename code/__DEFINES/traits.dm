@@ -593,6 +593,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CONNOISSEUR "connoisseur"
 #define TRAIT_EXPERT_SLEEPER "expert_sleeper"
 #define TRAIT_IRON_STOMACH "iron_stomach"
+#define TRAIT_SUPER_IMMUNE "super_immune"
 /// Gives you the Shifty Eyes quirk, rarely making people who examine you think you examined them back even when you didn't
 #define TRAIT_SHIFTY_EYES "shifty_eyes"
 

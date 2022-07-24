@@ -366,7 +366,7 @@
 	desc = "You have a robust immune system."
 	icon = "pills"
 	value = 4
-	mob_trait = TRAIT_SPIRITUAL
+	mob_trait = TRAIT_SUPER_IMMUNE
 	medical_record_text = "Patient has a hightened immune system."
 
 /datum/quirk/item_quirk/sweet_tooth
