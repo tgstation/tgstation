@@ -155,7 +155,7 @@
 				show_message = TRUE
 			else
 				if(!spam_protection)
-					src.balloon_alert(user, "bag full!")
+					balloon_alert(user, "bag full!")
 					spam_protection = TRUE
 					continue
 	if(show_message)

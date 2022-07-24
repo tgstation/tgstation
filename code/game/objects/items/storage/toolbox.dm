@@ -310,7 +310,7 @@
 	if(!is_type_in_list(src, allowed_toolbox) && (type != /obj/item/storage/toolbox))
 		return
 	if(contents.len >= 1)
-		balloon_alert(user, "stuff inside!")
+		balloon_alert(user, "not empty!")
 		return
 	if(T.use(10))
 		var/obj/item/bot_assembly/floorbot/B = new

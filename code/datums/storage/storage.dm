@@ -1072,11 +1072,11 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	collection_mode = (collection_mode+1)%3
 	switch(collection_mode)
 		if(COLLECT_SAME)
-			resolve_parent.balloon_alert(user, "single type")
+			resolve_parent.balloon_alert(user, "will now only pick up a single type")
 		if(COLLECT_EVERYTHING)
-			resolve_parent.balloon_alert(user, "all on tile")
+			resolve_parent.balloon_alert(user, "will now pick up everything")
 		if(COLLECT_ONE)
-			resolve_parent.balloon_alert(user, "single item")
+			resolve_parent.balloon_alert(user, "will now pick up one at a time")
 
 /// Gives a spiffy animation to our parent to represent opening and closing.
 /datum/storage/proc/animate_parent()

@@ -35,7 +35,7 @@
 			else
 				icon_state = icon_closed
 
-			balloon_alert(user, "[locked ? "locked" : "unlocked"]")
+			balloon_alert(user, locked ? "locked" : "unlocked")
 			return
 
 		else
