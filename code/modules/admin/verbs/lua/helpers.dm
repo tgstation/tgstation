@@ -39,6 +39,7 @@
  * a datum.
  */
 /datum/proc/lua_reference_cleanup()
+	SIGNAL_HANDLER
 	if(SSlua.gc_guard == src)
 		SSlua.gc_guard = null
 	for(var/datum/lua_state/state in SSlua.states)
