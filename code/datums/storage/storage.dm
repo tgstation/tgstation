@@ -157,10 +157,14 @@
 	if(!istype(arrived))
 		return
 
+	var/atom/resolve_parent = parent?.resolve()
+	if(!resolve_parent)
+		return
+
+	resolve_parent.update_appearance(UPDATE_ICON_STATE)
+
 	arrived.item_flags |= IN_STORAGE
-
 	refresh_views()
-
 	arrived.on_enter_storage(src)
 
 /// Automatically ran on all object removals: flag marking and view refreshing.
@@ -170,10 +174,14 @@
 	if(!istype(gone))
 		return
 
+	var/atom/resolve_parent = parent?.resolve()
+	if(!resolve_parent)
+		return
+
+	resolve_parent.update_appearance(UPDATE_ICON_STATE)
+
 	gone.item_flags &= ~IN_STORAGE
-
 	remove_and_refresh(gone)
-
 	gone.on_exit_storage(src)
 
 /**
@@ -460,8 +468,6 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	var/obj/item/resolve_parent = parent?.resolve()
 	if(!resolve_parent)
 		return
-
-	resolve_parent.update_appearance(UPDATE_ICON_STATE)
 
 	if(animated)
 		animate_parent()

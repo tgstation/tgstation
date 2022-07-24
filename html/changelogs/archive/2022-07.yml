@@ -702,3 +702,154 @@
       a few long hours in the lab, assistants have found a display hidden deep within
       the machinations of the airlock that allow you to either flip the direction
       of this Unrestricted Exit or disable it entirely.
+2022-07-20:
+  CoffeeDragon16:
+  - bugfix: xenomorph corrosive acid will once again not target mobs
+  - bugfix: xenomorph limbs will no longer be examined as human limbs
+  Justice12354:
+  - bugfix: Chemical reactions no longer give you double the product
+  PK_Sonikal:
+  - bugfix: The oxygen canister in the Cere emergency shuttle's cryogenics setup has
+      been replaced with the correct anesthetic mix.
+  Salex08:
+  - bugfix: roboticist in tramstation have access to tech storage again
+  Whoneedspacee:
+  - bugfix: Fixed megafauna not having melee cooldown times after ability usage.
+  - admin: Mob ability verbs expanded greatly, allowing for creation of custom ability
+      sequences and allowing easy removal of already added actions.
+  Y0SH1M4S73R:
+  - admin: Admins with the debug permission can run lua scripts using the "Open Lua
+      Editor" verb.
+  jlsnow301:
+  - code_imp: notify ghost alerts and healing robotic limbs' code was brought up to
+      coding standards.
+  jlsnow301 MooCow:
+  - bugfix: Adding items to dispenser shells no longer damages the dispenser
+  orthography:
+  - bugfix: fixed a scrubber that didn't have pipes.
+  zxaber:
+  - bugfix: Added Clown and Mime spawns to Tramstation
+2022-07-21:
+  Fikou:
+  - bugfix: fixes cqc knockouts
+  Kylerace:
+  - bugfix: circuits can no longer send trams to brazil, since that is not on the
+      station
+  ReinaCoder:
+  - imageadd: Gives the Spider Charge a unique sprite
+  Twaticus:
+  - imageadd: Various clothing items have been converted using GAGs, making them recolorable.
+      Check it out at your local clothesmate!
+  private-tristan:
+  - qol: Shutters, Blast doors, and Bluespace Vendors are now in the structures category,
+      instead of misc, craft away!
+2022-07-22:
+  13spacemen:
+  - imageadd: Internals action buttons have a gold border and are inserted left-most
+      by default
+  - rscdel: Removed the internals HUD icon (gas mask + tank icon)
+  CoffeeDragon16:
+  - rscadd: New signage on all stations for the AI upload, AI sattelite, telecomms,
+      vault, and the R&D servers.
+  Pickle-Coding:
+  - rscadd: Proto-nitrate bz response can now emit nuclear particles.
+  - balance: Proto-nitrate bz response radiation pulse intensity will get reduced
+      based on how many particles it is creating.
+  RandomGamer123, bug originally reported by Murmic#2120 on Discord:
+  - qol: Makes it more clear that venus human traps can be possessed in the first
+      place
+  - bugfix: Makes it so that venus human traps can be possessed even if they are underneath
+      kudzu
+  - refactor: Moved venus human traps to the same spawning system that spiders used,
+      now, a notification pops up when one is ready to be possessed, and you can possess
+      it by using the ghost role menu, the link in chat, or by clicking on the notification
+  - admin: Venus human traps now respect role bans (for ROLE_LAVALAND as its the default
+      for ghost roles)
+  Salex08:
+  - bugfix: parrots spawned from strange objects dont come with headsets anymore ,
+      like it was intented
+  itseasytosee:
+  - bugfix: Bugs exposed by gunpoint's fixing have been fixed
+  orthography:
+  - rscdel: removed one of the two circuit labs on tramstation
+  - balance: Nanotransen realizes they're losing money by having two of the same niche
+      science on the same station. The Auxiliary Laboratory has been cleared out until
+      there is a new use for it. Hope squatters don't set up in there...
+  - bugfix: gives tramstation science more glass
+  - bugfix: removes one of the tramstation cargo ordering consoles
+  tralezab:
+  - balance: IAA are now flavored around rooting out corruption, rather than just
+      killing syndicates.
+2022-07-23:
+  CoffeeDragon16:
+  - bugfix: maintenance-adapted eyes will now display properly
+  CursedBirb:
+  - bugfix: Dutch jacket shows hands again
+  FernandoJ8:
+  - bugfix: the appearance of broken plating now updates after repairing it
+  Fikou:
+  - qol: entrenching tool now tells you on examine how to switch config
+  Jackraxxus:
+  - bugfix: Tramstation chemfactory's meson left pair of meson goggles no longer slow
+      you down.
+  JohnFulpWillard:
+  - bugfix: The Veteran's cloak now only respects people who meet the requirements,
+      rather than being the other way around.
+  - spellcheck: Fixes a minor spelling error in seperation when you eat a red pill.
+  Melbert:
+  - bugfix: Blue, Red, and Delta alerts make the right sound again
+  - bugfix: Fixes a runtime error preventing Ion Storms from triggering occasionally
+  Mickyan:
+  - qol: Blacklight and red light fixtures are slightly brighter
+  MidoriWroth:
+  - bugfix: Fixed brownies and breadsticks not being bakeable
+  - bugfix: Brownie sheets are now sliceable again.
+  Profakos:
+  - bugfix: If you toggle night shift mode on an APC too fast, you'll see the balloon
+      message
+  Y0SH1M4S73R:
+  - bugfix: calling the lua function "print" when there are multiple lua states will
+      no longer crash the server
+  dragomagol:
+  - admin: moved dynamic logging into its own file
+  lizardqueenlexi:
+  - bugfix: added missing flag to captain's jumpskirt
+  magatsuchi:
+  - bugfix: fixes storage item icons not updating properly
+  necromanceranne:
+  - balance: Syndicate encryption keys protect your headset from radio jammers.
+  orthography:
+  - bugfix: fixes the highfive memory saying deuteragonist instead of the name of
+      the second actor.
+  san7890:
+  - bugfix: The KiloStation Emergency Shuttle now uses appropriate flooring to complement
+      the floor decalling work.
+  - bugfix: On MetaStation, the Quartermaster's Office no longer owns a conveyor belt.
+      Greedy bastard.
+2022-07-24:
+  13spacemen:
+  - imageadd: Pun Pun wears drippy clothes now. Swag.
+  - bugfix: Becoming a digitigrade species should properly drop your shoes if they
+      don't fit
+  ArcaneMusic:
+  - qol: Roller Beds and Body Bags now have screentips explaining how to fold them
+      up.
+  Melbert:
+  - bugfix: Having the Supermatter Engine detonate will no longer make all traitor
+      final objectives unavailable. (Only the Supermatter Cascade objective is made
+      unavailable.)
+  Mooshimi:
+  - bugfix: Separate DNA Vaults will now check if you already have a power from one
+      before giving a power to you.
+  ShizCalev:
+  - bugfix: Floors repaired by floorbots will now have their overlays updated properly.
+  Wallem:
+  - imageadd: Updated the treat fabricator sprite
+  Watermelon914:
+  - admin: The lua editor now has text highlighting for lua keywords
+  dragomagol:
+  - bugfix: tongue tied players will no longer be haunted by floating faces if they
+      type too fast
+  - admin: Added Delay Round End to the server tab
+  vincentiusvin:
+  - bugfix: fixed the 20 radius supermatter delam irradiation not working

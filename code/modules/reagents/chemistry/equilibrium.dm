@@ -345,8 +345,6 @@
 	for(var/product in reaction.results)
 		//create the products
 		step_add = delta_chem_factor * reaction.results[product]
-		//If we make purities in real time
-		holder.add_reagent(product, step_add, null, cached_temp, purity, override_base_ph = TRUE)
 		//Default handiling
 		holder.add_reagent(product, step_add, null, cached_temp, purity, override_base_ph = TRUE)
 

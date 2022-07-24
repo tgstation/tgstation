@@ -2331,7 +2331,7 @@
 	name = "Formalwear Crate"
 	desc = "You're gonna like the way you look, I guaranteed it. Contains an asston of fancy clothing."
 	cost = CARGO_CRATE_VALUE * 4 //Lots of very expensive items. You gotta pay up to look good!
-	contains = list(/obj/item/clothing/under/dress/blacktango,
+	contains = list(/obj/item/clothing/under/dress/tango,
 					/obj/item/clothing/under/misc/assistantformal,
 					/obj/item/clothing/under/misc/assistantformal,
 					/obj/item/clothing/under/rank/civilian/lawyer/bluesuit,

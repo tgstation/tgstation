@@ -259,3 +259,9 @@
 #define PN_BZASE_RAD_RANGE_DIVISOR 1.5
 /// A scaling factor for the threshold of the radiation pulses generated when proto-nitrate breaks down BZ.
 #define PN_BZASE_RAD_THRESHOLD_BASE 15
+/// A scaling factor for the nuclear particle production generated when proto-nitrate breaks down BZ.
+#define PN_BZASE_NUCLEAR_PARTICLE_DIVISOR 5
+/// The maximum amount of nuclear particles that can be produced from proto-nitrate breaking down BZ.
+#define PN_BZASE_NUCLEAR_PARTICLE_MAXIMUM 6
+/// How much radiation in consumed amount does a nuclear particle take from radiation when proto-nitrate breaks down BZ.
+#define PN_BZASE_NUCLEAR_PARTICLE_RADIATION_ENERGY_CONVERSION 2.5
