@@ -324,7 +324,7 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 		new /obj/effect/temp_visual/telegraphing/lift_travel(below_us, duration)
 
 /**
- * Opens all doors that share an ID with our lift.
+ * Opens all blast doors and shutters that share an ID with our lift.
  *
  * on_z_level - optional, only open doors on this z-level.
  */
@@ -334,13 +334,13 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 			continue
 		if(!isnull(on_z_level) && elevator_door.z != on_z_level)
 			continue
-		if(elevator_door.density)
+		if(elevator_door.density) // Already open
 			continue
 
 		INVOKE_ASYNC(elevator_door, /obj/machinery/door/poddoor.proc/open)
 
 /**
- * Closes all doors that share an ID without lift.
+ * Closes all blast doors and shutters that share an ID without lift.
  *
  * on_z_level - optional, only close doors on this z-level.
  */
@@ -350,7 +350,7 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 			continue
 		if(!isnull(on_z_level) && elevator_door.z != on_z_level)
 			continue
-		if(elevator_door.density)
+		if(elevator_door.density) // Already shut
 			continue
 
 		INVOKE_ASYNC(elevator_door, /obj/machinery/door/poddoor.proc/close)
