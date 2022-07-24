@@ -42,7 +42,7 @@
 
 	update_mob()
 	playsound(src, 'sound/effects/spray2.ogg', 100, TRUE)
-	var/list/connected_turfs = detect_room(origin = get_turf(src), max_size = fix_range)
+	var/list/connected_turfs = create_atmos_zone(source = get_turf(src), range = fix_range)
 	var/number_of_turf = length(connected_turfs)
 	var/static/list/safe_mixture = typecacheof(list(/datum/gas/oxygen, /datum/gas/nitrogen))
 	var/datum/gas_mixture/removed_gas = new

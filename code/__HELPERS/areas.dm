@@ -40,6 +40,31 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 				continue
 			found_turfs += checkT // Since checkT is connected, add it to the list to be processed
 
+// Create a ZAS atmos zone, fuck you Kapu you made me zas post 
+/proc/create_atmos_zone(turf/source, var/range)
+	var/counter = 1 // a counter which increment each loop
+	if(source.blocks_air)
+		return
+	var/list/connected_turfs = list(source)
+	while(length(connected_turfs))
+		var/recorded_length = length(connected_turfs)
+		var/list/turf/adjacent_turfs = list(
+			get_step(connected_turfs[counter], NORTH),
+			get_step(connected_turfs[counter], SOUTH),
+			get_step(connected_turfs[counter], EAST),
+			get_step(connected_turfs[counter], WEST)
+		)// get a tile in each cardinal direction at once and add that to the list
+		for(var/turf/valid_turf in adjacent_turfs)//loop through the list and check for atmos adjacency
+			var/turf/reference_turf = connected_turfs[counter]
+			if(!TURFS_CAN_SHARE(reference_turf, valid_turf))
+				continue
+			if(length(connected_turfs) >= range)
+				return connected_turfs
+			connected_turfs |= valid_turf//add that to the original list
+		counter += 1 //increment by one so the next loop will start at the next position in the list
+		if(length(connected_turfs) == recorded_length)	
+			return connected_turfs	
+			
 /proc/create_area(mob/creator)
 	// Passed into the above proc as list/break_if_found
 	var/static/list/area_or_turf_fail_types = typecacheof(list(
