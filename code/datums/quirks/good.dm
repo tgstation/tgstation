@@ -374,7 +374,7 @@
 	desc = "You have a thing for sweets, they make you feel happy."
 	icon = "cookie"
 	value = 2
-	mob_trait = TRAIT_SPIRITUAL
+	mob_trait = TRAIT_SWEET_TOOTH
 	mood_quirk = TRUE
 	gain_text = "<span class='notice'>You want somthing sweet.</span>"
 	lose_text = "<span class='danger'>You loose your drive for something sweet.</span>"

@@ -310,3 +310,8 @@
 	description = "Fishing is relaxing."
 	mood_change = 5
 	timeout = 3 MINUTES
+
+/datum/mood_event/sugar_rush
+	description = "I'm a sucker for sweets."
+	mood_change = 3
+	timeout = 3 MINUTES

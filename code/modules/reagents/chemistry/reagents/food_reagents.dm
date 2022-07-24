@@ -224,6 +224,11 @@
 	taste_description = "sweetness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/sugar/on_mob_life(mob/living/carbon/sweetheart, delta_time, times_fired)
+	..()
+	if(HAS_TRAIT(sweetheart, TRAIT_SWEET_TOOTH))
+		SEND_SIGNAL(sweetheart, COMSIG_ADD_MOOD_EVENT, "sugar", /datum/mood_event/sugar_rush)
+
 // Plants should not have sugar, they can't use it and it prevents them getting water/ nutients, it is good for mold though...
 /datum/reagent/consumable/sugar/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
