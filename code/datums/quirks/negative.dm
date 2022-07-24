@@ -917,20 +917,6 @@
 	medical_record_text = "Patient's mind is in a vulnerable state, and cannot recover from traumatic events."
 	hardcore_value = 9
 
-/datum/quirk/dunce
-	name = "Dunce"
-	desc = "You don't really like this whole learning thing"
-	icon = "tired"
-	value = -1
-	medical_record_text = "Patient exhibits a lack of desire to learn anything."
-	hardcore_value = 2
-
-/datum/quirk/dunce/add()
-	quirk_holder.mind?.experience_multiplier_reasons["Dunce"] = 0
-
-/datum/quirk/dunce/remove()
-	quirk_holder.mind?.experience_multiplier_reasons -= "Dunce"
-
 /datum/quirk/item_quirk/allergic
 	name = "Extreme Medicine Allergy"
 	desc = "Ever since you were a kid, you've been allergic to certain chemicals..."
