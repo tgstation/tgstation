@@ -78,7 +78,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	var/datum/picture/saved_image // the saved image used for messaging purpose like come on dude
 
 	/// Stored pAI in the computer
-	var/obj/item/paicard/inserted_pai = null
+	var/obj/item/pai_card/inserted_pai = null
 
 /obj/item/modular_computer/Initialize(mapload)
 	. = ..()
@@ -661,11 +661,10 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		return
 
 	// Insert a PAI.
-	if(istype(attacking_item, /obj/item/paicard) && !inserted_pai)
+	if(istype(attacking_item, /obj/item/pai_card) && !inserted_pai)
 		if(!user.transferItemToLoc(attacking_item, src))
 			return
 		inserted_pai = attacking_item
-		inserted_pai.slotted = TRUE
 		to_chat(user, span_notice("You slot \the [attacking_item] into [src]."))
 		return
 
