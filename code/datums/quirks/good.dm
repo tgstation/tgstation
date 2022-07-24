@@ -388,14 +388,6 @@
 	mob_trait = TRAIT_THICK_SKIN
 	medical_record_text = "Patient has abnormally thick skin."
 
-/datum/quirk/item_quirk/tough_feet
-	name = "Tough Feet"
-	desc = "The skin on your feet is hard and calloused. You don't suffer the effects of caltrop-like effects while barefoot."
-	icon = "user-shield"
-	value = 6
-	mob_trait = TRAIT_SPIRITUAL
-	medical_record_text = "Patient has abnormally thick skin."
-
 /datum/quirk/robust_physique
 	name = "Built From Stronger Stuff"
 	desc = "You have robust physique, allowing you to take more punishment."
