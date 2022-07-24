@@ -359,9 +359,9 @@
 	medical_record_text = "Patient has a hightened immune system."
 
 /datum/quirk/item_quirk/sweet_tooth
-	name = "Sweet tooth"
+	name = "Sweet Tooth"
 	desc = "You have a thing for sweets, they make you feel happy."
-	icon = "cookie-bite"
+	icon = "cookie"
 	value = 2
 	mob_trait = TRAIT_SPIRITUAL
 	mood_quirk = TRUE
@@ -372,7 +372,7 @@
 /datum/quirk/item_quirk/thick_skin
 	name = "Thick Skin"
 	desc = "Your skin is tough as leather, leaving you resistant to blunt and slashing wounds."
-	icon = "shield-alt"
+	icon = "user-shield"
 	value = 6
 	mob_trait = TRAIT_THICK_SKIN
 	medical_record_text = "Patient has abnormally thick skin."
@@ -380,17 +380,16 @@
 /datum/quirk/item_quirk/tough_feet
 	name = "Tough Feet"
 	desc = "The skin on your feet is hard and calloused. You don't suffer the effects of caltrop-like effects while barefoot."
-	icon = "shield-alt"
+	icon = "user-shield"
 	value = 6
 	mob_trait = TRAIT_SPIRITUAL
 	medical_record_text = "Patient has abnormally thick skin."
 
-/datum/quirk/item_quirk/robust_physique
+/datum/quirk/robust_physique
 	name = "Built From Stronger Stuff"
 	desc = "You have robust physique, allowing you to take more punishment."
 	icon = "user-astronaut"
 	value = 10
-	mob_trait = TRAIT_SPIRITUAL
 	medical_record_text = "Patient has an unnaturally robust physique."
 
 /datum/quirk/robust_physique/add()
