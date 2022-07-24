@@ -26,12 +26,13 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Clown Enjoyer","Mime Fan"),
 		list("Bad Touch", "Friendly"),
 		list("Extrovert", "Introvert"),
-		//list("Cry Baby", "Masochist"),
-		//list("Tough Skin", "Frail"),
-		//list("Addiction Resistance", "Addictive Personality", "Junkie"),
-		//list("Connoisseur", "Sweet Tooth"),
-		//list("Expert Sleeper", "Heavy Sleeper"),
-		//list("Indefatigable", "Languorous"),
+		list("Cry Baby", "Masochist"),
+		list("Tough Skin", "Frail"),
+		list("Addiction Resistance", "Addictive Personality", "Junkie"),
+		list("Connoisseur", "Sweet Tooth"),
+		list("Expert Sleeper", "Heavy Sleeper"),
+		list("Indefatigable", "Languorous"),
+		list("Light Eater", "Voracious"),
 	)
 
 /datum/controller/subsystem/processing/quirks/Initialize(timeofday)

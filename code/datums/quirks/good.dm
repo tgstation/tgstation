@@ -222,8 +222,8 @@
 	desc = "You can handel gross food better than most. Your strong stomach doesn't make it taste any better, but it does help you keep it down."
 	icon = "pizza-slice"
 	value = 2
-	mob_trait = TRAIT_ALCOHOL_TOLERANCE
-	medical_record_text = "Patient has exquisit gastro-intestial fortitude"
+	mob_trait = TRAIT_IRON_STOMACH
+	medical_record_text = "Patient has exquisite gastro-intestinal fortitude"
 
 /datum/quirk/jolly
 	name = "Jolly"
@@ -253,6 +253,16 @@
 	gain_text = "<span class='notice'>You don't feel like eating all that much.</span>"
 	lose_text = "<span class='danger'>You feel like you could probably use a bite to eat.</span>"
 	medical_record_text = "Patient has a slower than average matabolism."
+
+/datum/quirk/light_eater/add()
+	if(ishuman(quirk_holder))
+		var/mob/living/carbon/human/subject = quirk_holder
+		subject.physiology.hunger_mod *= 0.75
+
+/datum/quirk/light_eater/remove()
+	if(ishuman(quirk_holder))
+		var/mob/living/carbon/human/subject = quirk_holder
+		subject.physiology.hunger_mod /= 0.75
 
 /datum/quirk/item_quirk/masochist
 	name = "Masochist"

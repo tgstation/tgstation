@@ -416,6 +416,10 @@
 	if((HAS_TRAIT(src, TRAIT_NOHUNGER) || HAS_TRAIT(src, TRAIT_TOXINLOVER)) && !force)
 		return TRUE
 
+	if((HAS_TRAIT(src, TRAIT_IRON_STOMACH)) && !force && stat != DEAD)
+		to_chat(src, span_warning("Your body tries to vomit, but you keep it down."))
+		return
+
 	if(nutrition < 100 && !blood && !force)
 		if(message)
 			visible_message(span_warning("[src] dry heaves!"), \
