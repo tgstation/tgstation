@@ -1,0 +1,5 @@
+author: "magatsuchi"
+delete-after: True
+changes: 
+  - bugfix: "dumping storage containers now works properly, and cigarette carts aren't janky anymore to open"
+  - bugfix: "right clicking a storage container with an item in hand now opens storage"
