@@ -400,7 +400,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(damage >= emergency_point)
 		return SUPERMATTER_EMERGENCY
 	if(damage >= danger_point)
-		return SUPERMATTER_WARNING
+		return SUPERMATTER_DANGER
 	if(damage >= warning_point)
 		return SUPERMATTER_WARNING
 	if(absorbed_gasmix.temperature > (T0C + HEAT_PENALTY_THRESHOLD) * 0.8)
