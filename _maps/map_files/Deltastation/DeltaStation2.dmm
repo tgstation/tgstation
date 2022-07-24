@@ -2777,10 +2777,7 @@
 /area/station/engineering/storage/tech)
 "aJZ" = (
 /obj/machinery/light/directional/east,
-/obj/item/storage/pod{
-	pixel_x = 8;
-	pixel_y = 32
-	},
+/obj/item/storage/alert_safe/directional/north,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -22439,6 +22436,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/storage/alert_safe/directional/north,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "gfJ" = (
@@ -27416,6 +27414,7 @@
 "hAB" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/item/storage/alert_safe/directional/south,
 /turf/open/floor/iron,
 /area/station/security/office)
 "hAG" = (
@@ -37792,9 +37791,6 @@
 /turf/open/floor/plating,
 /area/station/science/research/abandoned)
 "kiL" = (
-/obj/item/storage/pod{
-	pixel_x = 32
-	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/modular_computer/console/preset/cargochat/science,
 /obj/effect/turf_decal/trimline/brown/filled/line,
@@ -71735,15 +71731,6 @@
 /obj/structure/sign/warning/no_smoking,
 /turf/closed/wall/r_wall,
 /area/station/science/xenobiology)
-"tsm" = (
-/obj/item/storage/pod{
-	pixel_x = 32
-	},
-/obj/effect/landmark/secequipment,
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/station/security/office)
 "tss" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -144375,7 +144362,7 @@ jdI
 dGV
 dGV
 gNx
-tsm
+dGV
 nup
 vLo
 oIj

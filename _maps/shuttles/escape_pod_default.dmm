@@ -30,9 +30,7 @@
 	dir = 1
 	},
 /obj/item/radio/intercom/directional/east,
-/obj/item/storage/pod{
-	pixel_x = -26
-	},
+/obj/item/storage/alert_safe/directional/west,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
