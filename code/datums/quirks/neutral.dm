@@ -400,11 +400,11 @@
 
 /datum/quirk/atheist
 	name = "Atheist"
-	desc = "What's all this nonsense about space gods and holy magic? Surely there is a logical explanation for all this."
+	desc = "What's all this nonsense about space gods and holy magic? Surely there is a logical explanation for all this. (bibles will not heal you)"
 	icon = "atom"
 	value = 0
-	mob_trait = TRAIT_ALCOHOL_TOLERANCE
-	medical_record_text = "Patient reports lack of faith in god."
+	mob_trait = TRAIT_ATHEIST
+	medical_record_text = "Patient reports lack of faith in any religion."
 
 #define GAMING_WITHDRAWAL_TIME (15 MINUTES)
 /datum/quirk/gamer

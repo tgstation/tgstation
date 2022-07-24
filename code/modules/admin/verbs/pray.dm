@@ -33,11 +33,17 @@
 		prayer_type = "CULTIST PRAYER"
 		deity = "Nar'Sie"
 	else if(isliving(usr))
-		var/mob/living/L = usr
-		if(HAS_TRAIT(L, TRAIT_SPIRITUAL))
+		var/mob/living/prayer = usr
+		if(HAS_TRAIT(prayer, TRAIT_SPIRITUAL))
 			cross.icon_state = "holylight"
 			font_color = "blue"
 			prayer_type = "SPIRITUAL PRAYER"
+	else if(isliving(usr))
+		var/mob/living/prayer = usr
+		if(HAS_TRAIT(prayer, TRAIT_ATHEIST))
+			cross.icon_state = "atheist"
+			font_color = "grey"
+			prayer_type = "ATHEIST PRAYER"
 
 	var/msg_tmp = msg
 	GLOB.requests.pray(usr.client, msg, usr.job == JOB_CHAPLAIN)
