@@ -52,12 +52,14 @@ GLOBAL_LIST_EMPTY(lifts)
 	var/create_multitile_platform = FALSE
 
 	/// Does our elevator warn people (with visual effects) when moving down?
-	var/warns_on_down_movement = TRUE
+	var/warns_on_down_movement = FALSE
 	/// if TRUE, we will gib anyone we land on top of. if FALSE, we will just apply damage with a serious wound penalty.
-	var/violent_landing = FALSE
+	var/violent_landing = TRUE
 	/// How long does it take for the elevator to vertically?
 	var/elevator_vertical_speed = 2 SECONDS
 
+	/// We use a radial to travel primarily, instead of a button / ui
+	var/radial_travel = TRUE
 	/// A lazylist of REFs to all mobs which have a radial open currently
 	var/list/current_operators
 
@@ -650,25 +652,40 @@ GLOBAL_VAR_INIT(lift_down_arrow, image(icon = 'icons/testing/turf_analysis.dmi',
 	. = ..()
 	if(.)
 		return
-	open_lift_radial(user)
+	if(!radial_travel)
+		return ..()
+
+	return open_lift_radial(user)
 
 //ai probably shouldn't get to use lifts but they sure are great for admins to crush people with
 /obj/structure/industrial_lift/attack_ghost(mob/user)
 	. = ..()
 	if(.)
 		return
-	if(isAdminGhostAI(user))
-		open_lift_radial(user)
+	if(!radial_travel)
+		return
+	if(!isAdminGhostAI(user))
+		return
+
+	return open_lift_radial(user)
 
 /obj/structure/industrial_lift/attack_paw(mob/user, list/modifiers)
+	if(!radial_travel)
+		return ..()
+
 	return open_lift_radial(user)
 
-/obj/structure/industrial_lift/attackby(obj/item/W, mob/user, params)
+/obj/structure/industrial_lift/attackby(obj/item/attacking_item, mob/user, params)
+	if(!radial_travel)
+		return ..()
+
 	return open_lift_radial(user)
 
-/obj/structure/industrial_lift/attack_robot(mob/living/silicon/robot/R)
-	if(R.Adjacent(src))
-		return open_lift_radial(R)
+/obj/structure/industrial_lift/attack_robot(mob/living/user)
+	if(!radial_travel)
+		return ..()
+
+	return open_lift_radial(user)
 
 /**
  * Shows a message indicating that the lift has moved up or down.
@@ -688,6 +705,7 @@ GLOBAL_VAR_INIT(lift_down_arrow, image(icon = 'icons/testing/turf_analysis.dmi',
 	desc = "A lightweight platform. It moves in any direction, except up and down."
 	color = "#5286b9ff"
 	lift_id = DEBUG_LIFT_ID
+	radial_travel = TRUE
 
 /obj/structure/industrial_lift/debug/open_lift_radial(mob/user)
 	if (!in_range(src, user))
@@ -752,6 +770,7 @@ GLOBAL_VAR_INIT(lift_down_arrow, image(icon = 'icons/testing/turf_analysis.dmi',
 
 	lift_id = TRAM_LIFT_ID
 	lift_master_type = /datum/lift_master/tram
+	radial_travel = FALSE
 
 	/// Set by the tram control console in late initialize
 	var/travelling = FALSE
@@ -782,9 +801,6 @@ GLOBAL_VAR_INIT(lift_down_arrow, image(icon = 'icons/testing/turf_analysis.dmi',
 
 	src.travelling = travelling
 	SEND_SIGNAL(src, COMSIG_TRAM_SET_TRAVELLING, travelling)
-
-/obj/structure/industrial_lift/tram/open_lift_radial(mob/user) //dont click the floor dingus we use computers now
-	return
 
 /obj/structure/industrial_lift/tram/set_currently_z_moving()
 	return FALSE //trams can never z fall and shouldnt waste any processing time trying to do so
