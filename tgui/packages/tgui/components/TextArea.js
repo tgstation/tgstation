@@ -192,8 +192,8 @@ export class TextArea extends Component {
       <Box
         className={classes(['TextArea', fluid && 'TextArea--fluid', className])}
         {...rest}>
-        <Box position="absolute" width="100%" height="100%" overflow="hidden">
-          {!!displayedValue && (
+        {!!displayedValue && (
+          <Box position="absolute" width="100%" height="100%" overflow="hidden">
             <div
               className={classes([
                 'TextArea__textarea',
@@ -205,8 +205,8 @@ export class TextArea extends Component {
               ref={this.displayedContainerRef}>
               {displayedValue}
             </div>
-          )}
-        </Box>
+          </Box>
+        )}
         <textarea
           ref={this.textareaRef}
           className="TextArea__textarea"
