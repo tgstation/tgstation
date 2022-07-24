@@ -597,7 +597,7 @@ GLOBAL_VAR_INIT(lift_down_arrow, image(icon = 'icons/testing/turf_analysis.dmi',
 				return
 
 			if(elevator_vertical_speed <= 0 SECONDS)
-				lift_master_datum.MoveLift(UP, user)
+				lift_master_datum.move_lift_vertically(UP, user)
 			else
 				lift_master_datum.move_after_delay(
 					duration = elevator_vertical_speed,
@@ -616,7 +616,7 @@ GLOBAL_VAR_INIT(lift_down_arrow, image(icon = 'icons/testing/turf_analysis.dmi',
 				return
 
 			if(elevator_vertical_speed <= 0 SECONDS)
-				lift_master_datum.MoveLift(DOWN, user)
+				lift_master_datum.move_lift_vertically(DOWN, user)
 			else
 				lift_master_datum.move_after_delay(
 					duration = elevator_vertical_speed,
@@ -709,28 +709,28 @@ GLOBAL_VAR_INIT(lift_down_arrow, image(icon = 'icons/testing/turf_analysis.dmi',
 
 	switch(result)
 		if("NORTH")
-			lift_master_datum.MoveLiftHorizontal(NORTH, z)
+			lift_master_datum.move_lift_horizontally(NORTH, z)
 			open_lift_radial(user)
 		if("NORTHEAST")
-			lift_master_datum.MoveLiftHorizontal(NORTHEAST, z)
+			lift_master_datum.move_lift_horizontally(NORTHEAST, z)
 			open_lift_radial(user)
 		if("EAST")
-			lift_master_datum.MoveLiftHorizontal(EAST, z)
+			lift_master_datum.move_lift_horizontally(EAST, z)
 			open_lift_radial(user)
 		if("SOUTHEAST")
-			lift_master_datum.MoveLiftHorizontal(SOUTHEAST, z)
+			lift_master_datum.move_lift_horizontally(SOUTHEAST, z)
 			open_lift_radial(user)
 		if("SOUTH")
-			lift_master_datum.MoveLiftHorizontal(SOUTH, z)
+			lift_master_datum.move_lift_horizontally(SOUTH, z)
 			open_lift_radial(user)
 		if("SOUTHWEST")
-			lift_master_datum.MoveLiftHorizontal(SOUTHWEST, z)
+			lift_master_datum.move_lift_horizontally(SOUTHWEST, z)
 			open_lift_radial(user)
 		if("WEST")
-			lift_master_datum.MoveLiftHorizontal(WEST, z)
+			lift_master_datum.move_lift_horizontally(WEST, z)
 			open_lift_radial(user)
 		if("NORTHWEST")
-			lift_master_datum.MoveLiftHorizontal(NORTHWEST, z)
+			lift_master_datum.move_lift_horizontally(NORTHWEST, z)
 			open_lift_radial(user)
 		if("Cancel")
 			return

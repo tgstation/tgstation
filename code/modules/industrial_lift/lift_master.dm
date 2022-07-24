@@ -264,7 +264,7 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
  * going - UP or DOWN directions, where the lift should go. Keep in mind by this point checks of whether it should go up or down have already been done.
  * user - Whomever made the lift movement.
  */
-/datum/lift_master/proc/MoveLift(going, mob/user)
+/datum/lift_master/proc/move_lift_vertically(going, mob/user)
 	set_controls(LIFT_PLATFORM_LOCKED)
 	//lift_platforms are sorted in order of lowest z to highest z, so going upwards we need to move them in reverse order to not collide
 	if(going == UP)
@@ -284,32 +284,83 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 
 /**
  * Moves the lift after a passed delay.
+ *
+ * This is a more "user friendly" or "realistic" lift move.
+ * It will include things like:
+ * - Allowing lift "travel time"
+ * - Shutting elevator doors
+ * - Sound effects for moving
+ * - Safety warnings for anyone below the lift while it's moving downwards
+ *
+ * duration - how long do we wait to move the lift?
+ * direction - which direction are we moving the lift?
+ * user - optional, who is moving the lift?
+ * display_warnings - if we are moving down, should we show warnings to people below us?
  */
 /datum/lift_master/proc/move_after_delay(duration, direction, mob/user, display_warnings = TRUE)
 	if(!isnum(duration) || duration <= 0)
 		CRASH("[type] move_after_delay called with invalid duration ([duration]).")
 
 	var/obj/structure/industrial_lift/prime_lift = lift_platforms[1]
+	var/turf/destination = get_step_multiz(prime_lift, DOWN)
 	// If anyone changes the hydraulic sound effect I sure hope they update this variable
 	var/hydraulic_sfx_duration = 2 SECONDS
 	// because we use the duration of the sound effect to make it last for roughly the duration of the lift travel
 	playsound(prime_lift, 'sound/mecha/hydraulic.ogg', 25, vary = TRUE, frequency = clamp(hydraulic_sfx_duration / duration, 0.33, 3))
 
-	addtimer(CALLBACK(src, .proc/MoveLift, direction, user), duration)
+	// Close ALL lift doors (ideally, should only end up closing the starting z-level doors)
+	close_lift_doors()
+	// Move the lift after a timer
+	addtimer(CALLBACK(src, .proc/move_lift_vertically, direction, user), duration)
+	// Then open all lift doors shortly after we arrive
+	addtimer(CALLBACK(src, .proc/open_lift_doors, destination.z), duration * 1.5)
 
 	if(!display_warnings || direction != DOWN)
 		return
 
+	// Show warning signs if we're going downwards, to avoid crushing and peril
 	for(var/obj/structure/industrial_lift/going_to_move as anything in lift_platforms)
 		var/turf/below_us = get_step_multiz(going_to_move, DOWN)
 		new /obj/effect/temp_visual/telegraphing/lift_travel(below_us, duration)
+
+/**
+ * Opens all doors that share an ID with our lift.
+ *
+ * on_z_level - optional, only open doors on this z-level.
+ */
+/datum/lift_master/proc/open_lift_doors(on_z_level)
+	for(var/obj/machinery/door/poddoor/elevator_door in GLOB.machines)
+		if(elevator_door.id != specific_lift_id)
+			continue
+		if(!isnull(on_z_level) && elevator_door.z != on_z_level)
+			continue
+		if(elevator_door.density)
+			continue
+
+		INVOKE_ASYNC(elevator_door, /obj/machinery/door/poddoor.proc/open)
+
+/**
+ * Closes all doors that share an ID without lift.
+ *
+ * on_z_level - optional, only close doors on this z-level.
+ */
+/datum/lift_master/proc/close_lift_doors(on_z_level)
+	for(var/obj/machinery/door/poddoor/elevator_door in GLOB.machines)
+		if(elevator_door.id != specific_lift_id)
+			continue
+		if(!isnull(on_z_level) && elevator_door.z != on_z_level)
+			continue
+		if(elevator_door.density)
+			continue
+
+		INVOKE_ASYNC(elevator_door, /obj/machinery/door/poddoor.proc/close)
 
 /**
  * Moves the lift, this is what users invoke with their hand.
  * This is a SAFE proc, ensuring every part of the lift moves SANELY.
  * It also locks controls for the (miniscule) duration of the movement, so the elevator cannot be broken by spamming.
  */
-/datum/lift_master/proc/MoveLiftHorizontal(going)
+/datum/lift_master/proc/move_lift_horizontally(going)
 	set_controls(LIFT_PLATFORM_LOCKED)
 
 	if(multitile_platform)
