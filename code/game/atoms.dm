@@ -1035,31 +1035,21 @@
  * call chain
  */
 /atom/proc/storage_contents_dump_act(obj/item/src_object, mob/user)
-	if(atom_storage)
-		return component_storage_contents_dump_act(src_object, user)
-	return FALSE
+	if(src_object.atom_storage)
+		to_chat(user, span_notice("You start dumping out the contents of \the [src_object] into \the [src]."))
 
-/**
- * Implement the behaviour for when a user click drags another storage item to you
- *
- * In this case we get as many of the tiems from the target items compoent storage and then
- * put everything into ourselves (or our storage component)
- *
- * TODO these should be purely component items that intercept the atom clicks higher in the
- * call chain
- */
-/atom/proc/component_storage_contents_dump_act(obj/item/src_object, mob/user)
-	var/list/things = src_object.contents
-	var/datum/progressbar/progress = new(user, things.len, src)
-	while (do_after(user, 1 SECONDS, src, NONE, FALSE, CALLBACK(src_object.atom_storage, /datum/storage.proc/handle_mass_transfer, user, src, /* override = */ TRUE)))
-		stoplag(1)
-	progress.end_progress()
-	to_chat(user, span_notice("You dump as much of [src_object]'s contents [atom_storage.insert_preposition]to [src] as you can."))
-	atom_storage.orient_to_hud(user)
-	src_object.atom_storage.orient_to_hud(user)
-	if(user.active_storage) //refresh the HUD to show the transfered contents
-		user.active_storage.refresh_views()
-	return TRUE
+		if(!do_after(user, 20, target = src))
+			return FALSE
+
+		src_object.atom_storage.handle_mass_transfer(user, src, /* override = */ TRUE)
+
+		atom_storage.orient_to_hud(user)
+		src_object.atom_storage?.orient_to_hud(user)
+		user.active_storage?.refresh_views()
+
+		return TRUE
+
+	return FALSE
 
 ///Get the best place to dump the items contained in the source storage item?
 /atom/proc/get_dumping_location()
