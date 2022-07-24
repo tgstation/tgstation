@@ -381,7 +381,7 @@
 
 /datum/quirk/languorous
 	name = "Languorous"
-	desc = "You are very easy to tire.."
+	desc = "You are very easy to tire..."
 	icon = "battery-quarter"
 	value = -6
 	mob_trait = TRAIT_LIGHT_DRINKER
@@ -389,6 +389,16 @@
 	lose_text = "<span class='danger'>You feel more in-shape.</span>"
 	medical_record_text = "Patient was made out of breath by filling out documents relating to their exercise routine."
 	hardcore_value = 6
+
+/datum/quirk/languorous/add()
+	if(ishuman(quirk_holder))
+		var/mob/living/carbon/human/subject = quirk_holder
+		subject.physiology.stamina_mod *= 2
+
+/datum/quirk/languorous/remove()
+	if(ishuman(quirk_holder))
+		var/mob/living/carbon/human/subject = quirk_holder
+		subject.physiology.stamina_mod /= 2
 
 /datum/quirk/item_quirk/nearsighted
 	name = "Nearsighted"

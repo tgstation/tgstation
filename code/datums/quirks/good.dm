@@ -188,14 +188,14 @@
 	medical_record_text = "Patient's skin shows natural resistance to fire."
 
 /datum/quirk/fireproof/add()
-	if(iscarbon(quirk_holder))
-		var/mob/living/carbon/fire_man = quirk_holder
-		fire_man.dna.species.heatmod *= 0.25
+	if(ishuman(quirk_holder))
+		var/mob/living/carbon/human/fire_man = quirk_holder
+		fire_man.physiology.heat_mod *= 0.25
 
 /datum/quirk/fireproof/remove()
-	if(iscarbon(quirk_holder))
-		var/mob/living/carbon/fire_man = quirk_holder
-		fire_man.dna.species.heatmod *= 4
+	if(ishuman(quirk_holder))
+		var/mob/living/carbon/human/fire_man = quirk_holder
+		fire_man.physiology.heat_mod *= 4
 
 /datum/quirk/indefatigable
 	name = "Indefatigable"
@@ -206,6 +206,16 @@
 	gain_text = "<span class='notice'>You feel like you could run a mile.</span>"
 	lose_text = "<span class='danger'>You feel tired.</span>"
 	medical_record_text = "Patient has an exelent diet and exersises consistantly, well done."
+
+/datum/quirk/indefatigable/add()
+	if(ishuman(quirk_holder))
+		var/mob/living/carbon/human/subject = quirk_holder
+		subject.physiology.stamina_mod *= 0.8
+
+/datum/quirk/indefatigable/remove()
+	if(ishuman(quirk_holder))
+		var/mob/living/carbon/human/subject = quirk_holder
+		subject.physiology.stamina_mod /= 0.8
 
 /datum/quirk/iron_stomach
 	name = "Iron Stomach"
