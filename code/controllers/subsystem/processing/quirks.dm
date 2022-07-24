@@ -33,6 +33,8 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Expert Sleeper", "Heavy Sleeper"),
 		list("Indefatigable", "Languorous"),
 		list("Light Eater", "Voracious"),
+		list("Spiritual", "Atheist"),
+
 	)
 
 /datum/controller/subsystem/processing/quirks/Initialize(timeofday)

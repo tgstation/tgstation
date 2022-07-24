@@ -56,6 +56,8 @@
 
 /mob/living/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
 	. = ..()
+	if(simple_bullet_act)
+		return simple_bullet_act
 	if(!P.nodamage && (. != BULLET_ACT_BLOCK))
 		var/attack_direction = get_dir(P.starting, src)
 		// we need a second, silent armor check to actually know how much to reduce damage taken, as opposed to

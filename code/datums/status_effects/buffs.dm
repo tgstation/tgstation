@@ -679,3 +679,24 @@
 /datum/status_effect/limited_buff/health_buff/maxed_out()
 	. = ..()
 	to_chat(owner, span_warning("You don't feel any healthier."))
+
+/datum/status_effect/bullet_dodge
+	id = "bullet_dodge"
+	alert_type = null
+	status_type = STATUS_EFFECT_REFRESH
+	duration = 1.2 SECONDS
+	var/original_bullet_act
+
+/datum/status_effect/bullet_dodge/on_apply()
+	var/mob/living/dodger = owner
+	if(dodger.simple_bullet_act)
+		original_bullet_act = dodger.simple_bullet_act
+	dodger.simple_bullet_act = BULLET_ACT_FORCE_PIERCE
+	return ..()
+
+/datum/status_effect/bullet_dodge/on_remove()
+	var/mob/living/dodger = owner
+	if(original_bullet_act)
+		dodger.simple_bullet_act = original_bullet_act
+	else
+		dodger.simple_bullet_act = null

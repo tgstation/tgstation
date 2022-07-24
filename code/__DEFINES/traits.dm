@@ -589,7 +589,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ADDICT_RESISTANCE "addict_resistance"
 #define TRAIT_ADDICTIVE_PERSONALITY "addictive_personality"
 #define TRAIT_BULLET_DODGER "bullet_dodger"
-#define TRAIT_BULLET_PASSTHROUGH "bullet_passthrough"
 #define TRAIT_CONNOISSEUR "connoisseur"
 #define TRAIT_EXPERT_SLEEPER "expert_sleeper"
 #define TRAIT_IRON_STOMACH "iron_stomach"
@@ -840,7 +839,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given by Objects that provide blindsight
 #define ITEM_BLIND_TRAIT "blind_item_trait"
 /// temporary trait from an emote
-#define TRAIT_EMOTE "emote"
+#define EMOTE_TRAIT "emote"
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and
 * granted/removed by [/obj/item/organ/internal/tongue]

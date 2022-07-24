@@ -73,10 +73,10 @@
 	if(.)
 		user.SpinAnimation(7,1)
 
-		if(iscarbon(user) && HAS_TRAIT(user, TRAIT_BULLET_DODGER))
-			ADD_TRAIT(user, TRAIT_BULLET_PASSTHROUGH, TRAIT_EMOTE)
-			sleep(2 SECONDS)
-			REMOVE_TRAIT(user, TRAIT_BULLET_PASSTHROUGH, TRAIT_EMOTE)
+		if(isliving(user) && HAS_TRAIT(user, TRAIT_BULLET_DODGER))
+			var/mob/living/dodger = user
+			dodger.apply_status_effect(/datum/status_effect/bullet_dodge)
+			dodger.adjustStaminaLoss(20)
 
 /datum/emote/flip/check_cooldown(mob/user, intentional)
 	. = ..()
