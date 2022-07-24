@@ -1,0 +1,1 @@
+/obj/item/storage/pod : /obj/item/storage/alert_safe
