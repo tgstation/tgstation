@@ -128,7 +128,9 @@ export class TextArea extends Component {
       const input = this.textareaRef.current;
       const displayedContainer = this.displayedContainerRef.current;
       if (displayedValue && input && displayedContainer) {
-        displayedContainer.scrollTop = input.scrollTop;
+        this.setState({
+          scrolledAmount: input.scrollTop,
+        });
       }
     };
   }
@@ -190,19 +192,21 @@ export class TextArea extends Component {
       <Box
         className={classes(['TextArea', fluid && 'TextArea--fluid', className])}
         {...rest}>
-        {!!displayedValue && (
-          <div
-            className={classes([
-              'TextArea__textarea',
-              'TextArea__textarea_custom',
-            ])}
-            style={{
-              'transform': `translateY(-${scrolledAmount}px)`,
-            }}
-            ref={this.displayedContainerRef}>
-            {displayedValue}
-          </div>
-        )}
+        <Box position="absolute" width="100%" height="100%" overflow="hidden">
+          {!!displayedValue && (
+            <div
+              className={classes([
+                'TextArea__textarea',
+                'TextArea__textarea_custom',
+              ])}
+              style={{
+                'transform': `translateY(-${scrolledAmount}px)`,
+              }}
+              ref={this.displayedContainerRef}>
+              {displayedValue}
+            </div>
+          )}
+        </Box>
         <textarea
           ref={this.textareaRef}
           className="TextArea__textarea"
