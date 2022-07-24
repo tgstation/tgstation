@@ -296,14 +296,13 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
  * door_duration - optional, how long should we wait to open the doors after arriving?
  * direction - which direction are we moving the lift?
  * user - optional, who is moving the lift?
- * display_warnings - if we are moving down, should we show warnings to people below us?
  */
-/datum/lift_master/proc/move_after_delay(lift_move_duration, door_duration, direction, mob/user, display_warnings = TRUE)
+/datum/lift_master/proc/move_after_delay(lift_move_duration, door_duration, direction, mob/user)
 	if(!isnum(lift_move_duration) || lift_move_duration <= 0)
 		CRASH("[type] move_after_delay called with invalid duration ([lift_move_duration]).")
 
 	var/obj/structure/industrial_lift/prime_lift = lift_platforms[1]
-	var/turf/destination = get_step_multiz(prime_lift, DOWN)
+	var/turf/destination = get_step_multiz(prime_lift, direction)
 	// If anyone changes the hydraulic sound effect I sure hope they update this variable
 	var/hydraulic_sfx_duration = 2 SECONDS
 	// because we use the duration of the sound effect to make it last for roughly the duration of the lift travel
@@ -312,15 +311,17 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 	// Close ALL lift doors (ideally, should only end up closing the starting z-level doors)
 	close_lift_doors()
 	// Move the lift after a timer
-	addtimer(CALLBACK(src, .proc/move_lift_vertically, direction, user), lift_move_duration)
+	addtimer(CALLBACK(src, .proc/move_lift_vertically, direction, user), lift_move_duration, TIMER_UNIQUE)
 	// Then open all lift doors after we move
-	addtimer(CALLBACK(src, .proc/open_lift_doors, destination.z), door_duration || lift_move_duration)
+	addtimer(CALLBACK(src, .proc/open_lift_doors, destination.z), door_duration || lift_move_duration, TIMER_UNIQUE)
 
-	if(!display_warnings || direction != DOWN)
+	if(direction != DOWN)
 		return
 
 	// Show warning signs if we're going downwards, to avoid crushing and peril
 	for(var/obj/structure/industrial_lift/going_to_move as anything in lift_platforms)
+		if(!going_to_move.warns_on_down_movement)
+			continue
 		var/turf/below_us = get_step_multiz(going_to_move, DOWN)
 		new /obj/effect/temp_visual/telegraphing/lift_travel(below_us, lift_move_duration)
 
@@ -336,7 +337,7 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 			continue
 		if(!isnull(on_z_level) && elevator_door.z != on_z_level)
 			continue
-		if(elevator_door.density) // Already open
+		if(!elevator_door.density) // Already open
 			continue
 
 		INVOKE_ASYNC(elevator_door, /obj/machinery/door/poddoor.proc/open)

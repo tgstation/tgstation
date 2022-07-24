@@ -52,9 +52,9 @@ GLOBAL_LIST_EMPTY(lifts)
 	var/create_multitile_platform = FALSE
 
 	/// Does our elevator warn people (with visual effects) when moving down?
-	var/warns_on_down_movement = FALSE
+	var/warns_on_down_movement = TRUE
 	/// if TRUE, we will gib anyone we land on top of. if FALSE, we will just apply damage with a serious wound penalty.
-	var/violent_landing = TRUE
+	var/violent_landing = FALSE
 	/// How long does it take for the elevator to vertically?
 	var/elevator_vertical_speed = 2 SECONDS
 
@@ -298,12 +298,13 @@ GLOBAL_LIST_EMPTY(lifts)
 					crushed.gib(FALSE, FALSE, FALSE)
 				else
 					// Less violent landing simply crushes every bone in your body.
-					crushed.apply_damage(25, BRUTE, BODY_ZONE_CHEST, wound_bonus = 30)
-					crushed.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 20)
-					crushed.apply_damage(15, BRUTE, BODY_ZONE_L_LEG, wound_bonus = 10)
-					crushed.apply_damage(15, BRUTE, BODY_ZONE_R_LEG, wound_bonus = 10)
-					crushed.apply_damage(15, BRUTE, BODY_ZONE_L_ARM, wound_bonus = 10)
-					crushed.apply_damage(15, BRUTE, BODY_ZONE_R_ARM, wound_bonus = 10)
+					crushed.Paralyze(30 SECONDS, ignore_canstun = TRUE)
+					crushed.apply_damage(30, BRUTE, BODY_ZONE_CHEST, wound_bonus = 30)
+					crushed.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 25)
+					crushed.apply_damage(15, BRUTE, BODY_ZONE_L_LEG, wound_bonus = 15)
+					crushed.apply_damage(15, BRUTE, BODY_ZONE_R_LEG, wound_bonus = 15)
+					crushed.apply_damage(15, BRUTE, BODY_ZONE_L_ARM, wound_bonus = 15)
+					crushed.apply_damage(15, BRUTE, BODY_ZONE_R_ARM, wound_bonus = 15)
 
 	else if(going == UP)
 		for(var/turf/dest_turf as anything in entering_locs)
@@ -604,7 +605,6 @@ GLOBAL_VAR_INIT(lift_down_arrow, image(icon = 'icons/testing/turf_analysis.dmi',
 					door_duration = elevator_vertical_speed * 1.5,
 					direction = UP,
 					user = user,
-					display_warnings = warns_on_down_movement,
 				)
 
 			show_fluff_message(UP, user)
@@ -624,7 +624,6 @@ GLOBAL_VAR_INIT(lift_down_arrow, image(icon = 'icons/testing/turf_analysis.dmi',
 					door_duration = elevator_vertical_speed * 1.5,
 					direction = DOWN,
 					user = user,
-					display_warnings = warns_on_down_movement,
 				)
 
 			show_fluff_message(DOWN, user)

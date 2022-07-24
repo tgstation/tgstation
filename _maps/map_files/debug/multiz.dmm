@@ -14,6 +14,18 @@
 "ah" = (
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos)
+"ai" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/preopen{
+	id = "test_vator"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
 "aj" = (
 /turf/closed/wall/r_wall,
 /area/station/engineering/main)
@@ -160,7 +172,7 @@
 	dir = 1
 	},
 /obj/structure/industrial_lift,
-/turf/open/floor/plating,
+/turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
 "aY" = (
 /obj/machinery/light/directional/east,
@@ -632,6 +644,10 @@
 /area/station/commons/storage/primary)
 "de" = (
 /obj/machinery/light/directional/north,
+/obj/machinery/button/elevator{
+	id = "test_vator";
+	pixel_y = 28
+	},
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "di" = (
@@ -774,6 +790,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/west,
+/obj/structure/railing/corner,
 /turf/open/floor/iron,
 /area/station/engineering/storage)
 "em" = (
@@ -977,6 +994,13 @@
 /obj/machinery/atmospherics/pipe/multiz,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
+"ji" = (
+/obj/structure/lattice,
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/openspace,
+/area/station/engineering/storage)
 "jz" = (
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/plating,
@@ -1044,7 +1068,7 @@
 	dir = 6
 	},
 /obj/structure/industrial_lift,
-/turf/open/floor/plating,
+/turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
 "mb" = (
 /obj/structure/cable,
@@ -1059,7 +1083,7 @@
 	dir = 8
 	},
 /obj/structure/industrial_lift,
-/turf/open/floor/plating,
+/turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
 "mZ" = (
 /turf/open/floor/iron{
@@ -1086,7 +1110,7 @@
 "nS" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/industrial_lift,
-/turf/open/floor/plating,
+/turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
 "nW" = (
 /obj/structure/grille,
@@ -1120,6 +1144,25 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/bridge)
 "qo" = (
+/turf/open/openspace,
+/area/station/engineering/storage)
+"qu" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "test_vator"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
+"qI" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing/corner{
+	dir = 8
+	},
 /turf/open/openspace,
 /area/station/engineering/storage)
 "qR" = (
@@ -1175,6 +1218,18 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
+/area/station/engineering/storage)
+"tw" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/door/poddoor{
+	id = "test_vator"
+	},
+/turf/open/floor/iron,
 /area/station/engineering/storage)
 "uv" = (
 /obj/structure/cable,
@@ -1247,7 +1302,7 @@
 	dir = 10
 	},
 /obj/structure/industrial_lift,
-/turf/open/floor/plating,
+/turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
 "xO" = (
 /obj/structure/lattice,
@@ -1268,11 +1323,14 @@
 	dir = 5
 	},
 /obj/structure/industrial_lift,
-/turf/open/floor/plating,
+/turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
 "yX" = (
 /obj/structure/industrial_lift,
-/turf/open/floor/plating,
+/obj/effect/landmark/lift_id{
+	specific_lift_id = "test_vator"
+	},
+/turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
 "zd" = (
 /obj/structure/railing{
@@ -1316,7 +1374,7 @@
 	dir = 4
 	},
 /obj/structure/industrial_lift,
-/turf/open/floor/plating,
+/turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
 "Bw" = (
 /obj/effect/turf_decal/stripes/line{
@@ -1342,6 +1400,13 @@
 /obj/machinery/disposal/bin,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
+"Dl" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/openspace,
+/area/station/engineering/storage)
 "Dm" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/plating,
@@ -1395,6 +1460,11 @@
 "Gb" = (
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
+"GG" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing,
+/turf/open/openspace,
+/area/station/engineering/storage)
 "Hp" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -1472,6 +1542,15 @@
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
+"Km" = (
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 4
+	},
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/engineering/storage)
 "Kw" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
@@ -1509,6 +1588,17 @@
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
+"LL" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/button/elevator{
+	id = "test_vator";
+	pixel_y = 28
+	},
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/turf/open/openspace,
+/area/station/engineering/storage)
 "LM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/meter,
@@ -1624,6 +1714,12 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/door/poddoor{
+	id = "test_vator"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "TH" = (
@@ -1679,8 +1775,16 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
 	},
+/obj/structure/railing/corner,
 /turf/open/floor/iron,
 /area/station/engineering/storage)
+"VF" = (
+/obj/machinery/button/elevator{
+	id = "test_vator";
+	pixel_y = 28
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
 "VG" = (
 /obj/structure/railing/corner{
 	dir = 1
@@ -1725,6 +1829,10 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
+"XY" = (
+/obj/machinery/light/directional/east,
+/turf/open/openspace,
+/area/station/engineering/storage)
 "Zc" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -1736,7 +1844,7 @@
 	dir = 9
 	},
 /obj/structure/industrial_lift,
-/turf/open/floor/plating,
+/turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
 "ZQ" = (
 /obj/effect/turf_decal/stripes/white/line{
@@ -3613,7 +3721,7 @@ by
 de
 dJ
 dB
-dl
+cS
 dE
 dH
 dI
@@ -3664,10 +3772,10 @@ cH
 cI
 cJ
 by
-dk
-dk
-dC
-dl
+qu
+ai
+qu
+cS
 dE
 dH
 dI
@@ -3721,7 +3829,7 @@ by
 Zk
 mG
 xK
-dl
+cS
 dF
 dk
 dk
@@ -3775,7 +3883,7 @@ by
 aW
 yX
 nS
-dl
+cS
 dl
 dl
 dl
@@ -3829,7 +3937,7 @@ by
 yR
 Bm
 lT
-dl
+cS
 dl
 dl
 dl
@@ -6419,10 +6527,10 @@ TY
 TY
 TY
 TY
+VF
 dY
 dY
-dY
-eF
+TY
 iu
 iu
 iu
@@ -6476,7 +6584,7 @@ TY
 SN
 SN
 SN
-eF
+TY
 iu
 iu
 iu
@@ -6530,7 +6638,7 @@ TY
 iu
 iu
 iu
-eF
+TY
 iu
 iu
 iu
@@ -6580,7 +6688,7 @@ dY
 dY
 dY
 dY
-TY
+eF
 iu
 iu
 iu
@@ -6638,7 +6746,7 @@ TY
 iu
 Ht
 iu
-eF
+TY
 iu
 iu
 iu
@@ -8796,10 +8904,10 @@ Qw
 Qw
 Qw
 ej
-Qw
+Km
 Qw
 Vn
-xO
+ji
 xO
 xO
 xO
@@ -8850,9 +8958,9 @@ qo
 xO
 qo
 qo
+Dl
 fp
-fp
-fp
+GG
 qo
 qo
 xO
@@ -8904,9 +9012,9 @@ qo
 xO
 qo
 qo
+Dl
 fp
-fp
-fp
+GG
 qo
 qo
 xO
@@ -8958,9 +9066,9 @@ qo
 xO
 qo
 qo
+Dl
 fp
-fp
-fp
+GG
 qo
 qo
 xO
@@ -9012,10 +9120,10 @@ qo
 xO
 qo
 qo
+Dl
 fp
-fp
-fp
-qo
+qI
+AG
 qo
 xO
 qo
@@ -9066,10 +9174,10 @@ qo
 xO
 qo
 qo
+Dl
 fp
 fp
-fp
-qo
+AG
 qo
 xO
 qo
@@ -9120,10 +9228,10 @@ qo
 xO
 qo
 qo
+Dl
 fp
 fp
-fp
-qo
+AG
 qo
 xO
 qo
@@ -9174,10 +9282,10 @@ qo
 xO
 qo
 qo
+Dl
 fp
 fp
-fp
-qo
+AG
 qo
 xO
 qo
@@ -9227,11 +9335,11 @@ qo
 qo
 xO
 qo
-qo
+AG
+LL
 fp
 fp
-fp
-qo
+AG
 qo
 xO
 qo
@@ -9281,11 +9389,11 @@ qo
 qo
 xO
 qo
-fp
-fp
-fp
-fp
-fp
+AG
+tw
+tw
+tw
+AG
 qo
 xO
 qo
@@ -9335,11 +9443,11 @@ qo
 qo
 xO
 qo
-fp
+AG
 qo
 qo
 qo
-fp
+AG
 qo
 xO
 qo
@@ -9389,11 +9497,11 @@ xO
 xO
 xO
 xO
-fp
+DK
 qo
 qo
 qo
-fp
+DK
 xO
 xO
 xO
@@ -9443,11 +9551,11 @@ qo
 qo
 xO
 qo
-fp
+AG
 qo
+XY
 qo
-qo
-fp
+AG
 qo
 xO
 qo
@@ -9497,11 +9605,11 @@ qo
 qo
 xO
 qo
-fp
-fp
-fp
-fp
-fp
+AG
+AG
+AG
+AG
+AG
 qo
 xO
 qo

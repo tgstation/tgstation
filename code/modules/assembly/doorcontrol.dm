@@ -279,7 +279,6 @@
 			door_duration = travel_speed * 1.5,
 			direction = direction,
 			user = activator,
-			display_warnings = !(obj_flags & EMAGGED)
 		)
 		// and we don't want to send another request until the timer's done
 		stoplag(travel_speed)
