@@ -22,6 +22,9 @@
 	)
 
 /obj/item/book/granter/attack_self(mob/living/user)
+	var/read_time = 5 SECONDS
+	if(HAS_TRAIT(user, TRAIT_QUICK_LEARNER))
+		read_time /= 2
 	if(reading)
 		to_chat(user, span_warning("You're already reading this!"))
 		return FALSE
@@ -44,7 +47,7 @@
 			on_reading_stopped()
 			reading = FALSE
 			return
-	if(do_after(user, 5 SECONDS, src))
+	if(do_after(user, read_time, src))
 		uses--
 		on_reading_finished(user)
 	reading = FALSE

@@ -317,10 +317,16 @@
 	desc = "You pick up on skills quicker than most people."
 	icon = "chalkboard-teacher"
 	value = 3
-	mob_trait = TRAIT_NIGHT_VISION
+	mob_trait = TRAIT_QUICK_LEARNER
 	gain_text = "<span class='notice'>You feel ready to learn.</span>"
 	lose_text = "<span class='danger'>You feel like learning if for chumps.</span>"
 	medical_record_text = "Patient shows unwarented enthusiasm for picking up new skills."
+
+/datum/quirk/quick_learner/add()
+	quirk_holder.mind?.experience_multiplier_reasons["Quick Learner"] = 1.25
+
+/datum/quirk/quick_learner/add()
+	quirk_holder.mind?.experience_multiplier_reasons -= "Quick Learner"
 
 /datum/quirk/robust_genetics
 	name = "Robust Genetics"

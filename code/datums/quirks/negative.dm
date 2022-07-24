@@ -922,9 +922,14 @@
 	desc = "You don't really like this whole learning thing"
 	icon = "tired"
 	value = -1
-	mob_trait = TRAIT_UNSTABLE
-	medical_record_text = "Patient's exibits a lack of desire to learn anything."
+	medical_record_text = "Patient exhibits a lack of desire to learn anything."
 	hardcore_value = 2
+
+/datum/quirk/dunce/add()
+	quirk_holder.mind?.experience_multiplier_reasons["Dunce"] = 0
+
+/datum/quirk/dunce/remove()
+	quirk_holder.mind?.experience_multiplier_reasons -= "Dunce"
 
 /datum/quirk/item_quirk/allergic
 	name = "Extreme Medicine Allergy"
