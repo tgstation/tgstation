@@ -298,12 +298,12 @@ GLOBAL_LIST_EMPTY(lifts)
 					crushed.gib(FALSE, FALSE, FALSE)
 				else
 					// Less violent landing simply crushes every bone in your body.
-					collided.apply_damage(25, BRUTE, BODY_ZONE_CHEST, wound_bonus = 30)
-					collided.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 20)
-					collided.apply_damage(15, BRUTE, BODY_ZONE_L_LEG, wound_bonus = 10)
-					collided.apply_damage(15, BRUTE, BODY_ZONE_R_LEG, wound_bonus = 10)
-					collided.apply_damage(15, BRUTE, BODY_ZONE_L_ARM, wound_bonus = 10)
-					collided.apply_damage(15, BRUTE, BODY_ZONE_R_ARM, wound_bonus = 10)
+					crushed.apply_damage(25, BRUTE, BODY_ZONE_CHEST, wound_bonus = 30)
+					crushed.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 20)
+					crushed.apply_damage(15, BRUTE, BODY_ZONE_L_LEG, wound_bonus = 10)
+					crushed.apply_damage(15, BRUTE, BODY_ZONE_R_LEG, wound_bonus = 10)
+					crushed.apply_damage(15, BRUTE, BODY_ZONE_L_ARM, wound_bonus = 10)
+					crushed.apply_damage(15, BRUTE, BODY_ZONE_R_ARM, wound_bonus = 10)
 
 	else if(going == UP)
 		for(var/turf/dest_turf as anything in entering_locs)
@@ -600,7 +600,8 @@ GLOBAL_VAR_INIT(lift_down_arrow, image(icon = 'icons/testing/turf_analysis.dmi',
 				lift_master_datum.move_lift_vertically(UP, user)
 			else
 				lift_master_datum.move_after_delay(
-					duration = elevator_vertical_speed,
+					lift_move_duration = elevator_vertical_speed,
+					door_duration = elevator_vertical_speed * 1.5,
 					direction = UP,
 					user = user,
 					display_warnings = warns_on_down_movement,
@@ -619,7 +620,8 @@ GLOBAL_VAR_INIT(lift_down_arrow, image(icon = 'icons/testing/turf_analysis.dmi',
 				lift_master_datum.move_lift_vertically(DOWN, user)
 			else
 				lift_master_datum.move_after_delay(
-					duration = elevator_vertical_speed,
+					lift_move_duration = elevator_vertical_speed,
+					door_duration = elevator_vertical_speed * 1.5,
 					direction = DOWN,
 					user = user,
 					display_warnings = warns_on_down_movement,

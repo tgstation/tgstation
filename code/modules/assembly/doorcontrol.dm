@@ -275,7 +275,8 @@
 	for(var/i in 1 to difference)
 		// move_after_delay will set up a timer and cause us to move after a time
 		lift.move_after_delay(
-			duration = travel_speed,
+			lift_move_duration = travel_speed,
+			door_duration = travel_speed * 1.5,
 			direction = direction,
 			user = activator,
 			display_warnings = !(obj_flags & EMAGGED)
@@ -314,7 +315,7 @@
 /// Gets the lift associated with our assembly / button
 /obj/item/assembly/control/elevator/proc/get_lift()
 	for(var/datum/lift_master/possible_match as anything in GLOB.active_lifts_by_type[BASIC_LIFT_ID])
-		if(possible_match.specific_lift_id != id || !check_z(possible_match) || possible_match.controls_locked)
+		if(possible_match.specific_lift_id != id || possible_match.controls_locked)
 			continue
 
 		return possible_match

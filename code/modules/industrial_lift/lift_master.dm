@@ -286,34 +286,35 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
  * Moves the lift after a passed delay.
  *
  * This is a more "user friendly" or "realistic" lift move.
- * It will include things like:
+ * It includes things like:
  * - Allowing lift "travel time"
- * - Shutting elevator doors
- * - Sound effects for moving
- * - Safety warnings for anyone below the lift while it's moving downwards
+ * - Shutting elevator safety doors
+ * - Sound effects while moving
+ * - Safety warnings for anyone below the lift (while it's moving downwards)
  *
- * duration - how long do we wait to move the lift?
+ * duration - required, how long do we wait to move the lift?
+ * door_duration - optional, how long should we wait to open the doors after arriving?
  * direction - which direction are we moving the lift?
  * user - optional, who is moving the lift?
  * display_warnings - if we are moving down, should we show warnings to people below us?
  */
-/datum/lift_master/proc/move_after_delay(duration, direction, mob/user, display_warnings = TRUE)
-	if(!isnum(duration) || duration <= 0)
-		CRASH("[type] move_after_delay called with invalid duration ([duration]).")
+/datum/lift_master/proc/move_after_delay(lift_move_duration, door_duration, direction, mob/user, display_warnings = TRUE)
+	if(!isnum(lift_move_duration) || lift_move_duration <= 0)
+		CRASH("[type] move_after_delay called with invalid duration ([lift_move_duration]).")
 
 	var/obj/structure/industrial_lift/prime_lift = lift_platforms[1]
 	var/turf/destination = get_step_multiz(prime_lift, DOWN)
 	// If anyone changes the hydraulic sound effect I sure hope they update this variable
 	var/hydraulic_sfx_duration = 2 SECONDS
 	// because we use the duration of the sound effect to make it last for roughly the duration of the lift travel
-	playsound(prime_lift, 'sound/mecha/hydraulic.ogg', 25, vary = TRUE, frequency = clamp(hydraulic_sfx_duration / duration, 0.33, 3))
+	playsound(prime_lift, 'sound/mecha/hydraulic.ogg', 25, vary = TRUE, frequency = clamp(hydraulic_sfx_duration / lift_move_duration, 0.33, 3))
 
 	// Close ALL lift doors (ideally, should only end up closing the starting z-level doors)
 	close_lift_doors()
 	// Move the lift after a timer
-	addtimer(CALLBACK(src, .proc/move_lift_vertically, direction, user), duration)
-	// Then open all lift doors shortly after we arrive
-	addtimer(CALLBACK(src, .proc/open_lift_doors, destination.z), duration * 1.5)
+	addtimer(CALLBACK(src, .proc/move_lift_vertically, direction, user), lift_move_duration)
+	// Then open all lift doors after we move
+	addtimer(CALLBACK(src, .proc/open_lift_doors, destination.z), door_duration || lift_move_duration)
 
 	if(!display_warnings || direction != DOWN)
 		return
@@ -321,7 +322,7 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 	// Show warning signs if we're going downwards, to avoid crushing and peril
 	for(var/obj/structure/industrial_lift/going_to_move as anything in lift_platforms)
 		var/turf/below_us = get_step_multiz(going_to_move, DOWN)
-		new /obj/effect/temp_visual/telegraphing/lift_travel(below_us, duration)
+		new /obj/effect/temp_visual/telegraphing/lift_travel(below_us, lift_move_duration)
 
 /**
  * Opens all blast doors and shutters that share an ID with our lift.
@@ -329,6 +330,7 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
  * on_z_level - optional, only open doors on this z-level.
  */
 /datum/lift_master/proc/open_lift_doors(on_z_level)
+	var/played_ding = FALSE
 	for(var/obj/machinery/door/poddoor/elevator_door in GLOB.machines)
 		if(elevator_door.id != specific_lift_id)
 			continue
@@ -338,6 +340,9 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 			continue
 
 		INVOKE_ASYNC(elevator_door, /obj/machinery/door/poddoor.proc/open)
+		if(!played_ding)
+			playsound(elevator_door, 'sound/machines/ding.ogg', 50, TRUE)
+			played_ding = TRUE
 
 /**
  * Closes all blast doors and shutters that share an ID without lift.
@@ -345,6 +350,7 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
  * on_z_level - optional, only close doors on this z-level.
  */
 /datum/lift_master/proc/close_lift_doors(on_z_level)
+	var/played_ding = FALSE
 	for(var/obj/machinery/door/poddoor/elevator_door in GLOB.machines)
 		if(elevator_door.id != specific_lift_id)
 			continue
@@ -354,6 +360,9 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 			continue
 
 		INVOKE_ASYNC(elevator_door, /obj/machinery/door/poddoor.proc/close)
+		if(!played_ding)
+			playsound(elevator_door, 'sound/machines/ding.ogg', 50, TRUE)
+			played_ding = TRUE
 
 /**
  * Moves the lift, this is what users invoke with their hand.
