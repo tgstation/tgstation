@@ -202,6 +202,10 @@
 
 /obj/item/analyzer/ranged/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(!can_see(user, target, 7))
+	if(!can_see(user, target, 15))
 		return
-	atmos_scan(user, target)
+	if(!target.return_analyzable_air())
+		var/target_turf = get_turf(target)
+		atmos_scan(user, target_turf)
+	else 
+		atmos_scan(user, target)
