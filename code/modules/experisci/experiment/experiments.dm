@@ -321,7 +321,7 @@
 	. = ..()
 	damage_percent = rand(15, 95)
 	//updating the description with the damage_percent var set
-	description = "Your exosuit fabricators allow for rapid production on a small scale, but the structural integrity of created parts is inferior to those made with more traditional means. Damage a few exosuits to [damage_percent]% or lower integrity and scan them to help us determine how the armor fails under stress."
+	description = "Your exosuit fabricators allow for rapid production on a small scale, but the structural integrity of created parts is inferior to those made with more traditional means. Damage a few exosuits to around [damage_percent]% integrity and scan them to help us determine how the armor fails under stress."
 
 /datum/experiment/scanning/random/mecha_damage_scan/final_contributing_index_checks(atom/target, typepath)
 	var/found_percent = round(target.get_integrity() / target.max_integrity, 0.01) * 100
