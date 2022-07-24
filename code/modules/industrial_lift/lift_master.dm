@@ -283,6 +283,28 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 	set_controls(LIFT_PLATFORM_UNLOCKED)
 
 /**
+ * Moves the lift after a passed delay.
+ */
+/datum/lift_master/proc/move_after_delay(duration, direction, mob/user, display_warnings = TRUE)
+	if(!isnum(duration) || duration <= 0)
+		CRASH("[type] move_after_delay called with invalid duration ([duration]).")
+
+	var/obj/structure/industrial_lift/prime_lift = lift_platforms[1]
+	// If anyone changes the hydraulic sound effect I sure hope they update this variable
+	var/hydraulic_sfx_duration = 2 SECONDS
+	// because we use the duration of the sound effect to make it last for roughly the duration of the lift travel
+	playsound(prime_lift, 'sound/mecha/hydraulic.ogg', 25, vary = TRUE, frequency = clamp(hydraulic_sfx_duration / duration, 0.33, 3))
+
+	addtimer(CALLBACK(src, .proc/MoveLift, direction, user), duration)
+
+	if(!display_warnings || direction != DOWN)
+		return
+
+	for(var/obj/structure/industrial_lift/going_to_move as anything in lift_platforms)
+		var/turf/below_us = get_step_multiz(going_to_move, DOWN)
+		new /obj/effect/temp_visual/telegraphing/lift_travel(below_us, duration)
+
+/**
  * Moves the lift, this is what users invoke with their hand.
  * This is a SAFE proc, ensuring every part of the lift moves SANELY.
  * It also locks controls for the (miniscule) duration of the movement, so the elevator cannot be broken by spamming.
