@@ -41,7 +41,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 			found_turfs += checkT // Since checkT is connected, add it to the list to be processed
 
 // Create a ZAS atmos zone, fuck you Kapu you made me zas post 
-/proc/create_atmos_zone(turf/source, var/range)
+/proc/create_atmos_zone(turf/source, range)
 	var/counter = 1 // a counter which increment each loop
 	if(source.blocks_air)
 		return
