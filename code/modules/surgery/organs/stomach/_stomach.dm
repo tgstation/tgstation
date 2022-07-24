@@ -299,7 +299,7 @@
 	organ_flags = ORGAN_SYNTHETIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
 	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
-	metabolism_efficiency = 0.35 // not as good at digestion
+	metabolism_efficiency = 0.035 // not as good at digestion
 
 /obj/item/organ/internal/stomach/cybernetic/tier2
 	name = "cybernetic stomach"
