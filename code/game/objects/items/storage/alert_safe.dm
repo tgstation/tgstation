@@ -43,6 +43,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/alert_safe, 32)
 
 // This proc is called every time the Alert Level gets updated. It determines whether the current Level should unlock the safe, and prepares it to get a new overlay for the Alert Level.
 /obj/item/storage/alert_safe/proc/alert_level_update()
+	SIGNAL_HANDLER
+
 	if(SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
 		atom_storage.locked = FALSE
 	else
