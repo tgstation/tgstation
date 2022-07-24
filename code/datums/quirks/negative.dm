@@ -11,16 +11,6 @@
 	lose_text = "<span class='notice'>You feel a strong sence of self dependence!</span>"
 	hardcore_value = 4
 
-/datum/quirk/asthmatic
-	name = "Asthmatic"
-	desc = "You suffer from a particualraly strong case of Asthma. Better keep your inhaler on hand."
-	icon = "pills"
-	value = -4
-	mob_trait = TRAIT_PROSOPAGNOSIA
-	lose_text = "<span class='notice'>You feel you can breath more clearly.</span>"
-	medical_record_text = "Patient suffers from a stong case of Asthma."
-	hardcore_value = 6
-
 /datum/quirk/badback
 	name = "Bad Back"
 	desc = "Thanks to your poor posture, backpacks and other bags never sit right on your back. More evently weighted objects are fine, though."
