@@ -1,4 +1,0 @@
-author: "dragomagol"
-delete-after: True
-changes: 
-  - bugfix: "tongue tied players will no longer be haunted by floating faces if they type too fast"
