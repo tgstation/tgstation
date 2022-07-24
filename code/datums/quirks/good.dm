@@ -317,10 +317,19 @@
 	desc = "You have an advanced capacity for genetic mutations."
 	icon = "dna"
 	value = 5
-	mob_trait = TRAIT_NIGHT_VISION
 	gain_text = "<span class='notice'>You feel ready to learn.</span>"
 	lose_text = "<span class='danger'>You feel like learning if for chumps.</span>"
 	medical_record_text = "Patient's DNA is very well structured as resistant to genetic collapse."
+
+/datum/quirk/robust_genetics/add()
+	if(ishuman(quirk_holder))
+		var/mob/living/carbon/human/subject = quirk_holder
+		subject.dna.base_stability += 25
+
+/datum/quirk/robust_genetics/remove()
+	if(ishuman(quirk_holder))
+		var/mob/living/carbon/human/subject = quirk_holder
+		subject.dna.base_stability -= 25
 
 /datum/quirk/selfaware
 	name = "Self-Aware"
@@ -337,14 +346,6 @@
 	value = 8
 	mob_trait = TRAIT_SKITTISH
 	medical_record_text = "Patient demonstrates a high aversion to danger and has described hiding in containers out of fear."
-
-/datum/quirk/skater
-	name = "Skater"
-	desc = "You're a pro skater."
-	icon = "bicycle"
-	value = 6
-	mob_trait = TRAIT_SKITTISH
-	medical_record_text = "Patient wouldn't shut up about how good they are at skateboarding."
 
 /datum/quirk/item_quirk/spiritual
 	name = "Spiritual"
