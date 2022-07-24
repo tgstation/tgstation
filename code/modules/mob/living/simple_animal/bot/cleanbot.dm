@@ -37,7 +37,7 @@
 	var/chosen_name
 
 	/// The time it takes for the cleanbot to clean something.
-	#define CLEANING_TIME (1 SECONDS)
+	var/cleaning_time = 1 SECONDS
 
 	var/list/stolen_valor = list()
 
@@ -146,7 +146,7 @@
 
 /mob/living/simple_animal/bot/cleanbot/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/cleaner, CLEANING_TIME,  on_cleaned_callback=CALLBACK(src, /atom/.proc/update_icon_state))
+	AddComponent(/datum/component/cleaner, cleaning_time, on_cleaned_callback=CALLBACK(src, /atom/.proc/update_icon_state))
 
 	chosen_name = name
 	get_targets()
