@@ -826,3 +826,30 @@
       the floor decalling work.
   - bugfix: On MetaStation, the Quartermaster's Office no longer owns a conveyor belt.
       Greedy bastard.
+2022-07-24:
+  13spacemen:
+  - imageadd: Pun Pun wears drippy clothes now. Swag.
+  - bugfix: Becoming a digitigrade species should properly drop your shoes if they
+      don't fit
+  ArcaneMusic:
+  - qol: Roller Beds and Body Bags now have screentips explaining how to fold them
+      up.
+  Melbert:
+  - bugfix: Having the Supermatter Engine detonate will no longer make all traitor
+      final objectives unavailable. (Only the Supermatter Cascade objective is made
+      unavailable.)
+  Mooshimi:
+  - bugfix: Separate DNA Vaults will now check if you already have a power from one
+      before giving a power to you.
+  ShizCalev:
+  - bugfix: Floors repaired by floorbots will now have their overlays updated properly.
+  Wallem:
+  - imageadd: Updated the treat fabricator sprite
+  Watermelon914:
+  - admin: The lua editor now has text highlighting for lua keywords
+  dragomagol:
+  - bugfix: tongue tied players will no longer be haunted by floating faces if they
+      type too fast
+  - admin: Added Delay Round End to the server tab
+  vincentiusvin:
+  - bugfix: fixed the 20 radius supermatter delam irradiation not working
