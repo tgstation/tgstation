@@ -15,7 +15,6 @@ export class TextArea extends Component {
   constructor(props, context) {
     super(props, context);
     this.textareaRef = props.innerRef || createRef();
-    this.displayedContainerRef = createRef();
     this.state = {
       editing: false,
       scrolledAmount: 0,
@@ -126,8 +125,7 @@ export class TextArea extends Component {
     this.handleScroll = (e) => {
       const { displayedValue } = this.props;
       const input = this.textareaRef.current;
-      const displayedContainer = this.displayedContainerRef.current;
-      if (displayedValue && input && displayedContainer) {
+      if (displayedValue && input) {
         this.setState({
           scrolledAmount: input.scrollTop,
         });
@@ -201,8 +199,7 @@ export class TextArea extends Component {
               ])}
               style={{
                 'transform': `translateY(-${scrolledAmount}px)`,
-              }}
-              ref={this.displayedContainerRef}>
+              }}>
               {displayedValue}
             </div>
           </Box>
