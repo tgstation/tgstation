@@ -78,6 +78,9 @@
 	color_source = ORGAN_COLOR_HAIR
 	wag_flags = WAG_ABLE
 
+/obj/item/organ/external/tail/cat/get_global_feature_list()
+	return tails_list_human
+
 /obj/item/organ/external/tail/monkey
 	color_source = NONE
 
@@ -89,6 +92,9 @@
 	wag_flags = WAG_ABLE
 	///A reference to the paired_spines, since for some fucking reason tail spines are tied to the spines themselves.
 	var/obj/item/organ/external/spines/paired_spines
+
+/obj/item/organ/external/tail/lizard/get_global_feature_list()
+	return tails_list_lizard
 
 /obj/item/organ/external/tail/lizard/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()

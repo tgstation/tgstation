@@ -792,6 +792,15 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	human_mob.socks = random_socks(human_mob.gender)
 	human_mob.update_body()
 
+/datum/species/proc/randomize_features(mob/living/carbon/human/human_mob)
+	human.dna.features["mcolor"] = "#[random_color()]"
+	for(var/obj/item/organ/external/ext_organ as anything in human_mob.external_organs)
+		var/new_look = pick(ext_organ.get_global_feature_list())
+		human_mob.dna.features["[ext_organ.feature_key]"] = new_look
+		mutant_bodyparts["[ext_organ.feature_key]"] = new_look
+		ext_organ.mutate_feature(new_look, human_mob)
+	human_mob.update_body()
+
 /datum/species/proc/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
 	if(HAS_TRAIT(H, TRAIT_NOBREATH))
 		H.setOxyLoss(0)

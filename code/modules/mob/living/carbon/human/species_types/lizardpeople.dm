@@ -77,6 +77,10 @@
 	mutant_bodyparts["tail_lizard"] = tail
 	human_mob.update_body()
 
+/datum/species/lizard/randomize_features(mob/living/carbon/human/human_mob)
+	human_mob.dna.features["body_markings"] = pick(GLOB.body_markings_list)
+	..()
+
 /datum/species/lizard/get_scream_sound(mob/living/carbon/human/lizard)
 	return pick(
 		'sound/voice/lizard/lizard_scream_1.ogg',
