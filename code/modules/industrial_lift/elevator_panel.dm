@@ -23,6 +23,8 @@
 	/// So, if you want the z-level 2 destination to be named "Cargo", you would do list("2" = "Cargo").
 	var/list/preset_destination_names
 
+	var/door_reset_timerid
+
 /obj/machinery/elevator_control_panel/Initialize(mapload)
 	. = ..()
 	if(mapload)
@@ -134,6 +136,10 @@
 /obj/machinery/elevator_control_panel/ui_data(mob/user)
 	var/list/data = list()
 
+	data["panel_z"] = z
+	data["emergency_level"] = SSsecurity_level.get_current_level_as_text()
+	data["doors_open"] = !!door_reset_timerid
+
 	var/datum/lift_master/lift = lift_weakref?.resolve()
 	if(lift)
 		data["lift_exists"] = TRUE
@@ -160,6 +166,7 @@
 /obj/machinery/elevator_control_panel/ui_act(action, list/params)
 	. = ..()
 	if(.)
+		return
 
 	if(!check_panel())
 		return TRUE // We shouldn't be usable right now, update UI
@@ -177,10 +184,24 @@
 			INVOKE_ASYNC(lift, /datum/lift_master.proc/move_to_zlevel, desired_z, CALLBACK(src, .proc/check_panel), usr)
 			return TRUE // Succcessfully initiated a move, regardless of whether it actually works update the UI
 
-		if("emergency_stop")
+		if("emergency_door")
+			var/datum/lift_master/lift = lift_weakref?.resolve()
+			if(!lift)
+				return TRUE // Something is very wrong
 
+			if(SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_RED)
+				return TRUE // Only operational on red alert or higher, so people won't just ALWAYS put it on emergency mode
 
-/// Callback for [move_to_zlevel]
+			lift.open_lift_doors()
+			door_reset_timerid = addtimer(CALLBACK(src, .proc/reset_doors), 3 MINUTES, TIMER_UNIQUE|TIMER_STOPPABLE)
+			return TRUE
+
+		if("reset_doors")
+			deltimer(door_reset_timerid)
+			reset_doors()
+			return TRUE
+
+/// Callback for move_to_zlevel to ensure the lift can continue to move.
 /obj/machinery/elevator_control_panel/proc/check_panel()
 	if(QDELETED(src))
 		return FALSE
@@ -188,3 +209,20 @@
 		return FALSE
 
 	return TRUE
+
+/// Helper proc to go through all of our desetinations and reset all elevator doors,
+/// closing doors on z-levels the lift is away from, and opening doors on the z the lift is
+/obj/machinery/elevator_control_panel/proc/reset_doors()
+	var/datum/lift_master/lift = lift_weakref?.resolve()
+	if(!lift)
+		return
+
+	for(var/destination in linked_elevator_desinations)
+		var/z_level = linked_elevator_desinations[destination]
+
+		if(z_level == lift.lift_platforms[1].z)
+			lift.open_lift_doors(z_level)
+		else
+			lift.close_lift_doors(z_level)
+
+	door_reset_timerid = null

@@ -386,7 +386,7 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
  *
  * on_z_level - optional, only open doors on this z-level.
  */
-/datum/lift_master/proc/open_lift_doors(on_z_level)
+/datum/lift_master/proc/open_lift_doors(on_z_levels)
 	var/played_ding = FALSE
 	for(var/obj/machinery/door/poddoor/elevator_door in GLOB.machines)
 		if(elevator_door.id != specific_lift_id)
