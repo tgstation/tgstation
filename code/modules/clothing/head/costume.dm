@@ -131,7 +131,7 @@
 /obj/item/clothing/head/fancy
 	name = "fancy hat"
 	icon_state = "fancy_hat"
-	greyscale_colors = "#414344"
+	greyscale_colors = "#E3C937#782A81"
 	greyscale_config = /datum/greyscale_config/fancy_hat
 	greyscale_config_worn = /datum/greyscale_config/fancy_hat_worn
 	flags_1 = IS_PLAYER_COLORABLE_1
