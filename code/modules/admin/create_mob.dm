@@ -10,12 +10,11 @@
 
 	user << browse(create_panel_helper(create_mob_html), "window=create_mob;size=425x475")
 
-/proc/randomize_human(mob/living/carbon/human/human, new_name = TRUE)
+/proc/randomize_human(mob/living/carbon/human/human)
 	human.gender = pick(MALE, FEMALE, PLURAL)
 	human.physique = human.gender
-	if(new_name)
-		human.real_name = human.dna?.species.random_name(human.gender) || random_unique_name(human.gender)
-		human.name = human.real_name
+	human.real_name = human.dna?.species.random_name(human.gender) || random_unique_name(human.gender)
+	human.name = human.real_name
 	human.hairstyle = random_hairstyle(human.gender)
 	human.facial_hairstyle = random_facial_hairstyle(human.gender)
 	human.hair_color = "#[random_color()]"
@@ -27,7 +26,10 @@
 	human.dna.blood_type = random_blood_type()
 	human.dna.species.randomize_active_underwear(human)
 
-	for(var/all_species in subtypesof(/datum/species))
-		var/datum/species/all_species_type = GLOB.species_list[all_species]
+	for(var/datum/species/all_species in subtypesof(/datum/species))
+		var/datum/species/all_species_type = GLOB.species_list[initial(all_species.id)]
+		to_chat(human, span_warning("[all_species_type]"))
+		to_chat(human, span_warning("[all_species]"))
+		to_chat(human, span_warning("[all_species.id]"))
 		all_species_type.randomize_features(human)
 	human.update_body(is_creating = TRUE)

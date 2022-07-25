@@ -102,7 +102,7 @@
 /datum/species/ethereal/randomize_features(mob/living/carbon/human/human_mob)
 	human_mob.dna.features["ethcolor"] = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)]
 	human_mob.dna.species.spec_updatehealth(human_mob)
-
+	human_mob.update_body()
 
 /datum/species/ethereal/spec_updatehealth(mob/living/carbon/human/ethereal)
 	. = ..()
