@@ -114,6 +114,7 @@
 	var/heal_brute = 10
 	var/heal_burn = 10
 	var/heal_oxy = 0
+	var/heal_toxin = 0
 
 
 /obj/item/organ/internal/heart/cursed/attack(mob/living/carbon/human/accursed, mob/living/carbon/human/user, obj/target)
@@ -172,6 +173,7 @@
 				accursed.adjustBruteLoss(-cursed_heart.heal_brute)
 				accursed.adjustFireLoss(-cursed_heart.heal_burn)
 				accursed.adjustOxyLoss(-cursed_heart.heal_oxy)
+				accursed.adjustToxLoss(-cursed_heart.heal_toxin)
 
 
 /datum/client_colour/cursed_heart_blood

@@ -300,6 +300,7 @@
 	heal_brute = 25
 	heal_burn = 25
 	heal_oxy = 25
+	heal_toxin = 25
 
 ///Warp whistle, spawns a tornado that teleports you
 /obj/item/warp_whistle
