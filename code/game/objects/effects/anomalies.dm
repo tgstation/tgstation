@@ -90,7 +90,6 @@
 
 	qdel(src)
 
-
 /obj/effect/anomaly/attackby(obj/item/weapon, mob/user, params)
 	if(weapon.tool_behaviour == TOOL_ANALYZER)
 		to_chat(user, span_notice("Analyzing... [src]'s unstable field is fluctuating along frequency [format_frequency(aSignal.frequency)], code [aSignal.code]."))
@@ -503,7 +502,7 @@
 /obj/effect/anomaly/hallucination
 	name = "hallucination anomaly"
 	icon_state = "hallucination_anomaly"
-	aSignal = /obj/item/assembly/signaler/anomaly/hallucination
+	aSignal = /obj/item/assembly/signaler/anomaly/
 	/// Time passed since the last effect, increased by delta_time of the SSobj
 	var/ticks = 0
 	/// How many seconds between each small hallucination pulses
@@ -545,5 +544,69 @@
 			"You are going insane!",
 		)
 		to_chat(near, span_warning(pick(messages)))
+
+/////////////////////
+
+/obj/effect/anomaly/dimensional
+	name = "dimensional anomaly"
+	icon_state = "hallucination_anomaly"
+	immortal = TRUE
+	/// Cooldown for every anomaly pulse
+	COOLDOWN_DECLARE(relocate_cooldown)
+	/// How many seconds between each anomaly pulses
+	var/relocate_delay = 30 SECONDS
+	var/range = 2
+	var/detonate_range = 3
+	var/min_tiles = 1
+	var/max_tiles = 3
+	var/datum/dimension_theme/theme
+
+/obj/effect/anomaly/dimensional/Initialize()
+	. = ..()
+	COOLDOWN_START(src, relocate_cooldown, relocate_delay)
+	var/datum/dimension_theme/themes = new()
+	src.theme = themes.get_random_theme()
+
+/obj/effect/anomaly/dimensional/anomalyEffect(delta_time)
+	. = ..()
+	transmute_area()
+
+/obj/effect/anomaly/dimensional/proc/transmute_area()
+	var/area/affected_area = get_area(src)
+	if (affected_area.outdoors)
+		return
+
+	theme.apply_theme(get_turf(src))
+	var/affected_tiles = 0
+	var/target_count = rand(min_tiles, max_tiles)
+	var/list/turfs = RANGE_TURFS(range, src)
+	while (affected_tiles < target_count)
+		theme.apply_theme(pick(turfs))
+		affected_tiles++
+
+/obj/effect/anomaly/dimensional/process(delta_time)
+	if (!COOLDOWN_FINISHED(src, relocate_cooldown))
+		return ..()
+
+	relocate()
+	COOLDOWN_START(src, relocate_cooldown, relocate_delay)
+	return ..()
+
+/obj/effect/anomaly/dimensional/proc/relocate()
+	var/area/affected_area = get_area(src)
+	if (affected_area.outdoors)
+		return
+
+	for (var/turf/turf in RANGE_TURFS(detonate_range, src))
+		theme.apply_theme(turf)
+
+	var/datum/anomaly_placer/placer = new()
+	var/area/new_area = placer.findValidArea()
+
+	priority_announce("Dimensional instability relocated. Expected location: [new_area.name].", "Anomaly Alert")
+	var/datum/dimension_theme/themes = new()
+	src.theme = themes.get_random_theme()
+	src.loc = pick(get_area_turfs(new_area))
+
 
 #undef ANOMALY_MOVECHANCE
