@@ -111,8 +111,8 @@
 	var/blood_loss = 100 //600 blood is human default, so 5 failures (below 122 blood is where humans die because reasons?)
 
 	//How much to heal per pump, negative numbers would HURT the player
-	var/heal_brute = 0
-	var/heal_burn = 0
+	var/heal_brute = 10
+	var/heal_burn = 10
 	var/heal_oxy = 0
 
 
