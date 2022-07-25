@@ -195,12 +195,23 @@
 	name = "Flimsy"
 	desc = "Your body is not made to withstand punishment, making you much easier to kill."
 	icon = "wind"
-	mob_trait = TRAIT_DEPRESSION
-	value = -10
+	value = -9
 	gain_text = "<span class='danger'>You feel fragile.</span>"
 	lose_text = "<span class='notice'>You no longer feel fragile.</span>"
-	medical_record_text = "Patient has an exeptionally weak body."
+	medical_record_text = "Patient has an exceptionally weak body."
 	hardcore_value = 10
+
+/datum/quirk/flimsy/add()
+	if(iscarbon(quirk_holder))
+		var/mob/living/weakling = quirk_holder
+		weakling.maxHealth *= 0.6
+		weakling.health *= 0.6
+
+/datum/quirk/flimsy/remove()
+	if(iscarbon(quirk_holder))
+		var/mob/living/weakling = quirk_holder
+		weakling.maxHealth /= 0.6
+		weakling.health /= 0.6
 
 /datum/quirk/item_quirk/family_heirloom
 	name = "Family Heirloom"
