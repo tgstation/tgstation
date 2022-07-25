@@ -49812,7 +49812,7 @@
 "pmY" = (
 /obj/structure/rack,
 /obj/structure/window/reinforced/spawner/east,
-/obj/item/clothing/head/saints,
+/obj/item/clothing/head/fancy,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison)
 "pna" = (

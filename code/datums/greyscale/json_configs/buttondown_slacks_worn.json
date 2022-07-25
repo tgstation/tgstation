@@ -1,22 +1,28 @@
 {
-	"jeanshorts": [
+	"buttondown_slacks": [
 		{
 			"type": "icon_state",
-			"icon_state": "buckle",
+			"icon_state": "buttondown",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "belt",
+			"icon_state": "buckle",
 			"blend_mode": "overlay",
 			"color_ids": [ 2 ]
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "jeanshorts",
+			"icon_state": "belt",
 			"blend_mode": "overlay",
 			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "slacks",
+			"blend_mode": "overlay",
+			"color_ids": [ 4 ]
 		}
 	]
 }
