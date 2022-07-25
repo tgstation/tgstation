@@ -712,6 +712,11 @@ GLOBAL_VAR_INIT(lift_down_arrow, image(icon = 'icons/testing/turf_analysis.dmi',
 /obj/structure/industrial_lift/public
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "rockvault"
+	base_icon_state = null
+	smoothing_flags = NONE
+	smoothing_groups = null
+	canSmoothWith = null
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	warns_on_down_movement = TRUE
 	violent_landing = FALSE
 	elevator_vertical_speed = 3 SECONDS

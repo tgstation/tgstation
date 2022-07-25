@@ -291,7 +291,7 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
  * - Safety warnings for anyone below the lift (while it's moving downwards)
  *
  * duration - required, how long do we wait to move the lift?
- * door_duration - optional, how long should we wait to open the doors after arriving?
+ * door_duration - optional, how long should we wait to open the doors after arriving? If null, we won't open or close doors
  * direction - which direction are we moving the lift?
  * user - optional, who is moving the lift?
  */
@@ -369,7 +369,7 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 		// move_after_delay will set up a timer and cause us to move after a time
 		move_after_delay(
 			lift_move_duration = travel_speed,
-			door_duration = travel_speed * 1.5,
+			door_duration = (i == z_difference ? travel_speed * 1.5 : null),
 			direction = direction,
 			user = user,
 		)

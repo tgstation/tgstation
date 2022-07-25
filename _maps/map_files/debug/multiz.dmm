@@ -24,7 +24,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron/edge{
+	dir = 4
+	},
 /area/station/commons/storage/primary)
 "aj" = (
 /turf/closed/wall/r_wall,
@@ -168,10 +170,10 @@
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "aW" = (
-/obj/effect/turf_decal/stripes/line{
+/obj/structure/industrial_lift/public,
+/obj/effect/turf_decal/siding/white{
 	dir = 1
 	},
-/obj/structure/industrial_lift,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
 "aY" = (
@@ -587,7 +589,8 @@
 /obj/machinery/elevator_control_panel/directional/north{
 	linked_elevator_id = "test_vator"
 	},
-/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/edge,
 /area/station/hallway/secondary/service)
 "cU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -902,6 +905,14 @@
 /obj/machinery/suit_storage_unit/ce,
 /turf/open/floor/iron,
 /area/station/construction)
+"gz" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron/edge{
+	dir = 1
+	},
+/area/station/engineering/storage)
 "gA" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible/layer2{
@@ -955,7 +966,8 @@
 "iA" = (
 /obj/structure/sign/warning/directional/north,
 /obj/machinery/light/directional/north,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/edge,
 /area/station/commons/storage/primary)
 "iH" = (
 /obj/effect/turf_decal/stripes/white/line,
@@ -1005,7 +1017,8 @@
 /obj/machinery/elevator_control_panel/directional/north{
 	linked_elevator_id = "test_vator"
 	},
-/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/edge,
 /area/station/engineering/storage)
 "jV" = (
 /obj/effect/turf_decal/stripes/white/line{
@@ -1056,10 +1069,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "lT" = (
-/obj/effect/turf_decal/stripes/line{
+/obj/structure/industrial_lift/public,
+/obj/effect/turf_decal/siding/white{
 	dir = 6
 	},
-/obj/structure/industrial_lift,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
 "mb" = (
@@ -1078,10 +1091,10 @@
 	},
 /area/station/hallway/secondary/entry)
 "mG" = (
-/obj/effect/turf_decal/stripes/line{
+/obj/structure/industrial_lift/public,
+/obj/effect/turf_decal/siding/white{
 	dir = 8
 	},
-/obj/structure/industrial_lift,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
 "mZ" = (
@@ -1107,8 +1120,8 @@
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
 "nS" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/structure/industrial_lift,
+/obj/structure/industrial_lift/public,
+/obj/effect/turf_decal/siding/white,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
 "nW" = (
@@ -1155,7 +1168,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron/edge{
+	dir = 4
+	},
 /area/station/commons/storage/primary)
 "qI" = (
 /obj/structure/lattice/catwalk,
@@ -1187,7 +1202,8 @@
 "rT" = (
 /obj/machinery/light/directional/north,
 /obj/structure/sign/warning/directional/north,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/edge,
 /area/station/hallway/secondary/service)
 "sh" = (
 /turf/open/floor/iron{
@@ -1233,7 +1249,9 @@
 /obj/machinery/door/poddoor{
 	id = "test_vator"
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron/edge{
+	dir = 4
+	},
 /area/station/engineering/storage)
 "uv" = (
 /obj/structure/cable,
@@ -1277,7 +1295,8 @@
 /obj/machinery/elevator_control_panel/directional/north{
 	linked_elevator_id = "test_vator"
 	},
-/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/edge,
 /area/station/commons/storage/primary)
 "wr" = (
 /obj/effect/turf_decal/stripes/line,
@@ -1293,7 +1312,8 @@
 "xb" = (
 /obj/machinery/light/directional/north,
 /obj/structure/sign/warning/directional/north,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/edge,
 /area/station/engineering/storage)
 "xw" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -1302,6 +1322,14 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
+"xx" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron/edge{
+	dir = 1
+	},
+/area/station/commons/storage/primary)
 "xB" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
@@ -1313,10 +1341,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "xK" = (
-/obj/effect/turf_decal/stripes/line{
+/obj/structure/industrial_lift/public,
+/obj/effect/turf_decal/siding/white{
 	dir = 10
 	},
-/obj/structure/industrial_lift,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
 "xO" = (
@@ -1334,22 +1362,22 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "yR" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
-/obj/structure/industrial_lift,
 /obj/machinery/elevator_control_panel/directional/east{
-	preset_destination_names = list("2" = "Bottom Floor", "3" = "Middle Floor", "4" = "Top Floor");
+	preset_destination_names = list("2"="Bottom Floor","3"="Middle Floor","4"="Top Floor");
 	linked_elevator_id = "test_vator"
+	},
+/obj/structure/industrial_lift/public,
+/obj/effect/turf_decal/siding/white{
+	dir = 5
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
 "yX" = (
-/obj/structure/industrial_lift,
 /obj/effect/landmark/lift_id{
 	specific_lift_id = "test_vator"
 	},
 /obj/machinery/light/floor,
+/obj/structure/industrial_lift/public,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
 "zd" = (
@@ -1395,11 +1423,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "Bm" = (
-/obj/effect/turf_decal/stripes/line{
+/obj/structure/sign/warning/directional/east,
+/obj/structure/industrial_lift/public,
+/obj/effect/turf_decal/siding/white{
 	dir = 4
 	},
-/obj/structure/industrial_lift,
-/obj/structure/sign/warning/directional/east,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
 "Bw" = (
@@ -1491,6 +1519,10 @@
 /obj/structure/railing,
 /turf/open/openspace,
 /area/station/engineering/storage)
+"Ho" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/edge,
+/area/station/commons/storage/primary)
 "Hp" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -1732,6 +1764,10 @@
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/iron,
 /area/station/construction)
+"Rm" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/edge,
+/area/station/engineering/storage)
 "RQ" = (
 /obj/machinery/door/airlock/glass,
 /obj/structure/cable,
@@ -1750,7 +1786,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron/edge{
+	dir = 4
+	},
 /area/station/hallway/secondary/service)
 "TH" = (
 /turf/open/floor/plating,
@@ -1800,6 +1838,10 @@
 	},
 /turf/open/floor/plating,
 /area/station/construction)
+"Vb" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/edge,
+/area/station/hallway/secondary/service)
 "Vm" = (
 /obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
@@ -1873,6 +1915,14 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
+"YV" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron/edge{
+	dir = 1
+	},
+/area/station/hallway/secondary/service)
 "Zc" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -1880,10 +1930,10 @@
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
 "Zk" = (
-/obj/effect/turf_decal/stripes/line{
+/obj/structure/industrial_lift/public,
+/obj/effect/turf_decal/siding/white{
 	dir = 9
 	},
-/obj/structure/industrial_lift,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
 "ZQ" = (
@@ -3869,7 +3919,7 @@ wb
 Zk
 mG
 xK
-dl
+xx
 cS
 dl
 dl
@@ -3923,7 +3973,7 @@ iA
 aW
 yX
 nS
-dl
+xx
 cS
 dl
 dl
@@ -3973,11 +4023,11 @@ cy
 eo
 eo
 cS
-dl
+Ho
 yR
 Bm
 lT
-dl
+xx
 cS
 dl
 dl
@@ -6678,7 +6728,7 @@ cT
 iu
 iu
 iu
-Gb
+YV
 TY
 iu
 iu
@@ -6732,7 +6782,7 @@ rT
 iu
 iu
 iu
-Gb
+YV
 eF
 iu
 iu
@@ -6782,11 +6832,11 @@ iK
 dY
 dY
 TY
-Gb
+Vb
 iu
 iu
 iu
-Gb
+YV
 TY
 iu
 iu
@@ -9487,7 +9537,7 @@ jM
 qo
 qo
 qo
-TH
+gz
 AG
 xO
 qo
@@ -9541,7 +9591,7 @@ xb
 qo
 qo
 qo
-TH
+gz
 DK
 xO
 xO
@@ -9591,11 +9641,11 @@ qo
 qo
 xO
 AG
-TH
+Rm
 qo
 qo
 qo
-TH
+gz
 AG
 xO
 qo
