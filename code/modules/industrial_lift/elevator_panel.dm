@@ -138,14 +138,19 @@
 	return GLOB.physical_state
 
 /obj/machinery/elevator_control_panel/ui_status(mob/user)
+	. = ..()
+	if(. == UI_CLOSE)
+		return UI_CLOSE
+
+	if(user.z != z)
+		return UI_CLOSE
+
 	var/datum/lift_master/lift = lift_weakref?.resolve()
 	if(!lift || lift.controls_locked == LIFT_PLATFORM_LOCKED)
 		return UI_UPDATE
 
 	if(lift.lift_platforms[1].z != z)
 		return UI_UPDATE
-
-	return ..()
 
 /obj/machinery/elevator_control_panel/ui_data(mob/user)
 	var/list/data = list()

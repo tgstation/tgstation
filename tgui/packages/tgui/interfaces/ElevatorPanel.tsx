@@ -41,7 +41,7 @@ export const ElevatorPanel = (props, context) => {
                   'font-family': 'Consolas',
                   'font-size': '50px',
                 }}>
-                {data.current_floor}
+                {data.current_floor - 1}
               </Box>
             </Stack.Item>
             <Stack.Item height="200px">

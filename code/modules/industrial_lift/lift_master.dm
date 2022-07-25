@@ -295,7 +295,7 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
  * direction - which direction are we moving the lift?
  * user - optional, who is moving the lift?
  */
-/datum/lift_master/proc/move_after_delay(lift_move_duration, door_duration = lift_move_duration, direction, mob/user)
+/datum/lift_master/proc/move_after_delay(lift_move_duration, door_duration, direction, mob/user)
 	if(!isnum(lift_move_duration) || lift_move_duration <= 0)
 		CRASH("[type] move_after_delay called with invalid duration ([lift_move_duration]).")
 
@@ -306,13 +306,14 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 	// because we use the duration of the sound effect to make it last for roughly the duration of the lift travel
 	playsound(prime_lift, 'sound/mecha/hydraulic.ogg', 25, vary = TRUE, frequency = clamp(hydraulic_sfx_duration / lift_move_duration, 0.33, 3))
 
-	// Close ALL lift doors (ideally, should only end up closing the starting z-level doors)
-	close_lift_doors()
 	// Move the lift after a timer
 	addtimer(CALLBACK(src, .proc/move_lift_vertically, direction, user), lift_move_duration, TIMER_UNIQUE)
 
-	// Then open all lift doors after we move
-	addtimer(CALLBACK(src, .proc/open_lift_doors, destination.z), door_duration, TIMER_UNIQUE)
+	if(isnum(door_duration))
+		// Close ALL lift doors (ideally, should only end up closing the starting z-level doors)
+		close_lift_doors()
+		// Then open all lift doors after we move
+		addtimer(CALLBACK(src, .proc/open_lift_doors, destination.z), door_duration, TIMER_UNIQUE)
 
 	if(direction != DOWN)
 		return
