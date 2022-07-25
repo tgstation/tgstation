@@ -53,7 +53,7 @@
 		span_warning("Blood erupts from [user]'s arm as it reforms into a weapon!"),
 		span_userdanger("Icy blood pumps through your veins as your arm reforms itself!")
 	)
-	user.temporarilyRemoveItemFromInventory(src, TRUE)
+	QDEL_NULL(src)//heart is used
 	Insert(user)
 
 /obj/item/organ/internal/heart/nightmare/Insert(mob/living/carbon/M, special = FALSE)
