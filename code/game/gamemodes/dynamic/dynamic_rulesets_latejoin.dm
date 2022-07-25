@@ -32,7 +32,7 @@
 	var/threat = round(mode.threat_level/10)
 
 	if (job_check < required_enemies[threat])
-		log_game("DYNAMIC: FAIL: [src] is not ready, because there are not enough enemies: [required_enemies[threat]] needed, [job_check] found")
+		log_dynamic("FAIL: [src] is not ready, because there are not enough enemies: [required_enemies[threat]] needed, [job_check] found")
 		return FALSE
 
 	return ..()
@@ -150,8 +150,8 @@
 		SSshuttle.registerHostileEnvironment(revolution)
 		return TRUE
 	else
-		log_game("DYNAMIC: [ruletype] [name] discarded [M.name] from head revolutionary due to ineligibility.")
-		log_game("DYNAMIC: [ruletype] [name] failed to get any eligible headrevs. Refunding [cost] threat.")
+		log_dynamic("[ruletype] [name] discarded [M.name] from head revolutionary due to ineligibility.")
+		log_dynamic("[ruletype] [name] failed to get any eligible headrevs. Refunding [cost] threat.")
 		return FALSE
 
 /datum/dynamic_ruleset/latejoin/provocateur/rule_process()

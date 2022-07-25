@@ -1614,18 +1614,11 @@
 /turf/open/floor/iron/grimy,
 /area/station/service/bar/atrium)
 "aAv" = (
-/obj/machinery/requests_console/directional/south{
-	announcementConsole = 1;
-	anon_tips_receiver = 1;
-	assistance_requestable = 1;
-	department = "Bridge";
-	departmentType = 5;
-	name = "Bridge Requests Console"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/structure/sign/departments/aiupload/directional/south,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "aAE" = (
@@ -9198,7 +9191,7 @@
 /area/station/commons/locker)
 "cIK" = (
 /obj/structure/table/wood,
-/obj/item/paicard,
+/obj/item/pai_card,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
 /area/station/maintenance/fore)
@@ -13070,7 +13063,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/sign/warning/cold_temp/directional/south,
+/obj/structure/sign/departments/rndserver/directional/south,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "dQZ" = (
@@ -14944,10 +14937,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
-"evo" = (
-/obj/structure/sign/warning/secure_area,
-/turf/closed/wall/r_wall,
-/area/station/engineering/transit_tube)
 "evp" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
@@ -21679,9 +21668,6 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/engineering{
 	name = "Utilities Room"
-	},
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /obj/effect/mapping_helpers/airlock/unres,
@@ -39360,7 +39346,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/structure/table,
-/obj/item/paicard,
+/obj/item/pai_card,
 /obj/item/taperecorder{
 	pixel_x = -3;
 	pixel_y = 2
@@ -46567,6 +46553,7 @@
 "okk" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/structure/cable,
+/obj/structure/sign/departments/aisat/directional/east,
 /turf/open/floor/iron/dark/corner,
 /area/station/engineering/storage_shared)
 "oko" = (
@@ -50239,6 +50226,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/sign/departments/vault/directional/north{
+	pixel_x = 32
+	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/port)
 "ptp" = (
@@ -52533,7 +52523,6 @@
 /turf/closed/wall/r_wall,
 /area/station/security/checkpoint/engineering)
 "qeA" = (
-/obj/structure/sign/warning/secure_area/directional/west,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -52542,6 +52531,7 @@
 	dir = 8
 	},
 /obj/machinery/vending/cigarette,
+/obj/structure/sign/departments/telecomms/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "qeJ" = (
@@ -53665,7 +53655,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/rack,
 /obj/item/storage/briefcase,
-/obj/item/paicard,
+/obj/item/pai_card,
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "qyf" = (
@@ -62083,7 +62073,7 @@
 /area/station/science/robotics/lab)
 "tfO" = (
 /obj/structure/table/wood,
-/obj/item/paicard,
+/obj/item/pai_card,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "tfR" = (
@@ -66526,11 +66516,18 @@
 	},
 /area/mine/eva)
 "uyF" = (
-/obj/machinery/newscaster/directional/south,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/machinery/requests_console/directional/south{
+	announcementConsole = 1;
+	anon_tips_receiver = 1;
+	assistance_requestable = 1;
+	department = "Bridge";
+	departmentType = 5;
+	name = "Bridge Requests Console"
+	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "uyH" = (
@@ -72797,7 +72794,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
-/obj/item/paicard,
+/obj/item/pai_card,
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
@@ -231048,7 +231045,7 @@ oPI
 xWN
 xWN
 wtw
-uiM
+ybQ
 jOt
 jOt
 ozw
@@ -242689,7 +242686,7 @@ alD
 tjk
 ydc
 nyA
-evo
+duh
 iaY
 duh
 duh

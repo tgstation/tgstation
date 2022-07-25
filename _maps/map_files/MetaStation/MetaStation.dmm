@@ -6222,7 +6222,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
 "cqN" = (
-/obj/machinery/status_display/evac/directional/north,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
@@ -7369,7 +7368,7 @@
 /area/station/commons/lounge)
 "cNC" = (
 /obj/structure/table/wood,
-/obj/item/paicard,
+/obj/item/pai_card,
 /turf/open/floor/wood,
 /area/station/service/library)
 "cNS" = (
@@ -10505,7 +10504,7 @@
 	pixel_x = -2;
 	pixel_y = 6
 	},
-/obj/item/paicard,
+/obj/item/pai_card,
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted,
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
@@ -14504,7 +14503,7 @@
 	dir = 1
 	},
 /obj/item/aicard,
-/obj/item/paicard,
+/obj/item/pai_card,
 /obj/item/circuitboard/aicore,
 /obj/machinery/keycard_auth/directional/north{
 	pixel_x = -5
@@ -20724,7 +20723,7 @@
 	},
 /obj/machinery/light/directional/west,
 /turf/open/floor/plating,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/sorting)
 "hGF" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
@@ -21529,15 +21528,12 @@
 /obj/machinery/camera/directional/north{
 	c_tag = "Central Primary Hallway - Fore - ai_upload"
 	},
-/obj/structure/sign/warning/secure_area/directional/north{
-	desc = "A warning sign which reads 'HIGH-POWER TURRETS AHEAD'.";
-	name = "\improper HIGH-POWER TURRETS AHEAD"
-	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/sign/departments/aiupload/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "hVn" = (
@@ -21658,6 +21654,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
+/obj/structure/sign/departments/aisat/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "hWS" = (
@@ -25116,7 +25113,7 @@
 	pixel_x = 8;
 	pixel_y = 32
 	},
-/obj/item/paicard{
+/obj/item/pai_card{
 	desc = "A real Nanotrasen success, these personal AIs provide all of the companionship of an AI without any law related red-tape.";
 	name = "\improper Nanotrasen-brand personal AI device exhibit"
 	},
@@ -33957,7 +33954,6 @@
 /area/station/service/library)
 "mfS" = (
 /obj/structure/table/wood,
-/obj/machinery/status_display/evac/directional/north,
 /obj/item/book/manual/wiki/tcomms,
 /obj/item/folder/blue,
 /obj/item/pen,
@@ -34529,7 +34525,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/sorting)
 "mpQ" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 5
@@ -36482,7 +36478,6 @@
 	},
 /obj/effect/turf_decal/trimline/purple/corner,
 /obj/machinery/airalarm/directional/east,
-/obj/machinery/firealarm/directional/north,
 /obj/effect/turf_decal/siding/purple/corner{
 	dir = 8
 	},
@@ -36494,6 +36489,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/structure/sign/departments/rndserver/directional/north,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "mYE" = (
@@ -37396,7 +37392,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/sorting)
 "nor" = (
 /obj/structure/sink/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -39728,7 +39724,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/sorting)
 "ofZ" = (
 /obj/machinery/vending/hydroseeds{
 	slogan_delay = 700
@@ -42269,6 +42265,7 @@
 	dir = 8
 	},
 /mob/living/simple_animal/bot/floorbot,
+/obj/structure/sign/departments/telecomms/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "pck" = (
@@ -49719,7 +49716,7 @@
 /area/station/engineering/supermatter)
 "rHp" = (
 /obj/structure/table,
-/obj/item/paicard,
+/obj/item/pai_card,
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "rHr" = (
@@ -61710,6 +61707,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/sign/departments/vault/directional/north{
+	pixel_x = 32
+	},
 /turf/open/floor/iron/dark,
 /area/station/construction/storage_wing)
 "vLv" = (
@@ -67349,7 +67349,7 @@
 	},
 /obj/structure/plasticflaps/opaque,
 /turf/open/floor/plating,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/sorting)
 "xNb" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -90183,7 +90183,7 @@ cTU
 wHW
 wHW
 isp
-qpD
+rlU
 aEH
 aEH
 lpt

@@ -28,7 +28,8 @@
 /datum/uplink_item/device_tools/encryptionkey
 	name = "Syndicate Encryption Key"
 	desc = "A key that, when inserted into a radio headset, allows you to listen to all station department channels \
-			as well as talk on an encrypted Syndicate channel with other agents that have the same key."
+			as well as talk on an encrypted Syndicate channel with other agents that have the same key. In addition, this key also protects \
+			your headset from radio jammers."
 	item = /obj/item/encryptionkey/syndicate
 	cost = 2
 	surplus = 75
