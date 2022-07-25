@@ -27,8 +27,7 @@
 	human.dna.blood_type = random_blood_type()
 	human.dna.species.randomize_active_underwear(human)
 
-	for(var/all_species as anything in subtypesof(/datum/species))
+	for(var/all_species in subtypesof(/datum/species))
 		var/datum/species/all_species_type = GLOB.species_list[all_species]
 		all_species_type.randomize_features(human)
-
-	human.update_body()
+	human.update_body(is_creating = TRUE)
