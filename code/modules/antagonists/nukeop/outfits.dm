@@ -80,7 +80,7 @@
 	name = "Syndicate Operative - Gorlex Reinforcement"
 	suit = /obj/item/clothing/suit/armor/vest/alt
 	head = /obj/item/clothing/head/helmet/swat
-	neck = /obj/item/clothing/neck/syndiescarf
+	neck = /obj/item/clothing/neck/large_scarf/syndie
 	glasses = /obj/item/clothing/glasses/cold
 	faction = "the Gorlex Marauders"
 
