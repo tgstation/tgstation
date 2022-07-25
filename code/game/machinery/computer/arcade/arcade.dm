@@ -663,15 +663,17 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		user.won_game()
 		playsound(src, 'sound/arcade/win.ogg', 50, TRUE)
 		prizevend(user, rand(3,5))
+		return
+	else if(!do_they_still_have_that_hand(user, chopchop))
+		to_chat(user, span_warning("The guillotine drops, but your hand seems to be gone already!"))
+		playsound(src, 'sound/weapons/slice.ogg', 25, TRUE, -1)
 	else
 		to_chat(user, span_notice("You (wisely) decide against putting your hand in the machine."))
-		user.lost_game()
+	user.lost_game()
 
 ///Makes sure the user still has their starting hand.
 /obj/machinery/computer/arcade/amputation/proc/do_they_still_have_that_hand(mob/user, obj/item/bodypart/chopchop)
 	if(QDELETED(chopchop) || chopchop.owner != user) //No pulling your arm out of the machine!
-		to_chat(user, span_warning("The guillotine drops, but your hand seems to be gone already!"))
-		playsound(src, 'sound/weapons/slice.ogg', 25, TRUE, -1)
 		return FALSE
 	return TRUE
 
