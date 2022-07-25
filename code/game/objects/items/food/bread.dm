@@ -329,7 +329,7 @@
 	foodtypes = GRAIN | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/rawbreadstick/MakeBakeable()
+/obj/item/food/raw_breadstick/MakeBakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/breadstick, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)
 
 /obj/item/food/breadstick

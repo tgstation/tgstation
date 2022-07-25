@@ -85,6 +85,8 @@
 	switch(action)
 		if("newState")
 			var/state_name = params["name"]
+			if(!length(state_name))
+				return TRUE
 			var/datum/lua_state/new_state = new(state_name)
 			SSlua.states += new_state
 			LAZYREMOVEASSOC(SSlua.editors, "\ref[current_state]", src)
@@ -170,10 +172,16 @@
 			var/log_entry_index = params["entryIndex"]
 			var/list/log_entry = current_state.log[log_entry_index]
 			var/thing_to_debug = traverse_list(params["tableIndices"], log_entry["param"])
+			if(isweakref(thing_to_debug))
+				var/datum/weakref/ref = thing_to_debug
+				thing_to_debug = ref.resolve()
 			INVOKE_ASYNC(usr.client, /client.proc/debug_variables, thing_to_debug)
 			return FALSE
 		if("vvGlobal")
 			var/thing_to_debug = traverse_list(params["indices"], current_state.globals)
+			if(isweakref(thing_to_debug))
+				var/datum/weakref/ref = thing_to_debug
+				thing_to_debug = ref.resolve()
 			INVOKE_ASYNC(usr.client, /client.proc/debug_variables, thing_to_debug)
 			return FALSE
 		if("clearArgs")

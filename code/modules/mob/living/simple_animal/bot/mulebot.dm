@@ -766,7 +766,7 @@
 	else
 		return ..()
 
-/mob/living/simple_animal/bot/mulebot/insertpai(mob/user, obj/item/paicard/card)
+/mob/living/simple_animal/bot/mulebot/insertpai(mob/user, obj/item/pai_card/card)
 	. = ..()
 	if(.)
 		visible_message(span_notice("[src]'s safeties are locked on."))

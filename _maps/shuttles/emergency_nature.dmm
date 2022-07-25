@@ -845,7 +845,7 @@
 /obj/item/food/monkeycube{
 	pixel_x = 5
 	},
-/obj/item/paicard{
+/obj/item/pai_card{
 	pixel_x = -6;
 	pixel_y = 1
 	},

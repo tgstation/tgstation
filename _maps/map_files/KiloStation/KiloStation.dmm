@@ -18966,7 +18966,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/aux_base,
 /turf/open/floor/iron/dark,
 /area/station/construction/mining/aux_base)
 "fyD" = (
@@ -44785,7 +44785,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/item/paicard,
+/obj/item/pai_card,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/service/bar/atrium)
@@ -54244,7 +54244,7 @@
 /obj/machinery/door/airlock/mining{
 	name = "Auxiliary Base"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/aux_base,
 /turf/open/floor/iron/dark,
 /area/station/construction/mining/aux_base)
 "pBR" = (
@@ -66152,7 +66152,7 @@
 /obj/item/folder{
 	pixel_x = -4
 	},
-/obj/item/paicard,
+/obj/item/pai_card,
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -73907,7 +73907,7 @@
 /obj/item/hand_labeler,
 /obj/machinery/airalarm/directional/west,
 /obj/machinery/light/directional/west,
-/obj/item/paicard{
+/obj/item/pai_card{
 	pixel_x = 6
 	},
 /obj/item/aicard,
@@ -76681,7 +76681,7 @@
 /area/station/hallway/primary/central)
 "vMN" = (
 /obj/structure/table/wood,
-/obj/item/paicard,
+/obj/item/pai_card,
 /turf/open/floor/wood/tile,
 /area/station/service/library)
 "vMW" = (

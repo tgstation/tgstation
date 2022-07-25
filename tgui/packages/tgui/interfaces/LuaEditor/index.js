@@ -15,7 +15,7 @@ hljs.registerLanguage('lua', lua);
 
 export const LuaEditor = (props, context) => {
   const { act, data } = useBackend(context);
-  const { noStateYet, globals, documentation } = data;
+  const { noStateYet, globals, documentation, tasks } = data;
   const [modal, setModal] = useLocalState(
     context,
     'modal',
@@ -30,18 +30,35 @@ export const LuaEditor = (props, context) => {
   let tabContent;
   switch (activeTab) {
     case 'globals': {
-      tabContent = (
-        <ListMapper
-          list={globals}
-          skipNulls
-          vvAct={(path) => act('vvGlobal', { indices: path })}
-          callType="callFunction"
-        />
-      );
+      if (!globals) {
+        tabContent = (
+          <h1>
+            Could not retrieve the global table. Was it corrupted or shadowed?
+          </h1>
+        );
+      } else {
+        tabContent = (
+          <ListMapper
+            list={globals}
+            skipNulls
+            vvAct={(path) => act('vvGlobal', { indices: path })}
+            callType="callFunction"
+          />
+        );
+      }
       break;
     }
     case 'tasks': {
-      tabContent = <TaskManager />;
+      if (!tasks) {
+        tabContent = (
+          <h1>
+            Could not retrieve task info. Was the global table corrupted or
+            shadowed?
+          </h1>
+        );
+      } else {
+        tabContent = <TaskManager />;
+      }
       break;
     }
     case 'log': {
@@ -86,7 +103,19 @@ export const LuaEditor = (props, context) => {
                   width="700px"
                   height="590px"
                   value={input}
+                  fontFamily="Consolas"
                   onInput={(_, value) => setInput(value)}
+                  displayedValue={
+                    <Box
+                      style={{
+                        'pointer-events': 'none',
+                      }}
+                      dangerouslySetInnerHTML={{
+                        __html: hljs.highlight(input, { language: 'lua' })
+                          .value,
+                      }}
+                    />
+                  }
                 />
                 <Button onClick={() => act('runCode', { code: input })}>
                   Run

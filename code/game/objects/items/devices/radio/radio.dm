@@ -67,7 +67,7 @@
 	var/translate_binary = FALSE
 	/// If true, can say/hear on the special CentCom channel.
 	var/independent = FALSE
-	/// If true, hears all well-known channels automatically, and can say/hear on the Syndicate channel.
+	/// If true, hears all well-known channels automatically, and can say/hear on the Syndicate channel. Also protects from radio jammers.
 	var/syndie = FALSE
 	/// associative list of the encrypted radio channels this radio is currently set to listen/broadcast to, of the form: list(channel name = TRUE or FALSE)
 	var/list/channels
@@ -277,7 +277,7 @@
 	var/turf/position = get_turf(src)
 	for(var/obj/item/jammer/jammer as anything in GLOB.active_jammers)
 		var/turf/jammer_turf = get_turf(jammer)
-		if(position?.z == jammer_turf.z && (get_dist(position, jammer_turf) <= jammer.range))
+		if(position?.z == jammer_turf.z && (get_dist(position, jammer_turf) <= jammer.range) && !syndie)
 			return
 
 	// Determine the identity information which will be attached to the signal.
