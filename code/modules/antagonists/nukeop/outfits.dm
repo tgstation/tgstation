@@ -56,17 +56,16 @@
 	belt = /obj/item/storage/belt/military
 	r_hand = /obj/item/gun/ballistic/shotgun/bulldog
 	backpack_contents = list(
-		/obj/item/gun/ballistic/automatic/pistol/clandestine,
-		/obj/item/pen/edagger,
+		/obj/item/gun/ballistic/automatic/pistol/clandestine = 1,
+		/obj/item/pen/edagger = 1,
 	)
 
 /datum/outfit/syndicate/reinforcement
 	name = "Syndicate Operative - Reinforcement"
 	tc = 0
 	backpack_contents = list(
-		/obj/item/gun/ballistic/automatic/plastikov,
-		/obj/item/ammo_box/magazine/plastikov9mm,
-		/obj/item/ammo_box/magazine/plastikov9mm,
+		/obj/item/gun/ballistic/automatic/plastikov = 1,
+		/obj/item/ammo_box/magazine/plastikov9mm = 2,
 	)
 	var/faction = "The Syndicate"
 
