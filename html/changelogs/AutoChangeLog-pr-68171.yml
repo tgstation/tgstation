@@ -1,0 +1,4 @@
+author: "raffclar"
+delete-after: True
+changes: 
+  - bugfix: "Tablets can be used inside lockers again."
