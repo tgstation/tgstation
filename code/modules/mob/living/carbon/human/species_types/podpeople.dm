@@ -75,7 +75,7 @@
 
 /datum/species/pod/randomize_features(mob/living/carbon/human_mob)
 	..()
-	human.dna.features["mcolor"] = "#59CE00"
+	human_mob.dna.features["mcolor"] = "#59CE00"
 
 /datum/species/pod/proc/change_hairstyle(mob/living/carbon/human/human_mob, new_style)
 	var/obj/item/organ/external/organ = human_mob.getorganslot(ORGAN_SLOT_EXTERNAL_POD_HAIR)

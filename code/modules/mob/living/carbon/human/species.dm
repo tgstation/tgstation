@@ -793,7 +793,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	human_mob.update_body()
 
 /datum/species/proc/randomize_features(mob/living/carbon/human/human_mob)
-	human.dna.features["mcolor"] = "#[random_color()]"
+	human_mob.dna.features["mcolor"] = "#[random_color()]"
 	for(var/obj/item/organ/external/ext_organ as anything in human_mob.external_organs)
 		var/new_look = pick(ext_organ.get_global_feature_list())
 		human_mob.dna.features["[ext_organ.feature_key]"] = new_look

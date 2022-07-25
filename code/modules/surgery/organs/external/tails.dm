@@ -79,7 +79,7 @@
 	wag_flags = WAG_ABLE
 
 /obj/item/organ/external/tail/cat/get_global_feature_list()
-	return tails_list_human
+	return GLOB.tails_list_human
 
 /obj/item/organ/external/tail/monkey
 	color_source = NONE
@@ -94,7 +94,7 @@
 	var/obj/item/organ/external/spines/paired_spines
 
 /obj/item/organ/external/tail/lizard/get_global_feature_list()
-	return tails_list_lizard
+	return GLOB.tails_list_lizard
 
 /obj/item/organ/external/tail/lizard/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()
