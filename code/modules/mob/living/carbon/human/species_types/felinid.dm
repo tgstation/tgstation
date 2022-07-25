@@ -55,9 +55,9 @@
 		CHECK_TICK
 
 /proc/purrbation_toggle(mob/living/carbon/human/H, silent = FALSE)
-	if(!ishumanbasic(H))
+	if(!ishuman(H))
 		return
-	if(!isfelinid(H))
+	if(!istype(H.getorganslot(ORGAN_SLOT_EARS), /obj/item/organ/internal/ears/cat))
 		purrbation_apply(H, silent)
 		. = TRUE
 	else
@@ -83,20 +83,27 @@
 /proc/purrbation_remove(mob/living/carbon/human/H, silent = FALSE)
 	if(isfelinid(H))
 		var/datum/species/human/felinid/cat_species = H.dna.species
-		if(!cat_species.original_felinid)
-			H.set_species(/datum/species/human)
+		if(cat_species.original_felinid)
+			return // Don't display the to_chat message
+		H.set_species(/datum/species/human)
 	else if(ishuman(H) && !ishumanbasic(H))
 		var/datum/species/target_species = H.dna.species
-		for(var/obj/item/organ/current_organ as anything in H.external_organs)
-			if(istype(current_organ, /obj/item/organ/external/tail/cat))
-				current_organ.Remove(H, TRUE)
-				var/obj/item/organ/external/tail/new_tail = locate(/obj/item/organ/external/tail) in target_species.external_organs
-				if(new_tail)
-					new_tail = new new_tail()
-					new_tail.Insert(H, TRUE, FALSE)
-			if(istype(current_organ, /obj/item/organ/internal/ears/cat))
-				var/obj/item/organ/new_ears = new target_species.mutantears
-				new_ears.Insert(H, TRUE, FALSE)
+
+		// From the previous check we know they're not a felinid, therefore removing cat ears and tail is safe
+		var/obj/item/organ/external/tail/tail = H.getorganslot(ORGAN_SLOT_EXTERNAL_TAIL)
+		if(istype(tail, /obj/item/organ/external/tail/cat))
+			var/obj/item/organ/external/tail/new_tail = locate(/obj/item/organ/external/tail) in target_species.external_organs
+			if(new_tail)
+				new_tail = new new_tail()
+				new_tail.Insert(H, TRUE, FALSE)
+			else
+				tail.Remove(H, TRUE)
+				qdel(tail)
+
+		var/obj/item/organ/internal/ears/ears = H.getorganslot(ORGAN_SLOT_EARS)
+		if(istype(ears, /obj/item/organ/internal/ears/cat))
+			var/obj/item/organ/new_ears = new target_species.mutantears
+			new_ears.Insert(H, TRUE, FALSE)
 	if(!silent)
 		to_chat(H, span_boldnotice("You are no longer a cat."))
 
