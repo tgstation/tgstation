@@ -1,4 +1,0 @@
-author: "ChakatStormCloud"
-delete-after: True
-changes: 
-  - bugfix: "Virology: all healing symptoms no longer receive an accidental power boost at Stage Speed 6."

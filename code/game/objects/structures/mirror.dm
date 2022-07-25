@@ -203,9 +203,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 						to_chat(amazed_human, span_notice("Invalid color. Your color is not bright enough."))
 						return TRUE
 
-			amazed_human.update_body()
-			amazed_human.update_hair()
-			amazed_human.update_body_parts()
+			amazed_human.update_body(is_creating = TRUE)
 			amazed_human.update_mutations_overlay() // no hulk lizard
 
 		if("gender")

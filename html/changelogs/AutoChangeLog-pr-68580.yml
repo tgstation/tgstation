@@ -1,0 +1,7 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes: 
+  - rscadd: "Concentrated barbers aid will give hairless species hair after it has remained in them for a number of cycles inversely proportional to the purity (20 cycles at 100% purity). Additionally, at 100% purity, it removes the smooth-headed quirk at the same time that it grants hairless species hair."
+  - bugfix: "Most effects that change your hairstyle are no longer delayed until certain effects occur."
+  - bugfix: "You cannot bypass the smooth-headed quirk with the genetics console (even if you were somehow able to figure out how to get a specific hairstyle)"
+  - bugfix: "The species and antagonist character icons in the preferences menu are no longer all bald."

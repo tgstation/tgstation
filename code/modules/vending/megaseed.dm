@@ -34,6 +34,7 @@
 		/obj/item/seeds/olive = 3,
 		/obj/item/seeds/onion = 3,
 		/obj/item/seeds/orange = 3,
+		/obj/item/seeds/peanut = 3,
 		/obj/item/seeds/peas = 3,
 		/obj/item/seeds/pineapple = 3,
 		/obj/item/seeds/plum = 3,

@@ -68,11 +68,13 @@
 	anchored = TRUE
 	state = AI_READY_CORE
 
-/obj/structure/ai_core/deactivated/Initialize(mapload, posibrain = FALSE)
+/obj/structure/ai_core/deactivated/Initialize(mapload, skip_mmi_creation = FALSE, posibrain = FALSE)
 	. = ..()
 	circuit = new(src)
+	if(skip_mmi_creation)
+		return
 	if(posibrain)
-		core_mmi = new/obj/item/mmi/posibrain(src)
+		core_mmi = new/obj/item/mmi/posibrain(src, /* autoping = */ FALSE)
 	else
 		core_mmi = new(src)
 		core_mmi.brain = new(core_mmi)

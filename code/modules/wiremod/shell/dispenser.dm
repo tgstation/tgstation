@@ -28,7 +28,8 @@
 	return ..()
 
 
-/obj/structure/dispenser_bot/proc/add_item(obj/item/to_add)
+/obj/structure/dispenser_bot/proc/add_item(mob/user, obj/item/to_add)
+	balloon_alert(user, "inserted item")
 	stored_items += to_add
 	to_add.forceMove(src)
 	RegisterSignal(to_add, COMSIG_MOVABLE_MOVED, .proc/handle_stored_item_moved)
@@ -61,33 +62,33 @@
 	), SHELL_CAPACITY_LARGE)
 
 /obj/structure/dispenser_bot/attackby(obj/item/item, mob/living/user, params)
-	. = ..()
-	if(user.combat_mode || .)
-		return
-
+	if(user.combat_mode)
+		return ..()
+	if(istype(item, /obj/item/wrench) || istype(item, /obj/item/multitool) || istype(item, /obj/item/integrated_circuit))
+		return ..()
 	if(item.w_class > max_weight && !istype(item, /obj/item/storage/bag))
 		balloon_alert(user, "item too big!")
-		return
-
+		return FALSE
 	if(length(stored_items) >= capacity)
 		balloon_alert(user, "at maximum capacity!")
-		return
-
+		return FALSE
 	if(istype(item, /obj/item/storage/bag))
 		for(var/obj/item/bag_item in item.contents)
 			if(length(stored_items) >= capacity)
 				break
-			add_item(bag_item)
-		return
-
-	add_item(item)
+			if(bag_item.w_class > max_weight || istype(bag_item, /obj/item/storage/bag))
+				continue
+			add_item(user, bag_item)
+		return TRUE
+	add_item(user, item)
+	return TRUE
 
 /obj/structure/dispenser_bot/wrench_act(mob/living/user, obj/item/tool)
 	if(locked)
 		return
 	set_anchored(!anchored)
 	tool.play_tool_sound(src)
-	balloon_alert(user, "You [anchored?"secure":"unsecure"] [src].")
+	balloon_alert(user, "[anchored? "secured" : "unsecured"]")
 	return TRUE
 
 /obj/item/circuit_component/dispenser_bot
