@@ -389,16 +389,6 @@
 	if(mood)
 		mood.mood_modifier -= 0.5
 
-/datum/quirk/inflexable_arms
-	name = "Single Jointed Arms"
-	desc = "Your arms are rigid planks. You will need to take off your backpack to access it's contents, and you'll have trouble escaping restraints."
-	icon = "hand-holding"
-	value = -3
-	gain_text = "<span class='danger'>Your arms feel ridgid.</span>"
-	lose_text = "<span class='notice'>Your arms feel more relaxed</span>"
-	medical_record_text = "Patient had very inflexable arms."
-	hardcore_value = 2
-
 /datum/quirk/light_drinker
 	name = "Light Drinker"
 	desc = "You just can't handle your drinks and get drunk very quickly."
