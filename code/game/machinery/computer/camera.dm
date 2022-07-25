@@ -326,7 +326,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 
 /// A button that adds a camera network to the entertainment monitors
 /obj/machinery/button/showtime
-	name = "showtime button"
+	name = "thunderdome showtime button"
 	desc = "Use this button to allow entertainment monitors to broadcast the big game."
 	device_type = /obj/item/assembly/control/showtime
 	req_access = list()
@@ -345,6 +345,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	var/is_show_active = FALSE
 	/// The camera network id this controller toggles
 	var/tv_network_id = "thunder"
+	/// The display TV show name
+	var/tv_show_name = "Thunderdome"
 	/// List of phrases the entertainment console may say when the show begins
 	var/list/tv_starters = list("Feats of bravery live now at the thunderdome!",
 		"Two enter, one leaves! Tune in now!",
@@ -358,6 +360,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 
 /obj/item/assembly/control/showtime/activate()
 	is_show_active = !is_show_active
+	say("The [tv_show_name] show has [ is_show_active ? "begun" : "ended"]")
 	var/announcement = is_show_active ? pick(tv_starters) : pick(tv_enders)
 	for(var/obj/machinery/computer/security/telescreen/entertainment/tv in GLOB.machines)
 		tv.update_shows(is_show_active, tv_network_id, announcement)
