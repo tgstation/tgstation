@@ -745,9 +745,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
 "cM" = (
-/obj/machinery/shower{
-	dir = 8
-	},
+/obj/machinery/shower/directional/west,
 /turf/open/floor/iron,
 /area/shuttle/sbc_starfury)
 "cO" = (
@@ -767,9 +765,7 @@
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "cQ" = (
-/obj/structure/sink{
-	pixel_y = 24
-	},
+/obj/structure/sink/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
@@ -990,9 +986,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
 "dD" = (
-/obj/machinery/shower{
-	dir = 8
-	},
+/obj/machinery/shower/directional/west,
 /turf/open/floor/iron/dark/corner{
 	dir = 8
 	},
@@ -1710,10 +1704,7 @@
 	pixel_y = 14
 	},
 /obj/structure/mirror/directional/east,
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 12
-	},
+/obj/structure/sink/directional/west,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/sbc_starfury)

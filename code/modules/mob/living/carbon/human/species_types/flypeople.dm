@@ -109,7 +109,7 @@
 /obj/item/organ/internal/heart/fly/Initialize(mapload)
 	. = ..()
 	name = odd_organ_name()
-	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
+	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "spinner-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
 
 /obj/item/organ/internal/heart/fly/update_icon_state()
 	SHOULD_CALL_PARENT(FALSE)
@@ -121,7 +121,7 @@
 /obj/item/organ/internal/lungs/fly/Initialize(mapload)
 	. = ..()
 	name = odd_organ_name()
-	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
+	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "spinner-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
 
 /obj/item/organ/internal/liver/fly
 	desc = "You have no idea what the hell this is, or how it manages to keep something alive in any capacity."
@@ -130,7 +130,7 @@
 /obj/item/organ/internal/liver/fly/Initialize(mapload)
 	. = ..()
 	name = odd_organ_name()
-	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
+	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "spinner-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
 
 /obj/item/organ/internal/stomach/fly
 	desc = "You have no idea what the hell this is, or how it manages to keep something alive in any capacity."
@@ -138,7 +138,7 @@
 /obj/item/organ/internal/stomach/fly/Initialize(mapload)
 	. = ..()
 	name = odd_organ_name()
-	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
+	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "spinner-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
 
 /obj/item/organ/internal/stomach/fly/on_life(delta_time, times_fired)
 	if(locate(/datum/reagent/consumable) in reagents.reagent_list)
@@ -156,7 +156,7 @@
 /obj/item/organ/internal/appendix/fly/Initialize(mapload)
 	. = ..()
 	name = odd_organ_name()
-	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
+	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "spinner-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
 
 /obj/item/organ/internal/appendix/fly/update_appearance(updates=ALL)
 	return ..(updates & ~(UPDATE_NAME|UPDATE_ICON)) //don't set name or icon thank you
@@ -169,7 +169,7 @@
 /obj/item/organ/internal/fly/Initialize(mapload)
 	. = ..()
 	name = odd_organ_name()
-	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
+	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "spinner-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
 
 /obj/item/organ/internal/fly/groin //appendix is the only groin organ so we gotta have one of these too lol
 	zone = BODY_ZONE_PRECISE_GROIN

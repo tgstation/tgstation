@@ -189,7 +189,9 @@
 		for(var/obj/O in contents)
 			O.emp_act(severity)
 
-/obj/item/gun/attack_secondary(mob/living/victim, mob/living/user, params)
+/obj/item/gun/afterattack_secondary(mob/living/victim, mob/living/user, params)
+	if(!ismob(victim))
+		return
 	if (user.GetComponent(/datum/component/gunpoint))
 		to_chat(user, span_warning("You are already holding someone up!"))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

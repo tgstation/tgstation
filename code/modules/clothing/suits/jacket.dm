@@ -2,6 +2,7 @@
 	name = "bomber jacket"
 	desc = "Aviators not included."
 	icon_state = "bomberjacket"
+	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
 	inhand_icon_state = "brownjsuit"
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/radio)
 	body_parts_covered = CHEST|GROIN|ARMS

@@ -1,0 +1,22 @@
+{
+	"sundress": [
+		{
+			"type": "icon_state",
+			"icon_state": "sundress_pistil",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "sundress_pedal",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "sundress_base",
+			"blend_mode": "overlay",
+			"color_ids": [3 ]
+		}
+	]
+}

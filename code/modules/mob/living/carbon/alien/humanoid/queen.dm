@@ -147,7 +147,7 @@
 	if(!promotion)
 		CRASH("[type] was created and handled by a mob ([queen]) that didn't have a promotion action associated.")
 
-	if(!isalienadult(to_promote) || isalienroyal(to_promote))
+	if(!isalienhumanoid(to_promote) || isalienroyal(to_promote))
 		to_chat(queen, span_noticealien("You may only use this with your adult, non-royal children!"))
 		return
 

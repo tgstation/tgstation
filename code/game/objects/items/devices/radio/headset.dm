@@ -67,7 +67,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	else
 		set_listening(FALSE, actual_setting = FALSE)
 
-/obj/item/radio/headset/Moved(atom/OldLoc, Dir)
+/obj/item/radio/headset/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	possibly_deactivate_in_loc()
 
