@@ -29,6 +29,6 @@
 
 	for(var/all_species as anything in subtypesof(/datum/species))
 		var/datum/species/all_species_type = GLOB.species_list[all_species]
-		human.dna.species.randomize_features(human)
+		all_species_type.randomize_features(human)
 
 	human.update_body()
