@@ -44,7 +44,7 @@
 		visible_message(span_notice("[user] gently pats [src] on the head, eliciting an off-putting buzzing from its holographic field."))
 		return
 	user.do_attack_animation(src)
-	if(user.name != master)
+	if(user.name != master_name)
 		visible_message(span_danger("[user] stomps on [src]!."))
 		take_holo_damage(2)
 		return
@@ -65,8 +65,8 @@
 	return FALSE
 
 /mob/living/silicon/pai/proc/take_holo_damage(amount)
-	emitterhealth = clamp((emitterhealth - amount), -50, emittermaxhealth)
-	if(emitterhealth < 0)
+	holochassis_health = clamp((holochassis_health - amount), -50, HOLOCHASSIS_MAX_HEALTH)
+	if(holochassis_health < 0)
 		fold_in(force = TRUE)
 	if(amount > 0)
 		to_chat(src, span_userdanger("The impact degrades your holochassis!"))
@@ -85,7 +85,7 @@
 		take_holo_damage(amount * 0.25)
 
 /mob/living/silicon/pai/getBruteLoss()
-	return emittermaxhealth - emitterhealth
+	return HOLOCHASSIS_MAX_HEALTH - holochassis_health
 
 /mob/living/silicon/pai/getFireLoss()
-	return emittermaxhealth - emitterhealth
+	return HOLOCHASSIS_MAX_HEALTH - holochassis_health

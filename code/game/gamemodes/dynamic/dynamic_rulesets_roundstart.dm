@@ -67,7 +67,7 @@
 
 	// If we're not forced, we're going to make sure we can actually have an AI in this shift,
 	if(!forced && min(ai_job.total_positions - ai_job.current_positions, ai_job.spawn_positions) <= 0)
-		log_game("DYNAMIC: FAIL: [src] could not run, because there is nobody who wants to be an AI")
+		log_dynamic("FAIL: [src] could not run, because there is nobody who wants to be an AI")
 		return FALSE
 
 	return ..()
@@ -523,13 +523,13 @@
 			M.add_antag_datum(new_head,revolution)
 		else
 			assigned -= M
-			log_game("DYNAMIC: [ruletype] [name] discarded [M.name] from head revolutionary due to ineligibility.")
+			log_dynamic("[ruletype] [name] discarded [M.name] from head revolutionary due to ineligibility.")
 	if(revolution.members.len)
 		revolution.update_objectives()
 		revolution.update_heads()
 		SSshuttle.registerHostileEnvironment(revolution)
 		return TRUE
-	log_game("DYNAMIC: [ruletype] [name] failed to get any eligible headrevs. Refunding [cost] threat.")
+	log_dynamic("[ruletype] [name] failed to get any eligible headrevs. Refunding [cost] threat.")
 	return FALSE
 
 /datum/dynamic_ruleset/roundstart/revs/clean_up()

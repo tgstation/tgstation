@@ -780,3 +780,116 @@
   tralezab:
   - balance: IAA are now flavored around rooting out corruption, rather than just
       killing syndicates.
+2022-07-23:
+  CoffeeDragon16:
+  - bugfix: maintenance-adapted eyes will now display properly
+  CursedBirb:
+  - bugfix: Dutch jacket shows hands again
+  FernandoJ8:
+  - bugfix: the appearance of broken plating now updates after repairing it
+  Fikou:
+  - qol: entrenching tool now tells you on examine how to switch config
+  Jackraxxus:
+  - bugfix: Tramstation chemfactory's meson left pair of meson goggles no longer slow
+      you down.
+  JohnFulpWillard:
+  - bugfix: The Veteran's cloak now only respects people who meet the requirements,
+      rather than being the other way around.
+  - spellcheck: Fixes a minor spelling error in seperation when you eat a red pill.
+  Melbert:
+  - bugfix: Blue, Red, and Delta alerts make the right sound again
+  - bugfix: Fixes a runtime error preventing Ion Storms from triggering occasionally
+  Mickyan:
+  - qol: Blacklight and red light fixtures are slightly brighter
+  MidoriWroth:
+  - bugfix: Fixed brownies and breadsticks not being bakeable
+  - bugfix: Brownie sheets are now sliceable again.
+  Profakos:
+  - bugfix: If you toggle night shift mode on an APC too fast, you'll see the balloon
+      message
+  Y0SH1M4S73R:
+  - bugfix: calling the lua function "print" when there are multiple lua states will
+      no longer crash the server
+  dragomagol:
+  - admin: moved dynamic logging into its own file
+  lizardqueenlexi:
+  - bugfix: added missing flag to captain's jumpskirt
+  magatsuchi:
+  - bugfix: fixes storage item icons not updating properly
+  necromanceranne:
+  - balance: Syndicate encryption keys protect your headset from radio jammers.
+  orthography:
+  - bugfix: fixes the highfive memory saying deuteragonist instead of the name of
+      the second actor.
+  san7890:
+  - bugfix: The KiloStation Emergency Shuttle now uses appropriate flooring to complement
+      the floor decalling work.
+  - bugfix: On MetaStation, the Quartermaster's Office no longer owns a conveyor belt.
+      Greedy bastard.
+2022-07-24:
+  13spacemen:
+  - imageadd: Pun Pun wears drippy clothes now. Swag.
+  - bugfix: Becoming a digitigrade species should properly drop your shoes if they
+      don't fit
+  ArcaneMusic:
+  - qol: Roller Beds and Body Bags now have screentips explaining how to fold them
+      up.
+  Melbert:
+  - bugfix: Having the Supermatter Engine detonate will no longer make all traitor
+      final objectives unavailable. (Only the Supermatter Cascade objective is made
+      unavailable.)
+  Mooshimi:
+  - bugfix: Separate DNA Vaults will now check if you already have a power from one
+      before giving a power to you.
+  ShizCalev:
+  - bugfix: Floors repaired by floorbots will now have their overlays updated properly.
+  Wallem:
+  - imageadd: Updated the treat fabricator sprite
+  Watermelon914:
+  - admin: The lua editor now has text highlighting for lua keywords
+  dragomagol:
+  - bugfix: tongue tied players will no longer be haunted by floating faces if they
+      type too fast
+  - admin: Added Delay Round End to the server tab
+  vincentiusvin:
+  - bugfix: fixed the 20 radius supermatter delam irradiation not working
+2022-07-25:
+  Fikou:
+  - bugfix: you no longer rename door assemblies with pens on combat mode
+  Mothblocks:
+  - qol: Pointing at something on yourself now shows the item.
+  Y0SH1M4S73R:
+  - bugfix: Fixes most, if not all harddels related to lua.
+  - bugfix: Fixed lua signal handlers for COMSIG_PARENT_QDELETED.
+  - qol: The lua editor UI will warn when a state's global table has been corrupted
+      or shadowed.
+  - qol: Internal auxlua errors will provide more verbose error messages.
+  - bugfix: Possibly fixed chat by way of removing seemingly unrelated code that turns
+      out to have been unnecessary in the first place.
+  - bugfix: In lua, if you shadow the global table (_G), you will no longer be prevented
+      from running any further code, and as such, can unshadow the global table.
+  jlsnow301, Dejaku51:
+  - refactor: Most pAI code has been rewritten or refactored.
+  - rscadd: pAIs can now be factory reset in card mode if they've been emagged.
+  - rscadd: pAI host scan now be used on their masters at range.
+  - rscadd: pAI photography modules now come bundled with printers and zoom lenses.
+  - balance: pAIs lose both medical and security records in order to gain crew monitors.
+  - rscdel: pAI door jacking no longer gives ominous warnings to the AI about "brute
+      force attacks".
+  - balance: pAI door jack time has been increased 50%.
+  - bugfix: Hopefully prevents invalid pAI candidates from getting downloaded.
+  - bugfix: pAI door jacks no longer have infinite length and will retract if you
+      walk too far away.
+  - bugfix: pAI integrated lights now follow the pAI.
+  - bugfix: pAI PDAs now properly work on both hud and software interface.
+  - bugfix: pAI examine text now properly displays master and holochassis status.
+  - bugfix: pAIs no longer give newscaster alerts without having one installed.
+  - qol: pAI requests no longer make the Byond window flash.
+  - qol: The silicon text for "your laws have been updated" is now easier to see.
+  - qol: Changed the text for camera and printer functions.
+  magatsuchi:
+  - bugfix: dumping storage containers now works properly, and cigarette carts aren't
+      janky anymore to open
+  - bugfix: right clicking a storage container with an item in hand now opens storage
+  raffclar:
+  - bugfix: Tablets can be used inside lockers again.

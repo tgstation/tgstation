@@ -2320,7 +2320,7 @@
 "vV" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/paicard,
+/obj/item/pai_card,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/science/rnd)
 "vY" = (

@@ -413,6 +413,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			// organ.Insert will qdel any current organs in that slot, so we don't need to.
 			replacement.Insert(C, TRUE, FALSE)
 
+/datum/species/proc/worn_items_fit_body_check(mob/living/carbon/wearer)
+	for(var/obj/item/equipped_item in wearer.get_all_worn_items())
+		var/equipped_item_slot = wearer.get_slot_by_item(equipped_item)
+		if(!can_equip(equipped_item, equipped_item_slot, H = wearer,  bypass_equip_delay_self = TRUE, ignore_equipped = TRUE))
+			wearer.dropItemToGround(equipped_item)
+
 /**
  * Proc called when a carbon becomes this species.
  *
@@ -428,10 +434,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	// Drop the items the new species can't wear
 	if((AGENDER in species_traits))
 		C.gender = PLURAL
-	for(var/slot_id in no_equip)
-		var/obj/item/thing = C.get_item_by_slot(slot_id)
-		if(thing && (!thing.species_exception || !is_type_in_list(src,thing.species_exception)))
-			C.dropItemToGround(thing)
 	if(C.hud_used)
 		C.hud_used.update_locked_slots()
 
@@ -440,6 +442,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	replace_body(C, src)
 	regenerate_organs(C, old_species, visual_only = C.visual_only_organs)
+
+	INVOKE_ASYNC(src, .proc/worn_items_fit_body_check, C)
 
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
 		C.dna.blood_type = exotic_bloodtype
@@ -779,7 +783,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 ///Proc that will randomise the hair, or primary appearance element (i.e. for moths wings) of a species' associated mob
 /datum/species/proc/randomize_main_appearance_element(mob/living/carbon/human/human_mob)
 	human_mob.hairstyle = random_hairstyle(human_mob.gender)
-	human_mob.update_hair()
+	human_mob.update_hair(is_creating = TRUE)
 
 ///Proc that will randomise the underwear (i.e. top, pants and socks) of a species' associated mob
 /datum/species/proc/randomize_active_underwear(mob/living/carbon/human/human_mob)
@@ -800,14 +804,15 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE)
+/datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE)
 	if(slot in no_equip)
 		if(!I.species_exception || !is_type_in_list(src, I.species_exception))
 			return FALSE
 
 	// if there's an item in the slot we want, fail
-	if(H.get_item_by_slot(slot))
-		return FALSE
+	if(!ignore_equipped)
+		if(H.get_item_by_slot(slot))
+			return FALSE
 
 	// this check prevents us from equipping something to a slot it doesn't support, WITH the exceptions of storage slots (pockets, suit storage, and backpacks)
 	// we don't require having those slots defined in the item's slot_flags, so we'll rely on their own checks further down
@@ -873,6 +878,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_ICLOTHING)
+			var/obj/item/bodypart/chest = H.get_bodypart(BODY_ZONE_CHEST)
+			if(chest && (chest.bodytype & BODYTYPE_MONKEY))
+				if(!(I.supports_variations_flags & CLOTHING_MONKEY_VARIATION))
+					if(!disable_warning)
+						to_chat(H, span_warning("[I] doesn't fit your [chest.name]!"))
+					return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_ID)
 			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
@@ -1021,7 +1032,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return
 	target.facial_hairstyle = "Shaved"
 	target.hairstyle = "Bald"
-	target.update_hair()
+	target.update_hair(is_creating = TRUE)
 
 //////////////////
 // ATTACK PROCS //

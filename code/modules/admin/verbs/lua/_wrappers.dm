@@ -4,20 +4,30 @@
 /proc/wrap_lua_datum_proc_call(datum/thing_to_call, proc_name, list/arguments)
 	if(!usr)
 		usr = GLOB.lua_usr
+	var/ret
 	if(usr)
-		SSlua.gc_guard = WrapAdminProcCall(thing_to_call, proc_name, arguments)
+		ret = WrapAdminProcCall(thing_to_call, proc_name, arguments)
 	else
-		SSlua.gc_guard = HandleUserlessProcCall("lua", thing_to_call, proc_name, arguments)
-	return SSlua.gc_guard
+		ret = HandleUserlessProcCall("lua", thing_to_call, proc_name, arguments)
+	if(isdatum(ret))
+		SSlua.gc_guard = ret
+		var/datum/ret_datum = ret
+		ret_datum.RegisterSignal(ret_datum, COMSIG_PARENT_QDELETING, /datum.proc/lua_reference_cleanup, override = TRUE)
+	return ret
 
 /proc/wrap_lua_global_proc_call(proc_name, list/arguments)
 	if(!usr)
 		usr = GLOB.lua_usr
+	var/ret
 	if(usr)
-		SSlua.gc_guard = WrapAdminProcCall(GLOBAL_PROC, proc_name, arguments)
+		ret = WrapAdminProcCall(GLOBAL_PROC, proc_name, arguments)
 	else
-		SSlua.gc_guard = HandleUserlessProcCall("lua", GLOBAL_PROC, proc_name, arguments)
-	return SSlua.gc_guard
+		ret = HandleUserlessProcCall("lua", GLOBAL_PROC, proc_name, arguments)
+	if(isdatum(ret))
+		SSlua.gc_guard = ret
+		var/datum/ret_datum = ret
+		ret_datum.RegisterSignal(ret_datum, COMSIG_PARENT_QDELETING, /datum.proc/lua_reference_cleanup, override = TRUE)
+	return ret
 
 /proc/wrap_lua_print(state_id, list/arguments)
 	var/datum/lua_state/target_state

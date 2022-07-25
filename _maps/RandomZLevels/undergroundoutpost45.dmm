@@ -6241,7 +6241,7 @@
 /obj/item/taperecorder{
 	pixel_x = -3
 	},
-/obj/item/paicard{
+/obj/item/pai_card{
 	pixel_x = 4
 	},
 /turf/open/floor/iron/cafeteria{
