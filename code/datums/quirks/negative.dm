@@ -62,7 +62,7 @@
 	RegisterSignal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM, .proc/on_equipped_item)
 
 /datum/quirk/bad_knees
-	name = "Bad knees"
+	name = "Bad Knees"
 	desc = "Your suffer from a bad pair of knees. You walk slightly slower, and climbing things is out of the question."
 	icon = "crutch"
 	mob_trait = TRAIT_BAD_KNEES
@@ -288,21 +288,33 @@
 
 /datum/quirk/glass_jaw
 	name = "Glass Jaw"
-	desc = "Your skull is much more fragile than average.."
+	desc = "Your skull is much more fragile than average. Damage inflicted on your head is doubled."
 	icon = "tooth"
 	mob_trait = TRAIT_DEPRESSION
 	value = -8
 	medical_record_text = "Patient has abnormally frail jaw and skull bones."
 	hardcore_value = 8
 
+/datum/quirk/glass_jaw/add()
+	if(ishuman(quirk_holder))
+		var/mob/living/carbon/human/glass_joe = quirk_holder
+		var/obj/item/bodypart/jaw = glass_joe.get_bodypart(BODY_ZONE_HEAD)
+		jaw.body_damage_coeff *= 2
+
 /datum/quirk/paper_ribcage
 	name = "Paper Ribcage"
-	desc = "Damage inflicted on your torso is doubled."
+	desc = "Your ribcage is britel and calcafied. Damage inflicted on your torso is doubled."
 	icon = "toilet-paper"
 	mob_trait = TRAIT_DEPRESSION
 	value = -8
 	medical_record_text = "Patient has abnormally frail rib cage"
-	hardcore_value = 8
+	hardcore_value = 10
+
+/datum/quirk/paper_ribcage/add()
+	if(ishuman(quirk_holder))
+		var/mob/living/carbon/human/paper_andy = quirk_holder
+		var/obj/item/bodypart/ribs = paper_andy.get_bodypart(BODY_ZONE_CHEST)
+		ribs.body_damage_coeff *= 2
 
 /datum/quirk/frail
 	name = "Frail"

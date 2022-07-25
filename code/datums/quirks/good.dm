@@ -396,7 +396,7 @@
 	medical_record_text = "Patient has an unnaturally robust physique."
 
 /datum/quirk/robust_physique/add()
-	if(iscarbon (quirk_holder))
+	if(iscarbon(quirk_holder))
 		var/mob/living/tough_guy = quirk_holder
 		tough_guy.maxHealth *= 1.2
 		tough_guy.health *= 1.2
