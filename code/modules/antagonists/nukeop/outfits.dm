@@ -25,7 +25,9 @@
 
 	id_trim = /datum/id_trim/chameleon/operative/nuke_leader
 
-/datum/outfit/syndicate/post_equip(mob/living/carbon/human/H)
+/datum/outfit/syndicate/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
 	var/obj/item/radio/R = H.ears
 	R.set_frequency(FREQ_SYNDICATE)
 	R.freqlock = TRUE
@@ -61,6 +63,19 @@
 /datum/outfit/syndicate/reinforcement
 	name = "Syndicate Operative - Reinforcement"
 	tc = 0
+	backpack_contents = list(
+		/obj/item/gun/ballistic/automatic/plastikov,
+		/obj/item/ammo_box/magazine/plastikov9mm,
+		/obj/item/ammo_box/magazine/plastikov9mm,
+	)
+	var/faction = "The Syndicate"
+
+/datum/outfit/syndicate/reinforcement/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	. = ..()
+	if(visualsOnly)
+		return
+	to_chat(H, span_notice("You're an agent of [faction], sent to accompany the nuclear squad on their mission. \
+		Support your allies, and remember: Down with Nanotrasen."))
 
 /datum/outfit/syndicate/reinforcement/gorlex
 	name = "Syndicate Operative - Gorlex Reinforcement"
@@ -68,6 +83,7 @@
 	head = /obj/item/clothing/head/helmet/swat
 	neck = /obj/item/clothing/neck/syndiescarf
 	glasses = /obj/item/clothing/glasses/cold
+	faction = "the Gorlex Marauders"
 
 /datum/outfit/syndicate/reinforcement/cybersun
 	name = "Syndicate Operative - Cybersun Reinforcement"
@@ -76,6 +92,7 @@
 	gloves = /obj/item/clothing/gloves/fingerless
 	glasses = /obj/item/clothing/glasses/sunglasses
 	mask = /obj/item/clothing/mask/cigarette/cigar
+	faction = "Cybersun Industries"
 
 /datum/outfit/syndicate/reinforcement/donk
 	name = "Syndicate Operative - Donk Reinforcement"
@@ -83,6 +100,7 @@
 	head = /obj/item/clothing/head/hardhat/orange
 	shoes = /obj/item/clothing/shoes/workboots
 	glasses = /obj/item/clothing/glasses/meson
+	faction = "the Donk Corporation"
 
 /datum/outfit/syndicate/reinforcement/waffle
 	name = "Syndicate Operative - Waffle Reinforcement"
@@ -90,6 +108,7 @@
 	suit = /obj/item/clothing/suit/armor/vest
 	head = /obj/item/clothing/head/helmet/blueshirt
 	glasses = /obj/item/clothing/glasses/welding/up
+	faction = "the Waffle Corporation"
 
 /datum/outfit/syndicate/reinforcement/interdyne
 	name = "Syndicate Operative - Interdyne Reinforcement"
@@ -100,9 +119,11 @@
 	neck = /obj/item/clothing/neck/stethoscope
 	glasses = /obj/item/clothing/glasses/hud/health
 	mask = /obj/item/clothing/mask/breath/medical
+	faction = "Interdyne Pharmaceutics"
 
 /datum/outfit/syndicate/reinforcement/mi13
 	name = "Syndicate Operative - MI13 Reinforcement"
 	uniform = /obj/item/clothing/under/syndicate/sniper
 	shoes = /obj/item/clothing/shoes/laceup
 	glasses = /obj/item/clothing/glasses/sunglasses/big
+	faction = "MI13"
