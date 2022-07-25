@@ -50,8 +50,7 @@
 	if(ishuman(spawned_mob))
 		var/mob/living/carbon/human/spawned_human = spawned_mob
 		if(mob_species)
-			spawned_human.set_species(mob_species, generate_new_features = TRUE)
-		randomize_human(spawned_mob, new_name = FALSE)
+			spawned_human.set_species(mob_species)
 		spawned_human.underwear = "Nude"
 		spawned_human.undershirt = "Nude"
 		spawned_human.socks = "Nude"

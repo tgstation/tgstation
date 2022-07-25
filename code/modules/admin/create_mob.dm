@@ -25,8 +25,10 @@
 	human.eye_color_right = random_eye_color
 
 	human.dna.blood_type = random_blood_type()
-
 	human.dna.species.randomize_active_underwear(human)
-	human.dna.species.randomize_features(human)
 
-	human.update_body(is_creating = TRUE)
+	for(var/all_species as anything in subtypesof(/datum/species))
+		var/datum/species/all_species_type = GLOB.species_list[all_species]
+		human.dna.species.randomize_features(human)
+
+	human.update_body()
