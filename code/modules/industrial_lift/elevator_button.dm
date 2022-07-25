@@ -143,3 +143,14 @@
 		return possible_match
 
 	return null
+
+/obj/machinery/button/elevator
+	name = "elevator button"
+	desc = "Go back. Go back. Go back. Can you operate the elevator."
+	icon_state = "launcher"
+	skin = "launcher"
+	device_type = /obj/item/assembly/control/elevator
+	req_access = list()
+	id = 1
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 28)

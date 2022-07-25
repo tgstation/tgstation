@@ -1,3 +1,13 @@
+/**
+ * # Elevator control panel
+ *
+ * A wallmounted simple machine that controls elevators,
+ * allowing users to enter a UI to move it up or down
+ *
+ * These can be placed in two methods:
+ * - You can place the control panel on the same turf as a lift. It will move up and down with the lift
+ * - You can place the control panel to the side of a lift, NOT attached to the lift. It will remain in position
+ */
 /obj/machinery/elevator_control_panel
 	name = "elevator panel"
 	desc = "<i>\"In case of emergency, please use the stairs.\"</i> Thus, always use the stairs." // Fire alarm reference, yes.
@@ -17,12 +27,12 @@
 	/// A list of all possible destinations this elevator can travel.
 	/// Assoc list of "Floor name" to "z level of destination".
 	/// By default the floor names will auto-generate ("Floor 1", "Floor 2", etc).
-	var/list/linked_elevator_desinations
+	var/list/linked_elevator_destination
 	/// If you want to override what each floor is named as, you can do so with this list.
 	/// Make this an assoc list of "z level you want to rename" to "desired name".
 	/// So, if you want the z-level 2 destination to be named "Cargo", you would do list("2" = "Cargo").
 	var/list/preset_destination_names
-
+	/// TimerID to our door reset timer, made by emergency opening doors
 	var/door_reset_timerid
 
 /obj/machinery/elevator_control_panel/Initialize(mapload)
@@ -59,28 +69,30 @@
 
 	return null
 
-/// Goes through and populates the linked_elevator_desinations list with all possible destinations the lift can go.
+/// Goes through and populates the linked_elevator_destination list with all possible destinations the lift can go.
 /obj/machinery/elevator_control_panel/proc/populate_destinations_list(datum/lift_master/linked_lift)
 	// Get a list of all the starting locs our elevator starts at
 	var/list/starting_locs = list()
 	for(var/obj/structure/industrial_lift/lift_piece as anything in linked_lift.lift_platforms)
 		starting_locs |= lift_piece.locs
 
-	// Start with the initial destination obviously
-	var/list/raw_destinations = list(loc.z)
+	// Start with the initial z level obviously
+	var/list/raw_destinations = list(linked_lift.lift_platforms[1].z)
 	// Get all destinations below us
 	add_destinations_in_a_direction_recursively(starting_locs, DOWN, raw_destinations)
 	// Get all destinations above us
 	add_destinations_in_a_direction_recursively(starting_locs, UP, raw_destinations)
 
-	linked_elevator_desinations = list()
+	linked_elevator_destination = list()
 	for(var/z_level in raw_destinations)
 		// Check if this z-level has a preset destination associated.
 		var/preset_name = preset_destination_names?[num2text(z_level)]
-		linked_elevator_desinations[preset_name || "Floor [z_level]"] = z_level
+		// If we don't have a preset name, use Floor z-1 for the title.
+		// z - 1 is used because the station z-level is 2, and goes up.
+		linked_elevator_destination["[z_level]"] = preset_name || "Floor [z_level - 1]"
 
 /**
- * Recursively adds destinations to the list of linked_elevator_desinations
+ * Recursively adds destinations to the list of linked_elevator_destination
  * until it fails to find a valid stopping point in the passed direction.
  */
 /obj/machinery/elevator_control_panel/proc/add_destinations_in_a_direction_recursively(list/turfs_to_check, direction, list/destinations)
@@ -125,19 +137,22 @@
 /obj/machinery/elevator_control_panel/ui_state(mob/user)
 	return GLOB.physical_state
 
-/*
 /obj/machinery/elevator_control_panel/ui_status(mob/user)
 	var/datum/lift_master/lift = lift_weakref?.resolve()
 	if(!lift || lift.controls_locked == LIFT_PLATFORM_LOCKED)
 		return UI_UPDATE
+
+	if(lift.lift_platforms[1].z != z)
+		return UI_UPDATE
+
 	return ..()
-*/
 
 /obj/machinery/elevator_control_panel/ui_data(mob/user)
 	var/list/data = list()
 
 	data["panel_z"] = z
 	data["emergency_level"] = SSsecurity_level.get_current_level_as_text()
+	data["emergency_level_as_num"] = SSsecurity_level.get_current_level_as_number()
 	data["doors_open"] = !!door_reset_timerid
 
 	var/datum/lift_master/lift = lift_weakref?.resolve()
@@ -155,10 +170,10 @@
 	var/list/data = list()
 
 	data["all_floor_data"] = list()
-	for(var/destination in linked_elevator_desinations)
+	for(var/destination in linked_elevator_destination)
 		data["all_floor_data"] += list(list(
-			"name" = destination,
-			"z_level" = linked_elevator_desinations[destination],
+			"name" = linked_elevator_destination[destination],
+			"z_level" = destination,
 		))
 
 	return data
@@ -173,15 +188,15 @@
 
 	switch(action)
 		if("move_lift")
-			var/desired_z = params["move_to_z"]
-			if(!(desired_z in linked_elevator_desinations))
+			var/desired_z = params["z"]
+			if(!(desired_z in linked_elevator_destination))
 				return TRUE // Something is inaccurate, update UI
 
 			var/datum/lift_master/lift = lift_weakref?.resolve()
 			if(!lift || lift.controls_locked == LIFT_PLATFORM_LOCKED)
 				return TRUE // We shouldn't be moving anything, update UI
 
-			INVOKE_ASYNC(lift, /datum/lift_master.proc/move_to_zlevel, desired_z, CALLBACK(src, .proc/check_panel), usr)
+			INVOKE_ASYNC(lift, /datum/lift_master.proc/move_to_zlevel, text2num(desired_z), CALLBACK(src, .proc/check_panel), usr)
 			return TRUE // Succcessfully initiated a move, regardless of whether it actually works update the UI
 
 		if("emergency_door")
@@ -217,12 +232,16 @@
 	if(!lift)
 		return
 
-	for(var/destination in linked_elevator_desinations)
-		var/z_level = linked_elevator_desinations[destination]
-
+	for(var/z_level in linked_elevator_destination)
+		z_level = text2num(z_level)
 		if(z_level == lift.lift_platforms[1].z)
 			lift.open_lift_doors(z_level)
 		else
 			lift.close_lift_doors(z_level)
 
 	door_reset_timerid = null
+
+/obj/machinery/elevator_control_panel/proc/debug_for_testing()
+	ui_act("move_lift", list("move_to_z" = 3))
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/elevator_control_panel, 30)

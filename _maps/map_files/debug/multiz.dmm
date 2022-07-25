@@ -583,6 +583,12 @@
 "cS" = (
 /turf/closed/wall/r_wall,
 /area/station/commons/storage/primary)
+"cT" = (
+/obj/machinery/elevator_control_panel/directional/north{
+	linked_elevator_id = "test_vator"
+	},
+/turf/open/floor/plating,
+/area/station/hallway/secondary/service)
 "cU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/closed/wall/r_wall,
@@ -618,9 +624,8 @@
 /area/station/commons/storage/primary)
 "de" = (
 /obj/machinery/light/directional/north,
-/obj/machinery/button/elevator{
-	id = "test_vator";
-	pixel_y = 28
+/obj/machinery/button/elevator/directional/north{
+	id = "test_vator"
 	},
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
@@ -996,6 +1001,12 @@
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
+"jM" = (
+/obj/machinery/elevator_control_panel/directional/north{
+	linked_elevator_id = "test_vator"
+	},
+/turf/open/floor/plating,
+/area/station/engineering/storage)
 "jV" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 6
@@ -1262,6 +1273,12 @@
 "vX" = (
 /turf/closed/wall/r_wall,
 /area/station/construction)
+"wb" = (
+/obj/machinery/elevator_control_panel/directional/north{
+	linked_elevator_id = "test_vator"
+	},
+/turf/open/floor/plating,
+/area/station/commons/storage/primary)
 "wr" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
@@ -1321,6 +1338,10 @@
 	dir = 5
 	},
 /obj/structure/industrial_lift,
+/obj/machinery/elevator_control_panel/directional/east{
+	preset_destination_names = list("2" = "Bottom Floor", "3" = "Middle Floor", "4" = "Top Floor");
+	linked_elevator_id = "test_vator"
+	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
 "yX" = (
@@ -1378,6 +1399,7 @@
 	dir = 4
 	},
 /obj/structure/industrial_lift,
+/obj/structure/sign/warning/directional/east,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
 "Bw" = (
@@ -1599,12 +1621,11 @@
 /area/station/hallway/secondary/service)
 "LL" = (
 /obj/structure/lattice/catwalk,
-/obj/machinery/button/elevator{
-	id = "test_vator";
-	pixel_y = 28
-	},
 /obj/structure/railing/corner{
 	dir = 1
+	},
+/obj/machinery/button/elevator/directional/north{
+	id = "test_vator"
 	},
 /turf/open/openspace,
 /area/station/engineering/storage)
@@ -1792,9 +1813,8 @@
 /turf/open/floor/iron,
 /area/station/engineering/storage)
 "VF" = (
-/obj/machinery/button/elevator{
-	id = "test_vator";
-	pixel_y = 28
+/obj/machinery/button/elevator/directional/north{
+	id = "test_vator"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
@@ -1829,6 +1849,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"Xx" = (
+/obj/machinery/elevator_control_panel/directional/north,
+/turf/open/openspace/airless,
+/area/space)
 "XK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/closed/wall/r_wall,
@@ -3841,7 +3865,7 @@ Bl
 cM
 jY
 cS
-dl
+wb
 Zk
 mG
 xK
@@ -6650,7 +6674,7 @@ dY
 dY
 dY
 TY
-Gb
+cT
 iu
 iu
 iu
@@ -9459,7 +9483,7 @@ qo
 qo
 xO
 AG
-TH
+jM
 qo
 qo
 qo
@@ -9998,7 +10022,7 @@ SF
 SF
 SF
 SF
-SF
+Xx
 SF
 SF
 SF

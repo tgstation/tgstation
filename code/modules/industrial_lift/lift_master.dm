@@ -358,10 +358,13 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 	// Okay we're ready to start moving now.
 	set_controls(LIFT_PLATFORM_LOCKED)
 	var/travel_speed = prime_lift.elevator_vertical_speed
-	var/travel_duration = travel_speed * z_difference
 
 	// Approach the desired z-level one step at a time
 	for(var/i in 1 to z_difference)
+		if(!Check_lift_move(direction))
+			break
+		if(loop_callback && !loop_callback.Invoke())
+			break
 		// move_after_delay will set up a timer and cause us to move after a time
 		move_after_delay(
 			lift_move_duration = travel_speed,
@@ -370,13 +373,9 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 			user = user,
 		)
 		// and we don't want to send another request until the timer's done
-		stoplag(travel_speed)
+		stoplag(travel_speed + 0.1 SECONDS)
 		if(QDELETED(src) || QDELETED(prime_lift))
 			return
-		if(loop_callback?.Invoke())
-			break
-		if(!Check_lift_move(direction))
-			break
 
 	set_controls(LIFT_PLATFORM_UNLOCKED)
 	return TRUE
@@ -386,7 +385,7 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
  *
  * on_z_level - optional, only open doors on this z-level.
  */
-/datum/lift_master/proc/open_lift_doors(on_z_levels)
+/datum/lift_master/proc/open_lift_doors(on_z_level)
 	var/played_ding = FALSE
 	for(var/obj/machinery/door/poddoor/elevator_door in GLOB.machines)
 		if(elevator_door.id != specific_lift_id)

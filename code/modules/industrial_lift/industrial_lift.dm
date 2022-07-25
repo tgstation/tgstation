@@ -560,8 +560,9 @@ GLOBAL_VAR_INIT(lift_down_arrow, image(icon = 'icons/testing/turf_analysis.dmi',
 	if(!can_open_lift_radial(user, starting_position))
 		return
 	// One radial per person
-	if(REF(user) in current_operators)
-		return
+	for(var/obj/structure/industrial_lift/other_platform as anything in lift_master_datum.lift_platforms)
+		if(REF(user) in other_platform.current_operators)
+			return
 
 	var/list/possible_directions = list()
 	if(lift_master_datum.Check_lift_move(UP))
@@ -572,9 +573,6 @@ GLOBAL_VAR_INIT(lift_down_arrow, image(icon = 'icons/testing/turf_analysis.dmi',
 	add_fingerprint(user)
 	if(!length(possible_directions))
 		balloon_alert(user, "elevator out of service!")
-		return
-	if(lift_master_datum.controls_locked)
-		balloon_alert(user, "elevator controls locked!")
 		return
 
 	LAZYADD(current_operators, REF(user))
@@ -590,7 +588,9 @@ GLOBAL_VAR_INIT(lift_down_arrow, image(icon = 'icons/testing/turf_analysis.dmi',
 	LAZYREMOVE(current_operators, REF(user))
 	if(!can_open_lift_radial(user, starting_position))
 		return //nice try
-
+	if(lift_master_datum.controls_locked)
+		balloon_alert(user, "elevator controls locked!")
+		return
 	switch(result)
 		if("Up")
 			// We have to make sure that they don't do illegal actions
@@ -707,6 +707,15 @@ GLOBAL_VAR_INIT(lift_down_arrow, image(icon = 'icons/testing/turf_analysis.dmi',
 
 	if(direction == DOWN)
 		user.visible_message(span_notice("[user] moves the lift downwards."), span_notice("You move the lift downwards."))
+
+// A subtype intended for "public use"
+/obj/structure/industrial_lift/public
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "rockvault"
+	warns_on_down_movement = TRUE
+	violent_landing = FALSE
+	elevator_vertical_speed = 3 SECONDS
+	radial_travel = FALSE
 
 /obj/structure/industrial_lift/debug
 	name = "transport platform"
