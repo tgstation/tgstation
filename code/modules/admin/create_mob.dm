@@ -27,6 +27,6 @@
 	human.dna.blood_type = random_blood_type()
 
 	human.dna.species.randomize_active_underwear(human)
-	human.dna.species.randomize_featureshuman()
+	human.dna.species.randomize_features(human)
 
 	human.update_body(is_creating = TRUE)
