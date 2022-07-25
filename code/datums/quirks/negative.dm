@@ -61,6 +61,23 @@
 	backpack = null
 	RegisterSignal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM, .proc/on_equipped_item)
 
+/datum/quirk/bad_knees
+	name = "Bad knees"
+	desc = "Your suffer from a bad pair of knees. You walk slightly slower, and climbing things is out of the question."
+	icon = "crutch"
+	mob_trait = TRAIT_BAD_KNEES
+	value = -7
+	gain_text = "<span class='danger'>Youe knees hurt like hell.</span>"
+	lose_text = "<span class='notice'>Your knees feel better.</span>"
+	medical_record_text = "Patient suffers severe calsification of the knee bones."
+	hardcore_value = 7
+
+/datum/quirk/bad_knees/add()
+	quirk_holder.add_movespeed_modifier(/datum/movespeed_modifier/bad_knees)
+
+/datum/quirk/bad_knees/remove()
+	quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/bad_knees)
+
 /datum/quirk/blooddeficiency
 	name = "Blood Deficiency"
 	desc = "Your body can't produce enough blood to sustain itself."
@@ -71,16 +88,6 @@
 	medical_record_text = "Patient requires regular treatment for blood loss due to low production of blood."
 	hardcore_value = 8
 	processing_quirk = TRUE
-
-/datum/quirk/bad_knees
-	name = "Bad knees"
-	desc = "Your suffer from a bad pair of knees. You walk slightly slower, and climbing things is out of the question."
-	icon = "crutch"
-	value = -7
-	gain_text = "<span class='danger'>Youe knees hurt like hell.</span>"
-	lose_text = "<span class='notice'>Your knees feel better.</span>"
-	medical_record_text = "Patient suffers extream athritius in the knees."
-	hardcore_value = 7
 
 /datum/quirk/blooddeficiency/process(delta_time)
 	if(quirk_holder.stat == DEAD)
@@ -623,11 +630,16 @@
 	desc = "You've always liked taking your time."
 	icon = "clock"
 	value = -6
-	mob_trait = TRAIT_GRABWEAKNESS
 	gain_text = "<span class='userdanger'>You feel slow</span>"
 	lose_text = "<span class='notice'>You feel faster.</span>"
-	medical_record_text = "Patient suffers a irrational dependence on their attire."
+	medical_record_text = "Patient took 3 times the expected time to complete the medical exam."
 	hardcore_value = 6
+
+/datum/quirk/slow/add()
+	quirk_holder.add_movespeed_modifier(/datum/movespeed_modifier/slow_quirk)
+
+/datum/quirk/slow/remove()
+	quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/slow_quirk)
 
 /datum/quirk/social_anxiety
 	name = "Social Anxiety"

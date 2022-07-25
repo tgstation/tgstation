@@ -56,6 +56,10 @@
 /datum/element/climbable/proc/climb_structure(atom/climbed_thing, mob/living/user, params)
 	if(!can_climb(climbed_thing, user))
 		return
+	if(HAS_TRAIT(user, TRAIT_BAD_KNEES))
+		user.visible_message(span_warning("[user] looks towards [climbed_thing], somberly."), \
+						span_notice("You contemplate onto [climbed_thing], but your knees couldn't take it."))
+		return
 	climbed_thing.add_fingerprint(user)
 	user.visible_message(span_warning("[user] starts climbing onto [climbed_thing]."), \
 								span_notice("You start climbing onto [climbed_thing]..."))

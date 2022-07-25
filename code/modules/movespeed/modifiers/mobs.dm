@@ -131,3 +131,9 @@
 
 /datum/movespeed_modifier/auto_wash
 	multiplicative_slowdown = 3
+
+/datum/movespeed_modifier/bad_knees
+	multiplicative_slowdown = 0.5
+
+/datum/movespeed_modifier/slow_quirk
+	multiplicative_slowdown = 1
