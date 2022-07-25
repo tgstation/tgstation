@@ -50,7 +50,7 @@
 		if(8)
 			new /obj/item/rod_of_asclepius(src)
 		if(9)
-			new /obj/item/organ/internal/heart/cursed/wizard(src)
+			new /obj/item/organ/internal/heart/cursed(src)
 		if(10)
 			new /obj/item/ship_in_a_bottle(src)
 		if(11)

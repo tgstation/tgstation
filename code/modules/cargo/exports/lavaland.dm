@@ -11,7 +11,7 @@
 						/obj/item/clothing/glasses/godeye,
 						/obj/item/melee/ghost_sword,
 						/obj/item/clothing/neck/necklace/memento_mori,
-						/obj/item/organ/internal/heart/cursed/wizard,
+						/obj/item/organ/internal/heart/cursed,
 						/obj/item/clothing/suit/hooded/cloak/drake,
 						/obj/item/ship_in_a_bottle,
 						/obj/item/clothing/shoes/clown_shoes/banana_shoes,

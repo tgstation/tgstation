@@ -294,6 +294,8 @@
 
 //Provides a decent heal, need to pump every 6 seconds
 /obj/item/organ/internal/heart/cursed/wizard
+	name = "infused cursed heart"
+	desc = "A heart that, when inserted, will force you to pump it manually. Something about it makes you feel more alive than ever."
 	pump_delay = 60
 	heal_brute = 25
 	heal_burn = 25
