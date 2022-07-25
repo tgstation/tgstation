@@ -301,6 +301,12 @@
 		var/obj/item/bodypart/jaw = glass_joe.get_bodypart(BODY_ZONE_HEAD)
 		jaw.body_damage_coeff *= 2
 
+/datum/quirk/glass_jaw/remove()
+	if(ishuman(quirk_holder))
+		var/mob/living/carbon/human/glass_joe = quirk_holder
+		var/obj/item/bodypart/jaw = glass_joe.get_bodypart(BODY_ZONE_HEAD)
+		jaw.body_damage_coeff /= 2
+
 /datum/quirk/paper_ribcage
 	name = "Paper Ribcage"
 	desc = "Your ribcage is britel and calcafied. Damage inflicted on your torso is doubled."
@@ -315,6 +321,12 @@
 		var/mob/living/carbon/human/paper_andy = quirk_holder
 		var/obj/item/bodypart/ribs = paper_andy.get_bodypart(BODY_ZONE_CHEST)
 		ribs.body_damage_coeff *= 2
+
+/datum/quirk/paper_ribcage/remove()
+	if(ishuman(quirk_holder))
+		var/mob/living/carbon/human/paper_andy = quirk_holder
+		var/obj/item/bodypart/ribs = paper_andy.get_bodypart(BODY_ZONE_CHEST)
+		ribs.body_damage_coeff /= 2
 
 /datum/quirk/frail
 	name = "Frail"
