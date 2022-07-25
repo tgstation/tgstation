@@ -70,7 +70,7 @@
 	desc = "A discolored heart that requires it's user to maually pump it every 6 seconds, healing them when pumped, but causing bloodloss when ignored."
 	item_path = /obj/item/organ/internal/heart/cursed/wizard
 	category = "Assistance"
-	cost = 2
+	cost = 1
 
 /datum/spellbook_entry/item/guardian
 	name = "Guardian Deck"
