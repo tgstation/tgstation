@@ -596,6 +596,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SWEET_TOOTH "sweet_tooth"
 #define TRAIT_ATHEIST "atheist"
 #define TRAIT_BAD_KNEES "bad_knees"
+#define TRAIT_LACTOSE_INTOLERANT "lactose_intolerant"
 /// Gives you the Shifty Eyes quirk, rarely making people who examine you think you examined them back even when you didn't
 #define TRAIT_SHIFTY_EYES "shifty_eyes"
 

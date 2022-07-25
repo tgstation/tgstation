@@ -231,6 +231,7 @@
 	glass_desc = "White and nutritious goodness!"
 	ph = 6.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	contains_lactose = TRUE
 
 	// Milk is good for humans, but bad for plants. The sugars cannot be used by plants, and the milk fat harms growth. Not shrooms though. I can't deal with this now...
 /datum/reagent/consumable/milk/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
@@ -776,6 +777,7 @@
 	glass_desc = "A nice, strong and refreshing beverage while you're reading."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_EASY
+	contains_lactose = TRUE
 
 /datum/reagent/consumable/cafe_latte/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_timed_status_effect(-10 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
@@ -890,6 +892,7 @@
 	glass_desc = "A chocolate flavored milkshake."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_MEDIUM
+	contains_lactose = TRUE
 
 /datum/reagent/consumable/pumpkin_latte
 	name = "Pumpkin Latte"
@@ -902,6 +905,7 @@
 	glass_name = "pumpkin latte"
 	glass_desc = "A mix of coffee and pumpkin juice."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	contains_lactose = TRUE
 
 /datum/reagent/consumable/gibbfloats
 	name = "Gibb Floats"
@@ -960,6 +964,7 @@
 	quality = DRINK_NICE
 	taste_description = "chocolate milk"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	contains_lactose = TRUE
 
 /datum/reagent/consumable/hot_coco
 	name = "Hot Coco"
@@ -971,6 +976,7 @@
 	glass_name = "glass of hot coco"
 	glass_desc = "A favorite winter drink to warm you up."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	contains_lactose = TRUE
 
 /datum/reagent/consumable/hot_coco/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal())
@@ -992,6 +998,7 @@
 	glass_name = "glass of italian coco"
 	glass_desc = "A spin on a winter favourite, made to please."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	contains_lactose = TRUE
 
 /datum/reagent/consumable/italian_coco/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal())
@@ -1225,6 +1232,7 @@
 	glass_name = "strawberry banana smoothie"
 	glass_desc = "A classic drink which countless souls have bonded over..."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	contains_lactose = TRUE
 
 /datum/reagent/consumable/berry_blast
 	name = "berry blast smoothie"
@@ -1236,6 +1244,7 @@
 	glass_name = "berry blast smoothie"
 	glass_desc = "A classic drink, freshly made with hand picked berries. Or, maybe not."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	contains_lactose = TRUE
 
 /datum/reagent/consumable/funky_monkey
 	name = "funky monkey smoothie"
@@ -1247,6 +1256,7 @@
 	glass_name = "funky monkey smoothie"
 	glass_desc = "A classic drink made with chocolate and banana. No monkeys were harmed, officially."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	contains_lactose = TRUE
 
 /datum/reagent/consumable/green_giant
 	name = "green giant smoothie"
@@ -1258,6 +1268,7 @@
 	glass_name = "green giant smoothie"
 	glass_desc = "A classic drink, if you enjoy juiced wheatgrass and chia seeds."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	contains_lactose = TRUE
 
 /datum/reagent/consumable/melon_baller
 	name = "melon baller smoothie"
@@ -1269,6 +1280,7 @@
 	glass_name = "melon baller smoothie"
 	glass_desc = "A wonderfully fresh melon smoothie. Guaranteed to brighten your day."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	contains_lactose = TRUE
 
 /datum/reagent/consumable/vanilla_dream
 	name = "vanilla dream smoothie"
@@ -1280,3 +1292,4 @@
 	glass_name = "vanilla dream smoothie"
 	glass_desc = "A classic drink made with vanilla and fresh cream."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	contains_lactose = TRUE

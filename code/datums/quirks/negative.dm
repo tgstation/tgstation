@@ -411,13 +411,13 @@
 	hardcore_value = 3
 
 /datum/quirk/lactose_intolerance
-	name = "Lactose Intolerant"
-	desc = "Milk and milk products make you vomit."
+	name = "Severe Lactose Intolerance"
+	desc = "Milk and milk products make you vomit violently."
 	icon = "water"
 	value = -2
-	mob_trait = TRAIT_LIGHT_DRINKER
+	mob_trait = TRAIT_LACTOSE_INTOLERANT
 	lose_text = "<span class='danger'>You feel like a glass of milk.</span>"
-	medical_record_text = "Patient has a lactose intolerance."
+	medical_record_text = "Patient has a violent case of lactose intolerance."
 	hardcore_value = 2
 
 /datum/quirk/languorous

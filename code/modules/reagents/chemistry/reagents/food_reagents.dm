@@ -16,13 +16,25 @@
 	/// How much nutrition this reagent supplies
 	var/nutriment_factor = 1 * REAGENTS_METABOLISM
 	var/quality = 0 //affects mood, typically higher for mixed drinks with more complex recipes'
+	/// lactose intolerant people will have a bad time with this one
+	var/contains_lactose = FALSE
 
-/datum/reagent/consumable/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/consumable/on_mob_life(mob/living/carbon/eater, delta_time, times_fired)
 	current_cycle++
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(!HAS_TRAIT(H, TRAIT_NOHUNGER))
-			H.adjust_nutrition(nutriment_factor * REM * delta_time)
+	if(ishuman(eater))
+		var/mob/living/carbon/human/human_eater = eater
+		if(!HAS_TRAIT(human_eater, TRAIT_NOHUNGER))
+			human_eater.adjust_nutrition(nutriment_factor * REM * delta_time)
+
+			if(contains_lactose && TRAIT_LACTOSE_INTOLERANT)
+				if(current_cycle >= 11 && DT_PROB(min(30, current_cycle), delta_time))
+
+					if(current_cycle >= 44) // uh oh
+						human_eater.vomit(blood = prob(10), stun = prob(50), distance = rand(2,4), harm = TRUE)
+
+					else
+						human_eater.vomit(stun = prob(50), distance = rand(0,2))
+
 	if(length(reagent_removal_skip_list))
 		return
 	holder.remove_reagent(type, metabolization_rate * delta_time)
@@ -1067,3 +1079,6 @@
 	color = "#adcf77"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/nutriment/lactose
+	name = "Lactose"
+	contains_lactose = TRUE //duh

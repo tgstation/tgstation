@@ -37,6 +37,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Bad Knees", "Freerunning"),
 		list("Built From Stronger Stuff", "Flimsy"),
 		list("Built From Stronger Stuff", "Frail"),
+		list("Severe Lactose Intolerance", "Iron Stomach"),
 	)
 
 /datum/controller/subsystem/processing/quirks/Initialize(timeofday)

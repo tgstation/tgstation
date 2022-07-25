@@ -299,6 +299,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "glass of bilk"
 	glass_desc = "A brew of milk and beer. For those alcoholics who fear osteoporosis."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	contains_lactose = TRUE
 
 /datum/reagent/consumable/ethanol/bilk/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	if(drinker.getBruteLoss() && DT_PROB(5, delta_time))
@@ -1717,6 +1718,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Creme de Menthe"
 	glass_desc = "You can almost feel the first breath of spring just looking at it."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	contains_lactose = TRUE
 
 /datum/reagent/consumable/ethanol/creme_de_cacao
 	name = "Creme de Cacao"
@@ -1728,6 +1730,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Creme de Cacao"
 	glass_desc = "A million hazing lawsuits and alcohol poisonings have started with this humble ingredient."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	contains_lactose = TRUE
 
 /datum/reagent/consumable/ethanol/creme_de_coconut
 	name = "Creme de Coconut"
@@ -1739,6 +1742,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Creme de Coconut"
 	glass_desc = "An unintimidating glass of coconut liqueur."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	contains_lactose = TRUE
 
 /datum/reagent/consumable/ethanol/quadruple_sec
 	name = "Quadruple Sec"

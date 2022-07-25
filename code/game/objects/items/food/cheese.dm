@@ -24,7 +24,7 @@
 	name = "cheese wedge"
 	desc = "A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far."
 	icon_state = "cheesewedge"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list(/datum/reagent/consumable/nutriment/lactose = 2, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	w_class = WEIGHT_CLASS_SMALL
 	rat_heal = 10
 
@@ -32,7 +32,7 @@
 	name = "cheese wheel"
 	desc = "A big wheel of delcious Cheddar."
 	icon_state = "cheesewheel"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 5) //Hard cheeses contain about 25% protein
+	food_reagents = list(/datum/reagent/consumable/nutriment/lactose = 10, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 5) //Hard cheeses contain about 25% protein
 	w_class = WEIGHT_CLASS_NORMAL
 	rat_heal = 35
 
@@ -50,7 +50,7 @@
 	name = "royal cheese"
 	desc = "Ascend the throne. Consume the wheel. Feel the POWER."
 	icon_state = "royalcheese"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/gold = 20, /datum/reagent/toxin/mutagen = 5)
+	food_reagents = list(/datum/reagent/consumable/nutriment/lactose = 15, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/gold = 20, /datum/reagent/toxin/mutagen = 5)
 	w_class = WEIGHT_CLASS_BULKY
 	tastes = list("cheese" = 4, "royalty" = 1)
 	rat_heal = 70
