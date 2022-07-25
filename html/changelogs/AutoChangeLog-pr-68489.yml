@@ -1,5 +1,0 @@
-author: "13spacemen"
-delete-after: True
-changes: 
-  - imageadd: "Pun Pun wears drippy clothes now. Swag."
-  - bugfix: "Becoming a digitigrade species should properly drop your shoes if they don't fit"

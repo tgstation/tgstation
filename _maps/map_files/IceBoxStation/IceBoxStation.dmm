@@ -9191,7 +9191,7 @@
 /area/station/commons/locker)
 "cIK" = (
 /obj/structure/table/wood,
-/obj/item/paicard,
+/obj/item/pai_card,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
 /area/station/maintenance/fore)
@@ -39346,7 +39346,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/structure/table,
-/obj/item/paicard,
+/obj/item/pai_card,
 /obj/item/taperecorder{
 	pixel_x = -3;
 	pixel_y = 2
@@ -53655,7 +53655,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/rack,
 /obj/item/storage/briefcase,
-/obj/item/paicard,
+/obj/item/pai_card,
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "qyf" = (
@@ -62073,7 +62073,7 @@
 /area/station/science/robotics/lab)
 "tfO" = (
 /obj/structure/table/wood,
-/obj/item/paicard,
+/obj/item/pai_card,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "tfR" = (
@@ -72794,7 +72794,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
-/obj/item/paicard,
+/obj/item/pai_card,
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
