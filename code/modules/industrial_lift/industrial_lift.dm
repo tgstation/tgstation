@@ -599,8 +599,11 @@ GLOBAL_VAR_INIT(lift_down_arrow, image(icon = 'icons/testing/turf_analysis.dmi',
 				balloon_alert(user, "elevator unable to move!")
 				return
 
+			lift_master_datum.set_controls(LIFT_PLATFORM_LOCKED)
 			if(elevator_vertical_speed <= 0 SECONDS)
 				lift_master_datum.move_lift_vertically(UP, user)
+				lift_master_datum.set_controls(LIFT_PLATFORM_UNLOCKED)
+
 			else
 				lift_master_datum.move_after_delay(
 					lift_move_duration = elevator_vertical_speed,
@@ -608,6 +611,7 @@ GLOBAL_VAR_INIT(lift_down_arrow, image(icon = 'icons/testing/turf_analysis.dmi',
 					direction = UP,
 					user = user,
 				)
+				addtimer(CALLBACK(lift_master_datum, /datum/lift_master.proc/set_controls, LIFT_PLATFORM_UNLOCKED), elevator_vertical_speed * 1.5)
 
 			show_fluff_message(UP, user)
 			open_lift_radial(user)
@@ -618,8 +622,11 @@ GLOBAL_VAR_INIT(lift_down_arrow, image(icon = 'icons/testing/turf_analysis.dmi',
 				balloon_alert(user, "elevator unable to move!")
 				return
 
+			lift_master_datum.set_controls(LIFT_PLATFORM_LOCKED)
 			if(elevator_vertical_speed <= 0 SECONDS)
 				lift_master_datum.move_lift_vertically(DOWN, user)
+				lift_master_datum.set_controls(LIFT_PLATFORM_UNLOCKED)
+
 			else
 				lift_master_datum.move_after_delay(
 					lift_move_duration = elevator_vertical_speed,
@@ -627,6 +634,7 @@ GLOBAL_VAR_INIT(lift_down_arrow, image(icon = 'icons/testing/turf_analysis.dmi',
 					direction = DOWN,
 					user = user,
 				)
+				addtimer(CALLBACK(lift_master_datum, /datum/lift_master.proc/set_controls, LIFT_PLATFORM_UNLOCKED), elevator_vertical_speed * 1.5)
 
 			show_fluff_message(DOWN, user)
 			open_lift_radial(user)
