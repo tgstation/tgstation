@@ -65,6 +65,13 @@
 	category = "Assistance"
 	refundable = TRUE
 
+/datum/spellbook_entry/item/cursed_heart
+	name = "Cursed Heart"
+	desc = "A discolored heart that requires it's user to maually pump it every 6 seconds, healing them when pumped, but causing bloodloss when ignored."
+	item_path = /obj/item/organ/internal/heart/cursed/wizard
+	category = "Assistance"
+	cost = 2
+
 /datum/spellbook_entry/item/guardian
 	name = "Guardian Deck"
 	desc = "A deck of guardian tarot cards, capable of binding a personal guardian to your body. There are multiple types of guardian available, but all of them will transfer some amount of damage to you. \
