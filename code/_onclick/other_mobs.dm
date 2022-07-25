@@ -64,8 +64,8 @@
 		return interact(user)
 	return FALSE
 
-/atom/proc/can_interact(mob/user)
-	if(!user.can_interact_with(src))
+/atom/proc/can_interact(mob/user, require_adjacent_turf = TRUE)
+	if(!user.can_interact_with(src, interaction_flags_atom & INTERACT_ATOM_ALLOW_USER_LOCATION))
 		return FALSE
 	if((interaction_flags_atom & INTERACT_ATOM_REQUIRES_DEXTERITY) && !ISADVANCEDTOOLUSER(user))
 		to_chat(user, span_warning("You don't have the dexterity to do this!"))
@@ -83,6 +83,7 @@
 
 /atom/ui_status(mob/user)
 	. = ..()
+	//Check if both user and atom are at the same location
 	if(!can_interact(user))
 		. = min(., UI_UPDATE)
 
