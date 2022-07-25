@@ -19,7 +19,7 @@ Equivalent to DM's `datum.procName(...)`
 ---
 
 ## Lists
-In order to allow lists to be modified in-place across the DM-to-lua language barrier, lists are treated as userdata. Whenever running code that expects a DM value, auxlua will attempt to convert tables into lists.
+In order to allow lists to be modified in-place across the DM-to-Lua language barrier, lists are treated as userdata. Whenever running code that expects a DM value, auxlua will attempt to convert tables into lists.
 
 List references are subject to the same limitations as datum userdata, but you are less likely to encounter these limitations.
 
