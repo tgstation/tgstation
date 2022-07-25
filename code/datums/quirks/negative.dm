@@ -356,9 +356,18 @@
 	desc = "You bleed like a punctured beer keg!"
 	icon = "cut"
 	value = -5
-	mob_trait = TRAIT_HEAVY_SLEEPER
 	medical_record_text = "Patient has extreame hemophilia."
 	hardcore_value = 5
+
+/datum/quirk/heavy_bleeder/add()
+	if(ishuman(quirk_holder))
+		var/mob/living/carbon/human/bleeder = quirk_holder
+		bleeder.physiology.bleed_mod *= 1.5
+
+/datum/quirk/heavy_bleeder/remove()
+	if(ishuman(quirk_holder))
+		var/mob/living/carbon/human/bleeder = quirk_holder
+		bleeder.physiology.bleed_mod /= 1.5
 
 /datum/quirk/hypersensitive
 	name = "Hypersensitive"
