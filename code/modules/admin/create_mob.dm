@@ -10,11 +10,12 @@
 
 	user << browse(create_panel_helper(create_mob_html), "window=create_mob;size=425x475")
 
-/proc/randomize_human(mob/living/carbon/human/human)
+/proc/randomize_human(mob/living/carbon/human/human, new_name = TRUE)
 	human.gender = pick(MALE, FEMALE, PLURAL)
 	human.physique = human.gender
-	human.real_name = human.dna?.species.random_name(human.gender) || random_unique_name(human.gender)
-	human.name = human.real_name
+	if(new_name)
+		human.real_name = human.dna?.species.random_name(human.gender) || random_unique_name(human.gender)
+		human.name = human.real_name
 	human.hairstyle = random_hairstyle(human.gender)
 	human.facial_hairstyle = random_facial_hairstyle(human.gender)
 	human.hair_color = "#[random_color()]"
@@ -25,7 +26,7 @@
 
 	human.dna.blood_type = random_blood_type()
 
-	human.dna.species.randomize_active_underwear()
-	human.dna.species.randomize_features()
+	human.dna.species.randomize_active_underwear(human)
+	human.dna.species.randomize_featureshuman()
 
 	human.update_body(is_creating = TRUE)

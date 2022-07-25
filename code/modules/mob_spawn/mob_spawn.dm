@@ -50,30 +50,22 @@
 	if(ishuman(spawned_mob))
 		var/mob/living/carbon/human/spawned_human = spawned_mob
 		if(mob_species)
-			spawned_human.set_species(mob_species)
+			spawned_human.set_species(mob_species, generate_new_features = TRUE)
+		randomize_human(spawned_mob, new_name = FALSE)
 		spawned_human.underwear = "Nude"
 		spawned_human.undershirt = "Nude"
 		spawned_human.socks = "Nude"
+		//overrides for certain spawners
 		if(hairstyle)
 			spawned_human.hairstyle = hairstyle
-		else
-			spawned_human.hairstyle = random_hairstyle(spawned_human.gender)
 		if(facial_hairstyle)
 			spawned_human.facial_hairstyle = facial_hairstyle
-		else
-			spawned_human.facial_hairstyle = random_facial_hairstyle(spawned_human.gender)
 		if(haircolor)
 			spawned_human.hair_color = haircolor
-		else
-			spawned_human.hair_color = "#[random_color()]"
 		if(facial_haircolor)
 			spawned_human.facial_hair_color = facial_haircolor
-		else
-			spawned_human.facial_hair_color = "#[random_color()]"
 		if(skin_tone)
 			spawned_human.skin_tone = skin_tone
-		else
-			spawned_human.skin_tone = random_skin_tone()
 		spawned_human.update_body(is_creating = TRUE)
 
 /obj/effect/mob_spawn/proc/name_mob(mob/living/spawned_mob, forced_name)
