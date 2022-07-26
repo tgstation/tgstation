@@ -240,12 +240,6 @@
 	if (!do_mob(user, source, get_equip_delay(equipping)))
 		return FALSE
 
-	if (!user.Adjacent(source))
-		return FALSE
-
-	if (QDELETED(equipping) || QDELETED(source))
-		return
-
 	if (!equipping.mob_can_equip(
 		source,
 		user,
@@ -446,9 +440,11 @@
 
 					// They equipped an item in the meantime
 					if (!isnull(strippable_item.get_item(owner)))
+						user.put_in_hands(held_item)
 						return
 
 					if (!user.Adjacent(owner))
+						user.put_in_hands(held_item)
 						return
 
 					strippable_item.finish_equip(owner, held_item, user)
