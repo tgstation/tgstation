@@ -46,7 +46,7 @@
 	//flub conditions
 	RegisterSignal(sparring, COMSIG_PARENT_ATTACKBY, .proc/outsider_interference)
 	RegisterSignal(sparring, COMSIG_ATOM_HULK_ATTACK, .proc/hulk_interference)
-	RegisterSignal(sparring, COMSIG_ATOM_ATTACK_HAND, .proc/hand_interference)
+	RegisterSignal(sparring, COMSIG_ATOM_ATTACK_HAND, .proc/hand_interference, override = TRUE)
 	RegisterSignal(sparring, COMSIG_ATOM_ATTACK_PAW, .proc/paw_interference)
 	RegisterSignal(sparring, COMSIG_ATOM_HITBY, .proc/thrown_interference)
 	RegisterSignal(sparring, COMSIG_ATOM_BULLET_ACT, .proc/projectile_interference)
