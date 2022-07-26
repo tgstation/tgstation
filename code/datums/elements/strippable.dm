@@ -243,6 +243,9 @@
 	if (!user.Adjacent(source))
 		return FALSE
 
+	if (QDELETED(equipping) || QDELETED(source))
+		return
+
 	if (!equipping.mob_can_equip(
 		source,
 		user,
