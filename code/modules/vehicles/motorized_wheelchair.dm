@@ -128,7 +128,7 @@
 	. = ..()
 	if (.)
 		return
-	if (!(obj_flags & EMAGGED) || !has_buckled_mobs())
+	if (!has_buckled_mobs())
 		return
 	for (var/mob/living/guy in newloc)
 		if(!(guy in buckled_mobs))
