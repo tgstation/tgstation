@@ -53,10 +53,8 @@
 	if(HAS_TRAIT(src, TRAIT_BAD_KNEES) && body_position == STANDING_UP) // uh oh
 		visible_message(span_danger("[src] makes a hard landing on [T] landing directly on their stiff legs! Ouch!"), \
 					span_userdanger("You land directly on your poor legs, sending a shockwave up your knees!"))
-		var/obj/item/bodypart/wrecked_leg_L = src.get_bodypart(BODY_ZONE_L_LEG)
-		var/obj/item/bodypart/wrecked_leg_R = src.get_bodypart(BODY_ZONE_R_LEG)
-		wrecked_leg_L.receive_damage(brute = 5, wound_bonus = 55)
-		wrecked_leg_R.receive_damage(brute = 5, wound_bonus = 55)
+		apply_damage(5, BRUTE, wound_bonus = 55, def_zone = BODY_ZONE_L_LEG)
+		apply_damage(5, BRUTE, wound_bonus = 55, def_zone = BODY_ZONE_R_LEG)
 
 	if(stat != CONSCIOUS || levels > 1) // you're not The One
 		return ..()

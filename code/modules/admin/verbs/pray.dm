@@ -38,8 +38,6 @@
 			cross.icon_state = "holylight"
 			font_color = "blue"
 			prayer_type = "SPIRITUAL PRAYER"
-	else if(isliving(usr))
-		var/mob/living/prayer = usr
 		if(HAS_TRAIT(prayer, TRAIT_ATHEIST))
 			cross.icon_state = "atheist"
 			font_color = "grey"
