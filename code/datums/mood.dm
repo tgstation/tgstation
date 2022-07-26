@@ -1,5 +1,7 @@
 #define MINOR_INSANITY_PEN 5
 #define MAJOR_INSANITY_PEN 10
+#define MOOD_CATEGORY_NUTRITION "nutrition"
+#define MOOD_CATEGORY_AREA_BEAUTY "area_beauty"
 
 /**
  * Mood datum
@@ -28,7 +30,7 @@
 	var/atom/movable/screen/mood/mood_screen_object
 
 	/// List of mood events currently active on this datum
-	var/list/mood_events
+	var/list/mood_events = list()
 
 /datum/mood/New(mob/living/mob_to_make_moody)
 	if (!istype(mob_to_make_moody))
@@ -39,7 +41,6 @@
 	START_PROCESSING(SSmood, src)
 
 	parent = WEAKREF(mob_to_make_moody)
-	mood_events = list()
 
 	RegisterSignal(mob_to_make_moody, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
 	RegisterSignal(mob_to_make_moody, COMSIG_ENTER_AREA, .proc/check_area_mood)
@@ -106,19 +107,19 @@
 	switch(mob_parent.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
 			if (!HAS_TRAIT(mob_parent, TRAIT_VORACIOUS))
-				add_mood_event("nutrition", /datum/mood_event/fat)
+				add_mood_event(MOOD_CATEGORY_NUTRITION, /datum/mood_event/fat)
 			else
-				add_mood_event("nutrition", /datum/mood_event/wellfed) // round and full
+				add_mood_event(MOOD_CATEGORY_NUTRITION, /datum/mood_event/wellfed) // round and full
 		if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
-			add_mood_event("nutrition", /datum/mood_event/wellfed)
+			add_mood_event(MOOD_CATEGORY_NUTRITION, /datum/mood_event/wellfed)
 		if( NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
-			add_mood_event("nutrition", /datum/mood_event/fed)
+			add_mood_event(MOOD_CATEGORY_NUTRITION, /datum/mood_event/fed)
 		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
-			clear_mood_event("nutrition")
+			clear_mood_event(MOOD_CATEGORY_NUTRITION)
 		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-			add_mood_event("nutrition", /datum/mood_event/hungry)
+			add_mood_event(MOOD_CATEGORY_NUTRITION, /datum/mood_event/hungry)
 		if(0 to NUTRITION_LEVEL_STARVING)
-			add_mood_event("nutrition", /datum/mood_event/starving)
+			add_mood_event(MOOD_CATEGORY_NUTRITION, /datum/mood_event/starving)
 
 /**
  * Adds a mood event to the mob
@@ -365,27 +366,27 @@
 /// Updates the mob's given beauty moodie, based on the area
 /datum/mood/proc/update_beauty(area/area_to_beautify)
 	if (area_to_beautify.outdoors) // if we're outside, we don't care
-		clear_mood_event("area_beauty")
+		clear_mood_event(MOOD_CATEGORY_AREA_BEAUTY)
 		return
 
 	var/mob/living/mob_parent = parent?.resolve()
 	if(HAS_TRAIT(mob_parent, TRAIT_SNOB))
 		switch(area_to_beautify.beauty)
 			if(-INFINITY to BEAUTY_LEVEL_HORRID)
-				add_mood_event("area_beauty", /datum/mood_event/horridroom)
+				add_mood_event(MOOD_CATEGORY_AREA_BEAUTY, /datum/mood_event/horridroom)
 				return
 			if(BEAUTY_LEVEL_HORRID to BEAUTY_LEVEL_BAD)
-				add_mood_event("area_beauty", /datum/mood_event/badroom)
+				add_mood_event(MOOD_CATEGORY_AREA_BEAUTY, /datum/mood_event/badroom)
 				return
 	switch(area_to_beautify.beauty)
 		if(BEAUTY_LEVEL_BAD to BEAUTY_LEVEL_DECENT)
-			clear_mood_event("area_beauty")
+			clear_mood_event(MOOD_CATEGORY_AREA_BEAUTY)
 		if(BEAUTY_LEVEL_DECENT to BEAUTY_LEVEL_GOOD)
-			add_mood_event("area_beauty", /datum/mood_event/decentroom)
+			add_mood_event(MOOD_CATEGORY_AREA_BEAUTY, /datum/mood_event/decentroom)
 		if(BEAUTY_LEVEL_GOOD to BEAUTY_LEVEL_GREAT)
-			add_mood_event("area_beauty", /datum/mood_event/goodroom)
+			add_mood_event(MOOD_CATEGORY_AREA_BEAUTY, /datum/mood_event/goodroom)
 		if(BEAUTY_LEVEL_GREAT to INFINITY)
-			add_mood_event("area_beauty", /datum/mood_event/greatroom)
+			add_mood_event(MOOD_CATEGORY_AREA_BEAUTY, /datum/mood_event/greatroom)
 
 /// Called when parent is ahealed.
 /datum/mood/proc/on_revive(datum/source, full_heal)
@@ -466,3 +467,5 @@
 
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN
+#undef MOOD_CATEGORY_NUTRITION
+#undef MOOD_CATEGORY_AREA_BEAUTY

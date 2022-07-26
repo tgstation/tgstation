@@ -448,7 +448,7 @@
 			if(bodytemperature > helper.bodytemperature)
 				if(!HAS_TRAIT(helper, TRAIT_BADTOUCH))
 					helper.add_mood_event("hug", /datum/mood_event/warmhug, src) // Hugger got a warm hug (Unless they hate hugs)
-				add_mood_event("hug", /datum/mood_event/hug) // Reciver always gets a mood for being hugged
+				add_mood_event("hug", /datum/mood_event/hug) // Receiver always gets a mood for being hugged
 			else
 				add_mood_event("hug", /datum/mood_event/warmhug, helper) // You got a warm hug
 

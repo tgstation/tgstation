@@ -9,8 +9,7 @@
 	var/hidden = FALSE
 	/// string of what category this mood was added in as
 	var/category
-	/// if it isn't null, it will replace or add onto the mood icon with this (same file).
-	/// see happiness drug for example
+	/// Icon state of the unique mood event icon, if applicable
 	var/special_screen_obj
 	/// if false, it will be an overlay instead
 	var/special_screen_replace = TRUE
