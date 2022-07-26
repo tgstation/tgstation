@@ -777,16 +777,6 @@
 	mood_change = -5
 	timeout = 3 MINUTES
 
-/datum/quirk/squeamish
-	name = "Squeamish"
-	desc = "You're rather disturbed by wearing bloody clothing."
-	icon = "clock"
-	value = -2
-	mood_quirk = TRUE
-	mob_trait = TRAIT_GRABWEAKNESS
-	medical_record_text = "Patient suffers mild gemophobia."
-	hardcore_value = 2
-
 /datum/quirk/item_quirk/junkie
 	name = "Junkie"
 	desc = "You can't get enough of hard drugs."
@@ -919,16 +909,6 @@
 			SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "wrong_cigs")
 			return
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "wrong_cigs", /datum/mood_event/wrong_brand)
-
-/datum/quirk/table_manners
-	name = "Table Manners"
-	desc = "The thought of eating without sitting at a table distresses you."
-	icon = "utensils"
-	value = -2
-	mob_trait = TRAIT_UNSTABLE
-	mood_quirk = TRUE
-	medical_record_text = "Patient holds an attration to tables."
-	hardcore_value = 2
 
 /datum/quirk/unstable
 	name = "Unstable"
