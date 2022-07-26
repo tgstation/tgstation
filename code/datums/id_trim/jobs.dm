@@ -898,6 +898,8 @@
 /datum/id_trim/job/brig_physician
 	assignment = "Brig Physician"
 	trim_state = "trim_brig_physician"
+	department_color = COLOR_SECURITY_RED
+	subdepartment_color = COLOR_MEDICAL_BLUE
 	sechud_icon_state = SECHUD_BRIG_PHYSICIAN
 	extra_access = list(ACCESS_DETECTIVE, ACCESS_MAINT_TUNNELS, ACCESS_MORGUE)
 	minimal_access = list(ACCESS_BRIG, ACCESS_COURT, ACCESS_SECURITY, ACCESS_BRIG_ENTRANCE, ACCESS_MECH_SECURITY,
@@ -1066,6 +1068,8 @@
 /datum/id_trim/job/worker
 	assignment = "Worker"
 	trim_state = "trim_worker"
+	department_color = COLOR_ENGINEERING_ORANGE
+	subdepartment_color = COLOR_ENGINEERING_ORANGE
 	sechud_icon_state = SECHUD_WORKER
 	extra_access = list(ACCESS_ATMOSPHERICS)
 	minimal_access = list(ACCESS_AUX_BASE, ACCESS_CONSTRUCTION, ACCESS_ENGINEERING, ACCESS_ENGINE_EQUIP, ACCESS_EXTERNAL_AIRLOCKS,
