@@ -18,24 +18,24 @@
 /datum/dimension_theme/proc/can_convert(turf/affected_turf)
 	if (isspaceturf(affected_turf))
 		return FALSE
-	if (isopenturf(affected_turf))
+	if (isfloorturf(affected_turf))
 		if (isindestructiblefloor(affected_turf))
 			return FALSE
 		return replace_floors.len > 0
-	if (isclosedturf(affected_turf))
+	if (iswallturf(affected_turf))
 		if (isindestructiblewall(affected_turf))
 			return FALSE
 		return replace_walls.len > 0
 	return FALSE
 
 /datum/dimension_theme/proc/replace_turf(turf/affected_turf)
-	if (isopenturf(affected_turf) && !isindestructiblefloor(affected_turf))
+	if (isfloorturf(affected_turf) && !isindestructiblefloor(affected_turf))
 		if (replace_floors.len == 0 || (affected_turf in replace_floors))
 			return FALSE
 		affected_turf.ChangeTurf(pick_weight(replace_floors), flags = CHANGETURF_INHERIT_AIR)
 		return TRUE
 
-	if (isclosedturf(affected_turf) && !isindestructiblewall(affected_turf))
+	if (iswallturf(affected_turf) && !isindestructiblewall(affected_turf))
 		if (replace_walls.len == 0 || (affected_turf in replace_walls))
 			return FALSE
 		affected_turf.ChangeTurf(pick_weight(replace_walls))
@@ -119,8 +119,8 @@
 		/obj/structure/table = list(/obj/structure/table/glass/plasmaglass = 1))
 
 /datum/dimension_theme/icebox
-	replace_floors = list(/turf/open/misc/snow/actually_safe = 10, /turf/open/misc/ice/coldroom = 1)
-	replace_walls = list(/turf/closed/mineral/random/snow = 1)
+	replace_floors = list(/turf/open/floor/fake_snow = 10, /turf/open/floor/fakeice/slippery = 1)
+	replace_walls = list(/turf/closed/wall/mineral/snow = 1)
 	replace_objs = list(\
 		/obj/structure/chair = list(/obj/structure/chair/wood = 1), \
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/wood = 1), \
@@ -128,6 +128,6 @@
 
 /datum/dimension_theme/lavaland
 	replace_floors = list(/turf/open/floor/fakebasalt = 5, /turf/open/floor/fakepit = 1)
-	replace_walls = list(/turf/closed/mineral = 1)
+	replace_walls = list(/turf/closed/wall/vault = 1)
 	replace_objs = list(\
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/external/glass/ruin = 1))
