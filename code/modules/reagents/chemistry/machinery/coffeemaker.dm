@@ -35,8 +35,9 @@
 
 /obj/machinery/coffeemaker/Initialize(mapload)
 	. = ..()
-	coffeepot = new /obj/item/reagent_containers/glass/coffeepot(src)
-	cartridge = new /obj/item/coffee_cartridge
+	if(mapload)
+		coffeepot = new /obj/item/reagent_containers/glass/coffeepot(src)
+		cartridge = new /obj/item/coffee_cartridge
 
 /obj/machinery/coffeemaker/deconstruct()
 	coffeepot?.forceMove(drop_location())
