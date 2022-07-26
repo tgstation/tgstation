@@ -34,7 +34,7 @@
 
 /mob/living/basic/mothroach/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/basic_body_temp_sensitive, 300, INFINITY)
+	AddElement(/datum/element/basic_body_temp_sensitive, 250, INFINITY)
 	add_verb(src, /mob/living/proc/toggle_resting)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
@@ -53,7 +53,7 @@
 		return
 	..()
 
-/mob/living/basic/mothroach/ex_act() //Explosions are a terrible way to handle a cockroach.
+/mob/living/basic/mothroach/ex_act() //Explosions are a terrible way to handle a mothroach (just like a cockroach).
 	return FALSE
 
 /datum/ai_controller/basic_controller/cockroach
