@@ -899,7 +899,7 @@
 	assignment = "Brig Physician"
 	trim_state = "trim_brig_physician"
 	department_color = COLOR_SECURITY_RED
-	subdepartment_color = COLOR_MEDICAL_BLUE
+	subdepartment_color = COLOR_SECURITY_RED
 	sechud_icon_state = SECHUD_BRIG_PHYSICIAN
 	extra_access = list(ACCESS_DETECTIVE, ACCESS_MAINT_TUNNELS, ACCESS_MORGUE)
 	minimal_access = list(ACCESS_BRIG, ACCESS_COURT, ACCESS_SECURITY, ACCESS_BRIG_ENTRANCE, ACCESS_MECH_SECURITY,
