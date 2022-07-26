@@ -132,14 +132,17 @@
 	orient_to_hud()
 
 /datum/storage/Destroy()
+	for(var/mob/person in is_using)
+		if(person.active_storage == src)
+			person.active_storage = null
+			if(person.client)
+				person.client.screen -= boxes
+				person.client.screen -= closer
+
 	parent = null
 	real_location = null
 	boxes = null
 	closer = null
-
-	for(var/mob/person in is_using)
-		if(person.active_storage == src)
-			person.active_storage = null
 
 	is_using.Cut()
 
