@@ -240,6 +240,9 @@
 	if (!do_mob(user, source, get_equip_delay(equipping)))
 		return FALSE
 
+	if (!user.Adjacent(source))
+		return FALSE
+
 	if (!equipping.mob_can_equip(
 		source,
 		user,
