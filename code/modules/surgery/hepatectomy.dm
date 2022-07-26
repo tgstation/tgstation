@@ -15,8 +15,10 @@
 
 /datum/surgery/hepatectomy/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/internal/liver/target_liver = target.getorganslot(ORGAN_SLOT_LIVER)
-	if(target_liver?.damage > 50 && !(target_liver.organ_flags & ORGAN_FAILING))
-		return TRUE
+	if(target_liver)
+		if(target_liver.damage > 50 && !target_liver.operated)
+			return TRUE
+	return FALSE
 
 ////hepatectomy, removes damaged parts of the liver so that the liver may regenerate properly
 //95% chance of success, not 100 because organs are delicate

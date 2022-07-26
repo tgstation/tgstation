@@ -16,8 +16,10 @@
 
 /datum/surgery/gastrectomy/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/internal/stomach/target_stomach = target.getorganslot(ORGAN_SLOT_STOMACH)
-	if(target_stomach?.damage > 50 && !(target_stomach.organ_flags & ORGAN_FAILING))
-		return TRUE
+	if(target_stomach)
+		if(target_stomach.damage > 50 && !target_stomach.operated)
+			return TRUE
+	return FALSE
 
 ////Gastrectomy, because we truly needed a way to repair stomachs.
 //95% chance of success to be consistent with most organ-repairing surgeries.
