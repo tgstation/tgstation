@@ -1360,4 +1360,4 @@
 		/obj/item/stock_parts/water_recycler = 1,
 		/obj/item/stock_parts/capacitor = 1,
 		/obj/item/stock_parts/micro_laser = 1,
-		)
+	)

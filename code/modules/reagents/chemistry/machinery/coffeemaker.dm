@@ -38,12 +38,6 @@
 	coffeepot = new /obj/item/reagent_containers/glass/coffeepot(src)
 	cartridge = new /obj/item/coffee_cartridge
 
-/obj/machinery/coffeemaker/constructed/Initialize(mapload)
-	. = ..()
-	QDEL_NULL(coffeepot)
-	QDEL_NULL(cartridge)
-	update_appearance()
-
 /obj/machinery/coffeemaker/deconstruct()
 	coffeepot?.forceMove(drop_location())
 	coffeepot = null
@@ -128,9 +122,9 @@
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
 	if(!can_interact(user) || !user.canUseTopic(src, !issilicon(user), FALSE, NO_TK))
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(brewing)
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	replace_pot(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -192,9 +186,9 @@
 		var/obj/item/reagent_containers/glass/coffeepot/new_pot = I
 		. = TRUE //no afterattack
 		if(!user.transferItemToLoc(new_pot, src))
-			return
+			return TRUE
 		replace_pot(user, new_pot)
-		to_chat(user, span_notice("You add [new_pot] to [src]."))
+		balloon_alert(user, "added pot")
 		update_appearance()
 		return TRUE //no afterattack
 
@@ -202,9 +196,9 @@
 		var/obj/item/coffee_cartridge/new_cartridge = I
 		. = TRUE //no afterattack
 		if(!user.transferItemToLoc(new_cartridge, src))
-			return
+			return TRUE
 		replace_cartridge(user, new_cartridge)
-		to_chat(user, span_notice("You add [new_cartridge] to [src]."))
+		balloon_alert(user, "added cartridge")
 		update_appearance()
 		return TRUE //no afterattack
 
@@ -284,36 +278,36 @@
 
 /obj/machinery/coffeemaker/proc/take_cup(mob/user)
 	if(!coffee_cups) //shouldn't happen, but we all know how stuff manages to break
-		to_chat(user, span_warning("There aren't any cups left!"))
+		balloon_alert("no cups left!")
 		return
-	user.visible_message(span_notice("[user] takes a cup from [src]."), span_notice("You take a cup from [src]."))
+	balloon_alert_to_viewers("took cup")
 	var/obj/item/reagent_containers/food/drinks/coffee_cup/new_cup = new(get_turf(src))
 	user.put_in_hands(new_cup)
 	coffee_cups--
 
 /obj/machinery/coffeemaker/proc/take_sugar(mob/user)
 	if(!sugar_packs)
-		to_chat(user, span_warning("There isn't any sugar left!"))
+		balloon_alert("no sugar left!")
 		return
-	user.visible_message(span_notice("[user] takes a packet of sugar from [src]."), span_notice("You take a packet of sugar from [src]."))
+	balloon_alert_to_viewers("took sugar packet")
 	var/obj/item/reagent_containers/food/condiment/pack/sugar/new_pack = new(get_turf(src))
 	user.put_in_hands(new_pack)
 	sugar_packs--
 
 /obj/machinery/coffeemaker/proc/take_sweetener(mob/user)
 	if(!sweetener_packs)
-		to_chat(user, span_warning("There isn't any sweetener left!"))
+		balloon_alert("no sweetener left!")
 		return
-	user.visible_message(span_notice("[user] takes a packet of sweetener from [src]."), span_notice("You take a packet of sweetener from [src]."))
+	balloon_alert_to_viewers("took sweetener packet")
 	var/obj/item/reagent_containers/food/condiment/pack/astrotame/new_pack = new(get_turf(src))
 	user.put_in_hands(new_pack)
 	sweetener_packs--
 
 /obj/machinery/coffeemaker/proc/take_creamer(mob/user)
 	if(!creamer_packs)
-		to_chat(user, span_warning("There isn't any creamer left!"))
+		balloon_alert("no creamer left!")
 		return
-	user.visible_message(span_notice("[user] takes a packet of creamer from [src]."), span_notice("You take a packet of creamer from [src]."))
+	balloon_alert_to_viewers("took creamer packet")
 	var/obj/item/reagent_containers/food/condiment/pack/creamer/new_pack = new(get_turf(src))
 	user.put_in_hands(new_pack)
 	creamer_packs--
@@ -321,7 +315,7 @@
 /obj/machinery/coffeemaker/proc/operate_for(time, silent = FALSE)
 	brewing = TRUE
 	if(!silent)
-		playsound(src, 'sound/machines/coffeemaker_brew.ogg', 20, TRUE)
+		playsound(src, 'sound/machines/coffeemaker_brew.ogg', 20, vary = TRUE)
 	use_power(active_power_usage * time * 0.1) // .1 needed here to convert time (in deciseconds) to seconds such that watts * seconds = joules
 	addtimer(CALLBACK(src, .proc/stop_operating), time / speed)
 
@@ -349,12 +343,11 @@
 	. = ..()
 	if(charges != 0)
 		. += span_warning("The cartridge has [charges] portions of grounds remaining.")
-		return
 	else
 		. += span_warning("The cartridge has no unspent grounds remaining.")
 
 /obj/item/coffee_cartridge/fancy
-	name = "coffeemaker cartridge- Caffè Fantasioso"
+	name = "coffeemaker cartridge - Caffè Fantasioso"
 	desc = "A fancy coffee cartridge manufactured by Piccionaia Coffee, for use with the Modello 3 system."
 	icon_state = "cartridge_blend"
 
@@ -364,26 +357,26 @@
 	var/coffee_type = pick("blend", "blue_mountain", "kilimanjaro", "mocha")
 	switch(coffee_type)
 		if("blend")
-			name = "coffeemaker cartridge- Miscela di Piccione"
+			name = "coffeemaker cartridge - Miscela di Piccione"
 			icon_state = "cartridge_blend"
 		if("blue_mountain")
-			name = "coffeemaker cartridge- Montagna Blu"
+			name = "coffeemaker cartridge - Montagna Blu"
 			icon_state = "cartridge_blue_mtn"
 		if("kilimanjaro")
-			name = "coffeemaker cartridge- Kilimangiaro"
+			name = "coffeemaker cartridge - Kilimangiaro"
 			icon_state = "cartridge_kilimanjaro"
 		if("mocha")
-			name = "coffeemaker cartridge- Moka Arabica"
+			name = "coffeemaker cartridge - Moka Arabica"
 			icon_state = "cartridge_mocha"
 
 /obj/item/coffee_cartridge/decaf
-	name = "coffeemaker cartridge- Caffè Decaffeinato"
+	name = "coffeemaker cartridge - Caffè Decaffeinato"
 	desc = "A decaf coffee cartridge manufactured by Piccionaia Coffee, for use with the Modello 3 system."
 	icon_state = "cartridge_decaf"
 
 // no you can't just squeeze the juice bag into a glass!
 /obj/item/coffee_cartridge/bootleg
-	name = "coffeemaker cartridge- Botany Blend"
+	name = "coffeemaker cartridge - Botany Blend"
 	desc = "A jury-rigged coffee cartridge. Should work with a Modello 3 system, though it might void the warranty."
 	icon_state = "cartridge_bootleg"
 
