@@ -324,7 +324,7 @@
 	description = "Your exosuit fabricators allow for rapid production on a small scale, but the structural integrity of created parts is inferior to those made with more traditional means. Damage a few exosuits to exactly [damage_percent]% integrity and scan them to help us determine how the armor fails under stress."
 
 /datum/experiment/scanning/random/mecha_damage_scan/final_contributing_index_checks(atom/target, typepath)
-	var/found_percent = round(target.get_integrity() / target.max_integrity, 0.01) * 100
+	var/found_percent = round((target.get_integrity() / target.max_integrity) * 100) //Intentionally flooring the result, rather than rounding up if possible
 	return ..() && (found_percent == damage_percent)
 
 /datum/experiment/scanning/random/mecha_destroyed_scan
