@@ -10,22 +10,32 @@
 	return new subtype()
 
 /datum/dimension_theme/proc/apply_theme(turf/affected_turf)
-	if (isspaceturf(affected_turf))
-		return
-
 	if (!replace_turf(affected_turf))
 		return
 	for (var/obj/object in affected_turf)
 		replace_object(object)
 
+/datum/dimension_theme/proc/can_convert(turf/affected_turf)
+	if (isspaceturf(affected_turf))
+		return FALSE
+	if (isopenturf(affected_turf))
+		if (isindestructiblefloor(affected_turf))
+			return FALSE
+		return replace_floors.len > 0
+	if (isclosedturf(affected_turf))
+		if (isindestructiblewall(affected_turf))
+			return FALSE
+		return replace_walls.len > 0
+	return FALSE
+
 /datum/dimension_theme/proc/replace_turf(turf/affected_turf)
-	if (isfloorturf(affected_turf))
+	if (isopenturf(affected_turf) && !isindestructiblefloor(affected_turf))
 		if (replace_floors.len == 0 || (affected_turf in replace_floors))
 			return FALSE
 		affected_turf.ChangeTurf(pick_weight(replace_floors), flags = CHANGETURF_INHERIT_AIR)
 		return TRUE
 
-	if (iswallturf(affected_turf))
+	if (isclosedturf(affected_turf) && !isindestructiblewall(affected_turf))
 		if (replace_walls.len == 0 || (affected_turf in replace_walls))
 			return FALSE
 		affected_turf.ChangeTurf(pick_weight(replace_walls))
@@ -55,7 +65,7 @@
 
 /////////////////////
 
-/datum/dimension_theme/grass
+/datum/dimension_theme/natural
 	replace_floors = list(/turf/open/floor/grass = 1)
 	replace_walls = list(/turf/closed/wall/mineral/wood/nonmetal = 1)
 	replace_objs = list(\
@@ -72,7 +82,7 @@
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/wood = 1), \
 		/obj/structure/table = list(/obj/structure/table/wood = 1))
 
-/datum/dimension_theme/gold
+/datum/dimension_theme/decadent
 	replace_floors = list(/turf/open/floor/mineral/gold = 1)
 	replace_walls = list(/turf/closed/wall/mineral/gold = 1)
 	replace_objs = list(\

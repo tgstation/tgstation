@@ -24,6 +24,8 @@
 	var/drops_core = TRUE
 	///Do we keep on living forever?
 	var/immortal = FALSE
+	///Do we stay in one place?
+	var/immobile = FALSE
 
 /obj/effect/anomaly/Initialize(mapload, new_lifespan, drops_core = TRUE)
 	. = ..()
@@ -70,7 +72,7 @@
 	return ..()
 
 /obj/effect/anomaly/proc/anomalyEffect(delta_time)
-	if(DT_PROB(ANOMALY_MOVECHANCE, delta_time))
+	if(!immobile && DT_PROB(ANOMALY_MOVECHANCE, delta_time))
 		step(src,pick(GLOB.alldirs))
 
 /obj/effect/anomaly/proc/detonate()
@@ -551,62 +553,46 @@
 	name = "dimensional anomaly"
 	icon_state = "hallucination_anomaly"
 	immortal = TRUE
-	/// Cooldown for every anomaly pulse
-	COOLDOWN_DECLARE(relocate_cooldown)
-	/// How many seconds between each anomaly pulses
-	var/relocate_delay = 30 SECONDS
-	var/range = 2
-	var/detonate_range = 3
-	var/min_tiles = 1
-	var/max_tiles = 3
+	immobile = TRUE
+	/// Range of effect, if left alone anomaly will convert a 2(range)+1 squared area.
+	var/range = 4
+	var/list/turf/area = new()
 	var/datum/dimension_theme/theme
 
-/obj/effect/anomaly/dimensional/Initialize()
+/obj/effect/anomaly/dimensional/Initialize(mapload, new_lifespan, drops_core)
 	. = ..()
-	COOLDOWN_START(src, relocate_cooldown, relocate_delay)
+	prepare_area()
+
+/obj/effect/anomaly/dimensional/proc/prepare_area()
 	var/datum/dimension_theme/themes = new()
-	src.theme = themes.get_random_theme()
+	theme = themes.get_random_theme()
+
+	area = new()
+	var/list/turfs = spiral_range_turfs(range, src)
+	for (var/turf/turf in turfs)
+		if (theme.can_convert(turf))
+			area.Add(turf)
+	try_relocate()
 
 /obj/effect/anomaly/dimensional/anomalyEffect(delta_time)
 	. = ..()
 	transmute_area()
 
 /obj/effect/anomaly/dimensional/proc/transmute_area()
-	var/area/affected_area = get_area(src)
-	if (affected_area.outdoors)
+	var/turf/affected_turf = area[1]
+	theme.apply_theme(affected_turf)
+	area.Remove(affected_turf)
+	try_relocate()
+
+/obj/effect/anomaly/dimensional/proc/try_relocate()
+	if (area.len != 0)
 		return
-
-	theme.apply_theme(get_turf(src))
-	var/affected_tiles = 0
-	var/target_count = rand(min_tiles, max_tiles)
-	var/list/turfs = RANGE_TURFS(range, src)
-	while (affected_tiles < target_count)
-		theme.apply_theme(pick(turfs))
-		affected_tiles++
-
-/obj/effect/anomaly/dimensional/process(delta_time)
-	if (!COOLDOWN_FINISHED(src, relocate_cooldown))
-		return ..()
-
-	relocate()
-	COOLDOWN_START(src, relocate_cooldown, relocate_delay)
-	return ..()
-
-/obj/effect/anomaly/dimensional/proc/relocate()
-	var/area/affected_area = get_area(src)
-	if (affected_area.outdoors)
-		return
-
-	for (var/turf/turf in RANGE_TURFS(detonate_range, src))
-		theme.apply_theme(turf)
 
 	var/datum/anomaly_placer/placer = new()
 	var/area/new_area = placer.findValidArea()
 
 	priority_announce("Dimensional instability relocated. Expected location: [new_area.name].", "Anomaly Alert")
-	var/datum/dimension_theme/themes = new()
-	src.theme = themes.get_random_theme()
 	src.loc = pick(get_area_turfs(new_area))
-
+	prepare_area()
 
 #undef ANOMALY_MOVECHANCE
