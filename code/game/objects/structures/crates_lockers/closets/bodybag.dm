@@ -22,6 +22,20 @@
 	var/tagged = FALSE // so closet code knows to put the tag overlay back
 	can_install_electronics = FALSE
 
+/obj/structure/closet/body_bag/Initialize(mapload)
+	. = ..()
+	var/static/list/tool_behaviors = list(
+		TOOL_WIRECUTTER = list(
+			SCREENTIP_CONTEXT_RMB = "Remove Tag",
+		),
+	)
+	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+	AddElement( \
+		/datum/element/contextual_screentip_bare_hands, \
+		rmb_text = "Fold up", \
+	)
+	AddElement(/datum/element/contextual_screentip_sharpness, lmb_text = "Remove Tag")
+
 /obj/structure/closet/body_bag/Destroy()
 	// If we have a stored bag, and it's in nullspace (not in someone's hand), delete it.
 	if (foldedbag_instance && !foldedbag_instance.loc)
@@ -65,11 +79,12 @@
 /obj/structure/closet/body_bag/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!attempt_fold(user))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	perform_fold(user)
 	qdel(src)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 		/**
 		  * Checks to see if we can fold. Return TRUE to actually perform the fold and delete.

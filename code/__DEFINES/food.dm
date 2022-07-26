@@ -72,7 +72,7 @@
 
 #define FOOD_IN_CONTAINER (1<<0)
 #define FOOD_FINGER_FOOD (1<<1)
-///Is this food item spawned from a silver slime? Prevent it from exporting for profit from cargo.
+///Is this food item spawned from a silver slime? Prevent it from exporting for profit from cargo and make it taste disgusting
 #define FOOD_SILVER_SPAWNED (1<<2)
 
 #define STOP_SERVING_BREAKFAST (15 MINUTES)

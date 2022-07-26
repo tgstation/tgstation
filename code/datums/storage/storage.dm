@@ -52,7 +52,7 @@
 
 	/// you put things *in* a bag, but *on* a plate
 	var/insert_preposition = "in"
-	
+
 	/// don't show any chat messages regarding inserting items
 	var/silent = FALSE
 	/// play a rustling sound when interacting with the bag
@@ -108,7 +108,7 @@
 		stack_trace("storage could not resolve location weakref")
 		qdel(src)
 		return
-	
+
 	RegisterSignal(resolve_parent, list(COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_ATTACK_HAND), .proc/handle_attack)
 	RegisterSignal(resolve_parent, COMSIG_MOUSEDROP_ONTO, .proc/mousedrop_onto)
 	RegisterSignal(resolve_parent, COMSIG_MOUSEDROPPED_ONTO, .proc/mousedropped_onto)
@@ -120,7 +120,9 @@
 
 	RegisterSignal(resolve_parent, COMSIG_ITEM_ATTACK_SELF, .proc/mass_empty)
 
-	RegisterSignal(resolve_parent, list(COMSIG_ATOM_ATTACK_HAND_SECONDARY, COMSIG_CLICK_ALT, COMSIG_ATOM_ATTACK_GHOST), .proc/open_storage)
+	RegisterSignal(resolve_parent, list(COMSIG_CLICK_ALT, COMSIG_ATOM_ATTACK_GHOST), .proc/open_storage)
+	RegisterSignal(resolve_parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY, .proc/open_storage_secondary)
+	RegisterSignal(resolve_parent, COMSIG_PARENT_ATTACKBY_SECONDARY, .proc/open_storage_attackby_secondary)
 
 	RegisterSignal(resolve_location, COMSIG_ATOM_ENTERED, .proc/handle_enter)
 	RegisterSignal(resolve_location, COMSIG_ATOM_EXITED, .proc/handle_exit)
@@ -157,10 +159,14 @@
 	if(!istype(arrived))
 		return
 
+	var/atom/resolve_parent = parent?.resolve()
+	if(!resolve_parent)
+		return
+
+	resolve_parent.update_appearance(UPDATE_ICON_STATE)
+
 	arrived.item_flags |= IN_STORAGE
-
 	refresh_views()
-
 	arrived.on_enter_storage(src)
 
 /// Automatically ran on all object removals: flag marking and view refreshing.
@@ -170,15 +176,19 @@
 	if(!istype(gone))
 		return
 
+	var/atom/resolve_parent = parent?.resolve()
+	if(!resolve_parent)
+		return
+
+	resolve_parent.update_appearance(UPDATE_ICON_STATE)
+
 	gone.item_flags &= ~IN_STORAGE
-
 	remove_and_refresh(gone)
-
 	gone.on_exit_storage(src)
 
 /**
- * Sets where items are physically being stored in the case it shouldn't be on the parent.	
- * 
+ * Sets where items are physically being stored in the case it shouldn't be on the parent.
+ *
  * @param atom/real the new real location of the datum
  * @param should_drop if TRUE, all the items in the old real location will be dropped
  */
@@ -286,7 +296,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 /**
  * Checks if an item is capable of being inserted into the storage
- * 
+ *
  * @param obj/item/to_insert the item we're checking
  * @param messages if TRUE, will print out a message if the item is not valid
  * @param force bypass locked storage
@@ -334,10 +344,15 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			if(messages)
 				to_chat(user, span_warning("\The [resolve_parent] cannot hold \the [to_insert]!"))
 			return FALSE
-	
+
 	if(is_type_in_typecache(to_insert, cant_hold) || HAS_TRAIT(to_insert, TRAIT_NO_STORAGE_INSERT) || (can_hold_trait && !HAS_TRAIT(to_insert, can_hold_trait)))
 		if(messages)
 			to_chat(user, span_warning("\The [resolve_parent] cannot hold \the [to_insert]!"))
+		return FALSE
+
+	if(HAS_TRAIT(to_insert, TRAIT_NODROP))
+		if(messages)
+			to_chat(user, span_warning("\The [to_insert] is stuck on your hand!"))
 		return FALSE
 
 	var/datum/storage/biggerfish = resolve_parent.loc.atom_storage // this is valid if the container our resolve_parent is being held in is a storage item
@@ -358,7 +373,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 /**
  * Attempts to insert an item into the storage
- * 
+ *
  * @param datum/source used by the signal handler
  * @param obj/item/to_insert the item we're inserting
  * @param mob/user the user who is inserting the item
@@ -384,7 +399,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 /**
  * Inserts every time in a given list, with a progress bar
- * 
+ *
  * @param mob/user the user who is inserting the items
  * @param list/things the list of items to insert
  * @param atom/thing_loc the location of the items (used to make sure an item hasn't moved during pickup)
@@ -421,24 +436,32 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 /**
  * Used to transfer all the items inside of us to another atom
- * 
+ *
  * @param mob/user the user who is transferring the items
  * @param atom/going_to the atom we're transferring to
+ * @param override enable override on attempt_insert
  */
-/datum/storage/proc/handle_mass_transfer(mob/user, atom/going_to)
+/datum/storage/proc/handle_mass_transfer(mob/user, atom/going_to, override = FALSE)
 	var/obj/item/resolve_location = real_location?.resolve()
 	if(!resolve_location)
+		return
+
+	var/obj/item/resolve_parent = parent?.resolve()
+	if(!resolve_parent)
 		return
 
 	if(!going_to.atom_storage)
 		return
 
+	if(rustle_sound)
+		playsound(resolve_parent, SFX_RUSTLE, 50, TRUE, -5)
+
 	for (var/atom/thing in resolve_location.contents)
-		going_to.atom_storage.attempt_insert(src, thing, user)
+		going_to.atom_storage.attempt_insert(src, thing, user, override = override)
 
 /**
  * Provides visual feedback in chat for an item insertion
- * 
+ *
  * @param mob/user the user who is inserting the item
  * @param obj/item/thing the item we're inserting
  * @param override skip feedback, only do animation check
@@ -472,7 +495,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 /**
  * Attempts to remove an item from the storage
- * 
+ *
  * @param obj/item/thing the object we're removing
  * @param atom/newLoc where we're placing the item
  * @param silent if TRUE, we won't play any exit sounds
@@ -508,9 +531,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	return TRUE
 
-/** 
+/**
  * Removes everything inside of our storage
- * 
+ *
  * @param atom/target where we're placing the item
  */
 /datum/storage/proc/remove_all(atom/target)
@@ -532,7 +555,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 /**
  * Removes only a specific type of item from our storage
- * 
+ *
  * @param type the type of item to remove
  * @param amount how many we should attempt to pick up at one time
  * @param check_adjacent if TRUE, we'll check adjacent locations for the item type
@@ -544,7 +567,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	var/obj/item/resolve_location = real_location?.resolve()
 	if(!resolve_location)
 		return
-	
+
 	if(!force)
 		if(check_adjacent)
 			if(!user || !user.CanReach(destination) || !user.CanReach(parent))
@@ -572,7 +595,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 /**
  * Recursive proc to get absolutely EVERYTHING inside a storage item, including the contents of inner items.
- * 
+ *
  * @param list/interface the list we're adding objects to
  * @param recursive whether or not we're checking inside of inner items
  */
@@ -592,12 +615,12 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			atom.atom_storage?.return_inv(ret, TRUE)
 
 	interface |= ret
-	
+
 	return TRUE
 
 /**
  * Resets an object, removes it from our screen, and refreshes the view.
- * 
+ *
  * @param atom/movable/gone the object leaving our storage
  */
 /datum/storage/proc/remove_and_refresh(atom/movable/gone)
@@ -621,7 +644,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	if(emp_shielded)
 		return
-	
+
 	for(var/atom/thing in resolve_location)
 		thing.emp_act(severity)
 
@@ -644,7 +667,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 /**
  * Collects every item of a type on a turf.
- * 
+ *
  * @param obj/item/thing the initial object to pick up
  * @param mob/user the user who is picking up the items
  */
@@ -652,7 +675,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	var/obj/item/resolve_parent = parent?.resolve()
 	if(!resolve_parent)
 		return
-	
+
 	var/list/turf_things = thing.loc.contents.Copy()
 
 	if(collection_mode == COLLECT_SAME)
@@ -688,7 +711,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return
 	if(user.incapacitated() || !user.canUseStorage())
 		return
-	
+
 	resolve_parent.add_fingerprint(user)
 
 	if(over_object == user)
@@ -697,10 +720,10 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(!istype(over_object, /atom/movable/screen))
 		INVOKE_ASYNC(src, .proc/dump_content_at, over_object, user)
 		return
-	
+
 	if(resolve_parent.loc != user)
 		return
-	
+
 	if(rustle_sound)
 		playsound(resolve_parent, SFX_RUSTLE, 50, TRUE, -5)
 
@@ -711,7 +734,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 /**
  * Dumps all of our contents at a specific location.
- * 
+ *
  * @param atom/dest_object where to dump to
  * @param mob/user the user who is dumping the contents
  */
@@ -740,7 +763,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return
 	if(!istype(dropping))
 		return
-	
+
 	if(iscarbon(user) || isdrone(user))
 		var/mob/living/user_living = user
 		if(!user_living.incapacitated() && dropping == user_living.get_active_held_item())
@@ -864,7 +887,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	else
 		for(var/obj/item in resolve_location)
-			item.mouse_opacity = MOUSE_OPACITY_OPAQUE 
+			item.mouse_opacity = MOUSE_OPACITY_OPAQUE
 			item.screen_loc = "[current_x]:[screen_pixel_x],[current_y]:[screen_pixel_y]"
 			item.maptext = ""
 			item.plane = ABOVE_HUD_PLANE
@@ -880,6 +903,50 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	closer.screen_loc = "[screen_start_x + cols]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y]"
 
+/// Signal handler for when we get attacked with secondary click by an item.
+/datum/storage/proc/open_storage_attackby_secondary(datum/source, atom/weapon, mob/toshow)
+	SIGNAL_HANDLER
+
+	return open_storage_secondary(source, toshow)
+
+/// Signal handler for when we get attacked with secondary click.
+/datum/storage/proc/open_storage_secondary(datum/source, mob/toshow)
+	SIGNAL_HANDLER
+
+	var/obj/item/resolve_parent = parent?.resolve()
+	if(!resolve_parent)
+		return
+
+	var/obj/item/resolve_location = real_location?.resolve()
+	if(!resolve_location)
+		return
+
+	if(isobserver(toshow))
+		show_contents(toshow)
+		return
+
+	if(!toshow.CanReach(resolve_parent))
+		resolve_parent.balloon_alert(toshow, "can't reach!")
+		return FALSE
+
+	if(!isliving(toshow) || toshow.incapacitated())
+		return FALSE
+
+	if(locked)
+		if(!silent)
+			to_chat(toshow, span_warning("[pick("Ka-chunk!", "Ka-chink!", "Plunk!", "Glorf!")] \The [resolve_parent] appears to be locked!"))
+		return FALSE
+
+	show_contents(toshow)
+
+	if(animated)
+		animate_parent()
+
+	if(rustle_sound)
+		playsound(resolve_parent, SFX_RUSTLE, 50, TRUE, -5)
+
+	return TRUE
+
 /// Signal handler for when we're showing ourselves to a mob.
 /datum/storage/proc/open_storage(datum/source, mob/toshow)
 	SIGNAL_HANDLER
@@ -892,10 +959,14 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(!resolve_location)
 		return
 
+	if(isobserver(toshow))
+		show_contents(toshow)
+		return
+
 	if(!toshow.CanReach(resolve_parent))
 		resolve_parent.balloon_alert(toshow, "can't reach!")
 		return FALSE
-	
+
 	if(!isliving(toshow) || toshow.incapacitated())
 		return FALSE
 
@@ -903,13 +974,13 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		if(!silent)
 			to_chat(toshow, span_warning("[pick("Ka-chunk!", "Ka-chink!", "Plunk!", "Glorf!")] \The [resolve_parent] appears to be locked!"))
 		return FALSE
-	
+
 	if(!quickdraw || toshow.get_active_held_item())
 		show_contents(toshow)
 
 		if(animated)
 			animate_parent()
-			
+
 		if(rustle_sound)
 			playsound(resolve_parent, SFX_RUSTLE, 50, TRUE, -5)
 
@@ -923,7 +994,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	attempt_remove(to_remove)
 
 	INVOKE_ASYNC(src, .proc/put_in_hands_async, toshow, to_remove)
-	
+
 	if(!silent)
 		toshow.visible_message(span_warning("[toshow] draws [to_remove] from [resolve_parent]!"), span_notice("You draw [to_remove] from [resolve_parent]."))
 
@@ -968,9 +1039,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			is_using -= user
 	return seeing
 
-/** 
+/**
  * Show our storage to a mob.
- * 
+ *
  * @param mob/toshow the mob to show the storage to
  */
 /datum/storage/proc/show_contents(mob/toshow)
@@ -985,7 +1056,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		for(var/obj/item/thing in resolve_location)
 			if(thing.on_found(toshow))
 				toshow.active_storage.hide_contents(toshow)
-	
+
 	if(toshow.active_storage)
 		toshow.active_storage.hide_contents(toshow)
 
@@ -1005,7 +1076,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 /**
  * Hide our storage from a mob.
- * 
+ *
  * @param mob/toshow the mob to hide the storage from
  */
 /datum/storage/proc/hide_contents(mob/toshow)
@@ -1023,7 +1094,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		movable_loc.lose_active_storage(src)
 
 	is_using -= toshow
-		
+
 	toshow.client.screen -= boxes
 	toshow.client.screen -= closer
 	toshow.client.screen -= resolve_location.contents
@@ -1036,7 +1107,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 /**
  * Toggles the collectmode of our storage.
- * 
+ *
  * @param mob/toshow the mob toggling us
  */
 /datum/storage/proc/toggle_collection_mode(mob/user)

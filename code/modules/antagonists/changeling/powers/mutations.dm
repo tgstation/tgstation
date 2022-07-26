@@ -95,7 +95,7 @@
 		H.temporarilyRemoveItemFromInventory(H.wear_suit, TRUE)
 		H.update_inv_wear_suit()
 		H.update_inv_head()
-		H.update_hair()
+		H.update_hair(is_creating = TRUE)
 
 		if(blood_on_castoff)
 			H.add_splatter_floor()

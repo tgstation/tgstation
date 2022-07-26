@@ -327,7 +327,7 @@
 
 /datum/greyscale_config/suspenders/worn
 	name = "Worn Suspenders"
-	icon_file = 'icons/mob/clothing/suit.dmi'
+	icon_file = 'icons/mob/clothing/suits/utility.dmi'
 	json_config = 'code/datums/greyscale/json_configs/suspenders_worn.json'
 
 /datum/greyscale_config/giftdeliverybox
@@ -557,7 +557,7 @@
 
 /datum/greyscale_config/heck_suit/worn
 	name = "H.E.C.K. Suit Worn"
-	icon_file = 'icons/mob/clothing/suit.dmi'
+	icon_file = 'icons/mob/clothing/suits/armor.dmi'
 	json_config = 'code/datums/greyscale/json_configs/heck_suit_worn.json'
 
 /datum/greyscale_config/heck_helmet
@@ -569,3 +569,143 @@
 	name = "H.E.C.K. Helmet Worn"
 	icon_file = 'icons/mob/clothing/head.dmi'
 	json_config = 'code/datums/greyscale/json_configs/heck_helmet_worn.json'
+
+/datum/greyscale_config/plaidskirt
+	name = "Plaid Skirt"
+	icon_file = 'icons/obj/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plaidskirt.json'
+
+/datum/greyscale_config/plaidskirt_worn
+	name = "Worn Plaid Skirt"
+	icon_file = 'icons/mob/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plaidskirt_worn.json'
+
+/datum/greyscale_config/turtleskirt
+	name = "Skirtleneck"
+	icon_file = 'icons/obj/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/turtleskirt.json'
+
+/datum/greyscale_config/turtleskirt_worn
+	name = "Worn Skirtleneck"
+	icon_file = 'icons/mob/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/turtleskirt_worn.json'
+
+/datum/greyscale_config/tango
+	name = "Tango Dress"
+	icon_file = 'icons/obj/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/tango.json'
+
+/datum/greyscale_config/tango_worn
+	name = "Worn Tango Dress"
+	icon_file = 'icons/mob/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/tango_worn.json'
+
+/datum/greyscale_config/sundress
+	name = "Sundress"
+	icon_file = 'icons/obj/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/sundress.json'
+
+/datum/greyscale_config/sundress_worn
+	name = "Worn Sundress"
+	icon_file = 'icons/mob/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/sundress_worn.json'
+
+/datum/greyscale_config/beanie
+	name = "Beanie"
+	icon_file = 'icons/obj/clothing/hats.dmi'
+	json_config = 'code/datums/greyscale/json_configs/beanie.json'
+
+/datum/greyscale_config/beanie_worn
+	name = "Worn Beanie"
+	icon_file = 'icons/mob/clothing/head.dmi'
+	json_config = 'code/datums/greyscale/json_configs/beanie_worn.json'
+
+/datum/greyscale_config/scarf
+	name = "Scarf"
+	icon_file = 'icons/obj/clothing/neck.dmi'
+	json_config = 'code/datums/greyscale/json_configs/scarf.json'
+
+/datum/greyscale_config/scarf_worn
+	name = "Worn Scarf"
+	icon_file = 'icons/mob/clothing/neck.dmi'
+	json_config = 'code/datums/greyscale/json_configs/scarf_worn.json'
+
+/datum/greyscale_config/large_scarf
+	name = "Large Scarf"
+	icon_file = 'icons/obj/clothing/neck.dmi'
+	json_config = 'code/datums/greyscale/json_configs/large_scarf.json'
+
+/datum/greyscale_config/large_scarf_worn
+	name = "Worn Large Scarf"
+	icon_file = 'icons/mob/clothing/neck.dmi'
+	json_config = 'code/datums/greyscale/json_configs/large_scarf_worn.json'
+
+/datum/greyscale_config/slacks
+	name = "Slacks"
+	icon_file = 'icons/obj/clothing/under/shorts_pants.dmi'
+	json_config = 'code/datums/greyscale/json_configs/slacks.json'
+
+/datum/greyscale_config/slacks_worn
+	name = "Worn Slacks"
+	icon_file = 'icons/mob/clothing/under/shorts_pants.dmi'
+	json_config = 'code/datums/greyscale/json_configs/slacks_worn.json'
+
+/datum/greyscale_config/shorts
+	name = "Shorts"
+	icon_file = 'icons/obj/clothing/under/shorts_pants.dmi'
+	json_config = 'code/datums/greyscale/json_configs/shorts.json'
+
+/datum/greyscale_config/shorts_worn
+	name = "Worn Shorts"
+	icon_file = 'icons/mob/clothing/under/shorts_pants.dmi'
+	json_config = 'code/datums/greyscale/json_configs/shorts_worn.json'
+
+/datum/greyscale_config/jeans
+	name = "Jeans"
+	icon_file = 'icons/obj/clothing/under/shorts_pants.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jeans.json'
+
+/datum/greyscale_config/jeans_worn
+	name = "Worn Jeans"
+	icon_file = 'icons/mob/clothing/under/shorts_pants.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jeans_worn.json'
+
+/datum/greyscale_config/jeanshorts
+	name = "Jean Shorts"
+	icon_file = 'icons/obj/clothing/under/shorts_pants.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jeanshorts.json'
+
+/datum/greyscale_config/jeanshorts_worn
+	name = "Worn Jean Shorts"
+	icon_file = 'icons/mob/clothing/under/shorts_pants.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jeanshorts_worn.json'
+
+/datum/greyscale_config/tape
+	name = "Tape"
+	icon_file = 'icons/obj/tapes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/tape.json'
+
+/datum/greyscale_config/tape/spikes
+	name = "Spiked Tape"
+	icon_file = 'icons/obj/tapes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/tape_spikes.json'
+
+/datum/greyscale_config/tape_piece
+	name = "Tape Piece"
+	icon_file = 'icons/obj/tapes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/tape_piece.json'
+
+/datum/greyscale_config/tape_piece/spikes
+	name = "Spiked Tape Piece"
+	icon_file = 'icons/obj/tapes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/tape_piece_spikes.json'
+
+/datum/greyscale_config/tape_piece/worn
+	name = "Worn Tape Piece"
+	icon_file = 'icons/obj/tapes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/tape_piece_worn.json'
+
+/datum/greyscale_config/tape_piece/worn/spikes
+	name = "Worn Tape Piece"
+	icon_file = 'icons/obj/tapes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/tape_piece_spikes_worn.json'
