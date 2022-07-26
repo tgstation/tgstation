@@ -342,7 +342,6 @@
 /datum/quirk/heavy_sleeper
 	name = "Heavy Sleeper"
 	desc = "You sleep like a rock! Whenever you're put to sleep or knocked unconscious, you take a little bit longer to wake up."
-	//reminder for warm milk
 	icon = "bed"
 	value = -3
 	mob_trait = TRAIT_HEAVY_SLEEPER

@@ -247,6 +247,9 @@
 		. = TRUE
 	if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
 		holder.remove_reagent(/datum/reagent/consumable/capsaicin, 1 * delta_time)
+	if(HAS_TRAIT(M, TRAIT_HEAVY_SLEEPER) && holder.chem_temp >= 320) // Warm Milk
+		if(current_cycle >= 11)
+		M.Sleeping(40 * REM * delta_time)
 	..()
 
 /datum/reagent/consumable/soymilk

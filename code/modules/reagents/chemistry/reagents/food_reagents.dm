@@ -26,7 +26,7 @@
 		if(!HAS_TRAIT(human_eater, TRAIT_NOHUNGER))
 			human_eater.adjust_nutrition(nutriment_factor * REM * delta_time)
 
-			if(contains_lactose && TRAIT_LACTOSE_INTOLERANT)
+			if(contains_lactose && HAS_TRAIT(human_eater, TRAIT_LACTOSE_INTOLERANT))
 				if(current_cycle >= 11 && DT_PROB(min(30, current_cycle), delta_time))
 
 					if(current_cycle >= 44) // uh oh
