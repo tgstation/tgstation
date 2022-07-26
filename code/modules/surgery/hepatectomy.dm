@@ -43,6 +43,8 @@
 /datum/surgery_step/hepatectomy/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	var/mob/living/carbon/human/human_target = target
 	human_target.setOrganLoss(ORGAN_SLOT_LIVER, 10) //not bad, not great
+	if(target_liver)
+		target_liver.operated = TRUE
 	display_results(user, target, span_notice("You successfully remove the damaged part of [target]'s liver."),
 		span_notice("[user] successfully removes the damaged part of [target]'s liver."),
 		span_notice("[user] successfully removes the damaged part of [target]'s liver."))
