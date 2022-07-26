@@ -4,7 +4,7 @@
 /// Mutates the list that is passed into it to remove invalid rules.
 /datum/game_mode/dynamic/proc/pick_ruleset(list/drafted_rules)
 	if (only_ruleset_executed)
-		log_game("DYNAMIC: FAIL: only_ruleset_executed")
+		log_dynamic("FAIL: only_ruleset_executed")
 		return null
 
 	while (TRUE)
@@ -14,7 +14,7 @@
 			for (var/leftover_rule in drafted_rules)
 				leftover_rules += "[leftover_rule]"
 
-			log_game("DYNAMIC: FAIL: No rulesets left to pick. Leftover rules: [leftover_rules.Join(", ")]")
+			log_dynamic("FAIL: No rulesets left to pick. Leftover rules: [leftover_rules.Join(", ")]")
 
 			return null
 
@@ -29,7 +29,7 @@
 			&& GLOB.dynamic_no_stacking \
 			&& high_impact_ruleset_executed \
 		)
-			log_game("DYNAMIC: FAIL: [rule] can't execute as a high impact ruleset was already executed.")
+			log_dynamic("FAIL: [rule] can't execute as a high impact ruleset was already executed.")
 			drafted_rules -= rule
 			if(drafted_rules.len <= 0)
 				return null
@@ -39,7 +39,7 @@
 
 /// Executes a random midround ruleset from the list of drafted rules.
 /datum/game_mode/dynamic/proc/pick_midround_rule(list/drafted_rules, description)
-	log_game("DYNAMIC: Rolling [drafted_rules.len] [description]")
+	log_dynamic("Rolling [drafted_rules.len] [description]")
 
 	var/datum/dynamic_ruleset/rule = pick_ruleset(drafted_rules)
 	if (isnull(rule))
@@ -53,7 +53,7 @@
 		TIMER_STOPPABLE, \
 	)
 
-	log_game("DYNAMIC: [rule] ruleset executing...")
+	log_dynamic("[rule] ruleset executing...")
 	message_admins("DYNAMIC: Executing midround ruleset [rule] in [DisplayTimeText(ADMIN_CANCEL_MIDROUND_TIME)]. \
 		<a href='?src=[REF(src)];cancelmidround=[midround_injection_timer_id]'>CANCEL</a> | \
 		<a href='?src=[REF(src)];differentmidround=[midround_injection_timer_id]'>SOMETHING ELSE</a>")
@@ -84,7 +84,7 @@
 	spend_midround_budget(rule.cost, threat_log, "[worldtime2text()]: [rule.ruletype] [rule.name]")
 	rule.pre_execute(GLOB.alive_player_list.len)
 	if (rule.execute())
-		log_game("DYNAMIC: Injected a [rule.ruletype == "latejoin" ? "latejoin" : "midround"] ruleset [rule.name].")
+		log_dynamic("Injected a [rule.ruletype == "latejoin" ? "latejoin" : "midround"] ruleset [rule.name].")
 		if(rule.flags & HIGH_IMPACT_RULESET)
 			high_impact_ruleset_executed = TRUE
 		else if(rule.flags & ONLY_RULESET)
@@ -92,7 +92,7 @@
 		if(rule.ruletype == "Latejoin")
 			var/mob/M = pick(rule.candidates)
 			message_admins("[key_name(M)] joined the station, and was selected by the [rule.name] ruleset.")
-			log_game("DYNAMIC: [key_name(M)] joined the station, and was selected by the [rule.name] ruleset.")
+			log_dynamic("[key_name(M)] joined the station, and was selected by the [rule.name] ruleset.")
 		executed_rules += rule
 		rule.candidates.Cut()
 		if (rule.persistent)

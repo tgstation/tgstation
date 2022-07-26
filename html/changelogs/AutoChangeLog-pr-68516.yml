@@ -1,4 +1,0 @@
-author: "magatsuchi"
-delete-after: True
-changes: 
-  - bugfix: "you can no longer put undroppable items into storage"
