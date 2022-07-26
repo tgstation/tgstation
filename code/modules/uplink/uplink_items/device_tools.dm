@@ -17,32 +17,21 @@
 	cost = 1
 	surplus = 50
 	illegal_tech = FALSE
-	purchasable_from = ~UPLINK_NANO
-
-/datum/uplink_item/device_tools/security_encryption
-	name = "Security Radio Sniffer"
-	desc = "This radio sniffer is used to listen to the security radio channel. Just put it inside your headset. \
-			However Nanotrasen would not recommend talking on the channel."
-	item = /obj/item/encryptionkey/headset_sec
-	cost = 1
-	surplus = 50
-	purchasable_from = UPLINK_NANO
 
 /datum/uplink_item/device_tools/surgerybag
 	name = "Syndicate Surgery Duffel Bag"
 	desc = "The Syndicate surgery duffel bag is a toolkit containing all surgery tools, surgical drapes, \
 			a Syndicate brand MMI, a straitjacket, and a muzzle."
 	item = /obj/item/storage/backpack/duffelbag/syndie/surgery
-	purchasable_from = ~UPLINK_NANO
 	cost = 3
 
 /datum/uplink_item/device_tools/encryptionkey
 	name = "Syndicate Encryption Key"
 	desc = "A key that, when inserted into a radio headset, allows you to listen to all station department channels \
-			as well as talk on an encrypted Syndicate channel with other agents that have the same key."
+			as well as talk on an encrypted Syndicate channel with other agents that have the same key. In addition, this key also protects \
+			your headset from radio jammers."
 	item = /obj/item/encryptionkey/syndicate
 	cost = 2
-	purchasable_from = ~UPLINK_NANO
 	surplus = 75
 	restricted = TRUE
 
@@ -53,7 +42,6 @@
 			of the originals, these inferior copies are still quite useful, being able to provide \
 			both weal and woe on the battlefield, even if they do occasionally bite off a finger."
 	item = /obj/item/storage/book/bible/syndicate
-	purchasable_from = ~UPLINK_NANO
 	cost = 5
 
 /datum/uplink_item/device_tools/thermal
@@ -63,16 +51,6 @@
 			emitted as heat and light by objects. Hotter objects, such as warm bodies, cybernetic organisms \
 			and artificial intelligence cores emit more of this light than cooler objects like walls and airlocks."
 	item = /obj/item/clothing/glasses/thermal/syndi
-	purchasable_from = ~UPLINK_NANO
-	cost = 4
-
-/datum/uplink_item/device_tools/thermalnano
-	name = "Thermal Eyepatch"
-	desc = "This is a nanotrasen branded thermal eyepatch. They allow you to see organisms through walls by capturing the upper portion of the \
-			infrared light spectrum, emitted as heat and light by objects. Hotter objects, such as warm bodies, cybernetic organisms and artifiial \
-			intelligence cores emit more of this light than cooler objects like walls and airlocks. "
-	item = /obj/item/clothing/glasses/thermal/eyepatch
-	purchasable_from = UPLINK_NANO
 	cost = 4
 
 /datum/uplink_item/device_tools/cutouts
@@ -121,15 +99,6 @@
 	item = /obj/item/card/emag/doorjack
 	cost = 3
 
-/datum/uplink_item/device_tools/detective_scanner
-	name = "Nano Scanner"
-	desc = "The finest tool a crime finder can have. Scan for fingerprints, fibers and DNA from blood. Keep in mind \
-			you need a security records or medical record console to check the prints."
-	item = /obj/item/detective_scanner
-	cost = 3
-	surplus = 90
-	purchasable_from = UPLINK_NANO
-
 /datum/uplink_item/device_tools/fakenucleardisk
 	name = "Decoy Nuclear Authentication Disk"
 	desc = "It's just a normal disk. Visually it's identical to the real deal, but it won't hold up under closer scrutiny by the Captain. \
@@ -147,7 +116,6 @@
 			telecrystals normally."
 	item = /obj/item/computer_hardware/hard_drive/portable/virus/frame
 	cost = 4
-	purchasable_from = ~UPLINK_NANO
 	restricted = TRUE
 
 /datum/uplink_item/device_tools/frame/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
@@ -164,7 +132,7 @@
 	cost = 1
 	surplus = 0
 	restricted = TRUE
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_NANO)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/device_tools/failsafe/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	var/datum/component/uplink/uplink = source.GetComponent(/datum/component/uplink)
@@ -181,7 +149,6 @@
 			multitool and combat gloves that are resistant to shocks and heat."
 	item = /obj/item/storage/toolbox/syndicate
 	cost = 1
-	purchasable_from = ~UPLINK_NANO
 	illegal_tech = FALSE
 
 /datum/uplink_item/device_tools/rad_laser
@@ -201,7 +168,6 @@
 	item = /obj/item/suspiciousphone
 	restricted = TRUE
 	cost = 7
-	purchasable_from = ~UPLINK_NANO
 	limited_stock = 1
 
 /datum/uplink_item/device_tools/binary
@@ -222,7 +188,6 @@
 			in electronic devices, subverts intended functions, and easily breaks security mechanisms. Cannot be used to open airlocks."
 	progression_minimum = 20 MINUTES
 	item = /obj/item/card/emag
-	purchasable_from = ~UPLINK_NANO
 	cost = 4
 
 /datum/uplink_item/device_tools/stimpack
@@ -234,6 +199,14 @@
 	cost = 5
 	surplus = 90
 
+/datum/uplink_item/device_tools/super_pointy_tape
+	name = "Super Pointy Tape"
+	desc = "An all-purpose super pointy tape roll. The tape is built with hundreds of tiny metal needles, the roll comes with in 5 pieces. When added to items the \
+			item that was taped will embed when thrown at people. Taping people's mouthes with it will hurt them if pulled off by someone else."
+	progression_minimum = 10 MINUTES
+	item = /obj/item/stack/sticky_tape/pointy/super
+	cost = 1
+
 // Medium progression cost
 
 /datum/uplink_item/device_tools/hacked_module
@@ -242,7 +215,6 @@
 			Be careful with wording, as artificial intelligences may look for loopholes to exploit."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/ai_module/syndicate
-	purchasable_from = ~UPLINK_NANO
 	cost = 4
 
 /datum/uplink_item/device_tools/hypnotic_flash
@@ -267,7 +239,6 @@
 			sends you a small beacon that will teleport the larger beacon to your location upon activation."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/sbeacondrop
-	purchasable_from = ~UPLINK_NANO
 	cost = 10
 
 /datum/uplink_item/device_tools/powersink
@@ -277,5 +248,4 @@
 			traditional bags and boxes. Caution: Will explode if the powernet contains sufficient amounts of energy."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/powersink
-	purchasable_from = ~UPLINK_NANO
 	cost = 11
