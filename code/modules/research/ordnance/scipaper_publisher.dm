@@ -22,7 +22,7 @@
 	. = ..()
 	paper_to_be = new
 
-/datum/computer_file/program/scipaper_program/run_program(mob/living/user)
+/datum/computer_file/program/scipaper_program/on_start(mob/living/user)
 	. = ..()
 	linked_techweb = SSresearch.science_tech
 

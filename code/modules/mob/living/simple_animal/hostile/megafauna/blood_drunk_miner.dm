@@ -56,6 +56,8 @@ Difficulty: Medium
 	var/datum/action/cooldown/mob_cooldown/dash/dash
 	/// Kinetic accelerator ability
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/kinetic_accelerator/kinetic_accelerator
+	/// Dash Attack Ability
+	var/datum/action/cooldown/mob_cooldown/dash_attack/dash_attack
 	/// Transform weapon ability
 	var/datum/action/cooldown/mob_cooldown/transform_weapon/transform_weapon
 
@@ -65,14 +67,17 @@ Difficulty: Medium
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 	dash = new /datum/action/cooldown/mob_cooldown/dash()
 	kinetic_accelerator = new /datum/action/cooldown/mob_cooldown/projectile_attack/kinetic_accelerator()
+	dash_attack = new /datum/action/cooldown/mob_cooldown/dash_attack()
 	transform_weapon = new /datum/action/cooldown/mob_cooldown/transform_weapon()
 	dash.Grant(src)
 	kinetic_accelerator.Grant(src)
+	dash_attack.Grant(src)
 	transform_weapon.Grant(src)
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Destroy()
 	QDEL_NULL(dash)
 	QDEL_NULL(kinetic_accelerator)
+	QDEL_NULL(dash_attack)
 	QDEL_NULL(transform_weapon)
 	return ..()
 
@@ -81,10 +86,8 @@ Difficulty: Medium
 		return
 
 	Goto(target, move_to_delay, minimum_distance)
-	if(get_dist(src, target) > 4)
-		if(dash.Trigger(target = target))
-			kinetic_accelerator.StartCooldown(0)
-			kinetic_accelerator.Trigger(target = target)
+	if(get_dist(src, target) > 4 && dash_attack.IsAvailable())
+		dash_attack.Trigger(target = target)
 	else
 		kinetic_accelerator.Trigger(target = target)
 	transform_weapon.Trigger(target = target)

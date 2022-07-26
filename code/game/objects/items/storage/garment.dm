@@ -47,7 +47,7 @@
 	new /obj/item/clothing/under/rank/captain/parade(src)
 	new /obj/item/clothing/suit/armor/vest/capcarapace(src)
 	new /obj/item/clothing/suit/armor/vest/capcarapace/captains_formal(src)
-	new /obj/item/clothing/suit/capjacket(src)
+	new /obj/item/clothing/suit/jacket/capjacket(src)
 	new /obj/item/clothing/glasses/sunglasses/gar/giga(src)
 	new /obj/item/clothing/gloves/color/captain(src)
 	new /obj/item/clothing/head/caphat(src)

@@ -141,3 +141,10 @@
 	usesound = 'sound/items/drill_use.ogg'
 	toolspeed = 0.5
 	random_color = FALSE
+
+/obj/item/screwdriver/red
+	random_color = FALSE
+
+/obj/item/screwdriver/red/Initialize(mapload)
+	. = ..()
+	set_greyscale(colors=list(screwdriver_colors["red"]))

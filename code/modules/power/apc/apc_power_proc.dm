@@ -14,8 +14,8 @@
 	terminal.setDir(dir)
 	terminal.master = src
 
-/obj/machinery/power/apc/proc/toggle_nightshift_lights(mob/living/user)
-	if(last_nightshift_switch > world.time - 100) //~10 seconds between each toggle to prevent spamming
+/obj/machinery/power/apc/proc/toggle_nightshift_lights(mob/user)
+	if(last_nightshift_switch > world.time - 10 SECONDS) //~10 seconds between each toggle to prevent spamming
 		balloon_alert(user, "night breaker is cycling!")
 		return
 	last_nightshift_switch = world.time
