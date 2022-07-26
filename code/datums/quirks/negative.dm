@@ -647,18 +647,6 @@
 	to_chat(quirk_holder, "<span class='big bold info'>Please note that your dissociation syndrome does NOT give you the right to attack people or otherwise cause any interference to \
 	the round. You are not an antagonist, and the rules will treat you the same as other crewmembers.</span>")
 
-/datum/quirk/skirt_dependance
-	name = "Skirt dependance"
-	desc = "You don't know what you would do without your skirt, you might just explode."
-	icon = "female"
-	value = -6
-	mob_trait = TRAIT_INSANITY
-	gain_text = "<span class='userdanger'>You feel attached to your skirt</span>"
-	lose_text = "<span class='notice'>You feel brave enough to take your skirt off.</span>"
-	medical_record_text = "Patient suffers a irrational dependence on their attire."
-	hardcore_value = 6
-	processing_quirk = TRUE
-
 /datum/quirk/slow
 	name = "Slow"
 	desc = "You've always liked taking your time."
