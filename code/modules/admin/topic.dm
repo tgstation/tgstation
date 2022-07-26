@@ -158,28 +158,11 @@
 			return
 		shuttle_console.admin_controlled = !shuttle_console.admin_controlled
 		to_chat(usr, "[shuttle_console] was [shuttle_console.admin_controlled ? "locked" : "unlocked"].", confidential = TRUE)
+
 	else if(href_list["delay_round_end"])
-		if(!check_rights(R_SERVER))
-			return
+		// Permissions are checked in delay_round_end
+		delay_round_end()
 
-		if(SSticker.delay_end)
-			tgui_alert(usr, "The round end is already delayed. The reason for the current delay is: \"[SSticker.admin_delay_notice]\"", "Alert", list("Ok"))
-			return
-
-		var/delay_reason = input(usr, "Enter a reason for delaying the round end", "Round Delay Reason") as null|text
-
-		if(isnull(delay_reason))
-			return
-
-		if(SSticker.delay_end)
-			tgui_alert(usr, "The round end is already delayed. The reason for the current delay is: \"[SSticker.admin_delay_notice]\"", "Alert", list("Ok"))
-			return
-
-		SSticker.delay_end = TRUE
-		SSticker.admin_delay_notice = delay_reason
-
-		log_admin("[key_name(usr)] delayed the round end for reason: [SSticker.admin_delay_notice]")
-		message_admins("[key_name_admin(usr)] delayed the round end for reason: [SSticker.admin_delay_notice]")
 	else if(href_list["undelay_round_end"])
 		if(!check_rights(R_SERVER))
 			return
@@ -1977,3 +1960,22 @@
 		if(!datum_to_mark)
 			return
 		return usr.client?.mark_datum(datum_to_mark)
+
+	else if(href_list["lua_state"])
+		if(!check_rights(R_DEBUG))
+			return
+		var/datum/lua_state/state_to_view = locate(href_list["lua_state"])
+		if(!state_to_view)
+			return
+		var/datum/lua_editor/editor = new(state_to_view)
+		var/log_index = href_list["log_index"]
+		if(log_index)
+			log_index = text2num(log_index)
+		if(log_index <= state_to_view.log.len)
+			var/list/log_entry = state_to_view.log[log_index]
+			if(log_entry["chunk"])
+				LAZYINITLIST(editor.tgui_shared_states)
+				editor.tgui_shared_states["viewedChunk"] = json_encode(log_entry["chunk"])
+				editor.tgui_shared_states["modal"] = json_encode("viewChunk")
+		editor.ui_interact(usr)
+		editor.tgui_shared_states = null

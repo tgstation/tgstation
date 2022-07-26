@@ -1,6 +1,0 @@
-author: "13spacemen"
-delete-after: True
-changes: 
-  - bugfix: "Carding an AI or deconstructing it will not ping ghosts about its positronic brain"
-  - bugfix: "Ejecting a brain from an MMI will correctly transfer the guy in the MMI to the ejected brain"
-  - bugfix: "You can (un)anchor AIs with a wrench"
