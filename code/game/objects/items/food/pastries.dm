@@ -319,8 +319,8 @@
 	tastes = list("raw brownie batter" = 1)
 	foodtypes = GRAIN | JUNKFOOD | SUGAR | BREAKFAST
 
-/obj/item/food/rawbrowniebatter/MakeBakeable()
-	AddComponent(/datum/component/bakeable, /obj/item/food/browniesheet, rand(20 SECONDS, 30 SECONDS), TRUE, TRUE)
+/obj/item/food/raw_brownie_batter/MakeBakeable()
+	AddComponent(/datum/component/bakeable, /obj/item/food/brownie_sheet, rand(20 SECONDS, 30 SECONDS), TRUE, TRUE)
 
 /obj/item/food/brownie_sheet
 	name = "brownie sheet"
@@ -333,7 +333,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	burns_in_oven = TRUE
 
-/obj/item/food/browniesheet/MakeProcessable()
+/obj/item/food/brownie_sheet/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/brownie, 4, 3 SECONDS, table_required = TRUE)
 
 /obj/item/food/brownie

@@ -505,9 +505,9 @@
 			/obj/item/clothing/head/nursehat,
 			/obj/item/clothing/head/chefhat,
 			/obj/item/clothing/head/papersack,
-			)) - /obj/item/clothing/head/caphat/beret
-			//Need to subtract the beret because its annoying
-
+			/obj/item/clothing/head/caphat/beret,
+			))
+			
 /obj/item/mod/module/hat_stabilizer/on_suit_activation()
 	RegisterSignal(mod.helmet, COMSIG_PARENT_EXAMINE, .proc/add_examine)
 	RegisterSignal(mod.helmet, COMSIG_PARENT_ATTACKBY, .proc/place_hat)

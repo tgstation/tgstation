@@ -97,6 +97,7 @@
 #define ROLE_MAINTENANCE_DRONE "Maintenance Drone"
 #define ROLE_BATTLECRUISER_CREW "Battlecruiser Crew"
 #define ROLE_BATTLECRUISER_CAPTAIN "Battlecruiser Captain"
+#define ROLE_VENUSHUMANTRAP "Venus Human Trap"
 
 
 /// This defines the antagonists you can operate with in the settings.

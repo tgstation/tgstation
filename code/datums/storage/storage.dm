@@ -120,7 +120,9 @@
 
 	RegisterSignal(resolve_parent, COMSIG_ITEM_ATTACK_SELF, .proc/mass_empty)
 
-	RegisterSignal(resolve_parent, list(COMSIG_ATOM_ATTACK_HAND_SECONDARY, COMSIG_CLICK_ALT, COMSIG_ATOM_ATTACK_GHOST), .proc/open_storage)
+	RegisterSignal(resolve_parent, list(COMSIG_CLICK_ALT, COMSIG_ATOM_ATTACK_GHOST), .proc/open_storage)
+	RegisterSignal(resolve_parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY, .proc/open_storage_secondary)
+	RegisterSignal(resolve_parent, COMSIG_PARENT_ATTACKBY_SECONDARY, .proc/open_storage_attackby_secondary)
 
 	RegisterSignal(resolve_location, COMSIG_ATOM_ENTERED, .proc/handle_enter)
 	RegisterSignal(resolve_location, COMSIG_ATOM_EXITED, .proc/handle_exit)
@@ -157,10 +159,14 @@
 	if(!istype(arrived))
 		return
 
+	var/atom/resolve_parent = parent?.resolve()
+	if(!resolve_parent)
+		return
+
+	resolve_parent.update_appearance(UPDATE_ICON_STATE)
+
 	arrived.item_flags |= IN_STORAGE
-
 	refresh_views()
-
 	arrived.on_enter_storage(src)
 
 /// Automatically ran on all object removals: flag marking and view refreshing.
@@ -170,10 +176,14 @@
 	if(!istype(gone))
 		return
 
+	var/atom/resolve_parent = parent?.resolve()
+	if(!resolve_parent)
+		return
+
+	resolve_parent.update_appearance(UPDATE_ICON_STATE)
+
 	gone.item_flags &= ~IN_STORAGE
-
 	remove_and_refresh(gone)
-
 	gone.on_exit_storage(src)
 
 /**
@@ -460,8 +470,6 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	var/obj/item/resolve_parent = parent?.resolve()
 	if(!resolve_parent)
 		return
-
-	resolve_parent.update_appearance(UPDATE_ICON_STATE)
 
 	if(animated)
 		animate_parent()
@@ -894,6 +902,50 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 					break
 
 	closer.screen_loc = "[screen_start_x + cols]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y]"
+
+/// Signal handler for when we get attacked with secondary click by an item.
+/datum/storage/proc/open_storage_attackby_secondary(datum/source, atom/weapon, mob/toshow)
+	SIGNAL_HANDLER
+
+	return open_storage_secondary(source, toshow)
+
+/// Signal handler for when we get attacked with secondary click.
+/datum/storage/proc/open_storage_secondary(datum/source, mob/toshow)
+	SIGNAL_HANDLER
+
+	var/obj/item/resolve_parent = parent?.resolve()
+	if(!resolve_parent)
+		return
+
+	var/obj/item/resolve_location = real_location?.resolve()
+	if(!resolve_location)
+		return
+
+	if(isobserver(toshow))
+		show_contents(toshow)
+		return
+
+	if(!toshow.CanReach(resolve_parent))
+		resolve_parent.balloon_alert(toshow, "can't reach!")
+		return FALSE
+
+	if(!isliving(toshow) || toshow.incapacitated())
+		return FALSE
+
+	if(locked)
+		if(!silent)
+			to_chat(toshow, span_warning("[pick("Ka-chunk!", "Ka-chink!", "Plunk!", "Glorf!")] \The [resolve_parent] appears to be locked!"))
+		return FALSE
+
+	show_contents(toshow)
+
+	if(animated)
+		animate_parent()
+
+	if(rustle_sound)
+		playsound(resolve_parent, SFX_RUSTLE, 50, TRUE, -5)
+
+	return TRUE
 
 /// Signal handler for when we're showing ourselves to a mob.
 /datum/storage/proc/open_storage(datum/source, mob/toshow)

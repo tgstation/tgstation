@@ -218,6 +218,9 @@ Doesn't work on other aliens/AI.*/
 /datum/action/cooldown/alien/acid/corrosion/PreActivate(atom/target)
 	if(get_dist(owner, target) > 1)
 		return FALSE
+	if(ismob(target)) //If it could corrode mobs, it would one-shot them.
+		owner.balloon_alert(owner, "doesn't work on mobs!")
+		return FALSE
 
 	return ..()
 
