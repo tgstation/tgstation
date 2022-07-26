@@ -76,9 +76,20 @@
 	name = "Pirate Corpse"
 	uniform = /obj/item/clothing/under/costume/pirate
 	shoes = /obj/item/clothing/shoes/jackboots
-	glasses = /obj/item/clothing/glasses/eyepatch
-	head = /obj/item/clothing/head/bandana
 
+/obj/effect/mob_spawn/corpse/human/pirate/melee
+	name = "Pirate Swashbuckler"
+	outfit = /datum/outfit/piratecorpse/melee
+
+/datum/outfit/piratecorpse/melee
+	name = "Pirate Swashbuckler Corpse"
+	glasses = /obj/item/clothing/glasses/eyepatch
+	head = /obj/item/clothing/head/bandana/armored
+
+/datum/outfit/piratecorpse/melee/space
+	name = "Pirate Swashbuckler Corpse - Space"
+	suit = /obj/item/clothing/suit/space/pirate
+	head = /obj/item/clothing/head/helmet/space/pirate/bandana
 
 /obj/effect/mob_spawn/corpse/human/pirate/ranged
 	name = "Pirate Gunner"
@@ -86,9 +97,14 @@
 
 /datum/outfit/piratecorpse/ranged
 	name = "Pirate Gunner Corpse"
-	suit = /obj/item/clothing/suit/costume/pirate
-	head = /obj/item/clothing/head/pirate
+	glasses = /obj/item/clothing/glasses/eyepatch
+	suit = /obj/item/clothing/suit/costume/pirate/armored
+	head = /obj/item/clothing/head/pirate/armored
 
+/datum/outfit/piratecorpse/ranged/space
+	name = "Pirate Gunner Corpse - Space"
+	suit = /obj/item/clothing/suit/space/pirate
+	head = /obj/item/clothing/head/helmet/space/pirate
 
 /obj/effect/mob_spawn/corpse/human/russian
 	name = "Russian"

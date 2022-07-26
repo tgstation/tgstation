@@ -1,10 +1,6 @@
 /mob/living/simple_animal/hostile/skeleton
 	name = "reanimated skeleton"
 	desc = "A real bonefied skeleton, doesn't seem like it wants to socialize."
-	icon = 'icons/mob/simple_human.dmi'
-	icon_state = "skeleton"
-	icon_living = "skeleton"
-	icon_dead = "skeleton"
 	gender = NEUTER
 	mob_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	turns_per_move = 5
@@ -31,36 +27,51 @@
 	faction = list("skeleton")
 	see_in_dark = NIGHTVISION_FOV_RANGE
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	deathmessage = "collapses into a pile of bones!"
-	del_on_death = 1
-	loot = list(/obj/effect/decal/remains/human)
-
 	footstep_type = FOOTSTEP_MOB_SHOE
+	deathmessage = "collapses into a pile of bones!"
+	del_on_death = TRUE
+	loot = list(/obj/effect/decal/remains/human)
+	var/outfit = /datum/outfit
+	var/species = /datum/species/skeleton
+
+/mob/living/simple_animal/hostile/skeleton/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/outfit_icon_gen, outfit, species, r_hand = FALSE, l_hand = FALSE)
 
 /mob/living/simple_animal/hostile/skeleton/eskimo
 	name = "undead eskimo"
 	desc = "The reanimated remains of some poor traveler."
-	icon_state = "eskimo"
-	icon_living = "eskimo"
-	icon_dead = "eskimo_dead"
 	maxHealth = 55
 	health = 55
 	weather_immunities = list(TRAIT_SNOWSTORM_IMMUNE)
 	melee_damage_lower = 17
 	melee_damage_upper = 20
 	deathmessage = "collapses into a pile of bones, its gear falling to the floor!"
-	loot = list(/obj/effect/decal/remains/human,
-				/obj/item/spear,
-				/obj/item/clothing/shoes/winterboots,
-				/obj/item/clothing/suit/hooded/wintercoat)
+	loot = list(
+		/obj/effect/decal/remains/human,
+		/obj/item/spear,
+		/obj/item/clothing/shoes/winterboots,
+		/obj/item/clothing/suit/hooded/wintercoat,
+	)
+	outfit = /datum/outfit/eskimo
 
+/datum/outfit/eskimo
+	name = "Eskimo"
+	suit = /obj/item/clothing/suit/hooded/wintercoat
+	shoes = /obj/item/clothing/shoes/winterboots
+	r_hand = /obj/item/spear
+
+/datum/outfit/eskimo/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+	if(visualsOnly)
+		return
+	if(istype(H.wear_suit, /obj/item/clothing/suit/hooded))
+		var/obj/item/clothing/suit/hooded/hood = H.wear_suit
+		hood.ToggleHood()
 
 /mob/living/simple_animal/hostile/skeleton/templar
 	name = "undead templar"
 	desc = "The reanimated remains of a holy templar knight."
-	icon_state = "templar"
-	icon_living = "templar"
-	icon_dead = "templar_dead"
 	maxHealth = 150
 	health = 150
 	weather_immunities = list(TRAIT_SNOWSTORM_IMMUNE)
@@ -72,10 +83,19 @@
 	melee_damage_lower = 25
 	melee_damage_upper = 30
 	deathmessage = "collapses into a pile of bones, its gear clanging as it hits the ground!"
-	loot = list(/obj/effect/decal/remains/human,
-				/obj/item/clothing/suit/chaplainsuit/armor/templar,
-				/obj/item/clothing/head/helmet/chaplain,
-				/obj/item/claymore/weak{name = "holy sword"})
+	loot = list(
+		/obj/effect/decal/remains/human,
+		/obj/item/clothing/suit/chaplainsuit/armor/templar,
+		/obj/item/clothing/head/helmet/chaplain,
+		/obj/item/claymore/weak{name = "holy sword"}
+	)
+	outfit = /datum/outfit/templar
+
+/datum/outfit/templar
+	name = "Templar"
+	head = /obj/item/clothing/head/helmet/chaplain
+	suit = /obj/item/clothing/suit/chaplainsuit/armor/templar
+	r_hand = /obj/item/claymore/weak
 
 /mob/living/simple_animal/hostile/skeleton/ice
 	name = "ice skeleton"
@@ -99,8 +119,10 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	light_color = LIGHT_COLOR_PURPLE
+	light_range = 2
 	deathmessage = "collapses into a pile of bones, their suit dissolving among the plasma!"
 	loot = list(/obj/effect/decal/remains/plasma)
+	outfit = null
 
 /mob/living/simple_animal/hostile/skeleton/plasmaminer/jackhammer
 	desc = "A plasma-soaked miner, their exposed limbs turned into a grossly incandescent bone seemingly made of plasma. They seem to still have their mining tool in their hand, gripping tightly."
@@ -117,7 +139,3 @@
 	attack_sound = 'sound/weapons/sonic_jackhammer.ogg'
 	attack_vis_effect = null // jackhammer moment
 	loot = list(/obj/effect/decal/remains/plasma, /obj/item/pickaxe/drill/jackhammer)
-
-/mob/living/simple_animal/hostile/skeleton/plasmaminer/Initialize(mapload)
-	. = ..()
-	set_light(2)

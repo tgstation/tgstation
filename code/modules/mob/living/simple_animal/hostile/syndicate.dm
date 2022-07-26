@@ -6,14 +6,6 @@
 	LINE 267 - MISC
 */
 
-
-///////////////Base mob////////////
-/obj/effect/light_emitter/red_energy_sword //used so there's a combination of both their head light and light coming off the energy sword
-	set_luminosity = 2
-	set_cap = 2.5
-	light_color = COLOR_SOFT_RED
-
-
 /mob/living/simple_animal/hostile/syndicate
 	name = "Syndicate Operative"
 	desc = "Death to Nanotrasen."
@@ -60,11 +52,11 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	speed = 1
+	light_range = 4
 
 /mob/living/simple_animal/hostile/syndicate/space/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	set_light(4)
 
 /mob/living/simple_animal/hostile/syndicate/space/stormtrooper
 	icon_state = "syndicate_stormtrooper"
@@ -96,11 +88,11 @@
 	minbodytemp = 0
 	speed = 1
 	projectile_deflect_chance = 50
+	light_range = 4
 
 /mob/living/simple_animal/hostile/syndicate/melee/space/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	set_light(4)
 
 /mob/living/simple_animal/hostile/syndicate/melee/space/stormtrooper
 	icon_state = "syndicate_stormtrooper_knife"
@@ -119,18 +111,11 @@
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/blade1.ogg'
 	armour_penetration = 35
-	light_color = COLOR_SOFT_RED
 	status_flags = 0
-	var/obj/effect/light_emitter/red_energy_sword/sord
+	light_range = 2
+	light_power = 2.5
+	light_color = COLOR_SOFT_RED
 	projectile_deflect_chance = 50
-
-/mob/living/simple_animal/hostile/syndicate/melee/sword/Initialize(mapload)
-	. = ..()
-	set_light(2)
-
-/mob/living/simple_animal/hostile/syndicate/melee/sword/Destroy()
-	QDEL_NULL(sord)
-	return ..()
 
 /mob/living/simple_animal/hostile/syndicate/melee/bullet_act(obj/projectile/Proj)
 	if(prob(projectile_deflect_chance))
@@ -148,16 +133,11 @@
 	minbodytemp = 0
 	speed = 1
 	projectile_deflect_chance = 50
+	light_range = 4
 
 /mob/living/simple_animal/hostile/syndicate/melee/sword/space/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	sord = new(src)
-	set_light(4)
-
-/mob/living/simple_animal/hostile/syndicate/melee/sword/space/Destroy()
-	QDEL_NULL(sord)
-	return ..()
 
 /mob/living/simple_animal/hostile/syndicate/melee/sword/space/stormtrooper
 	icon_state = "syndicate_stormtrooper_sword"
@@ -194,11 +174,11 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	speed = 1
+	light_range = 4
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	set_light(4)
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space/stormtrooper
 	icon_state = "syndicate_stormtrooper_pistol"
@@ -227,11 +207,11 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	speed = 1
+	light_range = 4
 
 /mob/living/simple_animal/hostile/syndicate/ranged/smg/space/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	set_light(4)
 
 /mob/living/simple_animal/hostile/syndicate/ranged/smg/space/stormtrooper
 	icon_state = "syndicate_stormtrooper_smg"
@@ -257,11 +237,11 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	speed = 1
+	light_range = 4
 
 /mob/living/simple_animal/hostile/syndicate/ranged/shotgun/space/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	set_light(4)
 
 /mob/living/simple_animal/hostile/syndicate/ranged/shotgun/space/stormtrooper
 	icon_state = "syndicate_stormtrooper_shotgun"
