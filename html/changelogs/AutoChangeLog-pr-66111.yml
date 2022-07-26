@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - balance: "Revenants' defile ability no longer breaks windows, only damaging it until nearly broken. The damage dealt to windows has also been slightly lowered."

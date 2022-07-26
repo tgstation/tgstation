@@ -116,8 +116,8 @@
 	desc = "A syringe gun that fires DNA injectors instead of normal syringes."
 	progression_minimum = 15 MINUTES
 	item = /obj/item/gun/syringe/dna
-	cost = 14
 	purchasable_from = ~UPLINK_NANO
+	cost = 14
 	restricted_roles = list(JOB_GENETICIST, JOB_RESEARCH_DIRECTOR)
 
 /datum/uplink_item/role_restricted/meathook
@@ -211,8 +211,8 @@
 	desc = "An implant that grants you a recharging laser gun inside your arm. Weak to EMPs. Comes with a syndicate autosurgeon for immediate self-application."
 	progression_minimum = 30 MINUTES
 	cost = 10
-	item = /obj/item/autosurgeon/organ/syndicate/laser_arm
 	purchasable_from = ~UPLINK_NANO
+	item = /obj/item/autosurgeon/syndicate/laser_arm
 	restricted_roles = list(JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR)
 
 /datum/uplink_item/role_restricted/chemical_gun

@@ -469,8 +469,8 @@
 		return NO_REACTION // Shouldn't produce gas from nothing.
 
 	var/old_heat_capacity = air.heat_capacity()
-	cached_gases[/datum/gas/oxygen][MOLES] -= heat_efficency
-	cached_gases[/datum/gas/nitrogen][MOLES] -= heat_efficency * 2
+	cached_gases[/datum/gas/oxygen][MOLES] -= heat_efficency * 0.5
+	cached_gases[/datum/gas/nitrogen][MOLES] -= heat_efficency
 	ASSERT_GAS(/datum/gas/nitrous_oxide, air)
 	cached_gases[/datum/gas/nitrous_oxide][MOLES] += heat_efficency
 
@@ -1152,7 +1152,11 @@
 	else if(isatom(holder))
 		location = holder
 	if (location && energy_released > PN_BZASE_RAD_RELEASE_THRESHOLD * (air.volume / CELL_VOLUME) ** ATMOS_RADIATION_VOLUME_EXP)
-		radiation_pulse(location, max_range = min(sqrt(consumed_amount) / PN_BZASE_RAD_RANGE_DIVISOR, GAS_REACTION_MAXIMUM_RADIATION_PULSE_RANGE), threshold = PN_BZASE_RAD_THRESHOLD_BASE * INVERSE(PN_BZASE_RAD_THRESHOLD_BASE + consumed_amount))
+		///How many nuclear particles will fire in this reaction.
+		var/nuclear_particle_amount = min(round(consumed_amount / PN_BZASE_NUCLEAR_PARTICLE_DIVISOR), PN_BZASE_NUCLEAR_PARTICLE_MAXIMUM)
+		for(var/i in 1 to nuclear_particle_amount)
+			location.fire_nuclear_particle()
+		radiation_pulse(location, max_range = min(sqrt(consumed_amount - nuclear_particle_amount * PN_BZASE_NUCLEAR_PARTICLE_RADIATION_ENERGY_CONVERSION) / PN_BZASE_RAD_RANGE_DIVISOR, GAS_REACTION_MAXIMUM_RADIATION_PULSE_RANGE), threshold = PN_BZASE_RAD_THRESHOLD_BASE * INVERSE(PN_BZASE_RAD_THRESHOLD_BASE + consumed_amount - nuclear_particle_amount * PN_BZASE_NUCLEAR_PARTICLE_RADIATION_ENERGY_CONVERSION))
 		for(var/mob/living/carbon/L in location)
 			L.hallucination += consumed_amount
 

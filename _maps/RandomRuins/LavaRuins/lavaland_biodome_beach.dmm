@@ -195,9 +195,7 @@
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "ek" = (
-/obj/machinery/shower{
-	dir = 8
-	},
+/obj/machinery/shower/directional/west,
 /turf/open/floor/iron/white,
 /area/ruin/powered/beach)
 "et" = (
@@ -484,9 +482,7 @@
 /area/ruin/powered/beach)
 "qc" = (
 /obj/structure/mirror/directional/west,
-/obj/structure/sink/kitchen{
-	pixel_y = 32
-	},
+/obj/structure/sink/kitchen/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
@@ -584,7 +580,7 @@
 	},
 /obj/item/clothing/neck/beads,
 /obj/item/clothing/glasses/sunglasses/reagent,
-/obj/item/clothing/suit/hawaiian,
+/obj/item/clothing/suit/costume/hawaiian,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "sV" = (
@@ -926,11 +922,9 @@
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "FC" = (
-/obj/structure/sink/kitchen{
+/obj/structure/sink/kitchen/directional/west{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	dir = 8;
-	name = "old sink";
-	pixel_x = 12
+	name = "old sink"
 	},
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
@@ -1212,11 +1206,9 @@
 /turf/open/floor/sepia,
 /area/ruin/powered/beach)
 "PY" = (
-/obj/structure/sink/kitchen{
+/obj/structure/sink/kitchen/directional/east{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	dir = 4;
-	name = "old sink";
-	pixel_x = -12
+	name = "old sink"
 	},
 /turf/open/floor/pod/light,
 /area/ruin/powered/beach)
@@ -1265,7 +1257,7 @@
 /obj/structure/closet/cabinet,
 /obj/item/storage/backpack/duffelbag,
 /obj/item/clothing/under/shorts/blue,
-/obj/item/clothing/suit/ianshirt,
+/obj/item/clothing/suit/costume/ianshirt,
 /obj/item/clothing/shoes/sandal{
 	desc = "A very fashionable pair of flip-flops.";
 	name = "flip-flops"

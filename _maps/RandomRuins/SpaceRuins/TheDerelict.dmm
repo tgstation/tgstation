@@ -2320,7 +2320,7 @@
 "vV" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/paicard,
+/obj/item/pai_card,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/science/rnd)
 "vY" = (
@@ -7325,12 +7325,12 @@
 /area/ruin/space/ks13/service/hydro)
 "VG" = (
 /obj/structure/closet/crate,
-/obj/item/clothing/head/beanie/rasta,
+/obj/item/clothing/head/rasta,
 /obj/item/clothing/head/beanie/black,
 /obj/item/clothing/head/beanie/christmas,
 /obj/item/clothing/head/beanie/darkblue,
 /obj/item/clothing/head/beanie/red,
-/obj/item/clothing/head/beanie/waldo,
+/obj/item/clothing/head/waldo,
 /obj/item/clothing/head/bearpelt,
 /obj/item/clothing/head/beret,
 /obj/item/clothing/head/bomb_hood,

@@ -7,6 +7,7 @@
 	hud_type = /datum/hud/alien
 	melee_damage_lower = 20 //Refers to unarmed damage, aliens do unarmed attacks.
 	melee_damage_upper = 20
+	max_grab = GRAB_AGGRESSIVE
 	var/caste = ""
 	var/alt_icon = 'icons/mob/alienleap.dmi' //used to switch between the two alien icon files.
 	var/leap_on_click = 0
@@ -33,6 +34,10 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	. = ..()
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW, 0.5, -11)
 	AddElement(/datum/element/strippable, GLOB.strippable_alien_humanoid_items)
+
+/mob/living/carbon/alien/humanoid/create_internal_organs()
+	internal_organs += new /obj/item/organ/internal/stomach/alien()
+	return ..()
 
 /mob/living/carbon/alien/humanoid/cuff_resist(obj/item/I)
 	playsound(src, 'sound/voice/hiss5.ogg', 40, TRUE, TRUE)  //Alien roars when starting to break free
@@ -68,3 +73,81 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	if(numba)
 		name = "[name] ([numba])"
 		real_name = name
+
+/mob/living/carbon/alien/humanoid/proc/grab(mob/living/carbon/human/target)
+	if(target.check_block())
+		target.visible_message(span_warning("[target] blocks [src]'s grab!"), \
+						span_userdanger("You block [src]'s grab!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, src)
+		to_chat(src, span_warning("Your grab at [target] was blocked!"))
+		return FALSE
+	target.grabbedby(src)
+	return TRUE
+
+/mob/living/carbon/alien/humanoid/setGrabState(newstate)
+	if(newstate == grab_state)
+		return
+	if(newstate > GRAB_AGGRESSIVE)
+		newstate = GRAB_AGGRESSIVE
+	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_GRAB_STATE, newstate)
+	. = grab_state
+	grab_state = newstate
+	switch(grab_state) // Current state.
+		if(GRAB_PASSIVE)
+			REMOVE_TRAIT(pulling, TRAIT_IMMOBILIZED, CHOKEHOLD_TRAIT)
+			if(. >= GRAB_NECK) // Previous state was a a neck-grab or higher.
+				REMOVE_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
+		if(GRAB_AGGRESSIVE)
+			if(. >= GRAB_NECK) // Grab got downgraded.
+				REMOVE_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
+			else // Grab got upgraded from a passive one.
+				ADD_TRAIT(pulling, TRAIT_IMMOBILIZED, CHOKEHOLD_TRAIT)
+		if(GRAB_NECK, GRAB_KILL)
+			if(. <= GRAB_AGGRESSIVE)
+				ADD_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
+
+/mob/living/carbon/alien/humanoid/MouseDrop_T(atom/dropping, atom/user)
+	if(devour_lad(dropping))
+		return
+	return ..()
+
+/// Returns FALSE if we're not allowed to eat it, true otherwise
+/mob/living/carbon/alien/humanoid/proc/can_consume(atom/movable/poor_soul)
+	if(!isliving(poor_soul) || pulling != poor_soul)
+		return FALSE
+	if(incapacitated() || grab_state < GRAB_AGGRESSIVE || stat != CONSCIOUS)
+		return FALSE
+	if(get_dir(src, poor_soul) != dir) // Gotta face em 4head
+		return FALSE
+	return TRUE
+
+/// Attempts to devour the passed in thing in devour_time seconds
+/// The mob needs to be consumable, as decided by [/mob/living/carbon/alien/humanoid/proc/can_consume]
+/// Returns FALSE if the attempt never even started, TRUE otherwise
+/mob/living/carbon/alien/humanoid/proc/devour_lad(atom/movable/candidate, devour_time = 13.5 SECONDS)
+	setDir(get_dir(src, candidate))
+	if(!can_consume(candidate))
+		return FALSE
+	var/mob/living/lucky_winner = candidate
+
+	lucky_winner.audible_message(span_danger("You hear a great snapping, like the disjointing of muscle and bone."))
+	lucky_winner.visible_message(span_danger("[src] is attempting to devour [lucky_winner]!"), \
+			span_userdanger("[src] is attempting to devour you!"))
+
+	playsound(lucky_winner, 'sound/creatures/alien_eat.ogg', 100)
+	if(!do_mob(src, lucky_winner, devour_time, extra_checks = CALLBACK(src, .proc/can_consume, lucky_winner)))
+		return TRUE
+	if(!can_consume(lucky_winner))
+		return TRUE
+
+	var/obj/item/organ/internal/stomach/alien/melting_pot = getorganslot(ORGAN_SLOT_STOMACH)
+	if(!istype(melting_pot))
+		visible_message(span_clown("[src] can't seem to consume [lucky_winner]!"), \
+			span_alien("You feel a pain in your... chest? You can't get [lucky_winner] down."))
+		return TRUE
+
+	lucky_winner.audible_message(span_danger("You hear a deep groan, and a harsh snap like a mantrap."))
+	lucky_winner.visible_message(span_danger("[src] devours [lucky_winner]!"), \
+			span_userdanger("[lucky_winner] devours you!"))
+	melting_pot.consume_thing(lucky_winner)
+	log_combat(src, lucky_winner, "devoured")
+	return TRUE

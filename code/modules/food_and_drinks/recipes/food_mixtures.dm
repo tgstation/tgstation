@@ -23,6 +23,17 @@
 	mob_react = FALSE
 	reaction_flags = REACTION_INSTANT
 
+/datum/chemical_reaction/food/candycorn
+	required_reagents = list(/datum/reagent/consumable/cornoil = 5)
+	required_catalysts = list(/datum/reagent/consumable/sugar = 5)
+	mob_react = FALSE
+	reaction_flags = REACTION_INSTANT
+
+/datum/chemical_reaction/food/candycorn/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i in 1 to created_volume)
+		new /obj/item/food/candy_corn(location)
+
 /datum/chemical_reaction/food/tofu/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to created_volume)
