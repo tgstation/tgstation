@@ -31,15 +31,14 @@
 	response_help_continuous = "pats"
 	response_help_simple = "pat"
 	speak_emote = list("flutters")
+	emote_hear = list("flutters.")
+	speak_chance = 1
 	attacked_sound = 'sound/voice/moth/scream_moth.ogg'
 
 	faction = list("neutral")
 
-	ai_controller = /datum/ai_controller/basic_controller/cockroach
-
 /mob/living/simple_animal/mothroach/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/basic_body_temp_sensitive, 250, INFINITY)
 	add_verb(src, /mob/living/proc/toggle_resting)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
@@ -52,16 +51,3 @@
 	else
 		icon_state = "[icon_living]"
 	regenerate_icons()
-
-/datum/ai_controller/basic_controller/cockroach
-	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic()
-	)
-
-	ai_traits = STOP_MOVING_WHEN_PULLED
-	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/random_speech,
-		/datum/ai_planning_subtree/find_and_hunt_target
-)
