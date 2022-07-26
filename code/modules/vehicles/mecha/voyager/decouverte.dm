@@ -2,7 +2,6 @@
 /obj/vehicle/sealed/mecha/voyager/decouverte
 	desc = "A Voyager class exploration mech, combines quantum physics and bluespace technology to achieve immense speeds in a vaccum. Not advised to use in the station. R&D reccomends using an exosuit drill when searching for ruins in space."
 	name = "\improper Decouverte"
-	icon_state = "deathripley"
 	base_icon_state = "deathripley"
 	allow_diagonal_movement = TRUE
 	max_temperature = 65000
@@ -56,9 +55,11 @@
 		stepsound = 'sound/machines/clockcult/ocularwarden-dot1.ogg'	//Ses her stepte tekrarlandığı için kısa, jetpackimsi ve kullanılmayan bir ses gerekiyordu, o ses bu.
 		turnsound = 'sound/machines/clockcult/ocularwarden-dot2.ogg'
 		step_energy_drain = 1								 //Uzayda çok mesafe kat edileceği için step başı enerji harcaması düşük olması lazım
+		icon_state = "phazon"
 
 	else
 		movedelay = bas_frene
 		stepsound = 'sound/mecha/powerloader_step.ogg'
 		turnsound = 'sound/mecha/powerloader_turn2.ogg'
 		step_energy_drain = 15 							//Mech yavaş hareket ederken çok enerji harcıyor.
+		icon_state = "deathripley"
