@@ -212,31 +212,6 @@
 		knowledge.on_gain(new_body)
 
 /*
- * Signal proc for [COMSIG_MOB_BEFORE_SPELL_CAST] and [COMSIG_MOB_SPELL_ACTIVATED].
- *
- * Checks if our heretic has [TRAIT_ALLOW_HERETIC_CASTING] or is ascended.
- * If so, allow them to cast like normal.
- * If not, cancel the cast, and returns [SPELL_CANCEL_CAST].
- */
-/datum/antagonist/heretic/proc/on_spell_cast(mob/living/source, datum/action/cooldown/spell/spell)
-	SIGNAL_HANDLER
-
-	// Heretic spells are of the forbidden school, otherwise we don't care
-	if(spell.school != SCHOOL_FORBIDDEN)
-		return
-
-	// If we've got the trait, we don't care
-	if(HAS_TRAIT(source, TRAIT_ALLOW_HERETIC_CASTING))
-		return
-	// All powerful, don't care
-	if(ascended)
-		return
-
-	// We shouldn't be able to cast this! Cancel it.
-	source.balloon_alert(source, "you need a focus!")
-	return SPELL_CANCEL_CAST
-
-/*
  * Signal proc for [COMSIG_MOB_ITEM_AFTERATTACK].
  *
  * If a heretic is holding a pen in their main hand,
