@@ -79,6 +79,13 @@
 	name = "kitchen knife"
 	desc = "A general purpose Chef's Knife made by SpaceCook Incorporated. Guaranteed to stay sharp for years to come."
 
+/obj/item/knife/kitchen/attackby(obj/item/I, mob/user)
+	if(istype(I) && I.goldenk == TRUE)
+		user.visible_message(span_notice("[user] pours the potion onto [I]. It glows brightly before turning into gold!"))
+		new /obj/item/knife/gold(loc)
+		qdel(src)
+		qdel(I)
+
 /obj/item/knife/plastic
 	name = "plastic knife"
 	icon_state = "plastic_knife"
