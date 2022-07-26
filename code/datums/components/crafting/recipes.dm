@@ -669,6 +669,14 @@
 	blacklist |= typesof(/obj/item/radio/headset)
 	blacklist |= typesof(/obj/item/radio/intercom)
 
+/datum/crafting_recipe/mothplush
+	name = "Moth Plushie"
+	result = /obj/item/toy/plush/moth
+	reqs = list(/obj/item/stack/sheet/animalhide/mothroach = 1,
+				/obj/item/organ/internal/heart = 1,
+				/obj/item/stack/sheet/cloth/ = 3)
+	category = CAT_MISC
+
 /datum/crafting_recipe/mixedbouquet
 	name = "Mixed bouquet"
 	result = /obj/item/bouquet
