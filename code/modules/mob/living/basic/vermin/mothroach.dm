@@ -8,6 +8,7 @@
 	held_rh = 'icons/mob/animal_item_rh.dmi'
 	head_icon = 'icons/mob/animal_item_head.dmi'
 	held_state = "mothroach"
+	gold_core_spawnable = FRIENDLY_SPAWN
 	density = TRUE
 	mob_biotypes = MOB_ORGANIC|MOB_BUG
 	mob_size = MOB_SIZE_SMALL
