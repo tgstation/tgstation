@@ -73,6 +73,11 @@
 
 	skillchips = list(/obj/item/skillchip/job/chef)
 
+/datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H, visualsOnly)
+	. = ..()
+	if(H.client?.get_award_status(CHEF_TOURISTS_SERVED) >= 3000)
+		backpack_contents[/obj/item/knife/gold] = 1
+
 /datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
 	var/datum/job/cook/other_chefs = SSjob.GetJobType(jobtype)

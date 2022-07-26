@@ -41,6 +41,12 @@
 						span_suicide("[user] is slitting [user.p_their()] stomach open with the [src.name]! It looks like [user.p_theyre()] trying to commit seppuku.")))
 	return (BRUTELOSS)
 /////
+/obj/item/knife/gold
+	name = "golden knife"
+	desc = "A golden knife for Nanotrasen's most distinguished chefs."
+	icon_state = "gold_knife"
+	inhand_icon_state = "gold_knife"
+	custom_materials = list(/datum/material/gold=12000)
 
 /obj/item/knife/ritual
 	name = "ritual knife"

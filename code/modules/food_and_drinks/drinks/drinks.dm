@@ -573,6 +573,15 @@
 	volume = 100
 	isGlass = FALSE
 
+/obj/item/reagent_containers/food/drinks/shaker/gold
+	name = "golden shaker"
+	desc = "A golden shaker for Nanotrasen's most prolific barkeeps."
+	icon_state = "gold_shaker"
+	custom_materials = list(/datum/material/gold=1500)
+	amount_per_transfer_from_this = 10
+	volume = 100
+	isGlass = FALSE
+
 /obj/item/reagent_containers/food/drinks/shaker/Initialize(mapload)
 	. = ..()
 	if(prob(10))
