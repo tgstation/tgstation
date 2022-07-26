@@ -49,14 +49,6 @@
 		icon_state = "[icon_living]"
 	regenerate_icons()
 
-/mob/living/basic/mothroach/death(gibbed)
-	if(GLOB.station_was_nuked) //If the nuke is going off, then mothroaches are invincible. Keeps the nuke from killing them, cause mothroaches are immune to nukes (just like cockroaches).
-		return
-	..()
-
-/mob/living/basic/mothroach/ex_act() //Explosions are a terrible way to handle a mothroach (just like a cockroach).
-	return FALSE
-
 /datum/ai_controller/basic_controller/cockroach
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic()
