@@ -400,7 +400,7 @@
 
 /datum/quirk/atheist
 	name = "Atheist"
-	desc = "What's all this nonsense about space gods and holy magic? Surely there is a logical explanation for all this. (bibles will not heal you)"
+	desc = "What's all this nonsense about space gods and holy magic? Surely there is a logical explanation for all this."
 	icon = "atom"
 	value = 0
 	mob_trait = TRAIT_ATHEIST

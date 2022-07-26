@@ -206,5 +206,5 @@
 	var/list/fov_traits
 	///what multiplicative slowdown we get from turfs currently.
 	var/current_turf_slowdown = 0
-	///automatically defines what a bullet should do when it hits the mob. For special interations only, should be null by default.
+	///automatically defines what a bullet should do when it hits the mob. For special interactions only, should be null by default.
 	var/simple_bullet_act = null

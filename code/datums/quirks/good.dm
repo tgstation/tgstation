@@ -3,7 +3,7 @@
 
 /datum/quirk/addict_resistance
 	name = "Addiction Resistance"
-	desc = "You have an unaddictive personality."
+	desc = "You have an unaddictive personality. Its harder for you to gain addictions, and easier to shake them."
 	icon = "spa"
 	value = 4
 	mob_trait = TRAIT_ADDICT_RESISTANCE
@@ -44,25 +44,25 @@
 	desc = "You hit a lot harder with your fists"
 	icon = "fist-raised"
 	value = 6
-	gain_text = "<span class='notice'>Your arms feel strong!</span>"
-	lose_text = "<span class='danger'>Your arms feel weaker.</span>"
+	gain_text = "<span class='notice'>Your fists feel strong!</span>"
+	lose_text = "<span class='danger'>Your fists feel weaker.</span>"
 	medical_record_text = "Patient displays pugilistic tendancies"
 
 /datum/quirk/brusier/add()
 	if(iscarbon (quirk_holder))
 		var/mob/living/carbon/heavy_hitter = quirk_holder
-		heavy_hitter.dna.species.punchdamagelow *= 2
-		heavy_hitter.dna.species.punchdamagehigh *= 2
+		heavy_hitter.dna.species.punchdamagelow *= 1.75
+		heavy_hitter.dna.species.punchdamagehigh *= 1.5
 
 /datum/quirk/brusier/remove()
 	if(iscarbon (quirk_holder))
 		var/mob/living/carbon/heavy_hitter = quirk_holder
-		heavy_hitter.dna.species.punchdamagelow /= 2
-		heavy_hitter.dna.species.punchdamagehigh /= 2
+		heavy_hitter.dna.species.punchdamagelow /= 1.75
+		heavy_hitter.dna.species.punchdamagehigh /= 1.75
 
 /datum/quirk/bullet_dodge
 	name = "Bullet Dodger"
-	desc = "Your flips cost stamina, but let you dodge bullets!"
+	desc = "Your flips cost stamina, but let you dodge bullets midair!"
 	icon = "running"
 	value = 6
 	mob_trait = TRAIT_BULLET_DODGER
@@ -180,7 +180,7 @@
 
 /datum/quirk/fireproof
 	name = "Fireproof"
-	desc = "Due to training, natural aptitude, or digesting large quantities of Aerogel as a child, your skin has developed a resistance to fire."
+	desc = "Due to training, natural aptitude, or consuming large quantities of Aerogel as a child, your skin has developed a resistance to fire."
 	icon = "fire"
 	value = 8
 	gain_text = "<span class='notice'>You feel resistant to fire!</span>"
@@ -202,7 +202,6 @@
 	desc = "Through consistant exersize and good lifestyle choices you have an increased stamina pool."
 	icon = "heartbeat"
 	value = 8
-	mob_trait = TRAIT_FRIENDLY
 	gain_text = "<span class='notice'>You feel like you could run a mile.</span>"
 	lose_text = "<span class='danger'>You feel tired.</span>"
 	medical_record_text = "Patient has an exelent diet and exersises consistantly, well done."
@@ -249,7 +248,6 @@
 	desc = "You've never been a a big food guy."
 	icon = "pizza-slice"
 	value = 3
-	mob_trait = TRAIT_ALCOHOL_TOLERANCE
 	gain_text = "<span class='notice'>You don't feel like eating all that much.</span>"
 	lose_text = "<span class='danger'>You feel like you could probably use a bite to eat.</span>"
 	medical_record_text = "Patient has a slower than average matabolism."
@@ -271,7 +269,7 @@
 	value = 4
 	mob_trait = TRAIT_MASOCHIST
 	mood_quirk = TRUE
-	gain_text = "<span class='notice'>You enjoy the sensation of pain.</span>"
+	gain_text = "<span class='notice'>You begin to enjoy the sensation of pain.</span>"
 	lose_text = "<span class='danger'>You realize that pain hurts.</span>"
 	medical_record_text = "Patient displays machochistic tendencies."
 
@@ -317,8 +315,6 @@
 	desc = "You have an advanced capacity for genetic mutations."
 	icon = "dna"
 	value = 5
-	gain_text = "<span class='notice'>You feel ready to learn.</span>"
-	lose_text = "<span class='danger'>You feel like learning if for chumps.</span>"
 	medical_record_text = "Patient's DNA is very well structured as resistant to genetic collapse."
 
 /datum/quirk/robust_genetics/add()
@@ -378,7 +374,7 @@
 	mood_quirk = TRUE
 	gain_text = "<span class='notice'>You want somthing sweet.</span>"
 	lose_text = "<span class='danger'>You loose your drive for something sweet.</span>"
-	medical_record_text = "Patient has poor dental enamel due to an abnormal desire for sugar."
+	medical_record_text = "Patient has poor dental enamel."
 
 /datum/quirk/item_quirk/thick_skin
 	name = "Thick Skin"

@@ -55,8 +55,8 @@
 					span_userdanger("You land directly on your poor legs, sending a shockwave up your knees!"))
 		var/obj/item/bodypart/wrecked_leg_L = src.get_bodypart(BODY_ZONE_L_LEG)
 		var/obj/item/bodypart/wrecked_leg_R = src.get_bodypart(BODY_ZONE_R_LEG)
-		wrecked_leg_L.receive_damage(brute = 15, wound_bonus = 35)
-		wrecked_leg_R.receive_damage(brute = 15, wound_bonus = 35)
+		wrecked_leg_L.receive_damage(brute = 5, wound_bonus = 55)
+		wrecked_leg_R.receive_damage(brute = 5, wound_bonus = 55)
 
 	if(stat != CONSCIOUS || levels > 1) // you're not The One
 		return ..()
@@ -960,9 +960,6 @@
 
 	return ..()
 
-#define minor_pain 15
-#define moderate_pain 40
-#define major_pain 70
 
 /mob/living/carbon/human/updatehealth()
 	. = ..()
@@ -982,11 +979,6 @@
 	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "pain", /datum/mood_event/pain)
 	if(health_deficiency >= 10 && (HAS_TRAIT(src, TRAIT_CRY_BABY) || (HAS_TRAIT(src, TRAIT_MASOCHIST))))
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "pain", /datum/mood_event/pain)
-
-
-#undef minor_pain
-#undef moderate_pain
-#undef major_pain
 
 /mob/living/carbon/human/adjust_nutrition(change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER))

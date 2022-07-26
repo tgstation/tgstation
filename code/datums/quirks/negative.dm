@@ -69,7 +69,7 @@
 	value = -7
 	gain_text = "<span class='danger'>Youe knees hurt like hell.</span>"
 	lose_text = "<span class='notice'>Your knees feel better.</span>"
-	medical_record_text = "Patient suffers severe calsification of the knee bones."
+	medical_record_text = "Patient suffers severe calcification of the knee bones."
 	hardcore_value = 7
 
 /datum/quirk/bad_knees/add()
@@ -290,7 +290,6 @@
 	name = "Glass Jaw"
 	desc = "Your skull is much more fragile than average. Damage inflicted on your head is doubled."
 	icon = "tooth"
-	mob_trait = TRAIT_DEPRESSION
 	value = -8
 	medical_record_text = "Patient has abnormally frail jaw and skull bones."
 	hardcore_value = 8
@@ -343,7 +342,7 @@
 	name = "Heavy Sleeper"
 	desc = "You sleep like a rock! Whenever you're put to sleep or knocked unconscious, you take a little bit longer to wake up."
 	icon = "bed"
-	value = -3
+	value = -2
 	mob_trait = TRAIT_HEAVY_SLEEPER
 	gain_text = "<span class='danger'>You feel sleepy.</span>"
 	lose_text = "<span class='notice'>You feel awake again.</span>"
@@ -414,7 +413,6 @@
 	desc = "You are very easy to tire..."
 	icon = "battery-quarter"
 	value = -6
-	mob_trait = TRAIT_LIGHT_DRINKER
 	gain_text = "<span class='notice'>You feel lazy.</span>"
 	lose_text = "<span class='danger'>You feel more in-shape.</span>"
 	medical_record_text = "Patient was made out of breath by filling out documents relating to their exercise routine."

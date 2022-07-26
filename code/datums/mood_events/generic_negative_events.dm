@@ -387,7 +387,7 @@
 
 /datum/mood_event/pain
 	description = "Ouch"
-	mood_change = -10
+	mood_change = -10 //Shouldn't ever come up
 
 /datum/mood_event/pain/add_effects()
 	var/mob/living/pained = owner
