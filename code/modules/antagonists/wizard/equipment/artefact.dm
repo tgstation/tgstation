@@ -296,9 +296,8 @@
 /obj/item/organ/internal/heart/cursed/wizard
 	name = "cursed wizard heart"
 	desc = "A heart that, when inserted, will force you to pump it manually. Something about it makes you feel more alive than ever."
-	pump_delay = 60
-	heal_brute = 25
-	heal_burn = 25
+	heal_brute = 50
+	heal_burn = 50
 	heal_oxy = 25
 	heal_toxin = 25
 
