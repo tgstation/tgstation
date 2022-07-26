@@ -41,7 +41,7 @@
 	jobtype = /datum/job/worker
 
 	id_trim = /datum/id_trim/job/worker
-	uniform = /obj/item/clothing/under/pants/classicjeans
+	uniform = /obj/item/clothing/under/pants/jeans
 	suit = /obj/item/clothing/under/rank/engineering/engineer/hazard
 	backpack_contents = list(
 		/obj/item/stack/sheet/iron/fifty = 1,

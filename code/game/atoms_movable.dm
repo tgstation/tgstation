@@ -65,6 +65,8 @@
 
 	var/atom/movable/pulling
 	var/grab_state = 0
+	/// The strongest grab we can acomplish
+	var/max_grab = GRAB_KILL
 	var/throwforce = 0
 	var/datum/component/orbiter/orbiting
 
@@ -453,7 +455,7 @@
 	var/atom/old_loc = loc
 	var/direction = get_dir(old_loc, new_loc)
 	loc = new_loc
-	Moved(old_loc, direction)
+	Moved(old_loc, direction, TRUE, momentum_change = FALSE)
 
 ////////////////////////////////////////
 // Here's where we rewrite how byond handles movement except slightly different
@@ -595,6 +597,10 @@
 			if(moving_diagonally == SECOND_DIAG_STEP)
 				if(!. && set_dir_on_move)
 					setDir(first_step_dir)
+				else if(!inertia_moving)
+					newtonian_move(direct)
+				if(client_mobs_in_contents)
+					update_parallax_contents()
 			moving_diagonally = 0
 			return
 
@@ -625,7 +631,7 @@
 
 	//glide_size strangely enough can change mid movement animation and update correctly while the animation is playing
 	//This means that if you don't override it late like this, it will just be set back by the movement update that's called when you move turfs.
-	if(glide_size_override && glide_size != glide_size_override)
+	if(glide_size_override)
 		set_glide_size(glide_size_override)
 
 	last_move = direct

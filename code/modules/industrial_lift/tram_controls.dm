@@ -106,7 +106,7 @@
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	if(!tram_part)
 		return FALSE
-	if(tram_part.controls_locked) // someone else started already
+	if(tram_part.controls_locked || tram_part.travelling) // someone else started already
 		return FALSE
 	tram_part.tram_travel(to_where)
 	visible_message("The tram has been called to [to_where.name]")

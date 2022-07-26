@@ -87,8 +87,7 @@
 			H.set_species(/datum/species/human)
 	else if(ishuman(H) && !ishumanbasic(H))
 		var/datum/species/target_species = H.dna.species
-		var/organs = H.internal_organs
-		for(var/obj/item/organ/current_organ in organs)
+		for(var/obj/item/organ/current_organ as anything in H.external_organs)
 			if(istype(current_organ, /obj/item/organ/external/tail/cat))
 				current_organ.Remove(H, TRUE)
 				var/obj/item/organ/external/tail/new_tail = locate(/obj/item/organ/external/tail) in target_species.external_organs
@@ -104,7 +103,7 @@
 /datum/species/human/felinid/prepare_human_for_preview(mob/living/carbon/human/human)
 	human.hairstyle = "Hime Cut"
 	human.hair_color = "#ffcccc" // pink
-	human.update_hair()
+	human.update_hair(is_creating = TRUE)
 
 	var/obj/item/organ/internal/ears/cat/cat_ears = human.getorgan(/obj/item/organ/internal/ears/cat)
 	if (cat_ears)

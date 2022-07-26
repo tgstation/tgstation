@@ -16,6 +16,7 @@ type SectionProps = BoxProps & {
   fill?: boolean;
   fitted?: boolean;
   scrollable?: boolean;
+  scrollableHorizontal?: boolean;
   /** @deprecated This property no longer works, please remove it. */
   level?: boolean;
   /** @deprecated Please use `scrollable` property */
@@ -25,21 +26,23 @@ type SectionProps = BoxProps & {
 export class Section extends Component<SectionProps> {
   scrollableRef: RefObject<HTMLDivElement>;
   scrollable: boolean;
+  scrollableHorizontal: boolean;
 
   constructor(props) {
     super(props);
     this.scrollableRef = createRef();
     this.scrollable = props.scrollable;
+    this.scrollableHorizontal = props.scrollableHorizontal;
   }
 
   componentDidMount() {
-    if (this.scrollable) {
+    if (this.scrollable || this.scrollableHorizontal) {
       addScrollableNode(this.scrollableRef.current);
     }
   }
 
   componentWillUnmount() {
-    if (this.scrollable) {
+    if (this.scrollable || this.scrollableHorizontal) {
       removeScrollableNode(this.scrollableRef.current);
     }
   }
@@ -52,6 +55,7 @@ export class Section extends Component<SectionProps> {
       fill,
       fitted,
       scrollable,
+      scrollableHorizontal,
       children,
       ...rest
     } = this.props;
@@ -64,6 +68,7 @@ export class Section extends Component<SectionProps> {
           fill && 'Section--fill',
           fitted && 'Section--fitted',
           scrollable && 'Section--scrollable',
+          scrollableHorizontal && 'Section--scrollableHorizontal',
           className,
           computeBoxClassName(rest),
         ])}

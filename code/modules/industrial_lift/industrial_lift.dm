@@ -421,7 +421,7 @@ GLOBAL_LIST_EMPTY(lifts)
 
 			our_area.Exited(mover, movement_direction)
 			mover.loc = get_step(mover, movement_direction)
-			their_area.Entered(mover, movement_direction)
+			their_area.Entered(mover, our_area)
 
 			mover.Moved(mover_old_loc, movement_direction, TRUE, null, FALSE)
 
