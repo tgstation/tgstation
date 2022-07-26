@@ -23,6 +23,7 @@
 	/// Scaling factor for how much damage toxins deal to the liver
 	var/toxLethality = LIVER_DEFAULT_TOX_LETHALITY
 	var/filterToxins = TRUE //whether to filter toxins
+	var/operated = FALSE //whether the liver's been repaired with surgery and can be fixed again or not
 
 /obj/item/organ/internal/liver/Initialize(mapload)
 	. = ..()
