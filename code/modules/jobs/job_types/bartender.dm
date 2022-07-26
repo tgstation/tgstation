@@ -61,7 +61,7 @@
 /datum/outfit/job/bartender/pre_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()
 	if(H.client?.get_award_status(BARTENDER_TOURISTS_SERVED) >= 3000)
-		backpack_contents[/obj/item/achivement_potion/bartender] = 1
+		backpack_contents[/obj/item/achievement_potion/bartender] = 1
 
 /datum/outfit/job/bartender/post_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()

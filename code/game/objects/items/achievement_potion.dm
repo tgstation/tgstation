@@ -7,10 +7,10 @@
 
 /obj/item/achievement_potion/bartender
 	name = "bartender's midas potion"
-	desc = "A reward for Nanotransen's most prolific batenders!"
+	desc = "A reward for Nanotrasen's most prolific batenders!"
 	goldens = TRUE
 
 /obj/item/achievement_potion/cook
 	name = "chef's midas potion"
-	desc = "A reward for Nanotransen's most prolific chefs!"
+	desc = "A reward for Nanotrasen's most prolific chefs!"
 	goldenk = TRUE
