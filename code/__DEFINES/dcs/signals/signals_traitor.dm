@@ -25,3 +25,5 @@
 #define COMSIG_DEMORALISING_EVENT "traitor_demoralise_event"
 /// Called when you finish drawing some graffiti so we can register more signals on it. Pass the graffiti effect.
 #define COMSIG_TRAITOR_GRAFFITI_DRAWN "traitor_rune_drawn"
+/// Called when someone slips on some seditious graffiti. Pass the mind of the viewer.
+#define COMSIG_TRAITOR_GRAFFITI_SLIPPED "traitor_demoralise_event"

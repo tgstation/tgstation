@@ -31,7 +31,6 @@
 	replace_in_name("%VIEWS%", demoralised_crew_required)
 	return TRUE
 
-/// Handles receiving a mood event, increasing your progress towards success.
 /**
  * Handles an event which increases your progress towards success.
  *

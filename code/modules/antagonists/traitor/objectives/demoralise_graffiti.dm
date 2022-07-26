@@ -61,6 +61,7 @@
 	UnregisterSignal(spray, COMSIG_TRAITOR_GRAFFITI_DRAWN)
 	RegisterSignal(drawn_rune, COMSIG_PARENT_QDELETING, .proc/on_rune_destroyed)
 	RegisterSignal(drawn_rune, COMSIG_DEMORALISING_EVENT, .proc/on_mood_event)
+	RegisterSignal(drawn_rune, COMSIG_TRAITOR_GRAFFITI_SLIPPED, .proc/on_mood_event)
 
 /**
  * Called when your traitor rune is destroyed. If you haven't suceeded by now, you fail.area
@@ -76,6 +77,7 @@
 	if (rune)
 		UnregisterSignal(rune, COMSIG_PARENT_QDELETING)
 		UnregisterSignal(rune, COMSIG_DEMORALISING_EVENT)
+		UnregisterSignal(rune, COMSIG_TRAITOR_GRAFFITI_SLIPPED)
 		rune = null
 	return ..()
 
@@ -143,8 +145,9 @@
  * * target_turf - the place the rune's being drawn
  */
 /obj/item/traitor_spraycan/proc/draw_rune(mob/living/user, turf/target_turf)
-	if (try_draw_step("drawing outline...", user, target_turf))
-		try_complete_rune(user, new /obj/effect/decal/cleanable/traitor_rune(target_turf))
+	if (!try_draw_step("drawing outline...", user, target_turf))
+		return
+	try_complete_rune(user, new /obj/effect/decal/cleanable/traitor_rune(target_turf))
 
 /**
  * Holder for repeated code to do something after a message and a set amount of time.
@@ -202,7 +205,7 @@
 			SEND_SIGNAL(src, COMSIG_TRAITOR_GRAFFITI_DRAWN, rune)
 
 		if (RUNE_STAGE_COMPLETE, RUNE_STAGE_REMOVABLE)
-			user.balloon_alert(user, "there's nothing more to do here.")
+			user.balloon_alert(user, "all done!")
 
 /// Copying the functionality from normal spraycans, but doesn't need all the optional checks
 /obj/item/traitor_spraycan/suicide_act(mob/user)
@@ -260,8 +263,11 @@
  * * victim - whoever just slipped, point and laugh at them
  */
 /obj/effect/decal/cleanable/traitor_rune/proc/slip(mob/living/victim)
-	if(!(victim.movement_type & FLYING) && victim.slip(slip_time, src, slip_flags))
-		SEND_SIGNAL(src, COMSIG_DEMORALISING_EVENT, victim.mind)
+	if(victim.movement_type & FLYING)
+		return
+	if (!victim.slip(slip_time, src, slip_flags))
+		return
+	SEND_SIGNAL(src, COMSIG_TRAITOR_GRAFFITI_SLIPPED, victim.mind)
 
 /**
  * Sets the "drawing stage" of the rune.
