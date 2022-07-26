@@ -77,7 +77,7 @@
 	)
 	return TRUE
 
-/// Explodes
+/// Spawns a scrung and eat the SM.
 /datum/sm_delam/proc/effect_singulo(obj/machinery/power/supermatter_crystal/sm)
 	var/turf/sm_turf = get_turf(sm)
 	if(!sm_turf)
