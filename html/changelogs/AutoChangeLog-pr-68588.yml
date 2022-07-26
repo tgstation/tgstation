@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "Void Magnet no longer instantly removes itself"
+  - code_imp: "Convoke Void now handles the self-cast part of Void Magnet."
