@@ -96,7 +96,7 @@
 /code/game/objects/items/storage/medkit.dm @ExcessiveUseOfCobblestone
 
 # Dragomagol/Tattle
-/code/__HELPERS/logging/ @Dragomagol
+/code/__HELPERS/logging/ @dragomagol
 
 # Fikou
 
