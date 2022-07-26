@@ -1,0 +1,4 @@
+author: "VioletN"
+delete-after: True
+changes: 
+  - bugfix: "The \"kill pet\" traitor objective can now properly target pets owned by the Head of Personnel, Head of Security, and Quartermaster."
