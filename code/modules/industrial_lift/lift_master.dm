@@ -259,7 +259,7 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 /**
  * Moves the lift UP or DOWN, this is what users invoke with their hand.
  * This is a SAFE proc, ensuring every part of the lift moves SANELY.
- * It also locks controls for the (miniscule) duration of the movement, so the elevator cannot be broken by spamming.
+ *
  * Arguments:
  * going - UP or DOWN directions, where the lift should go. Keep in mind by this point checks of whether it should go up or down have already been done.
  * user - Whomever made the lift movement.
@@ -290,14 +290,18 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
  * - Sound effects while moving
  * - Safety warnings for anyone below the lift (while it's moving downwards)
  *
+ * Arguments:
  * duration - required, how long do we wait to move the lift?
  * door_duration - optional, how long should we wait to open the doors after arriving? If null, we won't open or close doors
  * direction - which direction are we moving the lift?
  * user - optional, who is moving the lift?
  */
 /datum/lift_master/proc/move_after_delay(lift_move_duration, door_duration, direction, mob/user)
-	if(!isnum(lift_move_duration) || lift_move_duration <= 0)
+	if(!isnum(lift_move_duration))
 		CRASH("[type] move_after_delay called with invalid duration ([lift_move_duration]).")
+	if(lift_move_duration <= 0 SECONDS)
+		move_lift_vertically(direction, user)
+		return
 
 	var/obj/structure/industrial_lift/prime_lift = lift_platforms[1]
 	var/turf/destination = get_step_multiz(prime_lift, direction)
@@ -308,11 +312,8 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 
 	// Move the lift after a timer
 	addtimer(CALLBACK(src, .proc/move_lift_vertically, direction, user), lift_move_duration, TIMER_UNIQUE)
-
+	// Open doors after the set duration if supplied
 	if(isnum(door_duration))
-		// Close ALL lift doors (ideally, should only end up closing the starting z-level doors)
-		close_lift_doors()
-		// Then open all lift doors after we move
 		addtimer(CALLBACK(src, .proc/open_lift_doors, destination.z), door_duration, TIMER_UNIQUE)
 
 	if(direction != DOWN)
@@ -326,13 +327,50 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 		new /obj/effect/temp_visual/telegraphing/lift_travel(below_us, lift_move_duration)
 
 /**
- * Moves the lift to the passed z-level in a "realistic" fashion.
+ * Simple wrapper for checking if we can move 1 zlevel, and if we can, do said move.
+ * Locks controls, closes all doors, then moves the lift and re-opens the doors afterwards.
  *
- * Check for validity of the move: Are we moving to the same z-level, can we actually move to that z-level
- * Does not check if the lift controls are currently locked
+ * Arguments:
+ * direction - which direction are we moving?
+ * lift_move_duration - how long does the move take? can be 0 or null for instant move.
+ * door_duration - how long does it take for the doors to open after a move?
+ * user - optional, who moved it?
+ */
+/datum/lift_master/proc/simple_move_wrapper(direction, lift_move_duration, mob/user)
+	if(!Check_lift_move(direction))
+		return FALSE
+
+	set_controls(LIFT_PLATFORM_LOCKED)
+	close_lift_doors()
+
+	if(isnull(lift_move_duration) || lift_move_duration <= 0 SECONDS)
+		// Do an instant move
+		move_lift_vertically(direction, user)
+		open_lift_doors(lift_platforms[1].z)
+		set_controls(LIFT_PLATFORM_UNLOCKED)
+		return TRUE
+
+	// Do a delayed move
+	move_after_delay(
+		lift_move_duration = lift_move_duration,
+		door_duration = lift_move_duration * 1.5,
+		direction = direction,
+		user = user,
+	)
+
+	addtimer(CALLBACK(src, .proc/set_controls, LIFT_PLATFORM_UNLOCKED), lift_move_duration * 1.5)
+	return TRUE
+
+/**
+ * Moves the lift to the passed z-level.
  *
- * Calls move_after_delay and sleeps until the lift reaches the target z.
+ * Checks for validity of the move: Are we moving to the same z-level, can we actually move to that z-level?
+ * Does NOT check if the lift controls are currently locked.
  *
+ * Moves to the passed z-level by calling move_after_delay repeatedly until the passed z-level is reached.
+ * This proc sleeps as it moves.
+ *
+ * Arguments:
  * target_z - required, the Z we want to move to
  * loop_callback - optional, an additional callback invoked during the l oop that allows the move to cancel.
  * user - optional, who started the move
@@ -360,6 +398,7 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 	set_controls(LIFT_PLATFORM_LOCKED)
 	var/travel_speed = prime_lift.elevator_vertical_speed
 
+	close_lift_doors()
 	// Approach the desired z-level one step at a time
 	for(var/i in 1 to z_difference)
 		if(!Check_lift_move(direction))
@@ -369,7 +408,6 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 		// move_after_delay will set up a timer and cause us to move after a time
 		move_after_delay(
 			lift_move_duration = travel_speed,
-			door_duration = (i == z_difference ? travel_speed * 1.5 : null),
 			direction = direction,
 			user = user,
 		)
@@ -378,12 +416,14 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 		if(QDELETED(src) || QDELETED(prime_lift))
 			return
 
+	addtimer(CALLBACK(src, .proc/open_lift_doors, target_z), 2 SECONDS)
 	set_controls(LIFT_PLATFORM_UNLOCKED)
 	return TRUE
 
 /**
  * Opens all blast doors and shutters that share an ID with our lift.
  *
+ * Arguments:
  * on_z_level - optional, only open doors on this z-level.
  */
 /datum/lift_master/proc/open_lift_doors(on_z_level)
@@ -404,6 +444,7 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 /**
  * Closes all blast doors and shutters that share an ID without lift.
  *
+ * Arguments:
  * on_z_level - optional, only close doors on this z-level.
  */
 /datum/lift_master/proc/close_lift_doors(on_z_level)

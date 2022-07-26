@@ -595,46 +595,15 @@ GLOBAL_VAR_INIT(lift_down_arrow, image(icon = 'icons/testing/turf_analysis.dmi',
 		if("Up")
 			// We have to make sure that they don't do illegal actions
 			// by not having their radial menu refresh from someone else moving the lift.
-			if(!lift_master_datum.Check_lift_move(UP))
-				balloon_alert(user, "elevator unable to move!")
+			if(!lift_master_datum.simple_move_wrapper(UP, elevator_vertical_speed, user))
 				return
-
-			lift_master_datum.set_controls(LIFT_PLATFORM_LOCKED)
-			if(elevator_vertical_speed <= 0 SECONDS)
-				lift_master_datum.move_lift_vertically(UP, user)
-				lift_master_datum.set_controls(LIFT_PLATFORM_UNLOCKED)
-
-			else
-				lift_master_datum.move_after_delay(
-					lift_move_duration = elevator_vertical_speed,
-					door_duration = elevator_vertical_speed * 1.5,
-					direction = UP,
-					user = user,
-				)
-				addtimer(CALLBACK(lift_master_datum, /datum/lift_master.proc/set_controls, LIFT_PLATFORM_UNLOCKED), elevator_vertical_speed * 1.5)
 
 			show_fluff_message(UP, user)
 			open_lift_radial(user)
 
 		if("Down")
-			// Same as above. Sanity checking.
-			if(!lift_master_datum.Check_lift_move(DOWN))
-				balloon_alert(user, "elevator unable to move!")
+			if(!lift_master_datum.simple_move_wrapper(DOWN, elevator_vertical_speed, user))
 				return
-
-			lift_master_datum.set_controls(LIFT_PLATFORM_LOCKED)
-			if(elevator_vertical_speed <= 0 SECONDS)
-				lift_master_datum.move_lift_vertically(DOWN, user)
-				lift_master_datum.set_controls(LIFT_PLATFORM_UNLOCKED)
-
-			else
-				lift_master_datum.move_after_delay(
-					lift_move_duration = elevator_vertical_speed,
-					door_duration = elevator_vertical_speed * 1.5,
-					direction = DOWN,
-					user = user,
-				)
-				addtimer(CALLBACK(lift_master_datum, /datum/lift_master.proc/set_controls, LIFT_PLATFORM_UNLOCKED), elevator_vertical_speed * 1.5)
 
 			show_fluff_message(DOWN, user)
 			open_lift_radial(user)
