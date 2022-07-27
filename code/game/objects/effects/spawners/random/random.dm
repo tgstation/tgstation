@@ -72,13 +72,8 @@
 				if(spawn_scatter_radius > 0)
 					spawn_loc = pick_n_take(spawn_locations)
 
-				var/atom/movable/spawned_loot = new lootspawn(spawn_loc)
+				var/atom/movable/spawned_loot = make_item(spawn_loc, lootspawn)
 				spawned_loot.setDir(dir)
-
-				if(istype(src, /obj/effect/spawner/random/trash/graffiti))
-					var/obj/effect/spawner/random/trash/graffiti/G = src
-					G.select_graffiti(spawned_loot)
-					//var/obj/graffiti = new /obj/effect/decal/cleanable/crayon(get_turf(src))
 
 				if (!spawn_loot_split && !spawn_random_offset)
 					if (pixel_x != 0)
@@ -92,6 +87,9 @@
 					if (loot_spawned)
 						spawned_loot.pixel_x = spawned_loot.pixel_y = ((!(loot_spawned%2)*loot_spawned/2)*-1)+((loot_spawned%2)*(loot_spawned+1)/2*1)
 			loot_spawned++
+
+/obj/effect/spawner/random/proc/make_item(spawn_loc, type_path_to_make)
+	return new type_path_to_make(spawn_loc)
 
 ///If the spawner has a spawn_scatter_radius set, this creates a list of nearby turfs available
 /obj/effect/spawner/random/proc/get_spawn_locations(radius)
