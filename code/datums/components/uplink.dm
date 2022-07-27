@@ -245,7 +245,7 @@
 				if(!ispath(item_path, /datum/uplink_item))
 					return
 				item = SStraitor.uplink_items_by_type[item_path]
-			uplink_handler.purchase_item(ui.user, item)
+			uplink_handler.purchase_item(ui.user, item, parent)
 		if("lock")
 			if(!lockable)
 				return TRUE
