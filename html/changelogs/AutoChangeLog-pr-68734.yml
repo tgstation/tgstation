@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - bugfix: "the hook shotguns hook and the m90gls grenade launcher no longer hit the user"

@@ -1,0 +1,4 @@
+author: "Salex08"
+delete-after: True
+changes: 
+  - refactor: "Mining items have been refactored to make better use of components."

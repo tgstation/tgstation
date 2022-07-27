@@ -309,29 +309,25 @@
 /obj/item/clothing/head/hooded/hostile_environment/Initialize(mapload)
 	. = ..()
 	update_appearance()
-	AddComponent(/datum/component/butchering, 5, 150, null, null, null, TRUE, CALLBACK(src, .proc/consume))
+	AddComponent(/datum/component/butchering/wearable, \
+	speed = 0.5 SECONDS, \
+	effectiveness = 150, \
+	bonus_modifier = 0, \
+	butcher_sound = null, \
+	disabled = null, \
+	can_be_blunt = TRUE, \
+	butcher_callback = CALLBACK(src, .proc/consume), \
+	)
 	AddElement(/datum/element/radiation_protected_clothing)
 	AddComponent(/datum/component/gags_recolorable)
 
 /obj/item/clothing/head/hooded/hostile_environment/equipped(mob/user, slot, initial = FALSE)
 	. = ..()
-	RegisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/butcher_target)
-	var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering)
-	butchering.butchering_enabled = TRUE
 	to_chat(user, span_notice("You feel a bloodlust. You can now butcher corpses with your bare arms."))
 
 /obj/item/clothing/head/hooded/hostile_environment/dropped(mob/user, silent = FALSE)
 	. = ..()
-	UnregisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
-	var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering)
-	butchering.butchering_enabled = FALSE
 	to_chat(user, span_notice("You lose your bloodlust."))
-
-/obj/item/clothing/head/hooded/hostile_environment/proc/butcher_target(mob/user, atom/target, proximity)
-	SIGNAL_HANDLER
-	if(!isliving(target))
-		return
-	return SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, target, user)
 
 /obj/item/clothing/head/hooded/hostile_environment/proc/consume(mob/living/user, mob/living/butchered)
 	if(butchered.mob_biotypes & (MOB_ROBOTIC | MOB_SPIRIT))
@@ -633,7 +629,10 @@
 	spirits = list()
 	START_PROCESSING(SSobj, src)
 	SSpoints_of_interest.make_point_of_interest(src)
-	AddComponent(/datum/component/butchering, 150, 90)
+	AddComponent(/datum/component/butchering, \
+	speed = 15 SECONDS, \
+	effectiveness = 90, \
+	)
 
 /obj/item/melee/ghost_sword/Destroy()
 	for(var/mob/dead/observer/G in spirits)
