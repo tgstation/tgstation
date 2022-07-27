@@ -82,7 +82,7 @@
 ///The limb is snouted
 #define BODYTYPE_SNOUTED (1<<5)
 
-//Defines for Species IDs
+// Defines for Species IDs. Used to refer to the name of a species, for things like bodypart names or species preferences.
 #define SPECIES_ABDUCTOR "abductor"
 #define SPECIES_ANDROID "android"
 #define SPECIES_DULLAHAN "dullahan"
@@ -110,6 +110,11 @@
 #define SPECIES_ZOMBIE "zombie"
 #define SPECIES_ZOMBIE_INFECTIOUS "memezombie"
 #define SPECIES_ZOMBIE_KROKODIL "krokodil_zombie"
+
+// Like species IDs, but not specifically attached a species.
+#define BODYPART_TYPE_ALIEN "alien"
+#define BODYPART_TYPE_ROBOTIC "robotic"
+#define BODYPART_TYPE_DIGITIGRADE "digitigrade"
 
 //See: datum/species/var/digitigrade_customization
 ///The species does not have digitigrade legs in generation.

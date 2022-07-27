@@ -89,7 +89,7 @@
 		add_light(starting_light)
 
 /datum/component/seclite_attachable/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ATOM_DESTRUCTION, .proc/on_parent_deconstructed)
+	RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, .proc/on_parent_deconstructed)
 	RegisterSignal(parent, COMSIG_ATOM_EXITED, .proc/on_light_exit)
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), .proc/on_screwdriver)
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON_STATE, .proc/on_update_icon_state)
@@ -101,7 +101,7 @@
 
 /datum/component/seclite_attachable/UnregisterFromParent()
 	UnregisterSignal(parent, list(
-		COMSIG_ATOM_DESTRUCTION,
+		COMSIG_OBJ_DECONSTRUCT,
 		COMSIG_ATOM_EXITED,
 		COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER),
 		COMSIG_ATOM_UPDATE_ICON_STATE,
@@ -144,7 +144,6 @@
 
 	// It is possible the light was removed by being deleted.
 	if(!QDELETED(light))
-		UnregisterSignal(light, COMSIG_PARENT_QDELETING)
 		light.set_light_flags(light.light_flags & ~LIGHT_ATTACHED)
 		light.update_brightness()
 
@@ -180,10 +179,16 @@
 	if(gone == light)
 		remove_light()
 
-/// Signal proc for [COMSIG_ATOM_DESTRUCTION] that drops our light to the ground if our parent is deconstructed.
+/// Signal proc for [COMSIG_OBJ_DECONSTRUCT] that drops our light to the ground if our parent is deconstructed.
 /datum/component/seclite_attachable/proc/on_parent_deconstructed(obj/item/source, disassembled)
 	SIGNAL_HANDLER
 
+	// Our light is gone already - Probably destroyed by whatever destroyed our parent. Just remove it.
+	if(QDELETED(light) || !is_light_removable)
+		remove_light()
+		return
+
+	// We were deconstructed in any other way, so we can just drop the light on the ground (which removes it via signal).
 	light.forceMove(source.drop_location())
 
 /// Signal proc for [COMSIG_PARENT_QDELETING] that deletes our light if our parent is deleted.

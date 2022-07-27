@@ -78,16 +78,26 @@
 /code/controllers/subsystem/chat.dm @stylemistake
 /code/controllers/subsystem/ping.dm @stylemistake
 /code/controllers/subsystem/tgui.dm @stylemistake
-/code/modules/tgchat @stylemistake
-/code/modules/tgui @stylemistake
-/code/modules/tgui_panel @stylemistake
-/tgui @stylemistake
+/code/modules/tgchat/ @stylemistake
+/code/modules/tgui/ @stylemistake
+/code/modules/tgui_panel/ @stylemistake
+/tgui/ @stylemistake
+
+# stylemistake (explicitly disowned)
+
+/tgui/packages/tgui/interfaces/
+/tgui/packages/tgui/styles/interfaces/
+/tgui/packages/tgui-panel/styles/goon/chat-dark.scss
+/tgui/packages/tgui-panel/styles/goon/chat-light.scss
 
 # Watermelon914
 
 /code/modules/wiremod/ @Watermelon914
 
 # CONTRIBUTORS
+
+# Dragomagol/Tattle
+/code/__HELPERS/logging/ @Dragomagol
 
 # Fikou
 

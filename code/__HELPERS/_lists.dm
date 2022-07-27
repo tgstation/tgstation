@@ -811,3 +811,121 @@
 		return ref.resolve()
 	else
 		return element
+
+/// Returns a copy of the list where any element that is a datum or the world is converted into a ref
+/proc/refify_list(list/target_list)
+	var/list/ret = list()
+	for(var/i in 1 to target_list.len)
+		var/key = target_list[i]
+		var/new_key = key
+		if(isweakref(key))
+			var/datum/weakref/ref = key
+			var/resolved = ref.resolve()
+			if(resolved)
+				new_key = "[resolved] [REF(resolved)]"
+			else
+				new_key = "null weakref [REF(key)]"
+		else if(isdatum(key))
+			new_key = "[key] [REF(key)]"
+		else if(key == world)
+			new_key = "world [REF(world)]"
+		else if(islist(key))
+			new_key = refify_list(key)
+		var/value
+		if(istext(key) || islist(key) || ispath(key) || isdatum(key) || key == world)
+			value = target_list[key]
+		if(isweakref(value))
+			var/datum/weakref/ref = value
+			var/resolved = ref.resolve()
+			if(resolved)
+				value = "[resolved] [REF(resolved)]"
+			else
+				value = "null weakref [REF(key)]"
+		else if(isdatum(value))
+			value = "[value] [REF(value)]"
+		else if(value == world)
+			value = "world [REF(world)]"
+		else if(islist(value))
+			value = refify_list(value)
+		var/list/to_add = list(new_key)
+		if(value)
+			to_add[new_key] = value
+		ret += to_add
+		CHECK_TICK
+	return ret
+
+/**
+ * Converts a list into a list of assoc lists of the form ("key" = key, "value" = value)
+ * so that list keys that are themselves lists can be fully json-encoded
+ */
+/proc/kvpify_list(list/target_list, depth = INFINITY)
+	var/list/ret = list()
+	for(var/i in 1 to target_list.len)
+		var/key = target_list[i]
+		var/new_key = key
+		if(islist(key) && depth)
+			new_key = kvpify_list(key, depth-1)
+		var/value
+		if(istext(key) || islist(key) || ispath(key) || isdatum(key) || key == world)
+			value = target_list[key]
+		if(islist(value) && depth)
+			value = kvpify_list(value, depth-1)
+		if(value)
+			ret += list(list("key" = new_key, "value" = value))
+		else
+			ret += list(list("key" = i, "value" = new_key))
+		CHECK_TICK
+	return ret
+
+/// Compares 2 lists, returns TRUE if they are the same
+/proc/deep_compare_list(list/list_1, list/list_2)
+	if(!islist(list_1) || !islist(list_2))
+		return FALSE
+
+	if(list_1 == list_2)
+		return TRUE
+
+	if(list_1.len != list_2.len)
+		return FALSE
+
+	for(var/i in 1 to list_1.len)
+		var/key_1 = list_1[i]
+		var/key_2 = list_2[i]
+		if (islist(key_1) && islist(key_2))
+			if(!deep_compare_list(key_1, key_2))
+				return FALSE
+		else if(key_1 != key_2)
+			return FALSE
+		if(istext(key_1) || islist(key_1) || ispath(key_1) || isdatum(key_1) || key_1 == world)
+			var/value_1 = list_1[key_1]
+			var/value_2 = list_2[key_1]
+			if (islist(value_1) && islist(value_2))
+				if(!deep_compare_list(value_1, value_2))
+					return FALSE
+			else if(value_1 != value_2)
+				return FALSE
+	return TRUE
+
+/// Returns a copy of the list where any element that is a datum is converted into a weakref
+/proc/weakrefify_list(list/target_list)
+	var/list/ret = list()
+	for(var/i in 1 to target_list.len)
+		var/key = target_list[i]
+		var/new_key = key
+		if(isdatum(key))
+			new_key = WEAKREF(key)
+		else if(islist(key))
+			new_key = weakrefify_list(key)
+		var/value
+		if(istext(key) || islist(key) || ispath(key) || isdatum(key) || key == world)
+			value = target_list[key]
+		if(isdatum(value))
+			value = WEAKREF(value)
+		else if(islist(value))
+			value = weakrefify_list(value)
+		var/list/to_add = list(new_key)
+		if(value)
+			to_add[new_key] = value
+		ret += to_add
+		CHECK_TICK
+	return ret

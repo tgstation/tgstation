@@ -149,7 +149,7 @@
 		var/obj/item/food_item = new chosen(T)
 		if(istype(food_item, /obj/item/food))
 			var/obj/item/food/foody = food_item
-			foody.food_flags |= FOOD_SILVER_SPAWNED
+			foody.mark_silver_slime_reaction()
 		if(prob(5))//Fry it!
 			var/obj/item/food/deepfryholder/fried
 			fried = new(T, food_item)

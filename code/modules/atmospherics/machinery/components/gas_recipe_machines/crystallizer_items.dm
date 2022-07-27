@@ -1,8 +1,8 @@
 /obj/item/hypernoblium_crystal
 	name = "Hypernoblium Crystal"
-	desc = "Crystalized oxygen and hypernoblium stored in a bottle to pressureproof your clothes."
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "potblue"
+	desc = "Crystalized oxygen and hypernoblium to pressureproof your clothes."
+	icon = 'icons/obj/atmos.dmi'
+	icon_state = "hypernoblium_crystal"
 	var/uses = 2
 
 /obj/item/hypernoblium_crystal/afterattack(obj/item/clothing/worn_item, mob/user, proximity)
