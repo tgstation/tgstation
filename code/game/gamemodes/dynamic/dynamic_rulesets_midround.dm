@@ -902,7 +902,7 @@
 	return ..()
 
 /// Thief ruleset
-/datum/dynamic_ruleset/midround/opportunist
+/* /datum/dynamic_ruleset/midround/opportunist
 	name = "Opportunist"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
 	antag_datum = /datum/antagonist/thief
@@ -953,7 +953,7 @@
 	message_admins("[ADMIN_LOOKUPFLW(thief)] has been made a Thief by the midround ruleset.")
 	log_game("[key_name(thief)] was made a Thief by the midround ruleset.")
 	return ..()
-
+*/
 /// Probability the AI going malf will be accompanied by an ion storm announcement and some ion laws.
 #undef MALF_ION_PROB
 /// The probability to replace an existing law with an ion law instead of adding a new ion law.
