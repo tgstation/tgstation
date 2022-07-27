@@ -24,7 +24,7 @@
 /datum/species/human/prepare_human_for_preview(mob/living/carbon/human/human)
 	human.hairstyle = "Unkept"
 	human.hair_color = "#f08e33" // brown
-	human.update_hair()
+	human.update_hair(is_creating = TRUE)
 
 	var/obj/item/organ/internal/ears/fox/fox_ears = human.getorgan(/obj/item/organ/internal/ears/fox)
 	if (fox_ears)
