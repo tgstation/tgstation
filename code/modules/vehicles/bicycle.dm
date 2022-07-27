@@ -27,7 +27,7 @@
 		return TRUE
 	if(atom_integrity >= max_integrity)
 		return TRUE
-	if(!I.use_tool(src, user, 0, volume=50, amount=1))
+	if(!I.use_tool(src, user, 2.5 SECONDS, volume=50, amount=1))
 		return TRUE
 	atom_integrity += min(10, max_integrity-atom_integrity)
 	if(atom_integrity == max_integrity)

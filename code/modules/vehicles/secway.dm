@@ -35,7 +35,7 @@
 	if(atom_integrity >= max_integrity)
 		to_chat(user, span_notice("It is fully repaired already!"))
 		return
-	if(!I.use_tool(src, user, 0, volume = 50, amount = 1))
+	if(!I.use_tool(src, user, 2.5 SECONDS, volume = 50, amount = 1))
 		return
 	user.visible_message(span_notice("[user] repairs some damage to [name]."), span_notice("You repair some damage to \the [src]."))
 	atom_integrity += min(10, max_integrity-atom_integrity)

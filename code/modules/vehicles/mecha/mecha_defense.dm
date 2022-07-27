@@ -320,7 +320,7 @@
 		return
 	. = TRUE
 	if(atom_integrity < max_integrity)
-		if(!W.use_tool(src, user, 0, volume=50, amount=1))
+		if(!W.use_tool(src, user, 2.5 SECONDS, volume=50, amount=1))
 			return
 		user.visible_message(span_notice("[user] repairs some damage to [name]."), span_notice("You repair some damage to [src]."))
 		atom_integrity += min(10, max_integrity-atom_integrity)
