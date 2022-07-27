@@ -20627,7 +20627,6 @@
 /turf/open/floor/wood,
 /area/station/service/theater)
 "feA" = (
-/obj/structure/table,
 /obj/item/book/manual/wiki/ordnance{
 	pixel_x = 4;
 	pixel_y = 1
@@ -20649,6 +20648,7 @@
 	pixel_x = -4;
 	pixel_y = -1
 	},
+/obj/structure/table/reinforced,
 /turf/open/floor/iron,
 /area/station/science/ordnance/office)
 "feG" = (
@@ -54980,15 +54980,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
-"nKp" = (
-/obj/structure/bookcase/random/nonfiction,
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/wood,
-/obj/structure/table/glass,
-/turf/open/floor/wood,
-/area/station/service/library)
 "nKw" = (
 /obj/structure/table/wood,
 /obj/item/pai_card,
@@ -143662,7 +143653,7 @@ wrs
 nHY
 iVL
 nHY
-nKp
+ylh
 nHY
 ylh
 ggg
