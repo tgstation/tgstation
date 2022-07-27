@@ -401,7 +401,7 @@
 		loc.balloon_alert(user, "ritual failed, no fingerprints!")
 		return FALSE
 
-	var/chosen_mob = tgui_input_list(user, "Select the person you wish to curse", "Eldritch Curse", sort_list(compiled_list, /proc/cmp_mob_realname_dsc))
+	var/chosen_mob = tgui_input_list(user, "Select the person you wish to curse", "Eldritch Curse", sort_list(compiled_list))
 	if(isnull(chosen_mob))
 		return FALSE
 
