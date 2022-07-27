@@ -56973,10 +56973,10 @@
 /turf/open/floor/iron,
 /area/station/engineering/storage/tech)
 "oic" = (
-/obj/structure/closet/crate/freezer/surplus_limbs,
 /obj/effect/turf_decal/bot_white{
 	color = "#435a88"
 	},
+/obj/structure/closet/crate/freezer/blood,
 /turf/open/floor/iron/freezer,
 /area/station/medical/coldroom)
 "oif" = (
@@ -136986,7 +136986,7 @@ veM
 fse
 ako
 wAO
-ako
+pdl
 ako
 ako
 pdl
