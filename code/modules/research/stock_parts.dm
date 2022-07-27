@@ -23,7 +23,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	atom_storage.max_total_storage = 100
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.numerical_stacking = TRUE
-	atom_storage.set_holdable(list(/obj/item/stock_parts), null)
+	atom_storage.set_holdable(list(/obj/item/stock_parts, /obj/item/reagent_containers/glass/beaker), null)
 
 /obj/item/storage/part_replacer/pre_attack(obj/attacked_object, mob/living/user, params)
 	if(!istype(attacked_object, /obj/machinery) && !istype(attacked_object, /obj/structure/frame/machine))
