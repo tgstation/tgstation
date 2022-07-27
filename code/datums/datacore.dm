@@ -1,6 +1,3 @@
-///Dummy mob reserve slot for manifest
-#define DUMMY_HUMAN_SLOT_MANIFEST "dummy_manifest_generation"
-
 GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 
 //TODO: someone please get rid of this shit
@@ -315,5 +312,3 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 
 /datum/datacore/proc/get_id_photo(mob/living/carbon/human/human, show_directions = list(SOUTH))
 	return get_flat_existing_human_icon(human, show_directions)
-
-#undef DUMMY_HUMAN_SLOT_MANIFEST
