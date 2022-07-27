@@ -156,8 +156,8 @@
 	var/list/data = list()
 
 	data["panel_z"] = z
-	data["emergency_level"] = SSsecurity_level.get_current_level_as_text()
-	data["emergency_level_as_num"] = SSsecurity_level.get_current_level_as_number()
+	data["emergency_level"] = capitalize(SSsecurity_level.get_current_level_as_text())
+	data["is_emergency"] = (SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
 	data["doors_open"] = !!door_reset_timerid
 
 	var/datum/lift_master/lift = lift_weakref?.resolve()
@@ -168,6 +168,7 @@
 
 	else
 		data["lift_exists"] = FALSE
+		data["current_floor"] = -1
 
 	return data
 
@@ -217,6 +218,9 @@
 			return TRUE
 
 		if("reset_doors")
+			if(!door_reset_timerid)
+				return TRUE
+
 			deltimer(door_reset_timerid)
 			reset_doors()
 			return TRUE

@@ -1,6 +1,6 @@
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Box, Button, Section, Stack } from '../components';
+import { Box, Button, Dimmer, Icon, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type FloorData = {
@@ -11,7 +11,7 @@ type FloorData = {
 type ElevatorPanelData = {
   panel_z: number;
   emergency_level: string;
-  emergency_level_as_num: number;
+  is_emergency: BooleanLike;
   doors_open: BooleanLike;
   lift_exists: BooleanLike;
   currently_moving: BooleanLike;
@@ -34,6 +34,8 @@ export const ElevatorPanel = (props, context) => {
     <Window width={250} height={375}>
       <Window.Content>
         <Section>
+          {!data.lift_exists && <NoLiftDimmer />}
+          {!!data.currently_moving && <MovingDimmer />}
           <Stack vertical align="center" fill>
             <Stack.Item height="50px">
               <Box
@@ -69,12 +71,58 @@ export const ElevatorPanel = (props, context) => {
               </Stack>
             </Stack.Item>
             <Stack.Item height="50px">
-              <Button onClick={() => act('emergency_door')}>Emergency</Button>
-              <Button onClick={() => act('reset_doors')}>Reset Doors</Button>
+              {data.doors_open ? (
+                <Button
+                  tooltip={
+                    'Closes all elevator doors, except \
+                    those on the level of the elevator.'
+                  }
+                  onClick={() => act('reset_doors')}>
+                  Reset Doors
+                </Button>
+              ) : (
+                <Button
+                  disabled={!data.is_emergency}
+                  color={'bad'}
+                  tooltip={
+                    data.is_emergency
+                      ? 'In case of emergency, Opens all lift doors.'
+                      : `The station is only at ${data.emergency_level} alert.`
+                  }
+                  onClick={() => act('emergency_door')}>
+                  Emergency
+                </Button>
+              )}
             </Stack.Item>
           </Stack>
         </Section>
       </Window.Content>
     </Window>
+  );
+};
+
+const NoLiftDimmer = () => {
+  return (
+    <Dimmer>
+      <Stack vertical fill align="center">
+        <Stack.Item>
+          <Icon size={8} name="exclamation" />
+        </Stack.Item>
+        <Stack.Item fontSize="16px">No elevator connected.</Stack.Item>
+      </Stack>
+    </Dimmer>
+  );
+};
+
+const MovingDimmer = () => {
+  return (
+    <Dimmer>
+      <Stack vertical fill align="center">
+        <Stack.Item>
+          <Icon size={8} name="spinner" spin />
+        </Stack.Item>
+        <Stack.Item fontSize="16px">Moving...</Stack.Item>
+      </Stack>
+    </Dimmer>
   );
 };
