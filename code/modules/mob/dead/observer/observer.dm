@@ -408,12 +408,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 
 	can_reenter_corpse = FALSE
-	var/mob/living/carbon/current = mind.current
+	var/mob/living/current_mob = mind.current
 	if(istype(current))
 		// Update med huds
 		current.med_hud_set_status()
-		current.log_message("Had their player ([key_name(src)]) do-not-resuscitate", LOG_GAME, color = COLOR_GREEN, log_globally = FALSE)
-	log_message("Has opted to do-not-resciscitate from their body ([current])", LOG_GAME, color = COLOR_GREEN)
+		current.log_message("had their player ([key_name(src)]) do-not-resuscitate / DNR", LOG_GAME, color = COLOR_GREEN, log_globally = FALSE)
+	log_message("has opted to do-not-resuscitate / DNR from their body ([current])", LOG_GAME, color = COLOR_GREEN)
 
 	// Disassociates observer mind from the body mind
 	mind = null
