@@ -75,7 +75,7 @@
 
 /datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()
-	if(H.client?.get_award_status(CHEF_TOURISTS_SERVED) >= 5000)
+	if(H.client?.get_award_status(CHEF_TOURISTS_SERVED) >= 5000 && H.client?.prefs.read_preference(/datum/preference/toggle/achievement_potions))
 		backpack_contents[/obj/item/achievement_potion/cook] = 1
 
 /datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
