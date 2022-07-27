@@ -23,10 +23,6 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	///Icon file for right inhand overlays
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
-	///Achievement items.
-	var/goldenk = FALSE
-	var/goldens = FALSE
-	var/goldenw = FALSE
 	///Icon file for mob worn overlays.
 	var/icon/worn_icon
 	///Icon state for mob worn overlays, if null the normal icon_state will be used.

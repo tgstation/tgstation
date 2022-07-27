@@ -35,10 +35,10 @@
 	new /obj/item/stack/sheet/iron(drop_location(), 1)
 	return ..()
 
-/obj/vehicle/ridden/wheelchair/attackby(obj/item/I, mob/user)
+/obj/vehicle/ridden/wheelchair/attackby(obj/item/achievement_potion/I, mob/user)
 	var/turf/holder_turf = get_turf(user)
 	var/obj/vehicle/ridden/wheelchair/gold/chair
-	if(istype(I) && I.goldenw == TRUE)
+	if(istype(I) && I.golden_wheelchair == TRUE)
 		chair = new(holder_turf)
 		user.visible_message(span_notice("[user] pours the potion onto the [src]. It glows brightly before turning into gold!"))
 		qdel(src)

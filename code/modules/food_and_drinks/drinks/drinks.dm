@@ -572,10 +572,9 @@
 	amount_per_transfer_from_this = 10
 	volume = 100
 	isGlass = FALSE
-	goldens = TRUE //can this be made golden? (shaker)
 
-/obj/item/reagent_containers/food/drinks/shaker/attackby(obj/item/I, mob/user)
-	if(istype(I) && I.goldens == TRUE)
+/obj/item/reagent_containers/food/drinks/shaker/attackby(obj/item/achievement_potion/I, mob/user)
+	if(istype(I) && I.golden_shaker == TRUE)
 		user.visible_message(span_notice("[user] pours the potion onto [src]. It glows brightly before turning into gold!"))
 		new /obj/item/reagent_containers/food/drinks/shaker/gold(loc)
 		qdel(src)

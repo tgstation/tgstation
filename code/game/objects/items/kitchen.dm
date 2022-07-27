@@ -79,8 +79,8 @@
 	name = "kitchen knife"
 	desc = "A general purpose Chef's Knife made by SpaceCook Incorporated. Guaranteed to stay sharp for years to come."
 
-/obj/item/knife/kitchen/attackby(obj/item/I, mob/user)
-	if(istype(I) && I.goldenk == TRUE)
+/obj/item/knife/kitchen/attackby(obj/item/achievement_potion/I, mob/user)
+	if(istype(I) && I.golden_knife == TRUE)
 		user.visible_message(span_notice("[user] pours the potion onto [src]. It glows brightly before turning into gold!"))
 		new /obj/item/knife/gold(loc)
 		qdel(src)
