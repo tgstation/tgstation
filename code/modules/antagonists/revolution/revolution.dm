@@ -154,9 +154,9 @@
 		flash.burnt_out = FALSE
 		flash.update_appearance()
 
-/datum/antagonist/rev/head/proc/admin_demote(datum/mind/target,mob/user)
-	message_admins("[key_name_admin(user)] has demoted [key_name_admin(owner)] from head revolutionary.")
-	log_admin("[key_name(user)] has demoted [key_name(owner)] from head revolutionary.")
+/datum/antagonist/rev/head/proc/admin_demote(mob/admin)
+	message_admins("[key_name_admin(admin)] has demoted [key_name_admin(owner)] from head revolutionary.")
+	log_admin("[key_name(admin)] has demoted [key_name(owner)] from head revolutionary.")
 	demote()
 
 /datum/antagonist/rev/head
