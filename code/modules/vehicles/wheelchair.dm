@@ -45,7 +45,6 @@
 		qdel(I)
 		chair.buckle_mob(user)
 
-
 /obj/vehicle/ridden/wheelchair/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	playsound(src, 'sound/effects/roll.ogg', 75, TRUE)

@@ -11,6 +11,9 @@
 
 	return achievement_preferences.parent?.owns_potion()
 
+/datum/preference/toggle/achievement_potions/apply_to_human(mob/living/carbon/human/target, value)
+	return
+
 /// Checks if they own any potion varient
 /client/proc/owns_potion()
 	if(get_award_status(CHEF_TOURISTS_SERVED) >= 5000 || get_award_status(BARTENDER_TOURISTS_SERVED) >= 5000 || get_award_status(HARDCORE_RANDOM_SCORE) >= 5000)
