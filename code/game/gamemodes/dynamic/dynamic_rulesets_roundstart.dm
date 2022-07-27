@@ -695,7 +695,7 @@
 	spawn_meteors(ramp_up_final, wavetype)
 
 /// Ruleset for thieves
-/datum/dynamic_ruleset/roundstart/thieves
+/* /datum/dynamic_ruleset/roundstart/thieves
 	name = "Thieves"
 	antag_flag = ROLE_THIEF
 	antag_datum = /datum/antagonist/thief
@@ -738,7 +738,7 @@
 		chosen_mind.add_antag_datum(new_antag)
 		GLOB.pre_setup_antags -= chosen_mind
 	return TRUE
-
+*/
 /// Ruleset for Nations
 /datum/dynamic_ruleset/roundstart/nations
 	name = "Nations"
