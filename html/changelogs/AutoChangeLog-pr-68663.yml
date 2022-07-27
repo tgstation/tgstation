@@ -1,0 +1,4 @@
+author: "CoffeeDragon16"
+delete-after: True
+changes: 
+  - admin: "head-revolutionary demotion logging will now properly display the demoting admin"
