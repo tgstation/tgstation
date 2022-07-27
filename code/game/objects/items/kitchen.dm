@@ -81,7 +81,7 @@
 
 /obj/item/knife/kitchen/attackby(obj/item/I, mob/user)
 	if(istype(I) && I.goldenk == TRUE)
-		user.visible_message(span_notice("[user] pours the potion onto [I]. It glows brightly before turning into gold!"))
+		user.visible_message(span_notice("[user] pours the potion onto [src]. It glows brightly before turning into gold!"))
 		new /obj/item/knife/gold(loc)
 		qdel(src)
 		qdel(I)

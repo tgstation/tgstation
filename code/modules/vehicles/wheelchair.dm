@@ -36,11 +36,15 @@
 	return ..()
 
 /obj/vehicle/ridden/wheelchair/attackby(obj/item/I, mob/user)
+	var/turf/holder_turf = get_turf(user)
+	var/obj/vehicle/ridden/wheelchair/gold/chair
 	if(istype(I) && I.goldenw == TRUE)
-		user.visible_message(span_notice("[user] pours the potion onto the [I]. It glows brightly before turning into gold!"))
-		new /obj/vehicle/ridden/wheelchair/gold(loc)
+		chair = new(holder_turf)
+		user.visible_message(span_notice("[user] pours the potion onto the [src]. It glows brightly before turning into gold!"))
 		qdel(src)
 		qdel(I)
+		chair.buckle_mob(user)
+
 
 /obj/vehicle/ridden/wheelchair/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()

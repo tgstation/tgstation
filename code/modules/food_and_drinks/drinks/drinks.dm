@@ -576,7 +576,7 @@
 
 /obj/item/reagent_containers/food/drinks/shaker/attackby(obj/item/I, mob/user)
 	if(istype(I) && I.goldens == TRUE)
-		user.visible_message(span_notice("[user] pours the potion onto [I]. It glows brightly before turning into gold!"))
+		user.visible_message(span_notice("[user] pours the potion onto [src]. It glows brightly before turning into gold!"))
 		new /obj/item/reagent_containers/food/drinks/shaker/gold(loc)
 		qdel(src)
 		qdel(I)
