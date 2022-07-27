@@ -71,3 +71,21 @@ modules = ["maintenance_lowercargosci_attachment_a_1.dmm", "maintenance_lowercar
 
 [rooms.maintenance_lowercargosci_attachment_b]
 modules = ["maintenance_lowercargosci_attachment_b_1.dmm", "maintenance_lowercargosci_attachment_b_2.dmm", "maintenance_lowercargosci_attachment_b_3.dmm"]
+
+[rooms.maintenance_loweratmosci]
+modules = ["maintenance_loweratmosci_1.dmm", "maintenance_loweratmosci_2.dmm"]
+
+[rooms.maintenance_loweratmosci_attachment_a]
+modules = ["maintenance_loweratmosci_attachment_a_1.dmm", "maintenance_loweratmosci_attachment_a_2.dmm", "maintenance_loweratmosci_attachment_a_3.dmm"]
+
+[rooms.maintenance_loweratmosci_attachment_b]
+modules = ["maintenance_loweratmosci_attachment_b_1.dmm", "maintenance_loweratmosci_attachment_b_2.dmm", "maintenance_loweratmosci_attachment_b_3.dmm"]
+
+[rooms.maintenance_lowerdormengie]
+modules = ["maintenance_lowerdormengie_1.dmm", "maintenance_lowerdormengie_2.dmm"]
+
+[rooms.maintenance_lowerdormengie_attachment_a]
+modules = ["maintenance_lowerdormengie_attachment_a_1.dmm", "maintenance_lowerdormengie_attachment_a_2.dmm", "maintenance_lowerdormengie_attachment_a_3.dmm"]
+
+[rooms.maintenance_lowerdormengie_attachment_b]
+modules = ["maintenance_lowerdormengie_attachment_b_1.dmm", "maintenance_lowerdormengie_attachment_b_2.dmm", "maintenance_lowerdormengie_attachment_b_3.dmm"]

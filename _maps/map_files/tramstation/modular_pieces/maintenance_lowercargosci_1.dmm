@@ -7,8 +7,7 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/central)
 "b" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/grille,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
 "c" = (
@@ -90,6 +89,10 @@
 "u" = (
 /turf/closed/wall,
 /area/station/maintenance/starboard/central)
+"w" = (
+/obj/modular_map_root/tramstation/maintenance_lowercargosci/attachment_a,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
 "x" = (
 /turf/template_noop,
 /area/template_noop)
@@ -118,6 +121,9 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/central)
+"C" = (
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/central)
 "D" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -130,6 +136,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
+"F" = (
+/obj/modular_map_root/tramstation/maintenance_lowercargosci/attachment_b,
+/turf/closed/wall,
+/area/station/maintenance/starboard/central)
 "G" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -137,9 +147,11 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/central)
 "I" = (
-/obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
 "L" = (
@@ -196,7 +208,13 @@
 "X" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/grille,
-/turf/open/floor/plating,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/central)
+"Y" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/departments/drop/directional/east,
+/turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
 "Z" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -725,9 +743,9 @@ x
 x
 x
 k
-a
+C
 k
-k
+w
 x
 x
 "}
@@ -754,7 +772,7 @@ x
 x
 x
 x
-a
+C
 k
 k
 x
@@ -783,7 +801,7 @@ x
 x
 x
 x
-a
+C
 k
 k
 x
@@ -812,7 +830,7 @@ x
 x
 x
 x
-a
+C
 k
 k
 x
@@ -826,7 +844,7 @@ x
 x
 S
 S
-u
+F
 a
 x
 x
@@ -841,7 +859,7 @@ x
 x
 x
 x
-a
+C
 k
 k
 x
@@ -867,10 +885,10 @@ x
 x
 x
 x
-a
-a
-a
-a
+k
+k
+u
+C
 k
 k
 x
@@ -896,10 +914,10 @@ a
 a
 a
 a
-a
-k
-k
-k
+C
+C
+C
+C
 k
 k
 x
@@ -918,19 +936,19 @@ S
 S
 u
 u
-k
-k
-k
-k
-k
-k
-k
-u
-u
-u
-u
-u
 b
+Y
+b
+b
+b
+Y
+b
+u
+u
+u
+u
+u
+k
 x
 x
 "}

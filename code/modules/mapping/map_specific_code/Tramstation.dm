@@ -82,6 +82,26 @@
 /obj/modular_map_root/tramstation/maintenance_lowercargosci/attachment_b
 	key = "maintenance_lowercargosci_attachment_b"
 
+//between atmos and sci on the lower floor, connects both
+/obj/modular_map_root/tramstation/maintenance_loweratmosci
+	key = "maintenance_loweratmosci"
+
+/obj/modular_map_root/tramstation/maintenance_loweratmosci/attachment_a
+	key = "maintenance_loweratmosci_attachment_a"
+
+/obj/modular_map_root/tramstation/maintenance_loweratmosci/attachment_b
+	key = "maintenance_loweratmosci_attachment_b"
+
+//between dorms and engineering on the lower floor, connects both
+/obj/modular_map_root/tramstation/maintenance_lowerdormengie
+	key = "maintenance_lowerdormengie"
+
+/obj/modular_map_root/tramstation/maintenance_lowerdormengie/attachment_a
+	key = "maintenance_lowerdormengie_attachment_a"
+
+/obj/modular_map_root/tramstation/maintenance_lowerdormengie/attachment_b
+	key = "maintenance_lowerdormengie_attachment_b"
+
 
 /obj/item/paper/fluff/genpop_instructions
 	name = "Genpop - Inmate Processing and You"
