@@ -62,7 +62,7 @@
 	///Stores the DNA enzymes of a carbon so tht only they can access the mech
 	var/dna_lock
 	///Spark effects are handled by this datum
-	var/datum/effect_system/spark_spread/spark_system = new
+	var/datum/effect_system/spark_spread/spark_system
 	///How powerful our lights are
 	var/lights_power = 6
 	///Just stop the mech from doing anything
@@ -151,7 +151,7 @@
 	///Safety for weapons. Won't fire if enabled, and toggled by middle click.
 	var/weapons_safety = FALSE
 
-	var/datum/effect_system/fluid_spread/smoke/smoke_system = new
+	var/datum/effect_system/fluid_spread/smoke/smoke_system
 
 	////Action vars
 	///Ref to any active thrusters we might have
@@ -208,9 +208,11 @@
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/play_stepsound)
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, .proc/on_light_eater)
 
+	spark_system = new
 	spark_system.set_up(2, 0, src)
 	spark_system.attach(src)
 
+	smoke_system = new
 	smoke_system.set_up(3, holder = src, location = src)
 	smoke_system.attach(src)
 

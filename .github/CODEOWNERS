@@ -6,12 +6,6 @@
 
 # MAINTAINERS
 
-# Cobby
-
-/code/modules/reagents/ @ExcessiveUseOfCobblestone
-/code/modules/research/designs/medical_designs.dm @ExcessiveUseOfCobblestone
-/code/game/objects/items/storage/medkit.dm @ExcessiveUseOfCobblestone
-
 # Cyberboss
 
 /code/__HELPERS/jatum.dm @Cyberboss
@@ -96,8 +90,14 @@
 
 # CONTRIBUTORS
 
+# Cobby
+
+/code/modules/reagents/ @ExcessiveUseOfCobblestone
+/code/modules/research/designs/medical_designs.dm @ExcessiveUseOfCobblestone
+/code/game/objects/items/storage/medkit.dm @ExcessiveUseOfCobblestone
+
 # Dragomagol/Tattle
-/code/__HELPERS/logging/ @Dragomagol
+/code/__HELPERS/logging/ @dragomagol
 
 # Fikou
 

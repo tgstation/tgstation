@@ -1265,6 +1265,7 @@
 #include "code\game\gamemodes\game_mode.dm"
 #include "code\game\gamemodes\objective.dm"
 #include "code\game\gamemodes\objective_items.dm"
+#include "code\game\gamemodes\dynamic\_defines.dm"
 #include "code\game\gamemodes\dynamic\dynamic.dm"
 #include "code\game\gamemodes\dynamic\dynamic_hijacking.dm"
 #include "code\game\gamemodes\dynamic\dynamic_logging.dm"
