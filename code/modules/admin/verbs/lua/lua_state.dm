@@ -58,6 +58,7 @@ GLOBAL_PROTECT(lua_usr)
 				break
 	if(append_to_log)
 		log += list(weakrefify_list(result))
+	INVOKE_ASYNC(src, .proc/update_editors)
 
 /datum/lua_state/proc/load_script(script)
 	GLOB.IsLuaCall = TRUE
@@ -97,10 +98,6 @@ GLOBAL_PROTECT(lua_usr)
 	if(istext(result))
 		result = list("status" = "errored", "param" = result, "name" = islist(function) ? jointext(function, ".") : function)
 	check_if_slept(result)
-	var/list/editor_list = LAZYACCESS(SSlua.editors, "\ref[src]")
-	if(editor_list)
-		for(var/datum/lua_editor/editor in editor_list)
-			SStgui.update_uis(editor)
 	return result
 
 /datum/lua_state/proc/call_function_return_first(function, ...)
@@ -147,5 +144,11 @@ GLOBAL_PROTECT(lua_usr)
 
 /datum/lua_state/proc/kill_task(task_info)
 	__lua_kill_task(internal_id, task_info)
+
+/datum/lua_state/proc/update_editors()
+	var/list/editor_list = LAZYACCESS(SSlua.editors, "\ref[src]")
+	if(editor_list)
+		for(var/datum/lua_editor/editor as anything in editor_list)
+			SStgui.update_uis(editor)
 
 #undef MAX_LOG_REPEAT_LOOKBACK
