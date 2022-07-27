@@ -1,4 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes: 
-  - balance: "Heavily adjusted how much population impacts the chances of midround rulesets, mostly lowering them."

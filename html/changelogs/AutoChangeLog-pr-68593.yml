@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "The uplink failsafe code traitor item will now actually give you a failsafe code!"
-  - bugfix: "The uplink failsafe code can no longer be purchased on devices that don't support code entry."

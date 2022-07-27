@@ -1,5 +1,0 @@
-author: "CursedBirb"
-delete-after: True
-changes: 
-  - bugfix: "Engineer syndie sentry can only be activated with combat wrench"
-  - code_imp: "Added balloon alerts and made code easier to read"
