@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Cyborg flashes will no longer fail to drop from the heads of borgs."
+  - bugfix: "Butchering a bodypart for it's organs while inside a locker will no longer drop the organs /outside/ the locker."
