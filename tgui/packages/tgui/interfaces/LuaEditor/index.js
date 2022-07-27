@@ -81,10 +81,11 @@ export const LuaEditor = (props, context) => {
             <h1>Please select or create a lua state to get started.</h1>
           </Flex>
         ) : (
-          <Stack>
-            <Stack.Item>
+          <Stack height="calc(100% - 16px)">
+            <Stack.Item grow shrink basis="55%">
               <Section
                 fill
+                pb="16px"
                 title="Input"
                 buttons={
                   <>
@@ -100,8 +101,8 @@ export const LuaEditor = (props, context) => {
                 }>
                 <TextArea
                   fluid
-                  width="700px"
-                  height="590px"
+                  width="100%"
+                  height="100%"
                   value={input}
                   fontFamily="Consolas"
                   onInput={(_, value) => setInput(value)}
@@ -122,8 +123,8 @@ export const LuaEditor = (props, context) => {
                 </Button>
               </Section>
             </Stack.Item>
-            <Stack.Item grow>
-              <Section fill height="95%" width="100%">
+            <Stack.Item grow shrink basis="45%">
+              <Section fill pb="24px" height="100%" width="100%">
                 <Tabs>
                   <Tabs.Tab
                     selected={activeTab === 'globals'}
