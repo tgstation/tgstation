@@ -12,7 +12,7 @@
 	supervisors = "the captain"
 	selection_color = "#d7b088"
 	exp_requirements = 300
-	exp_required_type_crew = EXP_TYPE_CREW
+	exp_required_type = EXP_TYPE_CREW
 	exp_required_type_department = EXP_TYPE_SUPPLY
 	exp_granted_type = EXP_TYPE_CREW
 
