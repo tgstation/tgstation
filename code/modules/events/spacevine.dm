@@ -586,9 +586,13 @@
 		if(prob(mutativeness))
 			var/datum/spacevine_mutation/random_mutate = pick_weight(vine_mutations_list - vine.mutations)
 			var/total_severity = random_mutate.severity
+			var/mutation_is_valid = TRUE
 			for(var/datum/spacevine_mutation/mutation as anything in vine.mutations)
+				if(random_mutate.type == mutation.type) // see #68821, mutations from parent.mutations can have a different address than those in vine_mutations_list
+					mutation_is_valid = FALSE
+					break
 				total_severity += mutation.severity
-			if(total_severity <= max_mutation_severity)
+			if(mutation_is_valid && total_severity <= max_mutation_severity)
 				random_mutate.add_mutation_to_vinepiece(vine)
 
 	for(var/datum/spacevine_mutation/mutation in vine.mutations)
