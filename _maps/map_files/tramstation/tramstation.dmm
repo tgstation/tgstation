@@ -6176,7 +6176,7 @@
 /area/station/command/heads_quarters/hos)
 "ckt" = (
 /obj/structure/table/wood,
-/obj/item/paicard,
+/obj/item/pai_card,
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/wood/large,
 /area/station/service/library)
@@ -50834,7 +50834,7 @@
 /area/station/engineering/supermatter/room)
 "rEZ" = (
 /obj/structure/table,
-/obj/item/paicard,
+/obj/item/pai_card,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "rFv" = (
@@ -52220,7 +52220,7 @@
 /area/station/cargo/miningdock)
 "sbb" = (
 /obj/structure/table/wood,
-/obj/item/paicard,
+/obj/item/pai_card,
 /turf/open/floor/carpet,
 /area/station/hallway/secondary/entry)
 "sbh" = (
@@ -54524,7 +54524,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},
-/obj/item/paicard,
+/obj/item/pai_card,
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "sUd" = (
@@ -64599,7 +64599,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/item/paicard,
+/obj/item/pai_card,
 /obj/item/taperecorder{
 	pixel_x = -3;
 	pixel_y = 2
