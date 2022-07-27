@@ -60,8 +60,8 @@
 	id = "miningsite"
 	description = "Ruins of a site where people once mined with primitive tools for ore."
 	suffix = "icemoon_underground_mining_site.dmm"
-	always_place = TRUE
-	unpickable = TRUE
+
+// below ground only
 
 /datum/map_template/ruin/icemoon/underground
 	name = "underground ruin"
