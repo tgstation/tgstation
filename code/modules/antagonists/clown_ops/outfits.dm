@@ -10,11 +10,11 @@
 	r_pocket = /obj/item/bikehorn
 	id = /obj/item/card/id/advanced/chameleon
 	backpack_contents = list(
-		/obj/item/pen/edagger,
-		/obj/item/dnainjector/clumsymut, //in case you want to be clumsy for the memes
-		/obj/item/storage/box/syndie_kit/clownpins, //for any guns that you get your grubby little clown op mitts on
-		/obj/item/reagent_containers/spray/waterflower/lube,
-		/obj/item/mod/skin_applier/honkerative,
+		/obj/item/pen/edagger = 1,
+		/obj/item/dnainjector/clumsymut = 1, //in case you want to be clumsy for the memes
+		/obj/item/storage/box/syndie_kit/clownpins = 1, //for any guns that you get your grubby little clown op mitts on
+		/obj/item/reagent_containers/spray/waterflower/lube = 1,
+		/obj/item/mod/skin_applier/honkerative = 1,
 	)
 	box = /obj/item/storage/box/survival/syndie
 	implants = list(/obj/item/implant/sad_trombone)

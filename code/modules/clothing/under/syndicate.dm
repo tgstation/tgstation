@@ -90,3 +90,12 @@
 	can_adjust = FALSE
 	armor = list(MELEE = 5, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 0, ACID = 0)
 	resistance_flags = NONE
+
+/obj/item/clothing/under/syndicate/scrubs
+	name = "tactical scrubs"
+	desc = "A deep purple set of scrubs, made tactically for tactical reasons."
+	icon = 'icons/obj/clothing/under/medical.dmi'
+	worn_icon = 'icons/mob/clothing/under/medical.dmi'
+	icon_state = "scrubspurple"
+	can_adjust = FALSE
+	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 50, ACID = 40)
