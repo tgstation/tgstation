@@ -5522,14 +5522,14 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/machinery/door/window/right/directional/north{
-	name = "Medkit Storage";
-	req_access = list("medical")
-	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
 /obj/structure/table/reinforced,
+/obj/machinery/door/window/left/directional/north{
+	name = "Medkit Storage";
+	req_access = list("medical")
+	},
 /turf/open/floor/iron,
 /area/station/medical/storage)
 "brZ" = (
@@ -12204,13 +12204,13 @@
 /obj/item/clothing/mask/breath/medical{
 	pixel_y = -3
 	},
-/obj/machinery/door/window/right/directional/north{
-	name = "Surgical Supplies";
-	req_access = list("surgery")
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/window/reinforced/spawner/west,
 /obj/machinery/status_display/evac/directional/south,
+/obj/machinery/door/window/left/directional/north{
+	name = "Surgical Supplies";
+	req_access = list("surgery")
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/surgery/theatre)
 "cXs" = (
@@ -64439,10 +64439,6 @@
 /area/station/maintenance/disposal/incinerator)
 "qbQ" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/north{
-	name = "Surgical Supplies";
-	req_access = list("surgery")
-	},
 /obj/structure/window/reinforced/spawner/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/sign/poster/official/random/directional/south,
@@ -64453,6 +64449,10 @@
 /obj/item/clothing/ears/earmuffs,
 /obj/item/clothing/glasses/blindfold,
 /obj/item/clothing/glasses/blindfold,
+/obj/machinery/door/window/right/directional/north{
+	name = "Surgical Supplies";
+	req_access = list("surgery")
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/surgery/theatre)
 "qbT" = (
@@ -70021,14 +70021,14 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/machinery/door/window/left/directional/north{
-	name = "Medkit Storage";
-	req_access = list("medical")
-	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
 /obj/structure/table/reinforced,
+/obj/machinery/door/window/right/directional/north{
+	name = "Medkit Storage";
+	req_access = list("medical")
+	},
 /turf/open/floor/iron,
 /area/station/medical/storage)
 "rAk" = (
