@@ -165,19 +165,14 @@
 	if(curse_value >= 81)
 		owner.blood_volume = max(owner.blood_volume - 5, 0)
 		if(owner.stat == CONSCIOUS && prob(5))
-			to_chat(owner, span_warning("Maybe you should lie down for a bit..."))
+			to_chat(owner, span_userdanger("You feel a strong stinging sensation in your chest!"))
 
 	// Over 91, we gain even more toxloss, brain damage, and have a chance of dropping into a long sleep
 	if(curse_value >= 91)
 		owner.blood_volume = max(owner.blood_volume - 7, 0)
 		owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.4)
 		if(owner.stat == CONSCIOUS && prob(20))
-			// Don't put us in a deep sleep if the shuttle's here. QoL, mainly.
-			if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && is_station_level(owner.z))
-				to_chat(owner, span_warning("You're so tired... but you can't miss that shuttle..."))
-
-			else
-				to_chat(owner, span_warning("Just a quick nap..."))
+				to_chat(owner, span_userdanger("You collapse as a black ooze glazes your eyes shut!"))
 				owner.Sleeping(90 SECONDS)
 
 	// And finally, over 100 - let's be honest, you shouldn't be alive by now.
