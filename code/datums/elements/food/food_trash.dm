@@ -24,7 +24,7 @@
 		RegisterSignal(target, COMSIG_FOOD_CROSSED, .proc/food_crossed)
 	RegisterSignal(target, COMSIG_ITEM_ON_GRIND, .proc/generate_trash)
 	RegisterSignal(target, COMSIG_ITEM_ON_JUICE, .proc/generate_trash)
-	RegisterSignal(target, COMSIG_ITEM_USED_AS_INGREDIENT, .proc/on_use_ingredient)
+	RegisterSignal(target, COMSIG_ITEM_USED_AS_INGREDIENT, .proc/generate_trash)
 	RegisterSignal(target, COMSIG_ITEM_ON_COMPOSTED, .proc/generate_trash)
 	RegisterSignal(target, COMSIG_ITEM_SOLD_TO_CUSTOMER, .proc/generate_trash)
 
@@ -36,11 +36,6 @@
 	SIGNAL_HANDLER
 
 	///cringy signal_handler shouldnt be needed if you dont want to return but oh well
-	INVOKE_ASYNC(src, .proc/async_generate_trash, source)
-
-/datum/element/food_trash/proc/on_use_ingredient(datum/source)
-	SIGNAL_HANDLER
-
 	INVOKE_ASYNC(src, .proc/async_generate_trash, source)
 
 /datum/element/food_trash/proc/async_generate_trash(datum/source)
