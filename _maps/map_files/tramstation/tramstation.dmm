@@ -1978,6 +1978,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"aSq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
+/obj/machinery/meter,
+/turf/open/floor/iron,
+/area/station/maintenance/disposal/incinerator)
 "aSw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -2032,9 +2038,6 @@
 	dir = 6
 	},
 /obj/structure/reagent_dispensers/fueltank/large,
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
-	dir = 4
-	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "aTr" = (
@@ -4417,6 +4420,9 @@
 /area/station/science/ordnance/bomb)
 "bJN" = (
 /obj/effect/landmark/event_spawn,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "bJP" = (
@@ -33533,9 +33539,6 @@
 /area/station/command/heads_quarters/hop)
 "lEp" = (
 /obj/machinery/vending/wardrobe/atmos_wardrobe,
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
-	dir = 4
-	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "lEE" = (
@@ -36801,10 +36804,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/tram/right)
 "mHw" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "mHA" = (
@@ -55761,7 +55764,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
-/obj/machinery/meter,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "tnq" = (
@@ -57476,7 +57478,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "tPw" = (
@@ -63686,7 +63687,9 @@
 /area/station/maintenance/tram/mid)
 "vYX" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
+/obj/machinery/atmospherics/components/binary/pump{
+	name = "Gas to Chamber"
+	},
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "vZt" = (
@@ -64883,7 +64886,7 @@
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/rd)
 "wwq" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "wws" = (
@@ -65832,6 +65835,13 @@
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
+"wNx" = (
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
+	dir = 9
+	},
+/obj/machinery/meter,
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "wNA" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
@@ -68143,9 +68153,6 @@
 	pixel_y = 32
 	},
 /obj/structure/reagent_dispensers/watertank/high,
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
-	dir = 4
-	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "xAJ" = (
@@ -103794,9 +103801,9 @@ atT
 atT
 wja
 atT
-lFM
-mHw
 atT
+mHw
+lFM
 atT
 atT
 agy
@@ -104053,7 +104060,7 @@ dsH
 cPM
 lEp
 urq
-wQm
+tTW
 wQm
 plE
 nmP
@@ -104310,7 +104317,7 @@ cPM
 cPM
 xAx
 oqh
-wQm
+tTW
 wQm
 xxn
 hCo
@@ -104822,9 +104829,9 @@ nQe
 aPI
 nQe
 vRm
+lFM
 wwq
-wQm
-wQm
+wNx
 wQm
 xxn
 fmo
@@ -108941,7 +108948,7 @@ tUq
 rCd
 nhr
 wjw
-vYX
+aSq
 vYX
 tnj
 oZh
