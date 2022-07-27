@@ -39,6 +39,7 @@
 
 /mob/living/simple_animal/mothroach/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/pet_bonus, "squeaks happily!")
 	add_verb(src, /mob/living/proc/toggle_resting)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
