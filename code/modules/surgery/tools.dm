@@ -172,7 +172,11 @@
 
 /obj/item/scalpel/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 80 * toolspeed, 100, 0)
+	AddComponent(/datum/component/butchering, \
+	speed = 8 SECONDS * toolspeed, \
+	effectiveness = 100, \
+	bonus_modifier = 0, \
+	)
 	AddElement(/datum/element/eyestab)
 
 /obj/item/scalpel/augment
@@ -211,7 +215,13 @@
 
 /obj/item/circular_saw/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 40 * toolspeed, 100, 5, 'sound/weapons/circsawhit.ogg') //saws are very accurate and fast at butchering
+	AddComponent(/datum/component/butchering, \
+	speed = 4 SECONDS * toolspeed, \
+	effectiveness = 100, \
+	bonus_modifier = 5, \
+	butcher_sound = 'sound/weapons/circsawhit.ogg', \
+	)
+	//saws are very accurate and fast at butchering
 
 /obj/item/circular_saw/augment
 	desc = "A small but very fast spinning saw. It rips and tears until it is done."

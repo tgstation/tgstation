@@ -285,6 +285,12 @@
 	name = "large blue scarf"
 	greyscale_colors = "#20396C#6F7F91"
 
+/obj/item/clothing/neck/large_scarf/syndie
+	name = "suspicious looking striped scarf"
+	desc = "Ready to operate."
+	greyscale_colors = "#B40000#545350"
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 40)
+
 /obj/item/clothing/neck/infinity_scarf
 	name = "infinity scarf"
 	icon_state = "infinity_scarf"

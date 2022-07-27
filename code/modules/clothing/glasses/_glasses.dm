@@ -366,6 +366,9 @@
 /obj/item/clothing/glasses/welding/attack_self(mob/user)
 	weldingvisortoggle(user)
 
+/obj/item/clothing/glasses/welding/up/Initialize(mapload)
+	. = ..()
+	visor_toggling()
 
 /obj/item/clothing/glasses/blindfold
 	name = "blindfold"
