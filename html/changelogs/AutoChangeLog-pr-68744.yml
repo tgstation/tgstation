@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed an exploit which would result in Mediborg's Amputation Adventure not amputating properly. Legendary gamers don't have to cheat."
+  - bugfix: "Clicking Mediborg's Amputation Adventure's with TK will no longer result in amputation."

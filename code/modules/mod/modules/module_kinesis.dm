@@ -145,6 +145,8 @@
 	var/atom/movable/movable_target = target
 	if(movable_target.anchored)
 		return FALSE
+	if(movable_target.throwing)
+		return FALSE
 	if(movable_target.move_resist >= MOVE_FORCE_OVERPOWERING)
 		return FALSE
 	if(ismob(movable_target))

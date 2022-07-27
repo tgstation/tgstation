@@ -912,3 +912,33 @@
       if you were somehow able to figure out how to get a specific hairstyle)
   - bugfix: The species and antagonist character icons in the preferences menu are
       no longer all bald.
+2022-07-27:
+  CoffeeDragon16:
+  - admin: head-revolutionary demotion logging will now properly display the demoting
+      admin
+  CursedBirb:
+  - bugfix: Engineer syndie sentry can only be activated with combat wrench
+  - code_imp: Added balloon alerts and made code easier to read
+  JohnFulpWillard:
+  - balance: Revenants' defile ability no longer breaks windows, only damaging it
+      until nearly broken. The damage dealt to windows has also been slightly lowered.
+  Melbert:
+  - rscadd: Almost the entire bottom half of Deltastation has been remapped.
+  - bugfix: Void Magnet no longer instantly removes itself
+  - code_imp: Convoke Void now handles the self-cast part of Void Magnet.
+  Mothblocks:
+  - balance: Heavily adjusted how much population impacts the chances of midround
+      rulesets, mostly lowering them.
+  ShizCalev:
+  - bugfix: The uplink failsafe code traitor item will now actually give you a failsafe
+      code!
+  - bugfix: The uplink failsafe code can no longer be purchased on devices that don't
+      support code entry.
+  Thunder12345:
+  - spellcheck: The butcher's cleaver will now kill people in ways accurate to real
+      culinary techniques
+  VioletN:
+  - bugfix: The "kill pet" traitor objective can now properly target pets owned by
+      the Head of Personnel, Head of Security, and Quartermaster.
+  Wallem:
+  - imageadd: Resprites the implant pad
