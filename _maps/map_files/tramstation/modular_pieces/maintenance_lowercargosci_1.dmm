@@ -33,6 +33,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/central)
+"f" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/filingcabinet/chestdrawer,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
 "i" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -89,6 +94,11 @@
 "u" = (
 /turf/closed/wall,
 /area/station/maintenance/starboard/central)
+"v" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
 "w" = (
 /obj/modular_map_root/tramstation/maintenance_lowercargosci/attachment_a,
 /turf/open/floor/iron/smooth,
@@ -100,6 +110,15 @@
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/central)
+"z" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/item/compact_remote,
+/obj/item/multitool/circuit{
+	pixel_x = -8
+	},
+/turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
 "A" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -148,16 +167,25 @@
 /area/station/maintenance/starboard/central)
 "I" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Maintenance Hatch"
-	},
+/obj/structure/rack,
+/obj/item/integrated_circuit/loaded/hello_world,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
 "L" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"O" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
 "P" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -278,10 +306,10 @@ x
 x
 x
 x
-k
-k
-k
-k
+b
+v
+b
+z
 x
 x
 "}
@@ -307,10 +335,10 @@ x
 x
 x
 x
-k
-k
-k
-k
+f
+b
+b
+I
 x
 x
 "}
@@ -338,7 +366,7 @@ x
 x
 u
 u
-I
+O
 u
 x
 x
