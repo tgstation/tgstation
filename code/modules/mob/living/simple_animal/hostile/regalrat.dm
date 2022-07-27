@@ -30,14 +30,14 @@
 	///Whether or not the regal rat is already opening an airlock
 	var/opening_airlock = FALSE
 	///The spell that the rat uses to generate miasma
-	var/datum/action/cooldown/domain
+	var/datum/action/cooldown/domain/domain
 	///The Spell that the rat uses to recruit/convert more rats.
-	var/datum/action/cooldown/riot
+	var/datum/action/cooldown/riot/riot
 
 /mob/living/simple_animal/hostile/regalrat/Initialize(mapload)
 	. = ..()
-	domain = new /datum/action/cooldown/domain
-	riot = new /datum/action/cooldown/riot
+	domain = new(src)
+	riot = new(src)
 	domain.Grant(src)
 	riot.Grant(src)
 	AddElement(/datum/element/waddling)
@@ -45,9 +45,9 @@
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/regalrat/Destroy()
-	. = ..()
 	QDEL_NULL(domain)
 	QDEL_NULL(riot)
+	return ..()
 
 /mob/living/simple_animal/hostile/regalrat/proc/get_player()
 	var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as the Royal Rat, cheesey be their crown?", ROLE_SENTIENCE, FALSE, 100, POLL_IGNORE_SENTIENCE_POTION)
@@ -207,6 +207,7 @@
 	desc = "Corrupts this area to be more suitable for your rat army."
 	check_flags = AB_CHECK_CONSCIOUS
 	cooldown_time = 6 SECONDS
+	melee_cooldown_time = 0 SECONDS
 	icon_icon = 'icons/mob/actions/actions_animal.dmi'
 	background_icon_state = "bg_clock"
 	button_icon_state = "coffer"
@@ -242,7 +243,7 @@
 	button_icon_state = "riot"
 	background_icon_state = "bg_clock"
 	cooldown_time = 8 SECONDS
-	///Checks to see if there are any nearby mice. Does not count Rats.
+	melee_cooldown_time = 0 SECONDS
 
 /datum/action/cooldown/riot/proc/riot()
 	var/cap = CONFIG_GET(number/ratcap)
