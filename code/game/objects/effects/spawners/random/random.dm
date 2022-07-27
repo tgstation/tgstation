@@ -88,6 +88,12 @@
 						spawned_loot.pixel_x = spawned_loot.pixel_y = ((!(loot_spawned%2)*loot_spawned/2)*-1)+((loot_spawned%2)*(loot_spawned+1)/2*1)
 			loot_spawned++
 
+/**
+ *  Makes the actual item related to our spawner.
+ *
+ * spawn_loc - where are we spawning it?
+ * type_path_to_make - what are we spawning?
+ **/
 /obj/effect/spawner/random/proc/make_item(spawn_loc, type_path_to_make)
 	return new type_path_to_make(spawn_loc)
 
