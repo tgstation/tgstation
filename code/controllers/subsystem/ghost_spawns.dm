@@ -1,10 +1,15 @@
+
+
+
+
+
+
 SUBSYSTEM_DEF(ghost_spawns)
 	name = "Ghost Spawns"
 	init_order = INIT_ORDER_EVENTS
 	flags = SS_BACKGROUND
 	wait = 1 SECONDS
 	runlevels = RUNLEVEL_GAME
-	offline_implications = "Ghosts will no longer be able to respawn as event mobs (Blob, etc..). Shuttle call recommended."
 
 	/// List of polls currently ongoing, to be checked on next fire()
 	var/list/datum/candidate_poll/currently_polling
@@ -36,14 +41,13 @@ SUBSYSTEM_DEF(ghost_spawns)
   * * role - The role to poll for. Should be a ROLE_x enum. If set, potential candidates who aren't eligible will be ignored
   * * antag_age_check - Whether to filter out potential candidates who don't have an old enough account
   * * poll_time - How long to poll for in deciseconds
-  * * ignore_respawnability - Whether to ignore the player's respawnability
   * * min_hours - The amount of hours needed for a potential candidate to be eligible
   * * flash_window - Whether the poll should flash a potential candidate's game window
   * * check_antaghud - Whether to filter out potential candidates who enabled AntagHUD
   * * source - The atom, atom prototype, icon or mutable appearance to display as an icon in the alert
   */
-/datum/controller/subsystem/ghost_spawns/proc/poll_candidates(question = "Would you like to play a special role?", role, antag_age_check = FALSE, poll_time = 30 SECONDS, ignore_respawnability = FALSE, min_hours = 0, flash_window = TRUE, check_antaghud = TRUE, source)
-	log_debug("Polling candidates [role ? "for [get_roletext(role)]" : "\"[question]\""] for [poll_time / 10] seconds")
+/datum/controller/subsystem/ghost_spawns/proc/poll_candidates(question = "Would you like to play a special role?", role, poll_time = 30 SECONDS, min_hours = 0, flash_window = TRUE, check_antaghud = TRUE, source)
+	log_game("Polling candidates [role ? "for special role" : "\"[question]\""] for [poll_time / 10] seconds")
 
 	// Start firing
 	polls_active = TRUE
@@ -58,7 +62,7 @@ SUBSYSTEM_DEF(ghost_spawns)
 
 	var/category = "[P.hash]_notify_action"
 
-	for(var/mob/dead/observer/M in (ignore_respawnability ? GLOB.player_list : GLOB.respawnable_list))
+	for(var/mob/dead/observer/M in GLOB.player_list)
 		if(!is_eligible(M))
 			continue
 
@@ -68,7 +72,7 @@ SUBSYSTEM_DEF(ghost_spawns)
 
 		// If we somehow send two polls for the same mob type, but with a duration on the second one shorter than the time left on the first one,
 		// we need to keep the first one's timeout rather than use the shorter one
-		var/obj/screen/alert/notify_action/current_alert = LAZYACCESS(M.alerts, category)
+		var/atom/movable/screen/alert/notify_action/current_alert = LAZYACCESS(M.alerts, category)
 		var/alert_time = poll_time
 		var/alert_poll = P
 		if(current_alert && current_alert.timeout > (world.time + poll_time - world.tick_lag))
@@ -76,7 +80,7 @@ SUBSYSTEM_DEF(ghost_spawns)
 			alert_poll = current_alert.poll
 
 		// Send them an on-screen alert
-		var/obj/screen/alert/notify_action/A = M.throw_alert(category, /obj/screen/alert/notify_action, timeout_override = alert_time, no_anim = TRUE)
+		var/atom/movable/screen/alert/notify_action/A = M.throw_alert(category, /atom/movable/screen/alert/notify_action, timeout_override = alert_time, no_anim = TRUE)
 		if(!A)
 			continue
 
@@ -144,16 +148,14 @@ SUBSYSTEM_DEF(ghost_spawns)
   * * min_hours - The amount of minimum hours the client needs before being eligible
   * * check_antaghud - Whether to consider a client who enabled AntagHUD ineligible or not
   */
-/datum/controller/subsystem/ghost_spawns/proc/is_eligible(mob/M, role, antag_age_check, role_text, min_hours, check_antaghud)
+/datum/controller/subsystem/ghost_spawns/proc/is_eligible(mob/M, role, role_text, min_hours, check_antaghud)
 	. = FALSE
 	if(!M.key || !M.client)
 		return
 	if(role)
 		if(!(role in M.client.prefs.be_special))
 			return
-		if(antag_age_check)
-			if(!player_old_enough_antag(M.client, role))
-				return
+
 	if(role_text)
 		if(jobban_isbanned(M, role_text) || jobban_isbanned(M, "Syndicate"))
 			return
@@ -176,7 +178,7 @@ SUBSYSTEM_DEF(ghost_spawns)
 	// Trim players who aren't eligible anymore
 	var/len_pre_trim = length(P.signed_up)
 	P.trim_candidates()
-	log_debug("Candidate poll [P.role ? "for [get_roletext(P.role)]" : "\"[P.question]\""] finished. [len_pre_trim] players signed up, [length(P.signed_up)] after trimming")
+	log_game("Candidate poll [P.role ? "for special role" : "\"[P.question]\""] finished. [len_pre_trim] players signed up, [length(P.signed_up)] after trimming")
 
 	P.finished = TRUE
 	currently_polling -= P
@@ -255,7 +257,7 @@ SUBSYSTEM_DEF(ghost_spawns)
   * Deletes any candidates who may have disconnected from the list
   */
 /datum/candidate_poll/proc/trim_candidates()
-	listclearnulls(signed_up)
+	list_clear_nulls(signed_up)
 	for(var/mob in signed_up)
 		var/mob/M = mob
 		if(!M.key || !M.client)
@@ -266,3 +268,6 @@ SUBSYSTEM_DEF(ghost_spawns)
   */
 /datum/candidate_poll/proc/time_left()
 	return duration - (world.time - time_started)
+
+
+
