@@ -851,7 +851,8 @@
 		if(value)
 			to_add[new_key] = value
 		ret += to_add
-		CHECK_TICK
+		if(i < target_list.len)
+			CHECK_TICK
 	return ret
 
 /**
@@ -874,7 +875,8 @@
 			ret += list(list("key" = new_key, "value" = value))
 		else
 			ret += list(list("key" = i, "value" = new_key))
-		CHECK_TICK
+		if(i < target_list.len)
+			CHECK_TICK
 	return ret
 
 /// Compares 2 lists, returns TRUE if they are the same
@@ -927,5 +929,6 @@
 		if(value)
 			to_add[new_key] = value
 		ret += to_add
-		CHECK_TICK
+		if(i < target_list.len)
+			CHECK_TICK
 	return ret

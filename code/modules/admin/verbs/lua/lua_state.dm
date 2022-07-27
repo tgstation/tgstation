@@ -68,6 +68,8 @@ GLOBAL_PROTECT(lua_usr)
 	GLOB.lua_usr = tmp_usr
 
 	// Internal errors unrelated to the code being executed are returned as text rather than lists
+	if(isnull(result))
+		result = list("status" = "errored", "param" = "__lua_load returned null (it may have runtimed - check the runtime logs)", "name" = "input")
 	if(istext(result))
 		result = list("status" = "errored", "param" = result, "name" = "input")
 	result["chunk"] = script
@@ -90,6 +92,8 @@ GLOBAL_PROTECT(lua_usr)
 	GLOB.IsLuaCall = FALSE
 	GLOB.lua_usr = tmp_usr
 
+	if(isnull(result))
+		result = list("status" = "errored", "param" = "__lua_call returned null (it may have runtimed - check the runtime logs)", "name" = "input")
 	if(istext(result))
 		result = list("status" = "errored", "param" = result, "name" = islist(function) ? jointext(function, ".") : function)
 	check_if_slept(result)
@@ -111,6 +115,8 @@ GLOBAL_PROTECT(lua_usr)
 	var/result = __lua_awaken(internal_id)
 	GLOB.IsLuaCall = FALSE
 
+	if(isnull(result))
+		result = list("status" = "errored", "param" = "__lua_awaken returned null (it may have runtimed - check the runtime logs)", "name" = "input")
 	if(istext(result))
 		result = list("status" = "errored", "param" = result, "name" = "An attempted awaken")
 	check_if_slept(result)
@@ -126,6 +132,8 @@ GLOBAL_PROTECT(lua_usr)
 	var/result = __lua_resume(internal_id, index, call_args)
 	GLOB.IsLuaCall = FALSE
 
+	if(isnull(result))
+		result = list("status" = "errored", "param" = "__lua_resume returned null (it may have runtimed - check the runtime logs)", "name" = "input")
 	if(istext(result))
 		result = list("status" = "errored", "param" = result, "name" = "An attempted resume")
 	check_if_slept(result)
