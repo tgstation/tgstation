@@ -30460,6 +30460,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/processing)
+"hIy" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/secure_closet/security/science,
+/turf/open/floor/iron,
+/area/station/security/checkpoint/medical/medsci)
 "hIB" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 1;
@@ -91158,10 +91165,10 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "wHt" = (
-/obj/structure/closet/secure_closet/security/science,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/effect/turf_decal/bot,
+/obj/structure/closet/secure_closet/security/med,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/medical/medsci)
 "wHx" = (
@@ -134154,7 +134161,7 @@ wzK
 dgU
 mjq
 lNw
-wHt
+hIy
 wHt
 lNw
 vIM
