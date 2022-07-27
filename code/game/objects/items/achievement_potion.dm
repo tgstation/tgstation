@@ -14,3 +14,8 @@
 	name = "chef's midas potion"
 	desc = "A reward for Nanotrasen's most prolific chefs!"
 	goldenk = TRUE
+
+/obj/item/achievement_potion/hardcore
+	name = "martyr's midas potion"
+	desc = "You must've seen some shit to get a hold of this."
+	goldenw = TRUE

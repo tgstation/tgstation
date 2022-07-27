@@ -26,6 +26,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 	///Achievement items.
 	var/goldenk = FALSE
 	var/goldens = FALSE
+	var/goldenw = FALSE
 	///Icon file for mob worn overlays.
 	var/icon/worn_icon
 	///Icon state for mob worn overlays, if null the normal icon_state will be used.
