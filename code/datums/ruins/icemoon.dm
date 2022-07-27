@@ -55,24 +55,13 @@
 	description = "Moffuchi's Family Pizzeria chain has a reputation for providing affordable artisanal meals of questionable edibility. This particular pizzeria seems to have been abandoned for some time."
 	suffix = "icemoon_surface_pizza.dmm"
 
-// above and below ground together
-
-/datum/map_template/ruin/icemoon/mining_site
+/datum/map_template/ruin/icemoon/underground/mining_site
 	name = "Mining Site"
 	id = "miningsite"
 	description = "Ruins of a site where people once mined with primitive tools for ore."
-	suffix = "icemoon_surface_mining_site.dmm"
-	always_place = TRUE
-	always_spawn_with = list(/datum/map_template/ruin/icemoon/underground/mining_site_below = PLACE_BELOW)
-
-/datum/map_template/ruin/icemoon/underground/mining_site_below
-	name = "Mining Site Underground"
-	id = "miningsite-underground"
-	description = "Who knew ladders could be so useful?"
 	suffix = "icemoon_underground_mining_site.dmm"
+	always_place = TRUE
 	unpickable = TRUE
-
-// below ground only
 
 /datum/map_template/ruin/icemoon/underground
 	name = "underground ruin"

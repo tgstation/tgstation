@@ -3,11 +3,8 @@
 /turf/open/misc/ice/icemoon,
 /area/icemoon/underground/explored)
 "b" = (
-/obj/structure/ladder{
-	travel_time = 40
-	},
-/turf/open/misc/ice/icemoon,
-/area/icemoon/underground/explored)
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/ruin/unpowered)
 "d" = (
 /turf/template_noop,
 /area/template_noop)
@@ -24,14 +21,88 @@
 /obj/item/knife/combat/survival,
 /turf/open/misc/ice/icemoon,
 /area/icemoon/underground/explored)
+"j" = (
+/obj/structure/mineral_door/wood,
+/obj/structure/barricade/wooden/crude/snow,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
 "l" = (
 /turf/closed/indestructible/rock/snow/ice/ore,
 /area/icemoon/underground/explored)
+"n" = (
+/obj/structure/mineral_door/silver,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"x" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"B" = (
+/obj/structure/barricade/wooden/snowed,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"H" = (
+/obj/structure/table/wood,
+/obj/item/pen,
+/obj/machinery/light/broken/directional/west,
+/obj/item/paper/crumpled/bloody{
+	info = "help...";
+	text = ""
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"J" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"K" = (
+/obj/item/clothing/suit/hooded/explorer,
+/obj/item/clothing/mask/gas/explorer,
+/obj/item/clothing/gloves/color/black,
+/obj/item/storage/backpack/explorer,
+/obj/item/flashlight/lantern,
+/obj/item/storage/bag/ore,
+/obj/structure/closet,
+/obj/item/clothing/shoes/winterboots/ice_boots,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"N" = (
+/obj/effect/decal/cleanable/blood/gibs/old,
+/obj/effect/mob_spawn/corpse/human/miner/explorer,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"R" = (
+/obj/structure/fireplace,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"S" = (
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"T" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
 "V" = (
 /obj/structure/frost_miner_prism,
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner,
 /turf/open/misc/ice/icemoon,
 /area/icemoon/underground/explored)
+"W" = (
+/obj/structure/closet/toolcloset,
+/obj/item/wrench,
+/obj/item/screwdriver,
+/obj/item/crowbar,
+/obj/item/weldingtool/largetank,
+/obj/item/wirecutters,
+/obj/item/radio/off,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
 "Z" = (
 /obj/structure/frost_miner_prism,
 /turf/open/misc/ice/icemoon,
@@ -58,7 +129,7 @@ l
 l
 l
 l
-l
+d
 d
 d
 d
@@ -88,7 +159,7 @@ l
 l
 l
 l
-l
+d
 d
 d
 d
@@ -118,7 +189,7 @@ Z
 l
 l
 l
-l
+d
 d
 d
 d
@@ -148,7 +219,7 @@ a
 l
 l
 l
-l
+d
 d
 d
 d
@@ -178,7 +249,7 @@ a
 l
 l
 l
-l
+d
 d
 d
 "}
@@ -208,7 +279,7 @@ a
 l
 l
 l
-l
+d
 d
 "}
 (7,1,1) = {"
@@ -238,7 +309,7 @@ a
 l
 l
 l
-l
+d
 "}
 (8,1,1) = {"
 l
@@ -575,7 +646,7 @@ a
 a
 a
 a
-b
+a
 a
 a
 a
@@ -760,7 +831,7 @@ a
 l
 l
 l
-l
+d
 "}
 (26,1,1) = {"
 d
@@ -788,7 +859,7 @@ a
 l
 l
 l
-l
+d
 d
 "}
 (27,1,1) = {"
@@ -816,7 +887,7 @@ a
 l
 l
 l
-l
+d
 d
 d
 "}
@@ -844,7 +915,7 @@ a
 l
 l
 l
-l
+d
 d
 d
 d
@@ -872,7 +943,7 @@ Z
 l
 l
 l
-l
+d
 d
 d
 d
@@ -890,17 +961,17 @@ l
 l
 l
 l
+b
+b
+S
+b
+b
 l
 l
 l
 l
 l
-l
-l
-l
-l
-l
-l
+d
 d
 d
 d
@@ -918,17 +989,278 @@ l
 l
 l
 l
+b
+b
+b
+n
+b
+b
+b
 l
 l
 l
-l
-l
-l
-l
-l
-l
-l
-l
+d
+d
+d
+d
+d
+d
+d
+"}
+(32,1,1) = {"
+d
+d
+d
+d
+d
+d
+d
+d
+d
+b
+b
+W
+S
+J
+S
+H
+b
+b
+d
+d
+d
+d
+d
+d
+d
+d
+d
+"}
+(33,1,1) = {"
+d
+d
+d
+d
+d
+d
+d
+d
+d
+b
+b
+S
+S
+J
+S
+K
+b
+b
+d
+d
+d
+d
+d
+d
+d
+d
+d
+"}
+(34,1,1) = {"
+d
+d
+d
+d
+d
+d
+d
+d
+d
+b
+b
+R
+S
+J
+x
+S
+b
+b
+d
+d
+d
+d
+d
+d
+d
+d
+d
+"}
+(35,1,1) = {"
+d
+d
+d
+d
+d
+d
+d
+d
+d
+b
+b
+S
+S
+x
+S
+S
+b
+b
+d
+d
+d
+d
+d
+d
+d
+d
+d
+"}
+(36,1,1) = {"
+d
+d
+d
+d
+d
+d
+d
+d
+d
+b
+b
+N
+T
+T
+S
+S
+b
+b
+d
+d
+d
+d
+d
+d
+d
+d
+d
+"}
+(37,1,1) = {"
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+b
+b
+S
+S
+S
+b
+b
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+"}
+(38,1,1) = {"
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+b
+B
+b
+b
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+"}
+(39,1,1) = {"
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+b
+S
+b
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+"}
+(40,1,1) = {"
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+b
+j
+b
+d
+d
+d
+d
+d
+d
 d
 d
 d

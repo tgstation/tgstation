@@ -7,9 +7,8 @@
 #_maps/RandomRuins/AnywhereRuins/golem_ship.dmm
 
 ##MEGAFAUNA
-#_maps/RandomRuins/IceRuins/icemoon_surface_mining_site.dmm
 #_maps/RandomRuins/IceRuins/icemoon_underground_mining_site.dmm
-#_maps/RandomRuins/IceRuins/icemoon_underground_wendigo_cave.dmm
+#_maps/RandomRuins/IceRuins/icemoon_u+nderground_wendigo_cave.dmm
 #_maps/RandomRuins/IceRuins/icemoon_underground_lavaland.dmm
 
 ##MISC
