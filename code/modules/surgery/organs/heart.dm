@@ -107,15 +107,13 @@
 	actions_types = list(/datum/action/item_action/organ_action/cursed_heart)
 	var/last_pump = 0
 	var/add_colour = TRUE //So we're not constantly recreating colour datums
-	var/pump_delay = 60 //you can pump 1 second early, for lag, but no more (otherwise you could spam heal)
-	var/blood_loss = 100 //600 blood is human default, so 5 failures (below 122 blood is where humans die because reasons?)
+	var/pump_delay = 70 //you can pump 1 second early, for lag, but no more (otherwise you could spam heal)
 
 	//How much to heal per pump, negative numbers would HURT the player
 	var/heal_brute = 25
 	var/heal_burn = 25
 	var/heal_oxy = 10
 	var/heal_toxin = 10
-	var/heal_stamina = 25
 
 
 /obj/item/organ/internal/heart/cursed/attack(mob/living/carbon/human/accursed, mob/living/carbon/human/user, obj/target)
@@ -128,10 +126,10 @@
 
 /obj/item/organ/internal/heart/cursed/on_life(delta_time, times_fired)
 	if(world.time > (last_pump + pump_delay))
-		if(ishuman(owner) && owner.client) //While this entire item exists to make people suffer, they can't control disconnects.
+		if(ishuman(owner) && owner.client && owner.client?.lastping < 250) //While this entire item exists to make people suffer, they can't control disconnects.
 			var/mob/living/carbon/human/accursed_human = owner
 			if(accursed_human.dna && !(NOBLOOD in accursed_human.dna.species.species_traits))
-				accursed_human.blood_volume = max(accursed_human.blood_volume - blood_loss, 0)
+				accursed_human.adjust_curse_effect(rand(1,7))
 				to_chat(accursed_human, span_userdanger("You have to keep pumping your blood!"))
 				if(add_colour)
 					accursed_human.add_client_colour(/datum/client_colour/cursed_heart_blood) //bloody screen so real
@@ -139,7 +137,7 @@
 		else
 			last_pump = world.time //lets be extra fair *sigh*
 
-/obj/item/organ/internal/heart/cursed/Insert(mob/living/carbon/accursed, special = 0)
+/obj/item/organ/internal/heart/cursed/Insert(mob/living/carbon/accursed, special = 0, drop_if_replaced = FALSE)
 	..()
 	if(owner)
 		to_chat(owner, span_userdanger("Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!"))
@@ -168,14 +166,13 @@
 		var/mob/living/carbon/human/accursed = owner
 		if(istype(accursed))
 			if(accursed.dna && !(NOBLOOD in accursed.dna.species.species_traits))
-				accursed.blood_volume = min(accursed.blood_volume + cursed_heart.blood_loss*0.5, BLOOD_VOLUME_MAXIMUM)
+				accursed.adjust_curse_effect(rand(-7,-4))
 				accursed.remove_client_colour(/datum/client_colour/cursed_heart_blood)
 				cursed_heart.add_colour = TRUE
 				accursed.adjustBruteLoss(-cursed_heart.heal_brute)
 				accursed.adjustFireLoss(-cursed_heart.heal_burn)
 				accursed.adjustOxyLoss(-cursed_heart.heal_oxy)
 				accursed.adjustToxLoss(-cursed_heart.heal_toxin)
-				accursed.adjustStaminaLoss(-cursed_heart.heal_stamina)
 
 
 /datum/client_colour/cursed_heart_blood

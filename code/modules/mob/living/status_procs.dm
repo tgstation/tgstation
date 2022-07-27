@@ -752,7 +752,15 @@
 	else if(amount > 0)
 		apply_status_effect(/datum/status_effect/inebriated/tipsy, amount)
 
+/mob/living/proc/adjust_curse_effect(amount, down_to = 0, up_to = INFINITY)
+	if(!isnum(amount))
+		CRASH("adjust_curse_effect: called with an invalid amount. (Got: [amount])")
 
+	var/datum/status_effect/cursed/cursed = has_status_effect(/datum/status_effect/cursed)
+	if(cursed)
+		cursed.set_curse_value(clamp(cursed.curse_value + amount, down_to, up_to))
+	else if(amount > 0)
+		apply_status_effect(/datum/status_effect/cursed/nauseous, amount)
 /**
  * Directly sets the "drunk value" the mob is currently experiencing to the passed value,
  * or applies a drunk effect with the passed value if the mob isn't currently drunk
@@ -769,7 +777,20 @@
 	else if(set_to > 0)
 		apply_status_effect(/datum/status_effect/inebriated/tipsy, set_to)
 
+/mob/living/proc/set_curse_effect(set_to)
+	if(!isnum(set_to) || set_to < 0)
+		CRASH("set_curse_effect: called with an invalid value. (Got: [set_to])")
+
+	var/datum/status_effect/cursed/cursed = has_status_effect(/datum/status_effect/cursed)
+	if(cursed)
+		cursed.set_curse_value(set_to)
+	else if(set_to > 0)
+		apply_status_effect(/datum/status_effect/cursed/nauseous, set_to)
 /// Helper to get the amount of drunkness the mob's currently experiencing.
 /mob/living/proc/get_drunk_amount()
 	var/datum/status_effect/inebriated/inebriation = has_status_effect(/datum/status_effect/inebriated)
 	return inebriation?.drunk_value || 0
+
+/mob/living/proc/get_curse_amount()
+	var/datum/status_effect/cursed/cursed = has_status_effect(/datum/status_effect/cursed)
+	return cursed?.curse_value || 0
