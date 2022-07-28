@@ -321,8 +321,6 @@
 	if(client?.is_veteran() && client?.prefs.read_preference(/datum/preference/toggle/playtime_reward_cloak))
 		neck = /obj/item/clothing/neck/cloak/skill_reward/playing
 
-/datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly)
-	. = ..()
 	if(H.client?.get_award_status(HARDCORE_RANDOM_SCORE) >= 5000 && H.client?.prefs.read_preference(/datum/preference/toggle/achievement_potions) && H.has_quirk(/datum/quirk/paraplegic))
 		backpack_contents[/obj/item/achievement_potion/hardcore] = 1
 
