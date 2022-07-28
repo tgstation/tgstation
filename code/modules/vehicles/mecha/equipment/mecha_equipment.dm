@@ -187,8 +187,8 @@
 	if(islist(chassis.equip_by_category[to_unequip_slot]))
 		chassis.equip_by_category[to_unequip_slot] -= src
 	else
-		chassis.equip_by_category[to_unequip_slot] = null
-	log_message("[src] removed from equipment on [chassis].", LOG_MECHA)
+		SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_DETACHED)
+	log_message("[src] removed from equipment.", LOG_MECHA)
 	chassis = null
 
 /obj/item/mecha_parts/mecha_equipment/log_message(message, message_type=LOG_GAME, color=null, log_globally)
