@@ -106,6 +106,7 @@
 		/obj/item/clothing/gloves/maid = 1,
 		/obj/item/clothing/neck/maid = 1,
 		/obj/item/clothing/under/rank/civilian/janitor/maid = 1,
+		/obj/item/clothing/accessory/maidapron = 1,
 		/obj/item/clothing/glasses/cold=1,
 		/obj/item/clothing/glasses/heat=1,
 		/obj/item/clothing/suit/costume/whitedress = 1,

@@ -118,7 +118,7 @@
 
 /obj/item/clothing/under/costume/maid/Initialize(mapload)
 	. = ..()
-	var/obj/item/clothing/accessory/maidapron/A = new (src)
+	var/obj/item/clothing/accessory/maidcorset/A = new (src)
 	attach_accessory(A)
 
 /obj/item/clothing/under/costume/geisha
