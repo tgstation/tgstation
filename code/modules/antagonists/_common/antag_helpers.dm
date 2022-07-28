@@ -8,17 +8,6 @@
 		if(!antag_type || !specific && istype(A,antag_type) || specific && A.type == antag_type)
 			. += A.owner
 
-/proc/get_player_client(client/player)
-	if(ismob(player))
-		var/mob/player_mob = player
-		player = player_mob.client
-	else if(istype(player, /datum/mind))
-		var/datum/mind/player_mind = player
-		player = player_mind.current.client
-	if(!istype(player))
-		return FALSE
-	return player
-
 /proc/get_most_experienced(list/players, specific_role)
 	if(!CONFIG_GET(flag/use_exp_tracking)) //woops
 		return players[1]
