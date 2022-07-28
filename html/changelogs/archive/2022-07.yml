@@ -942,3 +942,40 @@
       the Head of Personnel, Head of Security, and Quartermaster.
   Wallem:
   - imageadd: Resprites the implant pad
+2022-07-28:
+  CoffeeDragon16:
+  - admin: added logging for when you fail to tip something over
+  - bugfix: cleanbots will display their cleaning animation and clean at the right
+      speed again
+  Fikou:
+  - rscadd: Nuke Op reinforcements now come in different flavors.
+  - balance: Nuke Op reinforcements now start with plastikovs.
+  - bugfix: the hook shotguns hook and the m90gls grenade launcher no longer hit the
+      user
+  Melbert:
+  - bugfix: Fixes some alien actions like Evolve not working.
+  RaveRadbury:
+  - rscadd: Adds the old maid apron to the autodrobe
+  - imageadd: Returned the maid apron
+  Salex08:
+  - refactor: Mining items have been refactored to make better use of components.
+  ShizCalev:
+  - bugfix: Immortal anomalies (eg bioscramblers) will no longer have a death timer
+      overlay.
+  - bugfix: Fixed an exploit which would result in Mediborg's Amputation Adventure
+      not amputating properly. Legendary gamers don't have to cheat.
+  - bugfix: Clicking Mediborg's Amputation Adventure's with TK will no longer result
+      in amputation.
+  - bugfix: Cyborg flashes will no longer fail to drop from the heads of borgs.
+  - bugfix: Butchering a bodypart for it's organs while inside a locker will no longer
+      drop the organs /outside/ the locker.
+  - bugfix: Surgical moth wing reconstruction can no longer be attempted on wings
+      that... aren't moth wings!
+  SuperDrish:
+  - bugfix: Fixed Heterochromia not knowing where the right and left eyes are
+  orthography:
+  - spellcheck: minor grammatical change to the golden wheelchair.
+  tf-4:
+  - balance: Reflectors can now reflect nuclear particles.
+  vincentiusvin:
+  - qol: tidied up tram's atmospherics piping
