@@ -28,7 +28,7 @@
 	var/disgust_metabolism = 1
 
 	///The rate that the stomach will transfer reagents to the body
-	var/metabolism_efficiency = 0.05 // the lowest we should go is 0.05
+	var/metabolism_efficiency = 0.05 // the lowest we should go is 0.025
 
 
 /obj/item/organ/internal/stomach/Initialize(mapload)
