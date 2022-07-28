@@ -46,6 +46,10 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/central)
+"j" = (
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
 "k" = (
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
@@ -741,7 +745,7 @@ x
 x
 x
 x
-k
+j
 a
 u
 x

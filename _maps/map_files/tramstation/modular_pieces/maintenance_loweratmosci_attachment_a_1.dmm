@@ -1,0 +1,281 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"n" = (
+/turf/template_noop,
+/area/template_noop)
+"s" = (
+/obj/modular_map_connector,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"u" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/template_noop)
+"v" = (
+/turf/closed/wall,
+/area/template_noop)
+"O" = (
+/turf/closed/wall,
+/area/station/maintenance/starboard/lesser)
+"R" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/template_noop)
+"Y" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+
+(1,1,1) = {"
+O
+O
+O
+O
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+"}
+(2,1,1) = {"
+Y
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+s
+"}
+(3,1,1) = {"
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+Y
+O
+O
+O
+O
+n
+"}
+(4,1,1) = {"
+n
+n
+n
+n
+n
+v
+u
+u
+R
+u
+u
+u
+u
+u
+v
+n
+n
+n
+"}
+(5,1,1) = {"
+n
+n
+n
+n
+n
+v
+v
+v
+v
+u
+u
+u
+u
+u
+v
+n
+n
+n
+"}
+(6,1,1) = {"
+n
+n
+n
+n
+n
+n
+n
+n
+v
+u
+u
+u
+u
+u
+v
+n
+n
+n
+"}
+(7,1,1) = {"
+n
+n
+n
+n
+n
+n
+n
+n
+v
+v
+v
+v
+v
+v
+v
+n
+n
+n
+"}
+(8,1,1) = {"
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+"}
+(9,1,1) = {"
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+"}
+(10,1,1) = {"
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+"}
+(11,1,1) = {"
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+"}
+(12,1,1) = {"
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+"}

@@ -2,7 +2,7 @@
 "aj" = (
 /obj/modular_map_connector,
 /turf/template_noop,
-/area/space)
+/area/template_noop)
 "bp" = (
 /obj/item/pickaxe/rusted,
 /turf/open/misc/asteroid/airless,
@@ -11,6 +11,17 @@
 /obj/item/relic,
 /turf/open/misc/asteroid/airless,
 /area/mine/explored)
+"cm" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/xeno_spawn,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"ex" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate,
+/obj/effect/spawner/random/maintenance/four,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
 "fe" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/spawner/random/structure/girder,
@@ -40,8 +51,28 @@
 /obj/effect/decal/cleanable/robot_debris,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
+"hi" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet,
+/obj/effect/spawner/random/maintenance/three,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
 "hG" = (
 /turf/closed/wall/rock/porous,
+/area/station/maintenance/starboard/lesser)
+"ia" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/steam_vent,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"iB" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/garbage{
+	spawn_loot_count = 2;
+	spawn_random_offset = 1;
+	spawn_scatter_radius = 4
+	},
+/turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 "iW" = (
 /mob/living/simple_animal/hostile/lizard/space{
@@ -51,7 +82,6 @@
 /turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "jW" = (
-/obj/machinery/door/airlock/maintenance_hatch,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
@@ -60,6 +90,9 @@
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
 "ku" = (
@@ -67,7 +100,7 @@
 /area/mine/explored)
 "kw" = (
 /turf/template_noop,
-/area/space)
+/area/template_noop)
 "mi" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/emcloset,
@@ -108,9 +141,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
-"rF" = (
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/starboard/lesser)
 "rT" = (
 /obj/structure/falsewall,
 /obj/effect/decal/cleanable/dirt,
@@ -133,22 +163,35 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "sci-maint-passthrough"
 	},
-/obj/machinery/door/airlock/maintenance_hatch,
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/science/general,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
 "sO" = (
 /obj/item/shovel,
 /turf/open/misc/asteroid/airless,
 /area/mine/explored)
+"sP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
 "tX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/assembly/mousetrap/armed,
 /obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
 "uu" = (
@@ -177,11 +220,8 @@
 "wT" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
 /obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
 "xA" = (
@@ -191,10 +231,20 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "sci-maint-passthrough"
 	},
-/obj/machinery/door/airlock/maintenance_hatch,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
 /turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
+"yb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/plastic{
+	dir = 8
+	},
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 "zR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -215,6 +265,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
 "AU" = (
@@ -225,6 +276,11 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/girder,
 /turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"Ew" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/moisture_trap,
+/turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 "EB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -240,6 +296,13 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/item/crowbar,
 /turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"FQ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/plastic{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 "GH" = (
 /obj/machinery/camera{
@@ -277,7 +340,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
+"Ki" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "Ks" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -292,6 +360,20 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
+/area/station/maintenance/starboard/lesser)
+"LV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/engineering/material_cheap,
+/obj/effect/spawner/random/engineering/material_cheap,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"Mu" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/engineering/flashlight,
+/obj/effect/spawner/random/engineering/tool,
+/turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 "MF" = (
 /obj/item/shard,
@@ -310,6 +392,11 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
+"Ns" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
 "NK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -323,15 +410,9 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
-"Pf" = (
-/turf/open/floor/catwalk_floor,
-/area/station/maintenance/starboard/lesser)
 "Pk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/space_heater,
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 "Qk" = (
@@ -342,6 +423,12 @@
 /area/station/maintenance/starboard/lesser)
 "Qp" = (
 /obj/modular_map_root/tramstation/maintenance_loweratmosci/attachment_b,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"Qy" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/effect/spawner/random/trash/cigbutt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 "QL" = (
@@ -384,6 +471,16 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
+"UV" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
 "Vk" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -391,12 +488,14 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "sci-maint-passthrough"
 	},
-/obj/machinery/door/airlock/maintenance_hatch,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
 "VL" = (
@@ -428,6 +527,13 @@
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
+"Xx" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
 "XC" = (
 /obj/item/stack/ore/iron,
 /turf/open/misc/asteroid/airless,
@@ -438,6 +544,11 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"Ze" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 
 (1,1,1) = {"
@@ -565,10 +676,10 @@ kw
 kw
 "}
 (5,1,1) = {"
-RG
-RG
-RG
-RG
+kw
+kw
+kw
+kw
 kw
 kw
 kw
@@ -596,25 +707,25 @@ kw
 kw
 "}
 (6,1,1) = {"
-rF
-rF
-rF
-rF
-rF
-rF
-rF
-rF
-rF
-rF
-rF
-rF
-rF
-rF
-rF
-rF
-rF
+kw
+kw
+kw
+kw
+kw
+kw
+kw
+kw
+kw
+kw
+kw
+kw
+kw
+kw
+kw
+kw
+kw
 sc
-Pf
+wT
 kw
 kw
 kw
@@ -627,25 +738,25 @@ kw
 kw
 "}
 (7,1,1) = {"
+kw
+kw
+kw
+kw
+kw
+kw
+kw
+kw
+kw
+kw
+kw
+kw
+kw
+kw
+kw
+kw
+kw
 RG
-RG
-RG
-RG
-RG
-RG
-RG
-RG
-RG
-RG
-RG
-RG
-RG
-RG
-RG
-RG
-RG
-RG
-Pf
+wT
 kw
 kw
 kw
@@ -676,7 +787,7 @@ kw
 kw
 kw
 RG
-Pf
+wT
 kw
 kw
 kw
@@ -707,7 +818,7 @@ kw
 kw
 kw
 RG
-Pf
+wT
 kw
 kw
 kw
@@ -738,7 +849,7 @@ kw
 kw
 kw
 RG
-Pf
+wT
 RG
 kw
 kw
@@ -769,7 +880,7 @@ kw
 kw
 kw
 RG
-Pf
+wT
 RG
 Hy
 kw
@@ -800,8 +911,8 @@ kw
 kw
 kw
 RG
-Pf
-rF
+wT
+ex
 Hy
 kw
 kw
@@ -831,8 +942,8 @@ kw
 kw
 kw
 RG
-Pf
-rF
+wT
+ia
 Hy
 kw
 kw
@@ -862,8 +973,8 @@ kw
 kw
 kw
 RG
-Pf
-rF
+wT
+hi
 Hy
 kw
 kw
@@ -893,7 +1004,7 @@ kw
 kw
 kw
 RG
-Pf
+wT
 RG
 Hy
 kw
@@ -924,7 +1035,7 @@ kw
 kw
 kw
 RG
-Pf
+wT
 RG
 kw
 kw
@@ -955,8 +1066,8 @@ kw
 kw
 kw
 RG
-Pf
-rF
+wT
+ra
 kw
 kw
 kw
@@ -986,8 +1097,8 @@ kw
 kw
 kw
 RG
-Pf
-Pf
+wT
+wT
 kw
 kw
 kw
@@ -1017,8 +1128,8 @@ kw
 kw
 kw
 RG
-Pf
-rF
+wT
+ra
 kw
 kw
 kw
@@ -1048,7 +1159,7 @@ kw
 kw
 kw
 RG
-Pf
+wT
 RG
 kw
 kw
@@ -1079,16 +1190,16 @@ kw
 kw
 kw
 RG
-Pf
-Pf
-Pf
-Pf
-Pf
-Pf
-Pf
-Pf
-Pf
-Pf
+wT
+wT
+wT
+wT
+wT
+wT
+wT
+wT
+wT
+wT
 QL
 "}
 (22,1,1) = {"
@@ -1110,16 +1221,16 @@ kw
 kw
 kw
 RG
-Pf
+wT
 RG
-rF
-rF
-rF
+FQ
+Xx
+Ew
 RG
-Pf
+wT
 RG
-rF
-rF
+ra
+ra
 Hy
 "}
 (23,1,1) = {"
@@ -1141,13 +1252,13 @@ RG
 RG
 RG
 RG
-Pf
-RG
-rF
-rF
-rF
-RG
-Pf
+wT
+Ki
+Ze
+ra
+LV
+Ki
+wT
 RG
 RG
 RG
@@ -1164,21 +1275,21 @@ RG
 RG
 RG
 RG
-Pf
-Pf
-Pf
-Pf
-Pf
-Pf
-Pf
-Pf
-Pf
-RG
-rF
-rF
-rF
-RG
-Pf
+wT
+wT
+wT
+wT
+wT
+wT
+wT
+wT
+wT
+Ki
+Qy
+ra
+Mu
+Ki
+wT
 RG
 ot
 ot
@@ -1192,25 +1303,25 @@ kw
 kw
 kw
 RG
-Pf
-Pf
-Pf
-Pf
+wT
+wT
+wT
+wT
 kw
 kw
 kw
 kw
 kw
 kw
-rF
-Pf
+ra
+ra
 RG
-rF
-rF
-rF
+yb
+ra
+ra
 RG
-Pf
-Qp
+wT
+RG
 ot
 ot
 ot
@@ -1223,7 +1334,7 @@ kw
 kw
 kw
 RG
-Pf
+wT
 kw
 kw
 kw
@@ -1233,14 +1344,14 @@ kw
 kw
 kw
 kw
-rF
-Pf
-Pf
-Pf
-Pf
-Pf
-Pf
-Pf
+ra
+ra
+ra
+ra
+iB
+cm
+Ns
+wT
 RG
 ot
 ot
@@ -1254,7 +1365,7 @@ kw
 kw
 kw
 RG
-Pf
+wT
 kw
 kw
 kw
@@ -1271,9 +1382,9 @@ kw
 RG
 RG
 RG
-Pf
+wT
 RG
-ot
+ku
 ot
 ot
 "}
@@ -1302,10 +1413,10 @@ kw
 ot
 ot
 RG
-Pf
+wT
 RG
-ot
-ot
+iW
+ku
 ot
 "}
 (29,1,1) = {"
@@ -1333,10 +1444,10 @@ kw
 ot
 ot
 RG
-Pf
+wT
 RG
-ot
-ot
+bJ
+ku
 ot
 "}
 (30,1,1) = {"
@@ -1364,9 +1475,9 @@ kw
 ot
 ot
 RG
-Pf
+wT
 RG
-ot
+ku
 ot
 kw
 "}
@@ -1395,7 +1506,7 @@ kw
 ot
 ot
 RG
-Pf
+wT
 RG
 ot
 ot
@@ -1419,16 +1530,16 @@ kw
 kw
 kw
 kw
+kw
+kw
+kw
+kw
 ot
-sO
-ku
-ku
-ML
 ot
 RG
-Pf
+wT
 RG
-ku
+ot
 ot
 kw
 "}
@@ -1450,17 +1561,17 @@ kw
 kw
 kw
 kw
+kw
+kw
+kw
+kw
 ot
-XC
-ku
-ku
-ku
-ku
+ot
 RG
-Pf
+wT
 RG
-iW
-ku
+ot
+ot
 kw
 "}
 (34,1,1) = {"
@@ -1481,17 +1592,17 @@ kw
 kw
 kw
 kw
-kw
-kw
-kw
-kw
 ot
-bp
-RG
-Pf
-RG
-bJ
+sO
 ku
+ku
+ML
+ot
+RG
+wT
+RG
+ot
+ot
 kw
 "}
 (35,1,1) = {"
@@ -1512,16 +1623,16 @@ kw
 kw
 kw
 kw
-kw
-kw
-kw
-kw
 ot
-ot
-RG
-Pf
-RG
+XC
 ku
+ku
+ku
+ku
+RG
+wT
+Qp
+ot
 ot
 kw
 "}
@@ -1548,9 +1659,9 @@ kw
 kw
 kw
 ot
-ot
+bp
 RG
-Pf
+wT
 RG
 ot
 ot
@@ -1736,7 +1847,7 @@ kw
 mm
 qk
 Pk
-wT
+uu
 RG
 ot
 ot
@@ -1766,8 +1877,8 @@ kw
 kw
 sa
 NK
-VL
-uu
+sP
+UV
 RG
 ot
 ot

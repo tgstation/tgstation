@@ -282,6 +282,10 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/central)
+"Wy" = (
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
 "Yk" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
@@ -806,7 +810,7 @@ nJ
 nJ
 nJ
 nJ
-mi
+Wy
 YX
 NO
 nJ
