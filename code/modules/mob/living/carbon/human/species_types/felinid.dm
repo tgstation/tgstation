@@ -28,84 +28,84 @@
 		fish.toxpwr = 0
 
 
-/datum/species/human/felinid/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
-	if(ishuman(C))
-		var/mob/living/carbon/human/H = C
+/datum/species/human/felinid/on_species_gain(mob/living/carbon/carbon, datum/species/old_species, pref_load)
+	if(ishuman(carbon))
+		var/mob/living/carbon/human/human = carbon
 		if(!pref_load) //Hah! They got forcefully purrbation'd. Force default felinid parts on them if they have no mutant parts in those areas!
-			H.dna.features["tail_cat"] = "Cat"
-			if(H.dna.features["ears"] == "None")
-				H.dna.features["ears"] = "Cat"
-		if(H.dna.features["ears"] == "Cat")
+			human.dna.features["tail_cat"] = "Cat"
+			if(human.dna.features["ears"] == "None")
+				human.dna.features["ears"] = "Cat"
+		if(human.dna.features["ears"] == "Cat")
 			var/obj/item/organ/internal/ears/cat/ears = new
-			ears.Insert(H, drop_if_replaced = FALSE)
+			ears.Insert(human, drop_if_replaced = FALSE)
 		else
 			mutantears = /obj/item/organ/internal/ears
 	return ..()
 
 /proc/mass_purrbation()
-	for(var/M in GLOB.mob_list)
-		if(ishuman(M))
-			purrbation_apply(M)
+	for(var/mob in GLOB.mob_list)
+		if(ishuman(mob))
+			purrbation_apply(mob)
 		CHECK_TICK
 
 /proc/mass_remove_purrbation()
-	for(var/M in GLOB.mob_list)
-		if(ishuman(M))
-			purrbation_remove(M)
+	for(var/mob in GLOB.mob_list)
+		if(ishuman(mob))
+			purrbation_remove(mob)
 		CHECK_TICK
 
-/proc/purrbation_toggle(mob/living/carbon/human/H, silent = FALSE)
-	if(!ishuman(H))
+/proc/purrbation_toggle(mob/living/carbon/human/human, silent = FALSE)
+	if(!ishuman(human))
 		return
-	if(!istype(H.getorganslot(ORGAN_SLOT_EARS), /obj/item/organ/internal/ears/cat))
-		purrbation_apply(H, silent)
+	if(!istype(human.getorganslot(ORGAN_SLOT_EARS), /obj/item/organ/internal/ears/cat))
+		purrbation_apply(human, silent = silent)
 		. = TRUE
 	else
-		purrbation_remove(H, silent)
+		purrbation_remove(human, silent = silent)
 		. = FALSE
 
-/proc/purrbation_apply(mob/living/carbon/human/H, silent = FALSE)
-	if(!ishuman(H) || isfelinid(H))
+/proc/purrbation_apply(mob/living/carbon/human/human, silent = FALSE)
+	if(!ishuman(human) || isfelinid(human))
 		return
-	if(ishumanbasic(H))
-		H.set_species(/datum/species/human/felinid)
-		var/datum/species/human/felinid/cat_species = H.dna.species
+	if(ishumanbasic(human))
+		human.set_species(/datum/species/human/felinid)
+		var/datum/species/human/felinid/cat_species = human.dna.species
 		cat_species.original_felinid = FALSE
 	else
 		var/obj/item/organ/internal/ears/cat/kitty_ears = new
 		var/obj/item/organ/external/tail/cat/kitty_tail = new
-		kitty_ears.Insert(H, TRUE, FALSE) //Gives nonhumans cat tail and ears
-		kitty_tail.Insert(H, TRUE, FALSE)
+		kitty_ears.Insert(human, special = TRUE, drop_if_replaced = FALSE) //Gives nonhumans cat tail and ears
+		kitty_tail.Insert(human, special = TRUE, drop_if_replaced = FALSE)
 	if(!silent)
-		to_chat(H, span_boldnotice("Something is nya~t right."))
-		playsound(get_turf(H), 'sound/effects/meow1.ogg', 50, TRUE, -1)
+		to_chat(human, span_boldnotice("Something is nya~t right."))
+		playsound(get_turf(human), 'sound/effects/meow1.ogg', 50, TRUE, -1)
 
-/proc/purrbation_remove(mob/living/carbon/human/H, silent = FALSE)
-	if(isfelinid(H))
-		var/datum/species/human/felinid/cat_species = H.dna.species
+/proc/purrbation_remove(mob/living/carbon/human/human, silent = FALSE)
+	if(isfelinid(human))
+		var/datum/species/human/felinid/cat_species = human.dna.species
 		if(cat_species.original_felinid)
 			return // Don't display the to_chat message
-		H.set_species(/datum/species/human)
-	else if(ishuman(H) && !ishumanbasic(H))
-		var/datum/species/target_species = H.dna.species
+		human.set_species(/datum/species/human)
+	else if(ishuman(human) && !ishumanbasic(human))
+		var/datum/species/target_species = human.dna.species
 
 		// From the previous check we know they're not a felinid, therefore removing cat ears and tail is safe
-		var/obj/item/organ/external/tail/tail = H.getorganslot(ORGAN_SLOT_EXTERNAL_TAIL)
+		var/obj/item/organ/external/tail/tail = human.getorganslot(ORGAN_SLOT_EXTERNAL_TAIL)
 		if(istype(tail, /obj/item/organ/external/tail/cat))
 			var/obj/item/organ/external/tail/new_tail = locate(/obj/item/organ/external/tail) in target_species.external_organs
 			if(new_tail)
 				new_tail = new new_tail()
-				new_tail.Insert(H, TRUE, FALSE)
+				new_tail.Insert(human, special = TRUE, drop_if_replaced = FALSE)
 			else
-				tail.Remove(H, TRUE)
+				tail.Remove(human, special = TRUE)
 				qdel(tail)
 
-		var/obj/item/organ/internal/ears/ears = H.getorganslot(ORGAN_SLOT_EARS)
+		var/obj/item/organ/internal/ears/ears = human.getorganslot(ORGAN_SLOT_EARS)
 		if(istype(ears, /obj/item/organ/internal/ears/cat))
 			var/obj/item/organ/new_ears = new target_species.mutantears
-			new_ears.Insert(H, TRUE, FALSE)
+			new_ears.Insert(human, special = TRUE, drop_if_replaced = FALSE)
 	if(!silent)
-		to_chat(H, span_boldnotice("You are no longer a cat."))
+		to_chat(human, span_boldnotice("You are no longer a cat."))
 
 /datum/species/human/felinid/prepare_human_for_preview(mob/living/carbon/human/human)
 	human.hairstyle = "Hime Cut"
