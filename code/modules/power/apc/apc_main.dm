@@ -365,6 +365,7 @@
 				malfvacate()
 		if("reboot")
 			failure_timer = 0
+			force_update = FALSE
 			update_appearance()
 			update()
 		if("emergency_lighting")
@@ -385,6 +386,7 @@
 		return
 	if(failure_timer)
 		failure_timer--
+		force_update = TRUE
 		return
 
 	//dont use any power from that channel if we shut that power channel off
