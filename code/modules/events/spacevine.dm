@@ -586,6 +586,7 @@
 		if(prob(mutativeness))
 			var/datum/spacevine_mutation/random_mutate = pick_weight(vine_mutations_list - vine.mutations)
 			var/total_severity = random_mutate.severity
+			/// Ensures that the mutation is truly unique and isn't just the same datum but with a different address in memory
 			var/mutation_is_valid = TRUE
 			for(var/datum/spacevine_mutation/mutation as anything in vine.mutations)
 				if(random_mutate.type == mutation.type) // parent mutations (from the vine.mutations |= parent.mutations line) come from the parent vine that spawned this, and if up and up the chain they came from seeds originated from a different master controller and hence have a "different" mutation datum with a different address, subtracting vine.address from vine_mutations_list isn't sufficient in this case and wouldn't remove it, allowing for mutations to be duplicated
