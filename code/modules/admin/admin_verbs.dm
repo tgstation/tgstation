@@ -218,8 +218,6 @@ GLOBAL_PROTECT(admin_verbs_poll)
 
 		var/rights = holder.rank_flags()
 		add_verb(src, GLOB.admin_verbs_default)
-		if(rights & R_BUILD)
-			add_verb(src, /client/proc/togglebuildmodeself)
 		if(rights & R_ADMIN)
 			add_verb(src, GLOB.admin_verbs_admin)
 		if(rights & R_BAN)
@@ -248,7 +246,6 @@ GLOBAL_PROTECT(admin_verbs_poll)
 /client/proc/remove_admin_verbs()
 	remove_verb(src, list(
 		GLOB.admin_verbs_default,
-		/client/proc/togglebuildmodeself,
 		GLOB.admin_verbs_admin,
 		GLOB.admin_verbs_ban,
 		GLOB.admin_verbs_fun,
@@ -693,8 +690,6 @@ GLOBAL_PROTECT(admin_verbs_poll)
 /client/proc/togglebuildmodeself()
 	set name = "Toggle Build Mode Self"
 	set category = "Admin.Events"
-	if (!(holder.rank_flags() & R_BUILD))
-		return
 	if(src.mob)
 		togglebuildmode(src.mob)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Toggle Build Mode") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
