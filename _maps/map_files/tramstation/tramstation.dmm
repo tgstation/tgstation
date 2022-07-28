@@ -12187,10 +12187,6 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/primary/tram/left)
-"ejg" = (
-/obj/machinery/atmospherics/pipe/smart/simple/supply/visible,
-/turf/closed/wall/r_wall,
-/area/station/engineering/atmos)
 "ejp" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -48559,6 +48555,10 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
+"qLE" = (
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible,
+/turf/closed/wall/r_wall,
+/area/station/engineering/atmos)
 "qLG" = (
 /obj/structure/table/wood,
 /obj/machinery/light/warm/directional/east,
@@ -64154,15 +64154,15 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "wja" = (
-/obj/machinery/light/directional/east,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
+	dir = 1
+	},
 /obj/machinery/requests_console/directional/east{
 	department = "Atmospherics";
 	departmentType = 3;
 	name = "Atmospherics Requests Console"
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
-	dir = 1
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "wjb" = (
@@ -103805,8 +103805,8 @@ rrv
 bWv
 atT
 atT
-wja
 atT
+wja
 atT
 mHw
 lFM
@@ -104302,7 +104302,7 @@ xCj
 oNq
 rHk
 haK
-ejg
+qLE
 fvn
 tpw
 byG
