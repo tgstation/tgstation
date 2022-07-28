@@ -1,6 +1,6 @@
 ///Abuzer Mech, uzayda şimşek makkuin gibi gidiyo.
 /obj/vehicle/sealed/mecha/voyager/decouverte
-	desc = "A Voyager class exploration mech, combines quantum physics and bluespace technology to achieve immense speeds in a vaccum. Not advised to use in the station. R&D reccomends using an exosuit drill when searching for ruins in space."
+	desc = "A Voyager class exploration mech, combines quantum physics and bluespace technology to achieve immense speeds in a vaccum. Not advised to use in the station. R&D recommends using an exosuit drill when searching for ruins in space."
 	name = "\improper Decouverte"
 	base_icon_state = "deathripley"
 	allow_diagonal_movement = TRUE
