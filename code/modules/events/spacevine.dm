@@ -588,7 +588,7 @@
 			var/total_severity = random_mutate.severity
 			var/mutation_is_valid = TRUE
 			for(var/datum/spacevine_mutation/mutation as anything in vine.mutations)
-				if(random_mutate.type == mutation.type) // see #68821, mutations from parent.mutations can have a different address than those in vine_mutations_list
+				if(random_mutate.type == mutation.type) // parent mutations (from the vine.mutations |= parent.mutations line) come from the parent vine that spawned this, and if up and up the chain they came from seeds originated from a different master controller and hence have a "different" mutation datum with a different address, subtracting vine.address from vine_mutations_list isn't sufficient in this case and wouldn't remove it, allowing for mutations to be duplicated
 					mutation_is_valid = FALSE
 					break
 				total_severity += mutation.severity
