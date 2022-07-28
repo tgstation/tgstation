@@ -108,14 +108,13 @@
 	var/last_pump = 0
 	var/add_colour = TRUE //So we're not constantly recreating colour datums
 	var/pump_delay = 70 //you can pump 1 second early, for lag, but no more (otherwise you could spam heal)
-	var/expelled = FALSE //for throwing up the curse
+	var/blood_regained = 70
 
 	//How much to heal per pump, negative numbers would HURT the player
 	var/heal_brute = 25
 	var/heal_burn = 25
 	var/heal_oxy = 10
 	var/heal_toxin = 10
-	var/blood_regained = 70
 
 
 /obj/item/organ/internal/heart/cursed/attack(mob/living/carbon/human/accursed, mob/living/carbon/human/user, obj/target)
@@ -169,7 +168,7 @@
 		if(istype(accursed))
 			if(accursed.dna && !(NOBLOOD in accursed.dna.species.species_traits))
 				accursed.adjust_curse_effect(rand(-8,-5))
-				accursed.blood_volume = min(accursed.blood_volume + accursed.blood_regained, BLOOD_VOLUME_MAXIMUM)
+				accursed.blood_volume = min(accursed.blood_volume + cursed_heart.blood_regained, BLOOD_VOLUME_MAXIMUM)
 				accursed.remove_client_colour(/datum/client_colour/cursed_heart_blood)
 				cursed_heart.add_colour = TRUE
 				accursed.adjustBruteLoss(-cursed_heart.heal_brute)
