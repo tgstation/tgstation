@@ -88,7 +88,8 @@
 		return FALSE
 
 	user.visible_message(span_notice("[user] pours [attacking_item] onto [src]. It glows brightly before turning into gold!"))
-	new /obj/item/knife/gold(loc)
+	var/obj/item/knife/golden = new(drop_location())
+	user.put_in_hands(golden)
 	qdel(src)
 	qdel(attacking_item)
 	return TRUE
