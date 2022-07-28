@@ -49,6 +49,8 @@
 	var/static/list/scribing_tools = typecacheof(list(/obj/item/pen, /obj/item/toy/crayon))
 	/// A blacklist of turfs we cannot scribe on.
 	var/static/list/blacklisted_rune_turfs = typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/lava, /turf/open/chasm))
+	/// Controls what types of turf we can spread rust to, increases as we unlock more powerful rust abilites
+	var/rust_strength = 0
 
 /datum/antagonist/heretic/Destroy()
 	LAZYNULL(sac_targets)
@@ -581,6 +583,17 @@
  */
 /datum/antagonist/heretic/proc/get_knowledge(wanted)
 	return researched_knowledge[wanted]
+
+/datum/antagonist/heretic/proc/increase_rust_strength(side_path_only = FALSE)
+	if(side_path_only && get_knowledge(/datum/heretic_knowledge/limited_amount/base_rust))
+		return
+
+	rust_strength++
+
+/datum/antagonist/heretic/proc/set_rust_strength(strength)
+	if(ISNAN(strength))
+		return
+	rust_strength = strength
 
 /*
  * Get a list of all rituals this heretic can invoke on a rune.

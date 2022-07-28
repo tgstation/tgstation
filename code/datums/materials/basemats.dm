@@ -7,6 +7,7 @@
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/iron
 	value_per_unit = 0.0025
+	mat_rust_resistance = RUST_RESISTANCE_BASIC
 
 /datum/material/iron/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
@@ -207,6 +208,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	value_per_unit = 0.0625
 	beauty_modifier = 0.05
 	armor_modifiers = list(MELEE = 1.35, BULLET = 1.3, LASER = 1.3, ENERGY = 1.25, BOMB = 1.25, BIO = 1, FIRE = 0.7, ACID = 1)
+	mat_rust_resistance = RUST_RESISTANCE_TITANIUM
 
 /datum/material/titanium/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)

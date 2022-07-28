@@ -14,6 +14,7 @@
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	rust_resistance = RUST_RESISTANCE_BASIC
 
 	var/attachment_holes = TRUE
 
@@ -92,11 +93,6 @@
 		broken = FALSE
 
 	return TRUE
-
-/turf/open/floor/plating/rust_heretic_act()
-	if(prob(70))
-		new /obj/effect/temp_visual/glowing_rune(src)
-	return ..()
 
 /turf/open/floor/plating/make_plating(force = FALSE)
 	return

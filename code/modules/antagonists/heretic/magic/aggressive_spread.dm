@@ -30,7 +30,7 @@
 	if(prob(chance_of_not_rusting))
 		return
 
-	victim.rust_heretic_act()
+	victim.rust_heretic_act(caster)
 
 /datum/action/cooldown/spell/aoe/rust_conversion/small
 	name = "Rust Conversion"

@@ -12,6 +12,7 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
+	rust_resistance = RUST_RESISTANCE_REINFORCED
 
 
 /turf/open/floor/engine/examine(mob/user)

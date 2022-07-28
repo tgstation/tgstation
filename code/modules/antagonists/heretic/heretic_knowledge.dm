@@ -633,6 +633,7 @@
 
 
 	log_heretic_knowledge("[key_name(user)] completed their final ritual at [worldtime2text()].")
+	heretic_datum.increase_rust_strength()
 	return TRUE
 
 /datum/heretic_knowledge/final/cleanup_atoms(list/selected_atoms)

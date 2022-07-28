@@ -74,3 +74,10 @@
 #define TURF_PATHING_PASS_PROC 1
 /// Turf is never passable
 #define TURF_PATHING_PASS_NO 2
+
+// Defines for turf rust resistance
+#define RUST_RESISTANCE_BASIC 1
+#define RUST_RESISTANCE_REINFORCED 2
+#define RUST_RESISTANCE_TITANIUM 3
+#define RUST_RESISTANCE_ORGANIC 4
+#define RUST_RESISTANCE_ABSOLUTE 5

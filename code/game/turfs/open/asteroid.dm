@@ -24,6 +24,7 @@
 	var/dug = FALSE
 	/// Icon state to use when broken
 	var/broken_state = "asteroid_dug"
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 
 /turf/open/misc/asteroid/break_tile()
 	icon_state = broken_state

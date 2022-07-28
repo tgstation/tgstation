@@ -4,6 +4,7 @@
 	name = "\proper space"
 	overfloor_placed = FALSE
 	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
+	rust_resistance = RUST_RESISTANCE_ABSOLUTE
 
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
@@ -209,9 +210,6 @@
 			to_chat(user, span_notice("You build a floor."))
 			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			return TRUE
-	return FALSE
-
-/turf/open/space/rust_heretic_act()
 	return FALSE
 
 /turf/open/space/ReplaceWithLattice()

@@ -77,6 +77,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	///whether or not this turf forces movables on it to have no gravity (unless they themselves have forced gravity)
 	var/force_no_gravity = FALSE
 
+	var/rust_resistance = RUST_RESISTANCE_ORGANIC
+
 	/// How pathing algorithm will check if this turf is passable by itself (not including content checks). By default it's just density check.
 	/// WARNING: Currently to use a density shortcircuiting this does not support dense turfs with special allow through function
 	var/pathing_pass_method = TURF_PATHING_PASS_DENSITY
@@ -581,7 +583,24 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/acid_melt()
 	return
 
-/turf/rust_heretic_act()
+/// Check if the heretic is strong enough to rust this turf
+/turf/rust_heretic_act(mob/living/source)
+	if(turf_flags & NO_RUST)
+		return
+	// Rust walkers and the spreading from an ascended rust heretic rune use this value
+	var/heretic_rust_strength = 4
+	if(!isnull(source))
+		var/datum/antagonist/heretic/heretic_data = IS_HERETIC(source)
+		if(heretic_data)
+			heretic_rust_strength = heretic_data.rust_strength
+
+	if(heretic_rust_strength >= rust_resistance)
+		rust_turf()
+		if(prob(70))
+			new /obj/effect/temp_visual/glowing_rune(src)
+
+/// Override this to change behaviour when being rusted by a heretic
+/turf/proc/rust_turf()
 	if(turf_flags & NO_RUST)
 		return
 	if(HAS_TRAIT(src, TRAIT_RUSTY))

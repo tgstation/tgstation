@@ -21,7 +21,7 @@
 	new /obj/effect/temp_visual/dir_setting/entropic(get_step(cast_on, cast_on.dir), cast_on.dir)
 
 /datum/action/cooldown/spell/cone/staggered/entropic_plume/do_turf_cone_effect(turf/target_turf, atom/caster, level)
-	target_turf.rust_heretic_act()
+	target_turf.rust_heretic_act(caster)
 
 /datum/action/cooldown/spell/cone/staggered/entropic_plume/do_mob_cone_effect(mob/living/victim, atom/caster, level)
 	if(victim.can_block_magic(antimagic_flags) || IS_HERETIC_OR_MONSTER(victim))

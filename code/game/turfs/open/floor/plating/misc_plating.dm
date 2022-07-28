@@ -28,6 +28,7 @@
 	icon_state = "alienplating"
 	base_icon_state = "alienplating"
 	tiled_dirt = FALSE
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 
 /turf/open/floor/plating/abductor2/break_tile()
 	return //unbreakable

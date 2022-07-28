@@ -20,6 +20,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pathing_pass_method = TURF_PATHING_PASS_PROC
+	rust_resistance = RUST_RESISTANCE_ABSOLUTE
 	var/can_cover_up = TRUE
 	var/can_build_on = TRUE
 
@@ -156,9 +157,6 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 			to_chat(user, span_notice("You build a floor."))
 			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			return TRUE
-	return FALSE
-
-/turf/open/openspace/rust_heretic_act()
 	return FALSE
 
 /turf/open/openspace/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller, no_id = FALSE)

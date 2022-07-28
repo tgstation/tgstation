@@ -40,6 +40,7 @@
 	sheet_type = /obj/item/stack/sheet/plasteel
 	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	composition = list(/datum/material/iron=1, /datum/material/plasma=1)
+	mat_rust_resistance = RUST_RESISTANCE_REINFORCED
 
 /datum/material/alloy/plasteel/on_applied_obj(obj/item/target_item, amount, material_flags)
 	. = ..()
@@ -73,6 +74,7 @@
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
 	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	composition = list(/datum/material/titanium=1, /datum/material/plasma=1)
+	mat_rust_resistance = RUST_RESISTANCE_TITANIUM
 
 /** Plasmaglass
  *

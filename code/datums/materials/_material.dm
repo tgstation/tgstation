@@ -46,6 +46,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/cached_texture_filter_icon
 	///What type of shard the material will shatter to
 	var/obj/item/shard_type
+	///How resistant the material is to rusting when applied to a turf
+	var/mat_rust_resistance = RUST_RESISTANCE_ORGANIC
 
 /** Handles initializing the material.
  *
@@ -151,6 +153,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 			O.heavyfootstep = turf_sound_override
 	if(alpha < 255)
 		T.AddElement(/datum/element/turf_z_transparency)
+	T.rust_resistance = mat_rust_resistance
 	return
 
 /datum/material/proc/get_greyscale_config_for(datum/greyscale_config/config_path)
