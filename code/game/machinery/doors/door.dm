@@ -87,9 +87,11 @@
 	if(isaicamera(user) || issilicon(user))
 		return .
 
-	if (isnull(held_item) && Adjacent(user))
+	if(isnull(held_item) && Adjacent(user))
 		context[SCREENTIP_CONTEXT_LMB] = "Open"
 		return CONTEXTUAL_SCREENTIP_SET
+		
+	if(istype(held_item, /obj/item/stack/sheet/mineral/wood) && Adjacent(user)
 
 /obj/machinery/door/check_access_list(list/access_list)
 	if(red_alert_access && SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
@@ -214,6 +216,26 @@
 	if(requiresID() && !allowed(null))
 		return
 	return ..()
+
+/obj/machinery/door/unpowered/attackby(obj/item/weapon, mob/user, params)
+	if(isstack(weapon) && istype(weapon, /obj/item/stack/sheet/mineral/wood))
+		var/obj/item/stack/sheet/mineral/wood/plank = weapon
+
+		if(!plank.get_amount() >= 2)
+			to_chat(user, span_warning("You need two [plank] sheets to do this!"))
+			return
+
+		to_chat(user, span_notice("You start adding [plank] to [src]..."))
+		if(!do_after(user, 2 SECONDS, target = src) || !plank.use(2))
+			return
+
+		to_chat(user, span_notice("You construct a barricade on the [src]."))
+		playsound(src, 'sound/items/drill_hit.ogg', 50, TRUE)
+		new /obj/structure/barricade/wooden/crude(loc)
+		
+	return ..()
+		
+
 
 /obj/machinery/door/proc/try_to_activate_door(mob/user, access_bypass = FALSE)
 	add_fingerprint(user)
