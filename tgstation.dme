@@ -2507,7 +2507,6 @@
 #include "code\modules\buildmode\submodes\advanced.dm"
 #include "code\modules\buildmode\submodes\area_edit.dm"
 #include "code\modules\buildmode\submodes\basic.dm"
-#include "code\modules\buildmode\submodes\boom.dm"
 #include "code\modules\buildmode\submodes\copy.dm"
 #include "code\modules\buildmode\submodes\delete.dm"
 #include "code\modules\buildmode\submodes\fill.dm"
