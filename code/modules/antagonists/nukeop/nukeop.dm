@@ -318,7 +318,7 @@
 /datum/antagonist/nukeop/reinforcement
 	show_in_antagpanel = FALSE
 	send_to_spawnpoint = FALSE
-	nukeop_outfit = /datum/outfit/syndicate/no_crystals
+	nukeop_outfit = /datum/outfit/syndicate/reinforcement
 
 /datum/team/nuclear
 	var/syndicate_name

@@ -18,8 +18,8 @@
 	surplus = 50
 	purchasable_from = ~UPLINK_NANO
 	illegal_tech = FALSE
-	
-	/datum/uplink_item/device_tools/security_encryption
+
+/datum/uplink_item/device_tools/security_encryption
 	name = "Security Radio Sniffer"
 	desc = "This radio sniffer is used to listen to the security radio channel. Just put it inside your headset. \
 			However Nanotrasen would not recommend talking on the channel."
@@ -27,7 +27,7 @@
 	cost = 1
 	surplus = 50
 	purchasable_from = UPLINK_NANO
-	
+
 /datum/uplink_item/device_tools/surgerybag
 	name = "Syndicate Surgery Duffel Bag"
 	desc = "The Syndicate surgery duffel bag is a toolkit containing all surgery tools, surgical drapes, \
@@ -90,7 +90,7 @@
 			Comes with 4 charges, recharges randomly. Warranty null and void if exposed to an electromagnetic pulse."
 	item = /obj/item/storage/box/syndie_kit/syndicate_teleporter
 	cost = 8
-	
+
 /datum/uplink_item/device_tools/thermalnano
 	name = "Thermal Eyepatch"
 	desc = "This is a nanotrasen branded thermal eyepatch. They allow you to see organisms through walls by capturing the upper portion of the \
@@ -99,7 +99,7 @@
 	item = /obj/item/clothing/glasses/thermal/eyepatch
 	purchasable_from = UPLINK_NANO
 	cost = 4
-	
+
 /datum/uplink_item/device_tools/detective_scanner
 	name = "Nano Scanner"
 	desc = "The finest tool a crime finder can have. Scan for fingerprints, fibers and DNA from blood. Keep in mind \
@@ -108,7 +108,7 @@
 	cost = 3
 	surplus = 90
 	purchasable_from = UPLINK_NANO
-	
+
 /datum/uplink_item/device_tools/camera_bug
 	name = "Camera Bug"
 	desc = "Enables you to view all cameras on the main network, set up motion alerts and track a target. \
@@ -170,9 +170,17 @@
 	var/datum/component/uplink/uplink = source.GetComponent(/datum/component/uplink)
 	if(!uplink)
 		return
+	if(!uplink.unlock_note) //no note means it can't be locked (typically due to being an implant.)
+		to_chat(user, span_warning("This device doesn't support code entry!"))
+		return
+
 	uplink.failsafe_code = uplink.generate_code()
 	var/code = "[islist(uplink.failsafe_code) ? english_list(uplink.failsafe_code) : uplink.failsafe_code]"
-	to_chat(user, span_warning("The new failsafe code for this uplink is now : [code]. You may check your antagonist info to recall this."))
+	var/datum/antagonist/traitor/traitor_datum = user.mind?.has_antag_datum(/datum/antagonist/traitor)
+	if(traitor_datum)
+		traitor_datum.antag_memory += "<b>Uplink Failsafe Code:</b> [code]" + "<br>"
+		traitor_datum.update_static_data_for_all_viewers()
+	to_chat(user, span_warning("The new failsafe code for this uplink is now: [code].[traitor_datum ? " You may check your antagonist info to recall this." : null]"))
 	return source //For log icon
 
 /datum/uplink_item/device_tools/toolbox

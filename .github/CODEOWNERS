@@ -6,12 +6,6 @@
 
 # MAINTAINERS
 
-# Cobby
-
-/code/modules/reagents/ @ExcessiveUseOfCobblestone
-/code/modules/research/designs/medical_designs.dm @ExcessiveUseOfCobblestone
-/code/game/objects/items/storage/medkit.dm @ExcessiveUseOfCobblestone
-
 # Cyberboss
 
 /code/__HELPERS/jatum.dm @Cyberboss
@@ -25,6 +19,14 @@
 /code/modules/admin/verbs/adminhelp.dm @Cyberboss
 /code/modules/admin/verbs/adminpm.dm @Cyberboss
 /code/modules/mapping/ @Cyberboss
+
+# Fikou
+
+/code/modules/mod/ @Fikou
+/code/modules/ruins/lavaland_ruin_code.dm @Fikou
+/code/modules/ruins/lavalandruin_code/ @Fikou
+/code/modules/mining/ @Fikou
+/code/modules/awaymissions/ @Fikou
 
 # JohnFulpWizard
 
@@ -96,16 +98,14 @@
 
 # CONTRIBUTORS
 
+# Cobby
+
+/code/modules/reagents/ @ExcessiveUseOfCobblestone
+/code/modules/research/designs/medical_designs.dm @ExcessiveUseOfCobblestone
+/code/game/objects/items/storage/medkit.dm @ExcessiveUseOfCobblestone
+
 # Dragomagol/Tattle
-/code/__HELPERS/logging/ @Dragomagol
-
-# Fikou
-
-/code/modules/mod/ @Fikou
-/code/modules/ruins/lavaland_ruin_code.dm @Fikou
-/code/modules/ruins/lavalandruin_code/ @Fikou
-/code/modules/mining/ @Fikou
-/code/modules/awaymissions/ @Fikou
+/code/__HELPERS/logging/ @dragomagol
 
 # Jordie0608
 
