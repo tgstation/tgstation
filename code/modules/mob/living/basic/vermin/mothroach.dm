@@ -43,8 +43,8 @@
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/basic/mothroach/death(gibbed)
-    ..()
-    attacked_sound = SFX_PUNCH
+	..()
+	attacked_sound = SFX_PUNCH
 
 /mob/living/basic/mothroach/toggle_resting()
 	. = ..()
