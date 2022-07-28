@@ -21620,8 +21620,8 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/binary/pump/on{
-	name = "External Waste Ports to Filter";
-	dir = 4
+	dir = 4;
+	name = "External Waste Ports to Filter"
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
@@ -30409,8 +30409,8 @@
 /area/station/engineering/engine_smes)
 "kSA" = (
 /obj/machinery/atmospherics/components/binary/pump{
-	name = "Pure to Port";
-	dir = 8
+	dir = 8;
+	name = "Pure to Port"
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
@@ -106020,7 +106020,7 @@ dhe
 dhe
 dhe
 dhe
-duU
+dhe
 dhe
 afH
 dhe
