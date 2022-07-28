@@ -2515,7 +2515,6 @@
 #include "code\modules\buildmode\submodes\outfit.dm"
 #include "code\modules\buildmode\submodes\smite.dm"
 #include "code\modules\buildmode\submodes\throwing.dm"
-#include "code\modules\buildmode\submodes\variable_edit.dm"
 #include "code\modules\capture_the_flag\_defines.dm"
 #include "code\modules\capture_the_flag\ctf_classes.dm"
 #include "code\modules\capture_the_flag\ctf_equipment.dm"
