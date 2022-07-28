@@ -45,7 +45,6 @@
 		return FALSE
 
 	user.visible_message(span_notice("[user] pours [attacking_item] onto [src]. It glows brightly before turning into gold!"))
-	new /obj/vehicle/ridden/wheelchair/gold(loc)
 	var/turf/holder_turf = get_turf(user)
 	var/obj/vehicle/ridden/wheelchair/gold/chair
 	chair = new(holder_turf)
