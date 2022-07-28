@@ -397,6 +397,10 @@
 	else
 		return ..()
 
+/datum/dynamic_ruleset/midround/from_ghosts/nuclear/review_applications()
+	. = ..()
+	sort_by_most_played(assigned)
+
 //////////////////////////////////////////////
 //                                          //
 //              BLOB (GHOST)                //

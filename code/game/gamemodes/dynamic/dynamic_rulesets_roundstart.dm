@@ -407,6 +407,7 @@
 		assigned += M.mind
 		M.mind.set_assigned_role(SSjob.GetJobType(/datum/job/nuclear_operative))
 		M.mind.special_role = ROLE_NUCLEAR_OPERATIVE
+	sort_by_most_played(assigned)
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/nuclear/execute()
