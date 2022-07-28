@@ -100,38 +100,21 @@
 	key_third_person = "wags"
 	message = "wags their tail."
 
-/datum/emote/living/carbon/human/stopwag
-	key = "stopwag"
-	message = "stops wagging their tail."
-
 /datum/emote/living/carbon/human/wag/run_emote(mob/user, params, type_override, intentional)
-	. = ..()
-	if(!.)
-		return
-	var/obj/item/organ/external/tail/oranges_accessory = user.getorganslot(ORGAN_SLOT_EXTERNAL_TAIL)
-	if(oranges_accessory.wag_flags) //We verified the tail exists in can_run_emote()
-		SEND_SIGNAL(user, COMSIG_ORGAN_WAG_TAIL, TRUE)
-
-/datum/emote/living/carbon/human/stopwag/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	if(!.)
 		return
 	var/obj/item/organ/external/tail/oranges_accessory = user.getorganslot(ORGAN_SLOT_EXTERNAL_TAIL)
 	if(oranges_accessory.wag_flags & WAG_WAGGING) //We verified the tail exists in can_run_emote()
 		SEND_SIGNAL(user, COMSIG_ORGAN_WAG_TAIL, FALSE)
-
-/datum/emote/living/carbon/human/stopwag/can_run_emote(mob/user, status_check, intentional)
-	var/obj/item/organ/external/tail/oranges_accessory = user.getorganslot(ORGAN_SLOT_EXTERNAL_TAIL)
-	if(oranges_accessory.wag_flags & WAG_WAGGING)
-		return ..()
-	return FALSE
+	else
+		SEND_SIGNAL(user, COMSIG_ORGAN_WAG_TAIL, TRUE)
 
 /datum/emote/living/carbon/human/wag/can_run_emote(mob/user, status_check, intentional)
 	var/obj/item/organ/external/tail/tail = user.getorganslot(ORGAN_SLOT_EXTERNAL_TAIL)
 	if(tail?.wag_flags & WAG_ABLE)
 		return ..()
 	return FALSE
-
 /datum/emote/living/carbon/human/wing
 	key = "wing"
 	key_third_person = "wings"
