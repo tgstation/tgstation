@@ -324,7 +324,9 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 	. = ..()
 
 	if(sharpness && force > 5) //give sharp objects butchering functionality, for consistency
-		AddComponent(/datum/component/butchering, 80 * toolspeed)
+		AddComponent(/datum/component/butchering, \
+		speed = 8 SECONDS * toolspeed, \
+		)
 
 /**Makes cool stuff happen when you suicide with an item
  *

@@ -361,6 +361,13 @@
 
 // /obj/vehicle/sealed/mecha signals
 
+/// sent if you attach equipment to mecha
+#define COMSIG_MECHA_EQUIPMENT_ATTACHED "mecha_equipment_attached"
+/// sent if you detach equipment to mecha
+#define COMSIG_MECHA_EQUIPMENT_DETACHED "mecha_equipment_detached"
+/// sent when you are able to drill through a mob
+#define COMSIG_MECHA_DRILL_MOB "mecha_drill_mob"
+
 ///sent from mecha action buttons to the mecha they're linked to
 #define COMSIG_MECHA_ACTION_TRIGGER "mecha_action_activate"
 

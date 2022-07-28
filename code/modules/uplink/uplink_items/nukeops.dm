@@ -563,8 +563,8 @@
 
 /datum/uplink_item/support/reinforcement
 	name = "Reinforcements"
-	desc = "Call in an additional team member. They won't come with any gear, so you'll have to save some telecrystals \
-			to arm them as well."
+	desc = "Call in an additional team member from one of our factions. \
+		They'll come equipped with a mere surplus SMG, so arming them is recommended."
 	item = /obj/item/antag_spawner/nuke_ops
 	cost = 25
 	refundable = TRUE

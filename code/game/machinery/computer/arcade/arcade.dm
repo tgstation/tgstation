@@ -647,31 +647,39 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	icon_state = "arcade"
 	circuit = /obj/item/circuitboard/computer/arcade/amputation
 
+/obj/machinery/computer/arcade/amputation/attack_tk(mob/user)
+	return //that's a pretty damn big guillotine
+
 /obj/machinery/computer/arcade/amputation/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(!iscarbon(user))
 		return
-	var/mob/living/carbon/c_user = user
-	if(!c_user.get_bodypart(BODY_ZONE_L_ARM) && !c_user.get_bodypart(BODY_ZONE_R_ARM))
-		return
-	to_chat(c_user, span_warning("You move your hand towards the machine, and begin to hesitate as a bloodied guillotine emerges from inside of it..."))
-	usr.played_game()
-	if(do_after(c_user, 50, target = src))
-		to_chat(c_user, span_userdanger("The guillotine drops on your arm, and the machine sucks it in!"))
-		playsound(loc, 'sound/weapons/slice.ogg', 25, TRUE, -1)
-		var/which_hand = BODY_ZONE_L_ARM
-		if(!(c_user.active_hand_index % 2))
-			which_hand = BODY_ZONE_R_ARM
-		var/obj/item/bodypart/chopchop = c_user.get_bodypart(which_hand)
+	to_chat(user, span_warning("You move your hand towards the machine, and begin to hesitate as a bloodied guillotine emerges from inside of it..."))
+	user.played_game()
+	var/obj/item/bodypart/chopchop = user.get_active_hand()
+	if(do_after(user, 5 SECONDS, target = src, extra_checks = CALLBACK(src, .proc/do_they_still_have_that_hand, user, chopchop)))
+		playsound(src, 'sound/weapons/slice.ogg', 25, TRUE, -1)
+		to_chat(user, span_userdanger("The guillotine drops on your arm, and the machine sucks it in!"))
 		chopchop.dismember()
 		qdel(chopchop)
 		user.mind?.adjust_experience(/datum/skill/gaming, 100)
 		user.won_game()
-		playsound(loc, 'sound/arcade/win.ogg', 50, TRUE)
+		playsound(src, 'sound/arcade/win.ogg', 50, TRUE)
 		prizevend(user, rand(3,5))
+		return
+	else if(!do_they_still_have_that_hand(user, chopchop))
+		to_chat(user, span_warning("The guillotine drops, but your hand seems to be gone already!"))
+		playsound(src, 'sound/weapons/slice.ogg', 25, TRUE, -1)
 	else
-		to_chat(c_user, span_notice("You (wisely) decide against putting your hand in the machine."))
-		user.lost_game()
+		to_chat(user, span_notice("You (wisely) decide against putting your hand in the machine."))
+	user.lost_game()
+
+///Makes sure the user still has their starting hand.
+/obj/machinery/computer/arcade/amputation/proc/do_they_still_have_that_hand(mob/user, obj/item/bodypart/chopchop)
+	if(QDELETED(chopchop) || chopchop.owner != user) //No pulling your arm out of the machine!
+		return FALSE
+	return TRUE
+
 
 /obj/machinery/computer/arcade/amputation/festive //dispenses wrapped gifts instead of arcade prizes, also known as the ancap christmas tree
 	name = "Mediborg's Festive Amputation Adventure"
