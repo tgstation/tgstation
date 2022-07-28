@@ -159,8 +159,8 @@
 		if (makeBody)
 			new_character = generate_ruleset_body(applicant)
 
-		finish_setup(new_character, i)
 		assigned += applicant
+		finish_setup(new_character, i)
 		notify_ghosts("[applicant.name] has been picked for the ruleset [name]!", source = new_character, action = NOTIFY_ORBIT, header="Something Interesting!")
 
 /datum/dynamic_ruleset/midround/from_ghosts/proc/generate_ruleset_body(mob/applicant)
@@ -390,16 +390,12 @@
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear/finish_setup(mob/new_character, index)
 	new_character.mind.set_assigned_role(SSjob.GetJobType(/datum/job/nuclear_operative))
 	new_character.mind.special_role = ROLE_NUCLEAR_OPERATIVE
-	if (index == 1) // Our first guy is the leader
-		var/datum/antagonist/nukeop/leader/new_role = new
+	if(new_character.mind == get_most_experienced(assigned, ROLE_NUCLEAR_OPERATIVE))
+		var/datum/antagonist/nukeop/leader/new_role = new()
 		nuke_team = new_role.nuke_team
 		new_character.mind.add_antag_datum(new_role)
 	else
 		return ..()
-
-/datum/dynamic_ruleset/midround/from_ghosts/nuclear/review_applications()
-	. = ..()
-	sort_by_most_played(assigned)
 
 //////////////////////////////////////////////
 //                                          //
