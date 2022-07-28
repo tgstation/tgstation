@@ -136,6 +136,9 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 
 
 /obj/item/nuclear_challenge/proc/check_allowed(mob/living/user)
+	if(!user?.mind.has_antag_datum(/datum/antagonist/nukeop/leader))
+		to_chat(user, span_boldwarning("Only the leader is allowed to declare war."))
+		return FALSE
 	if(declaring_war)
 		to_chat(user, span_boldwarning("You are already in the process of declaring war! Make your mind up."))
 		return FALSE
