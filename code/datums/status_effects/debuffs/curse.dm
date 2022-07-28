@@ -33,11 +33,11 @@
 		if(21.01 to 41)
 			return span_warning("[owner.p_they(TRUE)] [owner.p_are()] flushed, [owner.p_their()] eyes are glassy and vacant.")
 		if(41.01 to 61)
-			return span_warning("[owner.p_they(TRUE)][owner.p_s()] heart is practically beating out of [owner.p_their()] chest!")
+			return span_warning("[owner.p_their(TRUE)] heart is practically beating out of [owner.p_their()] chest!")
 		if(61.01 to 91)
-			return span_warning("[owner.p_they(TRUE)] look[owner.p_s()] sick to [owner.p_their()] stomach with a black ooze running down their chin.")
+			return span_warning("[owner.p_they(TRUE)] look[owner.p_s()] sick to [owner.p_their()] stomach with a purple ooze running down [owner.p_their()] chin.")
 		if(91.01 to INFINITY)
-			return span_warning("[owner.p_they(TRUE)] [owner.p_are()] at the mercy of their curse.")
+			return span_warning("[owner.p_they(TRUE)] [owner.p_are()] at the mercy of [owner.p_their()] curse.")
 
 	return null
 
@@ -133,10 +133,11 @@
 
 	// Over 11, we will constantly gain slurring up to 10 seconds of slurring.
 	if(curse_value >= 11)
-		to_chat(owner, span_warning("You feel as if your heart it gnawing on itself!"))
+		to_chat(owner, span_warning("You feel your heart gnawing itself!"))
 
 	// Over 31, we have a 30% chance to gain confusion, and we will always have 20 seconds of dizziness.
 	if(curse_value >= 31)
+		owner.add_movespeed_modifier(/datum/movespeed_modifier/sanity/crazy)
 		if(prob(30))
 			owner.adjust_timed_status_effect(2 SECONDS, /datum/status_effect/confusion)
 
@@ -149,16 +150,19 @@
 			owner.adjust_timed_status_effect(15 SECONDS, /datum/status_effect/confusion)
 			if(iscarbon(owner))
 				var/mob/living/carbon/carbon_owner = owner
-				var/obj/item/organ/internal/heart/new_heart = carbon_owner
 				// 20% chance the vomit will expell the curse.
 				if(prob(20))
-					carbon_owner.vomit(blood = TRUE, vomit_type = VOMIT_PURPLE)
-					new_heart.Insert(carbon_owner, special = 0, drop_if_replaced = FALSE)
+					var/obj/item/organ/internal/heart/new_heart = new(get_turf(carbon_owner))
+					carbon_owner.vomit(vomit_type = VOMIT_PURPLE)
+					new_heart.Insert(carbon_owner, drop_if_replaced = FALSE)
+					to_chat(owner, span_userdanger("You expell the curse in your vomit!"))
+					carbon_owner.set_curse_effect(0)
 				else
 					carbon_owner.vomit(blood = TRUE) // Vomiting clears toxloss - consider this a blessing
 
 	// Over 71, we will constantly have blurry eyes
 	if(curse_value >= 71)
+		owner.add_movespeed_modifier(/datum/movespeed_modifier/sanity/insane)
 		owner.blur_eyes(curse_value - 70)
 
 	// Over 81, we will gain constant bloodloss
@@ -171,9 +175,16 @@
 	if(curse_value >= 91)
 		owner.blood_volume = max(owner.blood_volume - 7, 0)
 		owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.4)
+		var/mob/living/carbon/carbon_owner = owner
+		var/obj/item/organ/internal/heart/new_heart = new(get_turf(carbon_owner))
+		// Passing out will remove the curse.
 		if(owner.stat == CONSCIOUS && prob(20))
-				to_chat(owner, span_userdanger("You collapse as a black ooze glazes your eyes shut!"))
-				owner.Sleeping(90 SECONDS)
+			to_chat(owner, span_userdanger("You collapse as a purple ooze glazes your eyes shut! You feel the curse is expelled."))
+			carbon_owner.vomit(vomit_type = VOMIT_PURPLE)
+			carbon_owner.remove_client_colour(/datum/client_colour/cursed_heart_blood)
+			new_heart.Insert(carbon_owner, drop_if_replaced = TRUE)
+			carbon_owner.set_curse_effect(0)
+			owner.Sleeping(90 SECONDS)
 
 	// And finally, over 100 - let's be honest, you shouldn't be alive by now.
 	if(curse_value >= 101)

@@ -108,12 +108,14 @@
 	var/last_pump = 0
 	var/add_colour = TRUE //So we're not constantly recreating colour datums
 	var/pump_delay = 70 //you can pump 1 second early, for lag, but no more (otherwise you could spam heal)
+	var/expelled = FALSE //for throwing up the curse
 
 	//How much to heal per pump, negative numbers would HURT the player
 	var/heal_brute = 25
 	var/heal_burn = 25
 	var/heal_oxy = 10
 	var/heal_toxin = 10
+	var/blood_regained = 70
 
 
 /obj/item/organ/internal/heart/cursed/attack(mob/living/carbon/human/accursed, mob/living/carbon/human/user, obj/target)
@@ -129,7 +131,7 @@
 		if(ishuman(owner) && owner.client && owner.client?.lastping < 250) //While this entire item exists to make people suffer, they can't control disconnects.
 			var/mob/living/carbon/human/accursed_human = owner
 			if(accursed_human.dna && !(NOBLOOD in accursed_human.dna.species.species_traits))
-				accursed_human.adjust_curse_effect(rand(1,7))
+				accursed_human.adjust_curse_effect(rand(5,7))
 				to_chat(accursed_human, span_userdanger("You have to keep pumping your blood!"))
 				if(add_colour)
 					accursed_human.add_client_colour(/datum/client_colour/cursed_heart_blood) //bloody screen so real
@@ -166,7 +168,8 @@
 		var/mob/living/carbon/human/accursed = owner
 		if(istype(accursed))
 			if(accursed.dna && !(NOBLOOD in accursed.dna.species.species_traits))
-				accursed.adjust_curse_effect(rand(-7,-4))
+				accursed.adjust_curse_effect(rand(-8,-5))
+				accursed.blood_volume = min(accursed.blood_volume + accursed.blood_regained, BLOOD_VOLUME_MAXIMUM)
 				accursed.remove_client_colour(/datum/client_colour/cursed_heart_blood)
 				cursed_heart.add_colour = TRUE
 				accursed.adjustBruteLoss(-cursed_heart.heal_brute)
