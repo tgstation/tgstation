@@ -10,6 +10,8 @@
 	max_integrity = 300
 	var/oxygentanks = TANK_DISPENSER_CAPACITY
 	var/plasmatanks = TANK_DISPENSER_CAPACITY
+	var/obj/item/tank/internals/oxytank_type = /obj/item/tank/internals/oxygen
+	var/obj/item/tank/internals/plasmatank_type = /obj/item/tank/internals/plasma
 
 /obj/structure/tank_dispenser/oxygen
 	plasmatanks = 0
@@ -17,12 +19,17 @@
 /obj/structure/tank_dispenser/plasma
 	oxygentanks = 0
 
+/obj/structure/tank_dispenser/emptytank
+	name = "empty tank dispenser"
+	oxytank_type = /obj/item/tank/internals/oxygen/empty
+	plasmatank_type = /obj/item/tank/internals/plasma/empty
+
 /obj/structure/tank_dispenser/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to oxygentanks)
-		new /obj/item/tank/internals/oxygen(src)
+		new oxytank_type(src)
 	for(var/i in 1 to plasmatanks)
-		new /obj/item/tank/internals/plasma(src)
+		new plasmatank_type(src)
 	update_appearance()
 
 /obj/structure/tank_dispenser/update_overlays()
@@ -45,12 +52,12 @@
 
 /obj/structure/tank_dispenser/attackby(obj/item/I, mob/living/user, params)
 	var/full
-	if(istype(I, /obj/item/tank/internals/plasma))
+	if(istype(I, plasmatank_type))
 		if(plasmatanks < TANK_DISPENSER_CAPACITY)
 			plasmatanks++
 		else
 			full = TRUE
-	else if(istype(I, /obj/item/tank/internals/oxygen))
+	else if(istype(I, oxytank_type))
 		if(oxygentanks < TANK_DISPENSER_CAPACITY)
 			oxygentanks++
 		else
@@ -91,13 +98,13 @@
 		return
 	switch(action)
 		if("plasma")
-			var/obj/item/tank/internals/plasma/tank = locate() in src
+			var/obj/item/tank/internals/tank = locate(plasmatank_type) in src
 			if(tank && Adjacent(usr))
 				usr.put_in_hands(tank)
 				plasmatanks--
 			. = TRUE
 		if("oxygen")
-			var/obj/item/tank/internals/oxygen/tank = locate() in src
+			var/obj/item/tank/internals/tank = locate(oxytank_type) in src
 			if(tank && Adjacent(usr))
 				usr.put_in_hands(tank)
 				oxygentanks--
