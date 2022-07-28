@@ -90,6 +90,7 @@
 	name = "Pirate Swashbuckler Corpse - Space"
 	suit = /obj/item/clothing/suit/space/pirate
 	head = /obj/item/clothing/head/helmet/space/pirate/bandana
+	back = /obj/item/tank/jetpack/carbondioxide
 
 /obj/effect/mob_spawn/corpse/human/pirate/ranged
 	name = "Pirate Gunner"
@@ -105,6 +106,7 @@
 	name = "Pirate Gunner Corpse - Space"
 	suit = /obj/item/clothing/suit/space/pirate
 	head = /obj/item/clothing/head/helmet/space/pirate
+	back = /obj/item/tank/jetpack/carbondioxide
 
 /obj/effect/mob_spawn/corpse/human/russian
 	name = "Russian"
