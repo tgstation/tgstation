@@ -214,11 +214,11 @@
 		user.say("MEDIOCRE!!", forced="spraycan suicide")
 		return SHAME
 
-	var/mob/living/carbon/human/H = user
+	var/mob/living/carbon/human/suicider = user
 	user.visible_message(span_suicide("[user] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, spraying paint across [user.p_their()] teeth!"))
 	user.say("WITNESS ME!!", forced="spraycan suicide")
 	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)
-	H.update_lips("spray_face", paint_color)
+	suicider.update_lips("spray_face", paint_color)
 
 	return (OXYLOSS)
 
