@@ -555,37 +555,36 @@
 	immortal = TRUE
 	immobile = TRUE
 	/// Range of effect, if left alone anomaly will convert a 2(range)+1 squared area.
-	var/range = 4
-	var/list/turf/area = new()
+	var/range = 3
+	var/list/turf/target_turfs = new()
 	var/datum/dimension_theme/theme
-
-/obj/effect/anomaly/dimensional/Initialize(mapload, new_lifespan, drops_core)
-	. = ..()
-	prepare_area()
 
 /obj/effect/anomaly/dimensional/proc/prepare_area()
 	var/datum/dimension_theme/themes = new()
 	theme = themes.get_random_theme()
 
-	area = new()
+	target_turfs = new()
 	var/list/turfs = spiral_range_turfs(range, src)
 	for (var/turf/turf in turfs)
 		if (theme.can_convert(turf))
-			area.Add(turf)
+			target_turfs.Add(turf)
 	try_relocate()
 
 /obj/effect/anomaly/dimensional/anomalyEffect(delta_time)
 	. = ..()
+	if (!theme)
+		prepare_area()
 	transmute_area()
 
 /obj/effect/anomaly/dimensional/proc/transmute_area()
-	var/turf/affected_turf = area[1]
+	var/turf/affected_turf = target_turfs[1]
+	new /obj/effect/temp_visual/transmute_tile_flash(affected_turf)
 	theme.apply_theme(affected_turf)
-	area.Remove(affected_turf)
+	target_turfs.Remove(affected_turf)
 	try_relocate()
 
 /obj/effect/anomaly/dimensional/proc/try_relocate()
-	if (area.len != 0)
+	if (target_turfs.len != 0)
 		return
 
 	var/datum/anomaly_placer/placer = new()
@@ -594,5 +593,10 @@
 	priority_announce("Dimensional instability relocated. Expected location: [new_area.name].", "Anomaly Alert")
 	src.loc = pick(get_area_turfs(new_area))
 	prepare_area()
+
+/obj/effect/temp_visual/transmute_tile_flash
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "shield-flash"
+	duration = 3
 
 #undef ANOMALY_MOVECHANCE
