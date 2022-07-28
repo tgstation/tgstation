@@ -47,14 +47,14 @@
 	user.holder.player_panel_new()
 	return TRUE
 
-/datum/keybinding/admin/toggle_buildmode_self
+/datum/keybinding/client/toggle_buildmode_self
 	hotkey_keys = list("F7")
 	name = "toggle_buildmode_self"
 	full_name = "Toggle Buildmode Self"
 	description = "Toggles buildmode"
 	keybind_signal = COMSIG_KB_ADMIN_TOGGLEBUILDMODE_DOWN
 
-/datum/keybinding/admin/toggle_buildmode_self/down(client/user)
+/datum/keybinding/client/toggle_buildmode_self/down(client/user)
 	. = ..()
 	if(.)
 		return
