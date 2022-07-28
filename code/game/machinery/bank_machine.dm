@@ -107,7 +107,8 @@
 
 /obj/machinery/computer/bank_machine/proc/start_siphon(mob/living/carbon/user)
 	siphoning = TRUE
+	unauthorized = TRUE
 	var/obj/item/card/id/card = user.get_idcard(hand_first = TRUE)
 	if(istype(card))
-		if(!(ACCESS_VAULT in card.GetAccess()))
-			unauthorized = TRUE
+		if(ACCESS_VAULT in card.GetAccess())
+			unauthorized = FALSE
