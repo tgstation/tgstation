@@ -906,8 +906,8 @@
 /turf/open/misc/asteroid,
 /area/mine/explored)
 "arx" = (
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden{
-	dir = 4
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
@@ -1604,7 +1604,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "aJk" = (
@@ -12187,6 +12187,10 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/primary/tram/left)
+"ejg" = (
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible,
+/turf/closed/wall/r_wall,
+/area/station/engineering/atmos)
 "ejp" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -13260,7 +13264,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden{
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 5
 	},
 /turf/open/floor/iron,
@@ -13980,7 +13984,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "eSk" = (
-/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible{
 	dir = 5
 	},
 /turf/open/floor/iron,
@@ -15291,7 +15295,7 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/greater)
 "foT" = (
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
 /turf/closed/wall/r_wall,
 /area/station/engineering/break_room)
 "fpf" = (
@@ -20158,7 +20162,7 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness)
 "haK" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold/supply/visible{
 	dir = 4
 	},
 /turf/closed/wall/r_wall,
@@ -27057,7 +27061,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/science)
 "jxp" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible{
 	dir = 8
 	},
 /turf/closed/wall/r_wall,
@@ -28988,7 +28992,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "kfO" = (
@@ -40440,7 +40444,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "nYX" = (
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden{
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 6
 	},
 /turf/closed/wall/r_wall,
@@ -50912,7 +50916,7 @@
 	dir = 1
 	},
 /obj/machinery/firealarm/directional/north,
-/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "rDn" = (
@@ -51152,7 +51156,7 @@
 /turf/open/floor/plating,
 /area/station/science/lab)
 "rHk" = (
-/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible{
 	dir = 10
 	},
 /turf/closed/wall/r_wall,
@@ -104298,7 +104302,7 @@ xCj
 oNq
 rHk
 haK
-lXH
+ejg
 fvn
 tpw
 byG
