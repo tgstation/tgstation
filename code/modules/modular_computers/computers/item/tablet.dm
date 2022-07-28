@@ -18,6 +18,7 @@
 	comp_light_luminosity = 2.3 //Same as the PDA
 	looping_sound = FALSE
 	custom_materials = list(/datum/material/iron=300, /datum/material/glass=100, /datum/material/plastic=100)
+	interaction_flags_atom = INTERACT_ATOM_ALLOW_USER_LOCATION
 
 	var/has_variants = TRUE
 	var/finish_color = null
@@ -199,7 +200,7 @@
 	borgo = null
 	return ..()
 
-/obj/item/modular_computer/tablet/integrated/turn_on(mob/user)
+/obj/item/modular_computer/tablet/integrated/turn_on(mob/user, open_ui = FALSE)
 	if(borgo?.stat != DEAD)
 		return ..()
 	return FALSE

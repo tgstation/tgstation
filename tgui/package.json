@@ -7,16 +7,17 @@
     "packages/*"
   ],
   "scripts": {
-    "tgui:build": "webpack",
     "tgui:analyze": "webpack --analyze",
+    "tgui:bench": "webpack --env TGUI_BENCH=1 && node packages/tgui-bench/index.js",
+    "tgui:build": "webpack",
     "tgui:dev": "node --experimental-modules packages/tgui-dev-server/index.js",
     "tgui:lint": "eslint packages --ext .js,.cjs,.ts,.tsx",
+    "tgui:prettier": "prettierx --check .",
     "tgui:sonar": "eslint packages --ext .js,.cjs,.ts,.tsx -c .eslintrc-sonar.yml",
-    "tgui:tsc": "tsc",
     "tgui:test": "jest --watch",
     "tgui:test-simple": "CI=true jest --color",
     "tgui:test-ci": "CI=true jest --color --collect-coverage",
-    "tgui:bench": "webpack --env TGUI_BENCH=1 && node packages/tgui-bench/index.js"
+    "tgui:tsc": "tsc"
   },
   "dependencies": {
     "@babel/core": "^7.15.0",
@@ -38,6 +39,7 @@
     "common": "workspace:*",
     "css-loader": "^5.2.7",
     "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-radar": "^0.2.1",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-unused-imports": "^1.1.4",
@@ -47,6 +49,7 @@
     "jest-circus": "^27.0.6",
     "jsdom": "^16.7.0",
     "mini-css-extract-plugin": "^1.6.2",
+    "prettier": "npm:prettierx@0.19.0",
     "sass": "^1.37.5",
     "sass-loader": "^11.1.1",
     "style-loader": "^2.0.0",

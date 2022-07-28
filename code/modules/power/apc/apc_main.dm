@@ -328,7 +328,7 @@
 			toggle_breaker(usr)
 			. = TRUE
 		if("toggle_nightshift")
-			toggle_nightshift_lights()
+			toggle_nightshift_lights(usr)
 			. = TRUE
 		if("charge")
 			chargemode = !chargemode
@@ -370,8 +370,8 @@
 		if("emergency_lighting")
 			emergency_lights = !emergency_lights
 			for(var/obj/machinery/light/L in area)
-				if(!initial(L.no_emergency)) //If there was an override set on creation, keep that override
-					L.no_emergency = emergency_lights
+				if(!initial(L.no_low_power)) //If there was an override set on creation, keep that override
+					L.no_low_power = emergency_lights
 					INVOKE_ASYNC(L, /obj/machinery/light/.proc/update, FALSE)
 				CHECK_TICK
 	return TRUE

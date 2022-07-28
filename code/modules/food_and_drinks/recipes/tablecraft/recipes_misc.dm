@@ -207,7 +207,7 @@
 /datum/crafting_recipe/food/pesto
 	name = "Pesto"
 	reqs = list(
-		/obj/item/food/firm_cheese_slice = 1,
+		/obj/item/food/cheese/firm_cheese_slice = 1,
 		/datum/reagent/consumable/salt = 5,
 		/obj/item/food/grown/herbs = 2,
 		/obj/item/food/grown/garlic = 1,
@@ -241,9 +241,9 @@
 /datum/crafting_recipe/food/pierogi
 	name = "Pierogi"
 	reqs = list(
+		/obj/item/food/doughslice = 1,
 		/obj/item/food/grown/potato = 1,
-		/obj/item/food/grown/onion = 1,
-		/obj/item/food/bun = 1
+		/obj/item/food/grown/onion = 1
 	)
 	result = /obj/item/food/pierogi
 	subcategory = CAT_MISCFOOD
@@ -257,4 +257,25 @@
 		/obj/item/food/grown/tomato = 1
 	)
 	result = /obj/item/food/stuffed_cabbage
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/granola_bar
+	name = "Granola bar"
+	reqs = list(
+		/obj/item/food/grown/oat = 1,
+		/obj/item/food/grown/peanut = 1,
+		/obj/item/food/chocolatebar = 1,
+		/obj/item/food/no_raisin = 1,
+		/datum/reagent/consumable/sugar = 2
+	)
+	result = /obj/item/food/granola_bar
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/onigiri
+	name = "Onigiri"
+	reqs = list(
+		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/food/seaweedsheet = 1,
+	)
+	result = /obj/item/food/onigiri
 	subcategory = CAT_MISCFOOD

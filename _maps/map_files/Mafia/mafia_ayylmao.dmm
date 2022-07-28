@@ -7,12 +7,11 @@
 /area/centcom/mafia)
 "g" = (
 /obj/mafia_game_board,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
 /area/centcom/mafia)
 "h" = (
-/obj/structure/grille/indestructable,
+/obj/structure/grille/indestructible,
 /turf/open/floor/plating,
 /area/centcom/mafia)
 "i" = (
@@ -70,9 +69,8 @@
 /area/centcom/mafia)
 "v" = (
 /obj/mafia_game_board,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
 /area/centcom/mafia)
 "x" = (
 /obj/machinery/door/poddoor/preopen{
@@ -85,7 +83,7 @@
 /turf/open/floor/plating/abductor2,
 /area/centcom/mafia)
 "z" = (
-/obj/structure/grille/indestructable,
+/obj/structure/grille/indestructible,
 /turf/open/floor/fakespace,
 /area/centcom/mafia)
 "B" = (

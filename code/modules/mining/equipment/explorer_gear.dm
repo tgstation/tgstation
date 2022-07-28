@@ -3,6 +3,7 @@
 	name = "explorer suit"
 	desc = "An armoured suit for exploring harsh environments."
 	icon_state = "explorer"
+	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
 	inhand_icon_state = "explorer"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	cold_protection = CHEST|GROIN|LEGS|ARMS
@@ -68,6 +69,9 @@
 	. = ..()
 	adjustmask()
 
+/obj/item/clothing/suit/hooded/cloak
+	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
+
 /obj/item/clothing/suit/hooded/cloak/goliath
 	name = "goliath cloak"
 	icon_state = "goliath_cloak"
@@ -76,7 +80,7 @@
 		/obj/item/flashlight,
 		/obj/item/knife/combat/bone,
 		/obj/item/knife/combat/survival,
-		/obj/item/organ/regenerative_core/legion,
+		/obj/item/organ/internal/regenerative_core/legion,
 		/obj/item/pickaxe,
 		/obj/item/spear,
 		/obj/item/tank/internals,

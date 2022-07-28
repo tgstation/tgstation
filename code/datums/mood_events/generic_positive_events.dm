@@ -305,3 +305,8 @@
 
 /datum/mood_event/russian_roulette_win/add_effects(loaded_rounds)
 	mood_change = 2 ** loaded_rounds
+
+/datum/mood_event/fishing
+	description = "Fishing is relaxing."
+	mood_change = 5
+	timeout = 3 MINUTES

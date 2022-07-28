@@ -28,7 +28,8 @@
 /datum/uplink_item/device_tools/encryptionkey
 	name = "Syndicate Encryption Key"
 	desc = "A key that, when inserted into a radio headset, allows you to listen to all station department channels \
-			as well as talk on an encrypted Syndicate channel with other agents that have the same key."
+			as well as talk on an encrypted Syndicate channel with other agents that have the same key. In addition, this key also protects \
+			your headset from radio jammers."
 	item = /obj/item/encryptionkey/syndicate
 	cost = 2
 	surplus = 75
@@ -67,6 +68,15 @@
 	surplus = 0
 	item = /obj/item/storage/briefcase/launchpad
 	cost = 6
+
+/datum/uplink_item/device_tools/syndicate_teleporter
+	name = "Experimental Syndicate Teleporter"
+	desc = "A handheld device that teleports the user 4-8 meters forward. \
+			Beware, teleporting into a wall will trigger a parallel emergency teleport; \
+			however if that fails, you may need to be stitched back together. \
+			Comes with 4 charges, recharges randomly. Warranty null and void if exposed to an electromagnetic pulse."
+	item = /obj/item/storage/box/syndie_kit/syndicate_teleporter
+	cost = 8
 
 /datum/uplink_item/device_tools/camera_bug
 	name = "Camera Bug"
@@ -128,9 +138,17 @@
 	var/datum/component/uplink/uplink = source.GetComponent(/datum/component/uplink)
 	if(!uplink)
 		return
+	if(!uplink.unlock_note) //no note means it can't be locked (typically due to being an implant.)
+		to_chat(user, span_warning("This device doesn't support code entry!"))
+		return
+
 	uplink.failsafe_code = uplink.generate_code()
 	var/code = "[islist(uplink.failsafe_code) ? english_list(uplink.failsafe_code) : uplink.failsafe_code]"
-	to_chat(user, span_warning("The new failsafe code for this uplink is now : [code]. You may check your antagonist info to recall this."))
+	var/datum/antagonist/traitor/traitor_datum = user.mind?.has_antag_datum(/datum/antagonist/traitor)
+	if(traitor_datum)
+		traitor_datum.antag_memory += "<b>Uplink Failsafe Code:</b> [code]" + "<br>"
+		traitor_datum.update_static_data_for_all_viewers()
+	to_chat(user, span_warning("The new failsafe code for this uplink is now: [code].[traitor_datum ? " You may check your antagonist info to recall this." : null]"))
 	return source //For log icon
 
 /datum/uplink_item/device_tools/toolbox
@@ -189,6 +207,13 @@
 	cost = 5
 	surplus = 90
 
+/datum/uplink_item/device_tools/super_pointy_tape
+	name = "Super Pointy Tape"
+	desc = "An all-purpose super pointy tape roll. The tape is built with hundreds of tiny metal needles, the roll comes with in 5 pieces. When added to items the \
+			item that was taped will embed when thrown at people. Taping people's mouthes with it will hurt them if pulled off by someone else."
+	progression_minimum = 10 MINUTES
+	item = /obj/item/stack/sticky_tape/pointy/super
+	cost = 1
 
 // Medium progression cost
 

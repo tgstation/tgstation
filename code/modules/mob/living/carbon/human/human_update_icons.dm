@@ -74,8 +74,7 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/regenerate_icons()
 
 	if(!..())
-		update_body()
-		update_hair()
+		update_body(is_creating = TRUE)
 		update_inv_w_uniform()
 		update_inv_wear_id()
 		update_inv_gloves()
@@ -154,12 +153,21 @@ There are several things that need to be remembered:
 
 		var/mutable_appearance/uniform_overlay
 
+		//This is how non-humanoid clothing works. You check if the mob has the right bodyflag, and the clothing has the corresponding clothing flag.
+		//handled_by_bodytype is used to track whether or not we successfully used an alternate sprite. It's set to TRUE to ease up on copy-paste.
+		//icon_file MUST be set to null by default, or it causes issues.
+		//handled_by_bodytype MUST be set to FALSE under the if(!icon_exists()) statement, or everything breaks.
+		//"override_file = handled_by_bodytype ? icon_file : null" MUST be added to the arguments of build_worn_icon()
+		//Friendly reminder that icon_exists(file, state, scream = TRUE) is your friend when debugging this code.
+		var/handled_by_bodytype = TRUE
 		var/icon_file
 		var/woman
 		if(!uniform_overlay)
 			//BEGIN SPECIES HANDLING
 			if((dna?.species.bodytype & BODYTYPE_DIGITIGRADE) && (uniform.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
 				icon_file = DIGITIGRADE_UNIFORM_FILE
+			if((dna?.species.bodytype & BODYTYPE_MONKEY) && (uniform.supports_variations_flags & CLOTHING_MONKEY_VARIATION))
+				icon_file = MONKEY_UNIFORM_FILE
 
 			//Female sprites have lower priority than digitigrade sprites
 			else if(dna.species.sexes && (dna.species.bodytype & BODYTYPE_HUMANOID) && physique == FEMALE && uniform.female_sprite_flags != NO_FEMALE_UNIFORM) //Agggggggghhhhh
@@ -167,6 +175,8 @@ There are several things that need to be remembered:
 
 			if(!icon_exists(icon_file, RESOLVE_ICON_STATE(uniform)))
 				icon_file = DEFAULT_UNIFORM_FILE
+				handled_by_bodytype = FALSE
+
 			//END SPECIES HANDLING
 			uniform_overlay = uniform.build_worn_icon(
 				default_layer = UNIFORM_LAYER,
@@ -174,6 +184,7 @@ There are several things that need to be remembered:
 				isinhands = FALSE,
 				female_uniform = woman ? uniform.female_sprite_flags : null,
 				override_state = target_overlay,
+				override_file = handled_by_bodytype ? icon_file : null,
 			)
 
 		if(OFFSET_UNIFORM in dna.species.offset_features)
@@ -380,6 +391,8 @@ There are several things that need to be remembered:
 		overlays_standing[SHOES_LAYER] = shoes_overlay
 
 	apply_overlay(SHOES_LAYER)
+
+	update_body_parts()
 
 
 /mob/living/carbon/human/update_inv_s_store()
@@ -677,7 +690,7 @@ There are several things that need to be remembered:
 
 /mob/living/carbon/human/proc/update_hud_s_store(obj/item/worn_item)
 	worn_item.screen_loc = ui_sstore1
-	if((client && hud_used) && (hud_used.inventory_shown && hud_used.hud_shown))
+	if(client && hud_used?.hud_shown)
 		client.screen += worn_item
 	update_observer_view(worn_item,TRUE)
 

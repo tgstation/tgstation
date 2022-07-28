@@ -50,9 +50,8 @@
 /area/centcom/ctf)
 "bc" = (
 /obj/structure/sign/poster/random/directional/west,
-/turf/open/floor/wood{
-	icon_state = "wood-broken"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
 /area/centcom/ctf)
 "bd" = (
 /obj/effect/turf_decal/tile/bar{
@@ -455,9 +454,8 @@
 /obj/structure/table/wood{
 	resistance_flags = 64
 	},
-/turf/open/floor/wood{
-	icon_state = "wood-broken7"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
 /area/centcom/ctf)
 "iy" = (
 /obj/effect/turf_decal/trimline/red/line{
@@ -487,9 +485,8 @@
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "iQ" = (
-/turf/open/floor/wood{
-	icon_state = "wood-broken4"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
 /area/centcom/ctf)
 "iW" = (
 /obj/effect/turf_decal/stripes/line{
@@ -1667,11 +1664,6 @@
 /obj/effect/turf_decal/siding/yellow,
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
-"Ie" = (
-/turf/open/floor/wood{
-	icon_state = "wood-broken5"
-	},
-/area/centcom/ctf)
 "Ij" = (
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 1
@@ -1839,11 +1831,6 @@
 "KL" = (
 /obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/misc/grass,
-/area/centcom/ctf)
-"KN" = (
-/turf/open/floor/wood{
-	icon_state = "wood-broken6"
-	},
 /area/centcom/ctf)
 "KV" = (
 /obj/effect/turf_decal/siding/white,
@@ -3963,7 +3950,7 @@ vX
 dO
 RU
 Dm
-Ie
+iQ
 iv
 Am
 Kh
@@ -4188,7 +4175,7 @@ BH
 BH
 xf
 Bx
-KN
+iQ
 ql
 ql
 bs

@@ -28,8 +28,14 @@
 	if(message)
 		QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, /mob/proc/whisper, message), SSspeech_controller)
 
-///whisper a message
-/mob/proc/whisper(message, datum/language/language=null)
+/**
+ * Whisper a message.
+ *
+ * Basic level implementation just speaks the message, nothing else.
+ */
+/mob/proc/whisper(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language, ignore_spam = FALSE, forced, filterproof)
+	if(!message)
+		return
 	say(message, language = language)
 
 ///The me emote verb

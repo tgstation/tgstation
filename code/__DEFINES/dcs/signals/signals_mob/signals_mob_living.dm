@@ -43,8 +43,6 @@
 
 ///from base of element/bane/activate(): (item/weapon, mob/user)
 #define COMSIG_LIVING_BANED "living_baned"
-///Sent when bloodcrawl ends in mob/living/phasein(): (phasein_decal)
-#define COMSIG_LIVING_AFTERPHASEIN "living_phasein"
 
 ///from base of mob/living/death(): (gibbed)
 #define COMSIG_LIVING_DEATH "living_death"

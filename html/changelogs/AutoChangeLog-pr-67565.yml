@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Fixes issue where lobby buttons were still visable and usable under panic bunker x interview system and also allows use of fix chat verb for interviewees."

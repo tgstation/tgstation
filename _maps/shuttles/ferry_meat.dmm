@@ -79,10 +79,9 @@
 /turf/open/floor/iron/freezer,
 /area/shuttle/transport)
 "m" = (
-/obj/structure/sink/kitchen{
+/obj/structure/sink/kitchen/directional/south{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	name = "old sink";
-	pixel_y = 28
+	name = "old sink"
 	},
 /turf/open/floor/iron/freezer,
 /area/shuttle/transport)

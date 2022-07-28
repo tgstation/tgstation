@@ -189,10 +189,7 @@
 	},
 /area/template_noop)
 "H" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12
-	},
+/obj/structure/sink/directional/east,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
@@ -302,9 +299,7 @@
 	},
 /area/template_noop)
 "Z" = (
-/obj/structure/musician/piano{
-	icon_state = "piano"
-	},
+/obj/structure/musician/piano,
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 

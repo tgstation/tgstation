@@ -176,9 +176,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/sign/departments/cargo{
-	pixel_x = 32
-	},
+/obj/structure/sign/departments/cargo/directional/east,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/supply)
 "r" = (

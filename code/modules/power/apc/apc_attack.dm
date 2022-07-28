@@ -24,16 +24,16 @@
 
 	if(istype(attacking_object, /obj/item/stock_parts/cell) && opened)
 		if(cell)
-			to_chat(user, span_warning("There is a power cell already installed!"))
+			balloon_alert(user, "cell already installed!")
 			return
 		if(machine_stat & MAINT)
-			to_chat(user, span_warning("There is no connector for your power cell!"))
+			balloon_alert(user, "no connector for a cell!")
 			return
 		if(!user.transferItemToLoc(attacking_object, src))
 			return
 		cell = attacking_object
-		user.visible_message(span_notice("[user.name] inserts the power cell to [src.name]!"),\
-			span_notice("You insert the power cell."))
+		user.visible_message(span_notice("[user.name] inserts the power cell to [src.name]!"))
+		balloon_alert(user, "cell inserted")
 		chargecount = 0
 		update_appearance()
 		return
@@ -47,22 +47,22 @@
 		if(!host_turf)
 			CRASH("attackby on APC when it's not on a turf")
 		if(host_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
-			to_chat(user, span_warning("You must remove the floor plating in front of the APC first!"))
+			balloon_alert(user, "remove the floor plating!")
 			return
 		if(terminal)
-			to_chat(user, span_warning("This APC is already wired!"))
+			balloon_alert(user, "APC is already wired!")
 			return
 		if(!has_electronics)
-			to_chat(user, span_warning("There is nothing to wire!"))
+			balloon_alert(user, "no board to wire!")
 			return
 
 		var/obj/item/stack/cable_coil/installing_cable = attacking_object
 		if(installing_cable.get_amount() < 10)
-			to_chat(user, span_warning("You need ten lengths of cable for APC!"))
+			balloon_alert(user, "need ten lengths of cable!")
 			return
 
-		user.visible_message(span_notice("[user.name] adds cables to the APC frame."), \
-							span_notice("You start adding cables to the APC frame..."))
+		user.visible_message(span_notice("[user.name] adds cables to the APC frame."))
+		balloon_alert(user, "adding cables to the frame...")
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 		if(!do_after(user, 20, target = src))
 			return
@@ -76,22 +76,22 @@
 			do_sparks(5, TRUE, src)
 			return
 		installing_cable.use(10)
-		to_chat(user, span_notice("You add cables to the APC frame."))
+		balloon_alert(user, "cables added to the frame")
 		make_terminal()
 		terminal.connect_to_network()
 		return
 
 	if(istype(attacking_object, /obj/item/electronics/apc) && opened)
 		if(has_electronics)
-			to_chat(user, span_warning("There is already a board inside the [src]!"))
+			balloon_alert(user, "there is already a board!")
 			return
 
 		if(machine_stat & BROKEN)
-			to_chat(user, span_warning("You cannot put the board inside, the frame is damaged!"))
+			balloon_alert(user, "the frame is damaged!")
 			return
 
-		user.visible_message(span_notice("[user.name] inserts the power control board into [src]."), \
-							span_notice("You start to insert the power control board into the frame..."))
+		user.visible_message(span_notice("[user.name] inserts the power control board into [src]."))
+		balloon_alert(user, "you start to insert the board...")
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 
 		if(!do_after(user, 10, target = src) || has_electronics)
@@ -99,7 +99,7 @@
 
 		has_electronics = APC_ELECTRONICS_INSTALLED
 		locked = FALSE
-		to_chat(user, span_notice("You place the power control board inside the frame."))
+		balloon_alert(user, "board installed")
 		qdel(attacking_object)
 		return
 
@@ -107,7 +107,7 @@
 		var/obj/item/electroadaptive_pseudocircuit/pseudocircuit = attacking_object
 		if(!has_electronics)
 			if(machine_stat & BROKEN)
-				to_chat(user, span_warning("[src]'s frame is too damaged to support a circuit."))
+				balloon_alert(user, "frame is too damaged!")
 				return
 			if(!pseudocircuit.adapt_circuit(user, 50))
 				return
@@ -119,7 +119,7 @@
 
 		if(!cell)
 			if(machine_stat & MAINT)
-				to_chat(user, span_warning("There's no connector for a power cell."))
+				balloon_alert(user, "no board for a cell!")
 				return
 			if(!pseudocircuit.adapt_circuit(user, 500))
 				return
@@ -132,29 +132,29 @@
 			update_appearance()
 			return
 
-		to_chat(user, span_warning("[src] has both electronics and a cell."))
+		balloon_alert(user, "has both board and cell!")
 		return
 
 	if(istype(attacking_object, /obj/item/wallframe/apc) && opened)
 		if(!(machine_stat & BROKEN || opened==APC_COVER_REMOVED || atom_integrity < max_integrity)) // There is nothing to repair
-			to_chat(user, span_warning("You found no reason for repairing this APC!"))
+			balloon_alert(user, "no reason for repairs!")
 			return
 		if(!(machine_stat & BROKEN) && opened==APC_COVER_REMOVED) // Cover is the only thing broken, we do not need to remove elctronicks to replace cover
-			user.visible_message(span_notice("[user.name] replaces missing APC's cover."), \
-							span_notice("You begin to replace APC's cover..."))
+			user.visible_message(span_notice("[user.name] replaces missing APC's cover."))
+			balloon_alert(user, "replacing APC's cover...")
 			if(do_after(user, 20, target = src)) // replacing cover is quicker than replacing whole frame
-				to_chat(user, span_notice("You replace missing APC's cover."))
+				balloon_alert(user, "cover replaced")
 				qdel(attacking_object)
 				opened = APC_COVER_OPENED
 				update_appearance()
 			return
 		if(has_electronics)
-			to_chat(user, span_warning("You cannot repair this APC until you remove the electronics still inside!"))
+			balloon_alert(user, "remove the board inside!")
 			return
-		user.visible_message(span_notice("[user.name] replaces the damaged APC frame with a new one."), \
-							span_notice("You begin to replace the damaged APC frame..."))
+		user.visible_message(span_notice("[user.name] replaces the damaged APC frame with a new one."))
+		balloon_alert(user, "replacing damaged frame...")
 		if(do_after(user, 50, target = src))
-			to_chat(user, span_notice("You replace the damaged APC frame with a new one."))
+			balloon_alert(user, "APC frame replaced")
 			qdel(attacking_object)
 			set_machine_stat(machine_stat & ~BROKEN)
 			atom_integrity = max_integrity
@@ -201,40 +201,40 @@
 		return
 	if(ethereal.combat_mode)
 		if(cell.charge <= (cell.maxcharge / 2)) // ethereals can't drain APCs under half charge, this is so that they are forced to look to alternative power sources if the station is running low
-			to_chat(ethereal, span_warning("The APC's syphon safeties prevent you from draining power!"))
+			balloon_alert(ethereal, "safeties prevent draining!")
 			return
 		if(stomach.crystal_charge > charge_limit)
-			to_chat(ethereal, span_warning("Your charge is full!"))
+			balloon_alert(ethereal, "charge is full!")
 			return
 		stomach.drain_time = world.time + APC_DRAIN_TIME
-		to_chat(ethereal, span_notice("You start channeling some power through the APC into your body."))
+		balloon_alert(ethereal, "draining power")
 		if(do_after(user, APC_DRAIN_TIME, target = src))
 			if(cell.charge <= (cell.maxcharge / 2) || (stomach.crystal_charge > charge_limit))
 				return
-			to_chat(ethereal, span_notice("You receive some charge from the APC."))
+			balloon_alert(ethereal, "received charge")
 			stomach.adjust_charge(APC_POWER_GAIN)
 			cell.use(APC_POWER_GAIN)
 		return
 
 	if(cell.charge >= cell.maxcharge - APC_POWER_GAIN)
-		to_chat(ethereal, span_warning("The APC can't receive anymore power!"))
+		balloon_alert(ethereal, "APC can't receive more power!")
 		return
 	if(stomach.crystal_charge < APC_POWER_GAIN)
-		to_chat(ethereal, span_warning("Your charge is too low!"))
+		balloon_alert(ethereal, "charge is too low!")
 		return
 	stomach.drain_time = world.time + APC_DRAIN_TIME
-	to_chat(ethereal, span_notice("You start channeling power through your body into the APC."))
+	balloon_alert(ethereal, "transfering power")
 	if(!do_after(user, APC_DRAIN_TIME, target = src))
 		return
 	if((cell.charge >= (cell.maxcharge - APC_POWER_GAIN)) || (stomach.crystal_charge < APC_POWER_GAIN))
-		to_chat(ethereal, span_warning("You can't transfer power to the APC!"))
+		balloon_alert(ethereal, "can't transfer power!")
 		return
 	if(istype(stomach))
-		to_chat(ethereal, span_notice("You transfer some power to the APC."))
+		balloon_alert(ethereal, "transfered power")
 		stomach.adjust_charge(-APC_POWER_GAIN)
 		cell.give(APC_POWER_GAIN)
 	else
-		to_chat(ethereal, span_warning("You can't transfer power to the APC!"))
+		balloon_alert(ethereal, "can't transfer power!")
 
 // attack with hand - remove cell (if cover open) or interact with the APC
 /obj/machinery/power/apc/attack_hand(mob/user, list/modifiers)
@@ -244,7 +244,8 @@
 
 	if(opened && (!issilicon(user)))
 		if(cell)
-			user.visible_message(span_notice("[user] removes \the [cell] from [src]!"), span_notice("You remove \the [cell]."))
+			user.visible_message(span_notice("[user] removes \the [cell] from [src]!"))
+			balloon_alert(user, "cell removed")
 			user.put_in_hands(cell)
 			cell.update_appearance()
 			cell = null
@@ -284,7 +285,7 @@
 	var/mob/living/silicon/robot/robot = user
 	if(aidisabled || malfhack && istype(malfai) && ((istype(AI) && (malfai!=AI && malfai != AI.parent)) || (istype(robot) && (robot in malfai.connected_robots))))
 		if(!loud)
-			to_chat(user, span_danger("\The [src] has been disabled!"))
+			balloon_alert(user, "APC has been disabled!")
 		return FALSE
 	return TRUE
 

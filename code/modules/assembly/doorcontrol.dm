@@ -185,34 +185,46 @@
 	if(cooldown)
 		return
 	cooldown = TRUE
-	var/obj/structure/industrial_lift/lift
-	for(var/l in GLOB.lifts)
-		var/obj/structure/industrial_lift/possible_lift = l
-		if(possible_lift.id != id || possible_lift.z == z || possible_lift.controls_locked)
+	var/datum/lift_master/lift
+	for(var/datum/lift_master/possible_match as anything in GLOB.active_lifts_by_type[BASIC_LIFT_ID])
+		if(possible_match.specific_lift_id != id || !check_z(possible_match) || possible_match.controls_locked)
 			continue
-		lift = possible_lift
+
+		lift = possible_match
 		break
+
 	if(!lift)
 		addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 2 SECONDS)
 		return
-	lift.visible_message(span_notice("[src] clinks and whirrs into automated motion, locking controls."))
-	lift.lift_master_datum.set_controls(LOCKED)
+
+	var/obj/structure/industrial_lift/target = lift.lift_platforms[1]
+	var/target_z = target.z
+
+	lift.set_controls(LIFT_PLATFORM_LOCKED)
 	///The z level to which the elevator should travel
 	var/targetZ = (abs(loc.z)) //The target Z (where the elevator should move to) is not our z level (we are just some assembly in nullspace) but actually the Z level of whatever we are contained in (e.g. elevator button)
 	///The amount of z levels between the our and targetZ
-	var/difference = abs(targetZ - lift.z)
+	var/difference = abs(targetZ - target_z)
 	///Direction (up/down) needed to go to reach targetZ
-	var/direction = lift.z < targetZ ? UP : DOWN
+	var/direction = target_z < targetZ ? UP : DOWN
 	///How long it will/should take us to reach the target Z level
 	var/travel_duration = FLOOR_TRAVEL_TIME * difference //100 / 2 floors up = 50 seconds on every floor, will always reach destination in the same time
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), travel_duration)
+
 	for(var/i in 1 to difference)
 		sleep(FLOOR_TRAVEL_TIME)//hey this should be alright... right?
 		if(QDELETED(lift) || QDELETED(src))//elevator control or button gone = don't go up anymore
 			return
-		lift.lift_master_datum.MoveLift(direction, null)
-	lift.visible_message(span_notice("[src] clicks, ready to be manually operated again."))
-	lift.lift_master_datum.set_controls(UNLOCKED)
+		lift.MoveLift(direction, null)
+	lift.set_controls(LIFT_PLATFORM_UNLOCKED)
+
+///check if any of the lift platforms are already here
+/obj/item/assembly/control/elevator/proc/check_z(datum/lift_master/lift)
+	for(var/obj/structure/industrial_lift/platform as anything in lift.lift_platforms)
+		if(platform.z == loc.z)
+			return FALSE
+
+	return TRUE
 
 #undef FLOOR_TRAVEL_TIME
 
@@ -221,17 +233,19 @@
 	desc = "A small device used to bring trams to you."
 	///for finding the landmark initially - should be the exact same as the landmark's destination id.
 	var/initial_id
+	///ID to link to allow us to link to one specific tram in the world
+	var/specific_lift_id = MAIN_STATION_TRAM
 	///this is our destination's landmark, so we only have to find it the first time.
 	var/datum/weakref/to_where
 
 /obj/item/assembly/control/tram/Initialize(mapload)
-	. = ..()
+	..()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/item/assembly/control/tram/LateInitialize()
 	. = ..()
 	//find where the tram needs to go to (our destination). only needs to happen the first time
-	for(var/obj/effect/landmark/tram/our_destination as anything in GLOB.tram_landmarks)
+	for(var/obj/effect/landmark/tram/our_destination as anything in GLOB.tram_landmarks[specific_lift_id])
 		if(our_destination.destination_id == initial_id)
 			to_where = WEAKREF(our_destination)
 			break
@@ -245,29 +259,27 @@
 		return
 	cooldown = TRUE
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 2 SECONDS)
-	var/obj/structure/industrial_lift/tram/tram_part
-	var/turf/current_turf = get_turf(src)
-	if(!current_turf)
-		return
-	for(var/atom/tram as anything in GLOB.central_trams)
-		if(tram.z != current_turf.z)
-			continue
-		tram_part = tram
-		break
-	if(!tram_part)
+
+	var/datum/lift_master/tram/tram
+	for(var/datum/lift_master/tram/possible_match as anything in GLOB.active_lifts_by_type[TRAM_LIFT_ID])
+		if(possible_match.specific_lift_id == specific_lift_id)
+			tram = possible_match
+			break
+
+	if(!tram)
 		say("The tram is not responding to call signals. Please send a technician to repair the internals of the tram.")
 		return
-	if(tram_part.travelling) //in use
-		say("The tram is already travelling to [tram_part.from_where].")
+	if(tram.travelling) //in use
+		say("The tram is already travelling to [tram.from_where].")
 		return
 	if(!to_where)
 		return
 	var/obj/effect/landmark/tram/current_location = to_where.resolve()
 	if(!current_location)
 		return
-	if(tram_part.from_where == current_location) //already here
+	if(tram.from_where == current_location) //already here
 		say("The tram is already here. Please board the tram and select a destination.")
 		return
 
 	say("The tram has been called to [current_location.name]. Please wait for its arrival.")
-	tram_part.tram_travel(current_location)
+	tram.tram_travel(current_location)

@@ -9,37 +9,40 @@ import { Component, createRef, InfernoNode, RefObject } from 'inferno';
 import { addScrollableNode, removeScrollableNode } from '../events';
 import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
 
-interface SectionProps extends BoxProps {
+type SectionProps = BoxProps & {
   className?: string;
   title?: InfernoNode;
   buttons?: InfernoNode;
   fill?: boolean;
   fitted?: boolean;
   scrollable?: boolean;
+  scrollableHorizontal?: boolean;
   /** @deprecated This property no longer works, please remove it. */
   level?: boolean;
   /** @deprecated Please use `scrollable` property */
   overflowY?: any;
-}
+};
 
 export class Section extends Component<SectionProps> {
   scrollableRef: RefObject<HTMLDivElement>;
   scrollable: boolean;
+  scrollableHorizontal: boolean;
 
   constructor(props) {
     super(props);
     this.scrollableRef = createRef();
     this.scrollable = props.scrollable;
+    this.scrollableHorizontal = props.scrollableHorizontal;
   }
 
   componentDidMount() {
-    if (this.scrollable) {
+    if (this.scrollable || this.scrollableHorizontal) {
       addScrollableNode(this.scrollableRef.current);
     }
   }
 
   componentWillUnmount() {
-    if (this.scrollable) {
+    if (this.scrollable || this.scrollableHorizontal) {
       removeScrollableNode(this.scrollableRef.current);
     }
   }
@@ -52,6 +55,7 @@ export class Section extends Component<SectionProps> {
       fill,
       fitted,
       scrollable,
+      scrollableHorizontal,
       children,
       ...rest
     } = this.props;
@@ -64,18 +68,15 @@ export class Section extends Component<SectionProps> {
           fill && 'Section--fill',
           fitted && 'Section--fitted',
           scrollable && 'Section--scrollable',
+          scrollableHorizontal && 'Section--scrollableHorizontal',
           className,
           computeBoxClassName(rest),
         ])}
         {...computeBoxProps(rest)}>
         {hasTitle && (
           <div className="Section__title">
-            <span className="Section__titleText">
-              {title}
-            </span>
-            <div className="Section__buttons">
-              {buttons}
-            </div>
+            <span className="Section__titleText">{title}</span>
+            <div className="Section__buttons">{buttons}</div>
           </div>
         )}
         <div className="Section__rest">

@@ -1,6 +1,6 @@
-import { FeatureChoiced, FeatureDropdownInput } from "../base";
+import { FeatureChoiced, FeatureDropdownInput } from '../base';
 
 export const prefered_security_department: FeatureChoiced = {
-  name: "Security department",
+  name: 'Security department',
   component: FeatureDropdownInput,
 };

@@ -41,6 +41,29 @@
 	"BUGS", \
 )
 
+/// IC meaning (more or less) for food flags
+#define FOOD_FLAGS_IC list( \
+	"Meat", \
+	"Vegetables", \
+	"Raw food", \
+	"Junk food", \
+	"Grain", \
+	"Fruits", \
+	"Dairy products", \
+	"Fried food", \
+	"Alcohol", \
+	"Sugary food", \
+	"Gross food", \
+	"Toxic food", \
+	"Pineapples", \
+	"Breakfast food", \
+	"Clothing", \
+	"Nuts", \
+	"Seafood", \
+	"Oranges", \
+	"Bugs", \
+)
+
 #define DRINK_NICE 1
 #define DRINK_GOOD 2
 #define DRINK_VERYGOOD 3
@@ -49,7 +72,7 @@
 
 #define FOOD_IN_CONTAINER (1<<0)
 #define FOOD_FINGER_FOOD (1<<1)
-///Is this food item spawned from a silver slime? Prevent it from exporting for profit from cargo.
+///Is this food item spawned from a silver slime? Prevent it from exporting for profit from cargo and make it taste disgusting
 #define FOOD_SILVER_SPAWNED (1<<2)
 
 #define STOP_SERVING_BREAKFAST (15 MINUTES)

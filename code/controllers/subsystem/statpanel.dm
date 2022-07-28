@@ -73,10 +73,22 @@ SUBSYSTEM_DEF(statpanels)
 
 		if(target.mob)
 			var/mob/target_mob = target.mob
-			if((target.stat_tab in target.spell_tabs) || !length(target.spell_tabs) && (length(target_mob.mob_spell_list) || length(target_mob.mind?.spell_list)))
-				if(num_fires % default_wait == 0)
-					set_spells_tab(target, target_mob)
 
+			// Handle the action panels of the stat panel
+
+			var/update_actions = FALSE
+			// We're on a spell tab, update the tab so we can see cooldowns progressing and such
+			if(target.stat_tab in target.spell_tabs)
+				update_actions = TRUE
+			// We're not on a spell tab per se, but we have cooldown actions, and we've yet to
+			// set up our spell tabs at all
+			if(!length(target.spell_tabs) && locate(/datum/action/cooldown) in target_mob.actions)
+				update_actions = TRUE
+
+			if(update_actions && num_fires % default_wait == 0)
+				set_action_tabs(target, target_mob)
+
+			// Handle the examined turf of the stat panel
 
 			if(target_mob?.listed_turf && num_fires % default_wait == 0)
 				if(!target_mob.TurfAdjacent(target_mob.listed_turf) || isnull(target_mob.listed_turf))
@@ -148,14 +160,15 @@ SUBSYSTEM_DEF(statpanels)
 	sdql2A += sdql2B
 	target.stat_panel.send_message("update_sdql2", sdql2A)
 
-/datum/controller/subsystem/statpanels/proc/set_spells_tab(client/target, mob/target_mob)
-	var/list/proc_holders = target_mob.get_proc_holders()
+/// Set up the various action tabs.
+/datum/controller/subsystem/statpanels/proc/set_action_tabs(client/target, mob/target_mob)
+	var/list/actions = target_mob.get_actions_for_statpanel()
 	target.spell_tabs.Cut()
 
-	for(var/proc_holder_list as anything in proc_holders)
-		target.spell_tabs |= proc_holder_list[1]
+	for(var/action_data in actions)
+		target.spell_tabs |= action_data[1]
 
-	target.stat_panel.send_message("update_spells", list(spell_tabs = target.spell_tabs, proc_holders_encoded = proc_holders))
+	target.stat_panel.send_message("update_spells", list(spell_tabs = target.spell_tabs, actions = actions))
 
 /datum/controller/subsystem/statpanels/proc/set_turf_examine_tab(client/target, mob/target_mob)
 	var/list/overrides = list()
@@ -221,9 +234,21 @@ SUBSYSTEM_DEF(statpanels)
 		return TRUE
 
 	var/mob/target_mob = target.mob
-	if((target.stat_tab in target.spell_tabs) || !length(target.spell_tabs) && (length(target_mob.mob_spell_list) || length(target_mob.mind?.spell_list)))
-		set_spells_tab(target, target_mob)
+
+	// Handle actions
+
+	var/update_actions = FALSE
+	if(target.stat_tab in target.spell_tabs)
+		update_actions = TRUE
+
+	if(!length(target.spell_tabs) && locate(/datum/action/cooldown) in target_mob.actions)
+		update_actions = TRUE
+
+	if(update_actions)
+		set_action_tabs(target, target_mob)
 		return TRUE
+
+	// Handle turfs
 
 	if(target_mob?.listed_turf)
 		if(!target_mob.TurfAdjacent(target_mob.listed_turf))

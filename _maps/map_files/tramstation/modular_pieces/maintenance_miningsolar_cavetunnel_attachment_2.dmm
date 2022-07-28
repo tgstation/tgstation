@@ -22,6 +22,10 @@
 /obj/effect/spawner/random/trash/cigbutt,
 /turf/open/misc/asteroid/airless,
 /area/mine/explored)
+"o" = (
+/obj/item/relic,
+/turf/open/misc/asteroid/airless,
+/area/mine/explored)
 "r" = (
 /obj/effect/spawner/random/trash/hobo_squat,
 /obj/item/bedsheet/brown,
@@ -42,9 +46,8 @@
 /turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "x" = (
-/obj/item/relic,
-/turf/open/misc/asteroid/airless,
-/area/mine/explored)
+/turf/template_noop,
+/area/template_noop)
 "y" = (
 /turf/closed/wall,
 /area/mine/explored)
@@ -80,9 +83,9 @@ c
 c
 u
 a
-I
-a
-a
+x
+x
+x
 "}
 (2,1,1) = {"
 a
@@ -97,9 +100,9 @@ a
 a
 c
 a
-c
-a
-a
+x
+x
+x
 "}
 (3,1,1) = {"
 a
@@ -113,10 +116,10 @@ I
 t
 a
 c
-e
-c
-x
 a
+a
+a
+x
 "}
 (4,1,1) = {"
 E
@@ -130,7 +133,7 @@ a
 c
 a
 z
-a
+e
 c
 a
 a
@@ -149,7 +152,7 @@ a
 a
 a
 c
-c
+o
 t
 "}
 (6,1,1) = {"
