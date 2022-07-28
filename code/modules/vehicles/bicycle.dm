@@ -38,7 +38,7 @@
 	if(!W.tool_start_check(user, amount=1))
 		return
 	LAZYADD(repairing_mobs, user)
-	user.balloon_alert_to_viewers("starts to repair [src]", "started repairing [src]")
+	user.balloon_alert_to_viewers("started repairing [src]")
 	audible_message(span_hear("You hear welding."))
 	var/did_the_thing
 	while(atom_integrity < max_integrity)
