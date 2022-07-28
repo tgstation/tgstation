@@ -44,7 +44,7 @@
 ///If the spawner has any loot defined, randomly picks some and spawns it. Does not cleanup the spawner.
 /obj/effect/spawner/random/proc/spawn_loot(lootcount_override)
 	if(!prob(spawn_loot_chance))
-		return INITIALIZE_HINT_QDEL
+		return
 
 	var/list/spawn_locations = get_spawn_locations(spawn_scatter_radius)
 	var/spawn_loot_count = isnull(lootcount_override) ? src.spawn_loot_count : lootcount_override
