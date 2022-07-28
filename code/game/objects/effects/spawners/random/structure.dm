@@ -101,6 +101,13 @@
 		/obj/structure/closet/crate/science = 1,
 	)
 
+/obj/effect/spawner/random/structure/crate_empty/Initialize(mapload)
+	var/obj/structure/closet/crate/peek_a_boo = ..()
+	if(istype(peek_a_boo))
+		peek_a_boo.opened = prob(50)
+
+	return INITIALIZE_HINT_QDEL
+
 /obj/effect/spawner/random/structure/crate_loot
 	name = "lootcrate spawner"
 	icon_state = "crate"
