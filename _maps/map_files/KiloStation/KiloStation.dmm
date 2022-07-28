@@ -79961,7 +79961,7 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
 	},
-/obj/structure/tank_dispenser,
+/obj/structure/tank_dispenser/emptytank,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/ordnance)
 "wHb" = (

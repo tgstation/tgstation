@@ -17838,9 +17838,7 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/tram/left)
 "gma" = (
-/obj/structure/sign/warning/radiation/rad_area/directional/north{
-	dir = 1
-	},
+/obj/structure/sign/warning/radiation/rad_area/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -41477,7 +41475,7 @@
 /turf/open/floor/carpet,
 /area/station/cargo/miningdock)
 "osM" = (
-/obj/structure/tank_dispenser,
+/obj/structure/tank_dispenser/emptytank,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "osT" = (
@@ -65031,9 +65029,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "wzq" = (
-/obj/structure/sign/warning/radiation/rad_area/directional/north{
-	dir = 1
-	},
+/obj/structure/sign/warning/radiation/rad_area/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1

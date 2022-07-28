@@ -9966,9 +9966,9 @@
 /area/station/security/prison/safe)
 "cuH" = (
 /obj/machinery/airalarm/directional/west,
-/obj/structure/tank_dispenser,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/bot,
+/obj/structure/tank_dispenser/emptytank,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "cuQ" = (
@@ -12308,9 +12308,7 @@
 /area/station/service/abandoned_gambling_den)
 "cYO" = (
 /obj/structure/bodycontainer/morgue,
-/obj/effect/turf_decal/trimline/neutral/warning{
-	dir = 2
-	},
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/effect/turf_decal/trimline/neutral/mid_joiner,
 /obj/structure/sign/warning/no_smoking/directional/west,
 /turf/open/floor/iron/dark/textured_half,
@@ -81634,9 +81632,7 @@
 /obj/structure/bodycontainer/morgue{
 	dir = 8
 	},
-/obj/effect/turf_decal/trimline/neutral/warning{
-	dir = 2
-	},
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/effect/turf_decal/trimline/neutral/mid_joiner,
 /turf/open/floor/iron/dark/textured_half,
 /area/station/service/chapel/storage)
@@ -85794,9 +85790,7 @@
 /area/station/engineering/main)
 "vug" = (
 /obj/structure/bodycontainer/morgue,
-/obj/effect/turf_decal/trimline/neutral/warning{
-	dir = 2
-	},
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/effect/turf_decal/trimline/neutral/mid_joiner,
 /turf/open/floor/iron/dark/textured_half,
 /area/station/service/chapel/storage)
@@ -95694,9 +95688,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
-/obj/effect/turf_decal/siding{
-	dir = 2
-	},
+/obj/effect/turf_decal/siding,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/rd)

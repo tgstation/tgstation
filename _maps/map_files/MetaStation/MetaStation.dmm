@@ -9254,8 +9254,8 @@
 /turf/open/floor/wood/parquet,
 /area/station/medical/psychology)
 "dvJ" = (
-/obj/structure/tank_dispenser,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/tank_dispenser/emptytank,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "dvP" = (
