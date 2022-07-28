@@ -384,10 +384,7 @@
 	if(!area || !area.requires_power)
 		return
 	if(failure_timer)
-		update()
-		queue_icon_update()
 		failure_timer--
-		force_update = TRUE
 		return
 
 	//dont use any power from that channel if we shut that power channel off
@@ -515,7 +512,7 @@
 	// update icon & area power if anything changed
 
 	if(last_lt != lighting || last_eq != equipment || last_en != environ || force_update)
-		force_update = 0
+		force_update = FALSE
 		queue_icon_update()
 		update()
 	else if(last_ch != charging)
