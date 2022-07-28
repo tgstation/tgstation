@@ -573,12 +573,19 @@
 	volume = 100
 	isGlass = FALSE
 
-/obj/item/reagent_containers/food/drinks/shaker/attackby(obj/item/achievement_potion/I, mob/user)
-	if(istype(I) && I.golden_shaker == TRUE)
-		user.visible_message(span_notice("[user] pours the potion onto [src]. It glows brightly before turning into gold!"))
-		new /obj/item/reagent_containers/food/drinks/shaker/gold(loc)
-		qdel(src)
-		qdel(I)
+/obj/item/reagent_containers/food/drinks/shaker/attackby(obj/item/attacking_item, mob/user, params)
+	. = ..()
+	if(.)
+		return TRUE
+
+	if(!istype(attacking_item, /obj/item/achievement_potion/bartender))
+		return FALSE
+
+	user.visible_message(span_notice("[user] pours [attacking_item] onto [src]. It glows brightly before turning into gold!"))
+	new /obj/item/reagent_containers/food/drinks/shaker/gold(loc)
+	qdel(src)
+	qdel(attacking_item)
+	return TRUE
 
 /obj/item/reagent_containers/food/drinks/shaker/gold
 	name = "golden shaker"

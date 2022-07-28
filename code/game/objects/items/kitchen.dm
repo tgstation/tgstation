@@ -83,10 +83,10 @@
 	. = ..()
 	if(.)
 		return TRUE
-		
-	if(!istype(attacking_item, /obj/item/achievement_potion/chef))
-	    return FALSE
-	    
+
+	if(!istype(attacking_item, /obj/item/achievement_potion/cook))
+		return FALSE
+
 	user.visible_message(span_notice("[user] pours [attacking_item] onto [src]. It glows brightly before turning into gold!"))
 	new /obj/item/knife/gold(loc)
 	qdel(src)

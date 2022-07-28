@@ -35,15 +35,24 @@
 	new /obj/item/stack/sheet/iron(drop_location(), 1)
 	return ..()
 
-/obj/vehicle/ridden/wheelchair/attackby(obj/item/achievement_potion/I, mob/user)
+/obj/vehicle/ridden/wheelchair/attackby(obj/item/attacking_item, mob/user, params)
+	. = ..()
+
+	if(.)
+		return TRUE
+
+	if(!istype(attacking_item, /obj/item/achievement_potion/hardcore))
+		return FALSE
+
+	user.visible_message(span_notice("[user] pours [attacking_item] onto [src]. It glows brightly before turning into gold!"))
+	new /obj/vehicle/ridden/wheelchair/gold(loc)
 	var/turf/holder_turf = get_turf(user)
 	var/obj/vehicle/ridden/wheelchair/gold/chair
-	if(istype(I) && I.golden_wheelchair == TRUE)
-		chair = new(holder_turf)
-		user.visible_message(span_notice("[user] pours the potion onto the [src]. It glows brightly before turning into gold!"))
-		qdel(src)
-		qdel(I)
-		chair.buckle_mob(user)
+	chair = new(holder_turf)
+	qdel(src)
+	qdel(attacking_item)
+	chair.buckle_mob(user)
+	return TRUE
 
 /obj/vehicle/ridden/wheelchair/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
