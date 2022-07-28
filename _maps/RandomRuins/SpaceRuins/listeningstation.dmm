@@ -18,12 +18,6 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/item/wallframe/button{
-	pixel_x = 7;
-	pixel_y = -7;
-	name = "Busted Button";
-	desc = "Someone appears to have broken this button off it's frame. Not likely to be useful where you found it."
-	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
 "ap" = (
@@ -34,10 +28,10 @@
 /obj/structure/sign/nanotrasen{
 	pixel_x = 32
 	},
+/obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "aP" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -104,7 +98,6 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "ct" = (
-/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "cU" = (
@@ -154,8 +147,12 @@
 /area/ruin/space/has_grav/listeningstation)
 "dW" = (
 /obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/small,
+/obj/machinery/button/door/directional/west{
+	specialfunctions = 4;
+	normaldoorcontrol = 1;
+	id = "syndie_listeningpost_external"
+	},
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
 "eR" = (
 /obj/effect/decal/cleanable/dirt,
@@ -243,7 +240,9 @@
 /area/ruin/space/has_grav/listeningstation)
 "lk" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
-/obj/item/radio/intercom/directional/east,
+/obj/item/radio/intercom/directional/east{
+	freerange = 1
+	},
 /obj/machinery/computer/camera_advanced{
 	dir = 8
 	},
@@ -287,11 +286,10 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
 "oW" = (
-/obj/machinery/telecomms/relay/preset/ruskie{
-	use_power = 0
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/spawner/random/trash/cigbutt,
+/turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
 "qD" = (
 /obj/machinery/door/airlock/external/ruin{
@@ -308,7 +306,6 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "qN" = (
-/obj/machinery/atmospherics/components/binary/valve/layer4,
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
@@ -324,13 +321,13 @@
 /obj/machinery/door/airlock{
 	name = "Emergency Backup"
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation)
 "rE" = (
 /obj/structure/cable,
+/obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "rG" = (
@@ -350,6 +347,7 @@
 /area/ruin/space/has_grav/listeningstation)
 "tl" = (
 /obj/structure/marker_beacon/cerulean,
+/obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "tm" = (
@@ -410,6 +408,7 @@
 /obj/structure/sign/nanotrasen{
 	pixel_x = 32
 	},
+/obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "xh" = (
@@ -428,8 +427,8 @@
 /area/ruin/space/has_grav/listeningstation)
 "xp" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
-/obj/structure/table/reinforced,
 /obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/structure/table,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
 "xY" = (
@@ -488,9 +487,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4{
-	dir = 6
-	},
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
@@ -499,6 +495,7 @@
 	pixel_y = -32
 	},
 /obj/structure/cable,
+/obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "zZ" = (
@@ -786,14 +783,12 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "Oo" = (
-/obj/structure/cable,
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/space{
 	dir = 4
 	},
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation)
 "OS" = (
-/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -801,7 +796,6 @@
 /area/ruin/space/has_grav/listeningstation)
 "QE" = (
 /obj/structure/barricade/wooden/crude,
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -823,7 +817,6 @@
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
 "RK" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -882,7 +875,6 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
 "TO" = (
-/obj/structure/cable,
 /obj/structure/chair/sofa/left{
 	dir = 4
 	},
@@ -890,7 +882,9 @@
 /area/ruin/space/has_grav/listeningstation)
 "Uh" = (
 /obj/effect/turf_decal/bot_red,
-/obj/structure/tank_frame,
+/obj/machinery/telecomms/relay/preset/ruskie{
+	use_power = 0
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "Uu" = (
@@ -972,7 +966,7 @@
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
 "Yz" = (
-/turf/open/floor/plating/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "YV" = (
 /obj/item/stack/sheet/iron/twenty,
@@ -1219,7 +1213,7 @@ tl
 vI
 JB
 hk
-oW
+rG
 rr
 JB
 vI
@@ -1286,7 +1280,7 @@ JB
 ac
 yB
 zZ
-UI
+dW
 qD
 Uu
 aR
@@ -1295,7 +1289,7 @@ vI
 JB
 XQ
 zo
-ym
+Sz
 JB
 vI
 AV
@@ -1320,7 +1314,7 @@ JB
 JB
 dg
 aP
-vC
+oW
 JB
 vI
 AV
@@ -1344,7 +1338,7 @@ It
 ad
 by
 cj
-db
+ct
 Sz
 JB
 vI
@@ -1394,7 +1388,7 @@ SB
 FV
 ca
 BX
-dW
+wm
 QI
 JB
 vI
@@ -1487,7 +1481,7 @@ be
 zv
 qN
 ct
-SB
+ct
 Cw
 wk
 rG
