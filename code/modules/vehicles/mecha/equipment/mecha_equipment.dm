@@ -187,7 +187,8 @@
 	if(islist(chassis.equip_by_category[to_unequip_slot]))
 		chassis.equip_by_category[to_unequip_slot] -= src
 	else
-		SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_DETACHED)
+		chassis.equip_by_category[to_unequip_slot] = null
+	SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_DETACHED)
 	log_message("[src] removed from equipment.", LOG_MECHA)
 	chassis = null
 
