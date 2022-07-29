@@ -5,7 +5,7 @@
 #define ID_ICON_BORDERS 1, 9, 32, 24
 
 /// Fallback time if none of the config entries are set for USE_LOW_LIVING_HOUR_INTERN
-#define INTERN_THRESHOLD_FALLBACK_HOURS 15
+#define INTERN_THRESHOLD_FALLBACK_HOURS 15 HOURS
 
 /// Max time interval between projecting holopays
 #define HOLOPAY_PROJECTION_INTERVAL 7 SECONDS
@@ -935,7 +935,7 @@
 	if(!SSdbcore.Connect())
 		return
 
-	var/intern_threshold = (CONFIG_GET(number/use_low_living_hour_intern_hours) * 60) || (CONFIG_GET(number/use_exp_restrictions_heads_hours) * 60) || INTERN_THRESHOLD_FALLBACK_HOURS * 60
+	var/intern_threshold = (CONFIG_GET(number/use_low_living_hour_intern_hours) HOURS) || (CONFIG_GET(number/use_exp_restrictions_heads_hours) HOURS) || INTERN_THRESHOLD_FALLBACK_HOURS
 	var/playtime = user.client.get_exp_living(pure_numeric = TRUE)
 
 	if((intern_threshold >= playtime) && (user.mind?.assigned_role.job_flags & JOB_CAN_BE_INTERN))
