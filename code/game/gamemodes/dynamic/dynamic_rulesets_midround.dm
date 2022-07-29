@@ -393,7 +393,7 @@
 	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear/finish_applications()
-	leader = get_most_experienced(assigned)
+	leader = get_most_experienced(assigned, ROLE_NUCLEAR_OPERATIVE)
 	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear/finish_setup(mob/new_character, index)
