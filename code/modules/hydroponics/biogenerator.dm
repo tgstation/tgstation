@@ -45,7 +45,7 @@
 	else if (istype(held_item, /obj/item/storage/bag/plants))
 		context[SCREENTIP_CONTEXT_LMB] = "Insert products"
 		return CONTEXTUAL_SCREENTIP_SET
-	else if (istype(held_item, /obj/item/reagent_containers/glass ))
+	else if (istype(held_item, /obj/item/reagent_containers/glass))
 		context[SCREENTIP_CONTEXT_LMB] =  beaker ? "Swap container" : "Insert container"
 		return CONTEXTUAL_SCREENTIP_SET
 	else if (istype(held_item, /obj/item/ ))
