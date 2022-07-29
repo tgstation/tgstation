@@ -524,7 +524,7 @@
 	/// var to prevent it freezing the same things over and over
 	var/cooling = FALSE
 
-/obj/item/storage/organbox/Initialize()
+/obj/item/storage/organbox/Initialize(mapload)
 	. = ..()
 
 	create_storage(type = /datum/storage/organ_box, max_specific_storage = WEIGHT_CLASS_BULKY, max_total_storage = 21)
