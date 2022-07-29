@@ -390,6 +390,7 @@
 	requirements = list(90,90,90,80,60,40,30,20,10,10)
 	flags = HIGH_IMPACT_RULESET
 	antag_cap = list("denominator" = 18, "offset" = 1)
+	var/required_role = ROLE_NUCLEAR_OPERATIVE
 	var/datum/team/nuclear/nuke_team
 
 /datum/dynamic_ruleset/roundstart/nuclear/ready(population, forced = FALSE)
@@ -410,15 +411,16 @@
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/nuclear/execute()
-	var/leader = TRUE
-	for(var/datum/mind/M in assigned)
-		if (leader)
-			leader = FALSE
-			var/datum/antagonist/nukeop/leader/new_op = M.add_antag_datum(antag_leader_datum)
+	var/most_experienced = get_most_experienced(assigned, required_role)
+	if(!most_experienced)
+		most_experienced = assigned[1]
+	for(var/datum/mind/assigned_player in assigned)
+		if(assigned_player == most_experienced)
+			var/datum/antagonist/nukeop/leader/new_op = assigned_player.add_antag_datum(antag_leader_datum)
 			nuke_team = new_op.nuke_team
 		else
 			var/datum/antagonist/nukeop/new_op = new antag_datum()
-			M.add_antag_datum(new_op)
+			assigned_player.add_antag_datum(new_op)
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/nuclear/round_result()
@@ -595,6 +597,7 @@
 	antag_flag_override = ROLE_OPERATIVE
 	antag_leader_datum = /datum/antagonist/nukeop/leader/clownop
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
+	required_role = ROLE_CLOWN_OPERATIVE
 
 /datum/dynamic_ruleset/roundstart/nuclear/clown_ops/pre_execute()
 	. = ..()
