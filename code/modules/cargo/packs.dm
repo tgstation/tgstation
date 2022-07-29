@@ -2239,6 +2239,14 @@
 					/mob/living/simple_animal/hostile/retaliate/snake)
 	crate_name = "snake crate"
 
+/datum/supply_pack/critter/lizard
+	name = "Lizard Crate"
+	desc = "Hisss! Containssss a friendly lizard, not to be confusssed with a lizardperssson."
+	cost = CARGO_CRATE_VALUE * 4
+	access_view = ACCESS_JANITOR
+	contains = list(/mob/living/simple_animal/hostile/lizard)
+	crate_name = "lizard crate"
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Costumes & Toys /////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
