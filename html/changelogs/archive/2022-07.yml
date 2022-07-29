@@ -979,3 +979,36 @@
   - balance: Reflectors can now reflect nuclear particles.
   vincentiusvin:
   - qol: tidied up tram's atmospherics piping
+2022-07-29:
+  Ekaterina-von-Russland:
+  - bugfix: fixes the stress experiment
+  - balance: changes the stress experiment to allow values 2% below or above the target
+      integrity
+  FernandoJ8:
+  - bugfix: xenos now take fire damage in accordance to how many firestacks they have
+      instead of a set amount
+  Fikou:
+  - bugfix: you can no longer push puzzle doors
+  Ghommie:
+  - qol: Ladders now take left/right clicks to go up or down. Radial menus for them
+      should only show up when you reach the floor above or below but the ladder goes
+      beyond it, so that you don't have to bother clicking a sprite covered by that
+      of your mob.
+  - qol: Added contextual screen info (shows up top-center of the screen when hovering
+      your cursor over the object) and similar information when examining the ladder.
+  - qol: Improved messages for using ladders. They also make use of balloon messages
+      now.
+  - balance: Climbing up or down a ladder now takes 1 second by default. Less spammable,
+      barely more immersive.
+  GoldenAlpharex:
+  - bugfix: Security Records should no longer have to apply prefs to a random dummy
+      to generate pictures for every character that joins the round.
+  IndieanaJones:
+  - bugfix: Fixed legionnaire's charge when hitting an ally.
+  Melbert:
+  - qol: Swaps a prosthetics freezer for a blood freezer on Delta medical
+  orthography:
+  - spellcheck: oh hi mark changed to oh hi daniel.
+  timothymtorres:
+  - bugfix: Fix slime potions used on simple mobs to inherit all language abilities
+      from the user (for real this time)

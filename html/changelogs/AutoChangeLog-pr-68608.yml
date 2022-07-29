@@ -1,4 +1,0 @@
-author: "FernandoJ8"
-delete-after: True
-changes: 
-  - bugfix: "xenos now take fire damage in accordance to how many firestacks they have instead of a set amount"
