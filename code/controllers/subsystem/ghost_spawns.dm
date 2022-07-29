@@ -46,8 +46,8 @@ SUBSYSTEM_DEF(ghost_spawns)
   * * check_antaghud - Whether to filter out potential candidates who enabled AntagHUD
   * * source - The atom, atom prototype, icon or mutable appearance to display as an icon in the alert
   */
-/datum/controller/subsystem/ghost_spawns/proc/poll_candidates(question = "Would you like to play a special role?", role, poll_time = 30 SECONDS, min_hours = 0, flash_window = TRUE, check_antaghud = TRUE, source)
-	log_game("Polling candidates [role ? "for special role" : "\"[question]\""] for [poll_time / 10] seconds")
+/datum/controller/subsystem/ghost_spawns/proc/poll_candidates(question = "Would you like to play a special role?", role, poll_time = 30 SECONDS, flash_window = TRUE, source, role_cleanname)
+	log_game("Polling candidates [role ? "for [role_cleanname || role]" : "\"[question]\""] for [poll_time / 10] seconds")
 
 	// Start firing
 	polls_active = TRUE
@@ -63,7 +63,7 @@ SUBSYSTEM_DEF(ghost_spawns)
 	var/category = "[P.hash]_notify_action"
 
 	for(var/mob/dead/observer/M in GLOB.player_list)
-		if(!is_eligible(M))
+		if(!is_eligible(M, role, role))
 			continue
 
 		SEND_SOUND(M, 'sound/misc/notice2.ogg')
@@ -129,6 +129,13 @@ SUBSYSTEM_DEF(ghost_spawns)
 			I.plane = FLOAT_PLANE
 			A.overlays += I
 
+		// Chat message
+		var/act_jump = ""
+		if(isatom(source))
+			act_jump = "<a href='?src=[REF(M)];jump=\ref[source]'>\[Teleport]</a>"
+		var/act_signup = "<a href='?src=[REF(A)];signup=1'>\[Sign Up]</a>"
+		to_chat(M, "<big><span class='boldnotice'>Now looking for candidates [role ? "to play as \an [role_cleanname || role]" : "\"[question]\""]. [act_jump] [act_signup]</span></big>")
+
 		// Start processing it so it updates visually the timer
 		START_PROCESSING(SSprocessing, A)
 		A.process()
@@ -148,7 +155,7 @@ SUBSYSTEM_DEF(ghost_spawns)
   * * min_hours - The amount of minimum hours the client needs before being eligible
   * * check_antaghud - Whether to consider a client who enabled AntagHUD ineligible or not
   */
-/datum/controller/subsystem/ghost_spawns/proc/is_eligible(mob/M, role, role_text, min_hours, check_antaghud)
+/datum/controller/subsystem/ghost_spawns/proc/is_eligible(mob/M, role, role_text)
 	. = FALSE
 	if(!M.key || !M.client)
 		return

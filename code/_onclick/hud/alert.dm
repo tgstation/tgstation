@@ -12,7 +12,7 @@
  *flicks are forwarded to master
  *override makes it so the alert is not replaced until cleared by a clear_alert with clear_override, and it's used for hallucinations.
  */
-/mob/proc/throw_alert(category, type, severity, obj/new_master, override = FALSE)
+/mob/proc/throw_alert(category, type, severity, obj/new_master, override = FALSE, timeout_override, no_anim)
 
 	if(!category || QDELETED(src))
 		return
@@ -60,10 +60,12 @@
 	alerts[category] = thealert
 	if(client && hud_used)
 		hud_used.reorganize_alerts()
-	thealert.transform = matrix(32, 6, MATRIX_TRANSLATE)
-	animate(thealert, transform = matrix(), time = 2.5, easing = CUBIC_EASING)
+	if(!no_anim)
+		thealert.transform = matrix(32, 6, MATRIX_TRANSLATE)
+		animate(thealert, transform = matrix(), time = 2.5, easing = CUBIC_EASING)
 
-	if(thealert.timeout)
+	var/the_timeout = timeout_override || thealert.timeout
+	if(the_timeout)
 		addtimer(CALLBACK(src, .proc/alert_timeout, thealert, category), thealert.timeout)
 		thealert.timeout = world.time + thealert.timeout - world.tick_lag
 	return thealert
@@ -115,6 +117,12 @@
 /atom/movable/screen/alert/MouseExited()
 	closeToolTip(usr)
 
+/atom/movable/screen/alert/proc/do_timeout(mob/M, category)
+	if(!M || !M.alerts)
+		return
+
+	if(timeout && M.alerts[category] == src && world.time >= timeout)
+		M.clear_alert(category)
 
 //Gas alerts
 /atom/movable/screen/alert/not_enough_oxy
