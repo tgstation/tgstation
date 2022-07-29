@@ -936,9 +936,10 @@
 		return
 
 	var/intern_threshold = (CONFIG_GET(number/use_low_living_hour_intern_hours) HOURS) || (CONFIG_GET(number/use_exp_restrictions_heads_hours) HOURS) || INTERN_THRESHOLD_FALLBACK_HOURS
-	var/playtime = user.client.get_exp_living(pure_numeric = TRUE)
+	var/playtime = user.client.get_exp_living(pure_numeric = TRUE) //Pure numeric, so any values returned by this proc will be in minutes.
 
-	if((intern_threshold >= playtime) && (user.mind?.assigned_role.job_flags & JOB_CAN_BE_INTERN))
+	// intern_threshold is in HOURS, while playtime is in MINUTES, so declare the appropriate defines here to allow for proper comparison.
+	if((intern_threshold >= playtime MINUTES) && (user.mind?.assigned_role.job_flags & JOB_CAN_BE_INTERN))
 		is_intern = TRUE
 		update_label()
 		return
