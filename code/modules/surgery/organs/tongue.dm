@@ -446,7 +446,7 @@
 	// The timerid for our tonal indicator
 	var/tonal_timerid
 
-/obj/item/organ/internal/tongue/tied/Insert(mob/living/carbon/signer)
+/obj/item/organ/internal/tongue/tied/Insert(mob/living/carbon/signer, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	signer.verb_ask = "signs"
 	signer.verb_exclaim = "signs"
@@ -457,7 +457,7 @@
 	ADD_TRAIT(signer, TRAIT_SIGN_LANG, ORGAN_TRAIT)
 	REMOVE_TRAIT(signer, TRAIT_MUTE, ORGAN_TRAIT)
 
-/obj/item/organ/internal/tongue/tied/Remove(mob/living/carbon/speaker, special = 0)
+/obj/item/organ/internal/tongue/tied/Remove(mob/living/carbon/speaker, special = FALSE, drop_if_replaced = TRUE)
 	..()
 	speaker.verb_ask = initial(speaker.verb_ask)
 	speaker.verb_exclaim = initial(speaker.verb_exclaim)
