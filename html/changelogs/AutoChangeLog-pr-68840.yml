@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - qol: "the NtOS messenger has a scrollbar now."

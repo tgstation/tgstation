@@ -274,7 +274,8 @@ Difficulty: Hard
 	. = ..()
 	anger_modifier = clamp(((maxHealth - health)/60),0,20)
 	enrage_time = initial(enrage_time) * clamp(anger_modifier / 20, 0.5, 1)
-	hallucination_charge.enraged = BUBBLEGUM_SMASH
+	if(hallucination_charge)
+		hallucination_charge.enraged = BUBBLEGUM_SMASH
 	if(. > 0 && prob(25))
 		var/obj/effect/decal/cleanable/blood/gibs/bubblegum/B = new /obj/effect/decal/cleanable/blood/gibs/bubblegum(loc)
 		if(prob(40))

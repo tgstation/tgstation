@@ -26,11 +26,13 @@
 		setup_tatted_owner(tatted_limb.owner)
 
 /datum/component/tattoo/Destroy(force, silent)
-	. = ..()
+	if(!parent)
+		return ..()
 	var/obj/item/bodypart/tatted_limb = parent
 	if(tatted_limb.owner)
 		clear_tatted_owner(tatted_limb.owner)
 	parent.RemoveElement(/datum/element/art/commoner)
+	return ..()
 
 /datum/component/tattoo/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
