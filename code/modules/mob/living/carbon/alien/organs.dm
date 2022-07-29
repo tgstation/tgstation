@@ -215,11 +215,11 @@
 	stomach_contents -= source
 	UnregisterSignal(source, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_DEATH))
 
-/obj/item/organ/internal/stomach/alien/Insert(mob/living/carbon/stomach_owner, special)
+/obj/item/organ/internal/stomach/alien/Insert(mob/living/carbon/stomach_owner, special = FALSE, drop_if_replaced = TRUE)
 	RegisterSignal(stomach_owner, COMSIG_ATOM_RELAYMOVE, .proc/something_moved)
 	return ..()
 
-/obj/item/organ/internal/stomach/alien/Remove(mob/living/carbon/stomach_owner, special)
+/obj/item/organ/internal/stomach/alien/Remove(mob/living/carbon/stomach_owner, special = FALSE, drop_if_replaced = TRUE)
 	UnregisterSignal(stomach_owner, COMSIG_ATOM_RELAYMOVE)
 	return ..()
 
