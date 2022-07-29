@@ -414,8 +414,8 @@
 	var/datum/mind/most_experienced = get_most_experienced(assigned, required_role)
 	if(!most_experienced)
 		most_experienced = assigned[1]
-	var/datum/antagonist/nukeop/leader/new_op = most_experienced.add_antag_datum(antag_leader_datum)
-	nuke_team = new_op.nuke_team
+	var/datum/antagonist/nukeop/leader/leader = most_experienced.add_antag_datum(antag_leader_datum)
+	nuke_team = leader.nuke_team
 	for(var/datum/mind/assigned_player in assigned)
 		if(assigned_player == most_experienced)
 			continue
