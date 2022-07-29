@@ -67,17 +67,17 @@
 	else
 		owner.adjustPlasma(0.1 * plasma_rate * delta_time)
 
-/obj/item/organ/internal/alien/plasmavessel/Insert(mob/living/carbon/target_carbon, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/alien/plasmavessel/Insert(mob/living/carbon/organ_owner, special = FALSE, drop_if_replaced = TRUE)
 	..()
-	if(isalien(target_carbon))
-		var/mob/living/carbon/alien/target_alien = target_carbon
+	if(isalien(organ_owner))
+		var/mob/living/carbon/alien/target_alien = organ_owner
 		target_alien.updatePlasmaDisplay()
 
-/obj/item/organ/internal/alien/plasmavessel/Remove(mob/living/carbon/target_carbon, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/alien/plasmavessel/Remove(mob/living/carbon/organ_owner, special = FALSE, drop_if_replaced = TRUE)
 	..()
-	if(isalien(target_carbon))
-		var/mob/living/carbon/alien/target_alien = target_carbon
-		target_alien.updatePlasmaDisplay()
+	if(isalien(organ_owner))
+		var/mob/living/carbon/alien/organ_owner_alien = organ_owner
+		organ_owner_alien.updatePlasmaDisplay()
 
 #define QUEEN_DEATH_DEBUFF_DURATION 2400
 
@@ -91,14 +91,14 @@
 	/// Indicates if the queen died recently, aliens are heavily weakened while this is active.
 	var/recent_queen_death = FALSE
 
-/obj/item/organ/internal/alien/hivenode/Insert(mob/living/carbon/target_carbon, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/alien/hivenode/Insert(mob/living/carbon/organ_owner, special = FALSE, drop_if_replaced = TRUE)
 	..()
-	target_carbon.faction |= ROLE_ALIEN
-	ADD_TRAIT(target_carbon, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
+	organ_owner.faction |= ROLE_ALIEN
+	ADD_TRAIT(organ_owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
 
-/obj/item/organ/internal/alien/hivenode/Remove(mob/living/carbon/target_carbon, special = FALSE, drop_if_replaced = TRUE)
-	target_carbon.faction -= ROLE_ALIEN
-	REMOVE_TRAIT(target_carbon, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
+/obj/item/organ/internal/alien/hivenode/Remove(mob/living/carbon/organ_owner, special = FALSE, drop_if_replaced = TRUE)
+	organ_owner.faction -= ROLE_ALIEN
+	REMOVE_TRAIT(organ_owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
 	..()
 
 //When the alien queen dies, all aliens suffer a penalty as punishment for failing to protect her.
