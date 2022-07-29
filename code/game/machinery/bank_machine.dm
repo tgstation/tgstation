@@ -58,9 +58,10 @@
 	playsound(src, 'sound/items/poster_being_created.ogg', 100, TRUE)
 	syphoning_credits += siphon_am
 	D.adjust_money(-siphon_am)
-	if(unauthorized && next_warning < world.time && prob(15))
+	if(next_warning < world.time && prob(15))
 		var/area/A = get_area(loc)
-		var/message = "Unauthorized credit withdrawal underway in [initial(A.name)]!!"
+		var/a = !unauthorized
+		var/message = "[a ? "C" : "Unauthorized c"]redit withdrawal underway in [initial(A.name)][a ? "..." : "!!"]"
 		radio.talk_into(src, message, radio_channel)
 		next_warning = world.time + minimum_time_between_warnings
 
