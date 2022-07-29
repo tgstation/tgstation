@@ -5,7 +5,7 @@
 #define ID_ICON_BORDERS 1, 9, 32, 24
 
 /// Fallback time if none of the config entries are set for USE_LOW_LIVING_HOUR_INTERN
-#define INTERN_THRESHOLD_FALLBACK_HOURS 15 HOURS
+#define INTERN_THRESHOLD_FALLBACK_TIME 15 HOURS
 
 /// Max time interval between projecting holopays
 #define HOLOPAY_PROJECTION_INTERVAL 7 SECONDS
@@ -935,7 +935,7 @@
 	if(!SSdbcore.Connect())
 		return
 
-	var/intern_threshold = (CONFIG_GET(number/use_low_living_hour_intern_hours) HOURS) || (CONFIG_GET(number/use_exp_restrictions_heads_hours) HOURS) || INTERN_THRESHOLD_FALLBACK_HOURS
+	var/intern_threshold = (CONFIG_GET(number/use_low_living_hour_intern_hours) HOURS) || (CONFIG_GET(number/use_exp_restrictions_heads_hours) HOURS) || INTERN_THRESHOLD_FALLBACK_TIME
 	var/playtime = user.client.get_exp_living(pure_numeric = TRUE) //Pure numeric, so any values returned by this proc will be in minutes.
 
 	// intern_threshold is in HOURS, while playtime is in MINUTES, so declare the appropriate defines here to allow for proper comparison.
@@ -1644,5 +1644,5 @@
 	desc = "A card used to identify members of the green team for CTF"
 	icon_state = "ctf_green"
 
-#undef INTERN_THRESHOLD_FALLBACK_HOURS
+#undef INTERN_THRESHOLD_FALLBACK_TIME
 #undef ID_ICON_BORDERS
