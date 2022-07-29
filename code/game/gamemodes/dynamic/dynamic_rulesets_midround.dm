@@ -408,7 +408,7 @@
 	new_character.mind.set_assigned_role(SSjob.GetJobType(/datum/job/nuclear_operative))
 	new_character.mind.special_role = ROLE_NUCLEAR_OPERATIVE
 	if(new_character.mind == leader)
-		leader.mind.add_antag_datum(leader_antag_datum)
+		leader.add_antag_datum(leader_antag_datum)
 		leader = null
 		leader_antag_datum = null
 	else
