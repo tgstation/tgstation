@@ -39,7 +39,7 @@
 				context[SCREENTIP_CONTEXT_LMB] = "Remove electronics"
 				return CONTEXTUAL_SCREENTIP_SET
 
-	if (istype(held_item, /obj/item/food/grown/ ))
+	if (istype(held_item, /obj/item/food/grown))
 		context[SCREENTIP_CONTEXT_LMB] = "Insert product"
 		return CONTEXTUAL_SCREENTIP_SET
 	else if (istype(held_item, /obj/item/storage/bag/plants))
