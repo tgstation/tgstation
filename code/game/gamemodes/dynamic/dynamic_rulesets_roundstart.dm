@@ -412,6 +412,8 @@
 
 /datum/dynamic_ruleset/roundstart/nuclear/execute()
 	var/most_experienced = get_most_experienced(assigned, required_role)
+	if(!most_experienced)
+		most_experienced = assigned[1]
 	for(var/datum/mind/assigned_player in assigned)
 		if(assigned_player == most_experienced)
 			var/datum/antagonist/nukeop/leader/new_op = assigned_player.add_antag_datum(antag_leader_datum)

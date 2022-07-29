@@ -11,22 +11,18 @@
 /// From a list of players (minds, mobs or clients), finds the one with the highest playtime (either from a specific role or overall living) and returns it.
 /proc/get_most_experienced(list/players, specific_role)
 	if(!CONFIG_GET(flag/use_exp_tracking)) //woops
-		return players[1]
-	var/index = 0
+		return
+	var/most_experienced
 	for(var/client/player as anything in players)
-		index++
+		if(!most_experienced)
+			most_experienced = player
+			continue
 		player = get_player_client(player)
-		if(!player?.prefs)
+		if(!player?.prefs || !length(player.prefs.exp))
 			continue
-		if(!length(player.prefs.exp))
-			player.set_exp_from_db()
-			if(!length(player.prefs.exp))
-				continue
-		var/client/most_played = get_player_client(players[1])
-		if(player == most_played)
-			continue
-		if(!most_played.prefs || !length(most_played.prefs.exp))
-			players.Swap(1, index)
+		var/client/most_played = get_player_client(most_experienced)
+		if(!most_played?.prefs || !length(most_played.prefs.exp))
+			most_experienced = player
 			continue
 		var/player_playtime
 		var/most_playtime
@@ -37,5 +33,5 @@
 			player_playtime = player.get_exp_living(TRUE)
 			most_playtime = most_played.get_exp_living(TRUE)
 		if(player_playtime > most_playtime)
-			players.Swap(1, index)
-	return players[1]
+			most_experienced = player
+	return most_experienced
