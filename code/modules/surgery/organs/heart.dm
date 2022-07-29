@@ -276,13 +276,13 @@
 	. = ..()
 	add_atom_colour(ethereal_color, FIXED_COLOUR_PRIORITY)
 
-/obj/item/organ/internal/heart/ethereal/Insert(mob/living/carbon/owner, special = 0)
+/obj/item/organ/internal/heart/ethereal/Insert(mob/living/carbon/owner, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, .proc/on_stat_change)
 	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, .proc/on_owner_fully_heal)
 	RegisterSignal(owner, COMSIG_PARENT_QDELETING, .proc/owner_deleted)
 
-/obj/item/organ/internal/heart/ethereal/Remove(mob/living/carbon/owner, special = 0)
+/obj/item/organ/internal/heart/ethereal/Remove(mob/living/carbon/owner, special = FALSE, drop_if_replaced = TRUE)
 	UnregisterSignal(owner, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_PARENT_QDELETING))
 	REMOVE_TRAIT(owner, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
 	stop_crystalization_process(owner)
