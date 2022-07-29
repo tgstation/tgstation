@@ -1,0 +1,4 @@
+author: "Superlagg"
+delete-after: True
+changes: 
+  - rscadd: "Voracious properly speeds up eating. It also allows you to eat and be fed even while you're full, albeit more slowly the fulller you are."

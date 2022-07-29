@@ -942,3 +942,73 @@
       the Head of Personnel, Head of Security, and Quartermaster.
   Wallem:
   - imageadd: Resprites the implant pad
+2022-07-28:
+  CoffeeDragon16:
+  - admin: added logging for when you fail to tip something over
+  - bugfix: cleanbots will display their cleaning animation and clean at the right
+      speed again
+  Fikou:
+  - rscadd: Nuke Op reinforcements now come in different flavors.
+  - balance: Nuke Op reinforcements now start with plastikovs.
+  - bugfix: the hook shotguns hook and the m90gls grenade launcher no longer hit the
+      user
+  Melbert:
+  - bugfix: Fixes some alien actions like Evolve not working.
+  RaveRadbury:
+  - rscadd: Adds the old maid apron to the autodrobe
+  - imageadd: Returned the maid apron
+  Salex08:
+  - refactor: Mining items have been refactored to make better use of components.
+  ShizCalev:
+  - bugfix: Immortal anomalies (eg bioscramblers) will no longer have a death timer
+      overlay.
+  - bugfix: Fixed an exploit which would result in Mediborg's Amputation Adventure
+      not amputating properly. Legendary gamers don't have to cheat.
+  - bugfix: Clicking Mediborg's Amputation Adventure's with TK will no longer result
+      in amputation.
+  - bugfix: Cyborg flashes will no longer fail to drop from the heads of borgs.
+  - bugfix: Butchering a bodypart for it's organs while inside a locker will no longer
+      drop the organs /outside/ the locker.
+  - bugfix: Surgical moth wing reconstruction can no longer be attempted on wings
+      that... aren't moth wings!
+  SuperDrish:
+  - bugfix: Fixed Heterochromia not knowing where the right and left eyes are
+  orthography:
+  - spellcheck: minor grammatical change to the golden wheelchair.
+  tf-4:
+  - balance: Reflectors can now reflect nuclear particles.
+  vincentiusvin:
+  - qol: tidied up tram's atmospherics piping
+2022-07-29:
+  Ekaterina-von-Russland:
+  - bugfix: fixes the stress experiment
+  - balance: changes the stress experiment to allow values 2% below or above the target
+      integrity
+  FernandoJ8:
+  - bugfix: xenos now take fire damage in accordance to how many firestacks they have
+      instead of a set amount
+  Fikou:
+  - bugfix: you can no longer push puzzle doors
+  Ghommie:
+  - qol: Ladders now take left/right clicks to go up or down. Radial menus for them
+      should only show up when you reach the floor above or below but the ladder goes
+      beyond it, so that you don't have to bother clicking a sprite covered by that
+      of your mob.
+  - qol: Added contextual screen info (shows up top-center of the screen when hovering
+      your cursor over the object) and similar information when examining the ladder.
+  - qol: Improved messages for using ladders. They also make use of balloon messages
+      now.
+  - balance: Climbing up or down a ladder now takes 1 second by default. Less spammable,
+      barely more immersive.
+  GoldenAlpharex:
+  - bugfix: Security Records should no longer have to apply prefs to a random dummy
+      to generate pictures for every character that joins the round.
+  IndieanaJones:
+  - bugfix: Fixed legionnaire's charge when hitting an ally.
+  Melbert:
+  - qol: Swaps a prosthetics freezer for a blood freezer on Delta medical
+  orthography:
+  - spellcheck: oh hi mark changed to oh hi daniel.
+  timothymtorres:
+  - bugfix: Fix slime potions used on simple mobs to inherit all language abilities
+      from the user (for real this time)

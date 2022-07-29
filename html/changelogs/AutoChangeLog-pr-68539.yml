@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes: 
+  - balance: "Toy guns are only available to clown operatives."
+  - rscdel: "Removes from both operative uplinks: Camera Bug, Combat Gloves Plus (already removed from leaders), Guerrilla Gloves, FRAME disc, Radioactive Microlaser, Blood-Red Magboots (the standalone ones, not the modules), Power Beacon, Bioterror everything (including the bundle), Stechkin APS machine pistol and ammo, AI Detector."

@@ -43,7 +43,7 @@ In all, this is a lot like the monkey code. /N
 
 
 
-/mob/living/carbon/alien/attack_larva(mob/living/carbon/alien/larva/L)
+/mob/living/carbon/alien/attack_larva(mob/living/carbon/alien/larva/L, list/modifiers)
 	return attack_alien(L)
 
 
@@ -91,7 +91,7 @@ In all, this is a lot like the monkey code. /N
 			if(STAMINA)
 				adjustStaminaLoss(damage)
 
-/mob/living/carbon/alien/attack_slime(mob/living/simple_animal/slime/M)
+/mob/living/carbon/alien/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
 	if(..()) //successful slime attack
 		var/damage = rand(5, 35)
 		if(M.is_adult)
@@ -133,4 +133,4 @@ In all, this is a lot like the monkey code. /N
 	return FALSE//aliens are immune to acid.
 
 /mob/living/carbon/alien/on_fire_stack(delta_time, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
-	adjust_bodytemperature(BODYTEMP_HEATING_MAX * 0.5 * delta_time)
+	adjust_bodytemperature((BODYTEMP_HEATING_MAX + (fire_handler.stacks * 12)) * 0.5 * delta_time)
