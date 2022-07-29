@@ -56,13 +56,13 @@
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	Insert(user)
 
-/obj/item/organ/internal/heart/nightmare/Insert(mob/living/carbon/M, special = FALSE)
+/obj/item/organ/internal/heart/nightmare/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	if(special != HEART_SPECIAL_SHADOWIFY)
 		blade = new/obj/item/light_eater
 		M.put_in_hands(blade)
 
-/obj/item/organ/internal/heart/nightmare/Remove(mob/living/carbon/M, special = FALSE)
+/obj/item/organ/internal/heart/nightmare/Remove(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	respawn_progress = 0
 	if(blade && special != HEART_SPECIAL_SHADOWIFY)
 		M.visible_message(span_warning("\The [blade] disintegrates!"))
