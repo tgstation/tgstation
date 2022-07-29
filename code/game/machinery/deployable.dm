@@ -51,10 +51,7 @@
 			return TRUE
 		return FALSE
 
-
-
 /////BARRICADE TYPES///////
-
 /obj/structure/barricade/wooden
 	name = "wooden barricade"
 	desc = "This space is blocked off by a wooden barricade."
@@ -62,6 +59,14 @@
 	icon_state = "woodenbarricade"
 	bar_material = WOOD
 	var/drop_amount = 3
+
+/obj/structure/barricade/wooden/Initialize(mapload)
+	. = ..()
+
+	if(!(flags_1 & NODECONSTRUCT_1))
+		var/static/list/tool_behaviors = list(TOOL_CROWBAR = list(SCREENTIP_CONTEXT_LMB = "Deconstruct"))
+		AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+		register_context()
 
 /obj/structure/barricade/wooden/attackby(obj/item/I, mob/user)
 	if(istype(I,/obj/item/stack/sheet/mineral/wood))
@@ -79,6 +84,15 @@
 				return
 	return ..()
 
+/obj/structure/barricade/wooden/crowbar_act(mob/living/user, obj/item/tool)
+	balloon_alert(user, "deconstructing barricade...")
+	if(!tool.use_tool(src, user, 2 SECONDS, volume=100))
+		return
+	balloon_alert(user, "barricade deconstructed")
+	tool.play_tool_sound(src)
+	new /obj/item/stack/sheet/mineral/wood(get_turf(src), drop_amount)
+	qdel(src)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/barricade/wooden/crude
 	name = "crude plank barricade"

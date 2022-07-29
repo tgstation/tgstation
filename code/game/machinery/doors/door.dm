@@ -90,8 +90,10 @@
 	if(isnull(held_item) && Adjacent(user))
 		context[SCREENTIP_CONTEXT_LMB] = "Open"
 		return CONTEXTUAL_SCREENTIP_SET
-		
-	if(istype(held_item, /obj/item/stack/sheet/mineral/wood) && Adjacent(user)
+
+	if(istype(held_item, /obj/item/stack/sheet/mineral/wood) && Adjacent(user))
+		context[SCREENTIP_CONTEXT_LMB] = "Construct barricade"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/door/check_access_list(list/access_list)
 	if(red_alert_access && SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
@@ -217,26 +219,6 @@
 		return
 	return ..()
 
-/obj/machinery/door/unpowered/attackby(obj/item/weapon, mob/user, params)
-	if(isstack(weapon) && istype(weapon, /obj/item/stack/sheet/mineral/wood))
-		var/obj/item/stack/sheet/mineral/wood/plank = weapon
-
-		if(!plank.get_amount() >= 2)
-			to_chat(user, span_warning("You need two [plank] sheets to do this!"))
-			return
-
-		to_chat(user, span_notice("You start adding [plank] to [src]..."))
-		if(!do_after(user, 2 SECONDS, target = src) || !plank.use(2))
-			return
-
-		to_chat(user, span_notice("You construct a barricade on the [src]."))
-		playsound(src, 'sound/items/drill_hit.ogg', 50, TRUE)
-		new /obj/structure/barricade/wooden/crude(loc)
-		
-	return ..()
-		
-
-
 /obj/machinery/door/proc/try_to_activate_door(mob/user, access_bypass = FALSE)
 	add_fingerprint(user)
 	if(operating || (obj_flags & EMAGGED) || !can_open_with_hands)
@@ -293,6 +275,23 @@
 /obj/machinery/door/attackby(obj/item/I, mob/living/user, params)
 	if(!user.combat_mode && istype(I, /obj/item/fireaxe))
 		try_to_crowbar(I, user, FALSE)
+		return TRUE
+	if(!user.combat_mode && istype(I, /obj/item/stack/sheet/mineral/wood))
+		var/obj/item/stack/sheet/mineral/wood/plank = I
+
+		if(!plank.get_amount() >= 2)
+			balloon_alert(user, "need two [plank] sheets!")
+			return
+
+		balloon_alert(user, "constructing barricade...")
+		if(!do_after(user, 5 SECONDS, target = src) || !plank.use(2) || (locate(/obj/structure/barricade/wooden/crude) in loc) ))
+			return
+
+		balloon_alert(user, "barricade constructed")
+		// mak sure this gets converted to an .ogg (since it's a .wav) and then credit it to soundcloud (public domain)
+		playsound(src, 'sound/items/hammering_wood.ogg', 50, TRUE)
+		var/obj/structure/barricade/wooden/crude/barricade = new (loc)
+		transfer_fingerprints_to(barricade)
 		return TRUE
 	else if(I.item_flags & NOBLUDGEON || user.combat_mode)
 		return ..()
