@@ -18,8 +18,8 @@ GLOBAL_PROTECT(exp_to_update)
 	var/isexempt = C.prefs.db_flags & DB_FLAG_EXEMPT
 	if(isexempt)
 		return 0
-	var/my_exp = C.calc_exp_type(get_exp_req_type()) // this value is returned in minutes.
-	var/job_requirement = get_exp_req_amount() // this value is returned in hours.
+	var/my_exp = C.calc_exp_type(get_exp_req_type()) // this value is returned in minutes via the DB.
+	var/job_requirement = get_exp_req_amount() // this value is returned in deciseconds.
 	if((my_exp MINUTES) >= job_requirement) // The evaluation done here is done on the deciseconds level using the time defines.
 		return 0
 	else
