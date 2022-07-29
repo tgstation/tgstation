@@ -525,6 +525,11 @@
 
 	var/damage = intensity - get_eye_protection()
 	if(.) // we've been flashed
+
+		var/datum/mutation/human/epilepsy/epilepsy_mutation = dna.get_mutation(/datum/mutation/human/epilepsy)
+		if(epilepsy_mutation && prob(30))
+			epilepsy_mutation.trigger_seizure() //I DON'T FEEL BAD FOR THIS. I'M SORRY.
+
 		if(visual)
 			return
 
