@@ -91,14 +91,14 @@
 	/// Indicates if the queen died recently, aliens are heavily weakened while this is active.
 	var/recent_queen_death = FALSE
 
-/obj/item/organ/internal/alien/hivenode/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/internal/alien/hivenode/Insert(mob/living/carbon/target_carbon, special = FALSE, drop_if_replaced = TRUE)
 	..()
-	M.faction |= ROLE_ALIEN
-	ADD_TRAIT(M, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
+	target_carbon.faction |= ROLE_ALIEN
+	ADD_TRAIT(target_carbon, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
 
-/obj/item/organ/internal/alien/hivenode/Remove(mob/living/carbon/M, special = 0)
-	M.faction -= ROLE_ALIEN
-	REMOVE_TRAIT(M, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
+/obj/item/organ/internal/alien/hivenode/Remove(mob/living/carbon/target_carbon, special = FALSE, drop_if_replaced = TRUE)
+	target_carbon.faction -= ROLE_ALIEN
+	REMOVE_TRAIT(target_carbon, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
 	..()
 
 //When the alien queen dies, all aliens suffer a penalty as punishment for failing to protect her.
