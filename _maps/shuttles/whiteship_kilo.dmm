@@ -355,7 +355,6 @@
 /area/shuttle/abandoned/crew)
 "pI" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/machinery/door/airlock/shuttle{
 	name = "NTMS-037 Cargo Bay"
