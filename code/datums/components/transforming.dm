@@ -221,7 +221,7 @@
 	if(!HAS_TRAIT(user, TRAIT_CLUMSY))
 		return FALSE
 
-	if(active && prob(50))
+	if(active && prob(50) && force_on)
 		var/hurt_self_verb_simple = LAZYLEN(attack_verb_simple_on) ? pick(attack_verb_simple_on) : "hit"
 		var/hurt_self_verb_continuous = LAZYLEN(attack_verb_continuous_on) ? pick(attack_verb_continuous_on) : "hits"
 		user.visible_message(
