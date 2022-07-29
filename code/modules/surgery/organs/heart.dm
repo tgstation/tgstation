@@ -111,10 +111,9 @@
 	var/blood_regained = 70
 
 	//How much to heal per pump, negative numbers would HURT the player
-	var/heal_brute = 25
-	var/heal_burn = 25
+	var/heal_brute = 20
+	var/heal_burn = 20
 	var/heal_oxy = 10
-	var/heal_toxin = 10
 
 
 /obj/item/organ/internal/heart/cursed/attack(mob/living/carbon/human/accursed, mob/living/carbon/human/user, obj/target)

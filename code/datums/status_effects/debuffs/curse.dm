@@ -30,13 +30,13 @@
 	switch(curse_value)
 		if(11 to 21)
 			return span_warning("[owner.p_they(TRUE)] [owner.p_are()] slightly pale.")
-		if(21.01 to 41)
+		if(21 to 41)
 			return span_warning("[owner.p_they(TRUE)] [owner.p_are()] flushed, [owner.p_their()] eyes are glassy and vacant.")
-		if(41.01 to 61)
+		if(41 to 61)
 			return span_warning("[owner.p_their(TRUE)] heart is practically beating out of [owner.p_their()] chest!")
-		if(61.01 to 91)
+		if(61 to 91)
 			return span_warning("[owner.p_they(TRUE)] look[owner.p_s()] sick to [owner.p_their()] stomach with a purple ooze running down [owner.p_their()] chin.")
-		if(91.01 to INFINITY)
+		if(91 to INFINITY)
 			return span_warning("[owner.p_they(TRUE)] [owner.p_are()] at the mercy of [owner.p_their()] curse.")
 
 	return null

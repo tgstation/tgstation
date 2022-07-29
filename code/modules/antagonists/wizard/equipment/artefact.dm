@@ -296,10 +296,10 @@
 /obj/item/organ/internal/heart/cursed/wizard
 	name = "cursed wizard heart"
 	desc = "A heart that, when inserted, will force you to pump it manually. Something about it makes you feel more alive than ever."
-	heal_brute = 35
-	heal_burn = 35
-	heal_oxy = 25
-	heal_toxin = 25
+	heal_brute = 30
+	heal_burn = 30
+	heal_oxy = 20
+	heal_toxin = 20
 
 ///Warp whistle, spawns a tornado that teleports you
 /obj/item/warp_whistle
