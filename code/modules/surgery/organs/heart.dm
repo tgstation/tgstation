@@ -114,6 +114,7 @@
 	var/heal_brute = 20
 	var/heal_burn = 20
 	var/heal_oxy = 10
+	var/heal_toxin = 0
 
 
 /obj/item/organ/internal/heart/cursed/attack(mob/living/carbon/human/accursed, mob/living/carbon/human/user, obj/target)
