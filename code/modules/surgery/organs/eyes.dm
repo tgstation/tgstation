@@ -519,11 +519,11 @@
 	eye_icon_state = "flyeyes"
 	icon_state = "eyeballs-fly"
 
-/obj/item/organ/internal/eyes/fly/Insert(mob/living/carbon/eye_owner, special = FALSE)
+/obj/item/organ/internal/eyes/fly/Insert(mob/living/carbon/eye_owner, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	ADD_TRAIT(eye_owner, TRAIT_FLASH_SENSITIVE, ORGAN_TRAIT)
 
-/obj/item/organ/internal/eyes/fly/Remove(mob/living/carbon/eye_owner, special = FALSE)
+/obj/item/organ/internal/eyes/fly/Remove(mob/living/carbon/eye_owner, special = FALSE, drop_if_replaced = TRUE)
 	REMOVE_TRAIT(eye_owner, TRAIT_FLASH_SENSITIVE, ORGAN_TRAIT)
 	return ..()
 
