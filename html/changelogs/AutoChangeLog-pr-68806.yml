@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "Constructs, rats, and some other creatures can attack while their spells are on CD"
