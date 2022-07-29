@@ -143,6 +143,8 @@
 	desc = "Used by engineering staff to see underfloor objects such as cables and pipes."
 	range = 2
 
+	darkness_view = 1
+
 	modes = list(MODE_NONE = MODE_TRAY, MODE_TRAY = MODE_PIPE_CONNECTABLE, MODE_PIPE_CONNECTABLE = MODE_NONE)
 
 /obj/item/clothing/glasses/meson/engine/tray/dropped(mob/user)
@@ -163,6 +165,8 @@
 	name = "atmospheric thermal imaging goggles"
 	desc = "Goggles used by Atmospheric Technician to see the thermal energy of gasses in open areas"
 	icon_state = "trayson-"
+	inhand_icon_state = "trayson-meson"
+	glass_colour_type = /datum/client_colour/glass_colour/gray
 
 	modes = list(MODE_NONE = MODE_ATMOS_THERMAL, MODE_ATMOS_THERMAL = MODE_NONE)
 
@@ -191,19 +195,25 @@
 	if(mode == MODE_ATMOS_THERMAL)
 		atmos_thermal(user)
 
-/proc/atmos_thermal(mob/viewer, range = 5, duration = 5)
+/proc/atmos_thermal(mob/viewer, range = 4, duration = 10)
 	if(!ismob(viewer) || !viewer.client)
 		return
 	for(var/turf/open in view(range, viewer))
 		if(open.blocks_air)
 			continue
 		var/datum/gas_mixture/environment = open.return_air()
-		var/specific_temp = round(environment.temperature)
+		var/temp = round(environment.temperature)
 		var/mutable_appearance/temptext = new()
-		var/image/pic = image(loc = open)
-		temptext.maptext = MAPTEXT("[specific_temp]")
-		temptext.color = "#e0ea17"
+		temptext.icon = 'icons/turf/overlays.dmi'
 		temptext.plane = RUNECHAT_PLANE
+		temptext.alpha = 200
+		var/image/pic = image(loc = open)
+		if(temp <= 273.15)
+			temptext.icon_state = "blueOverlay"
+		else if(temp >= 303.15)
+			temptext.icon_state = "redOverlay"
+		else 
+			temptext.icon_state = "greenOverlay"
 		pic.appearance = temptext
 		flick_overlay(pic, list(viewer.client), duration)
 
