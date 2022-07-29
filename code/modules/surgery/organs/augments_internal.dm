@@ -120,7 +120,7 @@
 	. = ..()
 	UnregisterSignal(implant_owner, signalCache)
 
-/obj/item/organ/internal/cyberimp/brain/anti_stun/Insert()
+/obj/item/organ/internal/cyberimp/brain/anti_stun/Insert(special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	RegisterSignal(owner, signalCache, .proc/on_signal)
 
