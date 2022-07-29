@@ -116,12 +116,12 @@
 /datum/design/component/binary_conversion
 	name = "Binary Conversion Component"
 	id = "comp_binary_convert"
-	build_path = /obj/item/circuit_component/binary_decimal/binary_conversion
+	build_path = /obj/item/circuit_component/binary_conversion
 
 /datum/design/component/decimal_conversion
 	name = "Decimal Conversion Component"
 	id = "comp_decimal_convert"
-	build_path = /obj/item/circuit_component/binary_decimal/decimal_conversion
+	build_path = /obj/item/circuit_component/decimal_conversion
 
 /datum/design/component/species
 	name = "Get Species Component"
@@ -321,7 +321,7 @@
 /datum/design/component/list_assoc_literal
 	name = "Associative List Literal"
 	id = "comp_list_assoc_literal"
-	build_path = /obj/item/circuit_component/list_literal/assoc_literal
+	build_path = /obj/item/circuit_component/assoc_literal
 
 /datum/design/component/typecast
 	name = "Typecast Component"

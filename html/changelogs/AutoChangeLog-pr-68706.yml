@@ -1,4 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes: 
-  - bugfix: "Security Records should no longer have to apply prefs to a random dummy to generate pictures for every character that joins the round."
