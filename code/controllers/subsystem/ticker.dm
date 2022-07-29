@@ -591,18 +591,10 @@ SUBSYSTEM_DEF(ticker)
 			news_message = "Tensions have flared with the Space Wizard Federation following the death of one of their members aboard [decoded_station_name]."
 		if(STATION_NUKED)
 			news_message = "[decoded_station_name] activated its self-destruct device for unknown reasons. Attempts to clone the Captain for arrest and execution are underway."
-		if(CLOCK_SUMMON)
-			news_message = "The garbled messages about hailing a mouse and strange energy readings from [decoded_station_name] have been discovered to be an ill-advised, if thorough, prank by a clown."
-		if(CLOCK_SILICONS)
-			news_message = "The project started by [decoded_station_name] to upgrade their silicon units with advanced equipment have been largely successful, though they have thus far refused to release schematics in a violation of company policy."
-		if(CLOCK_PROSELYTIZATION)
-			news_message = "The burst of energy released near [decoded_station_name] has been confirmed as merely a test of a new weapon. However, due to an unexpected mechanical error, their communications system has been knocked offline."
 		if(SHUTTLE_HIJACK)
 			news_message = "During routine evacuation procedures, the emergency shuttle of [decoded_station_name] had its navigation protocols corrupted and went off course, but was recovered shortly after."
-		if(GANG_OPERATING)
-			news_message = "The company would like to state that any rumors of criminal organizing on board stations such as [decoded_station_name] are falsehoods, and not to be emulated."
-		if(GANG_DESTROYED)
-			news_message = "The crew of [decoded_station_name] would like to thank the Spinward Stellar Coalition Police Department for quickly resolving a minor terror threat to the station."
+		if(SUPERMATTER_CASCADE)
+			news_message = "Officials are advising nearby colonies about a newly declared exclusion zone in the sector surrounding [decoded_station_name]."
 
 	if(news_message)
 		send2otherserver(news_source, news_message,"News_Report")

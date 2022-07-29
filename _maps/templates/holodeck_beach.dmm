@@ -55,7 +55,7 @@
 /turf/open/floor/holofloor/beach,
 /area/template_noop)
 "W" = (
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/holofloor/beach,
 /area/template_noop)
 "X" = (

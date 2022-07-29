@@ -21,7 +21,7 @@
 	var/list/cam_plane_masters
 	var/atom/movable/screen/background/cam_background
 
-	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_SET_MACHINE | INTERACT_MACHINE_REQUIRES_SIGHT
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE|INTERACT_MACHINE_REQUIRES_SIGHT
 
 /obj/machinery/computer/security/Initialize(mapload)
 	. = ..()
@@ -64,6 +64,7 @@
 		network += "[port.id]_[i]"
 
 /obj/machinery/computer/security/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	// Update UI
 	ui = SStgui.try_update_ui(user, src, ui)
 
@@ -91,9 +92,10 @@
 		ui.open()
 
 /obj/machinery/computer/security/ui_status(mob/user)
-	if(!in_range(user, src) && !isobserver(user))
+	. = ..()
+	if(. == UI_DISABLED)
 		return UI_CLOSE
-	return ..()
+	return .
 
 /obj/machinery/computer/security/ui_data()
 	var/list/data = list()
@@ -125,11 +127,11 @@
 		return
 
 	if(action == "switch_camera")
-		var/c_tag = params["name"]
+		var/c_tag = format_text(params["name"])
 		var/list/cameras = get_available_cameras()
 		var/obj/machinery/camera/selected_camera = cameras[c_tag]
 		active_camera = selected_camera
-		playsound(src, get_sfx("terminal_type"), 25, FALSE)
+		playsound(src, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
 
 		if(!selected_camera)
 			return TRUE
@@ -173,6 +175,7 @@
 	cam_background.fill_rect(1, 1, size_x, size_y)
 
 /obj/machinery/computer/security/ui_close(mob/user)
+	. = ..()
 	var/user_ref = REF(user)
 	var/is_living = isliving(user)
 	// Living creature or not, we remove you anyway.

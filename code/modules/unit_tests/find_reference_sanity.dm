@@ -115,6 +115,7 @@
 /datum/unit_test/find_reference_static_investigation/Run()
 	var/atom/movable/ref_test/victim = allocate(/atom/movable/ref_test)
 	var/atom/movable/ref_holder/testbed = allocate(/atom/movable/ref_holder)
+	pass(testbed)
 	SSgarbage.should_save_refs = TRUE
 
 	//Lets check static vars now, since those can be a real headache

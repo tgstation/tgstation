@@ -7,7 +7,8 @@
 import { classes, pureComponentHooks } from 'common/react';
 import { computeBoxClassName, computeBoxProps } from './Box';
 
-export const ColorBox = props => {
+export const ColorBox = (props) => {
+  // prettier-ignore
   const {
     content,
     children,
@@ -20,11 +21,7 @@ export const ColorBox = props => {
   rest.backgroundColor = color || backgroundColor;
   return (
     <div
-      className={classes([
-        'ColorBox',
-        className,
-        computeBoxClassName(rest),
-      ])}
+      className={classes(['ColorBox', className, computeBoxClassName(rest)])}
       {...computeBoxProps(rest)}>
       {content || '.'}
     </div>

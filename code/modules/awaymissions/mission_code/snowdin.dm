@@ -5,6 +5,7 @@
 	icon_state = "awaycontent1"
 	requires_power = FALSE
 	static_lighting = FALSE
+	base_lighting_alpha = 255
 
 /area/awaymission/snowdin/outside
 	name = "Snowdin Tundra Plains"
@@ -15,6 +16,7 @@
 	icon_state = "awaycontent2"
 	requires_power = TRUE
 	static_lighting = TRUE
+	base_lighting_alpha = 0
 
 /area/awaymission/snowdin/post/medbay
 	name = "Snowdin Outpost - Medbay"
@@ -97,11 +99,13 @@
 	name = "Snowdin Igloos"
 	icon_state = "awaycontent14"
 	static_lighting = TRUE
+	base_lighting_alpha = 0
 
 /area/awaymission/snowdin/cave
 	name = "Snowdin Caves"
 	icon_state = "awaycontent15"
 	static_lighting = TRUE
+	base_lighting_alpha = 0
 
 /area/awaymission/snowdin/cave/cavern
 	name = "Snowdin Depths"
@@ -116,17 +120,20 @@
 	name = "Snowdin Main Base"
 	icon_state = "awaycontent16"
 	static_lighting = TRUE
+	base_lighting_alpha = 0
 	requires_power = TRUE
 
 /area/awaymission/snowdin/dungeon1
 	name = "Snowdin Depths"
 	icon_state = "awaycontent17"
 	static_lighting = TRUE
+	base_lighting_alpha = 0
 
 /area/awaymission/snowdin/sekret
 	name = "Snowdin Operations"
 	icon_state = "awaycontent18"
 	static_lighting = TRUE
+	base_lighting_alpha = 0
 	requires_power = TRUE
 
 /area/shuttle/snowdin/elevator1
@@ -166,6 +173,11 @@
 	light_color = LIGHT_COLOR_PURPLE
 	immunity_trait = TRAIT_SNOWSTORM_IMMUNE
 	immunity_resistance_flags = FREEZE_PROOF
+	lava_temperature = 100
+
+/turf/open/lava/plasma/examine(mob/user)
+	. = ..()
+	. += span_info("Some <b>liquid plasma<b> could probably be scooped up with a <b>container</b>.")
 
 /turf/open/lava/plasma/attackby(obj/item/I, mob/user, params)
 	var/obj/item/reagent_containers/glass/C = I
@@ -190,15 +202,15 @@
 		return
 	var/mob/living/carbon/human/burn_human = burn_living
 	var/datum/species/burn_species = burn_human.dna.species
-	if(istype(burn_species, /datum/species/plasmaman) || istype(burn_species, /datum/species/android) || istype(burn_species, /datum/species/synth)) //ignore plasmamen/robotic species
+	if(istype(burn_species, /datum/species/plasmaman) || istype(burn_species, /datum/species/android)) //ignore plasmamen/robotic species
 		return
 
 	var/list/plasma_parts = list()//a list of the organic parts to be turned into plasma limbs
 	var/list/robo_parts = list()//keep a reference of robotic parts so we know if we can turn them into a plasmaman
 	for(var/obj/item/bodypart/burn_limb as anything in burn_human.bodyparts)
-		if(burn_limb.status == BODYPART_ORGANIC && burn_limb.species_id != SPECIES_PLASMAMAN) //getting every organic, non-plasmaman limb (augments/androids are immune to this)
+		if(IS_ORGANIC_LIMB(burn_limb) && burn_limb.limb_id != SPECIES_PLASMAMAN) //getting every organic, non-plasmaman limb (augments/androids are immune to this)
 			plasma_parts += burn_limb
-		if(burn_limb.status == BODYPART_ROBOTIC)
+		if(!IS_ORGANIC_LIMB(burn_limb))
 			robo_parts += burn_limb
 
 	burn_human.adjustToxLoss(15)
@@ -206,13 +218,13 @@
 	if(plasma_parts.len)
 		var/obj/item/bodypart/burn_limb = pick(plasma_parts) //using the above-mentioned list to get a choice of limbs
 		burn_human.emote("scream")
-		ADD_TRAIT(burn_limb, TRAIT_PLASMABURNT, src)
+		ADD_TRAIT(burn_limb, TRAIT_PLASMABURNT, name)
 		burn_human.update_body_parts()
 		burn_human.emote("scream")
 		burn_human.visible_message(span_warning("[burn_human]'s [burn_limb.name] melts down to the bone!"), \
 			span_userdanger("You scream out in pain as your [burn_limb.name] melts down to the bone, leaving an eerie plasma-like glow where flesh used to be!"))
 	if(!plasma_parts.len && !robo_parts.len) //a person with no potential organic limbs left AND no robotic limbs, time to turn them into a plasmaman
-		burn_human.IgniteMob()
+		burn_human.ignite_mob()
 		burn_human.set_species(/datum/species/plasmaman)
 		burn_human.visible_message(span_warning("[burn_human] bursts into a brilliant purple flame as [burn_human.p_their()] entire body is that of a skeleton!"), \
 			span_userdanger("Your senses numb as all of your remaining flesh is turned into a purple slurry, sloshing off your body and leaving only your bones to show in a vibrant purple!"))
@@ -460,19 +472,6 @@
 	desc = "This wand uses healing magics to heal and revive. The years of the cold have weakened the magic inside the wand."
 	max_charges = 5
 
-//mobs//--
-
-//ice spiders moved to giant_spiders.dm
-
-//objs//--
-
-/obj/structure/flora/rock/icy
-	name = "icy rock"
-	color = rgb(204,233,235)
-
-/obj/structure/flora/rock/pile/icy
-	name = "icey rocks"
-	color = rgb(204,233,235)
 
 //decals//--
 /obj/effect/turf_decal/snowdin_station_sign

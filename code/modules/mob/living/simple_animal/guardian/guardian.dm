@@ -508,7 +508,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /obj/item/guardiancreator
 	name = "enchanted deck of tarot cards"
 	desc = "An enchanted deck of tarot cards, rumored to be a source of unimaginable power."
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/playing_cards.dmi'
 	icon_state = "deck_tarot_full"
 	var/used = FALSE
 	var/theme = "magic"
@@ -606,6 +606,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	G.summoner = user
 	G.key = candidate.key
 	G.mind.enslave_mind_to_creator(user)
+	G.copy_languages(user, LANGUAGE_MASTER) // make sure holoparasites speak same language as master
+	G.update_atom_languages()
 	log_game("[key_name(user)] has summoned [key_name(G)], a [guardiantype] holoparasite.")
 	switch(theme)
 		if("tech")

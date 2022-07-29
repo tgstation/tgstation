@@ -44,6 +44,11 @@
 	inhand_icon_state = "witch"
 	flags_inv = HIDEHAIR
 
+/obj/item/clothing/head/maidheadband
+	name = "maid headband"
+	desc = "Just like from one of those chinese cartoons!"
+	icon_state = "maid_headband"
+
 /obj/item/clothing/head/chicken
 	name = "chicken suit head"
 	desc = "Bkaw!"
@@ -88,7 +93,7 @@
 	flags_inv = HIDEHAIR //bald
 	icon_state = "shrine_wig"
 	inhand_icon_state = "shrine_wig"
-	dynamic_hair_suffix = ""
+
 	worn_y_offset = 1
 
 /obj/item/clothing/head/cardborg
@@ -106,8 +111,8 @@
 	..()
 	if(ishuman(user) && slot == ITEM_SLOT_HEAD)
 		var/mob/living/carbon/human/H = user
-		if(istype(H.wear_suit, /obj/item/clothing/suit/cardborg))
-			var/obj/item/clothing/suit/cardborg/CB = H.wear_suit
+		if(istype(H.wear_suit, /obj/item/clothing/suit/costume/cardborg))
+			var/obj/item/clothing/suit/costume/cardborg/CB = H.wear_suit
 			CB.disguise(user, src)
 
 /obj/item/clothing/head/cardborg/dropped(mob/living/user)
@@ -117,7 +122,7 @@
 /obj/item/clothing/head/bronze
 	name = "bronze hat"
 	desc = "A crude helmet made out of bronze plates. It offers very little in the way of protection."
-	icon = 'icons/obj/clothing/clockwork_garb.dmi'
+	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "clockwork_helmet_old"
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEEARS|HIDEHAIR
@@ -174,3 +179,25 @@
 	name = "basil boys helmet"
 	icon_state = "football_helmet_red"
 	inhand_icon_state = "football_helmet_red"
+
+/obj/item/clothing/head/tv_head
+	name = "television helmet"
+	desc = "A mysterious headgear made from the hollowed out remains of a status display. How very retro-retro-futuristic of you."
+	icon_state = "IPC_helmet"
+	inhand_icon_state = "syringe_kit"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi' //Grandfathered in from the wallframe for status displays.
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	clothing_flags = SNUG_FIT
+	flash_protect = FLASH_PROTECTION_SENSITIVE
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	var/has_fov = TRUE
+
+/obj/item/clothing/head/tv_head/Initialize(mapload)
+	. = ..()
+	if(has_fov)
+		AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
+
+/obj/item/clothing/head/tv_head/fov_less
+	desc = "A mysterious headgear made from the hollowed out remains of a status display. How very retro-retro-futuristic of you. It's very easy to see out of this one."
+	has_fov = FALSE

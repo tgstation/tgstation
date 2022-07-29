@@ -46,21 +46,23 @@
 	var/special_role
 	var/list/restricted_roles = list()
 
-	var/list/spell_list = list() // Wizard mode & "Give Spell" badmin button.
-
 	var/datum/martial_art/martial_art
 	var/static/default_martial_art = new/datum/martial_art
 	var/miming = FALSE // Mime's vow of silence
 	var/list/antag_datums
-	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
-	var/datum/atom_hud/alternate_appearance/basic/antagonist_hud/antag_hud = null //this mind's antag HUD
+	///this mind's ANTAG_HUD should have this icon_state
+	var/antag_hud_icon_state = null
+	///this mind's antag HUD
+	var/datum/atom_hud/alternate_appearance/basic/antagonist_hud/antag_hud = null
 	var/holy_role = NONE //is this person a chaplain or admin role allowed to use bibles, Any rank besides 'NONE' allows for this.
 
-	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
+	///If this mind's master is another mob (i.e. adamantine golems)
+	var/mob/living/enslaved_to
 	var/datum/language_holder/language_holder
 	var/unconvertable = FALSE
 	var/late_joiner = FALSE
-
+	///has this mind ever been an AI
+	var/has_ever_been_ai = FALSE
 	var/last_death = 0
 
 	var/force_escaped = FALSE  // Set by Into The Sunset command of the shuttle manipulator
@@ -92,6 +94,8 @@
 	var/list/active_addictions
 	///List of objective-specific equipment that couldn't properly be given to the mind
 	var/list/failed_special_equipment
+	/// A list to keep track of which books a person has read (to prevent people from reading the same book again and again for positive mood events)
+	var/list/book_titles_read
 
 /datum/mind/New(_key)
 	key = _key
@@ -168,7 +172,6 @@
 	if(iscarbon(new_character))
 		var/mob/living/carbon/C = new_character
 		C.last_mind = src
-	transfer_actions(new_character)
 	transfer_martial_arts(new_character)
 	RegisterSignal(new_character, COMSIG_LIVING_DEATH, .proc/set_death_time)
 	if(active || force_key_move)
@@ -258,12 +261,12 @@
 	if(!length(shown_skills))
 		to_chat(user, span_notice("You don't seem to have any particularly outstanding skills."))
 		return
-	var/msg = "[span_info("*---------*\n<EM>Your skills</EM>")]\n<span class='notice'>"
+	var/msg = "[span_info("<EM>Your skills</EM>")]\n<span class='notice'>"
 	for(var/i in shown_skills)
 		var/datum/skill/the_skill = i
 		msg += "[initial(the_skill.name)] - [get_skill_level_name(the_skill)]\n"
 	msg += "</span>"
-	to_chat(user, msg)
+	to_chat(user, examine_block(msg))
 
 /datum/mind/proc/set_death_time()
 	SIGNAL_HANDLER
@@ -384,7 +387,7 @@
 		return
 
 	var/list/all_contents = traitor_mob.get_all_contents()
-	var/obj/item/pda/PDA = locate() in all_contents
+	var/obj/item/modular_computer/tablet/pda/PDA = locate() in all_contents
 	var/obj/item/radio/R = locate() in all_contents
 	var/obj/item/pen/P
 
@@ -431,16 +434,20 @@
 	if(!new_uplink)
 		CRASH("Uplink creation failed.")
 	new_uplink.setup_unlock_code()
+	new_uplink.uplink_handler.owner = traitor_mob.mind
+	new_uplink.uplink_handler.assigned_role = traitor_mob.mind.assigned_role.title
+	new_uplink.uplink_handler.assigned_species = traitor_mob.dna.species.id
 	if(uplink_loc == R)
 		unlock_text = "Your Uplink is cunningly disguised as your [R.name]. Simply dial the frequency [format_frequency(new_uplink.unlock_code)] to unlock its hidden features."
 	else if(uplink_loc == PDA)
-		unlock_text = "Your Uplink is cunningly disguised as your [PDA.name]. Simply enter the code \"[new_uplink.unlock_code]\" into the ringtone select to unlock its hidden features."
+		unlock_text = "Your Uplink is cunningly disguised as your [PDA.name]. Simply enter the code \"[new_uplink.unlock_code]\" into the ring tone selection to unlock its hidden features."
 	else if(uplink_loc == P)
 		unlock_text = "Your Uplink is cunningly disguised as your [P.name]. Simply twist the top of the pen [english_list(new_uplink.unlock_code)] from its starting position to unlock its hidden features."
 	new_uplink.unlock_text = unlock_text
 	if(!silent)
 		to_chat(traitor_mob, span_boldnotice(unlock_text))
-	antag_datum.antag_memory += new_uplink.unlock_note + "<br>"
+	if(antag_datum)
+		antag_datum.antag_memory += new_uplink.unlock_note + "<br>"
 
 
 //Link a new mobs mind to the creator of said mob. They will join any team they are currently on, and will only switch teams when their creator does.
@@ -478,6 +485,7 @@
 
 	if(href_list["add_antag"])
 		add_antag_wrapper(text2path(href_list["add_antag"]),usr)
+
 	if(href_list["remove_antag"])
 		var/datum/antagonist/A = locate(href_list["remove_antag"]) in antag_datums
 		if(!istype(A))
@@ -485,8 +493,15 @@
 			return
 		A.admin_remove(usr)
 
+	if(href_list["open_antag_vv"])
+		var/datum/antagonist/to_vv = locate(href_list["open_antag_vv"]) in antag_datums
+		if(!istype(to_vv))
+			to_chat(usr, span_warning("Invalid antagonist ref to be vv'd."))
+			return
+		usr.client?.debug_variables(to_vv)
+
 	if (href_list["role_edit"])
-		var/new_role = input("Select new role", "Assigned role", assigned_role.title) as null|anything in sort_list(SSjob.station_jobs)
+		var/new_role = input("Select new role", "Assigned role", assigned_role.title) as null|anything in sort_list(SSjob.name_occupations)
 		if(isnull(new_role))
 			return
 		var/datum/job/new_job = SSjob.GetJob(new_role)
@@ -611,6 +626,41 @@
 					message_admins("[key_name_admin(usr)] has unemag'ed [ai]'s Cyborgs.")
 					log_admin("[key_name(usr)] has unemag'ed [ai]'s Cyborgs.")
 
+	else if(href_list["edit_obj_tc"])
+		var/datum/traitor_objective/objective = locate(href_list["edit_obj_tc"])
+		if(!istype(objective))
+			return
+		var/telecrystal = input("Set new telecrystal reward for [objective.name]","Syndicate uplink", objective.telecrystal_reward) as null | num
+		if(isnull(telecrystal))
+			return
+		objective.telecrystal_reward = telecrystal
+		message_admins("[key_name_admin(usr)] changed [objective]'s telecrystal reward count to [telecrystal].")
+		log_admin("[key_name(usr)] changed [objective]'s telecrystal reward count to [telecrystal].")
+	else if(href_list["edit_obj_pr"])
+		var/datum/traitor_objective/objective = locate(href_list["edit_obj_pr"])
+		if(!istype(objective))
+			return
+		var/progression = input("Set new progression reward for [objective.name]","Syndicate uplink", objective.progression_reward) as null | num
+		if(isnull(progression))
+			return
+		objective.progression_reward = progression
+		message_admins("[key_name_admin(usr)] changed [objective]'s progression reward count to [progression].")
+		log_admin("[key_name(usr)] changed [objective]'s progression reward count to [progression].")
+	else if(href_list["fail_objective"])
+		var/datum/traitor_objective/objective = locate(href_list["fail_objective"])
+		if(!istype(objective))
+			return
+		var/performed = objective.objective_state == OBJECTIVE_STATE_INACTIVE? "skipped" : "failed"
+		message_admins("[key_name_admin(usr)] forcefully [performed] [objective].")
+		log_admin("[key_name(usr)] forcefully [performed] [objective].")
+		objective.fail_objective()
+	else if(href_list["succeed_objective"])
+		var/datum/traitor_objective/objective = locate(href_list["succeed_objective"])
+		if(!istype(objective))
+			return
+		message_admins("[key_name_admin(usr)] forcefully succeeded [objective].")
+		log_admin("[key_name(usr)] forcefully succeeded [objective].")
+		objective.succeed_objective()
 	else if (href_list["common"])
 		switch(href_list["common"])
 			if("undress")
@@ -621,16 +671,50 @@
 				wipe_memory()//Remove any memory they may have had.
 				log_admin("[key_name(usr)] removed [current]'s uplink.")
 			if("crystals")
-				if(check_rights(R_FUN, 0))
+				if(check_rights(R_FUN))
 					var/datum/component/uplink/U = find_syndicate_uplink()
 					if(U)
-						var/crystals = input("Amount of telecrystals for [key]","Syndicate uplink", U.telecrystals) as null | num
+						var/crystals = input("Amount of telecrystals for [key]","Syndicate uplink", U.uplink_handler.telecrystals) as null | num
 						if(!isnull(crystals))
-							U.telecrystals = crystals
+							U.uplink_handler.telecrystals = crystals
 							message_admins("[key_name_admin(usr)] changed [current]'s telecrystal count to [crystals].")
 							log_admin("[key_name(usr)] changed [current]'s telecrystal count to [crystals].")
+			if("progression")
+				if(!check_rights(R_FUN))
+					return
+				var/datum/component/uplink/uplink = find_syndicate_uplink()
+				if(!uplink)
+					return
+				var/progression = input("Set new progression points for [key]","Syndicate uplink", uplink.uplink_handler.progression_points) as null | num
+				if(isnull(progression))
+					return
+				uplink.uplink_handler.progression_points = progression
+				message_admins("[key_name_admin(usr)] changed [current]'s progression point count to [progression].")
+				log_admin("[key_name(usr)] changed [current]'s progression point count to [progression].")
+				uplink.uplink_handler.update_objectives()
+				uplink.uplink_handler.generate_objectives()
+			if("give_objective")
+				if(!check_rights(R_FUN))
+					return
+				var/datum/component/uplink/uplink = find_syndicate_uplink()
+				if(!uplink || !uplink.uplink_handler)
+					return
+				var/list/all_objectives = subtypesof(/datum/traitor_objective)
+				var/objective_typepath = tgui_input_list(usr, "Select objective", "Select objective", all_objectives)
+				if(!objective_typepath)
+					return
+				var/datum/traitor_objective/objective = uplink.uplink_handler.try_add_objective(objective_typepath)
+				if(objective)
+					message_admins("[key_name_admin(usr)] gave [current] a traitor objective ([objective_typepath]).")
+					log_admin("[key_name(usr)] gave [current] a traitor objective ([objective_typepath]).")
+					objective.forced = TRUE
+				else
+					to_chat(usr, span_warning("Failed to generate the objective!"))
+					message_admins("[key_name_admin(usr)] failed to give [current] a traitor objective ([objective_typepath]).")
+					log_admin("[key_name(usr)] failed to give [current] a traitor objective ([objective_typepath]).")
 			if("uplink")
-				if(!give_uplink(antag_datum = has_antag_datum(/datum/antagonist/traitor)))
+				var/datum/antagonist/traitor/traitor_datum = has_antag_datum(/datum/antagonist/traitor)
+				if(!give_uplink(antag_datum = traitor_datum || null))
 					to_chat(usr, span_danger("Equipping a syndicate failed!"))
 					log_admin("[key_name(usr)] tried and failed to give [current] an uplink.")
 				else
@@ -672,14 +756,15 @@
 * and gives them a fallback spell if no uplink was found
 */
 /datum/mind/proc/try_give_equipment_fallback()
-	var/datum/component/uplink/uplink
+	var/uplink_exists
 	var/datum/antagonist/traitor/traitor_datum = has_antag_datum(/datum/antagonist/traitor)
 	if(traitor_datum)
-		uplink = traitor_datum.uplink
-	if(!uplink)
-		uplink = find_syndicate_uplink(check_unlocked = TRUE)
-	if(!uplink && !(locate(/obj/effect/proc_holder/spell/self/special_equipment_fallback) in spell_list))
-		AddSpell(new /obj/effect/proc_holder/spell/self/special_equipment_fallback(null, src))
+		uplink_exists = traitor_datum.uplink_ref
+	if(!uplink_exists)
+		uplink_exists = find_syndicate_uplink(check_unlocked = TRUE)
+	if(!uplink_exists && !(locate(/datum/action/special_equipment_fallback) in current.actions))
+		var/datum/action/special_equipment_fallback/fallback = new(src)
+		fallback.Grant(current)
 
 /datum/mind/proc/take_uplink()
 	qdel(find_syndicate_uplink())
@@ -687,10 +772,6 @@
 /datum/mind/proc/make_traitor()
 	if(!(has_antag_datum(/datum/antagonist/traitor)))
 		add_antag_datum(/datum/antagonist/traitor)
-
-/datum/mind/proc/make_contractor_support()
-	if(!(has_antag_datum(/datum/antagonist/traitor/contractor_support)))
-		add_antag_datum(/datum/antagonist/traitor/contractor_support)
 
 /datum/mind/proc/make_changeling()
 	var/datum/antagonist/changeling/C = has_antag_datum(/datum/antagonist/changeling)
@@ -715,25 +796,6 @@
 	add_antag_datum(head)
 	special_role = ROLE_REV_HEAD
 
-/datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/S)
-	spell_list += S
-	S.action.Grant(current)
-
-//To remove a specific spell from a mind
-/datum/mind/proc/RemoveSpell(obj/effect/proc_holder/spell/spell)
-	if(!spell)
-		return
-	for(var/X in spell_list)
-		var/obj/effect/proc_holder/spell/S = X
-		if(istype(S, spell))
-			spell_list -= S
-			qdel(S)
-	current?.client << output(null, "statbrowser:check_spells")
-
-/datum/mind/proc/RemoveAllSpells()
-	for(var/obj/effect/proc_holder/S in spell_list)
-		RemoveSpell(S)
-
 /datum/mind/proc/transfer_martial_arts(mob/living/new_character)
 	if(!ishuman(new_character))
 		return
@@ -742,27 +804,6 @@
 			martial_art.remove(new_character)
 		else
 			martial_art.teach(new_character)
-
-/datum/mind/proc/transfer_actions(mob/living/new_character)
-	if(current?.actions)
-		for(var/datum/action/A in current.actions)
-			A.Grant(new_character)
-	transfer_mindbound_actions(new_character)
-
-/datum/mind/proc/transfer_mindbound_actions(mob/living/new_character)
-	for(var/X in spell_list)
-		var/obj/effect/proc_holder/spell/S = X
-		S.action.Grant(new_character)
-
-/datum/mind/proc/disrupt_spells(delay, list/exceptions = New())
-	for(var/X in spell_list)
-		var/obj/effect/proc_holder/spell/S = X
-		for(var/type in exceptions)
-			if(istype(S, type))
-				continue
-		S.charge_counter = delay
-		S.updateButtonIcon()
-		INVOKE_ASYNC(S, /obj/effect/proc_holder/spell.proc/start_recharge)
 
 /datum/mind/proc/get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
 	for(var/mob/dead/observer/G in (ghosts_with_clients ? GLOB.player_list : GLOB.dead_mob_list))

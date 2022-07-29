@@ -25,8 +25,10 @@
 #define VV_BITFIELD "Bitfield"
 #define VV_TEXT_LOCATE "Custom Reference Locate"
 #define VV_PROCCALL_RETVAL "Return Value of Proccall"
+#define VV_WEAKREF "Weak Reference Datum"
 
 #define VV_MSG_MARKED "<br><font size='1' color='red'><b>Marked Object</b></font>"
+#define VV_MSG_TAGGED(num) "<br><font size='1' color='red'><b>Tagged Datum #[num]</b></font>"
 #define VV_MSG_EDITED "<br><font size='1' color='red'><b>Var Edited</b></font>"
 #define VV_MSG_DELETED "<br><font size='1' color='red'><b>Deleted</b></font>"
 
@@ -119,7 +121,9 @@
 #define VV_HK_DIRECT_CONTROL "direct_control"
 #define VV_HK_GIVE_DIRECT_CONTROL "give_direct_control"
 #define VV_HK_OFFER_GHOSTS "offer_ghosts"
-#define VV_HK_SDQL_SPELL "sdql_spell"
+
+// /mob/living
+#define VV_HK_GIVE_SPEECH_IMPEDIMENT "impede_speech"
 
 // /mob/living/carbon
 #define VV_HK_MAKE_AI "aiify"
@@ -146,20 +150,4 @@
 //outfits
 #define VV_HK_TO_OUTFIT_EDITOR "outfit_editor"
 
-// /obj/effect/proc_holder/spell
-/// Require casting_clothes to cast spell.
-#define VV_HK_SPELL_SET_ROBELESS "spell_set_robeless"
-/// Require cult armor to cast spell.
-#define VV_HK_SPELL_SET_CULT "spell_set_cult"
-/// Require the mob to be ishuman() to cast spell.
-#define VV_HK_SPELL_SET_HUMANONLY "spell_set_humanonly"
-/// Require mob to not be a brain or pAI to cast spell.
-#define VV_HK_SPELL_SET_NONABSTRACT "spell_set_nonabstract"
-/// Spell can now be cast without casting_clothes.
-#define VV_HK_SPELL_UNSET_ROBELESS "spell_unset_robeless"
-/// Spell can now be cast without cult armour.
-#define VV_HK_SPELL_UNSET_CULT "spell_unset_cult"
-/// Any /mob can cast this spell.
-#define VV_HK_SPELL_UNSET_HUMANONLY "spell_unset_humanonly"
-/// Abstract mobs such as brains or pAIs can cast this spell.
-#define VV_HK_SPELL_UNSET_NONABSTRACT "spell_unset_nonabstract"
+#define VV_HK_WEAKREF_RESOLVE "weakref_resolve"

@@ -108,6 +108,7 @@
 	name = "Look Out, Sir!"
 	desc = "Either awarded for making the ultimate sacrifice for your comrades, or a really dumb attempt at grenade jumping."
 	database_id = MEDAL_LOOKOUTSIR
+	icon = "martyr" // purple heart on an explosive danger warning sign (well, sort of)
 
 /datum/award/achievement/misc/gottem
 	name = "HA, GOTTEM"
@@ -151,6 +152,12 @@
 	database_id = MEDAL_VOID_ASCENSION
 	icon = "voidascend"
 
+/datum/award/achievement/misc/blade_ascension
+	name = "Silver and Steel"
+	desc = "You've become the master of all duellists - the paragon of blades."
+	database_id = MEDAL_BLADE_ASCENSION
+	icon = "bladeascend"
+
 /datum/award/achievement/misc/toolbox_soul
 	name = "SOUL'd Out"
 	desc = "My eternal soul was destroyed to make a toolbox look funny and all I got was this achievement..."
@@ -186,3 +193,15 @@
 	desc = "Where's my free smartphone?!?"
 	database_id = MEDAL_CLICKBAIT
 	icon = "bait"
+
+/datum/award/achievement/misc/narsupreme
+	name = "If Nar'Sie is so good, why isn't there a..."
+	desc = "Even interdimensional space deitys need a friend."
+	database_id = MEDAL_NARSUPREME
+	icon = "narsupreme"
+
+/datum/award/achievement/misc/springlock
+	name = "The Man Inside the MODsuit"
+	desc = "Ignore the warning label on a springlock MODsuit."
+	database_id = MEDAL_SPRINGLOCK
+	icon = "springlock"

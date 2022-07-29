@@ -4,9 +4,6 @@
 	name = "exosuit fabricator"
 	desc = "Nothing is being built."
 	density = TRUE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 20
-	active_power_usage = 5000
 	req_access = list(ACCESS_ROBOTICS)
 	circuit = /obj/item/circuitboard/machine/mechfab
 	processing_flags = START_PROCESSING_MANUALLY
@@ -79,6 +76,7 @@
 	return ..()
 
 /obj/machinery/mecha_part_fabricator/RefreshParts()
+	. = ..()
 	var/T = 0
 
 	//maximum stocking amount (default 300000, 600000 at T4)
@@ -112,6 +110,17 @@
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Storing up to <b>[rmat.local_size]</b> material units.<br>Material consumption at <b>[component_coeff*100]%</b>.<br>Build time reduced by <b>[100-time_coeff*100]%</b>.")
+	if(panel_open)
+		. += span_notice("Alt-click to rotate the output direction.")
+
+/obj/machinery/mecha_part_fabricator/AltClick(mob/user)
+	. = ..()
+	if(!user.canUseTopic(src, BE_CLOSE))
+		return
+	if(panel_open)
+		dir = turn(dir, -90)
+		balloon_alert(user, "rotated to [dir2text(dir)].")
+		return TRUE
 
 /**
  * Generates an info list for a given part.
@@ -172,6 +181,8 @@
 					category_override += "H.O.N.K"
 				if(mech_types & EXOSUIT_MODULE_PHAZON)
 					category_override += "Phazon"
+				if(mech_types & EXOSUIT_MODULE_SAVANNAH)
+					category_override += "Savannah-Ivanov"
 
 		else if(ispath(built_item, /obj/item/borg_restart_board))
 			sub_category += "All Cyborgs" //Otherwise the restart board shows in the "parts" category, which seems dumb
@@ -182,12 +193,12 @@
 
 	var/list/part = list(
 		"name" = D.name,
-		"desc" = D.desc == "Desc" ? initial(built_item.desc) : D.desc,
+		"desc" = D.get_description(),
 		"printTime" = get_construction_time_w_coeff(initial(D.construction_time))/10,
 		"cost" = cost,
 		"id" = D.id,
 		"subCategory" = sub_category,
-		"categoryOverride" = category_override,
+		"category_override" = category_override,
 		"searchMeta" = D.search_metadata
 	)
 
@@ -520,12 +531,14 @@
 			return
 		if("add_queue_part")
 			// Add a specific part to queue
-			var/T = params["id"]
-			for(var/v in stored_research.researched_designs)
-				var/datum/design/D = SSresearch.techweb_design_by_id(v)
-				if((D.build_type & MECHFAB) && (D.id == T))
-					add_to_queue(D)
-					break
+			var/id = params["id"]
+			if(!stored_research.researched_designs.Find(id))
+				stack_trace("ID did not map to a researched datum [id]")
+				return
+			var/datum/design/design = SSresearch.techweb_design_by_id(id)
+			if(!(design.build_type & MECHFAB) || design.id != id)
+				return
+			add_to_queue(design)
 			return
 		if("del_queue_part")
 			// Delete a specific from from the queue
@@ -555,12 +568,13 @@
 				return
 
 			var/id = params["id"]
-			var/datum/design/D = SSresearch.techweb_design_by_id(id)
-
-			if(!(D.build_type & MECHFAB) || !(D.id == id))
+			if(!stored_research.researched_designs.Find(id))
+				stack_trace("ID did not map to a researched datum [id]")
 				return
-
-			if(build_part(D))
+			var/datum/design/design = SSresearch.techweb_design_by_id(id)
+			if(!(design.build_type & MECHFAB) || design.id != id)
+				return
+			if(build_part(design))
 				on_start_printing()
 				begin_processing()
 

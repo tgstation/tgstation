@@ -12,7 +12,7 @@
 	outfit = /datum/outfit/job/clown
 	plasmaman_outfit = /datum/outfit/plasmaman/clown
 
-	paycheck = PAYCHECK_MINIMAL
+	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
 
 	liver_traits = list(TRAIT_COMEDY_METABOLISM)
@@ -32,7 +32,7 @@
 
 	family_heirlooms = list(/obj/item/bikehorn/golden)
 	rpg_title = "Jester"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
 
 /datum/job/clown/after_spawn(mob/living/spawned, client/player_client)
@@ -46,6 +46,7 @@
 	name = "Clown"
 	jobtype = /datum/job/clown
 
+	id = /obj/item/card/id/advanced/rainbow
 	id_trim = /datum/id_trim/job/clown
 	uniform = /obj/item/clothing/under/rank/civilian/clown
 	backpack_contents = list(
@@ -54,7 +55,7 @@
 		/obj/item/food/grown/banana = 1,
 		/obj/item/instrument/bikehorn = 1,
 		)
-	belt = /obj/item/pda/clown
+	belt = /obj/item/modular_computer/tablet/pda/clown
 	ears = /obj/item/radio/headset/headset_srv
 	shoes = /obj/item/clothing/shoes/clown_shoes
 	mask = /obj/item/clothing/mask/gas/clown_hat
@@ -67,6 +68,13 @@
 	box = /obj/item/storage/box/hug/survival
 	chameleon_extras = /obj/item/stamp/clown
 	implants = list(/obj/item/implant/sad_trombone)
+
+/datum/outfit/job/clown/mod
+	name = "Clown (MODsuit)"
+
+	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/cosmohonk
+	internals_slot = ITEM_SLOT_SUITSTORE
 
 /datum/outfit/job/clown/pre_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()
@@ -85,8 +93,10 @@
 
 	H.fully_replace_character_name(H.real_name, pick(GLOB.clown_names)) //rename the mob AFTER they're equipped so their ID gets updated properly.
 	ADD_TRAIT(H, TRAIT_NAIVE, JOB_TRAIT)
-	H.dna.add_mutation(CLOWNMUT)
+	H.dna.add_mutation(/datum/mutation/human/clumsy)
 	for(var/datum/mutation/human/clumsy/M in H.dna.mutations)
 		M.mutadone_proof = TRUE
 	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]
-	fan.add_hud_to(H)
+	fan.show_to(H)
+	H.faction |= FACTION_CLOWN
+

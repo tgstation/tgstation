@@ -9,6 +9,15 @@
 	var/temp = "" // output message
 	var/tempfreq = FREQ_COMMON
 	var/mob/living/operator
+	///Illegal frequencies that can't be listened to by telecommunication servers.
+	var/list/banned_frequencies = list(
+		FREQ_SYNDICATE,
+		FREQ_CENTCOM,
+		FREQ_CTF_RED,
+		FREQ_CTF_YELLOW,
+		FREQ_CTF_GREEN,
+		FREQ_CTF_BLUE,
+	)
 
 /obj/machinery/telecomms/attackby(obj/item/P, mob/user, params)
 
@@ -123,7 +132,7 @@
 			if(params["value"])
 				tempfreq = text2num(params["value"]) * 10
 		if("freq")
-			if(tempfreq == FREQ_SYNDICATE)
+			if(tempfreq in banned_frequencies)
 				to_chat(operator, span_warning("Error: Interference preventing filtering frequency: \"[tempfreq / 10] kHz\""))
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
 			else

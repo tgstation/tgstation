@@ -54,10 +54,10 @@
 	if(living_parent.body_position != STANDING_UP) // if we move while on the ground, the rider falls off
 		. = FALSE
 	// for piggybacks and (redundant?) borg riding, check if the rider is stunned/restrained
-	else if((ride_check_flags & RIDER_NEEDS_ARMS) && (HAS_TRAIT(rider, TRAIT_RESTRAINED) || rider.incapacitated(TRUE, TRUE)))
+	else if((ride_check_flags & RIDER_NEEDS_ARMS) && (HAS_TRAIT(rider, TRAIT_RESTRAINED) || rider.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)))
 		. = FALSE
 	// for fireman carries, check if the ridden is stunned/restrained
-	else if((ride_check_flags & CARRIER_NEEDS_ARM) && (HAS_TRAIT(living_parent, TRAIT_RESTRAINED) || living_parent.incapacitated(TRUE, TRUE)))
+	else if((ride_check_flags & CARRIER_NEEDS_ARM) && (HAS_TRAIT(living_parent, TRAIT_RESTRAINED) || living_parent.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)))
 		. = FALSE
 
 	if(. || !consequences)
@@ -137,11 +137,8 @@
 
 	var/mob/living/ridden_creature = parent
 
-	for(var/ability in ridden_creature.abilities)
-		var/obj/effect/proc_holder/proc_holder = ability
-		if(!proc_holder.action)
-			return
-		proc_holder.action.Share(rider)
+	for(var/datum/action/action as anything in ridden_creature.actions)
+		action.GiveAction(rider)
 
 /// Takes away the riding parent's abilities from the rider
 /datum/component/riding/creature/proc/remove_abilities(mob/living/rider)
@@ -150,13 +147,11 @@
 
 	var/mob/living/ridden_creature = parent
 
-	for(var/ability in ridden_creature.abilities)
-		var/obj/effect/proc_holder/proc_holder = ability
-		if(!proc_holder.action)
-			return
-		if(rider == proc_holder.ranged_ability_user)
-			proc_holder.remove_ranged_ability()
-		proc_holder.action.Unshare(rider)
+	for(var/datum/action/action as anything in ridden_creature.actions)
+		if(istype(action, /datum/action/cooldown) && rider.click_intercept == action)
+			var/datum/action/cooldown/cooldown_action = action
+			cooldown_action.unset_click_ability(rider, refund_cooldown = TRUE)
+		action.HideFrom(rider)
 
 /datum/component/riding/creature/riding_can_z_move(atom/movable/movable_parent, direction, turf/start, turf/destination, z_move_flags, mob/living/rider)
 	if(!(z_move_flags & ZMOVE_CAN_FLY_CHECKS))

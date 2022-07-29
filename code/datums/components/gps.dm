@@ -16,6 +16,16 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	GLOB.GPS_list -= src
 	return ..()
 
+/datum/component/gps/kheiral_cuffs
+
+/datum/component/gps/kheiral_cuffs/Initialize(_gpstag = "COM0")
+	. = ..()
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/deactivate_kheiral_cuffs)
+
+/datum/component/gps/kheiral_cuffs/proc/deactivate_kheiral_cuffs(datum/source)
+	SIGNAL_HANDLER
+	qdel(src)
+
 ///GPS component subtype. Only gps/item's can be used to open the UI.
 /datum/component/gps/item
 	var/updating = TRUE //Automatic updating of GPS list. Can be set to manual by user.
@@ -23,7 +33,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	/// UI state of GPS, altering when it can be used.
 	var/datum/ui_state/state = null
 
-/datum/component/gps/item/Initialize(_gpstag = "COM0", emp_proof = FALSE, state = null)
+/datum/component/gps/item/Initialize(_gpstag = "COM0", emp_proof = FALSE, state = null, overlay_state = "working")
 	. = ..()
 	if(. == COMPONENT_INCOMPATIBLE || !isitem(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -33,7 +43,8 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	src.state = state
 
 	var/atom/A = parent
-	A.add_overlay("working")
+	if(overlay_state)
+		A.add_overlay(overlay_state)
 	A.name = "[initial(A.name)] ([gpstag])"
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/interact)
 	if(!emp_proof)

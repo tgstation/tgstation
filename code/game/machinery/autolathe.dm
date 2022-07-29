@@ -3,9 +3,7 @@
 	desc = "It produces items using iron, glass, plastic and maybe some more."
 	icon_state = "autolathe"
 	density = TRUE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 10
-	active_power_usage = 100
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 	circuit = /obj/item/circuitboard/machine/autolathe
 	layer = BELOW_OBJ_LAYER
 
@@ -35,6 +33,7 @@
 							"Tools",
 							"Electronics",
 							"Construction",
+							"Material",
 							"T-Comm",
 							"Security",
 							"Machinery",
@@ -47,7 +46,6 @@
 /obj/machinery/autolathe/Initialize(mapload)
 	AddComponent(/datum/component/material_container, SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL], 0, MATCONTAINER_EXAMINE, _after_insert = CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
-
 	wires = new /datum/wires/autolathe(src)
 	stored_research = new /datum/techweb/specialized/autounlocking/autolathe
 	matching_designs = list()
@@ -114,9 +112,9 @@
 				var/datum/component/material_container/mats = GetComponent(/datum/component/material_container)
 				for(var/datum/material/mat in D.materials)
 					max_multiplier = min(D.maxstack, round(mats.get_material_amount(mat)/D.materials[mat]))
-				if (max_multiplier>10 && !disabled)
+				if (max_multiplier >= 10 && !disabled)
 					m10 = TRUE
-				if (max_multiplier>25 && !disabled)
+				if (max_multiplier >= 25 && !disabled)
 					m25 = TRUE
 		else
 			if(!unbuildable)
@@ -190,7 +188,7 @@
 			for(var/MAT in being_built.materials)
 				total_amount += being_built.materials[MAT]
 
-			var/power = max(2000, (total_amount)*multiplier/5) //Change this to use all materials
+			var/power = max(active_power_usage, (total_amount)*multiplier/5) //Change this to use all materials
 
 			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 
@@ -230,15 +228,15 @@
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.retrieve_all()
 
-/obj/machinery/autolathe/attackby(obj/item/O, mob/living/user, params)
+/obj/machinery/autolathe/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(busy)
 		balloon_alert(user, "it's busy!")
 		return TRUE
 
-	if(default_deconstruction_crowbar(O))
+	if(default_deconstruction_crowbar(attacking_item))
 		return TRUE
 
-	if(panel_open && is_wire_tool(O))
+	if(panel_open && is_wire_tool(attacking_item))
 		wires.interact(user)
 		return TRUE
 
@@ -248,13 +246,13 @@
 	if(machine_stat)
 		return TRUE
 
-	if(istype(O, /obj/item/disk/design_disk))
-		user.visible_message(span_notice("[user] begins to load \the [O] in \the [src]..."),
+	if(istype(attacking_item, /obj/item/disk/design_disk))
+		user.visible_message(span_notice("[user] begins to load \the [attacking_item] in \the [src]..."),
 			balloon_alert(user, "uploading design..."),
 			span_hear("You hear the chatter of a floppy drive."))
 		busy = TRUE
 		if(do_after(user, 14.4, target = src))
-			var/obj/item/disk/design_disk/disky = O
+			var/obj/item/disk/design_disk/disky = attacking_item
 			var/list/not_imported
 			for(var/datum/design/blueprint as anything in disky.blueprints)
 				if(!blueprint)
@@ -271,6 +269,13 @@
 	if(panel_open)
 		balloon_alert(user, "close the panel first!")
 		return FALSE
+
+	if(istype(attacking_item, /obj/item/storage/bag/trash))
+		for(var/obj/item/content_item in attacking_item.contents)
+			if(!do_after(user, 0.5 SECONDS, src))
+				return FALSE
+			attackby(content_item, user)
+		return TRUE
 
 	return ..()
 
@@ -300,7 +305,7 @@
 	else
 		flick("autolathe_o", src)//plays metal insertion animation
 
-		use_power(min(1000, amount_inserted / 100))
+		use_power(min(active_power_usage * 0.25, amount_inserted / 100))
 
 /obj/machinery/autolathe/proc/make_item(power, list/materials_used, list/picked_materials, multiplier, coeff, is_stack, mob/user)
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
@@ -330,6 +335,7 @@
 	busy = FALSE
 
 /obj/machinery/autolathe/RefreshParts()
+	. = ..()
 	var/mat_capacity = 0
 	for(var/obj/item/stock_parts/matter_bin/new_matter_bin in component_parts)
 		mat_capacity += new_matter_bin.rating*75000

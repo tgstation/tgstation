@@ -9,6 +9,8 @@
 /obj/item/grenade/c4/ninja
 	name = "spider charge"
 	desc = "A modified C-4 charge supplied to you by the Spider Clan.  Its explosive power has been juiced up, but only works in one specific area."
+	icon_state = "ninja-explosive0"
+	inhand_icon_state = "ninja-explosive"
 	boom_sizes = list(4, 8, 12)
 	///Weakref to the mob that has planted the charge
 	var/datum/weakref/detonator
@@ -53,11 +55,13 @@
 		target.cut_overlay(plastic_overlay, TRUE)
 		qdel(src)
 		return
-	. = ..()
 	//Since we already did the checks in afterattack, the denonator must be a ninja with the bomb objective.
 	if(!detonator)
 		return
 	var/mob/ninja = detonator.resolve()
+	. = ..()
+	if(!.)
+		return
 	if (isnull(ninja))
 		return
 	var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)

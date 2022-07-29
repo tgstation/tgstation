@@ -1,6 +1,7 @@
 /turf/open
 	plane = FLOOR_PLANE
-	var/slowdown = 0 //negative for faster, positive for slower
+	///negative for faster, positive for slower
+	var/slowdown = 0
 
 	var/footstep = null
 	var/barefootstep = null
@@ -33,6 +34,10 @@
 /turf/open/zAirOut(direction, turf/source)
 	return (direction == UP)
 
+/turf/open/update_icon()
+	. = ..()
+	update_visuals()
+
 /turf/open/indestructible
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
@@ -55,6 +60,9 @@
 
 /turf/open/indestructible/white
 	icon_state = "white"
+
+/turf/open/indestructible/dark
+	icon_state = "darkfull"
 
 /turf/open/indestructible/light
 	icon_state = "light_on-1"
@@ -180,10 +188,9 @@
 
 /turf/open/proc/freeze_turf()
 	for(var/obj/I in contents)
-		if(I.resistance_flags & FREEZE_PROOF)
-			continue
-		if(!(I.obj_flags & FROZEN))
-			I.make_frozen_visual()
+		if(!HAS_TRAIT(I, TRAIT_FROZEN) && !(I.obj_flags & FREEZE_PROOF))
+			I.AddElement(/datum/element/frozen)
+
 	for(var/mob/living/L in contents)
 		if(L.bodytemperature <= 50)
 			L.apply_status_effect(/datum/status_effect/freon)
@@ -197,55 +204,53 @@
 		M.apply_water()
 
 	wash(CLEAN_WASH)
-	for(var/am in src)
-		var/atom/movable/movable_content = am
+	for(var/atom/movable/movable_content as anything in src)
 		if(ismopable(movable_content)) // Will have already been washed by the wash call above at this point.
 			continue
 		movable_content.wash(CLEAN_WASH)
 	return TRUE
 
-/turf/open/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube, paralyze_amount, force_drop)
-	if(C.movement_type & FLYING)
+/turf/open/handle_slip(mob/living/carbon/slipper, knockdown_amount, obj/O, lube, paralyze_amount, force_drop)
+	if(slipper.movement_type & (FLYING | FLOATING))
 		return FALSE
 	if(has_gravity(src))
 		var/obj/buckled_obj
-		if(C.buckled)
-			buckled_obj = C.buckled
+		if(slipper.buckled)
+			buckled_obj = slipper.buckled
 			if(!(lube&GALOSHES_DONT_HELP)) //can't slip while buckled unless it's lube.
 				return FALSE
 		else
-			if(!(lube & SLIP_WHEN_CRAWLING) && (C.body_position == LYING_DOWN || !(C.status_flags & CANKNOCKDOWN))) // can't slip unbuckled mob if they're lying or can't fall.
+			if(!(lube & SLIP_WHEN_CRAWLING) && (slipper.body_position == LYING_DOWN || !(slipper.status_flags & CANKNOCKDOWN))) // can't slip unbuckled mob if they're lying or can't fall.
 				return FALSE
-			if(C.m_intent == MOVE_INTENT_WALK && (lube&NO_SLIP_WHEN_WALKING))
+			if(slipper.m_intent == MOVE_INTENT_WALK && (lube&NO_SLIP_WHEN_WALKING))
 				return FALSE
 		if(!(lube&SLIDE_ICE))
-			to_chat(C, span_notice("You slipped[ O ? " on the [O.name]" : ""]!"))
-			playsound(C.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
+			to_chat(slipper, span_notice("You slipped[ O ? " on the [O.name]" : ""]!"))
+			playsound(slipper.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
 
-		SEND_SIGNAL(C, COMSIG_ON_CARBON_SLIP)
+		SEND_SIGNAL(slipper, COMSIG_ON_CARBON_SLIP)
 		if(force_drop)
-			for(var/obj/item/I in C.held_items)
-				C.accident(I)
+			for(var/obj/item/I in slipper.held_items)
+				slipper.accident(I)
 
-		var/olddir = C.dir
-		C.moving_diagonally = 0 //If this was part of diagonal move slipping will stop it.
+		var/olddir = slipper.dir
+		slipper.moving_diagonally = 0 //If this was part of diagonal move slipping will stop it.
 		if(!(lube & SLIDE_ICE))
-			C.Knockdown(knockdown_amount)
-			C.Paralyze(paralyze_amount)
-			C.stop_pulling()
+			slipper.Knockdown(knockdown_amount)
+			slipper.Paralyze(paralyze_amount)
+			slipper.stop_pulling()
 		else
-			C.Knockdown(20)
+			slipper.Knockdown(20)
 
 		if(buckled_obj)
-			buckled_obj.unbuckle_mob(C)
+			buckled_obj.unbuckle_mob(slipper)
 			lube |= SLIDE_ICE
 
-		if(lube&SLIDE)
-			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 4), 1, FALSE, CALLBACK(C, /mob/living/carbon/.proc/spin, 1, 1))
+		var/turf/target = get_ranged_target_turf(slipper, olddir, 4)
+		if(lube & SLIDE)
+			slipper.AddComponent(/datum/component/force_move, target, TRUE)
 		else if(lube&SLIDE_ICE)
-			if(C.force_moving) //If we're already slipping extend it
-				qdel(C.force_moving)
-			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 1), 1, FALSE) //spinning would be bad for ice, fucks up the next dir
+			slipper.AddComponent(/datum/component/force_move, target, FALSE)//spinning would be bad for ice, fucks up the next dir
 		return TRUE
 
 /turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0, max_wet_time = MAXIMUM_WET_TIME, permanent)
@@ -259,3 +264,46 @@
 
 /turf/open/proc/ClearWet()//Nuclear option of immediately removing slipperyness from the tile instead of the natural drying over time
 	qdel(GetComponent(/datum/component/wet_floor))
+
+/// Builds with rods. This doesn't exist to be overriden, just to remove duplicate logic for turfs that want
+/// To support floor tile creation
+/// I'd make it a component, but one of these things is space. So no.
+/turf/open/proc/build_with_rods(obj/item/stack/rods/used_rods, mob/user)
+	var/obj/structure/lattice/catwalk_bait = locate(/obj/structure/lattice, src)
+	var/obj/structure/lattice/catwalk/existing_catwalk = locate(/obj/structure/lattice/catwalk, src)
+	if(existing_catwalk)
+		to_chat(user, span_warning("There is already a catwalk here!"))
+		return
+
+	if(catwalk_bait)
+		if(used_rods.use(1))
+			qdel(catwalk_bait)
+			to_chat(user, span_notice("You construct a catwalk."))
+			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+			new /obj/structure/lattice/catwalk(src)
+		else
+			to_chat(user, span_warning("You need two rods to build a catwalk!"))
+		return
+
+	if(used_rods.use(1))
+		to_chat(user, span_notice("You construct a lattice."))
+		playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+		new /obj/structure/lattice(src)
+	else
+		to_chat(user, span_warning("You need one rod to build a lattice."))
+
+/// Very similar to build_with_rods, this exists to allow consistent behavior between different types in terms of how
+/// Building floors works
+/turf/open/proc/build_with_floor_tiles(obj/item/stack/tile/iron/used_tiles, user)
+	var/obj/structure/lattice/soon_to_be_floor = locate(/obj/structure/lattice, src)
+	if(!soon_to_be_floor)
+		to_chat(user, span_warning("The plating is going to need some support! Place metal rods first."))
+		return
+	if(!used_tiles.use(1))
+		to_chat(user, span_warning("You need one floor tile to build a floor!"))
+		return
+
+	qdel(soon_to_be_floor)
+	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+	to_chat(user, span_notice("You build a floor."))
+	PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)

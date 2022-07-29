@@ -48,7 +48,11 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	var/to_remove_string
 	var/list/candidates = get_hearers_in_view(8, user) - (include_speaker ? null : user)
 	for(var/mob/living/candidate in candidates)
-		if(candidate.stat != DEAD && candidate.can_hear() && !candidate.anti_magic_check(magic = FALSE, holy = TRUE))
+		if(candidate.stat != DEAD && candidate.can_hear())
+			if(candidate.can_block_magic(MAGIC_RESISTANCE_HOLY|MAGIC_RESISTANCE_MIND, charge_cost = 0))
+				to_chat(span_userdanger("Something's wrong! [candidate] seems to be resisting your commands."))
+				continue
+
 			listeners += candidate
 
 			//Let's ensure the listener's name is not matched within another word or command (and viceversa). e.g. "Saul" in "somersault"
@@ -199,7 +203,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 /datum/voice_of_god_command/bleed/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	for(var/mob/living/carbon/human/target in listeners)
 		var/obj/item/bodypart/chosen_part = pick(target.bodyparts)
-		chosen_part.generic_bleedstacks += 5
+		chosen_part.adjustBleedStacks(5)
 
 /// This command sets the listeners ablaze.
 /datum/voice_of_god_command/burn
@@ -209,7 +213,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 /datum/voice_of_god_command/burn/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	for(var/mob/living/target as anything in listeners)
 		target.adjust_fire_stacks(1 * power_multiplier)
-		target.IgniteMob()
+		target.ignite_mob()
 
 /// This command heats the listeners up like boiling water.
 /datum/voice_of_god_command/hot

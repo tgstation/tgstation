@@ -1,166 +1,151 @@
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, LabeledList, NoticeBox, Section, Stack, Tabs } from '../components';
+import { decodeHtmlEntities } from 'common/string';
+import { BooleanLike } from '../../common/react';
+import { useBackend } from '../backend';
+import { BlockQuote, Box, Button, LabeledList, NoticeBox, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
-type PaiCardData = {
-  candidates: Candidate[];
+type Data = {
+  candidates: ReadonlyArray<Candidate>;
   pai: Pai;
 };
 
-type Candidate = {
+type Candidate = Readonly<{
   comments: string;
+  ckey: string;
   description: string;
-  key: string;
   name: string;
-};
+}>;
 
 type Pai = {
-  can_holo: number;
+  can_holo: BooleanLike;
   dna: string;
-  emagged: number;
+  emagged: BooleanLike;
   laws: string;
   master: string;
   name: string;
-  transmit: number;
-  receive: number;
+  transmit: BooleanLike;
+  receive: BooleanLike;
 };
 
-export const PaiCard = (_, context) => {
-  const { data } = useBackend<PaiCardData>(context);
+export const PaiCard = (props, context) => {
+  const { data } = useBackend<Data>(context);
   const { pai } = data;
 
   return (
     <Window width={400} height={400} title="pAI Options Menu">
-      <Window.Content>{!pai ? <PaiDownload /> : <PaiOptions />}</Window.Content>
+      <Window.Content scrollable>
+        {!pai ? <PaiDownload /> : <PaiOptions />}
+      </Window.Content>
     </Window>
   );
 };
 
 /** Gives a list of candidates as cards */
-const PaiDownload = (_, context) => {
-  const { act, data } = useBackend<PaiCardData>(context);
+const PaiDownload = (props, context) => {
+  const { act, data } = useBackend<Data>(context);
   const { candidates = [] } = data;
 
   return (
-    <Section
-      buttons={
-        <Button
-          icon="concierge-bell"
-          onClick={() => act('request')}
-          tooltip="Request candidates.">
-          Request
-        </Button>
-      }
-      fill
-      scrollable
-      title="Viewing pAI Candidates">
-      {!candidates.length ? (
-        <NoticeBox>None found!</NoticeBox>
-      ) : (
-        <Stack fill vertical>
-          {candidates.map((candidate, index) => {
-            return (
-              <Stack.Item key={index}>
-                <CandidateDisplay candidate={candidate} />
-              </Stack.Item>
-            );
-          })}
-        </Stack>
-      )}
-    </Section>
-  );
-};
-
-/** Candidate card: Individual. Since this info is refreshing,
- * had to make the comments and descriptions a separate tab.
- * In longer entries, it is much more readable.
- */
-const CandidateDisplay = (props, context) => {
-  const [tab, setTab] = useLocalState(context, 'tab', 'description');
-  const { candidate } = props;
-  const { comments, description, name } = candidate;
-
-  const onTabClickHandler = (tab: string) => {
-    setTab(tab);
-  };
-
-  return (
-    <Box
-      style={{
-        'background': '#111111',
-        'border': '1px solid #4972a1',
-        'border-radius': '5px',
-        'padding': '1rem',
-      }}>
-      <Section
-        buttons={
-          <CandidateTabs
-            candidate={candidate}
-            onTabClick={onTabClickHandler}
-            tab={tab}
-          />
-        }
-        fill
-        height={12}
-        scrollable
-        title="Candidate">
-        <Box color="green" fontSize="16px">
-          Name: {name || 'Randomized Name'}
-        </Box>
-        {tab === 'description'
-          ? (`Description: ${description.length && description || "None"}`)
-          : (`OOC Comments: ${comments.length && comments || "None"}`)}
-      </Section>
-    </Box>
-  );
-};
-
-/** Tabs for the candidate */
-const CandidateTabs = (props, context) => {
-  const { act } = useBackend<PaiCardData>(context);
-  const { candidate, onTabClick, tab } = props;
-  const { key } = candidate;
-
-  return (
-    <Stack>
+    <Stack fill vertical>
       <Stack.Item>
-        <Tabs>
-          <Tabs.Tab
-            onClick={() => {
-              onTabClick('description');
-            }}
-            selected={tab === 'description'}>
-            Description
-          </Tabs.Tab>
-          <Tabs.Tab
-            onClick={() => {
-              onTabClick('comments');
-            }}
-            selected={tab === 'comments'}>
-            OOC
-          </Tabs.Tab>
-        </Tabs>
+        <NoticeBox info>
+          <Stack fill>
+            <Stack.Item grow fontSize="16px">
+              pAI Candidates
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                color="good"
+                icon="bell"
+                onClick={() => act('request')}
+                tooltip="Request more candidates from beyond.">
+                Request
+              </Button>
+            </Stack.Item>
+          </Stack>
+        </NoticeBox>
       </Stack.Item>
-      <Stack.Item>
-        <Button
-          icon="download"
-          onClick={() => act('download', { key })}
-          tooltip="Accepts this pAI candidate.">
-          Download
-        </Button>
-      </Stack.Item>
+      {candidates.map((candidate, index) => {
+        return (
+          <Stack.Item key={index}>
+            <CandidateDisplay candidate={candidate} index={index + 1} />
+          </Stack.Item>
+        );
+      })}
     </Stack>
   );
 };
 
-/** Once a pAI has been loaded, you can alter its settings here */
-const PaiOptions = (_, context) => {
-  const { act, data } = useBackend<PaiCardData>(context);
-  const { pai } = data;
-  const { can_holo, dna, emagged, laws, master, name, transmit, receive } = pai;
+/**
+ * Renders a custom section that displays a candidate.
+ */
+const CandidateDisplay = (
+  props: { candidate: Candidate; index: number },
+  context
+) => {
+  const { act } = useBackend<Data>(context);
+  const {
+    candidate: { comments, ckey, description, name },
+    index,
+  } = props;
 
   return (
-    <Section fill scrollable title={name}>
+    <Section
+      buttons={
+        <Button icon="save" onClick={() => act('download', { ckey })}>
+          Download
+        </Button>
+      }
+      overflow="hidden"
+      title={`Candidate ${index}`}>
+      <Stack vertical>
+        <Stack.Item>
+          <Box color="label" mb={1}>
+            Name:
+          </Box>
+          {name ? (
+            <Box color="green">{name}</Box>
+          ) : (
+            'None provided - name will be randomized.'
+          )}
+        </Stack.Item>
+        {!!description && (
+          <>
+            <Stack.Divider />
+            <Stack.Item>
+              <Box color="label" mb={1}>
+                IC Description:
+              </Box>
+              {description}
+            </Stack.Item>
+          </>
+        )}
+        {!!comments && (
+          <>
+            <Stack.Divider />
+            <Stack.Item>
+              <Box color="label" mb={1}>
+                OOC Notes:
+              </Box>
+              {comments}
+            </Stack.Item>
+          </>
+        )}
+      </Stack>
+    </Section>
+  );
+};
+
+/** Once a pAI has been loaded, you can alter its settings here */
+const PaiOptions = (props, context) => {
+  const { act, data } = useBackend<Data>(context);
+  const {
+    pai: { can_holo, dna, emagged, laws, master, name, transmit, receive },
+  } = data;
+  const suppliedLaws = laws[0] ? decodeHtmlEntities(laws[0]) : 'None';
+
+  return (
+    <Section fill scrollable title={`Settings: ${name.toUpperCase()}`}>
       <LabeledList>
         <LabeledList.Item label="Master">
           {master || (
@@ -169,8 +154,14 @@ const PaiOptions = (_, context) => {
             </Button>
           )}
         </LabeledList.Item>
-        {!!master && <LabeledList.Item label="DNA">{dna}</LabeledList.Item>}
-        <LabeledList.Item label="Laws">{laws}</LabeledList.Item>
+        {!!master && (
+          <LabeledList.Item color="red" label="DNA">
+            {dna}
+          </LabeledList.Item>
+        )}
+        <LabeledList.Item label="Laws">
+          <BlockQuote>{suppliedLaws}</BlockQuote>
+        </LabeledList.Item>
         <LabeledList.Item label="Holoform">
           <Button
             icon={can_holo ? 'toggle-on' : 'toggle-off'}
@@ -210,7 +201,11 @@ const PaiOptions = (_, context) => {
         </LabeledList.Item>
       </LabeledList>
       {!!emagged && (
-        <Button color="bad" disabled icon="bug" mt={1}>
+        <Button
+          color="bad"
+          icon="bug"
+          mt={1}
+          onClick={() => act('reset_software')}>
           Malicious Software Detected
         </Button>
       )}

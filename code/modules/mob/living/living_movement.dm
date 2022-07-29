@@ -1,4 +1,4 @@
-/mob/living/Moved()
+/mob/living/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	update_turf_movespeed(loc)
 
@@ -27,10 +27,13 @@
 	add_movespeed_modifier((m_intent == MOVE_INTENT_WALK)? /datum/movespeed_modifier/config_walk_run/walk : /datum/movespeed_modifier/config_walk_run/run)
 
 /mob/living/proc/update_turf_movespeed(turf/open/T)
-	if(isopenturf(T))
-		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/turf_slowdown, multiplicative_slowdown = T.slowdown)
-	else
+	if(isopenturf(T) && !is_type_on_turf(T, /obj/structure/lattice/catwalk))
+		if(T.slowdown != current_turf_slowdown)
+			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/turf_slowdown, multiplicative_slowdown = T.slowdown)
+			current_turf_slowdown = T.slowdown
+	else if(current_turf_slowdown)
 		remove_movespeed_modifier(/datum/movespeed_modifier/turf_slowdown)
+		current_turf_slowdown = 0
 
 
 /mob/living/proc/update_pull_movespeed()
@@ -78,6 +81,11 @@
 			to_chat(rider || src, span_warning("[rider ? src : "You"] can't do that right now!"))
 		return FALSE
 	if(!buckled || !(z_move_flags & ZMOVE_ALLOW_BUCKLED))
+		if(!(z_move_flags & ZMOVE_FALL_CHECKS) && incorporeal_move && (!rider || rider.incorporeal_move))
+			//An incorporeal mob will ignore obstacles unless it's a potential fall (it'd suck hard) or is carrying corporeal mobs.
+			//Coupled with flying/floating, this allows the mob to move up and down freely.
+			//By itself, it only allows the mob to move down.
+			z_move_flags |= ZMOVE_IGNORE_OBSTACLES
 		return ..()
 	switch(SEND_SIGNAL(buckled, COMSIG_BUCKLED_CAN_Z_MOVE, direction, start, destination, z_move_flags, src))
 		if(COMPONENT_RIDDEN_ALLOW_Z_MOVE) // Can be ridden.

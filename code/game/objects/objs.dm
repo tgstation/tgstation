@@ -13,6 +13,9 @@
 	/// If this attacks a human with no wound armor on the affected body part, add this to the wound mod. Some attacks may be significantly worse at wounding if there's even a slight layer of armor to absorb some of it vs bare flesh
 	var/bare_wound_bonus = 0
 
+	/// A multiplier to an objecet's force when used against a stucture, vechicle, machine, or robot.
+	var/demolition_mod = 1
+
 	var/current_skin //Has the item been reskinned?
 	var/list/unique_reskin //List of options to reskin.
 
@@ -76,19 +79,30 @@
 		/// Needs to run before as ComponentInitialize runs after this statement...why do we have ComponentInitialize again?
 
 
-/obj/Destroy(force=FALSE)
+/obj/Destroy(force)
 	if(!ismachinery(src))
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
 	SStgui.close_uis(src)
 	. = ..()
 
+/obj/attacked_by(obj/item/attacking_item, mob/living/user)
+	if(!attacking_item.force)
+		return
 
-/obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
-	. = ..()
-	if(obj_flags & FROZEN)
-		visible_message(span_danger("[src] shatters into a million pieces!"))
-		qdel(src)
+	var/total_force = (attacking_item.force * attacking_item.demolition_mod)
 
+	var/damage = take_damage(total_force, attacking_item.damtype, MELEE, 1)
+
+	var/damage_verb = "hit"
+
+	if(attacking_item.demolition_mod > 1 && damage)
+		damage_verb = "pulverise"
+	if(attacking_item.demolition_mod < 1)
+		damage_verb = "ineffectively pierce"
+
+	user.visible_message(span_danger("[user] [damage_verb][plural_s(damage_verb)] [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), \
+		span_danger("You [damage_verb] [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), null, COMBAT_MESSAGE_RANGE)
+	log_combat(user, src, "attacked", attacking_item)
 
 /obj/assume_air(datum/gas_mixture/giver)
 	if(loc)
@@ -141,7 +155,7 @@
 			var/mob/living/carbon/human/H = usr
 			if(!(usr in nearby))
 				if(usr.client && usr.machine==src)
-					if(H.dna.check_mutation(TK))
+					if(H.dna.check_mutation(/datum/mutation/human/telekinesis))
 						is_in_use = TRUE
 						ui_interact(usr)
 		if (is_in_use)
@@ -208,22 +222,6 @@
 
 /obj/get_dumping_location()
 	return get_turf(src)
-
-/**
- * This proc is used for telling whether something can pass by this object in a given direction, for use by the pathfinding system.
- *
- * Trying to generate one long path across the station will call this proc on every single object on every single tile that we're seeing if we can move through, likely
- * multiple times per tile since we're likely checking if we can access said tile from multiple directions, so keep these as lightweight as possible.
- *
- * Arguments:
- * * ID- An ID card representing what access we have (and thus if we can open things like airlocks or windows to pass through them). The ID card's physical location does not matter, just the reference
- * * to_dir- What direction we're trying to move in, relevant for things like directional windows that only block movement in certain directions
- * * caller- The movable we're checking pass flags for, if we're making any such checks
- **/
-/obj/proc/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
-	if(istype(caller) && (caller.pass_flags & pass_flags_self))
-		return TRUE
-	. = !density
 
 /obj/proc/check_uplink_validity()
 	return 1
@@ -356,8 +354,8 @@
 		return FALSE
 	return TRUE
 
-/obj/analyzer_act(mob/living/user, obj/item/I)
-	if(atmosanalyzer_scan(user, src))
+/obj/analyzer_act(mob/living/user, obj/item/analyzer/tool)
+	if(atmos_scan(user=user, target=src, silent=FALSE))
 		return TRUE
 	return ..()
 
@@ -371,7 +369,7 @@
 /obj/handle_ricochet(obj/projectile/P)
 	. = ..()
 	if(. && receive_ricochet_damage_coeff)
-		take_damage(P.damage * receive_ricochet_damage_coeff, P.damage_type, P.flag, 0, turn(P.dir, 180), P.armour_penetration) // pass along receive_ricochet_damage_coeff damage to the structure for the ricochet
+		take_damage(P.damage * receive_ricochet_damage_coeff, P.damage_type, P.armor_flag, 0, turn(P.dir, 180), P.armour_penetration) // pass along receive_ricochet_damage_coeff damage to the structure for the ricochet
 
 /obj/update_overlays()
 	. = ..()
@@ -388,3 +386,39 @@
 	for(var/reagent in reagents)
 		var/datum/reagent/R = reagent
 		. |= R.expose_obj(src, reagents[R])
+
+///attempt to freeze this obj if possible. returns TRUE if it succeeded, FALSE otherwise.
+/obj/proc/freeze()
+	if(HAS_TRAIT(src, TRAIT_FROZEN))
+		return FALSE
+	if(obj_flags & FREEZE_PROOF)
+		return FALSE
+
+	AddElement(/datum/element/frozen)
+	return TRUE
+
+///unfreezes this obj if its frozen
+/obj/proc/unfreeze()
+	SEND_SIGNAL(src, COMSIG_OBJ_UNFREEZE)
+
+/obj/storage_contents_dump_act(obj/item/src_object, mob/user)
+	. = ..()
+
+	if(.)
+		return
+
+	if(!src_object.atom_storage)
+		return
+
+	var/atom/resolve_location = src_object.atom_storage.real_location?.resolve()
+	if(!resolve_location)
+		return FALSE
+
+	if(length(resolve_location.contents))
+		to_chat(user, span_notice("You start dumping out the contents of [src_object]..."))
+		if(!do_after(user, 20, target=resolve_location))
+			return FALSE
+
+	src_object.atom_storage.remove_all(get_dumping_location())
+
+	return TRUE

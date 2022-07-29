@@ -16,8 +16,7 @@
 
 /obj/item/clothing/suit/hooded/Destroy()
 	. = ..()
-	qdel(hood)
-	hood = null
+	QDEL_NULL(hood)
 
 /obj/item/clothing/suit/hooded/proc/MakeHood()
 	if(!hood)
@@ -85,7 +84,7 @@
 
 /obj/item/clothing/head/hooded
 	var/obj/item/clothing/suit/hooded/suit
-	dynamic_hair_suffix = ""
+
 
 /obj/item/clothing/head/hooded/Destroy()
 	suit = null

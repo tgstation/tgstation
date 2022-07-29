@@ -31,6 +31,7 @@
 	antag.is_captured = TRUE
 	to_chat(fugitive, span_userdanger("You are thrown into a vast void of bluespace, and as you fall further into oblivion the comparatively small entrance to reality gets smaller and smaller until you cannot see it anymore. You have failed to avoid capture."))
 	fugitive.ghostize(TRUE) //so they cannot suicide, round end stuff.
+	use_power(active_power_usage)
 
 /obj/machinery/computer/shuttle/hunter
 	name = "shuttle console"
@@ -44,7 +45,7 @@
 	lock_override = CAMERA_LOCK_STATION
 	shuttlePortId = "huntership_custom"
 	see_hidden = FALSE
-	jumpto_ports = list("huntership_home" = 1, "whiteship_home" = 1, "syndicate_nw" = 1)
+	jump_to_ports = list("huntership_home" = 1, "whiteship_home" = 1, "syndicate_nw" = 1)
 	view_range = 4.5
 
 /obj/structure/closet/crate/eva

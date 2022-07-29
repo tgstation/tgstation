@@ -2,6 +2,7 @@
 	name = "labcoat"
 	desc = "A suit that protects against minor chemical spills."
 	icon_state = "labcoat"
+	worn_icon = 'icons/mob/clothing/suits/labcoat.dmi'
 	inhand_icon_state = "labcoat"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
@@ -83,9 +84,15 @@
 
 /obj/item/clothing/suit/toggle/labcoat/science/Initialize(mapload)
 	. = ..()
-	allowed += /obj/item/storage/bag/bio
+	allowed += /obj/item/storage/bag/xeno
 
 /obj/item/clothing/suit/toggle/labcoat/roboticist
 	name = "roboticist labcoat"
 	desc = "More like an eccentric coat than a labcoat. Helps pass off bloodstains as part of the aesthetic. Comes with red shoulder pads."
 	icon_state = "labcoat_robo"
+
+/obj/item/clothing/suit/toggle/labcoat/interdyne
+	name = "interdyne labcoat"
+	desc = "More like an eccentric coat than a labcoat. Helps pass off bloodstains as part of the aesthetic. Comes with red shoulder pads."
+	icon_state = "labcoat_robo"
+

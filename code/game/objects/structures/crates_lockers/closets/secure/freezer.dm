@@ -4,6 +4,7 @@
 	door_anim_squish = 0.22
 	door_anim_angle = 123
 	door_anim_time = 4
+	/// If FALSE, we will protect the first person in the freezer from an explosion / nuclear blast.
 	var/jones = FALSE
 
 /obj/structure/closet/secure_closet/freezer/Destroy()
@@ -29,6 +30,13 @@
 		return ..()
 	jones = TRUE
 	flags_1 &= ~PREVENT_CONTENTS_EXPLOSION_1
+
+/obj/structure/closet/secure_closet/freezer/empty
+	name = "empty freezer"
+
+/obj/structure/closet/secure_closet/freezer/empty/open
+	req_access = null
+	locked = FALSE
 
 /obj/structure/closet/secure_closet/freezer/kitchen
 	name = "kitchen cabinet"

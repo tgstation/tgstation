@@ -177,14 +177,16 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 
 	data["reason"] = reason
 
+	data["settlers"] = settlers
+	data["settlermoods"] = settlermoods
+
 	return data
 
 /obj/machinery/computer/arcade/orion_trail/ui_static_data(mob/user)
 	var/list/static_data = list()
 	static_data["gamename"] = name
 	static_data["emagged"] = obj_flags & EMAGGED
-	static_data["settlers"] = settlers
-	static_data["settlermoods"] = settlermoods
+
 	return static_data
 
 /obj/machinery/computer/arcade/orion_trail/ui_act(action, list/params)
@@ -211,13 +213,14 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 
 	var/xp_gained = 0
 
+	gamer.played_game()
+
 	if(event)
 		event.response(src, action)
 		if(!settlers.len || food <= 0 || fuel <= 0)
 			set_game_over(gamer)
 			return
 		new_settler_mood() //events shake people up a bit and can also change food
-		update_static_data(usr)
 		return TRUE
 	switch(action)
 		if("start_game")
@@ -345,6 +348,8 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 		event.emag_effect(src, gamer)
 
 /obj/machinery/computer/arcade/orion_trail/proc/set_game_over(user, given_reason)
+	usr.lost_game()
+
 	gameStatus = ORION_STATUS_GAMEOVER
 	event = null
 	reason = given_reason || death_reason(user)
@@ -363,7 +368,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 			reason = "You ran out of fuel, and drift, slowly, into a star."
 			if(obj_flags & EMAGGED)
 				gamer.adjust_fire_stacks(5)
-				gamer.IgniteMob() //flew into a star, so you're on fire
+				gamer.ignite_mob() //flew into a star, so you're on fire
 				to_chat(gamer, span_userdanger("You feel an immense wave of heat emanate from the arcade machine. Your skin bursts into flames."))
 
 	if(obj_flags & EMAGGED)
@@ -392,7 +397,6 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 		alive++
 	if(update)
 		new_settler_mood()//new faces!
-		update_static_data(usr)
 	return newcrew
 
 
@@ -413,7 +417,6 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 		alive--
 	if(update)
 		new_settler_mood()//bro, i...
-		update_static_data(usr)
 	return removed
 
 /**
@@ -471,6 +474,8 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 			settlermoods[settlers[i]] = min(settlermoods[settlers[i]], 3)
 
 /obj/machinery/computer/arcade/orion_trail/proc/win(mob/user)
+	usr.won_game()
+
 	gameStatus = ORION_STATUS_START
 	say("Congratulations, you made it to Orion!")
 	if(obj_flags & EMAGGED)
@@ -537,5 +542,18 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	visible_message(span_userdanger("[src] explodes!"))
 	explosion(src, devastation_range = 2, heavy_impact_range = 4, light_impact_range = 8, flame_range = 16)
 	qdel(src)
+
+/obj/singularity/orion
+	move_self = FALSE
+
+/obj/singularity/orion/Initialize(mapload)
+	. = ..()
+
+	var/datum/component/singularity/singularity = singularity_component.resolve()
+	singularity?.grav_pull = 1
+
+/obj/singularity/orion/process(delta_time)
+	if(DT_PROB(0.5, delta_time))
+		mezzer()
 
 #undef ORION_TRAIL_WINTURN

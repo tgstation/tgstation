@@ -1,6 +1,7 @@
 /obj/structure/closet/crate/cardboard
 	name = "cardboard box"
 	desc = "A box, in which you can place things. Revolutionary, I know."
+	pass_flags_self = PASSSTRUCTURE
 	material_drop = /obj/item/stack/sheet/cardboard
 	material_drop_amount = 4
 	icon_state = "cardboard"
@@ -13,3 +14,8 @@
 	name = "\improper Mothic Fleet box"
 	desc = "For holding moths, presumably."
 	icon_state = "cardboard_moth"
+
+/obj/structure/closet/crate/cardboard/tiziran
+	name = "\improper Tiziran shipment box"
+	desc = "For holding lizards, presumably."
+	icon_state = "cardboard_tiziran"

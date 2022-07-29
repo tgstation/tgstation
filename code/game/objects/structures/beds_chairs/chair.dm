@@ -28,25 +28,11 @@
 		addtimer(CALLBACK(src, .proc/RemoveFromLatejoin), 0)
 	if(prob(0.2))
 		name = "tactical [name]"
+	MakeRotate()
 
-/obj/structure/chair/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE, CALLBACK(src, .proc/can_user_rotate),CALLBACK(src, .proc/can_be_rotated),null)
-
-/obj/structure/chair/proc/can_be_rotated(mob/user)
-	return TRUE
-
-/obj/structure/chair/proc/can_user_rotate(mob/user)
-	var/mob/living/L = user
-
-	if(istype(L))
-		if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
-			return FALSE
-		else
-			return TRUE
-	else if(isobserver(user) && CONFIG_GET(flag/ghost_interaction))
-		return TRUE
-	return FALSE
+///This proc adds the rotate component, overwrite this if you for some reason want to change some specific args.
+/obj/structure/chair/proc/MakeRotate()
+	AddComponent(/datum/component/simple_rotation, ROTATION_IGNORE_ANCHORED|ROTATION_GHOSTS_ALLOWED)
 
 /obj/structure/chair/Destroy()
 	RemoveFromLatejoin()
@@ -82,6 +68,9 @@
 		return
 	. = ..()
 
+/obj/structure/chair/AltClick(mob/user)
+	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
+
 ///allows each chair to request the electrified_buckle component with overlays that dont look ridiculous
 /obj/structure/chair/proc/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
 	SHOULD_CALL_PARENT(TRUE)
@@ -107,7 +96,7 @@
 	weapon.play_tool_sound(src)
 	deconstruct(disassembled = TRUE)
 	return TRUE
-	
+
 /obj/structure/chair/attack_tk(mob/user)
 	if(!anchored || has_buckled_mobs() || !isturf(user.loc))
 		return ..()
@@ -125,8 +114,10 @@
 /obj/structure/chair/proc/handle_layer()
 	if(has_buckled_mobs() && dir == NORTH)
 		layer = ABOVE_MOB_LAYER
+		plane = GAME_PLANE_UPPER
 	else
 		layer = OBJ_LAYER
+		plane = GAME_PLANE
 
 /obj/structure/chair/post_buckle_mob(mob/living/M)
 	. = ..()
@@ -181,7 +172,7 @@
 /obj/structure/chair/comfy/Initialize(mapload)
 	armrest = GetArmrest()
 	armrest.layer = ABOVE_MOB_LAYER
-	armrest.plane = ABOVE_GAME_PLANE
+	armrest.plane = GAME_PLANE_UPPER
 	return ..()
 
 /obj/structure/chair/comfy/proc/GetArmrest()
@@ -231,6 +222,9 @@
 		overlays_from_child_procs = list(image('icons/obj/chairs.dmi', loc, "echair_over", pixel_x = -1))
 	. = ..()
 
+/obj/structure/chair/comfy/shuttle/tactical
+	name = "tactical chair"
+
 /obj/structure/chair/comfy/carp
 	name = "carpskin chair"
 	desc = "A luxurious chair, the many purple scales reflect the light in a most pleasing manner."
@@ -244,7 +238,7 @@
 	icon_state = "officechair_dark"
 
 
-/obj/structure/chair/office/Moved()
+/obj/structure/chair/office/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(has_gravity())
 		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
@@ -253,6 +247,9 @@
 	if(!overlays_from_child_procs)
 		overlays_from_child_procs = list(image('icons/obj/chairs.dmi', loc, "echair_over", pixel_x = -1))
 	. = ..()
+
+/obj/structure/chair/office/tactical
+	name = "tactical swivel chair"
 
 /obj/structure/chair/office/light
 	icon_state = "officechair_white"
@@ -297,6 +294,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool, 0)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 
+/obj/structure/chair/stool/bamboo
+	name = "bamboo stool"
+	desc = "A makeshift bamboo stool with a rustic look."
+	icon_state = "bamboo_stool"
+	resistance_flags = FLAMMABLE
+	max_integrity = 60
+	buildstacktype = /obj/item/stack/sheet/mineral/bamboo
+	buildstackamount = 2
+	item_chair = /obj/item/chair/stool/bamboo
+
 /obj/item/chair
 	name = "chair"
 	desc = "Bar brawl essential."
@@ -308,6 +315,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	w_class = WEIGHT_CLASS_HUGE
 	force = 8
 	throwforce = 10
+	demolition_mod = 1.25
 	throw_range = 3
 	hitsound = 'sound/items/trayhit1.ogg'
 	hit_reaction_chance = 50
@@ -399,6 +407,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	inhand_icon_state = "stool_bar"
 	origin_type = /obj/structure/chair/stool/bar
 
+/obj/item/chair/stool/bamboo
+	name = "bamboo stool"
+	icon_state = "bamboo_stool"
+	inhand_icon_state = "stool_bamboo"
+	hitsound = 'sound/weapons/genhit1.ogg'
+	origin_type = /obj/structure/chair/stool/bamboo
+	break_chance = 50	//Submissive and breakable unlike the chad iron stool
+
 /obj/item/chair/stool/narsie_act()
 	return //sturdy enough to ignore a god
 
@@ -447,7 +463,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	if(turns >= 8)
 		STOP_PROCESSING(SSfastprocess, src)
 
-/obj/structure/chair/bronze/Moved()
+/obj/structure/chair/bronze/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(has_gravity())
 		playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
@@ -524,3 +540,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	custom_materials = list(/datum/material/plastic = 2000)
 	break_chance = 25
 	origin_type = /obj/structure/chair/plastic
+
+/obj/structure/chair/musical
+	name = "musical chair"
+	desc = "You listen to this. Either by will or by force."
+	item_chair = /obj/item/chair/musical
+	particles = new /particles/musical_notes
+
+/obj/item/chair/musical
+	name = "musical chair"
+	desc = "Oh, so this is like the fucked up Monopoly rules where there are no rules and you can pick up and place the musical chairs as you please."
+	particles = new /particles/musical_notes
+	origin_type = /obj/structure/chair/musical

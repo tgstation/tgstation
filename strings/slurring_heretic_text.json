@@ -1,0 +1,32 @@
+{
+	"replacements": {
+		"characters": {
+			"common": {
+				"o": "u",
+				"t": "ch",
+				"a": "ah",
+				"c": "th",
+				"i": "ks",
+				"m": "nth"
+			},
+			"uncommon": {
+				" ": " endless... ",
+				"H": " THE HANDS... ",
+				"h": " BRIGHT ",
+				"s": " LEAK ",
+				"r": " CRACK "
+			}
+		},
+		"string_replacements": [
+			"'",
+			"br",
+			"th",
+			"see",
+			"etch"
+		],
+		"string_additions": [
+			"ah",
+			"wth"
+		]
+	}
+}

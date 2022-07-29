@@ -36,7 +36,7 @@
 
 	var/list/text_list = list()
 	for(var/entry in list_input)
-		if(isatom(entry))
+		if(isdatum(entry))
 			text_list += PORT_TYPE_ATOM
 		else
 			text_list += "[entry]"

@@ -21,11 +21,35 @@ declare module '*.svg' {
   export default content;
 }
 
+namespace JSX {
+  interface IntrinsicElements {
+    marquee: any;
+    blink: any;
+  }
+}
+
+type TguiMessage = {
+  type: string;
+  payload?: any;
+  [key: string]: any;
+};
+
 type ByondType = {
+  /**
+   * ID of the Byond window this script is running on.
+   * Can be used as a parameter to winget/winset.
+   */
+  windowId: string;
+
   /**
    * True if javascript is running in BYOND.
    */
   IS_BYOND: boolean;
+
+  /**
+   * Version of Trident engine of Internet Explorer. Null if N/A.
+   */
+  TRIDENT: number | null;
 
   /**
    * True if browser is IE8 or lower.
@@ -46,6 +70,18 @@ type ByondType = {
    * True if browser is IE11 or lower.
    */
   IS_LTE_IE11: boolean;
+
+  /**
+   * If `true`, unhandled errors and common mistakes result in a blue screen
+   * of death, which stops this window from handling incoming messages and
+   * closes the active instance of tgui datum if there was one.
+   *
+   * It can be defined in window.initialize() in DM, or changed in runtime
+   * here via this property to `true` or `false`.
+   *
+   * It is recommended that you keep this ON to detect hard to find bugs.
+   */
+  strictMode: boolean;
 
   /**
    * Makes a BYOND call.
@@ -79,14 +115,14 @@ type ByondType = {
    *
    * Returns a promise with a key-value object containing all properties.
    */
-  winget(id: string): Promise<object>;
+  winget(id: string | null): Promise<object>;
 
   /**
    * Retrieves all properties of the BYOND skin element.
    *
    * Returns a promise with a key-value object containing all properties.
    */
-  winget(id: string, propName: '*'): Promise<object>;
+  winget(id: string | null, propName: '*'): Promise<object>;
 
   /**
    * Retrieves an exactly one property of the BYOND skin element,
@@ -94,7 +130,7 @@ type ByondType = {
    *
    * Returns a promise with the value of that property.
    */
-  winget(id: string, propName: string): Promise<any>;
+  winget(id: string | null, propName: string): Promise<any>;
 
   /**
    * Retrieves multiple properties of the BYOND skin element,
@@ -102,29 +138,46 @@ type ByondType = {
    *
    * Returns a promise with a key-value object containing listed properties.
    */
-  winget(id: string, propNames: string[]): Promise<object>;
+  winget(id: string | null, propNames: string[]): Promise<object>;
 
   /**
-   * Assigns properties to BYOND skin elements.
+   * Assigns properties to BYOND skin elements in bulk.
    */
   winset(props: object): void;
 
   /**
    * Assigns properties to the BYOND skin element.
    */
-  winset(id: string, props: object): void;
+  winset(id: string | null, props: object): void;
 
   /**
    * Sets a property on the BYOND skin element to a certain value.
    */
-  winset(id: string, propName: string, propValue: any): void;
+  winset(id: string | null, propName: string, propValue: any): void;
 
   /**
    * Parses BYOND JSON.
    *
-   * Uses a special encoding to preverse Infinity and NaN.
+   * Uses a special encoding to preserve `Infinity` and `NaN`.
    */
   parseJson(text: string): any;
+
+  /**
+   * Sends a message to `/datum/tgui_window` which hosts this window instance.
+   */
+  sendMessage(type: string, payload?: any): void;
+  sendMessage(message: TguiMessage): void;
+
+  /**
+   * Subscribe to incoming messages that were sent from `/datum/tgui_window`.
+   */
+  subscribe(listener: (type: string, payload: any) => void): void;
+
+  /**
+   * Subscribe to incoming messages *of some specific type*
+   * that were sent from `/datum/tgui_window`.
+   */
+  subscribeTo(type: string, listener: (payload: any) => void): void;
 
   /**
    * Loads a stylesheet into the document.
@@ -144,12 +197,5 @@ type ByondType = {
 const Byond: ByondType;
 
 interface Window {
-  /**
-   * ID of the Byond window this script is running on.
-   * Should be used as a parameter to winget/winset.
-   */
-  __windowId__: string;
-  __updateQueue__: unknown[];
-  update: (msg: unknown) => unknown;
   Byond: ByondType;
 }

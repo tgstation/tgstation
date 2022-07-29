@@ -4,7 +4,7 @@
 	typepath = /datum/round_event/ghost_role/sentient_disease
 	weight = 7
 	max_occurrences = 1
-	min_players = 5
+	min_players = 25
 
 
 /datum/round_event/ghost_role/sentient_disease

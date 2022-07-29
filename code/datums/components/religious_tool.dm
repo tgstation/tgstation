@@ -48,8 +48,6 @@
 		after_sect_select_cb.Invoke()
 	return TRUE
 
-
-
 /**
  * Since all of these involve attackby, we require mega proc. Handles Invocation, Sacrificing, And Selection of Sects.
  */
@@ -112,6 +110,7 @@
 	switch(action)
 		if("sect_select")
 			select_sect(usr, params["path"])
+			return TRUE //they picked a sect lets update so some weird spammy shit doesn't happen
 		if("perform_rite")
 			perform_rite(usr, params["path"])
 
@@ -162,7 +161,10 @@
 	else
 		performing_rite.invoke_effect(user, parent)
 		easy_access_sect.adjust_favor(-performing_rite.favor_cost)
-		QDEL_NULL(performing_rite)
+		if(performing_rite.auto_delete)
+			QDEL_NULL(performing_rite)
+		else
+			performing_rite = null
 
 /**
  * Generates a list of available sects to the user. Intended to support custom-availability sects.

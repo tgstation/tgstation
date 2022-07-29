@@ -52,8 +52,6 @@
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, .proc/try_run_handheld_experiment)
 		RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, .proc/ignored_handheld_experiment_attempt)
-	if(istype(parent, /obj/machinery/doppler_array))
-		RegisterSignal(parent, COMSIG_DOPPLER_ARRAY_EXPLOSION_DETECTED, .proc/try_run_doppler_experiment)
 	if(istype(parent, /obj/machinery/destructive_scanner))
 		RegisterSignal(parent, COMSIG_MACHINERY_DESTRUCTIVE_SCAN, .proc/try_run_destructive_experiment)
 	if(istype(parent, /obj/machinery/computer/operating))
@@ -161,19 +159,6 @@
 	else
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
 		our_scanner.say("The scan did not result in anything.")
-/**
- * Hooks on successful explosions on the doppler array this is attached to
- */
-/datum/component/experiment_handler/proc/try_run_doppler_experiment(datum/source, turf/epicenter, devastation_range,
-	heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range
-)
-	SIGNAL_HANDLER
-	var/atom/movable/our_array = parent
-	if(action_experiment(source, devastation_range, heavy_impact_range, light_impact_range))
-		playsound(src, 'sound/machines/ping.ogg', 25)
-	else
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
-		our_array.say("Insufficient explosion to contribute to current experiment.")
 
 /// Hooks on a successful dissection experiment
 /datum/component/experiment_handler/proc/try_run_dissection_experiment(obj/source, mob/living/target)
@@ -300,20 +285,20 @@
 	selected_experiment = null
 
 /**
- * Attempts to get rnd servers that are on the station z-level, also checks if provided turf is on the station z-level
+ * Get rnd servers that are on the same z-level or the same station as the experiment source
  *
  * Arguments:
- * * turf_to_check_for_servers - The turf to check if its on the station z-level
+ * * turf_source - The turf where the experiment conducted
  */
-/datum/component/experiment_handler/proc/get_available_servers(turf/turf_to_check_for_servers = null)
-	if (!turf_to_check_for_servers)
-		turf_to_check_for_servers = get_turf(parent)
+/datum/component/experiment_handler/proc/get_available_servers(turf/turf_source = null)
+	if (!turf_source)
+		turf_source = get_turf(parent)
 	var/list/local_servers = list()
-	if (!SSmapping.level_trait(turf_to_check_for_servers.z,ZTRAIT_STATION))
-		return local_servers
 	for (var/obj/machinery/rnd/server/server in SSresearch.servers)
-		var/turf/position_of_this_server_machine = get_turf(server)
-		if (position_of_this_server_machine && SSmapping.level_trait(position_of_this_server_machine.z,ZTRAIT_STATION))
+		var/turf/turf_server = get_turf(server)
+		if (!turf_source || !turf_server)
+			break
+		if (turf_source.z == turf_server.z || (SSmapping.level_trait(turf_source.z, ZTRAIT_STATION) && SSmapping.level_trait(turf_server.z, ZTRAIT_STATION)))
 			local_servers += server
 	return local_servers
 

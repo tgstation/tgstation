@@ -23,7 +23,8 @@
 
 	var/list/valentines = list()
 	for(var/mob/living/M in GLOB.player_list)
-		if(!M.stat && M.mind)
+		var/turf/current_turf = get_turf(M.mind.current)
+		if(!M.stat && M.mind && !current_turf.onCentCom())
 			valentines |= M
 
 
@@ -54,8 +55,8 @@
 /obj/item/valentine
 	name = "valentine"
 	desc = "A Valentine's card! Wonder what it says..."
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "sc_Ace of Hearts_syndicate" // shut up
+	icon = 'icons/obj/playing_cards.dmi'
+	icon_state = "sc_Ace of Hearts_syndicate" // shut up // bye felicia 
 	var/message = "A generic message of love or whatever."
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
@@ -67,8 +68,7 @@
 /obj/item/valentine/attackby(obj/item/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/pen) || istype(W, /obj/item/toy/crayon))
-		if(!user.is_literate())
-			to_chat(user, span_notice("You scribble illegibly on [src]!"))
+		if(!user.can_write(W))
 			return
 		var/recipient = tgui_input_text(user, "Who is receiving this valentine?", "To:", max_length = MAX_NAME_LEN)
 		var/sender = tgui_input_text(user, "Who is sending this valentine?", "From:", max_length = MAX_NAME_LEN)

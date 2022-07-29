@@ -3,7 +3,6 @@
 	desc = "A pair of kitty ears. Meow!"
 	icon_state = "kitty"
 	color = "#999999"
-	dynamic_hair_suffix = ""
 
 	dog_fashion = /datum/dog_fashion/head/kitty
 
@@ -25,6 +24,5 @@
 	name = "rabbit ears"
 	desc = "Wearing these makes you look useless, and only good for your sex appeal."
 	icon_state = "bunny"
-	dynamic_hair_suffix = ""
 
 	dog_fashion = /datum/dog_fashion/head/rabbit

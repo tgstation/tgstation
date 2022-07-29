@@ -33,14 +33,21 @@
 
 /obj/effect/mob_spawn/ghost_role/human/fugitive/russian
 	name = "russian pod"
-	prompt_name = "a russian"
-	you_are_text = "Ay blyat. I am a space-russian smuggler!"
-	flavour_text = "We were mid-flight when our cargo was beamed off our ship!"
-	back_story = "russian"
 	desc = "A small sleeper typically used to make long distance travel a bit more bearable."
-	outfit = /datum/outfit/russiancorpse/hunter
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
+	faction = list("russian")
+	prompt_name = "a russian"
+	you_are_text = "Ay blyat. I am a Space-Russian smuggler!"
+	flavour_text = "We were mid-flight when our cargo was beamed off our ship! Must be on station somewhere? \
+		We must \"legally\" reaquire it by any means necessary - is our property, after all!"
+	back_story = "russian"
+	outfit = /datum/outfit/russian_hunter
+
+/obj/effect/mob_spawn/ghost_role/human/fugitive/russian/leader
+	name = "russian commandant pod"
+	you_are_text = "Ay blyat. I am the commandant of a Space-Russian smuggler ring!"
+	outfit = /datum/outfit/russian_hunter/leader
 
 /obj/effect/mob_spawn/ghost_role/human/fugitive/bounty
 	name = "bounty hunter pod"

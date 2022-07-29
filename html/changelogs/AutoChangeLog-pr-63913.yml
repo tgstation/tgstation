@@ -1,4 +1,0 @@
-author: "FernandoJ8"
-delete-after: True
-changes: 
-  - bugfix: "people with only morgue access can now get to the morgue in tramstation"

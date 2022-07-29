@@ -9,12 +9,11 @@
 #define ON_BLUEPRINTS (1<<5)  //Are we visible on the station blueprints at roundstart?
 #define UNIQUE_RENAME (1<<6) // can you customize the description/name of the thing?
 #define USES_TGUI (1<<7) //put on things that use tgui on ui_interact instead of custom/old UI.
-#define FROZEN (1<<8)
-#define BLOCK_Z_OUT_DOWN (1<<9)  // Should this object block z falling from loc?
-#define BLOCK_Z_OUT_UP (1<<10) // Should this object block z uprise from loc?
-#define BLOCK_Z_IN_DOWN (1<<11) // Should this object block z falling from above?
-#define BLOCK_Z_IN_UP (1<<12) // Should this object block z uprise from below?
-#define NO_BUILD (1<<13) // Can we build on this object?
+#define BLOCK_Z_OUT_DOWN (1<<8)  // Should this object block z falling from loc?
+#define BLOCK_Z_OUT_UP (1<<9) // Should this object block z uprise from loc?
+#define BLOCK_Z_IN_DOWN (1<<10) // Should this object block z falling from above?
+#define BLOCK_Z_IN_UP (1<<11) // Should this object block z uprise from below?
+#define NO_BUILD (1<<12) // Can we build on this object?
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 
@@ -39,6 +38,8 @@
 #define NO_PIXEL_RANDOM_DROP (1<<17) //if dropped, it wont have a randomized pixel_x/pixel_y
 ///Can be equipped on digitigrade legs.
 #define IGNORE_DIGITIGRADE (1<<18)
+/// Has contextual screentips when HOVERING OVER OTHER objects
+#define ITEM_HAS_CONTEXTUAL_SCREENTIPS (1 << 19)
 
 // Flags for the clothing_flags var on /obj/item/clothing
 
@@ -60,6 +61,12 @@
 /// Clothes that block speech (i.e the muzzle). Can be applied to any clothing piece.
 #define BLOCKS_SPEECH (1<<16)
 #define PLASMAMAN_HELMET_EXEMPT (1<<17) //prevents from placing on plasmaman helmet
+/// Prevents plasmamen from igniting when wearing this
+#define PLASMAMAN_PREVENT_IGNITION (1<<18)
+/// Usable as casting clothes by wizards (only matters for suits and headwear)
+#define CASTING_CLOTHES (1<<19)
+///Moths can't eat the clothing that has this flag.
+#define INEDIBLE_CLOTHING (1<<20)
 
 /// Flags for the organ_flags var on /obj/item/organ
 
@@ -82,6 +89,8 @@
 
 /// Flags for the gun_flags var for firearms
 #define TOY_FIREARM_OVERLAY (1<<0) // If update_overlay would add some indicator that the gun is a toy, like a plastic cap on a pistol
+/// Currently used to identify valid guns to steal
+#define NOT_A_REAL_GUN (1<<1)
 
 /// Flags for sharpness in obj/item
 #define SHARP_EDGED (1<<0)

@@ -15,6 +15,7 @@
 	desc = "An unfinished covered turret frame."
 	anchored = FALSE
 	density = TRUE
+	use_power = NO_POWER_USE
 	var/build_step = PTURRET_UNSECURED //the current step in the building process
 	var/finish_name = "turret" //the name applied to the product turret
 	var/obj/item/gun/installed_gun = null
@@ -105,7 +106,6 @@
 				to_chat(user, span_notice("You add [I] to the turret."))
 				build_step = PTURRET_GUN_EQUIPPED
 				return
-
 			else if(I.tool_behaviour == TOOL_WRENCH)
 				I.play_tool_sound(src, 100)
 				to_chat(user, span_notice("You remove the turret's metal armor bolts."))

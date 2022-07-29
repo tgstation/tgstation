@@ -14,6 +14,8 @@
 			if(!do_after(user, 5 SECONDS, target = src))
 				balloon_alert(user, "interrupted!")
 				return
+			if(!ai)
+				return
 			intAI = ai
 			intAI.ai_restore_power()//So the AI initially has power.
 			intAI.control_disabled = TRUE
@@ -34,6 +36,9 @@
 			if(!intAI)
 				balloon_alert(user, "no AI in card!")
 				return
+			if(ai)
+				balloon_alert(user, "already has AI!")
+				return
 			if(intAI.deployed_shell) //Recall AI if shelled so it can be checked for a client
 				intAI.disconnect_shell()
 			if(intAI.stat || !intAI.client)
@@ -42,6 +47,8 @@
 			balloon_alert(user, "transferring to suit...")
 			if(!do_after(user, 5 SECONDS, target = src))
 				balloon_alert(user, "interrupted!")
+				return
+			if(ai)
 				return
 			balloon_alert(user, "AI transferred to suit")
 			ai_enter_mod(intAI)
@@ -63,11 +70,11 @@
 #define MOVE_DELAY 2
 #define WEARER_DELAY 1
 #define LONE_DELAY 5
-#define CELL_PER_STEP DEFAULT_CELL_DRAIN * 2.5
+#define CHARGE_PER_STEP DEFAULT_CHARGE_DRAIN * 2.5
 #define AI_FALL_TIME 1 SECONDS
 
 /obj/item/mod/control/relaymove(mob/user, direction)
-	if((!active && wearer) || !cell || cell.charge < CELL_PER_STEP  || user != ai || !COOLDOWN_FINISHED(src, cooldown_mod_move) || (wearer?.pulledby?.grab_state > GRAB_PASSIVE))
+	if((!active && wearer) || get_charge() < CHARGE_PER_STEP  || user != ai || !COOLDOWN_FINISHED(src, cooldown_mod_move) || (wearer?.pulledby?.grab_state > GRAB_PASSIVE))
 		return FALSE
 	var/timemodifier = MOVE_DELAY * (ISDIAGONALDIR(direction) ? SQRT_2 : 1) * (wearer ? WEARER_DELAY : LONE_DELAY)
 	if(wearer && !wearer.Process_Spacemove(direction))
@@ -75,7 +82,7 @@
 	else if(!wearer && (!has_gravity() || !isturf(loc)))
 		return FALSE
 	COOLDOWN_START(src, cooldown_mod_move, movedelay * timemodifier + slowdown_active)
-	cell.charge = max(0, cell.charge - CELL_PER_STEP)
+	subtract_charge(CHARGE_PER_STEP)
 	playsound(src, 'sound/mecha/mechmove01.ogg', 25, TRUE)
 	if(ismovable(wearer?.loc))
 		return wearer.loc.relaymove(wearer, direction)
@@ -88,7 +95,7 @@
 #undef MOVE_DELAY
 #undef WEARER_DELAY
 #undef LONE_DELAY
-#undef CELL_PER_STEP
+#undef CHARGE_PER_STEP
 
 /obj/item/mod/control/proc/ai_fall()
 	if(!wearer)

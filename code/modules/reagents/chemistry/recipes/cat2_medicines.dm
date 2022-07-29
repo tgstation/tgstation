@@ -200,7 +200,10 @@
 /datum/chemical_reaction/medicine/convermol/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
 	. = ..()
 	overheated(holder, equilibrium, impure = TRUE)
-	clear_reactants(holder, step_volume_added*2)
+	if(holder.has_reagent(/datum/reagent/oxygen))
+		clear_reactants(holder, step_volume_added*2)
+	else
+		clear_reactants(holder)
 
 
 /datum/chemical_reaction/medicine/tirimol

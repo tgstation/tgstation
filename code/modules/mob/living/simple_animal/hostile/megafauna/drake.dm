@@ -93,8 +93,8 @@
 	meteors.Grant(src)
 	mass_fire.Grant(src)
 	lava_swoop.Grant(src)
-	RegisterSignal(src, COMSIG_ABILITY_STARTED, .proc/start_attack)
-	RegisterSignal(src, COMSIG_ABILITY_FINISHED, .proc/finished_attack)
+	RegisterSignal(src, COMSIG_MOB_ABILITY_STARTED, .proc/start_attack)
+	RegisterSignal(src, COMSIG_MOB_ABILITY_FINISHED, .proc/finished_attack)
 	RegisterSignal(src, COMSIG_SWOOP_INVULNERABILITY_STARTED, .proc/swoop_invulnerability_started)
 	RegisterSignal(src, COMSIG_LAVA_ARENA_FAILED, .proc/on_arena_fail)
 
@@ -103,6 +103,16 @@
 	QDEL_NULL(meteors)
 	QDEL_NULL(mass_fire)
 	QDEL_NULL(lava_swoop)
+	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/dragon/revive(full_heal = FALSE, admin_revive = FALSE)
+	. = ..()
+	if(!.)
+		return
+	pull_force = MOVE_FORCE_OVERPOWERING
+
+/mob/living/simple_animal/hostile/megafauna/dragon/death(gibbed)
+	move_force = MOVE_FORCE_DEFAULT
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/OpenFire()
@@ -115,23 +125,23 @@
 	if(prob(15 + anger_modifier))
 		if(DRAKE_ENRAGED)
 			// Lava Arena
-			lava_swoop.Trigger(target)
+			lava_swoop.Trigger(target = target)
 			return
 		// Lava Pools
-		if(lava_swoop.Trigger(target))
+		if(lava_swoop.Trigger(target = target))
 			SLEEP_CHECK_DEATH(0, src)
 			fire_cone.StartCooldown(0)
-			fire_cone.Trigger(target)
+			fire_cone.Trigger(target = target)
 			meteors.StartCooldown(0)
 			INVOKE_ASYNC(meteors, /datum/action/proc/Trigger, target)
 			return
 	else if(prob(10+anger_modifier) && DRAKE_ENRAGED)
-		mass_fire.Trigger(target)
+		mass_fire.Trigger(target = target)
 		return
-	if(fire_cone.Trigger(target))
+	if(fire_cone.Trigger(target = target))
 		if(prob(50))
 			meteors.StartCooldown(0)
-			meteors.Trigger(target)
+			meteors.Trigger(target = target)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/start_attack(mob/living/owner, datum/action/cooldown/activated)
 	SIGNAL_HANDLER
@@ -233,6 +243,7 @@
 /obj/effect/temp_visual/lava_warning
 	icon_state = "lavastaff_warn"
 	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
 	light_range = 2
 	duration = 13
 	var/mob/owner
@@ -291,6 +302,7 @@
 	name = "fireball"
 	desc = "Get out of the way!"
 	layer = FLY_LAYER
+	plane = ABOVE_GAME_PLANE
 	randomdir = FALSE
 	duration = 9
 	pixel_z = 270
@@ -303,6 +315,7 @@
 	icon = 'icons/mob/actions/actions_items.dmi'
 	icon_state = "sniper_zoom"
 	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
 	light_range = 2
 	duration = 9
 
@@ -318,7 +331,7 @@
 	if(ismineralturf(T))
 		var/turf/closed/mineral/M = T
 		M.gets_drilled()
-	playsound(T, "explosion", 80, TRUE)
+	playsound(T, SFX_EXPLOSION, 80, TRUE)
 	new /obj/effect/hotspot(T)
 	T.hotspot_expose(DRAKE_FIRE_TEMP, DRAKE_FIRE_EXPOSURE, 1)
 	for(var/mob/living/L in T.contents)

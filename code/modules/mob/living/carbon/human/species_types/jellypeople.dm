@@ -1,21 +1,22 @@
 /datum/species/jelly
 	// Entirely alien beings that seem to be made entirely out of gel. They have three eyes and a skeleton visible within them.
-	name = "Jellyperson"
+	name = "\improper Jellyperson"
+	plural_form = "Jellypeople"
 	id = SPECIES_JELLYPERSON
-	default_color = "00FF90"
 	say_mod = "chirps"
 	species_traits = list(MUTCOLORS,EYECOLOR,NOBLOOD)
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
+		TRAIT_LITERATE,
 		TRAIT_TOXINLOVER,
 	)
-	mutantlungs = /obj/item/organ/lungs/slime
+	mutantlungs = /obj/item/organ/internal/lungs/slime
 	meat = /obj/item/food/meat/slab/human/mutant/slime
 	exotic_blood = /datum/reagent/toxin/slimejelly
 	damage_overlay_type = ""
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
-	liked_food = MEAT
+	liked_food = MEAT | BUGS
 	toxic_food = NONE
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
@@ -26,16 +27,27 @@
 	species_language_holder = /datum/language_holder/jelly
 	ass_image = 'icons/ass/assslime.png'
 
-/datum/species/jelly/on_species_loss(mob/living/carbon/C)
+	bodypart_overrides = list(
+		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/jelly,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/jelly,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/jelly,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/jelly,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/jelly,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/jelly,
+	)
+
+/datum/species/jelly/on_species_loss(mob/living/carbon/old_jellyperson)
 	if(regenerate_limbs)
-		regenerate_limbs.Remove(C)
+		regenerate_limbs.Remove(old_jellyperson)
+	old_jellyperson.RemoveElement(/datum/element/soft_landing)
 	..()
 
-/datum/species/jelly/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+/datum/species/jelly/on_species_gain(mob/living/carbon/new_jellyperson, datum/species/old_species)
 	..()
-	if(ishuman(C))
+	if(ishuman(new_jellyperson))
 		regenerate_limbs = new
-		regenerate_limbs.Grant(C)
+		regenerate_limbs.Grant(new_jellyperson)
+	new_jellyperson.AddElement(/datum/element/soft_landing)
 
 /datum/species/jelly/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
 	if(H.stat == DEAD) //can't farm slime jelly from a dead slime/jelly person indefinitely
@@ -59,7 +71,7 @@
 		Cannibalize_Body(H)
 
 	if(regenerate_limbs)
-		regenerate_limbs.UpdateButtonIcon()
+		regenerate_limbs.UpdateButtons()
 
 /datum/species/jelly/proc/Cannibalize_Body(mob/living/carbon/human/H)
 	var/list/limbs_to_consume = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG) - H.get_missing_limbs()
@@ -74,6 +86,21 @@
 	to_chat(H, span_userdanger("Your [consumed_limb] is drawn back into your body, unable to maintain its shape!"))
 	qdel(consumed_limb)
 	H.blood_volume += 20
+
+// Slimes have both NOBLOOD and an exotic bloodtype set, so they need to be handled uniquely here.
+// They may not be roundstart but in the unlikely event they become one might as well not leave a glaring issue open.
+/datum/species/jelly/create_pref_blood_perks()
+	var/list/to_add = list()
+
+	to_add += list(list(
+		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+		SPECIES_PERK_ICON = "tint",
+		SPECIES_PERK_NAME = "Jelly Blood",
+		SPECIES_PERK_DESC = "[plural_form] don't have blood, but instead have toxic [initial(exotic_blood.name)]! \
+			Jelly is extremely important, as losing it will cause you to lose limbs. Having low jelly will make medical treatment very difficult.",
+	))
+
+	return to_add
 
 /datum/action/innate/regenerate_limbs
 	name = "Regenerate Limbs"
@@ -120,9 +147,9 @@
 //Slime people are able to split like slimes, retaining a single mind that can swap between bodies at will, even after death.
 
 /datum/species/jelly/slime
-	name = "Slimeperson"
+	name = "\improper Slimeperson"
+	plural_form = "Slimepeople"
 	id = SPECIES_SLIMEPERSON
-	default_color = "00FFFF"
 	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
 	hair_color = "mutcolor"
 	hair_alpha = 150
@@ -130,6 +157,15 @@
 	var/datum/action/innate/split_body/slime_split
 	var/list/mob/living/carbon/bodies
 	var/datum/action/innate/swap_body/swap_body
+
+	bodypart_overrides = list(
+		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/slime,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/slime,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/slime,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/slime,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/slime,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/slime,
+	)
 
 /datum/species/jelly/slime/on_species_loss(mob/living/carbon/C)
 	if(slime_split)
@@ -304,7 +340,7 @@
 		switch(body.stat)
 			if(CONSCIOUS)
 				stat = "Conscious"
-			if(UNCONSCIOUS)
+			if(SOFT_CRIT to HARD_CRIT) // Also includes UNCONSCIOUS
 				stat = "Unconscious"
 			if(DEAD)
 				stat = "Dead"
@@ -406,7 +442,17 @@
 
 /datum/species/jelly/luminescent
 	name = "Luminescent"
+	plural_form = null
 	id = SPECIES_LUMINESCENT
+	examine_limb_id = SPECIES_LUMINESCENT
+	bodypart_overrides = list(
+		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/luminescent,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/luminescent,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/luminescent,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/luminescent,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/luminescent,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/luminescent,
+	)
 	var/glow_intensity = LUMINESCENT_DEFAULT_GLOW
 	var/obj/effect/dummy/luminescent_glow/glow
 	var/obj/item/slime_extract/current_extract
@@ -414,6 +460,7 @@
 	var/datum/action/innate/use_extract/extract_minor
 	var/datum/action/innate/use_extract/major/extract_major
 	var/extract_cooldown = 0
+
 
 //Species datums don't normally implement destroy, but JELLIES SUCK ASS OUT OF A STEEL STRAW
 /datum/species/jelly/luminescent/Destroy(force, ...)
@@ -448,9 +495,9 @@
 
 /datum/species/jelly/luminescent/proc/update_slime_actions()
 	integrate_extract.update_name()
-	integrate_extract.UpdateButtonIcon()
-	extract_minor.UpdateButtonIcon()
-	extract_major.UpdateButtonIcon()
+	integrate_extract.UpdateButtons()
+	extract_minor.UpdateButtons()
+	extract_major.UpdateButtons()
 
 /datum/species/jelly/luminescent/proc/update_glow(mob/living/carbon/C, intensity)
 	if(intensity)
@@ -489,7 +536,7 @@
 		name = "Eject Extract"
 		desc = "Eject your current slime extract."
 
-/datum/action/innate/integrate_extract/UpdateButtonIcon(status_only, force)
+/datum/action/innate/integrate_extract/UpdateButtons(status_only, force)
 	var/datum/species/jelly/luminescent/species = target
 	if(!species || !species.current_extract)
 		button_icon_state = "slimeconsume"
@@ -587,127 +634,32 @@
 //Stargazers are the telepathic branch of jellypeople, able to project psychic messages and to link minds with willing participants.
 
 /datum/species/jelly/stargazer
-	name = "Stargazer"
+	name = "\improper Stargazer"
+	plural_form = null
 	id = SPECIES_STARGAZER
-	var/datum/action/innate/project_thought/project_thought
-	var/datum/action/innate/link_minds/link_minds
-	var/datum/action/innate/linked_speech/master_speech
-	var/list/mob/living/linked_mobs = list()
-	var/datum/weakref/slimelink_owner
-	var/current_link_id = 0
+	examine_limb_id = SPECIES_JELLYPERSON
+	/// Special "project thought" telepathy action for stargazers.
+	var/datum/action/innate/project_thought/project_action
+
+/datum/species/jelly/stargazer/on_species_gain(mob/living/carbon/grant_to, datum/species/old_species)
+	. = ..()
+	project_action = new(src)
+	project_action.Grant(grant_to)
+
+	grant_to.AddComponent(/datum/component/mind_linker, \
+		network_name = "Slime Link", \
+		linker_action_path = /datum/action/innate/link_minds, \
+		signals_which_destroy_us = list(COMSIG_SPECIES_LOSS), \
+	)
 
 //Species datums don't normally implement destroy, but JELLIES SUCK ASS OUT OF A STEEL STRAW
 /datum/species/jelly/stargazer/Destroy()
-	for(var/mob/living/link_to_clear as anything in linked_mobs)
-		unlink_mob(link_to_clear)
-	linked_mobs.Cut()
-	QDEL_NULL(project_thought)
-	QDEL_NULL(link_minds)
-	QDEL_NULL(master_speech)
-	slimelink_owner = null
+	QDEL_NULL(project_action)
 	return ..()
 
-/datum/species/jelly/stargazer/on_species_loss(mob/living/carbon/C)
-	..()
-	for(var/mob/living/link_to_clear as anything in linked_mobs)
-		unlink_mob(link_to_clear)
-	if(project_thought)
-		QDEL_NULL(project_thought)
-	if(link_minds)
-		QDEL_NULL(link_minds)
-	if(master_speech)
-		QDEL_NULL(master_speech)
-	slimelink_owner = null
-
-/datum/species/jelly/stargazer/spec_death(gibbed, mob/living/carbon/human/H)
-	..()
-	for(var/mob/living/link_to_clear as anything in linked_mobs)
-		unlink_mob(link_to_clear)
-
-/datum/species/jelly/stargazer/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	..()
-	project_thought = new(src)
-	project_thought.Grant(C)
-	link_minds = new(src)
-	link_minds.Grant(C)
-	master_speech = new(src)
-	master_speech.Grant(C)
-	slimelink_owner = WEAKREF(C)
-
-/**
- * Adds a living, not mind/psych shielded mob to the linked_mobs list and gives him
- * the ability to chat with other mobs in the same lists.
- * Don't call this proc on the owner; stat, mindshield, antimagic checks and superfluous comsigs
- * will only lead to bugs in that case. He has his own ability.
- */
-/datum/species/jelly/stargazer/proc/link_mob(mob/living/mob_linked)
-	if(QDELETED(mob_linked) || mob_linked.stat == DEAD)
-		return FALSE
-	if(HAS_TRAIT(mob_linked, TRAIT_MINDSHIELD)) //mindshield implant, no dice
-		return FALSE
-	if(mob_linked.anti_magic_check(FALSE, FALSE, TRUE, 0))
-		return FALSE
-	if(mob_linked in linked_mobs)
-		return FALSE
-	var/mob/living/carbon/human/owner = slimelink_owner.resolve()
-	if(!owner)
-		return FALSE
-	to_chat(mob_linked, span_notice("You are now connected to [owner.real_name]'s Slime Link."))
-	var/datum/action/innate/linked_speech/action = new(src)
-	action.Grant(mob_linked)
-	linked_mobs[mob_linked] = action
-	RegisterSignal(mob_linked, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING, SIGNAL_ADDTRAIT(TRAIT_MINDSHIELD)), .proc/unlink_mob)
-	return TRUE
-
-/datum/species/jelly/stargazer/proc/unlink_mob(mob/living/mob_linked)
-	SIGNAL_HANDLER
-	if(!linked_mobs.Find(mob_linked))
-		return
-	UnregisterSignal(mob_linked, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING, SIGNAL_ADDTRAIT(TRAIT_MINDSHIELD)))
-	var/datum/action/innate/linked_speech/action = linked_mobs[mob_linked]
-	var/mob/living/carbon/human/owner = slimelink_owner.resolve()
-	if(owner)
-		to_chat(mob_linked, span_notice("You are no longer connected to [owner.real_name]'s Slime Link."))
-	linked_mobs -= mob_linked
-	qdel(action)
-
-/datum/action/innate/linked_speech
-	name = "Slimelink"
-	desc = "Send a psychic message to everyone connected to your slime link."
-	button_icon_state = "link_speech"
-	icon_icon = 'icons/mob/actions/actions_slime.dmi'
-	background_icon_state = "bg_alien"
-
-/datum/action/innate/linked_speech/Activate()
-	var/mob/living/carbon/human/human_user = owner
-	if(human_user.stat == DEAD)
-		return
-
-	var/datum/species/jelly/stargazer/master_species = target
-	var/mob/living/carbon/human/star_owner = master_species.slimelink_owner.resolve()
-
-	if(star_owner != human_user && !(human_user in master_species.linked_mobs))
-		to_chat(human_user, span_warning("The link seems to have been severed..."))
-		return
-
-	var/message = sanitize(tgui_input_text(human_user, "Enter a message", "Slime Telepathy"))
-
-	if(!message)
-		return
-
-	if(QDELETED(master_species) || (star_owner != human_user && !(human_user in master_species.linked_mobs)))
-		to_chat(human_user, span_warning("The link seems to have been severed..."))
-		return
-
-	var/msg = "<i><font color=#008CA2>\[[star_owner.real_name]'s Slime Link\] <b>[human_user]:</b> [message]</font></i>"
-	log_directed_talk(human_user, star_owner, msg, LOG_SAY, "slime link")
-	to_chat(star_owner, msg)
-	for(var/mob/living/recipient as anything in master_species.linked_mobs)
-		to_chat(recipient, msg)
-
-	for(var/mob/recipient as anything in GLOB.dead_mob_list)
-		var/link = FOLLOW_LINK(recipient, human_user)
-		to_chat(recipient, "[link] [msg]")
+/datum/species/jelly/stargazer/on_species_loss(mob/living/carbon/remove_from)
+	QDEL_NULL(project_action)
+	return ..()
 
 /datum/action/innate/project_thought
 	name = "Send Thought"
@@ -734,8 +686,8 @@
 	var/msg = tgui_input_text(telepath, title = "Telepathy")
 	if(isnull(msg))
 		return
-	if(recipient.anti_magic_check(FALSE, FALSE, TRUE, 0))
-		to_chat(telepath, span_notice("As you try to communicate with [recipient], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled."))
+	if(recipient.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
+		to_chat(telepath, span_warning("As you reach into [recipient]'s mind, you are stopped by a mental blockage. It seems you've been foiled."))
 		return
 	log_directed_talk(telepath, recipient, msg, LOG_SAY, "slime telepathy")
 	to_chat(recipient, "[span_notice("You hear an alien voice in your head... ")]<font color=#008CA2>[msg]</font>")
@@ -753,26 +705,69 @@
 	button_icon_state = "mindlink"
 	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
+	/// The species required to use this ability. Typepath.
+	var/req_species = /datum/species/jelly/stargazer
+	/// Whether we're currently linking to someone.
+	var/currently_linking = FALSE
+
+/datum/action/innate/link_minds/New(Target)
+	. = ..()
+	if(!istype(Target, /datum/component/mind_linker))
+		stack_trace("[name] ([type]) was instantiated on a non-mind_linker target, this doesn't work.")
+		qdel(src)
+
+/datum/action/innate/link_minds/IsAvailable()
+	. = ..()
+	if(!.)
+		return
+	if(!ishuman(owner) || !is_species(owner, req_species))
+		return FALSE
+	if(currently_linking)
+		return FALSE
+
+	return TRUE
 
 /datum/action/innate/link_minds/Activate()
-	var/mob/living/carbon/human/human_user = owner
-	if(!is_species(human_user, /datum/species/jelly/stargazer))
+	if(!isliving(owner.pulling) || owner.grab_state < GRAB_AGGRESSIVE)
+		to_chat(owner, span_warning("You need to aggressively grab someone to link minds!"))
 		return
 
-	if(!human_user.pulling || !isliving(human_user.pulling) || human_user.grab_state < GRAB_AGGRESSIVE)
-		to_chat(human_user, span_warning("You need to aggressively grab someone to link minds!"))
+	var/mob/living/living_target = owner.pulling
+	if(living_target.stat == DEAD)
+		to_chat(owner, span_warning("They're dead!"))
 		return
 
-	var/mob/living/living_target = human_user.pulling
-	var/datum/species/jelly/stargazer/user_species = human_user.dna.species
-
-	to_chat(human_user, span_notice("You begin linking [living_target]'s mind to yours..."))
+	to_chat(owner, span_notice("You begin linking [living_target]'s mind to yours..."))
 	to_chat(living_target, span_warning("You feel a foreign presence within your mind..."))
-	if(do_after(human_user, 60, target = living_target))
-		if(human_user.pulling != living_target || human_user.grab_state < GRAB_AGGRESSIVE)
-			return
-		if(user_species?.link_mob(living_target))
-			to_chat(human_user, span_notice("You connect [living_target]'s mind to your slime link!"))
-		else
-			to_chat(human_user, span_warning("You can't seem to link [living_target]'s mind..."))
-			to_chat(living_target, span_warning("The foreign presence leaves your mind."))
+	currently_linking = TRUE
+
+	if(!do_after(owner, 6 SECONDS, target = living_target, extra_checks = CALLBACK(src, .proc/while_link_callback, living_target)))
+		to_chat(owner, span_warning("You can't seem to link [living_target]'s mind."))
+		to_chat(living_target, span_warning("The foreign presence leaves your mind."))
+		currently_linking = FALSE
+		return
+
+	currently_linking = FALSE
+	if(QDELETED(src) || QDELETED(owner) || QDELETED(living_target))
+		return
+
+	var/datum/component/mind_linker/linker = target
+	if(!linker.link_mob(living_target))
+		to_chat(owner, span_warning("You can't seem to link [living_target]'s mind."))
+		to_chat(living_target, span_warning("The foreign presence leaves your mind."))
+
+
+/// Callback ran during the do_after of Activate() to see if we can keep linking with someone.
+/datum/action/innate/link_minds/proc/while_link_callback(mob/living/linkee)
+	if(!is_species(owner, req_species))
+		return FALSE
+	if(!owner.pulling)
+		return FALSE
+	if(owner.pulling != linkee)
+		return FALSE
+	if(owner.grab_state < GRAB_AGGRESSIVE)
+		return FALSE
+	if(linkee.stat == DEAD)
+		return FALSE
+
+	return TRUE

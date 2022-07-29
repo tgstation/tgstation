@@ -46,18 +46,18 @@
 	if(!iscarbon(user) || user.usable_hands < 2)
 		return FALSE
 	return ..()
-	
+
 /datum/emote/living/carbon/circle
 	key = "circle"
 	key_third_person = "circles"
 	hands_use_check = TRUE
-	
+
 /datum/emote/living/carbon/circle/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	if(!length(user.get_empty_held_indexes()))
 		to_chat(user, span_warning("You don't have any free hands to make a circle with."))
 		return
-	var/obj/item/circlegame/N = new(user)
+	var/obj/item/hand_item/circlegame/N = new(user)
 	if(user.put_in_hands(N))
 		to_chat(user, span_notice("You make a circle with your hand."))
 
@@ -67,7 +67,7 @@
 	message = "moans!"
 	message_mime = "appears to moan!"
 	emote_type = EMOTE_AUDIBLE
-	
+
 /datum/emote/living/carbon/noogie
 	key = "noogie"
 	key_third_person = "noogies"
@@ -77,7 +77,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/obj/item/noogie/noogie = new(user)
+	var/obj/item/hand_item/noogie/noogie = new(user)
 	if(user.put_in_hands(noogie))
 		to_chat(user, span_notice("You ready your noogie'ing hand."))
 	else
@@ -104,7 +104,7 @@
 	message_param = "signs the number %t."
 	mob_type_allowed_typecache = list(/mob/living/carbon/alien)
 	hands_use_check = TRUE
-	
+
 /datum/emote/living/carbon/sign/select_param(mob/user, params)
 	. = ..()
 	if(!isnum(text2num(params)))
@@ -116,18 +116,18 @@
 	message_param = "raises %t fingers."
 	mob_type_allowed_typecache = list(/mob/living/carbon/human)
 	hands_use_check = TRUE
-	
+
 /datum/emote/living/carbon/slap
 	key = "slap"
 	key_third_person = "slaps"
 	hands_use_check = TRUE
 	cooldown = 3 SECONDS // to prevent endless table slamming
-	
+
 /datum/emote/living/carbon/slap/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	if(!.)
 		return
-	var/obj/item/slapper/N = new(user)
+	var/obj/item/hand_item/slapper/N = new(user)
 	if(user.put_in_hands(N))
 		to_chat(user, span_notice("You ready your slapping hand."))
 	else

@@ -9,6 +9,9 @@
 
 /obj/item/grenade/hypnotic/detonate(mob/living/lanced_by)
 	. = ..()
+	if(!.)
+		return
+
 	update_mob()
 	var/flashbang_turf = get_turf(src)
 	if(!flashbang_turf)
@@ -62,6 +65,6 @@
 				target.apply_status_effect(/datum/status_effect/trance, 100, TRUE)
 			else
 				to_chat(target, span_hypnophrase("The light is so pretty..."))
-				target.add_confusion(min(target.get_confusion() + 10, 20))
-				target.dizziness += min(target.dizziness + 10, 20)
 				target.adjust_drowsyness(min(target.drowsyness + 10, 20))
+				target.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/confusion, max_duration = 20 SECONDS)
+				target.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/dizziness, max_duration = 40 SECONDS)

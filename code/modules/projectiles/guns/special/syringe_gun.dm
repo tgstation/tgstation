@@ -23,6 +23,7 @@
 	var/list/syringes = list()
 	var/max_syringes = 1 ///The number of syringes it can store.
 	var/has_syringe_overlay = TRUE ///If it has an overlay for inserted syringes. If true, the overlay is determined by the number of syringes inserted into it.
+	gun_flags = NOT_A_REAL_GUN
 
 /obj/item/gun/syringe/Initialize(mapload)
 	. = ..()
@@ -186,6 +187,7 @@
 	base_pixel_x = 0
 	pixel_x = 0
 	force = 4
+	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 
 /obj/item/gun/syringe/blowgun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	visible_message(span_danger("[user] starts aiming with a blowgun!"))

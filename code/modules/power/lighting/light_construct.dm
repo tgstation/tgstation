@@ -5,6 +5,7 @@
 	icon_state = "tube-construct-stage1"
 	anchored = TRUE
 	layer = WALL_OBJ_LAYER
+	plane = GAME_PLANE_UPPER
 	max_integrity = 200
 	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 80, ACID = 50)
 
@@ -142,7 +143,7 @@
 						new_light = new /obj/machinery/light/small/built(loc)
 				new_light.setDir(dir)
 				transfer_fingerprints_to(new_light)
-				if(cell)
+				if(!QDELETED(cell))
 					new_light.cell = cell
 					cell.forceMove(new_light)
 					cell = null

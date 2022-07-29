@@ -14,7 +14,7 @@
 	icon_state = "health"
 	module_type = MODULE_ACTIVE
 	complexity = 2
-	use_power_cost = DEFAULT_CELL_DRAIN
+	use_power_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/health_analyzer)
 	cooldown_time = 0.5 SECONDS
 	tgui_id = "health_analyzer"
@@ -25,18 +25,18 @@
 
 /obj/item/mod/module/health_analyzer/add_ui_data()
 	. = ..()
-	.["userhealth"] = mod.wearer ? mod.wearer.health : 0
-	.["usermaxhealth"] = mod.wearer ? mod.wearer.getMaxHealth() : 0
-	.["userbrute"] = mod.wearer ? mod.wearer.getBruteLoss() : 0
-	.["userburn"] = mod.wearer ? mod.wearer.getFireLoss() : 0
-	.["usertoxin"] = mod.wearer ? mod.wearer.getToxLoss() : 0
-	.["useroxy"] = mod.wearer ? mod.wearer.getOxyLoss() : 0
+	.["userhealth"] = mod.wearer?.health || 0
+	.["usermaxhealth"] = mod.wearer?.getMaxHealth() || 0
+	.["userbrute"] = mod.wearer?.getBruteLoss() || 0
+	.["userburn"] = mod.wearer?.getFireLoss() || 0
+	.["usertoxin"] = mod.wearer?.getToxLoss() || 0
+	.["useroxy"] = mod.wearer?.getOxyLoss() || 0
 
 /obj/item/mod/module/health_analyzer/on_select_use(atom/target)
 	. = ..()
 	if(!.)
 		return
-	if(!isliving(target))
+	if(!isliving(target) || !mod.wearer.can_read(src))
 		return
 	switch(mode)
 		if(HEALTH_SCAN)
@@ -67,13 +67,13 @@
 		or simply for fun. However, Nanotrasen has locked the module's ability to assist in hand-to-hand combat."
 	icon_state = "carry"
 	complexity = 1
-	idle_power_cost = DEFAULT_CELL_DRAIN * 0.3
+	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/quick_carry, /obj/item/mod/module/constructor)
 
 /obj/item/mod/module/quick_carry/on_suit_activation()
 	ADD_TRAIT(mod.wearer, TRAIT_QUICK_CARRY, MOD_TRAIT)
 
-/obj/item/mod/module/quick_carry/on_suit_deactivation()
+/obj/item/mod/module/quick_carry/on_suit_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_QUICK_CARRY, MOD_TRAIT)
 
 /obj/item/mod/module/quick_carry/advanced
@@ -85,7 +85,7 @@
 	ADD_TRAIT(mod.wearer, TRAIT_QUICKER_CARRY, MOD_TRAIT)
 	ADD_TRAIT(mod.wearer, TRAIT_FASTMED, MOD_TRAIT)
 
-/obj/item/mod/module/quick_carry/on_suit_deactivation()
+/obj/item/mod/module/quick_carry/on_suit_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_QUICKER_CARRY, MOD_TRAIT)
 	REMOVE_TRAIT(mod.wearer, TRAIT_FASTMED, MOD_TRAIT)
 
@@ -98,7 +98,7 @@
 	icon_state = "injector"
 	module_type = MODULE_ACTIVE
 	complexity = 1
-	active_power_cost = DEFAULT_CELL_DRAIN * 0.3
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	device = /obj/item/reagent_containers/syringe/mod
 	incompatible_modules = list(/obj/item/mod/module/injector)
 	cooldown_time = 0.5 SECONDS
@@ -125,10 +125,12 @@
 	icon_state = "organ_thrower"
 	module_type = MODULE_ACTIVE
 	complexity = 2
-	use_power_cost = DEFAULT_CELL_DRAIN
+	use_power_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/organ_thrower, /obj/item/mod/module/microwave_beam)
 	cooldown_time = 0.5 SECONDS
+	/// How many organs the module can hold.
 	var/max_organs = 5
+	/// A list of all our organs.
 	var/organ_list = list()
 
 /obj/item/mod/module/organ_thrower/on_select_use(atom/target)
@@ -165,6 +167,7 @@
 	nodamage = TRUE
 	hitsound = 'sound/effects/attackblob.ogg'
 	hitsound_wall = 'sound/effects/attackblob.ogg'
+	/// A reference to the organ we "are".
 	var/obj/item/organ/organ
 
 /obj/projectile/organ/Initialize(mapload, obj/item/stored_organ)

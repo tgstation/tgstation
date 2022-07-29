@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes: 
+  - rscadd: "Urban legend says that people have been hiding sharp glass behind posters to hurt anyone who tries to remove them. Who would do that? Make sure you're wearing gloves when pulling down posters..."
+  - rscadd: "Adds two new traitor objectives to upset the crew by placing syndicate posters or drawing the syndicate logo."

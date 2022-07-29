@@ -22,16 +22,16 @@
 	///Max attemps to make
 	var/max_attempts = 3
 
-
 /datum/ai_behavior/item_move_close_and_attack/setup(datum/ai_controller/controller, target_key, throw_count_key)
 	. = ..()
-	controller.current_movement_target = controller.blackboard[target_key]
-
+	var/datum/weakref/target_ref = controller.blackboard[target_key]
+	controller.current_movement_target = target_ref?.resolve()
 
 /datum/ai_behavior/item_move_close_and_attack/perform(delta_time, datum/ai_controller/controller, target_key, throw_count_key)
 	. = ..()
 	var/obj/item/item_pawn = controller.pawn
-	var/atom/throw_target = controller.blackboard[target_key]
+	var/datum/weakref/target_ref = controller.blackboard[target_key]
+	var/atom/throw_target = target_ref?.resolve()
 
 	item_pawn.visible_message(span_warning("[item_pawn] hurls towards [throw_target]!"))
 	item_pawn.throw_at(throw_target, rand(4,5), 9)
@@ -48,12 +48,13 @@
 	controller.blackboard -= target_key
 	controller.blackboard[throw_count_key] = 0
 
-/datum/ai_behavior/item_move_close_and_attack/haunted
+/datum/ai_behavior/item_move_close_and_attack/ghostly
 	attack_sound = 'sound/items/haunted/ghostitemattack.ogg'
 	max_attempts = 4
 
-/datum/ai_behavior/item_move_close_and_attack/haunted/finish_action(datum/ai_controller/controller, succeeded, target_key, throw_count_key)
-	var/atom/throw_target = controller.blackboard[target_key]
-	var/list/hauntee_list = controller.blackboard[BB_TO_HAUNT_LIST]
-	hauntee_list[throw_target]--
+/datum/ai_behavior/item_move_close_and_attack/ghostly/haunted
+
+/datum/ai_behavior/item_move_close_and_attack/ghostly/haunted/finish_action(datum/ai_controller/controller, succeeded, target_key, throw_count_key)
+	var/datum/weakref/target_ref = controller.blackboard[target_key]
+	controller.blackboard[BB_TO_HAUNT_LIST][target_ref]--
 	return ..()

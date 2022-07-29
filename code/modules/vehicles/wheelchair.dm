@@ -14,26 +14,30 @@
 	var/image/wheels_overlay
 	///Determines the typepath of what the object folds into
 	var/foldabletype = /obj/item/wheelchair
+	///Bell attached to the wheelchair, if we have one.
+	var/obj/structure/desk_bell/bell_attached
+
+/obj/vehicle/ridden/wheelchair/generate_actions()
+	. = ..()
+	if(!bell_attached)
+		return
+	initialize_controller_action_type(/datum/action/vehicle/ridden/wheelchair/bell, VEHICLE_CONTROL_DRIVE)
 
 /obj/vehicle/ridden/wheelchair/Initialize(mapload)
 	. = ..()
 	make_ridable()
-	wheels_overlay = image(icon, overlay_icon, FLY_LAYER)
+	wheels_overlay = image(icon, overlay_icon, ABOVE_MOB_LAYER)
 	ADD_TRAIT(src, TRAIT_NO_IMMOBILIZE, INNATE_TRAIT)
-
-/obj/vehicle/ridden/wheelchair/ComponentInitialize() //Since it's technically a chair I want it to have chair properties
-	. = ..()
-	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE, CALLBACK(src, .proc/can_user_rotate),CALLBACK(src, .proc/can_be_rotated),null)
+	AddComponent(/datum/component/simple_rotation) //Since it's technically a chair I want it to have chair properties
 
 /obj/vehicle/ridden/wheelchair/atom_destruction(damage_flag)
 	new /obj/item/stack/rods(drop_location(), 1)
 	new /obj/item/stack/sheet/iron(drop_location(), 1)
 	return ..()
 
-/obj/vehicle/ridden/wheelchair/Moved()
+/obj/vehicle/ridden/wheelchair/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	playsound(src, 'sound/effects/roll.ogg', 75, TRUE)
-
 
 /obj/vehicle/ridden/wheelchair/post_buckle_mob(mob/living/user)
 	. = ..()
@@ -53,25 +57,16 @@
 		qdel(src)
 	return TRUE
 
+/obj/vehicle/ridden/wheelchair/AltClick(mob/user)
+	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
+
 /obj/vehicle/ridden/wheelchair/update_overlays()
 	. = ..()
 	if(has_buckled_mobs())
 		. += wheels_overlay
+	if(bell_attached)
+		. += "wheelchair_bell"
 
-
-///used for simple rotation component checks
-/obj/vehicle/ridden/wheelchair/proc/can_be_rotated(mob/living/user)
-	return TRUE
-
-///used in simple rotation component checks as to whether a user can rotate this chair
-/obj/vehicle/ridden/wheelchair/proc/can_user_rotate(mob/living/user)
-	var/mob/living/L = user
-	if(istype(L))
-		if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
-			return FALSE
-	if(isobserver(user) && CONFIG_GET(flag/ghost_interaction))
-		return TRUE
-	return FALSE
 
 /// I assign the ridable element in this so i don't have to fuss with hand wheelchairs and motor wheelchairs having different subtypes
 /obj/vehicle/ridden/wheelchair/proc/make_ridable()
@@ -79,7 +74,7 @@
 
 /obj/vehicle/ridden/wheelchair/gold
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS
-	desc = "Damn, he's been through a lot."
+	desc = "Damn, must've been through a lot."
 	icon_state = "gold_wheelchair"
 	overlay_icon = "gold_wheelchair_overlay"
 	max_integrity = 200
@@ -133,3 +128,28 @@
 	var/obj/vehicle/ridden/wheelchair/wheelchair_unfolded = new unfolded_type(location)
 	wheelchair_unfolded.add_fingerprint(user)
 	qdel(src)
+
+
+///attaches bell to the wheelchair
+/obj/vehicle/ridden/wheelchair/proc/attach_bell(obj/structure/desk_bell/bell)
+	bell_attached = bell
+	bell.forceMove(src)
+	generate_actions()
+	update_appearance()
+
+/obj/vehicle/ridden/wheelchair/examine(mob/user)
+	. =..()
+	if(bell_attached)
+		. += span_notice("There is \a [bell_attached] attached to the handle.")
+
+/obj/vehicle/ridden/wheelchair/Destroy()
+	if(bell_attached)
+		remove_bell()
+	return ..()
+
+/obj/vehicle/ridden/wheelchair/proc/remove_bell()
+	bell_attached.forceMove(get_turf(src))
+	usr.visible_message(span_notice("[bell_attached] falls off!"))
+	bell_attached = null
+	update_appearance()
+

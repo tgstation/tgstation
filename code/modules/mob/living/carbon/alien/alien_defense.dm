@@ -14,7 +14,7 @@ As such, they can either help or harm other aliens. Help works like the human he
 In all, this is a lot like the monkey code. /N
 */
 /mob/living/carbon/alien/attack_alien(mob/living/carbon/alien/user, list/modifiers)
-	if(isturf(loc) && istype(loc.loc, /area/start))
+	if(isturf(loc) && istype(loc.loc, /area/misc/start))
 		to_chat(user, "No attacking people at spawn, you jackass.")
 		return
 
@@ -43,7 +43,7 @@ In all, this is a lot like the monkey code. /N
 
 
 
-/mob/living/carbon/alien/attack_larva(mob/living/carbon/alien/larva/L)
+/mob/living/carbon/alien/attack_larva(mob/living/carbon/alien/larva/L, list/modifiers)
 	return attack_alien(L)
 
 
@@ -91,7 +91,7 @@ In all, this is a lot like the monkey code. /N
 			if(STAMINA)
 				adjustStaminaLoss(damage)
 
-/mob/living/carbon/alien/attack_slime(mob/living/simple_animal/slime/M)
+/mob/living/carbon/alien/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
 	if(..()) //successful slime attack
 		var/damage = rand(5, 35)
 		if(M.is_adult)
@@ -108,7 +108,7 @@ In all, this is a lot like the monkey code. /N
 	if(QDELETED(src))
 		return
 
-	var/obj/item/organ/ears/ears = getorganslot(ORGAN_SLOT_EARS)
+	var/obj/item/organ/internal/ears/ears = getorganslot(ORGAN_SLOT_EARS)
 	switch (severity)
 		if (EXPLODE_DEVASTATE)
 			gib()
@@ -131,3 +131,6 @@ In all, this is a lot like the monkey code. /N
 
 /mob/living/carbon/alien/acid_act(acidpwr, acid_volume)
 	return FALSE//aliens are immune to acid.
+
+/mob/living/carbon/alien/on_fire_stack(delta_time, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
+	adjust_bodytemperature((BODYTEMP_HEATING_MAX + (fire_handler.stacks * 12)) * 0.5 * delta_time)

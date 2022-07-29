@@ -15,6 +15,7 @@
 	var/list/filter_result = CAN_BYPASS_FILTER(src) ? null : is_ooc_filtered(message)
 	if (filter_result)
 		REPORT_CHAT_FILTER_TO_USER(usr, filter_result)
+		log_filter("OOC", message, filter_result)
 		return
 
 	var/list/soft_filter_result = CAN_BYPASS_FILTER(src) ? null : is_soft_ooc_filtered(message)
@@ -41,7 +42,7 @@
 		return
 
 	message = copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN)
-	if(check_emote(message, forced))
+	if(message[1] == "*" && check_emote(message, forced))
 		return
 
 	. = say_dead(message)

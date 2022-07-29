@@ -34,7 +34,7 @@
 /obj/effect/mob_spawn/ghost_role/spider
 	name = "egg cluster"
 	desc = "They seem to pulse slightly with an inner life."
-	mob_name = "a spider"
+	mob_name = "\improper spider"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "eggs"
 	move_resist = MOVE_FORCE_NORMAL
@@ -158,9 +158,18 @@
 	for(var/choice in potentialspawns)
 		var/mob/living/simple_animal/hostile/giant_spider/spider = choice
 		spider_list[initial(spider.name)] = choice
+
 		var/datum/radial_menu_choice/option = new
 		option.image = image(icon = initial(spider.icon), icon_state = initial(spider.icon_state))
-		option.info = span_boldnotice("[initial(spider.menu_description)]")
+
+		var/datum/reagent/spider_poison = initial(spider.poison_type)
+		var/spider_description = initial(spider.menu_description)
+		if(initial(spider.poison_per_bite))
+			spider_description += " [initial(spider_poison.name)] injection of [initial(spider.poison_per_bite)]u per bite."
+		else
+			spider_description += " Does not inject [initial(spider_poison.name)]."
+		option.info = span_boldnotice(spider_description)
+
 		display_spiders[initial(spider.name)] = option
 	sort_list(display_spiders)
 	var/chosen_spider = show_radial_menu(user, egg, display_spiders, radius = 38)
@@ -168,4 +177,5 @@
 	if(QDELETED(src) || QDELETED(user) || !chosen_spider)
 		return FALSE
 	mob_type = chosen_spider
+	mob_name = "[mob_name] ([rand(1, 1000)])"
 	return ..()

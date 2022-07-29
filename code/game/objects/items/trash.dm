@@ -45,6 +45,15 @@
 	icon_state = "boritos"
 	grind_results = list(/datum/reagent/aluminium = 1) //from the mylar bag
 
+/obj/item/trash/boritos/green
+	icon_state = "boritosgreen"
+
+/obj/item/trash/boritos/red
+	icon_state = "boritosred"
+
+/obj/item/trash/boritos/purple
+	icon_state = "boritospurple"
+
 /obj/item/trash/popcorn
 	name = "popcorn"
 	icon_state = "popcorn"
@@ -72,6 +81,10 @@
 /obj/item/trash/semki
 	name = "semki pack"
 	icon_state = "semki_pack"
+
+/obj/item/trash/semki/healthy
+	name = "nibbled sunflower seeds"
+	icon_state = "sunseeds"
 
 /obj/item/trash/tray
 	name = "tray"
@@ -124,13 +137,13 @@
 
 /obj/item/trash/can/food/tomatoes
 	name = "canned San Marzano tomatoes"
-	icon = 'icons/obj/food/food.dmi'
+	icon = 'icons/obj/food/canned.dmi'
 	icon_state = "tomatoescan_empty"
 
 /obj/item/trash/can/food/pine_nuts
 	name = "canned pine nuts"
-	icon = 'icons/obj/food/food.dmi'
-	icon_state = "pine_nuts_empty"
+	icon = 'icons/obj/food/canned.dmi'
+	icon_state = "pinenutscan_empty"
 
 /obj/item/trash/spacers_sidekick
 	name = "\improper Spacer's Sidekick packet"

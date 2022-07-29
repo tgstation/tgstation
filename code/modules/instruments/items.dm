@@ -55,7 +55,7 @@
 	desc = "A wooden musical instrument with four strings and a bow. \"The devil went down to space, he was looking for an assistant to grief.\""
 	icon_state = "violin"
 	inhand_icon_state = "violin"
-	hitsound = "swing_hit"
+	hitsound = SFX_SWING_HIT
 	allowed_instrument_ids = "violin"
 
 /obj/item/instrument/violin/golden
@@ -215,6 +215,17 @@
 	. = ..()
 	UnregisterSignal(M, COMSIG_MOB_SAY)
 
+/datum/action/item_action/instrument
+	name = "Use Instrument"
+	desc = "Use the instrument specified"
+
+/datum/action/item_action/instrument/Trigger(trigger_flags)
+	if(istype(target, /obj/item/instrument))
+		var/obj/item/instrument/I = target
+		I.interact(usr)
+		return
+	return ..()
+
 /obj/item/instrument/bikehorn
 	name = "gilded bike horn"
 	desc = "An exquisitely decorated bike horn, capable of honking in a variety of notes."
@@ -269,5 +280,5 @@
 	w_class = WEIGHT_CLASS_TINY
 	force = 0
 	hitsound = 'sound/voice/moth/scream_moth.ogg'
-	custom_price = PAYCHECK_HARD * 2.37
-	custom_premium_price = PAYCHECK_HARD * 2.37
+	custom_price = PAYCHECK_COMMAND * 2.37
+	custom_premium_price = PAYCHECK_COMMAND * 2.37

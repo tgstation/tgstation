@@ -5,7 +5,7 @@
 	desc = "This can be used to check medical records."
 	icon_screen = "medcomp"
 	icon_keyboard = "med_key"
-	req_one_access = list(ACCESS_MEDICAL, ACCESS_FORENSICS_LOCKERS)
+	req_one_access = list(ACCESS_MEDICAL, ACCESS_DETECTIVE, ACCESS_GENETICS)
 	circuit = /obj/item/circuitboard/computer/med_data
 	light_color = LIGHT_COLOR_BLUE
 	var/rank = null
@@ -21,6 +21,7 @@
 
 /obj/machinery/computer/med_data/syndie
 	icon_keyboard = "syndie_key"
+	req_one_access = list(ACCESS_SYNDICATE)
 
 /obj/machinery/computer/med_data/ui_interact(mob/user)
 	. = ..()

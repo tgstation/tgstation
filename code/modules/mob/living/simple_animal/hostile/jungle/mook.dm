@@ -71,7 +71,7 @@
 /mob/living/simple_animal/hostile/jungle/mook/proc/WarmupAttack(forced_slash_combo = FALSE)
 	if(attack_state == MOOK_ATTACK_NEUTRAL && target)
 		attack_state = MOOK_ATTACK_WARMUP
-		walk(src,0)
+		SSmove_manager.stop_looping(src)
 		update_icons()
 		if(prob(50) && get_dist(src,target) <= 3 || forced_slash_combo)
 			addtimer(CALLBACK(src, .proc/SlashCombo), ATTACK_INTERMISSION_TIME)
@@ -220,6 +220,7 @@
 	icon = 'icons/mob/jungle/mook.dmi'
 	icon_state = "mook_leap_cloud"
 	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
 	pixel_x = -16
 	base_pixel_x = -16
 	pixel_y = -16

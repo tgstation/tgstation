@@ -15,47 +15,51 @@
 	var/extended_desc = "A third-generation, modular civilian class suit by Nakamura Engineering, \
 		this suit is a staple across the galaxy for civilian applications. These suits are oxygenated, \
 		spaceworthy, resistant to fire and chemical threats, and are immunized against everything between \
-		a sneeze and a bioweapon. However, their combat applications are incredibly minimal due to no \
-		armor plating being installed by default, and their actuators only lead to slightly greater speed than normal."
+		a sneeze and a bioweapon. However, their combat applications are incredibly minimal due to the amount of \
+		armor plating being installed by default, and their actuators only lead to slightly greater speed than industrial suits."
 	/// Default skin of the MOD.
 	var/default_skin = "standard"
-	/// Armor shared across the MOD pieces.
-	var/armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
-	/// Resistance flags shared across the MOD pieces.
+	/// The slot this mod theme fits on
+	var/slot_flags = ITEM_SLOT_BACK
+	/// Armor shared across the MOD parts.
+	var/armor = list(MELEE = 10, BULLET = 5, LASER = 5, ENERGY = 5, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 5)
+	/// Resistance flags shared across the MOD parts.
 	var/resistance_flags = NONE
-	/// Max heat protection shared across the MOD pieces.
+	/// Atom flags shared across the MOD parts.
+	var/atom_flags = NONE
+	/// Max heat protection shared across the MOD parts.
 	var/max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
-	/// Max cold protection shared across the MOD pieces.
+	/// Max cold protection shared across the MOD parts.
 	var/min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	/// Permeability shared across the MOD pieces.
-	var/permeability_coefficient = 0.01
-	/// Siemens shared across the MOD pieces.
+	/// Siemens shared across the MOD parts.
 	var/siemens_coefficient = 0.5
 	/// How much modules can the MOD carry without malfunctioning.
 	var/complexity_max = DEFAULT_MAX_COMPLEXITY
 	/// How much battery power the MOD uses by just being on
-	var/cell_drain = DEFAULT_CELL_DRAIN
+	var/charge_drain = DEFAULT_CHARGE_DRAIN
 	/// Slowdown of the MOD when not active.
 	var/slowdown_inactive = 1.25
 	/// Slowdown of the MOD when active.
 	var/slowdown_active = 0.75
 	/// Theme used by the MOD TGUI.
 	var/ui_theme = "ntos"
-	/// Allowed items in the chestplate's suit storage.
-	var/list/allowed = list(/obj/item/flashlight, /obj/item/tank/internals)
 	/// List of inbuilt modules. These are different from the pre-equipped suits, you should mainly use these for unremovable modules with 0 complexity.
 	var/list/inbuilt_modules = list()
 	/// Modules blacklisted from the MOD.
 	var/list/module_blacklist = list()
+	/// Allowed items in the chestplate's suit storage.
+	var/list/allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+	)
 	/// List of skins with their appropriate clothing flags.
 	var/list/skins = list(
 		"standard" = list(
-			HELMET_LAYER = NECK_LAYER,
 			HELMET_FLAGS = list(
+				UNSEALED_LAYER = NECK_LAYER,
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
-				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
-				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
+				SEALED_INVISIBILITY =  HIDEFACIALHAIR|HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
 				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
 			),
 			CHESTPLATE_FLAGS = list(
@@ -66,15 +70,17 @@
 			GAUNTLETS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 			BOOTS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 		),
 		"civilian" = list(
-			HELMET_LAYER = null,
 			HELMET_FLAGS = list(
+				UNSEALED_LAYER = null,
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
@@ -88,10 +94,12 @@
 			GAUNTLETS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 			BOOTS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 		),
 	)
@@ -105,16 +113,22 @@
 		a shock-resistant outer layer, making the suit nigh-invulnerable against even the extremes of high-voltage electricity. \
 		However, the capacity for modification remains the same as civilian-grade suits."
 	default_skin = "engineering"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 100, FIRE = 100, ACID = 25, WOUND = 10)
+	armor = list(MELEE = 10, BULLET = 5, LASER = 20, ENERGY = 10, BOMB = 10, BIO = 100, FIRE = 100, ACID = 25, WOUND = 10)
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	slowdown_inactive = 1.5
 	slowdown_active = 1
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/construction/rcd,
+		/obj/item/storage/bag/construction,
+	)
 	skins = list(
 		"engineering" = list(
-			HELMET_LAYER = NECK_LAYER,
 			HELMET_FLAGS = list(
+				UNSEALED_LAYER = NECK_LAYER,
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
@@ -129,10 +143,12 @@
 			GAUNTLETS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 			BOOTS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 		),
 	)
@@ -146,15 +162,22 @@
 		corrosive gasses and liquids, useful in the world of pipes. \
 		However, the capacity for modification remains the same as civilian-grade suits."
 	default_skin = "atmospheric"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 100, FIRE = 100, ACID = 75, WOUND = 10)
+	armor = list(MELEE = 10, BULLET = 5, LASER = 10, ENERGY = 15, BOMB = 10, BIO = 100, FIRE = 100, ACID = 75, WOUND = 10)
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	slowdown_inactive = 1.5
 	slowdown_active = 1
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/analyzer,
+		/obj/item/t_scanner,
+		/obj/item/pipe_dispenser,
+	)
 	skins = list(
 		"atmospheric" = list(
-			HELMET_LAYER = NECK_LAYER,
 			HELMET_FLAGS = list(
+				UNSEALED_LAYER = NECK_LAYER,
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDESNOUT,
@@ -170,10 +193,12 @@
 			GAUNTLETS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 			BOOTS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 		),
 	)
@@ -187,17 +212,27 @@
 		The paint used is almost entirely immune to corrosives, and certainly looks damn fine. \
 		These come pre-installed with magnetic boots, using an advanced system to toggle them on or off as the user walks."
 	default_skin = "advanced"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 100, FIRE = 100, ACID = 90, WOUND = 10)
+	armor = list(MELEE = 15, BULLET = 5, LASER = 20, ENERGY = 15, BOMB = 50, BIO = 100, FIRE = 100, ACID = 90, WOUND = 10)
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	slowdown_inactive = 1
 	slowdown_active = 0.5
 	inbuilt_modules = list(/obj/item/mod/module/magboot/advanced)
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/analyzer,
+		/obj/item/t_scanner,
+		/obj/item/pipe_dispenser,
+		/obj/item/construction/rcd,
+		/obj/item/storage/bag/construction,
+		/obj/item/melee/baton/telescopic,
+	)
 	skins = list(
 		"advanced" = list(
-			HELMET_LAYER = NECK_LAYER,
 			HELMET_FLAGS = list(
+				UNSEALED_LAYER = NECK_LAYER,
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
@@ -212,34 +247,84 @@
 			GAUNTLETS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 			BOOTS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 		),
 	)
 
 /datum/mod_theme/mining
 	name = "mining"
-	desc = "A high-power Nanotrasen mining suit, supporting more complexity at a bigger drain."
+	desc = "A Nanotrasen mining suit for on-site operations, fit with accreting ash armor and a sphere form."
 	extended_desc = "A high-powered Nanotrasen-designed suit, based off the work of Nakamura Engineering. \
 		While initial designs were built for the rigors of asteroid mining, given blast resistance through inbuilt ceramics, \
-		mining teams have since heavily tweaked the suit themselves. Aftermarket armor plating has been added, \
-		giving way to incredible protection against corrosives and thermal protection good enough for volcanic environments. \
-		The systems have been upgraded as well, giving space for further modification down the line. \
-		However, all of this has proven to be straining on the cell and the actuators of the suit, \
-		making it demand more power in exchange."
+		mining teams have since heavily tweaked the suit themselves with assistance from devices crafted by \
+		destructive analysis of unknown technologies discovered on the Indecipheres mining sites, patterned off \
+		their typical non-EVA exploration suits. The visor has been expanded to a system of seven arachnid-like cameras, \
+		offering full view of the land and its soon-to-be-dead inhabitants. The armor plating has been trimmed down to \
+		the bare essentials, geared far more for environmental hazards than combat against fauna; however, \
+		this gives way to incredible protection against corrosives and thermal protection good enough for \
+		both casual backstroking through molten magma and romantic walks through arctic terrain. \
+		Instead, the suit is capable of using its' anomalous properties to attract and \
+		carefully distribute layers of ash or ice across the surface; these layers are ablative, but incredibly strong. \
+		Lastly, the suit is capable of compressing and shrinking the mass of the wearer, as well as \
+		rearranging its own constitution, to allow them to fit upright in a sphere form that can \
+		roll around at half their original size; leaving high-powered mining ordinance in its wake. \
+		However, all of this has proven to be straining on all Nanotrasen-approved cells, \
+		so much so that it comes default fueled by equally-enigmatic plasma fuel rather than a simple recharge. \
+		Additionally, the systems have been put to near their maximum load, allowing for far less customization than others."
 	default_skin = "mining"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 100, FIRE = 100, ACID = 75, WOUND = 15)
-	resistance_flags = FIRE_PROOF
+	armor = list(MELEE = 15, BULLET = 5, LASER = 5, ENERGY = 5, BOMB = 30, BIO = 100, FIRE = 100, ACID = 75, WOUND = 15)
+	resistance_flags = FIRE_PROOF|LAVA_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
-	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
-	cell_drain = DEFAULT_CELL_DRAIN * 2
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
+	charge_drain = DEFAULT_CHARGE_DRAIN * 2
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/resonator,
+		/obj/item/mining_scanner,
+		/obj/item/t_scanner/adv_mining_scanner,
+		/obj/item/pickaxe,
+		/obj/item/kinetic_crusher,
+		/obj/item/stack/ore/plasma,
+		/obj/item/storage/bag/ore,
+	)
+	inbuilt_modules = list(/obj/item/mod/module/ash_accretion, /obj/item/mod/module/sphere_transform)
 	skins = list(
 		"mining" = list(
-			HELMET_LAYER = null,
 			HELMET_FLAGS = list(
+				UNSEALED_LAYER = null,
+				UNSEALED_CLOTHING = SNUG_FIT,
+				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
+				UNSEALED_INVISIBILITY = HIDEEARS|HIDEHAIR,
+				SEALED_INVISIBILITY = HIDEMASK|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT,
+				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
+			),
+			CHESTPLATE_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				SEALED_INVISIBILITY = HIDEJUMPSUIT,
+			),
+			GAUNTLETS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+			),
+			BOOTS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+			),
+		),
+		"asteroid" = list(
+			HELMET_FLAGS = list(
+				UNSEALED_LAYER = null,
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEEARS|HIDEHAIR|HIDESNOUT,
@@ -254,10 +339,64 @@
 			GAUNTLETS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 			BOOTS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+			),
+		),
+	)
+
+/datum/mod_theme/loader
+	name = "loader"
+	desc = "An unsealed experimental motorized harness manufactured by Scarborough Arms for quick and efficient munition supplies."
+	extended_desc = "This powered suit is an experimental spinoff of in-atmosphere Engineering suits. \
+		This fully articulated titanium exoskeleton is Scarborough Arms' suit of choice for their munition delivery men, \
+		and what it lacks in EVA protection, it makes up for in strength and flexibility. The primary feature of \
+		this suit are the two manipulator arms, carefully synchronized with the user's thoughts and \
+		duplicating their motions almost exactly. These are driven by myomer, an artificial analog of muscles, \
+		requiring large amounts of voltage to function; occasionally sparking under load with the sheer power of a \
+		suit capable of lifting 250 tons. Even the legs in the suit have been tuned to incredible capacity, \
+		the user being able to run at greater speeds for much longer distances and times than an unsuited equivalent. \
+		A lot of people would say loading cargo is a dull job. You could not disagree more."
+	default_skin = "loader"
+	armor = list(MELEE = 15, BULLET = 5, LASER = 5, ENERGY = 5, BOMB = 10, BIO = 10, FIRE = 25, ACID = 25, WOUND = 10)
+	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
+	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
+	siemens_coefficient = 0.25
+	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
+	slowdown_inactive = 0.5
+	slowdown_active = 0
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/mail,
+		/obj/item/delivery/small,
+		/obj/item/paper,
+		/obj/item/storage/bag/mail,
+	)
+	inbuilt_modules = list(/obj/item/mod/module/hydraulic, /obj/item/mod/module/clamp/loader, /obj/item/mod/module/magnet)
+	skins = list(
+		"loader" = list(
+			HELMET_FLAGS = list(
+				UNSEALED_LAYER = null,
+				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
+				UNSEALED_INVISIBILITY = HIDEEARS|HIDEHAIR,
+				SEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEYES|HIDEFACE|HIDESNOUT,
+				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
+			),
+			CHESTPLATE_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+			),
+			GAUNTLETS_FLAGS = list(
+				SEALED_CLOTHING = THICKMATERIAL,
+				CAN_OVERSLOT = TRUE,
+			),
+			BOOTS_FLAGS = list(
+				SEALED_CLOTHING = THICKMATERIAL,
+				CAN_OVERSLOT = TRUE,
 			),
 		),
 	)
@@ -272,14 +411,30 @@
 		it is incredibly acid-resistant. It is slightly more demanding of power than civilian-grade models, \
 		and weak against fingers tapping the glass."
 	default_skin = "medical"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 100, FIRE = 60, ACID = 75, WOUND = 10)
-	cell_drain = DEFAULT_CELL_DRAIN * 1.5
+	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 5, BOMB = 10, BIO = 100, FIRE = 60, ACID = 75, WOUND = 5)
+	charge_drain = DEFAULT_CHARGE_DRAIN * 1.5
 	slowdown_inactive = 1
 	slowdown_active = 0.5
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/healthanalyzer,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/reagent_containers/glass/beaker,
+		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/hypospray,
+		/obj/item/reagent_containers/pill,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/stack/medical,
+		/obj/item/sensor_device,
+		/obj/item/storage/pill_bottle,
+		/obj/item/storage/bag/chemistry,
+		/obj/item/storage/bag/bio,
+	)
 	skins = list(
 		"medical" = list(
-			HELMET_LAYER = NECK_LAYER,
 			HELMET_FLAGS = list(
+				UNSEALED_LAYER = NECK_LAYER,
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
@@ -294,15 +449,17 @@
 			GAUNTLETS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 			BOOTS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 		),
 		"corpsman" = list(
-			HELMET_LAYER = NECK_LAYER,
 			HELMET_FLAGS = list(
+				UNSEALED_LAYER = NECK_LAYER,
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
@@ -317,10 +474,12 @@
 			GAUNTLETS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 			BOOTS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 		),
 	)
@@ -335,17 +494,34 @@
 		all while being entirely immune against chemical and thermal threats. \
 		It is slightly more demanding of power than civilian-grade models, and weak against fingers tapping the glass."
 	default_skin = "rescue"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 100, FIRE = 100, ACID = 100, WOUND = 10)
+	armor = list(MELEE = 10, BULLET = 10, LASER = 5, ENERGY = 5, BOMB = 10, BIO = 100, FIRE = 100, ACID = 100, WOUND = 5)
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
-	cell_drain = DEFAULT_CELL_DRAIN * 1.5
+	charge_drain = DEFAULT_CHARGE_DRAIN * 1.5
 	slowdown_inactive = 0.75
 	slowdown_active = 0.25
 	inbuilt_modules = list(/obj/item/mod/module/quick_carry/advanced)
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/healthanalyzer,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/reagent_containers/glass/beaker,
+		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/hypospray,
+		/obj/item/reagent_containers/pill,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/stack/medical,
+		/obj/item/sensor_device,
+		/obj/item/storage/pill_bottle,
+		/obj/item/storage/bag/chemistry,
+		/obj/item/storage/bag/bio,
+		/obj/item/melee/baton/telescopic,
+	)
 	skins = list(
 		"rescue" = list(
-			HELMET_LAYER = NECK_LAYER,
 			HELMET_FLAGS = list(
+				UNSEALED_LAYER = NECK_LAYER,
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
@@ -360,10 +536,12 @@
 			GAUNTLETS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 			BOOTS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 		),
 	)
@@ -376,21 +554,31 @@
 		Featuring an inbuilt chemical scanning array, this suit uses two layers of plastitanium armor, \
 		sandwiching an inert layer to dissipate kinetic energy into the suit and away from the user; \
 		outperforming even the best conventional EOD suits. However, despite its immunity against even \
-		missiles and artillery, the armor is no more effective than standard suits against \
-		other weapon types and physical damage; and all the explosive resistance mostly working to keep the user intact, \
+		missiles and artillery, all the explosive resistance is mostly working to keep the user intact, \
 		not alive. The user will also find narrow doorframes nigh-impossible to surmount."
 	default_skin = "research"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100, WOUND = 15)
+	armor = list(MELEE = 20, BULLET = 15, LASER = 5, ENERGY = 5, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100, WOUND = 15)
 	resistance_flags = FIRE_PROOF|ACID_PROOF
+	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
 	slowdown_inactive = 1.75
 	slowdown_active = 1.25
 	inbuilt_modules = list(/obj/item/mod/module/reagent_scanner/advanced)
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/analyzer,
+		/obj/item/dnainjector,
+		/obj/item/biopsy_tool,
+		/obj/item/experi_scanner,
+		/obj/item/storage/bag/bio,
+		/obj/item/melee/baton/telescopic,
+	)
 	skins = list(
 		"research" = list(
-			HELMET_LAYER = null,
 			HELMET_FLAGS = list(
+				UNSEALED_LAYER = null,
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
@@ -404,10 +592,12 @@
 			GAUNTLETS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 			BOOTS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 		),
 	)
@@ -419,20 +609,27 @@
 		hostile situations. These suits have been layered with plating worthy enough for fires or corrosive environments, \
 		and come with composite cushioning and an advanced honeycomb structure underneath the hull to ensure protection \
 		against broken bones or possible avulsions. The suit's legs have been given more rugged actuators, \
-		allowing the suit to do more work in carrying the weight. Lastly, these have been given a shock-absorbing \
-		insulating layer on the gauntlets, making sure the user isn't under risk of electricity. \
-		However, the systems used in these suits are more than a few years out of date, \
-		leading to an overall lower capacity for modules."
+		allowing the suit to do more work in carrying the weight. However, the systems used in these suits are more than \
+		a few years out of date, leading to an overall lower capacity for modules."
 	default_skin = "security"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 100, FIRE = 75, ACID = 75, WOUND = 20)
-	siemens_coefficient = 0
-	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
+	armor = list(MELEE = 15, BULLET = 15, LASER = 15, ENERGY = 15, BOMB = 25, BIO = 100, FIRE = 75, ACID = 75, WOUND = 15)
+	complexity_max = DEFAULT_MAX_COMPLEXITY - 3
 	slowdown_inactive = 1
 	slowdown_active = 0.5
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/ammo_box,
+		/obj/item/ammo_casing,
+		/obj/item/reagent_containers/spray/pepper,
+		/obj/item/restraints/handcuffs,
+		/obj/item/assembly/flash,
+		/obj/item/melee/baton,
+	)
 	skins = list(
 		"security" = list(
-			HELMET_LAYER = null,
 			HELMET_FLAGS = list(
+				UNSEALED_LAYER = null,
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEEARS|HIDEHAIR|HIDESNOUT,
@@ -448,10 +645,12 @@
 			GAUNTLETS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 			BOOTS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 		),
 	)
@@ -466,17 +665,25 @@
 		Heatsinks line the sides of the suit, and greater technology has been used in insulating it against \
 		both corrosive environments and sudden impacts to the user's joints."
 	default_skin = "safeguard"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, 	BOMB = 25, BIO = 100, FIRE = 100, ACID = 95, WOUND = 25)
+	armor = list(MELEE = 15, BULLET = 15, LASER = 15, ENERGY = 15, BOMB = 40, BIO = 100, FIRE = 100, ACID = 95, WOUND = 15)
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
-	siemens_coefficient = 0
-	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
 	slowdown_inactive = 0.75
 	slowdown_active = 0.25
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/ammo_box,
+		/obj/item/ammo_casing,
+		/obj/item/reagent_containers/spray/pepper,
+		/obj/item/restraints/handcuffs,
+		/obj/item/assembly/flash,
+		/obj/item/melee/baton,
+	)
 	skins = list(
 		"safeguard" = list(
-			HELMET_LAYER = null,
 			HELMET_FLAGS = list(
+				UNSEALED_LAYER = null,
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
@@ -490,10 +697,12 @@
 			GAUNTLETS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 			BOOTS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 		),
 	)
@@ -511,17 +720,27 @@
 		and bluespace processing to allow for a wide array of onboard modules to be supported, and only the best actuators \
 		have been employed for speed. The resemblance to a Gorlex Marauder helmet is purely coincidental."
 	default_skin = "magnate"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100, WOUND = 20)
+	armor = list(MELEE = 20, BULLET = 15, LASER = 15, ENERGY = 15, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100, WOUND = 15)
 	resistance_flags = FIRE_PROOF|ACID_PROOF
+	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
 	slowdown_inactive = 0.75
 	slowdown_active = 0.25
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/ammo_box,
+		/obj/item/ammo_casing,
+		/obj/item/restraints/handcuffs,
+		/obj/item/assembly/flash,
+		/obj/item/melee/baton,
+	)
 	skins = list(
 		"magnate" = list(
-			HELMET_LAYER = NECK_LAYER,
 			HELMET_FLAGS = list(
+				UNSEALED_LAYER = NECK_LAYER,
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
@@ -536,10 +755,12 @@
 			GAUNTLETS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 			BOOTS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 		),
 	)
@@ -553,15 +774,23 @@
 		this particular model does not employ manganese bipolar capacitor cleaners, thank the Honkmother. \
 		All you know is that this suit is mysteriously power-efficient, and far too colorful for the Mime to steal."
 	default_skin = "cosmohonk"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 100, FIRE = 60, ACID = 30, WOUND = 5)
-	cell_drain = DEFAULT_CELL_DRAIN * 0.25
+	armor = list(MELEE = 5, BULLET = 5, LASER = 20, ENERGY = 20, BOMB = 10, BIO = 100, FIRE = 60, ACID = 30, WOUND = 5)
+	charge_drain = DEFAULT_CHARGE_DRAIN * 0.25
 	slowdown_inactive = 1.75
 	slowdown_active = 1.25
-	inbuilt_modules = list(/obj/item/mod/module/waddle)
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/bikehorn,
+		/obj/item/food/grown/banana,
+		/obj/item/grown/bananapeel,
+		/obj/item/reagent_containers/spray/waterflower,
+		/obj/item/instrument,
+	)
 	skins = list(
 		"cosmohonk" = list(
-			HELMET_LAYER = NECK_LAYER,
 			HELMET_FLAGS = list(
+				UNSEALED_LAYER = NECK_LAYER,
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 				UNSEALED_INVISIBILITY = HIDEEARS|HIDEHAIR,
@@ -576,10 +805,12 @@
 			GAUNTLETS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 			BOOTS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 		),
 	)
@@ -590,22 +821,34 @@
 	extended_desc = "An advanced combat suit adorned in a sinister crimson red color scheme, produced and manufactured \
 		for special mercenary operations. The build is a streamlined layering consisting of shaped Plasteel, \
 		and composite ceramic, while the under suit is lined with a lightweight Kevlar and durathread hybrid weave \
-		to provide ample protection to the user where the plating doesn't, with an illegal onboard cell powered \
+		to provide ample protection to the user where the plating doesn't, with an illegal onboard electric powered \
 		ablative shield module to provide resistance against conventional energy firearms. \
 		A small tag hangs off of it reading; 'Property of the Gorlex Marauders, with assistance from Cybersun Industries. \
 		All rights reserved, tampering with suit will void warranty."
 	default_skin = "syndicate"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 35, BIO = 100, FIRE = 50, ACID = 90, WOUND = 25)
+	armor = list(MELEE = 15, BULLET = 20, LASER = 15, ENERGY = 15, BOMB = 35, BIO = 100, FIRE = 50, ACID = 90, WOUND = 25)
+	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	slowdown_inactive = 1
 	slowdown_active = 0.5
 	ui_theme = "syndicate"
 	inbuilt_modules = list(/obj/item/mod/module/armor_booster)
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/ammo_box,
+		/obj/item/ammo_casing,
+		/obj/item/restraints/handcuffs,
+		/obj/item/assembly/flash,
+		/obj/item/melee/baton,
+		/obj/item/melee/energy/sword,
+		/obj/item/shield/energy,
+	)
 	skins = list(
 		"syndicate" = list(
-			HELMET_LAYER = NECK_LAYER,
 			HELMET_FLAGS = list(
+				UNSEALED_LAYER = NECK_LAYER,
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
@@ -615,14 +858,42 @@
 			CHESTPLATE_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				SEALED_INVISIBILITY = HIDEJUMPSUIT,
 			),
 			GAUNTLETS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 			BOOTS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+			),
+		),
+		"honkerative" = list(
+			HELMET_FLAGS = list(
+				UNSEALED_LAYER = NECK_LAYER,
+				UNSEALED_CLOTHING = SNUG_FIT,
+				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
+				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
+				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
+				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
+			),
+			CHESTPLATE_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				SEALED_INVISIBILITY = HIDEJUMPSUIT,
+			),
+			GAUNTLETS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+			),
+			BOOTS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 		),
 	)
@@ -637,18 +908,30 @@
 		'Property of the Gorlex Marauders, with assistance from Cybersun Industries. \
 		All rights reserved, tampering with suit will void life expectancy.'"
 	default_skin = "elite"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 55, BIO = 100, FIRE = 100, ACID = 100, WOUND = 25)
+	armor = list(MELEE = 35, BULLET = 30, LASER = 35, ENERGY = 35, BOMB = 55, BIO = 100, FIRE = 100, ACID = 100, WOUND = 25)
 	resistance_flags = FIRE_PROOF|ACID_PROOF
+	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
-	slowdown_inactive = 0.75
-	slowdown_active = 0.25
+	slowdown_inactive = 1
+	slowdown_active = 0.5
 	ui_theme = "syndicate"
-	inbuilt_modules = list(/obj/item/mod/module/armor_booster/elite)
+	inbuilt_modules = list(/obj/item/mod/module/armor_booster)
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/ammo_box,
+		/obj/item/ammo_casing,
+		/obj/item/restraints/handcuffs,
+		/obj/item/assembly/flash,
+		/obj/item/melee/baton,
+		/obj/item/melee/energy/sword,
+		/obj/item/shield/energy,
+	)
 	skins = list(
 		"elite" = list(
-			HELMET_LAYER = null,
 			HELMET_FLAGS = list(
+				UNSEALED_LAYER = null,
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
@@ -663,10 +946,12 @@
 			GAUNTLETS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 			BOOTS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 		),
 	)
@@ -677,12 +962,12 @@
 	extended_desc = "The Wizard Federation's relatively low-tech MODsuit. This armor employs not \
 		plasteel or carbon fibre, but space dragon scales for its protection. Recruits are expected to \
 		gather these themselves, but the effort is well worth it, the suit being well-armored against threats \
-		both mundane and mystic. Rather than wholly relying on the suit's cell, which would surely perish \
+		both mundane and mystic. Rather than wholly relying on a cell, which would surely perish \
 		under the load, several naturally-occurring bluespace gemstones have been utilized as \
-		supplementary means of power. The hood and platform boots are of unknown usage, but it's speculated that \
+		default means of power. The hood and platform boots are of unknown usage, but it's speculated that \
 		wizards trend towards the dramatic."
 	default_skin = "enchanted"
-	armor = list(MELEE = 40, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 35, BIO = 100, FIRE = 100, ACID = 100, WOUND = 30)
+	armor = list(MELEE = 40, BULLET = 40, LASER = 50, ENERGY = 50, BOMB = 35, BIO = 100, FIRE = 100, ACID = 100, WOUND = 30)
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
@@ -691,14 +976,76 @@
 	slowdown_active = 0.25
 	ui_theme = "wizard"
 	inbuilt_modules = list(/obj/item/mod/module/anti_magic/wizard)
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/teleportation_scroll,
+		/obj/item/highfrequencyblade/wizard,
+		/obj/item/gun/magic,
+	)
 	skins = list(
 		"enchanted" = list(
-			HELMET_LAYER = null,
 			HELMET_FLAGS = list(
-				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
+				UNSEALED_LAYER = null,
+				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL|CASTING_CLOTHES,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
 				UNSEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
+			),
+			CHESTPLATE_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL|CASTING_CLOTHES,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				SEALED_INVISIBILITY = HIDEJUMPSUIT,
+			),
+			GAUNTLETS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+			),
+			BOOTS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+			),
+		),
+	)
+
+/datum/mod_theme/ninja
+	name = "ninja"
+	desc = "A unique, vacuum-proof suit of nano-enhanced armor designed specifically for Spider Clan assassins."
+	extended_desc = "A suit of nano-enhanced armor designed specifically for Spider Clan assassin-saboteurs. \
+		This MODsuit employs the cutting edge of stealth and combat technology, built skin-tight but just as durable as \
+		suits two or three times as thick. The nanomachines making up the outermost layer of armor \
+		are capable of shifting their form into almost-microscopic radiating fins, rendering the suit itself \
+		nigh-immune to even volcanic heat. It's entirely sealed against even the strongest acids, \
+		and the myoelectric artifical muscles of the suit leave it light as a feather during movement."
+	default_skin = "ninja"
+	armor = list(MELEE = 40, BULLET = 30, LASER = 20, ENERGY = 30, BOMB = 30, BIO = 100, FIRE = 100, ACID = 100, WOUND = 10)
+	resistance_flags = LAVA_PROOF|FIRE_PROOF|ACID_PROOF
+	charge_drain = DEFAULT_CHARGE_DRAIN * 0.5
+	siemens_coefficient = 0
+	slowdown_inactive = 0.5
+	slowdown_active = 0
+	ui_theme = "hackerman"
+	inbuilt_modules = list(/obj/item/mod/module/welding/camera_vision, /obj/item/mod/module/hacker, /obj/item/mod/module/weapon_recall, /obj/item/mod/module/adrenaline_boost, /obj/item/mod/module/energy_net)
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/gun,
+		/obj/item/ammo_box,
+		/obj/item/ammo_casing,
+		/obj/item/melee/baton,
+		/obj/item/restraints/handcuffs,
+	)
+	skins = list(
+		"ninja" = list(
+			HELMET_FLAGS = list(
+				UNSEALED_LAYER = null,
+				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				UNSEALED_INVISIBILITY = HIDEEARS|HIDEHAIR,
+				SEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEYES|HIDEFACE|HIDESNOUT,
+				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
 			),
 			CHESTPLATE_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
@@ -708,10 +1055,12 @@
 			GAUNTLETS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 			BOOTS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 		),
 	)
@@ -724,23 +1073,30 @@
 		though it's missing several modern-day luxuries from updated Nakamura Engineering designs. \
 		Primarily, the suit's myoelectric suit layer is entirely non-existant, and the servos do very little to \
 		help distribute the weight evenly across the wearer's body, making it slow and bulky to move in. \
-		Additionally, the armor plating never finished production aside from the shoulders, forearms, and helmet; \
-		making it useless against direct attacks. The internal heads-up display is rendered in nearly unreadable cyan, \
-		as the visor suggests, leaving the user unable to see long distances. \
-		However, the way the helmet retracts is pretty cool."
+		The internal heads-up display is rendered in nearly unreadable cyan, as the visor suggests, \
+		leaving the user unable to see long distances. However, the way the helmet retracts is pretty cool."
 	default_skin = "prototype"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 100, FIRE = 100, ACID = 75, WOUND = 5)
+	armor = list(MELEE = 20, BULLET = 5, LASER = 10, ENERGY = 10, BOMB = 50, BIO = 100, FIRE = 100, ACID = 75, WOUND = 5)
 	resistance_flags = FIRE_PROOF
+	siemens_coefficient = 0
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
-	cell_drain = DEFAULT_CELL_DRAIN * 2
+	charge_drain = DEFAULT_CHARGE_DRAIN * 2
 	slowdown_inactive = 2
 	slowdown_active = 1.5
 	ui_theme = "hackerman"
-	inbuilt_modules = list(/obj/item/mod/module/kinesis)
+	inbuilt_modules = list(/obj/item/mod/module/anomaly_locked/kinesis/prebuilt/prototype)
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/analyzer,
+		/obj/item/t_scanner,
+		/obj/item/pipe_dispenser,
+		/obj/item/construction/rcd,
+	)
 	skins = list(
 		"prototype" = list(
-			HELMET_LAYER = null,
 			HELMET_FLAGS = list(
+				UNSEALED_LAYER = null,
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
@@ -754,10 +1110,12 @@
 			GAUNTLETS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 			BOOTS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 		),
 	)
@@ -771,16 +1129,26 @@
 		it keeps the wearer safe from the harsh void of space while sacrificing no speed whatsoever. \
 		While wearing it you feel an extreme deference to darkness. "
 	default_skin = "responsory"
-	armor = list(MELEE = 35, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 50, BIO = 100, FIRE = 100, ACID = 90, WOUND = 15)
+	armor = list(MELEE = 50, BULLET = 40, LASER = 50, ENERGY = 50, BOMB = 50, BIO = 100, FIRE = 100, ACID = 90, WOUND = 10)
+	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	slowdown_inactive = 0.5
 	slowdown_active = 0
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/ammo_box,
+		/obj/item/ammo_casing,
+		/obj/item/restraints/handcuffs,
+		/obj/item/assembly/flash,
+		/obj/item/melee/baton,
+	)
 	skins = list(
 		"responsory" = list(
-			HELMET_LAYER = NECK_LAYER,
 			HELMET_FLAGS = list(
+				UNSEALED_LAYER = NECK_LAYER,
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
@@ -795,15 +1163,17 @@
 			GAUNTLETS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 			BOOTS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 		),
 		"inquisitory" = list(
-			HELMET_LAYER = null,
 			HELMET_FLAGS = list(
+				UNSEALED_LAYER = null,
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
@@ -817,10 +1187,12 @@
 			GAUNTLETS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 			BOOTS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 		),
 	)
@@ -837,13 +1209,25 @@
 	default_skin = "apocryphal"
 	armor = list(MELEE = 80, BULLET = 80, LASER = 50, ENERGY = 60, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100, WOUND = 25)
 	resistance_flags = FIRE_PROOF|ACID_PROOF
+	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 10
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/ammo_box,
+		/obj/item/ammo_casing,
+		/obj/item/restraints/handcuffs,
+		/obj/item/assembly/flash,
+		/obj/item/melee/baton,
+		/obj/item/melee/energy/sword,
+		/obj/item/shield/energy,
+	)
 	skins = list(
 		"apocryphal" = list(
-			HELMET_LAYER = null,
 			HELMET_FLAGS = list(
+				UNSEALED_LAYER = null,
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 				UNSEALED_INVISIBILITY = HIDEEARS|HIDEHAIR,
@@ -858,10 +1242,12 @@
 			GAUNTLETS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 			BOOTS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 		),
 	)
@@ -875,16 +1261,26 @@
 		counted as a war-crime and reason for immediate execution in over fifty Nanotrasen space stations. \
 		The resemblance to a Gorlex Marauder helmet is purely coincidental."
 	default_skin = "corporate"
-	armor = list(MELEE = 35, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100, WOUND = 15)
+	armor = list(MELEE = 50, BULLET = 40, LASER = 50, ENERGY = 50, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100, WOUND = 15)
 	resistance_flags = FIRE_PROOF|ACID_PROOF
+	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	slowdown_inactive = 0.5
 	slowdown_active = 0
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/ammo_box,
+		/obj/item/ammo_casing,
+		/obj/item/restraints/handcuffs,
+		/obj/item/assembly/flash,
+		/obj/item/melee/baton,
+	)
 	skins = list(
 		"corporate" = list(
-			HELMET_LAYER = null,
 			HELMET_FLAGS = list(
+				UNSEALED_LAYER = null,
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEEARS|HIDEHAIR|HIDESNOUT,
@@ -899,10 +1295,59 @@
 			GAUNTLETS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 			BOOTS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+			),
+		),
+	)
+
+/datum/mod_theme/chrono
+	name = "chrono"
+	desc = "A suit beyond our time, beyond time itself. Used to traverse timelines and \"correct their course\"."
+	extended_desc = "A suit whose tech goes beyond this era's understanding. The internal mechanisms are all but \
+		completely alien, but the purpose is quite simple. The suit protects the user from the many incredibly lethal \
+		and sometimes hilariously painful side effects of jumping timelines, while providing inbuilt equipment for \
+		making timeline adjustments to correct a bad course."
+	default_skin = "chrono"
+	armor = list(MELEE = 60, BULLET = 60, LASER = 60, ENERGY = 60, BOMB = 30, BIO = 100, FIRE = 100, ACID = 100, WOUND = 15)
+	resistance_flags = FIRE_PROOF|ACID_PROOF
+	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
+	complexity_max = DEFAULT_MAX_COMPLEXITY - 10
+	slowdown_inactive = 0
+	slowdown_active = 0
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/restraints/handcuffs,
+	)
+	skins = list(
+		"chrono" = list(
+			HELMET_FLAGS = list(
+				UNSEALED_LAYER = NECK_LAYER,
+				UNSEALED_CLOTHING = SNUG_FIT,
+				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT,
+				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
+				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
+				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
+			),
+			CHESTPLATE_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				SEALED_INVISIBILITY = HIDEJUMPSUIT,
+			),
+			GAUNTLETS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+			),
+			BOOTS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 		),
 	)
@@ -916,14 +1361,21 @@
 	default_skin = "debug"
 	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100, WOUND = 0)
 	resistance_flags = FIRE_PROOF|ACID_PROOF
+	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	complexity_max = 50
+	siemens_coefficient = 0
 	slowdown_inactive = 0.5
 	slowdown_active = 0
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/gun,
+	)
 	skins = list(
 		"debug" = list(
-			HELMET_LAYER = null,
 			HELMET_FLAGS = list(
+				UNSEALED_LAYER = null,
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEEARS|HIDEHAIR|HIDESNOUT,
@@ -939,10 +1391,12 @@
 			GAUNTLETS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 			BOOTS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 		),
 	)
@@ -957,15 +1411,22 @@
 	default_skin = "debug"
 	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100, WOUND = 100)
 	resistance_flags = INDESTRUCTIBLE|LAVA_PROOF|FIRE_PROOF|UNACIDABLE|ACID_PROOF
+	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	complexity_max = 1000
-	cell_drain = DEFAULT_CELL_DRAIN * 0
+	charge_drain = DEFAULT_CHARGE_DRAIN * 0
+	siemens_coefficient = 0
 	slowdown_inactive = 0
 	slowdown_active = 0
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/gun,
+	)
 	skins = list(
 		"debug" = list(
-			HELMET_LAYER = null,
 			HELMET_FLAGS = list(
+				UNSEALED_LAYER = null,
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEEARS|HIDEHAIR|HIDESNOUT,
 				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE,
@@ -977,9 +1438,11 @@
 			),
 			GAUNTLETS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 			BOOTS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
 			),
 		),
 	)

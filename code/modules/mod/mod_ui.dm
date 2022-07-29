@@ -16,25 +16,25 @@
 	data["wearer_name"] = wearer ? (wearer.get_authentification_name("Unknown") || "Unknown") : "No Occupant"
 	data["wearer_job"] = wearer ? wearer.get_assignment("Unknown", "Unknown", FALSE) : "No Job"
 	data["AI"] = ai?.name
-	data["cell"] = cell?.name
-	data["charge"] = cell ? round(cell.percent(), 1) : 0
+	data["core"] = core?.name
+	data["charge"] = get_charge_percent()
 	data["modules"] = list()
 	for(var/obj/item/mod/module/module as anything in modules)
 		var/list/module_data = list(
-			name = module.name,
-			description = module.desc,
-			module_type = module.module_type,
-			active = module.active,
-			pinned = module.pinned_to[user],
-			idle_power = module.idle_power_cost,
-			active_power = module.active_power_cost,
-			use_power = module.use_power_cost,
-			complexity = module.complexity,
-			cooldown_time = module.cooldown_time,
-			cooldown = round(COOLDOWN_TIMELEFT(module, cooldown_timer), 1 SECONDS),
-			id = module.tgui_id,
-			ref = REF(module),
-			configuration_data = module.get_configuration()
+			"module_name" = module.name,
+			"description" = module.desc,
+			"module_type" = module.module_type,
+			"module_active" = module.active,
+			"pinned" = module.pinned_to[user],
+			"idle_power" = module.idle_power_cost,
+			"active_power" = module.active_power_cost,
+			"use_power" = module.use_power_cost,
+			"module_complexity" = module.complexity,
+			"cooldown_time" = module.cooldown_time,
+			"cooldown" = round(COOLDOWN_TIMELEFT(module, cooldown_timer), 1 SECONDS),
+			"id" = module.tgui_id,
+			"ref" = REF(module),
+			"configuration_data" = module.get_configuration()
 		)
 		module_data += module.add_ui_data()
 		data["modules"] += list(module_data)
@@ -55,7 +55,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!allowed(usr) && locked)
+	if(locked && !allowed(usr))
 		balloon_alert(usr, "insufficient access!")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return

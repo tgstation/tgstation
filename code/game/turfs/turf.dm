@@ -22,8 +22,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/list/baseturfs = /turf/baseturf_bottom
 
 	var/temperature = T20C
-	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
-	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
+	///Used for fire, if a melting temperature was reached, it will be destroyed
+	var/to_be_destroyed = 0
+	///The max temperature of the fire which it was subjected to
+	var/max_fire_temperature_sustained = 0
 
 	var/blocks_air = FALSE
 
@@ -72,9 +74,15 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	/// but is now destroyed, this will preserve the value.
 	/// See __DEFINES/construction.dm for RCD_MEMORY_*.
 	var/rcd_memory
+	///whether or not this turf forces movables on it to have no gravity (unless they themselves have forced gravity)
+	var/force_no_gravity = FALSE
+
+	/// How pathing algorithm will check if this turf is passable by itself (not including content checks). By default it's just density check.
+	/// WARNING: Currently to use a density shortcircuiting this does not support dense turfs with special allow through function
+	var/pathing_pass_method = TURF_PATHING_PASS_DENSITY
 
 /turf/vv_edit_var(var_name, new_value)
-	var/static/list/banned_edits = list("x", "y", "z")
+	var/static/list/banned_edits = list(NAMEOF(src, x), NAMEOF(src, y), NAMEOF(src, z))
 	if(var_name in banned_edits)
 		return FALSE
 	. = ..()
@@ -357,15 +365,15 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/canPassSelf = CanPass(mover, get_dir(src, mover))
 	if(canPassSelf || (mover.movement_type & PHASING))
 		for(var/atom/movable/thing as anything in contents)
-			if(QDELETED(mover))
-				return FALSE //We were deleted, do not attempt to proceed with movement.
 			if(thing == mover || thing == mover.loc) // Multi tile objects and moving out of other objects
 				continue
 			if(!thing.Cross(mover))
-				if(QDELETED(mover)) //Mover deleted from Cross/CanPass, do not proceed.
+				if(QDELETED(mover)) //deleted from Cross() (CanPass is pure so it cant delete, Cross shouldnt be doing this either though, but it can happen)
 					return FALSE
 				if((mover.movement_type & PHASING))
 					mover.Bump(thing)
+					if(QDELETED(mover)) //deleted from Bump()
+						return FALSE
 					continue
 				else
 					if(!firstbump || ((thing.layer > firstbump.layer || thing.flags_1 & ON_BORDER_1) && !(firstbump.flags_1 & ON_BORDER_1)))
@@ -378,14 +386,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		mover.Bump(firstbump)
 		return (mover.movement_type & PHASING)
 	return TRUE
-
-/turf/open/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	. = ..()
-	//melting
-	if(isobj(arrived) && air && air.temperature > T0C)
-		var/obj/O = arrived
-		if(O.obj_flags & FROZEN)
-			O.make_unfrozen()
 
 // A proc in case it needs to be recreated or badmins want to change the baseturfs
 /turf/proc/assemble_baseturfs(turf/fake_baseturf_type)
@@ -454,20 +454,21 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/Bless()
 	new /obj/effect/blessing(src)
 
-/turf/storage_contents_dump_act(datum/component/storage/src_object, mob/user)
+/turf/storage_contents_dump_act(atom/src_object, mob/user)
 	. = ..()
 	if(.)
 		return
-	if(length(src_object.contents()))
-		to_chat(usr, span_notice("You start dumping out the contents..."))
-		if(!do_after(usr,20,target=src_object.parent))
+	if(!src_object.atom_storage)
+		return
+	var/atom/resolve_parent = src_object.atom_storage.real_location?.resolve()
+	if(!resolve_parent)
+		return FALSE
+	if(length(resolve_parent.contents))
+		to_chat(user, span_notice("You start dumping out the contents of [src_object]..."))
+		if(!do_after(user, 20, target=resolve_parent))
 			return FALSE
 
-	var/list/things = src_object.contents()
-	var/datum/progressbar/progress = new(user, things.len, src)
-	while (do_after(usr, 1 SECONDS, src, NONE, FALSE, CALLBACK(src_object, /datum/component/storage.proc/mass_remove_from_storage, src, things, progress)))
-		stoplag(1)
-	progress.end_progress()
+	src_object.atom_storage.remove_all(src)
 
 	return TRUE
 
@@ -505,19 +506,15 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/visibilityChanged()
 	GLOB.cameranet.updateVisibility(src)
-	// The cameranet usually handles this for us, but if we've just been
-	// recreated we should make sure we have the cameranet vis_contents.
-	var/datum/camerachunk/C = GLOB.cameranet.chunkGenerated(x, y, z)
-	if(C)
-		if(C.obscuredTurfs[src])
-			vis_contents += GLOB.cameranet.vis_contents_opaque
-		else
-			vis_contents -= GLOB.cameranet.vis_contents_opaque
 
 /turf/proc/burn_tile()
+	return
+
+/turf/proc/break_tile()
+	return
 
 /turf/proc/is_shielded()
-
+	return
 
 /turf/contents_explosion(severity, target)
 	for(var/thing in contents)
@@ -586,9 +583,17 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/acid_melt()
 	return
 
+/turf/rust_heretic_act()
+	if(turf_flags & NO_RUST)
+		return
+	if(HAS_TRAIT(src, TRAIT_RUSTY))
+		return
+
+	AddElement(/datum/element/rust)
+
 /turf/handle_fall(mob/faller)
 	if(has_gravity(src))
-		playsound(src, "bodyfall", 50, TRUE)
+		playsound(src, SFX_BODYFALL, 50, TRUE)
 	faller.drop_all_held_items()
 
 /turf/proc/photograph(limit=20)
@@ -626,7 +631,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		clear_reagents_to_vomit_pool(M, V, purge_ratio)
 
 /proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V, purge_ratio = 0.1)
-	var/obj/item/organ/stomach/belly = M.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/stomach/belly = M.getorganslot(ORGAN_SLOT_STOMACH)
 	if(!belly?.reagents.total_volume)
 		return
 	var/chemicals_lost = belly.reagents.total_volume * purge_ratio
@@ -678,8 +683,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
  * * caller: The movable, if one exists, being used for mobility checks to see what tiles it can reach
  * * ID: An ID card that decides if we can gain access to doors that would otherwise block a turf
  * * simulated_only: Do we only worry about turfs with simulated atmos, most notably things that aren't space?
+ * * no_id: When true, doors with public access will count as impassible
 */
-/turf/proc/reachableAdjacentTurfs(caller, ID, simulated_only)
+/turf/proc/reachableAdjacentTurfs(caller, ID, simulated_only, no_id = FALSE)
 	var/static/space_type_cache = typecacheof(/turf/open/space)
 	. = list()
 
@@ -687,7 +693,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		var/turf/turf_to_check = get_step(src,iter_dir)
 		if(!turf_to_check || (simulated_only && space_type_cache[turf_to_check.type]))
 			continue
-		if(turf_to_check.density || LinkBlockedWithAccess(turf_to_check, caller, ID))
+		if(turf_to_check.density || LinkBlockedWithAccess(turf_to_check, caller, ID, no_id = no_id))
 			continue
 		. += turf_to_check
 

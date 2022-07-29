@@ -1,23 +1,12 @@
-/*
-//////////////////////////////////////
-
-Coughing
-
-	Noticable.
-	Little Resistance.
-	Doesn't increase stage speed much.
-	Transmissibile.
-	Low Level.
-
-BONUS
-	Spreads the virus in a small square around the host.
-	Can force the affected mob to drop small items!
-
-//////////////////////////////////////
+/**Coughing
+ * Slightly decreases stealth
+ * Reduces resistance
+ * Slightly increases stage speed
+ * Increases transmissibility
+ * Low level
+ * Bonus: Spreads the virus in a small square around the host. Can force the affected mob to drop small items!
 */
-
 /datum/symptom/cough
-
 	name = "Cough"
 	desc = "The virus irritates the throat of the host, causing occasional coughing. Each cough will try to infect bystanders who are within 1 tile of the host with the virus."
 	stealth = -1

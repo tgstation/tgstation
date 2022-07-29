@@ -12,7 +12,7 @@
 	volume = 15
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=20)
 	reagent_flags = TRANSPARENT
-	custom_price = PAYCHECK_EASY * 0.5
+	custom_price = PAYCHECK_CREW * 0.5
 	sharpness = SHARP_POINTY
 	/// Flags used by the injection
 	var/inject_flags = NONE
@@ -45,7 +45,7 @@
 	if (!try_syringe(target, user, proximity))
 		return
 
-	var/contained = reagents.log_list()
+	var/contained = reagents.get_reagent_log_string()
 	log_combat(user, target, "attempted to inject", src, addition="which had [contained]")
 
 	if(!reagents.total_volume)
@@ -230,6 +230,14 @@
 	volume = 10
 	possible_transfer_amounts = list(5, 10)
 	inject_flags = INJECT_CHECK_PENETRATE_THICK
+
+/obj/item/reagent_containers/syringe/crude
+	name = "crude syringe"
+	desc = "A crudely made syringe. The flimsy wooden construction makes it hold a minimal amounts of reagents, but its very disposable."
+	icon_state = "crude_0"
+	base_icon_state = "crude"
+	possible_transfer_amounts = list(1,5)
+	volume = 5
 
 /obj/item/reagent_containers/syringe/spider_extract
 	name = "spider extract syringe"

@@ -4,6 +4,15 @@
 	spark_system.attach(src)
 
 	ADD_TRAIT(src, TRAIT_CAN_STRIP, INNATE_TRAIT)
+	AddComponent(/datum/component/tippable, \
+		tip_time = 3 SECONDS, \
+		untip_time = 2 SECONDS, \
+		self_right_time = 60 SECONDS, \
+		post_tipped_callback = CALLBACK(src, .proc/after_tip_over), \
+		post_untipped_callback = CALLBACK(src, .proc/after_righted), \
+		roleplay_friendly = TRUE, \
+		roleplay_emotes = list(/datum/emote/silicon/buzz, /datum/emote/silicon/buzz2, /datum/emote/living/beep), \
+		roleplay_callback = CALLBACK(src, .proc/untip_roleplay))
 
 	wires = new /datum/wires/robot(src)
 	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
@@ -33,6 +42,8 @@
 
 	if(lawupdate)
 		make_laws()
+		for (var/law in laws.inherent)
+			lawcheck += law
 		if(!TryConnectToAI())
 			lawupdate = FALSE
 
@@ -53,7 +64,7 @@
 		//MMI stuff. Held togheter by magic. ~Miauw
 		if(!mmi?.brainmob)
 			mmi = new (src)
-			mmi.brain = new /obj/item/organ/brain(mmi)
+			mmi.brain = new /obj/item/organ/internal/brain(mmi)
 			mmi.brain.organ_flags |= ORGAN_FROZEN
 			mmi.brain.name = "[real_name]'s brain"
 			mmi.name = "[initial(mmi.name)]: [real_name]"
@@ -70,8 +81,8 @@
 	logevent("System brought online.")
 
 	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z))
-	RegisterSignal(alert_control.listener, COMSIG_ALARM_TRIGGERED, .proc/alarm_triggered)
-	RegisterSignal(alert_control.listener, COMSIG_ALARM_CLEARED, .proc/alarm_cleared)
+	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_TRIGGERED, .proc/alarm_triggered)
+	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_CLEARED, .proc/alarm_cleared)
 	alert_control.listener.RegisterSignal(src, COMSIG_LIVING_DEATH, /datum/alarm_listener/proc/prevent_alarm_changes)
 	alert_control.listener.RegisterSignal(src, COMSIG_LIVING_REVIVE, /datum/alarm_listener/proc/allow_alarm_changes)
 
@@ -80,16 +91,13 @@
 	laws = new /datum/ai_laws/syndicate_override()
 	addtimer(CALLBACK(src, .proc/show_playstyle), 5)
 
-/mob/living/silicon/robot/proc/create_modularInterface()
-	if(!modularInterface)
-		modularInterface = new /obj/item/modular_computer/tablet/integrated(src)
-	modularInterface.layer = ABOVE_HUD_PLANE
-	modularInterface.plane = ABOVE_HUD_PLANE
-
 /mob/living/silicon/robot/model/syndicate/create_modularInterface()
 	if(!modularInterface)
 		modularInterface = new /obj/item/modular_computer/tablet/integrated/syndicate(src)
+		modularInterface.saved_identification = real_name
+		modularInterface.saved_job = "Cyborg"
 	return ..()
+
 
 /**
  * Sets the tablet theme and icon
@@ -142,6 +150,7 @@
 	QDEL_NULL(inv1)
 	QDEL_NULL(inv2)
 	QDEL_NULL(inv3)
+	QDEL_NULL(hands)
 	QDEL_NULL(spark_system)
 	QDEL_NULL(alert_control)
 	cell = null
@@ -162,6 +171,10 @@
 
 	if(wires.is_cut(WIRE_RESET_MODEL))
 		to_chat(src,span_userdanger("ERROR: Model installer reply timeout. Please check internal connections."))
+		return
+
+	if(lockcharge == TRUE)
+		to_chat(src,span_userdanger("ERROR: Lockdown is engaged. Please disengage lockdown to pick module."))
 		return
 
 	var/list/model_list = list(
@@ -282,6 +295,16 @@
 		return FALSE
 	return ..()
 
+
+/mob/living/silicon/robot/proc/after_tip_over(mob/user)
+	if(hat)
+		hat.forceMove(drop_location())
+	unbuckle_all_mobs()
+
+///For any special cases for robots after being righted.
+/mob/living/silicon/robot/proc/after_righted(mob/user)
+	return
+
 /mob/living/silicon/robot/proc/allowed(mob/M)
 	//check if it doesn't require any access at all
 	if(check_access(null))
@@ -333,7 +356,7 @@
 		else
 			eye_lights.icon_state = "[model.special_light_key ? "[model.special_light_key]":"[model.cyborg_base_icon]"]_e"
 			eye_lights.color = COLOR_WHITE
-			eye_lights.plane = GAME_PLANE
+			eye_lights.plane = ABOVE_GAME_PLANE
 		eye_lights.icon = icon
 		add_overlay(eye_lights)
 
@@ -397,9 +420,9 @@
 	if(wires?.is_cut(WIRE_LOCKDOWN))
 		state = TRUE
 	if(state)
-		throw_alert("locked", /atom/movable/screen/alert/locked)
+		throw_alert(ALERT_HACKED, /atom/movable/screen/alert/locked)
 	else
-		clear_alert("locked")
+		clear_alert(ALERT_HACKED)
 	set_lockcharge(state)
 
 
@@ -422,9 +445,9 @@
 	model.rebuild_modules()
 	update_icons()
 	if(emagged)
-		throw_alert("hacked", /atom/movable/screen/alert/hacked)
+		throw_alert(ALERT_HACKED, /atom/movable/screen/alert/hacked)
 	else
-		clear_alert("hacked")
+		clear_alert(ALERT_HACKED)
 	set_modularInterface_theme()
 
 /// Special handling for getting hit with a light eater
@@ -665,6 +688,7 @@
 	notify_ai(AI_NOTIFICATION_CYBORG_RENAMED, oldname, newname)
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name
+		modularInterface.saved_identification = real_name
 	custom_name = newname
 
 
@@ -715,11 +739,6 @@
 	if(model.model_traits)
 		for(var/trait in model.model_traits)
 			ADD_TRAIT(src, trait, MODEL_TRAIT)
-
-	if(model.clean_on_move)
-		AddElement(/datum/element/cleaning)
-	else
-		RemoveElement(/datum/element/cleaning)
 
 	hat_offset = model.hat_offset
 
@@ -853,7 +872,7 @@
 	icon_icon = 'icons/mob/actions/actions_AI.dmi'
 	button_icon_state = "ai_core"
 
-/datum/action/innate/undeployment/Trigger()
+/datum/action/innate/undeployment/Trigger(trigger_flags)
 	if(!..())
 		return FALSE
 	var/mob/living/silicon/robot/R = owner
@@ -955,32 +974,36 @@
 		lamp_doom = connected_ai.doomsday_device ? TRUE : FALSE
 	toggle_headlamp(FALSE, TRUE)
 
-/**
- * Records an IC event log entry in the cyborg's internal tablet.
- *
- * Creates an entry in the borglog list of the cyborg's internal tablet, listing the current
- * in-game time followed by the message given. These logs can be seen by the cyborg in their
- * BorgUI tablet app. By design, logging fails if the cyborg is dead.
- *
- * Arguments:
- * arg1: a string containing the message to log.
- */
-/mob/living/silicon/robot/proc/logevent(string = "")
-	if(!string)
-		return
-	if(stat == DEAD) //Dead borgs log no longer
-		return
-	if(!modularInterface)
-		stack_trace("Cyborg [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
-		create_modularInterface()
-	modularInterface.borglog += "[station_time_timestamp()] - [string]"
-	var/datum/computer_file/program/robotact/program = modularInterface.get_robotact()
-	if(program)
-		program.force_full_update()
-
 /mob/living/silicon/robot/get_exp_list(minutes)
 	. = ..()
 
 	var/datum/job/cyborg/cyborg_job_ref = SSjob.GetJobType(/datum/job/cyborg)
 
 	.[cyborg_job_ref.title] = minutes
+
+/mob/living/silicon/robot/proc/untip_roleplay()
+	to_chat(src, span_notice("Your frustration has empowered you! You can now right yourself faster!"))
+
+/mob/living/silicon/robot/update_fire_overlay(stacks, on_fire, last_icon_state, suffix = "")
+	var/fire_icon = "generic_fire[suffix]"
+
+	if(!GLOB.fire_appearances[fire_icon])
+		var/mutable_appearance/new_fire_overlay = mutable_appearance('icons/mob/onfire.dmi', fire_icon, -FIRE_LAYER)
+		new_fire_overlay.appearance_flags = RESET_COLOR
+		GLOB.fire_appearances[fire_icon] = new_fire_overlay
+
+	if(stacks && on_fire)
+		if(last_icon_state == fire_icon)
+			return last_icon_state
+		add_overlay(GLOB.fire_appearances[fire_icon])
+		return fire_icon
+
+	if(!last_icon_state)
+		return last_icon_state
+
+	cut_overlay(GLOB.fire_appearances[fire_icon])
+	return null
+
+/// Draw power from the robot
+/mob/living/silicon/robot/proc/draw_power(power_to_draw)
+	cell?.use(power_to_draw)

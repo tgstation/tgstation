@@ -30,7 +30,7 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 	if(needs_button)
 		Grant(user)//how powers are added rather than the checks in mob.dm
 
-/datum/action/changeling/Trigger()
+/datum/action/changeling/Trigger(trigger_flags)
 	var/mob/user = owner
 	if(!user || !user.mind || !user.mind.has_antag_datum(/datum/antagonist/changeling))
 		return

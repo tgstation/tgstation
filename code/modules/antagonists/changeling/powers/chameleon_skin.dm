@@ -12,14 +12,14 @@
 	if(!istype(H)) // req_human could be done in can_sting stuff.
 		return
 	..()
-	if(H.dna.get_mutation(CHAMELEON))
-		H.dna.remove_mutation(CHAMELEON)
+	if(H.dna.get_mutation(/datum/mutation/human/chameleon))
+		H.dna.remove_mutation(/datum/mutation/human/chameleon)
 	else
-		H.dna.add_mutation(CHAMELEON)
+		H.dna.add_mutation(/datum/mutation/human/chameleon)
 	return TRUE
 
 /datum/action/changeling/chameleon_skin/Remove(mob/user)
 	if(user.has_dna())
 		var/mob/living/carbon/C = user
-		C.dna.remove_mutation(CHAMELEON)
+		C.dna.remove_mutation(/datum/mutation/human/chameleon)
 	..()

@@ -10,8 +10,6 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "core"
 	base_icon_state = "core"
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 0
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/spaceship_navigation_beacon
 
@@ -20,13 +18,13 @@
 
 /obj/machinery/spaceship_navigation_beacon/Initialize(mapload)
 	. = ..()
-	SSshuttle.beacons |= src
+	SSshuttle.beacon_list |= src
 
 /obj/machinery/spaceship_navigation_beacon/emp_act()
 	locked = TRUE
 
 /obj/machinery/spaceship_navigation_beacon/Destroy()
-	SSshuttle.beacons -= src
+	SSshuttle.beacon_list -= src
 	return ..()
 
 // update the icon_state

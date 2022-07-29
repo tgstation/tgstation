@@ -26,13 +26,7 @@ const COLORS_SPECTRUM = [
   'grey',
 ];
 
-const COLORS_STATES = [
-  'good',
-  'average',
-  'bad',
-  'black',
-  'white',
-];
+const COLORS_STATES = ['good', 'average', 'bad', 'black', 'white'];
 
 const Story = (props, context) => {
   return (
@@ -51,28 +45,20 @@ const Story = (props, context) => {
           lineHeight={2}
           minWidth={15}
           textAlign="center"
-          content="With Box props" />
+          content="With Box props"
+        />
       </Box>
       <Box mb={1}>
-        {COLORS_STATES.map(color => (
-          <Button
-            key={color}
-            color={color}
-            content={color} />
+        {COLORS_STATES.map((color) => (
+          <Button key={color} color={color} content={color} />
         ))}
         <br />
-        {COLORS_SPECTRUM.map(color => (
-          <Button
-            key={color}
-            color={color}
-            content={color} />
+        {COLORS_SPECTRUM.map((color) => (
+          <Button key={color} color={color} content={color} />
         ))}
         <br />
-        {COLORS_SPECTRUM.map(color => (
-          <Box inline
-            mx="7px"
-            key={color}
-            color={color}>
+        {COLORS_SPECTRUM.map((color) => (
+          <Box inline mx="7px" key={color} color={color}>
             {color}
           </Box>
         ))}

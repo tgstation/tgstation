@@ -8,11 +8,7 @@
 #DO tick the associated code file for the away mission you are enabling. Otherwise, the map will be trying to reference objects which do not exist, which will cause runtime errors!
 
 #_maps/RandomZLevels/blackmarketpackers.dmm
-#_maps/RandomZLevels/spacebattle.dmm
 #_maps/RandomZLevels/TheBeach.dmm
-#_maps/RandomZLevels/Academy.dmm
-#_maps/RandomZLevels/wildwest.dmm
-#_maps/RandomZLevels/challenge.dmm
 #_maps/RandomZLevels/centcomAway.dmm
 #_maps/RandomZLevels/moonoutpost19.dmm
 #_maps/RandomZLevels/undergroundoutpost45.dmm
@@ -20,4 +16,3 @@
 #_maps/RandomZLevels/snowdin.dmm
 #_maps/RandomZLevels/research.dmm
 #_maps/RandomZLevels/SnowCabin.dmm
-_maps/RandomZLevels/VR/snowdin_VR.dmm

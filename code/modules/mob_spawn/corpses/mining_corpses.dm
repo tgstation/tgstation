@@ -21,7 +21,7 @@
 
 /obj/effect/mob_spawn/corpse/human/legioninfested/dwarf/special(mob/living/carbon/human/spawned_human)
 	. = ..()
-	spawned_human.dna.add_mutation(DWARFISM)
+	spawned_human.dna.add_mutation(/datum/mutation/human/dwarfism)
 
 //main type, rolls a pool of legion victims
 /obj/effect/mob_spawn/corpse/human/legioninfested
@@ -124,7 +124,6 @@
 	uniform = /obj/item/clothing/under/rank/civilian/clown
 	back = /obj/item/storage/backpack/clown
 	backpack_contents = list()
-	belt = /obj/item/pda/clown
 	ears = /obj/item/radio/headset/headset_srv
 	shoes = /obj/item/clothing/shoes/clown_shoes
 	mask = /obj/item/clothing/mask/gas/clown_hat
@@ -187,7 +186,7 @@
 /datum/outfit/consumed_dame/pre_equip(mob/living/carbon/human/dame, visualsOnly = FALSE)
 	if(!visualsOnly)
 		dame.gender = FEMALE
-		dame.body_type = FEMALE
+		dame.physique = FEMALE
 		dame.update_body()
 	if(prob(30))
 		back = /obj/item/nullrod/scythe/talking

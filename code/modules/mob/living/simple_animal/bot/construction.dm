@@ -234,7 +234,7 @@
 	created_name = "Medibot" //To preserve the name if it's a unique medbot I guess
 	var/skin = null //Same as medbot, set to tox or ointment for the respective kits.
 	var/healthanalyzer = /obj/item/healthanalyzer
-	var/firstaid = /obj/item/storage/firstaid
+	var/medkit_type = /obj/item/storage/medkit
 
 /obj/item/bot_assembly/medbot/proc/set_skin(skin)
 	src.skin = skin
@@ -260,14 +260,14 @@
 				if(!can_finish_build(W, user))
 					return
 				qdel(W)
-				var/mob/living/simple_animal/bot/medbot/S = new(drop_location(), skin)
+				var/mob/living/simple_animal/bot/medbot/medbot = new(drop_location(), skin)
 				to_chat(user, span_notice("You complete the Medbot. Beep boop!"))
-				S.name = created_name
-				S.firstaid = firstaid
-				S.robot_arm = robot_arm
-				S.healthanalyzer = healthanalyzer
-				var/obj/item/storage/firstaid/FA = firstaid
-				S.damagetype_healer = initial(FA.damagetype_healed) ? initial(FA.damagetype_healed) : BRUTE
+				medbot.name = created_name
+				medbot.medkit_type = medkit_type
+				medbot.robot_arm = robot_arm
+				medbot.healthanalyzer = healthanalyzer
+				var/obj/item/storage/medkit/medkit = medkit_type
+				medbot.damagetype_healer = initial(medkit.damagetype_healed) ? initial(medkit.damagetype_healed) : BRUTE
 				qdel(src)
 
 
@@ -278,30 +278,30 @@
 	icon_state = "honkbot_arm"
 	created_name = "Honkbot"
 
-/obj/item/bot_assembly/honkbot/attackby(obj/item/I, mob/user, params)
+/obj/item/bot_assembly/honkbot/attackby(obj/item/attacking_item, mob/user, params)
 	..()
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP)
-			if(isprox(I))
-				if(!user.temporarilyRemoveItemFromInventory(I))
+			if(isprox(attacking_item))
+				if(!user.temporarilyRemoveItemFromInventory(attacking_item))
 					return
-				to_chat(user, span_notice("You add the [I] to [src]!"))
+				to_chat(user, span_notice("You add the [attacking_item] to [src]!"))
 				icon_state = "honkbot_proxy"
 				name = "incomplete Honkbot assembly"
-				qdel(I)
+				qdel(attacking_item)
 				build_step++
 
 		if(ASSEMBLY_SECOND_STEP)
-			if(istype(I, /obj/item/bikehorn))
-				if(!can_finish_build(I, user))
+			if(istype(attacking_item, /obj/item/bikehorn))
+				if(!can_finish_build(attacking_item, user))
 					return
-				to_chat(user, span_notice("You add the [I] to [src]! Honk!"))
-				var/mob/living/simple_animal/bot/honkbot/S = new(drop_location())
-				S.name = created_name
-				S.limiting_spam = TRUE // only long enough to hear the first ping.
-				addtimer(CALLBACK (S, .mob/living/simple_animal/bot/honkbot/proc/react_ping), 5)
-				S.bikehorn = I.type
-				qdel(I)
+				to_chat(user, span_notice("You add the [attacking_item] to [src]! Honk!"))
+				var/mob/living/simple_animal/bot/secbot/honkbot/new_honkbot = new(drop_location())
+				new_honkbot.name = created_name
+				new_honkbot.limiting_spam = TRUE // only long enough to hear the first ping.
+				playsound(new_honkbot, 'sound/machines/ping.ogg', 50, TRUE, -1)
+				new_honkbot.baton_type = attacking_item.type
+				qdel(attacking_item)
 				qdel(src)
 
 

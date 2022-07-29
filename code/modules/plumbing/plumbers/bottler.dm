@@ -3,10 +3,11 @@
 	desc = "Puts reagents into containers, like bottles and beakers in the tile facing the green light spot, they will exit on the red light spot if successfully filled."
 	icon_state = "bottler"
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 
 	reagent_flags = TRANSPARENT | DRAINABLE
 	buffer = 100
-
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 	///how much do we fill
 	var/wanted_amount = 10
 	///where things are sent
@@ -28,12 +29,6 @@
 	. += span_notice("A small screen indicates that it will fill for [wanted_amount]u.")
 	if(!valid_output_configuration)
 		. += span_warning("A flashing notification on the screen reads: \"Output location error!\"")
-
-/obj/machinery/plumbing/bottler/can_be_rotated(mob/user, rotation_type)
-	if(anchored)
-		to_chat(user, span_warning("It is fastened to the floor!"))
-		return FALSE
-	return TRUE
 
 ///changes the tile array
 /obj/machinery/plumbing/bottler/setDir(newdir)
@@ -67,13 +62,13 @@
 	if(!valid_output_configuration)
 		to_chat(user, span_warning("A flashing notification on the screen reads: \"Output location error!\""))
 		return .
-	var/new_amount = tgui_input_number(user, "Set Amount to Fill", "Desired Amount", 1, 100, 1)
-	if(isnull(new_amount))
+	var/new_amount = tgui_input_number(user, "Set Amount to Fill", "Desired Amount", max_value = 100)
+	if(!new_amount || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return .
-	wanted_amount = round(new_amount)
+	wanted_amount = new_amount
 	to_chat(user, span_notice(" The [src] will now fill for [wanted_amount]u."))
 
-/obj/machinery/plumbing/bottler/process()
+/obj/machinery/plumbing/bottler/process(delta_time)
 	if(machine_stat & NOPOWER)
 		return
 	// Sanity check the result locations and stop processing if they don't exist
@@ -81,8 +76,9 @@
 		valid_output_configuration = FALSE
 		return PROCESS_KILL
 
-	///see if machine has enough to fill
-	if(reagents.total_volume >= wanted_amount && anchored)
+	///see if machine has enough to fill, is anchored down and has any inputspot objects to pick from
+	if(reagents.total_volume >= wanted_amount && anchored && length(inputspot.contents))
+		use_power(active_power_usage * delta_time)
 		var/obj/AM = pick(inputspot.contents)///pick a reagent_container that could be used
 		if((istype(AM, /obj/item/reagent_containers) && !istype(AM, /obj/item/reagent_containers/hypospray/medipen)) || istype(AM, /obj/item/ammo_casing/shotgun/dart))
 			var/obj/item/reagent_containers/B = AM

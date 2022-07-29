@@ -1,4 +1,0 @@
-author: "SuperNovaa41"
-delete-after: True
-changes: 
-  - bugfix: "Clicking an open locker on combat mode will no longer deposit your item."

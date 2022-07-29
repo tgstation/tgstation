@@ -111,16 +111,19 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		to_chat(src, span_warning("That message contained a word prohibited in IC chat! Consider reviewing the server rules."))
 		to_chat(src, span_warning("\"[message]\""))
 		REPORT_CHAT_FILTER_TO_USER(src, filter_result)
+		log_filter("IC", message, filter_result)
 		SSblackbox.record_feedback("tally", "ic_blocked_words", 1, lowertext(config.ic_filter_regex.match))
 		return
 
 	if(soft_filter_result && !filterproof)
 		if(tgui_alert(usr,"Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to say it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
 			SSblackbox.record_feedback("tally", "soft_ic_blocked_words", 1, lowertext(config.soft_ic_filter_regex.match))
+			log_filter("Soft IC", message, filter_result)
 			return
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term. Message: \"[message]\"")
 		log_admin_private("[key_name(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term. Message: \"[message]\"")
 		SSblackbox.record_feedback("tally", "passed_soft_ic_blocked_words", 1, lowertext(config.soft_ic_filter_regex.match))
+		log_filter("Soft IC (Passed)", message, filter_result)
 
 	var/list/message_mods = list()
 	var/original_message = message
@@ -228,6 +231,15 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		message = "[randomnote] [message] [randomnote]"
 		spans |= SPAN_SINGING
 
+	// Leaving this here so that anything that handles speech this way will be able to have spans affecting it and all that.
+	var/sigreturn = SEND_SIGNAL(src, COMSIG_MOB_SAY, args, message_range)
+	if (sigreturn & COMPONENT_UPPERCASE_SPEECH)
+		message = uppertext(message)
+	if(!message)
+		if(succumbed)
+			succumb()
+		return
+
 	//This is before anything that sends say a radio message, and after all important message type modifications, so you can scumb in alien chat or something
 	if(saymode && !saymode.handle_message(src, message, language))
 		return
@@ -237,15 +249,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		radio_message = stars(radio_message)
 		spans |= SPAN_ITALICS
 
-	var/list/speech_arguments = args + message_range
-	// Leaving this here so that anything that handles speech this way will be able to have spans affecting it and all that.
-	var/sigreturn = SEND_SIGNAL(src, COMSIG_MOB_SAY, speech_arguments)
-	if (sigreturn & COMPONENT_UPPERCASE_SPEECH)
-		message = uppertext(message)
-	if(!message)
-		if(succumbed)
-			succumb()
-		return
 
 	var/radio_return = radio(radio_message, message_mods, spans, language)//roughly 27% of living/say()'s total cost
 	if(radio_return & ITALICS)
@@ -261,7 +264,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	var/turf/T = get_turf(src)
 	var/datum/gas_mixture/environment = T.return_air()
 	var/pressure = (environment)? environment.return_pressure() : 0
-	if(pressure < SOUND_MINIMUM_PRESSURE)
+	if(pressure < SOUND_MINIMUM_PRESSURE && !HAS_TRAIT(H, TRAIT_SIGN_LANG))
 		message_range = 1
 
 	if(pressure < ONE_ATMOSPHERE*0.4) //Thin air, let's italicise the message
@@ -396,6 +399,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		if(M.client && (!M.client.prefs.read_preference(/datum/preference/toggle/enable_runechat) || (SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES))))
 			speech_bubble_recipients.Add(M.client)
 	var/image/I = image('icons/mob/talk.dmi', src, "[bubble_type][say_test(message)]", FLY_LAYER)
+	I.plane = ABOVE_GAME_PLANE
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	INVOKE_ASYNC(GLOBAL_PROC, /.proc/flick_overlay, I, speech_bubble_recipients, 30)
 
@@ -432,21 +436,10 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 
 /mob/living/proc/treat_message(message)
-
 	if(HAS_TRAIT(src, TRAIT_UNINTELLIGIBLE_SPEECH))
 		message = unintelligize(message)
 
-	if(derpspeech)
-		message = derpspeech(message, stuttering)
-
-	if(stuttering)
-		message = stutter(message)
-
-	if(slurring)
-		message = slur(message)
-
-	if(cultslurring)
-		message = cultslur(message)
+	SEND_SIGNAL(src, COMSIG_LIVING_TREAT_MESSAGE, args)
 
 	message = capitalize(message)
 
@@ -487,12 +480,12 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		. = "[verb_whisper] in [p_their()] last breath"
 	else if(message_mods[MODE_SING])
 		. = verb_sing
-	else if(stuttering)
+	else if(has_status_effect(/datum/status_effect/speech/stutter))
 		if(HAS_TRAIT(src, TRAIT_SIGN_LANG))
 			. = "shakily signs"
 		else
 			. = "stammers"
-	else if(derpspeech)
+	else if(has_status_effect(/datum/status_effect/speech/stutter/derpspeech))
 		if(HAS_TRAIT(src, TRAIT_SIGN_LANG))
 			. = "incoherently signs"
 		else
@@ -500,7 +493,21 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	else
 		. = ..()
 
-/mob/living/whisper(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof)
+/**
+ * Living level whisper.
+ *
+ * Living mobs which whisper have their message only appear to people very close.
+ *
+ * message - the message to display
+ * bubble_type - the type of speech bubble that shows up when they speak (currently does nothing)
+ * spans - a list of spans to apply around the message
+ * sanitize - whether we sanitize the message
+ * language - typepath language to force them to speak / whisper in
+ * ignore_spam - whether we ignore the spam filter
+ * forced - string source of what forced this speech to happen, also bypasses spam filter / mutes if supplied
+ * filterproof - whether we ignore the word filter
+ */
+/mob/living/whisper(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language, ignore_spam = FALSE, forced, filterproof)
 	if(!message)
 		return
 	say("#[message]", bubble_type, spans, sanitize, language, ignore_spam, forced, filterproof)

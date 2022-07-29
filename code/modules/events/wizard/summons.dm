@@ -8,10 +8,10 @@
 /datum/round_event_control/wizard/summonguns/New()
 	if(CONFIG_GET(flag/no_summon_guns))
 		weight = 0
-	..()
+	return ..()
 
 /datum/round_event/wizard/summonguns/start()
-	rightandwrong(SUMMON_GUNS, null, 10)
+	summon_guns(survivor_probability = 10)
 
 /datum/round_event_control/wizard/summonmagic //The Somewhat Less Classic
 	name = "Summon Magic"
@@ -23,7 +23,7 @@
 /datum/round_event_control/wizard/summonmagic/New()
 	if(CONFIG_GET(flag/no_summon_magic))
 		weight = 0
-	..()
+	return ..()
 
 /datum/round_event/wizard/summonmagic/start()
-	rightandwrong(SUMMON_MAGIC, null, 10)
+	summon_magic(survivor_probability = 10)

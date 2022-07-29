@@ -7,7 +7,7 @@
 	var/can_cancel = TRUE //Can cancel this surgery after step 1 with cautery
 	var/list/target_mobtypes = list(/mob/living/carbon/human) //Acceptable Species
 	var/location = BODY_ZONE_CHEST //Surgery location
-	var/requires_bodypart_type = BODYPART_ORGANIC //Prevents you from performing an operation on incorrect limbs. 0 for any limb type
+	var/requires_bodypart_type = BODYTYPE_ORGANIC //Prevents you from performing an operation on incorrect limbs. 0 for any limb type
 	var/list/possible_locs = list() //Multiple locations
 	var/ignore_clothes = FALSE //This surgery ignores clothes
 	var/mob/living/carbon/target //Operation target mob
@@ -22,20 +22,24 @@
 	var/requires_tech = FALSE //handles techweb-oriented surgeries, previously restricted to the /advanced subtype (You still need to add designs)
 	var/replaced_by //type; doesn't show up if this type exists. Set to /datum/surgery if you want to hide a "base" surgery (useful for typing parents IE healing.dm just make sure to null it out again)
 	/// Organ being directly manipulated, used for checking if the organ is still in the body after surgery has begun
-	var/organ_to_manipulate 
+	var/organ_to_manipulate
 
-/datum/surgery/New(surgery_target, surgery_location, surgery_bodypart)
+/datum/surgery/New(atom/surgery_target, surgery_location, surgery_bodypart)
 	..()
-	if(surgery_target)
-		target = surgery_target
-		target.surgeries += src
-		if(surgery_location)
-			location = surgery_location
-		if(surgery_bodypart)
-			operated_bodypart = surgery_bodypart
-			if(targetable_wound)
-				operated_wound = operated_bodypart.get_wound_type(targetable_wound)
-				operated_wound.attached_surgery = src
+	if(!surgery_target)
+		return
+	target = surgery_target
+	target.surgeries += src
+	if(surgery_location)
+		location = surgery_location
+	if(!surgery_bodypart)
+		return
+	operated_bodypart = surgery_bodypart
+	if(targetable_wound)
+		operated_wound = operated_bodypart.get_wound_type(targetable_wound)
+		operated_wound.attached_surgery = src
+
+	SEND_SIGNAL(surgery_target, COMSIG_MOB_SURGERY_STARTED, src, surgery_location, surgery_bodypart)
 
 /datum/surgery/Destroy()
 	if(operated_wound)

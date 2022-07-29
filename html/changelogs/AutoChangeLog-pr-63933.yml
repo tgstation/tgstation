@@ -1,4 +1,0 @@
-author: "tastyfish"
-delete-after: True
-changes: 
-  - bugfix: "The connect_range component now works correctly, meaning stacking machines in Recycling now pick up stacks again."

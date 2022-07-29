@@ -99,6 +99,11 @@ Difficulty: Hard
 	hallucination_charge_surround.spawn_blood = TRUE
 	RegisterSignal(src, COMSIG_BLOOD_WARP, .proc/blood_enrage)
 	RegisterSignal(src, COMSIG_FINISHED_CHARGE, .proc/after_charge)
+	if(spawn_blood)
+		AddComponent(/datum/component/blood_walk, \
+			blood_type = /obj/effect/decal/cleanable/blood/bubblegum, \
+			sound_played = 'sound/effects/meteorimpact.ogg', \
+			sound_volume = 200)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Destroy()
 	QDEL_NULL(triple_charge)
@@ -119,18 +124,17 @@ Difficulty: Hard
 		return
 
 	if(!try_bloodattack() || prob(25 + anger_modifier))
-		blood_warp.Trigger(target)
+		blood_warp.Trigger(target = target)
 
 	if(!BUBBLEGUM_SMASH)
-		triple_charge.Trigger(target)
+		triple_charge.Trigger(target = target)
+	else if(prob(50 + anger_modifier))
+		hallucination_charge.Trigger(target = target)
 	else
-		if(prob(50 + anger_modifier))
-			hallucination_charge.Trigger(target)
-		else
-			hallucination_charge_surround.Trigger(target)
+		hallucination_charge_surround.Trigger(target = target)
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_mobs_on_blood(mob/target)
-	var/list/targets = list(target)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_mobs_on_blood()
+	var/list/targets = ListTargets()
 	. = list()
 	for(var/mob/living/L in targets)
 		var/list/bloodpool = get_bloodcrawlable_pools(get_turf(L), 0)
@@ -149,7 +153,7 @@ Difficulty: Hard
  */
 /mob/living/simple_animal/hostile/megafauna/bubblegum/attackby(obj/item/W, mob/user, params)
 	. = ..()
-	if(istype(W, /obj/item/organ/tongue))
+	if(istype(W, /obj/item/organ/internal/tongue))
 		user.client?.give_award(/datum/award/achievement/misc/frenching, user)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/try_bloodattack()
@@ -270,7 +274,8 @@ Difficulty: Hard
 	. = ..()
 	anger_modifier = clamp(((maxHealth - health)/60),0,20)
 	enrage_time = initial(enrage_time) * clamp(anger_modifier / 20, 0.5, 1)
-	hallucination_charge.enraged = BUBBLEGUM_SMASH
+	if(hallucination_charge)
+		hallucination_charge.enraged = BUBBLEGUM_SMASH
 	if(. > 0 && prob(25))
 		var/obj/effect/decal/cleanable/blood/gibs/bubblegum/B = new /obj/effect/decal/cleanable/blood/gibs/bubblegum(loc)
 		if(prob(40))
@@ -305,12 +310,6 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Move()
 	update_approach()
 	. = ..()
-
-/mob/living/simple_animal/hostile/megafauna/bubblegum/Moved(atom/OldLoc, Dir, Forced = FALSE)
-	. = ..()
-	if(spawn_blood)
-		new /obj/effect/decal/cleanable/blood/bubblegum(src.loc)
-	playsound(src, 'sound/effects/meteorimpact.ogg', 200, TRUE, 2, TRUE)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination
 	name = "bubblegum's hallucination"
@@ -383,10 +382,12 @@ Difficulty: Hard
 /obj/effect/temp_visual/bubblegum_hands/rightpaw
 	icon_state = "rightpawgrab"
 	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
 
 /obj/effect/temp_visual/bubblegum_hands/leftpaw
 	icon_state = "leftpawgrab"
 	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
 
 /obj/effect/temp_visual/bubblegum_hands/rightsmack
 	icon_state = "rightsmack"

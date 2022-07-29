@@ -1,0 +1,27 @@
+{
+	"replacements": {
+		"characters": {
+			"common": {
+				"o": "u",
+				"t": "ch",
+				"a": "ah",
+				"u": "oo",
+				"c": " NAR ",
+				"s": " SIE "
+			},
+			"uncommon": {
+				" ": " no hope... ",
+				"H": " IT COMES... "
+			}
+		},
+		"string_replacements": [
+			"'",
+			"fth",
+			"nglu",
+			"glor"
+		],
+		"string_additions": [
+			"agn"
+		]
+	}
+}

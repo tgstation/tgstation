@@ -26,22 +26,18 @@
 /datum/saymode/vocalcords/handle_message(mob/living/user, message, datum/language/language)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		var/obj/item/organ/vocal_cords/V = C.getorganslot(ORGAN_SLOT_VOICE)
+		var/obj/item/organ/internal/vocal_cords/V = C.getorganslot(ORGAN_SLOT_VOICE)
 		if(V?.can_speak_with())
 			V.handle_speech(message) //message
 			V.speak_with(message) //action
 	return FALSE
 
 
-/datum/saymode/binary //everything that uses .b (silicons, drones, swarmers)
+/datum/saymode/binary //everything that uses .b (silicons, drones)
 	key = MODE_KEY_BINARY
 	mode = MODE_BINARY
 
 /datum/saymode/binary/handle_message(mob/living/user, message, datum/language/language)
-	if(isswarmer(user))
-		var/mob/living/simple_animal/hostile/swarmer/S = user
-		S.swarmer_chat(message)
-		return FALSE
 	if(isdrone(user))
 		var/mob/living/simple_animal/drone/D = user
 		D.drone_chat(message)

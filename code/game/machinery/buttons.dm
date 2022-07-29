@@ -10,9 +10,9 @@
 	var/device_type = null
 	var/id = null
 	var/initialized_button = 0
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 10, BIO = 100, FIRE = 90, ACID = 70)
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 2
+	var/silicon_access_disabled = FALSE
+	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 10, BIO = 0, FIRE = 90, ACID = 70)
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 
 /obj/machinery/button/indestructible
@@ -59,16 +59,17 @@
 	if(board)
 		. += "button-board"
 
-/obj/machinery/button/attackby(obj/item/W, mob/living/user, params)
-	if(W.tool_behaviour == TOOL_SCREWDRIVER)
-		if(panel_open || allowed(user))
-			default_deconstruction_screwdriver(user, "button-open", "[skin]",W)
-			update_appearance()
-		else
-			to_chat(user, span_alert("Maintenance Access Denied."))
-			flick("[skin]-denied", src)
-		return
+/obj/machinery/button/screwdriver_act(mob/living/user, obj/item/tool)
+	if(panel_open || allowed(user))
+		default_deconstruction_screwdriver(user, "button-open", "[skin]", tool)
+		update_appearance()
+	else
+		to_chat(user, span_alert("Maintenance Access Denied."))
+		flick("[skin]-denied", src)
 
+	return TRUE
+
+/obj/machinery/button/attackby(obj/item/W, mob/living/user, params)
 	if(panel_open)
 		if(!device && istype(W, /obj/item/assembly))
 			if(!user.transferItemToLoc(W, src))
@@ -110,11 +111,11 @@
 		return
 	req_access = list()
 	req_one_access = list()
-	playsound(src, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	obj_flags |= EMAGGED
 
 /obj/machinery/button/attack_ai(mob/user)
-	if(!panel_open)
+	if(!silicon_access_disabled && !panel_open)
 		return attack_hand(user)
 
 /obj/machinery/button/attack_robot(mob/user)

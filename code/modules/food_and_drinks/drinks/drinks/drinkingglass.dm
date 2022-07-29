@@ -14,7 +14,7 @@
 	obj_flags = UNIQUE_RENAME
 	drop_sound = 'sound/items/handling/drinkglass_drop.ogg'
 	pickup_sound = 'sound/items/handling/drinkglass_pickup.ogg'
-	custom_price = PAYCHECK_PRISONER
+	custom_price = PAYCHECK_LOWER
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/on_reagent_change(datum/reagents/holder, ...)
 	. = ..()
@@ -71,7 +71,7 @@
 	fill_icon_state = "shot_glass"
 	volume = 15
 	custom_materials = list(/datum/material/glass=100)
-	custom_price = PAYCHECK_ASSISTANT * 0.4
+	custom_price = PAYCHECK_CREW * 0.4
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/update_name(updates)
 	if(renamedByPlayer)

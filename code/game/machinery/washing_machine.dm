@@ -70,6 +70,16 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		DYE_SYNDICATE = /obj/item/clothing/gloves/combat,
 		DYE_CENTCOM = /obj/item/clothing/gloves/combat
 	),
+	DYE_REGISTRY_BANDANA = list(
+		DYE_RED = /obj/item/clothing/mask/bandana/red,
+		DYE_ORANGE = /obj/item/clothing/mask/bandana/orange,
+		DYE_YELLOW = /obj/item/clothing/mask/bandana/gold,
+		DYE_GREEN = /obj/item/clothing/mask/bandana/green,
+		DYE_BLUE = /obj/item/clothing/mask/bandana/blue,
+		DYE_PURPLE = /obj/item/clothing/mask/bandana/purple,
+		DYE_BLACK = /obj/item/clothing/mask/bandana/black,
+		DYE_WHITE = /obj/item/clothing/mask/bandana/white
+	),
 	DYE_REGISTRY_SNEAKERS = list(
 		DYE_RED = /obj/item/clothing/shoes/sneakers/red,
 		DYE_ORANGE = /obj/item/clothing/shoes/sneakers/orange,
@@ -212,6 +222,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		qdel(color_source)
 		color_source = null
 	update_appearance()
+	use_power(active_power_usage)
 
 /obj/item/proc/dye_item(dye_color, dye_key_override)
 	var/dye_key_selector = dye_key_override ? dye_key_override : dying_key
@@ -317,10 +328,14 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(panel_open)
 		. += "wm_panel"
 
-/obj/machinery/washing_machine/attackby(obj/item/W, mob/living/user, params)
-	if(panel_open && !busy && default_unfasten_wrench(user, W))
-		return
+/obj/machinery/washing_machine/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(!panel_open || busy)
+		return FALSE
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
+/obj/machinery/washing_machine/attackby(obj/item/W, mob/living/user, params)
 	if(default_deconstruction_screwdriver(user, null, null, W))
 		update_appearance()
 		return

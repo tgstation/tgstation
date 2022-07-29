@@ -8,13 +8,15 @@
 		immunity against extremities such as spot and arc welding, solar eclipses, and handheld flashlights."
 	icon_state = "welding"
 	complexity = 1
-	incompatible_modules = list(/obj/item/mod/module/welding)
+	incompatible_modules = list(/obj/item/mod/module/welding, /obj/item/mod/module/armor_booster)
 	overlay_state_inactive = "module_welding"
 
 /obj/item/mod/module/welding/on_suit_activation()
 	mod.helmet.flash_protect = FLASH_PROTECTION_WELDER
 
-/obj/item/mod/module/welding/on_suit_deactivation()
+/obj/item/mod/module/welding/on_suit_deactivation(deleting = FALSE)
+	if(deleting)
+		return
 	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)
 
 ///T-Ray Scan - Scans the terrain for undertile objects.
@@ -26,11 +28,11 @@
 	icon_state = "tray"
 	module_type = MODULE_TOGGLE
 	complexity = 1
-	active_power_cost = DEFAULT_CELL_DRAIN * 0.2
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/t_ray)
 	cooldown_time = 0.5 SECONDS
 	/// T-ray scan range.
-	var/range = 2
+	var/range = 4
 
 /obj/item/mod/module/t_ray/on_active_process(delta_time)
 	t_ray_scan(mod.wearer, 0.8 SECONDS, range)
@@ -45,7 +47,7 @@
 	icon_state = "magnet"
 	module_type = MODULE_TOGGLE
 	complexity = 2
-	active_power_cost = DEFAULT_CELL_DRAIN * 0.5
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/magboot, /obj/item/mod/module/atrocinator)
 	cooldown_time = 0.5 SECONDS
 	/// Slowdown added onto the suit.
@@ -61,7 +63,7 @@
 	mod.wearer.update_gravity(mod.wearer.has_gravity())
 	mod.wearer.update_equipment_speed_mods()
 
-/obj/item/mod/module/magboot/on_deactivation()
+/obj/item/mod/module/magboot/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -86,7 +88,7 @@
 	icon_state = "tether"
 	module_type = MODULE_ACTIVE
 	complexity = 3
-	use_power_cost = DEFAULT_CELL_DRAIN
+	use_power_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/tether)
 	cooldown_time = 1.5 SECONDS
 
@@ -111,8 +113,7 @@
 /obj/projectile/tether
 	name = "tether"
 	icon_state = "tether_projectile"
-	icon = 'icons/obj/mod.dmi'
-	pass_flags = PASSTABLE
+	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
 	damage = 0
 	nodamage = TRUE
 	range = 10
@@ -120,11 +121,12 @@
 	hitsound_wall = 'sound/weapons/batonextend.ogg'
 	suppressed = SUPPRESSED_VERY
 	hit_threshhold = LATTICE_LAYER
+	/// Reference to the beam following the projectile.
 	var/line
 
 /obj/projectile/tether/fire(setAngle)
 	if(firer)
-		line = firer.Beam(src, "line", 'icons/obj/mod.dmi')
+		line = firer.Beam(src, "line", 'icons/obj/clothing/modsuit/mod_modules.dmi')
 	..()
 
 /obj/projectile/tether/on_hit(atom/target)
@@ -144,7 +146,7 @@
 		giving a voice to an otherwise silent killer."
 	icon_state = "radshield"
 	complexity = 2
-	idle_power_cost = DEFAULT_CELL_DRAIN * 0.3
+	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/rad_protection)
 	tgui_id = "rad_counter"
 	/// Radiation threat level being perceived.
@@ -157,7 +159,7 @@
 	for(var/obj/item/part in mod.mod_parts)
 		ADD_TRAIT(part, TRAIT_RADIATION_PROTECTED_CLOTHING, MOD_TRAIT)
 
-/obj/item/mod/module/rad_protection/on_suit_deactivation()
+/obj/item/mod/module/rad_protection/on_suit_deactivation(deleting = FALSE)
 	qdel(GetComponent(/datum/component/geiger_sound))
 	REMOVE_TRAIT(mod.wearer, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK, MOD_TRAIT)
 	UnregisterSignal(mod.wearer, COMSIG_IN_RANGE_OF_IRRADIATION)
@@ -166,9 +168,9 @@
 
 /obj/item/mod/module/rad_protection/add_ui_data()
 	. = ..()
-	.["userradiated"] = mod.wearer ? HAS_TRAIT(mod.wearer, TRAIT_IRRADIATED) : 0
-	.["usertoxins"] = mod.wearer ? mod.wearer.getToxLoss() : 0
-	.["usermaxtoxins"] = mod.wearer ? mod.wearer.getMaxHealth() : 0
+	.["userradiated"] = mod.wearer ? HAS_TRAIT(mod.wearer, TRAIT_IRRADIATED) : FALSE
+	.["usertoxins"] = mod.wearer?.getToxLoss() || 0
+	.["usermaxtoxins"] = mod.wearer?.getMaxHealth() || 0
 	.["threatlevel"] = perceived_threat_level
 
 /obj/item/mod/module/rad_protection/proc/on_pre_potential_irradiation(datum/source, datum/radiation_pulse_information/pulse_information, insulation_to_target)
@@ -187,15 +189,15 @@
 	icon_state = "constructor"
 	module_type = MODULE_USABLE
 	complexity = 2
-	idle_power_cost = DEFAULT_CELL_DRAIN * 0.2
-	use_power_cost = DEFAULT_CELL_DRAIN * 2
+	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 2
 	incompatible_modules = list(/obj/item/mod/module/constructor, /obj/item/mod/module/quick_carry)
 	cooldown_time = 11 SECONDS
 
 /obj/item/mod/module/constructor/on_suit_activation()
 	ADD_TRAIT(mod.wearer, TRAIT_QUICK_BUILD, MOD_TRAIT)
 
-/obj/item/mod/module/constructor/on_suit_deactivation()
+/obj/item/mod/module/constructor/on_suit_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_QUICK_BUILD, MOD_TRAIT)
 
 /obj/item/mod/module/constructor/on_use()
@@ -205,43 +207,35 @@
 	rcd_scan(src, fade_time = 10 SECONDS)
 	drain_power(use_power_cost)
 
-///Kinesis - Gives you a special form of telekinesis.
-/obj/item/mod/module/kinesis //TODO POST-MERGE MAKE NOT SUCK ASS, MAKE BALLER AS FUCK
-	name = "MOD kinesis module"
-	desc = "A modular plug-in to the forearm, this module was presumed lost for many years, \
-		despite the suits it used to be mounted on still seeing some circulation. \
-		This piece of technology allows the user to generate precise anti-gravity fields, \
-		letting them move objects as small as a titanium rod to as large as industrial machinery. \
-		Oddly enough, it doesn't seem to work on living creatures."
-	icon_state = "kinesis"
-//	module_type = MODULE_ACTIVE
-	module_type = MODULE_TOGGLE
-//	complexity = 3
-	complexity = 0
-	active_power_cost = DEFAULT_CELL_DRAIN*0.75
-//	use_power_cost = DEFAULT_CELL_DRAIN*3
-	removable = FALSE
-	incompatible_modules = list(/obj/item/mod/module/kinesis)
+///Mister - Sprays water over an area.
+/obj/item/mod/module/mister
+	name = "MOD water mister module"
+	desc = "A module containing a mister, able to spray it over areas."
+	icon_state = "mister"
+	module_type = MODULE_ACTIVE
+	complexity = 2
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
+	device = /obj/item/reagent_containers/spray/mister
+	incompatible_modules = list(/obj/item/mod/module/mister)
 	cooldown_time = 0.5 SECONDS
-	overlay_state_inactive = "module_kinesis"
-	overlay_state_active = "module_kinesis_on"
-	/// Whether the user had TK previously or not.
-	var/has_tk = FALSE
+	/// Volume of our reagent holder.
+	var/volume = 500
 
-/obj/item/mod/module/kinesis/on_activation()
-	. = ..()
-	if(!.)
-		return
-	if(mod.wearer.dna.check_mutation(TK))
-		has_tk = TRUE
-		return
-	mod.wearer.dna.add_mutation(TK_MOD)
+/obj/item/mod/module/mister/Initialize(mapload)
+	create_reagents(volume, OPENCONTAINER)
+	return ..()
 
-/obj/item/mod/module/kinesis/on_deactivation()
+///Resin Mister - Sprays resin over an area.
+/obj/item/mod/module/mister/atmos
+	name = "MOD resin mister module"
+	desc = "An atmospheric resin mister, able to fix up areas quickly."
+	device = /obj/item/extinguisher/mini/nozzle/mod
+	volume = 250
+
+/obj/item/mod/module/mister/atmos/Initialize(mapload)
 	. = ..()
-	if(!.)
-		return
-	if(has_tk)
-		has_tk = FALSE
-		return
-	mod.wearer.dna.remove_mutation(TK_MOD)
+	reagents.add_reagent(/datum/reagent/water, volume)
+
+/obj/item/extinguisher/mini/nozzle/mod
+	name = "MOD atmospheric mister"
+	desc = "An atmospheric resin mister with three modes, mounted as a module."
