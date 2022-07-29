@@ -554,18 +554,13 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/built/directional/south,
 /obj/structure/curtain,
-/obj/machinery/shower{
-	pixel_y = 15
-	},
+/obj/machinery/shower/directional/south,
 /obj/item/soap,
 /turf/open/floor/iron/freezer,
 /area/shuttle/abandoned/crew)
 "bG" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /obj/structure/toilet{
 	dir = 1
 	},
@@ -1452,10 +1447,7 @@
 /area/shuttle/abandoned/bar)
 "dR" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /obj/effect/decal/cleanable/food/flour,
 /turf/open/floor/iron/cafeteria,
 /area/shuttle/abandoned/bar)
@@ -1465,11 +1457,7 @@
 /area/shuttle/abandoned/bar)
 "dT" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 2
-	},
+/obj/structure/sink/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/bar)

@@ -50,8 +50,8 @@
 	if(doorname)
 		. += span_notice("There is a small <i>paper</i> placard on the assembly labelled \"[doorname]\".")
 
-/obj/structure/door_assembly/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/pen))
+/obj/structure/door_assembly/attackby(obj/item/W, mob/living/user, params)
+	if(istype(W, /obj/item/pen) && !user.combat_mode)
 		var/t = tgui_input_text(user, "Enter the name for the door", "Airlock Renaming", created_name, MAX_NAME_LEN)
 		if(!t)
 			return
@@ -277,6 +277,8 @@
 	if(electronics.passed_cycle_id)
 		door.closeOtherId = electronics.passed_cycle_id
 		door.update_other_id()
+	if(door.unres_sides)
+		door.unres_sensor = TRUE
 	door.previous_airlock = previous_assembly
 	electronics.forceMove(door)
 	door.update_appearance()

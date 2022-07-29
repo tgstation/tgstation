@@ -1,0 +1,9 @@
+## This file allows server hosts to specify the paths that the lua function "require" searches for modules in.
+## The character '?' will be replaced with the name of the module being searched.
+
+LUA_PATH ?
+LUA_PATH ?.lua
+LUA_PATH ?.luau
+LUA_PATH lua/?
+LUA_PATH lua/?.lua
+LUA_PATH lua/?.luau

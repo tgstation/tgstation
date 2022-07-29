@@ -614,6 +614,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			if(!WITHIN_RANGE(component_id, attached_components))
 				return
 			var/obj/item/circuit_component/component = attached_components[component_id]
+			SEND_SIGNAL(component, COMSIG_CIRCUIT_COMPONENT_PERFORM_ACTION, ui.user, params["action_name"])
 			component.ui_perform_action(ui.user, params["action_name"])
 		if("print_component")
 			var/component_path = text2path(params["component_to_print"])

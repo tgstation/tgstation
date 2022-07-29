@@ -29,7 +29,7 @@
 
 /datum/element/weather_listener/Detach(datum/source)
 	. = ..()
-	UnregisterSignal(source, COMSIG_MOVABLE_Z_CHANGED, COMSIG_MOB_LOGOUT)
+	UnregisterSignal(source, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_MOB_LOGOUT))
 
 /datum/element/weather_listener/proc/handle_z_level_change(datum/source, old_z, new_z)
 	SIGNAL_HANDLER

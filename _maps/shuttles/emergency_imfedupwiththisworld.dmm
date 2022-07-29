@@ -6,7 +6,7 @@
 /obj/docking_port/mobile/emergency{
 	dwidth = 1;
 	height = 10;
-	name = "Oh Hi Mark";
+	name = "Oh Hi Daniel";
 	width = 12
 	},
 /obj/machinery/door/airlock/wood,

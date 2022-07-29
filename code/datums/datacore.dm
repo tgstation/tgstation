@@ -1,6 +1,3 @@
-///Dummy mob reserve slot for manifest
-#define DUMMY_HUMAN_SLOT_MANIFEST "dummy_manifest_generation"
-
 GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 
 //TODO: someone please get rid of this shit
@@ -136,7 +133,7 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		if(N.new_character)
 			log_manifest(N.ckey,N.new_character.mind,N.new_character)
 		if(ishuman(N.new_character))
-			manifest_inject(N.new_character, N.client)
+			manifest_inject(N.new_character)
 		CHECK_TICK
 
 /datum/datacore/proc/manifest_modify(name, assignment, trim)
@@ -218,7 +215,7 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 	return dat
 
 
-/datum/datacore/proc/manifest_inject(mob/living/carbon/human/H, client/C)
+/datum/datacore/proc/manifest_inject(mob/living/carbon/human/H)
 	set waitfor = FALSE
 	var/static/list/show_directions = list(SOUTH, WEST)
 	if(H.mind?.assigned_role.job_flags & JOB_CREW_MANIFEST)
@@ -226,9 +223,7 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 
 		var/static/record_id_num = 1001
 		var/id = num2hex(record_id_num++,6)
-		if(!C)
-			C = H.client
-		var/image = get_id_photo(H, C, show_directions)
+		var/image = get_id_photo(H, show_directions)
 		var/datum/picture/pf = new
 		var/datum/picture/ps = new
 		pf.picture_name = "[H]"
@@ -315,61 +310,5 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		locked += L
 	return
 
-/**
- * Supporing proc for getting general records
- * and using them as pAI ui data. This gets
- * medical information - or what I would deem
- * medical information - and sends it as a list.
- *
- * @return - list(general_records_out)
- */
-/datum/datacore/proc/get_general_records()
-	if(!GLOB.data_core.general)
-		return list()
-	/// The array of records
-	var/list/general_records_out = list()
-	for(var/datum/data/record/gen_record as anything in GLOB.data_core.general)
-		/// The object containing the crew info
-		var/list/crew_record = list()
-		crew_record["ref"] = REF(gen_record)
-		crew_record["name"] = gen_record.fields["name"]
-		crew_record["physical_health"] = gen_record.fields["p_stat"]
-		crew_record["mental_health"] = gen_record.fields["m_stat"]
-		general_records_out += list(crew_record)
-	return general_records_out
-
-/**
- * Supporing proc for getting secrurity records
- * and using them as pAI ui data. Sends it as a
- * list.
- *
- * @return - list(security_records_out)
- */
-/datum/datacore/proc/get_security_records()
-	if(!GLOB.data_core.security)
-		return list()
-	/// The array of records
-	var/list/security_records_out = list()
-	for(var/datum/data/record/sec_record as anything in GLOB.data_core.security)
-		/// The object containing the crew info
-		var/list/crew_record = list()
-		crew_record["ref"] = REF(sec_record)
-		crew_record["name"] = sec_record.fields["name"]
-		crew_record["status"] = sec_record.fields["criminal"] // wanted status
-		crew_record["crimes"] = length(sec_record.fields["crim"])
-		security_records_out += list(crew_record)
-	return security_records_out
-
-/datum/datacore/proc/get_id_photo(mob/living/carbon/human/human, client/client, show_directions = list(SOUTH))
-	var/datum/job/humans_job = human.mind.assigned_role
-	var/datum/preferences/humans_prefs
-	if(!client)
-		client = human.client
-	if(client)
-		humans_prefs = client.prefs
-	if (human.dna.species.roundstart_changed)
-		return get_flat_human_icon(null, humans_job, null, DUMMY_HUMAN_SLOT_MANIFEST, show_directions)
-	else
-		return get_flat_human_icon(null, humans_job, humans_prefs, DUMMY_HUMAN_SLOT_MANIFEST, show_directions)
-
-#undef DUMMY_HUMAN_SLOT_MANIFEST
+/datum/datacore/proc/get_id_photo(mob/living/carbon/human/human, show_directions = list(SOUTH))
+	return get_flat_existing_human_icon(human, show_directions)

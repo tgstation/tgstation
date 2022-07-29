@@ -8,7 +8,7 @@
 /area/icemoon/surface)
 "h" = (
 /obj/effect/mob_spawn/corpse/human/skeleton,
-/obj/item/clothing/suit/bronze,
+/obj/item/clothing/suit/costume/bronze,
 /obj/item/clothing/shoes/bronze,
 /obj/item/clothing/head/bronze,
 /turf/open/floor/bronze{

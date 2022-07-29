@@ -26,7 +26,7 @@
 	qdel(src)
 	return TRUE
 
-/obj/vehicle/ridden/scooter/Moved()
+/obj/vehicle/ridden/scooter/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	for(var/mob/living/buckled_mob as anything in buckled_mobs)
 		if(buckled_mob.num_legs > 0)

@@ -221,7 +221,7 @@
 			if(closed[target] || isarea(target))  // avoid infinity situations
 				continue
 
-			if(isturf(target) || isturf(target.loc) || (target in direct_access) || (ismovable(target) && target.flags_1 & IS_ONTOP_1) || target.loc.atom_storage) //Directly accessible atoms
+			if(isturf(target) || isturf(target.loc) || (target in direct_access) || (ismovable(target) && target.flags_1 & IS_ONTOP_1) || target.loc?.atom_storage) //Directly accessible atoms
 				if(Adjacent(target) || (tool && CheckToolReach(src, target, tool.reach))) //Adjacent or reaching attacks
 					return TRUE
 
@@ -378,18 +378,22 @@
 
 
 /mob/living/carbon/human/CtrlClick(mob/user)
-
-	if(!ishuman(user) || !user.CanReach(src) || user.incapacitated())
+	if(!iscarbon(user) || !user.CanReach(src) || user.incapacitated())
 		return ..()
 
 	if(world.time < user.next_move)
 		return FALSE
 
-	var/mob/living/carbon/human/human_user = user
-	if(human_user.dna.species.grab(human_user, src, human_user.mind.martial_art))
-		human_user.changeNext_move(CLICK_CD_MELEE)
-		return TRUE
-
+	if (ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		if(human_user.dna.species.grab(human_user, src, human_user.mind.martial_art))
+			human_user.changeNext_move(CLICK_CD_MELEE)
+			return TRUE
+	else if(isalien(user))
+		var/mob/living/carbon/alien/humanoid/alien_boy = user
+		if(alien_boy.grab(src))
+			alien_boy.changeNext_move(CLICK_CD_MELEE)
+			return TRUE
 	return ..()
 
 /mob/proc/CtrlMiddleClickOn(atom/A)

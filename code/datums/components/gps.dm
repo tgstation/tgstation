@@ -16,6 +16,16 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	GLOB.GPS_list -= src
 	return ..()
 
+/datum/component/gps/kheiral_cuffs
+
+/datum/component/gps/kheiral_cuffs/Initialize(_gpstag = "COM0")
+	. = ..()
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/deactivate_kheiral_cuffs)
+
+/datum/component/gps/kheiral_cuffs/proc/deactivate_kheiral_cuffs(datum/source)
+	SIGNAL_HANDLER
+	qdel(src)
+
 ///GPS component subtype. Only gps/item's can be used to open the UI.
 /datum/component/gps/item
 	var/updating = TRUE //Automatic updating of GPS list. Can be set to manual by user.

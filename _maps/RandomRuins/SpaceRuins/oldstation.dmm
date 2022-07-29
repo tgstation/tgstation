@@ -598,10 +598,8 @@
 "cg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/window/left/directional/west,
-/obj/machinery/shower{
-	dir = 8;
-	can_refill = 0;
-	can_toggle_refill = 0
+/obj/machinery/shower/directional/west{
+	has_water_reclaimer = 0
 	},
 /obj/item/soap/nanotrasen,
 /turf/open/floor/iron/white,
@@ -2412,10 +2410,9 @@
 /area/ruin/space/ancientstation/beta/supermatter)
 "hx" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sink/kitchen{
+/obj/structure/sink/kitchen/directional/south{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	name = "old sink";
-	pixel_y = 28
+	name = "old sink"
 	},
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/ancientstation/charlie/kitchen)
@@ -5423,11 +5420,9 @@
 "sJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sink/kitchen{
+/obj/structure/sink/kitchen/directional/west{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	dir = 8;
 	name = "old sink";
-	pixel_x = 12;
 	has_water_reclaimer = 0
 	},
 /turf/open/floor/iron,
@@ -5883,10 +5878,8 @@
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "wq" = (
-/obj/machinery/shower{
-	dir = 8;
-	can_refill = 0;
-	can_toggle_refill = 0
+/obj/machinery/shower/directional/west{
+	has_water_reclaimer = 0
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/vault,
@@ -6313,9 +6306,7 @@
 /area/ruin/space/ancientstation/beta/medbay)
 "AO" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11;
+/obj/structure/sink/directional/west{
 	has_water_reclaimer = 0
 	},
 /obj/structure/mirror/directional/east,
@@ -8557,8 +8548,8 @@
 /area/ruin/space/ancientstation/beta/hall)
 "Tx" = (
 /obj/structure/closet/radiation,
-/obj/item/clothing/suit/radiation,
-/obj/item/clothing/suit/radiation,
+/obj/item/clothing/suit/utility/radiation,
+/obj/item/clothing/suit/utility/radiation,
 /obj/item/clothing/head/radiation,
 /obj/item/clothing/head/radiation,
 /obj/item/geiger_counter,
@@ -8837,10 +8828,8 @@
 "Xe" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/window/right/directional/west,
-/obj/machinery/shower{
-	dir = 8;
-	can_refill = 0;
-	can_toggle_refill = 0
+/obj/machinery/shower/directional/west{
+	has_water_reclaimer = 0
 	},
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/charlie/hall)

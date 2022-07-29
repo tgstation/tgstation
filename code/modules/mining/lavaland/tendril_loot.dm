@@ -449,9 +449,9 @@
 
 /obj/item/shared_storage/red/Initialize(mapload)
 	. = ..()
-	
+
 	create_storage(max_total_storage = 15, max_slots = 21)
-	
+
 	new /obj/item/shared_storage/blue(drop_location(), src)
 
 /obj/item/shared_storage/blue/Initialize(mapload, atom/master)
@@ -594,6 +594,7 @@
 	name = "berserker armor"
 	desc = "Voices echo from the armor, driving the user insane. Is not space-proof."
 	icon_state = "berserker"
+	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	hoodtype = /obj/item/clothing/head/hooded/berserker
 	armor = list(MELEE = 30, BULLET = 30, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 0, FIRE = 100, ACID = 100)
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
