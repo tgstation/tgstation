@@ -188,6 +188,8 @@
 	var/datum/port/output/output_port = new(arglist(arguments))
 	output_ports += output_port
 	sortTim(output_ports, /proc/cmp_port_order_asc)
+	if(parent)
+		SStgui.update_uis(parent)
 	return output_port
 
 /**
