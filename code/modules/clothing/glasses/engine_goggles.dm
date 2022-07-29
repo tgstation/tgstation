@@ -5,6 +5,7 @@
 #define MODE_TRAY "t-ray"
 #define MODE_SHUTTLE "shuttle"
 #define MODE_PIPE_CONNECTABLE "connectable"
+#define MODE_ATMOS_THERMAL "atmospheric thermal"
 
 /obj/item/clothing/glasses/meson/engine
 	name = "engineering scanner goggles"
@@ -157,8 +158,59 @@
 
 	modes = list(MODE_NONE = MODE_SHUTTLE, MODE_SHUTTLE = MODE_NONE)
 
+
+/obj/item/clothing/glasses/meson/engine/atmos_imaging
+	name = "atmospheric thermal imaging goggles"
+	desc = "Goggles used by Atmospheric Technician to see the thermal energy of gasses in open areas"
+	icon_state = "trayson-"
+
+	modes = list(MODE_NONE = MODE_ATMOS_THERMAL, MODE_ATMOS_THERMAL = MODE_NONE)
+
+/obj/item/clothing/glasses/meson/engine/atmos_imaging/toggle_mode(mob/user, voluntary)
+	mode = modes[mode]
+	to_chat(user, "<span class='[voluntary ? "notice":"warning"]'>[voluntary ? "You turn the goggles":"The goggles turn"] [mode ? "to [mode] mode":"off"][voluntary ? ".":"!"]</span>")
+	switch(mode)
+		if(MODE_ATMOS_THERMAL)
+			change_glass_color(user, /datum/client_colour/glass_colour/lightorange)
+		if(MODE_NONE)
+			change_glass_color(user, initial(glass_colour_type))
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.glasses == src)
+			H.update_sight()
+
+	update_appearance()
+	update_action_buttons()
+
+/obj/item/clothing/glasses/meson/engine/atmos_imaging/process()
+	if(!ishuman(loc))
+		return
+	var/mob/living/carbon/human/user = loc
+	if(user.glasses != src || !user.client)
+		return
+	if(mode == MODE_ATMOS_THERMAL)
+		atmos_thermal(user)
+
+/proc/atmos_thermal(mob/viewer, range = 5, duration = 5)
+	if(!ismob(viewer) || !viewer.client)
+		return
+	for(var/turf/open in view(range, viewer))
+		if(open.blocks_air)
+			continue
+		var/datum/gas_mixture/environment = open.return_air()
+		var/specific_temp = round(environment.temperature)
+		var/mutable_appearance/temptext = new()
+		var/image/pic = image(loc = open)
+		temptext.maptext = MAPTEXT("[specific_temp]")
+		temptext.color = "#e0ea17"
+		temptext.plane = RUNECHAT_PLANE
+		pic.appearance = temptext
+		flick_overlay(pic, list(viewer.client), duration)
+
+
 #undef MODE_NONE
 #undef MODE_MESON
 #undef MODE_TRAY
 #undef MODE_SHUTTLE
 #undef MODE_PIPE_CONNECTABLE
+#undef MODE_ATMOS_THERMAL
