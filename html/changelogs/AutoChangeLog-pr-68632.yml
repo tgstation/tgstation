@@ -1,0 +1,5 @@
+author: "Watermelon914"
+delete-after: True
+changes: 
+  - balance: "Air alarms USB now support controlling scrubbers, vents and operating mode as well as the alarm."
+  - rscadd: "Airlocks can now be made into shells by ticking the 'shell' option in airlock electronic UI. This can only be done during construction."
