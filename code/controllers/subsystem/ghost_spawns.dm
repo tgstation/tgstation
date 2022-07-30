@@ -1,9 +1,3 @@
-
-
-
-
-
-
 SUBSYSTEM_DEF(ghost_spawns)
 	name = "Ghost Spawns"
 	init_order = INIT_ORDER_EVENTS
@@ -46,14 +40,16 @@ SUBSYSTEM_DEF(ghost_spawns)
   * * check_antaghud - Whether to filter out potential candidates who enabled AntagHUD
   * * source - The atom, atom prototype, icon or mutable appearance to display as an icon in the alert
   */
-/datum/controller/subsystem/ghost_spawns/proc/poll_candidates(question = "Would you like to play a special role?", role, poll_time = 30 SECONDS, flash_window = TRUE, source, role_cleanname)
-	log_game("Polling candidates [role ? "for [role_cleanname || role]" : "\"[question]\""] for [poll_time / 10] seconds")
+/datum/controller/subsystem/ghost_spawns/proc/poll_candidates(question, jobban_type, be_special_flag, poll_time = 30 SECONDS, ignore_category = null, flash_window = TRUE, candidates, source)
+	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
+		return
+	log_game("Polling candidates [be_special_flag ? "for [be_special_flag]" : "\"[question]\""] for [poll_time / 10] seconds")
 
 	// Start firing
 	polls_active = TRUE
 	total_polls++
 
-	var/datum/candidate_poll/P = new(role, question, poll_time)
+	var/datum/candidate_poll/P = new(be_special_flag, question, poll_time)
 	LAZYADD(currently_polling, P)
 
 	// We're the poll closest to completion
@@ -63,7 +59,7 @@ SUBSYSTEM_DEF(ghost_spawns)
 	var/category = "[P.hash]_notify_action"
 
 	for(var/mob/dead/observer/M in GLOB.player_list)
-		if(!is_eligible(M, role, role))
+		if(!is_eligible(M, be_special_flag, jobban_type))
 			continue
 
 		SEND_SOUND(M, 'sound/misc/notice2.ogg')
@@ -115,7 +111,7 @@ SUBSYSTEM_DEF(ghost_spawns)
 
 				S.layer = FLOAT_LAYER
 				S.plane = FLOAT_PLANE
-				A.overlays += S
+				A.add_overlay(S)
 				S.layer = old_layer
 				S.plane = old_plane
 			else
@@ -127,14 +123,14 @@ SUBSYSTEM_DEF(ghost_spawns)
 		if(I)
 			I.layer = FLOAT_LAYER
 			I.plane = FLOAT_PLANE
-			A.overlays += I
+			A.add_overlay(I)
 
 		// Chat message
 		var/act_jump = ""
 		if(isatom(source))
 			act_jump = "<a href='?src=[REF(M)];jump=\ref[source]'>\[Teleport]</a>"
 		var/act_signup = "<a href='?src=[REF(A)];signup=1'>\[Sign Up]</a>"
-		to_chat(M, "<big><span class='boldnotice'>Now looking for candidates [role ? "to play as \an [role_cleanname || role]" : "\"[question]\""]. [act_jump] [act_signup]</span></big>")
+		to_chat(M, "<big><span class='boldnotice'>Now looking for candidates [be_special_flag ? "to play as \an [be_special_flag]" : "\"[question]\""]. [act_jump] [act_signup]</span></big>")
 
 		// Start processing it so it updates visually the timer
 		START_PROCESSING(SSprocessing, A)
@@ -155,16 +151,16 @@ SUBSYSTEM_DEF(ghost_spawns)
   * * min_hours - The amount of minimum hours the client needs before being eligible
   * * check_antaghud - Whether to consider a client who enabled AntagHUD ineligible or not
   */
-/datum/controller/subsystem/ghost_spawns/proc/is_eligible(mob/M, role, role_text)
+/datum/controller/subsystem/ghost_spawns/proc/is_eligible(mob/M, be_special_flag, jobban_type)
 	. = FALSE
 	if(!M.key || !M.client)
 		return
-	if(role)
-		if(!(role in M.client.prefs.be_special))
+	if(be_special_flag)
+		if(!(be_special_flag in M.client.prefs.be_special))
 			return
 
-	if(role_text)
-		if(is_banned_from(M.ckey, list(role_text, ROLE_SYNDICATE)))
+	if(jobban_type)
+		if(is_banned_from(M.ckey, list(jobban_type, ROLE_SYNDICATE)))
 			return
 
 	return TRUE

@@ -196,17 +196,6 @@
 		else
 			candidates -= candidate_mob
 
-///Wrapper to send all ghosts the poll to ask them if they want to be considered for a mob.
-/proc/poll_ghost_candidates(question, jobban_type, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE)
-	var/list/candidates = list()
-	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
-		return candidates
-
-	for(var/mob/dead/observer/ghost_player in GLOB.player_list)
-		candidates += ghost_player
-
-	return SSghost_spawns.poll_candidates(question, jobban_type, be_special_flag, poll_time, ignore_category, flashwindow, candidates)
-
 /**
  * Returns a list of ghosts that are eligible to take over and wish to be considered for a mob.
  *
@@ -226,7 +215,7 @@
 
 	currently_polling_mobs += target_mob
 
-	var/list/possible_candidates = poll_ghost_candidates(question, jobban_type, be_special_flag, poll_time, ignore_category)
+	var/list/possible_candidates = SSghost_spawns.poll_candidates(question, jobban_type, be_special_flag, poll_time, ignore_category)
 
 	currently_polling_mobs -= target_mob
 	if(!target_mob || QDELETED(target_mob) || !target_mob.loc)
@@ -246,7 +235,7 @@
  * * ignore_category - Unknown/needs further documentation.
  */
 /proc/poll_candidates_for_mobs(question, jobban_type, be_special_flag = 0, poll_time = 30 SECONDS, list/mobs, ignore_category = null)
-	var/list/candidate_list = poll_ghost_candidates(question, jobban_type, be_special_flag, poll_time, ignore_category)
+	var/list/candidate_list = SSghost_spawns.poll_candidates(question, jobban_type, be_special_flag, poll_time, ignore_category)
 
 	for(var/mob/potential_mob as anything in mobs)
 		if(QDELETED(potential_mob) || !potential_mob.loc)
