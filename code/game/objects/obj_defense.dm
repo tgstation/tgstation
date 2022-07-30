@@ -98,8 +98,11 @@
 		if(user.client)
 			log_combat(user, src, "attempted to attack")
 		return
-	if(attack_generic(user, rand(10, 15), BRUTE, MELEE, 1) && user.client)
-		log_combat(user, src, "attacked")
+	if(user.client)
+		if(attack_generic(user, rand(10, 15), BRUTE, MELEE, 1))
+			log_combat(user, src, "attacked")
+		else 
+			log_combat(user, src, "attempted to attack")
 
 
 /obj/singularity_act()
