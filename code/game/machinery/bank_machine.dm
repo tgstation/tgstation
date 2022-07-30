@@ -60,8 +60,7 @@
 	D.adjust_money(-siphon_am)
 	if(next_warning < world.time && prob(15))
 		var/area/A = get_area(loc)
-		var/a = !unauthorized
-		var/message = "[a ? "C" : "Unauthorized c"]redit withdrawal underway in [initial(A.name)][a ? "..." : "!!"]"
+		var/message = "[unauthorized ? "Unauthorized c" : "C"]redit withdrawal underway in [initial(A.name)][unauthorized ? "!!" : "..."]"
 		radio.talk_into(src, message, radio_channel)
 		next_warning = world.time + minimum_time_between_warnings
 
