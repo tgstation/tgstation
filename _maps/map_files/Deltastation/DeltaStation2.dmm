@@ -32919,28 +32919,6 @@
 /turf/open/floor/engine/vacuum,
 /area/station/science/ordnance/freezerchamber)
 "ibM" = (
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/structure/table,
-/obj/item/computer_hardware/hard_drive/portable{
-	pixel_x = -5;
-	pixel_y = 8
-	},
-/obj/item/computer_hardware/hard_drive/portable{
-	pixel_x = -8;
-	pixel_y = -3
-	},
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/cable,
-/obj/item/computer_hardware/hard_drive/portable/ordnance{
-	pixel_x = 4;
-	pixel_y = 1
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---",
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 5
 	},
@@ -55120,7 +55098,7 @@
 	pixel_y = 2
 	},
 /obj/item/computer_hardware/hard_drive/portable,
-/obj/item/computer_hardware/hard_drive/portable/scipaper_program{
+/obj/item/computer_hardware/hard_drive/portable/ordnance{
 	pixel_x = -4;
 	pixel_y = -1
 	},
