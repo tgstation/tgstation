@@ -211,6 +211,7 @@
 		temptext.icon = 'icons/turf/overlays.dmi'
 		temptext.plane = RUNECHAT_PLANE
 		temptext.alpha = 200
+		temptext.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		var/image/pic = image(loc = open)
 		if(temp <= 273.15)
 			temptext.icon_state = "blueOverlay"
