@@ -39,6 +39,8 @@
 	UnregisterSignal(owner, COMSIG_MOB_FLASHED)
 
 /datum/mutation/human/epilepsy/proc/get_flashed_nerd()
+	SIGNAL_HANDLER
+
 	if(!prob(30))
 		return
 	trigger_seizure()
