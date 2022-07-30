@@ -17,13 +17,9 @@
 	for(var/obj/machinery/status_display/ai/ai_display as anything in GLOB.ai_status_displays)
 		var/turf/display_turf = get_turf(ai_display)
 
-		// Station AIs can change every display on the station Z
-		if(is_station_level(ai_turf.z))
-			if(!is_station_level(display_turf.z))
-				continue
-
-		// Ghost role AIs (or AIs on the mining base?) can only affect their Z
-		else if(ai_turf.z != display_turf.z)
+		// - Station AIs can change every display on the station Z.
+		// - Ghost role AIs (or AIs on the mining base?) can only affect their Z
+		if(!is_valid_z_level(ai_turf, display_turf))
 			continue
 
 		ai_display.emotion = emotion
