@@ -479,11 +479,11 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/override_species = CONFIG_GET(string/morgue_cadaver_override_species)
 	var/list/usable_races
 	if(use_species)
-		usable_races = GLOB.roundstart_races.Copy() //micro optimization
+		usable_races = GLOB.roundstart_races.Copy()
 		usable_races -= SPECIES_ETHEREAL //they revive on death which is bad juju
 		LAZYREMOVE(usable_races, SPECIES_HUMAN)
 		if(!usable_races)
-			stack_trace("morgue_cadaver_disable_nonhumans. NONHUMANS ENABLED BUT NO NONHUMANS ARE ENABLED")
+			stack_trace("morgue_cadaver_disable_nonhumans. THERE ARE NO VALID NONHUMANS ENABLED")
 		if(override_species)
 			stack_trace("WARNING: BOTH use_all_roundstart_races_for_cadavers & morgue_cadaver_override_species CONFIGS ENABLED. morgue_cadaver_override_species BEING OVERRIDEN.")
 	else if(override_species)
