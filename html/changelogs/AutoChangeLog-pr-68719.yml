@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Necropolis chest will no longer consume your key if it fails to generate a reward. Also, if it fails to generate, it'll allow you to attempt it again."
