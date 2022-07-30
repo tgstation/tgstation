@@ -78,6 +78,8 @@
 #define ORGAN_EDIBLE (1<<5) //is a snack? :D
 #define ORGAN_SYNTHETIC_EMP (1<<6) //Synthetic organ affected by an EMP. Deteriorates over time.
 #define ORGAN_UNREMOVABLE (1<<7) //Can't be removed using surgery
+#define ORGAN_INTERNAL (1<<8) //Can only be manipulated by internal organ surgery
+#define ORGAN_EXTERNAL (1<<9) //can only be manipulated by external organ surgery
 
 /// Integrity defines for clothing (not flags but close enough)
 #define CLOTHING_PRISTINE 0 // We have no damage on the clothing

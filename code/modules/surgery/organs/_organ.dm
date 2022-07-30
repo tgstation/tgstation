@@ -12,7 +12,7 @@
 	///The organ slot this organ is supposed to inhabit. This should be unique by type. (Lungs, Appendix, Stomach, etc)
 	var/slot
 	// DO NOT add slots with matching names to different zones - it will break internal_organs_slot list!
-	var/organ_flags = ORGAN_EDIBLE
+	var/organ_flags = ORGAN_EDIBLE | ORGAN_INTERNAL
 	var/maxHealth = STANDARD_ORGAN_THRESHOLD
 	/// Total damage this organ has sustained
 	/// Should only ever be modified by applyOrganDamage

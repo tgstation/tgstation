@@ -8,7 +8,7 @@
 	desc = "An external organ that is too external."
 
 	///Unremovable is until the features are completely finished
-	organ_flags = ORGAN_UNREMOVABLE | ORGAN_EDIBLE
+	organ_flags = ORGAN_EXTERNAL | ORGAN_EDIBLE
 	visual = TRUE
 
 	///Sometimes we need multiple layers, for like the back, middle and front of the person
@@ -29,6 +29,8 @@
 	var/datum/sprite_accessory/sprite_datum
 	///Key of the icon states of all the sprite_datums for easy caching
 	var/cache_key = ""
+	///Set to TRUE to use the mob sprite as item sprite
+	var/use_mob_sprite_as_obj_sprite = FALSE
 
 	///With what DNA block do we mutate in mutate_feature() ? For genetics
 	var/dna_block
@@ -44,7 +46,6 @@
 
 	///Does this organ have any bodytypes to pass to it's ownerlimb?
 	var/external_bodytypes = NONE
-
 
 /**mob_sprite is optional if you havent set sprite_datums for the object, and is used mostly to generate sprite_datums from a persons DNA
 * For _mob_sprite we make a distinction between "Round Snout" and "round". Round Snout is the name of the sprite datum, while "round" would be part of the sprite
@@ -144,6 +145,11 @@
 	var/mutable_appearance/appearance = mutable_appearance(sprite_datum.icon, finished_icon_state, layer = -image_layer)
 	appearance.dir = image_dir
 
+	///Also give the icon to the obj
+	if(use_mob_sprite_as_obj_sprite)
+		icon_state = finished_icon_state
+		icon = sprite_datum.icon
+
 	if(sprite_datum.color_src) //There are multiple flags, but only one is ever used so meh :/ | This comment isn't true.
 		appearance.color = draw_color
 
@@ -233,6 +239,10 @@
 
 ///The horns of a lizard!
 /obj/item/organ/external/horns
+	name = "horns"
+	desc = "Why do lizards even have horns? Well, this one obviously doesn't."
+	icon_state = "horns"
+
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EXTERNAL_HORNS
 	layers = EXTERNAL_ADJACENT
@@ -252,6 +262,10 @@
 
 ///The frills of a lizard (like weird fin ears)
 /obj/item/organ/external/frills
+	name = "frills"
+	desc = "Ear-like external organs often seen on aquatic reptillians."
+	icon_state = "frills"
+
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EXTERNAL_FRILLS
 	layers = EXTERNAL_ADJACENT
@@ -272,6 +286,10 @@
 
 ///Guess what part of the lizard this is?
 /obj/item/organ/external/snout
+	name = "lizard snout"
+	desc = "Take a closer look at that snout!"
+	icon_state = "snout"
+
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EXTERNAL_SNOUT
 	layers = EXTERNAL_ADJACENT
@@ -292,6 +310,10 @@
 
 ///A moth's antennae
 /obj/item/organ/external/antennae
+	name = "moth antennae"
+	desc = "A moths antennae. What is it telling them? What are they sensing?"
+	icon_state = "antennae"
+
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EXTERNAL_ANTENNAE
 	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
@@ -346,8 +368,11 @@
 		burnt = FALSE
 		set_sprite(original_sprite)
 
-//podperson hair
+///The leafy hair of a podperson
 /obj/item/organ/external/pod_hair
+	name = "podperson hair"
+	desc = "Base for many-o-salads."
+
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EXTERNAL_POD_HAIR
 	layers = EXTERNAL_FRONT|EXTERNAL_ADJACENT

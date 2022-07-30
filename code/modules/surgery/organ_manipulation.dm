@@ -58,6 +58,15 @@
 		/datum/surgery_step/manipulate_organs,
 		/datum/surgery_step/mechanic_close)
 
+/datum/surgery/organ_manipulation/external
+	name = "Feature manipulation"
+	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/manipulate_organs/external,
+		/datum/surgery_step/close)
+
 /datum/surgery_step/manipulate_organs
 	time = 64
 	name = "manipulate organs"
@@ -102,6 +111,10 @@
 		if(!meatslab.useable)
 			to_chat(user, span_warning("[target_organ] seems to have been chewed on, you can't use this!"))
 			return -1
+
+		if(!can_use_organ(user, meatslab))
+			return -1
+
 		if (target_zone == BODY_ZONE_PRECISE_EYES)
 			target_zone = check_zone(target_zone)
 		display_results(user, target, span_notice("You begin to insert [tool] into [target]'s [parse_zone(target_zone)]..."),
@@ -112,7 +125,11 @@
 
 	else if(implement_type in implements_extract)
 		current_type = "extract"
-		var/list/organs = target.getorganszone(target_zone)
+		var/list/unfiltered_organs = target.getorganszone(target_zone)
+		var/list/organs = list()
+		for(var/organ in unfiltered_organs)
+			if(can_use_organ(user, organ))
+				organs.Add(organ)
 		if (target_zone == BODY_ZONE_PRECISE_EYES)
 			target_zone = check_zone(target_zone)
 		if(!length(organs))
@@ -141,7 +158,6 @@
 				display_pain(target, "You can feel your [target_organ] being removed from your [parse_zone(target_zone)]!")
 			else
 				return -1
-
 
 /datum/surgery_step/manipulate_organs/success(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	if (target_zone == BODY_ZONE_PRECISE_EYES)
@@ -176,3 +192,13 @@
 				span_notice("[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!"),
 				span_notice("[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!"))
 	return FALSE
+
+/datum/surgery_step/manipulate_organs/proc/can_use_organ(mob/user, obj/item/organ/organ)
+	return TRUE
+
+/datum/surgery_step/manipulate_organs/external
+	time = 32
+	name = "manipulate features"
+
+/datum/surgery_step/manipulate_organs/external/can_use_organ(mob/user, obj/item/organ/organ)
+	return organ.organ_flags & ORGAN_EXTERNAL
