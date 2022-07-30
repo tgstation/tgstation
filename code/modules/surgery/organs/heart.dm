@@ -344,7 +344,7 @@
 	crystalize_timer_id = addtimer(CALLBACK(src, .proc/crystalize, victim), CRYSTALIZE_PRE_WAIT_TIME, TIMER_STOPPABLE)
 
 	RegisterSignal(victim, COMSIG_HUMAN_DISARM_HIT, .proc/reset_crystalizing)
-	RegisterSignal(victim, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(victim, COMSIG_PARENT_EXAMINE, .proc/on_examine, TRUE)
 	RegisterSignal(victim, COMSIG_MOB_APPLY_DAMAGE, .proc/on_take_damage)
 
 ///Ran when disarmed, prevents the ethereal from reviving
@@ -377,7 +377,7 @@
 ///Stop the crystalization process, unregistering any signals and resetting any variables.
 /obj/item/organ/internal/heart/ethereal/proc/stop_crystalization_process(mob/living/ethereal, succesful = FALSE)
 	UnregisterSignal(ethereal, COMSIG_HUMAN_DISARM_HIT)
-	UnregisterSignal(ethereal, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(ethereal, COMSIG_PARENT_EXAMINE, TRUE)
 	UnregisterSignal(ethereal, COMSIG_MOB_APPLY_DAMAGE)
 
 	crystalization_process_damage = 0 //Reset damage taken during crystalization
