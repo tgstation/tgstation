@@ -378,8 +378,6 @@
 	var/list/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
 	/// The nuke ops team datum.
 	var/datum/team/nuclear/nuke_team
-	/// The team leader we chose.
-	var/mob/leader
 	flags = HIGH_IMPACT_RULESET
 
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear/acceptable(population=0, threat=0)
@@ -395,22 +393,20 @@
 	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear/finish_applications()
-	leader = get_most_experienced(assigned, ROLE_NUCLEAR_OPERATIVE)
-	if(!leader)
-		leader = assigned[1]
-	leader.mind.set_assigned_role(SSjob.GetJobType(/datum/job/nuclear_operative))
-	leader.mind.special_role = ROLE_NUCLEAR_OPERATIVE
-	var/datum/antagonist/nukeop/leader/leader_antag_datum = new()
-	nuke_team = leader_antag_datum.nuke_team
-	leader.mind.add_antag_datum(leader_antag_datum)
+	var/mob/leader = get_most_experienced(assigned, ROLE_NUCLEAR_OPERATIVE)
+	if(leader)
+		assigned.Remove(leader)
+		assigned.Insert(1, leader)
 	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear/finish_setup(mob/new_character, index)
-	if(new_character == leader)
-		leader = null
-		return
 	new_character.mind.set_assigned_role(SSjob.GetJobType(/datum/job/nuclear_operative))
 	new_character.mind.special_role = ROLE_NUCLEAR_OPERATIVE
+	if(index == 1)
+		var/datum/antagonist/nukeop/leader/leader_antag_datum = new()
+		nuke_team = leader_antag_datum.nuke_team
+		new_character.mind.add_antag_datum(leader_antag_datum)
+		return
 	return ..()
 
 //////////////////////////////////////////////
