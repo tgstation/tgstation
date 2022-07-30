@@ -398,7 +398,7 @@
 	leader = get_most_experienced(assigned, ROLE_NUCLEAR_OPERATIVE)
 	if(!leader)
 		leader = assigned[1]
-	leader_antag_datum = new()
+	var/antagonist/nukeop/leader_antag_datum = new()
 	nuke_team = leader_antag_datum.nuke_team
 	leader.set_assigned_role(SSjob.GetJobType(/datum/job/nuclear_operative))
 	leader.special_role = ROLE_NUCLEAR_OPERATIVE
