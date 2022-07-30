@@ -130,7 +130,11 @@
 
 /obj/item/shovel/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 150, 40) //it's sharp, so it works, but barely.
+	AddComponent(/datum/component/butchering, \
+	speed = 15 SECONDS, \
+	effectiveness = 40, \
+	)
+	//it's sharp, so it works, but barely.
 
 /obj/item/shovel/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins digging their own grave! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -184,6 +188,7 @@
 
 /obj/item/trench_tool/examine(mob/user)
 	. = ..()
+	. += span_notice("Use in hand to switch configuration.")
 	. += span_notice("It functions as a [tool_behaviour] tool.")
 
 /obj/item/trench_tool/attack_self(mob/user, modifiers)

@@ -310,19 +310,79 @@
 	if(!holder)
 		return
 
-	if(!holder.marked_datum || !istype(holder.marked_datum, /mob/living))
+	if(!isliving(holder.marked_datum))
+		to_chat(usr, span_warning("Error: Please mark a mob to add actions to it."))
 		return
 
 	var/mob/living/marked_mob = holder.marked_datum
 
-	var/ability_type = input("Choose an ability", "Ability")  as null|anything in sort_list(subtypesof(/datum/action/cooldown/mob_cooldown), /proc/cmp_typepaths_asc)
+	var/list/all_mob_actions = sort_list(subtypesof(/datum/action/cooldown/mob_cooldown), /proc/cmp_typepaths_asc)
+
+	var/ability_type = tgui_input_list(usr, "Choose an ability", "Ability", all_mob_actions)
 
 	if(!ability_type)
 		return
 
-	var/datum/action/cooldown/mob_cooldown/add_ability = new ability_type()
+	var/datum/action/cooldown/mob_cooldown/add_ability
+
+	var/make_sequence = tgui_alert(usr, "Would you like this action to be a sequence of multiple abilities?", "Sequence Ability", list("Yes", "No"))
+	if(make_sequence == "Yes")
+		add_ability = new /datum/action/cooldown/mob_cooldown(marked_mob)
+		add_ability.sequence_actions = list()
+		while(!isnull(ability_type))
+			var/ability_delay = tgui_input_number(usr, "Enter the delay in seconds before the next ability in the sequence is used", "Ability Delay", 2)
+			if(isnull(ability_delay) || ability_delay < 0)
+				ability_delay = 0
+			add_ability.sequence_actions[ability_type] = ability_delay * 1 SECONDS
+			ability_type = tgui_input_list(usr, "Choose a new sequence ability", "Sequence Ability", all_mob_actions)
+		var/ability_cooldown = tgui_input_number(usr, "Enter the sequence abilities cooldown in seconds", "Ability Cooldown", 2)
+		if(isnull(ability_cooldown) || ability_cooldown < 0)
+			ability_cooldown = 2
+		add_ability.cooldown_time = ability_cooldown * 1 SECONDS
+		var/ability_melee_cooldown = tgui_input_number(usr, "Enter the abilities melee cooldown in seconds", "Melee Cooldown", 2)
+		if(isnull(ability_melee_cooldown) || ability_melee_cooldown < 0)
+			ability_melee_cooldown = 2
+		add_ability.melee_cooldown_time = ability_melee_cooldown * 1 SECONDS
+		add_ability.name = tgui_input_text(usr, "Choose ability name", "Ability name", "Generic Ability")
+		add_ability.create_sequence_actions()
+	else
+		add_ability = new ability_type(marked_mob)
+
+	if(isnull(marked_mob))
+		return
 	add_ability.Grant(marked_mob)
 
 	message_admins("[key_name_admin(usr)] added mob ability [ability_type] to mob [marked_mob].")
 	log_admin("[key_name(usr)] added mob ability [ability_type] to mob [marked_mob].")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Add Mob Ability") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/remove_mob_ability()
+	set category = "Admin.Events"
+	set name = "Remove Mob Ability"
+	set desc = "Removes an ability from marked mob."
+
+	if(!holder)
+		return
+
+	if(!isliving(holder.marked_datum))
+		to_chat(usr, span_warning("Error: Please mark a mob to remove actions from it."))
+		return
+
+	var/mob/living/marked_mob = holder.marked_datum
+
+	var/list/all_mob_actions = list()
+	for(var/datum/action/cooldown/mob_cooldown/ability in marked_mob.actions)
+		all_mob_actions.Add(ability)
+
+	var/datum/action/cooldown/mob_cooldown/ability = tgui_input_list(usr, "Remove an ability", "Ability", all_mob_actions)
+
+	if(!ability)
+		return
+
+	var/ability_name = ability.name
+	QDEL_NULL(ability)
+
+	message_admins("[key_name_admin(usr)] removed ability [ability_name] from mob [marked_mob].")
+	log_admin("[key_name(usr)] removed mob ability [ability_name] from mob [marked_mob].")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Remove Mob Ability") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+

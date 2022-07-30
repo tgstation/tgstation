@@ -13,6 +13,8 @@ Doesn't work on other aliens/AI.*/
 	icon_icon = 'icons/mob/actions/actions_xeno.dmi'
 	button_icon_state = "spell_default"
 	check_flags = AB_CHECK_CONSCIOUS
+	melee_cooldown_time = 0 SECONDS
+
 	/// How much plasma this action uses.
 	var/plasma_cost = 0
 
@@ -218,6 +220,9 @@ Doesn't work on other aliens/AI.*/
 /datum/action/cooldown/alien/acid/corrosion/PreActivate(atom/target)
 	if(get_dist(owner, target) > 1)
 		return FALSE
+	if(ismob(target)) //If it could corrode mobs, it would one-shot them.
+		owner.balloon_alert(owner, "doesn't work on mobs!")
+		return FALSE
 
 	return ..()
 
@@ -410,4 +415,3 @@ Doesn't work on other aliens/AI.*/
 /mob/living/carbon/alien/adjustPlasma(amount)
 	. = ..()
 	updatePlasmaDisplay()
-

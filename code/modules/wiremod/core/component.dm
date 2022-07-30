@@ -188,6 +188,8 @@
 	var/datum/port/output/output_port = new(arglist(arguments))
 	output_ports += output_port
 	sortTim(output_ports, /proc/cmp_port_order_asc)
+	if(parent)
+		SStgui.update_uis(parent)
 	return output_port
 
 /**
@@ -373,15 +375,15 @@
  * Returns a list that can then be added to the return list in get_ui_notices()
  * Used by components to list their available columns. Recommended to use at the end of get_ui_notices()
  */
-/obj/item/circuit_component/proc/create_table_notices(list/entries)
+/obj/item/circuit_component/proc/create_table_notices(list/entries, column_name = "Column", column_name_plural = "Columns")
 	SHOULD_BE_PURE(TRUE)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	. = list()
-	. += create_ui_notice("Available Columns:", "grey", "question-circle")
+	. += create_ui_notice("Available [column_name_plural]:", "grey", "question-circle")
 
 
 	for(var/entry in entries)
-		. += create_ui_notice("Column Name: '[entry]'", "grey", "columns")
+		. += create_ui_notice("[column_name] Name: '[entry]'", "grey", "columns")
 
 /**
  * Called when a circuit component is added to an object with a USB port.

@@ -67,7 +67,7 @@
 
 	// If we're not forced, we're going to make sure we can actually have an AI in this shift,
 	if(!forced && min(ai_job.total_positions - ai_job.current_positions, ai_job.spawn_positions) <= 0)
-		log_game("DYNAMIC: FAIL: [src] could not run, because there is nobody who wants to be an AI")
+		log_dynamic("FAIL: [src] could not run, because there is nobody who wants to be an AI")
 		return FALSE
 
 	return ..()
@@ -390,6 +390,7 @@
 	requirements = list(90,90,90,80,60,40,30,20,10,10)
 	flags = HIGH_IMPACT_RULESET
 	antag_cap = list("denominator" = 18, "offset" = 1)
+	var/required_role = ROLE_NUCLEAR_OPERATIVE
 	var/datum/team/nuclear/nuke_team
 
 /datum/dynamic_ruleset/roundstart/nuclear/ready(population, forced = FALSE)
@@ -410,15 +411,16 @@
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/nuclear/execute()
-	var/leader = TRUE
-	for(var/datum/mind/M in assigned)
-		if (leader)
-			leader = FALSE
-			var/datum/antagonist/nukeop/leader/new_op = M.add_antag_datum(antag_leader_datum)
+	var/most_experienced = get_most_experienced(assigned, required_role)
+	if(!most_experienced)
+		most_experienced = assigned[1]
+	for(var/datum/mind/assigned_player in assigned)
+		if(assigned_player == most_experienced)
+			var/datum/antagonist/nukeop/leader/new_op = assigned_player.add_antag_datum(antag_leader_datum)
 			nuke_team = new_op.nuke_team
 		else
 			var/datum/antagonist/nukeop/new_op = new antag_datum()
-			M.add_antag_datum(new_op)
+			assigned_player.add_antag_datum(new_op)
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/nuclear/round_result()
@@ -523,13 +525,13 @@
 			M.add_antag_datum(new_head,revolution)
 		else
 			assigned -= M
-			log_game("DYNAMIC: [ruletype] [name] discarded [M.name] from head revolutionary due to ineligibility.")
+			log_dynamic("[ruletype] [name] discarded [M.name] from head revolutionary due to ineligibility.")
 	if(revolution.members.len)
 		revolution.update_objectives()
 		revolution.update_heads()
 		SSshuttle.registerHostileEnvironment(revolution)
 		return TRUE
-	log_game("DYNAMIC: [ruletype] [name] failed to get any eligible headrevs. Refunding [cost] threat.")
+	log_dynamic("[ruletype] [name] failed to get any eligible headrevs. Refunding [cost] threat.")
 	return FALSE
 
 /datum/dynamic_ruleset/roundstart/revs/clean_up()
@@ -595,6 +597,7 @@
 	antag_flag_override = ROLE_OPERATIVE
 	antag_leader_datum = /datum/antagonist/nukeop/leader/clownop
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
+	required_role = ROLE_CLOWN_OPERATIVE
 
 /datum/dynamic_ruleset/roundstart/nuclear/clown_ops/pre_execute()
 	. = ..()

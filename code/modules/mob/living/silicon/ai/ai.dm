@@ -154,6 +154,9 @@
 	job = "AI"
 
 	create_eye()
+
+	create_modularInterface()
+
 	if(client)
 		INVOKE_ASYNC(src, .proc/apply_pref_name, /datum/preference/name/ai, client)
 
@@ -168,7 +171,6 @@
 
 	add_verb(src, /mob/living/silicon/ai/proc/show_laws_verb)
 
-	create_modularInterface()
 
 	aiMulti = new(src)
 	aicamera = new/obj/item/camera/siliconcam/ai_camera(src)
@@ -194,8 +196,8 @@
 	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, ROUNDSTART_TRAIT)
 
 	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z), camera_view = TRUE)
-	RegisterSignal(alert_control.listener, COMSIG_ALARM_TRIGGERED, .proc/alarm_triggered)
-	RegisterSignal(alert_control.listener, COMSIG_ALARM_CLEARED, .proc/alarm_cleared)
+	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_TRIGGERED, .proc/alarm_triggered)
+	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_CLEARED, .proc/alarm_cleared)
 
 /mob/living/silicon/ai/key_down(_key, client/user)
 	if(findtext(_key, "numpad")) //if it's a numpad number, we can convert it to just the number
@@ -389,7 +391,7 @@
 /mob/living/silicon/ai/proc/ai_mob_to_structure()
 	disconnect_shell()
 	ShutOffDoomsdayDevice()
-	var/obj/structure/ai_core/deactivated/ai_core = new(get_turf(src))
+	var/obj/structure/ai_core/deactivated/ai_core = new(get_turf(src), /* skip_mmi_creation = */ TRUE)
 	if(!make_mmi_drop_and_transfer(ai_core.core_mmi, the_core = ai_core))
 		return FALSE
 	qdel(src)
@@ -398,7 +400,7 @@
 /mob/living/silicon/ai/proc/make_mmi_drop_and_transfer(obj/item/mmi/the_mmi, the_core)
 	var/mmi_type
 	if(posibrain_inside)
-		mmi_type = new/obj/item/mmi/posibrain(src)
+		mmi_type = new/obj/item/mmi/posibrain(src, /* autoping = */ FALSE)
 	else
 		mmi_type = new/obj/item/mmi(src)
 	if(hack_software)

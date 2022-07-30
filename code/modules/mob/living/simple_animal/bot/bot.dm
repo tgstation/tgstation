@@ -40,7 +40,7 @@
 	///People currently looking into a bot's UI panel.
 	var/list/users = list()
 	///The inserted (if any) pAI in this bot.
-	var/obj/item/paicard/paicard
+	var/obj/item/pai_card/paicard
 	///The type of bot it is, for radio control.
 	var/bot_type = NONE
 
@@ -398,7 +398,7 @@
 /mob/living/simple_animal/bot/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(attacking_item.GetID())
 		unlock_with_id(user)
-	else if(istype(attacking_item, /obj/item/paicard))
+	else if(istype(attacking_item, /obj/item/pai_card))
 		insertpai(user, attacking_item)
 	else if(attacking_item.tool_behaviour == TOOL_HEMOSTAT && paicard)
 		if(bot_cover_flags & BOT_COVER_OPEN)
@@ -936,7 +936,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 			return TRUE
 	return FALSE
 
-/mob/living/simple_animal/bot/proc/insertpai(mob/user, obj/item/paicard/card)
+/mob/living/simple_animal/bot/proc/insertpai(mob/user, obj/item/pai_card/card)
 	if(paicard)
 		to_chat(user, span_warning("A [paicard] is already inserted!"))
 		return

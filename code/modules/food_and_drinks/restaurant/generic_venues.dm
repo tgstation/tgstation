@@ -30,7 +30,7 @@
 
 	var/image/food_image = new
 	food_image.appearance = appearance
-	food_image.underlays += mutable_appearance(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble")
+	food_image.underlays += mutable_appearance(icon = 'icons/effects/effects.dmi' , icon_state = "thought_bubble")
 
 	return food_image
 
@@ -95,7 +95,7 @@
 	else
 		stack_trace("[reagent_to_order] has no icon sprite for restaurant code, please set a fallback_icon_state for this reagent.")
 
-	var/image/food_image = image(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble")
+	var/image/food_image = image(icon = 'icons/effects/effects.dmi' , icon_state = "thought_bubble")
 	food_image.add_overlay(mutable_appearance('icons/obj/drinks.dmi', glass_visual))
 
 	return food_image
