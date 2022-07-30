@@ -7,7 +7,6 @@
 	name = "external organ"
 	desc = "An external organ that is too external."
 
-	///Unremovable is until the features are completely finished
 	organ_flags = ORGAN_EXTERNAL | ORGAN_EDIBLE
 	visual = TRUE
 
