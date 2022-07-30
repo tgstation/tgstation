@@ -72,7 +72,19 @@
 	else
 		var/obj/item/organ/internal/ears/cat/kitty_ears = new
 		var/obj/item/organ/external/tail/cat/kitty_tail = new
-		kitty_ears.Insert(soon_to_be_felinid, special = TRUE, drop_if_replaced = FALSE) //Gives nonhumans cat tail and ears
+
+		// This removes the spines if they exist
+		var/obj/item/organ/external/spines/current_spines = soon_to_be_felinid.getorganslot(ORGAN_SLOT_EXTERNAL_SPINES)
+		if(current_spines)
+			current_spines.Remove(soon_to_be_felinid, special = TRUE)
+			qdel(current_spines)
+
+		// Without this line the tails would be invisible. This is because cat tail and ears default to None.
+		// Humans get converted directly to felinids, and the key is handled in on_species_gain.
+		// Now when we get mob.dna.features[feature_key], it returns None, which is why the tail is invisible.
+		// stored_feature_id is only set once (the first time an organ is inserted), so this should be safe.
+		kitty_tail.stored_feature_id = "Cat"
+		kitty_ears.Insert(soon_to_be_felinid, special = TRUE, drop_if_replaced = FALSE)
 		kitty_tail.Insert(soon_to_be_felinid, special = TRUE, drop_if_replaced = FALSE)
 	if(!silent)
 		to_chat(soon_to_be_felinid, span_boldnotice("Something is nya~t right."))
