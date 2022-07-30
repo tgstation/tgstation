@@ -102,13 +102,17 @@
 		// From the previous check we know they're not a felinid, therefore removing cat ears and tail is safe
 		var/obj/item/organ/external/tail/old_tail = purrbated_human.getorganslot(ORGAN_SLOT_EXTERNAL_TAIL)
 		if(istype(old_tail, /obj/item/organ/external/tail/cat))
-			var/obj/item/organ/external/tail/new_tail = locate(/obj/item/organ/external/tail) in target_species.external_organs
-			if(new_tail)
-				new_tail = new new_tail()
-				new_tail.Insert(purrbated_human, special = TRUE, drop_if_replaced = FALSE)
-			else
-				old_tail.Remove(purrbated_human, special = TRUE)
-				qdel(old_tail)
+			old_tail.Remove(purrbated_human, special = TRUE)
+			qdel(old_tail)
+			// Locate does not work on assoc lists, so we do it by hand
+			for(var/external_organ in target_species.external_organs)
+				if(ispath(external_organ, /obj/item/organ/external/tail))
+					var/obj/item/organ/external/tail/new_tail = new external_organ()
+					new_tail.Insert(purrbated_human, special = TRUE, drop_if_replaced = FALSE)
+				// Don't forget the spines we removed earlier
+				else if(ispath(external_organ, /obj/item/organ/external/spines))
+					var/obj/item/organ/external/spines/new_spines = new external_organ()
+					new_spines.Insert(purrbated_human, special = TRUE, drop_if_replaced = FALSE)
 
 		var/obj/item/organ/internal/ears/old_ears = purrbated_human.getorganslot(ORGAN_SLOT_EARS)
 		if(istype(old_ears, /obj/item/organ/internal/ears/cat))
