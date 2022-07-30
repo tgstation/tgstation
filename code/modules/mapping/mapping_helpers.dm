@@ -481,7 +481,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	if(use_species)
 		usable_races = GLOB.roundstart_races.Copy() //micro optimization
 		usable_races -= SPECIES_ETHEREAL //they revive on death which is bad juju
-		usable_races -= SPECIES_HUMAN
+		LAZYREMOVE(usable_races, SPECIES_HUMAN)
+		if(!usable_races)
+			stack_trace("morgue_cadaver_disable_nonhumans. NONHUMANS ENABLED BUT NO NONHUMANS ARE ENABLED")
 		if(override_species)
 			stack_trace("WARNING: BOTH use_all_roundstart_races_for_cadavers & morgue_cadaver_override_species CONFIGS ENABLED. morgue_cadaver_override_species BEING OVERRIDEN.")
 	else if(override_species)
@@ -493,7 +495,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		var/mob/living/carbon/human/new_human = new /mob/living/carbon/human(morgue_tray.loc, 1)
 
 		var/species_to_pick
-		if(usable_races.len)
+		if(LAZYLEN(usable_races))
 			if(!species_probability)
 				species_probability = 50
 				stack_trace("WARNING: morgue_cadaver_other_species_probability CONFIG SET TO 0% WHEN SPAWNING. DEFAULTING TO [species_probability]%.")
