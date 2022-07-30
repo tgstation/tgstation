@@ -18,8 +18,9 @@
 		var/turf/display_turf = get_turf(ai_display)
 
 		// Station AIs can change every display on the station Z
-		if(is_station_level(ai_turf.z) && !is_station_level(display_turf.z))
-			continue
+		if(is_station_level(ai_turf.z))
+			if(!is_station_level(display_turf.z))
+				continue
 
 		// Ghost role AIs (or AIs on the mining base?) can only affect their Z
 		else if(ai_turf.z != display_turf.z)
