@@ -522,7 +522,7 @@
 	var/spread_multiplier = 5 // corresponds to artifical kudzu with production speed of 1, approaches 10% of total vines will spread per second
 	///Maximum spreading limit (ie. how many kudzu can there be) for this controller
 	var/spread_cap = 30 // corresponds to artifical kudzu with production speed of 3.5
-	var/list/vine_mutations_list
+	var/static/list/vine_mutations_list
 	var/mutativeness = 1
 	///Maximum sum of mutation severities
 	var/max_mutation_severity = 20
@@ -537,10 +537,11 @@
 	if(event)
 		event.announce_to_ghosts(vine)
 	START_PROCESSING(SSobj, src)
-	vine_mutations_list = list()
-	init_subtypes(/datum/spacevine_mutation/, vine_mutations_list)
-	for(var/datum/spacevine_mutation/mutation as anything in vine_mutations_list)
-		vine_mutations_list[mutation] = max_mutation_severity - mutation.severity // this is intended to be before the potency check as the ideal maximum potency is used for weighting
+	if(!vine_mutations_list)
+		vine_mutations_list = list()
+		init_subtypes(/datum/spacevine_mutation/, vine_mutations_list)
+		for(var/datum/spacevine_mutation/mutation as anything in vine_mutations_list)
+			vine_mutations_list[mutation] = max_mutation_severity - mutation.severity // this is intended to be before the potency check as the ideal maximum potency is used for weighting
 	if(potency != null)
 		mutativeness = potency * MUTATIVENESS_SCALE_FACTOR // If potency is 100, 20 mutativeness; if 1: 0.2 mutativeness
 		max_mutation_severity = round(potency * MAX_SEVERITY_LINEAR_COEFF + MAX_SEVERITY_CONSTANT_TERM) // If potency is 100, 25 max mutation severity; if 1, 10 max mutation severity
@@ -586,14 +587,9 @@
 		if(prob(mutativeness))
 			var/datum/spacevine_mutation/random_mutate = pick_weight(vine_mutations_list - vine.mutations)
 			var/total_severity = random_mutate.severity
-			/// Ensures that the mutation is truly unique and isn't just the same datum but with a different address in memory
-			var/mutation_is_valid = TRUE
 			for(var/datum/spacevine_mutation/mutation as anything in vine.mutations)
-				if(random_mutate.type == mutation.type) // parent mutations (from the vine.mutations |= parent.mutations line) come from the parent vine that spawned this, and if up and up the chain they came from seeds originated from a different master controller and hence have a "different" mutation datum with a different address, subtracting vine.address from vine_mutations_list isn't sufficient in this case and wouldn't remove it, allowing for mutations to be duplicated
-					mutation_is_valid = FALSE
-					break
 				total_severity += mutation.severity
-			if(mutation_is_valid && total_severity <= max_mutation_severity)
+			if(total_severity <= max_mutation_severity)
 				random_mutate.add_mutation_to_vinepiece(vine)
 
 	for(var/datum/spacevine_mutation/mutation in vine.mutations)
