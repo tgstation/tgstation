@@ -138,7 +138,7 @@
 		else
 			last_pump = world.time //lets be extra fair *sigh*
 
-/obj/item/organ/internal/heart/cursed/Insert(mob/living/carbon/accursed, special = 0, drop_if_replaced = FALSE)
+/obj/item/organ/internal/heart/cursed/Insert(mob/living/carbon/accursed, special = 0, drop_if_replaced = TRUE)
 	..()
 	if(owner)
 		to_chat(owner, span_userdanger("Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!"))
