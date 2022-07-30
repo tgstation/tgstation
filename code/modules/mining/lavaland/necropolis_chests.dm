@@ -71,8 +71,7 @@
 			new /obj/item/clothing/neck/necklace/memento_mori(src)
 	if(!contents.len)
 		to_chat(user, span_warning("[src] makes a clunking sound as you try to open it. You feel compelled to let the gods know! (Please open an adminhelp and try again!)"))
-		stack_trace("failed to generate loot. loot number: [loot][mod ? "subloot: [mod]" : null]")
-		return
+		CRASH("Failed to generate loot. loot number: [loot][mod ? "subloot: [mod]" : null]")
 	spawned_loot = TRUE
 	qdel(item)
 	to_chat(user, span_notice("You disable the magic lock, revealing the loot."))
