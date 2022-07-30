@@ -149,18 +149,22 @@
 			else // Not dead? Disregard them, pick a new applicant
 				i--
 				continue
-
 		if(!applicant)
 			i--
 			continue
-
-		var/mob/new_character = applicant
-
-		if (makeBody)
-			new_character = generate_ruleset_body(applicant)
-
-		finish_setup(new_character, i)
 		assigned += applicant
+	finish_applications()
+
+/// Here the accepted applications get generated bodies and their setup is finished.
+/// Called by review_applications()
+/datum/dynamic_ruleset/midround/from_ghosts/proc/finish_applications()
+	var/i = 0
+	for(var/mob/applicant as anything in assigned)
+		i++
+		var/mob/new_character = applicant
+		if(makeBody)
+			new_character = generate_ruleset_body(applicant)
+		finish_setup(new_character, i)
 		notify_ghosts("[applicant.name] has been picked for the ruleset [name]!", source = new_character, action = NOTIFY_ORBIT, header="Something Interesting!")
 
 /datum/dynamic_ruleset/midround/from_ghosts/proc/generate_ruleset_body(mob/applicant)
@@ -270,9 +274,9 @@
 	exclusive_roles = list(JOB_AI)
 	required_enemies = list(4,4,4,4,4,4,2,2,2,0)
 	required_candidates = 1
-	weight = 3
+	minimum_players = 25
+	weight = 2
 	cost = 10
-	requirements = list(101,101,101,80,60,50,30,20,10,10)
 	required_type = /mob/living/silicon/ai
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/malf_ai)
 
@@ -329,7 +333,7 @@
 	required_candidates = 1
 	weight = 1
 	cost = 10
-	requirements = list(90,90,90,80,60,50,40,40,40,40)
+	requirements = REQUIREMENTS_VERY_HIGH_THREAT_NEEDED
 	flags = HIGH_IMPACT_RULESET
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(forced = FALSE)
@@ -370,9 +374,10 @@
 	weight = 5
 	cost = 7
 	minimum_round_time = 70 MINUTES
-	requirements = list(90,90,90,80,60,40,30,20,10,10)
+	requirements = REQUIREMENTS_VERY_HIGH_THREAT_NEEDED
 	var/list/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
 	var/datum/team/nuclear/nuke_team
+	var/mob/leader
 	flags = HIGH_IMPACT_RULESET
 
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear/acceptable(population=0, threat=0)
@@ -387,11 +392,16 @@
 		return FALSE
 	return ..()
 
+/datum/dynamic_ruleset/midround/from_ghosts/nuclear/finish_applications()
+	leader = get_most_experienced(assigned, ROLE_NUCLEAR_OPERATIVE)
+	return ..()
+
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear/finish_setup(mob/new_character, index)
 	new_character.mind.set_assigned_role(SSjob.GetJobType(/datum/job/nuclear_operative))
 	new_character.mind.special_role = ROLE_NUCLEAR_OPERATIVE
-	if (index == 1) // Our first guy is the leader
-		var/datum/antagonist/nukeop/leader/new_role = new
+	if(new_character.mind == leader)
+		leader = null
+		var/datum/antagonist/nukeop/leader/new_role = new()
 		nuke_team = new_role.nuke_team
 		new_character.mind.add_antag_datum(new_role)
 	else
@@ -419,7 +429,7 @@
 	minimum_round_time = 35 MINUTES
 	weight = 3
 	cost = 8
-	requirements = list(101,101,101,80,60,50,30,20,10,10)
+	minimum_players = 25
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/from_ghosts/blob/generate_ruleset_body(mob/applicant)
@@ -457,7 +467,7 @@
 	minimum_round_time = 35 MINUTES
 	weight = 3
 	cost = 10
-	requirements = list(101,101,101,80,60,50,30,20,10,10)
+	minimum_players = 25
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/blob_infection/trim_candidates()
@@ -502,7 +512,7 @@
 	minimum_round_time = 40 MINUTES
 	weight = 5
 	cost = 10
-	requirements = list(101,101,101,70,50,40,20,15,10,10)
+	minimum_players = 25
 	repeatable = TRUE
 	var/list/vents = list()
 
@@ -555,7 +565,7 @@
 	required_candidates = 1
 	weight = 3
 	cost = 5
-	requirements = list(101,101,101,70,50,40,20,15,10,10)
+	minimum_players = 15
 	repeatable = TRUE
 	var/list/spawn_locs = list()
 
@@ -607,7 +617,7 @@
 	required_candidates = 1
 	weight = 4
 	cost = 7
-	requirements = list(101,101,101,80,60,50,30,20,10,10)
+	minimum_players = 25
 	repeatable = TRUE
 	var/list/spawn_locs = list()
 
@@ -658,7 +668,7 @@
 	required_applicants = 2
 	weight = 4
 	cost = 7
-	requirements = list(101,101,101,80,60,50,30,20,10,10)
+	minimum_players = 25
 	repeatable = TRUE
 	var/datum/team/abductor_team/new_team
 
@@ -701,7 +711,7 @@
 	required_candidates = 1
 	weight = 4
 	cost = 8
-	requirements = list(101,101,101,80,60,50,30,20,10,10)
+	minimum_players = 30
 	repeatable = TRUE
 	var/list/spawn_locs = list()
 
@@ -746,7 +756,7 @@
 	required_candidates = 0
 	weight = 3
 	cost = 8
-	requirements = list(101,101,101,80,60,50,30,20,10,10)
+	minimum_players = 27
 	repeatable = TRUE
 	var/spawncount = 2
 
@@ -770,7 +780,7 @@
 	required_candidates = 1
 	weight = 4
 	cost = 5
-	requirements = list(101,101,101,70,50,40,20,15,10,10)
+	minimum_players = 15
 	repeatable = TRUE
 	var/dead_mobs_required = 20
 	var/need_extra_spawns_value = 15
@@ -816,7 +826,6 @@
 	minimum_players = 25
 	weight = 4
 	cost = 8
-	requirements = list(101,101,101,80,60,50,30,20,10,10)
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/from_ghosts/sentient_disease/generate_ruleset_body(mob/applicant)
@@ -843,7 +852,7 @@
 	required_candidates = 0
 	weight = 4
 	cost = 8
-	requirements = list(101,101,101,80,60,50,30,20,10,10)
+	minimum_players = 27
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/pirates/acceptable(population=0, threat=0)
@@ -876,7 +885,6 @@
 	required_candidates = 1
 	weight = 4
 	cost = 3 // Doesn't have the same impact on rounds as revenants, dragons, sentient disease (10) or syndicate infiltrators (5).
-	requirements = list(101,101,101,80,60,50,30,20,10,10)
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/obsessed/trim_candidates()
