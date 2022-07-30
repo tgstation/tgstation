@@ -24,9 +24,12 @@
 	human.eye_color_right = random_eye_color
 
 	human.dna.blood_type = random_blood_type()
+	human.dna.features["mcolor"] = "#[random_color()]"
 	human.dna.species.randomize_active_underwear(human)
 
-	for(var/datum/species/all_species as anything in subtypesof(/datum/species))
-		var/datum/species/new_species = new all_species
+	for(var/datum/species/species_path as anything in subtypesof(/datum/species))
+		var/datum/species/new_species = new species_path
 		new_species.randomize_features(human)
+	human.dna.update_dna_identity()
+	human.updateappearance()
 	human.update_body(is_creating = TRUE)

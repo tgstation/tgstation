@@ -793,13 +793,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	human_mob.update_body()
 
 /datum/species/proc/randomize_external_organs(mob/living/carbon/human/human_mob)
-	for(var/obj/item/organ/external/randomized_organ as anything in human_mob.external_organs)
-		if(randomized_organ in external_organs)
+	for(var/obj/item/organ/external/organ_path as anything in external_organs)
+		var/obj/item/organ/external/randomized_organ = human_mob.getorgan(organ_path)
+		if(randomized_organ)
 			var/new_look = pick(randomized_organ.get_global_feature_list())
 			human_mob.dna.features["[randomized_organ.feature_key]"] = new_look
 			mutant_bodyparts["[randomized_organ.feature_key]"] = new_look
-			randomized_organ.mutate_feature(new_look, human_mob)
-	human_mob.update_body()
 
 /datum/species/proc/randomize_features(mob/living/carbon/human/human_mob)
 	return
