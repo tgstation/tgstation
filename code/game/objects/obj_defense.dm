@@ -95,15 +95,10 @@
 
 /obj/attack_slime(mob/living/simple_animal/slime/user, list/modifiers)
 	if(!user.is_adult)
-		if(user.client)
-			log_combat(user, src, "attempted to attack")
 		return
 	if(user.client)
 		if(attack_generic(user, rand(10, 15), BRUTE, MELEE, 1))
 			log_combat(user, src, "attacked")
-		else 
-			log_combat(user, src, "attempted to attack")
-
 
 /obj/singularity_act()
 	SSexplosions.high_mov_atom += src
