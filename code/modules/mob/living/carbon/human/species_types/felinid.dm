@@ -43,15 +43,13 @@
 	return ..()
 
 /proc/mass_purrbation()
-	for(var/mob in GLOB.mob_list)
-		if(ishuman(mob))
-			purrbation_apply(mob)
+	for(var/mob in GLOB.human_list)
+		purrbation_apply(mob)
 		CHECK_TICK
 
 /proc/mass_remove_purrbation()
-	for(var/mob in GLOB.mob_list)
-		if(ishuman(mob))
-			purrbation_remove(mob)
+	for(var/mob in GLOB.human_list)
+		purrbation_remove(mob)
 		CHECK_TICK
 
 /proc/purrbation_toggle(mob/living/carbon/human/target_human, silent = FALSE)
@@ -102,7 +100,7 @@
 
 		var/obj/item/organ/internal/ears/old_ears = purrbated_human.getorganslot(ORGAN_SLOT_EARS)
 		if(istype(old_ears, /obj/item/organ/internal/ears/cat))
-			var/obj/item/organ/new_ears = new target_species.mutantears
+			var/obj/item/organ/new_ears = new target_species.mutantears()
 			new_ears.Insert(purrbated_human, special = TRUE, drop_if_replaced = FALSE)
 	if(!silent)
 		to_chat(purrbated_human, span_boldnotice("You are no longer a cat."))
