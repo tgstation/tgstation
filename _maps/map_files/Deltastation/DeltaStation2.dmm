@@ -5522,14 +5522,14 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/machinery/door/window/right/directional/north{
-	name = "Medkit Storage";
-	req_access = list("medical")
-	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
 /obj/structure/table/reinforced,
+/obj/machinery/door/window/left/directional/north{
+	name = "Medkit Storage";
+	req_access = list("medical")
+	},
 /turf/open/floor/iron,
 /area/station/medical/storage)
 "brZ" = (
@@ -12204,13 +12204,13 @@
 /obj/item/clothing/mask/breath/medical{
 	pixel_y = -3
 	},
-/obj/machinery/door/window/right/directional/north{
-	name = "Surgical Supplies";
-	req_access = list("surgery")
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/window/reinforced/spawner/west,
 /obj/machinery/status_display/evac/directional/south,
+/obj/machinery/door/window/left/directional/north{
+	name = "Surgical Supplies";
+	req_access = list("surgery")
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/surgery/theatre)
 "cXs" = (
@@ -20627,7 +20627,6 @@
 /turf/open/floor/wood,
 /area/station/service/theater)
 "feA" = (
-/obj/structure/table,
 /obj/item/book/manual/wiki/ordnance{
 	pixel_x = 4;
 	pixel_y = 1
@@ -20649,6 +20648,7 @@
 	pixel_x = -4;
 	pixel_y = -1
 	},
+/obj/structure/table/reinforced,
 /turf/open/floor/iron,
 /area/station/science/ordnance/office)
 "feG" = (
@@ -30460,6 +30460,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/processing)
+"hIy" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/secure_closet/security/science,
+/turf/open/floor/iron,
+/area/station/security/checkpoint/medical/medsci)
 "hIB" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 1;
@@ -54980,15 +54987,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
-"nKp" = (
-/obj/structure/bookcase/random/nonfiction,
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/wood,
-/obj/structure/table/glass,
-/turf/open/floor/wood,
-/area/station/service/library)
 "nKw" = (
 /obj/structure/table/wood,
 /obj/item/pai_card,
@@ -56982,10 +56980,10 @@
 /turf/open/floor/iron,
 /area/station/engineering/storage/tech)
 "oic" = (
-/obj/structure/closet/crate/freezer/surplus_limbs,
 /obj/effect/turf_decal/bot_white{
 	color = "#435a88"
 	},
+/obj/structure/closet/crate/freezer/blood,
 /turf/open/floor/iron/freezer,
 /area/station/medical/coldroom)
 "oif" = (
@@ -64448,10 +64446,6 @@
 /area/station/maintenance/disposal/incinerator)
 "qbQ" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/north{
-	name = "Surgical Supplies";
-	req_access = list("surgery")
-	},
 /obj/structure/window/reinforced/spawner/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/sign/poster/official/random/directional/south,
@@ -64462,6 +64456,10 @@
 /obj/item/clothing/ears/earmuffs,
 /obj/item/clothing/glasses/blindfold,
 /obj/item/clothing/glasses/blindfold,
+/obj/machinery/door/window/right/directional/north{
+	name = "Surgical Supplies";
+	req_access = list("surgery")
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/surgery/theatre)
 "qbT" = (
@@ -70030,14 +70028,14 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/machinery/door/window/left/directional/north{
-	name = "Medkit Storage";
-	req_access = list("medical")
-	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
 /obj/structure/table/reinforced,
+/obj/machinery/door/window/right/directional/north{
+	name = "Medkit Storage";
+	req_access = list("medical")
+	},
 /turf/open/floor/iron,
 /area/station/medical/storage)
 "rAk" = (
@@ -91167,10 +91165,10 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "wHt" = (
-/obj/structure/closet/secure_closet/security/science,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/effect/turf_decal/bot,
+/obj/structure/closet/secure_closet/security/med,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/medical/medsci)
 "wHx" = (
@@ -134163,7 +134161,7 @@ wzK
 dgU
 mjq
 lNw
-wHt
+hIy
 wHt
 lNw
 vIM
@@ -136995,7 +136993,7 @@ veM
 fse
 ako
 wAO
-ako
+pdl
 ako
 ako
 pdl
@@ -143662,7 +143660,7 @@ wrs
 nHY
 iVL
 nHY
-nKp
+ylh
 nHY
 ylh
 ggg
