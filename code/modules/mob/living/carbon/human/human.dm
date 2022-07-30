@@ -853,8 +853,8 @@
 	if(href_list[VV_HK_PURRBATION])
 		if(!check_rights(R_SPAWN))
 			return
-		if(!ishumanbasic(src))
-			to_chat(usr, "This can only be done to the basic human species at the moment.")
+		if(!ishuman(src))
+			to_chat(usr, "This can only be done to human species at the moment.")
 			return
 		var/success = purrbation_toggle(src)
 		if(success)

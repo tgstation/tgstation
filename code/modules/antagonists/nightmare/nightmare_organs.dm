@@ -10,7 +10,7 @@
 	icon_state = "brain-x-d"
 	var/datum/action/cooldown/spell/jaunt/shadow_walk/our_jaunt
 
-/obj/item/organ/internal/brain/nightmare/Insert(mob/living/carbon/M, special = FALSE)
+/obj/item/organ/internal/brain/nightmare/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	if(M.dna.species.id != SPECIES_NIGHTMARE)
 		M.set_species(/datum/species/shadow/nightmare)
@@ -19,7 +19,7 @@
 	our_jaunt = new(M)
 	our_jaunt.Grant(M)
 
-/obj/item/organ/internal/brain/nightmare/Remove(mob/living/carbon/M, special = FALSE)
+/obj/item/organ/internal/brain/nightmare/Remove(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	QDEL_NULL(our_jaunt)
 	return ..()
 
@@ -56,13 +56,13 @@
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	Insert(user)
 
-/obj/item/organ/internal/heart/nightmare/Insert(mob/living/carbon/M, special = FALSE)
+/obj/item/organ/internal/heart/nightmare/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	if(special != HEART_SPECIAL_SHADOWIFY)
 		blade = new/obj/item/light_eater
 		M.put_in_hands(blade)
 
-/obj/item/organ/internal/heart/nightmare/Remove(mob/living/carbon/M, special = FALSE)
+/obj/item/organ/internal/heart/nightmare/Remove(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	respawn_progress = 0
 	if(blade && special != HEART_SPECIAL_SHADOWIFY)
 		M.visible_message(span_warning("\The [blade] disintegrates!"))
