@@ -30,6 +30,7 @@
 	///The rate that the stomach will transfer reagents to the body
 	var/metabolism_efficiency = 0.05 // the lowest we should go is 0.05
 
+	var/operated = FALSE //whether the stomach's been repaired with surgery and can be fixed again or not
 
 /obj/item/organ/internal/stomach/Initialize(mapload)
 	. = ..()
