@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes: 
+  - rscadd: "Bubblegum now spawns demonic bubblegum candy when they devour corpses."
