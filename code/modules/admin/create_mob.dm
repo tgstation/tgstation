@@ -11,7 +11,10 @@
 	user << browse(create_panel_helper(create_mob_html), "window=create_mob;size=425x475")
 
 /proc/randomize_human(mob/living/carbon/human/human)
-	human.gender = pick(MALE, FEMALE, PLURAL)
+	if(human.dna.species.sexes)
+		human.gender = pick(MALE, FEMALE, PLURAL)
+	else
+		human.gender = PLURAL
 	human.physique = human.gender
 	human.real_name = human.dna?.species.random_name(human.gender) || random_unique_name(human.gender)
 	human.name = human.real_name
@@ -30,6 +33,7 @@
 	for(var/datum/species/species_path as anything in subtypesof(/datum/species))
 		var/datum/species/new_species = new species_path
 		new_species.randomize_features(human)
+	human.dna.species.spec_updatehealth(human)
 	human.dna.update_dna_identity()
 	human.updateappearance()
 	human.update_body(is_creating = TRUE)

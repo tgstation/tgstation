@@ -44,7 +44,6 @@
 
 /datum/species/human/felinid/randomize_features(mob/living/carbon/human/human_mob)
 	randomize_external_organs(human_mob)
-	human_mob.update_body()
 
 /proc/mass_purrbation()
 	for(var/M in GLOB.mob_list)
