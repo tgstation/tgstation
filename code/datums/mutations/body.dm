@@ -28,6 +28,22 @@
 
 	owner.set_timed_status_effect(20 SECONDS, /datum/status_effect/jitter)
 
+/datum/mutation/human/epilepsy/on_acquiring(mob/living/carbon/human/acquirer)
+	if(..())
+		return
+	RegisterSignal(owner, COMSIG_MOB_FLASHED, .proc/get_flashed_nerd)
+
+/datum/mutation/human/epilepsy/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	UnregisterSignal(owner, COMSIG_MOB_FLASHED)
+
+/datum/mutation/human/epilepsy/proc/get_flashed_nerd()
+	if(!prob(30))
+		return
+	trigger_seizure()
+
+
 //Unstable DNA induces random mutations!
 /datum/mutation/human/bad_dna
 	name = "Unstable DNA"
