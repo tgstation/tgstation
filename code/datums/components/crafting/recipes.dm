@@ -674,7 +674,7 @@
 	result = /obj/item/toy/plush/moth
 	reqs = list(/obj/item/stack/sheet/animalhide/mothroach = 1,
 				/obj/item/organ/internal/heart = 1,
-				/obj/item/stack/sheet/cloth/ = 3)
+				/obj/item/stack/sheet/cloth = 3)
 	category = CAT_MISC
 
 /datum/crafting_recipe/mixedbouquet
