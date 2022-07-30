@@ -524,21 +524,17 @@
 	/// var to prevent it freezing the same things over and over
 	var/cooling = FALSE
 
-/obj/item/storage/organbox/Initialize()
+/obj/item/storage/organbox/Initialize(mapload)
 	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY /// you have to remove it from your bag before opening it but I think that's fine
-	atom_storage.max_total_storage = 21
+
+	create_storage(type = /datum/storage/organ_box, max_specific_storage = WEIGHT_CLASS_BULKY, max_total_storage = 21)
 	atom_storage.set_holdable(list(
 		/obj/item/organ,
 		/obj/item/bodypart,
 		/obj/item/food/icecream
 		))
 
-/obj/item/storage/organbox/Initialize(mapload)
-	. = ..()
 	create_reagents(100, TRANSPARENT)
-	RegisterSignal(src, COMSIG_ATOM_ENTERED, .proc/freeze)
-	RegisterSignal(src, COMSIG_ATOM_EXITED, .proc/unfreeze)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/storage/organbox/process(delta_time)
@@ -557,20 +553,20 @@
 		cooling = TRUE
 		update_appearance()
 		for(var/C in contents)
-			freeze(C)
+			freeze_contents(C)
 		return
 	if(cooling && !cool)
 		cooling = FALSE
 		update_appearance()
 		for(var/C in contents)
-			unfreeze(C)
+			unfreeze_contents(C)
 
 /obj/item/storage/organbox/update_icon_state()
 	icon_state = "[base_icon_state][cooling ? "-working" : null]"
 	return ..()
 
 ///freezes the organ and loops bodyparts like heads
-/obj/item/storage/organbox/proc/freeze(datum/source, obj/item/I)
+/obj/item/storage/organbox/proc/freeze_contents(datum/source, obj/item/I)
 	SIGNAL_HANDLER
 	if(isinternalorgan(I))
 		var/obj/item/organ/internal/int_organ = I
@@ -582,7 +578,7 @@
 			int_organ.organ_flags |= ORGAN_FROZEN
 
 ///unfreezes the organ and loops bodyparts like heads
-/obj/item/storage/organbox/proc/unfreeze(datum/source, obj/item/I)
+/obj/item/storage/organbox/proc/unfreeze_contents(datum/source, obj/item/I)
 	SIGNAL_HANDLER
 	if(isinternalorgan(I))
 		var/obj/item/organ/internal/int_organ = I

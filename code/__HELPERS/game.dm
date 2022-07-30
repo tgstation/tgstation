@@ -213,8 +213,7 @@
 	if (!question)
 		question = "Would you like to be a special role?"
 	var/list/result = list()
-	for(var/candidate in group)
-		var/mob/candidate_mob = candidate
+	for(var/mob/candidate_mob as anything in group)
 		if(!candidate_mob.key || !candidate_mob.client || (ignore_category && GLOB.poll_ignore[ignore_category] && (candidate_mob.ckey in GLOB.poll_ignore[ignore_category])))
 			continue
 		if(be_special_flag)

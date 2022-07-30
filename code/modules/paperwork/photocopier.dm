@@ -313,7 +313,7 @@
 			temp_img = icon(spec.ass_image)
 		else
 			temp_img = icon(ass.gender == FEMALE ? 'icons/ass/assfemale.png' : 'icons/ass/assmale.png')
-	else if(isalienadult(ass) || istype(ass, /mob/living/simple_animal/hostile/alien)) //Xenos have their own asses, thanks to Pybro.
+	else if(isalienadult(ass)) //Xenos have their own asses, thanks to Pybro.
 		temp_img = icon('icons/ass/assalien.png')
 	else if(issilicon(ass))
 		temp_img = icon('icons/ass/assmachine.png')
@@ -501,6 +501,10 @@
 	grind_results = list(/datum/reagent/iodine = 40, /datum/reagent/iron = 10)
 	var/charges = 5
 	var/max_charges = 5
+
+/obj/item/toner/examine(mob/user)
+	. = ..()
+	. += span_notice("The ink level gauge on the side reads [round(charges / max_charges * 100)]%")
 
 /obj/item/toner/large
 	name = "large toner cartridge"

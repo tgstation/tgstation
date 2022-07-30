@@ -144,6 +144,9 @@
 /mob/living/carbon/attack_drone(mob/living/simple_animal/drone/user)
 	return //so we don't call the carbon's attack_hand().
 
+/mob/living/carbon/attack_drone_secondary(mob/living/simple_animal/drone/user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/carbon/attack_hand(mob/living/carbon/human/user, list/modifiers)
 
@@ -199,7 +202,7 @@
 		return TRUE
 
 
-/mob/living/carbon/attack_slime(mob/living/simple_animal/slime/M)
+/mob/living/carbon/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
 	if(..()) //successful slime attack
 		if(M.powerlevel > 0)
 			var/stunprob = M.powerlevel * 7 + 10  // 17 at level 1, 80 at level 10
@@ -353,9 +356,8 @@
 	. = ..()
 	if(. & EMP_PROTECT_CONTENTS)
 		return
-	for(var/X in internal_organs)
-		var/obj/item/organ/O = X
-		O.emp_act(severity)
+	for(var/obj/item/organ/internal_organ as anything in internal_organs)
+		internal_organ.emp_act(severity)
 
 ///Adds to the parent by also adding functionality to propagate shocks through pulling and doing some fluff effects.
 /mob/living/carbon/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)

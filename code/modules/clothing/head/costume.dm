@@ -111,8 +111,8 @@
 	..()
 	if(ishuman(user) && slot == ITEM_SLOT_HEAD)
 		var/mob/living/carbon/human/H = user
-		if(istype(H.wear_suit, /obj/item/clothing/suit/cardborg))
-			var/obj/item/clothing/suit/cardborg/CB = H.wear_suit
+		if(istype(H.wear_suit, /obj/item/clothing/suit/costume/cardborg))
+			var/obj/item/clothing/suit/costume/cardborg/CB = H.wear_suit
 			CB.disguise(user, src)
 
 /obj/item/clothing/head/cardborg/dropped(mob/living/user)
@@ -179,3 +179,25 @@
 	name = "basil boys helmet"
 	icon_state = "football_helmet_red"
 	inhand_icon_state = "football_helmet_red"
+
+/obj/item/clothing/head/tv_head
+	name = "television helmet"
+	desc = "A mysterious headgear made from the hollowed out remains of a status display. How very retro-retro-futuristic of you."
+	icon_state = "IPC_helmet"
+	inhand_icon_state = "syringe_kit"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi' //Grandfathered in from the wallframe for status displays.
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	clothing_flags = SNUG_FIT
+	flash_protect = FLASH_PROTECTION_SENSITIVE
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	var/has_fov = TRUE
+
+/obj/item/clothing/head/tv_head/Initialize(mapload)
+	. = ..()
+	if(has_fov)
+		AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
+
+/obj/item/clothing/head/tv_head/fov_less
+	desc = "A mysterious headgear made from the hollowed out remains of a status display. How very retro-retro-futuristic of you. It's very easy to see out of this one."
+	has_fov = FALSE

@@ -80,7 +80,7 @@
 	active_mind_control = FALSE
 	return TRUE
 
-/obj/item/organ/internal/heart/gland/Remove(mob/living/carbon/M, special = FALSE)
+/obj/item/organ/internal/heart/gland/Remove(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	active = FALSE
 	if(initial(uses) == 1)
 		uses = initial(uses)
@@ -89,7 +89,7 @@
 	clear_mind_control()
 	..()
 
-/obj/item/organ/internal/heart/gland/Insert(mob/living/carbon/M, special = FALSE)
+/obj/item/organ/internal/heart/gland/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	..()
 	if(special != 2 && uses) // Special 2 means abductor surgery
 		Start()

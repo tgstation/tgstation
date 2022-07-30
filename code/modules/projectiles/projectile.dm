@@ -22,7 +22,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/def_zone = "" //Aiming at
 	var/atom/movable/firer = null//Who shot it
-	var/atom/fired_from = null // the atom that the projectile was fired from (gun, turret)
+	var/datum/fired_from = null // the thing that the projectile was fired from (gun, turret, spell)
 	var/suppressed = FALSE //Attack message
 	var/yo = null
 	var/xo = null
@@ -590,7 +590,7 @@
  * Scan turf we're now in for anything we can/should hit. This is useful for hitting non dense objects the user
  * directly clicks on, as well as for PHASING projectiles to be able to hit things at all as they don't ever Bump().
  */
-/obj/projectile/Moved(atom/OldLoc, Dir)
+/obj/projectile/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(!fired)
 		return

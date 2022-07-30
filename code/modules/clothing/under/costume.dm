@@ -118,7 +118,7 @@
 
 /obj/item/clothing/under/costume/maid/Initialize(mapload)
 	. = ..()
-	var/obj/item/clothing/accessory/maidapron/A = new (src)
+	var/obj/item/clothing/accessory/maidcorset/A = new (src)
 	attach_accessory(A)
 
 /obj/item/clothing/under/costume/geisha
@@ -369,4 +369,10 @@
 	desc = "A standard black and white striped uniform to signal authority."
 	icon_state = "referee"
 	inhand_icon_state = "referee"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/joker
+	name = "comedian suit"
+	desc = "The worst part of having a mental illness is people expect you to behave as if you don't."
+	icon_state = "joker"
 	can_adjust = FALSE
