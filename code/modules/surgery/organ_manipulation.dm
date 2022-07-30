@@ -68,7 +68,7 @@
 		/datum/surgery_step/close)
 
 /datum/surgery_step/manipulate_organs
-	time = 64
+	time = 6.4 SECONDS
 	name = "manipulate organs"
 	repeatable = TRUE
 	implements = list(
@@ -91,13 +91,13 @@
 		success_sound = initial(success_sound)
 		if(!length(tool.contents))
 			to_chat(user, span_warning("There is nothing inside [tool]!"))
-			return -1
+			return SURGERY_STEP_FAIL
 		target_organ = tool.contents[1]
 		if(!isorgan(target_organ))
 			if (target_zone == BODY_ZONE_PRECISE_EYES)
 				target_zone = check_zone(target_zone)
 			to_chat(user, span_warning("You cannot put [target_organ] into [target]'s [parse_zone(target_zone)]!"))
-			return -1
+			return SURGERY_STEP_FAIL
 		tool = target_organ
 	if(isorgan(tool))
 		current_type = "insert"
@@ -106,14 +106,14 @@
 		target_organ = tool
 		if(target_zone != target_organ.zone || target.getorganslot(target_organ.slot))
 			to_chat(user, span_warning("There is no room for [target_organ] in [target]'s [parse_zone(target_zone)]!"))
-			return -1
+			return SURGERY_STEP_FAIL
 		var/obj/item/organ/meatslab = tool
 		if(!meatslab.useable)
 			to_chat(user, span_warning("[target_organ] seems to have been chewed on, you can't use this!"))
-			return -1
+			return SURGERY_STEP_FAIL
 
 		if(!can_use_organ(user, meatslab))
-			return -1
+			return SURGERY_STEP_FAIL
 
 		if (target_zone == BODY_ZONE_PRECISE_EYES)
 			target_zone = check_zone(target_zone)
@@ -134,7 +134,7 @@
 			target_zone = check_zone(target_zone)
 		if(!length(organs))
 			to_chat(user, span_warning("There are no removable organs in [target]'s [parse_zone(target_zone)]!"))
-			return -1
+			return SURGERY_STEP_FAIL
 		else
 			for(var/obj/item/organ/organ in organs)
 				organ.on_find(user)
@@ -143,21 +143,21 @@
 
 			var/chosen_organ = tgui_input_list(user, "Remove which organ?", "Surgery", sort_list(organs))
 			if(isnull(chosen_organ))
-				return -1
+				return SURGERY_STEP_FAIL
 			target_organ = chosen_organ
 			if(user && target && user.Adjacent(target) && user.get_active_held_item() == tool)
 				target_organ = organs[target_organ]
 				if(!target_organ)
-					return -1
+					return SURGERY_STEP_FAIL
 				if(target_organ.organ_flags & ORGAN_UNREMOVABLE)
 					to_chat(user, span_warning("[target_organ] is too well connected to take out!"))
-					return -1
+					return SURGERY_STEP_FAIL
 				display_results(user, target, span_notice("You begin to extract [target_organ] from [target]'s [parse_zone(target_zone)]..."),
 					span_notice("[user] begins to extract [target_organ] from [target]'s [parse_zone(target_zone)]."),
 					span_notice("[user] begins to extract something from [target]'s [parse_zone(target_zone)]."))
 				display_pain(target, "You can feel your [target_organ] being removed from your [parse_zone(target_zone)]!")
 			else
-				return -1
+				return SURGERY_STEP_FAIL
 
 /datum/surgery_step/manipulate_organs/success(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	if (target_zone == BODY_ZONE_PRECISE_EYES)
@@ -197,7 +197,7 @@
 	return TRUE
 
 /datum/surgery_step/manipulate_organs/external
-	time = 32
+	time = 3.2 SECONDS
 	name = "manipulate features"
 
 /datum/surgery_step/manipulate_organs/external/can_use_organ(mob/user, obj/item/organ/organ)
