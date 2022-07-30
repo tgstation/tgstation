@@ -34,10 +34,11 @@
 
 GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/punpun)
 
-/mob/living/carbon/human/species/monkey/punpun //except for a few special persistence features, pun pun is just a normal monkey
+/mob/living/carbon/human/species/monkey/punpun
 	name = "Pun Pun" //C A N O N
 	unique_name = FALSE
 	use_random_name = FALSE
+	ai_controller = /datum/ai_controller/monkey/pun_pun
 	/// If we had one of the rare names in a past life
 	var/ancestor_name
 	/// The number of times Pun Pun has died since he was last gibbed
