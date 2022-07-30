@@ -164,7 +164,7 @@
 /obj/item/clothing/glasses/meson/engine/atmos_imaging
 	name = "atmospheric thermal imaging goggles"
 	desc = "Goggles used by Atmospheric Technician to see the thermal energy of gasses in open areas"
-	icon_state = "trayson-"
+	icon_state = "trayson-radiation"
 	inhand_icon_state = "trayson-meson"
 	glass_colour_type = /datum/client_colour/glass_colour/gray
 
@@ -185,6 +185,10 @@
 
 	update_appearance()
 	update_action_buttons()
+
+/obj/item/clothing/glasses/meson/engine/atmos_imaging/update_icon_state()
+	icon_state = inhand_icon_state = "trayson-[mode]"
+	return ..()
 
 /obj/item/clothing/glasses/meson/engine/atmos_imaging/process()
 	if(!ishuman(loc))
