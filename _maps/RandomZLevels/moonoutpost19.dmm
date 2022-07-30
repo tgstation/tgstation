@@ -28,6 +28,8 @@
 	pixel_y = 7
 	},
 /obj/structure/fluff/paper/corner,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/pod/dark,
 /area/awaymission/moonoutpost19/main)
 "ar" = (
@@ -1305,11 +1307,8 @@
 	pixel_y = 23;
 	req_access = null
 	},
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
 	},
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
@@ -1840,11 +1839,7 @@
 /obj/structure/sign/poster/official/safety_report{
 	pixel_y = 32
 	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron{
@@ -1868,14 +1863,8 @@
 "fS" = (
 /obj/structure/filingcabinet,
 /obj/item/paper/fluff/awaymissions/moonoutpost19/log/kenneth,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
 	},
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
@@ -1966,10 +1955,7 @@
 /area/awaymission/moonoutpost19/research)
 "gi" = (
 /obj/structure/reagent_dispensers/wall/peppertank/directional/west,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron{
@@ -1977,8 +1963,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "gj" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron{
@@ -2143,8 +2128,7 @@
 	dir = 8;
 	icon_state = "ltrails_1"
 	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron{
@@ -2351,11 +2335,7 @@
 /obj/structure/table,
 /obj/item/book/manual/wiki/security_space_law,
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron{
@@ -2365,10 +2345,7 @@
 "hh" = (
 /obj/structure/table,
 /obj/item/folder/red,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
@@ -2380,13 +2357,7 @@
 	pixel_y = 9
 	},
 /obj/item/pen,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
@@ -2863,22 +2834,15 @@
 /area/awaymission/moonoutpost19/arrivals)
 "jy" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/purple{
+/obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
 	},
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "jz" = (
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
+/obj/effect/turf_decal/tile/purple/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron{
@@ -3800,6 +3764,13 @@
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
+"nF" = (
+/obj/effect/baseturf_helper/asteroid/moon,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "nO" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock{
@@ -3842,7 +3813,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "oe" = (
-/obj/structure/flora/rock{
+/obj/structure/flora/rock/style_random{
 	pixel_y = -2
 	},
 /turf/open/misc/asteroid/moon{
@@ -3913,10 +3884,13 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "oH" = (
-/obj/structure/cable,
-/obj/structure/displaycase,
+/obj/structure/displaycase{
+	desc = "A display case for prized possessions. It hasn't been cleaned in a while.";
+	name = "award display case"
+	},
 /obj/item/reagent_containers/food/drinks/trophy/silver_cup{
-	desc = "Second place prize for excellence in archaeology. Wonder who got first place?"
+	desc = "Second place prize for excellence in archaeology. Wonder who got first place?";
+	name = "silver trophy (second place)"
 	},
 /turf/open/floor/pod/dark,
 /area/awaymission/moonoutpost19/main)
@@ -4076,6 +4050,15 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/item/emptysandbag,
 /turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/moonoutpost19/arrivals)
+"qC" = (
+/obj/machinery/door/poddoor/shutters{
+	id = "awaymission19atvs"
+	},
+/obj/structure/cable,
+/turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -4262,6 +4245,13 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
+/area/awaymission/moonoutpost19/main)
+"sp" = (
+/obj/item/reagent_containers/food/drinks/trophy/gold_cup{
+	desc = "For continued excellence in the field of archaeology.";
+	name = "first place trophy"
+	},
+/turf/closed/mineral/random,
 /area/awaymission/moonoutpost19/main)
 "ss" = (
 /obj/structure/chair/comfy/black{
@@ -4606,11 +4596,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/dark/fourcorners,
-/obj/effect/turf_decal/tile/dark/fourcorners,
-/turf/open/floor/iron/white{
-	heat_capacity = 1e+006
-	},
+/turf/open/floor/iron/dark,
 /area/awaymission/moonoutpost19/research)
 "vz" = (
 /obj/structure/table,
@@ -4655,6 +4641,8 @@
 /area/awaymission/moonoutpost19/arrivals)
 "vQ" = (
 /obj/item/banner/command/mundane{
+	desc = "The banner of Central Command, impaled into the rock upon first landing on this moon.";
+	name = "command claim banner";
 	pixel_x = -1;
 	pixel_y = 15
 	},
@@ -4746,13 +4734,12 @@
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
 /obj/item/screwdriver{
 	pixel_x = 9;
 	pixel_y = 10
+	},
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
 	},
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
@@ -4810,11 +4797,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/dark/fourcorners,
-/obj/effect/turf_decal/tile/dark/fourcorners,
-/turf/open/floor/iron/white{
-	heat_capacity = 1e+006
-	},
+/turf/open/floor/iron/dark,
 /area/awaymission/moonoutpost19/research)
 "xo" = (
 /obj/machinery/door/airlock/medical{
@@ -4857,11 +4840,7 @@
 	dir = 8;
 	icon_state = "ltrails_1"
 	},
-/obj/effect/turf_decal/tile/dark/fourcorners,
-/obj/effect/turf_decal/tile/dark/fourcorners,
-/turf/open/floor/iron/white{
-	heat_capacity = 1e+006
-	},
+/turf/open/floor/iron/dark,
 /area/awaymission/moonoutpost19/research)
 "xC" = (
 /obj/effect/decal/cleanable/dirt,
@@ -5155,16 +5134,13 @@
 	dir = 4;
 	network = list("mo19r","mo19")
 	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
 /obj/machinery/button/door/directional/west{
 	id = "Awaybiohazard";
 	name = "Biohazard Shutter Control";
 	req_access_txt = "101"
+	},
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 8
 	},
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
@@ -5287,11 +5263,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/effect/turf_decal/tile/dark/fourcorners,
-/obj/effect/turf_decal/tile/dark/fourcorners,
-/turf/open/floor/iron/white{
-	heat_capacity = 1e+006
-	},
+/turf/open/floor/iron/dark,
 /area/awaymission/moonoutpost19/research)
 "AK" = (
 /obj/structure/table,
@@ -5561,11 +5533,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/effect/turf_decal/tile/dark/fourcorners,
-/obj/effect/turf_decal/tile/dark/fourcorners,
-/turf/open/floor/iron/white{
-	heat_capacity = 1e+006
-	},
+/turf/open/floor/iron/dark,
 /area/awaymission/moonoutpost19/research)
 "CM" = (
 /obj/structure/table,
@@ -5753,7 +5721,10 @@
 /turf/open/floor/carpet/royalblue,
 /area/awaymission/moonoutpost19/arrivals)
 "Eb" = (
-/obj/structure/closet/crate/miningcar,
+/obj/structure/closet/crate/miningcar{
+	desc = "A mining cart. It's caked with old basalt and lunar debris.";
+	name = "mining car"
+	},
 /turf/open/misc/asteroid/basalt,
 /area/awaymission/moonoutpost19/main)
 "Ed" = (
@@ -5815,17 +5786,13 @@
 /area/awaymission/moonoutpost19/main)
 "ES" = (
 /obj/structure/rack,
-/obj/item/paicard{
+/obj/item/pai_card{
 	pixel_x = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/dark/fourcorners,
-/obj/effect/turf_decal/tile/dark/fourcorners,
-/turf/open/floor/iron/white{
-	heat_capacity = 1e+006
-	},
+/turf/open/floor/iron/dark,
 /area/awaymission/moonoutpost19/research)
 "EU" = (
 /obj/structure/disposaloutlet,
@@ -6201,6 +6168,13 @@
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 4
 	},
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
+"HY" = (
+/obj/structure/flora/rock/style_random,
 /turf/open/misc/asteroid/moon{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
@@ -7205,7 +7179,6 @@
 	},
 /area/awaymission/moonoutpost19/main)
 "QZ" = (
-/obj/structure/cable,
 /obj/machinery/light/cold/directional/west,
 /turf/open/floor/pod/light,
 /area/awaymission/moonoutpost19/main)
@@ -7275,11 +7248,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/effect/turf_decal/tile/dark/fourcorners,
-/obj/effect/turf_decal/tile/dark/fourcorners,
-/turf/open/floor/iron/white{
-	heat_capacity = 1e+006
-	},
+/turf/open/floor/iron/dark,
 /area/awaymission/moonoutpost19/research)
 "RT" = (
 /obj/effect/decal/cleanable/dirt,
@@ -7294,7 +7263,9 @@
 	pixel_x = 16;
 	pixel_y = -10
 	},
-/obj/effect/decal/remains/human,
+/obj/effect/decal/remains/human{
+	desc = "...the pilot wasn't as lucky as the flag."
+	},
 /turf/open/misc/asteroid/moon{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
@@ -7345,6 +7316,10 @@
 	name = "\improper Historical Ripley MK-II wreckage"
 	},
 /obj/effect/decal/cleanable/oil,
+/obj/item/food/grown/moonflower{
+	pixel_x = 7;
+	pixel_y = -18
+	},
 /turf/open/misc/asteroid/moon{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
@@ -7434,12 +7409,6 @@
 /obj/machinery/newscaster{
 	pixel_x = -30
 	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
 /obj/item/chair{
 	pixel_x = 5;
 	pixel_y = 5
@@ -7449,6 +7418,9 @@
 	pixel_y = 3
 	},
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 8
+	},
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
@@ -7499,11 +7471,7 @@
 "Tx" = (
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/tile/dark/fourcorners,
-/obj/effect/turf_decal/tile/dark/fourcorners,
-/turf/open/floor/iron/white{
-	heat_capacity = 1e+006
-	},
+/turf/open/floor/iron/dark,
 /area/awaymission/moonoutpost19/research)
 "TG" = (
 /obj/machinery/airalarm/unlocked{
@@ -7616,17 +7584,13 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/effect/turf_decal/tile/dark/fourcorners,
-/obj/effect/turf_decal/tile/dark/fourcorners,
 /obj/item/exodrone,
 /obj/item/keycard{
 	desc = "This keycard has a little label on it, it goes to the ATV shed off-base.";
 	name = "security keycard: ATV shed";
 	puzzle_id = "atvs"
 	},
-/turf/open/floor/iron/white{
-	heat_capacity = 1e+006
-	},
+/turf/open/floor/iron/dark,
 /area/awaymission/moonoutpost19/research)
 "UJ" = (
 /obj/structure/lattice/catwalk,
@@ -8062,14 +8026,8 @@
 	pixel_y = 32
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/purple{
+/obj/effect/turf_decal/tile/purple/anticorner{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
 	},
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
@@ -32273,7 +32231,7 @@ dA
 dA
 oe
 Zy
-Zy
+nF
 Zy
 Zy
 Zy
@@ -32744,6 +32702,15 @@ dA
 dA
 dA
 dA
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 dA
 dA
@@ -32751,20 +32718,11 @@ dA
 dA
 dA
 dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
+ae
+ae
+ae
+ae
+ae
 dA
 dA
 dA
@@ -33001,37 +32959,37 @@ dA
 dA
 dA
 dA
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 dA
 dA
@@ -33255,40 +33213,40 @@ ae
 ae
 dA
 dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 dA
 dA
@@ -33512,40 +33470,40 @@ ae
 ae
 dA
 dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 dA
 dA
@@ -33768,48 +33726,48 @@ dA
 ae
 ae
 dA
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 dA
 dA
 dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
+ae
+ae
+ae
 dA
 Zy
 Zy
@@ -33860,7 +33818,7 @@ Zy
 Zy
 xU
 Nj
-SU
+qC
 SU
 Tw
 SU
@@ -34025,48 +33983,48 @@ dA
 ae
 ae
 dA
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+dA
+ae
+ae
+dA
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 dA
 dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
+ae
+ae
+ae
 dA
 dA
 Zy
@@ -34120,7 +34078,7 @@ VZ
 ZT
 UJ
 UJ
-SR
+UJ
 UJ
 Px
 dA
@@ -34282,24 +34240,24 @@ dA
 ae
 ae
 dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 dA
 dA
@@ -34308,22 +34266,22 @@ dA
 dA
 qj
 dA
+ae
+dA
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 dA
 dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
+ae
+ae
+ae
 dA
 Zy
 Zy
@@ -34539,19 +34497,19 @@ dA
 ae
 ae
 dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 dA
 dA
@@ -34568,19 +34526,19 @@ Zy
 dA
 Zy
 dA
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 dA
 dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
+ae
+ae
+ae
 dA
 Zy
 Zy
@@ -34796,16 +34754,16 @@ dA
 ae
 ae
 dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 dA
 dA
@@ -34829,14 +34787,14 @@ QP
 dA
 QP
 dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 Zy
 Zy
@@ -35053,14 +35011,14 @@ dA
 ae
 ae
 dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 dA
 Zy
@@ -35083,17 +35041,17 @@ dA
 dA
 QP
 Zy
-oe
+HY
 Zy
 dA
 dA
 QP
 QP
-dA
-dA
-dA
-dA
-dA
+ae
+ae
+ae
+ae
+ae
 dA
 Zy
 Zy
@@ -35310,13 +35268,13 @@ dA
 ae
 ae
 dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 Zy
 oe
@@ -35347,9 +35305,9 @@ QP
 Zy
 oe
 QP
-dA
-dA
-dA
+ae
+ae
+ae
 dA
 oe
 Zy
@@ -35563,16 +35521,16 @@ Zy
 Zy
 Zy
 oe
-dA
 ae
 ae
-dA
-dA
-dA
-dA
-dA
-dA
-dA
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 oe
 Zy
@@ -35606,7 +35564,7 @@ Zy
 Zy
 QP
 dA
-dA
+ae
 dA
 dA
 Zy
@@ -35820,15 +35778,15 @@ Zy
 Zy
 Zy
 Zy
-dA
 ae
 ae
-dA
-dA
-dA
-dA
-dA
-dA
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 Zy
 Zy
@@ -36077,14 +36035,14 @@ Zy
 Zy
 Zy
 Zy
-dA
 ae
 ae
-dA
-dA
-dA
-dA
-dA
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 Zy
 Zy
@@ -36334,13 +36292,13 @@ Zy
 Zy
 Zy
 Zy
-dA
 ae
 ae
-dA
-dA
-dA
-dA
+ae
+ae
+ae
+ae
+ae
 dA
 Zy
 Zy
@@ -36591,12 +36549,12 @@ Zy
 Zy
 oe
 dA
-dA
 ae
 ae
-dA
-dA
-dA
+ae
+ae
+ae
+ae
 dA
 oe
 Zy
@@ -36848,12 +36806,12 @@ Zy
 Zy
 Zy
 Zy
-dA
 ae
 ae
-dA
-dA
-dA
+ae
+ae
+ae
+ae
 dA
 Zy
 Zy
@@ -37105,11 +37063,11 @@ Zy
 Zy
 oe
 dA
-dA
 ae
 ae
-dA
-dA
+ae
+ae
+ae
 dA
 Zy
 Zy
@@ -37361,12 +37319,12 @@ Zy
 Zy
 Zy
 dA
-dA
-dA
 ae
 ae
-dA
-dA
+ae
+ae
+ae
+ae
 dA
 Zy
 Zy
@@ -37618,11 +37576,11 @@ Zy
 Zy
 Zy
 dA
-dA
 ae
 ae
 ae
-dA
+ae
+ae
 dA
 Zy
 Zy
@@ -37642,7 +37600,7 @@ xU
 oY
 iu
 Xd
-Xd
+tp
 DK
 Ed
 Zy
@@ -37874,11 +37832,11 @@ dA
 dA
 dA
 dA
-dA
-dA
 ae
 ae
-dA
+ae
+ae
+ae
 dA
 oe
 Zy
@@ -37899,7 +37857,7 @@ Zy
 oY
 Fc
 Gc
-Xd
+tp
 ao
 Ed
 Zy
@@ -38132,10 +38090,10 @@ dA
 dA
 dA
 dA
-dA
 ae
 ae
-dA
+ae
+ae
 dA
 Zy
 Zy
@@ -38389,7 +38347,7 @@ oe
 dA
 dA
 Zy
-dA
+ae
 ae
 ae
 dA
@@ -38645,8 +38603,8 @@ oe
 QP
 dA
 dA
-dA
-dA
+ae
+ae
 ae
 ae
 dA
@@ -39159,7 +39117,7 @@ Zy
 oe
 dA
 dA
-dA
+ae
 ae
 ae
 dA
@@ -39928,9 +39886,9 @@ Zy
 Zy
 oe
 QP
-dA
-dA
-dA
+ae
+ae
+ae
 ae
 ae
 dA
@@ -40186,7 +40144,7 @@ Zy
 dA
 dA
 Zy
-dA
+ae
 ae
 ae
 dA
@@ -40443,7 +40401,7 @@ oe
 QP
 dA
 dA
-dA
+ae
 ae
 ae
 dA
@@ -40700,7 +40658,7 @@ QP
 Zy
 dA
 dA
-dA
+ae
 ae
 ae
 dA
@@ -40957,7 +40915,7 @@ dA
 dA
 oe
 dA
-dA
+ae
 ae
 ae
 dA
@@ -41474,7 +41432,7 @@ Zy
 dA
 ae
 ae
-dA
+ae
 dA
 oe
 Zy
@@ -41731,7 +41689,7 @@ Zy
 dA
 ae
 ae
-dA
+ae
 dA
 Zy
 Zy
@@ -41988,8 +41946,8 @@ dA
 dA
 ae
 ae
-dA
-dA
+ae
+ae
 dA
 Zy
 Zy
@@ -42245,8 +42203,8 @@ Zy
 dA
 ae
 ae
-dA
-dA
+ae
+ae
 dA
 Zy
 Zy
@@ -42761,7 +42719,7 @@ ae
 ae
 ae
 ae
-dA
+ae
 dA
 Zy
 Zy
@@ -42970,10 +42928,10 @@ at
 at
 at
 at
-at
+aU
 Bk
-at
-at
+aU
+aU
 aU
 aU
 aU
@@ -43014,11 +42972,11 @@ Zy
 Zy
 Zy
 Zy
-dA
 ae
 ae
 ae
-dA
+ae
+ae
 dA
 Zy
 Zy
@@ -43225,12 +43183,12 @@ ac
 ac
 ac
 ac
-at
+aU
 bR
 ci
 cx
 cM
-at
+aU
 ac
 ac
 ac
@@ -43271,12 +43229,12 @@ Zy
 Zy
 Zy
 Zy
-dA
 ae
 ae
 ae
 ae
-dA
+ae
+ae
 dA
 oe
 Zy
@@ -43482,12 +43440,12 @@ ac
 ac
 ac
 ac
-at
+aU
 bS
 DL
 cy
 cN
-at
+aU
 ac
 ac
 ac
@@ -43528,13 +43486,13 @@ Zy
 Zy
 Zy
 Zy
-dA
 ae
 ae
 ae
 ae
-dA
-dA
+ae
+ae
+ae
 dA
 Zy
 Zy
@@ -43739,12 +43697,12 @@ ac
 ac
 ac
 ac
-at
+aU
 bT
 ck
 cz
 cO
-at
+aU
 ac
 ac
 ac
@@ -43785,13 +43743,13 @@ Zy
 Zy
 Zy
 oe
-dA
-dA
-dA
 ae
 ae
-dA
-dA
+ae
+ae
+ae
+ae
+ae
 dA
 Zy
 Zy
@@ -43996,12 +43954,12 @@ ac
 ac
 ac
 ac
-at
+aU
 bW
 cl
 cA
 cN
-at
+aU
 ac
 ac
 ac
@@ -44044,12 +44002,12 @@ Zy
 Zy
 Zy
 Zy
-dA
 ae
 ae
 ae
 ae
-dA
+ae
+ae
 dA
 Zy
 Zy
@@ -44253,12 +44211,12 @@ ac
 ac
 ac
 ac
-at
+aU
 bV
 cm
 cB
 cP
-at
+aU
 ac
 ac
 ac
@@ -44301,13 +44259,13 @@ oe
 Zy
 Zy
 Zy
-dA
 ae
 ae
 ae
 ae
-dA
-dA
+ae
+ae
+ae
 dA
 Zy
 Zy
@@ -44510,12 +44468,12 @@ ac
 ac
 ac
 ac
-at
-at
-at
-at
-at
-at
+aU
+aU
+aU
+aU
+aU
+aU
 ac
 ac
 ac
@@ -44558,14 +44516,14 @@ Zy
 Zy
 Zy
 Zy
-dA
-dA
 ae
 ae
 ae
-dA
-dA
-dA
+ae
+ae
+ae
+ae
+ae
 dA
 Zy
 Zy
@@ -44822,7 +44780,7 @@ ae
 ae
 ae
 ae
-dA
+ae
 dA
 Zy
 Zy
@@ -45079,8 +45037,8 @@ ae
 ae
 ae
 ae
-dA
-dA
+ae
+ae
 dA
 Zy
 Zy
@@ -45331,14 +45289,14 @@ Zy
 Zy
 Zy
 dA
-dA
 ae
 ae
 ae
 ae
-dA
-dA
-dA
+ae
+ae
+ae
+ae
 dA
 oe
 Zy
@@ -45588,15 +45546,15 @@ Zy
 Zy
 Zy
 dA
-dA
 ae
 ae
 ae
 ae
-dA
-dA
-dA
-dA
+ae
+ae
+ae
+ae
+ae
 dA
 Zy
 Zy
@@ -45845,7 +45803,6 @@ Zy
 Zy
 oe
 dA
-dA
 ae
 ae
 ae
@@ -45853,8 +45810,9 @@ ae
 ae
 ae
 ae
-dA
-dA
+ae
+ae
+ae
 dA
 Zy
 Zy
@@ -46110,9 +46068,9 @@ ae
 ae
 ae
 ae
-dA
-dA
-dA
+ae
+ae
+ae
 dA
 Zy
 Zy
@@ -46360,17 +46318,17 @@ Zy
 Zy
 Zy
 dA
-dA
-dA
-dA
 ae
 ae
 ae
 ae
-dA
-dA
-dA
-dA
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 dA
 Zy
@@ -46617,19 +46575,19 @@ Zy
 Zy
 Zy
 dA
-dA
-dA
-dA
 ae
 ae
 ae
 ae
-dA
-dA
-dA
-dA
-dA
-dA
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 Zy
 Zy
@@ -46874,9 +46832,6 @@ Zy
 Zy
 Zy
 dA
-dA
-dA
-dA
 ae
 ae
 ae
@@ -46884,10 +46839,13 @@ ae
 ae
 ae
 ae
-dA
-dA
-dA
-dA
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 dA
 Zy
@@ -47132,8 +47090,6 @@ Zy
 Zy
 Zy
 dA
-dA
-dA
 ae
 ae
 ae
@@ -47141,12 +47097,14 @@ ae
 ae
 ae
 ae
-dA
-dA
-dA
-dA
-dA
-dA
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 Zy
 Zy
@@ -47389,22 +47347,22 @@ Zy
 Zy
 Zy
 dA
-dA
-dA
-dA
-dA
 ae
 ae
 ae
 ae
 ae
-dA
-dA
-dA
-dA
-dA
-dA
-dA
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 dA
 Zy
@@ -47646,10 +47604,6 @@ Zy
 Zy
 oe
 dA
-dA
-dA
-dA
-dA
 ae
 ae
 ae
@@ -47657,13 +47611,17 @@ ae
 ae
 ae
 ae
-dA
-dA
-dA
-dA
-dA
-dA
-dA
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 dA
 dA
@@ -47904,9 +47862,6 @@ Zy
 Zy
 Zy
 dA
-dA
-dA
-dA
 ae
 ae
 ae
@@ -47914,16 +47869,19 @@ ae
 ae
 ae
 ae
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 dA
 dA
@@ -48161,26 +48119,26 @@ Zy
 Zy
 Zy
 dA
-dA
-dA
-dA
-dA
-dA
-dA
 ae
 ae
 ae
 ae
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 dA
 Zy
@@ -48418,26 +48376,26 @@ Zy
 Zy
 Zy
 dA
-dA
-dA
-dA
-dA
-dA
-dA
 ae
 ae
 ae
 ae
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 dA
 dA
@@ -48676,11 +48634,6 @@ Zy
 Zy
 Zy
 dA
-dA
-dA
-dA
-dA
-dA
 ae
 ae
 ae
@@ -48688,16 +48641,21 @@ ae
 ae
 ae
 ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
+ae
 dA
 Zy
 Zy
@@ -48933,28 +48891,28 @@ Zy
 Zy
 Zy
 dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
 ae
 ae
 ae
 ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
+ae
 dA
 dA
 Zy
@@ -49190,14 +49148,6 @@ Zy
 Zy
 Zy
 dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
 ae
 ae
 ae
@@ -49205,13 +49155,21 @@ ae
 ae
 ae
 ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 dA
-dA
-dA
-dA
-dA
-dA
+ae
 dA
 dA
 Zy
@@ -49448,13 +49406,6 @@ Zy
 Zy
 Zy
 dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
 ae
 ae
 ae
@@ -49462,13 +49413,20 @@ ae
 ae
 ae
 ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 dA
-dA
-dA
-dA
-dA
-dA
+ae
 dA
 dA
 dA
@@ -49705,15 +49663,6 @@ Zy
 Zy
 Zy
 dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
 ae
 ae
 ae
@@ -49721,15 +49670,24 @@ ae
 ae
 ae
 ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+dA
+dA
+ae
 dA
 dA
 dA
-dA
-dA
-dA
-dA
-dA
-dA
+ae
 dA
 Zy
 Zy
@@ -49963,14 +49921,6 @@ Zy
 Zy
 Zy
 dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
 ae
 ae
 ae
@@ -49978,15 +49928,23 @@ ae
 ae
 ae
 ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+dA
+dA
+ae
 dA
 dA
 dA
-dA
-dA
-dA
-dA
-dA
-dA
+ae
 dA
 dA
 Zy
@@ -50221,31 +50179,31 @@ Zy
 Zy
 Zy
 dA
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 dA
-dA
-dA
-dA
-dA
-dA
-dA
+ae
 dA
 dA
 dA
 ae
+dA
 ae
-ae
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
 dA
 oe
 Zy
@@ -50479,30 +50437,30 @@ Zy
 Zy
 Zy
 dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
 ae
 ae
 ae
 ae
 ae
 ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+dA
+ae
 dA
 dA
 dA
+ae
 dA
-dA
-dA
-dA
-dA
+ae
 dA
 dA
 Zy
@@ -50737,29 +50695,29 @@ Zy
 Zy
 Zy
 dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
 ae
 ae
 ae
 ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+dA
+ae
 dA
 dA
 dA
+ae
 dA
-dA
-dA
-dA
-dA
+ae
 dA
 dA
 Zy
@@ -50994,29 +50952,29 @@ Zy
 Zy
 Zy
 dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
 ae
 ae
 ae
 ae
 ae
 ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 dA
 dA
+ae
 dA
-dA
-dA
+ae
 dA
 dA
 dA
@@ -51254,26 +51212,26 @@ Zy
 dA
 dA
 dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 dA
 dA
 dA
 ae
+dA
 ae
-ae
-dA
-dA
-dA
-dA
-dA
-dA
 dA
 dA
 dA
@@ -51511,17 +51469,18 @@ Zy
 Zy
 oe
 dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-dA
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 ae
 ae
 ae
@@ -51529,8 +51488,7 @@ ae
 ae
 ae
 dA
-dA
-dA
+ae
 dA
 dA
 dA
@@ -51770,11 +51728,11 @@ Zy
 Zy
 dA
 dA
-dA
-dA
-dA
-dA
-dA
+ae
+ae
+ae
+ae
+ae
 dA
 dA
 dA
@@ -51785,9 +51743,9 @@ ae
 ae
 ae
 ae
+ae
 dA
-dA
-dA
+ae
 dA
 dA
 dA
@@ -52027,11 +51985,11 @@ Zy
 Zy
 Zy
 dA
-dA
-dA
-dA
-dA
-dA
+ae
+ae
+ae
+ae
+ae
 dA
 pA
 QX
@@ -52044,7 +52002,7 @@ ae
 ae
 ae
 dA
-dA
+ae
 dA
 dA
 dA
@@ -52284,24 +52242,24 @@ Zy
 Zy
 Zy
 dA
-dA
-dA
-dA
-dA
-dA
+ae
+ae
+ae
+ae
+ae
 dA
 QX
 QX
 dA
 dA
 dA
-dA
+ae
 dA
 dA
 ae
 ae
 dA
-dA
+ae
 dA
 dA
 dA
@@ -52542,7 +52500,7 @@ Zy
 Zy
 Zy
 dA
-dA
+ae
 dA
 dA
 dA
@@ -52552,13 +52510,13 @@ QX
 dA
 dA
 dA
-dA
+ae
 dA
 dA
 ae
 ae
 dA
-dA
+ae
 dA
 dA
 dA
@@ -52799,7 +52757,7 @@ Zy
 Zy
 Zy
 dA
-dA
+ae
 dA
 Sz
 QX
@@ -52809,7 +52767,7 @@ QX
 pA
 dA
 dA
-dA
+ae
 dA
 dA
 ae
@@ -53066,7 +53024,7 @@ QX
 Sz
 dA
 dA
-dA
+ae
 dA
 dA
 dA
@@ -53323,7 +53281,7 @@ dA
 QX
 dA
 dA
-dA
+ae
 dA
 dA
 dA
@@ -53584,9 +53542,9 @@ dA
 dA
 dA
 dA
+ae
 dA
-dA
-dA
+ae
 ae
 ae
 ae
@@ -53841,9 +53799,9 @@ Zy
 dA
 dA
 dA
-dA
-dA
-dA
+ae
+sp
+ae
 ae
 ae
 ae
@@ -54098,9 +54056,9 @@ Zy
 Zy
 dA
 dA
+ae
 dA
-dA
-dA
+ae
 ae
 ae
 ae
@@ -54356,8 +54314,8 @@ QX
 oe
 dA
 dA
-dA
-dA
+ae
+ae
 ae
 ae
 ae
