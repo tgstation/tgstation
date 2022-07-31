@@ -173,7 +173,7 @@
 	operating = TRUE
 	update_appearance()
 
-	shake_for(45)
+	shake_for(gibtime)
 	var/mob/living/mob_occupant = occupant
 	var/sourcename = mob_occupant.real_name
 	var/sourcejob
