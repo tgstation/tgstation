@@ -18,6 +18,8 @@ export class LuaEditor extends Component {
   constructor(props) {
     super(props);
     this.sectionRef = createRef();
+
+    window.addEventListener('resize', () => this.setState({}));
   }
 
   render() {
@@ -73,7 +75,10 @@ export class LuaEditor extends Component {
         break;
       }
     }
-    const tabSectionHeight = activeTab === 'log' ? 'calc(100% - 32px)' : '100%';
+    const jumpButtonCondition =
+      activeTab === 'log' &&
+      this.sectionRef.current?.scrollableRef.current.scrollHeight >
+        this.sectionRef.current?.scrollableRef.current.clientHeight;
     return (
       <Window width={1280} height={720}>
         <Window.Content>
@@ -132,7 +137,11 @@ export class LuaEditor extends Component {
                 </Section>
               </Stack.Item>
               <Stack.Item grow shrink basis="45%">
-                <Section fill pb="24px" height={tabSectionHeight} width="100%">
+                <Section
+                  fill
+                  pb="24px"
+                  height={jumpButtonCondition ? 'calc(100% - 32px)' : '100%'}
+                  width="100%">
                   <Tabs>
                     <Tabs.Tab
                       selected={activeTab === 'globals'}
@@ -162,7 +171,7 @@ export class LuaEditor extends Component {
                     width="100%">
                     {tabContent}
                   </Section>
-                  {activeTab === 'log' && (
+                  {jumpButtonCondition && (
                     <Button
                       width="100%"
                       onClick={() => {
