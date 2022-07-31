@@ -7,6 +7,9 @@
 	/// Arguments for a function call or coroutine resume
 	var/list/arguments = list()
 
+	/// If set, the global table and the
+	var/show_debug_info = FALSE
+
 /datum/lua_editor/New(state, _quick_log_index)
 	. = ..()
 	if(state)
@@ -36,12 +39,13 @@
 /datum/lua_editor/ui_data(mob/user)
 	var/list/data = list()
 	data["noStateYet"] = !current_state
+	data["showDebugInfo"] = show_debug_info
 	if(current_state)
-		current_state.get_globals()
-		if(current_state.log)
+		if(current_state.log && show_debug_info)
 			data["stateLog"] = kvpify_list(refify_list(current_state.log))
 		data["tasks"] = current_state.get_tasks()
-		if(current_state.globals)
+		if(show_debug_info)
+			current_state.get_globals()
 			data["globals"] = kvpify_list(refify_list(current_state.globals))
 	data["states"] = SSlua.states
 	data["callArguments"] = kvpify_list(refify_list(arguments))
@@ -186,6 +190,9 @@
 			return FALSE
 		if("clearArgs")
 			arguments.Cut()
+			return TRUE
+		if("toggleShowDebugInfo")
+			show_debug_info = !show_debug_info
 			return TRUE
 
 /datum/lua_editor/ui_close(mob/user)

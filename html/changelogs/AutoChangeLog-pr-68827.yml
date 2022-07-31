@@ -1,4 +1,0 @@
-author: "ghommie, dragomagol"
-delete-after: True
-changes: 
-  - bugfix: "admin-triggered xeno event now works!"
