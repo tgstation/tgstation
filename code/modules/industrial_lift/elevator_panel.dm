@@ -22,7 +22,7 @@
 	// Indestructible until someone wants to make these constructible, with all the chaos that implies
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-	/// Were we instantiated at mapload? Used to determine if we should throw errors or not
+	/// Were we instantiated at mapload? Used to determine when we should link / throw errors
 	var/maploaded = FALSE
 
 	/// A weakref to the lift_master datum we control
@@ -54,9 +54,11 @@
 	. = INITIALIZE_HINT_LATELOAD
 
 	maploaded = mapload
+	// Maploaded panels link in LateInitialize
 	if(mapload)
 		return
 
+	// Non-mapload panels link in Initialize
 	var/datum/lift_master/lift = get_associated_lift()
 	if(!lift)
 		return
@@ -66,11 +68,15 @@
 
 /obj/machinery/elevator_control_panel/LateInitialize()
 	. = ..()
+	// If we weren't maploaded, we probably already linked (or tried to link) in Initialize().
+	if(!maploaded)
+		return
+
+	// This is exclusively for linking in mapload, to ensure all elevator parts are created
 	var/datum/lift_master/lift = get_associated_lift()
 	if(!lift)
-		// Only throw mapping errors if our panel existed at mapload
-		if(!maploaded)
-			log_mapping("Elevator control panel at [AREACOORD(src)] found no associated lift to link with, this may be a mapping error.")
+		// We only throw linking errors in mapload so mappers can see if they messed up
+		log_mapping("Elevator control panel at [AREACOORD(src)] found no associated lift to link with, this may be a mapping error.")
 		return
 
 	lift_weakref = WEAKREF(lift)
