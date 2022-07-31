@@ -22,6 +22,9 @@
 	// Indestructible until someone wants to make these constructible, with all the chaos that implies
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
+	/// Were we instantiated at mapload? Used to determine if we should throw errors or not
+	var/maploaded = FALSE
+
 	/// A weakref to the lift_master datum we control
 	var/datum/weakref/lift_weakref
 	/// What specific_lift_id do we link with?
@@ -39,8 +42,20 @@
 
 /obj/machinery/elevator_control_panel/Initialize(mapload)
 	. = ..()
+
+	var/static/list/tool_behaviors = list(
+		TOOL_MULTITOOL = list(SCREENTIP_CONTEXT_LMB = "Reset Panel"),
+	)
+	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+	AddElement(/datum/element/contextual_screentip_bare_hands, lmb_text = "Send Elevator")
+
+	// Machinery returns lateload by default via parent,
+	// this is just here for redundancy's sake
+	. = INITIALIZE_HINT_LATELOAD
+
+	maploaded = mapload
 	if(mapload)
-		return INITIALIZE_HINT_LATELOAD
+		return
 
 	var/datum/lift_master/lift = get_associated_lift()
 	if(!lift)
@@ -49,13 +64,13 @@
 	lift_weakref = WEAKREF(lift)
 	populate_destinations_list(lift)
 
-// LateInitialize is only done after mapload,
-// just to make sure all the bit exist properly, and
-// to throw mapping errors if not
 /obj/machinery/elevator_control_panel/LateInitialize()
+	. = ..()
 	var/datum/lift_master/lift = get_associated_lift()
 	if(!lift)
-		log_mapping("Elevator control panel at [AREACOORD(src)] found no associated lift to link with, this may be a mapping error.")
+		// Only throw mapping errors if our panel existed at mapload
+		if(!maploaded)
+			log_mapping("Elevator control panel at [AREACOORD(src)] found no associated lift to link with, this may be a mapping error.")
 		return
 
 	lift_weakref = WEAKREF(lift)
@@ -144,6 +159,7 @@
 		// z - 1 is used because the station z-level is 2, and goes up.
 		linked_elevator_destination["[z_level]"] = preset_name || "Floor [z_level - 1]"
 
+	// Reverse it, so higher Zs are lower are at the top of the list, and lower Zs are at the bottom
 	reverse_range(linked_elevator_destination)
 
 /**
@@ -216,7 +232,7 @@
 	var/datum/lift_master/lift = lift_weakref?.resolve()
 	if(lift)
 		data["lift_exists"] = TRUE
-		data["currently_moving"] = (lift.controls_locked == LIFT_PLATFORM_LOCKED)
+		data["currently_moving"] = lift.controls_locked == LIFT_PLATFORM_LOCKED
 		data["current_floor"] = lift.lift_platforms[1].z
 
 	else

@@ -1891,10 +1891,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"Xx" = (
-/obj/machinery/elevator_control_panel/directional/north,
-/turf/open/openspace/airless,
-/area/space)
 "XK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/closed/wall/r_wall,
@@ -10072,7 +10068,7 @@ SF
 SF
 SF
 SF
-Xx
+SF
 SF
 SF
 SF

@@ -67,6 +67,10 @@ GLOBAL_LIST_EMPTY(lifts)
 	. = ..()
 	GLOB.lifts.Add(src)
 
+	// Yes if it's VV'd it won't be accurate but it probably shouldn't ever be
+	if(radial_travel)
+		AddElement(/datum/element/contextual_screentip_bare_hands, lmb_text = "Send Elevator")
+
 	set_movement_registrations()
 
 	//since lift_master datums find all connected platforms when an industrial lift first creates it and then
@@ -594,7 +598,8 @@ GLOBAL_LIST_EMPTY(lifts)
 	LAZYREMOVE(current_operators, REF(user))
 	if(!can_open_lift_radial(user, starting_position))
 		return //nice try
-	if(lift_master_datum.controls_locked)
+	if(!isnull(result) && result != "Cancel" && lift_master_datum.controls_locked)
+		// Only show this message if they actually wanted to move
 		balloon_alert(user, "elevator controls locked!")
 		return
 	switch(result)

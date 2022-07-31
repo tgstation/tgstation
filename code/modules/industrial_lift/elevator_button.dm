@@ -6,6 +6,9 @@
 
 /obj/item/assembly/control/elevator/Initialize(mapload)
 	. = ..()
+
+	AddElement(/datum/element/contextual_screentip_bare_hands, lmb_text = "Call Elevator")
+
 	if(mapload)
 		return INITIALIZE_HINT_LATELOAD
 
