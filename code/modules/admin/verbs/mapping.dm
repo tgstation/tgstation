@@ -55,6 +55,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/station_food_debug,
 	/client/proc/station_stack_debug,
 	/client/proc/check_atmos_controls,
+	/client/proc/check_for_obstructed_atmospherics,
 ))
 GLOBAL_PROTECT(admin_verbs_debug_mapping)
 
@@ -517,3 +518,65 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 		to_chat(usr, "Atmos control frequency check passed without encountering problems.", confidential=TRUE)
 	else
 		to_chat(usr, "Total errors: [invalid_machine + invalid_tag + tagless + duplicate_tag + not_heard + not_told]", confidential=TRUE)
+
+/// Check all tiles with a vent or scrubber on it and ensure that nothing is covering it up.
+/client/proc/check_for_obstructed_atmospherics()
+	set name = "Check For Obstructed Atmospherics"
+	set category = "Mapping"
+	if(!src.holder)
+		to_chat(src, "Only administrators may use this command.", confidential = TRUE)
+		return
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Check For Obstructed Atmospherics") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+	var/list/results = list()
+
+	results += "<h2><b>Anything that is considered to aesthetically obstruct an atmospherics machine (vent, scrubber, port) is listed below.</b> Please re-arrange to accomodate for this.</h2><br>"
+
+	// Ignore out stuff we see in normal and standard mapping that we don't care about (false alarms). Typically stuff that goes directionally off turfs or are undertiles that shouldn't matter.
+	var/list/ignore_list = list(
+		/obj/effect,
+		/obj/item/shard, // it's benign enough to where we don't need to error, yet common enough to filter. fuck.
+		/obj/machinery/airalarm,
+		/obj/machinery/atmospherics/components/unary, //don't wanna flag on the vent or scrubber itself.
+		/obj/machinery/atmospherics/pipe,
+		/obj/machinery/button,
+		/obj/machinery/camera,
+		/obj/machinery/door_buttons,
+		/obj/machinery/door/window, // i kind of wish we didn't have to do it but we have some particularly compact areas that we need to be wary of
+		/obj/machinery/duct,
+		/obj/machinery/firealarm,
+		/obj/machinery/flasher,
+		/obj/machinery/light_switch,
+		/obj/machinery/light,
+		/obj/machinery/navbeacon,
+		/obj/machinery/newscaster,
+		/obj/machinery/portable_atmospherics,
+		/obj/machinery/power/apc,
+		/obj/machinery/power/terminal,
+		/obj/machinery/sparker,
+		/obj/machinery/status_display,
+		/obj/machinery/turretid,
+		/obj/structure/cable,
+		/obj/structure/disposalpipe,
+		/obj/structure/extinguisher_cabinet,
+		/obj/structure/lattice,
+		/obj/structure/sign,
+		/obj/structure/urinal, // the reason why this one gets to live and not the shower/sink is because it's pretty firmly on a wall.
+		/obj/structure/window/reinforced,
+	)
+
+	for(var/turf/T in world)
+		var/obj/machinery/atmospherics/components/unary/A = locate(/obj/machinery/atmospherics/components/unary) in T.contents
+		if(A)
+			var/list/obj/O = locate(/obj) in T.contents
+
+			if(!is_type_in_list(O, ignore_list))
+				results += "There is an obstruction on top of an atmospherics machine at: [ADMIN_VERBOSEJMP(T)].<br>"
+				continue
+
+	if(results.len == 1) // only the header is in the list, we're good
+		to_chat(src, "No obstructions detected.", confidential = TRUE)
+	else
+		var/datum/browser/popup = new(usr, "atmospherics_obstructions", "Atmospherics Obstructions", 900, 750)
+		popup.set_content(results.Join())
+		popup.open()
