@@ -655,37 +655,6 @@
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, examined_mob, msg), 3)
 
 /**
- * Point at an atom
- *
- * mob verbs are faster than object verbs. See
- * [this byond forum post](https://secure.byond.com/forum/?post=1326139&page=2#comment8198716)
- * for why this isn't atom/verb/pointed()
- *
- * note: ghosts can point, this is intended
- *
- * visible_message will handle invisibility properly
- *
- * overridden here and in /mob/dead/observer for different point span classes and sanity checks
- */
-/mob/verb/pointed(atom/A as mob|obj|turf in view())
-	set name = "Point To"
-	set category = "Object"
-
-	if(istype(A, /obj/effect/temp_visual/point))
-		return FALSE
-
-	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, .proc/_pointed, A))
-
-/mob/proc/_pointed(atom/pointing_at)
-	if(client && !(pointing_at in view(client.view, src)))
-		return FALSE
-
-	point_at(pointing_at)
-
-	SEND_SIGNAL(src, COMSIG_MOB_POINTED, pointing_at)
-	return TRUE
-
-/**
  * Called by using Activate Held Object with an empty hand/limb
  *
  * Does nothing by default. The intended use is to allow limbs to call their
