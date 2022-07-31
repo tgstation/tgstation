@@ -35,10 +35,11 @@
 	for(var/obj/structure/industrial_lift/lift_platform as anything in lift.lift_platforms)
 		lift_platform.violent_landing = TRUE
 		lift_platform.warns_on_down_movement = FALSE
+		lift_platform.elevator_vertical_speed = initial(lift_platform.elevator_vertical_speed) * 0.5
 
 	// Note that we can either be emagged by having the button we are inside swiped,
 	// or by someone emagging the assembly directly after removing it (to be cheeky)
-	var/atom/balloon_alert_loc = istype(loc, /obj/machinery/button) ? loc : src
+	var/atom/balloon_alert_loc = get(src, /obj/machinery/button) || src
 	balloon_alert_loc.balloon_alert(user, "safeties overridden")
 	obj_flags |= EMAGGED
 	return TRUE
@@ -55,6 +56,7 @@
 	for(var/obj/structure/industrial_lift/lift_platform as anything in lift.lift_platforms)
 		lift_platform.violent_landing = initial(lift_platform.violent_landing)
 		lift_platform.warns_on_down_movement = initial(lift_platform.warns_on_down_movement)
+		lift_platform.elevator_vertical_speed = initial(lift_platform.elevator_vertical_speed)
 
 	// We can only be multitooled directly so just throw up the balloon alert
 	balloon_alert(user, "safeties reset")

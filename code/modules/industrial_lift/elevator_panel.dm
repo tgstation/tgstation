@@ -59,6 +59,55 @@
 	lift_weakref = WEAKREF(lift)
 	populate_destinations_list(lift)
 
+/obj/machinery/elevator_control_panel/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return
+
+	var/datum/lift_master/lift = lift_weakref?.resolve()
+	if(!lift)
+		return
+
+	for(var/obj/structure/industrial_lift/lift_platform as anything in lift.lift_platforms)
+		lift_platform.violent_landing = TRUE
+		lift_platform.warns_on_down_movement = FALSE
+		lift_platform.elevator_vertical_speed = initial(lift_platform.elevator_vertical_speed) * 0.5
+
+	balloon_alert(user, "safeties overridden")
+	obj_flags |= EMAGGED
+
+/obj/machinery/elevator_control_panel/multitool_act(mob/living/user)
+	var/datum/lift_master/lift = lift_weakref?.resolve()
+	if(!lift)
+		return
+
+	playsound(src, 'sound/machines/locktoggle.ogg', 50, TRUE)
+	balloon_alert(user, "resetting panel...")
+	if(!do_after(user, 6 SECONDS, src))
+		balloon_alert(user, "interrupted!")
+		return TRUE
+
+	if(QDELETED(lift) || !length(lift.lift_platforms))
+		return
+
+	// If we were emagged, reset us
+	if(obj_flags & EMAGGED)
+		for(var/obj/structure/industrial_lift/lift_platform as anything in lift.lift_platforms)
+			lift_platform.violent_landing = initial(lift_platform.violent_landing)
+			lift_platform.warns_on_down_movement = initial(lift_platform.warns_on_down_movement)
+			lift_platform.elevator_vertical_speed = initial(lift_platform.elevator_vertical_speed)
+
+		obj_flags &= ~EMAGGED
+
+	// If we had doors open, stop the timer and reset them
+	if(door_reset_timerid)
+		deltimer(door_reset_timerid)
+	reset_doors()
+
+	// be vague about whether something was accomplished or not
+	balloon_alert(user, "panel reset")
+
+	return TRUE
+
 /// Find the elevator associated with our lift button
 /obj/machinery/elevator_control_panel/proc/get_associated_lift()
 	for(var/datum/lift_master/possible_match as anything in GLOB.active_lifts_by_type[BASIC_LIFT_ID])
@@ -90,6 +139,8 @@
 		// If we don't have a preset name, use Floor z-1 for the title.
 		// z - 1 is used because the station z-level is 2, and goes up.
 		linked_elevator_destination["[z_level]"] = preset_name || "Floor [z_level - 1]"
+
+	reverse_range(linked_elevator_destination)
 
 /**
  * Recursively adds destinations to the list of linked_elevator_destination
@@ -146,9 +197,6 @@
 		return UI_CLOSE
 
 	var/datum/lift_master/lift = lift_weakref?.resolve()
-	if(!lift || lift.controls_locked == LIFT_PLATFORM_LOCKED)
-		return UI_UPDATE
-
 	if(lift.lift_platforms[1].z != z)
 		return UI_UPDATE
 
@@ -157,7 +205,7 @@
 
 	data["panel_z"] = z
 	data["emergency_level"] = capitalize(SSsecurity_level.get_current_level_as_text())
-	data["is_emergency"] = (SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
+	data["is_emergency"] = SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED
 	data["doors_open"] = !!door_reset_timerid
 
 	var/datum/lift_master/lift = lift_weakref?.resolve()
@@ -179,7 +227,7 @@
 	for(var/destination in linked_elevator_destination)
 		data["all_floor_data"] += list(list(
 			"name" = linked_elevator_destination[destination],
-			"z_level" = destination,
+			"z_level" = text2num(destination),
 		))
 
 	return data
@@ -194,15 +242,20 @@
 
 	switch(action)
 		if("move_lift")
+			if(!allowed(usr))
+				balloon_alert(usr, "access denied!")
+				return
+
 			var/desired_z = params["z"]
-			if(!(desired_z in linked_elevator_destination))
+			// Num2text here is required as the z's are stored as strings
+			if(!(num2text(desired_z) in linked_elevator_destination))
 				return TRUE // Something is inaccurate, update UI
 
 			var/datum/lift_master/lift = lift_weakref?.resolve()
 			if(!lift || lift.controls_locked == LIFT_PLATFORM_LOCKED)
 				return TRUE // We shouldn't be moving anything, update UI
 
-			INVOKE_ASYNC(lift, /datum/lift_master.proc/move_to_zlevel, text2num(desired_z), CALLBACK(src, .proc/check_panel), usr)
+			INVOKE_ASYNC(lift, /datum/lift_master.proc/move_to_zlevel, desired_z, CALLBACK(src, .proc/check_panel), usr)
 			return TRUE // Succcessfully initiated a move, regardless of whether it actually works update the UI
 
 		if("emergency_door")
@@ -249,8 +302,5 @@
 			lift.close_lift_doors(z_level)
 
 	door_reset_timerid = null
-
-/obj/machinery/elevator_control_panel/proc/debug_for_testing()
-	ui_act("move_lift", list("move_to_z" = 3))
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/elevator_control_panel, 30)
