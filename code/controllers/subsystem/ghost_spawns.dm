@@ -132,17 +132,17 @@ source - The atom, atom prototype, icon or mutable appearance to display as an i
 	UNTIL(P.finished)
 	return P.signed_up
 
-/**
-  * Returns whether an observer is eligible to be an event mob
-  *
-  * Arguments:
-  * * M - The mob to check eligibility
-  * * role - The role to check eligibility for. Checks 1. the client has enabled the role 2. the account's age for this role if antag_age_check is TRUE
-  * * antag_age_check - Whether to check the account's age or not for the given role.
-  * * role_text - The role's clean text. Used for checking job bans to determine eligibility
-  * * min_hours - The amount of minimum hours the client needs before being eligible
-  * * check_antaghud - Whether to consider a client who enabled AntagHUD ineligible or not
-  */
+/*
+Returns whether an observer is eligible to be an event mob
+
+Arguments:
+M - The mob to check eligibility
+role - The role to check eligibility for. Checks 1. the client has enabled the role 2. the account's age for this role if antag_age_check is TRUE
+antag_age_check - Whether to check the account's age or not for the given role.
+role_text - The role's clean text. Used for checking job bans to determine eligibility
+min_hours - The amount of minimum hours the client needs before being eligible
+check_antaghud - Whether to consider a client who enabled AntagHUD ineligible or not
+*/
 /datum/controller/subsystem/ghost_spawns/proc/is_eligible(mob/M, be_special_flag, jobban_type)
 	. = FALSE
 	if(!M.key || !M.client)
@@ -158,12 +158,12 @@ source - The atom, atom prototype, icon or mutable appearance to display as an i
 	return TRUE
 
 /**
-  * Called by the subsystem when a poll's timer runs out
-  *
-  * Can be called manually to finish a poll prematurely
-  * Arguments:
-  * * P - The poll to finish
-  */
+Called by the subsystem when a poll's timer runs out
+
+Can be called manually to finish a poll prematurely
+Arguments:
+P - The poll to finish
+*/
 /datum/controller/subsystem/ghost_spawns/proc/polling_finished(datum/candidate_poll/P)
 	// Trim players who aren't eligible anymore
 	var/len_pre_trim = length(P.signed_up)
@@ -218,14 +218,14 @@ source - The atom, atom prototype, icon or mutable appearance to display as an i
 	return ..()
 
 /**
-  * Attempts to sign a (controlled) mob up
-  *
-  * Will fail if the mob is already signed up or the poll's timer ran out.
-  * Does not check for eligibility
-  * Arguments:
-  * * M - The (controlled) mob to sign up
-  * * silent - Whether no messages should appear or not. If not TRUE, signing up to this poll will also sign the mob up for identical polls
-  */
+Attempts to sign a (controlled) mob up
+
+Will fail if the mob is already signed up or the poll's timer ran out.
+Does not check for eligibility
+Arguments:
+M - The (controlled) mob to sign up
+silent - Whether no messages should appear or not. If not TRUE, signing up to this poll will also sign the mob up for identical polls
+*/
 /datum/candidate_poll/proc/sign_up(mob/dead/observer/M, silent = FALSE)
 	. = FALSE
 	if(!istype(M) || !M.key || !M.client)
@@ -251,13 +251,13 @@ source - The atom, atom prototype, icon or mutable appearance to display as an i
 
 	return TRUE
 
-/**
- * Attempts to remove a signed-up mob from a poll.
- *
- * Arguments:
- * * M - The mob to remove from the poll, if present.
- * * silent - If TRUE, no messages will be sent to M about their removal.
- */
+/*
+Attempts to remove a signed-up mob from a poll.
+
+Arguments:
+M - The mob to remove from the poll, if present.
+silent - If TRUE, no messages will be sent to M about their removal.
+*/
 /datum/candidate_poll/proc/remove_candidate(mob/dead/observer/M, silent = FALSE)
 	. = FALSE
 	if(!istype(M) || !M.key || !M.client)
@@ -282,9 +282,9 @@ source - The atom, atom prototype, icon or mutable appearance to display as an i
 				P.remove_candidate(M, TRUE)
 	return TRUE
 
-/**
-  * Deletes any candidates who may have disconnected from the list
-  */
+/*
+Deletes any candidates who may have disconnected from the list
+*/
 /datum/candidate_poll/proc/trim_candidates()
 	list_clear_nulls(signed_up)
 	for(var/mob in signed_up)
@@ -292,9 +292,9 @@ source - The atom, atom prototype, icon or mutable appearance to display as an i
 		if(!M.key || !M.client)
 			signed_up -= M
 
-/**
-  * Returns the time left for a poll
-  */
+/*
+Returns the time left for a poll
+*/
 /datum/candidate_poll/proc/time_left()
 	return duration - (world.time - time_started)
 
