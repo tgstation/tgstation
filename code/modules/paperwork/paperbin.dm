@@ -14,7 +14,7 @@
 	throw_range = 7
 	pressure_resistance = 8
 	var/papertype = /obj/item/paper
-	var/total_paper = 30
+	var/initial_paper = 30
 	var/list/papers = list()
 	var/obj/item/pen/bin_pen
 	///Overlay of the pen on top of the bin.
@@ -33,8 +33,8 @@
 		if(pen && !bin_pen)
 			pen.forceMove(src)
 			bin_pen = pen
-	for(var/i in 1 to total_paper)
-		papers.Add(generate_paper())
+	for(var/i in 1 to initial_paper)
+		papers += generate_paper()
 	update_appearance()
 
 /obj/item/paper_bin/proc/generate_paper()
@@ -129,13 +129,14 @@
 
 /obj/item/paper_bin/examine(mob/user)
 	. = ..()
+	var/total_paper = LAZYLEN(papers)
 	if(total_paper)
 		. += "It contains [total_paper > 1 ? "[total_paper] papers" : "one paper"]."
 	else
 		. += "It doesn't contain anything."
 
 /obj/item/paper_bin/update_icon_state()
-	if(total_paper < 1)
+	if(!LAZYLEN(papers))
 		icon_state = "paper_bin0"
 	else
 		icon_state = "[initial(icon_state)]"
@@ -143,9 +144,6 @@
 
 /obj/item/paper_bin/update_overlays()
 	. = ..()
-
-	total_paper = LAZYLEN(papers)
-
 	if(bin_pen)
 		pen_overlay = mutable_appearance(bin_pen.icon, bin_pen.icon_state)
 
