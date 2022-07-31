@@ -15,12 +15,21 @@
 	var/obj/item/assembly/trapdoor/assembly
 	///path of the turf this should change into when the assembly is pulsed. needed for openspace trapdoors knowing what to turn back into
 	var/trapdoor_turf_path
+	/// is this trapdoor "conspicuous" (ie. it gets examine text and overlay added)
+	var/conspicuous
+	/// overlay that makes trapdoors more obvious
+	var/static/trapdoor_overlay
 
-/datum/component/trapdoor/Initialize(starts_open, trapdoor_turf_path, assembly)
+/datum/component/trapdoor/Initialize(starts_open, trapdoor_turf_path, assembly, conspicuous = TRUE)
 	if(!isopenturf(parent))
 		return COMPONENT_INCOMPATIBLE
 
+	src.conspicuous = conspicuous
 	src.assembly = assembly
+
+	if(!trapdoor_overlay)
+		trapdoor_overlay = mutable_appearance('icons/turf/overlays.dmi', "border_black", ABOVE_NORMAL_TURF_LAYER)
+
 	if(IS_OPEN(parent))
 		openspace_trapdoor_setup(trapdoor_turf_path, assembly)
 	else
@@ -38,6 +47,8 @@
 	src.trapdoor_turf_path = parent.type
 	if(assembly && assembly.stored_decals.len)
 		reapply_all_decals()
+	if(conspicuous)
+		add_overlay(trapdoor_overlay)
 
 /datum/component/trapdoor/RegisterWithParent()
 	. = ..()
@@ -115,6 +126,16 @@
 	new_turf.AddComponent(/datum/component/trapdoor, FALSE, trapdoor_turf_path, src)
 
 /**
+ * ## on_examine
+ *
+ * examine message for conspicuous trapdoors that makes it obvious
+ */
+/datum/component/trapdoor/proc/on_examine(datum/source, mob/user, list/examine_text)
+	SIGNAL_HANDLER
+
+	examine_text += "There seems to be a tiny gap around this tile."
+
+/**
  * ## try_opening
  *
  * small proc for opening the turf into openspace
@@ -122,6 +143,7 @@
  */
 /datum/component/trapdoor/proc/try_opening()
 	var/turf/open/trapdoor_turf = parent
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	///we want to save this turf's decals as they were right before deletion, so this is the point where we begin listening
 	if(assembly)
 		RegisterSignal(parent, COMSIG_TURF_DECAL_DETACHED, .proc/decal_detached)
