@@ -30,6 +30,13 @@
 	spell_type = /datum/action/cooldown/spell/jaunt/ethereal_jaunt
 	category = "Mobility"
 
+/datum/spellbook_entry/swap
+	name = "Swap"
+	desc = "Switch places with any living target."
+	spell_type = /datum/action/cooldown/spell/pointed/swap
+	category = "Mobility"
+	cost = 1
+
 /datum/spellbook_entry/item/warpwhistle
 	name = "Warp Whistle"
 	desc = "A strange whistle that will transport you to a distant safe place on the station. There is a window of vulnerability at the beginning of every use."
