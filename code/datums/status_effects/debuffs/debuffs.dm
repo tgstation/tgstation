@@ -493,9 +493,7 @@
 	effect_icon_state = "emark4"
 
 /datum/status_effect/eldritch/void/on_effect()
-	var/turf/open/our_turf = get_turf(owner)
-	our_turf.TakeTemperature(-40)
-	owner.adjust_bodytemperature(-20)
+	owner.apply_status_effect(/datum/status_effect/void_chill/major)
 
 	if(iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner
@@ -1281,6 +1279,36 @@
 	desc = "You are a Ghoul!"
 	icon_state = ALERT_MIND_CONTROL
 
+//VOID CHILL
+/datum/status_effect/void_chill
+	id = "void_chill"
+	alert_type = /atom/movable/screen/alert/status_effect/void_chill
+	duration = 8 SECONDS
+	status_type = STATUS_EFFECT_REPLACE
+	tick_interval = 5 // deciseconds
+	var/cooling_per_tick = -14
+
+/atom/movable/screen/alert/status_effect/void_chill
+	name = "Void Chill"
+	desc = "There's something freezing you from within and without. You've never felt cold this oppressive before..."
+	icon_state = "void_chill"
+
+/datum/status_effect/void_chill/on_apply()
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/void_chill, update = TRUE)
+	return ..()
+
+/datum/status_effect/void_chill/on_remove()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/void_chill, update = TRUE)
+
+/datum/status_effect/void_chill/tick()
+	owner.adjust_bodytemperature(cooling_per_tick * TEMPERATURE_DAMAGE_COEFFICIENT)
+
+/datum/status_effect/void_chill/major
+	duration = 10 SECONDS
+	cooling_per_tick = -20
+
+/datum/movespeed_modifier/void_chill
+	multiplicative_slowdown = 0.3
 
 /datum/status_effect/stagger
 	id = "stagger"
