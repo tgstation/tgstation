@@ -106,14 +106,7 @@ SUBSYSTEM_DEF(ghost_spawns)
 		if(source)
 			if(!ispath(source))
 				var/atom/S = source
-				var/old_layer = S.layer
-				var/old_plane = S.plane
-
-				S.layer = FLOAT_LAYER
-				S.plane = FLOAT_PLANE
 				A.add_overlay(S)
-				S.layer = old_layer
-				S.plane = old_plane
 			else
 				I = image(source, layer = FLOAT_LAYER, dir = SOUTH)
 		else
@@ -121,8 +114,6 @@ SUBSYSTEM_DEF(ghost_spawns)
 			I = image('icons/effects/effects.dmi', icon_state = "static", layer = FLOAT_LAYER, dir = SOUTH)
 
 		if(I)
-			I.layer = FLOAT_LAYER
-			I.plane = FLOAT_PLANE
 			A.add_overlay(I)
 
 		// Chat message

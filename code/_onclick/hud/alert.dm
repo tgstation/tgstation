@@ -748,22 +748,17 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		var/timeleft = timeout - world.time
 		if(timeleft <= 0)
 			return PROCESS_KILL
-
 		if(time_left_overlay)
 			overlays -= time_left_overlay
-
 		var/obj/O = new
 		O.maptext = "<span style='font-family: \"Small Fonts\"; font-weight: bold; font-size: 32px; color: [(timeleft <= 10 SECONDS) ? "red" : "white"];'>[CEILING(timeleft / 10, 1)]</span>"
 		O.maptext_width = O.maptext_height = 128
 		var/matrix/M = new
 		M.Translate(4, 16)
 		O.transform = M
-
 		var/image/I = image(O)
-		I.layer = FLOAT_LAYER
-		I.plane = FLOAT_PLANE + 1
+		I.plane = plane
 		overlays += I
-
 		time_left_overlay = I
 		qdel(O)
 	..()
@@ -781,7 +776,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	var/mob/dead/observer/G = usr
 	if(!istype(G))
 		return
-
 	if(poll)
 		var/success
 		if(G in poll.signed_up)
@@ -817,8 +811,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /atom/movable/screen/alert/notify_action/proc/update_signed_up_alert()
 	if(!signed_up_overlay)
 		signed_up_overlay = image('icons/hud/screen_gen.dmi', icon_state = "selector")
-		signed_up_overlay.layer = FLOAT_LAYER
-		signed_up_overlay.plane = FLOAT_PLANE + 2
 	if(usr in poll.signed_up)
 		overlays += signed_up_overlay
 	else
@@ -827,19 +819,15 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /atom/movable/screen/alert/notify_action/proc/display_stacks(stacks = 1)
 	if(stacks <= 1)
 		return
-
 	var/obj/O = new
 	O.maptext = "<span style='font-family: \"Small Fonts\"; font-size: 32px; color: yellow;'>[stacks]x</span>"
 	O.maptext_width = O.maptext_height = 128
 	var/matrix/M = new
 	M.Translate(4, 2)
 	O.transform = M
-
 	var/image/I = image(O)
-	I.layer = FLOAT_LAYER
-	I.plane = FLOAT_PLANE + 1
+	I.plane = plane
 	overlays += I
-
 	qdel(O)
 
 //OBJECT-BASED
