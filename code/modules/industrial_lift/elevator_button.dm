@@ -7,8 +7,6 @@
 /obj/item/assembly/control/elevator/Initialize(mapload)
 	. = ..()
 
-	AddElement(/datum/element/contextual_screentip_bare_hands, lmb_text = "Call Elevator")
-
 	if(mapload)
 		return INITIALIZE_HINT_LATELOAD
 
@@ -157,5 +155,10 @@
 	device_type = /obj/item/assembly/control/elevator
 	req_access = list()
 	id = 1
+
+/obj/machinery/button/elevator/Initialize(mapload, ndir, built)
+	. = ..()
+	// Kind of a cop-out
+	AddElement(/datum/element/contextual_screentip_bare_hands, lmb_text = "Call Elevator")
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 28)
