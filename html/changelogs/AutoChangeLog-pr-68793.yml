@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Using candy bars as an ingredient in salad now drops a candy wrapper."
