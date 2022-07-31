@@ -85,6 +85,7 @@ SUBSYSTEM_DEF(ghost_spawns)
 		A.desc = "[question]\n\n(expires in [poll_time / 10] seconds)"
 		A.show_time_left = TRUE
 		A.poll = alert_poll
+		A.poll.alert_button = A
 
 		// Sign up inheritance and stacking
 		var/inherited_sign_up = FALSE
@@ -98,14 +99,14 @@ SUBSYSTEM_DEF(ghost_spawns)
 					inherited_sign_up = TRUE
 				// This number is used to display the number of polls the alert regroups
 				num_stack++
-		if(num_stack > 1)
-			A.display_stacks(num_stack)
+		A.display_stacks(num_stack)
 
 		// Image to display
 		var/image/I
 		if(source)
 			if(!ispath(source))
 				var/atom/S = source
+				S.plane = A.plane
 				A.add_overlay(S)
 			else
 				I = image(source, layer = FLOAT_LAYER, dir = SOUTH)
@@ -114,6 +115,7 @@ SUBSYSTEM_DEF(ghost_spawns)
 			I = image('icons/effects/effects.dmi', icon_state = "static", layer = FLOAT_LAYER, dir = SOUTH)
 
 		if(I)
+			I.plane = A.plane
 			A.add_overlay(I)
 
 		// Chat message
@@ -125,7 +127,6 @@ SUBSYSTEM_DEF(ghost_spawns)
 
 		// Start processing it so it updates visually the timer
 		START_PROCESSING(SSprocessing, A)
-		A.process()
 
 	// Sleep until the time is up
 	UNTIL(P.finished)
@@ -182,12 +183,19 @@ SUBSYSTEM_DEF(ghost_spawns)
 			var/datum/candidate_poll/P2 = poll
 			if(!next_poll_to_finish || P2.time_left() < next_poll_to_finish.time_left())
 				next_poll_to_finish = P2
+	if(next_poll_to_finish)
+		var/num_stack = 1
+		for(var/poll in currently_polling)
+			var/datum/candidate_poll/P2 = poll
+			if(next_poll_to_finish != P2 && next_poll_to_finish.hash == P2.hash)
+				num_stack++
+		next_poll_to_finish.alert_button.display_stacks(num_stack)
 
 /datum/controller/subsystem/ghost_spawns/stat_entry(msg)
 	msg += "Active: [length(currently_polling)] | Total: [total_polls]"
 	if(next_poll_to_finish)
 		msg += " | Next: [DisplayTimeText(next_poll_to_finish.time_left())] ([length(next_poll_to_finish.signed_up)] candidates)"
-	..(msg)
+	return ..()
 
 // The datum that describes one instance of candidate polling
 /datum/candidate_poll
@@ -195,6 +203,7 @@ SUBSYSTEM_DEF(ghost_spawns)
 	var/question // The question asked to observers
 	var/duration // The duration of the poll
 	var/list/mob/dead/observer/signed_up // The players who signed up to this poll
+	var/atom/movable/screen/alert/notify_action/alert_button
 	var/time_started // The world.time at which the poll was created
 	var/finished = FALSE // Whether the polling is finished
 	var/hash // Used to categorize in the alerts system

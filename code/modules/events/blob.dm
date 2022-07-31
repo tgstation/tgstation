@@ -25,7 +25,11 @@
 /datum/round_event/ghost_role/blob/spawn_role()
 	if(!GLOB.blobstart.len)
 		return MAP_ERROR
-	var/list/candidates = get_candidates(ROLE_BLOB, ROLE_BLOB)
+	var/icon/blob_icon = icon('icons/mob/blob.dmi', icon_state = "blob_core")
+	blob_icon.Blend("#9ACD32", ICON_MULTIPLY)
+	blob_icon.Blend(icon('icons/mob/blob.dmi', "blob_core_overlay"), ICON_OVERLAY)
+	var/image/blob_image = image(blob_icon)
+	var/list/candidates = get_candidates(ROLE_BLOB, ROLE_BLOB, alert_image = blob_image)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 	var/mob/dead/observer/new_blob = pick(candidates)

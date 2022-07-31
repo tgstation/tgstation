@@ -741,6 +741,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	var/show_time_left = FALSE // If true you need to call START_PROCESSING manually
 	var/image/time_left_overlay // The last image showing the time left
 	var/image/signed_up_overlay // image showing that you're signed up
+	var/image/stacks_overlay
 	var/datum/candidate_poll/poll // If set, on Click() it'll register the player as a candidate
 
 /atom/movable/screen/alert/notify_action/process()
@@ -748,86 +749,86 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		var/timeleft = timeout - world.time
 		if(timeleft <= 0)
 			return PROCESS_KILL
-		if(time_left_overlay)
-			overlays -= time_left_overlay
+		cut_overlay(time_left_overlay)
 		var/obj/O = new
-		O.maptext = "<span style='font-family: \"Small Fonts\"; font-weight: bold; font-size: 32px; color: [(timeleft <= 10 SECONDS) ? "red" : "white"];'>[CEILING(timeleft / 10, 1)]</span>"
+		O.maptext = "<span style='font-family: \"Small Fonts\"; font-weight: bold; font-size: 32px; color: [(timeleft <= 10 SECONDS) ? "red" : "white"]; -dm-text-outline: 1px black'>[CEILING(timeleft / 10, 1)]</span>"
 		O.maptext_width = O.maptext_height = 128
 		var/matrix/M = new
 		M.Translate(4, 16)
 		O.transform = M
-		var/image/I = image(O)
-		I.plane = plane
-		overlays += I
-		time_left_overlay = I
+		time_left_overlay = image(O)
+		time_left_overlay.plane = plane
+		add_overlay(time_left_overlay)
 		qdel(O)
 	..()
 
 /atom/movable/screen/alert/notify_action/Destroy()
 	target = null
 	if(signed_up_overlay)
-		overlays -= signed_up_overlay
+		cut_overlay(signed_up_overlay)
 		qdel(signed_up_overlay)
 	return ..()
 
 /atom/movable/screen/alert/notify_action/Click()
 	if(!usr || !usr.client)
 		return
-	var/mob/dead/observer/G = usr
-	if(!istype(G))
+	var/mob/dead/observer/ghost = usr
+	if(!istype(ghost))
 		return
 	if(poll)
 		var/success
-		if(G in poll.signed_up)
-			success = poll.remove_candidate(G)
+		if(ghost in poll.signed_up)
+			success = poll.remove_candidate(ghost)
 		else
-			success = poll.sign_up(G)
+			success = poll.sign_up(ghost)
 		if(success)
 			// Add a small overlay to indicate we've signed up
 			update_signed_up_alert()
 	else if(target)
 		switch(action)
 			if(NOTIFY_ATTACK)
-				target.attack_ghost(G)
+				target.attack_ghost(ghost)
 			if(NOTIFY_JUMP)
 				var/turf/T = get_turf(target)
 				if(T && isturf(T))
-					G.loc = T
+					ghost.loc = T
 			if(NOTIFY_ORBIT)
-				G.ManualFollow(target)
+				ghost.ManualFollow(target)
 
 /atom/movable/screen/alert/notify_action/Topic(href, href_list)
 	if(!href_list["signup"])
 		return
 	if(!poll)
 		return
-	var/mob/dead/observer/G = usr
-	if(G in poll.signed_up)
-		poll.remove_candidate(G)
+	var/mob/dead/observer/ghost = usr
+	if(ghost in poll.signed_up)
+		poll.remove_candidate(ghost)
 	else
-		poll.sign_up(G)
+		poll.sign_up(ghost)
 	update_signed_up_alert()
 
 /atom/movable/screen/alert/notify_action/proc/update_signed_up_alert()
 	if(!signed_up_overlay)
 		signed_up_overlay = image('icons/hud/screen_gen.dmi', icon_state = "selector")
+		signed_up_overlay.plane = plane
 	if(usr in poll.signed_up)
-		overlays += signed_up_overlay
+		add_overlay(signed_up_overlay)
 	else
-		overlays -= signed_up_overlay
+		cut_overlay(signed_up_overlay)
 
 /atom/movable/screen/alert/notify_action/proc/display_stacks(stacks = 1)
 	if(stacks <= 1)
+		cut_overlay(stacks_overlay)
 		return
 	var/obj/O = new
-	O.maptext = "<span style='font-family: \"Small Fonts\"; font-size: 32px; color: yellow;'>[stacks]x</span>"
+	O.maptext = "<span style='font-family: \"Small Fonts\"; font-size: 32px; color: yellow; -dm-text-outline: 1px black'>[stacks]x</span>"
 	O.maptext_width = O.maptext_height = 128
 	var/matrix/M = new
 	M.Translate(4, 2)
 	O.transform = M
-	var/image/I = image(O)
-	I.plane = plane
-	overlays += I
+	stacks_overlay = image(O)
+	stacks_overlay.plane = plane
+	add_overlay(stacks_overlay)
 	qdel(O)
 
 //OBJECT-BASED
