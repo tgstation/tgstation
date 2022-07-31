@@ -256,31 +256,6 @@
 	holdingitems -= O
 	qdel(O)
 
-/obj/machinery/reagentgrinder/proc/start_shaking()
-	var/static/list/transforms
-	if(!transforms)
-		var/matrix/M1 = matrix()
-		var/matrix/M2 = matrix()
-		var/matrix/M3 = matrix()
-		var/matrix/M4 = matrix()
-		M1.Translate(-1, 0)
-		M2.Translate(0, 1)
-		M3.Translate(1, 0)
-		M4.Translate(0, -1)
-		transforms = list(M1, M2, M3, M4)
-	animate(src, transform=transforms[1], time=0.4, loop=-1)
-	animate(transform=transforms[2], time=0.2)
-	animate(transform=transforms[3], time=0.4)
-	animate(transform=transforms[4], time=0.6)
-
-/obj/machinery/reagentgrinder/proc/shake_for(duration)
-	start_shaking() //start shaking
-	addtimer(CALLBACK(src, .proc/stop_shaking), duration)
-
-/obj/machinery/reagentgrinder/proc/stop_shaking()
-	update_appearance()
-	animate(src, transform = matrix())
-
 /obj/machinery/reagentgrinder/proc/operate_for(time, silent = FALSE, juicing = FALSE)
 	shake_for(time / speed)
 	operating = TRUE

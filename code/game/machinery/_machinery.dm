@@ -1029,3 +1029,33 @@
 	if(isliving(user))
 		last_used_time = world.time
 		last_user_mobtype = user.type
+
+/**
+ * Causes the machinery to shake while in use.
+ *
+ * Uses an animation to cause the machinery to shake for a designated amount of time.
+ */
+/obj/machinery/proc/start_shaking()
+	var/static/list/transforms
+	if(!transforms)
+		var/matrix/first_translation = matrix()
+		var/matrix/second_translation = matrix()
+		var/matrix/third_translation = matrix()
+		var/matrix/fourth_translation = matrix()
+		first_translation.Translate(-1, 0)
+		second_translation.Translate(0, 1)
+		third_translation.Translate(1, 0)
+		fourth_translation.Translate(0, -1)
+		transforms = list(first_translation, second_translation, third_translation, fourth_translation)
+	animate(src, transform = transforms[1], time=0.4, loop=-1)
+	animate(transform = transforms[2], time=0.2)
+	animate(transform = transforms[3], time=0.4)
+	animate(transform = transforms[4], time=0.6)
+
+/obj/machinery/proc/shake_for(duration)
+	start_shaking() //start shaking
+	addtimer(CALLBACK(src, .proc/stop_shaking), duration)
+
+/obj/machinery/proc/stop_shaking()
+	update_appearance()
+	animate(src, transform = matrix())
