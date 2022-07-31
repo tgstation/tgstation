@@ -33,7 +33,7 @@
 	desc = "A bloody burger."
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("bun" = 2, "long pig" = 4)
-	foodtypes = MEAT | GRAIN | GROSS
+	foodtypes = MEAT | GRAIN | CARRION
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/burger/human/CheckParts(list/parts_list)
@@ -49,7 +49,7 @@
 	name = "corgi burger"
 	desc = "You monster."
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 6)
-	foodtypes = GRAIN | MEAT | GROSS
+	foodtypes = GRAIN | MEAT | CARRION
 	venue_value = FOOD_PRICE_EXOTIC
 
 
@@ -59,7 +59,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 6)
 	icon_state = "appendixburger"
 	tastes = list("bun" = 4, "grass" = 2)
-	foodtypes = GRAIN | MEAT | GROSS
+	foodtypes = GRAIN | MEAT | CARRION
 	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/burger/fish
@@ -353,7 +353,7 @@
 	icon_state = "catburger"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("bun" = 4, "meat" = 2, "cat" = 2)
-	foodtypes = GRAIN | MEAT | GROSS
+	foodtypes = GRAIN | MEAT | CARRION
 
 /obj/item/food/burger/crab
 	name = "crab burger"

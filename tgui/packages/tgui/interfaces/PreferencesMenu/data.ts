@@ -6,6 +6,7 @@ export enum Food {
   Alcohol = 'ALCOHOL',
   Breakfast = 'BREAKFAST',
   Bugs = 'BUGS',
+  Carrion = 'CARRION',
   Cloth = 'CLOTH',
   Dairy = 'DAIRY',
   Fried = 'FRIED',

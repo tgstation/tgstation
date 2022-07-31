@@ -7,6 +7,7 @@ import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 
 const FOOD_ICONS = {
   [Food.Bugs]: 'bug',
+  [Food.Carrion]: 'skull',
   [Food.Cloth]: 'tshirt',
   [Food.Dairy]: 'cheese',
   [Food.Fried]: 'bacon',
@@ -25,6 +26,7 @@ const FOOD_ICONS = {
 
 const FOOD_NAMES: Record<keyof typeof FOOD_ICONS, string> = {
   [Food.Bugs]: 'Bugs',
+  [Food.Carrion]: 'Carrion',
   [Food.Cloth]: 'Clothing',
   [Food.Dairy]: 'Dairy',
   [Food.Fried]: 'Fried food',
