@@ -114,6 +114,31 @@
 	else
 		return ..()
 
+/obj/machinery/processor/proc/start_shaking()
+	var/static/list/transforms
+	if(!transforms)
+		var/matrix/M1 = matrix()
+		var/matrix/M2 = matrix()
+		var/matrix/M3 = matrix()
+		var/matrix/M4 = matrix()
+		M1.Translate(-1, 0)
+		M2.Translate(0, 1)
+		M3.Translate(1, 0)
+		M4.Translate(0, -1)
+		transforms = list(M1, M2, M3, M4)
+	animate(src, transform=transforms[1], time=0.4, loop=-1)
+	animate(transform=transforms[2], time=0.2)
+	animate(transform=transforms[3], time=0.4)
+	animate(transform=transforms[4], time=0.6)
+
+/obj/machinery/processor/proc/shake_for(duration)
+	start_shaking() //start shaking
+	addtimer(CALLBACK(src, .proc/stop_shaking), duration)
+
+/obj/machinery/processor/proc/stop_shaking()
+	update_appearance()
+	animate(src, transform = matrix())
+
 /obj/machinery/processor/interact(mob/user)
 	if(processing)
 		to_chat(user, span_warning("[src] is in the process of processing!"))
@@ -144,8 +169,7 @@
 			log_admin("DEBUG: [movable_input] in processor doesn't have a suitable recipe. How did it get in there? Please report it immediately!!!")
 			continue
 		total_time += recipe.time
-	var/offset = prob(50) ? -2 : 2
-	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = (total_time / rating_speed)*5) //start shaking
+	shake_for(total_time / rating_speed)
 	sleep(total_time / rating_speed)
 	for(var/atom/movable/O in processor_contents)
 		var/datum/food_processor_process/P = PROCESSOR_SELECT_RECIPE(O)
@@ -153,7 +177,6 @@
 			log_admin("DEBUG: [O] in processor doesn't have a suitable recipe. How do you put it in?")
 			continue
 		process_food(P, O)
-	pixel_x = base_pixel_x //return to its spot after shaking
 	processing = FALSE
 	visible_message(span_notice("\The [src] finishes processing."))
 
