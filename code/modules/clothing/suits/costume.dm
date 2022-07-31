@@ -489,3 +489,41 @@
 	name = "comedian coat"
 	desc = "I mean, don’t you have to be funny to be a comedian?"
 	icon_state = "joker_coat"
+
+/obj/item/clothing/suit/costume/deckers
+	name = "decker hoodie"
+	desc = "Based? Based on what?"
+	icon_state = "decker_suit"
+	inhand_icon_state = "decker_suit"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/suit/costume/soviet
+	name = "soviet armored coat"
+	desc = "Conscript reporting! Sponsored by DonkSoft Co. for historical reenactment of the Third World War!"
+	icon_state = "soviet_suit"
+	inhand_icon_state = "soviet_suit"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+
+/obj/item/clothing/suit/costume/yuri
+	name = "yuri initiate coat"
+	desc = "Yuri is master! Sponsored by DonkSoft Co. for historical reenactment of the Third World War!"
+	icon_state = "yuri_coat"
+	inhand_icon_state = "yuri_coat"
+	body_parts_covered = CHEST|GROIN|ARMS
+
+/obj/item/clothing/suit/costume/tmc
+	name = "\improper Lost M.C. cut"
+	desc = "Making sure everyone knows you're in the best biker gang this side of Alderney."
+	icon_state = "tmc_suit"
+	inhand_icon_state = "tmc_suit"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/suit/costume/pg
+	name = "powder ganger jacket"
+	desc = "Remind Security of their mistakes in giving prisoners blasting charges."
+	icon_state = "pg_suit"
+	inhand_icon_state = "pg_suit"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON

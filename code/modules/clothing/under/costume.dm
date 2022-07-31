@@ -321,3 +321,29 @@
 	desc = "The worst part of having a mental illness is people expect you to behave as if you don't."
 	icon_state = "joker"
 	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/yuri
+	name = "yuri initiate jumpsuit"
+	icon_state = "yuri_uniform"
+	inhand_icon_state = "yuri_uniform"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/dutch
+	name = "dutch's suit"
+	desc = "You can feel a <b>god damn plan</b> coming on."
+	icon_state = "DutchUniform"
+	inhand_icon_state = "DutchUniform"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/osi
+	name = "O.S.I. jumpsuit"
+	icon_state = "osi_jumpsuit"
+	inhand_icon_state = "osi_jumpsuit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/tmc
+	name = "Lost MC clothing"
+	icon_state = "tmc_jumpsuit"
+	inhand_icon_state = "tmc_jumpsuit"
+	can_adjust = FALSE
+

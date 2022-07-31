@@ -165,3 +165,30 @@
 /obj/item/clothing/head/tv_head/fov_less
 	desc = "A mysterious headgear made from the hollowed out remains of a status display. How very retro-retro-futuristic of you. It's very easy to see out of this one."
 	has_fov = FALSE
+
+/obj/item/clothing/head/irs
+	name = "internal revenue service cap"
+	icon_state = "irs_hat"
+	inhand_icon_state = "irs_hat"
+
+/obj/item/clothing/head/tmc
+	name = "Lost M.C. bandana"
+	icon_state = "tmc_hat"
+	inhand_icon_state = "tmc_hat"
+
+/obj/item/clothing/head/deckers
+	name = "Decker headphones"
+	icon_state = "decker_hat"
+	inhand_icon_state = "decker_hat"
+
+/obj/item/clothing/head/yuri
+	name = "yuri initiate helmet"
+	icon_state = "yuri_helmet"
+	inhand_icon_state = "yuri_helmet"
+	clothing_flags = SNUG_FIT
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+
+/obj/item/clothing/head/allies
+	name = "allies helmet"
+	icon_state = "allies_helmet"
+	inhand_icon_state = "allies_helmet"

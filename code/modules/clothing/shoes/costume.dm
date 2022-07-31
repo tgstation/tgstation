@@ -67,3 +67,15 @@
 	desc = "t3h c00L3st sh03z j00'LL 3v3r f1nd."
 	icon_state = "glow_shoes"
 	inhand_icon_state = "glow_shoes"
+
+/obj/item/clothing/shoes/jackbros
+	name = "frosty boots"
+	desc = "For when you're stepping on up to the plate."
+	icon_state = "JackFrostShoes"
+	inhand_icon_state = "JackFrostShoes_worn"
+
+/obj/item/clothing/shoes/saints
+	name = "saints sneakers"
+	desc = "Officially branded Saints sneakers. Incredibly valuable!"
+	icon_state = "saints_shoes"
+	inhand_icon_state = "saints_shoes"
