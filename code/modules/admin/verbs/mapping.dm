@@ -526,13 +526,14 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	if(!src.holder)
 		to_chat(src, "Only administrators may use this command.", confidential = TRUE)
 		return
+	message_admins(span_adminnotice("[key_name_admin(usr)] is checking for obstructed atmospherics through the debug command."))
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Check For Obstructed Atmospherics") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	var/list/results = list()
 
 	results += "<h2><b>Anything that is considered to aesthetically obstruct an atmospherics machine (vent, scrubber, port) is listed below.</b> Please re-arrange to accomodate for this.</h2><br>"
 
-	// Ignore out stuff we see in normal and standard mapping that we don't care about (false alarms). Typically stuff that goes directionally off turfs or are undertiles that shouldn't matter.
+	// Ignore out stuff we see in normal and standard mapping that we don't care about (false alarms). Typically stuff that goes directionally off turfs or other undertile objects that we don't want to care about.
 	var/list/ignore_list = list(
 		/obj/effect,
 		/obj/item/shard, // it's benign enough to where we don't need to error, yet common enough to filter. fuck.
@@ -566,11 +567,10 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	)
 
 	for(var/turf/T in world)
-		var/obj/machinery/atmospherics/components/unary/A = locate(/obj/machinery/atmospherics/components/unary) in T.contents
-		if(A)
-			var/list/obj/O = locate(/obj) in T.contents
-
-			if(!is_type_in_list(O, ignore_list))
+		var/obj/machinery/atmospherics/components/unary/device = locate() in T.contents
+		if(device)
+			var/list/obj/obstruction = locate(/obj) in T.contents
+			if(!is_type_in_list(obstruction, ignore_list))
 				results += "There is an obstruction on top of an atmospherics machine at: [ADMIN_VERBOSEJMP(T)].<br>"
 				continue
 
