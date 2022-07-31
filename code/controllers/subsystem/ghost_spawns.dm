@@ -25,20 +25,20 @@ SUBSYSTEM_DEF(ghost_spawns)
 		if(P.time_left() <= 0)
 			polling_finished(P)
 
-/**
-* Polls for candidates with a question and a preview of the role
-*
-* This proc replaces /proc/pollCandidates.
-* Should NEVER be used in a proc that has waitfor set to FALSE/0 (due to #define UNTIL)
-* Arguments:
-* * question - The question to ask to potential candidates
-* * role - The role to poll for. Should be a ROLE_x enum. If set, potential candidates who aren't eligible will be ignored
-* * antag_age_check - Whether to filter out potential candidates who don't have an old enough account
-* * poll_time - How long to poll for in deciseconds
-* * min_hours - The amount of hours needed for a potential candidate to be eligible
-* * flash_window - Whether the poll should flash a potential candidate's game window
-* * check_antaghud - Whether to filter out potential candidates who enabled AntagHUD
-* * source - The atom, atom prototype, icon or mutable appearance to display as an icon in the alert
+/*
+Polls for candidates with a question and a preview of the role
+
+This proc replaces /proc/pollCandidates.
+Should NEVER be used in a proc that has waitfor set to FALSE/0 (due to #define UNTIL)
+Arguments:
+question - The question to ask to potential candidates
+role - The role to poll for. Should be a ROLE_x enum. If set, potential candidates who aren't eligible will be ignored
+antag_age_check - Whether to filter out potential candidates who don't have an old enough account
+poll_time - How long to poll for in deciseconds
+min_hours - The amount of hours needed for a potential candidate to be eligible
+flash_window - Whether the poll should flash a potential candidate's game window
+check_antaghud - Whether to filter out potential candidates who enabled AntagHUD
+source - The atom, atom prototype, icon or mutable appearance to display as an icon in the alert
 */
 /datum/controller/subsystem/ghost_spawns/proc/poll_candidates(question, jobban_type, be_special_flag, poll_time = 30 SECONDS, ignore_category = null, flash_window = TRUE, candidates, source)
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
