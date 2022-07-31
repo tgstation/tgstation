@@ -263,7 +263,7 @@
 /obj/machinery/launchpad/briefcase/Initialize(mapload, _briefcase)
 	. = ..()
 	if(!_briefcase)
-		stack_trace()
+		stack_trace("[src] spawned without a briefcase.")
 		return INITIALIZE_HINT_QDEL
 	briefcase = _briefcase
 
