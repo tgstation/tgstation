@@ -16,8 +16,8 @@
 	var/repeatable_weight_decrease = 2
 	/// List of players that are being drafted for this rule
 	var/list/mob/candidates = list()
-	/// List of players that were selected for this rule
-	var/list/datum/mind/assigned = list()
+	/// List of players that were selected for this rule. This can be minds, or mobs.
+	var/list/assigned = list()
 	/// Preferences flag such as ROLE_WIZARD that need to be turned on for players to be antag.
 	var/antag_flag = null
 	/// The antagonist datum that is assigned to the mobs mind on ruleset execution.

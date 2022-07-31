@@ -643,6 +643,9 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 		new_objective.explanation_text = objective
 		traitor_datum.objectives += new_objective
 		player.mind.add_antag_datum(traitor_datum)
+		var/datum/uplink_handler/uplink = traitor_datum.uplink_handler
+		uplink.has_progression = FALSE
+		uplink.has_objectives = FALSE
 	else if(isAI(player))
 		var/datum/antagonist/malf_ai/malfunction_datum = new(give_objectives = FALSE)
 		var/datum/objective/new_objective = new

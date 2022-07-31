@@ -168,7 +168,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		to_chat(src, span_warning("Not a valid name, please try again."))
 		guardianrename()
 		return
-	visible_message(span_notice("Your new name [span_name("[new_name]")] anchors itself in your mind."))
+	to_chat(src, span_notice("Your new name [span_name("[new_name]")] anchors itself in your mind."))
 	fully_replace_character_name(null, new_name)
 
 /mob/living/simple_animal/hostile/guardian/Life(delta_time = SSMOBS_DT, times_fired) //Dies if the summoner dies
