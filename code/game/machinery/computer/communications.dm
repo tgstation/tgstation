@@ -618,7 +618,7 @@
 /obj/machinery/computer/communications/Topic(href, href_list)
 	if (href_list["reject_cross_comms_message"])
 		if (!usr.client?.holder)
-			usr.log_message("tried to reject a cross-comms message without being an admin.", LOG_GAME)
+			usr.log_message("tried to reject a cross-comms message without being an admin.", LOG_ADMIN)
 			message_admins("[key_name(usr)] tried to reject a cross-comms message without being an admin.")
 			return
 

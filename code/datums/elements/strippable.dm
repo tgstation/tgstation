@@ -111,7 +111,7 @@
 
 	to_chat(user, span_notice("You try to put [equipping] on [source]..."))
 
-	user.log_message("is putting [equipping] on [key_name(source)]", LOG_GAME, color="red")
+	user.log_message("is putting [equipping] on [key_name(source)]", LOG_ATTACK, color="red")
 	source.log_message("is having [equipping] put on them by [key_name(user)]", LOG_VICTIM, color="orange", log_globally=FALSE)
 
 	return TRUE

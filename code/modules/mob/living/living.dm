@@ -1353,7 +1353,7 @@
 // Called when we are hit by a bolt of polymorph and changed
 // Generally the mob we are currently in is about to be deleted
 /mob/living/proc/wabbajack_act(mob/living/new_mob)
-	src.log_message("was wabbajack polymorphed into: [new_mob.name]([new_mob.type]).", LOG_GAME)
+	log_message("was wabbajack polymorphed into: [new_mob.name]([new_mob.type]).", LOG_GAME)
 	new_mob.name = real_name
 	new_mob.real_name = real_name
 
@@ -1485,8 +1485,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		adjust_fire_stacks(-fire_stacks / 2, fire_status.type)
 		spread_to.adjust_fire_stacks(fire_stacks, fire_status.type)
 		if(spread_to.ignite_mob())
-			src.log_message("bumped into [key_name(spread_to)] and set them on fire.", LOG_ATTACK, log_globally = FALSE)
-			src.log_message("bumped into [key_name(spread_to)] and set them on fire.", LOG_GAME)
+			log_message("bumped into [key_name(spread_to)] and set them on fire.", LOG_ATTACK)
 		return
 
 	if(!their_fire_status || !their_fire_status.on_fire)

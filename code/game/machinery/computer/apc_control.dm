@@ -163,7 +163,7 @@
 					target.vars[type] = value
 				else
 					message_admins("Warning: possible href exploit by [key_name(usr)] - attempted to set [html_encode(type)] on [target] to [html_encode(value)]")
-					usr.log_message("possibly trying to href exploit - attempted to set [html_encode(type)] on [target] to [html_encode(value)]", LOG_GAME)
+					usr.log_message("possibly trying to href exploit - attempted to set [html_encode(type)] on [target] to [html_encode(value)]", LOG_ADMIN)
 					return
 
 			target.update_appearance()
@@ -191,7 +191,7 @@
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
-	usr.log_message("emagged [src].", LOG_GAME)
+	usr.log_message("emagged [src].", LOG_ATTACK, color="red")
 	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/machinery/computer/apc_control/proc/log_activity(log_text)
@@ -202,7 +202,7 @@
 /obj/machinery/computer/apc_control/proc/restore_comp()
 	obj_flags &= ~EMAGGED
 	should_log = TRUE
-	operator.log_message("restored the logs of [src].")
+	operator.log_message("restored the logs of [src].", LOG_GAME)
 	log_activity("-=- Logging restored to full functionality at this point -=-")
 	restoring = FALSE
 

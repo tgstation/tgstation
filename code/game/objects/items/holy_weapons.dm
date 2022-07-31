@@ -55,8 +55,6 @@
 
 /obj/item/nullrod/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!"))
-	user.log_message("suicided with the null rod, [src].", LOG_GAME, log_globally = FALSE)
-	log_game("[key_name(user)] suicided with the null rod, [src].")
 
 	return (BRUTELOSS|FIRELOSS)
 

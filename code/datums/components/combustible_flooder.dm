@@ -44,12 +44,12 @@
 	var/log_message = "ignited [parent]"
 	if(user)
 		admin_message += " by [ADMIN_LOOKUPFLW(user)]"
-		user.log_message(log_message, LOG_GAME, log_globally = FALSE)//only individual log
+		user.log_message(log_message, LOG_ATTACK, log_globally = FALSE)//only individual log
 	else
 		log_message = "[key_name(user)] " + log_message
 		admin_message += " by fire"
 		log_message += " by fire"
-		log_game(log_message)
+		log_attack(log_message)
 	message_admins(admin_message)
 
 	if(delete_parent && !QDELETED(parent))

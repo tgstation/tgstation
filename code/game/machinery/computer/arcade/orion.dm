@@ -375,6 +375,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 		to_chat(gamer, span_userdanger("You're never going to make it to Orion..."))
 		gamer.death()
 		obj_flags &= ~EMAGGED //removes the emagged status after you lose
+		gamer.log_message("lost a Realism Mode Orion Trail game, changing the machine back to normal.", LOG_GAME)
 		gameStatus = ORION_STATUS_START
 		name = "The Orion Trail"
 		desc = "Learn how our ancestors got to Orion, and have fun in the process!"
@@ -492,6 +493,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	if(obj_flags & EMAGGED)
 		return
 	to_chat(user, span_notice("You override the cheat code menu and skip to Cheat #[rand(1, 50)]: Realism Mode."))
+	user.log_message("emagged [src], activating Realism Mode.")
 	name = "The Orion Trail: Realism Edition"
 	desc = "Learn how our ancestors got to Orion, and try not to die in the process!"
 	newgame()
