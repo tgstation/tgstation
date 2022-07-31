@@ -137,7 +137,7 @@
 	icon_state = "brainburger"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/medicine/mannitol = 6, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/nutriment/protein = 6)
 	tastes = list("bun" = 4, "brains" = 2)
-	foodtypes = GRAIN | MEAT | GROSS
+	foodtypes = GRAIN | MEAT | CARRION
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/burger/ghost
@@ -316,7 +316,7 @@
 	desc = "Pretty much what you'd expect..."
 	icon_state = "ratburger"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
-	foodtypes = GRAIN | MEAT | GROSS
+	foodtypes = GRAIN | MEAT | CARRION
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/burger/baseball
