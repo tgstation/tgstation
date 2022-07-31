@@ -379,8 +379,7 @@ Example config:
 		return
 
 	log_config("Loading config file word_filter.toml...")
-
-	var/list/result = rustg_read_toml_file_result("[directory]/word_filter.toml")
+	var/list/result = rustg_read_toml_file("[directory]/word_filter.toml")
 	if(!result["success"])
 		var/message = "The word filter is not configured correctly! [result["content"]]"
 		log_config(message)
