@@ -207,19 +207,18 @@
 			continue
 		var/datum/gas_mixture/environment = open.return_air()
 		var/temp = round(environment.temperature)
-		var/mutable_appearance/temptext = new()
-		temptext.icon = 'icons/turf/overlays.dmi'
-		temptext.plane = RUNECHAT_PLANE
-		temptext.alpha = 200
-		temptext.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		var/static/mutable_appearance/normaltemp = mutable_appearance('icons/turf/overlays.dmi', "greenOverlay", ABOVE_MOB_LAYER, RUNECHAT_PLANE, 200)
+		var/static/mutable_appearance/coldtemp = mutable_appearance('icons/turf/overlays.dmi', "blueOverlay", ABOVE_MOB_LAYER, RUNECHAT_PLANE, 200)
+		var/static/mutable_appearance/hottemp = mutable_appearance('icons/turf/overlays.dmi', "redOverlay", ABOVE_MOB_LAYER, RUNECHAT_PLANE, 200)	
 		var/image/pic = image(loc = open)
+		pic.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		if(temp <= 273.15)
-			temptext.icon_state = "blueOverlay"
+			pic.appearance = coldtemp
 		else if(temp >= 303.15)
-			temptext.icon_state = "redOverlay"
+			pic.appearance = hottemp
 		else 
-			temptext.icon_state = "greenOverlay"
-		pic.appearance = temptext
+			pic.appearance = normaltemp
+		
 		flick_overlay(pic, list(viewer.client), duration)
 
 
