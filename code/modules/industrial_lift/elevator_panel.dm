@@ -185,20 +185,21 @@
 		ui = new(user, src, "ElevatorPanel", name)
 		ui.open()
 
-/obj/machinery/elevator_control_panel/ui_state(mob/user)
-	return GLOB.physical_state
-
 /obj/machinery/elevator_control_panel/ui_status(mob/user)
-	. = ..()
-	if(. == UI_CLOSE)
-		return UI_CLOSE
-
+	// We moved up a z-level, probably via the lift itself, don't preserve the UI
 	if(user.z != z)
 		return UI_CLOSE
 
-	var/datum/lift_master/lift = lift_weakref?.resolve()
-	if(lift.lift_platforms[1].z != z)
+	// Our list if gone - look but don't touch
+	if(!lift_weakref?.resolve())
 		return UI_UPDATE
+
+	// We're non-functional, probably - don't do anything
+	if(!check_panel())
+		return UI_DISABLED
+
+	// Otherwise, just check the default state
+	return ..()
 
 /obj/machinery/elevator_control_panel/ui_data(mob/user)
 	var/list/data = list()

@@ -45,7 +45,6 @@ export const ElevatorPanel = (props, context) => {
         </Section>
         <Section height="67%" fill>
           {!!data.currently_moving && <MovingDimmer />}
-          {/* Hardcoding this height until I can figure out how to do this */}
           <Stack vertical width="90%">
             {data.all_floor_data.map((floor, index) => (
               <Stack.Item key={index}>
