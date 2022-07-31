@@ -10,7 +10,8 @@
  */
 /obj/machinery/elevator_control_panel
 	name = "elevator panel"
-	desc = "<i>\"In case of emergency, please use the stairs.\"</i> Thus, always use the stairs." // Fire alarm reference, yes.
+	// Fire alarm reference.
+	desc = "<i>\"In case of emergency, please use the stairs.\"</i> Thus, always use the stairs."
 	density = FALSE
 
 	icon = 'icons/obj/airlock_machines.dmi'
@@ -18,6 +19,7 @@
 	base_icon_state = "airlock_control"
 
 	power_channel = AREA_USAGE_ENVIRON
+	// Indestructible until someone wants to make these constructible, with all the chaos that implies
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 	/// A weakref to the lift_master datum we control
@@ -72,6 +74,7 @@
 		lift_platform.warns_on_down_movement = FALSE
 		lift_platform.elevator_vertical_speed = initial(lift_platform.elevator_vertical_speed) * 0.5
 
+	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	balloon_alert(user, "safeties overridden")
 	obj_flags |= EMAGGED
 
@@ -80,8 +83,8 @@
 	if(!lift)
 		return
 
-	playsound(src, 'sound/machines/locktoggle.ogg', 50, TRUE)
 	balloon_alert(user, "resetting panel...")
+	playsound(src, 'sound/machines/locktoggle.ogg', 50, TRUE)
 	if(!do_after(user, 6 SECONDS, src))
 		balloon_alert(user, "interrupted!")
 		return TRUE
@@ -105,6 +108,7 @@
 
 	// be vague about whether something was accomplished or not
 	balloon_alert(user, "panel reset")
+	playsound(src, 'sound/machines/locktoggle.ogg', 50, TRUE)
 
 	return TRUE
 

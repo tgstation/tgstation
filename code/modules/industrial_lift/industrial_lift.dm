@@ -550,10 +550,6 @@ GLOBAL_LIST_EMPTY(lifts)
 
 	return TRUE
 
-// we make these every time we open a radial, might as well cache em
-GLOBAL_VAR_INIT(lift_up_arrow, image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTH))
-GLOBAL_VAR_INIT(lift_down_arrow, image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTH))
-
 /// Opens the radial for the lift, allowing the user to move it around.
 /obj/structure/industrial_lift/proc/open_lift_radial(mob/living/user)
 	var/starting_position = loc
@@ -564,11 +560,21 @@ GLOBAL_VAR_INIT(lift_down_arrow, image(icon = 'icons/testing/turf_analysis.dmi',
 		if(REF(user) in other_platform.current_operators)
 			return
 
+
 	var/list/possible_directions = list()
 	if(lift_master_datum.Check_lift_move(UP))
-		possible_directions["Up"] = GLOB.lift_up_arrow
+		var/static/image/up_arrow
+		if(!up_arrow)
+			up_arrow = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTH)
+
+		possible_directions["Up"] = up_arrow
+
 	if(lift_master_datum.Check_lift_move(DOWN))
-		possible_directions["Down"] = GLOB.lift_down_arrow
+		var/static/image/down_arrow
+		if(!down_arrow)
+			down_arrow = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTH)
+
+		possible_directions["Down"] = down_arrow
 
 	add_fingerprint(user)
 	if(!length(possible_directions))
