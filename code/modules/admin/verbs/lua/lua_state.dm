@@ -57,7 +57,10 @@ GLOBAL_PROTECT(lua_usr)
 				append_to_log = FALSE
 				break
 	if(append_to_log)
-		log += list(weakrefify_list(result))
+		if(islist(result["param"]))
+			result["param"] = weakrefify_list(result["param"])
+		log += list(result)
+	INVOKE_ASYNC(src, .proc/update_editors)
 
 /datum/lua_state/proc/load_script(script)
 	GLOB.IsLuaCall = TRUE

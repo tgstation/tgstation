@@ -813,8 +813,11 @@
 		return element
 
 /// Returns a copy of the list where any element that is a datum or the world is converted into a ref
-/proc/refify_list(list/target_list)
+/proc/refify_list(list/target_list, list/visited, path_accumulator = "list")
+	if(!visited)
+		visited = list()
 	var/list/ret = list()
+	visited[target_list] = path_accumulator
 	for(var/i in 1 to target_list.len)
 		var/key = target_list[i]
 		var/new_key = key
@@ -830,7 +833,10 @@
 		else if(key == world)
 			new_key = "world [REF(world)]"
 		else if(islist(key))
-			new_key = refify_list(key)
+			if(visited.Find(key))
+				new_key = visited[key]
+			else
+				new_key = refify_list(key, visited, path_accumulator + "\[[i]\]")
 		var/value
 		if(istext(key) || islist(key) || ispath(key) || isdatum(key) || key == world)
 			value = target_list[key]
@@ -846,7 +852,10 @@
 		else if(value == world)
 			value = "world [REF(world)]"
 		else if(islist(value))
-			value = refify_list(value)
+			if(visited.Find(value))
+				value = visited[value]
+			else
+				value = refify_list(value, visited, path_accumulator + "\[[key]\]")
 		var/list/to_add = list(new_key)
 		if(value)
 			to_add[new_key] = value
@@ -858,18 +867,27 @@
  * Converts a list into a list of assoc lists of the form ("key" = key, "value" = value)
  * so that list keys that are themselves lists can be fully json-encoded
  */
-/proc/kvpify_list(list/target_list, depth = INFINITY)
+/proc/kvpify_list(list/target_list, depth = INFINITY, list/visited, path_accumulator = "list")
+	if(!visited)
+		visited = list()
 	var/list/ret = list()
+	visited[target_list] = path_accumulator
 	for(var/i in 1 to target_list.len)
 		var/key = target_list[i]
 		var/new_key = key
 		if(islist(key) && depth)
-			new_key = kvpify_list(key, depth-1)
+			if(visited.Find(key))
+				new_key = visited[key]
+			else
+				new_key = kvpify_list(key, depth-1, visited, path_accumulator + "\[[i]\]")
 		var/value
 		if(istext(key) || islist(key) || ispath(key) || isdatum(key) || key == world)
 			value = target_list[key]
 		if(islist(value) && depth)
-			value = kvpify_list(value, depth-1)
+			if(visited.Find(value))
+				value = visited[value]
+			else
+				value = kvpify_list(value, depth-1, visited, path_accumulator + "\[[key]\]")
 		if(value)
 			ret += list(list("key" = new_key, "value" = value))
 		else
@@ -907,22 +925,31 @@
 	return TRUE
 
 /// Returns a copy of the list where any element that is a datum is converted into a weakref
-/proc/weakrefify_list(list/target_list)
+/proc/weakrefify_list(list/target_list, list/visited, path_accumulator = "list")
+	if(!visited)
+		visited = list()
 	var/list/ret = list()
+	visited[target_list] = path_accumulator
 	for(var/i in 1 to target_list.len)
 		var/key = target_list[i]
 		var/new_key = key
 		if(isdatum(key))
 			new_key = WEAKREF(key)
 		else if(islist(key))
-			new_key = weakrefify_list(key)
+			if(visited.Find(key))
+				new_key = visited[key]
+			else
+				new_key = weakrefify_list(key, visited, path_accumulator + "\[[i]\]")
 		var/value
 		if(istext(key) || islist(key) || ispath(key) || isdatum(key) || key == world)
 			value = target_list[key]
 		if(isdatum(value))
 			value = WEAKREF(value)
 		else if(islist(value))
-			value = weakrefify_list(value)
+			if(visited.Find(value))
+				value = visited[value]
+			else
+				value = weakrefify_list(value, visited, path_accumulator + "\[[key]\]")
 		var/list/to_add = list(new_key)
 		if(value)
 			to_add[new_key] = value
