@@ -136,12 +136,15 @@
 /datum/storage/Destroy()
 	parent = null
 	real_location = null
-	boxes = null
-	closer = null
 
 	for(var/mob/person in is_using)
 		if(person.active_storage == src)
 			person.active_storage = null
+			person.client?.screen -= boxes
+			person.client?.screen -= closer
+
+	QDEL_NULL(boxes)
+	QDEL_NULL(closer)
 
 	is_using.Cut()
 

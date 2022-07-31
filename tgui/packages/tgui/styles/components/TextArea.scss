@@ -63,5 +63,6 @@ $border-radius: Input.$border-radius !default;
 }
 
 .TextArea__textarea_custom {
+  overflow: visible;
   white-space: pre-wrap;
 }

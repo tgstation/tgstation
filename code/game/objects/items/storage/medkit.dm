@@ -524,21 +524,17 @@
 	/// var to prevent it freezing the same things over and over
 	var/cooling = FALSE
 
-/obj/item/storage/organbox/Initialize()
+/obj/item/storage/organbox/Initialize(mapload)
 	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY /// you have to remove it from your bag before opening it but I think that's fine
-	atom_storage.max_total_storage = 21
+
+	create_storage(type = /datum/storage/organ_box, max_specific_storage = WEIGHT_CLASS_BULKY, max_total_storage = 21)
 	atom_storage.set_holdable(list(
 		/obj/item/organ,
 		/obj/item/bodypart,
 		/obj/item/food/icecream
 		))
 
-/obj/item/storage/organbox/Initialize(mapload)
-	. = ..()
 	create_reagents(100, TRANSPARENT)
-	RegisterSignal(src, COMSIG_ATOM_ENTERED, .proc/freeze)
-	RegisterSignal(src, COMSIG_ATOM_EXITED, .proc/unfreeze)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/storage/organbox/process(delta_time)
