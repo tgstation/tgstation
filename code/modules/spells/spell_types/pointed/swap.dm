@@ -9,10 +9,9 @@
 	cooldown_time = 30 SECONDS
 	cooldown_reduction_per_rank = 6 SECONDS
 	cast_range = 9
-	invocation_type = INVOCATION_NONE
 	invocation = "FRO' BRT'TRO, DA!"
 	invocation_type = INVOCATION_SHOUT
-	spell_requirements = SPELL_REQUIRES_WIZARD_GARB|SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_OFF_CENTCOM
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_OFF_CENTCOM
 	active_msg = "You prepare to swap locations with a target..."
 
 	smoke_type = /datum/effect_system/fluid_spread/smoke
