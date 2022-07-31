@@ -1,11 +1,11 @@
 
 /datum/action/cooldown/spell/pointed/swap
 	name = "Swap"
-	desc = "This spell instills a deep terror in your target, temporarily chilling and blinding it."
+	desc = "This spell allows you to swap locations with any living being."
 	button_icon_state = "swap"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/swap_target.dmi'
 
-	school = SCHOOL_EVOCATION
+	school = SCHOOL_TRANSLOCATION
 	cooldown_time = 30 SECONDS
 	cooldown_reduction_per_rank = 6 SECONDS
 	cast_range = 9
