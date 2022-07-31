@@ -76,7 +76,9 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 		equip_to_slot_or_del(new relic_hat, ITEM_SLOT_HEAD)
 	if(relic_mask)
 		equip_to_slot_or_del(new relic_mask, ITEM_SLOT_MASK)
-	equip_to_slot_or_del(new /obj/item/clothing/under/suit/waiter(src), ITEM_SLOT_ICLOTHING)
+	var/obj/item/clothing/under/suit/waiter/punpun_suit = new(src)
+	punpun_suit.sensor_mode = NO_SENSORS
+	equip_to_slot_or_del(punpun_suit, ITEM_SLOT_ICLOTHING)
 
 /mob/living/carbon/human/species/monkey/punpun/Destroy()
 	if(GLOB.the_one_and_only_punpun == src)
