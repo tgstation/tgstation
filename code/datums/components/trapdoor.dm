@@ -73,6 +73,7 @@
 	if(assembly)
 		UnregisterSignal(assembly, COMSIG_ASSEMBLY_PULSED)
 	UnregisterSignal(parent, COMSIG_TURF_CHANGE)
+	UnregisterSignal(parent, COMSIG_PARENT_EXAMINE)
 
 /datum/component/trapdoor/proc/decal_detached(datum/source, description, cleanable, directional, pic)
 	SIGNAL_HANDLER
