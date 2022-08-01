@@ -2,7 +2,7 @@
 ///makes this file more legible
 #define IS_OPEN(parent) isgroundlessturf(parent)
 ///distance a trapdoor will accept a link request.
-#define TRAPDOOR_LINKING_SEARCH_RANGE 3
+#define TRAPDOOR_LINKING_SEARCH_RANGE 4
 
 /**
  * ## trapdoor component!
