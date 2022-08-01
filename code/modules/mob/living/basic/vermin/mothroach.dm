@@ -1,6 +1,6 @@
 /mob/living/basic/mothroach
 	name = "mothroach"
-	desc = "An ancient ancestor of the moth that surprisingly looks like the crossbreed of a moth and a cockroach."
+	desc = "This is the adorable by-product of multiple attempts at genetically mixing mothpeople with cockroaches."
 	icon_state = "mothroach"
 	icon_living = "mothroach"
 	icon_dead = "mothroach_dead"
