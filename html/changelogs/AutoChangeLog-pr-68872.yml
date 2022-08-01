@@ -1,0 +1,4 @@
+author: "SuperSlayer"
+delete-after: True
+changes: 
+  - bugfix: "Aliens help/harm intent now works normally if used on other aliens"
