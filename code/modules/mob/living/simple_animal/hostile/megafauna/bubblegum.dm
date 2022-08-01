@@ -228,7 +228,11 @@ Difficulty: Hard
 				addtimer(CALLBACK(src, .proc/devour, L), 2)
 	SLEEP_CHECK_DEATH(1, src)
 
-
+/mob/living/simple_animal/hostile/megafauna/bubblegum/devour(mob/living/yummy_food)
+	. = ..()
+	if(. == TRUE) // a corpse was devoured
+		// bubblegum bubblegum in a dish, how many corpses do you wish?
+		new /obj/item/food/bubblegum/bubblegum(loc)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/be_aggressive()
 	if(BUBBLEGUM_IS_ENRAGED)

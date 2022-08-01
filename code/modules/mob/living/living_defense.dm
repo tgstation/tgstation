@@ -452,6 +452,7 @@
 
 	overlay_fullscreen("flash", type)
 	addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", length), length)
+	SEND_SIGNAL(src, COMSIG_MOB_FLASHED, intensity, override_blindness_check, affect_silicon, visual, type, length)
 	return TRUE
 
 //called when the mob receives a loud bang
