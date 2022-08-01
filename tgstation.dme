@@ -2262,6 +2262,7 @@
 #include "code\modules\antagonists\heretic\magic\void_phase.dm"
 #include "code\modules\antagonists\heretic\magic\void_pull.dm"
 #include "code\modules\antagonists\heretic\mobs\maid_in_mirror.dm"
+#include "code\modules\antagonists\heretic\status_effects\buffs.dm"
 #include "code\modules\antagonists\heretic\status_effects\debuffs.dm"
 #include "code\modules\antagonists\heretic\status_effects\ghoul.dm"
 #include "code\modules\antagonists\heretic\status_effects\mark_effects.dm"
