@@ -29,7 +29,6 @@
 	response_harm_simple = "hit"
 	response_help_continuous = "pats"
 	response_help_simple = "pat"
-	speak_emote = list("flutters")
 	attacked_sound = 'sound/voice/moth/scream_moth.ogg'
 
 	faction = list("neutral")
