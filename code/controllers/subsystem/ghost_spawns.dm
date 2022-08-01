@@ -49,7 +49,7 @@ source - The atom, atom prototype, icon or mutable appearance to display as an i
 	polls_active = TRUE
 	total_polls++
 
-	var/datum/candidate_poll/P = new(be_special_flag, question, poll_time)
+	var/datum/candidate_poll/P = new(be_special_flag, question, poll_time, ignore_category)
 	LAZYADD(currently_polling, P)
 
 	// We're the poll closest to completion
@@ -202,16 +202,18 @@ P - The poll to finish
 	var/role // The role the poll is for
 	var/question // The question asked to observers
 	var/duration // The duration of the poll
+	var/ignoring_category
 	var/list/mob/dead/observer/signed_up // The players who signed up to this poll
 	var/atom/movable/screen/alert/notify_action/alert_button
 	var/time_started // The world.time at which the poll was created
 	var/finished = FALSE // Whether the polling is finished
 	var/hash // Used to categorize in the alerts system
 
-/datum/candidate_poll/New(polled_role, polled_question, poll_duration)
+/datum/candidate_poll/New(polled_role, polled_question, poll_duration, poll_ignoring_category)
 	role = polled_role
 	question = polled_question
 	duration = poll_duration
+	ignoring_category = poll_ignoring_category
 	signed_up = list()
 	time_started = world.time
 	hash = copytext(md5("[question]_[role ? role : "0"]"), 1, 7)
@@ -281,6 +283,18 @@ silent - If TRUE, no messages will be sent to M about their removal.
 			if(src != P && hash == P.hash && (M in P.signed_up))
 				P.remove_candidate(M, TRUE)
 	return TRUE
+
+/datum/candidate_poll/proc/never_for_this_round(mob/M, undoing = FALSE)
+	if(!undoing)
+		var/list/ignore_list = GLOB.poll_ignore[ignoring_category]
+		if(!ignore_list)
+			GLOB.poll_ignore[ignoring_category] = list()
+		GLOB.poll_ignore[ignoring_category] += M.ckey
+		to_chat(M, span_danger("Choice registered: Never for this round."))
+		remove_candidate(M, silent = TRUE)
+		return
+	GLOB.poll_ignore[ignoring_category] -= M.ckey
+	to_chat(M, span_danger("Choice registered: Eligible for this round"))
 
 /*
 Deletes any candidates who may have disconnected from the list

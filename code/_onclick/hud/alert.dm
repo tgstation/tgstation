@@ -769,13 +769,20 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		qdel(signed_up_overlay)
 	return ..()
 
-/atom/movable/screen/alert/notify_action/Click()
-	if(!usr || !usr.client)
+/atom/movable/screen/alert/notify_action/Click(params)
+	if(!owner || !owner.client)
 		return
-	var/mob/dead/observer/ghost = usr
+	var/mob/dead/observer/ghost = owner
 	if(!istype(ghost))
 		return
 	if(poll)
+		var/list/modifiers = params2list(params)
+		if(LAZYACCESS(modifiers, RIGHT_CLICK))
+			if(!(ghost.ckey in GLOB.poll_ignore[poll.ignoring_category]))
+				poll.never_for_this_round(ghost)
+				return
+			poll.never_for_this_round(ghost, undoing = TRUE)
+			return
 		var/success
 		if(ghost in poll.signed_up)
 			success = poll.remove_candidate(ghost)
@@ -800,7 +807,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		return
 	if(!poll)
 		return
-	var/mob/dead/observer/ghost = usr
+	var/mob/dead/observer/ghost = owner
 	if(ghost in poll.signed_up)
 		poll.remove_candidate(ghost)
 	else
@@ -811,7 +818,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(!signed_up_overlay)
 		signed_up_overlay = image('icons/hud/screen_gen.dmi', icon_state = "selector")
 		signed_up_overlay.plane = plane
-	if(usr in poll.signed_up)
+	if(owner in poll.signed_up)
 		add_overlay(signed_up_overlay)
 	else
 		cut_overlay(signed_up_overlay)
