@@ -128,7 +128,7 @@
  * applies the trapdoor to the new turf (created by the last trapdoor)
  * apparently callbacks with arguments on invoke and the callback itself have the callback args go first. interesting!
  */
-/obj/item/assembly/trapdoor/proc/carry_over_trapdoor(trapdoor_turf_path, turf/new_turf, conspicuous)
+/obj/item/assembly/trapdoor/proc/carry_over_trapdoor(trapdoor_turf_path, conspicuous, turf/new_turf)
 	new_turf.AddComponent(/datum/component/trapdoor, FALSE, trapdoor_turf_path, src, conspicuous)
 
 /**
