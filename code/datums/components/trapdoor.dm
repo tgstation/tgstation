@@ -19,6 +19,13 @@
 	var/conspicuous
 	/// overlay that makes trapdoors more obvious
 	var/static/trapdoor_overlay
+	/// is there an active callback on this and therefore we shouldn't delete ourselves
+	var/callback_active = FALSE
+
+/datum/component/trapdoor/Destroy(force)
+	if(callback_active && !force)
+		return QDEL_HINT_LETMELIVE
+	return ..()
 
 /datum/component/trapdoor/Initialize(starts_open, trapdoor_turf_path, assembly, conspicuous = TRUE)
 	if(!isopenturf(parent))
@@ -109,9 +116,13 @@
 /datum/component/trapdoor/proc/turf_changed_pre(datum/source, path, new_baseturfs, flags, post_change_callbacks)
 	SIGNAL_HANDLER
 	var/turf/open/dying_trapdoor = parent
-	if((!IS_OPEN(dying_trapdoor) && !IS_OPEN(path))) //not a process of the trapdoor
+	if((!IS_OPEN(dying_trapdoor) && !IS_OPEN(path)) || (path == /turf/open/floor/plating && trapdoor_turf_path != /turf/open/floor/plating)) //not a process of the trapdoor
 		if(istype(parent, /turf/open/floor/plating) && !ispath(path, /turf/closed) && !ispath(path, /turf/open/openspace)) // allow people to place tiles on plating without breaking the trapdoor
-			post_change_callbacks += CALLBACK(assembly, /obj/item/assembly/trapdoor.proc/carry_over_trapdoor, path, conspicuous)
+			if(assembly)
+				post_change_callbacks += CALLBACK(assembly, /obj/item/assembly/trapdoor.proc/carry_over_trapdoor, path, conspicuous)
+			else // no assembly, handle adding new trapdoor ourselves
+				callback_active = TRUE
+				post_change_callbacks += CALLBACK(src, /datum/component/trapdoor.proc/backup_carry_over_trapdoor, path, conspicuous)
 			return
 		// otherwise, break trapdoor
 		dying_trapdoor.visible_message(span_warning("The trapdoor mechanism in [dying_trapdoor] is broken!"))
@@ -121,6 +132,17 @@
 			assembly = null
 		return
 	post_change_callbacks += CALLBACK(assembly, /obj/item/assembly/trapdoor.proc/carry_over_trapdoor, trapdoor_turf_path, conspicuous)
+
+/**
+ * ## backup_carry_over_trapdoor
+ *
+ * applies the trapdoor to the new turf (created by the last trapdoor), but without an assembly
+ * apparently callbacks with arguments on invoke and the callback itself have the callback args go first. interesting!
+ */
+/datum/component/trapdoor/proc/backup_carry_over_trapdoor(trapdoor_turf_path, conspicuous, turf/new_turf)
+	new_turf.AddComponent(/datum/component/trapdoor, FALSE, trapdoor_turf_path, null, conspicuous)
+	callback_active = FALSE
+	qdel(src)
 
 /**
  * ## carry_over_trapdoor
@@ -138,8 +160,8 @@
  */
 /datum/component/trapdoor/proc/on_examine(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
-
-	examine_text += "There seems to be a tiny gap around this tile."
+	if(conspicuous)
+		examine_text += "There seems to be a tiny gap around this tile."
 
 /**
  * ## try_opening
