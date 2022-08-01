@@ -1,4 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes: 
-  - bugfix: "unfrozen items no longer break when thrown"

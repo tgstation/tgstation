@@ -1,4 +1,0 @@
-author: "Bytube"
-delete-after: True
-changes: 
-  - bugfix: "fixed crates being able to store mechs"

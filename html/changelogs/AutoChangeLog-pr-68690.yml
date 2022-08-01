@@ -1,5 +1,0 @@
-author: "Armhulen/Armhulenn/Bazelart/Tralezab, san7890"
-delete-after: True
-changes: 
-  - admin: "Word filters incorrectly set up will now have their errors actually described. Please, tell your server ops when you see it so they may fix the configuration."
-  - server: "Rust-g on this codebase is now on the 1.0.2 version, prepare accordingly."
