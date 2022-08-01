@@ -59,6 +59,7 @@
 		RegisterSignal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK, .proc/on_link_requested)
 	else
 		RegisterSignal(assembly, COMSIG_ASSEMBLY_PULSED, .proc/toggle_trapdoor)
+		RegisterSignal(parent, COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_SCREWDRIVER), .proc/try_unlink)
 
 /datum/component/trapdoor/UnregisterFromParent()
 	. = ..()
@@ -67,6 +68,28 @@
 		UnregisterSignal(assembly, COMSIG_ASSEMBLY_PULSED)
 	UnregisterSignal(parent, COMSIG_TURF_CHANGE)
 	UnregisterSignal(parent, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(parent, COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_SCREWDRIVER))
+
+/datum/component/trapdoor/proc/try_unlink(turf/source, mob/user, obj/item/tool)
+	SIGNAL_HANDLER
+	if(!assembly)
+		return
+	if(IS_OPEN(parent))
+		source.balloon_alert(user, "can't unlink trapdoor when its open")
+		return
+	source.balloon_alert(user, "unlinking trapdoor")
+	if(!do_after(user, 5 SECONDS, target=source))
+		return
+	if(IS_OPEN(parent))
+		source.balloon_alert(user, "can't unlink trapdoor when its open")
+		return
+	assembly.linked = FALSE
+	assembly.stored_decals = list()
+	assembly = null
+	source.balloon_alert(user, "trapdoor unlinked")
+	UnregisterSignal(assembly, COMSIG_ASSEMBLY_PULSED)
+	UnregisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL))
+	RegisterSignal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK, .proc/on_link_requested)
 
 /datum/component/trapdoor/proc/decal_detached(datum/source, description, cleanable, directional, pic)
 	SIGNAL_HANDLER
@@ -97,6 +120,7 @@
 	assembly.linked = TRUE
 	UnregisterSignal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK)
 	RegisterSignal(assembly, COMSIG_ASSEMBLY_PULSED, .proc/toggle_trapdoor)
+	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), .proc/try_unlink)
 
 ///signal called by our assembly being pulsed
 /datum/component/trapdoor/proc/toggle_trapdoor(datum/source)
@@ -133,15 +157,6 @@
 	new_turf.AddComponent(/datum/component/trapdoor, FALSE, trapdoor_turf_path, assembly, conspicuous)
 
 /**
- * ## carry_over_trapdoor
- *
- * applies the trapdoor to the new turf (created by the last trapdoor)
- * apparently callbacks with arguments on invoke and the callback itself have the callback args go first. interesting!
- */
-/obj/item/assembly/trapdoor/proc/carry_over_trapdoor(trapdoor_turf_path, conspicuous, turf/new_turf)
-	new_turf.AddComponent(/datum/component/trapdoor, FALSE, trapdoor_turf_path, src, conspicuous)
-
-/**
  * ## on_examine
  *
  * examine message for conspicuous trapdoors that makes it obvious
@@ -149,7 +164,7 @@
 /datum/component/trapdoor/proc/on_examine(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
 	if(conspicuous)
-		examine_text += "There seems to be a tiny gap around this tile."
+		examine_text += "There seems to be a tiny gap around this tile with some wires that you might be able to pulse with a <b>multitool</b>."
 
 /**
  * ## try_opening
