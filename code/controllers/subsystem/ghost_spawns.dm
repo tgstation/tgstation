@@ -89,7 +89,6 @@ source - The atom, atom prototype, icon or mutable appearance to display as an i
 
 		// Sign up inheritance and stacking
 		var/inherited_sign_up = FALSE
-		var/num_stack = 1
 		for(var/existing_poll in currently_polling)
 			var/datum/candidate_poll/P2 = existing_poll
 			if(P != P2 && P.hash == P2.hash)
@@ -97,9 +96,6 @@ source - The atom, atom prototype, icon or mutable appearance to display as an i
 				if(!inherited_sign_up && (M in P2.signed_up) && P.sign_up(M, TRUE))
 					A.update_signed_up_alert()
 					inherited_sign_up = TRUE
-				// This number is used to display the number of polls the alert regroups
-				num_stack++
-		A.display_stacks(num_stack)
 
 		// Image to display
 		var/image/I
@@ -186,13 +182,6 @@ P - The poll to finish
 			var/datum/candidate_poll/P2 = poll
 			if(!next_poll_to_finish || P2.time_left() < next_poll_to_finish.time_left())
 				next_poll_to_finish = P2
-	if(next_poll_to_finish && next_poll_to_finish.alert_button)
-		var/num_stack = 1
-		for(var/poll in currently_polling)
-			var/datum/candidate_poll/P2 = poll
-			if(next_poll_to_finish != P2 && next_poll_to_finish.hash == P2.hash)
-				num_stack++
-		next_poll_to_finish.alert_button.display_stacks(num_stack)
 
 /datum/controller/subsystem/ghost_spawns/stat_entry(msg)
 	msg += "Active: [length(currently_polling)] | Total: [total_polls]"
@@ -253,7 +242,8 @@ silent - Whether no messages should appear or not. If not TRUE, signing up to th
 			var/datum/candidate_poll/P = existing_poll
 			if(src != P && hash == P.hash && !(M in P.signed_up))
 				P.sign_up(M, TRUE)
-
+	if(alert_button)
+		alert_button.update_candidates_number_overlay()
 	return TRUE
 
 /*
@@ -285,6 +275,8 @@ silent - If TRUE, no messages will be sent to M about their removal.
 			var/datum/candidate_poll/P = existing_poll
 			if(src != P && hash == P.hash && (M in P.signed_up))
 				P.remove_candidate(M, TRUE)
+	if(alert_button)
+		alert_button.update_candidates_number_overlay()
 	return TRUE
 
 /datum/candidate_poll/proc/never_for_this_round(mob/M, undoing = FALSE)
@@ -314,6 +306,3 @@ Returns the time left for a poll
 */
 /datum/candidate_poll/proc/time_left()
 	return duration - (world.time - time_started)
-
-
-

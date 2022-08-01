@@ -118,13 +118,6 @@
 /atom/movable/screen/alert/MouseExited()
 	closeToolTip(usr)
 
-/atom/movable/screen/alert/proc/do_timeout(mob/M, category)
-	if(!M || !M.alerts)
-		return
-
-	if(timeout && M.alerts[category] == src && world.time >= timeout)
-		M.clear_alert(category)
-
 //Gas alerts
 /atom/movable/screen/alert/not_enough_oxy
 	name = "Choking (No O2)"
@@ -743,6 +736,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	var/image/time_left_overlay // The last image showing the time left
 	var/image/signed_up_overlay // image showing that you're signed up
 	var/image/stacks_overlay
+	var/image/candidates_num_overlay
 	var/datum/candidate_poll/poll // If set, on Click() it'll register the player as a candidate
 
 /atom/movable/screen/alert/notify_action/process()
@@ -752,8 +746,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			return PROCESS_KILL
 		cut_overlay(time_left_overlay)
 		var/obj/O = new
-		O.maptext = "<span style='font-family: \"Small Fonts\"; font-weight: bold; font-size: 32px; color: [(timeleft <= 10 SECONDS) ? "red" : "white"]; -dm-text-outline: 1px black'>[CEILING(timeleft / 10, 1)]</span>"
-		O.maptext_width = O.maptext_height = 128
+		O.maptext = "<span style='font-family: \"Small Fonts\"; font-weight: bold; font-size: 8px; color: [(timeleft <= 10 SECONDS) ? "red" : "white"]; -dm-text-outline: 1px black'>[CEILING(timeleft / 10, 1)]</span>"
 		var/matrix/M = new
 		M.Translate(4, 16)
 		O.transform = M
@@ -761,6 +754,12 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		time_left_overlay.plane = plane
 		add_overlay(time_left_overlay)
 		qdel(O)
+	if(poll)
+		var/num_same = 1
+		for(var/datum/candidate_poll/P2 in SSghost_spawns.currently_polling)
+			if(P2 != poll && P2.hash == poll.hash && !P2.finished)
+				num_same++
+		display_stacks(num_same)
 	..()
 
 /atom/movable/screen/alert/notify_action/Destroy()
@@ -825,15 +824,28 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	else
 		cut_overlay(signed_up_overlay)
 
-/atom/movable/screen/alert/notify_action/proc/display_stacks(stacks = 1)
-	if(stacks <= 1)
-		cut_overlay(stacks_overlay)
+/atom/movable/screen/alert/notify_action/proc/update_candidates_number_overlay()
+	cut_overlay(candidates_num_overlay)
+	if(!length(poll.signed_up))
 		return
 	var/obj/O = new
-	O.maptext = "<span style='font-family: \"Small Fonts\"; font-size: 32px; color: yellow; -dm-text-outline: 1px black'>[stacks]x</span>"
-	O.maptext_width = O.maptext_height = 128
+	O.maptext = "<span style='font-family: \"Small Fonts\"; font-size: 7px; color: aqua; -dm-text-outline: 1px black'>[length(poll.signed_up)]</span>"
 	var/matrix/M = new
-	M.Translate(4, 2)
+	M.Translate(18, 2)
+	O.transform = M
+	candidates_num_overlay = image(O)
+	candidates_num_overlay.plane = plane
+	add_overlay(candidates_num_overlay)
+	qdel(O)
+
+/atom/movable/screen/alert/notify_action/proc/display_stacks(stacks = 1)
+	cut_overlay(stacks_overlay)
+	if(stacks <= 1)
+		return
+	var/obj/O = new
+	O.maptext = "<span style='font-family: \"Small Fonts\"; font-size: 7px; color: yellow; -dm-text-outline: 1px black'>[stacks]x</span>"
+	var/matrix/M = new
+	M.Translate(3, 2)
 	O.transform = M
 	stacks_overlay = image(O)
 	stacks_overlay.plane = plane
