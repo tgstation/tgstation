@@ -196,6 +196,38 @@
 		else
 			candidates -= candidate_mob
 
+///currently only used for cult master voting
+/proc/poll_living_candidates(question, jobban_type, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE, list/group = null)
+	var/time_passed = world.time
+	if (!question)
+		question = "Would you like to be a special role?"
+	var/list/result = list()
+	for(var/mob/candidate_mob as anything in group)
+		if(!candidate_mob.key || !candidate_mob.client || (ignore_category && GLOB.poll_ignore[ignore_category] && (candidate_mob.ckey in GLOB.poll_ignore[ignore_category])))
+			continue
+		if(be_special_flag)
+			if(!(candidate_mob.client.prefs) || !(be_special_flag in candidate_mob.client.prefs.be_special))
+				continue
+
+			var/required_time = GLOB.special_roles[be_special_flag] || 0
+			if (candidate_mob.client && candidate_mob.client.get_remaining_days(required_time) > 0)
+				continue
+		if(jobban_type)
+			if(is_banned_from(candidate_mob.ckey, list(jobban_type, ROLE_SYNDICATE)) || QDELETED(candidate_mob))
+				continue
+
+		show_candidate_poll_window(candidate_mob, poll_time, question, result, ignore_category, time_passed, flashwindow)
+	sleep(poll_time)
+
+	//Check all our candidates, to make sure they didn't log off or get deleted during the wait period.
+	for(var/mob/asking_mob in result)
+		if(!asking_mob.key || !asking_mob.client)
+			result -= asking_mob
+
+	list_clear_nulls(result)
+
+	return result
+
 /**
  * Returns a list of ghosts that are eligible to take over and wish to be considered for a mob.
  *

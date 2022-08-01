@@ -123,7 +123,7 @@ source - The atom, atom prototype, icon or mutable appearance to display as an i
 		if(isatom(source))
 			act_jump = "<a href='?src=[REF(M)];jump=\ref[source]'>\[Teleport]</a>"
 		var/act_signup = "<a href='?src=[REF(A)];signup=1'>\[Sign Up]</a>"
-		to_chat(M, "<big><span class='boldnotice'>Now looking for candidates [be_special_flag ? "to play as \an [be_special_flag]" : "\"[question]\""]. [act_jump] [act_signup]</span></big>")
+		to_chat(M, "<big>[span_boldnotice("Now looking for candidates [be_special_flag ? "to play as \an [be_special_flag]" : "\"[question]\""]. [act_jump] [act_signup]")]</big>")
 
 		// Start processing it so it updates visually the timer
 		START_PROCESSING(SSprocessing, A)
@@ -232,17 +232,17 @@ silent - Whether no messages should appear or not. If not TRUE, signing up to th
 		return
 	if(M in signed_up)
 		if(!silent)
-			to_chat(M, "<span class='warning'>You have already signed up for this!</span>")
+			to_chat(M, span_warning("You have already signed up for this!"))
 		return
 	if(time_left() <= 0)
 		if(!silent)
-			to_chat(M, "<span class='danger'>Sorry, you were too late for the consideration!</span>")
+			to_chat(M, span_danger("Sorry, you were too late for the consideration!"))
 			SEND_SOUND(M, 'sound/machines/buzz-sigh.ogg')
 		return
 
 	signed_up += M
 	if(!silent)
-		to_chat(M, "<span class='notice'>You have signed up for this role! A candidate will be picked randomly soon..</span>")
+		to_chat(M, span_notice("You have signed up for this role! A candidate will be picked randomly soon."))
 		// Sign them up for any other polls with the same mob type
 		for(var/existing_poll in SSghost_spawns.currently_polling)
 			var/datum/candidate_poll/P = existing_poll
@@ -264,17 +264,17 @@ silent - If TRUE, no messages will be sent to M about their removal.
 		return
 	if(!(M in signed_up))
 		if(!silent)
-			to_chat(M, "<span class='warning'>You aren't signed up for this!</span>")
+			to_chat(M, span_warning("You aren't signed up for this!"))
 		return
 
 	if(time_left() <= 0)
 		if(!silent)
-			to_chat(M, "<span class='danger'>It's too late to unregister yourself, selection has already begun!</span>")
+			to_chat(M, span_danger("It's too late to unregister yourself, selection has already begun!"))
 		return
 
 	signed_up -= M
 	if(!silent)
-		to_chat(M, "<span class='notice'>You have been unregistered as a candidate for this role. You can freely sign up again before the poll ends.</span>")
+		to_chat(M, span_notice("You have been unregistered as a candidate for this role. You can freely sign up again before the poll ends."))
 
 		for(var/existing_poll in SSghost_spawns.currently_polling)
 			var/datum/candidate_poll/P = existing_poll
