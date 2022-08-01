@@ -84,7 +84,7 @@
 		if(cat_species.original_felinid)
 			return // Don't display the to_chat message
 		purrbated_human.set_species(/datum/species/human)
-	else if(ishuman(purrbated_human) && !ishuman(purrbated_human))
+	else if(ishumanoid(purrbated_human) && !ishuman(purrbated_human))
 		var/datum/species/target_species = purrbated_human.dna.species
 
 		// From the previous check we know they're not a felinid, therefore removing cat ears and tail is safe

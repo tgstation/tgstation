@@ -29,7 +29,7 @@
 	description = "When we asked for a tail bone, we didn't mean...look, just send us back data from something OTHER than a human. It could be a monkey for all we care, just send us research."
 
 /datum/experiment/dissection/nonhuman/is_valid_dissection(mob/target)
-	return ishuman(target) && !ishuman(target)
+	return ishumanoid(target) && !ishuman(target)
 
 /datum/experiment/dissection/xenomorph
 	name = "Xenomorph Dissection Experiment"
