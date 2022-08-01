@@ -20,6 +20,14 @@
 /code/modules/admin/verbs/adminpm.dm @Cyberboss
 /code/modules/mapping/ @Cyberboss
 
+# Fikou
+
+/code/modules/awaymissions/ @Fikou
+/code/modules/mining/ @Fikou
+/code/modules/mod/ @Fikou
+/code/modules/ruins/lavalandruin_code/ @Fikou
+/code/modules/ruins/lavaland_ruin_code.dm @Fikou
+
 # JohnFulpWizard
 
 /code/modules/mob/living/simple_animal/bot/ @JohnFulpWillard
@@ -98,14 +106,6 @@
 
 # Dragomagol/Tattle
 /code/__HELPERS/logging/ @dragomagol
-
-# Fikou
-
-/code/modules/mod/ @Fikou
-/code/modules/ruins/lavaland_ruin_code.dm @Fikou
-/code/modules/ruins/lavalandruin_code/ @Fikou
-/code/modules/mining/ @Fikou
-/code/modules/awaymissions/ @Fikou
 
 # Jordie0608
 

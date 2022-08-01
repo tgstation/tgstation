@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Surgical moth wing reconstruction can no longer be attempted on wings that... aren't moth wings!"

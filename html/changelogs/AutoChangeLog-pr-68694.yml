@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Immortal anomalies (eg bioscramblers) will no longer have a death timer overlay."
