@@ -37,9 +37,9 @@ You can avoid hacky code by using object-oriented methodologies, such as overrid
 
 ### User Interfaces
 
-* All new player-facing user interfaces must use TGUI, unless they are critical user interfaces.
-* All critical user interfaces must be usable with HTML or the interface.dmf, with TGUI being *optional* for this UI.
-	* The most prolific example of a critical user interface are administrative tooling UIs that must be accessible at all times during a server's life. If it's for something fluffy like the Supply Pod menu that one could "live without", it's not exactly critical. However, we really don't want something like the game panel to have a chance of not loading (The game panel is the way that one would delay/restart during a live round).
+* All newly implemented player-facing user interfaces must use TGUI, unless they are critical user interfaces.
+* All critical user interfaces must be usable with HTML or the interface.dmf, with TGUI being *optional* (or even disallowed) for this UI.
+	* The most prolific example of critical user interfaces are administrative tooling UIs that must be accessible at all times during a server's life. If it's for something fluffy like the Supply Pod menu that one could "live without", it's not exactly critical. However, we really don't want something like the game panel to have a chance of not loading (The game panel is the way that one would delay/restart during a live round). When in doubt, ask.
 * Documentation for TGUI can be found at:
 	* [tgui/README.md](../tgui/README.md)
 	* [tgui/tutorial-and-examples.md](../tgui/docs/tutorial-and-examples.md)
