@@ -248,15 +248,17 @@ export class LuaEditor extends Component {
                             }}
                           />
                         </Stack.Item>
-                        <Stack.Item width="50%">
-                          <ProgressBar
-                            width="100%"
-                            value={page / (pageCount - 1)}>
-                            <Box width="100%" align="center">
-                              {`Page ${page + 1}/${pageCount}`}
-                            </Box>
-                          </ProgressBar>
-                        </Stack.Item>
+                        {!!pageCount && (
+                          <Stack.Item width="50%">
+                            <ProgressBar
+                              width="100%"
+                              value={page / (pageCount - 1)}>
+                              <Box width="100%" align="center">
+                                {`Page ${page + 1}/${pageCount}`}
+                              </Box>
+                            </ProgressBar>
+                          </Stack.Item>
+                        )}
                         <Stack.Item width="25%">
                           <Button
                             width="100%"

@@ -54,6 +54,7 @@
 			data["globals"] = kvpify_list(refify_list(current_state.globals))
 	data["states"] = SSlua.states
 	data["callArguments"] = kvpify_list(refify_list(arguments))
+	LAZYSET(tgui_shared_states, "shouldUpdateScroll", "true")
 	return data
 
 /datum/lua_editor/proc/traverse_list(list/path, list/root, traversal_depth_offset = 0)
@@ -203,11 +204,9 @@
 			return TRUE
 		if("nextPage")
 			page = min(page+1, CEILING(current_state.log.len/50, 1)-1)
-			LAZYSET(tgui_shared_states, "shouldUpdateScroll", "true")
 			return TRUE
 		if("previousPage")
 			page = max(page-1, 0)
-			LAZYSET(tgui_shared_states, "shouldUpdateScroll", "true")
 			return TRUE
 
 /datum/lua_editor/ui_close(mob/user)
