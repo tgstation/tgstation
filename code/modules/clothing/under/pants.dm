@@ -8,61 +8,28 @@
 	worn_icon = 'icons/mob/clothing/under/shorts_pants.dmi'
 	species_exception = list(/datum/species/golem)
 
-/obj/item/clothing/under/pants/classicjeans
-	name = "classic jeans"
-	desc = "You feel cooler already."
-	icon_state = "jeansclassic"
+/obj/item/clothing/under/pants/slacks
+	name = "slacks"
+	desc = "A pair of comfy slacks."
+	icon_state = "slacks"
+	greyscale_config = /datum/greyscale_config/slacks
+	greyscale_config_worn = /datum/greyscale_config/slacks_worn
+	greyscale_colors = "#575757#3E3E3E#75634F"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
-/obj/item/clothing/under/pants/mustangjeans
-	name = "Must Hang jeans"
-	desc = "Made in the finest space jeans factory this side of Alpha Centauri."
-	icon_state = "jeansmustang"
-	custom_price = PAYCHECK_CREW * 3
-
-/obj/item/clothing/under/pants/blackjeans
-	name = "black jeans"
-	desc = "Only for those who can pull it off."
-	icon_state = "jeansblack"
-
-/obj/item/clothing/under/pants/youngfolksjeans
-	name = "Young Folks jeans"
-	desc = "For those tired of boring old jeans. Relive the passion of your youth!"
-	icon_state = "jeansyoungfolks"
-
-/obj/item/clothing/under/pants/white
-	name = "white pants"
-	desc = "Plain white pants. Boring."
-	icon_state = "whitepants"
-
-/obj/item/clothing/under/pants/red
-	name = "red pants"
-	desc = "Bright red pants. Overflowing with personality."
-	icon_state = "redpants"
-
-/obj/item/clothing/under/pants/black
-	name = "black pants"
-	desc = "These pants are dark, like your soul."
-	icon_state = "blackpants"
-
-/obj/item/clothing/under/pants/tan
-	name = "tan pants"
-	desc = "Some tan pants. You look like a white collar worker with these on."
-	icon_state = "tanpants"
+/obj/item/clothing/under/pants/jeans
+	name = "jeans"
+	desc = "A nondescript pair of tough jeans."
+	icon_state = "jeans"
+	greyscale_config = /datum/greyscale_config/jeans
+	greyscale_config_worn = /datum/greyscale_config/jeans_worn
+	greyscale_colors = "#787878#723E0E#4D7EAC"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/under/pants/track
 	name = "track pants"
 	desc = "A pair of track pants, for the athletic."
 	icon_state = "trackpants"
-
-/obj/item/clothing/under/pants/jeans
-	name = "jeans"
-	desc = "A nondescript pair of tough blue jeans."
-	icon_state = "jeans"
-
-/obj/item/clothing/under/pants/khaki
-	name = "khaki pants"
-	desc = "A pair of dust beige khaki pants."
-	icon_state = "khaki"
 
 /obj/item/clothing/under/pants/camo
 	name = "camo pants"

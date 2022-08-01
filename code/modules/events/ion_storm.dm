@@ -33,7 +33,13 @@
 		if(M.stat != DEAD && !M.incapacitated())
 			if(prob(replaceLawsetChance))
 				var/datum/ai_laws/ion_lawset = pick_weighted_lawset()
-				M.laws.inherent = ion_lawset.inherent
+				// pick_weighted_lawset gives us a typepath,
+				// so we have to instantiate it to access its laws
+				ion_lawset = new()
+				// our inherent laws now becomes the picked lawset's laws!
+				M.laws.inherent = ion_lawset.inherent.Copy()
+				// and clean up after.
+				qdel(ion_lawset)
 
 			if(prob(removeRandomLawChance))
 				M.remove_law(rand(1, M.laws.get_law_amount(list(LAW_INHERENT, LAW_SUPPLIED))))

@@ -50,8 +50,8 @@
 	if(doorname)
 		. += span_notice("There is a small <i>paper</i> placard on the assembly labelled \"[doorname]\".")
 
-/obj/structure/door_assembly/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/pen))
+/obj/structure/door_assembly/attackby(obj/item/W, mob/living/user, params)
+	if(istype(W, /obj/item/pen) && !user.combat_mode)
 		var/t = tgui_input_text(user, "Enter the name for the door", "Airlock Renaming", created_name, MAX_NAME_LEN)
 		if(!t)
 			return
@@ -264,6 +264,13 @@
 	door.electronics = electronics
 	door.heat_proof = heat_proof_finished
 	door.security_level = 0
+	if(electronics.shell)
+		door.AddComponent( \
+			/datum/component/shell, \
+			unremovable_circuit_components = list(new /obj/item/circuit_component/airlock, new /obj/item/circuit_component/airlock_access_event), \
+			capacity = SHELL_CAPACITY_LARGE, \
+			shell_flags = SHELL_FLAG_ALLOW_FAILURE_ACTION|SHELL_FLAG_REQUIRE_ANCHOR \
+		)
 	if(electronics.one_access)
 		door.req_one_access = electronics.accesses
 	else

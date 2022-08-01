@@ -42,6 +42,7 @@
 	max_integrity = 600
 	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100)
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
+	move_resist = MOVE_FORCE_OVERPOWERING
 	damage_deflection = 70
 	/// Make sure that the puzzle has the same puzzle_id as the keycard door!
 	var/puzzle_id = null

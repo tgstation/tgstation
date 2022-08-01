@@ -53,7 +53,17 @@
 	countdown = new(src)
 	if(countdown_colour)
 		countdown.color = countdown_colour
+	if(immortal)
+		return
 	countdown.start()
+
+/obj/effect/anomaly/vv_edit_var(vname, vval)
+	. = ..()
+	if(vname == NAMEOF(src, immortal))
+		if(vval)
+			countdown.stop()
+		else
+			countdown.start()
 
 /obj/effect/anomaly/process(delta_time)
 	anomalyEffect(delta_time)

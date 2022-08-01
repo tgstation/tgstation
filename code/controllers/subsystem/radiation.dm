@@ -93,7 +93,7 @@ SUBSYSTEM_DEF(radiation)
 	if (!can_irradiate_basic(target))
 		return FALSE
 
-	irradiate_after_basic_checks()
+	irradiate_after_basic_checks(target)
 	return TRUE
 
 /datum/controller/subsystem/radiation/proc/irradiate_after_basic_checks(atom/target)

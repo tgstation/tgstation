@@ -135,7 +135,7 @@
 	return ..()
 
 /obj/item/bodypart/head/drop_organs(mob/user, violent_removal)
-	var/turf/head_turf = get_turf(src)
+	var/atom/drop_loc = drop_location()
 	for(var/obj/item/head_item in src)
 		if(head_item == brain)
 			if(user)
@@ -148,7 +148,7 @@
 			if(violent_removal && prob(rand(80, 100))) //ghetto surgery can damage the brain.
 				to_chat(user, span_warning("[brain] was damaged in the process!"))
 				brain.setOrganDamage(brain.maxHealth)
-			brain.forceMove(head_turf)
+			brain.forceMove(drop_loc)
 			brain = null
 			update_icon_dropped()
 		else
@@ -159,7 +159,7 @@
 				var/obj/item/organ/organ = head_item
 				if(organ.organ_flags & ORGAN_UNREMOVABLE)
 					continue
-			head_item.forceMove(head_turf)
+			head_item.forceMove(drop_loc)
 	eyes = null
 	ears = null
 	tongue = null

@@ -1,0 +1,4 @@
+author: "Zenitheevee"
+delete-after: True
+changes: 
+  - balance: "Bluespace crystals can now go in ITEM_MATERIAL capable material storage (like autolathes)"

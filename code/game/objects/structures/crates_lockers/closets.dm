@@ -309,7 +309,7 @@
 	else if(istype(AM, /obj/structure/closet))
 		return FALSE
 	else if(isobj(AM))
-		if((!allow_dense && AM.density) || AM.anchored || AM.has_buckled_mobs())
+		if((!allow_dense && AM.density) || AM.anchored || AM.has_buckled_mobs() || ismecha(AM))
 			return FALSE
 		else if(isitem(AM) && !HAS_TRAIT(AM, TRAIT_NODROP))
 			return TRUE

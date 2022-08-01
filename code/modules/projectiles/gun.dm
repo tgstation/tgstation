@@ -140,7 +140,7 @@
 	return TRUE
 
 /obj/item/gun/proc/tk_firing(mob/living/user)
-	return loc != user ? TRUE : FALSE
+	return !user.contains(src)
 
 /obj/item/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	visible_message(span_warning("*click*"), vision_distance = COMBAT_MESSAGE_RANGE)
@@ -190,6 +190,8 @@
 			O.emp_act(severity)
 
 /obj/item/gun/afterattack_secondary(mob/living/victim, mob/living/user, params)
+	if(!ismob(victim))
+		return
 	if (user.GetComponent(/datum/component/gunpoint))
 		to_chat(user, span_warning("You are already holding someone up!"))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

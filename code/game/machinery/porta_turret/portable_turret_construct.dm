@@ -106,7 +106,6 @@
 				to_chat(user, span_notice("You add [I] to the turret."))
 				build_step = PTURRET_GUN_EQUIPPED
 				return
-
 			else if(I.tool_behaviour == TOOL_WRENCH)
 				I.play_tool_sound(src, 100)
 				to_chat(user, span_notice("You remove the turret's metal armor bolts."))

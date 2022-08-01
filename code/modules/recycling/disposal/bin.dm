@@ -259,18 +259,18 @@
 	return src
 
 //How disposal handles getting a storage dump from a storage object
-/obj/machinery/disposal/storage_contents_dump_act(datum/storage/src_object, mob/user)
+/obj/machinery/disposal/storage_contents_dump_act(obj/item/src_object, mob/user)
 	. = ..()
 	if(.)
 		return
-	var/atom/resolve_parent = src_object.real_location?.resolve()
+	var/atom/resolve_parent = src_object.atom_storage?.real_location?.resolve()
 	if(!resolve_parent)
 		return FALSE
 	for(var/obj/item/I in resolve_parent)
 		if(user.active_storage != src_object)
 			if(I.on_found(user))
 				return
-		src_object.attempt_remove(I, src)
+		src_object.atom_storage?.attempt_remove(I, src)
 	return TRUE
 
 // Disposal bin

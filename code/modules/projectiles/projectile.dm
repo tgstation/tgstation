@@ -72,7 +72,19 @@
 	/// If objects are below this layer, we pass through them
 	var/hit_threshhold = PROJECTILE_HIT_THRESHHOLD_LAYER
 
-	var/speed = 0.8 //Amount of deciseconds it takes for projectile to travel
+	/// During each fire of SSprojectiles, the number of deciseconds since the last fire of SSprojectiles
+	/// is divided by this var, and the result truncated to the next lowest integer is
+	/// the number of times the projectile's `pixel_move` proc will be called.
+	var/speed = 0.8
+
+	/// This var is multiplied by SSprojectiles.global_pixel_speed to get how many pixels
+	/// the projectile moves during each iteration of the movement loop
+	///
+	/// If you want to make a fast-moving projectile, you should keep this equal to 1 and
+	/// reduce the value of `speed`. If you want to make a slow-moving projectile, make
+	/// `speed` a modest value like 1 and set this to a low value like 0.2.
+	var/pixel_speed_multiplier = 1
+
 	var/Angle = 0
 	var/original_angle = 0 //Angle at firing
 	var/nondirectional_sprite = FALSE //Set TRUE to prevent projectiles from having their sprites rotated based on firing angle
@@ -200,6 +212,7 @@
 		bare_wound_bonus = max(0, bare_wound_bonus + wound_falloff_tile)
 	if(embedding)
 		embedding["embed_chance"] += embed_falloff_tile
+	SEND_SIGNAL(src, COMSIG_PROJECTILE_RANGE)
 	if(range <= 0 && loc)
 		on_range()
 
@@ -672,7 +685,7 @@
 		time_offset += MODULUS(elapsed_time_deciseconds, speed)
 
 	for(var/i in 1 to required_moves)
-		pixel_move(1, FALSE)
+		pixel_move(pixel_speed_multiplier, FALSE)
 
 /obj/projectile/proc/fire(angle, atom/direct_target)
 	LAZYINITLIST(impacted)
@@ -716,7 +729,7 @@
 		process_hitscan()
 	if(!(datum_flags & DF_ISPROCESSING))
 		START_PROCESSING(SSprojectiles, src)
-	pixel_move(1, FALSE) //move it now!
+	pixel_move(pixel_speed_multiplier, FALSE) //move it now!
 
 /obj/projectile/proc/set_angle(new_angle) //wrapper for overrides.
 	Angle = new_angle

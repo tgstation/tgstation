@@ -1,0 +1,6 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes: 
+  - bugfix: "Calling `print` from lua will no longer spontaneously cause a runtime."
+  - bugfix: "The lua editor UI now properly scales with the window, up to certain extremely small sizes."
+  - bugfix: "To mitigate lag pending a possible future auxlua update with features to facilitate improved performance on the DM side, the lua editor UI no longer displays the global table and the state log by default - instead, they can be enabled using a toggle-button to the right of the tabs."

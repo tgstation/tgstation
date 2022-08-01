@@ -3109,7 +3109,7 @@
 /area/awaymission/moonoutpost19/research)
 "ic" = (
 /obj/structure/rack,
-/obj/item/paicard{
+/obj/item/pai_card{
 	pixel_x = 4
 	},
 /obj/effect/turf_decal/stripes/line{
