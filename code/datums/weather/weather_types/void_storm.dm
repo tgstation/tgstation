@@ -39,7 +39,7 @@
 
 // Goes through former_impacted_areas and sets the overlay of each back to the telegraph overlay, to indicate the ascended heretic is no longer in that area.
 /datum/weather/void_storm/update_areas()
-	for(var/area/former_area in former_impacted_areas)
+	for(var/area/former_area as anything in former_impacted_areas)
 		former_area.icon_state = telegraph_overlay
 		former_impacted_areas -= former_area
 	return ..()
