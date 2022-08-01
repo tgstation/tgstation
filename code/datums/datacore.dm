@@ -312,3 +312,50 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 
 /datum/datacore/proc/get_id_photo(mob/living/carbon/human/human, show_directions = list(SOUTH))
 	return get_flat_existing_human_icon(human, show_directions)
+
+/proc/print_security_record(datum/data/record/general_data, datum/data/record/security, atom/location)
+	if(!istype(general_data) && !istype(security))
+		stack_trace("called without any datacores! this may or may not be intentional!")
+	if(!isatom(location))
+		CRASH("NO VALID LOCATION PASSED.")
+
+	GLOB.data_core.securityPrintCount++
+	var/obj/item/paper/P = new /obj/item/paper(location)
+	P.info = "<CENTER><B>Security Record - (SR-[GLOB.data_core.securityPrintCount])</B></CENTER><BR>"
+	if((istype(general_data, /datum/data/record) && GLOB.data_core.general.Find(general_data)))
+		P.info += text("Name: [] ID: []<BR>\nGender: []<BR>\nAge: []<BR>", general_data.fields["name"], general_data.fields["id"], general_data.fields["gender"], general_data.fields["age"])
+		P.info += "\nSpecies: [general_data.fields["species"]]<BR>"
+		P.info += text("\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>", general_data.fields["fingerprint"], general_data.fields["p_stat"], general_data.fields["m_stat"])
+	else
+		P.info += "<B>General Record Lost!</B><BR>"
+	if((istype(security, /datum/data/record) && GLOB.data_core.security.Find(security)))
+		P.info += text("<BR>\n<CENTER><B>Security Data</B></CENTER><BR>\nCriminal Status: []", security.fields["criminal"])
+
+		P.info += "<BR>\n<BR>\nCrimes:<BR>\n"
+		P.info +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
+<tr>
+<th>Crime</th>
+<th>Details</th>
+<th>Author</th>
+<th>Time Added</th>
+</tr>"}
+		for(var/datum/data/crime/c in security.fields["crim"])
+			P.info += "<tr><td>[c.crimeName]</td>"
+			P.info += "<td>[c.crimeDetails]</td>"
+			P.info += "<td>[c.author]</td>"
+			P.info += "<td>[c.time]</td>"
+			P.info += "</tr>"
+		P.info += "</table>"
+
+		P.info += text("<BR>\nImportant Notes:<BR>\n\t[]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", security.fields["notes"])
+		var/counter = 1
+		while(security.fields[text("com_[]", counter)])
+			P.info += text("[]<BR>", security.fields[text("com_[]", counter)])
+			counter++
+		P.name = text("SR-[] '[]'", GLOB.data_core.securityPrintCount, general_data.fields["name"])
+	else //if no security record
+		P.info += "<B>Security Record Lost!</B><BR>"
+		P.name = text("SR-[] '[]'", GLOB.data_core.securityPrintCount, "Record Lost")
+	P.info += "</TT>"
+	P.update_appearance()
+
