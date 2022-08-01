@@ -1,0 +1,5 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - qol: "nuke ops id trims have a sechud icon"
+  - bugfix: "chameleon cards now fix their colors upon resetting"
