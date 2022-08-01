@@ -2,7 +2,7 @@
 ///makes this file more legible
 #define IS_OPEN(parent) isgroundlessturf(parent)
 ///distance a trapdoor will accept a link request.
-#define TRAPDOOR_LINKING_SEARCH_RANGE 7
+#define TRAPDOOR_LINKING_SEARCH_RANGE 3
 
 /**
  * ## trapdoor component!
@@ -90,7 +90,7 @@
 ///called by linking remotes to tie an assembly to the trapdoor
 /datum/component/trapdoor/proc/on_link_requested(datum/source, obj/item/assembly/trapdoor/assembly)
 	SIGNAL_HANDLER
-	if(get_dist(parent, assembly) > TRAPDOOR_LINKING_SEARCH_RANGE)
+	if(get_dist(parent, assembly) > TRAPDOOR_LINKING_SEARCH_RANGE || assembly.linked)
 		return
 	. = LINKED_UP
 	src.assembly = assembly
@@ -112,10 +112,7 @@
 	var/turf/open/dying_trapdoor = parent
 	if((!IS_OPEN(dying_trapdoor) && !IS_OPEN(path)) || (path == /turf/open/floor/plating && trapdoor_turf_path != /turf/open/floor/plating)) //not a process of the trapdoor
 		if(istype(parent, /turf/open/floor/plating) && !ispath(path, /turf/closed) && !ispath(path, /turf/open/openspace)) // allow people to place tiles on plating without breaking the trapdoor
-			if(assembly)
-				post_change_callbacks += CALLBACK(assembly, /obj/item/assembly/trapdoor.proc/carry_over_trapdoor, path, conspicuous)
-			else // no assembly, handle adding new trapdoor ourselves
-				post_change_callbacks += CALLBACK(src, /datum/component/trapdoor.proc/backup_carry_over_trapdoor, path, conspicuous)
+			post_change_callbacks += CALLBACK(src, /datum/component/trapdoor.proc/carry_over_trapdoor, path, conspicuous, assembly)
 			return
 		// otherwise, break trapdoor
 		dying_trapdoor.visible_message(span_warning("The trapdoor mechanism in [dying_trapdoor] is broken!"))
@@ -124,16 +121,16 @@
 			assembly.stored_decals.Cut()
 			assembly = null
 		return
-	post_change_callbacks += CALLBACK(assembly, /obj/item/assembly/trapdoor.proc/carry_over_trapdoor, trapdoor_turf_path, conspicuous)
+	post_change_callbacks += CALLBACK(src, /datum/component/trapdoor.proc/carry_over_trapdoor, trapdoor_turf_path, conspicuous, assembly)
 
 /**
- * ## backup_carry_over_trapdoor
+ * ## carry_over_trapdoor
  *
  * applies the trapdoor to the new turf (created by the last trapdoor), but without an assembly
  * apparently callbacks with arguments on invoke and the callback itself have the callback args go first. interesting!
  */
-/datum/component/trapdoor/proc/backup_carry_over_trapdoor(trapdoor_turf_path, conspicuous, turf/new_turf)
-	new_turf.AddComponent(/datum/component/trapdoor, FALSE, trapdoor_turf_path, null, conspicuous)
+/datum/component/trapdoor/proc/carry_over_trapdoor(trapdoor_turf_path, conspicuous, assembly, turf/new_turf)
+	new_turf.AddComponent(/datum/component/trapdoor, FALSE, trapdoor_turf_path, assembly, conspicuous)
 
 /**
  * ## carry_over_trapdoor
