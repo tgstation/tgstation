@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes: 
+  - bugfix: "Creatures which can't experience emotions will no longer attempt to do so upon seeing a traitorous poster."
