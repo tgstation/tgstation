@@ -59,7 +59,7 @@
 		RegisterSignal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK, .proc/on_link_requested)
 	else
 		RegisterSignal(assembly, COMSIG_ASSEMBLY_PULSED, .proc/toggle_trapdoor)
-		RegisterSignal(parent, COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_SCREWDRIVER), .proc/try_unlink)
+		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), .proc/try_unlink)
 
 /datum/component/trapdoor/UnregisterFromParent()
 	. = ..()
@@ -68,7 +68,7 @@
 		UnregisterSignal(assembly, COMSIG_ASSEMBLY_PULSED)
 	UnregisterSignal(parent, COMSIG_TURF_CHANGE)
 	UnregisterSignal(parent, COMSIG_PARENT_EXAMINE)
-	UnregisterSignal(parent, COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_SCREWDRIVER))
+	UnregisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL))
 
 /datum/component/trapdoor/proc/try_unlink(turf/source, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
