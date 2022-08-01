@@ -39,7 +39,7 @@
 		smoke.set_up(smoke_amt, holder = owner, location = get_turf(owner))
 		smoke.start()
 	var/target_location = cast_on.loc
-	cast_on.forceMove(owner.loc)
-	owner.forceMove(target_location)
+	do_teleport(cast_on, owner.loc, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
+	do_teleport(owner, target_location, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
 	cast_on.playsound_local(get_turf(cast_on), 'sound/magic/swap.ogg', 50, 1)
 	owner.playsound_local(get_turf(owner), 'sound/magic/swap.ogg', 50, 1)
