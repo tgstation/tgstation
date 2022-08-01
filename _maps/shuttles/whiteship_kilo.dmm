@@ -5,7 +5,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/portable_atmospherics/scrubber,
-/obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
@@ -20,7 +19,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/obj/structure/cable,
 /obj/item/bikehorn/rubberducky,
 /obj/structure/closet/crate/trashcart/filled,
 /turf/open/floor/plating,
@@ -49,7 +47,6 @@
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 1
 	},
-/obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating,
@@ -89,7 +86,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "fL" = (
@@ -239,7 +235,6 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/obj/structure/cable,
 /obj/docking_port/mobile{
 	callTime = 250;
 	can_move_docking_ports = 1;
@@ -359,7 +354,6 @@
 /obj/machinery/door/airlock/shuttle{
 	name = "NTMS-037 Cargo Bay"
 	},
-/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/engine)
 "pV" = (
@@ -449,7 +443,6 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "tk" = (
@@ -506,7 +499,6 @@
 	},
 /obj/effect/turf_decal/box/corners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/obj/structure/cable,
 /obj/structure/closet/cardboard,
 /obj/item/pickaxe/drill,
 /obj/item/shovel,
@@ -528,8 +520,8 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/effect/decal/cleanable/blood/tracks,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "zl" = (
@@ -597,7 +589,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "BL" = (
@@ -621,7 +613,6 @@
 "CQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -726,9 +717,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/power/terminal{
-	dir = 1
-	},
+/obj/machinery/power/terminal,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "Jd" = (
@@ -775,10 +764,7 @@
 	dir = 6
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/item/storage/toolbox/emergency{
-	pixel_y = 5
-	},
+/obj/machinery/power/smes,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "KS" = (
@@ -810,7 +796,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/structure/cable,
 /obj/structure/closet/crate/cardboard,
 /obj/machinery/light/cold/no_nightlight/directional/north,
 /obj/item/storage/box/lights/mixed{
@@ -818,6 +803,7 @@
 	},
 /obj/effect/spawner/random/maintenance/three,
 /obj/item/wirebrush,
+/obj/item/stack/sheet/mineral/plasma/five,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "LK" = (
@@ -1000,13 +986,13 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/crew)
 "Ss" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/reagent_dispensers/fueltank,
 /obj/item/weldingtool/largetank,
-/obj/structure/cable,
+/obj/effect/turf_decal/delivery/red,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "SL" = (
@@ -1120,12 +1106,13 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/engine)
 "XP" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/machinery/power/smes,
+/obj/machinery/power/port_gen/pacman,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "Yh" = (
