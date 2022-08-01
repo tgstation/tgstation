@@ -48,11 +48,13 @@
 	if(assembly && assembly.stored_decals.len)
 		reapply_all_decals()
 	if(conspicuous)
-		add_overlay(trapdoor_overlay)
+		var/turf/parent_turf = parent
+		parent_turf.add_overlay(trapdoor_overlay)
 
 /datum/component/trapdoor/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_TURF_CHANGE, .proc/turf_changed_pre)
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	if(!src.assembly)
 		RegisterSignal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK, .proc/on_link_requested)
 	else
@@ -107,14 +109,18 @@
 /datum/component/trapdoor/proc/turf_changed_pre(datum/source, path, new_baseturfs, flags, post_change_callbacks)
 	SIGNAL_HANDLER
 	var/turf/open/dying_trapdoor = parent
-	if((!IS_OPEN(dying_trapdoor) && !IS_OPEN(path)) || path == /turf/open/floor/plating) //not a process of the trapdoor, so this trapdoor has been destroyed
+	if((!IS_OPEN(dying_trapdoor) && !IS_OPEN(path))) //not a process of the trapdoor
+		if(istype(parent, /turf/open/floor/plating) && !ispath(path, /turf/closed) && !ispath(path, /turf/open/openspace)) // allow people to place tiles on plating without breaking the trapdoor
+			post_change_callbacks += CALLBACK(assembly, /obj/item/assembly/trapdoor.proc/carry_over_trapdoor, path, conspicuous)
+			return
+		// otherwise, break trapdoor
 		dying_trapdoor.visible_message(span_warning("The trapdoor mechanism in [dying_trapdoor] is broken!"))
 		if(assembly)
 			assembly.linked = FALSE
 			assembly.stored_decals.Cut()
 			assembly = null
 		return
-	post_change_callbacks += CALLBACK(assembly, /obj/item/assembly/trapdoor.proc/carry_over_trapdoor, trapdoor_turf_path)
+	post_change_callbacks += CALLBACK(assembly, /obj/item/assembly/trapdoor.proc/carry_over_trapdoor, trapdoor_turf_path, conspicuous)
 
 /**
  * ## carry_over_trapdoor
@@ -122,8 +128,8 @@
  * applies the trapdoor to the new turf (created by the last trapdoor)
  * apparently callbacks with arguments on invoke and the callback itself have the callback args go first. interesting!
  */
-/obj/item/assembly/trapdoor/proc/carry_over_trapdoor(trapdoor_turf_path, turf/new_turf)
-	new_turf.AddComponent(/datum/component/trapdoor, FALSE, trapdoor_turf_path, src)
+/obj/item/assembly/trapdoor/proc/carry_over_trapdoor(trapdoor_turf_path, turf/new_turf, conspicuous)
+	new_turf.AddComponent(/datum/component/trapdoor, FALSE, trapdoor_turf_path, src, conspicuous)
 
 /**
  * ## on_examine
@@ -143,7 +149,6 @@
  */
 /datum/component/trapdoor/proc/try_opening()
 	var/turf/open/trapdoor_turf = parent
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	///we want to save this turf's decals as they were right before deletion, so this is the point where we begin listening
 	if(assembly)
 		RegisterSignal(parent, COMSIG_TURF_DECAL_DETACHED, .proc/decal_detached)
@@ -291,3 +296,39 @@
 /obj/item/trapdoor_remote/preloaded/Initialize(mapload)
 	. = ..()
 	internals = new(src)
+
+/// trapdoor parts kit, allows trapdoors to be made by players
+/obj/item/trapdoor_kit
+	name = "trapdoor parts kit"
+	desc = "A kit containing all the parts needed to build a trapdoor. Can only be used on open space."
+	icon = 'icons/obj/improvised.dmi'
+	icon_state = "kitsuitcase"
+	var/in_use = FALSE
+
+/obj/item/trapdoor_kit/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/openspace_item_click_handler)
+
+/obj/item/trapdoor_kit/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
+	afterattack(target, user, proximity_flag, click_parameters)
+
+/obj/item/trapdoor_kit/afterattack(atom/target, mob/user, proximity_flag)
+	. = ..()
+	if(!proximity_flag)
+		return
+	var/turf/target_turf = get_turf(target)
+	if(!isopenspaceturf(target_turf))
+		return
+	in_use = TRUE
+	balloon_alert(user, "constructing trapdoor")
+	if(!do_after(user, 5 SECONDS, target = target))
+		in_use = FALSE
+		return
+	in_use = FALSE
+	if(!isopenspaceturf(target_turf)) // second check to make sure nothing changed during constructions
+		return
+	var/turf/new_turf = target_turf.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+	new_turf.AddComponent(/datum/component/trapdoor, starts_open = FALSE, conspicuous = TRUE)
+	balloon_alert(user, "trapdoor constructed")
+	qdel(src)
+	return
