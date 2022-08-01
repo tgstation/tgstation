@@ -85,11 +85,12 @@
 		return
 	assembly.linked = FALSE
 	assembly.stored_decals = list()
-	assembly = null
-	source.balloon_alert(user, "trapdoor unlinked")
 	UnregisterSignal(assembly, COMSIG_ASSEMBLY_PULSED)
 	UnregisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL))
 	RegisterSignal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK, .proc/on_link_requested)
+	assembly = null
+	source.balloon_alert(user, "trapdoor unlinked")
+
 
 /datum/component/trapdoor/proc/decal_detached(datum/source, description, cleanable, directional, pic)
 	SIGNAL_HANDLER
