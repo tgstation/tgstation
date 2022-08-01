@@ -64,9 +64,10 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 //Carbon mobs
 #define iscarbon(A) (istype(A, /mob/living/carbon))
 
-#define ishuman(A) (istype(A, /mob/living/carbon/human))
+#define ishumanoid(A) (istype(A, /mob/living/carbon/humanoid))
 
 //Human sub-species
+#define ishuman(A) (is_species(A, /datum/species/human))
 #define isabductor(A) (is_species(A, /datum/species/abductor))
 #define isgolem(A) (is_species(A, /datum/species/golem))
 #define islizard(A) (is_species(A, /datum/species/lizard))
@@ -79,7 +80,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define iszombie(A) (is_species(A, /datum/species/zombie))
 #define isskeleton(A) (is_species(A, /datum/species/skeleton))
 #define ismoth(A) (is_species(A, /datum/species/moth))
-#define isfelinid(A) (is_species(A, /datum/species/human/felinid))
+#define isfelinid(A) (is_species(A, /datum/species/humanoid/felinid))
 #define isethereal(A) (is_species(A, /datum/species/ethereal))
 #define isvampire(A) (is_species(A,/datum/species/vampire))
 #define isdullahan(A) (is_species(A, /datum/species/dullahan))

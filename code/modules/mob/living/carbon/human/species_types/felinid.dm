@@ -65,7 +65,7 @@
 /proc/purrbation_apply(mob/living/carbon/human/soon_to_be_felinid, silent = FALSE)
 	if(!ishuman(soon_to_be_felinid) || isfelinid(soon_to_be_felinid))
 		return
-	if(ishumanbasic(soon_to_be_felinid))
+	if(ishuman(soon_to_be_felinid))
 		soon_to_be_felinid.set_species(/datum/species/human/felinid)
 		var/datum/species/human/felinid/cat_species = soon_to_be_felinid.dna.species
 		cat_species.original_felinid = FALSE
@@ -84,7 +84,7 @@
 		if(cat_species.original_felinid)
 			return // Don't display the to_chat message
 		purrbated_human.set_species(/datum/species/human)
-	else if(ishuman(purrbated_human) && !ishumanbasic(purrbated_human))
+	else if(ishuman(purrbated_human) && !ishuman(purrbated_human))
 		var/datum/species/target_species = purrbated_human.dna.species
 
 		// From the previous check we know they're not a felinid, therefore removing cat ears and tail is safe
