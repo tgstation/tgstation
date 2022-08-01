@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, Flex, Section, Tabs, TextArea, Modal, Stack } from '../../components';
+import { Box, Button, Flex, Section, Tabs, TextArea, Modal, Stack, ProgressBar } from '../../components';
 import { Window } from '../../layouts';
 import { CallModal } from './CallModal';
 import { ChunkViewModal } from './ChunkViewModal';
@@ -46,7 +46,15 @@ export class LuaEditor extends Component {
 
   render() {
     const { act, data } = useBackend(this.context);
-    const { noStateYet, globals, documentation, tasks } = data;
+    const {
+      noStateYet,
+      globals,
+      documentation,
+      tasks,
+      showGlobalTable,
+      page,
+      pageCount,
+    } = data;
     const [modal, setModal] = useLocalState(
       this.context,
       'modal',
@@ -55,9 +63,18 @@ export class LuaEditor extends Component {
     const [activeTab, setActiveTab] = useLocalState(
       this.context,
       'activeTab',
-      'globals'
+      showGlobalTable ? 'globals' : 'tasks'
     );
     const [input, setInput] = useLocalState(this.context, 'scriptInput', '');
+    const [shouldUpdateScroll, setShouldUpdateScroll] = useLocalState(
+      this.context,
+      'shouldUpdateScroll',
+      false
+    );
+    if (shouldUpdateScroll) {
+      setShouldUpdateScroll(false);
+      setTimeout(this.handleSectionScroll, 0);
+    }
     let tabContent;
     switch (activeTab) {
       case 'globals': {
@@ -159,32 +176,55 @@ export class LuaEditor extends Component {
                   fill
                   pb="24px"
                   height={
-                    this.state.showJumpToBottomButton
-                      ? 'calc(100% - 32px)'
+                    activeTab === 'log'
+                      ? this.state.showJumpToBottomButton
+                        ? 'calc(100% - 48px)'
+                        : 'calc(100% - 32px)'
                       : '100%'
                   }
                   width="100%">
-                  <Tabs>
-                    <Tabs.Tab
-                      selected={activeTab === 'globals'}
-                      onClick={() => {
-                        setActiveTab('globals');
-                      }}>
-                      Globals
-                    </Tabs.Tab>
-                    <Tabs.Tab
-                      selected={activeTab === 'tasks'}
-                      onClick={() => setActiveTab('tasks')}>
-                      Tasks
-                    </Tabs.Tab>
-                    <Tabs.Tab
-                      selected={activeTab === 'log'}
-                      onClick={() => {
-                        setActiveTab('log');
-                      }}>
-                      Log
-                    </Tabs.Tab>
-                  </Tabs>
+                  <Stack justify="space-between">
+                    <Stack.Item>
+                      <Tabs>
+                        {!!showGlobalTable && (
+                          <Tabs.Tab
+                            selected={activeTab === 'globals'}
+                            onClick={() => {
+                              setActiveTab('globals');
+                            }}>
+                            Globals
+                          </Tabs.Tab>
+                        )}
+                        <Tabs.Tab
+                          selected={activeTab === 'tasks'}
+                          onClick={() => setActiveTab('tasks')}>
+                          Tasks
+                        </Tabs.Tab>
+                        <Tabs.Tab
+                          selected={activeTab === 'log'}
+                          onClick={() => {
+                            setActiveTab('log');
+                            setTimeout(this.handleSectionScroll, 0);
+                          }}>
+                          Log
+                        </Tabs.Tab>
+                      </Tabs>
+                    </Stack.Item>
+                    <Stack.Item>
+                      <Button.Checkbox
+                        inline
+                        checked={showGlobalTable}
+                        tooltip="WARNING: Displaying the global table can cause significant lag for the entire server, especially when there is a large number of global variables."
+                        onClick={() => {
+                          if (showGlobalTable && activeTab === 'globals') {
+                            setActiveTab('tasks');
+                          }
+                          act('toggleShowGlobalTable');
+                        }}>
+                        Show Global Table
+                      </Button.Checkbox>
+                    </Stack.Item>
+                  </Stack>
                   <Section
                     ref={this.sectionRef}
                     fill
@@ -194,18 +234,55 @@ export class LuaEditor extends Component {
                     width="100%">
                     {tabContent}
                   </Section>
-                  {this.state.showJumpToBottomButton && (
-                    <Button
-                      width="100%"
-                      onClick={() => {
-                        const sectionCurrent = this.sectionRef.current;
-                        const scrollableCurrent =
-                          sectionCurrent.scrollableRef.current;
-                        scrollableCurrent.scrollTop =
-                          scrollableCurrent.scrollHeight;
-                      }}>
-                      Jump to Bottom
-                    </Button>
+                  {activeTab === 'log' && (
+                    <>
+                      <Stack justify="space-between">
+                        <Stack.Item width="25%">
+                          <Button
+                            width="100%"
+                            align="center"
+                            icon="arrow-left"
+                            disabled={page <= 0}
+                            onClick={() => {
+                              act('previousPage');
+                            }}
+                          />
+                        </Stack.Item>
+                        <Stack.Item width="50%">
+                          <ProgressBar
+                            width="100%"
+                            value={page / (pageCount - 1)}>
+                            <Box width="100%" align="center">
+                              {`Page ${page + 1}/${pageCount}`}
+                            </Box>
+                          </ProgressBar>
+                        </Stack.Item>
+                        <Stack.Item width="25%">
+                          <Button
+                            width="100%"
+                            align="center"
+                            icon="arrow-right"
+                            disabled={page >= pageCount - 1}
+                            onClick={() => {
+                              act('nextPage');
+                            }}
+                          />
+                        </Stack.Item>
+                      </Stack>
+                      {this.state.showJumpToBottomButton && (
+                        <Button
+                          width="100%"
+                          onClick={() => {
+                            const sectionCurrent = this.sectionRef.current;
+                            const scrollableCurrent =
+                              sectionCurrent.scrollableRef.current;
+                            scrollableCurrent.scrollTop =
+                              scrollableCurrent.scrollHeight;
+                          }}>
+                          Jump to Bottom
+                        </Button>
+                      )}
+                    </>
                   )}
                 </Section>
               </Stack.Item>
