@@ -80,7 +80,8 @@
 
 /mob/living/simple_animal/slime/can_enter_vent(atom/A)
 	if(buckled)
-		to_chat(src, span_warning("You can't vent crawl while feeding!"))
+		if(provide_feedback)
+			to_chat(src, span_warning("You can't vent crawl while feeding!"))
 		return
 	return ..()
 
