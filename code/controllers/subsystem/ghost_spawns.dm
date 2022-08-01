@@ -183,7 +183,7 @@ P - The poll to finish
 			var/datum/candidate_poll/P2 = poll
 			if(!next_poll_to_finish || P2.time_left() < next_poll_to_finish.time_left())
 				next_poll_to_finish = P2
-	if(next_poll_to_finish)
+	if(next_poll_to_finish && next_poll_to_finish.alert_button)
 		var/num_stack = 1
 		for(var/poll in currently_polling)
 			var/datum/candidate_poll/P2 = poll

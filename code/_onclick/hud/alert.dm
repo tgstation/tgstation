@@ -789,9 +789,9 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			if(NOTIFY_ATTACK)
 				target.attack_ghost(ghost)
 			if(NOTIFY_JUMP)
-				var/turf/T = get_turf(target)
-				if(T && isturf(T))
-					ghost.loc = T
+				var/turf/target_turf = get_turf(target)
+				if(target_turf && isturf(target_turf))
+					ghost.abstract_move(target_turf)
 			if(NOTIFY_ORBIT)
 				ghost.ManualFollow(target)
 
