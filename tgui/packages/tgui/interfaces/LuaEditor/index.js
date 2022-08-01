@@ -18,8 +18,30 @@ export class LuaEditor extends Component {
   constructor(props) {
     super(props);
     this.sectionRef = createRef();
+    this.state = {
+      showJumpToBottomButton: false,
+    };
 
-    window.addEventListener('resize', () => this.setState({}));
+    this.handleSectionScroll = () => {
+      const scrollableCurrent = this.sectionRef.current?.scrollableRef.current;
+      if (
+        !this.state.showJumpToBottomButton &&
+        scrollableCurrent?.scrollHeight >
+          scrollableCurrent?.scrollTop + scrollableCurrent?.clientHeight
+      ) {
+        this.setState({ showJumpToBottomButton: true });
+      } else if (
+        this.state.showJumpToBottomButton &&
+        scrollableCurrent?.scrollTop + scrollableCurrent?.clientHeight >=
+          scrollableCurrent?.scrollHeight
+      ) {
+        this.setState({ showJumpToBottomButton: false });
+      }
+    };
+
+    window.addEventListener('resize', () =>
+      this.forceUpdate(this.handleSectionScroll)
+    );
   }
 
   render() {
@@ -75,10 +97,6 @@ export class LuaEditor extends Component {
         break;
       }
     }
-    const jumpButtonCondition =
-      activeTab === 'log' &&
-      this.sectionRef.current?.scrollableRef.current.scrollHeight >
-        this.sectionRef.current?.scrollableRef.current.clientHeight;
     return (
       <Window width={1280} height={720}>
         <Window.Content>
@@ -140,7 +158,11 @@ export class LuaEditor extends Component {
                 <Section
                   fill
                   pb="24px"
-                  height={jumpButtonCondition ? 'calc(100% - 32px)' : '100%'}
+                  height={
+                    this.state.showJumpToBottomButton
+                      ? 'calc(100% - 32px)'
+                      : '100%'
+                  }
                   width="100%">
                   <Tabs>
                     <Tabs.Tab
@@ -168,10 +190,11 @@ export class LuaEditor extends Component {
                     fill
                     scrollable
                     scrollableHorizontal
+                    onScroll={this.handleSectionScroll}
                     width="100%">
                     {tabContent}
                   </Section>
-                  {jumpButtonCondition && (
+                  {this.state.showJumpToBottomButton && (
                     <Button
                       width="100%"
                       onClick={() => {
