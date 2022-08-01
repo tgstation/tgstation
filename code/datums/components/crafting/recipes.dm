@@ -751,6 +751,29 @@
 	time = 20 SECONDS
 	category = CAT_MISC
 
+/datum/crafting_recipe/trapdoor_kit
+	name = "Trapdoor Construction Kit"
+	result = /obj/item/trapdoor_kit
+	reqs = list(/obj/item/stack/sheet/iron = 4,
+		/obj/item/stack/rods = 4,
+		/obj/item/stack/cable_coil = 10,
+		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/assembly/signaler = 1)
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER)
+	time = 10 SECONDS
+	category = CAT_MISC
+
+/datum/crafting_recipe/trapdoor_remote
+	name = "Trapdoor Remote"
+	result = /obj/item/trapdoor_remote/preloaded // since its useless without its assembly just require an assembly to craft it
+	reqs = list(
+		/obj/item/compact_remote = 1,
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/assembly/trapdoor = 1)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	time = 5 SECONDS
+	category = CAT_MISC
+
 /datum/crafting_recipe/mousetrap
 	name = "Mouse Trap"
 	result = /obj/item/assembly/mousetrap
