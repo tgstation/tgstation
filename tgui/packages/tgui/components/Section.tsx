@@ -57,6 +57,7 @@ export class Section extends Component<SectionProps> {
       scrollable,
       scrollableHorizontal,
       children,
+      onScroll,
       ...rest
     } = this.props;
     const hasTitle = canRender(title) || canRender(buttons);
@@ -80,7 +81,10 @@ export class Section extends Component<SectionProps> {
           </div>
         )}
         <div className="Section__rest">
-          <div ref={this.scrollableRef} className="Section__content">
+          <div
+            ref={this.scrollableRef}
+            onScroll={onScroll}
+            className="Section__content">
             {children}
           </div>
         </div>

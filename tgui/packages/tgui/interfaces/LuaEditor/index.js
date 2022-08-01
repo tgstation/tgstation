@@ -202,7 +202,11 @@ export class LuaEditor extends Component {
               }}>
               Close
             </Button>
-            <Section height="500px" width="700px" fill scrollable>
+            <Section
+              height={`${window.innerHeight * 0.8}px`}
+              width={`${window.innerWidth * 0.5}px`}
+              fill
+              scrollable>
               <Box
                 dangerouslySetInnerHTML={{
                   __html: marked(sanitizeText(documentation), {
