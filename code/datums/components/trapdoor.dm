@@ -78,6 +78,10 @@
 		source.balloon_alert(user, "can't unlink trapdoor when its open")
 		return
 	source.balloon_alert(user, "unlinking trapdoor")
+	INVOKE_ASYNC(src, .proc/async_try_unlink, source, user, tool)
+	return
+	
+/datum/component/trapdoor/proc/async_try_unlink(turf/source, mob/user, obj/item/tool)
 	if(!do_after(user, 5 SECONDS, target=source))
 		return
 	if(IS_OPEN(parent))
@@ -90,7 +94,6 @@
 	RegisterSignal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK, .proc/on_link_requested)
 	assembly = null
 	source.balloon_alert(user, "trapdoor unlinked")
-
 
 /datum/component/trapdoor/proc/decal_detached(datum/source, description, cleanable, directional, pic)
 	SIGNAL_HANDLER
