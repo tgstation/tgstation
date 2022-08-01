@@ -64,8 +64,9 @@
 		thealert.transform = matrix(32, 6, MATRIX_TRANSLATE)
 		animate(thealert, transform = matrix(), time = 2.5, easing = CUBIC_EASING)
 
-	var/the_timeout = timeout_override || thealert.timeout
-	if(the_timeout)
+	if(timeout_override)
+		thealert.timeout = timeout_override
+	if(thealert.timeout)
 		addtimer(CALLBACK(src, .proc/alert_timeout, thealert, category), thealert.timeout)
 		thealert.timeout = world.time + thealert.timeout - world.tick_lag
 	return thealert
@@ -769,15 +770,16 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		qdel(signed_up_overlay)
 	return ..()
 
-/atom/movable/screen/alert/notify_action/Click(params)
-	if(!owner || !owner.client)
+/atom/movable/screen/alert/notify_action/Click(location, control, params)
+	. = ..()
+	if(!.)
 		return
 	var/mob/dead/observer/ghost = owner
 	if(!istype(ghost))
 		return
 	if(poll)
 		var/list/modifiers = params2list(params)
-		if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		if(LAZYACCESS(modifiers, ALT_CLICK))
 			if(!(ghost.ckey in GLOB.poll_ignore[poll.ignoring_category]))
 				poll.never_for_this_round(ghost)
 				return

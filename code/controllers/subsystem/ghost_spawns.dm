@@ -59,7 +59,7 @@ source - The atom, atom prototype, icon or mutable appearance to display as an i
 	var/category = "[P.hash]_notify_action"
 
 	for(var/mob/dead/observer/M in GLOB.player_list)
-		if(!is_eligible(M, be_special_flag, jobban_type))
+		if(!is_eligible(M, be_special_flag, jobban_type, ignore_category))
 			continue
 
 		SEND_SOUND(M, 'sound/misc/notice2.ogg')
@@ -109,10 +109,10 @@ source - The atom, atom prototype, icon or mutable appearance to display as an i
 				S.plane = A.plane
 				A.add_overlay(S)
 			else
-				I = image(source, layer = FLOAT_LAYER, dir = SOUTH)
+				I = image(source, layer = FLOAT_LAYER)
 		else
 			// Just use a generic image
-			I = image('icons/effects/effects.dmi', icon_state = "static", layer = FLOAT_LAYER, dir = SOUTH)
+			I = image('icons/effects/effects.dmi', icon_state = "static", layer = FLOAT_LAYER)
 
 		if(I)
 			I.plane = A.plane
@@ -143,10 +143,13 @@ role_text - The role's clean text. Used for checking job bans to determine eligi
 min_hours - The amount of minimum hours the client needs before being eligible
 check_antaghud - Whether to consider a client who enabled AntagHUD ineligible or not
 */
-/datum/controller/subsystem/ghost_spawns/proc/is_eligible(mob/M, be_special_flag, jobban_type)
+/datum/controller/subsystem/ghost_spawns/proc/is_eligible(mob/M, be_special_flag, jobban_type, the_ignore_category)
 	. = FALSE
 	if(!M.key || !M.client)
 		return
+	if(the_ignore_category)
+		if(M.ckey in GLOB.poll_ignore[the_ignore_category])
+			return
 	if(be_special_flag)
 		if(!(be_special_flag in M.client.prefs.be_special))
 			return
@@ -294,7 +297,7 @@ silent - If TRUE, no messages will be sent to M about their removal.
 		remove_candidate(M, silent = TRUE)
 		return
 	GLOB.poll_ignore[ignoring_category] -= M.ckey
-	to_chat(M, span_danger("Choice registered: Eligible for this round"))
+	to_chat(M, span_notice("Choice registered: Eligible for this round"))
 
 /*
 Deletes any candidates who may have disconnected from the list
