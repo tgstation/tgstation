@@ -145,7 +145,9 @@
 			continue
 		total_time += recipe.time
 	shake_for(total_time / rating_speed)
-	sleep(total_time / rating_speed)
+	addtimer(CALLBACK(src, .proc/process_contents), total_time / rating_speed)
+
+/obj/machinery/processor/proc/process_contents()
 	for(var/atom/movable/O in processor_contents)
 		var/datum/food_processor_process/P = PROCESSOR_SELECT_RECIPE(O)
 		if (!P)
