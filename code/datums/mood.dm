@@ -12,17 +12,17 @@
 	/// Weakref to the parent (living) mob
 	var/datum/weakref/parent
 
-	/// Mob's mood
+	/// The total combined value of all moodlets for the mob
 	var/mood
-	/// Mob's sanity
+	/// Current sanity of the mob (ranges from 0 - 150)
 	var/sanity = SANITY_NEUTRAL
-	/// The displayed mood
+	/// the total combined value of all visible moodlets for the mob
 	var/shown_mood
-	/// Modifier to allow certain mobs to be less affected by moodlets
+	/// Moodlet value modifier
 	var/mood_modifier = 1
-	/// Used to track what stage of moodies they're on
+	/// Used to track what stage of moodies they're on (1-9)
 	var/mood_level = MOOD_LEVEL_NEUTRAL
-	/// To track what stage of sanity they're on
+	/// To track what stage of sanity they're on (1-6)
 	var/sanity_level = SANITY_LEVEL_NEUTRAL
 	/// Is the owner being punished for low mood? if so, how much?
 	var/insanity_effect = 0
@@ -133,7 +133,7 @@
  * Adds a mood event to the mob
  *
  * Arguments:
- * * category - (text) category of the mood event
+ * * category - (text) category of the mood event - see /datum/mood_event for category explanation
  * * type - (path) any /datum/mood_event
  */
 /datum/mood/proc/add_mood_event(category, type, ...)
