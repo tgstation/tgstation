@@ -133,7 +133,7 @@
 #define INIT_ORDER_TICKER 55
 #define INIT_ORDER_TCG 55
 #define INIT_ORDER_MAPPING 50
-#define INIT_ORDER_DAY_NIGHT 49 // Networking and atoms require this
+#define INIT_ORDER_DAY_NIGHT 49 // Networking and atoms require this as if the subsystem hasn't initialised, there will be no time to get, resulting in runtimes.
 #define INIT_ORDER_EARLY_ASSETS 48
 #define INIT_ORDER_RESEARCH 47
 #define INIT_ORDER_TIMETRACK 46

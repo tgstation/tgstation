@@ -94,7 +94,7 @@
 	var/set_luminosity = max > 1e-6
 	#endif
 
-	// Respect daynight blending from an area for luminosity here.
+	// Respect daynight blending from an area for luminosity here, this is required as the luminosity can sometimes be overriden to 0 when it's day outside, and day trumps whatever is trying to set it to 0.
 	if(day_night_area && day_night_area.luminosity)
 		set_luminosity = 1
 
