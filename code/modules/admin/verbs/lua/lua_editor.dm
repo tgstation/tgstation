@@ -13,6 +13,12 @@
 	/// The log page we are currently on
 	var/page = 0
 
+	/// If set, we will force the editor's modal to be this
+	var/force_modal
+
+	/// If set, we will force the editor to look at this chunk
+	var/force_view_chunk
+
 /datum/lua_editor/New(state, _quick_log_index)
 	. = ..()
 	if(state)
@@ -54,7 +60,13 @@
 			data["globals"] = kvpify_list(refify_list(current_state.globals))
 	data["states"] = SSlua.states
 	data["callArguments"] = kvpify_list(refify_list(arguments))
-	LAZYSET(tgui_shared_states, "shouldUpdateScroll", "true")
+	data["shouldUpdateScroll"] = TRUE
+	if(force_modal)
+		data["forceModal"] = force_modal
+		force_modal = null
+	if(force_view_chunk)
+		data["forceViewChunk"] = force_view_chunk
+		force_view_chunk = null
 	return data
 
 /datum/lua_editor/proc/traverse_list(list/path, list/root, traversal_depth_offset = 0)

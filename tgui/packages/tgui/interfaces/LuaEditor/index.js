@@ -20,18 +20,21 @@ export class LuaEditor extends Component {
     this.sectionRef = createRef();
     this.state = {
       showJumpToBottomButton: false,
+      activeTab: 'tasks',
+      scriptInput: '',
     };
 
     this.handleSectionScroll = () => {
+      const { showJumpToBottomButton } = this.state;
       const scrollableCurrent = this.sectionRef.current?.scrollableRef.current;
       if (
-        !this.state.showJumpToBottomButton &&
+        !showJumpToBottomButton &&
         scrollableCurrent?.scrollHeight >
           scrollableCurrent?.scrollTop + scrollableCurrent?.clientHeight
       ) {
         this.setState({ showJumpToBottomButton: true });
       } else if (
-        this.state.showJumpToBottomButton &&
+        showJumpToBottomButton &&
         scrollableCurrent?.scrollTop + scrollableCurrent?.clientHeight >=
           scrollableCurrent?.scrollHeight
       ) {
@@ -60,21 +63,20 @@ export class LuaEditor extends Component {
       'modal',
       noStateYet ? 'states' : null
     );
-    const [activeTab, setActiveTab] = useLocalState(
-      this.context,
-      'activeTab',
-      showGlobalTable ? 'globals' : 'tasks'
-    );
-    const [input, setInput] = useLocalState(this.context, 'scriptInput', '');
-    const [shouldUpdateScroll, setShouldUpdateScroll] = useLocalState(
-      this.context,
-      'shouldUpdateScroll',
-      false
-    );
+    const [, setViewedChunk] = useLocalState(this.context, 'viewedChunk');
+    let { shouldUpdateScroll, forceModal, forceViewChunk } = data;
     if (shouldUpdateScroll) {
-      setShouldUpdateScroll(false);
+      shouldUpdateScroll = 0;
       setTimeout(this.handleSectionScroll, 0);
     }
+    if (forceModal || forceViewChunk) {
+      const [newModal, newViewChunk] = [forceModal, forceViewChunk];
+      forceModal = null;
+      forceViewChunk = null;
+      setModal(newModal);
+      setViewedChunk(newViewChunk);
+    }
+    const { activeTab, showJumpToBottomButton, scriptInput } = this.state;
     let tabContent;
     switch (activeTab) {
       case 'globals': {
@@ -138,7 +140,9 @@ export class LuaEditor extends Component {
                   buttons={
                     <>
                       <Button.File
-                        onSelectFiles={(file) => setInput(file)}
+                        onSelectFiles={(file) =>
+                          this.setState({ scriptInput: file })
+                        }
                         accept=".lua,.luau">
                         Import
                       </Button.File>
@@ -151,22 +155,25 @@ export class LuaEditor extends Component {
                     fluid
                     width="100%"
                     height="100%"
-                    value={input}
+                    value={scriptInput}
                     fontFamily="Consolas"
-                    onInput={(_, value) => setInput(value)}
+                    onInput={(_, value) =>
+                      this.setState({ scriptInput: value })
+                    }
                     displayedValue={
                       <Box
                         style={{
                           'pointer-events': 'none',
                         }}
                         dangerouslySetInnerHTML={{
-                          __html: hljs.highlight(input, { language: 'lua' })
-                            .value,
+                          __html: hljs.highlight(scriptInput, {
+                            language: 'lua',
+                          }).value,
                         }}
                       />
                     }
                   />
-                  <Button onClick={() => act('runCode', { code: input })}>
+                  <Button onClick={() => act('runCode', { code: scriptInput })}>
                     Run
                   </Button>
                 </Section>
@@ -177,7 +184,7 @@ export class LuaEditor extends Component {
                   pb="24px"
                   height={
                     activeTab === 'log'
-                      ? this.state.showJumpToBottomButton
+                      ? showJumpToBottomButton
                         ? 'calc(100% - 48px)'
                         : 'calc(100% - 32px)'
                       : '100%'
@@ -190,20 +197,20 @@ export class LuaEditor extends Component {
                           <Tabs.Tab
                             selected={activeTab === 'globals'}
                             onClick={() => {
-                              setActiveTab('globals');
+                              this.setState({ activeTab: 'globals' });
                             }}>
                             Globals
                           </Tabs.Tab>
                         )}
                         <Tabs.Tab
                           selected={activeTab === 'tasks'}
-                          onClick={() => setActiveTab('tasks')}>
+                          onClick={() => this.setState({ activeTab: 'tasks' })}>
                           Tasks
                         </Tabs.Tab>
                         <Tabs.Tab
                           selected={activeTab === 'log'}
                           onClick={() => {
-                            setActiveTab('log');
+                            this.setState({ activeTab: 'log' });
                             setTimeout(this.handleSectionScroll, 0);
                           }}>
                           Log
@@ -217,7 +224,7 @@ export class LuaEditor extends Component {
                         tooltip="WARNING: Displaying the global table can cause significant lag for the entire server, especially when there is a large number of global variables."
                         onClick={() => {
                           if (showGlobalTable && activeTab === 'globals') {
-                            setActiveTab('tasks');
+                            this.setState({ activeTab: 'tasks' });
                           }
                           act('toggleShowGlobalTable');
                         }}>
@@ -271,7 +278,7 @@ export class LuaEditor extends Component {
                           />
                         </Stack.Item>
                       </Stack>
-                      {this.state.showJumpToBottomButton && (
+                      {showJumpToBottomButton && (
                         <Button
                           width="100%"
                           onClick={() => {
