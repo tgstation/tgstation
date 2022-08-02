@@ -12,7 +12,7 @@
  *flicks are forwarded to master
  *override makes it so the alert is not replaced until cleared by a clear_alert with clear_override, and it's used for hallucinations.
  */
-/mob/proc/throw_alert(category, type, severity, obj/new_master, override = FALSE, no_anim)
+/mob/proc/throw_alert(category, type, severity, obj/new_master, override = FALSE, timeout_override, no_anim)
 
 	if(!category || QDELETED(src))
 		return
@@ -63,7 +63,8 @@
 	if(!no_anim)
 		thealert.transform = matrix(32, 6, MATRIX_TRANSLATE)
 		animate(thealert, transform = matrix(), time = 2.5, easing = CUBIC_EASING)
-
+	if(timeout_override)
+		thealert.timeout = timeout_override
 	if(thealert.timeout)
 		addtimer(CALLBACK(src, .proc/alert_timeout, thealert, category), thealert.timeout)
 		thealert.timeout = world.time + thealert.timeout - world.tick_lag
@@ -754,6 +755,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /atom/movable/screen/alert/poll_alert
 	name = "Looking for candidates"
 	icon_state = "template"
+	timeout = 30 SECONDS
 	var/show_time_left = FALSE // If true you need to call START_PROCESSING manually
 	var/image/time_left_overlay // The last image showing the time left
 	var/image/signed_up_overlay // image showing that you're signed up
@@ -764,7 +766,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /atom/movable/screen/alert/poll_alert/Initialize(mapload)
 	. = ..()
 	desc = poll.question
-	timeout = poll.duration
 
 /atom/movable/screen/alert/poll_alert/process()
 	if(show_time_left)
