@@ -756,6 +756,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	name = "Looking for candidates"
 	icon_state = "template"
 	timeout = 30 SECONDS
+	ghost_screentips = TRUE
 	var/show_time_left = FALSE // If true you need to call START_PROCESSING manually
 	var/image/time_left_overlay // The last image showing the time left
 	var/image/signed_up_overlay // image showing that you're signed up
@@ -769,10 +770,15 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /atom/movable/screen/alert/poll_alert/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
+	var/left_click_text
+	if(owner in poll.signed_up)
+		left_click_text = "Leave"
+	else
+		left_click_text = "Enter"
+	context[SCREENTIP_CONTEXT_LMB] = "[left_click_text] Poll"
 	if(poll?.ignoring_category)
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Set Never For This Round"
-		return CONTEXTUAL_SCREENTIP_SET
-	return .
+	return CONTEXTUAL_SCREENTIP_SET
 
 /atom/movable/screen/alert/poll_alert/process()
 	if(show_time_left)
@@ -804,7 +810,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		return
 	if(poll)
 		var/list/modifiers = params2list(params)
-		if(LAZYACCESS(modifiers, ALT_CLICK))
+		if((LAZYACCESS(modifiers, ALT_CLICK)) && poll.ignoring_category)
 			if(!(owner.ckey in GLOB.poll_ignore[poll.ignoring_category]))
 				poll.never_for_this_round(owner)
 				color = "red"

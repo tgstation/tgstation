@@ -164,6 +164,8 @@
 
 	/// the datum handler for our contents - see create_storage() for creation method
 	var/datum/storage/atom_storage
+	///whether ghosts can see screentips on it
+	var/ghost_screentips = FALSE
 
 /**
  * Called when an atom is created in byond (built in engine proc)
@@ -1985,7 +1987,7 @@
 			var/extra_lines = 0
 			var/extra_context = ""
 
-			if (isliving(user) || isovermind(user) || isaicamera(user))
+			if (isliving(user) || isovermind(user) || isaicamera(user) || (isobserver(user) && ghost_screentips))
 				var/obj/item/held_item = user.get_active_held_item()
 
 				if ((flags_1 & HAS_CONTEXTUAL_SCREENTIPS_1) || (held_item?.item_flags & ITEM_HAS_CONTEXTUAL_SCREENTIPS))
