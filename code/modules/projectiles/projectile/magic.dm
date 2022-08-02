@@ -414,7 +414,7 @@
 		var/datum/antagonist/A = target.mind.has_antag_datum(/datum/antagonist/)
 		if(A)
 			poll_message = "[poll_message] Status:[A.name]."
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob(poll_message, ROLE_PAI, FALSE, 10 SECONDS, target)
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob(poll_message, ROLE_PAI, FALSE, 10 SECONDS, target)
 	if(target.stat == DEAD)//boo.
 		return
 	if(LAZYLEN(candidates))

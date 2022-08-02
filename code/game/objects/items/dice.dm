@@ -397,7 +397,7 @@
 			servant_antagonist.setup_master(user)
 			servant_mind.transfer_to(human_servant)
 
-			var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [user.real_name]'s Servant?", ROLE_WIZARD, ROLE_WIZARD, 5 SECONDS, human_servant)
+			var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob("Do you want to play as [user.real_name]'s Servant?", ROLE_WIZARD, ROLE_WIZARD, 5 SECONDS, human_servant)
 			if(LAZYLEN(candidates))
 				var/mob/dead/observer/candidate = pick(candidates)
 				message_admins("[ADMIN_LOOKUPFLW(candidate)] was spawned as Dice Servant")

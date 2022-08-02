@@ -25,16 +25,20 @@ SUBSYSTEM_DEF(polling)
 		if(P.time_left() <= 0)
 			polling_finished(P)
 
-/datum/controller/subsystem/polling/proc/poll_candidates(question, jobban_type, be_special_flag, poll_time = 30 SECONDS, ignore_category = null, flash_window = TRUE, candidates, source)
-	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
-		return
-	log_game("Polling candidates [be_special_flag ? "for [be_special_flag]" : "\"[question]\""] for [poll_time / 10] seconds")
+/datum/controller/subsystem/polling/proc/poll_candidates(question, role, jobban_type, poll_time = 30 SECONDS, ignore_category = null, flash_window = TRUE, list/group = null, pic_source, role_name_text)
+	if(role && !role_name_text)
+		role_name_text = role
+	if(role_name_text && !question)
+		question = "Do you want to play as \a [role_name_text]?"
+	if(!question)
+		question = "Do you want to play as a special role?"
+	log_game("Polling candidates [role_name_text ? "for [role_name_text]" : "\"[question]\""] for [poll_time / 10] seconds")
 
 	// Start firing
 	polls_active = TRUE
 	total_polls++
 
-	var/datum/candidate_poll/P = new(be_special_flag, question, poll_time, ignore_category)
+	var/datum/candidate_poll/P = new(role_name_text, question, poll_time, ignore_category)
 	LAZYADD(currently_polling, P)
 
 	// We're the poll closest to completion
@@ -43,17 +47,23 @@ SUBSYSTEM_DEF(polling)
 
 	var/category = "[P.hash]_poll_alert"
 
-	for(var/mob/dead/observer/M in GLOB.player_list)
-		if(!is_eligible(M, be_special_flag, jobban_type, ignore_category))
+	for(var/mob/candidate_mob as anything in group)
+		// Universal opt-out for all players.
+		if((!candidate_mob.client.prefs.read_preference(/datum/preference/toggle/ghost_roles)))
+			continue
+		// Opt-out for admins whom are currently adminned.
+		if((!candidate_mob.client.prefs.read_preference(/datum/preference/toggle/ghost_roles_as_admin)) && candidate_mob.client.holder)
+			continue
+		if(!is_eligible(candidate_mob, role, jobban_type, ignore_category))
 			continue
 
-		SEND_SOUND(M, 'sound/misc/notice2.ogg')
+		SEND_SOUND(candidate_mob, 'sound/misc/notice2.ogg')
 		if(flash_window)
-			window_flash(M.client)
+			window_flash(candidate_mob.client)
 
 		// If we somehow send two polls for the same mob type, but with a duration on the second one shorter than the time left on the first one,
 		// we need to keep the first one's timeout rather than use the shorter one
-		var/atom/movable/screen/alert/poll_alert/current_alert = LAZYACCESS(M.alerts, category)
+		var/atom/movable/screen/alert/poll_alert/current_alert = LAZYACCESS(candidate_mob.alerts, category)
 		var/alert_time = poll_time
 		var/alert_poll = P
 		if(current_alert && current_alert.timeout > (world.time + poll_time - world.tick_lag))
@@ -61,11 +71,11 @@ SUBSYSTEM_DEF(polling)
 			alert_poll = current_alert.poll
 
 		// Send them an on-screen alert
-		var/atom/movable/screen/alert/poll_alert/A = M.throw_alert(category, /atom/movable/screen/alert/poll_alert, timeout_override = alert_time, no_anim = TRUE)
+		var/atom/movable/screen/alert/poll_alert/A = candidate_mob.throw_alert(category, /atom/movable/screen/alert/poll_alert, timeout_override = alert_time, no_anim = TRUE)
 		if(!A)
 			continue
 
-		A.icon = ui_style2icon(M.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
+		A.icon = ui_style2icon(candidate_mob.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
 		A.desc = "[question]"
 		A.show_time_left = TRUE
 		A.poll = alert_poll
@@ -77,19 +87,19 @@ SUBSYSTEM_DEF(polling)
 			var/datum/candidate_poll/P2 = existing_poll
 			if(P != P2 && P.hash == P2.hash)
 				// If there's already a poll for an identical mob type ongoing and the client is signed up for it, sign them up for this one
-				if(!inherited_sign_up && (M in P2.signed_up) && P.sign_up(M, TRUE))
+				if(!inherited_sign_up && (candidate_mob in P2.signed_up) && P.sign_up(candidate_mob, TRUE))
 					A.update_signed_up_alert()
 					inherited_sign_up = TRUE
 
 		// Image to display
 		var/image/I
-		if(source)
-			if(!ispath(source))
-				var/atom/S = source
-				S.plane = A.plane
-				A.add_overlay(S)
+		if(pic_source)
+			if(!ispath(pic_source))
+				var/atom/PS = pic_source
+				PS.plane = A.plane
+				A.add_overlay(PS)
 			else
-				I = image(source, layer = FLOAT_LAYER)
+				I = image(pic_source, layer = FLOAT_LAYER)
 		else
 			// Just use a generic image
 			I = image('icons/effects/effects.dmi', icon_state = "static", layer = FLOAT_LAYER)
@@ -100,10 +110,10 @@ SUBSYSTEM_DEF(polling)
 
 		// Chat message
 		var/act_jump = ""
-		if(isatom(source))
-			act_jump = "<a href='?src=[REF(M)];jump=\ref[source]'>\[Teleport]</a>"
+		if(isatom(pic_source))
+			act_jump = "<a href='?src=[REF(candidate_mob)];jump=\ref[pic_source]'>\[Teleport]</a>"
 		var/act_signup = "<a href='?src=[REF(A)];signup=1'>\[Sign Up]</a>"
-		to_chat(M, "<big>[span_boldnotice("Now looking for candidates [be_special_flag ? "to play as \an [be_special_flag]" : "\"[question]\""]. [act_jump] [act_signup]")]</big>")
+		to_chat(candidate_mob, "<big>[span_boldnotice("Now looking for candidates [role_name_text ? "to play as \an [role_name_text]" : "\"[question]\""]. [act_jump] [act_signup]")]</big>")
 
 		// Start processing it so it updates visually the timer
 		START_PROCESSING(SSprocessing, A)
@@ -112,35 +122,68 @@ SUBSYSTEM_DEF(polling)
 	UNTIL(P.finished)
 	return P.signed_up
 
-/datum/controller/subsystem/polling/proc/is_eligible(mob/M, be_special_flag, jobban_type, the_ignore_category)
-	. = FALSE
+/datum/controller/subsystem/polling/proc/poll_ghost_candidates(question, role, jobban_type, poll_time = 300, ignore_category = null, flashwindow = TRUE, pic_source)
+	var/list/candidates = list()
+	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
+		return candidates
+
+	for(var/mob/dead/observer/ghost_player in GLOB.player_list)
+		candidates += ghost_player
+
+	return poll_candidates(question, role, jobban_type, poll_time, ignore_category, flashwindow, candidates, pic_source)
+
+/datum/controller/subsystem/polling/proc/poll_ghost_candidates_for_mob(question, role, jobban_type, poll_time = 30 SECONDS, mob/target_mob, ignore_category = null, flashwindow = TRUE, pic_source)
+	var/static/list/mob/currently_polling_mobs = list()
+
+	if(currently_polling_mobs.Find(target_mob))
+		return list()
+
+	currently_polling_mobs += target_mob
+
+	var/list/possible_candidates = poll_ghost_candidates(question, role, jobban_type, poll_time, ignore_category, flashwindow, pic_source)
+
+	currently_polling_mobs -= target_mob
+	if(!target_mob || QDELETED(target_mob) || !target_mob.loc)
+		return list()
+
+	return possible_candidates
+
+/datum/controller/subsystem/polling/proc/poll_ghost_candidates_for_mobs(question, role, jobban_type, poll_time = 30 SECONDS, list/mobs, ignore_category = null, pic_source)
+	var/list/candidate_list = poll_ghost_candidates(question, role, jobban_type, poll_time, ignore_category, pic_source)
+
+	for(var/mob/potential_mob as anything in mobs)
+		if(QDELETED(potential_mob) || !potential_mob.loc)
+			mobs -= potential_mob
+
+	if(!length(mobs))
+		return list()
+
+	return candidate_list
+
+/datum/controller/subsystem/polling/proc/is_eligible(mob/M, role, jobban_type, the_ignore_category)
 	if(!M.key || !M.client)
-		return
+		return FALSE
 	if(the_ignore_category)
 		if(M.ckey in GLOB.poll_ignore[the_ignore_category])
-			return
-	if(be_special_flag)
-		if(!(be_special_flag in M.client.prefs.be_special))
-			return
+			return FALSE
+	if(role)
+		if(!(role in M.client.prefs.be_special))
+			return FALSE
+		var/required_time = GLOB.special_roles[role] || 0
+		if(M.client && M.client.get_remaining_days(required_time) > 0)
+			return FALSE
 
 	if(jobban_type)
 		if(is_banned_from(M.ckey, list(jobban_type, ROLE_SYNDICATE)))
-			return
+			return FALSE
 
 	return TRUE
 
-/**
-Called by the subsystem when a poll's timer runs out
-
-Can be called manually to finish a poll prematurely
-Arguments:
-P - The poll to finish
-*/
 /datum/controller/subsystem/polling/proc/polling_finished(datum/candidate_poll/P)
 	// Trim players who aren't eligible anymore
 	var/len_pre_trim = length(P.signed_up)
 	P.trim_candidates()
-	log_game("Candidate poll [P.role ? "for special role" : "\"[P.question]\""] finished. [len_pre_trim] players signed up, [length(P.signed_up)] after trimming")
+	log_game("Candidate poll [P.role ? "for [P.role]" : "\"[P.question]\""] finished. [len_pre_trim] players signed up, [length(P.signed_up)] after trimming")
 
 	P.finished = TRUE
 	currently_polling -= P
@@ -168,7 +211,7 @@ P - The poll to finish
 	var/question // The question asked to observers
 	var/duration // The duration of the poll
 	var/ignoring_category
-	var/list/mob/dead/observer/signed_up // The players who signed up to this poll
+	var/list/mob/signed_up // The players who signed up to this poll
 	var/atom/movable/screen/alert/poll_alert/alert_button
 	var/time_started // The world.time at which the poll was created
 	var/finished = FALSE // Whether the polling is finished
@@ -184,32 +227,22 @@ P - The poll to finish
 	hash = copytext(md5("[question]_[role ? role : "0"]"), 1, 7)
 	return ..()
 
-/**
-Attempts to sign a (controlled) mob up
-
-Will fail if the mob is already signed up or the poll's timer ran out.
-Does not check for eligibility
-Arguments:
-M - The (controlled) mob to sign up
-silent - Whether no messages should appear or not. If not TRUE, signing up to this poll will also sign the mob up for identical polls
-*/
-/datum/candidate_poll/proc/sign_up(mob/dead/observer/M, silent = FALSE)
-	. = FALSE
+/datum/candidate_poll/proc/sign_up(mob/M, silent = FALSE)
 	if(!istype(M) || !M.key || !M.client)
-		return
+		return FALSE
 	if(M in signed_up)
 		if(!silent)
 			to_chat(M, span_warning("You have already signed up for this!"))
-		return
+		return FALSE
 	if(time_left() <= 0)
 		if(!silent)
 			to_chat(M, span_danger("Sorry, you were too late for the consideration!"))
 			SEND_SOUND(M, 'sound/machines/buzz-sigh.ogg')
-		return
+		return FALSE
 
 	signed_up += M
 	if(!silent)
-		to_chat(M, span_notice("You have signed up for this role! A candidate will be picked randomly soon."))
+		to_chat(M, span_notice("You have signed up for [role]! A candidate will be picked randomly soon."))
 		// Sign them up for any other polls with the same mob type
 		for(var/existing_poll in SSpolling.currently_polling)
 			var/datum/candidate_poll/P = existing_poll
@@ -219,30 +252,22 @@ silent - Whether no messages should appear or not. If not TRUE, signing up to th
 		alert_button.update_candidates_number_overlay()
 	return TRUE
 
-/*
-Attempts to remove a signed-up mob from a poll.
-
-Arguments:
-M - The mob to remove from the poll, if present.
-silent - If TRUE, no messages will be sent to M about their removal.
-*/
-/datum/candidate_poll/proc/remove_candidate(mob/dead/observer/M, silent = FALSE)
-	. = FALSE
+/datum/candidate_poll/proc/remove_candidate(mob/M, silent = FALSE)
 	if(!istype(M) || !M.key || !M.client)
-		return
+		return FALSE
 	if(!(M in signed_up))
 		if(!silent)
 			to_chat(M, span_warning("You aren't signed up for this!"))
-		return
+		return FALSE
 
 	if(time_left() <= 0)
 		if(!silent)
 			to_chat(M, span_danger("It's too late to unregister yourself, selection has already begun!"))
-		return
+		return FALSE
 
 	signed_up -= M
 	if(!silent)
-		to_chat(M, span_notice("You have been unregistered as a candidate for this role. You can freely sign up again before the poll ends."))
+		to_chat(M, span_notice("You have been unregistered as a candidate for [role]. You can sign up again before the poll ends."))
 
 		for(var/existing_poll in SSpolling.currently_polling)
 			var/datum/candidate_poll/P = existing_poll
@@ -264,9 +289,6 @@ silent - If TRUE, no messages will be sent to M about their removal.
 	GLOB.poll_ignore[ignoring_category] -= M.ckey
 	to_chat(M, span_notice("Choice registered: Eligible for this round"))
 
-/*
-Deletes any candidates who may have disconnected from the list
-*/
 /datum/candidate_poll/proc/trim_candidates()
 	list_clear_nulls(signed_up)
 	for(var/mob in signed_up)
@@ -274,8 +296,5 @@ Deletes any candidates who may have disconnected from the list
 		if(!M.key || !M.client)
 			signed_up -= M
 
-/*
-Returns the time left for a poll
-*/
 /datum/candidate_poll/proc/time_left()
 	return duration - (world.time - time_started)

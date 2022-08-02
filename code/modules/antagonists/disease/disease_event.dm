@@ -11,7 +11,7 @@
 	role_name = "sentient disease"
 
 /datum/round_event/ghost_role/sentient_disease/spawn_role()
-	var/list/candidates = get_candidates(ROLE_ALIEN, ROLE_ALIEN)
+	var/list/candidates = SSpolling.poll_ghost_candidates(role = ROLE_ALIEN, jobban_type = ROLE_ALIEN)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 

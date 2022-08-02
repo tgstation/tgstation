@@ -129,7 +129,7 @@
 			else
 				to_chat(usr, span_warning("Could not spawn you in as briefing officer as you are not a ghost!"))
 
-		var/list/mob/dead/observer/candidates = SSpolling.poll_candidates("Do you wish to be considered for [ertemplate.polldesc]?", "deathsquad")
+		var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates("Do you wish to be considered for [ertemplate.polldesc]?", "deathsquad")
 		var/teamSpawned = FALSE
 
 		if(candidates.len == 0)

@@ -82,7 +82,7 @@
 	priority_announce("Santa is coming to town!", "Unknown Transmission")
 
 /datum/round_event/santa/start()
-	var/list/candidates = SSpolling.poll_candidates("Santa is coming to town! Do you want to be Santa?", poll_time=150)
+	var/list/candidates = SSpolling.poll_ghost_candidates("Santa is coming to town! Do you want to be Santa?", poll_time=150)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		santa = new /mob/living/carbon/human(pick(GLOB.blobstart))

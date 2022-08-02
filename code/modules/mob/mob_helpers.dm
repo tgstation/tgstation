@@ -298,7 +298,7 @@
 /**
  * Offer control of the passed in mob to dead player
  *
- * Automatic logging and uses poll_candidates_for_mob, how convenient
+ * Automatic logging and uses SSpolling.poll_ghost_candidates_for_mob, how convenient
  */
 /proc/offer_control(mob/M)
 	to_chat(M, "Control of your mob has been offered to dead players.")
@@ -314,7 +314,7 @@
 			var/datum/antagonist/A = M.mind.has_antag_datum(/datum/antagonist/)
 			if(A)
 				poll_message = "[poll_message] Status: [A.name]."
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob(poll_message, ROLE_PAI, FALSE, 10 SECONDS, M)
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob(poll_message, ROLE_PAI, FALSE, 10 SECONDS, M)
 
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)

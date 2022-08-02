@@ -765,7 +765,14 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /atom/movable/screen/alert/poll_alert/Initialize(mapload)
 	. = ..()
-	desc = poll.question
+	register_context()
+
+/atom/movable/screen/alert/poll_alert/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(poll?.ignoring_category)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Set Never For This Round"
+		return CONTEXTUAL_SCREENTIP_SET
+	return .
 
 /atom/movable/screen/alert/poll_alert/process()
 	if(show_time_left)
@@ -788,30 +795,28 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			if(P2 != poll && P2.hash == poll.hash && !P2.finished)
 				num_same++
 		display_stacks(num_same)
+		update_signed_up_alert()
 	..()
 
 /atom/movable/screen/alert/poll_alert/Click(location, control, params)
 	. = ..()
 	if(!.)
 		return
-	var/mob/dead/observer/ghost = owner
-	if(!istype(ghost))
-		return
 	if(poll)
 		var/list/modifiers = params2list(params)
 		if(LAZYACCESS(modifiers, ALT_CLICK))
-			if(!(ghost.ckey in GLOB.poll_ignore[poll.ignoring_category]))
-				poll.never_for_this_round(ghost)
+			if(!(owner.ckey in GLOB.poll_ignore[poll.ignoring_category]))
+				poll.never_for_this_round(owner)
 				color = "red"
 				return
-			poll.never_for_this_round(ghost, undoing = TRUE)
+			poll.never_for_this_round(owner, undoing = TRUE)
 			color = initial(color)
 			return
 		var/success
-		if(ghost in poll.signed_up)
-			success = poll.remove_candidate(ghost)
-		else
-			success = poll.sign_up(ghost)
+		if(owner in poll.signed_up)
+			success = poll.remove_candidate(owner)
+		else if(!(owner.ckey in GLOB.poll_ignore[poll.ignoring_category]))
+			success = poll.sign_up(owner)
 		if(success)
 			// Add a small overlay to indicate we've signed up
 			update_signed_up_alert()
@@ -821,11 +826,10 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		return
 	if(!poll)
 		return
-	var/mob/dead/observer/ghost = owner
-	if(ghost in poll.signed_up)
-		poll.remove_candidate(ghost)
-	else
-		poll.sign_up(ghost)
+	if(owner in poll.signed_up)
+		poll.remove_candidate(owner)
+	else if(!(owner.ckey in GLOB.poll_ignore[poll.ignoring_category]))
+		poll.sign_up(owner)
 	update_signed_up_alert()
 
 /atom/movable/screen/alert/poll_alert/proc/update_signed_up_alert()
