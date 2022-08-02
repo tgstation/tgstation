@@ -154,7 +154,7 @@
 	being_polled_for = TRUE
 	var/list/mob/dead/candidates = SSpolling.poll_ghost_candidates_for_mob(
 		"Do you want to play as a Cargorilla?",
-		jobban_type = ROLE_SENTIENCE,
+		jobban = ROLE_SENTIENCE,
 		poll_time = 30 SECONDS,
 		target_mob = src,
 	)

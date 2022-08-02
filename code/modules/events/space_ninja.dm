@@ -23,7 +23,7 @@
 		return MAP_ERROR
 
 	//selecting a candidate player
-	var/list/candidates = SSpolling.poll_ghost_candidates(role = ROLE_NINJA, jobban_type = ROLE_NINJA)
+	var/list/candidates = SSpolling.poll_ghost_candidates(role = ROLE_NINJA, jobban = ROLE_NINJA)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 

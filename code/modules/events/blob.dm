@@ -29,7 +29,7 @@
 	blob_icon.Blend("#9ACD32", ICON_MULTIPLY)
 	blob_icon.Blend(icon('icons/mob/blob.dmi', "blob_core_overlay"), ICON_OVERLAY)
 	var/image/blob_image = image(blob_icon)
-	var/list/candidates = SSpolling.poll_ghost_candidates(role = ROLE_BLOB, jobban_type = ROLE_BLOB, pic_source = blob_image)
+	var/list/candidates = SSpolling.poll_ghost_candidates(role = ROLE_BLOB, jobban = ROLE_BLOB, pic_source = blob_image)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 	var/mob/dead/observer/new_blob = pick(candidates)

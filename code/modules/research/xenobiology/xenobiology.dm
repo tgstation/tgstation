@@ -710,7 +710,7 @@
 	to_chat(user, span_notice("You offer [src] to [dumb_mob]..."))
 	being_used = TRUE
 
-	var/list/candidates = SSpolling.poll_ghost_candidates_for_mob("Do you want to play as [dumb_mob.name]?", ROLE_SENTIENCE, ROLE_SENTIENCE, 5 SECONDS, dumb_mob, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm
+	var/list/candidates = SSpolling.poll_ghost_candidates_for_mob("Do you want to play as [dumb_mob.name]?", role = ROLE_SENTIENCE, jobban = ROLE_SENTIENCE, poll_time = 5 SECONDS, target_mob = dumb_mob, ignore_category = POLL_IGNORE_SENTIENCE_POTION, pic_source = dumb_mob) // see poll_ignore.dm
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		dumb_mob.key = C.key

@@ -25,7 +25,7 @@ SUBSYSTEM_DEF(polling)
 		if(P.time_left() <= 0)
 			polling_finished(P)
 
-/datum/controller/subsystem/polling/proc/poll_candidates(question, role, jobban_type, poll_time = 30 SECONDS, ignore_category = null, flash_window = TRUE, list/group = null, pic_source, role_name_text)
+/datum/controller/subsystem/polling/proc/poll_candidates(question, role, jobban, poll_time = 30 SECONDS, ignore_category = null, flash_window = TRUE, list/group = null, pic_source, role_name_text)
 	if(role && !role_name_text)
 		role_name_text = role
 	if(role_name_text && !question)
@@ -54,7 +54,7 @@ SUBSYSTEM_DEF(polling)
 		// Opt-out for admins whom are currently adminned.
 		if((!candidate_mob.client.prefs.read_preference(/datum/preference/toggle/ghost_roles_as_admin)) && candidate_mob.client.holder)
 			continue
-		if(!is_eligible(candidate_mob, role, jobban_type, ignore_category))
+		if(!is_eligible(candidate_mob, role, jobban, ignore_category))
 			continue
 
 		SEND_SOUND(candidate_mob, 'sound/misc/notice2.ogg')
@@ -122,7 +122,7 @@ SUBSYSTEM_DEF(polling)
 	UNTIL(P.finished)
 	return P.signed_up
 
-/datum/controller/subsystem/polling/proc/poll_ghost_candidates(question, role, jobban_type, poll_time = 300, ignore_category = null, flashwindow = TRUE, pic_source)
+/datum/controller/subsystem/polling/proc/poll_ghost_candidates(question, role, jobban, poll_time = 300, ignore_category = null, flashwindow = TRUE, pic_source)
 	var/list/candidates = list()
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
 		return candidates
@@ -130,9 +130,9 @@ SUBSYSTEM_DEF(polling)
 	for(var/mob/dead/observer/ghost_player in GLOB.player_list)
 		candidates += ghost_player
 
-	return poll_candidates(question, role, jobban_type, poll_time, ignore_category, flashwindow, candidates, pic_source)
+	return poll_candidates(question, role, jobban, poll_time, ignore_category, flashwindow, candidates, pic_source)
 
-/datum/controller/subsystem/polling/proc/poll_ghost_candidates_for_mob(question, role, jobban_type, poll_time = 30 SECONDS, mob/target_mob, ignore_category = null, flashwindow = TRUE, pic_source)
+/datum/controller/subsystem/polling/proc/poll_ghost_candidates_for_mob(question, role, jobban, poll_time = 30 SECONDS, mob/target_mob, ignore_category = null, flashwindow = TRUE, pic_source)
 	var/static/list/mob/currently_polling_mobs = list()
 
 	if(currently_polling_mobs.Find(target_mob))
@@ -140,7 +140,7 @@ SUBSYSTEM_DEF(polling)
 
 	currently_polling_mobs += target_mob
 
-	var/list/possible_candidates = poll_ghost_candidates(question, role, jobban_type, poll_time, ignore_category, flashwindow, pic_source)
+	var/list/possible_candidates = poll_ghost_candidates(question, role, jobban, poll_time, ignore_category, flashwindow, pic_source)
 
 	currently_polling_mobs -= target_mob
 	if(!target_mob || QDELETED(target_mob) || !target_mob.loc)
@@ -148,8 +148,8 @@ SUBSYSTEM_DEF(polling)
 
 	return possible_candidates
 
-/datum/controller/subsystem/polling/proc/poll_ghost_candidates_for_mobs(question, role, jobban_type, poll_time = 30 SECONDS, list/mobs, ignore_category = null, pic_source)
-	var/list/candidate_list = poll_ghost_candidates(question, role, jobban_type, poll_time, ignore_category, pic_source)
+/datum/controller/subsystem/polling/proc/poll_ghost_candidates_for_mobs(question, role, jobban, poll_time = 30 SECONDS, list/mobs, ignore_category = null, pic_source)
+	var/list/candidate_list = poll_ghost_candidates(question, role, jobban, poll_time, ignore_category, pic_source)
 
 	for(var/mob/potential_mob as anything in mobs)
 		if(QDELETED(potential_mob) || !potential_mob.loc)
@@ -160,7 +160,7 @@ SUBSYSTEM_DEF(polling)
 
 	return candidate_list
 
-/datum/controller/subsystem/polling/proc/is_eligible(mob/M, role, jobban_type, the_ignore_category)
+/datum/controller/subsystem/polling/proc/is_eligible(mob/M, role, jobban, the_ignore_category)
 	if(!M.key || !M.client)
 		return FALSE
 	if(the_ignore_category)
@@ -173,8 +173,8 @@ SUBSYSTEM_DEF(polling)
 		if(M.client && M.client.get_remaining_days(required_time) > 0)
 			return FALSE
 
-	if(jobban_type)
-		if(is_banned_from(M.ckey, list(jobban_type, ROLE_SYNDICATE)))
+	if(jobban)
+		if(is_banned_from(M.ckey, list(jobban, ROLE_SYNDICATE)))
 			return FALSE
 
 	return TRUE

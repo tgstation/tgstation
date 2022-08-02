@@ -88,7 +88,7 @@
 			bodies += possessable
 
 	var/question = "Would you like to be [group_name]?"
-	var/list/candidates = SSpolling.poll_ghost_candidates_for_mobs(question, poll_time = 10 SECONDS, mobs = bodies)
+	var/list/candidates = SSpolling.poll_ghost_candidates_for_mobs(question, jobban = ROLE_PAI, poll_time = 10 SECONDS, mobs = bodies)
 	while(LAZYLEN(candidates) && LAZYLEN(bodies))
 		var/mob/dead/observer/C = pick_n_take(candidates)
 		var/mob/living/body = pick_n_take(bodies)
