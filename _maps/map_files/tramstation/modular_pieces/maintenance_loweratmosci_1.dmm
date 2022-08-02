@@ -3,10 +3,6 @@
 /obj/modular_map_connector,
 /turf/template_noop,
 /area/template_noop)
-"bp" = (
-/obj/item/pickaxe/rusted,
-/turf/open/misc/asteroid/airless,
-/area/mine/explored)
 "bJ" = (
 /obj/item/relic,
 /turf/open/misc/asteroid/airless,
@@ -171,10 +167,6 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
-"sO" = (
-/obj/item/shovel,
-/turf/open/misc/asteroid/airless,
-/area/mine/explored)
 "sP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -379,10 +371,6 @@
 /obj/item/shard,
 /turf/open/misc/asteroid,
 /area/mine/explored)
-"ML" = (
-/obj/item/stack/ore/glass,
-/turf/open/misc/asteroid/airless,
-/area/mine/explored)
 "MM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -535,8 +523,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 "XC" = (
-/obj/item/stack/ore/iron,
-/turf/open/misc/asteroid/airless,
+/turf/template_noop,
 /area/mine/explored)
 "YO" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1592,11 +1579,11 @@ kw
 kw
 kw
 kw
+XC
+XC
+XC
+XC
 ot
-sO
-ku
-ku
-ML
 ot
 RG
 wT
@@ -1623,12 +1610,12 @@ kw
 kw
 kw
 kw
-ot
 XC
-ku
-ku
-ku
-ku
+XC
+XC
+XC
+ot
+ot
 RG
 wT
 Qp
@@ -1659,7 +1646,7 @@ kw
 kw
 kw
 ot
-bp
+ot
 RG
 wT
 RG

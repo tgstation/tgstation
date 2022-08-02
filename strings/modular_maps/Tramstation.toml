@@ -16,7 +16,7 @@ modules = ["maintenance_upperdormsright_attachment_1.dmm", "maintenance_upperdor
 modules = ["maintenance_upperbridgeright_1.dmm", "maintenance_upperbridgeright_2.dmm"]
 
 [rooms.maintenance_upperbridgeright_attachment_a]
-modules = ["maintenance_upperbridgeright_attachment_a_1.dmm", "maintenance_upperbridgeright_attachment_a_2.dmm, "maintenance_upperbridgeright_attachment_a_3.dmm"]
+modules = ["maintenance_upperbridgeright_attachment_a_1.dmm", "maintenance_upperbridgeright_attachment_a_2.dmm", "maintenance_upperbridgeright_attachment_a_3.dmm"]
 
 [rooms.maintenance_upperbridgeright_attachment_b]
 modules = ["maintenance_upperbridgeright_attachment_b_1.dmm", "maintenance_upperbridgeright_attachment_b_2.dmm", "maintenance_upperbridgeright_attachment_b_3.dmm"]
@@ -42,10 +42,10 @@ modules = ["maintenance_uppermedsci_attachment_b_1.dmm", "maintenance_uppermedsc
 [rooms.maintenance_lowertunnel_leftup]
 modules = ["maintenance_lowertunnel_leftup_1.dmm", "maintenance_lowertunnel_leftup_2.dmm"]
 
-[rooms.maintenance_uppermedsci_attachment_a]
+[rooms.maintenance_lowertunnel_leftup_attachment_a]
 modules = ["maintenance_lowertunnel_leftup_attachment_a_1.dmm", "maintenance_lowertunnel_leftup_attachment_a_2.dmm", "maintenance_lowertunnel_leftup_attachment_a_3.dmm"]
 
-[rooms.maintenance_uppermedsci_attachment_a]
+[rooms.maintenance_lowertunnel_leftup_attachment_b]
 modules = ["maintenance_lowertunnel_leftup_attachment_b_1.dmm", "maintenance_lowertunnel_leftup_attachment_b_2.dmm", "maintenance_lowertunnel_leftup_attachment_b_3.dmm"]
 
 [rooms.maintenance_lowersecurity]
@@ -58,10 +58,10 @@ modules = ["maintenance_lowersecurity_attachment_1.dmm", "maintenance_lowersecur
 modules = ["maintenance_lowerservicecargo_1.dmm", "maintenance_lowerservicecargo_2.dmm"]
 
 [rooms.maintenance_lowerservicecargo_attachment_a]
-modules = ["maintenance_lowerservicecargo_attachment_a_1.dmm", "maintenance_lowersecurity_attachment_a_2.dmm", "maintenance_lowersecurity_attachment_a_3.dmm"]
+modules = ["maintenance_lowerservicecargo_attachment_a_1.dmm", "maintenance_lowerservicecargo_attachment_a_2.dmm", "maintenance_lowerservicecargo_attachment_a_3.dmm"]
 
 [rooms.maintenance_lowerservicecargo_attachment_b]
-modules = ["maintenance_lowerservicecargo_attachment_b_1.dmm", "maintenance_lowersecurity_attachment_b_2.dmm", "maintenance_lowersecurity_attachment_b_3.dmm"]
+modules = ["maintenance_lowerservicecargo_attachment_b_1.dmm", "maintenance_lowerservicecargo_attachment_b_2.dmm", "maintenance_lowerservicecargo_attachment_b_3.dmm"]
 
 [rooms.maintenance_lowercargosci]
 modules = ["maintenance_lowercargosci_1.dmm", "maintenance_lowercargosci_2.dmm"]

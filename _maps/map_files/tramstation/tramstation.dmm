@@ -35909,10 +35909,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
-"mKH" = (
-/obj/modular_map_root/tramstation/maintenance_lowersecurity,
-/turf/closed/mineral/random/stationside/asteroid/porus,
-/area/mine/explored)
 "mKL" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -95936,7 +95932,7 @@ dhe
 wZm
 wZm
 dhe
-mKH
+dhe
 dhe
 dhe
 afH

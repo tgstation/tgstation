@@ -201,8 +201,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "V" = (
-/obj/item/stack/ore/glass,
-/turf/open/misc/asteroid,
+/turf/closed/wall/rock/porous,
 /area/mine/explored)
 "W" = (
 /obj/effect/decal/cleanable/dirt,
@@ -293,11 +292,11 @@ T
 "}
 (4,1,1) = {"
 T
+T
+T
+T
 E
 E
-O
-O
-O
 O
 O
 O
@@ -314,12 +313,12 @@ T
 "}
 (5,1,1) = {"
 T
+T
+T
+T
 E
 O
 O
-O
-O
-m
 O
 O
 s
@@ -335,13 +334,13 @@ T
 "}
 (6,1,1) = {"
 T
+T
+T
+T
 E
 O
 O
-O
 E
-E
-O
 O
 O
 O
@@ -356,13 +355,13 @@ T
 "}
 (7,1,1) = {"
 T
+T
+T
+T
 E
 O
 E
 E
-E
-O
-O
 O
 O
 O
@@ -377,12 +376,12 @@ T
 "}
 (8,1,1) = {"
 T
+T
+T
+T
 E
 O
 E
-E
-O
-O
 O
 O
 O
@@ -398,10 +397,10 @@ T
 "}
 (9,1,1) = {"
 T
+T
+T
+T
 E
-O
-O
-O
 O
 O
 O
@@ -419,13 +418,13 @@ T
 "}
 (10,1,1) = {"
 T
+T
+T
+T
 E
 O
 O
 O
-O
-O
-V
 n
 O
 O
@@ -440,11 +439,11 @@ T
 "}
 (11,1,1) = {"
 T
+T
+T
+T
 E
 E
-O
-O
-O
 O
 O
 R
@@ -461,18 +460,18 @@ T
 "}
 (12,1,1) = {"
 T
+T
+T
+T
 E
 E
 O
 O
-O
-O
-O
 E
 E
 E
 E
-E
+V
 c
 E
 E
@@ -482,34 +481,34 @@ T
 "}
 (13,1,1) = {"
 T
+T
+T
+T
 E
 E
 E
 O
-O
-O
 E
 E
 E
-E
-E
+V
 O
 f
 Y
-E
+V
 E
 T
 T
 "}
 (14,1,1) = {"
 T
+T
+T
+T
 E
 E
 E
 O
-O
-O
-E
 E
 E
 E
@@ -524,33 +523,33 @@ T
 "}
 (15,1,1) = {"
 T
-E
+T
+T
+T
 E
 E
 E
 O
-O
 E
-E
-E
+V
 O
 P
 Q
 e
 f
 O
-E
+V
 T
 T
 "}
 (16,1,1) = {"
 T
+T
+T
+T
 E
 E
 E
-E
-E
-O
 E
 E
 E
@@ -560,12 +559,15 @@ F
 u
 O
 O
-E
+V
 T
 T
 "}
 (17,1,1) = {"
 T
+T
+T
+T
 E
 E
 E
@@ -573,10 +575,7 @@ E
 E
 E
 E
-E
-E
-E
-E
+V
 B
 O
 O
