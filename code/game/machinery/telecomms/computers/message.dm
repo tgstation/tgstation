@@ -21,7 +21,7 @@
 	//Server linked to.
 	var/obj/machinery/telecomms/message_server/linkedServer = null
 	//Sparks effect - For emag
-	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
+	var/datum/effect_system/spark_spread/spark_system
 	//Messages - Saves me time if I want to change something.
 	var/noserver = "<span class='alert'>ALERT: No server detected.</span>"
 	var/incorrectkey = "<span class='warning'>ALERT: Incorrect decryption key!</span>"
@@ -67,6 +67,7 @@
 
 /obj/machinery/computer/message_monitor/Initialize(mapload)
 	..()
+	spark_system = new
 	GLOB.telecomms_list += src
 	return INITIALIZE_HINT_LATELOAD
 

@@ -13,6 +13,8 @@ Doesn't work on other aliens/AI.*/
 	icon_icon = 'icons/mob/actions/actions_xeno.dmi'
 	button_icon_state = "spell_default"
 	check_flags = AB_CHECK_CONSCIOUS
+	melee_cooldown_time = 0 SECONDS
+
 	/// How much plasma this action uses.
 	var/plasma_cost = 0
 
@@ -413,4 +415,3 @@ Doesn't work on other aliens/AI.*/
 /mob/living/carbon/alien/adjustPlasma(amount)
 	. = ..()
 	updatePlasmaDisplay()
-

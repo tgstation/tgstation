@@ -106,6 +106,7 @@
 		/obj/item/clothing/gloves/maid = 1,
 		/obj/item/clothing/neck/maid = 1,
 		/obj/item/clothing/under/rank/civilian/janitor/maid = 1,
+		/obj/item/clothing/accessory/maidapron = 1,
 		/obj/item/clothing/glasses/cold=1,
 		/obj/item/clothing/glasses/heat=1,
 		/obj/item/clothing/suit/costume/whitedress = 1,
@@ -141,6 +142,11 @@
 		/obj/item/clothing/under/rank/medical/doctor/nurse = 1,
 		/obj/item/clothing/mask/gas/prop = 4,
 		/obj/item/clothing/mask/gas/atmosprop = 3,
+		/obj/item/storage/backpack/henchmen = 5,
+		/obj/item/clothing/under/suit/henchmen = 5,
+		/obj/item/clothing/head/jackbros = 5,
+		/obj/item/clothing/under/costume/jackbros = 5,
+		/obj/item/clothing/under/costume/deckers = 5,
 	)
 	contraband = list(
 		/obj/item/clothing/suit/costume/judgerobe = 1,

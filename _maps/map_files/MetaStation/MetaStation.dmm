@@ -7368,7 +7368,7 @@
 /area/station/commons/lounge)
 "cNC" = (
 /obj/structure/table/wood,
-/obj/item/paicard,
+/obj/item/pai_card,
 /turf/open/floor/wood,
 /area/station/service/library)
 "cNS" = (
@@ -10504,7 +10504,7 @@
 	pixel_x = -2;
 	pixel_y = 6
 	},
-/obj/item/paicard,
+/obj/item/pai_card,
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted,
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
@@ -14503,7 +14503,7 @@
 	dir = 1
 	},
 /obj/item/aicard,
-/obj/item/paicard,
+/obj/item/pai_card,
 /obj/item/circuitboard/aicore,
 /obj/machinery/keycard_auth/directional/north{
 	pixel_x = -5
@@ -25113,7 +25113,7 @@
 	pixel_x = 8;
 	pixel_y = 32
 	},
-/obj/item/paicard{
+/obj/item/pai_card{
 	desc = "A real Nanotrasen success, these personal AIs provide all of the companionship of an AI without any law related red-tape.";
 	name = "\improper Nanotrasen-brand personal AI device exhibit"
 	},
@@ -49716,7 +49716,7 @@
 /area/station/engineering/supermatter)
 "rHp" = (
 /obj/structure/table,
-/obj/item/paicard,
+/obj/item/pai_card,
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "rHr" = (

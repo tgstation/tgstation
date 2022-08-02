@@ -200,6 +200,7 @@
 		if(id_trim)
 			if(!SSid_access.apply_trim_to_card(id_card, id_trim))
 				WARNING("Unable to apply trim [id_trim] to [id_card] in outfit [name].")
+			H.sec_hud_set_ID()
 
 	if(suit_store)
 		EQUIP_OUTFIT_ITEM(suit_store, ITEM_SLOT_SUITSTORE)

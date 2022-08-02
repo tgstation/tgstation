@@ -15,7 +15,7 @@ hljs.registerLanguage('lua', lua);
 
 export const LuaEditor = (props, context) => {
   const { act, data } = useBackend(context);
-  const { noStateYet, globals, documentation } = data;
+  const { noStateYet, globals, documentation, tasks, showDebugInfo } = data;
   const [modal, setModal] = useLocalState(
     context,
     'modal',
@@ -24,24 +24,41 @@ export const LuaEditor = (props, context) => {
   const [activeTab, setActiveTab] = useLocalState(
     context,
     'activeTab',
-    'globals'
+    'tasks'
   );
   const [input, setInput] = useLocalState(context, 'scriptInput', '');
   let tabContent;
   switch (activeTab) {
     case 'globals': {
-      tabContent = (
-        <ListMapper
-          list={globals}
-          skipNulls
-          vvAct={(path) => act('vvGlobal', { indices: path })}
-          callType="callFunction"
-        />
-      );
+      if (!globals) {
+        tabContent = (
+          <h1>
+            Could not retrieve the global table. Was it corrupted or shadowed?
+          </h1>
+        );
+      } else {
+        tabContent = (
+          <ListMapper
+            list={globals}
+            skipNulls
+            vvAct={(path) => act('vvGlobal', { indices: path })}
+            callType="callFunction"
+          />
+        );
+      }
       break;
     }
     case 'tasks': {
-      tabContent = <TaskManager />;
+      if (!tasks) {
+        tabContent = (
+          <h1>
+            Could not retrieve task info. Was the global table corrupted or
+            shadowed?
+          </h1>
+        );
+      } else {
+        tabContent = <TaskManager />;
+      }
       break;
     }
     case 'log': {
@@ -64,10 +81,11 @@ export const LuaEditor = (props, context) => {
             <h1>Please select or create a lua state to get started.</h1>
           </Flex>
         ) : (
-          <Stack>
-            <Stack.Item>
+          <Stack height="calc(100% - 16px)">
+            <Stack.Item grow shrink basis="55%">
               <Section
                 fill
+                pb="16px"
                 title="Input"
                 buttons={
                   <>
@@ -83,8 +101,8 @@ export const LuaEditor = (props, context) => {
                 }>
                 <TextArea
                   fluid
-                  width="700px"
-                  height="590px"
+                  width="100%"
+                  height="100%"
                   value={input}
                   fontFamily="Consolas"
                   onInput={(_, value) => setInput(value)}
@@ -105,29 +123,51 @@ export const LuaEditor = (props, context) => {
                 </Button>
               </Section>
             </Stack.Item>
-            <Stack.Item grow>
-              <Section fill height="95%" width="100%">
-                <Tabs>
-                  <Tabs.Tab
-                    selected={activeTab === 'globals'}
-                    onClick={() => {
-                      setActiveTab('globals');
-                    }}>
-                    Globals
-                  </Tabs.Tab>
-                  <Tabs.Tab
-                    selected={activeTab === 'tasks'}
-                    onClick={() => setActiveTab('tasks')}>
-                    Tasks
-                  </Tabs.Tab>
-                  <Tabs.Tab
-                    selected={activeTab === 'log'}
-                    onClick={() => {
-                      setActiveTab('log');
-                    }}>
-                    Log
-                  </Tabs.Tab>
-                </Tabs>
+            <Stack.Item grow shrink basis="45%">
+              <Section fill pb="24px" height="100%" width="100%" buttons>
+                <Stack justify="space-between">
+                  <Stack.Item>
+                    <Tabs>
+                      {!!showDebugInfo && (
+                        <Tabs.Tab
+                          selected={activeTab === 'globals'}
+                          onClick={() => {
+                            setActiveTab('globals');
+                          }}>
+                          Globals
+                        </Tabs.Tab>
+                      )}
+                      <Tabs.Tab
+                        selected={activeTab === 'tasks'}
+                        onClick={() => setActiveTab('tasks')}>
+                        Tasks
+                      </Tabs.Tab>
+                      {!!showDebugInfo && (
+                        <Tabs.Tab
+                          selected={activeTab === 'log'}
+                          onClick={() => {
+                            setActiveTab('log');
+                          }}>
+                          Log
+                        </Tabs.Tab>
+                      )}
+                    </Tabs>
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Button.Checkbox
+                      inline
+                      checked={showDebugInfo}
+                      tooltip="WARNING: Enabling debug info can cause significant lag for the entire server, especially when there is a large number of global variables."
+                      onClick={() => {
+                        if (showDebugInfo && activeTab !== 'tasks') {
+                          setActiveTab('tasks');
+                        }
+                        act('toggleShowDebugInfo');
+                      }}>
+                      Show Debug Info
+                    </Button.Checkbox>
+                  </Stack.Item>
+                </Stack>
                 <Section fill scrollable scrollableHorizontal width="100%">
                   {tabContent}
                 </Section>

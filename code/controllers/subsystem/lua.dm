@@ -1,8 +1,3 @@
-//world/proc/shelleo
-#define SHELLEO_ERRORLEVEL 1
-#define SHELLEO_STDOUT 2
-#define SHELLEO_STDERR 3
-
 #define SSLUA_INIT_FAILED 2
 
 SUBSYSTEM_DEF(lua)
@@ -49,19 +44,10 @@ SUBSYSTEM_DEF(lua)
 		return time
 
 /datum/controller/subsystem/lua/OnConfigLoad()
-	// Get the current working directory - we need it to set the LUAU_PATH environment variable
-	var/here = world.shelleo(world.system_type == MS_WINDOWS ? "cd" : "pwd")[SHELLEO_STDOUT]
-	here = replacetext(here, "\n", "")
-	var/last_char = copytext_char(here, -1)
-	if(last_char != "/" && last_char != "\\")
-		here += "/"
-
 	// Read the paths from the config file
 	var/list/lua_path = list()
 	var/list/config_paths = CONFIG_GET(str_list/lua_path)
 	for(var/path in config_paths)
-		if(path[1] != "/")
-			path = here + path
 		lua_path += path
 	world.SetConfig("env", "LUAU_PATH", jointext(lua_path, ";"))
 
@@ -152,15 +138,7 @@ SUBSYSTEM_DEF(lua)
 				break
 
 	// Update every lua editor TGUI open for each state that had a task awakened or resumed
-	for(var/state in affected_states)
-		var/list/editor_list = LAZYACCESS(editors, "\ref[state]")
-		if(editor_list)
-			for(var/datum/lua_editor/editor in editor_list)
-				SStgui.update_uis(editor)
-
-//world/proc/shelleo
-#undef SHELLEO_ERRORLEVEL
-#undef SHELLEO_STDOUT
-#undef SHELLEO_STDERR
+	for(var/datum/lua_state/state in affected_states)
+		INVOKE_ASYNC(state, /datum/lua_state.proc/update_editors)
 
 #undef SSLUA_INIT_FAILED

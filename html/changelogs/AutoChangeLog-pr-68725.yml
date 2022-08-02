@@ -1,0 +1,4 @@
+author: "Twaticus"
+delete-after: True
+changes: 
+  - imageadd: "Converts some families gear into recolorable items in the clothesvendor. Includes a hat, scarf, 3 jackets, football gear, and buttondown shirt with shorts/pants. Adds a recolorable waistcoat."

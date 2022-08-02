@@ -1,0 +1,4 @@
+author: "EOBGames"
+delete-after: True
+changes: 
+  - rscadd: "Nanotrasen has implemented a new system of Threat Advisories to inform stations of the relative Dynamic threat to their stations by sector."
