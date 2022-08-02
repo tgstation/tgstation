@@ -49,8 +49,7 @@
 		C = new /obj/structure/closet/crate/secure/owned(A, paying_account)
 		C.name = "[crate_name] - Purchased by [paying_account.account_holder]"
 	else if(!crate_type)
-		stack_trace("tried to generate a supply pack without a valid crate type")
-		return
+		CHRASH("tried to generate a supply pack without a valid crate type")
 	else
 		C = new crate_type(A)
 		C.name = crate_name
