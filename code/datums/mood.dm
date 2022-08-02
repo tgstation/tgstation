@@ -21,7 +21,7 @@
 	/// Modifier to allow certain mobs to be less affected by moodlets
 	var/mood_modifier = 1
 	/// Used to track what stage of moodies they're on
-	var/mood_level = 5
+	var/mood_level = MOOD_LEVEL_NEUTRAL
 	/// To track what stage of sanity they're on
 	var/sanity_level = SANITY_LEVEL_NEUTRAL
 	/// Is the owner being punished for low mood? if so, how much?
@@ -69,23 +69,23 @@
 /datum/mood/process(delta_time)
 	var/mob/living/mob_parent = parent?.resolve()
 	switch(mood_level)
-		if(1)
+		if(MOOD_LEVEL_SAD4)
 			set_sanity(sanity - 0.3 * delta_time, SANITY_INSANE)
-		if(2)
+		if(MOOD_LEVEL_SAD3)
 			set_sanity(sanity - 0.15 * delta_time, SANITY_INSANE)
-		if(3)
+		if(MOOD_LEVEL_SAD2)
 			set_sanity(sanity - 0.1 * delta_time, SANITY_CRAZY)
-		if(4)
+		if(MOOD_LEVEL_SAD1)
 			set_sanity(sanity - 0.05 * delta_time, SANITY_UNSTABLE)
-		if(5)
+		if(MOOD_LEVEL_NEUTRAL)
 			set_sanity(sanity, SANITY_UNSTABLE) //This makes sure that mood gets increased should you be below the minimum.
-		if(6)
+		if(MOOD_LEVEL_HAPPY1)
 			set_sanity(sanity + 0.2 * delta_time, SANITY_UNSTABLE)
-		if(7)
+		if(MOOD_LEVEL_HAPPY2)
 			set_sanity(sanity + 0.3 * delta_time, SANITY_UNSTABLE)
-		if(8)
+		if(MOOD_LEVEL_HAPPY3)
 			set_sanity(sanity + 0.4 * delta_time, SANITY_NEUTRAL, SANITY_MAXIMUM)
-		if(9)
+		if(MOOD_LEVEL_HAPPY4)
 			set_sanity(sanity + 0.6 * delta_time, SANITY_NEUTRAL, SANITY_MAXIMUM)
 	handle_nutrition()
 
@@ -202,24 +202,24 @@
 	shown_mood *= mood_modifier
 
 	switch(mood)
-		if (-INFINITY to MOOD_LEVEL_SAD4)
-			mood_level = 1
-		if (MOOD_LEVEL_SAD4 to MOOD_LEVEL_SAD3)
-			mood_level = 2
-		if (MOOD_LEVEL_SAD3 to MOOD_LEVEL_SAD2)
-			mood_level = 3
-		if (MOOD_LEVEL_SAD2 to MOOD_LEVEL_SAD1)
-			mood_level = 4
-		if (MOOD_LEVEL_SAD1 to MOOD_LEVEL_HAPPY1)
-			mood_level = 5
-		if (MOOD_LEVEL_HAPPY1 to MOOD_LEVEL_HAPPY2)
-			mood_level = 6
-		if (MOOD_LEVEL_HAPPY2 to MOOD_LEVEL_HAPPY3)
-			mood_level = 7
-		if (MOOD_LEVEL_HAPPY3 to MOOD_LEVEL_HAPPY4)
-			mood_level = 8
-		if (MOOD_LEVEL_HAPPY4 to INFINITY)
-			mood_level = 9
+		if (-INFINITY to MOOD_SAD4)
+			mood_level = MOOD_LEVEL_SAD4
+		if (MOOD_SAD4 to MOOD_SAD3)
+			mood_level = MOOD_LEVEL_SAD3
+		if (MOOD_SAD3 to MOOD_SAD2)
+			mood_level = MOOD_LEVEL_SAD2
+		if (MOOD_SAD2 to MOOD_SAD1)
+			mood_level = MOOD_LEVEL_SAD1
+		if (MOOD_SAD1 to MOOD_HAPPY1)
+			mood_level = MOOD_LEVEL_NEUTRAL
+		if (MOOD_HAPPY1 to MOOD_HAPPY2)
+			mood_level = MOOD_LEVEL_HAPPY1
+		if (MOOD_HAPPY2 to MOOD_HAPPY3)
+			mood_level = MOOD_LEVEL_HAPPY2
+		if (MOOD_HAPPY3 to MOOD_HAPPY4)
+			mood_level = MOOD_LEVEL_HAPPY3
+		if (MOOD_HAPPY4 to INFINITY)
+			mood_level = MOOD_LEVEL_HAPPY4
 
 	update_mood_icon()
 
@@ -323,23 +323,23 @@
 
 	msg += span_notice("My current mood: ") //Short term
 	switch(mood_level)
-		if(1)
+		if(MOOD_LEVEL_SAD4)
 			msg += "[span_boldwarning("I wish I was dead!")]\n"
-		if(2)
+		if(MOOD_LEVEL_SAD3)
 			msg += "[span_boldwarning("I feel terrible...")]\n"
-		if(3)
+		if(MOOD_LEVEL_SAD2)
 			msg += "[span_boldwarning("I feel very upset.")]\n"
-		if(4)
+		if(MOOD_LEVEL_SAD1)
 			msg += "[span_warning("I'm a bit sad.")]\n"
-		if(5)
+		if(MOOD_LEVEL_NEUTRAL)
 			msg += "[span_grey("I'm alright.")]\n"
-		if(6)
+		if(MOOD_LEVEL_HAPPY1)
 			msg += "[span_nicegreen("I feel pretty okay.")]\n"
-		if(7)
+		if(MOOD_LEVEL_HAPPY2)
 			msg += "[span_boldnicegreen("I feel pretty good.")]\n"
-		if(8)
+		if(MOOD_LEVEL_HAPPY3)
 			msg += "[span_boldnicegreen("I feel amazing!")]\n"
-		if(9)
+		if(MOOD_LEVEL_HAPPY4)
 			msg += "[span_boldnicegreen("I love life!")]\n"
 
 	msg += "[span_notice("Moodlets:")]\n"//All moodlets
@@ -347,15 +347,15 @@
 		for(var/category in mood_events)
 			var/datum/mood_event/event = mood_events[category]
 			switch(event.mood_change)
-				if(-INFINITY to MOOD_LEVEL_SAD2)
+				if(-INFINITY to MOOD_SAD2)
 					msg += span_boldwarning(event.description + "\n")
-				if(MOOD_LEVEL_SAD2 to MOOD_LEVEL_SAD1)
+				if(MOOD_SAD2 to MOOD_SAD1)
 					msg += span_warning(event.description + "\n")
-				if(MOOD_LEVEL_SAD1 to MOOD_LEVEL_HAPPY1)
+				if(MOOD_SAD1 to MOOD_HAPPY1)
 					msg += span_grey(event.description + "\n")
-				if(MOOD_LEVEL_HAPPY1 to MOOD_LEVEL_HAPPY2)
+				if(MOOD_HAPPY1 to MOOD_HAPPY2)
 					msg += span_nicegreen(event.description + "\n")
-				if(MOOD_LEVEL_HAPPY2 to INFINITY)
+				if(MOOD_HAPPY2 to INFINITY)
 					msg += span_boldnicegreen(event.description + "\n")
 	else
 		msg += "[span_grey("I don't have much of a reaction to anything right now.")]\n"

@@ -137,17 +137,17 @@
 
 	if(mob_mood)
 		switch(mob_mood.shown_mood)
-			if(-INFINITY to MOOD_LEVEL_SAD4)
+			if(-INFINITY to MOOD_SAD4)
 				. += "[t_He] look[p_s()] depressed."
-			if(MOOD_LEVEL_SAD4 to MOOD_LEVEL_SAD3)
+			if(MOOD_SAD4 to MOOD_SAD3)
 				. += "[t_He] look[p_s()] very sad."
-			if(MOOD_LEVEL_SAD3 to MOOD_LEVEL_SAD2)
+			if(MOOD_SAD3 to MOOD_SAD2)
 				. += "[t_He] look[p_s()] a bit down."
-			if(MOOD_LEVEL_HAPPY2 to MOOD_LEVEL_HAPPY3)
+			if(MOOD_HAPPY2 to MOOD_HAPPY3)
 				. += "[t_He] look[p_s()] quite happy."
-			if(MOOD_LEVEL_HAPPY3 to MOOD_LEVEL_HAPPY4)
+			if(MOOD_HAPPY3 to MOOD_HAPPY4)
 				. += "[t_He] look[p_s()] very happy."
-			if(MOOD_LEVEL_HAPPY4 to INFINITY)
+			if(MOOD_HAPPY4 to INFINITY)
 				. += "[t_He] look[p_s()] ecstatic."
 	. += "</span>"
 

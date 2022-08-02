@@ -1,13 +1,17 @@
 /datum/mood_event
 	/// Description of the mood event
 	var/description
-	/// The amount the mood will change
+	/// An integer value that affects overall sanity over time
 	var/mood_change = 0
 	/// How long this mood event should last
 	var/timeout = 0
 	/// Is this mood event hidden on examine
 	var/hidden = FALSE
-	/// string of what category this mood was added in as
+	/**
+	 * A category to put multiple mood events. If one of the mood events in the category
+	 * is active while another mood event (from the same category) is triggered it will remove
+	 * the effects of the current mood event and replace it with the new one
+	 */
 	var/category
 	/// Icon state of the unique mood event icon, if applicable
 	var/special_screen_obj
