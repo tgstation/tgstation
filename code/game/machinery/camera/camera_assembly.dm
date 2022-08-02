@@ -133,7 +133,7 @@
 		user.balloon_alert_to_viewers("stopped [state == STATE_WELDED ? "un" : null]welding!")
 		return
 	state = ((state == STATE_WELDED) ? STATE_WRENCHED : STATE_WELDED)
-	set_anchored((state == STATE_WELDED) ? TRUE : FALSE)
+	set_anchored(state == STATE_WELDED)
 	user.balloon_alert_to_viewers(state == STATE_WELDED ? "welded" : "unwelded")
 
 
