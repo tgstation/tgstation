@@ -1,7 +1,7 @@
 import { clamp } from 'common/math';
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Box, Button, Dimmer, Icon, Section, Stack } from '../components';
+import { Box, Blink, Button, Dimmer, Icon, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type FloorData = {
@@ -10,8 +10,6 @@ type FloorData = {
 };
 
 type ElevatorPanelData = {
-  // What Z the panel itself is on
-  panel_z: number;
   // What Z the lift is on
   current_floor: number;
   // Station emergency level - "Red", "Green", etc
@@ -24,6 +22,8 @@ type ElevatorPanelData = {
   lift_exists: BooleanLike;
   // State: Is the lift moving?
   currently_moving: BooleanLike;
+  // What floor are we currently moving to?
+  currently_moving_to_floor: number | null;
   // A list of all floors we can move around to
   all_floor_data: FloorData[];
 };
@@ -32,7 +32,6 @@ export const ElevatorPanel = (props, context) => {
   const { data, act } = useBackend<ElevatorPanelData>(context);
 
   const {
-    panel_z,
     current_floor,
     emergency_level,
     is_emergency,
@@ -61,16 +60,7 @@ export const ElevatorPanel = (props, context) => {
         <Stack height="100%" vertical>
           <Stack.Item>
             <Section title="Floor" align="center">
-              <Box
-                backgroundColor="black"
-                textColor="white"
-                style={{
-                  'font-family': 'Monospace',
-                  'font-size': '50px',
-                  'font-weight': 'bold',
-                }}>
-                {current_floor - 1}
-              </Box>
+              <FloorPanel />
             </Section>
           </Stack.Item>
           <Stack.Item grow>
@@ -85,7 +75,9 @@ export const ElevatorPanel = (props, context) => {
                         'font-size': '14px',
                       }}
                       fluid
-                      color={'good'}
+                      ellipsis
+                      textAlign="left"
+                      icon="circle"
                       disabled={floor.z_level === current_floor}
                       onClick={() => act('move_lift', { z: floor.z_level })}>
                       {floor.name}
@@ -99,6 +91,8 @@ export const ElevatorPanel = (props, context) => {
             <Section>
               {doors_open ? (
                 <Button
+                  width="65%"
+                  icon="door-closed"
                   tooltip={
                     'Closes all elevator doors, except \
                     those on the level of the elevator.'
@@ -108,6 +102,8 @@ export const ElevatorPanel = (props, context) => {
                 </Button>
               ) : (
                 <Button
+                  width="65%"
+                  icon="door-open"
                   disabled={!is_emergency}
                   color={'bad'}
                   tooltip={
@@ -150,5 +146,60 @@ const MovingDimmer = () => {
         <Stack.Item fontSize="16px">Moving...</Stack.Item>
       </Stack>
     </Dimmer>
+  );
+};
+
+const FloorPanel = (props, context) => {
+  const { data } = useBackend<ElevatorPanelData>(context);
+  const { current_floor, currently_moving, currently_moving_to_floor } = data;
+
+  return (
+    <Stack width="50%" backgroundColor="black">
+      <Stack.Item ml={2} mr={1} mt={1} mb={1}>
+        <Stack vertical align="center">
+          <Stack.Item>
+            <ArrowIcon
+              icon="arrow-up"
+              is_moving={
+                currently_moving &&
+                currently_moving_to_floor &&
+                currently_moving_to_floor > current_floor
+              }
+            />
+          </Stack.Item>
+          <Stack.Item>
+            <ArrowIcon
+              icon="arrow-down"
+              is_moving={
+                currently_moving &&
+                currently_moving_to_floor &&
+                currently_moving_to_floor < current_floor
+              }
+            />
+          </Stack.Item>
+        </Stack>
+      </Stack.Item>
+      <Stack.Item mt={1}>
+        <Box
+          textColor="white"
+          style={{
+            'font-family': 'Monospace',
+            'font-size': '50px',
+            'font-weight': 'bold',
+          }}>
+          {current_floor - 1}
+        </Box>
+      </Stack.Item>
+    </Stack>
+  );
+};
+
+const ArrowIcon = (props) => {
+  return props.is_moving ? (
+    <Blink time={500} interval={500}>
+      <Icon name={props.icon} color={'green'} size={2} />
+    </Blink>
+  ) : (
+    <Icon name={props.icon} color={'grey'} size={2} />
   );
 };

@@ -31,8 +31,6 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 	///overridable ID string to link control units to this specific lift_master datum. created by placing a lift id landmark object
 	///somewhere on the tram, if its anywhere on the tram we'll find it in init and set this to whatever it specifies
 	var/specific_lift_id
-	///what directions we're allowed to move
-	var/allowed_travel_directions = ALL
 
 	///if true, the lift cannot be manually moved.
 	var/controls_locked = FALSE

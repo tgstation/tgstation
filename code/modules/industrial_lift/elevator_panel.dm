@@ -39,6 +39,8 @@
 	var/list/preset_destination_names
 	/// TimerID to our door reset timer, made by emergency opening doors
 	var/door_reset_timerid
+	/// What z-level did we move to last?
+	var/last_move_target
 
 /obj/machinery/elevator_control_panel/Initialize(mapload)
 	. = ..()
@@ -230,7 +232,6 @@
 /obj/machinery/elevator_control_panel/ui_data(mob/user)
 	var/list/data = list()
 
-	data["panel_z"] = z
 	data["emergency_level"] = capitalize(SSsecurity_level.get_current_level_as_text())
 	data["is_emergency"] = SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED
 	data["doors_open"] = !!door_reset_timerid
@@ -239,11 +240,13 @@
 	if(lift)
 		data["lift_exists"] = TRUE
 		data["currently_moving"] = lift.controls_locked == LIFT_PLATFORM_LOCKED
+		data["currently_moving_to_floor"] = last_move_target
 		data["current_floor"] = lift.lift_platforms[1].z
 
 	else
 		data["lift_exists"] = FALSE
-		data["current_floor"] = 0
+		data["currently_moving"] = FALSE
+		data["current_floor"] = 0 // 0 shows up as "Floor -1" in the UI, which is fine for what it is
 
 	return data
 
@@ -283,6 +286,7 @@
 				return TRUE // We shouldn't be moving anything, update UI
 
 			INVOKE_ASYNC(lift, /datum/lift_master.proc/move_to_zlevel, desired_z, CALLBACK(src, .proc/check_panel), usr)
+			last_move_target = desired_z
 			return TRUE // Succcessfully initiated a move, regardless of whether it actually works update the UI
 
 		if("emergency_door")
