@@ -3081,7 +3081,7 @@
 	dir = 8
 	},
 /obj/item/paper/crumpled/bloody{
-	info = "I've sealed the place off. I'm taking the last snowtreader to look for help. Please, if you find this place, leave. It's not safe here. We made them angry."
+	default_raw_text = "I've sealed the place off. I'm taking the last snowtreader to look for help. Please, if you find this place, leave. It's not safe here. We made them angry."
 	},
 /turf/open/floor/iron/edge{
 	dir = 1

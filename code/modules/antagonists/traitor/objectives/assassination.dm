@@ -251,7 +251,7 @@
 	icon_state = "syndicate_calling_card"
 	color = "#ff5050"
 	show_written_words = FALSE
-	info = {"
+	default_raw_text = {"
 	<b>**Death to Nanotrasen.**</b><br><br>
 
 	Only through the inviolable cooperation of corporations known as The Syndicate, can Nanotrasen and its autocratic tyrants be silenced.

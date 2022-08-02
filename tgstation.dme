@@ -4532,7 +4532,6 @@
 #include "code\modules\wiremod\components\action\light.dm"
 #include "code\modules\wiremod\components\action\mmi.dm"
 #include "code\modules\wiremod\components\action\pathfind.dm"
-#include "code\modules\wiremod\components\action\printer.dm"
 #include "code\modules\wiremod\components\action\pull.dm"
 #include "code\modules\wiremod\components\action\radio.dm"
 #include "code\modules\wiremod\components\action\soundemitter.dm"
