@@ -22,3 +22,12 @@
       (like autolathes)
   distributivgesetz:
   - qol: Vault bank machine checks for access before alerting.
+2022-08-02:
+  Fikou:
+  - qol: nuke ops id trims have a sechud icon
+  - bugfix: chameleon cards now fix their colors upon resetting
+  Jacquerel:
+  - bugfix: Creatures which can't experience emotions will no longer attempt to do
+      so upon seeing a traitorous poster.
+  SuperSlayer:
+  - bugfix: Aliens help/harm intent now works normally if used on other aliens
