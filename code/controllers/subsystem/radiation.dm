@@ -33,8 +33,7 @@ SUBSYSTEM_DEF(radiation)
 	var/list/cached_rad_insulations = list()
 	var/list/cached_turfs_to_process = pulse_information.turfs_to_process
 	var/turfs_iterated = 0
-	for (var/turf/turf in cached_turfs_to_process)
-		var/turf/turf_to_irradiate = turf
+	for (var/turf/turf_to_irradiate as anything in cached_turfs_to_process)
 		turfs_iterated += 1
 		for (var/atom/movable/target in turf_to_irradiate)
 			if (!can_irradiate_basic(target))
