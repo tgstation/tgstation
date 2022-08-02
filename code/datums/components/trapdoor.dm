@@ -139,7 +139,7 @@
 	SIGNAL_HANDLER
 	var/turf/open/dying_trapdoor = parent
 	if((!IS_OPEN(dying_trapdoor) && !IS_OPEN(path)) || (path == /turf/open/floor/plating && trapdoor_turf_path != /turf/open/floor/plating)) //not a process of the trapdoor
-		if(istype(parent, /turf/open/floor/plating) && !ispath(path, /turf/closed) && !ispath(path, /turf/open/openspace)) // allow people to place tiles on plating without breaking the trapdoor
+		if(!IS_OPEN(parent) && !ispath(path, /turf/closed) && !ispath(path, /turf/open/openspace)) // allow people to place tiles on plating / change tiles without breaking the trapdoor
 			post_change_callbacks += CALLBACK(src, /datum/component/trapdoor.proc/carry_over_trapdoor, path, conspicuous, assembly)
 			return
 		// otherwise, break trapdoor
@@ -154,7 +154,7 @@
 /**
  * ## carry_over_trapdoor
  *
- * applies the trapdoor to the new turf (created by the last trapdoor), but without an assembly
+ * applies the trapdoor to the new turf (created by the last trapdoor)
  * apparently callbacks with arguments on invoke and the callback itself have the callback args go first. interesting!
  */
 /datum/component/trapdoor/proc/carry_over_trapdoor(trapdoor_turf_path, conspicuous, assembly, turf/new_turf)
