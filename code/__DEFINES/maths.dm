@@ -233,3 +233,6 @@
 
 /// The number of cells in a taxicab circle (rasterized diamond) of radius X.
 #define DIAMOND_AREA(X) (1 + 2*(X)*((X)+1))
+
+/// Checks if a number needs to have a 0 placed infront, 24 hour format. Takes a number, returns a string.
+#define TIMESTAMP_TO_PROPER_FORMAT(number) (number < 10 ? "0[number]" : number)

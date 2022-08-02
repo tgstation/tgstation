@@ -69,8 +69,8 @@ SUBSYSTEM_DEF(day_night)
  * Returns HH:MM
  */
 /datum/controller/subsystem/day_night/proc/get_twentyfourhour_timestamp()
-	var/hour_entry = current_hour < 10 ? "0[current_hour]" : current_hour
-	var/minute_entry = current_minute < 10 ? "0[current_minute]" : current_minute
+	var/hour_entry = TIMESTAMP_TO_PROPER_FORMAT(current_hour)
+	var/minute_entry = TIMESTAMP_TO_PROPER_FORMAT(current_minute)
 	return "[hour_entry]:[minute_entry]"
 
 /**
