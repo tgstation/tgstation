@@ -130,7 +130,7 @@
 	user.balloon_alert_to_viewers("[state == STATE_WELDED ? "un" : null]welding...")
 	audible_message(span_hear("You hear welding."))
 	if(!tool.use_tool(src, user, 2 SECONDS, amount=3, volume = 50))
-		user.balloon_alert_to_viewers("stopped [state == STATE_WELDED ? "un" : null]welding [src]")
+		user.balloon_alert_to_viewers("stopped [state == STATE_WELDED ? "un" : null]welding!")
 		return
 	state = ((state == STATE_WELDED) ? STATE_WRENCHED : STATE_WELDED)
 	set_anchored((state == STATE_WELDED) ? TRUE : FALSE)
