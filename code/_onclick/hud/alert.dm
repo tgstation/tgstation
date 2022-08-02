@@ -12,7 +12,7 @@
  *flicks are forwarded to master
  *override makes it so the alert is not replaced until cleared by a clear_alert with clear_override, and it's used for hallucinations.
  */
-/mob/proc/throw_alert(category, type, severity, obj/new_master, override = FALSE, timeout_override, no_anim)
+/mob/proc/throw_alert(category, type, severity, obj/new_master, override = FALSE, no_anim)
 
 	if(!category || QDELETED(src))
 		return
@@ -64,8 +64,6 @@
 		thealert.transform = matrix(32, 6, MATRIX_TRANSLATE)
 		animate(thealert, transform = matrix(), time = 2.5, easing = CUBIC_EASING)
 
-	if(timeout_override)
-		thealert.timeout = timeout_override
 	if(thealert.timeout)
 		addtimer(CALLBACK(src, .proc/alert_timeout, thealert, category), thealert.timeout)
 		thealert.timeout = world.time + thealert.timeout - world.tick_lag
@@ -117,6 +115,7 @@
 
 /atom/movable/screen/alert/MouseExited()
 	closeToolTip(usr)
+
 
 //Gas alerts
 /atom/movable/screen/alert/not_enough_oxy
@@ -732,6 +731,32 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	timeout = 300
 	var/atom/target = null
 	var/action = NOTIFY_JUMP
+
+/atom/movable/screen/alert/notify_action/Destroy()
+	target = null
+	return ..()
+
+/atom/movable/screen/alert/notify_action/Click()
+	. = ..()
+	if(!.)
+	if(!target)
+		return
+	var/mob/dead/observer/ghost_owner = owner
+	if(!istype(ghost_owner))
+		return
+	switch(action)
+		if(NOTIFY_ATTACK)
+			target.attack_ghost(ghost_owner)
+		if(NOTIFY_JUMP)
+			var/turf/target_turf = get_turf(target)
+			if(target_turf && isturf(target_turf))
+				ghost_owner.abstract_move(target_turf)
+		if(NOTIFY_ORBIT)
+			ghost_owner.ManualFollow(target)
+
+/atom/movable/screen/alert/poll_alert
+	name = "Looking for candidates"
+	icon_state = "template"
 	var/show_time_left = FALSE // If true you need to call START_PROCESSING manually
 	var/image/time_left_overlay // The last image showing the time left
 	var/image/signed_up_overlay // image showing that you're signed up
@@ -739,7 +764,12 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	var/image/candidates_num_overlay
 	var/datum/candidate_poll/poll // If set, on Click() it'll register the player as a candidate
 
-/atom/movable/screen/alert/notify_action/process()
+/atom/movable/screen/alert/poll_alert/Initialize(mapload)
+	. = ..()
+	desc = poll.question
+	timeout = poll.duration
+
+/atom/movable/screen/alert/poll_alert/process()
 	if(show_time_left)
 		var/timeleft = timeout - world.time
 		if(timeleft <= 0)
@@ -756,20 +786,13 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		qdel(O)
 	if(poll)
 		var/num_same = 1
-		for(var/datum/candidate_poll/P2 in SSghost_spawns.currently_polling)
+		for(var/datum/candidate_poll/P2 in SSpolling.currently_polling)
 			if(P2 != poll && P2.hash == poll.hash && !P2.finished)
 				num_same++
 		display_stacks(num_same)
 	..()
 
-/atom/movable/screen/alert/notify_action/Destroy()
-	target = null
-	if(signed_up_overlay)
-		cut_overlay(signed_up_overlay)
-		qdel(signed_up_overlay)
-	return ..()
-
-/atom/movable/screen/alert/notify_action/Click(location, control, params)
+/atom/movable/screen/alert/poll_alert/Click(location, control, params)
 	. = ..()
 	if(!.)
 		return
@@ -781,8 +804,10 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		if(LAZYACCESS(modifiers, ALT_CLICK))
 			if(!(ghost.ckey in GLOB.poll_ignore[poll.ignoring_category]))
 				poll.never_for_this_round(ghost)
+				color = "red"
 				return
 			poll.never_for_this_round(ghost, undoing = TRUE)
+			color = initial(color)
 			return
 		var/success
 		if(ghost in poll.signed_up)
@@ -792,18 +817,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		if(success)
 			// Add a small overlay to indicate we've signed up
 			update_signed_up_alert()
-	else if(target)
-		switch(action)
-			if(NOTIFY_ATTACK)
-				target.attack_ghost(ghost)
-			if(NOTIFY_JUMP)
-				var/turf/target_turf = get_turf(target)
-				if(target_turf && isturf(target_turf))
-					ghost.abstract_move(target_turf)
-			if(NOTIFY_ORBIT)
-				ghost.ManualFollow(target)
 
-/atom/movable/screen/alert/notify_action/Topic(href, href_list)
+/atom/movable/screen/alert/poll_alert/Topic(href, href_list)
 	if(!href_list["signup"])
 		return
 	if(!poll)
@@ -815,7 +830,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		poll.sign_up(ghost)
 	update_signed_up_alert()
 
-/atom/movable/screen/alert/notify_action/proc/update_signed_up_alert()
+/atom/movable/screen/alert/poll_alert/proc/update_signed_up_alert()
 	if(!signed_up_overlay)
 		signed_up_overlay = image('icons/hud/screen_gen.dmi', icon_state = "selector")
 		signed_up_overlay.plane = plane
@@ -824,7 +839,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	else
 		cut_overlay(signed_up_overlay)
 
-/atom/movable/screen/alert/notify_action/proc/update_candidates_number_overlay()
+/atom/movable/screen/alert/poll_alert/proc/update_candidates_number_overlay()
 	cut_overlay(candidates_num_overlay)
 	if(!length(poll.signed_up))
 		return
@@ -838,7 +853,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	add_overlay(candidates_num_overlay)
 	qdel(O)
 
-/atom/movable/screen/alert/notify_action/proc/display_stacks(stacks = 1)
+/atom/movable/screen/alert/poll_alert/proc/display_stacks(stacks = 1)
 	cut_overlay(stacks_overlay)
 	if(stacks <= 1)
 		return

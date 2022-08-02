@@ -247,7 +247,7 @@
 
 	currently_polling_mobs += target_mob
 
-	var/list/possible_candidates = SSghost_spawns.poll_candidates(question, jobban_type, be_special_flag, poll_time, ignore_category)
+	var/list/possible_candidates = SSpolling.poll_candidates(question, jobban_type, be_special_flag, poll_time, ignore_category)
 
 	currently_polling_mobs -= target_mob
 	if(!target_mob || QDELETED(target_mob) || !target_mob.loc)
@@ -267,7 +267,7 @@
  * * ignore_category - Unknown/needs further documentation.
  */
 /proc/poll_candidates_for_mobs(question, jobban_type, be_special_flag = 0, poll_time = 30 SECONDS, list/mobs, ignore_category = null)
-	var/list/candidate_list = SSghost_spawns.poll_candidates(question, jobban_type, be_special_flag, poll_time, ignore_category)
+	var/list/candidate_list = SSpolling.poll_candidates(question, jobban_type, be_special_flag, poll_time, ignore_category)
 
 	for(var/mob/potential_mob as anything in mobs)
 		if(QDELETED(potential_mob) || !potential_mob.loc)

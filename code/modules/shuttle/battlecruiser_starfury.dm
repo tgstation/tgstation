@@ -141,7 +141,7 @@
  */
 /proc/summon_battlecruiser(datum/team/battlecruiser/team)
 
-	var/list/candidates = SSghost_spawns.poll_candidates("Do you wish to be considered for battlecruiser crew?", ROLE_TRAITOR)
+	var/list/candidates = SSpolling.poll_candidates("Do you wish to be considered for battlecruiser crew?", ROLE_TRAITOR)
 	shuffle_inplace(candidates)
 
 	var/datum/map_template/ship = SSmapping.map_templates["battlecruiser_starfury.dmm"]

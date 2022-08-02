@@ -1,5 +1,5 @@
-SUBSYSTEM_DEF(ghost_spawns)
-	name = "Ghost Spawns"
+SUBSYSTEM_DEF(polling)
+	name = "Polling"
 	init_order = INIT_ORDER_EVENTS
 	flags = SS_BACKGROUND
 	wait = 1 SECONDS
@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(ghost_spawns)
 	/// The poll that's closest to finishing
 	var/datum/candidate_poll/next_poll_to_finish
 
-/datum/controller/subsystem/ghost_spawns/fire()
+/datum/controller/subsystem/polling/fire()
 	if(!polls_active)
 		return
 	if(!currently_polling) // if polls_active is TRUE then this shouldn't happen, but still..
@@ -25,22 +25,7 @@ SUBSYSTEM_DEF(ghost_spawns)
 		if(P.time_left() <= 0)
 			polling_finished(P)
 
-/*
-Polls for candidates with a question and a preview of the role
-
-This proc replaces /proc/pollCandidates.
-Should NEVER be used in a proc that has waitfor set to FALSE/0 (due to #define UNTIL)
-Arguments:
-question - The question to ask to potential candidates
-role - The role to poll for. Should be a ROLE_x enum. If set, potential candidates who aren't eligible will be ignored
-antag_age_check - Whether to filter out potential candidates who don't have an old enough account
-poll_time - How long to poll for in deciseconds
-min_hours - The amount of hours needed for a potential candidate to be eligible
-flash_window - Whether the poll should flash a potential candidate's game window
-check_antaghud - Whether to filter out potential candidates who enabled AntagHUD
-source - The atom, atom prototype, icon or mutable appearance to display as an icon in the alert
-*/
-/datum/controller/subsystem/ghost_spawns/proc/poll_candidates(question, jobban_type, be_special_flag, poll_time = 30 SECONDS, ignore_category = null, flash_window = TRUE, candidates, source)
+/datum/controller/subsystem/polling/proc/poll_candidates(question, jobban_type, be_special_flag, poll_time = 30 SECONDS, ignore_category = null, flash_window = TRUE, candidates, source)
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
 		return
 	log_game("Polling candidates [be_special_flag ? "for [be_special_flag]" : "\"[question]\""] for [poll_time / 10] seconds")
@@ -56,7 +41,7 @@ source - The atom, atom prototype, icon or mutable appearance to display as an i
 	if(!next_poll_to_finish || poll_time < next_poll_to_finish.time_left())
 		next_poll_to_finish = P
 
-	var/category = "[P.hash]_notify_action"
+	var/category = "[P.hash]_poll_alert"
 
 	for(var/mob/dead/observer/M in GLOB.player_list)
 		if(!is_eligible(M, be_special_flag, jobban_type, ignore_category))
@@ -68,7 +53,7 @@ source - The atom, atom prototype, icon or mutable appearance to display as an i
 
 		// If we somehow send two polls for the same mob type, but with a duration on the second one shorter than the time left on the first one,
 		// we need to keep the first one's timeout rather than use the shorter one
-		var/atom/movable/screen/alert/notify_action/current_alert = LAZYACCESS(M.alerts, category)
+		var/atom/movable/screen/alert/poll_alert/current_alert = LAZYACCESS(M.alerts, category)
 		var/alert_time = poll_time
 		var/alert_poll = P
 		if(current_alert && current_alert.timeout > (world.time + poll_time - world.tick_lag))
@@ -76,13 +61,12 @@ source - The atom, atom prototype, icon or mutable appearance to display as an i
 			alert_poll = current_alert.poll
 
 		// Send them an on-screen alert
-		var/atom/movable/screen/alert/notify_action/A = M.throw_alert(category, /atom/movable/screen/alert/notify_action, timeout_override = alert_time, no_anim = TRUE)
+		var/atom/movable/screen/alert/poll_alert/A = M.throw_alert(category, /atom/movable/screen/alert/poll_alert, timeout_override = alert_time, no_anim = TRUE)
 		if(!A)
 			continue
 
 		A.icon = ui_style2icon(M.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
-		A.name = "Looking for candidates"
-		A.desc = "[question]\n\n(expires in [poll_time / 10] seconds)"
+		A.desc = "[question]"
 		A.show_time_left = TRUE
 		A.poll = alert_poll
 		A.poll.alert_button = A
@@ -128,18 +112,7 @@ source - The atom, atom prototype, icon or mutable appearance to display as an i
 	UNTIL(P.finished)
 	return P.signed_up
 
-/*
-Returns whether an observer is eligible to be an event mob
-
-Arguments:
-M - The mob to check eligibility
-role - The role to check eligibility for. Checks 1. the client has enabled the role 2. the account's age for this role if antag_age_check is TRUE
-antag_age_check - Whether to check the account's age or not for the given role.
-role_text - The role's clean text. Used for checking job bans to determine eligibility
-min_hours - The amount of minimum hours the client needs before being eligible
-check_antaghud - Whether to consider a client who enabled AntagHUD ineligible or not
-*/
-/datum/controller/subsystem/ghost_spawns/proc/is_eligible(mob/M, be_special_flag, jobban_type, the_ignore_category)
+/datum/controller/subsystem/polling/proc/is_eligible(mob/M, be_special_flag, jobban_type, the_ignore_category)
 	. = FALSE
 	if(!M.key || !M.client)
 		return
@@ -163,7 +136,7 @@ Can be called manually to finish a poll prematurely
 Arguments:
 P - The poll to finish
 */
-/datum/controller/subsystem/ghost_spawns/proc/polling_finished(datum/candidate_poll/P)
+/datum/controller/subsystem/polling/proc/polling_finished(datum/candidate_poll/P)
 	// Trim players who aren't eligible anymore
 	var/len_pre_trim = length(P.signed_up)
 	P.trim_candidates()
@@ -183,7 +156,7 @@ P - The poll to finish
 			if(!next_poll_to_finish || P2.time_left() < next_poll_to_finish.time_left())
 				next_poll_to_finish = P2
 
-/datum/controller/subsystem/ghost_spawns/stat_entry(msg)
+/datum/controller/subsystem/polling/stat_entry(msg)
 	msg += "Active: [length(currently_polling)] | Total: [total_polls]"
 	if(next_poll_to_finish)
 		msg += " | Next: [DisplayTimeText(next_poll_to_finish.time_left())] ([length(next_poll_to_finish.signed_up)] candidates)"
@@ -196,7 +169,7 @@ P - The poll to finish
 	var/duration // The duration of the poll
 	var/ignoring_category
 	var/list/mob/dead/observer/signed_up // The players who signed up to this poll
-	var/atom/movable/screen/alert/notify_action/alert_button
+	var/atom/movable/screen/alert/poll_alert/alert_button
 	var/time_started // The world.time at which the poll was created
 	var/finished = FALSE // Whether the polling is finished
 	var/hash // Used to categorize in the alerts system
@@ -238,7 +211,7 @@ silent - Whether no messages should appear or not. If not TRUE, signing up to th
 	if(!silent)
 		to_chat(M, span_notice("You have signed up for this role! A candidate will be picked randomly soon."))
 		// Sign them up for any other polls with the same mob type
-		for(var/existing_poll in SSghost_spawns.currently_polling)
+		for(var/existing_poll in SSpolling.currently_polling)
 			var/datum/candidate_poll/P = existing_poll
 			if(src != P && hash == P.hash && !(M in P.signed_up))
 				P.sign_up(M, TRUE)
@@ -271,7 +244,7 @@ silent - If TRUE, no messages will be sent to M about their removal.
 	if(!silent)
 		to_chat(M, span_notice("You have been unregistered as a candidate for this role. You can freely sign up again before the poll ends."))
 
-		for(var/existing_poll in SSghost_spawns.currently_polling)
+		for(var/existing_poll in SSpolling.currently_polling)
 			var/datum/candidate_poll/P = existing_poll
 			if(src != P && hash == P.hash && (M in P.signed_up))
 				P.remove_candidate(M, TRUE)
