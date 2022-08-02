@@ -1647,6 +1647,21 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/caves/second_outpost/researchcenter/engineering)
+"Ki" = (
+/obj/item/aicard,
+/obj/item/melee/baton/telescopic,
+/obj/item/clothing/under/rank/rnd/research_director,
+/obj/effect/turf_decal/tile/purple/opposingcorners{
+	dir = 8
+	},
+/obj/structure/closet/secure_closet{
+	icon_state = "rd";
+	name = "site director's locker";
+	req_access_txt = "away_science"
+	},
+/obj/item/pai_card,
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/caves/second_outpost/researchcenter/sitedirector)
 "Kp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2198,21 +2213,6 @@
 /obj/structure/sign/clock/directional/south,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/second_outpost/researchcenter)
-"VJ" = (
-/obj/item/aicard,
-/obj/item/paicard,
-/obj/item/melee/baton/telescopic,
-/obj/item/clothing/under/rank/rnd/research_director,
-/obj/effect/turf_decal/tile/purple/opposingcorners{
-	dir = 8
-	},
-/obj/structure/closet/secure_closet{
-	icon_state = "rd";
-	name = "site director's locker";
-	req_access_txt = "away_science"
-	},
-/turf/open/floor/iron/cafeteria,
-/area/awaymission/caves/second_outpost/researchcenter/sitedirector)
 "VK" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/decal/cleanable/dirt,
@@ -3450,7 +3450,7 @@ Wv
 PZ
 ZJ
 Nu
-VJ
+Ki
 PY
 fO
 fO

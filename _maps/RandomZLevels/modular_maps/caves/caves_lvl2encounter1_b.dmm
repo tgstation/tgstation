@@ -59,6 +59,14 @@
 /obj/item/storage/bag/ore,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
+"x" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/pai_card{
+	desc = "Downloads personal harm yellers to accompany its owner or others. Seems like this one didn't do its job well enough.";
+	name = "personal harm yeller"
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
 "y" = (
 /obj/structure/flora/ash/stem_shroom,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -104,13 +112,6 @@
 /area/template_noop)
 "O" = (
 /obj/structure/flora/ash/cap_shroom,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/template_noop)
-"R" = (
-/obj/effect/decal/cleanable/blood/old,
-/obj/item/paicard{
-	desc = "A harm alarm, it seems like it wasn't all that useful after all..."
-	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
 "S" = (
@@ -458,7 +459,7 @@ b
 b
 A
 Y
-R
+x
 l
 A
 b

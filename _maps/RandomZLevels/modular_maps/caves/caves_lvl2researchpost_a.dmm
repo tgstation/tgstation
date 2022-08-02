@@ -786,14 +786,6 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/second_outpost/researchcenter)
-"os" = (
-/obj/effect/turf_decal/tile/purple/anticorner/contrasted{
-	dir = 4
-	},
-/turf/open/floor/iron{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/awaymission/caves/second_outpost/researchcenter/dorm)
 "ou" = (
 /obj/structure/curtain,
 /obj/machinery/shower{
@@ -1654,6 +1646,21 @@
 /obj/item/reagent_containers/food/drinks/coffee,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/second_outpost/researchcenter/work)
+"Fe" = (
+/obj/item/aicard,
+/obj/item/melee/baton/telescopic,
+/obj/item/clothing/under/rank/rnd/research_director,
+/obj/effect/turf_decal/tile/purple/opposingcorners{
+	dir = 8
+	},
+/obj/structure/closet/secure_closet{
+	icon_state = "rd";
+	name = "site director's locker";
+	req_access_txt = "away_science"
+	},
+/obj/item/pai_card,
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/caves/second_outpost/researchcenter/sitedirector)
 "Fh" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -1798,6 +1805,15 @@
 	},
 /turf/open/floor/plating/lavaland_atmos,
 /area/template_noop)
+"Ik" = (
+/obj/effect/turf_decal/tile/purple/anticorner/contrasted{
+	dir = 4
+	},
+/obj/item/pai_card,
+/turf/open/floor/iron{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/dorm)
 "It" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2201,21 +2217,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/away/engineering,
 /turf/open/floor/plating,
 /area/awaymission/caves/second_outpost/researchcenter/engineering)
-"Sh" = (
-/obj/item/aicard,
-/obj/item/paicard,
-/obj/item/melee/baton/telescopic,
-/obj/item/clothing/under/rank/rnd/research_director,
-/obj/effect/turf_decal/tile/purple/opposingcorners{
-	dir = 8
-	},
-/obj/structure/closet/secure_closet{
-	icon_state = "rd";
-	name = "site director's locker";
-	req_access_txt = "away_science"
-	},
-/turf/open/floor/iron/cafeteria,
-/area/awaymission/caves/second_outpost/researchcenter/sitedirector)
 "Si" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/carpet,
@@ -3316,7 +3317,7 @@ hh
 IM
 cp
 Tb
-Sh
+Fe
 yx
 iR
 ZY
@@ -3493,7 +3494,7 @@ aR
 LL
 TZ
 TZ
-os
+Ik
 fe
 jf
 fe

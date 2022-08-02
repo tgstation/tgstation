@@ -708,23 +708,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/second_outpost/researchcenter/work)
-"mI" = (
-/obj/structure/closet/secure_closet{
-	icon_state = "rd";
-	name = "site director's locker";
-	req_access_txt = "away_science"
-	},
-/obj/item/aicard,
-/obj/item/paicard,
-/obj/item/melee/baton/telescopic,
-/obj/item/clothing/under/rank/rnd/research_director,
-/obj/effect/turf_decal/tile/purple/opposingcorners{
-	dir = 8
-	},
-/turf/open/floor/iron/cafeteria{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/awaymission/caves/second_outpost/researchcenter/sitedirector)
 "mK" = (
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
@@ -1180,6 +1163,23 @@
 /obj/structure/closet/secure_closet/freezer/kitchen,
 /turf/open/floor/iron/kitchen,
 /area/awaymission/caves/second_outpost/researchcenter/messhall)
+"wO" = (
+/obj/structure/closet/secure_closet{
+	icon_state = "rd";
+	name = "site director's locker";
+	req_access_txt = "away_science"
+	},
+/obj/item/aicard,
+/obj/item/melee/baton/telescopic,
+/obj/item/clothing/under/rank/rnd/research_director,
+/obj/effect/turf_decal/tile/purple/opposingcorners{
+	dir = 8
+	},
+/obj/item/pai_card,
+/turf/open/floor/iron/cafeteria{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/sitedirector)
 "wZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -3568,7 +3568,7 @@ dP
 Ds
 so
 En
-mI
+wO
 dP
 fO
 pt

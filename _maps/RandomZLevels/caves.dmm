@@ -4643,7 +4643,7 @@
 "uF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/reagent_containers/food/drinks/coffee{
-	list_reagents = list(/datum/reagent/consumable/coffee=10)
+	list_reagents = list(/datum/reagent/consumable/coffee = 10)
 	},
 /turf/open/floor/mineral/titanium/tiled{
 	initial_gas_mix = "LAVALAND_ATMOS"
@@ -10274,6 +10274,13 @@
 "VP" = (
 /turf/closed/indestructible/rock,
 /area/awaymission/caves/bmp_asteroid)
+"VQ" = (
+/obj/structure/table/wood,
+/obj/item/pai_card,
+/turf/open/floor/iron{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/barracks)
 "VR" = (
 /obj/structure/girder,
 /obj/effect/decal/cleanable/dirt,
@@ -10541,13 +10548,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/freezer,
-/area/awaymission/caves/second_outpost/barracks)
-"Xh" = (
-/obj/structure/table/wood,
-/obj/item/paicard,
-/turf/open/floor/iron{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
 /area/awaymission/caves/second_outpost/barracks)
 "Xi" = (
 /obj/effect/landmark/awaystart,
@@ -62679,7 +62679,7 @@ xI
 oT
 Qs
 Zu
-Xh
+VQ
 Py
 vI
 kg
