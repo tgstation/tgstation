@@ -465,6 +465,20 @@
 /datum/mood/proc/direct_sanity_drain(amount)
 	set_sanity(sanity + amount, override = TRUE)
 
+/**
+ * Returns true if you already have a mood from a provided category.
+ * You may think to yourself, why am I trying to get a boolean from a component? Well, this system probably should not be a component.
+ *
+ * Arguments
+ * * category - Mood category to validate against.
+ */
+/datum/mood/proc/has_mood_of_category(category)
+	for(var/i in mood_events)
+		var/datum/mood_event/moodlet = mood_events[i]
+		if (moodlet.category == category)
+			return TRUE
+	return FALSE
+
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN
 #undef MOOD_CATEGORY_NUTRITION

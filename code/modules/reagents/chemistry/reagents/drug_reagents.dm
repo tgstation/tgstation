@@ -121,7 +121,7 @@
 			var/mob/living/carbon/human/H = M
 			H.facial_hairstyle = "Shaved"
 			H.hairstyle = "Bald"
-			H.update_hair() // makes you loose hair as well
+			H.update_hair(is_creating = TRUE) // makes you loose hair as well
 			M.set_species(/datum/species/human/krokodil_addict)
 			M.adjustBruteLoss(50*REM, 0) // holy shit your skin just FELL THE FUCK OFF
 	..()
@@ -692,7 +692,6 @@
 		druggy_dna.species.species_traits += NOBLOODOVERLAY
 
 	invisible_man.update_body()
-	invisible_man.update_hair()
 	invisible_man.remove_from_all_data_huds()
 	invisible_man.sound_environment_override = SOUND_ENVIROMENT_PHASED
 

@@ -289,6 +289,13 @@ Behavior that's still missing from this component that original food items had t
 		return FALSE
 	return TRUE
 
+/// Normal time to forcefeed someone something
+#define EAT_TIME_FORCE_FEED 3 SECONDS
+/// Multiplier for eat time if the eater has TRAIT_VORACIOUS
+#define EAT_TIME_VORACIOUS_MULT 0.65 // voracious folk eat 35% faster
+/// Multiplier for how much longer it takes a voracious folk to eat while full
+#define EAT_TIME_VORACIOUS_FULL_MULT 4 // Takes at least 4 times as long to eat while full, so dorks cant just clear out the kitchen before they get robusted
+
 ///All the checks for the act of eating itself and
 /datum/component/edible/proc/TryToEat(mob/living/eater, mob/living/feeder)
 
@@ -308,8 +315,15 @@ Behavior that's still missing from this component that original food items had t
 		return
 	var/fullness = eater.get_fullness() + 10 //The theoretical fullness of the person eating if they were to eat this
 
+	var/time_to_eat = (eater == feeder) ? eat_time : EAT_TIME_FORCE_FEED
+	if(HAS_TRAIT(eater, TRAIT_VORACIOUS))
+		if(fullness < NUTRITION_LEVEL_FAT || (eater != feeder)) // No extra delay when being forcefed
+			time_to_eat *= EAT_TIME_VORACIOUS_MULT
+		else
+			time_to_eat *= (fullness / NUTRITION_LEVEL_FAT) * EAT_TIME_VORACIOUS_FULL_MULT // takes longer to eat the more well fed you are
+
 	if(eater == feeder)//If you're eating it yourself.
-		if(eat_time && !do_mob(feeder, eater, eat_time, timed_action_flags = food_flags & FOOD_FINGER_FOOD ? IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE : NONE)) //Gotta pass the minimal eat time
+		if(eat_time && !do_mob(feeder, eater, time_to_eat, timed_action_flags = food_flags & FOOD_FINGER_FOOD ? IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE : NONE)) //Gotta pass the minimal eat time
 			return
 		if(IsFoodGone(owner, feeder))
 			return
@@ -323,16 +337,24 @@ Behavior that's still missing from this component that original food items had t
 			to_chat(eater, span_warning("You don't feel like eating any more junk food at the moment!"))
 			return
 		else if(fullness > (600 * (1 + eater.overeatduration / (4000 SECONDS)))) // The more you eat - the more you can eat
-			message_to_nearby_audience = span_warning("[eater] cannot force any more of \the [parent] to go down [eater.p_their()] throat!")
-			message_to_consumer = span_warning("You cannot force any more of \the [parent] to go down your throat!")
-			message_to_blind_consumer = message_to_consumer
-			eater.show_message(message_to_consumer, MSG_VISUAL, message_to_blind_consumer)
-			eater.visible_message(message_to_nearby_audience, ignored_mobs = eater)
-			//if we're too full, return because we can't eat whatever it is we're trying to eat
-			return
+			if(HAS_TRAIT(eater, TRAIT_VORACIOUS))
+				message_to_nearby_audience = span_notice("[eater] voraciously forces \the [parent] down [eater.p_their()] throat..")
+				message_to_consumer = span_notice("You voraciously force \the [parent] down your throat.")
+			else
+				message_to_nearby_audience = span_warning("[eater] cannot force any more of \the [parent] to go down [eater.p_their()] throat!")
+				message_to_consumer = span_warning("You cannot force any more of \the [parent] to go down your throat!")
+				message_to_blind_consumer = message_to_consumer
+				eater.show_message(message_to_consumer, MSG_VISUAL, message_to_blind_consumer)
+				eater.visible_message(message_to_nearby_audience, ignored_mobs = eater)
+				//if we're too full, return because we can't eat whatever it is we're trying to eat
+				return
 		else if(fullness > 500)
-			message_to_nearby_audience = span_notice("[eater] unwillingly [eatverb]s a bit of \the [parent].")
-			message_to_consumer = span_notice("You unwillingly [eatverb] a bit of \the [parent].")
+			if(HAS_TRAIT(eater, TRAIT_VORACIOUS))
+				message_to_nearby_audience = span_notice("[eater] [eatverb]s \the [parent].")
+				message_to_consumer = span_notice("You [eatverb] \the [parent].")
+			else
+				message_to_nearby_audience = span_notice("[eater] unwillingly [eatverb]s a bit of \the [parent].")
+				message_to_consumer = span_notice("You unwillingly [eatverb] a bit of \the [parent].")
 		else if(fullness > 150)
 			message_to_nearby_audience = span_notice("[eater] [eatverb]s \the [parent].")
 			message_to_consumer = span_notice("You [eatverb] \the [parent].")
@@ -352,7 +374,7 @@ Behavior that's still missing from this component that original food items had t
 		if(isbrain(eater))
 			to_chat(feeder, span_warning("[eater] doesn't seem to have a mouth!"))
 			return
-		if(fullness <= (600 * (1 + eater.overeatduration / (2000 SECONDS))))
+		if(fullness <= (600 * (1 + eater.overeatduration / (2000 SECONDS))) || HAS_TRAIT(eater, TRAIT_VORACIOUS))
 			eater.visible_message(
 				span_danger("[feeder] attempts to [eater.get_bodypart(BODY_ZONE_HEAD) ? "feed [eater] [parent]." : "stuff [parent] down [eater]'s throat hole! Gross."]"),
 				span_userdanger("[feeder] attempts to [eater.get_bodypart(BODY_ZONE_HEAD) ? "feed you [parent]." : "stuff [parent] down your throat hole! Gross."]")
@@ -363,7 +385,7 @@ Behavior that's still missing from this component that original food items had t
 				span_userdanger("[feeder] cannot force any more of [parent] down your [eater.get_bodypart(BODY_ZONE_HEAD) ? "throat!" : "throat hole! Eugh."]")
 			)
 			return
-		if(!do_mob(feeder, eater)) //Wait 3 seconds before you can feed
+		if(!do_mob(feeder, eater, time = time_to_eat)) //Wait 3-ish seconds before you can feed
 			return
 		if(IsFoodGone(owner, feeder))
 			return
@@ -379,6 +401,9 @@ Behavior that's still missing from this component that original food items had t
 	if(eater == feeder && eat_time)
 		INVOKE_ASYNC(src, .proc/TryToEat, eater, feeder)
 
+#undef EAT_TIME_FORCE_FEED
+#undef EAT_TIME_VORACIOUS_MULT
+#undef EAT_TIME_VORACIOUS_FULL_MULT
 
 ///This function lets the eater take a bite and transfers the reagents to the eater.
 /datum/component/edible/proc/TakeBite(mob/living/eater, mob/living/feeder)

@@ -28,7 +28,10 @@
 
 /obj/item/ceremonial_blade/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 40, 105)
+	AddComponent(/datum/component/butchering, \
+	speed = 4 SECONDS, \
+	effectiveness = 105, \
+	)
 	RegisterSignal(src, COMSIG_ITEM_SHARPEN_ACT, .proc/block_sharpening)
 
 /obj/item/ceremonial_blade/melee_attack_chain(mob/user, atom/target, params)

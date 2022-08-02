@@ -1,0 +1,33 @@
+2022-08-01:
+  Armhulen/Armhulenn/Bazelart/Tralezab, san7890:
+  - admin: Word filters incorrectly set up will now have their errors actually described.
+      Please, tell your server ops when you see it so they may fix the configuration.
+  - server: Rust-g on this codebase is now on the 1.0.2 version, prepare accordingly.
+  Bytube:
+  - bugfix: fixed crates being able to store mechs
+  Profakos:
+  - bugfix: unfrozen items no longer break when thrown
+  Y0SH1M4S73R:
+  - code_imp: Several projectiles, particularly magic missile and gauntlet echo, now
+      move more smoothly instead of jumping from tile to tile.
+  - bugfix: Calling `print` from lua will no longer spontaneously cause a runtime.
+  - bugfix: The lua editor UI now properly scales with the window, up to certain extremely
+      small sizes.
+  - bugfix: To mitigate lag pending a possible future auxlua update with features
+      to facilitate improved performance on the DM side, the lua editor UI no longer
+      displays the global table and the state log by default - instead, they can be
+      enabled using a toggle-button to the right of the tabs.
+  Zenitheevee:
+  - balance: Bluespace crystals can now go in ITEM_MATERIAL capable material storage
+      (like autolathes)
+  distributivgesetz:
+  - qol: Vault bank machine checks for access before alerting.
+2022-08-02:
+  Fikou:
+  - qol: nuke ops id trims have a sechud icon
+  - bugfix: chameleon cards now fix their colors upon resetting
+  Jacquerel:
+  - bugfix: Creatures which can't experience emotions will no longer attempt to do
+      so upon seeing a traitorous poster.
+  SuperSlayer:
+  - bugfix: Aliens help/harm intent now works normally if used on other aliens
