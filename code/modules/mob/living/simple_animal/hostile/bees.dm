@@ -10,7 +10,7 @@
 #define BEE_POLLINATE_PEST_CHANCE 33
 #define BEE_POLLINATE_POTENCY_CHANCE 50
 
-#define BEE_FOODGROUPS RAW | MEAT | CARRION | BUGS
+#define BEE_FOODGROUPS RAW | MEAT | GORE | BUGS
 
 /mob/living/simple_animal/hostile/bee
 	name = "bee"
