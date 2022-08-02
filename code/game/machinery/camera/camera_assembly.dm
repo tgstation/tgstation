@@ -134,7 +134,7 @@
 		return
 	state = ((state == STATE_WELDED) ? STATE_WRENCHED : STATE_WELDED)
 	set_anchored((state == STATE_WELDED) ? TRUE : FALSE)
-	user.balloon_alert_to_viewers("[state == STATE_WELDED ? "welded [src]" : "unwelded [src]"]")
+	user.balloon_alert_to_viewers(state == STATE_WELDED ? "welded" : "unwelded")
 
 
 /obj/structure/camera_assembly/attackby(obj/item/W, mob/living/user, params)
