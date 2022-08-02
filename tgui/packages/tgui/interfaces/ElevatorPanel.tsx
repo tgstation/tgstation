@@ -1,3 +1,4 @@
+import { clamp } from 'common/math';
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import { Box, Button, Dimmer, Icon, Section, Stack } from '../components';
@@ -30,59 +31,97 @@ type ElevatorPanelData = {
 export const ElevatorPanel = (props, context) => {
   const { data, act } = useBackend<ElevatorPanelData>(context);
 
+  const {
+    panel_z,
+    current_floor,
+    emergency_level,
+    is_emergency,
+    doors_open,
+    lift_exists,
+    currently_moving,
+    all_floor_data,
+  } = data;
+
+  /*
+   * We want to grow our UI if we have a lot of floors to display,
+   * while also leaving some whitespace - just so it's not too cluttered.
+   *
+   * 400 is chosen for the min, to prevent it from being too tiny.
+   *
+   * 600 is chosen for the max, as it fits fits 10 floors pretty comfortably.
+   * If you seriously need more than 10 floors for an elevator in this game,
+   * you should reconsider your map's layout. It's not worth it.
+   */
+  const calculatedHeight = clamp(all_floor_data.length * 90, 400, 600);
+
   return (
-    <Window width={200} height={450} theme="retro">
-      <Window.Content align="center">
-        {!data.lift_exists && <NoLiftDimmer />}
-        <Section height="18%">
-          <Box
-            style={{
-              'font-family': 'Consolas',
-              'font-size': '50px',
-            }}>
-            {data.current_floor - 1}
-          </Box>
-        </Section>
-        <Section height="67%" fill>
-          {!!data.currently_moving && <MovingDimmer />}
-          <Stack vertical width="90%">
-            {data.all_floor_data.map((floor, index) => (
-              <Stack.Item key={index}>
+    <Window width={200} height={calculatedHeight} theme="retro">
+      <Window.Content>
+        {!lift_exists && <NoLiftDimmer />}
+        <Stack height="100%" vertical>
+          <Stack.Item>
+            <Section title="Floor" align="center">
+              <Box
+                backgroundColor="black"
+                textColor="white"
+                style={{
+                  'font-family': 'Monospace',
+                  'font-size': '50px',
+                  'font-weight': 'bold',
+                }}>
+                {current_floor - 1}
+              </Box>
+            </Section>
+          </Stack.Item>
+          <Stack.Item grow>
+            <Section fill align="center">
+              {!!currently_moving && <MovingDimmer />}
+              <Stack vertical width="90%">
+                {all_floor_data.map((floor, index) => (
+                  <Stack.Item key={index}>
+                    <Button
+                      style={{
+                        'font-weight': 'bold',
+                        'font-size': '14px',
+                      }}
+                      fluid
+                      color={'good'}
+                      disabled={floor.z_level === current_floor}
+                      onClick={() => act('move_lift', { z: floor.z_level })}>
+                      {floor.name}
+                    </Button>
+                  </Stack.Item>
+                ))}
+              </Stack>
+            </Section>
+          </Stack.Item>
+          <Stack.Item>
+            <Section>
+              {doors_open ? (
                 <Button
-                  fluid
-                  color={'good'}
-                  disabled={floor.z_level === data.current_floor}
-                  onClick={() => act('move_lift', { z: floor.z_level })}>
-                  {floor.name}
-                </Button>
-              </Stack.Item>
-            ))}
-          </Stack>
-        </Section>
-        <Section>
-          {data.doors_open ? (
-            <Button
-              tooltip={
-                'Closes all elevator doors, except \
+                  tooltip={
+                    'Closes all elevator doors, except \
                     those on the level of the elevator.'
-              }
-              onClick={() => act('reset_doors')}>
-              Reset Doors
-            </Button>
-          ) : (
-            <Button
-              disabled={!data.is_emergency}
-              color={'bad'}
-              tooltip={
-                data.is_emergency
-                  ? 'In case of emergency, opens all lift doors.'
-                  : `The station is only at ${data.emergency_level} alert.`
-              }
-              onClick={() => act('emergency_door')}>
-              Emergency
-            </Button>
-          )}
-        </Section>
+                  }
+                  onClick={() => act('reset_doors')}>
+                  Reset Doors
+                </Button>
+              ) : (
+                <Button
+                  disabled={!is_emergency}
+                  color={'bad'}
+                  tooltip={
+                    is_emergency
+                      ? 'In case of emergency, opens all lift doors.'
+                      : `The station is only at ${emergency_level} alert.`
+                  }
+                  onClick={() => act('emergency_door')}>
+                  Emergency
+                </Button>
+              )}
+            </Section>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );

@@ -243,7 +243,7 @@
 
 	else
 		data["lift_exists"] = FALSE
-		data["current_floor"] = -1
+		data["current_floor"] = 0
 
 	return data
 
