@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Trying to inject someone in the eyes/mouth/feet/hands will no longer result in you trying to inject their chest!"
