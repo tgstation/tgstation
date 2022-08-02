@@ -19,7 +19,7 @@ type RecipeList = {
   [key: string]: Recipe | RecipeList;
 };
 
-type StackProps = {
+type StackCraftingProps = {
   amount: number;
   recipes: RecipeList;
 };
@@ -89,8 +89,8 @@ const filterRecipeList = (
   return Object.keys(filteredList).length ? filteredList : undefined;
 };
 
-export const Stack = (_props, context) => {
-  const { data } = useBackend<StackProps>(context);
+export const StackCrafting = (_props, context) => {
+  const { data } = useBackend<StackCraftingProps>(context);
   const { amount, recipes = {} } = data;
 
   const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
@@ -205,7 +205,7 @@ const Multipliers = (props: MultiplierProps, context) => {
 };
 
 const RecipeBox = (props: RecipeBoxProps, context) => {
-  const { act, data } = useBackend<StackProps>(context);
+  const { act, data } = useBackend<StackCraftingProps>(context);
 
   const { amount } = data;
 
