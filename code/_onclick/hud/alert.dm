@@ -732,13 +732,10 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	var/atom/target = null
 	var/action = NOTIFY_JUMP
 
-/atom/movable/screen/alert/notify_action/Destroy()
-	target = null
-	return ..()
-
 /atom/movable/screen/alert/notify_action/Click()
 	. = ..()
 	if(!.)
+		return
 	if(!target)
 		return
 	var/mob/dead/observer/ghost_owner = owner
