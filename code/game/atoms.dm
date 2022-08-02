@@ -1035,31 +1035,21 @@
  * call chain
  */
 /atom/proc/storage_contents_dump_act(obj/item/src_object, mob/user)
-	if(atom_storage)
-		return component_storage_contents_dump_act(src_object, user)
-	return FALSE
+	if(src_object.atom_storage)
+		to_chat(user, span_notice("You start dumping out the contents of \the [src_object] into \the [src]."))
 
-/**
- * Implement the behaviour for when a user click drags another storage item to you
- *
- * In this case we get as many of the tiems from the target items compoent storage and then
- * put everything into ourselves (or our storage component)
- *
- * TODO these should be purely component items that intercept the atom clicks higher in the
- * call chain
- */
-/atom/proc/component_storage_contents_dump_act(obj/item/src_object, mob/user)
-	var/list/things = src_object.contents
-	var/datum/progressbar/progress = new(user, things.len, src)
-	while (do_after(user, 1 SECONDS, src, NONE, FALSE, CALLBACK(src_object.atom_storage, /datum/storage.proc/handle_mass_transfer, user, src, /* override = */ TRUE)))
-		stoplag(1)
-	progress.end_progress()
-	to_chat(user, span_notice("You dump as much of [src_object]'s contents [atom_storage.insert_preposition]to [src] as you can."))
-	atom_storage.orient_to_hud(user)
-	src_object.atom_storage.orient_to_hud(user)
-	if(user.active_storage) //refresh the HUD to show the transfered contents
-		user.active_storage.refresh_views()
-	return TRUE
+		if(!do_after(user, 20, target = src))
+			return FALSE
+
+		src_object.atom_storage.handle_mass_transfer(user, src, /* override = */ TRUE)
+
+		atom_storage.orient_to_hud(user)
+		src_object.atom_storage?.orient_to_hud(user)
+		user.active_storage?.refresh_views()
+
+		return TRUE
+
+	return FALSE
 
 ///Get the best place to dump the items contained in the source storage item?
 /atom/proc/get_dumping_location()
@@ -1653,6 +1643,11 @@
 	if(filter_data && filter_data[name])
 		return filters[filter_data.Find(name)]
 
+/// Returns the indice in filters of the given filter name.
+/// If it is not found, returns null.
+/atom/proc/get_filter_index(name)
+	return filter_data?.Find(name)
+
 /atom/proc/remove_filter(name_or_names)
 	if(!filter_data)
 		return
@@ -1962,28 +1957,6 @@
 /atom/proc/InitializeAIController()
 	if(ispath(ai_controller))
 		ai_controller = new ai_controller(src)
-
-/**
- * Point at an atom
- *
- * Intended to enable and standardise the pointing animation for all atoms
- *
- * Not intended as a replacement for the mob verb
- */
-/atom/movable/proc/point_at(atom/pointed_atom)
-	if(!isturf(loc))
-		return FALSE
-
-	var/turf/tile = get_turf(pointed_atom)
-	if (!tile)
-		return FALSE
-
-	var/turf/our_tile = get_turf(src)
-	var/obj/visual = new /obj/effect/temp_visual/point(our_tile, invisibility)
-
-	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
-
-	return TRUE
 
 /atom/MouseEntered(location, control, params)
 	SSmouse_entered.hovers[usr.client] = src

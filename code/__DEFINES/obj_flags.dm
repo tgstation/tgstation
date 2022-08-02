@@ -79,6 +79,18 @@
 #define ORGAN_SYNTHETIC_EMP (1<<6) //Synthetic organ affected by an EMP. Deteriorates over time.
 #define ORGAN_UNREMOVABLE (1<<7) //Can't be removed using surgery
 
+DEFINE_BITFIELD(organ_flags, list(
+	"ORGAN_SYNTHETIC" = ORGAN_SYNTHETIC,
+	"ORGAN_FROZEN" = ORGAN_FROZEN,
+	"ORGAN_FAILING" = ORGAN_FAILING,
+	"ORGAN_EXTERNAL" = ORGAN_EXTERNAL,
+	"ORGAN_VITAL" = ORGAN_VITAL,
+	"ORGAN_EDIBLE" = ORGAN_EDIBLE,
+	"ORGAN_SYNTHETIC_EMP" = ORGAN_SYNTHETIC_EMP,
+	"ORGAN_UNREMOVABLE" = ORGAN_UNREMOVABLE,
+))
+
+
 /// Integrity defines for clothing (not flags but close enough)
 #define CLOTHING_PRISTINE 0 // We have no damage on the clothing
 #define CLOTHING_DAMAGED 1 // There's some damage on the clothing but it still has at least one functioning bodypart and can be equipped

@@ -95,7 +95,7 @@
 		H.temporarilyRemoveItemFromInventory(H.wear_suit, TRUE)
 		H.update_inv_wear_suit()
 		H.update_inv_head()
-		H.update_hair()
+		H.update_hair(is_creating = TRUE)
 
 		if(blood_on_castoff)
 			H.add_splatter_floor()
@@ -175,7 +175,10 @@
 		loc.visible_message(span_warning("A grotesque blade forms around [loc.name]\'s arm!"), span_warning("Our arm twists and mutates, transforming it into a deadly blade."), span_hear("You hear organic matter ripping and tearing!"))
 	if(synthetic)
 		can_drop = TRUE
-	AddComponent(/datum/component/butchering, 60, 80)
+	AddComponent(/datum/component/butchering, \
+	speed = 6 SECONDS, \
+	effectiveness = 80, \
+	)
 
 /obj/item/melee/arm_blade/afterattack(atom/target, mob/user, proximity)
 	. = ..()

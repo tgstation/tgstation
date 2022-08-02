@@ -7,6 +7,9 @@
 	/// Arguments for a function call or coroutine resume
 	var/list/arguments = list()
 
+	/// If set, the global table and the
+	var/show_debug_info = FALSE
+
 /datum/lua_editor/New(state, _quick_log_index)
 	. = ..()
 	if(state)
@@ -36,12 +39,13 @@
 /datum/lua_editor/ui_data(mob/user)
 	var/list/data = list()
 	data["noStateYet"] = !current_state
+	data["showDebugInfo"] = show_debug_info
 	if(current_state)
-		current_state.get_globals()
-		if(current_state.log)
+		if(current_state.log && show_debug_info)
 			data["stateLog"] = kvpify_list(refify_list(current_state.log))
 		data["tasks"] = current_state.get_tasks()
-		if(current_state.globals)
+		if(show_debug_info)
+			current_state.get_globals()
 			data["globals"] = kvpify_list(refify_list(current_state.globals))
 	data["states"] = SSlua.states
 	data["callArguments"] = kvpify_list(refify_list(arguments))
@@ -85,6 +89,8 @@
 	switch(action)
 		if("newState")
 			var/state_name = params["name"]
+			if(!length(state_name))
+				return TRUE
 			var/datum/lua_state/new_state = new(state_name)
 			SSlua.states += new_state
 			LAZYREMOVEASSOC(SSlua.editors, "\ref[current_state]", src)
@@ -170,14 +176,23 @@
 			var/log_entry_index = params["entryIndex"]
 			var/list/log_entry = current_state.log[log_entry_index]
 			var/thing_to_debug = traverse_list(params["tableIndices"], log_entry["param"])
+			if(isweakref(thing_to_debug))
+				var/datum/weakref/ref = thing_to_debug
+				thing_to_debug = ref.resolve()
 			INVOKE_ASYNC(usr.client, /client.proc/debug_variables, thing_to_debug)
 			return FALSE
 		if("vvGlobal")
 			var/thing_to_debug = traverse_list(params["indices"], current_state.globals)
+			if(isweakref(thing_to_debug))
+				var/datum/weakref/ref = thing_to_debug
+				thing_to_debug = ref.resolve()
 			INVOKE_ASYNC(usr.client, /client.proc/debug_variables, thing_to_debug)
 			return FALSE
 		if("clearArgs")
 			arguments.Cut()
+			return TRUE
+		if("toggleShowDebugInfo")
+			show_debug_info = !show_debug_info
 			return TRUE
 
 /datum/lua_editor/ui_close(mob/user)
