@@ -49,13 +49,13 @@
 
 	if (is_special_character(viewer))
 		to_chat(viewer, span_notice("[moods.antag_notification]"))
-		SEND_SIGNAL(viewer, COMSIG_ADD_MOOD_EVENT, moods.mood_category, moods.antag_mood)
+		viewer.add_mood_event(moods.mood_category, moods.antag_mood)
 	else if (viewer.mind.assigned_role.departments_bitflags & (DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND))
 		to_chat(viewer, span_notice("[moods.authority_notification]"))
-		SEND_SIGNAL(viewer, COMSIG_ADD_MOOD_EVENT, moods.mood_category, moods.authority_mood)
+		viewer.add_mood_event(moods.mood_category, moods.authority_mood)
 	else
 		to_chat(viewer, span_notice("[moods.crew_notification]"))
-		SEND_SIGNAL(viewer, COMSIG_ADD_MOOD_EVENT, moods.mood_category, moods.crew_mood)
+		viewer.add_mood_event(moods.mood_category, moods.crew_mood)
 
 	SEND_SIGNAL(host, COMSIG_DEMORALISING_EVENT, viewer.mind)
 

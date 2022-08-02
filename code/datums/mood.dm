@@ -45,6 +45,7 @@
 	RegisterSignal(mob_to_make_moody, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
 	RegisterSignal(mob_to_make_moody, COMSIG_ENTER_AREA, .proc/check_area_mood)
 	RegisterSignal(mob_to_make_moody, COMSIG_LIVING_REVIVE, .proc/on_revive)
+	RegisterSignal(mob_to_make_moody, COMSIG_MOB_STATCHANGE, .proc/handle_mob_death)
 
 	mob_to_make_moody.become_area_sensitive(MOOD_DATUM_TRAIT)
 	if(mob_to_make_moody.hud_used)
@@ -61,15 +62,12 @@
 	var/mob/living/mob_parent = parent?.resolve()
 	if (mob_parent)
 		mob_parent.lose_area_sensitivity(MOOD_DATUM_TRAIT)
-		UnregisterSignal(mob_parent, list(COMSIG_MOB_HUD_CREATED, COMSIG_ENTER_AREA, COMSIG_LIVING_REVIVE))
+		UnregisterSignal(mob_parent, list(COMSIG_MOB_HUD_CREATED, COMSIG_ENTER_AREA, COMSIG_LIVING_REVIVE, COMSIG_MOB_STATCHANGE))
 
 	return ..()
 
 /datum/mood/process(delta_time)
 	var/mob/living/mob_parent = parent?.resolve()
-	if (mob_parent.stat == DEAD)
-		return
-
 	switch(mood_level)
 		if(1)
 			set_sanity(sanity - 0.3 * delta_time, SANITY_INSANE)
@@ -98,6 +96,16 @@
 
 	if(HAS_TRAIT(mob_parent, TRAIT_JOLLY) && DT_PROB(0.416, delta_time))
 		add_mood_event("jolly", /datum/mood_event/jolly)
+
+/datum/mood/proc/handle_mob_death(datum/source)
+	SIGNAL_HANDLER
+
+	var/mob/living/mob_parent = parent?.resolve()
+	if (mob_parent.stat == DEAD && (mob_parent.datum_flags & DF_ISPROCESSING))
+		STOP_PROCESSING(SSmood, src)
+	else if (mob_parent.stat != DEAD && !(mob_parent.datum_flags & DF_ISPROCESSING))
+		START_PROCESSING(SSmood, src)
+
 
 /// Handles mood given by nutrition
 /datum/mood/proc/handle_nutrition()

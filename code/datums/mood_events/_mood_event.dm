@@ -21,7 +21,7 @@
 /datum/mood_event/New(mob/M, ...)
 	owner = M
 	var/list/params = args.Copy(2)
-	if (M.mind && !(M.mind.assigned_role in required_job))
+	if ((length(required_job) > 0) && M.mind && !(M.mind.assigned_role.type in required_job))
 		qdel(src)
 		return
 	add_effects(arglist(params))
