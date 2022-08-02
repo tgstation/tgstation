@@ -48,6 +48,8 @@
 	if(paying_account)
 		C = new /obj/structure/closet/crate/secure/owned(A, paying_account)
 		C.name = "[crate_name] - Purchased by [paying_account.account_holder]"
+	else if(!crate_type)
+		CRASH("tried to generate a supply pack without a valid crate type")
 	else
 		C = new crate_type(A)
 		C.name = crate_name
@@ -2728,6 +2730,9 @@
 	drop_pod_only = TRUE
 	crate_type = null
 	special_pod = /obj/structure/closet/supplypod/bluespacepod
+
+/datum/supply_pack/misc/empty/generate(atom/A, datum/bank_account/paying_account)
+	return
 
 /datum/supply_pack/misc/religious_supplies
 	name = "Religious Supplies Crate"
