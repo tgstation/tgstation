@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Camera assemblies can now be moved after being unwelded! (This was an 11 year old bug lol.)"
+  - qol: "Camera assembly welding has been updated to balloon alerts!"
