@@ -7,6 +7,7 @@
  * These can be placed in two methods:
  * - You can place the control panel on the same turf as a lift. It will move up and down with the lift
  * - You can place the control panel to the side of a lift, NOT attached to the lift. It will remain in position
+ * I don't recommend using both methods on the same elevator, as it might result in some jank, but it's functional.
  */
 /obj/machinery/elevator_control_panel
 	name = "elevator panel"
@@ -29,6 +30,7 @@
 	var/datum/weakref/lift_weakref
 	/// What specific_lift_id do we link with?
 	var/linked_elevator_id
+
 	/// A list of all possible destinations this elevator can travel.
 	/// Assoc list of "Floor name" to "z level of destination".
 	/// By default the floor names will auto-generate ("Floor 1", "Floor 2", etc).
@@ -37,10 +39,11 @@
 	/// Make this an assoc list of "z level you want to rename" to "desired name".
 	/// So, if you want the z-level 2 destination to be named "Cargo", you would do list("2" = "Cargo").
 	var/list/preset_destination_names
+
+	/// What z-level did we move to last? Used for showing the user in the UI which direction we're moving.
+	var/last_move_target
 	/// TimerID to our door reset timer, made by emergency opening doors
 	var/door_reset_timerid
-	/// What z-level did we move to last?
-	var/last_move_target
 
 /obj/machinery/elevator_control_panel/Initialize(mapload)
 	. = ..()
@@ -52,15 +55,15 @@
 	AddElement(/datum/element/contextual_screentip_bare_hands, lmb_text = "Send Elevator")
 
 	// Machinery returns lateload by default via parent,
-	// this is just here for redundancy's sake
+	// this is just here for redundancy's sake.
 	. = INITIALIZE_HINT_LATELOAD
 
 	maploaded = mapload
-	// Maploaded panels link in LateInitialize
+	// Maploaded panels link in LateInitialize...
 	if(mapload)
 		return
 
-	// Non-mapload panels link in Initialize
+	// And non-mapload panels link in Initialize
 	var/datum/lift_master/lift = get_associated_lift()
 	if(!lift)
 		return
@@ -74,10 +77,10 @@
 	if(!maploaded)
 		return
 
-	// This is exclusively for linking in mapload, to ensure all elevator parts are created
+	// This is exclusively for linking in mapload, just to ensure all elevator parts are created,
+	// and also so we can throw mapping errors to let people know if they messed up setup.
 	var/datum/lift_master/lift = get_associated_lift()
 	if(!lift)
-		// We only throw linking errors in mapload so mappers can see if they messed up
 		log_mapping("Elevator control panel at [AREACOORD(src)] found no associated lift to link with, this may be a mapping error.")
 		return
 
@@ -129,13 +132,13 @@
 		deltimer(door_reset_timerid)
 	reset_doors()
 
-	// be vague about whether something was accomplished or not
+	// Be vague about whether something was accomplished or not
 	balloon_alert(user, "panel reset")
 	playsound(src, 'sound/machines/locktoggle.ogg', 50, TRUE)
 
 	return TRUE
 
-/// Find the elevator associated with our lift button
+/// Find the elevator associated with our lift button.
 /obj/machinery/elevator_control_panel/proc/get_associated_lift()
 	for(var/datum/lift_master/possible_match as anything in GLOB.active_lifts_by_type[BASIC_LIFT_ID])
 		if(possible_match.specific_lift_id != linked_elevator_id)
@@ -167,15 +170,19 @@
 		// z - 1 is used because the station z-level is 2, and goes up.
 		linked_elevator_destination["[z_level]"] = preset_name || "Floor [z_level - 1]"
 
-	// Reverse it, so higher Zs are lower are at the top of the list, and lower Zs are at the bottom
+	// Reverse the destination list.
+	// By this point the list will go from bottom floor to top floor,
+	// which is unintuitive when passed to the UI to show to users.
+	// This way we have the top floors at the top, and the bottom floors the bottom.
 	reverse_range(linked_elevator_destination)
+	update_static_data_for_all_viewers()
 
 /**
  * Recursively adds destinations to the list of linked_elevator_destination
  * until it fails to find a valid stopping point in the passed direction.
  */
 /obj/machinery/elevator_control_panel/proc/add_destinations_in_a_direction_recursively(list/turfs_to_check, direction, list/destinations)
-	// Only vertical elevators are supported -  use trams for horizontal ones
+	// Only vertical elevators are supported -  use trams for horizontal ones.
 	if(direction != UP && direction != DOWN)
 		CRASH("[type] was given an invalid direction in add_destinations_in_a_direction_recursively!")
 
@@ -198,7 +205,7 @@
 		// Otherwise, we can feasibly move our direction with this turf
 		checked_turfs += next_level
 
-	// If we somehow found no turfs but made it this far, and error has been made
+	// If we somehow found no turfs, BUT made it this far, something definitely went wrong.
 	if(!length(checked_turfs))
 		CRASH("[type] found no turfs in add_destinations_in_a_direction_recursively!")
 
@@ -214,19 +221,19 @@
 		ui.open()
 
 /obj/machinery/elevator_control_panel/ui_status(mob/user)
-	// We moved up a z-level, probably via the lift itself, don't preserve the UI
+	// We moved up a z-level, probably via the lift itself, so don't preserve the UI.
 	if(user.z != z)
 		return UI_CLOSE
 
-	// Our list if gone - look but don't touch
+	// Our lift is gone entirely - look, but don't touch.
 	if(!lift_weakref?.resolve())
 		return UI_UPDATE
 
-	// We're non-functional, probably - don't do anything
+	// We're non-functional - don't do anything.
 	if(!check_panel())
 		return UI_DISABLED
 
-	// Otherwise, just check the default state
+	// Otherwise, just check default state (is the user conscious and close, etc).
 	return ..()
 
 /obj/machinery/elevator_control_panel/ui_data(mob/user)
@@ -277,7 +284,7 @@
 				return
 
 			var/desired_z = params["z"]
-			// Num2text here is required as the z's are stored as strings
+			// num2text here is required as the z is stored as strings in the list, but passed here as a number.
 			if(!(num2text(desired_z) in linked_elevator_destination))
 				return TRUE // Something is inaccurate, update UI
 
@@ -287,27 +294,29 @@
 
 			INVOKE_ASYNC(lift, /datum/lift_master.proc/move_to_zlevel, desired_z, CALLBACK(src, .proc/check_panel), usr)
 			last_move_target = desired_z
-			return TRUE // Succcessfully initiated a move, regardless of whether it actually works update the UI
+			return TRUE // Succcessfully initiated a move. Regardless of whether it actually works, update the UI
 
 		if("emergency_door")
 			var/datum/lift_master/lift = lift_weakref?.resolve()
 			if(!lift)
-				return TRUE // Something is very wrong
+				return TRUE // Something is wrong, update UI
 
+			// The emergency door button is only available at red alert or higher.
+			// This is so people don't keep it in emergency mode 100% of the time.
 			if(SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_RED)
-				return TRUE // Only operational on red alert or higher, so people won't just ALWAYS put it on emergency mode
+				return TRUE // The security level might have been lowered since last update, so update UI
 
 			lift.open_lift_doors()
 			door_reset_timerid = addtimer(CALLBACK(src, .proc/reset_doors), 3 MINUTES, TIMER_UNIQUE|TIMER_STOPPABLE)
-			return TRUE
+			return TRUE // We opened up all the doors, update the UI so the emergency button is replaced correctly
 
 		if("reset_doors")
 			if(!door_reset_timerid)
-				return TRUE
+				return TRUE // All the doors were shut since last update, so update UI
 
 			deltimer(door_reset_timerid)
 			reset_doors()
-			return TRUE
+			return TRUE // We closed all the doors, update the UI so the door button is replaced correctly
 
 /// Callback for move_to_zlevel to ensure the lift can continue to move.
 /obj/machinery/elevator_control_panel/proc/check_panel()
@@ -326,7 +335,7 @@
 		return
 
 	for(var/z_level in linked_elevator_destination)
-		z_level = text2num(z_level)
+		z_level = text2num(z_level) // Stored as strings.
 		if(z_level == lift.lift_platforms[1].z)
 			lift.open_lift_doors(z_level)
 		else

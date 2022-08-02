@@ -47,7 +47,7 @@ export const ElevatorPanel = (props, context) => {
    *
    * 400 is chosen for the min, to prevent it from being too tiny.
    *
-   * 600 is chosen for the max, as it fits fits 10 floors pretty comfortably.
+   * 600 is chosen for the max, as it fits 10 floors pretty comfortably.
    * If you seriously need more than 10 floors for an elevator in this game,
    * you should reconsider your map's layout. It's not worth it.
    */
