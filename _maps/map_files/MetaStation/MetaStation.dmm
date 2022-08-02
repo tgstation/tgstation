@@ -4750,7 +4750,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "bJR" = (
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/qm)
 "bJT" = (
@@ -16961,9 +16961,7 @@
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "gnE" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/spawner/west,
 /obj/structure/cable,
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/carpet,
@@ -17738,7 +17736,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "gDT" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/aft)
 "gDZ" = (
@@ -20209,9 +20207,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
 "hwC" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/spawner/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet,
@@ -32342,9 +32338,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "lxV" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/spawner/west,
 /turf/open/floor/carpet,
 /area/station/service/theater)
 "lyf" = (
@@ -34576,9 +34570,7 @@
 /area/station/maintenance/port)
 "mrT" = (
 /obj/item/radio/intercom/directional/east,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/spawner/north,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "mrV" = (
@@ -37910,9 +37902,7 @@
 /area/station/security/checkpoint/engineering)
 "nxb" = (
 /obj/effect/spawner/random/structure/musician/piano/random_piano,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/spawner/west,
 /obj/machinery/light_switch/directional/south,
 /turf/open/floor/wood,
 /area/station/service/theater)
@@ -40622,9 +40612,7 @@
 /turf/closed/wall/r_wall,
 /area/station/maintenance/disposal/incinerator)
 "ovZ" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/spawner/west,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "owf" = (
@@ -42695,10 +42683,8 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/science)
 "pkA" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
+/obj/structure/window/spawner/west,
+/obj/structure/window/spawner,
 /mob/living/simple_animal/chicken{
 	name = "Kentucky";
 	real_name = "Kentucky"
@@ -48533,12 +48519,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "rnV" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/spawner/north,
+/obj/structure/window/spawner/west,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "rnX" = (
@@ -55260,7 +55242,7 @@
 /turf/open/floor/holofloor/dark,
 /area/station/science/cytology)
 "tym" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/spawner,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "tyy" = (
@@ -64823,10 +64805,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"wRT" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/fore)
 "wRZ" = (
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -114047,7 +114025,7 @@ aox
 aox
 aaa
 aaa
-wRT
+bfq
 wyG
 wrn
 tCS
