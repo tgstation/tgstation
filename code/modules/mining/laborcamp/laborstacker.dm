@@ -64,7 +64,7 @@ GLOBAL_LIST(labor_sheet_values)
 	if(istype(worn_id, /obj/item/card/id/advanced/prisoner))
 		var/obj/item/card/id/advanced/prisoner/worn_prisoner_id = worn_id
 		data["id_points"] = worn_prisoner_id.points
-		if(worn_prisoner_id.goal <= 0)
+		if(!worn_prisoner_id.goal)
 			data["status_info"] = "No goal set!"
 		else if(worn_prisoner_id.points >= worn_prisoner_id.goal)
 			can_go_home = TRUE
