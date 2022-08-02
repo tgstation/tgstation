@@ -178,7 +178,7 @@ GLOBAL_LIST(labor_sheet_values)
 	if(!istype(weapon, /obj/item/card/id/advanced/prisoner))
 		return ..()
 	var/obj/item/card/id/advanced/prisoner/prisoner_id = weapon
-	if(prisoner_id.goal <= 0) //no goal to reach
+	if(!prisoner_id.goal) //no goal to reach
 		say("No goal required for this ID.")
 		return
 	say("ID: [prisoner_id.registered_name].")
