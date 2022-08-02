@@ -629,7 +629,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  * Arguments:
  * * initialize_turfs - This will call the expensive proc initialize_day_night_adjacent_turfs, recalculating all of the turfs after clearing them.
  * * search_for_controller - This will make us look for a controller in our new z-level, and set us up to it if needed.
- * * new_light_color & new_light_alpha - Incoming parameters to apply an update to lighting.
+ * * incoming_controller - The controller that is updating this areas lighting.
  */
 /area/proc/update_day_night_turfs(initialize_turfs = FALSE, search_for_controller = FALSE, datum/day_night_controller/incoming_controller)
 	if(search_for_controller)
