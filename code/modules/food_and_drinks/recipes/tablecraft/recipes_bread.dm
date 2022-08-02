@@ -122,6 +122,16 @@
 	result = /obj/item/food/baguette
 	subcategory = CAT_BREAD
 
+/datum/crafting_recipe/food/raw_breadstick
+	name = "Raw breadstick"
+	reqs = list(
+		/obj/item/food/doughslice = 1,
+		/datum/reagent/consumable/salt = 1,
+		/obj/item/food/butter = 1
+	)
+	result = /obj/item/food/raw_breadstick
+	subcategory = CAT_BREAD
+
 ////////////////////////////////////////////////TOAST////////////////////////////////////////////////
 
 /datum/crafting_recipe/food/slimetoast

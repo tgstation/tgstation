@@ -37,9 +37,10 @@
  *
  * Note that this proc can be overridden, and is in the case of screen objects.
  */
-/atom/Click(location,control,params)
+/atom/Click(location, control, params)
 	if(flags_1 & INITIALIZED_1)
 		SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, usr)
+
 		usr.ClickOn(src, params)
 
 /atom/DblClick(location,control,params)
@@ -153,6 +154,12 @@
 	if(!loc.AllowClick())
 		return
 
+	// In a storage item with a disassociated storage parent
+	var/obj/item/item_atom = A
+	if(istype(item_atom))
+		if((item_atom.item_flags & IN_STORAGE) && (item_atom.loc.flags_1 & HAS_DISASSOCIATED_STORAGE_1))
+			UnarmedAttack(item_atom, TRUE, modifiers)
+
 	//Standard reach turf to turf or reaching inside storage
 	if(CanReach(A,W))
 		if(W)
@@ -206,6 +213,7 @@
 
 	var/list/closed = list()
 	var/list/checking = list(ultimate_target)
+
 	while (checking.len && depth > 0)
 		var/list/next = list()
 		--depth
@@ -214,7 +222,7 @@
 			if(closed[target] || isarea(target))  // avoid infinity situations
 				continue
 
-			if(isturf(target) || isturf(target.loc) || (target in direct_access) || (ismovable(target) && target.flags_1 & IS_ONTOP_1)) //Directly accessible atoms
+			if(isturf(target) || isturf(target.loc) || (target in direct_access) || (ismovable(target) && target.flags_1 & IS_ONTOP_1) || target.loc?.atom_storage) //Directly accessible atoms
 				if(Adjacent(target) || (tool && CheckToolReach(src, target, tool.reach))) //Adjacent or reaching attacks
 					return TRUE
 
@@ -223,8 +231,7 @@
 			if (!target.loc)
 				continue
 
-			//Storage and things with reachable internal atoms need add to next here. Or return COMPONENT_ALLOW_REACH.
-			if(SEND_SIGNAL(target.loc, COMSIG_ATOM_CANREACH, next) & COMPONENT_ALLOW_REACH)
+			if(target.loc.atom_storage)
 				next += target.loc
 
 		checking = next
@@ -285,6 +292,7 @@
  * modifiers is a lazy list of click modifiers this attack had,
  * used for figuring out different properties of the click, mostly right vs left and such.
  */
+
 /mob/proc/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(ismob(A))
 		changeNext_move(CLICK_CD_MELEE)
@@ -371,18 +379,22 @@
 
 
 /mob/living/carbon/human/CtrlClick(mob/user)
-
-	if(!ishuman(user) || !user.CanReach(src) || user.incapacitated())
+	if(!iscarbon(user) || !user.CanReach(src) || user.incapacitated())
 		return ..()
 
 	if(world.time < user.next_move)
 		return FALSE
 
-	var/mob/living/carbon/human/human_user = user
-	if(human_user.dna.species.grab(human_user, src, human_user.mind.martial_art))
-		human_user.changeNext_move(CLICK_CD_MELEE)
-		return TRUE
-
+	if (ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		if(human_user.dna.species.grab(human_user, src, human_user.mind.martial_art))
+			human_user.changeNext_move(CLICK_CD_MELEE)
+			return TRUE
+	else if(isalien(user))
+		var/mob/living/carbon/alien/humanoid/alien_boy = user
+		if(alien_boy.grab(src))
+			alien_boy.changeNext_move(CLICK_CD_MELEE)
+			return TRUE
 	return ..()
 
 /mob/proc/CtrlMiddleClickOn(atom/A)

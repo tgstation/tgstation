@@ -156,7 +156,7 @@
 		if(SLIME_ACTIVATE_MINOR)
 			var/food_type = get_random_food()
 			var/obj/item/food/food_item = new food_type
-			food_item.food_flags |= FOOD_SILVER_SPAWNED
+			food_item.mark_silver_slime_reaction()
 			if(!user.put_in_active_hand(food_item))
 				food_item.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
@@ -725,6 +725,7 @@
 			to_chat(dumb_mob, span_userdanger("You also become depressingly aware that you are not a real creature, but instead a holoform. Your existence is limited to the parameters of the holodeck."))
 		to_chat(user, span_notice("[dumb_mob] accepts [src] and suddenly becomes attentive and aware. It worked!"))
 		dumb_mob.copy_languages(user, LANGUAGE_MASTER)
+		dumb_mob.update_atom_languages()
 		after_success(user, dumb_mob)
 		qdel(src)
 	else
@@ -792,6 +793,7 @@
 	user.mind.transfer_to(switchy_mob)
 	switchy_mob.faction = user.faction.Copy()
 	switchy_mob.copy_languages(user, LANGUAGE_MIND)
+	switchy_mob.update_atom_languages()
 	user.death()
 	to_chat(switchy_mob, span_notice("In a quick flash, you feel your consciousness flow into [switchy_mob]!"))
 	to_chat(switchy_mob, span_warning("You are now [switchy_mob]. Your allegiances, alliances, and role is still the same as it was prior to consciousness transfer!"))
@@ -904,7 +906,7 @@
 	C.add_atom_colour("#FF0000", FIXED_COLOUR_PRIORITY)
 	qdel(src)
 
-/obj/item/slimepotion/speed/attackby_storage_insert(datum/component/storage, atom/storage_holder, mob/user)
+/obj/item/slimepotion/speed/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
 	if(!isitem(storage_holder))
 		return TRUE
 	if(istype(storage_holder, /obj/item/mod/control))

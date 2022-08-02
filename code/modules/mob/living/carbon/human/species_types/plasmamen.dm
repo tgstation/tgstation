@@ -122,8 +122,6 @@
 	if(job.plasmaman_outfit)
 		equipping.equipOutfit(job.plasmaman_outfit, visuals_only)
 	equipping.internal = equipping.get_item_for_held_index(2)
-	equipping.update_internals_hud_icon(1)
-
 
 /datum/species/plasmaman/random_name(gender,unique,lastname)
 	if(unique)

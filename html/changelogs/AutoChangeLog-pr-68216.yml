@@ -1,4 +1,0 @@
-author: "stylemistake"
-delete-after: True
-changes: 
-  - bugfix: "Fixed \"Script Error\" in tgui and tgchat (hopefully)."

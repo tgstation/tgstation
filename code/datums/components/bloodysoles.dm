@@ -73,7 +73,7 @@
 		last_blood_state = index
 	if(!wielder)
 		return
-	if(bloody_shoes[last_blood_state] <= BLOOD_FOOTPRINTS_MIN * 2)//need twice that amount to make footprints
+	if(bloody_shoes[index] <= BLOOD_FOOTPRINTS_MIN * 2)//need twice that amount to make footprints
 		UnregisterSignal(wielder, COMSIG_MOVABLE_MOVED)
 	else
 		RegisterSignal(wielder, COMSIG_MOVABLE_MOVED, .proc/on_moved, override = TRUE)

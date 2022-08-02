@@ -64,7 +64,7 @@
         "uplink": "You have been provided with a standard uplink to accomplish your task."
     },
     "Internal Affairs Agent": {
-        "allies": "Death to the Syndicate. Killing infiltrators is a whole different kind of internal affair we fully approve of dealing with.",
+        "allies": "Do NOT reveal your agent status, to anyone. Work to root out corruption from the station from the shadows.",
         "goal": "While you have a license to kill, unneeded property damage or loss of employee life will lead to your contract being terminated.",
         "introduction": "You are the Internal Affairs Agent.",
         "roundend_report": "was part of Nanotrasen Internal Affairs.",

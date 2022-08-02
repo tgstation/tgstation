@@ -13,16 +13,11 @@
 	/// var to check if it got opened by a key
 	var/spawned_loot = FALSE
 
-/obj/structure/closet/crate/necropolis/tendril/Initialize(mapload)
-	. = ..()
-	RegisterSignal(src, COMSIG_PARENT_ATTACKBY, .proc/try_spawn_loot)
-
-/obj/structure/closet/crate/necropolis/tendril/proc/try_spawn_loot(datum/source, obj/item/item, mob/user, params) ///proc that handles key checking and generating loot
-	SIGNAL_HANDLER
-
+/obj/structure/closet/crate/necropolis/tendril/attackby(obj/item/item, mob/user, params)
 	if(!istype(item, /obj/item/skeleton_key) || spawned_loot)
-		return FALSE
+		return ..()
 	var/loot = rand(1,20)
+	var/mod
 	switch(loot)
 		if(1)
 			new /obj/item/shared_storage/red(src)
@@ -37,7 +32,7 @@
 		if(6)
 			new /obj/item/clothing/gloves/gauntlets(src)
 		if(7)
-			var/mod = rand(1,4)
+			mod = rand(1,4)
 			switch(mod)
 				if(1)
 					new /obj/item/disk/design_disk/modkit_disc/resonator_blast(src)
@@ -74,10 +69,12 @@
 			new /obj/item/bedsheet/cult(src)
 		if(20)
 			new /obj/item/clothing/neck/necklace/memento_mori(src)
+	if(!contents.len)
+		to_chat(user, span_warning("[src] makes a clunking sound as you try to open it. You feel compelled to let the gods know! (Please open an adminhelp and try again!)"))
+		CRASH("Failed to generate loot. loot number: [loot][mod ? "subloot: [mod]" : null]")
 	spawned_loot = TRUE
 	qdel(item)
 	to_chat(user, span_notice("You disable the magic lock, revealing the loot."))
-	return TRUE
 
 /obj/structure/closet/crate/necropolis/tendril/can_open(mob/living/user, force = FALSE)
 	if(!spawned_loot)

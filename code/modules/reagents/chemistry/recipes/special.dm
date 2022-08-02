@@ -128,9 +128,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 	if(randomize_impurity_reagents)
 		for(var/rid in required_reagents)
 			var/datum/reagent/R = GLOB.chemical_reagents_list[rid]
-			R.impure_chem = get_random_reagent_id()
 			R.inverse_chem = get_random_reagent_id()
-			R.failed_chem = get_random_reagent_id()
 
 	if(randomize_results)
 		results = list()
@@ -318,7 +316,8 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 /obj/item/paper/secretrecipe/proc/UpdateInfo()
 	var/datum/chemical_reaction/recipe = get_chemical_reaction(recipe_id)
 	if(!recipe)
-		info = "This recipe is illegible."
+		add_raw_text("This recipe is illegible.")
+		update_appearance()
 		return
 	var/list/dat = list("<ul>")
 	for(var/rid in recipe.required_reagents)
@@ -354,7 +353,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 			dat += "<li> and your purity above [recipe.purity_min]</li>"
 	dat += "</ul>"
 	dat += "."
-	info = dat.Join("")
+	add_raw_text(dat.Join(""))
 	update_appearance()
 
 #undef VALID_RANDOM_RECIPE_REAGENT

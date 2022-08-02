@@ -790,3 +790,7 @@
 	results = list(/datum/reagent/consumable/vanilla_dream = 3)
 	required_reagents = list(/datum/reagent/consumable/vanilla = 1, /datum/reagent/consumable/milk = 1, /datum/reagent/consumable/cream = 1)
 
+/datum/chemical_reaction/drink/thehat
+	results = list(/datum/reagent/consumable/ethanol/thehat = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/water = 1, /datum/reagent/consumable/ethanol/plumwine = 1)
+	mix_message = "The drink starts to smell perfumy..."

@@ -1617,10 +1617,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "xm" = (
-/obj/machinery/shower{
-	dir = 8;
-	pixel_y = -4
-	},
+/obj/machinery/shower/directional/west,
 /obj/machinery/light/small/directional/west,
 /obj/item/bikehorn/rubberducky,
 /turf/open/floor/iron/showroomfloor,
@@ -1727,9 +1724,9 @@
 /obj/structure/closet{
 	name = "beekeeping wardrobe"
 	},
-/obj/item/clothing/suit/beekeeper_suit,
-/obj/item/clothing/suit/beekeeper_suit,
-/obj/item/clothing/suit/beekeeper_suit,
+/obj/item/clothing/suit/utility/beekeeper_suit,
+/obj/item/clothing/suit/utility/beekeeper_suit,
+/obj/item/clothing/suit/utility/beekeeper_suit,
 /obj/item/clothing/head/beekeeper_head,
 /obj/item/clothing/head/beekeeper_head,
 /obj/item/clothing/head/beekeeper_head,
@@ -2629,10 +2626,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "JX" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "JZ" = (
@@ -3503,10 +3497,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "TJ" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "TR" = (
@@ -3736,10 +3727,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "WJ" = (
-/obj/machinery/shower{
-	dir = 8;
-	pixel_y = -4
-	},
+/obj/machinery/shower/directional/west,
 /obj/item/soap/homemade,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)

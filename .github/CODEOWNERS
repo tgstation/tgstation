@@ -6,12 +6,6 @@
 
 # MAINTAINERS
 
-# Cobby
-
-/code/modules/reagents/ @ExcessiveUseOfCobblestone
-/code/modules/research/designs/medical_designs.dm @ExcessiveUseOfCobblestone
-/code/game/objects/items/storage/medkit.dm @ExcessiveUseOfCobblestone
-
 # Cyberboss
 
 /code/__HELPERS/jatum.dm @Cyberboss
@@ -25,6 +19,14 @@
 /code/modules/admin/verbs/adminhelp.dm @Cyberboss
 /code/modules/admin/verbs/adminpm.dm @Cyberboss
 /code/modules/mapping/ @Cyberboss
+
+# Fikou
+
+/code/modules/awaymissions/ @Fikou
+/code/modules/mining/ @Fikou
+/code/modules/mod/ @Fikou
+/code/modules/ruins/lavalandruin_code/ @Fikou
+/code/modules/ruins/lavaland_ruin_code.dm @Fikou
 
 # JohnFulpWizard
 
@@ -78,10 +80,17 @@
 /code/controllers/subsystem/chat.dm @stylemistake
 /code/controllers/subsystem/ping.dm @stylemistake
 /code/controllers/subsystem/tgui.dm @stylemistake
-/code/modules/tgchat @stylemistake
-/code/modules/tgui @stylemistake
-/code/modules/tgui_panel @stylemistake
-/tgui @stylemistake
+/code/modules/tgchat/ @stylemistake
+/code/modules/tgui/ @stylemistake
+/code/modules/tgui_panel/ @stylemistake
+/tgui/ @stylemistake
+
+# stylemistake (explicitly disowned)
+
+/tgui/packages/tgui/interfaces/
+/tgui/packages/tgui/styles/interfaces/
+/tgui/packages/tgui-panel/styles/goon/chat-dark.scss
+/tgui/packages/tgui-panel/styles/goon/chat-light.scss
 
 # Watermelon914
 
@@ -89,13 +98,14 @@
 
 # CONTRIBUTORS
 
-# Fikou
+# Cobby
 
-/code/modules/mod/ @Fikou
-/code/modules/ruins/lavaland_ruin_code.dm @Fikou
-/code/modules/ruins/lavalandruin_code/ @Fikou
-/code/modules/mining/ @Fikou
-/code/modules/awaymissions/ @Fikou
+/code/modules/reagents/ @ExcessiveUseOfCobblestone
+/code/modules/research/designs/medical_designs.dm @ExcessiveUseOfCobblestone
+/code/game/objects/items/storage/medkit.dm @ExcessiveUseOfCobblestone
+
+# Dragomagol/Tattle
+/code/__HELPERS/logging/ @dragomagol
 
 # Jordie0608
 

@@ -1,0 +1,4 @@
+author: "jlsnow301"
+delete-after: True
+changes: 
+  - bugfix: "Custom virus names should now display properly in the pandemic."

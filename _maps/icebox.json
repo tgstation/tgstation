@@ -42,7 +42,6 @@
 			"No Parallax": true
 		}
 	],
-	"orbit_shift_replacement": "Attention crew, it appears that someone on your outpost has shifted your planet into more dangerous territory.",
 	"minetype": "none",
 	"job_changes": {
 		"Cook": {

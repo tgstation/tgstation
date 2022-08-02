@@ -78,7 +78,10 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/item/melee/cultblade/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 40, 100)
+	AddComponent(/datum/component/butchering, \
+	speed = 4 SECONDS, \
+	effectiveness = 100, \
+	)
 
 /obj/item/melee/cultblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(IS_CULTIST(owner) && prob(final_block_chance))
@@ -155,7 +158,10 @@ Striking a noncultist, however, will tear their flesh."}
 	. = ..()
 	jaunt = new(src)
 	linked_action = new(src)
-	AddComponent(/datum/component/butchering, 50, 80)
+	AddComponent(/datum/component/butchering, \
+	speed = 5 SECONDS, \
+	effectiveness = 80, \
+	)
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
 
 /obj/item/cult_bastard/Destroy()
@@ -341,6 +347,7 @@ Striking a noncultist, however, will tear their flesh."}
 	name = "ancient cultist robes"
 	desc = "A ragged, dusty set of robes. Strange letters line the inside."
 	icon_state = "cultrobes"
+	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	inhand_icon_state = "cultrobes"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
@@ -387,6 +394,7 @@ Striking a noncultist, however, will tear their flesh."}
 	name = "magus robes"
 	desc = "A set of armored robes worn by the followers of Nar'Sie."
 	icon_state = "magusred"
+	worn_icon = 'icons/mob/clothing/suits/wizard.dmi'
 	inhand_icon_state = "magusred"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
@@ -628,7 +636,7 @@ Striking a noncultist, however, will tear their flesh."}
 
 	var/mob/living/carbon/C = user
 	var/turf/mobloc = get_turf(C)
-	var/turf/destination = get_teleport_loc(mobloc,C,9,1,3,1,0,1)
+	var/turf/destination = get_teleport_loc(location = mobloc, target = C, distance = 9, density_check = TRUE, errorx = 3, errory = 1, eoffsety = 1)
 
 	if(destination)
 		uses--
@@ -724,7 +732,10 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/item/melee/cultblade/halberd/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/butchering, 100, 90)
+	AddComponent(/datum/component/butchering, \
+	speed = 10 SECONDS, \
+	effectiveness = 90, \
+	)
 	AddComponent(/datum/component/two_handed, force_unwielded=17, force_wielded=24)
 
 /obj/item/melee/cultblade/halberd/update_icon_state()

@@ -147,15 +147,15 @@
 	playsound(src,'sound/effects/bang.ogg', 200, 1)
 	var/list/hit_things = list()
 	var/throwtarget = get_edge_target_turf(src, move_dir)
-	for(var/mob/living/L in T.contents - hit_things - src)
-		if(faction_check_mob(L))
-			return
-		hit_things += L
-		visible_message(span_boldwarning("[src] tramples and kicks [L]!"))
-		to_chat(L, span_userdanger("[src] tramples you and kicks you away!"))
-		L.safe_throw_at(throwtarget, 10, 1, src)
-		L.Paralyze(20)
-		L.adjustBruteLoss(melee_damage_upper)
+	for(var/mob/living/trample_target in T.contents - hit_things - src)
+		hit_things += trample_target
+		if(faction_check_mob(trample_target))
+			continue
+		visible_message(span_boldwarning("[src] tramples and kicks [trample_target]!"))
+		to_chat(trample_target, span_userdanger("[src] tramples you and kicks you away!"))
+		trample_target.safe_throw_at(throwtarget, 10, 1, src)
+		trample_target.Paralyze(20)
+		trample_target.adjustBruteLoss(melee_damage_upper)
 	addtimer(CALLBACK(src, .proc/legionnaire_charge_2, move_dir, (times_ran + 1)), 0.7)
 
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/head_detach(target)

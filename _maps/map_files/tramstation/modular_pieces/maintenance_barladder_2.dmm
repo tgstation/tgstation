@@ -1,0 +1,140 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"i" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/mine/explored)
+"l" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/maintenance/three,
+/obj/effect/spawner/random/engineering/tool,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"t" = (
+/turf/closed/wall,
+/area/station/maintenance/starboard/greater)
+"J" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"K" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/maintenance/two,
+/obj/effect/spawner/random/engineering/toolbox,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"O" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/decal/cleanable/dirt,
+/obj/modular_map_connector,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"Q" = (
+/obj/structure/ladder,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
+"V" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"Y" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+
+(1,1,1) = {"
+i
+t
+t
+t
+t
+t
+i
+i
+i
+i
+t
+"}
+(2,1,1) = {"
+t
+t
+Y
+V
+Y
+t
+t
+i
+i
+i
+t
+"}
+(3,1,1) = {"
+t
+l
+Y
+Y
+Y
+Y
+t
+t
+t
+t
+t
+"}
+(4,1,1) = {"
+t
+Y
+Y
+Q
+Y
+Y
+Y
+Y
+Y
+Y
+O
+"}
+(5,1,1) = {"
+t
+K
+Y
+Y
+Y
+Y
+t
+t
+t
+t
+t
+"}
+(6,1,1) = {"
+t
+t
+Y
+J
+Y
+t
+t
+i
+i
+i
+t
+"}
+(7,1,1) = {"
+i
+t
+t
+t
+t
+t
+i
+i
+i
+i
+t
+"}

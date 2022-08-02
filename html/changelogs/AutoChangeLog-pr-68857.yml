@@ -1,0 +1,5 @@
+author: "Capsandi"
+delete-after: True
+changes: 
+  - rscadd: "The kilo whiteship has been remapped and can fly again"
+  - rscadd: "Kilo's abandoned warehouse has been adjusted slightly to match the ship"

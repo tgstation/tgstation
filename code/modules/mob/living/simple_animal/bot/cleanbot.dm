@@ -36,6 +36,9 @@
 	var/weapon_orig_force = 0
 	var/chosen_name
 
+	/// The time it takes for the cleanbot to clean something.
+	var/cleaning_time = 1 SECONDS
+
 	var/list/stolen_valor = list()
 
 	var/static/list/officers_titles = list(
@@ -96,15 +99,17 @@
 	bot_mode_flags = ~(BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED)
 
 /mob/living/simple_animal/bot/cleanbot/proc/deputize(obj/item/W, mob/user)
-	if(in_range(src, user))
-		to_chat(user, span_notice("You attach \the [W] to \the [src]."))
-		user.transferItemToLoc(W, src)
+	if(in_range(src, user) && user.transferItemToLoc(W, src))
+		balloon_alert(user, "attached")
 		weapon = W
 		weapon_orig_force = weapon.force
 		if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 			weapon.force = weapon.force / 2
 		add_overlay(image(icon=weapon.lefthand_file,icon_state=weapon.inhand_icon_state))
-
+		return TRUE
+	balloon_alert(user, "couldn't attach!")
+	return FALSE
+		
 /mob/living/simple_animal/bot/cleanbot/proc/update_titles()
 	var/working_title = ""
 
@@ -141,6 +146,7 @@
 
 /mob/living/simple_animal/bot/cleanbot/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/cleaner, cleaning_time, on_cleaned_callback=CALLBACK(src, /atom/.proc/update_icon_state))
 
 	chosen_name = name
 	get_targets()
@@ -350,15 +356,11 @@
 	if(ismopable(A))
 		mode = BOT_CLEANING
 		update_icon_state()
-
 		var/turf/T = get_turf(A)
-		if(do_after(src, 1, target = T))
-			T.wash(CLEAN_SCRUB)
-			visible_message(span_notice("[src] cleans \the [T]."))
-			target = null
-
+		start_cleaning(src, T, src)
+		target = null
 		mode = BOT_IDLE
-		update_icon_state()
+
 	else if(istype(A, /obj/item) || istype(A, /obj/effect/decal/remains))
 		visible_message(span_danger("[src] sprays hydrofluoric acid at [A]!"))
 		playsound(src, 'sound/effects/spray2.ogg', 50, TRUE, -6)

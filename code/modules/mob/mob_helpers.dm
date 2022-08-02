@@ -211,69 +211,69 @@
  * * notify_suiciders If it should notify suiciders (who do not qualify for many ghost roles)
  * * notify_volume How loud the sound should be to spook the user
  */
-/proc/notify_ghosts(message, ghost_sound = null, enter_link = null, atom/source = null, mutable_appearance/alert_overlay = null, action = NOTIFY_JUMP, flashwindow = TRUE, ignore_mapload = TRUE, ignore_key, header = null, notify_suiciders = TRUE, notify_volume = 100) //Easy notification of ghosts.
+/proc/notify_ghosts(message, ghost_sound, enter_link, atom/source, mutable_appearance/alert_overlay, action = NOTIFY_JUMP, flashwindow = TRUE, ignore_mapload = TRUE, ignore_key, header, notify_suiciders = TRUE, notify_volume = 100) //Easy notification of ghosts.
+
 	if(ignore_mapload && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR) //don't notify for objects created during a map load
 		return
-	for(var/mob/dead/observer/O in GLOB.player_list)
-		if(!notify_suiciders && (O in GLOB.suicided_mob_list))
+	for(var/mob/dead/observer/ghost in GLOB.player_list)
+		if(!notify_suiciders && (ghost in GLOB.suicided_mob_list))
 			continue
-		if (ignore_key && (O.ckey in GLOB.poll_ignore[ignore_key]))
+		if(ignore_key && (ghost.ckey in GLOB.poll_ignore[ignore_key]))
 			continue
 		var/orbit_link
-		if (source && action == NOTIFY_ORBIT)
-			orbit_link = " <a href='?src=[REF(O)];follow=[REF(source)]'>(Orbit)</a>"
-		to_chat(O, span_ghostalert("[message][(enter_link) ? " [enter_link]" : ""][orbit_link]"))
+		if(source && action == NOTIFY_ORBIT)
+			orbit_link = " <a href='?src=[REF(ghost)];follow=[REF(source)]'>(Orbit)</a>"
+		to_chat(ghost, span_ghostalert("[message][(enter_link) ? " [enter_link]" : ""][orbit_link]"))
 		if(ghost_sound)
-			SEND_SOUND(O, sound(ghost_sound, volume = notify_volume))
+			SEND_SOUND(ghost, sound(ghost_sound, volume = notify_volume))
 		if(flashwindow)
-			window_flash(O.client)
-		if(source)
-			var/atom/movable/screen/alert/notify_action/A = O.throw_alert("[REF(source)]_notify_action", /atom/movable/screen/alert/notify_action)
-			if(A)
-				var/ui_style = O.client?.prefs?.read_preference(/datum/preference/choiced/ui_style)
-				if(ui_style)
-					A.icon = ui_style2icon(ui_style)
-				if (header)
-					A.name = header
-				A.desc = message
-				A.action = action
-				A.target = source
-				if(!alert_overlay)
-					alert_overlay = new(source)
-					var/icon/size_check = icon(source.icon, source.icon_state)
-					var/scale = 1
-					var/width = size_check.Width()
-					var/height = size_check.Height()
-					if(width > world.icon_size || height > world.icon_size)
-						if(width >= height)
-							scale = world.icon_size / width
-						else
-							scale = world.icon_size / height
-					alert_overlay.transform = alert_overlay.transform.Scale(scale)
-					alert_overlay.appearance_flags |= TILE_BOUND
-				alert_overlay.layer = FLOAT_LAYER
-				alert_overlay.plane = FLOAT_PLANE
-				A.add_overlay(alert_overlay)
+			window_flash(ghost.client)
+		if(!source)
+			continue
+		var/atom/movable/screen/alert/notify_action/alert = ghost.throw_alert("[REF(source)]_notify_action", /atom/movable/screen/alert/notify_action)
+		if(!alert)
+			continue
+		var/ui_style = ghost.client?.prefs?.read_preference(/datum/preference/choiced/ui_style)
+		if(ui_style)
+			alert.icon = ui_style2icon(ui_style)
+		if (header)
+			alert.name = header
+		alert.desc = message
+		alert.action = action
+		alert.target = source
+		if(!alert_overlay)
+			alert_overlay = new(source)
+			var/icon/size_check = icon(source.icon, source.icon_state)
+			var/scale = 1
+			var/width = size_check.Width()
+			var/height = size_check.Height()
+			if(width > world.icon_size || height > world.icon_size)
+				if(width >= height)
+					scale = world.icon_size / width
+				else
+					scale = world.icon_size / height
+			alert_overlay.transform = alert_overlay.transform.Scale(scale)
+			alert_overlay.appearance_flags |= TILE_BOUND
+		alert_overlay.layer = FLOAT_LAYER
+		alert_overlay.plane = FLOAT_PLANE
+		alert.add_overlay(alert_overlay)
 
 /**
  * Heal a robotic body part on a mob
  */
-/proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute_heal, burn_heal)
-	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
-	if(affecting && !IS_ORGANIC_LIMB(affecting))
-		var/dam //changes repair text based on how much brute/burn was supplied
-		if(brute_heal > burn_heal)
-			dam = 1
-		else
-			dam = 0
-		if((brute_heal > 0 && affecting.brute_dam > 0) || (burn_heal > 0 && affecting.burn_dam > 0))
-			if(affecting.heal_damage(brute_heal, burn_heal, 0, BODYTYPE_ROBOTIC))
-				H.update_damage_overlays()
-			user.visible_message(span_notice("[user] fixes some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name]."), \
-			span_notice("You fix some of the [dam ? "dents on" : "burnt wires in"] [H == user ? "your" : "[H]'s"] [affecting.name]."))
-			return 1 //successful heal
-		else
-			to_chat(user, span_warning("[affecting] is already in good condition!"))
+/proc/item_heal_robotic(mob/living/carbon/human/human, mob/user, brute_heal, burn_heal)
+	var/obj/item/bodypart/affecting = human.get_bodypart(check_zone(user.zone_selected))
+	if(!affecting || IS_ORGANIC_LIMB(affecting))
+		to_chat(user, span_warning("[affecting] is already in good condition!"))
+		return FALSE
+	var/brute_damage = brute_heal > burn_heal //changes repair text based on how much brute/burn was supplied
+	if((brute_heal > 0 && affecting.brute_dam > 0) || (burn_heal > 0 && affecting.burn_dam > 0))
+		if(affecting.heal_damage(brute_heal, burn_heal, 0, BODYTYPE_ROBOTIC))
+			human.update_damage_overlays()
+		user.visible_message(span_notice("[user] fixes some of the [brute_damage ? "dents on" : "burnt wires in"] [human]'s [affecting.name]."), \
+			span_notice("You fix some of the [brute_damage ? "dents on" : "burnt wires in"] [human == user ? "your" : "[human]'s"]	[affecting.name]."))
+		return TRUE //successful heal
+
 
 ///Is the passed in mob a ghost with admin powers, doesn't check for AI interact like isAdminGhost() used to
 /proc/isAdminObserver(mob/user)
@@ -420,3 +420,15 @@
 		if(ITEM_SLOT_SUITSTORE)
 			return /obj/item
 	return null
+
+/// Returns a client from a mob, mind or client
+/proc/get_player_client(player)
+	if(ismob(player))
+		var/mob/player_mob = player
+		player = player_mob.client
+	else if(istype(player, /datum/mind))
+		var/datum/mind/player_mind = player
+		player = player_mind.current.client
+	if(!istype(player, /client))
+		return
+	return player

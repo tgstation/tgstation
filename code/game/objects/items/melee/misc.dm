@@ -52,7 +52,11 @@
 
 /obj/item/melee/synthetic_arm_blade/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 60, 80) //very imprecise
+	AddComponent(/datum/component/butchering, \
+	speed = 6 SECONDS, \
+	effectiveness = 80, \
+	)
+	//very imprecise
 
 /obj/item/melee/sabre
 	name = "officer's sabre"
@@ -79,20 +83,25 @@
 
 /obj/item/melee/sabre/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 30, 95, 5) //fast and effective, but as a sword, it might damage the results.
+	AddComponent(/datum/component/butchering, \
+	speed = 3 SECONDS, \
+	effectiveness = 95, \
+	bonus_modifier = 5, \
+	)
+	//fast and effective, but as a sword, it might damage the results.
 
 /obj/item/melee/sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
 		final_block_chance = 0 //Don't bring a sword to a gunfight
 	return ..()
 
-/obj/item/melee/sabre/on_exit_storage(datum/component/storage/concrete/container)
-	var/obj/item/storage/belt/sabre/sabre = container.real_location()
+/obj/item/melee/sabre/on_exit_storage(datum/storage/container)
+	var/obj/item/storage/belt/sabre/sabre = container.real_location?.resolve()
 	if(istype(sabre))
 		playsound(sabre, 'sound/items/unsheath.ogg', 25, TRUE)
 
-/obj/item/melee/sabre/on_enter_storage(datum/component/storage/concrete/container)
-	var/obj/item/storage/belt/sabre/sabre = container.real_location()
+/obj/item/melee/sabre/on_enter_storage(datum/storage/container)
+	var/obj/item/storage/belt/sabre/sabre = container.real_location?.resolve()
 	if(istype(sabre))
 		playsound(sabre, 'sound/items/sheath.ogg', 25, TRUE)
 

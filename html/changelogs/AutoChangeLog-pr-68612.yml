@@ -1,0 +1,9 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - rscdel: "Removed the integrated circuit paper printing mechanic as part of paper code rewrite."
+  - rscdel: "Removed the ability to scan paper directly into the modular computer notes app as part of paper code rewrite."
+  - qol: "AIs now see the full paper interface when players show them papers through the camera, exactly what's written on the paper, fully rendered."
+  - refactor: "Paper code has been completely refactored."
+  - bugfix: "Fixes signatures not working at all. Signatures now only work when %s or %sign is put into an [___] input field."
+  - bugfix: "Input fields are now fixed and also work again."

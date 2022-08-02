@@ -42,5 +42,4 @@
 	human.dna.features["pod_hair"] = pick(GLOB.pod_hair_list)
 
 	human.update_body(is_creating = TRUE)
-	human.update_hair(is_creating = TRUE)
 	human.dna.species.spec_updatehealth(human)
