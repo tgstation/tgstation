@@ -16,13 +16,13 @@
 		return //just put it on cooldown and let the other ability reactivate, you couldn't burrow and that's okay.
 	playsound(burrower, 'sound/effects/break_stone.ogg', 50, TRUE)
 	burrower.status_flags |= GODMODE
-	invisibility = INVISIBILITY_MAXIMUM
+	burrower.invisibility = INVISIBILITY_MAXIMUM
 	burrower.forceMove(unburrow_turf)
 	//not that it's gonna die with godmode but still
 	SLEEP_CHECK_DEATH(rand(0.75 SECONDS, 1.25 SECONDS), burrower)
 	playsound(burrower, 'sound/effects/break_stone.ogg', 50, TRUE)
 	burrower.status_flags &= ~GODMODE
-	invisibility = 0
+	burrower.invisibility = 0
 
 /datum/action/cooldown/mob_cooldown/resurface/proc/get_unburrow_turf(mob/living/burrower, atom/target)
 	var/list/potential_turfs = shuffle(oview(5, target))//get in view, shuffle
