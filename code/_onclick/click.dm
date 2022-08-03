@@ -69,10 +69,7 @@
 		return
 	next_click = world.time + 1
 
-	if(check_click_intercept(params,A))
-		return
-
-	if(notransform)
+	if(check_click_intercept(params,A) || notransform)
 		return
 
 	var/list/modifiers = params2list(params)
@@ -415,12 +412,12 @@
 	A.AltClick(src)
 
 /atom/proc/AltClick(mob/user)
+	var/turf/T = get_turf(src)
 	if(!can_interact(user))
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_CLICK_ALT, user) & COMPONENT_CANCEL_CLICK_ALT)
 		return
-	var/turf/T = get_turf(src)
-	if(T && (isturf(loc) || isturf(src)) && user.TurfAdjacent(T))
+	else if((T && (isturf(loc)) || (isturf(src)) && user.TurfAdjacent(T)) && !HAS_TRAIT(user, TRAIT_MOVE_VENTCRAWLING))
 		user.listed_turf = T
 		user.client.stat_panel.send_message("create_listedturf", T.name)
 
