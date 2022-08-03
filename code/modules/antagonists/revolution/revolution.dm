@@ -481,7 +481,7 @@
 			player.med_hud_set_status()
 
 	for(var/datum/job/job as anything in SSjob.joinable_occupations)
-		if(!(job.departments_bitflags & (DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND)))
+		if(!(job.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND))
 			continue
 		job.allow_bureaucratic_error = FALSE
 		job.total_positions = 0
@@ -507,11 +507,13 @@
 	var/total_revs = 0
 	var/total_candidates = 0
 
+	var/list/former_revs = ex_revs + ex_headrevs
+
 	for (var/mob/player as anything in GLOB.player_list)
 		if (player.mind.has_antag_datum(/datum/antagonist/enemy_of_the_revolution))
 			continue
 
-		if (player.mind in ex_revs + ex_headrevs)
+		if (player.mind in former_revs)
 			total_revs += 1
 
 		total_candidates += 1
