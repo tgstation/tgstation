@@ -2,8 +2,8 @@
 	name = "Prosthetic replacement"
 	steps = list(
 		/datum/surgery_step/incise,
-		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/add_prosthetic)
 	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_HEAD)
@@ -42,14 +42,15 @@
 		tool = organ_storage_contents
 	if(istype(tool, /obj/item/bodypart))
 		var/obj/item/bodypart/bodypart_to_attach = tool
-		if(bodypart_to_attach.status != BODYPART_ROBOTIC)
+		if(IS_ORGANIC_LIMB(bodypart_to_attach))
 			organ_rejection_dam = 10
 			if(ishuman(target))
 				var/mob/living/carbon/human/human_target = target
-				if(!(bodypart_to_attach.part_origin & human_target.dna.species.allowed_animal_origin))
+				var/obj/item/bodypart/chest/target_chest = human_target.get_bodypart(BODY_ZONE_CHEST)
+				if(!(bodypart_to_attach.bodytype & target_chest.acceptable_bodytype))
 					to_chat(user, span_warning("[bodypart_to_attach] doesn't match the patient's morphology."))
 					return -1
-				if(human_target.dna.species.id != bodypart_to_attach.species_id)
+				if(human_target.dna.species.id != bodypart_to_attach.limb_id)
 					organ_rejection_dam = 30
 
 		if(target_zone == bodypart_to_attach.body_zone) //so we can't replace a leg with an arm, or a human arm with a monkey arm.

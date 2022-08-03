@@ -84,6 +84,9 @@
 	//Headset for Poly to yell at engineers :)
 	var/obj/item/radio/headset/ears = null
 
+	//Wheter the Parrot should come with a headset
+	var/spawn_headset = TRUE
+
 	//The thing the parrot is currently interested in. This gets used for items the parrot wants to pick up, mobs it wants to steal from,
 	//mobs it wants to attack or mobs that have attacked it
 	var/atom/movable/parrot_interest = null
@@ -110,14 +113,6 @@
 
 /mob/living/simple_animal/parrot/Initialize(mapload)
 	. = ..()
-	if(!ears)
-		var/headset = pick(/obj/item/radio/headset/headset_sec, \
-						/obj/item/radio/headset/headset_eng, \
-						/obj/item/radio/headset/headset_med, \
-						/obj/item/radio/headset/headset_sci, \
-						/obj/item/radio/headset/headset_cargo)
-		ears = new headset(src)
-
 	parrot_sleep_dur = parrot_sleep_max //In case someone decides to change the max without changing the duration var
 
 	add_verb(src, list(/mob/living/simple_animal/parrot/proc/steal_from_ground, \
@@ -129,6 +124,15 @@
 
 	AddElement(/datum/element/strippable, GLOB.strippable_parrot_items)
 	AddElement(/datum/element/simple_flying)
+	if(!spawn_headset)
+		return
+	if(!ears)
+		var/headset = pick(/obj/item/radio/headset/headset_sec, \
+						/obj/item/radio/headset/headset_eng, \
+						/obj/item/radio/headset/headset_med, \
+						/obj/item/radio/headset/headset_sci, \
+						/obj/item/radio/headset/headset_cargo)
+		ears = new headset(src)
 
 /mob/living/simple_animal/parrot/examine(mob/user)
 	. = ..()
@@ -366,7 +370,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		icon_state = icon_living
 		drop_held_item(0)
 
-/mob/living/simple_animal/parrot/Process_Spacemove()
+/mob/living/simple_animal/parrot/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	if(!stat) //Birds can fly, fun fact. No I don't care that space doesn't have air. Space parrots bitch
 		return TRUE
 	return ..()
@@ -816,7 +820,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	to_chat(src, span_warning("There is no perch nearby to sit on!"))
 	return
 
-/mob/living/simple_animal/parrot/Moved(oldLoc, dir)
+/mob/living/simple_animal/parrot/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(. && !stat && client && parrot_state == PARROT_PERCH)
 		parrot_state = PARROT_WANDER
@@ -880,6 +884,8 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	to_chat(src, span_notice("You will now [combat_mode ? "Harm" : "Help"] others."))
 	return
 
+/mob/living/simple_animal/parrot/natural
+	spawn_headset = FALSE
 /*
  * Sub-types
  */
@@ -952,7 +958,10 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	if(!islist(speech_buffer))
 		speech_buffer = list()
 
-/mob/living/simple_animal/parrot/poly/proc/Write_Memory(dead)
+/mob/living/simple_animal/parrot/poly/Write_Memory(dead, gibbed)
+	. = ..()
+	if(!.)
+		return
 	var/json_file = file("data/npc_saves/Poly.json")
 	var/list/file_data = list()
 	if(islist(speech_buffer))
@@ -965,7 +974,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		else
 			file_data["longestdeathstreak"] = longest_deathstreak
 	else
-		file_data["roundssurvived"] = rounds_survived + 1
+		file_data["roundssurvived"] = max(rounds_survived, 0) + 1
 		if(rounds_survived + 1 > longest_survival)
 			file_data["longestsurvival"] = rounds_survived + 1
 		else

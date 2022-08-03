@@ -11,7 +11,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/table,
 /obj/item/paper{
-	info = "What exactly is the plan with all these rooms? I've dug out like 15 rooms in maintenance that aren't even labeled on the station blueprint. Seems like all we're doing is fucking up the structural stability of the asteroid.";
+	default_raw_text = "What exactly is the plan with all these rooms? I've dug out like 15 rooms in maintenance that aren't even labeled on the station blueprint. Seems like all we're doing is fucking up the structural stability of the asteroid.";
 	name = "sand-covered note"
 	},
 /obj/item/stack/ore/glass,
@@ -20,15 +20,15 @@
 "h" = (
 /obj/structure/table,
 /obj/item/folder/blue,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "i" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "k" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance/three,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "s" = (
 /turf/closed/wall/rock/porous,

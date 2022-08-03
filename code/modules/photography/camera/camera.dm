@@ -19,7 +19,7 @@
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_NECK
 	custom_materials = list(/datum/material/iron = 50, /datum/material/glass = 150)
-	custom_price = PAYCHECK_EASY * 2
+	custom_price = PAYCHECK_CREW * 2
 	var/flash_enabled = TRUE
 	var/state_on = "camera"
 	var/state_off = "camera_off"

@@ -119,6 +119,9 @@
 		)
 
 		if(!do_after(tipper, tip_time, target = tipped_mob))
+			if(!isnull(tipped_mob.client))
+				tipped_mob.log_message("was attempted to tip over by [key_name(tipper)]", LOG_VICTIM, log_globally = FALSE)
+				tipper.log_message("failed to tip over [key_name(tipped_mob)]", LOG_ATTACK)
 			to_chat(tipper, span_danger("You fail to tip over [tipped_mob]."))
 			return
 	do_tip(tipped_mob, tipper)

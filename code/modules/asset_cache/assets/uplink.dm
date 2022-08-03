@@ -1,6 +1,7 @@
 /// Sends information needed for uplinks
 /datum/asset/json/uplink
 	name = "uplink"
+	early = TRUE
 
 /datum/asset/json/uplink/generate()
 	var/list/data = list()
@@ -23,13 +24,14 @@
 				"name" = item.name,
 				"cost" = item.cost,
 				"desc" = item.desc,
-				"category" = item.category? initial(item.category.name) : null,
+				"category" = item.category ? initial(item.category.name) : null,
 				"purchasable_from" = item.purchasable_from,
 				"restricted" = item.restricted,
 				"limited_stock" = item.limited_stock,
 				"restricted_roles" = item.restricted_roles,
 				"restricted_species" = item.restricted_species,
 				"progression_minimum" = item.progression_minimum,
+				"cost_override_string" = item.cost_override_string,
 			))
 		}
 		SStraitor.uplink_items += item

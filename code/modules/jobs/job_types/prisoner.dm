@@ -8,7 +8,7 @@
 	supervisors = "the security team"
 	selection_color = "#ffe1c3"
 	exp_granted_type = EXP_TYPE_CREW
-	paycheck = PAYCHECK_PRISONER
+	paycheck = PAYCHECK_LOWER
 
 	outfit = /datum/outfit/job/prisoner
 	plasmaman_outfit = /datum/outfit/plasmaman/prisoner
@@ -36,6 +36,11 @@
 	belt = null
 	ears = null
 	shoes = /obj/item/clothing/shoes/sneakers/orange
+
+/datum/outfit/job/prisoner/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(prob(1)) // D BOYYYYSSSSS
+		head = /obj/item/clothing/head/beanie/black/dboy
 
 /datum/outfit/job/prisoner/post_equip(mob/living/carbon/human/new_prisoner, visualsOnly)
 	. = ..()

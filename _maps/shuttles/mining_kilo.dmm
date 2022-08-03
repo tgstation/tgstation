@@ -29,7 +29,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/mining/large)
 "f" = (
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/structure/table,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/mining/large)
@@ -297,9 +297,7 @@
 /turf/open/floor/plating,
 /area/shuttle/mining/large)
 "K" = (
-/obj/structure/sign/warning/vacuum/external{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/east,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8

@@ -123,6 +123,19 @@
 			to_chat(user, "You transfer the frequency and code of \the [signaler2.name] to \the [name]")
 	..()
 
+/obj/item/assembly/signaler/attack_self_secondary(mob/user, modifiers)
+	. = ..()
+	if(!can_interact(user))
+		return
+	if(!ishuman(user))
+		return
+	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_SIGNALLER_SEND))
+		balloon_alert(user, "still recharging...")
+		return
+	TIMER_COOLDOWN_START(src, COOLDOWN_SIGNALLER_SEND, 1 SECONDS)
+	INVOKE_ASYNC(src, .proc/signal)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 /obj/item/assembly/signaler/proc/signal()
 	if(!radio_connection)
 		return

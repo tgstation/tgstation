@@ -87,8 +87,9 @@
 	"crimson",
 	"cyan",
 	"gold",
-	"grey",
 	"green",
+	"grey",
+	"lime",
 	"magenta",
 	"orange",
 	"pink",
@@ -97,7 +98,7 @@
 	"silver",
 	"violet",
 	"white",
-	"yellow"
+	"yellow",
 	)
 
 	var/list/my_possible_colors = possible_colors.Copy()

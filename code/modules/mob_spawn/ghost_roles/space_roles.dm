@@ -96,7 +96,7 @@
 
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/space/Initialize(mapload)
 	. = ..()
-	if(prob(90)) //only has a 10% chance of existing, otherwise it'll just be a NPC syndie.
+	if(prob(85)) //only has a 15% chance of existing, otherwise it'll just be a NPC syndie.
 		new /mob/living/simple_animal/hostile/syndicate/ranged(get_turf(src))
 		return INITIALIZE_HINT_QDEL
 
@@ -110,6 +110,7 @@
 	prompt_name = "a battlecruiser crewmember"
 	outfit = /datum/outfit/syndicate_empty/battlecruiser
 	spawner_job_path = /datum/job/battlecruiser_crew
+	uses = 4
 
 	/// The antag team to apply the player to
 	var/datum/team/antag_team
@@ -185,8 +186,9 @@
 
 /datum/outfit/syndicate_empty/battlecruiser
 	name = "Syndicate Battlecruiser Ship Operative"
-	l_pocket = /obj/item/gun/ballistic/automatic/pistol
+	l_pocket = /obj/item/gun/ballistic/automatic/pistol/clandestine
 	r_pocket = /obj/item/knife/combat/survival
+	box = /obj/item/storage/box/survival/syndie
 	belt = /obj/item/storage/belt/military/assault
 
 /obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser/assault
@@ -196,6 +198,7 @@
 	important_text = "Work as a team with your fellow operatives and work out a plan of attack. If you are overwhelmed, escape back to your ship!"
 	prompt_name = "a battlecruiser operative"
 	outfit = /datum/outfit/syndicate_empty/battlecruiser/assault
+	uses = 8
 
 /datum/outfit/syndicate_empty/battlecruiser/assault
 	name = "Syndicate Battlecruiser Assault Operative"
@@ -204,8 +207,8 @@
 	r_pocket = /obj/item/modular_computer/tablet/nukeops
 	belt = /obj/item/storage/belt/military
 	suit = /obj/item/clothing/suit/armor/vest
-	suit_store = /obj/item/gun/ballistic/automatic/pistol
-	back = /obj/item/storage/backpack/security
+	suit_store = /obj/item/gun/ballistic/automatic/pistol/clandestine
+	back = /obj/item/storage/backpack
 	mask = /obj/item/clothing/mask/gas/syndicate
 
 /obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser/captain
@@ -217,6 +220,7 @@
 	outfit = /datum/outfit/syndicate_empty/battlecruiser/assault/captain
 	spawner_job_path = /datum/job/battlecruiser_captain
 	antag_datum_to_give = /datum/antagonist/battlecruiser/captain
+	uses = 1
 
 /datum/outfit/syndicate_empty/battlecruiser/assault/captain
 	name = "Syndicate Battlecruiser Captain"

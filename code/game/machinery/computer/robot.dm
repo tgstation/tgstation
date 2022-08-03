@@ -22,6 +22,7 @@
 	return TRUE
 
 /obj/machinery/computer/robotics/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "RoboticsControlConsole", name)
@@ -37,6 +38,11 @@
 			data["can_hack"] = TRUE
 	else if(isAdminGhostAI(user))
 		data["can_hack"] = TRUE
+
+	data["can_detonate"] = FALSE
+	if(isAI(user))
+		var/mob/living/silicon/ai/ai = user
+		data["can_detonate"] = !isnull(ai.malf_picker)
 
 	data["cyborgs"] = list()
 	for(var/mob/living/silicon/robot/R in GLOB.silicon_mobs)
@@ -96,6 +102,20 @@
 						to_chat(usr, span_danger("Cyborg locked by an user with superior permissions."))
 			else
 				to_chat(usr, span_danger("Access Denied."))
+
+		if("killbot") //Malf AIs, and AIs with a combat upgrade, can detonate their cyborgs remotely.
+			if(!isAI(usr))
+				return
+			var/mob/living/silicon/ai/ai = usr
+			if(!ai.malf_picker)
+				return
+			var/mob/living/silicon/robot/target = locate(params["ref"]) in GLOB.silicon_mobs
+			if(!istype(target))
+				return
+			if(target.connected_ai != ai)
+				return
+			target.self_destruct(usr)
+
 		if("magbot")
 			var/mob/living/silicon/S = usr
 			if((istype(S) && S.hack_software) || isAdminGhostAI(usr))
@@ -105,6 +125,7 @@
 					message_admins("[ADMIN_LOOKUPFLW(usr)] emagged cyborg [key_name_admin(R)] using robotic console!")
 					R.SetEmagged(TRUE)
 					R.logevent("WARN: root privleges granted to PID [num2hex(rand(1,65535), -1)][num2hex(rand(1,65535), -1)].") //random eight digit hex value. Two are used because rand(1,4294967295) throws an error
+
 		if("killdrone")
 			if(allowed(usr))
 				var/mob/living/simple_animal/drone/D = locate(params["ref"]) in GLOB.mob_list

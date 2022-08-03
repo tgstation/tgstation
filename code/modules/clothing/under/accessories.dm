@@ -8,17 +8,11 @@
 	slot_flags = 0
 	w_class = WEIGHT_CLASS_SMALL
 	/// Whether or not the accessory displays through suits and the like.
-	var/above_suit = FALSE
+	var/above_suit = TRUE
 	/// TRUE if shown as a small icon in corner, FALSE if overlayed
 	var/minimize_when_attached = TRUE
-	/// Whether the accessory has any storage to apply to the clothing it's attached to.
-	var/datum/component/storage/detached_pockets
 	/// What equipment slot the accessory attaches to.
 	var/attachment_slot = CHEST
-
-/obj/item/clothing/accessory/Destroy()
-	set_detached_pockets(null)
-	return ..()
 
 /obj/item/clothing/accessory/proc/can_attach_accessory(obj/item/clothing/U, mob/user)
 	if(!attachment_slot || (U && U.body_parts_covered & attachment_slot))
@@ -27,12 +21,11 @@
 		to_chat(user, span_warning("There doesn't seem to be anywhere to put [src]..."))
 
 /obj/item/clothing/accessory/proc/attach(obj/item/clothing/under/U, user)
-	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
-	if(storage)
-		if(SEND_SIGNAL(U, COMSIG_CONTAINS_STORAGE))
+	if(atom_storage)
+		if(U.atom_storage)
 			return FALSE
-		U.TakeComponent(storage)
-		set_detached_pockets(storage)
+		U.clone_storage(atom_storage)
+		U.atom_storage.set_real_location(src)
 	U.attached_accessory = src
 	forceMove(U)
 	layer = FLOAT_LAYER
@@ -57,8 +50,8 @@
 	return TRUE
 
 /obj/item/clothing/accessory/proc/detach(obj/item/clothing/under/U, user)
-	if(detached_pockets && detached_pockets.parent == U)
-		TakeComponent(detached_pockets)
+	if(U.atom_storage && U.atom_storage.real_location?.resolve() == src)
+		QDEL_NULL(U.atom_storage)
 
 	U.armor = U.armor.detachArmor(armor)
 
@@ -75,16 +68,6 @@
 	U.attached_accessory = null
 	U.accessory_overlay = null
 
-/obj/item/clothing/accessory/proc/set_detached_pockets(new_pocket)
-	if(detached_pockets)
-		UnregisterSignal(detached_pockets, COMSIG_PARENT_QDELETING)
-	detached_pockets = new_pocket
-	if(detached_pockets)
-		RegisterSignal(detached_pockets, COMSIG_PARENT_QDELETING, .proc/handle_pockets_del)
-
-/obj/item/clothing/accessory/proc/handle_pockets_del(datum/source)
-	SIGNAL_HANDLER
-	set_detached_pockets(null)
 
 /obj/item/clothing/accessory/proc/on_uniform_equip(obj/item/clothing/under/U, user)
 	return
@@ -92,8 +75,8 @@
 /obj/item/clothing/accessory/proc/on_uniform_dropped(obj/item/clothing/under/U, user)
 	return
 
-/obj/item/clothing/accessory/AltClick(mob/user)
-	if(initial(above_suit) && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
+/obj/item/clothing/accessory/attack_self_secondary(mob/user)
+	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		above_suit = !above_suit
 		to_chat(user, "[src] will be worn [above_suit ? "above" : "below"] your suit.")
 		return
@@ -103,8 +86,7 @@
 /obj/item/clothing/accessory/examine(mob/user)
 	. = ..()
 	. += span_notice("\The [src] can be attached to a uniform. Alt-click to remove it once attached.")
-	if(initial(above_suit))
-		. += span_notice("\The [src] can be worn above or below your suit. Alt-click to toggle.")
+	. += span_notice("\The [src] can be worn above or below your suit. Right-click to toggle.")
 
 /obj/item/clothing/accessory/waistcoat
 	name = "waistcoat"
@@ -113,6 +95,10 @@
 	inhand_icon_state = "waistcoat"
 	minimize_when_attached = FALSE
 	attachment_slot = null
+	greyscale_config = /datum/greyscale_config/waistcoat
+	greyscale_config_worn = /datum/greyscale_config/waistcoat_worn
+	greyscale_colors = "#414344"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/accessory/vest_sheriff
 	name = "sheriff vest"
@@ -120,6 +106,14 @@
 	icon_state = "vest_sheriff"
 	inhand_icon_state = "vest_sheriff"
 	minimize_when_attached = TRUE
+	attachment_slot = null
+
+/obj/item/clothing/accessory/maidcorset
+	name = "maid corset"
+	desc = "The final touch that holds it all together."
+	icon_state = "maidcorset"
+	inhand_icon_state = "maidapron"
+	minimize_when_attached = FALSE
 	attachment_slot = null
 
 /obj/item/clothing/accessory/maidapron
@@ -231,18 +225,16 @@
 	icon_state = "gold"
 	medaltype = "medal-gold"
 	custom_materials = list(/datum/material/gold=1000)
-	
+
 /obj/item/clothing/accessory/medal/med_medal
 	name = "exemplary performance medal"
 	desc = "A medal awarded to those who have shown distinguished conduct, performance, and initiative within the medical department."
 	icon_state = "med_medal"
-	above_suit = TRUE
 
 /obj/item/clothing/accessory/medal/med_medal2
 	name = "excellence in medicine medal"
 	desc = "A medal awarded to those who have shown legendary performance, competence, and initiative beyond all expectations within the medical department."
 	icon_state = "med_medal2"
-	above_suit = TRUE
 
 /obj/item/clothing/accessory/medal/gold/captain
 	name = "medal of captaincy"
@@ -359,10 +351,12 @@
 	name = "pocket protector"
 	desc = "Can protect your clothing from ink stains, but you'll look like a nerd if you're using one."
 	icon_state = "pocketprotector"
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/pocketprotector
 
 /obj/item/clothing/accessory/pocketprotector/full/Initialize(mapload)
 	. = ..()
+
+	create_storage(type = /datum/storage/pockets/pocketprotector)
+
 	new /obj/item/pen/red(src)
 	new /obj/item/pen(src)
 	new /obj/item/pen/blue(src)
@@ -421,7 +415,6 @@
 	name = "skull codpiece"
 	desc = "A skull shaped ornament, intended to protect the important things in life."
 	icon_state = "skull"
-	above_suit = TRUE
 	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 5, BOMB = 20, BIO = 20, FIRE = 0, ACID = 25)
 	attachment_slot = GROIN
 
@@ -429,7 +422,6 @@
 	name = "Sinew Skirt"
 	desc = "For the last time. IT'S A KILT not a skirt."
 	icon_state = "skilt"
-	above_suit = TRUE
 	minimize_when_attached = FALSE
 	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 5, BOMB = 20, BIO = 20, FIRE = 0, ACID = 25)
 	attachment_slot = GROIN
@@ -438,7 +430,6 @@
 	name = "Allergy dogtag"
 	desc = "Dogtag with a list of your allergies"
 	icon_state = "allergy"
-	above_suit = FALSE
 	minimize_when_attached = TRUE
 	attachment_slot = CHEST
 	///Display message
@@ -472,4 +463,6 @@
 						"Asexual Pride" = "pride_ace",
 						"Non-binary Pride" = "pride_enby",
 						"Transgender Pride" = "pride_trans",
+						"Intersex Pride" = "pride_intersex",
+						"Lesbian Pride" = "pride_lesbian",
 						)

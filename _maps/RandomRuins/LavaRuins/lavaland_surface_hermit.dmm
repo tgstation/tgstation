@@ -10,43 +10,43 @@
 /area/ruin/powered)
 "e" = (
 /obj/item/clothing/suit/space/orange,
-/turf/open/floor/plating/asteroid/basalt,
+/turf/open/misc/asteroid/basalt,
 /area/ruin/powered)
 "f" = (
-/turf/open/floor/plating/asteroid/basalt,
+/turf/open/misc/asteroid/basalt,
 /area/ruin/powered)
 "g" = (
-/turf/open/floor/plating/asteroid{
+/turf/open/misc/asteroid{
 	name = "dirt"
 	},
 /area/ruin/powered)
 "h" = (
 /obj/item/shovel,
-/turf/open/floor/plating/asteroid{
+/turf/open/misc/asteroid{
 	name = "dirt"
 	},
 /area/ruin/powered)
 "i" = (
 /obj/item/reagent_containers/glass/bucket,
-/turf/open/floor/plating/asteroid{
+/turf/open/misc/asteroid{
 	name = "dirt"
 	},
 /area/ruin/powered)
 "j" = (
 /obj/structure/water_source/puddle,
-/turf/open/floor/plating/asteroid{
+/turf/open/misc/asteroid{
 	name = "dirt"
 	},
 /area/ruin/powered)
 "k" = (
 /obj/structure/glowshroom/single,
-/turf/open/floor/plating/asteroid{
+/turf/open/misc/asteroid{
 	name = "dirt"
 	},
 /area/ruin/powered)
 "l" = (
 /obj/item/storage/toolbox/emergency,
-/turf/open/floor/plating/asteroid{
+/turf/open/misc/asteroid{
 	name = "dirt"
 	},
 /area/ruin/powered)
@@ -57,7 +57,7 @@
 /obj/item/seeds/plump,
 /obj/item/food/grown/mushroom/glowshroom,
 /obj/item/seeds/tower,
-/turf/open/floor/plating/asteroid/basalt,
+/turf/open/misc/asteroid/basalt,
 /area/ruin/powered)
 "n" = (
 /obj/machinery/hydroponics/soil,
@@ -70,8 +70,8 @@
 /obj/structure/rack,
 /obj/item/storage/bag/plants/portaseeder,
 /obj/item/storage/bag/ore,
-/obj/item/storage/firstaid/regular,
-/turf/open/floor/plating/asteroid/basalt,
+/obj/item/storage/medkit/regular,
+/turf/open/misc/asteroid/basalt,
 /area/ruin/powered)
 "q" = (
 /obj/structure/glowshroom/single,
@@ -81,10 +81,10 @@
 /obj/structure/rack,
 /obj/item/pickaxe/emergency,
 /obj/item/tank/internals/oxygen,
-/turf/open/floor/plating/asteroid/basalt,
+/turf/open/misc/asteroid/basalt,
 /area/ruin/powered)
 "s" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "t" = (
 /turf/closed/wall/mineral/titanium/survival/pod,
@@ -174,14 +174,14 @@
 /area/ruin/powered)
 "M" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plating/asteroid/basalt,
+/turf/open/misc/asteroid/basalt,
 /area/ruin/powered)
 "P" = (
 /turf/template_noop,
 /area/template_noop)
 "S" = (
 /obj/item/clothing/head/helmet/space/orange,
-/turf/open/floor/plating/asteroid{
+/turf/open/misc/asteroid{
 	name = "dirt"
 	},
 /area/ruin/powered)

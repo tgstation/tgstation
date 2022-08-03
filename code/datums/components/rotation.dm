@@ -110,7 +110,6 @@
 
 	var/obj/rotated_obj = parent
 	rotated_obj.setDir(turn(rotated_obj.dir, degrees))
-	rotated_obj.balloon_alert(user, "you [degrees == ROTATION_FLIP ? "flip" : "rotate"] [rotated_obj]")
 	if(rotation_flags & ROTATION_REQUIRE_WRENCH)
 		playsound(rotated_obj, 'sound/items/ratchet.ogg', 50, TRUE)
 		
@@ -131,13 +130,13 @@
 			return FALSE
 		var/obj/item/tool = user.get_active_held_item()
 		if(!tool || tool.tool_behaviour != TOOL_WRENCH)
-			rotated_obj.balloon_alert(user, "need a wrench")
+			rotated_obj.balloon_alert(user, "need a wrench!")
 			return FALSE
 	if(!(rotation_flags & ROTATION_IGNORE_ANCHORED) && rotated_obj.anchored)
 		if(istype(rotated_obj, /obj/structure/window))
-			rotated_obj.balloon_alert(user, "need to unscrew")
+			rotated_obj.balloon_alert(user, "need to unscrew!")
 		else
-			rotated_obj.balloon_alert(user, "need to unwrench")
+			rotated_obj.balloon_alert(user, "need to unwrench!")
 		return FALSE
 
 	if(rotation_flags & ROTATION_NEEDS_ROOM)
@@ -145,7 +144,7 @@
 		var/obj/structure/window/rotated_window = rotated_obj
 		var/fulltile = istype(rotated_window) ? rotated_window.fulltile : FALSE
 		if(!valid_window_location(rotated_obj.loc, target_dir, is_fulltile = fulltile))
-			rotated_obj.balloon_alert(user, "cannot rotate in that direction")
+			rotated_obj.balloon_alert(user, "can't rotate in that direction!")
 			return FALSE
 	return TRUE
 

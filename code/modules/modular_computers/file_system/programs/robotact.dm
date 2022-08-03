@@ -1,12 +1,11 @@
 /datum/computer_file/program/robotact
 	filename = "robotact"
 	filedesc = "RoboTact"
-	category = PROGRAM_CATEGORY_ROBO
+	category = PROGRAM_CATEGORY_SCI
 	extended_desc = "A built-in app for cyborg self-management and diagnostics."
 	ui_header = "robotact.gif" //DEBUG -- new icon before PR
 	program_icon_state = "command"
 	requires_ntnet = FALSE
-	transfer_access = null
 	available_on_ntnet = FALSE
 	unsendable = TRUE
 	undeletable = TRUE
@@ -15,7 +14,7 @@
 	tgui_id = "NtosRobotact"
 	program_icon = "terminal"
 
-/datum/computer_file/program/robotact/run_program(mob/living/user)
+/datum/computer_file/program/robotact/on_start(mob/living/user)
 	if(!istype(computer, /obj/item/modular_computer/tablet/integrated))
 		to_chat(user, span_warning("A warning flashes across \the [computer]: Device Incompatible."))
 		return FALSE

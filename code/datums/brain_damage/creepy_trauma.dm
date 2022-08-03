@@ -34,7 +34,7 @@
 	//antag stuff//
 	antagonist.forge_objectives(obsession.mind)
 	antagonist.greet()
-	RegisterSignal(owner, COMSIG_CARBON_HUG, .proc/on_hug)
+	RegisterSignal(owner, COMSIG_CARBON_HELPED, .proc/on_hug)
 
 /datum/brain_trauma/special/obsessed/on_life(delta_time, times_fired)
 	if(!obsession || obsession.stat == DEAD)
@@ -76,11 +76,12 @@
 	if(prob(25)) // 25% chances to be nervous and stutter.
 		if(prob(50)) // 12.5% chance (previous check taken into account) of doing something suspicious.
 			addtimer(CALLBACK(src, .proc/on_failed_social_interaction), rand(1, 3) SECONDS)
-		else if(owner.stuttering == 0)
+		else if(!owner.has_status_effect(/datum/status_effect/speech/stutter))
 			to_chat(owner, span_warning("Being near [obsession] makes you nervous and you begin to stutter..."))
-		owner.stuttering = max(3, owner.stuttering)
+		owner.set_timed_status_effect(6 SECONDS, /datum/status_effect/speech/stutter, only_if_higher = TRUE)
 
-/datum/brain_trauma/special/obsessed/proc/on_hug(datum/source, mob/living/hugger, mob/living/hugged)
+/// Singal proc for [COMSIG_CARBON_HELPED], when our obsessed helps (hugs) our obsession, increases hug count
+/datum/brain_trauma/special/obsessed/proc/on_hug(datum/source, mob/living/hugged)
 	SIGNAL_HANDLER
 
 	if(hugged != obsession)
@@ -103,7 +104,7 @@
 			to_chat(owner, span_userdanger("You feel your heart lurching in your chest..."))
 		if(81 to 100)
 			INVOKE_ASYNC(owner, /mob.proc/emote, "cough")
-			owner.dizziness += 10
+			owner.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/dizziness)
 			owner.adjust_disgust(5)
 			to_chat(owner, span_userdanger("You gag and swallow a bit of bile..."))
 

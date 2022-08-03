@@ -5,7 +5,7 @@
 	TEST_ASSERT_EQUAL(human.fire_stacks, 0, "Human does not have 0 fire stacks pre-ignition")
 
 	human.adjust_fire_stacks(5)
-	human.IgniteMob()
+	human.ignite_mob()
 
 	TEST_ASSERT_EQUAL(human.fire_stacks, 5, "Human does not have 5 fire stacks pre-resist")
 

@@ -68,6 +68,9 @@
 		return
 	. = ..()
 
+/obj/structure/chair/AltClick(mob/user)
+	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
+
 ///allows each chair to request the electrified_buckle component with overlays that dont look ridiculous
 /obj/structure/chair/proc/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
 	SHOULD_CALL_PARENT(TRUE)
@@ -219,6 +222,9 @@
 		overlays_from_child_procs = list(image('icons/obj/chairs.dmi', loc, "echair_over", pixel_x = -1))
 	. = ..()
 
+/obj/structure/chair/comfy/shuttle/tactical
+	name = "tactical chair"
+
 /obj/structure/chair/comfy/carp
 	name = "carpskin chair"
 	desc = "A luxurious chair, the many purple scales reflect the light in a most pleasing manner."
@@ -232,7 +238,7 @@
 	icon_state = "officechair_dark"
 
 
-/obj/structure/chair/office/Moved()
+/obj/structure/chair/office/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(has_gravity())
 		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
@@ -241,6 +247,9 @@
 	if(!overlays_from_child_procs)
 		overlays_from_child_procs = list(image('icons/obj/chairs.dmi', loc, "echair_over", pixel_x = -1))
 	. = ..()
+
+/obj/structure/chair/office/tactical
+	name = "tactical swivel chair"
 
 /obj/structure/chair/office/light
 	icon_state = "officechair_white"
@@ -306,6 +315,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	w_class = WEIGHT_CLASS_HUGE
 	force = 8
 	throwforce = 10
+	demolition_mod = 1.25
 	throw_range = 3
 	hitsound = 'sound/items/trayhit1.ogg'
 	hit_reaction_chance = 50
@@ -453,7 +463,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	if(turns >= 8)
 		STOP_PROCESSING(SSfastprocess, src)
 
-/obj/structure/chair/bronze/Moved()
+/obj/structure/chair/bronze/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(has_gravity())
 		playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
@@ -530,3 +540,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	custom_materials = list(/datum/material/plastic = 2000)
 	break_chance = 25
 	origin_type = /obj/structure/chair/plastic
+
+/obj/structure/chair/musical
+	name = "musical chair"
+	desc = "You listen to this. Either by will or by force."
+	item_chair = /obj/item/chair/musical
+	particles = new /particles/musical_notes
+
+/obj/item/chair/musical
+	name = "musical chair"
+	desc = "Oh, so this is like the fucked up Monopoly rules where there are no rules and you can pick up and place the musical chairs as you please."
+	particles = new /particles/musical_notes
+	origin_type = /obj/structure/chair/musical

@@ -113,13 +113,19 @@
 			stage_change(GRENADE_READY)
 			to_chat(user, span_notice("You lock the [initial(name)] assembly."))
 			tool.play_tool_sound(src, 25)
+		else if(landminemode)
+			landminemode.timing = FALSE
+			if(!landminemode.secured)
+				landminemode.toggle_secure()
+			landminemode.toggle_scan(FALSE)
+			to_chat(user, span_notice("You disarm the [landminemode.name]."))
+			tool.play_tool_sound(src, 25)
 		else
 			to_chat(user, span_warning("You need to add at least one beaker before locking the [initial(name)] assembly!"))
 	else if(stage == GRENADE_READY)
 		det_time = det_time == 50 ? 30 : 50 //toggle between 30 and 50
 		if(landminemode)
 			landminemode.time = det_time * 0.1 //overwrites the proxy sensor activation timer
-
 		tool.play_tool_sound(src, 25)
 		to_chat(user, span_notice("You modify the time delay. It's set for [DisplayTimeText(det_time)]."))
 	else

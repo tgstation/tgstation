@@ -1,18 +1,10 @@
-/*
-//////////////////////////////////////
-
-DNA Saboteur
-
-	Very noticable.
-	Lowers resistance tremendously.
-	No changes to stage speed.
-	Decreases transmittablity tremendously.
-	Fatal Level.
-
-Bonus
-	Cleans the DNA of a person and then randomly gives them a trait.
-
-//////////////////////////////////////
+/*DNA Saboteur
+ * Lowers stealth
+ * Lowers resistance greatly
+ * No change to stage speed
+ * Decreases transmissibility greatly
+ * Fatal level
+ * Bonus: Cleans the DNA of a person and then randomly gives them a trait.
 */
 
 /datum/symptom/genetic_mutation

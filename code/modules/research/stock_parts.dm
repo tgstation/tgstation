@@ -10,29 +10,68 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
-	component_type = /datum/component/storage/concrete/rped
 	var/works_from_distance = FALSE
 	var/pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/rped.ogg'
 	var/alt_sound = null
 
-/obj/item/storage/part_replacer/pre_attack(obj/machinery/T, mob/living/user, params)
-	if(!istype(T) || !T.component_parts)
-		return ..()
-	if(user.Adjacent(T)) // no TK upgrading.
-		if(works_from_distance)
-			user.Beam(T, icon_state = "rped_upgrade", time = 5)
-		T.exchange_parts(user, src)
-		return TRUE
-	return ..()
+/obj/item/storage/part_replacer/Initialize()
+	. = ..()
+	create_storage(type = /datum/storage/rped)
 
-/obj/item/storage/part_replacer/afterattack(obj/machinery/T, mob/living/user, adjacent, params)
-	if(adjacent || !istype(T) || !T.component_parts)
+/obj/item/storage/part_replacer/pre_attack(obj/attacked_object, mob/living/user, params)
+	if(!istype(attacked_object, /obj/machinery) && !istype(attacked_object, /obj/structure/frame/machine))
 		return ..()
+
+	if(!user.Adjacent(attacked_object)) // no TK upgrading.
+		return ..()
+
+	if(istype(attacked_object, /obj/machinery))
+		var/obj/machinery/attacked_machinery = attacked_object
+
+		if(!attacked_machinery.component_parts)
+			return ..()
+
+		if(works_from_distance)
+			user.Beam(attacked_machinery, icon_state = "rped_upgrade", time = 5)
+		attacked_machinery.exchange_parts(user, src)
+		return TRUE
+
+	var/obj/structure/frame/machine/attacked_frame = attacked_object
+
+	if(!attacked_frame.components)
+		return ..()
+
 	if(works_from_distance)
-		user.Beam(T, icon_state = "rped_upgrade", time = 5)
-		T.exchange_parts(user, src)
+		user.Beam(attacked_frame, icon_state = "rped_upgrade", time = 5)
+	attacked_frame.attackby(src, user)
+	return TRUE
+
+/obj/item/storage/part_replacer/afterattack(obj/attacked_object, mob/living/user, adjacent, params)
+	if(!istype(attacked_object, /obj/machinery) && !istype(attacked_object, /obj/structure/frame/machine))
+		return ..()
+
+	if(adjacent)
+		return ..()
+
+	if(istype(attacked_object, /obj/machinery))
+		var/obj/machinery/attacked_machinery = attacked_object
+
+		if(!attacked_machinery.component_parts)
+			return ..()
+
+		if(works_from_distance)
+			user.Beam(attacked_machinery, icon_state = "rped_upgrade", time = 5)
+			attacked_machinery.exchange_parts(user, src)
 		return
-	return ..()
+
+	var/obj/structure/frame/machine/attacked_frame = attacked_object
+
+	if(!attacked_frame.components)
+		return ..()
+
+	if(works_from_distance)
+		user.Beam(attacked_frame, icon_state = "rped_upgrade", time = 5)
+	attacked_frame.attackby(src, user)
 
 /obj/item/storage/part_replacer/proc/play_rped_sound()
 	//Plays the sound for RPED exhanging or installing parts.
@@ -45,14 +84,18 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	name = "bluespace rapid part exchange device"
 	desc = "A version of the RPED that allows for replacement of parts and scanning from a distance, along with higher capacity for parts."
 	icon_state = "BS_RPED"
+	inhand_icon_state = "BS_RPED"
 	w_class = WEIGHT_CLASS_NORMAL
 	works_from_distance = TRUE
 	pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/pshoom.ogg'
 	alt_sound = 'sound/items/pshoom_2.ogg'
-	component_type = /datum/component/storage/concrete/bluespace/rped
 
 /obj/item/storage/part_replacer/bluespace/Initialize(mapload)
 	. = ..()
+
+	atom_storage.max_slots = 400
+	atom_storage.max_total_storage = 800
+	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
 
 	RegisterSignal(src, COMSIG_ATOM_ENTERED, .proc/on_part_entered)
 	RegisterSignal(src, COMSIG_ATOM_EXITED, .proc/on_part_exited)
@@ -182,6 +225,9 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	icon = 'icons/obj/stock_parts.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	var/rating = 1
+	///Used when a base part has a different name to higher tiers of part. For example, machine frames want any manipulator and not just a micro-manipulator.
+	var/base_name
+	var/energy_rating = 1
 
 /obj/item/stock_parts/Initialize(mapload)
 	. = ..()
@@ -210,6 +256,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "micro_mani"
 	custom_materials = list(/datum/material/iron=30)
+	base_name = "manipulator"
 
 /obj/item/stock_parts/micro_laser
 	name = "micro-laser"
@@ -230,6 +277,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "An advanced capacitor used in the construction of a variety of devices."
 	icon_state = "adv_capacitor"
 	rating = 2
+	energy_rating = 3
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
 
 /obj/item/stock_parts/scanning_module/adv
@@ -237,6 +285,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "A compact, high resolution scanning module used in the construction of certain devices."
 	icon_state = "adv_scan_module"
 	rating = 2
+	energy_rating = 3
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
 
 /obj/item/stock_parts/manipulator/nano
@@ -244,6 +293,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "nano_mani"
 	rating = 2
+	energy_rating = 3
 	custom_materials = list(/datum/material/iron=30)
 
 /obj/item/stock_parts/micro_laser/high
@@ -251,6 +301,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "A tiny laser used in certain devices."
 	icon_state = "high_micro_laser"
 	rating = 2
+	energy_rating = 3
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=20)
 
 /obj/item/stock_parts/matter_bin/adv
@@ -258,6 +309,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "A container designed to hold compressed matter awaiting reconstruction."
 	icon_state = "advanced_matter_bin"
 	rating = 2
+	energy_rating = 3
 	custom_materials = list(/datum/material/iron=80)
 
 //Rating 3
@@ -267,6 +319,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "A super-high capacity capacitor used in the construction of a variety of devices."
 	icon_state = "super_capacitor"
 	rating = 3
+	energy_rating = 5
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
 
 /obj/item/stock_parts/scanning_module/phasic
@@ -274,6 +327,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "A compact, high resolution phasic scanning module used in the construction of certain devices."
 	icon_state = "super_scan_module"
 	rating = 3
+	energy_rating = 5
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
 
 /obj/item/stock_parts/manipulator/pico
@@ -281,6 +335,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "pico_mani"
 	rating = 3
+	energy_rating = 5
 	custom_materials = list(/datum/material/iron=30)
 
 /obj/item/stock_parts/micro_laser/ultra
@@ -288,6 +343,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	icon_state = "ultra_high_micro_laser"
 	desc = "A tiny laser used in certain devices."
 	rating = 3
+	energy_rating = 5
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=20)
 
 /obj/item/stock_parts/matter_bin/super
@@ -295,6 +351,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "A container designed to hold compressed matter awaiting reconstruction."
 	icon_state = "super_matter_bin"
 	rating = 3
+	energy_rating = 5
 	custom_materials = list(/datum/material/iron=80)
 
 //Rating 4
@@ -304,6 +361,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "A capacity capacitor used in the construction of a variety of devices."
 	icon_state = "quadratic_capacitor"
 	rating = 4
+	energy_rating = 10
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
 
 /obj/item/stock_parts/scanning_module/triphasic
@@ -311,6 +369,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "A compact, ultra resolution triphasic scanning module used in the construction of certain devices."
 	icon_state = "triphasic_scan_module"
 	rating = 4
+	energy_rating = 10
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
 
 /obj/item/stock_parts/manipulator/femto
@@ -318,6 +377,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "femto_mani"
 	rating = 4
+	energy_rating = 10
 	custom_materials = list(/datum/material/iron=30)
 
 /obj/item/stock_parts/micro_laser/quadultra
@@ -325,6 +385,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	icon_state = "quadultra_micro_laser"
 	desc = "A tiny laser used in certain devices."
 	rating = 4
+	energy_rating = 10
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=20)
 
 /obj/item/stock_parts/matter_bin/bluespace
@@ -332,6 +393,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "A container designed to hold compressed matter awaiting reconstruction."
 	icon_state = "bluespace_matter_bin"
 	rating = 4
+	energy_rating = 10
 	custom_materials = list(/datum/material/iron=80)
 
 // Subspace stock parts

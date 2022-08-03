@@ -19,8 +19,7 @@
 	if(user)
 		to_chat(user, span_danger("The crate's anti-tamper system activates!"))
 		log_bomber(user, "has detonated a", src)
-	for(var/obj/loot in src)
-		SSexplosions.high_mov_atom += loot
+	dump_contents()
 	explosion(src, heavy_impact_range = 1, light_impact_range = 5, flash_range = 5)
 	qdel(src)
 
@@ -52,7 +51,7 @@
 /obj/structure/closet/crate/secure/freezer/pizza
 	name = "secure pizza crate"
 	desc = "An insulated crate with a lock on it, used to secure pizza."
-	req_access = list(28)
+	req_access = list(ACCESS_KITCHEN)
 	tamperproof = 10
 
 /obj/structure/closet/crate/secure/freezer/pizza/PopulateContents()

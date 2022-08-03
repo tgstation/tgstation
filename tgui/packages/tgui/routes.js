@@ -5,7 +5,7 @@
  */
 
 import { selectBackend } from './backend';
-import { Icon, Stack } from './components';
+import { Icon, Section, Stack } from './components';
 import { selectDebug } from './debug/selectors';
 import { Window } from './layouts';
 
@@ -16,10 +16,14 @@ const routingError = (type, name) => () => {
     <Window>
       <Window.Content scrollable>
         {type === 'notFound' && (
-          <div>Interface <b>{name}</b> was not found.</div>
+          <div>
+            Interface <b>{name}</b> was not found.
+          </div>
         )}
         {type === 'missingExport' && (
-          <div>Interface <b>{name}</b> is missing an export.</div>
+          <div>
+            Interface <b>{name}</b> is missing an export.
+          </div>
         )}
       </Window.Content>
     </Window>
@@ -36,22 +40,22 @@ const SuspendedWindow = () => {
 
 const RefreshingWindow = () => {
   return (
-    <Window height={130} title="Loading" width={150}>
+    <Window title="Loading">
       <Window.Content>
-        <Stack align="center" fill justify="center" vertical>
-          <Stack.Item>
-            <Icon color="blue" name="toolbox" spin size={4} />
-          </Stack.Item>
-          <Stack.Item>
-            Please wait...
-          </Stack.Item>
-        </Stack>
+        <Section fill>
+          <Stack align="center" fill justify="center" vertical>
+            <Stack.Item>
+              <Icon color="blue" name="toolbox" spin size={4} />
+            </Stack.Item>
+            <Stack.Item>Please wait...</Stack.Item>
+          </Stack>
+        </Section>
       </Window.Content>
     </Window>
   );
 };
 
-export const getRoutedComponent = store => {
+export const getRoutedComponent = (store) => {
   const state = store.getState();
   const { suspended, config } = selectBackend(state);
   if (suspended) {
@@ -69,10 +73,10 @@ export const getRoutedComponent = store => {
   }
   const name = config?.interface;
   const interfacePathBuilders = [
-    name => `./${name}.tsx`,
-    name => `./${name}.js`,
-    name => `./${name}/index.tsx`,
-    name => `./${name}/index.js`,
+    (name) => `./${name}.tsx`,
+    (name) => `./${name}.js`,
+    (name) => `./${name}/index.tsx`,
+    (name) => `./${name}/index.js`,
   ];
   let esModule;
   while (!esModule && interfacePathBuilders.length > 0) {
@@ -80,8 +84,7 @@ export const getRoutedComponent = store => {
     const interfacePath = interfacePathBuilder(name);
     try {
       esModule = requireInterface(interfacePath);
-    }
-    catch (err) {
+    } catch (err) {
       if (err.code !== 'MODULE_NOT_FOUND') {
         throw err;
       }

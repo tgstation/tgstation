@@ -3,7 +3,7 @@
 /atom/movable/screen/alert/status_effect/determined
 	name = "Determined"
 	desc = "The serious wounds you've sustained have put your body into fight-or-flight mode! Now's the time to look for an exit!"
-	icon_state = "regenerative_core"
+	icon_state = "wounded"
 
 /datum/status_effect/determined
 	id = "determined"
@@ -142,9 +142,9 @@
 	alert_type = NONE
 
 /datum/status_effect/wound/on_creation(mob/living/new_owner, incoming_wound)
-	. = ..()
 	linked_wound = incoming_wound
 	linked_limb = linked_wound.limb
+	return ..()
 
 /datum/status_effect/wound/on_remove()
 	linked_wound = null

@@ -9,6 +9,8 @@
 		/obj/item/shard = 45,
 		/obj/item = 30) // 30% success with any sharp item.
 	time = 16
+	preop_sound = 'sound/surgery/scalpel1.ogg'
+	success_sound = 'sound/surgery/scalpel2.ogg'
 
 /datum/surgery_step/incise/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, span_notice("You begin to make an incision in [target]'s [parse_zone(target_zone)]..."),
@@ -31,7 +33,7 @@
 				span_notice("Blood pools around the incision in [human_target]'s [parse_zone(target_zone)]."))
 			var/obj/item/bodypart/target_bodypart = target.get_bodypart(target_zone)
 			if(target_bodypart)
-				target_bodypart.generic_bleedstacks += 10
+				target_bodypart.adjustBleedStacks(10)
 	return ..()
 
 /datum/surgery_step/incise/nobleed/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -49,6 +51,7 @@
 		/obj/item/stack/package_wrap = 35,
 		/obj/item/stack/cable_coil = 15)
 	time = 24
+	preop_sound = 'sound/surgery/hemostat1.ogg'
 
 /datum/surgery_step/clamp_bleeders/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, span_notice("You begin to clamp bleeders in [target]'s [parse_zone(target_zone)]..."),
@@ -63,7 +66,7 @@
 		var/mob/living/carbon/human/human_target = target
 		var/obj/item/bodypart/target_bodypart = human_target.get_bodypart(target_zone)
 		if(target_bodypart)
-			target_bodypart.generic_bleedstacks -= 3
+			target_bodypart.adjustBleedStacks(-3)
 	return ..()
 
 //retract skin
@@ -75,6 +78,8 @@
 		TOOL_WIRECUTTER = 35,
 		/obj/item/stack/rods = 35)
 	time = 24
+	preop_sound = 'sound/surgery/retractor1.ogg'
+	success_sound = 'sound/surgery/retractor2.ogg'
 
 /datum/surgery_step/retract_skin/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, span_notice("You begin to retract the skin in [target]'s [parse_zone(target_zone)]..."),
@@ -91,6 +96,8 @@
 		TOOL_WELDER = 70,
 		/obj/item = 30) // 30% success with any hot item.
 	time = 24
+	preop_sound = 'sound/surgery/cautery1.ogg'
+	success_sound = 'sound/surgery/cautery2.ogg'
 
 /datum/surgery_step/close/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, span_notice("You begin to mend the incision in [target]'s [parse_zone(target_zone)]..."),
@@ -111,7 +118,7 @@
 		var/mob/living/carbon/human/human_target = target
 		var/obj/item/bodypart/target_bodypart = human_target.get_bodypart(target_zone)
 		if(target_bodypart)
-			target_bodypart.generic_bleedstacks -= 3
+			target_bodypart.adjustBleedStacks(-3)
 	return ..()
 
 
@@ -127,6 +134,15 @@
 		/obj/item/knife/butcher = 25,
 		/obj/item = 20) //20% success (sort of) with any sharp item with a force>=10
 	time = 54
+	preop_sound = list(
+		/obj/item/circular_saw = 'sound/surgery/saw.ogg',
+		/obj/item/melee/arm_blade = 'sound/surgery/scalpel1.ogg',
+		/obj/item/fireaxe = 'sound/surgery/scalpel1.ogg',
+		/obj/item/hatchet = 'sound/surgery/scalpel1.ogg',
+		/obj/item/knife/butcher = 'sound/surgery/scalpel1.ogg',
+		/obj/item = 'sound/surgery/scalpel1.ogg',
+	) 
+	success_sound = 'sound/surgery/organ2.ogg'
 
 /datum/surgery_step/saw/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, span_notice("You begin to saw through the bone in [target]'s [parse_zone(target_zone)]..."),

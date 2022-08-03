@@ -20,11 +20,12 @@
 	progression_maximum = 30 MINUTES
 
 	var/list/applicable_heads = list(
-		JOB_RESEARCH_DIRECTOR = /area/command/heads_quarters/rd,
-		JOB_CHIEF_MEDICAL_OFFICER = /area/command/heads_quarters/cmo,
-		JOB_CHIEF_ENGINEER = /area/command/heads_quarters/ce,
-		JOB_HEAD_OF_PERSONNEL = /area/command/heads_quarters/hop,
-		JOB_CAPTAIN = /area/command/heads_quarters/captain, // For head roles so that they can still get this objective.
+		JOB_RESEARCH_DIRECTOR = /area/station/command/heads_quarters/rd,
+		JOB_CHIEF_MEDICAL_OFFICER = /area/station/command/heads_quarters/cmo,
+		JOB_CHIEF_ENGINEER = /area/station/command/heads_quarters/ce,
+		JOB_HEAD_OF_PERSONNEL = /area/station/command/heads_quarters/hop,
+		JOB_CAPTAIN = /area/station/command/heads_quarters/captain, // For head roles so that they can still get this objective.
+		JOB_QUARTERMASTER = /area/station/command/heads_quarters/qm,
 	)
 	var/datum/job/target_office
 	var/requires_head_as_supervisor = TRUE
@@ -35,7 +36,7 @@
 	progression_minimum = 10 MINUTES
 	progression_maximum = 40 MINUTES
 	applicable_heads = list(
-		JOB_CAPTAIN = /area/command/heads_quarters/captain,
+		JOB_CAPTAIN = /area/station/command/heads_quarters/captain,
 	)
 	progression_reward = list(5 MINUTES, 10 MINUTES)
 	telecrystal_reward = list(1, 2)
@@ -45,7 +46,7 @@
 	progression_minimum = 20 MINUTES
 	progression_maximum = 60 MINUTES
 	applicable_heads = list(
-		JOB_HEAD_OF_SECURITY = /area/command/heads_quarters/hos,
+		JOB_HEAD_OF_SECURITY = /area/station/command/heads_quarters/hos,
 	)
 	progression_reward = list(10 MINUTES, 15 MINUTES)
 	telecrystal_reward = list(2, 3)
@@ -180,7 +181,7 @@
 		planted_on.vis_contents -= src
 	return ..()
 
-/obj/item/traitor_bug/Moved(atom/OldLoc, Dir)
+/obj/item/traitor_bug/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(planted_on)
 		planted_on.vis_contents -= src

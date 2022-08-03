@@ -43,6 +43,14 @@
 		4 ; "graft_mushroom" , \
 		1 ; "graft_doom" )
 
+	var/static/list/hovering_item_typechecks = list(
+		/obj/item/plant_analyzer = list(
+			SCREENTIP_CONTEXT_LMB = "Scan graft",
+		),
+	)
+
+	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
+
 /obj/item/graft/Destroy()
 	QDEL_NULL(stored_trait)
 	return ..()

@@ -46,7 +46,7 @@
 	. = ..()
 	if(!.)
 		return
-	playsound(loc, "punch", 25, TRUE, -1)
+	playsound(loc, SFX_PUNCH, 25, TRUE, -1)
 	visible_message(span_danger("[user] punches [src]!"), \
 					span_userdanger("You're punched by [user]!"), null, COMBAT_MESSAGE_RANGE, user)
 	to_chat(user, span_danger("You punch [src]!"))
@@ -84,7 +84,7 @@
 			log_combat(user, src, "attacked")
 		return 1
 
-/mob/living/simple_animal/attack_larva(mob/living/carbon/alien/larva/L)
+/mob/living/simple_animal/attack_larva(mob/living/carbon/alien/larva/L, list/modifiers)
 	. = ..()
 	if(. && stat != DEAD) //successful larva bite
 		var/damage = rand(5, 10)
@@ -104,7 +104,7 @@
 		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
 		return attack_threshold_check(damage, user.melee_damage_type)
 
-/mob/living/simple_animal/attack_slime(mob/living/simple_animal/slime/M)
+/mob/living/simple_animal/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
 	if(..()) //successful slime attack
 		var/damage = rand(15, 25)
 		if(M.is_adult)
@@ -114,6 +114,11 @@
 /mob/living/simple_animal/attack_drone(mob/living/simple_animal/drone/M)
 	if(M.combat_mode) //No kicking dogs even as a rogue drone. Use a weapon.
 		return
+	return ..()
+
+/mob/living/simple_animal/attack_drone_secondary(mob/living/simple_animal/drone/M)
+	if(M.combat_mode)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 
 /mob/living/simple_animal/proc/attack_threshold_check(damage, damagetype = BRUTE, armorcheck = MELEE, actuallydamage = TRUE)
@@ -183,3 +188,15 @@
 		else
 			visual_effect_icon = ATTACK_EFFECT_SMASH
 	..()
+
+/mob/living/simple_animal/emp_act(severity)
+	. = ..()
+	if(mob_biotypes & MOB_ROBOTIC)
+		switch (severity)
+			if (EMP_LIGHT)
+				visible_message(span_danger("[src] shakes violently, its parts coming loose!"))
+				apply_damage(maxHealth * 0.6)
+				Shake(5, 5, 1 SECONDS)
+			if (EMP_HEAVY)
+				visible_message(span_danger("[src] suddenly bursts apart!"))
+				apply_damage(maxHealth)

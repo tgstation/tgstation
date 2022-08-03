@@ -48,7 +48,7 @@
 		/mob/living/simple_animal/hostile/carp,
 		/mob/living/simple_animal/hostile/bear,
 		/mob/living/simple_animal/hostile/mushroom,
-		/mob/living/simple_animal/hostile/statue,
+		/mob/living/simple_animal/hostile/netherworld/statue,
 		/mob/living/simple_animal/hostile/retaliate/bat,
 		/mob/living/simple_animal/hostile/retaliate/goat,
 		/mob/living/simple_animal/hostile/killertomato,

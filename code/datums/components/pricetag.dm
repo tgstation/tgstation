@@ -25,12 +25,11 @@
 /datum/component/pricetag/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_EXPORTED, .proc/on_parent_sold)
 	// Register this regardless of delete_on_unwrap because it could change by inherited components.
-	RegisterSignal(parent, list(COMSIG_STRUCTURE_UNWRAPPED, COMSIG_ITEM_UNWRAPPED), .proc/on_parent_unwrap)
+	RegisterSignal(parent, COMSIG_ITEM_UNWRAPPED, .proc/on_parent_unwrap)
 
 /datum/component/pricetag/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_ITEM_EXPORTED,
-		COMSIG_STRUCTURE_UNWRAPPED,
 		COMSIG_ITEM_UNWRAPPED,
 		))
 

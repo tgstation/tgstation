@@ -43,7 +43,7 @@
 			return // The drink might be empty after the delay, such as by spam-feeding
 		M.visible_message(span_danger("[user] fed [M] the contents of [src]."), \
 			span_userdanger("[user] fed you the contents of [src]."))
-		log_combat(user, M, "fed", reagents.log_list())
+		log_combat(user, M, "fed", reagents.get_reagent_log_string())
 
 	SEND_SIGNAL(src, COMSIG_DRINK_DRANK, M, user)
 	var/fraction = min(gulp_size/reagents.total_volume, 1)
@@ -81,21 +81,13 @@
 		if(!reagents.total_volume)
 			to_chat(user, span_warning("[src] is empty."))
 			return
-
 		if(target.reagents.holder_full())
 			to_chat(user, span_warning("[target] is full."))
 			return
 
-		var/refill = reagents.get_master_reagent_id()
 		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
 		to_chat(user, span_notice("You transfer [trans] units of the solution to [target]."))
 
-		if(iscyborg(user)) //Cyborg modules that include drinks automatically refill themselves (and only with consumable drinks), but drain the borg's cell
-			if (!ispath(refill, /datum/reagent/consumable))
-				return
-			var/mob/living/silicon/robot/bro = user
-			bro.cell.use(30)
-			addtimer(CALLBACK(reagents, /datum/reagents.proc/add_reagent, refill, trans), 600)
 
 	else if(target.is_drainable()) //A dispenser. Transfer FROM it TO us.
 		if (!is_refillable())
@@ -139,6 +131,7 @@
 	if(!.) //if the bottle wasn't caught
 		smash(hit_atom, throwingdatum?.thrower, TRUE)
 
+
 /obj/item/reagent_containers/food/drinks/proc/smash(atom/target, mob/thrower, ranged = FALSE)
 	if(!isGlass)
 		return
@@ -146,18 +139,9 @@
 		return
 	if(bartender_check(target) && ranged)
 		return
+	SplashReagents(target, ranged, override_spillable = TRUE)
 	var/obj/item/broken_bottle/B = new (loc)
-	B.icon_state = icon_state
-	var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
-	I.Blend(B.broken_outline, ICON_OVERLAY, rand(5), 1)
-	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
-	B.icon = I
-	B.name = "broken [name]"
-	if(prob(33))
-		var/obj/item/shard/S = new(drop_location())
-		target.Bumped(S)
-	playsound(src, "shatter", 70, TRUE)
-	transfer_fingerprints_to(B)
+	B.mimic_broken(src, target)
 	qdel(src)
 	target.Bumped(B)
 
@@ -243,8 +227,8 @@
 /obj/item/reagent_containers/food/drinks/ice
 	name = "ice cup"
 	desc = "Careful, cold ice, do not chew."
-	custom_price = PAYCHECK_PRISONER * 0.6
-	icon_state = "coffee"
+	custom_price = PAYCHECK_LOWER * 0.6
+	icon_state = "icecup"
 	list_reagents = list(/datum/reagent/consumable/ice = 30)
 	spillable = TRUE
 	isGlass = FALSE
@@ -276,7 +260,7 @@
 	list_reagents = list(/datum/reagent/consumable/hot_coco = 15, /datum/reagent/consumable/sugar = 5)
 	foodtype = SUGAR
 	resistance_flags = FREEZE_PROOF
-	custom_price = PAYCHECK_ASSISTANT * 1.2
+	custom_price = PAYCHECK_CREW * 1.2
 
 
 /obj/item/reagent_containers/food/drinks/dry_ramen
@@ -286,7 +270,7 @@
 	list_reagents = list(/datum/reagent/consumable/dry_ramen = 15, /datum/reagent/consumable/salt = 3)
 	foodtype = GRAIN
 	isGlass = FALSE
-	custom_price = PAYCHECK_ASSISTANT * 0.9
+	custom_price = PAYCHECK_CREW * 0.9
 
 /obj/item/reagent_containers/food/drinks/waterbottle
 	name = "bottle of water"
@@ -306,7 +290,7 @@
 	var/cap_lost = FALSE
 	var/mutable_appearance/cap_overlay
 	var/flip_chance = 10
-	custom_price = PAYCHECK_PRISONER * 0.8
+	custom_price = PAYCHECK_LOWER * 0.8
 
 /obj/item/reagent_containers/food/drinks/waterbottle/Initialize(mapload)
 	. = ..()
@@ -544,17 +528,9 @@
 /obj/item/reagent_containers/food/drinks/sillycup/smallcarton/smash(atom/target, mob/thrower, ranged = FALSE)
 	if(bartender_check(target) && ranged)
 		return
+	SplashReagents(target, ranged, override_spillable = TRUE)
 	var/obj/item/broken_bottle/B = new (loc)
-	B.icon_state = icon_state
-	var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
-	I.Blend(B.broken_outline, ICON_OVERLAY, rand(5), 1)
-	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
-	B.icon = I
-	B.name = "broken [name]"
-	B.force = 0
-	B.throwforce = 0
-	B.desc = "A carton with the bottom half burst open. Might give you a papercut."
-	transfer_fingerprints_to(B)
+	B.mimic_broken(src, target)
 	qdel(src)
 	target.Bumped(B)
 
@@ -597,10 +573,17 @@
 	volume = 100
 	isGlass = FALSE
 
+/obj/item/reagent_containers/food/drinks/shaker/Initialize(mapload)
+	. = ..()
+	if(prob(10))
+		name = "\improper NanoTrasen 20th Anniversary Shaker"
+		desc += " It has an emblazoned NanoTrasen logo on it."
+		icon_state = "shaker_n"
+
 /obj/item/reagent_containers/food/drinks/flask
 	name = "flask"
 	desc = "Every good spaceman knows it's a good idea to bring along a couple of pints of whiskey wherever they go."
-	custom_price = PAYCHECK_HARD * 2
+	custom_price = PAYCHECK_COMMAND * 2
 	icon_state = "flask"
 	custom_materials = list(/datum/material/iron=250)
 	volume = 60
@@ -639,7 +622,7 @@
 	reagent_flags = NONE
 	spillable = FALSE
 	isGlass = FALSE
-	custom_price = PAYCHECK_ASSISTANT * 0.9
+	custom_price = PAYCHECK_CREW * 0.9
 	obj_flags = CAN_BE_HIT
 	throwforce = 12 // set to 0 upon being opened. Have you ever been domed by a soda can? Those things fucking hurt
 	/// If the can hasn't been opened yet, this is the measure of how fizzed up it is from being shaken or thrown around. When opened, this is rolled as a percentage chance to burst
@@ -703,7 +686,7 @@
 
 	to_chat(user, "You pull back the tab of [src] with a satisfying pop.") //Ahhhhhhhh
 	reagents.flags |= OPENCONTAINER
-	playsound(src, "can_open", 50, TRUE)
+	playsound(src, SFX_CAN_OPEN, 50, TRUE)
 	spillable = TRUE
 	throwforce = 0
 

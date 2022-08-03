@@ -98,34 +98,31 @@
 /datum/emote/living/carbon/human/wag
 	key = "wag"
 	key_third_person = "wags"
-	message = "wags their tail."
+	message = "their tail."
 
 /datum/emote/living/carbon/human/wag/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	if(!.)
 		return
-	var/mob/living/carbon/human/H = user
-	if(!istype(H) || !H.dna || !H.dna.species || !H.dna.species.can_wag_tail(H))
-		return
-	if(!H.dna.species.is_wagging_tail())
-		H.dna.species.start_wagging_tail(H)
+	var/obj/item/organ/external/tail/oranges_accessory = user.getorganslot(ORGAN_SLOT_EXTERNAL_TAIL)
+	if(oranges_accessory.wag_flags & WAG_WAGGING) //We verified the tail exists in can_run_emote()
+		SEND_SIGNAL(user, COMSIG_ORGAN_WAG_TAIL, FALSE)
 	else
-		H.dna.species.stop_wagging_tail(H)
-
-/datum/emote/living/carbon/human/wag/can_run_emote(mob/user, status_check = TRUE , intentional)
-	if(!..())
-		return FALSE
-	var/mob/living/carbon/human/H = user
-	return H.dna && H.dna.species && H.dna.species.can_wag_tail(user)
+		SEND_SIGNAL(user, COMSIG_ORGAN_WAG_TAIL, TRUE)
 
 /datum/emote/living/carbon/human/wag/select_message_type(mob/user, intentional)
 	. = ..()
-	var/mob/living/carbon/human/H = user
-	if(!H.dna || !H.dna.species)
-		return
-	if(H.dna.species.is_wagging_tail())
-		. = null
+	var/obj/item/organ/external/tail/oranges_accessory = user.getorganslot(ORGAN_SLOT_EXTERNAL_TAIL)
+	if(oranges_accessory.wag_flags & WAG_WAGGING)
+		. = "stops wagging " + message
+	else
+		. = "wags " + message
 
+/datum/emote/living/carbon/human/wag/can_run_emote(mob/user, status_check, intentional)
+	var/obj/item/organ/external/tail/tail = user.getorganslot(ORGAN_SLOT_EXTERNAL_TAIL)
+	if(tail?.wag_flags & WAG_ABLE)
+		return ..()
+	return FALSE
 /datum/emote/living/carbon/human/wing
 	key = "wing"
 	key_third_person = "wings"

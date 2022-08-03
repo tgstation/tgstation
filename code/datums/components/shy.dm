@@ -11,6 +11,10 @@
 	var/list/machine_whitelist = null
 	/// Message shown when you are is_shy
 	var/message = "You find yourself too shy to do that around %TARGET!"
+	/// Are you shy around bodies with no key?
+	var/keyless_shy = FALSE
+	/// Are you shy around bodies with no client?
+	var/clientless_shy = TRUE
 	/// Are you shy around a dead body?
 	var/dead_shy = FALSE
 	/// If dead_shy is false and this is true, you're only shy when right next to a dead target
@@ -20,7 +24,7 @@
 	/// What was our last result?
 	var/last_result = FALSE
 
-/datum/component/shy/Initialize(mob_whitelist, shy_range, message, dead_shy, dead_shy_immediate, machine_whitelist)
+/datum/component/shy/Initialize(mob_whitelist, shy_range, message, keyless_shy, clientless_shy, dead_shy, dead_shy_immediate, machine_whitelist)
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.mob_whitelist = mob_whitelist
@@ -28,6 +32,10 @@
 		src.shy_range = shy_range
 	if(message)
 		src.message = message
+	if(keyless_shy)
+		src.keyless_shy = keyless_shy
+	if(clientless_shy)
+		src.clientless_shy = clientless_shy
 	if(dead_shy)
 		src.dead_shy = dead_shy
 	if(dead_shy_immediate)
@@ -81,7 +89,11 @@
 		for(var/mob/living/person in strangers)
 			if(person == owner)
 				continue
-			if(!is_type_in_typecache(person, mob_whitelist))
+			if(is_type_in_typecache(person, mob_whitelist))
+				continue
+			if(!person.key && !keyless_shy)
+				continue
+			if(!person.client && !clientless_shy)
 				continue
 			if(person.stat == DEAD && !dead_shy)
 				if(!dead_shy_immediate)

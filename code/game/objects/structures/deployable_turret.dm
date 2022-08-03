@@ -114,7 +114,7 @@
 	var/client/controlling_client = controller.client
 	if(controlling_client)
 		var/modifiers = params2list(controlling_client.mouseParams)
-		var/atom/target_atom = controlling_client.mouseObject
+		var/atom/target_atom = controlling_client.mouse_object_ref?.resolve()
 		var/turf/target_turf = get_turf(target_atom)
 		if(istype(target_turf)) //They're hovering over something in the map.
 			direction_track(controller, target_turf)
@@ -196,6 +196,8 @@
 	var/obj/projectile/projectile_to_fire = new projectile_type
 	playsound(src, firesound, 75, TRUE)
 	projectile_to_fire.preparePixelProjectile(target, targets_from)
+	projectile_to_fire.firer = user
+	projectile_to_fire.fired_from = src
 	projectile_to_fire.fire()
 
 /obj/machinery/deployable_turret/ultimate  // Admin-only proof of concept for autoclicker automatics

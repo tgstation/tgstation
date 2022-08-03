@@ -38,7 +38,7 @@
 	turret = new(loc)
 	turret.base = src
 
-/obj/vehicle/ridden/atv/turret/Moved()
+/obj/vehicle/ridden/atv/turret/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(!turret)
 		return
@@ -88,8 +88,8 @@
 		return PROCESS_KILL
 	if(DT_PROB(10, delta_time))
 		return
-	var/datum/effect_system/smoke_spread/smoke = new
-	smoke.set_up(0, src)
+	var/datum/effect_system/fluid_spread/smoke/smoke = new
+	smoke.set_up(0, holder = src, location = src)
 	smoke.start()
 
 /obj/vehicle/ridden/atv/bullet_act(obj/projectile/P)

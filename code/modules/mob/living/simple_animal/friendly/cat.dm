@@ -21,7 +21,7 @@
 	unsuitable_atmos_damage = 0.5
 	animal_species = /mob/living/simple_animal/pet/cat
 	childtype = list(/mob/living/simple_animal/pet/cat/kitten = 1)
-	butcher_results = list(/obj/item/food/meat/slab = 1, /obj/item/organ/ears/cat = 1, /obj/item/organ/tail/cat = 1, /obj/item/stack/sheet/animalhide/cat = 1)
+	butcher_results = list(/obj/item/food/meat/slab = 1, /obj/item/organ/internal/ears/cat = 1, /obj/item/organ/external/tail/cat = 1, /obj/item/stack/sheet/animalhide/cat = 1)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -72,7 +72,7 @@
 	icon_dead = "breadcat_dead"
 	collar_type = null
 	held_state = "breadcat"
-	butcher_results = list(/obj/item/food/meat/slab = 2, /obj/item/organ/ears/cat = 1, /obj/item/organ/tail/cat = 1, /obj/item/food/breadslice/plain = 1)
+	butcher_results = list(/obj/item/food/meat/slab = 2, /obj/item/organ/internal/ears/cat = 1, /obj/item/organ/external/tail/cat = 1, /obj/item/food/breadslice/plain = 1)
 
 /mob/living/simple_animal/pet/cat/breadcat/add_cell_sample()
 	return
@@ -113,7 +113,7 @@
 	unique_pet = TRUE
 	var/list/family = list()//var restored from savefile, has count of each child type
 	var/list/children = list()//Actual mob instances of children
-	var/cats_deployed = 0
+	var/static/cats_deployed = 0
 	var/memory_saved = FALSE
 	held_state = "cat"
 
@@ -158,7 +158,10 @@
 	if(isnull(family))
 		family = list()
 
-/mob/living/simple_animal/pet/cat/runtime/proc/Write_Memory(dead)
+/mob/living/simple_animal/pet/cat/runtime/Write_Memory(dead, gibbed)
+	. = ..()
+	if(!.)
+		return
 	var/json_file = file("data/npc_saves/Runtime.json")
 	var/list/file_data = list()
 	family = list()
@@ -278,13 +281,13 @@
 	maxHealth = 50
 	gender = FEMALE
 	harm_intent_damage = 10
-	butcher_results = list(/obj/item/organ/brain = 1, /obj/item/organ/heart = 1, /obj/item/food/cakeslice/birthday = 3,  \
+	butcher_results = list(/obj/item/organ/internal/brain = 1, /obj/item/organ/internal/heart = 1, /obj/item/food/cakeslice/birthday = 3,  \
 	/obj/item/food/meat/slab = 2)
 	response_harm_continuous = "takes a bite out of"
 	response_harm_simple = "take a bite out of"
 	attacked_sound = 'sound/items/eatfood.ogg'
 	deathmessage = "loses her false life and collapses!"
-	deathsound = "bodyfall"
+	deathsound = SFX_BODYFALL
 	held_state = "cak"
 
 /mob/living/simple_animal/pet/cat/cak/add_cell_sample()
@@ -292,7 +295,7 @@
 
 /mob/living/simple_animal/pet/cat/cak/CheckParts(list/parts)
 	..()
-	var/obj/item/organ/brain/B = locate(/obj/item/organ/brain) in contents
+	var/obj/item/organ/internal/brain/B = locate(/obj/item/organ/internal/brain) in contents
 	if(!B || !B.brainmob || !B.brainmob.mind)
 		return
 	B.brainmob.mind.transfer_to(src)

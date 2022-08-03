@@ -8,6 +8,6 @@
 	antag_hud_name = "changeling"
 
 /datum/mood_event/fallen_changeling
-	description = "<span class='warning'>My powers! Where are my powers?!</span>\n"
+	description = "My powers! Where are my powers?!"
 	mood_change = -4
 

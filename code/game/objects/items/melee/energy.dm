@@ -33,7 +33,10 @@
 /obj/item/melee/energy/Initialize(mapload)
 	. = ..()
 	make_transformable()
-	AddComponent(/datum/component/butchering, _speed = 5 SECONDS, _butcher_sound = active_hitsound)
+	AddComponent(/datum/component/butchering, \
+	speed = 5 SECONDS, \
+	butcher_sound = active_hitsound, \
+	)
 
 /obj/item/melee/energy/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -107,6 +110,7 @@
 		heat = initial(heat)
 		STOP_PROCESSING(SSobj, src)
 
+	tool_behaviour = (active ? TOOL_SAW : NONE) //Lets energy weapons cut trees. Also lets them do bonecutting surgery, which is kinda metal!
 	balloon_alert(user, "[name] [active ? "enabled":"disabled"]")
 	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
 	set_light_on(active)
@@ -156,7 +160,7 @@
 	icon_state = "e_sword"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	hitsound = "swing_hit"
+	hitsound = SFX_SWING_HIT
 	force = 3
 	throwforce = 5
 	throw_speed = 3
@@ -221,7 +225,7 @@
 		"green" = LIGHT_COLOR_GREEN,
 		"purple" = LIGHT_COLOR_LAVENDER,
 		)
-	/// Whether this saber has beel multitooled.
+	/// Whether this saber has been multitooled.
 	var/hacked = FALSE
 
 /obj/item/melee/energy/sword/saber/Initialize(mapload)

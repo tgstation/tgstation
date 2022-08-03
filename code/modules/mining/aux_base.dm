@@ -17,7 +17,7 @@
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "dorm_available"
 	icon_keyboard = null
-	req_one_access = list(ACCESS_AUX_BASE, ACCESS_HEADS)
+	req_one_access = list(ACCESS_AUX_BASE, ACCESS_COMMAND)
 	circuit = /obj/item/circuitboard/computer/auxiliary_base
 	/// Shuttle ID of the base
 	var/shuttleId = "colony_drop"
@@ -45,6 +45,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 	return ..()
 
 /obj/machinery/computer/auxiliary_base/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "AuxBaseConsole", name)
@@ -144,7 +145,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 				return
 			var/shuttle_error = SSshuttle.moveShuttle(shuttleId, params["shuttle_id"], 1)
 			if(launch_warning)
-				say(span_danger("Launch sequence activated! Prepare for drop!!"))
+				say("Launch sequence activated! Prepare for drop!!", spans = list("danger"))
 				playsound(loc, 'sound/machines/warning-buzzer.ogg', 70, FALSE)
 				launch_warning = FALSE
 				blind_drop_ready = FALSE
@@ -162,7 +163,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 			for(var/z_level in SSmapping.levels_by_trait(ZTRAIT_MINING))
 				all_mining_turfs += Z_TURFS(z_level)
 			var/turf/LZ = pick(all_mining_turfs) //Pick a random mining Z-level turf
-			if(!ismineralturf(LZ) && !istype(LZ, /turf/open/floor/plating/asteroid))
+			if(!ismineralturf(LZ) && !istype(LZ, /turf/open/misc/asteroid))
 			//Find a suitable mining turf. Reduces chance of landing in a bad area
 				to_chat(usr, span_warning("Landing zone scan failed. Please try again."))
 				return
@@ -324,7 +325,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 	dwidth = 3
 	width = 7
 	height = 5
-	area_type = /area/construction/mining/aux_base
+	area_type = /area/station/construction/mining/aux_base
 
 /obj/structure/mining_shuttle_beacon
 	name = "mining shuttle beacon"

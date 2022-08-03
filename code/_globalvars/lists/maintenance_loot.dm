@@ -50,6 +50,7 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 
 		/obj/item/airlock_painter = 1,
 		/obj/item/airlock_painter/decal = 1,
+		/obj/item/airlock_painter/decal/tile = 1,
 		/obj/item/clothing/mask/breath = 1,
 		/obj/item/rack_parts = 1,
 		/obj/item/shard = 1,
@@ -178,6 +179,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/clothing/glasses/hud/diagnostic = 1,
 		/obj/item/clothing/glasses/hud/health = 1,
 		/obj/item/clothing/glasses/salesman = 1,
+		/obj/item/clothing/glasses/nightmare_vision = 1,
 		/obj/item/clothing/glasses/welding = 1,
 		/obj/item/clothing/gloves/tackler/offbrand = 1,
 		/obj/item/clothing/head/helmet/old = 1,
@@ -287,6 +289,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/shield/riot/buckler = 1,
 		/obj/item/throwing_star = 1,
 		/obj/item/weldingtool/hugetank = 1,
+		/obj/item/fishing_rod/master = 1,
 		) = 1,
 
 	list(//equipment
@@ -315,8 +318,8 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 	list(//medical and chemicals
 		list(//medkits
 			/obj/item/storage/box/hug/medical = 1,
-			/obj/item/storage/firstaid/emergency = 1,
-			/obj/item/storage/firstaid/regular = 1,
+			/obj/item/storage/medkit/emergency = 1,
+			/obj/item/storage/medkit/regular = 1,
 			) = 1,
 		list(//medical chems
 			/obj/item/reagent_containers/hypospray/medipen/oxandrolone = 1,
@@ -352,6 +355,7 @@ GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 			/obj/item/instrument/trombone/spectral = 1,
 			/obj/item/instrument/trumpet/spectral = 1,
 			) = 1,
+		/obj/item/toy/cards/deck/tarot/haunted = 1,
 	))
 
 //Maintenance loot spawner pools

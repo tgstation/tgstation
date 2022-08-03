@@ -36,6 +36,7 @@
 		. += grocery_list[item] * item.cost_per_order
 
 /obj/machinery/computer/chef_order/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "ProduceConsole", name)

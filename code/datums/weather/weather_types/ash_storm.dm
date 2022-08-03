@@ -74,7 +74,7 @@
 
 /datum/weather/ash_storm/end()
 	. = ..()
-	for(var/turf/open/floor/plating/asteroid/basalt/basalt as anything in GLOB.dug_up_basalt)
+	for(var/turf/open/misc/asteroid/basalt/basalt as anything in GLOB.dug_up_basalt)
 		if(!(basalt.loc in impacted_areas) || !(basalt.z in impacted_z_levels))
 			continue
 		GLOB.dug_up_basalt -= basalt

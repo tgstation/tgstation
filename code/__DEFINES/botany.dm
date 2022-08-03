@@ -32,6 +32,8 @@
 #define MAX_TRAY_WEEDS 10
 /// Minumum plant health required for gene shears.
 #define GENE_SHEAR_MIN_HEALTH 15
+/// Minumum plant endurance required to lock a mutation with a somatoray.
+#define FLORA_GUN_MIN_ENDURANCE 20
 
 /// -- Flags for genes --
 /// Plant genes that can be removed via gene shears.

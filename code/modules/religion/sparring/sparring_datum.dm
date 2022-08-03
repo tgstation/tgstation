@@ -40,16 +40,16 @@
 	//arena conditions
 	RegisterSignal(sparring, COMSIG_MOVABLE_MOVED, .proc/arena_violation)
 	//severe violations (insta violation win for other party) conditions
-	RegisterSignal(sparring, COMSIG_MOVABLE_TELEPORTED, .proc/teleport_violation)
+	RegisterSignal(sparring, COMSIG_MOVABLE_POST_TELEPORT, .proc/teleport_violation)
 	//win conditions
 	RegisterSignal(sparring, COMSIG_MOB_STATCHANGE, .proc/check_for_victory)
 	//flub conditions
-	RegisterSignal(sparring, COMSIG_PARENT_ATTACKBY, .proc/outsider_interference)
-	RegisterSignal(sparring, COMSIG_ATOM_HULK_ATTACK, .proc/hulk_interference)
-	RegisterSignal(sparring, COMSIG_ATOM_ATTACK_HAND, .proc/hand_interference)
-	RegisterSignal(sparring, COMSIG_ATOM_ATTACK_PAW, .proc/paw_interference)
-	RegisterSignal(sparring, COMSIG_ATOM_HITBY, .proc/thrown_interference)
-	RegisterSignal(sparring, COMSIG_ATOM_BULLET_ACT, .proc/projectile_interference)
+	RegisterSignal(sparring, COMSIG_PARENT_ATTACKBY, .proc/outsider_interference, override = TRUE)
+	RegisterSignal(sparring, COMSIG_ATOM_HULK_ATTACK, .proc/hulk_interference, override = TRUE)
+	RegisterSignal(sparring, COMSIG_ATOM_ATTACK_HAND, .proc/hand_interference, override = TRUE)
+	RegisterSignal(sparring, COMSIG_ATOM_ATTACK_PAW, .proc/paw_interference, override = TRUE)
+	RegisterSignal(sparring, COMSIG_ATOM_HITBY, .proc/thrown_interference, override = TRUE)
+	RegisterSignal(sparring, COMSIG_ATOM_BULLET_ACT, .proc/projectile_interference, override = TRUE)
 	//severe flubs (insta match ender, no winners) conditions
 	RegisterSignal(sparring, COMSIG_LIVING_DEATH, .proc/death_flub)
 	RegisterSignal(sparring, COMSIG_PARENT_QDELETING, .proc/deletion_flub)
@@ -62,7 +62,7 @@
 		COMSIG_MOB_GRENADE_ARMED,
 		COMSIG_MOB_ITEM_ATTACK,
 		COMSIG_MOVABLE_MOVED,
-		COMSIG_MOVABLE_TELEPORTED,
+		COMSIG_MOVABLE_POST_TELEPORT,
 		COMSIG_MOB_STATCHANGE,
 		COMSIG_PARENT_ATTACKBY,
 		COMSIG_ATOM_HULK_ATTACK,

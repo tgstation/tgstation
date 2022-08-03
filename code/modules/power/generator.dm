@@ -215,6 +215,9 @@
 	default_deconstruction_crowbar(I)
 	return TRUE
 
+/obj/machinery/power/generator/AltClick(mob/user)
+	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
+
 /obj/machinery/power/generator/on_deconstruction()
 	kill_circs()
 

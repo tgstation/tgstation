@@ -14,16 +14,16 @@
 
 /datum/action/cooldown/mob_cooldown/lava_swoop/Grant(mob/M)
 	. = ..()
-	ADD_TRAIT(M, TRAIT_LAVA_IMMUNE, src)
-	ADD_TRAIT(M, TRAIT_NOFIRE, src)
+	ADD_TRAIT(M, TRAIT_LAVA_IMMUNE, REF(src))
+	ADD_TRAIT(M, TRAIT_NOFIRE, REF(src))
 
 /datum/action/cooldown/mob_cooldown/lava_swoop/Remove(mob/M)
 	. = ..()
-	REMOVE_TRAIT(M, TRAIT_LAVA_IMMUNE, src)
-	REMOVE_TRAIT(M, TRAIT_NOFIRE, src)
+	REMOVE_TRAIT(M, TRAIT_LAVA_IMMUNE, REF(src))
+	REMOVE_TRAIT(M, TRAIT_NOFIRE, REF(src))
 
 /datum/action/cooldown/mob_cooldown/lava_swoop/Activate(atom/target_atom)
-	StartCooldown(30 SECONDS)
+	StartCooldown(360 SECONDS, 360 SECONDS)
 	attack_sequence(target_atom)
 	StartCooldown()
 
@@ -152,7 +152,7 @@
 		if(istype(T, /turf/open/indestructible))
 			continue
 		if(!istype(T, /turf/closed/indestructible))
-			T.ChangeTurf(/turf/open/floor/plating/asteroid/basalt/lava_land_surface, flags = CHANGETURF_INHERIT_AIR)
+			T.ChangeTurf(/turf/open/misc/asteroid/basalt/lava_land_surface, flags = CHANGETURF_INHERIT_AIR)
 		else
 			indestructible_turfs += T
 	SLEEP_CHECK_DEATH(1 SECONDS, owner) // give them a bit of time to realize what attack is actually happening

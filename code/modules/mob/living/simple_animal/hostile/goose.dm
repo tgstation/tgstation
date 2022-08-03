@@ -50,12 +50,16 @@
 		Retaliate()
 
 /mob/living/simple_animal/hostile/retaliate/goose/handle_automated_action()
+	. = ..()
+	feed_random()
+
+/mob/living/simple_animal/hostile/retaliate/goose/proc/feed_random()
 	var/obj/item/eat_it_motherfucker = pick(locate(/obj/item) in loc)
 	if(!eat_it_motherfucker)
 		return
 	feed(eat_it_motherfucker)
 
-/mob/living/simple_animal/hostile/retaliate/goose/vomit/handle_automated_action()
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/feed_random()
 	for(var/obj/item/eat_it_motherfucker in loc)
 		if(!eat_it_motherfucker.has_material_type(/datum/material/plastic))
 			continue

@@ -15,11 +15,7 @@ export const meta = {
 const Story = (props, context) => {
   return (
     <Section>
-      <Collapsible
-        title="Collapsible Demo"
-        buttons={(
-          <Button icon="cog" />
-        )}>
+      <Collapsible title="Collapsible Demo" buttons={<Button icon="cog" />}>
         <BoxWithSampleText />
       </Collapsible>
     </Section>

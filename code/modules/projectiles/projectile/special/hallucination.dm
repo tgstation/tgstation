@@ -128,7 +128,7 @@
 	hal_icon_state = "bullet"
 	hal_fire_sound = "gunshot"
 	hal_hitsound = 'sound/weapons/pierce.ogg'
-	hal_hitsound_wall = "ricochet"
+	hal_hitsound_wall = SFX_RICOCHET
 	hal_impact_effect = "impact_bullet"
 	hal_impact_effect_wall = "impact_bullet"
 	hit_duration = 5
@@ -167,7 +167,7 @@
 
 /obj/projectile/hallucination/taser/hal_apply_effect()
 	hal_target.Paralyze(100)
-	hal_target.stuttering += 20
+	hal_target.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/stutter)
 	if(hal_target.dna && hal_target.dna.check_mutation(/datum/mutation/human/hulk))
 		hal_target.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
 	else if((hal_target.status_flags & CANKNOCKDOWN) && !HAS_TRAIT(hal_target, TRAIT_STUNIMMUNE))
@@ -200,7 +200,7 @@
 
 /obj/projectile/hallucination/ebow/hal_apply_effect()
 	hal_target.Paralyze(100)
-	hal_target.stuttering += 5
+	hal_target.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/speech/stutter)
 	hal_target.adjustStaminaLoss(8)
 
 /obj/projectile/hallucination/change

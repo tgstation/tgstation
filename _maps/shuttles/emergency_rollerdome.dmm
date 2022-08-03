@@ -36,9 +36,8 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "hD" = (
-/obj/machinery/door/airlock/gold/glass{
-	req_access_txt = "19"
-	},
+/obj/machinery/door/airlock/gold/glass,
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "hF" = (
@@ -47,6 +46,25 @@
 "im" = (
 /obj/machinery/computer/emergency_shuttle,
 /turf/open/floor/wood,
+/area/shuttle/escape)
+"jD" = (
+/obj/structure/rack,
+/obj/item/clothing/shoes/wheelys/rollerskates,
+/obj/item/clothing/shoes/wheelys/rollerskates,
+/obj/item/clothing/shoes/wheelys/rollerskates,
+/obj/item/clothing/shoes/wheelys/rollerskates,
+/obj/item/clothing/shoes/wheelys/rollerskates,
+/obj/item/clothing/shoes/wheelys/rollerskates,
+/obj/item/clothing/shoes/wheelys/rollerskates,
+/obj/item/clothing/shoes/wheelys/rollerskates,
+/obj/item/clothing/shoes/wheelys/rollerskates,
+/obj/item/clothing/shoes/wheelys/rollerskates,
+/obj/item/clothing/shoes/wheelys/rollerskates,
+/obj/item/clothing/shoes/wheelys/rollerskates,
+/obj/item/clothing/shoes/wheelys/rollerskates,
+/obj/item/clothing/shoes/wheelys/rollerskates,
+/obj/item/clothing/shoes/wheelys/rollerskates,
+/turf/open/floor/eighties,
 /area/shuttle/escape)
 "ln" = (
 /obj/machinery/vending/games,
@@ -423,7 +441,7 @@ HS
 HS
 pa
 Ry
-Cg
+jD
 Cg
 ce
 uN
@@ -471,7 +489,7 @@ HS
 HS
 pa
 Ry
-Cg
+jD
 Cg
 ce
 Zo

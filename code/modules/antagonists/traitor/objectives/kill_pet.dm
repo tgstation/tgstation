@@ -24,6 +24,11 @@
 		JOB_CAPTAIN = /mob/living/simple_animal/pet/fox/renault,
 		JOB_CHIEF_MEDICAL_OFFICER = /mob/living/simple_animal/pet/cat/runtime,
 		JOB_CHIEF_ENGINEER = /mob/living/simple_animal/parrot/poly,
+		JOB_QUARTERMASTER = list(
+			/mob/living/simple_animal/sloth/citrus,
+			/mob/living/simple_animal/sloth/paperwork,
+			/mob/living/simple_animal/hostile/gorilla/cargo_domestic,
+		)
 	)
 	/// The head that we are targetting
 	var/datum/job/target
@@ -66,7 +71,7 @@
 	var/pet_type = possible_heads[target.title]
 	if(islist(pet_type))
 		for(var/type in pet_type)
-			target_pet = locate(pet_type) in GLOB.mob_living_list
+			target_pet = locate(type) in GLOB.mob_living_list
 			if(target_pet)
 				break
 	else

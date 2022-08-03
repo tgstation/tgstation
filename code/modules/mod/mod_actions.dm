@@ -72,7 +72,7 @@
 		button_icon_state = "activate-ready"
 		if(!ai_action)
 			background_icon_state = "bg_tech"
-		UpdateButtonIcon()
+		UpdateButtons()
 		addtimer(CALLBACK(src, .proc/reset_ready), 3 SECONDS)
 		return
 	var/obj/item/mod/control/mod = target
@@ -85,7 +85,7 @@
 	button_icon_state = initial(button_icon_state)
 	if(!ai_action)
 		background_icon_state = initial(background_icon_state)
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /datum/action/item_action/mod/activate/ai
 	ai_action = TRUE
@@ -180,14 +180,14 @@
 /datum/action/item_action/mod/pinned_module/proc/on_module_activate(datum/source)
 	SIGNAL_HANDLER
 
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /datum/action/item_action/mod/pinned_module/proc/on_module_deactivate(datum/source)
 	SIGNAL_HANDLER
 
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /datum/action/item_action/mod/pinned_module/proc/on_module_use(datum/source)
 	SIGNAL_HANDLER
 
-	UpdateButtonIcon()
+	UpdateButtons()

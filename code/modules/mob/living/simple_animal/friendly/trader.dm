@@ -361,7 +361,7 @@
 /mob/living/simple_animal/hostile/retaliate/trader/mrbones/initial_products()
 	return list(
 		/obj/item/clothing/head/helmet/skull = list(150, INFINITY),
-		/obj/item/clothing/mask/bandana/skull = list(50, INFINITY),
+		/obj/item/clothing/mask/bandana/skull/black = list(50, INFINITY),
 		/obj/item/food/cookie/sugar/spookyskull = list(10, INFINITY),
 		/obj/item/instrument/trombone/spectral = list(10000, INFINITY),
 		/obj/item/shovel/serrated = list(150, INFINITY)

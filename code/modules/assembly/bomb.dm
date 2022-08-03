@@ -115,7 +115,11 @@
 //Bomb assembly proc. This turns assembly+tank into a bomb
 /obj/item/tank/proc/bomb_assemble(obj/item/assembly_holder/assembly, mob/living/user)
 	//Check if either part of the assembly has an igniter, but if both parts are igniters, then fuck it
-	if(isigniter(assembly.a_left) == isigniter(assembly.a_right))
+	var/igniter_count = 0
+	for(var/obj/item/assembly/attached_assembly as anything in assembly.assemblies)
+		if(isigniter(attached_assembly))
+			igniter_count += 1
+	if(LAZYLEN(assembly.assemblies) == igniter_count)
 		return
 
 	if((src in user.get_equipped_items(TRUE)) && !user.canUnEquip(src))

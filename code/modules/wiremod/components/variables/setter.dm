@@ -12,6 +12,11 @@
 
 	circuit_size = 0
 
+/obj/item/circuit_component/variable/setter/trigger
+	display_name = "Trigger Variable Setter"
+	desc = "A component that sets a variable globally on the circuit. This one requires input signals and also provides an output signal"
+	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
+
 /obj/item/circuit_component/variable/setter/get_variable_list(obj/item/integrated_circuit/integrated_circuit)
 	return integrated_circuit.modifiable_circuit_variables
 

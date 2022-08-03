@@ -7,7 +7,6 @@ export const CONSOLE_MODE_FEATURES = 'features';
 export const CONSOLE_MODE_SEQUENCER = 'sequencer';
 export const CONSOLE_MODE_STORAGE = 'storage';
 
-export const GENES = ['A', 'T', 'C', 'G'];
 export const GENE_COLORS = {
   A: 'green',
   T: 'green',
@@ -47,3 +46,7 @@ export const MUT_COLORS = {
   [NEGATIVE]: 'bad',
   [MINOR_NEGATIVE]: 'average',
 };
+
+export const CLEAR_GENE = 0;
+export const NEXT_GENE = 1;
+export const PREV_GENE = 2;

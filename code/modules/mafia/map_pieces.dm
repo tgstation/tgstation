@@ -26,7 +26,7 @@
 		MF = create_mafia_game()
 	MF.ui_interact(user)
 
-/area/mafia
+/area/centcom/mafia
 	name = "Mafia Minigame"
 	icon_state = "mafia"
 	static_lighting = FALSE

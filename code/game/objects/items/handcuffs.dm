@@ -40,7 +40,7 @@
 	custom_materials = list(/datum/material/iron=500)
 	breakouttime = 1 MINUTES
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
-	custom_price = PAYCHECK_HARD * 0.35
+	custom_price = PAYCHECK_COMMAND * 0.35
 	///Sound that plays when starting to put handcuffs on someone
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
 	///If set, handcuffs will be destroyed on application and leave behind whatever this is set to.
@@ -144,6 +144,21 @@
 	custom_materials = list(/datum/material/iron=150, /datum/material/glass=75)
 	breakouttime = 30 SECONDS
 	cuffsound = 'sound/weapons/cablecuff.ogg'
+
+/obj/item/restraints/handcuffs/cable/Initialize(mapload)
+	. = ..()
+
+	var/static/list/hovering_item_typechecks = list(
+		/obj/item/stack/rods = list(
+			SCREENTIP_CONTEXT_LMB = "Craft wired rod",
+		),
+
+		/obj/item/stack/sheet/iron = list(
+			SCREENTIP_CONTEXT_LMB = "Craft bola",
+		),
+	)
+
+	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
 
 /**
  * # Sinew restraints
@@ -266,6 +281,21 @@
 
 /obj/item/restraints/handcuffs/cable/zipties/used/attack()
 	return
+
+/**
+ * # Fake Zipties
+ *
+ * One-use handcuffs that is very easy to break out of, meant as a one-use alternative to regular fake handcuffs.
+ */
+/obj/item/restraints/handcuffs/cable/zipties/fake
+	name = "fake zipties"
+	desc = "Fake zipties meant for gag purposes."
+	breakouttime = 1 SECONDS
+
+/obj/item/restraints/handcuffs/cable/zipties/fake/used
+	desc = "A pair of broken fake zipties."
+	icon_state = "cuff_used"
+	inhand_icon_state = "cuff"
 
 /**
  * # Generic leg cuffs
@@ -474,7 +504,7 @@
 	hitsound = 'sound/weapons/taserhit.ogg'
 	w_class = WEIGHT_CLASS_SMALL
 	breakouttime = 6 SECONDS
-	custom_price = PAYCHECK_HARD * 0.35
+	custom_price = PAYCHECK_COMMAND * 0.35
 
 /obj/item/restraints/legcuffs/bola/energy/Initialize(mapload)
 	. = ..()

@@ -1,8 +1,10 @@
-// Atom mouse signals. Format:
+// mouse signals. Format:
 // When the signal is called: (signal arguments)
 // All signals send the source datum of the signal as the first argument
 
-///from base of atom/Click(): (location, control, params, mob/user)
+///from base of client/Click(): (atom/target, atom/location, control, params, mob/user)
+#define COMSIG_CLIENT_CLICK "atom_client_click"
+///from base of atom/Click(): (atom/location, control, params, mob/user)
 #define COMSIG_CLICK "atom_click"
 ///from base of atom/ShiftClick(): (/mob)
 #define COMSIG_CLICK_SHIFT "shift_click"

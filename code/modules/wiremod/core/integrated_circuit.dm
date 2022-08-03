@@ -221,13 +221,13 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
  */
 /obj/item/integrated_circuit/proc/add_component(obj/item/circuit_component/to_add, mob/living/user)
 	if(to_add.parent)
-		return
+		return FALSE
 
 	if(SEND_SIGNAL(src, COMSIG_CIRCUIT_ADD_COMPONENT, to_add, user) & COMPONENT_CANCEL_ADD_COMPONENT)
-		return
+		return FALSE
 
 	if(!to_add.add_to(src))
-		return
+		return FALSE
 
 	var/success = FALSE
 	if(user)
@@ -236,7 +236,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		success = to_add.forceMove(src)
 
 	if(!success)
-		return
+		return FALSE
 
 	to_add.rel_x = rand(COMPONENT_MIN_RANDOM_POS, COMPONENT_MAX_RANDOM_POS) - screen_x
 	to_add.rel_y = rand(COMPONENT_MIN_RANDOM_POS, COMPONENT_MAX_RANDOM_POS) - screen_y
@@ -541,16 +541,9 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			var/new_name = params["display_name"]
 
 			if(new_name)
-				set_display_name(strip_html(params["display_name"], label_max_length))
+				set_display_name(params["display_name"])
 			else
 				set_display_name("")
-
-			if(shell)
-				if(display_name != "")
-					shell.name = "[initial(shell.name)] ([display_name])"
-				else
-					shell.name = initial(shell.name)
-
 			. = TRUE
 		if("set_examined_component")
 			var/component_id = text2num(params["component_id"])
@@ -621,6 +614,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			if(!WITHIN_RANGE(component_id, attached_components))
 				return
 			var/obj/item/circuit_component/component = attached_components[component_id]
+			SEND_SIGNAL(component, COMSIG_CIRCUIT_COMPONENT_PERFORM_ACTION, ui.user, params["action_name"])
 			component.ui_perform_action(ui.user, params["action_name"])
 		if("print_component")
 			var/component_path = text2path(params["component_to_print"])
@@ -666,7 +660,17 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 /// Sets the display name that appears on the shell.
 /obj/item/integrated_circuit/proc/set_display_name(new_name)
-	display_name = new_name
+	display_name = copytext(new_name, 1, label_max_length)
+	if(!shell)
+		return
+
+	if(display_name != "")
+		if(!admin_only)
+			shell.name = "[initial(shell.name)] ([strip_html(display_name)])"
+		else
+			shell.name = display_name
+	else
+		shell.name = initial(shell.name)
 
 /**
  * Returns the creator of the integrated circuit. Used in admin messages and other related things.

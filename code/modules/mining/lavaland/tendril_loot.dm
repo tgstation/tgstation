@@ -30,7 +30,7 @@
 /datum/design/unique_modkit
 	category = list("Mining Designs", "Cyborg Upgrade Modules") //can't be normally obtained
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
-	departmental_flags = DEPARTMENTAL_FLAG_CARGO
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/unique_modkit/offensive_turf_aoe
 	name = "Kinetic Accelerator Offensive Mining Explosion Mod"
@@ -361,7 +361,7 @@
 
 /obj/item/immortality_talisman/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE, TRUE)
+	AddComponent(/datum/component/anti_magic, ALL)
 
 /datum/action/item_action/immortality
 	name = "Immortality"
@@ -380,12 +380,31 @@
 	icon_state = "blank"
 	icon = 'icons/effects/effects.dmi'
 	var/vanish_description = "vanishes from reality"
-	var/can_destroy = TRUE
+	// Weakref to the user who we're "acting" on
+	var/datum/weakref/user_ref
 
 /obj/effect/immortality_talisman/Initialize(mapload, mob/new_user)
 	. = ..()
 	if(new_user)
 		vanish(new_user)
+
+/obj/effect/immortality_talisman/Destroy()
+	// If we have a mob, we need to free it before cleanup
+	// This is a safety to prevent nuking a human, not so much a good pattern in general
+	unvanish()
+	return ..()
+
+/obj/effect/immortality_talisman/proc/unvanish()
+	var/mob/user = user_ref?.resolve()
+	user_ref = null
+
+	if(!user)
+		return
+
+	user.status_flags &= ~GODMODE
+	user.notransform = FALSE
+	user.forceMove(get_turf(src))
+	user.visible_message(span_danger("[user] pops back into reality!"))
 
 /obj/effect/immortality_talisman/proc/vanish(mob/user)
 	user.visible_message(span_danger("[user] [vanish_description], leaving a hole in [user.p_their()] place!"))
@@ -397,17 +416,11 @@
 	user.notransform = TRUE
 	user.status_flags |= GODMODE
 
-	can_destroy = FALSE
+	user_ref = WEAKREF(user)
 
-	addtimer(CALLBACK(src, .proc/unvanish, user), 10 SECONDS)
+	addtimer(CALLBACK(src, .proc/dissipate), 10 SECONDS)
 
-/obj/effect/immortality_talisman/proc/unvanish(mob/user)
-	user.status_flags &= ~GODMODE
-	user.notransform = FALSE
-	user.forceMove(get_turf(src))
-
-	user.visible_message(span_danger("[user] pops back into reality!"))
-	can_destroy = TRUE
+/obj/effect/immortality_talisman/proc/dissipate()
 	qdel(src)
 
 /obj/effect/immortality_talisman/attackby()
@@ -415,12 +428,6 @@
 
 /obj/effect/immortality_talisman/singularity_pull()
 	return
-
-/obj/effect/immortality_talisman/Destroy(force)
-	if(!can_destroy && !force)
-		return QDEL_HINT_LETMELIVE
-	else
-		. = ..()
 
 /obj/effect/immortality_talisman/void
 	vanish_description = "is dragged into the void"
@@ -442,20 +449,18 @@
 
 /obj/item/shared_storage/red/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = AddComponent(/datum/component/storage/concrete)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.max_combined_w_class = 15
-	STR.max_items = 21
-	new /obj/item/shared_storage/blue(drop_location(), STR)
 
-/obj/item/shared_storage/blue/Initialize(mapload, datum/component/storage/concrete/master)
+	create_storage(max_total_storage = 15, max_slots = 21)
+
+	new /obj/item/shared_storage/blue(drop_location(), src)
+
+/obj/item/shared_storage/blue/Initialize(mapload, atom/master)
 	. = ..()
 	if(!istype(master))
 		return INITIALIZE_HINT_QDEL
-	var/datum/component/storage/STR = AddComponent(/datum/component/storage, master)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.max_combined_w_class = 15
-	STR.max_items = 21
+	create_storage(max_total_storage = 15, max_slots = 21)
+
+	atom_storage.set_real_location(master)
 
 //Book of Babel
 
@@ -467,6 +472,9 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/book_of_babel/attack_self(mob/user)
+	if(user.is_blind())
+		to_chat(user, span_warning("You are blind and can't read anything!"))
+		return FALSE
 	if(!user.can_read(src))
 		return FALSE
 	to_chat(user, span_notice("You flip through the pages of the book, quickly and conveniently learning every language in existence. Somewhat less conveniently, the aging book crumbles to dust in the process. Whoops."))
@@ -586,8 +594,9 @@
 	name = "berserker armor"
 	desc = "Voices echo from the armor, driving the user insane. Is not space-proof."
 	icon_state = "berserker"
+	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	hoodtype = /obj/item/clothing/head/hooded/berserker
-	armor = list(MELEE = 30, BULLET = 30, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 30, BULLET = 30, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 0, FIRE = 100, ACID = 100)
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -595,11 +604,11 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	resistance_flags = FIRE_PROOF
 	clothing_flags = THICKMATERIAL
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/pickaxe, /obj/item/spear, /obj/item/organ/regenerative_core/legion, /obj/item/knife, /obj/item/kinetic_crusher, /obj/item/resonator, /obj/item/melee/cleaving_saw)
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/pickaxe, /obj/item/spear, /obj/item/organ/internal/regenerative_core/legion, /obj/item/knife, /obj/item/kinetic_crusher, /obj/item/resonator, /obj/item/melee/cleaving_saw)
 
 /obj/item/clothing/suit/hooded/berserker/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE, TRUE, ITEM_SLOT_OCLOTHING)
+	AddComponent(/datum/component/anti_magic, ALL, inventory_flags = ITEM_SLOT_OCLOTHING)
 
 #define MAX_BERSERK_CHARGE 100
 #define PROJECTILE_HIT_MULTIPLIER 1.5
@@ -612,7 +621,7 @@
 	name = "berserker helmet"
 	desc = "Peering into the eyes of the helmet is enough to seal damnation."
 	icon_state = "berserker"
-	armor = list(MELEE = 30, BULLET = 30, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 30, BULLET = 30, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 0, FIRE = 100, ACID = 100)
 	actions_types = list(/datum/action/item_action/berserk_mode)
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
@@ -706,83 +715,74 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	custom_materials = null
-	var/obj/effect/proc_holder/scan/scan
+	var/datum/action/cooldown/scan/scan_ability
 
 /obj/item/clothing/glasses/godeye/Initialize(mapload)
 	. = ..()
-	scan = new(src)
+	scan_ability = new(src)
+
+/obj/item/clothing/glasses/godeye/Destroy()
+	QDEL_NULL(scan_ability)
+	return ..()
 
 /obj/item/clothing/glasses/godeye/equipped(mob/living/user, slot)
 	. = ..()
 	if(ishuman(user) && slot == ITEM_SLOT_EYES)
 		ADD_TRAIT(src, TRAIT_NODROP, EYE_OF_GOD_TRAIT)
 		pain(user)
-		user.AddAbility(scan)
+		scan_ability.Grant(user)
 
 /obj/item/clothing/glasses/godeye/dropped(mob/living/user)
 	. = ..()
 	// Behead someone, their "glasses" drop on the floor
 	// and thus, the god eye should no longer be sticky
 	REMOVE_TRAIT(src, TRAIT_NODROP, EYE_OF_GOD_TRAIT)
-	user.RemoveAbility(scan)
+	scan_ability.Remove(user)
 
 /obj/item/clothing/glasses/godeye/proc/pain(mob/living/victim)
 	to_chat(victim, span_userdanger("You experience blinding pain, as [src] burrows into your skull."))
 	victim.emote("scream")
 	victim.flash_act()
 
-/obj/effect/proc_holder/scan
+/datum/action/cooldown/scan
 	name = "Scan"
 	desc = "Scan an enemy, to get their location and stagger them, increasing their time between attacks."
-	action_background_icon_state = "bg_clock"
-	action_icon = 'icons/mob/actions/actions_items.dmi'
-	action_icon_state = "scan"
+	background_icon_state = "bg_clock"
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "scan"
+
+	click_to_activate = TRUE
+	cooldown_time = 45 SECONDS
 	ranged_mousepointer = 'icons/effects/mouse_pointers/scan_target.dmi'
-	var/cooldown_time = 45 SECONDS
-	COOLDOWN_DECLARE(scan_cooldown)
 
-/obj/effect/proc_holder/scan/on_lose(mob/living/user)
-	remove_ranged_ability()
+/datum/action/cooldown/scan/IsAvailable()
+	return ..() && isliving(owner)
 
-/obj/effect/proc_holder/scan/Click(location, control, params)
-	. = ..()
-	if(!isliving(usr))
-		return TRUE
-	var/mob/living/user = usr
-	fire(user)
+/datum/action/cooldown/scan/Activate(atom/scanned)
+	StartCooldown(15 SECONDS)
 
-/obj/effect/proc_holder/scan/fire(mob/living/carbon/user)
-	if(active)
-		remove_ranged_ability(span_notice("Your eye relaxes."))
-	else
-		add_ranged_ability(user, span_notice("Your eye starts spinning fast. <B>Left-click a creature to scan it!</B>"), TRUE)
+	if(owner.stat != CONSCIOUS)
+		return FALSE
+	if(!isliving(scanned) || scanned == owner)
+		owner.balloon_alert(owner, "invalid scanned!")
+		return FALSE
 
-/obj/effect/proc_holder/scan/InterceptClickOn(mob/living/caller, params, atom/target)
-	. = ..()
-	if(.)
-		return
-	if(ranged_ability_user.stat)
-		remove_ranged_ability()
-		return
-	if(!COOLDOWN_FINISHED(src, scan_cooldown))
-		balloon_alert(ranged_ability_user, "not ready!")
-		return
-	if(!isliving(target) || target == ranged_ability_user)
-		balloon_alert(ranged_ability_user, "invalid target!")
-		return
-	var/mob/living/living_target = target
-	living_target.apply_status_effect(/datum/status_effect/stagger)
-	var/datum/status_effect/agent_pinpointer/scan_pinpointer = ranged_ability_user.apply_status_effect(/datum/status_effect/agent_pinpointer/scan)
-	scan_pinpointer.scan_target = living_target
-	living_target.Jitter(5 SECONDS)
-	to_chat(living_target, span_warning("You've been staggered!"))
-	living_target.add_filter("scan", 2, list("type" = "outline", "color" = COLOR_YELLOW, "size" = 1))
-	addtimer(CALLBACK(living_target, /atom/.proc/remove_filter, "scan"), 30 SECONDS)
-	ranged_ability_user.playsound_local(get_turf(ranged_ability_user), 'sound/magic/smoke.ogg', 50, TRUE)
-	balloon_alert(ranged_ability_user, "[living_target] scanned")
-	COOLDOWN_START(src, scan_cooldown, cooldown_time)
-	addtimer(CALLBACK(src, /atom/.proc/balloon_alert, ranged_ability_user, "scan recharged"), cooldown_time)
-	remove_ranged_ability()
+	var/mob/living/living_owner = owner
+	var/mob/living/living_scanned = scanned
+	living_scanned.apply_status_effect(/datum/status_effect/stagger)
+	var/datum/status_effect/agent_pinpointer/scan_pinpointer = living_owner.apply_status_effect(/datum/status_effect/agent_pinpointer/scan)
+	scan_pinpointer.scan_target = living_scanned
+
+	living_scanned.set_timed_status_effect(100 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+	to_chat(living_scanned, span_warning("You've been staggered!"))
+	living_scanned.add_filter("scan", 2, list("type" = "outline", "color" = COLOR_YELLOW, "size" = 1))
+	addtimer(CALLBACK(living_scanned, /atom/.proc/remove_filter, "scan"), 30 SECONDS)
+
+	owner.playsound_local(get_turf(owner), 'sound/magic/smoke.ogg', 50, TRUE)
+	owner.balloon_alert(owner, "[living_scanned] scanned")
+	addtimer(CALLBACK(src, /atom/.proc/balloon_alert, owner, "scan recharged"), cooldown_time)
+
+	StartCooldown()
 	return TRUE
 
 /datum/status_effect/agent_pinpointer/scan
@@ -801,7 +801,7 @@
 	name = "Scan Target"
 	desc = "Contact may or may not be close."
 
-/obj/item/organ/cyberimp/arm/katana
+/obj/item/organ/internal/cyberimp/arm/katana
 	name = "dark shard"
 	desc = "An eerie metal shard surrounded by dark energies."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
@@ -812,7 +812,7 @@
 	extend_sound = 'sound/items/unsheath.ogg'
 	retract_sound = 'sound/items/sheath.ogg'
 
-/obj/item/organ/cyberimp/arm/katana/attack_self(mob/user, modifiers)
+/obj/item/organ/internal/cyberimp/arm/katana/attack_self(mob/user, modifiers)
 	. = ..()
 	to_chat(user, span_userdanger("The mass goes up your arm and goes inside it!"))
 	playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
@@ -822,13 +822,13 @@
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	Insert(user)
 
-/obj/item/organ/cyberimp/arm/katana/screwdriver_act(mob/living/user, obj/item/screwtool)
+/obj/item/organ/internal/cyberimp/arm/katana/screwdriver_act(mob/living/user, obj/item/screwtool)
 	return
 
-/obj/item/organ/cyberimp/arm/katana/Retract()
+/obj/item/organ/internal/cyberimp/arm/katana/Retract()
 	var/obj/item/cursed_katana/katana = active_item
 	if(!katana || katana.shattered)
-		return
+		return FALSE
 	if(!katana.drew_blood)
 		to_chat(owner, span_userdanger("[katana] lashes out at you in hunger!"))
 		playsound(owner, 'sound/magic/demon_attack1.ogg', 50, TRUE)
@@ -973,7 +973,7 @@
 			target.ranged_cooldown += 5 SECONDS
 		else if(iscarbon(source))
 			var/mob/living/carbon/target = source
-			target.set_confusion(max(target.get_confusion(), 8))
+			target.set_timed_status_effect(8 SECONDS, /datum/status_effect/confusion, only_if_higher = TRUE)
 	return NONE
 
 /obj/item/cursed_katana/proc/slice(mob/living/target, mob/user)

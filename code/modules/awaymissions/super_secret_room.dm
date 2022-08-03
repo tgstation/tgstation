@@ -27,10 +27,10 @@
 	switch(times_spoken_to)
 		if(0)
 			SpeakPeace(list("Welcome to the error handling room.","Something's goofed up bad to send you here.","You should probably tell an admin what you were doing, or make a bug report."))
-			for(var/obj/structure/signpost/salvation/S in orange(7))
-				S.invisibility = 0
-				var/datum/effect_system/smoke_spread/smoke = new
-				smoke.set_up(1, S.loc)
+			for(var/obj/structure/signpost/salvation/sign in orange(7))
+				sign.invisibility = 0
+				var/datum/effect_system/fluid_spread/smoke/smoke = new
+				smoke.set_up(1, holder = src, location = sign.loc)
 				smoke.start()
 				break
 		if(1)
@@ -99,13 +99,13 @@
 /obj/structure/speaking_tile/attack_hulk(mob/user)
 	return
 
-/obj/structure/speaking_tile/attack_larva(mob/user)
+/obj/structure/speaking_tile/attack_larva(mob/user, list/modifiers)
 	return interact(user)
 
 /obj/structure/speaking_tile/attack_ai(mob/user)
 	return interact(user)
 
-/obj/structure/speaking_tile/attack_slime(mob/user)
+/obj/structure/speaking_tile/attack_slime(mob/user, list/modifiers)
 	return interact(user)
 
 /obj/structure/speaking_tile/attack_animal(mob/user, list/modifiers)

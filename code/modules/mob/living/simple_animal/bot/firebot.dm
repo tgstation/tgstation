@@ -107,7 +107,7 @@
 	if(user)
 		to_chat(user, span_danger("[src] buzzes and beeps."))
 	audible_message(span_danger("[src] buzzes oddly!"))
-	playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	if(user)
 		old_target_fire = user
 	extinguish_fires = FALSE
@@ -187,12 +187,14 @@
 		target_fire = null
 		var/scan_range = (stationary_mode ? 1 : DEFAULT_SCAN_RANGE)
 
+		var/list/things_to_extinguish = list()
 		if(extinguish_people)
-			target_fire = scan(/mob/living, old_target_fire, scan_range) // Scan for burning humans first
+			things_to_extinguish += list(/mob/living)
 
 		if(target_fire == null && extinguish_fires)
-			target_fire = scan(/turf/open, old_target_fire, scan_range) // Scan for burning turfs second
+			things_to_extinguish += list(/turf/open)
 
+		target_fire = scan(things_to_extinguish, old_target_fire, scan_range) // Scan for burning turfs second
 		old_target_fire = target_fire
 
 	// Target reached ENGAGE WATER CANNON
@@ -239,11 +241,11 @@
 		frustration++
 
 	if(bot_mode_flags & BOT_MODE_AUTOPATROL && !target_fire)
-		if(mode == BOT_IDLE || mode == BOT_START_PATROL)
-			start_patrol()
-
-		if(mode == BOT_PATROL)
-			bot_patrol()
+		switch(mode)
+			if(BOT_IDLE, BOT_START_PATROL)
+				start_patrol()
+			if(BOT_PATROL)
+				bot_patrol()
 
 
 //Look for burning people or turfs around the bot
@@ -267,7 +269,7 @@
 
 /mob/living/simple_animal/bot/firebot/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	if(COOLDOWN_FINISHED(src, foam_cooldown))
-		new /obj/effect/particle_effect/foam/firefighting(loc)
+		new /obj/effect/particle_effect/fluid/foam/firefighting(loc)
 		COOLDOWN_START(src, foam_cooldown, FOAM_INTERVAL)
 
 /mob/living/simple_animal/bot/firebot/proc/spray_water(atom/target, mob/user)
@@ -289,9 +291,6 @@
 
 
 /mob/living/simple_animal/bot/firebot/explode()
-	bot_mode_flags &= ~BOT_MODE_ON
-	visible_message(span_boldannounce("[src] blows apart!"))
-
 	var/atom/Tsec = drop_location()
 
 	new /obj/item/assembly/prox_sensor(Tsec)
@@ -302,9 +301,7 @@
 	if(isopenturf(T))
 		var/turf/open/theturf = T
 		theturf.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
-
-	do_sparks(3, TRUE, src)
-	..()
+	return ..()
 
 #undef SPEECH_INTERVAL
 #undef DETECTED_VOICE_INTERVAL

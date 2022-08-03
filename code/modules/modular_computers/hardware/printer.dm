@@ -24,18 +24,19 @@
 	if(!check_functionality())
 		return FALSE
 
-	var/obj/item/paper/P = new/obj/item/paper(holder.drop_location())
+	var/obj/item/paper/printed_paper = new/obj/item/paper(holder.drop_location())
 
 	// Damaged printer causes the resulting paper to be somewhat harder to read.
+
 	if(damage > damage_malfunction)
-		P.info = stars(text_to_print, 100-malfunction_probability)
+		printed_paper.add_raw_text(stars(text_to_print, 100-malfunction_probability))
 	else
-		P.info = text_to_print
+		printed_paper.add_raw_text(text_to_print)
 	if(paper_title)
-		P.name = paper_title
-	P.update_appearance()
+		printed_paper.name = paper_title
+	printed_paper.update_appearance()
 	stored_paper--
-	P = null
+
 	return TRUE
 
 /obj/item/computer_hardware/printer/try_insert(obj/item/I, mob/living/user = null)
@@ -59,7 +60,7 @@
 			/// Number of sheets we're adding
 			var/num_to_add = 0
 			for(var/obj/item/paper/the_paper as anything in bin.papers) // Search for the first blank sheet of paper, then toss it in
-				if(the_paper.get_info_length()) // Uh oh, paper has words!
+				if(the_paper.get_total_length()) // Uh oh, paper has words!
 					continue
 				if(istype(the_paper, /obj/item/paper/carbon)) // Add both the carbon, and the copy
 					var/obj/item/paper/carbon/carbon_paper = the_paper

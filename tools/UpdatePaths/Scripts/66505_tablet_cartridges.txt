@@ -1,0 +1,24 @@
+/obj/item/computer_hardware/hard_drive/role/medical : /obj/item/computer_hardware/hard_drive/portable/medical
+/obj/item/computer_hardware/hard_drive/role/chemistry : /obj/item/computer_hardware/hard_drive/portable/chemistry
+/obj/item/computer_hardware/hard_drive/role/engineering : /obj/item/computer_hardware/hard_drive/portable/engineering
+/obj/item/computer_hardware/hard_drive/role/atmos : /obj/item/computer_hardware/hard_drive/portable/atmos
+/obj/item/computer_hardware/hard_drive/role/signal : /obj/item/computer_hardware/hard_drive/portable/ordnance
+/obj/item/computer_hardware/hard_drive/role/signal/ordnance : /obj/item/computer_hardware/hard_drive/portable/ordnance
+/obj/item/computer_hardware/hard_drive/role/quartermaster : /obj/item/computer_hardware/hard_drive/portable/quartermaster
+/obj/item/computer_hardware/hard_drive/role/rd : /obj/item/computer_hardware/hard_drive/portable/command/rd
+/obj/item/computer_hardware/hard_drive/role/ce : /obj/item/computer_hardware/hard_drive/portable/command/ce
+/obj/item/computer_hardware/hard_drive/role/cmo : /obj/item/computer_hardware/hard_drive/portable/command/cmo
+/obj/item/computer_hardware/hard_drive/role/hos : /obj/item/computer_hardware/hard_drive/portable/command/hos
+/obj/item/computer_hardware/hard_drive/role/hop : /obj/item/computer_hardware/hard_drive/portable/command/hop
+/obj/item/computer_hardware/hard_drive/role/captain : /obj/item/computer_hardware/hard_drive/portable/command/captain
+/obj/item/computer_hardware/hard_drive/role/virus/mime : /obj/item/computer_hardware/hard_drive/portable/virus/mime
+/obj/item/computer_hardware/hard_drive/role/virus/clown : /obj/item/computer_hardware/hard_drive/portable/virus/clown
+/obj/item/computer_hardware/hard_drive/role/virus/deto : /obj/item/computer_hardware/hard_drive/portable/virus/deto
+/obj/item/computer_hardware/hard_drive/role/virus/frame : /obj/item/computer_hardware/hard_drive/portable/virus/frame
+
+/obj/item/computer_hardware/hard_drive/role/lawyer : @DELETE
+/obj/item/computer_hardware/hard_drive/role/detective : @DELETE
+/obj/item/computer_hardware/hard_drive/role/janitor : @DELETE
+/obj/item/computer_hardware/hard_drive/role/curator : @DELETE
+/obj/item/computer_hardware/hard_drive/role/roboticist : @DELETE
+/obj/item/computer_hardware/hard_drive/role/signal : @DELETE

@@ -70,7 +70,7 @@
 	reagent_puff.color = mix_color_from_reagents(reagent_puff.reagents.reagent_list)
 	var/wait_step = max(round(2+3/range), 2)
 
-	var/puff_reagent_string = reagent_puff.reagents.log_list()
+	var/puff_reagent_string = reagent_puff.reagents.get_reagent_log_string()
 	var/turf/src_turf = get_turf(src)
 
 	log_combat(user, src_turf, "fired a puff of reagents from", src, addition="with a range of \[[range]\], containing [puff_reagent_string]")
@@ -140,7 +140,7 @@
 	if(isturf(usr.loc) && src.loc == usr)
 		to_chat(usr, span_notice("You empty \the [src] onto the floor."))
 		reagents.expose(usr.loc)
-		log_combat(usr, usr.loc, "emptied onto", src, addition="which had [reagents.log_list()]")
+		log_combat(usr, usr.loc, "emptied onto", src, addition="which had [reagents.get_reagent_log_string()]")
 		src.reagents.clear_reagents()
 
 /// Handles updating the spray distance when the reagents change.
@@ -378,7 +378,7 @@
 	spray_range = 4
 	stream_range = 2
 	volume = 100
-	custom_premium_price = PAYCHECK_HARD * 2
+	custom_premium_price = PAYCHECK_COMMAND * 2
 
 /obj/item/reagent_containers/spray/syndicate/Initialize(mapload)
 	. = ..()

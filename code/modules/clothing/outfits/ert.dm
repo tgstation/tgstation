@@ -1,9 +1,11 @@
-/datum/outfit/centcom/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/centcom
+	name = "CentCom Base"
+
+/datum/outfit/centcom/post_equip(mob/living/carbon/human/centcom_member, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
-
-	var/obj/item/implant/mindshield/L = new/obj/item/implant/mindshield(H)//hmm lets have centcom officials become revs
-	L.implant(H, null, 1)
+	var/obj/item/implant/mindshield/mindshield = new /obj/item/implant/mindshield(centcom_member)//hmm lets have centcom officials become revs
+	mindshield.implant(centcom_member, null, silent = TRUE)
 
 /datum/outfit/centcom/ert
 	name = "ERT Common"
@@ -96,7 +98,6 @@
 	l_hand = /obj/item/gun/energy/pulse/carbine/loyalpin
 	backpack_contents = list(
 		/obj/item/melee/baton/security/loaded = 1,
-		/obj/item/storage/belt/security/full = 1,
 		/obj/item/storage/box/handcuffs = 1,
 		/obj/item/storage/box/survival/engineer = 1,
 	)
@@ -114,9 +115,9 @@
 		/obj/item/storage/box/hug/plushes = 1,
 		/obj/item/storage/box/survival/engineer = 1,
 	)
-	belt = /obj/item/storage/belt/medical
+	belt = /obj/item/storage/belt/medical/ert
 	glasses = /obj/item/clothing/glasses/hud/health
-	l_hand = /obj/item/storage/firstaid/regular
+	l_hand = /obj/item/storage/medkit/regular
 	r_hand = /obj/item/gun/energy/e_gun
 
 /datum/outfit/centcom/ert/medic/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -197,17 +198,16 @@
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	l_pocket = /obj/item/pen
-	r_pocket = /obj/item/pda/heads
+	r_pocket = /obj/item/modular_computer/tablet/pda/heads
 	l_hand = /obj/item/clipboard
 
 /datum/outfit/centcom/centcom_official/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
-	var/obj/item/pda/heads/pda = H.r_store
-	pda.owner = H.real_name
-	pda.ownjob = "CentCom Official"
-	pda.update_label()
+	var/obj/item/modular_computer/tablet/pda/heads/pda = H.r_store
+	pda.saved_identification = H.real_name
+	pda.saved_job = "CentCom Official"
 
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
@@ -510,7 +510,7 @@
 		/obj/item/grenade/c4/x4 = 1,
 		/obj/item/storage/box/flashbangs = 1,
 		/obj/item/storage/box/survival/engineer = 1,
-		/obj/item/storage/firstaid/regular = 1,
+		/obj/item/storage/medkit/regular = 1,
 	)
 	belt = /obj/item/gun/ballistic/revolver/mateba
 	ears = /obj/item/radio/headset/headset_cent/alt
@@ -597,8 +597,8 @@
 	head = /obj/item/clothing/head/helmet/marine/medic
 	backpack_contents = list(
 		/obj/item/reagent_containers/hypospray/combat = 1,
-		/obj/item/storage/firstaid/regular = 1,
-		/obj/item/storage/firstaid/advanced = 1,
+		/obj/item/storage/medkit/regular = 1,
+		/obj/item/storage/medkit/advanced = 1,
 	)
 	belt = /obj/item/storage/belt/medical/paramedic
 	glasses = /obj/item/clothing/glasses/hud/health/sunglasses

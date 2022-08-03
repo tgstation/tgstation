@@ -1,5 +1,6 @@
 /turf/closed
 	layer = CLOSED_TURF_LAYER
+	turf_flags = IS_SOLID
 	opacity = TRUE
 	density = TRUE
 	blocks_air = TRUE
@@ -42,7 +43,7 @@
 
 /turf/closed/indestructible/weeb
 	name = "paper wall"
-	desc = "Reinforced paper walling. Someone really doesn't you to leave."
+	desc = "Reinforced paper walling. Someone really doesn't want you to leave."
 	icon = 'icons/obj/smooth_structures/paperframes.dmi'
 	icon_state = "paperframes-0"
 	base_icon_state = "paperframes"
@@ -151,6 +152,12 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	icon_state = "plastinum_wall-0"
 	base_icon_state = "plastinum_wall"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_PLASTINUM_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_PLASTINUM_WALLS)
+
+/turf/closed/indestructible/riveted/plastinum/nodiagonal
+	icon_state = "map-shuttle_nd"
+	smoothing_flags = SMOOTH_BITMASK
 
 /turf/closed/indestructible/wood
 	icon = 'icons/turf/walls/wood_wall.dmi'

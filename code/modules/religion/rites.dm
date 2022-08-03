@@ -1,15 +1,17 @@
 /datum/religion_rites
-/// name of the religious rite
+	/// name of the religious rite
 	var/name = "religious rite"
-/// Description of the religious rite
+	/// Description of the religious rite
 	var/desc = "immm gonna rooon"
-/// length it takes to complete the ritual
+	/// length it takes to complete the ritual
 	var/ritual_length = (10 SECONDS) //total length it'll take
-/// list of invocations said (strings) throughout the rite
+	/// list of invocations said (strings) throughout the rite
 	var/list/ritual_invocations //strings that are by default said evenly throughout the rite
-/// message when you invoke
+	/// message when you invoke
 	var/invoke_msg
 	var/favor_cost = 0
+	/// does the altar auto-delete the rite
+	var/auto_delete = TRUE
 
 /datum/religion_rites/New()
 	. = ..()
@@ -127,12 +129,12 @@
 	..()
 	var/altar_turf = get_turf(religious_tool)
 	var/blessing = pick(
-					/obj/item/organ/cyberimp/arm/surgery,
-					/obj/item/organ/cyberimp/eyes/hud/diagnostic,
-					/obj/item/organ/cyberimp/eyes/hud/medical,
-					/obj/item/organ/cyberimp/mouth/breathing_tube,
-					/obj/item/organ/cyberimp/chest/thrusters,
-					/obj/item/organ/eyes/robotic/glow)
+					/obj/item/organ/internal/cyberimp/arm/surgery,
+					/obj/item/organ/internal/cyberimp/eyes/hud/diagnostic,
+					/obj/item/organ/internal/cyberimp/eyes/hud/medical,
+					/obj/item/organ/internal/cyberimp/mouth/breathing_tube,
+					/obj/item/organ/internal/cyberimp/chest/thrusters,
+					/obj/item/organ/internal/eyes/robotic/glow)
 	new blessing(altar_turf)
 	return TRUE
 /**** Pyre God ****/
@@ -424,7 +426,7 @@
 	for(var/obj/item/paper/could_writ in get_turf(religious_tool))
 		if(istype(could_writ, /obj/item/paper/holy_writ))
 			continue
-		if(could_writ.get_info_length()) //blank paper pls
+		if(could_writ.get_total_length()) //blank paper pls
 			continue
 		writ_target = could_writ //PLEASE SIGN MY AUTOGRAPH
 		return ..()
@@ -455,7 +457,7 @@
 /obj/item/paper/holy_writ/Initialize(mapload)
 	add_filter("holy_outline", 9, list("type" = "outline", "color" = "#fdff6c"))
 	name = "[GLOB.deity]'s honorbound rules"
-	info = {"[GLOB.deity]'s honorbound rules:
+	default_raw_text = {"[GLOB.deity]'s honorbound rules:
 	<br>
 	1.) Thou shalt not attack the unready!<br>
 	Those who are not ready for battle should not be wrought low. The evil of this world must lose
@@ -530,7 +532,7 @@
 	if(!HAS_TRAIT_FROM(user, TRAIT_HOPELESSLY_ADDICTED, "maint_adaptation"))
 		to_chat(user, span_warning("You need to adapt to maintenance first."))
 		return FALSE
-	var/obj/item/organ/eyes/night_vision/maintenance_adapted/adapted = user.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/night_vision/maintenance_adapted/adapted = user.getorganslot(ORGAN_SLOT_EYES)
 	if(adapted && istype(adapted))
 		to_chat(user, span_warning("Your eyes are already adapted!"))
 		return FALSE
@@ -538,12 +540,12 @@
 
 /datum/religion_rites/adapted_eyes/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
 	..()
-	var/obj/item/organ/eyes/oldeyes = user.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/oldeyes = user.getorganslot(ORGAN_SLOT_EYES)
 	to_chat(user, span_warning("You feel your eyes adapt to the darkness!"))
 	if(oldeyes)
 		oldeyes.Remove(user, special = TRUE)
 		qdel(oldeyes)//eh
-	var/obj/item/organ/eyes/night_vision/maintenance_adapted/neweyes = new
+	var/obj/item/organ/internal/eyes/night_vision/maintenance_adapted/neweyes = new
 	neweyes.Insert(user, special = TRUE)
 
 /datum/religion_rites/adapted_food
@@ -618,7 +620,7 @@
 
 /datum/religion_rites/sparring_contract/perform_rite(mob/living/user, atom/religious_tool)
 	for(var/obj/item/paper/could_contract in get_turf(religious_tool))
-		if(could_contract.get_info_length()) //blank paper pls
+		if(could_contract.get_total_length()) //blank paper pls
 			continue
 		contract_target = could_contract
 		return ..()

@@ -5,7 +5,7 @@
 /obj/machinery/disposal
 	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
 	density = TRUE
-	armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 100, BOMB = 0, BIO = 100, FIRE = 90, ACID = 30)
+	armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 90, ACID = 30)
 	max_integrity = 200
 	resistance_flags = FIRE_PROOF
 	interaction_flags_machine = INTERACT_MACHINE_OPEN | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
@@ -123,7 +123,7 @@
 			if(6 to 33)
 				king.say(pick("Treasure!","Our precious!","Cheese!"))
 				to_chat(king, span_notice("Score! You find some cheese!"))
-				new /obj/item/food/cheese(get_turf(king))
+				new /obj/item/food/cheese/wedge(get_turf(king))
 			else
 				var/pickedtrash = pick(GLOB.ratking_trash)
 				to_chat(king, span_notice("You just find more garbage and dirt. Lovely, but beneath you now."))
@@ -224,7 +224,7 @@
 	flush = FALSE
 
 /obj/machinery/disposal/proc/newHolderDestination(obj/structure/disposalholder/H)
-	for(var/obj/item/small_delivery/O in src)
+	for(var/obj/item/delivery/O in src)
 		H.tomail = TRUE
 		return
 
@@ -259,15 +259,18 @@
 	return src
 
 //How disposal handles getting a storage dump from a storage object
-/obj/machinery/disposal/storage_contents_dump_act(datum/component/storage/src_object, mob/user)
+/obj/machinery/disposal/storage_contents_dump_act(obj/item/src_object, mob/user)
 	. = ..()
 	if(.)
 		return
-	for(var/obj/item/I in src_object.parent)
+	var/atom/resolve_parent = src_object.atom_storage?.real_location?.resolve()
+	if(!resolve_parent)
+		return FALSE
+	for(var/obj/item/I in resolve_parent)
 		if(user.active_storage != src_object)
 			if(I.on_found(user))
 				return
-		src_object.remove_from_storage(I, src)
+		src_object.atom_storage?.attempt_remove(I, src)
 	return TRUE
 
 // Disposal bin
@@ -286,10 +289,9 @@
 /obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/storage/bag/trash)) //Not doing component overrides because this is a specific type.
 		var/obj/item/storage/bag/trash/T = I
-		var/datum/component/storage/STR = T.GetComponent(/datum/component/storage)
 		to_chat(user, span_warning("You empty the bag."))
 		for(var/obj/item/O in T.contents)
-			STR.remove_from_storage(O,src)
+			T.atom_storage.attempt_remove(O,src)
 		T.update_appearance()
 		update_appearance()
 	else
@@ -416,21 +418,19 @@
 				do_flush()
 		flush_count = 0
 
-	updateDialog()
-
 	if(flush && air_contents.return_pressure() >= SEND_PRESSURE) // flush can happen even without power
 		do_flush()
 
 	if(machine_stat & NOPOWER) // won't charge if no power
 		return
 
-	use_power(100) // base power usage
+	use_power(idle_power_usage) // base power usage
 
 	if(!pressure_charging) // if off or ready, no need to charge
 		return
 
 	// otherwise charge
-	use_power(500) // charging power usage
+	use_power(idle_power_usage) // charging power usage
 
 	var/atom/L = loc //recharging from loc turf
 

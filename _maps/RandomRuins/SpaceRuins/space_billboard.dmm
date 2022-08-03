@@ -24,14 +24,14 @@
 /area/ruin/unpowered/no_grav)
 "G" = (
 /obj/structure/marker_beacon/burgundy,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "S" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "Z" = (
 /obj/effect/spawner/random/structure/billboard,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 
 (1,1,1) = {"

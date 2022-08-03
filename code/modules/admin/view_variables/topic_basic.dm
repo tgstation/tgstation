@@ -44,8 +44,8 @@
 	if(check_rights(R_DEBUG))
 		if(href_list[VV_HK_DELETE])
 			usr.client.admin_delete(target)
-			if (isturf(src)) // show the turf that took its place
-				usr.client.debug_variables(src)
+			if (isturf(target)) // show the turf that took its place
+				usr.client.debug_variables(target)
 				return
 
 	if(href_list[VV_HK_MARK])

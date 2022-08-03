@@ -4,35 +4,35 @@
 /area/mine/explored)
 "e" = (
 /obj/item/shovel,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "f" = (
 /obj/item/chair/stool,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "g" = (
 /obj/item/stack/ore/iron{
 	pixel_y = -11
 	},
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "j" = (
 /turf/template_noop,
 /area/template_noop)
 "l" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "m" = (
 /obj/effect/spawner/random/trash/garbage,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "o" = (
 /obj/item/stack/ore/glass,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "u" = (
 /obj/structure/ore_box,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "w" = (
 /obj/modular_map_connector,
@@ -41,45 +41,45 @@
 "x" = (
 /obj/structure/table,
 /obj/item/toy/plush/lizard_plushie/green,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "B" = (
 /obj/structure/barricade/wooden,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "H" = (
 /obj/item/stack/ore/glass{
 	pixel_x = 4;
 	pixel_y = 8
 	},
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "I" = (
 /turf/closed/wall/rock/porous,
 /area/mine/explored)
 "K" = (
 /obj/effect/spawner/random/trash/hobo_squat,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "M" = (
 /obj/structure/bonfire,
 /obj/item/food/meat/slab/goliath,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "R" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/spawner/random/trash/garbage,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "U" = (
 /obj/structure/rack,
 /obj/item/spear,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "V" = (
 /obj/structure/table/wood,
 /obj/item/relic,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "Z" = (
 /obj/structure/punji_sticks,
@@ -92,7 +92,7 @@
 	pixel_x = -4;
 	pixel_y = -3
 	},
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 
 (1,1,1) = {"

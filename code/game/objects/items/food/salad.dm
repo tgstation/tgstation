@@ -15,7 +15,7 @@
 	name = "\improper Aesir salad"
 	desc = "Probably too incredible for mortal men to fully enjoy."
 	icon_state = "aesirsalad"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/medicine/omnizine = 10, /datum/reagent/consumable/nutriment/vitamin = 12)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 12)
 	tastes = list("leaves" = 1)
 	foodtypes = VEGETABLES | FRUIT
 
@@ -57,7 +57,7 @@
 	icon_state = "citrusdelight"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 11, /datum/reagent/consumable/nutriment/vitamin = 7)
 	tastes = list("sourness" = 1, "leaves" = 1)
-	foodtypes = FRUIT
+	foodtypes = FRUIT | ORANGES
 
 /obj/item/food/salad/ricebowl
 	name = "ricebowl"
@@ -114,7 +114,7 @@
 	name = "\improper Salad of Eden"
 	desc = "A salad brimming with untapped potential."
 	icon_state = "edensalad"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/medicine/earthsblood = 3, /datum/reagent/medicine/omnizine = 5, /datum/reagent/drug/happiness = 2)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("extreme bitterness" = 3, "hope" = 1)
 	foodtypes = VEGETABLES
 
@@ -135,7 +135,7 @@
 	reagent_flags = OPENCONTAINER
 	custom_materials = list(/datum/material/glass = 500)
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_price = PAYCHECK_ASSISTANT * 0.6
+	custom_price = PAYCHECK_CREW * 0.6
 
 /obj/item/reagent_containers/glass/bowl/Initialize(mapload)
 	. = ..()

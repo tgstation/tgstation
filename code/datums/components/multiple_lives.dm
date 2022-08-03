@@ -17,15 +17,24 @@
 /datum/component/multiple_lives/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_LIVING_DEATH, .proc/respawn)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(parent, COMSIG_LIVING_WRITE_MEMORY, .proc/on_write_memory)
 
 /datum/component/multiple_lives/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_EXAMINE))
+	UnregisterSignal(parent, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_EXAMINE, COMSIG_LIVING_WRITE_MEMORY))
+
+/// Stops a dying station pet from overriding persistence data before we respawn it and thus causing issues.
+/datum/component/multiple_lives/proc/on_write_memory(mob/living/source, dead, gibbed)
+	if(dead && !source.suiciding)
+		return COMPONENT_DONT_WRITE_MEMORY
 
 /datum/component/multiple_lives/proc/respawn(mob/living/source, gibbed)
 	SIGNAL_HANDLER
 	if(source.suiciding) //Freed from this mortail coil.
 		qdel(src)
 		return
+	//Gives the old mob this trait in case it gets revived, so we won't end up eventually overriding data
+	//that would be read by the current holder when he respawns if the old corpse is ever revived.
+	ADD_TRAIT(source, TRAIT_DONT_WRITE_MEMORY, EXPIRED_LIFE_TRAIT)
 	var/mob/living/respawned_mob = new source.type (source.drop_location())
 	source.mind?.transfer_to(respawned_mob)
 	lives_left--

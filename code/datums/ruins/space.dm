@@ -4,6 +4,8 @@
 	prefix = "_maps/RandomRuins/SpaceRuins/"
 	cost = 1
 	allow_duplicates = FALSE
+	ruin_type = ZTRAIT_SPACE_RUINS
+	default_area = /area/space
 
 /datum/map_template/ruin/space/zoo
 	id = "zoo"
@@ -64,12 +66,12 @@
 	description = "A once-bustling tradestation that handled imports and exports from nearby stations now lays eerily dormant. \
 	The last received message was a distress call from one of the on-board officers, but we had no success in making contact again."
 
-/datum/map_template/ruin/space/derelict1
-	id = "derelict1"
-	suffix = "derelict1.dmm"
-	name = "Derelict 1"
-	description = "Nothing to see here citizen, move along, certainly no xeno outbreaks on this piece of station debris. That purple stuff? It's uh... station nectar. \
-	It's a top secret research installation."
+/datum/map_template/ruin/space/derelict_sulaco
+	id = "derelict_sulaco"
+	suffix = "derelict_sulaco.dmm"
+	name = "Derelict Sulaco"
+	description = "Nothing to see here citizen, move along, certainly no xeno outbreaks here. That purple stuff? It's uh... space nectar... but don't eat it! \
+	It's the bridge of a top secret military ship."
 
 /datum/map_template/ruin/space/derelict2
 	id = "derelict2"
@@ -217,8 +219,8 @@
 	id = "crashedship"
 	suffix = "crashedship.dmm"
 	name = "Crashed Ship"
-	description = "Among civilian vessels the most common cause of tragedy is lack of food. \
-	This ship was outfitted with a multitude of food-generating features, then summarily ran into an asteroid shortly after takeoff."
+	description = "The SSCV Atrus was chartered to survey over 600 planets in its maiden voyage. \
+	Hopefully the SSC is content with an indepth analysis of just this asteroid."
 
 /datum/map_template/ruin/space/listeningstation
 	id = "listeningstation"
@@ -290,7 +292,7 @@
 
 /datum/map_template/ruin/space/hilbertresearchfacility
 	id = "hilbert_facility"
-	suffix = "hilbertshoteltestingsite.dmm"
+	suffix = "hilbertresearchfacility.dmm"
 	name = "Hilbert Research Facility"
 	description = "A research facility of great bluespace discoveries. Long since abandoned, willingly or not..."
 
@@ -323,3 +325,9 @@
 	suffix = "space_billboard.dmm"
 	name = "Space Billboard"
 	description = "Frequently found alongside well-traversed sublight routes, space billboards have fallen out of favour in recent years as advertisers finally realised that people are incapable of reading billboards going by at over 2/3rds the speed of light."
+
+/datum/map_template/ruin/space/spinwardsmoothies
+	id = "spinwardsmoothies"
+	suffix = "spinwardsmoothies.dmm"
+	name = "Spinward Smoothies"
+	description = "A branch of the beloved Spinward Smoothies chain of smoothie bars."

@@ -27,6 +27,6 @@
 		if(11 to 20)
 			mutateweed()
 			return
-		if(1 to 10)
+		if(0 to 10)
 			mutatepest(user)
 			return

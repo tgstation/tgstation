@@ -162,6 +162,14 @@
 /proc/show_candidate_poll_window(mob/candidate_mob, poll_time, question, list/candidates, ignore_category, time_passed, flashwindow = TRUE)
 	set waitfor = 0
 
+	// Universal opt-out for all players.
+	if ((!candidate_mob.client.prefs.read_preference(/datum/preference/toggle/ghost_roles)))
+		return
+
+	// Opt-out for admins whom are currently adminned.
+	if ((!candidate_mob.client.prefs.read_preference(/datum/preference/toggle/ghost_roles_as_admin)) && candidate_mob.client.holder)
+		return
+
 	SEND_SOUND(candidate_mob, 'sound/misc/notice2.ogg') //Alerting them to their consideration
 	if(flashwindow)
 		window_flash(candidate_mob.client)
@@ -205,8 +213,7 @@
 	if (!question)
 		question = "Would you like to be a special role?"
 	var/list/result = list()
-	for(var/candidate in group)
-		var/mob/candidate_mob = candidate
+	for(var/mob/candidate_mob as anything in group)
 		if(!candidate_mob.key || !candidate_mob.client || (ignore_category && GLOB.poll_ignore[ignore_category] && (candidate_mob.ckey in GLOB.poll_ignore[ignore_category])))
 			continue
 		if(be_special_flag)
@@ -407,4 +414,4 @@
 		message = html_encode(message)
 	else
 		message = copytext(message, 2)
-	to_chat(target, span_purple("<span class='oocplain'><b>Tip of the round: </b>[message]</span>"))
+	to_chat(target, span_purple(examine_block("<span class='oocplain'><b>Tip of the round: </b>[message]</span>")))

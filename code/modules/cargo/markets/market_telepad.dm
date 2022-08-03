@@ -16,7 +16,7 @@
 	circuit = /obj/item/circuitboard/machine/ltsrbt
 	density = TRUE
 
-	idle_power_usage = 200
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 2
 
 	/// Divider for power_usage_per_teleport.
 	var/power_efficiency = 1
@@ -48,6 +48,7 @@
 	. = ..()
 
 /obj/machinery/ltsrbt/RefreshParts()
+	. = ..()
 	recharge_time = base_recharge_time
 	// On tier 4 recharge_time should be 20 and by default it is 80 as scanning modules should be tier 1.
 	for(var/obj/item/stock_parts/scanning_module/scan in component_parts)

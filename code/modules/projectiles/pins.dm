@@ -89,7 +89,7 @@
 /obj/item/firing_pin/test_range/pin_auth(mob/living/user)
 	if(!istype(user))
 		return FALSE
-	if (istype(get_area(user), /area/security/range))
+	if (istype(get_area(user), /area/station/security/range))
 		return TRUE
 	return FALSE
 

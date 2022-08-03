@@ -7,7 +7,6 @@
 
 /datum/dynamic_ruleset/roundstart/traitor
 	name = "Traitors"
-	persistent = TRUE
 	antag_flag = ROLE_TRAITOR
 	antag_datum = /datum/antagonist/traitor
 	minimum_required_age = 0
@@ -28,13 +27,11 @@
 	cost = 8 // Avoid raising traitor threat above this, as it is the default low cost ruleset.
 	scaling_cost = 9
 	requirements = list(8,8,8,8,8,8,8,8,8,8)
-	antag_cap = list("denominator" = 24)
+	antag_cap = list("denominator" = 38)
 	var/autotraitor_cooldown = (15 MINUTES)
-	COOLDOWN_DECLARE(autotraitor_cooldown_check)
 
 /datum/dynamic_ruleset/roundstart/traitor/pre_execute(population)
 	. = ..()
-	COOLDOWN_START(src, autotraitor_cooldown_check, autotraitor_cooldown)
 	var/num_traitors = get_antag_cap(population) * (scaled_times + 1)
 	for (var/i = 1 to num_traitors)
 		if(candidates.len <= 0)
@@ -45,12 +42,6 @@
 		M.mind.restricted_roles = restricted_roles
 		GLOB.pre_setup_antags += M.mind
 	return TRUE
-
-/datum/dynamic_ruleset/roundstart/traitor/rule_process()
-	if (COOLDOWN_FINISHED(src, autotraitor_cooldown_check))
-		COOLDOWN_START(src, autotraitor_cooldown_check, autotraitor_cooldown)
-		log_game("DYNAMIC: Checking if we can turn someone into a traitor.")
-		mode.picking_specific_rule(/datum/dynamic_ruleset/midround/autotraitor)
 
 //////////////////////////////////////////////
 //                                          //
@@ -76,6 +67,7 @@
 
 	// If we're not forced, we're going to make sure we can actually have an AI in this shift,
 	if(!forced && min(ai_job.total_positions - ai_job.current_positions, ai_job.spawn_positions) <= 0)
+		log_dynamic("FAIL: [src] could not run, because there is nobody who wants to be an AI")
 		return FALSE
 
 	return ..()
@@ -207,7 +199,7 @@
 
 //////////////////////////////////////////////
 //                                          //
-//              ELDRITCH CULT               //
+//                 HERETICS                 //
 //                                          //
 //////////////////////////////////////////////
 
@@ -341,7 +333,7 @@
 
 /datum/dynamic_ruleset/roundstart/bloodcult/ready(population, forced = FALSE)
 	required_candidates = get_antag_cap(population)
-	. = ..()
+	return ..()
 
 /datum/dynamic_ruleset/roundstart/bloodcult/pre_execute(population)
 	. = ..()
@@ -398,11 +390,12 @@
 	requirements = list(90,90,90,80,60,40,30,20,10,10)
 	flags = HIGH_IMPACT_RULESET
 	antag_cap = list("denominator" = 18, "offset" = 1)
+	var/required_role = ROLE_NUCLEAR_OPERATIVE
 	var/datum/team/nuclear/nuke_team
 
 /datum/dynamic_ruleset/roundstart/nuclear/ready(population, forced = FALSE)
 	required_candidates = get_antag_cap(population)
-	. = ..()
+	return ..()
 
 /datum/dynamic_ruleset/roundstart/nuclear/pre_execute(population)
 	. = ..()
@@ -418,15 +411,16 @@
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/nuclear/execute()
-	var/leader = TRUE
-	for(var/datum/mind/M in assigned)
-		if (leader)
-			leader = FALSE
-			var/datum/antagonist/nukeop/leader/new_op = M.add_antag_datum(antag_leader_datum)
-			nuke_team = new_op.nuke_team
-		else
-			var/datum/antagonist/nukeop/new_op = new antag_datum()
-			M.add_antag_datum(new_op)
+	var/datum/mind/most_experienced = get_most_experienced(assigned, required_role)
+	if(!most_experienced)
+		most_experienced = assigned[1]
+	var/datum/antagonist/nukeop/leader/leader = most_experienced.add_antag_datum(antag_leader_datum)
+	nuke_team = leader.nuke_team
+	for(var/datum/mind/assigned_player in assigned)
+		if(assigned_player == most_experienced)
+			continue
+		var/datum/antagonist/nukeop/new_op = new antag_datum()
+		assigned_player.add_antag_datum(new_op)
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/nuclear/round_result()
@@ -486,6 +480,7 @@
 		JOB_HEAD_OF_PERSONNEL,
 		JOB_HEAD_OF_SECURITY,
 		JOB_PRISONER,
+		JOB_QUARTERMASTER,
 		JOB_RESEARCH_DIRECTOR,
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
@@ -530,13 +525,13 @@
 			M.add_antag_datum(new_head,revolution)
 		else
 			assigned -= M
-			log_game("DYNAMIC: [ruletype] [name] discarded [M.name] from head revolutionary due to ineligibility.")
+			log_dynamic("[ruletype] [name] discarded [M.name] from head revolutionary due to ineligibility.")
 	if(revolution.members.len)
 		revolution.update_objectives()
 		revolution.update_heads()
 		SSshuttle.registerHostileEnvironment(revolution)
 		return TRUE
-	log_game("DYNAMIC: [ruletype] [name] failed to get any eligible headrevs. Refunding [cost] threat.")
+	log_dynamic("[ruletype] [name] failed to get any eligible headrevs. Refunding [cost] threat.")
 	return FALSE
 
 /datum/dynamic_ruleset/roundstart/revs/clean_up()
@@ -560,59 +555,6 @@
 
 /datum/dynamic_ruleset/roundstart/revs/round_result()
 	revolution.round_result(finished)
-
-//////////////////////////////////////////////
-//                                          //
-//                 FAMILIES                 //
-//                                          //
-//////////////////////////////////////////////
-
-/datum/dynamic_ruleset/roundstart/families
-	name = "Families"
-	persistent = TRUE
-	antag_datum = /datum/antagonist/gang
-	antag_flag = ROLE_FAMILIES
-	protected_roles = list(
-		JOB_HEAD_OF_PERSONNEL,
-		JOB_PRISONER,
-	)
-	restricted_roles = list(
-		JOB_AI,
-		JOB_CAPTAIN,
-		JOB_CYBORG,
-		JOB_DETECTIVE,
-		JOB_HEAD_OF_SECURITY,
-		JOB_RESEARCH_DIRECTOR,
-		JOB_SECURITY_OFFICER,
-		JOB_WARDEN,
-	)
-	required_candidates = 3
-	weight = 1
-	cost = 19
-	requirements = list(101,101,40,40,30,20,10,10,10,10)
-	flags = HIGH_IMPACT_RULESET
-	/// A reference to the handler that is used to run pre_execute(), execute(), etc..
-	var/datum/gang_handler/handler
-
-/datum/dynamic_ruleset/roundstart/families/pre_execute(population)
-	..()
-	handler = new /datum/gang_handler(candidates,restricted_roles)
-	handler.gang_balance_cap = clamp((indice_pop - 3), 2, 5) // gang_balance_cap by indice_pop: (2,2,2,2,2,3,4,5,5,5)
-	handler.use_dynamic_timing = TRUE
-	return handler.pre_setup_analogue()
-
-/datum/dynamic_ruleset/roundstart/families/execute()
-	return handler.post_setup_analogue(TRUE)
-
-/datum/dynamic_ruleset/roundstart/families/clean_up()
-	QDEL_NULL(handler)
-	..()
-
-/datum/dynamic_ruleset/roundstart/families/rule_process()
-	return handler.process_analogue()
-
-/datum/dynamic_ruleset/roundstart/families/round_result()
-	return handler.set_round_result_analogue()
 
 // Admin only rulesets. The threat requirement is 101 so it is not possible to roll them.
 
@@ -655,6 +597,7 @@
 	antag_flag_override = ROLE_OPERATIVE
 	antag_leader_datum = /datum/antagonist/nukeop/leader/clownop
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
+	required_role = ROLE_CLOWN_OPERATIVE
 
 /datum/dynamic_ruleset/roundstart/nuclear/clown_ops/pre_execute()
 	. = ..()
@@ -723,10 +666,11 @@
 	)
 	required_candidates = 1
 	weight = 3
-	cost = 6 //very cheap cost for the round
-	scaling_cost = 9
+	cost = 4 //very cheap cost for the round
+	scaling_cost = 0
 	requirements = list(8,8,8,8,8,8,8,8,8,8)
-	antag_cap = list("denominator" = 24)
+	antag_cap = list("denominator" = 24, "offset" = 2)
+	flags = LONE_RULESET
 
 /datum/dynamic_ruleset/roundstart/thieves/pre_execute(population)
 	. = ..()
@@ -754,7 +698,7 @@
 	required_candidates = 0
 	weight = 0 //admin only (and for good reason)
 	cost = 0
-	flags = LONE_RULESET
+	flags = LONE_RULESET | ONLY_RULESET
 
 /datum/dynamic_ruleset/roundstart/nations/execute()
 	. = ..()

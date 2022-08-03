@@ -81,6 +81,11 @@
 	using.screen_loc = ui_borg_language_menu
 	static_inventory += using
 
+// Navigation
+	using = new /atom/movable/screen/navigate
+	using.screen_loc = ui_borg_navigate_menu
+	static_inventory += using
+
 //Radio
 	using = new /atom/movable/screen/robot/radio()
 	using.screen_loc = ui_borg_radio
@@ -125,14 +130,14 @@
 	static_inventory += using
 
 //Borg Integrated Tablet
-	using = new /atom/movable/screen/robot/modPC()
+	using = new /atom/movable/screen/robot/modpc()
 	using.screen_loc = ui_borg_tablet
 	using.hud = src
 	static_inventory += using
 	robit.interfaceButton = using
 	if(robit.modularInterface)
 		using.vis_contents += robit.modularInterface
-	var/atom/movable/screen/robot/modPC/tabletbutton = using
+	var/atom/movable/screen/robot/modpc/tabletbutton = using
 	tabletbutton.robot = robit
 
 //Alerts
@@ -292,18 +297,18 @@
 		robot = null
 	return ..()
 
-/atom/movable/screen/robot/modPC
+/atom/movable/screen/robot/modpc
 	name = "Modular Interface"
 	icon_state = "template"
 	var/mob/living/silicon/robot/robot
 
-/atom/movable/screen/robot/modPC/Click()
+/atom/movable/screen/robot/modpc/Click()
 	. = ..()
 	if(.)
 		return
 	robot.modularInterface?.interact(robot)
 
-/atom/movable/screen/robot/modPC/Destroy()
+/atom/movable/screen/robot/modpc/Destroy()
 	if(robot)
 		robot.interfaceButton = null
 		robot = null

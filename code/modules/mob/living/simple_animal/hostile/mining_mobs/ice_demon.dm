@@ -50,7 +50,9 @@
 /obj/projectile/temp/basilisk/ice
 	name = "ice blast"
 	damage = 5
-	speed = 4
+	speed = 1
+	pixel_speed_multiplier = 0.25
+	range = 200
 	nodamage = FALSE
 	temperature = -75
 	slowdown = FALSE
@@ -72,11 +74,8 @@
 	SLEEP_CHECK_DEATH(8, src)
 	return ..()
 
-/mob/living/simple_animal/hostile/asteroid/ice_demon/Life(delta_time = SSMOBS_DT, times_fired)
-	. = ..()
-	if(!. || target)
-		return
-	adjustHealth(-0.0125 * maxHealth * delta_time)
+/mob/living/simple_animal/hostile/asteroid/ice_demon/spawn_crusher_loot()
+	loot += crusher_loot
 
 /mob/living/simple_animal/hostile/asteroid/ice_demon/death(gibbed)
 	move_force = MOVE_FORCE_DEFAULT

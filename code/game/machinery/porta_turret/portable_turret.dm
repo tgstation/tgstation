@@ -32,11 +32,9 @@ DEFINE_BITFIELD(turret_flags, list(
 	invisibility = INVISIBILITY_OBSERVER //the turret is invisible if it's inside its cover
 	density = TRUE
 	desc = "A covered turret that shoots at its enemies."
-	use_power = IDLE_POWER_USE //this turret uses and requires power
-	idle_power_usage = 50 //when inactive, this turret takes up constant 50 Equipment power
-	active_power_usage = 300 //when active, this turret takes up constant 300 Equipment power
 	req_access = list(ACCESS_SECURITY) /// Only people with Security access
 	power_channel = AREA_USAGE_EQUIP //drains power from the EQUIPMENT channel
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.15
 	max_integrity = 160 //the turret's health
 	integrity_failure = 0.5
 	armor = list(MELEE = 50, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 30, BIO = 0, FIRE = 90, ACID = 90)
@@ -89,6 +87,8 @@ DEFINE_BITFIELD(turret_flags, list(
 	var/turret_flags = TURRET_FLAG_SHOOT_CRIMINALS | TURRET_FLAG_SHOOT_ANOMALOUS
 	/// Determines if the turret is on
 	var/on = TRUE
+	/// Determines if our projectiles hit our faction
+	var/ignore_faction = FALSE
 	/// Same faction mobs will never be shot at, no matter the other settings
 	var/list/faction = list("turret")
 	/// The spark system, used for generating... sparks?
@@ -174,7 +174,7 @@ DEFINE_BITFIELD(turret_flags, list(
 		turret_gun.forceMove(src)
 		stored_gun = turret_gun
 
-	RegisterSignal(stored_gun, COMSIG_PARENT_PREQDELETED, .proc/null_gun)
+	RegisterSignal(stored_gun, COMSIG_PARENT_QDELETING, .proc/null_gun)
 	var/list/gun_properties = stored_gun.get_turret_properties()
 
 	//required properties
@@ -628,6 +628,8 @@ DEFINE_BITFIELD(turret_flags, list(
 	A.preparePixelProjectile(target, T)
 	A.firer = src
 	A.fired_from = src
+	if(ignore_faction)
+		A.ignored_factions = faction
 	A.fire()
 	return A
 
@@ -779,9 +781,6 @@ DEFINE_BITFIELD(turret_flags, list(
 		addtimer(CALLBACK(src, .proc/shootAt, target), 15)
 		return TRUE
 
-/obj/machinery/porta_turret/syndicate/pod/toolbox
-	max_integrity = 100
-
 /obj/machinery/porta_turret/ai
 	faction = list("silicon")
 	turret_flags = TURRET_FLAG_SHOOT_CRIMINALS | TURRET_FLAG_SHOOT_ANOMALOUS | TURRET_FLAG_SHOOT_HEADS
@@ -890,15 +889,17 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(!mapload)
 		return
 
-	if(control_area)
-		control_area = get_area_instance_from_text(control_area)
-		if(control_area == null)
-			control_area = get_area(src)
-			stack_trace("Bad control_area path for [src], [src.control_area]")
-	else if(!control_area)
-		control_area = get_area(src)
+	// The actual area that control_area refers to
+	var/area/control_area_instance
 
-	for(var/obj/machinery/porta_turret/T in control_area)
+	if(control_area)
+		control_area_instance = get_area_instance_from_text(control_area)
+		if(!control_area_instance)
+			log_mapping("Bad control_area path for [src] at [AREACOORD(src)]: [control_area]")
+	if(!control_area_instance)
+		control_area_instance = get_area(src)
+
+	for(var/obj/machinery/porta_turret/T in control_area_instance)
 		turrets |= WEAKREF(T)
 
 /obj/machinery/turretid/examine(mob/user)

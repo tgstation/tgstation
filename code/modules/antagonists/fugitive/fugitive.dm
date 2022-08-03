@@ -9,6 +9,7 @@
 	antag_hud_name = "fugitive"
 	suicide_cry = "FOR FREEDOM!!"
 	preview_outfit = /datum/outfit/prisoner
+	count_against_dynamic_roll_chance = FALSE
 	var/datum/team/fugitive/fugitive_team
 	var/is_captured = FALSE
 	var/backstory = "error"

@@ -8,6 +8,7 @@
 #define GIRDER_REINF 2
 #define GIRDER_DISPLACED 3
 #define GIRDER_DISASSEMBLED 4
+#define GIRDER_TRAM 5
 
 //rwall construction states
 #define INTACT 0
@@ -110,6 +111,7 @@
 #define CAT_DRINK "Drinks"
 #define CAT_CHEMISTRY "Chemistry"
 #define CAT_ATMOSPHERIC "Atmospheric"
+#define CAT_STRUCTURE "Structures"
 
 //rcd modes
 #define RCD_FLOORWALL 0

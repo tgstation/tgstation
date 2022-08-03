@@ -86,7 +86,7 @@
 /datum/map_generator/ca/caves
 	b_rule = list(5,6,7,8)
 	s_rule = list(4)
-	type_map = list(/turf/open/floor/plating/asteroid/basalt, /turf/closed/mineral/volcanic)
+	type_map = list(/turf/open/misc/asteroid/basalt, /turf/closed/mineral/volcanic)
 	iterations = 5
 
 /datum/map_generator/ca/maze
