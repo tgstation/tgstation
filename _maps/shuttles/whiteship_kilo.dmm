@@ -27,9 +27,6 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
-"bO" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/abandoned/bar)
 "cD" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
@@ -113,6 +110,9 @@
 /turf/open/floor/iron/white/corner{
 	dir = 4
 	},
+/area/shuttle/abandoned/bar)
+"gk" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/bar)
 "gA" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -695,6 +695,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/random/clothing/wardrobe_closet_colored,
 /obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron/freezer,
 /area/shuttle/abandoned/crew)
 "In" = (
@@ -776,6 +777,14 @@
 /obj/machinery/power/smes/engineering,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
+"Kx" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor{
+	id = "whiteship_windows";
+	name = "Exterior Window Blast Door"
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/bar)
 "KS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/corner{
@@ -1079,9 +1088,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/freezer,
 /area/shuttle/abandoned/crew)
-"TT" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/abandoned/bar)
 "VP" = (
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
@@ -1100,18 +1106,13 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
-"Wp" = (
-/obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
-	id = "whiteship_windows";
-	name = "Exterior Window Blast Door"
-	},
-/turf/open/floor/plating,
-/area/shuttle/abandoned/bar)
 "Xe" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
+/area/shuttle/abandoned/bar)
+"Xk" = (
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/bar)
 "XL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -1354,8 +1355,8 @@ YV
 nN
 lg
 ig
-TT
-TT
+gk
+gk
 "}
 (11,1,1) = {"
 Rr
@@ -1370,7 +1371,7 @@ NV
 fL
 zJ
 sz
-Wp
+Kx
 "}
 (12,1,1) = {"
 xh
@@ -1400,7 +1401,7 @@ id
 jM
 QR
 kY
-Wp
+Kx
 "}
 (14,1,1) = {"
 Gu
@@ -1415,7 +1416,7 @@ RF
 eE
 rX
 Xe
-TT
+gk
 "}
 (15,1,1) = {"
 Gu
@@ -1427,9 +1428,9 @@ TP
 ZW
 HD
 id
-TT
+gk
 Lj
-TT
+gk
 ry
 "}
 (16,1,1) = {"
@@ -1444,7 +1445,7 @@ FW
 id
 hN
 mt
-TT
+gk
 Gu
 "}
 (17,1,1) = {"
@@ -1458,7 +1459,7 @@ Gu
 Gu
 ei
 ik
-TT
-bO
+gk
+Xk
 Gu
 "}
