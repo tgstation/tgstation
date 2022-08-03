@@ -198,8 +198,8 @@
 	foodtypes = VEGETABLES
 
 //add an icon for blends
-/obj/item/food/tempehblend
-	name = "tempeh blend"
+/obj/item/food/tempehstarter
+	name = "tempeh starter"
 	desc = "a mix of soy and joy, it's warm, it's moving?."
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = "tempehslice"

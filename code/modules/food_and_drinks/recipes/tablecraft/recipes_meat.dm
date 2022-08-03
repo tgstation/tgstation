@@ -64,6 +64,18 @@
 
 ////////////////////////////////////////////////MISC RECIPE's////////////////////////////////////////////////
 
+/datum/crafting_recipe/food/tempehstarter
+	name = "Tempeh starter"
+	reqs = list(
+		/obj/item/food/grown/soybeans = 5,
+		//to be added
+		/datum/reagent/consumable/mushroom = 5,
+		/obj/item/food/meat/steak = 1,
+		/obj/item/food/grown/cabbage = 2
+	)
+	result = /obj/item/food/cornedbeef
+	subcategory = CAT_MEAT
+
 /datum/crafting_recipe/food/cornedbeef
 	name = "Corned beef"
 	reqs = list(
