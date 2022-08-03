@@ -103,15 +103,15 @@
 				ignored_mobs = user,
 			)
 
-		if(source.is_blind())
-			to_chat(source, span_userdanger("You feel someone trying to put something on you."))
-
 		if(ishuman(source))
 			var/mob/living/carbon/human/victim_human = source
 			if(victim_human.key && !victim_human.client) // AKA braindead
 				if(victim_human.stat <= SOFT_CRIT && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
 					var/list/new_entry = list(list(user.name, "tried equipping you with [equipping]", world.time))
 					LAZYADD(victim_human.afk_thefts, new_entry)
+
+			else if(victim_human.is_blind()) //blind support
+				to_chat(source, span_userdanger("You feel someone trying to put something on you."))
 
 	to_chat(user, span_notice("You try to put [equipping] on [source]..."))
 
@@ -160,8 +160,6 @@
 		blind_message = "You hear rustling.",
 		ignored_mobs = user,
 	)
-	if(source.is_blind())
-		to_chat(source, span_userdanger("You feel someone fumble with your belongings."))
 
 	to_chat(user, span_danger("You try to remove [source]'s [item]..."))
 	user.log_message("is stripping [key_name(source)] of [item]", LOG_ATTACK, color="red")
@@ -174,6 +172,9 @@
 			if(victim_human.stat <= SOFT_CRIT && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
 				var/list/new_entry = list(list(user.name, "tried unequipping your [item.name]", world.time))
 				LAZYADD(victim_human.afk_thefts, new_entry)
+
+		else if(victim_human.is_blind())//blind support
+			to_chat(source, span_userdanger("You feel someone fumble with your belongings."))
 
 	return TRUE
 
