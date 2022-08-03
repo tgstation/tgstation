@@ -266,7 +266,6 @@
 		playsound(src, 'sound/weapons/emitter2.ogg', 70, TRUE)
 		var/power_multiplier = max(0, 1 + power_transmission_bonus / 10)
 		var/pressure_multiplier = max((1 / ((env.return_pressure() ** pressure_bonus_curve_angle) + 1) * pressure_bonus_derived_steepness) + pressure_bonus_derived_constant, 1)
-		var/co2_power_increase = max(gas_comp[/datum/gas/carbon_dioxide] * 2, 1)
 		hue_angle_shift = clamp(903 * log(10, (power + 8000)) - 3590, -50, 240)
 		var/zap_color = color_matrix_rotate_hue(hue_angle_shift)
 		supermatter_zap(
