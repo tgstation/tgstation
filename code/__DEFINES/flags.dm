@@ -290,3 +290,4 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 #define EMOTE_AUDIBLE (1<<0)
 #define EMOTE_VISIBLE (1<<1)
+#define EMOTE_IMPORTANT (1<<2)

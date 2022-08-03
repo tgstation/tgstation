@@ -114,6 +114,10 @@
 		user.audible_message(msg, deaf_message = "<span class='emote'>You see how <b>[user]</b> [msg]</span>", audible_message_flags = EMOTE_MESSAGE)
 	else if(emote_type & EMOTE_VISIBLE)	//emote is only visible
 		user.visible_message(msg, visible_message_flags = EMOTE_MESSAGE)
+	if(emote_type & EMOTE_IMPORTANT)
+		for(var/mob/living/viewer in viewers())
+			if(viewer.is_blind() && !viewer.can_hear())
+				to_chat(viewer, msg)
 
 	SEND_SIGNAL(user, COMSIG_MOB_EMOTED(key))
 
