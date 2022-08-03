@@ -41,7 +41,7 @@
 	var/trait_check = HAS_TRAIT(attacked_mob, TRAIT_BATON_RESISTANCE)
 	if(attacked_mob.getStaminaLoss() >= paralyze_after)
 		if(!attacked_mob.IsParalyzed())
-			to_chat(L, span_warning("You muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]"))
+			to_chat(attacked_mob, span_warning("You muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]"))
 		attacked_mob.Paralyze(trait_check ? paralyze_time : paralyze_time*0.1)
 		attacked_mob.adjust_timed_status_effect(trait_check ? paralyze_time : paralyze_time*0.1, /datum/status_effect/speech/stutter)
 	else
