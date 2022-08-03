@@ -31,9 +31,9 @@
 	ADD_TRAIT(src, TRAIT_LAVA_IMMUNE, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, INNATE_TRAIT)
 	AddElement(/datum/element/basic_body_temp_sensitive, max_body_temp = INFINITY)
-	spew_bile = new()
+	spew_bile = new(src)
 	spew_bile.Grant(src)
-	resurface = new()
+	resurface = new(src)
 	resurface.Grant(src)
 	ai_controller.blackboard[BB_SPEW_BILE] = spew_bile
 	ai_controller.blackboard[BB_RESURFACE] = resurface
