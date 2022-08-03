@@ -95,12 +95,16 @@
 				span_userdanger("[user] tries to put [equipping] on you."),
 				ignored_mobs = user,
 			)
+
 		else
 			source.visible_message(
 				span_notice("[user] tries to put [equipping] on [source]."),
 				span_notice("[user] tries to put [equipping] on you."),
 				ignored_mobs = user,
 			)
+
+		if(source.is_blind())
+				to_chat(source, span_userdanger("You feel someone trying to put something on you."))
 
 		if(ishuman(source))
 			var/mob/living/carbon/human/victim_human = source
@@ -153,8 +157,11 @@
 	source.visible_message(
 		span_warning("[user] tries to remove [source]'s [item.name]."),
 		span_userdanger("[user] tries to remove your [item.name]."),
+		blind_message = "You hear rustling.",
 		ignored_mobs = user,
 	)
+	if(source.is_blind())
+		to_chat(source, span_userdanger("You feel someone fumble with your belongings."))
 
 	to_chat(user, span_danger("You try to remove [source]'s [item]..."))
 	user.log_message("is stripping [key_name(source)] of [item]", LOG_ATTACK, color="red")
