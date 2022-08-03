@@ -17,6 +17,14 @@
 	icon_state = "elecarm"
 	/// Cost to use the stun arm
 	var/charge_cost = 1000
+	///How many stamina damage we deal
+	var/stamina_damage = 65
+	///How much stamina damage should the target have to get paralyzed by the attack
+	var/paralyze_after = 60
+	///How long will be duration of the knockdown
+	var/knockdown_time = 2 SECONDS
+	///How long will be the duration of the paralyze
+	var/paralyze_time = 10 SECONDS
 
 /obj/item/borg/stun/attack(mob/living/attacked_mob, mob/living/user)
 	if(ishuman(attacked_mob))
@@ -30,15 +38,22 @@
 			return
 
 	user.do_attack_animation(attacked_mob)
-	attacked_mob.Paralyze(100)
-	attacked_mob.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/speech/stutter)
+	var/trait_check = HAS_TRAIT(attacked_mob, TRAIT_BATON_RESISTANCE)
+	if(attacked_mob.getStaminaLoss() >= paralyze_after)
+		if(!attacked_mob.IsParalyzed())
+			to_chat(L, span_warning("You muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]"))
+		attacked_mob.Paralyze(trait_check ? paralyze_time : paralyze_time*0.1)
+		attacked_mob.adjust_timed_status_effect(trait_check ? paralyze_time : paralyze_time*0.1, /datum/status_effect/speech/stutter)
+	else
+		attacked_mob.apply_damage(stamina_damage, STAMINA, BODY_ZONE_CHEST)
+		attacked_mob.Knockdown(trait_check ? knockdown_time : knockdown_time*0.5)
 
 	attacked_mob.visible_message(span_danger("[user] prods [attacked_mob] with [src]!"), \
 					span_userdanger("[user] prods you with [src]!"))
 
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 
-	log_combat(user, attacked_mob, "stunned", src, "(Combat mode: [user.combat_mode ? "On" : "Off"])")
+	log_combat(user, attacked_mob, "proded", src, "(Combat mode: [user.combat_mode ? "On" : "Off"])")
 
 /obj/item/borg/cyborghug
 	name = "hugging module"
