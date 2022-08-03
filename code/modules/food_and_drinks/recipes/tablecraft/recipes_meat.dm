@@ -68,12 +68,9 @@
 	name = "Tempeh starter"
 	reqs = list(
 		/obj/item/food/grown/soybeans = 5,
-		//to be added
-		/datum/reagent/consumable/mushroom = 5,
-		/obj/item/food/meat/steak = 1,
-		/obj/item/food/grown/cabbage = 2
+		/obj/item/seeds/plump = 1
 	)
-	result = /obj/item/food/cornedbeef
+	result = /obj/item/food/tempehstarter
 	subcategory = CAT_MEAT
 
 /datum/crafting_recipe/food/cornedbeef

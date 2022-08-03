@@ -29,16 +29,6 @@
 		new /obj/item/food/tofu(location)
 	return
 
-//temporary
-/datum/chemical_reaction/food/tempehblend
-	required_reagents = list(/datum/reagent/consumable/soymilk = 5, /datum/reagent/vinegar = 2)
-
-/datum/chemical_reaction/food/tempehblend/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	var/location = get_turf(holder.my_atom)
-	for(var/i in 1 to created_volume)
-		new /obj/item/food/tempehblend(location)
-	return
-
 /datum/chemical_reaction/food/chocolatepudding
 	results = list(/datum/reagent/consumable/chocolatepudding = 20)
 	required_reagents = list(/datum/reagent/consumable/cream = 5, /datum/reagent/consumable/coco = 5, /datum/reagent/consumable/eggyolk = 2)

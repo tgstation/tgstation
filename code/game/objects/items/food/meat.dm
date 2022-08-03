@@ -202,7 +202,7 @@
 	name = "tempeh starter"
 	desc = "a mix of soy and joy, it's warm, it's moving?."
 	icon = 'icons/obj/food/food.dmi'
-	icon_state = "tempehslice"
+	icon_state = "tempeh"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("nutty" = 2, "bland" = 2)
 	foodtypes = VEGETABLES | GROSS

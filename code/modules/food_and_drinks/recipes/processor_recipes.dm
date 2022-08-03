@@ -91,7 +91,7 @@
 	output = /obj/item/food/fries
 
 /datum/food_processor_process/tempeh
-	input = /obj/item/food/tempehblend
+	input = /obj/item/food/tempehstarter
 	output = /obj/item/food/tempeh
 	food_multiplier = 2
 
