@@ -208,7 +208,7 @@
 	if(!product_info[2])
 		to_chat(user, span_red("The item appears to be out of stock."))
 		return
-	to_chat(user, span_notice("It will cost you [product_info[1]] credits to buy \the [initial(item_to_buy.name)]. Are you sure you want to buy it?"))
+	to_chat(user, span_notice("It will cost you [product_info[1]] [currency_name] to buy \the [initial(item_to_buy.name)]. Are you sure you want to buy it?"))
 	var/list/npc_options = list(
 		"Yes" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_yes"),
 		"No" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no")
@@ -280,7 +280,7 @@
 		say(pick(itemisworthless))
 		return FALSE
 	say(pick(interestedphrase))
-	to_chat(user, span_notice("You will receive [cost] credits for each one of [selling]."))
+	to_chat(user, span_notice("You will receive [cost] [currency_name] for each one of [selling]."))
 	var/list/npc_options = list(
 		"Yes" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_yes"),
 		"No" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no")
