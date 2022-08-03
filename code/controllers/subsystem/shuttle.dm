@@ -288,7 +288,7 @@ SUBSYSTEM_DEF(shuttle)
 
 /datum/controller/subsystem/shuttle/proc/check_backup_emergency_shuttle()
 	if(emergency)
-		return
+		return TRUE
 
 	WARNING("check_backup_emergency_shuttle(): There is no emergency shuttle, but the \
 		shuttle was called. Using the backup shuttle instead.")
@@ -303,7 +303,12 @@ SUBSYSTEM_DEF(shuttle)
 		Good luck.")
 	emergency = backup_shuttle
 
+	return TRUE
+
 /datum/controller/subsystem/shuttle/proc/requestEvac(mob/user, call_reason)
+	if (!check_backup_emergency_shuttle())
+		return
+
 	var/can_evac_or_fail_reason = SSshuttle.canEvac()
 	if(can_evac_or_fail_reason != TRUE)
 		to_chat(user, span_alert("[can_evac_or_fail_reason]"))
@@ -328,7 +333,8 @@ SUBSYSTEM_DEF(shuttle)
 /// If you are doing this on behalf of a player, use requestEvac instead.
 /// `signal_origin` is fluff occasionally provided to players.
 /datum/controller/subsystem/shuttle/proc/call_evac_shuttle(call_reason, signal_origin)
-	check_backup_emergency_shuttle()
+	if (!check_backup_emergency_shuttle())
+		return
 
 	call_reason = trim(html_encode(call_reason))
 
