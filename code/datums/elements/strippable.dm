@@ -104,7 +104,7 @@
 			)
 
 		if(source.is_blind())
-				to_chat(source, span_userdanger("You feel someone trying to put something on you."))
+			to_chat(source, span_userdanger("You feel someone trying to put something on you."))
 
 		if(ishuman(source))
 			var/mob/living/carbon/human/victim_human = source
