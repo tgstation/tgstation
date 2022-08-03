@@ -35133,7 +35133,7 @@
 /obj/structure/table,
 /obj/item/radio/intercom/directional/east,
 /obj/item/paper{
-	info = "buy more donk pockets";
+	default_raw_text = "buy more donk pockets";
 	name = "To-Do List"
 	},
 /turf/open/floor/iron/dark,
