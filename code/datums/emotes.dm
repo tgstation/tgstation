@@ -113,11 +113,10 @@
 				continue
 			if(ghost.client.prefs.chat_toggles & CHAT_GHOSTSIGHT && !(ghost in viewers(user_turf, null)))
 				ghost.show_message("<span class='emote'>[FOLLOW_LINK(ghost, user)] [dchatmsg]</span>")
-
-	if(emote_type == EMOTE_AUDIBLE)
+	if(emote_type == EMOTE_AUDIBLE) //emote is audible and visible
 		user.audible_message(msg, deaf_message = "<span class='emote'>You see how <b>[user]</b> [msg]</span>", audible_message_flags = EMOTE_MESSAGE)
-	else
-		user.visible_message(msg, blind_message = "<span class='emote'>You hear how <b>[user]</b> [msg]</span>", visible_message_flags = EMOTE_MESSAGE)
+	else if(emote_type == EMOTE_VISIBLE)	//emote is only visible
+		user.visible_message(msg, visible_message_flags = EMOTE_MESSAGE)
 
 	SEND_SIGNAL(user, COMSIG_MOB_EMOTED(key))
 
