@@ -620,8 +620,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait applied when the MMI component is added to an [/obj/item/integrated_circuit]
 #define TRAIT_COMPONENT_MMI "component_mmi"
-/// Trait applied when the MMI component is added to an [/obj/item/integrated_circuit]
-#define TRAIT_COMPONENT_PRINTER "component_printer"
 
 /// Trait applied when an integrated circuit/module becomes undupable
 #define TRAIT_CIRCUIT_UNDUPABLE "circuit_undupable"

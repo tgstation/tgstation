@@ -110,6 +110,22 @@
 	pixel_y = -96
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 
+/obj/cascade_portal/Initialize(mapload)
+	. = ..()
+	var/turf/location = get_turf(src)
+	var/area_name = get_area_name(src)
+	message_admins("Exit rift created at [area_name]. [ADMIN_VERBOSEJMP(location)]")
+	log_game("Bluespace Exit Rift was created at [area_name].")
+	investigate_log("created at [area_name].", INVESTIGATE_ENGINE)
+
+/obj/cascade_portal/Destroy(force)
+	var/turf/location = get_turf(src)
+	var/area_name = get_area_name(src)
+	message_admins("Exit rift at [area_name] deleted. [ADMIN_VERBOSEJMP(location)]")
+	log_game("Bluespace Exit Rift at [area_name] was deleted.")
+	investigate_log("was deleted.", INVESTIGATE_ENGINE)
+	return ..()
+
 /obj/cascade_portal/Bumped(atom/movable/hit_object)
 	consume(hit_object)
 	new /obj/effect/particle_effect/sparks(loc)
@@ -135,7 +151,7 @@
 		while(!is_safe_turf(arrival_turf))
 
 		var/mob/living/consumed_mob = consumed_object
-		message_admins("[key_name_admin(consumed_mob)] has entered [src] [ADMIN_JMP(src)].")
+		message_admins("[key_name_admin(consumed_mob)] has entered [src] [ADMIN_VERBOSEJMP(src)].")
 		investigate_log("was entered by [key_name(consumed_mob)].", INVESTIGATE_ENGINE)
 		consumed_mob.forceMove(arrival_turf)
 		consumed_mob.Paralyze(100)
@@ -149,3 +165,4 @@
 			span_hear("You hear a loud crack as a small distortion passes through you."))
 
 		qdel(consumed_object)
+

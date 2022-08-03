@@ -41,6 +41,16 @@
 		return
 	content = trim(html_encode(_content), MAX_PAPER_LENGTH)
 
+/datum/book_info/proc/set_content_using_paper(obj/item/paper/paper)
+	// Just the paper's raw data.
+	var/raw_content = ""
+
+	for(var/datum/paper_input/text_input as anything in paper.raw_text_inputs)
+		raw_content += text_input.raw_text
+
+	// Content from paper is never trusted. It it raw, unsanitised, unparsed user input.
+	content = trim(html_encode(raw_content), MAX_PAPER_LENGTH)
+
 /datum/book_info/proc/get_content(default="N/A")
 	return html_decode(content) || "N/A"
 

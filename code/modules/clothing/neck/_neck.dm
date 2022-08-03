@@ -266,7 +266,8 @@
 /obj/item/clothing/neck/large_scarf
 	name = "large scarf"
 	icon_state = "large_scarf"
-	custom_price = PAYCHECK_CREW * 0.2
+	w_class = WEIGHT_CLASS_TINY
+	custom_price = PAYCHECK_CREW
 	greyscale_colors = "#C6C6C6#EEEEEE"
 	greyscale_config = /datum/greyscale_config/large_scarf
 	greyscale_config_worn = /datum/greyscale_config/large_scarf_worn
@@ -289,6 +290,16 @@
 	desc = "Ready to operate."
 	greyscale_colors = "#B40000#545350"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 40)
+
+/obj/item/clothing/neck/infinity_scarf
+	name = "infinity scarf"
+	icon_state = "infinity_scarf"
+	w_class = WEIGHT_CLASS_TINY
+	custom_price = PAYCHECK_CREW
+	greyscale_colors = "#EEEEEE"
+	greyscale_config = /datum/greyscale_config/infinity_scarf
+	greyscale_config_worn = /datum/greyscale_config/infinity_scarf_worn
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/neck/petcollar
 	name = "pet collar"
