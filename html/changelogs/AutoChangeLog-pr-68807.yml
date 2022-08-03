@@ -1,4 +1,0 @@
-author: "orthography"
-delete-after: True
-changes: 
-  - bugfix: "fixes tail wag emote stopping the wag."

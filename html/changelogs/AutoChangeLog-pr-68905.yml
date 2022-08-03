@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - admin: "You should hopefully no longer see an error message that has nothing to say regarding the word filter."
