@@ -178,7 +178,11 @@
 
 	GLOB.reality_smash_track.add_tracked_mind(owner)
 	addtimer(CALLBACK(src, .proc/passive_influence_gain), passive_gain_timer) // Gain +1 knowledge every 20 minutes.
-	return ..()
+	. = ..()
+	if(world.time > passive_gain_timer)
+		var/additional_knowledge = round(world.time/passive_gain_timer)
+		knowledge_points += additional_knowledge
+		to_chat(owner.current, span_notice("As a latejoin heretic you were given [additional_knowledge] knowledge point[additional_knowledge == 1 ? "" : "s"]"))
 
 /datum/antagonist/heretic/on_removal()
 
