@@ -272,7 +272,7 @@
 		supermatter_zap(
 			zapstart = src,
 			range = 3,
-			zap_str = 2.5 * power * power_multiplier * pressure_multiplier * co2_power_increase,
+			zap_str = 2.5 * power * power_multiplier * pressure_multiplier,
 			zap_flags = ZAP_SUPERMATTER_FLAGS,
 			zap_cutoff = 300,
 			power_level = power,
