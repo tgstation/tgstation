@@ -44,11 +44,12 @@
 	return COMPONENT_BLOCK_TOOL_ATTACK
 
 /// We call this from secondary_tool_act because we sleep with do_after
-/datum/element/rust/proc/handle_tool_use(atom/source, mob/user, obj/item/item)
+/datum/element/rust/proc/handle_tool_use(atom/source, mob/living/user, obj/item/item)
 	switch(item.tool_behaviour)
 		if(TOOL_WELDER)
 			if(item.use(5))
 				user.balloon_alert(user, "burning off rust...")
+				user.flash_act(length = (5 SECONDS * item.toolspeed)) // snowflake flash act since we're overriding regular tool act with the signal
 				if(!do_after(user, 5 SECONDS * item.toolspeed, source))
 					return
 				user.balloon_alert(user, "burned off rust")
