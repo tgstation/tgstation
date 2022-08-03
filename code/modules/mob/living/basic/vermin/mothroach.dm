@@ -29,7 +29,6 @@
 	response_harm_simple = "hit"
 	response_help_continuous = "pats"
 	response_help_simple = "pat"
-	attacked_sound = 'sound/voice/moth/scream_moth.ogg'
 
 	faction = list("neutral")
 
@@ -41,10 +40,6 @@
 	add_verb(src, /mob/living/proc/toggle_resting)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
-/mob/living/basic/mothroach/death(gibbed)
-	..()
-	attacked_sound = SFX_PUNCH
-
 /mob/living/basic/mothroach/toggle_resting()
 	. = ..()
 	if(stat == DEAD)
@@ -54,6 +49,20 @@
 	else
 		icon_state = "[icon_living]"
 	regenerate_icons()
+
+/mob/living/basic/mothroach/attack_hand(mob/living/carbon/human/user, list/modifiers)
+	. = ..()
+	if(src.stat == DEAD)
+		return
+	else
+		playsound(loc, 'sound/voice/moth/scream_moth.ogg', 50, TRUE)
+
+/mob/living/basic/mothroach/attackby(obj/item/attacking_item, mob/living/user, params)
+	. = ..()
+	if(src.stat == DEAD)
+		return
+	else
+		playsound(loc, 'sound/voice/moth/scream_moth.ogg', 50, TRUE)
 
 /datum/ai_controller/basic_controller/mothroach
 	blackboard = list()
