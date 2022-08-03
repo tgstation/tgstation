@@ -263,7 +263,6 @@
 
 	//Zaps around 2.5 seconds at 1500 MeV, limited to 0.5 from 4000 MeV and up
 	if(power && (last_power_zap + 4 SECONDS - (power * 0.001)) < world.time)
-		//(1 + (tritRad + pluoxDampen * bzDampen * o2Rad * plasmaRad / (10 - bzrads))) * freonbonus
 		playsound(src, 'sound/weapons/emitter2.ogg', 70, TRUE)
 		var/power_multiplier = max(0, 1 + power_transmission_bonus / 10)
 		var/pressure_multiplier = max((1 / ((env.return_pressure() ** pressure_bonus_curve_angle) + 1) * pressure_bonus_derived_steepness) + pressure_bonus_derived_constant, 1)
