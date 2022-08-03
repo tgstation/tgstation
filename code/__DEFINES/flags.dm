@@ -287,3 +287,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define FLORA_HERBAL (1 << 0)
 #define FLORA_WOODEN (1 << 1)
 #define FLORA_STONE (1 << 2)
+
+#define EMOTE_AUDIBLE (1<<0)
+#define EMOTE_VISIBLE (1<<1)

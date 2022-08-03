@@ -1,6 +1,3 @@
-#define EMOTE_VISIBLE 1
-#define EMOTE_AUDIBLE 2
-
 /**
  * # Emote
  *
@@ -35,7 +32,7 @@
 	var/message_simple = ""
 	/// Message with %t at the end to allow adding params to the message, like for mobs doing an emote relatively to something else.
 	var/message_param = ""
-	/// Whether the emote is visible or audible.
+	/// Whether the emote is visible and/or audible bitflag
 	var/emote_type = EMOTE_VISIBLE
 	/// Checks if the mob can use its hands before performing the emote.
 	var/hands_use_check = FALSE
@@ -113,9 +110,9 @@
 				continue
 			if(ghost.client.prefs.chat_toggles & CHAT_GHOSTSIGHT && !(ghost in viewers(user_turf, null)))
 				ghost.show_message("<span class='emote'>[FOLLOW_LINK(ghost, user)] [dchatmsg]</span>")
-	if(emote_type == EMOTE_AUDIBLE) //emote is audible and visible
+	if(emote_type & (EMOTE_AUDIBLE | EMOTE_VISIBLE)) //emote is audible and visible
 		user.audible_message(msg, deaf_message = "<span class='emote'>You see how <b>[user]</b> [msg]</span>", audible_message_flags = EMOTE_MESSAGE)
-	else if(emote_type == EMOTE_VISIBLE)	//emote is only visible
+	else if(emote_type & EMOTE_VISIBLE)	//emote is only visible
 		user.visible_message(msg, visible_message_flags = EMOTE_MESSAGE)
 
 	SEND_SIGNAL(user, COMSIG_MOB_EMOTED(key))
@@ -186,7 +183,7 @@
 /datum/emote/proc/select_message_type(mob/user, msg, intentional)
 	// Basically, we don't care that the others can use datum variables, because they're never going to change.
 	. = msg
-	if(!muzzle_ignore && user.is_muzzled() && emote_type == EMOTE_AUDIBLE)
+	if(!muzzle_ignore && user.is_muzzled() && emote_type & EMOTE_AUDIBLE)
 		return "makes a [pick("strong ", "weak ", "")]noise."
 	if(user.mind && user.mind.miming && message_mime)
 		. = message_mime
