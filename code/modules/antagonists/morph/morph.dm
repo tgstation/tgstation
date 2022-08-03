@@ -157,9 +157,9 @@
 		if(prob(90))
 			step(AM, pick(GLOB.alldirs))
 
-/mob/living/simple_animal/hostile/morph/wabbajack_act(mob/living/new_mob)
+/mob/living/simple_animal/hostile/morph/on_wabbajacked(mob/living/new_mob)
 	barf_contents()
-	. = ..()
+	return ..()
 
 /mob/living/simple_animal/hostile/morph/Aggro() // automated only
 	..()

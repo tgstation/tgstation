@@ -20,8 +20,14 @@
 /datum/action/cooldown/spell/shapeshift/is_valid_target(atom/cast_on)
 	return isliving(cast_on)
 
+/// Check if we're currently shifted by trying to find the shapechange status effect in our loc
+/// Returns a truthy value (a status_effect instance) if we're shapeshifted, or null if we're not.
 /datum/action/cooldown/spell/shapeshift/proc/is_shifted(mob/living/cast_on)
-	return locate(/obj/shapeshift_holder) in cast_on
+	var/mob/living/shape = cast_on.loc
+	if(!istype(shape))
+		return null
+
+	return shape.has_status_effect(/datum/status_effect/shapechange_mob)
 
 /datum/action/cooldown/spell/shapeshift/before_cast(atom/cast_on)
 	. = ..()
@@ -70,7 +76,7 @@
 
 	// Do the shift back or forth
 	if(is_shifted(cast_on))
-		restore_form(cast_on)
+		do_unshapeshift(cast_on)
 	else
 		do_shapeshift(cast_on)
 
@@ -120,146 +126,18 @@
 
 /datum/action/cooldown/spell/shapeshift/proc/do_shapeshift(mob/living/caster)
 	if(is_shifted(caster))
-		to_chat(caster, span_warning("You're already shapeshifted!"))
+		to_chat(caster, span_warning("You're already shapeshifted, but for some reason casting this tried to shapeshift you again!"))
 		CRASH("[type] called do_shapeshift while shapeshifted.")
 
-	var/mob/living/new_shape = new shapeshift_type(caster.loc)
-	var/obj/shapeshift_holder/new_shape_holder = new(new_shape, src, caster)
 
+	// Make sure it's castable even in their new form.
 	spell_requirements &= ~(SPELL_REQUIRES_HUMAN|SPELL_REQUIRES_WIZARD_GARB)
 
-	return new_shape_holder
+	var/mob/living/new_shape = new shapeshift_type(caster.loc)
+	return new_shape.apply_status_effect(/datum/status_effect/shapechange_mob, caster, src)
 
-/datum/action/cooldown/spell/shapeshift/proc/restore_form(mob/living/caster)
-	var/obj/shapeshift_holder/current_shift = is_shifted(caster)
-	if(QDELETED(current_shift))
-		return
+/datum/action/cooldown/spell/shapeshift/proc/do_unshapeshift(mob/living/caster)
+	// Restore the requirements. Might mess with admin memes.
+	spell_requirements = initial(spell_requirements)
 
-	var/mob/living/restored_player = current_shift.stored
-
-	current_shift.restore()
-	spell_requirements = initial(spell_requirements) // Miiight mess with admin stuff.
-
-	return restored_player
-
-// Maybe one day, this can be a component or something
-// Until then, this is what holds data between wizard and shapeshift form whenever shapeshift is cast.
-/obj/shapeshift_holder
-	name = "Shapeshift holder"
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
-	var/mob/living/stored
-	var/mob/living/shape
-	var/restoring = FALSE
-	var/datum/action/cooldown/spell/shapeshift/source
-
-/obj/shapeshift_holder/Initialize(mapload, datum/action/cooldown/spell/shapeshift/_source, mob/living/caster)
-	. = ..()
-	source = _source
-	shape = loc
-	if(!istype(shape))
-		stack_trace("shapeshift holder created outside mob/living")
-		return INITIALIZE_HINT_QDEL
-	stored = caster
-
-	// Transfer the Shapeshift spell over
-	source.Grant(shape)
-	// Also transfer over any actions bound to them specifically - this leaves behind item actions and similar
-	// (Mindbound actions are automatically tranferred over, so we don't need to worry about it)
-	for(var/datum/action/bodybound_action as anything in caster.actions)
-		if(bodybound_action.target != caster)
-			continue
-		bodybound_action.Grant(shape)
-
-	if(stored.mind)
-		stored.mind.transfer_to(shape)
-	stored.forceMove(src)
-	stored.notransform = TRUE
-	if(source.convert_damage)
-		var/damage_percent = (stored.maxHealth - stored.health) / stored.maxHealth;
-		var/damapply = damage_percent * shape.maxHealth;
-
-		shape.apply_damage(damapply, source.convert_damage_type, forced = TRUE, wound_bonus = CANT_WOUND);
-		shape.blood_volume = stored.blood_volume;
-
-	RegisterSignal(shape, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), .proc/shape_death)
-	RegisterSignal(stored, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), .proc/caster_death)
-
-/obj/shapeshift_holder/Destroy()
-	// restore_form manages signal unregistering. If restoring is TRUE, we've already unregistered the signals and we're here
-	// because restore() qdel'd src.
-	if(!restoring)
-		restore()
-	stored = null
-	shape = null
-	return ..()
-
-/obj/shapeshift_holder/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
-	. = ..()
-	if(!restoring && !QDELETED(src))
-		restore()
-
-/obj/shapeshift_holder/handle_atom_del(atom/A)
-	if(A == stored && !restoring)
-		restore()
-
-/obj/shapeshift_holder/Exited(atom/movable/gone, direction)
-	if(stored == gone && !restoring)
-		restore()
-
-/obj/shapeshift_holder/proc/caster_death()
-	SIGNAL_HANDLER
-
-	//Something kills the stored caster through direct damage.
-	if(source.revert_on_death)
-		restore(death = TRUE)
-	else
-		shape.death()
-
-/obj/shapeshift_holder/proc/shape_death()
-	SIGNAL_HANDLER
-
-	//Shape dies.
-	if(source.die_with_shapeshifted_form)
-		if(source.revert_on_death)
-			restore(death = TRUE)
-	else
-		restore()
-
-/obj/shapeshift_holder/proc/restore(death=FALSE)
-	// Destroy() calls this proc if it hasn't been called. Unregistering here prevents multiple qdel loops
-	// when caster and shape both die at the same time.
-	UnregisterSignal(shape, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
-	UnregisterSignal(stored, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
-	restoring = TRUE
-
-	// Give Shapeshift back to the OG
-	source.Grant(stored)
-	// Also transfer their bodybound actions back
-	for(var/datum/action/bodybound_action as anything in shape.actions)
-		if(bodybound_action.target != stored)
-			continue
-		bodybound_action.Grant(stored)
-
-	stored.forceMove(shape.loc)
-	stored.notransform = FALSE
-	if(shape.mind)
-		shape.mind.transfer_to(stored)
-	if(death)
-		stored.death()
-	else if(source.convert_damage)
-		stored.revive(full_heal = TRUE, admin_revive = FALSE)
-
-		var/damage_percent = (shape.maxHealth - shape.health)/shape.maxHealth;
-		var/damapply = stored.maxHealth * damage_percent
-
-		stored.apply_damage(damapply, source.convert_damage_type, forced = TRUE, wound_bonus=CANT_WOUND)
-	if(source.convert_damage)
-		stored.blood_volume = shape.blood_volume;
-
-	// This guard is important because restore() can also be called on COMSIG_PARENT_QDELETING for shape, as well as on death.
-	// This can happen in, for example, [/proc/wabbajack] where the mob hit is qdel'd.
-	if(!QDELETED(shape))
-		QDEL_NULL(shape)
-
-	qdel(src)
-	return stored
+	return caster.remove_status_effect(/datum/status_effect/shapechange_mob)

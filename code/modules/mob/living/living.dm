@@ -1197,15 +1197,14 @@
 
 // Used in polymorph code to shapeshift mobs into other creatures
 /mob/living/proc/wabbajack(randomize)
-	// If the mob has a shapeshifted form, we want to pull out the reference of the caster's original body from it.
-	// We then want to restore this original body through the shapeshift holder itself.
-	var/obj/shapeshift_holder/shapeshift = locate() in src
-	if(shapeshift)
-		shapeshift.restore()
-		if(shapeshift.stored != src) // To reduce the risk of an infinite loop.
-			return shapeshift.stored.wabbajack(randomize)
-
 	if(stat == DEAD || notransform || (GODMODE & status_flags))
+		return
+
+	var/list/transformed_mobs = list()
+	var/sigreturn = SEND_SIGNAL(src, COMSIG_LIVING_PRE_WABBAJACKED, randomize, transformed_mobs)
+	if(sigreturn & WABBAJACK_HANDLED)
+		return length(transformed_mobs) && pick(transformed_mobs)
+	if(sigreturn & STOP_WABBAJACK)
 		return
 
 	notransform = TRUE
@@ -1341,9 +1340,8 @@
 	for(var/obj/item/item as anything in item_contents)
 		new_mob.equip_to_appropriate_slot(item)
 
-	log_message("became [new_mob.name]([new_mob.type])", LOG_ATTACK, color="orange")
 	new_mob.set_combat_mode(TRUE)
-	wabbajack_act(new_mob)
+	on_wabbajacked(new_mob)
 	to_chat(new_mob, span_warning("Your form morphs into that of a [randomize]."))
 
 	var/poly_msg = get_policy(POLICY_POLYMORPH)
@@ -1357,8 +1355,9 @@
 
 // Called when we are hit by a bolt of polymorph and changed
 // Generally the mob we are currently in is about to be deleted
-/mob/living/proc/wabbajack_act(mob/living/new_mob)
-	log_game("[key_name(src)] is being wabbajack polymorphed into: [new_mob.name]([new_mob.type]).")
+/mob/living/proc/on_wabbajacked(mob/living/new_mob)
+	log_message("became [new_mob.name] ([new_mob.type])", LOG_ATTACK, color = "orange")
+	SEND_SIGNAL(src, COMSIG_LIVING_ON_WABBAJACKED, new_mob)
 	new_mob.name = real_name
 	new_mob.real_name = real_name
 
@@ -1366,12 +1365,6 @@
 		mind.transfer_to(new_mob)
 	else
 		new_mob.key = key
-
-	for(var/para in hasparasites())
-		var/mob/living/simple_animal/hostile/guardian/G = para
-		G.summoner = new_mob
-		G.Recall()
-		to_chat(G, span_holoparasite("Your summoner has changed form!"))
 
 /mob/living/proc/unfry_mob() //Callback proc to tone down spam from multiple sizzling frying oil dipping.
 	REMOVE_TRAIT(src, TRAIT_OIL_FRIED, "cooking_oil_react")

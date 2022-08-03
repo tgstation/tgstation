@@ -68,7 +68,24 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	GLOB.parasites += src
 	updatetheme(theme)
 	AddElement(/datum/element/simple_flying)
-	. = ..()
+	return ..()
+
+/mob/living/simple_animal/hostile/guardian/proc/set_summoner(mob/to_who)
+	if(summoner)
+		UnregisterSignal(summoner, COMSIG_LIVING_ON_WABBAJACKED)
+
+	summoner = to_who
+	Recall(TRUE)
+	RegisterSignal(to_who, COMSIG_LIVING_ON_WABBAJACKED, .proc/on_owner_wabbajacked)
+
+/mob/living/simple_animal/hostile/guardian/proc/on_owner_wabbajacked(mob/living/source, mob/living/new_mob)
+	SIGNAL_HANDLER
+
+	set_summoner(new_mob)
+	to_chat(src, span_holoparasite("Your summoner has changed form!"))
+
+/mob/living/simple_animal/hostile/guardian/wabbajack(randomize)
+	visible_message(span_warning("[src] resists the polymorph!"))
 
 /mob/living/simple_animal/hostile/guardian/med_hud_set_health()
 	if(summoner)
@@ -493,11 +510,13 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 ////////parasite tracking/finding procs
 
 /mob/living/proc/hasparasites() //returns a list of guardians the mob is a summoner for
-	. = list()
-	for(var/P in GLOB.parasites)
-		var/mob/living/simple_animal/hostile/guardian/G = P
-		if(G.summoner == src)
-			. += G
+	RETURN_TYPE(/list)
+	var/list/all_parasites = list()
+	for(var/mob/living/simple_animal/hostile/guardian/stand as anything in GLOB.parasites)
+		if(stand.summoner != src)
+			continue
+		all_parasites += stand
+	return all_parasites
 
 /mob/living/simple_animal/hostile/guardian/proc/hasmatchingsummoner(mob/living/simple_animal/hostile/guardian/G) //returns 1 if the summoner matches the target's summoner
 	return (istype(G) && G.summoner == summoner)
@@ -603,7 +622,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		return
 	var/mob/living/simple_animal/hostile/guardian/G = new pickedtype(user, theme)
 	G.name = mob_name
-	G.summoner = user
+	G.set_summoner(user)
 	G.key = candidate.key
 	G.mind.enslave_mind_to_creator(user)
 	G.copy_languages(user, LANGUAGE_MASTER) // make sure holoparasites speak same language as master

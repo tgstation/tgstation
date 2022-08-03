@@ -213,9 +213,9 @@
 	add_dragon_overlay()
 	RegisterSignal(small_sprite, COMSIG_ACTION_TRIGGER, .proc/add_dragon_overlay)
 
-/mob/living/simple_animal/hostile/space_dragon/wabbajack_act(mob/living/new_mob)
+/mob/living/simple_animal/hostile/space_dragon/on_wabbajacked(mob/living/new_mob)
 	empty_contents()
-	. = ..()
+	return ..()
 
 /**
  * Allows space dragon to choose its own name.
