@@ -117,6 +117,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/zauker = ZAUKER_TRANSMIT_MODIFIER,
 		/datum/gas/hypernoblium = HYPERNOBLIUM_TRANSMIT_MODIFIER,
 		/datum/gas/antinoblium = ANTINOBLIUM_TRANSMIT_MODIFIER,
+		/datum/gas/freon = FREON_TRANSMIT_MODIFIER,
+		/datum/gas/water_vapor = H20_TRANSMIT_MODIFIER.
 	)
 	///The list of gases mapped against their heat penaltys. We use it to determin molar and heat output
 	var/list/gas_heat = list(
@@ -250,7 +252,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///Do we show this crystal in the CIMS modular program
 	var/include_in_cims = TRUE
 
-	var/freonbonus = 0
 	///Hue shift of the zaps color based on the power of the crystal
 	var/hue_angle_shift = 0
 	///Reference to the warp effect
