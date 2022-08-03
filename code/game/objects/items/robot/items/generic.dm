@@ -16,7 +16,7 @@
 	name = "electrically-charged arm"
 	icon_state = "elecarm"
 	/// Cost to use the stun arm
-	var/charge_cost = 1000
+	var/charge_cost = 600
 	///How many stamina damage we deal
 	var/stamina_damage = 65
 	///How much stamina damage should the target have to get paralyzed by the attack
