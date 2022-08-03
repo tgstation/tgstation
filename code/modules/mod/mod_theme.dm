@@ -268,7 +268,8 @@
 		offering full view of the land and its soon-to-be-dead inhabitants. The armor plating has been trimmed down to \
 		the bare essentials, geared far more for environmental hazards than combat against fauna; however, \
 		this gives way to incredible protection against corrosives and thermal protection good enough for \
-		both casual backstroking through molten magma and romantic walks through arctic terrain. \
+		both casual backstroking while being on fire and romantic walks through arctic terrain. \
+		Sadly, this protection could not offer you a relaxing swim through magma. You will be like a chicken in a pot full of boiling water. \
 		Instead, the suit is capable of using its' anomalous properties to attract and \
 		carefully distribute layers of ash or ice across the surface; these layers are ablative, but incredibly strong. \
 		Lastly, the suit is capable of compressing and shrinking the mass of the wearer, as well as \
@@ -279,7 +280,7 @@
 		Additionally, the systems have been put to near their maximum load, allowing for far less customization than others."
 	default_skin = "mining"
 	armor = list(MELEE = 15, BULLET = 5, LASER = 5, ENERGY = 5, BOMB = 30, BIO = 100, FIRE = 100, ACID = 75, WOUND = 15)
-	resistance_flags = FIRE_PROOF|LAVA_PROOF
+	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
