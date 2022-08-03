@@ -60,7 +60,6 @@
 			data["globals"] = kvpify_list(refify_list(current_state.globals))
 	data["states"] = SSlua.states
 	data["callArguments"] = kvpify_list(refify_list(arguments))
-	data["shouldUpdateScroll"] = TRUE
 	if(force_modal)
 		data["forceModal"] = force_modal
 		force_modal = null

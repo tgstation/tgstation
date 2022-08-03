@@ -47,6 +47,21 @@ export class LuaEditor extends Component {
     );
   }
 
+  componentDidMount() {
+    const { data } = useBackend(this.context);
+    const { forceModal, forceViewChunk } = data;
+    if (forceModal || forceViewChunk) {
+      const [, setModal] = useLocalState(this.context, 'modal');
+      const [, setViewedChunk] = useLocalState(this.context, 'viewedChunk');
+      setModal(forceModal);
+      setViewedChunk(forceViewChunk);
+    }
+  }
+
+  componentDidUpdate() {
+    this.handleSectionScroll();
+  }
+
   render() {
     const { act, data } = useBackend(this.context);
     const {
@@ -63,19 +78,6 @@ export class LuaEditor extends Component {
       'modal',
       noStateYet ? 'states' : null
     );
-    const [, setViewedChunk] = useLocalState(this.context, 'viewedChunk');
-    let { shouldUpdateScroll, forceModal, forceViewChunk } = data;
-    if (shouldUpdateScroll) {
-      shouldUpdateScroll = 0;
-      setTimeout(this.handleSectionScroll, 0);
-    }
-    if (forceModal || forceViewChunk) {
-      const [newModal, newViewChunk] = [forceModal, forceViewChunk];
-      forceModal = null;
-      forceViewChunk = null;
-      setModal(newModal);
-      setViewedChunk(newViewChunk);
-    }
     const { activeTab, showJumpToBottomButton, scriptInput } = this.state;
     let tabContent;
     switch (activeTab) {
