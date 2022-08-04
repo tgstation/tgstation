@@ -1,7 +1,6 @@
 /datum/ai_controller/basic_controller/bileworm
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
-		BB_SHOULD_RESURFACE = TRUE,
 	)
 
 	planning_subtrees = list(
@@ -17,23 +16,11 @@
 	if(!target || QDELETED(target))
 		return
 
-	if(controller.blackboard[BB_SHOULD_RESURFACE])
-		controller.queue_behavior(/datum/ai_behavior/try_mob_ability/resurface, BB_RESURFACE, BB_BASIC_MOB_CURRENT_TARGET)
+	var/datum/action/cooldown/mob_cooldown/resurface = controller.blackboard[BB_RESURFACE]
+
+	//because one ability is always INFINITY cooldown, this actually works to check which ability should be used
+	//sometimes it will try to spew bile on infinity cooldown, but that's okay because as soon as resurface is ready it will attempt that
+	if(resurface.next_use_time <= world.time)
+		controller.queue_behavior(/datum/ai_behavior/try_mob_ability, BB_RESURFACE, BB_BASIC_MOB_CURRENT_TARGET)
 	else
-		controller.queue_behavior(/datum/ai_behavior/try_mob_ability/spew_bile, BB_SPEW_BILE, BB_BASIC_MOB_CURRENT_TARGET)
-
-//making try_mob_ability flop which ability should be done after completion
-
-/datum/ai_behavior/try_mob_ability/resurface
-
-/datum/ai_behavior/try_mob_ability/resurface/finish_action(datum/ai_controller/controller, succeeded, ability_key, target_key)
-	if(succeeded)
-		//will now try to bury
-		controller.blackboard[BB_SHOULD_RESURFACE] = !controller.blackboard[BB_SHOULD_RESURFACE]
-
-/datum/ai_behavior/try_mob_ability/spew_bile
-
-/datum/ai_behavior/try_mob_ability/spew_bile/finish_action(datum/ai_controller/controller, succeeded, ability_key, target_key)
-	if(succeeded)
-		//will now try to resurface
-		controller.blackboard[BB_SHOULD_RESURFACE] = !controller.blackboard[BB_SHOULD_RESURFACE]
+		controller.queue_behavior(/datum/ai_behavior/try_mob_ability, BB_SPEW_BILE, BB_BASIC_MOB_CURRENT_TARGET)

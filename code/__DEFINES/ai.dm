@@ -219,6 +219,5 @@
 
 ///Bileworm AI keys
 
-#define BB_SHOULD_RESURFACE "BB_should_resurface"
 #define BB_SPEW_BILE "BB_spew_bile"
 #define BB_RESURFACE "BB_resurface"

@@ -20,20 +20,23 @@
 	faction = list("mining")
 
 	ai_controller = /datum/ai_controller/basic_controller/bileworm
-	/// bileworm's spewing ability
-	var/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/bileworm/spew_bile
-	/// bileworm's resurfacing ability
-	var/datum/action/cooldown/mob_cooldown/resurface/resurface
 
 /mob/living/basic/bileworm/Initialize(mapload)
 	. = ..()
+	//traits and elements
+
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_LAVA_IMMUNE, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, INNATE_TRAIT)
 	AddElement(/datum/element/basic_body_temp_sensitive, max_body_temp = INFINITY)
-	spew_bile = new()
+	AddElement(/datum/element/crusher_loot, /obj/item/crusher_trophy/bileworm_spewlet, 15)
+	AddElement(/datum/element/mob_killed_tally, "mobs_killed_mining")
+
+	//setup mob abilities
+
+	var/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/bileworm/spew_bile = new()
 	spew_bile.Grant(src)
-	resurface = new()
+	var/datum/action/cooldown/mob_cooldown/resurface/resurface = new()
 	resurface.Grant(src)
 	ai_controller.blackboard[BB_SPEW_BILE] = spew_bile
 	ai_controller.blackboard[BB_RESURFACE] = resurface
