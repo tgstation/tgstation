@@ -55,4 +55,4 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/spewlet/New(Target)
 	firing_directions = GLOB.cardinals.Copy()
-	. = ..()
+	return ..()
