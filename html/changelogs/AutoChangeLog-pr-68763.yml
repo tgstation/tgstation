@@ -1,0 +1,7 @@
+author: "Justice12354"
+delete-after: True
+changes: 
+  - rscadd: "The Mothroach, your new local exotic pet"
+  - rscadd: "Mothroach Hide and Mothroach Meat"
+  - rscadd: "New crafting recipe for the Moth Plush: 1 Mothroach Hide; 1 heart; 3 cloth"
+  - bugfix: "Fixes dead mobs on-head not having sprites"
