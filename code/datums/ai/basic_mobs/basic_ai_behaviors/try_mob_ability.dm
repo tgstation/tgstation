@@ -22,4 +22,4 @@
 
 /datum/ai_behavior/try_mob_ability/and_plan_execute/finish_action(datum/ai_controller/controller, succeeded, ability_key, target_key)
 	controller.blackboard[BB_BASIC_MOB_EXECUTION_TARGET] = controller.blackboard[target_key]
-	. = ..()
+	return ..()
