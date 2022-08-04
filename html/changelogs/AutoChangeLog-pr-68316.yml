@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes: 
-  - bugfix: "Fix slime potions used on simple mobs to inherit all language abilities from the user (for real this time)"

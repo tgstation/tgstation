@@ -264,7 +264,6 @@
 	dir = 8
 	},
 /obj/machinery/mineral/processing_unit_console{
-	machinedir = 0;
 	pixel_x = -32
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -411,7 +410,6 @@
 	dir = 8
 	},
 /obj/machinery/mineral/processing_unit_console{
-	machinedir = 0;
 	pixel_x = 32
 	},
 /turf/open/floor/mineral/plastitanium,

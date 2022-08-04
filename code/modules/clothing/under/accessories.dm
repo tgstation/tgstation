@@ -95,6 +95,10 @@
 	inhand_icon_state = "waistcoat"
 	minimize_when_attached = FALSE
 	attachment_slot = null
+	greyscale_config = /datum/greyscale_config/waistcoat
+	greyscale_config_worn = /datum/greyscale_config/waistcoat_worn
+	greyscale_colors = "#414344"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/accessory/vest_sheriff
 	name = "sheriff vest"

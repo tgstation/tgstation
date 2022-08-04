@@ -4,6 +4,8 @@
 	max_occurrences = 1
 	min_players = 20
 	dynamic_should_hijack = TRUE
+	category = EVENT_CATEGORY_ENTITIES
+	description = "Spawns a nightmare, aiming to darken the station."
 
 /datum/round_event/ghost_role/nightmare
 	minimum_required = 1

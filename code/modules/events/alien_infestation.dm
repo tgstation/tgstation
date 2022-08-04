@@ -6,6 +6,8 @@
 	min_players = 10
 
 	dynamic_should_hijack = TRUE
+	category = EVENT_CATEGORY_ENTITIES
+	description = "A xenomorph larva spawns on a random vent."
 
 /datum/round_event_control/alien_infestation/canSpawnEvent()
 	. = ..()
@@ -67,14 +69,9 @@
 
 	while(spawncount > 0 && vents.len && candidates.len)
 		var/obj/vent = pick_n_take(vents)
-		var/client/candidate_client = pick_n_take(candidates)
-		var/datum/mind/candidate_mind = candidate_client.mob.mind
-		if(!candidate_mind)
-			continue
+		var/mob/dead/observer/selected = pick_n_take(candidates)
 		var/mob/living/carbon/alien/larva/new_xeno = new(vent.loc)
-		candidate_mind.transfer_to(new_xeno)
-		candidate_mind.set_assigned_role(SSjob.GetJobType(/datum/job/xenomorph))
-		candidate_mind.special_role = ROLE_ALIEN
+		new_xeno.key = selected.key
 		new_xeno.move_into_vent(vent)
 
 		spawncount--

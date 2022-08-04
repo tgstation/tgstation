@@ -13,6 +13,8 @@
 	typepath = /datum/round_event/shuttle_loan
 	max_occurrences = 1
 	earliest_start = 7 MINUTES
+	category = EVENT_CATEGORY_BUREAUCRATIC
+	description = "If cargo accepts the offer, fills the shuttle with loot and/or enemies."
 
 /datum/round_event/shuttle_loan
 	announceWhen = 1
@@ -256,7 +258,7 @@
 
 /obj/item/paper/fluff/bee_objectives
 	name = "Objectives of a Bee Liberation Front Operative"
-	info = "<b>Objective #1</b>. Liberate all bees on the NT transport vessel 2416/B. <b>Success!</b>  <br><b>Objective #2</b>. Escape alive. <b>Failed.</b>"
+	default_raw_text = "<b>Objective #1</b>. Liberate all bees on the NT transport vessel 2416/B. <b>Success!</b>  <br><b>Objective #2</b>. Escape alive. <b>Failed.</b>"
 
 /obj/machinery/syndicatebomb/shuttle_loan/Initialize(mapload)
 	. = ..()
@@ -267,10 +269,10 @@
 
 /obj/item/paper/fluff/cargo/bomb
 	name = "hastly scribbled note"
-	info = "GOOD LUCK!"
+	default_raw_text = "GOOD LUCK!"
 
 /obj/item/paper/fluff/cargo/bomb/allyourbase
-	info = "Somebody set us up the bomb!"
+	default_raw_text = "Somebody set us up the bomb!"
 
 #undef HIJACK_SYNDIE
 #undef RUSKY_PARTY

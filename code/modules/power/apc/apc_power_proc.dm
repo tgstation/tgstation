@@ -121,6 +121,8 @@
 			return
 
 	failure_timer = max(failure_timer, round(duration))
+	update()
+	queue_icon_update()
 
 /obj/machinery/power/apc/proc/set_nightshift(on)
 	set waitfor = FALSE
