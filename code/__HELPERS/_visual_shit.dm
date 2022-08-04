@@ -36,8 +36,6 @@
 /// Takes a true plane, returns the potential offset planes it could "hold"
 #define TRUE_PLANE_TO_OFFSETS(plane) ((SSmapping.true_to_offset_planes) ? SSmapping.true_to_offset_planes["[plane]"] : list(plane))
 
-// Lemon todo: somehow ensure this works with plane offset blacklists
-// Maybe get rid of bespoke render targets, and just add a PLANE_TARGET macro or something
 #define OFFSET_RENDER_TARGET(render_target, offset) (SSmapping.render_offset_blacklist?["[render_target]"] ? \
 														_OFFSET_RENDER_TARGET(render_target, 0) : _OFFSET_RENDER_TARGET(render_target, offset))
 #define _OFFSET_RENDER_TARGET(render_target, offset) ("[(render_target)] #[(offset)]")
