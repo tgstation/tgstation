@@ -25,6 +25,6 @@
 	admin_only = TRUE
 
 /datum/instrument/fun/bileworm
-	name = "Bilehorn Intonations"
+	name = "Bilehorn"
 	id = "bilehorn"
 	real_samples = list("60"='sound/creatures/bileworm/bileworm_spit.ogg')

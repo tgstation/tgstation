@@ -41,9 +41,12 @@
 
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/bileworm/spew_bile = new(src)
 	spew_bile.Grant(src)
+	//well, one of them has to start on infinite cooldown
+	spew_bile.StartCooldownSelf(INFINITY)
 	var/datum/action/cooldown/mob_cooldown/resurface/resurface = new(src)
 	resurface.Grant(src)
-	var/datum/action/cooldown/mob_cooldown/devour/devour
+	var/datum/action/cooldown/mob_cooldown/devour/devour = new(src)
+	devour.Grant(src)
 	ai_controller.blackboard[BB_BILEWORM_SPEW_BILE] = spew_bile
 	ai_controller.blackboard[BB_BILEWORM_RESURFACE] = resurface
 	ai_controller.blackboard[BB_BILEWORM_DEVOUR] = devour

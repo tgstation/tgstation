@@ -83,7 +83,7 @@
 	desc = "Burrow underground, and then move to your target to consume them. Short cooldown, but your target must be unconscious."
 	shared_cooldown = MOB_SHARED_COOLDOWN_2
 
-/datum/action/cooldown/mob_cooldown/resurface/Activate(atom/target_atom)
+/datum/action/cooldown/mob_cooldown/devour/Activate(atom/target_atom)
 	if(!isliving(target_atom))
 		to_chat(owner, span_warning("That's not food!"))
 		return
@@ -93,7 +93,7 @@
 		return
 	burrow_and_devour(owner, living_target)
 
-/datum/action/cooldown/mob_cooldown/resurface/proc/burrow_and_devour(mob/living/devourer, mob/living/target)
+/datum/action/cooldown/mob_cooldown/devour/proc/burrow_and_devour(mob/living/devourer, mob/living/target)
 	var/turf/devour_turf = get_turf(target)
 	if(!istype(devour_turf, /turf/open/misc)) // means all the turfs nearby are station turfs or something, not lavaland
 		to_chat(devourer, span_warning("Your target is on something you can't burrow through!"))
