@@ -219,66 +219,62 @@ const PageChangingStatus = (props, context) => {
       </Section>
 
       <Section>
-        <Flex direction="column">
-          <Flex.Item>
-            <Button
-              icon="times"
-              content="Clear Alert"
-              color="bad"
-              onClick={() => act('setStatusPicture', { picture: 'blank' })}
-            />
-          </Flex.Item>
+        <Button
+          icon="toggle-off"
+          content="Off"
+          color="bad"
+          onClick={() => act('setStatusPicture', { picture: 'blank' })}
+        />
+        <Button
+          icon="space-shuttle"
+          content="Shuttle ETA / Off"
+          color=""
+          onClick={() => act('setStatusPicture', { picture: 'shuttle' })}
+        />
+      </Section>
 
-          <Flex.Item mt={1}>
-            <Button
-              icon="check-square-o"
-              content="Default"
-              onClick={() => act('setStatusPicture', { picture: 'default' })}
-            />
+      <Section title="Graphics">
+        <Button
+          icon="flag"
+          content="Logo"
+          onClick={() => act('setStatusPicture', { picture: 'default' })}
+        />
 
-            <Button
-              icon="bell-o"
-              content="Red Alert"
-              onClick={() => act('setStatusPicture', { picture: 'redalert' })}
-            />
+        <Button
+          icon="bell-o"
+          content="Red Alert"
+          onClick={() => act('setStatusPicture', { picture: 'redalert' })}
+        />
 
-            <Button
-              icon="exclamation-triangle"
-              content="Lockdown"
-              onClick={() => act('setStatusPicture', { picture: 'lockdown' })}
-            />
+        <Button
+          icon="exclamation-triangle"
+          content="Lockdown"
+          onClick={() => act('setStatusPicture', { picture: 'lockdown' })}
+        />
 
-            <Button
-              icon="exclamation-circle"
-              content="Biohazard"
-              onClick={() => act('setStatusPicture', { picture: 'biohazard' })}
-            />
-
-            <Button
-              icon="space-shuttle"
-              content="Shuttle ETA"
-              onClick={() => act('setStatusPicture', { picture: 'shuttle' })}
-            />
-          </Flex.Item>
-        </Flex>
+        <Button
+          icon="biohazard"
+          content="Biohazard"
+          onClick={() => act('setStatusPicture', { picture: 'biohazard' })}
+        />
       </Section>
 
       <Section title="Message">
-        <Flex direction="column">
+        <Flex direction="column" align="stretch">
           <Flex.Item mb={1}>
             <Input
+              fluid
               maxLength={maxStatusLineLength}
               value={lineOne}
-              width="200px"
               onChange={(_, value) => setLineOne(value)}
             />
           </Flex.Item>
 
           <Flex.Item mb={1}>
             <Input
+              fluid
               maxLength={maxStatusLineLength}
               value={lineTwo}
-              width="200px"
               onChange={(_, value) => setLineTwo(value)}
             />
           </Flex.Item>
@@ -286,7 +282,7 @@ const PageChangingStatus = (props, context) => {
           <Flex.Item>
             <Button
               icon="comment-o"
-              content="Message"
+              content="Send"
               onClick={() =>
                 act('setStatusMessage', {
                   lineOne,

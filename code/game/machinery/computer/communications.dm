@@ -17,6 +17,11 @@
 	circuit = /obj/item/circuitboard/computer/communications
 	light_color = LIGHT_COLOR_BLUE
 
+	/// Valid status display pictures to choose from
+	var/static/list/approved_status_pictures = list("biohazard", "blank", "default", "lockdown", "redalert", "shuttle")
+	/// Status picture that are actually direct commands
+	var/static/list/state_status_pictures = list("blank", "shuttle")
+
 	/// If the battlecruiser has been called
 	var/static/battlecruiser_called = FALSE
 
@@ -140,8 +145,6 @@
 
 /obj/machinery/computer/communications/ui_act(action, list/params)
 	var/static/list/approved_states = list(STATE_BUYING_SHUTTLE, STATE_CHANGING_STATUS, STATE_MAIN, STATE_MESSAGES)
-	var/static/list/approved_status_pictures = list("biohazard", "blank", "default", "lockdown", "redalert", "shuttle")
-	var/static/list/state_status_pictures = list("blank", "shuttle")
 
 	. = ..()
 	if (.)
