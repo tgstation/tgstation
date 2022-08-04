@@ -520,11 +520,6 @@
 /datum/action/innate/spider/lay_eggs/enriched/IsAvailable()
 	return ..() && (charges > 0)
 
-/datum/action/innate/spider/lay_eggs/enriched/bloody
-	name = "Lay Bloody Eggs"
-	desc = "Lay a cluster of eggs, which will soon grow into a flesh spider.  Requires you drain a human per cluster of these eggs."
-	egg_type = /obj/effect/mob_spawn/ghost_role/spider/bloody
-
 /datum/action/innate/spider/set_directive
 	name = "Set Directive"
 	desc = "Set a directive for your children to follow."
@@ -691,8 +686,6 @@
  * They also produce web in 70% of the time of the base spider.  They also occasionally leave puddles of blood when they walk around.  Flavorful!
  */
 /mob/living/simple_animal/hostile/giant_spider/hunter/flesh
-	melee_damage_lower = 10
-	melee_damage_upper = 15
 	desc = "A odd fleshy creature in the shape of a spider.  Its eyes are pitch black and soulless."
 	icon_state = "flesh_spider"
 	icon_living = "flesh_spider"
@@ -705,15 +698,6 @@
 	AddComponent(/datum/component/blood_walk, \
 		blood_type = /obj/effect/decal/cleanable/blood/bubblegum, \
 		blood_spawn_chance = 5)
-
-	var/datum/action/cooldown/wrap/wrapping = new(src)
-	wrapping.Grant(src)
-
-	var/datum/action/innate/spider/lay_eggs/enriched/bloody/make_better_eggs = new(src)
-	make_better_eggs.Grant(src)
-
-	var/datum/action/innate/spider/set_directive/give_orders = new(src)
-	give_orders.Grant(src)
 
 /mob/living/simple_animal/hostile/giant_spider/hunter/flesh/AttackingTarget()
 	if(DOING_INTERACTION(src, INTERACTION_SPIDER_KEY))
