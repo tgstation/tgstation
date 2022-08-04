@@ -78,3 +78,43 @@
   san7890:
   - admin: You should hopefully no longer see an error message that has nothing to
       say regarding the word filter.
+2022-08-04:
+  CoffeeDragon16:
+  - qol: most storage item chat messages have been replaced with balloon alerts
+  GoblinBackwards:
+  - bugfix: Fixes heretic curses always failing and saying the items had no fingerprints.
+  Hardly:
+  - rscadd: You can now buy lizards through cargo.
+  LemonInTheDark:
+  - bugfix: You can no longer infinitely york as an alien
+  Melbert:
+  - qol: AIs which update their status displays on multi-z station maps will now update
+      ALL displays on station, instead of only those which match the level their core
+      is on
+  Profakos:
+  - rscadd: Added a new button to the thunderdome administration arena that toggles
+      entertainment monitor's ability to broadcast the thunderdome arena's cameras.
+  - bugfix: Clicking on entertainment monitors actually works now
+  Tastyfish:
+  - qol: Searching within a material stack's recipes now searches the categorized
+      recipes as well.
+  Watermelon914:
+  - bugfix: Clicking on tiles you can't see will work again if you pressed F12.
+  orthography:
+  - qol: allows for an existing ai lawset to be used as the default instead of a "custom"
+      lawset.
+  - server: added server settings that allow for the ai lawset to be specified. This
+      *should* be changed in the server to allow the "asimov++" card to spawn in place
+      of the "asimov" card in the AI upload.
+  timothymtorres:
+  - qol: Add chance for maintenance crate and closet spawners to be open to make the
+      area look more messy.
+  vincentiusvin:
+  - refactor: All four SM delams got recoded, no significant gameplay changes expected.
+  - qol: SM healing is broadcasted on crew radio too now instead of just engi
+  - qol: SM going singulo or tesla will be announced on common comms when the damage
+      is getting severe enough.
+  - code_imp: Only engines considered to be a main engine can spawn stationwide anomalies
+      and trigger cascades.
+  - bugfix: Fixed the sm not having a boxy overlay on normal delams when counting
+      down. This is what the radio message was referring to as "causality field".

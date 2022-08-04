@@ -61,12 +61,12 @@
 	if(!foldable || (flags_1 & HOLOGRAM_1))
 		return
 	if(contents.len)
-		to_chat(user, span_warning("You can't fold this box with items still inside!"))
+		balloon_alert(user, "items inside!")
 		return
 	if(!ispath(foldable))
 		return
 
-	to_chat(user, span_notice("You fold [src] flat."))
+	balloon_alert(user, "folded")
 	var/obj/item/I = new foldable
 	qdel(src)
 	user.put_in_hands(I)
@@ -834,12 +834,12 @@
 /obj/item/storage/box/clown/attackby(obj/item/I, mob/user, params)
 	if((istype(I, /obj/item/bodypart/l_arm/robot)) || (istype(I, /obj/item/bodypart/r_arm/robot)))
 		if(contents.len) //prevent accidently deleting contents
-			to_chat(user, span_warning("You need to empty [src] out first!"))
+			balloon_alert(user, "items inside!")
 			return
 		if(!user.temporarilyRemoveItemFromInventory(I))
 			return
 		qdel(I)
-		to_chat(user, span_notice("You add some wheels to the [src]! You've got a honkbot assembly now! Honk!"))
+		balloon_alert(user, "wheels added, honk!")
 		var/obj/item/bot_assembly/honkbot/A = new
 		qdel(src)
 		user.put_in_hands(A)
@@ -993,7 +993,7 @@
 				desc = "A paper sack with a crude smile etched onto the side."
 			else
 				return FALSE
-		to_chat(user, span_notice("You make some modifications to [src] using your pen."))
+		balloon_alert(user, "modified")
 		icon_state = "paperbag_[choice]"
 		inhand_icon_state = "paperbag_[choice]"
 		return FALSE
@@ -1024,10 +1024,10 @@
 	if(user.incapacitated())
 		return FALSE
 	if(contents.len)
-		to_chat(user, span_warning("You can't modify [src] with items still inside!"))
+		balloon_alert(user, "items inside!")
 		return FALSE
 	if(!P || !user.is_holding(P))
-		to_chat(user, span_warning("You need a pen to modify [src]!"))
+		balloon_alert(user, "needs pen!")
 		return FALSE
 	return TRUE
 
