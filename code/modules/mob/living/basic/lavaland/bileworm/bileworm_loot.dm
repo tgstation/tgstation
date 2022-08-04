@@ -1,5 +1,20 @@
+
+//skin
+
+/obj/item/stack/sheet/animalhide/bileworm
+	name = "bileworm skin"
+	desc = "The slushy, squishy and slightly shiny skin of a postmortem bileworm."
+	singular_name = "bileworm skin piece"
+	icon = 'icons/mob/lavaland/bileworm.dmi'
+	icon_state = "sheet-bileworm"
+	inhand_icon_state = "sheet-bileworm"
+	merge_type = /obj/item/stack/sheet/animalhide/bileworm
+
+//trophy
+
 /obj/item/crusher_trophy/bileworm_spewlet
 	name = "bileworm spewlet"
+	icon = 'icons/mob/lavaland/bileworm.dmi'
 	icon_state = "bileworm_spewlet"
 	desc = "A baby bileworm. Suitable as a trophy for a kinetic crusher."
 	denied_type = /obj/item/crusher_trophy/bileworm_spewlet
@@ -24,7 +39,7 @@
 	crusher.remove_item_action(ability)
 
 /obj/item/crusher_trophy/bileworm_spewlet/effect_desc()
-	return "mark detonation launches projectiles in cardinal directions. 10 second cooldown."
+	return "mark detonation launches projectiles in cardinal directions on a 10 second cooldown"
 
 /obj/item/crusher_trophy/bileworm_spewlet/on_mark_detonation(mob/living/target, mob/living/user)
 	//ability itself handles cooldowns.
@@ -37,3 +52,7 @@
 	cooldown_time = 10 SECONDS
 	projectile_type = /obj/projectile/bileworm_acid
 	projectile_sound = 'sound/creatures/bileworm/bileworm_spit.ogg'
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/spewlet/New(Target)
+	firing_directions = GLOB.cardinals.Copy()
+	. = ..()

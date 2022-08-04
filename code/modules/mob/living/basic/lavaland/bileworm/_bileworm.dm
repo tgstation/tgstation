@@ -5,11 +5,15 @@
 	icon_state = "bileworm"
 	icon_living = "bileworm"
 	icon_dead = "bileworm_dead"
+	mob_size = MOB_SIZE_LARGE
 	mob_biotypes = MOB_BUG
 	maxHealth = 150
 	health = 150
-	butcher_results = list(/obj/item/food/meat/slab/bugmeat = 6)
-	guaranteed_butcher_results = list(/obj/effect/gibspawner/generic)
+	butcher_results = list(/obj/item/food/meat/slab/bugmeat = 4)
+	guaranteed_butcher_results = list(
+		/obj/effect/gibspawner/generic = 1,
+		/obj/item/stack/sheet/animalhide/bileworm = 1,
+	)
 
 	//it can't be dragged, just butcher it
 	move_resist = INFINITY
@@ -31,6 +35,7 @@
 	AddElement(/datum/element/basic_body_temp_sensitive, max_body_temp = INFINITY)
 	AddElement(/datum/element/crusher_loot, /obj/item/crusher_trophy/bileworm_spewlet, 15)
 	AddElement(/datum/element/mob_killed_tally, "mobs_killed_mining")
+	AddElement(/datum/element/content_barfer)
 
 	//setup mob abilities
 
@@ -38,5 +43,7 @@
 	spew_bile.Grant(src)
 	var/datum/action/cooldown/mob_cooldown/resurface/resurface = new(src)
 	resurface.Grant(src)
-	ai_controller.blackboard[BB_SPEW_BILE] = spew_bile
-	ai_controller.blackboard[BB_RESURFACE] = resurface
+	var/datum/action/cooldown/mob_cooldown/devour/devour
+	ai_controller.blackboard[BB_BILEWORM_SPEW_BILE] = spew_bile
+	ai_controller.blackboard[BB_BILEWORM_RESURFACE] = resurface
+	ai_controller.blackboard[BB_BILEWORM_DEVOUR] = devour

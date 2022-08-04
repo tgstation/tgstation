@@ -1,7 +1,7 @@
 /datum/action/cooldown/mob_cooldown/resurface
 	name = "Resurface"
 	desc = "Burrow underground, and then move to a new location near your target. Must spew bile to refresh."
-	shared_cooldown = MOB_SHARED_COOLDOWN_1
+	shared_cooldown = MOB_SHARED_COOLDOWN_1 | MOB_SHARED_COOLDOWN_2
 
 /datum/action/cooldown/mob_cooldown/resurface/Activate(atom/target_atom)
 	StartCooldownSelf(INFINITY)
@@ -15,12 +15,14 @@
 		to_chat(burrower, span_warning("Couldn't burrow anywhere near the target!"))
 		return //just put it on cooldown and let the other ability reactivate, you couldn't burrow and that's okay.
 	playsound(burrower, 'sound/effects/break_stone.ogg', 50, TRUE)
+	new /obj/effect/temp_visual/mook_dust(get_turf(burrower))
 	burrower.status_flags |= GODMODE
 	burrower.invisibility = INVISIBILITY_MAXIMUM
 	burrower.forceMove(unburrow_turf)
 	//not that it's gonna die with godmode but still
 	SLEEP_CHECK_DEATH(rand(0.75 SECONDS, 1.25 SECONDS), burrower)
 	playsound(burrower, 'sound/effects/break_stone.ogg', 50, TRUE)
+	new /obj/effect/temp_visual/mook_dust(unburrow_turf)
 	burrower.status_flags &= ~GODMODE
 	burrower.invisibility = 0
 
@@ -49,7 +51,7 @@
 	desc = "Spews bile everywhere. Must resurface after use to refresh."
 	projectile_type = /obj/projectile/bileworm_acid
 	projectile_sound = 'sound/creatures/bileworm/bileworm_spit.ogg'
-	shared_cooldown = MOB_SHARED_COOLDOWN_1
+	shared_cooldown = MOB_SHARED_COOLDOWN_1 | MOB_SHARED_COOLDOWN_2
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/bileworm/Activate(atom/target_atom)
 	StartCooldownSelf(INFINITY)
@@ -75,3 +77,43 @@
 	stutter = 3 SECONDS
 	damage_type = BURN
 	pass_flags = PASSTABLE
+
+/datum/action/cooldown/mob_cooldown/devour
+	name = "Devour"
+	desc = "Burrow underground, and then move to your target to consume them. Short cooldown, but your target must be unconscious."
+	shared_cooldown = MOB_SHARED_COOLDOWN_2
+
+/datum/action/cooldown/mob_cooldown/resurface/Activate(atom/target_atom)
+	if(!isliving(target_atom))
+		to_chat(owner, span_warning("That's not food!"))
+		return
+	var/mob/living/living_target = target_atom
+	if(living_target.stat < UNCONSCIOUS)
+		to_chat(owner, span_warning("No way you're eating that while it's still kicking! It should at least be unconscious first."))
+		return
+	burrow_and_devour(owner, living_target)
+
+/datum/action/cooldown/mob_cooldown/resurface/proc/burrow_and_devour(mob/living/devourer, mob/living/target)
+	var/turf/devour_turf = get_turf(target)
+	if(!istype(devour_turf, /turf/open/misc)) // means all the turfs nearby are station turfs or something, not lavaland
+		to_chat(devourer, span_warning("Your target is on something you can't burrow through!"))
+		return //this will give up on devouring the target which is fine by me
+	playsound(devourer, 'sound/effects/break_stone.ogg', 50, TRUE)
+	new /obj/effect/temp_visual/mook_dust(get_turf(devourer))
+	devourer.status_flags |= GODMODE
+	devourer.invisibility = INVISIBILITY_MAXIMUM
+	devourer.forceMove(devour_turf)
+	//not that it's gonna die with godmode but still
+	SLEEP_CHECK_DEATH(rand(0.75 SECONDS, 1.25 SECONDS), devourer)
+	playsound(devourer, 'sound/effects/break_stone.ogg', 50, TRUE)
+	new /obj/effect/temp_visual/mook_dust(devour_turf)
+	devourer.status_flags &= ~GODMODE
+	devourer.invisibility = 0
+	if(!(target in devour_turf))
+		to_chat(devourer, span_warning("Someone stole your dinner!"))
+		return
+	devourer.visible_message("[devourer] consumes [target]!")
+	devourer.fully_heal()
+	playsound(devourer, 'sound/effects/splat.ogg', 50, TRUE)
+	//to be recieved on death
+	target.forceMove(devourer)
