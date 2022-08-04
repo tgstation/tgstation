@@ -866,6 +866,15 @@
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CORGI, CELL_VIRUS_TABLE_GENERIC_MOB)
 
+/obj/item/food/meat/slab/mothroach
+	name = "mothroach meat"
+	desc = "A light slab of meat."
+	foodtypes = RAW | MEAT | GROSS
+
+/obj/item/food/meat/slab/mothroach/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_VIRUS_TABLE_GENERIC_MOB)
+
 /obj/item/food/meat/slab/pug
 	name = "pug meat"
 	desc = "Tastes like... well you know..."
