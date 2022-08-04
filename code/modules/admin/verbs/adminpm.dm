@@ -551,7 +551,7 @@
 
 	var/client/recipient = ambiguious_recipient
 	// The ckey of our recipient
-	var/recipient_key = recipient?.ckey
+	var/recipient_key = recipient?.key
 	// Shows the recipient's ckey and the name of any mob it might be possessing
 	var/recipient_name = key_name(recipient)
 	// Shows the recipient's ckey/name embedded inside a clickable link to reply to this message
