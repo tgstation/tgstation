@@ -49,7 +49,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
  *
  * Returns a list of turfs, which is an area of isolated atmos
  */ 
-/proc/create_atmos_zone(turf/source, range)
+/proc/create_atmos_zone(turf/source, range = INFINITY)
 	var/counter = 1 // a counter which increment each loop
 	var/loops = 0
 	if(source.blocks_air)
