@@ -34,9 +34,9 @@
 
 	//setup mob abilities
 
-	var/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/bileworm/spew_bile = new()
+	var/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/bileworm/spew_bile = new(src)
 	spew_bile.Grant(src)
-	var/datum/action/cooldown/mob_cooldown/resurface/resurface = new()
+	var/datum/action/cooldown/mob_cooldown/resurface/resurface = new(src)
 	resurface.Grant(src)
 	ai_controller.blackboard[BB_SPEW_BILE] = spew_bile
 	ai_controller.blackboard[BB_RESURFACE] = resurface

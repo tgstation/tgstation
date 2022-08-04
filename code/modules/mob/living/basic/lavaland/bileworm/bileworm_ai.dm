@@ -5,7 +5,7 @@
 
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/bileworm_attack
+		/datum/ai_planning_subtree/bileworm_attack,
 	)
 
 /datum/ai_planning_subtree/bileworm_attack
