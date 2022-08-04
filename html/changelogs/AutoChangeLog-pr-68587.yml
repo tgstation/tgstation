@@ -1,5 +1,0 @@
-author: "orthography"
-delete-after: True
-changes: 
-  - qol: "allows for an existing ai lawset to be used as the default instead of a \"custom\" lawset."
-  - server: "added server settings that allow for the ai lawset to be specified. This *should* be changed in the server to allow the \"asimov++\" card to spawn in place of the \"asimov\" card in the AI upload."
