@@ -38,7 +38,7 @@
 	ninja.mind.add_antag_datum(/datum/antagonist/ninja)
 	spawned_mobs += ninja
 	message_admins("[ADMIN_LOOKUPFLW(ninja)] has been made into a space ninja by an event.")
-	log_game("[key_name(ninja)] was spawned as a ninja by an event.")
+	ninja.log_message("was spawned as a ninja by an event.", LOG_GAME)
 
 	return SUCCESSFUL_SPAWN
 

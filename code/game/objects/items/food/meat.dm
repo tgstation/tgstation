@@ -470,7 +470,7 @@
 		bananas.faction = faction
 	if (!QDELETED(bananas))
 		visible_message(span_notice("[src] expands!"))
-		bananas.log_message("Spawned via [src] at [AREACOORD(src)], Last attached mob: [key_name(spammer)].", LOG_ATTACK)
+		bananas.log_message("spawned via [src], Last attached mob: [key_name(spammer)].", LOG_ATTACK)
 	else if (!spammer) // Visible message in case there are no fingerprints
 		visible_message(span_notice("[src] fails to expand!"))
 	qdel(src)
@@ -490,6 +490,7 @@
 	playsound(user, 'sound/items/eatfood.ogg', rand(10, 50), TRUE)
 	user.temporarilyRemoveItemFromInventory(src) //removes from hands, keeps in M
 	addtimer(CALLBACK(src, .proc/finish_suicide, user), 15) //you've eaten it, you can run now
+
 	return MANUAL_SUICIDE
 
 /obj/item/food/monkeycube/proc/finish_suicide(mob/living/user) ///internal proc called by a monkeycube's suicide_act using a timer and callback. takes as argument the mob/living who activated the suicide

@@ -35,6 +35,6 @@
 	Mind.add_antag_datum(/datum/antagonist/nukeop/lone)
 
 	message_admins("[ADMIN_LOOKUPFLW(operative)] has been made into lone operative by an event.")
-	log_game("[key_name(operative)] was spawned as a lone operative by an event.")
+	operative.log_message("was spawned as a lone operative by an event.", LOG_GAME)
 	spawned_mobs += operative
 	return SUCCESSFUL_SPAWN

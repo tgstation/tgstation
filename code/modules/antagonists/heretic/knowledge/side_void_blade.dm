@@ -68,7 +68,8 @@
 
 /// Make [victim] into a shattered risen ghoul.
 /datum/heretic_knowledge/limited_amount/risen_corpse/proc/make_risen(mob/living/user, mob/living/carbon/human/victim)
-	log_game("[key_name(user)] created a shattered risen out of [key_name(victim)].")
+	user.log_message("created a shattered risen out of [key_name(victim)].", LOG_GAME)
+	victim.log_message("became a shattered risen of [key_name(user)]'s.", LOG_VICTIM, log_globally = FALSE)
 	message_admins("[ADMIN_LOOKUPFLW(user)] created a shattered risen, [ADMIN_LOOKUPFLW(victim)].")
 
 	victim.apply_status_effect(

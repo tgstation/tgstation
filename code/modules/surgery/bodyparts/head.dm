@@ -88,7 +88,7 @@
 		update_icon_dropped()
 		if(!QDELETED(brainmob)) //this shouldn't happen without badminnery.
 			message_admins("Brainmob: ([ADMIN_LOOKUPFLW(brainmob)]) was left stranded in [src] at [ADMIN_VERBOSEJMP(src)] without a brain!")
-			log_game("Brainmob: ([key_name(brainmob)]) was left stranded in [src] at [AREACOORD(src)] without a brain!")
+			brainmob.log_message(", brainmob, was left stranded in [src] at [AREACOORD(src)] without a brain!", LOG_GAME)
 	if(head_atom == brainmob)
 		brainmob = null
 	if(head_atom == eyes)
