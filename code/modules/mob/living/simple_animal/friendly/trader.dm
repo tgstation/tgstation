@@ -145,7 +145,7 @@
 	var/list/npc_options = list()
 	if(products.len)
 		npc_options["Buy"] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_buy")
-	if(say_phrases[TRADER_LORE_PHRASE].len)
+	if(length(say_phrases[TRADER_LORE_PHRASE]))
 		npc_options["Talk"] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_talk")
 	if(wanted_items.len)
 		npc_options["Sell"] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_sell")
