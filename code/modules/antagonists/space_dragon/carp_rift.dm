@@ -115,6 +115,7 @@
 		dragon?.destroy_rifts()
 		if(dragon)
 			to_chat(dragon.owner, span_boldwarning("A rift has been destroyed! You have failed, and find yourself weakened."))
+	dragon = null
 	return ..()
 
 /obj/structure/carp_rift/process(delta_time)

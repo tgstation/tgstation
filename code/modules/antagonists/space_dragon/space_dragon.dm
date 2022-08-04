@@ -55,6 +55,11 @@
 	owner.current.faction -= "carp"
 	UnregisterSignal(owner.current, COMSIG_LIVING_LIFE)
 	UnregisterSignal(owner.current, COMSIG_LIVING_DEATH)
+	rift_list = null
+
+/datum/antagonist/space_dragon/Destroy()
+	rift_list = null
+	. = ..()
 
 /datum/antagonist/space_dragon/get_preview_icon()
 	var/icon/icon = icon('icons/mob/spacedragon.dmi', "spacedragon")
