@@ -550,7 +550,7 @@
 		return
 
 	var/client/recipient = ambiguious_recipient
-	// The ckey of our recipient
+	// The key of our recipient
 	var/recipient_key = recipient?.key
 	// Shows the recipient's ckey and the name of any mob it might be possessing
 	var/recipient_name = key_name(recipient)
