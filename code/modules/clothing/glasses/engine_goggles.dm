@@ -205,20 +205,25 @@
 	for(var/turf/open in view(range, viewer))
 		if(open.blocks_air)
 			continue
+		var/calc
 		var/datum/gas_mixture/environment = open.return_air()
 		var/temp = round(environment.temperature)
-		var/static/mutable_appearance/normaltemp = mutable_appearance('icons/turf/overlays.dmi', "greenOverlay", ABOVE_MOB_LAYER, RUNECHAT_PLANE, 200)
-		var/static/mutable_appearance/coldtemp = mutable_appearance('icons/turf/overlays.dmi', "blueOverlay", ABOVE_MOB_LAYER, RUNECHAT_PLANE, 200)
-		var/static/mutable_appearance/hottemp = mutable_appearance('icons/turf/overlays.dmi', "redOverlay", ABOVE_MOB_LAYER, RUNECHAT_PLANE, 200)	
-		var/image/pic = image(loc = open)
-		pic.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		var/image/pic = image('icons/turf/overlays.dmi', open, "greyOverlay", ABOVE_ALL_MOB_LAYER)
 		if(temp <= 273.15)
-			pic.appearance = coldtemp
-		else if(temp >= 303.15)
-			pic.appearance = hottemp
-		else 
-			pic.appearance = normaltemp
-		
+			pic.color = COLOR_STRONG_BLUE
+		if(temp > 273.15 && temp <= 283.15)
+			calc = max(round(temp/280, 0.01), 0)
+			pic.color = BlendRGB(COLOR_DARK_CYAN, COLOR_LIME, calc)
+		else if(temp >= 100)
+			pic.color = COLOR_RED
+		else if(temp > 280 && temp <= 1000)
+			calc =    clamp(round((temp-280)/720, 0.01), 0, 1)
+			pic.color = BlendRGB(COLOR_LIME, COLOR_YELLOW, calc)
+		else
+			calc =    clamp(round((temp-1000)/4000, 0.01), 0, 1)
+			pic.color = BlendRGB(COLOR_YELLOW, COLOR_RED, calc)
+		pic.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		pic.alpha = 255
 		flick_overlay(pic, list(viewer.client), duration)
 
 
