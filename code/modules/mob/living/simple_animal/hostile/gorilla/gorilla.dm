@@ -157,6 +157,7 @@
 		jobban = ROLE_SENTIENCE,
 		poll_time = 30 SECONDS,
 		target_mob = src,
+		pic_source = type,
 	)
 
 	being_polled_for = FALSE

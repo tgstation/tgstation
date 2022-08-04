@@ -10,7 +10,7 @@
 	fakeable = FALSE
 
 /datum/round_event/ghost_role/operative/spawn_role()
-	var/list/candidates = SSpolling.poll_ghost_candidates(role = ROLE_LONE_OPERATIVE, jobban = ROLE_OPERATIVE)
+	var/list/candidates = SSpolling.poll_ghost_candidates(role = ROLE_LONE_OPERATIVE, jobban = ROLE_OPERATIVE, pic_source = /obj/machinery/nuclearbomb)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 

@@ -26,7 +26,7 @@
 			message_admins("Event attempted to spawn a revenant, but there were only [deadMobs]/[REVENANT_SPAWN_THRESHOLD] dead mobs.")
 			return WAITING_FOR_SOMETHING
 
-	var/list/candidates = SSpolling.poll_ghost_candidates(role = ROLE_REVENANT, jobban = ROLE_REVENANT)
+	var/list/candidates = SSpolling.poll_ghost_candidates(role = ROLE_REVENANT, jobban = ROLE_REVENANT, pic_source = /mob/living/simple_animal/revenant)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 

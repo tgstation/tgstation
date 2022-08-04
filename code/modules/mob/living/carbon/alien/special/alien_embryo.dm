@@ -81,7 +81,7 @@
 
 	bursting = TRUE
 
-	var/list/candidates = SSpolling.poll_ghost_candidates("Do you want to play as an alien larva that will burst out of [owner.real_name]?", ROLE_ALIEN, ROLE_ALIEN, 100, POLL_IGNORE_ALIEN_LARVA)
+	var/list/candidates = SSpolling.poll_ghost_candidates("Do you want to play as an alien larva that will burst out of [owner.real_name]?", role = ROLE_ALIEN, jobban = ROLE_ALIEN, poll_time = 10 SECONDS, ignore_category = POLL_IGNORE_ALIEN_LARVA, pic_source = /mob/living/carbon/alien/larva)
 
 	if(QDELETED(src) || QDELETED(owner))
 		return

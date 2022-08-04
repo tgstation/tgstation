@@ -25,7 +25,7 @@
 		message_admins("No valid spawn locations found, aborting...")
 		return MAP_ERROR
 
-	var/list/candidates = SSpolling.poll_ghost_candidates(role = ROLE_SPACE_DRAGON, jobban = ROLE_SPACE_DRAGON)
+	var/list/candidates = SSpolling.poll_ghost_candidates(role = ROLE_SPACE_DRAGON, jobban = ROLE_SPACE_DRAGON, pic_source = /mob/living/simple_animal/hostile/space_dragon)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 

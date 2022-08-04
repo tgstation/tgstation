@@ -463,7 +463,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		return
 
 	to_chat(src, span_holoparasite("You attempt to reset <font color=\"[chosen_guardian.guardiancolor]\"><b>[chosen_guardian.real_name]</b></font>'s personality..."))
-	var/list/mob/dead/observer/ghost_candidates = SSpolling.poll_ghost_candidates("Do you want to play as [src.real_name]'s [chosen_guardian.real_name]?", ROLE_PAI, FALSE, 100)
+	var/list/mob/dead/observer/ghost_candidates = SSpolling.poll_ghost_candidates("Do you want to play as [real_name]'s [chosen_guardian.real_name]?", jobban = ROLE_PAI, poll_time = 10 SECONDS, pic_source = chosen_guardian)
 	if(!LAZYLEN(ghost_candidates))
 		to_chat(src, span_holoparasite("There were no ghosts willing to take control of <font color=\"[chosen_guardian.guardiancolor]\"><b>[chosen_guardian.real_name]</b></font>. Looks like you're stuck with it for now."))
 		return
