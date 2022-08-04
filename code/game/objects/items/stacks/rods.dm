@@ -43,6 +43,13 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	. = ..()
 	update_appearance()
 	AddElement(/datum/element/openspace_item_click_handler)
+	var/static/list/tool_behaviors = list(
+		TOOL_WELDER = list(
+			SCREENTIP_CONTEXT_LMB = "Craft iron sheets",
+			SCREENTIP_CONTEXT_RMB = "Craft floor tiles",
+		),
+	)
+	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
 /obj/item/stack/rods/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
 	if(proximity_flag)
@@ -60,29 +67,48 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	else
 		icon_state = "rods"
 
-/obj/item/stack/rods/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_WELDER)
+/obj/item/stack/rods/attackby(obj/item/attackby_item, mob/user, params)
+	if(attackby_item.tool_behaviour == TOOL_WELDER)
 		if(get_amount() < 2)
 			to_chat(user, span_warning("You need at least two rods to do this!"))
 			return
-
-		if(W.use_tool(src, user, 0, volume=40))
+		if(attackby_item.use_tool(src, user, 0, volume=40))
 			var/obj/item/stack/sheet/iron/new_item = new(usr.loc)
-			user.visible_message(span_notice("[user.name] shaped [src] into iron sheets with [W]."), \
-				span_notice("You shape [src] into iron sheets with [W]."), \
+			user.visible_message(span_notice("[user.name] shaped [src] into iron sheets with [attackby_item]."), \
+				span_notice("You shape [src] into iron sheets with [attackby_item]."), \
 				span_hear("You hear welding."))
-			var/obj/item/stack/rods/R = src
+			var/obj/item/stack/rods/welded_rod = src
 			src = null
-			var/replace = (user.get_inactive_held_item()==R)
-			R.use(2)
-			if (!R && replace)
+			var/replace = (user.get_inactive_held_item()==welded_rod)
+			welded_rod.use(2)
+			if (!welded_rod && replace)
 				user.put_in_hands(new_item)
 	else
 		return ..()
 
+/obj/item/stack/rods/attackby_secondary(obj/item/attackby_item, mob/user, params)
+	if(attackby_item.tool_behaviour == TOOL_WELDER)
+		if(attackby_item.use_tool(src, user, 0, volume=40))
+			var/obj/item/stack/tile/iron/two/new_item = new(user.loc)
+			user.visible_message(span_notice("[user] shaped [src] into [new_item] with [attackby_item]."), \
+				span_notice("You shaped [src] into [new_item] with [attackby_item]."), \
+				span_hear("You hear welding."))
+			var/obj/item/stack/rods/welded_rod = src
+			src = null
+			var/replace = (user.get_inactive_held_item()==welded_rod)
+			welded_rod.use(1)
+			if(!welded_rod && replace)
+				user.put_in_hands(new_item)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	return SECONDARY_ATTACK_CONTINUE_CHAIN
+
 /obj/item/stack/rods/cyborg/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_blocker)
+
+/obj/item/stack/rods/two
+	amount = 2
 
 /obj/item/stack/rods/ten
 	amount = 10

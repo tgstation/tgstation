@@ -83,22 +83,60 @@
 		/obj/item/stack/tile/iron/sepia,
 	)
 
-/obj/item/stack/tile/iron/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_WELDER)
+/obj/item/stack/tile/iron/two
+	amount = 2
+
+/obj/item/stack/tile/iron/four
+	amount = 4
+
+/obj/item/stack/tile/iron/Initialize(mapload)
+	. = ..()
+	var/static/list/tool_behaviors = list(
+		TOOL_WELDER = list(
+			SCREENTIP_CONTEXT_LMB = "Craft iron sheets",
+			SCREENTIP_CONTEXT_RMB = "Craft iron rods",
+		),
+	)
+	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+
+/obj/item/stack/tile/iron/attackby(obj/item/attackby_item, mob/user, params)
+	if(attackby_item.tool_behaviour == TOOL_WELDER)
 		if(get_amount() < 4)
 			to_chat(user, span_warning("You need at least four tiles to do this!"))
 			return
-		if(W.use_tool(src, user, 0, volume=40))
+		if(attackby_item.use_tool(src, user, 0, volume=40))
 			var/obj/item/stack/sheet/iron/new_item = new(user.loc)
-			user.visible_message(span_notice("[user] shaped [src] into [new_item] with [W]."), \
-				span_notice("You shaped [src] into [new_item] with [W]."), \
+			user.visible_message(span_notice("[user] shaped [src] into a sheet with [attackby_item]."), \
+				span_notice("You shaped [src] into a sheet with [attackby_item]."), \
 				span_hear("You hear welding."))
-			var/holding = user.is_holding(src)
-			use(4)
-			if(holding && QDELETED(src))
+			var/obj/item/stack/tile/iron/welded_tile = src
+			src = null
+			var/replace = (user.get_inactive_held_item()==welded_tile)
+			welded_tile.use(4)
+			if(!welded_tile && replace)
 				user.put_in_hands(new_item)
 	else
 		return ..()
+
+/obj/item/stack/tile/iron/attackby_secondary(obj/item/attackby_item, mob/user, params)
+	if(attackby_item.tool_behaviour == TOOL_WELDER)
+		if(get_amount() < 2)
+			to_chat(user, span_warning("You need at least two tiles to do this!"))
+			return
+		if(attackby_item.use_tool(src, user, 0, volume=40))
+			var/obj/item/stack/rods/new_item = new(user.loc)
+			user.visible_message(span_notice("[user] shaped [src] into [new_item] with [attackby_item]."), \
+				span_notice("You shaped [src] into [new_item] with [attackby_item]."), \
+				span_hear("You hear welding."))
+			var/obj/item/stack/tile/iron/welded_tile = src
+			src = null
+			var/replace = (user.get_inactive_held_item()==welded_tile)
+			welded_tile.use(2)
+			if(!welded_tile && replace)
+				user.put_in_hands(new_item)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /obj/item/stack/tile/iron/base //this subtype should be used for most stuff
 	merge_type = /obj/item/stack/tile/iron/base
