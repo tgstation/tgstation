@@ -46,6 +46,9 @@ SUBSYSTEM_DEF(verb_manager)
 	///for obvious reasons dont make this be TRUE on the code level this is for admins to turn on
 	var/message_admins_on_queue = FALSE
 
+	///always queue if possible. overides can_queue_admin_verbs but not FOR_ADMINS_IF_VERBS_FUCKED_immediately_execute_all_verbs
+	var/always_queue = FALSE
+
 /**
  * queue a callback for the given verb/verblike proc and any given arguments to the specified verb subsystem, so that they process in the next tick.
  * intended to only work with verbs or verblike procs called directly from client input, use as part of TRY_QUEUE_VERB() and co.
@@ -53,14 +56,18 @@ SUBSYSTEM_DEF(verb_manager)
  * returns TRUE if the queuing was successful, FALSE otherwise.
  */
 /proc/_queue_verb(datum/callback/verb_callback/incoming_callback, tick_check, datum/controller/subsystem/verb_manager/subsystem_to_use = SSverb_manager, ...)
-	if(TICK_USAGE < tick_check \
-	|| QDELETED(incoming_callback) \
+	if(QDELETED(incoming_callback) \
 	|| QDELETED(incoming_callback.object) \
 	|| !ismob(usr) \
 	|| QDELING(usr))
+		stack_trace("_queue_verb() returned false because either it was asked to queue something that isnt player input or it was given an invalid callback!")
 		return FALSE
 
 	if(!istype(subsystem_to_use))
+		stack_trace("_queue_verb() returned false because it was given an invalid subsystem to queue for!")
+		return FALSE
+
+	if((TICK_USAGE < tick_check) && !subsystem_to_use.always_queue)
 		return FALSE
 
 	var/list/args_to_check = args.Copy()
@@ -80,9 +87,11 @@ SUBSYSTEM_DEF(verb_manager)
  * in TRY_QUEUE_VERB() and co.
  */
 /datum/controller/subsystem/verb_manager/proc/can_queue_verb(datum/callback/verb_callback/incoming_callback)
+	if(always_queue && !FOR_ADMINS_IF_VERBS_FUCKED_immediately_execute_all_verbs)
+		return TRUE
+
 	if(usr.client?.holder && !can_queue_admin_verbs \
 	|| FOR_ADMINS_IF_VERBS_FUCKED_immediately_execute_all_verbs \
-	|| !initialized \
 	|| !(runlevels & Master.current_runlevel))
 		return FALSE
 
