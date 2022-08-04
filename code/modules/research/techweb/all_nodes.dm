@@ -277,7 +277,6 @@
 		"comp_ntnet_send",
 		"comp_pinpointer",
 		"comp_pressuresensor",
-		"comp_printer",
 		"comp_radio",
 		"comp_random",
 		"comp_reagents",

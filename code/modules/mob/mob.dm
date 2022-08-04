@@ -1140,10 +1140,15 @@
 /mob/proc/is_literate()
 	return HAS_TRAIT(src, TRAIT_LITERATE) && !HAS_TRAIT(src, TRAIT_ILLITERATE)
 
-/// Can this mob write
-/mob/proc/can_write(obj/writing_instrument)
-	if(!istype(writing_instrument, /obj/item/pen) && !istype(writing_instrument, /obj/item/toy/crayon))
+/**
+ * Proc that returns TRUE if the mob can write using the writing_instrument, FALSE otherwise.
+ *
+ * This proc a side effect, outputting a message to the mob's chat with a reason if it returns FALSE.
+ */
+/mob/proc/can_write(obj/item/writing_instrument)
+	if(!istype(writing_instrument))
 		to_chat(src, span_warning("You can't write with the [writing_instrument]!"))
+		return FALSE
 
 	if(!is_literate())
 		to_chat(src, span_warning("You try to write, but don't know how to spell anything!"))
@@ -1153,15 +1158,17 @@
 		to_chat(src, span_warning("It's too dark in here to write anything!"))
 		return FALSE
 
+	var/pen_info = writing_instrument.get_writing_implement_details()
+	if(!pen_info || (pen_info["interaction_mode"] != MODE_WRITING))
+		to_chat(src, span_warning("You can't write with the [writing_instrument]!"))
+		return FALSE
+
+	if(has_gravity())
+		return TRUE
+
 	var/obj/item/pen/pen = writing_instrument
-	var/writing_instrument_requires_gravity
 
-	if(istype(pen))
-		writing_instrument_requires_gravity = pen.requires_gravity
-	else if(istype(writing_instrument, /obj/item/toy/crayon))
-		writing_instrument_requires_gravity = FALSE
-
-	if(writing_instrument_requires_gravity && !has_gravity())
+	if(istype(pen) && pen.requires_gravity)
 		to_chat(src, span_warning("You try to write, but the [writing_instrument] doesn't work in zero gravity!"))
 		return FALSE
 

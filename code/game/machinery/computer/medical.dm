@@ -511,26 +511,27 @@
 					GLOB.data_core.medicalPrintCount++
 					playsound(loc, 'sound/items/poster_being_created.ogg', 100, TRUE)
 					sleep(30)
-					var/obj/item/paper/P = new /obj/item/paper( loc )
-					P.info = "<CENTER><B>Medical Record - (MR-[GLOB.data_core.medicalPrintCount])</B></CENTER><BR>"
+					var/obj/item/paper/printed_paper = new /obj/item/paper(loc)
+					var/final_paper_text = "<CENTER><B>Medical Record - (MR-[GLOB.data_core.medicalPrintCount])</B></CENTER><BR>"
 					if(active1 in GLOB.data_core.general)
-						P.info += text("Name: [] ID: []<BR>\nGender: []<BR>\nAge: []<BR>", active1.fields["name"], active1.fields["id"], active1.fields["gender"], active1.fields["age"])
-						P.info += "\nSpecies: [active1.fields["species"]]<BR>"
-						P.info += text("\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>", active1.fields["fingerprint"], active1.fields["p_stat"], active1.fields["m_stat"])
+						final_paper_text += text("Name: [] ID: []<BR>\nGender: []<BR>\nAge: []<BR>", active1.fields["name"], active1.fields["id"], active1.fields["gender"], active1.fields["age"])
+						final_paper_text += "\nSpecies: [active1.fields["species"]]<BR>"
+						final_paper_text += text("\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>", active1.fields["fingerprint"], active1.fields["p_stat"], active1.fields["m_stat"])
 					else
-						P.info += "<B>General Record Lost!</B><BR>"
+						final_paper_text += "<B>General Record Lost!</B><BR>"
 					if(active2 in GLOB.data_core.medical)
-						P.info += text("<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: []<BR>\nDNA: []<BR>\n<BR>\nMinor Disabilities: []<BR>\nDetails: []<BR>\n<BR>\nMajor Disabilities: []<BR>\nDetails: []<BR>\n<BR>\nAllergies: []<BR>\nDetails: []<BR>\n<BR>\nCurrent Diseases: [] (per disease info placed in log/comment section)<BR>\nDetails: []<BR>\n<BR>\nImportant Notes:<BR>\n\t[]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", active2.fields["blood_type"], active2.fields["b_dna"], active2.fields["mi_dis"], active2.fields["mi_dis_d"], active2.fields["ma_dis"], active2.fields["ma_dis_d"], active2.fields["alg"], active2.fields["alg_d"], active2.fields["cdi"], active2.fields["cdi_d"], active2.fields["notes"])
+						final_paper_text += text("<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: []<BR>\nDNA: []<BR>\n<BR>\nMinor Disabilities: []<BR>\nDetails: []<BR>\n<BR>\nMajor Disabilities: []<BR>\nDetails: []<BR>\n<BR>\nAllergies: []<BR>\nDetails: []<BR>\n<BR>\nCurrent Diseases: [] (per disease info placed in log/comment section)<BR>\nDetails: []<BR>\n<BR>\nImportant Notes:<BR>\n\t[]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", active2.fields["blood_type"], active2.fields["b_dna"], active2.fields["mi_dis"], active2.fields["mi_dis_d"], active2.fields["ma_dis"], active2.fields["ma_dis_d"], active2.fields["alg"], active2.fields["alg_d"], active2.fields["cdi"], active2.fields["cdi_d"], active2.fields["notes"])
 						var/counter = 1
 						while(active2.fields[text("com_[]", counter)])
-							P.info += text("[]<BR>", active2.fields[text("com_[]", counter)])
+							final_paper_text += text("[]<BR>", active2.fields[text("com_[]", counter)])
 							counter++
-						P.name = text("MR-[] '[]'", GLOB.data_core.medicalPrintCount, active1.fields["name"])
+						printed_paper.name = text("MR-[] '[]'", GLOB.data_core.medicalPrintCount, active1.fields["name"])
 					else
-						P.info += "<B>Medical Record Lost!</B><BR>"
-						P.name = text("MR-[] '[]'", GLOB.data_core.medicalPrintCount, "Record Lost")
-					P.info += "</TT>"
-					P.update_appearance()
+						final_paper_text += "<B>Medical Record Lost!</B><BR>"
+						printed_paper.name = text("MR-[] '[]'", GLOB.data_core.medicalPrintCount, "Record Lost")
+					final_paper_text += "</TT>"
+					printed_paper.add_raw_text(final_paper_text)
+					printed_paper.update_appearance()
 					printing = null
 
 	add_fingerprint(usr)

@@ -1588,11 +1588,11 @@
 /area/station/maintenance/department/crew_quarters/bar)
 "ave" = (
 /obj/docking_port/stationary{
-	dir = 8;
+	dir = 2;
 	dwidth = 11;
 	height = 22;
 	id = "whiteship_home";
-	name = "SS13: Auxiliary Dock, Station-Port";
+	name = "SS13: Auxiliary Dock, Station-Fore";
 	width = 35
 	},
 /turf/open/space/basic,
@@ -10412,13 +10412,13 @@
 "dgD" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/conveyor_switch/oneway{
 	id = "NTMSLoad2";
 	name = "on ramp";
 	pixel_x = 8;
 	pixel_y = -5
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "dgE" = (
@@ -10776,16 +10776,11 @@
 	id = "NTMSLoad2";
 	name = "on ramp"
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 4
 	},
-/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/cargo/warehouse)
 "dlc" = (
@@ -14568,13 +14563,10 @@
 	id = "NTMSLoad";
 	name = "off ramp"
 	},
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/cargo/warehouse)
 "eqA" = (
@@ -19544,11 +19536,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
-"fGG" = (
-/obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/asteroid/hivelord,
-/turf/open/floor/plating,
-/area/station/cargo/warehouse)
 "fGI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -23424,7 +23411,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
 "gJF" = (
-/obj/structure/table_frame,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/stack/cable_coil/five,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "gJK" = (
@@ -26432,8 +26421,11 @@
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
 "hBG" = (
-/obj/structure/tank_dispenser/oxygen,
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/tank_dispenser/oxygen{
+	pixel_x = -1;
+	pixel_y = 2
+	},
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "hBJ" = (
@@ -27691,6 +27683,13 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central/fore)
+"hRB" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron/dark,
+/area/station/cargo/warehouse)
 "hRG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
 	dir = 1
@@ -28397,7 +28396,7 @@
 "ibm" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/asteroid/hivelord,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "ibJ" = (
@@ -35281,7 +35280,7 @@
 	},
 /obj/item/clipboard,
 /obj/item/paper/crumpled{
-	info = "The safes have been locked and scrambled. Three thousand space dollars, a bandolier, a custom shotgun, and a lazarus injector have been safely deposited.";
+	default_raw_text = "The safes have been locked and scrambled. Three thousand space dollars, a bandolier, a custom shotgun, and a lazarus injector have been safely deposited.";
 	name = "bank statement"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -42024,14 +42023,11 @@
 	id = "NTMSLoad";
 	name = "off ramp"
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
 /obj/effect/turf_decal/bot,
 /obj/structure/sign/warning/vacuum/external/directional/south,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/cargo/warehouse)
 "lYa" = (
@@ -42305,7 +42301,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/remains/human,
 /obj/item/paper/crumpled{
-	info = "This isn't funny, I'm trapped on the least fun room on the station.";
+	default_raw_text = "This isn't funny, I'm trapped on the least fun room on the station.";
 	name = "poorly written complaint"
 	},
 /turf/open/floor/iron/dark,
@@ -42392,6 +42388,8 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/cargo/warehouse)
 "mdE" = (
@@ -43617,15 +43615,12 @@
 /turf/closed/wall,
 /area/station/service/kitchen)
 "mwj" = (
-/obj/machinery/door/airlock/external{
-	name = "Departure Shuttle Airlock"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/dark,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/structure/cable,
+/turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "mwn" = (
 /obj/machinery/door/firedoor,
@@ -48365,6 +48360,8 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "nOR" = (
@@ -59079,6 +59076,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/item/stack/cable_coil/cut,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "qVk" = (
@@ -59202,8 +59200,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
 "qVW" = (
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/stack/cable_coil/five,
+/obj/item/binoculars,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "qWz" = (
@@ -62128,14 +62127,9 @@
 /turf/closed/wall/rust,
 /area/station/cargo/miningoffice)
 "rLW" = (
-/obj/machinery/door/airlock/external{
-	name = "External Freight Airlock"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/turf/open/floor/iron/dark,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table_frame,
+/turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "rMi" = (
 /obj/effect/turf_decal/delivery,
@@ -63218,7 +63212,6 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/asteroid/hivelord,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "scE" = (
@@ -63448,17 +63441,6 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
-"seP" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/cargo/warehouse)
 "seU" = (
 /obj/structure/table,
 /obj/item/clothing/gloves/color/yellow,
@@ -63501,18 +63483,13 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "sfx" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/button/door/directional/south{
 	id = "freight_port";
 	name = "Freight Bay Control"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
 	},
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
@@ -64509,6 +64486,8 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/cargo/warehouse)
 "suo" = (
@@ -70246,14 +70225,14 @@
 /turf/open/floor/carpet/red,
 /area/station/command/heads_quarters/hos)
 "tZh" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/cargo/warehouse)
 "tZk" = (
@@ -71176,18 +71155,15 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "ulJ" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "NTMSLoad";
 	name = "off ramp"
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/cargo/warehouse)
 "ulS" = (
@@ -73094,13 +73070,10 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port/greater)
 "uQt" = (
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
 /area/station/cargo/warehouse)
 "uQE" = (
@@ -73724,8 +73697,9 @@
 /turf/open/floor/iron/dark,
 /area/station/science/research)
 "uZS" = (
-/obj/structure/grille,
 /obj/item/shard,
+/obj/structure/grille/broken,
+/obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "uZT" = (
@@ -75699,15 +75673,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "vAr" = (
-/obj/effect/turf_decal/stripes/corner,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/rods,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/sign/warning/vacuum/external/directional/west,
+/obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "vAw" = (
@@ -79516,6 +79484,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/mob/living/simple_animal/hostile/asteroid/hivelord,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "wAz" = (
@@ -128134,7 +128103,7 @@ aaa
 aaa
 aaa
 aaa
-ave
+aaa
 aaa
 aaa
 aaa
@@ -128390,10 +128359,10 @@ acm
 acm
 acm
 qJs
-itR
-rLW
-itR
-qJs
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -128644,13 +128613,13 @@ aeu
 aeu
 aeu
 aeu
-coy
+dME
+itR
+itR
+itR
+dME
 aaa
-acm
-itR
-seP
-itR
-acm
+aaa
 aaa
 aaa
 aaa
@@ -128901,14 +128870,14 @@ dME
 mDD
 dME
 dME
-dME
-itR
-itR
 mDD
-mwj
+qVW
+gJF
+rLW
+mDD
 dME
 acm
-aaa
+qJs
 aaa
 aaa
 aaa
@@ -129159,8 +129128,8 @@ fkI
 waq
 mDD
 aKe
-qVW
-gJF
+nuf
+nuf
 vAr
 sfx
 mDD
@@ -129675,12 +129644,12 @@ itR
 qUZ
 fSD
 ibm
-sTy
+mwj
 tZh
 mdB
 nOL
 suj
-aaa
+ave
 aaa
 aaa
 aaa
@@ -130444,7 +130413,7 @@ mDD
 itR
 dME
 gIw
-fGG
+nuf
 eNb
 sTy
 ulJ
@@ -130704,7 +130673,7 @@ eXZ
 ngl
 lhf
 sTy
-uQt
+hRB
 itR
 aaa
 aaa

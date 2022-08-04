@@ -86,3 +86,22 @@
 ///Overload for running after processing.
 /datum/symptom/proc/OnRemove(datum/disease/advance/A)
 	return
+
+/**
+ * Returns a list for all of the traits of this symptom.
+ *
+ *
+ * @returns {list} symptom - The desired symptoms as a list.
+ */
+/datum/symptom/proc/get_symptom_data()
+	var/list/data = list()
+	data["name"] = name
+	data["desc"] = desc
+	data["stealth"] = stealth
+	data["resistance"] = resistance
+	data["stage_speed"] = stage_speed
+	data["transmission"] = transmittable
+	data["level"] = level
+	data["neutered"] = neutered
+	data["threshold_desc"] = threshold_descs
+	return data

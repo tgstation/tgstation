@@ -142,7 +142,7 @@
 	if(owner)
 		to_chat(owner, span_userdanger("Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!"))
 
-/obj/item/organ/internal/heart/cursed/Remove(mob/living/carbon/accursed, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/heart/cursed/Remove(mob/living/carbon/accursed, special = FALSE)
 	..()
 	accursed.remove_client_colour(/datum/client_colour/cursed_heart_blood)
 
@@ -282,7 +282,7 @@
 	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, .proc/on_owner_fully_heal)
 	RegisterSignal(owner, COMSIG_PARENT_QDELETING, .proc/owner_deleted)
 
-/obj/item/organ/internal/heart/ethereal/Remove(mob/living/carbon/owner, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/heart/ethereal/Remove(mob/living/carbon/owner, special = FALSE)
 	UnregisterSignal(owner, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_PARENT_QDELETING))
 	REMOVE_TRAIT(owner, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
 	stop_crystalization_process(owner)

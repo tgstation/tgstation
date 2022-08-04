@@ -32,7 +32,7 @@
  * Datum for generating a message overlay on the map
  */
 /datum/chatmessage
-	/// The visual element of the chat messsage
+	/// The visual element of the chat message
 	var/image/message
 	/// The location in which the message is appearing
 	var/atom/message_loc
