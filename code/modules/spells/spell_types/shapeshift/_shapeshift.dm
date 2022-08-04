@@ -20,15 +20,6 @@
 /datum/action/cooldown/spell/shapeshift/is_valid_target(atom/cast_on)
 	return isliving(cast_on)
 
-/// Check if we're currently shifted by trying to find the shapechange status effect in our loc
-/// Returns a truthy value (a status_effect instance) if we're shapeshifted, or null if we're not.
-/datum/action/cooldown/spell/shapeshift/proc/is_shifted(mob/living/cast_on)
-	var/mob/living/shape = cast_on.loc
-	if(!istype(shape))
-		return null
-
-	return shape.has_status_effect(/datum/status_effect/shapechange_mob)
-
 /datum/action/cooldown/spell/shapeshift/before_cast(atom/cast_on)
 	. = ..()
 	if(. & SPELL_CANCEL_CAST)
@@ -116,6 +107,7 @@
 	cast_on.death()
 	qdel(cast_on)
 
+/// Callback for the radial that allows the user to choose their species.
 /datum/action/cooldown/spell/shapeshift/proc/check_menu(mob/living/caster)
 	if(QDELETED(src))
 		return FALSE
@@ -124,6 +116,16 @@
 
 	return !caster.incapacitated()
 
+/// Check if we're currently shifted by trying to find the shapechange status effect in our loc
+/// Returns a truthy value (a status_effect instance) if we're shapeshifted, or null if we're not.
+/datum/action/cooldown/spell/shapeshift/proc/is_shifted(mob/living/cast_on)
+	var/mob/living/shape = cast_on.loc
+	if(!istype(shape))
+		return null
+
+	return shape.has_status_effect(/datum/status_effect/shapechange_mob)
+
+/// Actually does the shapeshift, for the caster.
 /datum/action/cooldown/spell/shapeshift/proc/do_shapeshift(mob/living/caster)
 	if(is_shifted(caster))
 		to_chat(caster, span_warning("You're already shapeshifted, but for some reason casting this tried to shapeshift you again!"))
@@ -133,11 +135,17 @@
 	// Make sure it's castable even in their new form.
 	spell_requirements &= ~(SPELL_REQUIRES_HUMAN|SPELL_REQUIRES_WIZARD_GARB)
 
-	var/mob/living/new_shape = new shapeshift_type(caster.loc)
+	var/mob/living/new_shape = create_shapeshift_mob(caster.loc)
 	return new_shape.apply_status_effect(/datum/status_effect/shapechange_mob, caster, src)
 
+/// Actually does the un-shapeshift, from the caster. (Caster is a shapeshifted mob.)
 /datum/action/cooldown/spell/shapeshift/proc/do_unshapeshift(mob/living/caster)
 	// Restore the requirements. Might mess with admin memes.
 	spell_requirements = initial(spell_requirements)
 
 	return caster.remove_status_effect(/datum/status_effect/shapechange_mob)
+
+/// Helper proc that instantiates the mob we shapeshift into.
+/// Returns an instance of a living mob. Can be overridden.
+/datum/action/cooldown/spell/shapeshift/proc/create_shapeshift_mob(atom/loc)
+	return new shapeshift_type(loc)

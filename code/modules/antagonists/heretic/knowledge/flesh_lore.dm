@@ -303,7 +303,7 @@
 	. = ..()
 	priority_announce("[generate_heretic_text()] Ever coiling vortex. Reality unfolded. ARMS OUTREACHED, THE LORD OF THE NIGHT, [user.real_name] has ascended! Fear the ever twisting hand! [generate_heretic_text()]", "[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
 
-	var/datum/action/cooldown/spell/shed_human_form/worm_spell = new(user.mind)
+	var/datum/action/cooldown/spell/shapeshift/shed_human_form/worm_spell = new(user.mind)
 	worm_spell.Grant(user)
 
 	user.client?.give_award(/datum/award/achievement/misc/flesh_ascension, user)
