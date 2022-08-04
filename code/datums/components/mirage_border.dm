@@ -40,3 +40,7 @@
 	name = "Mirage holder"
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/obj/effect/abstract/mirage_holder/Destroy(force)
+	. = ..()
+	stack_trace("I hate it here")
