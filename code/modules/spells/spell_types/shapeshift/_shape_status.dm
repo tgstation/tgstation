@@ -110,7 +110,7 @@
 
 	RegisterSignal(source_spell, list(COMSIG_PARENT_QDELETING, COMSIG_ACTION_REMOVED), .proc/on_spell_lost)
 
-/datum/status_effect/shapechange_mob/from_spell/restore_caster()
+/datum/status_effect/shapechange_mob/from_spell/restore_caster(kill_caster_after)
 	UnregisterSignal(source_spell, list(COMSIG_PARENT_QDELETING, COMSIG_ACTION_REMOVED))
 
 	source_spell.Grant(caster_mob)
@@ -129,9 +129,9 @@
 		caster_mob.revive(full_heal = TRUE, admin_revive = FALSE)
 
 		var/damage_to_apply = caster_mob.maxHealth * ((owner.maxHealth - owner.health) / owner.maxHealth)
-		stored.apply_damage(damage_to_apply, source_spell.convert_damage_type, forced = TRUE, wound_bonus = CANT_WOUND)
+		caster_mob.apply_damage(damage_to_apply, source_spell.convert_damage_type, forced = TRUE, wound_bonus = CANT_WOUND)
 
-	stored.blood_volume = shape.blood_volume
+	caster_mob.blood_volume = owner.blood_volume
 
 /datum/status_effect/shapechange_mob/from_spell/proc/on_spell_lost(datum/action/source)
 	SIGNAL_HANDLER
