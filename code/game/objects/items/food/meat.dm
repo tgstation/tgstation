@@ -848,6 +848,7 @@
 
 /obj/item/food/meat/slab/bugmeat
 	name = "bug meat"
+	icon_state = "spidermeat"
 	foodtypes = RAW | MEAT | BUGS
 
 /obj/item/food/meat/slab/mouse

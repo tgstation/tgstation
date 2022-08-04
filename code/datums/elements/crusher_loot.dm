@@ -8,8 +8,9 @@
 	id_arg_index = 2
 	/// Path of the trophy dropped
 	var/trophy_type
-	/// chance to drop the trophy if all the damage the mob took was crusher damage
+	/// chance to drop the trophy, lowered by the mob only taking partial crusher damage instead of full
 	/// for example, 25% would mean ~4 mobs need to die before you find one.
+	/// but it would be more if you didn't deal full crusher damage to them.
 	var/drop_mod
 	/// If true, will immediately spawn the item instead of putting it in butcher loot.
 	var/drop_immediately
