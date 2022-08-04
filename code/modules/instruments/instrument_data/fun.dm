@@ -18,7 +18,6 @@
 	id = "chime"
 	real_samples = list("79"='sound/machines/chime.ogg')
 
-
 /datum/instrument/fun/meowsynth
 	name = "MeowSynth"
 	id = "meowsynth"
