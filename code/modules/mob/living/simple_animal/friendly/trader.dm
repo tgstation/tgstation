@@ -1,10 +1,21 @@
+#define ITEM_REJECTED_PHRASE "ITEM_REJECTED_PHRASE"
+#define ITEM_SELLING_CANCELED_PHRASE "ITEM_SELLING_CANCELED_PHRASE"
+#define ITEM_SELLING_ACCEPTED_PHRASE "ITEM_SELLING_ACCEPTED_PHRASE"
+#define INTERESTED_PHRASE "INTERESTED_PHRASE"
+#define BUY_PHRASE "BUY_PHRASE"
+#define NO_CASH_PHRASE "NO_CASH_PHRASE"
+#define NO_STOCK_PHRASE "NO_STOCK_PHRASE"
+#define NOT_WILLING_TO_BUY_PHRASE "NOT_WILLING_TO_BUY_PHRASE"
+#define ITEM_IS_WORTHLESS_PHRASE "ITEM_IS_WORTHLESS_PHRASE"
+#define TRADER_HAS_ENOUGH_ITEM_PHRASE "TRADER_HAS_ENOUGH_ITEM_PHRASE"
+#define TRADER_LORE_PHRASE "TRADER_LORE_PHRASE"
+
 /**
  * # Trader
  *
  * A mob that has some dialogue options with radials, allows for selling items and buying em'
  *
  */
-
 /mob/living/simple_animal/hostile/retaliate/trader
 	name = "Trader"
 	desc = "Come buy some!"
@@ -38,51 +49,70 @@
 	/**
 	 * Format; list(TYPEPATH = list(PRICE, QUANTITY))
 	 * Associated list of items the NPC sells with how much they cost and the quantity available before a restock
-	 * This list is filled upon Initialize(), if you want to change the starting products, modify initial_products()
+	 * This list is filled by Initialize(), if you want to change the starting products, modify initial_products()
 	 * *
 	 */
 	var/list/products
 	/**
+	 * A list of wanted items that the trader would wish to buy, each typepath has a assigned value, quantity and additional flavor text
+	 *
 	 * CHILDREN OF TYPEPATHS INCLUDED IN WANTED_ITEMS WILL BE TREATED AS THE PARENT IF NO ENTRY EXISTS FOR THE CHILDREN
 	 *
+	 * As an additional note; if you include multiple children of a typepath; the typepath with the most children should be placed after all other typepaths
+	 * Bad; list(/obj/item/milk = list(100, 1, ""), /obj/item/milk/small = list(50, 2, ""))
+	 * Good; list(/obj/item/milk/small = list(50, 2, ""), /obj/item/milk = list(100, 1, ""))
+	 * This is mainly because sell_item() uses a istype(item_being_sold, item_in_entry) to determine what parent should the child be automatically considered as
+	 * If /obj/item/milk/small/spooky was being sold; /obj/item/milk/small would be the first to check against rather than /obj/item/milk
 	 *
 	 * Format; list(TYPEPATH = list(PRICE, QUANTITY, ADDITIONAL_DESCRIPTION))
 	 * Associated list of items able to be sold to the NPC with the money given for them.
 	 * The price given should be the "base" price; any price manipulation based on variables should be done with apply_sell_price_mods()
 	 * ADDITIONAL_DESCRIPTION is any additional text added to explain how the variables of the item effect the price; if it's stack based, it's final price depends how much is in the stack
 	 * EX; /obj/item/stack/sheet/mineral/diamond = list(500, INFINITY, ", per 2000 cm3 sheet of diamond")
-	 * This list is filled upon Initialize(), if you want to change the starting wanted items, modify initial_wanteds()
-	 * *
+	 * This list is filled by Initialize(), if you want to change the starting wanted items, modify initial_wanteds()
 	*/
 	var/list/wanted_items
-	///Phrase said when NPC finds none of your inhand items in wanted_items.
-	var/itemrejectphrase = list("Sorry, I'm not a fan of anything you're showing me. Give me something better and we'll talk.")
-	///Phrase said when you cancel selling a thing to the NPC.
-	var/itemsellcancelphrase = list("What a shame, tell me if you changed your mind.")
-	///Phrase said when you accept selling a thing to the NPC.
-	var/itemsellacceptphrase = list("Pleasure doing business with you.")
-	///Phrase said when the NPC finds an item in the wanted_items list in your hands.
-	var/interestedphrase = list("Hey, you've got an item that interests me, I'd like to buy it, I'll give you some cash for it, deal?")
-	///Phrase said when the NPC sells you an item.
-	var/buyphrase = list("Pleasure doing business with you.")
-	///Phrase said when you have too little money to buy an item.
-	var/nocashphrase = list("Sorry adventurer, I can't give credit! Come back when you're a little mmmmm... richer!")
-	///Phrase said when the requested item is out of stock
-	var/nostockphrase = list("That item seems to be out of stock, you'll have to come back another time.")
-	///Phrase said when the trader doesn't want any more of a item
-	var/notwillingtobuyphrase = list("I don't want to buy that item for the time being, check back another time.")
-	///Phrase said when the value of a item being sold to the trader turns out to be worth nothing after modifiers
-	var/itemisworthless = list("This item seems to be worthless on a closer look, I won't buy this.")
-	///Phrase said when the trader already bought enough of this item recently
-	var/traderhasenoughitem = list("I already bought enough of this for the time being.")
-	///Phrases used when you talk to the NPC
-	var/list/lore = list(
-		"Hello! I am the test trader.",
-		"Oooooooo~!"
+	///Associated list of defines matched with list of phrases; phrase to be said is dealt by return_trader_phrase()
+	var/list/say_phrases = list(
+		ITEM_REJECTED_PHRASE = list(
+			"Sorry, I'm not a fan of anything you're showing me. Give me something better and we'll talk."
+		),
+		ITEM_SELLING_CANCELED_PHRASE = list(
+			"What a shame, tell me if you changed your mind."
+		),
+		ITEM_SELLING_ACCEPTED_PHRASE = list(
+		"Pleasure doing business with you."
+		),
+		INTERESTED_PHRASE = list(
+			"Hey, you've got an item that interests me, I'd like to buy it, I'll give you some cash for it, deal?"
+		),
+		BUY_PHRASE = list(
+			"Pleasure doing business with you."
+		),
+		NO_CASH_PHRASE = list(
+			"Sorry adventurer, I can't give credit! Come back when you're a little mmmmm... richer!"
+		),
+		NO_STOCK_PHRASE = list(
+			"Sorry adventurer, but that item is not in stock at the moment."
+		),
+		NOT_WILLING_TO_BUY_PHRASE = list(
+			"I don't want to buy that item for the time being, check back another time."
+		),
+		ITEM_IS_WORTHLESS_PHRASE = list(
+			"This item seems to be worthless on a closer look, I won't buy this."
+		),
+		TRADER_HAS_ENOUGH_ITEM_PHRASE = list(
+			"I already bought enough of this for the time being."
+		),
+		TRADER_LORE_PHRASE = list(
+			"Hello! I am the test trader.",
+			"Oooooooo~!"
+		)
 	)
 	///The name of the currency that is used when buying or selling items
 	var/currency_name = "credits"
 
+///Initializes the products and item demands of the trader
 /mob/living/simple_animal/hostile/retaliate/trader/Initialize()
 	. = ..()
 	restock_products()
@@ -98,13 +128,24 @@
 	return list(/obj/item/ectoplasm = list(100, INFINITY, "")
 				)
 
+/**
+ * Depending on the passed parameter/override, returns a randomly picked string out of a list
+ *
+ * Do note when overriding this argument, you will need to ensure pick(the list) doesn't get supplied with a list of zero length
+ * Arguments:
+ * * say_text - (String) a define that matches the key of a entry in say_phrases
+ */
+/mob/living/simple_animal/hostile/retaliate/trader/proc/return_trader_phrase(say_text)
+	return (length(say_phrases[say_text]) ? pick(say_phrases[say_text]) : "")
+
+///Sets up the radials for the user and calls procs related to the actions the user wants to take
 /mob/living/simple_animal/hostile/retaliate/trader/interact(mob/user)
 	if(user == target)
 		return FALSE
 	var/list/npc_options = list()
 	if(products.len)
 		npc_options["Buy"] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_buy")
-	if(lore.len)
+	if(say_phrases[TRADER_LORE_PHRASE].len)
 		npc_options["Talk"] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_talk")
 	if(wanted_items.len)
 		npc_options["Sell"] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_sell")
@@ -126,7 +167,7 @@
  *
  * Checks if the user is not a mob or is incapacitated or not adjacent to the source of the radial, in those cases returns FALSE, otherwise returns TRUE
  * Arguments:
- * * user - The mob checking the menu
+ * * user - (Mob REF) The mob checking the menu
  */
 /mob/living/simple_animal/hostile/retaliate/trader/proc/check_menu(mob/user)
 	if(!istype(user))
@@ -144,7 +185,7 @@
 	)
 	var/pick = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(pick == "Lore")
-		say(pick(lore))
+		say(return_trader_phrase(TRADER_LORE_PHRASE))
 	if(pick == "Buying?")
 		trader_buys_what(user)
 	if(pick == "Selling?")
@@ -183,7 +224,7 @@
 /**
  * Generates a radial of the items the NPC sells and lets the user try to buy one
  * Arguments:
- * * user - The mob trying to buy something
+ * * user - (Mob REF) The mob trying to buy something
  */
 /mob/living/simple_animal/hostile/retaliate/trader/proc/buy_item(mob/user)
 	if(!LAZYLEN(products))
@@ -218,13 +259,13 @@
 		return
 	face_atom(user)
 	if(!spend_buyer_offhand_money(user, product_info[1]))
-		say(pick(nocashphrase))
+		say(return_trader_phrase(NO_CASH_PHRASE))
 		return
 	item_to_buy = new item_to_buy(get_turf(user))
 	user.put_in_hands(item_to_buy)
 	playsound(src, sell_sound, 50, TRUE)
 	product_info[2] -= 1
-	say(pick(buyphrase))
+	say(return_trader_phrase(BUY_PHRASE))
 
 ///Calculates the value of money in the hand of the buyer and spends it if it's sufficient
 /mob/living/simple_animal/hostile/retaliate/trader/proc/spend_buyer_offhand_money(mob/user, the_cost)
@@ -243,43 +284,48 @@
  *
  * Gets both items in the user's hands, and then tries to call sell_item on them, if both fail, he gives a chat message
  * Arguments:
- * * user - The mob trying to sell something
+ * * user - (Mob REF) The mob trying to sell something
  */
 /mob/living/simple_animal/hostile/retaliate/trader/proc/try_sell(mob/user)
 	var/obj/item/activehanditem = user.get_active_held_item()
 	var/obj/item/inactivehanditem = user.get_inactive_held_item()
 	if(!sell_item(user, activehanditem) && !sell_item(user, inactivehanditem))
-		say(pick(itemrejectphrase))
+		say(return_trader_phrase(ITEM_REJECTED_PHRASE))
 
 /**
  * Checks if an item is in the list of wanted items and if it is after a Yes/No radial returns generate_cash with the value of the item for the NPC
  * Arguments:
- * * user - The mob trying to sell something
- * * selling - The item being sold
+ * * user - (Mob REF) The mob trying to sell something
+ * * selling - (Item REF) The item being sold
  */
 /mob/living/simple_animal/hostile/retaliate/trader/proc/sell_item(mob/user, obj/item/selling)
 	var/cost
 	if(!selling)
 		return FALSE
 	var/list/product_info
-	var/obj/initialized_type //Need to intialize obj to access parent_type and keep a record of the typepath
-	var/sell_typepath = selling.type
-	while(sell_typepath != null && sell_typepath != /obj)
-		initialized_type = new sell_typepath
-		if(wanted_items[sell_typepath])
-			product_info = wanted_items[sell_typepath]
-			break
-		sell_typepath = initialized_type.parent_type
+	//Keep track of the typepath; rather mundane but it's required for correctly modifying the wanted_items
+	//should a product be sellable because even if it doesn't have a entry because it's a child of a parent that is present on the list
+	var/typepath_for_product_info
+	if(selling.type in wanted_items)
+		product_info = wanted_items[selling.type]
+		typepath_for_product_info = selling.type
+	else //Assume wanted_items is setup in the correct way; read wanted_items documentation for more info
+		for(var/typepath in wanted_items)
+			if(istype(selling, typepath))
+				product_info = wanted_items[typepath]
+				typepath_for_product_info = typepath
+				break
+
 	if(!product_info) //Nothing interesting to sell
 		return FALSE
 	if(product_info[2] <= 0)
-		say(pick(traderhasenoughitem))
+		say(return_trader_phrase(TRADER_HAS_ENOUGH_ITEM_PHRASE))
 		return FALSE
 	cost = apply_sell_price_mods(selling, product_info[1])
 	if(cost <= 0)
-		say(pick(itemisworthless))
+		say(return_trader_phrase(ITEM_IS_WORTHLESS_PHRASE))
 		return FALSE
-	say(pick(interestedphrase))
+	say(return_trader_phrase(INTERESTED_PHRASE))
 	to_chat(user, span_notice("You will receive [cost] [currency_name] for each one of [selling]."))
 	var/list/npc_options = list(
 		"Yes" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_yes"),
@@ -288,19 +334,22 @@
 	var/npc_result = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	face_atom(user)
 	if(npc_result != "Yes")
-		say(pick(itemsellcancelphrase))
+		say(return_trader_phrase(ITEM_SELLING_CANCELED_PHRASE))
 		return TRUE
-	say(pick(itemsellacceptphrase))
+	say(return_trader_phrase(ITEM_SELLING_ACCEPTED_PHRASE))
 	playsound(src, sell_sound, 50, TRUE)
-	log_econ("[selling] has been sold to [src] by [user] for [cost] cash.")
-	exchange_sold_items(selling, cost, sell_typepath)
+	log_econ("[selling] has been sold to [src] (typepath used for product info; [typepath_for_product_info]) by [user] for [cost] cash.")
+	exchange_sold_items(selling, cost, typepath_for_product_info)
 	generate_cash(cost, user)
 	return TRUE
 
 /**
-	Handles modifying/deleting the items to ensure that a proper amount is converted into cash; put into it's own proc to make the children of this not override a 30+ line sell_item()
-
-	original_typepath is for scenarios where a children of a parent is being sold but we want to modify the parent's product information
+ * Handles modifying/deleting the items to ensure that a proper amount is converted into cash; put into it's own proc to make the children of this not override a 30+ line sell_item()
+ *
+ * Arguments:
+ * * selling - (Item REF) this is the item being sold
+ * * value_exchanged_for - (Number) the "value", useful for a scenario where you want to remove enough items equal to the value
+ * * original_typepath - (Typepath) For scenarios where a children of a parent is being sold but we want to modify the parent's product information
  */
 /mob/living/simple_animal/hostile/retaliate/trader/proc/exchange_sold_items(obj/item/selling, value_exchanged_for, original_typepath)
 	var/list/product_info = wanted_items[original_typepath]
@@ -313,19 +362,24 @@
 		qdel(selling)
 		product_info[2] -= 1
 
-///Modifies the 'base' price of a item based on certain variables
+/**
+ * Modifies the 'base' price of a item based on certain variables
+ *
+ * Arguments:
+ * * Reference to the item; this is the item being sold
+ * * Original cost; the original cost of the item, to be manipulated depending on the variables of the item, one example is using item.amount if it's a stack
+ */
 /mob/living/simple_animal/hostile/retaliate/trader/proc/apply_sell_price_mods(obj/item/selling, original_cost)
 	if(isstack(selling))
 		var/obj/item/stack/stackoverflow = selling
 		original_cost *= stackoverflow.amount
 	return original_cost
 
-
 /**
  * Creates an item equal to the value set by the proc and puts it in the user's hands if possible
  * Arguments:
- * * value - The amount of cash that will be on the holochip
- * * user - The mob we put the holochip in hands of
+ * * value - A number; The amount of cash that will be on the holochip
+ * * user - Reference to a mob; The mob we put the holochip in hands of
  */
 /mob/living/simple_animal/hostile/retaliate/trader/proc/generate_cash(value, mob/user)
 	var/obj/item/holochip/chip = new /obj/item/holochip(get_turf(user), value)
@@ -346,16 +400,48 @@
 	speech_span = SPAN_SANS
 	sell_sound = 'sound/voice/hiss2.ogg'
 	mob_biotypes = MOB_UNDEAD|MOB_HUMANOID
-	buyphrase = "Bone appetit!"
 	icon_state = "mrbones"
 	gender = MALE
 	loot = list(/obj/effect/decal/remains/human)
-	lore = list(
-		"Hello, I am Mr. Bones!",
-		"The ride never ends!",
-		"I'd really like a refreshing carton of milk!",
-		"I'm willing to play big prices for BONES! Need materials to make merch, eh?",
-		"It's a beautiful day outside. Birds are singing, Flowers are blooming... On days like these, kids like you... Should be buying my wares!"
+
+	say_phrases = list(
+		ITEM_REJECTED_PHRASE = list(
+			"Sorry, I'm not a fan of anything you're showing me. Give me something better and we'll talk."
+		),
+		ITEM_SELLING_CANCELED_PHRASE = list(
+			"What a shame, tell me if you changed your mind."
+		),
+		ITEM_SELLING_ACCEPTED_PHRASE = list(
+		"Pleasure doing business with you."
+		),
+		INTERESTED_PHRASE = list(
+			"Hey, you've got an item that interests me, I'd like to buy it, I'll give you some cash for it, deal?"
+		),
+		BUY_PHRASE = list(
+			"Bone appetit!"
+		),
+		NO_CASH_PHRASE = list(
+			"Sorry adventurer, I can't give credit! Come back when you're a little mmmmm... richer!"
+		),
+		NO_STOCK_PHRASE = list(
+			"Sorry adventurer, but that item is not in stock at the moment."
+		),
+		NOT_WILLING_TO_BUY_PHRASE = list(
+			"I don't want to buy that item for the time being, check back another time."
+		),
+		ITEM_IS_WORTHLESS_PHRASE = list(
+			"This item seems to be worthless on a closer look, I won't buy this."
+		),
+		TRADER_HAS_ENOUGH_ITEM_PHRASE = list(
+			"I already bought enough of this for the time being."
+		),
+		TRADER_LORE_PHRASE = list(
+			"Hello, I am Mr. Bones!",
+			"The ride never ends!",
+			"I'd really like a refreshing carton of milk!",
+			"I'm willing to play big prices for BONES! Need materials to make merch, eh?",
+			"It's a beautiful day outside. Birds are singing, Flowers are blooming... On days like these, kids like you... Should be buying my wares!"
+		)
 	)
 
 /mob/living/simple_animal/hostile/retaliate/trader/mrbones/initial_products()
