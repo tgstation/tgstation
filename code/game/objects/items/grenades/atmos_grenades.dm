@@ -24,7 +24,7 @@
 	addtimer(CALLBACK(src, .proc/detonate), isnull(delayoverride)? det_time : delayoverride)
 
 /obj/item/grenade/gas_crystal/cleansing_crystal
-	name = "Cleansing crystal"
+	name = "cleansing crystal"
 	desc = "A crystal made from various gasses condensed down into a solid, when detonated it will scrubs out all the gasses aside from oxygen and nitrogen and refill within a 5 by 10 area"
 	icon_state = "healium_crystal"
 	///Range of the grenade that will cool down and affect mobs
