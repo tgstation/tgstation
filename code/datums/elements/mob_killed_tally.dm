@@ -6,7 +6,7 @@
 /datum/element/mob_killed_tally
 	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
 	id_arg_index = 2
-	/// Path of the trophy dropped
+	/// Which tally needs to be ticked up in the blackbox
 	var/tally_string
 
 /datum/element/mob_killed_tally/Attach(datum/target, tally_string)

@@ -25,9 +25,24 @@
 	burrower.invisibility = 0
 
 /datum/action/cooldown/mob_cooldown/resurface/proc/get_unburrow_turf(mob/living/burrower, atom/target)
+	//we want the worm to try guaranteeing a hit on a living target if it thinks it can
+	var/cardinal_only = FALSE
+
+	if(isliving(target))
+		var/mob/living/living_target = target
+		if(living_target.stat >= UNCONSCIOUS)
+			cardinal_only = TRUE
+
 	var/list/potential_turfs = shuffle(oview(5, target))//get in view, shuffle
+	var/list/fallback_turfs = list()
 	for(var/turf/open/misc/chosen_one in potential_turfs)//first turf that counts as ground
+		if(cardinal_only && !(get_dir(chosen_one, target) in GLOB.cardinals))
+			fallback_turfs.Add(chosen_one)
+			continue
 		return chosen_one
+	//even if a worm can't execute someone in crit, it should not fail if it has SOMETHING to move to.
+	if(fallback_turfs.len)
+		return pick(fallback_turfs)
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/bileworm
 	name = "Spew Bile"
@@ -43,15 +58,11 @@
 	StartCooldownOthers(1.5 SECONDS)
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/bileworm/attack_sequence(mob/living/firer, atom/target)
-	//pre-attack opening
-	SLEEP_CHECK_DEATH(0.5 SECONDS, firer)
 	fire_in_directions(firer, target, GLOB.cardinals)
 	SLEEP_CHECK_DEATH(0.25 SECONDS, firer)
 	fire_in_directions(firer, target, GLOB.diagonals)
 	SLEEP_CHECK_DEATH(0.25 SECONDS, firer)
 	fire_in_directions(firer, target, GLOB.cardinals)
-	//post-attack opening
-	SLEEP_CHECK_DEATH(0.5 SECONDS, firer)
 
 /obj/projectile/bileworm_acid
 	name = "acidic bile"
