@@ -13,20 +13,20 @@
 	button_icon_state = "carp_rift"
 
 /datum/action/innate/summon_rift/Activate()
-	var/datum/antagonist/space_dragon/dragon = owner.mind?.has_antag_datum(/datum/antagonist/space_dragon)
+	var/datum/antagonist/space_dragon/dragon = owner.mind?.current.has_antag_datum(/datum/antagonist/space_dragon)
 	if(!dragon)
 		return
-	var/area/rift_location = get_area(dragon.owner)
+	var/area/rift_location = get_area(dragon.owner.current)
 	if(!(rift_location.area_flags & VALID_TERRITORY))
-		to_chat(dragon.owner, span_warning("You can't summon a rift here! Try summoning somewhere secure within the station!"))
+		to_chat(dragon.owner.current, span_warning("You can't summon a rift here! Try summoning somewhere secure within the station!"))
 		return
 	for(var/obj/structure/carp_rift/rift in dragon.rift_list)
 		var/area/used_location = get_area(rift)
 		if(used_location == rift_location)
-			to_chat(dragon.owner, span_warning("You've already summoned a rift in this area! You have to summon again somewhere else!"))
+			to_chat(dragon.owner.current, span_warning("You've already summoned a rift in this area! You have to summon again somewhere else!"))
 			return
-	to_chat(dragon.owner, span_warning("You begin to open a rift..."))
-	if(!do_after(dragon.owner, 10 SECONDS, target = dragon.owner))
+	to_chat(dragon.owner.current, span_warning("You begin to open a rift..."))
+	if(!do_after(dragon.owner.current, 10 SECONDS, target = dragon.owner))
 		return
 	if(locate(/obj/structure/carp_rift) in owner.loc)
 		return
@@ -35,7 +35,7 @@
 	dragon.riftTimer = -1
 	new_rift.dragon = dragon
 	dragon.rift_list += new_rift
-	to_chat(dragon.owner, span_boldwarning("The rift has been summoned. Prevent the crew from destroying it at all costs!"))
+	to_chat(dragon.owner.current, span_boldwarning("The rift has been summoned. Prevent the crew from destroying it at all costs!"))
 	notify_ghosts("The Space Dragon has opened a rift!", source = new_rift, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Carp Rift Opened")
 	qdel(src)
 
@@ -114,7 +114,7 @@
 	if(time_charged != max_charge + 1)
 		dragon?.destroy_rifts()
 		if(dragon)
-			to_chat(dragon.owner, span_boldwarning("A rift has been destroyed! You have failed, and find yourself weakened."))
+			to_chat(dragon.owner.current, span_boldwarning("A rift has been destroyed! You have failed, and find yourself weakened."))
 	dragon = null
 	return ..()
 
@@ -177,7 +177,7 @@
 		dragon.rifts_charged += 1
 		if(dragon.rifts_charged != 3 && !dragon.objective_complete)
 			var/datum/action/innate/summon_rift/rift = new()
-			rift.Grant(dragon.owner)
+			rift.Grant(dragon.owner.current)
 			dragon.riftTimer = 0
 			dragon.rift_empower()
 		// Early return, nothing to do after this point.
