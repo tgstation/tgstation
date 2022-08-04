@@ -10,6 +10,11 @@
 #define TRADER_HAS_ENOUGH_ITEM_PHRASE "TRADER_HAS_ENOUGH_ITEM_PHRASE"
 #define TRADER_LORE_PHRASE "TRADER_LORE_PHRASE"
 
+#define TRADER_PRODUCT_INFO_PRICE 1
+#define TRADER_PRODUCT_INFO_QUANTITY 2
+//Only valid for wanted_items
+#define TRADER_PRODUCT_INFO_PRICE_MOD_DESCRIPTION 3
+
 /**
  * # Trader
  *
@@ -200,11 +205,11 @@
 	to_chat(user, span_green("I'm willing to buy the following; "))
 	for(var/obj/item/thing as anything in wanted_items)
 		product_info = wanted_items[thing]
-		var/tern_op_result = (product_info[2] == INFINITY ? "as many as I can." : "[product_info[2]]") //Coder friendly string concat
-		if(product_info[2] <= 0) //Zero demand
-			to_chat(user, span_notice("[span_red("(DOESN'T WANT MORE)")] [initial(thing.name)] for [product_info[1]] [currency_name][product_info[3]]; willing to buy [span_red("[tern_op_result]")] more."))
+		var/tern_op_result = (product_info[TRADER_PRODUCT_INFO_QUANTITY] == INFINITY ? "as many as I can." : "[product_info[TRADER_PRODUCT_INFO_QUANTITY]]") //Coder friendly string concat
+		if(product_info[TRADER_PRODUCT_INFO_QUANTITY] <= 0) //Zero demand
+			to_chat(user, span_notice("[span_red("(DOESN'T WANT MORE)")] [initial(thing.name)] for [product_info[TRADER_PRODUCT_INFO_PRICE]] [currency_name][product_info[TRADER_PRODUCT_INFO_PRICE_MOD_DESCRIPTION]]; willing to buy [span_red("[tern_op_result]")] more."))
 		else
-			to_chat(user, span_notice("[initial(thing.name)] for [product_info[1]] [currency_name][product_info[3]]; willing to buy [span_green("[tern_op_result]")]"))
+			to_chat(user, span_notice("[initial(thing.name)] for [product_info[TRADER_PRODUCT_INFO_PRICE]] [currency_name][product_info[TRADER_PRODUCT_INFO_PRICE_MOD_DESCRIPTION]]; willing to buy [span_green("[tern_op_result]")]"))
 
 ///Displays to the user what the trader is selling and how much is in stock
 /mob/living/simple_animal/hostile/retaliate/trader/proc/trader_sells_what(mob/user)
@@ -215,11 +220,11 @@
 	to_chat(user, span_green("I'm currently selling the following; "))
 	for(var/obj/item/thing as anything in products)
 		product_info = products[thing]
-		var/tern_op_result = (product_info[2] == INFINITY ? "an infinite amount" : "[product_info[2]]") //Coder friendly string concat
-		if(product_info[2] <= 0) //Out of stock
-			to_chat(user, span_notice("[span_red("(OUT OF STOCK)")] [initial(thing.name)] for [product_info[1]] [currency_name]; [span_red("[tern_op_result]")] left in stock"))
+		var/tern_op_result = (product_info[TRADER_PRODUCT_INFO_QUANTITY] == INFINITY ? "an infinite amount" : "[product_info[TRADER_PRODUCT_INFO_QUANTITY]]") //Coder friendly string concat
+		if(product_info[TRADER_PRODUCT_INFO_QUANTITY] <= 0) //Out of stock
+			to_chat(user, span_notice("[span_red("(OUT OF STOCK)")] [initial(thing.name)] for [product_info[TRADER_PRODUCT_INFO_PRICE]] [currency_name]; [span_red("[tern_op_result]")] left in stock"))
 		else
-			to_chat(user, span_notice("[initial(thing.name)] for [product_info[1]] [currency_name]; [span_green("[tern_op_result]")] left in stock"))
+			to_chat(user, span_notice("[initial(thing.name)] for [product_info[TRADER_PRODUCT_INFO_PRICE]] [currency_name]; [span_green("[tern_op_result]")] left in stock"))
 
 /**
  * Generates a radial of the items the NPC sells and lets the user try to buy one
@@ -237,7 +242,7 @@
 		display_names["[initial(thing.name)]"] = thing
 		var/image/item_image = image(icon = initial(thing.icon), icon_state = initial(thing.icon_state))
 		product_info = products[thing]
-		if(product_info[2] <= 0) //out of stock
+		if(product_info[TRADER_PRODUCT_INFO_QUANTITY] <= 0) //out of stock
 			item_image.overlays += image(icon = 'icons/hud/radial.dmi', icon_state = "radial_center")
 		items += list("[initial(thing.name)]" = item_image)
 	var/pick = show_radial_menu(user, src, items, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
@@ -246,10 +251,10 @@
 	var/obj/item/item_to_buy = display_names[pick]
 	face_atom(user)
 	product_info = products[item_to_buy]
-	if(!product_info[2])
+	if(!product_info[TRADER_PRODUCT_INFO_QUANTITY])
 		to_chat(user, span_red("The item appears to be out of stock."))
 		return
-	to_chat(user, span_notice("It will cost you [product_info[1]] [currency_name] to buy \the [initial(item_to_buy.name)]. Are you sure you want to buy it?"))
+	to_chat(user, span_notice("It will cost you [product_info[TRADER_PRODUCT_INFO_PRICE]] [currency_name] to buy \the [initial(item_to_buy.name)]. Are you sure you want to buy it?"))
 	var/list/npc_options = list(
 		"Yes" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_yes"),
 		"No" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no")
@@ -258,13 +263,13 @@
 	if(buyer_will_buy != "Yes")
 		return
 	face_atom(user)
-	if(!spend_buyer_offhand_money(user, product_info[1]))
+	if(!spend_buyer_offhand_money(user, product_info[TRADER_PRODUCT_INFO_PRICE]))
 		say(return_trader_phrase(NO_CASH_PHRASE))
 		return
 	item_to_buy = new item_to_buy(get_turf(user))
 	user.put_in_hands(item_to_buy)
 	playsound(src, sell_sound, 50, TRUE)
-	product_info[2] -= 1
+	product_info[TRADER_PRODUCT_INFO_QUANTITY] -= 1
 	say(return_trader_phrase(BUY_PHRASE))
 
 ///Calculates the value of money in the hand of the buyer and spends it if it's sufficient
@@ -318,10 +323,10 @@
 
 	if(!product_info) //Nothing interesting to sell
 		return FALSE
-	if(product_info[2] <= 0)
+	if(product_info[TRADER_PRODUCT_INFO_QUANTITY] <= 0)
 		say(return_trader_phrase(TRADER_HAS_ENOUGH_ITEM_PHRASE))
 		return FALSE
-	cost = apply_sell_price_mods(selling, product_info[1])
+	cost = apply_sell_price_mods(selling, product_info[TRADER_PRODUCT_INFO_PRICE])
 	if(cost <= 0)
 		say(return_trader_phrase(ITEM_IS_WORTHLESS_PHRASE))
 		return FALSE
@@ -355,12 +360,12 @@
 	var/list/product_info = wanted_items[original_typepath]
 	if(isstack(selling))
 		var/obj/item/stack/the_stack = selling
-		var/actually_sold = min(the_stack.amount, product_info[2])
+		var/actually_sold = min(the_stack.amount, product_info[TRADER_PRODUCT_INFO_QUANTITY])
 		the_stack.use(actually_sold)
-		product_info[2] -= (actually_sold)
+		product_info[TRADER_PRODUCT_INFO_QUANTITY] -= (actually_sold)
 	else
 		qdel(selling)
-		product_info[2] -= 1
+		product_info[TRADER_PRODUCT_INFO_QUANTITY] -= 1
 
 /**
  * Modifies the 'base' price of a item based on certain variables
