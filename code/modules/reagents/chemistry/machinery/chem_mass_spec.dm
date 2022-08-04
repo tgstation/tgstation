@@ -218,7 +218,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 				var/datum/reagent/inverse_reagent = GLOB.chemical_reagents_list[reagent.inverse_chem]
 				if(inverse_reagent.mass < lower_mass_range || inverse_reagent.mass > upper_mass_range)
 					in_range = FALSE
-				beakerContents.Add(list(list("name" = inverse_reagent.name, "volume" = round(reagent.volume, 0.01), "mass" = inverse_reagent.mass, "purity" = 1-reagent.purity, "selected" = in_range, "color" = "#b60046", "type" = "Inverted")))
+				beakerContents.Add(list(list("name" = inverse_reagent.name, "volume" = round(reagent.volume, 0.01), "mass" = inverse_reagent.mass, "purity" = round(1-reagent.purity, 0.01), "selected" = in_range, "color" = "#b60046", "type" = "Inverted")))
 				data["peakHeight"] = max(data["peakHeight"], reagent.volume)
 				continue
 			if(reagent.mass < lower_mass_range || reagent.mass > upper_mass_range)
