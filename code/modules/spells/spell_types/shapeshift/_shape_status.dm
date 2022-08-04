@@ -44,7 +44,7 @@
 
 /datum/status_effect/shapechange_mob/proc/restore_caster(kill_caster_after = FALSE)
 	already_restored = TRUE
-	UnregisterSignal(owner, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
+	UnregisterSignal(owner, list(COMSIG_LIVING_PRE_WABBAJACKED, COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
 	UnregisterSignal(caster_mob, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
 
 	caster_mob.forceMove(owner.loc)
@@ -79,11 +79,7 @@
 
 /datum/status_effect/shapechange_mob/from_spell
 	/// The shapechange spell that's caused our change
-	var/datum/action/cooldown/spell/shapeshift/source_spell
-
-/datum/status_effect/shapechange_mob/from_spell/Destroy()
-	source_spell = null
-	return ..()
+	var/datum/weakref/source_weakref
 
 /datum/status_effect/shapechange_mob/from_spell/on_creation(mob/living/new_owner, mob/living/caster, datum/action/cooldown/spell/shapeshift/source_spell)
 	if(!istype(source_spell))
@@ -91,29 +87,35 @@
 		qdel(src)
 		return
 
-	src.source_spell = source_spell
+	source_weakref = WEAKREF(source_spell)
 	return ..()
 
 /datum/status_effect/shapechange_mob/from_spell/on_apply()
 	. = ..()
-	source_spell.Grant(owner)
+	var/datum/action/cooldown/spell/shapeshift/source_spell = source_weakref?.resolve()
+	if(!QDELETED(source_spell) && source_spell.owner == caster_mob)
+		// Assuming the spell is owned by the caster, give it over to the shapeshifted mob
+		// so they can actually transform back to their original form
+		source_spell.Grant(owner)
+
+		if(source_spell.convert_damage)
+			var/damage_to_apply = owner.maxHealth * ((caster_mob.maxHealth - caster_mob.health) / caster_mob.maxHealth)
+
+			owner.apply_damage(damage_to_apply, source_spell.convert_damage_type, forced = TRUE, wound_bonus = CANT_WOUND)
+			owner.blood_volume = caster_mob.blood_volume
+
 	for(var/datum/action/bodybound_action as anything in caster_mob.actions)
 		if(bodybound_action.target != caster_mob)
 			continue
 		bodybound_action.Grant(owner)
 
-	if(source_spell.convert_damage)
-		var/damage_to_apply = owner.maxHealth * ((caster_mob.maxHealth - caster_mob.health) / caster_mob.maxHealth)
-
-		owner.apply_damage(damage_to_apply, source_spell.convert_damage_type, forced = TRUE, wound_bonus = CANT_WOUND)
-		owner.blood_volume = caster_mob.blood_volume
-
-	RegisterSignal(source_spell, list(COMSIG_PARENT_QDELETING, COMSIG_ACTION_REMOVED), .proc/on_spell_lost)
-
 /datum/status_effect/shapechange_mob/from_spell/restore_caster(kill_caster_after)
-	UnregisterSignal(source_spell, list(COMSIG_PARENT_QDELETING, COMSIG_ACTION_REMOVED))
+	var/datum/action/cooldown/spell/shapeshift/source_spell = source_weakref?.resolve()
+	// The owner = owner check here is specifically for edge cases in which the owner of the spell
+	// is no longer in control of the shapeshifted mob, such as mindswapping out of a shapeshift
+	if(!QDELETED(source_spell) && source_spell.owner == owner)
+		source_spell.Grant(caster_mob)
 
-	source_spell.Grant(caster_mob)
 	for(var/datum/action/bodybound_action as anything in owner.actions)
 		if(bodybound_action.target != caster_mob)
 			continue
@@ -122,7 +124,8 @@
 	return ..()
 
 /datum/status_effect/shapechange_mob/from_spell/after_unchange()
-	if(!source_spell.convert_damage)
+	var/datum/action/cooldown/spell/shapeshift/source_spell = source_weakref?.resolve()
+	if(QDELETED(source_spell) || !source_spell.convert_damage)
 		return
 
 	if(caster_mob.stat != DEAD)
@@ -133,12 +136,11 @@
 
 	caster_mob.blood_volume = owner.blood_volume
 
-/datum/status_effect/shapechange_mob/from_spell/proc/on_spell_lost(datum/action/source)
-	SIGNAL_HANDLER
-
-	restore_caster()
-
 /datum/status_effect/shapechange_mob/from_spell/on_shape_death(datum/source)
+	var/datum/action/cooldown/spell/shapeshift/source_spell = source_weakref?.resolve()
+	if(QDELETED(source_spell))
+		return ..()
+
 	if(source_spell.die_with_shapeshifted_form)
 		if(source_spell.revert_on_death)
 			restore_caster(kill_caster_after = TRUE)
@@ -147,6 +149,10 @@
 	return ..()
 
 /datum/status_effect/shapechange_mob/from_spell/on_caster_death(datum/source)
+	var/datum/action/cooldown/spell/shapeshift/source_spell = source_weakref?.resolve()
+	if(QDELETED(source_spell))
+		return ..()
+
 	if(source_spell.revert_on_death)
 		restore_caster(kill_caster_after = TRUE)
 		return
