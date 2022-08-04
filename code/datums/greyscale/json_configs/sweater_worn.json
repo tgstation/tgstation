@@ -1,0 +1,18 @@
+{
+	"sweater": [
+		{
+			"type": "icon_state",
+			"icon_state": "sweater",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"sweater_t": [
+		{
+			"type": "icon_state",
+			"icon_state": "sweater_t",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

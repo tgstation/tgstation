@@ -27,7 +27,7 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/organ/internal/zombie_infection/Remove(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/zombie_infection/Remove(mob/living/carbon/M, special = FALSE)
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
 	if(iszombie(M) && old_species && !special && !QDELETED(src))

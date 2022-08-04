@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Leather satchels no longer have a rogue crotch height pixel sticking through your clothing when facing left."

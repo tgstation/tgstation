@@ -80,7 +80,7 @@
 	active_mind_control = FALSE
 	return TRUE
 
-/obj/item/organ/internal/heart/gland/Remove(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/heart/gland/Remove(mob/living/carbon/M, special = FALSE)
 	active = FALSE
 	if(initial(uses) == 1)
 		uses = initial(uses)

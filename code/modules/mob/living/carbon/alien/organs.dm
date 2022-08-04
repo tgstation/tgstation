@@ -73,7 +73,7 @@
 		var/mob/living/carbon/alien/target_alien = organ_owner
 		target_alien.updatePlasmaDisplay()
 
-/obj/item/organ/internal/alien/plasmavessel/Remove(mob/living/carbon/organ_owner, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/alien/plasmavessel/Remove(mob/living/carbon/organ_owner, special = FALSE)
 	..()
 	if(isalien(organ_owner))
 		var/mob/living/carbon/alien/organ_owner_alien = organ_owner
@@ -96,7 +96,7 @@
 	organ_owner.faction |= ROLE_ALIEN
 	ADD_TRAIT(organ_owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
 
-/obj/item/organ/internal/alien/hivenode/Remove(mob/living/carbon/organ_owner, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/alien/hivenode/Remove(mob/living/carbon/organ_owner, special = FALSE)
 	organ_owner.faction -= ROLE_ALIEN
 	REMOVE_TRAIT(organ_owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
 	..()
@@ -219,7 +219,7 @@
 	RegisterSignal(stomach_owner, COMSIG_ATOM_RELAYMOVE, .proc/something_moved)
 	return ..()
 
-/obj/item/organ/internal/stomach/alien/Remove(mob/living/carbon/stomach_owner, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/stomach/alien/Remove(mob/living/carbon/stomach_owner, special = FALSE)
 	UnregisterSignal(stomach_owner, COMSIG_ATOM_RELAYMOVE)
 	return ..()
 
