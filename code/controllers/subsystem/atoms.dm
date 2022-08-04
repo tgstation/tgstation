@@ -115,6 +115,7 @@ SUBSYSTEM_DEF(atoms)
 	var/the_type = A.type
 	if(QDELING(A))
 		BadInitializeCalls[the_type] |= BAD_INIT_QDEL_BEFORE
+		stack_trace("QDEL IN NEW QDEL IN NEW JESUS CHRIST WHY AHHHHHHH")
 		return TRUE
 
 	var/start_tick = world.time
