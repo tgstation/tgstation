@@ -91,6 +91,10 @@ SUBSYSTEM_DEF(mapping)
 			config = old_config
 	plane_offset_to_true = list()
 	true_to_offset_planes = list()
+	// VERY special cases for FLOAT_PLANE, so it will be treated as expected by plane management logic
+	// Sorry :(
+	plane_offset_to_true["[FLOAT_PLANE]"] = FLOAT_PLANE
+	true_to_offset_planes["[FLOAT_PLANE]"] = list(FLOAT_PLANE)
 	plane_offset_blacklist = list()
 	render_offset_blacklist = list()
 	create_plane_offsets(0, 0)

@@ -40,10 +40,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	///The amount of damage we have currently
 	var/damage = 0
-	/// The damage we had before this cycle. 
+	/// The damage we had before this cycle.
 	/// Used to limit the damage we can take each cycle, and to check if we are currently taking damage or healing.
 	var/damage_archived = 0
-	
+
 	///The point at which we consider the supermatter to be [SUPERMATTER_STATUS_WARNING]
 	var/warning_point = 50
 	var/warning_channel = RADIO_CHANNEL_ENGINEERING
@@ -267,7 +267,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	/// How we are delaminating.
 	var/datum/sm_delam/delamination_strategy
-	/// Whether the sm is forced in a specific delamination_strategy or not. All truthy values means it's forced. 
+	/// Whether the sm is forced in a specific delamination_strategy or not. All truthy values means it's forced.
 	/// Only values greater or equal to the current one can change the strat.
 	var/delam_priority = SM_DELAM_PRIO_NONE
 
@@ -425,9 +425,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/update_overlays()
 	. = ..()
-	. += delamination_strategy.overlays(src)
-	return .
-
+	if(delamination_strategy)
+		. += delamination_strategy.overlays(src)
+		
 /obj/machinery/power/supermatter_crystal/proc/force_delam()
 	SIGNAL_HANDLER
 	investigate_log("was forcefully delaminated", INVESTIGATE_ENGINE)
@@ -448,9 +448,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		step_towards(movable_atom,center)
 
 /**
- * Count down, spout some messages, and then execute the delam itself. 
+ * Count down, spout some messages, and then execute the delam itself.
  * We guard for last second delam strat changes here, mostly because some have diff messages.
- * 
+ *
  * By last second changes, we mean that it's possible for say, a tesla delam to
  * just explode normally if at the absolute last second it loses power and switches to default one.
  * Even after countdown is already in progress.
@@ -461,7 +461,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(final_countdown) // We're already doing it go away
 		stack_trace("[src] told to delaminate again while it's already delaminating.")
 		return
-	
+
 	final_countdown = TRUE
 	update_appearance()
 
@@ -480,7 +480,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 		var/message
 		var/healed = FALSE
-		
+
 		if(damage < explosion_point) // Cutting it a bit close there engineers
 			message = count_down_messages[2]
 			healed = TRUE
@@ -493,7 +493,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			message = "[i*0.1]..."
 
 		radio.talk_into(src, message, emergency_channel)
-		
+
 		if(healed)
 			final_countdown = FALSE
 			update_appearance()
