@@ -31681,7 +31681,6 @@
 /area/station/service/abandoned_gambling_den)
 "hMn" = (
 /obj/machinery/mineral/stacking_unit_console{
-	machinedir = 8;
 	pixel_x = 32
 	},
 /obj/effect/decal/cleanable/dirt,
