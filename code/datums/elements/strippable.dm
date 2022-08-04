@@ -157,7 +157,7 @@
 	source.visible_message(
 		span_warning("[user] tries to remove [source]'s [item.name]."),
 		span_userdanger("[user] tries to remove your [item.name]."),
-		blind_message = "You hear rustling.",
+		blind_message = span_hear("You hear rustling."),
 		ignored_mobs = user,
 	)
 
