@@ -691,8 +691,8 @@
  * They also produce web in 70% of the time of the base spider.  They also occasionally leave puddles of blood when they walk around.  Flavorful!
  */
 /mob/living/simple_animal/hostile/giant_spider/hunter/flesh
-	maxHealth = 30
-	health = 30
+	melee_damage_lower = 10
+	melee_damage_upper = 15
 	desc = "A odd fleshy creature in the shape of a spider.  Its eyes are pitch black and soulless."
 	icon_state = "flesh_spider"
 	icon_living = "flesh_spider"
@@ -727,7 +727,7 @@
 			return
 		visible_message(span_notice("[src] begins mending themselves..."),span_notice("You begin mending your wounds..."))
 		if(do_after(src, 2 SECONDS, target = src, interaction_key = INTERACTION_SPIDER_KEY))
-			heal_overall_damage(maxHealth, maxHealth)
+			heal_overall_damage(maxHealth * 0.5, maxHealth * 0.5)
 			new /obj/effect/temp_visual/heal(get_turf(src), "#80F5FF")
 			visible_message(span_notice("[src]'s wounds mend together."),span_notice("You mend your wounds together."))
 		return
