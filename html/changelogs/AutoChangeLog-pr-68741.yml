@@ -1,5 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes: 
-  - rscadd: "Added a new button to the thunderdome administration arena that toggles entertainment monitor's ability to broadcast the thunderdome arena's cameras."
-  - bugfix: "Clicking on entertainment monitors actually works now"
