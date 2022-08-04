@@ -61,7 +61,8 @@
 	var/datum/language_holder/language_holder
 	var/unconvertable = FALSE
 	var/late_joiner = FALSE
-
+	///has this mind ever been an AI
+	var/has_ever_been_ai = FALSE
 	var/last_death = 0
 
 	var/force_escaped = FALSE  // Set by Into The Sunset command of the shuttle manipulator

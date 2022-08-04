@@ -436,6 +436,9 @@ SUBSYSTEM_DEF(id_access)
 	id_card.trim_state_override = trim.trim_state
 	id_card.trim_assignment_override = trim.assignment
 	id_card.sechud_icon_state_override = trim.sechud_icon_state
+	id_card.department_color_override = trim.department_color
+	id_card.department_state_override = trim.department_state
+	id_card.subdepartment_color_override = trim.subdepartment_color
 
 	if(!check_forged || !id_card.forged)
 		id_card.assignment = trim.assignment
@@ -453,6 +456,9 @@ SUBSYSTEM_DEF(id_access)
 	id_card.trim_state_override = null
 	id_card.trim_assignment_override = null
 	id_card.sechud_icon_state_override = null
+	id_card.department_color_override = null
+	id_card.department_state_override = null
+	id_card.subdepartment_color_override = null
 
 /**
  * Adds the accesses associated with a trim to an ID card.

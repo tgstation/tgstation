@@ -46,7 +46,7 @@
 /obj/item/organ/internal/tongue/proc/modify_speech(datum/source, list/speech_args)
 	return speech_args[SPEECH_MESSAGE]
 
-/obj/item/organ/internal/tongue/Insert(mob/living/carbon/tongue_owner, special = 0)
+/obj/item/organ/internal/tongue/Insert(mob/living/carbon/tongue_owner, special = FALSE, drop_if_replaced = TRUE)
 	..()
 	if(say_mod && tongue_owner.dna && tongue_owner.dna.species)
 		tongue_owner.dna.species.say_mod = say_mod
@@ -63,7 +63,7 @@
 	if(!sense_of_taste)
 		ADD_TRAIT(tongue_owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
 
-/obj/item/organ/internal/tongue/Remove(mob/living/carbon/tongue_owner, special = 0)
+/obj/item/organ/internal/tongue/Remove(mob/living/carbon/tongue_owner, special = FALSE)
 	. = ..()
 	if(say_mod && tongue_owner.dna && tongue_owner.dna.species)
 		tongue_owner.dna.species.say_mod = initial(tongue_owner.dna.species.say_mod)
@@ -446,7 +446,7 @@
 	// The timerid for our tonal indicator
 	var/tonal_timerid
 
-/obj/item/organ/internal/tongue/tied/Insert(mob/living/carbon/signer)
+/obj/item/organ/internal/tongue/tied/Insert(mob/living/carbon/signer, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	signer.verb_ask = "signs"
 	signer.verb_exclaim = "signs"
@@ -457,7 +457,7 @@
 	ADD_TRAIT(signer, TRAIT_SIGN_LANG, ORGAN_TRAIT)
 	REMOVE_TRAIT(signer, TRAIT_MUTE, ORGAN_TRAIT)
 
-/obj/item/organ/internal/tongue/tied/Remove(mob/living/carbon/speaker, special = 0)
+/obj/item/organ/internal/tongue/tied/Remove(mob/living/carbon/speaker, special = FALSE)
 	..()
 	speaker.verb_ask = initial(speaker.verb_ask)
 	speaker.verb_exclaim = initial(speaker.verb_exclaim)
@@ -483,6 +483,10 @@
 		new_message = replacetext(new_message, "?", ".")
 	speech_args[SPEECH_MESSAGE] = new_message
 
+	// Cut our last overlay before we replace it
+	if(timeleft(tonal_timerid) > 0 && (question_found || exclamation_found))
+		remove_tonal_indicator()
+		deltimer(tonal_timerid)
 	if(question_found) // Prioritize questions
 		tonal_indicator = mutable_appearance('icons/mob/talk.dmi', "signlang1", TYPING_LAYER)
 		owner.visible_message(span_notice("[owner] lowers [owner.p_their()] eyebrows."))
@@ -491,7 +495,7 @@
 		owner.visible_message(span_notice("[owner] raises [owner.p_their()] eyebrows."))
 	if(!isnull(tonal_indicator) && owner?.client.typing_indicators)
 		owner.add_overlay(tonal_indicator)
-		tonal_timerid = addtimer(CALLBACK(src, .proc/remove_tonal_indicator), 2.5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+		tonal_timerid = addtimer(CALLBACK(src, .proc/remove_tonal_indicator), 2.5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE | TIMER_DELETE_ME)
 	else // If we're not gonna use it, just be sure we get rid of it
 		tonal_indicator = null
 

@@ -21,24 +21,8 @@
 	/// List of charging mobs
 	var/list/charging = list()
 
-/datum/action/cooldown/mob_cooldown/charge/New(Target, delay, past, distance, speed, damage, destroy)
-	. = ..()
-	if(!isnull(delay))
-		charge_delay = delay
-	if(!isnull(past))
-		charge_past = past
-	if(!isnull(distance))
-		charge_distance = distance
-	if(!isnull(speed))
-		charge_speed = speed
-	if(!isnull(damage))
-		charge_damage = damage
-	if(!isnull(destroy))
-		destroy_objects = destroy
-
 /datum/action/cooldown/mob_cooldown/charge/Activate(atom/target_atom)
-	// start pre-cooldown so that the ability can't come up while the charge is happening
-	StartCooldown(10 SECONDS)
+	StartCooldown(360 SECONDS, 360 SECONDS)
 	charge_sequence(owner, target_atom, charge_delay, charge_past)
 	StartCooldown()
 
@@ -85,6 +69,7 @@
 
 	// Yes this is disgusting. But we need to queue this stuff, and this code just isn't setup to support that right now. So gotta do it with sleeps
 	sleep(time_to_hit + charge_speed)
+	charger.setDir(dir)
 
 	return TRUE
 
@@ -242,7 +227,6 @@
 /datum/action/cooldown/mob_cooldown/charge/hallucination_charge/charge_sequence(atom/movable/charger, atom/target_atom, delay, past)
 	if(!enraged)
 		hallucination_charge(target_atom, 6, 8, 0, 6, TRUE)
-		StartCooldown(cooldown_time * 0.5)
 		return
 	for(var/i in 0 to 2)
 		hallucination_charge(target_atom, 4, 9 - 2 * i, 0, 4, TRUE)

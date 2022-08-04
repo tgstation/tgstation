@@ -214,6 +214,13 @@
 		SEND_SIGNAL(src, COMSIG_CARBON_EMBED_RIP, I, L)
 		return
 
+	if(href_list["show_paper_note"])
+		var/obj/item/paper/paper_note = locate(href_list["show_paper_note"])
+		if(!paper_note)
+			return
+
+		paper_note.show_through_camera(usr)
+
 /mob/living/carbon/on_fall()
 	. = ..()
 	loc.handle_fall(src)//it's loc so it doesn't call the mob's handle_fall which does nothing
@@ -780,10 +787,6 @@
 		else
 			hud_used.stamina.icon_state = "stamina6"
 
-/mob/living/carbon/proc/update_internals_hud_icon(internal_state = 0)
-	if(hud_used?.internals)
-		hud_used.internals.icon_state = "internal[internal_state]"
-
 /mob/living/carbon/proc/update_spacesuit_hud_icon(cell_state = "empty")
 	if(hud_used?.spacesuit)
 		hud_used.spacesuit.icon_state = "spacesuit_[cell_state]"
@@ -860,8 +863,7 @@
 	if(mind)
 		for(var/addiction_type in subtypesof(/datum/addiction))
 			mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS) //Remove the addiction!
-	for(var/O in internal_organs)
-		var/obj/item/organ/organ = O
+	for(var/obj/item/organ/organ as anything in internal_organs)
 		organ.setOrganDamage(0)
 	for(var/thing in diseases)
 		var/datum/disease/D = thing
@@ -931,12 +933,11 @@
 	if(QDELETED(src))
 		return
 	var/organs_amt = 0
-	for(var/X in internal_organs)
-		var/obj/item/organ/O = X
+	for(var/obj/item/organ/internal_organ as anything in internal_organs)
 		if(prob(50))
 			organs_amt++
-			O.Remove(src)
-			O.forceMove(drop_location())
+			internal_organ.Remove(src)
+			internal_organ.forceMove(drop_location())
 	if(organs_amt)
 		to_chat(user, span_notice("You retrieve some of [src]\'s internal organs!"))
 	remove_all_embedded_objects()
@@ -991,9 +992,8 @@
 
 
 /mob/living/carbon/proc/create_internal_organs()
-	for(var/X in internal_organs)
-		var/obj/item/organ/I = X
-		I.Insert(src)
+	for(var/obj/item/organ/internal/internal_organ in internal_organs)
+		internal_organ.Insert(src)
 
 /proc/cmp_organ_slot_asc(slot_a, slot_b)
 	return GLOB.organ_process_order.Find(slot_a) - GLOB.organ_process_order.Find(slot_b)

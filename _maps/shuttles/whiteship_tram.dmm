@@ -557,7 +557,7 @@
 /obj/item/clothing/shoes/jackboots,
 /obj/item/clothing/gloves/fingerless,
 /obj/item/clothing/under/syndicate/coldres,
-/obj/item/clothing/neck/stripedbluescarf,
+/obj/item/clothing/neck/large_scarf/blue,
 /obj/item/clothing/head/beret/centcom_formal,
 /obj/item/clothing/suit/armor/vest,
 /obj/effect/turf_decal/bot_white,

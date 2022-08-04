@@ -220,7 +220,7 @@
 /turf/open/floor/holofloor/chapel/bottom_right,
 /area/template_noop)
 "F" = (
-/obj/item/clothing/suit/judgerobe,
+/obj/item/clothing/suit/costume/judgerobe,
 /obj/item/clothing/head/powdered_wig,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{

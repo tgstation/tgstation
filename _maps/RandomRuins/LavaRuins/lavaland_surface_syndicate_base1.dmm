@@ -875,9 +875,7 @@
 /area/ruin/syndicate_lava_base/main)
 "fF" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/shower{
-	pixel_y = 14
-	},
+/obj/machinery/shower/directional/south,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/main)
 "fH" = (
@@ -1017,11 +1015,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 2
-	},
+/obj/structure/sink/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 1
 	},
@@ -1739,9 +1733,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/machinery/shower{
+/obj/machinery/shower/directional/east{
 	desc = "The HS-452. Installed recently by the Donk Co. Hygiene Division.";
-	dir = 4;
 	name = "emergency shower"
 	},
 /obj/structure/closet/radiation,
@@ -1853,9 +1846,7 @@
 "kN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sink/kitchen{
-	pixel_y = 28
-	},
+/obj/structure/sink/kitchen/directional/south,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/bar)
 "kP" = (
@@ -2127,10 +2118,7 @@
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/medbay)
 "mf" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/medbay)
@@ -2568,10 +2556,7 @@
 /obj/structure/toilet{
 	pixel_y = 18
 	},
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /obj/machinery/light/small/directional/west,
 /obj/structure/mirror/directional/east,
 /obj/effect/decal/cleanable/dirt,

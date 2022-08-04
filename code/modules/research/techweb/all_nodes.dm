@@ -277,7 +277,6 @@
 		"comp_ntnet_send",
 		"comp_pinpointer",
 		"comp_pressuresensor",
-		"comp_printer",
 		"comp_radio",
 		"comp_random",
 		"comp_reagents",
@@ -1345,6 +1344,7 @@
 		"jawsoflife",
 		"laserscalpel",
 		"mechanicalpinches",
+		"rangedanalyzer",
 		"searingtool",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)

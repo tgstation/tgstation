@@ -25,7 +25,7 @@
 /proc/get_airlock_overlay(icon_state, icon_file, em_block)
 	var/static/list/airlock_overlays = list()
 
-	var/base_icon_key = "[icon_state][icon_file]"
+	var/base_icon_key = "[icon_state][REF(icon_file)]"
 	if(!(. = airlock_overlays[base_icon_key]))
 		. = airlock_overlays[base_icon_key] = mutable_appearance(icon_file, icon_state)
 	if(isnull(em_block))
@@ -1454,7 +1454,7 @@
 		return
 	else if(istype(note, /obj/item/paper))
 		var/obj/item/paper/pinned_paper = note
-		if(pinned_paper.info && pinned_paper.show_written_words)
+		if(pinned_paper.get_total_length() && pinned_paper.show_written_words)
 			return "note_words_[frame_state]"
 		else
 			return "note_[frame_state]"

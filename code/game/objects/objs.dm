@@ -386,3 +386,39 @@
 	for(var/reagent in reagents)
 		var/datum/reagent/R = reagent
 		. |= R.expose_obj(src, reagents[R])
+
+///attempt to freeze this obj if possible. returns TRUE if it succeeded, FALSE otherwise.
+/obj/proc/freeze()
+	if(HAS_TRAIT(src, TRAIT_FROZEN))
+		return FALSE
+	if(obj_flags & FREEZE_PROOF)
+		return FALSE
+
+	AddElement(/datum/element/frozen)
+	return TRUE
+
+///unfreezes this obj if its frozen
+/obj/proc/unfreeze()
+	SEND_SIGNAL(src, COMSIG_OBJ_UNFREEZE)
+
+/obj/storage_contents_dump_act(obj/item/src_object, mob/user)
+	. = ..()
+
+	if(.)
+		return
+
+	if(!src_object.atom_storage)
+		return
+
+	var/atom/resolve_location = src_object.atom_storage.real_location?.resolve()
+	if(!resolve_location)
+		return FALSE
+
+	if(length(resolve_location.contents))
+		to_chat(user, span_notice("You start dumping out the contents of [src_object]..."))
+		if(!do_after(user, 20, target=resolve_location))
+			return FALSE
+
+	src_object.atom_storage.remove_all(get_dumping_location())
+
+	return TRUE

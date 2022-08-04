@@ -78,7 +78,7 @@
 /turf/open/floor/holofloor/snow,
 /area/template_noop)
 "H" = (
-/obj/item/clothing/neck/stripedredscarf{
+/obj/item/clothing/neck/large_scarf/red{
 	pixel_x = -3;
 	pixel_y = -5
 	},

@@ -1,0 +1,120 @@
+2022-08-01:
+  Armhulen/Armhulenn/Bazelart/Tralezab, san7890:
+  - admin: Word filters incorrectly set up will now have their errors actually described.
+      Please, tell your server ops when you see it so they may fix the configuration.
+  - server: Rust-g on this codebase is now on the 1.0.2 version, prepare accordingly.
+  Bytube:
+  - bugfix: fixed crates being able to store mechs
+  Profakos:
+  - bugfix: unfrozen items no longer break when thrown
+  Y0SH1M4S73R:
+  - code_imp: Several projectiles, particularly magic missile and gauntlet echo, now
+      move more smoothly instead of jumping from tile to tile.
+  - bugfix: Calling `print` from lua will no longer spontaneously cause a runtime.
+  - bugfix: The lua editor UI now properly scales with the window, up to certain extremely
+      small sizes.
+  - bugfix: To mitigate lag pending a possible future auxlua update with features
+      to facilitate improved performance on the DM side, the lua editor UI no longer
+      displays the global table and the state log by default - instead, they can be
+      enabled using a toggle-button to the right of the tabs.
+  Zenitheevee:
+  - balance: Bluespace crystals can now go in ITEM_MATERIAL capable material storage
+      (like autolathes)
+  distributivgesetz:
+  - qol: Vault bank machine checks for access before alerting.
+2022-08-02:
+  Fikou:
+  - qol: nuke ops id trims have a sechud icon
+  - bugfix: chameleon cards now fix their colors upon resetting
+  Jacquerel:
+  - bugfix: Creatures which can't experience emotions will no longer attempt to do
+      so upon seeing a traitorous poster.
+  SuperSlayer:
+  - bugfix: Aliens help/harm intent now works normally if used on other aliens
+2022-08-03:
+  Capsandi:
+  - rscadd: The kilo whiteship has been remapped and can fly again
+  - rscadd: Kilo's abandoned warehouse has been adjusted slightly to match the ship
+  EOBGames:
+  - rscadd: Nanotrasen has implemented a new system of Threat Advisories to inform
+      stations of the relative Dynamic threat to their stations by sector.
+  LemonInTheDark:
+  - admin: Wooooo spoooky ADMIN HELP BACKEND HAS CHANGED. If you run into any strange
+      behavior or dropped messages, REPORT THEM
+  Mooshimi:
+  - code_imp: No more runtimes when someone interferes in a religious spar.
+  - code_imp: No more runtimes when someone wearing cowboy boots is table slammed.
+  ShizCalev:
+  - bugfix: Camera assemblies can now be moved after being unwelded! (This was an
+      11 year old bug lol.)
+  - qol: Camera assembly welding has been updated to balloon alerts!
+  - bugfix: Fixed the Stray Cargo Pod event failing to occur if it tried to send an
+      empty cargo pod.
+  - bugfix: Trying to inject someone in the eyes/mouth/feet/hands will no longer result
+      in you trying to inject their chest!
+  SuperSlayer:
+  - bugfix: fixes slimes attacking objects not getting logged
+  Timberpoes:
+  - rscdel: Removed the integrated circuit paper printing mechanic as part of paper
+      code rewrite.
+  - rscdel: Removed the ability to scan paper directly into the modular computer notes
+      app as part of paper code rewrite.
+  - qol: AIs now see the full paper interface when players show them papers through
+      the camera, exactly what's written on the paper, fully rendered.
+  - refactor: Paper code has been completely refactored.
+  - bugfix: Fixes signatures not working at all. Signatures now only work when %s
+      or %sign is put into an [___] input field.
+  - bugfix: Input fields are now fixed and also work again.
+  Twaticus:
+  - imageadd: Converts some families gear into recolorable items in the clothesvendor.
+      Includes a hat, scarf, 3 jackets, football gear, and buttondown shirt with shorts/pants.
+      Adds a recolorable waistcoat.
+  VioletN:
+  - bugfix: The Fire Cascade heretic spell no longer hurts the user.
+  jlsnow301:
+  - bugfix: Custom virus names should now display properly in the pandemic.
+  orthography:
+  - bugfix: fixes tail wag emote stopping the wag.
+  san7890:
+  - admin: You should hopefully no longer see an error message that has nothing to
+      say regarding the word filter.
+2022-08-04:
+  CoffeeDragon16:
+  - qol: most storage item chat messages have been replaced with balloon alerts
+  GoblinBackwards:
+  - bugfix: Fixes heretic curses always failing and saying the items had no fingerprints.
+  Hardly:
+  - rscadd: You can now buy lizards through cargo.
+  LemonInTheDark:
+  - bugfix: You can no longer infinitely york as an alien
+  Melbert:
+  - qol: AIs which update their status displays on multi-z station maps will now update
+      ALL displays on station, instead of only those which match the level their core
+      is on
+  Profakos:
+  - rscadd: Added a new button to the thunderdome administration arena that toggles
+      entertainment monitor's ability to broadcast the thunderdome arena's cameras.
+  - bugfix: Clicking on entertainment monitors actually works now
+  Tastyfish:
+  - qol: Searching within a material stack's recipes now searches the categorized
+      recipes as well.
+  Watermelon914:
+  - bugfix: Clicking on tiles you can't see will work again if you pressed F12.
+  orthography:
+  - qol: allows for an existing ai lawset to be used as the default instead of a "custom"
+      lawset.
+  - server: added server settings that allow for the ai lawset to be specified. This
+      *should* be changed in the server to allow the "asimov++" card to spawn in place
+      of the "asimov" card in the AI upload.
+  timothymtorres:
+  - qol: Add chance for maintenance crate and closet spawners to be open to make the
+      area look more messy.
+  vincentiusvin:
+  - refactor: All four SM delams got recoded, no significant gameplay changes expected.
+  - qol: SM healing is broadcasted on crew radio too now instead of just engi
+  - qol: SM going singulo or tesla will be announced on common comms when the damage
+      is getting severe enough.
+  - code_imp: Only engines considered to be a main engine can spawn stationwide anomalies
+      and trigger cascades.
+  - bugfix: Fixed the sm not having a boxy overlay on normal delams when counting
+      down. This is what the radio message was referring to as "causality field".

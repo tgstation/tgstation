@@ -95,6 +95,10 @@
 	inhand_icon_state = "waistcoat"
 	minimize_when_attached = FALSE
 	attachment_slot = null
+	greyscale_config = /datum/greyscale_config/waistcoat
+	greyscale_config_worn = /datum/greyscale_config/waistcoat_worn
+	greyscale_colors = "#414344"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/accessory/vest_sheriff
 	name = "sheriff vest"
@@ -102,6 +106,14 @@
 	icon_state = "vest_sheriff"
 	inhand_icon_state = "vest_sheriff"
 	minimize_when_attached = TRUE
+	attachment_slot = null
+
+/obj/item/clothing/accessory/maidcorset
+	name = "maid corset"
+	desc = "The final touch that holds it all together."
+	icon_state = "maidcorset"
+	inhand_icon_state = "maidapron"
+	minimize_when_attached = FALSE
 	attachment_slot = null
 
 /obj/item/clothing/accessory/maidapron
