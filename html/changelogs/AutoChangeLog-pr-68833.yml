@@ -1,5 +1,0 @@
-author: "distributivgesetz"
-delete-after: True
-changes: 
-  - bugfix: "Fixed some odd pipes menacingly laying around above tiles in Tramstation engineering."
-  - bugfix: "Fixed misplaced requests console and light fixture."

@@ -98,7 +98,7 @@
 /datum/emote/living/carbon/human/wag
 	key = "wag"
 	key_third_person = "wags"
-	message = "wags their tail."
+	message = "their tail."
 
 /datum/emote/living/carbon/human/wag/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -109,6 +109,14 @@
 		SEND_SIGNAL(user, COMSIG_ORGAN_WAG_TAIL, FALSE)
 	else
 		SEND_SIGNAL(user, COMSIG_ORGAN_WAG_TAIL, TRUE)
+
+/datum/emote/living/carbon/human/wag/select_message_type(mob/user, intentional)
+	. = ..()
+	var/obj/item/organ/external/tail/oranges_accessory = user.getorganslot(ORGAN_SLOT_EXTERNAL_TAIL)
+	if(oranges_accessory.wag_flags & WAG_WAGGING)
+		. = "stops wagging " + message
+	else
+		. = "wags " + message
 
 /datum/emote/living/carbon/human/wag/can_run_emote(mob/user, status_check, intentional)
 	var/obj/item/organ/external/tail/tail = user.getorganslot(ORGAN_SLOT_EXTERNAL_TAIL)

@@ -29396,7 +29396,7 @@
 /obj/structure/table/wood,
 /obj/item/food/pie/cream,
 /obj/item/paper/crumpled{
-	info = "Knock them dead out there, sport!";
+	default_raw_text = "Knock them dead out there, sport!";
 	name = "note from mom"
 	},
 /obj/item/radio/intercom/directional/south,

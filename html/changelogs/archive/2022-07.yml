@@ -1012,3 +1012,105 @@
   timothymtorres:
   - bugfix: Fix slime potions used on simple mobs to inherit all language abilities
       from the user (for real this time)
+2022-07-30:
+  Fikou, TeomanTheGreat:
+  - rscadd: the nuke ops leader is now the highest nuke ops playtime player on the
+      team
+  - qol: the nuke ops leader now starts with their radio loud mode on
+  Jacquerel:
+  - rscadd: Urban legend says that people have been hiding sharp glass behind posters
+      to hurt anyone who tries to remove them. Who would do that? Make sure you're
+      wearing gloves when pulling down posters...
+  - rscadd: Adds two new traitor objectives to upset the crew by placing syndicate
+      posters or drawing the syndicate logo.
+  - bugfix: removed a way that you could send items into the void using just a windoor
+      and a pal
+  JohnFulpWillard:
+  - qol: the NtOS messenger has a scrollbar now.
+  Melbert:
+  - bugfix: Constructs, rats, and some other creatures can attack while their spells
+      are on CD
+  - admin: DNR-ing is now logged
+  Superlagg:
+  - rscadd: Voracious properly speeds up eating. It also allows you to eat and be
+      fed even while you're full, albeit more slowly the fulller you are.
+  Tastyfish:
+  - rscadd: The results of the tile sprayer and decal painter can now only be removed
+      by crowbarring the tile, just like map-start.
+  - bugfix: Tile sprayer's "white" replaced with "neutral", the most common tile overlay
+      color.
+  Watermelon914:
+  - balance: Air alarms USB now support controlling scrubbers, vents and operating
+      mode as well as the alarm.
+  - rscadd: Airlocks can now be made into shells by ticking the 'shell' option in
+      airlock electronic UI. This can only be done during construction.
+  Y0SH1M4S73R:
+  - qol: USB cables can connect directly to bluespace launchpads. As a consequence,
+      You do not need a console for a launchpad if you only intend to control it via
+      circuits.
+  distributivgesetz:
+  - bugfix: Fixed some odd pipes menacingly laying around above tiles in Tramstation
+      engineering.
+  - bugfix: Fixed misplaced requests console and light fixture.
+  magatsuchi:
+  - bugfix: organ boxes no longer freeze the box instead of the organs
+  necromanceranne:
+  - balance: Toy guns are only available to clown operatives.
+  - rscdel: 'Removes from both operative uplinks: Camera Bug, Combat Gloves Plus (already
+      removed from leaders), Guerrilla Gloves, FRAME disc, Radioactive Microlaser,
+      Blood-Red Magboots (the standalone ones, not the modules), Power Beacon, Bioterror
+      everything (including the bundle), Stechkin APS machine pistol and ammo, AI
+      Detector.'
+2022-07-31:
+  CPTANT:
+  - balance: Regular Windows are now stronger and take about 10 toolbox hits to destroy
+  ChakatStormCloud:
+  - bugfix: Basic cyberstomach digestion speed dropped down to be in line with the
+      other stomachs
+  CoffeeDragon16:
+  - bugfix: RPEDs can pick up beakers and assemblies once again
+  - bugfix: holoparasite renaming text will no longer display to others
+  Fikou:
+  - bugfix: everyone is a traitor mode disables progression
+  - bugfix: fixes nuke ops leaders not spawning
+  Higgin:
+  - balance: Non-functional livers and stomachs can now be repaired with their respective
+      surgeries once in the organ's lifetime.
+  Jacquerel:
+  - bugfix: Construction and ape-crushing behaviour should be more consistent between
+      manual and motorised wheelchairs.
+  JohnFulpWillard:
+  - bugfix: Using candy bars as an ingredient in salad now drops a candy wrapper.
+  Melbert:
+  - bugfix: Slime Transformation doesn't require wizard clothes
+  - bugfix: Plant bags transfer seeds in bulk again.
+  OrionTheFox:
+  - bugfix: The Pants Altar's pants' icons are now fixed
+  RigglePrime:
+  - admin: Admins can now put any human species on purrbation
+  ShizCalev:
+  - bugfix: Transferring a carded AI to an empty core will no longer result in a second
+      AI core appearing.
+  - balance: People with epilepsy now have a chance to have a seizure when they're
+      flashed!
+  - bugfix: Leather satchels no longer have a rogue crotch height pixel sticking through
+      your clothing when facing left.
+  - bugfix: Necropolis chest will no longer consume your key if it fails to generate
+      a reward. Also, if it fails to generate, it'll allow you to attempt it again.
+  Watermelon914:
+  - bugfix: Fixed some cases where the highlighted text in the lua editor was out
+      of place with the actual text.
+  distributivgesetz:
+  - bugfix: Fixes APCs clicking constantly during a Grid Check.
+  ghommie, dragomagol:
+  - bugfix: admin-triggered xeno event now works!
+  magatsuchi:
+  - bugfix: storage UI no longer gets stuck on the screen due to an oversight
+  orthography:
+  - bugfix: the all-in-one-grinder shakes (again?)
+  - spellcheck: adds extra information to objective explanation text.
+  - bugfix: makes the photo objective more specific
+  san7890:
+  - bugfix: Nanotrasen should no longer place single bedsheets on double beds.
+  timothymtorres:
+  - rscadd: Bubblegum now spawns demonic bubblegum candy when they devour corpses.
