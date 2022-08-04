@@ -9,6 +9,10 @@
 	mob_biotypes = MOB_BUG
 	maxHealth = 150
 	health = 150
+	verb_say = "spittles"
+	verb_ask = "spittles questioningly"
+	verb_exclaim = "splutters and gurgles"
+	verb_yell = "splutters and gurgles"
 	butcher_results = list(/obj/item/food/meat/slab/bugmeat = 4)
 	guaranteed_butcher_results = list(
 		/obj/effect/gibspawner/generic = 1,

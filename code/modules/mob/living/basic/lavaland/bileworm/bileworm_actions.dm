@@ -84,6 +84,9 @@
 	shared_cooldown = MOB_SHARED_COOLDOWN_2
 
 /datum/action/cooldown/mob_cooldown/devour/Activate(atom/target_atom)
+	if(target_atom == owner)
+		to_chat(owner, span_warning("You can't eat yourself!"))
+		return
 	if(!isliving(target_atom))
 		to_chat(owner, span_warning("That's not food!"))
 		return
@@ -112,6 +115,7 @@
 	if(!(target in devour_turf))
 		to_chat(devourer, span_warning("Someone stole your dinner!"))
 		return
+	to_chat(target, span_userdanger("You are consumed by [devourer]!"))
 	devourer.visible_message("[devourer] consumes [target]!")
 	devourer.fully_heal()
 	playsound(devourer, 'sound/effects/splat.ogg', 50, TRUE)
