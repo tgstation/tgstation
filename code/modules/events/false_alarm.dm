@@ -4,7 +4,8 @@
 	weight = 20
 	max_occurrences = 5
 	var/forced_type //Admin abuse
-
+	category = EVENT_CATEGORY_BUREAUCRATIC
+	description = "Fakes an event announcement."
 
 /datum/round_event_control/falsealarm/admin_setup()
 	if(!check_rights(R_FUN))

@@ -798,7 +798,7 @@
 		return
 	visible_message(span_notice("[src] whirs as it prints and binds a new book."))
 	var/obj/item/book/bound_book = new(loc)
-	bound_book.book_data.set_content(draw_from.info)
+	bound_book.book_data.set_content_using_paper(draw_from)
 	bound_book.name = "Print Job #" + "[rand(100, 999)]"
 	bound_book.gen_random_icon_state()
 	qdel(draw_from)

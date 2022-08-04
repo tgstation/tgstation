@@ -6,6 +6,8 @@
 	earliest_start = 1 HOURS
 	min_players = 20
 	dynamic_should_hijack = TRUE
+	category = EVENT_CATEGORY_ENTITIES
+	description = "Spawns a slaughter demon, to hunt by travelling through pools of blood."
 
 /datum/round_event/ghost_role/slaughter
 	minimum_required = 1

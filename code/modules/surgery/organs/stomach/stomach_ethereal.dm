@@ -18,7 +18,7 @@
 	RegisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_electrocute)
 	ADD_TRAIT(owner, TRAIT_NOHUNGER, REF(src))
 
-/obj/item/organ/internal/stomach/ethereal/Remove(mob/living/carbon/carbon, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/stomach/ethereal/Remove(mob/living/carbon/carbon, special = FALSE)
 	UnregisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
 	UnregisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT)
 	REMOVE_TRAIT(owner, TRAIT_NOHUNGER, REF(src))
