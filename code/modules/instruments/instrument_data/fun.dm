@@ -35,11 +35,6 @@
 				   "48"='sound/runtime/instruments/synthesis_samples/spaceman/c3.ogg',
 				   "60"='sound/runtime/instruments/synthesis_samples/spaceman/c4.ogg')
 
-/datum/instrument/fun/sans
-	name = "Sans"
-	id = "sans"
-	real_samples = list("40"='sound/runtime/instruments/synthesis_samples/sans/e2.ogg')
-
 /datum/instrument/fun/mothscream
 	name = "Moth Scream"
 	id = "mothscream"
