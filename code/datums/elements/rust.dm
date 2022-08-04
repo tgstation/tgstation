@@ -52,7 +52,7 @@
 
 			user.balloon_alert(user, "burning off rust...")
 
-			if(!item.use_tool(source, user, 5))
+			if(!item.use_tool(source, user, 5 SECONDS))
 				return
 			user.balloon_alert(user, "burned off rust")
 			Detach(source)
@@ -63,7 +63,7 @@
 			if(!item.tool_start_check(user, amount=0))
 				return
 			user.balloon_alert(user, "scraping off rust...")
-			if(!item.use_tool(source, user, 2 SECONDS * item.toolspeed))
+			if(!item.use_tool(source, user, 2 SECONDS))
 				return
 			user.balloon_alert(user, "scraped off rust")
 			Detach(source)
