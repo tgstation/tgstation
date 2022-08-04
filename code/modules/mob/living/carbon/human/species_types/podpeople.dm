@@ -67,11 +67,6 @@
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * delta_time)
 		return TRUE
 
-/datum/species/pod/randomize_main_appearance_element(mob/living/carbon/human/human_mob)
-	var/hairstyle = pick(GLOB.pod_hair_list)
-	human_mob.dna.features["pod_hair"] = hairstyle
-	mutant_bodyparts["pod_hair"] = hairstyle
-	human_mob.update_body()
 
 /datum/species/pod/randomize_features(mob/living/carbon/human_mob)
 	randomize_external_organs(human_mob)

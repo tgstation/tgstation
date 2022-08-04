@@ -66,13 +66,6 @@
 		return 10 //flyswatters deal 10x damage to moths
 	return 1
 
-/datum/species/moth/randomize_main_appearance_element(mob/living/carbon/human/human_mob)
-	var/wings = pick(GLOB.moth_wings_list)
-	mutant_bodyparts["wings"] = wings
-	mutant_bodyparts["moth_wings"] = wings
-	human_mob.dna.features["wings"] = wings
-	human_mob.dna.features["moth_wings"] = wings
-	human_mob.update_body()
 
 /datum/species/moth/randomize_features(mob/living/carbon/human/human_mob)
 	human_mob.dna.features["moth_markings"] = pick(GLOB.moth_markings_list)
