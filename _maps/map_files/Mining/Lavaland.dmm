@@ -4373,9 +4373,7 @@
 /turf/open/floor/iron,
 /area/mine/cafeteria)
 "zJ" = (
-/obj/machinery/mineral/processing_unit_console{
-	machinedir = 5
-	},
+/obj/machinery/mineral/processing_unit_console,
 /turf/closed/wall,
 /area/mine/production)
 "zK" = (
@@ -5951,9 +5949,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "Kv" = (
-/obj/machinery/mineral/processing_unit_console{
-	machinedir = 2
-	},
+/obj/machinery/mineral/processing_unit_console,
 /turf/closed/wall,
 /area/mine/laborcamp/production)
 "Kw" = (

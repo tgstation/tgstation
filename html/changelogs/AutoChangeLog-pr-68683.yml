@@ -1,0 +1,6 @@
+author: "Mooshimi"
+delete-after: True
+changes: 
+  - admin: "A lot of game logs will now also be in individual game logs, for convenience in log diving."
+  - admin: "Added logging for bluespace launchpad x and y offset changes, which go to individual game logs."
+  - admin: "Attack logs will now be slightly shorter, one useless word was removed."
