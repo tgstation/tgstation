@@ -1,5 +1,0 @@
-author: "Mooshimi"
-delete-after: True
-changes: 
-  - bugfix: "Added a test in Aurora Caelus event for if the station has the ability to show it."
-  - bugfix: "Stations without space should no longer receive station objectives that require space to be present."

@@ -118,3 +118,63 @@
       and trigger cascades.
   - bugfix: Fixed the sm not having a boxy overlay on normal delams when counting
       down. This is what the radio message was referring to as "causality field".
+2022-08-05:
+  JohnFulpWillard:
+  - balance: Ordnance data disks now have the Frontier app on them, and has entirely
+      replaced Frontier data disks.
+  - bugfix: Labor camp Prisoners without a sentence can no longer send themselves
+      back up whenever they wanted by clicking the button fast enough.
+  - bugfix: Prisoners can no longer get infinite labor camp points by clicking the
+      stacking machine with ores.
+  - bugfix: All ore machines now properly change their direction when they dock a
+      shuttle in a separate direction, fixing Lavaland's labor camp stacking machine.
+  - qol: Labor camp's point checker now states all the information you need, rather
+      than being a paragraph of text that just appears in chat.
+  Justice12354:
+  - rscadd: The Mothroach, your new local exotic pet
+  - rscadd: Mothroach Hide and Mothroach Meat
+  - rscadd: 'New crafting recipe for the Moth Plush: 1 Mothroach Hide; 1 heart; 3
+      cloth'
+  - bugfix: Fixes dead mobs on-head not having sprites
+  Mooshimi:
+  - admin: A lot of game logs will now also be in individual game logs, for convenience
+      in log diving.
+  - admin: Added logging for bluespace launchpad x and y offset changes, which go
+      to individual game logs.
+  - admin: Attack logs will now be slightly shorter, one useless word was removed.
+  - bugfix: Added a test in Aurora Caelus event for if the station has the ability
+      to show it.
+  - bugfix: Stations without space should no longer receive station objectives that
+      require space to be present.
+  - qol: Machines that require a minimum level of part now have it visible.
+  Pepsilawn:
+  - bugfix: Fixed a typo in Metastation's service's camera tag
+  Profakos:
+  - refactor: The Force Event UI has been refactored
+  - refactor: Events now have categories and descriptions
+  - refactor: Admin triggered events happen immediately
+  - balance: Fake Virus and Electric Storms are shown to admins, making them cancelable
+  ShizCalev:
+  - bugfix: You can no longer crawl into a vent if it's welded while you're climbing
+      into it.
+  - bugfix: ES8 explosive charges (structural weakpoint charges) can now only be planted
+      on walls or the floor.
+  lizardqueenlexi:
+  - bugfix: Universal recorder now properly reports length of silence in seconds instead
+      of deciseconds
+  san7890:
+  - balance: Nanotrasen realized that the more access they had on their cards was
+      costing them a pretty penny, so they trimmed back the number of accesses a certain
+      departmental Security Guard might have. However, any given guard will get back
+      a greater amount of accesses depending on how many security guards there are
+      in relation to the population.
+  - config: Hey server operators, listen! We've changed up how Departmental Security
+      Officers get their accesses, so be sure to review the DEPSEC_ACCESS_LEVEL config
+      number to see what you want to work best for your server.
+  - admin: The word filter should no longer runtime on initialize. For real this time.
+  timothymtorres:
+  - rscadd: The drink "Between the Sheets" requires sleeping underneath bedsheets
+      to gain healing effects
+  vincentiusvin:
+  - bugfix: deleted unconnected lavabase pump
+  - bugfix: removed unecessary bridge pipes from kilomos

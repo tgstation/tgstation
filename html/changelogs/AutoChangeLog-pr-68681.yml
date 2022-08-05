@@ -1,4 +1,0 @@
-author: "lizardqueenlexi"
-delete-after: True
-changes: 
-  - bugfix: "Universal recorder now properly reports length of silence in seconds instead of deciseconds"
