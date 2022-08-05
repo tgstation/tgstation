@@ -745,6 +745,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define BLINDFOLD_TRAIT "blindfolded"
 #define TRAIT_SANTA "santa"
 #define SCRYING_ORB "scrying-orb"
+#define WISP_TRAIT "wisp"
 #define ABDUCTOR_ANTAGONIST "abductor-antagonist"
 #define JUNGLE_FEVER_TRAIT "jungle_fever"
 #define MEGAFAUNA_TRAIT "megafauna"

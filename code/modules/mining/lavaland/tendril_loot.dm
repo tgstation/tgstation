@@ -248,6 +248,10 @@
 			wisp.visible_message(span_notice("[wisp] has a sad feeling for a moment, then it passes."))
 	return ..()
 
+#define WISP_FULL_EFFECT 1
+#define WISP_MEDIUM_EFFECT 2
+#define WISP_WEAK_EFFECT 3
+
 /obj/effect/wisp
 	name = "friendly wisp"
 	desc = "Happy to light your way."
@@ -258,28 +262,66 @@
 	light_flags = LIGHT_ATTACHED
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
-	var/sight_flags = SEE_MOBS
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	var/mob/owner
+	var/state
+	var/night_vision_granted = FALSE
 
 /obj/effect/wisp/orbit(atom/thing, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, lockinorbit)
 	. = ..()
 	if(ismob(thing))
-		RegisterSignal(thing, COMSIG_MOB_UPDATE_SIGHT, .proc/update_user_sight)
-		var/mob/being = thing
-		being.update_sight()
-		to_chat(thing, span_notice("The wisp enhances your vision."))
+		owner = thing
+		START_PROCESSING(SSobj, src)
+
 
 /obj/effect/wisp/stop_orbit(datum/component/orbiter/orbits)
 	. = ..()
-	if(ismob(orbits.parent))
-		UnregisterSignal(orbits.parent, COMSIG_MOB_UPDATE_SIGHT)
-		to_chat(orbits.parent, span_notice("Your vision returns to normal."))
+	if(owner)
+		clear_old_traits()
+		REMOVE_TRAIT(owner, TRAIT_TRUE_NIGHT_VISION, WISP_TRAIT)
+		STOP_PROCESSING(SSobj, src)
+		owner = null
+		night_vision_granted = FALSE
 
-/obj/effect/wisp/proc/update_user_sight(mob/user)
-	SIGNAL_HANDLER
-	user.sight |= sight_flags
-	if(!isnull(lighting_alpha))
-		user.lighting_alpha = min(user.lighting_alpha, lighting_alpha)
+/obj/effect/wisp/Destroy()
+	if(owner)
+		clear_old_traits()
+		REMOVE_TRAIT(owner, TRAIT_TRUE_NIGHT_VISION, WISP_TRAIT)
+		STOP_PROCESSING(SSobj, src)
+		owner = null
+	. = ..()
+
+/obj/effect/wisp/process()
+	if(!owner)
+		return
+	clear_old_traits()
+	if(SSmapping.level_trait(z, ZTRAIT_MINING))
+		state = WISP_FULL_EFFECT
+		ADD_TRAIT(owner, TRAIT_XRAY_VISION, WISP_TRAIT)
+	else if(SSmapping.level_trait(z, ZTRAIT_STATION) || SSmapping.level_trait(z, ZTRAIT_AWAY))
+		state = WISP_WEAK_EFFECT
+		ADD_TRAIT(owner, TRAIT_MESON_VISION, WISP_TRAIT)
+	else
+		state = WISP_MEDIUM_EFFECT
+		ADD_TRAIT(owner, TRAIT_THERMAL_VISION, WISP_TRAIT)
+	if(!night_vision_granted)
+		ADD_TRAIT(owner, TRAIT_TRUE_NIGHT_VISION, WISP_TRAIT)
+		night_vision_granted = TRUE
+
+/obj/effect/wisp/proc/clear_old_traits()
+	if(!state)
+		return
+	switch(state)
+		if(WISP_FULL_EFFECT)
+			REMOVE_TRAIT(owner, TRAIT_XRAY_VISION, WISP_TRAIT)
+		if(WISP_MEDIUM_EFFECT)
+			REMOVE_TRAIT(owner, TRAIT_THERMAL_VISION, WISP_TRAIT)
+		if(WISP_WEAK_EFFECT)
+			REMOVE_TRAIT(owner, TRAIT_MESON_VISION, WISP_TRAIT)
+
+#undef WISP_FULL_EFFECT 
+#undef WISP_MEDIUM_EFFECT 
+#undef WISP_WEAK_EFFECT 
 
 //Red/Blue Cubes
 /obj/item/warp_cube
