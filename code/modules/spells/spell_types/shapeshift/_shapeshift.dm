@@ -1,6 +1,11 @@
 /// Helper for checking of someone's shapeshifted currently.
 #define is_shifted(mob) mob.has_status_effect(/datum/status_effect/shapechange_mob/from_spell)
 
+/**
+ * Shapeshift spells.
+ *
+ * Allows the caster to transform to and from a different mob type.
+ */
 /datum/action/cooldown/spell/shapeshift
 	button_icon_state = "shapeshift"
 	school = SCHOOL_TRANSMUTATION
@@ -18,20 +23,28 @@
 	/// If convert damage is true, the damage type we deal when converting damage back and forth
 	var/convert_damage_type = BRUTE
 
-	/// Our chosen type
+	/// Our chosen type.
 	var/mob/living/shapeshift_type
-	/// All possible types we can become
+	/// All possible types we can become.
+	/// This should be implemented even if there is only one choice.
 	var/list/atom/possible_shapes
 
 /datum/action/cooldown/spell/shapeshift/is_valid_target(atom/cast_on)
 	return isliving(cast_on)
 
-/datum/action/cooldown/spell/shapeshift/before_cast(atom/cast_on)
+/datum/action/cooldown/spell/shapeshift/before_cast(mob/living/cast_on)
 	. = ..()
 	if(. & SPELL_CANCEL_CAST)
 		return
 
 	if(shapeshift_type)
+		// If another shapeshift spell was casted while we're already shifted, they could technically go to do_unshapeshift().
+		// However, we don't really want people casting shapeshift A to un-shapeshift from shapeshift B,
+		// as it could cause bugs or unintended behavior. So we'll just stop them here.
+		if(is_shifted(cast_on) && !istype(cast_on, shifted_type))
+			to_chat(caster, span_warning("This spell won't un-shapeshift you from this form!"))
+			return . | SPELL_CANCEL_CAST
+
 		return
 
 	if(length(possible_shapes) == 1)
@@ -126,11 +139,13 @@
 
 /// Actually does the shapeshift, for the caster.
 /datum/action/cooldown/spell/shapeshift/proc/do_shapeshift(mob/living/caster)
-
 	var/mob/living/new_shape = create_shapeshift_mob(caster.loc)
 	var/datum/status_effect/shapechange_mob/shapechange = new_shape.apply_status_effect(/datum/status_effect/shapechange_mob/from_spell, caster, src)
 	if(!shapechange)
+		// We failed to shift, maybe because we were already shapeshifted?
+		// Whatver the case, this shouldn't happen, so throw a stack trace.
 		to_chat(caster, span_warning("You can't shapeshift in this form!"))
+		stack_trace("[type] do_shapeshift was called when the mob was already shapeshifted (from a spell).")
 		return
 
 	// Make sure it's castable even in their new form.
@@ -141,16 +156,11 @@
 
 /// Actually does the un-shapeshift, from the caster. (Caster is a shapeshifted mob.)
 /datum/action/cooldown/spell/shapeshift/proc/do_unshapeshift(mob/living/caster)
-
 	var/datum/status_effect/shapechange_mob/shapechange = caster.has_status_effect(/datum/status_effect/shapechange_mob/from_spell)
 	if(!shapechange)
+		// We made it to do_unshapeshift without having a shapeshift status effect, this shouldn't happen.
 		to_chat(caster, span_warning("You can't un-shapeshift from this form!"))
-		return
-
-	// If someone uses another shapeshift spell while already shapeshfited,
-	// they need to use that spell to un-shapeshift instead - to avoid weirdness
-	if(!istype(caster, shapeshift_type))
-		to_chat(caster, span_warning("This spell won't un-shapeshift you from this form!"))
+		stack_trace("[type] do_unshapeshift was called when the mob wasn't even shapeshifted (from a spell).")
 		return
 
 	// Restore the requirements.
