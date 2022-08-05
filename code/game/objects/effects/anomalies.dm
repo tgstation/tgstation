@@ -601,7 +601,7 @@
 	var/area/new_area = placer.findValidArea()
 
 	priority_announce("Dimensional instability relocated. Expected location: [new_area.name].", "Anomaly Alert")
-	src.loc = pick(get_area_turfs(new_area))
+	do_teleport(src, pick(get_area_turfs(new_area)))
 	prepare_area()
 
 /obj/effect/temp_visual/transmute_tile_flash

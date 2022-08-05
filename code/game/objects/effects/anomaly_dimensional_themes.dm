@@ -107,7 +107,7 @@
 	return FALSE
 
 /datum/dimension_theme/proc/apply_materials(turf/affected_turf)
-	var/list/custom_materials = list(GET_MATERIAL_REF(material) = 1)
+	var/list/custom_materials = list(GET_MATERIAL_REF(material) = MINERAL_MATERIAL_AMOUNT)
 
 	if (istype(affected_turf, /turf/open/floor/material) || istype(affected_turf, /turf/closed/wall/material))
 		affected_turf.set_custom_materials(custom_materials)
