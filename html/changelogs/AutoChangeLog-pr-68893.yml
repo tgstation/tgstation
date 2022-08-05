@@ -1,0 +1,4 @@
+author: "RigglePrime"
+delete-after: True
+changes: 
+  - bugfix: "Purrbation now properly adds and removes tails"

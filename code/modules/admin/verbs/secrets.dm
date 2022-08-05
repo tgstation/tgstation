@@ -572,7 +572,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				candidates -= chosen_candidate
 				nerd = new /mob/living/simple_animal/drone/classic(spawnpoint)
 				nerd.key = chosen_candidate.key
-				log_game("[key_name(nerd)] has been selected as a Nanotrasen emergency response drone")
+				nerd.log_message("has been selected as a Nanotrasen emergency response drone.", LOG_GAME)
 				teamsize--
 
 			return TRUE
