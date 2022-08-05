@@ -1,6 +1,6 @@
 import { classes } from 'common/react';
 import { capitalizeAll } from 'common/string';
-import { useBackend } from 'tgui/backend';
+import { useBackend, useLocalState } from 'tgui/backend';
 import { Box, Button, Icon, LabeledList, NoticeBox, Section, Stack, Table } from 'tgui/components';
 import { Window } from 'tgui/layouts';
 
@@ -16,6 +16,11 @@ type VendingData = {
   extended_inventory: boolean;
   access: boolean;
   vending_machine_input: CustomInput[];
+  categories?: Record<string, Category>;
+};
+
+type Category = {
+  icon: string,
 };
 
 type ProductRecord = {
@@ -55,6 +60,7 @@ type StockItem = {
   name: string;
   amount: number;
   colorable: boolean;
+  category?: string;
 };
 
 type CustomInput = {
@@ -66,6 +72,11 @@ type CustomInput = {
 export const Vending = (props, context) => {
   const { data } = useBackend<VendingData>(context);
   const { onstation } = data;
+  const [selectedCategory, setSelectedCategory] = useLocalState<string | null>(
+    context,
+    'selectedCategory',
+    data.categories ? Object.keys(data.categories)[0] : null,
+  );
 
   return (
     <Window width={450} height={600}>
@@ -77,8 +88,18 @@ export const Vending = (props, context) => {
             </Stack.Item>
           )}
           <Stack.Item grow>
-            <ProductDisplay />
+            <ProductDisplay selectedCategory={selectedCategory} />
           </Stack.Item>
+
+          {data.categories && Object.keys(data.categories).length > 0 && (
+            <Stack.Item>
+              <CategorySelector
+                categories={data.categories}
+                selectedCategory={selectedCategory!}
+                onSelect={setSelectedCategory}
+              />
+            </Stack.Item>
+          )}
         </Stack>
       </Window.Content>
     </Window>
@@ -116,8 +137,11 @@ export const UserDetails = (props, context) => {
 };
 
 /** Displays  products in a section, with user balance at top */
-const ProductDisplay = (props, context) => {
+const ProductDisplay = (props: {
+  selectedCategory: string | null;
+}, context) => {
   const { data } = useBackend<VendingData>(context);
+  const { selectedCategory } = props;
   const {
     onstation,
     user,
@@ -137,8 +161,11 @@ const ProductDisplay = (props, context) => {
       inventory = [...inventory, ...hidden_records];
     }
   }
-  // Just in case we still have undefined values in the list
-  inventory = inventory.filter((item) => !!item);
+
+  inventory = inventory
+    // Just in case we still have undefined values in the list
+    .filter((item) => !!item)
+    .filter((item) => stock[item.name]?.category === selectedCategory);
 
   return (
     <Section
@@ -304,5 +331,29 @@ const ProductButton = (props, context) => {
       }>
       {standardPrice}
     </Button>
+  );
+};
+
+const CategorySelector = (props: {
+  categories: Record<string, Category>,
+  selectedCategory: string,
+  onSelect: (category: string) => void;
+}) => {
+  const { categories, selectedCategory, onSelect } = props;
+
+  return (
+    <Stack grow>
+      <Stack.Item>
+        {Object.entries(categories).map(([name, category]) => (
+          <Button
+            key={name}
+            selected={name === selectedCategory}
+            icon={category.icon}
+            onClick={() => onSelect(name)}>
+              {name}
+          </Button>
+        ))}
+      </Stack.Item>
+    </Stack>
   );
 };

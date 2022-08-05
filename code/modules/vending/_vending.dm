@@ -1,3 +1,5 @@
+// MOTHBLOCKS TODO: Contraband/premium categories when unlocked
+
 /*
  * Vending machine types - Can be found under /code/modules/vending/
  */
@@ -952,7 +954,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 		if (!isnull(category))
 			categories[category["name"]] = list(
-				"name" = category["name"],
 				"icon" = category["icon"],
 			)
 
