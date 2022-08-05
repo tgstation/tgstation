@@ -562,8 +562,9 @@
 /obj/projectile/magic/aoe/magic_missile
 	name = "magic missile"
 	icon_state = "magicm"
-	range = 20
-	speed = 5
+	range = 100
+	speed = 1
+	pixel_speed_multiplier = 0.2
 	trigger_range = 0
 	can_only_hit_target = TRUE
 	nodamage = FALSE
@@ -589,8 +590,9 @@
 	trigger_range = 0
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
 	ignored_factions = list("cult")
-	range = 15
-	speed = 7
+	range = 105
+	speed = 1
+	pixel_speed_multiplier = 1/7
 
 /obj/projectile/magic/spell/juggernaut/on_hit(atom/target, blocked)
 	. = ..()

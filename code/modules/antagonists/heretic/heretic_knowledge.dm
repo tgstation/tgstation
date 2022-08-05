@@ -378,7 +378,7 @@
 /datum/heretic_knowledge/curse/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	fingerprints = list()
 	for(var/atom/requirements as anything in atoms)
-		fingerprints[GET_ATOM_FINGERPRINTS(requirements)] = 1
+		fingerprints |= GET_ATOM_FINGERPRINTS(requirements)
 	list_clear_nulls(fingerprints)
 
 	// No fingerprints? No ritual
@@ -401,7 +401,7 @@
 		loc.balloon_alert(user, "ritual failed, no fingerprints!")
 		return FALSE
 
-	var/chosen_mob = tgui_input_list(user, "Select the person you wish to curse", "Eldritch Curse", sort_list(compiled_list, /proc/cmp_mob_realname_dsc))
+	var/chosen_mob = tgui_input_list(user, "Select the person you wish to curse", "Eldritch Curse", sort_list(compiled_list))
 	if(isnull(chosen_mob))
 		return FALSE
 
@@ -463,7 +463,7 @@
 	summoned.ghostize(FALSE)
 	summoned.key = picked_candidate.key
 
-	log_game("[key_name(user)] created a [summoned.name], controlled by [key_name(picked_candidate)].")
+	user.log_message("created a [summoned.name], controlled by [key_name(picked_candidate)].", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(user)] created a [summoned.name], [ADMIN_LOOKUPFLW(summoned)].")
 
 	var/datum/antagonist/heretic_monster/heretic_monster = summoned.mind.add_antag_datum(/datum/antagonist/heretic_monster)

@@ -5,6 +5,8 @@
 	max_occurrences = 1
 	min_players = 20
 	dynamic_should_hijack = TRUE
+	category = EVENT_CATEGORY_INVASION
+	description = "One or more abductor teams spawns, and they plan to experiment on the crew."
 
 /datum/round_event/ghost_role/abductor
 	minimum_required = 2
@@ -24,8 +26,8 @@
 	if(T.team_number > ABDUCTOR_MAX_TEAMS)
 		return MAP_ERROR
 
-	log_game("[key_name(scientist)] has been selected as [T.name] abductor scientist.")
-	log_game("[key_name(agent)] has been selected as [T.name] abductor agent.")
+	scientist.log_message("has been selected as [T.name] abductor scientist.", LOG_GAME)
+	agent.log_message("has been selected as [T.name] abductor agent.", LOG_GAME)
 
 	scientist.mind.add_antag_datum(/datum/antagonist/abductor/scientist, T)
 	agent.mind.add_antag_datum(/datum/antagonist/abductor/agent, T)

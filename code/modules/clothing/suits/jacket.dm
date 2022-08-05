@@ -1,14 +1,48 @@
 /obj/item/clothing/suit/jacket
-	name = "bomber jacket"
-	desc = "Aviators not included."
-	icon_state = "bomberjacket"
 	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
-	inhand_icon_state = "brownjsuit"
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/radio)
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	species_exception = list(/datum/species/golem)
+
+/obj/item/clothing/suit/toggle/jacket/sweater
+	name = "sweater jacket"
+	desc = "A sweater jacket."
+	icon_state = "sweater"
+	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
+	greyscale_config = /datum/greyscale_config/sweater
+	greyscale_config_worn = /datum/greyscale_config/sweater_worn
+	greyscale_colors = "#414344"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/suit/jacket/oversized
+	name = "oversized jacket"
+	desc = "An oversized jacket."
+	icon_state = "jacket_oversized"
+	greyscale_config = /datum/greyscale_config/jacket_oversized
+	greyscale_config_worn = /datum/greyscale_config/jacket_oversized_worn
+	greyscale_colors = "#414344"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/suit/jacket/fancy
+	name = "fancy fur coat"
+	desc = "Rated 10 out of 10 in Cosmo for best coat brand."
+	icon_state = "fancy_coat"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	cold_protection = CHEST|GROIN|LEGS|ARMS
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	greyscale_config = /datum/greyscale_config/fancy_coat
+	greyscale_config_worn = /datum/greyscale_config/fancy_coat_worn
+	greyscale_colors = "#EDE3DC#414344"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/suit/jacket/bomber
+	name = "bomber jacket"
+	desc = "Aviators not included."
+	icon_state = "bomberjacket"
+	inhand_icon_state = "brownjsuit"
 
 /obj/item/clothing/suit/jacket/leather
 	name = "leather jacket"

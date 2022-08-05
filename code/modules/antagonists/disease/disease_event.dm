@@ -5,7 +5,8 @@
 	weight = 7
 	max_occurrences = 1
 	min_players = 25
-
+	category = EVENT_CATEGORY_HEALTH
+	description = "Spawns a sentient disease, who wants to infect as many people as possible."
 
 /datum/round_event/ghost_role/sentient_disease
 	role_name = "sentient disease"
@@ -21,6 +22,6 @@
 	virus.key = selected.key
 	INVOKE_ASYNC(virus, /mob/camera/disease/proc/pick_name)
 	message_admins("[ADMIN_LOOKUPFLW(virus)] has been made into a sentient disease by an event.")
-	log_game("[key_name(virus)] was spawned as a sentient disease by an event.")
+	virus.log_message("was spawned as a sentient disease by an event.", LOG_GAME)
 	spawned_mobs += virus
 	return SUCCESSFUL_SPAWN
