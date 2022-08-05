@@ -91,9 +91,9 @@
 		return data
 
 	data["table"] = table
-	if(!table.check_eligible_patient())
-		return data
 	data["patient"] = list()
+	if(!table.patient)
+		return data
 	var/mob/living/carbon/human/patient = table.patient
 
 	switch(patient.stat)
