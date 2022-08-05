@@ -14042,7 +14042,7 @@
 	dir = 4
 	},
 /obj/item/paper{
-	info = "ratsratsratsratsratsratsratsratsratsratsratsratsrats"
+	default_raw_text = "ratsratsratsratsratsratsratsratsratsratsratsratsrats"
 	},
 /obj/effect/decal/cleanable/dirt,
 /mob/living/simple_animal/mouse,
@@ -34000,7 +34000,7 @@
 /obj/structure/table,
 /obj/item/radio/intercom/directional/east,
 /obj/item/paper{
-	info = "buy more donk pockets";
+	default_raw_text = "buy more donk pockets";
 	name = "To-Do List"
 	},
 /turf/open/floor/iron/dark,
