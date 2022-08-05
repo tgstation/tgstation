@@ -83,7 +83,7 @@
 /datum/disease/transformation/proc/replace_banned_player(mob/living/new_mob) // This can run well after the mob has been transferred, so need a handle on the new mob to kill it if needed.
 	set waitfor = FALSE
 
-	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob(role = bantype, jobban = bantype, poll_time = 5 SECONDS, target_mob = affected_mob, pic_source = affected_mob, role_name_text = "[affected_mob.real_name]")
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob(role = bantype, jobban = bantype, poll_time = 5 SECONDS, target_mob = affected_mob, pic_source = affected_mob)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		to_chat(affected_mob, span_userdanger("Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!"))

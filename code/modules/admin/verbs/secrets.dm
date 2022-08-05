@@ -405,7 +405,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				var/list/candidates = list()
 
 				if (prefs["offerghosts"]["value"] == "Yes")
-					candidates = SSpolling.poll_ghost_candidates(role = replacetext(prefs["ghostpoll"]["value"], "%TYPE%", initial(pathToSpawn.name)), jobban = ROLE_TRAITOR, pic_source = pathToSpawn, role_name_text = "[initial(pathToSpawn.name)]")
+					candidates = SSpolling.poll_ghost_candidates(role = replacetext(prefs["ghostpoll"]["value"], "%TYPE%", initial(pathToSpawn.name)), jobban = ROLE_TRAITOR, pic_source = pathToSpawn, role_name_text = "portal storm spawn")
 
 				if (prefs["playersonly"]["value"] == "Yes" && length(candidates) < prefs["minplayers"]["value"])
 					message_admins("Not enough players signed up to create a portal storm, the minimum was [prefs["minplayers"]["value"]] and the number of signups [length(candidates)]")

@@ -57,7 +57,7 @@
 	attempting_awakening = TRUE
 	to_chat(awakener, span_notice("You attempt to wake the spirit of [parent]..."))
 
-	var/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(jobban = ROLE_PAI, poll_time = 10 SECONDS, ignore_category = POLL_IGNORE_POSSESSED_BLADE, pic_source = parent, role_name_text = "the spirit of [awakener.real_name]'s blade")
+	var/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(jobban = ROLE_PAI, poll_time = 10 SECONDS, ignore_category = POLL_IGNORE_POSSESSED_BLADE, pic_source = parent, role_name_text = "spirit of item")
 	if(!LAZYLEN(candidates))
 		to_chat(awakener, span_warning("[parent] is dormant. Maybe you can try again later."))
 		attempting_awakening = FALSE

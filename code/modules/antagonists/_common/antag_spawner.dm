@@ -55,7 +55,7 @@
 /obj/item/antag_spawner/contract/proc/poll_for_student(mob/living/carbon/human/teacher, apprentice_school)
 	balloon_alert(teacher, "contacting apprentice...")
 	polling = TRUE
-	var/list/candidates = SSpolling.poll_ghost_candidates_for_mob(role = ROLE_WIZARD, jobban = ROLE_WIZARD, poll_time = 15 SECONDS, target_mob = src, pic_source = /obj/item/clothing/head/wizard, role_name_text = "wizard's [apprentice_school] apprentice")
+	var/list/candidates = SSpolling.poll_ghost_candidates_for_mob(role = ROLE_WIZARD, jobban = ROLE_WIZARD, poll_time = 15 SECONDS, target_mob = src, pic_source = /obj/item/clothing/head/wizard, role_name_text = "wizard apprentice")
 	polling = FALSE
 	if(!LAZYLEN(candidates))
 		to_chat(teacher, span_warning("Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later."))
@@ -251,7 +251,7 @@
 		return
 	if(used)
 		return
-	var/list/candidates = SSpolling.poll_ghost_candidates_for_mob(role = ROLE_ALIEN, jobban = ROLE_ALIEN, poll_time = 5 SECONDS, target_mob = src, pic_source = /mob/living/simple_animal/hostile/imp/slaughter, role_name_text = "[initial(demon_type.name)]")
+	var/list/candidates = SSpolling.poll_ghost_candidates_for_mob(role = ROLE_ALIEN, jobban = ROLE_ALIEN, poll_time = 5 SECONDS, target_mob = src, pic_source = /mob/living/simple_animal/hostile/imp/slaughter, role_name_text = "slaughter demon")
 	if(LAZYLEN(candidates))
 		if(used || QDELETED(src))
 			return

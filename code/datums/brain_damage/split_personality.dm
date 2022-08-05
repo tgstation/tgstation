@@ -33,7 +33,7 @@
 
 /datum/brain_trauma/severe/split_personality/proc/get_ghost()
 	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob(jobban = ROLE_PAI, poll_time = 7.5 SECONDS, target_mob = stranger_backseat, ignore_category = POLL_IGNORE_SPLITPERSONALITY, pic_source = owner, role_name_text = "[owner.real_name]'s split personality")
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob(jobban = ROLE_PAI, poll_time = 7.5 SECONDS, target_mob = stranger_backseat, ignore_category = POLL_IGNORE_SPLITPERSONALITY, pic_source = owner, role_name_text = "split personality")
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		stranger_backseat.key = C.key
@@ -206,7 +206,7 @@
 
 /datum/brain_trauma/severe/split_personality/brainwashing/get_ghost()
 	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob(poll_time = 7.5 SECONDS, target_mob = stranger_backseat, pic_source = owner, role_name_text = "[owner.real_name]'s brainwashed mind")
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob(poll_time = 7.5 SECONDS, target_mob = stranger_backseat, pic_source = owner, role_name_text = "brainwashed mind")
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		stranger_backseat.key = C.key
