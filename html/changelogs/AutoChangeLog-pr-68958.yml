@@ -1,0 +1,4 @@
+author: "Jackraxxus"
+delete-after: True
+changes: 
+  - bugfix: "Admin AI interact can once again print items from departmental protolathes."
