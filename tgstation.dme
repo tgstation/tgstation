@@ -697,6 +697,7 @@
 #include "code\datums\ai\monkey\monkey_behaviors.dm"
 #include "code\datums\ai\monkey\monkey_controller.dm"
 #include "code\datums\ai\monkey\monkey_subtrees.dm"
+#include "code\datums\ai\monkey\punpun_subtrees.dm"
 #include "code\datums\ai\movement\_ai_movement.dm"
 #include "code\datums\ai\movement\ai_movement_basic_avoidance.dm"
 #include "code\datums\ai\movement\ai_movement_dumb.dm"
