@@ -1,9 +1,12 @@
+/// Helper for checking of someone's shapeshifted currently.
+#define is_shifted(mob) mob.has_status_effect(/datum/status_effect/shapechange_mob/from_spell)
+
 /datum/action/cooldown/spell/shapeshift
 	button_icon_state = "shapeshift"
 	school = SCHOOL_TRANSMUTATION
 	cooldown_time = 10 SECONDS
 
-	/// Our spell's requrements before we shapeshifted. Stored on shapeshift.
+	/// Our spell's requrements before we shapeshifted. Stored on shapeshift so we can restore them after unshifting.
 	var/pre_shift_requirements
 
 	/// Whehter we revert to our human form on death.
@@ -67,24 +70,25 @@
 	cast_on.buckled?.unbuckle_mob(cast_on, force = TRUE)
 
 	var/currently_ventcrawling = (cast_on.movement_type & VENTCRAWLING)
+	var/mob/living/resulting_mob
 
 	// Do the shift back or forth
 	if(is_shifted(cast_on))
-		do_unshapeshift(cast_on)
+		resulting_mob = do_unshapeshift(cast_on)
 	else
-		do_shapeshift(cast_on)
+		resulting_mob = do_shapeshift(cast_on)
 
 	// The shift is done, let's make sure they're in a valid state now
 	// If we're not ventcrawling, we don't need to mind
-	if(!currently_ventcrawling)
+	if(!currently_ventcrawling || !resulting_mob)
 		return
 
 	// We are ventcrawling - can our new form support ventcrawling?
-	if(HAS_TRAIT(cast_on, TRAIT_VENTCRAWLER_ALWAYS) || HAS_TRAIT(cast_on, TRAIT_VENTCRAWLER_NUDE))
+	if(HAS_TRAIT(resulting_mob, TRAIT_VENTCRAWLER_ALWAYS) || HAS_TRAIT(resulting_mob, TRAIT_VENTCRAWLER_NUDE))
 		return
 
 	// Uh oh. You've shapeshifted into something that can't fit into a vent, while ventcrawling.
-	eject_from_vents(cast_on)
+	eject_from_vents(resulting_mob)
 
 /// Whenever someone shapeshifts within a vent,
 /// and enters a state in which they are no longer a ventcrawler,
@@ -107,8 +111,9 @@
 			playsound(possible_vent, 'sound/effects/reee.ogg', 75, TRUE)
 
 	priority_announce("We detected a pipe blockage around [get_area(get_turf(cast_on))], please dispatch someone to investigate.", "Central Command")
-	cast_on.death()
-	qdel(cast_on)
+	// Gib our caster, and make sure to leave nothing behind
+	// (If we leave something behind, it'll drop on the turf of the pipe, which is kinda wrong.)
+	cast_on.gib(TRUE, TRUE, TRUE)
 
 /// Callback for the radial that allows the user to choose their species.
 /datum/action/cooldown/spell/shapeshift/proc/check_menu(mob/living/caster)
@@ -119,38 +124,46 @@
 
 	return !caster.incapacitated()
 
-/// Check if we're currently shifted by trying to find the shapechange status effect in our loc
-/// Returns a truthy value (a status_effect instance) if we're shapeshifted, or null if we're not.
-/datum/action/cooldown/spell/shapeshift/proc/is_shifted(mob/living/cast_on)
-	var/mob/living/shape = cast_on.loc
-	if(!istype(shape))
-		return null
-
-	return shape.has_status_effect(/datum/status_effect/shapechange_mob)
-
 /// Actually does the shapeshift, for the caster.
 /datum/action/cooldown/spell/shapeshift/proc/do_shapeshift(mob/living/caster)
-	if(is_shifted(caster))
-		to_chat(caster, span_warning("You're already shapeshifted, but for some reason casting this tried to shapeshift you again!"))
-		CRASH("[type] called do_shapeshift while shapeshifted.")
 
+	var/mob/living/new_shape = create_shapeshift_mob(caster.loc)
+	var/datum/status_effect/shapechange_mob/shapechange = new_shape.apply_status_effect(/datum/status_effect/shapechange_mob/from_spell, caster, src)
+	if(!shapechange)
+		to_chat(caster, span_warning("You can't shapeshift in this form!"))
+		return
 
 	// Make sure it's castable even in their new form.
 	pre_shift_requirements = spell_requirements
 	spell_requirements &= ~(SPELL_REQUIRES_HUMAN|SPELL_REQUIRES_WIZARD_GARB)
 
-	var/mob/living/new_shape = create_shapeshift_mob(caster.loc)
-	return new_shape.apply_status_effect(/datum/status_effect/shapechange_mob, caster, src)
+	return new_shape
 
 /// Actually does the un-shapeshift, from the caster. (Caster is a shapeshifted mob.)
 /datum/action/cooldown/spell/shapeshift/proc/do_unshapeshift(mob/living/caster)
-	// Restore the requirements. Might mess with admin memes.
+
+	var/datum/status_effect/shapechange_mob/shapechange = caster.has_status_effect(/datum/status_effect/shapechange_mob/from_spell)
+	if(!shapechange)
+		to_chat(caster, span_warning("You can't un-shapeshift from this form!"))
+		return
+
+	// If someone uses another shapeshift spell while already shapeshfited,
+	// they need to use that spell to un-shapeshift instead - to avoid weirdness
+	if(!istype(caster, shapeshift_type))
+		to_chat(caster, span_warning("This spell won't un-shapeshift you from this form!"))
+		return
+
+	// Restore the requirements.
 	spell_requirements = pre_shift_requirements
 	pre_shift_requirements = null
 
-	return caster.remove_status_effect(/datum/status_effect/shapechange_mob)
+	var/mob/living/unshapeshifted_mob = shapechange.caster_mob
+	caster.remove_status_effect(/datum/status_effect/shapechange_mob/from_spell)
+	return unshapeshifted_mob
 
 /// Helper proc that instantiates the mob we shapeshift into.
 /// Returns an instance of a living mob. Can be overridden.
 /datum/action/cooldown/spell/shapeshift/proc/create_shapeshift_mob(atom/loc)
 	return new shapeshift_type(loc)
+
+#undef is_shifted

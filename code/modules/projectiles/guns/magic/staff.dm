@@ -53,7 +53,7 @@
 /obj/item/gun/magic/staff/change/on_intruder_use(mob/living/user, atom/target)
 	user.dropItemToGround(src, TRUE)
 	var/wabbajack_into = preset_wabbajack_type || pick(WABBAJACK_MONKEY, WABBAJACK_HUMAN, WABBAJACK_ANIMAL)
-	var/mob/living/new_body = user.wabbajack(preset_wabbajack_type, preset_wabbajack_changeflag)
+	var/mob/living/new_body = user.wabbajack(wabbajack_into, preset_wabbajack_changeflag)
 	if(!new_body)
 		return
 

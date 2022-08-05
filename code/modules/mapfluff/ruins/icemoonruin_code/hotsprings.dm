@@ -26,7 +26,7 @@
 	if(HAS_TRAIT(transforming_mind, TRAIT_HOT_SPRING_CURSED)) // no double dipping
 		return
 
-	var/mob/living/transformed_mob = to_transform.wabbajack(pick(WABBAJACK_HUMAN, WABBAJACK_ANIMAL)), change_flags = RACE_SWAP)
+	var/mob/living/transformed_mob = to_transform.wabbajack(pick(WABBAJACK_HUMAN, WABBAJACK_ANIMAL), change_flags = RACE_SWAP)
 	if(!transformed_mob)
 		// Wabbajack failed, maybe the mob had godmode or something.
 		if(!QDELETED(to_transform))

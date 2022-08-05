@@ -1,14 +1,24 @@
+// A status effect for having a mob temporarily (usually) change form into that of another mob.
+// When the status effect is removed, the mob is reverted back to their human form in most cases.
+// If you want a more permanent polymorph, see [/proc/wabbajack].
 /datum/status_effect/shapechange_mob
+	id = "shapechange_mob"
+	alert_type = /atom/movable/screen/alert/status_effect/shapeshifted
+	on_remove_on_mob_delete = TRUE
+
 	/// The caster's mob. Who has transformed into us
+	/// This reference is handled in [/proc/restore_caster], which is always called if we delete
 	var/mob/living/caster_mob
 	/// Whether we're currently undoing the change
 	var/already_restored = FALSE
 
-/datum/status_effect/shapechange_mob/Destroy()
-	caster_mob = null
-	return ..()
-
 /datum/status_effect/shapechange_mob/on_creation(mob/living/new_owner, mob/living/caster)
+
+	if(new_owner.has_status_effect(type))
+		stack_trace("Mob shapechange status effect applied to a mob which already was shapechanged, which will definitely act poorly.")
+		qdel(src)
+		return
+
 	if(!istype(caster))
 		stack_trace("Mob shapechange status effect applied without a proper caster.")
 		qdel(src)
@@ -24,16 +34,20 @@
 	caster_mob.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_SHAPECHANGE_EFFECT)
 
 	RegisterSignal(owner, COMSIG_LIVING_PRE_WABBAJACKED, .proc/on_wabbajacked)
-	RegisterSignal(owner, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), .proc/on_shape_death)
-	RegisterSignal(caster_mob, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), .proc/on_caster_death)
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, .proc/on_shape_death)
+	RegisterSignal(caster_mob, COMSIG_LIVING_DEATH, .proc/on_caster_death)
+	RegisterSignal(caster_mob, COMSIG_PARENT_QDELETING, .proc/on_caster_deleted)
 	return TRUE
 
 /datum/status_effect/shapechange_mob/on_remove()
-	if(already_restored)
-		return
+	// If the owner was straight up deleted we shouldn't restore anyone
+	if(!QDELETED(owner))
+		restore_caster()
 
-	restore_caster()
+	// Juuust in case make sure no reference sticks around
+	caster_mob = null
 
+/// Signal proc for [COMSIG_LIVING_PRE_WABBAJACKED] to prevent us from being Wabbajacked and messed up.
 /datum/status_effect/shapechange_mob/proc/on_wabbajacked(mob/living/source, randomized)
 	SIGNAL_HANDLER
 
@@ -41,9 +55,14 @@
 	restore_caster()
 	return STOP_WABBAJACK
 
+/// Restores the caster back to their human form.
+/// if kill_caster_after is TRUE, the caster will have death() called on them after restoring.
 /datum/status_effect/shapechange_mob/proc/restore_caster(kill_caster_after = FALSE)
+	if(already_restored || !caster_mob)
+		return
+
 	already_restored = TRUE
-	UnregisterSignal(owner, list(COMSIG_LIVING_PRE_WABBAJACKED, COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
+	UnregisterSignal(owner, list(COMSIG_LIVING_PRE_WABBAJACKED, COMSIG_LIVING_DEATH))
 	UnregisterSignal(caster_mob, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
 
 	caster_mob.forceMove(owner.loc)
@@ -56,27 +75,51 @@
 
 	after_unchange()
 
-	// This guard is important because restore() can also be called on COMSIG_PARENT_QDELETING for shape, as well as on death.
+	caster_mob = null
+
+	// This guard is important because restore_caster() can also be called on COMSIG_PARENT_QDELETING for shape, as well as on death.
 	// This can happen in, for example, [/proc/wabbajack] where the mob hit is qdel'd.
 	if(!QDELETED(owner))
 		QDEL_NULL(owner)
 
-	qdel(src)
+	// And this guard is important because restore_caster() can be called from on_remove() which is subsequenctly called from Destroy().
+	if(!QDELETED(src))
+		qdel(src)
 
+/// Effects done after the casting mob has reverted to their human form. Nothing, by default.
 /datum/status_effect/shapechange_mob/proc/after_unchange()
 	return
 
-/datum/status_effect/shapechange_mob/proc/on_shape_death(datum/source)
+/// Signal proc for [COMSIG_LIVING_DEATH] from our owner.
+/// If our owner mob is killed, we should revert back to normal.
+/datum/status_effect/shapechange_mob/proc/on_shape_death(datum/source, gibbed)
 	SIGNAL_HANDLER
+
+	if(gibbed)
+		return
 
 	restore_caster()
 
-/datum/status_effect/shapechange_mob/proc/on_caster_death(datum/source)
+/// Signal proc for [COMSIG_LIVING_DEATH] from our caster.
+/// If our internal caster is killed, kill our owner, too (which causes the above signal).
+/datum/status_effect/shapechange_mob/proc/on_caster_death(datum/source, gibbed)
 	SIGNAL_HANDLER
 
-	owner.death()
+	if(gibbed)
+		owner.gib()
+	else
+		owner.death()
 
+/// Signal proc for [COMSIG_PARENT_QDELETING] from our caster, delete us / our owner if we get deleted
+/datum/status_effect/shapechange_mob/proc/on_caster_deleted(datum/source)
+	SIGNAL_HANDLER
+
+	caster_mob = null
+	qdel(owner)
+
+// A subtype for a shapechange sourced from a shapeshift spell.
 /datum/status_effect/shapechange_mob/from_spell
+	id = "shapechange_from_spell"
 	/// The shapechange spell that's caused our change
 	var/datum/weakref/source_weakref
 
@@ -90,7 +133,6 @@
 	return ..()
 
 /datum/status_effect/shapechange_mob/from_spell/on_apply()
-	. = ..()
 	var/datum/action/cooldown/spell/shapeshift/source_spell = source_weakref?.resolve()
 	if(!QDELETED(source_spell) && source_spell.owner == caster_mob)
 		// Assuming the spell is owned by the caster, give it over to the shapeshifted mob
@@ -107,6 +149,8 @@
 		if(bodybound_action.target != caster_mob)
 			continue
 		bodybound_action.Grant(owner)
+
+	return ..()
 
 /datum/status_effect/shapechange_mob/from_spell/restore_caster(kill_caster_after)
 	var/datum/action/cooldown/spell/shapeshift/source_spell = source_weakref?.resolve()
@@ -135,25 +179,42 @@
 
 	caster_mob.blood_volume = owner.blood_volume
 
-/datum/status_effect/shapechange_mob/from_spell/on_shape_death(datum/source)
+/datum/status_effect/shapechange_mob/from_spell/on_shape_death(datum/source, gibbed)
 	var/datum/action/cooldown/spell/shapeshift/source_spell = source_weakref?.resolve()
-	if(QDELETED(source_spell))
-		return ..()
-
-	if(source_spell.die_with_shapeshifted_form)
+	// If our spell dictates our wizard dies when our shape dies, we won't restore by default
+	if(!QDELETED(source_spell) && source_spell.die_with_shapeshifted_form)
+		// (But if our spell says we should revert on death anyways, we'll also do that)
 		if(source_spell.revert_on_death)
 			restore_caster(kill_caster_after = TRUE)
+		// Otherwise, we just do nothing - we dead
 		return
 
-	return ..()
+	return ..() // Restore like normal
 
 /datum/status_effect/shapechange_mob/from_spell/on_caster_death(datum/source)
 	var/datum/action/cooldown/spell/shapeshift/source_spell = source_weakref?.resolve()
-	if(QDELETED(source_spell))
-		return ..()
-
-	if(source_spell.revert_on_death)
-		restore_caster(kill_caster_after = TRUE)
+	// If our spell does not have revert_on_death, don't do anything when our caster dies
+	if(!QDELETED(source_spell) && !source_spell.revert_on_death)
 		return
 
-	return ..()
+	return ..() // Kill our owner and revert, like normal
+
+/atom/movable/screen/alert/status_effect/shapeshifted
+	name = "Shapeshifted"
+	desc = "Your form is not your own... you're shapeshifted into another creature! \
+		A wizard could turn you back - or maybe you're stuck like this for good?"
+	icon_state = "shapeshifted"
+
+/atom/movable/screen/alert/status_effect/shapeshifted/Click(location, control, params)
+	. = ..()
+	if(!.)
+		return
+
+	var/mob/living/living_user = usr
+	if(!istype(living_user))
+		return
+
+	for(var/datum/action/cooldown/spell/shapeshift/shift_spell in living_user.actions)
+		if(istype(living_user, shift_spell.shapeshift_type))
+			shift_spell.Trigger()
+			return TRUE

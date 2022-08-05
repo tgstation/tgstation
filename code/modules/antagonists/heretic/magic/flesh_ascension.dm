@@ -41,7 +41,7 @@
 	return ..()
 
 /datum/action/cooldown/spell/shapeshift/shed_human_form/create_shapeshift_mob(atom/loc)
-	return new shapeshift_type(cast_on.loc, TRUE, segment_length)
+	return new shapeshift_type(loc, TRUE, segment_length)
 
 /datum/action/cooldown/spell/worm_contract
 	name = "Force Contract"

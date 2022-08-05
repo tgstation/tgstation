@@ -1209,7 +1209,7 @@
 	if(stat == DEAD || notransform || (GODMODE & status_flags))
 		return
 
-	if(SEND_SIGNAL(src, COMSIG_LIVING_PRE_WABBAJACKED, randomize) & STOP_WABBAJACK)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_PRE_WABBAJACKED, what_to_randomize) & STOP_WABBAJACK)
 		return
 
 	notransform = TRUE
