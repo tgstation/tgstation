@@ -91,6 +91,7 @@ SUBSYSTEM_DEF(verb_manager)
 		return TRUE
 
 	if(usr.client?.holder && !can_queue_admin_verbs \
+	|| (!initialized && !(flags & SS_NO_INIT)) \
 	|| FOR_ADMINS_IF_VERBS_FUCKED_immediately_execute_all_verbs \
 	|| !(runlevels & Master.current_runlevel))
 		return FALSE
