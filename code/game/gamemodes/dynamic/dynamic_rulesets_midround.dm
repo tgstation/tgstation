@@ -123,13 +123,12 @@
 	candidates = poll_ghost_candidates("The mode is looking for volunteers to become [antag_flag] for [name]", antag_flag_override, antag_flag || antag_flag_override, poll_time = 300)
 
 	if(!candidates || candidates.len <= 0)
-		mode.dynamic_log("The ruleset [name] received no applications.")
+		mode.log_dynamic_and_announce("The ruleset [name] received no applications.")
 		mode.executed_rules -= src
 		attempt_replacement()
 		return
 
-	message_admins("[candidates.len] players volunteered for the ruleset [name].")
-	log_dynamic("[candidates.len] players volunteered for [name].")
+	log_dynamic_and_announce("[candidates.len] players volunteered for [name].")
 	review_applications()
 
 /// Here is where you can check if your ghost applicants are valid for the ruleset.
