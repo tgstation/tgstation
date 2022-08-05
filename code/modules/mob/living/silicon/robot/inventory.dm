@@ -69,7 +69,9 @@
 	item_module.plane = ABOVE_HUD_PLANE
 	item_module.forceMove(src)
 
-	item_module.on_robot_equip(src)
+	if(istype(item_module, /obj/item/borg))
+		var/obj/item/borg/module_item = item_module
+		module_item.on_robot_equip(src)
 
 	observer_screen_update(item_module, TRUE)
 
@@ -95,8 +97,9 @@
 
 	if(istype(item_module, /obj/item/storage/bag/tray/))
 		item_module.atom_storage.remove_all(loc)
-
-	item_module.on_robot_unequip(src)
+	if(istype(item_module, /obj/item/borg))
+		var/obj/item/borg/module_item = item_module
+		module_item.on_robot_unequip(src)
 
 	if(client)
 		client.screen -= item_module

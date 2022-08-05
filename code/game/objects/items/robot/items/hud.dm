@@ -3,11 +3,11 @@
 
 /obj/item/borg/sight/on_robot_equip(mob/living/silicon/robot/borgo)
 	borgo.sight_mode |= sight_mode
-	update_sight()
+	borgo.update_sight()
 
 /obj/item/borg/sight/on_robot_unequip(mob/living/silicon/robot/borgo)
 	borgo.sight_mode &= ~sight_mode
-	update_sight()
+	borgo.update_sight()
 
 /obj/item/borg/sight/xray
 	name = "\proper X-ray vision"
