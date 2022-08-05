@@ -73,6 +73,8 @@
 			. = TRUE
 		if("interface") //Remotely connect to a bot!
 			bot = locate(params["ref"]) in GLOB.bots_list
+			if(!bot)
+				bot = locate(params["ref"]) in GLOB.basic_bots_list
 			owner.bot_ref = WEAKREF(bot)
 			if(!bot || !(bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED) || owner.control_disabled)
 				return

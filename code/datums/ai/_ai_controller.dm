@@ -256,7 +256,7 @@ multiple modular subtrees with behaviors
 	set_ai_status(AI_STATUS_ON) //Can't do anything while player is connected
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, .proc/on_sentience_gained)
 
-/// Use this proc to define how your controller defines what access the pawn has for the sake of pathfinding, likely pointing to whatever ID slot is relevant
+/// Use this proc to define how your controller defines what access the pawn has for the sake of pathfinding, likever ID slot is relevant
 /datum/ai_controller/proc/get_access()
 	return
 

@@ -66,6 +66,21 @@
 			newbot["mule_check"] = TRUE
 		botlist += list(newbot)
 
+	for(var/mob/living/basic/bot/basic_bot as anything in GLOB.basic_bots_list)
+		if(basic_bot.z != zlevel || !(basic_bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED)) //Only non-emagged bots on the same Z-level are detected!
+			continue
+		if(computer && !basic_bot.check_access(user)) // Only check Bots we can access)
+			continue
+		var/list/newbot = list(
+			"name" = basic_bot.name,
+			"mode" = basic_bot.get_current_behavior_description(),
+			"model" = basic_bot.bot_type,
+			"locat" = get_area(basic_bot),
+			"bot_ref" = REF(basic_bot),
+			"mule_check" = FALSE,
+		)
+		botlist += list(newbot)
+
 	for(var/mob/living/simple_animal/drone/all_drones as anything in GLOB.drones_list)
 		if(all_drones.hacked)
 			continue

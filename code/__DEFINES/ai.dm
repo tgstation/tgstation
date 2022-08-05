@@ -224,3 +224,10 @@
 #define BB_BILEWORM_SPEW_BILE "BB_bileworm_spew_bile"
 #define BB_BILEWORM_RESURFACE "BB_bileworm_resurface"
 #define BB_BILEWORM_DEVOUR "BB_bileworm_devour"
+
+
+///Bot AI keys
+///Base bot
+
+#define BB_BOT_WAS_SUMMONED "BB_was_summoned"
+#define BB_BOT_CURRENT_PATROL_POINT "BB_current_patrol_point"
