@@ -207,8 +207,6 @@
 			else
 				msg = alt_msg
 				type = alt_type
-				if(type & MSG_AUDIBLE && !can_hear())
-					return
 
 		if(type & MSG_AUDIBLE && !can_hear())//Hearing related
 			if(!alt_msg)
