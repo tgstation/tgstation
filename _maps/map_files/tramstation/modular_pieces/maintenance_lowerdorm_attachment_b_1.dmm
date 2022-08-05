@@ -2,19 +2,14 @@
 "c" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
 /area/mine/explored)
-"i" = (
+"m" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Construction Storage"
-	},
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 1
-	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/modular_map_connector,
-/turf/open/floor/catwalk_floor,
+/obj/structure/rack,
+/obj/item/clothing/suit/hazardvest,
+/obj/item/clothing/gloves/color/black,
+/obj/item/clothing/mask/gas,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/smooth,
 /area/station/maintenance/central/lesser)
 "n" = (
 /obj/effect/decal/cleanable/dirt,
@@ -42,22 +37,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/lesser)
+"t" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/pipe_dispenser,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/lesser)
 "F" = (
 /turf/template_noop,
 /area/template_noop)
-"M" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/central/lesser)
-"O" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/rack,
-/obj/item/clothing/suit/hazardvest,
-/obj/item/clothing/gloves/color/black,
-/obj/item/clothing/mask/gas,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/central/lesser)
 "P" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot{
@@ -76,6 +64,20 @@
 	},
 /obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/plating,
+/area/station/maintenance/central/lesser)
+"T" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Atmospherics Storage"
+	},
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/modular_map_connector,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/lesser)
 "U" = (
 /obj/structure/grille,
@@ -125,8 +127,8 @@ Z
 V
 U
 q
-O
-M
+m
+t
 F
 "}
 (3,1,1) = {"
@@ -138,7 +140,7 @@ U
 X
 X
 n
-i
+T
 "}
 (4,1,1) = {"
 c

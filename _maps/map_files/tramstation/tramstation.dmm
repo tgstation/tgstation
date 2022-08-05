@@ -1586,6 +1586,18 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/tram/left)
+"aKO" = (
+/obj/effect/turf_decal/box,
+/obj/structure/fluff{
+	desc = "What, you think the water just magically soaks into the metallic flooring?";
+	icon = 'icons/obj/lavaland/survival_pod.dmi';
+	icon_state = "fan_tiny";
+	name = "shower drain"
+	},
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/shower/directional/east,
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
 "aKQ" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -7361,12 +7373,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
-"cGp" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 6
-	},
-/turf/open/floor/iron,
-/area/station/engineering/atmos)
 "cGC" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Bridge Access"
@@ -9214,6 +9220,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/research)
+"dqW" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/structure/sink/directional/west,
+/turf/open/floor/iron/white,
+/area/station/medical/medbay/central)
 "drb" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
@@ -16905,20 +16918,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
-"gfd" = (
-/obj/machinery/shower{
-	dir = 4
-	},
-/obj/effect/turf_decal/box,
-/obj/structure/fluff{
-	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/lavaland/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/turf/open/floor/iron/white,
-/area/station/medical/treatment_center)
 "gfK" = (
 /turf/closed/wall/r_wall,
 /area/station/security/execution/education)
@@ -21204,15 +21203,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
-"hGF" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line,
-/obj/machinery/shower{
-	dir = 1
-	},
-/obj/effect/turf_decal/box,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/engineering/main)
 "hGG" = (
 /obj/structure/closet/secure_closet/hos,
 /obj/item/storage/secure/safe/hos{
@@ -24678,16 +24668,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
-"iTx" = (
-/obj/machinery/shower{
-	dir = 8
-	},
-/obj/effect/turf_decal/box,
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/engineering/main)
 "iTz" = (
 /turf/closed/wall,
 /area/station/service/lawoffice)
@@ -25404,16 +25384,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
-"jfN" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 4
-	},
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
-/turf/open/floor/iron/white,
-/area/station/medical/virology)
 "jfR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -29654,17 +29624,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
-"kES" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 4
-	},
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11;
-	pixel_y = -2
-	},
-/turf/open/floor/iron/white,
-/area/station/medical/medbay/central)
 "kEX" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -30445,6 +30404,14 @@
 "kUo" = (
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
+"kUs" = (
+/obj/effect/turf_decal/box,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/machinery/shower/directional/west,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "kUv" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -30956,16 +30923,6 @@
 "lbL" = (
 /turf/open/floor/wood,
 /area/station/service/bar/backroom)
-"lbP" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 8
-	},
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12
-	},
-/turf/open/floor/iron/white,
-/area/station/medical/medbay/central)
 "lcn" = (
 /obj/structure/table,
 /obj/effect/turf_decal/trimline/red/filled/line,
@@ -39220,6 +39177,13 @@
 	dir = 5
 	},
 /area/station/command/heads_quarters/rd)
+"nZx" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
+/obj/structure/sink/directional/west,
+/turf/open/floor/iron/white,
+/area/station/medical/virology)
 "nZF" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 8
@@ -40345,6 +40309,17 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
+"oux" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 6
+	},
+/mob/living/simple_animal/pet/dog/pug{
+	desc = "A pug with an insatiable appetite for pasta and pasta-adjacent piping.";
+	name = "Spaghetti"
+	},
+/obj/structure/bed/dogbed/ian,
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "ouJ" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 9
@@ -46207,6 +46182,18 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
+"qym" = (
+/obj/effect/turf_decal/box,
+/obj/structure/fluff{
+	desc = "What, you think the water just magically soaks into the metallic flooring?";
+	icon = 'icons/obj/lavaland/survival_pod.dmi';
+	icon_state = "fan_tiny";
+	name = "shower drain"
+	},
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/shower/directional/west,
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
 "qyr" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/lattice/catwalk,
@@ -47158,16 +47145,6 @@
 	},
 /turf/open/floor/eighties/red,
 /area/station/commons/fitness/recreation/entertainment)
-"qOv" = (
-/obj/machinery/shower{
-	dir = 4
-	},
-/obj/effect/turf_decal/box,
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/station/engineering/main)
 "qOw" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
@@ -47851,20 +47828,6 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
-"rbH" = (
-/obj/machinery/shower{
-	dir = 8
-	},
-/obj/effect/turf_decal/box,
-/obj/structure/fluff{
-	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/lavaland/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/turf/open/floor/iron/white,
-/area/station/medical/treatment_center)
 "rbM" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -48503,12 +48466,6 @@
 "roB" = (
 /turf/closed/wall/r_wall,
 /area/station/security/checkpoint/engineering)
-"roH" = (
-/obj/item/toy/plush/space_lizard_plushie{
-	name = "Bold-And-Brash"
-	},
-/turf/open/misc/asteroid/airless,
-/area/mine/explored)
 "roT" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -52570,6 +52527,13 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/mine/explored)
+"sLF" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/effect/turf_decal/box,
+/obj/structure/cable,
+/obj/machinery/shower/directional/north,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "sLK" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
@@ -53738,6 +53702,13 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
+"tgU" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/structure/sink/directional/east,
+/turf/open/floor/iron/white,
+/area/station/medical/medbay/central)
 "tgW" = (
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
@@ -61025,6 +60996,14 @@
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"vNB" = (
+/obj/effect/turf_decal/box,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/obj/machinery/shower/directional/east,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "vND" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
@@ -66752,6 +66731,13 @@
 /obj/structure/cable/layer3,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
+"xSG" = (
+/obj/structure/chair/stool/directional/west,
+/obj/item/toy/plush/space_lizard_plushie{
+	name = "Bold-And-Brash"
+	},
+/turf/open/misc/asteroid/airless,
+/area/mine/explored)
 "xSL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -98123,8 +98109,8 @@ cjy
 dAR
 pkG
 pqb
-qOv
-qOv
+vNB
+vNB
 vpP
 aYF
 djg
@@ -98637,8 +98623,8 @@ cjy
 cIm
 kuX
 lfg
-iTx
-iTx
+kUs
+kUs
 vpP
 roB
 ptT
@@ -98653,7 +98639,7 @@ hJd
 hJd
 gxh
 hJd
-hGF
+sLF
 lfB
 ltq
 fuj
@@ -103006,7 +102992,7 @@ bia
 hZr
 gdJ
 hRj
-cGp
+oux
 mwK
 afH
 beG
@@ -115051,7 +115037,7 @@ dDG
 dhe
 dDG
 dDG
-roH
+xSG
 vle
 pHM
 qxm
@@ -163920,7 +163906,7 @@ qdK
 xKP
 qdK
 cWx
-kES
+dqW
 qGc
 utK
 srE
@@ -165201,7 +165187,7 @@ xSZ
 rkH
 oIU
 jRr
-rbH
+qym
 wbT
 dvQ
 uZQ
@@ -165715,7 +165701,7 @@ xSZ
 hqV
 oIU
 jRr
-gfd
+aKO
 krE
 bvK
 eGn
@@ -167004,7 +166990,7 @@ gNk
 qOX
 gNk
 eqq
-lbP
+tgU
 exo
 wUH
 iys
@@ -169064,7 +169050,7 @@ pbn
 xug
 dGn
 pfo
-jfN
+nZx
 kxb
 uQK
 qQZ
