@@ -504,17 +504,12 @@
 #define REV_AUTO_CALL_THRESHOLD 0.65
 
 /datum/team/revolution/proc/try_auto_call_shuttle()
-	var/total_revs = 0
+	var/total_revs = ex_revs.len + ex_headrevs.len
 	var/total_candidates = 0
-
-	var/list/former_revs = ex_revs + ex_headrevs
 
 	for (var/mob/player as anything in GLOB.player_list)
 		if (player.mind.has_antag_datum(/datum/antagonist/enemy_of_the_revolution))
 			continue
-
-		if (player.mind in former_revs)
-			total_revs += 1
 
 		total_candidates += 1
 
