@@ -783,7 +783,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 ///Proc that will randomise the hair, or primary appearance element (i.e. for moths wings) of a species' associated mob
 /datum/species/proc/randomize_main_appearance_element(mob/living/carbon/human/human_mob)
 	human_mob.hairstyle = random_hairstyle(human_mob.gender)
-	human_mob.update_hair()
+	human_mob.update_hair(is_creating = TRUE)
 
 ///Proc that will randomise the underwear (i.e. top, pants and socks) of a species' associated mob
 /datum/species/proc/randomize_active_underwear(mob/living/carbon/human/human_mob)
@@ -974,7 +974,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(!chem.overdosed && chem.overdose_threshold && chem.volume >= chem.overdose_threshold)
 		chem.overdosed = TRUE
 		chem.overdose_start(H)
-		log_game("[key_name(H)] has started overdosing on [chem.name] at [chem.volume] units.")
+		H.log_message("has started overdosing on [chem.name] at [chem.volume] units.", LOG_GAME)
 
 /datum/species/proc/check_species_weakness(obj/item, mob/living/attacker)
 	return 1 //This is not a boolean, it's the multiplier for the damage that the user takes from the item. The force of the item is multiplied by this value
@@ -1032,7 +1032,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return
 	target.facial_hairstyle = "Shaved"
 	target.hairstyle = "Bald"
-	target.update_hair()
+	target.update_hair(is_creating = TRUE)
 
 //////////////////
 // ATTACK PROCS //

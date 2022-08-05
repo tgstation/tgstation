@@ -22,15 +22,15 @@
 
 
 ///returns nothing with an alert instead of the message if it contains something in the ic filter, and sanitizes normally if the name is fine. It returns nothing so it backs out of the input the same way as if you had entered nothing.
-/proc/sanitize_name(t,allow_numbers=FALSE)
-	if(is_ic_filtered(t) || is_soft_ic_filtered(t))
+/proc/sanitize_name(target, allow_numbers = FALSE, cap_after_symbols = TRUE)
+	if(is_ic_filtered(target) || is_soft_ic_filtered(target))
 		tgui_alert(usr, "You cannot set a name that contains a word prohibited in IC chat!")
 		return ""
-	var/r = reject_bad_name(t,allow_numbers=allow_numbers,strict=TRUE)
-	if(!r)
+	var/result = reject_bad_name(target, allow_numbers = allow_numbers, strict = TRUE, cap_after_symbols = cap_after_symbols)
+	if(!result)
 		tgui_alert(usr, "Invalid name.")
 		return ""
-	return sanitize(r)
+	return sanitize(result)
 
 
 /// Runs byond's html encoding sanitization proc, after replacing new-lines and tabs for the # character.
@@ -150,8 +150,9 @@
  *
  * * strict - return null immidiately instead of filtering out
  * * allow_numbers - allows numbers and common special characters - used for silicon/other weird things names
+ * * cap_after_symbols - words like Bob's will be capitalized to Bob'S by default. False is good for titles.
  */
-/proc/reject_bad_name(t_in, allow_numbers = FALSE, max_length = MAX_NAME_LEN, ascii_only = TRUE, strict = FALSE)
+/proc/reject_bad_name(t_in, allow_numbers = FALSE, max_length = MAX_NAME_LEN, ascii_only = TRUE, strict = FALSE, cap_after_symbols = TRUE)
 	if(!t_in)
 		return //Rejects the input if it is null
 
@@ -178,7 +179,7 @@
 
 			// a  .. z
 			if(97 to 122) //Lowercase Letters
-				if(last_char_group == NO_CHARS_DETECTED || last_char_group == SPACES_DETECTED || last_char_group == SYMBOLS_DETECTED) //start of a word
+				if(last_char_group == NO_CHARS_DETECTED || last_char_group == SPACES_DETECTED || cap_after_symbols && last_char_group == SYMBOLS_DETECTED) //start of a word
 					char = uppertext(char)
 				number_of_alphanumeric++
 				last_char_group = LETTERS_DETECTED
@@ -191,7 +192,6 @@
 					continue
 				number_of_alphanumeric++
 				last_char_group = NUMBERS_DETECTED
-
 			// '  -  .
 			if(39,45,46) //Common name punctuation
 				if(last_char_group == NO_CHARS_DETECTED)
@@ -603,7 +603,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 	t = parsemarkdown_basic_step1(t)
 
-	t = replacetext(t, regex("%s(?:ign)?(?=\\s|$)", "igm"), user ? "<font face=\"[SIGNFONT]\"><i>[user.real_name]</i></font>" : "<span class=\"paper_field\"></span>")
+	t = replacetext(t, regex("%s(?:ign)?(?=\\s|$)", "igm"), user ? "<font face=\"[SIGNATURE_FONT]\"><i>[user.real_name]</i></font>" : "<span class=\"paper_field\"></span>")
 	t = replacetext(t, regex("%f(?:ield)?(?=\\s|$)", "igm"), "<span class=\"paper_field\"></span>")
 
 	t = parsemarkdown_basic_step2(t)

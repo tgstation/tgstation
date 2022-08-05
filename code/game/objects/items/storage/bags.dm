@@ -155,7 +155,7 @@
 				show_message = TRUE
 			else
 				if(!spam_protection)
-					to_chat(user, span_warning("Your [name] is full and can't hold any more!"))
+					balloon_alert(user, "bag full!")
 					spam_protection = TRUE
 					continue
 	if(show_message)

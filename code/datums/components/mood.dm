@@ -296,6 +296,21 @@
 	if(the_event.timeout)
 		addtimer(CALLBACK(src, .proc/clear_event, null, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
 
+/**
+ * Returns true if you already have a mood from a provided category.
+ * You may think to yourself, why am I trying to get a boolean from a component? Well, this system probably should not be a component.
+ *
+ * Arguments
+ * * category - Mood category to validate against.
+ */
+/datum/component/mood/proc/has_mood_of_category(category)
+	for(var/i in mood_events)
+		var/datum/mood_event/moodlet = mood_events[i]
+		if (moodlet.category == category)
+			return TRUE
+
+	return FALSE
+
 /datum/component/mood/proc/clear_event(datum/source, category)
 	SIGNAL_HANDLER
 

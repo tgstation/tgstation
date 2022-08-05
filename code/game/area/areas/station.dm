@@ -40,6 +40,9 @@
 	name = "EVA Maintenance"
 	icon_state = "maint_eva"
 
+/area/station/maintenance/department/eva/abandoned
+	name = "Abandoned EVA Storage"
+
 /area/station/maintenance/department/electrical
 	name = "Electrical Maintenance"
 	icon_state = "maint_electrical"
@@ -549,6 +552,10 @@
 /area/station/service/cafeteria
 	name = "\improper Cafeteria"
 	icon_state = "cafeteria"
+
+/area/station/service/barber
+	name = "\improper Barber"
+	icon_state = "barber"
 
 /area/station/service/kitchen
 	name = "\improper Kitchen"
@@ -1194,6 +1201,9 @@
 	name = "Security Post - Medbay"
 	icon_state = "checkpoint_med"
 
+/area/station/security/checkpoint/medical/medsci
+	name = "Security Post - Medsci"
+
 /area/station/security/checkpoint/science
 	name = "Security Post - Science"
 	icon_state = "checkpoint_sci"
@@ -1349,6 +1359,10 @@
 	name = "\improper Research Division Server Room"
 	icon_state = "server"
 
+/area/station/science/circuits
+	name = "\improper Circuit Lab"
+	icon_state = "cir_lab"
+
 /area/station/science/explab
 	name = "\improper Experimentation Lab"
 	icon_state = "exp_lab"
@@ -1357,6 +1371,9 @@
 /area/station/science/auxlab
 	name = "\improper Auxillary Lab"
 	icon_state = "aux_lab"
+
+/area/station/science/auxlab/firing_range
+	name = "\improper Research Firing Range"
 
 /area/station/science/robotics
 	name = "Robotics"

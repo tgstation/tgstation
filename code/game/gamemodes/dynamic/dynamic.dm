@@ -294,7 +294,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	return ..()
 
 /datum/game_mode/dynamic/proc/send_intercept()
-	. = "<b><i>Central Command Status Summary</i></b><hr>"
+	. = "<b><i>Nanotrasen Department of Intelligence Threat Advisory, Spinward Sector, TCD [time2text(world.realtime, "DDD, MMM DD")], [GLOB.year_integer+540]:</i></b><hr>"
 	switch(round(shown_threat))
 		if(0 to 19)
 			var/show_core_territory = (GLOB.current_living_antags.len > 0)
@@ -302,27 +302,26 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				show_core_territory = !show_core_territory
 
 			if (show_core_territory)
-				. += "<b>Core Territory</b></center><BR>"
-				. += "Your station orbits within reliably mundane, secure space. Although Nanotrasen has a firm grip on security in your region, the valuable resources and strategic position aboard your station make it a potential target for infiltrations. Monitor crew for non-loyal behavior, but expect a relatively tame shift free of large-scale destruction. We expect great things from your station."
+				. += "Advisory Level: <b>Blue Star</b></center><BR>"
+				. += "Your sector's advisory level is Blue Star. At this threat advisory, the risk of attacks on Nanotrasen assets within the sector is minor, but cannot be ruled out entirely. Remain vigilant."
 			else
-				. += "<b>Peaceful Waypoint</b></center><BR>"
-				. += "Your station orbits deep within controlled, core-sector systems and serves as a waypoint for routine traffic through Nanotrasen's trade empire. Due to the combination of high security, interstellar traffic, and low strategic value, it makes any direct threat of violence unlikely. Your primary enemies will be incompetence and bored crewmen: try to organize team-building events to keep staffers interested and productive."
+				. += "Advisory Level: <b>Green Star</b></center><BR>"
+				. += "Your sector's advisory level is Green Star. Surveillance information shows no credible threats to Nanotrasen assets within the Spinward Sector at this time. As always, the Department advises maintaining vigilance against potential threats, regardless of a lack of known threats."
 		if(20 to 39)
-			. += "<b>Anomalous Exogeology</b></center><BR>"
-			. += "Although your station lies within what is generally considered Nanotrasen-controlled space, the course of its orbit has caused it to cross unusually close to exogeological features with anomalous readings. Although these features offer opportunities for our research department, it is known that these little understood readings are often correlated with increased activity from competing interstellar organizations and individuals, among them the Wizard Federation and Cult of the Geometer of Blood - all known competitors for Anomaly Type B sites. Exercise elevated caution."
+			. += "Advisory Level: <b>Yellow Star</b></center><BR>"
+			. += "Your sector's advisory level is Yellow Star. Surveillance shows a credible risk of enemy attack against our assets in the Spinward Sector. We advise a heightened level of security, alongside maintaining vigilance against potential threats."
 		if(40 to 65)
-			. += "<b>Contested System</b></center><BR>"
-			. += "Your station's orbit passes along the edge of Nanotrasen's sphere of influence. While subversive elements remain the most likely threat against your station, hostile organizations are bolder here, where our grip is weaker. Exercise increased caution against elite Syndicate strike forces, or Executives forbid, some kind of ill-conceived unionizing attempt."
+			. += "Advisory Level: <b>Orange Star</b></center><BR>"
+			. += "Your sector's advisory level is Orange Star. Upon reviewing your sector's intelligence, the Department has determined that the risk of enemy activity is moderate to severe. At this advisory, we recommend maintaining a higher degree of security and alertness, and vigilance against threats that may (or will) arise."
 		if(66 to 79)
-			. += "<b>Uncharted Space</b></center><BR>"
-			. += "Congratulations and thank you for participating in the NT 'Frontier' space program! Your station is actively orbiting a high value system far from the nearest support stations. Little is known about your region of space, and the opportunity to encounter the unknown invites greater glory. You are encouraged to elevate security as necessary to protect Nanotrasen assets."
+			. += "Advisory Level: <b>Red Star</b></center><BR>"
+			. += "Your sector's advisory level is Red Star. The Department of Intelligence has decrypted Cybersun communications suggesting a high likelihood of attacks on Nanotrasen assets within the Spinward Sector. Stations in the region are advised to remain highly vigilant for signs of enemy activity and to be on high alert."
 		if(80 to 99)
-			. += "<b>Black Orbit</b></center><BR>"
-			. += "As part of a mandatory security protocol, we are required to inform you that as a result of your orbital pattern directly behind an astrological body (oriented from our nearest observatory), your station will be under decreased monitoring and support. It is anticipated that your extreme location and decreased surveillance could pose security risks. Avoid unnecessary risks and attempt to keep your station in one piece."
+			. += "Advisory Level: <b>Black Orbit</b></center><BR>"
+			. += "Your sector's advisory level is Black Orbit. Your sector's local comms network is currently undergoing a blackout, and we are therefore unable to accurately judge enemy movements within the region. However, information passed to us by GDI suggests a high amount of enemy activity in the sector, indicative of an impending attack. Remain on high alert, and as always, we advise remaining vigilant against any other potential threats."
 		if(100)
-			. += "<b>Impending Doom</b></center><BR>"
-			. += "Your station is somehow in the middle of hostile territory, in clear view of any enemy of the corporation. Your likelihood to survive is low, and station destruction is expected and almost inevitable. Secure any sensitive material and neutralize any enemy you will come across. It is important that you at least try to maintain the station.<BR>"
-			. += "Good luck."
+			. += "Advisory Level: <b>Midnight Sun</b></center><BR>"
+			. += "Your sector's advisory level is Midnight Sun. Credible information passed to us by GDI suggests that the Syndicate is preparing to mount a major concerted offensive on Nanotrasen assets in the Spinward Sector to cripple our foothold there. All stations should remain on high alert and prepared to defend themselves."
 
 	var/min_threat = 100
 	for(var/datum/dynamic_ruleset/ruleset as anything in init_rulesets(/datum/dynamic_ruleset))
