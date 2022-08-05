@@ -92,6 +92,11 @@
 	base_icon_state = "asteroid_dug"
 	icon_state = "asteroid_dug"
 
+/turf/open/misc/asteroid/lavaland_atmos
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	planetary_atmos = TRUE
+	baseturfs = /turf/open/misc/asteroid/lavaland_atmos
+
 /// Used by ashstorms to replenish basalt tiles that have been dug up without going through all of them.
 GLOBAL_LIST_EMPTY(dug_up_basalt)
 
