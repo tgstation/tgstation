@@ -255,6 +255,10 @@
 		to_chat(user, span_warning("[src] can only be detonated in [initial(weakpoint_area.name)]."))
 		return
 
+	if(!isfloorturf(target) && !iswallturf(target))
+		to_chat(user, span_warning("[src] can only be planted on a wall or the floor!"))
+		return
+
 	return ..()
 
 /obj/item/grenade/c4/es8/detonate(mob/living/lanced_by)

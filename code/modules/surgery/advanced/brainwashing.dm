@@ -62,7 +62,7 @@
 	message_admins("[ADMIN_LOOKUPFLW(user)] surgically brainwashed [ADMIN_LOOKUPFLW(target)] with the objective '[objective]'.")
 	user.log_message("has brainwashed [key_name(target)] with the objective '[objective]' using brainwashing surgery.", LOG_ATTACK)
 	target.log_message("has been brainwashed with the objective '[objective]' by [key_name(user)] using brainwashing surgery.", LOG_VICTIM, log_globally=FALSE)
-	log_game("[key_name(user)] surgically brainwashed [key_name(target)] with the objective '[objective]'.")
+	user.log_message("surgically brainwashed [key_name(target)] with the objective '[objective]'.", LOG_GAME)
 	return ..()
 
 /datum/surgery_step/brainwash/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

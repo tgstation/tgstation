@@ -105,6 +105,7 @@
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_HEALS_FROM_CARP_RIFTS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_ALERT_GHOSTS_ON_DEATH, INNATE_TRAIT)
+	AddElement(/datum/element/content_barfer)
 	small_sprite = new
 	small_sprite.Grant(src)
 	RegisterSignal(small_sprite, COMSIG_ACTION_TRIGGER, .proc/add_dragon_overlay)
@@ -141,10 +142,9 @@
 		return
 	if(riftTimer >= maxRiftTimer)
 		to_chat(src, span_boldwarning("You've failed to summon the rift in a timely manner! You're being pulled back from whence you came!"))
-		destroy_rifts()
-		empty_contents()
+		death(TRUE)
 		playsound(src, 'sound/magic/demon_dies.ogg', 100, TRUE)
-		QDEL_NULL(src)
+		qdel(src)
 
 /mob/living/simple_animal/hostile/space_dragon/AttackingTarget()
 	if(using_special)

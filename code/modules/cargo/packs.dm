@@ -1954,9 +1954,10 @@
 				fourfiveeight.update_appearance()
 				qdel(P)
 				anomalous_box_provided = TRUE
-				log_game("An anomalous pizza box was provided in a pizza crate at during cargo delivery")
+				log_game("An anomalous pizza box was provided in a pizza crate at during cargo delivery.")
 				if(prob(50))
 					addtimer(CALLBACK(src, .proc/anomalous_pizza_report), rand(300, 1800))
+					message_admins("An anomalous pizza box was provided in a pizza crate at during cargo delivery.")
 				else
 					message_admins("An anomalous pizza box was silently created with no command report in a pizza crate delivery.")
 				continue
@@ -1974,8 +1975,8 @@
 				new boombox_type(C)
 				qdel(P)
 				boombox_provided = TRUE
-				log_game("A bomb pizza box was created by a pizza crate delivery.")
-				message_admins("A bomb pizza box has arrived in a pizza crate delivery.")
+				log_game("A pizza box bomb was created by a pizza crate delivery.")
+				message_admins("A pizza box bomb has arrived in a pizza crate delivery.")
 				continue
 
 		//here we randomly replace our pizzas for a chance at the full range
@@ -2206,6 +2207,13 @@
 	access_view = ACCESS_KITCHEN
 	contains = list(/mob/living/simple_animal/hostile/retaliate/goat)
 	crate_name = "goat crate"
+
+/datum/supply_pack/critter/mothroach
+	name = "Mothroach Crate"
+	desc = "Put the mothroach on your head and find out what true cuteness looks like."
+	cost = CARGO_CRATE_VALUE * 4
+	contains = list(/mob/living/basic/mothroach)
+	crate_name = "mothroach crate"
 
 /datum/supply_pack/critter/monkey
 	name = "Monkey Cube Crate"

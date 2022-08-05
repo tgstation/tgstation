@@ -418,6 +418,8 @@ SUBSYSTEM_DEF(explosions)
 				var/atom/A = I
 				if (length(A.contents) && !(A.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)) //The atom/contents_explosion() proc returns null if the contents ex_acting has been handled by the atom, and TRUE if it hasn't.
 					items += A.get_all_contents(ignore_flag_1 = PREVENT_CONTENTS_EXPLOSION_1)
+				if(isliving(A))
+					items -= A		//Stops mobs from taking double damage from explosions originating from them/their turf, such as from projectiles
 			for(var/thing in items)
 				var/atom/movable/movable_thing = thing
 				if(QDELETED(movable_thing))

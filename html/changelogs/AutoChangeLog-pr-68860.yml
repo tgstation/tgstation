@@ -1,0 +1,4 @@
+author: "Mqiib, ToasterBiome"
+delete-after: True
+changes: 
+  - balance: "Explosion epicenters no longer explode mobs twice; Fireballs and other explosive projectiles are significantly less-damaging"
