@@ -346,11 +346,12 @@
 	return NONE
 
 /obj/item/mod/core/plasma/proc/charge_plasma(obj/item/stack/plasma, mob/user)
-	if(!is_type_in_list(plasma, charger_list))
+	var/charge_given = is_type_in_list(plasma, charger_list, zebra = TRUE)
+	if(!charge_given)
 		return FALSE
-	var/uses_needed = min(plasma.amount, ROUND_UP((max_charge_amount() - charge_amount()) / charger_list[plasma]))
+	var/uses_needed = min(plasma.amount, ROUND_UP((max_charge_amount() - charge_amount()) / charge_given))
 	if(!plasma.use(uses_needed))
 		return FALSE
-	add_charge(uses_needed * charger_list[plasma])
+	add_charge(uses_needed * charge_given)
 	balloon_alert(user, "core refueled")
 	return TRUE
