@@ -57,10 +57,22 @@ SUBSYSTEM_DEF(verb_manager)
  */
 /proc/_queue_verb(datum/callback/verb_callback/incoming_callback, tick_check, datum/controller/subsystem/verb_manager/subsystem_to_use = SSverb_manager, ...)
 	if(QDELETED(incoming_callback) \
-	|| QDELETED(incoming_callback.object) \
-	|| !ismob(usr) \
-	|| QDELING(usr))
-		stack_trace("_queue_verb() returned false because either it was asked to queue something that isnt player input or it was given an invalid callback!")
+	|| QDELETED(incoming_callback.object))
+		stack_trace("_queue_verb() returned false because it was given an invalid callback!")
+		return FALSE
+
+	//we want unit tests to be able to directly call verbs that attempt to queue, and since unit tests should test internal behavior, we want the queue
+	//to happen as if it was actually from player input if its called on a mob.
+#ifdef UNIT_TESTS
+	if(QDELETED(usr) && ismob(incoming_callback.object))
+		incoming_callback.user = WEAKREF(incoming_callback.object)
+		var/datum/callback/new_us = CALLBACK(arglist(list(GLOBAL_PROC, /proc/_queue_verb) + args.Copy()))
+		return world.push_usr(incoming_callback.object, new_us)
+#endif
+
+	//debatable whether this is needed, this is just to try and ensure that you dont use this to queue stuff that isnt from player input.
+	if(QDELETED(usr))
+		stack_trace("_queue_verb() returned false because it wasnt called from player input!")
 		return FALSE
 
 	if(!istype(subsystem_to_use))
@@ -90,7 +102,7 @@ SUBSYSTEM_DEF(verb_manager)
 	if(always_queue && !FOR_ADMINS_IF_VERBS_FUCKED_immediately_execute_all_verbs)
 		return TRUE
 
-	if(usr.client?.holder && !can_queue_admin_verbs \
+	if((usr.client?.holder && !can_queue_admin_verbs) \
 	|| (!initialized && !(flags & SS_NO_INIT)) \
 	|| FOR_ADMINS_IF_VERBS_FUCKED_immediately_execute_all_verbs \
 	|| !(runlevels & Master.current_runlevel))
