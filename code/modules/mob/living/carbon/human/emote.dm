@@ -98,7 +98,7 @@
 /datum/emote/living/carbon/human/wag
 	key = "wag"
 	key_third_person = "wags"
-	message = "wags their tail."
+	message = "their tail."
 
 /datum/emote/living/carbon/human/wag/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -110,11 +110,20 @@
 	else
 		SEND_SIGNAL(user, COMSIG_ORGAN_WAG_TAIL, TRUE)
 
+/datum/emote/living/carbon/human/wag/select_message_type(mob/user, intentional)
+	. = ..()
+	var/obj/item/organ/external/tail/oranges_accessory = user.getorganslot(ORGAN_SLOT_EXTERNAL_TAIL)
+	if(oranges_accessory.wag_flags & WAG_WAGGING)
+		. = "stops wagging " + message
+	else
+		. = "wags " + message
+
 /datum/emote/living/carbon/human/wag/can_run_emote(mob/user, status_check, intentional)
 	var/obj/item/organ/external/tail/tail = user.getorganslot(ORGAN_SLOT_EXTERNAL_TAIL)
 	if(tail?.wag_flags & WAG_ABLE)
 		return ..()
 	return FALSE
+
 /datum/emote/living/carbon/human/wing
 	key = "wing"
 	key_third_person = "wings"
@@ -144,6 +153,11 @@
 	var/mob/living/carbon/human/H = user
 	if(H.dna && H.dna.species && (H.dna.features["wings"] != "None"))
 		return TRUE
+
+/datum/emote/living/carbon/human/clear_throat
+	key = "clear"
+	key_third_person = "clears throat"
+	message = "clears their throat."
 
 ///Snowflake emotes only for le epic chimp
 /datum/emote/living/carbon/human/monkey
@@ -180,7 +194,7 @@
 	key = "tail"
 	message = "waves their tail."
 
-/datum/emote/living/carbon/human/monkeysign
+/datum/emote/living/carbon/human/monkey/sign
 	key = "sign"
 	key_third_person = "signs"
 	message_param = "signs the number %t."

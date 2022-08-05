@@ -484,7 +484,8 @@ LINEN BINS
 	var/type = pick_weight(list("Colors" = 80, "Special" = 20))
 	switch(type)
 		if("Colors")
-			type = pick(list(/obj/item/bedsheet,
+			type = pick(list(
+				/obj/item/bedsheet/double,
 				/obj/item/bedsheet/blue/double,
 				/obj/item/bedsheet/green/double,
 				/obj/item/bedsheet/grey/double,
@@ -493,13 +494,16 @@ LINEN BINS
 				/obj/item/bedsheet/red/double,
 				/obj/item/bedsheet/yellow/double,
 				/obj/item/bedsheet/brown/double,
-				/obj/item/bedsheet/black/double))
+				/obj/item/bedsheet/black/double,
+				))
 		if("Special")
-			type = pick(list(/obj/item/bedsheet/patriot/double,
+			type = pick(list(
+				/obj/item/bedsheet/patriot/double,
 				/obj/item/bedsheet/rainbow/double,
 				/obj/item/bedsheet/ian/double,
 				/obj/item/bedsheet/cosmos/double,
-				/obj/item/bedsheet/nanotrasen/double))
+				/obj/item/bedsheet/nanotrasen/double,
+				))
 	var/obj/item/bedsheet = new type(loc)
 	bedsheet.dir = dir
 	return INITIALIZE_HINT_QDEL

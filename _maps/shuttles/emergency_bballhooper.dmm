@@ -295,7 +295,7 @@
 /obj/structure/table,
 /obj/machinery/recharger,
 /obj/item/paper/crumpled{
-	info = "HOLY FUCKING SHIT THIS WAS A MISTAKE -KY";
+	default_raw_text = "HOLY FUCKING SHIT THIS WAS A MISTAKE -KY";
 	name = "The Commisioner's Note";
 	pixel_x = -9;
 	pixel_y = 9

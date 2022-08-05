@@ -555,7 +555,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				new /obj/effect/spawner/newbomb/plasma(loc, /obj/item/assembly/timer)
 				new /obj/item/clothing/head/collectable/petehat(loc)
 				message_admins("[ADMIN_LOOKUPFLW(usr)] has outbombed Cuban Pete and been awarded a bomb.")
-				log_game("[key_name(usr)] has outbombed Cuban Pete and been awarded a bomb.")
+				usr.log_message("outbombed Cuban Pete and has been awarded a bomb.", LOG_GAME)
 				Reset()
 				obj_flags &= ~EMAGGED
 				xp_gained += 100
