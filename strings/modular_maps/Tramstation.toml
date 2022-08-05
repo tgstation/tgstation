@@ -89,3 +89,12 @@ modules = ["maintenance_lowerdormengie_attachment_a_1.dmm", "maintenance_lowerdo
 
 [rooms.maintenance_lowerdormengie_attachment_b]
 modules = ["maintenance_lowerdormengie_attachment_b_1.dmm", "maintenance_lowerdormengie_attachment_b_2.dmm", "maintenance_lowerdormengie_attachment_b_3.dmm"]
+
+[rooms.maintenance_lowerdorm]
+modules = ["maintenance_lowerdorm_1.dmm", "maintenance_lowerdorm_2.dmm"]
+
+[rooms.maintenance_lowerdorm_attachment_a]
+modules = ["maintenance_lowerdorm_attachment_a_1.dmm", "maintenance_lowerdorm_attachment_a_2.dmm", "maintenance_lowerdorm_attachment_a_3.dmm"]
+
+[rooms.maintenance_lowerdorm_attachment_b]
+modules = ["maintenance_lowerdorm_attachment_b_1.dmm", "maintenance_lowerdorm_attachment_b_2.dmm", "maintenance_lowerdorm_attachment_b_3.dmm"]

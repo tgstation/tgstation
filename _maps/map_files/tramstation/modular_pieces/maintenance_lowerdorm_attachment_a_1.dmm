@@ -15,6 +15,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/modular_map_connector,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "f" = (
@@ -66,8 +67,7 @@
 /obj/structure/table,
 /obj/item/training_toolbox{
 	pixel_x = 5;
-	pixel_y = 5;
-	pixel_z = 0
+	pixel_y = 5
 	},
 /obj/item/training_toolbox,
 /turf/open/floor/iron/smooth,

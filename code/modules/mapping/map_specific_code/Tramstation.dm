@@ -102,6 +102,16 @@
 /obj/modular_map_root/tramstation/maintenance_lowerdormengie/attachment_b
 	key = "maintenance_lowerdormengie_attachment_b"
 
+//below dorms on lower floor
+/obj/modular_map_root/tramstation/maintenance_lowerdorm
+	key = "maintenance_lowerdorm"
+
+/obj/modular_map_root/tramstation/maintenance_lowerdorm/attachment_a
+	key = "maintenance_lowerdorm_attachment_a"
+
+/obj/modular_map_root/tramstation/maintenance_lowerdorm/attachment_b
+	key = "maintenance_lowerdorm_attachment_b"
+
 
 /obj/item/paper/fluff/genpop_instructions
 	name = "Genpop - Inmate Processing and You"
