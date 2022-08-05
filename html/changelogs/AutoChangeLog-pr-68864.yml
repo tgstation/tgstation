@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - qol: "AIs which update their status displays on multi-z station maps will now update ALL displays on station, instead of only those which match the level their core is on"

@@ -125,7 +125,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 
 	if(inserted_cell.rigged || inserted_cell.corrupted)
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has inserted rigged/corrupted [inserted_cell] into [src].")
-		log_game("[key_name(usr)] has inserted rigged/corrupted [inserted_cell] into [src].")
+		usr.log_message("has inserted rigged/corrupted [inserted_cell] into [src].", LOG_GAME)
 		usr.log_message("inserted rigged/corrupted [inserted_cell] into [src]", LOG_ATTACK)
 
 /**

@@ -34,6 +34,11 @@
 
 #undef BLUSH_DURATION
 
+/datum/emote/living/sing_tune
+	key = "tunesing"
+	key_third_person = "sings a tune"
+	message = "sings a tune."
+
 /datum/emote/living/bow
 	key = "bow"
 	key_third_person = "bows"

@@ -112,10 +112,16 @@
 /obj/machinery/launchpad/proc/set_offset(x, y)
 	if(teleporting)
 		return
-	if(!isnull(x))
+	if(!isnull(x) && !isnull(y))
 		x_offset = clamp(x, -range, range)
-	if(!isnull(y))
 		y_offset = clamp(y, -range, range)
+		log_message("changed the launchpad's x and y-offset parameters to X: [x] Y: [y].", LOG_GAME, log_globally = FALSE)
+	else if(!isnull(x))
+		x_offset = clamp(x, -range, range)
+		log_message("changed the launchpad's x-offset parameter to X: [x].", LOG_GAME, log_globally = FALSE)
+	else if(!isnull(y))
+		y_offset = clamp(y, -range, range)
+		log_message("changed the launchpad's y-offset parameter to Y: [y].", LOG_GAME, log_globally = FALSE)
 	update_indicator()
 
 /obj/effect/ebeam/launchpad/Initialize(mapload)
@@ -257,7 +263,7 @@
 /obj/machinery/launchpad/briefcase/Initialize(mapload, _briefcase)
 	. = ..()
 	if(!_briefcase)
-		log_game("[src] has been spawned without a briefcase.")
+		stack_trace("[src] spawned without a briefcase.")
 		return INITIALIZE_HINT_QDEL
 	briefcase = _briefcase
 

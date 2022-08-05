@@ -4,6 +4,7 @@
 	typepath = /datum/round_event/wizard/rpgtitles
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
+	description = "Everyone gains an RPG title hovering above them."
 
 /datum/round_event/wizard/rpgtitles/start()
 	GLOB.rpgtitle_controller = new /datum/rpgtitle_controller

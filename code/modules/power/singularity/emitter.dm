@@ -124,9 +124,9 @@
 /obj/machinery/power/emitter/Destroy()
 	if(SSticker.IsRoundInProgress())
 		var/turf/T = get_turf(src)
-		message_admins("[src] deleted at [ADMIN_VERBOSEJMP(T)]")
-		log_game("[src] deleted at [AREACOORD(T)]")
-		investigate_log("deleted at [AREACOORD(T)]", INVESTIGATE_ENGINE)
+		message_admins("[src] deleted at [ADMIN_VERBOSEJMP(T)].")
+		log_game("[src] deleted at [AREACOORD(T)].")
+		investigate_log("deleted at [AREACOORD(T)].", INVESTIGATE_ENGINE)
 	QDEL_NULL(sparks)
 	return ..()
 

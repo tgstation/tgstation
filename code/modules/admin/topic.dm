@@ -47,30 +47,6 @@
 			to_chat(usr, span_danger("ERROR: Mob not found."), confidential = TRUE)
 			return
 		cmd_show_exp_panel(M.client)
-	else if(href_list["forceevent"])
-		if(!check_rights(R_FUN))
-			return
-		var/datum/round_event_control/E = locate(href_list["forceevent"]) in SSevents.control
-		if(E)
-			E.admin_setup(usr)
-			var/datum/round_event/event = E.runEvent()
-			if(event.cancel_event)
-				return
-			if(event.announceWhen>0)
-				event.processing = FALSE
-				var/prompt = tgui_alert(usr, "Would you like to alert the crew?", "Alert", list("Yes", "No", "Cancel"))
-				switch(prompt)
-					if("Yes")
-						event.announceChance = 100
-					if("Cancel")
-						event.kill()
-						return
-					if("No")
-						event.announceChance = 0
-				event.processing = TRUE
-			message_admins("[key_name_admin(usr)] has triggered an event. ([E.name])")
-			log_admin("[key_name(usr)] has triggered an event. ([E.name])")
-		return
 
 	else if(href_list["editrightsbrowser"])
 		edit_admin_permissions(0)

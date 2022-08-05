@@ -2,6 +2,7 @@
 	name = "Major Space Dust"
 	typepath = /datum/round_event/meteor_wave/major_dust
 	weight = 8
+	description = "The station is pelted by sand."
 
 /datum/round_event/meteor_wave/major_dust
 	wave_name = "space dust"
