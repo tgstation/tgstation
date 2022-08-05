@@ -819,3 +819,14 @@
 	name = "Worn Fancy Coat"
 	icon_file = 'icons/mob/clothing/suits/jacket.dmi'
 	json_config = 'code/datums/greyscale/json_configs/fancy_coat_worn.json'
+
+/datum/greyscale_config/trek
+	name = "Trek Uniform"
+	icon_file = 'icons/obj/clothing/under/trek.dmi'
+	json_config = 'code/datums/greyscale/json_configs/trek.json'
+	//All Trek uniforms are different icon_states in the same json so we dont have seperate jsons for all the different types
+
+/datum/greyscale_config/trek/worn
+	name = "Worn Trek Uniform"
+	icon_file = 'icons/mob/clothing/under/trek.dmi'
+	//The worn json is exactly the same, so it's easier to just inherit it (EXPERIMENTAL - SUCCESS. TODO: REMOVE ALL (duplicate-of-obj)_WORN CONFIGS)
