@@ -691,44 +691,59 @@
 		if(computer)
 			computer.table = src
 			break
+	RegisterSignal(loc, COMSIG_ATOM_ENTERED, .proc/mark_patient)
+	RegisterSignal(loc, COMSIG_ATOM_EXITED, .proc/unmark_patient)
 
 /obj/structure/table/optable/Destroy()
-	. = ..()
 	if(computer && computer.table == src)
 		computer.table = null
+	patient = null
+	UnregisterSignal(loc, COMSIG_ATOM_ENTERED)
+	UnregisterSignal(loc, COMSIG_ATOM_EXITED)
+	return ..()
 
 /obj/structure/table/optable/tablepush(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(loc)
 	pushed_mob.set_resting(TRUE, TRUE)
 	visible_message(span_notice("[user] lays [pushed_mob] on [src]."))
-	get_patient()
 
-/obj/structure/table/optable/proc/get_patient()
-	var/mob/living/carbon/M = locate(/mob/living/carbon) in loc
-	if(M)
-		if(M.resting)
-			set_patient(M)
-	else
-		set_patient(null)
-
-/obj/structure/table/optable/proc/set_patient(new_patient)
-	if(patient)
-		UnregisterSignal(patient, COMSIG_PARENT_QDELETING)
-	patient = new_patient
-	if(patient)
-		RegisterSignal(patient, COMSIG_PARENT_QDELETING, .proc/patient_deleted)
-
-/obj/structure/table/optable/proc/patient_deleted(datum/source)
+/// Any mob that enters our tile will be marked as a potential patient. They will be turned into a patient if they lie down.
+/obj/structure/table/optable/proc/mark_patient(datum/source, mob/living/carbon/human/potential_patient)
 	SIGNAL_HANDLER
-	set_patient(null)
+	if(!istype(potential_patient))
+		return
+	RegisterSignal(potential_patient, COMSIG_LIVING_SET_BODY_POSITION, .proc/recheck_patient)
+	recheck_patient(potential_patient) // In case the mob is already lying down before they entered.
 
-/obj/structure/table/optable/proc/check_eligible_patient()
-	get_patient()
-	if(!patient)
-		return FALSE
-	if(ishuman(patient))
-		return TRUE
-	return FALSE
+/// Unmark the potential patient.
+/obj/structure/table/optable/proc/unmark_patient(datum/source, mob/living/carbon/human/potential_patient)
+	SIGNAL_HANDLER
+	if(!istype(potential_patient))
+		return
+	if(potential_patient == patient)
+		recheck_patient(patient) // Can just set patient to null, but doing the recheck lets us find a replacement patient.
+	UnregisterSignal(potential_patient, COMSIG_LIVING_SET_BODY_POSITION)
+
+/// Someone on our tile just lied down, got up, moved in, or moved out.
+/// potential_patient is the mob that had one of those four things change.
+/// The check is a bit broad so we can find a replacement patient.
+/obj/structure/table/optable/proc/recheck_patient(mob/living/carbon/human/potential_patient)
+	SIGNAL_HANDLER
+	if(patient && patient != potential_patient)
+		return
+
+	if(potential_patient.body_position == LYING_DOWN && potential_patient.loc == loc)
+		patient = potential_patient
+		return
+	
+	// Find another lying mob as a replacement.
+	// Can only happen if there are two or more mobs lying in the same location, so if we dont have an old patient just scram.
+	if(patient)
+		for (var/mob/living/carbon/human/replacement_patient in loc.contents)
+			if(replacement_patient.body_position == LYING_DOWN)
+				patient = replacement_patient
+				return
+	patient = null
 
 /*
  * Racks
