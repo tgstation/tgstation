@@ -35,7 +35,7 @@
 /datum/addiction/proc/become_addicted(datum/mind/victim_mind)
 	LAZYSET(victim_mind.active_addictions, type, 1) //Start at first cycle.
 	SEND_SIGNAL(victim_mind.current, COMSIG_CARBON_GAIN_ADDICTION, victim_mind)
-	log_game("[key_name(victim_mind.current)] has become addicted to [name].")
+	victim_mind.current.log_message("has become addicted to [name].", LOG_GAME)
 
 
 ///Called when you lose addiction poitns somehow. Takes a mind as argument and sees if you lost the addiction

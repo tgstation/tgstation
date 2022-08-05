@@ -123,6 +123,7 @@
 	if(tail?.wag_flags & WAG_ABLE)
 		return ..()
 	return FALSE
+
 /datum/emote/living/carbon/human/wing
 	key = "wing"
 	key_third_person = "wings"
@@ -152,6 +153,11 @@
 	var/mob/living/carbon/human/H = user
 	if(H.dna && H.dna.species && (H.dna.features["wings"] != "None"))
 		return TRUE
+
+/datum/emote/living/carbon/human/clear_throat
+	key = "clear"
+	key_third_person = "clears throat"
+	message = "clears their throat."
 
 ///Snowflake emotes only for le epic chimp
 /datum/emote/living/carbon/human/monkey
@@ -188,7 +194,7 @@
 	key = "tail"
 	message = "waves their tail."
 
-/datum/emote/living/carbon/human/monkeysign
+/datum/emote/living/carbon/human/monkey/sign
 	key = "sign"
 	key_third_person = "signs"
 	message_param = "signs the number %t."
