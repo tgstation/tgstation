@@ -99,6 +99,6 @@
 		client.move_delay = initial(client.move_delay)
 
 	if(!gibbed && (death_sound || death_message))
-		emote("deathgasp")
+		INVOKE_ASYNC(src, /mob.proc/emote, "deathgasp")
 
 	return TRUE
