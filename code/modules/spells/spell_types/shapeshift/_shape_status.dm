@@ -34,13 +34,12 @@
 
 	restore_caster()
 
-/datum/status_effect/shapechange_mob/proc/on_wabbajacked(mob/living/source, randomized, list/transformed_mobs)
+/datum/status_effect/shapechange_mob/proc/on_wabbajacked(mob/living/source, randomized)
 	SIGNAL_HANDLER
 
 	source.visible_message(span_warning("[caster_mob] gets pulled back to their normal form!"))
-	transformed_mobs += caster_mob
 	restore_caster()
-	return WABBAJACK_HANDLED
+	return STOP_WABBAJACK
 
 /datum/status_effect/shapechange_mob/proc/restore_caster(kill_caster_after = FALSE)
 	already_restored = TRUE

@@ -3,6 +3,9 @@
 	school = SCHOOL_TRANSMUTATION
 	cooldown_time = 10 SECONDS
 
+	/// Our spell's requrements before we shapeshifted. Stored on shapeshift.
+	var/pre_shift_requirements
+
 	/// Whehter we revert to our human form on death.
 	var/revert_on_death = TRUE
 	/// Whether we die when our shapeshifted form is killed
@@ -133,6 +136,7 @@
 
 
 	// Make sure it's castable even in their new form.
+	pre_shift_requirements = spell_requirements
 	spell_requirements &= ~(SPELL_REQUIRES_HUMAN|SPELL_REQUIRES_WIZARD_GARB)
 
 	var/mob/living/new_shape = create_shapeshift_mob(caster.loc)
@@ -141,7 +145,8 @@
 /// Actually does the un-shapeshift, from the caster. (Caster is a shapeshifted mob.)
 /datum/action/cooldown/spell/shapeshift/proc/do_unshapeshift(mob/living/caster)
 	// Restore the requirements. Might mess with admin memes.
-	spell_requirements = initial(spell_requirements)
+	spell_requirements = pre_shift_requirements
+	pre_shift_requirements = null
 
 	return caster.remove_status_effect(/datum/status_effect/shapechange_mob)
 

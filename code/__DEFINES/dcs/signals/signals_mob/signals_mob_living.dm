@@ -97,6 +97,5 @@
 
 #define COMSIG_LIVING_PRE_WABBAJACKED "living_mob_wabbajacked"
 	#define STOP_WABBAJACK (1<<0)
-	#define WABBAJACK_HANDLED (1<<1)
 
 #define COMSIG_LIVING_ON_WABBAJACKED "living_mob_on_wabbajacked"

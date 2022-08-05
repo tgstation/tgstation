@@ -84,7 +84,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	set_summoner(new_mob)
 	to_chat(src, span_holoparasite("Your summoner has changed form!"))
 
-/mob/living/simple_animal/hostile/guardian/wabbajack(randomize)
+/mob/living/simple_animal/hostile/guardian/wabbajack(what_to_randomize, change_flags = WABBAJACK)
 	visible_message(span_warning("[src] resists the polymorph!"))
 
 /mob/living/simple_animal/hostile/guardian/med_hud_set_health()
