@@ -686,7 +686,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	var/amount = length(turf_things)
 	if(!amount)
-		to_chat(user, span_warning("You failed to pick up anything with [resolve_parent]!"))
+		resolve_parent.balloon_alert(user, "nothing to pick up!")
 		return
 
 	var/datum/progressbar/progress = new(user, amount, thing.loc)
@@ -696,7 +696,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		stoplag(1)
 
 	progress.end_progress()
-	to_chat(user, span_notice("You put everything you could [insert_preposition]to [resolve_parent]."))
+	resolve_parent.balloon_alert(user, "picked up")
 
 /// Signal handler for whenever we drag the storage somewhere.
 /datum/storage/proc/mousedrop_onto(datum/source, atom/over_object, mob/user)
@@ -975,7 +975,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	if(locked)
 		if(!silent)
-			to_chat(toshow, span_warning("[pick("Ka-chunk!", "Ka-chink!", "Plunk!", "Glorf!")] \The [resolve_parent] appears to be locked!"))
+			resolve_parent.balloon_alert(toshow, "locked!")
 		return FALSE
 
 	if(!quickdraw || toshow.get_active_held_item())
@@ -1007,7 +1007,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/put_in_hands_async(mob/toshow, obj/item/toremove)
 	if(!toshow.put_in_hands(toremove))
 		if(!silent)
-			to_chat(toshow, span_notice("You fumble for [toremove] and it falls on the floor."))
+			toremove.balloon_alert(toshow, "fumbled!")
 		return TRUE
 
 /// Signal handler for whenever a mob walks away with us, close if they can't reach us.
@@ -1121,11 +1121,11 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	collection_mode = (collection_mode+1)%3
 	switch(collection_mode)
 		if(COLLECT_SAME)
-			to_chat(user, span_notice("[resolve_parent] now picks up all items of a single type at once."))
+			resolve_parent.balloon_alert(user, "will now only pick up a single type")
 		if(COLLECT_EVERYTHING)
-			to_chat(user, span_notice("[resolve_parent] now picks up all items in a tile at once."))
+			resolve_parent.balloon_alert(user, "will now pick up everything")
 		if(COLLECT_ONE)
-			to_chat(user, span_notice("[resolve_parent] now picks up one item at a time."))
+			resolve_parent.balloon_alert(user, "will now pick up one at a time")
 
 /// Gives a spiffy animation to our parent to represent opening and closing.
 /datum/storage/proc/animate_parent()

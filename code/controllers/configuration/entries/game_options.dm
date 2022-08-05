@@ -29,6 +29,11 @@
 
 /datum/config_entry/flag/everyone_has_maint_access
 
+/datum/config_entry/number/depsec_access_level
+	default = 1
+	min_val = 0
+	max_val = 2
+
 /datum/config_entry/flag/sec_start_brig //makes sec start in brig instead of dept sec posts
 
 /datum/config_entry/flag/force_random_names
@@ -282,11 +287,15 @@
 /datum/config_entry/number/default_laws //Controls what laws the AI spawns with.
 	default = 0
 	min_val = 0
-	max_val = 3
+	max_val = 4
 
 /datum/config_entry/number/silicon_max_law_amount
 	default = 12
 	min_val = 0
+
+/datum/config_entry/keyed_list/specified_laws
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_FLAG
 
 /datum/config_entry/keyed_list/random_laws
 	key_mode = KEY_MODE_TEXT

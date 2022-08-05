@@ -74,9 +74,6 @@
 	SLEEP_CHECK_DEATH(8, src)
 	return ..()
 
-/mob/living/simple_animal/hostile/asteroid/ice_demon/spawn_crusher_loot()
-	loot += crusher_loot
-
 /mob/living/simple_animal/hostile/asteroid/ice_demon/death(gibbed)
 	move_force = MOVE_FORCE_DEFAULT
 	move_resist = MOVE_RESIST_DEFAULT
