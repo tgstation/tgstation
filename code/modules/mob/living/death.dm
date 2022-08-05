@@ -98,4 +98,7 @@
 	if (client)
 		client.move_delay = initial(client.move_delay)
 
+	if(!gibbed && (death_sound || death_message))
+		emote("deathgasp")
+
 	return TRUE

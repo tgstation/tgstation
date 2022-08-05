@@ -18,6 +18,7 @@
 		/obj/effect/gibspawner/generic = 1,
 		/obj/item/stack/sheet/animalhide/bileworm = 1,
 	)
+	death_message = "seizes up and falls limp, slowly receeding into its burrow with a dying gurgle..."
 
 	//it can't be dragged, just butcher it
 	move_resist = INFINITY

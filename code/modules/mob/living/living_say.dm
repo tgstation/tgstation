@@ -516,3 +516,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(get_minds && mind)
 		return mind.get_language_holder()
 	. = ..()
+
+/mob/living/emote(act, m_type=1, message = null, intentional = FALSE, force_silence = FALSE)
+	if(stat)
+		return FALSE
+	return ..()
