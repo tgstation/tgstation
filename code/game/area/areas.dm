@@ -425,8 +425,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 	if(old_area)
 		L.UnregisterSignal(old_area, COMSIG_AREA_POWER_CHANGE)
-	L.RegisterSignal(src, COMSIG_AREA_POWER_CHANGE, /mob/proc/refresh_looping_ambience)
-	L.refresh_looping_ambience()
+
+	if(ambient_buzz != old_area.ambient_buzz)
+		L.refresh_looping_ambience(old_area)
 
 ///Tries to play looping ambience to the mobs.
 /mob/proc/refresh_looping_ambience()
