@@ -538,9 +538,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 		return
 	visible_message(span_danger("[src] tips over!"))
 	tilted = TRUE
-	var/turf/our_turf = get_turf(src)
 	layer = ABOVE_MOB_LAYER
-	SET_PLANE(src, GAME_PLANE_UPPER, our_turf)
+	SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 
 	var/crit_case
 	if(crit)
@@ -654,9 +653,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 	unbuckle_all_mobs(TRUE)
 
 	tilted = FALSE
-	var/turf/our_turf = get_turf(src)
 	layer = initial(layer)
-	SET_PLANE(src, initial(plane), our_turf)
+	SET_PLANE_IMPLICIT(src, initial(plane))
 
 	var/matrix/M = matrix()
 	M.Turn(0)

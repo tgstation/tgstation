@@ -324,12 +324,11 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/obj/item/l_hand = get_item_for_held_index(1)
 	var/obj/item/r_hand = get_item_for_held_index(2)
 
-	var/turf/our_turf = get_turf(src)
 	if(r_hand)
 		hands_overlays += r_hand.build_worn_icon(default_layer = GUARDIAN_HANDS_LAYER, default_icon_file = r_hand.righthand_file, isinhands = TRUE)
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
-			SET_PLANE(r_hand, ABOVE_HUD_PLANE, our_turf)
+			SET_PLANE_EXPLICIT(r_hand, ABOVE_HUD_PLANE, src)
 			r_hand.screen_loc = ui_hand_position(get_held_index_of_item(r_hand))
 			client.screen |= r_hand
 
@@ -337,7 +336,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		hands_overlays += l_hand.build_worn_icon(default_layer = GUARDIAN_HANDS_LAYER, default_icon_file = l_hand.lefthand_file, isinhands = TRUE)
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
-			SET_PLANE(l_hand, ABOVE_HUD_PLANE, our_turf)
+			SET_PLANE_EXPLICIT(l_hand, ABOVE_HUD_PLANE, src)
 			l_hand.screen_loc = ui_hand_position(get_held_index_of_item(l_hand))
 			client.screen |= l_hand
 

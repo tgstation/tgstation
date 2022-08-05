@@ -66,8 +66,7 @@
 
 	I.screen_loc = null // will get moved if inventory is visible
 	I.forceMove(src)
-	var/turf/our_turf = get_turf(src)
-	SET_PLANE(I, ABOVE_HUD_PLANE, our_turf)
+	SET_PLANE_EXPLICIT(I, ABOVE_HUD_PLANE, src)
 
 	switch(slot)
 		if(ITEM_SLOT_HEAD)

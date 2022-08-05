@@ -32,9 +32,8 @@
 
 /obj/structure/chair/pew/left/proc/gen_armrest()
 	leftpewarmrest = GetLeftPewArmrest()
-	var/turf/our_turf = get_turf(src)
 	leftpewarmrest.layer = ABOVE_MOB_LAYER
-	SET_PLANE(leftpewarmrest, GAME_PLANE_UPPER, our_turf)
+	SET_PLANE_EXPLICIT(leftpewarmrest, GAME_PLANE_UPPER, src)
 	update_leftpewarmrest()
 
 
@@ -76,9 +75,8 @@
 
 /obj/structure/chair/pew/right/proc/gen_armrest()
 	rightpewarmrest = GetRightPewArmrest()
-	var/turf/our_turf = get_turf(src)
 	rightpewarmrest.layer = ABOVE_MOB_LAYER
-	SET_PLANE(rightpewarmrest, GAME_PLANE_UPPER, our_turf)
+	SET_PLANE_EXPLICIT(rightpewarmrest, GAME_PLANE_UPPER, src)
 	update_rightpewarmrest()
 
 /obj/structure/chair/pew/right/proc/GetRightPewArmrest()

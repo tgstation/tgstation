@@ -42,10 +42,9 @@
 		var/atom/movable/movable_source = src
 		bound_width = movable_source.bound_width
 
-	// Todo: needs to update on move
-	var/turf/our_turf = get_turf(src)
+	// lemon Todo: needs to update on move
 	var/image/balloon_alert = image(loc = isturf(src) ? src : get_atom_on_turf(src), layer = ABOVE_MOB_LAYER)
-	SET_PLANE(balloon_alert, BALLOON_CHAT_PLANE, our_turf)
+	SET_PLANE_EXPLICIT(balloon_alert, BALLOON_CHAT_PLANE, src)
 	balloon_alert.alpha = 0
 	balloon_alert.appearance_flags = RESET_ALPHA|RESET_COLOR|RESET_TRANSFORM
 	balloon_alert.maptext = MAPTEXT("<span style='text-align: center; -dm-text-outline: 1px #0005'>[text]</span>")

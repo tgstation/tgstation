@@ -44,10 +44,9 @@
 		number_clear = round(number_clear / 6.25) * 6.25
 	else if(current_option == COMP_BAR_OVERLAY_VERTICAL)
 		number_clear = round(number_clear / 10) * 10
-	// Todo: needs to update on move
-	var/turf/our_turf = get_turf(target_atom)
+	// lemon Todo: needs to update on move
 	var/image/cool_overlay = image(icon = 'icons/hud/screen_bci.dmi', loc = target_atom, icon_state = "[options_map[current_option]][number_clear]", layer = RIPPLE_LAYER)
-	SET_PLANE(cool_overlay, ABOVE_LIGHTING_PLANE, our_turf)
+	SET_PLANE_EXPLICIT(cool_overlay, ABOVE_LIGHTING_PLANE, target_atom)
 
 	if(image_pixel_x.value != null)
 		cool_overlay.pixel_x = image_pixel_x.value

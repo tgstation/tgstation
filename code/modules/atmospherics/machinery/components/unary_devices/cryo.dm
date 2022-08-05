@@ -206,8 +206,7 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
 	. = ..()
-	var/turf/our_turf = get_turf(src)
-	SET_PLANE(src, initial(plane), our_turf)
+	SET_PLANE_IMPLICIT(src, initial(plane))
 
 GLOBAL_LIST_INIT_TYPED(cryo_overlays_cover_on, /mutable_appearance, list(create_cryo_overlay(0, "cover-on")))
 GLOBAL_LIST_INIT_TYPED(cryo_overlays_cover_off, /mutable_appearance, list(create_cryo_overlay(0, "cover-off")))
@@ -471,10 +470,10 @@ GLOBAL_LIST_INIT_TYPED(cryo_overlays_cover_off, /mutable_appearance, list(create
 		else if (HAS_TRAIT(mob_occupant, TRAIT_KNOCKEDOUT))
 			data["occupant"]["stat"] = "Unconscious"
 			data["occupant"]["statstate"] = "good"
-		else 
+		else
 			data["occupant"]["stat"] = "Conscious"
 			data["occupant"]["statstate"] = "bad"
-			
+
 		data["occupant"]["bodyTemperature"] = round(mob_occupant.bodytemperature, 1)
 		if(mob_occupant.bodytemperature < T0C) // Green if the mob can actually be healed by cryoxadone.
 			data["occupant"]["temperaturestatus"] = "good"

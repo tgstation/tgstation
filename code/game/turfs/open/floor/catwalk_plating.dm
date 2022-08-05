@@ -41,16 +41,15 @@
 /turf/open/floor/catwalk_floor/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	covered = !covered
-	var/turf/our_turf = get_turf(src)
 	if(!covered)
 		underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 		layer = TURF_LAYER
-		SET_PLANE(src, FLOOR_PLANE, our_turf)
+		SET_PLANE_IMPLICIT(src, FLOOR_PLANE)
 		icon_state = "[catwalk_type]_below"
 	else
 		underfloor_accessibility = UNDERFLOOR_VISIBLE
 		layer = CATWALK_LAYER
-		SET_PLANE(src, GAME_PLANE, our_turf)
+		SET_PLANE_IMPLICIT(src, GAME_PLANE)
 		icon_state = "[catwalk_type]_above"
 	user.balloon_alert(user, "[!covered ? "cover removed" : "cover added"]")
 	tool.play_tool_sound(src)

@@ -23,11 +23,10 @@
 		stack_trace("A deepfried object was created with no fried target")
 		return INITIALIZE_HINT_QDEL
 	. = ..()
-	var/turf/our_turf = get_turf(src)
 	name = fried.name //We'll determine the other stuff when it's actually removed
 	appearance = fried.appearance
 	layer = initial(layer)
-	SET_PLANE(src, initial(plane), our_turf)
+	SET_PLANE_IMPLICIT(src, initial(plane))
 	lefthand_file = fried.lefthand_file
 	righthand_file = fried.righthand_file
 	inhand_icon_state = fried.inhand_icon_state

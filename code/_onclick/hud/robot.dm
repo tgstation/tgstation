@@ -226,7 +226,6 @@
 		var/x = -4 //Start at CENTER-4,SOUTH+1
 		var/y = 1
 
-		var/turf/our_turf = get_turf(viewer)
 		for(var/atom/movable/A in R.model.get_inactive_modules())
 			//Module is not currently active
 			screenmob.client.screen += A
@@ -234,7 +233,7 @@
 				A.screen_loc = "CENTER[x]:16,SOUTH+[y]:7"
 			else
 				A.screen_loc = "CENTER+[x]:16,SOUTH+[y]:7"
-			SET_PLANE(A, ABOVE_HUD_PLANE, our_turf)
+			SET_PLANE_IMPLICIT(A, ABOVE_HUD_PLANE)
 
 			x++
 			if(x == 4)

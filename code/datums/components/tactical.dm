@@ -39,9 +39,8 @@
 	current_slot = slot
 
 	var/obj/item/master = parent
-	var/turf/our_turf = get_turf(master)
 	var/image/I = image(icon = master.icon, icon_state = master.icon_state, loc = user)
-	SET_PLANE(I, GAME_PLANE_FOV_HIDDEN, our_turf)
+	SET_PLANE_EXPLICIT(I, GAME_PLANE_FOV_HIDDEN, master)
 	I.copy_overlays(master)
 	I.override = TRUE
 	source.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "sneaking_mission", I)

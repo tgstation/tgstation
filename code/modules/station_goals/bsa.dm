@@ -186,9 +186,8 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	reload()
 
 /obj/machinery/bsa/full/proc/get_layer()
-	var/turf/our_turf = get_turf(src)
 	top_layer = mutable_appearance(icon, layer = ABOVE_MOB_LAYER)
-	SET_PLANE(top_layer, GAME_PLANE_UPPER, our_turf)
+	SET_PLANE_EXPLICIT(top_layer, GAME_PLANE_UPPER, src)
 	switch(dir)
 		if(WEST)
 			top_layer.icon_state = "top_west"

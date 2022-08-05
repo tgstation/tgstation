@@ -1117,9 +1117,8 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 	M.update_inv_hands()
 	if(M.client)
 		M.client.screen -= src
-	var/turf/our_turf = get_turf(src)
 	layer = initial(layer)
-	SET_PLANE(src, initial(plane), our_turf)
+	SET_PLANE_IMPLICIT(src, initial(plane))
 	appearance_flags &= ~NO_CLIENT_COLOR
 	dropped(M, FALSE)
 	return ..()

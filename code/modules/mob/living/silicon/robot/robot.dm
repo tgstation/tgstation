@@ -346,7 +346,6 @@
 	cut_overlays()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	icon_state = model.cyborg_base_icon
-	var/turf/our_turf = get_turf(src)
 	if(stat != DEAD && !(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsStun() || IsParalyzed() || low_power_mode)) //Not dead, not stunned.
 	// Todo: needs to update on move
 		if(!eye_lights)
@@ -354,11 +353,11 @@
 		if(lamp_enabled || lamp_doom)
 			eye_lights.icon_state = "[model.special_light_key ? "[model.special_light_key]":"[model.cyborg_base_icon]"]_l"
 			eye_lights.color = lamp_doom? COLOR_RED : lamp_color
-			SET_PLANE(eye_lights, ABOVE_LIGHTING_PLANE, our_turf) //glowy eyes
+			SET_PLANE_EXPLICIT(eye_lights, ABOVE_LIGHTING_PLANE, src) //glowy eyes
 		else
 			eye_lights.icon_state = "[model.special_light_key ? "[model.special_light_key]":"[model.cyborg_base_icon]"]_e"
 			eye_lights.color = COLOR_WHITE
-			SET_PLANE(eye_lights, ABOVE_GAME_PLANE, our_turf)
+			SET_PLANE_EXPLICIT(eye_lights, ABOVE_GAME_PLANE, src)
 		eye_lights.icon = icon
 		add_overlay(eye_lights)
 
@@ -663,7 +662,7 @@
 
 	set_sight(new_sight)
 	return ..()
-	
+
 /mob/living/silicon/robot/update_stat()
 	if(status_flags & GODMODE)
 		return

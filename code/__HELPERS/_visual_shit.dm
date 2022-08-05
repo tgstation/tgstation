@@ -4,16 +4,25 @@
 /// Lets imagine we know how many z levels are stacked on top of each other
 /// If we know that, we can autogenerate plane masters to sit on top/below them
 /// We only need as many plane masters as the maximum of all z level stacks
-#define SET_PLANE_IMPLICIT(thing, new_value) (SET_PLANE_EXPLICIT(thing, new_value, thing))
-#define SET_PLANE_EXPLICIT(thing, new_value, source) do {\
+#define SET_PLANE_IMPLICIT(thing, new_value) SET_PLANE_EXPLICIT(thing, new_value, thing)
+
+#define SET_PLANE_EXPLICIT(thing, new_value, source) \
+	do {\
 		var/turf/_our_turf = get_turf(source);\
-		SET_PLANE(thing, new_value, _our_turf);\
+		if(_our_turf){\
+			SET_PLANE(thing, new_value, _our_turf);\
+		}\
 	}\
 	while (FALSE)
 
 #define SET_PLANE(thing, new_value, z_reference) (thing.plane = MUTATE_PLANE(new_value, z_reference))
 #define SET_PLANE_W_SCALAR(thing, new_value, multiplier) (thing.plane = GET_NEW_PLANE(new_value, multiplier))
 
+// Known issues:
+// Potentially too much client load? Hard to tell due to not having a potato pc to hand.
+// This is solvable with lowspec preferences, which would not be hard to implement
+// Player popups will now render their effects, like overlay lights. this is fixable, but I've not gotten to it
+// AIs
 // Lemon todo:
 // Consider adding a low spec mode if possible, seen too many fps complaints, concerning
 // AIs can see through static via openspace, fix that too

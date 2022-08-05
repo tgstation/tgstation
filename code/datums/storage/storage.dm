@@ -290,9 +290,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 /// Refreshes and item to be put back into the real world, out of storage.
 /datum/storage/proc/reset_item(obj/item/thing)
-	var/turf/current_turf = get_turf(thing)
 	thing.layer = initial(thing.layer)
-	SET_PLANE(thing, initial(thing.plane), current_turf)
+	SET_PLANE_IMPLICIT(thing, initial(thing.plane))
 	thing.mouse_opacity = initial(thing.mouse_opacity)
 	thing.screen_loc = null
 	if(thing.maptext)

@@ -237,9 +237,9 @@
 
 	if(loc)
 		SEND_SIGNAL(loc, COMSIG_ATOM_INITIALIZED_ON, src) /// Sends a signal that the new atom `src`, has been created at `loc`
-	var/turf/our_turf = get_turf(src)
-	if(our_turf)
-		SET_PLANE(src, initial(plane), our_turf)
+
+	SET_PLANE_IMPLICIT(src, initial(plane))
+
 	if(greyscale_config && greyscale_colors)
 		update_greyscale()
 

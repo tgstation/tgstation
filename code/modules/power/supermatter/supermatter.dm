@@ -329,8 +329,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(same_z_layer)
 		return
 	if(warp)
-		var/turf/our_turf = get_turf(src)
-		SET_PLANE(warp, PLANE_TO_TRUE(warp.plane), our_turf)
+		SET_PLANE_EXPLICIT(warp, PLANE_TO_TRUE(warp.plane), src)
 
 /obj/machinery/power/supermatter_crystal/proc/update_constants()
 	pressure_bonus_derived_steepness = (1 - 1 / pressure_bonus_max_multiplier) / (pressure_bonus_max_pressure ** pressure_bonus_curve_angle)
@@ -427,7 +426,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	. = ..()
 	if(delamination_strategy)
 		. += delamination_strategy.overlays(src)
-		
+
 /obj/machinery/power/supermatter_crystal/proc/force_delam()
 	SIGNAL_HANDLER
 	investigate_log("was forcefully delaminated", INVESTIGATE_ENGINE)

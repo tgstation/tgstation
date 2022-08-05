@@ -454,9 +454,8 @@
 	if(load) //don't have to do any of this for mobs.
 		load.forceMove(loc)
 		load.pixel_y = initial(load.pixel_y)
-		var/turf/our_turf = get_turf(src)
 		load.layer = initial(load.layer)
-		SET_PLANE(load, initial(load.plane), our_turf)
+		SET_PLANE_EXPLICIT(load, initial(load.plane), src)
 		load = null
 
 	if(dirn) //move the thing to the delivery point.

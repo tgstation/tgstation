@@ -64,11 +64,9 @@
 	var/datum/atom_hud/overlay = counter_appearance?.resolve()
 	QDEL_NULL(overlay)
 
-	var/turf/our_turf = get_turf(owner)
-
-	// Todo: needs to update on move
+	// lemon Todo: needs to update on move
 	var/image/counter = image(icon = 'icons/hud/screen_bci.dmi', icon_state = "hud_numbers", loc = owner, layer = RIPPLE_LAYER)
-	SET_PLANE(counter, ABOVE_LIGHTING_PLANE, our_turf)
+	SET_PLANE_EXPLICIT(counter, ABOVE_LIGHTING_PLANE, owner)
 
 	if(image_pixel_x.value != null)
 		counter.pixel_x = image_pixel_x.value
@@ -91,7 +89,7 @@
 		var/cur_num = round(cleared_number / (10 ** (3 - i))) % 10
 	// Todo: needs to update on move
 		var/image/number = image(icon = 'icons/hud/screen_bci.dmi', icon_state = "hud_number_[cur_num]", loc = owner, layer = RIPPLE_LAYER)
-		SET_PLANE(number, ABOVE_LIGHTING_PLANE, our_turf)
+		SET_PLANE_EXPLICIT(number, ABOVE_LIGHTING_PLANE, owner)
 
 		if(image_pixel_x.value != null)
 			number.pixel_x = image_pixel_x.value + (i - 1) * 9

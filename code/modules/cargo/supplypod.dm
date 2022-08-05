@@ -461,17 +461,15 @@
 	glow_effect = new(src)
 	glow_effect.icon_state = "pod_glow_" + GLOB.podstyles[style][POD_GLOW]
 	vis_contents += glow_effect
-	var/turf/our_turf = get_turf(src)
 	glow_effect.layer = GASFIRE_LAYER
-	SET_PLANE(glow_effect, ABOVE_GAME_PLANE, our_turf)
+	SET_PLANE_EXPLICIT(glow_effect, ABOVE_GAME_PLANE, src)
 	RegisterSignal(glow_effect, COMSIG_PARENT_QDELETING, .proc/remove_glow)
 
 /obj/structure/closet/supplypod/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	. = ..()
 	if(same_z_layer)
 		return
-	var/turf/our_turf = get_turf(src)
-	SET_PLANE(glow_effect, ABOVE_GAME_PLANE, our_turf)
+	SET_PLANE_EXPLICIT(glow_effect, ABOVE_GAME_PLANE, src)
 
 /obj/structure/closet/supplypod/proc/endGlow()
 	if(!glow_effect)
@@ -634,9 +632,8 @@
 	var/rotation = get_pixel_angle(pod.pixel_z, pod.pixel_x) //CUSTOM HOMEBREWED proc that is just arctan with extra steps
 	setupSmoke(rotation)
 	pod.transform = matrix().Turn(rotation)
-	var/turf/our_turf = get_turf(src)
 	pod.layer = FLY_LAYER
-	SET_PLANE(pod, ABOVE_GAME_PLANE, our_turf)
+	SET_PLANE_EXPLICIT(pod, ABOVE_GAME_PLANE, src)
 	if (pod.style != STYLE_INVISIBLE)
 		animate(pod, pixel_z = -1 * abs(sin(rotation))*4, pixel_x = SUPPLYPOD_X_OFFSET + (sin(rotation) * 20), time = pod.delays[POD_FALLING], easing = LINEAR_EASING) //Make the pod fall! At an angle!
 	addtimer(CALLBACK(src, .proc/endLaunch), pod.delays[POD_FALLING], TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation

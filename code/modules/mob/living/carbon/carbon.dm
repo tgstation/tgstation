@@ -328,9 +328,8 @@
 			W.forceMove(drop_location())
 			W.dropped(src)
 			if (W)
-				var/turf/our_turf = get_turf(src)
 				W.layer = initial(W.layer)
-				SET_PLANE(W, initial(W.plane), our_turf)
+				SET_PLANE_EXPLICIT(W, initial(W.plane), src)
 		changeNext_move(0)
 	if (legcuffed)
 		var/obj/item/W = legcuffed
@@ -342,9 +341,8 @@
 			W.forceMove(drop_location())
 			W.dropped(src)
 			if (W)
-				var/turf/our_turf = get_turf(src)
 				W.layer = initial(W.layer)
-				SET_PLANE(W, initial(W.plane), our_turf)
+				SET_PLANE_EXPLICIT(W, initial(W.plane), src)
 		changeNext_move(0)
 	update_equipment_speed_mods() // In case cuffs ever change speed
 

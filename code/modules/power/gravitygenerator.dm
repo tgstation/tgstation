@@ -180,7 +180,7 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 		if(count == 5) // Middle
 			center_part = part
 		if(count <= 3) // Their sprite is the top part of the generator
-	// Todo: needs to update on move
+	// lemon Todo: needs to update on move
 			part.set_density(FALSE)
 			part.layer = WALL_OBJ_LAYER
 			SET_PLANE(part, GAME_PLANE_UPPER, our_turf)
