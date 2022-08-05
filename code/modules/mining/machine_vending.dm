@@ -46,7 +46,7 @@
 		new /datum/data/mining_equipment("Super Resonator", /obj/item/resonator/upgraded, 2500),
 		new /datum/data/mining_equipment("Jump Boots", /obj/item/clothing/shoes/bhop, 2500),
 		new /datum/data/mining_equipment("Ice Hiking Boots", /obj/item/clothing/shoes/winterboots/ice_boots, 2500),
-		new /datum/data/mining_equipment("Mining MODsuit", /obj/item/mod/control/pre_equipped/mining, 2500),
+		new /datum/data/mining_equipment("Mining MODsuit", /obj/item/mod/control/pre_equipped/mining, 3000),
 		new /datum/data/mining_equipment("Luxury Shelter Capsule", /obj/item/survivalcapsule/luxury, 3000),
 		new /datum/data/mining_equipment("Luxury Bar Capsule", /obj/item/survivalcapsule/luxuryelite, 10000),
 		new /datum/data/mining_equipment("Nanotrasen Minebot", /mob/living/simple_animal/hostile/mining_drone, 800),
