@@ -60,7 +60,7 @@
 
 
 		if(TOOL_RUSTSCRAPER)
-			if(!item.tool_start_check(user, amount=0))
+			if(!item.tool_start_check(user))
 				return
 			user.balloon_alert(user, "scraping off rust...")
 			if(!item.use_tool(source, user, 2 SECONDS))
