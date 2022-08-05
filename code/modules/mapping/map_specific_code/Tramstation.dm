@@ -50,10 +50,10 @@
 	key = "maintenance_lowertunnel_leftup"
 
 /obj/modular_map_root/tramstation/maintenance_lowertunnel_leftup/attachment_a
-	key = "maintenance_maintenance_lowertunnel_leftup_attachment_a"
+	key = "maintenance_lowertunnel_leftup_attachment_a"
 
 /obj/modular_map_root/tramstation/maintenance_lowertunnel_leftup/attachment_b
-	key = "maintenance_maintenance_lowertunnel_leftup_attachment_b"
+	key = "maintenance_lowertunnel_leftup_attachment_b"
 
 //right of security lower floor
 /obj/modular_map_root/tramstation/maintenance_lowersecurity
