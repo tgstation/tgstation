@@ -122,7 +122,7 @@ SUBSYSTEM_DEF(polling)
 	UNTIL(P.finished)
 	return P.signed_up
 
-/datum/controller/subsystem/polling/proc/poll_ghost_candidates(question, role, jobban, poll_time = 300, ignore_category = null, flashwindow = TRUE, pic_source)
+/datum/controller/subsystem/polling/proc/poll_ghost_candidates(question, role, jobban, poll_time = 300, ignore_category = null, flashwindow = TRUE, pic_source, role_name_text)
 	var/list/candidates = list()
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
 		return candidates
@@ -130,9 +130,9 @@ SUBSYSTEM_DEF(polling)
 	for(var/mob/dead/observer/ghost_player in GLOB.player_list)
 		candidates += ghost_player
 
-	return poll_candidates(question, role, jobban, poll_time, ignore_category, flashwindow, candidates, pic_source)
+	return poll_candidates(question, role, jobban, poll_time, ignore_category, flashwindow, candidates, pic_source, role_name_text)
 
-/datum/controller/subsystem/polling/proc/poll_ghost_candidates_for_mob(question, role, jobban, poll_time = 30 SECONDS, mob/target_mob, ignore_category = null, flashwindow = TRUE, pic_source)
+/datum/controller/subsystem/polling/proc/poll_ghost_candidates_for_mob(question, role, jobban, poll_time = 30 SECONDS, mob/target_mob, ignore_category = null, flashwindow = TRUE, pic_source, role_name_text)
 	var/static/list/mob/currently_polling_mobs = list()
 
 	if(currently_polling_mobs.Find(target_mob))
@@ -140,7 +140,7 @@ SUBSYSTEM_DEF(polling)
 
 	currently_polling_mobs += target_mob
 
-	var/list/possible_candidates = poll_ghost_candidates(question, role, jobban, poll_time, ignore_category, flashwindow, pic_source)
+	var/list/possible_candidates = poll_ghost_candidates(question, role, jobban, poll_time, ignore_category, flashwindow, pic_source, role_name_text)
 
 	currently_polling_mobs -= target_mob
 	if(!target_mob || QDELETED(target_mob) || !target_mob.loc)
@@ -148,8 +148,8 @@ SUBSYSTEM_DEF(polling)
 
 	return possible_candidates
 
-/datum/controller/subsystem/polling/proc/poll_ghost_candidates_for_mobs(question, role, jobban, poll_time = 30 SECONDS, list/mobs, ignore_category = null, pic_source)
-	var/list/candidate_list = poll_ghost_candidates(question, role, jobban, poll_time, ignore_category, pic_source)
+/datum/controller/subsystem/polling/proc/poll_ghost_candidates_for_mobs(question, role, jobban, poll_time = 30 SECONDS, list/mobs, ignore_category = null, pic_source, role_name_text)
+	var/list/candidate_list = poll_ghost_candidates(question, role, jobban, poll_time, ignore_category, pic_source, role_name_text)
 
 	for(var/mob/potential_mob as anything in mobs)
 		if(QDELETED(potential_mob) || !potential_mob.loc)
