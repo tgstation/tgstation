@@ -941,6 +941,15 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
+/datum/design/borg_sunglasses
+	name = "Cyborg Upgrade (Flash Resistance Module)"
+	id = "borg_upgrade_sunglasses"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/flash_resistance
+	materials = list(/datum/material/iron = 6000, /datum/material/glass = 9000)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
 //Misc
 /datum/design/mecha_tracking
 	name = "Exosuit Tracker (Exosuit Tracking Beacon)"

@@ -163,7 +163,6 @@
 
 	if(targeted)
 		if(flashed.flash_act(1, 1))
-			flashed.set_timed_status_effect(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER, /datum/status_effect/confusion, only_if_higher = TRUE)
 			// Special check for if we're a revhead. Special cases to attempt conversion.
 			if(converter)
 				// Did we try to flash them from behind?
@@ -174,9 +173,11 @@
 				// Convert them. Terribly.
 				terrible_conversion_proc(flashed, user)
 				visible_message(span_danger("[user] blinds [flashed] with the flash!"), span_userdanger("[user] blinds you with the flash!"))
-			//easy way to make sure that you can only long stun someone who is facing in your direction
-			flashed.adjustStaminaLoss(rand(80, 120) * (1 - (deviation * 0.5)))
-			flashed.Paralyze(rand(25, 50) * (1 - (deviation * 0.5)))
+			if(!HAS_TRAIT(flashed, TRAIT_FLASH_RESISTANCE) || flashed.has_status_effect(/datum/status_effect/confusion))
+				//easy way to make sure that you can only long stun someone who is facing in your direction
+				flashed.adjustStaminaLoss(rand(80, 120) * (1 - (deviation * 0.5)))
+				flashed.Paralyze(rand(25, 50) * (1 - (deviation * 0.5)))
+			flashed.set_timed_status_effect(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER, /datum/status_effect/confusion, only_if_higher = TRUE)
 		else if(user)
 			visible_message(span_warning("[user] fails to blind [flashed] with the flash!"), span_danger("[user] fails to blind you with the flash!"))
 		else
@@ -248,7 +249,8 @@
 		if(!flashed_borgo.flash_act(affect_silicon = TRUE))
 			user.visible_message(span_warning("[user] fails to blind [flashed_borgo] with the flash!"), span_warning("You fail to blind [flashed_borgo] with the flash!"))
 			return
-		flashed_borgo.Paralyze(rand(80,120))
+		if(!HAS_TRAIT(flashed_borgo, TRAIT_FLASH_RESISTANCE) || flashed_borgo.has_status_effect(/datum/status_effect/confusion))
+			flashed_borgo.Paralyze(rand(80,120))
 		flashed_borgo.set_timed_status_effect(5 SECONDS * CONFUSION_STACK_MAX_MULTIPLIER, /datum/status_effect/confusion, only_if_higher = TRUE)
 		user.visible_message(span_warning("[user] overloads [flashed_borgo]'s sensors with the flash!"), span_danger("You overload [flashed_borgo]'s sensors with the flash!"))
 		return

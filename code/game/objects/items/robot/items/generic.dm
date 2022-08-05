@@ -12,6 +12,12 @@
 /obj/item/borg
 	icon = 'icons/mob/robot_items.dmi'
 
+/obj/item/borg/proc/on_robot_equip(/mob/living/silicon/robot/user)
+	return
+
+/obj/item/borg/proc/on_robot_unequip(/mob/living/silicon/robot/user)
+	return
+
 /obj/item/borg/stun
 	name = "electrically-charged arm"
 	icon_state = "elecarm"
@@ -352,3 +358,14 @@
 		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 130, 3)
 		COOLDOWN_START(src, alarm_cooldown, HARM_ALARM_NO_SAFETY_COOLDOWN)
 		user.log_message("used an emagged Cyborg Harm Alarm in [AREACOORD(user)]", LOG_ATTACK)
+
+/obj/item/borg/sunglasses
+	name = "sensor protection module"
+	icon_state = "sunglasses"
+	icon = 'icons/obj/clothing/glasses.dmi'
+
+/obj/item/borg/sunglasses/on_robot_equip(/mob/living/silicon/robot/user)
+	ADD_TRAIT(user, TRAIT_FLASH_RESISTANCE, CYBORG_ITEM_TRAIT)
+
+/obj/item/borg/sunglasses/on_robot_unequip(/mob/living/silicon/robot/user)
+	REMOVE_TRAIT(user, TRAIT_FLASH_RESISTANCE, CYBORG_ITEM_TRAIT)

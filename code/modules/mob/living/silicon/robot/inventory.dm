@@ -69,10 +69,7 @@
 	item_module.plane = ABOVE_HUD_PLANE
 	item_module.forceMove(src)
 
-	if(istype(item_module, /obj/item/borg/sight))
-		var/obj/item/borg/sight/borg_sight = item_module
-		sight_mode |= borg_sight.sight_mode
-		update_sight()
+	item_module.on_robot_equip(src)
 
 	observer_screen_update(item_module, TRUE)
 
@@ -98,10 +95,8 @@
 
 	if(istype(item_module, /obj/item/storage/bag/tray/))
 		item_module.atom_storage.remove_all(loc)
-	if(istype(item_module, /obj/item/borg/sight))
-		var/obj/item/borg/sight/borg_sight = item_module
-		sight_mode &= ~borg_sight.sight_mode
-		update_sight()
+
+	item_module.on_robot_unequip(src)
 
 	if(client)
 		client.screen -= item_module

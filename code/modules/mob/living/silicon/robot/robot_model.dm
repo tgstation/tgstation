@@ -767,6 +767,7 @@
 		/obj/item/card/emag,
 		/obj/item/crowbar/cyborg,
 		/obj/item/extinguisher/mini,
+		/obj/item/borg/sunglasses,
 		/obj/item/pinpointer/syndicate_cyborg)
 
 	cyborg_base_icon = "synd_sec"
@@ -804,7 +805,8 @@
 		/obj/item/pinpointer/syndicate_cyborg,
 		/obj/item/stack/medical/gauze,
 		/obj/item/gun/medbeam,
-		/obj/item/borg/apparatus/organ_storage)
+		/obj/item/borg/apparatus/organ_storage,
+		/obj/item/borg/sunglasses)
 
 	cyborg_base_icon = "synd_medical"
 	model_select_icon = "malf"
@@ -837,6 +839,7 @@
 		/obj/item/pinpointer/syndicate_cyborg,
 		/obj/item/borg_chameleon,
 		/obj/item/card/emag,
+		/obj/item/borg/sunglasses
 		)
 
 	cyborg_base_icon = "synd_engi"

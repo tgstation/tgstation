@@ -783,3 +783,22 @@
 	borgo.logevent("WARN -- System recovered from unexpected shutdown.")
 	borgo.logevent("System brought online.")
 	return ..()
+
+/obj/item/borg/upgrade/flash_resistance
+	name = "cyborg flash resistance module."
+	desc = "A module, that allows cyborgs to take more flashes before getting stunned."
+	icon = 'icons/obj/module.dmi'
+	icon_state = "cyborg_upgrade"
+
+/obj/item/borg/upgrade/flash_resistance/action(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		var/obj/item/borg/sunglasses/FP = new /obj/item/borg/sunglasses(R.model)
+		R.model.basic_modules += FP
+		R.model.add_module(FP, FALSE, TRUE)
+
+/obj/item/borg/upgrade/flash_resistance/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if (.)
+		for(var/obj/item/borg/sunglasses/FP in R.model)
+			R.model.remove_module(FP, TRUE)

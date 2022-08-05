@@ -1,6 +1,14 @@
 /obj/item/borg/sight
 	var/sight_mode = null
 
+/obj/item/borg/sight/on_robot_equip(/mob/living/silicon/robot/user)
+	user.sight_mode |= sight_mode
+	update_sight()
+
+/obj/item/borg/sight/on_robot_unequip(/mob/living/silicon/robot/user)
+	user.sight_mode &= ~sight_mode
+	update_sight()
+
 /obj/item/borg/sight/xray
 	name = "\proper X-ray vision"
 	icon = 'icons/obj/decals.dmi'

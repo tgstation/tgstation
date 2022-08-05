@@ -293,6 +293,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PASSTABLE "passtable"
 /// Makes you immune to flashes
 #define TRAIT_NOFLASH "noflash"
+// You need to be flashed twice before getting stunned
+#define TRAIT_FLASH_RESISTANCE "flash_resistance"
 /// prevents xeno huggies implanting skeletons
 #define TRAIT_XENO_IMMUNE "xeno_immune"
 /// Makes you flashable from any direction
