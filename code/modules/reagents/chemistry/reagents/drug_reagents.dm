@@ -50,7 +50,7 @@
 		to_chat(M, "<span class='notice'>[smoke_message]</span>")
 	if(DT_PROB(2, delta_time))
 		M.emote(pick("smile","laugh","giggle"))
-	M.adjust_nutrition(-0.3 * REM * delta_time) //munchies
+	M.adjust_nutrition(-0.15 * REM * delta_time) //munchies
 	if(DT_PROB(4, delta_time) && M.body_position == LYING_DOWN && !M.IsSleeping()) //chance to fall asleep if lying down
 		to_chat(M, "<span class='warning'>You doze off...</span>")
 		M.Sleeping(10 SECONDS)
