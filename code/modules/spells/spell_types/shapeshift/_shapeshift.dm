@@ -41,8 +41,8 @@
 		// If another shapeshift spell was casted while we're already shifted, they could technically go to do_unshapeshift().
 		// However, we don't really want people casting shapeshift A to un-shapeshift from shapeshift B,
 		// as it could cause bugs or unintended behavior. So we'll just stop them here.
-		if(is_shifted(cast_on) && !istype(cast_on, shifted_type))
-			to_chat(caster, span_warning("This spell won't un-shapeshift you from this form!"))
+		if(is_shifted(cast_on) && !is_type_in_list(cast_on, possible_shapes))
+			to_chat(cast_on, span_warning("This spell won't un-shapeshift you from this form!"))
 			return . | SPELL_CANCEL_CAST
 
 		return
@@ -51,6 +51,7 @@
 		shapeshift_type = possible_shapes[1]
 		return
 
+	// Not bothering with caching these as they're only ever shown once
 	var/list/shape_names_to_types = list()
 	var/list/shape_names_to_image = list()
 	if(!length(shape_names_to_types) || !length(shape_names_to_image))

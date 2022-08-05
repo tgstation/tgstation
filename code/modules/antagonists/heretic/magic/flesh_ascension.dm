@@ -34,7 +34,7 @@
 
 	return ..()
 
-/datum/action/cooldown/spell/shapeshift/shed_human_form/do_unshapeshift(mob/living/simple_animal/hostile/heretic_summon/armsy/prime/caster)
+/datum/action/cooldown/spell/shapeshift/shed_human_form/do_unshapeshift(mob/living/simple_animal/hostile/heretic_summon/armsy/caster)
 	if(istype(caster))
 		segment_length = caster.get_length()
 
