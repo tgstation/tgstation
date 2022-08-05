@@ -423,9 +423,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!L.ckey)
 		return
 
-	if(old_area)
-		L.UnregisterSignal(old_area, COMSIG_AREA_POWER_CHANGE)
-
 	if(ambient_buzz != old_area.ambient_buzz)
 		L.refresh_looping_ambience(old_area)
 
