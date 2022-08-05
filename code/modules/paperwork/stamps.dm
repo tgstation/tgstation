@@ -70,6 +70,10 @@
 	icon_state = "stamp-deny"
 	dye_color = DYE_REDCOAT
 
+/obj/item/stamp/void
+	name = "VOID rubber stamp"
+	icon_state = "stamp-void"
+
 /obj/item/stamp/clown
 	name = "clown's rubber stamp"
 	icon_state = "stamp-clown"
