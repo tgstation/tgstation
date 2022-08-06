@@ -93,7 +93,7 @@
 		return FALSE
 	leaking = !leaking
 	balloon_alert(user, "[leaking ? "opened" : "closed"] [src]'s tap")
-	log_game("[key_name(user)] [leaking ? "opened" : "closed"] [src]")
+	user.log_message("[leaking ? "opened" : "closed"] [src].", LOG_GAME)
 	tank_leak()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
@@ -169,7 +169,7 @@
 	if(!do_after(user, 2 SECONDS, target = src))
 		return
 	user.balloon_alert_to_viewers("detached rig")
-	log_message("[key_name(user)] detached [rig] from [src]", LOG_GAME)
+	user.log_message("detached [rig] from [src].", LOG_GAME)
 	if(!user.put_in_hands(rig))
 		rig.forceMove(get_turf(user))
 	rig = null

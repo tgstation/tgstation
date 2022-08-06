@@ -463,7 +463,7 @@
 	summoned.ghostize(FALSE)
 	summoned.key = picked_candidate.key
 
-	log_game("[key_name(user)] created a [summoned.name], controlled by [key_name(picked_candidate)].")
+	user.log_message("created a [summoned.name], controlled by [key_name(picked_candidate)].", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(user)] created a [summoned.name], [ADMIN_LOOKUPFLW(summoned)].")
 
 	var/datum/antagonist/heretic_monster/heretic_monster = summoned.mind.add_antag_datum(/datum/antagonist/heretic_monster)

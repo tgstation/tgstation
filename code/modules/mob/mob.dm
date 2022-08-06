@@ -745,22 +745,22 @@
 		to_chat(usr, span_boldnotice("You must be dead to use this!"))
 		return
 
-	log_game("[key_name(usr)] used the respawn button.")
+	usr.log_message("used the respawn button.", LOG_GAME)
 
 	to_chat(usr, span_boldnotice("Please roleplay correctly!"))
 
 	if(!client)
-		log_game("[key_name(usr)] respawn failed due to disconnect.")
+		usr.log_message("respawn failed due to disconnect.", LOG_GAME)
 		return
 	client.screen.Cut()
 	client.screen += client.void
 	if(!client)
-		log_game("[key_name(usr)] respawn failed due to disconnect.")
+		usr.log_message("respawn failed due to disconnect.", LOG_GAME)
 		return
 
 	var/mob/dead/new_player/M = new /mob/dead/new_player()
 	if(!client)
-		log_game("[key_name(usr)] respawn failed due to disconnect.")
+		usr.log_message("respawn failed due to disconnect.", LOG_GAME)
 		qdel(M)
 		return
 

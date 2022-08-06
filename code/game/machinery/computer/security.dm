@@ -942,9 +942,11 @@ What a mess.*/
 								else
 									message_admins("Warning: possible href exploit by [key_name(usr)] - attempted to set change a crew member rank to an invalid path: [path]")
 									log_game("Warning: possible href exploit by [key_name(usr)] - attempted to set change a crew member rank to an invalid path: [path]")
+									usr.log_message("possibly trying to href exploit - attempted to set change a crew member rank to an invalid path: [path]", LOG_ADMIN, log_globally = FALSE)
 							else if(!isnull(text))
 								message_admins("Warning: possible href exploit by [key_name(usr)] - attempted to set change a crew member rank to an invalid value: [text]")
 								log_game("Warning: possible href exploit by [key_name(usr)] - attempted to set change a crew member rank to an invalid value: [text]")
+								usr.log_message("possibly trying to href exploit - attempted to set change a crew member rank to an invalid value: [text]", LOG_ADMIN, log_globally = FALSE)
 
 					if("Change Criminal Status")
 						if(active2)

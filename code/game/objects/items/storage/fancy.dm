@@ -60,7 +60,7 @@
 	if(contents.len)
 		return
 	new fold_result(user.drop_location())
-	to_chat(user, span_notice("You fold the [src] into [initial(fold_result.name)]."))
+	balloon_alert(user, "folded")
 	user.put_in_active_hand(fold_result)
 	qdel(src)
 
@@ -166,7 +166,7 @@
 /obj/item/storage/fancy/candle_box/attack_self(mob/user)
 	if(!contents.len)
 		new fold_result(user.drop_location())
-		to_chat(user, span_notice("You fold the [src] into [initial(fold_result.name)]."))
+		balloon_alert(user, "folded")
 		user.put_in_active_hand(fold_result)
 		qdel(src)
 
@@ -202,7 +202,7 @@
 	if(contents.len != 0 || !spawn_coupon)
 		return ..()
 
-	to_chat(user, span_notice("You rip the back off \the [src] and get a coupon!"))
+	balloon_alert(user, "ooh, free coupon")
 	var/obj/item/coupon/attached_coupon = new
 	user.put_in_hands(attached_coupon)
 	attached_coupon.generate(rigged_omen)

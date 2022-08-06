@@ -310,7 +310,7 @@
 	if(!is_type_in_list(src, allowed_toolbox) && (type != /obj/item/storage/toolbox))
 		return
 	if(contents.len >= 1)
-		to_chat(user, span_warning("They won't fit in, as there is already stuff inside!"))
+		balloon_alert(user, "not empty!")
 		return
 	if(T.use(10))
 		var/obj/item/bot_assembly/floorbot/B = new
@@ -328,10 +328,10 @@
 				B.toolbox_color = "s"
 		user.put_in_hands(B)
 		B.update_appearance()
-		to_chat(user, span_notice("You add the tiles into the empty [name]. They protrude from the top."))
+		B.balloon_alert(user, "tiles added")
 		qdel(src)
 	else
-		to_chat(user, span_warning("You need 10 floor tiles to start building a floorbot!"))
+		balloon_alert(user, "needs 10 tiles!")
 		return
 
 

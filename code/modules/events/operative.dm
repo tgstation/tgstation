@@ -3,6 +3,8 @@
 	typepath = /datum/round_event/ghost_role/operative
 	weight = 0 //its weight is relative to how much stationary and neglected the nuke disk is. See nuclearbomb.dm. Shouldn't be dynamic hijackable.
 	max_occurrences = 1
+	category = EVENT_CATEGORY_INVASION
+	description = "A single nuclear operative assaults the station."
 
 /datum/round_event/ghost_role/operative
 	minimum_required = 1
@@ -33,6 +35,6 @@
 	Mind.add_antag_datum(/datum/antagonist/nukeop/lone)
 
 	message_admins("[ADMIN_LOOKUPFLW(operative)] has been made into lone operative by an event.")
-	log_game("[key_name(operative)] was spawned as a lone operative by an event.")
+	operative.log_message("was spawned as a lone operative by an event.", LOG_GAME)
 	spawned_mobs += operative
 	return SUCCESSFUL_SPAWN
