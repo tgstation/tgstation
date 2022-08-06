@@ -265,7 +265,7 @@
  * Returns a bool about whether or not the user should play a sound when performing the emote.
  */
 /datum/emote/proc/should_play_sound(mob/user, intentional = FALSE)
-	if(emote_type == EMOTE_AUDIBLE && !muzzle_ignore)
+	if(emote_type & EMOTE_AUDIBLE && !muzzle_ignore)
 		if(user.is_muzzled())
 			return FALSE
 		if(HAS_TRAIT(user, TRAIT_MUTE))
