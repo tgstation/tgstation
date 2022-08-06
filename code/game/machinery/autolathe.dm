@@ -174,7 +174,8 @@
 				return
 
 			var/multiplier = text2num(params["multiplier"])
-			if(!multiplier)
+			if(!multiplier || !isnum(multiplier) || ISNAN(multiplier))
+				message_admins("[ADMIN_FULLMONTY(usr)] is attempting to create NAN stacks of items")
 				to_chat(usr, span_alert("[src] only accepts a numerical multiplier!"))
 				return
 			var/is_stack = ispath(being_built.build_path, /obj/item/stack)

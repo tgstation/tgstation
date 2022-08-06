@@ -357,7 +357,8 @@
 		return
 	if(!is_valid_recipe(recipe, recipes)) //href exploit protection
 		return
-	if(!multiplier || multiplier < 1) //href exploit protection
+	if(!multiplier || multiplier < 1 || !isnum(multiplier) || ISNAN(multiplier)) //href exploit protection
+		message_admins("[ADMIN_FULLMONTY(usr)] is attempting to create NAN amount item stacks")
 		return
 	if(!building_checks(builder, recipe, multiplier))
 		return
