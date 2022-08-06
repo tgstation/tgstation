@@ -209,12 +209,13 @@
 	user.visible_message(detailed_message, self_message, vision_distance = 1, ignored_mobs = target_detailed ? null : target)
 	if(!target_detailed)
 		var/you_feel = pick("a brief pain", "your body tense up", "an unnerving sensation")
-		if(!vague_message && detailed_message)
-			stack_trace("DIDN'T GET PASSED A VAGUE MESSAGE.")
-			vague_message = detailed_message
-		else
-			stack_trace("NO MESSAGES TO SEND TO TARGET!")
-			vauge_message = span_notice("You feel [you_feel] as you are operated on.")
+		if(!vague_message)
+			if(detailed_message)
+				stack_trace("DIDN'T GET PASSED A VAGUE MESSAGE.")
+				vague_message = detailed_message
+			else
+				stack_trace("NO MESSAGES TO SEND TO TARGET!")
+				vague_message = span_notice("You feel [you_feel] as you are operated on.")
 		target.show_message(vague_message, MSG_VISUAL, span_notice("You feel [you_feel] as you are operated on."))
 /**
  * Sends a pain message to the target, including a chance of screaming.
