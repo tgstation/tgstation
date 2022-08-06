@@ -14,7 +14,7 @@
 
 	//since resist() is a verb that possibly queues its actual execution for the next tick, we need to make the subsystem that handles the delayed execution process
 	//the callback. either that or sleep ourselves and see if it ran.
-	SSverb_manager.fire()
+	SSverb_manager.run_verb_queue()
 
 	TEST_ASSERT(human.fire_stacks < 5, "Human did not lower fire stacks after resisting")
 
@@ -33,6 +33,6 @@
 
 	//since resist() is a verb that possibly queues itself for the next tick, we need to make the subsystem that handles the delayed execution process
 	//the callback. either that or sleep ourselves and see if it ran.
-	SSverb_manager.fire()
+	SSverb_manager.run_verb_queue()
 
 	TEST_ASSERT(!(human in closet.contents), "Human resisted out of a standard closet, but was still in it")
