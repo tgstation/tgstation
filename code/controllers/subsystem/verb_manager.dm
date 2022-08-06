@@ -30,13 +30,6 @@ SUBSYSTEM_DEF(verb_manager)
 	///this list is ran through every tick, and the subsystem does not yield until this queue is finished.
 	var/list/datum/callback/verb_callback/verb_queue = list()
 
-	///what REALTIMEOFDAY we last cleared the verb queue. used for stat info
-	var/last_verb_run_realtime = 0
-	///what world.time we last cleared the verb queue. used for stat info
-	var/last_verb_run_worldtime = 0
-	///what world.tick_usage we last cleared the verb queue. used for stat info
-	var/last_verb_run_starting_tick_usage = 0
-
 	///running average of how many verb callbacks are executed every second. used for the stat entry
 	var/verbs_executed_per_second = 0
 
@@ -136,11 +129,6 @@ SUBSYSTEM_DEF(verb_manager)
 /// runs through all of this subsystems queue of verb callbacks.
 /// goes through the entire verb queue without yielding.
 /// used so you can flush the queue outside of fire() without interfering with anything else subtype subsystems might do in fire().
-///
-/// ---DO NOT CALL OUTSIDE OF execute_verbs()!---
-/// - otherwise timing data will not be set!
-///
-/// delta_seconds - amount of time since this was last called in seconds. this is real time and not based on wait.
 /datum/controller/subsystem/verb_manager/proc/run_verb_queue()
 	var/executed_verbs = 0
 
