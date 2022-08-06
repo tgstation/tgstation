@@ -1,6 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - balance: "Vehicles & Mecha now take 2.5 second to repair with a welder."
-  - qol: "Vehicles & mecha will automatically repair over time once clicked."
-  - qol: "Vehicles & Mecha now give balloon alerts when repairing."

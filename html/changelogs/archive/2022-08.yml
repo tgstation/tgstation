@@ -178,3 +178,34 @@
   vincentiusvin:
   - bugfix: deleted unconnected lavabase pump
   - bugfix: removed unecessary bridge pipes from kilomos
+2022-08-06:
+  Jackraxxus:
+  - bugfix: Admin AI interact can once again print items from departmental protolathes.
+  JohnFulpWillard:
+  - rscadd: Pun Pun now gives stuff in their hand frequently and rings desk bells.
+  - rscadd: Pun Pun now has gentleman-like emotes, rather than screeching and roaring.
+  - balance: Pun Pun no longer looks for weapons in their off time.
+  - balance: Pun Pun is no longer vulnerable to stuns by being walked into.
+  - qol: Monkeys can now use desk bells.
+  Mooshimi:
+  - bugfix: Things that are ventcrawling can no longer alt click tiles to see what
+      is outside the pipes.
+  Mqiib, ToasterBiome:
+  - balance: Explosion epicenters no longer explode mobs twice; Fireballs and other
+      explosive projectiles are significantly less-damaging
+  Profakos:
+  - bugfix: Mining flora can be harvested again
+  RigglePrime:
+  - bugfix: Purrbation now properly adds and removes tails
+  ShizCalev:
+  - bugfix: Purchasing the Stationwide Blackout traitor event repeatedly will now
+      only announce there is a power outage if the previous power outage has finished.
+  - balance: Vehicles & Mecha now take 2.5 second to repair with a welder.
+  - qol: Vehicles & mecha will automatically repair over time once clicked.
+  - qol: Vehicles & Mecha now give balloon alerts when repairing.
+  X13-423:
+  - imageadd: Improved Unholy Pitchfork back and inhand sprites
+  XyzzyThePretender:
+  - bugfix: Silicons can now interact with floodlights.
+  tralezab:
+  - rscadd: Bileworms have appeared on lavaland!
