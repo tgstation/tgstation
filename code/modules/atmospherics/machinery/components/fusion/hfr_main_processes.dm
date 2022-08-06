@@ -288,7 +288,7 @@
 		if(1)
 			if(moderator_list[/datum/gas/plasma] > 100)
 				internal_output.assert_gases(/datum/gas/nitrous_oxide)
-				moderator_internal.gases[/datum/gas/nitrous_oxide] += scaled_production * 0.5
+				internal_output.gases[/datum/gas/nitrous_oxide] += scaled_production * 0.5
 				moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 0.85)
 			if(moderator_list[/datum/gas/bz] > 150)
 				internal_output.assert_gases(/datum/gas/halon)
@@ -345,7 +345,7 @@
 				internal_output.assert_gases(/datum/gas/healium, /datum/gas/freon)
 				internal_output.gases[/datum/gas/healium][MOLES] += scaled_production
 				induce_hallucination(500, delta_time)
-				moderator_internal.gases[/datum/gas/freon][MOLES] += scaled_production * 1.15
+				internal_output.gases[/datum/gas/freon][MOLES] += scaled_production * 1.15
 			if(moderator_list[/datum/gas/healium] > 100)
 				if(critical_threshold_proximity > 400)
 					critical_threshold_proximity = max(critical_threshold_proximity - (moderator_list[/datum/gas/healium] / 100 * delta_time ), 0)
@@ -357,7 +357,7 @@
 			internal_output.assert_gases(/datum/gas/antinoblium)
 			if(moderator_list[/datum/gas/plasma] > 30)
 				internal_output.assert_gases(/datum/gas/bz)
-				moderator_internal.gases[/datum/gas/bz][MOLES] += scaled_production * 1.15
+				internal_output.gases[/datum/gas/bz][MOLES] += scaled_production * 1.15
 				moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 1.45)
 			if(moderator_list[/datum/gas/proto_nitrate])
 				internal_output.assert_gases(/datum/gas/zauker, /datum/gas/nitrium)
@@ -368,7 +368,7 @@
 				heat_output *= 2.25
 			if(moderator_list[/datum/gas/bz])
 				induce_hallucination(900, delta_time, force=TRUE)
-				moderator_internal.gases[/datum/gas/antinoblium][MOLES] += clamp(dirty_production_rate / 0.045, 0, 10) * delta_time
+				internal_output.gases[/datum/gas/antinoblium][MOLES] += clamp(dirty_production_rate / 0.045, 0, 10) * delta_time
 			if(moderator_list[/datum/gas/healium] > 100)
 				if(critical_threshold_proximity > 400)
 					critical_threshold_proximity = max(critical_threshold_proximity - (moderator_list[/datum/gas/healium] / 100 * delta_time ), 0)
