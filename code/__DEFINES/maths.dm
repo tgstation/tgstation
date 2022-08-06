@@ -1,7 +1,8 @@
 // Remove these once we have Byond implementation.
-#define ISNAN(a) (a!=a)
-#define ISINF(a) (!ISNAN(a) && ISNAN(a-a))
-#define IS_INF_OR_NAN(a) (ISNAN(a-a))
+#define IS_NAN(a) (a!=a)
+#define IS_INF(a) (isnum(a) && a==a && a-a!=a-a)
+#define IS_INF_OR_NAN(a) (isnum(a) && a-a!=a-a)
+#define IS_FINITE(a) (isnum(a) && a-a==a-a)
 // Aight dont remove the rest
 
 // Credits to Nickr5 for the useful procs I've taken from his library resource.
