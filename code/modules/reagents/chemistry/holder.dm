@@ -163,7 +163,7 @@
  * * ignore splitting - Don't call the process that handles reagent spliting in a mob (impure/inverse) - generally leave this false unless you care about REAGENTS_DONOTSPLIT flags (see reagent defines)
  */
 /datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = DEFAULT_REAGENT_TEMPERATURE, added_purity = null, added_ph, no_react = FALSE, override_base_ph = FALSE, ignore_splitting = FALSE)
-	if(!isnum(amount) || ISNAN(amount) || !amount)
+	if(!amount || !IS_FINITE(amount))
 		stack_trace("invalid number amount passed to add reagent [amount] [reagent]")
 		return FALSE
 
@@ -277,7 +277,7 @@
 		stack_trace("null amount passed to reagent code")
 		return FALSE
 
-	if(!isnum(amount) || ISNAN(amount) || amount < 0)
+	if(amount < 0 || !IS_FINITE(amount))
 		stack_trace("invalid number passed to remove_reagent [amount]")
 		return FALSE
 
