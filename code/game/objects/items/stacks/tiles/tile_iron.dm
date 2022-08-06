@@ -102,38 +102,42 @@
 /obj/item/stack/tile/iron/attackby(obj/item/attackby_item, mob/user, params)
 	if(attackby_item.tool_behaviour == TOOL_WELDER)
 		if(get_amount() < 4)
-			to_chat(user, span_warning("You need at least four tiles to do this!"))
+			balloon_alert(user, "not enough tiles!")
 			return
-		if(attackby_item.use_tool(src, user, 0, volume=40))
+		if(attackby_item.use_tool(src, user, 0, volume = 40))
 			var/obj/item/stack/sheet/iron/new_item = new(user.loc)
-			user.visible_message(span_notice("[user] shaped [src] into a sheet with [attackby_item]."), \
-				span_notice("You shaped [src] into a sheet with [attackby_item]."), \
-				span_hear("You hear welding."))
+			balloon_alert(user, "crafting sheets...")
+			user.visible_message(
+				span_notice("[user.name] shaped [src] into sheets with [attackby_item]."),
+				blind_message = span_hear("You hear welding."),
+				vision_distance = COMBAT_MESSAGE_RANGE,
+				ignored_mobs = user
+			)
 			var/obj/item/stack/tile/iron/welded_tile = src
 			src = null
-			var/replace = (user.get_inactive_held_item()==welded_tile)
 			welded_tile.use(4)
-			if(!welded_tile && replace)
-				user.put_in_hands(new_item)
+			user.put_in_inactive_hand(new_item)
 	else
 		return ..()
 
 /obj/item/stack/tile/iron/attackby_secondary(obj/item/attackby_item, mob/user, params)
 	if(attackby_item.tool_behaviour == TOOL_WELDER)
 		if(get_amount() < 2)
-			to_chat(user, span_warning("You need at least two tiles to do this!"))
+			balloon_alert(user, "not enough tiles!")
 			return
-		if(attackby_item.use_tool(src, user, 0, volume=40))
+		if(attackby_item.use_tool(src, user, 0, volume = 40))
 			var/obj/item/stack/rods/new_item = new(user.loc)
-			user.visible_message(span_notice("[user] shaped [src] into [new_item] with [attackby_item]."), \
-				span_notice("You shaped [src] into [new_item] with [attackby_item]."), \
-				span_hear("You hear welding."))
+			balloon_alert(user, "crafting rods...")
+			user.visible_message(
+				span_notice("[user.name] shaped [src] into rods with [attackby_item]."),
+				blind_message = span_hear("You hear welding."),
+				vision_distance = COMBAT_MESSAGE_RANGE,
+				ignored_mobs = user
+			)
 			var/obj/item/stack/tile/iron/welded_tile = src
 			src = null
-			var/replace = (user.get_inactive_held_item()==welded_tile)
 			welded_tile.use(2)
-			if(!welded_tile && replace)
-				user.put_in_hands(new_item)
+			user.put_in_inactive_hand(new_item)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
