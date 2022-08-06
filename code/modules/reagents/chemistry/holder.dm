@@ -491,6 +491,7 @@
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
 	var/trans_data = null
 	var/transfer_log = list()
+	var/r_to_send = list()	// Validated list of reagents to be exposed
 	if(!round_robin)
 		var/part = amount / src.total_volume
 		for(var/datum/reagent/reagent as anything in cached_reagents)
@@ -504,14 +505,15 @@
 			if(!R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transfered.
 				continue
 			if(methods)
-				if(istype(target_atom, /obj/item/organ))
-					R.expose_single(reagent, target, methods, part, show_message)
-				else
-					R.expose_single(reagent, target_atom, methods, part, show_message)
-				reagent.on_transfer(target_atom, methods, transfer_amount * multiplier)
+				r_to_send += reagent
 			remove_reagent(reagent.type, transfer_amount)
 			var/list/reagent_qualities = list(REAGENT_TRANSFER_AMOUNT = transfer_amount, REAGENT_PURITY = reagent.purity)
 			transfer_log[reagent.type] = reagent_qualities
+
+		if(istype(target_atom, /obj/item/organ))
+			R.expose_multiple(r_to_send, target, methods, part, show_message)
+		else
+			R.expose_multiple(r_to_send, target_atom, methods, part, show_message)
 
 	else
 		var/to_transfer = amount
