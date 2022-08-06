@@ -642,42 +642,42 @@
 
 /datum/greyscale_config/slacks
 	name = "Slacks"
-	icon_file = 'icons/obj/clothing/under/shorts_pants.dmi'
+	icon_file = 'icons/obj/clothing/under/shorts_pants_shirts.dmi'
 	json_config = 'code/datums/greyscale/json_configs/slacks.json'
 
 /datum/greyscale_config/slacks_worn
 	name = "Worn Slacks"
-	icon_file = 'icons/mob/clothing/under/shorts_pants.dmi'
+	icon_file = 'icons/mob/clothing/under/shorts_pants_shirts.dmi'
 	json_config = 'code/datums/greyscale/json_configs/slacks_worn.json'
 
 /datum/greyscale_config/shorts
 	name = "Shorts"
-	icon_file = 'icons/obj/clothing/under/shorts_pants.dmi'
+	icon_file = 'icons/obj/clothing/under/shorts_pants_shirts.dmi'
 	json_config = 'code/datums/greyscale/json_configs/shorts.json'
 
 /datum/greyscale_config/shorts_worn
 	name = "Worn Shorts"
-	icon_file = 'icons/mob/clothing/under/shorts_pants.dmi'
+	icon_file = 'icons/mob/clothing/under/shorts_pants_shirts.dmi'
 	json_config = 'code/datums/greyscale/json_configs/shorts_worn.json'
 
 /datum/greyscale_config/jeans
 	name = "Jeans"
-	icon_file = 'icons/obj/clothing/under/shorts_pants.dmi'
+	icon_file = 'icons/obj/clothing/under/shorts_pants_shirts.dmi'
 	json_config = 'code/datums/greyscale/json_configs/jeans.json'
 
 /datum/greyscale_config/jeans_worn
 	name = "Worn Jeans"
-	icon_file = 'icons/mob/clothing/under/shorts_pants.dmi'
+	icon_file = 'icons/mob/clothing/under/shorts_pants_shirts.dmi'
 	json_config = 'code/datums/greyscale/json_configs/jeans_worn.json'
 
 /datum/greyscale_config/jeanshorts
 	name = "Jean Shorts"
-	icon_file = 'icons/obj/clothing/under/shorts_pants.dmi'
+	icon_file = 'icons/obj/clothing/under/shorts_pants_shirts.dmi'
 	json_config = 'code/datums/greyscale/json_configs/jeanshorts.json'
 
 /datum/greyscale_config/jeanshorts_worn
 	name = "Worn Jean Shorts"
-	icon_file = 'icons/mob/clothing/under/shorts_pants.dmi'
+	icon_file = 'icons/mob/clothing/under/shorts_pants_shirts.dmi'
 	json_config = 'code/datums/greyscale/json_configs/jeanshorts_worn.json'
 
 /datum/greyscale_config/tape
@@ -709,3 +709,113 @@
 	name = "Worn Tape Piece"
 	icon_file = 'icons/obj/tapes.dmi'
 	json_config = 'code/datums/greyscale/json_configs/tape_piece_spikes_worn.json'
+
+/datum/greyscale_config/buttondown_slacks
+	name = "Buttondown with Slacks"
+	icon_file = 'icons/obj/clothing/under/shorts_pants_shirts.dmi'
+	json_config = 'code/datums/greyscale/json_configs/buttondown_slacks.json'
+
+/datum/greyscale_config/buttondown_slacks_worn
+	name = "Worn Buttondown with Slacks"
+	icon_file = 'icons/mob/clothing/under/shorts_pants_shirts.dmi'
+	json_config = 'code/datums/greyscale/json_configs/buttondown_slacks_worn.json'
+
+/datum/greyscale_config/buttondown_shorts
+	name = "Buttondown with Shorts"
+	icon_file = 'icons/obj/clothing/under/shorts_pants_shirts.dmi'
+	json_config = 'code/datums/greyscale/json_configs/buttondown_shorts.json'
+
+/datum/greyscale_config/buttondown_shorts_worn
+	name = "Worn Buttondown with Shorts"
+	icon_file = 'icons/mob/clothing/under/shorts_pants_shirts.dmi'
+	json_config = 'code/datums/greyscale/json_configs/buttondown_shorts_worn.json'
+
+/datum/greyscale_config/sweater
+	name = "Sweater"
+	icon_file = 'icons/obj/clothing/suits.dmi'
+	json_config = 'code/datums/greyscale/json_configs/sweater.json'
+
+/datum/greyscale_config/sweater_worn
+	name = "Worn Sweater"
+	icon_file = 'icons/mob/clothing/suits/jacket.dmi'
+	json_config = 'code/datums/greyscale/json_configs/sweater_worn.json'
+
+/datum/greyscale_config/jacket_oversized
+	name = "Oversized Jacket"
+	icon_file = 'icons/obj/clothing/suits.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jacket_oversized.json'
+
+/datum/greyscale_config/jacket_oversized_worn
+	name = "Worn Oversized Jacket"
+	icon_file = 'icons/mob/clothing/suits/jacket.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jacket_oversized_worn.json'
+
+/datum/greyscale_config/infinity_scarf
+	name = "Infinity Scarf"
+	icon_file = 'icons/obj/clothing/neck.dmi'
+	json_config = 'code/datums/greyscale/json_configs/infinity_scarf.json'
+
+/datum/greyscale_config/infinity_scarf_worn
+	name = "Worn Infinity Scarf"
+	icon_file = 'icons/mob/clothing/neck.dmi'
+	json_config = 'code/datums/greyscale/json_configs/infinity_scarf_worn.json'
+
+/datum/greyscale_config/football_helmet
+	name = "Football Helmet"
+	icon_file = 'icons/obj/clothing/hats.dmi'
+	json_config = 'code/datums/greyscale/json_configs/football_helmet.json'
+
+/datum/greyscale_config/football_helmet_worn
+	name = "Worn Football Helmet"
+	icon_file = 'icons/mob/clothing/head.dmi'
+	json_config = 'code/datums/greyscale/json_configs/football_helmet_worn.json'
+
+/datum/greyscale_config/football_suit
+	name = "Football Suit"
+	icon_file = 'icons/obj/clothing/under/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/football_suit.json'
+
+/datum/greyscale_config/football_suit_worn
+	name = "Worn Football Suit"
+	icon_file = 'icons/mob/clothing/under/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/football_suit_worn.json'
+
+/datum/greyscale_config/football_armor
+	name = "Football Armor"
+	icon_file = 'icons/obj/clothing/suits.dmi'
+	json_config = 'code/datums/greyscale/json_configs/football_armor.json'
+
+/datum/greyscale_config/football_armor_worn
+	name = "Worn Football Armor"
+	icon_file = 'icons/mob/clothing/suits/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/football_armor_worn.json'
+
+/datum/greyscale_config/waistcoat
+	name = "Waistcoat"
+	icon_file = 'icons/obj/clothing/accessories.dmi'
+	json_config = 'code/datums/greyscale/json_configs/waistcoat.json'
+
+/datum/greyscale_config/waistcoat_worn
+	name = "Worn Waistcoat"
+	icon_file = 'icons/mob/clothing/accessories.dmi'
+	json_config = 'code/datums/greyscale/json_configs/waistcoat_worn.json'
+
+/datum/greyscale_config/fancy_hat
+	name = "Fancy Hat"
+	icon_file = 'icons/obj/clothing/hats.dmi'
+	json_config = 'code/datums/greyscale/json_configs/fancy_hat.json'
+
+/datum/greyscale_config/fancy_hat_worn
+	name = "Worn Fancy Hat"
+	icon_file = 'icons/mob/clothing/head.dmi'
+	json_config = 'code/datums/greyscale/json_configs/fancy_hat_worn.json'
+
+/datum/greyscale_config/fancy_coat
+	name = "Fancy Coat"
+	icon_file = 'icons/obj/clothing/suits.dmi'
+	json_config = 'code/datums/greyscale/json_configs/fancy_coat.json'
+
+/datum/greyscale_config/fancy_coat_worn
+	name = "Worn Fancy Coat"
+	icon_file = 'icons/mob/clothing/suits/jacket.dmi'
+	json_config = 'code/datums/greyscale/json_configs/fancy_coat_worn.json'

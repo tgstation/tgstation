@@ -495,8 +495,6 @@
 	blocking_rules = list(/datum/dynamic_ruleset/latejoin/provocateur)
 	// I give up, just there should be enough heads with 35 players...
 	minimum_players = 35
-	/// How much threat should be injected when the revolution wins?
-	var/revs_win_threat_injection = 20
 	var/datum/team/revolution/revolution
 	var/finished = FALSE
 
@@ -539,7 +537,7 @@
 	..()
 
 /datum/dynamic_ruleset/roundstart/revs/rule_process()
-	var/winner = revolution.process_victory(revs_win_threat_injection)
+	var/winner = revolution.process_victory()
 	if (isnull(winner))
 		return
 

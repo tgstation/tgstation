@@ -328,11 +328,6 @@
 	id = "comp_typecast"
 	build_path = /obj/item/circuit_component/typecast
 
-/datum/design/component/printer
-	name = "Printer Component"
-	id = "comp_printer"
-	build_path = /obj/item/circuit_component/printer
-
 /datum/design/component/pinpointer
 	name = "Proximity Pinpointer Component"
 	id = "comp_pinpointer"

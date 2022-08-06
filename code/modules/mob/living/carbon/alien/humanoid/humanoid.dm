@@ -148,6 +148,6 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	lucky_winner.audible_message(span_danger("You hear a deep groan, and a harsh snap like a mantrap."))
 	lucky_winner.visible_message(span_danger("[src] devours [lucky_winner]!"), \
 			span_userdanger("[lucky_winner] devours you!"))
-	melting_pot.consume_thing(lucky_winner)
 	log_combat(src, lucky_winner, "devoured")
+	melting_pot.consume_thing(lucky_winner)
 	return TRUE

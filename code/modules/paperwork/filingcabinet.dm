@@ -129,16 +129,18 @@
 			var/datum/data/record/S = find_record("name", G.fields["name"], GLOB.data_core.security)
 			if(!S)
 				continue
-			var/obj/item/paper/P = new /obj/item/paper(src)
-			P.info = "<CENTER><B>Security Record</B></CENTER><BR>"
-			P.info += "Name: [G.fields["name"]] ID: [G.fields["id"]]<BR>\nGender: [G.fields["gender"]]<BR>\nAge: [G.fields["age"]]<BR>\nFingerprint: [G.fields["fingerprint"]]<BR>\nPhysical Status: [G.fields["p_stat"]]<BR>\nMental Status: [G.fields["m_stat"]]<BR>"
-			P.info += "<BR>\n<CENTER><B>Security Data</B></CENTER><BR>\nCriminal Status: [S.fields["criminal"]]<BR>\n<BR>\nCrimes: [S.fields["crim"]]<BR>\nDetails: [S.fields["crim_d"]]<BR>\n<BR>\nImportant Notes:<BR>\n\t[S.fields["notes"]]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
+			var/obj/item/paper/sec_record_paper = new /obj/item/paper(src)
+			var/sec_record_text = "<CENTER><B>Security Record</B></CENTER><BR>"
+			sec_record_text += "Name: [G.fields["name"]] ID: [G.fields["id"]]<BR>\nGender: [G.fields["gender"]]<BR>\nAge: [G.fields["age"]]<BR>\nFingerprint: [G.fields["fingerprint"]]<BR>\nPhysical Status: [G.fields["p_stat"]]<BR>\nMental Status: [G.fields["m_stat"]]<BR>"
+			sec_record_text += "<BR>\n<CENTER><B>Security Data</B></CENTER><BR>\nCriminal Status: [S.fields["criminal"]]<BR>\n<BR>\nCrimes: [S.fields["crim"]]<BR>\nDetails: [S.fields["crim_d"]]<BR>\n<BR>\nImportant Notes:<BR>\n\t[S.fields["notes"]]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
 			var/counter = 1
 			while(S.fields["com_[counter]"])
-				P.info += "[S.fields["com_[counter]"]]<BR>"
+				sec_record_text += "[S.fields["com_[counter]"]]<BR>"
 				counter++
-			P.info += "</TT>"
-			P.name = "paper - '[G.fields["name"]]'"
+			sec_record_text += "</TT>"
+			sec_record_paper.name = "paper - '[G.fields["name"]]'"
+			sec_record_paper.add_raw_text(sec_record_text)
+			sec_record_paper.update_appearance()
 			virgin = FALSE //tabbing here is correct- it's possible for people to try and use it
 						//before the records have been generated, so we do this inside the loop.
 
@@ -163,16 +165,18 @@
 			var/datum/data/record/M = find_record("name", G.fields["name"], GLOB.data_core.medical)
 			if(!M)
 				continue
-			var/obj/item/paper/P = new /obj/item/paper(src)
-			P.info = "<CENTER><B>Medical Record</B></CENTER><BR>"
-			P.info += "Name: [G.fields["name"]] ID: [G.fields["id"]]<BR>\nGender: [G.fields["gender"]]<BR>\nAge: [G.fields["age"]]<BR>\nFingerprint: [G.fields["fingerprint"]]<BR>\nPhysical Status: [G.fields["p_stat"]]<BR>\nMental Status: [G.fields["m_stat"]]<BR>"
-			P.info += "<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: [M.fields["blood_type"]]<BR>\nDNA: [M.fields["b_dna"]]<BR>\n<BR>\nMinor Disabilities: [M.fields["mi_dis"]]<BR>\nDetails: [M.fields["mi_dis_d"]]<BR>\n<BR>\nMajor Disabilities: [M.fields["ma_dis"]]<BR>\nDetails: [M.fields["ma_dis_d"]]<BR>\n<BR>\nAllergies: [M.fields["alg"]]<BR>\nDetails: [M.fields["alg_d"]]<BR>\n<BR>\nCurrent Diseases: [M.fields["cdi"]] (per disease info placed in log/comment section)<BR>\nDetails: [M.fields["cdi_d"]]<BR>\n<BR>\nImportant Notes:<BR>\n\t[M.fields["notes"]]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
+			var/obj/item/paper/med_record_paper = new /obj/item/paper(src)
+			var/med_record_text = "<CENTER><B>Medical Record</B></CENTER><BR>"
+			med_record_text += "Name: [G.fields["name"]] ID: [G.fields["id"]]<BR>\nGender: [G.fields["gender"]]<BR>\nAge: [G.fields["age"]]<BR>\nFingerprint: [G.fields["fingerprint"]]<BR>\nPhysical Status: [G.fields["p_stat"]]<BR>\nMental Status: [G.fields["m_stat"]]<BR>"
+			med_record_text += "<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: [M.fields["blood_type"]]<BR>\nDNA: [M.fields["b_dna"]]<BR>\n<BR>\nMinor Disabilities: [M.fields["mi_dis"]]<BR>\nDetails: [M.fields["mi_dis_d"]]<BR>\n<BR>\nMajor Disabilities: [M.fields["ma_dis"]]<BR>\nDetails: [M.fields["ma_dis_d"]]<BR>\n<BR>\nAllergies: [M.fields["alg"]]<BR>\nDetails: [M.fields["alg_d"]]<BR>\n<BR>\nCurrent Diseases: [M.fields["cdi"]] (per disease info placed in log/comment section)<BR>\nDetails: [M.fields["cdi_d"]]<BR>\n<BR>\nImportant Notes:<BR>\n\t[M.fields["notes"]]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
 			var/counter = 1
 			while(M.fields["com_[counter]"])
-				P.info += "[M.fields["com_[counter]"]]<BR>"
+				med_record_text += "[M.fields["com_[counter]"]]<BR>"
 				counter++
-			P.info += "</TT>"
-			P.name = "paper - '[G.fields["name"]]'"
+			med_record_text += "</TT>"
+			med_record_paper.add_raw_text(med_record_text)
+			med_record_paper.name = "paper - '[G.fields["name"]]'"
+			med_record_paper.update_appearance()
 			virgin = FALSE //tabbing here is correct- it's possible for people to try and use it
 						//before the records have been generated, so we do this inside the loop.
 

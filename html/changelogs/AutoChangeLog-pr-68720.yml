@@ -1,4 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - bugfix: "Fixed some cases where the highlighted text in the lua editor was out of place with the actual text."

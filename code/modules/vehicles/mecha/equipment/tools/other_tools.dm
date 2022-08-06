@@ -58,7 +58,7 @@
 		return
 	var/list/obj/effect/portal/created = create_portal_pair(ourturf, target_turf, 300, 1, /obj/effect/portal/anom)
 	message_admins("[ADMIN_LOOKUPFLW(source)] used a Wormhole Generator in [ADMIN_VERBOSEJMP(ourturf)]")
-	log_game("[key_name(source)] used a Wormhole Generator in [AREACOORD(ourturf)]")
+	source.log_message("used a Wormhole Generator in [AREACOORD(ourturf)].", LOG_GAME)
 	QDEL_LIST_IN(created, rand(150,300))
 	return ..()
 
@@ -103,7 +103,7 @@
 					var/turf/orig = get_turf(movable_target)
 					movable_target.throw_at(target, 14, 1.5)
 					movable_target = null
-					log_game("[key_name(source)] used a Gravitational Catapult to throw [movable_target] (From [AREACOORD(orig)]) at [target] ([AREACOORD(targ)]).")
+					source.log_message("used a Gravitational Catapult to throw [movable_target] (From [AREACOORD(orig)]) at [target] ([AREACOORD(targ)]).", LOG_GAME)
 					return ..()
 				movable_target = null
 				to_chat(source, "[icon2html(src, source)][span_notice("Lock on [movable_target] disengaged.")]")
@@ -123,7 +123,7 @@
 						continue
 				do_scatter(scatter, target)
 			var/turf/targetturf = get_turf(target)
-			log_game("[key_name(source)] used a Gravitational Catapult repulse wave on [AREACOORD(targetturf)]")
+			source.log_message("used a Gravitational Catapult repulse wave on [AREACOORD(targetturf)].", LOG_GAME)
 			return ..()
 
 /obj/item/mecha_parts/mecha_equipment/gravcatapult/proc/do_scatter(atom/movable/scatter, atom/movable/target)
