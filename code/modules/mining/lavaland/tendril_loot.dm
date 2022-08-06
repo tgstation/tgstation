@@ -786,6 +786,8 @@
 	return TRUE
 
 /datum/action/cooldown/scan/proc/send_cooldown_end_message()
+	if(!owner)
+	   return
 	owner.balloon_alert(owner, "scan recharged")
 
 /datum/status_effect/agent_pinpointer/scan
