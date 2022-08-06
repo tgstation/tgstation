@@ -12,16 +12,16 @@
 	adjust_charge(-ETHEREAL_CHARGE_FACTOR * delta_time)
 	handle_charge(owner, delta_time, times_fired)
 
-/obj/item/organ/internal/stomach/ethereal/Insert(mob/living/carbon/carbon, special = 0)
+/obj/item/organ/internal/stomach/ethereal/Insert(mob/living/carbon/carbon, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	RegisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/charge)
 	RegisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_electrocute)
-	ADD_TRAIT(owner, TRAIT_NOHUNGER, src)
+	ADD_TRAIT(owner, TRAIT_NOHUNGER, REF(src))
 
-/obj/item/organ/internal/stomach/ethereal/Remove(mob/living/carbon/carbon, special = 0)
+/obj/item/organ/internal/stomach/ethereal/Remove(mob/living/carbon/carbon, special = FALSE)
 	UnregisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
 	UnregisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT)
-	REMOVE_TRAIT(owner, TRAIT_NOHUNGER, src)
+	REMOVE_TRAIT(owner, TRAIT_NOHUNGER, REF(src))
 
 	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "charge")
 	carbon.clear_alert(ALERT_ETHEREAL_CHARGE)

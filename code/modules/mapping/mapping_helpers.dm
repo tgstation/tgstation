@@ -97,7 +97,6 @@
 	..()
 	return late ? INITIALIZE_HINT_LATELOAD : INITIALIZE_HINT_QDEL
 
-
 //airlock helpers
 /obj/effect/mapping_helpers/airlock
 	layer = DOOR_HELPER_LAYER
@@ -189,13 +188,13 @@
 	else
 		airlock.locked = TRUE
 
-
 /obj/effect/mapping_helpers/airlock/unres
 	name = "airlock unrestricted side helper"
 	icon_state = "airlock_unres_helper"
 
 /obj/effect/mapping_helpers/airlock/unres/payload(obj/machinery/door/airlock/airlock)
 	airlock.unres_sides ^= dir
+	airlock.unres_sensor = TRUE
 
 /obj/effect/mapping_helpers/airlock/abandoned
 	name = "airlock abandoned helper"
@@ -602,7 +601,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 			var/obj/item/paper/paper = new /obj/item/paper(src)
 			if(note_name)
 				paper.name = note_name
-			paper.info = "[note_info]"
+			paper.add_raw_text("[note_info]")
+			paper.update_appearance()
 			found_airlock.note = paper
 			paper.forceMove(found_airlock)
 			found_airlock.update_appearance()
@@ -700,3 +700,35 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	json_cache[json_url] = json_data
 	query_in_progress = FALSE
 	return json_data
+
+/obj/effect/mapping_helpers/broken_floor
+	name = "broken floor"
+	icon = 'icons/turf/damaged.dmi'
+	icon_state = "damaged1"
+	late = TRUE
+	layer = ABOVE_NORMAL_TURF_LAYER
+
+/obj/effect/mapping_helpers/broken_floor/Initialize(mapload)
+	.=..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/mapping_helpers/broken_floor/LateInitialize()
+	var/turf/open/floor/floor = get_turf(src)
+	floor.break_tile()
+	qdel(src)
+
+/obj/effect/mapping_helpers/burnt_floor
+	name = "burnt floor"
+	icon = 'icons/turf/damaged.dmi'
+	icon_state = "floorscorched1"
+	late = TRUE
+	layer = ABOVE_NORMAL_TURF_LAYER
+
+/obj/effect/mapping_helpers/burnt_floor/Initialize(mapload)
+	.=..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/mapping_helpers/burnt_floor/LateInitialize()
+	var/turf/open/floor/floor = get_turf(src)
+	floor.burn_tile()
+	qdel(src)

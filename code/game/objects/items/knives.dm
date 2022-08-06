@@ -33,7 +33,12 @@
 
 ///Adds the butchering component, used to override stats for special cases
 /obj/item/knife/proc/set_butchering()
-	AddComponent(/datum/component/butchering, 80 - force, 100, force - 10) //bonus chance increases depending on force
+	AddComponent(/datum/component/butchering, \
+	speed = 8 SECONDS - force, \
+	effectiveness = 100, \
+	bonus_modifier = force - 10, \
+	)
+	//bonus chance increases depending on force
 
 /obj/item/knife/suicide_act(mob/user)
 	user.visible_message(pick(span_suicide("[user] is slitting [user.p_their()] wrists with the [src.name]! It looks like [user.p_theyre()] trying to commit suicide."), \
@@ -87,8 +92,8 @@
 	force = 15
 	throwforce = 10
 	custom_materials = list(/datum/material/iron=18000)
-	attack_verb_continuous = list("cleaves", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
-	attack_verb_simple = list("cleave", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
+	attack_verb_continuous = list("slices", "dices", "chops", "cubes", "minces", "juliennes", "chiffonades", "batonnets")
+	attack_verb_simple = list("slice", "dice", "chop", "cube", "mince", "julienne", "chiffonade", "batonnet")
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_price = PAYCHECK_CREW * 5
 	wound_bonus = 15
@@ -101,7 +106,11 @@
 	wound_bonus = 10
 
 /obj/item/knife/hunting/set_butchering()
-	AddComponent(/datum/component/butchering, 80 - force, 100, force + 10)
+	AddComponent(/datum/component/butchering, \
+	speed = 8 SECONDS - force, \
+	effectiveness = 100, \
+	bonus_modifier = force + 10, \
+	)
 
 /obj/item/knife/combat
 	name = "combat knife"

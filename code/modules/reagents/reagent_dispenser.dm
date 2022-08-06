@@ -19,6 +19,8 @@
 	var/openable = FALSE
 	///Is this dispenser slowly leaking its reagent?
 	var/leaking = FALSE
+	///How much reagent to leak
+	var/amount_to_leak = 10
 
 /obj/structure/reagent_dispensers/Initialize(mapload)
 	. = ..()
@@ -30,8 +32,11 @@
 	. = ..()
 	if(can_be_tanked)
 		. += span_notice("Use a sheet of iron to convert this into a plumbing-compatible tank.")
-	if(leaking)
-		. += span_warning("Its tap is wrenched open!")
+	if(openable)
+		if(!leaking)
+			. += span_notice("Its tap looks like it could be <b>wrenched</b> open.")
+		else
+			. += span_warning("Its tap is <b>wrenched</b> open!")
 
 /obj/structure/reagent_dispensers/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
@@ -75,21 +80,26 @@
 	else
 		qdel(src)
 
+/obj/structure/reagent_dispensers/proc/tank_leak()
+	if(leaking && reagents && reagents.total_volume >= amount_to_leak)
+		reagents.expose(get_turf(src), TOUCH, amount_to_leak / max(amount_to_leak, reagents.total_volume))
+		reagents.remove_reagent(reagent_id, amount_to_leak)
+		return TRUE
+	return FALSE
+
 /obj/structure/reagent_dispensers/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(!openable)
 		return FALSE
 	leaking = !leaking
 	balloon_alert(user, "[leaking ? "opened" : "closed"] [src]'s tap")
-	log_game("[key_name(user)] [leaking ? "opened" : "closed"] [src]")
-	if(leaking && reagents)
-		reagents.expose(get_turf(src), TOUCH, 10 / max(10, reagents.total_volume))
+	user.log_message("[leaking ? "opened" : "closed"] [src].", LOG_GAME)
+	tank_leak()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/structure/reagent_dispensers/Moved(atom/OldLoc, Dir)
+/obj/structure/reagent_dispensers/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
-	if(leaking && reagents)
-		reagents.expose(get_turf(src), TOUCH, 10 / max(10, reagents.total_volume))
+	tank_leak()
 
 /obj/structure/reagent_dispensers/watertank
 	name = "water tank"
@@ -143,8 +153,11 @@
 
 /obj/structure/reagent_dispensers/fueltank/examine(mob/user)
 	. = ..()
-	if(get_dist(user, src) <= 2 && rig)
-		. += span_notice("There is some kind of device rigged to the tank.")
+	if(get_dist(user, src) <= 2)
+		if(rig)
+			. += span_warning("There is some kind of device <b>rigged</b> to the tank!")
+		else
+			. += span_notice("It looks like you could <b>rig</b> a device to the tank.")
 
 /obj/structure/reagent_dispensers/fueltank/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -156,7 +169,7 @@
 	if(!do_after(user, 2 SECONDS, target = src))
 		return
 	user.balloon_alert_to_viewers("detached rig")
-	log_message("[key_name(user)] detached [rig] from [src]", LOG_GAME)
+	user.log_message("detached [rig] from [src].", LOG_GAME)
 	if(!user.put_in_hands(rig))
 		rig.forceMove(get_turf(user))
 	rig = null

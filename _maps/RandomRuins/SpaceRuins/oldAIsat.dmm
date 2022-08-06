@@ -75,14 +75,8 @@
 /turf/open/floor/iron/airless,
 /area/ruin/tcommsat_oldaisat)
 "ar" = (
-/turf/open/floor/iron/airless{
-	icon_state = "damaged2"
-	},
-/area/ruin/tcommsat_oldaisat)
-"as" = (
-/turf/open/floor/iron/airless{
-	icon_state = "damaged3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/airless,
 /area/ruin/tcommsat_oldaisat)
 "at" = (
 /obj/structure/lattice,
@@ -2638,7 +2632,7 @@ ag
 cn
 az
 ar
-as
+ar
 ar
 az
 cD
@@ -2753,7 +2747,7 @@ cg
 bw
 ac
 ag
-as
+ar
 cs
 ar
 ag
@@ -3208,7 +3202,7 @@ aa
 ab
 ah
 ac
-as
+ar
 ar
 az
 aY
@@ -3268,7 +3262,7 @@ aa
 ac
 ab
 ac
-as
+ar
 ar
 aZ
 bj
@@ -3327,7 +3321,7 @@ aa
 ab
 ab
 ac
-as
+ar
 ar
 ba
 bk

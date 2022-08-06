@@ -71,7 +71,7 @@
  *
  * If we, or the item we're located in, is subject to the charge spell, gain some charge back
  */
-/obj/item/stock_parts/cell/proc/on_magic_charge(datum/source, obj/effect/proc_holder/spell/targeted/charge/spell, mob/living/caster)
+/obj/item/stock_parts/cell/proc/on_magic_charge(datum/source, datum/action/cooldown/spell/charge/spell, mob/living/caster)
 	SIGNAL_HANDLER
 
 	// This shouldn't be running if we're not being held by a mob,
@@ -178,7 +178,8 @@
 		return
 
 	message_admins("[ADMIN_LOOKUPFLW(usr)] has triggered a rigged/corrupted power cell explosion at [AREACOORD(T)].")
-	log_game("[key_name(usr)] has triggered a rigged/corrupted power cell explosion at [AREACOORD(T)].")
+	usr.log_message("has triggered a rigged/corrupted power cell explosion at [AREACOORD(T)].", LOG_GAME)
+	usr.log_message("has triggered a rigged/corrupted power cell explosion at [AREACOORD(T)].", LOG_VICTIM)
 
 	//explosion(T, 0, 1, 2, 2)
 	explosion(src, devastation_range = range_devastation, heavy_impact_range = range_heavy, light_impact_range = range_light, flash_range = range_flash)
@@ -255,7 +256,7 @@
 /obj/item/stock_parts/cell/get_part_rating()
 	return maxcharge * 10 + charge
 
-/obj/item/stock_parts/cell/attackby_storage_insert(datum/component/storage, atom/storage_holder, mob/user)
+/obj/item/stock_parts/cell/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
 	var/obj/item/mod/control/mod = storage_holder
 	return !(istype(mod) && mod.open)
 

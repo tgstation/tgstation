@@ -306,17 +306,12 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "whistle"
 
-	/// Cooldown between whistle uses.
-	COOLDOWN_DECLARE(whistle_cooldown)
 	/// Person using the warp whistle
 	var/mob/living/whistler
 
 /obj/item/warp_whistle/attack_self(mob/user)
-	if(!COOLDOWN_FINISHED(src, whistle_cooldown))
-		to_chat(user, span_warning("[src] is still on cooldown!"))
-		return
 	if(whistler)
-		to_chat(user, span_warning("[src] is already warping."))
+		to_chat(user, span_warning("[src] is on cooldown."))
 		return
 
 	whistler = user
@@ -324,7 +319,6 @@
 	var/turf/spawn_location = locate(user.x + pick(-7, 7), user.y, user.z)
 	playsound(current_turf,'sound/magic/warpwhistle.ogg', 200, TRUE)
 	new /obj/effect/temp_visual/teleporting_tornado(spawn_location, src)
-	COOLDOWN_START(src, whistle_cooldown, 4 SECONDS)
 
 ///Teleporting tornado, spawned by warp whistle, teleports the user if they manage to pick them up.
 /obj/effect/temp_visual/teleporting_tornado
@@ -335,7 +329,7 @@
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE
 	randomdir = FALSE
-	duration = 10 SECONDS
+	duration = 8 SECONDS
 	movement_type = PHASING
 
 	/// Reference to the whistle
@@ -376,5 +370,6 @@
 /// Destroy the tornado and teleport everyone on it away.
 /obj/effect/temp_visual/teleporting_tornado/Destroy()
 	if(whistle)
+		whistle.whistler = null
 		whistle = null
 	return ..()

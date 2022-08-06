@@ -48,7 +48,7 @@
 		RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT_RND, .proc/add_event) //Mood events that are only for RnD members
 
 /datum/component/mood/proc/print_mood(mob/user)
-	var/msg = "[span_info("*---------*\n<EM>My current mental status:</EM>")]\n"
+	var/msg = "[span_info("<EM>My current mental status:</EM>")]\n"
 	msg += span_notice("My current sanity: ") //Long term
 	switch(sanity)
 		if(SANITY_GREAT to INFINITY)
@@ -102,7 +102,7 @@
 					msg += span_boldnicegreen(event.description + "\n")
 	else
 		msg += "[span_grey("I don't have much of a reaction to anything right now.")]\n"
-	to_chat(user, msg)
+	to_chat(user, examine_block(msg))
 
 ///Called after moodevent/s have been added/removed.
 /datum/component/mood/proc/update_mood()
@@ -295,6 +295,21 @@
 
 	if(the_event.timeout)
 		addtimer(CALLBACK(src, .proc/clear_event, null, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
+
+/**
+ * Returns true if you already have a mood from a provided category.
+ * You may think to yourself, why am I trying to get a boolean from a component? Well, this system probably should not be a component.
+ *
+ * Arguments
+ * * category - Mood category to validate against.
+ */
+/datum/component/mood/proc/has_mood_of_category(category)
+	for(var/i in mood_events)
+		var/datum/mood_event/moodlet = mood_events[i]
+		if (moodlet.category == category)
+			return TRUE
+
+	return FALSE
 
 /datum/component/mood/proc/clear_event(datum/source, category)
 	SIGNAL_HANDLER

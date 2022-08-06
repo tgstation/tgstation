@@ -36,18 +36,18 @@ type Knowledge = {
   disabled: boolean;
   hereticPath: string;
   color: string;
-}
+};
 
 type KnowledgeInfo = {
   learnableKnowledge: Knowledge[];
   learnedKnowledge: Knowledge[];
-}
+};
 
 type Objective = {
   count: number;
   name: string;
   explanation: string;
-}
+};
 
 type Info = {
   charges: number;
@@ -58,10 +58,7 @@ type Info = {
 
 const IntroductionSection = () => {
   return (
-    <Stack
-      justify="space-evenly"
-      height="100%"
-      width="100%">
+    <Stack justify="space-evenly" height="100%" width="100%">
       <Stack.Item grow>
         <Section title="You are the Heretic!" fill fontSize="14px">
           <Stack vertical>
@@ -92,8 +89,8 @@ const FlavorSection = () => {
             <span style={hereticBlue}>shimmer</span>
             &nbsp;around you, as a realization of something&nbsp;
             <span style={hereticRed}>strange</span>
-            &nbsp;in the air unfolds. You look inwards and
-            discover something that will change your life.
+            &nbsp;in the air unfolds. You look inwards and discover something
+            that will change your life.
           </i>
         </Stack.Item>
         <Stack.Item>
@@ -116,18 +113,17 @@ const GuideSection = () => {
           <span style={hereticPurple}>influences</span>
           &nbsp;around the station invisible to the normal eye and&nbsp;
           <b>right click</b> on them to harvest them for&nbsp;
-          <span style={hereticBlue}>knowledge points</span>.
-          Tapping them makes them visible to all after a short time.
+          <span style={hereticBlue}>knowledge points</span>. Tapping them makes
+          them visible to all after a short time.
         </Stack.Item>
         <Stack.Item>
           - Use your&nbsp;
           <span style={hereticRed}>Living Heart action</span>
           &nbsp;to track down&nbsp;
-          <span style={hereticRed}>sacrifice targets</span>,
-          but be careful: Pulsing it will produce a
-          heartbeat sound that nearby people may hear. This action
-          is tied to your <b>heart</b> - if you lose it,
-          you must complete a ritual to regain it.
+          <span style={hereticRed}>sacrifice targets</span>, but be careful:
+          Pulsing it will produce a heartbeat sound that nearby people may hear.
+          This action is tied to your <b>heart</b> - if you lose it, you must
+          complete a ritual to regain it.
         </Stack.Item>
         <Stack.Item>
           - Draw a&nbsp;
@@ -138,18 +134,18 @@ const GuideSection = () => {
           rituals and sacrifices.
         </Stack.Item>
         <Stack.Item>
-          - Follow your <span style={hereticRed}>Living Heart</span> to
-          find your targets. Bring them back to a&nbsp;
+          - Follow your <span style={hereticRed}>Living Heart</span> to find
+          your targets. Bring them back to a&nbsp;
           <span style={hereticGreen}>transmutation rune</span> to&nbsp;
           <span style={hereticRed}>sacrifice</span> them for&nbsp;
-          <span style={hereticBlue}>knowledge points</span>.
-          The Mansus <b>ONLY</b> accepts targets pointed to by the&nbsp;
+          <span style={hereticBlue}>knowledge points</span>. The Mansus{' '}
+          <b>ONLY</b> accepts targets pointed to by the&nbsp;
           <span style={hereticRed}>Living Heart</span>.
         </Stack.Item>
         <Stack.Item>
-          - Accomplish all of your objectives to be able to learn
-          the <span style={hereticYellow}>final ritual</span>. Complete
-          the ritual to become all powerful!
+          - Accomplish all of your objectives to be able to learn the{' '}
+          <span style={hereticYellow}>final ritual</span>. Complete the ritual
+          to become all powerful!
         </Stack.Item>
       </Stack>
     </Stack.Item>
@@ -158,29 +154,29 @@ const GuideSection = () => {
 
 const InformationSection = (props, context) => {
   const { data } = useBackend<Info>(context);
-  const {
-    charges,
-    total_sacrifices,
-    ascended,
-  } = data;
+  const { charges, total_sacrifices, ascended } = data;
   return (
     <Stack.Item>
       <Stack vertical fill>
         {!!ascended && (
           <Stack.Item>
             <Stack align="center">
-              <Stack.Item>
-                You have
-              </Stack.Item>
+              <Stack.Item>You have</Stack.Item>
               <Stack.Item fontSize="24px">
-                <Box inline color="yellow">ASCENDED</Box>!
+                <Box inline color="yellow">
+                  ASCENDED
+                </Box>
+                !
               </Stack.Item>
             </Stack>
           </Stack.Item>
         )}
         <Stack.Item>
           You have <b>{charges || 0}</b>&nbsp;
-          <span style={hereticBlue}>knowledge point{charges !== 1 ? "s":""}</span>.
+          <span style={hereticBlue}>
+            knowledge point{charges !== 1 ? 's' : ''}
+          </span>
+          .
         </Stack.Item>
         <Stack.Item>
           You have made a total of&nbsp;
@@ -194,9 +190,7 @@ const InformationSection = (props, context) => {
 
 const ObjectivePrintout = (props, context) => {
   const { data } = useBackend<Info>(context);
-  const {
-    objectives,
-  } = data;
+  const { objectives } = data;
   return (
     <Stack.Item>
       <Stack vertical fill>
@@ -204,12 +198,12 @@ const ObjectivePrintout = (props, context) => {
           In order to ascend, you have these tasks to fulfill:
         </Stack.Item>
         <Stack.Item>
-          {!objectives && "None!"
-          || objectives.map(objective => (
-            <Stack.Item key={objective.count}>
-              {objective.count}: {objective.explanation}
-            </Stack.Item>
-          )) }
+          {(!objectives && 'None!') ||
+            objectives.map((objective) => (
+              <Stack.Item key={objective.count}>
+                {objective.count}: {objective.explanation}
+              </Stack.Item>
+            ))}
         </Stack.Item>
       </Stack>
     </Stack.Item>
@@ -218,27 +212,23 @@ const ObjectivePrintout = (props, context) => {
 
 const ResearchedKnowledge = (props, context) => {
   const { data } = useBackend<KnowledgeInfo>(context);
-  const {
-    learnedKnowledge,
-  } = data;
+  const { learnedKnowledge } = data;
 
   return (
     <Stack.Item grow>
-      <Section
-        title="Researched Knowledge"
-        fill
-        scrollable>
+      <Section title="Researched Knowledge" fill scrollable>
         <Stack vertical>
-          {!learnedKnowledge.length && "None!"
-            || learnedKnowledge.map(learned => (
+          {(!learnedKnowledge.length && 'None!') ||
+            learnedKnowledge.map((learned) => (
               <Stack.Item key={learned.name}>
                 <Button
                   width="100%"
                   color={learned.color}
                   content={`${learned.hereticPath} - ${learned.name}`}
-                  tooltip={learned.desc} />
+                  tooltip={learned.desc}
+                />
               </Stack.Item>
-            )) }
+            ))}
         </Stack>
       </Section>
     </Stack.Item>
@@ -247,36 +237,34 @@ const ResearchedKnowledge = (props, context) => {
 
 const KnowledgeShop = (props, context) => {
   const { data, act } = useBackend<KnowledgeInfo>(context);
-  const {
-    learnableKnowledge,
-  } = data;
+  const { learnableKnowledge } = data;
 
   return (
     <Stack.Item grow>
-      <Section
-        title="Potential Knowledge"
-        fill
-        scrollable>
-        {!learnableKnowledge.length && "None!"
-          || learnableKnowledge.map(toLearn => (
+      <Section title="Potential Knowledge" fill scrollable>
+        {(!learnableKnowledge.length && 'None!') ||
+          learnableKnowledge.map((toLearn) => (
             <Stack.Item key={toLearn.name} mb={1}>
               <Button
                 width="100%"
                 color={toLearn.color}
                 disabled={toLearn.disabled}
-                content={`${toLearn.hereticPath} - ${toLearn.cost > 0
-                  ? `${toLearn.name}: ${toLearn.cost}
-                  point${toLearn.cost !== 1 ? "s":""}`
-                  : toLearn.name}`}
+                content={`${toLearn.hereticPath} - ${
+                  toLearn.cost > 0
+                    ? `${toLearn.name}: ${toLearn.cost}
+                  point${toLearn.cost !== 1 ? 's' : ''}`
+                    : toLearn.name
+                }`}
                 tooltip={toLearn.desc}
-                onClick={() => act("research", { path: toLearn.path })} />
+                onClick={() => act('research', { path: toLearn.path })}
+              />
               {!!toLearn.gainFlavor && (
                 <BlockQuote>
                   <i>{toLearn.gainFlavor}</i>
                 </BlockQuote>
               )}
             </Stack.Item>
-          )) }
+          ))}
       </Section>
     </Stack.Item>
   );
@@ -284,20 +272,18 @@ const KnowledgeShop = (props, context) => {
 
 const ResearchInfo = (props, context) => {
   const { data } = useBackend<Info>(context);
-  const {
-    charges,
-  } = data;
+  const { charges } = data;
 
   return (
-    <Stack
-      justify="space-evenly"
-      height="100%"
-      width="100%">
+    <Stack justify="space-evenly" height="100%" width="100%">
       <Stack.Item grow>
         <Stack vertical height="100%">
           <Stack.Item fontSize="20px" textAlign="center">
             You have <b>{charges || 0}</b>&nbsp;
-            <span style={hereticBlue}>knowledge point{charges !== 1 ? "s":""}</span> to spend.
+            <span style={hereticBlue}>
+              knowledge point{charges !== 1 ? 's' : ''}
+            </span>{' '}
+            to spend.
           </Stack.Item>
           <Stack.Item grow>
             <Stack height="100%">
@@ -311,30 +297,22 @@ const ResearchInfo = (props, context) => {
   );
 };
 
-
 export const AntagInfoHeretic = (props, context) => {
   const { data } = useBackend<Info>(context);
-  const {
-    ascended,
-  } = data;
+  const { ascended } = data;
 
-  const [
-    currentTab,
-    setTab,
-  ] = useLocalState(context, 'currentTab', 0);
+  const [currentTab, setTab] = useLocalState(context, 'currentTab', 0);
 
   return (
-    <Window
-      width={675}
-      height={600}>
+    <Window width={675} height={600}>
       <Window.Content
         style={{
           // 'font-family': 'Times New Roman',
           // 'fontSize': '20px',
-          "background-image": "none",
-          "background": ascended
-            ? "radial-gradient(circle, rgba(24,9,9,1) 54%, rgba(31,10,10,1) 60%, rgba(46,11,11,1) 80%, rgba(47,14,14,1) 100%);"
-            : "radial-gradient(circle, rgba(9,9,24,1) 54%, rgba(10,10,31,1) 60%, rgba(21,11,46,1) 80%, rgba(24,14,47,1) 100%);",
+          'background-image': 'none',
+          'background': ascended
+            ? 'radial-gradient(circle, rgba(24,9,9,1) 54%, rgba(31,10,10,1) 60%, rgba(46,11,11,1) 80%, rgba(47,14,14,1) 100%);'
+            : 'radial-gradient(circle, rgba(9,9,24,1) 54%, rgba(10,10,31,1) 60%, rgba(21,11,46,1) 80%, rgba(24,14,47,1) 100%);',
         }}>
         <Stack vertical fill>
           <Stack.Item>
@@ -346,7 +324,7 @@ export const AntagInfoHeretic = (props, context) => {
                 Information
               </Tabs.Tab>
               <Tabs.Tab
-                icon={currentTab === 1 ? "book-open":"book"}
+                icon={currentTab === 1 ? 'book-open' : 'book'}
                 selected={currentTab === 1}
                 onClick={() => setTab(1)}>
                 Research
@@ -354,11 +332,7 @@ export const AntagInfoHeretic = (props, context) => {
             </Tabs>
           </Stack.Item>
           <Stack.Item grow>
-            {currentTab === 0 && (
-              <IntroductionSection />
-            ) || (
-              <ResearchInfo />
-            )}
+            {(currentTab === 0 && <IntroductionSection />) || <ResearchInfo />}
           </Stack.Item>
         </Stack>
       </Window.Content>

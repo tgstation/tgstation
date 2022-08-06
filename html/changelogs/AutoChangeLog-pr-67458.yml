@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - qol: "Research servers are now a bit more clear about why they aren't generating research points. Check the console for more info. If in doubt, turn them off and on again (i'm not kidding)."
-  - code_imp: "Removed a buncha old, deprecated / unused R&D server code related to them making heat."

@@ -46,7 +46,7 @@
 /obj/item/organ/internal/tongue/proc/modify_speech(datum/source, list/speech_args)
 	return speech_args[SPEECH_MESSAGE]
 
-/obj/item/organ/internal/tongue/Insert(mob/living/carbon/tongue_owner, special = 0)
+/obj/item/organ/internal/tongue/Insert(mob/living/carbon/tongue_owner, special = FALSE, drop_if_replaced = TRUE)
 	..()
 	if(say_mod && tongue_owner.dna && tongue_owner.dna.species)
 		tongue_owner.dna.species.say_mod = say_mod
@@ -63,18 +63,21 @@
 	if(!sense_of_taste)
 		ADD_TRAIT(tongue_owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
 
-/obj/item/organ/internal/tongue/Remove(mob/living/carbon/tongue_owner, special = 0)
+/obj/item/organ/internal/tongue/Remove(mob/living/carbon/tongue_owner, special = FALSE)
 	. = ..()
 	if(say_mod && tongue_owner.dna && tongue_owner.dna.species)
 		tongue_owner.dna.species.say_mod = initial(tongue_owner.dna.species.say_mod)
 	UnregisterSignal(tongue_owner, COMSIG_MOB_SAY)
-	RegisterSignal(tongue_owner, COMSIG_MOB_SAY, /mob/living/carbon/.proc/handle_tongueless_speech)
+	tongue_owner.RegisterSignal(tongue_owner, COMSIG_MOB_SAY, /mob/living/carbon/.proc/handle_tongueless_speech)
 	REMOVE_TRAIT(tongue_owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
 	// Carbons by default start with NO_TONGUE_TRAIT caused TRAIT_AGEUSIA
 	ADD_TRAIT(tongue_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 
 /obj/item/organ/internal/tongue/could_speak_language(language)
 	return is_type_in_typecache(language, languages_possible)
+
+/obj/item/organ/internal/tongue/get_availability(datum/species/owner_species)
+	return !(NO_TONGUE in owner_species.species_traits)
 
 /obj/item/organ/internal/tongue/lizard
 	name = "forked tongue"
@@ -438,34 +441,41 @@
 	say_mod = "signs"
 	icon_state = "tonguetied"
 	modifies_speech = TRUE
+	// The tonal indicator shown when we finish sending a message. If it's empty, none appears.
+	var/tonal_indicator = null
+	// The timerid for our tonal indicator
+	var/tonal_timerid
 
-/obj/item/organ/internal/tongue/tied/Insert(mob/living/carbon/signer)
+/obj/item/organ/internal/tongue/tied/Insert(mob/living/carbon/signer, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	signer.verb_ask = "signs"
 	signer.verb_exclaim = "signs"
 	signer.verb_whisper = "subtly signs"
 	signer.verb_sing = "rythmically signs"
 	signer.verb_yell = "emphatically signs"
+	signer.bubble_icon = "signlang"
 	ADD_TRAIT(signer, TRAIT_SIGN_LANG, ORGAN_TRAIT)
 	REMOVE_TRAIT(signer, TRAIT_MUTE, ORGAN_TRAIT)
 
-/obj/item/organ/internal/tongue/tied/Remove(mob/living/carbon/speaker, special = 0)
+/obj/item/organ/internal/tongue/tied/Remove(mob/living/carbon/speaker, special = FALSE)
 	..()
-	speaker.verb_ask = initial(verb_ask)
-	speaker.verb_exclaim = initial(verb_exclaim)
-	speaker.verb_whisper = initial(verb_whisper)
-	speaker.verb_sing = initial(verb_sing)
-	speaker.verb_yell = initial(verb_yell)
+	speaker.verb_ask = initial(speaker.verb_ask)
+	speaker.verb_exclaim = initial(speaker.verb_exclaim)
+	speaker.verb_whisper = initial(speaker.verb_whisper)
+	speaker.verb_sing = initial(speaker.verb_sing)
+	speaker.verb_yell = initial(speaker.verb_yell)
+	speaker.bubble_icon = initial(speaker.bubble_icon)
 	REMOVE_TRAIT(speaker, TRAIT_SIGN_LANG, ORGAN_TRAIT)
 
-//Thank you Jwapplephobia for helping me with the literal hellcode below
-
 /obj/item/organ/internal/tongue/tied/modify_speech(datum/source, list/speech_args)
+	// The message we send instead of our normal one
 	var/new_message
+	// The original message
 	var/message = speech_args[SPEECH_MESSAGE]
+	// Is there a !
 	var/exclamation_found = findtext(message, "!")
+	// Is there a ?
 	var/question_found = findtext(message, "?")
-	var/mob/living/carbon/signer = owner
 	new_message = message
 	if(exclamation_found)
 		new_message = replacetext(new_message, "!", ".")
@@ -473,9 +483,24 @@
 		new_message = replacetext(new_message, "?", ".")
 	speech_args[SPEECH_MESSAGE] = new_message
 
-	if(exclamation_found && question_found)
-		signer.visible_message(span_notice("[signer] lowers one of [signer.p_their()] eyebrows, raising the other."))
+	// Cut our last overlay before we replace it
+	if(timeleft(tonal_timerid) > 0 && (question_found || exclamation_found))
+		remove_tonal_indicator()
+		deltimer(tonal_timerid)
+	if(question_found) // Prioritize questions
+		tonal_indicator = mutable_appearance('icons/mob/talk.dmi', "signlang1", TYPING_LAYER)
+		owner.visible_message(span_notice("[owner] lowers [owner.p_their()] eyebrows."))
 	else if(exclamation_found)
-		signer.visible_message(span_notice("[signer] raises [signer.p_their()] eyebrows."))
-	else if(question_found)
-		signer.visible_message(span_notice("[signer] lowers [signer.p_their()] eyebrows."))
+		tonal_indicator = mutable_appearance('icons/mob/talk.dmi', "signlang2", TYPING_LAYER)
+		owner.visible_message(span_notice("[owner] raises [owner.p_their()] eyebrows."))
+	if(!isnull(tonal_indicator) && owner?.client.typing_indicators)
+		owner.add_overlay(tonal_indicator)
+		tonal_timerid = addtimer(CALLBACK(src, .proc/remove_tonal_indicator), 2.5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE | TIMER_DELETE_ME)
+	else // If we're not gonna use it, just be sure we get rid of it
+		tonal_indicator = null
+
+/obj/item/organ/internal/tongue/tied/proc/remove_tonal_indicator()
+	if(isnull(tonal_indicator))
+		return
+	owner.cut_overlay(tonal_indicator)
+	tonal_indicator = null

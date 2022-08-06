@@ -20,13 +20,12 @@
 	minbodytemp = 0
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	var/phaser = TRUE
-	var/datum/action/innate/creature/teleport/teleport
 	var/is_phased = FALSE
 
 /mob/living/simple_animal/hostile/netherworld/Initialize(mapload)
 	. = ..()
 	if(phaser)
-		teleport = new
+		var/datum/action/innate/creature/teleport/teleport = new(src)
 		teleport.Grant(src)
 	add_cell_sample()
 
@@ -54,14 +53,13 @@
 		return
 	if(N.is_phased)
 		holder = N.loc
-		N.forceMove(T)
-		QDEL_NULL(holder)
+		holder.eject_jaunter()
+		holder = null
 		N.is_phased = FALSE
 		playsound(get_turf(N), 'sound/effects/podwoosh.ogg', 50, TRUE, -1)
 	else
 		playsound(get_turf(N), 'sound/effects/podwoosh.ogg', 50, TRUE, -1)
-		holder = new /obj/effect/dummy/phased_mob(T)
-		N.forceMove(holder)
+		holder = new /obj/effect/dummy/phased_mob(T, N)
 		N.is_phased = TRUE
 
 /mob/living/simple_animal/hostile/netherworld/proc/can_be_seen(turf/location)

@@ -89,6 +89,9 @@
 	if(chassis.equipment_disabled)
 		to_chat(chassis.occupants, span_warning("Error -- Equipment control unit is unresponsive."))
 		return FALSE
+	if(get_integrity() <= 1)
+		to_chat(chassis.occupants, span_warning("Error -- Equipment critically damaged."))
+		return FALSE
 	if(TIMER_COOLDOWN_CHECK(chassis, COOLDOWN_MECHA_EQUIPMENT(type)))
 		return FALSE
 	return TRUE
@@ -163,6 +166,7 @@
 	else
 		M.equip_by_category[to_equip_slot] = src
 	chassis = M
+	SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_ATTACHED)
 	forceMove(M)
 	log_message("[src] initialized.", LOG_MECHA)
 
@@ -185,6 +189,7 @@
 		chassis.equip_by_category[to_unequip_slot] -= src
 	else
 		chassis.equip_by_category[to_unequip_slot] = null
+	SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_DETACHED)
 	log_message("[src] removed from equipment.", LOG_MECHA)
 	chassis = null
 

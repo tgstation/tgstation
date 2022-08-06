@@ -15,13 +15,26 @@
 	delivery_icon = null //unwrappable
 	anchorable = FALSE
 	cutting_tool = null // Bodybags are not deconstructed by cutting
-	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	drag_slowdown = 0
 	has_closed_overlay = FALSE
 	var/foldedbag_path = /obj/item/bodybag
 	var/obj/item/bodybag/foldedbag_instance = null
 	var/tagged = FALSE // so closet code knows to put the tag overlay back
 	can_install_electronics = FALSE
+
+/obj/structure/closet/body_bag/Initialize(mapload)
+	. = ..()
+	var/static/list/tool_behaviors = list(
+		TOOL_WIRECUTTER = list(
+			SCREENTIP_CONTEXT_RMB = "Remove Tag",
+		),
+	)
+	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+	AddElement( \
+		/datum/element/contextual_screentip_bare_hands, \
+		rmb_text = "Fold up", \
+	)
+	AddElement(/datum/element/contextual_screentip_sharpness, lmb_text = "Remove Tag")
 
 /obj/structure/closet/body_bag/Destroy()
 	// If we have a stored bag, and it's in nullspace (not in someone's hand), delete it.
@@ -45,7 +58,9 @@
 		else
 			name = initial(name)
 		return
-	else if((interact_tool.tool_behaviour == TOOL_WIRECUTTER) && tagged)
+	if(!tagged)
+		return
+	if(interact_tool.tool_behaviour == TOOL_WIRECUTTER || interact_tool.get_sharpness())
 		to_chat(user, span_notice("You cut the tag off [src]."))
 		name = "body bag"
 		tagged = FALSE
@@ -56,30 +71,26 @@
 	if(tagged)
 		. += "bodybag_label"
 
-/obj/structure/closet/body_bag/open(mob/living/user, force = FALSE)
-	. = ..()
-	if(.)
-		mouse_drag_pointer = MOUSE_INACTIVE_POINTER
-
 /obj/structure/closet/body_bag/close()
 	. = ..()
 	if(.)
 		set_density(FALSE)
-		mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
-/obj/structure/closet/body_bag/MouseDrop(over_object, src_location, over_location)
+/obj/structure/closet/body_bag/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	if(over_object == usr && Adjacent(usr) && (in_range(src, usr) || usr.contents.Find(src)))
-		if(!attempt_fold(usr))
-			return
-		perform_fold(usr)
-		qdel(src)
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(!attempt_fold(user))
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	perform_fold(user)
+	qdel(src)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 		/**
 		  * Checks to see if we can fold. Return TRUE to actually perform the fold and delete.
 			*
 		  * Arguments:
-		  * * the_folder - over_object of MouseDrop aka usr
+		  * * the_folder - aka user
 		  */
 /obj/structure/closet/body_bag/proc/attempt_fold(mob/living/carbon/human/the_folder)
 	. = FALSE
@@ -99,12 +110,12 @@
 		* Performs the actual folding. Deleting is automatic, please do not include.
 		*
 		* Arguments:
-		* * the_folder - over_object of MouseDrop aka usr
+		* * the_folder - aka user
 		*/
 /obj/structure/closet/body_bag/proc/perform_fold(mob/living/carbon/human/the_folder)
-	visible_message(span_notice("[usr] folds up [src]."))
-	var/obj/item/bodybag/B = foldedbag_instance || new foldedbag_path
-	the_folder.put_in_hands(B)
+	visible_message(span_notice("[the_folder] folds up [src]."))
+	var/obj/item/bodybag/folding_bodybag = foldedbag_instance || new foldedbag_path
+	the_folder.put_in_hands(folding_bodybag)
 
 /obj/structure/closet/body_bag/bluespace
 	name = "bluespace body bag"
@@ -125,20 +136,20 @@
 		return
 	//end copypaste zone
 	if(contents.len >= mob_storage_capacity / 2)
-		to_chat(usr, span_warning("There are too many things inside of [src] to fold it up!"))
+		to_chat(the_folder, span_warning("There are too many things inside of [src] to fold it up!"))
 		return
 	for(var/obj/item/bodybag/bluespace/B in src)
-		to_chat(usr, span_warning("You can't recursively fold bluespace body bags!") )
+		to_chat(the_folder, span_warning("You can't recursively fold bluespace body bags!") )
 		return
 	return TRUE
 
 /obj/structure/closet/body_bag/bluespace/perform_fold(mob/living/carbon/human/the_folder)
-	visible_message(span_notice("[usr] folds up [src]."))
-	var/obj/item/bodybag/B = foldedbag_instance || new foldedbag_path
-	var/max_weight_of_contents = initial(B.w_class)
+	visible_message(span_notice("[the_folder] folds up [src]."))
+	var/obj/item/bodybag/folding_bodybag = foldedbag_instance || new foldedbag_path
+	var/max_weight_of_contents = initial(folding_bodybag.w_class)
 	for(var/am in contents)
 		var/atom/movable/content = am
-		content.forceMove(B)
+		content.forceMove(folding_bodybag)
 		if(isliving(content))
 			to_chat(content, span_userdanger("You're suddenly forced into a tiny, compressed space!"))
 		if(iscarbon(content))
@@ -153,8 +164,8 @@
 		if(A_is_item.w_class < max_weight_of_contents)
 			continue
 		max_weight_of_contents = A_is_item.w_class
-	B.w_class = max_weight_of_contents
-	usr.put_in_hands(B)
+	folding_bodybag.w_class = max_weight_of_contents
+	the_folder.put_in_hands(folding_bodybag)
 
 /// Environmental bags. They protect against bad weather.
 
@@ -298,7 +309,7 @@
 	user.visible_message(span_notice("[user] [sinched ? null : "un"]sinches [src]."),
 							span_notice("You [sinched ? null : "un"]sinch [src]."),
 							span_hear("You hear stretching followed by metal clicking from [src]."))
-	log_game("[key_name(user)] [sinched ? "sinched":"unsinched"] secure environmental bag [src] at [AREACOORD(src)]")
+	user.log_message("[sinched ? "sinched":"unsinched"] secure environmental bag [src] at [AREACOORD(src)]", LOG_GAME)
 	update_appearance()
 
 /obj/structure/closet/body_bag/environmental/prisoner/pressurized

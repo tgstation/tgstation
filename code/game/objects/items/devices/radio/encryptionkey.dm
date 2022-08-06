@@ -4,14 +4,19 @@
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "cypherkey"
 	w_class = WEIGHT_CLASS_TINY
+	/// Can this radio key access the binary radio channel?
 	var/translate_binary = FALSE
+	/// Decrypts Syndicate radio transmissions.
 	var/syndie = FALSE
+	/// If true, the radio can say/hear on the special CentCom channel.
 	var/independent = FALSE
+	/// What channels does this encryption key grant to the parent headset.
 	var/list/channels = list()
+	var/datum/language/translated_language
 
 /obj/item/encryptionkey/Initialize(mapload)
 	. = ..()
-	if(!channels.len && !translate_binary)
+	if(!channels.len && !translate_binary && !translated_language)
 		desc += " Has no special codes in it. You should probably tell a coder!"
 
 /obj/item/encryptionkey/examine(mob/user)
@@ -30,12 +35,13 @@
 	name = "syndicate encryption key"
 	icon_state = "syn_cypherkey"
 	channels = list(RADIO_CHANNEL_SYNDICATE = 1)
-	syndie = TRUE//Signifies that it de-crypts Syndicate transmissions
+	syndie = TRUE
 
 /obj/item/encryptionkey/binary
 	name = "binary translator key"
 	icon_state = "bin_cypherkey"
 	translate_binary = TRUE
+	translated_language = /datum/language/machine
 
 /obj/item/encryptionkey/headset_sec
 	name = "security radio encryption key"
@@ -143,3 +149,33 @@
 
 /obj/item/encryptionkey/secbot
 	channels = list(RADIO_CHANNEL_AI_PRIVATE = 1, RADIO_CHANNEL_SECURITY = 1)
+
+/obj/item/encryptionkey/moth
+	name = "\improper Moffic translation key"
+	desc = "An encryption key that automatically encodes moffic heard through the radio into common. The signal's a little fuzzy."
+	icon_state = "translation_cypherkey"
+	translated_language = /datum/language/moffic
+
+/obj/item/encryptionkey/tiziran
+	name = "\improper Tiziran translation key"
+	desc = "An encryption key that automatically encodes draconic heard through the radio into common. The signal's not quite to scale."
+	icon_state = "translation_cypherkey"
+	translated_language = /datum/language/draconic
+
+/obj/item/encryptionkey/plasmaman
+	name = "\improper Calcic translation key"
+	desc = "An encryption key that automatically encodes calcic heard through the radio into common. The signal lacks a bit of teeth."
+	icon_state = "translation_cypherkey"
+	translated_language = /datum/language/calcic
+
+/obj/item/encryptionkey/ethereal
+	name = "\improper Ethereal translation key"
+	desc = "An encryption key that automatically encodes ethereal heard through the radio into common. The signal's overpowering."
+	icon_state = "translation_cypherkey"
+	translated_language = /datum/language/voltaic
+
+/obj/item/encryptionkey/felinid
+	name = "\improper Felinid translation key"
+	desc = "An encryption key that automatically encodes nekomimetic heard through the radio into common. The signal's rather scratchy."
+	icon_state = "translation_cypherkey"
+	translated_language = /datum/language/nekomimetic

@@ -13,7 +13,7 @@
 /proc/randomize_human(mob/living/carbon/human/human)
 	human.gender = pick(MALE, FEMALE)
 	human.physique = human.gender
-	human.real_name = random_unique_name(human.gender)
+	human.real_name = human.dna?.species.random_name(human.gender) || random_unique_name(human.gender)
 	human.name = human.real_name
 	human.underwear = random_underwear(human.gender)
 	human.underwear_color = "#[random_color()]"
@@ -42,5 +42,4 @@
 	human.dna.features["pod_hair"] = pick(GLOB.pod_hair_list)
 
 	human.update_body(is_creating = TRUE)
-	human.update_hair(is_creating = TRUE)
 	human.dna.species.spec_updatehealth(human)

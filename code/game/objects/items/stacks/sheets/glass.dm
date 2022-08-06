@@ -77,7 +77,8 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 GLOBAL_LIST_INIT(pglass_recipes, list ( \
 	new/datum/stack_recipe("directional window", /obj/structure/window/plasma/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
 	new/datum/stack_recipe("fulltile window", /obj/structure/window/plasma/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE), \
-	new/datum/stack_recipe("plasma glass shard", /obj/item/shard/plasma, time = 20, on_floor = TRUE) \
+	new/datum/stack_recipe("plasma glass shard", /obj/item/shard/plasma, time = 20, on_floor = TRUE), \
+	new/datum/stack_recipe("plasma glass tile", /obj/item/stack/tile/glass/plasma, 1, 4, 20) \
 ))
 
 /obj/item/stack/sheet/plasmaglass
@@ -184,7 +185,8 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	new/datum/stack_recipe("directional reinforced window", /obj/structure/window/reinforced/plasma/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
 	new/datum/stack_recipe("fulltile reinforced window", /obj/structure/window/reinforced/plasma/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE), \
-	new/datum/stack_recipe("plasma glass shard", /obj/item/shard/plasma, time = 40, on_floor = TRUE) \
+	new/datum/stack_recipe("plasma glass shard", /obj/item/shard/plasma, time = 40, on_floor = TRUE), \
+	new/datum/stack_recipe("reinforced plasma glass tile", /obj/item/stack/tile/rglass/plasma, 1, 4, 20) \
 ))
 
 /obj/item/stack/sheet/plasmarglass
@@ -288,7 +290,10 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 /obj/item/shard/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/caltrop, min_damage = force)
-	AddComponent(/datum/component/butchering, 150, 65)
+	AddComponent(/datum/component/butchering, \
+	speed = 15 SECONDS, \
+	effectiveness = 65, \
+	)
 	icon_state = pick("large", "medium", "small")
 	switch(icon_state)
 		if("small")

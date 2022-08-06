@@ -40,8 +40,15 @@
 			return head
 		if(ITEM_SLOT_DEX_STORAGE)
 			return internal_storage
+
 	return ..()
 
+/mob/living/simple_animal/drone/get_slot_by_item(obj/item/looking_for)
+	if(internal_storage == looking_for)
+		return ITEM_SLOT_DEX_STORAGE
+	if(head == looking_for)
+		return ITEM_SLOT_HEAD
+	return ..()
 
 /mob/living/simple_animal/drone/equip_to_slot(obj/item/I, slot)
 	if(!slot)

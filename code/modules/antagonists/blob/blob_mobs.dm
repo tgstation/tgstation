@@ -167,7 +167,7 @@
 		to_chat(user, span_warning("Someone else already took this spore!"))
 		return
 	key = user.key
-	log_game("[key_name(src)] took control of [name].")
+	src.log_message("took control of [name].", LOG_GAME)
 
 /mob/living/simple_animal/hostile/blob/blobspore/proc/Zombify(mob/living/carbon/human/H)
 	is_zombie = 1
@@ -188,7 +188,7 @@
 	icon = H.icon
 	icon_state = "zombie"
 	H.hairstyle = null
-	H.update_hair()
+	H.update_hair(is_creating = TRUE)
 	H.forceMove(src)
 	oldguy = H
 	update_icons()

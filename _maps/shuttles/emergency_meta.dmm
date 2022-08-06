@@ -357,7 +357,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bk" = (
-/obj/machinery/shower,
+/obj/machinery/shower/directional/south,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bl" = (
@@ -542,7 +542,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bI" = (
-/obj/structure/sink,
+/obj/structure/sink/directional/south,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bJ" = (
@@ -566,7 +566,7 @@
 "bM" = (
 /obj/structure/rack,
 /obj/item/tank/internals/oxygen/red,
-/obj/item/clothing/suit/fire/firefighter,
+/obj/item/clothing/suit/utility/fire/firefighter,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/head/hardhat/red,
 /obj/effect/turf_decal/stripes/line{

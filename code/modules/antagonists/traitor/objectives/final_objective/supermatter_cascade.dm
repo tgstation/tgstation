@@ -1,12 +1,23 @@
 /datum/traitor_objective/final/supermatter_cascade
-	name = "destroy the station by causing a crystallizing resonance cascade"
+	name = "Destroy the station by causing a crystallizing resonance cascade"
 	description = "Destroy the station by causing a supermatter cascade. Go to %AREA% to retrieve the destabilizing crystal \
-	and use it on the SM."
+		and use it on the supermatter."
 
 	///area type the objective owner must be in to recieve the destabilizing crystal
 	var/area/dest_crystal_area_pickup
 	///checker on whether we have sent the crystal yet.
 	var/sent_crystal = FALSE
+
+/datum/traitor_objective/final/supermatter_cascade/can_take_final_objective()
+	. = ..()
+	if(!.)
+		return FALSE
+
+	for(var/obj/machinery/power/supermatter_crystal/engine/crystal in GLOB.machines)
+		if(is_station_level(crystal.z) || is_mining_level(crystal.z))
+			return TRUE
+
+	return FALSE
 
 /datum/traitor_objective/final/supermatter_cascade/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	if(!can_take_final_objective())
@@ -34,7 +45,7 @@
 				return
 			var/area/delivery_area = get_area(user)
 			if(delivery_area.type != dest_crystal_area_pickup)
-				to_chat(user, span_warning("You must be in [initial(dest_crystal_area_pickup.name)] to recieve the supermatter cascade kit."))
+				to_chat(user, span_warning("You must be in [initial(dest_crystal_area_pickup.name)] to receive the supermatter cascade kit."))
 				return
 			sent_crystal = TRUE
 			podspawn(list(

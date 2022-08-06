@@ -119,6 +119,9 @@
 		)
 
 		if(!do_after(tipper, tip_time, target = tipped_mob))
+			if(!isnull(tipped_mob.client))
+				tipped_mob.log_message("was attempted to tip over by [key_name(tipper)]", LOG_VICTIM, log_globally = FALSE)
+				tipper.log_message("failed to tip over [key_name(tipped_mob)]", LOG_ATTACK)
 			to_chat(tipper, span_danger("You fail to tip over [tipped_mob]."))
 			return
 	do_tip(tipped_mob, tipper)
@@ -137,8 +140,8 @@
 
 	to_chat(tipper, span_warning("You tip over [tipped_mob]."))
 	if (!isnull(tipped_mob.client))
-		tipped_mob.log_message("[key_name(tipped_mob)] has been tipped over by [key_name(tipper)].", LOG_ATTACK)
-		tipper.log_message("[key_name(tipper)] has tipped over [key_name(tipped_mob)].", LOG_ATTACK)
+		tipped_mob.log_message("has been tipped over by [key_name(tipper)].", LOG_ATTACK)
+		tipper.log_message("has tipped over [key_name(tipped_mob)].", LOG_ATTACK)
 	tipped_mob.visible_message(
 		span_warning("[tipper] tips over [tipped_mob]."),
 		span_userdanger("You are tipped over by [tipper]!"),

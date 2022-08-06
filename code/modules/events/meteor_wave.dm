@@ -7,6 +7,8 @@
 	min_players = 15
 	max_occurrences = 3
 	earliest_start = 25 MINUTES
+	category = EVENT_CATEGORY_SPACE
+	description = "A regular meteor wave."
 
 /datum/round_event/meteor_wave
 	startWhen = 6
@@ -60,6 +62,7 @@
 	min_players = 20
 	max_occurrences = 3
 	earliest_start = 35 MINUTES
+	description = "A meteor wave with higher chance of big meteors."
 
 /datum/round_event/meteor_wave/threatening
 	wave_name = "threatening"
@@ -71,6 +74,7 @@
 	min_players = 25
 	max_occurrences = 3
 	earliest_start = 45 MINUTES
+	description = "A meteor wave that might summon a tunguska class meteor."
 
 /datum/round_event/meteor_wave/catastrophic
 	wave_name = "catastrophic"

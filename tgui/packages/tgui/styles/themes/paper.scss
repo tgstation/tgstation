@@ -17,7 +17,7 @@
 );
 @use '../base.scss' with (
   $color-fg: #000000,
-  $color-bg: #ffffff,
+  $color-bg: #dfdfdf,
   $color-bg-grad-spread: 0%,
 );
 
@@ -31,26 +31,36 @@ $font-size: 24px;
 
   // Components
   @include meta.load-css('../components/Tabs.scss');
-  @include meta.load-css('../components/Section.scss', $with: (
-    'background-color': rgba(0, 0, 0, 0.1),
-  ));
-  @include meta.load-css('../components/Button.scss', $with: (
-    'color-default': #E8E4C9,
-    'color-disabled': #363636,
-    'color-selected': #9d0808,
-    'color-caution': #be6209,
-    'color-danger': #9a9d00,
-    'color-transparent-text': rgba(0, 0, 0, 0.5),
-  ));
+  @include meta.load-css(
+    '../components/Section.scss',
+    $with: ('background-color': rgba(0, 0, 0, 0.1))
+  );
+  @include meta.load-css(
+    '../components/Button.scss',
+    $with: (
+      'color-default': #e8e4c9,
+      'color-disabled': #363636,
+      'color-selected': #9d0808,
+      'color-caution': #be6209,
+      'color-danger': #9a9d00,
+      'color-transparent-text': rgba(0, 0, 0, 0.5)
+    )
+  );
 
   // Layouts
-  @include meta.load-css('../layouts/Layout.scss');
+  @include meta.load-css(
+    '../layouts/Layout.scss',
+    $with: ('scrollbar-color-multiplier': -1)
+  );
   @include meta.load-css('../layouts/Window.scss');
-  @include meta.load-css('../layouts/TitleBar.scss', $with: (
-    'text-color': rgba(0, 0, 0, 0.75),
-    'background-color': base.$color-bg,
-    'shadow-color-core': rgba(0, 0, 0, 0.25),
-  ));
+  @include meta.load-css(
+    '../layouts/TitleBar.scss',
+    $with: (
+      'text-color': rgba(0, 0, 0, 0.75),
+      'background-color': base.$color-bg,
+      'shadow-color-core': rgba(0, 0, 0, 0.25)
+    )
+  );
 
   .PaperInput {
     position: relative;
@@ -60,7 +70,7 @@ $font-size: 24px;
     background: transparent;
     border-bottom: 1px solid #000;
     outline: none;
-    background-color:rgba(255, 255, 62, 0.8);
+    background-color: rgba(255, 255, 62, 0.8);
     padding: 0 4px;
     margin-right: 2px;
     line-height: 17px;
@@ -116,7 +126,7 @@ $font-size: 24px;
       background: transparent;
       border-bottom: 1px solid #000;
       outline: none;
-      background-color:rgba(255, 255, 62, 0.8);
+      background-color: rgba(255, 255, 62, 0.8);
       padding: 0 4px;
       margin-right: 2px;
       line-height: 17px;
@@ -130,12 +140,16 @@ $font-size: 24px;
       background: transparent;
       border-bottom: 1px solid #000;
       outline: none;
-      background-color:rgba(255, 255, 62, 0.8);
+      background-color: rgba(255, 255, 62, 0.8);
       padding: 0 4px;
       margin-right: 2px;
       line-height: 17px;
       overflow: visible;
     }
+  }
+
+  .Section__title {
+    border-bottom: none;
   }
 
   .paper-field {
@@ -146,7 +160,7 @@ $font-size: 24px;
     background: transparent;
     border-bottom: 1px solid #000;
     outline: none;
-    background-color:rgba(255, 255, 62, 0.8);
+    background-color: rgba(255, 255, 62, 0.8);
     padding: 0 4px;
     margin-right: 2px;
     line-height: 17px;
@@ -160,7 +174,7 @@ $font-size: 24px;
       background: transparent;
       border-bottom: 1px solid #000;
       outline: none;
-      background-color:rgba(255, 255, 62, 0.8);
+      background-color: rgba(255, 255, 62, 0.8);
       padding: 0 4px;
       margin-right: 2px;
       line-height: 17px;

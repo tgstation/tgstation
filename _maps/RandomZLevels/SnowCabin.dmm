@@ -102,19 +102,12 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "as" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /obj/structure/mirror/directional/north,
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "at" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 2
-	},
+/obj/structure/sink/directional/east,
 /obj/structure/mirror/directional/north,
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
@@ -185,9 +178,8 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/baseturf_helper/asteroid/snow,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "aF" = (
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -202,9 +194,7 @@
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "aH" = (
-/obj/machinery/shower{
-	dir = 1
-	},
+/obj/machinery/shower/directional/north,
 /obj/structure/curtain,
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
@@ -237,9 +227,8 @@
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "aN" = (
 /obj/structure/chair/wood{
@@ -272,9 +261,8 @@
 	name = "geothermal generator"
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "aR" = (
 /obj/machinery/door/window/right/directional/west{
@@ -285,10 +273,9 @@
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "aS" = (
-/obj/structure/sink/kitchen{
+/obj/structure/sink/kitchen/directional/south{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	name = "sink";
-	pixel_y = 28
+	name = "sink"
 	},
 /obj/structure/janitorialcart,
 /obj/item/mop,
@@ -468,10 +455,9 @@
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "bz" = (
-/obj/structure/sink/kitchen{
+/obj/structure/sink/kitchen/directional/south{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	name = "sink";
-	pixel_y = 28
+	name = "sink"
 	},
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
@@ -498,17 +484,11 @@
 /turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "bG" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 2
-	},
+/obj/structure/sink/directional/east,
 /turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "bH" = (
-/obj/machinery/shower{
-	dir = 1
-	},
+/obj/machinery/shower/directional/north,
 /obj/structure/curtain,
 /obj/item/soap/nanotrasen{
 	pixel_x = -1;
@@ -520,10 +500,7 @@
 /turf/open/lava,
 /area/awaymission/cabin/caves/mountain)
 "bJ" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "bK" = (
@@ -728,7 +705,6 @@
 /obj/structure/cable,
 /obj/structure/musician/piano{
 	desc = "Very theatrical.";
-	icon_state = "piano";
 	name = "theatre piano"
 	},
 /turf/open/floor/wood,
@@ -859,9 +835,8 @@
 /area/awaymission/cabin)
 "cT" = (
 /obj/vehicle/ridden/atv,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "cU" = (
 /obj/machinery/light/directional/north,
@@ -873,15 +848,13 @@
 /area/awaymission/cabin)
 "cW" = (
 /obj/item/shovel,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "cX" = (
 /obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "cZ" = (
 /turf/open/floor/plating/snowed/snow_cabin,
@@ -996,9 +969,8 @@
 "du" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "dv" = (
 /obj/structure{
@@ -1011,9 +983,8 @@
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "dw" = (
 /mob/living/simple_animal/hostile/bear/snow{
@@ -1162,9 +1133,8 @@
 /area/awaymission/cabin)
 "ec" = (
 /obj/machinery/light/directional/south,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "ed" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2113,9 +2083,7 @@
 "hf" = (
 /obj/machinery/space_heater,
 /obj/effect/decal/remains/robot,
-/obj/structure/sign/warning/fire{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/fire/directional/north,
 /obj/machinery/space_heater,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -2225,9 +2193,8 @@
 /obj/item/lightreplacer,
 /obj/item/storage/toolbox/mechanical,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "hx" = (
 /obj/structure/cable,
@@ -2744,7 +2711,7 @@
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/shoes/winterboots,
 /obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/neck/stripedbluescarf,
+/obj/item/clothing/neck/large_scarf/blue,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "jv" = (
@@ -2756,7 +2723,7 @@
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/shoes/winterboots,
 /obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/neck/stripedgreenscarf,
+/obj/item/clothing/neck/large_scarf/green,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "jw" = (
@@ -2768,7 +2735,7 @@
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/shoes/winterboots,
 /obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/neck/stripedredscarf,
+/obj/item/clothing/neck/large_scarf/red,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "jx" = (
@@ -3038,34 +3005,8 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin/caves)
 "ko" = (
-/turf/open/floor/wood/freezing{
-	icon_state = "wood-broken"
-	},
-/area/awaymission/cabin/caves)
-"kp" = (
-/turf/open/floor/wood/freezing{
-	icon_state = "wood-broken4"
-	},
-/area/awaymission/cabin/caves)
-"kq" = (
-/turf/open/floor/wood/freezing{
-	icon_state = "wood-broken5"
-	},
-/area/awaymission/cabin/caves)
-"kr" = (
-/turf/open/floor/wood/freezing{
-	icon_state = "wood-broken3"
-	},
-/area/awaymission/cabin/caves)
-"ks" = (
-/turf/open/floor/wood/freezing{
-	icon_state = "wood-broken2"
-	},
-/area/awaymission/cabin/caves)
-"ku" = (
-/turf/open/floor/wood/freezing{
-	icon_state = "wood-broken7"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood/freezing,
 /area/awaymission/cabin/caves)
 "kE" = (
 /obj/structure/closet,
@@ -3344,9 +3285,8 @@
 /turf/open/floor/plating/snowed/smoothed,
 /area/awaymission/cabin/caves)
 "mw" = (
-/obj/structure/sign/warning{
-	name = "\improper SAWBLADE WARNING";
-	pixel_x = -32
+/obj/structure/sign/warning/directional/west{
+	name = "\improper SAWBLADE WARNING"
 	},
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
@@ -3898,7 +3838,7 @@
 	invoke_damage = 60;
 	name = "ice rune"
 	},
-/obj/item/clothing/suit/snowman{
+/obj/item/clothing/suit/costume/snowman{
 	desc = "The dead body of a snowman. There's holes to stick your own body in it.";
 	name = "snowman corpse"
 	},
@@ -4176,7 +4116,7 @@
 	name = "wooden box"
 	},
 /obj/item/paper{
-	info = "Moving these crates through a tunnel that isn't even finished yet is really annoying. It's such a pain in the ass to haul even a single crate to the cabin. It made sense to haul food and other goods however these are fake fucking trophies. Why do they even need these fake artifacts for some asshole's trophy case? We'll just leave the crates in the cave that has all those bones inside. Fuck it.";
+	default_raw_text = "Moving these crates through a tunnel that isn't even finished yet is really annoying. It's such a pain in the ass to haul even a single crate to the cabin. It made sense to haul food and other goods however these are fake fucking trophies. Why do they even need these fake artifacts for some asshole's trophy case? We'll just leave the crates in the cave that has all those bones inside. Fuck it.";
 	name = "Shipment Delivery Note"
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
@@ -4389,9 +4329,7 @@
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
 "Lt" = (
-/obj/structure/sign/warning/no_smoking{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/no_smoking/directional/east,
 /turf/open/floor/wood/freezing,
 /area/awaymission/cabin/lumbermill)
 "LE" = (
@@ -4806,9 +4744,7 @@
 	},
 /area/awaymission/cabin/caves)
 "Un" = (
-/obj/structure/sign/warning/no_smoking{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/no_smoking/directional/west,
 /turf/open/floor/wood/freezing,
 /area/awaymission/cabin/lumbermill)
 "Uu" = (
@@ -20995,8 +20931,8 @@ Oe
 Oe
 ki
 ki
-kq
-ks
+ko
+ko
 ki
 ki
 ki
@@ -21255,7 +21191,7 @@ ki
 ki
 ki
 ki
-ku
+ko
 ki
 Oe
 Oe
@@ -24850,7 +24786,7 @@ ki
 ki
 ki
 ki
-kr
+ko
 Oe
 Oe
 gx
@@ -25105,7 +25041,7 @@ Oe
 ki
 ki
 ki
-kp
+ko
 ki
 ki
 Oe

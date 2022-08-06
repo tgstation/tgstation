@@ -1,5 +1,0 @@
-author: "Iatots"
-delete-after: True
-changes: 
-  - rscdel: "you can't hold bread slices in your mouth (head) anymore."
-  - rscadd: "you can hold griddled toast in your mouth (mask)."

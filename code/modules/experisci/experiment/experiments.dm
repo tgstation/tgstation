@@ -120,8 +120,8 @@
 	required_gas = /datum/gas/bz
 
 /datum/experiment/ordnance/gaseous/noblium
-	name = "Noblium Gas Shells"
-	description = "The delivery of Noblium gas into an area of operation might prove useful. Perform research and publish papers on this field."
+	name = "Hypernoblium Gas Shells"
+	description = "The delivery of Hypernoblium gas into an area of operation might prove useful. Perform research and publish papers on this field."
 	gain = list(10,40,80)
 	target_amount = list(15,55,250)
 	experiment_proper = TRUE
@@ -169,13 +169,13 @@
 
 /datum/experiment/scanning/random/plants/wild
 	name = "Wild Biomatter Mutation Sample"
-	description = "Due to a number of reasons, (Solar Rays, a diet consisting only of unstable mutagen, entropy) plants with lower levels of instability may occasionally mutate with little reason. Scan one of these samples for us."
+	description = "Due to a number of reasons, (Solar Rays, a diet consisting only of unstable mutagen, entropy) plants with lower levels of instability may occasionally mutate upon harvest. Scan one of these samples for us."
 	performance_hint = "\"Wild\" mutations have been recorded to occur above 30 points of instability, while species mutations occur above 60 points of instability."
 	total_requirement = 1
 
 /datum/experiment/scanning/random/plants/traits
 	name = "Unique Biomatter Mutation Sample"
-	description = "We here at centcom are on the look out for rare and exotic plants with unique properties to brag about to our shareholders. We're looking for a sample with a very specific genes currently."
+	description = "We here at CentCom are on the look out for rare and exotic plants with unique properties to brag about to our shareholders. We're looking for a sample with a very specific genes currently."
 	performance_hint = "The wide varities of plants on station each carry various traits, some unique to them. Look for plants that may mutate into what we're looking for."
 	total_requirement = 3
 	possible_plant_genes = list(/datum/plant_gene/trait/squash, /datum/plant_gene/trait/cell_charge, /datum/plant_gene/trait/glow/shadow, /datum/plant_gene/trait/teleport, /datum/plant_gene/trait/brewing, /datum/plant_gene/trait/juicing, /datum/plant_gene/trait/eyes, /datum/plant_gene/trait/sticky)
@@ -307,3 +307,28 @@
 		/obj/machinery/chem_mass_spec = 3
 	)
 	required_stock_part = /obj/item/stock_parts/micro_laser/ultra
+
+/datum/experiment/scanning/random/mecha_damage_scan
+	name = "Exosuit Materials 1: Stress Failure Test"
+	description = "Your exosuit fabricators allow for rapid production on a small scale, but the structural integrity of created parts is inferior to more traditional means."
+	exp_tag = "Scan"
+	possible_types = list(/obj/vehicle/sealed/mecha)
+	total_requirement = 2
+	///Damage percent that each mech needs to be at for a scan to work.
+	var/damage_percent
+
+/datum/experiment/scanning/random/mecha_damage_scan/New()
+	. = ..()
+	damage_percent = rand(15, 95)
+	//updating the description with the damage_percent var set
+	description = "Your exosuit fabricators allow for rapid production on a small scale, but the structural integrity of created parts is inferior to those made with more traditional means. Damage a few exosuits to around [damage_percent]% integrity and scan them to help us determine how the armor fails under stress."
+
+/datum/experiment/scanning/random/mecha_damage_scan/final_contributing_index_checks(atom/target, typepath)
+	var/found_percent = round((target.get_integrity() / target.max_integrity) * 100)
+	return ..() && (found_percent <= (damage_percent + 2) && found_percent >= (damage_percent - 2))
+
+/datum/experiment/scanning/random/mecha_destroyed_scan
+	name = "Exosuit Materials 2: Excessive Damage Test"
+	description = "As an extension of testing exosuit damage results, scanning examples of complete structural failure will accelerate our material stress simulations."
+	possible_types = list(/obj/structure/mecha_wreckage)
+	total_requirement = 2

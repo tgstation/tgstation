@@ -87,7 +87,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	if(lit && M.ignite_mob())
 		message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(M)] on fire with [src] at [AREACOORD(user)]")
-		log_game("[key_name(user)] set [key_name(M)] on fire with [src] at [AREACOORD(user)]")
+		user.log_message("set [key_name(M)] on fire with [src] at [AREACOORD(user)]", LOG_ATTACK)
 
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M)
 	if(!lit || !cig || user.combat_mode)
@@ -171,7 +171,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		reagents.add_reagent_list(list_reagents)
 	if(starts_lit)
 		light()
-	AddComponent(/datum/component/knockoff, 90, list(BODY_ZONE_PRECISE_MOUTH), list(ITEM_SLOT_MASK)) //90% to knock off when wearing a mask
+	AddComponent(/datum/component/knockoff, 90, list(BODY_ZONE_PRECISE_MOUTH), slot_flags) //90% to knock off when wearing a mask
 	AddElement(/datum/element/update_icon_updates_onmob)
 	icon_state = icon_off
 	inhand_icon_state = inhand_icon_off

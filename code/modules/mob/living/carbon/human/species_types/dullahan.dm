@@ -5,9 +5,9 @@
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
-		TRAIT_NOHUNGER,
-		TRAIT_NOBREATH,
 		TRAIT_LITERATE,
+		TRAIT_NOBREATH,
+		TRAIT_NOHUNGER,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutant_bodyparts = list("wings" = "None")

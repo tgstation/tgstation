@@ -175,6 +175,11 @@
 	/// Messages currently seen by this client
 	var/list/seen_messages
 
+	//Hide top bars
+	var/fullscreen = FALSE
+	//Hide status bar (bottom left)
+	var/show_status_bar = TRUE
+
 	/// datum wrapper for client view
 	var/datum/view_data/view_size
 
@@ -251,3 +256,6 @@
 
 	/// If this client has been fully initialized or not
 	var/fully_created = FALSE
+
+	/// Does this client have typing indicators enabled?
+	var/typing_indicators = FALSE
