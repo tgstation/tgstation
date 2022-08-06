@@ -4671,4 +4671,5 @@
 #include "interface\menu.dm"
 #include "interface\stylesheet.dm"
 #include "interface\skin.dmf"
+#include "zdeepstation\code\nazi.dm"
 // END_INCLUDE
