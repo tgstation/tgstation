@@ -205,8 +205,8 @@
 		if((!LC || IS_ORGANIC_LIMB(LC)) && !target.getorgan(/obj/item/organ/internal/body_egg/alien_embryo))
 			new /obj/item/organ/internal/body_egg/alien_embryo(target)
 			var/turf/T = get_turf(target)
-			target.log_message("was impregnated by a facehugger at [loc_name(T)].", LOG_GAME)
-			target.log_message("was impregnated by a facehugger at [loc_name(T)].", LOG_VICTIM, log_globally = FALSE)
+			target.log_message("was impregnated by a facehugger", LOG_GAME)
+			target.log_message("was impregnated by a facehugger", LOG_VICTIM, log_globally = FALSE)
 
 	else
 		target.visible_message(span_danger("[src] violates [target]'s face!"), \

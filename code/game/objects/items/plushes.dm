@@ -157,7 +157,7 @@
 		span_danger("You slide [I] into [src]."))
 		grenade = I
 		var/turf/grenade_turf = get_turf(src)
-		user.log_message("added a grenade ([I.name]) to [src] at [AREACOORD(grenade_turf)].", LOG_GAME)
+		user.log_message("added a grenade ([I.name]) to [src]", LOG_GAME)
 		return
 	if(istype(I, /obj/item/toy/plush))
 		love(I, user)

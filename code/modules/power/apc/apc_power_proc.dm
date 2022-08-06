@@ -39,7 +39,7 @@
 		return
 	operating = !operating
 	add_hiddenprint(user)
-	user.log_message("turned [operating ? "on" : "off"] the [src] in [AREACOORD(src)].", LOG_GAME)
+	user.log_message("turned [operating ? "on" : "off"] the [src]", LOG_GAME)
 	update()
 	update_appearance()
 
