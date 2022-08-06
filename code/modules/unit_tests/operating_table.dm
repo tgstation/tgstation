@@ -7,10 +7,12 @@
 	var/obj/structure/table/optable/table = allocate(/obj/structure/table/optable)
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human, get_step(table, NORTH))
 	var/mob/living/carbon/human/replacement_human = allocate(/mob/living/carbon/human, get_step(table, NORTH))
+	
+	// Resting is a bit more high level than bodypos, gets us nicer coverage.
 	human.set_resting(new_resting = FALSE, instant = TRUE)
 	replacement_human.set_resting(new_resting = FALSE, instant = TRUE)
 
-	human.Move(get_turf(table))
+	human.forceMove(get_turf(table))
 	TEST_ASSERT_NULL(table.patient, "Operating table is occupied by a non-resting patient.")
 
 	human.set_resting(new_resting = TRUE, instant = TRUE)
@@ -22,9 +24,9 @@
 	human.set_resting(new_resting = TRUE, instant = TRUE)
 	TEST_ASSERT_EQUAL(table.patient, human, "Operating table failed to update for a resting patient.")
 
-	replacement_human.Move(get_turf(table))
+	replacement_human.forceMove(get_turf(table))
 	replacement_human.set_resting(new_resting = TRUE, instant = TRUE)
 	TEST_ASSERT_EQUAL(table.patient, human, "Operating table patient unset by another patient jumping in.")
 
-	human.Move(get_step(get_turf(table), NORTH))
+	human.forceMove(get_step(get_turf(table), NORTH))
 	TEST_ASSERT_EQUAL(table.patient, replacement_human, "Operating table failed to find a replacement patient.")
