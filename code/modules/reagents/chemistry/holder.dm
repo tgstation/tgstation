@@ -163,7 +163,7 @@
  * * ignore splitting - Don't call the process that handles reagent spliting in a mob (impure/inverse) - generally leave this false unless you care about REAGENTS_DONOTSPLIT flags (see reagent defines)
  */
 /datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = DEFAULT_REAGENT_TEMPERATURE, added_purity = null, added_ph, no_react = FALSE, override_base_ph = FALSE, ignore_splitting = FALSE)
-	if(!isnum(amount) || !amount)
+	if(!isnum(amount) || ISNAN(amount) || !amount)
 		return FALSE
 
 	if(amount <= CHEMICAL_QUANTISATION_LEVEL)//To prevent small amount problems.
@@ -276,7 +276,7 @@
 		amount = 0
 		CRASH("null amount passed to reagent code")
 
-	if(!isnum(amount))
+	if(!isnum(amount) || ISNAN(amount))
 		return FALSE
 
 	if(amount < 0)
