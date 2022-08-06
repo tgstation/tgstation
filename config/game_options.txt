@@ -332,21 +332,21 @@ SILICON_MAX_LAW_AMOUNT 12
 ROUNDSTART_RACES human
 
 ## Races that are strictly worse than humans that could probably be turned on without balance concerns
-ROUNDSTART_RACES felinid
-ROUNDSTART_RACES lizard
+#ROUNDSTART_RACES felinid
+#ROUNDSTART_RACES lizard
 #ROUNDSTART_RACES fly
-ROUNDSTART_RACES moth
+#ROUNDSTART_RACES moth
 ROUNDSTART_RACES plasmaman
-#ROUNDSTART_RACES shadow
+ROUNDSTART_RACES shadow
 
 ## Races that are better than humans in some ways, but worse in others
 ROUNDSTART_RACES ethereal
 #ROUNDSTART_RACES jelly
 #ROUNDSTART_RACES abductor
-#ROUNDSTART_RACES synth
+ROUNDSTART_RACES synth
 
 ## Including all the various golem subtypes that are better than humans in some ways, but worse in others
-#ROUNDSTART_RACES iron_golem
+ROUNDSTART_RACES iron_golem
 #ROUNDSTART_RACES adamantine_golem
 #ROUNDSTART_RACES plasma_golem
 #ROUNDSTART_RACES diamond_golem
@@ -374,10 +374,10 @@ ROUNDSTART_RACES ethereal
 #ROUNDSTART_RACES metallic_hydrogen_golem
 
 ## Races that are straight upgrades. If these are on expect powergamers to always pick them
-#ROUNDSTART_RACES skeleton
+ROUNDSTART_RACES skeleton
 #ROUNDSTART_RACES zombie
-#ROUNDSTART_RACES slime
-#ROUNDSTART_RACES pod
+ROUNDSTART_RACES slime
+ROUNDSTART_RACES pod
 #ROUNDSTART_RACES military_synth
 #ROUNDSTART_RACES agent
 
@@ -398,7 +398,7 @@ OVERFLOW_CAP -1
 #STARLIGHT
 
 ## Uncomment to bring back old grey suit assistants instead of the now default rainbow colored assistants.
-#GREY_ASSISTANTS
+GREY_ASSISTANTS
 
 ##Limit Spell Choices##
 ## Uncomment to disallow wizards from using certain spells that may be too chaotic/fun for your playerbase
