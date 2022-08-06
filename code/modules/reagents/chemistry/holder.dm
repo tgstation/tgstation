@@ -1227,6 +1227,20 @@
 
 	return A.expose_reagents(reagents, src, methods, volume_modifier, show_message)
 
+// Same as [/datum/reagents/proc/expose] but only for multiple reagents (through a list)
+/datum/reagents/proc/expose_multiple(list/r_to_expose, atom/A, methods = TOUCH, volume_modifier = 1, show_message = 1)
+	if(isnull(A))
+		return null
+
+	var/list/cached_reagents = r_to_expose
+	if(!cached_reagents.len)
+		return null
+
+	var/list/reagents = list()
+	for(var/datum/reagent/reagent as anything in cached_reagents)
+		reagents[reagent] = reagent.volume * volume_modifier
+
+	return A.expose_reagents(reagents, src, methods, volume_modifier, show_message)
 
 /// Same as [/datum/reagents/proc/expose] but only for one reagent
 /datum/reagents/proc/expose_single(datum/reagent/R, atom/A, methods = TOUCH, volume_modifier = 1, show_message = TRUE)
