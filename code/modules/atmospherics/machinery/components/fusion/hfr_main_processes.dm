@@ -287,6 +287,7 @@
 	switch(power_level)
 		if(1)
 			if(moderator_list[/datum/gas/plasma] > 100)
+				internal_output.assert_gases(/datum/gas/nitrous_oxide)
 				moderator_internal.gases[/datum/gas/nitrous_oxide] += scaled_production * 0.5
 				moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 0.85)
 			if(moderator_list[/datum/gas/bz] > 150)
@@ -341,7 +342,7 @@
 				radiation *= 1.95
 				heat_output *= 1.25
 			if(moderator_list[/datum/gas/bz] > 100)
-				internal_output.assert_gases(/datum/gas/healium)
+				internal_output.assert_gases(/datum/gas/healium, /datum/gas/freon)
 				internal_output.gases[/datum/gas/healium][MOLES] += scaled_production
 				induce_hallucination(500, delta_time)
 				moderator_internal.gases[/datum/gas/freon][MOLES] += scaled_production * 1.15
@@ -353,7 +354,9 @@
 				internal_output.assert_gases(/datum/gas/antinoblium)
 				internal_output.gases[/datum/gas/antinoblium][MOLES] += dirty_production_rate * 0.9 / 0.065 * delta_time
 		if(6)
+			internal_output.assert_gases(/datum/gas/antinoblium)
 			if(moderator_list[/datum/gas/plasma] > 30)
+				internal_output.assert_gases(/datum/gas/bz)
 				moderator_internal.gases[/datum/gas/bz][MOLES] += scaled_production * 1.15
 				moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 1.45)
 			if(moderator_list[/datum/gas/proto_nitrate])
