@@ -205,10 +205,10 @@
 
 /datum/round_event/ghost_role/morph
 	minimum_required = 1
-	role_name = "morphling"
+	role_name = "morph"
 
 /datum/round_event/ghost_role/morph/spawn_role()
-	var/list/candidates = SSpolling.poll_ghost_candidates(role = ROLE_ALIEN, jobban = ROLE_ALIEN, pic_source = /mob/living/simple_animal/hostile/morph)
+	var/list/candidates = SSpolling.poll_ghost_candidates(role = ROLE_ALIEN, jobban = ROLE_ALIEN, pic_source = /mob/living/simple_animal/hostile/morph, role_name_text = role_name)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 

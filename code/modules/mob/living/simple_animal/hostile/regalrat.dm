@@ -50,7 +50,7 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/regalrat/proc/get_player()
-	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates("Do you want to play as the Royal Rat, cheesey be their crown?", jobban = ROLE_SENTIENCE, poll_time = 10 SECONDS, ignore_category = POLL_IGNORE_SENTIENCE_POTION, pic_source = src)
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates("Do you want to play as the Royal Rat, cheesey be their crown?", jobban = ROLE_SENTIENCE, poll_time = 10 SECONDS, ignore_category = POLL_IGNORE_SENTIENCE_POTION, pic_source = src, role_name_text = "regal rat")
 	if(LAZYLEN(candidates) && !mind)
 		var/mob/dead/observer/C = pick(candidates)
 		key = C.key

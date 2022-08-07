@@ -74,7 +74,7 @@
 	if(!skip_answer_check && threat?.answered == 1)
 		return
 
-	var/list/candidates = SSpolling.poll_candidates("Do you wish to be considered for pirate crew?", jobban = ROLE_TRAITOR, pic_source = /obj/item/clothing/head/pirate)
+	var/list/candidates = SSpolling.poll_candidates("Do you wish to be considered for pirate crew?", jobban = ROLE_TRAITOR, pic_source = /obj/item/clothing/head/pirate, role_name_text = "pirate")
 	shuffle_inplace(candidates)
 
 	var/datum/map_template/shuttle/pirate/ship = new ship_template

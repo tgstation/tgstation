@@ -11,7 +11,7 @@
 		if(!ishuman(M.current))
 			continue
 		var/mob/living/carbon/human/W = M.current
-		var/list/candidates = SSpolling.poll_ghost_candidates("Would you like to be an imposter wizard?", jobban = ROLE_WIZARD, pic_source = /obj/item/clothing/head/wizard)
+		var/list/candidates = SSpolling.poll_ghost_candidates("Would you like to be an imposter wizard?", jobban = ROLE_WIZARD, pic_source = /obj/item/clothing/head/wizard, role_name_text = "imposter wizard")
 		if(!candidates)
 			return //Sad Trombone
 		var/mob/dead/observer/C = pick(candidates)

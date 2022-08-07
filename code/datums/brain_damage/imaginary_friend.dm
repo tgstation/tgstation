@@ -47,7 +47,7 @@
 
 /datum/brain_trauma/special/imaginary_friend/proc/get_ghost()
 	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob(jobban = ROLE_PAI, poll_time = 7.5 SECONDS, target_mob = friend, ignore_category = POLL_IGNORE_IMAGINARYFRIEND, pic_source = owner, role_name_text = "imaginary friend")
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob("Do you want to play as [owner.real_name]'s imaginary friend?", jobban = ROLE_PAI, poll_time = 7.5 SECONDS, target_mob = friend, ignore_category = POLL_IGNORE_IMAGINARYFRIEND, pic_source = owner, role_name_text = "imaginary friend")
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		friend.key = C.key

@@ -152,13 +152,7 @@
 /// Poll ghosts for control of the gorilla.
 /mob/living/simple_animal/hostile/gorilla/cargo_domestic/proc/poll_for_gorilla()
 	being_polled_for = TRUE
-	var/list/mob/dead/candidates = SSpolling.poll_ghost_candidates_for_mob(
-		"Do you want to play as a Cargorilla?",
-		jobban = ROLE_SENTIENCE,
-		poll_time = 30 SECONDS,
-		target_mob = src,
-		pic_source = type,
-	)
+	var/list/mob/dead/candidates = SSpolling.poll_ghost_candidates_for_mob(jobban = ROLE_SENTIENCE, poll_time = 30 SECONDS, target_mob = src, pic_source = type, role_name_text = "Cargorilla")
 
 	being_polled_for = FALSE
 	if(QDELETED(src) || mind || client)

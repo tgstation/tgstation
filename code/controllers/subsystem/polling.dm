@@ -29,7 +29,7 @@ SUBSYSTEM_DEF(polling)
 	if(role && !role_name_text)
 		role_name_text = role
 	if(role_name_text && !question)
-		question = "Do you want to play as \a [role_name_text]?"
+		question = "Do you want to play as \a [lowertext(role_name_text)]?"
 	if(!question)
 		question = "Do you want to play as a special role?"
 	log_game("Polling candidates [role_name_text ? "for [role_name_text]" : "\"[question]\""] for [poll_time / 10] seconds")

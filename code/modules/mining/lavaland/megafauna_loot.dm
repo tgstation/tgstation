@@ -412,7 +412,7 @@
 	using = TRUE
 	balloon_alert(user, "you hold the scythe up...")
 	ADD_TRAIT(src, TRAIT_NODROP, type)
-	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates("Do you want to play as [user.real_name]'s soulscythe?", jobban = ROLE_PAI, poll_time = 10 SECONDS, ignore_category = POLL_IGNORE_POSSESSED_BLADE, pic_source = src)
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates("Do you want to play as [user.real_name]'s soulscythe?", jobban = ROLE_PAI, poll_time = 10 SECONDS, ignore_category = POLL_IGNORE_POSSESSED_BLADE, pic_source = src, role_name_text = "soulscythe")
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/picked_ghost = pick(candidates)
 		soul.ckey = picked_ghost.ckey

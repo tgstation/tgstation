@@ -562,7 +562,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			if(teamsize <= 0)
 				return FALSE
 
-			candidates = SSpolling.poll_ghost_candidates("Do you wish to be considered for a Nanotrasen emergency response drone?", jobban = ROLE_DRONE, pic_source = /mob/living/simple_animal/drone/classic, role_name_text = "Nanotrasen emergency response drone")
+			candidates = SSpolling.poll_ghost_candidates(jobban = ROLE_DRONE, pic_source = /mob/living/simple_animal/drone/classic, role_name_text = "Nanotrasen emergency response drone")
 
 			if(length(candidates) == 0)
 				return FALSE

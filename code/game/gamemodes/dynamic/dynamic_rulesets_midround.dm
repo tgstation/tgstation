@@ -120,7 +120,7 @@
 	message_admins("Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 	log_dynamic("Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 
-	candidates = SSpolling.poll_ghost_candidates("The mode is looking for volunteers to become [antag_flag] for [name]", role = (antag_flag || antag_flag_override), jobban = antag_flag_override, poll_time = 30 SECONDS, pic_source = /mob/dead/observer)
+	candidates = SSpolling.poll_ghost_candidates("The mode is looking for volunteers to become [antag_flag] for [name]", role = (antag_flag || antag_flag_override), jobban = antag_flag_override, poll_time = 30 SECONDS, pic_source = /mob/dead/observer, role_name_text = "dynamic midround")
 
 	if(!candidates || candidates.len <= 0)
 		mode.dynamic_log("The ruleset [name] received no applications.")
