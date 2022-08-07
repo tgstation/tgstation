@@ -475,6 +475,15 @@
 	inhand_icon_state = "hawaiian_blue"
 	species_exception = list(/datum/species/golem)
 
+/obj/item/clothing/suit/costume/dutch
+	name = "dutch's jacket"
+	desc = "For those long nights on the beach in Tahiti."
+	icon_state = "DutchJacket"
+	inhand_icon_state = "DutchJacket"
+	body_parts_covered = ARMS
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
 /obj/item/clothing/suit/costume/football_armor
 	name = "football protective gear"
 	desc = "Given to members of the football team!"
@@ -487,7 +496,7 @@
 
 /obj/item/clothing/suit/costume/joker
 	name = "comedian coat"
-	desc = "I mean, don’t you have to be funny to be a comedian?"
+	desc = "I mean, don't you have to be funny to be a comedian?"
 	icon_state = "joker_coat"
 
 /obj/item/clothing/suit/costume/deckers
