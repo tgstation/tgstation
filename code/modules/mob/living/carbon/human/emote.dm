@@ -53,13 +53,11 @@
 	only_forced_audio = TRUE
 	vary = TRUE
 
-/datum/emote/living/carbon/human/scream/get_sound(mob/living/user)
-	if(!ishuman(user))
+/datum/emote/living/carbon/human/scream/get_sound(mob/living/carbon/human/user)
+	if(!istype(user))
 		return
-	var/mob/living/carbon/human/human = user
-	if(human.mind?.miming)
-		return
-	return human.dna.species.get_scream_sound(human)
+
+	return user.dna.species.get_scream_sound(user)
 
 /datum/emote/living/carbon/human/scream/screech //If a human tries to screech it'll just scream.
 	key = "screech"

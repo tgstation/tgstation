@@ -209,3 +209,26 @@
   - bugfix: Silicons can now interact with floodlights.
   tralezab:
   - rscadd: Bileworms have appeared on lavaland!
+2022-08-07:
+  Capybara Holly:
+  - bugfix: Trying to remove rust from walls with a welding tool will now blind you
+      like it should
+  CursedBirb:
+  - bugfix: Banana now have correct right hand sprite
+  Holoo-1:
+  - bugfix: fixed hplc not displaying purity. Also fixed incorrect display of volume
+      if beaker is inserted in output slot
+  JohnFulpWillard:
+  - bugfix: The air scrubber in atmos near the northern maintenance airlock is now
+      connected to waste.
+  Kylerace:
+  - bugfix: makes verb queuing work again
+  Mooshimi:
+  - bugfix: Blind support added to some actions like stripping, being hit, and force-feeding.
+  - bugfix: Blind people will now only be able to 'hear' audible emotes.
+  - bugfix: Blind and deaf people will see and hear no emotes, for obvious reasons.
+  Mothblocks:
+  - rscadd: Revolution victories now call the shuttle when enough of the station is
+      revolutionaries.
+  ShizCalev:
+  - bugfix: Grilles are now anchorable with screwdrivers again.
