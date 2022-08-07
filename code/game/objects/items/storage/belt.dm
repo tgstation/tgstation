@@ -270,8 +270,8 @@
 	SSwardrobe.provide_type(/obj/item/stack/medical/gauze/twelve, src)
 	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel, src)
 	SSwardrobe.provide_type(/obj/item/stack/sticky_tape/surgical, src)
-	SSwardrobe.provide_type(/obj/item/bonesetter, src)
 	SSwardrobe.provide_type(/obj/item/reagent_containers/syringe, src)
+	SSwardrobe.provide_type(/obj/item/reagent_containers/glass/bottle/calomel, src)
 	SSwardrobe.provide_type(/obj/item/reagent_containers/glass/bottle/formaldehyde, src)
 	update_appearance()
 
@@ -281,8 +281,8 @@
 	to_preload += /obj/item/stack/medical/gauze/twelve
 	to_preload += /obj/item/stack/medical/bone_gel
 	to_preload += /obj/item/stack/sticky_tape/surgical
-	to_preload += /obj/item/bonesetter
 	to_preload += /obj/item/reagent_containers/syringe
+	to_preload += /obj/item/reagent_containers/glass/bottle/calomel
 	to_preload += /obj/item/reagent_containers/glass/bottle/formaldehyde
 	return to_preload
 
