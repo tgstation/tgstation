@@ -1,4 +1,0 @@
-author: "Capybara Holly"
-delete-after: True
-changes: 
-  - bugfix: "Trying to remove rust from walls with a welding tool will now blind you like it should"

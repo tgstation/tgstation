@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes: 
+  - bugfix: "Fix audible emotes playing sounds while mob is gagged, mute, tongueless, or under a vow of silence."

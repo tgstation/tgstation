@@ -46,6 +46,9 @@ SUBSYSTEM_DEF(verb_manager)
 	///for obvious reasons dont make this be TRUE on the code level this is for admins to turn on
 	var/message_admins_on_queue = FALSE
 
+	///always queue if possible. overides can_queue_admin_verbs but not FOR_ADMINS_IF_VERBS_FUCKED_immediately_execute_all_verbs
+	var/always_queue = FALSE
+
 /**
  * queue a callback for the given verb/verblike proc and any given arguments to the specified verb subsystem, so that they process in the next tick.
  * intended to only work with verbs or verblike procs called directly from client input, use as part of TRY_QUEUE_VERB() and co.
@@ -53,14 +56,30 @@ SUBSYSTEM_DEF(verb_manager)
  * returns TRUE if the queuing was successful, FALSE otherwise.
  */
 /proc/_queue_verb(datum/callback/verb_callback/incoming_callback, tick_check, datum/controller/subsystem/verb_manager/subsystem_to_use = SSverb_manager, ...)
-	if(TICK_USAGE < tick_check \
-	|| QDELETED(incoming_callback) \
-	|| QDELETED(incoming_callback.object) \
-	|| !ismob(usr) \
-	|| QDELING(usr))
+	if(QDELETED(incoming_callback) \
+	|| QDELETED(incoming_callback.object))
+		stack_trace("_queue_verb() returned false because it was given an invalid callback!")
+		return FALSE
+
+	//we want unit tests to be able to directly call verbs that attempt to queue, and since unit tests should test internal behavior, we want the queue
+	//to happen as if it was actually from player input if its called on a mob.
+#ifdef UNIT_TESTS
+	if(QDELETED(usr) && ismob(incoming_callback.object))
+		incoming_callback.user = WEAKREF(incoming_callback.object)
+		var/datum/callback/new_us = CALLBACK(arglist(list(GLOBAL_PROC, /proc/_queue_verb) + args.Copy()))
+		return world.push_usr(incoming_callback.object, new_us)
+#endif
+
+	//debatable whether this is needed, this is just to try and ensure that you dont use this to queue stuff that isnt from player input.
+	if(QDELETED(usr))
+		stack_trace("_queue_verb() returned false because it wasnt called from player input!")
 		return FALSE
 
 	if(!istype(subsystem_to_use))
+		stack_trace("_queue_verb() returned false because it was given an invalid subsystem to queue for!")
+		return FALSE
+
+	if((TICK_USAGE < tick_check) && !subsystem_to_use.always_queue)
 		return FALSE
 
 	var/list/args_to_check = args.Copy()
@@ -80,9 +99,12 @@ SUBSYSTEM_DEF(verb_manager)
  * in TRY_QUEUE_VERB() and co.
  */
 /datum/controller/subsystem/verb_manager/proc/can_queue_verb(datum/callback/verb_callback/incoming_callback)
-	if(usr.client?.holder && !can_queue_admin_verbs \
+	if(always_queue && !FOR_ADMINS_IF_VERBS_FUCKED_immediately_execute_all_verbs)
+		return TRUE
+
+	if((usr.client?.holder && !can_queue_admin_verbs) \
+	|| (!initialized && !(flags & SS_NO_INIT)) \
 	|| FOR_ADMINS_IF_VERBS_FUCKED_immediately_execute_all_verbs \
-	|| !initialized \
 	|| !(runlevels & Master.current_runlevel))
 		return FALSE
 
@@ -102,6 +124,12 @@ SUBSYSTEM_DEF(verb_manager)
 	return TRUE
 
 /datum/controller/subsystem/verb_manager/fire(resumed)
+	run_verb_queue()
+
+/// runs through all of this subsystems queue of verb callbacks.
+/// goes through the entire verb queue without yielding.
+/// used so you can flush the queue outside of fire() without interfering with anything else subtype subsystems might do in fire().
+/datum/controller/subsystem/verb_manager/proc/run_verb_queue()
 	var/executed_verbs = 0
 
 	for(var/datum/callback/verb_callback/verb_callback as anything in verb_queue)
@@ -113,7 +141,8 @@ SUBSYSTEM_DEF(verb_manager)
 		executed_verbs++
 
 	verb_queue.Cut()
-	verbs_executed_per_second = MC_AVG_SECONDS(verbs_executed_per_second, executed_verbs, wait TICKS)
+	verbs_executed_per_second = MC_AVG_SECONDS(verbs_executed_per_second, executed_verbs, wait SECONDS)
+	//note that wait SECONDS is incorrect if this is called outside of fire() but because byond is garbage i need to add a timer to rustg to find a valid solution
 
 /datum/controller/subsystem/verb_manager/stat_entry(msg)
 	. = ..()
