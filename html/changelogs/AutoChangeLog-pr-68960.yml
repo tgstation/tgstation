@@ -1,0 +1,5 @@
+author: "Addust"
+delete-after: True
+changes: 
+  - rscadd: "Kilo whiteship now has shit so that it can actually maintain power now"
+  - rscadd: "Kilo whiteship now has both the bar and crew quarters area to increase information hell"
