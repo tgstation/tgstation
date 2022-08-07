@@ -59,6 +59,89 @@
 	resistance_flags = NONE
 	///The item it spawns when it's folded up.
 	var/foldabletype = /obj/item/roller
+	///the attached iv stand
+	var/obj/machinery/iv_drip/iv_stand
+
+/*
+		todo:
+	make overlay icons (if anyone wants to do them, that'll speed things up. <3)
+	contextual screentips
+	balloonify / user messages
+	unfuck the overlay spaghett
+
+/obj/structure/bed/roller/update_overlays()
+	. = ..()
+	if(iv_stand)
+		. += "rollerbed_[iv_stand.icon_state]"
+		if(!iv_stand.reagent_container)
+			return
+
+		. += iv_stand.attached ? "beakeractive" : "beakeridle"
+		var/datum/reagents/target_reagents = iv_stand.get_reagent_holder()
+		if(!target_reagents)
+			return
+
+		var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/iv_drip.dmi', "rollerbed_reagent")
+		var/percent = round((target_reagents.total_volume / target_reagents.maximum_volume) * 100)
+		switch(percent)
+			if(0 to 9)
+				filling_overlay.icon_state = "reagent0"
+			if(10 to 24)
+				filling_overlay.icon_state = "reagent10"
+			if(25 to 49)
+				filling_overlay.icon_state = "reagent25"
+			if(50 to 74)
+				filling_overlay.icon_state = "reagent50"
+			if(75 to 79)
+				filling_overlay.icon_state = "reagent75"
+			if(80 to 90)
+				filling_overlay.icon_state = "reagent80"
+			if(91 to INFINITY)
+				filling_overlay.icon_state = "reagent100"
+
+		filling_overlay.color = mix_color_from_reagents(target_reagents.reagent_list)
+		. += filling_overlay
+
+*/
+
+/obj/structure/bed/roller/attackby(obj/item/W, mob/user, params)
+	if(iv_stand && (!iv_stand.use_internal_storage && is_type_in_typecache(W, iv_stand.drip_containers)))
+		iv_stand.attackby(W, user, params)
+		return
+	return ..()
+
+/obj/structure/bed/roller/screwdriver_act(mob/living/user, obj/item/tool)
+	if(!iv_stand)
+		return
+	iv_stand.forceMove(loc)
+	UnregisterSignal(iv_stand, COMSIG_ATOM_UPDATED_ICON)
+	iv_stand = null
+	return TRUE
+
+/obj/structure/bed/roller/handle_atom_del(atom/deleting_atom)
+	if(deleting_atom == iv_stand)
+		UnregisterSignal(iv_stand, COMSIG_ATOM_UPDATED_ICON)
+		iv_stand = null
+	return ..()
+
+/obj/structure/bed/roller/MouseDrop(mob/over)
+	if(!iv_stand)
+		return ..()
+	iv_stand.MouseDrop(over)
+
+/obj/structure/bed/roller/MouseDrop_T(atom/dropping, mob/user, params)
+	if(iv_stand || !istype(dropping, /obj/machinery/iv_drip))
+		return ..()
+	if(user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(dropping) || !ISADVANCEDTOOLUSER(user))
+		return
+	iv_stand = dropping
+	iv_stand.forceMove(src)
+	RegisterSignal(iv_stand, COMSIG_ATOM_UPDATED_ICON, /atom/.proc/update_icon)
+
+
+/obj/structure/bed/roller/Destroy()
+	QDEL_NULL(iv_stand)
+	return ..()
 
 /obj/structure/bed/roller/Initialize(mapload)
 	. = ..()
@@ -70,6 +153,11 @@
 /obj/structure/bed/roller/examine(mob/user)
 	. = ..()
 	. += span_notice("You can fold it up with a Right-click.")
+	if(iv_stand)
+		. += iv_stand.examine(user)
+		. += span_info("You can use a <b>screwdriver</b> to remove [iv_stand].")
+	else
+		. += span_notice("It has mounting points for an IV stand.")
 
 /obj/structure/bed/roller/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/roller/robo))
@@ -98,6 +186,8 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!ishuman(user) || !user.canUseTopic(src, BE_CLOSE))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(iv_stand)
+		return iv_stand.attack_hand_secondary(user, modifiers)
 	if(has_buckled_mobs())
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	user.visible_message(span_notice("[user] collapses [src]."), span_notice("You collapse [src]."))

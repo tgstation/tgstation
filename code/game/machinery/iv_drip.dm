@@ -16,6 +16,8 @@
 	use_power = NO_POWER_USE
 	///Who are we sticking our needle in?
 	var/mob/living/carbon/attached
+	///are we attached to a roller bed?
+	var/obj/structure/bed/roller/roller_bed
 	///Are we donating or injecting?
 	var/mode = IV_INJECTING
 	///whether we feed slower
@@ -85,7 +87,7 @@
 
 /obj/machinery/iv_drip/update_icon_state()
 	if(attached)
-		icon_state = "[base_icon_state]_[mode ? "injecting" : "donating"]"
+		icon_state = "[base_icon_state]_[mode ? "injecting" : "donating"]" //if you change these make sure to update rollerbeds. <3
 	else
 		icon_state = "[base_icon_state]_[mode ? "injectidle" : "donateidle"]"
 	return ..()
@@ -103,7 +105,7 @@
 
 	var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/iv_drip.dmi', "reagent")
 	var/percent = round((target_reagents.total_volume / target_reagents.maximum_volume) * 100)
-	switch(percent)
+	switch(percent) //if you change these make sure to update rollerbeds. <3
 		if(0 to 9)
 			filling_overlay.icon_state = "reagent0"
 		if(10 to 24)
