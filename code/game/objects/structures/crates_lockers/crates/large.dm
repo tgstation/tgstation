@@ -28,7 +28,8 @@
 	if(W.tool_behaviour == TOOL_CROWBAR)
 		if(manifest)
 			tear_manifest(user)
-
+		if(SEND_SIGNAL(src, COMSIG_CLOSET_PRE_OPEN, user, force) & BLOCK_OPEN)
+			return FALSE
 		user.visible_message(span_notice("[user] pries \the [src] open."), \
 			span_notice("You pry open \the [src]."), \
 			span_hear("You hear splitting wood."))
@@ -39,7 +40,7 @@
 			new material_drop(src)
 		for(var/atom/movable/AM in contents)
 			AM.forceMove(T)
-
+		SEND_SIGNAL(src, COMSIG_CLOSET_POST_OPEN, force)
 		qdel(src)
 
 	else
