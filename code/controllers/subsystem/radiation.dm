@@ -33,34 +33,38 @@ SUBSYSTEM_DEF(radiation)
 	var/list/cached_rad_insulations = list()
 	var/list/cached_turfs_to_process = pulse_information.turfs_to_process
 	var/turfs_iterated = 0
+	var/distance
 	for (var/turf/turf_to_irradiate as anything in cached_turfs_to_process)
 		turfs_iterated += 1
 		for (var/atom/movable/target in turf_to_irradiate)
 			if (!can_irradiate_basic(target))
 				continue
 
-			var/current_insulation = 1
+			distance = get_dist_euclidian(source, target)
+
+			///The combined attenuation of all atoms in the path of the radiation to target, in decibels.
+			var/current_insulation = 0
 
 			for (var/turf/turf_in_between in get_line(source, target) - get_turf(source))
 				var/insulation = cached_rad_insulations[turf_in_between]
 				if (isnull(insulation))
 					insulation = turf_in_between.rad_insulation
 					for (var/atom/on_turf as anything in turf_in_between.contents)
-						insulation *= on_turf.rad_insulation
+						insulation += on_turf.rad_insulation
 					cached_rad_insulations[turf_in_between] = insulation
 
-				current_insulation *= insulation
+				current_insulation += insulation
 
-				if (current_insulation <= pulse_information.threshold)
+				if (current_insulation >= pulse_information.threshold)
 					break
 
-			SEND_SIGNAL(target, COMSIG_IN_RANGE_OF_IRRADIATION, pulse_information, current_insulation)
+			SEND_SIGNAL(target, COMSIG_IN_RANGE_OF_IRRADIATION, pulse_information, current_insulation, distance)
 
 			// Check a second time, because of TRAIT_BYPASS_EARLY_IRRADIATED_CHECK
 			if (HAS_TRAIT(target, TRAIT_IRRADIATED))
 				continue
 
-			if (current_insulation <= pulse_information.threshold)
+			if (current_insulation >= pulse_information.threshold)
 				continue
 
 			/// Perceived chance of target getting irradiated.
@@ -74,8 +78,8 @@ SUBSYSTEM_DEF(radiation)
 
 			if(pulse_information.chance < 100) // Prevents log(0) runtime if chance is 100%
 				intensity = -log(1 - pulse_information.chance / 100) * (1 + pulse_information.max_range / 2) ** 2
-				perceived_intensity = intensity * INVERSE((1 + get_dist_euclidian(source, target)) ** 2) // Diminishes over range.
-				perceived_intensity *= (current_insulation - pulse_information.threshold) * INVERSE(1 - pulse_information.threshold) // Perceived intensity decreases as objects that absorb radiation block its trajectory.
+				perceived_intensity = intensity * INVERSE((1 + distance) ** 2) // Diminishes over range.
+				perceived_intensity *= (0.1 ** (current_insulation / 10) - 0.1 ** (pulse_information.threshold / 10)) * INVERSE(1 - 0.1 ** (pulse_information.threshold / 10)) // Perceived intensity decreases as objects that absorb radiation block its trajectory.
 				perceived_chance = 100 * (1 - NUM_E ** -perceived_intensity)
 			else
 				perceived_chance = 100

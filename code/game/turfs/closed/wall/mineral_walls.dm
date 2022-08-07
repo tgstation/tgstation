@@ -6,6 +6,7 @@
 	canSmoothWith = null
 	rcd_memory = null
 	material_flags = MATERIAL_EFFECTS
+	rad_insulation = RAD_MEDIUM_INSULATION
 
 /turf/closed/wall/mineral/gold
 	name = "gold wall"
@@ -19,6 +20,7 @@
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_GOLD_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_GOLD_WALLS)
 	custom_materials = list(/datum/material/gold = 4000)
+	rad_insulation = RAD_HEAVY_INSULATION
 
 /turf/closed/wall/mineral/silver
 	name = "silver wall"
@@ -32,6 +34,7 @@
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_SILVER_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_SILVER_WALLS)
 	custom_materials = list(/datum/material/silver = 4000)
+	rad_insulation = RAD_HEAVY_INSULATION
 
 /turf/closed/wall/mineral/diamond
 	name = "diamond wall"
@@ -47,6 +50,7 @@
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_DIAMOND_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_DIAMOND_WALLS)
 	custom_materials = list(/datum/material/diamond = 4000)
+	rad_insulation = RAD_HEAVY_INSULATION
 
 /turf/closed/wall/mineral/diamond/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, damage = 41)
 	return ..()
@@ -63,6 +67,7 @@
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_BANANIUM_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_BANANIUM_WALLS)
 	custom_materials = list(/datum/material/bananium = 4000)
+	rad_insulation = RAD_NO_INSULATION
 
 /turf/closed/wall/mineral/sandstone
 	name = "sandstone wall"
@@ -91,6 +96,7 @@
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_URANIUM_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_URANIUM_WALLS)
 	custom_materials = list(/datum/material/uranium = 4000)
+	rad_insulation = RAD_NO_INSULATION
 
 	/// Mutex to prevent infinite recursion when propagating radiation pulses
 	var/active = null
@@ -148,6 +154,7 @@
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_PLASMA_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_PLASMA_WALLS)
 	custom_materials = list(/datum/material/plasma = 4000)
+	rad_insulation = RAD_EXTREME_INSULATION
 
 /turf/closed/wall/mineral/wood
 	name = "wooden wall"
@@ -163,6 +170,7 @@
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_WOOD_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_WOOD_WALLS)
 	custom_materials = list(/datum/material/wood = 4000)
+	rad_insulation = RAD_LIGHT_INSULATION
 
 /turf/closed/wall/mineral/wood/attackby(obj/item/W, mob/user)
 	if(W.get_sharpness() && W.force)
@@ -181,6 +189,7 @@
 	desc = "A solidly wooden wall. It's a bit weaker than a wall made with metal."
 	girder_type = /obj/structure/barricade/wooden
 	hardness = 67 //a bit weaker than iron (60)
+	rad_insulation = RAD_VERY_LIGHT_INSULATION
 
 /turf/closed/wall/mineral/bamboo
 	name = "bamboo wall"
@@ -192,6 +201,7 @@
 	canSmoothWith = list(SMOOTH_GROUP_BAMBOO_WALLS)
 	sheet_type = /obj/item/stack/sheet/mineral/bamboo
 	hardness = 80 //it's not a mineral...
+	rad_insulation = RAD_VERY_LIGHT_INSULATION
 
 /turf/closed/wall/mineral/iron
 	name = "rough iron wall"
@@ -241,6 +251,7 @@
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_ABDUCTOR_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_ABDUCTOR_WALLS)
 	custom_materials = list(/datum/material/alloy/alien = 4000)
+	rad_insulation = RAD_EXTREME_INSULATION
 
 /////////////////////Titanium walls/////////////////////
 
@@ -321,6 +332,7 @@
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_PLASTITANIUM_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_PLASTITANIUM_WALLS, SMOOTH_GROUP_SYNDICATE_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_PARTS)
 	custom_materials = list(/datum/material/alloy/plastitanium = 4000)
+	rad_insulation = RAD_EXTREME_INSULATION
 
 /turf/closed/wall/mineral/plastitanium/rust_heretic_act()
 	return // plastitanium does not rust

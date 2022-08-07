@@ -543,7 +543,7 @@
 		radiation_pulse(
 			source = loc,
 			max_range = rad_pulse_size,
-			threshold = 0.05,
+			threshold = 20,
 		)
 
 	if(em_pulse)
@@ -576,7 +576,7 @@
 	radiation_pulse(
 		src,
 		max_range = 6,
-		threshold = 0.3,
+		threshold = RAD_EXTREME_INSULATION,
 	)
 
 /*

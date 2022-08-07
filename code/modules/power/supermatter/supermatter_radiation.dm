@@ -1,8 +1,5 @@
-// Any power past this number will be clamped down
-#define MAX_ACCEPTED_POWER_OUTPUT 5000
-
-// At the highest power output, assuming no integrity changes, the threshold will be 0.
-#define THRESHOLD_EQUATION_SLOPE (-1 / MAX_ACCEPTED_POWER_OUTPUT)
+// The divisor for the power_factor when calculating the threshold.
+#define THRESHOLD_POWER_DIVISOR 750
 
 // The higher this number, the faster low integrity will drop threshold
 // I would've named this "power", but y'know. :P
@@ -20,7 +17,7 @@
 /obj/machinery/power/supermatter_crystal/proc/emit_radiation()
 	// As power goes up, rads go up.
 	// A standard N2 SM seems to produce a value of around 1,500.
-	var/power_factor = min(power, MAX_ACCEPTED_POWER_OUTPUT)
+	var/power_factor = power
 
 	var/integrity = 1 - CLAMP01(damage / explosion_point)
 
@@ -32,17 +29,17 @@
 
 	power_factor = max(power_factor, integrity_power_nudge)
 
-	// At the "normal" N2 power output (with max integrity), this is 0.7, which is enough to be stopped
+	// At the "normal" N2 power output (with max integrity), this is 2dB, which is enough to be stopped
 	// by the walls or the radation shutters.
 	// As integrity does down, rads go up.
 	var/threshold
 	switch(integrity)
 		if(0)
-			threshold = power_factor ? 0 : 1
+			threshold = power_factor ? RAD_FULL_INSULATION : RAD_NO_INSULATION
 		if(1)
-			threshold = (THRESHOLD_EQUATION_SLOPE * power_factor + 1)
+			threshold = power_factor / THRESHOLD_POWER_DIVISOR
 		else
-			threshold = (THRESHOLD_EQUATION_SLOPE * power_factor + 1) ** ((1 / integrity) ** INTEGRITY_EXPONENTIAL_DEGREE)
+			threshold = power_factor / (THRESHOLD_POWER_DIVISOR * integrity ** INTEGRITY_EXPONENTIAL_DEGREE)
 
 	// Calculating chance is done entirely on integrity, so that actively delaminating SMs feel more dangerous
 	var/chance = (CHANCE_EQUATION_SLOPE * (1 - integrity)) + RADIATION_CHANCE_AT_FULL_INTEGRITY
@@ -58,7 +55,5 @@
 #undef INTEGRITY_EXPONENTIAL_DEGREE
 #undef INTEGRITY_MAX_POWER_NUDGE
 #undef INTEGRITY_MIN_NUDGABLE_AMOUNT
-#undef MAX_ACCEPTED_POWER_OUTPUT
 #undef RADIATION_CHANCE_AT_FULL_INTEGRITY
 #undef RADIATION_CHANCE_AT_ZERO_INTEGRITY
-#undef THRESHOLD_EQUATION_SLOPE

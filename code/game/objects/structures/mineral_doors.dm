@@ -232,6 +232,7 @@
 	sheetType = /obj/item/stack/sheet/mineral/uranium
 	max_integrity = 300
 	light_range = 2
+	rad_insulation = RAD_NO_INSULATION
 
 /obj/structure/mineral_door/uranium/ComponentInitialize()
 	return
@@ -254,13 +255,14 @@
 	name = "plasma door"
 	icon_state = "plasma"
 	sheetType = /obj/item/stack/sheet/mineral/plasma
+	rad_insulation = RAD_EXTREME_INSULATION
 
 /obj/structure/mineral_door/transparent/diamond
 	name = "diamond door"
 	icon_state = "diamond"
 	sheetType = /obj/item/stack/sheet/mineral/diamond
 	max_integrity = 1000
-	rad_insulation = RAD_EXTREME_INSULATION
+	rad_insulation = RAD_HEAVY_INSULATION
 
 /obj/structure/mineral_door/wood
 	name = "wood door"

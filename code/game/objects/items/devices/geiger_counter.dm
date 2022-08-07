@@ -13,6 +13,9 @@
 	custom_materials = list(/datum/material/iron = 150, /datum/material/glass = 150)
 
 	var/last_perceived_radiation_danger = null
+	var/list/perceived_information = list()
+	var/perceived_threshold = null
+	var/perceived_distance = null
 
 	var/scanning = FALSE
 
@@ -26,6 +29,10 @@
 	if(!scanning)
 		return
 	. += span_info("Alt-click it to clear stored radiation levels.")
+	if(!isnull(perceived_distance))
+		. += span_notice("The epicenter of the radiation is [perceived_distance] meters away.")
+	if(perceived_threshold > 0)
+		. += span_danger("The radiation requires a reduction of [perceived_threshold]dB to be harmless.")
 	switch(last_perceived_radiation_danger)
 		if(null)
 			. += span_notice("Ambient radiation level count reports that all is well.")
@@ -74,6 +81,8 @@
 		return
 
 	if (!CAN_IRRADIATE(target))
+		if (target.rad_insulation)
+			to_chat(user, span_info("\the [target] can attenuate [target.rad_insulation]dB of radiation."))
 		return
 
 	user.visible_message(span_notice("[user] scans [target] with [src]."), span_notice("You scan [target]'s radiation levels with [src]..."))
@@ -89,10 +98,13 @@
 
 	UnregisterSignal(user, COMSIG_IN_RANGE_OF_IRRADIATION)
 
-/obj/item/geiger_counter/proc/on_pre_potential_irradiation(datum/source, datum/radiation_pulse_information/pulse_information, insulation_to_target)
+/obj/item/geiger_counter/proc/on_pre_potential_irradiation(datum/source, datum/radiation_pulse_information/pulse_information, insulation_to_target, distance)
 	SIGNAL_HANDLER
 
 	last_perceived_radiation_danger = get_perceived_radiation_danger(pulse_information, insulation_to_target)
+	perceived_information = get_perceived_radiation_pulse_information(pulse_information, insulation_to_target, distance)
+	perceived_threshold = perceived_information["perceived_threshold"]
+	perceived_distance = perceived_information["perceived_distance"]
 	addtimer(CALLBACK(src, .proc/reset_perceived_danger), TIME_WITHOUT_RADIATION_BEFORE_RESET, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 	if (scanning)
@@ -100,6 +112,9 @@
 
 /obj/item/geiger_counter/proc/reset_perceived_danger()
 	last_perceived_radiation_danger = null
+	perceived_information = list()
+	perceived_threshold = null
+	perceived_distance = null
 	if (scanning)
 		update_appearance(UPDATE_ICON)
 
