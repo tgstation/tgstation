@@ -72,7 +72,16 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 		to_remove_string = "(\\L|^)([to_remove_string])(\\L|$)"
 		message = replacetext(message, regex(to_remove_string, "i"), "")
 
-	var/power_multiplier = base_multiplier * (user.mind?.assigned_role.voice_of_god_power || 1)
+	var/power_multiplier = base_multiplier //strength of user's voice, modified by job
+
+	if (user.mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND) //Command staff has authority
+		power_multiplier *= 1.4
+
+	if (user.mind.holy_role)
+		power_multiplier *= 2 //Chaplains are used to speaking for their gods
+
+	if (is_mime_job(user.mind.assigned_role)) //why are you talking
+		power_multiplier *= 0.5
 
 	//Cultists are closer to their gods and are more powerful, but they'll give themselves away
 	if(is_cultie)
@@ -156,7 +165,8 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	cooldown = COOLDOWN_STUN
 
 /datum/voice_of_god_command/silence/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
-	power_multiplier *= user.mind?.assigned_role?.voice_of_god_silence_power || 1
+	if (is_mime_job(user.mind.assigned_role) || is_curator_job(user.mind.assigned_role))
+		power_multiplier *= 3
 	for(var/mob/living/carbon/target in listeners)
 		target.silent += (10 * power_multiplier)
 

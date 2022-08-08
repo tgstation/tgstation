@@ -109,11 +109,6 @@
 	/// All values = (JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN)
 	var/job_flags = NONE
 
-	/// Multiplier for general usage of the voice of god.
-	var/voice_of_god_power = 1
-	/// Multiplier for the silence command of the voice of god.
-	var/voice_of_god_silence_power = 1
-
 	/// String. If set to a non-empty one, it will be the key for the policy text value to show this role on spawn.
 	var/policy_index = ""
 
