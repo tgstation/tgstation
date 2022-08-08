@@ -244,7 +244,7 @@
 		var/obj/item/reagent_containers/cup/glass/waterbottle/WB = target
 		if(WB.cap_on)
 			to_chat(user, span_warning("[WB] has a cap firmly twisted on!"))
-	. = ..()
+	return ..()
 
 // heehoo bottle flipping
 /obj/item/reagent_containers/cup/glass/waterbottle/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

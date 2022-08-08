@@ -6,8 +6,9 @@
 /// How much fizziness is added to the can of soda by shaking it, in percentage points
 #define SODA_FIZZINESS_SHAKE 5
 
-/obj/item/reagent_containers/cup/soda_cans
+/obj/item/reagent_containers/cup/soda_cans09
 	name = "soda can"
+	icon = 'icons/obj/drinks.dmi'
 	reagent_flags = NONE
 	spillable = FALSE
 	custom_price = PAYCHECK_CREW * 0.9
