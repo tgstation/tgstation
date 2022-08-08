@@ -108,7 +108,7 @@
 	owner.current.add_movespeed_modifier(/datum/movespeed_modifier/dragon_depression)
 	riftTimer = -1
 	SEND_SOUND(owner.current, sound('sound/vehicles/rocketlaunch.ogg'))
-	for(var/obj/structure/carp_rift/rift in rift_list)
+	for(var/obj/structure/carp_rift/rift as anything in rift_list)
 		rift.dragon = null
 		rift_list -= rift
 		if(!QDELETED(rift))
