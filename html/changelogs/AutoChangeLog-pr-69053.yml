@@ -1,5 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - bugfix: "Attempting to send back a reply to an ahelp after it is closed now sends the reply to a new ticket, rather then just dropping it and leaving you for dead with a runtime"
-  - admin: "see above"
