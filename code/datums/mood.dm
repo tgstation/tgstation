@@ -32,6 +32,10 @@
 	/// List of mood events currently active on this datum
 	var/list/mood_events = list()
 
+	/// Tracks the last mob stat, updates on change
+	/// Used to stop processing SSmood
+	var/last_stat = CONSCIOUS
+
 /datum/mood/New(mob/living/mob_to_make_moody)
 	if (!istype(mob_to_make_moody))
 		stack_trace("Tried to apply mood to a non-living atom!")
@@ -101,11 +105,11 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/mob_parent = parent?.resolve()
-	if (mob_parent.stat == DEAD && (mob_parent.datum_flags & DF_ISPROCESSING))
-		STOP_PROCESSING(SSmood, src)
-	else if (mob_parent.stat != DEAD && !(mob_parent.datum_flags & DF_ISPROCESSING))
+	if (last_stat == DEAD && mob_parent.stat != DEAD)
 		START_PROCESSING(SSmood, src)
-
+	else if (last_stat != DEAD && mob_parent.stat == DEAD)
+		STOP_PROCESSING(SSmood, src)
+	last_stat = mob_parent.stat
 
 /// Handles mood given by nutrition
 /datum/mood/proc/handle_nutrition()
