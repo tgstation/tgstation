@@ -397,7 +397,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	return TRUE
 
 /**
- * Inserts every time in a given list, with a progress bar
+ * Inserts every item in a given list, with a progress bar
  *
  * @param mob/user the user who is inserting the items
  * @param list/things the list of items to insert
@@ -407,11 +407,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  */
 /datum/storage/proc/handle_mass_pickup(mob/user, list/things, atom/thing_loc, list/rejections, datum/progressbar/progress)
 	var/obj/item/resolve_parent = parent?.resolve()
-	if(!resolve_parent)
-		return
-
 	var/obj/item/resolve_location = real_location?.resolve()
-	if(!resolve_location)
+	if(!resolve_parent || !resolve_location)
 		return
 
 	for(var/obj/item/thing in things)
@@ -420,7 +417,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			continue
 		if(thing.type in rejections) // To limit bag spamming: any given type only complains once
 			continue
-		if(!attempt_insert(resolve_parent, thing, user, TRUE)) // Note can_be_inserted still makes noise when the answer is no
+		if(!attempt_insert(thing, user, TRUE)) // Note can_be_inserted still makes noise when the answer is no
 			if(resolve_location.contents.len >= max_slots)
 				break
 			rejections += thing.type // therefore full bags are still a little spammy
@@ -628,17 +625,17 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	SIGNAL_HANDLER
 
 	if(!istype(thing) || !allow_quick_gather || thing.atom_storage)
-		return FALSE
+		return
 
 	if(collection_mode == COLLECT_ONE)
-		attempt_insert(source, thing, user)
-		return TRUE
+		attempt_insert(thing, user)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(!isturf(thing.loc))
-		return TRUE
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	INVOKE_ASYNC(src, .proc/collect_on_turf, thing, user)
-	return TRUE
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /**
  * Collects every item of a type on a turf.
