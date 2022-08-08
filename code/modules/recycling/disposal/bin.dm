@@ -269,7 +269,10 @@
 			continue
 		if(user.active_storage != storage_source && to_dump.on_found(user))
 			return
-		storage_source.atom_storage.attempt_remove(to_dump, src, silent = TRUE)
+		if(!storage_source.atom_storage.attempt_remove(to_dump, src, silent = TRUE))
+			continue
+		to_dump.pixel_x = to_dump.base_pixel_x + rand(-5, 5)
+		to_dump.pixel_y = to_dump.base_pixel_y + rand(-5, 5)
 
 // Disposal bin
 // Holds items for disposal into pipe system

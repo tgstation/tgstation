@@ -120,7 +120,8 @@
 
 	RegisterSignal(resolve_parent, COMSIG_ITEM_ATTACK_SELF, .proc/mass_empty)
 
-	RegisterSignal(resolve_parent, list(COMSIG_CLICK_ALT, COMSIG_ATOM_ATTACK_GHOST, COMSIG_ATOM_ATTACK_HAND_SECONDARY, COMSIG_PARENT_ATTACKBY_SECONDARY), .proc/open_storage_on_signal)
+	RegisterSignal(resolve_parent, list(COMSIG_CLICK_ALT, COMSIG_ATOM_ATTACK_GHOST, COMSIG_ATOM_ATTACK_HAND_SECONDARY), .proc/open_storage_on_signal)
+	RegisterSignal(resolve_parent, COMSIG_PARENT_ATTACKBY_SECONDARY, .proc/open_storage_attackby_secondary)
 
 	RegisterSignal(resolve_location, COMSIG_ATOM_ENTERED, .proc/handle_enter)
 	RegisterSignal(resolve_location, COMSIG_ATOM_EXITED, .proc/handle_exit)
@@ -899,6 +900,12 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	closer.screen_loc = "[screen_start_x + cols]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y]"
 
+
+/// Signal handler for when we get attacked with secondary click by an item.
+/datum/storage/proc/open_storage_attackby_secondary(datum/source, atom/weapon, mob/user)
+	SIGNAL_HANDLER
+
+	return open_storage_on_signal(source, user)
 
 /// Signal handler to open up the storage when we recieve a signal.
 /datum/storage/proc/open_storage_on_signal(datum/source, mob/to_show)
