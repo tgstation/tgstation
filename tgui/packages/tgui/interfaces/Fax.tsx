@@ -18,7 +18,7 @@ type FaxInfo = {
 export const Fax = (props, context) => {
   const { act } = useBackend(context);
   const { data } = useBackend<FaxData>(context);
-  const faxes = sortBy((fax) => fax.name)(data.faxes);
+  const faxes = sortBy((fax: FaxInfo) => fax.name)(data.faxes);
   return (
     <Window
       width={450}
@@ -34,7 +34,7 @@ export const Fax = (props, context) => {
         </Section>
         <Section title="Paper">
           <LabeledList.Item label="Paper">
-            {data.has_paper ? <font color='green'>Paper in tray </font> : <font color='red'>No paper </font>}
+            {data.has_paper ? 'Paper in tray ' : 'No paper '}
             <Button
               onClick={() => act('remove')}
               disabled={data.has_paper ? false : true}>
@@ -44,7 +44,7 @@ export const Fax = (props, context) => {
         </Section>
         <Section title="Send">
           <Box mt={0.4}>
-          {faxes.map((fax) => (
+          {faxes.map((fax: FaxInfo) => (
             <Button
               key={fax.id}
               title={fax.name}

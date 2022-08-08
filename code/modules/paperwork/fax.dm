@@ -58,11 +58,11 @@
 			fax_name = new_fax_name
 		return
 
-/obj/machinery/fax/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/paper))
+/obj/machinery/fax/attackby(obj/item/item, mob/user, params)
+	if(istype(item, /obj/item/paper))
 		if(!paper_contain)
-			paper_contain = I
-			I.forceMove(src)
+			paper_contain = item
+			item.forceMove(src)
 			update_appearance()
 		return
 	return ..()
