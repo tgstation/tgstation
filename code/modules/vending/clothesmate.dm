@@ -36,7 +36,7 @@
 
 		list(
 			"name" = "Accessories",
-			"icon" = "vest-patches",
+			"icon" = "glasses",
 			"products" = list(
 				/obj/item/clothing/accessory/pride = 15,
 				/obj/item/clothing/accessory/waistcoat = 4,
@@ -56,7 +56,7 @@
 
 		list(
 			"name" = "Under",
-			"icon" = "shirt-tank-top",
+			"icon" = "shirt",
 			"products" = list(
 				/obj/item/clothing/under/pants/slacks = 5,
 				/obj/item/clothing/under/shorts = 5,
@@ -81,7 +81,7 @@
 
 		list(
 			"name" = "Suits & Skirts",
-			"icon" = "shirt-long-sleeve",
+			"icon" = "vest",
 			"products" = list(
 				/obj/item/clothing/suit/toggle/jacket/sweater = 4,
 				/obj/item/clothing/suit/jacket/oversized = 4,

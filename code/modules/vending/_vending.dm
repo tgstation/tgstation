@@ -370,7 +370,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 /obj/machinery/vending/proc/build_inventories(start_empty)
 	build_inventory(products, product_records, product_categories, start_empty)
 	build_inventory(contraband, hidden_records, create_categories_from(contraband, "mask", "Contraband"), start_empty)
-	build_inventory(premium, coin_records, create_categories_from(premium, "sparkles", "Premium"), start_empty)
+	build_inventory(premium, coin_records, create_categories_from(premium, "coins", "Premium"), start_empty)
 
 /obj/machinery/vending/proc/create_categories_from(products, icon, name)
 	return list(list(
@@ -886,42 +886,54 @@ GLOBAL_LIST_EMPTY(vending_products)
 		ui.open()
 
 /obj/machinery/vending/ui_static_data(mob/user)
-	. = list()
-	.["onstation"] = onstation
-	.["department"] = payment_department
-	.["jobDiscount"] = DEPARTMENT_DISCOUNT
-	.["product_records"] = list()
-	for (var/datum/data/vending_product/R in product_records)
-		var/list/data = list(
-			path = replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-"),
-			name = R.name,
-			price = R.custom_price || default_price,
-			max_amount = R.max_amount,
-			ref = REF(R)
+	var/list/data = list()
+	data["onstation"] = onstation
+	data["department"] = payment_department
+	data["jobDiscount"] = DEPARTMENT_DISCOUNT
+	data["product_records"] = list()
+
+	var/list/categories = list()
+
+	data["product_records"] = collect_records_for_static_data(product_records, categories)
+	data["coin_records"] = collect_records_for_static_data(coin_records, categories, premium = TRUE)
+	data["hidden_records"] = collect_records_for_static_data(hidden_records, categories, premium = TRUE)
+
+	data["categories"] = categories
+
+	return data
+
+/obj/machinery/vending/proc/collect_records_for_static_data(list/records, list/categories, premium)
+	var/static/list/default_category = list(
+		"name" = "Products",
+		"icon" = "cart-shopping",
+	)
+
+	var/list/out_records = list()
+
+	for (var/datum/data/vending_product/record as anything in records)
+		var/list/static_record = list(
+			path = replacetext(replacetext("[record.product_path]", "/obj/item/", ""), "/", "-"),
+			name = record.name,
+			price = premium ? (record.custom_premium_price || extra_price) : (record.custom_price || default_price),
+			max_amount = record.max_amount,
+			ref = REF(record),
 		)
-		.["product_records"] += list(data)
-	.["coin_records"] = list()
-	for (var/datum/data/vending_product/R in coin_records)
-		var/list/data = list(
-			path = replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-"),
-			name = R.name,
-			price = R.custom_premium_price || extra_price,
-			max_amount = R.max_amount,
-			ref = REF(R),
-			premium = TRUE
-		)
-		.["coin_records"] += list(data)
-	.["hidden_records"] = list()
-	for (var/datum/data/vending_product/R in hidden_records)
-		var/list/data = list(
-			path = replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-"),
-			name = R.name,
-			price = R.custom_premium_price || extra_price,
-			max_amount = R.max_amount,
-			ref = REF(R),
-			premium = TRUE
-		)
-		.["hidden_records"] += list(data)
+
+		var/list/category = record.category || default_category
+		if (!isnull(category))
+			if (!(category["name"] in categories))
+				categories[category["name"]] = list(
+					"icon" = category["icon"],
+				)
+
+			static_record["category"] = category["name"]
+
+		if (premium)
+			static_record["premium"] = TRUE
+
+		out_records += list(static_record)
+
+	return out_records
 
 /obj/machinery/vending/ui_data(mob/user)
 	. = list()
@@ -941,28 +953,14 @@ GLOBAL_LIST_EMPTY(vending_products)
 			.["user"]["department"] = "No Department"
 	.["stock"] = list()
 
-	var/list/categories = list()
-
 	for (var/datum/data/vending_product/product_record in product_records + coin_records + hidden_records)
-		var/list/category = product_record.category
-
 		var/list/product_data = list(
 			name = product_record.name,
 			amount = product_record.amount,
 			colorable = product_record.colorable,
 		)
 
-		if (!isnull(category))
-			categories[category["name"]] = list(
-				"icon" = category["icon"],
-			)
-
-			product_data["category"] = category["name"]
-
 		.["stock"][product_record.name] = product_data
-
-	if (categories.len > 0)
-		.["categories"] = categories
 
 	.["extended_inventory"] = extended_inventory
 
