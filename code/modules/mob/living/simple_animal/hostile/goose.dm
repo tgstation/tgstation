@@ -118,7 +118,7 @@
 	if(feed(O))
 		return TRUE
 
-/mob/living/simple_animal/hostile/retaliate/goose/vomit/feed(obj/item/reagent_containers/food/tasty)
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/feed(obj/item/food/tasty)
 	. = ..()
 	if(. || !istype(tasty))
 		return FALSE
@@ -127,7 +127,7 @@
 			visible_message(span_notice("[src] looks too full to eat \the [tasty]!"))
 			message_cooldown = world.time + 5 SECONDS
 		return FALSE
-	if (tasty.foodtype & GROSS)
+	if (tasty.foodtypes & GROSS)
 		visible_message(span_notice("[src] hungrily gobbles up \the [tasty]!"))
 		tasty.forceMove(src)
 		playsound(src,'sound/items/eatfood.ogg', 70, TRUE)

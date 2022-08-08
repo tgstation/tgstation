@@ -26,7 +26,7 @@
 		/obj/item/reagent_containers/glass/beaker,
 		/obj/item/reagent_containers/glass/bottle,
 		/obj/item/reagent_containers/food/drinks/waterbottle,
-		/obj/item/reagent_containers/food/condiment,
+		/obj/item/reagent_containers/condiment,
 	))
 
 /obj/item/storage/portable_chem_mixer/Destroy()

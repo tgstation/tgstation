@@ -163,7 +163,7 @@
 	desc = "A special apparatus for carrying drinks without spilling the contents. Will resynthesize any drinks you pour out!"
 	icon_state = "borg_beaker_apparatus"
 	storable = list(/obj/item/reagent_containers/food/drinks,
-					/obj/item/reagent_containers/food/condiment)
+					/obj/item/reagent_containers/condiment)
 
 /obj/item/borg/apparatus/beaker/service/add_glass()
 	stored = new /obj/item/reagent_containers/food/drinks/drinkingglass(src)

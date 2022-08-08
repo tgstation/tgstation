@@ -219,17 +219,17 @@
 	name = "condiment spawner"
 	icon_state = "condiment"
 	loot = list(
-		/obj/item/reagent_containers/food/condiment/saltshaker = 3,
-		/obj/item/reagent_containers/food/condiment/peppermill = 3,
-		/obj/item/reagent_containers/food/condiment/pack/ketchup = 3,
-		/obj/item/reagent_containers/food/condiment/pack/hotsauce = 3,
-		/obj/item/reagent_containers/food/condiment/pack/astrotame = 3,
-		/obj/item/reagent_containers/food/condiment/pack/bbqsauce = 3,
-		/obj/item/reagent_containers/food/condiment/bbqsauce = 1,
-		/obj/item/reagent_containers/food/condiment/soysauce = 1,
-		/obj/item/reagent_containers/food/condiment/vinegar = 1,
-		/obj/item/reagent_containers/food/condiment/peanut_butter = 1,
-		/obj/item/reagent_containers/food/condiment/quality_oil = 1,
+		/obj/item/reagent_containers/condiment/saltshaker = 3,
+		/obj/item/reagent_containers/condiment/peppermill = 3,
+		/obj/item/reagent_containers/condiment/pack/ketchup = 3,
+		/obj/item/reagent_containers/condiment/pack/hotsauce = 3,
+		/obj/item/reagent_containers/condiment/pack/astrotame = 3,
+		/obj/item/reagent_containers/condiment/pack/bbqsauce = 3,
+		/obj/item/reagent_containers/condiment/bbqsauce = 1,
+		/obj/item/reagent_containers/condiment/soysauce = 1,
+		/obj/item/reagent_containers/condiment/vinegar = 1,
+		/obj/item/reagent_containers/condiment/peanut_butter = 1,
+		/obj/item/reagent_containers/condiment/quality_oil = 1,
 	)
 
 /obj/effect/spawner/random/food_or_drink/cups

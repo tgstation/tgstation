@@ -421,18 +421,18 @@
 				reagents.trans_to(P, vol_each, transfered_by = usr)
 			return TRUE
 		if(item_type == "condimentPack")
-			var/obj/item/reagent_containers/food/condiment/pack/P
+			var/obj/item/reagent_containers/condiment/pack/P
 			for(var/i in 1 to amount)
-				P = new/obj/item/reagent_containers/food/condiment/pack(drop_location())
+				P = new/obj/item/reagent_containers/condiment/pack(drop_location())
 				P.originalname = name
 				P.name = trim("[name] pack")
 				P.desc = "A small condiment pack. The label says it contains [name]."
 				reagents.trans_to(P, vol_each, transfered_by = usr)
 			return TRUE
 		if(item_type == "condimentBottle")
-			var/obj/item/reagent_containers/food/condiment/P
+			var/obj/item/reagent_containers/condiment/P
 			for(var/i in 1 to amount)
-				P = new/obj/item/reagent_containers/food/condiment(drop_location())
+				P = new/obj/item/reagent_containers/condiment(drop_location())
 				if (style)
 					apply_condi_style(P, style)
 				P.renamedByPlayer = TRUE

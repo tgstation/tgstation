@@ -20,8 +20,8 @@
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	isGlass = TRUE
-	foodtype = ALCOHOL
-	age_restricted = TRUE // wrryy can't set an init value to see if foodtype contains ALCOHOL so here we go
+	drink_type = ALCOHOL
+	age_restricted = TRUE // wrryy can't set an init value to see if drink_type contains ALCOHOL so here we go
 	///Directly relates to the 'knockdown' duration. Lowered by armor (i.e. helmets)
 	var/bottle_knockdown_duration = 1.3 SECONDS
 
@@ -167,7 +167,7 @@
 	icon_state = "beer"
 	volume = 30
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 30)
-	foodtype = GRAIN | ALCOHOL
+	drink_type = GRAIN | ALCOHOL
 	custom_price = PAYCHECK_CREW
 
 /obj/item/reagent_containers/food/drinks/bottle/beer/almost_empty
@@ -183,7 +183,7 @@
 	desc = "A popular, old-fashioned brand of root beer, known for its extremely sugary formula. Might make you want a nap afterwards."
 	volume = 30
 	list_reagents = list(/datum/reagent/consumable/rootbeer = 30)
-	foodtype = SUGAR | JUNKFOOD
+	drink_type = SUGAR | JUNKFOOD
 	custom_price = PAYCHECK_CREW * 1.5
 	custom_premium_price = PAYCHECK_CREW * 2
 
@@ -193,7 +193,7 @@
 	icon_state = "alebottle"
 	volume = 30
 	list_reagents = list(/datum/reagent/consumable/ethanol/ale = 30)
-	foodtype = GRAIN | ALCOHOL
+	drink_type = GRAIN | ALCOHOL
 	custom_price = PAYCHECK_CREW
 
 /obj/item/reagent_containers/food/drinks/bottle/gin
@@ -241,7 +241,7 @@
 	desc = "A bottle filled with nothing."
 	icon_state = "bottleofnothing"
 	list_reagents = list(/datum/reagent/consumable/nothing = 100)
-	foodtype = NONE
+	drink_type = NONE
 	age_restricted = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/patron
@@ -268,7 +268,7 @@
 	desc = "A flask of the chaplain's holy water."
 	icon_state = "holyflask"
 	list_reagents = list(/datum/reagent/water/holywater = 100)
-	foodtype = NONE
+	drink_type = NONE
 
 /obj/item/reagent_containers/food/drinks/bottle/holywater/hell
 	desc = "A flask of holy water...it's been sitting in the Necropolis a while though."
@@ -285,7 +285,7 @@
 	desc = "A widely known, Mexican coffee-flavoured liqueur. In production since 1936, HONK."
 	icon_state = "kahluabottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/kahlua = 100)
-	foodtype = VEGETABLES
+	drink_type = VEGETABLES
 
 /obj/item/reagent_containers/food/drinks/bottle/goldschlager
 	name = "College Girl goldschlager"
@@ -304,7 +304,7 @@
 	desc = "A faint aura of unease and asspainery surrounds the bottle."
 	icon_state = "winebottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/wine = 100)
-	foodtype = FRUIT | ALCOHOL
+	drink_type = FRUIT | ALCOHOL
 
 /obj/item/reagent_containers/food/drinks/bottle/wine/add_initial_reagents()
 	. = ..()
@@ -385,7 +385,7 @@
 	desc = "An alcoholic beverage from Space China, made by infusing lizard tails in ethanol. Inexplicably popular among command staff."
 	icon_state = "lizardwine"
 	list_reagents = list(/datum/reagent/consumable/ethanol/lizardwine = 100)
-	foodtype = FRUIT | ALCOHOL
+	drink_type = FRUIT | ALCOHOL
 
 /obj/item/reagent_containers/food/drinks/bottle/hcider
 	name = "Jian Hard Cider"
@@ -460,7 +460,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = FALSE
 	list_reagents = list(/datum/reagent/consumable/orangejuice = 100)
-	foodtype = FRUIT | BREAKFAST
+	drink_type = FRUIT | BREAKFAST
 	age_restricted = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/cream
@@ -473,7 +473,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = FALSE
 	list_reagents = list(/datum/reagent/consumable/cream = 100)
-	foodtype = DAIRY
+	drink_type = DAIRY
 	age_restricted = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/tomatojuice
@@ -486,7 +486,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = FALSE
 	list_reagents = list(/datum/reagent/consumable/tomatojuice = 100)
-	foodtype = VEGETABLES
+	drink_type = VEGETABLES
 	age_restricted = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/limejuice
@@ -499,7 +499,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = FALSE
 	list_reagents = list(/datum/reagent/consumable/limejuice = 100)
-	foodtype = FRUIT
+	drink_type = FRUIT
 	age_restricted = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/pineapplejuice
@@ -512,7 +512,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = FALSE
 	list_reagents = list(/datum/reagent/consumable/pineapplejuice = 100)
-	foodtype = FRUIT | PINEAPPLE
+	drink_type = FRUIT | PINEAPPLE
 	age_restricted = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/menthol
@@ -533,7 +533,7 @@
 	icon_state = "grenadine"
 	isGlass = TRUE
 	list_reagents = list(/datum/reagent/consumable/grenadine = 100)
-	foodtype = FRUIT
+	drink_type = FRUIT
 	age_restricted = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/applejack
@@ -543,7 +543,7 @@
 	icon_state = "applejack_bottle"
 	isGlass = TRUE
 	list_reagents = list(/datum/reagent/consumable/ethanol/applejack = 100)
-	foodtype = FRUIT
+	drink_type = FRUIT
 
 /obj/item/reagent_containers/food/drinks/bottle/champagne
 	name = "Eau d' Dandy Brut Champagne"

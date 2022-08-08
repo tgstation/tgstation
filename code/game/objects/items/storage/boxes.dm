@@ -448,7 +448,7 @@
 
 /obj/item/storage/box/condimentbottles/PopulateContents()
 	for(var/i in 1 to 6)
-		new /obj/item/reagent_containers/food/condiment(src)
+		new /obj/item/reagent_containers/condiment(src)
 
 /obj/item/storage/box/cups
 	name = "box of paper cups"
@@ -1757,9 +1757,9 @@
 /obj/item/storage/box/mothic_goods/PopulateContents()
 	for(var/i in 1 to 12)
 		var/randomFood = pick_weight(list(/obj/item/food/grown/toechtauese = 10,
-										  /obj/item/reagent_containers/food/condiment/cornmeal = 5,
-										  /obj/item/reagent_containers/food/condiment/yoghurt = 5,
-										  /obj/item/reagent_containers/food/condiment/quality_oil = 5,
+										  /obj/item/reagent_containers/condiment/cornmeal = 5,
+										  /obj/item/reagent_containers/condiment/yoghurt = 5,
+										  /obj/item/reagent_containers/condiment/quality_oil = 5,
 										  /obj/item/food/cheese/mozzarella = 5,
 										  /obj/item/food/cheese/firm_cheese = 5,
 										  /obj/item/food/cheese/wheel = 5,
