@@ -105,18 +105,18 @@
 	icon_state = "can"
 	loot = list(
 		/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola = 3,
-		/obj/item/reagent_containers/cup/glass/soda_cans/grey_bull = 3,
-		/obj/item/reagent_containers/cup/glass/soda_cans/monkey_energy = 2,
-		/obj/item/reagent_containers/cup/glass/soda_cans/thirteenloko = 2,
+		/obj/item/reagent_containers/cup/soda_cans/grey_bull = 3,
+		/obj/item/reagent_containers/cup/soda_cans/monkey_energy = 2,
+		/obj/item/reagent_containers/cup/soda_cans/thirteenloko = 2,
 		/obj/item/reagent_containers/cup/glass/bottle/beer/light = 2,
-		/obj/item/reagent_containers/cup/glass/soda_cans/shamblers = 1,
-		/obj/item/reagent_containers/cup/glass/soda_cans/pwr_game = 1,
-		/obj/item/reagent_containers/cup/glass/soda_cans/dr_gibb = 1,
-		/obj/item/reagent_containers/cup/glass/soda_cans/space_mountain_wind = 1,
-		/obj/item/reagent_containers/cup/glass/soda_cans/starkist = 1,
-		/obj/item/reagent_containers/cup/glass/soda_cans/space_up = 1,
-		/obj/item/reagent_containers/cup/glass/soda_cans/sol_dry = 1,
-		/obj/item/reagent_containers/cup/glass/soda_cans/cola = 1,
+		/obj/item/reagent_containers/cup/soda_cans/shamblers = 1,
+		/obj/item/reagent_containers/cup/soda_cans/pwr_game = 1,
+		/obj/item/reagent_containers/cup/soda_cans/dr_gibb = 1,
+		/obj/item/reagent_containers/cup/soda_cans/space_mountain_wind = 1,
+		/obj/item/reagent_containers/cup/soda_cans/starkist = 1,
+		/obj/item/reagent_containers/cup/soda_cans/space_up = 1,
+		/obj/item/reagent_containers/cup/soda_cans/sol_dry = 1,
+		/obj/item/reagent_containers/cup/soda_cans/cola = 1,
 	)
 
 /obj/effect/spawner/random/food_or_drink/booze

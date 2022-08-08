@@ -526,13 +526,13 @@
 		/obj/item/food/syndicake,
 		/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola,
 		/obj/item/reagent_containers/cup/glass/dry_ramen,
-		/obj/item/reagent_containers/cup/glass/soda_cans/cola,
-		/obj/item/reagent_containers/cup/glass/soda_cans/dr_gibb,
-		/obj/item/reagent_containers/cup/glass/soda_cans/lemon_lime,
-		/obj/item/reagent_containers/cup/glass/soda_cans/pwr_game,
-		/obj/item/reagent_containers/cup/glass/soda_cans/space_mountain_wind,
-		/obj/item/reagent_containers/cup/glass/soda_cans/space_up,
-		/obj/item/reagent_containers/cup/glass/soda_cans/starkist,
+		/obj/item/reagent_containers/cup/soda_cans/cola,
+		/obj/item/reagent_containers/cup/soda_cans/dr_gibb,
+		/obj/item/reagent_containers/cup/soda_cans/lemon_lime,
+		/obj/item/reagent_containers/cup/soda_cans/pwr_game,
+		/obj/item/reagent_containers/cup/soda_cans/space_mountain_wind,
+		/obj/item/reagent_containers/cup/soda_cans/space_up,
+		/obj/item/reagent_containers/cup/soda_cans/starkist,
 		))
 		new rig_snacks(src)
 

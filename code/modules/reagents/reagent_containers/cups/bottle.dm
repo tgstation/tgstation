@@ -141,7 +141,7 @@
 
 /// Mimics the appearance and properties of the passed in bottle.
 /// Takes the broken bottle to mimic, and the thing the bottle was broken agaisnt as args
-/obj/item/broken_bottle/proc/mimic_broken(obj/item/reagent_containers/food/drinks/to_mimic, atom/target)
+/obj/item/broken_bottle/proc/mimic_broken(obj/item/reagent_containers/cup/glass/to_mimic, atom/target)
 	icon_state = to_mimic.icon_state
 	var/icon/drink_icon = new('icons/obj/drinks.dmi', icon_state)
 	drink_icon.Blend(broken_outline, ICON_OVERLAY, rand(5), 1)

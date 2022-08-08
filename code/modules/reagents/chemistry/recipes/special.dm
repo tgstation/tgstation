@@ -7,7 +7,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 	. = list()
 	for (var/type in subtypesof(/obj/item/food))
 		var/obj/item/food/item = new type()
-		for(var/datum/reagent/reagent as anything in item.list_reagents)
+		for(var/datum/reagent/reagent as anything in item.food_reagents)
 			var/chem_flags = initial(reagent.chemical_flags)
 			if(!VALID_RANDOM_RECIPE_REAGENT(chem_flags))
 				continue

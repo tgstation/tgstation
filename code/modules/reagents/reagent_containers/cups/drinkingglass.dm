@@ -104,16 +104,16 @@
 	list_reagents = list(/datum/reagent/consumable/nuka_cola = 50)
 
 /obj/item/reagent_containers/cup/glass/drinkingglass/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/food/egg)) //breaking eggs
-		var/obj/item/food/egg/E = I
-		if(reagents)
-			if(reagents.total_volume >= reagents.maximum_volume)
-				to_chat(user, span_notice("[src] is full."))
-			else
-				to_chat(user, span_notice("You break [E] in [src]."))
-				reagents.add_reagent(/datum/reagent/consumable/eggyolk, 2)
-				reagents.add_reagent(/datum/reagent/consumable/eggwhite, 4)
-				qdel(E)
-			return
+	if(!istype(I, /obj/item/food/egg)) //breaking eggs
+		return
+	var/obj/item/food/egg/E = I
+	if(!reagents)
+		return
+	if(reagents.total_volume >= reagents.maximum_volume)
+		to_chat(user, span_notice("[src] is full."))
 	else
-		..()
+		to_chat(user, span_notice("You break [E] in [src]."))
+		reagents.add_reagent(E.food_reagents)
+		reagents.add_reagent(/datum/reagent/consumable/eggyolk, 2)
+		reagents.add_reagent(/datum/reagent/consumable/eggwhite, 4)
+		qdel(E)

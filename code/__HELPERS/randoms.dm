@@ -31,7 +31,7 @@
 ///Gets a random drink excluding the blocked type
 /proc/get_random_drink()
 	var/list/blocked = list(
-		/obj/item/reagent_containers/cup/glass/soda_cans,
+		/obj/item/reagent_containers/cup/soda_cans,
 		/obj/item/reagent_containers/cup/glass/bottle
 		)
 	return pick(subtypesof(/obj/item/reagent_containers/cup/glass) - blocked)

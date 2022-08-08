@@ -67,8 +67,8 @@
 	reqs = list(/datum/reagent/fuel = 50,
 				/obj/item/stack/cable_coil = 1,
 				/obj/item/assembly/igniter = 1,
-				/obj/item/reagent_containers/cup/glass/soda_cans = 1)
-	parts = list(/obj/item/reagent_containers/cup/glass/soda_cans = 1)
+				/obj/item/reagent_containers/cup/soda_cans = 1)
+	parts = list(/obj/item/reagent_containers/cup/soda_cans = 1)
 	time = 1.5 SECONDS
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON

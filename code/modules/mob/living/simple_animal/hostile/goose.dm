@@ -140,12 +140,12 @@
 			message_cooldown = world.time + 5 SECONDS
 			return FALSE
 
-/mob/living/simple_animal/hostile/retaliate/goose/proc/choke(obj/item/reagent_containers/food/plastic)
+/mob/living/simple_animal/hostile/retaliate/goose/proc/choke(obj/item/food/plastic)
 	if(stat == DEAD || choking)
 		return
 	addtimer(CALLBACK(src, .proc/suffocate), 300)
 
-/mob/living/simple_animal/hostile/retaliate/goose/vomit/choke(obj/item/reagent_containers/food/plastic)
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/choke(obj/item/food/plastic)
 	if(stat == DEAD || choking)
 		return
 	if(prob(25))

@@ -594,7 +594,7 @@
  * * container - condiment bottle that gets style applied to it
  * * style - assoc list, must probably one from [/obj/machinery/chem_master/proc/get_condi_styles]
  */
-/obj/machinery/chem_master/proc/apply_condi_style(obj/item/reagent_containers/food/condiment/container, list/style)
+/obj/machinery/chem_master/proc/apply_condi_style(obj/item/reagent_containers/condiment/container, list/style)
 	container.name = style["name"]
 	container.desc = style["desc"]
 	container.icon_state = style["icon_state"]

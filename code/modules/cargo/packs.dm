@@ -2050,7 +2050,7 @@
 	crate_type = /obj/structure/closet/crate
 	contains = list(/obj/item/stack/sheet/mineral/coal/five,
 					/obj/machinery/grill/unwrenched,
-					/obj/item/reagent_containers/cup/glass/soda_cans/monkey_energy
+					/obj/item/reagent_containers/cup/soda_cans/monkey_energy
 					)
 	crate_name = "grilling starter kit crate"
 
@@ -2060,7 +2060,7 @@
 	cost = CARGO_CRATE_VALUE * 4
 	crate_type = /obj/structure/closet/crate
 	contains = list(/obj/item/stack/sheet/mineral/coal/ten,
-					/obj/item/reagent_containers/cup/glass/soda_cans/monkey_energy
+					/obj/item/reagent_containers/cup/soda_cans/monkey_energy
 					)
 	crate_name = "grilling fuel kit crate"
 

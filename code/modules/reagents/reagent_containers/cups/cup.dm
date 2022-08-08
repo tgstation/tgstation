@@ -7,6 +7,48 @@
 	spillable = TRUE
 	resistance_flags = ACID_PROOF
 
+	///Like Edible's food type, what kind of drink is this?
+	var/drink_type = NONE
+	///The last time we have checked for taste.
+	var/last_check_time
+	///How much we drink at once, shot glasses drink more.
+	var/gulp_size = 5
+	///Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it.
+	var/isGlass = FALSE
+
+/obj/item/reagent_containers/cup/examine(mob/user)
+	. = ..()
+	if(drink_type)
+		var/list/types = bitfield_to_list(drink_type, FOOD_FLAGS)
+		. += span_notice("It is [lowertext(english_list(types))].")
+
+/obj/item/reagent_containers/cup/proc/checkLiked(fraction, mob/M)
+	if(last_check_time + 50 >= world.time)
+		return
+	if(!ishuman(M))
+		return
+	var/mob/living/carbon/human/H = M
+	if(HAS_TRAIT(H, TRAIT_AGEUSIA))
+		if(drink_type & H.dna.species.toxic_food)
+			to_chat(H, span_warning("You don't feel so good..."))
+			H.adjust_disgust(25 + 30 * fraction)
+	else
+		if(drink_type & H.dna.species.toxic_food)
+			to_chat(H,span_warning("What the hell was that thing?!"))
+			H.adjust_disgust(25 + 30 * fraction)
+			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "toxic_food", /datum/mood_event/disgusting_food)
+		else if(drink_type & H.dna.species.disliked_food)
+			to_chat(H,span_notice("That didn't taste very good..."))
+			H.adjust_disgust(11 + 15 * fraction)
+			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "gross_food", /datum/mood_event/gross_food)
+		else if(drink_type & H.dna.species.liked_food)
+			to_chat(H,span_notice("I love this taste!"))
+			H.adjust_disgust(-5 + -2.5 * fraction)
+			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "fav_food", /datum/mood_event/favorite_food)
+
+	if((drink_type & BREAKFAST) && world.time - SSticker.round_start_time < STOP_SERVING_BREAKFAST)
+		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "breakfast", /datum/mood_event/breakfast)
+	last_check_time = world.time
 
 /obj/item/reagent_containers/cup/attack(mob/M, mob/living/user, obj/target)
 	if(!canconsume(M, user))
@@ -33,7 +75,9 @@
 		else
 			to_chat(user, span_notice("You swallow a gulp of [src]."))
 		SEND_SIGNAL(src, COMSIG_GLASS_DRANK, M, user)
-		addtimer(CALLBACK(reagents, /datum/reagents.proc/trans_to, M, 5, TRUE, TRUE, FALSE, user, FALSE, INGEST), 5)
+		var/fraction = min(gulp_size/reagents.total_volume, 1)
+		addtimer(CALLBACK(reagents, /datum/reagents.proc/trans_to, M, gulp_size, TRUE, TRUE, FALSE, user, FALSE, INGEST), 5)
+		checkLiked(fraction, M)
 		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 		if(iscarbon(M))
 			var/mob/living/carbon/carbon_drinker = M
@@ -139,7 +183,7 @@
  * On accidental consumption, make sure the container is partially glass, and continue to the reagent_container proc
  */
 /obj/item/reagent_containers/cup/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item, discover_after = TRUE)
-	if(!custom_materials)
+	if(isGlass && !custom_materials)
 		set_custom_materials(list(GET_MATERIAL_REF(/datum/material/glass) = 5))//sets it to glass so, later on, it gets picked up by the glass catch (hope it doesn't 'break' things lol)
 	return ..()
 

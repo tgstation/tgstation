@@ -139,7 +139,7 @@
 	if(!visualsOnly)
 		clown.fully_replace_character_name(clown.name, pick(GLOB.clown_names))
 	if(prob(70))
-		var/backpack_loot = pick(list(/obj/item/stamp/clown = 1, /obj/item/reagent_containers/spray/waterflower = 1, /obj/item/food/grown/banana = 1, /obj/item/megaphone/clown = 1, /obj/item/reagent_containers/cup/glass/soda_cans/canned_laughter = 1, /obj/item/pneumatic_cannon/pie))
+		var/backpack_loot = pick(list(/obj/item/stamp/clown = 1, /obj/item/reagent_containers/spray/waterflower = 1, /obj/item/food/grown/banana = 1, /obj/item/megaphone/clown = 1, /obj/item/reagent_containers/cup/soda_cans/canned_laughter = 1, /obj/item/pneumatic_cannon/pie))
 		if(backpack_loot == /obj/item/pneumatic_cannon/pie)
 			drop_a_pie_cannon = TRUE
 		else
