@@ -309,6 +309,13 @@
 	if(HAS_TRAIT(sacker, TRAIT_GIANT))
 		attack_mod += 2
 
+	if(ismoth(sacker))
+		var/obj/item/organ/external/wings/moth/sacker_wing = sacker.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
+		if(!sacker_wing || sacker_wing.burnt) // moths without wing/burnt ones can't tackle properly
+			attack_mod -= 2
+		else
+			attack_mod += 2 // healty wings are used as extra propulsion
+
 	if(ishuman(target))
 		var/mob/living/carbon/human/S = sacker
 
@@ -372,6 +379,9 @@
 
 	if(HAS_TRAIT(user, TRAIT_CLUMSY))
 		oopsie_mod += 6 //honk!
+
+	if(isflyperson(user))
+		oopsie_mod += 6 // flies don't take smacking into a window/wall easily
 
 	var/oopsie = rand(danger_zone, 100)
 	if(oopsie >= 94 && oopsie_mod < 0) // good job avoiding getting paralyzed! gold star!
