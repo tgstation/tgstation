@@ -1,4 +1,4 @@
-/obj/item/reagent_containers/food/drinks/drinkingglass
+/obj/item/reagent_containers/cup/glass/drinkingglass
 	name = "drinking glass"
 	desc = "Your standard drinking glass."
 	icon_state = "glass_empty"
@@ -16,26 +16,26 @@
 	pickup_sound = 'sound/items/handling/drinkglass_pickup.ogg'
 	custom_price = PAYCHECK_LOWER
 
-/obj/item/reagent_containers/food/drinks/drinkingglass/on_reagent_change(datum/reagents/holder, ...)
+/obj/item/reagent_containers/cup/glass/drinkingglass/on_reagent_change(datum/reagents/holder, ...)
 	. = ..()
 	if(!length(reagents.reagent_list))
 		renamedByPlayer = FALSE //so new drinks can rename the glass
 
-/obj/item/reagent_containers/food/drinks/drinkingglass/update_name(updates)
+/obj/item/reagent_containers/cup/glass/drinkingglass/update_name(updates)
 	if(renamedByPlayer)
 		return
 	. = ..()
 	var/datum/reagent/largest_reagent = reagents.get_master_reagent()
 	name = largest_reagent?.glass_name || initial(name)
 
-/obj/item/reagent_containers/food/drinks/drinkingglass/update_desc(updates)
+/obj/item/reagent_containers/cup/glass/drinkingglass/update_desc(updates)
 	if(renamedByPlayer)
 		return
 	. = ..()
 	var/datum/reagent/largest_reagent = reagents.get_master_reagent()
 	desc = largest_reagent?.glass_desc || initial(desc)
 
-/obj/item/reagent_containers/food/drinks/drinkingglass/update_icon_state()
+/obj/item/reagent_containers/cup/glass/drinkingglass/update_icon_state()
 	if(!reagents.total_volume)
 		icon_state = base_icon_state
 		return ..()
@@ -50,7 +50,7 @@
 		icon_state = base_icon_state
 	return ..()
 
-/obj/item/reagent_containers/food/drinks/drinkingglass/proc/get_glass_icon(datum/reagent/largest_reagent)
+/obj/item/reagent_containers/cup/glass/drinkingglass/proc/get_glass_icon(datum/reagent/largest_reagent)
 	return largest_reagent?.glass_icon_state
 
 //Shot glasses!//
@@ -60,7 +60,7 @@
 //  You can only mix the ported-over drinks in shot glasses for now (they'll mix in a shaker, but the sprite won't change for glasses). //
 //  This is on a case-by-case basis, and you can even make a separate sprite for shot glasses if you want. //
 
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass
 	name = "shot glass"
 	desc = "A shot glass - the universal symbol for bad decisions."
 	icon_state = "shotglass"
@@ -73,13 +73,13 @@
 	custom_materials = list(/datum/material/glass=100)
 	custom_price = PAYCHECK_CREW * 0.4
 
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/update_name(updates)
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass/update_name(updates)
 	if(renamedByPlayer)
 		return
 	. = ..()
 	name = "[length(reagents.reagent_list) ? "filled " : null]shot glass"
 
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/update_desc(updates)
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass/update_desc(updates)
 	if(renamedByPlayer)
 		return
 	. = ..()
@@ -88,22 +88,22 @@
 	else
 		desc = "The challenge is not taking as many as you can, but guessing what it is before you pass out."
 
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/get_glass_icon(datum/reagent/largest_reagent)
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass/get_glass_icon(datum/reagent/largest_reagent)
 	return largest_reagent?.shot_glass_icon_state
 
-/obj/item/reagent_containers/food/drinks/drinkingglass/filled/soda
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/soda
 	name = "Soda Water"
 	list_reagents = list(/datum/reagent/consumable/sodawater = 50)
 
-/obj/item/reagent_containers/food/drinks/drinkingglass/filled/cola
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/cola
 	name = "Space Cola"
 	list_reagents = list(/datum/reagent/consumable/space_cola = 50)
 
-/obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola
 	name = "Nuka Cola"
 	list_reagents = list(/datum/reagent/consumable/nuka_cola = 50)
 
-/obj/item/reagent_containers/food/drinks/drinkingglass/attackby(obj/item/I, mob/user, params)
+/obj/item/reagent_containers/cup/glass/drinkingglass/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/food/egg)) //breaking eggs
 		var/obj/item/food/egg/E = I
 		if(reagents)

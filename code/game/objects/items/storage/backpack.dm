@@ -634,7 +634,7 @@
 	new /obj/item/gun/ballistic/automatic/pistol/aps(src)
 	new /obj/item/ammo_box/magazine/m9mm_aps/fire(src)
 	new /obj/item/ammo_box/magazine/m9mm_aps/fire(src)
-	new /obj/item/reagent_containers/food/drinks/bottle/vodka/badminka(src)
+	new /obj/item/reagent_containers/cup/glass/bottle/vodka/badminka(src)
 	new /obj/item/reagent_containers/hypospray/medipen/stimulants(src)
 	new /obj/item/grenade/syndieminibomb(src)
 

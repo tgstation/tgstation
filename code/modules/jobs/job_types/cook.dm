@@ -32,7 +32,7 @@
 
 	mail_goodies = list(
 		/obj/item/storage/box/ingredients/random = 80,
-		/obj/item/reagent_containers/glass/bottle/caramel = 20,
+		/obj/item/reagent_containers/cup/bottle/caramel = 20,
 		/obj/item/reagent_containers/condiment/flour = 20,
 		/obj/item/reagent_containers/condiment/rice = 20,
 		/obj/item/reagent_containers/condiment/enzyme = 15,

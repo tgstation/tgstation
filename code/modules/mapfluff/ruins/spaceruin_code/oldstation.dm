@@ -234,7 +234,7 @@
 	sample.sample_color = COLOR_SAMPLE_BROWN
 	update_appearance()
 
-/obj/item/reagent_containers/glass/beaker/oldstation
+/obj/item/reagent_containers/cup/beaker/oldstation
 	name = "cultivation broth"
 	amount_per_transfer_from_this = 50
 	list_reagents = list(

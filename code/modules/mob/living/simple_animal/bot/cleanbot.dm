@@ -109,7 +109,7 @@
 		return TRUE
 	balloon_alert(user, "couldn't attach!")
 	return FALSE
-		
+
 /mob/living/simple_animal/bot/cleanbot/proc/update_titles()
 	var/working_title = ""
 
@@ -410,7 +410,7 @@
 
 /mob/living/simple_animal/bot/cleanbot/explode()
 	var/atom/Tsec = drop_location()
-	new /obj/item/reagent_containers/glass/bucket(Tsec)
+	new /obj/item/reagent_containers/cup/bucket(Tsec)
 	new /obj/item/assembly/prox_sensor(Tsec)
 	return ..()
 

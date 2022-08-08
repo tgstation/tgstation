@@ -240,8 +240,8 @@
 		/obj/item/radio,
 		/obj/item/reagent_containers/blood,
 		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/glass/beaker,
-		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/cup/beaker,
+		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/reagent_containers/medigel,
 		/obj/item/reagent_containers/pill,
@@ -272,7 +272,7 @@
 	SSwardrobe.provide_type(/obj/item/reagent_containers/syringe, src)
 	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel, src)
 	SSwardrobe.provide_type(/obj/item/stack/sticky_tape/surgical, src)
-	SSwardrobe.provide_type(/obj/item/reagent_containers/glass/bottle/formaldehyde, src)
+	SSwardrobe.provide_type(/obj/item/reagent_containers/cup/bottle/formaldehyde, src)
 	update_appearance()
 
 /obj/item/storage/belt/medical/paramedic/get_types_to_preload()
@@ -283,7 +283,7 @@
 	to_preload += /obj/item/reagent_containers/syringe
 	to_preload += /obj/item/stack/medical/bone_gel
 	to_preload += /obj/item/stack/sticky_tape/surgical
-	to_preload += /obj/item/reagent_containers/glass/bottle/formaldehyde
+	to_preload += /obj/item/reagent_containers/cup/bottle/formaldehyde
 	return to_preload
 
 /obj/item/storage/belt/medical/ert
@@ -389,8 +389,8 @@
 		/obj/item/organ/internal/regenerative_core,
 		/obj/item/pickaxe,
 		/obj/item/radio,
-		/obj/item/reagent_containers/food/drinks,
-		/obj/item/reagent_containers/food/drinks/bottle,
+		/obj/item/reagent_containers/cup/glass,
+		/obj/item/reagent_containers/cup/glass/bottle,
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/reagent_containers/pill,
 		/obj/item/resonator,
@@ -504,7 +504,7 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	atom_storage.set_holdable(list(
 		/obj/item/food,
-		/obj/item/reagent_containers/food/drinks
+		/obj/item/reagent_containers/cup/glass
 		))
 
 	var/amount = 5
@@ -524,15 +524,15 @@
 		/obj/item/food/spacetwinkie,
 		/obj/item/food/spaghetti/pastatomato,
 		/obj/item/food/syndicake,
-		/obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola,
-		/obj/item/reagent_containers/food/drinks/dry_ramen,
-		/obj/item/reagent_containers/food/drinks/soda_cans/cola,
-		/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb,
-		/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime,
-		/obj/item/reagent_containers/food/drinks/soda_cans/pwr_game,
-		/obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind,
-		/obj/item/reagent_containers/food/drinks/soda_cans/space_up,
-		/obj/item/reagent_containers/food/drinks/soda_cans/starkist,
+		/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola,
+		/obj/item/reagent_containers/cup/glass/dry_ramen,
+		/obj/item/reagent_containers/cup/glass/soda_cans/cola,
+		/obj/item/reagent_containers/cup/glass/soda_cans/dr_gibb,
+		/obj/item/reagent_containers/cup/glass/soda_cans/lemon_lime,
+		/obj/item/reagent_containers/cup/glass/soda_cans/pwr_game,
+		/obj/item/reagent_containers/cup/glass/soda_cans/space_mountain_wind,
+		/obj/item/reagent_containers/cup/glass/soda_cans/space_up,
+		/obj/item/reagent_containers/cup/glass/soda_cans/starkist,
 		))
 		new rig_snacks(src)
 
@@ -598,7 +598,7 @@
 		/obj/item/grenade/c4,
 		/obj/item/lighter,
 		/obj/item/multitool,
-		/obj/item/reagent_containers/food/drinks/bottle/molotov,
+		/obj/item/reagent_containers/cup/glass/bottle/molotov,
 		/obj/item/screwdriver,
 		))
 
@@ -837,8 +837,8 @@
 		/obj/item/gun/energy/floragun,
 		/obj/item/hatchet,
 		/obj/item/plant_analyzer,
-		/obj/item/reagent_containers/glass/beaker,
-		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/cup/beaker,
+		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/spray/pestspray,
 		/obj/item/reagent_containers/spray/plantbgone,
 		/obj/item/secateurs,
