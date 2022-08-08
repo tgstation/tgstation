@@ -265,51 +265,50 @@
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	var/mob/owner
 	var/state
-	var/night_vision_granted = FALSE
 
 /obj/effect/wisp/orbit(atom/thing, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, lockinorbit)
 	. = ..()
 	if(ismob(thing))
 		owner = thing
-		START_PROCESSING(SSobj, src)
-
+		ADD_TRAIT(owner, TRAIT_TRUE_NIGHT_VISION, WISP_TRAIT)
+		give_buffs_to_owner(get_turf(owner))
+		RegisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED, .proc/on_owner_z_change)
 
 /obj/effect/wisp/stop_orbit(datum/component/orbiter/orbits)
 	. = ..()
 	if(owner)
-		clear_old_traits()
+		remove_buffs_from_owner()
 		REMOVE_TRAIT(owner, TRAIT_TRUE_NIGHT_VISION, WISP_TRAIT)
-		STOP_PROCESSING(SSobj, src)
+		UnregisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED)
 		owner = null
-		night_vision_granted = FALSE
 
 /obj/effect/wisp/Destroy()
 	if(owner)
-		clear_old_traits()
+		remove_buffs_from_owner()
 		REMOVE_TRAIT(owner, TRAIT_TRUE_NIGHT_VISION, WISP_TRAIT)
-		STOP_PROCESSING(SSobj, src)
+		UnregisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED)
 		owner = null
 	. = ..()
 
-/obj/effect/wisp/process()
+/obj/effect/wisp/proc/on_owner_z_change(datum/source, turf/old_turf, turf/new_turf)
+	remove_buffs_from_owner()
+	give_buffs_to_owner(new_turf)
+
+/obj/effect/wisp/proc/give_buffs_to_owner(turf/T)
 	if(!owner)
 		return
-	clear_old_traits()
-	if(SSmapping.level_trait(z, ZTRAIT_MINING))
+	if(SSmapping.level_trait(T.z, ZTRAIT_MINING))
 		state = WISP_FULL_EFFECT
 		ADD_TRAIT(owner, TRAIT_XRAY_VISION, WISP_TRAIT)
-	else if(SSmapping.level_trait(z, ZTRAIT_STATION) || SSmapping.level_trait(z, ZTRAIT_AWAY))
+	else if(SSmapping.level_trait(T.z, ZTRAIT_STATION))
 		state = WISP_WEAK_EFFECT
 		ADD_TRAIT(owner, TRAIT_MESON_VISION, WISP_TRAIT)
 	else
 		state = WISP_MEDIUM_EFFECT
 		ADD_TRAIT(owner, TRAIT_THERMAL_VISION, WISP_TRAIT)
-	if(!night_vision_granted)
-		ADD_TRAIT(owner, TRAIT_TRUE_NIGHT_VISION, WISP_TRAIT)
-		night_vision_granted = TRUE
 
-/obj/effect/wisp/proc/clear_old_traits()
-	if(!state)
+/obj/effect/wisp/proc/remove_buffs_from_owner()
+	if(!owner || !state)
 		return
 	switch(state)
 		if(WISP_FULL_EFFECT)
