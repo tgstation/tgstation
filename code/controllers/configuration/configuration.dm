@@ -385,7 +385,7 @@ Example config:
 		log_config(message)
 		DelayedMessageAdmins(message)
 		return
-	var/list/word_filter = result["content"]
+	var/list/word_filter = json_decode(result["content"])
 
 	ic_filter_reasons = try_extract_from_word_filter(word_filter, "ic")
 	ic_outside_pda_filter_reasons = try_extract_from_word_filter(word_filter, "ic_outside_pda")

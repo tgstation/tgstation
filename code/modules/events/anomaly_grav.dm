@@ -4,6 +4,7 @@
 
 	max_occurrences = 5
 	weight = 25
+	description = "This anomaly throws things around."
 
 /datum/round_event/anomaly/anomaly_grav
 	startWhen = 3
@@ -16,6 +17,7 @@
 	weight = 15
 	max_occurrences = 1
 	earliest_start = 20 MINUTES
+	description = "This anomaly has an intense gravitational field, and can disable the gravity generator."
 
 /datum/round_event/anomaly/anomaly_grav/high
 	startWhen = 3

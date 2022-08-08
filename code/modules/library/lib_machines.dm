@@ -607,7 +607,7 @@
 	if(!book.content)
 		say("No content detected. Aborting")
 		return
-	var/msg = "[key_name(usr)] has uploaded the book titled [book.title], [length(book.content)] signs"
+	var/msg = "has uploaded the book titled [book.title], [length(book.content)] signs"
 	var/datum/db_query/query_library_upload = SSdbcore.NewQuery({"
 		INSERT INTO [format_table_name("library")] (author, title, content, category, ckey, datetime, round_id_created)
 		VALUES (:author, :title, :content, :category, :ckey, Now(), :round_id)
@@ -616,7 +616,7 @@
 		qdel(query_library_upload)
 		say("Database error encountered uploading to Archive")
 		return
-	log_game(msg)
+	usr.log_message(msg, LOG_GAME)
 	qdel(query_library_upload)
 	say("Upload Complete. Uploaded title will be available for printing in a moment")
 	ignore_hash = TRUE

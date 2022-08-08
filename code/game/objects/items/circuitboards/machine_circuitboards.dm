@@ -4,6 +4,7 @@
 	name = "Bluespace Artillery Generator"
 	greyscale_colors = CIRCUIT_COLOR_COMMAND
 	build_path = /obj/machinery/bsa/back //No freebies!
+	specific_parts = TRUE
 	req_components = list(
 		/obj/item/stock_parts/capacitor/quadratic = 5,
 		/obj/item/stack/cable_coil = 2)
@@ -12,6 +13,7 @@
 	name = "Bluespace Artillery Bore"
 	greyscale_colors = CIRCUIT_COLOR_COMMAND
 	build_path = /obj/machinery/bsa/front
+	specific_parts = TRUE
 	req_components = list(
 		/obj/item/stock_parts/manipulator/femto = 5,
 		/obj/item/stack/cable_coil = 2)
@@ -28,6 +30,7 @@
 	name = "DNA Vault"
 	greyscale_colors = CIRCUIT_COLOR_COMMAND
 	build_path = /obj/machinery/dna_vault //No freebies!
+	specific_parts = TRUE
 	req_components = list(
 		/obj/item/stock_parts/capacitor/super = 5,
 		/obj/item/stock_parts/manipulator/pico = 5,

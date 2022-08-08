@@ -140,16 +140,6 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
-/datum/design/crewpinpointerprox
-	name = "Proximity Crew Pinpointer"
-	desc = "Displays your approximate proximity to someone if their suit sensors are turned to tracking beacon."
-	id = "crewpinpointerprox"
-	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 1200, /datum/material/glass = 300, /datum/material/gold = 200)
-	build_path = /obj/item/pinpointer/crew/prox
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
-
 /datum/design/defibrillator
 	name = "Defibrillator"
 	desc = "A portable defibrillator, used for resuscitating recently deceased crew."

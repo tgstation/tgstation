@@ -4,7 +4,7 @@ GLOBAL_VAR_INIT(curse_of_madness_triggered, FALSE)
 	if(user) //in this case either someone holding a spellbook or a badmin
 		to_chat(user, span_warning("You sent a curse of madness with the message \"[message]\"!"))
 		message_admins("[ADMIN_LOOKUPFLW(user)] sent a curse of madness with the message \"[message]\"!")
-		log_game("[key_name(user)] sent a curse of madness with the message \"[message]\"!")
+		user.log_message("sent a curse of madness with the message \"[message]\"!", LOG_GAME)
 
 	GLOB.curse_of_madness_triggered = message // So latejoiners are also afflicted.
 
