@@ -1,5 +1,3 @@
-// MOTHBLOCKS TODO: Contraband/premium categories when unlocked
-
 /*
  * Vending machine types - Can be found under /code/modules/vending/
  */
