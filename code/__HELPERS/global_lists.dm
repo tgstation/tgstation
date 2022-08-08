@@ -107,7 +107,6 @@ GLOBAL_LIST_INIT(WALLITEMS_INTERIOR, typecacheof(list(
 	/obj/machinery/computer/security/telescreen,
 	/obj/machinery/computer/security/telescreen/entertainment,
 	/obj/machinery/defibrillator_mount,
-	/obj/machinery/door_timer,
 	/obj/machinery/embedded_controller/radio/simple_vent_controller,
 	/obj/machinery/firealarm,
 	/obj/machinery/flasher,

@@ -11783,7 +11783,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "dwS" = (
-/obj/machinery/door_timer{
+/obj/machinery/status_display/door_timer{
 	id = "Cell 3";
 	name = "Cell 3";
 	pixel_x = -32
@@ -21121,7 +21121,7 @@
 	},
 /area/station/command/heads_quarters/rd)
 "gqZ" = (
-/obj/machinery/door_timer{
+/obj/machinery/status_display/door_timer{
 	id = "Cell 2";
 	name = "Cell 2";
 	pixel_x = -32
@@ -65086,7 +65086,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "ubo" = (
-/obj/machinery/door_timer{
+/obj/machinery/status_display/door_timer{
 	id = "Cell 1";
 	name = "Cell 1";
 	pixel_x = -32

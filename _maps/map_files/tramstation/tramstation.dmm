@@ -20427,7 +20427,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},
-/obj/machinery/door_timer{
+/obj/machinery/status_display/door_timer{
 	id = "scicell";
 	name = "Science Cell";
 	pixel_y = 32
@@ -32040,7 +32040,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "ldp" = (
-/obj/machinery/door_timer{
+/obj/machinery/status_display/door_timer{
 	id = "crgcell";
 	name = "Cargo Cell";
 	pixel_x = 32
@@ -38563,7 +38563,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmospherics_engine)
 "niv" = (
-/obj/machinery/door_timer{
+/obj/machinery/status_display/door_timer{
 	id = "medcell";
 	name = "Medical Cell";
 	pixel_y = 32
@@ -40139,7 +40139,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "nNP" = (
-/obj/machinery/door_timer{
+/obj/machinery/status_display/door_timer{
 	id = "engcell";
 	name = "Engineering Cell";
 	pixel_x = -32
