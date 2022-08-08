@@ -242,7 +242,7 @@
  * user - the mob inserting the beaker
  * inserted_beaker - the beaker we're inserting into the biogen
  */
-/obj/machinery/biogenerator/proc/insert_beaker(mob/living/user, obj/item/reagent_containers/glass/inserted_beaker)
+/obj/machinery/biogenerator/proc/insert_beaker(mob/living/user, obj/item/reagent_containers/cup/inserted_beaker)
 	if(!can_interact(user))
 		return
 

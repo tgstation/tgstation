@@ -137,7 +137,7 @@
 /datum/orderable_item/cream
 	name = "Cream"
 	category_index = CATEGORY_MILK_EGGS
-	item_instance = /obj/item/reagent_containers/cup/glass/bottle/cream
+	item_instance = /obj/item/reagent_containers/cup/glass/bottle/juice/cream
 	cost_per_order = 40
 
 /datum/orderable_item/yoghurt

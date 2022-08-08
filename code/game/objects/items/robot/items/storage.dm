@@ -169,7 +169,7 @@
 	stored = new /obj/item/reagent_containers/cup/glass/drinkingglass(src)
 	handle_reflling(stored, loc.loc, force = TRUE)
 
-/obj/item/borg/apparatus/beaker/service/proc/handle_reflling(obj/item/reagent_containers/glass, mob/living/silicon/robot/bro, force = FALSE)
+/obj/item/borg/apparatus/beaker/service/proc/handle_reflling(obj/item/reagent_containers/cup/glass, mob/living/silicon/robot/bro, force = FALSE)
 	if (isnull(bro))
 		bro = loc
 	if (!iscyborg(bro))
