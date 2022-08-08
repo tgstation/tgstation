@@ -20,7 +20,7 @@
 	if(!(rift_location.area_flags & VALID_TERRITORY))
 		to_chat(owner, span_warning("You can't summon a rift here! Try summoning somewhere secure within the station!"))
 		return
-	for(var/obj/structure/carp_rift/rift in dragon.rift_list)
+	for(var/obj/structure/carp_rift/rift as anything in dragon.rift_list)
 		var/area/used_location = get_area(rift)
 		if(used_location == rift_location)
 			to_chat(owner, span_warning("You've already summoned a rift in this area! You have to summon again somewhere else!"))
