@@ -199,6 +199,8 @@
 	var/immunities_active = FALSE
 	/// A typepath to an area that we must finish the ritual in.
 	var/area/ritual_location = /area/station/command/bridge
+	/// Next time when we can be revived by the power of rust
+	var/when_revived
 	/// A static list of traits we give to the heretic when on rust.
 	var/static/list/conditional_immunities = list(
 		TRAIT_STUNIMMUNE,
@@ -263,6 +265,8 @@
 				REMOVE_TRAIT(source, trait, type)
 			immunities_active = FALSE
 
+#define HERETIC_REVIVE_COOLDOWN 10 SECONDS //It needs the heretic to be healed enough, so 10 seconds seems OK
+
 /**
  * Signal proc for [COMSIG_LIVING_LIFE].
  *
@@ -280,6 +284,19 @@
 	source.adjustToxLoss(-4, FALSE, forced = TRUE)
 	source.adjustOxyLoss(-4, FALSE)
 	source.adjustStaminaLoss(-20)
+
+	if(source.stat == DEAD && source.health >= 0 && world.time >= when_revived)
+		if(iscarbon(source))
+			var/mob/living/carbon/C = source
+			if(!C.getorganslot(ORGAN_SLOT_BRAIN))
+				return
+			C.regenerate_organs()
+			C.restore_blood()
+		source.revive(full_heal = FALSE, admin_revive = FALSE)
+		when_revived = world.time + HERETIC_REVIVE_COOLDOWN
+		source.SetAllImmobility(0)
+		
+#undef HERETIC_REVIVE_COOLDOWN
 
 /**
  * #Rust spread datum
