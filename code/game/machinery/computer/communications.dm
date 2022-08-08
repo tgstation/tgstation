@@ -747,8 +747,8 @@
 	var/datum/signal/status_signal = new(list("command" = command))
 	switch(command)
 		if("message")
-			status_signal.data["msg1"] = data1
-			status_signal.data["msg2"] = data2
+			status_signal.data["top_text"] = data1
+			status_signal.data["bottom_text"] = data2
 		if("alert")
 			status_signal.data["picture_state"] = data1
 
