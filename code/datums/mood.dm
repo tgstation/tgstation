@@ -9,8 +9,6 @@
  * Contains the logic for controlling a living mob's mood and sanity.
  */
 /datum/mood
-	/// Weakref to the parent (living) mob
-	var/datum/weakref/parent
 	/// The parent (living) mob
 	var/mob/living/mob_parent
 
@@ -408,7 +406,7 @@
 	// If the new amount would move towards the acceptable range faster then use it instead
 	if(amount < minimum)
 		amount += clamp(minimum - amount, 0, 0.7)
-	if((!override && HAS_TRAIT(parent, TRAIT_UNSTABLE)) || amount > maximum)
+	if((!override && HAS_TRAIT(mob_parent, TRAIT_UNSTABLE)) || amount > maximum)
 		amount = min(sanity, amount)
 	if(amount == sanity) //Prevents stuff from flicking around.
 		return
