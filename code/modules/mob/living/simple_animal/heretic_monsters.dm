@@ -416,7 +416,7 @@
 	melee_damage_upper = 20
 	sight = SEE_MOBS
 	actions_to_add = list(
-		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash,
 		/datum/action/cooldown/spell/shapeshift/eldritch,
+		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash,
 		/datum/action/cooldown/spell/emp/eldritch,
 	)
