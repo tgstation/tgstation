@@ -1018,7 +1018,7 @@
 	welded = !welded
 	user.visible_message(span_notice("[user] [welded? "welds shut":"unwelds"] [src]."), \
 		span_notice("You [welded ? "weld the airlock shut":"unweld the airlock"]."))
-	log_game("[key_name(user)] [welded ? "welded":"unwelded"] airlock [src] with [tool] at [AREACOORD(src)]")
+	user.log_message("[welded ? "welded":"unwelded"] airlock [src] with [tool].", LOG_GAME)
 	update_appearance()
 
 /obj/machinery/door/airlock/proc/weld_checks(obj/item/weldingtool/W, mob/user)
