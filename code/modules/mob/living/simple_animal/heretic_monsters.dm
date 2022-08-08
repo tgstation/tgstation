@@ -28,7 +28,7 @@
 	movement_type = GROUND
 	pressure_resistance = 100
 	del_on_death = TRUE
-	deathmessage = "implodes into itself."
+	death_message = "implodes into itself."
 	loot = list(/obj/effect/gibspawner/human)
 	faction = list(FACTION_HERETIC)
 	simple_mob_flags = SILENCE_RANGED_MESSAGE
