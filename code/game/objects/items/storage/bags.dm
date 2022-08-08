@@ -111,7 +111,7 @@
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_HUGE
 	atom_storage.max_total_storage = 50
-	atom_storage.numerical_stacking = TRUE 
+	atom_storage.numerical_stacking = TRUE
 	atom_storage.allow_quick_empty = TRUE
 	atom_storage.allow_quick_gather = TRUE
 	atom_storage.set_holdable(list(/obj/item/stack/ore))
@@ -151,7 +151,7 @@
 			if(box)
 				user.transferItemToLoc(thing, box)
 				show_message = TRUE
-			else if(atom_storage.attempt_insert(src, thing, user))
+			else if(atom_storage.attempt_insert(thing, user))
 				show_message = TRUE
 			else
 				if(!spam_protection)

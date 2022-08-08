@@ -90,7 +90,7 @@ GLOBAL_DATUM(rpgloot_controller, /datum/rpgloot_controller)
 			var/datum/storage/storage_component = storage_item.atom_storage
 			if(prob(upgrade_scroll_chance) && storage_item.contents.len < storage_component.max_slots && !storage_item.invisibility)
 				var/obj/item/upgradescroll/scroll = new(get_turf(storage_item))
-				storage_item.atom_storage?.attempt_insert(storage_item, scroll, null, TRUE)
+				storage_item.atom_storage?.attempt_insert(scroll, override = TRUE)
 				upgrade_scroll_chance = max(0,upgrade_scroll_chance-100)
 				if(isturf(scroll.loc))
 					qdel(scroll)

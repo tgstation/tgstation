@@ -38,7 +38,7 @@
 	if(QDELETED(source) || !mod.wearer || newloc == mod.wearer || !mod.wearer.s_store)
 		return
 	to_chat(mod.wearer, span_notice("[src] tries to store [mod.wearer.s_store] inside itself."))
-	atom_storage?.attempt_insert(src, mod.wearer.s_store, mod.wearer, TRUE)
+	atom_storage?.attempt_insert(mod.wearer.s_store, mod.wearer, override = TRUE)
 
 /obj/item/mod/module/storage/large_capacity
 	name = "MOD expanded storage module"
@@ -507,7 +507,7 @@
 			/obj/item/clothing/head/papersack,
 			/obj/item/clothing/head/caphat/beret,
 			))
-			
+
 /obj/item/mod/module/hat_stabilizer/on_suit_activation()
 	RegisterSignal(mod.helmet, COMSIG_PARENT_EXAMINE, .proc/add_examine)
 	RegisterSignal(mod.helmet, COMSIG_PARENT_ATTACKBY, .proc/place_hat)
