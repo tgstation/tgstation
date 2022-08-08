@@ -75,9 +75,12 @@
 	if(!GLOB.station_goals.len)
 		return
 	. = "<hr><b>Special Orders for [station_name()]:</b><BR>"
+	var/list/goal_reports = list()
 	for(var/datum/station_goal/station_goal as anything in GLOB.station_goals)
 		station_goal.on_report()
-		. += station_goal.get_report()
+		goal_reports += station_goal.get_report()
+
+	. += goal_reports.Join("<hr>")
 	return
 
 /*
