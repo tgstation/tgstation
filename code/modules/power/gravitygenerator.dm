@@ -440,7 +440,7 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 	if(same_z_layer)
 		return
 	for(var/obj/machinery/gravity_generator/part as anything in generator_parts)
-		SET_PLANE_EXPLICIT(part, PLANE_TO_TRUE(part.plane), new_turf)
+		SET_PLANE(part, PLANE_TO_TRUE(part.plane), new_turf)
 
 //prevents shuttles attempting to rotate this since it messes up sprites
 /obj/machinery/gravity_generator/main/shuttleRotate(rotation, params)

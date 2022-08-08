@@ -1011,6 +1011,10 @@
 		// so we do this. sucks to suck
 		update_appearance()
 
+		// I so much wish this could be somewhere else. alas, no.
+		for(var/image/update in update_on_z)
+			SET_PLANE(update, PLANE_TO_TRUE(update.plane), new_turf)
+
 	if(!notify_contents)
 		return
 

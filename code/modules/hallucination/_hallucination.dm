@@ -134,7 +134,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	. = ..()
 	if(same_z_layer)
 		return
-	SET_PLANE_EXPLICIT(current_image, PLANE_TO_TRUE(current_image.plane), new_turf)
+	SET_PLANE(current_image, PLANE_TO_TRUE(current_image.plane), new_turf)
 
 /obj/effect/hallucination/simple/proc/Show(update=1)
 	if(!active || !target)
