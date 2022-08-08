@@ -232,3 +232,40 @@
       revolutionaries.
   ShizCalev:
   - bugfix: Grilles are now anchorable with screwdrivers again.
+2022-08-08:
+  Addust:
+  - rscadd: Kilo whiteship now has shit so that it can actually maintain power now
+  - rscadd: Kilo whiteship now has both the bar and crew quarters area to increase
+      information hell
+  Fikou:
+  - balance: the mining modsuit now costs 3000 from 2500
+  - balance: the mining modsuit now still slows you down over lava, though you still
+      resist it
+  - qol: the plasma core now accepts plasma both in sheet form and ore form
+  - bugfix: the plasma core should no longer buggily not refill you
+  - bugfix: the mining modsuit bombs should now have enemies target you
+  GoldenAlpharex:
+  - bugfix: Belts will now change appearance when items are inserted into them as
+      well, instead of only doing so when an item was removed from them.
+  LemonInTheDark:
+  - bugfix: Attempting to send back a reply to an ahelp after it is closed now sends
+      the reply to a new ticket, rather then just dropping it and leaving you for
+      dead with a runtime
+  - admin: see above
+  Melbert:
+  - rscadd: Paramedic PDAs now start with the Lifeline pinpointer app
+  - rscadd: Replaced the "proximity crew pinpointer" in the paramedic's belt with
+      a bottle of Calomel
+  - rscdel: Removed the "proximity crew pinpointer"
+  Pickle-Coding:
+  - code_imp: Radiation pulses will ask MC if they should continue processing for
+      every turf they iterate through, rather than just every pulse.
+  SpaceSmithers:
+  - bugfix: A locker in Icebox Maintenance will no longer disappear immediately upon
+      roundstart.
+  san7890:
+  - balance: The odds of gulagged prisoners on IceBoxStation getting mauled by a wolf
+      should go down dramatically.
+  timothymtorres:
+  - bugfix: Fix audible emotes playing sounds while mob is gagged, mute, tongueless,
+      or under a vow of silence.
