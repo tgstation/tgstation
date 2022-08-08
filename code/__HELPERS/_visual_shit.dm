@@ -22,10 +22,8 @@
 // Potentially too much client load? Hard to tell due to not having a potato pc to hand.
 // This is solvable with lowspec preferences, which would not be hard to implement
 // Player popups will now render their effects, like overlay lights. this is fixable, but I've not gotten to it
-// AIs I think? can see through static via openspace. somehow. I'll need to fix this
 // Lemon todo:
 // Consider adding a low spec mode if possible, seen too many fps complaints, concerning
-// AIs can see through static via openspace, fix that too
 // See if you can do anything about player popups effecting the lighting plane yes?
 // Global todos:
 // Add a shit ton of documentation, preferablely to the whole rendering pipeline

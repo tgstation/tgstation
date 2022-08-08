@@ -99,7 +99,6 @@
 		var/datum/atom_hud/overlay = overlay_ref?.resolve()
 		QDEL_NULL(overlay)
 
-	// lemon Todo: needs to update on move
 	var/image/cool_overlay = image(icon = 'icons/hud/screen_bci.dmi', loc = target_atom, icon_state = options_map[object_overlay_options.value], layer = RIPPLE_LAYER)
 	SET_PLANE_EXPLICIT(cool_overlay, ABOVE_LIGHTING_PLANE, target_atom)
 

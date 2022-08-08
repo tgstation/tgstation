@@ -64,7 +64,6 @@
 	var/datum/atom_hud/overlay = counter_appearance?.resolve()
 	QDEL_NULL(overlay)
 
-	// lemon Todo: needs to update on move
 	var/image/counter = image(icon = 'icons/hud/screen_bci.dmi', icon_state = "hud_numbers", loc = owner, layer = RIPPLE_LAYER)
 	SET_PLANE_EXPLICIT(counter, ABOVE_LIGHTING_PLANE, owner)
 

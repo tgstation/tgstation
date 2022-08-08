@@ -65,7 +65,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	var/atom/target
 	var/image/image
 	var/add_ghost_version = FALSE
-	var/ghost_appearance
+	var/datum/atom_hud/alternate_appearance/basic/observers/ghost_appearance
 	uses_global_hud_category = FALSE
 
 /datum/atom_hud/alternate_appearance/basic/New(key, image/I, options = AA_TARGET_SEE_APPEARANCE)
@@ -73,6 +73,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	transfer_overlays = options & AA_MATCH_TARGET_OVERLAYS
 	image = I
 	target = I.loc
+	RegisterSignal(target, COMSIG_MOVABLE_Z_CHANGED, .proc/target_z_changed)
 	if(transfer_overlays)
 		I.copy_overlays(target)
 
@@ -108,6 +109,12 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 
 /datum/atom_hud/alternate_appearance/basic/copy_overlays(atom/other, cut_old)
 	image.copy_overlays(other, cut_old)
+
+/datum/atom_hud/alternate_appearance/basic/proc/target_z_changed(turf/old_turf, turf/new_turf, same_z_layer)
+	SIGNAL_HANDLER
+	if(same_z_layer)
+		return
+	SET_PLANE_EXPLICIT(image, PLANE_TO_TRUE(image.plane) new_turf)
 
 /datum/atom_hud/alternate_appearance/basic/everyone
 	add_ghost_version = TRUE
