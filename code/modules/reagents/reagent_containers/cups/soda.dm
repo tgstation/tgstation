@@ -13,6 +13,8 @@
 	spillable = FALSE
 	custom_price = PAYCHECK_CREW * 0.9
 	obj_flags = CAN_BE_HIT
+	possible_transfer_amounts = list(5, 10, 15, 25, 30)
+	volume = 30
 	throwforce = 12 // set to 0 upon being opened. Have you ever been domed by a soda can? Those things fucking hurt
 	/// If the can hasn't been opened yet, this is the measure of how fizzed up it is from being shaken or thrown around. When opened, this is rolled as a percentage chance to burst
 	var/fizziness = 0
@@ -45,7 +47,12 @@
 		H.Stun(50)
 		sleep(50)
 		playsound(H,'sound/items/drink.ogg', 80, TRUE)
-		H.say(pick("Another day, another dollar.", "I wonder if I should hold?", "Diversifying is for young'ns.", "Yeap, times were good back then."))
+		H.say(pick(
+			"Another day, another dollar.",
+			"I wonder if I should hold?",
+			"Diversifying is for young'ns.",
+			"Yeap, times were good back then.",
+		))
 		return MANUAL_SUICIDE_NONLETHAL
 	sleep(20) //dramatic pause
 	return TOXLOSS

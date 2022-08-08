@@ -53,8 +53,8 @@
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "breakfast", /datum/mood_event/breakfast)
 	last_check_time = world.time
 
-/obj/item/reagent_containers/cup/attack(mob/M, mob/living/user, obj/target)
-	if(!canconsume(M, user))
+/obj/item/reagent_containers/cup/attack(mob/living/target_mob, mob/living/user, obj/target)
+	if(!canconsume(target_mob, user))
 		return
 
 	if(!spillable)
@@ -64,35 +64,39 @@
 		to_chat(user, span_warning("[src] is empty!"))
 		return
 
-	if(istype(M))
-		if(M != user)
-			M.visible_message(span_danger("[user] attempts to feed [M] something from [src]."), \
-						span_userdanger("[user] attempts to feed you something from [src]."))
-			if(!do_mob(user, M))
-				return
-			if(!reagents || !reagents.total_volume)
-				return // The drink might be empty after the delay, such as by spam-feeding
-			M.visible_message(span_danger("[user] feeds [M] something from [src]."), \
-						span_userdanger("[user] feeds you something from [src]."))
-			log_combat(user, M, "fed", reagents.get_reagent_log_string())
-		else
-			to_chat(user, span_notice("You swallow a gulp of [src]."))
-		SEND_SIGNAL(src, COMSIG_GLASS_DRANK, M, user)
-		var/fraction = min(gulp_size/reagents.total_volume, 1)
-		addtimer(CALLBACK(reagents, /datum/reagents.proc/trans_to, M, gulp_size, TRUE, TRUE, FALSE, user, FALSE, INGEST), 5)
-		checkLiked(fraction, M)
-		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
-		if(iscarbon(M))
-			var/mob/living/carbon/carbon_drinker = M
-			var/list/diseases = carbon_drinker.get_static_viruses()
-			if(LAZYLEN(diseases))
-				var/list/datum/disease/diseases_to_add = list()
-				for(var/d in diseases)
-					var/datum/disease/malady = d
-					if(malady.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS)
-						diseases_to_add += malady
-				if(LAZYLEN(diseases_to_add))
-					AddComponent(/datum/component/infective, diseases_to_add)
+	if(!istype(target_mob))
+		return
+
+	if(target_mob != user)
+		target_mob.visible_message(span_danger("[user] attempts to feed [target_mob] something from [src]."), \
+					span_userdanger("[user] attempts to feed you something from [src]."))
+		if(!do_mob(user, target_mob))
+			return
+		if(!reagents || !reagents.total_volume)
+			return // The drink might be empty after the delay, such as by spam-feeding
+		target_mob.visible_message(span_danger("[user] feeds [target_mob] something from [src]."), \
+					span_userdanger("[user] feeds you something from [src]."))
+		log_combat(user, target_mob, "fed", reagents.get_reagent_log_string())
+	else
+		to_chat(user, span_notice("You swallow a gulp of [src]."))
+
+	SEND_SIGNAL(src, COMSIG_GLASS_DRANK, target_mob, user)
+	var/fraction = min(gulp_size/reagents.total_volume, 1)
+	addtimer(CALLBACK(reagents, /datum/reagents.proc/trans_to, target_mob, gulp_size, TRUE, TRUE, FALSE, user, FALSE, INGEST), 5)
+	checkLiked(fraction, target_mob)
+	playsound(target_mob.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
+	if(!iscarbon(target_mob))
+		return
+	var/mob/living/carbon/carbon_drinker = target_mob
+	var/list/diseases = carbon_drinker.get_static_viruses()
+	if(!LAZYLEN(diseases))
+		return
+	var/list/datum/disease/diseases_to_add = list()
+	for(var/datum/disease/malady as anything in diseases)
+		if(malady.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS)
+			diseases_to_add += malady
+	if(LAZYLEN(diseases_to_add))
+		AddComponent(/datum/component/infective, diseases_to_add)
 
 /obj/item/reagent_containers/cup/afterattack(obj/target, mob/living/user, proximity)
 	. = ..()

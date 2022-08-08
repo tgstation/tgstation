@@ -1,4 +1,4 @@
-
+#define BOTTLE_KNOCKDOWN_DEFAULT_DURATION (1.3 SECONDS)
 
 ///////////////////////////////////////////////Alchohol bottles! -Agouri //////////////////////////
 //Functionally identical to regular drinks. The only difference is that the default bottle size is 100. - Darem
@@ -20,7 +20,7 @@
 	drink_type = ALCOHOL
 	age_restricted = TRUE // wrryy can't set an init value to see if drink_type contains ALCOHOL so here we go
 	///Directly relates to the 'knockdown' duration. Lowered by armor (i.e. helmets)
-	var/bottle_knockdown_duration = 1.3 SECONDS
+	var/bottle_knockdown_duration = BOTTLE_KNOCKDOWN_DEFAULT_DURATION
 
 /obj/item/reagent_containers/cup/glass/bottle/small
 	name = "small glass bottle"
@@ -130,8 +130,8 @@
 	. = ..()
 	AddComponent(/datum/component/caltrop, min_damage = force)
 	AddComponent(/datum/component/butchering, \
-	speed = 20 SECONDS, \
-	effectiveness = 55, \
+		speed = 20 SECONDS, \
+		effectiveness = 55, \
 	)
 
 /// Mimics the appearance and properties of the passed in bottle.
@@ -143,16 +143,15 @@
 	drink_icon.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
 	icon = drink_icon
 
-	if(to_mimic.isGlass)
+	if(istype(to_mimic, /obj/item/reagent_containers/cup/glass/juice))
+		force = 0
+		throwforce = 0
+		desc = "A carton with the bottom half burst open. Might give you a papercut."
+	else
 		if(prob(33))
 			var/obj/item/shard/stab_with = new(to_mimic.drop_location())
 			target.Bumped(stab_with)
 		playsound(src, SFX_SHATTER, 70, TRUE)
-	else
-		force = 0
-		throwforce = 0
-		desc = "A carton with the bottom half burst open. Might give you a papercut."
-
 	name = "broken [to_mimic.name]"
 	to_mimic.transfer_fingerprints_to(src)
 
@@ -304,9 +303,9 @@
 /obj/item/reagent_containers/cup/glass/bottle/wine/add_initial_reagents()
 	. = ..()
 	var/wine_info = generate_vintage()
-	var/datum/reagent/consumable/ethanol/wine/W = locate() in reagents.reagent_list
-	if(W)
-		LAZYSET(W.data,"vintage",wine_info)
+	var/datum/reagent/consumable/ethanol/wine/located_wine = locate() in reagents.reagent_list
+	if(located_wine)
+		LAZYSET(located_wine.data, "vintage", wine_info)
 
 /obj/item/reagent_containers/cup/glass/bottle/wine/proc/generate_vintage()
 	return "[GLOB.year_integer + 540] Nanotrasen Light Red"
@@ -346,9 +345,14 @@
 			fullname = "Ash and Asher"
 		if("Generic")
 			fullname = "Nanotrasen Cheap Imitations"
-	var/removals = list("\[REDACTED\]", "\[EXPLETIVE DELETED\]",
-		"\[EXPUNGED\]", "\[INFORMATION ABOVE YOUR SECURITY CLEARANCE\]",
-		"\[MOVE ALONG CITIZEN\]", "\[NOTHING TO SEE HERE\]")
+	var/removals = list(
+		"\[REDACTED\]",
+		"\[EXPLETIVE DELETED\]",
+		"\[EXPUNGED\]",
+		"\[INFORMATION ABOVE YOUR SECURITY CLEARANCE\]",
+		"\[MOVE ALONG CITIZEN\]",
+		"\[NOTHING TO SEE HERE\]",
+	)
 	var/chance = 50
 
 	if(prob(chance))
@@ -728,3 +732,5 @@
 	desc = "Tastes naturally minty, and imparts a very mild numbing sensation."
 	list_reagents = list(/datum/reagent/consumable/menthol = 100)
 	age_restricted = TRUE
+
+#undef BOTTLE_KNOCKDOWN_DEFAULT_DURATION

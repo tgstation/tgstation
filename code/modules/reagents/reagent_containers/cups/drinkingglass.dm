@@ -51,7 +51,9 @@
 	return ..()
 
 /obj/item/reagent_containers/cup/glass/drinkingglass/proc/get_glass_icon(datum/reagent/largest_reagent)
-	return largest_reagent?.glass_icon_state
+	if(!largest_reagent)
+		return FALSE
+	return largest_reagent.glass_icon_state
 
 //Shot glasses!//
 //  This lets us add shots in here instead of lumping them in with drinks because >logic  //
@@ -89,7 +91,9 @@
 		desc = "The challenge is not taking as many as you can, but guessing what it is before you pass out."
 
 /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass/get_glass_icon(datum/reagent/largest_reagent)
-	return largest_reagent?.shot_glass_icon_state
+	if(!largest_reagent)
+		return FALSE
+	return largest_reagent.shot_glass_icon_state
 
 /obj/item/reagent_containers/cup/glass/drinkingglass/filled/soda
 	name = "Soda Water"

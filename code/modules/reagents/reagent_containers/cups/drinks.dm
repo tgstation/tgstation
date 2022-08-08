@@ -35,8 +35,6 @@
 	if(!(P.nodamage) && P.damage_type == BRUTE && !QDELETED(src))
 		var/atom/T = get_turf(src)
 		smash(T)
-		return
-
 
 
 /obj/item/reagent_containers/cup/glass/trophy
@@ -218,12 +216,12 @@
 /obj/item/reagent_containers/cup/glass/waterbottle/is_refillable()
 	if(cap_on)
 		return FALSE
-	. = ..()
+	return ..()
 
 /obj/item/reagent_containers/cup/glass/waterbottle/is_drainable()
 	if(cap_on)
 		return FALSE
-	. = ..()
+	return ..()
 
 /obj/item/reagent_containers/cup/glass/waterbottle/attack(mob/target, mob/living/user, def_zone)
 	if(!target)
@@ -241,21 +239,26 @@
 		return
 
 	else if(istype(target, /obj/item/reagent_containers/cup/glass/waterbottle))
-		var/obj/item/reagent_containers/cup/glass/waterbottle/WB = target
-		if(WB.cap_on)
-			to_chat(user, span_warning("[WB] has a cap firmly twisted on!"))
+		var/obj/item/reagent_containers/cup/glass/waterbottle/other_bottle = target
+		if(other_bottle.cap_on)
+			to_chat(user, span_warning("[other_bottle] has a cap firmly twisted on!"))
+			return
+
 	return ..()
 
 // heehoo bottle flipping
 /obj/item/reagent_containers/cup/glass/waterbottle/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
-	if(!QDELETED(src) && cap_on && reagents.total_volume)
-		if(prob(flip_chance)) // landed upright
-			src.visible_message(span_notice("[src] lands upright!"))
-			if(throwingdatum.thrower)
-				SEND_SIGNAL(throwingdatum.thrower, COMSIG_ADD_MOOD_EVENT, "bottle_flip", /datum/mood_event/bottle_flip)
-		else // landed on it's side
-			animate(src, transform = matrix(prob(50)? 90 : -90, MATRIX_ROTATE), time = 3, loop = 0)
+	if(QDELETED(src))
+		return
+	if(!cap_on || !reagents.total_volume)
+		return
+	if(prob(flip_chance)) // landed upright
+		src.visible_message(span_notice("[src] lands upright!"))
+		if(throwingdatum.thrower)
+			SEND_SIGNAL(throwingdatum.thrower, COMSIG_ADD_MOOD_EVENT, "bottle_flip", /datum/mood_event/bottle_flip)
+	else // landed on it's side
+		animate(src, transform = matrix(prob(50)? 90 : -90, MATRIX_ROTATE), time = 3, loop = 0)
 
 /obj/item/reagent_containers/cup/glass/waterbottle/pickup(mob/user)
 	. = ..()
@@ -317,7 +320,7 @@
 /obj/item/reagent_containers/cup/glass/sillycup/smallcarton/on_reagent_change(datum/reagents/holder, ...)
 	. = ..()
 	if(!length(reagents.reagent_list))
-		drink_type = NONE /// Why are food types on the _container_? TODO: move these to the reagents
+		drink_type = NONE /// Why are drink types on the _container_? TODO: move these to the reagents //im waiting
 		return
 
 	switch(reagents.get_master_reagent_id())
@@ -409,10 +412,10 @@
 	if(bartender_check(target) && ranged)
 		return
 	SplashReagents(target, ranged, override_spillable = TRUE)
-	var/obj/item/broken_bottle/B = new (loc)
-	B.mimic_broken(src, target)
+	var/obj/item/broken_bottle/bottle_shard = new (loc)
+	bottle_shard.mimic_broken(src, target)
 	qdel(src)
-	target.Bumped(B)
+	target.Bumped(bottle_shard)
 
 /obj/item/reagent_containers/cup/glass/colocup
 	name = "colo cup"
@@ -429,13 +432,14 @@
 	var/random_sprite = TRUE
 
 /obj/item/reagent_containers/cup/glass/colocup/Initialize(mapload)
-	.=..()
+	. = ..()
 	pixel_x = rand(-4,4)
 	pixel_y = rand(-4,4)
-	if (random_sprite)
-		icon_state = "colocup[rand(0, 6)]"
-		if (icon_state == "colocup6")
-			desc = "A cheap, mass produced style of cup, typically used at parties. Woah, this one is in red! What the hell?"
+	if(!random_sprite)
+		return
+	icon_state = "colocup[rand(0, 6)]"
+	if(icon_state == "colocup6")
+		desc = "A cheap, mass produced style of cup, typically used at parties. Woah, this one is in red! What the hell?"
 
 //////////////////////////drinkingglass and shaker//
 //Note by Darem: This code handles the mixing of drinks. New drinks go in three places: In Chemistry-Reagents.dm (for the drink
