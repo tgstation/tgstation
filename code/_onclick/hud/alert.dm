@@ -762,6 +762,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	var/image/signed_up_overlay // image showing that you're signed up
 	var/image/stacks_overlay
 	var/image/candidates_num_overlay
+	var/image/role_name_overlay
 	var/datum/candidate_poll/poll // If set, on Click() it'll register the player as a candidate
 
 /atom/movable/screen/alert/poll_alert/Initialize(mapload)
@@ -796,6 +797,18 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		add_overlay(time_left_overlay)
 		qdel(O)
 	if(poll)
+		if(!role_name_overlay)
+			var/only_question = poll.role ? poll.role : "?"
+			var/obj/O = new
+			O.maptext = "<span style='font-family: \"Small Fonts\"; text-align: right; font-size: 7px; color: #B3E3FC; -dm-text-outline: 1px black'>[only_question]</span>"
+			O.maptext_width = 128
+			var/matrix/M = new
+			M.Translate(-128, 0)
+			O.transform = M
+			role_name_overlay = image(O)
+			role_name_overlay.plane = plane
+			add_overlay(role_name_overlay)
+			qdel(O)
 		var/num_same = 1
 		for(var/datum/candidate_poll/P2 in SSpolling.currently_polling)
 			if(P2 != poll && P2.hash == poll.hash && !P2.finished)

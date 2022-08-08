@@ -97,6 +97,7 @@ SUBSYSTEM_DEF(polling)
 			if(!ispath(pic_source))
 				var/atom/PS = pic_source
 				PS.plane = A.plane
+				PS.layer = FLOAT_LAYER
 				A.add_overlay(PS)
 			else
 				I = image(pic_source, layer = FLOAT_LAYER)
@@ -267,7 +268,7 @@ SUBSYSTEM_DEF(polling)
 
 	signed_up -= M
 	if(!silent)
-		to_chat(M, span_notice("You have been unregistered as a candidate for [role]. You can sign up again before the poll ends."))
+		to_chat(M, span_danger("You have been unregistered as a candidate for [role]. You can sign up again before the poll ends."))
 
 		for(var/existing_poll in SSpolling.currently_polling)
 			var/datum/candidate_poll/P = existing_poll
