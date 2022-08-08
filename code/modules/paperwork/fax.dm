@@ -5,7 +5,7 @@
 	icon_state = "fax"
 	density = TRUE
 	power_channel = AREA_USAGE_EQUIP
-	max_integrity = 300
+	max_integrity = 100
 	pass_flags = PASSTABLE
 	/// The unique ID by which the fax will build a list of existing faxes.
 	var/fax_id
@@ -38,12 +38,25 @@
 	if(!(obj_flags & EMAGGED))
 		obj_flags |= EMAGGED
 		playsound(src, 'sound/creatures/dog/growl2.ogg', 50, FALSE)
-		to_chat(user, span_warning("An image appears on [src] screen for a moment with Jan in the cap of a Syndicate officer."))
+		to_chat(user, span_warning("An image appears on [src] screen for a moment with Ian in the cap of a Syndicate officer."))
 
 /obj/machinery/fax/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/fax/multitool_act(mob/living/user, obj/item/I)
+	var/new_fax_name = tgui_input_text(user, "Enter a new name for the fax machine.", "New Fax Name", , 128)
+	if(!new_fax_name)
+		return
+	if (new_fax_name != fax_name)
+		if (fax_name_exist(new_fax_name))
+			// Being able to set the same name as another fax machine will give a lot of gimmicks for the traitor.
+			if (syndicate_network != TRUE && obj_flags != EMAGGED)
+				to_chat(user, span_warning("There is already a fax machine with this name on the network."))
+				return
+			fax_name = new_fax_name
+		return
 
 /obj/machinery/fax/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/paper))
@@ -52,20 +65,7 @@
 			I.forceMove(src)
 			update_appearance()
 		return
-	if(I.tool_behaviour == TOOL_MULTITOOL)
-		var/new_fax_name = tgui_input_text(user, "Enter a new name for the fax machine.", "New Fax Name", , 128)
-		if(!new_fax_name)
-			to_chat(user, span_warning("Invalid text!"))
-			return
-		if (new_fax_name != fax_name)
-			if (fax_name_exist(new_fax_name))
-				// Being able to set the same name as another fax machine will give a lot of gimmicks for the traitor.
-				if (syndicate_network != TRUE && obj_flags != EMAGGED)
-					to_chat(user, span_warning("There is already a fax machine with this name on the network."))
-					return
-			fax_name = new_fax_name
-		return
-	..()
+	return ..()
 
 /obj/machinery/fax/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -111,7 +111,7 @@
 				update_appearance()
 				return TRUE
 
-/obj/machinery/fax/proc/send(var/obj/item/paper/paper, var/id)
+/obj/machinery/fax/proc/send(obj/item/paper/paper, id)
 	for(var/obj/machinery/fax/FAX in GLOB.machines)
 		if (FAX.fax_id == id)
 			FAX.receive(paper, fax_name)
@@ -120,13 +120,13 @@
 			return TRUE
 	return FALSE
 
-/obj/machinery/fax/proc/receive(var/obj/item/paper/paper, var/sender_name)
+/obj/machinery/fax/proc/receive(obj/item/paper/paper, sender_name)
 	playsound(src, 'sound/machines/printer.ogg', 50, FALSE)
 	flick(paper_contain ? "fax_contain_receive" : "fax_contain", src)
 	say("Received correspondence from [sender_name]")
 	paper.forceMove(drop_location())
 
-/obj/machinery/fax/proc/fax_name_exist(var/new_fax_name)
+/obj/machinery/fax/proc/fax_name_exist(new_fax_name)
 	for(var/obj/machinery/fax/FAX in GLOB.machines)
 		if (FAX.fax_name == new_fax_name)
 			return TRUE
