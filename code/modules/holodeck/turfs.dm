@@ -115,7 +115,7 @@
 	icon_state = "0"
 
 /turf/open/floor/holofloor/space/Initialize(mapload)
-	icon_state = SPACE_ICON_STATE // so realistic
+	icon_state = SPACE_ICON_STATE(x, y, z) // so realistic
 	. = ..()
 
 /turf/open/floor/holofloor/hyperspace
