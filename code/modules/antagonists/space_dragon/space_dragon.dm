@@ -131,7 +131,7 @@
 	priority_announce("A large amount of lifeforms have been detected approaching [station_name()] at extreme speeds. \
 	Remaining crew are advised to evacuate as soon as possible.", "Central Command Wildlife Observations")
 	sound_to_playing_players('sound/creatures/space_dragon_roar.ogg')
-	for(var/obj/structure/carp_rift/rift in rift_list)
+	for(var/obj/structure/carp_rift/rift as anything in rift_list)
 		rift.carp_stored = 999999
 		rift.time_charged = rift.max_charge
 
