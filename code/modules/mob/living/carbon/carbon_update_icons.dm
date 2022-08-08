@@ -165,7 +165,6 @@
 		queue = list(appearances)
 	var/queue_index = 0
 	var/list/parent_queue = list()
-	var/unique_plane_found = FALSE
 
 	// We are essentially going to unroll apperance overlays into a flattened list here, so we can filter out floating planes laster
 	// It will look like "overlay overlay overlay (change overlay parent), overlay overlay etc"
@@ -179,10 +178,6 @@
 
 		var/mutable_appearance/new_appearance = new /mutable_appearance()
 		new_appearance.appearance = appearance
-		// We don't need to process anything if no unqiues are found, so we track this
-		// It's unlikely, but better safe then sorry and all
-		if(new_appearance.plane != FLOAT_PLANE)
-			unique_plane_found = TRUE
 		// Now check its children
 		if(length(appearance.overlays))
 			queue += NEXT_PARENT_COMMAND
@@ -195,7 +190,7 @@
 	// (keeping in mind that overlays only update if an apperance is removed and added, and this pattern applies in a nested fashion)
 
 	// If we found no results, return null
-	if(!length(queue) || !unique_plane_found)
+	if(!length(queue))
 		return null
 
 	// ALRIGHT MOTHERFUCKER
