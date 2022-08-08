@@ -90,7 +90,7 @@
 /// All humans within this range will be irradiated
 #define DETONATION_RADIATION_RANGE 20
 
-#define WARNING_DELAY 60
+#define SUPERMATTER_WARNING_DELAY 60 SECONDS
 
 #define HALLUCINATION_RANGE(P) (min(7, round(P ** 0.25)))
 
@@ -101,13 +101,6 @@
 #define BIOSCRAMBLER_ANOMALY "bioscrambler_anomaly"
 #define HALLUCINATION_ANOMALY "hallucination_anomaly"
 #define VORTEX_ANOMALY "vortex_anomaly"
-
-//If integrity percent remaining is less than these values, the monitor sets off the relevant alarm.
-#define SUPERMATTER_DELAM_PERCENT 5
-#define SUPERMATTER_EMERGENCY_PERCENT 25
-#define SUPERMATTER_DANGER_PERCENT 50
-#define SUPERMATTER_WARNING_PERCENT 100
-#define CRITICAL_TEMPERATURE 10000
 
 #define SUPERMATTER_COUNTDOWN_TIME 30 SECONDS
 
@@ -128,3 +121,32 @@
 #define POWERLOSS_LINEAR_RATE 0.83
 /// How much a psychologist can reduce power loss.
 #define PSYCHOLOGIST_POWERLOSS_REDUCTION 0.2
+
+/// Means it's not forced, sm decides itself by checking the [/datum/sm_delam/proc/can_select]
+#define SM_DELAM_PRIO_NONE 0
+/// In-game factors like the destabilizing crystal [/obj/item/destabilizing_crystal]. 
+/// Purged when SM heals to 100
+#define SM_DELAM_PRIO_IN_GAME 1
+
+/// Purge the current forced delam and make it zero again (back to normal). 
+/// Needs to be higher priority than current forced_delam though.
+#define SM_DELAM_STRATEGY_PURGE null
+
+// These are used by supermatter and supermatter monitor program, mostly for UI updating purposes. Higher should always be worse!
+// [/obj/machinery/power/supermatter_crystal/proc/get_status]
+/// Unknown status, shouldn't happen but just in case.
+#define SUPERMATTER_ERROR -1
+/// No or minimal energy
+#define SUPERMATTER_INACTIVE 0
+/// Normal operation
+#define SUPERMATTER_NORMAL 1
+/// Ambient temp 80% of the default temp for SM to take damage. 
+#define SUPERMATTER_NOTIFY 2
+/// Integrity below [/obj/machinery/power/supermatter_crystal/var/warning_point]. Start complaining on comms.
+#define SUPERMATTER_WARNING 3
+/// Integrity below [/obj/machinery/power/supermatter_crystal/var/danger_point]. Start spawning anomalies.
+#define SUPERMATTER_DANGER 4
+/// Integrity below [/obj/machinery/power/supermatter_crystal/var/emergency_point]. Start complaining to more people.
+#define SUPERMATTER_EMERGENCY 5
+/// Currently counting down to delamination. True [/obj/machinery/power/supermatter_crystal/var/final_countdown]
+#define SUPERMATTER_DELAMINATING 6

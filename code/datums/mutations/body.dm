@@ -10,18 +10,41 @@
 	power_coeff = 1
 
 /datum/mutation/human/epilepsy/on_life(delta_time, times_fired)
-	if(DT_PROB(0.5 * GET_MUTATION_SYNCHRONIZER(src), delta_time) && owner.stat == CONSCIOUS)
-		owner.visible_message(span_danger("[owner] starts having a seizure!"), span_userdanger("You have a seizure!"))
-		owner.Unconscious(200 * GET_MUTATION_POWER(src))
-		owner.set_timed_status_effect(2000 SECONDS * GET_MUTATION_POWER(src), /datum/status_effect/jitter)
-		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "epilepsy", /datum/mood_event/epilepsy)
-		addtimer(CALLBACK(src, .proc/jitter_less), 90)
+	if(DT_PROB(0.5 * GET_MUTATION_SYNCHRONIZER(src), delta_time))
+		trigger_seizure()
+
+/datum/mutation/human/epilepsy/proc/trigger_seizure()
+	if(owner.stat != CONSCIOUS)
+		return
+	owner.visible_message(span_danger("[owner] starts having a seizure!"), span_userdanger("You have a seizure!"))
+	owner.Unconscious(200 * GET_MUTATION_POWER(src))
+	owner.set_timed_status_effect(2000 SECONDS * GET_MUTATION_POWER(src), /datum/status_effect/jitter) //yes this number looks crazy but the jitter animations are amplified based on the duration.
+	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "epilepsy", /datum/mood_event/epilepsy)
+	addtimer(CALLBACK(src, .proc/jitter_less), 90)
 
 /datum/mutation/human/epilepsy/proc/jitter_less()
 	if(QDELETED(owner))
 		return
 
 	owner.set_timed_status_effect(20 SECONDS, /datum/status_effect/jitter)
+
+/datum/mutation/human/epilepsy/on_acquiring(mob/living/carbon/human/acquirer)
+	if(..())
+		return
+	RegisterSignal(owner, COMSIG_MOB_FLASHED, .proc/get_flashed_nerd)
+
+/datum/mutation/human/epilepsy/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	UnregisterSignal(owner, COMSIG_MOB_FLASHED)
+
+/datum/mutation/human/epilepsy/proc/get_flashed_nerd()
+	SIGNAL_HANDLER
+
+	if(!prob(30))
+		return
+	trigger_seizure()
+
 
 //Unstable DNA induces random mutations!
 /datum/mutation/human/bad_dna

@@ -44,7 +44,6 @@
 		weakpoint_areas = list()
 		/// List of high-security areas that we pick required ones from
 		var/list/allowed_areas = typecacheof(list(/area/station/command,
-			/area/station/cargo/qm,
 			/area/station/comms,
 			/area/station/engineering,
 			/area/station/science,
@@ -254,6 +253,10 @@
 	if (target_area.type != objective.weakpoint_areas[3])
 		var/area/weakpoint_area = objective.weakpoint_areas[3]
 		to_chat(user, span_warning("[src] can only be detonated in [initial(weakpoint_area.name)]."))
+		return
+
+	if(!isfloorturf(target) && !iswallturf(target))
+		to_chat(user, span_warning("[src] can only be planted on a wall or the floor!"))
 		return
 
 	return ..()

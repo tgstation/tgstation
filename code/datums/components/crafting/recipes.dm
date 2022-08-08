@@ -678,6 +678,14 @@
 	blacklist |= typesof(/obj/item/radio/headset)
 	blacklist |= typesof(/obj/item/radio/intercom)
 
+/datum/crafting_recipe/mothplush
+	name = "Moth Plushie"
+	result = /obj/item/toy/plush/moth
+	reqs = list(/obj/item/stack/sheet/animalhide/mothroach = 1,
+				/obj/item/organ/internal/heart = 1,
+				/obj/item/stack/sheet/cloth = 3)
+	category = CAT_MISC
+
 /datum/crafting_recipe/mixedbouquet
 	name = "Mixed bouquet"
 	result = /obj/item/bouquet
@@ -1262,7 +1270,7 @@
 				/obj/item/stack/sheet/glass = 10,
 				/obj/item/stack/cable_coil = 10,
 				)
-	category = CAT_MISC
+	category = CAT_STRUCTURE
 
 /datum/crafting_recipe/shutters
 	name = "Shutters"
@@ -1273,7 +1281,7 @@
 	result = /obj/machinery/door/poddoor/shutters/preopen
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL, TOOL_WIRECUTTER, TOOL_WELDER)
 	time = 10 SECONDS
-	category = CAT_MISC
+	category = CAT_STRUCTURE
 	one_per_turf = TRUE
 
 /datum/crafting_recipe/blast_doors
@@ -1285,7 +1293,7 @@
 	result = /obj/machinery/door/poddoor/preopen
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL, TOOL_WIRECUTTER, TOOL_WELDER)
 	time = 30 SECONDS
-	category = CAT_MISC
+	category = CAT_STRUCTURE
 	one_per_turf = TRUE
 
 /datum/crafting_recipe/aquarium

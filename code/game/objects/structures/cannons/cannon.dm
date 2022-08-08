@@ -75,7 +75,8 @@
 			balloon_alert(user, "needs [reagents.maximum_volume]u of charge!")
 			return
 		visible_message(ignition_message)
-		log_game("Cannon fired by [key_name(user)] in [AREACOORD(src)]")
+		user.log_message("fired a cannon in [AREACOORD(src)]", LOG_ATTACK)
+		log_game("[key_name(user)] fired a cannon in [AREACOORD(src)]")
 		addtimer(CALLBACK(src, .proc/fire), fire_delay)
 		charge_ignited = TRUE
 		return

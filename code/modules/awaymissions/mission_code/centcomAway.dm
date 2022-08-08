@@ -38,7 +38,7 @@
 
 /obj/item/paper/pamphlet/centcom/visitor_info
 	name = "Visitor Info Pamphlet"
-	info = "<b> XCC-P5831 Visitor Information </b><br>\
+	default_raw_text = "<b> XCC-P5831 Visitor Information </b><br>\
 	Greetings, visitor, to  XCC-P5831! As you may know, this outpost was once \
 	used as Nanotrasen's CENTRAL COMMAND STATION, organizing and coordinating company \
 	projects across the vastness of space. <br>\
@@ -50,7 +50,7 @@
 
 /obj/item/paper/fluff/awaymissions/centcom/gateway_memo
 	name = "Memo to XCC-P5831 QM"
-	info = "<b>From: XCC-P5831 Management Office</b><br>\
+	default_raw_text = "<b>From: XCC-P5831 Management Office</b><br>\
 	<b>To: Rolf Ingram, XCC-P5831 Quartermaster</b><br>\
 	Hey, Rolf, once you pack that gateway into the ferry hangar, <i>make absolutely sure</i> \
 	to deactivate it! As you may know, SS13 has recently got its network up and running, \

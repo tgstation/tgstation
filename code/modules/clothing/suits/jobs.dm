@@ -147,20 +147,8 @@
 	species_exception = list(/datum/species/golem)
 	greyscale_config = /datum/greyscale_config/suspenders
 	greyscale_config_worn = /datum/greyscale_config/suspenders/worn
-	greyscale_colors = "#ff0000"
+	greyscale_colors = "#972A2A"
 	flags_1 = IS_PLAYER_COLORABLE_1
-
-/obj/item/clothing/suit/toggle/suspenders/blue
-	name = "blue suspenders"
-	desc = "The symbol of hard labor and dirty jobs."
-	icon = 'icons/obj/clothing/belts.dmi'
-	greyscale_colors = "#0000ff"
-
-/obj/item/clothing/suit/toggle/suspenders/gray
-	name = "gray suspenders"
-	desc = "The symbol of hard labor and dirty jobs."
-	icon = 'icons/obj/clothing/belts.dmi'
-	greyscale_colors = "#888888"
 
 //Security
 /obj/item/clothing/suit/jacket/officer/blue

@@ -157,7 +157,7 @@
 /area/ruin/unpowered/no_grav)
 "iE" = (
 /obj/structure/table,
-/obj/item/paicard,
+/obj/item/pai_card,
 /turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "jH" = (
