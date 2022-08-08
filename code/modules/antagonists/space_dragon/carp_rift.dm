@@ -123,7 +123,7 @@
 	if(charge_state == CHARGE_COMPLETED)
 		if(DT_PROB(1.25, delta_time) && dragon)
 			var/mob/living/newcarp = new dragon.ai_to_spawn(loc)
-			newcarp.faction = dragon.owner.current.faction
+			newcarp.faction = dragon.owner.current.faction.Copy()
 		if(DT_PROB(1.5, delta_time))
 			var/rand_dir = pick(GLOB.cardinals)
 			Move(get_step(src, rand_dir), rand_dir)
