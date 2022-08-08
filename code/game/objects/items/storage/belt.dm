@@ -271,8 +271,8 @@
 	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel, src)
 	SSwardrobe.provide_type(/obj/item/stack/sticky_tape/surgical, src)
 	SSwardrobe.provide_type(/obj/item/reagent_containers/syringe, src)
-	SSwardrobe.provide_type(/obj/item/reagent_containers/cup/glass/calomel, src)
-	SSwardrobe.provide_type(/obj/item/reagent_containers/cup/glass/formaldehyde, src)
+	SSwardrobe.provide_type(/obj/item/reagent_containers/cup/bottle/calomel, src)
+	SSwardrobe.provide_type(/obj/item/reagent_containers/cup/bottle/formaldehyde, src)
 	update_appearance()
 
 /obj/item/storage/belt/medical/paramedic/get_types_to_preload()
@@ -282,8 +282,8 @@
 	to_preload += /obj/item/stack/medical/bone_gel
 	to_preload += /obj/item/stack/sticky_tape/surgical
 	to_preload += /obj/item/reagent_containers/syringe
-	to_preload += /obj/item/reagent_containers/cup/glass/calomel
-	to_preload += /obj/item/reagent_containers/cup/glass/formaldehyde
+	to_preload += /obj/item/reagent_containers/cup/bottle/calomel
+	to_preload += /obj/item/reagent_containers/cup/bottle/formaldehyde
 	return to_preload
 
 /obj/item/storage/belt/medical/ert
