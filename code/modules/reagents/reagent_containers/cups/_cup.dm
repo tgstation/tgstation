@@ -7,6 +7,9 @@
 	spillable = TRUE
 	resistance_flags = ACID_PROOF
 
+	lefthand_file = 'icons/mob/inhands/misc/drinks_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/drinks_righthand.dmi'
+
 	///Like Edible's food type, what kind of drink is this?
 	var/drink_type = NONE
 	///The last time we have checked for taste.
@@ -152,6 +155,7 @@
 	if(hotness && reagents)
 		reagents.expose_temperature(hotness)
 		to_chat(user, span_notice("You heat [name] with [I]!"))
+		return
 
 	//Cooling method
 	if(istype(I, /obj/item/extinguisher))
@@ -166,18 +170,22 @@
 		to_chat(user, span_notice("You cool the [name] with the [I]!"))
 		playsound(loc, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
 		extinguisher.reagents.remove_all(1)
+		return
 
 	if(istype(I, /obj/item/food/egg)) //breaking eggs
 		var/obj/item/food/egg/E = I
-		if(reagents)
-			if(reagents.total_volume >= reagents.maximum_volume)
-				to_chat(user, span_notice("[src] is full."))
-			else
-				to_chat(user, span_notice("You break [E] in [src]."))
-				E.reagents.trans_to(src, E.reagents.total_volume, transfered_by = user)
-				qdel(E)
+		if(!reagents)
 			return
-	..()
+		if(reagents.total_volume >= reagents.maximum_volume)
+			to_chat(user, span_notice("[src] is full."))
+		else
+			to_chat(user, span_notice("You break [E] in [src]."))
+			for(var/datum/reagent/consumable/egg_reagents in E.food_reagents)
+				reagents.add_reagent(egg_reagents)
+			qdel(E)
+		return
+
+	return ..()
 
 /*
  * On accidental consumption, make sure the container is partially glass, and continue to the reagent_container proc
@@ -333,16 +341,18 @@
 			reagents.trans_to(O, 5, transfered_by = user)
 			to_chat(user, span_notice("You wet [O] in [src]."))
 			playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
+		return
 	else if(isprox(O)) //This works with wooden buckets for now. Somewhat unintended, but maybe someone will add sprites for it soon(TM)
 		to_chat(user, span_notice("You add [O] to [src]."))
 		qdel(O)
 		qdel(src)
 		user.put_in_hands(new /obj/item/bot_assembly/cleanbot)
-	else
-		..()
+		return
+
+	return ..()
 
 /obj/item/reagent_containers/cup/bucket/equipped(mob/user, slot)
-	..()
+	. = ..()
 	if (slot == ITEM_SLOT_HEAD)
 		if(reagents.total_volume)
 			to_chat(user, span_userdanger("[src]'s contents spill all over you!"))
