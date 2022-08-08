@@ -38,7 +38,9 @@ SUBSYSTEM_DEF(polling)
 	polls_active = TRUE
 	total_polls++
 
-	var/datum/candidate_poll/P = new(role_name_text, question, poll_time, ignore_category)
+	var/jumpable = isatom(pic_source) ? pic_source : null
+
+	var/datum/candidate_poll/P = new(role_name_text, question, poll_time, ignore_category, jumpable)
 	LAZYADD(currently_polling, P)
 
 	// We're the poll closest to completion
@@ -96,9 +98,13 @@ SUBSYSTEM_DEF(polling)
 		if(pic_source)
 			if(!ispath(pic_source))
 				var/atom/PS = pic_source
+				var/old_layer = PS.layer
+				var/old_plane = PS.plane
 				PS.plane = A.plane
 				PS.layer = FLOAT_LAYER
 				A.add_overlay(PS)
+				PS.layer = old_layer
+				PS.plane = old_plane
 			else
 				I = image(pic_source, layer = FLOAT_LAYER)
 		else
@@ -111,10 +117,13 @@ SUBSYSTEM_DEF(polling)
 
 		// Chat message
 		var/act_jump = ""
-		if(isatom(pic_source))
-			act_jump = "<a href='?src=[REF(candidate_mob)];jump=\ref[pic_source]'>\[Teleport]</a>"
+		if(isatom(pic_source) && isobserver(candidate_mob))
+			act_jump = "<a href='?src=[REF(A)];jump=1'>\[Teleport]</a>"
 		var/act_signup = "<a href='?src=[REF(A)];signup=1'>\[Sign Up]</a>"
-		to_chat(candidate_mob, "<big>[span_boldnotice("Now looking for candidates [role_name_text ? "to play as \an [role_name_text]" : "\"[question]\""]. [act_jump] [act_signup]")]</big>")
+		var/act_never = ""
+		if(ignore_category)
+			act_never = "<a href='?src=[REF(A)];never=1'>\[Never For This Round]</a>"
+		to_chat(candidate_mob, "<big>[span_boldnotice("Now looking for candidates [role_name_text ? "to play as \an [role_name_text]" : "\"[question]\""]. [act_jump] [act_signup] [act_never]")]</big>")
 
 		// Start processing it so it updates visually the timer
 		START_PROCESSING(SSprocessing, A)
@@ -211,6 +220,7 @@ SUBSYSTEM_DEF(polling)
 	var/role // The role the poll is for
 	var/question // The question asked to observers
 	var/duration // The duration of the poll
+	var/atom/jump_to_me
 	var/ignoring_category
 	var/list/mob/signed_up // The players who signed up to this poll
 	var/atom/movable/screen/alert/poll_alert/alert_button
@@ -218,11 +228,12 @@ SUBSYSTEM_DEF(polling)
 	var/finished = FALSE // Whether the polling is finished
 	var/hash // Used to categorize in the alerts system
 
-/datum/candidate_poll/New(polled_role, polled_question, poll_duration, poll_ignoring_category)
+/datum/candidate_poll/New(polled_role, polled_question, poll_duration, poll_ignoring_category, poll_jumpable)
 	role = polled_role
 	question = polled_question
 	duration = poll_duration
 	ignoring_category = poll_ignoring_category
+	jump_to_me = poll_jumpable
 	signed_up = list()
 	time_started = world.time
 	hash = copytext(md5("[question]_[role ? role : "0"]"), 1, 7)

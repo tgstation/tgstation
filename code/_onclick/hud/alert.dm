@@ -772,13 +772,16 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /atom/movable/screen/alert/poll_alert/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 	var/left_click_text
-	if(owner in poll.signed_up)
-		left_click_text = "Leave"
-	else
-		left_click_text = "Enter"
-	context[SCREENTIP_CONTEXT_LMB] = "[left_click_text] Poll"
-	if(poll?.ignoring_category)
-		context[SCREENTIP_CONTEXT_ALT_LMB] = "Set Never For This Round"
+	if(poll)
+		if(owner in poll.signed_up)
+			left_click_text = "Leave"
+		else
+			left_click_text = "Enter"
+		context[SCREENTIP_CONTEXT_LMB] = "[left_click_text] Poll"
+		if(poll.ignoring_category)
+			context[SCREENTIP_CONTEXT_ALT_LMB] = "Never For This Round"
+		if(poll.jump_to_me && isobserver(owner))
+			context[SCREENTIP_CONTEXT_CTRL_LMB] = "Jump To"
 	return CONTEXTUAL_SCREENTIP_SET
 
 /atom/movable/screen/alert/poll_alert/process()
@@ -800,7 +803,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		if(!role_name_overlay)
 			var/only_question = poll.role ? poll.role : "?"
 			var/obj/O = new
-			O.maptext = "<span style='font-family: \"Small Fonts\"; text-align: right; font-size: 7px; color: #B3E3FC; -dm-text-outline: 1px black'>[only_question]</span>"
+			O.maptext = "<span style='font-family: \"Small Fonts\"; text-align: right; font-size: 7px; color: #B3E3FC; -dm-text-outline: 1px black'>[capitalize_each_word(only_question)]</span>"
 			O.maptext_width = 128
 			var/matrix/M = new
 			M.Translate(-128, 0)
@@ -824,12 +827,10 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(poll)
 		var/list/modifiers = params2list(params)
 		if((LAZYACCESS(modifiers, ALT_CLICK)) && poll.ignoring_category)
-			if(!(owner.ckey in GLOB.poll_ignore[poll.ignoring_category]))
-				poll.never_for_this_round(owner)
-				color = "red"
-				return
-			poll.never_for_this_round(owner, undoing = TRUE)
-			color = initial(color)
+			set_never_round()
+			return
+		if((LAZYACCESS(modifiers, CTRL_CLICK)) && poll.jump_to_me)
+			jump_to_pic_source()
 			return
 		var/success
 		if(owner in poll.signed_up)
@@ -840,16 +841,36 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			// Add a small overlay to indicate we've signed up
 			update_signed_up_alert()
 
-/atom/movable/screen/alert/poll_alert/Topic(href, href_list)
-	if(!href_list["signup"])
+/atom/movable/screen/alert/poll_alert/proc/set_never_round()
+	if(!(owner.ckey in GLOB.poll_ignore[poll.ignoring_category]))
+		poll.never_for_this_round(owner)
+		color = "red"
 		return
+	poll.never_for_this_round(owner, undoing = TRUE)
+	color = initial(color)
+
+/atom/movable/screen/alert/poll_alert/proc/jump_to_pic_source()
+	if(!poll?.jump_to_me || !isobserver(owner))
+		return
+	var/turf/target_turf = get_turf(poll.jump_to_me)
+	if(target_turf && isturf(target_turf))
+		owner.abstract_move(target_turf)
+
+/atom/movable/screen/alert/poll_alert/Topic(href, href_list)
 	if(!poll)
 		return
-	if(owner in poll.signed_up)
-		poll.remove_candidate(owner)
-	else if(!(owner.ckey in GLOB.poll_ignore[poll.ignoring_category]))
-		poll.sign_up(owner)
-	update_signed_up_alert()
+	if(href_list["never"])
+		set_never_round()
+		return
+	if(href_list["signup"])
+		if(owner in poll.signed_up)
+			poll.remove_candidate(owner)
+		else if(!(owner.ckey in GLOB.poll_ignore[poll.ignoring_category]))
+			poll.sign_up(owner)
+		update_signed_up_alert()
+	if(href_list["jump"])
+		jump_to_pic_source()
+		return
 
 /atom/movable/screen/alert/poll_alert/proc/update_signed_up_alert()
 	if(!signed_up_overlay)

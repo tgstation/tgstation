@@ -48,7 +48,7 @@
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 	RegisterSignal(magnification, COMSIG_SPECIES_LOSS, .proc/make_fall_off)
 	polling = TRUE
-	var/list/candidates = SSpolling.poll_ghost_candidates_for_mob(role = ROLE_SENTIENCE, jobban = ROLE_SENTIENCE, poll_time = 5 SECONDS, target_mob = magnification, ignore_category = POLL_IGNORE_SENTIENCE_POTION, pic_source = user, role_name_text = "mind-magnified monkey")
+	var/list/candidates = SSpolling.poll_ghost_candidates_for_mob(role = ROLE_SENTIENCE, jobban = ROLE_SENTIENCE, poll_time = 5 SECONDS, target_mob = magnification, ignore_category = POLL_IGNORE_SENTIENCE_POTION, pic_source = magnification, role_name_text = "mind-magnified monkey")
 	polling = FALSE
 	if(!magnification)
 		return

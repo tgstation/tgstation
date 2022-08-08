@@ -333,6 +333,13 @@
 		. = t[1]
 		return uppertext(.) + copytext(t, 1 + length(.))
 
+/proc/capitalize_each_word(text)
+	var/list/words = splittext(lowertext(text), " ")
+	var/list/new_words = list()
+	for(var/word in words)
+		new_words += (uppertext(word[1]) + copytext(word, 2))
+	return new_words.Join(" ")
+
 /proc/stringmerge(text,compare,replace = "*")
 //This proc fills in all spaces with the "replace" var (* by default) with whatever
 //is in the other string at the same spot (assuming it is not a replace char).
