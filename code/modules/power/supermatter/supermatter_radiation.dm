@@ -1,5 +1,5 @@
 // The divisor for the power_factor when calculating the threshold.
-#define THRESHOLD_POWER_DIVISOR 750
+#define THRESHOLD_POWER_DIVISOR 300
 
 // The higher this number, the faster low integrity will drop threshold
 // I would've named this "power", but y'know. :P
@@ -29,8 +29,8 @@
 
 	power_factor = max(power_factor, integrity_power_nudge)
 
-	// At the "normal" N2 power output (with max integrity), this is 2dB, which is enough to be stopped
-	// by the walls or the radation shutters.
+	// At the "normal" N2 power output (with max integrity), this is 5dB, which is enough to be stopped
+	// by the walls or the radiation shutters.
 	// As integrity does down, rads go up.
 	var/threshold
 	switch(integrity)

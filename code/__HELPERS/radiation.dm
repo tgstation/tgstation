@@ -49,7 +49,7 @@
 	var/minimum_exposure_time
 	var/list/turfs_to_process
 
-#define MEDIUM_RADIATION_THRESHOLD_RANGE 0.5
+#define MEDIUM_RADIATION_THRESHOLD_RANGE 2
 #define EXTREME_RADIATION_CHANCE 30
 
 /// Gets the perceived "danger" of radiation pulse, given the threshold to the target.
@@ -63,7 +63,7 @@
 			return PERCEIVED_RADIATION_DANGER_HIGH
 	else
 		// We're out of the threshold from being irradiated, but by how much?
-		if (insulation_to_target / pulse_information.threshold <= MEDIUM_RADIATION_THRESHOLD_RANGE)
+		if (pulse_information.threshold && insulation_to_target / pulse_information.threshold <= MEDIUM_RADIATION_THRESHOLD_RANGE)
 			return PERCEIVED_RADIATION_DANGER_MEDIUM
 		else
 			return PERCEIVED_RADIATION_DANGER_LOW

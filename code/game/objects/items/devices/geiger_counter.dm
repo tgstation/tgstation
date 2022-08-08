@@ -82,7 +82,7 @@
 
 	if (!CAN_IRRADIATE(target))
 		if (target.rad_insulation)
-			to_chat(user, span_info("\the [target] can attenuate [target.rad_insulation]dB of radiation."))
+			to_chat(user, span_info("\The [target] can block [target.rad_insulation]dB of radiation."))
 		return
 
 	user.visible_message(span_notice("[user] scans [target] with [src]."), span_notice("You scan [target]'s radiation levels with [src]..."))
