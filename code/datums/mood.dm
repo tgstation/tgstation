@@ -11,6 +11,8 @@
 /datum/mood
 	/// Weakref to the parent (living) mob
 	var/datum/weakref/parent
+	/// The parent (living) mob
+	var/mob/living/mob_parent
 
 	/// The total combined value of all moodlets for the mob
 	var/mood
@@ -44,12 +46,13 @@
 
 	START_PROCESSING(SSmood, src)
 
-	parent = WEAKREF(mob_to_make_moody)
+	mob_parent = mob_to_make_moody
 
 	RegisterSignal(mob_to_make_moody, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
 	RegisterSignal(mob_to_make_moody, COMSIG_ENTER_AREA, .proc/check_area_mood)
 	RegisterSignal(mob_to_make_moody, COMSIG_LIVING_REVIVE, .proc/on_revive)
 	RegisterSignal(mob_to_make_moody, COMSIG_MOB_STATCHANGE, .proc/handle_mob_death)
+	RegisterSignal(mob_to_make_moody, COMSIG_PARENT_QDELETING, .proc/clear_parent_ref)
 
 	mob_to_make_moody.become_area_sensitive(MOOD_DATUM_TRAIT)
 	if(mob_to_make_moody.hud_used)
@@ -57,21 +60,21 @@
 		var/datum/hud/hud = mob_to_make_moody.hud_used
 		hud.show_hud(hud.hud_version)
 
-/datum/mood/Destroy(force, ...)
-	STOP_PROCESSING(SSmood, src)
-
-	QDEL_LIST_ASSOC_VAL(mood_events)
+/datum/mood/proc/clear_parent_ref()
+	SIGNAL_HANDLER
 
 	unmodify_hud()
-	var/mob/living/mob_parent = parent?.resolve()
-	if (mob_parent)
-		mob_parent.lose_area_sensitivity(MOOD_DATUM_TRAIT)
-		UnregisterSignal(mob_parent, list(COMSIG_MOB_HUD_CREATED, COMSIG_ENTER_AREA, COMSIG_LIVING_REVIVE, COMSIG_MOB_STATCHANGE))
+	mob_parent.lose_area_sensitivity(MOOD_DATUM_TRAIT)
+	UnregisterSignal(mob_parent, list(COMSIG_MOB_HUD_CREATED, COMSIG_ENTER_AREA, COMSIG_LIVING_REVIVE, COMSIG_MOB_STATCHANGE, COMSIG_PARENT_QDELETING))
 
+	mob_parent = null
+
+/datum/mood/Destroy(force, ...)
+	STOP_PROCESSING(SSmood, src)
+	QDEL_LIST_ASSOC_VAL(mood_events)
 	return ..()
 
 /datum/mood/process(delta_time)
-	var/mob/living/mob_parent = parent?.resolve()
 	switch(mood_level)
 		if(MOOD_LEVEL_SAD4)
 			set_sanity(sanity - 0.3 * delta_time, SANITY_INSANE)
@@ -104,7 +107,6 @@
 /datum/mood/proc/handle_mob_death(datum/source)
 	SIGNAL_HANDLER
 
-	var/mob/living/mob_parent = parent?.resolve()
 	if (last_stat == DEAD && mob_parent.stat != DEAD)
 		START_PROCESSING(SSmood, src)
 	else if (last_stat != DEAD && mob_parent.stat == DEAD)
@@ -113,7 +115,6 @@
 
 /// Handles mood given by nutrition
 /datum/mood/proc/handle_nutrition()
-	var/mob/living/mob_parent = parent?.resolve()
 	if (HAS_TRAIT(mob_parent, TRAIT_NOHUNGER))
 		return FALSE // no moods for nutrition
 	switch(mob_parent.nutrition)
@@ -142,7 +143,7 @@
  */
 /datum/mood/proc/add_mood_event(category, type, ...)
 	if (!ispath(type, /datum/mood_event))
-		return
+		CRASH("A non path ([type]), was used to add a mood event. This shouldn't be happening.")
 	if (!istext(category))
 		category = REF(category)
 
@@ -157,7 +158,6 @@
 			return // Don't need to update the event.
 	var/list/params = args.Copy(3)
 
-	var/mob/living/mob_parent = parent?.resolve()
 	params.Insert(1, mob_parent)
 	the_event = new type(arglist(params))
 	if (QDELETED(the_event)) // the mood event has been deleted for whatever reason (requires a job, etc)
@@ -194,7 +194,6 @@
 	mood = 0
 	shown_mood = 0
 
-	var/mob/living/mob_parent = parent?.resolve()
 	SEND_SIGNAL(mob_parent, COMSIG_CARBON_MOOD_UPDATE)
 
 	for(var/category in mood_events)
@@ -229,7 +228,6 @@
 
 /// Updates the mob's mood icon
 /datum/mood/proc/update_mood_icon()
-	var/mob/living/mob_parent = parent?.resolve()
 	if (!(mob_parent.client || mob_parent.hud_used))
 		return
 
@@ -277,7 +275,6 @@
 /datum/mood/proc/modify_hud(datum/source)
 	SIGNAL_HANDLER
 
-	var/mob/living/mob_parent = parent?.resolve()
 	var/datum/hud/hud = mob_parent.hud_used
 	mood_screen_object = new
 	mood_screen_object.color = "#4b96c4"
@@ -291,7 +288,6 @@
 
 	if(!mood_screen_object)
 		return
-	var/mob/living/mob_parent = parent?.resolve()
 	var/datum/hud/hud = mob_parent.hud_used
 	if(hud?.infodisplay)
 		hud.infodisplay -= mood_screen_object
@@ -300,8 +296,6 @@
 /// Handles clicking on the mood HUD object
 /datum/mood/proc/hud_click(datum/source, location, control, params, mob/user)
 	SIGNAL_HANDLER
-
-	var/mob/living/mob_parent = parent?.resolve()
 
 	if(user != mob_parent)
 		return
@@ -381,7 +375,6 @@
 		clear_mood_event(MOOD_CATEGORY_AREA_BEAUTY)
 		return
 
-	var/mob/living/mob_parent = parent?.resolve()
 	if(HAS_TRAIT(mob_parent, TRAIT_SNOB))
 		switch(area_to_beautify.beauty)
 			if(-INFINITY to BEAUTY_LEVEL_HORRID)
@@ -420,7 +413,6 @@
 	if(amount == sanity) //Prevents stuff from flicking around.
 		return
 	sanity = amount
-	var/mob/living/mob_parent = parent?.resolve()
 	SEND_SIGNAL(mob_parent, COMSIG_CARBON_SANITY_UPDATE, amount)
 	switch(sanity)
 		if(SANITY_INSANE to SANITY_CRAZY)
@@ -459,7 +451,6 @@
 /datum/mood/proc/set_insanity_effect(newval)
 	if (newval == insanity_effect)
 		return
-	var/mob/living/mob_parent = parent?.resolve()
 	mob_parent.crit_threshold = (mob_parent.crit_threshold - insanity_effect) + newval
 	insanity_effect = newval
 
