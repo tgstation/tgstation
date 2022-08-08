@@ -59,7 +59,7 @@
 
 /datum/antagonist/space_dragon/Destroy()
 	rift_list = null
-	. = ..()
+	return ..()
 
 /datum/antagonist/space_dragon/get_preview_icon()
 	var/icon/icon = icon('icons/mob/spacedragon.dmi', "spacedragon")
