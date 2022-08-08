@@ -59,6 +59,12 @@
 	desc = "A small bottle of multiver, which removes toxins and other chemicals from the bloodstream but causes shortness of breath. All effects scale with the amount of reagents in the patient."
 	list_reagents = list(/datum/reagent/medicine/c2/multiver = 30)
 
+/obj/item/reagent_containers/cup/bottle/phlogiston
+	name = "Phlogiston bottle"
+	desc = "A small bottle of Phlogiston, that will set you on fire if used."
+	volume = 50
+	list_reagents = list(/datum/reagent/phlogiston = 30)
+
 /obj/item/reagent_containers/cup/bottle/calomel
 	name = "calomel bottle"
 	desc = "A small bottle of calomel, which quickly purges all chemicals from the patient. Causes toxin damage if the patient is not heavily injured."

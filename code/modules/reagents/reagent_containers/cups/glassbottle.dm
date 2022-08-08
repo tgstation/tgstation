@@ -143,7 +143,7 @@
 	drink_icon.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
 	icon = drink_icon
 
-	if(istype(to_mimic, /obj/item/reagent_containers/cup/glass/juice))
+	if(istype(to_mimic, /obj/item/reagent_containers/cup/glass/bottle/juice))
 		force = 0
 		throwforce = 0
 		desc = "A carton with the bottom half burst open. Might give you a papercut."
