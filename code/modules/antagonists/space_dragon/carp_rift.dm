@@ -112,9 +112,9 @@
 /obj/structure/carp_rift/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	if(charge_state != CHARGE_COMPLETED)
-		dragon?.destroy_rifts()
 		if(dragon)
-			to_chat(dragon.owner.current, span_boldwarning("A rift has been destroyed! You have failed, and find yourself weakened."))
+			to_chat(dragon.owner.current, span_boldwarning("A rift has been destroyed! You have failed, and find yourself  weakened."))
+			dragon.destroy_rifts()
 	dragon = null
 	return ..()
 
