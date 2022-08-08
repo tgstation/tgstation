@@ -82,7 +82,7 @@
 
 	SEND_SIGNAL(src, COMSIG_GLASS_DRANK, target_mob, user)
 	var/fraction = min(gulp_size/reagents.total_volume, 1)
-	addtimer(CALLBACK(reagents, /datum/reagents.proc/trans_to, target_mob, gulp_size, TRUE, TRUE, FALSE, user, FALSE, INGEST), 5)
+	reagents.trans_to(target_mob, gulp_size, transfered_by = user, methods = INGEST)
 	checkLiked(fraction, target_mob)
 	playsound(target_mob.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	if(!iscarbon(target_mob))
