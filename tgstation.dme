@@ -1506,6 +1506,7 @@
 #include "code\game\objects\effects\spawners\random\random.dm"
 #include "code\game\objects\effects\spawners\random\structure.dm"
 #include "code\game\objects\effects\spawners\random\techstorage.dm"
+#include "code\game\objects\effects\spawners\random\trap.dm"
 #include "code\game\objects\effects\spawners\random\trash.dm"
 #include "code\game\objects\effects\spawners\random\vending.dm"
 #include "code\game\objects\effects\temporary_visuals\cult.dm"

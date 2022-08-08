@@ -243,3 +243,33 @@
 	new /mob/living/simple_animal/hostile/construct/proteon/hostile(loc)
 	new /mob/living/simple_animal/hostile/construct/proteon/hostile(loc)
 	QDEL_IN(src, 30)
+
+//Labirent Tuzakları
+
+/obj/structure/trap/teleport
+	name = "teleport trap"
+	desc = "Yerde ne olduğunu anlamlandıramadığın bir şey var. Çok yaklaşmaman iyi olur."
+	icon_state = "trap"
+
+/obj/structure/trap/teleport/trap_effect(mob/living/L)
+	to_chat(L, span_danger("<B>Vücudunun fiziksel evrenden bağının koptuğunu hissediyorsun!</B>"))
+	var/turf/safe_turf = find_safe_turf(zlevels = z, extended_safety_checks = TRUE)
+	playsound(get_turf(L), SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
+	do_teleport(L, safe_turf, channel = TELEPORT_CHANNEL_MAGIC)
+	L.playsound_local(get_turf(L), 'sound/hallucinations/i_see_you1.ogg', 50, 1)
+	playsound(get_turf(L), 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(get_turf(L), SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
+	L.become_blind(10)
+	addtimer(CALLBACK(L, /mob/living/proc/cure_blind,), 30 SECONDS)
+
+/obj/structure/trap/flashbang
+	name = "flashbang trap"
+	desc = "Yerde ne olduğunu anlamlandıramadığın bir şey var. Çok yaklaşmaman iyi olur."
+	icon_state = "trap-shock"
+
+/obj/structure/trap/flashbang/trap_effect(mob/living/L)
+	to_chat(L, span_danger("<B>Çarpılıyorsun ve gözlerin acıyor.</B>"))
+	L.electrocute_act(5, src, flags = SHOCK_NOGLOVES)
+	explosion(src, flash_range = 7, adminlog = FALSE)
+	playsound(get_turf(L), 'sound/voice/human/hihiha.ogg', 100,)
+
