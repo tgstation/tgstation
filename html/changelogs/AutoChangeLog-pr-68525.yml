@@ -1,4 +1,0 @@
-author: "Pickle-Coding"
-delete-after: True
-changes: 
-  - code_imp: "Radiation pulses will ask MC if they should continue processing for every turf they iterate through, rather than just every pulse."

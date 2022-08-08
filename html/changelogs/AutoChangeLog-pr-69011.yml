@@ -1,8 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - balance: "the mining modsuit now costs 3000 from 2500"
-  - balance: "the mining modsuit now still slows you down over lava, though you still resist it"
-  - qol: "the plasma core now accepts plasma both in sheet form and ore form"
-  - bugfix: "the plasma core should no longer buggily not refill you"
-  - bugfix: "the mining modsuit bombs should now have enemies target you"

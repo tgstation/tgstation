@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - rscadd: "Paramedic PDAs now start with the Lifeline pinpointer app"
-  - rscadd: "Replaced the \"proximity crew pinpointer\" in the paramedic's belt with a bottle of Calomel"
-  - rscdel: "Removed the \"proximity crew pinpointer\""

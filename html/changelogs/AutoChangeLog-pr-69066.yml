@@ -1,4 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes: 
-  - bugfix: "Belts will now change appearance when items are inserted into them as well, instead of only doing so when an item was removed from them."
