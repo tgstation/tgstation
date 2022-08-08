@@ -3,23 +3,32 @@
  * Datum which describes a theme and replaces turfs and objects in specified locations to match that theme
  */
 /datum/dimension_theme
+	/// An icon to display to represent the theme
+	var/icon/icon
+	/// Icon state to use to represent the theme
+	var/icon_state
 	/// Typepath of custom material to use for objects.
-	var/material
+	var/datum/material/material
 	/// Weighted list of turfs to replace the floor with.
 	var/list/replace_floors = list(/turf/open/floor/material = 1)
-	/// Weighted list of turfs to replace walls with.
-	var/list/replace_walls = list(/turf/closed/wall/material = 1)
+	/// Typepath of turf to replace walls with.
+	var/turf/replace_walls = /turf/closed/wall/material
 	/// List of weighted lists for object replacement. Key is an original typepath, value is a weighted list of typepaths to replace it with.
 	var/list/replace_objs = list(\
 		/obj/structure/chair = list(/obj/structure/chair/greyscale = 1), \
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/material = 1, /obj/machinery/door/airlock/material/glass = 1), \
 		/obj/structure/table = list(/obj/structure/table/greyscale = 1), \
 		/obj/structure/toilet = list(/obj/structure/toilet/greyscale = 1),)
-	/// Weighted list of directional windows which will replace existing ones
-	var/list/replace_windows = list()
-	/// Weighted list of full-size windows which will replace existing ones
+	/// Typepath of full-size windows which will replace existing ones
 	/// These need to be separate from replace_objs because we don't want to replace dir windows with full ones and they share typepath
-	var/list/replace_full_windows = list()
+	var/obj/structure/window/replace_window
+	/// Colour to recolour windows with, replaced by material colour if material was specified.
+	var/window_colour = "#ffffff"
+
+/datum/dimension_theme/New()
+	if (material)
+		var/datum/material/using_mat = GET_MATERIAL_REF(material)
+		window_colour = using_mat.greyscale_colors
 
 /datum/dimension_theme/proc/get_random_theme()
 	var/subtype = pick(subtypesof(/datum/dimension_theme))
@@ -43,7 +52,7 @@
 	if (iswallturf(affected_turf))
 		if (isindestructiblewall(affected_turf))
 			return FALSE
-		return replace_walls.len > 0
+		return TRUE
 	return FALSE
 
 /datum/dimension_theme/proc/replace_turf(turf/affected_turf)
@@ -56,7 +65,10 @@
 		return FALSE
 	if (isindestructiblewall(affected_turf))
 		return FALSE
-	return transform_wall(affected_turf)
+	if (istype(affected_wall, replace_walls))
+		return FALSE
+	affected_wall.ChangeTurf(replace_walls)
+	return TRUE
 
 /datum/dimension_theme/proc/transform_floor(turf/open/floor/affected_floor)
 	if (replace_floors.len == 0 || (affected_floor in replace_floors))
@@ -65,12 +77,12 @@
 	return TRUE
 
 /datum/dimension_theme/proc/transform_wall(turf/closed/wall/affected_wall)
-	if (replace_walls.len == 0 || (affected_wall in replace_walls))
-		return FALSE
-	affected_wall.ChangeTurf(pick_weight(replace_walls))
-	return TRUE
 
 /datum/dimension_theme/proc/replace_object(obj/object)
+	if (istype(object, /obj/structure/window))
+		replace_window(object)
+		return
+
 	var/replace_path = get_replacement_object_typepath(object)
 	if (!replace_path)
 		return
@@ -79,18 +91,21 @@
 	qdel(object)
 
 /datum/dimension_theme/proc/get_replacement_object_typepath(obj/object)
-	if (istype(object, /obj/structure/window))
-		return get_window_typepath(object)
-
 	for (var/type in replace_objs)
 		if (istype(object, type))
 			return pick_weight(replace_objs[type])
 	return
 
-/datum/dimension_theme/proc/get_window_typepath(obj/structure/window/window)
-	if (window.fulltile)
-		return pick_weight(replace_full_windows)
-	return pick_weight(replace_windows)
+/datum/dimension_theme/proc/replace_window(obj/structure/window/window)
+	if (!window.fulltile)
+		return
+	if (!replace_window)
+		window.add_atom_colour(window_colour, FIXED_COLOUR_PRIORITY)
+		return
+
+	var/obj/structure/window/new_window = new replace_window(window.loc)
+	new_window.add_atom_colour(window_colour, FIXED_COLOUR_PRIORITY)
+	qdel(window)
 
 #define PERMITTED_MATERIAL_REPLACE_TYPES list(\
 	/obj/structure/chair, \
@@ -121,69 +136,93 @@
 /////////////////////
 
 /datum/dimension_theme/gold
+	icon = 'icons/obj/stack_objects.dmi'
+	icon_state = "sheet-gold_2"
 	material = /datum/material/gold
 
 /datum/dimension_theme/plasma
+	icon = 'icons/obj/clothing/masks.dmi'
+	icon_state = "gas_alt"
 	material = /datum/material/plasma
 
 /datum/dimension_theme/clown
+	icon = 'icons/obj/clothing/masks.dmi'
+	icon_state = "clown"
 	material = /datum/material/bananium
 
 /datum/dimension_theme/radioactive
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "Uranium ore"
 	material = /datum/material/uranium
 
 /datum/dimension_theme/meat
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "meat"
 	material = /datum/material/meat
 
 /datum/dimension_theme/pizza
+	icon = 'icons/obj/food/pizzaspaghetti.dmi'
+	icon_state = "pizzamargherita"
 	material = /datum/material/pizza
 
 /datum/dimension_theme/natural
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon_state = "map_flower"
+	window_colour = "#00f7ff"
 	replace_floors = list(/turf/open/floor/grass = 1)
-	replace_walls = list(/turf/closed/wall/mineral/wood/nonmetal = 1)
+	replace_walls = /turf/closed/wall/mineral/wood/nonmetal
 	replace_objs = list(\
 		/obj/structure/chair = list(/obj/structure/chair/wood = 3, /obj/structure/chair/wood/wings = 1), \
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/wood = 1, /obj/machinery/door/airlock/wood/glass = 1), \
 		/obj/structure/table = list(/obj/structure/table/wood = 5, /obj/structure/table/wood/fancy = 1),)
 
 /datum/dimension_theme/bamboo
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon_state = "bamboo"
 	replace_floors = list(/turf/open/floor/bamboo = 1)
-	replace_walls = list(/turf/closed/wall/mineral/bamboo = 1)
-	replace_full_windows = list(/obj/structure/window/paperframe = 1)
+	replace_walls = /turf/closed/wall/mineral/bamboo
+	replace_window = /obj/structure/window/paperframe
 	replace_objs = list(\
 		/obj/structure/chair = list(/obj/structure/chair/stool/bamboo = 1), \
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/wood = 1, /obj/machinery/door/airlock/wood/glass = 1), \
 		/obj/structure/table = list(/obj/structure/table/wood = 1),)
 
 /datum/dimension_theme/icebox
+	icon = 'icons/obj/clothing/shoes.dmi'
+	icon_state = "iceboots"
+	window_colour = "#00f7ff"
 	material = /datum/material/snow
 	replace_floors = list(/turf/open/floor/fake_snow = 10, /turf/open/floor/fakeice/slippery = 1)
-	replace_walls = list(/turf/closed/wall/mineral/snow = 1)
+	replace_walls = /turf/closed/wall/mineral/snow
 
 /datum/dimension_theme/lavaland
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "goliath_hide"
+	window_colour = "#860000"
 	replace_floors = list(/turf/open/floor/fakebasalt = 5, /turf/open/floor/fakepit = 1)
-	replace_walls = list(/turf/closed/wall/mineral/cult = 1)
+	replace_walls = /turf/closed/wall/mineral/cult
 	replace_objs = list(\
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/external/glass/ruin = 1))
 
 /datum/dimension_theme/space
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "blessed"
+	window_colour = "#000000"
 	material = /datum/material/glass
 	replace_floors = list(/turf/open/floor/fakespace = 1)
-	replace_walls = list(/turf/closed/wall/rock/porous = 1)
+	replace_walls = /turf/closed/wall/rock/porous
 	replace_objs = list(/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/external/glass/ruin = 1))
 
 /datum/dimension_theme/glass
+	icon = 'icons/obj/shards.dmi'
+	icon_state = "small"
 	material = /datum/material/glass
 	replace_floors = list(/turf/open/floor/glass = 1)
-	replace_walls = list(/turf/open/floor/glass = 1)
-
-/datum/dimension_theme/glass/transform_wall(turf/closed/wall/affected_wall)
-	affected_wall.ChangeTurf(/turf/open/floor/glass)
-	new /obj/structure/window/fulltile(affected_wall)
-	return TRUE
 
 /datum/dimension_theme/fancy
-	replace_walls = list(/turf/closed/wall/mineral/wood/nonmetal = 1)
+	icon = 'icons/obj/clothing/hats.dmi'
+	icon_state = "fancycrown"
+	replace_walls = /turf/closed/wall/mineral/wood/nonmetal
 
 #define FANCY_CARPETS list(\
 	/turf/open/floor/eighties, \
@@ -209,9 +248,11 @@
 #undef FANCY_CARPETS
 
 /datum/dimension_theme/disco
+	icon = 'icons/obj/lighting.dmi'
+	icon_state = "lbulb"
 	material = /datum/material/glass
 	replace_floors = list(/turf/open/floor/light = 1)
-	replace_walls = list(/turf/closed/wall = 1)
+	replace_walls = /turf/closed/wall
 
 /datum/dimension_theme/disco/transform_floor(turf/open/floor/affected_floor)
 	. = ..()

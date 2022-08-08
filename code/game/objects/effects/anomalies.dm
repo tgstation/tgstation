@@ -561,48 +561,81 @@
 
 /obj/effect/anomaly/dimensional
 	name = "dimensional anomaly"
-	icon_state = "hallucination_anomaly"
+	icon_state = "dimensional_anomaly"
+	aSignal = /obj/item/assembly/signaler/anomaly/dimensional
 	immortal = TRUE
 	immobile = TRUE
 	/// Range of effect, if left alone anomaly will convert a 2(range)+1 squared area.
 	var/range = 3
+	/// List of turfs this anomaly will try to transform before relocating
 	var/list/turf/target_turfs = new()
+	/// Current anomaly 'theme', dictates what tiles to create.
 	var/datum/dimension_theme/theme
+	/// Effect displaying on the anomaly to represent the theme.
+	var/mutable_appearance/theme_icon
+
+/obj/effect/anomaly/dimensional/Initialize(mapload, new_lifespan, drops_core)
+	. = ..()
+	overlays += mutable_appearance('icons/effects/effects.dmi', "dimensional_overlay")
+
+/obj/effect/anomaly/dimensional/anomalyEffect(delta_time)
+	. = ..()
+	transmute_area()
+
+/obj/effect/anomaly/dimensional/proc/transmute_area()
+	if (!theme)
+		prepare_area()
+	if (!target_turfs.len)
+		relocate()
+		return
+
+	var/turf/affected_turf = target_turfs[1]
+	new /obj/effect/temp_visual/transmute_tile_flash(affected_turf)
+	theme.apply_theme(affected_turf)
+	target_turfs.Remove(affected_turf)
 
 /obj/effect/anomaly/dimensional/proc/prepare_area()
 	var/datum/dimension_theme/themes = new()
 	theme = themes.get_random_theme()
+	apply_theme_icon()
 
 	target_turfs = new()
 	var/list/turfs = spiral_range_turfs(range, src)
 	for (var/turf/turf in turfs)
 		if (theme.can_convert(turf))
 			target_turfs.Add(turf)
-	try_relocate()
 
-/obj/effect/anomaly/dimensional/anomalyEffect(delta_time)
-	. = ..()
-	if (!theme)
-		prepare_area()
-	transmute_area()
+/obj/effect/anomaly/dimensional/proc/apply_theme_icon()
+	overlays -= theme_icon
+	theme_icon = mutable_appearance(theme.icon, theme.icon_state, FLOAT_LAYER - 1)
+	theme_icon.blend_mode = BLEND_INSET_OVERLAY
+	overlays += theme_icon
 
-/obj/effect/anomaly/dimensional/proc/transmute_area()
-	var/turf/affected_turf = target_turfs[1]
-	new /obj/effect/temp_visual/transmute_tile_flash(affected_turf)
-	theme.apply_theme(affected_turf)
-	target_turfs.Remove(affected_turf)
-	try_relocate()
-
-/obj/effect/anomaly/dimensional/proc/try_relocate()
-	if (target_turfs.len != 0)
-		return
-
+/obj/effect/anomaly/dimensional/proc/relocate()
 	var/datum/anomaly_placer/placer = new()
 	var/area/new_area = placer.findValidArea()
 
+	var/list/valid_turfs = list()
+	for (var/turf/try_turf as anything in get_area_turfs(new_area))
+		if (!is_valid_destination(try_turf))
+			continue
+		valid_turfs += try_turf
+
+	if (!valid_turfs.len)
+		CRASH("Dimensional anomaly attempted to reach invalid location [new_area].")
+
 	priority_announce("Dimensional instability relocated. Expected location: [new_area.name].", "Anomaly Alert")
-	do_teleport(src, pick(get_area_turfs(new_area)))
+	src.forceMove(pick(valid_turfs))
 	prepare_area()
+
+/obj/effect/anomaly/dimensional/proc/is_valid_destination(turf/tested)
+	if (isspaceturf(tested))
+		return FALSE
+	if (tested.density)
+		return FALSE
+	if (tested.is_blocked_turf(exclude_mobs = TRUE))
+		return FALSE
+	return TRUE
 
 /obj/effect/temp_visual/transmute_tile_flash
 	icon = 'icons/effects/effects.dmi'
