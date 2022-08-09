@@ -35,7 +35,7 @@
 	uniform = /obj/item/clothing/under/rank/civilian/curator
 	backpack_contents = list(
 		/obj/item/announcer = 1,
-
+		/obj/item/megaphone = 1,
 	)
 	belt = /obj/item/modular_computer/tablet/pda/curator
 	ears = /obj/item/radio/headset/headset_srv

@@ -12,7 +12,7 @@
 		to_chat(user, span_warning("Bu aletin nasıl çalıştığını anlamıyorsun."))
 		return
 	if(charge <= 0)
-		to_chat(user, span_warning("Alet şarz oluyor!"))
+		to_chat(user, span_warning("Alet şarz oluyor!")) //henüz çalışmıyor bir ara yapıcam
 		return
 	var/input = tgui_input_text(user, "Message to announce to the station crew", "Announcement")
 	var/list/players = get_communication_players()
