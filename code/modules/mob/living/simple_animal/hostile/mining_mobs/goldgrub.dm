@@ -25,7 +25,7 @@
 	combat_mode = FALSE
 	speak_emote = list("screeches")
 	throw_message = "sinks in slowly, before being pushed out of "
-	deathmessage = "stops moving as green liquid oozes from the carcass!"
+	death_message = "stops moving as green liquid oozes from the carcass!"
 	status_flags = CANPUSH
 	gold_core_spawnable = HOSTILE_SPAWN
 	search_objects = 1

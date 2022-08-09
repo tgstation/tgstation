@@ -163,10 +163,12 @@
  * * ignore splitting - Don't call the process that handles reagent spliting in a mob (impure/inverse) - generally leave this false unless you care about REAGENTS_DONOTSPLIT flags (see reagent defines)
  */
 /datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = DEFAULT_REAGENT_TEMPERATURE, added_purity = null, added_ph, no_react = FALSE, override_base_ph = FALSE, ignore_splitting = FALSE)
-	if(!isnum(amount) || !amount)
+	// Prevents small amount problems, as well as zero and below zero amounts.
+	if(amount <= CHEMICAL_QUANTISATION_LEVEL)
 		return FALSE
 
-	if(amount <= CHEMICAL_QUANTISATION_LEVEL)//To prevent small amount problems.
+	if(!IS_FINITE(amount))
+		stack_trace("non finite amount passed to add reagent [amount] [reagent]")
 		return FALSE
 
 	if(SEND_SIGNAL(src, COMSIG_REAGENTS_PRE_ADD_REAGENT, reagent, amount, reagtemp, data, no_react) & COMPONENT_CANCEL_REAGENT_ADD)
@@ -273,13 +275,11 @@
 /// Remove a specific reagent
 /datum/reagents/proc/remove_reagent(reagent, amount, safety = TRUE)//Added a safety check for the trans_id_to
 	if(isnull(amount))
-		amount = 0
-		CRASH("null amount passed to reagent code")
-
-	if(!isnum(amount))
+		stack_trace("null amount passed to reagent code")
 		return FALSE
 
-	if(amount < 0)
+	if(amount < 0 || !IS_FINITE(amount))
+		stack_trace("invalid number passed to remove_reagent [amount]")
 		return FALSE
 
 	var/list/cached_reagents = reagent_list

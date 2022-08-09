@@ -36,8 +36,8 @@
 	speed = 3
 	move_to_delay = 10
 	mouse_opacity = MOUSE_OPACITY_ICON
-	deathsound = 'sound/magic/repulse.ogg'
-	deathmessage = "'s lights flicker, before its top part falls down."
+	death_sound = 'sound/magic/repulse.ogg'
+	death_message = "'s lights flicker, before its top part falls down."
 	loot_drop = /obj/item/clothing/accessory/pandora_hope
 
 	attack_action_types = list(/datum/action/innate/elite_attack/singular_shot,
