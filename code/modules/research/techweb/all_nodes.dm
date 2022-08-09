@@ -29,6 +29,7 @@
 		"doppler_array",
 		"experi_scanner",
 		"experimentor",
+		"fax",
 		"gas_filter",
 		"handlabel",
 		"mechfab",
@@ -65,7 +66,6 @@
 		"turbine_part_rotor",
 		"turbine_part_stator",
 		"watering_can",
-		"fax",
 	)
 
 /datum/techweb_node/mmi
