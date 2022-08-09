@@ -46,10 +46,6 @@
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
 
-/datum/job/chief_engineer/get_captaincy_announcement(mob/living/captain)
-	return "Due to staffing shortages, newly promoted Acting Captain [captain.real_name] on deck!"
-
-
 /datum/outfit/job/ce
 	name = "Chief Engineer"
 	jobtype = /datum/job/chief_engineer
