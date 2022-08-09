@@ -31,7 +31,7 @@
 
 		var/list/unfiltered_allowed_food = subtypesof(/obj/item/food) - blocked
 		for(var/obj/item/food/food as anything in unfiltered_allowed_food)
-			if(!food?.icon_state) //im nullchecking because it would be very bad if this runtimed
+			if(initial(food.icon_state)) //im nullchecking because it would be very bad if this runtimed
 				continue
 			allowed_food.Add(food)
 
