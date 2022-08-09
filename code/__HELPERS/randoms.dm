@@ -31,7 +31,7 @@
 
 		var/list/unfiltered_allowed_food = subtypesof(/obj/item/food) - blocked
 		for(var/obj/item/food/food as anything in unfiltered_allowed_food)
-			if(initial(food.icon_state)) //food with no icon_state should probably not be spawned
+			if(!initial(food.icon_state)) //food with no icon_state should probably not be spawned
 				continue
 			allowed_food.Add(food)
 
