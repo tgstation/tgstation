@@ -113,9 +113,9 @@
 		return
 	if(playing)
 		return ..()
-	var/item/card/id/player_card = W.GetID()
+	var/obj/item/card/id/player_card = W.GetID()
 	if(player_card)
-		if(istype(W, /obj/item/card/id)
+		if(istype(W, /obj/item/card/id))
 			playsound(src, 'sound/machines/card_slide.ogg', 50, TRUE)
 		else
 			playsound(src, 'sound/machines/terminal_success.ogg', 50, TRUE)
@@ -124,13 +124,14 @@
 			to_chat(user, span_notice("The machine appears to be disabled."))
 			return FALSE
 
+		if(!player_card.registered_account)
+			say("You don't have a bank account!")
+			playsound(src, 'sound/machines/buzz-two.ogg', 30, TRUE)
+			return FALSE
+
 		if(my_card)
 			if(istype(player_card, /obj/item/card/id/departmental_budget)) // Are they using a department ID
 				say("You cannot gamble with the department budget!")
-				playsound(src, 'sound/machines/buzz-two.ogg', 30, TRUE)
-				return FALSE
-			if(!player_card.registered_account)
-				say("You don't have a bank account!")
 				playsound(src, 'sound/machines/buzz-two.ogg', 30, TRUE)
 				return FALSE
 			if(player_card.registered_account.account_balance < chosen_bet_amount) //Does the player have enough funds
@@ -176,7 +177,7 @@
 
 			addtimer(CALLBACK(src, .proc/play, user, player_card, chosen_bet_type, chosen_bet_amount, potential_payout), 4) //Animation first
 			return TRUE
-		else if(player_card.registered_account)
+		else
 			var/msg = tgui_input_text(user, "Name of your roulette wheel", "Roulette Customization", "Roulette Machine", MAX_NAME_LEN)
 			if(!msg)
 				return
