@@ -276,19 +276,19 @@
 	defense_mod -= round(leg_wounds * 0.5)
 
 	if(ishuman(target))
-		var/mob/living/carbon/human/T = target
+		var/mob/living/carbon/human/tackle_target = target
 
-		if(isnull(T.wear_suit) && isnull(T.w_uniform)) // who honestly puts all of their effort into tackling a naked guy?
+		if(isnull(tackle_target.wear_suit) && isnull(tackle_target.w_uniform)) // who honestly puts all of their effort into tackling a naked guy?
 			defense_mod += 2
-		if(T.mob_negates_gravity())
+		if(tackle_target.mob_negates_gravity())
 			defense_mod += 1
-		if(T.is_shove_knockdown_blocked()) // riot armor and such
+		if(tackle_target.is_shove_knockdown_blocked()) // riot armor and such
 			defense_mod += 5
-		if(T.is_holding_item_of_type(/obj/item/shield))
+		if(tackle_target.is_holding_item_of_type(/obj/item/shield))
 			defense_mod += 2
 
-		if(islizard(T))
-			var/obj/item/organ/external/tail/el_tail = T.getorganslot(ORGAN_SLOT_EXTERNAL_TAIL)
+		if(HAS_TRAIT(tackle_target, TRAIT_TACKLING_TAILED_DEFENDER))
+			var/obj/item/organ/external/tail/el_tail = tackle_target.getorganslot(ORGAN_SLOT_EXTERNAL_TAIL)
 			if(!el_tail) // lizards without tails are off-balance
 				defense_mod -= 1
 			else if(el_tail.wag_flags & WAG_WAGGING) // lizard tail wagging is robust and can swat away assailants!
@@ -309,9 +309,9 @@
 	if(HAS_TRAIT(sacker, TRAIT_GIANT))
 		attack_mod += 2
 
-	if(ismoth(sacker))
+	if(HAS_TRAIT(sacker, TRAIT_TACKLING_WINGED_ATTACKER))
 		var/obj/item/organ/external/wings/moth/sacker_wing = sacker.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
-		if(!sacker_wing || sacker_wing.burnt) // moths without wing/burnt ones can't tackle properly
+		if(!sacker_wing || sacker_wing.burnt) // moths without wings/burnt ones can't tackle properly
 			attack_mod -= 2
 		else
 			attack_mod += 2 // healty wings are used as extra propulsion
@@ -380,7 +380,7 @@
 	if(HAS_TRAIT(user, TRAIT_CLUMSY))
 		oopsie_mod += 6 //honk!
 
-	if(isflyperson(user))
+	if(HAS_TRAIT(user, TRAIT_TACKLING_FRAIL_ATTACKER))
 		oopsie_mod += 6 // flies don't take smacking into a window/wall easily
 
 	var/oopsie = rand(danger_zone, 100)
