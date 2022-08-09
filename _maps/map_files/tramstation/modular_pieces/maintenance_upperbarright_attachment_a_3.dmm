@@ -81,8 +81,8 @@
 	},
 /obj/item/chair/plastic,
 /obj/item/chair/plastic{
-	pixel_y = 12;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 12
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
@@ -147,9 +147,9 @@ s
 Y
 w
 n
-w
 B
 B
+u
 "}
 (2,1,1) = {"
 g
@@ -159,9 +159,9 @@ B
 w
 B
 B
-s
 B
 C
+u
 "}
 (3,1,1) = {"
 u
@@ -171,9 +171,9 @@ q
 A
 B
 w
-q
 t
 T
+u
 "}
 (4,1,1) = {"
 u

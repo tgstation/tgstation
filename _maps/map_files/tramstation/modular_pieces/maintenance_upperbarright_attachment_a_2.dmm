@@ -2,11 +2,8 @@
 "a" = (
 /turf/open/misc/asteroid,
 /area/station/maintenance/department/cargo)
-"b" = (
-/obj/item/stack/ore/glass,
-/turf/open/misc/asteroid/dug,
-/area/station/maintenance/department/cargo)
 "e" = (
+/obj/item/stack/ore/glass,
 /obj/structure/girder,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
@@ -25,13 +22,14 @@
 "n" = (
 /turf/closed/wall/rock,
 /area/station/maintenance/department/cargo)
-"q" = (
-/turf/closed/mineral/random/stationside/asteroid/porus,
-/area/station/maintenance/department/cargo)
 "v" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/misc/asteroid,
+/area/station/maintenance/department/cargo)
+"y" = (
+/obj/item/stack/ore/glass,
+/turf/closed/wall,
 /area/station/maintenance/department/cargo)
 "B" = (
 /obj/item/shovel,
@@ -39,10 +37,6 @@
 /area/station/maintenance/department/cargo)
 "F" = (
 /turf/closed/wall/rust,
-/area/station/maintenance/department/cargo)
-"H" = (
-/obj/item/pickaxe/rusted,
-/turf/open/misc/asteroid,
 /area/station/maintenance/department/cargo)
 "R" = (
 /obj/modular_map_connector,
@@ -60,10 +54,6 @@
 "S" = (
 /turf/closed/wall,
 /area/station/maintenance/department/cargo)
-"T" = (
-/obj/item/stack/ore/glass,
-/turf/open/misc/asteroid,
-/area/station/maintenance/department/cargo)
 "Y" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
@@ -78,36 +68,36 @@
 n
 a
 a
-q
 B
+i
 "}
 (2,1,1) = {"
 h
 Z
 a
 a
-a
+i
 "}
 (3,1,1) = {"
 v
 a
-H
 a
 F
+i
 "}
 (4,1,1) = {"
 n
 Y
 a
-T
 e
+i
 "}
 (5,1,1) = {"
 F
 Y
-Y
-b
-S
+a
+y
+i
 "}
 (6,1,1) = {"
 F

@@ -7,6 +7,11 @@
 /obj/modular_map_connector,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
+"be" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/shovel,
+/turf/open/floor/plating,
+/area/station/maintenance/department/crew_quarters/dorms)
 "bo" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -20,15 +25,15 @@
 /obj/machinery/duct,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
-"bz" = (
+"by" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/duct,
 /obj/effect/turf_decal/sand/plating,
-/obj/structure/barricade/wooden,
+/obj/structure/holosign/barrier/engineering,
 /turf/open/floor/plating,
-/area/space)
+/area/station/maintenance/department/crew_quarters/dorms)
 "cS" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -74,13 +79,6 @@
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
-"hA" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating,
-/area/space)
 "is" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -94,15 +92,6 @@
 "jb" = (
 /turf/open/misc/asteroid,
 /area/station/maintenance/department/crew_quarters/dorms)
-"jc" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/duct,
-/obj/effect/turf_decal/sand/plating,
-/obj/item/stack/ore/glass,
-/turf/open/floor/plating,
-/area/space)
 "kW" = (
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -140,20 +129,15 @@
 "ol" = (
 /turf/closed/wall/rust,
 /area/station/maintenance/central/lesser)
-"oV" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/structure/ore_box,
-/turf/open/floor/plating,
-/area/space)
-"qH" = (
+"ro" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/duct,
 /obj/effect/turf_decal/sand/plating,
-/obj/structure/holosign/barrier/engineering,
+/obj/item/stack/ore/glass,
 /turf/open/floor/plating,
-/area/space)
+/area/station/maintenance/department/crew_quarters/dorms)
 "rw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/firecloset,
@@ -172,6 +156,15 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/lesser)
+"so" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/duct,
+/obj/effect/turf_decal/sand/plating,
+/obj/item/stack/ore/iron,
+/turf/open/floor/plating,
+/area/station/maintenance/department/crew_quarters/dorms)
 "sq" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -187,11 +180,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/lesser)
-"tj" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/item/shovel,
-/turf/open/floor/plating,
-/area/space)
 "tx" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -304,6 +292,14 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/lesser)
+"CK" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/duct,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/crew_quarters/dorms)
 "CL" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Restroom Maintenance Access"
@@ -338,26 +334,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
-"FC" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/duct,
-/turf/open/floor/plating,
-/area/space)
 "GJ" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
 /area/station/maintenance/central/lesser)
-"Hv" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/duct,
-/obj/effect/turf_decal/sand/plating,
-/obj/item/stack/ore/iron,
-/turf/open/floor/plating,
-/area/space)
 "HC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -457,6 +437,11 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
+"Nd" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/ore_box,
+/turf/open/floor/plating,
+/area/station/maintenance/department/crew_quarters/dorms)
 "Nj" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -468,9 +453,15 @@
 /obj/structure/barricade/wooden,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
-"NV" = (
-/turf/open/misc/asteroid,
-/area/space)
+"Nx" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/duct,
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/barricade/wooden,
+/turf/open/floor/plating,
+/area/station/maintenance/department/crew_quarters/dorms)
 "Oi" = (
 /obj/item/stack/ore/silver,
 /turf/open/misc/asteroid,
@@ -489,17 +480,6 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
-"Qb" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/duct,
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating,
-/area/space)
-"Qk" = (
-/turf/closed/wall/rock/porous,
-/area/space)
 "Rt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/moisture_trap,
@@ -534,9 +514,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall,
 /area/station/maintenance/department/crew_quarters/dorms)
-"Wv" = (
-/turf/closed/wall/rust,
-/area/space)
+"WK" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/duct,
+/turf/open/floor/plating,
+/area/station/maintenance/department/crew_quarters/dorms)
 "XU" = (
 /obj/structure/barricade/wooden,
 /turf/open/misc/asteroid,
@@ -548,10 +532,6 @@
 "Yw" = (
 /turf/closed/wall/rust,
 /area/station/maintenance/department/crew_quarters/dorms)
-"Zq" = (
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating,
-/area/space)
 "ZJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
@@ -568,17 +548,17 @@ OI
 xu
 xu
 xu
-Zq
-Qk
-oV
-NV
-NV
-NV
-Zq
-Wv
-Wv
-NV
-Zq
+gU
+gn
+Nd
+jb
+jb
+jb
+gU
+Yw
+Yw
+jb
+gU
 gn
 Ii
 Ii
@@ -602,25 +582,25 @@ xu
 xu
 xu
 xu
-NV
-Hv
-Qb
-Qb
-Qb
-Qb
-jc
-Qb
-bz
-qH
-Qb
+jb
+so
+CK
+CK
+CK
+CK
+ro
+CK
+Nx
+by
+CK
 Sr
 tI
 tI
 tI
 tI
 tI
-hA
-hA
+ML
+ML
 gU
 xu
 xu
@@ -636,8 +616,8 @@ xu
 xu
 xu
 uZ
-NV
-Qb
+jb
+CK
 OI
 OI
 OI
@@ -654,7 +634,7 @@ OI
 OI
 OI
 OI
-hA
+ML
 jb
 yw
 uZ
@@ -670,8 +650,8 @@ xu
 xu
 uZ
 yw
-Zq
-Qb
+gU
+CK
 OI
 OI
 OI
@@ -688,7 +668,7 @@ OI
 OI
 OI
 OI
-hA
+ML
 jb
 OF
 xu
@@ -704,8 +684,8 @@ uZ
 uZ
 uZ
 uZ
-tj
-Qb
+be
+CK
 OI
 OI
 OI
@@ -722,7 +702,7 @@ OI
 OI
 OI
 OI
-hA
+ML
 gU
 uZ
 xu
@@ -738,8 +718,8 @@ xu
 xu
 uZ
 uZ
-Wv
-Qb
+Yw
+CK
 OI
 OI
 OI
@@ -756,7 +736,7 @@ OI
 OI
 OI
 OI
-hA
+ML
 Ii
 xu
 xu
@@ -772,8 +752,8 @@ xu
 uZ
 uZ
 xu
-Wv
-FC
+Yw
+WK
 OI
 OI
 OI

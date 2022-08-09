@@ -96,6 +96,17 @@
 "qF" = (
 /turf/closed/wall/rock/porous,
 /area/station/maintenance/department/security)
+"qH" = (
+/obj/structure/table,
+/obj/item/screwdriver,
+/obj/item/wirecutters{
+	pixel_x = 4;
+	pixel_y = 9
+	},
+/obj/item/clothing/mask/balaclava,
+/obj/machinery/light/small/directional/west,
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/security)
 "qO" = (
 /obj/machinery/duct,
 /obj/effect/decal/cleanable/dirt,
@@ -117,9 +128,6 @@
 /obj/item/pickaxe,
 /obj/item/storage/bag/ore,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/security)
-"uM" = (
-/turf/open/misc/asteroid/airless,
 /area/station/maintenance/department/security)
 "vm" = (
 /obj/effect/turf_decal/sand/plating,
@@ -154,6 +162,12 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"AT" = (
+/obj/structure/rack,
+/obj/item/stack/rods,
+/obj/item/restraints/handcuffs/cable/cyan,
+/turf/open/misc/asteroid,
 /area/station/maintenance/department/security)
 "Bx" = (
 /obj/effect/decal/cleanable/dirt,
@@ -221,10 +235,6 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
-"Ip" = (
-/obj/structure/ore_box,
-/turf/open/misc/asteroid/airless,
-/area/station/maintenance/department/security)
 "LF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -236,12 +246,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
-/area/station/maintenance/department/security)
-"LX" = (
-/obj/structure/rack,
-/obj/item/stack/rods,
-/obj/item/restraints/handcuffs/cable/cyan,
-/turf/open/misc/asteroid/airless,
 /area/station/maintenance/department/security)
 "Mt" = (
 /obj/effect/decal/cleanable/dirt,
@@ -319,17 +323,6 @@
 "Uh" = (
 /turf/open/misc/asteroid,
 /area/station/maintenance/department/security)
-"UR" = (
-/obj/structure/table,
-/obj/item/screwdriver,
-/obj/item/wirecutters{
-	pixel_x = 4;
-	pixel_y = 9
-	},
-/obj/item/clothing/mask/balaclava,
-/obj/machinery/light/small/directional/west,
-/turf/open/misc/asteroid/airless,
-/area/station/maintenance/department/security)
 "Vk" = (
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/misc/asteroid,
@@ -353,8 +346,8 @@
 /obj/effect/turf_decal/delivery/red,
 /obj/item/key/security,
 /obj/machinery/door/window/left/directional/north{
-	req_access_txt = "security";
-	name = "Secway Storage"
+	name = "Secway Storage";
+	req_access_txt = "security"
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
@@ -710,7 +703,7 @@ Cy
 Cy
 "}
 (11,1,1) = {"
-UR
+qH
 zo
 SD
 Cy
@@ -745,7 +738,7 @@ Cy
 Cy
 "}
 (12,1,1) = {"
-LX
+AT
 SD
 TS
 if
@@ -782,9 +775,9 @@ Cy
 (13,1,1) = {"
 ij
 OS
-uM
+Uh
 Hr
-Ip
+Mv
 ij
 ij
 ij
@@ -816,7 +809,7 @@ Cy
 "}
 (14,1,1) = {"
 Cy
-uM
+Uh
 ij
 jp
 ij
