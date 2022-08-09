@@ -93,7 +93,7 @@
 		return FALSE
 
 	// We can't call an elevator if it's already at this destination
-	var/obj/structure/industrial_lift/prime_lift = lift.lift_platforms[1]
+	var/obj/structure/industrial_lift/prime_lift = lift.return_closest_platform_to_z(loc.z)
 	if(prime_lift.z == loc.z)
 		loc.balloon_alert(activator, "elevator is here!")
 		return FALSE

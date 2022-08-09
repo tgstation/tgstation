@@ -55,7 +55,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	var/warns_on_down_movement = FALSE
 	/// if TRUE, we will gib anyone we land on top of. if FALSE, we will just apply damage with a serious wound penalty.
 	var/violent_landing = TRUE
-	/// How long does it take for the elevator to vertically?
+	/// How long does it take for the elevator to move vertically?
 	var/elevator_vertical_speed = 2 SECONDS
 
 	/// We use a radial to travel primarily, instead of a button / ui

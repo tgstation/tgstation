@@ -150,13 +150,16 @@
 
 /// Goes through and populates the linked_elevator_destination list with all possible destinations the lift can go.
 /obj/machinery/elevator_control_panel/proc/populate_destinations_list(datum/lift_master/linked_lift)
+	// This list will track all the raw z-levels which we found that we can travel to
+	var/list/raw_destinations = list()
+
 	// Get a list of all the starting locs our elevator starts at
 	var/list/starting_locs = list()
 	for(var/obj/structure/industrial_lift/lift_piece as anything in linked_lift.lift_platforms)
 		starting_locs |= lift_piece.locs
+		// The raw destination list will start with all the z's we start at
+		raw_destinations |= lift_piece.z
 
-	// Start with the initial z level obviously
-	var/list/raw_destinations = list(linked_lift.lift_platforms[1].z)
 	// Get all destinations below us
 	add_destinations_in_a_direction_recursively(starting_locs, DOWN, raw_destinations)
 	// Get all destinations above us
@@ -209,8 +212,11 @@
 	if(!length(checked_turfs))
 		CRASH("[type] found no turfs in add_destinations_in_a_direction_recursively!")
 
-	// Add the Z as a possible destination
-	destinations |= checked_turfs[1].z
+	// Add the Zs of all the found turfs as possible destinations
+	for(var/turf/found as anything in checked_turfs)
+		// We check all turfs we found in case of multi-z lift memes.
+		destinations |= found.z
+
 	// And recursively call the proc with all the turfs we found on the next level
 	add_destinations_in_a_direction_recursively(checked_turfs, direction, destinations)
 
@@ -306,7 +312,8 @@
 			if(SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_RED)
 				return TRUE // The security level might have been lowered since last update, so update UI
 
-			lift.open_lift_doors()
+			// Open all lift doors, it's an emergency dang it!
+			lift.update_lift_doors(action = OPEN_DOORS)
 			door_reset_timerid = addtimer(CALLBACK(src, .proc/reset_doors), 3 MINUTES, TIMER_UNIQUE|TIMER_STOPPABLE)
 			return TRUE // We opened up all the doors, update the UI so the emergency button is replaced correctly
 
@@ -334,12 +341,20 @@
 	if(!lift)
 		return
 
+	var/list/zs_we_are_present_on = lift.get_zs_we_are_on()
+	var/list/zs_we_are_absent = list()
+
 	for(var/z_level in linked_elevator_destination)
 		z_level = text2num(z_level) // Stored as strings.
-		if(z_level == lift.lift_platforms[1].z)
-			lift.open_lift_doors(z_level)
-		else
-			lift.close_lift_doors(z_level)
+		if(z_level in zs_we_are_present_on)
+			continue
+
+		zs_we_are_absent |= z_level
+
+	// Open all the doors on the zs we should be open on,
+	// and close all doors we aren't on. Simple enough.
+	lift.update_lift_doors(zs_we_are_present_on, action = OPEN_DOORS)
+	lift.update_lift_doors(zs_we_are_absent, action = CLOSE_DOORS)
 
 	door_reset_timerid = null
 
