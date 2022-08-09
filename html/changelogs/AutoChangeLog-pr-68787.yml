@@ -1,0 +1,4 @@
+author: "TheBoondock"
+delete-after: True
+changes: 
+  - code_imp: "add proc create_atmos_zone which detect an isolated atmos zone while ignoring walls and non atmos_can_pass tiles (zas zone)"

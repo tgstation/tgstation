@@ -111,7 +111,7 @@
 		return TRUE
 	balloon_alert(user, "couldn't attach!")
 	return FALSE
-		
+
 /mob/living/simple_animal/bot/cleanbot/proc/update_titles()
 	var/working_title = ""
 
@@ -369,11 +369,11 @@
 		A.acid_act(75, 10)
 		target = null
 	else if(istype(A, /mob/living/basic/cockroach) || istype(A, /mob/living/simple_animal/mouse))
-		var/mob/living/living_target = target
+		var/mob/living/living_target = A
 		if(!living_target.stat)
 			visible_message(span_danger("[src] smashes [living_target] with its mop!"))
 			living_target.death()
-		living_target = null
+		target = null
 
 	else if(bot_cover_flags & BOT_COVER_EMAGGED) //Emag functions
 		if(istype(A, /mob/living/carbon))
