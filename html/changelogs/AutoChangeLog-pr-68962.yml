@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Heretic stalkers are able again to return back to their normal form after casting shapeshift."

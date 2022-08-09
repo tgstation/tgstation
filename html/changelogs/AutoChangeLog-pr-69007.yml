@@ -1,6 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - qol: "Bileworms possessed by players can now see in the dark!"
-  - qol: "Bileworms now have a death message!"
-  - balance: "Bileworms will now give up their targeting if they fail to burrow to you. If they can still see you, they might regain aggro, but now moving say, to the mining station/big lava lake/hirophant is a good way to de-aggro them."
