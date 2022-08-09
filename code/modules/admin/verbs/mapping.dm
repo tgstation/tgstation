@@ -523,7 +523,7 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 /client/proc/check_for_obstructed_atmospherics()
 	set name = "Check For Obstructed Atmospherics"
 	set category = "Mapping"
-	if(!src.holder)
+	if(!holder)
 		to_chat(src, "Only administrators may use this command.", confidential = TRUE)
 		return
 	message_admins(span_adminnotice("[key_name_admin(usr)] is checking for obstructed atmospherics through the debug command."))
