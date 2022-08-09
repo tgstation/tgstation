@@ -388,15 +388,19 @@ ROUNDSTART_RACES ethereal
 #ROUNDSTART_NO_HARD_CHECK felinid
 
 ## Disable roundstart species morgue cadavers?
-## (This is recommended enabled for the chance for nonhuman species to have possible replacement organs)
+## Cadavers in the morgue at the start of the round will be randomly picked from all enabled ROUNDSTART_RACES
+## Recommended to leave this commented out so nonhuman species will have viable replacement bodies / organs when they die.
 # MORGUE_CADAVER_DISABLE_NONHUMANS
 
 ## Morgue Cadaver Species Probability
-## Probability for
+## The probability for nonhuman cadavers to spawn in the morgue.
+## Only used if MORGUE_CADAVER_DISABLE_NONHUMANS is commented out
+## If left undefined, defaults to 50%.
 MORGUE_CADAVER_OTHER_SPECIES_PROBABILITY 50
 
-## A single specific Species ID to supplement humans. Only used if USE_ALL_ROUNDSTART_RACES_FOR_CADAVERS is off.
+## A single specific Species ID to supplement human morgue cadavers.
 ## Set MORGUE_CADAVER_OTHER_SPECIES_PROBABILITY to determine the chances between being a human and this specific species.
+## Only used if MORGUE_CADAVER_DISABLE_NONHUMANS is commented out
 ## Prob = 100 means all corpses will be this race.
 #MORGUE_CADAVER_OVERRIDE_SPECIES lizard
 
