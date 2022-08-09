@@ -168,7 +168,7 @@
 /obj/item/clothing/neck/necklace/memento_mori/proc/check_health(mob/living/source)
 	SIGNAL_HANDLER
 
-	var/list/guardians = source.hasparasites()
+	var/list/guardians = source.get_all_linked_holoparasites()
 	if(!length(guardians))
 		return
 	if(source.health <= HEALTH_THRESHOLD_DEAD)

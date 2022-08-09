@@ -23,6 +23,9 @@ Slimecrossing Mobs
 
 /datum/action/cooldown/spell/shapeshift/slime_form/do_unshapeshift(mob/living/caster)
 	. = ..()
+	if(!.)
+		return
+
 	if(remove_on_restore)
 		qdel(src)
 

@@ -418,7 +418,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		var/my_message = "<font color=\"[guardiancolor]\"><b><i>[src]:</i></b></font> [preliminary_message]" //add source, color source with the guardian's color
 
 		to_chat(summoner, "<span class='say'>[my_message]</span>")
-		var/list/guardians = summoner.hasparasites()
+		var/list/guardians = summoner.get_all_linked_holoparasites()
 		for(var/para in guardians)
 			to_chat(para, "<span class='say'>[my_message]</span>")
 		for(var/M in GLOB.dead_mob_list)
@@ -439,7 +439,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/my_message = "<span class='holoparasite bold'><i>[src]:</i> [preliminary_message]</span>" //add source, color source with default grey...
 
 	to_chat(src, "<span class='say'>[my_message]</span>")
-	var/list/guardians = hasparasites()
+	var/list/guardians = get_all_linked_holoparasites()
 	for(var/para in guardians)
 		var/mob/living/simple_animal/hostile/guardian/G = para
 		to_chat(G, "<span class='say'><font color=\"[G.guardiancolor]\"><b><i>[src]:</i></b></font> [preliminary_message]</span>" )
@@ -455,7 +455,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	set name = "Recall Guardian"
 	set category = "Guardian"
 	set desc = "Forcibly recall your guardian."
-	var/list/guardians = hasparasites()
+	var/list/guardians = get_all_linked_holoparasites()
 	for(var/para in guardians)
 		var/mob/living/simple_animal/hostile/guardian/G = para
 		G.Recall()
@@ -465,7 +465,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	set category = "Guardian"
 	set desc = "Re-rolls which ghost will control your Guardian. One use per Guardian."
 
-	var/list/guardians = hasparasites()
+	var/list/guardians = get_all_linked_holoparasites()
 	for(var/para in guardians)
 		var/mob/living/simple_animal/hostile/guardian/P = para
 		if(P.reset)
@@ -509,7 +509,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 ////////parasite tracking/finding procs
 
-/mob/living/proc/hasparasites() //returns a list of guardians the mob is a summoner for
+/// Returns a list of all holoparasites that has this mob as sa summoner.
+/mob/living/proc/get_all_linked_holoparasites()
 	RETURN_TYPE(/list)
 	var/list/all_parasites = list()
 	for(var/mob/living/simple_animal/hostile/guardian/stand as anything in GLOB.parasites)
@@ -518,9 +519,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		all_parasites += stand
 	return all_parasites
 
-/mob/living/simple_animal/hostile/guardian/proc/hasmatchingsummoner(mob/living/simple_animal/hostile/guardian/G) //returns 1 if the summoner matches the target's summoner
-	return (istype(G) && G.summoner == summoner)
-
+/// Returns true if this holoparasite has the same summoner as the passed holoparasite.
+/mob/living/simple_animal/hostile/guardian/proc/hasmatchingsummoner(mob/living/simple_animal/hostile/guardian/other_guardian)
+	return istype(other_guardian) && other_guardian.summoner == summoner
 
 ////////Creation
 
@@ -547,7 +548,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	if(isguardian(user) && !allowguardian)
 		to_chat(user, span_holoparasite("[mob_name] chains are not allowed."))
 		return
-	var/list/guardians = user.hasparasites()
+	var/list/guardians = user.get_all_linked_holoparasites()
 	if(length(guardians) && !allowmultiple)
 		to_chat(user, span_holoparasite("You already have a [mob_name]!"))
 		return
@@ -615,7 +616,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		if("Gravitokinetic")
 			pickedtype = /mob/living/simple_animal/hostile/guardian/gravitokinetic
 
-	var/list/guardians = user.hasparasites()
+	var/list/guardians = user.get_all_linked_holoparasites()
 	if(length(guardians) && !allowmultiple)
 		to_chat(user, span_holoparasite("You already have a [mob_name]!") )
 		used = FALSE
