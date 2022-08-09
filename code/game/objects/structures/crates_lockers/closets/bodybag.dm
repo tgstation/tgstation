@@ -62,7 +62,7 @@
 ///Handles renaming of the bodybag's examine tag.
 /obj/structure/closet/body_bag/proc/handle_tag(tag_name)
 	name = tag_name ? "[initial(name)] - [tag_name]" : initial(name)
-	tagged = tag_name ? TRUE : FALSE
+	tagged = !!tag_name
 	update_appearance()
 
 /obj/structure/closet/body_bag/update_overlays()
