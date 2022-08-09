@@ -51,20 +51,19 @@
 			return
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
-		if(t)
-			name = "[initial(name)] - [t]"
-			tagged = TRUE
-			update_appearance()
-		else
-			name = initial(name)
+		handle_tag("[t ? t : initial(name)]")
 		return
 	if(!tagged)
 		return
 	if(interact_tool.tool_behaviour == TOOL_WIRECUTTER || interact_tool.get_sharpness())
 		to_chat(user, span_notice("You cut the tag off [src]."))
-		name = "body bag"
-		tagged = FALSE
-		update_appearance()
+		handle_tag()
+
+///Handles renaming of the bodybag's examine tag.
+/obj/structure/closet/body_bag/proc/handle_tag(tag_name)
+	name = tag_name ? "[initial(name)] - [tag_name]" : initial(name)
+	tagged = !!tag_name
+	update_appearance()
 
 /obj/structure/closet/body_bag/update_overlays()
 	. = ..()

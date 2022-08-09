@@ -387,6 +387,20 @@ ROUNDSTART_RACES ethereal
 ## Races defined here will not cause existing characters to be reset to human if they currently have a non-roundstart species defined.
 #ROUNDSTART_NO_HARD_CHECK felinid
 
+## Disable roundstart species morgue cadavers?
+## (This is recommended enabled for the chance for nonhuman species to have possible replacement organs)
+# MORGUE_CADAVER_DISABLE_NONHUMANS
+
+## Morgue Cadaver Species Probability
+## Probability for
+MORGUE_CADAVER_OTHER_SPECIES_PROBABILITY 50
+
+## A single specific Species ID to supplement humans. Only used if USE_ALL_ROUNDSTART_RACES_FOR_CADAVERS is off.
+## Set MORGUE_CADAVER_OTHER_SPECIES_PROBABILITY to determine the chances between being a human and this specific species.
+## Prob = 100 means all corpses will be this race.
+#MORGUE_CADAVER_OVERRIDE_SPECIES lizard
+
+
 ##Overflow job. Default is assistant
 OVERFLOW_JOB Assistant
 
