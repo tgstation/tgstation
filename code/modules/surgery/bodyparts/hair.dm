@@ -1,5 +1,6 @@
 #define SET_OVERLAY_VALUE(X,Y,Z) if(X) X.Y = Z
 
+///Part of `update_limb()`, this proc does what the name implies.
 /obj/item/bodypart/head/proc/update_hair_and_lips()
 	var/mob/living/carbon/human/human_head_owner = owner
 	var/datum/species/owner_species = human_head_owner.dna.species

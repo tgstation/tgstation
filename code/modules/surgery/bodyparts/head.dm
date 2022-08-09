@@ -257,6 +257,7 @@
 /mob/living/proc/set_haircolor(hex_string, override)
 	return
 
+///Set the haircolor of a human. Override instead sets the override value, it will not be changed away from the override value until override is set to null.
 /mob/living/carbon/human/set_haircolor(hex_string, override)
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
 	if(!my_head)
