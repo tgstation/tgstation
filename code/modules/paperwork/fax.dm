@@ -13,8 +13,10 @@
 	var/fax_name
 	/// A reference to an `/obj/item/paper` inside the copier, if one is inserted. Otherwise null.
 	var/obj/item/paper/paper_contain
-	/// Necessary to hide syndicate faxes from the general list
+	/// Necessary to hide syndicate faxes from the general list. Doesn't mean he's EMAGGED!
 	var/syndicate_network = FALSE
+	/// This is where the dispatch and reception history for each fax is stored.
+	var/list/fax_history
 
 /obj/machinery/fax/Initialize(mapload)
 	. = ..()
@@ -34,6 +36,7 @@
 		icon_state = "fax"
 	return ..()
 
+//Emag does not bring you into the syndicate network, but makes it visible to you.
 /obj/machinery/fax/emag_act(mob/user)
 	if(!(obj_flags & EMAGGED))
 		obj_flags |= EMAGGED
@@ -48,15 +51,15 @@
 /obj/machinery/fax/multitool_act(mob/living/user, obj/item/I)
 	var/new_fax_name = tgui_input_text(user, "Enter a new name for the fax machine.", "New Fax Name", , 128)
 	if(!new_fax_name)
-		return
+		return ..()
 	if (new_fax_name != fax_name)
 		if (fax_name_exist(new_fax_name))
 			// Being able to set the same name as another fax machine will give a lot of gimmicks for the traitor.
 			if (syndicate_network != TRUE && obj_flags != EMAGGED)
 				to_chat(user, span_warning("There is already a fax machine with this name on the network."))
-				return
-			fax_name = new_fax_name
-		return
+				return ..()
+		fax_name = new_fax_name
+	return ..()
 
 /obj/machinery/fax/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/paper))
@@ -64,7 +67,7 @@
 			paper_contain = item
 			item.forceMove(src)
 			update_appearance()
-		return
+		return ..()
 	return ..()
 
 /obj/machinery/fax/ui_interact(mob/user, datum/tgui/ui)
@@ -76,19 +79,27 @@
 /obj/machinery/fax/ui_data(mob/user)
 	var/list/data = list()
 	var/faxes[0]
+	//Record a list of all existing faxes.
 	for(var/obj/machinery/fax/FAX in GLOB.machines)
-		// To avoid putting yourself on the list
-		if(FAX.fax_id != fax_id)
-			if(FAX.syndicate_network != TRUE)
-				faxes.Add(list(list("id" = FAX.fax_id, "name" = FAX.fax_name)))
-			else if (syndicate_network == TRUE || obj_flags & EMAGGED)
-				faxes.Add(list(list("id" = FAX.fax_id, "name" = FAX.fax_name)))
+		if(FAX.fax_id == fax_id) //skip yourself
+			continue
+		var/list/fax_data = list()
+		fax_data["fax_name"] = FAX.fax_name
+		fax_data["fax_id"] = FAX.fax_id
+		fax_data["has_paper"] = !!FAX.paper_contain
+		// Hacked doesn't mean on the syndicate network.
+		fax_data["syndicate_network"] = FAX.syndicate_network
+		faxes += list(fax_data)
 
 	data["faxes"] = faxes
+
+	// Own data
 	data["fax_id"] = fax_id
 	data["fax_name"] = fax_name
-	data["has_paper"] = paper_contain ? TRUE : FALSE
-
+	// In this case, we don't care if the fax is hacked or in the syndicate's network. The main thing is to check the visibility of other faxes.
+	data["syndicate_network"] = (syndicate_network || (obj_flags & EMAGGED))
+	data["has_paper"] = !!paper_contain
+	data["fax_history"] = fax_history
 	return data
 
 /obj/machinery/fax/ui_act(action, list/params)
@@ -110,11 +121,15 @@
 				paper_contain = null
 				update_appearance()
 				return TRUE
+		if("history_clear")
+			history_clear()
+			return TRUE
 
 /obj/machinery/fax/proc/send(obj/item/paper/paper, id)
 	for(var/obj/machinery/fax/FAX in GLOB.machines)
 		if (FAX.fax_id == id)
 			FAX.receive(paper, fax_name)
+			history_add("Send", FAX.fax_name)
 			flick("fax_send", src)
 			playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, FALSE)
 			return TRUE
@@ -124,7 +139,18 @@
 	playsound(src, 'sound/machines/printer.ogg', 50, FALSE)
 	flick(paper_contain ? "fax_contain_receive" : "fax_contain", src)
 	say("Received correspondence from [sender_name]")
+	history_add("Receive", sender_name)
 	paper.forceMove(drop_location())
+
+/obj/machinery/fax/proc/history_add(history_type = "Send", history_fax_name)
+	var/list/history_data = list()
+	history_data["history_type"] = history_type
+	history_data["history_fax_name"] = history_fax_name
+	history_data["history_time"] = station_time_timestamp()
+	fax_history += list(history_data)
+
+/obj/machinery/fax/proc/history_clear()
+	fax_history = null
 
 /obj/machinery/fax/proc/fax_name_exist(new_fax_name)
 	for(var/obj/machinery/fax/FAX in GLOB.machines)
