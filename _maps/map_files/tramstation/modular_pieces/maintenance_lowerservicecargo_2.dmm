@@ -227,8 +227,7 @@
 /area/station/maintenance/starboard/greater)
 "Ei" = (
 /obj/item/paper{
-	name = "notice";
-	info = "on break, please contact my foreman for more info"
+	default_raw_text = "on break, talk to me in 30 minutes"
 	},
 /turf/open/misc/asteroid,
 /area/template_noop)
