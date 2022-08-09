@@ -1451,13 +1451,27 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 
 ///Perform a shake on an atom, resets its position afterwards
 /atom/proc/Shake(pixelshiftx = 15, pixelshifty = 15, duration = 250)
-	var/initialpixelx = pixel_x
-	var/initialpixely = pixel_y
-	var/shiftx = rand(-pixelshiftx,pixelshiftx)
-	var/shifty = rand(-pixelshifty,pixelshifty)
-	animate(src, pixel_x = pixel_x + shiftx, pixel_y = pixel_y + shifty, time = 0.2, loop = duration)
-	pixel_x = initialpixelx
-	pixel_y = initialpixely
+	var/static/list/transforms
+	if(!transforms)
+		var/matrix/first_translation = matrix()
+		var/matrix/second_translation = matrix()
+		var/matrix/third_translation = matrix()
+		var/matrix/fourth_translation = matrix()
+		first_translation.Translate(-pixelshiftx, 0)
+		second_translation.Translate(0, pixelshifty)
+		third_translation.Translate(pixelshiftx, 0)
+		fourth_translation.Translate(0, -pixelshifty)
+		transforms = list(first_translation, second_translation, third_translation, fourth_translation)
+	animate(src, transform = transforms[1], time=0.4, loop=-1)
+	animate(transform = transforms[2], time=0.2)
+	animate(transform = transforms[3], time=0.4)
+	animate(transform = transforms[4], time=0.6)
+	addtimer(CALLBACK(src, .proc/Stop_Shaking), duration)
+
+/atom/proc/Stop_Shaking()
+	update_appearance()
+	animate(src, transform = matrix())
+
 
 ///Checks if the given iconstate exists in the given file, caching the result. Setting scream to TRUE will print a stack trace ONCE.
 /proc/icon_exists(file, state, scream)

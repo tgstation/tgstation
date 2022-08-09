@@ -257,7 +257,7 @@
 	qdel(O)
 
 /obj/machinery/reagentgrinder/proc/operate_for(time, silent = FALSE, juicing = FALSE)
-	shake_for(time / speed)
+	Shake(2, 2, time / speed)
 	operating = TRUE
 	if(!silent)
 		if(!juicing)

@@ -144,7 +144,7 @@
 			log_admin("DEBUG: [movable_input] in processor doesn't have a suitable recipe. How did it get in there? Please report it immediately!!!")
 			continue
 		total_time += recipe.time
-	shake_for(total_time / rating_speed)
+	Shake(2, 2, total_time / rating_speed)
 	addtimer(CALLBACK(src, .proc/process_contents), total_time / rating_speed)
 
 /obj/machinery/processor/proc/process_contents()
