@@ -4,6 +4,7 @@
 	typepath = /datum/round_event/wizard/magicarp
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
+	description = "Summons a school of carps with magic projectiles."
 
 /datum/round_event/wizard/magicarp
 	announceWhen = 3

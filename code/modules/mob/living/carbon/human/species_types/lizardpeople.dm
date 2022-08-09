@@ -36,7 +36,7 @@
 	disliked_food = GRAIN | DAIRY | CLOTH
 	liked_food = GROSS | MEAT | SEAFOOD | NUTS | BUGS
 	inert_mutation = /datum/mutation/human/firebreath
-	deathsound = 'sound/voice/lizard/deathsound.ogg'
+	death_sound = 'sound/voice/lizard/deathsound.ogg'
 	wings_icons = list("Dragon")
 	species_language_holder = /datum/language_holder/lizard
 	digitigrade_customization = DIGITIGRADE_OPTIONAL

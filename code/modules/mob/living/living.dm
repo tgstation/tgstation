@@ -1512,7 +1512,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		adjust_fire_stacks(-fire_stacks / 2, fire_status.type)
 		spread_to.adjust_fire_stacks(fire_stacks, fire_status.type)
 		if(spread_to.ignite_mob())
-			log_game("[key_name(src)] bumped into [key_name(spread_to)] and set them on fire")
+			log_message("bumped into [key_name(spread_to)] and set them on fire.", LOG_ATTACK)
 		return
 
 	if(!their_fire_status || !their_fire_status.on_fire)

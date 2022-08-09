@@ -95,7 +95,9 @@
 ///From obj/item/toy/crayon/spraycan
 #define COMSIG_LIVING_MOB_PAINTED "living_mob_painted"
 
+///From mob/living/proc/wabbajack()
 #define COMSIG_LIVING_PRE_WABBAJACKED "living_mob_wabbajacked"
+	/// Return to stop the rest of the wabbajack from triggering.
 	#define STOP_WABBAJACK (1<<0)
-
-#define COMSIG_LIVING_ON_WABBAJACKED "living_mob_on_wabbajacked"
+///From mob/living/proc/on_wabbajack()
+#define COMSIG_LIVING_ON_WABBAJACKED "living_wabbajacked"

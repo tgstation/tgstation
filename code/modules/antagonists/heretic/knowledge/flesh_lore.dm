@@ -103,7 +103,7 @@
 
 /// Makes [victim] into a ghoul.
 /datum/heretic_knowledge/limited_amount/flesh_grasp/proc/make_ghoul(mob/living/user, mob/living/carbon/human/victim)
-	log_game("[key_name(user)] created a ghoul, controlled by [key_name(victim)].")
+	user.log_message("created a ghoul, controlled by [key_name(victim)].", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(user)] created a ghoul, [ADMIN_LOOKUPFLW(victim)].")
 
 	victim.apply_status_effect(
@@ -188,7 +188,7 @@
 
 /// Makes [victim] into a ghoul.
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/proc/make_ghoul(mob/living/user, mob/living/carbon/human/victim)
-	log_game("[key_name(user)] created a voiceless dead, controlled by [key_name(victim)].")
+	user.log_message("created a voiceless dead, controlled by [key_name(victim)].", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(user)] created a voiceless dead, [ADMIN_LOOKUPFLW(victim)].")
 
 	victim.apply_status_effect(

@@ -549,50 +549,11 @@ What a mess.*/
 
 			if("Print Record")
 				if(!( printing ))
-					printing = 1
-					GLOB.data_core.securityPrintCount++
-					playsound(loc, 'sound/items/poster_being_created.ogg', 100, TRUE)
+					printing = TRUE
+					playsound(src, 'sound/items/poster_being_created.ogg', 100, TRUE)
 					sleep(30)
-					var/obj/item/paper/printed_paper = new /obj/item/paper(loc)
-					var/final_paper_text = "<CENTER><B>Security Record - (SR-[GLOB.data_core.securityPrintCount])</B></CENTER><BR>"
-					if((istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1)))
-						final_paper_text += text("Name: [] ID: []<BR>\nGender: []<BR>\nAge: []<BR>", active1.fields["name"], active1.fields["id"], active1.fields["gender"], active1.fields["age"])
-						final_paper_text += "\nSpecies: [active1.fields["species"]]<BR>"
-						final_paper_text += text("\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>", active1.fields["fingerprint"], active1.fields["p_stat"], active1.fields["m_stat"])
-					else
-						final_paper_text += "<B>General Record Lost!</B><BR>"
-					if((istype(active2, /datum/data/record) && GLOB.data_core.security.Find(active2)))
-						final_paper_text += text("<BR>\n<CENTER><B>Security Data</B></CENTER><BR>\nCriminal Status: []", active2.fields["criminal"])
-
-						final_paper_text += "<BR>\n<BR>\nCrimes:<BR>\n"
-						final_paper_text +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
-<tr>
-<th>Crime</th>
-<th>Details</th>
-<th>Author</th>
-<th>Time Added</th>
-</tr>"}
-						for(var/datum/data/crime/c in active2.fields["crim"])
-							final_paper_text += "<tr><td>[c.crimeName]</td>"
-							final_paper_text += "<td>[c.crimeDetails]</td>"
-							final_paper_text += "<td>[c.author]</td>"
-							final_paper_text += "<td>[c.time]</td>"
-							final_paper_text += "</tr>"
-						final_paper_text += "</table>"
-
-						final_paper_text += text("<BR>\nImportant Notes:<BR>\n\t[]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", active2.fields["notes"])
-						var/counter = 1
-						while(active2.fields[text("com_[]", counter)])
-							final_paper_text += text("[]<BR>", active2.fields[text("com_[]", counter)])
-							counter++
-						printed_paper.name = text("SR-[] '[]'", GLOB.data_core.securityPrintCount, active1.fields["name"])
-					else
-						final_paper_text += "<B>Security Record Lost!</B><BR>"
-						printed_paper.name = text("SR-[] '[]'", GLOB.data_core.securityPrintCount, "Record Lost")
-					final_paper_text += "</TT>"
-					printed_paper.add_raw_text(final_paper_text)
-					printed_paper.update_appearance()
-					printing = null
+					print_security_record(active1, active2, loc)
+					printing = FALSE
 			if("Print Poster")
 				if(!( printing ))
 					var/wanted_name = tgui_input_text(usr, "Enter an alias for the criminal", "Print Wanted Poster", active1.fields["name"])
@@ -942,9 +903,11 @@ What a mess.*/
 								else
 									message_admins("Warning: possible href exploit by [key_name(usr)] - attempted to set change a crew member rank to an invalid path: [path]")
 									log_game("Warning: possible href exploit by [key_name(usr)] - attempted to set change a crew member rank to an invalid path: [path]")
+									usr.log_message("possibly trying to href exploit - attempted to set change a crew member rank to an invalid path: [path]", LOG_ADMIN, log_globally = FALSE)
 							else if(!isnull(text))
 								message_admins("Warning: possible href exploit by [key_name(usr)] - attempted to set change a crew member rank to an invalid value: [text]")
 								log_game("Warning: possible href exploit by [key_name(usr)] - attempted to set change a crew member rank to an invalid value: [text]")
+								usr.log_message("possibly trying to href exploit - attempted to set change a crew member rank to an invalid value: [text]", LOG_ADMIN, log_globally = FALSE)
 
 					if("Change Criminal Status")
 						if(active2)

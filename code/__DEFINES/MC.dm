@@ -20,7 +20,7 @@
 ///creates a running average of "things elapsed" per time period when you need to count via a smaller time period.
 ///eg you want an average number of things happening per second but you measure the event every tick (50 milliseconds).
 ///make sure both time intervals are in the same units. doesnt work if current_duration > total_duration or if total_duration == 0
-#define MC_AVG_OVER_TIME(average, current, total_duration, current_duration) (((total_duration - current_duration) / (total_duration)) * (average) + (current))
+#define MC_AVG_OVER_TIME(average, current, total_duration, current_duration) ((((total_duration) - (current_duration)) / (total_duration)) * (average) + (current))
 
 #define MC_AVG_MINUTES(average, current, current_duration) (MC_AVG_OVER_TIME(average, current, 1 MINUTES, current_duration))
 

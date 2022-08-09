@@ -14,7 +14,7 @@
 	/// Our spell's requrements before we shapeshifted. Stored on shapeshift so we can restore them after unshifting.
 	var/pre_shift_requirements
 
-	/// Whehter we revert to our human form on death.
+	/// Whether we revert to our human form on death.
 	var/revert_on_death = TRUE
 	/// Whether we die when our shapeshifted form is killed
 	var/die_with_shapeshifted_form = TRUE

@@ -424,7 +424,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		user.visible_message(span_notice("[user] places [I] in [src]."), \
 							span_notice("You place [I] in [src]."))
 		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
-		log_game("[key_name(user)] added an [I] to cryo containing [reagentlist]")
+		user.log_message("added an [I] to cryo containing [reagentlist].", LOG_GAME)
 		return
 	return ..()
 
@@ -455,10 +455,10 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		else if (HAS_TRAIT(mob_occupant, TRAIT_KNOCKEDOUT))
 			data["occupant"]["stat"] = "Unconscious"
 			data["occupant"]["statstate"] = "good"
-		else 
+		else
 			data["occupant"]["stat"] = "Conscious"
 			data["occupant"]["statstate"] = "bad"
-			
+
 		data["occupant"]["bodyTemperature"] = round(mob_occupant.bodytemperature, 1)
 		if(mob_occupant.bodytemperature < T0C) // Green if the mob can actually be healed by cryoxadone.
 			data["occupant"]["temperaturestatus"] = "good"
