@@ -165,7 +165,7 @@
 	thief.physique = FEMALE //update_body() and gender block or something
 	thief.hair_color = "#2A71DC" //hair color dna block
 	thief.skin_tone = "caucasian2" //skin tone dna block
-	thief.hairstyle = "Bun Head 2" //update_hair()
+	thief.hairstyle = "Bun Head 2" //update_body_parts()
 	thief.dna.update_ui_block(DNA_GENDER_BLOCK)
 	thief.dna.update_ui_block(DNA_HAIR_COLOR_BLOCK)
 	thief.dna.update_ui_block(DNA_SKIN_TONE_BLOCK)

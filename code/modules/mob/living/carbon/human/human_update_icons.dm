@@ -16,7 +16,7 @@ Most of the time we only wish to update one overlay:
 In these cases, instead of updating every overlay using the old behaviour (regenerate_icons), we instead call
 the appropriate update_X proc.
 	e.g. - update_l_hand()
-	e.g.2 - update_hair()
+	e.g.2 - update_body_parts()
 
 Note: Recent changes by aranclanos+carn:
 	update_icons() no longer needs to be called.
@@ -44,20 +44,11 @@ There are several things that need to be remembered:
 		update_body()				//Handles updating your mob's body layer and mutant bodyparts
 									as well as sprite-accessories that didn't really fit elsewhere (underwear, undershirts, socks, lips, eyes)
 									//NOTE: update_mutantrace() is now merged into this!
-		update_hair()				//Handles updating your hair overlay (used to be update_face, but mouth and
+		update_body_parts()				//Handles updating your hair overlay (used to be update_face, but mouth and
 									eyes were merged into update_body())
 
 
 */
-
-//HAIR OVERLAY
-/mob/living/carbon/human/update_hair(is_creating)
-	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
-	if(!my_head)
-		return
-	my_head.update_limb(FALSE, is_creating)
-	update_body_parts()
-
 
 //used when putting/removing clothes that hide certain mutant body parts to just update those and not update the whole body.
 /mob/living/carbon/human/proc/update_mutant_bodyparts()
@@ -500,7 +491,7 @@ There are several things that need to be remembered:
 			suit_overlay.pixel_x += dna.species.offset_features[OFFSET_SUIT][1]
 			suit_overlay.pixel_y += dna.species.offset_features[OFFSET_SUIT][2]
 		overlays_standing[SUIT_LAYER] = suit_overlay
-	update_hair()
+	update_body_parts()
 	update_mutant_bodyparts()
 
 	apply_overlay(SUIT_LAYER)
