@@ -1164,6 +1164,16 @@
 	req_components = list(
 		/obj/item/stock_parts/card_reader = 1)
 
+/obj/item/circuitboard/machine/fax
+	name = "Fax Machine"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/fax
+	req_components = list(
+		/obj/item/stock_parts/subspace/crystal = 1,
+		/obj/item/stock_parts/scanning_module = 1,
+		/obj/item/stock_parts/micro_laser = 1,
+		/obj/item/stock_parts/manipulator = 1,)
+
 //Supply
 
 /obj/item/circuitboard/machine/mining_equipment_vendor

@@ -34,7 +34,7 @@ export const Fax = (props, context) => {
       : data.faxes.filter((filterFax: FaxInfo) => !filterFax.syndicate_network)
   );
   return (
-    <Window width={540} height={340}>
+    <Window width={340} height={540}>
       <Window.Content scrollable>
         <Section title="About Fax">
           <LabeledList.Item label="Network name">
