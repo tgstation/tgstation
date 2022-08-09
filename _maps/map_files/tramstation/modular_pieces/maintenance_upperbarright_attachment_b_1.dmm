@@ -58,12 +58,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
-"E" = (
+"F" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/filingcabinet/filingcabinet,
 /obj/item/paper{
-	name = "clown prime orders";
-	info = "hello can u please order these for my next performance in the theatre pls. 1 pie cannon. 2 sets of honkin-squeezin balloons. 1 mime-catcher (144hz version pls). 3 seltzer bottles. okay that should be it, just put in on my tab."
+	default_raw_text = "hello can u please order these for my next performance in the theatre pls. 1 pie cannon. 2 sets of honkin-squeezin balloons. 1 mime-catcher (144hz version pls). 3 seltzer bottles. okay that should be it, just put in on my tab.";
+	name = "clown prime orders"
 	},
 /obj/item/paper{
 	name = "mime prime orders"
@@ -185,7 +185,7 @@ z
 "}
 (9,1,1) = {"
 a
-E
+F
 T
 f
 i
