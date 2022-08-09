@@ -20,17 +20,13 @@ export const Fax = (props, context) => {
   const { data } = useBackend<FaxData>(context);
   const faxes = sortBy((fax: FaxInfo) => fax.name)(data.faxes);
   return (
-    <Window
-      width={450}
-      height={340}>
+    <Window width={450} height={340}>
       <Window.Content scrollable>
         <Section title="About Fax">
-          <LabeledList.Item label='Network name'>
+          <LabeledList.Item label="Network name">
             {data.fax_name}
           </LabeledList.Item>
-          <LabeledList.Item label='Network ID'>
-            {data.fax_id}
-          </LabeledList.Item>
+          <LabeledList.Item label="Network ID">{data.fax_id}</LabeledList.Item>
         </Section>
         <Section title="Paper">
           <LabeledList.Item label="Paper">
@@ -44,19 +40,19 @@ export const Fax = (props, context) => {
         </Section>
         <Section title="Send">
           <Box mt={0.4}>
-          {faxes.map((fax: FaxInfo) => (
-            <Button
-              key={fax.id}
-              title={fax.name}
-              disabled={!data.has_paper}
-              onClick={() =>
-                act('send', {
-                  id: fax.id,
-                })
-              }>
-              {fax.name}
-            </Button>
-          ))}
+            {faxes.map((fax: FaxInfo) => (
+              <Button
+                key={fax.id}
+                title={fax.name}
+                disabled={!data.has_paper}
+                onClick={() =>
+                  act('send', {
+                    id: fax.id,
+                  })
+                }>
+                {fax.name}
+              </Button>
+            ))}
           </Box>
         </Section>
       </Window.Content>
