@@ -738,6 +738,7 @@
 		"dispenser_shell",
 		"door_shell",
 		"gun_shell",
+		"keyboard_shell",
 		"module_shell",
 		"money_bot_shell",
 		"scanner_gate_shell",
