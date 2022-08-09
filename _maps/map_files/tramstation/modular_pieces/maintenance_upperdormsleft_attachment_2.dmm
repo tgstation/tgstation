@@ -43,9 +43,9 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/aft)
-"E" = (
+"D" = (
 /turf/template_noop,
-/area/space)
+/area/template_noop)
 "G" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -106,15 +106,15 @@
 /area/station/maintenance/port/aft)
 
 (1,1,1) = {"
-E
+D
 a
 a
-E
-E
-E
-E
-E
-E
+D
+D
+D
+D
+D
+D
 "}
 (2,1,1) = {"
 W
@@ -124,8 +124,8 @@ a
 a
 a
 a
-E
-E
+D
+D
 "}
 (3,1,1) = {"
 W
@@ -136,7 +136,7 @@ v
 t
 a
 a
-E
+D
 "}
 (4,1,1) = {"
 G
@@ -150,7 +150,7 @@ a
 a
 "}
 (5,1,1) = {"
-E
+D
 C
 z
 c
@@ -161,24 +161,24 @@ a
 a
 "}
 (6,1,1) = {"
-E
-E
+D
+D
 P
 J
 Z
 v
 a
 a
-E
+D
 "}
 (7,1,1) = {"
-E
-E
-E
-E
-E
-E
-E
-E
-E
+D
+D
+D
+D
+D
+D
+D
+D
+D
 "}

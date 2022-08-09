@@ -79,18 +79,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/medical)
-"qa" = (
-/turf/template_noop,
-/area/space)
 "rh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/head/cone{
-	pixel_y = -8;
-	pixel_x = 10
+	pixel_x = 10;
+	pixel_y = -8
 	},
 /obj/item/clothing/head/cone{
-	pixel_y = -8;
-	pixel_x = -9
+	pixel_x = -9;
+	pixel_y = -8
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
@@ -104,6 +101,11 @@
 /obj/structure/ore_box,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
+"vn" = (
+/turf/open/misc/asteroid{
+	icon_state = "asteroid_dug"
+	},
+/area/template_noop)
 "vz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -115,12 +117,12 @@
 "xV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/head/cone{
-	pixel_y = -10;
-	pixel_x = -9
+	pixel_x = -9;
+	pixel_y = -10
 	},
 /obj/item/clothing/head/cone{
-	pixel_y = 12;
-	pixel_x = -9
+	pixel_x = -9;
+	pixel_y = 12
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
@@ -130,12 +132,12 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/head/cone{
-	pixel_y = -8;
-	pixel_x = 10
+	pixel_x = 10;
+	pixel_y = -8
 	},
 /obj/item/clothing/head/cone{
-	pixel_y = -8;
-	pixel_x = -9
+	pixel_x = -9;
+	pixel_y = -8
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/medical)
@@ -145,12 +147,12 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/head/cone{
-	pixel_y = 12;
-	pixel_x = -9
+	pixel_x = -9;
+	pixel_y = 12
 	},
 /obj/item/clothing/head/cone{
-	pixel_y = 12;
-	pixel_x = 10
+	pixel_x = 10;
+	pixel_y = 12
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/medical)
@@ -279,9 +281,6 @@
 /obj/effect/spawner/random/decoration/glowstick,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
-"Sd" = (
-/turf/open/misc/asteroid/dug,
-/area/template_noop)
 "Sp" = (
 /obj/structure/grille/broken,
 /obj/item/shard,
@@ -687,10 +686,10 @@ KH
 KH
 KH
 Ms
-qa
-qa
-qa
-qa
+KH
+KH
+KH
+KH
 KH
 KH
 KH
@@ -715,14 +714,14 @@ Ms
 Cb
 Ms
 Ms
-qa
-qa
-qa
-qa
-qa
-qa
-qa
-qa
+KH
+KH
+KH
+KH
+KH
+KH
+KH
+KH
 "}
 (15,1,1) = {"
 KH
@@ -744,13 +743,13 @@ NB
 NB
 Ms
 Ms
-qa
-qa
-qa
-qa
-qa
-qa
-qa
+KH
+KH
+KH
+KH
+KH
+KH
+KH
 "}
 (16,1,1) = {"
 KH
@@ -772,13 +771,13 @@ Ms
 NB
 NB
 Ms
-qa
-qa
-qa
-qa
-qa
-qa
-qa
+KH
+KH
+KH
+KH
+KH
+KH
+KH
 "}
 (17,1,1) = {"
 KH
@@ -803,10 +802,10 @@ KH
 KH
 SF
 KH
-qa
-qa
-qa
-qa
+KH
+KH
+KH
+KH
 "}
 (18,1,1) = {"
 KH
@@ -818,7 +817,7 @@ Gz
 Gz
 kP
 je
-Sd
+vn
 ZD
 iu
 je
@@ -831,10 +830,10 @@ KH
 KH
 KH
 KH
-qa
-qa
-qa
-qa
+KH
+KH
+KH
+KH
 "}
 (19,1,1) = {"
 KH
@@ -859,10 +858,10 @@ KH
 KH
 KH
 KH
-qa
-qa
-qa
-qa
+KH
+KH
+KH
+KH
 "}
 (20,1,1) = {"
 KH
@@ -887,10 +886,10 @@ KH
 KH
 KH
 SF
-qa
-qa
-qa
-qa
+KH
+KH
+KH
+KH
 "}
 (21,1,1) = {"
 KH
@@ -915,10 +914,10 @@ SF
 KH
 KH
 SF
-qa
-qa
-qa
-qa
+KH
+KH
+KH
+KH
 "}
 (22,1,1) = {"
 Ms
@@ -940,13 +939,13 @@ Ms
 CF
 CF
 Ms
-qa
-qa
-qa
-qa
-qa
-qa
-qa
+KH
+KH
+KH
+KH
+KH
+KH
+KH
 "}
 (23,1,1) = {"
 Ms
@@ -968,13 +967,13 @@ CF
 CF
 FD
 hY
-qa
-qa
-qa
-qa
-qa
-qa
-qa
+KH
+KH
+KH
+KH
+KH
+KH
+KH
 "}
 (24,1,1) = {"
 Ms
@@ -996,13 +995,13 @@ KH
 KH
 CF
 Ms
-qa
-qa
-qa
-qa
-qa
-qa
-qa
+KH
+KH
+KH
+KH
+KH
+KH
+KH
 "}
 (25,1,1) = {"
 Ms
@@ -1024,13 +1023,13 @@ KH
 KH
 CF
 NN
-qa
-qa
-qa
-qa
-qa
-qa
-qa
+KH
+KH
+KH
+KH
+KH
+KH
+KH
 "}
 (26,1,1) = {"
 Ms
@@ -1052,13 +1051,13 @@ KH
 KH
 CF
 aT
-qa
-qa
-qa
-qa
-qa
-qa
-qa
+KH
+KH
+KH
+KH
+KH
+KH
+KH
 "}
 (27,1,1) = {"
 Ms
@@ -1084,9 +1083,9 @@ Ms
 Ms
 aT
 aT
-qa
-qa
-qa
+KH
+KH
+KH
 "}
 (28,1,1) = {"
 Ms
@@ -1112,9 +1111,9 @@ Ew
 Ew
 CF
 fw
-qa
-qa
-qa
+KH
+KH
+KH
 "}
 (29,1,1) = {"
 Ms
@@ -1140,39 +1139,11 @@ KH
 Ew
 CF
 Ms
-qa
-qa
-qa
+KH
+KH
+KH
 "}
 (30,1,1) = {"
-Ms
-CF
-KH
-KH
-KH
-KH
-KH
-KH
-KH
-KH
-KH
-KH
-KH
-KH
-KH
-KH
-KH
-KH
-KH
-KH
-CF
-Ki
-KH
-KH
-KH
-KH
-"}
-(31,1,1) = {"
 Ms
 CF
 KH
@@ -1200,7 +1171,7 @@ KH
 KH
 KH
 "}
-(32,1,1) = {"
+(31,1,1) = {"
 Ms
 CF
 KH
@@ -1223,6 +1194,34 @@ KH
 KH
 UN
 CF
+KH
+KH
+KH
+KH
+"}
+(32,1,1) = {"
+Ms
+CF
+KH
+KH
+KH
+KH
+KH
+KH
+KH
+KH
+KH
+KH
+KH
+KH
+KH
+KH
+KH
+KH
+KH
+KH
+KH
+KH
 KH
 KH
 KH
