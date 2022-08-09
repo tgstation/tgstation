@@ -572,7 +572,6 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 			var/list/obj/obstruction = locate(/obj) in T.contents
 			if(!is_type_in_list(obstruction, ignore_list))
 				results += "There is an obstruction on top of an atmospherics machine at: [ADMIN_VERBOSEJMP(T)].<br>"
-				continue
 
 	if(results.len == 1) // only the header is in the list, we're good
 		to_chat(src, "No obstructions detected.", confidential = TRUE)
