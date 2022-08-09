@@ -1200,8 +1200,8 @@
  * Polymorphs our mob into another mob.
  * If successful, our current mob is qdeleted!
  *
- * what_to_randomize -
- * change_flags -
+ * what_to_randomize - what are we randomizing the mob into? See the defines for valid options.
+ * change_flags - only used for humanoid randomization (currently), what pool of changeflags should we draw from?
  *
  * Returns a mob (what our mob turned into) or null (if we failed).
  */

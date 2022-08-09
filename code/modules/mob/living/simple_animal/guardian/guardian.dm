@@ -70,6 +70,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	AddElement(/datum/element/simple_flying)
 	return ..()
 
+/// Setter for our summoner mob.
 /mob/living/simple_animal/hostile/guardian/proc/set_summoner(mob/to_who)
 	if(summoner)
 		UnregisterSignal(summoner, COMSIG_LIVING_ON_WABBAJACKED)
@@ -78,6 +79,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	Recall(TRUE)
 	RegisterSignal(to_who, COMSIG_LIVING_ON_WABBAJACKED, .proc/on_owner_wabbajacked)
 
+/// Signal proc for [COMSIG_LIVING_ON_WABBAJACKED], when our summoner is wabbajacked we should be alerted.
 /mob/living/simple_animal/hostile/guardian/proc/on_owner_wabbajacked(mob/living/source, mob/living/new_mob)
 	SIGNAL_HANDLER
 
