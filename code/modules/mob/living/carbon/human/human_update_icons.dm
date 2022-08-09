@@ -600,32 +600,21 @@ There are several things that need to be remembered:
 		drop_all_held_items()
 		return
 
-	if(hud_used)
-		if(length(held_items) == length(get_empty_held_indexes()))
-			for(var/atom/movable/screen/craft/crafting_button in hud_used.static_inventory)
-				crafting_button.icon = hud_used.ui_style
-				crafting_button.icon_state = initial(crafting_button.icon_state)
-
 	var/list/hands = list()
 	for(var/obj/item/worn_item in held_items)
-		if(hud_used)
-			if(is_type_in_typecache(worn_item, GLOB.crafting_recipe_items) || (is_type_in_typecache(worn_item.parent_type, GLOB.crafting_recipe_items) && !is_type_in_typecache(worn_item.type, GLOB.crafting_recipe_items_blacklist)) || is_type_in_typecache(worn_item, GLOB.crafting_recipe_items_results))
-				for(var/atom/movable/screen/craft/crafting_button in hud_used.static_inventory)
-					crafting_button.icon = 'icons/hud/screen_gen.dmi'
-					crafting_button.icon_state = "can_craft"
-			if(client && hud_used.hud_version != HUD_STYLE_NOHUD)
-				worn_item.screen_loc = ui_hand_position(get_held_index_of_item(worn_item))
-				client.screen += worn_item
-				if(observers?.len)
-					for(var/M in observers)
-						var/mob/dead/observe = M
-						if(observe.client && observe.client.eye == src)
-							observe.client.screen += worn_item
-						else
-							observers -= observe
-							if(!observers.len)
-								observers = null
-								break
+		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
+			worn_item.screen_loc = ui_hand_position(get_held_index_of_item(worn_item))
+			client.screen += worn_item
+			if(observers?.len)
+				for(var/M in observers)
+					var/mob/dead/observe = M
+					if(observe.client && observe.client.eye == src)
+						observe.client.screen += worn_item
+					else
+						observers -= observe
+						if(!observers.len)
+							observers = null
+							break
 
 		var/t_state = worn_item.inhand_icon_state
 		if(!t_state)

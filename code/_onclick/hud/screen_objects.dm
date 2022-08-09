@@ -145,6 +145,9 @@
 
 	to_chat(hud.mymob, examine_block("[span_ooc("Recipes for [item.name] [icon2html(item, hud.mymob)]")]\n[all_recipes]"))
 
+/atom/movable/screen/craft/proc/reset_icon()
+	icon = initial(icon)
+	icon_state = initial(icon_state)
 
 /atom/movable/screen/area_creator
 	name = "create new area"
