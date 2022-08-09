@@ -415,6 +415,25 @@
 		)
 	job = /datum/job/curator
 
+/datum/id_trim/job/journalist
+	assignment = "Journalist"
+	trim_state = "trim_journalist"
+	department_color = COLOR_SERVICE_LIME
+	subdepartment_color = COLOR_SERVICE_LIME
+	sechud_icon_state = SECHUD_JOURNALIST
+	minimal_access = list(
+		ACCESS_AUX_BASE,
+		ACCESS_LIBRARY,
+		ACCESS_MINING_STATION,
+		ACCESS_SERVICE,
+		)
+	extra_access = list()
+	template_access = list(
+		ACCESS_CAPTAIN,
+		ACCESS_CHANGE_IDS,
+		ACCESS_HOP,
+		)
+	job = /datum/job/journalist
 /datum/id_trim/job/detective
 	assignment = "Detective"
 	trim_state = "trim_detective"

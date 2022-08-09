@@ -17,6 +17,9 @@
 		GLOB.news_network.submit_article(html_encode(text), "Captain's Announcement", "Station Announcements", null)
 	else if(type == "Syndicate Captain")
 		announcement += "<h1 class='alert'>Syndicate Captain Announces</h1>"
+	else if(type == "News")
+		announcement += "<h1 class='alert'>Son Dakika!!</h1>"
+		GLOB.news_network.submit_article(html_encode(text), "Flaş Haber", "Station Announcements", null)
 
 	else
 		if(!sender_override)

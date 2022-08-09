@@ -25,6 +25,7 @@ Clown=1,1
 Mime=1,1
 Curator=1,1
 Lawyer=2,2
+Journalist=1,1
 
 Chaplain=1,1
 
