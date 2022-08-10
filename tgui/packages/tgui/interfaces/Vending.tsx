@@ -367,19 +367,21 @@ const CategorySelector = (props: {
   const { categories, selectedCategory, onSelect } = props;
 
   return (
-    <Stack grow>
-      <Stack.Item>
-        {Object.entries(categories).map(([name, category]) => (
-          <Button
-            key={name}
-            selected={name === selectedCategory}
-            color={CATEGORY_COLORS[name]}
-            icon={category.icon}
-            onClick={() => onSelect(name)}>
-            {name}
-          </Button>
-        ))}
-      </Stack.Item>
-    </Stack>
+    <Section>
+      <Stack grow>
+        <Stack.Item>
+          {Object.entries(categories).map(([name, category]) => (
+            <Button
+              key={name}
+              selected={name === selectedCategory}
+              color={CATEGORY_COLORS[name]}
+              icon={category.icon}
+              onClick={() => onSelect(name)}>
+              {name}
+            </Button>
+          ))}
+        </Stack.Item>
+      </Stack>
+    </Section>
   );
 };
