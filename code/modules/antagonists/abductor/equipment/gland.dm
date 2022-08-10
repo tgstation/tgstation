@@ -4,7 +4,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "gland"
 	status = ORGAN_ROBOTIC
-	organ_flags = NONE
+	organ_flags = ORGAN_INTERNAL
 	beating = TRUE
 	/// Shows name of the gland as well as a description of what it does upon examination by abductor scientists and observers.
 	var/abductor_hint = "baseline placebo referencer"

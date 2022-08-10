@@ -207,7 +207,7 @@
 	icon_state = "cybernetic_eyeballs"
 	desc = "Your vision is augmented."
 	status = ORGAN_ROBOTIC
-	organ_flags = ORGAN_SYNTHETIC
+	organ_flags = ORGAN_SYNTHETIC | ORGAN_INTERNAL
 
 /obj/item/organ/internal/eyes/robotic/emp_act(severity)
 	. = ..()

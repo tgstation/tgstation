@@ -9,7 +9,7 @@
 		/datum/surgery_step/saw,
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/incise,
-		/datum/surgery_step/manipulate_organs, //there should be bone fixing
+		/datum/surgery_step/manipulate_organs/internal,
 		/datum/surgery_step/close)
 
 /datum/surgery/organ_manipulation/soft
@@ -19,7 +19,7 @@
 		/datum/surgery_step/retract_skin,
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/incise,
-		/datum/surgery_step/manipulate_organs,
+		/datum/surgery_step/manipulate_organs/internal,
 		/datum/surgery_step/close)
 
 /datum/surgery/organ_manipulation/alien
@@ -31,7 +31,7 @@
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
 		/datum/surgery_step/saw,
-		/datum/surgery_step/manipulate_organs,
+		/datum/surgery_step/manipulate_organs/internal,
 		/datum/surgery_step/close)
 
 /datum/surgery/organ_manipulation/mechanic
@@ -45,7 +45,7 @@
 		/datum/surgery_step/open_hatch,
 		/datum/surgery_step/mechanic_unwrench,
 		/datum/surgery_step/prepare_electronics,
-		/datum/surgery_step/manipulate_organs,
+		/datum/surgery_step/manipulate_organs/internal,
 		/datum/surgery_step/mechanic_wrench,
 		/datum/surgery_step/mechanic_close)
 
@@ -55,7 +55,7 @@
 		/datum/surgery_step/mechanic_open,
 		/datum/surgery_step/open_hatch,
 		/datum/surgery_step/prepare_electronics,
-		/datum/surgery_step/manipulate_organs,
+		/datum/surgery_step/manipulate_organs/internal,
 		/datum/surgery_step/mechanic_close)
 
 /datum/surgery/organ_manipulation/external
@@ -67,8 +67,8 @@
 		/datum/surgery_step/manipulate_organs/external,
 		/datum/surgery_step/close)
 
+///Organ manipulation base class. Do not use, it wont work. Use it's subtypes
 /datum/surgery_step/manipulate_organs
-	time = 6.4 SECONDS
 	name = "manipulate organs"
 	repeatable = TRUE
 	implements = list(
@@ -76,9 +76,13 @@
 		/obj/item/borg/apparatus/organ_storage = 100)
 	preop_sound = 'sound/surgery/organ2.ogg'
 	success_sound = 'sound/surgery/organ1.ogg'
+
 	var/implements_extract = list(TOOL_HEMOSTAT = 100, TOOL_CROWBAR = 55, /obj/item/kitchen/fork = 35)
 	var/current_type
 	var/obj/item/organ/target_organ
+
+	///Flag for valid organs to extract, like ORGAN_EXTERNAL or ORGAN_INTERNAL
+	var/organ_flag = NONE
 
 /datum/surgery_step/manipulate_organs/New()
 	..()
@@ -194,11 +198,14 @@
 	return FALSE
 
 /datum/surgery_step/manipulate_organs/proc/can_use_organ(mob/user, obj/item/organ/organ)
-	return TRUE
+	return organ.organ_flags & organ_flag
+
+/datum/surgery_step/manipulate_organs/internal
+	time = 6.4 SECONDS
+	name = "manipulate organs"
+	organ_flag = ORGAN_INTERNAL
 
 /datum/surgery_step/manipulate_organs/external
 	time = 3.2 SECONDS
 	name = "manipulate features"
-
-/datum/surgery_step/manipulate_organs/external/can_use_organ(mob/user, obj/item/organ/organ)
-	return organ.organ_flags & ORGAN_EXTERNAL
+	organ_flag = ORGAN_EXTERNAL

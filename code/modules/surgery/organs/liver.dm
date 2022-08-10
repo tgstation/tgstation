@@ -220,7 +220,7 @@
 	name = "basic cybernetic liver"
 	icon_state = "liver-c"
 	desc = "A very basic device designed to mimic the functions of a human liver. Handles toxins slightly worse than an organic liver."
-	organ_flags = ORGAN_SYNTHETIC
+	organ_flags = ORGAN_SYNTHETIC | ORGAN_INTERNAL
 	toxTolerance = 2
 	toxLethality = 1.1 * LIVER_DEFAULT_TOX_LETHALITY
 	maxHealth = STANDARD_ORGAN_THRESHOLD*0.5

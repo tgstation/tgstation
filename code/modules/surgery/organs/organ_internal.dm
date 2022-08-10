@@ -1,5 +1,6 @@
 /obj/item/organ/internal
 	name = "organ"
+	organ_flags = ORGAN_INTERNAL
 
 /obj/item/organ/internal/Initialize(mapload)
 	. = ..()

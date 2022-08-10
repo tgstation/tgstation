@@ -146,8 +146,7 @@
 
 	///Also give the icon to the obj
 	if(use_mob_sprite_as_obj_sprite)
-		icon_state = finished_icon_state
-		icon = sprite_datum.icon
+		icon = icon(sprite_datum.icon, finished_icon_state, SOUTH)
 
 	if(sprite_datum.color_src) //There are multiple flags, but only one is ever used so meh :/ | This comment isn't true.
 		appearance.color = draw_color
@@ -234,10 +233,6 @@
 ///Colorizes the limb it's inserted to, if required.
 /obj/item/organ/external/proc/override_color(rgb_value)
 	CRASH("External organ color set to override with no override proc.")
-
-///use_mob_sprite_as_obj_sprite uses four directional mob sprites, which is bad for objects so just dont let them change dir and we good
-/obj/item/organ/external/setDir(newdir)
-	return ..(use_mob_sprite_as_obj_sprite ? SOUTH : newdir)
 
 ///The horns of a lizard!
 /obj/item/organ/external/horns

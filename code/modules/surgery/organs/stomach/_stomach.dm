@@ -297,7 +297,7 @@
 	name = "basic cybernetic stomach"
 	icon_state = "stomach-c"
 	desc = "A basic device designed to mimic the functions of a human stomach"
-	organ_flags = ORGAN_SYNTHETIC
+	organ_flags = ORGAN_SYNTHETIC | ORGAN_INTERNAL
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
 	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
 	metabolism_efficiency = 0.035 // not as good at digestion

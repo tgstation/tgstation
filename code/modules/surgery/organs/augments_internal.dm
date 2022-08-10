@@ -4,7 +4,7 @@
 	desc = "A state-of-the-art implant that improves a baseline's functionality."
 	visual = FALSE
 	status = ORGAN_ROBOTIC
-	organ_flags = ORGAN_SYNTHETIC
+	organ_flags = ORGAN_SYNTHETIC | ORGAN_INTERNAL
 	var/implant_color = "#FFFFFF"
 	var/implant_overlay
 	var/syndicate_implant = FALSE //Makes the implant invisible to health analyzers and medical HUDs.
@@ -17,8 +17,6 @@
 		overlay.color = implant_color
 		add_overlay(overlay)
 	return ..()
-
-
 
 //[[[[BRAIN]]]]
 
