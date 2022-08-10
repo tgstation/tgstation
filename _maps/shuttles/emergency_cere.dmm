@@ -640,19 +640,18 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "cl" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/structure/table,
+/obj/item/reagent_containers/glass/beaker/cryoxadone,
+/obj/item/wrench/medical,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "cm" = (
-/obj/structure/table,
-/obj/item/reagent_containers/glass/beaker/cryoxadone,
-/obj/item/wrench,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -660,6 +659,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "cn" = (
@@ -679,12 +679,6 @@
 "cp" = (
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
-"cq" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
-	dir = 5
-	},
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "cr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/iron/white,
@@ -698,6 +692,9 @@
 "ct" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
+	dir = 5
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
@@ -1918,8 +1915,8 @@ bW
 bW
 bR
 ac
-cj
-cq
+cl
+cp
 cw
 cC
 cF
@@ -2006,7 +2003,7 @@ aZ
 aZ
 bc
 ac
-cl
+cj
 cs
 cp
 cp
