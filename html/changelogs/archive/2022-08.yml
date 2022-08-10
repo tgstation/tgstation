@@ -298,3 +298,25 @@
   twilightwanderer:
   - rscadd: Added new VOID stamp
   - bugfix: Photocopier paperforms
+2022-08-10:
+  GoldenAlpharex:
+  - bugfix: Fixed the game re-initializing your verbs for no reason when you deadmin,
+      which was the cause of the "Your previous action was ignored because you've
+      done too many in a second" spam when pressing the Deadmin button.
+  - bugfix: The MC tab no longer appears in a "ghost" state in your status tabs after
+      you deadmin. Now it's just gone, at long last!
+  - code_imp: Prettier should no longer be ran on files outside of the "tgui" folder.
+  ShizCalev:
+  - bugfix: Player controlled cleanbots can now actually kill cockroaches and mice!
+  - bugfix: Right-clicking a non-carbon based mob (humans, xeno, ect) will now bite
+      them instead of doing nothing.
+  - server: Added a configurable probability for nonhuman species to spawn in the
+      morgue at round start!
+  - qol: Cadavers in the morgue at round start will now spawn in bodybags.
+  - bugfix: Adminspawned morgue cadavers will now only spawn inside closed morguetrays
+      (the bodies could get stuck inside them!)
+  - bugfix: Morguetrays are now less likely to end up having multiple cadavers in
+      them.
+  TheBoondock:
+  - code_imp: add proc create_atmos_zone which detect an isolated atmos zone while
+      ignoring walls and non atmos_can_pass tiles (zas zone)

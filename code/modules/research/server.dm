@@ -75,7 +75,7 @@
 /// Toggles whether or not researched_disabled is, yknow, disabled
 /obj/machinery/rnd/server/proc/toggle_disable(mob/user)
 	research_disabled = !research_disabled
-	user.log_message("[research_disabled ? "shut off" : "turned on"] [src] at [loc_name(user)].", LOG_GAME)
+	user.log_message("[research_disabled ? "shut off" : "turned on"] [src]", LOG_GAME)
 	refresh_working()
 
 /// Gets status text based on this server's status for the computer.

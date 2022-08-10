@@ -1,0 +1,7 @@
+author: "Time-Green"
+delete-after: True
+changes: 
+  - rscadd: "You can now remove/add all those ugly species features with the power of surgery! A lizards frills, horns, snout and spines, a moths wings and antennae, podperson hair and just wings in general"
+  - rscadd: "Species features can be altered by organ manipulation or the new 'feature manipulation' surgery! 'Feature manipulation' is a shorter version of organ manip that let's you only operate on external features"
+  - balance: "Organ manipulation only works on internal organs now. Use 'feature manipulation' for external organs."
+  - code_imp: "cleans up magic numbers in surgery"
