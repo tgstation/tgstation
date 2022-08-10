@@ -6,7 +6,6 @@
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_EXTERNAL_TAIL
 	layers = EXTERNAL_FRONT|EXTERNAL_BEHIND
-	organ_flags = ORGAN_EDIBLE | ORGAN_EXTERNAL
 	feature_key = "tail"
 	render_key = "tail"
 	dna_block = DNA_TAIL_BLOCK

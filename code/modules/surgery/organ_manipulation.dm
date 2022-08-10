@@ -205,7 +205,7 @@
 
 ///only operate on not external organs (so internal organs)
 /datum/surgery_step/manipulate_organs/internal/can_use_organ(mob/user, obj/item/organ/organ)
-	return !(organ.organ_flags & ORGAN_EXTERNAL)
+	return istype(organ, /obj/item/organ/internal)
 
 ///Surgery step for external organs/features, like tails, frills, wings etc
 /datum/surgery_step/manipulate_organs/external
@@ -214,4 +214,4 @@
 
 ///Only operate on external organs
 /datum/surgery_step/manipulate_organs/external/can_use_organ(mob/user, obj/item/organ/organ)
-	return organ.organ_flags & ORGAN_EXTERNAL
+	return istype(organ, /obj/item/organ/external)
