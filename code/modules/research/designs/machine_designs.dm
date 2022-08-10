@@ -690,7 +690,7 @@
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/machine/fax
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_SERVICE
 
 //Hypertorus fusion reactor designs
 
