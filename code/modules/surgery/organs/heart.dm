@@ -182,7 +182,7 @@
 	name = "basic cybernetic heart"
 	desc = "A basic electronic device designed to mimic the functions of an organic human heart."
 	icon_state = "heart-c"
-	organ_flags = ORGAN_SYNTHETIC | ORGAN_INTERNAL
+	organ_flags = ORGAN_SYNTHETIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD*0.75 //This also hits defib timer, so a bit higher than its less important counterparts
 
 	var/dose_available = FALSE
@@ -242,7 +242,7 @@
 /obj/item/organ/internal/heart/freedom
 	name = "heart of freedom"
 	desc = "This heart pumps with the passion to give... something freedom."
-	organ_flags = ORGAN_SYNTHETIC | ORGAN_INTERNAL //the power of freedom prevents heart attacks
+	organ_flags = ORGAN_SYNTHETIC  //the power of freedom prevents heart attacks
 	/// The cooldown until the next time this heart can give the host an adrenaline boost.
 	COOLDOWN_DECLARE(adrenaline_cooldown)
 

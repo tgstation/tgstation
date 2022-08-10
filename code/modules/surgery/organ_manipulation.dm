@@ -81,9 +81,6 @@
 	var/current_type
 	var/obj/item/organ/target_organ
 
-	///Flag for valid organs to extract, like ORGAN_EXTERNAL or ORGAN_INTERNAL
-	var/organ_flag = NONE
-
 /datum/surgery_step/manipulate_organs/New()
 	..()
 	implements = implements + implements_extract
@@ -197,15 +194,24 @@
 				span_notice("[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!"))
 	return FALSE
 
+///You can never use this MUHAHAHAHAHAHAH (because its the byond version of abstract)
 /datum/surgery_step/manipulate_organs/proc/can_use_organ(mob/user, obj/item/organ/organ)
-	return organ.organ_flags & organ_flag
+	return FALSE
 
+///Surgery step for internal organs, like hearts and brains
 /datum/surgery_step/manipulate_organs/internal
 	time = 6.4 SECONDS
 	name = "manipulate organs"
-	organ_flag = ORGAN_INTERNAL
 
+///only operate on not external organs (so internal organs)
+/datum/surgery_step/manipulate_organs/internal/can_use_organ(mob/user, obj/item/organ/organ)
+	return !(organ.organ_flags & ORGAN_EXTERNAL)
+
+///Surgery step for external organs/features, like tails, frills, wings etc
 /datum/surgery_step/manipulate_organs/external
 	time = 3.2 SECONDS
 	name = "manipulate features"
-	organ_flag = ORGAN_EXTERNAL
+
+///Only operate on external organs
+/datum/surgery_step/manipulate_organs/external/can_use_organ(mob/user, obj/item/organ/organ)
+	return organ.organ_flags & ORGAN_EXTERNAL
