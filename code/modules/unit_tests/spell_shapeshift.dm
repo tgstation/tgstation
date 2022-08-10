@@ -53,7 +53,7 @@
 		qdel(mindbound_shift)
 
 /datum/unit_test/shapeshift_spell/proc/test_spell(mob/living/carbon/human/dummy, datum/action/cooldown/spell/shapeshift/shift, forced_shape)
-	if(forced_type)
+	if(forced_shape)
 		shift.shapeshift_type = forced_shape
 
 	shift.Trigger()
@@ -68,3 +68,35 @@
 	shift.Trigger()
 	if(istype(dummy.loc, shift.shapeshift_type))
 		return TEST_FAIL("Shapeshift spell: [shift.name] failed to transform the dummy back into a human.")
+
+
+/**
+ * Validates that shapeshift functions properly with holoparasites
+ */
+/datum/unit_test/shapeshift_holoparasites
+
+/datum/unit_test/shapeshift_holoparasites/Run()
+
+	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human)
+
+	var/datum/action/cooldown/spell/shapeshift/wizard/shift = new(dummy)
+	shift.shapeshift_type = shift.possible_shapes[1]
+
+	var/mob/living/simple_animal/hostile/guardian/test_stand = allocate(/mob/living/simple_animal/hostile/guardian)
+	test_stand.set_summoner(dummy)
+
+	// The stand's summoner is dummy.
+	TEST_ASSERT_EQUAL(test_stand.summoner, dummy, "Holoparasite failed to set the summoner to the correct mob.")
+
+	// Dummy casts shapeshift. The stand's summoner should become the shape the dummy is within.
+	shift.Trigger()
+	TEST_ASSERT(istype(dummy.loc, shift.shapeshift_type), "Shapeshift spell failed to transform the dummy into the shape [initial(shift.shapeshift_type.name)].")
+	TEST_ASSERT_EQUAL(test_stand.summoner, dummy.loc, "Shapeshift spell failed to transfer the holoparasite to the dummy's shape.")
+
+	// Dummy casts shapeshfit back, the stand's summoner should become the dummy again.
+	shift.next_use_time = 0
+	shift.Trigger()
+	TEST_ASSERT(!istype(dummy.loc, shift.shapeshift_type), "Shapeshift spell failed to transform the dummy back into human form.")
+	TEST_ASSERT_EQUAL(test_stand.summoner, dummy.loc, "Shapeshift spell failed to transfer the holoparasite back to the dummy's human form.")
+
+	qdel(shift)
