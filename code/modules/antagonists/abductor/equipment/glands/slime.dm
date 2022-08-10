@@ -12,7 +12,7 @@
 	owner.faction |= "slime"
 	owner.grant_language(/datum/language/slime, TRUE, TRUE, LANGUAGE_GLAND)
 
-/obj/item/organ/internal/heart/gland/slime/Remove(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/heart/gland/slime/Remove(mob/living/carbon/M, special = FALSE)
 	owner.faction -= "slime"
 	owner.remove_language(/datum/language/slime, TRUE, TRUE, LANGUAGE_GLAND)
 	..()

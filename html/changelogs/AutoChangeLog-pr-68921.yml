@@ -1,0 +1,5 @@
+author: "orthography"
+delete-after: True
+changes: 
+  - bugfix: "emitter examine text now displays minimum maximum delay."
+  - spellcheck: "changes the text on the emitter examine blurb."

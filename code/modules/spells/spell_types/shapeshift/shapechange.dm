@@ -2,9 +2,7 @@
 	name = "Wild Shapeshift"
 	desc = "Take on the shape of another for a time to use their natural abilities. \
 		Once you've made your choice, it cannot be changed."
-	button_icon_state = "shapeshift"
 
-	school = SCHOOL_TRANSMUTATION
 	cooldown_time = 20 SECONDS
 	cooldown_reduction_per_rank = 3.75 SECONDS
 

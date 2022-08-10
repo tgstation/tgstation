@@ -19,7 +19,7 @@
 
 /obj/item/clothing/shoes/cowboy/equipped(mob/living/carbon/user, slot)
 	. = ..()
-	RegisterSignal(user, COMSIG_LIVING_SLAM_TABLE, .proc/table_slam)
+	RegisterSignal(user, COMSIG_LIVING_SLAM_TABLE, .proc/table_slam, override = TRUE)
 	if(slot == ITEM_SLOT_FEET)
 		for(var/mob/living/occupant in contents)
 			occupant.forceMove(user.drop_location())

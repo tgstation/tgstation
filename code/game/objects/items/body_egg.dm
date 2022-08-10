@@ -22,7 +22,7 @@
 	owner.med_hud_set_status()
 	INVOKE_ASYNC(src, .proc/AddInfectionImages, owner)
 
-/obj/item/organ/internal/body_egg/Remove(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/body_egg/Remove(mob/living/carbon/M, special = FALSE)
 	if(owner)
 		REMOVE_TRAIT(owner, TRAIT_XENO_HOST, ORGAN_TRAIT)
 		REMOVE_TRAIT(owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)

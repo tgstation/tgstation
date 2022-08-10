@@ -247,7 +247,7 @@
 			playsleepseconds = mytape.timestamp[i + 1] - mytape.timestamp[i]
 		if(playsleepseconds > 14 SECONDS)
 			sleep(1 SECONDS)
-			say("Skipping [playsleepseconds] seconds of silence.")
+			say("Skipping [playsleepseconds/10] seconds of silence.")
 			playsleepseconds = 1 SECONDS
 		i++
 
@@ -297,16 +297,16 @@
 
 	say("Transcript printed.")
 	playsound(src, 'sound/items/taperecorder/taperecorder_print.ogg', 50, FALSE)
-	var/obj/item/paper/P = new /obj/item/paper(get_turf(src))
+	var/obj/item/paper/transcript_paper = new /obj/item/paper(get_turf(src))
 	var/t1 = "<B>Transcript:</B><BR><BR>"
 	for(var/i in 1 to mytape.storedinfo.len)
 		t1 += "[mytape.storedinfo[i]]<BR>"
-	P.info = t1
+	transcript_paper.add_raw_text(t1)
 	var/tapename = mytape.name
 	var/prototapename = initial(mytape.name)
-	P.name = "paper- '[tapename == prototapename ? "Tape" : "[tapename]"] Transcript'"
-	P.update_icon_state()
-	usr.put_in_hands(P)
+	transcript_paper.name = "paper- '[tapename == prototapename ? "Tape" : "[tapename]"] Transcript'"
+	transcript_paper.update_appearance()
+	usr.put_in_hands(transcript_paper)
 	canprint = FALSE
 	addtimer(VARSET_CALLBACK(src, canprint, TRUE), 30 SECONDS)
 

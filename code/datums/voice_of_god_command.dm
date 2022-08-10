@@ -95,8 +95,8 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 			break
 
 	if(!forced)
-		message_admins("[ADMIN_LOOKUPFLW(user)] has said '[log_message]' with a Voice of God, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
-	log_game("[key_name(user)] has said '[log_message]' with a Voice of God[forced ? " forced by [forced]" : ""], affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
+		message_admins("[ADMIN_LOOKUPFLW(user)] said '[log_message]' with Voice of God, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
+	user.log_message("said '[log_message]' with Voice of God[forced ? " forced by [forced]" : ""], affecting [english_list(listeners)], with a power multiplier of [power_multiplier].", LOG_GAME, color="red")
 	SSblackbox.record_feedback("tally", "voice_of_god", 1, log_message)
 
 /// Voice of god command datums that are used in [/proc/voice_of_god()]

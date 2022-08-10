@@ -115,7 +115,7 @@
 	else if(!powered)
 		. += span_notice("Its status display is glowing faintly.")
 	else
-		. += span_notice("Its status display reads: Emitting one beam every <b>[DisplayTimeText(fire_delay)]</b>.")
+		. += span_notice("Its status display reads: Emitting one beam between <b>[DisplayTimeText(minimum_fire_delay)]</b> and <b>[DisplayTimeText(maximum_fire_delay)]</b>.")
 		. += span_notice("Power consumption at <b>[display_power(active_power_usage)]</b>.")
 
 /obj/machinery/power/emitter/should_have_node()
@@ -124,9 +124,9 @@
 /obj/machinery/power/emitter/Destroy()
 	if(SSticker.IsRoundInProgress())
 		var/turf/T = get_turf(src)
-		message_admins("[src] deleted at [ADMIN_VERBOSEJMP(T)]")
-		log_game("[src] deleted at [AREACOORD(T)]")
-		investigate_log("deleted at [AREACOORD(T)]", INVESTIGATE_ENGINE)
+		message_admins("[src] deleted at [ADMIN_VERBOSEJMP(T)].")
+		log_game("[src] deleted at [AREACOORD(T)].")
+		investigate_log("deleted at [AREACOORD(T)].", INVESTIGATE_ENGINE)
 	QDEL_NULL(sparks)
 	return ..()
 

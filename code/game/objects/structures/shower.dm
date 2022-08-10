@@ -177,7 +177,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 			if(SHOWER_BOILING)
 				current_temperature = SHOWER_NORMAL
 		user.visible_message(span_notice("[user] adjusts the shower with \the [I]."), span_notice("You adjust the shower with \the [I] to [current_temperature] temperature."))
-		user.log_message("has wrenched a shower at [AREACOORD(src)] to [current_temperature].", LOG_ATTACK)
+		user.log_message("has wrenched a shower to [current_temperature].", LOG_ATTACK)
 		add_hiddenprint(user)
 	handle_mist()
 	return TRUE
