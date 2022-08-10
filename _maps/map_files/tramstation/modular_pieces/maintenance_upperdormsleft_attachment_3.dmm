@@ -118,33 +118,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/aft)
-"M" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/window/reinforced/spawner/east,
-/obj/item/clothing/suit/chaplainsuit/bishoprobe,
-/obj/item/clothing/suit/chaplainsuit/holidaypriest{
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/item/clothing/suit/chaplainsuit/nun{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/clothing/suit/chaplainsuit/whiterobe{
-	pixel_x = -2;
-	pixel_y = -2
-	},
-/obj/item/clothing/suit/chaplainsuit/witchhunter{
-	pixel_x = -4;
-	pixel_y = -4
-	},
-/obj/structure/closet/crate{
-	name = "excess religious attire"
-	},
-/obj/item/clothing/suit/chaplainsuit/monkrobeeast,
-/obj/item/toy/figure/chaplain,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/port/aft)
 "P" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/coffin,
@@ -161,6 +134,30 @@
 	pixel_x = 3;
 	pixel_y = 5
 	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/aft)
+"W" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/reinforced/spawner/east,
+/obj/item/clothing/suit/chaplainsuit/bishoprobe,
+/obj/item/clothing/suit/chaplainsuit/holidaypriest{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/clothing/suit/chaplainsuit/nun{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/clothing/suit/chaplainsuit/whiterobe{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/obj/structure/closet/crate{
+	name = "excess religious attire"
+	},
+/obj/item/clothing/suit/chaplainsuit/monkrobeeast,
+/obj/item/toy/figure/chaplain,
+/obj/item/clothing/suit/chaplainsuit/armor/witchhunter,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/aft)
 "Y" = (
@@ -184,7 +181,7 @@ G
 h
 b
 k
-M
+W
 a
 "}
 (3,1,1) = {"

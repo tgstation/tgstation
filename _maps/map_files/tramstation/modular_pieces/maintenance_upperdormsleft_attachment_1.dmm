@@ -22,27 +22,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/aft)
-"h" = (
-/obj/effect/decal/cleanable/cobweb,
-/obj/structure/filingcabinet,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/paper{
-	info = "The Stars Below. I Died And ReIncarnated As a Cute Plasma Skeleton?! Ashwalker Love: Sandy Tunnels. I Fell In Love With A Rogue AI. The Hop Gave Me All Access To Their Heart.Hairballs In Bed: A Feline Story.";
-	name = "failed scifi romance novel names"
-	},
-/obj/item/paper{
-	info = "1. Steal the chaplain's candles for better mood lighting. 2. Expand the adult literature section. 3. Prevent assistants from unscrewing my wooden floorboards. 4. Buy more paper from cargo. 5. Figure out who keeps drawing dicks in the fiction books.";
-	name = "to-do list for library"
-	},
-/obj/item/paper{
-	name = "mime's request list"
-	},
-/obj/item/paper{
-	info = "A comprehensive list of various overdue books, their associated current owner and the amount owed by them at this point. All of them are copies of 'Fantastic Beasts and Where to Find Them' taken out by crewmember 'Hunts-The-Beasts'.";
-	name = "overdue books list"
-	},
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/port/aft)
 "k" = (
 /obj/structure/closet/crate{
 	name = "corporate approved leisure-time activites pack"
@@ -112,6 +91,27 @@
 /obj/item/storage/book/bible,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/aft)
+"L" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/filingcabinet,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/paper{
+	name = "mime's request list"
+	},
+/obj/item/paper{
+	default_raw_text = "The Stars Below. I Died And ReIncarnated As a Cute Plasma Skeleton?! Ashwalker Love: Sandy Tunnels. I Fell In Love With A Rogue AI. The Hop Gave Me All Access To Their Heart.Hairballs In Bed: A Feline Story.";
+	name = "failed sci-fi romance novel names"
+	},
+/obj/item/paper{
+	default_raw_text = "A comprehensive list of various overdue books, their associated current owner and the amount owed by them at this point. All of them are copies of 'Fantastic Beasts and Where to Find Them' taken out by crewmember 'Hunts-The-Beasts'.";
+	name = "overdue books list"
+	},
+/obj/item/paper{
+	default_raw_text = "1. Steal the chaplain's candles for better mood lighting. 2. Expand the adult literature section. 3. Prevent assistants from unscrewing my wooden floorboards. 4. Buy more paper from cargo. 5. Figure out who keeps drawing dicks in the fiction books.";
+	name = "library to-do list"
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/aft)
 "O" = (
 /turf/closed/wall,
 /area/station/maintenance/port/aft)
@@ -144,7 +144,7 @@ O
 "}
 (2,1,1) = {"
 O
-h
+L
 C
 Q
 k
