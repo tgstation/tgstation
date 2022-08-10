@@ -1,5 +1,0 @@
-author: "Mooshimi"
-delete-after: True
-changes: 
-  - bugfix: "Blind people will now only be able to 'hear' audible emotes."
-  - bugfix: "Blind and deaf people will see and hear no emotes, for obvious reasons."
