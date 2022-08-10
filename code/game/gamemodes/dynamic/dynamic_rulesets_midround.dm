@@ -192,6 +192,7 @@
 
 ///subtype to handle checking players
 /datum/dynamic_ruleset/midround/from_living
+	weight = 0
 
 /datum/dynamic_ruleset/midround/from_living/ready(forced)
 	if(!check_candidates())
