@@ -286,12 +286,10 @@
 		diag_hud.remove_atom_from_hud(src) //YEET
 	return ..()
 
-/obj/vehicle/sealed/mecha/atom_break(damage_flag)
-	spark_system?.start()
-	return ..()
-
 /obj/vehicle/sealed/mecha/atom_destruction()
+	spark_system?.start()
 	loc.assume_air(cabin_air)
+
 	var/mob/living/silicon/ai/unlucky_ais
 	for(var/mob/living/occupant as anything in occupants)
 		if(isAI(occupant))
@@ -300,6 +298,7 @@
 			continue
 		mob_exit(occupant, FALSE, TRUE)
 		occupant.SetSleeping(destruction_sleep_duration)
+
 	if(wreckage)
 		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, unlucky_ais)
 		for(var/obj/item/mecha_parts/mecha_equipment/E in flat_equipment)
