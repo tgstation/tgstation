@@ -49,7 +49,7 @@
 
 	var/obj/effect/rune/target_rune = target
 	if(target_rune.log_when_erased)
-		user.log_message("erased [target_rune.cultist_name] rune at [COORD(target_rune)] using a null rod", LOG_GAME)
+		user.log_message("erased [target_rune.cultist_name] rune using a null rod", LOG_GAME)
 		message_admins("[ADMIN_LOOKUPFLW(user)] erased a [target_rune.cultist_name] rune with a null rod.")
 	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
 
