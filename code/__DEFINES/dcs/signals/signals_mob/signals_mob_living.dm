@@ -104,5 +104,5 @@
 
 /// From /datum/status_effect/shapechange_mob/on_apply(): (mob/living/shape)
 #define COMSIG_LIVING_SHAPESHIFTED "living_shapeshifted"
-/// From /datum/status_effect/shapechange_mob/after_unchange(): ()
+/// From /datum/status_effect/shapechange_mob/after_unchange(): (mob/living/caster)
 #define COMSIG_LIVING_UNSHAPESHIFTED "living_unshapeshifted"

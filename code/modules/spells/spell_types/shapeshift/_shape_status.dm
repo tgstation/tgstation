@@ -94,7 +94,7 @@
 /// Effects done after the casting mob has reverted to their human form.
 /datum/status_effect/shapechange_mob/proc/after_unchange()
 	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(caster_mob, COMSIG_LIVING_UNSHAPESHIFTED)
+	SEND_SIGNAL(owner, COMSIG_LIVING_UNSHAPESHIFTED, caster_mob)
 
 /// Signal proc for [COMSIG_LIVING_DEATH] from our owner.
 /// If our owner mob is killed, we should revert back to normal.
