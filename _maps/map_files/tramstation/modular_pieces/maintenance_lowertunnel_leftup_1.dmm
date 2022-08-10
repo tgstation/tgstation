@@ -4,6 +4,9 @@
 /obj/structure/closet/firecloset,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
+"ac" = (
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
 "aU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/girder,
@@ -161,10 +164,6 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/central)
-"Ct" = (
-/obj/modular_map_root/tramstation/maintenance_lowertunnel_leftup/attachment_b,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/port/central)
 "Cu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/xeno_spawn,
@@ -232,10 +231,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/fore)
-"Lt" = (
-/obj/modular_map_root/tramstation/maintenance_lowertunnel_leftup/attachment_a,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/port/central)
 "LQ" = (
 /obj/effect/turf_decal/sand,
 /obj/structure/closet/emcloset,
@@ -716,7 +711,7 @@ LZ
 LZ
 LZ
 LZ
-Ct
+ac
 NL
 IU
 rE
@@ -1628,7 +1623,7 @@ LZ
 LZ
 LZ
 LZ
-Lt
+ac
 xZ
 gc
 LZ

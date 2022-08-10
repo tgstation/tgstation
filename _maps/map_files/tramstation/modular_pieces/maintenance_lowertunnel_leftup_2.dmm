@@ -32,10 +32,6 @@
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
-"bS" = (
-/obj/modular_map_root/tramstation/maintenance_lowertunnel_leftup/attachment_a,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/port/central)
 "bU" = (
 /obj/machinery/plumbing/synthesizer{
 	dir = 8;
@@ -277,10 +273,6 @@
 /obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/central)
-"vT" = (
-/obj/modular_map_root/tramstation/maintenance_lowertunnel_leftup/attachment_b,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/port/central)
 "zA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/girder,
@@ -381,6 +373,9 @@
 /area/station/maintenance/port/central)
 "ME" = (
 /obj/modular_map_connector,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
+"MO" = (
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
 "Pe" = (
@@ -804,7 +799,7 @@ Gu
 Gu
 Gu
 Gu
-vT
+MO
 fI
 PH
 KV
@@ -1716,7 +1711,7 @@ Gu
 Gu
 Gu
 Gu
-bS
+MO
 fT
 uP
 Gu
