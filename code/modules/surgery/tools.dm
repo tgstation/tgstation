@@ -149,6 +149,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "scalpel"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	force = 10
