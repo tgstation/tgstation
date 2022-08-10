@@ -34,7 +34,7 @@
 	for(var/obj/item/organ/organ as anything in internal_organs + external_organs)
 		if(zone == organ.zone)
 			. += organ
-		if(include_children && zone == deprecise_zone(organ.zone))
+		else if(include_children && zone == deprecise_zone(organ.zone))
 			. += organ
 	return .
 
