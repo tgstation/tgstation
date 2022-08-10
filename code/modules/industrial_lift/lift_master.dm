@@ -351,14 +351,26 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 	if(isnum(door_duration))
 		addtimer(CALLBACK(src, .proc/open_lift_doors_callback), door_duration, TIMER_UNIQUE)
 
+	// Here on we only care about lifts going DOWN
 	if(direction != DOWN)
 		return
 
-	// Show warning signs if we're going downwards, to avoid crushing and peril
+	// Okay we're going down, let's try to display some warnings to people below
+	var/list/turf/lift_locs = list()
 	for(var/obj/structure/industrial_lift/going_to_move as anything in lift_platforms)
+		// This lift has no warnings so we don't even need to worry about it
 		if(!going_to_move.warns_on_down_movement)
 			continue
-		var/turf/below_us = get_step_multiz(going_to_move, DOWN)
+		// Collect all the turfs our lift is found at
+		lift_locs |= going_to_move.locs
+
+	for(var/turf/moving in lift_locs)
+		// Find what's below the turf that's moving
+		var/turf/below_us = get_step_multiz(moving, DOWN)
+		// Hold up the turf below us is also in our locs list. Multi-z lift? Don't show a warning
+		if(below_us in lift_locs)
+			continue
+		// Display the warning for until we land
 		new /obj/effect/temp_visual/telegraphing/lift_travel(below_us, lift_move_duration)
 
 /**
