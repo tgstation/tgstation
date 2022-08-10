@@ -114,7 +114,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	SIGNAL_HANDLER
 	if(same_z_layer)
 		return
-	SET_PLANE(image, PLANE_TO_TRUE(image.plane) new_turf)
+	SET_PLANE(image, PLANE_TO_TRUE(image.plane), new_turf)
 
 /datum/atom_hud/alternate_appearance/basic/everyone
 	add_ghost_version = TRUE
