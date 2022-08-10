@@ -49,6 +49,7 @@
 	default_unfasten_wrench(user, tool)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
+// Using the multi-tool causes the fax network name to be renamed
 /obj/machinery/fax/multitool_act(mob/living/user, obj/item/I)
 	var/new_fax_name = tgui_input_text(user, "Enter a new name for the fax machine.", "New Fax Name", , 128)
 	if(!new_fax_name)
@@ -123,6 +124,16 @@
 			history_clear()
 			return TRUE
 
+/**
+ * The procedure for sending a paper to another fax machine.
+ *
+ * The object is called inside /obj/machinery/fax to send the paper to another fax machine.
+ * The procedure searches among all faxes for the desired fax ID and calls proc/receive() on that fax.
+ * If the paper is sent successfully, it returns TRUE.
+ * Arguments:
+ * * paper - The object of the paper to be sent.
+ * * id - The network ID of the fax machine you want to send the paper to.
+ */
 /obj/machinery/fax/proc/send(obj/item/paper/paper, id)
 	for(var/obj/machinery/fax/FAX in GLOB.machines)
 		if (FAX.fax_id == id)
@@ -133,6 +144,14 @@
 			return TRUE
 	return FALSE
 
+/**
+ * Procedure for accepting papers from another fax machine.
+ *
+ * The procedure is called in proc/send() of the other fax. It receives a paper object and "prints" it.
+ * Arguments:
+ * * paper - The object of the paper to be printed.
+ * * sender_name - The sender's name, which will be displayed in the message and recorded in the history of operations.
+ */
 /obj/machinery/fax/proc/receive(obj/item/paper/paper, sender_name)
 	playsound(src, 'sound/machines/printer.ogg', 50, FALSE)
 	flick(paper_contain ? "fax_contain_receive" : "fax_contain", src)
@@ -140,6 +159,15 @@
 	history_add("Receive", sender_name)
 	paper.forceMove(drop_location())
 
+/**
+ * A procedure that makes entries in the history of fax transactions.
+ *
+ * Called to record the operation in the fax history list.
+ * Records the type of operation, the name of the fax machine with which the operation was performed, and the station time.
+ * Arguments:
+ * * history_type - Type of operation. By default, "Send" and "Receive" should be used.
+ * * history_fax_name - The name of the fax machine that performed the operation.
+ */
 /obj/machinery/fax/proc/history_add(history_type = "Send", history_fax_name)
 	var/list/history_data = list()
 	history_data["history_type"] = history_type
@@ -147,9 +175,17 @@
 	history_data["history_time"] = station_time_timestamp()
 	fax_history += list(history_data)
 
+// Clears the history of fax operations.
 /obj/machinery/fax/proc/history_clear()
 	fax_history = null
 
+/**
+ * Checks fax names for a match.
+ *
+ * Called to check the new fax name against the names of other faxes to prevent the use of identical names.
+ * Arguments:
+ * * new_fax_name - The text of the name to be checked for a match.
+ */
 /obj/machinery/fax/proc/fax_name_exist(new_fax_name)
 	for(var/obj/machinery/fax/FAX in GLOB.machines)
 		if (FAX.fax_name == new_fax_name)
