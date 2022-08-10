@@ -429,6 +429,10 @@ It's also possible for some effects, especially things relating to [map format](
 to just be straight up impossible, or conflict with each other.
 It's dumb, but it's what we've got brother so we're gonna use it like it's a free ticket to the bahamas.
 
+We have a system that allows for arbitrary grouping of plane masters for the purposes of [filter effects](#filters)
+called `/atom/movable/plane_master_controller`.
+This is somewhat outmoded by our use of [render relays](#render-targetsource), but it's still valid and occasionally useful.
+
 > Something you should know: Plane masters effect ONLY the map their screen_loc is on. 
 For this reason, we are forced to generate whole copies of the set of plane masters with the proper screen_loc to make subviews look right
 
