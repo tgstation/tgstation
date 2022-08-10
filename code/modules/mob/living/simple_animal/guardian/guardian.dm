@@ -73,11 +73,12 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /// Setter for our summoner mob.
 /mob/living/simple_animal/hostile/guardian/proc/set_summoner(mob/to_who)
 	if(summoner)
-		UnregisterSignal(summoner, COMSIG_LIVING_ON_WABBAJACKED)
+		UnregisterSignal(summoner, list(COMSIG_LIVING_ON_WABBAJACKED, COMSIG_LIVING_SHAPESHIFTED, COMSIG_LIVING_UNSHAPESHIFTED))
 
 	summoner = to_who
 	Recall(TRUE)
 	RegisterSignal(to_who, COMSIG_LIVING_ON_WABBAJACKED, .proc/on_owner_wabbajacked)
+	RegisterSignal(to_who, COMSIG_LIVING_SHAPESHIFTED, .proc/on_owner_shapeshifted)
 
 /// Signal proc for [COMSIG_LIVING_ON_WABBAJACKED], when our summoner is wabbajacked we should be alerted.
 /mob/living/simple_animal/hostile/guardian/proc/on_owner_wabbajacked(mob/living/source, mob/living/new_mob)
@@ -86,6 +87,22 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	set_summoner(new_mob)
 	to_chat(src, span_holoparasite("Your summoner has changed form!"))
 
+/// Signal proc for [COMSIG_LIVING_SHAPESHIFTED], when our summoner is shapeshifted we should change to the new mob
+/mob/living/simple_animal/hostile/guardian/proc/on_owner_shapeshifted(mob/living/source, mob/living/shape)
+	SIGNAL_HANDLER
+
+	RegisterSignal(summoner, COMSIG_LIVING_UNSHAPESHIFTED, .proc/on_owner_unshapeshifted)
+	set_summoner(shape)
+	to_chat(src, span_holoparasite("Your summoner has shapeshifted into that of a [shape]!"))
+
+/// Signal proc for [COMSIG_LIVING_UNSHAPESHIFTED], when our summoner unshapeshifts go back to that mob
+/mob/living/simple_animal/hostile/guardian/proc/on_owner_unshapeshifted(mob/living/source)
+	SIGNAL_HANDLER
+
+	set_summoner(source)
+	to_chat(src, span_holoparasite("Your summoner has shapeshifted back into their normal form!"))
+
+// Ha, no
 /mob/living/simple_animal/hostile/guardian/wabbajack(what_to_randomize, change_flags = WABBAJACK)
 	visible_message(span_warning("[src] resists the polymorph!"))
 

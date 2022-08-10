@@ -39,6 +39,8 @@
 	RegisterSignal(owner, COMSIG_LIVING_DEATH, .proc/on_shape_death)
 	RegisterSignal(caster_mob, COMSIG_LIVING_DEATH, .proc/on_caster_death)
 	RegisterSignal(caster_mob, COMSIG_PARENT_QDELETING, .proc/on_caster_deleted)
+
+	SEND_SIGNAL(caster_mob, COMSIG_LIVING_SHAPESHIFTED, owner)
 	return TRUE
 
 /datum/status_effect/shapechange_mob/on_remove()
@@ -89,9 +91,10 @@
 	// retore_caster() should never reach this point while either the owner or the effect is being qdeleted
 	qdel(owner)
 
-/// Effects done after the casting mob has reverted to their human form. Nothing, by default.
+/// Effects done after the casting mob has reverted to their human form.
 /datum/status_effect/shapechange_mob/proc/after_unchange()
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(caster_mob, COMSIG_LIVING_UNSHAPESHIFTED)
 
 /// Signal proc for [COMSIG_LIVING_DEATH] from our owner.
 /// If our owner mob is killed, we should revert back to normal.
@@ -178,6 +181,7 @@
 	return ..()
 
 /datum/status_effect/shapechange_mob/from_spell/after_unchange()
+	. = ..()
 	var/datum/action/cooldown/spell/shapeshift/source_spell = source_weakref?.resolve()
 	if(QDELETED(source_spell) || !source_spell.convert_damage)
 		return

@@ -47,12 +47,12 @@
 			for(var/forced_shape in mindbound_shift.possible_shapes)
 				test_spell(dummy, mindbound_shift, forced_shape)
 
-		else if(LAZYLEN(bodybound_shift.mindbound_shift) == 1)
+		else if(LAZYLEN(bodybound_shift.possible_shapes) == 1)
 			test_spell(dummy, mindbound_shift)
 
 		qdel(mindbound_shift)
 
-/datum/unit_test/shapeshift_spell/proc/test_spell(mob/living/carbon/human/dummy, datum/action/cooldown/spell/shapeshift/shift, forced_type)
+/datum/unit_test/shapeshift_spell/proc/test_spell(mob/living/carbon/human/dummy, datum/action/cooldown/spell/shapeshift/shift, forced_shape)
 	if(forced_type)
 		shift.shapeshift_type = forced_shape
 
