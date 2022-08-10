@@ -1,7 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - server: "Added a configurable probability for nonhuman species to spawn in the morgue at round start!"
-  - qol: "Cadavers in the morgue at round start will now spawn in bodybags."
-  - bugfix: "Adminspawned morgue cadavers will now only spawn inside closed morguetrays (the bodies could get stuck inside them!)"
-  - bugfix: "Morguetrays are now less likely to end up having multiple cadavers in them."
