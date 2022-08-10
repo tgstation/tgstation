@@ -183,42 +183,35 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	user.visible_message(span_suicide("[user] begins whacking [user.p_them()]self over the head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
-/obj/item/stack/sheet/iron/attackby(obj/item/attackby_item, mob/user, params)
-	if(attackby_item.tool_behaviour == TOOL_WELDER)
-		if(attackby_item.use_tool(src, user, 0, volume = 40))
-			var/obj/item/stack/rods/two/new_item = new(usr.loc)
-			balloon_alert(user, "crafting rods...")
-			user.visible_message(
-				span_notice("[user.name] shaped [src] into floor rods with [attackby_item]."),
-				blind_message = span_hear("You hear welding."),
-				vision_distance = COMBAT_MESSAGE_RANGE,
-				ignored_mobs = user
-			)
-			var/obj/item/stack/rods/welded_sheet = src
-			src = null
-			welded_sheet.use(1)
-			user.put_in_inactive_hand(new_item)
-	else
-		return ..()
+/obj/item/stack/sheet/iron/welder_act(mob/living/user, obj/item/tool)
+	if(tool.use_tool(src, user, delay = 0, volume = 40))
+		var/obj/item/stack/rods/two/new_item = new(user.loc)
+		balloon_alert(user, "crafting rods...")
+		user.visible_message(
+			span_notice("[user.name] shaped [src] into floor rods with [tool]."),
+			blind_message = span_hear("You hear welding."),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+			ignored_mobs = user
+		)
+		var/obj/item/stack/rods/welded_sheet = src
+		welded_sheet.use(1)
+		user.put_in_inactive_hand(new_item)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/item/stack/sheet/iron/attackby_secondary(obj/item/attackby_item, mob/user, params)
-	if(attackby_item.tool_behaviour == TOOL_WELDER)
-		if(attackby_item.use_tool(src, user, 0, volume = 40))
-			var/obj/item/stack/tile/iron/four/new_item = new(user.loc)
-			balloon_alert(user, "crafting tiles...")
-			user.visible_message(
-				span_notice("[user.name] shaped [src] into floor tiles with [attackby_item]."),
-				blind_message = span_hear("You hear welding."),
-				vision_distance = COMBAT_MESSAGE_RANGE,
-				ignored_mobs = user
-			)
-			var/obj/item/stack/sheet/iron/welded_sheet = src
-			src = null
-			welded_sheet.use(1)
-			user.put_in_inactive_hand(new_item)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
+/obj/item/stack/sheet/iron/welder_act_secondary(mob/living/user, obj/item/tool)
+	if(tool.use_tool(src, user, delay = 0, volume = 40))
+		var/obj/item/stack/tile/iron/four/new_item = new(user.loc)
+		balloon_alert(user, "crafting tiles...")
+		user.visible_message(
+			span_notice("[user.name] shaped [src] into floor tiles with [tool]."),
+			blind_message = span_hear("You hear welding."),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+			ignored_mobs = user
+		)
+		var/obj/item/stack/sheet/iron/welded_sheet = src
+		welded_sheet.use(1)
+		user.put_in_inactive_hand(new_item)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/stack/sheet/iron/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	if(istype(target, /turf/open))

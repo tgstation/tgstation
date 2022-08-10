@@ -99,48 +99,41 @@
 	)
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
-/obj/item/stack/tile/iron/attackby(obj/item/attackby_item, mob/user, params)
-	if(attackby_item.tool_behaviour == TOOL_WELDER)
-		if(get_amount() < 4)
-			balloon_alert(user, "not enough tiles!")
-			return
-		if(attackby_item.use_tool(src, user, 0, volume = 40))
-			var/obj/item/stack/sheet/iron/new_item = new(user.loc)
-			balloon_alert(user, "crafting sheets...")
-			user.visible_message(
-				span_notice("[user.name] shaped [src] into sheets with [attackby_item]."),
-				blind_message = span_hear("You hear welding."),
-				vision_distance = COMBAT_MESSAGE_RANGE,
-				ignored_mobs = user
-			)
-			var/obj/item/stack/tile/iron/welded_tile = src
-			src = null
-			welded_tile.use(4)
-			user.put_in_inactive_hand(new_item)
-	else
-		return ..()
+/obj/item/stack/tile/iron/welder_act(mob/living/user, obj/item/tool)
+	if(get_amount() < 4)
+		balloon_alert(user, "not enough tiles!")
+		return
+	if(tool.use_tool(src, user, delay = 0, volume = 40))
+		var/obj/item/stack/sheet/iron/new_item = new(user.loc)
+		balloon_alert(user, "crafting sheets...")
+		user.visible_message(
+			span_notice("[user.name] shaped [src] into sheets with [tool]."),
+			blind_message = span_hear("You hear welding."),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+			ignored_mobs = user
+		)
+		var/obj/item/stack/tile/iron/welded_tile = src
+		welded_tile.use(4)
+		user.put_in_inactive_hand(new_item)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/item/stack/tile/iron/attackby_secondary(obj/item/attackby_item, mob/user, params)
-	if(attackby_item.tool_behaviour == TOOL_WELDER)
-		if(get_amount() < 2)
-			balloon_alert(user, "not enough tiles!")
-			return
-		if(attackby_item.use_tool(src, user, 0, volume = 40))
-			var/obj/item/stack/rods/new_item = new(user.loc)
-			balloon_alert(user, "crafting rods...")
-			user.visible_message(
-				span_notice("[user.name] shaped [src] into rods with [attackby_item]."),
-				blind_message = span_hear("You hear welding."),
-				vision_distance = COMBAT_MESSAGE_RANGE,
-				ignored_mobs = user
-			)
-			var/obj/item/stack/tile/iron/welded_tile = src
-			src = null
-			welded_tile.use(2)
-			user.put_in_inactive_hand(new_item)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
+/obj/item/stack/tile/iron/welder_act_secondary(mob/living/user, obj/item/tool)
+	if(get_amount() < 2)
+		balloon_alert(user, "not enough tiles!")
+		return
+	if(tool.use_tool(src, user, delay = 0, volume = 40))
+		var/obj/item/stack/rods/new_item = new(user.loc)
+		balloon_alert(user, "crafting rods...")
+		user.visible_message(
+			span_notice("[user.name] shaped [src] into rods with [tool]."),
+			blind_message = span_hear("You hear welding."),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+			ignored_mobs = user
+		)
+		var/obj/item/stack/tile/iron/welded_tile = src
+		welded_tile.use(2)
+		user.put_in_inactive_hand(new_item)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/stack/tile/iron/base //this subtype should be used for most stuff
 	merge_type = /obj/item/stack/tile/iron/base
