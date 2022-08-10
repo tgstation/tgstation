@@ -80,8 +80,8 @@
 // You can then for example prompt dead players in execute() to join as strike teams or whatever
 // Or autotator someone
 
-// IMPORTANT, since /datum/dynamic_ruleset/midround may accept candidates from both living, dead, and even antag players, you need to manually check whether there are enough candidates
-// (see /datum/dynamic_ruleset/midround/autotraitor/ready(forced = FALSE) for example)
+// IMPORTANT, since /datum/dynamic_ruleset/midround may accept candidates from both living, dead, and even antag players
+// subtype your midround with /from_ghosts or /from_living to get candidate checking. Or check yourself by subtyping from neither
 /datum/dynamic_ruleset/midround/ready(forced = FALSE)
 	if (forced)
 		return TRUE
@@ -181,7 +181,7 @@
 
 /// Fired when there are no valid candidates. Will spawn a sleeper agent or latejoin traitor.
 /datum/dynamic_ruleset/midround/from_ghosts/proc/attempt_replacement()
-	var/datum/dynamic_ruleset/midround/autotraitor/sleeper_agent = new
+	var/datum/dynamic_ruleset/midround/from_living/autotraitor/sleeper_agent = new
 
 	mode.configure_ruleset(sleeper_agent)
 
@@ -205,7 +205,7 @@
 //                                          //
 //////////////////////////////////////////////
 
-/datum/dynamic_ruleset/midround/autotraitor
+/datum/dynamic_ruleset/midround/from_living/autotraitor
 	name = "Syndicate Sleeper Agent"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
 	antag_datum = /datum/antagonist/traitor
@@ -231,7 +231,7 @@
 	requirements = list(3,3,3,3,3,3,3,3,3,3)
 	repeatable = TRUE
 
-/datum/dynamic_ruleset/midround/autotraitor/trim_candidates()
+/datum/dynamic_ruleset/midround/from_living/autotraitor/trim_candidates()
 	..()
 	for(var/mob/living/player in living_players)
 		if(issilicon(player)) // Your assigned role doesn't change when you are turned into a silicon.
@@ -241,7 +241,7 @@
 		else if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
 			living_players -= player // We don't autotator people with roles already
 
-/datum/dynamic_ruleset/midround/autotraitor/execute()
+/datum/dynamic_ruleset/midround/from_living/autotraitor/execute()
 	var/mob/M = pick(living_players)
 	assigned += M
 	living_players -= M
