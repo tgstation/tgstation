@@ -80,7 +80,7 @@
 			)
 	return data
 
-/obj/machinery/computer/apc_control/ui_act(action, params)
+/obj/machinery/computer/apc_control/ui_act(action, params, datum/tgui/ui)
 	. = ..()
 	if(.)
 		return
@@ -183,7 +183,7 @@
 		if("breaker")
 			var/ref = params["ref"]
 			var/obj/machinery/power/apc/target = locate(ref) in GLOB.apcs_list
-			target.toggle_breaker()
+			target.toggle_breaker(ui.user)
 			var/setTo = target.operating ? "On" : "Off"
 			log_activity("Turned APC [target.area.name]'s breaker [setTo]")
 
