@@ -50,7 +50,7 @@
 		to_chat(M, "<span class='notice'>[smoke_message]</span>")
 	if(DT_PROB(2, delta_time))
 		M.emote(pick("smile","laugh","giggle"))
-	M.adjust_nutrition(-1 * REM * delta_time) //munchies
+	M.adjust_nutrition(-0.15 * REM * delta_time) //munchies
 	if(DT_PROB(4, delta_time) && M.body_position == LYING_DOWN && !M.IsSleeping()) //chance to fall asleep if lying down
 		to_chat(M, "<span class='warning'>You doze off...</span>")
 		M.Sleeping(10 SECONDS)
@@ -66,7 +66,7 @@
 	color = "#60A584" // rgb: 96, 165, 132
 	taste_description = "smoke"
 	trippy = FALSE
-	overdose_threshold=15
+	overdose_threshold = 15
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	ph = 8
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -77,7 +77,7 @@
 	. = ..()
 	if(chems.has_reagent(type, 1))
 		mytray.adjust_toxic(round(chems.get_reagent_amount(type)))
-		mytray.adjust_pestlevel(-rand(1,2))
+		mytray.adjust_pestlevel(-rand(1, 2))
 
 /datum/reagent/drug/nicotine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(DT_PROB(0.5, delta_time))
@@ -85,7 +85,7 @@
 		to_chat(M, span_notice("[smoke_message]"))
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smoked", /datum/mood_event/smoked, name)
 	M.remove_status_effect(/datum/status_effect/jitter)
-	M.AdjustStun(-50  * REM * delta_time)
+	M.AdjustStun(-50 * REM * delta_time)
 	M.AdjustKnockdown(-50 * REM * delta_time)
 	M.AdjustUnconscious(-50 * REM * delta_time)
 	M.AdjustParalyzed(-50 * REM * delta_time)
@@ -123,7 +123,7 @@
 			H.hairstyle = "Bald"
 			H.update_hair(is_creating = TRUE) // makes you loose hair as well
 			M.set_species(/datum/species/human/krokodil_addict)
-			M.adjustBruteLoss(50*REM, 0) // holy shit your skin just FELL THE FUCK OFF
+			M.adjustBruteLoss(50 * REM, 0) // holy shit your skin just FELL THE FUCK OFF
 	..()
 
 /datum/reagent/drug/krokodil/overdose_process(mob/living/M, delta_time, times_fired)
