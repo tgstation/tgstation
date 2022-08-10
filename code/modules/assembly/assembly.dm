@@ -63,11 +63,11 @@
 	return TRUE
 
 ///Called when another assembly acts on this one, var/radio will determine where it came from for wire calcs
-/obj/item/assembly/proc/pulsed(radio = FALSE)
+/obj/item/assembly/proc/pulsed(radio = FALSE, mob/pulser)
 	if(wire_type & WIRE_RECEIVE)
-		INVOKE_ASYNC(src, .proc/activate)
+		INVOKE_ASYNC(src, .proc/activate, pulser)
 	if(radio && (wire_type & WIRE_RADIO_RECEIVE))
-		INVOKE_ASYNC(src, .proc/activate)
+		INVOKE_ASYNC(src, .proc/activate, pulser)
 	SEND_SIGNAL(src, COMSIG_ASSEMBLY_PULSED)
 	return TRUE
 
@@ -83,7 +83,7 @@
 	return TRUE
 
 /// What the device does when turned on
-/obj/item/assembly/proc/activate()
+/obj/item/assembly/proc/activate(mob/activator)
 	if(QDELETED(src) || !secured || (next_activate > world.time))
 		return FALSE
 	next_activate = world.time + 30
