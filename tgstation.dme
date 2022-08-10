@@ -4660,6 +4660,7 @@
 #include "code\modules\wiremod\shell\dispenser.dm"
 #include "code\modules\wiremod\shell\drone.dm"
 #include "code\modules\wiremod\shell\gun.dm"
+#include "code\modules\wiremod\shell\keyboard_shell.dm"
 #include "code\modules\wiremod\shell\module.dm"
 #include "code\modules\wiremod\shell\moneybot.dm"
 #include "code\modules\wiremod\shell\scanner.dm"
