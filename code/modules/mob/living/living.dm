@@ -1357,7 +1357,7 @@
 	if(!new_mob)
 		return
 
-	to_chat(src, span_warning("Your form morphs into that of a [what_to_randomize]."))
+	to_chat(src, span_hypnophrase(span_big("Your form morphs into that of a [what_to_randomize]!")))
 
 	// And of course, make sure they get policy for being transformed
 	var/poly_msg = get_policy(POLICY_POLYMORPH)
