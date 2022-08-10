@@ -154,9 +154,31 @@
 		can_craft_overlay = image('icons/hud/screen_gen.dmi', icon_state = "can_craft")
 		add_overlay(can_craft_overlay)
 
-/atom/movable/screen/craft/proc/reset_icon()
-	has_craft_items = FALSE
-	update_overlays()
+/atom/movable/screen/craft/proc/hands_craft_check(mob/living/carbon/human/user, obj/item/item, slot)
+	SIGNAL_HANDLER
+	if(slot != ITEM_SLOT_HANDS)
+		for(var/obj/item/hand_item in user.held_items)
+			if(hand_item.crafting_item_in_hands && hand_item != item)
+				return
+		if(has_craft_items)
+			has_craft_items = FALSE
+			item.crafting_item_in_hands = FALSE
+			update_overlays()
+			return
+	if(is_type_in_typecache(item, GLOB.crafting_recipe_items) || (is_type_in_typecache(item.parent_type, GLOB.crafting_recipe_items) && !is_type_in_typecache(item.type, GLOB.crafting_recipe_items_blacklist)) || is_type_in_typecache(item, GLOB.crafting_recipe_items_results))
+		has_craft_items = TRUE
+		item.crafting_item_in_hands = TRUE
+		update_overlays()
+
+/atom/movable/screen/craft/proc/exited_check(mob/living/carbon/human/user, obj/item/item, direction)
+	SIGNAL_HANDLER
+	for(var/obj/item/hand_item in user.held_items)
+		if(hand_item.crafting_item_in_hands && hand_item != item)
+			return
+	if(has_craft_items)
+		has_craft_items = FALSE
+		item.crafting_item_in_hands = FALSE
+		update_overlays()
 
 /atom/movable/screen/area_creator
 	name = "create new area"

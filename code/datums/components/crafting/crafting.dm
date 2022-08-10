@@ -9,6 +9,8 @@
 	var/atom/movable/screen/craft/C = new()
 	C.icon = H.ui_style
 	C.hud = H
+	C.RegisterSignal(user, COMSIG_MOB_EQUIPPED_ITEM, /atom/movable/screen/craft/.proc/hands_craft_check)
+	C.RegisterSignal(user, COMSIG_ATOM_EXITED, /atom/movable/screen/craft/.proc/exited_check)
 	H.static_inventory += C
 	CL.screen += C
 	RegisterSignal(C, COMSIG_CLICK, .proc/component_ui_interact)
