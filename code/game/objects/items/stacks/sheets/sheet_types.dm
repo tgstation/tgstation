@@ -196,7 +196,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 		var/obj/item/stack/rods/welded_sheet = src
 		welded_sheet.use(1)
 		user.put_in_inactive_hand(new_item)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/stack/sheet/iron/welder_act_secondary(mob/living/user, obj/item/tool)
 	if(tool.use_tool(src, user, delay = 0, volume = 40))
@@ -211,7 +211,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 		var/obj/item/stack/sheet/iron/welded_sheet = src
 		welded_sheet.use(1)
 		user.put_in_inactive_hand(new_item)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/stack/sheet/iron/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	if(istype(target, /turf/open))
