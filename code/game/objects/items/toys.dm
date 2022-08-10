@@ -44,11 +44,8 @@
 
 /obj/item/toy/waterballoon/Initialize(mapload)
 	. = ..()
-	create_reagents(10)
-
-/obj/item/toy/waterballoon/ComponentInitialize()
-	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
+	create_reagents(10)
 
 /obj/item/toy/waterballoon/attack(mob/living/carbon/human/M, mob/user)
 	return
