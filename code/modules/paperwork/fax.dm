@@ -52,15 +52,15 @@
 /obj/machinery/fax/multitool_act(mob/living/user, obj/item/I)
 	var/new_fax_name = tgui_input_text(user, "Enter a new name for the fax machine.", "New Fax Name", , 128)
 	if(!new_fax_name)
-		return
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 	if (new_fax_name != fax_name)
 		if (fax_name_exist(new_fax_name))
 			// Being able to set the same name as another fax machine will give a lot of gimmicks for the traitor.
 			if (syndicate_network != TRUE && obj_flags != EMAGGED)
 				to_chat(user, span_warning("There is already a fax machine with this name on the network."))
-				return
+				return TOOL_ACT_TOOLTYPE_SUCCESS
 		fax_name = new_fax_name
-	return
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/fax/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/paper))
@@ -69,7 +69,7 @@
 			item.forceMove(src)
 			update_appearance()
 		return
-	return
+	return ..()
 
 /obj/machinery/fax/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
