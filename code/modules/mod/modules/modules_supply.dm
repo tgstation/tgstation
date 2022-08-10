@@ -614,7 +614,7 @@
 	explosion_image.pixel_y = -32
 	SET_PLANE_EXPLICIT(explosion_image, ABOVE_GAME_PLANE, src)
 
-/obj/structure/mining_bomb/proc/prime()
+/obj/structure/mining_bomb/proc/prime(atom/movable/firer)
 	add_overlay(explosion_image)
 	addtimer(CALLBACK(src, .proc/boom, firer), explosion_time)
 
