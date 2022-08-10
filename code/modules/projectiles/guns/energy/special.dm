@@ -114,6 +114,7 @@
 	var/charge_weld = 25 //amount of charge used up to start action (multiplied by amount) and per progress_flash_divisor ticks of welding
 
 /obj/item/gun/energy/plasmacutter/Initialize(mapload)
+	AddElement(/datum/element/update_icon_blocker)
 	. = ..()
 	AddComponent(/datum/component/butchering, \
 		speed = 2.5 SECONDS, \
@@ -121,7 +122,6 @@
 		bonus_modifier = 0, \
 		butcher_sound = 'sound/weapons/plasma_cutter.ogg', \
 	)
-	AddElement(/datum/element/update_icon_blocker)
 	AddElement(/datum/element/tool_flash, 1)
 
 /obj/item/gun/energy/plasmacutter/examine(mob/user)
@@ -313,8 +313,8 @@
 	use_cyborg_cell = TRUE
 
 /obj/item/gun/energy/printer/Initialize(mapload)
-	. = ..()
 	AddElement(/datum/element/update_icon_blocker)
+	. = ..()
 	AddComponent(/datum/component/automatic_fire, 0.3 SECONDS)
 
 /obj/item/gun/energy/printer/emp_act()

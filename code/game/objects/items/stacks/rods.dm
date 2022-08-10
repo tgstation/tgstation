@@ -81,8 +81,8 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 		return ..()
 
 /obj/item/stack/rods/cyborg/Initialize(mapload)
-	. = ..()
 	AddElement(/datum/element/update_icon_blocker)
+	return ..()
 
 /obj/item/stack/rods/ten
 	amount = 10
