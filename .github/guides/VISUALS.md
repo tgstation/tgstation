@@ -37,7 +37,7 @@ You'll find links to the relevant reference entries at the heading of each entry
 - [Invisibility](#invisibility)
 - [Layers](#layers)
 - [Planes](#planes)
-- [Render target/source](#render-target/source)
+- [Render target/source](#render-targetsource)
 - [Multiz](#multiz)
 - [Mouse opacity](#mouse-opacity)
 - [Filters](#filters)
