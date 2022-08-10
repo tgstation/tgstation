@@ -61,7 +61,7 @@ const PatientStateView = (props, context) => {
               {patient.stat}
             </LabeledList.Item>
             <LabeledList.Item label="Blood Type">
-              {patient.blood_type}
+              {patient.blood_type || 'Unable to determine blood type'}
             </LabeledList.Item>
             <LabeledList.Item label="Health">
               <ProgressBar
