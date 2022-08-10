@@ -231,7 +231,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	render_relay_planes = list()
 	// We do NOT allow offsetting, because there's no case where you would want to block only one layer, at least currently
 	allows_offsetting = FALSE
-	
+
 /atom/movable/screen/plane_master/game_world_upper
 	name = "Upper game world"
 	documentation = "Ok so fov is kinda fucky, because planes in byond serve both as effect groupings and as rendering orderers. Since that's true, we need a plane that we can stick stuff that draws above fov blocked stuff on."
@@ -458,9 +458,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 
 /atom/movable/screen/plane_master/camera_static
 	name = "Camera static"
-	documentation = "Holds camera static images. Usually only visible to people who can well, see static, has an alpha of 0 otherwise.\
-		<br>We use images rather then vis contents because they're lighter on maptick, and maptick sucks butt.\
-		<br>Can change its alpha to show/hide the static, we do this occasionally."
+	documentation = "Holds camera static images. Usually only visible to people who can well, see static.\
+		<br>We use images rather then vis contents because they're lighter on maptick, and maptick sucks butt."
 	plane = CAMERA_STATIC_PLANE
 	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
