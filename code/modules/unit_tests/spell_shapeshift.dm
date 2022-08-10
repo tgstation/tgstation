@@ -1,6 +1,5 @@
 /**
- * Validates that all shapeshift type spells
- * have a valid possible_shapes setup.
+ * Validates that all shapeshift type spells have a valid possible_shapes setup.
  */
 /datum/unit_test/shapeshift_spell_validity
 
@@ -71,7 +70,7 @@
 
 
 /**
- * Validates that shapeshift functions properly with holoparasites
+ * Validates that shapeshifts function properly with holoparasites.
  */
 /datum/unit_test/shapeshift_holoparasites
 
