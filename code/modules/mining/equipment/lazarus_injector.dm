@@ -50,7 +50,7 @@
 			target_hostile.robust_searching = TRUE
 			target_hostile.friends += user
 			target_hostile.attack_same = TRUE
-			log_game("[key_name(user)] has revived hostile mob [key_name(target)] with a malfunctioning lazarus injector")
+			user.log_message("has revived hostile mob [key_name(target)] with a malfunctioning lazarus injector.", LOG_GAME)
 		else
 			target_hostile.attack_same = FALSE
 	loaded = FALSE

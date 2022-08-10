@@ -24,7 +24,7 @@
 
 /datum/brain_trauma/hypnosis/on_gain()
 	message_admins("[ADMIN_LOOKUPFLW(owner)] was hypnotized with the phrase '[hypnotic_phrase]'.")
-	log_game("[key_name(owner)] was hypnotized with the phrase '[hypnotic_phrase]'.")
+	owner.log_message("was hypnotized with the phrase '[hypnotic_phrase]'.", LOG_GAME)
 	to_chat(owner, "<span class='reallybig hypnophrase'>[hypnotic_phrase]</span>")
 	to_chat(owner, "<span class='notice'>[pick("You feel your thoughts focusing on this phrase... you can't seem to get it out of your head.",\
 												"Your head hurts, but this is all you can think of. It must be vitally important.",\
@@ -49,8 +49,7 @@
 
 /datum/brain_trauma/hypnosis/on_lose()
 	message_admins("[ADMIN_LOOKUPFLW(owner)] is no longer hypnotized with the phrase '[hypnotic_phrase]'.")
-	owner.log_message("is no longer hypnotized with the phrase '[hypnotic_phrase]'.", LOG_ATTACK)
-	log_game("[key_name(owner)] is no longer hypnotized with the phrase '[hypnotic_phrase]'.")
+	owner.log_message("is no longer hypnotized with the phrase '[hypnotic_phrase]'.", LOG_GAME)
 	to_chat(owner, span_userdanger("You suddenly snap out of your hypnosis. The phrase '[hypnotic_phrase]' no longer feels important to you."))
 	owner.clear_alert(ALERT_HYPNOSIS)
 	..()

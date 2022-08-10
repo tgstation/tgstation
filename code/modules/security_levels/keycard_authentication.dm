@@ -121,7 +121,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 	update_appearance()
 
 /obj/machinery/keycard_auth/proc/trigger_event(confirmer)
-	log_game("[key_name(triggerer)] triggered and [key_name(confirmer)] confirmed event [event]")
+	triggerer.log_message("triggered and [key_name(confirmer)] confirmed event [event].", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(triggerer)] triggered and [ADMIN_LOOKUPFLW(confirmer)] confirmed event [event]")
 
 	var/area/A1 = get_area(triggerer)

@@ -5,6 +5,8 @@
 	weight = 20
 	max_occurrences = 4
 	earliest_start = 10 MINUTES
+	category = EVENT_CATEGORY_BUREAUCRATIC
+	description = "A pod containing a random supply crate lands on the station."
 
 ///Spawns a cargo pod containing a random cargo supply pack on a random area of the station
 /datum/round_event/stray_cargo
@@ -89,6 +91,7 @@
 	weight = 6
 	max_occurrences = 1
 	earliest_start = 30 MINUTES
+	description = "A pod containing syndicate gear lands on the station."
 
 /datum/round_event/stray_cargo/syndicate
 	possible_pack_types = list(/datum/supply_pack/misc/syndicate)

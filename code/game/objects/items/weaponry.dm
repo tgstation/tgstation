@@ -705,10 +705,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		name = "cricket bat"
 		icon_state = "baseball_bat_brit"
 		inhand_icon_state = "baseball_bat_brit"
-		if(prob(50))
-			desc = "You've got red on you."
-		else
-			desc = "You gotta know what a crumpet is to understand cricket."
+		desc = pick("You've got red on you.", "You gotta know what a crumpet is to understand cricket.")
 
 	AddElement(/datum/element/kneecapping)
 
@@ -805,6 +802,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/melee/baseball_bat/homerun
 	name = "home run bat"
 	desc = "This thing looks dangerous... Dangerously good at baseball, that is."
+	icon_state = "baseball_bat_home"
+	inhand_icon_state = "baseball_bat_home"
 	homerun_able = TRUE
 	mob_thrower = TRUE
 

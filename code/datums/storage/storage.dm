@@ -398,6 +398,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	to_insert.forceMove(resolve_location)
 	item_insertion_feedback(user, to_insert, override)
 
+	if(isobj(resolve_location))
+		resolve_location.update_appearance()
+
 	return TRUE
 
 /**

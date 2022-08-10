@@ -1,5 +1,5 @@
 /// How many tiles around the target the shooter can roam without losing their shot
-#define GUNPOINT_SHOOTER_STRAY_RANGE 3
+#define GUNPOINT_SHOOTER_STRAY_RANGE 2
 /// How long it takes from the gunpoint is initiated to reach stage 2
 #define GUNPOINT_DELAY_STAGE_2 2.5 SECONDS
 /// How long it takes from stage 2 starting to move up to stage 3
@@ -66,11 +66,13 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/check_deescalate)
 	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, .proc/flinch)
 	RegisterSignal(parent, COMSIG_MOB_ATTACK_HAND, .proc/check_shove)
+	RegisterSignal(parent, COMSIG_MOB_UPDATE_SIGHT, .proc/check_deescalate)
 	RegisterSignal(parent, list(COMSIG_LIVING_START_PULL, COMSIG_MOVABLE_BUMP), .proc/check_bump)
 
 /datum/component/gunpoint/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE)
+	UnregisterSignal(parent, COMSIG_MOB_UPDATE_SIGHT)
 	UnregisterSignal(parent, COMSIG_MOB_ATTACK_HAND)
 	UnregisterSignal(parent, list(COMSIG_LIVING_START_PULL, COMSIG_MOVABLE_BUMP))
 
@@ -99,6 +101,8 @@
 
 ///Update the damage multiplier for whatever stage we're entering into
 /datum/component/gunpoint/proc/update_stage(new_stage)
+	if(check_deescalate())
+		return
 	stage = new_stage
 	if(stage == 2)
 		to_chat(parent, span_danger("You steady [weapon] on [target]."))
@@ -114,8 +118,9 @@
 /datum/component/gunpoint/proc/check_deescalate()
 	SIGNAL_HANDLER
 
-	if(!can_see(parent, target, GUNPOINT_SHOOTER_STRAY_RANGE - 1))
+	if(!can_see(parent, target, GUNPOINT_SHOOTER_STRAY_RANGE))
 		cancel()
+		return TRUE
 
 ///Bang bang, we're firing a charged shot off
 /datum/component/gunpoint/proc/trigger_reaction()
@@ -189,7 +194,6 @@
 			span_danger("You flinch!"))
 		INVOKE_ASYNC(src, .proc/trigger_reaction)
 
-#undef GUNPOINT_SHOOTER_STRAY_RANGE
 #undef GUNPOINT_DELAY_STAGE_2
 #undef GUNPOINT_DELAY_STAGE_3
 #undef GUNPOINT_BASE_WOUND_BONUS

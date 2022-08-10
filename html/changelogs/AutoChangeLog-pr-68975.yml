@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - admin: "The word filter should no longer runtime on initialize. For real this time."

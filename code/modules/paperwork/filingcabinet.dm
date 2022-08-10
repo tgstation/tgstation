@@ -129,18 +129,7 @@
 			var/datum/data/record/S = find_record("name", G.fields["name"], GLOB.data_core.security)
 			if(!S)
 				continue
-			var/obj/item/paper/sec_record_paper = new /obj/item/paper(src)
-			var/sec_record_text = "<CENTER><B>Security Record</B></CENTER><BR>"
-			sec_record_text += "Name: [G.fields["name"]] ID: [G.fields["id"]]<BR>\nGender: [G.fields["gender"]]<BR>\nAge: [G.fields["age"]]<BR>\nFingerprint: [G.fields["fingerprint"]]<BR>\nPhysical Status: [G.fields["p_stat"]]<BR>\nMental Status: [G.fields["m_stat"]]<BR>"
-			sec_record_text += "<BR>\n<CENTER><B>Security Data</B></CENTER><BR>\nCriminal Status: [S.fields["criminal"]]<BR>\n<BR>\nCrimes: [S.fields["crim"]]<BR>\nDetails: [S.fields["crim_d"]]<BR>\n<BR>\nImportant Notes:<BR>\n\t[S.fields["notes"]]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
-			var/counter = 1
-			while(S.fields["com_[counter]"])
-				sec_record_text += "[S.fields["com_[counter]"]]<BR>"
-				counter++
-			sec_record_text += "</TT>"
-			sec_record_paper.name = "paper - '[G.fields["name"]]'"
-			sec_record_paper.add_raw_text(sec_record_text)
-			sec_record_paper.update_appearance()
+			print_security_record(G, S, src)
 			virgin = FALSE //tabbing here is correct- it's possible for people to try and use it
 						//before the records have been generated, so we do this inside the loop.
 

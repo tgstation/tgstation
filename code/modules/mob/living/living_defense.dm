@@ -288,7 +288,7 @@
 		return martial_result
 
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		if (user != src)
+		if (user != src && iscarbon(src))
 			user.disarm(src)
 			return TRUE
 	if (!user.combat_mode)

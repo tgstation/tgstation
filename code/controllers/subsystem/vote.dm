@@ -274,7 +274,7 @@ SUBSYSTEM_DEF(vote)
 			if(!voter.client?.holder)
 				return
 
-			voter.log_message("[key_name_admin(voter)] cancelled a vote.", LOG_ADMIN)
+			voter.log_message("cancelled a vote.", LOG_ADMIN)
 			message_admins("[key_name_admin(voter)] has cancelled the current vote.")
 			reset()
 			return TRUE

@@ -117,19 +117,17 @@
 	if (possible_volunteers.len <= 0) // This shouldn't happen, as ready() should return FALSE if there is not a single valid candidate
 		message_admins("Possible volunteers was 0. This shouldn't appear, because of ready(), unless you forced it!")
 		return
-	message_admins("Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
-	log_dynamic("Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 
+	mode.log_dynamic_and_announce("Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 	candidates = poll_ghost_candidates("The mode is looking for volunteers to become [antag_flag] for [name]", antag_flag_override, antag_flag || antag_flag_override, poll_time = 300)
 
 	if(!candidates || candidates.len <= 0)
-		mode.dynamic_log("The ruleset [name] received no applications.")
+		mode.log_dynamic_and_announce("The ruleset [name] received no applications.")
 		mode.executed_rules -= src
 		attempt_replacement()
 		return
 
-	message_admins("[candidates.len] players volunteered for the ruleset [name].")
-	log_dynamic("[candidates.len] players volunteered for [name].")
+	mode.log_dynamic_and_announce("[candidates.len] players volunteered for [name].")
 	review_applications()
 
 /// Here is where you can check if your ghost applicants are valid for the ruleset.
