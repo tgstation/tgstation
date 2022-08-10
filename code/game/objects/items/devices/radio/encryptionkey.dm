@@ -184,10 +184,10 @@
 
 /obj/item/encryptionkey/headset_cent
 	name = "\improper CentCom radio encryption key"
-	icon_state = "cypherkey_centcomm"
+	icon_state = "cypherkey_centcom"
 	independent = TRUE
 	channels = list(RADIO_CHANNEL_CENTCOM = 1)
-	greyscale_config = /datum/greyscale_config/encryptionkey_centcomm
+	greyscale_config = /datum/greyscale_config/encryptionkey_centcom
 	greyscale_colors = "#24a157#dca01b"
 
 /obj/item/encryptionkey/ai //ported from NT, this goes 'inside' the AI.
