@@ -31,6 +31,7 @@
 	for(var/spell_type in subtypesof(/datum/action/cooldown/spell/shapeshift))
 		// Test all shapeshifts as if they were on the mob's body
 		var/datum/action/cooldown/spell/shapeshift/bodybound_shift = new spell_type(dummy)
+		bodybound_shift.Grant(dummy)
 		if(LAZYLEN(bodybound_shift.possible_shapes) > 1)
 			for(var/forced_shape in bodybound_shift.possible_shapes)
 				test_spell(dummy, bodybound_shift, forced_shape)
@@ -42,6 +43,7 @@
 
 		// And test all shapeshifts as if they were on the mob's mind
 		var/datum/action/cooldown/spell/shapeshift/mindbound_shift = new spell_type(dummy.mind)
+		mindbound_shift.Grant(dummy)
 		if(LAZYLEN(mindbound_shift.possible_shapes) > 1)
 			for(var/forced_shape in mindbound_shift.possible_shapes)
 				test_spell(dummy, mindbound_shift, forced_shape)
@@ -80,6 +82,7 @@
 
 	var/datum/action/cooldown/spell/shapeshift/wizard/shift = new(dummy)
 	shift.shapeshift_type = shift.possible_shapes[1]
+	shift.Grant(dummy)
 
 	var/mob/living/simple_animal/hostile/guardian/test_stand = allocate(/mob/living/simple_animal/hostile/guardian)
 	test_stand.set_summoner(dummy)
