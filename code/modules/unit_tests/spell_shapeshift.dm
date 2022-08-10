@@ -57,6 +57,7 @@
 	if(forced_shape)
 		shift.shapeshift_type = forced_shape
 
+	shift.next_use_time = 0
 	shift.Trigger()
 	if(!istype(dummy.loc, shift.shapeshift_type))
 		return TEST_FAIL("Shapeshift spell: [shift.name] failed to transform the dummy into the shape [initial(shift.shapeshift_type.name)].")
