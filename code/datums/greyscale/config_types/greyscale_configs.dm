@@ -819,3 +819,55 @@
 	name = "Worn Fancy Coat"
 	icon_file = 'icons/mob/clothing/suits/jacket.dmi'
 	json_config = 'code/datums/greyscale/json_configs/fancy_coat_worn.json'
+
+/datum/greyscale_config/encryptionkey_basic
+	name = "Basic Encryptionkey"
+	icon_file = 'icons/obj/radio.dmi'
+	json_config = 'code/datums/greyscale/json_configs/encryptionkey_basic.json'
+
+/datum/greyscale_config/encryptionkey_cube
+	name = "Block Encryptionkey"
+	icon_file = 'icons/obj/radio.dmi'
+	json_config = 'code/datums/greyscale/json_configs/encryptionkey_cube.json'
+
+
+/datum/greyscale_config/encryptionkey_research
+	name = "Research Encryptionkey"
+	icon_file = 'icons/obj/radio.dmi'
+	json_config = 'code/datums/greyscale/json_configs/encryptionkey_research.json'
+
+/datum/greyscale_config/encryptionkey_syndicate
+	name = "Syndicate Encryptionkey"
+	icon_file = 'icons/obj/radio.dmi'
+	json_config = 'code/datums/greyscale/json_configs/encryptionkey_syndicate.json'
+
+/datum/greyscale_config/encryptionkey_medical
+	name = "Medical Encryptionkey"
+	icon_file = 'icons/obj/radio.dmi'
+	json_config = 'code/datums/greyscale/json_configs/encryptionkey_medical.json'
+
+/datum/greyscale_config/encryptionkey_service
+	name = "Service Encryptionkey"
+	icon_file = 'icons/obj/radio.dmi'
+	json_config = 'code/datums/greyscale/json_configs/encryptionkey_service.json'
+
+/datum/greyscale_config/encryptionkey_engineering
+	name = "Engineering Encryptionkey"
+	icon_file = 'icons/obj/radio.dmi'
+	json_config = 'code/datums/greyscale/json_configs/encryptionkey_engineering.json'
+
+/datum/greyscale_config/encryptionkey_centcomm
+	name = "Centcomm Encryptionkey"
+	icon_file = 'icons/obj/radio.dmi'
+	json_config = 'code/datums/greyscale/json_configs/encryptionkey_centcomm.json'
+
+/datum/greyscale_config/encryptionkey_cargo
+	name = "Cargo Encryptionkey"
+	icon_file = 'icons/obj/radio.dmi'
+	json_config = 'code/datums/greyscale/json_configs/encryptionkey_cargo.json'
+
+/datum/greyscale_config/encryptionkey_security
+	name = "Security Encryptionkey"
+	icon_file = 'icons/obj/radio.dmi'
+	json_config = 'code/datums/greyscale/json_configs/encryptionkey_security.json'
+
