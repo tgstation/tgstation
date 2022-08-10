@@ -329,7 +329,7 @@
 
 			var/destination = params["destination"]
 
-			usr.log_message("is about to send the following message to [destination]: [message]")
+			usr.log_message("is about to send the following message to [destination]: [message]", LOG_GAME)
 			to_chat(
 				GLOB.admins,
 				span_adminnotice( \
@@ -520,7 +520,7 @@
 				data["alertLevel"] = SSsecurity_level.get_current_level_as_text()
 				data["authorizeName"] = authorize_name
 				data["canLogOut"] = !issilicon(user)
-				data["shuttleCanEvacOrFailReason"] = SSshuttle.canEvac(user)
+				data["shuttleCanEvacOrFailReason"] = SSshuttle.canEvac()
 				if(syndicate)
 					data["shuttleCanEvacOrFailReason"] = "You cannot summon the shuttle from this console!"
 

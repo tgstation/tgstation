@@ -37,8 +37,8 @@
 	speed = 1
 	move_to_delay = 3
 	mouse_opacity = MOUSE_OPACITY_ICON
-	deathsound = 'sound/magic/curse.ogg'
-	deathmessage = "'s arms reach out before it falls apart onto the floor, lifeless."
+	death_sound = 'sound/magic/curse.ogg'
+	death_message = "'s arms reach out before it falls apart onto the floor, lifeless."
 	loot_drop = /obj/item/crusher_trophy/legionnaire_spine
 
 	attack_action_types = list(/datum/action/innate/elite_attack/legionnaire_charge,
@@ -255,7 +255,7 @@
 	speed = 0
 	move_to_delay = 2
 	del_on_death = 1
-	deathmessage = "crumbles away!"
+	death_message = "crumbles away!"
 	faction = list()
 	ranged = FALSE
 	var/mob/living/simple_animal/hostile/asteroid/elite/legionnaire/body = null

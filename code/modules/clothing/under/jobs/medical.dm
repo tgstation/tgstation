@@ -35,6 +35,12 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
+/obj/item/clothing/under/rank/medical/chief_medical_officer/scrubs
+	name = "chief medical officer's scrubs"
+	desc = "A distinctive set of white and turquoise scrubs given to chief medical officers who desire a clinical look."
+	icon_state = "scrubscmo"
+	inhand_icon_state = "w_suit"
+
 /obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck
 	name = "chief medical officer's turtleneck"
 	desc = "A light blue turtleneck and tan khakis, for a chief medical officer with a superior sense of style."
@@ -84,7 +90,7 @@
 
 /obj/item/clothing/under/rank/medical/scrubs/purple
 	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in deep purple."
-	icon_state = "scrubspurple"
+	icon_state = "scrubswine"
 
 /obj/item/clothing/under/rank/medical/chemist
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a chemist rank stripe on it."

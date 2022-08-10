@@ -199,7 +199,7 @@
 		GLOB.bombers += admin_bomb_message
 		message_admins(admin_bomb_message)
 		log_game("Bomb valve opened in [AREACOORD(bombturf)][attachment_message][bomber_message]")
-		bomber.log_message("opened bomb valve at [AREACOORD(bombturf)].", LOG_GAME, log_globally = FALSE)
+		bomber.log_message("opened bomb valve", LOG_GAME, log_globally = FALSE)
 
 		valve_open = merge_gases(target, change_volume)
 

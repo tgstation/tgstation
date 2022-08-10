@@ -178,3 +178,145 @@
   vincentiusvin:
   - bugfix: deleted unconnected lavabase pump
   - bugfix: removed unecessary bridge pipes from kilomos
+2022-08-06:
+  Jackraxxus:
+  - bugfix: Admin AI interact can once again print items from departmental protolathes.
+  JohnFulpWillard:
+  - rscadd: Pun Pun now gives stuff in their hand frequently and rings desk bells.
+  - rscadd: Pun Pun now has gentleman-like emotes, rather than screeching and roaring.
+  - balance: Pun Pun no longer looks for weapons in their off time.
+  - balance: Pun Pun is no longer vulnerable to stuns by being walked into.
+  - qol: Monkeys can now use desk bells.
+  Mooshimi:
+  - bugfix: Things that are ventcrawling can no longer alt click tiles to see what
+      is outside the pipes.
+  Mqiib, ToasterBiome:
+  - balance: Explosion epicenters no longer explode mobs twice; Fireballs and other
+      explosive projectiles are significantly less-damaging
+  Profakos:
+  - bugfix: Mining flora can be harvested again
+  RigglePrime:
+  - bugfix: Purrbation now properly adds and removes tails
+  ShizCalev:
+  - bugfix: Purchasing the Stationwide Blackout traitor event repeatedly will now
+      only announce there is a power outage if the previous power outage has finished.
+  - balance: Vehicles & Mecha now take 2.5 second to repair with a welder.
+  - qol: Vehicles & mecha will automatically repair over time once clicked.
+  - qol: Vehicles & Mecha now give balloon alerts when repairing.
+  X13-423:
+  - imageadd: Improved Unholy Pitchfork back and inhand sprites
+  XyzzyThePretender:
+  - bugfix: Silicons can now interact with floodlights.
+  tralezab:
+  - rscadd: Bileworms have appeared on lavaland!
+2022-08-07:
+  Capybara Holly:
+  - bugfix: Trying to remove rust from walls with a welding tool will now blind you
+      like it should
+  CursedBirb:
+  - bugfix: Banana now have correct right hand sprite
+  Holoo-1:
+  - bugfix: fixed hplc not displaying purity. Also fixed incorrect display of volume
+      if beaker is inserted in output slot
+  JohnFulpWillard:
+  - bugfix: The air scrubber in atmos near the northern maintenance airlock is now
+      connected to waste.
+  Kylerace:
+  - bugfix: makes verb queuing work again
+  Mooshimi:
+  - bugfix: Blind support added to some actions like stripping, being hit, and force-feeding.
+  - bugfix: Blind people will now only be able to 'hear' audible emotes.
+  - bugfix: Blind and deaf people will see and hear no emotes, for obvious reasons.
+  Mothblocks:
+  - rscadd: Revolution victories now call the shuttle when enough of the station is
+      revolutionaries.
+  ShizCalev:
+  - bugfix: Grilles are now anchorable with screwdrivers again.
+2022-08-08:
+  Addust:
+  - rscadd: Kilo whiteship now has shit so that it can actually maintain power now
+  - rscadd: Kilo whiteship now has both the bar and crew quarters area to increase
+      information hell
+  Fikou:
+  - balance: the mining modsuit now costs 3000 from 2500
+  - balance: the mining modsuit now still slows you down over lava, though you still
+      resist it
+  - qol: the plasma core now accepts plasma both in sheet form and ore form
+  - bugfix: the plasma core should no longer buggily not refill you
+  - bugfix: the mining modsuit bombs should now have enemies target you
+  GoldenAlpharex:
+  - bugfix: Belts will now change appearance when items are inserted into them as
+      well, instead of only doing so when an item was removed from them.
+  LemonInTheDark:
+  - bugfix: Attempting to send back a reply to an ahelp after it is closed now sends
+      the reply to a new ticket, rather then just dropping it and leaving you for
+      dead with a runtime
+  - admin: see above
+  Melbert:
+  - rscadd: Paramedic PDAs now start with the Lifeline pinpointer app
+  - rscadd: Replaced the "proximity crew pinpointer" in the paramedic's belt with
+      a bottle of Calomel
+  - rscdel: Removed the "proximity crew pinpointer"
+  Pickle-Coding:
+  - code_imp: Radiation pulses will ask MC if they should continue processing for
+      every turf they iterate through, rather than just every pulse.
+  SpaceSmithers:
+  - bugfix: A locker in Icebox Maintenance will no longer disappear immediately upon
+      roundstart.
+  san7890:
+  - balance: The odds of gulagged prisoners on IceBoxStation getting mauled by a wolf
+      should go down dramatically.
+  timothymtorres:
+  - bugfix: Fix audible emotes playing sounds while mob is gagged, mute, tongueless,
+      or under a vow of silence.
+2022-08-09:
+  Melbert:
+  - bugfix: Heretic stalkers are able again to return back to their normal form after
+      casting shapeshift.
+  PositiveEntropy, AxieTheAxolotl:
+  - rscadd: Adds the Chief Medical Officer's Scrubs, making it the default clothing
+      option when they spawn!
+  - rscadd: Adds Surgery Caps! Doctors now spawn with them, and can buy some from
+      the MediDrobe! The CMO gets a special fancy one!
+  - qol: All scrubs are now adjustable, making surgery less of a pain!
+  - imageadd: Resprites the biosuits, making you look less bloated.
+  - imageadd: Resprites every labcoat in the game, including the paramedic's.
+  - imageadd: Resprites the entire medical department (again)!
+  ShizCalev:
+  - bugfix: Security records in filing cabinets will now actually contain crimes!
+  - bugfix: The eye of god will now send a provide a message when its scan is recharged.
+  SuperNovaa41:
+  - bugfix: Fixes ash walker tendrils dropping typeless anomaly cores.
+  dragomagol:
+  - admin: Moved the rest of the dynamic logs to dynamic.log
+  tralezab:
+  - qol: Bileworms possessed by players can now see in the dark!
+  - qol: Bileworms now have a death message!
+  - balance: Bileworms will now give up their targeting if they fail to burrow to
+      you. If they can still see you, they might regain aggro, but now moving say,
+      to the mining station/big lava lake/hirophant is a good way to de-aggro them.
+  twilightwanderer:
+  - rscadd: Added new VOID stamp
+  - bugfix: Photocopier paperforms
+2022-08-10:
+  GoldenAlpharex:
+  - bugfix: Fixed the game re-initializing your verbs for no reason when you deadmin,
+      which was the cause of the "Your previous action was ignored because you've
+      done too many in a second" spam when pressing the Deadmin button.
+  - bugfix: The MC tab no longer appears in a "ghost" state in your status tabs after
+      you deadmin. Now it's just gone, at long last!
+  - code_imp: Prettier should no longer be ran on files outside of the "tgui" folder.
+  ShizCalev:
+  - bugfix: Player controlled cleanbots can now actually kill cockroaches and mice!
+  - bugfix: Right-clicking a non-carbon based mob (humans, xeno, ect) will now bite
+      them instead of doing nothing.
+  - server: Added a configurable probability for nonhuman species to spawn in the
+      morgue at round start!
+  - qol: Cadavers in the morgue at round start will now spawn in bodybags.
+  - bugfix: Adminspawned morgue cadavers will now only spawn inside closed morguetrays
+      (the bodies could get stuck inside them!)
+  - bugfix: Morguetrays are now less likely to end up having multiple cadavers in
+      them.
+  TheBoondock:
+  - code_imp: add proc create_atmos_zone which detect an isolated atmos zone while
+      ignoring walls and non atmos_can_pass tiles (zas zone)

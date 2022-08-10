@@ -422,7 +422,7 @@
 
 /datum/reagent/medicine/calomel
 	name = "Calomel"
-	description = "Quickly purges the body of all chemicals. Toxin damage is dealt if the patient is in good condition."
+	description = "Quickly purges the body of toxic chemicals. Toxin damage is dealt if the patient is in good condition."
 	reagent_state = LIQUID
 	color = "#19C832"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
