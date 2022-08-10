@@ -89,6 +89,8 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "craft"
 	screen_loc = ui_crafting
+	var/image/can_craft_overlay
+	var/has_craft_items = FALSE
 
 /atom/movable/screen/craft/Initialize(mapload)
 	. = ..()
@@ -145,9 +147,16 @@
 
 	to_chat(hud.mymob, examine_block("[span_ooc("Recipes for [item.name] [icon2html(item, hud.mymob)]")]\n[all_recipes]"))
 
+/atom/movable/screen/craft/update_overlays()
+	. = ..()
+	cut_overlay(can_craft_overlay)
+	if(has_craft_items)
+		can_craft_overlay = image('icons/hud/screen_gen.dmi', icon_state = "can_craft")
+		add_overlay(can_craft_overlay)
+
 /atom/movable/screen/craft/proc/reset_icon()
-	icon = initial(icon)
-	icon_state = initial(icon_state)
+	has_craft_items = FALSE
+	update_overlays()
 
 /atom/movable/screen/area_creator
 	name = "create new area"

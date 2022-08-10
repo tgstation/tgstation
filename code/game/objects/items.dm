@@ -545,9 +545,9 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 	if(isturf(loc))
 		if(is_type_in_typecache(src, GLOB.crafting_recipe_items) || (is_type_in_typecache(parent_type, GLOB.crafting_recipe_items) && !is_type_in_typecache(type, GLOB.crafting_recipe_items_blacklist)) || is_type_in_typecache(src, GLOB.crafting_recipe_items_results))
 			for(var/atom/movable/screen/craft/crafting_button in user.hud_used?.static_inventory)
-				crafting_button.icon = 'icons/hud/screen_gen.dmi'
-				crafting_button.icon_state = "can_craft"
-				addtimer(CALLBACK(crafting_button, /atom/movable/screen/craft/.proc/reset_icon), 3 SECONDS)
+				crafting_button.has_craft_items = TRUE
+				crafting_button.update_overlays()
+				addtimer(CALLBACK(crafting_button, /atom/movable/screen/craft/.proc/reset_icon), 2 SECONDS)
 
 	//If the item is in a storage item, take it out
 	loc.atom_storage?.attempt_remove(src, user.loc, silent = TRUE)
