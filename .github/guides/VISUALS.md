@@ -41,6 +41,7 @@ You'll find links to the relevant reference entries at the heading of each entry
 - [Multiz](#multiz)
 - [Mouse opacity](#mouse-opacity)
 - [Filters](#filters)
+- [Particles](#particles)
 - [Pixel offsets](#pixel-offsets)
 - [Color](#color)
 - [Transform](#transform)
@@ -537,6 +538,17 @@ This system has the potential to break animations and other such things. Take ca
 
 > We have a debug tool for filters, called filterrific. You can access it in-game by vving an atom, going to the dropdown, and hitting `Edit Filters`
 It'll let you add and tweak *most* of the filters in BYOND.
+
+## Particles
+- [Table of Contents](#table-of-contents)
+- [Reference Entry](https://www.byond.com/docs/ref/#/{notes}/particles) 
+
+Particles are a system that allows you to attach "generators" to atoms on the world, and have them spit out little visual effects.
+This is done by creating a subtype of the `/particles` type, and giving it the values you want.
+
+At base BYOND only allows you to attach one particle emitter to any one `/atom`. We get around this using an atom inserted into the loc of some parent atom to follow.
+The type is `/obj/effect/abstract/particle_holder`. Interacting with it's real simple, you just pass in the location to mirror, and the type to use.
+It'll do the rest.
 
 ## Pixel Offsets
 - [Table of Contents](#table-of-contents)
