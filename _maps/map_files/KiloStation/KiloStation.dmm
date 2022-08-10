@@ -22727,17 +22727,17 @@
 	pixel_y = -4;
 	pixel_x = 10
 	},
-/obj/item/computer_hardware/hard_drive/portable/atmos{
-	pixel_y = -4;
-	pixel_x = 10
-	},
-/obj/item/computer_hardware/hard_drive/portable/atmos{
-	pixel_y = -4;
-	pixel_x = 10
-	},
 /obj/item/toy/figure/ce{
 	pixel_x = 8;
 	pixel_y = 6
+	},
+/obj/item/computer_hardware/hard_drive/portable/engineering{
+	pixel_y = -8;
+	pixel_x = 10
+	},
+/obj/item/computer_hardware/hard_drive/portable/engineering{
+	pixel_y = -8;
+	pixel_x = 10
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
@@ -47972,6 +47972,19 @@
 /obj/item/food/grown/poppy,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
+"nGF" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/table/wood,
+/obj/machinery/fax{
+	name = "Head of Security's Fax Machine";
+	fax_name = "Head of Security's Office"
+	},
+/turf/open/floor/iron/dark,
+/area/station/command/heads_quarters/hos)
 "nGH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -75056,19 +75069,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
-"vsr" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/table/wood,
-/obj/machinery/fax{
-	name = "Head of Security's Fax Machine";
-	fax_name = "Head of Security's Office"
-	},
-/turf/open/floor/iron/dark,
-/area/station/command/heads_quarters/hos)
 "vss" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -105432,7 +105432,7 @@ mVf
 pSG
 gpM
 cFO
-vsr
+nGF
 pUH
 wYW
 tZf
