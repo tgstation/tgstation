@@ -99,6 +99,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/proc/on_owner_unshapeshifted(mob/living/source)
 	SIGNAL_HANDLER
 
+	UnregisterSignal(source, COMSIG_LIVING_UNSHAPESHIFTED)
 	set_summoner(source)
 	to_chat(src, span_holoparasite("Your summoner has shapeshifted back into their normal form!"))
 
