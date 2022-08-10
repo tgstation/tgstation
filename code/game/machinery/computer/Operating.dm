@@ -94,7 +94,7 @@
 	data["patient"] = list()
 	if(!table.patient)
 		return data
-	var/mob/living/carbon/human/patient = table.patient
+	var/mob/living/carbon/patient = table.patient
 
 	switch(patient.stat)
 		if(CONSCIOUS)

@@ -681,7 +681,7 @@
 	buckle_lying = NO_BUCKLE_LYING
 	buckle_requires_restraints = TRUE
 	custom_materials = list(/datum/material/silver = 2000)
-	var/mob/living/carbon/human/patient = null
+	var/mob/living/carbon/patient = null
 	var/obj/machinery/computer/operating/computer = null
 
 /obj/structure/table/optable/Initialize(mapload)
@@ -708,7 +708,7 @@
 	visible_message(span_notice("[user] lays [pushed_mob] on [src]."))
 
 /// Any mob that enters our tile will be marked as a potential patient. They will be turned into a patient if they lie down.
-/obj/structure/table/optable/proc/mark_patient(datum/source, mob/living/carbon/human/potential_patient)
+/obj/structure/table/optable/proc/mark_patient(datum/source, mob/living/carbon/potential_patient)
 	SIGNAL_HANDLER
 	if(!istype(potential_patient))
 		return
@@ -716,7 +716,7 @@
 	recheck_patient(potential_patient) // In case the mob is already lying down before they entered.
 
 /// Unmark the potential patient.
-/obj/structure/table/optable/proc/unmark_patient(datum/source, mob/living/carbon/human/potential_patient)
+/obj/structure/table/optable/proc/unmark_patient(datum/source, mob/living/carbon/potential_patient)
 	SIGNAL_HANDLER
 	if(!istype(potential_patient))
 		return
@@ -727,7 +727,7 @@
 /// Someone on our tile just lied down, got up, moved in, or moved out.
 /// potential_patient is the mob that had one of those four things change.
 /// The check is a bit broad so we can find a replacement patient.
-/obj/structure/table/optable/proc/recheck_patient(mob/living/carbon/human/potential_patient)
+/obj/structure/table/optable/proc/recheck_patient(mob/living/carbon/potential_patient)
 	SIGNAL_HANDLER
 	if(patient && patient != potential_patient)
 		return
@@ -739,7 +739,7 @@
 	// Find another lying mob as a replacement.
 	// Can only happen if there are two or more mobs lying in the same location, so if we dont have an old patient just scram.
 	if(patient)
-		for (var/mob/living/carbon/human/replacement_patient in loc.contents)
+		for (var/mob/living/carbon/replacement_patient in loc.contents)
 			if(replacement_patient.body_position == LYING_DOWN)
 				patient = replacement_patient
 				return
