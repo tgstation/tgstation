@@ -301,8 +301,8 @@
 			return
 		set_anchored(!anchored)
 		user.visible_message(
-		span_notice("[user] [anchored ? null : "un"]wrenches the solar assembly [anchored ? "into place" : null]."), 
-		span_notice("You [anchored ? null : "un"]wrench the solar assembly [anchored ? "into place" : null]."),
+			span_notice("[user] [anchored ? null : "un"]wrenches the solar assembly [anchored ? "into place" : null]."), 
+			span_notice("You [anchored ? null : "un"]wrench the solar assembly [anchored ? "into place" : null]."),
 		)
 		W.play_tool_sound(src, 75)
 		return TRUE
