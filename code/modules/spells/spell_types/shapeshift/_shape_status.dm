@@ -4,6 +4,7 @@
 /datum/status_effect/shapechange_mob
 	id = "shapechange_mob"
 	alert_type = /atom/movable/screen/alert/status_effect/shapeshifted
+	// When the mob's deleted on_remove() will handle our references
 	on_remove_on_mob_delete = TRUE
 
 	/// The caster's mob. Who has transformed into us
@@ -13,12 +14,13 @@
 	var/already_restored = FALSE
 
 /datum/status_effect/shapechange_mob/on_creation(mob/living/new_owner, mob/living/caster)
-
-	if(new_owner.has_status_effect(type))
-		stack_trace("Mob shapechange status effect applied to a mob which already was shapechanged, which will definitely act poorly.")
+	// If any type or subtype of shapeshift mob is on the new_owner already throw an error and self-delete
+	if(locate(type) in new_owner.status_effects)
+		stack_trace("Mob shapechange status effect applied to a mob which already was shapechanged, which will definitely cause issues.")
 		qdel(src)
 		return
 
+	// No caster mob, no one to put in the mob. Self-delete
 	if(!istype(caster))
 		stack_trace("Mob shapechange status effect applied without a proper caster.")
 		qdel(src)
@@ -41,10 +43,12 @@
 
 /datum/status_effect/shapechange_mob/on_remove()
 	// If the owner was straight up deleted we shouldn't restore anyone
+	// (the caster's stored in the owner's contents so if it's qdel'd so is the caster)
 	if(!QDELETED(owner))
 		restore_caster()
 
-	// Juuust in case make sure no reference sticks around
+	// Either restore_caster() or other signals should have handled this reference by now,
+	// but juuust in case make sure nothing sticks around.
 	caster_mob = null
 
 /// Signal proc for [COMSIG_LIVING_PRE_WABBAJACKED] to prevent us from being Wabbajacked and messed up.
@@ -63,6 +67,9 @@
 	if(already_restored || !caster_mob)
 		return
 
+	if(QDELETED(owner))
+		CRASH("Mob shapechange effect called restore_caster while the owner was qdeleted, this shouldn't happen.")
+
 	already_restored = TRUE
 	UnregisterSignal(owner, list(COMSIG_LIVING_PRE_WABBAJACKED, COMSIG_LIVING_DEATH))
 	UnregisterSignal(caster_mob, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
@@ -76,17 +83,11 @@
 		caster_mob.death()
 
 	after_unchange()
-
 	caster_mob = null
 
-	// This guard is important because restore_caster() can also be called on COMSIG_PARENT_QDELETING for shape, as well as on death.
-	// This can happen in, for example, [/proc/wabbajack] where the mob hit is qdel'd.
-	if(!QDELETED(owner))
-		QDEL_NULL(owner)
-
-	// And this guard is important because restore_caster() can be called from on_remove() which is subsequenctly called from Destroy().
-	if(!QDELETED(src))
-		qdel(src)
+	// Destroy the owner after all's said and done, this will also destroy our status effect (src)
+	// retore_caster() should never reach this point while either the owner or the effect is being qdeleted
+	qdel(owner)
 
 /// Effects done after the casting mob has reverted to their human form. Nothing, by default.
 /datum/status_effect/shapechange_mob/proc/after_unchange()
@@ -97,6 +98,7 @@
 /datum/status_effect/shapechange_mob/proc/on_shape_death(datum/source, gibbed)
 	SIGNAL_HANDLER
 
+	// gibbed = deleted = nothing to restore
 	if(gibbed)
 		return
 
@@ -104,11 +106,15 @@
 
 /// Signal proc for [COMSIG_LIVING_DEATH] from our caster.
 /// If our internal caster is killed, kill our owner, too (which causes the above signal).
+/// This should very rarely end up being called but you never know
 /datum/status_effect/shapechange_mob/proc/on_caster_death(datum/source, gibbed)
 	SIGNAL_HANDLER
 
+	// Our caster inside was gibbed, mirror the gib to our mob
 	if(gibbed)
 		owner.gib()
+
+	// Otherwise our caster died, just make our mob die
 	else
 		owner.death()
 
@@ -117,6 +123,9 @@
 	SIGNAL_HANDLER
 
 	caster_mob = null
+	if(QDELETED(owner))
+		return
+
 	qdel(owner)
 
 // A subtype for a shapechange sourced from a shapeshift spell.
@@ -135,8 +144,8 @@
 	return ..()
 
 /datum/status_effect/shapechange_mob/from_spell/on_apply()
-	var/datum/action/cooldown/spell/shapeshift/source_spell = source_weakref?.resolve()
-	if(!QDELETED(source_spell) && source_spell.owner == caster_mob)
+	var/datum/action/cooldown/spell/shapeshift/source_spell = source_weakref.resolve()
+	if(source_spell.owner == caster_mob)
 		// Assuming the spell is owned by the caster, give it over to the shapeshifted mob
 		// so they can actually transform back to their original form
 		source_spell.Grant(owner)
@@ -155,7 +164,7 @@
 	return ..()
 
 /datum/status_effect/shapechange_mob/from_spell/restore_caster(kill_caster_after)
-	var/datum/action/cooldown/spell/shapeshift/source_spell = source_weakref?.resolve()
+	var/datum/action/cooldown/spell/shapeshift/source_spell = source_weakref.resolve()
 	// The owner = owner check here is specifically for edge cases in which the owner of the spell
 	// is no longer in control of the shapeshifted mob, such as mindswapping out of a shapeshift
 	if(!QDELETED(source_spell) && source_spell.owner == owner)
@@ -182,7 +191,7 @@
 	caster_mob.blood_volume = owner.blood_volume
 
 /datum/status_effect/shapechange_mob/from_spell/on_shape_death(datum/source, gibbed)
-	var/datum/action/cooldown/spell/shapeshift/source_spell = source_weakref?.resolve()
+	var/datum/action/cooldown/spell/shapeshift/source_spell = source_weakref.resolve()
 	// If our spell dictates our wizard dies when our shape dies, we won't restore by default
 	if(!QDELETED(source_spell) && source_spell.die_with_shapeshifted_form)
 		// (But if our spell says we should revert on death anyways, we'll also do that)
@@ -194,7 +203,7 @@
 	return ..() // Restore like normal
 
 /datum/status_effect/shapechange_mob/from_spell/on_caster_death(datum/source)
-	var/datum/action/cooldown/spell/shapeshift/source_spell = source_weakref?.resolve()
+	var/datum/action/cooldown/spell/shapeshift/source_spell = source_weakref.resolve()
 	// If our spell does not have revert_on_death, don't do anything when our caster dies
 	if(!QDELETED(source_spell) && !source_spell.revert_on_death)
 		return
@@ -216,6 +225,7 @@
 	if(!istype(living_user))
 		return
 
+	// Clicking the action will try to cast whatever spell shifted us in the first place
 	for(var/datum/action/cooldown/spell/shapeshift/shift_spell in living_user.actions)
 		if(istype(living_user, shift_spell.shapeshift_type))
 			shift_spell.Trigger()

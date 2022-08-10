@@ -7,7 +7,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	item_flags = NEEDS_PERMIT | NO_MAT_REDEMPTION
 	/// Can non-magic folk use our staff?
-	/// If TRUE, only wizards or survivalists can use the staff to its full potential - If FALSE, anyone can
+	/// If FALSE, only wizards or survivalists can use the staff to its full potential - If TRUE, anyone can
 	var/allow_intruder_use = FALSE
 
 /obj/item/gun/magic/staff/proc/is_wizard_or_friend(mob/user)
@@ -123,7 +123,7 @@
 	school = SCHOOL_FORBIDDEN //this staff is evil. okay? it just is. look at this projectile type list. this is wrong.
 
 	/// Static list of all projectiles we can fire from our staff.
-	/// Not all subtypes of magic projectiles.
+	/// Doesn't contain all subtypes of magic projectiles, unlike what it looks like
 	var/static/list/allowed_projectile_types = list(
 		/obj/projectile/magic/animate,
 		/obj/projectile/magic/antimagic,
