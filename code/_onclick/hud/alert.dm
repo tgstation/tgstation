@@ -650,7 +650,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /atom/movable/screen/alert/emptycell/plasma
 	name = "Out of Power"
 	desc = "Unit's plasma core has no charge remaining. No modules available until plasma core is recharged. \
-		Unit can be refilled through plasma ore."
+		Unit can be refilled through plasma fuel."
 
 /atom/movable/screen/alert/emptycell/plasma/update_desc()
 	. = ..()
@@ -658,7 +658,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /atom/movable/screen/alert/lowcell/plasma
 	name = "Low Charge"
-	desc = "Unit's plasma core is running low. Unit can be refilled through plasma ore."
+	desc = "Unit's plasma core is running low. Unit can be refilled through plasma fuel."
 
 /atom/movable/screen/alert/lowcell/plasma/update_desc()
 	. = ..()
