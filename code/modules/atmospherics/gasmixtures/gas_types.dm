@@ -19,7 +19,7 @@
 
 /proc/generate_gas_overlays(old_offset, new_offset, datum/gas/gas_type)
 	var/list/to_return = list()
-	for(var/i in 0 to SSmapping.max_plane_offset)
+	for(var/i in old_offset to new_offset)
 		var/fill = list()
 		to_return += list(fill)
 		for(var/j in 1 to TOTAL_VISIBLE_STATES)
