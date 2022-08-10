@@ -124,7 +124,7 @@
 	icon_state = "cypherkey_research"
 	channels = list(RADIO_CHANNEL_SCIENCE = 1, RADIO_CHANNEL_COMMAND = 1)
 	greyscale_config = /datum/greyscale_config/encryptionkey_research
-	greyscale_colors = "#793a80#bc4a9b"
+	greyscale_colors = "#bc4a9b#793a80"
 
 /obj/item/encryptionkey/heads/hos
 	name = "\proper the head of security's encryption key"
