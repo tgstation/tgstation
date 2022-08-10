@@ -127,7 +127,7 @@
 
 /obj/item/organ/internal/heart/cursed/on_life(delta_time, times_fired)
 	if(world.time > (last_pump + pump_delay))
-		if(ishuman(owner) && owner.client && owner.client?.lastping < 250) //While this entire item exists to make people suffer, they can't control disconnects.
+		if(ishuman(owner) && owner.client && owner.client?.lastping < 1000) //While this entire item exists to make people suffer, they can't control disconnects.
 			var/mob/living/carbon/human/accursed_human = owner
 			if(accursed_human.dna && !(NOBLOOD in accursed_human.dna.species.species_traits))
 				accursed_human.adjust_curse_effect(rand(5,7))
