@@ -100,6 +100,6 @@
 	shift.next_use_time = 0
 	shift.Trigger()
 	TEST_ASSERT(!istype(dummy.loc, shift.shapeshift_type), "Shapeshift spell failed to transform the dummy back into human form.")
-	TEST_ASSERT_EQUAL(test_stand.summoner, dummy.loc, "Shapeshift spell failed to transfer the holoparasite back to the dummy's human form.")
+	TEST_ASSERT_EQUAL(test_stand.summoner, dummy, "Shapeshift spell failed to transfer the holoparasite back to the dummy's human form.")
 
 	qdel(shift)
