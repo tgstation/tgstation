@@ -273,7 +273,7 @@
 	set_custom_materials(custom_materials)
 
 	ComponentInitialize()
-	if(!ispath(ai_controller))
+	if(ispath(ai_controller))
 		ai_controller = new ai_controller(src)
 
 	return INITIALIZE_HINT_NORMAL
