@@ -1,5 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Fixes broken command report formatting for station goals."
-  - bugfix: "Fixes markdown paragraphing not working in paper code."

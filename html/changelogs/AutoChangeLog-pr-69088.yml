@@ -1,7 +1,0 @@
-author: "PositiveEntropy, Kryson"
-delete-after: True
-changes: 
-  - rscdel: "Removes old and unused titanium, plastitanium and plating damaged states."
-  - imageadd: "Resprites the wooden, titanium and plastitanium-related floors!"
-  - imageadd: "Decals related to the resprited tiles have been adjusted accordingly."
-  - imageadd: "Updates the appearance of plating to be smoother!"
