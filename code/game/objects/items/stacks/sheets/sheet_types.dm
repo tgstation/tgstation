@@ -186,30 +186,26 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 /obj/item/stack/sheet/iron/welder_act(mob/living/user, obj/item/tool)
 	if(tool.use_tool(src, user, delay = 0, volume = 40))
 		var/obj/item/stack/rods/two/new_item = new(user.loc)
-		balloon_alert(user, "crafting rods...")
 		user.visible_message(
 			span_notice("[user.name] shaped [src] into floor rods with [tool]."),
 			blind_message = span_hear("You hear welding."),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 			ignored_mobs = user
 		)
-		var/obj/item/stack/rods/welded_sheet = src
-		welded_sheet.use(1)
+		use(1)
 		user.put_in_inactive_hand(new_item)
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/stack/sheet/iron/welder_act_secondary(mob/living/user, obj/item/tool)
 	if(tool.use_tool(src, user, delay = 0, volume = 40))
 		var/obj/item/stack/tile/iron/four/new_item = new(user.loc)
-		balloon_alert(user, "crafting tiles...")
 		user.visible_message(
 			span_notice("[user.name] shaped [src] into floor tiles with [tool]."),
 			blind_message = span_hear("You hear welding."),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 			ignored_mobs = user
 		)
-		var/obj/item/stack/sheet/iron/welded_sheet = src
-		welded_sheet.use(1)
+		use(1)
 		user.put_in_inactive_hand(new_item)
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 

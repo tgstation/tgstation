@@ -73,30 +73,26 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 		return
 	if(tool.use_tool(src, user, delay = 0, volume = 40))
 		var/obj/item/stack/sheet/iron/new_item = new(user.loc)
-		balloon_alert(user, "crafting sheets...")
 		user.visible_message(
 			span_notice("[user.name] shaped [src] into iron sheets with [tool]."),
 			blind_message = span_hear("You hear welding."),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 			ignored_mobs = user
 		)
-		var/obj/item/stack/rods/welded_rod = src
-		welded_rod.use(2)
+		use(2)
 		user.put_in_inactive_hand(new_item)
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/stack/rods/welder_act_secondary(mob/living/user, obj/item/tool)
 	if(tool.use_tool(src, user, delay = 0, volume = 40))
 		var/obj/item/stack/tile/iron/two/new_item = new(user.loc)
-		balloon_alert(user, "crafting tiles...")
 		user.visible_message(
 			span_notice("[user.name] shaped [src] into floor tiles with [tool]."),
 			blind_message = span_hear("You hear welding."),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 			ignored_mobs = user
 		)
-		var/obj/item/stack/rods/welded_rod = src
-		welded_rod.use(1)
+		use(1)
 		user.put_in_inactive_hand(new_item)
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 

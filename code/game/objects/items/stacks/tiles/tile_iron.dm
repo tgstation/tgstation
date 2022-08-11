@@ -105,15 +105,13 @@
 		return
 	if(tool.use_tool(src, user, delay = 0, volume = 40))
 		var/obj/item/stack/sheet/iron/new_item = new(user.loc)
-		balloon_alert(user, "crafting sheets...")
 		user.visible_message(
 			span_notice("[user.name] shaped [src] into sheets with [tool]."),
 			blind_message = span_hear("You hear welding."),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 			ignored_mobs = user
 		)
-		var/obj/item/stack/tile/iron/welded_tile = src
-		welded_tile.use(4)
+		use(4)
 		user.put_in_inactive_hand(new_item)
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
@@ -123,15 +121,13 @@
 		return
 	if(tool.use_tool(src, user, delay = 0, volume = 40))
 		var/obj/item/stack/rods/new_item = new(user.loc)
-		balloon_alert(user, "crafting rods...")
 		user.visible_message(
 			span_notice("[user.name] shaped [src] into rods with [tool]."),
 			blind_message = span_hear("You hear welding."),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 			ignored_mobs = user
 		)
-		var/obj/item/stack/tile/iron/welded_tile = src
-		welded_tile.use(2)
+		use(2)
 		user.put_in_inactive_hand(new_item)
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
