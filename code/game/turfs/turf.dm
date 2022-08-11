@@ -101,7 +101,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
-	SET_PLANE_IMPLICIT(src, initial(plane))
+	/// We do NOT use the shortcut here, because this is faster
+	var/cached_plane = plane
+	SET_PLANE(src, cached_plane, src)
 
 	// by default, vis_contents is inherited from the turf that was here before
 	vis_contents.Cut()

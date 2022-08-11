@@ -6,11 +6,18 @@
 /// We only need as many plane masters as the maximum of all z level stacks
 #define SET_PLANE_IMPLICIT(thing, new_value) SET_PLANE_EXPLICIT(thing, new_value, thing)
 
+// SSmapping.max_plane_offset here is redundant but saves a get_turf so we do it, for the sake of non multiz init
 #define SET_PLANE_EXPLICIT(thing, new_value, source) \
 	do {\
-		var/turf/_our_turf = get_turf(source);\
-		if(_our_turf){\
-			SET_PLANE(thing, new_value, _our_turf);\
+		var/_cached_plane = new_value;\
+		if(SSmapping.max_plane_offset){\
+			var/turf/_our_turf = get_turf(source);\
+			if(_our_turf){\
+				SET_PLANE(thing, _cached_plane, _our_turf);\
+			}\
+		}\
+		else {\
+			thing.plane = _cached_plane;\
 		}\
 	}\
 	while (FALSE)
@@ -29,7 +36,8 @@
 // Add a shit ton of documentation, preferablely to the whole rendering pipeline
 // Test to see if it fixes the wallening bug
 #define GET_NEW_PLANE(new_value, multiplier) (SSmapping.plane_offset_blacklist?["[new_value]"] ? new_value : (new_value) - (PLANE_RANGE * (multiplier)))
-#define MUTATE_PLANE(new_value, z_reference) (GET_NEW_PLANE(new_value, GET_TURF_PLANE_OFFSET(z_reference)))
+// Yes the offset check here is redundant, but it optimizes single z init, which is very important to me
+#define MUTATE_PLANE(new_value, z_reference) ((SSmapping.max_plane_offset) ? GET_NEW_PLANE(new_value, GET_TURF_PLANE_OFFSET(z_reference)) : (new_value))
 #define GET_TURF_PLANE_OFFSET(z_reference) ((isatom(z_reference) && SSmapping.max_plane_offset) ? GET_Z_PLANE_OFFSET(z_reference.z) : 0)
 #define GET_Z_PLANE_OFFSET(z) (SSmapping.z_level_to_plane_offset[z])
 

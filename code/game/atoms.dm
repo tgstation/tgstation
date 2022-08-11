@@ -242,7 +242,7 @@
 	if(loc)
 		SEND_SIGNAL(loc, COMSIG_ATOM_INITIALIZED_ON, src) /// Sends a signal that the new atom `src`, has been created at `loc`
 
-	SET_PLANE_IMPLICIT(src, initial(plane))
+	SET_PLANE_IMPLICIT(src, plane)
 
 	if(greyscale_config && greyscale_colors)
 		update_greyscale()
