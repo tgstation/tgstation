@@ -29,7 +29,7 @@
 /mob/living/carbon/getorgan(typepath)
 	return (locate(typepath) in internal_organs + external_organs)
 
-/mob/living/carbon/getorganszone(zone, include_children = 0)
+/mob/living/carbon/getorganszone(zone, include_children = FALSE)
 	. = list()
 	for(var/obj/item/organ/organ as anything in internal_organs + external_organs)
 		if(zone == organ.zone)
