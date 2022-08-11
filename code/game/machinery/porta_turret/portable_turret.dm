@@ -724,7 +724,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	faction = list(ROLE_SYNDICATE)
 	desc = "A ballistic machine gun auto-turret."
 
-/obj/machinery/porta_turret/syndicate/Initialize(maplpoad)
+/obj/machinery/porta_turret/syndicate/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
