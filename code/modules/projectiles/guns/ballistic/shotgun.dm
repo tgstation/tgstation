@@ -186,7 +186,7 @@
 			toggle_magazine()
 	else
 		toggle_magazine()
-	. = ..()
+	return ..()
 
 /obj/item/gun/ballistic/shotgun/bulldog/attack_self_secondary(mob/user, modifiers)
 	toggle_magazine()
