@@ -445,7 +445,7 @@
 #define DEFAULT_CLONE_EXAMINE_TEXT "cellular damage"
 
 #define ROBOTIC_BRUTE_EXAMINE_TEXT "denting"
-#define ROBOTIC_BURN_EXAMINE_TEXT "charrings"
+#define ROBOTIC_BURN_EXAMINE_TEXT "charring"
 
 // If a mob has a higher threshold than this, the icon shown will be increased to the big fire icon.
 #define MOB_BIG_FIRE_STACK_THRESHOLD 3
