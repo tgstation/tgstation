@@ -37,7 +37,11 @@
 	UnregisterSignal(shell, COMSIG_ITEM_ATTACK_SELF)
 
 /obj/item/circuit_component/keyboard_shell/proc/send_trigger(atom/source, mob/user)
+	if(!ready)
+		return
+
 	INVOKE_ASYNC(src, .proc/use_keyboard, user)
+	ready = FALSE
 
 /obj/item/circuit_component/keyboard_shell/proc/use_keyboard(mob/user)
 	SIGNAL_HANDLER
@@ -51,3 +55,4 @@
 	entity.set_output(user)
 	output.set_output(message)
 	signal.set_output(COMPONENT_SIGNAL)
+	ready = TRUE
