@@ -308,9 +308,9 @@
 		return
 	remote_control_user = remote_user
 	ui_interact(remote_user)
-	to_chat(remote_control_user, span_danger("[icon2html(src, remote_control_user)] Connected to [src]."))
 	remote_user.log_message("remotely accessed [src].", LOG_GAME)
 	say("Remote access detected.[locked ? " Interface unlocked." : ""]")
+	to_chat(remote_control_user, span_danger("[icon2html(src, remote_control_user)] Connected to [src]."))
 	if(locked)
 		playsound(src, 'sound/machines/terminal_on.ogg', 25, FALSE)
 		locked = FALSE
