@@ -229,6 +229,7 @@
 			playsound(slipper.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
 
 		SEND_SIGNAL(slipper, COMSIG_ON_CARBON_SLIP)
+		slipper.add_mood_event("slipped", /datum/mood_event/slipped)
 		if(force_drop)
 			for(var/obj/item/I in slipper.held_items)
 				slipper.accident(I)
