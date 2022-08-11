@@ -145,8 +145,9 @@
 	semi_auto = TRUE
 	internal_magazine = FALSE
 	tac_reloads = TRUE
-	///the secondary magazine for the bulldog
+	///the type of secondary magazine for the bulldog
 	var/secondary_magazine_type
+	///the secondary magazine
 	var/obj/item/ammo_box/magazine/secondary_magazine
 
 /obj/item/gun/ballistic/shotgun/bulldog/Initialize(mapload)
