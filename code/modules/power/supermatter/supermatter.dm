@@ -469,6 +469,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	for(var/i in SUPERMATTER_COUNTDOWN_TIME to 0 step -10)
 		if(last_delamination_strategy != delamination_strategy)
 			count_down_messages = delamination_strategy.count_down_messages()
+			last_delamination_strategy = delamination_strategy
 
 		var/message
 		var/healed = FALSE
