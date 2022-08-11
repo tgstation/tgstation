@@ -1,8 +1,8 @@
-/datum/unit_test/operating_table
-
 /// Make a mob hop on an optable, rest, get up, rest again, and then move to another tile.
 /// While the mob is still an active patient, move another mob in too.
 /// This is so the replacement code can kick in when the original mob is no longer valid.
+/datum/unit_test/operating_table
+
 /datum/unit_test/operating_table/Run()
 	var/obj/structure/table/optable/table = allocate(/obj/structure/table/optable)
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human, get_step(table, NORTH))
