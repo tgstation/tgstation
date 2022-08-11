@@ -198,7 +198,7 @@ LINEN BINS
 	desc = "It is decorated with a crate emblem in silver lining.  It's rather tough, and just the thing to lie on after a hard day of pushing paper."
 	icon_state = "sheetqm"
 	inhand_icon_state = "sheetqm"
-	dream_messages = list("a grey ID", "a shuttle", "a crate", "a sloth", "the quartermaster")
+	dream_messages = list("authority", "a silvery ID", "a shuttle", "a crate", "a sloth", "the quartermaster")
 
 /obj/item/bedsheet/chaplain
 	name = "chaplain's blanket"
@@ -479,12 +479,13 @@ LINEN BINS
 	icon_state = "random_bedsheet"
 	bedsheet_type = BEDSHEET_ABSTRACT
 
-/obj/item/bedsheet/dorms_double/Initialize()
+/obj/item/bedsheet/dorms_double/Initialize(mapload)
 	..()
 	var/type = pick_weight(list("Colors" = 80, "Special" = 20))
 	switch(type)
 		if("Colors")
-			type = pick(list(/obj/item/bedsheet,
+			type = pick(list(
+				/obj/item/bedsheet/double,
 				/obj/item/bedsheet/blue/double,
 				/obj/item/bedsheet/green/double,
 				/obj/item/bedsheet/grey/double,
@@ -493,13 +494,16 @@ LINEN BINS
 				/obj/item/bedsheet/red/double,
 				/obj/item/bedsheet/yellow/double,
 				/obj/item/bedsheet/brown/double,
-				/obj/item/bedsheet/black/double))
+				/obj/item/bedsheet/black/double,
+				))
 		if("Special")
-			type = pick(list(/obj/item/bedsheet/patriot/double,
+			type = pick(list(
+				/obj/item/bedsheet/patriot/double,
 				/obj/item/bedsheet/rainbow/double,
 				/obj/item/bedsheet/ian/double,
 				/obj/item/bedsheet/cosmos/double,
-				/obj/item/bedsheet/nanotrasen/double))
+				/obj/item/bedsheet/nanotrasen/double,
+				))
 	var/obj/item/bedsheet = new type(loc)
 	bedsheet.dir = dir
 	return INITIALIZE_HINT_QDEL

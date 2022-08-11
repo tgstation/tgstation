@@ -6,7 +6,7 @@
 	faction = FACTION_STATION
 	total_positions = 5
 	spawn_positions = 3
-	supervisors = "the chief medical officer"
+	supervisors = SUPERVISOR_CMO
 	selection_color = "#ffeef0"
 	exp_granted_type = EXP_TYPE_CREW
 
@@ -49,6 +49,7 @@
 	suit_store = /obj/item/flashlight/pen
 	belt = /obj/item/modular_computer/tablet/pda/medical
 	ears = /obj/item/radio/headset/headset_med
+	head = /obj/item/clothing/head/surgerycap
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	l_hand = /obj/item/storage/medkit/surgery
 

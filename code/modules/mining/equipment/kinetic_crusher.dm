@@ -223,21 +223,20 @@
 	else
 		..()
 
-/obj/item/crusher_trophy/proc/add_to(obj/item/kinetic_crusher/H, mob/living/user)
-	for(var/t in H.trophies)
-		var/obj/item/crusher_trophy/T = t
-		if(istype(T, denied_type) || istype(src, T.denied_type))
-			to_chat(user, span_warning("You can't seem to attach [src] to [H]. Maybe remove a few trophies?"))
+/obj/item/crusher_trophy/proc/add_to(obj/item/kinetic_crusher/crusher, mob/living/user)
+	for(var/obj/item/crusher_trophy/trophy as anything in crusher.trophies)
+		if(istype(trophy, denied_type) || istype(src, trophy.denied_type))
+			to_chat(user, span_warning("You can't seem to attach [src] to [crusher]. Maybe remove a few trophies?"))
 			return FALSE
-	if(!user.transferItemToLoc(src, H))
+	if(!user.transferItemToLoc(src, crusher))
 		return
-	H.trophies += src
-	to_chat(user, span_notice("You attach [src] to [H]."))
+	crusher.trophies += src
+	to_chat(user, span_notice("You attach [src] to [crusher]."))
 	return TRUE
 
-/obj/item/crusher_trophy/proc/remove_from(obj/item/kinetic_crusher/H, mob/living/user)
-	forceMove(get_turf(H))
-	H.trophies -= src
+/obj/item/crusher_trophy/proc/remove_from(obj/item/kinetic_crusher/crusher, mob/living/user)
+	forceMove(get_turf(crusher))
+	crusher.trophies -= src
 	return TRUE
 
 /obj/item/crusher_trophy/proc/on_melee_hit(mob/living/target, mob/living/user) //the target and the user

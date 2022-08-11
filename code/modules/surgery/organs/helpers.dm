@@ -30,7 +30,7 @@
 	return (locate(typepath) in internal_organs + external_organs)
 
 
-/mob/living/carbon/getorganszone(zone, subzones = 0)
+/mob/living/carbon/getorganszone(zone, subzones = 0, external = FALSE)
 	var/list/returnorg = list()
 	if(subzones)
 		// Include subzones - groin for chest, eyes and mouth for head

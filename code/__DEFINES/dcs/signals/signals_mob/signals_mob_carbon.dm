@@ -66,6 +66,8 @@
 #define COMSIG_CARBON_SANITY_UPDATE "carbon_sanity_update"
 ///Called when a carbon breathes, before the breath has actually occured
 #define COMSIG_CARBON_PRE_BREATHE "carbon_pre_breathe"
+///Called when a carbon updates their mood
+#define COMSIG_CARBON_MOOD_UPDATE "carbon_mood_update"
 
 // /mob/living/carbon/human signals
 

@@ -69,7 +69,7 @@
 /obj/item/pen,
 /obj/machinery/light/broken/directional/west,
 /obj/item/paper/crumpled/bloody{
-	info = "help...";
+	default_raw_text = "help...";
 	text = ""
 	},
 /turf/open/floor/wood,

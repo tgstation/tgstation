@@ -73,7 +73,7 @@
 	throwforce = 10
 	throw_speed = 2
 
-/obj/item/crowbar/large/old/Initialize()
+/obj/item/crowbar/large/old/Initialize(mapload)
 	. = ..()
 	if(prob(50))
 		icon_state = "crowbar_powergame"

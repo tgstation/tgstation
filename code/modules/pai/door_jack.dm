@@ -36,7 +36,7 @@
 	QDEL_NULL(hacking_cable) //clear any old cables
 	hacking_cable = new
 	var/mob/living/carbon/hacker = get_holder()
-	if(hacker?.put_in_hands(hacking_cable))
+	if(iscarbon(hacker) && hacker.put_in_hands(hacking_cable)) //important to double check since get_holder can return non-null values that aren't carbons.
 		hacker.visible_message(span_notice("A port on [src] opens to reveal a cable, which you quickly grab."), span_hear("You hear the soft click of a plastic	component and manage to catch the falling cable."))
 		track_pai()
 		track_thing(hacking_cable)
@@ -90,10 +90,7 @@
 /mob/living/silicon/pai/proc/retract_cable()
 	hacking_cable.visible_message(span_notice("The cable quickly retracts."))
 	balloon_alert(src, "cable retracted")
-	untrack_pai()
-	untrack_thing(hacking_cable)
 	QDEL_NULL(hacking_cable)
-	SStgui.update_user_uis(src)
 	return TRUE
 
 /**
