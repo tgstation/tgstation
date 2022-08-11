@@ -172,7 +172,6 @@
 	var/mheight
 	WXH_TO_HEIGHT(owned_by.MeasureText(complete_text, null, CHAT_MESSAGE_WIDTH), mheight)
 
-	CONSUME_UNTIL(100)
 
 	if(!TICK_CHECK)
 		return finish_image_generation(mheight, target, owner, complete_text, lifespan)
