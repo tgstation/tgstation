@@ -20,7 +20,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_BULKY
 
-/obj/item/storage/bag/Initialize()
+/obj/item/storage/bag/Initialize(mapload)
 	. = ..()
 	atom_storage.allow_quick_gather = TRUE
 	atom_storage.allow_quick_empty = TRUE
@@ -41,7 +41,7 @@
 	///If true, can be inserted into the janitor cart
 	var/insertable = TRUE
 
-/obj/item/storage/bag/trash/Initialize()
+/obj/item/storage/bag/trash/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	atom_storage.max_total_storage = 30
@@ -84,7 +84,7 @@
 	inhand_icon_state = "bluetrashbag"
 	item_flags = NO_MAT_REDEMPTION
 
-/obj/item/storage/bag/trash/bluespace/Initialize()
+/obj/item/storage/bag/trash/bluespace/Initialize(mapload)
 	. = ..()
 	atom_storage.max_total_storage = 60
 	atom_storage.max_slots = 60
@@ -111,7 +111,7 @@
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_HUGE
 	atom_storage.max_total_storage = 50
-	atom_storage.numerical_stacking = TRUE 
+	atom_storage.numerical_stacking = TRUE
 	atom_storage.allow_quick_empty = TRUE
 	atom_storage.allow_quick_gather = TRUE
 	atom_storage.set_holdable(list(/obj/item/stack/ore))
@@ -178,7 +178,7 @@
 	desc = "A revolution in convenience, this satchel allows for huge amounts of ore storage. It's been outfitted with anti-malfunction safety measures."
 	icon_state = "satchel_bspace"
 
-/obj/item/storage/bag/ore/holding/Initialize()
+/obj/item/storage/bag/ore/holding/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = INFINITY
 	atom_storage.max_specific_storage = INFINITY
@@ -195,7 +195,7 @@
 	worn_icon_state = "plantbag"
 	resistance_flags = FLAMMABLE
 
-/obj/item/storage/bag/plants/Initialize()
+/obj/item/storage/bag/plants/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_total_storage = 100
@@ -253,7 +253,7 @@
 
 	var/capacity = 300; //the number of sheets it can carry.
 
-/obj/item/storage/bag/sheetsnatcher/Initialize()
+/obj/item/storage/bag/sheetsnatcher/Initialize(mapload)
 	. = ..()
 	atom_storage.allow_quick_empty = TRUE
 	atom_storage.allow_quick_gather = TRUE
@@ -288,7 +288,7 @@
 	worn_icon_state = "bookbag"
 	resistance_flags = FLAMMABLE
 
-/obj/item/storage/bag/books/Initialize()
+/obj/item/storage/bag/books/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_total_storage = 21
@@ -317,7 +317,7 @@
 	custom_materials = list(/datum/material/iron=3000)
 	custom_price = PAYCHECK_CREW * 0.6
 
-/obj/item/storage/bag/tray/Initialize()
+/obj/item/storage/bag/tray/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY //Plates are required bulky to keep them out of backpacks
 	atom_storage.set_holdable(list(
@@ -404,7 +404,7 @@
 	desc = "A bag for storing pills, patches, and bottles."
 	resistance_flags = FLAMMABLE
 
-/obj/item/storage/bag/chemistry/Initialize()
+/obj/item/storage/bag/chemistry/Initialize(mapload)
 	. = ..()
 	atom_storage.max_total_storage = 200
 	atom_storage.max_slots = 50
@@ -431,7 +431,7 @@
 	desc = "A bag for the safe transportation and disposal of biowaste and other virulent materials."
 	resistance_flags = FLAMMABLE
 
-/obj/item/storage/bag/bio/Initialize()
+/obj/item/storage/bag/bio/Initialize(mapload)
 	. = ..()
 	atom_storage.max_total_storage = 200
 	atom_storage.max_slots = 25
@@ -460,7 +460,7 @@
 	desc = "A bag for the storage and transport of anomalous materials."
 	resistance_flags = FLAMMABLE
 
-/obj/item/storage/bag/xeno/Initialize()
+/obj/item/storage/bag/xeno/Initialize(mapload)
 	. = ..()
 	atom_storage.max_total_storage = 200
 	atom_storage.max_slots = 25
@@ -491,7 +491,7 @@
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
 	resistance_flags = FLAMMABLE
 
-/obj/item/storage/bag/construction/Initialize()
+/obj/item/storage/bag/construction/Initialize(mapload)
 	. = ..()
 	atom_storage.max_total_storage = 100
 	atom_storage.max_slots = 50
@@ -514,7 +514,7 @@
 	inhand_icon_state = "quiver"
 	worn_icon_state = "harpoon_quiver"
 
-/obj/item/storage/bag/harpoon_quiver/Initialize()
+/obj/item/storage/bag/harpoon_quiver/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_TINY
 	atom_storage.max_slots = 40

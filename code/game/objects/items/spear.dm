@@ -31,7 +31,7 @@
 	/// How much damage to do wielded
 	var/force_wielded = 18
 
-/obj/item/spear/Initialize()
+/obj/item/spear/Initialize(mapload)
 	. = ..()
 	force = force_unwielded
 

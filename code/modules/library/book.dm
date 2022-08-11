@@ -106,7 +106,7 @@
 	///Maximum icon state number
 	var/maximum_book_state = 8
 
-/obj/item/book/Initialize()
+/obj/item/book/Initialize(mapload)
 	. = ..()
 	book_data = new(starting_title, starting_author, starting_content)
 
