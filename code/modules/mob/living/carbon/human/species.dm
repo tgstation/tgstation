@@ -50,6 +50,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///The alpha used by the hair. 255 is completely solid, 0 is invisible.
 	var/hair_alpha = 255
 
+	///Examine text when the person has brute damage.
+	var/brute_damage_desc = DEFAULT_BRUTE_EXAMINE_TEXT
+	///Examine text when the person has burn damage.
+	var/burn_damage_desc = DEFAULT_BURN_EXAMINE_TEXT
+	///Examine text when the person has cellular damage.
+	var/cellular_damage_desc = DEFAULT_CLONE_EXAMINE_TEXT
 	///This is used for children, it will determine their default limb ID for use of examine. See [/mob/living/carbon/human/proc/examine].
 	var/examine_limb_id
 	///Never, Optional, or Forced digi legs?

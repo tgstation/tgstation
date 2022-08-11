@@ -179,29 +179,29 @@
 			temp = getBruteLoss()
 		if(temp)
 			if(temp < 25)
-				msg += "[t_He] [t_has] minor bruising.\n"
+				msg += "[t_He] [t_has] minor [dna.species.brute_damage_desc].\n"
 			else if(temp < 50)
-				msg += "[t_He] [t_has] <b>moderate</b> bruising!\n"
+				msg += "[t_He] [t_has] <b>moderate</b> [dna.species.brute_damage_desc]!\n"
 			else
-				msg += "<B>[t_He] [t_has] severe bruising!</B>\n"
+				msg += "<B>[t_He] [t_has] severe [dna.species.brute_damage_desc]!</B>\n"
 
 		temp = getFireLoss()
 		if(temp)
 			if(temp < 25)
-				msg += "[t_He] [t_has] minor burns.\n"
+				msg += "[t_He] [t_has] minor [dna.species.burn_damage_desc].\n"
 			else if (temp < 50)
-				msg += "[t_He] [t_has] <b>moderate</b> burns!\n"
+				msg += "[t_He] [t_has] <b>moderate</b> [dna.species.burn_damage_desc]!\n"
 			else
-				msg += "<B>[t_He] [t_has] severe burns!</B>\n"
+				msg += "<B>[t_He] [t_has] severe [dna.species.burn_damage_desc]!</B>\n"
 
 		temp = getCloneLoss()
 		if(temp)
 			if(temp < 25)
-				msg += "[t_He] [t_has] minor cellular damage.\n"
+				msg += "[t_He] [t_has] minor [dna.species.cellular_damage_desc].\n"
 			else if(temp < 50)
-				msg += "[t_He] [t_has] <b>moderate</b> cellular damage!\n"
+				msg += "[t_He] [t_has] <b>moderate</b> [dna.species.cellular_damage_desc]!\n"
 			else
-				msg += "<b>[t_He] [t_has] severe cellular damage!</b>\n"
+				msg += "<b>[t_He] [t_has] severe [dna.species.cellular_damage_desc]!</b>\n"
 
 
 	if(has_status_effect(/datum/status_effect/fire_handler/fire_stacks))
