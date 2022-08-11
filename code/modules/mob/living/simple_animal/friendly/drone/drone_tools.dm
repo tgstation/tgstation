@@ -6,7 +6,7 @@
 	item_flags = ABSTRACT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/item/storage/drone_tools/Initialize()
+/obj/item/storage/drone_tools/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
@@ -86,4 +86,3 @@
 	inhand_icon_state = "cutters"
 	item_flags = NO_MAT_REDEMPTION
 	random_color = FALSE
-

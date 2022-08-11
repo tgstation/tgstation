@@ -166,7 +166,7 @@
 	light_power = 3
 	light_range = 2
 
-/obj/effect/brimbeam/Initialize()
+/obj/effect/brimbeam/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 

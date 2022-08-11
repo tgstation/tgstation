@@ -300,7 +300,10 @@
 			to_chat(user, span_warning("You can't secure [src] here."))
 			return
 		set_anchored(!anchored)
-		user.visible_message(span_notice("[user] [anchored ? null : "un"]wrenches the solar assembly into place."), span_notice("You [anchored ? null : "un"]wrench the solar assembly into place."))
+		user.visible_message(
+			span_notice("[user] [anchored ? null : "un"]wrenches the solar assembly [anchored ? "into place" : null]."), 
+			span_notice("You [anchored ? null : "un"]wrench the solar assembly [anchored ? "into place" : null]."),
+		)
 		W.play_tool_sound(src, 75)
 		return TRUE
 

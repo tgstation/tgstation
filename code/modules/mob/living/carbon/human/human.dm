@@ -7,6 +7,8 @@
 	//initialize limbs first
 	create_bodyparts()
 
+	setup_mood()
+
 	setup_human_dna()
 	prepare_huds() //Prevents a nasty runtime on human init
 
@@ -31,21 +33,27 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 	GLOB.human_list += src
 
+/mob/living/carbon/human/proc/setup_mood()
+	if (CONFIG_GET(flag/disable_human_mood))
+		return
+	if (isdummy(src))
+		return
+	mob_mood = new /datum/mood(src)
+
 /mob/living/carbon/human/proc/setup_human_dna()
 	//initialize dna. for spawned humans; overwritten by other code
 	create_dna(src)
 	randomize_human(src)
 	dna.initialize_dna()
 
-/mob/living/carbon/human/ComponentInitialize()
-	. = ..()
-	if(!CONFIG_GET(flag/disable_human_mood))
-		AddComponent(/datum/component/mood)
-
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)
 	QDEL_LIST(bioware)
 	GLOB.human_list -= src
+
+	if (mob_mood)
+		QDEL_NULL(mob_mood)
+
 	return ..()
 
 /mob/living/carbon/human/ZImpactDamage(turf/T, levels)
@@ -532,7 +540,7 @@
 			return FALSE
 
 		visible_message(span_notice("[src] performs CPR on [target.name]!"), span_notice("You perform CPR on [target.name]."))
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "saved_life", /datum/mood_event/saved_life)
+		add_mood_event("saved_life", /datum/mood_event/saved_life)
 		log_combat(src, target, "CPRed")
 
 		if (HAS_TRAIT(target, TRAIT_NOBREATH))

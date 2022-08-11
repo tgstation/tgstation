@@ -14,7 +14,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	var/pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/rped.ogg'
 	var/alt_sound = null
 
-/obj/item/storage/part_replacer/Initialize()
+/obj/item/storage/part_replacer/Initialize(mapload)
 	. = ..()
 	create_storage(type = /datum/storage/rped)
 

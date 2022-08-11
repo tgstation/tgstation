@@ -66,6 +66,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
 
+#define isdummy(A) (istype(A, /mob/living/carbon/human/dummy))
+
 //Human sub-species
 #define isabductor(A) (is_species(A, /datum/species/abductor))
 #define isgolem(A) (is_species(A, /datum/species/golem))
