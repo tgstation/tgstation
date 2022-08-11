@@ -13,7 +13,7 @@
 	. = ..()
 	AddComponent(/datum/component/shell, list(
 		new /obj/item/circuit_component/keyboard_shell()
-	), SHELL_CAPACITY_MEDIUM)
+	), SHELL_CAPACITY_SMALL)
 
 /obj/item/circuit_component/keyboard_shell
 	display_name = "Keyboard Shell"
@@ -22,13 +22,13 @@
 	var/datum/port/output/signal
 	var/datum/port/output/entity
 	var/datum/port/output/output
-	var/datum/port/output/failure
+
+	var/ready = TRUE
 
 /obj/item/circuit_component/keyboard_shell/populate_ports()
 	entity = add_output_port("User", PORT_TYPE_ATOM)
 	output = add_output_port("Message", PORT_TYPE_STRING)
 	signal = add_output_port("Signal", PORT_TYPE_SIGNAL)
-	failure = add_output_port("On Failure", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/keyboard_shell/register_shell(atom/movable/shell)
 	RegisterSignal(shell, COMSIG_ITEM_ATTACK_SELF, .proc/send_trigger)
@@ -37,16 +37,17 @@
 	UnregisterSignal(shell, COMSIG_ITEM_ATTACK_SELF)
 
 /obj/item/circuit_component/keyboard_shell/proc/send_trigger(atom/source, mob/user)
+	INVOKE_ASYNC(src, .proc/use_keyboard, user)
+
+/obj/item/circuit_component/keyboard_shell/proc/use_keyboard(mob/user)
 	SIGNAL_HANDLER
 
 	if(HAS_TRAIT(user, TRAIT_ILLITERATE))
 		to_chat(user, span_warning("You start mashing keys at random!"))
-		failure.set_output(COMPONENT_SIGNAL)
-	else
-		source.balloon_alert(user, "Using keyboard")
+		return
 
-		var/message = tgui_input_text(user, "Input your text", "Keyboard")
+	var/message = tgui_input_text(user, "Input your text", "Keyboard")
 
-		entity.set_output(user)
-		output.set_output(message)
-		signal.set_output(COMPONENT_SIGNAL)
+	entity.set_output(user)
+	output.set_output(message)
+	signal.set_output(COMPONENT_SIGNAL)
