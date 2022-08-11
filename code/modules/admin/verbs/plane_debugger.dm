@@ -151,6 +151,7 @@
 		this_plane["color"] = plane.color
 		this_plane["alpha"] = plane.alpha
 		this_plane["render_target"] = plane.render_target
+		this_plane["intended_hidden"] = plane.force_hidden
 
 
 		var/list/incoming_relays = list()

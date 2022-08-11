@@ -40,6 +40,7 @@ type Plane = {
   outgoing_relays: string[];
   incoming_filters: string[];
   outgoing_filters: string[];
+  intended_hidden: boolean;
 
   incoming_connections: ConnectionRef[];
   outgoing_connections: ConnectionRef[];
@@ -261,7 +262,7 @@ const positionPlanes = function (context, connectSources: AssocConnected) {
   // First we sort by the plane of each member,
   // then we sort by the plane of each member's head
   // This way we get a nicely sorted list
-  // and get rid of the now uneeded parent refs
+  // and get rid of the now unneeded parent refs
   const stack = depth_stack.map((layer) =>
     flow([
       sortBy((plane: string) => plane_info[plane].plane),
@@ -495,7 +496,7 @@ class PlaneMaster extends Component<PlaneMasterProps> {
     return (
       <Box position="absolute" left={`${x}px`} top={`${y}px`} {...rest}>
         <Box
-          backgroundColor={'#000000'}
+          backgroundColor={our_plane.intended_hidden ? '#191919' : '#000000'}
           py={1}
           px={1}
           className="ObjectComponent__Titlebar">
@@ -508,7 +509,7 @@ class PlaneMaster extends Component<PlaneMasterProps> {
           />
         </Box>
         <Box
-          className="ObjectComponent__Content"
+          className={our_plane.intended_hidden ? "ObjectComponent__Greyed_Content" : "ObjectComponent__Content"}
           unselectable="on"
           py={1}
           px={1}>
@@ -720,6 +721,13 @@ const PlaneWindow = (props, context) => {
             position="right">
             <LabeledList.Item label="Blend Mode">
               {workingPlane.blend_mode}
+            </LabeledList.Item>
+          </Tooltip>
+          <Tooltip
+            content="If this is 1, the plane master is being forced to hide from its mob. This is most often done as an optimization tactic, since some planes only rarely need to be used"
+            position="right">
+            <LabeledList.Item label="Forced Hidden">
+              {workingPlane.intended_hidden}
             </LabeledList.Item>
           </Tooltip>
         </LabeledList>

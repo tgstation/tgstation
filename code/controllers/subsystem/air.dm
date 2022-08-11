@@ -753,7 +753,7 @@ GLOBAL_LIST_EMPTY(colored_images)
 	data["display_max"] = FALSE
 	#endif
 	for(var/atom/movable/screen/plane_master/plane in user.hud_used.get_true_plane_masters(ATMOS_GROUP_PLANE))
-		data["showing_user"] = (plane.alpha == 255)
+		data["showing_user"] = (!plane.force_hidden)
 	return data
 
 /datum/controller/subsystem/air/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -793,12 +793,12 @@ GLOBAL_LIST_EMPTY(colored_images)
 		if("toggle_user_display")
 			var/mob/user = ui.user
 			for(var/atom/movable/screen/plane_master/plane_master in user.hud_used.get_true_plane_masters(ATMOS_GROUP_PLANE))
-				if(!plane_master.alpha)
+				if(plane_master.force_hidden)
 					if(user.client)
 						user.client.images += GLOB.colored_images
-					plane_master.alpha = 255
+					plane_master.unhide_plane(user)
 				else
 					if(user.client)
 						user.client.images -= GLOB.colored_images
-					plane_master.alpha = 0
+					plane_master.hide_plane(user)
 			return TRUE

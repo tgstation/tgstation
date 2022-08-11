@@ -39,6 +39,14 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	var/list/atom/movable/render_plane_relay/relays = list()
 	/// if render relays have already be generated
 	var/relays_generated = FALSE
+	/// If this plane master should be hidden from the player at roundstart
+	/// We do this so PMs can opt into being temporary, to reduce load on clients
+	var/start_hidden = FALSE
+	/// If this plane master is being forced to hide.
+	/// Hidden PMs will dump ANYTHING relayed or drawn onto them. Be careful with this
+	/// Remember: a hidden plane master will dump anything drawn directly to it onto the output render. It does NOT hide its contents
+	/// Use alpha for that
+	var/force_hidden = FALSE
 
 /atom/movable/screen/plane_master/Initialize(mapload, datum/plane_master_group/home, offset = 0)
 	src.offset = offset
@@ -49,6 +57,10 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	update_offset()
 	if(!documentation && !(istype(src, /atom/movable/screen/plane_master) || istype(src, /atom/movable/screen/plane_master/rendering_plate)))
 		stack_trace("Plane master created without a description. Document how your thing works so people will know in future, and we can display it in the debug menu")
+	if(start_hidden)
+		hide_plane(home.our_hud?.mymob)
+	if(length(render_relay_planes))
+		generate_render_relays()
 	return ..()
 
 /atom/movable/screen/plane_master/Destroy()
@@ -97,19 +109,53 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 
 /// Shows a plane master to the passed in mob
 /// Override this to apply unique effects and such
+/// Returns TRUE if the call is allowed, FALSE otherwise
 /atom/movable/screen/plane_master/proc/show_to(mob/mymob)
 	SHOULD_CALL_PARENT(TRUE)
-	if(length(render_relay_planes))
-		relay_render_to_plane(mymob)
+	if(force_hidden)
+		return FALSE
+
+	var/client/our_client = mymob?.client
+	if(!our_client)
+		return TRUE
+
+	our_client.screen += src
+	our_client.screen += relays
+	return TRUE
 
 /// Hides a plane master from the passeed in mob
 /// Do your effect cleanup here
 /atom/movable/screen/plane_master/proc/hide_from(mob/oldmob)
-	var/client/their_client = oldmob.client
+	var/client/their_client = oldmob?.client
 	if(!their_client)
 		return
 	their_client.screen -= src
 	their_client.screen -= relays
+
+/// Forces this plane master to hide, until unhide_plane is called
+/// This allows us to disable unused PMs without breaking anything else
+/atom/movable/screen/plane_master/proc/hide_plane(mob/cast_away)
+	force_hidden = TRUE
+	hide_from(cast_away)
+
+/// Disables any forced hiding, allows the plane master to be used as normal
+/atom/movable/screen/plane_master/proc/unhide_plane(mob/enfold)
+	force_hidden = FALSE
+	show_to(enfold)
+
+/// Mirrors our force hidden state to the hidden state of the plane that came before, assuming it's valid
+/// This allows us to mirror any hidden sets from before we were created, no matter how low that chance is
+/atom/movable/screen/plane_master/proc/mirror_parent_hidden()
+	var/mob/our_mob = home?.our_hud?.mymob
+	var/atom/movable/screen/plane_master/true_plane = our_mob?.hud_used.get_plane_master(plane)
+	if(true_plane == src || !true_plane)
+		return
+
+	// If one of us already exists and it's not hidden, unhide ourselves
+	if(true_plane.force_hidden)
+		hide_plane(our_mob)
+	else
+		unhide_plane(our_mob)
 
 /atom/movable/screen/plane_master/parallax_white
 	name = "Parallax whitifier"
@@ -127,17 +173,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	plane = PLANE_SPACE_PARALLAX
 	blend_mode = BLEND_MULTIPLY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-
-/atom/movable/screen/plane_master/gravpulse
-	name = "Gravpulse"
-	documentation = "Ok so this one's fun. Basically, we want to be able to distort the game plane when a grav annom is around.\
-		<br>So we draw the pattern we want to use to this plane, and it's then used as a render target by a distortion filter on the game plane.\
-		<br>Note the blend mode and lack of relay targets. This plane exists only to distort, it's never rendered anywhere."
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	plane = GRAVITY_PULSE_PLANE
-	blend_mode = BLEND_ADD
-	render_target = GRAVITY_PULSE_RENDER_TARGET
-	render_relay_planes = list()
 
 /atom/movable/screen/plane_master/parallax/Initialize(mapload, datum/plane_master_group/home, offset)
 	. = ..()
@@ -158,12 +193,28 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 			// Overlay so we don't multiply twice, and thus fuck up our rendering
 			add_relay_to(GET_NEW_PLANE(plane, offset), BLEND_OVERLAY)
 
+/atom/movable/screen/plane_master/gravpulse
+	name = "Gravpulse"
+	documentation = "Ok so this one's fun. Basically, we want to be able to distort the game plane when a grav annom is around.\
+		<br>So we draw the pattern we want to use to this plane, and it's then used as a render target by a distortion filter on the game plane.\
+		<br>Note the blend mode and lack of relay targets. This plane exists only to distort, it's never rendered anywhere."
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	plane = GRAVITY_PULSE_PLANE
+	blend_mode = BLEND_ADD
+	render_target = GRAVITY_PULSE_RENDER_TARGET
+	render_relay_planes = list()
+
 ///For any transparent multi-z tiles we want to render
 /atom/movable/screen/plane_master/transparent
 	name = "Transparent"
 	documentation = "The master rendering plate from the offset below ours will be mirrored onto this plane. That way we achive a \"stack\" effect."
 	plane = TRANSPARENT_FLOOR_PLANE
 	appearance_flags = PLANE_MASTER
+
+/atom/movable/screen/plane_master/transparent/Initialize(mapload, datum/plane_master_group/home, offset)
+	. = ..()
+	/// Don't display us if we're below everything else yeah?
+	AddComponent(/datum/component/plane_hide_highest_offset)
 
 /atom/movable/screen/plane_master/openspace
 	name = "Open space"
@@ -176,6 +227,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	add_filter("first_stage_openspace", 1, drop_shadow_filter(color = "#04080FAA", size = -10))
 	add_filter("second_stage_openspace", 2, drop_shadow_filter(color = "#04080FAA", size = -15))
 	add_filter("third_stage_openspace", 3, drop_shadow_filter(color = "#04080FAA", size = -20))
+	/// Don't display us if we're below everything else yeah?
+	AddComponent(/datum/component/plane_hide_highest_offset)
 
 ///Things rendered on "openspace"; holes in multi-z
 ///This applies that shadow that openspace tiles get
@@ -186,6 +239,11 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_MULTIPLY
 	alpha = 255
+
+/atom/movable/screen/plane_master/openspace_backdrop/Initialize(mapload, datum/plane_master_group/home, offset)
+	. = ..()
+	/// Don't display us if we're below everything else yeah?
+	AddComponent(/datum/component/plane_hide_highest_offset)
 
 ///Contains just the floor
 /atom/movable/screen/plane_master/floor
@@ -205,6 +263,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 
 /atom/movable/screen/plane_master/game_world/show_to(mob/mymob)
 	. = ..()
+	if(!.)
+		return
 	remove_filter("AO")
 	if(istype(mymob) && mymob.client?.prefs?.read_preference(/datum/preference/toggle/ambient_occlusion))
 		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))
@@ -231,6 +291,11 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	render_relay_planes = list()
 	// We do NOT allow offsetting, because there's no case where you would want to block only one layer, at least currently
 	allows_offsetting = FALSE
+	start_hidden = TRUE
+
+/atom/movable/screen/plane_master/field_of_vision_blocker/Initialize(mapload, datum/plane_master_group/home, offset)
+	. = ..()
+	mirror_parent_hidden()
 
 /atom/movable/screen/plane_master/game_world_upper
 	name = "Upper game world"
@@ -274,6 +339,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 
 /atom/movable/screen/plane_master/blackness/show_to(mob/mymob)
 	. = ..()
+	if(!.)
+		return
 	if(offset != 0)
 		// You aren't the source? don't change yourself
 		return
@@ -351,6 +418,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 
 /atom/movable/screen/plane_master/lighting/show_to(mob/mymob)
 	. = ..()
+	if(!.)
+		return
 	// This applies a backdrop to our lighting plane
 	// Why do plane masters need a backdrop sometimes? Read https://secure.byond.com/forum/?post=2141928
 	// Basically, we need something to brighten
@@ -447,6 +516,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	plane = PIPECRAWL_IMAGES_PLANE
 	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
+	start_hidden = TRUE
 
 /atom/movable/screen/plane_master/pipecrawl/Initialize(mapload)
 	. = ..()
@@ -455,6 +525,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	color = list(1.2,0,0,0, 0,1.2,0,0, 0,0,1.2,0, 0,0,0,1, 0,0,0,0)
 	// This serves a similar purpose, I want the pipes to pop
 	add_filter("pipe_dropshadow", 1, drop_shadow_filter(x = -1, y= -1, size = 1, color = "#0000007A"))
+	mirror_parent_hidden()
 
 /atom/movable/screen/plane_master/camera_static
 	name = "Camera static"
@@ -464,15 +535,29 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
 
+/atom/movable/screen/plane_master/camera_static/show_to(mob/mymob)
+	. = ..()
+	if(!.)
+		return
+	if(isAI(mymob))
+		return
+	// If we aren't an AI, we have no need for this plane master
+	hide_plane(mymob)
+	return FALSE
+
 /atom/movable/screen/plane_master/excited_turfs
 	name = "Atmos excited turfs"
 	documentation = "Holds excited turf visualization images. Entirely a debug tool.\
 		<br>Images are created at init, and stuck in a turf's viscontents if a global debug toggle is enabled.\
-		<br>They're then displayed to the user by adding them to its images list, and toggling the plane's alpha."
+		<br>They're then displayed to the user by adding them to its images list, and showing the plane to our mob."
 	plane = ATMOS_GROUP_PLANE
 	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
-	alpha = 0
+	start_hidden = TRUE
+
+/atom/movable/screen/plane_master/excited_turfs/Initialize(mapload, datum/plane_master_group/home, offset)
+	. = ..()
+	mirror_parent_hidden()
 
 /atom/movable/screen/plane_master/ghost
 	name = "Ghost"
@@ -501,6 +586,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 
 /atom/movable/screen/plane_master/runechat/show_to(mob/mymob)
 	. = ..()
+	if(!.)
+		return
 	remove_filter("AO")
 	if(istype(mymob) && mymob.client?.prefs?.read_preference(/datum/preference/toggle/ambient_occlusion))
 		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))

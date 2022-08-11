@@ -71,7 +71,7 @@
 	render_relay_planes = list(RENDER_PLANE_MASTER)
 
 /**
- * Plane master proc called in show_to() that creates relay objects, sets them as needed and then adds them to the clients screen
+ * Plane master proc called in Initialize() that creates relay objects, and sets them uo as needed
  * Sets:
  * * layer from plane to avoid z-fighting
  * * planes to relay the render to
@@ -79,18 +79,8 @@
  * * mouse opacity to ensure proper mouse hit tracking
  * * name for debugging purposes
  * Other vars such as alpha will automatically be applied with the render source
- * Arguments:
- * * mymob: mob whose plane is being backdropped
  */
-/atom/movable/screen/plane_master/proc/relay_render_to_plane(mob/mymob)
-	var/client/our_client = mymob.client
-	if(!our_client)
-		return
-	// relay renders can be called more then once
-	if(relays_generated)
-		our_client.screen += relays
-		return
-
+/atom/movable/screen/plane_master/proc/generate_render_relays()
 	var/relay_loc = "CENTER"
 	// If we're using a submap (say for a popup window) make sure we draw onto it
 	if(home.map)
@@ -101,7 +91,7 @@
 		generated_planes += relay.plane
 
 	for(var/relay_plane in (render_relay_planes - generated_planes))
-		generate_relay_to(relay_plane, relay_loc, our_client)
+		generate_relay_to(relay_plane, relay_loc)
 
 	if(blend_mode != BLEND_MULTIPLY)
 		blend_mode = BLEND_DEFAULT

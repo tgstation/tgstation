@@ -65,7 +65,6 @@
 /// This is mostly a proc so it can be overriden by popups, since they have unique behavior they want to do
 /datum/plane_master_group/proc/show_plane(atom/movable/screen/plane_master/plane)
 	plane.show_to(our_hud.mymob)
-	our_hud.mymob.client.screen += plane
 
 /// Returns a list of all the plane master types we want to create
 /datum/plane_master_group/proc/get_plane_types()

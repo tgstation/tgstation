@@ -22,6 +22,9 @@
 		qdel(src) //no QDEL hint for components, and we dont want this to print a warning regarding bad component application
 		return
 
+	for(var/atom/movable/screen/plane_master/plane_master in mob_parent.hud_used.get_true_plane_masters(FIELD_OF_VISION_BLOCKER_PLANE))
+		plane_master.unhide_plane(mob_parent)
+
 	blocker_mask = new
 	visual_shadow = new
 	visual_shadow.alpha = parent_client?.prefs.read_preference(/datum/preference/numeric/fov_darkness)
@@ -31,6 +34,10 @@
 	update_mask()
 
 /datum/component/fov_handler/Destroy()
+	var/mob/living/mob_parent = parent
+	for(var/atom/movable/screen/plane_master/plane_master in mob_parent.hud_used.get_true_plane_masters(FIELD_OF_VISION_BLOCKER_PLANE))
+		plane_master.hide_plane(mob_parent)
+
 	if(applied_mask)
 		remove_mask()
 	if(blocker_mask) // In a case of early deletion due to volatile client
