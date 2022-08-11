@@ -21,6 +21,31 @@
 	if(machine_stat)
 		disconnect_apc()
 
+/obj/machinery/computer/apc_control/attack_ai(mob/user)
+	if(!isAdminGhostAI(user))
+		to_chat(user,span_warning("[src] does not support AI control.")) //You already have APC access, cheater!
+		return
+	..()
+
+/obj/machinery/computer/apc_control/emag_act(mob/user)
+	if(obj_flags & EMAGGED)
+		return
+	obj_flags |= EMAGGED
+	usr.log_message("emagged [src].", LOG_ATTACK, color="red")
+	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+
+/obj/machinery/computer/apc_control/proc/log_activity(log_text)
+	if(!should_log)
+		return
+	LAZYADD(logs, "([station_time_timestamp()]): [auth_id] [log_text]")
+
+/obj/machinery/computer/apc_control/proc/restore_comp(mob/user)
+	obj_flags &= ~EMAGGED
+	should_log = TRUE
+	user.log_message("restored the logs of [src].", LOG_GAME)
+	log_activity("-=- Logging restored to full functionality at this point -=-")
+	restoring = FALSE
+
 /obj/machinery/computer/apc_control/proc/connect_apc(obj/machinery/power/apc/apc, mob/user)
 	if(!apc)
 		return
@@ -42,16 +67,6 @@
 	if(active_apc.remote_control_user)
 		active_apc.disconnect_remote_access()
 	active_apc = null
-
-/obj/machinery/computer/apc_control/proc/apc_can_interact()
-	SIGNAL_HANDLER
-	return can_interact()
-
-/obj/machinery/computer/apc_control/attack_ai(mob/user)
-	if(!isAdminGhostAI(user))
-		to_chat(user,span_warning("[src] does not support AI control.")) //You already have APC access, cheater!
-		return
-	..()
 
 /obj/machinery/computer/apc_control/proc/check_apc(obj/machinery/power/apc/APC)
 	return APC.z == z && !APC.malfhack && !APC.aidisabled && !(APC.obj_flags & EMAGGED) && !APC.machine_stat && !istype(APC.area, /area/station/ai_monitored) && !(APC.area.area_flags & NO_ALERTS)
@@ -190,22 +205,3 @@
 	. = ..()
 	if(active_apc)
 		disconnect_apc()
-
-/obj/machinery/computer/apc_control/emag_act(mob/user)
-	if(obj_flags & EMAGGED)
-		return
-	obj_flags |= EMAGGED
-	usr.log_message("emagged [src].", LOG_ATTACK, color="red")
-	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-
-/obj/machinery/computer/apc_control/proc/log_activity(log_text)
-	if(!should_log)
-		return
-	LAZYADD(logs, "([station_time_timestamp()]): [auth_id] [log_text]")
-
-/obj/machinery/computer/apc_control/proc/restore_comp(mob/user)
-	obj_flags &= ~EMAGGED
-	should_log = TRUE
-	user.log_message("restored the logs of [src].", LOG_GAME)
-	log_activity("-=- Logging restored to full functionality at this point -=-")
-	restoring = FALSE
