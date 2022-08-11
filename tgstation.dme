@@ -177,6 +177,7 @@
 #include "code\__DEFINES\strippable.dm"
 #include "code\__DEFINES\subsystems.dm"
 #include "code\__DEFINES\supermatter.dm"
+#include "code\__DEFINES\surgery.dm"
 #include "code\__DEFINES\tcg.dm"
 #include "code\__DEFINES\text.dm"
 #include "code\__DEFINES\tgs.config.dm"

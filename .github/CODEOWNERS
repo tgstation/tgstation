@@ -20,6 +20,9 @@
 /code/modules/admin/verbs/adminpm.dm @Cyberboss
 /code/modules/mapping/ @Cyberboss
 
+# Dragomagol/Tattle
+/code/__HELPERS/logging/ @dragomagol
+
 # Fikou
 
 /code/modules/awaymissions/ @Fikou
@@ -103,9 +106,6 @@
 /code/modules/reagents/ @ExcessiveUseOfCobblestone
 /code/modules/research/designs/medical_designs.dm @ExcessiveUseOfCobblestone
 /code/game/objects/items/storage/medkit.dm @ExcessiveUseOfCobblestone
-
-# Dragomagol/Tattle
-/code/__HELPERS/logging/ @dragomagol
 
 # Jordie0608
 

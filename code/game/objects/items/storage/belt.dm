@@ -41,7 +41,7 @@
 	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbelt_pickup.ogg'
 
-/obj/item/storage/belt/utility/Initialize()
+/obj/item/storage/belt/utility/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_total_storage = 21
@@ -205,7 +205,7 @@
 	inhand_icon_state = "medical"
 	worn_icon_state = "medical"
 
-/obj/item/storage/belt/medical/Initialize()
+/obj/item/storage/belt/medical/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_total_storage = 21
@@ -318,7 +318,7 @@
 	worn_icon_state = "security"
 	content_overlays = TRUE
 
-/obj/item/storage/belt/security/Initialize()
+/obj/item/storage/belt/security/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 5
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
@@ -357,7 +357,7 @@
 	content_overlays = FALSE
 	custom_premium_price = PAYCHECK_COMMAND * 3
 
-/obj/item/storage/belt/security/webbing/Initialize()
+/obj/item/storage/belt/security/webbing/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 6
 
@@ -369,7 +369,7 @@
 	worn_icon_state = "explorer1"
 	w_class = WEIGHT_CLASS_BULKY
 
-/obj/item/storage/belt/mining/Initialize()
+/obj/item/storage/belt/mining/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 6
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
@@ -430,7 +430,7 @@
 	inhand_icon_state = "ebelt"
 	worn_icon_state = "ebelt"
 
-/obj/item/storage/belt/mining/primitive/Initialize()
+/obj/item/storage/belt/mining/primitive/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 5
 
@@ -441,7 +441,7 @@
 	inhand_icon_state = "soulstonebelt"
 	worn_icon_state = "soulstonebelt"
 
-/obj/item/storage/belt/soulstone/Initialize()
+/obj/item/storage/belt/soulstone/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 6
 	atom_storage.set_holdable(list(
@@ -464,7 +464,7 @@
 	worn_icon_state = "championbelt"
 	custom_materials = list(/datum/material/gold=400)
 
-/obj/item/storage/belt/champion/Initialize()
+/obj/item/storage/belt/champion/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 1
 	atom_storage.set_holdable(list(
@@ -486,7 +486,7 @@
 	worn_icon_state = "militarywebbing"
 	resistance_flags = FIRE_PROOF
 
-/obj/item/storage/belt/military/Initialize()
+/obj/item/storage/belt/military/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 
@@ -498,7 +498,7 @@
 	var/sponsor = pick("Donk Co.", "Waffle Co.", "Roffle Co.", "Gorlax Marauders", "Tiger Cooperative")
 	desc = "A set of snack-tical webbing worn by athletes of the [sponsor] VR sports division."
 
-/obj/item/storage/belt/military/snack/Initialize()
+/obj/item/storage/belt/military/snack/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 6
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
@@ -568,7 +568,7 @@
 	inhand_icon_state = "security"
 	worn_icon_state = "assault"
 
-/obj/item/storage/belt/military/assault/Initialize()
+/obj/item/storage/belt/military/assault/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 6
 
@@ -585,7 +585,7 @@
 	inhand_icon_state = "security"
 	worn_icon_state = "grenadebeltnew"
 
-/obj/item/storage/belt/grenade/Initialize()
+/obj/item/storage/belt/grenade/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 30
 	atom_storage.numerical_stacking = TRUE
@@ -624,7 +624,7 @@
 	inhand_icon_state = "soulstonebelt"
 	worn_icon_state = "soulstonebelt"
 
-/obj/item/storage/belt/wands/Initialize()
+/obj/item/storage/belt/wands/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 6
 	atom_storage.set_holdable(list(
@@ -650,7 +650,7 @@
 	inhand_icon_state = "janibelt"
 	worn_icon_state = "janibelt"
 
-/obj/item/storage/belt/janitor/Initialize()
+/obj/item/storage/belt/janitor/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 6
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL // Set to this so the  light replacer can fit.
@@ -685,7 +685,7 @@
 	inhand_icon_state = "bandolier"
 	worn_icon_state = "bandolier"
 
-/obj/item/storage/belt/bandolier/Initialize()
+/obj/item/storage/belt/bandolier/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 18
 	atom_storage.max_total_storage = 18
@@ -704,7 +704,7 @@
 	dying_key = DYE_REGISTRY_FANNYPACK
 	custom_price = PAYCHECK_CREW * 2
 
-/obj/item/storage/belt/fannypack/Initialize()
+/obj/item/storage/belt/fannypack/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 3
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
@@ -777,7 +777,7 @@
 	worn_icon_state = "sheath"
 	w_class = WEIGHT_CLASS_BULKY
 
-/obj/item/storage/belt/sabre/Initialize()
+/obj/item/storage/belt/sabre/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 
@@ -826,7 +826,7 @@
 	worn_icon_state = "plantbelt"
 	content_overlays = TRUE
 
-/obj/item/storage/belt/plant/Initialize()
+/obj/item/storage/belt/plant/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 6
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
