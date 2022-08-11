@@ -5349,6 +5349,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/all/medical/virology,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "bWt" = (
@@ -21598,6 +21599,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/medical/virology,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "hVX" = (
@@ -21903,6 +21905,7 @@
 "iaO" = (
 /obj/effect/turf_decal/siding/purple,
 /obj/item/kirbyplants/random,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/office)
 "iaQ" = (
