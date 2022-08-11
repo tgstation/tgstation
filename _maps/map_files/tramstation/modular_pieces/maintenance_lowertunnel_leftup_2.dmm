@@ -309,6 +309,10 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
+"Dx" = (
+/obj/modular_map_root/tramstation/maintenance_lowertunnel_leftup/attachment_a,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
 "EF" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -376,7 +380,11 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
 "MO" = (
+/obj/modular_map_root/tramstation/maintenance_lowertunnel_leftup/attachment_b,
 /turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
+"OP" = (
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/central)
 "Pe" = (
 /turf/closed/wall/rock/porous,
@@ -1711,7 +1719,7 @@ Gu
 Gu
 Gu
 Gu
-MO
+Dx
 fT
 uP
 Gu
@@ -2543,7 +2551,7 @@ Sz
 Sz
 Sz
 Sz
-kH
+OP
 Sz
 Sz
 Sz

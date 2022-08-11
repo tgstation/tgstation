@@ -108,7 +108,6 @@
 /turf/open/misc/asteroid,
 /area/station/maintenance/department/security)
 "qO" = (
-/obj/machinery/duct,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Water Access Maintenance Hatch"

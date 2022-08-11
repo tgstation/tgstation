@@ -49,7 +49,7 @@
 /area/station/maintenance/port/aft)
 "D" = (
 /turf/template_noop,
-/area/space)
+/area/template_noop)
 "E" = (
 /obj/effect/turf_decal/weather,
 /turf/open/floor/iron/smooth,
@@ -57,7 +57,7 @@
 "G" = (
 /obj/modular_map_root/tramstation/maintenance_upperdormsleft/attachment,
 /turf/template_noop,
-/area/space)
+/area/template_noop)
 "I" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
 /area/station/maintenance/port/aft)
@@ -74,7 +74,7 @@
 "U" = (
 /obj/modular_map_connector,
 /turf/template_noop,
-/area/space)
+/area/template_noop)
 "V" = (
 /turf/open/misc/asteroid,
 /area/station/maintenance/port/aft)

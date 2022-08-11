@@ -89,7 +89,9 @@
 /area/station/maintenance/department/medical)
 "C" = (
 /obj/item/relic,
-/turf/open/misc/asteroid/dug,
+/turf/open/misc/asteroid/dug{
+	initial_gas_mix = "TEMP=2.7"
+	},
 /area/template_noop)
 "E" = (
 /obj/effect/decal/cleanable/dirt,

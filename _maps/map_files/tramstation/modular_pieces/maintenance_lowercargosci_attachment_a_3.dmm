@@ -27,9 +27,6 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
 "r" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/grille,
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/central)
 "v" = (

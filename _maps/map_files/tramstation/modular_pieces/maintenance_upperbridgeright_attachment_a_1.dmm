@@ -72,15 +72,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/service/lawyer,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/security)
-"z" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/wood/large,
-/area/station/maintenance/department/security)
 "B" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -116,17 +107,12 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/station/maintenance/department/security)
-"M" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/photocopier,
-/turf/open/floor/wood/large,
-/area/station/maintenance/department/security)
 "N" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/item/paper{
 	name = "budget increase request";
-	info = "The IA office recognizes that while our department is lower on the totem pole of priorities in the never-ending research into Plasma, we would like to see a 25% budget increase in the next quarter so that we may be able to afford to open a crew slot so that someone will actually be capable of filling the desk job currently on-station."
+	default_raw_text = "The IA office recognizes that while our department is lower on the totem pole of priorities in the never-ending research into Plasma, we would like to see a 25% budget increase in the next quarter so that we may be able to afford to open a crew slot so that someone will actually be capable of filling the desk job currently on-station."
 	},
 /turf/open/floor/iron/grimy,
 /area/station/maintenance/department/security)
@@ -164,28 +150,28 @@
 x
 q
 w
-M
+e
 e
 "}
 (2,1,1) = {"
 I
 G
 w
-B
-I
+e
+e
 "}
 (3,1,1) = {"
 I
 C
 i
-o
+B
 I
 "}
 (4,1,1) = {"
 v
 K
 a
-z
+o
 I
 "}
 (5,1,1) = {"

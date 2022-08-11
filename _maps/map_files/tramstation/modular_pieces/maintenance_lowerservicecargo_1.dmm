@@ -22,12 +22,6 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/greater)
-"eD" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/turf/open/floor/plating/airless,
-/area/template_noop)
 "eL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -68,14 +62,7 @@
 /turf/closed/wall/rock/porous,
 /area/station/maintenance/starboard/greater)
 "kc" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Security Maintenance Hatch"
-	},
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/greater)
 "kJ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -255,7 +242,7 @@
 /area/station/maintenance/starboard/greater)
 "Kb" = (
 /obj/machinery/light/small/directional/south,
-/turf/open/misc/asteroid/airless,
+/turf/template_noop,
 /area/template_noop)
 "NS" = (
 /obj/effect/decal/cleanable/dirt,
@@ -805,7 +792,7 @@ mm
 mm
 "}
 (21,1,1) = {"
-yy
+mm
 yy
 yy
 Vv
@@ -828,7 +815,7 @@ hj
 mm
 "}
 (22,1,1) = {"
-yy
+mm
 Vv
 Vv
 Vv
@@ -851,7 +838,7 @@ hj
 mm
 "}
 (23,1,1) = {"
-eD
+mm
 gv
 wy
 VZ
@@ -897,7 +884,7 @@ hj
 mm
 "}
 (25,1,1) = {"
-yy
+mm
 yy
 yy
 Vv
@@ -920,7 +907,7 @@ hj
 mm
 "}
 (26,1,1) = {"
-yy
+mm
 yy
 yy
 Vv
@@ -943,7 +930,7 @@ hj
 mm
 "}
 (27,1,1) = {"
-yy
+mm
 hj
 hj
 hj

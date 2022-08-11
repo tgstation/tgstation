@@ -12,7 +12,9 @@
 /area/mine/explored)
 "d" = (
 /obj/item/stack/ore/glass,
-/turf/open/misc/asteroid/dug,
+/turf/open/misc/asteroid/dug{
+	initial_gas_mix = "TEMP=2.7"
+	},
 /area/mine/explored)
 "e" = (
 /obj/effect/decal/cleanable/dirt,

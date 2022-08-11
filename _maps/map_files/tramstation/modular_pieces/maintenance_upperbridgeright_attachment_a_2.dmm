@@ -30,9 +30,7 @@
 /area/station/maintenance/department/security)
 "C" = (
 /obj/item/shovel,
-/turf/open/misc/asteroid{
-	icon_state = "asteroid_dug"
-	},
+/turf/open/misc/asteroid,
 /area/station/maintenance/department/security)
 "D" = (
 /obj/item/stack/ore/iron,
@@ -46,8 +44,8 @@
 /turf/closed/wall,
 /area/station/maintenance/department/security)
 "S" = (
-/turf/closed/wall/rock/porous,
-/area/station/maintenance/department/security)
+/turf/template_noop,
+/area/template_noop)
 "U" = (
 /obj/item/stack/ore/glass,
 /turf/open/misc/asteroid{
@@ -71,14 +69,14 @@
 r
 w
 a
-a
-a
+S
+S
 "}
 (2,1,1) = {"
 N
 w
 q
-C
+S
 S
 "}
 (3,1,1) = {"
@@ -91,7 +89,7 @@ F
 (4,1,1) = {"
 a
 a
-q
+C
 w
 m
 "}

@@ -22,7 +22,7 @@
 /area/station/maintenance/starboard/greater)
 "bd" = (
 /obj/machinery/light/small/directional/south,
-/turf/open/misc/asteroid/airless,
+/turf/template_noop,
 /area/template_noop)
 "bD" = (
 /obj/effect/decal/cleanable/dirt,
@@ -386,14 +386,7 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/greater)
 "TH" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Security Maintenance Hatch"
-	},
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/greater)
 "TQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -433,12 +426,6 @@
 /obj/item/stack/cable_coil,
 /obj/item/stack/sheet/glass,
 /turf/open/misc/asteroid,
-/area/template_noop)
-"Ya" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/turf/open/floor/plating/airless,
 /area/template_noop)
 "YD" = (
 /obj/effect/decal/cleanable/dirt,
@@ -912,7 +899,7 @@ Nx
 Nx
 "}
 (21,1,1) = {"
-Of
+Nx
 Of
 Of
 YT
@@ -935,7 +922,7 @@ BF
 Nx
 "}
 (22,1,1) = {"
-Of
+Nx
 Xr
 Xr
 Xr
@@ -958,7 +945,7 @@ BF
 Nx
 "}
 (23,1,1) = {"
-Ya
+Nx
 po
 Nw
 aM
@@ -1004,7 +991,7 @@ BF
 Nx
 "}
 (25,1,1) = {"
-Of
+Nx
 Of
 Of
 Xr
@@ -1027,7 +1014,7 @@ BF
 Nx
 "}
 (26,1,1) = {"
-Of
+Nx
 Of
 Of
 Xr
@@ -1050,7 +1037,7 @@ BF
 Nx
 "}
 (27,1,1) = {"
-Of
+Nx
 BF
 BF
 BF

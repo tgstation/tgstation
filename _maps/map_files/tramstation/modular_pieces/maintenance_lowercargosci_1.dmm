@@ -237,12 +237,6 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/central)
-"X" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/grille,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/catwalk_floor,
-/area/station/maintenance/starboard/central)
 "Y" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/departments/drop/directional/east,
@@ -1009,7 +1003,7 @@ S
 S
 S
 u
-X
+C
 x
 x
 "}

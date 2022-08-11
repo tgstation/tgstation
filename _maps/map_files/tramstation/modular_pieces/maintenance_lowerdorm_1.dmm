@@ -48,15 +48,6 @@
 /turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "ah" = (
-/obj/machinery/door/airlock/maintenance_hatch,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/lesser)
 "ai" = (
@@ -72,14 +63,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
 "ak" = (
-/obj/machinery/door/airlock/maintenance_hatch,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/catwalk_floor,
-/area/station/commons/dorms)
+/area/template_noop)
 "al" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -258,13 +243,6 @@
 /obj/machinery/duct,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
-"aK" = (
-/obj/machinery/door/airlock/maintenance_hatch,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/turf/open/floor/catwalk_floor,
-/area/station/commons/dorms)
 "aL" = (
 /turf/template_noop,
 /area/template_noop)
@@ -322,17 +300,6 @@
 /obj/modular_map_root/tramstation/maintenance_lowerdorm/attachment_b,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/lesser)
-"aV" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Restroom Maintenance Access"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/machinery/duct,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/turf/open/floor/iron/smooth,
-/area/station/commons/toilet)
 "aW" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -458,7 +425,7 @@ aL
 aL
 aL
 aL
-aV
+ak
 aL
 aL
 aL
@@ -1079,7 +1046,7 @@ aL
 aL
 aL
 aL
-aK
+ak
 ab
 ab
 ab

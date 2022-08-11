@@ -68,12 +68,6 @@
 /obj/effect/spawner/random/structure/steam_vent,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/central)
-"rk" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/grille,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/catwalk_floor,
-/area/station/maintenance/starboard/central)
 "sd" = (
 /obj/modular_map_connector,
 /turf/template_noop,
@@ -1074,7 +1068,7 @@ eY
 eY
 eY
 NO
-rk
+Vf
 nJ
 nJ
 "}

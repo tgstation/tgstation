@@ -206,14 +206,8 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
 "tN" = (
-/obj/machinery/door/airlock/maintenance_hatch,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/catwalk_floor,
-/area/station/commons/dorms)
+/area/template_noop)
 "uZ" = (
 /turf/open/misc/asteroid,
 /area/mine/explored)
@@ -281,15 +275,6 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/lesser)
 "Al" = (
-/obj/machinery/door/airlock/maintenance_hatch,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/lesser)
 "CK" = (
@@ -300,17 +285,6 @@
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
-"CL" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Restroom Maintenance Access"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/machinery/duct,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/turf/open/floor/iron/smooth,
-/area/station/commons/toilet)
 "DS" = (
 /turf/closed/wall/rock/porous,
 /area/station/maintenance/central/lesser)
@@ -490,13 +464,6 @@
 /obj/structure/grille,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
-"RW" = (
-/obj/machinery/door/airlock/maintenance_hatch,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/turf/open/floor/catwalk_floor,
-/area/station/commons/dorms)
 "Sr" = (
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -627,7 +594,7 @@ OI
 OI
 OI
 OI
-CL
+tN
 OI
 OI
 OI
@@ -1248,7 +1215,7 @@ OI
 OI
 OI
 OI
-RW
+tN
 tI
 tI
 tI

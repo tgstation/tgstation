@@ -5,6 +5,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
 "ac" = (
+/obj/modular_map_root/tramstation/maintenance_lowertunnel_leftup/attachment_a,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
 "aU" = (
@@ -41,6 +42,9 @@
 	name = "sorting disposal pipe (Civilan Wing)";
 	sortTypes = list(16,17)
 	},
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/port/central)
+"ee" = (
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/central)
 "eo" = (
@@ -148,6 +152,10 @@
 /area/station/maintenance/port/fore)
 "zi" = (
 /obj/effect/turf_decal/sand,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
+"zB" = (
+/obj/modular_map_root/tramstation/maintenance_lowertunnel_leftup/attachment_b,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
 "zN" = (
@@ -711,7 +719,7 @@ LZ
 LZ
 LZ
 LZ
-ac
+zB
 NL
 IU
 rE
@@ -2455,7 +2463,7 @@ Dh
 Dh
 Dh
 Dh
-Pu
+ee
 Dh
 Dh
 Dh
