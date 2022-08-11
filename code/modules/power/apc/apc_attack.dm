@@ -289,11 +289,6 @@
 		return FALSE
 	return TRUE
 
-/obj/machinery/power/apc/can_interact(mob/user)
-	. = ..()
-	if(!. && !QDELETED(remote_control))
-		. = remote_control.can_interact(user)
-
 /obj/machinery/power/apc/proc/set_broken()
 	if(malfai && operating)
 		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10,0,1000)
