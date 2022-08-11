@@ -254,7 +254,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 	var/speed = 1
 	var/offset_x = 0
 	var/offset_y = 0
-	var/view_sized
 	var/absolute = FALSE
 	blend_mode = BLEND_ADD
 	plane = PLANE_SPACE_PARALLAX
@@ -296,7 +295,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 			new_overlays += texture_overlay
 	cut_overlays()
 	add_overlay(new_overlays)
-	view_sized = view
 
 /atom/movable/screen/parallax_layer/layer_1
 	icon_state = "layer1"
