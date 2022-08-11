@@ -618,7 +618,7 @@
 
 /obj/item/food/meatclown/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/slippery, 30)
+	AddComponent(/datum/component/slippery, 3 SECONDS)
 
 /obj/item/food/lasagna
 	name = "Lasagna"
