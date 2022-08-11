@@ -737,12 +737,10 @@
 		return
 	
 	// Find another lying mob as a replacement.
-	// Can only happen if there are two or more mobs lying in the same location, so if we dont have an old patient just scram.
-	if(patient)
-		for (var/mob/living/carbon/replacement_patient in loc.contents)
-			if(replacement_patient.body_position == LYING_DOWN)
-				patient = replacement_patient
-				return
+	for (var/mob/living/carbon/replacement_patient in loc.contents)
+		if(replacement_patient.body_position == LYING_DOWN)
+			patient = replacement_patient
+			return
 	patient = null
 
 /*
