@@ -509,7 +509,11 @@ class PlaneMaster extends Component<PlaneMasterProps> {
           />
         </Box>
         <Box
-          className={our_plane.intended_hidden ? "ObjectComponent__Greyed_Content" : "ObjectComponent__Content"}
+          className={
+            our_plane.intended_hidden
+              ? 'ObjectComponent__Greyed_Content'
+              : 'ObjectComponent__Content'
+          }
           unselectable="on"
           py={1}
           px={1}>
