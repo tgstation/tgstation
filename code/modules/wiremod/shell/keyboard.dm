@@ -19,11 +19,12 @@
 	display_name = "Keyboard Shell"
 	desc = "A handheld shell that allows the user to input a string. Use the shell in hand to open the input panel."
 
+	/// Called when the input window is closed
 	var/datum/port/output/signal
+	/// Entity who used the shell
 	var/datum/port/output/entity
+	/// The string, entity typed and submitted
 	var/datum/port/output/output
-
-	var/illiterate
 
 /obj/item/circuit_component/keyboard_shell/populate_ports()
 	entity = add_output_port("User", PORT_TYPE_ATOM)
@@ -38,17 +39,15 @@
 
 /obj/item/circuit_component/keyboard_shell/proc/send_trigger(atom/source, mob/user)
 	SIGNAL_HANDLER
-	check_illiterate(user)
 	INVOKE_ASYNC(src, .proc/use_keyboard, user)
 
 /obj/item/circuit_component/keyboard_shell/proc/use_keyboard(mob/user)
-	if(!illiterate)
-		var/message = tgui_input_text(user, "Input your text", "Keyboard")
-		entity.set_output(user)
-		output.set_output(message)
-		signal.set_output(COMPONENT_SIGNAL)
-
-/obj/item/circuit_component/keyboard_shell/proc/check_illiterate(mob/user)
 	if(HAS_TRAIT(user, TRAIT_ILLITERATE))
-		illiterate = TRUE
 		to_chat(user, span_warning("You start mashing keys at random!"))
+		return
+
+	var/message = tgui_input_text(user, "Input your text", "Keyboard")
+	entity.set_output(user)
+	output.set_output(message)
+	signal.set_output(COMPONENT_SIGNAL)
+
