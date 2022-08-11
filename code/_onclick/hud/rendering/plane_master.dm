@@ -59,8 +59,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		stack_trace("Plane master created without a description. Document how your thing works so people will know in future, and we can display it in the debug menu")
 	if(start_hidden)
 		hide_plane(home.our_hud?.mymob)
-	if(length(render_relay_planes))
-		generate_render_relays()
+	generate_render_relays()
 	return ..()
 
 /atom/movable/screen/plane_master/Destroy()
@@ -149,6 +148,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	var/mob/our_mob = home?.our_hud?.mymob
 	var/atom/movable/screen/plane_master/true_plane = our_mob?.hud_used.get_plane_master(plane)
 	if(true_plane == src || !true_plane)
+		return
+
+	if(true_plane.force_hidden == force_hidden)
 		return
 
 	// If one of us already exists and it's not hidden, unhide ourselves

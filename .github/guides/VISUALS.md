@@ -606,6 +606,8 @@ It'll help visualize this process quite well. Play around with it, it's fun.
 This is done using a matrix, similarly to color matrixes. You will likely never need to use it manually however, since there are
 helper procs for pretty much everything it can do.
 
+> Note: the transform var is COPIED whenever you read it. So if you want to modify it, you will need to reset the atom var back to your changes.
+
 It's not totally without explanation, and I figured you might wanna know about it. Not a whole lot more to say tho. Neat tool.
 
 ## Lighting
