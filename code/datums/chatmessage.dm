@@ -172,16 +172,18 @@
 	var/mheight
 	WXH_TO_HEIGHT(owned_by.MeasureText(complete_text, null, CHAT_MESSAGE_WIDTH), mheight)
 
-	if(!TICK_CHECK)
-		return finish_image_generation(mheight, target, complete_text, lifespan)
+	CONSUME_UNTIL(100)
 
-	var/datum/callback/our_callback = CALLBACK(src, .proc/finish_image_generation, mheight, target, complete_text, lifespan)
+	if(!TICK_CHECK)
+		return finish_image_generation(mheight, target, owner, complete_text, lifespan)
+
+	var/datum/callback/our_callback = CALLBACK(src, .proc/finish_image_generation, mheight, target, owner, complete_text, lifespan)
 	SSrunechat.message_queue += our_callback
 	return
 
 ///finishes the image generation after the MeasureText() call in generate_image().
 ///necessary because after that call the proc can resume at the end of the tick and cause overtime.
-/datum/chatmessage/proc/finish_image_generation(mheight, atom/target, complete_text, lifespan)
+/datum/chatmessage/proc/finish_image_generation(mheight, atom/target, mob/owner, complete_text, lifespan)
 
 	approx_lines = max(1, mheight / CHAT_MESSAGE_APPROX_LHEIGHT)
 
@@ -218,7 +220,7 @@
 	message.pixel_x = (target.maptext_width * 0.5) - 16
 	message.maptext_width = CHAT_MESSAGE_WIDTH
 	message.maptext_height = mheight
-	message.maptext_x = (CHAT_MESSAGE_WIDTH - owned_by.bound_width) * -0.5
+	message.maptext_x = (CHAT_MESSAGE_WIDTH - owner.bound_width) * -0.5
 	message.maptext = MAPTEXT(complete_text)
 
 	// View the message
