@@ -203,7 +203,7 @@
 	time = 6.4 SECONDS
 	name = "manipulate organs"
 
-///only operate on not external organs (so internal organs)
+///only operate on internal organs
 /datum/surgery_step/manipulate_organs/internal/can_use_organ(mob/user, obj/item/organ/organ)
 	return istype(organ, /obj/item/organ/internal)
 
