@@ -245,7 +245,7 @@
 /area/shuttle/syndicate/bridge)
 "az" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/computer/monitor/secret{
+/obj/machinery/computer/monitor{
 	dir = 8
 	},
 /obj/structure/cable,

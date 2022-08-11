@@ -293,7 +293,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/shuttle/pirate)
 "nh" = (
-/obj/machinery/computer/monitor/secret{
+/obj/machinery/computer/monitor{
 	dir = 8
 	},
 /turf/open/floor/iron/dark/side{
