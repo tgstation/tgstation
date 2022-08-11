@@ -23,7 +23,7 @@
 	var/datum/port/output/entity
 	var/datum/port/output/output
 
-	var/ready = TRUE
+	var/illiterate
 
 /obj/item/circuit_component/keyboard_shell/populate_ports()
 	entity = add_output_port("User", PORT_TYPE_ATOM)
@@ -37,22 +37,18 @@
 	UnregisterSignal(shell, COMSIG_ITEM_ATTACK_SELF)
 
 /obj/item/circuit_component/keyboard_shell/proc/send_trigger(atom/source, mob/user)
-	if(!ready)
-		return
-
+	SIGNAL_HANDLER
+	check_illiterate(user)
 	INVOKE_ASYNC(src, .proc/use_keyboard, user)
-	ready = FALSE
 
 /obj/item/circuit_component/keyboard_shell/proc/use_keyboard(mob/user)
-	SIGNAL_HANDLER
+	if(!illiterate)
+		var/message = tgui_input_text(user, "Input your text", "Keyboard")
+		entity.set_output(user)
+		output.set_output(message)
+		signal.set_output(COMPONENT_SIGNAL)
 
+/obj/item/circuit_component/keyboard_shell/proc/check_illiterate(mob/user)
 	if(HAS_TRAIT(user, TRAIT_ILLITERATE))
+		illiterate = TRUE
 		to_chat(user, span_warning("You start mashing keys at random!"))
-		return
-
-	var/message = tgui_input_text(user, "Input your text", "Keyboard")
-
-	entity.set_output(user)
-	output.set_output(message)
-	signal.set_output(COMPONENT_SIGNAL)
-	ready = TRUE
