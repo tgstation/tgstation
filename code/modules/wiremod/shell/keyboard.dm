@@ -32,6 +32,7 @@
 	signal = add_output_port("Signal", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/keyboard_shell/register_shell(atom/movable/shell)
+	. = ..()
 	RegisterSignal(shell, COMSIG_ITEM_ATTACK_SELF, .proc/send_trigger)
 
 /obj/item/circuit_component/keyboard_shell/unregister_shell(atom/movable/shell)
