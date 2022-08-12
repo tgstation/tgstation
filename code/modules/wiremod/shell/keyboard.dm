@@ -37,6 +37,7 @@
 
 /obj/item/circuit_component/keyboard_shell/unregister_shell(atom/movable/shell)
 	UnregisterSignal(shell, COMSIG_ITEM_ATTACK_SELF)
+	return ..()
 
 /obj/item/circuit_component/keyboard_shell/proc/send_trigger(atom/source, mob/user)
 	SIGNAL_HANDLER
