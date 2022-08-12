@@ -41,7 +41,7 @@
 	RegisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), .proc/on_reagent_change)
 	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, .proc/on_reagents_del)
 
-/obj/item/reagent_containers/attack(mob/living/M, mob/living/user, params)
+/obj/item/reagent_containers/attack(mob/living/target_mob, mob/living/user, params)
 	if (!user.combat_mode)
 		return
 	return ..()

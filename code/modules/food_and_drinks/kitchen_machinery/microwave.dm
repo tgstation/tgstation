@@ -158,7 +158,7 @@
 			to_chat(user, span_warning("You need more space cleaner!"))
 		return TRUE
 
-	if(istype(O, /obj/item/soap) || istype(O, /obj/item/reagent_containers/glass/rag))
+	if(istype(O, /obj/item/soap) || istype(O, /obj/item/reagent_containers/cup/rag))
 		var/cleanspeed = 50
 		if(istype(O, /obj/item/soap))
 			var/obj/item/soap/used_soap = O
@@ -262,7 +262,7 @@
 		muck()
 		return
 	for(var/obj/O in ingredients)
-		if(istype(O, /obj/item/reagent_containers/food) || istype(O, /obj/item/grown))
+		if(istype(O, /obj/item/food) || istype(O, /obj/item/grown))
 			continue
 		if(prob(min(dirty * 5, 100)))
 			start_can_fail()
@@ -381,7 +381,7 @@
 	idle_power_usage = 0
 	active_power_usage = 0
 
-/obj/machinery/microwave/hell/Initialize()
+/obj/machinery/microwave/hell/Initialize(mapload)
 	. = ..()
 	//We want there to be some chance of them getting a working microwave (eventually).
 	if(prob(95))

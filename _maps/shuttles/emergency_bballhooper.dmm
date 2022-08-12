@@ -780,7 +780,7 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/trophy/gold_cup{
+/obj/item/reagent_containers/cup/glass/trophy/gold_cup{
 	pixel_x = 0
 	},
 /turf/open/floor/mineral/titanium/purple,

@@ -221,7 +221,7 @@
 
 	if(!burnt && human.bodytemperature >= 800 && human.fire_stacks > 0) //do not go into the extremely hot light. you will not survive
 		to_chat(human, span_danger("Your precious wings burn to a crisp!"))
-		SEND_SIGNAL(human, COMSIG_ADD_MOOD_EVENT, "burnt_wings", /datum/mood_event/burnt_wings)
+		human.add_mood_event("burnt_wings", /datum/mood_event/burnt_wings)
 
 		burn_wings()
 		human.update_body_parts()

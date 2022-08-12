@@ -203,7 +203,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else
 		to_chat(user, span_warning("There is nothing to smoke!"))
 
-/obj/item/clothing/mask/cigarette/afterattack(obj/item/reagent_containers/glass/glass, mob/user, proximity)
+/obj/item/clothing/mask/cigarette/afterattack(obj/item/reagent_containers/cup/glass, mob/user, proximity)
 	. = ..()
 	if(!proximity || lit) //can't dip if cigarette is lit (it will heat the reagents in the glass instead)
 		return
@@ -799,7 +799,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		span_warning("After a few attempts, [user] manages to light [src] - however, [user.p_they()] burn [user.p_their()] finger in the process."),
 		span_warning("You burn yourself while lighting the lighter!")
 	)
-	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "burnt_thumb", /datum/mood_event/burnt_thumb)
+	user.add_mood_event("burnt_thumb", /datum/mood_event/burnt_thumb)
 
 
 /obj/item/lighter/attack(mob/living/carbon/M, mob/living/carbon/user)
