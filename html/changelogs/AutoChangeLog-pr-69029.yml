@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - rscadd: "Species now have custom damage examines, so Androids now have denting and charring, rather than bruising and burning."
