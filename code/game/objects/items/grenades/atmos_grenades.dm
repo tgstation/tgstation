@@ -129,8 +129,7 @@
 /obj/item/grenade/gas_crystal/hypernoblium_crystal
 	name = "hypernoblium crystal"
 	desc = "A conductive crystal with a foggy inside."
-	icon = 'icons/obj/atmos.dmi' //This should get removed, and have an active version of its icon state.
-	icon_state = "hypernoblium_crystal"
+	icon_state = "hypernob_crystal"
 	var/foam_range = 7
 
 /obj/item/grenade/gas_crystal/hypernoblium_crystal/detonate(mob/living/lanced_by)
