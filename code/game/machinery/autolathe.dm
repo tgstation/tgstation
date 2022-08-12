@@ -30,17 +30,17 @@
 	var/hacked_price = 50
 
 	var/list/categories = list(
-							"Tools",
-							"Electronics",
-							"Construction",
-							"Material",
-							"T-Comm",
-							"Security",
-							"Machinery",
-							"Medical",
-							"Misc",
-							"Dinnerware",
-							"Imported"
+							RND_CATEGORY_TOOLS,
+							RND_CATEGORY_EQUIPMENT,
+							RND_CATEGORY_CONSTRUCTION,
+							RND_CATEGORY_MATERIAL,
+							RND_CATEGORY_TELECOMMS,
+							RND_CATEGORY_SECURITY,
+							RND_CATEGORY_MACHINERY,
+							RND_CATEGORY_MEDICAL,
+							RND_CATEGORY_MISC,
+							RND_CATEGORY_DINNERWARE,
+							RND_CATEGORY_IMPORTED
 							)
 
 /obj/machinery/autolathe/Initialize(mapload)

@@ -203,7 +203,7 @@
 	desc = "The circuit board for a biogenerator."
 	id = "biogenerator"
 	build_path = /obj/item/circuitboard/machine/biogenerator
-	category = list ("Hydroponics Machinery")
+	category = list(RND_CATEGORY_HYDROPONICS_MACHIENRY)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/board/hydroponics
@@ -211,7 +211,7 @@
 	desc = "The circuit board for a hydroponics tray."
 	id = "hydro_tray"
 	build_path = /obj/item/circuitboard/machine/hydroponics
-	category = list ("Hydroponics Machinery")
+	category = list(RND_CATEGORY_HYDROPONICS_MACHIENRY)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/board/destructive_analyzer
@@ -391,7 +391,7 @@
 	desc = "The circuit board for a seed extractor."
 	id = "seed_extractor"
 	build_path = /obj/item/circuitboard/machine/seed_extractor
-	category = list ("Hydroponics Machinery")
+	category = list(RND_CATEGORY_HYDROPONICS_MACHIENRY)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/board/processor
@@ -399,7 +399,7 @@
 	desc = "The circuit board for a processing unit. Screwdriver the circuit to switch between food (default) or slime processing."
 	id = "processor"
 	build_path = /obj/item/circuitboard/machine/processor
-	category = list (RND_CATEGORY_MISC_MACHINERY)
+	category = list(RND_CATEGORY_MISC_MACHINERY)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/board/soda_dispenser
@@ -408,7 +408,7 @@
 	id = "soda_dispenser"
 	build_path = /obj/item/circuitboard/machine/chem_dispenser/drinks
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
-	category = list (RND_CATEGORY_MISC_MACHINERY)
+	category = list(RND_CATEGORY_MISC_MACHINERY)
 
 /datum/design/board/beer_dispenser
 	name = "Machine Design (Portable Booze Dispenser Board)"
@@ -416,14 +416,14 @@
 	id = "beer_dispenser"
 	build_path = /obj/item/circuitboard/machine/chem_dispenser/drinks/beer
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
-	category = list (RND_CATEGORY_MISC_MACHINERY)
+	category = list(RND_CATEGORY_MISC_MACHINERY)
 
 /datum/design/board/recycler
 	name = "Machine Design (Recycler Board)"
 	desc = "The circuit board for a recycler."
 	id = "recycler"
 	build_path = /obj/item/circuitboard/machine/recycler
-	category = list (RND_CATEGORY_MISC_MACHINERY)
+	category = list(RND_CATEGORY_MISC_MACHINERY)
 
 
 /datum/design/board/scanner_gate
@@ -431,7 +431,7 @@
 	desc = "The circuit board for a scanner gate."
 	id = "scanner_gate"
 	build_path = /obj/item/circuitboard/machine/scanner_gate
-	category = list (RND_CATEGORY_MISC_MACHINERY)
+	category = list(RND_CATEGORY_MISC_MACHINERY)
 
 
 /datum/design/board/holopad
