@@ -65,8 +65,8 @@ Difficulty: Hard
 	achievement_type = /datum/award/achievement/boss/bubblegum_kill
 	crusher_achievement_type = /datum/award/achievement/boss/bubblegum_crusher
 	score_achievement_type = /datum/award/score/bubblegum_score
-	deathmessage = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
-	deathsound = 'sound/magic/enter_blood.ogg'
+	death_message = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
+	death_sound = 'sound/magic/enter_blood.ogg'
 	small_sprite_type = /datum/action/small_sprite/megafauna/bubblegum
 	faction = list("mining", "boss", "hell")
 	/// Check to see if we should spawn blood
@@ -84,7 +84,7 @@ Difficulty: Hard
 	/// Blood warp ability
 	var/datum/action/cooldown/mob_cooldown/blood_warp/blood_warp
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/Initialize()
+/mob/living/simple_animal/hostile/megafauna/bubblegum/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 	triple_charge = new /datum/action/cooldown/mob_cooldown/charge/triple_charge()
@@ -326,12 +326,12 @@ Difficulty: Hard
 	achievement_type = null
 	crusher_achievement_type = null
 	score_achievement_type = null
-	deathmessage = "Explodes into a pool of blood!"
-	deathsound = 'sound/effects/splat.ogg'
+	death_message = "Explodes into a pool of blood!"
+	death_sound = 'sound/effects/splat.ogg'
 	true_spawn = FALSE
 	var/move_through_mob
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/Initialize()
+/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/Initialize(mapload)
 	. = ..()
 	toggle_ai(AI_OFF)
 

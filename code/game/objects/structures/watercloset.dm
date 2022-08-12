@@ -256,6 +256,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	icon_state = "sink"
 	desc = "A sink used for washing one's hands and face. Passively reclaims water over time."
 	anchored = TRUE
+	layer = ABOVE_OBJ_LAYER
 	pixel_z = 1
 	///Something's being washed at the moment
 	var/busy = FALSE

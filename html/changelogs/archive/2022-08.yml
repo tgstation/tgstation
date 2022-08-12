@@ -269,3 +269,172 @@
   timothymtorres:
   - bugfix: Fix audible emotes playing sounds while mob is gagged, mute, tongueless,
       or under a vow of silence.
+2022-08-09:
+  Melbert:
+  - bugfix: Heretic stalkers are able again to return back to their normal form after
+      casting shapeshift.
+  PositiveEntropy, AxieTheAxolotl:
+  - rscadd: Adds the Chief Medical Officer's Scrubs, making it the default clothing
+      option when they spawn!
+  - rscadd: Adds Surgery Caps! Doctors now spawn with them, and can buy some from
+      the MediDrobe! The CMO gets a special fancy one!
+  - qol: All scrubs are now adjustable, making surgery less of a pain!
+  - imageadd: Resprites the biosuits, making you look less bloated.
+  - imageadd: Resprites every labcoat in the game, including the paramedic's.
+  - imageadd: Resprites the entire medical department (again)!
+  ShizCalev:
+  - bugfix: Security records in filing cabinets will now actually contain crimes!
+  - bugfix: The eye of god will now send a provide a message when its scan is recharged.
+  SuperNovaa41:
+  - bugfix: Fixes ash walker tendrils dropping typeless anomaly cores.
+  dragomagol:
+  - admin: Moved the rest of the dynamic logs to dynamic.log
+  tralezab:
+  - qol: Bileworms possessed by players can now see in the dark!
+  - qol: Bileworms now have a death message!
+  - balance: Bileworms will now give up their targeting if they fail to burrow to
+      you. If they can still see you, they might regain aggro, but now moving say,
+      to the mining station/big lava lake/hirophant is a good way to de-aggro them.
+  twilightwanderer:
+  - rscadd: Added new VOID stamp
+  - bugfix: Photocopier paperforms
+2022-08-10:
+  GoldenAlpharex:
+  - bugfix: Fixed the game re-initializing your verbs for no reason when you deadmin,
+      which was the cause of the "Your previous action was ignored because you've
+      done too many in a second" spam when pressing the Deadmin button.
+  - bugfix: The MC tab no longer appears in a "ghost" state in your status tabs after
+      you deadmin. Now it's just gone, at long last!
+  - code_imp: Prettier should no longer be ran on files outside of the "tgui" folder.
+  ShizCalev:
+  - bugfix: Player controlled cleanbots can now actually kill cockroaches and mice!
+  - bugfix: Right-clicking a non-carbon based mob (humans, xeno, ect) will now bite
+      them instead of doing nothing.
+  - server: Added a configurable probability for nonhuman species to spawn in the
+      morgue at round start!
+  - qol: Cadavers in the morgue at round start will now spawn in bodybags.
+  - bugfix: Adminspawned morgue cadavers will now only spawn inside closed morguetrays
+      (the bodies could get stuck inside them!)
+  - bugfix: Morguetrays are now less likely to end up having multiple cadavers in
+      them.
+  TheBoondock:
+  - code_imp: add proc create_atmos_zone which detect an isolated atmos zone while
+      ignoring walls and non atmos_can_pass tiles (zas zone)
+2022-08-11:
+  GoldenAlpharex:
+  - spellcheck: The long-range gas analyzer's name is no longer capitalized, as it's
+      not a proper name.
+  Jacquerel:
+  - refactor: A lot of food which was 'gross' is now 'gore'.
+  - balance: '''Gore'' is disliked by Humans and Moths, but liked by Lizards and Felinids.
+      Lizards no longer like ''gross'' food.'
+  - balance: All butchered player species are considered to be gore, only preferred
+      by Lizards, Felinids, and people with Deviant Tastes. If you like the taste
+      of your fellow crew, prepare accordingly.
+  JohnFulpWillard:
+  - spellcheck: Calomel now properly states that it only purges toxins, rather than
+      all chemicals, like it already does.
+  Melbert:
+  - rscadd: Added support for elevator doors.
+  - rscadd: Elevators now have travel time, and make sound when moving. Emagging the
+      elevator button will speed them up.
+  - rscadd: Added support for less-than-lethal elevators, which crush your bones instead
+      of gibbing you. Emagging the elevator button will revert them to gibbing.
+  - rscadd: Added support for elevators to warn people below that they're moving down.
+      Emagging the elevator button will disable this.
+  - rscadd: Added elevator panels, and support for using elevators without a radial.
+  - qol: Elevator call buttons and the trapdoor now use balloon alerts.
+  - admin: Heretic starting research and ascending is logged in the Blackbox
+  Mooshimi:
+  - code_imp: Perish, individual logging runtime.
+  Nano:
+  - soundadd: 'Added 2 new sounds to the synthesizer''s ''fun'' category: MeowSynth
+      and Spaceman'
+  PositiveEntropy, Kryson:
+  - rscdel: Removes old and unused titanium, plastitanium and plating damaged states.
+  - imageadd: Resprites the wooden, titanium and plastitanium-related floors!
+  - imageadd: Decals related to the resprited tiles have been adjusted accordingly.
+  - imageadd: Updates the appearance of plating to be smoother!
+  ShizCalev:
+  - bugfix: Fixed traitors not getting a new kidnapping objective if they previously
+      failed to kidnap someone else.
+  - bugfix: Cutting open someone's heart will now actually make them bleed properly!
+  - bugfix: The Quartermaster and his items will now trigger phobias related to command
+      staff!
+  - bugfix: Command rank bedsheets, jackets, cloaks, and headsets will now trigger
+      phobias related to command staff.
+  - bugfix: The QM's bedsheets will now make you dream of authority and silvery IDs!
+  - qol: Rightclicking someone you're holding up will now shoot at them.
+  - bugfix: You can no longer hold someone up from across the station.
+  - bugfix: Holding someone at gunpoint will now check if you can actually see the
+      person you're holding up more often.
+  Timberpoes:
+  - bugfix: Fixes broken command report formatting for station goals.
+  - bugfix: Fixes markdown paragraphing not working in paper code.
+  Time-Green:
+  - rscadd: You can now remove/add all those ugly species features with the power
+      of surgery! A lizards frills, horns, snout and spines, a moths wings and antennae,
+      podperson hair and just wings in general
+  - rscadd: Species features can be altered by organ manipulation or the new 'feature
+      manipulation' surgery! 'Feature manipulation' is a shorter version of organ
+      manip that let's you only operate on external features
+  - balance: Organ manipulation only works on internal organs now. Use 'feature manipulation'
+      for external organs.
+  - code_imp: cleans up magic numbers in surgery
+  - bugfix: golden wheelchairs will now spawn
+  VioletN:
+  - balance: Instead of directly lowering body temperature by a small amount, the
+      Grasp of Void and Mark of Void heretic abilities now inflict a status condition
+      called void chill, which steadily lowers the victim's body temperature and also
+      inflicts a mild slowdown.
+  - balance: The void storm summoned by ascended void heretics now inflicts less direct
+      burn damage, but lowers body temperature much more strongly.
+  - bugfix: The void storm visual overlays now properly update when the heretic exits
+      an area, making them a more accurate indicator of which area the heretic is
+      in.
+  Wallem:
+  - imageadd: Updates the sprite for the metal & homerun bat
+  XyzzyThePretender:
+  - spellcheck: Fixes grammar for solar panel construction
+  - bugfix: Newly built turrets start unlocked.
+  - balance: munchies now impact hunger at a rate similar to running nonstop
+  Zonespace27:
+  - bugfix: Butcher's meat hook no longer fails when the user has TRAIT_NOGUNS
+  axietheaxolotl:
+  - imageadd: new dead body spawner icons
+  orthography:
+  - bugfix: emitter examine text now displays minimum maximum delay.
+  - spellcheck: changes the text on the emitter examine blurb.
+2022-08-12:
+  GoldenAlpharex:
+  - bugfix: Conveyor belts now properly update their sprites when flipped or inverted
+      using a screwdriver, without the need to being turned on and off to take effect.
+  - bugfix: Food exports now follow export value elasticity, as intended.
+  JohnFulpWillard:
+  - rscadd: Species now have custom damage examines, so Androids now have denting
+      and charring, rather than bruising and burning.
+  Pepsilawn:
+  - bugfix: Kitchen sinks will now be functional if placed facing against a window
+      and some other closed structures, up-facing sinks also look somewhat better
+      as a result.
+  ShizCalev:
+  - qol: You can now use wallets & PDAs with IDs in them to play roulette!
+  - bugfix: Fixed a runtime when hitting a roulette table with an ID that doesn't
+      have a linked bank account!
+  Spookuni:
+  - bugfix: Dorms rooms D and R on tramstation now bolt properly.
+  SuperNovaa41:
+  - admin: Added two new procs into the VV dropdown menu to add and remove mood events
+      from living mobs.
+  necromanceranne:
+  - balance: The Bulldog Shotgun now has a second magazine.
+  - balance: You can swap the magazine as you fire by shooting with rightclick.
+  vincentiusvin:
+  - bugfix: fixed an incorrect count down message if SM changed it's delam twice.
+  - balance: Made a pure BZ SM a tad stronger, made a mixed BZ + high power gas SM
+      a lot weaker.
+  - balance: Freon power nuking can be negated slightly by other high power gases.
+      Moved the power nuking threshold from 30% to 33.33%
+  - balance: Water vapor SM will only lower power transmission instead of dampening
+      it both ways.
+  - balance: CO2 power increase can also be modified by other gases.

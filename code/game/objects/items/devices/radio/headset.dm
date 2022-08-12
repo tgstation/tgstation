@@ -104,13 +104,17 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/syndicate //disguised to look like a normal headset for stealth ops
 
+/obj/item/radio/headset/syndicate/Initialize(mapload)
+	. = ..()
+	make_syndie()
+
 /obj/item/radio/headset/syndicate/alt //undisguised bowman with flash protection
 	name = "syndicate headset"
 	desc = "A syndicate headset that can be used to hear all radio frequencies. Protects ears from flashbangs."
 	icon_state = "syndie_headset"
 	inhand_icon_state = "syndie_headset"
 
-/obj/item/radio/headset/syndicate/alt/ComponentInitialize()
+/obj/item/radio/headset/syndicate/alt/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 
@@ -118,11 +122,8 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	name = "team leader headset"
 	command = TRUE
 
-/obj/item/radio/headset/syndicate/Initialize(mapload)
-	. = ..()
-	make_syndie()
-
 /obj/item/radio/headset/binary
+
 /obj/item/radio/headset/binary/Initialize(mapload)
 	. = ..()
 	qdel(keyslot)
@@ -141,7 +142,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	icon_state = "sec_headset_alt"
 	inhand_icon_state = "sec_headset_alt"
 
-/obj/item/radio/headset/headset_sec/alt/ComponentInitialize()
+/obj/item/radio/headset/headset_sec/alt/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 
@@ -208,7 +209,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	icon_state = "com_headset_alt"
 	inhand_icon_state = "com_headset_alt"
 
-/obj/item/radio/headset/heads/captain/alt/ComponentInitialize()
+/obj/item/radio/headset/heads/captain/alt/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 
@@ -230,7 +231,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	icon_state = "com_headset_alt"
 	inhand_icon_state = "com_headset_alt"
 
-/obj/item/radio/headset/heads/hos/alt/ComponentInitialize()
+/obj/item/radio/headset/heads/hos/alt/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 
@@ -297,7 +298,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	inhand_icon_state = "cent_headset_alt"
 	keyslot = null
 
-/obj/item/radio/headset/headset_cent/alt/ComponentInitialize()
+/obj/item/radio/headset/headset_cent/alt/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 

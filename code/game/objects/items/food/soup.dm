@@ -157,7 +157,7 @@
 	icon_state = "eyeballsoup"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/tomatojuice = 10, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/liquidgibs = 3)
 	tastes = list("tomato" = 1, "squirming" = 1)
-	foodtypes = MEAT | GROSS
+	foodtypes = MEAT | GORE
 
 /obj/item/food/soup/miso
 	name = "misosoup"

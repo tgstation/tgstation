@@ -87,7 +87,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	if(lit && M.ignite_mob())
 		message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(M)] on fire with [src] at [AREACOORD(user)]")
-		user.log_message("set [key_name(M)] on fire with [src] at [AREACOORD(user)]", LOG_ATTACK)
+		user.log_message("set [key_name(M)] on fire with [src]", LOG_ATTACK)
 
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M)
 	if(!lit || !cig || user.combat_mode)
@@ -799,7 +799,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		span_warning("After a few attempts, [user] manages to light [src] - however, [user.p_they()] burn [user.p_their()] finger in the process."),
 		span_warning("You burn yourself while lighting the lighter!")
 	)
-	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "burnt_thumb", /datum/mood_event/burnt_thumb)
+	user.add_mood_event("burnt_thumb", /datum/mood_event/burnt_thumb)
 
 
 /obj/item/lighter/attack(mob/living/carbon/M, mob/living/carbon/user)

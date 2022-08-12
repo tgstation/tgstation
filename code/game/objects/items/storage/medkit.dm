@@ -60,7 +60,7 @@
 	inhand_icon_state = "medkit"
 	desc = "A high capacity aid kit for doctors, full of medical supplies and basic surgical equipment"
 
-/obj/item/storage/medkit/surgery/Initialize()
+/obj/item/storage/medkit/surgery/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL //holds the same equipment as a medibelt
 	atom_storage.max_slots = 12
@@ -258,7 +258,7 @@
 	icon_state = "medkit_tactical"
 	damagetype_healed = "all"
 
-/obj/item/storage/medkit/tactical/Initialize()
+/obj/item/storage/medkit/tactical/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 
@@ -316,7 +316,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/storage/pill_bottle/Initialize()
+/obj/item/storage/pill_bottle/Initialize(mapload)
 	. = ..()
 	atom_storage.allow_quick_gather = TRUE
 	atom_storage.set_holdable(list(/obj/item/reagent_containers/pill))

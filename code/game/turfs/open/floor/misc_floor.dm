@@ -206,11 +206,8 @@
 
 /turf/open/floor/plating/rust/Initialize(mapload)
 	. = ..()
-	color = null
-
-/turf/open/floor/plating/rust/ComponentInitialize()
-	. = ..()
 	AddElement(/datum/element/rust)
+	color = null
 
 /turf/open/floor/plating/plasma
 	initial_gas_mix = ATMOS_TANK_PLASMA

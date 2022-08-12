@@ -18,6 +18,7 @@
 		/obj/effect/gibspawner/generic = 1,
 		/obj/item/stack/sheet/animalhide/bileworm = 1,
 	)
+	death_message = "seizes up and falls limp, slowly receeding into its burrow with a dying gurgle..."
 
 	//it can't be dragged, just butcher it
 	move_resist = INFINITY
@@ -51,6 +52,8 @@
 	resurface.Grant(src)
 	var/datum/action/cooldown/mob_cooldown/devour/devour = new(src)
 	devour.Grant(src)
+	var/datum/action/adjust_vision/adjust_vision = new(src)
+	adjust_vision.Grant(src)
 	ai_controller.blackboard[BB_BILEWORM_SPEW_BILE] = spew_bile
 	ai_controller.blackboard[BB_BILEWORM_RESURFACE] = resurface
 	ai_controller.blackboard[BB_BILEWORM_DEVOUR] = devour

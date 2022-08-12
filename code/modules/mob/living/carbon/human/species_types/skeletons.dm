@@ -33,7 +33,7 @@
 	mutantstomach = /obj/item/organ/internal/stomach/bone
 	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
 	disliked_food = NONE
-	liked_food = GROSS | MEAT | RAW
+	liked_food = GROSS | MEAT | RAW | GORE
 	wings_icons = list("Skeleton")
 	//They can technically be in an ERT
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN

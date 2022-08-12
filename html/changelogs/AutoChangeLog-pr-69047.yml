@@ -1,9 +1,0 @@
-author: "PositiveEntropy, AxieTheAxolotl"
-delete-after: True
-changes: 
-  - rscadd: "Adds the Chief Medical Officer's Scrubs, making it the default clothing option when they spawn!"
-  - rscadd: "Adds Surgery Caps! Doctors now spawn with them, and can buy some from the MediDrobe! The CMO gets a special fancy one!"
-  - qol: "All scrubs are now adjustable, making surgery less of a pain!"
-  - imageadd: "Resprites the biosuits, making you look less bloated."
-  - imageadd: "Resprites every labcoat in the game, including the paramedic's."
-  - imageadd: "Resprites the entire medical department (again)!"

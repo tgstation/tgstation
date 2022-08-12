@@ -18,7 +18,7 @@
 	///If the UI has the pH meter shown
 	var/show_ph = TRUE
 
-/obj/item/storage/portable_chem_mixer/Initialize()
+/obj/item/storage/portable_chem_mixer/Initialize(mapload)
 	. = ..()
 	atom_storage.max_total_storage = 200
 	atom_storage.max_slots = 50

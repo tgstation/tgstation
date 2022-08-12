@@ -190,9 +190,12 @@
 			O.emp_act(severity)
 
 /obj/item/gun/afterattack_secondary(mob/living/victim, mob/living/user, params)
-	if(!ismob(victim))
-		return
-	if (user.GetComponent(/datum/component/gunpoint))
+	if(!isliving(victim) || !IN_GIVEN_RANGE(user, victim, GUNPOINT_SHOOTER_STRAY_RANGE))
+		return ..() //if they're out of range, just shootem.
+	var/datum/component/gunpoint/gunpoint_component = user.GetComponent(/datum/component/gunpoint)
+	if (gunpoint_component)
+		if(gunpoint_component.target == victim)
+			return ..() //we're already holding them up, shoot that mans instead of complaining
 		to_chat(user, span_warning("You are already holding someone up!"))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if (user == victim)

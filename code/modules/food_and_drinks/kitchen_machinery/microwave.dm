@@ -381,7 +381,7 @@
 	idle_power_usage = 0
 	active_power_usage = 0
 
-/obj/machinery/microwave/hell/Initialize()
+/obj/machinery/microwave/hell/Initialize(mapload)
 	. = ..()
 	//We want there to be some chance of them getting a working microwave (eventually).
 	if(prob(95))
