@@ -77,6 +77,7 @@
 		/mob/living/simple_animal/pet/fox,
 		/mob/living/simple_animal/butterfly,
 		/mob/living/simple_animal/pet/cat/cak,
+		/mob/living/simple_animal/pet/dog/breaddog,
 		/mob/living/simple_animal/chick,
 		/mob/living/basic/cow/wisdom,
 		/obj/item/skub,

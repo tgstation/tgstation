@@ -310,3 +310,8 @@
 	description = "Fishing is relaxing."
 	mood_change = 5
 	timeout = 3 MINUTES
+
+/datum/mood_event/sanallite
+	description = "You are all loved by the Universe. I’m not alone, and you aren’t either."
+	mood_change = 14
+	timeout = 10 SECONDS
