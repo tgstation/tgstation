@@ -177,10 +177,10 @@
 		to_chat(src, span_notice("Your name is now <b>\"new_name\"</b>!"))
 		name = new_name
 
-/mob/living/simple_animal/hostile/bear/butter/AttackingTarget() //Makes the butter bear's attacks against vertical targets slip said targets
+/mob/living/simple_animal/hostile/bear/butter/AttackingTarget(atom/attacked_target) //Makes the butter bear's attacks against vertical targets slip said targets
 	. = ..()
-	if(isliving(target)) //we don't check for . here, since attack_animal() (and thus AttackingTarget()) will return false if your damage dealt is 0
-		var/mob/living/L = target
+	if(isliving(attacked_target)) //we don't check for . here, since attack_animal() (and thus AttackingTarget()) will return false if your damage dealt is 0
+		var/mob/living/L = attacked_target
 		if((L.body_position == STANDING_UP))
 			L.Knockdown(20)
 			playsound(loc, 'sound/misc/slip.ogg', 15)

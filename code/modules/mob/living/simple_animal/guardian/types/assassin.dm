@@ -33,10 +33,10 @@
 	if(stealthcooldown >= world.time)
 		. += "Stealth Cooldown Remaining: [DisplayTimeText(stealthcooldown - world.time)]"
 
-/mob/living/simple_animal/hostile/guardian/assassin/AttackingTarget()
+/mob/living/simple_animal/hostile/guardian/assassin/AttackingTarget(atom/attacked_target)
 	. = ..()
 	if(.)
-		if(toggle && (isliving(target) || istype(target, /obj/structure/window) || istype(target, /obj/structure/grille)))
+		if(toggle && (isliving(attacked_target) || istype(attacked_target, /obj/structure/window) || istype(attacked_target, /obj/structure/grille)))
 			ToggleMode(1)
 
 /mob/living/simple_animal/hostile/guardian/assassin/adjustHealth(amount, updating_health = TRUE, forced = FALSE)

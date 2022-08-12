@@ -298,25 +298,25 @@
 
 /mob/living/simple_animal/hostile/heretic_summon/armsy/Shoot(atom/targeted_atom)
 	GiveTarget(targeted_atom)
-	AttackingTarget()
+	AttackingTarget(targeted_atom)
 
-/mob/living/simple_animal/hostile/heretic_summon/armsy/AttackingTarget()
-	if(istype(target, /obj/item/bodypart/r_arm) || istype(target, /obj/item/bodypart/l_arm))
+/mob/living/simple_animal/hostile/heretic_summon/armsy/AttackingTarget(atom/attacked_target)
+	if(istype(attacked_target, /obj/item/bodypart/r_arm) || istype(attacked_target, /obj/item/bodypart/l_arm))
 		playsound(src, 'sound/magic/demon_consume.ogg', 50, TRUE)
-		qdel(target)
+		qdel(attacked_target)
 		heal()
 		return
-	if(target == back || target == front)
+	if(attacked_target == back || attacked_target == front)
 		return
 	if(back)
-		back.GiveTarget(target)
-		back.AttackingTarget()
-	if(!Adjacent(target))
+		back.GiveTarget(attacked_target)
+		back.AttackingTarget(attacked_target)
+	if(!Adjacent(attacked_target))
 		return
-	do_attack_animation(target)
+	do_attack_animation(attacked_target)
 
-	if(iscarbon(target))
-		var/mob/living/carbon/carbon_target = target
+	if(iscarbon(attacked_target))
+		var/mob/living/carbon/carbon_target = attacked_target
 		if(HAS_TRAIT(carbon_target, TRAIT_NODISMEMBER))
 			return
 		var/list/parts_to_remove = list()

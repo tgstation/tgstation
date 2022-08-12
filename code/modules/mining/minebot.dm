@@ -167,18 +167,18 @@
 	icon_state = "mining_drone_offense"
 	to_chat(src, span_info("You are set to attack mode. You can now attack from range."))
 
-/mob/living/simple_animal/hostile/mining_drone/AttackingTarget()
-	if(istype(target, /obj/item/stack/ore) && mode == MINEDRONE_COLLECT)
+/mob/living/simple_animal/hostile/mining_drone/AttackingTarget(atom/attacked_target)
+	if(istype(attacked_target, /obj/item/stack/ore) && mode == MINEDRONE_COLLECT)
 		CollectOre()
 		return
-	if(isliving(target))
+	if(isliving(attacked_target))
 		SetOffenseBehavior()
 	return ..()
 
-/mob/living/simple_animal/hostile/mining_drone/OpenFire(atom/target)
-	if(CheckFriendlyFire(target))
+/mob/living/simple_animal/hostile/mining_drone/OpenFire(atom/attacking_target)
+	if(CheckFriendlyFire(attacking_target))
 		return
-	stored_gun.afterattack(target, src) //of the possible options to allow minebots to have KA mods, would you believe this is the best?
+	stored_gun.afterattack(attacking_target, src) //of the possible options to allow minebots to have KA mods, would you believe this is the best?
 
 /mob/living/simple_animal/hostile/mining_drone/proc/CollectOre()
 	for(var/obj/item/stack/ore/O in range(1, src))

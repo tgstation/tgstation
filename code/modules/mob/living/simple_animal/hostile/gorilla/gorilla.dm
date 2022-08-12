@@ -70,14 +70,14 @@
 	if(client)
 		oogaooga()
 
-	var/list/parts = get_target_bodyparts(target)
+	var/list/parts = get_target_bodyparts(attacked_target)
 	if(length(parts))
 		var/obj/item/bodypart/to_dismember = pick(parts)
 		to_dismember.dismember()
 		return
 
-	if(isliving(target))
-		var/mob/living/living_target = target
+	if(isliving(attacked_target))
+		var/mob/living/living_target = attacked_target
 		if(prob(80))
 			living_target.throw_at(get_edge_target_turf(living_target, dir), rand(1, 2), 7, src)
 

@@ -113,9 +113,9 @@
 	foam = new
 	foam.Grant(src)
 
-/mob/living/simple_animal/hostile/hivebot/mechanic/AttackingTarget()
-	if(istype(target, /obj/machinery))
-		var/obj/machinery/fixable = target
+/mob/living/simple_animal/hostile/hivebot/mechanic/AttackingTarget(atom/attacked_target)
+	if(istype(attacked_target, /obj/machinery))
+		var/obj/machinery/fixable = attacked_target
 		if(fixable.get_integrity() >= fixable.max_integrity)
 			to_chat(src, span_warning("Diagnostics indicate that this machine is at peak integrity."))
 			return
@@ -125,8 +125,8 @@
 			do_sparks(3, TRUE, fixable)
 			to_chat(src, span_warning("Repairs complete."))
 		return
-	if(istype(target, /mob/living/simple_animal/hostile/hivebot))
-		var/mob/living/simple_animal/hostile/hivebot/fixable = target
+	if(istype(attacked_target, /mob/living/simple_animal/hostile/hivebot))
+		var/mob/living/simple_animal/hostile/hivebot/fixable = attacked_target
 		if(fixable.health >= fixable.maxHealth)
 			to_chat(src, span_warning("Diagnostics indicate that this unit is at peak integrity."))
 			return

@@ -165,14 +165,14 @@
 	return FALSE
 
 
-/mob/living/simple_animal/hostile/bee/AttackingTarget()
+/mob/living/simple_animal/hostile/bee/AttackingTarget(atom/attacked_target)
 	//Pollinate
-	if(istype(target, /obj/machinery/hydroponics))
-		var/obj/machinery/hydroponics/Hydro = target
+	if(istype(attacked_target, /obj/machinery/hydroponics))
+		var/obj/machinery/hydroponics/Hydro = attacked_target
 		pollinate(Hydro)
-	else if(istype(target, /obj/structure/beebox))
-		if(target == beehome)
-			var/obj/structure/beebox/BB = target
+	else if(istype(attacked_target, /obj/structure/beebox))
+		if(attacked_target == beehome)
+			var/obj/structure/beebox/BB = attacked_target
 			forceMove(BB)
 			toggle_ai(AI_IDLE)
 			LoseTarget()
@@ -180,8 +180,8 @@
 		return //no don't attack the goddamm box
 	else
 		. = ..()
-		if(. && beegent && isliving(target))
-			var/mob/living/L = target
+		if(. && beegent && isliving(attacked_target))
+			var/mob/living/L = attacked_target
 			if(L.reagents)
 				beegent.expose_mob(L, INJECT)
 				L.reagents.add_reagent(beegent.type, rand(1,5))
@@ -270,10 +270,10 @@
 
 
 //leave pollination for the peasent bees
-/mob/living/simple_animal/hostile/bee/queen/AttackingTarget()
+/mob/living/simple_animal/hostile/bee/queen/AttackingTarget(atom/attacked_target)
 	. = ..()
-	if(. && beegent && isliving(target))
-		var/mob/living/L = target
+	if(. && beegent && isliving(attacked_target))
+		var/mob/living/L = attacked_target
 		beegent.expose_mob(L, TOUCH)
 		L.reagents.add_reagent(beegent.type, rand(1,5))
 

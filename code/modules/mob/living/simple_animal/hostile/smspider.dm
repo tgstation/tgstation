@@ -31,19 +31,19 @@
 	footstep_type = FOOTSTEP_MOB_CLAW
 	var/overcharged = FALSE // if true, spider will not die if it dusts a limb
 
-/mob/living/simple_animal/hostile/smspider/AttackingTarget()
+/mob/living/simple_animal/hostile/smspider/AttackingTarget(atom/attacked_target)
 	. = ..()
-	if(isliving(target))
+	if(isliving(attacked_target))
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 10, TRUE)
 		visible_message(span_danger("[src] knocks into [target], turning them to dust in a brilliant flash of light!"))
-		var/mob/living/victim = target
+		var/mob/living/victim = attacked_target
 		victim.dust()
 		if(!overcharged)
 			death()
-	else if(!isturf(target))
+	else if(!isturf(attacked_target))
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 10, TRUE)
-		visible_message(span_danger("[src] knocks into [target], turning it to dust in a brilliant flash of light!"))
-		qdel(target)
+		visible_message(span_danger("[src] knocks into [attacked_target], turning it to dust in a brilliant flash of light!"))
+		qdel(attacked_target)
 		if(!overcharged)
 			death()
 	return FALSE

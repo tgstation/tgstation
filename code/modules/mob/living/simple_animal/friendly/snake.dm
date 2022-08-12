@@ -67,10 +67,10 @@
 	//Filter living mobs (in range mobs) by those we consider enemies (retaliate behaviour)
 	return  living_mobs & actual_enemies
 
-/mob/living/simple_animal/hostile/retaliate/snake/AttackingTarget()
-	if(istype(target, /mob/living/simple_animal/mouse))
-		visible_message(span_notice("[name] consumes [target] in a single gulp!"), span_notice("You consume [target] in a single gulp!"))
-		QDEL_NULL(target)
+/mob/living/simple_animal/hostile/retaliate/snake/AttackingTarget(atom/attacked_target)
+	if(istype(attacked_target, /mob/living/simple_animal/mouse))
+		visible_message(span_notice("[name] consumes [attacked_target] in a single gulp!"), span_notice("You consume [attacked_target] in a single gulp!"))
+		QDEL_NULL(attacked_target)
 		adjustBruteLoss(-2)
 	else
 		return ..()

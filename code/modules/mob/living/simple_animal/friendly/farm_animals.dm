@@ -88,10 +88,10 @@
 	if(eaten && prob(10))
 		say("Nom")
 
-/mob/living/simple_animal/hostile/retaliate/goat/AttackingTarget()
+/mob/living/simple_animal/hostile/retaliate/goat/AttackingTarget(atom/attacked_target)
 	. = ..()
-	if(. && ishuman(target))
-		var/mob/living/carbon/human/H = target
+	if(. && ishuman(attacked_target))
+		var/mob/living/carbon/human/H = attacked_target
 		if(istype(H.dna.species, /datum/species/pod))
 			var/obj/item/bodypart/NB = pick(H.bodyparts)
 			H.visible_message(span_warning("[src] takes a big chomp out of [H]!"), \

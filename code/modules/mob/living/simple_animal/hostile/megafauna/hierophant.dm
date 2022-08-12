@@ -457,10 +457,10 @@ Difficulty: Hard
 		wander = TRUE
 		did_reset = FALSE
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/AttackingTarget()
+/mob/living/simple_animal/hostile/megafauna/hierophant/AttackingTarget(atom/attacked_target)
 	if(!blinking)
-		if(target && isliving(target))
-			var/mob/living/L = target
+		if(attacked_target && isliving(attacked_target))
+			var/mob/living/L = attacked_target
 			if(L.stat != DEAD)
 				if(ranged_cooldown <= world.time)
 					calculate_rage()

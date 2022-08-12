@@ -24,13 +24,13 @@
 		clear_alert(ALERT_CHARGE)
 		chargealert = null
 
-/mob/living/simple_animal/hostile/guardian/charger/OpenFire(atom/A)
+/mob/living/simple_animal/hostile/guardian/charger/OpenFire(atom/attacking_target)
 	if(!charging)
-		visible_message(span_danger("<b>[src]</b> [ranged_message] at [A]!"))
+		visible_message(span_danger("<b>[src]</b> [ranged_message] at [attacking_target]!"))
 		ranged_cooldown = world.time + ranged_cooldown_time
 		clear_alert(ALERT_CHARGE)
 		chargealert = null
-		Shoot(A)
+		Shoot(attacking_target)
 
 /mob/living/simple_animal/hostile/guardian/charger/Shoot(atom/targeted_atom)
 	charging = 1

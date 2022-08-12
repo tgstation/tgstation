@@ -41,16 +41,16 @@
 					span_danger("We inject our egg into [victim]'s body!"))
 	egg_lain = 1
 
-/mob/living/simple_animal/hostile/headcrab/AttackingTarget()
+/mob/living/simple_animal/hostile/headcrab/AttackingTarget(atom/attacked_target)
 	. = ..()
-	if(. && !egg_lain && iscarbon(target) && !ismonkey(target))
+	if(. && !egg_lain && iscarbon(attacked_target) && !ismonkey(attacked_target))
 		// Changeling egg can survive in aliens!
-		var/mob/living/carbon/C = target
+		var/mob/living/carbon/C = attacked_target
 		if(C.stat == DEAD)
 			if(HAS_TRAIT(C, TRAIT_XENO_HOST))
 				to_chat(src, span_userdanger("A foreign presence repels us from this body. Perhaps we should try to infest another?"))
 				return
-			Infect(target)
+			Infect(attacked_target)
 			to_chat(src, span_userdanger("With our egg laid, our death approaches rapidly..."))
 			addtimer(CALLBACK(src, .proc/death), 100)
 
@@ -87,7 +87,7 @@
 		var/datum/action/changeling/humanform/hf = new()
 		changeling_datum.purchased_powers += hf
 		changeling_datum.regain_powers()
-		
+
 	owner.gib()
 
 #undef EGG_INCUBATION_TIME

@@ -65,10 +65,10 @@
 		T.air.gases[/datum/gas/carbon_dioxide][MOLES] -= amt
 		T.atmos_spawn_air("o2=[amt]")
 
-/mob/living/simple_animal/hostile/tree/AttackingTarget()
+/mob/living/simple_animal/hostile/tree/AttackingTarget(atom/attacked_target)
 	. = ..()
-	if(iscarbon(target))
-		var/mob/living/carbon/C = target
+	if(iscarbon(attacked_target))
+		var/mob/living/carbon/C = attacked_target
 		if(prob(15))
 			C.Paralyze(60)
 			C.visible_message(span_danger("\The [src] knocks down \the [C]!"), \

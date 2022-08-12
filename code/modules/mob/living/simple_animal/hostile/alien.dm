@@ -163,11 +163,11 @@
 	. = ..()
 	AddElement(/datum/element/cleaning)
 
-/mob/living/simple_animal/hostile/alien/maid/AttackingTarget()
-	if(ismovable(target))
-		target.wash(CLEAN_SCRUB)
-		if(istype(target, /obj/effect/decal/cleanable))
-			visible_message(span_notice("[src] cleans up \the [target]."))
+/mob/living/simple_animal/hostile/alien/maid/AttackingTarget(atom/attacked_target)
+	if(ismovable(attacked_target))
+		attacked_target.wash(CLEAN_SCRUB)
+		if(istype(attacked_target, /obj/effect/decal/cleanable))
+			visible_message(span_notice("[src] cleans up \the [attacked_target]."))
 		else
-			visible_message(span_notice("[src] polishes \the [target]."))
+			visible_message(span_notice("[src] polishes \the [attacked_target]."))
 		return TRUE

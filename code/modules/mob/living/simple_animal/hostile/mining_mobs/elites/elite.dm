@@ -34,12 +34,12 @@
 		attack_action.Grant(src)
 
 //Prevents elites from attacking members of their faction (can't hurt themselves either) and lets them mine rock with an attack despite not being able to smash walls.
-/mob/living/simple_animal/hostile/asteroid/elite/AttackingTarget()
-	if(istype(target, /mob/living/simple_animal/hostile))
+/mob/living/simple_animal/hostile/asteroid/elite/AttackingTarget(atom/attacked_target)
+	if(istype(attacked_target, /mob/living/simple_animal/hostile))
 		var/mob/living/simple_animal/hostile/M = target
 		if(faction_check_mob(M))
 			return FALSE
-	if(istype(target, /obj/structure/elite_tumor))
+	if(istype(attacked_target, /obj/structure/elite_tumor))
 		var/obj/structure/elite_tumor/T = target
 		if(T.mychild == src && T.activity == TUMOR_PASSIVE)
 			var/elite_remove = tgui_alert(usr,"Re-enter the tumor?", "Despawn yourself?", list("Yes", "No"))
@@ -51,11 +51,11 @@
 			qdel(src)
 			return FALSE
 	. = ..()
-	if(ismineralturf(target))
-		var/turf/closed/mineral/M = target
+	if(ismineralturf(attacked_target))
+		var/turf/closed/mineral/M = attacked_target
 		M.gets_drilled()
-	if(istype(target, /obj/vehicle/sealed/mecha))
-		var/obj/vehicle/sealed/mecha/M = target
+	if(istype(attacked_target, /obj/vehicle/sealed/mecha))
+		var/obj/vehicle/sealed/mecha/M = attacked_target
 		M.take_damage(50, BRUTE, MELEE, 1)
 
 //Elites can't talk (normally)!

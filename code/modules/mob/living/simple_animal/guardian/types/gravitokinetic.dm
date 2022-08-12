@@ -17,12 +17,12 @@
 	for(var/i in gravito_targets)
 		remove_gravity(i)
 
-/mob/living/simple_animal/hostile/guardian/gravitokinetic/AttackingTarget()
+/mob/living/simple_animal/hostile/guardian/gravitokinetic/AttackingTarget(atom/attacked_target)
 	. = ..()
-	if(isliving(target) && target != src && target != summoner)
-		to_chat(src, "[span_danger("<B>Your punch has applied heavy gravity to [target]!")]</B>")
-		add_gravity(target, 5)
-		to_chat(target, span_userdanger("Everything feels really heavy!"))
+	if(isliving(attacked_target) && attacked_target != src && attacked_target != summoner)
+		to_chat(src, "[span_danger("<B>Your punch has applied heavy gravity to [attacked_target]!")]</B>")
+		add_gravity(attacked_target, 5)
+		to_chat(attacked_target, span_userdanger("Everything feels really heavy!"))
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/AltClickOn(atom/A)
 	if(isopenturf(A) && is_deployed() && stat != DEAD && in_range(src, A) && !incapacitated())

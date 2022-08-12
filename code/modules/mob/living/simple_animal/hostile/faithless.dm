@@ -39,10 +39,10 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 
-/mob/living/simple_animal/hostile/faithless/AttackingTarget()
+/mob/living/simple_animal/hostile/faithless/AttackingTarget(atom/attacked_target)
 	. = ..()
-	if(. && prob(12) && iscarbon(target))
-		var/mob/living/carbon/C = target
+	if(. && prob(12) && iscarbon(attacked_target))
+		var/mob/living/carbon/C = attacked_target
 		C.Paralyze(60)
 		C.visible_message(span_danger("\The [src] knocks down \the [C]!"), \
 				span_userdanger("\The [src] knocks you down!"))

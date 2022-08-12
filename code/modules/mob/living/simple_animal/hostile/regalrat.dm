@@ -123,22 +123,22 @@
 		heal_bodypart_damage(1)
 
 #define REGALRAT_INTERACTION "regalrat"
-/mob/living/simple_animal/hostile/regalrat/AttackingTarget()
+/mob/living/simple_animal/hostile/regalrat/AttackingTarget(atom/attacked_target)
 	if (DOING_INTERACTION(src, REGALRAT_INTERACTION))
 		return
-	if (QDELETED(target))
+	if (QDELETED(attacked_target))
 		return
-	if(istype(target, /obj/machinery/door/airlock) && !opening_airlock)
-		pry_door(target)
+	if(istype(attacked_target, /obj/machinery/door/airlock) && !opening_airlock)
+		pry_door(attacked_target)
 		return
 
-	if (target.reagents && target.is_injectable(src, allowmobs = TRUE) && !istype(target, /obj/item/food/cheese))
-		src.visible_message(span_warning("[src] starts licking [target] passionately!"),span_notice("You start licking [target]..."))
-		if (do_mob(src, target, 2 SECONDS, interaction_key = REGALRAT_INTERACTION))
-			target.reagents.add_reagent(/datum/reagent/rat_spit,rand(1,3),no_react = TRUE)
-			to_chat(src, span_notice("You finish licking [target]."))
+	if (attacked_target.reagents && attacked_target.is_injectable(src, allowmobs = TRUE) && !istype(attacked_target, /obj/item/food/cheese))
+		src.visible_message(span_warning("[src] starts licking [attacked_target] passionately!"),span_notice("You start licking [attacked_target]..."))
+		if (do_mob(src, attacked_target, 2 SECONDS, interaction_key = REGALRAT_INTERACTION))
+			attacked_target.reagents.add_reagent(/datum/reagent/rat_spit,rand(1,3),no_react = TRUE)
+			to_chat(src, span_notice("You finish licking [attacked_target]."))
 	else
-		SEND_SIGNAL(target, COMSIG_RAT_INTERACT, src)
+		SEND_SIGNAL(attacked_target, COMSIG_RAT_INTERACT, src)
 
 	if (DOING_INTERACTION(src, REGALRAT_INTERACTION)) // check again in case we started interacting
 		return
@@ -375,15 +375,15 @@
 				playsound(src, 'sound/effects/sparks2.ogg', 100, TRUE)
 				C.deconstruct()
 
-/mob/living/simple_animal/hostile/rat/AttackingTarget()
+/mob/living/simple_animal/hostile/rat/AttackingTarget(atom/attacked_target)
 	. = ..()
-	if(istype(target, /obj/item/food/cheese))
+	if(istype(attacked_target, /obj/item/food/cheese))
 		if (health >= maxHealth)
 			to_chat(src, span_warning("You feel fine, no need to eat anything!"))
 			return
 		to_chat(src, span_green("You eat \the [src], restoring some health."))
 		heal_bodypart_damage(maxHealth)
-		qdel(target)
+		qdel(attacked_target)
 
 
 /**

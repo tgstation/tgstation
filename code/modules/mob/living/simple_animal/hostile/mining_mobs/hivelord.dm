@@ -39,18 +39,18 @@
 	if(has_clickbox)
 		AddComponent(/datum/component/clickbox, icon_state = "hivelord", max_scale = INFINITY, dead_state = "hivelord_dead") //they writhe so much.
 
-/mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
+/mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(atom/attacking_target)
 	if(world.time >= ranged_cooldown)
 		var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new brood_type(src.loc)
 
 		A.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
-		A.GiveTarget(target)
+		A.GiveTarget(attacking_target)
 		A.friends = friends
 		A.faction = faction.Copy()
 		ranged_cooldown = world.time + ranged_cooldown_time
 
-/mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
-	OpenFire()
+/mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget(atom/attacked_target)
+	OpenFire(attacked_target)
 	return TRUE
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/death(gibbed)

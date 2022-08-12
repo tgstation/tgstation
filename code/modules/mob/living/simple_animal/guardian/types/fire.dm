@@ -27,10 +27,10 @@
 		summoner.extinguish_mob()
 		summoner.adjust_fire_stacks(-10 * delta_time)
 
-/mob/living/simple_animal/hostile/guardian/fire/AttackingTarget()
+/mob/living/simple_animal/hostile/guardian/fire/AttackingTarget(atom/attacked_target)
 	. = ..()
-	if(. && ishuman(target) && target != summoner)
-		new /datum/hallucination/delusion(target,TRUE,"custom",200,0, icon_state,icon)
+	if(. && ishuman(attacked_target) && attacked_target != summoner)
+		new /datum/hallucination/delusion(attacked_target,TRUE,"custom",200,0, icon_state,icon)
 
 /mob/living/simple_animal/hostile/guardian/fire/proc/on_entered(datum/source, AM as mob|obj)
 	SIGNAL_HANDLER

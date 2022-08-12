@@ -185,13 +185,13 @@
 	status_flags = CANPUSH
 	var/mob/living/simple_animal/hostile/asteroid/elite/broodmother/mother = null
 
-/mob/living/simple_animal/hostile/asteroid/elite/broodmother_child/OpenFire(target)
+/mob/living/simple_animal/hostile/asteroid/elite/broodmother_child/OpenFire(atom/attacking_target)
 	ranged_cooldown = world.time + 40
-	var/tturf = get_turf(target)
+	var/tturf = get_turf(attacking_target)
 	if(!isturf(tturf))
 		return
-	if(get_dist(src, target) <= 7)//Screen range check, so it can't attack people off-screen
-		visible_message(span_warning("[src] digs one of its tentacles under [target]!"))
+	if(get_dist(src, attacking_target) <= 7)//Screen range check, so it can't attack people off-screen
+		visible_message(span_warning("[src] digs one of its tentacles under [attacking_target]!"))
 		new /obj/effect/temp_visual/goliath_tentacle/broodmother(tturf, src)
 
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother_child/death()

@@ -525,13 +525,13 @@
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
-/mob/living/simple_animal/hostile/lightgeist/AttackingTarget()
-	if(isliving(target) && target != src)
-		var/mob/living/L = target
+/mob/living/simple_animal/hostile/lightgeist/AttackingTarget(atom/attacked_target)
+	if(isliving(attacked_target) && attacked_target != src)
+		var/mob/living/L = attacked_target
 		if(L.stat != DEAD)
 			L.heal_overall_damage(melee_damage_upper, melee_damage_upper)
-			new /obj/effect/temp_visual/heal(get_turf(target), "#80F5FF")
-			visible_message(span_notice("[src] mends the wounds of [target]."),span_notice("You mend the wounds of [target]."))
+			new /obj/effect/temp_visual/heal(get_turf(attacked_target), "#80F5FF")
+			visible_message(span_notice("[src] mends the wounds of [attacked_target]."),span_notice("You mend the wounds of [attacked_target]."))
 
 /mob/living/simple_animal/hostile/lightgeist/ghost()
 	. = ..()

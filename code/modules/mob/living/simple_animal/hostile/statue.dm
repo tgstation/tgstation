@@ -99,7 +99,7 @@
 				LoseTarget()
 				GiveTarget(watching)
 
-/mob/living/simple_animal/hostile/netherworld/statue/AttackingTarget()
+/mob/living/simple_animal/hostile/netherworld/statue/AttackingTarget(atom/attacked_target)
 	if(can_be_seen(get_turf(loc)))
 		if(client)
 			to_chat(src, span_warning("You cannot attack, there are eyes on you!"))

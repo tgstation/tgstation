@@ -154,35 +154,35 @@
 
 //Pick a ranged weapon/tool
 //Fire it
-/mob/living/simple_animal/hostile/syndicate/mecha_pilot/OpenFire(atom/A)
+/mob/living/simple_animal/hostile/syndicate/mecha_pilot/OpenFire(atom/attacking_target)
 	if(mecha)
 		mecha_reload()
-		mecha_face_target(A)
+		mecha_face_target(attacking_target)
 		var/list/possible_weapons = get_mecha_equip_by_flag(MECHA_RANGED)
 		if(possible_weapons.len)
 			var/obj/item/mecha_parts/mecha_equipment/ME = pick(possible_weapons) //so we don't favor mecha.equipment[1] forever
-			if(ME.action(src,A))
+			if(ME.action(src, attacking_target))
 				return
 
 	else
 		..()
 
 
-/mob/living/simple_animal/hostile/syndicate/mecha_pilot/AttackingTarget()
+/mob/living/simple_animal/hostile/syndicate/mecha_pilot/AttackingTarget(atom/attacked_target)
 	if(mecha)
 		var/list/possible_weapons = get_mecha_equip_by_flag(MECHA_MELEE)
 		if(possible_weapons.len)
 			var/obj/item/mecha_parts/mecha_equipment/ME = pick(possible_weapons)
-			mecha_face_target(target)
-			if(ME.action(src,target))
+			mecha_face_target(attacked_target)
+			if(ME.action(src,attacked_target))
 				return
 
 		if(!TIMER_COOLDOWN_CHECK(mecha, COOLDOWN_MECHA_MELEE_ATTACK))
-			mecha_face_target(target)
-			target.mech_melee_attack(mecha, src)
+			mecha_face_target(attacked_target)
+			attacked_target.mech_melee_attack(mecha, src)
 	else
-		if(ismecha(target))
-			var/obj/vehicle/sealed/mecha/M = target
+		if(ismecha(attacked_target))
+			var/obj/vehicle/sealed/mecha/M = attacked_target
 			if(is_valid_mecha(M))
 				enter_mecha(M)
 				return
@@ -191,7 +191,7 @@
 					LoseTarget()
 					return
 
-		return target.attack_animal(src)
+		return attacked_target.attack_animal(src)
 
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/handle_automated_action()

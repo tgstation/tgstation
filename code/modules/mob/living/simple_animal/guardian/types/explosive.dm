@@ -23,10 +23,10 @@
 	if(bomb_cooldown >= world.time)
 		. += "Bomb Cooldown Remaining: [DisplayTimeText(bomb_cooldown - world.time)]"
 
-/mob/living/simple_animal/hostile/guardian/bomb/AttackingTarget()
+/mob/living/simple_animal/hostile/guardian/bomb/AttackingTarget(atom/attacked_target)
 	. = ..()
-	if(. && prob(40) && isliving(target))
-		var/mob/living/M = target
+	if(. && prob(40) && isliving(attacked_target))
+		var/mob/living/M = attacked_target
 		if(!M.anchored && M != summoner && !hasmatchingsummoner(M))
 			new /obj/effect/temp_visual/guardian/phase/out(get_turf(M))
 			do_teleport(M, M, 10, channel = TELEPORT_CHANNEL_BLUESPACE)

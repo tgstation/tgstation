@@ -78,11 +78,11 @@
 		if(EXPLODE_LIGHT)
 			adjustBruteLoss(110)
 
-/mob/living/simple_animal/hostile/asteroid/basilisk/AttackingTarget()
+/mob/living/simple_animal/hostile/asteroid/basilisk/AttackingTarget(atom/attacked_target)
 	. = ..()
-	if(lava_drinker && !warmed_up && istype(target, /turf/open/lava))
-		visible_message(span_warning("[src] begins to drink from [target]..."))
-		if(do_after(src, 70, target = target))
+	if(lava_drinker && !warmed_up && istype(attacked_target, /turf/open/lava))
+		visible_message(span_warning("[src] begins to drink from [attacked_target]..."))
+		if(do_after(src, 70, target = attacked_target))
 			visible_message(span_warning("[src] begins to fire up!"))
 			fully_heal()
 			icon_state = "Basilisk_alert"

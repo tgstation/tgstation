@@ -228,9 +228,9 @@
 	/// The seconds refunded when putting a target into critical
 	var/crit_refund = 5 SECONDS
 
-/mob/living/simple_animal/hostile/construct/wraith/AttackingTarget() //refund jaunt cooldown when attacking living targets
+/mob/living/simple_animal/hostile/construct/wraith/AttackingTarget(atom/attacked_target) //refund jaunt cooldown when attacking living targets
 	var/prev_stat
-	var/mob/living/living_target = target
+	var/mob/living/living_target = attacked_target
 
 	if(isliving(living_target) && !IS_CULTIST(living_target))
 		prev_stat = living_target.stat
@@ -431,9 +431,9 @@
 		if(stored_pulling)
 			start_pulling(stored_pulling, supress_message = TRUE) //drag anything we're pulling through the wall with us by magic
 
-/mob/living/simple_animal/hostile/construct/harvester/AttackingTarget()
-	if(iscarbon(target))
-		var/mob/living/carbon/C = target
+/mob/living/simple_animal/hostile/construct/harvester/AttackingTarget(atom/attacked_target)
+	if(iscarbon(attacked_target))
+		var/mob/living/carbon/C = attacked_target
 		if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
 			return ..() //ATTACK!
 		var/list/parts = list()

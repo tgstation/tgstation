@@ -167,10 +167,10 @@
 	. = ..()
 	pixel_x = base_pixel_x + (dir & (NORTH|WEST) ? 2 : -2)
 
-/mob/living/simple_animal/hostile/venus_human_trap/AttackingTarget()
+/mob/living/simple_animal/hostile/venus_human_trap/AttackingTarget(atom/attacked_target)
 	. = ..()
-	if(isliving(target))
-		var/mob/living/L = target
+	if(isliving(attacked_target))
+		var/mob/living/L = attacked_target
 		if(L.stat != DEAD)
 			adjustHealth(-maxHealth * 0.1)
 
@@ -182,7 +182,7 @@
 			return
 	if(get_dist(src,the_target) > vine_grab_distance || vines.len >= max_vines)
 		return
-	for(var/turf/T in get_line(src,target))
+	for(var/turf/T in get_line(src,the_target))
 		if (T.density)
 			return
 		for(var/obj/O in T)

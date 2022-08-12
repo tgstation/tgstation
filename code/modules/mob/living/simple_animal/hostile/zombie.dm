@@ -43,7 +43,7 @@
 	icon = getFlatIcon(dummy)
 	qdel(dummy)
 
-/mob/living/simple_animal/hostile/zombie/AttackingTarget()
+/mob/living/simple_animal/hostile/zombie/AttackingTarget(atom/attacked_target)
 	. = ..()
-	if(. && ishuman(target) && prob(infection_chance))
-		try_to_zombie_infect(target)
+	if(. && ishuman(attacked_target) && prob(infection_chance))
+		try_to_zombie_infect(attacked_target)

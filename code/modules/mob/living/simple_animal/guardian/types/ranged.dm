@@ -142,7 +142,7 @@
 	incorporeal_move = FALSE
 	. = ..()
 
-/mob/living/simple_animal/hostile/guardian/ranged/AttackingTarget()
+/mob/living/simple_animal/hostile/guardian/ranged/AttackingTarget(atom/attacked_target)
 	if(toggle)
 		return
 	..()

@@ -68,12 +68,12 @@
 	if(.)
 		trigger()
 
-/mob/living/simple_animal/hostile/mimic/crate/AttackingTarget()
+/mob/living/simple_animal/hostile/mimic/crate/AttackingTarget(atom/attacked_target)
 	. = ..()
 	if(.)
 		icon_state = initial(icon_state)
-		if(prob(15) && iscarbon(target))
-			var/mob/living/carbon/C = target
+		if(prob(15) && iscarbon(attacked_target))
+			var/mob/living/carbon/C = attacked_target
 			C.Paralyze(40)
 			C.visible_message(span_danger("\The [src] knocks down \the [C]!"), \
 					span_userdanger("\The [src] knocks you down!"))
@@ -183,10 +183,10 @@ GLOBAL_LIST_INIT(mimic_blacklist, list(/obj/structure/table, /obj/structure/cabl
 	if(destroy_objects)
 		..()
 
-/mob/living/simple_animal/hostile/mimic/copy/AttackingTarget()
+/mob/living/simple_animal/hostile/mimic/copy/AttackingTarget(atom/attacked_target)
 	. = ..()
-	if(knockdown_people && . && prob(15) && iscarbon(target))
-		var/mob/living/carbon/C = target
+	if(knockdown_people && . && prob(15) && iscarbon(attacked_target))
+		var/mob/living/carbon/C = attacked_target
 		C.Paralyze(40)
 		C.visible_message(span_danger("\The [src] knocks down \the [C]!"), \
 				span_userdanger("\The [src] knocks you down!"))
@@ -302,8 +302,8 @@ GLOBAL_LIST_INIT(mimic_blacklist, list(/obj/structure/table, /obj/structure/cabl
 	lock = new
 	lock.Grant(src)
 
-/mob/living/simple_animal/hostile/mimic/xenobio/AttackingTarget()
-	if(src == target)
+/mob/living/simple_animal/hostile/mimic/xenobio/AttackingTarget(atom/attacked_target)
+	if(src == attacked_target)
 		toggle_open()
 		return
 	return ..()

@@ -128,12 +128,12 @@ Difficulty: Medium
 		return FALSE
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/AttackingTarget()
-	if(QDELETED(target))
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/AttackingTarget(atom/attacked_target)
+	if(QDELETED(attacked_target))
 		return
-	face_atom(target)
-	if(isliving(target))
-		var/mob/living/L = target
+	face_atom(attacked_target)
+	if(isliving(attacked_target))
+		var/mob/living/L = attacked_target
 		if(L.stat == DEAD)
 			visible_message(span_danger("[src] butchers [L]!"),
 			span_userdanger("You butcher [L], restoring your health!"))
@@ -145,7 +145,7 @@ Difficulty: Medium
 			L.gib()
 			return TRUE
 	changeNext_move(CLICK_CD_MELEE)
-	miner_saw.melee_attack_chain(src, target)
+	miner_saw.melee_attack_chain(src, attacked_target)
 	if(guidance)
 		adjustHealth(-2)
 	return TRUE
@@ -185,10 +185,10 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/guidance
 	guidance = TRUE
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/hunter/AttackingTarget()
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/hunter/AttackingTarget(atom/attacked_target)
 	. = ..()
 	if(. && prob(12))
-		INVOKE_ASYNC(dash, /datum/action/proc/Trigger, target)
+		INVOKE_ASYNC(dash, /datum/action/proc/Trigger, attacked_target)
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/doom
 	name = "hostile-environment miner"

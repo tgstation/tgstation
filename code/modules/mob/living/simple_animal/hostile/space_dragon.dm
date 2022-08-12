@@ -146,31 +146,31 @@
 		playsound(src, 'sound/magic/demon_dies.ogg', 100, TRUE)
 		qdel(src)
 
-/mob/living/simple_animal/hostile/space_dragon/AttackingTarget()
+/mob/living/simple_animal/hostile/space_dragon/AttackingTarget(atom/attacked_target)
 	if(using_special)
 		return
-	if(target == src)
+	if(attacked_target == src)
 		to_chat(src, span_warning("You almost bite yourself, but then decide against it."))
 		return
-	if(istype(target, /turf/closed/wall))
+	if(istype(attacked_target, /turf/closed/wall))
 		if(tearing_wall)
 			return
 		tearing_wall = TRUE
-		var/turf/closed/wall/thewall = target
+		var/turf/closed/wall/thewall = attacked_target
 		to_chat(src, span_warning("You begin tearing through the wall..."))
 		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
 		var/timetotear = 40
-		if(istype(target, /turf/closed/wall/r_wall))
+		if(istype(attacked_target, /turf/closed/wall/r_wall))
 			timetotear = 120
-		if(do_after(src, timetotear, target = thewall))
+		if(do_after(src, timetotear, attacked_target = thewall))
 			if(istype(thewall, /turf/open))
 				return
 			thewall.dismantle_wall(1)
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 		tearing_wall = FALSE
 		return
-	if(isliving(target)) //Swallows corpses like a snake to regain health.
-		var/mob/living/L = target
+	if(isliving(attacked_target)) //Swallows corpses like a snake to regain health.
+		var/mob/living/L = attacked_target
 		if(L.stat == DEAD)
 			to_chat(src, span_warning("You begin to swallow [L] whole..."))
 			if(do_after(src, 30, target = L))
@@ -178,8 +178,8 @@
 					adjustHealth(-L.maxHealth * 0.25)
 			return
 	. = ..()
-	if(istype(target, /obj/vehicle/sealed/mecha))
-		var/obj/vehicle/sealed/mecha/M = target
+	if(istype(attacked_target, /obj/vehicle/sealed/mecha))
+		var/obj/vehicle/sealed/mecha/M = attacked_target
 		M.take_damage(50, BRUTE, MELEE, 1)
 
 /mob/living/simple_animal/hostile/space_dragon/ranged_secondary_attack(atom/target, modifiers)

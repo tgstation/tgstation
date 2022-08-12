@@ -22,9 +22,9 @@
 
 
 
-/mob/living/simple_animal/hostile/guardian/punch/AttackingTarget()
+/mob/living/simple_animal/hostile/guardian/punch/AttackingTarget(atom/attacked_target)
 	. = ..()
-	if(isliving(target))
+	if(isliving(attacked_target))
 		say("[battlecry][battlecry][battlecry][battlecry][battlecry][battlecry][battlecry][battlecry][battlecry][battlecry]!!", ignore_spam = TRUE)
 		playsound(loc, src.attack_sound, 50, TRUE, TRUE)
 		playsound(loc, src.attack_sound, 50, TRUE, TRUE)

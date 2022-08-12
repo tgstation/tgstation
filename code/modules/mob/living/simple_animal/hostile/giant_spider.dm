@@ -142,12 +142,12 @@
 	var/datum/atom_hud/datahud = GLOB.huds[health_hud]
 	datahud.show_to(src)
 
-/mob/living/simple_animal/hostile/giant_spider/nurse/AttackingTarget()
+/mob/living/simple_animal/hostile/giant_spider/nurse/AttackingTarget(atom/attacked_target)
 	if(DOING_INTERACTION(src, INTERACTION_SPIDER_KEY))
 		return
-	if(!istype(target, /mob/living/simple_animal/hostile/giant_spider))
+	if(!istype(attacked_target, /mob/living/simple_animal/hostile/giant_spider))
 		return ..()
-	var/mob/living/simple_animal/hostile/giant_spider/hurt_spider = target
+	var/mob/living/simple_animal/hostile/giant_spider/hurt_spider = attacked_target
 	if(hurt_spider == src)
 		to_chat(src, span_warning("You don't have the dexerity to wrap your own wounds."))
 		return
@@ -692,10 +692,10 @@
 		blood_type = /obj/effect/decal/cleanable/blood/bubblegum, \
 		blood_spawn_chance = 5)
 
-/mob/living/simple_animal/hostile/giant_spider/hunter/flesh/AttackingTarget()
+/mob/living/simple_animal/hostile/giant_spider/hunter/flesh/AttackingTarget(atom/attacked_target)
 	if(DOING_INTERACTION(src, INTERACTION_SPIDER_KEY))
 		return
-	if(src == target)
+	if(src == attacked_target)
 		if(health >= maxHealth)
 			to_chat(src, span_warning("You're not injured, there's no reason to heal."))
 			return
