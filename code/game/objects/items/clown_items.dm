@@ -233,7 +233,7 @@
 	COOLDOWN_START(src, golden_horn_cooldown, 1 SECONDS)
 
 //canned laughter
-/obj/item/reagent_containers/food/drinks/soda_cans/canned_laughter
+/obj/item/reagent_containers/cup/soda_cans/canned_laughter
 	name = "Canned Laughter"
 	desc = "Just looking at this makes you want to giggle."
 	icon_state = "laughter"
