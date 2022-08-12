@@ -220,6 +220,8 @@
 	var/turf/T = get_turf(src)
 	for(var/obj/structure/closet/closet in T)
 		if(closet != src && !closet.wall_mounted)
+			if(user)
+				to_chat(user, span_danger("There's something too large in [src], preventing it from closing."))
 			return FALSE
 	for(var/mob/living/L in T)
 		if(L.anchored || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
@@ -538,9 +540,11 @@
 	if(user.body_position == LYING_DOWN && get_dist(src, user) > 0)
 		return
 
-	if(!toggle(user))
-		togglelock(user)
+	if(toggle(user))
+		return
 
+	if(!opened)
+		togglelock(user)
 
 /obj/structure/closet/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
