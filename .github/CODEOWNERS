@@ -95,6 +95,11 @@
 /tgui/packages/tgui-panel/styles/goon/chat-dark.scss
 /tgui/packages/tgui-panel/styles/goon/chat-light.scss
 
+# SuperNovaa41
+
+/code/modules/forensics/ @SuperNovaa41
+/code/datums/mood.dm @SuperNovaa41
+
 # Watermelon914
 
 /code/modules/wiremod/ @Watermelon914
