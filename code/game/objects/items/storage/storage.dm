@@ -7,14 +7,15 @@
 	/// BE CAREFUL, THERE'S SOME REALLY NASTY SHIT IN THIS TYPEPATH
 	/// SANTA IS EVIL
 	var/preload = FALSE
+	max_specific_storage
 
 /obj/item/storage/Initialize(mapload)
 	. = ..()
 
 	create_storage()
-	
+
 	PopulateContents()
-	
+
 	for (var/obj/item/item in src)
 		item.item_flags |= IN_STORAGE
 
