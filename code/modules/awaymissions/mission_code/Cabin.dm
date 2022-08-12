@@ -114,7 +114,7 @@
 	AddElement(/datum/element/update_icon_blocker)
 	return ..()
 
-/obj/structure/ladder/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+/obj/structure/ladder/unbreakable/rune/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(up)
 		context[SCREENTIP_CONTEXT_LMB] = "Warp up"
 	if(down)

@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - qol: "You can now use wallets & PDAs with IDs in them to play roulette!"
-  - bugfix: "Fixed a runtime when hitting a roulette table with an ID that doesn't have a linked bank account!"
