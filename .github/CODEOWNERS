@@ -149,8 +149,8 @@
 
 # Time-Green
 
-/code/modules/plumbing @Time-Green
-/code/modules/surgery/organs/external @Time-Green
+/code/modules/plumbing/ @Time-Green
+/code/modules/surgery/organs/external/ @Time-Green
 
 # MULTIPLE OWNERS
 
