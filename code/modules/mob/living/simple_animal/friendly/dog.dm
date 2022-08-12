@@ -713,7 +713,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	make_babies()
 
 /mob/living/simple_animal/pet/dog/breaddog //Most of the code originates from Cak
-	name = "Sanallite"
+	name = "Kobun"
 	desc = "It is a dog made out of bread. 'The universe is definitely half full'."
 	icon_state = "breaddog"
 	icon_living = "breaddog"
@@ -743,7 +743,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	to_chat(src, "[span_boldbig("You are a bread dog!")]<b> You're a harmless dog/bread hybrid that everyone loves. People can take bites out of you if they're hungry, but you regenerate health \
 	so quickly that it generally doesn't matter. You're remarkably resilient to any damage besides this and it's hard for you to really die at all. You should go around and bring happiness and \
 	free bread to the station!</b><b>'I’m not alone, and you aren’t either'</b>")
-	var/default_name = "Sanallite"
+	var/default_name = "Kobun"
 	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(src, "You are the [name]. Would you like to change your name to something else?", "Name change", default_name, MAX_NAME_LEN)))
 	if(new_name)
 		to_chat(src, span_notice("Your name is now <b>[new_name]</b>!"))
@@ -758,7 +758,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 		adjustBruteLoss(-4 * delta_time) //Fast life regen
 
 	for(var/mob/living/carbon/L in view(3, src)) //Mood aura which stay as long you do not wear Sanallite as hat or carry(I will try to make it work with hat someday(obviously weaker than normal one))
-		L.add_mood_event("sanallite", /datum/mood_event/sanallite)
+		L.add_mood_event("kobun", /datum/mood_event/kobun)
 
 /mob/living/simple_animal/pet/dog/breaddog/attack_hand(mob/living/user, list/modifiers)
 	..()
