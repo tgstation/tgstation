@@ -111,7 +111,7 @@
 					LAZYADD(victim_human.afk_thefts, new_entry)
 
 			else if(victim_human.is_blind())
-				to_chat(source, span_danger("You feel someone trying to put something on you."))
+				to_chat(source, span_userdanger("You feel someone trying to put something on you."))
 
 	to_chat(user, span_notice("You try to put [equipping] on [source]..."))
 
@@ -174,7 +174,7 @@
 				LAZYADD(victim_human.afk_thefts, new_entry)
 
 		else if(victim_human.is_blind())
-			to_chat(source, span_danger("You feel someone fumble with your belongings."))
+			to_chat(source, span_userdanger("You feel someone fumble with your belongings."))
 
 	return TRUE
 
