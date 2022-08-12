@@ -370,6 +370,15 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 
+/datum/chemical_reaction/hypernoblium_foam
+	required_reagents = list(/datum/reagent/aluminium = 3, /datum/reagent/hypernoblium = 1, /datum/reagent/toxin/acid/fluacid = 1)
+	mob_react = TRUE
+	reaction_flags = REACTION_INSTANT
+	reaction_tags = REACTION_TAG_UNIQUE
+
+/datum/chemical_reaction/hypernoblium_foam/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	holder.create_foam(/datum/effect_system/fluid_spread/foam/hypernoblium, 5 * created_volume, null, span_danger("The solution spews out foam!"), log = TRUE)
+
 /////////////////////////////// Cleaning and hydroponics /////////////////////////////////////////////////
 
 /datum/chemical_reaction/ammonia

@@ -408,7 +408,7 @@
 	location.ClearWet()
 	if(location.air)
 		var/datum/gas_mixture/air = location.air
-		air.temperature = 293.15
+		air.temperature = T20C
 		for(var/obj/effect/hotspot/fire in location)
 			qdel(fire)
 
@@ -431,3 +431,70 @@
 		potential_tinder.extinguish_mob()
 	for(var/obj/item/potential_tinder in location)
 		potential_tinder.extinguish()
+
+/// Hypernoblium foam. Cools or heats an area to room temperature, and slows down fires.
+/datum/effect_system/fluid_spread/foam/hypernoblium
+	effect_type = /obj/effect/particle_effect/fluid/foam/hypernoblium
+
+/obj/effect/particle_effect/fluid/foam/hypernoblium
+	name = "hypernoblium foam"
+	icon_state = "mfoam"
+	lifetime = 16 SECONDS
+	allow_duplicate_results = FALSE
+	slippery_foam = FALSE
+	var/foam_total_heat_capacity = 3.51e6 // 175 moles of hypernoblium and 2,000 moles of oxygen has a heat capacity of 390kJ, and its specific heat is 4.5 times higher in this foam state.
+	var/local_foam_heat_capacity
+	var/local_foam_thermal_energy
+
+/obj/effect/particle_effect/fluid/foam/hypernoblium/Initialize(mapload)
+	. = ..()
+	RemoveElement(/datum/element/atmos_sensitive)
+	local_foam_heat_capacity = foam_total_heat_capacity * MINIMUM_FOAM_DILUTION * INVERSE(max(MINIMUM_FOAM_DILUTION, group.total_size))
+	local_foam_thermal_energy = local_foam_heat_capacity * T20C
+
+/obj/effect/particle_effect/fluid/foam/hypernoblium/process()
+	..()
+
+	var/turf/open/location = loc
+	if(!istype(location))
+		return
+
+	var/datum/gas_mixture/air = location.air
+
+	//Exchanges heat with turf and air. The foam is room temperature.
+	//Turf heat exchange.
+	if(!istype(air, /datum/gas_mixture/immutable))
+		var/turf_heat_capacity = location.heat_capacity
+		var/combined_heat_capacity_turf = turf_heat_capacity + local_foam_heat_capacity
+		var/combined_thermal_energy_turf = turf_heat_capacity * location.temperature + local_foam_thermal_energy
+		var/new_temperature_turf = combined_thermal_energy_turf / combined_heat_capacity_turf
+		location.temperature = new_temperature_turf
+		local_foam_thermal_energy = local_foam_heat_capacity * new_temperature_turf
+
+		//Atmospheric processing.
+		if(air)
+			//Fire extinguishing.
+			for(var/obj/effect/hotspot/fire in location)
+				qdel(fire)
+
+			//Air heat exchange.
+			var/air_heat_capacity = air.heat_capacity()
+			if(air_heat_capacity)
+				var/combined_heat_capacity_air = air_heat_capacity + local_foam_heat_capacity
+				var/combined_thermal_energy_air = air_heat_capacity * air.temperature + local_foam_thermal_energy
+				var/new_temperature_air = combined_thermal_energy_air / combined_heat_capacity_air
+				air.temperature = new_temperature_air
+				local_foam_thermal_energy = local_foam_heat_capacity * new_temperature_air
+				location.air_update_turf(FALSE, FALSE)
+
+
+	//Extinguishes living mobs and items.
+	for(var/mob/living/potential_tinder in location)
+		potential_tinder.extinguish_mob()
+	for(var/obj/item/potential_tinder in location)
+		potential_tinder.extinguish()
+
+/obj/effect/particle_effect/fluid/foam/hypernoblium/foam_mob(mob/living/foaming, delta_time)
+	if(!istype(foaming))
+		return
+	foaming.adjust_wet_stacks(2)

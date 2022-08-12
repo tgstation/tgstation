@@ -125,3 +125,34 @@
 	update_mob()
 
 	qdel(src)
+
+/obj/item/grenade/gas_crystal/hypernoblium_crystal
+	name = "hypernoblium crystal"
+	desc = "A conductive crystal with a foggy inside."
+	icon = 'icons/obj/atmos.dmi' //This should get removed, and have an active version of its icon state.
+	icon_state = "hypernoblium_crystal"
+	var/foam_range = 7
+
+/obj/item/grenade/gas_crystal/hypernoblium_crystal/detonate(mob/living/lanced_by)
+	. = ..()
+
+	var/datum/reagents/first_batch = new
+	var/datum/reagents/second_batch = new
+	var/list/datum/reagents/reactants = list()
+
+	first_batch.add_reagent(/datum/reagent/aluminium, 75)
+	second_batch.add_reagent(/datum/reagent/hypernoblium, 25)
+	second_batch.add_reagent(/datum/reagent/toxin/acid/fluacid, 25)
+	reactants += first_batch
+	reactants += second_batch
+
+	var/turf/detonation_turf = get_turf(src)
+
+	chem_splash(detonation_turf, null, foam_range, reactants)
+
+	playsound(src, 'sound/effects/spray2.ogg', 100, TRUE)
+	log_game("A grenade detonated at [AREACOORD(detonation_turf)]")
+
+	update_mob()
+
+	qdel(src)
