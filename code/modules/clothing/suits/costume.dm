@@ -475,62 +475,20 @@
 	inhand_icon_state = "hawaiian_blue"
 	species_exception = list(/datum/species/golem)
 
-/obj/item/clothing/suit/costume/yakuza
-	name = "tojo clan jacket"
-	desc = "The jacket of a mad dog."
-	icon_state = "MajimaJacket"
-	inhand_icon_state = "MajimaJacket"
+/obj/item/clothing/suit/costume/football_armor
+	name = "football protective gear"
+	desc = "Given to members of the football team!"
+	icon_state = "football_armor"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	greyscale_config = /datum/greyscale_config/football_armor
+	greyscale_config_worn = /datum/greyscale_config/football_armor_worn
+	greyscale_colors = "#D74722"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
-/obj/item/clothing/suit/costume/dutch
-	name = "dutch's jacket"
-	desc = "For those long nights on the beach in Tahiti."
-	icon_state = "DutchJacket"
-	inhand_icon_state = "DutchJacket"
-	body_parts_covered = ARMS
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-
-/obj/item/clothing/suit/costume/driscoll
-	name = "driscoll poncho"
-	desc = "Keeping you warm in the harsh cold of space."
-	icon_state = "driscoll_suit"
-	inhand_icon_state = "driscoll_suit"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-
-/obj/item/clothing/suit/costume/irs
-	name = "internal revenue service jacket"
-	desc = "I'm crazy enough to take on The Owl, but the IRS? Nooo thank you!"
-	icon_state = "irs_suit"
-	inhand_icon_state = "irs_suit"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-
-/obj/item/clothing/suit/costume/osi
-	name = "\improper O.S.I. body armor"
-	desc = "You're beyond good and evil, super man. You work for the government. And you're a tool, boy, a tool! Built for a single purpose by the United States of shut your third fucking damn eye for a fucking reason! You can't teach a hammer to love nails, son. That dog don't hunt!"
-	icon_state = "osi_suit"
-	inhand_icon_state = "osi_suit"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-
-/obj/item/clothing/suit/costume/tmc
-	name = "\improper Lost M.C. cut"
-	desc = "Making sure everyone knows you're in the best biker gang this side of Alderney."
-	icon_state = "tmc_suit"
-	inhand_icon_state = "tmc_suit"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-
-/obj/item/clothing/suit/costume/pg
-	name = "powder ganger jacket"
-	desc = "Remind Security of their mistakes in giving prisoners blasting charges."
-	icon_state = "pg_suit"
-	inhand_icon_state = "pg_suit"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+/obj/item/clothing/suit/costume/joker
+	name = "comedian coat"
+	desc = "I mean, don’t you have to be funny to be a comedian?"
+	icon_state = "joker_coat"
 
 /obj/item/clothing/suit/costume/deckers
 	name = "decker hoodie"
@@ -538,40 +496,6 @@
 	icon_state = "decker_suit"
 	inhand_icon_state = "decker_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-
-/obj/item/clothing/suit/costume/morningstar
-	name = "morningstar coat"
-	desc = "This coat costs more than you've ever made in your entire life."
-	icon_state = "morningstar_suit"
-	inhand_icon_state = "morningstar_suit"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-
-/obj/item/clothing/suit/costume/saints
-	name = "Third Street Saints fur coat"
-	desc = "Rated 10 out of 10 in Cosmo for best coat brand."
-	icon_state = "saints_suit"
-	inhand_icon_state = "saints_suit"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	cold_protection = CHEST|GROIN|LEGS|ARMS
-	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-
-/obj/item/clothing/suit/costume/phantom
-	name = "phantom thief coat"
-	desc = "Your foes will never see you coming in this stealthy yet stylish getup."
-	icon_state = "phantom_suit"
-	inhand_icon_state = "phantom_suit"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-
-/obj/item/clothing/suit/costume/allies
-	name = "allies body armor"
-	desc = "How 'bout some action!? Sponsored by DonkSoft Co. for historical reenactment of the Third World War!"
-	icon_state = "allies_armor"
-	inhand_icon_state = "allies_armor"
-	body_parts_covered = CHEST|GROIN
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/costume/soviet
@@ -588,21 +512,18 @@
 	inhand_icon_state = "yuri_coat"
 	body_parts_covered = CHEST|GROIN|ARMS
 
-/obj/item/clothing/suit/costume/sybil_slickers
-	name = "sybil slickers protective gear"
-	desc = "Given to members of the Sybil Slickers football team!"
-	icon_state = "football_armor_blue"
-	inhand_icon_state = "football_armor_blue"
+/obj/item/clothing/suit/costume/tmc
+	name = "\improper Lost M.C. cut"
+	desc = "Making sure everyone knows you're in the best biker gang this side of Alderney."
+	icon_state = "tmc_suit"
+	inhand_icon_state = "tmc_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/obj/item/clothing/suit/costume/basil_boys
-	name = "basil boys protective gear"
-	desc = "Given to members of the Basil Boys football team!"
-	icon_state = "football_armor_red"
-	inhand_icon_state = "football_armor_red"
+/obj/item/clothing/suit/costume/pg
+	name = "powder ganger jacket"
+	desc = "Remind Security of their mistakes in giving prisoners blasting charges."
+	icon_state = "pg_suit"
+	inhand_icon_state = "pg_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-
-/obj/item/clothing/suit/costume/joker
-	name = "comedian coat"
-	desc = "I mean, don’t you have to be funny to be a comedian?"
-	icon_state = "joker_coat"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON

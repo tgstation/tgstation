@@ -131,7 +131,7 @@
 			var/other_players = english_list(card_players - player)
 			var/obj/item/toy/held_card_item = card_players[player]
 
-			SEND_SIGNAL(player, COMSIG_ADD_MOOD_EVENT, "playing_cards", /datum/mood_event/playing_cards)
+			player.add_mood_event("playing_cards", /datum/mood_event/playing_cards)
 			player.mind?.add_memory(
 				MEMORY_PLAYING_CARDS,
 				list(
@@ -214,8 +214,8 @@
 	var/mob/living/thrower = throwingdatum.thrower
 
 	target.visible_message(span_warning("[target] is forced to play 52 card pickup!"), span_warning("You are forced to play 52 card pickup."))
-	SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "lost_52_card_pickup", /datum/mood_event/lost_52_card_pickup)
-	SEND_SIGNAL(thrower, COMSIG_ADD_MOOD_EVENT, "won_52_card_pickup", /datum/mood_event/won_52_card_pickup)
+	target.add_mood_event("lost_52_card_pickup", /datum/mood_event/lost_52_card_pickup)
+	thrower.add_mood_event("won_52_card_pickup", /datum/mood_event/won_52_card_pickup)
 	add_memory_in_range(
 		target,
 		7,

@@ -64,7 +64,7 @@
 	icon_state = "braincake"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/medicine/mannitol = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("cake" = 5, "sweetness" = 2, "brains" = 1)
-	foodtypes = GRAIN | DAIRY | MEAT | GROSS | SUGAR
+	foodtypes = GRAIN | DAIRY | MEAT | GORE | SUGAR
 
 /obj/item/food/cake/brain/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/brain, 5, 3 SECONDS, table_required = TRUE)
@@ -75,7 +75,7 @@
 	icon_state = "braincakeslice"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/medicine/mannitol = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("cake" = 5, "sweetness" = 2, "brains" = 1)
-	foodtypes = GRAIN | DAIRY | MEAT | GROSS | SUGAR
+	foodtypes = GRAIN | DAIRY | MEAT | GORE | SUGAR
 
 /obj/item/food/cake/cheese
 	name = "cheese cake"

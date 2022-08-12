@@ -14,11 +14,7 @@ As such, they can either help or harm other aliens. Help works like the human he
 In all, this is a lot like the monkey code. /N
 */
 /mob/living/carbon/alien/attack_alien(mob/living/carbon/alien/user, list/modifiers)
-	if(isturf(loc) && istype(loc.loc, /area/misc/start))
-		to_chat(user, "No attacking people at spawn, you jackass.")
-		return
-
-	if(user.combat_mode)
+	if(!user.combat_mode)
 		if(user == src && check_self_for_injuries())
 			return
 		set_resting(FALSE)
@@ -40,7 +36,6 @@ In all, this is a lot like the monkey code. /N
 		updatehealth()
 	else
 		to_chat(user, span_warning("[name] is too injured for that."))
-
 
 
 /mob/living/carbon/alien/attack_larva(mob/living/carbon/alien/larva/L, list/modifiers)

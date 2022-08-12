@@ -46,8 +46,8 @@
 	desc = "Your benefactors conveinently neglected to mention it's already assembled."
 	anchored = TRUE
 	radio_key = /obj/item/encryptionkey/syndicate
-	engineering_channel = "Syndicate"
-	common_channel = "Syndicate"
+	emergency_channel = "Syndicate"
+	warning_channel = "Syndicate"
 	include_in_cims = FALSE
 
 /obj/machinery/power/supermatter_crystal/shard/syndicate/attackby(obj/item/item, mob/living/user, params)

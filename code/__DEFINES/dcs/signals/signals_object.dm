@@ -339,7 +339,9 @@
 #define COMSIG_PROJECTILE_FIRE "projectile_fire"
 ///sent to targets during the process_hit proc of projectiles
 #define COMSIG_PROJECTILE_PREHIT "com_proj_prehit"
-///sent to targets during the process_hit proc of projectiles
+///from the base of /obj/projectile/Range(): ()
+#define COMSIG_PROJECTILE_RANGE "projectile_range"
+///from the base of /obj/projectile/on_range(): ()
 #define COMSIG_PROJECTILE_RANGE_OUT "projectile_range_out"
 ///from [/obj/item/proc/tryEmbed] sent when trying to force an embed (mainly for projectiles and eating glass)
 #define COMSIG_EMBED_TRY_FORCE "item_try_embed"
@@ -403,7 +405,7 @@
 ///from base of obj/item/attack_qdeleted(): (atom/target, mob/user, params)
 #define COMSIG_ITEM_ATTACK_QDELETED "item_attack_qdeleted"
 
-///from /obj/item/assembly/proc/pulsed()
+///from /obj/item/assembly/proc/pulsed(mob/pulser)
 #define COMSIG_ASSEMBLY_PULSED "assembly_pulsed"
 
 ///from base of /obj/item/mmi/set_brainmob(): (mob/living/brain/new_brainmob)

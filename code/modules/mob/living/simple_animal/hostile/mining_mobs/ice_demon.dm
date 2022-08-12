@@ -35,8 +35,8 @@
 	del_on_death = TRUE
 	loot = list()
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing/ice_wing
-	deathmessage = "fades as the energies that tied it to this world dissipate."
-	deathsound = 'sound/magic/demon_dies.ogg'
+	death_message = "fades as the energies that tied it to this world dissipate."
+	death_sound = 'sound/magic/demon_dies.ogg'
 	stat_attack = HARD_CRIT
 	robust_searching = TRUE
 	footstep_type = FOOTSTEP_MOB_CLAW
@@ -50,7 +50,9 @@
 /obj/projectile/temp/basilisk/ice
 	name = "ice blast"
 	damage = 5
-	speed = 4
+	speed = 1
+	pixel_speed_multiplier = 0.25
+	range = 200
 	nodamage = FALSE
 	temperature = -75
 	slowdown = FALSE
@@ -71,9 +73,6 @@
 	do_teleport(src, end, 0,  channel=TELEPORT_CHANNEL_BLUESPACE, forced = TRUE)
 	SLEEP_CHECK_DEATH(8, src)
 	return ..()
-
-/mob/living/simple_animal/hostile/asteroid/ice_demon/spawn_crusher_loot()
-	loot += crusher_loot
 
 /mob/living/simple_animal/hostile/asteroid/ice_demon/death(gibbed)
 	move_force = MOVE_FORCE_DEFAULT
