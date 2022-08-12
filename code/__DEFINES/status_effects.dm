@@ -40,11 +40,29 @@
 #define STASIS_ASCENSION_EFFECT "heretic_ascension"
 
 // Status effect application helpers.
-
-// adjust_x: Adds or removes duration of a status effect.
-// adjust_x_up_to: Will only add or remove duration of a status effect up UNTIL the second parameter.
-// set_stutter: Set the duration of a status effect exact.
-// set_stutter_if_lower: Will only set the duration of that effect IF any existing duration is lower than what was passed.
+// These are macros for easier use of adjust_timed_status_effect and set_timed_status_effect.
+//
+// adjust_x:
+// - Adds duration to a status effect
+// - Removes duration if a negative duration is passed.
+// - Ex: adjust_stutter(10 SECONDS) adds ten seconds of stuttering.
+// - Ex: adjust_jitter(-5 SECONDS) removes five seconds of jittering, or just removes jittering if less than five seconds exist.
+//
+// adjust_x_up_to:
+// - Will only add (or remove) duration of a status effect up to the second parameter
+// - If the duration will result in going beyond the second parameter, it will stop exactly at that parameter
+// - The second parameter cannot be negative.
+// - Ex: adjust_stutter_up_to(20 SECONDS, 10 SECONDS) adds ten seconds of stuttering.
+//
+// set_x:
+// - Set the duration of a status effect to the exact number.
+// - Setting duration to zero seconds is effectively the same as just using remove_status_effect, or qdelling the effect.
+// - Ex: set_stutter(10 SECONDS) sets the stuttering to ten seconds, regardless of whether they had more or less existing stutter.
+//
+// set_x_if_lower:
+// - Will only set the duration of that effect IF any existing duration is lower than what was passed.
+// - Ex: set_stutter_if_lower(10 SECONDS) will set stuttering to ten seconds if no stuttering or less than ten seconds of stuttering exists
+// - Ex: set_jitter_if_lower(20 SECONDS) will do nothing if more than twenty seconds of jittering already exists
 
 #define adjust_stutter(duration) adjust_timed_status_effect(duration, /datum/status_effect/speech/stutter)
 #define adjust_stutter_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/speech/stutter, up_to)
