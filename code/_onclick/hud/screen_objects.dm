@@ -393,11 +393,17 @@
 	if(!istype(storage_master))
 		return FALSE
 
-	var/obj/item/inserted = usr.get_active_held_item()
-	if(!inserted)
-		return FALSE
+	if(world.time <= usr.next_move)
+		return TRUE
+	if(usr.incapacitated())
+		return TRUE
+	if(ismecha(usr.loc)) // stops inventory actions in a mech
+		return TRUE
 
-	storage_master.attempt_insert(inserted, usr)
+	var/obj/item/inserted = usr.get_active_held_item()
+	if(inserted)
+		storage_master.attempt_insert(inserted, usr)
+
 	return TRUE
 
 /atom/movable/screen/throw_catch
