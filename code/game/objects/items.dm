@@ -211,6 +211,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 	var/offensive_notes
 	/// Used in obj/item/examine to determines whether or not to detail an item's statistics even if it does not meet the force requirements
 	var/override_notes = FALSE
+	///is this item both in mob's hands and part/result of crafting recipes? used to manage add/remove of crafting HUD button overlay
 	var/crafting_item_in_hands = FALSE
 
 /obj/item/Initialize(mapload)

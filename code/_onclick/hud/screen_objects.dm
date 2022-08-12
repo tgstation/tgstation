@@ -89,7 +89,7 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "craft"
 	screen_loc = ui_crafting
-	var/image/can_craft_overlay
+	///does the user have items in their hands that are used in or made by crafting recipes? used to add an overlay
 	var/has_craft_items = FALSE
 
 /atom/movable/screen/craft/Initialize(mapload)
@@ -149,10 +149,8 @@
 
 /atom/movable/screen/craft/update_overlays()
 	. = ..()
-	cut_overlay(can_craft_overlay)
 	if(has_craft_items)
-		can_craft_overlay = image('icons/hud/screen_gen.dmi', icon_state = "can_craft")
-		add_overlay(can_craft_overlay)
+		. += image('icons/hud/screen_gen.dmi', icon_state = "can_craft")
 
 /atom/movable/screen/craft/proc/hands_craft_check(mob/living/carbon/human/user, obj/item/item, slot)
 	SIGNAL_HANDLER
@@ -163,12 +161,12 @@
 		if(has_craft_items)
 			has_craft_items = FALSE
 			item.crafting_item_in_hands = FALSE
-			update_overlays()
+			update_appearance()
 			return
 	if(is_type_in_typecache(item, GLOB.crafting_recipe_items) || (is_type_in_typecache(item.parent_type, GLOB.crafting_recipe_items) && !is_type_in_typecache(item.type, GLOB.crafting_recipe_items_blacklist)) || is_type_in_typecache(item, GLOB.crafting_recipe_items_results))
 		has_craft_items = TRUE
 		item.crafting_item_in_hands = TRUE
-		update_overlays()
+		update_appearance()
 
 /atom/movable/screen/craft/proc/exited_check(mob/living/carbon/human/user, obj/item/item, direction)
 	SIGNAL_HANDLER
@@ -178,7 +176,7 @@
 	if(has_craft_items)
 		has_craft_items = FALSE
 		item.crafting_item_in_hands = FALSE
-		update_overlays()
+		update_appearance()
 
 /atom/movable/screen/area_creator
 	name = "create new area"
