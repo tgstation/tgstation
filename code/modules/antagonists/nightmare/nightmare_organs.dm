@@ -19,7 +19,7 @@
 	our_jaunt = new(M)
 	our_jaunt.Grant(M)
 
-/obj/item/organ/internal/brain/nightmare/Remove(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/brain/nightmare/Remove(mob/living/carbon/M, special = FALSE)
 	QDEL_NULL(our_jaunt)
 	return ..()
 
@@ -36,9 +36,9 @@
 	/// The armblade granted to the host of this heart.
 	var/obj/item/light_eater/blade
 
-/obj/item/organ/internal/heart/nightmare/ComponentInitialize()
-	. = ..()
+/obj/item/organ/internal/heart/nightmare/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
+	return ..()
 
 /obj/item/organ/internal/heart/nightmare/attack(mob/M, mob/living/carbon/user, obj/target)
 	if(M != user)
@@ -62,7 +62,7 @@
 		blade = new/obj/item/light_eater
 		M.put_in_hands(blade)
 
-/obj/item/organ/internal/heart/nightmare/Remove(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/heart/nightmare/Remove(mob/living/carbon/M, special = FALSE)
 	respawn_progress = 0
 	if(blade && special != HEART_SPECIAL_SHADOWIFY)
 		M.visible_message(span_warning("\The [blade] disintegrates!"))

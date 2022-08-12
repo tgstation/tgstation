@@ -18,8 +18,6 @@
 		add_overlay(overlay)
 	return ..()
 
-
-
 //[[[[BRAIN]]]]
 
 /obj/item/organ/internal/cyberimp/brain
@@ -116,7 +114,7 @@
 
 	var/stun_cap_amount = 40
 
-/obj/item/organ/internal/cyberimp/brain/anti_stun/Remove(mob/living/carbon/implant_owner, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/cyberimp/brain/anti_stun/Remove(mob/living/carbon/implant_owner, special = FALSE)
 	. = ..()
 	UnregisterSignal(implant_owner, signalCache)
 

@@ -608,7 +608,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	G.mind.enslave_mind_to_creator(user)
 	G.copy_languages(user, LANGUAGE_MASTER) // make sure holoparasites speak same language as master
 	G.update_atom_languages()
-	log_game("[key_name(user)] has summoned [key_name(G)], a [guardiantype] holoparasite.")
+	user.log_message("has summoned [key_name(G)], a [guardiantype] holoparasite.", LOG_GAME)
+	G.log_message("was summoned as a [guardiantype] holoparsite.", LOG_GAME)
 	switch(theme)
 		if("tech")
 			to_chat(user, "[G.tech_fluff_string]")
@@ -674,7 +675,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /obj/item/paper/guides/antag/guardian
 	name = "Holoparasite Guide"
-	info = {"<b>A list of Holoparasite Types</b><br>
+	default_raw_text = {"<b>A list of Holoparasite Types</b><br>
 
 <br>
 <b>Assassin</b>: Does medium damage and takes full damage, but can enter stealth, causing its next attack to do massive damage and ignore armor. However, it becomes briefly unable to recall after attacking from stealth.<br>
@@ -699,7 +700,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /obj/item/paper/guides/antag/guardian/wizard
 	name = "Guardian Guide"
-	info = {"<b>A list of Guardian Types</b><br>
+	default_raw_text = {"<b>A list of Guardian Types</b><br>
 
 <br>
 <b>Assassin</b>: Does medium damage and takes full damage, but can enter stealth, causing its next attack to do massive damage and ignore armor. However, it becomes briefly unable to recall after attacking from stealth.<br>

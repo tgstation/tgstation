@@ -11,7 +11,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/table,
 /obj/item/paper{
-	info = "What exactly is the plan with all these rooms? I've dug out like 15 rooms in maintenance that aren't even labeled on the station blueprint. Seems like all we're doing is fucking up the structural stability of the asteroid.";
+	default_raw_text = "What exactly is the plan with all these rooms? I've dug out like 15 rooms in maintenance that aren't even labeled on the station blueprint. Seems like all we're doing is fucking up the structural stability of the asteroid.";
 	name = "sand-covered note"
 	},
 /obj/item/stack/ore/glass,

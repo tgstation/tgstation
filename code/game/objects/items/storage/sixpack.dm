@@ -21,7 +21,7 @@
 	. = ..()
 	update_appearance()
 
-/obj/item/storage/cans/Initialize()
+/obj/item/storage/cans/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	atom_storage.max_total_storage = 12

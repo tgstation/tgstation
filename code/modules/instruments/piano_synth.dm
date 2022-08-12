@@ -29,7 +29,7 @@
 	circuit_type = /obj/item/circuit_component/synth/headphones
 	shell_capacity = SHELL_CAPACITY_TINY
 
-/obj/item/instrument/piano_synth/headphones/ComponentInitialize()
+/obj/item/instrument/piano_synth/headphones/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 	RegisterSignal(src, COMSIG_INSTRUMENT_START, .proc/start_playing)

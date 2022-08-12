@@ -61,12 +61,12 @@
 	if(!foldable || (flags_1 & HOLOGRAM_1))
 		return
 	if(contents.len)
-		to_chat(user, span_warning("You can't fold this box with items still inside!"))
+		balloon_alert(user, "items inside!")
 		return
 	if(!ispath(foldable))
 		return
 
-	to_chat(user, span_notice("You fold [src] flat."))
+	balloon_alert(user, "folded")
 	var/obj/item/I = new foldable
 	qdel(src)
 	user.put_in_hands(I)
@@ -470,7 +470,7 @@
 	for(var/i in 1 to 6)
 		new donktype(src)
 
-/obj/item/storage/box/donkpockets/Initialize()
+/obj/item/storage/box/donkpockets/Initialize(mapload)
 	. = ..()
 	atom_storage.set_holdable(list(/obj/item/food/donkpocket))
 
@@ -511,7 +511,7 @@
 	illustration = null
 	var/cube_type = /obj/item/food/monkeycube
 
-/obj/item/storage/box/monkeycubes/Initialize()
+/obj/item/storage/box/monkeycubes/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 7
 	atom_storage.set_holdable(list(/obj/item/food/monkeycube))
@@ -530,7 +530,7 @@
 	icon_state = "monkeycubebox"
 	illustration = null
 
-/obj/item/storage/box/gorillacubes/Initialize()
+/obj/item/storage/box/gorillacubes/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 3
 	atom_storage.set_holdable(list(/obj/item/food/monkeycube))
@@ -687,7 +687,7 @@
 	icon_state = "spbox"
 	illustration = ""
 
-/obj/item/storage/box/snappops/Initialize()
+/obj/item/storage/box/snappops/Initialize(mapload)
 	. = ..()
 	atom_storage.set_holdable(list(/obj/item/toy/snappop))
 	atom_storage.max_slots = 8
@@ -711,7 +711,7 @@
 	base_icon_state = "matchbox"
 	illustration = null
 
-/obj/item/storage/box/matches/Initialize()
+/obj/item/storage/box/matches/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 10
 	atom_storage.set_holdable(list(/obj/item/match))
@@ -746,7 +746,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	foldable = /obj/item/stack/sheet/cardboard //BubbleWrap
 
-/obj/item/storage/box/lights/Initialize()
+/obj/item/storage/box/lights/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 21
 	atom_storage.set_holdable(list(/obj/item/light/tube, /obj/item/light/bulb))
@@ -834,12 +834,12 @@
 /obj/item/storage/box/clown/attackby(obj/item/I, mob/user, params)
 	if((istype(I, /obj/item/bodypart/l_arm/robot)) || (istype(I, /obj/item/bodypart/r_arm/robot)))
 		if(contents.len) //prevent accidently deleting contents
-			to_chat(user, span_warning("You need to empty [src] out first!"))
+			balloon_alert(user, "items inside!")
 			return
 		if(!user.temporarilyRemoveItemFromInventory(I))
 			return
 		qdel(I)
-		to_chat(user, span_notice("You add some wheels to the [src]! You've got a honkbot assembly now! Honk!"))
+		balloon_alert(user, "wheels added, honk!")
 		var/obj/item/bot_assembly/honkbot/A = new
 		qdel(src)
 		user.put_in_hands(A)
@@ -993,7 +993,7 @@
 				desc = "A paper sack with a crude smile etched onto the side."
 			else
 				return FALSE
-		to_chat(user, span_notice("You make some modifications to [src] using your pen."))
+		balloon_alert(user, "modified")
 		icon_state = "paperbag_[choice]"
 		inhand_icon_state = "paperbag_[choice]"
 		return FALSE
@@ -1024,10 +1024,10 @@
 	if(user.incapacitated())
 		return FALSE
 	if(contents.len)
-		to_chat(user, span_warning("You can't modify [src] with items still inside!"))
+		balloon_alert(user, "items inside!")
 		return FALSE
 	if(!P || !user.is_holding(P))
-		to_chat(user, span_warning("You need a pen to modify [src]!"))
+		balloon_alert(user, "needs pen!")
 		return FALSE
 	return TRUE
 
@@ -1243,7 +1243,7 @@
 	foldable = null
 	custom_price = PAYCHECK_CREW
 
-/obj/item/storage/box/gum/Initialize()
+/obj/item/storage/box/gum/Initialize(mapload)
 	. = ..()
 	atom_storage.set_holdable(list(/obj/item/food/bubblegum))
 	atom_storage.max_slots = 4

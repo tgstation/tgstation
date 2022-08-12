@@ -103,7 +103,7 @@
 				to_chat(usr, span_warning("[src] is currently busy copying something. Please wait until it is finished."))
 				return FALSE
 			if(paper_copy)
-				if(!paper_copy.get_info_length())
+				if(!paper_copy.get_total_length())
 					to_chat(usr, span_warning("An error message flashes across [src]'s screen: \"The supplied paper is blank. Aborting.\""))
 					return FALSE
 				// Basic paper
@@ -184,12 +184,13 @@
 				return FALSE
 			do_copy_loop(CALLBACK(src, .proc/make_blank_print), usr)
 			var/obj/item/paper/printblank = new /obj/item/paper (loc)
-			var/printname = params["name"]
+			var/printname = sanitize(params["name"])
 			var/list/printinfo
 			for(var/infoline as anything in params["info"])
 				printinfo += infoline
 			printblank.name = printname
-			printblank.info = printinfo
+			printblank.add_raw_text(printinfo)
+			printblank.update_appearance()
 			return printblank
 
 /**
@@ -250,14 +251,13 @@
 /obj/machinery/photocopier/proc/make_paper_copy()
 	if(!paper_copy)
 		return
-	var/obj/item/paper/copied_paper = paper_copy.copy(/obj/item/paper, loc, FALSE)
+
+	var/copy_colour = toner_cartridge.charges > 10 ? COLOR_FULL_TONER_BLACK : COLOR_GRAY;
+
+	var/obj/item/paper/copied_paper = paper_copy.copy(/obj/item/paper, loc, FALSE, copy_colour)
+
 	give_pixel_offset(copied_paper)
 
-	//the font color dependant on the amount of toner left.
-	var/chosen_color = toner_cartridge.charges > 10 ? "#101010" : "#808080"
-	copied_paper.info = "<font color = [chosen_color]>[copied_paper.info]</font>"
-	for(var/list/style as anything in copied_paper.add_info_style)
-		style[ADD_INFO_COLOR] = chosen_color
 	copied_paper.name = paper_copy.name
 
 	toner_cartridge.charges -= PAPER_TONER_USE

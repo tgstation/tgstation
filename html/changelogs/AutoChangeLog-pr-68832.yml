@@ -1,4 +1,0 @@
-author: "distributivgesetz"
-delete-after: True
-changes: 
-  - qol: "Vault bank machine checks for access before alerting."

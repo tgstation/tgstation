@@ -183,7 +183,10 @@
 
 /mob/living/silicon/pai/handle_atom_del(atom/deleting_atom)
 	if(deleting_atom == hacking_cable)
+		untrack_pai()
+		untrack_thing(hacking_cable)
 		hacking_cable = null
+		SStgui.update_user_uis(src)
 		if(!QDELETED(card))
 			card.update_appearance()
 	if(deleting_atom == atmos_analyzer)
