@@ -30,8 +30,6 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	if(!CONFIG_GET(flag/disable_human_mood))
-		AddComponent(/datum/component/mood)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	GLOB.human_list += src
 
