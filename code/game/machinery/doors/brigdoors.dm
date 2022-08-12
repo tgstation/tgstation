@@ -14,6 +14,9 @@
 	desc = "A remote control for a door."
 	current_mode = SD_MESSAGE
 	req_access = list(ACCESS_SECURITY)
+	text_color = "#F44"
+	header_text_color = "#F88"
+
 	var/id = null // id of linked machinery/lockers
 
 	var/activation_time = 0
