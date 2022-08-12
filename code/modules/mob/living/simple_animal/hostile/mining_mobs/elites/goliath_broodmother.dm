@@ -74,11 +74,11 @@
 	chosen_message = "<span class='boldwarning'>You will summon your children to your location.</span>"
 	chosen_attack_num = CALL_CHILDREN
 
-/mob/living/simple_animal/hostile/asteroid/elite/broodmother/OpenFire()
+/mob/living/simple_animal/hostile/asteroid/elite/broodmother/OpenFire(atom/attacking_target)
 	if(client)
 		switch(chosen_attack)
 			if(TENTACLE_PATCH)
-				tentacle_patch(target)
+				tentacle_patch(attacking_target)
 			if(SPAWN_CHILDREN)
 				spawn_children()
 			if(RAGE)
@@ -89,7 +89,7 @@
 	var/aiattack = rand(1,4)
 	switch(aiattack)
 		if(TENTACLE_PATCH)
-			tentacle_patch(target)
+			tentacle_patch(attacking_target)
 		if(SPAWN_CHILDREN)
 			spawn_children()
 		if(RAGE)

@@ -124,7 +124,7 @@
 		var/mob/living/L = attacked_target
 		if(L.stat != DEAD)
 			if(!client && ranged && ranged_cooldown <= world.time)
-				OpenFire()
+				OpenFire(attacked_target)
 
 			if(L.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(L, TRAIT_NODEATH)) //Nope, it still gibs yall
 				devour(L)

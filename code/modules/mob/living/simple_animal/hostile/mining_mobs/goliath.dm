@@ -63,12 +63,12 @@
 	pull_force = PULL_FORCE_DEFAULT
 	..(gibbed)
 
-/mob/living/simple_animal/hostile/asteroid/goliath/OpenFire()
-	var/tturf = get_turf(target)
+/mob/living/simple_animal/hostile/asteroid/goliath/OpenFire(atom/attacking_target)
+	var/tturf = get_turf(attacking_target)
 	if(!isturf(tturf))
 		return
-	if(get_dist(src, target) <= 7)//Screen range check, so you can't get tentacle'd offscreen
-		visible_message(span_warning("[src] digs its tentacles under [target]!"))
+	if(get_dist(src, attacking_target) <= 7)//Screen range check, so you can't get tentacle'd offscreen
+		visible_message(span_warning("[src] digs its tentacles under [attacking_target]!"))
 		new /obj/effect/temp_visual/goliath_tentacle/original(tturf, src)
 		ranged_cooldown = world.time + ranged_cooldown_time
 		icon_state = icon_aggro

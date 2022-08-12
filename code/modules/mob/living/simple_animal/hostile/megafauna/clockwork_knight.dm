@@ -44,7 +44,7 @@ I'd rather there be something than the clockwork ruin be entirely empty though s
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 
-/mob/living/simple_animal/hostile/megafauna/clockwork_defender/OpenFire()
+/mob/living/simple_animal/hostile/megafauna/clockwork_defender/OpenFire(atom/attacking_target)
 	return
 
 /obj/item/clockwork_alloy

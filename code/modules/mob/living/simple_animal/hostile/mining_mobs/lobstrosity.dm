@@ -45,10 +45,10 @@
 	QDEL_NULL(charge)
 	return ..()
 
-/mob/living/simple_animal/hostile/asteroid/lobstrosity/OpenFire()
+/mob/living/simple_animal/hostile/asteroid/lobstrosity/OpenFire(atom/attacking_target)
 	if(client)
 		return
-	charge.Trigger(target = target)
+	charge.Trigger(target = attacking_target)
 
 /mob/living/simple_animal/hostile/asteroid/lobstrosity/lava
 	name = "tropical lobstrosity"

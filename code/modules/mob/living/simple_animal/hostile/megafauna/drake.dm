@@ -115,7 +115,7 @@
 	move_force = MOVE_FORCE_DEFAULT
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/OpenFire()
+/mob/living/simple_animal/hostile/megafauna/dragon/OpenFire(atom/attacking_target)
 	if(swooping)
 		return
 
@@ -125,23 +125,23 @@
 	if(prob(15 + anger_modifier))
 		if(DRAKE_ENRAGED)
 			// Lava Arena
-			lava_swoop.Trigger(target = target)
+			lava_swoop.Trigger(target = attacking_target)
 			return
 		// Lava Pools
-		if(lava_swoop.Trigger(target = target))
+		if(lava_swoop.Trigger(target = attacking_target))
 			SLEEP_CHECK_DEATH(0, src)
 			fire_cone.StartCooldown(0)
-			fire_cone.Trigger(target = target)
+			fire_cone.Trigger(target = attacking_target)
 			meteors.StartCooldown(0)
-			INVOKE_ASYNC(meteors, /datum/action/proc/Trigger, target)
+			INVOKE_ASYNC(meteors, /datum/action/proc/Trigger, attacking_target)
 			return
 	else if(prob(10+anger_modifier) && DRAKE_ENRAGED)
-		mass_fire.Trigger(target = target)
+		mass_fire.Trigger(target = attacking_target)
 		return
-	if(fire_cone.Trigger(target = target))
+	if(fire_cone.Trigger(target = attacking_target))
 		if(prob(50))
 			meteors.StartCooldown(0)
-			meteors.Trigger(target = target)
+			meteors.Trigger(target = attacking_target)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/start_attack(mob/living/owner, datum/action/cooldown/activated)
 	SIGNAL_HANDLER

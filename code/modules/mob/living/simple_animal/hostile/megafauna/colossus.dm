@@ -94,18 +94,18 @@
 	QDEL_NULL(dir_shots)
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/colossus/OpenFire()
+/mob/living/simple_animal/hostile/megafauna/colossus/OpenFire(atom/attacking_target)
 	anger_modifier = clamp(((maxHealth - health) / 40), 0, 20)
 
 	if(client)
 		return
 
-	if(enrage(target))
+	if(enrage(attacking_target))
 		if(move_to_delay == initial(move_to_delay))
 			visible_message(span_colossus("\"<b>You can't dodge.</b>\""))
 		ranged_cooldown = world.time + 3 SECONDS
 		telegraph()
-		dir_shots.fire_in_directions(src, target, GLOB.alldirs)
+		dir_shots.fire_in_directions(src, attacking_target, GLOB.alldirs)
 		move_to_delay = 3
 		return
 	else
@@ -113,16 +113,16 @@
 
 	if(health <= maxHealth / 10 && !final_availible)
 		final_availible = FALSE
-		colossus_final.Trigger(target = target)
+		colossus_final.Trigger(target = attacking_target)
 	else if(prob(20 + anger_modifier)) //Major attack
-		spiral_shots.Trigger(target = target)
+		spiral_shots.Trigger(target = attacking_target)
 	else if(prob(20))
-		random_shots.Trigger(target = target)
+		random_shots.Trigger(target = attacking_target)
 	else
 		if(prob(60 + anger_modifier))
-			shotgun_blast.Trigger(target = target)
+			shotgun_blast.Trigger(target = attacking_target)
 		else
-			dir_shots.Trigger(target = target)
+			dir_shots.Trigger(target = attacking_target)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/telegraph()
 	for(var/mob/viewer as anything in viewers(10, src))

@@ -134,7 +134,7 @@ Difficulty: Hard
 	if(cooldown_updates[COOLDOWN_UPDATE_ADD_ARENA])
 		arena_cooldown += cooldown_updates[COOLDOWN_UPDATE_ADD_ARENA]
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/OpenFire()
+/mob/living/simple_animal/hostile/megafauna/hierophant/OpenFire(atom/attacking_target)
 	if(blinking)
 		return
 
@@ -142,13 +142,13 @@ Difficulty: Hard
 	var/blink_counter = 1 + round(anger_modifier * 0.08)
 	var/cross_counter = 1 + round(anger_modifier * 0.12)
 
-	arena_trap(target)
+	arena_trap(attacking_target)
 	update_cooldowns(list(COOLDOWN_UPDATE_SET_RANGED = max(0.5 SECONDS, ranged_cooldown_time - anger_modifier * 0.75)), ignore_staggered = TRUE) //scale cooldown lower with high anger.
 
 	var/target_slowness = 0
 	var/mob/living/L
-	if(isliving(target))
-		L = target
+	if(isliving(attacking_target))
+		L = attacking_target
 		target_slowness += L.cached_multiplicative_slowdown
 	if(client)
 		target_slowness += 1
@@ -159,7 +159,7 @@ Difficulty: Hard
 	if(client)
 		switch(chosen_attack)
 			if(1)
-				blink(target)
+				blink(attacking_target)
 			if(2)
 				chaser_swarm(blink_counter, target_slowness, cross_counter)
 			if(3)
@@ -176,7 +176,7 @@ Difficulty: Hard
 		var/list/possibilities = list()
 		if(cross_counter > 1)
 			possibilities += "cross_blast_spam"
-		if(get_dist(src, target) > 2)
+		if(get_dist(src, attacking_target) > 2)
 			possibilities += "blink_spam"
 		if(chaser_cooldown < world.time)
 			if(prob(anger_modifier * 2))
@@ -194,23 +194,23 @@ Difficulty: Hard
 			return
 
 	if(chaser_cooldown < world.time) //if chasers are off cooldown, fire some!
-		var/obj/effect/temp_visual/hierophant/chaser/C = new /obj/effect/temp_visual/hierophant/chaser(loc, src, target, chaser_speed, FALSE)
+		var/obj/effect/temp_visual/hierophant/chaser/C = new /obj/effect/temp_visual/hierophant/chaser(loc, src, attacking_target, chaser_speed, FALSE)
 		update_cooldowns(list(COOLDOWN_UPDATE_SET_CHASER = chaser_cooldown_time))
-		if((prob(anger_modifier) || target.Adjacent(src)) && target != src)
-			var/obj/effect/temp_visual/hierophant/chaser/OC = new(loc, src, target, chaser_speed * 1.5, FALSE)
+		if((prob(anger_modifier) || attacking_target.Adjacent(src)) && attacking_target != src)
+			var/obj/effect/temp_visual/hierophant/chaser/OC = new(loc, src, attacking_target, chaser_speed * 1.5, FALSE)
 			OC.moving = 4
 			OC.moving_dir = pick(GLOB.cardinals - C.moving_dir)
 
-	else if(prob(10 + (anger_modifier * 0.5)) && get_dist(src, target) > 2)
-		blink(target)
+	else if(prob(10 + (anger_modifier * 0.5)) && get_dist(src, attacking_target) > 2)
+		blink(attacking_target)
 
 	else if(prob(70 - anger_modifier)) //a cross blast of some type
 		if(prob(anger_modifier * (2 / target_slowness)) && health < maxHealth * 0.5) //we're super angry do it at all dirs
-			INVOKE_ASYNC(src, .proc/blasts, target, GLOB.alldirs)
+			INVOKE_ASYNC(src, .proc/blasts, attacking_target, GLOB.alldirs)
 		else if(prob(60))
-			INVOKE_ASYNC(src, .proc/blasts, target, GLOB.cardinals)
+			INVOKE_ASYNC(src, .proc/blasts, attacking_target, GLOB.cardinals)
 		else
-			INVOKE_ASYNC(src, .proc/blasts, target, GLOB.diagonals)
+			INVOKE_ASYNC(src, .proc/blasts, attacking_target, GLOB.diagonals)
 	else //just release a burst of power
 		INVOKE_ASYNC(src, .proc/burst, get_turf(src))
 
@@ -469,7 +469,7 @@ Difficulty: Hard
 				else
 					burst_range = 3
 					INVOKE_ASYNC(src, .proc/burst, get_turf(src), 0.25) //melee attacks on living mobs cause it to release a fast burst if on cooldown
-				OpenFire()
+				OpenFire(attacked_target)
 			else
 				devour(L)
 		else

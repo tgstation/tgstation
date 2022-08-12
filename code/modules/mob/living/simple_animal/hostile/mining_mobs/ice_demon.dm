@@ -57,14 +57,14 @@
 	temperature = -75
 	slowdown = FALSE
 
-/mob/living/simple_animal/hostile/asteroid/ice_demon/OpenFire()
+/mob/living/simple_animal/hostile/asteroid/ice_demon/OpenFire(atom/attacking_target)
 	ranged_cooldown = world.time + ranged_cooldown_time
 	// Sentient ice demons teleporting has been linked to server crashes
 	if(client)
 		return ..()
 	if(teleport_distance <= 0)
 		return ..()
-	var/list/possible_ends = view(teleport_distance, target.loc) - view(teleport_distance - 1, target.loc)
+	var/list/possible_ends = view(teleport_distance, attacking_target.loc) - view(teleport_distance - 1, attacking_target.loc)
 	for(var/turf/closed/turf_to_remove in possible_ends)
 		possible_ends -= turf_to_remove
 	if(!possible_ends.len)

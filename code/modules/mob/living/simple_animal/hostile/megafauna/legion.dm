@@ -118,7 +118,7 @@
 	chosen_message = "<span class='colossus'>You are now creating legion sentinels.</span>"
 	chosen_attack_num = 3
 
-/mob/living/simple_animal/hostile/megafauna/legion/OpenFire(the_target)
+/mob/living/simple_animal/hostile/megafauna/legion/OpenFire(atom/attacking_target)
 	if(charging)
 		return
 	update_cooldowns(list(COOLDOWN_UPDATE_SET_RANGED = ranged_cooldown_time), ignore_staggered = TRUE)

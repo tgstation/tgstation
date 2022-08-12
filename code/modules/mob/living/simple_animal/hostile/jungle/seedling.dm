@@ -117,22 +117,22 @@
 		return
 	return ..()
 
-/mob/living/simple_animal/hostile/jungle/seedling/OpenFire()
-	WarmupAttack()
+/mob/living/simple_animal/hostile/jungle/seedling/OpenFire(atom/attacking_target)
+	WarmupAttack(attacking_target)
 
-/mob/living/simple_animal/hostile/jungle/seedling/proc/WarmupAttack()
+/mob/living/simple_animal/hostile/jungle/seedling/proc/WarmupAttack(atom/attacking_target)
 	if(combatant_state == SEEDLING_STATE_NEUTRAL)
 		combatant_state = SEEDLING_STATE_WARMUP
 		SSmove_manager.stop_looping(src)
 		update_icons()
-		var/target_dist = get_dist(src,target)
-		var/living_target_check = isliving(target)
+		var/target_dist = get_dist(src,attacking_target)
+		var/living_target_check = isliving(attacking_target)
 		if(living_target_check)
 			if(target_dist > 7)//Offscreen check
-				SolarBeamStartup(target)
+				SolarBeamStartup(attacking_target)
 				return
-			if(get_dist(src,target) >= 4 && prob(40))
-				SolarBeamStartup(target)
+			if(get_dist(src,attacking_target) >= 4 && prob(40))
+				SolarBeamStartup(attacking_target)
 				return
 		addtimer(CALLBACK(src, .proc/Volley), 5)
 

@@ -174,15 +174,15 @@
 		if(L.stat != DEAD)
 			adjustHealth(-maxHealth * 0.1)
 
-/mob/living/simple_animal/hostile/venus_human_trap/OpenFire(atom/the_target)
+/mob/living/simple_animal/hostile/venus_human_trap/OpenFire(atom/attacking_target)
 	for(var/datum/beam/B in vines)
-		if(B.target == the_target)
+		if(B.target == attacking_target)
 			pull_vines()
 			ranged_cooldown = world.time + (ranged_cooldown_time * 0.5)
 			return
-	if(get_dist(src,the_target) > vine_grab_distance || vines.len >= max_vines)
+	if(get_dist(src,attacking_target) > vine_grab_distance || vines.len >= max_vines)
 		return
-	for(var/turf/T in get_line(src,the_target))
+	for(var/turf/T in get_line(src,attacking_target))
 		if (T.density)
 			return
 		for(var/obj/O in T)

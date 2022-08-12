@@ -90,7 +90,7 @@ Difficulty: Extremely Hard
 	QDEL_NULL(hard_ice_shotgun)
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/OpenFire()
+/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/OpenFire(atom/attacking_target)
 	if(client)
 		return
 
@@ -99,19 +99,19 @@ Difficulty: Extremely Hard
 	switch(chosen_attack)
 		if(1)
 			if(easy_attack)
-				frost_orbs.Trigger(target = target)
+				frost_orbs.Trigger(target = attacking_target)
 			else
-				hard_frost_orbs.Trigger(target = target)
+				hard_frost_orbs.Trigger(target = attacking_target)
 		if(2)
 			if(easy_attack)
-				snowball_machine_gun.Trigger(target = target)
+				snowball_machine_gun.Trigger(target = attacking_target)
 			else
-				hard_snowball_machine_gun.Trigger(target = target)
+				hard_snowball_machine_gun.Trigger(target = attacking_target)
 		if(3)
 			if(easy_attack)
-				ice_shotgun.Trigger(target = target)
+				ice_shotgun.Trigger(target = attacking_target)
 			else
-				hard_ice_shotgun.Trigger(target = target)
+				hard_ice_shotgun.Trigger(target = attacking_target)
 
 /// Pre-ability usage stuff
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/start_attack(mob/living/owner, datum/action/cooldown/activated)

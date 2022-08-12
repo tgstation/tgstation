@@ -82,7 +82,7 @@
 		return FALSE
 	return ..()
 
-/mob/living/simple_animal/hostile/asteroid/brimdemon/OpenFire()
+/mob/living/simple_animal/hostile/asteroid/brimdemon/OpenFire(atom/attacking_target)
 	if(firing)
 		balloon_alert(src, "already firing!")
 		return
@@ -107,7 +107,7 @@
 	if(key || QDELETED(target) || get_dist(src, target) > BRIMBEAM_RANGE || !(get_dir(src, target) in GLOB.cardinals))
 		return
 	face_atom(target)
-	OpenFire()
+	OpenFire(target)
 
 /// Fires a brimbeam, getting a line of turfs between it and the direction to the target and creating a brimbeam effect on every one of them.
 /mob/living/simple_animal/hostile/asteroid/brimdemon/proc/fire_laser()

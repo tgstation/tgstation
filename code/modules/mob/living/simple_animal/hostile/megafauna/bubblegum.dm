@@ -119,19 +119,19 @@ Difficulty: Hard
 	if(cooldown_updates[COOLDOWN_UPDATE_ADD_ENRAGE])
 		enrage_till += cooldown_updates[COOLDOWN_UPDATE_ADD_ENRAGE]
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire()
+/mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire(atom/attacking_target)
 	if(client)
 		return
 
 	if(!try_bloodattack() || prob(25 + anger_modifier))
-		blood_warp.Trigger(target = target)
+		blood_warp.Trigger(target = attacking_target)
 
 	if(!BUBBLEGUM_SMASH)
-		triple_charge.Trigger(target = target)
+		triple_charge.Trigger(target = attacking_target)
 	else if(prob(50 + anger_modifier))
-		hallucination_charge.Trigger(target = target)
+		hallucination_charge.Trigger(target = attacking_target)
 	else
-		hallucination_charge_surround.Trigger(target = target)
+		hallucination_charge_surround.Trigger(target = attacking_target)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_mobs_on_blood()
 	var/list/targets = ListTargets()
@@ -346,7 +346,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
 	return
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/OpenFire()
+/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/OpenFire(atom/attacking_target)
 	return
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/AttackingTarget(atom/attacked_target)

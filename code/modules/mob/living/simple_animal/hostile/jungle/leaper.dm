@@ -191,19 +191,19 @@
 		ranged_cooldown = 0 //Keeps em on their toes instead of a constant rotation
 	..()
 
-/mob/living/simple_animal/hostile/jungle/leaper/OpenFire()
-	face_atom(target)
+/mob/living/simple_animal/hostile/jungle/leaper/OpenFire(atom/attacking_target)
+	face_atom(attacking_target)
 	if(ranged_cooldown <= world.time)
 		if(ckey)
 			if(hopping)
 				return
-			if(isliving(target))
-				var/mob/living/L = target
+			if(isliving(attacking_target))
+				var/mob/living/L = attacking_target
 				if(L.incapacitated())
 					return //No stunlocking. Hop on them after you stun them, you donk.
 		if(AIStatus == AI_ON && !projectile_ready && !ckey)
 			return
-		. = ..(target)
+		. = ..(attacking_target)
 		projectile_ready = FALSE
 		update_icons()
 

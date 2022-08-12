@@ -213,10 +213,10 @@
 	QDEL_NULL(charge)
 	return ..()
 
-/mob/living/simple_animal/hostile/giant_spider/tarantula/OpenFire()
+/mob/living/simple_animal/hostile/giant_spider/tarantula/OpenFire(atom/attacking_target)
 	if(client)
 		return
-	charge.Trigger(target = target)
+	charge.Trigger(target = attacking_target)
 
 /mob/living/simple_animal/hostile/giant_spider/tarantula/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()

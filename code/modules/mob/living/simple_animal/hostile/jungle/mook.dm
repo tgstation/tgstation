@@ -188,9 +188,9 @@
 		return
 	return ..()
 
-/mob/living/simple_animal/hostile/jungle/mook/OpenFire()
-	if(isliving(target))
-		var/mob/living/L = target
+/mob/living/simple_animal/hostile/jungle/mook/OpenFire(atom/attacking_target)
+	if(isliving(attacking_target))
+		var/mob/living/L = attacking_target
 		if(L.incapacitated())
 			return
 	WarmupAttack()

@@ -194,7 +194,7 @@
 	if(!using_special)
 		..()
 
-/mob/living/simple_animal/hostile/space_dragon/OpenFire()
+/mob/living/simple_animal/hostile/space_dragon/OpenFire(atom/attacking_target)
 	if(using_special)
 		return
 	ranged_cooldown = world.time + ranged_cooldown_time

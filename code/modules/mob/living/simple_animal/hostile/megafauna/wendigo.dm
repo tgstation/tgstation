@@ -98,7 +98,7 @@ Difficulty: Hard
 	. = ..()
 	starting = get_turf(src)
 
-/mob/living/simple_animal/hostile/megafauna/wendigo/OpenFire()
+/mob/living/simple_animal/hostile/megafauna/wendigo/OpenFire(atom/attacking_target)
 	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 10 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 10 SECONDS))
 	if(WENDIGO_ENRAGED)
 		speed = 4

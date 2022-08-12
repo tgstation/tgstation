@@ -76,13 +76,13 @@
 	chosen_message = "<span class='boldwarning'>Your head will spew smoke in an area, wherever it may be.</span>"
 	chosen_attack_num = SPEW_SMOKE
 
-/mob/living/simple_animal/hostile/asteroid/elite/legionnaire/OpenFire()
+/mob/living/simple_animal/hostile/asteroid/elite/legionnaire/OpenFire(atom/attacking_target)
 	if(client)
 		switch(chosen_attack)
 			if(LEGIONNAIRE_CHARGE)
-				legionnaire_charge(target)
+				legionnaire_charge(attacking_target)
 			if(HEAD_DETACH)
-				head_detach(target)
+				head_detach(attacking_target)
 			if(BONFIRE_TELEPORT)
 				bonfire_teleport()
 			if(SPEW_SMOKE)
@@ -91,9 +91,9 @@
 	var/aiattack = rand(1,4)
 	switch(aiattack)
 		if(LEGIONNAIRE_CHARGE)
-			legionnaire_charge(target)
+			legionnaire_charge(attacking_target)
 		if(HEAD_DETACH)
-			head_detach(target)
+			head_detach(attacking_target)
 		if(BONFIRE_TELEPORT)
 			bonfire_teleport()
 		if(SPEW_SMOKE)

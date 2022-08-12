@@ -81,16 +81,16 @@ Difficulty: Medium
 	QDEL_NULL(transform_weapon)
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/OpenFire()
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/OpenFire(atom/attacking_target)
 	if(client)
 		return
 
-	Goto(target, move_to_delay, minimum_distance)
-	if(get_dist(src, target) > 4 && dash_attack.IsAvailable())
-		dash_attack.Trigger(target = target)
+	Goto(attacking_target, move_to_delay, minimum_distance)
+	if(get_dist(src, attacking_target) > 4 && dash_attack.IsAvailable())
+		dash_attack.Trigger(target = attacking_target)
 	else
-		kinetic_accelerator.Trigger(target = target)
-	transform_weapon.Trigger(target = target)
+		kinetic_accelerator.Trigger(target = attacking_target)
+	transform_weapon.Trigger(target = attacking_target)
 
 /obj/item/melee/cleaving_saw/miner //nerfed saw because it is very murdery
 	force = 6
