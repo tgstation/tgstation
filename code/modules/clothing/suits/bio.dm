@@ -12,6 +12,7 @@
 /obj/item/clothing/suit/bio_suit
 	name = "bio suit"
 	desc = "A suit that protects against biological contamination."
+	icon = 'icons/obj/clothing/suits/bio.dmi'
 	icon_state = "bio"
 	worn_icon = 'icons/mob/clothing/suits/bio.dmi'
 	inhand_icon_state = "bio_suit"
@@ -33,14 +34,12 @@
 /obj/item/clothing/suit/bio_suit/general
 	icon_state = "bio"
 
-
 //Virology biosuit, green stripe
 /obj/item/clothing/head/bio_hood/virology
 	icon_state = "bio_virology"
 
 /obj/item/clothing/suit/bio_suit/virology
 	icon_state = "bio_virology"
-
 
 //Security biosuit, grey with red stripe across the chest
 /obj/item/clothing/head/bio_hood/security
