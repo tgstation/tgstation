@@ -39,8 +39,8 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 /datum/gas_recipe/crystallizer/hypern_crystalium
 	id = "hyper_crystalium"
 	name = "Hypernoblium Crystal"
-	min_temp = 4.5 * T0C
-	max_temp = 4.5 * (T0C + 40)
+	min_temp = 1200
+	max_temp = 1400
 	energy_release = -250000
 	requirements = list(/datum/gas/oxygen = 2000, /datum/gas/hypernoblium = 175)
 	products = list(/obj/item/grenade/gas_crystal/hypernoblium_crystal = 1)
