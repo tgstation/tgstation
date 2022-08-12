@@ -34,7 +34,7 @@
 #define RND_CATEGORY_MISC_MACHINERY "Misc. Machinery"
 #define RND_CATEGORY_RESEARCH_MACHINERY "Research Machinery"
 #define RND_CATEGORY_MEDICAL_MACHINERY "Medical Machinery"
-#define RND_CATEGORY_HYDROPONICS_MACHIENRY "Hydroponics Machinery"
+#define RND_CATEGORY_HYDROPONICS_MACHINERY "Hydroponics Machinery"
 
 // Exosuit Fabricator Categories
 #define RND_CATEGORY_EXOSUIT_MODULES "Exosuit Modules"

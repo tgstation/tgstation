@@ -203,7 +203,7 @@
 	desc = "The circuit board for a biogenerator."
 	id = "biogenerator"
 	build_path = /obj/item/circuitboard/machine/biogenerator
-	category = list(RND_CATEGORY_HYDROPONICS_MACHIENRY)
+	category = list(RND_CATEGORY_HYDROPONICS_MACHINERY)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/board/hydroponics
@@ -211,7 +211,7 @@
 	desc = "The circuit board for a hydroponics tray."
 	id = "hydro_tray"
 	build_path = /obj/item/circuitboard/machine/hydroponics
-	category = list(RND_CATEGORY_HYDROPONICS_MACHIENRY)
+	category = list(RND_CATEGORY_HYDROPONICS_MACHINERY)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/board/destructive_analyzer
@@ -391,7 +391,7 @@
 	desc = "The circuit board for a seed extractor."
 	id = "seed_extractor"
 	build_path = /obj/item/circuitboard/machine/seed_extractor
-	category = list(RND_CATEGORY_HYDROPONICS_MACHIENRY)
+	category = list(RND_CATEGORY_HYDROPONICS_MACHINERY)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/board/processor
