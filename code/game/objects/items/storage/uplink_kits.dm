@@ -385,7 +385,7 @@
 /obj/item/storage/box/syndie_kit/space
 	name = "boxed space suit and helmet"
 
-/obj/item/storage/box/syndie_kit/space/Initialize()
+/obj/item/storage/box/syndie_kit/space/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.set_holdable(list(/obj/item/clothing/suit/space/syndicate, /obj/item/clothing/head/helmet/space/syndicate))
@@ -410,7 +410,7 @@
 /obj/item/storage/box/syndie_kit/chemical
 	name = "chemical kit"
 
-/obj/item/storage/box/syndie_kit/chemical/Initialize()
+/obj/item/storage/box/syndie_kit/chemical/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 14
 

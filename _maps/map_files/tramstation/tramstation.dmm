@@ -39386,8 +39386,8 @@
 /area/station/hallway/primary/tram/right)
 "nwT" = (
 /obj/machinery/door/airlock{
-	id_tag = "private_c";
-	name = "Private Quarters C"
+	id_tag = "private_d";
+	name = "Private Quarters D"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -47027,7 +47027,7 @@
 /area/station/maintenance/disposal/incinerator)
 "qhe" = (
 /obj/machinery/door/airlock{
-	id_tag = "private_R";
+	id_tag = "private_r";
 	name = "Private Quarters R"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,

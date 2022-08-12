@@ -33,7 +33,9 @@
 			to_chat(victim, span_boldannounce("You hold onto \the [victim.loc] as hard as you can, as reality distorts around you. You feel safe."))
 			continue
 		to_chat(victim, span_boldannounce("You feel reality distort for a moment..."))
-		SEND_SIGNAL(victim, COMSIG_ADD_MOOD_EVENT, "delam", /datum/mood_event/delam)
+		if (isliving(victim))
+			var/mob/living/living_victim = victim
+			living_victim.add_mood_event("delam", /datum/mood_event/delam)
 	return TRUE
 
 /// Spawns anomalies all over the station. Half instantly, the other half over time.
@@ -48,7 +50,7 @@
 	for(var/i in 1 to anomalies)
 		var/anomaly_to_spawn = pick_weight(anomaly_types)
 		var/anomaly_location = pick_n_take(anomaly_places)
-		
+
 		if(i < cutoff_point)
 			supermatter_anomaly_gen(anomaly_location, anomaly_to_spawn, has_changed_lifespan = FALSE)
 			continue
@@ -143,8 +145,9 @@
 /datum/sm_delam/proc/effect_cascade_demoralize()
 	for(var/mob/player as anything in GLOB.player_list)
 		if(!isdead(player))
+			var/mob/living/living_player = player
 			to_chat(player, span_boldannounce("Everything around you is resonating with a powerful energy. This can't be good."))
-			SEND_SIGNAL(player, COMSIG_ADD_MOOD_EVENT, "cascade", /datum/mood_event/cascade)
+			living_player.add_mood_event("cascade", /datum/mood_event/cascade)
 		SEND_SOUND(player, 'sound/magic/charge.ogg')
 
 /datum/sm_delam/proc/effect_emergency_state()
@@ -178,7 +181,7 @@
 		Rapid expansion of crystal mass proportional to rising gravitational force. \
 		Matter collapse due to gravitational pull foreseeable.",
 		"Nanotrasen Star Observation Association")
-	
+
 	sleep(25 SECONDS)
 
 	priority_announce("[Gibberish("All attempts at evacuation have now ceased, and all assets have been retrieved from your sector.\n \
@@ -194,7 +197,7 @@
 		minor_announce(shuttle_msg, "Emergency Shuttle", TRUE)
 		SSshuttle.emergency.setTimer(15 SECONDS)
 		return
-	
+
 	sleep(10 SECONDS)
 
 	SSticker.news_report = SUPERMATTER_CASCADE

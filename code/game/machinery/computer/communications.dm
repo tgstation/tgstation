@@ -329,7 +329,7 @@
 
 			var/destination = params["destination"]
 
-			usr.log_message("is about to send the following message to [destination]: [message]")
+			usr.log_message("is about to send the following message to [destination]: [message]", LOG_GAME)
 			to_chat(
 				GLOB.admins,
 				span_adminnotice( \

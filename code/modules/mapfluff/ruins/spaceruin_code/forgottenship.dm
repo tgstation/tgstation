@@ -80,7 +80,7 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	deconstructible = FALSE
 
-/obj/structure/fluff/empty_sleeper/syndicate/captain/ComponentInitialize()
+/obj/structure/fluff/empty_sleeper/syndicate/captain/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/gps, "Old Encrypted Signal")
 

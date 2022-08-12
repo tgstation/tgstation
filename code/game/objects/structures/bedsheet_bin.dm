@@ -479,7 +479,7 @@ LINEN BINS
 	icon_state = "random_bedsheet"
 	bedsheet_type = BEDSHEET_ABSTRACT
 
-/obj/item/bedsheet/dorms_double/Initialize()
+/obj/item/bedsheet/dorms_double/Initialize(mapload)
 	..()
 	var/type = pick_weight(list("Colors" = 80, "Special" = 20))
 	switch(type)

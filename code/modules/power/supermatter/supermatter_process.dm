@@ -171,10 +171,6 @@
 	var/list/transit_mod = gases_we_care_about.Copy()
 	var/list/resistance_mod = gases_we_care_about.Copy()
 
-	var/h2obonus = 1 - (gas_comp[/datum/gas/water_vapor] * 0.25)//At max this value should be 0.75
-	freonbonus = (gas_comp[/datum/gas/freon] <= 0.03) //Let's just yeet power output if this shit is high
-
-
 	//No less then zero, and no greater then one, we use this to do explosions and heat to power transfer
 	//Be very careful with modifing this var by large amounts, and for the love of god do not push it past 1
 	gasmix_power_ratio = 0
@@ -198,7 +194,6 @@
 	power_transmission_bonus = 0
 	for(var/gas_id in gas_trans)
 		power_transmission_bonus += gas_comp[gas_id] * gas_trans[gas_id] * (isnull(transit_mod[gas_id]) ? 1 : transit_mod[gas_id])
-	power_transmission_bonus *= h2obonus
 
 /obj/machinery/power/supermatter_crystal/proc/special_gases_interactions(datum/gas_mixture/env, datum/gas_mixture/removed)
 	//Miasma is really just microscopic particulate. It gets consumed like anything else that touches the crystal.
@@ -268,17 +263,15 @@
 
 	//Zaps around 2.5 seconds at 1500 MeV, limited to 0.5 from 4000 MeV and up
 	if(power && (last_power_zap + 4 SECONDS - (power * 0.001)) < world.time)
-		//(1 + (tritRad + pluoxDampen * bzDampen * o2Rad * plasmaRad / (10 - bzrads))) * freonbonus
 		playsound(src, 'sound/weapons/emitter2.ogg', 70, TRUE)
-		var/power_multiplier = max(0, (1 + (power_transmission_bonus / (10 - (gas_comp[/datum/gas/bz] * BZ_RADIOACTIVITY_MODIFIER)))) * freonbonus)// RadModBZ(500%)
+		var/power_multiplier = max(0, 1 + power_transmission_bonus / 10)
 		var/pressure_multiplier = max((1 / ((env.return_pressure() ** pressure_bonus_curve_angle) + 1) * pressure_bonus_derived_steepness) + pressure_bonus_derived_constant, 1)
-		var/co2_power_increase = max(gas_comp[/datum/gas/carbon_dioxide] * 2, 1)
 		hue_angle_shift = clamp(903 * log(10, (power + 8000)) - 3590, -50, 240)
 		var/zap_color = color_matrix_rotate_hue(hue_angle_shift)
 		supermatter_zap(
 			zapstart = src,
 			range = 3,
-			zap_str = 2.5 * power * power_multiplier * pressure_multiplier * co2_power_increase,
+			zap_str = 2.5 * power * power_multiplier * pressure_multiplier,
 			zap_flags = ZAP_SUPERMATTER_FLAGS,
 			zap_cutoff = 300,
 			power_level = power,

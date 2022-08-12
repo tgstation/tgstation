@@ -401,7 +401,7 @@
 
 	custom_premium_price = PAYCHECK_CREW * 1.25
 
-/obj/item/canvas/thirtysix_twentyfour/Initialize()
+/obj/item/canvas/thirtysix_twentyfour/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/item_scaling, 1, 0.8)
 	icon = 'icons/obj/artstuff_64x64.dmi'
@@ -424,7 +424,7 @@
 
 	custom_premium_price = PAYCHECK_CREW * 1.75
 
-/obj/item/canvas/fortyfive_twentyseven/Initialize()
+/obj/item/canvas/fortyfive_twentyseven/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/item_scaling, 1, 0.7)
 	icon = 'icons/obj/artstuff_64x64.dmi'
@@ -762,7 +762,7 @@
 	///Chosen paint color
 	var/current_color = "#000000"
 
-/obj/item/paint_palette/Initialize()
+/obj/item/paint_palette/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/palette, AVAILABLE_PALETTE_SPACE, current_color)
 
