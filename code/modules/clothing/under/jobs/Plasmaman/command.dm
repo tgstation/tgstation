@@ -19,7 +19,7 @@
 	icon_state = "hos_envirosuit"
 	inhand_icon_state = "hos_envirosuit"
 	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 95, ACID = 95, WOUND = 10)
-	sensor_mode = 3
+	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 
 /obj/item/clothing/under/plasmaman/chief_engineer
