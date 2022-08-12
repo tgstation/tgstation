@@ -1,6 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the game re-initializing your verbs for no reason when you deadmin, which was the cause of the \"Your previous action was ignored because you've done too many in a second\" spam when pressing the Deadmin button."
-  - bugfix: "The MC tab no longer appears in a \"ghost\" state in your status tabs after you deadmin. Now it's just gone, at long last!"
-  - code_imp: "Prettier should no longer be ran on files outside of the \"tgui\" folder."

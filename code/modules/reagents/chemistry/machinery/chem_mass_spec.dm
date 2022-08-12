@@ -39,7 +39,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 	. = ..()
 	ADD_TRAIT(src, DO_NOT_SPLASH, src.type)
 	if(mapload)
-		beaker2 = new /obj/item/reagent_containers/glass/beaker/large(src)
+		beaker2 = new /obj/item/reagent_containers/cup/beaker/large(src)
 
 	AddElement( \
 		/datum/element/contextual_screentip_bare_hands, \
