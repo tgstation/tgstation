@@ -42,6 +42,7 @@
 	max_integrity = 600
 	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100)
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
+	move_resist = MOVE_FORCE_OVERPOWERING
 	damage_deflection = 70
 	/// Make sure that the puzzle has the same puzzle_id as the keycard door!
 	var/puzzle_id = null
@@ -188,7 +189,7 @@
 	/// Banned combinations of the list in decimal
 	var/static/list/banned_combinations = list(-1, 47, 95, 203, 311, 325, 422, 473, 488, 500, 511)
 
-/obj/structure/light_puzzle/Initialize()
+/obj/structure/light_puzzle/Initialize(mapload)
 	. = ..()
 	var/generated_board = -1
 	while(generated_board in banned_combinations)

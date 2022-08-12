@@ -103,7 +103,7 @@
 	id = "mauna_mug"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 100)
-	build_path = /obj/item/reagent_containers/glass/maunamug
+	build_path = /obj/item/reagent_containers/cup/maunamug
 	category = list("Equipment")
 
 
@@ -449,7 +449,7 @@
 	id = "adv_watering_can"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 2500, /datum/material/glass = 200)
-	build_path = /obj/item/reagent_containers/glass/watering_can/advanced
+	build_path = /obj/item/reagent_containers/cup/watering_can/advanced
 	category = list("initial","Tools","Tool Designs")
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 

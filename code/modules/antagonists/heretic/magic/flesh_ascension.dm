@@ -45,7 +45,7 @@
 		for(var/mob/living/carbon/human/nearby_human in view(scare_radius, new_armsy))
 			if(IS_HERETIC_OR_MONSTER(nearby_human))
 				continue
-			SEND_SIGNAL(nearby_human, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
+			nearby_human.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
 
 			if(prob(25))
 				var/datum/brain_trauma/trauma = pick(subtypesof(BRAIN_TRAUMA_MILD) + subtypesof(BRAIN_TRAUMA_SEVERE))

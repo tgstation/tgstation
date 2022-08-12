@@ -59,9 +59,9 @@
 #define COMSIG_WEATHER_WINDDOWN(event_type) "!weather_winddown [event_type]"
 #define COMSIG_WEATHER_END(event_type) "!weather_end [event_type]"
 /// An alarm of some form was sent (datum/alarm_handler/source, alarm_type, area/source_area)
-#define COMSIG_ALARM_FIRE(alarm_type) "!alarm_fire [alarm_type]"
+#define COMSIG_GLOB_ALARM_FIRE(alarm_type) "!alarm_fire [alarm_type]"
 /// An alarm of some form was cleared (datum/alarm_handler/source, alarm_type, area/source_area)
-#define COMSIG_ALARM_CLEAR(alarm_type) "!alarm_clear [alarm_type]"
+#define COMSIG_GLOB_ALARM_CLEAR(alarm_type) "!alarm_clear [alarm_type]"
 ///global mob logged in signal! (/mob/added_player)
 #define COMSIG_GLOB_MOB_LOGGED_IN "!mob_logged_in"
 
@@ -72,5 +72,5 @@
 
 /// Global signal sent when a light mechanism is completed (try_id)
 #define COMSIG_GLOB_LIGHT_MECHANISM_COMPLETED "!light_mechanism_completed"
-///Global Signal sent when the crew wins the revolution (No arguments).
-#define COMSIG_GLOB_REVOLUTION_TAX_REMOVAL "!revolution_tax_removal"
+/// Global Signal sent when the crew wins the revolution (No arguments).
+#define COMSIG_GLOB_REVOLUTION_VICTORY "!revolution_victory"

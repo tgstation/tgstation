@@ -38,6 +38,10 @@
 	speech_chance = 5
 	emote_hear = list("chitters")
 
+/datum/ai_planning_subtree/random_speech/mothroach
+	speech_chance = 15
+	emote_hear = list("flutters.")
+
 /datum/ai_planning_subtree/random_speech/cow
 	speech_chance = 1
 	speak = list("moo?","moo","MOOOOOO")

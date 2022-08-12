@@ -17,7 +17,7 @@
 	                /obj/item/grenade/chem_grenade/pyro = 5,
 	                /obj/item/grenade/chem_grenade/cryo = 5,
 	                /obj/item/grenade/chem_grenade/adv_release = 5,
-					/obj/item/reagent_containers/food/drinks/bottle/holywater = 1)
+					/obj/item/reagent_containers/cup/glass/bottle/holywater = 1)
 	product_slogans = "It's not pyromania if you're getting paid!;You smell that? Plasma, son. Nothing else in the world smells like that.;I love the smell of Plasma in the morning."
 	resistance_flags = FIRE_PROOF
 
@@ -46,8 +46,8 @@
 	desc = "Your benefactors conveinently neglected to mention it's already assembled."
 	anchored = TRUE
 	radio_key = /obj/item/encryptionkey/syndicate
-	engineering_channel = "Syndicate"
-	common_channel = "Syndicate"
+	emergency_channel = "Syndicate"
+	warning_channel = "Syndicate"
 	include_in_cims = FALSE
 
 /obj/machinery/power/supermatter_crystal/shard/syndicate/attackby(obj/item/item, mob/living/user, params)
