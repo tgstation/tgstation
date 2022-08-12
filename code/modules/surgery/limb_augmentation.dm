@@ -16,16 +16,16 @@
 /datum/surgery_step/replace_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(NOAUGMENTS in target.dna.species.species_traits)
 		to_chat(user, span_warning("[target] cannot be augmented!"))
-		return -1
+		return SURGERY_STEP_FAIL
 	if(istype(tool, /obj/item/borg/apparatus/organ_storage) && istype(tool.contents[1], /obj/item/bodypart))
 		tool = tool.contents[1]
 	var/obj/item/bodypart/aug = tool
 	if(IS_ORGANIC_LIMB(aug))
 		to_chat(user, span_warning("That's not an augment, silly!"))
-		return -1
+		return SURGERY_STEP_FAIL
 	if(aug.body_zone != target_zone)
 		to_chat(user, span_warning("[tool] isn't the right type for [parse_zone(target_zone)]."))
-		return -1
+		return SURGERY_STEP_FAIL
 	target_limb = surgery.operated_bodypart
 	if(target_limb)
 		display_results(user, target, span_notice("You begin to augment [target]'s [parse_zone(user.zone_selected)]..."),

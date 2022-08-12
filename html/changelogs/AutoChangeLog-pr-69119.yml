@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes: 
+  - balance: "The Bulldog Shotgun now has a second magazine."
+  - balance: "You can swap the magazine as you fire by shooting with rightclick."

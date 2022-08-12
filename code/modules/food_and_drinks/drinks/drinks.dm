@@ -372,8 +372,9 @@
 	if(!QDELETED(src) && cap_on && reagents.total_volume)
 		if(prob(flip_chance)) // landed upright
 			src.visible_message(span_notice("[src] lands upright!"))
-			if(throwingdatum.thrower)
-				SEND_SIGNAL(throwingdatum.thrower, COMSIG_ADD_MOOD_EVENT, "bottle_flip", /datum/mood_event/bottle_flip)
+			if(throwingdatum.thrower && isliving(throwingdatum.thrower))
+				var/mob/living/living_thrower = throwingdatum.thrower
+				living_thrower.add_mood_event("bottle_flip", /datum/mood_event/bottle_flip)
 		else // landed on it's side
 			animate(src, transform = matrix(prob(50)? 90 : -90, MATRIX_ROTATE), time = 3, loop = 0)
 
@@ -702,10 +703,11 @@
 		return
 
 	if(ismob(target))
-		SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "soda_spill", /datum/mood_event/soda_spill, src)
+		var/mob/living/target_mob = target
+		target_mob.add_mood_event("soda_spill", /datum/mood_event/soda_spill, src)
 		for(var/mob/living/iter_mob in view(src, 7))
 			if(iter_mob != target)
-				SEND_SIGNAL(iter_mob, COMSIG_ADD_MOOD_EVENT, "observed_soda_spill", /datum/mood_event/observed_soda_spill, target, src)
+				iter_mob.add_mood_event("observed_soda_spill", /datum/mood_event/observed_soda_spill, target, src)
 
 	playsound(src, 'sound/effects/can_pop.ogg', 80, TRUE)
 	if(!hide_message)

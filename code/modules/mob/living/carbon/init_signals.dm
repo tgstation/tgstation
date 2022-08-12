@@ -27,9 +27,9 @@
 	clear_alert(ALERT_TOO_MUCH_CO2)
 	clear_alert(ALERT_NOT_ENOUGH_CO2)
 
-	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
-	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
-	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "suffocation")
+	clear_mood_event("chemical_euphoria")
+	clear_mood_event("smell")
+	clear_mood_event("suffocation")
 /**
  * On gain of TRAIT_NOMETABOLISM
  *

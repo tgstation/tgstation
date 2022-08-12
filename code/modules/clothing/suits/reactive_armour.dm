@@ -310,7 +310,7 @@
 	owner.apply_damage(10, BRUTE)
 	owner.apply_damage(40, STAMINA)
 	playsound(owner, 'sound/effects/tableslam.ogg', 90, TRUE)
-	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table)
+	owner.add_mood_event("table", /datum/mood_event/table)
 	do_teleport(owner, get_turf(owner), tele_range, no_effects = TRUE, channel = TELEPORT_CHANNEL_BLUESPACE)
 	new /obj/structure/table(get_turf(owner))
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration

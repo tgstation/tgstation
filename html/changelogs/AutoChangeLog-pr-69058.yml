@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Right-clicking a non-carbon based mob (humans, xeno, ect) will now bite them instead of doing nothing."

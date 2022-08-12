@@ -110,9 +110,9 @@
 	icon_state = "1"
 	color = rgb(0,0,255)
 
-/obj/structure/ladder/unbreakable/rune/Initialize()
-	. = ..()
+/obj/structure/ladder/unbreakable/rune/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
+	return ..()
 
 /obj/structure/ladder/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(up)

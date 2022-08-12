@@ -194,7 +194,7 @@
 
 /obj/item/analyzer/ranged
 	desc = "A hand-held long-range environmental scanner which reports current gas levels."
-	name = "Long-range gas analyzer"
+	name = "long-range gas analyzer"
 	icon_state = "analyzerranged"
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron = 100, /datum/material/glass = 20, /datum/material/gold = 300, /datum/material/bluespace=200)

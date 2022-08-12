@@ -31,19 +31,21 @@
 	/// How much damage to do wielded
 	var/force_wielded = 18
 
-/obj/item/spear/Initialize()
+/obj/item/spear/Initialize(mapload)
 	. = ..()
 	force = force_unwielded
-
-/obj/item/spear/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/butchering, \
-	speed = 10 SECONDS, \
-	effectiveness = 70, \
-	)
 	//decent in a pinch, but pretty bad.
 	AddComponent(/datum/component/jousting)
-	AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, icon_wielded="[icon_prefix]1")
+
+	AddComponent(/datum/component/butchering, \
+		speed = 10 SECONDS, \
+		effectiveness = 70, \
+	)
+	AddComponent(/datum/component/two_handed, \
+		force_unwielded = force_unwielded, \
+		force_wielded = force_wielded, \
+		icon_wielded = "[icon_prefix]1", \
+	)
 	update_appearance()
 
 /obj/item/spear/update_icon_state()
