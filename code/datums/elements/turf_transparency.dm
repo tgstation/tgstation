@@ -1,9 +1,140 @@
+/// List of z pillars (objects placed in the bottom left of XbyX squares that have transparent relevant turfs in their vis_contents)
+/// We do this because any other method of expanding out turfs ends up offsetting the plane master, and it's impossible to unoffset it
+/// The pillars are stored in triple depth lists indexed by (world_size % pillar_size) + 1
+/// They are created at transparent turf request, and deleted when no turfs remain
+GLOBAL_LIST_EMPTY(pillars_by_z)
+#define Z_PILLAR_RADIUS 6
+// Takes a position, transforms it into a z pillar key
+#define Z_PILLAR_TRANSFORM(pos) (ROUND_UP(pos / Z_PILLAR_RADIUS))
+// Takes a z pillar key, hands back the actual posiiton it represents
+// A key of 1 becomes 1, a key of 2 becomes Z_PILLAR_RADIUS + 1, etc.
+#define Z_KEY_TO_POSITION(key) (((key - 1) * Z_PILLAR_RADIUS) + 1)
+
+/// Returns a z pillar to insert turfs into
+/proc/request_z_pillar(x, y, z)
+	var/list/pillars_by_z = GLOB.pillars_by_z
+	if(length(pillars_by_z) < z)
+		pillars_by_z.len = z
+	var/list/our_z = pillars_by_z[z]
+	if(!our_z)
+		our_z = list()
+		pillars_by_z[z] = our_z
+
+	//Now that we've got the z layer sorted, we're gonna check the X line
+	var/x_key = Z_PILLAR_TRANSFORM(x)
+	if(length(our_z) < x_key)
+		our_z.len = x_key
+	var/list/our_x = our_z[x_key]
+	if(!our_x)
+		our_x = list()
+		our_z[x_key] = our_x
+
+	//And now the y layer
+	var/y_key = Z_PILLAR_TRANSFORM(y)
+	if(length(our_x) < y_key)
+		our_x.len = y_key
+	var/obj/effect/abstract/pillar/our_lad = our_x[y_key]
+	if(!our_lad)
+		var/turf/location = locate(Z_KEY_TO_POSITION(x_key), Z_KEY_TO_POSITION(y_key), z)
+		our_lad = new(location)
+		our_x[y_key] = our_lad
+	return our_lad
+
+/obj/effect/abstract/pillar
+	appearance_flags = PIXEL_SCALE
+	plane = HUD_PLANE
+	anchored = TRUE
+	move_resist = INFINITY
+	infra_luminosity = 100
+	icon = 'icons/testing/greyscale_error.dmi'
+	/// Assoc list in the form displayed turf -> list of sources
+	var/list/turf_sources = list()
+	/// Assoc list of all turfs -> list of sources, except these turfs are drawing directly on their source
+	/// Turfs in this list will be migrated to drawing on us if their sources are removed
+	var/list/drawing_on_source = list()
+	/// The home turf of this pillar. MUST be in our vis_contents, otherwise
+	/// the pillar's other turfs will fail to render properly
+	var/turf/home_turf
+
+/obj/effect/abstract/pillar/Initialize(mapload)
+	. = ..()
+	home_turf = get_turf(src)
+	// Our own turf NEEDS to be in our vis_contents, because otherwise any other future vis_contents'd things will get shifted over visually
+	// This creates blocking, and streaks of black
+	display_turf(home_turf, src)
+	// We're going to use an overlay here to expand this pillar's visual bounds
+	// So it's "in view" for all the turfs it covers
+	// We're also gonna give it some bounds out and to the left to prevent dropping appearnaces
+	var/mutable_appearance/overlay = mutable_appearance('icons/blanks/32x32.dmi', "nothing", alpha = 0)
+	var/scale_by = Z_PILLAR_RADIUS
+	overlay.transform = overlay.transform.Scale(scale_by)
+	overlay.transform = overlay.transform.Translate((scale_by / 2) * 32)
+	overlays += overlay
+
+/// Displays a turf from the z level below us on our level
+/// Note: we type source as movable despite accepting turfs here. This is done because
+/// otherwise we will get an error about vis_contents on atom, since... it's not supported by areas?
+/obj/effect/abstract/pillar/proc/display_turf(turf/to_display, atom/movable/source, draw_to_source)
+	// You are NOT ALLOWED to steal my home turf, without it I will not properly expand my vis_contents
+	if(to_display == home_turf)
+		draw_to_source = FALSE
+	if(draw_to_source)
+		var/list/normal_sources = turf_sources[to_display]
+		// We want to draw turfs of this class on their source tile
+		// To minimize the amount put into view by being near a pillar
+		if(length(normal_sources))
+			vis_contents -= to_display
+		var/list/sources = drawing_on_source[to_display]
+		if(!sources)
+			sources = list()
+			drawing_on_source[to_display] = sources
+
+		sources |= source
+		source.vis_contents |= to_display
+		return
+
+	var/list/sources = turf_sources[to_display]
+	if(!sources)
+		sources = list()
+		turf_sources[to_display] = sources
+	sources |= source
+	// If we aren't the first to request this turf, return
+	if(length(sources) != 1 || length(drawing_on_source[to_display]))
+		return
+
+	vis_contents += to_display
+
+/// Hides an existing turf from our vis_contents, or the vis_contents of the source if applicable
+/// Note: we type source as movable despite accepting turfs here. This is done because
+/// otherwise we will get an error about vis_contents on atom, since... it's not supported by areas?
+/obj/effect/abstract/pillar/proc/hide_turf(turf/to_display, atom/movable/source)
+	var/list/sources = turf_sources[to_display]
+	var/list/direct_sources = drawing_on_source[to_display]
+	if(!sources || !direct_sources)
+		return
+	sources -= source
+
+	var/removed_success = direct_sources.Remove(source)
+	// If we successfully removed the last direct source and there's other spokesmen,
+	// we're gonna insert ourselves into the pillar's vis_contents
+	if(removed_success)
+		source.vis_contents -= to_display
+		if(!length(direct_sources) && length(sources))
+			vis_contents += to_display
+			return
+
+	// More sources remain
+	if(length(sources))
+		return
+
+	turf_sources -= to_display
+	vis_contents -= to_display
 
 /datum/element/turf_z_transparency
 	element_flags = ELEMENT_DETACH
 
 ///This proc sets up the signals to handle updating viscontents when turfs above/below update. Handle plane and layer here too so that they don't cover other obs/turfs in Dream Maker
-/datum/element/turf_z_transparency/Attach(datum/target, is_openspace = FALSE)
+/datum/element/turf_z_transparency/Attach(datum/target)
 	. = ..()
 	if(!isturf(target))
 		return ELEMENT_INCOMPATIBLE
@@ -11,8 +142,6 @@
 	var/turf/our_turf = target
 
 	our_turf.layer = OPENSPACE_LAYER
-	if(is_openspace) // openspace and windows have different visual effects but both share this component.
-		SET_PLANE(our_turf, OPENSPACE_PLANE, our_turf)
 
 	RegisterSignal(target, COMSIG_TURF_MULTIZ_DEL, .proc/on_multiz_turf_del)
 	RegisterSignal(target, COMSIG_TURF_MULTIZ_NEW, .proc/on_multiz_turf_new)
@@ -31,8 +160,12 @@
 ///Updates the viscontents or underlays below this tile.
 /datum/element/turf_z_transparency/proc/update_multi_z(turf/our_turf)
 	var/turf/below_turf = our_turf.below()
-	if(below_turf) // If we actually have somethign below us, display it.
-		our_turf.vis_contents += below_turf
+	// Note to self: register for changeturf here
+	if(below_turf) // If we actually have something below us, display it.
+		for(var/turf/partner in range(2, below_turf))
+			// We use our z here to ensure the pillar is actually on our level
+			var/obj/effect/abstract/pillar/pill_boss = request_z_pillar(partner.x, partner.y, our_turf.z)
+			pill_boss.display_turf(partner, our_turf, draw_to_source = (partner == below_turf))
 	else
 		our_turf.vis_contents.len = 0 // Nuke the list
 		add_baseturf_underlay(our_turf)
