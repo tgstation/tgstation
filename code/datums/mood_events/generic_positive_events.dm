@@ -4,7 +4,7 @@
 	timeout = 2 MINUTES
 
 /datum/mood_event/bear_hug
-	description = "You got squeezed very tightly, but it was quite nice."
+	description = "I got squeezed very tightly, but it was quite nice."
 	mood_change = 1
 	timeout = 2 MINUTES
 
