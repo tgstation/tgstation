@@ -405,3 +405,36 @@
   orthography:
   - bugfix: emitter examine text now displays minimum maximum delay.
   - spellcheck: changes the text on the emitter examine blurb.
+2022-08-12:
+  GoldenAlpharex:
+  - bugfix: Conveyor belts now properly update their sprites when flipped or inverted
+      using a screwdriver, without the need to being turned on and off to take effect.
+  - bugfix: Food exports now follow export value elasticity, as intended.
+  JohnFulpWillard:
+  - rscadd: Species now have custom damage examines, so Androids now have denting
+      and charring, rather than bruising and burning.
+  Pepsilawn:
+  - bugfix: Kitchen sinks will now be functional if placed facing against a window
+      and some other closed structures, up-facing sinks also look somewhat better
+      as a result.
+  ShizCalev:
+  - qol: You can now use wallets & PDAs with IDs in them to play roulette!
+  - bugfix: Fixed a runtime when hitting a roulette table with an ID that doesn't
+      have a linked bank account!
+  Spookuni:
+  - bugfix: Dorms rooms D and R on tramstation now bolt properly.
+  SuperNovaa41:
+  - admin: Added two new procs into the VV dropdown menu to add and remove mood events
+      from living mobs.
+  necromanceranne:
+  - balance: The Bulldog Shotgun now has a second magazine.
+  - balance: You can swap the magazine as you fire by shooting with rightclick.
+  vincentiusvin:
+  - bugfix: fixed an incorrect count down message if SM changed it's delam twice.
+  - balance: Made a pure BZ SM a tad stronger, made a mixed BZ + high power gas SM
+      a lot weaker.
+  - balance: Freon power nuking can be negated slightly by other high power gases.
+      Moved the power nuking threshold from 30% to 33.33%
+  - balance: Water vapor SM will only lower power transmission instead of dampening
+      it both ways.
+  - balance: CO2 power increase can also be modified by other gases.

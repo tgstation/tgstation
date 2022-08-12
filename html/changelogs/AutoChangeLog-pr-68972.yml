@@ -1,7 +1,0 @@
-author: "vincentiusvin"
-delete-after: True
-changes: 
-  - balance: "Made a pure BZ SM a tad stronger, made a mixed BZ + high power gas SM a lot weaker."
-  - balance: "Freon power nuking can be negated slightly by other high power gases. Moved the power nuking threshold from 30% to 33.33%"
-  - balance: "Water vapor SM will only lower power transmission instead of dampening it both ways."
-  - balance: "CO2 power increase can also be modified by other gases."
