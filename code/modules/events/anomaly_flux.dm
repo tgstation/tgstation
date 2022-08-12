@@ -5,6 +5,7 @@
 	min_players = 10
 	max_occurrences = 5
 	weight = 20
+	description = "This anomaly shocks and explodes."
 
 /datum/round_event/anomaly/anomaly_flux
 	startWhen = 10

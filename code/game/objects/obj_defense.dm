@@ -93,11 +93,11 @@
 	var/amt = max(0, ((force - (move_resist * MOVE_FORCE_CRUSH_RATIO)) / (move_resist * MOVE_FORCE_CRUSH_RATIO)) * 10)
 	take_damage(amt, BRUTE)
 
-/obj/attack_slime(mob/living/simple_animal/slime/user)
+/obj/attack_slime(mob/living/simple_animal/slime/user, list/modifiers)
 	if(!user.is_adult)
 		return
-	attack_generic(user, rand(10, 15), BRUTE, MELEE, 1)
-
+	if(attack_generic(user, rand(10, 15), BRUTE, MELEE, 1))
+		log_combat(user, src, "attacked")
 
 /obj/singularity_act()
 	SSexplosions.high_mov_atom += src

@@ -6,7 +6,7 @@
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_EXTERNAL_TAIL
 	layers = EXTERNAL_FRONT|EXTERNAL_BEHIND
-	organ_flags = ORGAN_EDIBLE
+	organ_flags = ORGAN_EDIBLE | ORGAN_EXTERNAL
 	feature_key = "tail"
 	render_key = "tail"
 	dna_block = DNA_TAIL_BLOCK
@@ -30,13 +30,13 @@
 		RegisterSignal(reciever, COMSIG_ORGAN_WAG_TAIL, .proc/wag)
 		original_owner ||= reciever //One and done
 
-		SEND_SIGNAL(reciever, COMSIG_CLEAR_MOOD_EVENT, "tail_lost")
-		SEND_SIGNAL(reciever, COMSIG_CLEAR_MOOD_EVENT, "tail_balance_lost")
+		reciever.clear_mood_event("tail_lost")
+		reciever.clear_mood_event("tail_balance_lost")
 
 		if(original_owner == reciever)
-			SEND_SIGNAL(reciever, COMSIG_CLEAR_MOOD_EVENT, "wrong_tail_regained")
+			reciever.clear_mood_event("wrong_tail_regained")
 		else if(type in reciever.dna.species.external_organs)
-			SEND_SIGNAL(reciever, COMSIG_ADD_MOOD_EVENT, "wrong_tail_regained", /datum/mood_event/tail_regained_wrong)
+			reciever.add_mood_event("wrong_tail_regained", /datum/mood_event/tail_regained_wrong)
 
 /obj/item/organ/external/tail/Remove(mob/living/carbon/organ_owner, special, moving)
 	if(wag_flags & WAG_WAGGING)
@@ -45,8 +45,8 @@
 	UnregisterSignal(organ_owner, COMSIG_ORGAN_WAG_TAIL)
 
 	if(type in organ_owner.dna.species.external_organs)
-		SEND_SIGNAL(organ_owner, COMSIG_ADD_MOOD_EVENT, "tail_lost", /datum/mood_event/tail_lost)
-		SEND_SIGNAL(organ_owner, COMSIG_ADD_MOOD_EVENT, "tail_balance_lost", /datum/mood_event/tail_balance_lost)
+		organ_owner.add_mood_event("tail_lost", /datum/mood_event/tail_lost)
+		organ_owner.add_mood_event("tail_balance_lost", /datum/mood_event/tail_balance_lost)
 
 /obj/item/organ/external/tail/generate_icon_cache()
 	. = ..()

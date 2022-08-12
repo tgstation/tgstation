@@ -124,7 +124,7 @@
 
 /datum/crafting_recipe/ghostsheet
 	name = "Ghost Sheet"
-	result = /obj/item/clothing/suit/ghost_sheet
+	result = /obj/item/clothing/suit/costume/ghost_sheet
 	time = 0.5 SECONDS
 	tool_behaviors = list(TOOL_WIRECUTTER)
 	reqs = list(/obj/item/bedsheet = 1)
@@ -164,3 +164,12 @@
 	reqs = list(/obj/item/stack/sheet/cloth = 2, /obj/item/stack/license_plates = 1)
 	time = 1 SECONDS
 	category = CAT_CLOTHING
+
+/datum/crafting_recipe/tv_helmet
+	name = "Television Helmet"
+	result = /obj/item/clothing/head/tv_head
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_CROWBAR)
+	reqs = list(/obj/item/wallframe/status_display = 1)
+	time = 2 SECONDS
+	category = CAT_CLOTHING
+

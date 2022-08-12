@@ -57,8 +57,15 @@
 	icon_state = "down"
 	anchored = FALSE
 	resistance_flags = NONE
+	///The item it spawns when it's folded up.
 	var/foldabletype = /obj/item/roller
 
+/obj/structure/bed/roller/Initialize(mapload)
+	. = ..()
+	AddElement( \
+		/datum/element/contextual_screentip_bare_hands, \
+		rmb_text = "Fold up", \
+	)
 
 /obj/structure/bed/roller/examine(mob/user)
 	. = ..()
@@ -105,7 +112,7 @@
 	//Push them up from the normal lying position
 	M.pixel_y = M.base_pixel_y
 
-/obj/structure/bed/roller/Moved()
+/obj/structure/bed/roller/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(has_gravity())
 		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)

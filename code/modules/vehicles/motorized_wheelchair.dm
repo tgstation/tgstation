@@ -56,14 +56,6 @@
 		return FALSE
 	return ..()
 
-/obj/vehicle/ridden/wheelchair/motorized/post_buckle_mob(mob/living/user)
-	. = ..()
-	set_density(TRUE)
-
-/obj/vehicle/ridden/wheelchair/motorized/post_unbuckle_mob()
-	. = ..()
-	set_density(FALSE)
-
 /obj/vehicle/ridden/wheelchair/motorized/attack_hand(mob/living/user, list/modifiers)
 	if(!power_cell || !panel_open)
 		return ..()
@@ -131,6 +123,16 @@
 	. += "Speed: [speed]"
 	. += "Energy efficiency: [power_efficiency]"
 	. += "Power: [power_cell.charge] out of [power_cell.maxcharge]"
+
+/obj/vehicle/ridden/wheelchair/motorized/Move(newloc, direct)
+	. = ..()
+	if (.)
+		return
+	if (!has_buckled_mobs())
+		return
+	for (var/mob/living/guy in newloc)
+		if(!(guy in buckled_mobs))
+			Bump(guy)
 
 /obj/vehicle/ridden/wheelchair/motorized/Bump(atom/A)
 	. = ..()

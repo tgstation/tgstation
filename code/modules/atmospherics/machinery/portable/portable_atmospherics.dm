@@ -42,7 +42,7 @@
 
 /obj/machinery/portable_atmospherics/ex_act(severity, target)
 	if(resistance_flags & INDESTRUCTIBLE)
-		return FALSE //Indestructable cans shouldn't release air
+		return FALSE //Indestructible cans shouldn't release air
 
 	if(severity == EXPLODE_DEVASTATE || target == src)
 		//This explosion will destroy the can, release its air.
@@ -62,7 +62,7 @@
 /// On most cases only one will be exceeded, so the other one is scaled down.
 /obj/machinery/portable_atmospherics/proc/take_atmos_damage()
 	var/taking_damage = FALSE
-	
+
 	var/temp_damage = 1
 	var/pressure_damage = 1
 
@@ -76,7 +76,7 @@
 
 	if(!taking_damage)
 		return FALSE
-	
+
 	take_damage(clamp(temp_damage * pressure_damage, 5, 50), BURN, 0)
 	return TRUE
 

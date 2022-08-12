@@ -33,7 +33,10 @@
 /obj/item/melee/energy/Initialize(mapload)
 	. = ..()
 	make_transformable()
-	AddComponent(/datum/component/butchering, _speed = 5 SECONDS, _butcher_sound = active_hitsound)
+	AddComponent(/datum/component/butchering, \
+	speed = 5 SECONDS, \
+	butcher_sound = active_hitsound, \
+	)
 
 /obj/item/melee/energy/Destroy()
 	STOP_PROCESSING(SSobj, src)

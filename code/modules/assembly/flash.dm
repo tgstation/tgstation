@@ -148,7 +148,7 @@
 	if(user)
 		log_combat(user, flashed, "[targeted? "flashed(targeted)" : "flashed(AOE)"]", src)
 	else //caused by emp/remote signal
-		flashed.log_message("was [targeted? "flashed(targeted)" : "flashed(AOE)"]",LOG_ATTACK)
+		flashed.log_message("was [targeted? "flashed(targeted)" : "flashed(AOE)"]", LOG_ATTACK)
 
 	if(generic_message && flashed != user)
 		to_chat(flashed, span_danger("[src] emits a blinding light!"))
@@ -380,7 +380,7 @@
 	if(user)
 		log_combat(user, M, "[targeted? "hypno-flashed(targeted)" : "hypno-flashed(AOE)"]", src)
 	else //caused by emp/remote signal
-		M.log_message("was [targeted? "hypno-flashed(targeted)" : "hypno-flashed(AOE)"]",LOG_ATTACK)
+		M.log_message("was [targeted? "hypno-flashed(targeted)" : "hypno-flashed(AOE)"]", LOG_ATTACK)
 	if(generic_message && M != user)
 		to_chat(M, span_notice("[src] emits a soothing light..."))
 	if(targeted)

@@ -127,12 +127,12 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 	GLOB.meteor_list -= src
 	return ..()
 
-/obj/effect/meteor/Moved(atom/OldLoc, Dir, Forced = FALSE)
+/obj/effect/meteor/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(QDELETED(src))
 		return
 
-	if(OldLoc != loc)//If did move, ram the turf we get in
+	if(old_loc != loc)//If did move, ram the turf we get in
 		var/turf/T = get_turf(loc)
 		ram_turf(T)
 

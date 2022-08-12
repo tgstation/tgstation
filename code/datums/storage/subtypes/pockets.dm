@@ -84,6 +84,7 @@
 		/obj/item/firing_pin,
 		/obj/item/suppressor,
 		/obj/item/ammo_box/magazine/m9mm,
+		/obj/item/ammo_box/magazine/m10mm,
 		/obj/item/ammo_box/magazine/m45,
 		/obj/item/ammo_casing,
 		/obj/item/lipstick,
@@ -115,6 +116,7 @@
 		/obj/item/firing_pin,
 		/obj/item/suppressor,
 		/obj/item/ammo_box/magazine/m9mm,
+		/obj/item/ammo_box/magazine/m10mm,
 		/obj/item/ammo_box/magazine/m45,
 		/obj/item/ammo_casing,
 		/obj/item/lipstick,
@@ -151,9 +153,9 @@
 
 /datum/storage/pockets/helmet/New()
 	. = ..()
-	set_holdable(list(/obj/item/reagent_containers/food/drinks/bottle/vodka,
-					  /obj/item/reagent_containers/food/drinks/bottle/molotov,
-					  /obj/item/reagent_containers/food/drinks/drinkingglass,
+	set_holdable(list(/obj/item/reagent_containers/cup/glass/bottle/vodka,
+					  /obj/item/reagent_containers/cup/glass/bottle/molotov,
+					  /obj/item/reagent_containers/cup/glass/drinkingglass,
 					  /obj/item/ammo_box/a762))
 
 
@@ -175,7 +177,7 @@
 		/obj/item/melee/rune_carver,
 		/obj/item/melee/sickly_blade, // Normal sized, so you can only fit one.
 		/obj/item/organ, // Organs are also often used in rituals.
-		/obj/item/reagent_containers/glass/beaker/eldritch,
+		/obj/item/reagent_containers/cup/beaker/eldritch,
 	))
 
 	var/static/list/exception_cache = typecacheof(list(/obj/item/bodypart, /obj/item/melee/sickly_blade))

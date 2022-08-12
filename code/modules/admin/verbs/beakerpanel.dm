@@ -19,7 +19,7 @@
 		if ("spawncontainer")
 			var/containerdata = json_decode(href_list["container"])
 			var/obj/item/reagent_containers/container = beaker_panel_create_container(containerdata, get_turf(usr))
-			log_game("[key_name(usr)] spawned a [container] containing [pretty_string_from_reagent_list(container.reagents.reagent_list)]")
+			usr.log_message("spawned a [container] containing [pretty_string_from_reagent_list(container.reagents.reagent_list)]", LOG_GAME)
 		if ("spawngrenade")
 			var/obj/item/grenade/chem_grenade/grenade = new(get_turf(usr))
 			var/containersdata = json_decode(href_list["containers"])
@@ -34,7 +34,7 @@
 					var/det_time = text2num(grenadedata["grenade-timer"])
 					if (det_time)
 						grenade.det_time = det_time
-			log_game("[key_name(usr)] spawned a [grenade] containing: [reagent_string]")
+			usr.log_message("spawned a [grenade] containing: [reagent_string]", LOG_GAME)
 
 /datum/admins/proc/beaker_panel_prep_assembly(obj/item/assembly/towrap, grenade)
 	var/obj/item/assembly/igniter/igniter = new

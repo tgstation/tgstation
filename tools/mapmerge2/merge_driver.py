@@ -80,7 +80,7 @@ def three_way_merge(base, left, right):
             obj_path = "/obj/merge_conflict_marker"
             obj_name = "---Merge Conflict Marker---"
             obj_desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-            merged_movables = left_movables + [f'{obj_path}{{name = "{obj_name}",\n\tdesc = "{obj_desc}"}}'] + right_movables
+            merged_movables = left_movables + [f'{obj_path}{{name = "{obj_name}";\n\tdesc = "{obj_desc}"}}'] + right_movables
             print(f"    Left and right movable groups are split by an `{obj_path}` named \"{obj_name}\"")
         if merged_turfs is None:
             merged_turfs = left_turfs

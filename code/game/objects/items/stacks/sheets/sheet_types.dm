@@ -267,13 +267,13 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("apiary", /obj/structure/beebox, 40, time = 50),\
 	new/datum/stack_recipe("tiki mask", /obj/item/clothing/mask/gas/tiki_mask, 2), \
 	new/datum/stack_recipe("honey frame", /obj/item/honey_frame, 5, time = 10),\
-	new/datum/stack_recipe("wooden bucket", /obj/item/reagent_containers/glass/bucket/wooden, 3, time = 10),\
+	new/datum/stack_recipe("wooden bucket", /obj/item/reagent_containers/cup/bucket/wooden, 3, time = 10),\
 	new/datum/stack_recipe("rake", /obj/item/cultivator/rake, 5, time = 10),\
 	new/datum/stack_recipe("ore box", /obj/structure/ore_box, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE),\
 	new/datum/stack_recipe("wooden crate", /obj/structure/closet/crate/wooden, 6, time = 50, one_per_turf = TRUE, on_floor = TRUE),\
 	new/datum/stack_recipe("baseball bat", /obj/item/melee/baseball_bat, 5, time = 15),\
 	new/datum/stack_recipe("loom", /obj/structure/loom, 10, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
-	new/datum/stack_recipe("mortar", /obj/item/reagent_containers/glass/mortar, 3), \
+	new/datum/stack_recipe("mortar", /obj/item/reagent_containers/cup/mortar, 3), \
 	new/datum/stack_recipe("firebrand", /obj/item/match/firebrand, 2, time = 100), \
 	new/datum/stack_recipe("bonfire", /obj/structure/bonfire, 10, time = 60, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("easel", /obj/structure/easel, 5, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
@@ -376,7 +376,7 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	new/datum/stack_recipe("construction bag", /obj/item/storage/bag/construction, 4), \
 	null, \
 	new/datum/stack_recipe("improvised gauze", /obj/item/stack/medical/gauze/improvised, 1, 2, 6), \
-	new/datum/stack_recipe("rag", /obj/item/reagent_containers/glass/rag, 1), \
+	new/datum/stack_recipe("rag", /obj/item/reagent_containers/cup/rag, 1), \
 	new/datum/stack_recipe("bedsheet", /obj/item/bedsheet, 3), \
 	new/datum/stack_recipe("double bedsheet", /obj/item/bedsheet/double, 6), \
 	new/datum/stack_recipe("empty sandbag", /obj/item/emptysandbag, 4), \
@@ -468,7 +468,7 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
  */
 GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	new/datum/stack_recipe("box", /obj/item/storage/box), \
-	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3), \
+	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/costume/cardborg, 3), \
 	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/cardborg), \
 	new/datum/stack_recipe("large box", /obj/structure/closet/cardboard, 4, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("cardboard cutout", /obj/item/cardboard_cutout, 5), \
@@ -578,7 +578,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	new/datum/stack_recipe("bronze pinion airlock assembly", /obj/structure/door_assembly/door_assembly_bronze/seethru, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("bronze floor tile", /obj/item/stack/tile/bronze, 1, 4, 20), \
 	new/datum/stack_recipe("bronze hat", /obj/item/clothing/head/bronze), \
-	new/datum/stack_recipe("bronze suit", /obj/item/clothing/suit/bronze), \
+	new/datum/stack_recipe("bronze suit", /obj/item/clothing/suit/costume/bronze), \
 	new/datum/stack_recipe("bronze boots", /obj/item/clothing/shoes/bronze), \
 	null,
 	new/datum/stack_recipe("bronze chair", /obj/structure/chair/bronze, 1, time = 0, one_per_turf = TRUE, on_floor = TRUE), \
@@ -667,9 +667,9 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	new /datum/stack_recipe("plastic floor tile", /obj/item/stack/tile/plastic, 1, 4, 20), \
 	new /datum/stack_recipe("folding plastic chair", /obj/structure/chair/plastic, 2), \
 	new /datum/stack_recipe("plastic flaps", /obj/structure/plasticflaps, 5, one_per_turf = TRUE, on_floor = TRUE, time = 40), \
-	new /datum/stack_recipe("water bottle", /obj/item/reagent_containers/food/drinks/waterbottle/empty), \
-	new /datum/stack_recipe("large water bottle", /obj/item/reagent_containers/food/drinks/waterbottle/large/empty, 3), \
-	new /datum/stack_recipe("colo cups", /obj/item/reagent_containers/food/drinks/colocup, 1), \
+	new /datum/stack_recipe("water bottle", /obj/item/reagent_containers/cup/glass/waterbottle/empty), \
+	new /datum/stack_recipe("large water bottle", /obj/item/reagent_containers/cup/glass/waterbottle/large/empty, 3), \
+	new /datum/stack_recipe("colo cups", /obj/item/reagent_containers/cup/glass/colocup, 1), \
 	new /datum/stack_recipe("wet floor sign", /obj/item/clothing/suit/caution, 2), \
 	new /datum/stack_recipe("warning cone", /obj/item/clothing/head/cone, 2), \
 	new /datum/stack_recipe("blank wall sign", /obj/item/sign, 1)))

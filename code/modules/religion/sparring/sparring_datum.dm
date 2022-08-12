@@ -44,12 +44,12 @@
 	//win conditions
 	RegisterSignal(sparring, COMSIG_MOB_STATCHANGE, .proc/check_for_victory)
 	//flub conditions
-	RegisterSignal(sparring, COMSIG_PARENT_ATTACKBY, .proc/outsider_interference)
-	RegisterSignal(sparring, COMSIG_ATOM_HULK_ATTACK, .proc/hulk_interference)
-	RegisterSignal(sparring, COMSIG_ATOM_ATTACK_HAND, .proc/hand_interference)
-	RegisterSignal(sparring, COMSIG_ATOM_ATTACK_PAW, .proc/paw_interference)
-	RegisterSignal(sparring, COMSIG_ATOM_HITBY, .proc/thrown_interference)
-	RegisterSignal(sparring, COMSIG_ATOM_BULLET_ACT, .proc/projectile_interference)
+	RegisterSignal(sparring, COMSIG_PARENT_ATTACKBY, .proc/outsider_interference, override = TRUE)
+	RegisterSignal(sparring, COMSIG_ATOM_HULK_ATTACK, .proc/hulk_interference, override = TRUE)
+	RegisterSignal(sparring, COMSIG_ATOM_ATTACK_HAND, .proc/hand_interference, override = TRUE)
+	RegisterSignal(sparring, COMSIG_ATOM_ATTACK_PAW, .proc/paw_interference, override = TRUE)
+	RegisterSignal(sparring, COMSIG_ATOM_HITBY, .proc/thrown_interference, override = TRUE)
+	RegisterSignal(sparring, COMSIG_ATOM_BULLET_ACT, .proc/projectile_interference, override = TRUE)
 	//severe flubs (insta match ender, no winners) conditions
 	RegisterSignal(sparring, COMSIG_LIVING_DEATH, .proc/death_flub)
 	RegisterSignal(sparring, COMSIG_PARENT_QDELETING, .proc/deletion_flub)
@@ -285,7 +285,7 @@
 					return
 				to_chat(loser, span_userdanger("[GLOB.deity] is enraged by your lackluster sparring record!"))
 				lightningbolt(loser)
-				SEND_SIGNAL(loser, COMSIG_ADD_MOOD_EVENT, "sparring", /datum/mood_event/banished)
+				loser.add_mood_event("sparring", /datum/mood_event/banished)
 				loser.mind.holy_role = NONE
 				to_chat(loser, span_userdanger("You have been excommunicated! You are no longer holy!"))
 		if(STAKES_MONEY_MATCH)

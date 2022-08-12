@@ -138,6 +138,8 @@
 		possible_targets += possible_target
 
 	for(var/datum/traitor_objective/kidnapping/objective as anything in possible_duplicates)
+		if(!objective.victim) //the old objective was already completed.
+			continue
 		possible_targets -= objective.victim.mind
 
 	if(!length(possible_targets))

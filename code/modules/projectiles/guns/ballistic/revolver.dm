@@ -232,11 +232,11 @@
 				else
 					user.visible_message(span_danger("[user.name] cowardly fires [src] at [user.p_their()] [affecting.name]!"), span_userdanger("You cowardly fire [src] at your [affecting.name]!"), span_hear("You hear a gunshot!"))
 				chambered = null
-				SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "russian_roulette_lose", /datum/mood_event/russian_roulette_lose)
+				user.add_mood_event("russian_roulette_lose", /datum/mood_event/russian_roulette_lose)
 				return
 
 		if(loaded_rounds && is_target_face)
-			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "russian_roulette_win", /datum/mood_event/russian_roulette_win, loaded_rounds)
+			user.add_mood_event("russian_roulette_win", /datum/mood_event/russian_roulette_win, loaded_rounds)
 
 		user.visible_message(span_danger("*click*"))
 		playsound(src, dry_fire_sound, 30, TRUE)

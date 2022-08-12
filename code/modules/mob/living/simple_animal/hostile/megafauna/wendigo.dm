@@ -50,8 +50,8 @@ Difficulty: Hard
 	achievement_type = /datum/award/achievement/boss/wendigo_kill
 	crusher_achievement_type = /datum/award/achievement/boss/wendigo_crusher
 	score_achievement_type = /datum/award/score/wendigo_score
-	deathmessage = "falls, shaking the ground around it"
-	deathsound = 'sound/effects/gravhit.ogg'
+	death_message = "falls, shaking the ground around it"
+	death_sound = 'sound/effects/gravhit.ogg'
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	attack_action_types = list(/datum/action/innate/megafauna_attack/heavy_stomp,
 							   /datum/action/innate/megafauna_attack/teleport,
@@ -137,9 +137,9 @@ Difficulty: Hard
 	stored_move_dirs |= direct
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/wendigo/Moved(atom/oldloc, direct)
+/mob/living/simple_animal/hostile/megafauna/wendigo/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
-	stored_move_dirs &= ~direct
+	stored_move_dirs &= ~movement_dir
 	if(!stored_move_dirs)
 		INVOKE_ASYNC(GLOBAL_PROC, .proc/wendigo_slam, src, stomp_range, 1, 8)
 
