@@ -245,17 +245,17 @@
 	/// We don't use rich text or anything fancy, so we can bake these values.
 	var/static/list/char_widths = list(
 		//   ! " # $ % & ' ( ) * + , - . /
-        1, 2, 3, 5, 4, 5, 5, 2, 3, 3, 3, 4, 2, 3, 2, 3,
+		1, 2, 3, 5, 4, 5, 5, 2, 3, 3, 3, 4, 2, 3, 2, 3,
 		// 0 1 2 3 4 5 6 7 8 9 : ; < = > ?
-        4, 3, 4, 4, 4, 4, 4, 4, 4, 4, 2, 2, 3, 3, 3, 3,
+		4, 3, 4, 4, 4, 4, 4, 4, 4, 4, 2, 2, 3, 3, 3, 3,
 		// @ A B C D E F G H I J K L M N O
-        7, 5, 5, 5, 5, 4, 4, 5, 5, 2, 4, 5, 4, 6, 5, 5,
+		7, 5, 5, 5, 5, 4, 4, 5, 5, 2, 4, 5, 4, 6, 5, 5,
 		// P Q R S T U V W X Y Z [ \ ] ^ _
-        5, 5, 5, 5, 4, 5, 4, 6, 4, 4, 4, 3, 3, 3, 4, 4,
+		5, 5, 5, 5, 4, 5, 4, 6, 4, 4, 4, 3, 3, 3, 4, 4,
 		// ` a b c d e f g h i j k l m n o
-        3, 5, 5, 5, 5, 4, 4, 5, 5, 2, 4, 5, 4, 6, 5, 5,
+		3, 5, 5, 5, 5, 4, 4, 5, 5, 2, 4, 5, 4, 6, 5, 5,
 		// p q r s t u v w x y z { | } ~
-        5, 5, 5, 5, 4, 5, 4, 6, 4, 4, 4, 3, 2, 3, 4,
+		5, 5, 5, 5, 4, 5, 4, 6, 4, 4, 4, 3, 2, 3, 4,
 	)
 
 /obj/effect/overlay/status_display_text/Initialize(mapload, yoffset, line, text_color, header_text_color)
