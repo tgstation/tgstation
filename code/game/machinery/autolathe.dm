@@ -409,7 +409,7 @@
 	hacked = state
 	for(var/id in SSresearch.techweb_designs)
 		var/datum/design/D = SSresearch.techweb_design_by_id(id)
-		if((D.build_type & AUTOLATHE) && ("hacked" in D.category))
+		if((D.build_type & AUTOLATHE) && (RND_CATEGORY_HACKED in D.category))
 			if(hacked)
 				stored_research.add_design(D)
 			else
