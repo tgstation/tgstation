@@ -104,10 +104,11 @@
 		return
 
 	if(ismob(target))
-		SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "soda_spill", /datum/mood_event/soda_spill, src)
+		var/mob/living/target_mob = target
+		target_mob.add_mood_event("soda_spill", /datum/mood_event/soda_spill, src)
 		for(var/mob/living/iter_mob in view(src, 7))
 			if(iter_mob != target)
-				SEND_SIGNAL(iter_mob, COMSIG_ADD_MOOD_EVENT, "observed_soda_spill", /datum/mood_event/observed_soda_spill, target, src)
+				iter_mob.add_mood_event("observed_soda_spill", /datum/mood_event/observed_soda_spill, target, src)
 
 	playsound(src, 'sound/effects/can_pop.ogg', 80, TRUE)
 	if(!hide_message)

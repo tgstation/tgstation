@@ -33,7 +33,7 @@
 	if(bartender_check(target) && ranged)
 		return
 	SplashReagents(target, ranged, override_spillable = TRUE)
-	var/obj/item/broken_bottle/B = new (loc)
+	var/obj/item/broken_bottle/B = new(loc)
 	if(!ranged && thrower)
 		thrower.put_in_hands(B)
 	B.mimic_broken(src, target)
@@ -41,17 +41,17 @@
 	qdel(src)
 	target.Bumped(B)
 
-/obj/item/reagent_containers/cup/glass/bottle/attack_secondary(atom/target, mob/living/user, params)
+/obj/item/reagent_containers/cup/glass/bottle/try_splash(mob/living/user, atom/target)
 
-	if(!target)
+	if(!target || !isliving(target))
 		return ..()
 
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You don't want to harm [target]!"))
-		return SECONDARY_ATTACK_CONTINUE_CHAIN
+		return FALSE
 
-	if(!isliving(target) || !isGlass)
-		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	if(!isGlass)
+		return FALSE
 
 	var/mob/living/living_target = target
 	var/obj/item/bodypart/affecting = user.zone_selected //Find what the player is aiming at
@@ -64,14 +64,11 @@
 
 		var/mob/living/carbon/human/H = target
 		var/headarmor = 0 // Target's head armor
-		armor_block = H.run_armor_check(affecting, MELEE,"","",armour_penetration) // For normal attack damage
+		armor_block = H.run_armor_check(affecting, MELEE, "", "", armour_penetration) // For normal attack damage
 
 		//If they have a hat/helmet and the user is targeting their head.
 		if(istype(H.head, /obj/item/clothing/head) && affecting == BODY_ZONE_HEAD)
-			headarmor = H.head.armor.melee
-		else
-			headarmor = 0
-
+			headarmor = (H.head.armor.melee) || 0
 		//Calculate the knockdown duration for the target.
 		armor_duration = (bottle_knockdown_duration - headarmor) + force
 
@@ -86,7 +83,7 @@
 
 	// You are going to knock someone down for longer if they are not wearing a helmet.
 	var/head_attack_message = ""
-	if(affecting == BODY_ZONE_HEAD && istype(target, /mob/living/carbon/))
+	if(affecting == BODY_ZONE_HEAD && iscarbon(target))
 		head_attack_message = " on the head"
 		if(armor_duration)
 			living_target.apply_effect(min(armor_duration, 200) , EFFECT_KNOCKDOWN)
@@ -105,7 +102,7 @@
 	//Finally, smash the bottle. This kills (del) the bottle.
 	smash(target, user)
 
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return TRUE
 
 //Keeping this here for now, I'll ask if I should keep it here.
 /obj/item/broken_bottle
