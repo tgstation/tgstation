@@ -552,6 +552,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	playsound(src, 'sound/magic/demon_dies.ogg', 75, TRUE)
 	var/mob/living/simple_animal/pet/dog/corgi/narsie/N = new(loc)
 	N.setDir(dir)
+	mind?.transfer_to(N)	
 	gib()
 
 /mob/living/simple_animal/pet/dog/corgi/narsie
