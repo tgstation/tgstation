@@ -248,7 +248,7 @@
 	cooling_power = 5
 	w_class = WEIGHT_CLASS_HUGE
 	item_flags = ABSTRACT  // don't put in storage
-	chem = null //holds no chems of its own, it takes from the tank.
+	chem = /datum/reagent/firefighting_foam/halon
 	gas_path = /datum/gas/halon
 	tanktype = /obj/machinery/portable_atmospherics
 	var/obj/item/tank

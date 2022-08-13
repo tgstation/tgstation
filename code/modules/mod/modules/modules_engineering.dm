@@ -234,7 +234,7 @@
 
 /obj/item/mod/module/mister/atmos/Initialize(mapload)
 	. = ..()
-	reagents.add_reagent(/datum/reagent/water, volume)
+	reagents.add_reagent(/datum/reagent/firefighting_foam/halon, volume)
 
 /obj/item/extinguisher/mini/nozzle/mod
 	name = "MOD atmospheric mister"
