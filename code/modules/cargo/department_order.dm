@@ -120,7 +120,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	if(!pack)
 		say("Something went wrong!")
 		CRASH("requested supply pack id \"[id]\" not found!")
-	if(pack.hidden || pack.drop_pod_only || pack.special)
+	if((pack.hidden && !(obj_flags & EMAGGED)) || (pack.special && !pack.special_enabled) || pack.drop_pod_only || pack.goody)
 		return
 	var/name = "*None Provided*"
 	var/rank = "*None Provided*"

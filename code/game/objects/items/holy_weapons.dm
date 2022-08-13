@@ -49,12 +49,13 @@
 
 	var/obj/effect/rune/target_rune = target
 	if(target_rune.log_when_erased)
-		log_game("[target_rune.cultist_name] rune erased by [key_name(user)] using a null rod.")
+		user.log_message("erased [target_rune.cultist_name] rune using a null rod", LOG_GAME)
 		message_admins("[ADMIN_LOOKUPFLW(user)] erased a [target_rune.cultist_name] rune with a null rod.")
 	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
 
 /obj/item/nullrod/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!"))
+
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/nullrod/godhand

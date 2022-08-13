@@ -5,7 +5,8 @@
 	key = "cry"
 	key_third_person = "cries"
 	message = "cries."
-	emote_type = EMOTE_AUDIBLE
+	message_mime = "sobs silently."
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/carbon/human/dap
 	key = "dap"
@@ -22,14 +23,15 @@
 	key = "grumble"
 	key_third_person = "grumbles"
 	message = "grumbles!"
-	emote_type = EMOTE_AUDIBLE
+	message_mime = "grumbles silently!"
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/carbon/human/handshake
 	key = "handshake"
 	message = "shakes their own hands."
 	message_param = "shakes hands with %t."
 	hands_use_check = TRUE
-	emote_type = EMOTE_AUDIBLE
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/carbon/human/hug
 	key = "hug"
@@ -42,30 +44,30 @@
 	key = "mumble"
 	key_third_person = "mumbles"
 	message = "mumbles!"
-	emote_type = EMOTE_AUDIBLE
+	message_mime = "mumbles silently!"
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/carbon/human/scream
 	key = "scream"
 	key_third_person = "screams"
 	message = "screams!"
 	message_mime = "acts out a scream!"
-	emote_type = EMOTE_AUDIBLE
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 	only_forced_audio = TRUE
 	vary = TRUE
 
-/datum/emote/living/carbon/human/scream/get_sound(mob/living/user)
-	if(!ishuman(user))
+/datum/emote/living/carbon/human/scream/get_sound(mob/living/carbon/human/user)
+	if(!istype(user))
 		return
-	var/mob/living/carbon/human/human = user
-	if(human.mind?.miming)
-		return
-	return human.dna.species.get_scream_sound(human)
+
+	return user.dna.species.get_scream_sound(user)
 
 /datum/emote/living/carbon/human/scream/screech //If a human tries to screech it'll just scream.
 	key = "screech"
 	key_third_person = "screeches"
 	message = "screeches."
-	emote_type = EMOTE_AUDIBLE
+	message_mime = "screeches silently."
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 	vary = FALSE
 
 /datum/emote/living/carbon/human/scream/screech/should_play_sound(mob/user, intentional)
@@ -123,6 +125,7 @@
 	if(tail?.wag_flags & WAG_ABLE)
 		return ..()
 	return FALSE
+
 /datum/emote/living/carbon/human/wing
 	key = "wing"
 	key_third_person = "wings"
@@ -153,6 +156,11 @@
 	if(H.dna && H.dna.species && (H.dna.features["wings"] != "None"))
 		return TRUE
 
+/datum/emote/living/carbon/human/clear_throat
+	key = "clear"
+	key_third_person = "clears throat"
+	message = "clears their throat."
+
 ///Snowflake emotes only for le epic chimp
 /datum/emote/living/carbon/human/monkey
 
@@ -165,6 +173,7 @@
 	key = "gnarl"
 	key_third_person = "gnarls"
 	message = "gnarls and shows its teeth..."
+	message_mime = "gnarls silently, baring its teeth..."
 
 /datum/emote/living/carbon/human/monkey/roll
 	key = "roll"
@@ -182,13 +191,14 @@
 	key = "roar"
 	key_third_person = "roars"
 	message = "roars."
-	emote_type = EMOTE_AUDIBLE
+	message_mime = "acts out a roar."
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/carbon/human/monkey/tail
 	key = "tail"
 	message = "waves their tail."
 
-/datum/emote/living/carbon/human/monkeysign
+/datum/emote/living/carbon/human/monkey/sign
 	key = "sign"
 	key_third_person = "signs"
 	message_param = "signs the number %t."

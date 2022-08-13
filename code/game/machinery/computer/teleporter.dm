@@ -188,8 +188,7 @@
 		if(isnull(desc))
 			return
 		set_teleport_target(targets[desc])
-		var/turf/target_turf = get_turf(targets[desc])
-		log_game("[key_name(user)] has set the teleporter target to [targets[desc]] at [AREACOORD(target_turf)]")
+		user.log_message("set the teleporter target to [targets[desc]].]", LOG_GAME)
 	else
 		if (!length(targets))
 			to_chat(user, span_alert("No active connected stations located."))
@@ -202,7 +201,7 @@
 		if(!target_station || !target_station.teleporter_hub)
 			return
 		var/turf/target_station_turf = get_turf(target_station)
-		log_game("[key_name(user)] has set the teleporter target to [target_station] at [AREACOORD(target_station_turf)]")
+		user.log_message("set the teleporter target to [target_station_turf].", LOG_GAME)
 		set_teleport_target(target_station.teleporter_hub)
 		lock_in_station(target_station)
 

@@ -247,6 +247,10 @@
 			continue
 		banned_knowledge += final_knowledge_type
 
+/datum/heretic_knowledge/limited_amount/starting/on_research(mob/user)
+	. = ..()
+	SSblackbox.record_feedback("tally", "heretic_path_taken", 1, route)
+
 /*
  * A knowledge subtype for heretic knowledge
  * that applies a mark on use.
@@ -463,7 +467,7 @@
 	summoned.ghostize(FALSE)
 	summoned.key = picked_candidate.key
 
-	log_game("[key_name(user)] created a [summoned.name], controlled by [key_name(picked_candidate)].")
+	user.log_message("created a [summoned.name], controlled by [key_name(picked_candidate)].", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(user)] created a [summoned.name], [ADMIN_LOOKUPFLW(summoned)].")
 
 	var/datum/antagonist/heretic_monster/heretic_monster = summoned.mind.add_antag_datum(/datum/antagonist/heretic_monster)
@@ -631,7 +635,7 @@
 		human_user.physiology.brute_mod *= 0.5
 		human_user.physiology.burn_mod *= 0.5
 
-
+	SSblackbox.record_feedback("tally", "heretic_ascended", 1, route)
 	log_heretic_knowledge("[key_name(user)] completed their final ritual at [worldtime2text()].")
 	return TRUE
 

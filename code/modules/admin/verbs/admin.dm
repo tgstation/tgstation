@@ -80,7 +80,7 @@
 		return
 
 	message_admins("[key_name_admin(usr)] triggered a CentCom recall, with the admiral message of: [message]")
-	log_game("[key_name(usr)] triggered a CentCom recall, with the message of: [message]")
+	usr.log_message("triggered a CentCom recall, with the message of: [message]", LOG_GAME)
 	SSshuttle.centcom_recall(SSshuttle.emergency.timer, message)
 
 /datum/admins/proc/cmd_show_exp_panel(client/client_to_check)

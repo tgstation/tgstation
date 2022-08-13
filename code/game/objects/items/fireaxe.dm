@@ -29,14 +29,11 @@
 
 /obj/item/fireaxe/Initialize(mapload)
 	. = ..()
-
-/obj/item/fireaxe/ComponentInitialize()
-	. = ..()
 	AddComponent(/datum/component/butchering, \
-	speed = 10 SECONDS, \
-	effectiveness = 80, \
-	bonus_modifier = 0 , \
-	butcher_sound = hitsound, \
+		speed = 10 SECONDS, \
+		effectiveness = 80, \
+		bonus_modifier = 0 , \
+		butcher_sound = hitsound, \
 	)
 	//axes are not known for being precision butchering tools
 	AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, icon_wielded="[base_icon_state]1")

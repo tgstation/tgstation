@@ -98,8 +98,8 @@
 
 		to_chat(user, span_warning("You begin to attach \the [destabilizing_crystal] to \the [src]..."))
 		if(do_after(user, 3 SECONDS, src))
-			message_admins("[ADMIN_LOOKUPFLW(user)] attached [destabilizing_crystal] to the supermatter at [ADMIN_VERBOSEJMP(src)]")
-			log_game("[key_name(user)] attached [destabilizing_crystal] to the supermatter at [AREACOORD(src)]")
+			message_admins("[ADMIN_LOOKUPFLW(user)] attached [destabilizing_crystal] to the supermatter at [ADMIN_VERBOSEJMP(src)].")
+			user.log_message("attached [destabilizing_crystal] to the supermatter", LOG_GAME)
 			investigate_log("[key_name(user)] attached [destabilizing_crystal] to a supermatter crystal.", INVESTIGATE_ENGINE)
 			to_chat(user, span_danger("\The [destabilizing_crystal] snaps onto \the [src]."))
 			set_delam(SM_DELAM_PRIO_IN_GAME, /datum/sm_delam/cascade)

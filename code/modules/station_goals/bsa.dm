@@ -10,11 +10,13 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	name = "Bluespace Artillery"
 
 /datum/station_goal/bluespace_cannon/get_report()
-	return {"Our military presence is inadequate in your sector.
-		We need you to construct BSA-[rand(1,99)] Artillery position aboard your station.
-
-		Base parts are available for shipping via cargo.
-		-Nanotrasen Naval Command"}
+	return list(
+		"<blockquote>Our military presence is inadequate in your sector.",
+		"We need you to construct BSA-[rand(1,99)] Artillery position aboard your station.",
+		"",
+		"Base parts are available for shipping via cargo.",
+		"-Nanotrasen Naval Command</blockquote>",
+	).Join("\n")
 
 /datum/station_goal/bluespace_cannon/on_report()
 	//Unlock BSA parts
@@ -216,11 +218,11 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 
 	if(!blocker)
 		message_admins("[ADMIN_LOOKUPFLW(user)] has launched an artillery strike targeting [ADMIN_VERBOSEJMP(bullseye)].")
-		log_game("[key_name(user)] has launched an artillery strike targeting [AREACOORD(bullseye)].")
+		user.log_message("has launched an artillery strike targeting [AREACOORD(bullseye)].", LOG_GAME)
 		explosion(bullseye, devastation_range = ex_power, heavy_impact_range = ex_power*2, light_impact_range = ex_power*4, explosion_cause = src)
 	else
 		message_admins("[ADMIN_LOOKUPFLW(user)] has launched an artillery strike targeting [ADMIN_VERBOSEJMP(bullseye)] but it was blocked by [blocker] at [ADMIN_VERBOSEJMP(target)].")
-		log_game("[key_name(user)] has launched an artillery strike targeting [AREACOORD(bullseye)] but it was blocked by [blocker] at [AREACOORD(target)].")
+		user.log_message("has launched an artillery strike targeting [AREACOORD(bullseye)] but it was blocked by [blocker] at [AREACOORD(target)].", LOG_GAME)
 
 
 /obj/machinery/bsa/full/proc/reload()

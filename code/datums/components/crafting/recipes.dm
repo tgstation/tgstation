@@ -67,8 +67,8 @@
 	reqs = list(/datum/reagent/fuel = 50,
 				/obj/item/stack/cable_coil = 1,
 				/obj/item/assembly/igniter = 1,
-				/obj/item/reagent_containers/food/drinks/soda_cans = 1)
-	parts = list(/obj/item/reagent_containers/food/drinks/soda_cans = 1)
+				/obj/item/reagent_containers/cup/soda_cans = 1)
+	parts = list(/obj/item/reagent_containers/cup/soda_cans = 1)
 	time = 1.5 SECONDS
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -101,10 +101,10 @@
 
 /datum/crafting_recipe/molotov
 	name = "Molotov"
-	result = /obj/item/reagent_containers/food/drinks/bottle/molotov
-	reqs = list(/obj/item/reagent_containers/glass/rag = 1,
-				/obj/item/reagent_containers/food/drinks/bottle = 1)
-	parts = list(/obj/item/reagent_containers/food/drinks/bottle = 1)
+	result = /obj/item/reagent_containers/cup/glass/bottle/molotov
+	reqs = list(/obj/item/reagent_containers/cup/rag = 1,
+				/obj/item/reagent_containers/cup/glass/bottle = 1)
+	parts = list(/obj/item/reagent_containers/cup/glass/bottle = 1)
 	time = 4 SECONDS
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -363,7 +363,7 @@
 /datum/crafting_recipe/cleanbot
 	name = "Cleanbot"
 	result = /mob/living/simple_animal/bot/cleanbot
-	reqs = list(/obj/item/reagent_containers/glass/bucket = 1,
+	reqs = list(/obj/item/reagent_containers/cup/bucket = 1,
 				/obj/item/assembly/prox_sensor = 1,
 				/obj/item/bodypart/r_arm/robot = 1)
 	time = 4 SECONDS
@@ -678,6 +678,14 @@
 	blacklist |= typesof(/obj/item/radio/headset)
 	blacklist |= typesof(/obj/item/radio/intercom)
 
+/datum/crafting_recipe/mothplush
+	name = "Moth Plushie"
+	result = /obj/item/toy/plush/moth
+	reqs = list(/obj/item/stack/sheet/animalhide/mothroach = 1,
+				/obj/item/organ/internal/heart = 1,
+				/obj/item/stack/sheet/cloth = 3)
+	category = CAT_MISC
+
 /datum/crafting_recipe/mixedbouquet
 	name = "Mixed bouquet"
 	result = /obj/item/bouquet
@@ -794,7 +802,7 @@
 
 /datum/crafting_recipe/sillycup
 	name = "Paper Cup"
-	result =  /obj/item/reagent_containers/food/drinks/sillycup
+	result =  /obj/item/reagent_containers/cup/glass/sillycup
 	time = 1 SECONDS
 	reqs = list(/obj/item/paper = 2)
 	category = CAT_MISC
@@ -998,7 +1006,7 @@
 	name = "Wooden Bucket"
 	time = 3 SECONDS
 	reqs = list(/obj/item/stack/sheet/mineral/wood = 3)
-	result = /obj/item/reagent_containers/glass/bucket/wooden
+	result = /obj/item/reagent_containers/cup/bucket/wooden
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/ore_sensor
@@ -1327,7 +1335,7 @@
 	name = "Alcohol burner"
 	result = /obj/item/burner
 	time = 5 SECONDS
-	reqs = list(/obj/item/reagent_containers/glass/beaker = 1,
+	reqs = list(/obj/item/reagent_containers/cup/beaker = 1,
 				/datum/reagent/consumable/ethanol = 15,
 				/obj/item/paper = 1
 				)
@@ -1337,7 +1345,7 @@
 	name = "Oil burner"
 	result = /obj/item/burner/oil
 	time = 5 SECONDS
-	reqs = list(/obj/item/reagent_containers/glass/beaker = 1,
+	reqs = list(/obj/item/reagent_containers/cup/beaker = 1,
 				/datum/reagent/fuel/oil = 15,
 				/obj/item/paper = 1
 				)
@@ -1347,7 +1355,7 @@
 	name = "Fuel burner"
 	result = /obj/item/burner/fuel
 	time = 5 SECONDS
-	reqs = list(/obj/item/reagent_containers/glass/beaker = 1,
+	reqs = list(/obj/item/reagent_containers/cup/beaker = 1,
 				/datum/reagent/fuel = 15,
 				/obj/item/paper = 1
 				)
