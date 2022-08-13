@@ -1,0 +1,4 @@
+author: "Guillaume Prata"
+delete-after: True
+changes: 
+  - qol: "You can now \"welder craft\" iron sheets/rods/floor tiles by Left or Right clicking one of these items with a welder. It will craft one of the other two options depending on the Left/Right click. There is a contextual screen tip too so just hover over them with a welder for details on the results."
