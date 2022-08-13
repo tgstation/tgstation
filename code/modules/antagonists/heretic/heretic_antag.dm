@@ -197,12 +197,20 @@
 	RegisterSignal(our_mob, list(COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_SPELL_ACTIVATED), .proc/on_spell_cast)
 	RegisterSignal(our_mob, COMSIG_MOB_ITEM_AFTERATTACK, .proc/on_item_afterattack)
 	RegisterSignal(our_mob, COMSIG_MOB_LOGIN, .proc/fix_influence_network)
+	RegisterSignal(our_mob, COMSIG_LIVING_POST_FULLY_HEAL, .proc/after_fully_healed)
 
 /datum/antagonist/heretic/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/our_mob = mob_override || owner.current
 	handle_clown_mutation(our_mob, removing = FALSE)
 	our_mob.faction -= FACTION_HERETIC
-	UnregisterSignal(our_mob, list(COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_SPELL_ACTIVATED, COMSIG_MOB_ITEM_AFTERATTACK, COMSIG_MOB_LOGIN))
+
+	UnregisterSignal(our_mob, list(
+		COMSIG_MOB_BEFORE_SPELL_CAST,
+		COMSIG_MOB_SPELL_ACTIVATED,
+		COMSIG_MOB_ITEM_AFTERATTACK,
+		COMSIG_MOB_LOGIN,
+		COMSIG_LIVING_POST_FULLY_HEAL,
+	))
 
 /datum/antagonist/heretic/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	. = ..()
@@ -326,6 +334,17 @@
 	SIGNAL_HANDLER
 
 	GLOB.reality_smash_track.rework_network()
+
+/// Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL], when we get fullhealed / ahealed,
+/// all of our organs are "deleted" and regenerated (cause it's a full heal)
+/// which unfortunately means we lose our living heart.
+/// So, we'll give them some lee-way and give them back the living heart afterwards
+/// (Maybe put this behind only admin_revives only? Not sure.)
+/datum/antagonist/heretic/proc/after_fully_healed(mob/living/source, admin_revive)
+	SIGNAL_HANDLER
+
+	var/datum/heretic_knowledge/living_heart/heart_knowledge = get_knowledge(/datum/heretic_knowledge/living_heart)
+	heart_knowledge.on_research(source)
 
 /**
  * Create our objectives for our heretic.
