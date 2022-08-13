@@ -37,7 +37,7 @@
 	. = ..()
 	if(mapload)
 		coffeepot = new /obj/item/reagent_containers/glass/coffeepot(src)
-		cartridge = new /obj/item/coffee_cartridge
+		cartridge = new /obj/item/coffee_cartridge(src)
 
 /obj/machinery/coffeemaker/deconstruct()
 	coffeepot?.forceMove(drop_location())
@@ -53,9 +53,9 @@
 
 /obj/machinery/coffeemaker/RefreshParts()
 	. = ..()
-	speed = 1
+	speed = 0
 	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
-		speed = laser.rating
+		speed += laser.rating
 
 /obj/machinery/coffeemaker/examine(mob/user)
 	. = ..()
@@ -82,7 +82,7 @@
 		. += "[span_notice("The status display reads:")]\n"+\
 		span_notice("- Brewing coffee at <b>[speed*100]%</b>.")
 		if(coffeepot)
-			for(var/datum/reagent/consumable/cawfee in coffeepot.reagents.reagent_list)
+			for(var/datum/reagent/consumable/cawfee as anything in coffeepot.reagents.reagent_list)
 				. += span_notice("- [cawfee.volume] units of coffee in pot.")
 		if(cartridge)
 			if(cartridge.charges < 1)
@@ -90,10 +90,8 @@
 			else
 				. += span_notice("- grounds cartridge has [cartridge.charges] charges remaining.")
 
-	if (coffee_cups > 1)
+	if (coffee_cups >= 1)
 		. += span_notice("There are [coffee_cups] cups left.")
-	else if (coffee_cups == 1)
-		. += span_notice("There is one cup left.")
 	else
 		. += span_notice("There are no cups left.")
 
@@ -142,7 +140,7 @@
 		update_appearance()
 
 /obj/machinery/coffeemaker/update_icon_state()
-	icon_state = "[base_icon_state][coffeepot ? 1 : 0][cartridge ? 1 : 0]"
+	icon_state = "[base_icon_state][!!coffeepot][!!cartridge]"
 	return ..()
 
 /obj/machinery/coffeemaker/proc/replace_pot(mob/living/user, obj/item/reagent_containers/glass/coffeepot/new_coffeepot)
@@ -172,19 +170,19 @@
 	default_unfasten_wrench(user, tool)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/machinery/coffeemaker/attackby(obj/item/I, mob/living/user, params)
+/obj/machinery/coffeemaker/attackby(obj/item/attack_item, mob/living/user, params)
 	//You can only screw open empty grinder
-	if(!coffeepot && default_deconstruction_screwdriver(user, icon_state, icon_state, I))
+	if(!coffeepot && default_deconstruction_screwdriver(user, icon_state, icon_state, attack_item))
 		return
 
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(attack_item))
 		return
 
 	if(panel_open) //Can't insert objects when its screwed open
 		return TRUE
 
-	if (istype(I, /obj/item/reagent_containers/glass/coffeepot) && !(I.item_flags & ABSTRACT) && I.is_open_container())
-		var/obj/item/reagent_containers/glass/coffeepot/new_pot = I
+	if (istype(attack_item, /obj/item/reagent_containers/glass/coffeepot) && !(attack_item.item_flags & ABSTRACT) && attack_item.is_open_container())
+		var/obj/item/reagent_containers/glass/coffeepot/new_pot = attack_item
 		. = TRUE //no afterattack
 		if(!user.transferItemToLoc(new_pot, src))
 			return TRUE
@@ -193,8 +191,8 @@
 		update_appearance()
 		return TRUE //no afterattack
 
-	if (istype(I, /obj/item/coffee_cartridge) && !(I.item_flags & ABSTRACT))
-		var/obj/item/coffee_cartridge/new_cartridge = I
+	if (istype(attack_item, /obj/item/coffee_cartridge) && !(attack_item.item_flags & ABSTRACT))
+		var/obj/item/coffee_cartridge/new_cartridge = attack_item
 		. = TRUE //no afterattack
 		if(!user.transferItemToLoc(new_cartridge, src))
 			return TRUE
@@ -242,8 +240,7 @@
 	if(length(options) < 1)
 		return
 	if(length(options) == 1)
-		for(var/key in options)
-			choice = key
+		choice = options[1]
 	else
 		choice = show_radial_menu(user, src, options, require_near = !issilicon(user))
 
@@ -342,7 +339,7 @@
 
 /obj/item/coffee_cartridge/examine(mob/user)
 	. = ..()
-	if(charges != 0)
+	if(charges)
 		. += span_warning("The cartridge has [charges] portions of grounds remaining.")
 	else
 		. += span_warning("The cartridge has no unspent grounds remaining.")
