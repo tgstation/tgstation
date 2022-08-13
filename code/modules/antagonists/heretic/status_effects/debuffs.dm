@@ -98,11 +98,7 @@
 
 /datum/status_effect/corrosion_curse/on_apply()
 	to_chat(owner, span_userdanger("Your body starts to break apart!"))
-	owner.add_filter(id, 2, list("type" = "outline", "color" = "#c1ffc9", "size" = 1))
 	return TRUE
-
-/datum/status_effect/corrosion_curse/on_remove()
-	owner.remove_filter(id)
 
 /datum/status_effect/corrosion_curse/tick()
 	. = ..()

@@ -380,6 +380,8 @@
 	var/duration = 1 MINUTES
 	/// The duration of the curse on people which have a fingerprint or blood sample present
 	var/duration_modifier = 2
+	/// What color do we outline cursed folk with?
+	var/curse_color = "#dadada"
 	/// A list of all the fingerprints that were found on our atoms, in our last go at the ritual
 	var/list/fingerprints
 	/// A list of all the blood samples that were found on our atoms, in our last go at the ritual
@@ -450,9 +452,7 @@
 
 	log_combat(user, to_curse, "cursed via heretic ritual", addition = "([boosted ? "Boosted" : ""] [name])")
 	curse(to_curse, boosted)
-
 	to_chat(user, span_hierophant("You cast a[boosted ? "n empowered":""] [name] upon [to_curse.real_name]."))
-	addtimer(CALLBACK(src, .proc/uncurse, to_curse), duration * (boosted ? duration_modifier : 1))
 
 	fingerprints = null
 	blood_samples = null
@@ -462,15 +462,28 @@
  * Calls a curse onto [chosen_mob].
  */
 /datum/heretic_knowledge/curse/proc/curse(mob/living/carbon/human/chosen_mob, boosted = FALSE)
-	SHOULD_CALL_PARENT(FALSE)
-	CRASH("[type] did not implement curse()!")
+	SHOULD_CALL_PARENT(TRUE)
+
+	addtimer(CALLBACK(src, .proc/uncurse, chosen_mob, boosted), duration * (boosted ? duration_modifier : 1))
+
+	if(!curse_color)
+		return
+
+	chosen_mob.add_filter(name, 2, list("type" = "outline", "color" = curse_color, "size" = 1))
 
 /**
  * Removes a curse from [chosen_mob]. Used in timers / callbacks.
  */
-/datum/heretic_knowledge/curse/proc/uncurse(mob/living/carbon/human/chosen_mob)
-	SHOULD_CALL_PARENT(FALSE)
-	CRASH("[type] did not implement uncurse()!")
+/datum/heretic_knowledge/curse/proc/uncurse(mob/living/carbon/human/chosen_mob, boosted = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(QDELETED(chosen_mob))
+		return
+
+	if(!curse_color)
+		return
+
+	chosen_mob.remove_filter(name)
 
 /*
  * A knowledge subtype lets the heretic summon a monster with the ritual.

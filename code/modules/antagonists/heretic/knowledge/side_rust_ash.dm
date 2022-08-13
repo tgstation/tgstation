@@ -35,19 +35,22 @@
 	)
 	duration = 0.5 MINUTES
 	duration_modifier = 4
+	curse_color = "#c1ffc9"
 	cost = 1
 	route = PATH_SIDE
 
-/datum/heretic_knowledge/curse/corrosion/curse(mob/living/carbon/human/chosen_mob)
-	to_chat(chosen_mob, span_danger("You feel very ill."))
+/datum/heretic_knowledge/curse/corrosion/curse(mob/living/carbon/human/chosen_mob, boosted = FALSE)
+	to_chat(chosen_mob, span_danger("You feel very ill..."))
 	chosen_mob.apply_status_effect(/datum/status_effect/corrosion_curse)
+	return ..()
 
-/datum/heretic_knowledge/curse/corrosion/uncurse(mob/living/carbon/human/chosen_mob)
+/datum/heretic_knowledge/curse/corrosion/uncurse(mob/living/carbon/human/chosen_mob, boosted = FALSE)
 	if(QDELETED(chosen_mob))
 		return
 
 	chosen_mob.remove_status_effect(/datum/status_effect/corrosion_curse)
-	to_chat(chosen_mob, span_notice("You start to feel better."))
+	to_chat(chosen_mob, span_green("You start to feel better."))
+	return ..()
 
 /datum/heretic_knowledge/summon/rusty
 	name = "Rusted Ritual"
