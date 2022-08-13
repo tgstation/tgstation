@@ -504,7 +504,7 @@ function remove_listedturf() {
 }
 
 function remove_mc() {
-	removeStatusTab("MC");
+	removePermanentTab("MC");
 	if (current_tab == "MC") {
 		tab_change("Status");
 	}
@@ -803,7 +803,7 @@ if (!current_tab) {
 }
 
 window.onload = function () {
-	Byond.command("Update-Verbs");
+	Byond.sendMessage("Update-Verbs");
 };
 
 Byond.subscribeTo('update_spells', function (payload) {

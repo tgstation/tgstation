@@ -13,6 +13,8 @@ Doesn't work on other aliens/AI.*/
 	icon_icon = 'icons/mob/actions/actions_xeno.dmi'
 	button_icon_state = "spell_default"
 	check_flags = AB_CHECK_CONSCIOUS
+	melee_cooldown_time = 0 SECONDS
+
 	/// How much plasma this action uses.
 	var/plasma_cost = 0
 
@@ -218,6 +220,9 @@ Doesn't work on other aliens/AI.*/
 /datum/action/cooldown/alien/acid/corrosion/PreActivate(atom/target)
 	if(get_dist(owner, target) > 1)
 		return FALSE
+	if(ismob(target)) //If it could corrode mobs, it would one-shot them.
+		owner.balloon_alert(owner, "doesn't work on mobs!")
+		return FALSE
 
 	return ..()
 
@@ -361,6 +366,33 @@ Doesn't work on other aliens/AI.*/
 		ADD_TRAIT(owner, TRAIT_ALIEN_SNEAK, name)
 
 	return TRUE
+
+/datum/action/cooldown/alien/regurgitate
+	name = "Regurgitate"
+	desc = "Empties the contents of your stomach."
+	button_icon_state = "alien_barf"
+	var/angle_delta = 45
+	var/mob_speed = 1.5
+	var/spit_speed = 1
+
+/datum/action/cooldown/alien/regurgitate/Activate(atom/target)
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/alien/humanoid/alieninated_owner = owner
+	var/obj/item/organ/internal/stomach/alien/melting_pot = alieninated_owner.getorganslot(ORGAN_SLOT_STOMACH)
+	if(!melting_pot)
+		owner.visible_message(span_clown("[src] gags, and spits up a bit of purple liquid. Ewwww."), \
+			span_alien("You feel a pain in your... chest? There's nothing there there's nothing there no no n-"))
+		return
+
+	if(!length(melting_pot.stomach_contents))
+		to_chat(owner, span_alien("There's nothing in your stomach, what exactly do you plan on spitting up?"))
+		return
+	owner.visible_message(span_danger("[owner] hurls out the contents of their stomach!"))
+	var/dir_angle = dir2angle(owner.dir)
+
+	playsound(owner, 'sound/creatures/alien_york.ogg', 100)
+	melting_pot.eject_stomach(slice_off_turfs(owner, border_diamond_range_turfs(owner, 9), dir_angle - angle_delta, dir_angle + angle_delta), 4, mob_speed, spit_speed)
 
 /// Gets the plasma level of this carbon's plasma vessel, or -1 if they don't have one
 /mob/living/carbon/proc/getPlasma()

@@ -36,8 +36,8 @@
 	speed = 2
 	move_to_delay = 10
 	mouse_opacity = MOUSE_OPACITY_ICON
-	deathsound = 'sound/magic/demon_dies.ogg'
-	deathmessage = "begins to shudder as it becomes transparent..."
+	death_sound = 'sound/magic/demon_dies.ogg'
+	death_message = "begins to shudder as it becomes transparent..."
 	loot_drop = /obj/item/clothing/neck/cloak/herald_cloak
 
 	can_talk = 1
@@ -199,10 +199,11 @@
 	maxHealth = 60
 	icon_state = "herald_mirror"
 	icon_aggro = "herald_mirror"
-	deathmessage = "shatters violently!"
-	deathsound = 'sound/effects/glassbr1.ogg'
+	death_message = "shatters violently!"
+	death_sound = 'sound/effects/glassbr1.ogg'
 	del_on_death = TRUE
 	is_mirror = TRUE
+	move_resist = MOVE_FORCE_OVERPOWERING // no dragging your mirror around
 	var/mob/living/simple_animal/hostile/asteroid/elite/herald/my_master = null
 
 /mob/living/simple_animal/hostile/asteroid/elite/herald/mirror/Initialize(mapload)

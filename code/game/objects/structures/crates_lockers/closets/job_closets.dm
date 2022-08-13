@@ -15,7 +15,7 @@
 		/obj/item/clothing/accessory/waistcoat = 2,
 		/obj/item/clothing/head/soft/black = 2,
 		/obj/item/clothing/shoes/sneakers/black = 2,
-		/obj/item/reagent_containers/glass/rag = 2,
+		/obj/item/reagent_containers/cup/rag = 2,
 		/obj/item/storage/box/beanbag = 1,
 		/obj/item/clothing/suit/armor/vest/alt = 1,
 		/obj/item/circuitboard/machine/dish_drive = 1,
@@ -42,7 +42,7 @@
 		/obj/item/clothing/suit/toggle/chef = 1,
 		/obj/item/clothing/under/rank/civilian/chef = 1,
 		/obj/item/clothing/head/chefhat = 1,
-		/obj/item/reagent_containers/glass/rag = 1)
+		/obj/item/reagent_containers/cup/rag = 1)
 	generate_items_inside(items_inside,src)
 
 /obj/structure/closet/jcloset
@@ -310,7 +310,7 @@
 
 /obj/structure/closet/wardrobe/curator/PopulateContents()
 	new /obj/item/clothing/head/fedora/curator(src)
-	new /obj/item/clothing/suit/curator(src)
+	new /obj/item/clothing/suit/jacket/curator(src)
 	new /obj/item/clothing/under/rank/civilian/curator/treasure_hunter(src)
 	new /obj/item/clothing/shoes/workboots/mining(src)
 	new /obj/item/storage/backpack/satchel/explorer(src)

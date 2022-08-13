@@ -34,7 +34,7 @@
 
 /obj/machinery/door/puzzle
 	name = "locked door"
-	desc = "This door only opens under certain conditions. It looks virtually indestructable."
+	desc = "This door only opens under certain conditions. It looks virtually indestructible."
 	icon = 'icons/obj/doors/puzzledoor/default.dmi'
 	icon_state = "door_closed"
 	explosion_block = 3
@@ -42,6 +42,7 @@
 	max_integrity = 600
 	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100)
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
+	move_resist = MOVE_FORCE_OVERPOWERING
 	damage_deflection = 70
 	/// Make sure that the puzzle has the same puzzle_id as the keycard door!
 	var/puzzle_id = null
@@ -75,7 +76,7 @@
 	return TRUE
 
 /obj/machinery/door/puzzle/keycard
-	desc = "This door only opens when a keycard is swiped. It looks virtually indestructable."
+	desc = "This door only opens when a keycard is swiped. It looks virtually indestructible."
 
 /obj/machinery/door/puzzle/keycard/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
@@ -97,7 +98,7 @@
 	puzzle_id = "blue"
 
 /obj/machinery/door/puzzle/light
-	desc = "This door only opens when a linked mechanism is powered. It looks virtually indestructable."
+	desc = "This door only opens when a linked mechanism is powered. It looks virtually indestructible."
 
 /obj/machinery/door/puzzle/light/Initialize(mapload)
 	. = ..()
@@ -168,7 +169,7 @@
 //Light puzzle
 /obj/structure/light_puzzle
 	name = "light mechanism"
-	desc = "It's a mechanism that seems to power something when all the lights are lit up. It looks virtually indestructable."
+	desc = "It's a mechanism that seems to power something when all the lights are lit up. It looks virtually indestructible."
 	icon = 'icons/obj/puzzle_small.dmi'
 	icon_state = "light_puzzle"
 	anchored = TRUE
@@ -188,7 +189,7 @@
 	/// Banned combinations of the list in decimal
 	var/static/list/banned_combinations = list(-1, 47, 95, 203, 311, 325, 422, 473, 488, 500, 511)
 
-/obj/structure/light_puzzle/Initialize()
+/obj/structure/light_puzzle/Initialize(mapload)
 	. = ..()
 	var/generated_board = -1
 	while(generated_board in banned_combinations)

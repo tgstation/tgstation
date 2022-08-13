@@ -71,12 +71,11 @@
 		if(!isturf(user.loc))
 			return
 
-		to_chat(user, span_notice("You start digging..."))
+		balloon_alert(user, "digging...")
 
 		if(W.use_tool(src, user, 40, volume=50))
 			if(!can_dig(user))
 				return TRUE
-			to_chat(user, span_notice("You dig a hole."))
 			getDug()
 			SSblackbox.record_feedback("tally", "pick_used_mining", 1, W.type)
 			return TRUE
@@ -92,6 +91,11 @@
 	dug = TRUE
 	base_icon_state = "asteroid_dug"
 	icon_state = "asteroid_dug"
+
+/turf/open/misc/asteroid/lavaland_atmos
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	planetary_atmos = TRUE
+	baseturfs = /turf/open/misc/asteroid/lavaland_atmos
 
 /// Used by ashstorms to replenish basalt tiles that have been dug up without going through all of them.
 GLOBAL_LIST_EMPTY(dug_up_basalt)

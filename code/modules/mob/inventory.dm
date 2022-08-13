@@ -409,7 +409,7 @@
 		if(equip_delay_self)
 			return
 
-	if(M.active_storage && M.active_storage.parent && SEND_SIGNAL(M.active_storage.parent, COMSIG_TRY_STORAGE_INSERT, src,M))
+	if(M.active_storage?.attempt_insert(M.active_storage, src, M))
 		return TRUE
 
 	var/list/obj/item/possible = list(M.get_inactive_held_item(), M.get_item_by_slot(ITEM_SLOT_BELT), M.get_item_by_slot(ITEM_SLOT_DEX_STORAGE), M.get_item_by_slot(ITEM_SLOT_BACK))
@@ -417,7 +417,7 @@
 		if(!i)
 			continue
 		var/obj/item/I = i
-		if(SEND_SIGNAL(I, COMSIG_TRY_STORAGE_INSERT, src, M))
+		if(I.atom_storage?.attempt_insert(I, src, M))
 			return TRUE
 
 	to_chat(M, span_warning("You are unable to equip that!"))
@@ -428,6 +428,10 @@
 	set name = "quick-equip"
 	set hidden = TRUE
 
+	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, .proc/execute_quick_equip))
+
+///proc extender of [/mob/verb/quick_equip] used to make the verb queuable if the server is overloaded
+/mob/proc/execute_quick_equip()
 	var/obj/item/I = get_active_held_item()
 	if(!I)
 		to_chat(src, span_warning("You are not holding anything to equip!"))
@@ -492,8 +496,8 @@
 	var/i = 0
 	while(i < length(processing_list) )
 		var/atom/A = processing_list[++i]
-		if(SEND_SIGNAL(A, COMSIG_CONTAINS_STORAGE))
+		if(A.atom_storage)
 			var/list/item_stuff = list()
-			SEND_SIGNAL(A, COMSIG_TRY_STORAGE_RETURN_INVENTORY, item_stuff)
+			A.atom_storage.return_inv(item_stuff)
 			processing_list += item_stuff
 	return processing_list

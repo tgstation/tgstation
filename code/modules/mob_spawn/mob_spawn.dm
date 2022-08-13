@@ -74,8 +74,7 @@
 			spawned_human.skin_tone = skin_tone
 		else
 			spawned_human.skin_tone = random_skin_tone()
-		spawned_human.update_hair()
-		spawned_human.update_body()
+		spawned_human.update_body(is_creating = TRUE)
 
 /obj/effect/mob_spawn/proc/name_mob(mob/living/spawned_mob, forced_name)
 	var/chosen_name
@@ -163,7 +162,7 @@
 		return
 	if(QDELETED(src) || QDELETED(user))
 		return
-	log_game("[key_name(user)] became a [prompt_name]")
+	user.log_message("became a [prompt_name].", LOG_GAME)
 	create(user)
 
 /obj/effect/mob_spawn/ghost_role/special(mob/living/spawned_mob, mob/mob_possessor)

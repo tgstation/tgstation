@@ -115,7 +115,7 @@
 	desc = "Oooh, gold and green. Fancy! This should help as you sit in your office."
 	icon = 'icons/obj/clothing/masks.dmi'
 	worn_icon = 'icons/mob/clothing/mask.dmi'
-	worn_icon_state = "centcomspace"
+	worn_icon_state = "gas_centcom"
 	icon_state = "gas_centcom"
 	inhand_icon_state = "gas_centcom"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -377,14 +377,6 @@
 	flags_inv = HIDEFACIALHAIR|HIDEFACE|HIDEEYES|HIDEEARS|HIDEHAIR|HIDESNOUT
 	has_fov = FALSE
 
-/obj/item/clothing/mask/gas/driscoll
-	name = "driscoll mask"
-	desc = "Great for train hijackings. Works like a normal full face gas mask, but won't conceal your identity."
-	icon_state = "driscoll_mask"
-	flags_inv = HIDEFACIALHAIR
-	w_class = WEIGHT_CLASS_NORMAL
-	inhand_icon_state = "driscoll_mask"
-
 /obj/item/clothing/mask/gas/prop
 	name = "prop gas mask"
 	desc = "A prop gas mask designed for appearance. Unlike a normal gas mask this does not filter gasses or protect against pepper spray."
@@ -405,3 +397,11 @@
 	flags_cover = MASKCOVERSMOUTH
 	resistance_flags = FLAMMABLE
 	has_fov = FALSE
+
+/obj/item/clothing/mask/gas/driscoll
+	name = "driscoll mask"
+	desc = "Great for train hijackings. Works like a normal full face gas mask, but won't conceal your identity."
+	icon_state = "driscoll_mask"
+	flags_inv = HIDEFACIALHAIR
+	w_class = WEIGHT_CLASS_NORMAL
+	inhand_icon_state = "driscoll_mask"

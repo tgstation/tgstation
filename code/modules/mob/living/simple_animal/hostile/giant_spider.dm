@@ -218,7 +218,7 @@
 		return
 	charge.Trigger(target = target)
 
-/mob/living/simple_animal/hostile/giant_spider/tarantula/Moved(atom/oldloc, dir)
+/mob/living/simple_animal/hostile/giant_spider/tarantula/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	var/obj/structure/spider/stickyweb/web = locate() in loc
 	if(web && !silk_walking)
@@ -295,6 +295,8 @@
 
 	var/datum/action/innate/spider/comm/not_hivemind_talk = new(src)
 	not_hivemind_talk.Grant(src)
+
+	ADD_TRAIT(src, TRAIT_ALERT_GHOSTS_ON_DEATH, INNATE_TRAIT)
 
 /datum/action/innate/spider
 	icon_icon = 'icons/mob/actions/actions_animal.dmi'
@@ -528,7 +530,7 @@
 		return FALSE
 
 	message_admins("[ADMIN_LOOKUPFLW(owner)] set its directive to: '[spider.directive]'.")
-	log_game("[key_name(owner)] set its directive to: '[spider.directive]'.")
+	owner.log_message("set its directive to: '[spider.directive]'.", LOG_GAME)
 	return TRUE
 
 /datum/action/innate/spider/comm

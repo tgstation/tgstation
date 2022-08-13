@@ -448,7 +448,7 @@ GLOBAL_LIST_INIT(abductor_recipes, list ( \
 	if(W.get_temperature() > 300)//If the temperature of the object is over 300, then ignite
 		var/turf/T = get_turf(src)
 		message_admins("Coal ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
-		log_game("Coal ignited by [key_name(user)] in [AREACOORD(T)]")
+		user.log_message("ignited coal", LOG_GAME)
 		fire_act(W.get_temperature())
 		return TRUE
 	else

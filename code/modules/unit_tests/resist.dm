@@ -12,6 +12,10 @@
 	// Stop, drop, and roll has a sleep call. This would delay the test, and is not necessary.
 	call_async(human, /mob/living/verb/resist)
 
+	//since resist() is a verb that possibly queues its actual execution for the next tick, we need to make the subsystem that handles the delayed execution process
+	//the callback. either that or sleep ourselves and see if it ran.
+	SSverb_manager.run_verb_queue()
+
 	TEST_ASSERT(human.fire_stacks < 5, "Human did not lower fire stacks after resisting")
 
 /// Test that you can resist out of a container
@@ -26,4 +30,9 @@
 	TEST_ASSERT(human in closet.contents, "Human was not in the contents of the closed closet")
 
 	human.resist()
+
+	//since resist() is a verb that possibly queues itself for the next tick, we need to make the subsystem that handles the delayed execution process
+	//the callback. either that or sleep ourselves and see if it ran.
+	SSverb_manager.run_verb_queue()
+
 	TEST_ASSERT(!(human in closet.contents), "Human resisted out of a standard closet, but was still in it")

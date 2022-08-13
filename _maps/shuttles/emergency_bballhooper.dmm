@@ -295,7 +295,7 @@
 /obj/structure/table,
 /obj/machinery/recharger,
 /obj/item/paper/crumpled{
-	info = "HOLY FUCKING SHIT THIS WAS A MISTAKE -KY";
+	default_raw_text = "HOLY FUCKING SHIT THIS WAS A MISTAKE -KY";
 	name = "The Commisioner's Note";
 	pixel_x = -9;
 	pixel_y = 9
@@ -468,10 +468,8 @@
 /obj/machinery/door/window/left/directional/north{
 	name = "MEDICAL INFIRMARY"
 	},
-/obj/machinery/shower{
-	dir = 8;
-	name = "emergency shower";
-	pixel_y = -4
+/obj/machinery/shower/directional/west{
+	name = "emergency shower"
 	},
 /obj/machinery/vending/wallmed/directional/east{
 	name = "Hooper's First Medical Kit"
@@ -782,7 +780,7 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/trophy/gold_cup{
+/obj/item/reagent_containers/cup/glass/trophy/gold_cup{
 	pixel_x = 0
 	},
 /turf/open/floor/mineral/titanium/purple,

@@ -11,15 +11,32 @@
 	var/list/stored_files = list() // List of stored files on this drive. DO NOT MODIFY DIRECTLY!
 	var/default_installs = TRUE // install the default progs
 
+/obj/item/computer_hardware/hard_drive/Initialize(mapload)
+	. = ..()
+
+	if(default_installs)
+		install_default_programs()
+
+/obj/item/computer_hardware/hard_drive/Destroy()
+	QDEL_LIST(stored_files)
+	return ..()
+
+/obj/item/computer_hardware/hard_drive/on_install(obj/item/modular_computer/install_into, mob/living/user)
+	. = ..()
+	// whoever tried to set the ref to the computer in new, is it okay if i could come to your house someday, yeah?
+	for(var/datum/computer_file/file as anything in stored_files)
+		file.computer = holder
+
 /obj/item/computer_hardware/hard_drive/on_remove(obj/item/modular_computer/remove_from, mob/user)
 	remove_from.shutdown_computer()
-	for(var/datum/computer_file/program/program in stored_files)
+	for(var/datum/computer_file/program in stored_files)
 		program.computer = null
+	return ..()
 
 /obj/item/computer_hardware/hard_drive/proc/install_default_programs()
-	store_file(new /datum/computer_file/program/computerconfig(src)) // Computer configuration utility, allows hardware control and displays more info than status bar
-	store_file(new /datum/computer_file/program/ntnetdownload(src)) // NTNet Downloader Utility, allows users to download more software from NTNet repository
-	store_file(new /datum/computer_file/program/filemanager(src)) // File manager, allows text editor functions and basic file manipulation.
+	store_file(new /datum/computer_file/program/computerconfig) // Computer configuration utility, allows hardware control and displays more info than status bar
+	store_file(new /datum/computer_file/program/ntnetdownload) // NTNet Downloader Utility, allows users to download more software from NTNet repository
+	store_file(new /datum/computer_file/program/filemanager) // File manager, allows text editor functions and basic file manipulation.
 
 /obj/item/computer_hardware/hard_drive/examine(user)
 	. = ..()
@@ -52,6 +69,7 @@
 	SEND_SIGNAL(F, COMSIG_MODULAR_COMPUTER_FILE_ADDING)
 
 	F.holder = src
+	F.computer = holder
 	stored_files.Add(F)
 	recalculate_size()
 
@@ -120,21 +138,10 @@
 	if(!stored_files)
 		return null
 
-	for(var/datum/computer_file/F in stored_files)
+	for(var/datum/computer_file/F as anything in stored_files)
 		if(F.filename == filename)
 			return F
 	return null
-
-/obj/item/computer_hardware/hard_drive/Destroy()
-	QDEL_LIST(stored_files)
-	return ..()
-
-/obj/item/computer_hardware/hard_drive/Initialize(mapload)
-	. = ..()
-
-	if(default_installs)
-		install_default_programs()
-
 
 /obj/item/computer_hardware/hard_drive/advanced
 	name = "advanced hard disk drive"
@@ -173,19 +180,19 @@
 /obj/item/computer_hardware/hard_drive/small/install_default_programs()
 	. = ..()
 
-	store_file(new /datum/computer_file/program/messenger(src))
-	store_file(new /datum/computer_file/program/notepad(src))
+	store_file(new /datum/computer_file/program/messenger)
+	store_file(new /datum/computer_file/program/notepad)
 
 // For borg integrated tablets. No downloader.
 /obj/item/computer_hardware/hard_drive/small/ai/install_default_programs()
-	var/datum/computer_file/program/messenger/messenger = new(src)
+	var/datum/computer_file/program/messenger/messenger = new
 	messenger.is_silicon = TRUE
 	store_file(messenger)
 
 /obj/item/computer_hardware/hard_drive/small/robot/install_default_programs()
-	store_file(new /datum/computer_file/program/computerconfig(src)) // Computer configuration utility, allows hardware control and displays more info than status bar
-	store_file(new /datum/computer_file/program/filemanager(src)) // File manager, allows text editor functions and basic file manipulation.
-	store_file(new /datum/computer_file/program/robotact(src))
+	store_file(new /datum/computer_file/program/computerconfig) // Computer configuration utility, allows hardware control and displays more info than status bar
+	store_file(new /datum/computer_file/program/filemanager) // File manager, allows text editor functions and basic file manipulation.
+	store_file(new /datum/computer_file/program/robotact)
 
 // Syndicate variant - very slight better
 /obj/item/computer_hardware/hard_drive/portable/syndicate
@@ -200,10 +207,10 @@
 	max_capacity = 70
 
 /obj/item/computer_hardware/hard_drive/small/nukeops/install_default_programs()
-	store_file(new/datum/computer_file/program/computerconfig(src))
-	store_file(new/datum/computer_file/program/ntnetdownload/syndicate(src)) // Syndicate version; automatic access to syndicate apps and no NT apps
-	store_file(new/datum/computer_file/program/filemanager(src))
-	store_file(new/datum/computer_file/program/radar/fission360(src)) //I am legitimately afraid if I don't do this, Ops players will think they just don't get a pinpointer anymore.
+	store_file(new/datum/computer_file/program/computerconfig)
+	store_file(new/datum/computer_file/program/ntnetdownload/syndicate) // Syndicate version; automatic access to syndicate apps and no NT apps
+	store_file(new/datum/computer_file/program/filemanager)
+	store_file(new/datum/computer_file/program/radar/fission360) //I am legitimately afraid if I don't do this, Ops players will think they just don't get a pinpointer anymore.
 
 /obj/item/computer_hardware/hard_drive/micro
 	name = "micro solid state drive"
