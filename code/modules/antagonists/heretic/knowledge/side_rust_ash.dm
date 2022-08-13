@@ -43,6 +43,9 @@
 	chosen_mob.apply_status_effect(/datum/status_effect/corrosion_curse)
 
 /datum/heretic_knowledge/curse/corrosion/uncurse(mob/living/carbon/human/chosen_mob)
+	if(QDELETED(chosen_mob))
+		return
+
 	chosen_mob.remove_status_effect(/datum/status_effect/corrosion_curse)
 	to_chat(chosen_mob, span_notice("You start to feel better."))
 

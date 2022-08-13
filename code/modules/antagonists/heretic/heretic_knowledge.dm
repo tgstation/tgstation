@@ -374,6 +374,8 @@
  */
 /datum/heretic_knowledge/curse
 	abstract_parent_type = /datum/heretic_knowledge/curse
+	/// How far can we curse people?
+	var/max_range = 64
 	/// The duration of the curse
 	var/duration = 1 MINUTES
 	/// The duration of the curse on people which have a fingerprint or blood sample present
@@ -406,6 +408,14 @@
 		var/mob/living/carbon/human/human_to_check = crewmember.current
 		if(!istype(human_to_check) || human_to_check.stat == DEAD || !human_to_check.dna)
 			continue
+		var/turf/check_turf = get_turf(human_to_check)
+		// Have to match z-levels.
+		// Otherwise, these will probably own miners which is funny, but mean
+		if(check_turf.z != loc.z)
+			continue
+		// Also has to abide by our max range
+		if(get_dist(check_turf, loc) > max_range)
+			continue
 
 		var/their_prints = md5(human_to_check.dna.unique_identity)
 		var/their_blood = human_to_check.dna.unique_enzymes
@@ -417,7 +427,7 @@
 
 		potential_targets[list_key] = human_to_check
 
-	var/chosen_mob = tgui_input_list(user, "Select the person you wish to [name]", name, sort_list(potential_targets, /proc/cmp_text_asc))
+	var/chosen_mob = tgui_input_list(user, "Select the victim you wish to curse.", name, sort_list(potential_targets, /proc/cmp_text_asc))
 	if(isnull(chosen_mob))
 		return FALSE
 
@@ -433,7 +443,7 @@
 			return FALSE
 
 	if(to_curse.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, charge_cost = 0))
-		to_chat(to_chat, span_warning("You feel a ghastly chill, but the feeling passes shortly."))
+		to_chat(to_curse, span_warning("You feel a ghastly chill, but the feeling passes shortly."))
 		return TRUE
 
 	var/boosted = (to_curse in boosted_targets)

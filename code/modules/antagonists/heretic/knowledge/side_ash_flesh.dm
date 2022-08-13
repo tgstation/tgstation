@@ -43,10 +43,14 @@
 	else
 		to_chat(chosen_mob, span_danger("You suddenly lose feeling in your leg[chosen_mob.usable_legs == 1 ? "":"s"]!"))
 
+
 	ADD_TRAIT(chosen_mob, TRAIT_PARALYSIS_L_LEG, type)
 	ADD_TRAIT(chosen_mob, TRAIT_PARALYSIS_R_LEG, type)
 
 /datum/heretic_knowledge/curse/paralysis/uncurse(mob/living/carbon/human/chosen_mob)
+	if(QDELETED(chosen_mob))
+		return
+
 	REMOVE_TRAIT(chosen_mob, TRAIT_PARALYSIS_L_LEG, type)
 	REMOVE_TRAIT(chosen_mob, TRAIT_PARALYSIS_R_LEG, type)
 
