@@ -443,6 +443,15 @@
 	materials = list(/datum/material/glass = 2000, /datum/material/iron = 7000)
 	category = list(RND_CATEGORY_CIRCUITRY, RND_CATEGORY_SHELLS)
 
+/datum/design/keyboard_shell
+	name = "Keyboard Shell"
+	desc = "A handheld shell that allows the user to input a string"
+	id = "keyboard_shell"
+	build_path = /obj/item/keyboard_shell
+	materials = list(/datum/material/glass = 2000, /datum/material/iron = 10000)
+	build_type = PROTOLATHE | COMPONENT_PRINTER
+	category = list("Circuitry", "Shells")
+
 /datum/design/gun_shell
 	name = "Gun Shell"
 	desc = "A handheld shell that can fire projectiles to output entities."
