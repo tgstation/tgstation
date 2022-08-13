@@ -193,6 +193,8 @@
 
 /// How much energy a mole of halon combusting consumes.
 #define HALON_COMBUSTION_ENERGY 2500
+/// The minimum temperature required for halon to combust.
+#define HALON_COMBUSTION_MIN_TEMPERATURE (T0C + 70)
 
 // Healium:
 /// The minimum temperature healium can form from BZ and freon at.

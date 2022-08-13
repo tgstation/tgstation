@@ -408,14 +408,14 @@
 	location.ClearWet()
 	if(location.air)
 		var/datum/gas_mixture/air = location.air
-		air.temperature = 293.15
+		air.temperature = T20C
 		for(var/obj/effect/hotspot/fire in location)
 			qdel(fire)
 
 		var/list/gases = air.gases
 		for(var/gas_type in gases)
 			switch(gas_type)
-				if(/datum/gas/oxygen, /datum/gas/nitrogen)
+				if(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/halon)
 					continue
 				else
 					gases[gas_type][MOLES] = 0
