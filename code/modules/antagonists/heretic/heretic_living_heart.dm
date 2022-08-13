@@ -150,7 +150,7 @@
 		return FALSE
 
 	COOLDOWN_START(src, track_cooldown, track_cooldown_lenth)
-	add_timer(CALLBACK(src, .proc/UpdateButtons), track_cooldown_lenth + 1)
+	addtimer(CALLBACK(src, .proc/UpdateButtons), track_cooldown_lenth + 1)
 	playsound(owner, 'sound/effects/singlebeat.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
 	owner.balloon_alert(owner, get_balloon_message(tracked_mob))
 
@@ -208,7 +208,7 @@
 	// They're on the same z-level as us!
 	else
 		var/dist = get_dist(our_turf, their_turf)
-		var/dir = get_dir(gour_turf, their_turf)
+		var/dir = get_dir(our_turf, their_turf)
 
 		switch(dist)
 			if(0 to 15)
