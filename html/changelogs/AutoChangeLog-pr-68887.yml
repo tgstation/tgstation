@@ -1,6 +1,0 @@
-author: "Y0SH1M4S73R"
-delete-after: True
-changes: 
-  - bugfix: "Fixes the formatting of the admin lua editor"
-  - qol: "In the admin lua editor, there will be a \"jump to bottom\" button in the log viewer if the log is longer than can be shown in the window."
-  - qol: "The lua editor log viewer is now split into pages of at most 50 log entries."
