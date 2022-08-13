@@ -28,6 +28,7 @@
 	. = ..()
 
 /obj/machinery/public_nanite_chamber/RefreshParts()
+	. = ..()
 	var/obj/item/circuitboard/machine/public_nanite_chamber/board = circuit
 	if(board)
 		cloud_id = board.cloud_id
@@ -91,6 +92,7 @@
 	SEND_SIGNAL(occupant, COMSIG_NANITE_SET_CLOUD, cloud_id)
 
 /obj/machinery/public_nanite_chamber/update_icon_state()
+	. = ..()
 	//running and someone in there
 	if(occupant)
 		if(busy)

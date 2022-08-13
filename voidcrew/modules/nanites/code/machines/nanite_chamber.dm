@@ -30,6 +30,7 @@
 	. = ..()
 
 /obj/machinery/nanite_chamber/RefreshParts()
+	. = ..()
 	scan_level = 0
 	for(var/obj/item/stock_parts/scanning_module/P in component_parts)
 		scan_level += P.rating
@@ -110,6 +111,7 @@
 	SEND_SIGNAL(occupant, COMSIG_NANITE_DELETE)
 
 /obj/machinery/nanite_chamber/update_icon_state()
+	. = ..()
 	//running and someone in there
 	if(occupant)
 		if(busy)
