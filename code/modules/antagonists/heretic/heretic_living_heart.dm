@@ -151,6 +151,7 @@
 		return FALSE
 
 	COOLDOWN_START(src, track_cooldown, track_cooldown_lenth)
+	UpdateButtons()
 	addtimer(CALLBACK(src, .proc/UpdateButtons), track_cooldown_lenth + 1)
 	playsound(owner, 'sound/effects/singlebeat.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
 	owner.balloon_alert(owner, get_balloon_message(tracked_mob))
@@ -187,7 +188,7 @@
 
 	// They're not on the same z-level as us
 	else if(our_z != their_z)
-		// They're on the st ation
+		// They're on the station
 		if(is_station_level(their_z))
 			// We're on a multi-z station
 			if(is_station_level(our_z))
@@ -197,7 +198,7 @@
 					balloon_message = "above you!"
 			// We're off station, they're not
 			else
-					balloon_message = "on station!"
+				balloon_message = "on station!"
 
 		// Mining
 		else if(is_mining_level(their_z))
