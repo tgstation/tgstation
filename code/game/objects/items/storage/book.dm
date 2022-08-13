@@ -23,12 +23,6 @@ GLOBAL_LIST_INIT(biblenames, list("Bible", "Quran", "Scrapbook", "Burning Bible"
 GLOBAL_LIST_INIT(biblestates, list("bible", "koran", "scrapbook", "burning", "honk1", "honk2", "creeper", "white", "holylight", "atheist", "tome", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon", "insuls", "gurugranthsahib"))
 GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning", "honk1", "honk2", "creeper", "white", "holylight", "atheist", "tome", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon", "kingyellow", "gurugranthsahib"))
 
-/mob/proc/bible_check() //The bible, if held, might protect against certain things
-	var/obj/item/storage/book/bible/B = locate() in src
-	if(is_holding(B))
-		return B
-	return 0
-
 /obj/item/storage/book/bible
 	name = "bible"
 	desc = "Apply to head repeatedly."
@@ -52,6 +46,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 
 /obj/item/storage/book/bible/Initialize(mapload)
 	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE_HOLY)
 
 /obj/item/storage/book/bible/suicide_act(mob/user)
