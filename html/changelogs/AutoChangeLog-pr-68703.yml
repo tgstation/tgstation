@@ -1,0 +1,5 @@
+author: "TheBoondock"
+delete-after: True
+changes: 
+  - qol: "ranged analyzer is now able to scan the tile of machines and tables without clicking on the tile directly"
+  - qol: "ranged analyzer can now scan further upward to 15 tiles"
