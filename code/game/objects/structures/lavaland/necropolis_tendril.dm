@@ -114,7 +114,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 	return ..()
 
 /obj/effect/collapse/proc/has_collected(mob/collector)
-	for(var/datum/weakref/weakref in collected)
+	for(var/datum/weakref/weakref as anything in collected)
 		var/mob/living/resolved = weakref.resolve()
 		//it could have been collector, it could not have been, we don't care
 		if(!resolved)
