@@ -33,6 +33,8 @@
 	our_hud = viewing_hud
 	our_hud.master_groups[key] = src
 	show_hud()
+	RegisterSignal(our_hud, COMSIG_HUD_OFFSET_CHANGED, .proc/transform_lower_turfs)
+	transform_lower_turfs(our_hud, 0, our_hud.current_plane_offset)
 
 /// Hide the plane master from its current hud, fully clear it out
 /datum/plane_master_group/proc/orphan_hud()
@@ -51,6 +53,7 @@
 	QDEL_LIST_ASSOC_VAL(plane_masters)
 	build_plane_masters(0, SSmapping.max_plane_offset)
 	show_hud()
+	transform_lower_turfs(our_hud, 0, our_hud.current_plane_offset)
 
 /datum/plane_master_group/proc/hide_hud()
 	for(var/thing in plane_masters)
@@ -83,6 +86,36 @@
 /// Similarly, exists so subtypes can do unique behavior to planes on creation
 /datum/plane_master_group/proc/prep_plane_instance(atom/movable/screen/plane_master/instance)
 	return
+
+/datum/plane_master_group/proc/transform_lower_turfs(datum/hud/source, old_offset, new_offset)
+	// No offset? piss off
+	if(!SSmapping.max_plane_offset)
+		return
+	var/list/offsets = list()
+	// We accept negatives so going down "zooms" away the drop above as it goes
+	for(var/offset in -SSmapping.max_plane_offset to SSmapping.max_plane_offset)
+		// No transformations if we're landing ON you
+		if(offset == 0)
+			offsets += null
+			continue
+		var/scale = 0.965 ** (offset)
+		var/matrix/multiz_shrink = matrix()
+		multiz_shrink.Scale(scale)
+		offsets += multiz_shrink
+
+	// So we can talk in 1 -> max_offset * 2 + 1, rather then -max_offset -> max_offset
+	var/offset_offset = SSmapping.max_plane_offset + 1
+
+	for(var/plane_key in plane_masters)
+		var/atom/movable/screen/plane_master/plane = plane_masters[plane_key]
+		if(!plane.accepts_input || !plane.allows_offsetting)
+			continue
+		var/visual_offset = plane.offset - new_offset
+		if(plane.force_hidden || visual_offset < 0)
+			// We don't animate here because it should be invisble, but we do mark because it'll look nice
+			plane.transform = offsets[visual_offset + offset_offset]
+			continue
+		animate(plane, transform = offsets[visual_offset + offset_offset], 0.05 SECONDS, easing = LINEAR_EASING)
 
 /// Holds plane masters for popups, like camera windows
 /datum/plane_master_group/popup
