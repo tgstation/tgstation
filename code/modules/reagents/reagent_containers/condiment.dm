@@ -394,12 +394,12 @@
 	originalname = "bbq sauce"
 	list_reagents = list(/datum/reagent/consumable/bbqsauce = 10)
 
-/obj/item/reagent_containers/food/condiment/pack/creamer
+/obj/item/reagent_containers/condiment/pack/creamer
 	name = "creamer pack"
 	originalname = "creamer"
 	list_reagents = list(/datum/reagent/consumable/creamer = 5)
 
-/obj/item/reagent_containers/food/condiment/pack/sugar
+/obj/item/reagent_containers/condiment/pack/sugar
 	name = "sugar pack"
 	originalname = "sugar"
 	list_reagents = list(/datum/reagent/consumable/sugar = 5)

@@ -238,13 +238,13 @@
 	name = "Coffee Mug"
 	desc = "A bog standard coffee mug, for drinking coffee."
 	cost = PAYCHECK_LOWER
-	contains = list(/obj/item/reagent_containers/food/drinks/mug)
+	contains = list(/obj/item/reagent_containers/cup/glass/mug)
 
 /datum/supply_pack/goody/nt_mug
 	name = "Nanotrasen Coffee Mug"
 	desc = "A blue mug bearing the logo of your corporate masters. Usually given out at inductions or events, we'll send one out special for a nominal fee."
 	cost = PAYCHECK_LOWER
-	contains = list(/obj/item/reagent_containers/food/drinks/mug/nanotrasen)
+	contains = list(/obj/item/reagent_containers/cup/glass/mug/nanotrasen)
 
 /datum/supply_pack/goody/coffee_cartridge
 	name = "Coffee Cartridge"

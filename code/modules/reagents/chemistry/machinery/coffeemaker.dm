@@ -282,7 +282,7 @@
 		balloon_alert("no cups left!")
 		return
 	balloon_alert_to_viewers("took cup")
-	var/obj/item/reagent_containers/food/drinks/coffee_cup/new_cup = new(get_turf(src))
+	var/obj/item/reagent_containers/cup/glass/coffee_cup/new_cup = new(get_turf(src))
 	user.put_in_hands(new_cup)
 	coffee_cups--
 
@@ -291,7 +291,7 @@
 		balloon_alert("no sugar left!")
 		return
 	balloon_alert_to_viewers("took sugar packet")
-	var/obj/item/reagent_containers/food/condiment/pack/sugar/new_pack = new(get_turf(src))
+	var/obj/item/reagent_containers/condiment/pack/sugar/new_pack = new(get_turf(src))
 	user.put_in_hands(new_pack)
 	sugar_packs--
 
@@ -300,7 +300,7 @@
 		balloon_alert("no sweetener left!")
 		return
 	balloon_alert_to_viewers("took sweetener packet")
-	var/obj/item/reagent_containers/food/condiment/pack/astrotame/new_pack = new(get_turf(src))
+	var/obj/item/reagent_containers/condiment/pack/astrotame/new_pack = new(get_turf(src))
 	user.put_in_hands(new_pack)
 	sweetener_packs--
 
@@ -309,7 +309,7 @@
 		balloon_alert("no creamer left!")
 		return
 	balloon_alert_to_viewers("took creamer packet")
-	var/obj/item/reagent_containers/food/condiment/pack/creamer/new_pack = new(get_turf(src))
+	var/obj/item/reagent_containers/condiment/pack/creamer/new_pack = new(get_turf(src))
 	user.put_in_hands(new_pack)
 	creamer_packs--
 
