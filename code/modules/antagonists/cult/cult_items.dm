@@ -731,13 +731,16 @@ Striking a noncultist, however, will tear their flesh."}
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/datum/action/innate/cult/halberd/halberd_act
 
-/obj/item/melee/cultblade/halberd/ComponentInitialize()
+/obj/item/melee/cultblade/halberd/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, \
-	speed = 10 SECONDS, \
-	effectiveness = 90, \
+		speed = 10 SECONDS, \
+		effectiveness = 90, \
 	)
-	AddComponent(/datum/component/two_handed, force_unwielded=17, force_wielded=24)
+	AddComponent(/datum/component/two_handed, \
+		force_unwielded = 17, \
+		force_wielded = 24, \
+	)
 
 /obj/item/melee/cultblade/halberd/update_icon_state()
 	icon_state = HAS_TRAIT(src, TRAIT_WIELDED) ? "[base_icon_state]1" : "[base_icon_state]0"

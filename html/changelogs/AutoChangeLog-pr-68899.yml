@@ -1,6 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes: 
-  - refactor: "A lot of food which was 'gross' is now 'gore'."
-  - balance: "'Gore' is disliked by Humans and Moths, but liked by Lizards and Felinids. Lizards no longer like 'gross' food."
-  - balance: "All butchered player species are considered to be gore, only preferred by Lizards, Felinids, and people with Deviant Tastes. If you like the taste of your fellow crew, prepare accordingly."

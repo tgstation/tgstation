@@ -29,6 +29,7 @@
 		"doppler_array",
 		"experi_scanner",
 		"experimentor",
+		"fax",
 		"gas_filter",
 		"handlabel",
 		"mechfab",

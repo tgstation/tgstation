@@ -1,9 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - rscadd: "Added support for elevator doors."
-  - rscadd: "Elevators now have travel time, and make sound when moving. Emagging the elevator button will speed them up."
-  - rscadd: "Added support for less-than-lethal elevators, which crush your bones instead of gibbing you. Emagging the elevator button will revert them to gibbing."
-  - rscadd: "Added support for elevators to warn people below that they're moving down. Emagging the elevator button will disable this."
-  - rscadd: "Added elevator panels, and support for using elevators without a radial."
-  - qol: "Elevator call buttons and the trapdoor now use balloon alerts."
