@@ -298,7 +298,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/index = get_held_index_of_item(I)
 	if(index)
 		held_items[index] = null
-		update_inv_hands()
+		update_held_items()
 
 	if(I.pulledby)
 		I.pulledby.stop_pulling()
@@ -318,7 +318,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		cut_overlay(I)
 		guardian_overlays[cache_index] = null
 
-/mob/living/simple_animal/hostile/guardian/update_inv_hands()
+/mob/living/simple_animal/hostile/guardian/update_held_items()
 	remove_overlay(GUARDIAN_HANDS_LAYER)
 	var/list/hands_overlays = list()
 	var/obj/item/l_hand = get_item_for_held_index(1)
@@ -345,7 +345,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	apply_overlay(GUARDIAN_HANDS_LAYER)
 
 /mob/living/simple_animal/hostile/guardian/regenerate_icons()
-	update_inv_hands()
+	update_held_items()
 
 //MANIFEST, RECALL, TOGGLE MODE/LIGHT, SHOW TYPE
 

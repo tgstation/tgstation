@@ -779,14 +779,16 @@
 
 /obj/item/storage/belt/sabre/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_BELT)
 
 	atom_storage.max_slots = 1
 	atom_storage.rustle_sound = FALSE
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
-	atom_storage.set_holdable(list(
-		/obj/item/melee/sabre,
-		))
+	atom_storage.set_holdable(
+		list(
+			/obj/item/melee/sabre,
+		)
+	)
 
 /obj/item/storage/belt/sabre/examine(mob/user)
 	. = ..()

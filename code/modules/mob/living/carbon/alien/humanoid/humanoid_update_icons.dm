@@ -44,8 +44,8 @@
 			alt_icon = old_icon
 	pixel_x = base_pixel_x + body_position_pixel_x_offset
 	pixel_y = base_pixel_y + body_position_pixel_y_offset
-	update_inv_hands()
-	update_inv_handcuffed()
+	update_held_items()
+	update_worn_handcuffs()
 
 /mob/living/carbon/alien/humanoid/regenerate_icons()
 	if(!..())
@@ -56,7 +56,7 @@
 	. = ..()
 	update_icons()
 
-/mob/living/carbon/alien/humanoid/update_inv_handcuffed()
+/mob/living/carbon/alien/humanoid/update_worn_handcuffs()
 	remove_overlay(HANDCUFF_LAYER)
 	var/cuff_icon = "aliencuff"
 	var/dmi_file = 'icons/mob/alien.dmi'
@@ -74,7 +74,7 @@
 		apply_overlay(HANDCUFF_LAYER)
 
 //Royals have bigger sprites, so inhand things must be handled differently.
-/mob/living/carbon/alien/humanoid/royal/update_inv_hands()
+/mob/living/carbon/alien/humanoid/royal/update_held_items()
 	..()
 	remove_overlay(HANDS_LAYER)
 	var/list/hands = list()
