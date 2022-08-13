@@ -680,7 +680,6 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 /mob/living/simple_animal/pet/dog/corgi/puppy/void/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	return 1 //Void puppies can navigate space.
 
-
 //LISA! SQUEEEEEEEEE~
 /mob/living/simple_animal/pet/dog/corgi/lisa
 	name = "Lisa"
