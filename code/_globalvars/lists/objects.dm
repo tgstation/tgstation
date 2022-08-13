@@ -25,9 +25,9 @@ GLOBAL_LIST(fake_reagent_blacklist) //List of all reagents that are parent types
 GLOBAL_LIST_EMPTY(tech_list) //list of all /datum/tech datums indexed by id.
 GLOBAL_LIST_EMPTY(surgeries_list) //list of all surgeries by name, associated with their path.
 GLOBAL_LIST_EMPTY(crafting_recipes) //list of all table craft recipes
-GLOBAL_LIST_EMPTY(crafting_recipe_items) //list of all crafting recipe requirement /obj/item
-GLOBAL_LIST_EMPTY(crafting_recipe_items_blacklist) //list of blacklisted crafting recipe /obj/item
-GLOBAL_LIST_EMPTY(crafting_recipe_items_results) //list of crafting recipe result /obj/item
+GLOBAL_LIST_EMPTY(crafting_recipes_items) //list of all crafting recipes requirement /obj/item
+GLOBAL_LIST_EMPTY(crafting_recipes_items_blacklist) //list of blacklisted crafting recipes /obj/item
+GLOBAL_LIST_EMPTY(crafting_recipes_items_results) //list of crafting recipes result /obj/item
 GLOBAL_LIST_EMPTY(rcd_list) //list of Rapid Construction Devices.
 GLOBAL_LIST_EMPTY(intercoms_list) //list of wallmounted intercom radios.
 GLOBAL_LIST_EMPTY(apcs_list) //list of all Area Power Controller machines, separate from machines for powernet speeeeeeed.

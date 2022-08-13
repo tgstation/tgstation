@@ -42,16 +42,16 @@
 	if(tool_paths)
 		tool_paths = string_list(tool_paths)
 	if(ispath(result, /obj/item))
-		GLOB.crafting_recipe_items_results[result] = TRUE
+		GLOB.crafting_recipes_items_results[result] = TRUE
 	for(var/item in blacklist)
 		if(!ispath(item, /obj/item) || item == result)
 			continue
-		if(!is_type_in_typecache(item, GLOB.crafting_recipe_items))
-			GLOB.crafting_recipe_items_blacklist[item] = TRUE
+		if(!is_type_in_typecache(item, GLOB.crafting_recipes_items))
+			GLOB.crafting_recipes_items_blacklist[item] = TRUE
 	for(var/item in reqs)
 		if(!ispath(item, /obj/item))
 			continue
-		GLOB.crafting_recipe_items[item] = TRUE
+		GLOB.crafting_recipes_items[item] = TRUE
 
 /**
  * Run custom pre-craft checks for this recipe, don't add feedback messages in this because it will spam the client

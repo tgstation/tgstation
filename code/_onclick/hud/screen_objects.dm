@@ -89,8 +89,8 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "craft"
 	screen_loc = ui_crafting
-	///does the user have items in their hands that are used in or made by crafting recipes? used to add an overlay
-	var/has_craft_items = FALSE
+	///list of weakrefs. if user has items in hands used in crafting recipes, weakref of item added. used to add/remove an overlay
+	var/list/craft_items = list()
 
 /atom/movable/screen/craft/Initialize(mapload)
 	. = ..()
@@ -103,23 +103,23 @@
 
 /atom/movable/screen/craft/Click(location, control, params)
 	var/list/modifiers = params2list(params)
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		for(var/hand_number in 0 to length(hud.mymob.held_items))
-			var/item_in_hand = hud.mymob.get_item_for_held_index(hand_number)
-			display_possible_recipes(item_in_hand)
-		if(length(hud.mymob.held_items) == length(hud.mymob.get_empty_held_indexes()))
-			to_chat(hud.mymob, span_warning("You aren't holding anything in your hands!"))
-	else
-		..()
+	if(!LAZYACCESS(modifiers, RIGHT_CLICK))
+		return ..()
+	for(var/hand_number in 0 to length(hud.mymob.held_items))
+		var/item_in_hand = hud.mymob.get_item_for_held_index(hand_number)
+		display_possible_recipes(item_in_hand)
+	if(!hud.mymob.get_num_held_items())
+		to_chat(hud.mymob, span_warning("You aren't holding anything in your hands!"))
 
+///prints to chat a list of crafting recipes for items in user's hands
 /atom/movable/screen/craft/proc/display_possible_recipes(obj/item/item)
 	if(!item)
 		return
 	var/list/possible_recipes = list()
 	var/recipe_line = ""
-	var/all_recipes = ""
+	var/list/all_recipes = list()
 	for(var/datum/crafting_recipe/recipe in GLOB.crafting_recipes)
-		if((item.type in recipe.reqs) || ((item.parent_type in recipe.reqs) && !(item.type in recipe.blacklist)) || item.type == recipe.result)
+		if((item.type in recipe.reqs) || ((item.parent_type in recipe.reqs) && !(item.type in recipe.blacklist)))
 			possible_recipes += recipe
 
 	if(!length(possible_recipes))
@@ -143,40 +143,33 @@
 			for(var/tool in recipe.tool_behaviors)
 				tools_text += tool
 		recipe_line = "<b>[recipe.name]</b>: [jointext(reqs_text, ", ")][(length(reqs_text) && length(tools_other_text)) ? ", " : null][span_green("[jointext(tools_other_text, ", ")][((length(tools_other_text) || length(reqs_text)) && length(tools_text))  ? ", " : null][jointext(tools_text, ", ")]")]"
-		all_recipes += "[recipe_line]\n"
+		all_recipes += "[recipe_line]"
 
-	to_chat(hud.mymob, examine_block("[span_ooc("Recipes for [item.name] [icon2html(item, hud.mymob)]")]\n[all_recipes]"))
+	to_chat(hud.mymob, examine_block("[span_ooc("Recipes for [item.name] [icon2html(item, hud.mymob)]")]\n[all_recipes.Join("\n")]"))
 
 /atom/movable/screen/craft/update_overlays()
 	. = ..()
-	if(has_craft_items)
-		. += image('icons/hud/screen_gen.dmi', icon_state = "can_craft")
+	if(length(craft_items))
+		. += mutable_appearance('icons/hud/screen_gen.dmi', icon_state = "can_craft")
 
 /atom/movable/screen/craft/proc/hands_craft_check(mob/living/carbon/human/user, obj/item/item, slot)
 	SIGNAL_HANDLER
 	if(slot != ITEM_SLOT_HANDS)
-		for(var/obj/item/hand_item in user.held_items)
-			if(hand_item.crafting_item_in_hands && hand_item != item)
-				return
-		if(has_craft_items)
-			has_craft_items = FALSE
-			item.crafting_item_in_hands = FALSE
-			update_appearance()
-			return
-	if(is_type_in_typecache(item, GLOB.crafting_recipe_items) || (is_type_in_typecache(item.parent_type, GLOB.crafting_recipe_items) && !is_type_in_typecache(item.type, GLOB.crafting_recipe_items_blacklist)) || is_type_in_typecache(item, GLOB.crafting_recipe_items_results))
-		has_craft_items = TRUE
-		item.crafting_item_in_hands = TRUE
+		craft_items -= WEAKREF(item)
 		update_appearance()
+		return
+	var/item_recipe_check = FALSE
+	if(is_type_in_typecache(item, GLOB.crafting_recipes_items))
+		item_recipe_check = TRUE
+	if(!item_recipe_check)
+		return
+	craft_items += WEAKREF(item)
+	update_appearance()
 
 /atom/movable/screen/craft/proc/exited_check(mob/living/carbon/human/user, obj/item/item, direction)
 	SIGNAL_HANDLER
-	for(var/obj/item/hand_item in user.held_items)
-		if(hand_item.crafting_item_in_hands && hand_item != item)
-			return
-	if(has_craft_items)
-		has_craft_items = FALSE
-		item.crafting_item_in_hands = FALSE
-		update_appearance()
+	craft_items -= WEAKREF(item)
+	update_appearance()
 
 /atom/movable/screen/area_creator
 	name = "create new area"
