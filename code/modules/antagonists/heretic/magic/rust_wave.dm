@@ -88,22 +88,21 @@
 	range = 15
 	speed = 1
 
-/obj/projectile/magic/aoe/rust_wave/Moved(atom/OldLoc, Dir)
+/obj/projectile/magic/aoe/rust_wave/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	playsound(src, 'sound/items/welder.ogg', 75, TRUE)
 	var/list/turflist = list()
 	var/turf/T1
 	turflist += get_turf(src)
-	T1 = get_step(src,turn(dir,90))
+	T1 = get_step(src,turn(movement_dir,90))
 	turflist += T1
-	turflist += get_step(T1,turn(dir,90))
-	T1 = get_step(src,turn(dir,-90))
+	turflist += get_step(T1,turn(movement_dir,90))
+	T1 = get_step(src,turn(movement_dir,-90))
 	turflist += T1
-	turflist += get_step(T1,turn(dir,-90))
-	for(var/X in turflist)
-		if(!X || prob(25))
+	turflist += get_step(T1,turn(movement_dir,-90))
+	for(var/turf/T as anything in turflist)
+		if(!T || prob(25))
 			continue
-		var/turf/T = X
 		T.rust_heretic_act()
 
 /datum/action/cooldown/spell/basic_projectile/rust_wave/short

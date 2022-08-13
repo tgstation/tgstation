@@ -25,6 +25,10 @@
 		/mob/dview,
 		//Template type
 		/obj/item/bodypart,
+		//This is meant to fail extremely loud every single time it occurs in any environment in any context, and it falsely alarms when this unit test iterates it. Let's not spawn it in.
+		/obj/merge_conflict_marker,
+		//briefcase launchpads erroring
+		/obj/machinery/launchpad/briefcase,
 	)
 	//Say it with me now, type template
 	ignore += typesof(/obj/effect/mapping_helpers)

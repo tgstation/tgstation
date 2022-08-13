@@ -16,6 +16,7 @@
 	name = "ablative trenchcoat"
 	desc = "Experimental trenchcoat specially crafted to reflect and absorb laser and disabler shots. Don't expect it to do all that much against an axe or a shotgun, however."
 	icon_state = "ablativecoat"
+	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	inhand_icon_state = "ablativecoat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	armor = list(MELEE = 10, BULLET = 10, LASER = 60, ENERGY = 60, BOMB = 0, BIO = 0, FIRE = 100, ACID = 100)

@@ -74,8 +74,6 @@
 	if(T)
 		T.multiz_turf_new(src, UP)
 
-	ComponentInitialize()
-
 	return INITIALIZE_HINT_NORMAL
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE

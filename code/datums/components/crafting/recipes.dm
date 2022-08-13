@@ -67,8 +67,8 @@
 	reqs = list(/datum/reagent/fuel = 50,
 				/obj/item/stack/cable_coil = 1,
 				/obj/item/assembly/igniter = 1,
-				/obj/item/reagent_containers/food/drinks/soda_cans = 1)
-	parts = list(/obj/item/reagent_containers/food/drinks/soda_cans = 1)
+				/obj/item/reagent_containers/cup/soda_cans = 1)
+	parts = list(/obj/item/reagent_containers/cup/soda_cans = 1)
 	time = 1.5 SECONDS
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -101,10 +101,10 @@
 
 /datum/crafting_recipe/molotov
 	name = "Molotov"
-	result = /obj/item/reagent_containers/food/drinks/bottle/molotov
-	reqs = list(/obj/item/reagent_containers/glass/rag = 1,
-				/obj/item/reagent_containers/food/drinks/bottle = 1)
-	parts = list(/obj/item/reagent_containers/food/drinks/bottle = 1)
+	result = /obj/item/reagent_containers/cup/glass/bottle/molotov
+	reqs = list(/obj/item/reagent_containers/cup/rag = 1,
+				/obj/item/reagent_containers/cup/glass/bottle = 1)
+	parts = list(/obj/item/reagent_containers/cup/glass/bottle = 1)
 	time = 4 SECONDS
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -363,7 +363,7 @@
 /datum/crafting_recipe/cleanbot
 	name = "Cleanbot"
 	result = /mob/living/simple_animal/bot/cleanbot
-	reqs = list(/obj/item/reagent_containers/glass/bucket = 1,
+	reqs = list(/obj/item/reagent_containers/cup/bucket = 1,
 				/obj/item/assembly/prox_sensor = 1,
 				/obj/item/bodypart/r_arm/robot = 1)
 	time = 4 SECONDS
@@ -678,6 +678,14 @@
 	blacklist |= typesof(/obj/item/radio/headset)
 	blacklist |= typesof(/obj/item/radio/intercom)
 
+/datum/crafting_recipe/mothplush
+	name = "Moth Plushie"
+	result = /obj/item/toy/plush/moth
+	reqs = list(/obj/item/stack/sheet/animalhide/mothroach = 1,
+				/obj/item/organ/internal/heart = 1,
+				/obj/item/stack/sheet/cloth = 3)
+	category = CAT_MISC
+
 /datum/crafting_recipe/mixedbouquet
 	name = "Mixed bouquet"
 	result = /obj/item/bouquet
@@ -794,7 +802,7 @@
 
 /datum/crafting_recipe/sillycup
 	name = "Paper Cup"
-	result =  /obj/item/reagent_containers/food/drinks/sillycup
+	result =  /obj/item/reagent_containers/cup/glass/sillycup
 	time = 1 SECONDS
 	reqs = list(/obj/item/paper = 2)
 	category = CAT_MISC
@@ -998,7 +1006,7 @@
 	name = "Wooden Bucket"
 	time = 3 SECONDS
 	reqs = list(/obj/item/stack/sheet/mineral/wood = 3)
-	result = /obj/item/reagent_containers/glass/bucket/wooden
+	result = /obj/item/reagent_containers/cup/bucket/wooden
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/ore_sensor
@@ -1233,7 +1241,7 @@
 	if(istype(T, /turf/open/water))
 		return TRUE
 	var/obj/machinery/shower/S = locate() in T
-	if(S?.on)
+	if(S?.actually_on)
 		return TRUE
 
 //Same but with wheat
@@ -1262,7 +1270,7 @@
 				/obj/item/stack/sheet/glass = 10,
 				/obj/item/stack/cable_coil = 10,
 				)
-	category = CAT_MISC
+	category = CAT_STRUCTURE
 
 /datum/crafting_recipe/shutters
 	name = "Shutters"
@@ -1273,7 +1281,7 @@
 	result = /obj/machinery/door/poddoor/shutters/preopen
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL, TOOL_WIRECUTTER, TOOL_WELDER)
 	time = 10 SECONDS
-	category = CAT_MISC
+	category = CAT_STRUCTURE
 	one_per_turf = TRUE
 
 /datum/crafting_recipe/blast_doors
@@ -1285,7 +1293,7 @@
 	result = /obj/machinery/door/poddoor/preopen
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL, TOOL_WIRECUTTER, TOOL_WELDER)
 	time = 30 SECONDS
-	category = CAT_MISC
+	category = CAT_STRUCTURE
 	one_per_turf = TRUE
 
 /datum/crafting_recipe/aquarium
@@ -1327,7 +1335,7 @@
 	name = "Alcohol burner"
 	result = /obj/item/burner
 	time = 5 SECONDS
-	reqs = list(/obj/item/reagent_containers/glass/beaker = 1,
+	reqs = list(/obj/item/reagent_containers/cup/beaker = 1,
 				/datum/reagent/consumable/ethanol = 15,
 				/obj/item/paper = 1
 				)
@@ -1337,7 +1345,7 @@
 	name = "Oil burner"
 	result = /obj/item/burner/oil
 	time = 5 SECONDS
-	reqs = list(/obj/item/reagent_containers/glass/beaker = 1,
+	reqs = list(/obj/item/reagent_containers/cup/beaker = 1,
 				/datum/reagent/fuel/oil = 15,
 				/obj/item/paper = 1
 				)
@@ -1347,7 +1355,7 @@
 	name = "Fuel burner"
 	result = /obj/item/burner/fuel
 	time = 5 SECONDS
-	reqs = list(/obj/item/reagent_containers/glass/beaker = 1,
+	reqs = list(/obj/item/reagent_containers/cup/beaker = 1,
 				/datum/reagent/fuel = 15,
 				/obj/item/paper = 1
 				)
@@ -1765,6 +1773,35 @@
 				/obj/item/stack/tile/iron = 1,
 				/obj/item/stock_parts/water_recycler = 1)
 	category = CAT_STRUCTURE
+
+/datum/crafting_recipe/toiletbong
+	name = "Toiletbong"
+	category = CAT_STRUCTURE
+	tool_behaviors = list(TOOL_WRENCH)
+	reqs = list(
+		/obj/item/flamethrower = 1)
+	result = /obj/structure/toiletbong
+	time = 5 SECONDS
+	additional_req_text = " plasma tank (on flamethrower), toilet"
+
+/datum/crafting_recipe/toiletbong/check_requirements(mob/user, list/collected_requirements)
+	if((locate(/obj/structure/toilet) in range(1, user.loc)) == null)
+		return FALSE
+	var/obj/item/flamethrower/flamethrower = collected_requirements[/obj/item/flamethrower][1]
+	if(flamethrower.ptank == null)
+		return FALSE
+	return TRUE
+
+/datum/crafting_recipe/toiletbong/on_craft_completion(mob/user, atom/result)
+	var/obj/structure/toiletbong/toiletbong = result
+	var/obj/structure/toilet/toilet = locate(/obj/structure/toilet) in range(1, user.loc)
+	for (var/obj/item/cistern_item in toilet.contents)
+		cistern_item.forceMove(user.loc)
+		to_chat(user, span_warning("[cistern_item] falls out of the toilet!"))
+	toiletbong.dir = toilet.dir
+	toiletbong.loc = toilet.loc
+	qdel(toilet)
+	to_chat(user, span_notice("[user] attaches the flamethrower to the repurposed toilet."))
 
 #undef CRAFTING_MACHINERY_CONSUME
 #undef CRAFTING_MACHINERY_USE

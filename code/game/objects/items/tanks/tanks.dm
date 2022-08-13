@@ -55,7 +55,6 @@
 	if(H.internal == src)
 		to_chat(H, span_notice("You close [src] valve."))
 		H.internal = null
-		H.update_internals_hud_icon(0)
 	else
 		if(!H.getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 			if(!H.wear_mask)
@@ -73,12 +72,14 @@
 		else
 			to_chat(H, span_notice("You open [src] valve."))
 		H.internal = src
-		H.update_internals_hud_icon(1)
 	H.update_action_buttons_icon()
 
 
 /obj/item/tank/Initialize(mapload)
 	. = ..()
+
+	if(tank_holder_icon_state)
+		AddComponent(/datum/component/container_item/tank_holder, tank_holder_icon_state)
 
 	air_contents = new(volume) //liters
 	air_contents.temperature = T20C
@@ -98,11 +99,6 @@
 
 /obj/item/tank/proc/populate_gas()
 	return
-
-/obj/item/tank/ComponentInitialize()
-	. = ..()
-	if(tank_holder_icon_state)
-		AddComponent(/datum/component/container_item/tank_holder, tank_holder_icon_state)
 
 /obj/item/tank/Destroy()
 	UnregisterSignal(air_contents, COMSIG_GASMIX_MERGED)

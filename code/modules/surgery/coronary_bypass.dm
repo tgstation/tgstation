@@ -44,7 +44,7 @@
 		if (!(NOBLOOD in target_human.dna.species.species_traits))
 			display_results(user, target, span_notice("Blood pools around the incision in [target_human]'s heart."),
 				span_notice("Blood pools around the incision in [target_human]'s heart."),
-				"")
+				span_notice("Blood pools around the incision in [target_human]'s heart."))
 			var/obj/item/bodypart/target_bodypart = target_human.get_bodypart(target_zone)
 			target_bodypart.adjustBleedStacks(10)
 			target_human.adjustBruteLoss(10)

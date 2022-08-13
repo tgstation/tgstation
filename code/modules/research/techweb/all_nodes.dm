@@ -29,6 +29,7 @@
 		"doppler_array",
 		"experi_scanner",
 		"experimentor",
+		"fax",
 		"gas_filter",
 		"handlabel",
 		"mechfab",
@@ -277,7 +278,6 @@
 		"comp_ntnet_send",
 		"comp_pinpointer",
 		"comp_pressuresensor",
-		"comp_printer",
 		"comp_radio",
 		"comp_random",
 		"comp_reagents",
@@ -322,7 +322,6 @@
 		"chem_mass_spec",
 		"chem_master",
 		"chem_pack",
-		"crewpinpointerprox",
 		"defibmount",
 		"defibrillator",
 		"genescanner",
@@ -1345,6 +1344,7 @@
 		"jawsoflife",
 		"laserscalpel",
 		"mechanicalpinches",
+		"rangedanalyzer",
 		"searingtool",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)

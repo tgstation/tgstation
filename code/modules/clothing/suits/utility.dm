@@ -9,7 +9,10 @@
  * Fire protection
  */
 
-/obj/item/clothing/suit/fire
+/obj/item/clothing/suit/utility
+	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
+
+/obj/item/clothing/suit/utility/fire
 	name = "emergency firesuit"
 	desc = "A suit that helps protect against fire and heat."
 	icon_state = "fire"
@@ -29,23 +32,23 @@
 	equip_delay_other = 60
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/suit/fire/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/clothing/suit/utility/fire/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
 		. += emissive_appearance(icon_file, "[icon_state]-emissive", alpha = src.alpha)
 
-/obj/item/clothing/suit/fire/firefighter
+/obj/item/clothing/suit/utility/fire/firefighter
 	icon_state = "firesuit"
 	inhand_icon_state = "firefighter"
 
-/obj/item/clothing/suit/fire/heavy
+/obj/item/clothing/suit/utility/fire/heavy
 	name = "heavy firesuit"
 	desc = "An old, bulky thermal protection suit."
 	icon_state = "thermal"
 	inhand_icon_state = "ro_suit"
 	slowdown = 1.5
 
-/obj/item/clothing/suit/fire/atmos
+/obj/item/clothing/suit/utility/fire/atmos
 	name = "firesuit"
 	desc = "An expensive firesuit that protects against even the most deadly of station fires. Designed to protect even if the wearer is set aflame."
 	icon_state = "atmos_firesuit"
@@ -73,7 +76,7 @@
 	resistance_flags = NONE
 
 
-/obj/item/clothing/suit/bomb_suit
+/obj/item/clothing/suit/utility/bomb_suit
 	name = "bomb suit"
 	desc = "A suit designed for safety when handling explosives."
 	icon_state = "bombsuit"
@@ -97,7 +100,7 @@
 	icon_state = "bombsuit_sec"
 	inhand_icon_state = "bombsuit_sec"
 
-/obj/item/clothing/suit/bomb_suit/security
+/obj/item/clothing/suit/utility/bomb_suit/security
 	icon_state = "bombsuit_sec"
 	inhand_icon_state = "bombsuit_sec"
 	allowed = list(/obj/item/gun/energy, /obj/item/melee/baton, /obj/item/restraints/handcuffs)
@@ -107,7 +110,7 @@
 	icon_state = "bombsuit_white"
 	inhand_icon_state = "bombsuit_white"
 
-/obj/item/clothing/suit/bomb_suit/white
+/obj/item/clothing/suit/utility/bomb_suit/white
 	icon_state = "bombsuit_white"
 	inhand_icon_state = "bombsuit_white"
 
@@ -131,7 +134,7 @@
 	. = ..()
 	AddElement(/datum/element/radiation_protected_clothing)
 
-/obj/item/clothing/suit/radiation
+/obj/item/clothing/suit/utility/radiation
 	name = "radiation suit"
 	desc = "A suit that protects against radiation. The label reads, 'Made with lead. Please do not consume insulation.'"
 	icon_state = "rad"
@@ -147,11 +150,11 @@
 	flags_inv = HIDEJUMPSUIT
 	resistance_flags = NONE
 
-/obj/item/clothing/suit/radiation/Initialize(mapload)
+/obj/item/clothing/suit/utility/radiation/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/radiation_protected_clothing)
 
-/obj/item/clothing/suit/radiation/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/clothing/suit/utility/radiation/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
 		. += emissive_appearance(icon_file, "[icon_state]-emissive", alpha = src.alpha)

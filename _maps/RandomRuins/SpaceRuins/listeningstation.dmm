@@ -164,7 +164,7 @@
 /area/ruin/space/has_grav/listeningstation)
 "eW" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/bottle/beer/almost_empty{
+/obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty{
 	name = "Use To Avert Loneliness";
 	desc = "It's been used...";
 	pixel_x = 8
@@ -433,14 +433,8 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
 "xY" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11;
-	pixel_y = -2
-	},
-/obj/machinery/shower{
-	dir = 1
-	},
+/obj/structure/sink/directional/west,
+/obj/machinery/shower/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/mirror/directional/east,
 /turf/open/floor/iron/showroomfloor,
@@ -930,7 +924,7 @@
 /obj/structure/table,
 /obj/item/paper_bin,
 /obj/item/pen/edagger,
-/obj/item/reagent_containers/food/drinks/waterbottle{
+/obj/item/reagent_containers/cup/glass/waterbottle{
 	pixel_x = 10;
 	pixel_y = 16
 	},

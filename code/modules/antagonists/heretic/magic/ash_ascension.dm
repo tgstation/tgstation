@@ -86,7 +86,7 @@
 		for(var/turf/nearby_turf as anything in spiral_range_turfs(i + 1, centre))
 			new /obj/effect/hotspot(nearby_turf)
 			nearby_turf.hotspot_expose(750, 50, 1)
-			for(var/mob/living/fried_living in nearby_turf.contents - centre)
+			for(var/mob/living/fried_living in nearby_turf.contents - owner)
 				fried_living.apply_damage(5, BURN)
 
 		stoplag(0.3 SECONDS)

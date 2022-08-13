@@ -111,7 +111,7 @@
 /area/station/maintenance/port/fore)
 "W" = (
 /obj/item/paper{
-	info = "Its just a bunch of scratch marks with the corner slightly eaten.";
+	default_raw_text = "Its just a bunch of scratch marks with the corner slightly eaten.";
 	name = "relic notes"
 	},
 /obj/item/pen{

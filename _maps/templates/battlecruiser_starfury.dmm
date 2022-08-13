@@ -56,11 +56,11 @@
 /area/shuttle/sbc_starfury)
 "ai" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/glass/beaker/cryoxadone{
+/obj/item/reagent_containers/cup/beaker/cryoxadone{
 	pixel_x = 7;
 	pixel_y = 1
 	},
-/obj/item/reagent_containers/glass/beaker/cryoxadone,
+/obj/item/reagent_containers/cup/beaker/cryoxadone,
 /obj/item/wrench,
 /obj/item/crowbar/red,
 /turf/open/floor/iron,
@@ -745,9 +745,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
 "cM" = (
-/obj/machinery/shower{
-	dir = 8
-	},
+/obj/machinery/shower/directional/west,
 /turf/open/floor/iron,
 /area/shuttle/sbc_starfury)
 "cO" = (
@@ -767,9 +765,7 @@
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "cQ" = (
-/obj/structure/sink{
-	pixel_y = 24
-	},
+/obj/structure/sink/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
@@ -990,9 +986,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
 "dD" = (
-/obj/machinery/shower{
-	dir = 8
-	},
+/obj/machinery/shower/directional/west,
 /turf/open/floor/iron/dark/corner{
 	dir = 8
 	},
@@ -1710,10 +1704,7 @@
 	pixel_y = 14
 	},
 /obj/structure/mirror/directional/east,
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 12
-	},
+/obj/structure/sink/directional/west,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/sbc_starfury)
@@ -2496,7 +2487,7 @@
 	pixel_x = -31
 	},
 /obj/item/book/manual/wiki/barman_recipes,
-/obj/item/reagent_containers/food/drinks/shaker{
+/obj/item/reagent_containers/cup/glass/shaker{
 	pixel_x = 10
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
@@ -2511,11 +2502,11 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/food/drinks/bottle/beer{
+/obj/item/reagent_containers/cup/glass/bottle/beer{
 	pixel_x = 5;
 	pixel_y = -2
 	},
-/obj/item/reagent_containers/glass/rag,
+/obj/item/reagent_containers/cup/rag,
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/turf_decal/siding/dark{
 	dir = 1
@@ -3928,7 +3919,7 @@
 /area/shuttle/sbc_starfury)
 "mD" = (
 /obj/structure/reagent_dispensers/watertank,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/item/mop,
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)

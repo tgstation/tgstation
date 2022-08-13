@@ -72,7 +72,7 @@
 	rust_resistance = RUST_RESISTANCE_TITANIUM
 
 /turf/open/floor/mineral/titanium/setup_broken_states()
-	return list("titanium_dam1","titanium_dam2","titanium_dam3","titanium_dam4","titanium_dam5")
+	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 
 /turf/open/floor/mineral/titanium/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -112,7 +112,7 @@
 	floor_tile = /obj/item/stack/tile/mineral/titanium/tiled
 
 /turf/open/floor/mineral/titanium/tiled/setup_broken_states()
-	return list("titanium_dam1_old","titanium_dam2_old","titanium_dam3_old","titanium_dam4_old","titanium_dam5_old")
+	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 
 /turf/open/floor/mineral/titanium/tiled/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -154,7 +154,7 @@
 	rust_resistance = RUST_RESISTANCE_TITANIUM
 
 /turf/open/floor/mineral/plastitanium/setup_broken_states()
-	return list("plastitanium_dam1","plastitanium_dam2","plastitanium_dam3","plastitanium_dam4","plastitanium_dam5")
+	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 
 /turf/open/floor/mineral/plastitanium/airless
 	initial_gas_mix = AIRLESS_ATMOS

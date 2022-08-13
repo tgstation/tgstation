@@ -40,7 +40,7 @@
 	///People currently looking into a bot's UI panel.
 	var/list/users = list()
 	///The inserted (if any) pAI in this bot.
-	var/obj/item/paicard/paicard
+	var/obj/item/pai_card/paicard
 	///The type of bot it is, for radio control.
 	var/bot_type = NONE
 
@@ -398,7 +398,7 @@
 /mob/living/simple_animal/bot/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(attacking_item.GetID())
 		unlock_with_id(user)
-	else if(istype(attacking_item, /obj/item/paicard))
+	else if(istype(attacking_item, /obj/item/pai_card))
 		insertpai(user, attacking_item)
 	else if(attacking_item.tool_behaviour == TOOL_HEMOSTAT && paicard)
 		if(bot_cover_flags & BOT_COVER_OPEN)
@@ -907,14 +907,14 @@ Pass a positive integer as an argument to override a bot's default speed.
 				bot_cover_flags |= (BOT_COVER_EMAGGED|BOT_COVER_HACKED|BOT_COVER_LOCKED)
 				to_chat(usr, span_warning("You overload [src]'s [hackables]."))
 				message_admins("Safety lock of [ADMIN_LOOKUPFLW(src)] was disabled by [ADMIN_LOOKUPFLW(usr)] in [ADMIN_VERBOSEJMP(src)]")
-				log_game("Safety lock of [src] was disabled by [key_name(usr)] in [AREACOORD(src)]")
+				usr.log_message("disabled safety lock of [src]", LOG_GAME)
 				bot_reset()
 			else if(!(bot_cover_flags & BOT_COVER_HACKED))
 				to_chat(usr, span_boldannounce("You fail to repair [src]'s [hackables]."))
 			else
 				bot_cover_flags &= ~(BOT_COVER_EMAGGED|BOT_COVER_HACKED)
 				to_chat(usr, span_notice("You reset the [src]'s [hackables]."))
-				log_game("Safety lock of [src] was re-enabled by [key_name(usr)] in [AREACOORD(src)]")
+				usr.log_message("re-enabled safety lock of [src]", LOG_GAME)
 				bot_reset()
 		if("eject_pai")
 			if(paicard)
@@ -936,7 +936,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 			return TRUE
 	return FALSE
 
-/mob/living/simple_animal/bot/proc/insertpai(mob/user, obj/item/paicard/card)
+/mob/living/simple_animal/bot/proc/insertpai(mob/user, obj/item/pai_card/card)
 	if(paicard)
 		to_chat(user, span_warning("A [paicard] is already inserted!"))
 		return
