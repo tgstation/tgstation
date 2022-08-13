@@ -585,7 +585,7 @@
 	return researched_knowledge[wanted]
 
 /datum/antagonist/heretic/proc/increase_rust_strength(side_path_only = FALSE)
-	if(side_path_only && get_knowledge(/datum/heretic_knowledge/limited_amount/base_rust))
+	if(side_path_only && get_knowledge(/datum/heretic_knowledge/limited_amount/starting/base_rust))
 		return
 
 	rust_strength++

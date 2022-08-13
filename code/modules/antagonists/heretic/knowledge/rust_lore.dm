@@ -184,6 +184,9 @@
 /datum/heretic_knowledge/blade_upgrade/rust/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	// No user == target check here, cause it's technically good for the heretic?
 	target.reagents?.add_reagent(/datum/reagent/eldritch, 5)
+
+/datum/heretic_knowledge/blade_upgrade/rust/on_gain(mob/user)
+	. = ..()
 	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
 	our_heretic.increase_rust_strength()
 
