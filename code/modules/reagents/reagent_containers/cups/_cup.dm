@@ -385,7 +385,7 @@
 	icon_state = "pestle"
 	force = 7
 
-/obj/item/reagent_containers/glass/mortar
+/obj/item/reagent_containers/cup/mortar
 	name = "mortar"
 	desc = "A specially formed bowl of ancient design. It is possible to crush or juice items placed in it using a pestle; however the process, unlike modern methods, is slow and physically exhausting. <b>Alt click to eject the item.</b>"
 	icon_state = "mortar"
@@ -397,13 +397,13 @@
 	spillable = TRUE
 	var/obj/item/grinded
 
-/obj/item/reagent_containers/glass/mortar/AltClick(mob/user)
+/obj/item/reagent_containers/cup/mortar/AltClick(mob/user)
 	if(grinded)
 		grinded.forceMove(drop_location())
 		grinded = null
 		to_chat(user, span_notice("You eject the item inside."))
 
-/obj/item/reagent_containers/glass/mortar/attackby(obj/item/I, mob/living/carbon/human/user)
+/obj/item/reagent_containers/cup/mortar/attackby(obj/item/I, mob/living/carbon/human/user)
 	..()
 	if(istype(I,/obj/item/pestle))
 		if(grinded)
