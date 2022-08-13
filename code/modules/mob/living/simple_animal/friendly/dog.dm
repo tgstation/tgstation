@@ -757,8 +757,8 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	if(health < maxHealth)
 		adjustBruteLoss(-4 * delta_time) //Fast life regen
 
-	for(var/mob/living/carbon/humanoid_entites in view(3, src)) //Mood aura which stay as long you do not wear Sanallite as hat or carry(I will try to make it work with hat someday(obviously weaker than normal one))
-		humanoid_entites.add_mood_event("kobun", /datum/mood_event/kobun)
+	for(var/mob/living/carbon/humanoid_entities in view(3, src)) //Mood aura which stay as long you do not wear Sanallite as hat or carry(I will try to make it work with hat someday(obviously weaker than normal one))
+		humanoid_entities.add_mood_event("kobun", /datum/mood_event/kobun)
 
 /mob/living/simple_animal/pet/dog/breaddog/attack_hand(mob/living/user, list/modifiers)
 	..()
