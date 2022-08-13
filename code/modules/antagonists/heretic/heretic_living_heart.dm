@@ -51,6 +51,7 @@
 	parent.RemoveElement(/datum/element/update_icon_blocker)
 	var/obj/item/organ/organ_parent = parent
 	organ_parent.icon = old_icon
+	organ_parent.icon_state = initial(organ_parent.icon_state)
 
 	// Sets the icon state to be the correct state
 	organ_parent.update_appearance(UPDATE_ICON_STATE)
