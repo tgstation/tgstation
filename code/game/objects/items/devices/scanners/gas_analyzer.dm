@@ -204,8 +204,4 @@
 	. = ..()
 	if(!can_see(user, target, 15))
 		return
-	if(!target.return_analyzable_air())
-		var/target_turf = get_turf(target)
-		atmos_scan(user, target_turf)
-	else 
-		atmos_scan(user, target)
+	atmos_scan(user, (target.return_analyzable_air() ? target : get_turf(target)))
