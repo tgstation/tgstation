@@ -138,6 +138,12 @@
 		outfit_id.registered_name = equipped.real_name
 		outfit_id.update_label()
 		outfit_id.update_icon()
+	
+	var/obj/item/clothing/under/pirate_uniform = equipped.w_uniform
+	if(pirate_uniform)
+		pirate_uniform.has_sensor = NO_SENSORS
+		pirate_uniform.sensor_mode = SENSOR_OFF
+		equipped.update_suit_sensors()
 
 /datum/outfit/pirate/captain
 	name = "Space Pirate Captain"
