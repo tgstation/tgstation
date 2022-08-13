@@ -193,8 +193,8 @@
 		if(HAS_TRAIT_FROM(owner, TRAIT_BLIND, BLINDFOLD_TRAIT) || is_sleeping_in_darkness)
 			healing += 0.1
 
-		// sleeping with earmuffs helps blockout the noise as well
-		if(HAS_TRAIT_FROM(src, TRAIT_DEAF, CLOTHING_TRAIT))
+		// sleeping in silence is always better
+		if(HAS_TRAIT(src, TRAIT_DEAF))
 			healing += 0.1
 
 		// check for beds

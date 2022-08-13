@@ -1,0 +1,4 @@
+author: "CPTANT"
+delete-after: True
+changes: 
+  - bugfix: "Modafinil Overdose now properly puts you to sleep."

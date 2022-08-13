@@ -147,6 +147,11 @@
 /code/modules/atmospherics/ @Pickle-Coding
 /code/modules/power/ @Pickle-Coding
 
+# Time-Green
+
+/code/modules/plumbing/ @Time-Green
+/code/modules/surgery/organs/external/ @Time-Green
+
 # MULTIPLE OWNERS
 
 /_maps/ @EOBGames @Maurukas @san7890 @ShizCalev

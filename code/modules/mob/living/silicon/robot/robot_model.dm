@@ -351,7 +351,7 @@
 		/obj/item/melee/flyswatter,
 		/obj/item/extinguisher/mini,
 		/obj/item/mop/cyborg,
-		/obj/item/reagent_containers/glass/bucket,
+		/obj/item/reagent_containers/cup/bucket,
 		/obj/item/paint/paint_remover,
 		/obj/item/lightreplacer/cyborg,
 		/obj/item/holosign_creator,
@@ -421,7 +421,7 @@
 	if(block_buffer_change)
 		return FALSE
 
-	var/obj/item/reagent_containers/glass/bucket/our_bucket = locate(/obj/item/reagent_containers/glass/bucket) in robot_owner.model.modules
+	var/obj/item/reagent_containers/cup/bucket/our_bucket = locate(/obj/item/reagent_containers/cup/bucket) in robot_owner.model.modules
 	bucket_ref = WEAKREF(our_bucket)
 
 	if(!buffer_on)
@@ -523,7 +523,7 @@
 		robot_owner.balloon_alert(robot_owner, "activation cancelled!")
 		return FALSE
 
-	var/obj/item/reagent_containers/glass/bucket/our_bucket = bucket_ref?.resolve()
+	var/obj/item/reagent_containers/cup/bucket/our_bucket = bucket_ref?.resolve()
 	if(!buffer_on && our_bucket?.reagents?.total_volume < 0.1)
 		robot_owner.balloon_alert(robot_owner, "bucket is empty!")
 		return FALSE
@@ -534,7 +534,7 @@
 	SIGNAL_HANDLER
 	var/mob/living/silicon/robot/robot_owner = owner
 
-	var/obj/item/reagent_containers/glass/bucket/our_bucket = bucket_ref?.resolve()
+	var/obj/item/reagent_containers/cup/bucket/our_bucket = bucket_ref?.resolve()
 	var/datum/reagents/reagents = our_bucket?.reagents
 
 	if(!reagents || reagents.total_volume < 0.1)
@@ -720,8 +720,8 @@
 	name = "Service"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
-		/obj/item/reagent_containers/glass/beaker/large, //I know a shaker is more appropiate but this is for ease of identification
-		/obj/item/reagent_containers/food/condiment/enzyme,
+		/obj/item/reagent_containers/cup/beaker/large, //I know a shaker is more appropiate but this is for ease of identification
+		/obj/item/reagent_containers/condiment/enzyme,
 		/obj/item/pen,
 		/obj/item/toy/crayon/spraycan/borg,
 		/obj/item/extinguisher/mini,
@@ -753,7 +753,7 @@
 
 /obj/item/robot_model/service/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
 	..()
-	var/obj/item/reagent_containers/enzyme = locate(/obj/item/reagent_containers/food/condiment/enzyme) in basic_modules
+	var/obj/item/reagent_containers/enzyme = locate(/obj/item/reagent_containers/condiment/enzyme) in basic_modules
 	if(enzyme)
 		enzyme.reagents.add_reagent(/datum/reagent/consumable/enzyme, 2 * coeff)
 

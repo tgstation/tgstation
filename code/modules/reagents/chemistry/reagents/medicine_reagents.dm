@@ -1358,6 +1358,7 @@
 			M.adjustOxyLoss(0.1 * REM * delta_time, 0)
 			M.adjustStaminaLoss(0.1 * REM * delta_time, 0)
 		if(82 to INFINITY)
+			REMOVE_TRAIT(M, TRAIT_SLEEPIMMUNE, type)
 			M.Sleeping(100 * REM * delta_time)
 			M.adjustOxyLoss(1.5 * REM * delta_time, 0)
 			M.adjustStaminaLoss(1.5 * REM * delta_time, 0)

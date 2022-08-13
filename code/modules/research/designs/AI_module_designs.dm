@@ -7,7 +7,7 @@
 	desc = "Allows for the construction of circuit boards used to build new AI cores."
 	id = "aicore"
 	build_path = /obj/item/circuitboard/aicore
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/safeguard_module
@@ -16,7 +16,7 @@
 	id = "safeguard_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/supplied/safeguard
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/onehuman_module
@@ -25,7 +25,7 @@
 	id = "onehuman_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 6000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/zeroth/onehuman
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/protectstation_module
@@ -34,7 +34,7 @@
 	id = "protectstation_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/supplied/protect_station
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/quarantine_module
@@ -43,7 +43,7 @@
 	id = "quarantine_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/supplied/quarantine
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/oxygen_module
@@ -52,7 +52,7 @@
 	id = "oxygen_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/supplied/oxygen
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/freeform_module
@@ -61,7 +61,7 @@
 	id = "freeform_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 10000, /datum/material/bluespace = 2000)//Custom inputs should be more expensive to get
 	build_path = /obj/item/ai_module/supplied/freeform
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/reset_module
@@ -70,7 +70,7 @@
 	id = "reset_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 2000)
 	build_path = /obj/item/ai_module/reset
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/purge_module
@@ -79,7 +79,7 @@
 	id = "purge_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/reset/purge
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/remove_module
@@ -88,7 +88,7 @@
 	id = "remove_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/remove
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/freeformcore_module
@@ -97,7 +97,7 @@
 	id = "freeformcore_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 10000, /datum/material/bluespace = 2000)//Ditto
 	build_path = /obj/item/ai_module/core/freeformcore
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/asimov
@@ -106,7 +106,7 @@
 	id = "asimov_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/asimov
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/paladin_module
@@ -115,7 +115,7 @@
 	id = "paladin_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/paladin
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/tyrant_module
@@ -124,7 +124,7 @@
 	id = "tyrant_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/tyrant
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/overlord_module
@@ -133,7 +133,7 @@
 	id = "overlord_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/overlord
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/corporate_module
@@ -142,7 +142,7 @@
 	id = "corporate_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/corp
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/default_module
@@ -151,7 +151,7 @@
 	id = "default_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/custom
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/dungeon_master_module
@@ -160,7 +160,7 @@
 	id = "dungeon_master_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/dungeon_master
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/painter_module
@@ -169,7 +169,7 @@
 	id = "painter_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/painter
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/nutimov_module
@@ -178,7 +178,7 @@
 	id = "nutimov_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/nutimov
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/ten_commandments_module
@@ -187,7 +187,7 @@
 	id = "ten_commandments_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/ten_commandments
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/asimovpp_module
@@ -196,7 +196,7 @@
 	id = "asimovpp_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/asimovpp
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/hippocratic_module
@@ -205,7 +205,7 @@
 	id = "hippocratic_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/hippocratic
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/paladin_devotion_module
@@ -214,7 +214,7 @@
 	id = "paladin_devotion_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/paladin_devotion
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/robocop_module
@@ -223,7 +223,7 @@
 	id = "robocop_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/robocop
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/maintain_module
@@ -232,7 +232,7 @@
 	id = "maintain_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/maintain
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/liveandletlive_module
@@ -241,7 +241,7 @@
 	id = "liveandletlive_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/liveandletlive
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/peacekeeper_module
@@ -250,7 +250,7 @@
 	id = "peacekeeper_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/peacekeeper
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/reporter_module
@@ -259,7 +259,7 @@
 	id = "reporter_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/reporter
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/hulkamania_module
@@ -268,7 +268,7 @@
 	id = "hulkamania_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/hulkamania
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/drone_module
@@ -277,7 +277,7 @@
 	id = "drone_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/drone
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/antimov_module
@@ -286,7 +286,7 @@
 	id = "antimov_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/antimov
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/balance_module
@@ -295,7 +295,7 @@
 	id = "balance_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/balance
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/thermurderdynamic_module
@@ -304,7 +304,7 @@
 	id = "thermurderdynamic_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/thermurderdynamic
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/damaged
@@ -313,5 +313,5 @@
 	id = "damaged_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/damaged
-	category = list("AI Modules")
+	category = list(RND_CATEGORY_AI_MODULES)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE

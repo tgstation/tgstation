@@ -412,7 +412,7 @@
 
 /mob/living/simple_animal/bot/cleanbot/explode()
 	var/atom/Tsec = drop_location()
-	new /obj/item/reagent_containers/glass/bucket(Tsec)
+	new /obj/item/reagent_containers/cup/bucket(Tsec)
 	new /obj/item/assembly/prox_sensor(Tsec)
 	return ..()
 
