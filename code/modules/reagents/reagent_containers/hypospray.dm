@@ -138,10 +138,25 @@
 
 /obj/item/reagent_containers/hypospray/medipen/examine()
 	. = ..()
-	if(reagents?.reagent_list.len)
-		. += span_notice("It is currently loaded.")
-	else
-		. += span_notice("It is spent.")
+	if(length(reagents?.reagent_list))
+		var/reagent_text = ""
+
+		if(length(reagents.reagent_list) == 1)
+			var/datum/reagent/first = reagents.reagent_list[1]
+			reagent_text = first.name
+
+		else
+			var/len = reagents.reagent_list.len
+			var/list/reagent_names_list = list()
+			for(var/i in 1 to (len - 2))
+				var/datum/reagent/reagent_object = reagents.reagent_list[i]
+				reagent_names_list += "[reagent_object.name], "
+			var/datum/reagent/last_reagent = reagents.reagent_list[len]
+			var/datum/reagent/second_to_last_reagent = reagents.reagent_list[len - 1]
+			reagent_names_list += "[second_to_last_reagent.name] and [last_reagent.name]"
+			reagent_text = reagent_names_list.Join("")
+
+		. += span_notice("Theres a small LCD screen on a side of the medipen which reads, 'WARNING: This medipen contains [reagent_text]. Do not use if allergic to any listed chemicals.' in small text.") //cheapskates at nanotrasen couldnt ball out for LED
 
 /obj/item/reagent_containers/hypospray/medipen/stimpack //goliath kiting
 	name = "stimpack medipen"
@@ -251,7 +266,7 @@
 	return ..()
 
 
-/obj/item/reagent_containers/hypospray/medipen/survival/luxury
+/obj/item/reagent_containers/hypospray/medipen/survival/luxury // hmmm today I will combine this with the survival pen, surely I will recieve a boosted healing effect
 	name = "luxury medipen"
 	desc = "Cutting edge bluespace technology allowed Nanotrasen to compact 60u of volume into a single medipen. Contains rare and powerful chemicals used to aid in exploration of very hard enviroments. WARNING: DO NOT MIX WITH EPINEPHRINE OR ATROPINE."
 	icon_state = "luxpen"
