@@ -1,4 +1,3 @@
-
 /datum/action/cooldown/spell/pointed/swap
 	name = "Swap"
 	desc = "This spell allows you to swap locations with any living being."
@@ -16,6 +15,8 @@
 
 	smoke_type = /datum/effect_system/fluid_spread/smoke
 	smoke_amt = 0
+	/// A variable for holding the second selected target with right click.
+	var/mob/living/second_target
 
 /datum/action/cooldown/spell/pointed/swap/is_valid_target(atom/cast_on)
 	. = ..()
@@ -25,6 +26,27 @@
 		to_chat(owner, span_warning("You can only swap locations with living beings!"))
 		return FALSE
 	return TRUE
+
+/datum/action/cooldown/spell/pointed/swap/InterceptClickOn(mob/living/caller, params, atom/click_target)
+	if(LAZYACCESS(params2list(params), RIGHT_CLICK))
+		if(!IsAvailable())
+			return FALSE
+		if(!target)
+			return FALSE
+		if(!isliving(click_target) && isturf(click_target))
+			// Find any living being in the list. We aren't picky, it's aim assist after all
+			click_target = locate(/mob/living) in click_target
+			if(!click_target)
+				to_chat(owner, span_warning("You can only select living beings as secondary target!"))
+				return FALSE
+		if(click_target == owner)
+			to_chat(owner, span_notice("You cancel your secondary swap target!"))
+			second_target = NONE
+			return FALSE
+		second_target = click_target
+		to_chat(owner, span_notice("You select [click_target.name] as a secondary swap target!"))
+		return FALSE
+	return ..()
 
 /datum/action/cooldown/spell/pointed/swap/cast(mob/living/carbon/cast_on)
 	. = ..()
@@ -38,8 +60,23 @@
 		var/datum/effect_system/fluid_spread/smoke/smoke = new smoke_type()
 		smoke.set_up(smoke_amt, holder = owner, location = get_turf(owner))
 		smoke.start()
-	var/target_location = cast_on.loc
-	do_teleport(cast_on, owner.loc, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
-	do_teleport(owner, target_location, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
-	cast_on.playsound_local(get_turf(cast_on), 'sound/magic/swap.ogg', 50, 1)
-	owner.playsound_local(get_turf(owner), 'sound/magic/swap.ogg', 50, 1)
+	var/turf/target_location = cast_on.loc
+	if(!isnull(second_target) && get_dist(owner, second_target) <= cast_range && !(cast_on == second_target))
+		to_chat(second_target, span_userdanger("You feel space bending."))
+		if(ispath(smoke_type, /datum/effect_system/fluid_spread/smoke))
+			var/datum/effect_system/fluid_spread/smoke/smoke = new smoke_type()
+			smoke.set_up(smoke_amt, holder = owner, location = get_turf(second_target))
+			smoke.start()
+		var/turf/second_location = second_target.loc
+		do_teleport(second_target, owner.loc, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
+		do_teleport(cast_on, second_location, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
+		do_teleport(owner, target_location, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
+		second_target.playsound_local(get_turf(owner), 'sound/magic/swap.ogg', 50, 1)
+		cast_on.playsound_local(get_turf(cast_on), 'sound/magic/swap.ogg', 50, 1)
+		owner.playsound_local(get_turf(owner), 'sound/magic/swap.ogg', 50, 1)
+	else
+		do_teleport(cast_on, owner.loc, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
+		do_teleport(owner, target_location, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
+		cast_on.playsound_local(get_turf(cast_on), 'sound/magic/swap.ogg', 50, 1)
+		owner.playsound_local(get_turf(owner), 'sound/magic/swap.ogg', 50, 1)
+	second_target = NONE
