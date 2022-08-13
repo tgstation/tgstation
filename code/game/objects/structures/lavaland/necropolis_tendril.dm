@@ -115,6 +115,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 	QDEL_NULL(emitted_light)
 	return ..()
 
+///Helper proc that resolves weakrefs to determine if collector is in collected list, returning a boolean.
 /obj/effect/collapse/proc/has_collected(mob/collector)
 	for(var/datum/weakref/weakref as anything in collected)
 		var/mob/living/resolved = weakref.resolve()
