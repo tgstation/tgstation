@@ -382,8 +382,8 @@
 		var/halon_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/halon][MOLES])
 		if(halon_pp > gas_stimulation_min)
 			breather.adjustOxyLoss(5)
-			var/existing = breather.reagents.get_reagent_amount(/datum/reagent/halon)
-			breather.reagents.add_reagent(/datum/reagent/halon,max(0, 1 - existing))
+			var/existing = breather.reagents.get_reagent_amount(/datum/reagent/firefighting_foam/halon)
+			breather.reagents.add_reagent(/datum/reagent/firefighting_foam/halon,max(0, 1 - existing))
 		gas_breathed = breath_gases[/datum/gas/halon][MOLES]
 		breath_gases[/datum/gas/halon][MOLES]-=gas_breathed
 

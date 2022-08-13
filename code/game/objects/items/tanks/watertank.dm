@@ -211,7 +211,7 @@
 
 /obj/item/watertank/atmos
 	name = "backpack firefighter tank"
-	desc = "A refrigerated and pressurized backpack tank with extinguisher nozzle, intended to fight fires. Swaps between extinguisher, resin launcher and a smaller scale resin foamer."
+	desc = "A refrigerated and pressurized backpack tank with extinguisher nozzle, intended to fight fires. Swaps between extinguisher, resin launcher and a smaller scale resin foamer. Requires halon to refill."
 	inhand_icon_state = "waterbackpackatmos"
 	icon_state = "waterbackpackatmos"
 	worn_icon_state = "waterbackpackatmos"
@@ -220,7 +220,7 @@
 
 /obj/item/watertank/atmos/Initialize(mapload)
 	. = ..()
-	reagents.add_reagent(/datum/reagent/water, 200)
+	reagents.add_reagent(/datum/reagent/firefighting_foam/halon, 200)
 
 /obj/item/watertank/atmos/make_noz()
 	return new /obj/item/extinguisher/mini/nozzle(src)
@@ -249,6 +249,8 @@
 	w_class = WEIGHT_CLASS_HUGE
 	item_flags = ABSTRACT  // don't put in storage
 	chem = null //holds no chems of its own, it takes from the tank.
+	gas_path = /datum/gas/halon
+	tanktype = /obj/machinery/portable_atmospherics
 	var/obj/item/tank
 	var/nozzle_mode = 0
 	var/metal_synthesis_cooldown = 0
@@ -303,7 +305,7 @@
 			return //Safety check so you don't blast yourself trying to refill your tank
 		var/datum/reagents/R = reagents
 		if(R.total_volume < 100)
-			balloon_alert(user, "not enough water!")
+			balloon_alert(user, "not enough halon!")
 			return
 		if(!COOLDOWN_FINISHED(src, resin_cooldown))
 			balloon_alert(user, "still recharging!")

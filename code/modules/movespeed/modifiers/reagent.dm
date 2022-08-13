@@ -28,7 +28,7 @@
 /datum/movespeed_modifier/reagent/freon
 	multiplicative_slowdown = 1.6
 
-/datum/movespeed_modifier/reagent/halon
+/datum/movespeed_modifier/reagent/firefighting_foam/halon
 	multiplicative_slowdown = 1.8
 
 /datum/movespeed_modifier/reagent/hypernoblium

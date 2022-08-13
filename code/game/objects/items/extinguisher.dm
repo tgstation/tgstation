@@ -21,6 +21,7 @@
 	var/max_water = 50
 	var/last_use = 1
 	var/chem = /datum/reagent/water
+	var/datum/gas/gas_path = null //If it uses an atmospheric container to refill, which gas does it need.
 	var/safety = TRUE
 	var/refilling = FALSE
 	var/tanktype = /obj/structure/reagent_dispensers/watertank
@@ -141,15 +142,27 @@
 		if(reagents.total_volume == reagents.maximum_volume)
 			balloon_alert(user, "already full!")
 			return TRUE
-		var/obj/structure/reagent_dispensers/W = target //will it work?
-		var/transferred = W.reagents.trans_to(src, max_water, transfered_by = user)
+		var/transferred
+
+		if(istype(target, /obj/structure/reagent_dispensers))
+			var/obj/structure/reagent_dispensers/reagent_dispenser = target //will it work?
+			transferred = reagent_dispenser.reagents.trans_to(src, max_water, transfered_by = user)
+		else if(istype(target, /obj/machinery/portable_atmospherics) && gas_path)
+			var/obj/machinery/portable_atmospherics/portable_atmospherics = target
+			var/datum/gas_mixture/portable_air = portable_atmospherics.return_air()
+			portable_air.assert_gas(gas_path)
+			transferred = min(reagents.maximum_volume - reagents.total_volume, portable_air.gases[gas_path][MOLES])
+			portable_air.gases[gas_path][MOLES] -= transferred
+			portable_air.garbage_collect()
+			reagents.add_reagent(chem, transferred)
+
 		if(transferred > 0)
-			to_chat(user, span_notice("\The [src] has been refilled by [transferred] units."))
+			balloon_alert(user, "\the [src] has been refilled by [transferred] units")
 			playsound(src.loc, 'sound/effects/refill.ogg', 50, TRUE, -6)
 			for(var/datum/reagent/water/R in reagents.reagent_list)
 				R.cooling_temperature = cooling_power
 		else
-			to_chat(user, span_warning("\The [W] is empty!"))
+			balloon_alert(user, "\the [target] is empty!")
 
 		return TRUE
 	else

@@ -1542,7 +1542,7 @@
 	. = ..()
 	breathing_mob.adjustOxyLoss(-2 * REM * delta_time, FALSE)
 
-/datum/reagent/halon
+/datum/reagent/firefighting_foam/halon
 	name = "Halon"
 	description = "A fire suppression gas that removes oxygen and cools down the area"
 	reagent_state = GAS
@@ -1551,13 +1551,13 @@
 	taste_description = "minty"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/halon/on_mob_metabolize(mob/living/L)
+/datum/reagent/firefighting_foam/halon/on_mob_metabolize(mob/living/L)
 	. = ..()
-	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/halon)
+	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/firefighting_foam/halon)
 	ADD_TRAIT(L, TRAIT_RESISTHEAT, type)
 
-/datum/reagent/halon/on_mob_end_metabolize(mob/living/L)
-	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/halon)
+/datum/reagent/firefighting_foam/halon/on_mob_end_metabolize(mob/living/L)
+	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/firefighting_foam/halon)
 	REMOVE_TRAIT(L, TRAIT_RESISTHEAT, type)
 	return ..()
 
