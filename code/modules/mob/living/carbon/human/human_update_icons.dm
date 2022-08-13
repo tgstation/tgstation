@@ -63,7 +63,6 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/regenerate_icons()
 
 	if(!..())
-		update_body()
 		update_worn_undersuit()
 		update_worn_id()
 		update_worn_glasses()

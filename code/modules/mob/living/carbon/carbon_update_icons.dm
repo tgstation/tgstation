@@ -88,7 +88,7 @@
 	update_worn_handcuffs()
 	update_worn_legcuffs()
 	update_fire()
-	update_body_parts()
+	update_body()
 
 /mob/living/carbon/update_held_items()
 	remove_overlay(HANDS_LAYER)
@@ -281,9 +281,6 @@
 		return
 
 	. += emissive_blocker(standing.icon, standing.icon_state, alpha = standing.alpha)
-
-/mob/living/carbon/update_body(is_creating)
-	update_body_parts(is_creating)
 
 ///Checks to see if any bodyparts need to be redrawn, then does so. update_limb_data = TRUE redraws the limbs to conform to the owner.
 /mob/living/carbon/proc/update_body_parts(update_limb_data)
