@@ -39,8 +39,8 @@
 	id = "bluespacebeaker"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass = 5000, /datum/material/plastic = 3000, /datum/material/diamond = 1000, /datum/material/bluespace = 1000)
-	build_path = /obj/item/reagent_containers/glass/beaker/bluespace
 	category = list(RND_CATEGORY_MEDICAL_DESIGNS)
+	build_path = /obj/item/reagent_containers/cup/beaker/bluespace
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/noreactbeaker
@@ -49,8 +49,8 @@
 	id = "splitbeaker"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 3000)
-	build_path = /obj/item/reagent_containers/glass/beaker/noreact
 	category = list(RND_CATEGORY_MEDICAL_DESIGNS)
+	build_path = /obj/item/reagent_containers/cup/beaker/noreact
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/xlarge_beaker
@@ -59,8 +59,8 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 	materials = list(/datum/material/glass = 2500, /datum/material/plastic = 3000)
-	build_path = /obj/item/reagent_containers/glass/beaker/plastic
 	category = list(RND_CATEGORY_MEDICAL_DESIGNS)
+	build_path = /obj/item/reagent_containers/cup/beaker/plastic
 
 /datum/design/meta_beaker
 	name = "Metamaterial Beaker"
@@ -68,8 +68,8 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 	materials = list(/datum/material/glass = 2500, /datum/material/plastic = 3000, /datum/material/gold = 1000, /datum/material/titanium = 1000)
-	build_path = /obj/item/reagent_containers/glass/beaker/meta
 	category = list(RND_CATEGORY_MEDICAL_DESIGNS)
+	build_path = /obj/item/reagent_containers/cup/beaker/meta
 
 /datum/design/ph_meter
 	name = "Chemical Analyzer"

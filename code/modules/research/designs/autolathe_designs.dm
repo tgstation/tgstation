@@ -7,7 +7,7 @@
 	id = "bucket"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 200)
-	build_path = /obj/item/reagent_containers/glass/bucket
+	build_path = /obj/item/reagent_containers/cup/bucket
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS, RND_CATEGORY_TOOL_DESIGNS)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -16,7 +16,7 @@
 	id = "watering_can"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 200)
-	build_path = /obj/item/reagent_containers/glass/watering_can
+	build_path = /obj/item/reagent_containers/cup/watering_can
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS, RND_CATEGORY_TOOL_DESIGNS)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
@@ -514,32 +514,32 @@
 	id = "bowl"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/glass = 500)
-	build_path = /obj/item/reagent_containers/glass/bowl
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_DINNERWARE)
+	build_path = /obj/item/reagent_containers/cup/bowl
 
 /datum/design/drinking_glass
 	name = "Drinking Glass"
 	id = "drinking_glass"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/glass = 500)
-	build_path = /obj/item/reagent_containers/food/drinks/drinkingglass
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_DINNERWARE)
+	build_path = /obj/item/reagent_containers/cup/glass/drinkingglass
 
 /datum/design/shot_glass
 	name = "Shot Glass"
 	id = "shot_glass"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/glass = 100)
-	build_path = /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_DINNERWARE)
+	build_path = /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass
 
 /datum/design/shaker
 	name = "Shaker"
 	id = "shaker"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 1500)
-	build_path = /obj/item/reagent_containers/food/drinks/shaker
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_DINNERWARE)
+	build_path = /obj/item/reagent_containers/cup/glass/shaker
 
 /datum/design/cultivator
 	name = "Cultivator"
@@ -689,8 +689,8 @@
 	id = "beaker"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass = 500)
-	build_path = /obj/item/reagent_containers/glass/beaker
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_MEDICAL, RND_CATEGORY_MEDICAL_DESIGNS)
+	build_path = /obj/item/reagent_containers/cup/beaker
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/large_beaker
@@ -698,8 +698,8 @@
 	id = "large_beaker"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass = 2500)
-	build_path = /obj/item/reagent_containers/glass/beaker/large
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_MEDICAL, RND_CATEGORY_MEDICAL_DESIGNS)
+	build_path = /obj/item/reagent_containers/cup/beaker/large
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/pillbottle

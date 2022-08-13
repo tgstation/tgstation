@@ -166,7 +166,7 @@
 	use_power(active_power_usage)
 	adv_disease = adv_disease.Copy()
 	var/list/data = list("viruses" = list(adv_disease))
-	var/obj/item/reagent_containers/glass/bottle/bottle = new(drop_location())
+	var/obj/item/reagent_containers/cup/bottle/bottle = new(drop_location())
 	bottle.name = "[adv_disease.name] culture bottle"
 	bottle.desc = "A small bottle. Contains [adv_disease.agent] culture in synthblood medium."
 	bottle.reagents.add_reagent(/datum/reagent/blood, 20, data)
@@ -188,7 +188,7 @@
 	use_power(active_power_usage)
 	var/id = index
 	var/datum/disease/disease = SSdisease.archive_diseases[id]
-	var/obj/item/reagent_containers/glass/bottle/bottle = new(drop_location())
+	var/obj/item/reagent_containers/cup/bottle/bottle = new(drop_location())
 	bottle.name = "[disease.name] vaccine bottle"
 	bottle.reagents.add_reagent(/datum/reagent/vaccine, 15, list(id))
 	wait = TRUE

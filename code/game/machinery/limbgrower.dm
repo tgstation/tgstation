@@ -96,7 +96,7 @@
 	return data
 
 /obj/machinery/limbgrower/on_deconstruction()
-	for(var/obj/item/reagent_containers/glass/our_beaker in component_parts)
+	for(var/obj/item/reagent_containers/cup/our_beaker in component_parts)
 		reagents.trans_to(our_beaker, our_beaker.reagents.maximum_volume)
 	..()
 
@@ -233,7 +233,7 @@
 /obj/machinery/limbgrower/RefreshParts()
 	. = ..()
 	reagents.maximum_volume = 0
-	for(var/obj/item/reagent_containers/glass/our_beaker in component_parts)
+	for(var/obj/item/reagent_containers/cup/our_beaker in component_parts)
 		reagents.maximum_volume += our_beaker.volume
 		our_beaker.reagents.trans_to(src, our_beaker.reagents.total_volume)
 	production_coefficient = 1.25

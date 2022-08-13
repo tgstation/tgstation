@@ -173,7 +173,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/clothing/shoes/cowboy/lizard,
 		/obj/item/food/kebab/tail,
 		/obj/item/organ/external/tail/lizard,
-		/obj/item/reagent_containers/food/drinks/bottle/lizardwine,
+		/obj/item/reagent_containers/cup/glass/bottle/lizardwine,
 		/obj/item/toy/plush/lizard_plushie,
 	)),
 
@@ -413,7 +413,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/katana,
 		/obj/item/nullrod/claymore/katana,
 		/obj/item/nullrod/scythe/vibro,
-		/obj/item/reagent_containers/food/drinks/bottle/sake,
+		/obj/item/reagent_containers/cup/glass/bottle/sake,
 		/obj/item/throwing_star,
 		/obj/item/toy/katana,
 		/obj/structure/mineral_door/paperframe,
