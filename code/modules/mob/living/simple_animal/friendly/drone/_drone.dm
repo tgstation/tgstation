@@ -29,8 +29,8 @@
 	speed = 0
 	healable = 0
 	density = FALSE
-	pass_flags = PASSTABLE | PASSMOB | SEE_BLACKNESS
-	sight = (SEE_TURFS | SEE_OBJS)
+	pass_flags = PASSTABLE | PASSMOB
+	sight = SEE_TURFS | SEE_OBJS| SEE_BLACKNESS
 	status_flags = (CANPUSH | CANSTUN | CANKNOCKDOWN)
 	gender = NEUTER
 	mob_biotypes = MOB_ROBOTIC
