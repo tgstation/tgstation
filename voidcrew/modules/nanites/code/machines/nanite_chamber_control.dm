@@ -3,7 +3,9 @@
 	desc = "Controls a connected nanite chamber. Can inoculate nanites, load programs, and analyze existing nanite swarms."
 	var/obj/machinery/nanite_chamber/chamber
 	var/obj/item/disk/nanite_program/disk
+	icon = 'voidcrew/modules/nanites/icons/computer.dmi'
 	icon_screen = "nanite_chamber_control"
+	icon_keyboard = null
 	circuit = /obj/item/circuitboard/computer/nanite_chamber_control
 
 /obj/machinery/computer/nanite_chamber_control/Initialize()
