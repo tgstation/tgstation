@@ -591,7 +591,7 @@
 	rust_strength++
 
 /datum/antagonist/heretic/proc/set_rust_strength(strength)
-	if(ISNAN(strength))
+	if(isnum(strength))
 		return
 	rust_strength = strength
 
