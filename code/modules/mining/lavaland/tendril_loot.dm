@@ -28,7 +28,7 @@
 	modkit_design = /datum/design/unique_modkit/bounty
 
 /datum/design/unique_modkit
-	category = list("Mining Designs", "Cyborg Upgrade Modules") //can't be normally obtained
+	category = list(RND_CATEGORY_MINING_DESIGNS, RND_CATEGORY_CYBORG_UPGRADE_MODULES) //can't be normally obtained
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
