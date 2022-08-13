@@ -263,6 +263,9 @@
 		if(entry == COMMAND_DEPTH_INCREASE)
 			// Don't wanna infinite loop now
 			if(i == length(processing_queue))
+				for(var/plane in TRUE_PLANE_TO_OFFSETS(RENDER_PLANE_MASTER))
+					if(!plane_to_depth["[plane]"])
+						processing_queue += "[plane]"
 				continue
 			// Increment our depth
 			depth += 1
@@ -283,6 +286,15 @@
 
 		// If it's not a command, it must be a plane string
 		var/list/plane = plane_info[entry]
+		/// We want master planes to ALWAYS bubble down to their own space. So if the entry before and after us
+		/// Are not expansion commands, then we insert at the very end and wait
+		/// Just ignore this if this is the head we're processing, yeah?
+		if(PLANE_TO_TRUE(plane["real_plane"]) == RENDER_PLANE_MASTER && i > 2)
+			if(processing_queue[i - 2] != COMMAND_DEPTH_INCREASE || processing_queue[i + 1] != COMMAND_DEPTH_INCREASE)
+				processing_queue += COMMAND_NEXT_PARENT
+				parents += parents[parent_head]
+				processing_queue += entry
+				continue
 		// Add all the planes that pipe into us to the queue, Intentionally allows dupes
 		// If we find the same entry twice, it'll get moved down the depth stack
 		for(var/relay_string in plane["incoming_relays"])
@@ -302,6 +314,13 @@
 		plane_packet[entry] = parents[parent_head]
 		treelike_output[depth] += plane_packet
 		plane_to_depth[entry] = depth
+
+	/// Walk treelike output, remove allll the empty lists we've accidentially generated
+	for(var/depth_index = 1; depth_index <= length(treelike_output); depth_index++)
+		var/list/layer = treelike_output[depth_index]
+		if(!length(layer))
+			treelike_output.Cut(depth_index, depth_index + 1)
+			depth_index -= 1
 
 	return treelike_output
 
