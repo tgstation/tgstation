@@ -33,54 +33,67 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 	var/y_key = Z_PILLAR_TRANSFORM(y)
 	if(length(our_x) < y_key)
 		our_x.len = y_key
-	var/obj/effect/abstract/pillar/our_lad = our_x[y_key]
+	var/datum/z_pillar/our_lad = our_x[y_key]
 	if(!our_lad)
-		var/turf/location = locate(Z_KEY_TO_POSITION(x_key), Z_KEY_TO_POSITION(y_key), z)
-		our_lad = new(location)
+		our_lad = new()
 		our_x[y_key] = our_lad
 	return our_lad
 
-/obj/effect/abstract/pillar
+/// Exists to be placed on the turf of walls and such to hold the vis_contents of the tile below
+/// Otherwise the lower turf might get shifted around, which is dumb. do this instead.
+/obj/effect/abstract/z_holder
 	appearance_flags = PIXEL_SCALE
 	plane = HUD_PLANE
 	anchored = TRUE
 	move_resist = INFINITY
-	infra_luminosity = 100
-	icon = 'icons/testing/greyscale_error.dmi'
+	invisibility = 101
+	
+/datum/z_pillar
 	/// Assoc list in the form displayed turf -> list of sources
 	var/list/turf_sources = list()
-
-/obj/effect/abstract/pillar/Initialize(mapload)
-	. = ..()
-	// We're going to use an overlay here to expand this pillar's visual bounds
-	// So it's "in view" for all the turfs it covers
-	// We're also gonna give it some bounds out and to the left to prevent dropping appearnaces
-	var/mutable_appearance/overlay = mutable_appearance('icons/blanks/32x32.dmi', "nothing", alpha = 0)
-	var/scale_by = Z_PILLAR_RADIUS
-	overlay.transform = overlay.transform.Scale(scale_by)
-	overlay.transform = overlay.transform.Translate((scale_by / 2) * 32)
-	overlays += overlay
+	/// Assoc list of turfs using z holders in the form displayed turf -> z holder
+	var/list/drawing_object = list()
 
 /// Displays a turf from the z level below us on our level
 /// Note: we type source as movable despite accepting turfs here. This is done because
 /// otherwise we will get an error about vis_contents on atom, since... it's not supported by areas?
-/obj/effect/abstract/pillar/proc/display_turf(turf/to_display, atom/movable/source)
+/datum/z_pillar/proc/display_turf(turf/to_display, atom/movable/source, mapload)
 	var/list/sources = turf_sources[to_display]
 	if(!sources)
 		sources = list()
 		turf_sources[to_display] = sources
 	sources |= source
-	// If we aren't the first to request this turf, return
-	if(length(sources) != 1)
+
+	if(length(sources) != 1) // If we aren't the first to request this turf, return
+		var/obj/effect/abstract/z_holder/holding = drawing_object[to_display]
+		if(!holding)
+			return
+
+		var/turf/visual_target = to_display.above()
+		/// Basically, if we used to be under a non transparent turf, but are no longer in that position
+		/// Then we add to the transparent turf we're now under, and nuke the old object
+		if(!HAS_TRAIT(visual_target, TURF_Z_TRANSPARENT_TRAIT))
+			return
+
+		holding.vis_contents -= to_display
+		qdel(holding)
+		drawing_object -= to_display
+		visual_target.vis_contents += to_display
 		return
 
 	var/turf/visual_target = to_display.above()
-	visual_target.vis_contents += to_display
+	// The isopenspaceturf() here isn't nessesarry for behavior, but serves as an optimization for large openspace areas
+	if(HAS_TRAIT(visual_target, TURF_Z_TRANSPARENT_TRAIT) || isopenspaceturf(visual_target))
+		visual_target.vis_contents += to_display
+	else
+		var/obj/effect/abstract/z_holder/hold_this = new(visual_target)
+		hold_this.vis_contents += to_display
+		drawing_object[to_display] = hold_this
 
 /// Hides an existing turf from our vis_contents, or the vis_contents of the source if applicable
 /// Note: we type source as movable despite accepting turfs here. This is done because
 /// otherwise we will get an error about vis_contents on atom, since... it's not supported by areas?
-/obj/effect/abstract/pillar/proc/hide_turf(turf/to_hide, atom/movable/source)
+/datum/z_pillar/proc/hide_turf(turf/to_hide, atom/movable/source)
 	var/list/sources = turf_sources[to_hide]
 	if(!sources)
 		return
@@ -90,14 +103,20 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 		return
 
 	turf_sources -= to_hide
-	var/turf/visual_target = to_hide.above()
-	visual_target.vis_contents -= to_hide
+	var/obj/effect/abstract/z_holder/holding = drawing_object[to_hide]
+	if(holding)
+		var/obj/effect/abstract/z_holder/holding_this = locate(/obj/effect/abstract/z_holder)
+		holding_this.vis_contents -= to_hide
+		qdel(holding_this)
+	else
+		var/turf/visual_target = to_hide.above()
+		visual_target.vis_contents -= to_hide
 
 /datum/element/turf_z_transparency
 	element_flags = ELEMENT_DETACH
 
 ///This proc sets up the signals to handle updating viscontents when turfs above/below update. Handle plane and layer here too so that they don't cover other obs/turfs in Dream Maker
-/datum/element/turf_z_transparency/Attach(datum/target)
+/datum/element/turf_z_transparency/Attach(datum/target, mapload)
 	. = ..()
 	if(!isturf(target))
 		return ELEMENT_INCOMPATIBLE
@@ -111,7 +130,8 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 
 	ADD_TRAIT(our_turf, TURF_Z_TRANSPARENT_TRAIT, ELEMENT_TRAIT(type))
 
-	update_multi_z(our_turf)
+	if(!mapload)
+		update_multi_z(our_turf)
 
 /datum/element/turf_z_transparency/Detach(datum/source)
 	. = ..()
@@ -123,12 +143,12 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 ///Updates the viscontents or underlays below this tile.
 /datum/element/turf_z_transparency/proc/update_multi_z(turf/our_turf)
 	var/turf/below_turf = our_turf.below()
-	// Note to self: register for changeturf here
+	// lemon todo: register for changeturf here, or on the z pillar datum
 	if(below_turf) // If we actually have something below us, display it.
 		for(var/turf/partner in range(1, below_turf))
 			// We use our z here to ensure the pillar is actually on our level
-			var/obj/effect/abstract/pillar/pill_boss = request_z_pillar(partner.x, partner.y, our_turf.z)
-			pill_boss.display_turf(partner, our_turf)
+			var/datum/z_pillar/z_boss = request_z_pillar(partner.x, partner.y, our_turf.z)
+			z_boss.display_turf(partner, our_turf)
 	else
 		our_turf.vis_contents.len = 0 // Nuke the list
 		add_baseturf_underlay(our_turf)

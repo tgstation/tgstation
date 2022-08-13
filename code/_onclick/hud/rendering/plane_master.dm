@@ -291,6 +291,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
  * vars are set as to replicate behavior when rendering to other planes
  * do not touch this unless you know what you are doing
  */
+// Lemon todo: blackness renders weird when you view down openspace, because of transforms and borders and such
+// Look into lessening this, maybe mirror down all the time? idk
 /atom/movable/screen/plane_master/blackness
 	name = "Darkness"
 	documentation = "This is quite fiddly, so bear with me. By default (in byond) everything in the game is rendered onto plane 0. It's the default plane. \
@@ -378,6 +380,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	blend_mode_override = BLEND_ADD
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
+// Lemon todo: over lights somehow break when... scaled? test this
 /atom/movable/screen/plane_master/o_light_visual
 	name = "Overlight light visual"
 	documentation = "Holds overlay lighting objects, or the sort of lighting that's a well, overlay stuck to something.\
