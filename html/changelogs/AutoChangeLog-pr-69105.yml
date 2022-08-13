@@ -1,0 +1,5 @@
+author: "YusufEmirKoroglu"
+delete-after: True
+changes: 
+  - rscadd: "Add keyboard shell. A shell that allows the user to input a string. Available after researching the Advanced Shells tech node."
+  - imageadd: "added 2 icons for the keyboard shell. One unassembled and one assembled."
