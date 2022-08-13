@@ -19,10 +19,9 @@
 
 /datum/heretic_knowledge/curse/paralysis
 	name = "Curse of Paralysis"
-	desc = "Allows you to transmute a hatchet, a left and right leg, \
-		and an item containing fingerprints to cast a curse of immobility \
-		on one of the fingerprint's owners for five minutes. While cursed, \
-		the victim will be unable to walk."
+	desc = "Allows you to transmute a hatchet and both a left and right leg to cast a curse of immobility on a crew member. \
+		While cursed, the victim will be unable to walk. You can additionally supply an item that a victim has touched \
+		or is covered in the victim's blood to empower the curse."
 	gain_text = "The flesh of humanity is weak. Make them bleed. Show them their fragility."
 	next_knowledge = list(
 		/datum/heretic_knowledge/mad_mask,
@@ -33,7 +32,8 @@
 		/obj/item/bodypart/r_leg = 1,
 		/obj/item/hatchet = 1,
 	)
-	duration = 5 MINUTES
+	duration = 3 MINUTES
+	duration_modifier = 2
 	cost = 1
 	route = PATH_SIDE
 

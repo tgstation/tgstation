@@ -375,54 +375,83 @@
 /datum/heretic_knowledge/curse
 	abstract_parent_type = /datum/heretic_knowledge/curse
 	/// The duration of the curse
-	var/duration = 5 MINUTES
-	/// Cache list of fingerprints (actual fingerprint strings) we have from our current ritual
+	var/duration = 1 MINUTES
+	/// The duration of the curse on people which have a fingerprint or blood sample present
+	var/duration_modifier = 2
+	/// A list of all the fingerprints that were found on our atoms, in our last go at the ritual
 	var/list/fingerprints
+	/// A list of all the blood samples that were found on our atoms, in our last go at the ritual
+	var/list/blood_samples
 
 /datum/heretic_knowledge/curse/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	fingerprints = list()
-	for(var/atom/requirements as anything in atoms)
-		fingerprints |= GET_ATOM_FINGERPRINTS(requirements)
-	list_clear_nulls(fingerprints)
+	blood_samples = list()
+	for(var/atom/requirement as anything in atoms)
+		for(var/print in GET_ATOM_FINGERPRINTS(requirement))
+			fingerprints[print] = 1
 
-	// No fingerprints? No ritual
-	if(!length(fingerprints))
-		loc.balloon_alert(user, "ritual failed, no fingerprints!")
-		return FALSE
+		for(var/blood in GET_ATOM_BLOOD_DNA(requirement))
+			blood_samples[blood] = 1
 
 	return TRUE
 
 /datum/heretic_knowledge/curse/on_finished_recipe(mob/living/user, list/selected_atoms,  turf/loc)
 
-	var/list/compiled_list = list()
+	// Potential targets is an assoc list of [names] to [human mob ref].
+	var/list/potential_targets = list()
+	// Boosted targets is a list of human mob references.
+	var/list/boosted_targets = list()
 
-	for(var/mob/living/carbon/human/human_to_check as anything in GLOB.human_list)
-		if(fingerprints[md5(human_to_check.dna.unique_identity)])
-			compiled_list |= human_to_check.real_name
-			compiled_list[human_to_check.real_name] = human_to_check
+	for(var/datum/mind/crewmember as anything in get_crewmember_minds())
+		var/mob/living/carbon/human/human_to_check = crewmember.current
+		if(!istype(human_to_check) || human_to_check.stat == DEAD || !human_to_check.dna)
+			continue
 
-	if(!length(compiled_list))
-		loc.balloon_alert(user, "ritual failed, no fingerprints!")
-		return FALSE
+		var/their_prints = md5(human_to_check.dna.unique_identity)
+		var/their_blood = human_to_check.dna.unique_enzymes
 
-	var/chosen_mob = tgui_input_list(user, "Select the person you wish to curse", "Eldritch Curse", sort_list(compiled_list))
+		var/list_key = "[human_to_check.real_name]"
+		if(fingerprints[their_prints] || blood_samples[their_blood])
+			boosted_targets += human_to_check
+			list_key += " (Boosted)"
+
+		potential_targets[list_key] = human_to_check
+
+	var/chosen_mob = tgui_input_list(user, "Select the person you wish to [name]", name, sort_list(potential_targets, /proc/cmp_text_asc))
 	if(isnull(chosen_mob))
 		return FALSE
 
-	var/mob/living/carbon/human/to_curse = compiled_list[chosen_mob]
+	var/mob/living/carbon/human/to_curse = potential_targets[chosen_mob]
 	if(QDELETED(to_curse))
 		loc.balloon_alert(user, "ritual failed, invalid choice!")
 		return FALSE
 
-	log_combat(user, to_curse, "cursed via heretic ritual", addition = "([name])")
-	curse(to_curse)
-	addtimer(CALLBACK(src, .proc/uncurse, to_curse), duration)
+	// Yes, you COULD curse yourself, not sure why but you could
+	if(to_curse == user)
+		var/are_you_sure = tgui_alert(user, "Are you sure you want to curse yourself?", name, list("Yes", "No"))
+		if(are_you_sure != "Yes")
+			return FALSE
+
+	if(to_curse.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, charge_cost = 0))
+		to_chat(to_chat, span_warning("You feel a ghastly chill, but the feeling passes shortly."))
+		return TRUE
+
+	var/boosted = (to_curse in boosted_targets)
+
+	log_combat(user, to_curse, "cursed via heretic ritual", addition = "([boosted ? "Boosted" : ""] [name])")
+	curse(to_curse, boosted)
+
+	to_chat(user, span_hierophant("You cast a[boosted ? "n empowered":""] [name] upon [to_curse.real_name]."))
+	addtimer(CALLBACK(src, .proc/uncurse, to_curse), duration * (boosted ? duration_modifier : 1))
+
+	fingerprints = null
+	blood_samples = null
 	return TRUE
 
 /**
  * Calls a curse onto [chosen_mob].
  */
-/datum/heretic_knowledge/curse/proc/curse(mob/living/carbon/human/chosen_mob)
+/datum/heretic_knowledge/curse/proc/curse(mob/living/carbon/human/chosen_mob, boosted = FALSE)
 	SHOULD_CALL_PARENT(FALSE)
 	CRASH("[type] did not implement curse()!")
 
