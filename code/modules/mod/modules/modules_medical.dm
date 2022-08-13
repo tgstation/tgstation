@@ -71,10 +71,10 @@
 	incompatible_modules = list(/obj/item/mod/module/quick_carry, /obj/item/mod/module/constructor)
 
 /obj/item/mod/module/quick_carry/on_suit_activation()
-	ADD_TRAIT(mod.wearer, TRAIT_QUICK_CARRY, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_QUICKER_CARRY, MOD_TRAIT)
 
 /obj/item/mod/module/quick_carry/on_suit_deactivation(deleting = FALSE)
-	REMOVE_TRAIT(mod.wearer, TRAIT_QUICK_CARRY, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_QUICKER_CARRY, MOD_TRAIT)
 
 /obj/item/mod/module/quick_carry/advanced
 	name = "MOD advanced quick carry module"
@@ -82,11 +82,11 @@
 	complexity = 0
 
 /obj/item/mod/module/quick_carry/on_suit_activation()
-	ADD_TRAIT(mod.wearer, TRAIT_QUICKER_CARRY, MOD_TRAIT)
+	. = ..()
 	ADD_TRAIT(mod.wearer, TRAIT_FASTMED, MOD_TRAIT)
 
 /obj/item/mod/module/quick_carry/on_suit_deactivation(deleting = FALSE)
-	REMOVE_TRAIT(mod.wearer, TRAIT_QUICKER_CARRY, MOD_TRAIT)
+	. = ..()
 	REMOVE_TRAIT(mod.wearer, TRAIT_FASTMED, MOD_TRAIT)
 
 ///Injector - Gives the suit an extendable large-capacity piercing syringe.
@@ -212,3 +212,30 @@
 	else
 		organ.forceMove(drop_location())
 	organ = null
+
+///Patrient Transport - Generates hololight bags you can put people in.
+/obj/item/mod/module/criminalcapture/patienttransport
+	name = "MOD patient transport module"
+	desc = "A modified version of the security criminal capture module, this module creates hololight bags to \
+		safely transfer patients throughout hostile environments."
+	icon_state = "patient_transport"
+	bodybag_type = /obj/structure/closet/body_bag/environmental/hololight
+	capture_time = 1.5 SECONDS
+	packup_time = 0.5 SECONDS
+
+///Defibrillator - Gives the suit an extendable pair of shock paddles.
+/obj/item/mod/module/defibrillator
+	name = "MOD defibrillator module"
+	desc = "A modified form of the standard defibrillator, this pair of shock paddles can resuscitate people suffering from \
+		symptoms such as... death. The ride never ends."
+	icon_state = "defibrillator"
+	module_type = MODULE_ACTIVE
+	complexity = 2
+	active_power_cost = DEFAULT_CHARGE_DRAIN
+	device = /obj/item/shockpaddles/mod
+	incompatible_modules = list(/obj/item/mod/module/defibrillator)
+	cooldown_time = 0.5 SECONDS
+
+/obj/item/shockpaddles/mod
+	name = "MOD defibrillator paddles"
+	req_defib = FALSE

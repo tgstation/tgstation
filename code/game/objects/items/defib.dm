@@ -528,7 +528,7 @@
 		span_warning("You overcharge the paddles and begin to place them onto [H]'s chest..."))
 	busy = TRUE
 	update_appearance()
-	if(do_after(user, 1.5 SECONDS, H))
+	if(do_after(user, 1.5 SECONDS, H, extra_checks = CALLBACK(src, .proc/is_wielded)))
 		user.visible_message(span_notice("[user] places [src] on [H]'s chest."),
 			span_warning("You place [src] on [H]'s chest and begin to charge them."))
 		var/turf/T = get_turf(defib)
@@ -537,7 +537,7 @@
 			T.audible_message(span_warning("\The [defib] lets out an urgent beep and lets out a steadily rising hum..."))
 		else
 			user.audible_message(span_warning("[src] let out an urgent beep."))
-		if(do_after(user, 1.5 SECONDS, H)) //Takes longer due to overcharging
+		if(do_after(user, 1.5 SECONDS, H, extra_checks = CALLBACK(src, .proc/is_wielded))) //Takes longer due to overcharging
 			if(!H)
 				do_cancel()
 				return
@@ -568,11 +568,11 @@
 	user.visible_message(span_warning("[user] begins to place [src] on [H]'s chest."), span_warning("You begin to place [src] on [H]'s chest..."))
 	busy = TRUE
 	update_appearance()
-	if(do_after(user, 3 SECONDS, H)) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
+	if(do_after(user, 3 SECONDS, H, extra_checks = CALLBACK(src, .proc/is_wielded))) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
 		user.visible_message(span_notice("[user] places [src] on [H]'s chest."), span_warning("You place [src] on [H]'s chest."))
 		playsound(src, 'sound/machines/defib_charge.ogg', 75, FALSE)
 		var/obj/item/organ/internal/heart = H.getorgan(/obj/item/organ/internal/heart)
-		if(do_after(user, 2 SECONDS, H)) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
+		if(do_after(user, 2 SECONDS, H, extra_checks = CALLBACK(src, .proc/is_wielded))) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
 			if((!combat && !req_defib) || (req_defib && !defib.combat))
 				for(var/obj/item/clothing/C in H.get_equipped_items())
 					if((C.body_parts_covered & CHEST) && (C.clothing_flags & THICKMATERIAL)) //check to see if something is obscuring their chest.
@@ -655,6 +655,9 @@
 				user.visible_message(span_warning("[req_defib ? "[defib]" : "[src]"] buzzes: Patient is not in a valid state. Operation aborted."))
 				playsound(src, 'sound/machines/defib_failed.ogg', 50, FALSE)
 	do_cancel()
+
+/obj/item/shockpaddles/proc/is_wielded()
+	return HAS_TRAIT(src, TRAIT_WIELDED)
 
 /obj/item/shockpaddles/cyborg
 	name = "cyborg defibrillator paddles"
