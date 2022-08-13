@@ -441,3 +441,5 @@
 		id++
 		mob_programs += list(mob_program)
 	data["mob_programs"] = mob_programs
+
+#undef NANITE_DEFAULT_MAX_VOLUME

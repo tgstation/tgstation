@@ -2,7 +2,6 @@
 #define TRAIT_NANITES "Nanites"
 
 #define NANITE_SYNC_DELAY (30 SECONDS)
-#define NANITE_DEFAULT_MAX_VOLUME 500
 #define NANITE_PROGRAM_LIMIT 20
 
 ///The chance at a Nanite program randomly failing when it cannot sync
