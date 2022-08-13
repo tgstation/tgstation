@@ -187,19 +187,24 @@
 
 	// They're not on the same z-level as us
 	else if(our_z != their_z)
-		// On a multi-z station
-		if(is_station_level(our_z))
-			if(our_z > their_z)
-				balloon_message = "below you!"
+		// They're on the st ation
+		if(is_station_level(their_z))
+			// We're on a multi-z station
+			if(is_station_level(our_z))
+				if(our_z > their_z)
+					balloon_message = "below you!"
+				else
+					balloon_message = "above you!"
+			// We're off station, they're not
 			else
-				balloon_message = "above you!"
+					balloon_message = "on station!"
 
 		// Mining
-		else if(is_mining_level(their_turf.z))
+		else if(is_mining_level(their_z))
 			balloon_message = "on lavaland!"
 
 		// In the gateway
-		else if(is_away_level(their_turf.z) || is_secret_level(their_turf.z))
+		else if(is_away_level(their_z) || is_secret_level(their_z))
 			balloon_message = "beyond the gateway!"
 
 		// They're somewhere we probably can't get too - sacrifice z-level, centcom, etc
