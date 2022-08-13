@@ -93,10 +93,11 @@ GLOBAL_LIST_INIT(tendrils, list())
 
 /obj/effect/collapse/examine(mob/user)
 	var/list/examine_messages = ..()
-	if(has_collected(user))
-		examine_messages += span_boldnotice("You've grabbed what you can, now get out!")
-	else
-		examine_messages += span_boldnotice("You might have some time to grab some goodies with an open hand before it collapses!")
+	if(isliving(user))
+		if(has_collected(user))
+			examine_messages += span_boldnotice("You've grabbed what you can, now get out!")
+		else
+			examine_messages += span_boldnotice("You might have some time to grab some goodies with an open hand before it collapses!")
 	return examine_messages
 
 /obj/effect/collapse/attack_hand(mob/living/collector, list/modifiers)
@@ -105,7 +106,8 @@ GLOBAL_LIST_INIT(tendrils, list())
 		to_chat(collector, span_danger("You've already gotten some loot, just get out of there with it!"))
 		return
 	visible_message(span_warning("Something falls free of the tendril!"))
-	new /obj/structure/closet/crate/necropolis/tendril(loc)
+	var/obj/structure/closet/crate/necropolis/tendril/loot = new /obj/structure/closet/crate/necropolis/tendril(loc)
+	collector.start_pulling(loot)
 	collected += WEAKREF(collector)
 
 /obj/effect/collapse/Destroy()
