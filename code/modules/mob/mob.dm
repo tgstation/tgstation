@@ -1105,7 +1105,7 @@
 /mob/proc/sync_lighting_plane_alpha()
 	if(!hud_used)
 		return
-	for(var/atom/movable/screen/plane_master/lighting/light_plane in hud_used.get_true_plane_masters(LIGHTING_PLANE))
+	for(var/atom/movable/screen/plane_master/rendering_plate/lighting/light_plane in hud_used.get_true_plane_masters(RENDER_PLANE_LIGHTING))
 		light_plane.set_alpha(lighting_alpha)
 
 ///Update the mouse pointer of the attached client in this mob

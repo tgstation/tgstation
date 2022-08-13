@@ -17,10 +17,7 @@
 
 #define OPENSPACE_LAYER 600 //Openspace layer over all
 
-#define TRANSPARENT_FLOOR_PLANE -10 //Transparent plane that shows openspace underneath the floor
-#define OPENSPACE_PLANE -9 //Openspace plane below all turfs
-#define OPENSPACE_BACKDROP_PLANE -8 //Black square just over openspace plane to guaranteed cover all in openspace turf
-
+#define RENDER_PLANE_TRANSPARENT -10 //Transparent plane that shows openspace underneath the floor
 
 #define FLOOR_PLANE -7
 
@@ -31,6 +28,7 @@
 
 #define ABOVE_GAME_PLANE -2
 
+#define RENDER_PLANE_GAME_WORLD -1
 
 #define BLACKNESS_PLANE 0 //To keep from conflicts with SEE_BLACKNESS internals
 
@@ -52,6 +50,8 @@
 
 /// This plane masks out lighting to create an "emissive" effect, ie for glowing lights in otherwise dark areas.
 #define EMISSIVE_PLANE 14
+
+#define RENDER_PLANE_LIGHTING 15
 
 ///---------------- MISC -----------------------
 

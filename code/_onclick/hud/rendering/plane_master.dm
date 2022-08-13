@@ -31,14 +31,13 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	//--rendering relay vars--
 	/// list of planes we will relay this plane's render to
 	var/list/render_relay_planes = list(RENDER_PLANE_GAME)
-	/// Whether this plane should get a render target automatically generated
-	var/generate_render_target = TRUE
 	/// blend mode to apply to the render relay in case you dont want to use the plane_masters blend_mode
 	var/blend_mode_override
 	/// list of current relays this plane is utilizing to render
 	var/list/atom/movable/render_plane_relay/relays = list()
 	/// if render relays have already be generated
 	var/relays_generated = FALSE
+
 	/// If this plane master should be hidden from the player at roundstart
 	/// We do this so PMs can opt into being temporary, to reduce load on clients
 	var/start_hidden = FALSE
@@ -47,6 +46,10 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	/// Remember: a hidden plane master will dump anything drawn directly to it onto the output render. It does NOT hide its contents
 	/// Use alpha for that
 	var/force_hidden = FALSE
+
+	/// If this plane is used OUTSIDE of the plane master relay tree or not
+	/// Basically, do we draw to this? or does it just exist to apply effects and such
+	var/accepts_input = TRUE
 
 /atom/movable/screen/plane_master/Initialize(mapload, datum/plane_master_group/home, offset = 0)
 	src.offset = offset
@@ -175,6 +178,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	plane = PLANE_SPACE_PARALLAX
 	blend_mode = BLEND_MULTIPLY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	accepts_input = FALSE
 
 /atom/movable/screen/plane_master/parallax/Initialize(mapload, datum/plane_master_group/home, offset)
 	. = ..()
@@ -206,47 +210,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	render_target = GRAVITY_PULSE_RENDER_TARGET
 	render_relay_planes = list()
 
-///For any transparent multi-z tiles we want to render
-/atom/movable/screen/plane_master/transparent
-	name = "Transparent"
-	documentation = "The master rendering plate from the offset below ours will be mirrored onto this plane. That way we achive a \"stack\" effect."
-	plane = TRANSPARENT_FLOOR_PLANE
-	appearance_flags = PLANE_MASTER
-
-/atom/movable/screen/plane_master/transparent/Initialize(mapload, datum/plane_master_group/home, offset)
-	. = ..()
-	/// Don't display us if we're below everything else yeah?
-	AddComponent(/datum/component/plane_hide_highest_offset)
-
-/atom/movable/screen/plane_master/openspace
-	name = "Open space"
-	documentation = "The plane of JUST openspace turfs. We give ourselves a dropshadow border, so people can see where floor ends and underfloor begins."
-	plane = OPENSPACE_PLANE
-	appearance_flags = PLANE_MASTER
-
-/atom/movable/screen/plane_master/openspace/Initialize(mapload)
-	. = ..()
-	add_filter("first_stage_openspace", 1, drop_shadow_filter(color = "#04080FAA", size = -10))
-	add_filter("second_stage_openspace", 2, drop_shadow_filter(color = "#04080FAA", size = -15))
-	add_filter("third_stage_openspace", 3, drop_shadow_filter(color = "#04080FAA", size = -20))
-	/// Don't display us if we're below everything else yeah?
-	AddComponent(/datum/component/plane_hide_highest_offset)
-
-///Things rendered on "openspace"; holes in multi-z
-///This applies that shadow that openspace tiles get
-/atom/movable/screen/plane_master/openspace_backdrop
-	name = "Open space backdrop"
-	documentation = "Contains the little patches of darkess, we slide this between the upper and lower turfs to give a distance effect."
-	plane = OPENSPACE_BACKDROP_PLANE
-	appearance_flags = PLANE_MASTER
-	blend_mode = BLEND_MULTIPLY
-	alpha = 255
-
-/atom/movable/screen/plane_master/openspace_backdrop/Initialize(mapload, datum/plane_master_group/home, offset)
-	. = ..()
-	/// Don't display us if we're below everything else yeah?
-	AddComponent(/datum/component/plane_hide_highest_offset)
-
 ///Contains just the floor
 /atom/movable/screen/plane_master/floor
 	name = "Floor"
@@ -255,27 +218,19 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
 
-///Contains most things in the game world
-/atom/movable/screen/plane_master/game_world
-	name = "Game world"
-	documentation = "Contains most of the objects in the world. Mobs, machines, etc. Note the drop shadow, it gives a very nice depth effect."
+/atom/movable/screen/plane_master/game
+	name = "Lower game world"
+	documentation = "Exists mostly because of FOV shit. Basically, if you've just got a normal not ABOVE fov thing, and you don't want it masked, stick it here yeah?"
 	plane = GAME_PLANE
+	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 
-/atom/movable/screen/plane_master/game_world/show_to(mob/mymob)
-	. = ..()
-	if(!.)
-		return
-	remove_filter("AO")
-	if(istype(mymob) && mymob.client?.prefs?.read_preference(/datum/preference/toggle/ambient_occlusion))
-		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))
-
 /atom/movable/screen/plane_master/game_world_fov_hidden
-	name = "Game world fov hidden"
+	name = "lower game world fov hidden"
 	documentation = "If you want something to be hidden by fov, stick it on this plane. We're masked by the fov blocker plane, so the items on us can actually well, disappear."
 	plane = GAME_PLANE_FOV_HIDDEN
-	render_relay_planes = list(GAME_PLANE)
+	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 
@@ -294,6 +249,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	// We do NOT allow offsetting, because there's no case where you would want to block only one layer, at least currently
 	allows_offsetting = FALSE
 	start_hidden = TRUE
+	// We mark as accepts_input FALSE so transforms don't effect us, and we draw to the planes below us as if they were us.
+	// This is safe because we will ALWAYS be on the top z layer, so it DON'T MATTER
+	accepts_input = FALSE
 
 /atom/movable/screen/plane_master/field_of_vision_blocker/Initialize(mapload, datum/plane_master_group/home, offset)
 	. = ..()
@@ -303,7 +261,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	name = "Upper game world"
 	documentation = "Ok so fov is kinda fucky, because planes in byond serve both as effect groupings and as rendering orderers. Since that's true, we need a plane that we can stick stuff that draws above fov blocked stuff on."
 	plane = GAME_PLANE_UPPER
-	render_relay_planes = list(GAME_PLANE)
+	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 
@@ -311,15 +269,20 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	name = "Upper game world fov hidden"
 	documentation = "Just as we need a place to draw things \"above\" the hidden fov plane, we also need to be able to hide stuff that draws over the upper game plane."
 	plane = GAME_PLANE_UPPER_FOV_HIDDEN
-	render_relay_planes = list(GAME_PLANE_FOV_HIDDEN)
+	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
+
+/atom/movable/screen/plane_master/game_world_upper_fov_hidden/Initialize()
+	. = ..()
+	// Dupe of the other hidden plane
+	add_filter("vision_cone", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(FIELD_OF_VISION_BLOCKER_RENDER_TARGET, offset), flags = MASK_INVERSE))
 
 /atom/movable/screen/plane_master/game_world_above
 	name = "Above game world"
 	documentation = "We need a place that's unmasked by fov that also draws above the upper game world fov hidden plane. I told you fov was hacky man."
 	plane = ABOVE_GAME_PLANE
-	render_relay_planes = list(GAME_PLANE)
+	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 
@@ -338,6 +301,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		mind yourself when you're working with this plane, you might have accidentially been trying to work with the wrong thing."
 	plane = BLACKNESS_PLANE
 	// Note: we don't set this to blend multiply because it just dies when its alpha is modified, since there's no backdrop I think
+	// Marked as accepts input = FALSE because it should not scale, scaling lets you see "through" the floor
+	accepts_input = FALSE
 
 /atom/movable/screen/plane_master/blackness/show_to(mob/mymob)
 	. = ..()
@@ -404,73 +369,14 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 
-///Contains all lighting objects
-/atom/movable/screen/plane_master/lighting
-	name = "Lighting"
-	documentation = "Anything on this plane will be <b>multiplied</b> with the plane it's rendered onto (typically the game plane).\
-		<br>That's how lighting functions at base. Because it uses BLEND_MULTIPLY and occasionally color matrixes, it needs a backdrop of blackness.\
-		<br>See <a href=\"https://secure.byond.com/forum/?post=2141928\">This byond post</a>\
-		<br>Lemme see uh, we're masked by the emissive plane so it can actually function (IE: make things glow in the dark).\
-		<br>We're also masked by the overlay lighting plane, which contains all the movable lights in the game. It draws to us and also the game plane.\
-		<br>Masks us out so it has the breathing room to apply its effect.\
-		<br>Oh and we quite often have our alpha changed to achive night vision effects, or things of that sort."
+///Contains all turf lighting
+/atom/movable/screen/plane_master/turf_lighting
+	name = "Turf Lighting"
+	documentation = "Contains all lighting drawn to turfs. Not so complex, draws directly onto the lighting plate."
 	plane = LIGHTING_PLANE
-	blend_mode_override = BLEND_MULTIPLY
+	render_relay_planes = list(RENDER_PLANE_LIGHTING)
+	blend_mode_override = BLEND_ADD
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-
-/atom/movable/screen/plane_master/lighting/show_to(mob/mymob)
-	. = ..()
-	if(!.)
-		return
-	// This applies a backdrop to our lighting plane
-	// Why do plane masters need a backdrop sometimes? Read https://secure.byond.com/forum/?post=2141928
-	// Basically, we need something to brighten
-	// unlit is perhaps less needed rn, it exists to provide a fullbright for things that can't see the lighting plane
-	// but we don't actually use invisibility to hide the lighting plane anymore, so it's pointless
-	mymob.overlay_fullscreen("lighting_backdrop_lit", /atom/movable/screen/fullscreen/lighting_backdrop/lit)
-	mymob.overlay_fullscreen("lighting_backdrop_unlit", /atom/movable/screen/fullscreen/lighting_backdrop/unlit)
-
-	// Sorry, this is a bit annoying
-	// Basically, we only want the lighting plane we can actually see to attempt to render
-	// If we don't our lower plane gets totally overriden by the black void of the upper plane
-	var/datum/hud/hud = home.our_hud
-	if(hud)
-		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, .proc/on_offset_change)
-	offset_change(hud.current_plane_offset)
-
-/atom/movable/screen/plane_master/lighting/hide_from(mob/oldmob)
-	oldmob.clear_fullscreen("lighting_backdrop_lit")
-	oldmob.clear_fullscreen("lighting_backdrop_unlit")
-	var/datum/hud/hud = home.our_hud
-	if(hud)
-		UnregisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, .proc/on_offset_change)
-
-/atom/movable/screen/plane_master/lighting/proc/on_offset_change(datum/source, old_offset, new_offset)
-	SIGNAL_HANDLER
-	offset_change(new_offset)
-
-/atom/movable/screen/plane_master/lighting/proc/offset_change(mob_offset)
-	// Offsets stack down remember. This implies that we're above the mob's view plane, and shouldn't render
-	if(offset < mob_offset)
-		disable_alpha()
-	else
-		enable_alpha()
-
-/*!
- * This system works by exploiting BYONDs color matrix filter to use layers to handle emissive blockers.
- *
- * Emissive overlays are pasted with an atom color that converts them to be entirely some specific color.
- * Emissive blockers are pasted with an atom color that converts them to be entirely some different color.
- * Emissive overlays and emissive blockers are put onto the same plane.
- * The layers for the emissive overlays and emissive blockers cause them to mask eachother similar to normal BYOND objects.
- * A color matrix filter is applied to the emissive plane to mask out anything that isn't whatever the emissive color is.
- * This is then used to alpha mask the lighting plane.
- */
-/atom/movable/screen/plane_master/lighting/Initialize(mapload)
-	. = ..()
-	add_filter("emissives", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(EMISSIVE_RENDER_TARGET, offset), flags = MASK_INVERSE))
-	add_filter("object_lighting", 2, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(O_LIGHTING_VISUAL_RENDER_TARGET, offset), flags = MASK_INVERSE))
-
 
 /atom/movable/screen/plane_master/o_light_visual
 	name = "Overlight light visual"
