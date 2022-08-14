@@ -201,7 +201,7 @@
 		wearer.update_worn_shoes()
 	if(part == gauntlets)
 		gauntlets.icon_state = "[skin]-gauntlets[seal ? "-sealed" : ""]"
-		wearer.update_worn_glasses()
+		wearer.update_worn_gloves()
 	if(part == chestplate)
 		chestplate.icon_state = "[skin]-chestplate[seal ? "-sealed" : ""]"
 		wearer.update_worn_oversuit()
