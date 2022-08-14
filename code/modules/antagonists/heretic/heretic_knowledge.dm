@@ -444,6 +444,11 @@
 		if(are_you_sure != "Yes")
 			return FALSE
 
+	var/turf/curse_turf = get_turf(to_curse)
+	if(curse_turf.z != loc.z || get_dist(curse_turf, loc) > max_range * 1.5) // Give a bit of leeway for people moving around
+		loc.balloon_alert(user, "ritual failed, too far!")
+		return FALSE
+
 	if(to_curse.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, charge_cost = 0))
 		to_chat(to_curse, span_warning("You feel a ghastly chill, but the feeling passes shortly."))
 		return TRUE
