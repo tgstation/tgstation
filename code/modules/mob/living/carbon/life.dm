@@ -328,20 +328,7 @@
 			. |= BODYPART_LIFE_UPDATE_HEALTH //make sure we remove the stamcrit
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
 		. |= limb.on_life(delta_time, times_fired)
-/*
-[00:48:02] Runtime in life.dm, line 334: Cannot execute null.has reagent().
-proc name: handle organs (/mob/living/carbon/proc/handle_organs)
-src: Unknown (/mob/living/carbon/human/species/monkey)
-src.loc: null
-call stack:
-Unknown (/mob/living/carbon/human/species/monkey): handle organs(2, 801)
-Unknown (/mob/living/carbon/human/species/monkey): Life(2, 801)
-Unknown (/mob/living/carbon/human/species/monkey): Life(2, 801)
-Mobs (/datum/controller/subsystem/mobs): fire(1)
-Mobs (/datum/controller/subsystem/mobs): ignite(1)
-Master (/datum/controller/master): RunQueue()
-Master (/datum/controller/master): Loop(2)
-Master (/datum/controller/master): StartProcessing(0)*/
+
 /mob/living/carbon/proc/handle_organs(delta_time, times_fired)
 	if(stat == DEAD)
 		if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1) || reagents.has_reagent(/datum/reagent/cryostylane)) // No organ decay if the body contains formaldehyde.
