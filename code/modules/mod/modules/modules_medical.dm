@@ -213,13 +213,13 @@
 		organ.forceMove(drop_location())
 	organ = null
 
-///Patrient Transport - Generates hololight bags you can put people in.
+///Patrient Transport - Generates hardlight bags you can put people in.
 /obj/item/mod/module/criminalcapture/patienttransport
 	name = "MOD patient transport module"
-	desc = "A modified version of the security criminal capture module, this module creates hololight bags to \
+	desc = "A modified version of the security criminal capture module, this module creates hardlight bags to \
 		safely transfer patients throughout hostile environments."
 	icon_state = "patient_transport"
-	bodybag_type = /obj/structure/closet/body_bag/environmental/hololight
+	bodybag_type = /obj/structure/closet/body_bag/environmental/hardlight
 	capture_time = 1.5 SECONDS
 	packup_time = 0.5 SECONDS
 

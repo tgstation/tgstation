@@ -361,26 +361,26 @@
 	air_contents.gases[/datum/gas/oxygen][MOLES] = (ONE_ATMOSPHERE*50)/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
 	air_contents.gases[/datum/gas/nitrous_oxide][MOLES] = (ONE_ATMOSPHERE*50)/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
 
-/obj/structure/closet/body_bag/environmental/hololight
-	name = "hololight bodybag"
-	desc = "A hololight bag for storing bodies. Resistant to space."
+/obj/structure/closet/body_bag/environmental/hardlight
+	name = "hardlight bodybag"
+	desc = "A hardlight bag for storing bodies. Resistant to space."
 	icon_state = "holobag_med"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	foldedbag_path = null
 	weather_protection = list(TRAIT_VOIDSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE)
 
-/obj/structure/closet/body_bag/environmental/hololight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/structure/closet/body_bag/environmental/hardlight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type in list(BRUTE, BURN))
 		playsound(src, 'sound/weapons/egloves.ogg', 80, TRUE)
 
-/obj/structure/closet/body_bag/environmental/prisoner/hololight
-	name = "hololight prisoner bodybag"
-	desc = "A hololight bag for storing bodies. Resistant to space, can be sinched to prevent escape."
+/obj/structure/closet/body_bag/environmental/prisoner/hardlight
+	name = "hardlight prisoner bodybag"
+	desc = "A hardlight bag for storing bodies. Resistant to space, can be sinched to prevent escape."
 	icon_state = "holobag_sec"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	foldedbag_path = null
 	weather_protection = list(TRAIT_VOIDSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE)
 
-/obj/structure/closet/body_bag/environmental/prisoner/hololight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/structure/closet/body_bag/environmental/prisoner/hardlight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type in list(BRUTE, BURN))
 		playsound(src, 'sound/weapons/egloves.ogg', 80, TRUE)

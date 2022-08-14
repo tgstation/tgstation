@@ -176,7 +176,7 @@
 	speech_args[SPEECH_SPANS] |= voicespan
 	drain_power(use_power_cost)
 
-///Criminal Capture - Generates hololight bags you can put people in and sinch.
+///Criminal Capture - Generates hardlight bags you can put people in and sinch.
 /obj/item/mod/module/criminalcapture
 	name = "MOD criminal capture module"
 	desc = "The private security that had orders to take in people dead were quite \
@@ -196,7 +196,7 @@
 	/// Time to dematerialize a bodybag.
 	var/packup_time = 1 SECONDS
 	/// Typepath of our bodybag
-	var/bodybag_type = /obj/structure/closet/body_bag/environmental/prisoner/hololight
+	var/bodybag_type = /obj/structure/closet/body_bag/environmental/prisoner/hardlight
 	/// Our linked bodybag.
 	var/obj/structure/closet/body_bag/linked_bodybag
 
@@ -255,7 +255,7 @@
 /obj/item/mod/module/criminalcapture/proc/delete_bag(obj/structure/closet/body_bag/bag)
 	if(mod?.wearer)
 		UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/check_range)
-		balloon_alert(mod.wearer, "bag destroyed")
+		balloon_alert(mod.wearer, "bag dissipated")
 	bag.open(force = TRUE)
 	qdel(bag)
 
@@ -353,7 +353,7 @@
 /obj/item/mod/module/active_sonar
 	name = "MOD active sonar"
 	desc = "Ancient tech from the 20th century, this module uses sonic waves to detect living creatures within the user's radius. \
-	Its loud ping is much harder to hide in an indoor station than in the outdoor operations it was designed for."
+		Its loud ping is much harder to hide in an indoor station than in the outdoor operations it was designed for."
 	icon_state = "active_sonar"
 	module_type = MODULE_USABLE
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
