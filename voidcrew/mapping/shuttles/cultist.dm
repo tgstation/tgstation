@@ -1,6 +1,7 @@
 /datum/map_template/shuttle/voidcrew/cultist
 	name = "Express-Class Eldritch Hijacked Freighter"
 	suffix = "express_cultist"
+	short_name = "Cultist-class"
 	antag_datum = /datum/antagonist/cult
 
 	job_slots = list(

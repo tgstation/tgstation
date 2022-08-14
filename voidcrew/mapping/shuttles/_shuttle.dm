@@ -7,7 +7,7 @@
 	///Amount of ships able to be active at once
 	var/limit
 	///Cost (in metacoins) of the ship
-	var/cost
+	var/cost = 1
 	///Short name of the ship
 	var/short_name
 	///The antag datum to give a player on join
