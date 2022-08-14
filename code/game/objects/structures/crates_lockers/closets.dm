@@ -460,7 +460,7 @@
 		var/item_is_id = W.GetID()
 		if(!item_is_id)
 			return FALSE
-		if(item_is_id || !toggle(user))
+		if((item_is_id || !toggle(user)) && !opened)
 			togglelock(user)
 	else
 		return FALSE
