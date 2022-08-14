@@ -168,7 +168,7 @@
 				. = TRUE
 		if("reaction_suppression")
 			if(!nob_crystal_inserted)
-				message_admins("[ADMIN_LOOKUPFLW(usr)] tried to toggle reaction suppression on a pump without a noblium crystal inside, possible href exploit attempt.")
+				stack_trace("[usr] tried to toggle reaction suppression on a pump without a noblium crystal inside, possible href exploit attempt.")
 				return
 			suppress_reactions = !suppress_reactions
 			SSair.start_processing_machine(src)
