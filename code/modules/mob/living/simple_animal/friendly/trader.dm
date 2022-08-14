@@ -460,6 +460,6 @@
 
 /mob/living/simple_animal/hostile/retaliate/trader/mrbones/initial_wanteds()
 	return list(
-		/obj/item/reagent_containers/food/condiment/milk = list(1000, INFINITY, ""),
+		/obj/item/reagent_containers/condiment/milk = list(1000, INFINITY, ""),
 		/obj/item/stack/sheet/bone = list(420, INFINITY, ", per sheet of bone")
 				)

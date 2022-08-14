@@ -1,4 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - bugfix: "Clicking on tiles you can't see will work again if you pressed F12."

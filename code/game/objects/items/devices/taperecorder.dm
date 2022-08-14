@@ -247,7 +247,7 @@
 			playsleepseconds = mytape.timestamp[i + 1] - mytape.timestamp[i]
 		if(playsleepseconds > 14 SECONDS)
 			sleep(1 SECONDS)
-			say("Skipping [playsleepseconds] seconds of silence.")
+			say("Skipping [playsleepseconds/10] seconds of silence.")
 			playsleepseconds = 1 SECONDS
 		i++
 
@@ -283,9 +283,8 @@
 	set name = "Print Transcript"
 	set category = "Object"
 
-	if(!mytape.storedinfo.len)
-		return
-	if(!can_use(usr))
+	var/list/transcribed_info = mytape.storedinfo
+	if(!length(transcribed_info))
 		return
 	if(!mytape)
 		return
@@ -294,22 +293,48 @@
 		return
 	if(recording || playing)
 		return
+	if(!can_use(usr))
+		return
 
-	say("Transcript printed.")
-	playsound(src, 'sound/items/taperecorder/taperecorder_print.ogg', 50, FALSE)
+	var/transcribed_text = "<b>Transcript:</b><br><br>"
+	var/page_count = 1
+
+	var/tape_name = mytape.name
+	var/initial_tape_name = initial(mytape.name)
+	var/paper_name = "paper- '[tape_name == initial_tape_name ? "Tape" : "[tape_name]"] Transcript'"
+
+	for(var/transcript_excerpt in transcribed_info)
+		var/excerpt_length = length(transcript_excerpt)
+
+		// Very unexpected. Better abort non-gracefully.
+		if(excerpt_length > MAX_PAPER_LENGTH)
+			say("Error: Data corruption detected. Cannot print.")
+			CRASH("Transcript entry has more than [MAX_PAPER_LENGTH] chars: [excerpt_length] chars")
+
+		// If we're going to overflow the paper's length, print the current transcribed text out first and reset to prevent us
+		// going over the paper char count.
+		if((length(transcribed_text) + excerpt_length) > MAX_PAPER_LENGTH)
+			var/obj/item/paper/transcript_paper = new /obj/item/paper(get_turf(src))
+			transcript_paper.add_raw_text(transcribed_text)
+			transcript_paper.name = "[paper_name] page [page_count]"
+			transcript_paper.update_appearance()
+			transcribed_text = ""
+			page_count++
+
+		transcribed_text += "[transcript_excerpt]<br>"
+
 	var/obj/item/paper/transcript_paper = new /obj/item/paper(get_turf(src))
-	var/t1 = "<B>Transcript:</B><BR><BR>"
-	for(var/i in 1 to mytape.storedinfo.len)
-		t1 += "[mytape.storedinfo[i]]<BR>"
-	transcript_paper.add_raw_text(t1)
-	var/tapename = mytape.name
-	var/prototapename = initial(mytape.name)
-	transcript_paper.name = "paper- '[tapename == prototapename ? "Tape" : "[tapename]"] Transcript'"
+	transcript_paper.add_raw_text(transcribed_text)
+	transcript_paper.name = "[paper_name] page [page_count]"
 	transcript_paper.update_appearance()
+
+	say("Transcript printed, [page_count] pages.")
+	playsound(src, 'sound/items/taperecorder/taperecorder_print.ogg', 50, FALSE)
+
+	// Can't put the entire stack into their hands if there's multple pages, but hey we can at least put one page in.
 	usr.put_in_hands(transcript_paper)
 	canprint = FALSE
 	addtimer(VARSET_CALLBACK(src, canprint, TRUE), 30 SECONDS)
-
 
 //empty tape recorders
 /obj/item/taperecorder/empty

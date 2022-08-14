@@ -11,9 +11,9 @@
 		/obj/item/shard = 10,
 		/obj/effect/spawner/random/trash/cigbutt = 10,
 		/obj/effect/spawner/random/trash/botanical_waste = 5,
-		/obj/item/reagent_containers/glass = 5,
+		/obj/item/reagent_containers/cup = 5,
 		/obj/item/broken_bottle = 5,
-		/obj/item/reagent_containers/glass/bowl = 5,
+		/obj/item/reagent_containers/cup/bowl = 5,
 		/obj/item/light/tube/broken = 5,
 		/obj/item/light/bulb/broken = 5,
 		/obj/item/assembly/mousetrap/armed = 5,
@@ -22,7 +22,7 @@
 		/obj/item/trash/candle = 1,
 		/obj/item/popsicle_stick = 1,
 		/obj/item/reagent_containers/syringe = 1,
-		/obj/item/reagent_containers/food/drinks/sillycup = 1,
+		/obj/item/reagent_containers/cup/glass/sillycup = 1,
 		/obj/item/shard/plasma = 1,
 	)
 
@@ -140,8 +140,8 @@
 		/obj/item/clothing/head/cone = 7,
 		/obj/item/clothing/suit/caution = 3,
 		/mob/living/simple_animal/hostile/retaliate/frog = 2,
-		/obj/item/reagent_containers/glass/rag = 2,
-		/obj/item/reagent_containers/glass/bucket = 2,
+		/obj/item/reagent_containers/cup/rag = 2,
+		/obj/item/reagent_containers/cup/bucket = 2,
 		/obj/effect/decal/cleanable/blood/old = 2,
 		/obj/structure/mopbucket = 2,
 	)
@@ -184,8 +184,8 @@
 		/obj/structure/mopbucket = 10,
 		/obj/item/mop = 5,
 		/obj/item/clothing/suit/caution = 3,
-		/obj/item/reagent_containers/glass/bucket = 1,
-		/obj/item/reagent_containers/glass/bucket/wooden = 1,
+		/obj/item/reagent_containers/cup/bucket = 1,
+		/obj/item/reagent_containers/cup/bucket/wooden = 1,
 	)
 
 /obj/effect/spawner/random/trash/caution_sign
@@ -203,8 +203,8 @@
 	name = "bucket spawner"
 	icon_state = "caution"
 	loot = list(
-		/obj/item/reagent_containers/glass/bucket,
-		/obj/item/reagent_containers/glass/bucket/wooden,
+		/obj/item/reagent_containers/cup/bucket,
+		/obj/item/reagent_containers/cup/bucket/wooden,
 	)
 
 /obj/effect/spawner/random/trash/soap

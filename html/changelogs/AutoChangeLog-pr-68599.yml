@@ -1,8 +1,0 @@
-author: "vincentiusvin"
-delete-after: True
-changes: 
-  - refactor: "All four SM delams got recoded, no significant gameplay changes expected."
-  - qol: "SM healing is broadcasted on crew radio too now instead of just engi"
-  - qol: "SM going singulo or tesla will be announced on common comms when the damage is getting severe enough."
-  - code_imp: "Only engines considered to be a main engine can spawn stationwide anomalies and trigger cascades."
-  - bugfix: "Fixed the sm not having a boxy overlay on normal delams when counting down. This is what the radio message was referring to as \"causality field\"."

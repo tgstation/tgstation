@@ -173,7 +173,7 @@
 			new /obj/item/card/id/advanced/chameleon(src)
 			new /obj/item/clothing/under/chameleon(src)
 			new /obj/item/reagent_containers/hypospray/medipen/stimulants(src)
-			new /obj/item/reagent_containers/glass/rag(src)
+			new /obj/item/reagent_containers/cup/rag(src)
 
 		if(KIT_NINJA)
 			new /obj/item/katana(src) // Unique , hard to tell how much tc this is worth. 8 tc?
@@ -222,7 +222,7 @@
 			new /obj/item/storage/belt/fannypack/yellow(src) // 0 tc
 			new /obj/item/grenade/spawnergrenade/buzzkill(src)
 			new /obj/item/grenade/spawnergrenade/buzzkill(src)
-			new /obj/item/reagent_containers/glass/bottle/beesease(src) // 10 tc?
+			new /obj/item/reagent_containers/cup/bottle/beesease(src) // 10 tc?
 			new /obj/item/melee/beesword(src) //priceless
 
 		if(KIT_MR_FREEZE)
@@ -385,7 +385,7 @@
 /obj/item/storage/box/syndie_kit/space
 	name = "boxed space suit and helmet"
 
-/obj/item/storage/box/syndie_kit/space/Initialize()
+/obj/item/storage/box/syndie_kit/space/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.set_holdable(list(/obj/item/clothing/suit/space/syndicate, /obj/item/clothing/head/helmet/space/syndicate))
@@ -410,24 +410,24 @@
 /obj/item/storage/box/syndie_kit/chemical
 	name = "chemical kit"
 
-/obj/item/storage/box/syndie_kit/chemical/Initialize()
+/obj/item/storage/box/syndie_kit/chemical/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 14
 
 /obj/item/storage/box/syndie_kit/chemical/PopulateContents()
-	new /obj/item/reagent_containers/glass/bottle/polonium(src)
-	new /obj/item/reagent_containers/glass/bottle/venom(src)
-	new /obj/item/reagent_containers/glass/bottle/fentanyl(src)
-	new /obj/item/reagent_containers/glass/bottle/formaldehyde(src)
-	new /obj/item/reagent_containers/glass/bottle/spewium(src)
-	new /obj/item/reagent_containers/glass/bottle/cyanide(src)
-	new /obj/item/reagent_containers/glass/bottle/histamine(src)
-	new /obj/item/reagent_containers/glass/bottle/initropidril(src)
-	new /obj/item/reagent_containers/glass/bottle/pancuronium(src)
-	new /obj/item/reagent_containers/glass/bottle/sodium_thiopental(src)
-	new /obj/item/reagent_containers/glass/bottle/coniine(src)
-	new /obj/item/reagent_containers/glass/bottle/curare(src)
-	new /obj/item/reagent_containers/glass/bottle/amanitin(src)
+	new /obj/item/reagent_containers/cup/bottle/polonium(src)
+	new /obj/item/reagent_containers/cup/bottle/venom(src)
+	new /obj/item/reagent_containers/cup/bottle/fentanyl(src)
+	new /obj/item/reagent_containers/cup/bottle/formaldehyde(src)
+	new /obj/item/reagent_containers/cup/bottle/spewium(src)
+	new /obj/item/reagent_containers/cup/bottle/cyanide(src)
+	new /obj/item/reagent_containers/cup/bottle/histamine(src)
+	new /obj/item/reagent_containers/cup/bottle/initropidril(src)
+	new /obj/item/reagent_containers/cup/bottle/pancuronium(src)
+	new /obj/item/reagent_containers/cup/bottle/sodium_thiopental(src)
+	new /obj/item/reagent_containers/cup/bottle/coniine(src)
+	new /obj/item/reagent_containers/cup/bottle/curare(src)
+	new /obj/item/reagent_containers/cup/bottle/amanitin(src)
 	new /obj/item/reagent_containers/syringe(src)
 
 /obj/item/storage/box/syndie_kit/nuke
@@ -457,7 +457,7 @@
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure(src)
 	new /obj/item/reagent_containers/syringe(src)
-	new /obj/item/reagent_containers/glass/bottle/tuberculosiscure(src)
+	new /obj/item/reagent_containers/cup/bottle/tuberculosiscure(src)
 
 /obj/item/storage/box/syndie_kit/chameleon
 	name = "chameleon kit"
@@ -494,7 +494,7 @@
 	new/obj/item/toy/crayon/rainbow(src)
 
 /obj/item/storage/box/syndie_kit/romerol/PopulateContents()
-	new /obj/item/reagent_containers/glass/bottle/romerol(src)
+	new /obj/item/reagent_containers/cup/bottle/romerol(src)
 	new /obj/item/reagent_containers/syringe(src)
 	new /obj/item/reagent_containers/dropper(src)
 
@@ -545,7 +545,7 @@
 
 /obj/item/storage/box/syndie_kit/sleepytime/PopulateContents()
 	new /obj/item/clothing/under/syndicate/bloodred/sleepytime(src)
-	new /obj/item/reagent_containers/food/drinks/mug/coco(src)
+	new /obj/item/reagent_containers/cup/glass/mug/coco(src)
 	new /obj/item/toy/plush/carpplushie(src)
 	new /obj/item/bedsheet/syndie(src)
 

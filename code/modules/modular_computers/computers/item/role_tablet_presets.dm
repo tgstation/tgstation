@@ -224,6 +224,14 @@
 		/datum/computer_file/program/robocontrol,
 	)
 
+/obj/item/modular_computer/tablet/pda/medical/paramedic
+	name = "paramedic PDA"
+	default_applications = list(
+		/datum/computer_file/program/phys_scanner/medical,
+		/datum/computer_file/program/records/medical,
+		/datum/computer_file/program/radar/lifeline,
+	)
+
 /obj/item/modular_computer/tablet/pda/viro
 	name = "virology PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_split
@@ -313,7 +321,7 @@
 	greyscale_colors = null
 	insert_type = /obj/item/toy/crayon/rainbow
 
-/obj/item/modular_computer/tablet/pda/clown/ComponentInitialize()
+/obj/item/modular_computer/tablet/pda/clown/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/slippery/clowning, 120, NO_SLIP_WHEN_WALKING, CALLBACK(src, .proc/AfterSlip), slot_whitelist = list(ITEM_SLOT_ID, ITEM_SLOT_BELT))
 	AddComponent(/datum/component/wearertargeting/sitcomlaughter, CALLBACK(src, .proc/after_sitcom_laugh))
@@ -383,4 +391,3 @@
 	icon_state = "pda-clear"
 	greyscale_config = null
 	greyscale_colors = null
-

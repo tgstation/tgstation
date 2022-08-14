@@ -433,13 +433,13 @@
 			span_notice("You turn off \the [src]."), \
 			span_hear("You hear heavy droning fade out."))
 		active = FALSE
-		log_game("[src] was deactivated by [key_name(user)] at [AREACOORD(src)]")
+		user.log_message("deactivated [src].", LOG_GAME)
 	else
 		user.visible_message(span_notice("[user] turned \the [src] on."), \
 			span_notice("You turn on \the [src]."), \
 			span_hear("You hear heavy droning."))
 		active = ACTIVE_SETUPFIELDS
-		log_game("[src] was activated by [key_name(user)] at [AREACOORD(src)]")
+		user.log_message("activated [src].", LOG_GAME)
 	add_fingerprint(user)
 
 /obj/machinery/power/shieldwallgen/emag_act(mob/user)

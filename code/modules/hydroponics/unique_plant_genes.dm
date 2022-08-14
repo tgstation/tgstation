@@ -127,7 +127,8 @@
 	target.adjust_fire_stacks(round(our_seed.potency / 20))
 	if(target.ignite_mob())
 		message_admins("[ADMIN_LOOKUPFLW(user)] set [ADMIN_LOOKUPFLW(target)] on fire with [our_plant] at [AREACOORD(user)]")
-		log_game("[key_name(user)] set [key_name(target)] on fire with [our_plant] at [AREACOORD(user)]")
+		user.log_message("set [key_name(target)] on fire with [our_plant]", LOG_ATTACK)
+		target.log_message("was set on fire by [key_name(user)] with [our_plant].", LOG_VICTIM, log_globally = FALSE)
 	our_plant.investigate_log("was used by [key_name(user)] to burn [key_name(target)] at [AREACOORD(user)]", INVESTIGATE_BOTANY)
 
 /// Sunflower's attack effect (shows cute text)
