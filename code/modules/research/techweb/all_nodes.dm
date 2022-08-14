@@ -334,8 +334,8 @@
 		"pandemic",
 		"soda_dispenser",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	required_experiments = list(/datum/experiment/dissection/human)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 12500)
+	discount_experiments = list(/datum/experiment/dissection/human = 10000) //ex-required experiments have large costs as a temp measure to see how often they get done when not a hard requirement.
 
 /datum/techweb_node/adv_biotech
 	id = "adv_biotech"
@@ -356,9 +356,11 @@
 		"plasmarefiller",
 		"smoke_machine",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	required_experiments = list(/datum/experiment/dissection/nonhuman)
-	discount_experiments = list(/datum/experiment/scanning/random/material/meat = 4000) //Big discount to reinforce doing it.
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 15000)
+	discount_experiments = list(
+		/datum/experiment/scanning/random/material/meat = 4000,
+		/datum/experiment/dissection/nonhuman = 10000,
+		) //ex-required experiments have large costs as a temp measure to see how often they get done when not a hard requirement.
 
 /datum/techweb_node/xenoorgan_biotech
 	id = "xenoorgan_bio"
@@ -549,9 +551,11 @@
 		"sheetifier",
 		"weldingmask",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	required_experiments = list(/datum/experiment/ordnance/gaseous/bz)
-	discount_experiments = list(/datum/experiment/scanning/random/material/medium/one = 4000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 15000)
+	discount_experiments = list(
+		/datum/experiment/scanning/random/material/medium/one = 4000,
+		/datum/experiment/ordnance/gaseous/bz = 10000,
+	) //ex-required experiments have large costs as a temp measure to see how often they get done when not a hard requirement.
 
 /datum/techweb_node/anomaly
 	id = "anomaly_research"
@@ -985,9 +989,11 @@
 	design_ids = list(
 		"quadultra_micro_laser",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier3_microlaser = 4000)
-	required_experiments = list(/datum/experiment/ordnance/gaseous/noblium)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 15000)
+	discount_experiments = list(
+		/datum/experiment/scanning/points/machinery_pinpoint_scan/tier3_microlaser = 4000,
+		/datum/experiment/ordnance/gaseous/noblium = 10000,
+	) //ex-required experiments have large costs as a temp measure to see how often they get done when not a hard requirement.
 
 /////////////////////////Clown tech/////////////////////////
 /datum/techweb_node/clown
@@ -1331,9 +1337,11 @@
 		"seed_extractor",
 		"adv_watering_can",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
-	required_experiments = list(/datum/experiment/scanning/random/plants/wild)
-	discount_experiments = list(/datum/experiment/scanning/random/plants/traits = 3000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 14000)
+	discount_experiments = list(
+		/datum/experiment/scanning/random/plants/traits = 3000,
+		/datum/experiment/scanning/random/plants/wild = 10000,
+	) //ex-required experiments have large costs as a temp measure to see how often they get done when not a hard requirement.
 
 /datum/techweb_node/exp_tools
 	id = "exp_tools"
@@ -1404,8 +1412,8 @@
 		"pin_testing",
 		"tele_shield",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
-	required_experiments = list(/datum/experiment/ordnance/explosive/pressurebomb)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 20000)
+	discount_experiments = list(/datum/experiment/ordnance/explosive/pressurebomb = 10000) //ex-required experiments have large costs as a temp measure to see how often they get done when not a hard requirement.
 
 /datum/techweb_node/adv_weaponry
 	id = "adv_weaponry"
@@ -1770,9 +1778,11 @@
 		"mech_ccw_armor",
 		"mech_proj_armor",
 	)
-	required_experiments = list(/datum/experiment/scanning/random/mecha_damage_scan)
-	discount_experiments = list(/datum/experiment/scanning/random/mecha_destroyed_scan = 5000)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+	discount_experiments = list(
+		/datum/experiment/scanning/random/mecha_destroyed_scan = 5000,
+		/datum/experiment/scanning/random/mecha_damage_scan = 10000,
+		) //ex-required experiments have large costs as a temp measure to see how often they get done when not a hard requirement.
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 20000)
 
 /datum/techweb_node/mech_scattershot
 	id = "mecha_tools"
@@ -1988,8 +1998,8 @@
 		/obj/item/wrench/abductor,
 	)
 
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	required_experiments = list(/datum/experiment/scanning/points/slime/hard)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 12500)
+	discount_experiments = list(/datum/experiment/scanning/points/slime/hard = 10000) //ex-required experiments have large costs as a temp measure to see how often they get done when not a hard requirement.
 	hidden = TRUE
 
 /datum/techweb_node/alien_engi
