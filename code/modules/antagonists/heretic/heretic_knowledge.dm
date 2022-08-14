@@ -410,24 +410,27 @@
 		var/mob/living/carbon/human/human_to_check = crewmember.current
 		if(!istype(human_to_check) || human_to_check.stat == DEAD || !human_to_check.dna)
 			continue
-		var/turf/check_turf = get_turf(human_to_check)
-		// Have to match z-levels.
-		// Otherwise, these will probably own miners which is funny, but mean
-		if(check_turf.z != loc.z)
+		var/their_prints = md5(human_to_check.dna.unique_identity)
+		var/their_blood = human_to_check.dna.unique_enzymes
+		// Having their fingerprints or blood present will boost the curse
+		// and also not run any z or dist checks, as a bonus for those going beyond
+		if(fingerprints[their_prints] || blood_samples[their_blood])
+			boosted_targets += human_to_check
+			potential_targets["[human_to_check.real_name] (Boosted)"] = human_to_check
 			continue
-		// Also has to abide by our max range
+
+		// No boost present, so we should be a little stricter moving forward
+		var/turf/check_turf = get_turf(human_to_check)
+		// We have to match z-levels.
+		// Otherwise, you could probably hard own miners, which is funny but mean.
+		// Multi-z stations technically work though.
+		if(!is_valid_z_level(check_turf, loc))
+			continue
+		// Also has to abide by our max range.
 		if(get_dist(check_turf, loc) > max_range)
 			continue
 
-		var/their_prints = md5(human_to_check.dna.unique_identity)
-		var/their_blood = human_to_check.dna.unique_enzymes
-
-		var/list_key = "[human_to_check.real_name]"
-		if(fingerprints[their_prints] || blood_samples[their_blood])
-			boosted_targets += human_to_check
-			list_key += " (Boosted)"
-
-		potential_targets[list_key] = human_to_check
+		potential_targets[human_to_check.real_name] = human_to_check
 
 	var/chosen_mob = tgui_input_list(user, "Select the victim you wish to curse.", name, sort_list(potential_targets, /proc/cmp_text_asc))
 	if(isnull(chosen_mob))
@@ -444,16 +447,15 @@
 		if(are_you_sure != "Yes")
 			return FALSE
 
+	var/boosted = (to_curse in boosted_targets)
 	var/turf/curse_turf = get_turf(to_curse)
-	if(curse_turf.z != loc.z || get_dist(curse_turf, loc) > max_range * 1.5) // Give a bit of leeway for people moving around
+	if(!boosted && (!is_valid_z_level(curse_turf, loc) || get_dist(curse_turf, loc) > max_range * 1.5)) // Give a bit of leeway on max range for people moving around
 		loc.balloon_alert(user, "ritual failed, too far!")
 		return FALSE
 
 	if(to_curse.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, charge_cost = 0))
 		to_chat(to_curse, span_warning("You feel a ghastly chill, but the feeling passes shortly."))
 		return TRUE
-
-	var/boosted = (to_curse in boosted_targets)
 
 	log_combat(user, to_curse, "cursed via heretic ritual", addition = "([boosted ? "Boosted" : ""] [name])")
 	curse(to_curse, boosted)
