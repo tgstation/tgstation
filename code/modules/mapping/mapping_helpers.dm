@@ -674,6 +674,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
  * ## trapdoor placer!
  *
  * This places an unlinked trapdoor in the tile its on (so someone with a remote needs to link it up first)
+ * Pre-mapped trapdoors (unlike player-made ones) are not conspicuous by default so nothing stands out with them
  * Admins may spawn this in the round for additional trapdoors if they so desire
  * if YOU want to learn more about trapdoors, read about the component at trapdoor.dm
  * note: this is not a turf subtype because the trapdoor needs the type of the turf to turn back into
@@ -685,7 +686,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 /obj/effect/mapping_helpers/trapdoor_placer/LateInitialize()
 	var/turf/component_target = get_turf(src)
-	component_target.AddComponent(/datum/component/trapdoor, starts_open = FALSE)
+	component_target.AddComponent(/datum/component/trapdoor, starts_open = FALSE, conspicuous = FALSE)
 	qdel(src)
 
 /obj/effect/mapping_helpers/ztrait_injector

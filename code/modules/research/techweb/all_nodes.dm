@@ -62,6 +62,7 @@
 		"titaniumglass",
 		"toner",
 		"toner_large",
+		"trapdoor_electronics",
 		"turbine_part_compressor",
 		"turbine_part_rotor",
 		"turbine_part_stator",
