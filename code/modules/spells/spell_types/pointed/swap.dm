@@ -1,6 +1,8 @@
 /datum/action/cooldown/spell/pointed/swap
 	name = "Swap"
-	desc = "This spell allows you to swap locations with any living being."
+	desc = "This spell allows you to swap locations with any living being. \
+		RMB: Mark a secondary swap target. This secondary swap target will be discarded once you swap, \
+		or else you can click yourself with the RMB to discard your secondary target."
 	button_icon_state = "swap"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/swap_target.dmi'
 
@@ -33,15 +35,18 @@
 			return FALSE
 		if(!target)
 			return FALSE
-		if(!isliving(click_target) && isturf(click_target))
+		if(!isliving(click_target) || isturf(click_target))
 			// Find any living being in the list. We aren't picky, it's aim assist after all
 			click_target = locate(/mob/living) in click_target
 			if(!click_target)
 				to_chat(owner, span_warning("You can only select living beings as secondary target!"))
 				return FALSE
 		if(click_target == owner)
-			to_chat(owner, span_notice("You cancel your secondary swap target!"))
-			second_target = NONE
+			if(!isnull(second_target))
+				to_chat(owner, span_notice("You cancel your secondary swap target!"))
+				second_target = null
+			else
+				to_chat(owner, span_warning("You have no secondary swap target!"))
 			return FALSE
 		second_target = click_target
 		to_chat(owner, span_notice("You select [click_target.name] as a secondary swap target!"))
@@ -60,14 +65,14 @@
 		var/datum/effect_system/fluid_spread/smoke/smoke = new smoke_type()
 		smoke.set_up(smoke_amt, holder = owner, location = get_turf(owner))
 		smoke.start()
-	var/turf/target_location = cast_on.loc
+	var/turf/target_location = get_turf(cast_on)
 	if(!isnull(second_target) && get_dist(owner, second_target) <= cast_range && !(cast_on == second_target))
 		to_chat(second_target, span_userdanger("You feel space bending."))
 		if(ispath(smoke_type, /datum/effect_system/fluid_spread/smoke))
 			var/datum/effect_system/fluid_spread/smoke/smoke = new smoke_type()
 			smoke.set_up(smoke_amt, holder = owner, location = get_turf(second_target))
 			smoke.start()
-		var/turf/second_location = second_target.loc
+		var/turf/second_location = get_turf(second_target)
 		do_teleport(second_target, owner.loc, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
 		do_teleport(cast_on, second_location, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
 		do_teleport(owner, target_location, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
@@ -79,4 +84,4 @@
 		do_teleport(owner, target_location, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
 		cast_on.playsound_local(get_turf(cast_on), 'sound/magic/swap.ogg', 50, 1)
 		owner.playsound_local(get_turf(owner), 'sound/magic/swap.ogg', 50, 1)
-	second_target = NONE
+	second_target = null
