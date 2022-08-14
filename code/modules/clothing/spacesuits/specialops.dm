@@ -16,6 +16,7 @@
 	name = "CentCom officer's coat"
 	desc = "An armored, space-proof coat used in special operations."
 	icon_state = "centcom_coat"
+	icon = 'icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
 	inhand_icon_state = "centcom"
 	blood_overlay_type = "coat"
