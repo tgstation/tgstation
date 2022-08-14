@@ -408,7 +408,7 @@
 			user.visible_message(span_notice("[user] [welded ? "welds shut" : "unwelded"] \the [src]."),
 							span_notice("You [welded ? "weld" : "unwelded"] \the [src] with \the [W]."),
 							span_hear("You hear welding."))
-			user.log_message("[welded ? "welded":"unwelded"] closet [src] with [W] at [AREACOORD(src)]", LOG_GAME)
+			user.log_message("[welded ? "welded":"unwelded"] closet [src] with [W]", LOG_GAME)
 			update_appearance()
 	else if (can_install_electronics && istype(W, /obj/item/electronics/airlock)\
 			&& !secure && !electronics && !locked && (welded || !can_weld_shut) && !broken)

@@ -405,7 +405,7 @@
 ///from base of obj/item/attack_qdeleted(): (atom/target, mob/user, params)
 #define COMSIG_ITEM_ATTACK_QDELETED "item_attack_qdeleted"
 
-///from /obj/item/assembly/proc/pulsed()
+///from /obj/item/assembly/proc/pulsed(mob/pulser)
 #define COMSIG_ASSEMBLY_PULSED "assembly_pulsed"
 
 ///from base of /obj/item/mmi/set_brainmob(): (mob/living/brain/new_brainmob)

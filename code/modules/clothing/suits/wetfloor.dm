@@ -1,6 +1,7 @@
 /obj/item/clothing/suit/caution
 	name = "wet floor sign"
 	desc = "Caution! Wet Floor!"
+	icon = 'icons/obj/clothing/suits/utility.dmi'
 	icon_state = "caution"
 	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'

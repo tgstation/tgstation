@@ -5,6 +5,7 @@
 	key = "cry"
 	key_third_person = "cries"
 	message = "cries."
+	message_mime = "sobs silently."
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/carbon/human/dap
@@ -22,6 +23,7 @@
 	key = "grumble"
 	key_third_person = "grumbles"
 	message = "grumbles!"
+	message_mime = "grumbles silently!"
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/carbon/human/handshake
@@ -42,6 +44,7 @@
 	key = "mumble"
 	key_third_person = "mumbles"
 	message = "mumbles!"
+	message_mime = "mumbles silently!"
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/carbon/human/scream
@@ -63,6 +66,7 @@
 	key = "screech"
 	key_third_person = "screeches"
 	message = "screeches."
+	message_mime = "screeches silently."
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 	vary = FALSE
 
@@ -169,6 +173,7 @@
 	key = "gnarl"
 	key_third_person = "gnarls"
 	message = "gnarls and shows its teeth..."
+	message_mime = "gnarls silently, baring its teeth..."
 
 /datum/emote/living/carbon/human/monkey/roll
 	key = "roll"
@@ -186,6 +191,7 @@
 	key = "roar"
 	key_third_person = "roars"
 	message = "roars."
+	message_mime = "acts out a roar."
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/carbon/human/monkey/tail

@@ -189,7 +189,7 @@
 	/// Banned combinations of the list in decimal
 	var/static/list/banned_combinations = list(-1, 47, 95, 203, 311, 325, 422, 473, 488, 500, 511)
 
-/obj/structure/light_puzzle/Initialize()
+/obj/structure/light_puzzle/Initialize(mapload)
 	. = ..()
 	var/generated_board = -1
 	while(generated_board in banned_combinations)

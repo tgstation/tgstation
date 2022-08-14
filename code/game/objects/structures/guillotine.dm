@@ -217,7 +217,7 @@
 	if (!istype(M, /mob/living/carbon/human))
 		return
 
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "dying", /datum/mood_event/deaths_door)
+	M.add_mood_event("dying", /datum/mood_event/deaths_door)
 	var/mob/living/carbon/human/H = M
 
 	if (H.dna)
@@ -242,7 +242,7 @@
 	M.regenerate_icons()
 	M.pixel_y -= -GUILLOTINE_HEAD_OFFSET // Move their body back
 	M.layer -= GUILLOTINE_LAYER_DIFF
-	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "dying")
+	M.clear_mood_event("dying")
 	..()
 
 /obj/structure/guillotine/can_be_unfasten_wrench(mob/user, silent)
