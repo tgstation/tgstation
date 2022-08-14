@@ -495,3 +495,53 @@
   - bugfix: fixed the operating computer UI showing empty progress bars. Should just
       tell you no patient in text now.
   - refactor: refactored how operating tables fetches it's patient.
+2022-08-14:
+  Any%, TetraZeta, PositiveEntropy:
+  - imageadd: Resprites all magboots!
+  - imageadd: Resprites Sneakers!
+  CPTANT:
+  - bugfix: Modafinil Overdose now properly puts you to sleep.
+  CapybaraExtravagante:
+  - soundadd: Ambience no longer uses reverb, as the sound files for ambience already
+      has reverb as needed usually!
+  Guillaume Prata:
+  - qol: You can now "welder craft" iron sheets/rods/floor tiles by Left or Right
+      clicking one of these items with a welder. It will craft one of the other two
+      options depending on the Left/Right click. There is a contextual screen tip
+      too so just hover over them with a welder for details on the results.
+  JohnFulpWillard:
+  - bugfix: Earmuffs now properly fix ear damage.
+  Jolly:
+  - bugfix: Somewhere in space, stairs were fixed. I don't know where, but they were
+      fixed. You're welcome.
+  Mothblocks:
+  - qol: Vending machines now support categories. Premium/contraband is moved to categories,
+      and the ClothesMate has special categories for different levels.
+  ShizCalev:
+  - bugfix: Dentally implanted pills now actually work.
+  SuperNovaa41:
+  - bugfix: Long range Gas Analyzer now appears under "Tool Designs" as intended.
+  - rscadd: Adds bear hugs to the game. Squeeze your friends so they can't escape
+      your love!
+  TheBoondock:
+  - qol: ranged analyzer is now able to scan the tile of machines and tables without
+      clicking on the tile directly
+  - qol: ranged analyzer can now scan further upward to 15 tiles
+  Timberpoes:
+  - bugfix: Fix an issue where exceptionally large tape recorder printed transcripts
+      could be generated. They now split across multiple pieces of paper. I sure hope
+      you have a filing cabinet handy!
+  Time-Green:
+  - bugfix: fixes abstract food spawns
+  - code_imp: allowed food list is only generated once
+  YusufEmirKoroglu:
+  - rscadd: Add keyboard shell. A shell that allows the user to input a string. Available
+      after researching the Advanced Shells tech node.
+  - imageadd: added 2 icons for the keyboard shell. One unassembled and one assembled.
+  dragomagol:
+  - qol: blind forcefeeding and stripping is lorge again
+  necromanceranne:
+  - code_imp: Removes an unused bible proc
+  - bugfix: Normal items once again do not fit into bibles.
+  timothymtorres:
+  - bugfix: Fix pirates to not be displayed on crew monitors

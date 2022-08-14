@@ -1,5 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes: 
-  - bugfix: "fixes abstract food spawns"
-  - code_imp: "allowed food list is only generated once"

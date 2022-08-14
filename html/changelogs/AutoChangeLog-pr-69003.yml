@@ -1,4 +1,0 @@
-author: "CapybaraExtravagante"
-delete-after: True
-changes: 
-  - soundadd: "Ambience no longer uses reverb, as the sound files for ambience already has reverb as needed usually!"
