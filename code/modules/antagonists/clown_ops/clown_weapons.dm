@@ -23,7 +23,7 @@
 
 /obj/item/clothing/shoes/clown_shoes/combat/Initialize(mapload)
 	. = ..()
-	
+
 	create_storage(type = /datum/storage/pockets/shoes)
 
 /// Recharging rate in PPS (peels per second)
@@ -190,15 +190,12 @@
 
 /obj/item/grown/bananapeel/bombanana/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/slippery, det_time)
 	bomb = new /obj/item/grenade/syndieminibomb(src)
 	bomb.det_time = det_time
 	if(iscarbon(loc))
 		to_chat(loc, span_danger("[src] begins to beep."))
 	bomb.arm_grenade(loc, null, FALSE)
-
-/obj/item/grown/bananapeel/bombanana/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/slippery, det_time)
 
 /obj/item/grown/bananapeel/bombanana/Destroy()
 	. = ..()

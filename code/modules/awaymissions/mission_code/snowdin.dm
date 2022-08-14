@@ -180,7 +180,7 @@
 	. += span_info("Some <b>liquid plasma<b> could probably be scooped up with a <b>container</b>.")
 
 /turf/open/lava/plasma/attackby(obj/item/I, mob/user, params)
-	var/obj/item/reagent_containers/glass/C = I
+	var/obj/item/reagent_containers/cup/C = I
 	if(C.reagents.total_volume >= C.volume)
 		to_chat(user, span_danger("[C] is full."))
 		return

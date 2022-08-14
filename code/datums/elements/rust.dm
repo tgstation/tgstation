@@ -47,16 +47,23 @@
 /datum/element/rust/proc/handle_tool_use(atom/source, mob/user, obj/item/item)
 	switch(item.tool_behaviour)
 		if(TOOL_WELDER)
-			if(item.use(5))
-				user.balloon_alert(user, "burning off rust...")
-				if(!do_after(user, 5 SECONDS * item.toolspeed, source))
-					return
-				user.balloon_alert(user, "burned off rust")
-				Detach(source)
+			if(!item.tool_start_check(user, amount=5))
 				return
+
+			user.balloon_alert(user, "burning off rust...")
+
+			if(!item.use_tool(source, user, 5 SECONDS))
+				return
+			user.balloon_alert(user, "burned off rust")
+			Detach(source)
+			return
+
+
 		if(TOOL_RUSTSCRAPER)
+			if(!item.tool_start_check(user))
+				return
 			user.balloon_alert(user, "scraping off rust...")
-			if(!do_after(user, 2 SECONDS * item.toolspeed, source))
+			if(!item.use_tool(source, user, 2 SECONDS))
 				return
 			user.balloon_alert(user, "scraped off rust")
 			Detach(source)

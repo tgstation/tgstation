@@ -438,7 +438,7 @@
 /turf/template_noop,
 /area/ruin/unpowered/no_grav)
 "jJ" = (
-/obj/item/reagent_containers/glass/beaker/bluespace{
+/obj/item/reagent_containers/cup/beaker/bluespace{
 	pixel_y = 5
 	},
 /obj/structure/table/reinforced/rglass,
@@ -703,11 +703,11 @@
 "qU" = (
 /obj/machinery/light/cold/directional/north,
 /obj/structure/table/reinforced/rglass,
-/obj/item/reagent_containers/glass/bottle/epinephrine{
+/obj/item/reagent_containers/cup/bottle/epinephrine{
 	pixel_x = -5;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/glass/bottle/multiver{
+/obj/item/reagent_containers/cup/bottle/multiver{
 	pixel_x = 6;
 	pixel_y = 3
 	},
@@ -1875,15 +1875,15 @@
 	},
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/structure/table/reinforced/rglass,
-/obj/item/reagent_containers/glass/bottle/nutrient/l4z{
+/obj/item/reagent_containers/cup/bottle/nutrient/l4z{
 	pixel_x = 4;
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/glass/bottle/nutrient/rh{
+/obj/item/reagent_containers/cup/bottle/nutrient/rh{
 	pixel_x = -4;
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/glass/bottle/mutagen,
+/obj/item/reagent_containers/cup/bottle/mutagen,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "QA" = (

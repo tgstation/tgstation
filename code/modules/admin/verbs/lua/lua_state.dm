@@ -60,7 +60,7 @@ GLOBAL_PROTECT(lua_usr)
 		if(islist(result["param"]))
 			result["param"] = weakrefify_list(result["param"])
 		log += list(result)
-	INVOKE_ASYNC(src, .proc/update_editors)
+	INVOKE_ASYNC(src, /datum/lua_state.proc/update_editors)
 
 /datum/lua_state/proc/load_script(script)
 	GLOB.IsLuaCall = TRUE

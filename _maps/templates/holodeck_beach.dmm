@@ -19,7 +19,7 @@
 /turf/open/floor/holofloor/beach/coast_b,
 /area/template_noop)
 "q" = (
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /turf/open/floor/holofloor/beach/coast_t,
 /area/template_noop)
 "t" = (

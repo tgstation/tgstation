@@ -1277,7 +1277,7 @@
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
 	},
-/obj/item/reagent_containers/glass/bucket/wooden,
+/obj/item/reagent_containers/cup/bucket/wooden,
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -1355,7 +1355,7 @@
 	dir = 8
 	},
 /obj/machinery/iv_drip,
-/obj/item/reagent_containers/food/drinks/waterbottle/large,
+/obj/item/reagent_containers/cup/glass/waterbottle/large,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "UL" = (
