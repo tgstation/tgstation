@@ -30,7 +30,7 @@
 			name = "Cultist",
 			outfit = /datum/outfit/job/assistant,
 			slots = 3,
-		)
+		),
 	)
 
 /datum/outfit/job/captain/western
