@@ -248,7 +248,7 @@
 	cooling_power = 5
 	w_class = WEIGHT_CLASS_HUGE
 	item_flags = ABSTRACT  // don't put in storage
-	chem = /datum/reagent/firefighting_foam/halon
+	chem = null //holds no chems of its own, it takes from the tank.
 	gas_path = /datum/gas/halon
 	tanktype = /obj/machinery/portable_atmospherics
 	var/obj/item/tank
@@ -263,7 +263,6 @@
 		return INITIALIZE_HINT_QDEL
 	reagents = tank.reagents
 	max_water = tank.reagents.maximum_volume
-
 
 /obj/item/extinguisher/mini/nozzle/Destroy()
 	reagents = null //This is a borrowed reference from the tank.

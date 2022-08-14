@@ -1,7 +1,7 @@
 /proc/meta_gas_list()
 	. = subtypesof(/datum/gas)
 	for(var/gas_path in .)
-		var/list/gas_info = new(8)
+		var/list/gas_info = new(9)
 		var/datum/gas/gas = gas_path
 
 		gas_info[META_GAS_SPECIFIC_HEAT] = initial(gas.specific_heat)
@@ -17,6 +17,7 @@
 		gas_info[META_GAS_DANGER] = initial(gas.dangerous)
 		gas_info[META_GAS_ID] = initial(gas.id)
 		gas_info[META_GAS_DESC] = initial(gas.desc)
+		gas_info[META_GAS_REAGENT] = initial(gas.reagent)
 		.[gas_path] = gas_info
 
 /proc/gas_id2path(id)
@@ -56,6 +57,8 @@
 	///How does a single mole of this gas sell for? Formula to calculate maximum value is in code\modules\cargo\exports\large_objects.dm. Doesn't matter for roundstart gasses.
 	var/base_value = 0
 	var/desc
+	///The equivelant reagent for the gas.
+	var/datum/reagent/reagent = null
 
 
 /datum/gas/oxygen
@@ -66,6 +69,7 @@
 	purchaseable = TRUE
 	base_value = 0.2
 	desc = "The gas most life forms need to be able to survive. Also an oxidizer."
+	reagent = /datum/reagent/oxygen
 
 /datum/gas/nitrogen
 	id = "n2"
@@ -75,6 +79,7 @@
 	purchaseable = TRUE
 	base_value = 0.1
 	desc = "A very common gas that used to pad artifical atmospheres to habitable pressure."
+	reagent = /datum/reagent/nitrogen
 
 /datum/gas/carbon_dioxide //what the fuck is this?
 	id = "co2"
@@ -85,6 +90,7 @@
 	purchaseable = TRUE
 	base_value = 0.2
 	desc = "What the fuck is carbon dioxide?"
+	reagent = /datum/reagent/carbondioxide
 
 /datum/gas/plasma
 	id = "plasma"
@@ -96,6 +102,7 @@
 	rarity = 800
 	base_value = 1.5
 	desc = "A flammable gas with many other curious properties. It's research is one of NT's primary objective."
+	reagent = /datum/reagent/stable_plasma
 
 /datum/gas/water_vapor
 	id = "water_vapor"
@@ -108,6 +115,7 @@
 	purchaseable = TRUE
 	base_value = 0.5
 	desc = "Water, in gas form. Makes things slippery."
+	reagent = /datum/reagent/water
 
 /datum/gas/hypernoblium
 	id = "nob"
@@ -120,6 +128,7 @@
 	rarity = 50
 	base_value = 2.5
 	desc = "The most noble gas of them all. High quantities of hyper-noblium actively prevents reactions from occuring."
+	reagent = /datum/reagent/hypernoblium
 
 /datum/gas/nitrous_oxide
 	id = "n2o"
@@ -133,6 +142,7 @@
 	purchaseable = TRUE
 	base_value = 1.5
 	desc = "Causes drowsiness, euphoria, and eventually unconsciousness."
+	reagent = /datum/reagent/nitrous_oxide
 
 /datum/gas/nitrium
 	id = "nitrium"
@@ -145,6 +155,7 @@
 	rarity = 1
 	base_value = 6
 	desc = "An experimental performance enhancing gas. Nitrium can have amplified effects as more of it gets into your bloodstream."
+	reagent = /datum/reagent/nitrium_high_metabolization
 
 /datum/gas/tritium
 	id = "tritium"
@@ -157,6 +168,7 @@
 	rarity = 300
 	base_value = 2.5
 	desc = "A highly flammable and radioctive gas."
+	reagent = /datum/reagent/hydrogen
 
 /datum/gas/bz
 	id = "bz"
@@ -168,6 +180,7 @@
 	purchaseable = TRUE
 	base_value = 1.5
 	desc = "A powerful hallucinogenic nerve agent able to induce cognitive damage."
+	reagent = /datum/reagent/bz_metabolites
 
 /datum/gas/pluoxium
 	id = "pluox"
@@ -177,6 +190,7 @@
 	rarity = 200
 	base_value = 2.5
 	desc = "A gas that could supply even more oxygen to the bloodstream when inhaled, without being an oxidizer."
+	reagent = /datum/reagent/pluoxium
 
 /datum/gas/miasma
 	id = "miasma"
@@ -200,6 +214,7 @@
 	rarity = 10
 	base_value = 5
 	desc = "A coolant gas. Mainly used for it's endothermic reaction with oxygen."
+	reagent = /datum/reagent/freon
 
 /datum/gas/hydrogen
 	id = "hydrogen"
@@ -210,6 +225,7 @@
 	rarity = 600
 	base_value = 1
 	desc = "A highly flammable gas."
+	reagent = /datum/reagent/hydrogen
 
 /datum/gas/healium
 	id = "healium"
@@ -221,6 +237,7 @@
 	rarity = 300
 	base_value = 5.5
 	desc = "Causes deep, regenerative sleep."
+	reagent = /datum/reagent/healium
 
 /datum/gas/proto_nitrate
 	id = "proto_nitrate"
@@ -243,6 +260,7 @@
 	rarity = 1
 	base_value = 7
 	desc = "A highly toxic gas, it's production is highly regulated on top of being difficult. It also breaks down when in contact with nitrogen."
+	reagent = /datum/reagent/zauker
 
 /datum/gas/halon
 	id = "halon"
@@ -254,6 +272,7 @@
 	rarity = 300
 	base_value = 4
 	desc = "A potent fire supressant. Removes oxygen from high temperature fires and cools down the area"
+	reagent = /datum/reagent/firefighting_foam/halon
 
 /datum/gas/helium
 	id = "helium"

@@ -153,8 +153,8 @@
 			portable_air.assert_gas(gas_path)
 			transferred = min(reagents.maximum_volume - reagents.total_volume, portable_air.gases[gas_path][MOLES])
 			portable_air.gases[gas_path][MOLES] -= transferred
+			reagents.add_reagent(portable_air.gases[gas_path][GAS_META][META_GAS_REAGENT], transferred)
 			portable_air.garbage_collect()
-			reagents.add_reagent(chem, transferred)
 
 		if(transferred > 0)
 			balloon_alert(user, "\the [src] has been refilled by [transferred] units")

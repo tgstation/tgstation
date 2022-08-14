@@ -860,9 +860,9 @@
 	var/turf/open/location = holder
 	var/obj/effect/particle_effect/fluid/foam/foam = locate() in location
 	var/obj/structure/foamedmetal/resin = locate() in location
-	if(heat_efficiency > 0.09 && location && !foam && !resin)
+	if(heat_efficiency > HALON_COMBUSTION_MINIMUM_RESIN_MOLES && location && !foam && !resin)
 		var/datum/effect_system/fluid_spread/foam/metal/resin/foaming = new
-		foaming.set_up(0, holder = holder, location = location)
+		foaming.set_up(amount = HALON_COMBUSTION_RESIN_VOLUME, holder = holder, location = location)
 		foaming.start()
 
 	return REACTING

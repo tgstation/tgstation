@@ -22,6 +22,8 @@
 #define META_GAS_FUSION_POWER 7
 ///Short description of the gas.
 #define META_GAS_DESC 8
+///Equivelant reagent of the gas.
+#define META_GAS_REAGENT 9
 //ATMOS
 //stuff you should probably leave well alone!
 /// kPa*L/(K*mol)
