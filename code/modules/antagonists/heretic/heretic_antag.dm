@@ -68,7 +68,12 @@
 	)
 
 	data["charges"] = knowledge_points
+	data["total_sacrifices"] = total_sacrifices
+	data["ascended"] = ascended
 
+	// This should be cached in some way, but the fact that final knowledge
+	// has to update its disabled state based on whether all objectives are complete,
+	// makes this very difficult. I'll figure it out one day maybe
 	for(var/datum/heretic_knowledge/knowledge as anything in get_researchable_knowledge())
 		var/list/knowledge_data = list()
 		knowledge_data["path"] = knowledge
@@ -87,6 +92,13 @@
 
 		data["learnableKnowledge"] += list(knowledge_data)
 
+	return data
+
+/datum/antagonist/heretic/ui_static_data(mob/user)
+	var/list/data = list()
+
+	data["objectives"] = get_objectives()
+
 	for(var/path in researched_knowledge)
 		var/list/knowledge_data = list()
 		var/datum/heretic_knowledge/found_knowledge = researched_knowledge[path]
@@ -98,15 +110,6 @@
 		knowledge_data["color"] = path_to_color[found_knowledge.route] || "grey"
 
 		data["learnedKnowledge"] += list(knowledge_data)
-
-	return data
-
-/datum/antagonist/heretic/ui_static_data(mob/user)
-	var/list/data = list()
-
-	data["total_sacrifices"] = total_sacrifices
-	data["ascended"] = ascended
-	data["objectives"] = get_objectives()
 
 	return data
 
@@ -122,9 +125,9 @@
 				CRASH("Heretic attempted to learn non-heretic_knowledge path! (Got: [researched_path])")
 
 			if(initial(researched_path.cost) > knowledge_points)
-				return
+				return TRUE
 			if(!gain_knowledge(researched_path))
-				return
+				return TRUE
 
 			log_heretic_knowledge("[key_name(owner)] gained knowledge: [initial(researched_path.name)]")
 			knowledge_points -= initial(researched_path.cost)
@@ -446,7 +449,7 @@
 
 	.["Adjust Knowledge Points"] = CALLBACK(src, .proc/admin_change_points)
 
-/*
+/**
  * Admin proc for giving a heretic a Living Heart easily.
  */
 /datum/antagonist/heretic/proc/give_living_heart(mob/admin)
@@ -461,7 +464,7 @@
 
 	heart_knowledge.on_research(owner.current)
 
-/*
+/**
  * Admin proc for adding a marked mob to a heretic's sac list.
  */
 /datum/antagonist/heretic/proc/add_marked_as_target(mob/admin)
@@ -480,7 +483,7 @@
 
 	add_sacrifice_target(new_target)
 
-/*
+/**
  * Admin proc for removing a mob from a heretic's sac list.
  */
 /datum/antagonist/heretic/proc/remove_target(mob/admin)
@@ -506,7 +509,7 @@
 	if(tgui_alert(admin, "Let them know their targets have been updated?", "Whispers of the Mansus", list("Yes", "No")) == "Yes")
 		to_chat(owner.current, span_danger("The Mansus has modified your targets."))
 
-/*
+/**
  * Admin proc for easily adding / removing knowledge points.
  */
 /datum/antagonist/heretic/proc/admin_change_points(mob/admin)
@@ -545,7 +548,7 @@
 		. += "<i>None!</i><br>"
 	. += "<br>"
 
-/*
+/**
  * Learns the passed [typepath] of knowledge, creating a knowledge datum
  * and adding it to our researched knowledge list.
  *
@@ -560,9 +563,10 @@
 	var/datum/heretic_knowledge/initialized_knowledge = new knowledge_type()
 	researched_knowledge[knowledge_type] = initialized_knowledge
 	initialized_knowledge.on_research(owner.current)
+	update_static_data(owner.curent)
 	return TRUE
 
-/*
+/**
  * Get a list of all knowledge TYPEPATHS that we can currently research.
  */
 /datum/antagonist/heretic/proc/get_researchable_knowledge()
@@ -576,13 +580,13 @@
 	researchable_knowledge -= banned_knowledge
 	return researchable_knowledge
 
-/*
+/**
  * Check if the wanted type-path is in the list of research knowledge.
  */
 /datum/antagonist/heretic/proc/get_knowledge(wanted)
 	return researched_knowledge[wanted]
 
-/*
+/**
  * Get a list of all rituals this heretic can invoke on a rune.
  * Iterates over all of our knowledge and, if we can invoke it, adds it to our list.
  *
@@ -599,7 +603,7 @@
 
 	return sortTim(rituals, /proc/cmp_heretic_knowledge, associative = TRUE)
 
-/*
+/**
  * Checks to see if our heretic can ccurrently ascend.
  *
  * Returns FALSE if not all of our objectives are complete, or TRUE otherwise.
@@ -610,7 +614,7 @@
 			return FALSE
 	return TRUE
 
-/*
+/**
  * Helper to determine if a Heretic
  * - Has a Living Heart
  * - Has a an organ in the correct slot that isn't a living heart

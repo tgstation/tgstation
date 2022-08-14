@@ -14,11 +14,7 @@
 
 	hand_path = /obj/item/melee/touch_attack/duffelbag
 
-/datum/action/cooldown/spell/touch/duffelbag/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
-	if(!iscarbon(victim))
-		return FALSE
-
-	var/mob/living/carbon/duffel_victim = victim
+	/// Some meme "elaborate backstories" to use.
 	var/static/list/elaborate_backstory = list(
 		"spacewar origin story",
 		"military background",
@@ -28,10 +24,16 @@
 		"upbringing on the space farm",
 		"fond memories with your buddy Keith",
 	)
-	if(duffel_victim.can_block_magic(antimagic_flags))
-		to_chat(caster, span_warning("The spell can't seem to affect [duffel_victim]!"))
-		to_chat(duffel_victim, span_warning("You really don't feel like talking about your [pick(elaborate_backstory)] with complete strangers today."))
-		return TRUE
+
+/datum/action/cooldown/spell/touch/duffelbag/on_antimagic_triggered(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
+	to_chat(caster, span_warning("The spell can't seem to affect [victim]!"))
+	to_chat(victim, span_warning("You really don't feel like talking about your [pick(elaborate_backstory)] with complete strangers today."))
+
+/datum/action/cooldown/spell/touch/duffelbag/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
+	if(victim == caster || !iscarbon(victim))
+		return FALSE
+
+	var/mob/living/carbon/duffel_victim = victim
 
 	// To get it started, stun and knockdown the person being hit
 	duffel_victim.flash_act()

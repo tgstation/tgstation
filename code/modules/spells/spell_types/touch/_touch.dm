@@ -117,8 +117,6 @@
 
 	if(!proximity_flag)
 		return
-	if(victim == caster)
-		return
 	if(!can_cast_spell(feedback = FALSE))
 		return
 
@@ -134,8 +132,6 @@
 
 	if(!proximity_flag)
 		return
-	if(victim == caster)
-		return
 	if(!can_cast_spell(feedback = FALSE))
 		return
 
@@ -146,7 +142,12 @@
  */
 /datum/action/cooldown/spell/touch/proc/do_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
 	SEND_SIGNAL(src, COMSIG_SPELL_TOUCH_HAND_HIT, victim, caster, hand)
-	if(!cast_on_hand_hit(hand, victim, caster))
+
+	var/mob/mob_victim = victim
+	if(istype(mob_victim) && mob_victim.can_block_magic(antimagic_flags))
+		on_antimagic_triggered(hand, victim, caster)
+
+	else if(!cast_on_hand_hit(hand, victim, caster))
 		return
 
 	log_combat(caster, victim, "cast the touch spell [name] on", hand)
@@ -215,6 +216,9 @@
 	SIGNAL_HANDLER
 
 	remove_hand(dropper, reset_cooldown_after = TRUE)
+
+/datum/action/cooldown/spell/touch/proc/on_antimagic_triggered(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
+	return
 
 /obj/item/melee/touch_attack
 	name = "\improper outstretched hand"

@@ -12,19 +12,18 @@
 	spell_requirements = NONE
 	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND
 
+/datum/action/cooldown/spell/touch/mad_touch/on_antimagic_triggered(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
+	victim.visible_message(
+		span_danger("The spell bounces off of [victim]!"),
+		span_danger("The spell bounces off of you!"),
+	)
+
 /datum/action/cooldown/spell/touch/mad_touch/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
-	if(!ishuman(victim))
+	if(victim == caster || !ishuman(victim))
 		return FALSE
 
 	var/mob/living/carbon/human/human_victim = victim
 	if(!human_victim.mind || IS_HERETIC(human_victim))
-		return FALSE
-
-	if(human_victim.can_block_magic(antimagic_flags))
-		victim.visible_message(
-			span_danger("The spell bounces off of [victim]!"),
-			span_danger("The spell bounces off of you!"),
-		)
 		return FALSE
 
 	to_chat(caster, span_warning("[human_victim.name] has been cursed!"))

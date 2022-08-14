@@ -17,12 +17,16 @@
 	cooldown_time = 10 SECONDS
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
+	antimagic_flags = NONE
 
 	hand_path = /obj/item/melee/touch_attack/shock
 	draw_message = span_notice("You channel electricity into your hand.")
 	drop_message = span_notice("You let the electricity from your hand dissipate.")
 
 /datum/action/cooldown/spell/touch/shock/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
+	if(victim == caster)
+		return FALSE
+
 	if(iscarbon(victim))
 		var/mob/living/carbon/carbon_victim = victim
 		if(carbon_victim.electrocute_act(15, caster, 1, SHOCK_NOGLOVES | SHOCK_NOSTUN))//doesnt stun. never let this stun
