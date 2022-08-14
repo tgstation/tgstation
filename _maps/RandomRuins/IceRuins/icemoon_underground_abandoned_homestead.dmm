@@ -88,7 +88,7 @@
 	color = "#666666"
 	},
 /obj/item/knife/hunting,
-/obj/item/reagent_containers/food/drinks/mug/coco{
+/obj/item/reagent_containers/cup/glass/mug/coco{
 	desc = "Still hot!";
 	pixel_x = 6;
 	pixel_y = 11
@@ -309,7 +309,7 @@
 	color = "#8a7453";
 	dir = 1
 	},
-/obj/item/reagent_containers/glass/bucket/wooden,
+/obj/item/reagent_containers/cup/bucket/wooden,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "RO" = (

@@ -438,22 +438,34 @@
 			add_mood_event("tailpulled", /datum/mood_event/tailpulled)
 
 	else
-		helper.visible_message(span_notice("[helper] hugs [src] to make [p_them()] feel better!"), \
-					null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(helper, src))
-		to_chat(helper, span_notice("You hug [src] to make [p_them()] feel better!"))
-		to_chat(src, span_notice("[helper] hugs you to make you feel better!"))
+		if (helper.grab_state >= GRAB_AGGRESSIVE)
+			helper.visible_message(span_notice("[helper] embraces [src] in a tight bear hug!"), \
+						null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(helper, src))
+			to_chat(helper, span_notice("You wrap [src] into a tight bear hug!"))
+			to_chat(src, span_notice("[helper] squeezes you super tightly in a firm bear hug!"))
+		else
+			helper.visible_message(span_notice("[helper] hugs [src] to make [p_them()] feel better!"), \
+						null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(helper, src))
+			to_chat(helper, span_notice("You hug [src] to make [p_them()] feel better!"))
+			to_chat(src, span_notice("[helper] hugs you to make you feel better!"))
 
 		// Warm them up with hugs
 		share_bodytemperature(helper)
 
 		// No moodlets for people who hate touches
 		if(!HAS_TRAIT(src, TRAIT_BADTOUCH))
-			if(bodytemperature > helper.bodytemperature)
-				if(!HAS_TRAIT(helper, TRAIT_BADTOUCH))
-					helper.add_mood_event("hug", /datum/mood_event/warmhug, src) // Hugger got a warm hug (Unless they hate hugs)
-				add_mood_event("hug", /datum/mood_event/hug) // Receiver always gets a mood for being hugged
+			if (helper.grab_state >= GRAB_AGGRESSIVE)
+				add_mood_event("hug", /datum/mood_event/bear_hug)
 			else
-				add_mood_event("hug", /datum/mood_event/warmhug, helper) // You got a warm hug
+				if(bodytemperature > helper.bodytemperature)
+					if(!HAS_TRAIT(helper, TRAIT_BADTOUCH))
+						helper.add_mood_event("hug", /datum/mood_event/warmhug, src) // Hugger got a warm hug (Unless they hate hugs)
+					add_mood_event("hug", /datum/mood_event/hug) // Receiver always gets a mood for being hugged
+				else
+					add_mood_event("hug", /datum/mood_event/warmhug, helper) // You got a warm hug
+		else
+			if (helper.grab_state >= GRAB_AGGRESSIVE)
+				add_mood_event("hug", /datum/mood_event/bad_touch_bear_hug)
 
 		// Let people know if they hugged someone really warm or really cold
 		if(helper.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
