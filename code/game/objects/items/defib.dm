@@ -44,13 +44,12 @@
 	. = ..()
 	paddles = new paddle_type(src)
 	update_power()
-	return
+	RegisterSignal(paddles, COMSIG_DEFIBRILLATOR_SUCCESS, .proc/on_defib_success)
 
 /obj/item/defibrillator/loaded/Initialize(mapload) //starts with hicap
 	. = ..()
 	cell = new(src)
 	update_power()
-	return
 
 /obj/item/defibrillator/examine(mob/user)
 	. = ..()
@@ -259,6 +258,12 @@
 	paddles.update_appearance()
 	update_power()
 
+/obj/item/defibrillator/proc/on_defib_success(obj/item/shockpaddles/source)
+	deductcharge(source.revivecost)
+	source.cooldown = TRUE
+	cooldowncheck()
+	return COMPONENT_DEFIB_STOP
+
 /obj/item/defibrillator/compact
 	name = "compact defibrillator"
 	desc = "A belt-equipped defibrillator that can be rapidly deployed."
@@ -377,14 +382,16 @@
 			visible_message(span_notice("[src] snap back into [defib]."))
 		snap_back()
 
-/obj/item/shockpaddles/proc/recharge(time)
-	if(req_defib || !time)
+/obj/item/shockpaddles/proc/recharge(time = 0)
+	if(req_defib)
 		return
 	cooldown = TRUE
 	update_appearance()
-	sleep(time)
-	var/turf/T = get_turf(src)
-	T.audible_message(span_notice("[src] beeps: Unit is recharged."))
+	addtimer(CALLBACK(src, .proc/finish_recharge), time)
+
+/obj/item/shockpaddles/proc/finish_recharge()
+	var/turf/current_turf = get_turf(src)
+	current_turf.audible_message(span_notice("[src] beeps: Unit is recharged."))
 	playsound(src, 'sound/machines/defib_ready.ogg', 50, FALSE)
 	cooldown = FALSE
 	update_appearance()
@@ -484,12 +491,9 @@
 		busy = FALSE
 
 	update_appearance()
-	if(req_defib)
-		defib.deductcharge(revivecost)
-		cooldown = TRUE
-		defib.cooldowncheck()
-	else
-		recharge(recharge_time)
+	if(SEND_SIGNAL(src, COMSIG_DEFIBRILLATOR_SUCCESS) & COMPONENT_DEFIB_STOP)
+		return
+	recharge(recharge_time)
 
 /// Called whenever the paddles fail to shock something after a do_x proc
 /obj/item/shockpaddles/proc/do_cancel()

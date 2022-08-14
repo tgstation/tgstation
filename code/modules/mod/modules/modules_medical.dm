@@ -231,11 +231,33 @@
 	icon_state = "defibrillator"
 	module_type = MODULE_ACTIVE
 	complexity = 2
-	active_power_cost = DEFAULT_CHARGE_DRAIN
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 10
 	device = /obj/item/shockpaddles/mod
 	incompatible_modules = list(/obj/item/mod/module/defibrillator)
 	cooldown_time = 0.5 SECONDS
+	var/defib_cooldown = 5 SECONDS
+
+/obj/item/mod/module/defibrillator/Initialize(mapload)
+	. = ..()
+	RegisterSignal(device, COMSIG_DEFIBRILLATOR_SUCCESS, .proc/on_defib_success)
+
+/obj/item/mod/module/defibrillator/proc/on_defib_success(obj/item/shockpaddles/source)
+	drain_power(use_power_cost)
+	source.recharge(defib_cooldown)
+	return COMPONENT_DEFIB_STOP
 
 /obj/item/shockpaddles/mod
 	name = "MOD defibrillator paddles"
 	req_defib = FALSE
+
+///Thread Ripper - Temporarily rips apart clothing to make it not cover the body
+/obj/item/mod/module/thread_ripper
+	name = "MOD thread ripper module"
+	desc = "A custom built tool to temporarily tear apart the fabric in clothing, allowing for use of medical tools just \
+		like on bare flesh."
+	icon_state = "thread_ripper"
+	module_type = MODULE_ACTIVE
+	complexity = 2
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
+	incompatible_modules = list(/obj/item/mod/module/thread_ripper)
+	cooldown_time = 1.5 SECONDS
