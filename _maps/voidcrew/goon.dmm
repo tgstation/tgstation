@@ -1,0 +1,1254 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ah" = (
+/obj/machinery/atmospherics/components/unary/tank/toxins{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/ship/engineering)
+"aq" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 4
+	},
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/mineral/titanium,
+/area/ship/crew)
+"as" = (
+/obj/structure/closet/secure_closet/engineering_electrical,
+/turf/open/floor/mineral/titanium/yellow,
+/area/ship/engineering)
+"at" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/obj/structure/fans/tiny,
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor/border_only{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/ship/crew)
+"bd" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/ship/medical)
+"bg" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/closet/crate/engineering/electrical,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/multitool,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/electrical,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/east,
+/turf/open/floor/mineral/titanium/yellow,
+/area/ship/engineering)
+"cn" = (
+/obj/structure/chair/comfy/brown{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/item/radio/intercom/wideband{
+	pixel_y = 28
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/ship/bridge)
+"cF" = (
+/turf/open/floor/mineral/titanium/yellow,
+/area/ship/engineering)
+"cR" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/power/smes/engineering,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/ship/engineering)
+"ds" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/mineral/titanium,
+/area/ship/crew)
+"dI" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/ship/crew)
+"eC" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/ship/crew)
+"eJ" = (
+/obj/structure/chair/comfy/brown{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 1
+	},
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/mineral/titanium/yellow,
+/area/ship/bridge)
+"fr" = (
+/obj/structure/table/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
+/turf/open/floor/mineral/titanium/yellow,
+/area/ship/bridge)
+"fH" = (
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ship/crew)
+"fU" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/ship/engineering)
+"fZ" = (
+/obj/machinery/atmospherics/components/unary/tank/air{
+	dir = 4;
+	piping_layer = 2
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/ship/engineering)
+"hg" = (
+/obj/machinery/atmospherics/components/unary/shuttle/heater{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8;
+	pixel_y = 2
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ship/engineering)
+"hh" = (
+/obj/machinery/holopad,
+/turf/open/floor/mineral/titanium/purple,
+/area/ship/crew)
+"iy" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/machinery/door/firedoor/border_only,
+/turf/open/floor/mineral/titanium/white,
+/area/ship/crew)
+"iC" = (
+/obj/machinery/power/shuttle/engine/fueled/plasma{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ship/medical)
+"jL" = (
+/obj/machinery/light,
+/obj/machinery/shower{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/south,
+/turf/open/floor/mineral/titanium/blue,
+/area/ship/medical)
+"jV" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/table/reinforced,
+/obj/item/radio,
+/turf/open/floor/mineral/titanium/yellow,
+/area/ship/bridge)
+"ka" = (
+/obj/machinery/firealarm{
+	pixel_y = -26
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ship/medical)
+"kd" = (
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/closed/wall/mineral/titanium,
+/area/ship/engineering)
+"ku" = (
+/obj/structure/sign/poster/retro/nanotrasen_logo_70s,
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
+/obj/machinery/door/firedoor/border_only,
+/turf/closed/wall/mineral/titanium,
+/area/ship/crew)
+"lI" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 10
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ship/crew)
+"lK" = (
+/obj/machinery/power/shuttle/engine/fueled/plasma{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ship/engineering)
+"mj" = (
+/obj/structure/table/optable,
+/turf/open/floor/mineral/titanium/blue,
+/area/ship/medical)
+"mB" = (
+/obj/machinery/door/poddoor{
+	id = "goon"
+	},
+/obj/structure/fans/tiny,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/turf/open/floor/mineral/titanium/white,
+/area/ship/crew)
+"oa" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ship/medical)
+"or" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/ship/engineering)
+"pi" = (
+/obj/machinery/atmospherics/components/binary/volume_pump{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/ship/engineering)
+"po" = (
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ship/crew)
+"pD" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 26
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/ship/crew)
+"pG" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/computer/helm{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/ship/bridge)
+"pW" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ship/medical)
+"qj" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Emergency Shuttle Cockpit"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/ship/bridge)
+"qL" = (
+/obj/structure/table/reinforced,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/machinery/door/firedoor/border_only,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/storage/bag/ore,
+/obj/item/t_scanner/adv_mining_scanner/lesser,
+/obj/item/t_scanner/adv_mining_scanner/lesser,
+/obj/item/storage/bag/ore,
+/turf/open/floor/mineral/titanium/white,
+/area/ship/crew)
+"ra" = (
+/obj/structure/fans/tiny,
+/obj/machinery/button/door{
+	id = "goon";
+	pixel_x = 26
+	},
+/obj/machinery/door/poddoor{
+	id = "goon"
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/ship/crew)
+"ro" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/ship/engineering)
+"rX" = (
+/obj/machinery/autolathe,
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/ship/crew)
+"sd" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 10
+	},
+/turf/open/floor/mineral/titanium,
+/area/ship/crew)
+"tW" = (
+/obj/structure/table,
+/obj/machinery/airalarm/directional/north,
+/obj/item/storage/firstaid/regular,
+/turf/open/floor/mineral/titanium/blue,
+/area/ship/medical)
+"uV" = (
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8
+	},
+/obj/structure/bed/pod,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4
+	},
+/obj/structure/curtain/cloth,
+/obj/machinery/door/window/survival_pod{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ship/crew)
+"vF" = (
+/turf/closed/wall/mineral/titanium,
+/area/ship/bridge)
+"vW" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/ship/engineering)
+"vX" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Emergency Shuttle Engineering"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/ship/engineering)
+"wa" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/turf/open/floor/mineral/titanium,
+/area/ship/crew)
+"wf" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/auto_name/west,
+/turf/open/floor/mineral/titanium,
+/area/ship/crew)
+"wE" = (
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1
+	},
+/obj/structure/table,
+/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/lootdrop/donkpockets,
+/obj/item/storage/cans/sixbeer,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
+/obj/item/soap/nanotrasen,
+/turf/open/floor/mineral/titanium/purple,
+/area/ship/crew)
+"wV" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/ship/crew)
+"xI" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8;
+	pixel_y = 2
+	},
+/obj/machinery/power/smes/shuttle/precharged{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plating,
+/area/ship/engineering)
+"ya" = (
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall/mineral/titanium,
+/area/ship/medical)
+"yi" = (
+/obj/machinery/vending/wallmed,
+/turf/closed/wall/mineral/titanium,
+/area/ship/engineering)
+"zf" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/turf/open/floor/mineral/titanium/white,
+/area/ship/crew)
+"An" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/ship/crew)
+"Ao" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/toolbox/emergency,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/ship/bridge)
+"As" = (
+/obj/machinery/computer/operating{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ship/medical)
+"AP" = (
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall/mineral/titanium,
+/area/ship/crew)
+"Be" = (
+/obj/machinery/sleeper,
+/turf/open/floor/mineral/titanium/blue,
+/area/ship/medical)
+"Bg" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/ship/medical)
+"Bw" = (
+/obj/structure/table,
+/obj/machinery/door/window,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/item/storage/firstaid/toxin{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/storage/firstaid/regular,
+/obj/item/clothing/suit/space/hardsuit/medical,
+/obj/item/storage/firstaid/brute{
+	pixel_x = -5;
+	pixel_y = -5
+	},
+/obj/item/storage/belt/medical,
+/obj/item/storage/belt/medical,
+/obj/item/reagent_containers/glass/bottle/formaldehyde,
+/obj/structure/window/reinforced{
+	dir = 8;
+	pixel_y = 2
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/purple/hidden{
+	dir = 10
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ship/medical)
+"BI" = (
+/obj/structure/bed/pod,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4
+	},
+/obj/structure/curtain/cloth,
+/obj/machinery/door/window/survival_pod{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ship/crew)
+"BV" = (
+/obj/machinery/atmospherics/components/binary/volume_pump{
+	dir = 8
+	},
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/mineral/titanium/yellow,
+/area/ship/engineering)
+"CW" = (
+/obj/structure/chair/comfy/brown{
+	dir = 4
+	},
+/obj/machinery/light/small,
+/obj/machinery/firealarm{
+	pixel_y = -26
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/ship/bridge)
+"Du" = (
+/obj/structure/closet/secure_closet/medical3,
+/obj/machinery/atmospherics/components/binary/volume_pump{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ship/medical)
+"Ea" = (
+/turf/open/floor/mineral/titanium,
+/area/ship/crew)
+"Eg" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1
+	},
+/obj/machinery/cryopod,
+/obj/machinery/computer/cryopod{
+	pixel_x = 32
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ship/crew)
+"Ej" = (
+/obj/structure/ore_box,
+/turf/open/floor/mineral/titanium/white,
+/area/ship/crew)
+"EJ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/obj/machinery/door/firedoor/border_only,
+/turf/open/floor/mineral/titanium/white,
+/area/ship/crew)
+"ET" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/ship/crew)
+"Fl" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
+/turf/open/floor/mineral/titanium,
+/area/ship/crew)
+"Ft" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/ship/bridge)
+"HK" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer4,
+/turf/open/floor/plating,
+/area/ship/crew)
+"HV" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/ship/crew)
+"Ia" = (
+/obj/structure/chair/comfy/brown{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/auto_name/west,
+/turf/open/floor/mineral/titanium/yellow,
+/area/ship/bridge)
+"Ix" = (
+/obj/machinery/atmospherics/pipe/simple/purple/hidden,
+/turf/closed/wall/mineral/titanium,
+/area/ship/engineering)
+"IN" = (
+/turf/closed/wall/mineral/titanium,
+/area/ship/crew)
+"IZ" = (
+/turf/template_noop,
+/area/template_noop)
+"Jc" = (
+/obj/effect/spawner/structure/window/shuttle,
+/obj/docking_port/mobile{
+	can_move_docking_ports = 1;
+	dir = 8;
+	launch_status = 0
+	},
+/turf/open/floor/plating,
+/area/ship/bridge)
+"Jy" = (
+/obj/machinery/cryopod,
+/turf/open/floor/mineral/titanium/purple,
+/area/ship/crew)
+"JH" = (
+/obj/structure/table/reinforced,
+/obj/structure/window/reinforced,
+/obj/item/areaeditor/shuttle,
+/turf/open/floor/mineral/titanium/yellow,
+/area/ship/bridge)
+"JP" = (
+/obj/machinery/stasis,
+/turf/open/floor/mineral/titanium/blue,
+/area/ship/medical)
+"JX" = (
+/obj/machinery/atmospherics/components/unary/shuttle/heater{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8;
+	pixel_y = 2
+	},
+/turf/open/floor/plating,
+/area/ship/medical)
+"JZ" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/closet/secure_closet/engineering_personal,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 10
+	},
+/obj/machinery/airalarm/directional/north,
+/obj/machinery/atmospherics/pipe/simple/purple/visible,
+/turf/open/floor/mineral/titanium/yellow,
+/area/ship/engineering)
+"Kx" = (
+/obj/machinery/door/window/survival_pod{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ship/crew)
+"Lr" = (
+/obj/machinery/power/port_gen/pacman,
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/item/stack/sheet/mineral/plasma/twenty,
+/obj/effect/turf_decal/box,
+/turf/open/floor/mineral/titanium/yellow,
+/area/ship/engineering)
+"Mo" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 10
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/ship/bridge)
+"Ng" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/purple/visible,
+/turf/open/floor/mineral/titanium/yellow,
+/area/ship/engineering)
+"ON" = (
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall/mineral/titanium,
+/area/ship/engineering)
+"OQ" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
+/obj/machinery/atmospherics/pipe/simple/purple/hidden,
+/turf/open/floor/mineral/titanium/blue,
+/area/ship/medical)
+"QI" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/mineral/titanium/yellow,
+/area/ship/engineering)
+"Rr" = (
+/obj/structure/chair/comfy/brown{
+	dir = 4
+	},
+/obj/item/toy/plush/beeplushie{
+	desc = "A cute toy resembling THE motherfucking captain.";
+	name = "The Captain of This God Damn Ship"
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/ship/bridge)
+"Rw" = (
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = -24
+	},
+/turf/open/floor/mineral/titanium,
+/area/ship/crew)
+"RI" = (
+/obj/structure/bed/pod,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4
+	},
+/obj/structure/curtain/cloth,
+/obj/machinery/door/window/survival_pod{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ship/crew)
+"RZ" = (
+/obj/machinery/power/shuttle/engine/electric{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/plating,
+/area/ship/medical)
+"SH" = (
+/turf/closed/wall/mineral/titanium,
+/area/ship/medical)
+"SS" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/turf/open/floor/mineral/titanium/white,
+/area/ship/crew)
+"TR" = (
+/turf/closed/wall/mineral/titanium,
+/area/ship/engineering)
+"TW" = (
+/turf/open/floor/mineral/titanium/white,
+/area/ship/crew)
+"Uo" = (
+/obj/machinery/vending/wallmed,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ship/medical)
+"UT" = (
+/obj/machinery/vending/wallmed,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ship/engineering)
+"VQ" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/manifold/purple/visible{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/ship/engineering)
+"Wh" = (
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/closed/wall/mineral/titanium,
+/area/ship/medical)
+"Wv" = (
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/machinery/microwave,
+/turf/open/floor/mineral/titanium/purple,
+/area/ship/crew)
+"WD" = (
+/obj/structure/table,
+/obj/item/storage/backpack/duffelbag/med/surgery,
+/turf/open/floor/mineral/titanium/blue,
+/area/ship/medical)
+"Xh" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/purple/hidden,
+/turf/open/floor/mineral/titanium/blue,
+/area/ship/medical)
+"Xt" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8;
+	pixel_y = 2
+	},
+/obj/machinery/power/smes/shuttle/precharged{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plating,
+/area/ship/medical)
+"Xx" = (
+/obj/machinery/power/port_gen/pacman,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/effect/turf_decal/box,
+/turf/open/floor/mineral/titanium/yellow,
+/area/ship/engineering)
+"YC" = (
+/obj/machinery/power/shuttle/engine/electric{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/plating,
+/area/ship/engineering)
+"YI" = (
+/obj/machinery/atmospherics/components/binary/pump/layer2{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/ship/engineering)
+"Zr" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/table,
+/obj/item/storage/toolbox/electrical{
+	pixel_x = -10;
+	pixel_y = -10
+	},
+/obj/item/storage/toolbox/mechanical,
+/obj/machinery/firealarm{
+	pixel_y = -26
+	},
+/obj/machinery/atmospherics/pipe/simple/purple/visible{
+	dir = 9
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/ship/engineering)
+"Zs" = (
+/obj/machinery/light/small,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/purple/hidden,
+/turf/open/floor/mineral/titanium/blue,
+/area/ship/medical)
+"ZH" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Emergency Shuttle Infirmary"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ship/medical)
+"ZO" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
+/turf/open/floor/mineral/titanium,
+/area/ship/crew)
+"ZQ" = (
+/obj/machinery/mineral/ore_redemption{
+	dir = 8
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/ship/crew)
+
+(1,1,1) = {"
+IZ
+iC
+SH
+SH
+SH
+TR
+TR
+TR
+yi
+lK
+IZ
+"}
+(2,1,1) = {"
+RZ
+JX
+WD
+As
+mj
+TR
+fZ
+ah
+as
+hg
+YC
+"}
+(3,1,1) = {"
+Xt
+Du
+bd
+bd
+bd
+fU
+YI
+pi
+cF
+BV
+xI
+"}
+(4,1,1) = {"
+Wh
+Bw
+OQ
+Xh
+Zs
+Ix
+JZ
+VQ
+Ng
+Zr
+kd
+"}
+(5,1,1) = {"
+SH
+Uo
+Be
+oa
+ka
+TR
+Lr
+ro
+or
+UT
+TR
+"}
+(6,1,1) = {"
+IZ
+SH
+tW
+oa
+bd
+fU
+Xx
+ro
+QI
+TR
+IZ
+"}
+(7,1,1) = {"
+IZ
+Bg
+JP
+pW
+jL
+TR
+cR
+vW
+bg
+fU
+IZ
+"}
+(8,1,1) = {"
+ya
+SH
+SH
+ZH
+SH
+TR
+TR
+vX
+TR
+TR
+ON
+"}
+(9,1,1) = {"
+at
+Ea
+Ea
+dI
+aq
+wf
+ds
+HV
+Ea
+Rw
+at
+"}
+(10,1,1) = {"
+at
+Ea
+Ea
+sd
+eC
+An
+wa
+ZO
+Ea
+Ea
+at
+"}
+(11,1,1) = {"
+AP
+IN
+ZQ
+rX
+ku
+wV
+Wv
+Kx
+uV
+IN
+AP
+"}
+(12,1,1) = {"
+HK
+mB
+zf
+SS
+EJ
+Fl
+wE
+lI
+BI
+ET
+IZ
+"}
+(13,1,1) = {"
+IZ
+ra
+TW
+TW
+qL
+wV
+po
+hh
+RI
+ET
+IZ
+"}
+(14,1,1) = {"
+IZ
+IN
+pD
+Ej
+iy
+wV
+Eg
+Jy
+fH
+IN
+IZ
+"}
+(15,1,1) = {"
+IZ
+vF
+vF
+Ft
+vF
+qj
+vF
+Ft
+vF
+vF
+IZ
+"}
+(16,1,1) = {"
+IZ
+IZ
+Ft
+Ao
+Ia
+Mo
+eJ
+JH
+Ft
+IZ
+IZ
+"}
+(17,1,1) = {"
+IZ
+IZ
+vF
+vF
+cn
+Rr
+CW
+vF
+vF
+IZ
+IZ
+"}
+(18,1,1) = {"
+IZ
+IZ
+IZ
+Ft
+jV
+pG
+fr
+Ft
+IZ
+IZ
+IZ
+"}
+(19,1,1) = {"
+IZ
+IZ
+IZ
+vF
+Ft
+Jc
+Ft
+vF
+IZ
+IZ
+IZ
+"}

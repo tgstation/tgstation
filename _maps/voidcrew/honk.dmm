@@ -1,0 +1,1730 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aj" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/light,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"am" = (
+/obj/machinery/disposal/deliveryChute,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/open/floor/light,
+/area/ship/engineering/engine)
+"aO" = (
+/obj/structure/tank_dispenser/plasma,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"dr" = (
+/obj/effect/spawner/structure/window/reinforced/indestructable,
+/obj/structure/grille,
+/obj/docking_port/mobile{
+	dir = 2
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plating,
+/area/ship/bridge)
+"dW" = (
+/obj/effect/spawner/structure/window/reinforced/indestructable,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/ship/bridge)
+"fx" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/vending/autodrobe/all_access,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"fL" = (
+/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ship/bridge)
+"gc" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on{
+	dir = 8
+	},
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"gN" = (
+/turf/closed/wall/mineral/bananium,
+/area/ship/bridge)
+"hf" = (
+/obj/machinery/vending/hydronutrients,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"hn" = (
+/obj/structure/window/plasma/reinforced{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/machinery/light,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"hv" = (
+/obj/machinery/computer/helm,
+/obj/item/areaeditor/shuttle,
+/turf/open/floor/wood/yew,
+/area/ship/bridge)
+"hx" = (
+/obj/structure/window/plasma/reinforced{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"iN" = (
+/obj/structure/window/plasma/reinforced{
+	dir = 8
+	},
+/obj/machinery/light,
+/obj/item/stack/sheet/mineral/plasma/twenty,
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/port_gen/pacman,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"kz" = (
+/obj/machinery/computer/autopilot,
+/turf/open/floor/wood/yew,
+/area/ship/bridge)
+"lc" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/wood/yew,
+/area/ship/bridge)
+"mc" = (
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/auto_name/east,
+/turf/open/floor/wood/yew,
+/area/ship/bridge)
+"mU" = (
+/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"mV" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/light,
+/area/ship/engineering/engine)
+"ns" = (
+/obj/machinery/door/airlock/bananium/glass,
+/obj/item/grown/bananapeel/bluespace{
+	alpha = 30
+	},
+/turf/open/floor/mineral/bananium,
+/area/ship/bridge)
+"oo" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/item/reagent_containers/food/snacks/grown/banana,
+/obj/item/reagent_containers/food/snacks/grown/banana,
+/obj/item/reagent_containers/food/snacks/grown/banana,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"qU" = (
+/obj/structure/fans/tiny,
+/turf/open/floor/light,
+/area/ship/engineering/engine)
+"rq" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/obj/machinery/conveyor/auto{
+	dir = 10
+	},
+/obj/machinery/power/supermatter_crystal/shard,
+/turf/open/floor/glass/reinforced,
+/area/ship/engineering/engine)
+"rz" = (
+/obj/machinery/door/airlock/bananium/glass,
+/obj/item/grown/bananapeel/bluespace{
+	alpha = 30
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/mineral/bananium,
+/area/ship/bridge)
+"rT" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"rY" = (
+/obj/structure/fans/tiny,
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/light,
+/area/ship/engineering/engine)
+"sM" = (
+/obj/machinery/power/smes/shuttle/precharged{
+	dir = 1
+	},
+/obj/structure/window/plasma/reinforced,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plating,
+/area/ship/engineering/engine)
+"ta" = (
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/turf/open/floor/plating,
+/area/ship/crew)
+"tc" = (
+/obj/machinery/conveyor/auto{
+	dir = 4
+	},
+/turf/open/floor/glass/reinforced,
+/area/ship/engineering/engine)
+"tX" = (
+/obj/machinery/atmospherics/pipe/simple/yellow,
+/turf/closed/wall/mineral/bananium,
+/area/ship/crew)
+"vn" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/table/wood/fancy/royalblue,
+/obj/item/storage/box/donkpockets/donkpockethonk,
+/obj/item/storage/box/donkpockets/donkpockethonk,
+/obj/item/storage/box/donkpockets/donkpockethonk,
+/obj/item/storage/box/donkpockets/donkpockethonk,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"vo" = (
+/obj/machinery/atmospherics/components/unary/tank/air,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"wp" = (
+/obj/machinery/power/emitter,
+/obj/structure/cable,
+/turf/open/floor/light,
+/area/ship/engineering/engine)
+"wr" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/poddoor{
+	id = "honkext3"
+	},
+/obj/item/grown/bananapeel/bluespace{
+	alpha = 30
+	},
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"xf" = (
+/turf/open/floor/mineral/bananium,
+/area/ship/crew/dorm)
+"xT" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/obj/machinery/conveyor/auto{
+	dir = 6
+	},
+/turf/open/floor/glass/reinforced,
+/area/ship/engineering/engine)
+"yr" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/closet/crate,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"yB" = (
+/obj/structure/chair/e_chair{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"yE" = (
+/obj/structure/fans/tiny,
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/cable,
+/obj/structure/railing,
+/turf/open/floor/light,
+/area/ship/engineering/engine)
+"zv" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"zT" = (
+/obj/machinery/airalarm/all_access,
+/turf/closed/wall/mineral/bananium,
+/area/ship/crew)
+"AH" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"AS" = (
+/turf/closed/wall/mineral/bananium,
+/area/ship/crew/dorm)
+"AY" = (
+/turf/open/floor/light,
+/area/ship/engineering/engine)
+"Bn" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/pipedispenser,
+/obj/item/pipe_dispenser,
+/turf/open/floor/light,
+/area/ship/engineering/engine)
+"BK" = (
+/obj/structure/closet/crate,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"Cz" = (
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"CJ" = (
+/obj/structure/window/plasma/reinforced,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"Do" = (
+/obj/structure/window/plasma/reinforced,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"Dt" = (
+/obj/machinery/conveyor/auto{
+	dir = 8
+	},
+/turf/open/floor/glass/reinforced,
+/area/ship/engineering/engine)
+"El" = (
+/mob/living/carbon/monkey,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/light,
+/area/ship/engineering/engine)
+"En" = (
+/obj/structure/fans/tiny,
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/light,
+/area/ship/engineering/engine)
+"EC" = (
+/obj/structure/window{
+	dir = 4
+	},
+/obj/structure/window{
+	dir = 8
+	},
+/obj/machinery/door/window,
+/obj/structure/table/wood/fancy,
+/obj/item/dnainjector/timed/h2m,
+/obj/item/dnainjector/timed/h2m,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"FK" = (
+/obj/machinery/autolathe,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"Hg" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/item/toy/crayon/spraycan/lubecan,
+/obj/item/toy/crayon/spraycan/lubecan,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"Hi" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/air_input{
+	dir = 1
+	},
+/obj/item/storage/book/bible/koran,
+/turf/open/floor/plating,
+/area/ship/crew)
+"Hr" = (
+/obj/machinery/biogenerator,
+/obj/item/reagent_containers/glass/beaker,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"HB" = (
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"HX" = (
+/turf/closed/wall/mineral/bananium,
+/area/ship/engineering/engine)
+"IO" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/space/hardsuit/clown,
+/obj/item/pickaxe/drill,
+/obj/item/storage/bag/ore,
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/clothing/shoes/clown_shoes/banana_shoes,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"IT" = (
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/auto_name/north,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"IX" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/table/wood/fancy/royalblue,
+/obj/machinery/microwave,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"Jl" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 8
+	},
+/obj/machinery/conveyor/auto{
+	dir = 5
+	},
+/turf/open/floor/glass/reinforced,
+/area/ship/engineering/engine)
+"Jq" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/poddoor/shutters{
+	id = "prisonint2"
+	},
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"Jy" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/button/door{
+	id = "prisonext3";
+	name = "Prison Flush";
+	pixel_y = 25
+	},
+/obj/machinery/button/door{
+	id = "prisonint2";
+	name = "Prison Shutters";
+	pixel_y = 34
+	},
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"Kf" = (
+/obj/structure/window/plasma/reinforced{
+	dir = 4
+	},
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"KF" = (
+/obj/machinery/deepfryer,
+/turf/open/floor/light,
+/area/ship/engineering/engine)
+"KM" = (
+/obj/machinery/cryopod{
+	dir = 1
+	},
+/turf/open/floor/mineral/bananium,
+/area/ship/crew/dorm)
+"KZ" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"LJ" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 8
+	},
+/obj/machinery/conveyor/auto{
+	dir = 9
+	},
+/turf/open/floor/glass/reinforced,
+/area/ship/engineering/engine)
+"LW" = (
+/obj/structure/window/plasma/reinforced,
+/obj/structure/disposaloutlet{
+	dir = 1
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 2
+	},
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"Mg" = (
+/obj/structure/falsewall/bananium,
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plating,
+/area/ship/crew)
+"MV" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"MZ" = (
+/obj/machinery/power/shuttle/engine/electric{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ship/engineering/engine)
+"Nj" = (
+/obj/structure/table/glass,
+/obj/item/clothing/head/clownmitre,
+/obj/item/storage/toolbox/mechanical,
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/pneumatic_cannon/pie/selfcharge,
+/obj/item/nullrod/clown,
+/obj/item/clothing/neck/petcollar,
+/obj/item/bikehorn/golden,
+/obj/item/gun/ballistic/revolver/russian/soul,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"NI" = (
+/obj/structure/window/reinforced/fulltile,
+/obj/structure/grille,
+/obj/machinery/atmospherics/pipe/simple/yellow,
+/turf/open/floor/plating,
+/area/ship/crew)
+"Ow" = (
+/obj/machinery/computer/cryopod,
+/turf/closed/wall/mineral/bananium,
+/area/ship/crew/dorm)
+"Po" = (
+/obj/machinery/hydroponics/constructable,
+/obj/item/seeds/banana{
+	growthstages = 2;
+	potency = 75;
+	production = 2;
+	yield = 9
+	},
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"Pr" = (
+/obj/structure/reagent_dispensers/watertank/high,
+/obj/item/reagent_containers/glass/bucket,
+/obj/machinery/light,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"Pt" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
+/turf/open/floor/light,
+/area/ship/engineering/engine)
+"Pz" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/item/assembly/signaler,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"PU" = (
+/obj/structure/disposaloutlet,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/light,
+/area/ship/engineering/engine)
+"Qc" = (
+/obj/structure/fans/tiny,
+/obj/item/restraints/legcuffs/beartrap,
+/obj/machinery/power/terminal,
+/obj/structure/cable,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/light,
+/area/ship/engineering/engine)
+"QS" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/light,
+/area/ship/engineering/engine)
+"Rx" = (
+/obj/effect/landmark/start/mime,
+/obj/item/clothing/mask/gas/mime,
+/obj/effect/decal/remains/human,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"RJ" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/space/hardsuit/clown,
+/obj/item/pickaxe/drill,
+/obj/item/storage/bag/ore,
+/obj/structure/window{
+	dir = 8
+	},
+/obj/item/clothing/shoes/clown_shoes/banana_shoes,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"RK" = (
+/obj/structure/fans/tiny,
+/obj/item/clothing/shoes/magboots,
+/turf/open/floor/light,
+/area/ship/engineering/engine)
+"SM" = (
+/obj/machinery/seed_extractor,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"TV" = (
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"Up" = (
+/obj/item/pet_carrier,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"Ur" = (
+/obj/structure/window/plasma/reinforced,
+/obj/machinery/disposal/deliveryChute{
+	dir = 1
+	},
+/obj/structure/disposalpipe/trunk,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"Uv" = (
+/obj/vehicle/ridden/scooter/skateboard,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"UD" = (
+/obj/machinery/airalarm/all_access,
+/turf/closed/wall/mineral/bananium,
+/area/ship/engineering/engine)
+"UT" = (
+/obj/machinery/jukebox/disco{
+	anchored = 1
+	},
+/obj/structure/fans/tiny,
+/obj/structure/railing,
+/turf/open/floor/light,
+/area/ship/engineering/engine)
+"Vc" = (
+/obj/machinery/mineral/ore_redemption,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"Vl" = (
+/obj/machinery/ore_silo,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"VT" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/poddoor{
+	id = "honkext3"
+	},
+/obj/machinery/button/door{
+	id = "honkext3";
+	pixel_y = -25
+	},
+/obj/item/grown/bananapeel/bluespace{
+	alpha = 30
+	},
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"Wc" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/structure/bed/dogbed,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"Wl" = (
+/obj/machinery/atmospherics/components/unary/passive_vent,
+/turf/open/floor/plating,
+/area/ship/crew)
+"Ww" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/south,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/melee/roastingstick,
+/obj/structure/closet,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/reagent_containers/food/snacks/sausage,
+/turf/open/floor/light,
+/area/ship/engineering/engine)
+"WJ" = (
+/obj/structure/window/plasma/reinforced{
+	dir = 8
+	},
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"Xf" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/light,
+/area/ship/engineering/engine)
+"Xn" = (
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"XR" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"Yd" = (
+/mob/living/simple_animal/pet/penguin/emperor/shamebrero{
+	desc = "Weakest Clown Player.";
+	icon = 'icons/mob/clown_mobs.dmi';
+	icon_living = "chlown";
+	icon_state = "chlown";
+	name = "Chlowne"
+	},
+/obj/item/fugu_gland,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"YY" = (
+/turf/template_noop,
+/area/template_noop)
+"Zp" = (
+/obj/machinery/mecha_part_fabricator,
+/obj/machinery/light,
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"Zr" = (
+/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"Zw" = (
+/obj/machinery/door/poddoor{
+	id = "prisonext3"
+	},
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"ZI" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/space/hardsuit/clown,
+/obj/item/pickaxe/drill,
+/obj/item/storage/bag/ore,
+/obj/item/clothing/shoes/clown_shoes/banana_shoes,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/bananium,
+/area/ship/crew)
+"ZT" = (
+/turf/closed/wall/mineral/bananium,
+/area/ship/crew)
+
+(1,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+ZT
+ZT
+ZT
+ta
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+"}
+(2,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+FK
+HB
+Up
+ZT
+Mg
+ZT
+ZT
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+"}
+(3,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+IT
+rT
+rT
+rT
+Wc
+ZT
+ZT
+YY
+YY
+YY
+YY
+YY
+YY
+"}
+(4,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+Nj
+Uv
+Yd
+Xn
+zv
+Zp
+ZT
+ZT
+YY
+YY
+YY
+YY
+YY
+"}
+(5,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+Vc
+Xn
+Xn
+zv
+Xn
+Xn
+ZT
+ZT
+YY
+YY
+YY
+YY
+"}
+(6,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+Vl
+Xn
+Xn
+IX
+oo
+Xn
+Xn
+ZT
+ZT
+YY
+YY
+YY
+"}
+(7,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+RJ
+Xn
+vn
+Hg
+Xn
+Xn
+xf
+Ow
+AS
+YY
+YY
+"}
+(8,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZI
+Xn
+zv
+Xn
+Xn
+Xn
+xf
+KM
+AS
+YY
+YY
+"}
+(9,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+IO
+Xn
+zv
+Xn
+Xn
+Xn
+xf
+xf
+AS
+YY
+YY
+"}
+(10,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+KZ
+zv
+Xn
+Kf
+Kf
+hx
+hn
+ZT
+ZT
+YY
+"}
+(11,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+zT
+Xn
+MV
+Ur
+PU
+Xf
+Xf
+QS
+Ww
+HX
+YY
+"}
+(12,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+Wl
+tX
+XR
+AH
+LW
+am
+AY
+RK
+En
+Qc
+sM
+MZ
+"}
+(13,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+ZT
+Jy
+CJ
+mV
+Xf
+yE
+Jl
+LJ
+HX
+YY
+"}
+(14,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+Zw
+yB
+Zr
+Pz
+Do
+Pt
+AY
+UT
+tc
+Dt
+HX
+YY
+"}
+(15,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+Zw
+Rx
+mU
+MV
+CJ
+mV
+Xf
+yE
+xT
+rq
+HX
+YY
+"}
+(16,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+Jq
+mU
+zv
+Do
+KF
+AY
+qU
+rY
+rY
+UD
+YY
+"}
+(17,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+fx
+Xn
+Xn
+MV
+CJ
+Bn
+El
+Xf
+QS
+wp
+HX
+YY
+"}
+(18,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+hf
+Xn
+Xn
+zv
+Xn
+WJ
+WJ
+WJ
+iN
+ZT
+ZT
+YY
+"}
+(19,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+SM
+Xn
+Xn
+Xn
+zv
+Xn
+Xn
+Xn
+Xn
+Xn
+NI
+Hi
+YY
+"}
+(20,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+Hr
+Xn
+Xn
+Xn
+Xn
+zv
+Xn
+Xn
+Xn
+Xn
+aO
+ZT
+YY
+YY
+"}
+(21,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+ZT
+EC
+Xn
+Xn
+Xn
+Xn
+Xn
+zv
+Xn
+Xn
+Xn
+Po
+ZT
+ZT
+YY
+YY
+"}
+(22,1,1) = {"
+YY
+YY
+YY
+YY
+ZT
+ZT
+ZT
+yr
+BK
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+zv
+Xn
+Xn
+Xn
+Po
+ZT
+YY
+YY
+YY
+"}
+(23,1,1) = {"
+YY
+fL
+gN
+gN
+gN
+vo
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+zv
+Xn
+Xn
+Pr
+ZT
+ZT
+YY
+YY
+YY
+"}
+(24,1,1) = {"
+dr
+fL
+hv
+lc
+ns
+gc
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+zv
+TV
+Cz
+ZT
+ZT
+YY
+YY
+YY
+YY
+"}
+(25,1,1) = {"
+dW
+fL
+kz
+mc
+rz
+rT
+rT
+rT
+rT
+rT
+rT
+rT
+rT
+rT
+rT
+aj
+ZT
+ZT
+ZT
+YY
+YY
+YY
+YY
+YY
+"}
+(26,1,1) = {"
+YY
+fL
+gN
+gN
+gN
+wr
+wr
+wr
+wr
+wr
+wr
+wr
+wr
+wr
+wr
+VT
+ZT
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+"}

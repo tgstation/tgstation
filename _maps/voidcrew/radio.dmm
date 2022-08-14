@@ -1,0 +1,534 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"az" = (
+/obj/structure/window/bronze{
+	dir = 4
+	},
+/obj/structure/window/bronze,
+/turf/open/floor/carpet/nanoweave/red,
+/area/ship/bridge)
+"aA" = (
+/obj/structure/frame/computer{
+	anchored = 1
+	},
+/turf/open/floor/carpet/nanoweave/blue,
+/area/ship/bridge)
+"aJ" = (
+/obj/structure/sink{
+	dir = 1
+	},
+/obj/structure/mirror{
+	pixel_y = -30
+	},
+/obj/machinery/light,
+/turf/open/floor/plasteel/freezer,
+/area/ship/bridge)
+"aW" = (
+/obj/machinery/computer/autopilot,
+/turf/open/floor/carpet/nanoweave/blue,
+/area/ship/bridge)
+"bD" = (
+/obj/structure/shuttle/engine/heater,
+/obj/structure/window/reinforced/spawner,
+/turf/open/floor/plasteel/freezer,
+/area/ship/bridge)
+"bF" = (
+/obj/structure/table/bronze,
+/obj/item/storage/firstaid/advanced,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/carpet/nanoweave/blue,
+/area/ship/bridge)
+"cS" = (
+/obj/structure/chair/bronze{
+	dir = 1
+	},
+/turf/open/floor/carpet/nanoweave/blue,
+/area/ship/bridge)
+"de" = (
+/turf/open/floor/plasteel/freezer,
+/area/ship/bridge)
+"eI" = (
+/obj/structure/table/bronze,
+/obj/item/storage/belt/utility,
+/turf/open/floor/carpet/nanoweave/blue,
+/area/ship/bridge)
+"gb" = (
+/turf/open/floor/carpet/nanoweave/red,
+/area/ship/bridge)
+"gG" = (
+/obj/machinery/light/floor,
+/turf/open/floor/carpet/nanoweave/blue,
+/area/ship/bridge)
+"io" = (
+/obj/structure/chair/bronze,
+/obj/machinery/door/window{
+	dir = 1
+	},
+/turf/open/floor/carpet/nanoweave/beige,
+/area/ship/bridge)
+"iX" = (
+/obj/structure/window/bronze{
+	dir = 4
+	},
+/obj/structure/window/bronze{
+	dir = 1
+	},
+/obj/structure/table/bronze,
+/obj/item/encryptionkey/wideband{
+	pixel_y = 12
+	},
+/turf/open/floor/carpet/nanoweave/red,
+/area/ship/bridge)
+"lm" = (
+/obj/machinery/atmospherics/components/unary/tank/air,
+/obj/structure/curtain/cloth/grey,
+/turf/open/floor/plasteel/freezer,
+/area/ship/bridge)
+"oK" = (
+/obj/machinery/power/shuttle/engine/void{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ship/bridge)
+"pO" = (
+/obj/structure/table/bronze,
+/turf/open/floor/carpet/nanoweave/blue,
+/area/ship/bridge)
+"pY" = (
+/obj/structure/table/bronze,
+/turf/open/floor/carpet/nanoweave/orange,
+/area/ship/bridge)
+"rm" = (
+/obj/structure/window/bronze,
+/obj/structure/table/bronze,
+/obj/item/storage/toolbox/mechanical/old/clean,
+/turf/open/floor/carpet/nanoweave/blue,
+/area/ship/bridge)
+"sq" = (
+/obj/machinery/door/airlock/external/glass,
+/obj/structure/fans/tiny,
+/obj/docking_port/mobile{
+	can_move_docking_ports = 1;
+	dwidth = 5;
+	height = 13;
+	launch_status = 0;
+	port_direction = 2;
+	width = 11
+	},
+/turf/open/floor/carpet/nanoweave/red,
+/area/ship/bridge)
+"th" = (
+/obj/machinery/light/floor,
+/turf/open/floor/carpet/nanoweave/red,
+/area/ship/bridge)
+"tv" = (
+/obj/structure/shuttle/engine/heater,
+/obj/structure/window/reinforced/spawner,
+/turf/open/floor/carpet/nanoweave/orange,
+/area/ship/bridge)
+"up" = (
+/obj/structure/window/bronze,
+/turf/open/floor/carpet/nanoweave/blue,
+/area/ship/bridge)
+"uS" = (
+/obj/structure/window/bronze{
+	dir = 4
+	},
+/turf/open/floor/carpet/nanoweave/red,
+/area/ship/bridge)
+"vt" = (
+/obj/structure/window/bronze{
+	dir = 4
+	},
+/obj/structure/table/bronze,
+/turf/open/floor/carpet/nanoweave/red,
+/area/ship/bridge)
+"wJ" = (
+/obj/structure/tank_dispenser/oxygen,
+/obj/structure/window/bronze{
+	dir = 8
+	},
+/obj/machinery/light,
+/turf/open/floor/carpet/nanoweave/red,
+/area/ship/bridge)
+"wV" = (
+/obj/structure/window/bronze{
+	dir = 8
+	},
+/obj/machinery/jukebox,
+/obj/structure/window/bronze{
+	dir = 1
+	},
+/obj/item/radio/intercom/wideband{
+	pixel_y = -32
+	},
+/turf/open/floor/carpet/nanoweave/beige,
+/area/ship/bridge)
+"xx" = (
+/obj/structure/table/bronze,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/carpet/nanoweave,
+/area/ship/bridge)
+"yX" = (
+/obj/machinery/shower{
+	dir = 1
+	},
+/obj/structure/curtain,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/freezer,
+/area/ship/bridge)
+"Au" = (
+/obj/structure/bed,
+/obj/item/bedsheet/syndie,
+/obj/structure/curtain/cloth/grey,
+/turf/open/floor/carpet/nanoweave,
+/area/ship/bridge)
+"Ba" = (
+/obj/structure/window/bronze{
+	dir = 8
+	},
+/turf/open/floor/carpet/nanoweave/red,
+/area/ship/bridge)
+"BI" = (
+/obj/structure/table/bronze,
+/obj/item/trash/plate,
+/turf/open/floor/carpet/nanoweave/orange,
+/area/ship/bridge)
+"EK" = (
+/turf/open/floor/carpet/nanoweave,
+/area/ship/bridge)
+"EY" = (
+/obj/structure/table/bronze,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/carpet/nanoweave/blue,
+/area/ship/bridge)
+"GQ" = (
+/obj/machinery/door/window/westright{
+	dir = 2
+	},
+/turf/open/floor/carpet/nanoweave/blue,
+/area/ship/bridge)
+"Hu" = (
+/obj/machinery/door/window/westright,
+/turf/open/floor/carpet/nanoweave,
+/area/ship/bridge)
+"HJ" = (
+/obj/structure/window/bronze,
+/obj/structure/window/bronze{
+	dir = 8
+	},
+/turf/open/floor/carpet/nanoweave/red,
+/area/ship/bridge)
+"HZ" = (
+/obj/effect/mob_spawn/human/lavaland_syndicate/comms{
+	dir = 4
+	},
+/turf/open/floor/carpet/nanoweave,
+/area/ship/bridge)
+"Jz" = (
+/obj/machinery/vending/autodrobe/all_access{
+	default_price = 0;
+	extra_price = 0
+	},
+/turf/open/floor/carpet/nanoweave,
+/area/ship/bridge)
+"Kn" = (
+/obj/machinery/computer/helm,
+/turf/open/floor/carpet/nanoweave/blue,
+/area/ship/bridge)
+"Kr" = (
+/turf/open/floor/carpet/nanoweave/blue,
+/area/ship/bridge)
+"Ky" = (
+/turf/open/space/basic,
+/area/space)
+"KK" = (
+/turf/open/floor/carpet/nanoweave/beige,
+/area/ship/bridge)
+"Lu" = (
+/obj/structure/table/bronze,
+/obj/item/kitchen/knife,
+/turf/open/floor/carpet/nanoweave/orange,
+/area/ship/bridge)
+"Mj" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/structure/window/bronze{
+	dir = 4
+	},
+/obj/machinery/light,
+/turf/open/floor/carpet/nanoweave/red,
+/area/ship/bridge)
+"Mo" = (
+/obj/structure/table/bronze,
+/obj/machinery/microwave,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/carpet/nanoweave/orange,
+/area/ship/bridge)
+"MW" = (
+/obj/structure/curtain/cloth/grey,
+/obj/structure/table,
+/turf/open/floor/plasteel/freezer,
+/area/ship/bridge)
+"Nh" = (
+/obj/machinery/door/window{
+	dir = 4
+	},
+/turf/open/floor/carpet/nanoweave/orange,
+/area/ship/bridge)
+"Ob" = (
+/obj/structure/chair/plastic{
+	dir = 4
+	},
+/turf/open/floor/carpet/nanoweave/orange,
+/area/ship/bridge)
+"Ph" = (
+/obj/structure/table/bronze,
+/obj/machinery/light/floor,
+/obj/item/radio/intercom,
+/turf/open/floor/carpet/nanoweave/red,
+/area/ship/bridge)
+"Qw" = (
+/obj/structure/window/bronze{
+	dir = 1
+	},
+/obj/structure/toilet{
+	dir = 4
+	},
+/turf/open/floor/plasteel/freezer,
+/area/ship/bridge)
+"QG" = (
+/obj/structure/window/bronze{
+	dir = 8
+	},
+/obj/structure/table/bronze,
+/turf/open/floor/carpet/nanoweave/red,
+/area/ship/bridge)
+"Rj" = (
+/obj/machinery/door/window{
+	dir = 1
+	},
+/turf/open/floor/plasteel/freezer,
+/area/ship/bridge)
+"Tq" = (
+/turf/open/floor/carpet/nanoweave/orange,
+/area/ship/bridge)
+"Ve" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/ship/bridge)
+"Vx" = (
+/obj/structure/table/bronze,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/carpet/nanoweave/orange,
+/area/ship/bridge)
+"VS" = (
+/obj/machinery/telecomms/allinone,
+/obj/structure/window/bronze,
+/turf/open/floor/carpet/nanoweave/blue,
+/area/ship/bridge)
+"Xu" = (
+/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/lootdrop/donkpockets,
+/obj/structure/closet/secure_closet/freezer,
+/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/lootdrop/donkpockets,
+/turf/open/floor/carpet/nanoweave/orange,
+/area/ship/bridge)
+"Ya" = (
+/obj/machinery/door/window/westright{
+	dir = 2
+	},
+/obj/machinery/holopad,
+/obj/structure/chair/comfy/teal{
+	dir = 1
+	},
+/turf/open/floor/carpet/nanoweave/red,
+/area/ship/bridge)
+"Yx" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ship/bridge)
+"Zp" = (
+/obj/structure/window/bronze{
+	dir = 1
+	},
+/obj/structure/curtain/cloth/grey,
+/obj/structure/table,
+/turf/open/floor/plasteel/freezer,
+/area/ship/bridge)
+
+(1,1,1) = {"
+Ky
+Ky
+Ky
+Ky
+Ky
+Ky
+Yx
+Ve
+Ve
+Ve
+Yx
+Ky
+Ky
+"}
+(2,1,1) = {"
+Ky
+Ky
+Ky
+Ky
+Yx
+Ve
+Yx
+HZ
+Qw
+aJ
+Yx
+Yx
+Ky
+"}
+(3,1,1) = {"
+Ky
+Yx
+Ve
+Ve
+Yx
+xx
+EK
+EK
+Rj
+de
+yX
+Yx
+Yx
+"}
+(4,1,1) = {"
+Yx
+Yx
+bF
+eI
+rm
+Au
+EK
+Jz
+Zp
+MW
+lm
+bD
+oK
+"}
+(5,1,1) = {"
+Ve
+aA
+Kr
+Kr
+up
+Ba
+Hu
+Ba
+wV
+QG
+HJ
+wJ
+Yx
+"}
+(6,1,1) = {"
+Ve
+Kn
+cS
+gG
+GQ
+Kr
+th
+KK
+io
+Ph
+Ya
+gb
+sq
+"}
+(7,1,1) = {"
+Ve
+aW
+Kr
+Kr
+up
+uS
+Nh
+uS
+iX
+vt
+az
+Mj
+Yx
+"}
+(8,1,1) = {"
+Yx
+Yx
+EY
+pO
+VS
+pY
+Tq
+Tq
+Tq
+Tq
+Xu
+tv
+oK
+"}
+(9,1,1) = {"
+Ky
+Yx
+Ve
+Ve
+Yx
+Vx
+Tq
+Ob
+Ob
+Ob
+Mo
+Yx
+Yx
+"}
+(10,1,1) = {"
+Ky
+Ky
+Ky
+Ky
+Yx
+Ve
+Yx
+BI
+BI
+Lu
+Yx
+Yx
+Ky
+"}
+(11,1,1) = {"
+Ky
+Ky
+Ky
+Ky
+Ky
+Ky
+Yx
+Ve
+Ve
+Ve
+Yx
+Ky
+Ky
+"}

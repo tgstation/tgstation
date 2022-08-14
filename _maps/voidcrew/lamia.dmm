@@ -1,0 +1,2950 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ab" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile{
+	color = "#008000"
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "wizardship_bridge"
+	},
+/turf/open/floor/plating,
+/area/ship/bridge)
+"ac" = (
+/obj/machinery/computer/helm,
+/turf/open/floor/carpet/stellar,
+/area/ship/bridge)
+"ad" = (
+/obj/machinery/computer/communications,
+/turf/open/floor/carpet/stellar,
+/area/ship/bridge)
+"af" = (
+/obj/structure/chair/bronze{
+	dir = 1
+	},
+/turf/open/floor/carpet/stellar,
+/area/ship/bridge)
+"ag" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/button/door{
+	id = "wizardship_bridge";
+	name = "bridge shutters";
+	pixel_y = 31
+	},
+/obj/machinery/airalarm/directional/east,
+/turf/open/floor/carpet/stellar,
+/area/ship/bridge)
+"ai" = (
+/obj/structure/showcase{
+	desc = "A historical figure of great importance to the wizard federation. He spent his long life learning magic, stealing artifacts, and harassing idiots with swords. May he rest forever, Rodney.";
+	icon = 'icons/mob/mob.dmi';
+	icon_state = "nim";
+	name = "wizard of yendor showcase"
+	},
+/turf/open/floor/carpet/stellar,
+/area/ship/bridge)
+"aj" = (
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
+	name = "Cockpit"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 1
+	},
+/turf/open/floor/carpet/stellar,
+/area/ship/bridge)
+"am" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ship/hallway/central)
+"an" = (
+/turf/open/floor/carpet/royalblack,
+/area/ship/hallway/starboard)
+"ao" = (
+/obj/structure/chair/wood/wings,
+/turf/open/floor/carpet/royalblack,
+/area/ship/hallway/starboard)
+"aq" = (
+/obj/structure/chair/wood/wings{
+	dir = 4
+	},
+/turf/open/floor/carpet/royalblack,
+/area/ship/hallway/starboard)
+"ar" = (
+/obj/structure/table/wood/poker,
+/obj/item/toy/figure/wizard,
+/turf/open/floor/carpet/royalblack,
+/area/ship/hallway/starboard)
+"as" = (
+/obj/structure/chair/wood/wings{
+	dir = 8
+	},
+/obj/machinery/power/apc/auto_name/north,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/carpet/royalblack,
+/area/ship/hallway/starboard)
+"at" = (
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
+	name = "Archives"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ship/hallway/central)
+"au" = (
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
+	name = "Game Room"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/carpet/black,
+/area/ship/hallway/central)
+"av" = (
+/obj/structure/chair/wood/wings{
+	dir = 1
+	},
+/turf/open/floor/carpet/royalblack,
+/area/ship/hallway/starboard)
+"ay" = (
+/turf/closed/wall/mineral/uranium/safe{
+	desc = "A wall plated with emerald.";
+	name = "emerald wall"
+	},
+/area/ship/hallway/central)
+"az" = (
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/wood,
+/area/ship/hallway/central)
+"aA" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/power/apc/auto_name/east,
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/turf/open/floor/wood,
+/area/ship/hallway/central)
+"aB" = (
+/obj/machinery/vending/games,
+/turf/open/floor/carpet/royalblack,
+/area/ship/hallway/starboard)
+"aC" = (
+/obj/structure/table/wood/poker,
+/obj/item/toy/cards/deck/tarot{
+	pixel_y = 4
+	},
+/turf/open/floor/carpet/royalblack,
+/area/ship/hallway/starboard)
+"aF" = (
+/obj/machinery/vending/snack/random,
+/turf/open/floor/wood,
+/area/ship/hallway/central)
+"aG" = (
+/obj/machinery/vending/cola/random,
+/turf/open/floor/wood,
+/area/ship/hallway/central)
+"aI" = (
+/obj/machinery/light,
+/turf/open/floor/carpet/royalblack,
+/area/ship/hallway/starboard)
+"aJ" = (
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
+	name = "Study"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/wood,
+/area/ship/science)
+"aK" = (
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
+	name = "Bar"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ship/crew/canteen)
+"aL" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/autolathe,
+/obj/structure/spider/stickyweb,
+/turf/open/floor/engine/cult,
+/area/ship/science)
+"aM" = (
+/obj/structure/chair/wood/wings,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/spider/stickyweb,
+/obj/item/soulstone/anybody,
+/turf/open/floor/engine/cult,
+/area/ship/science)
+"aO" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/power/apc/auto_name/north,
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/carpet/purple,
+/area/ship/crew/canteen)
+"aP" = (
+/turf/open/floor/carpet/purple,
+/area/ship/crew/canteen)
+"aR" = (
+/obj/machinery/vending/coffee,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ship/crew/canteen)
+"aS" = (
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/power/apc/auto_name/north,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/wood,
+/area/ship/crew/canteen/kitchen)
+"aT" = (
+/obj/structure/frame/machine,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/engine/cult,
+/area/ship/science)
+"aU" = (
+/obj/structure/destructible/cult/tome,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/storage/fancy/candle_box,
+/obj/item/storage/box/matches{
+	pixel_x = -5
+	},
+/turf/open/floor/engine/cult,
+/area/ship/science)
+"aV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/kirbyplants/random,
+/turf/open/floor/wood,
+/area/ship/hallway/central)
+"aW" = (
+/obj/machinery/chem_master/condimaster{
+	name = "HoochMaster 3000"
+	},
+/turf/open/floor/carpet/purple,
+/area/ship/crew/canteen)
+"aY" = (
+/obj/structure/chair/stool/bar{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ship/crew/canteen)
+"aZ" = (
+/obj/structure/table,
+/obj/item/shovel/spoon{
+	desc = "This mighty silver staff seems to have irreversibly lost it's luster.";
+	name = "staff of sustenance"
+	},
+/turf/open/floor/wood,
+/area/ship/crew/canteen/kitchen)
+"ba" = (
+/obj/structure/table,
+/obj/machinery/reagentgrinder{
+	pixel_y = 7
+	},
+/turf/open/floor/wood,
+/area/ship/crew/canteen/kitchen)
+"bb" = (
+/obj/structure/frame/computer,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/spider/stickyweb,
+/turf/open/floor/engine/cult,
+/area/ship/science)
+"bd" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/wood,
+/area/ship/hallway/central)
+"bf" = (
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
+	name = "Personal Quarters"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 1
+	},
+/turf/open/floor/carpet/royalblue,
+/area/ship/crew/dorm)
+"bg" = (
+/obj/structure/table,
+/obj/item/storage/box/donkpockets{
+	pixel_y = 8
+	},
+/obj/item/storage/box/donkpockets/donkpocketgondola,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ship/crew/canteen/kitchen)
+"bh" = (
+/obj/structure/table,
+/obj/machinery/microwave{
+	pixel_y = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ship/crew/canteen/kitchen)
+"bi" = (
+/obj/effect/decal/cleanable/blood/gibs/up,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 9
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ship/crew/canteen/kitchen)
+"bl" = (
+/obj/effect/decal/cleanable/blood/gibs/down,
+/turf/open/floor/wood,
+/area/ship/crew/canteen/kitchen)
+"bm" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/trash/candle,
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/auto_name/north,
+/turf/open/floor/engine/cult,
+/area/ship/science)
+"bn" = (
+/obj/structure/chair/wood/wings{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/sord{
+	desc = "This thing is so unspeakably powerful you are having a hard time even holding it."
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/engine/cult,
+/area/ship/science)
+"bo" = (
+/obj/machinery/vending/boozeomat/all_access,
+/turf/open/floor/carpet/purple,
+/area/ship/crew/canteen)
+"bp" = (
+/obj/machinery/light,
+/obj/item/radio/intercom{
+	pixel_y = -31
+	},
+/turf/open/floor/carpet/purple,
+/area/ship/crew/canteen)
+"bq" = (
+/obj/machinery/vending/cigarette,
+/turf/open/floor/wood,
+/area/ship/crew/canteen)
+"bs" = (
+/obj/machinery/vending/dinnerware,
+/turf/open/floor/wood,
+/area/ship/crew/canteen/kitchen)
+"bu" = (
+/obj/structure/closet/secure_closet/freezer/fridge,
+/turf/open/floor/wood,
+/area/ship/crew/canteen/kitchen)
+"by" = (
+/turf/open/floor/carpet/royalblue,
+/area/ship/hallway/aft)
+"bA" = (
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
+	name = "Cargo"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ship/storage)
+"bB" = (
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
+	name = "Bathroom"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ship/crew/toilet)
+"bC" = (
+/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/structure/closet/crate/medical,
+/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/o2,
+/obj/item/storage/firstaid/toxin,
+/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/machinery/power/apc/auto_name/west,
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/plasteel,
+/area/ship/storage)
+"bD" = (
+/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ship/storage)
+"bF" = (
+/obj/machinery/computer/cryopod{
+	pixel_y = 27
+	},
+/obj/machinery/cryopod{
+	close_state = "bscanner_green";
+	icon_state = "bscanner_open";
+	open_state = "bscanner_open"
+	},
+/turf/open/floor/carpet/royalblue,
+/area/ship/crew/dorm)
+"bG" = (
+/obj/structure/urinal{
+	pixel_y = 28
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/plasteel/white,
+/area/ship/crew/toilet)
+"bH" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/ship/crew/toilet)
+"bI" = (
+/obj/structure/sink{
+	pixel_y = 20
+	},
+/obj/item/razor{
+	desc = "The latest and greatest magic razor born from the science of shaving.";
+	name = "wand of hair slaying";
+	pixel_x = 11;
+	pixel_y = 7
+	},
+/obj/machinery/power/apc/auto_name/east,
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/structure/mirror/magic/lesser{
+	pixel_y = 31
+	},
+/turf/open/floor/plasteel/white,
+/area/ship/crew/toilet)
+"bJ" = (
+/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/closet/crate/miningcar{
+	name = "mining car"
+	},
+/obj/item/pickaxe/emergency{
+	attack_verb = list("hit","spelled","cantripped","ensorceled");
+	desc = "Forged by the greatest smiths of the academy, enchanted by the archmagus council, this is a TRUE boulder eradicator.";
+	icon = 'icons/obj/guns/magic.dmi';
+	icon_state = "staffofflight";
+	name = "staff of rock removal"
+	},
+/obj/item/pickaxe/emergency{
+	attack_verb = list("hit","spelled","cantripped","ensorceled");
+	desc = "Forged by the greatest smiths of the academy, enchanted by the archmagus council, this is a TRUE boulder eradicator.";
+	icon = 'icons/obj/guns/magic.dmi';
+	icon_state = "staffofflight";
+	name = "staff of rock removal"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ship/storage)
+"bK" = (
+/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/structure/closet/crate/engineering,
+/obj/item/stack/sheet/mineral/plasma/five,
+/obj/item/stack/sheet/mineral/plasma/five,
+/obj/item/stack/cable_coil/red,
+/obj/item/clothing/gloves/color/yellow{
+	desc = "These enchanted gloves provide protection against electric shock.";
+	icon_state = "wizard";
+	name = "gloves of shock resistance"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ship/storage)
+"bL" = (
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/carpet/royalblue,
+/area/ship/crew/dorm)
+"bM" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/carpet/royalblue,
+/area/ship/crew/dorm)
+"bN" = (
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/ship/crew/toilet)
+"bO" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/ship/crew/toilet)
+"bP" = (
+/obj/effect/turf_decal/industrial/warning,
+/obj/structure/closet/crate/science,
+/obj/item/storage/box/rndboards{
+	desc = "A box containing a gift for worthy wizards.";
+	name = "\proper the archmagus's legacy"
+	},
+/obj/machinery/airalarm/directional/west,
+/obj/structure/window/reinforced/survival_pod,
+/turf/open/floor/plasteel,
+/area/ship/storage)
+"bQ" = (
+/obj/effect/turf_decal/industrial/warning,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 1
+	},
+/obj/machinery/door/window/survival_pod,
+/turf/open/floor/plasteel,
+/area/ship/storage)
+"bR" = (
+/obj/item/bedsheet/wiz,
+/obj/structure/bed,
+/obj/structure/curtain/cloth/fancy,
+/obj/item/toy/plush/slimeplushie,
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/carpet/royalblue,
+/area/ship/crew/dorm)
+"bT" = (
+/obj/machinery/shower{
+	dir = 1
+	},
+/obj/structure/curtain,
+/obj/item/soap/deluxe,
+/turf/open/floor/plasteel/white,
+/area/ship/crew/toilet)
+"bU" = (
+/obj/structure/toilet{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/white,
+/area/ship/crew/toilet)
+"bV" = (
+/obj/structure/table/wood/fancy,
+/obj/item/skub{
+	pixel_y = 11
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/white,
+/area/ship/crew/toilet)
+"bW" = (
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/bronze,
+/area/ship/cargo)
+"bX" = (
+/turf/open/floor/bronze,
+/area/ship/cargo)
+"bY" = (
+/obj/machinery/mineral/ore_redemption{
+	req_access = null
+	},
+/turf/open/floor/bronze,
+/area/ship/cargo)
+"bZ" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile{
+	color = "#008000"
+	},
+/obj/structure/curtain/cloth/fancy,
+/turf/open/floor/plating,
+/area/ship/science)
+"ca" = (
+/obj/machinery/power/smes,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plating,
+/area/ship/maintenance/aft)
+"cb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ship/maintenance/aft)
+"cc" = (
+/obj/machinery/power/port_gen/pacman,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plating,
+/area/ship/maintenance/aft)
+"cd" = (
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
+	name = "External Airlock"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/bronze,
+/area/ship/cargo)
+"ce" = (
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
+	name = "Engine"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 8
+	},
+/turf/open/floor/bronze,
+/area/ship/maintenance/aft)
+"cf" = (
+/obj/effect/decal/cleanable/squid_ink{
+	name = "motor oil"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ship/maintenance/aft)
+"cg" = (
+/obj/machinery/suit_storage_unit/open,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/clothing/suit/space/hardsuit/wizard,
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/bronze,
+/area/ship/cargo)
+"ch" = (
+/obj/item/storage/toolbox/mechanical,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plating,
+/area/ship/maintenance/aft)
+"cj" = (
+/obj/machinery/atmospherics/components/unary/tank/air{
+	dir = 1;
+	piping_layer = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ship/maintenance/aft)
+"ck" = (
+/obj/machinery/power/smes/shuttle/precharged,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/door/window{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner,
+/turf/open/floor/plating,
+/area/ship/maintenance/aft)
+"cl" = (
+/obj/machinery/power/shuttle/engine/electric{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ship/external)
+"cr" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ship/crew/canteen)
+"cA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/wood,
+/area/ship/crew/canteen/kitchen)
+"cD" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ship/hallway/aft)
+"dd" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet/orange,
+/area/ship/crew/library)
+"do" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ship/crew/canteen)
+"dH" = (
+/turf/open/floor/wood,
+/area/ship/crew/canteen)
+"ee" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/turf/closed/wall/mineral/uranium/safe{
+	desc = "A wall plated with emerald.";
+	name = "emerald wall"
+	},
+/area/ship/maintenance/aft)
+"en" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/power/apc/auto_name/west,
+/obj/structure/cable,
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plating,
+/area/ship/maintenance/aft)
+"eN" = (
+/obj/structure/chair/wood/wings{
+	dir = 8
+	},
+/obj/item/radio/intercom{
+	pixel_y = 26
+	},
+/turf/open/floor/carpet/royalblack,
+/area/ship/hallway/starboard)
+"fx" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 1
+	},
+/turf/open/floor/carpet/royalblue,
+/area/ship/hallway/aft)
+"gz" = (
+/mob/living/simple_animal/hostile/carp/ranged{
+	desc = "A wizard's favorite familiar, the Magicarp!";
+	faction = list("neutral");
+	name = "Melchom"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bed/dogbed/cayenne{
+	name = "Melchom's bed"
+	},
+/turf/open/floor/wood,
+/area/ship/hallway/aft)
+"gB" = (
+/obj/item/kirbyplants/random,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 5
+	},
+/turf/open/floor/wood,
+/area/ship/hallway/aft)
+"gL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/gun/magic/wand/nothing{
+	desc = "A clever little artifact, devised to help with engine failures. You're not so confident about it, though.";
+	name = "emergency engine ignition wand"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ship/maintenance/aft)
+"hh" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 1
+	},
+/turf/open/floor/carpet/green,
+/area/ship/hallway/central)
+"hq" = (
+/obj/structure/destructible/cult/tome,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/book/codex_gigas,
+/turf/open/floor/engine/cult,
+/area/ship/science)
+"hA" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 1
+	},
+/turf/open/floor/carpet/royalblue,
+/area/ship/hallway/aft)
+"if" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/wood,
+/area/ship/crew/library)
+"io" = (
+/obj/structure/chair/bronze{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/item/radio/intercom/wideband{
+	pixel_x = -29;
+	pixel_y = 25
+	},
+/turf/open/floor/carpet/stellar,
+/area/ship/bridge)
+"iu" = (
+/obj/structure/sign/poster/contraband/shamblers_juice,
+/turf/closed/wall/mineral/uranium/safe{
+	desc = "A wall plated with emerald.";
+	name = "emerald wall"
+	},
+/area/ship/crew/canteen)
+"iT" = (
+/obj/structure/bookcase/random/reference,
+/turf/open/floor/carpet/orange,
+/area/ship/crew/library)
+"iU" = (
+/mob/living/carbon/monkey/punpun,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ship/crew/canteen)
+"je" = (
+/obj/effect/decal/cleanable/vomit/old,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ship/crew/canteen)
+"jA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ship/crew/canteen/kitchen)
+"jC" = (
+/turf/closed/wall/mineral/uranium/safe{
+	desc = "A wall plated with emerald.";
+	name = "emerald wall"
+	},
+/area/ship/maintenance/aft)
+"jQ" = (
+/turf/closed/wall/mineral/uranium/safe{
+	desc = "A wall plated with emerald.";
+	name = "emerald wall"
+	},
+/area/ship/cargo)
+"kC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/radio/intercom{
+	pixel_x = 29
+	},
+/turf/open/floor/bronze,
+/area/ship/cargo)
+"kN" = (
+/obj/machinery/light/broken{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ship/hallway/aft)
+"kO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/vending/autodrobe/all_access,
+/turf/open/floor/wood,
+/area/ship/hallway/aft)
+"lq" = (
+/obj/structure/chair/wood/wings{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 10
+	},
+/turf/open/floor/carpet/royalblack,
+/area/ship/hallway/starboard)
+"mr" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 5
+	},
+/turf/open/floor/carpet/royalblue,
+/area/ship/crew/dorm)
+"mv" = (
+/obj/structure/sign/poster/official/high_class_martini,
+/turf/closed/wall/mineral/uranium/safe{
+	desc = "A wall plated with emerald.";
+	name = "emerald wall"
+	},
+/area/ship/hallway/starboard)
+"ni" = (
+/turf/closed/wall/mineral/uranium/safe{
+	desc = "A wall plated with emerald.";
+	name = "emerald wall"
+	},
+/area/ship/hallway/starboard)
+"nl" = (
+/turf/closed/wall/mineral/uranium/safe{
+	desc = "A wall plated with emerald.";
+	name = "emerald wall"
+	},
+/area/ship/crew/library)
+"nC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ship/crew/canteen/kitchen)
+"nQ" = (
+/obj/structure/table/wood/fancy/purple,
+/obj/item/clothing/head/collectable/wizard{
+	pixel_y = 3
+	},
+/turf/open/floor/carpet/purple,
+/area/ship/crew/canteen)
+"oz" = (
+/turf/open/floor/wood,
+/area/ship/crew/canteen/kitchen)
+"oB" = (
+/obj/structure/frame/machine,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/spider/stickyweb,
+/turf/open/floor/engine/cult,
+/area/ship/science)
+"oD" = (
+/obj/structure/sign/warning/vacuum/external,
+/turf/closed/wall/mineral/uranium/safe{
+	desc = "A wall plated with emerald.";
+	name = "emerald wall"
+	},
+/area/ship/cargo)
+"oE" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plating,
+/area/ship/maintenance/aft)
+"pf" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 8
+	},
+/turf/open/floor/bronze,
+/area/ship/cargo)
+"pj" = (
+/obj/structure/chair/bronze{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/carpet/stellar,
+/area/ship/bridge)
+"pn" = (
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
+	name = "Bar"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ship/hallway/aft)
+"pR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/ship/hallway/aft)
+"qJ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ship/hallway/central)
+"qN" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile{
+	color = "#008000"
+	},
+/obj/structure/curtain/cloth/fancy,
+/obj/docking_port/mobile{
+	dir = 4;
+	launch_status = 0;
+	port_direction = 8
+	},
+/turf/open/floor/plating,
+/area/ship/science)
+"qT" = (
+/obj/structure/sign/poster/official/no_erp,
+/turf/closed/wall/mineral/uranium/safe{
+	desc = "A wall plated with emerald.";
+	name = "emerald wall"
+	},
+/area/ship/crew/toilet)
+"qU" = (
+/obj/machinery/power/apc/auto_name/west,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/carpet/orange,
+/area/ship/crew/library)
+"qY" = (
+/obj/item/reagent_containers/food/snacks/pizzaslice/dank{
+	pixel_x = -1;
+	pixel_y = 4
+	},
+/obj/structure/table/wood/fancy/purple,
+/turf/open/floor/carpet/purple,
+/area/ship/crew/canteen)
+"rg" = (
+/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/item/reagent_containers/food/condiment/enzyme,
+/turf/open/floor/wood,
+/area/ship/crew/canteen/kitchen)
+"rh" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small,
+/obj/structure/table/wood/fancy/royalblack,
+/obj/item/paper_bin/bundlenatural{
+	pixel_y = 5
+	},
+/obj/item/mining_scanner{
+	desc = "A grimoire penned by the mighty magus Antoras. Revelations of Rock is regarded as one of the most important and influential tomes to ever grace the Federation, granting it's reader the ability to divine minerals. And we mean REALLY divine. The book contains detailed information on hundreds of thousands of types of soil, minerals, gemstones, and more. A wizard wielding this tome could indeed, within seconds, precisely deduce how many individual grains of sand were on a planet. This tome alone is touted as the grandfather of the modern Wizard Federation, and certainly is responsible for your gem-encrusted hardsuits and your emerald-plated vessel. Your operations will, through the power of this stony grimoire, surely proceed smooth as slate and clear as crystal. That.. being said... It would appear that some, okay well, MOST of the pages have been ripped out of this copy. Through your wizardly intellect however, you deduce that missing pages will not lessen it's power. After all, tomes don't ACTUALLY utilize those pages, right?";
+	icon = 'icons/obj/library.dmi';
+	icon_state = "book";
+	name = "The Grimoire of Rock Revelation"
+	},
+/turf/open/floor/wood,
+/area/ship/crew/library)
+"rp" = (
+/obj/machinery/computer/bookmanagement{
+	pixel_y = 1
+	},
+/obj/structure/table/wood/fancy/royalblack,
+/obj/item/radio/intercom{
+	pixel_y = -31
+	},
+/turf/open/floor/carpet/orange,
+/area/ship/crew/library)
+"rH" = (
+/obj/structure/spider/stickyweb,
+/obj/item/relic,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 6
+	},
+/turf/open/floor/engine/cult,
+/area/ship/science)
+"sJ" = (
+/obj/structure/sign/poster/contraband/power,
+/turf/closed/wall/mineral/uranium/safe{
+	desc = "A wall plated with emerald.";
+	name = "emerald wall"
+	},
+/area/ship/science)
+"sX" = (
+/obj/machinery/airalarm/directional/east,
+/turf/open/floor/carpet/royalblack,
+/area/ship/hallway/starboard)
+"tv" = (
+/turf/closed/wall/mineral/uranium/safe{
+	desc = "A wall plated with emerald.";
+	name = "emerald wall"
+	},
+/area/ship/crew/dorm)
+"ud" = (
+/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6,
+/turf/closed/wall/mineral/uranium/safe{
+	desc = "A wall plated with emerald.";
+	name = "emerald wall"
+	},
+/area/ship/crew/toilet)
+"uh" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/old,
+/obj/structure/spider/spiderling,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/engine/cult,
+/area/ship/science)
+"ui" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/jukebox,
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/turf/open/floor/wood,
+/area/ship/crew/canteen)
+"vk" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/ship/maintenance/aft)
+"wj" = (
+/turf/closed/wall/mineral/uranium/safe{
+	desc = "A wall plated with emerald.";
+	name = "emerald wall"
+	},
+/area/ship/storage)
+"wq" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/carpet/stellar,
+/area/ship/bridge)
+"wE" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/trash/candle,
+/turf/open/floor/engine/cult,
+/area/ship/science)
+"wT" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ship/crew/canteen)
+"wX" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/carpet/royalblack,
+/area/ship/hallway/starboard)
+"xc" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/wood,
+/area/ship/crew/canteen/kitchen)
+"zn" = (
+/obj/machinery/processor,
+/turf/open/floor/wood,
+/area/ship/crew/canteen/kitchen)
+"zA" = (
+/obj/structure/sign/plaques/kiddie/library,
+/turf/closed/wall/mineral/uranium/safe{
+	desc = "A wall plated with emerald.";
+	name = "emerald wall"
+	},
+/area/ship/hallway/central)
+"zN" = (
+/obj/machinery/light,
+/obj/machinery/computer/arcade,
+/turf/open/floor/wood,
+/area/ship/crew/canteen)
+"zT" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/trash/candle,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/turf/open/floor/engine/cult,
+/area/ship/science)
+"An" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ship/crew/library)
+"Ar" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/bronze,
+/area/ship/cargo)
+"Cc" = (
+/obj/item/reagent_containers/food/drinks/shaker{
+	pixel_x = -1
+	},
+/obj/structure/table/wood/fancy/purple,
+/turf/open/floor/carpet/purple,
+/area/ship/crew/canteen)
+"Cq" = (
+/obj/structure/sign/poster/official/fruit_bowl,
+/turf/closed/wall/mineral/uranium/safe{
+	desc = "A wall plated with emerald.";
+	name = "emerald wall"
+	},
+/area/ship/crew/library)
+"Cy" = (
+/obj/structure/closet/cabinet,
+/obj/item/clothing/head/wizard/yellow,
+/obj/item/clothing/head/wizard/red,
+/obj/item/clothing/head/wizard/marisa,
+/obj/item/clothing/head/wizard/black,
+/obj/item/clothing/head/wizard,
+/obj/item/clothing/suit/wizrobe/yellow,
+/obj/item/clothing/suit/wizrobe/red,
+/obj/item/clothing/suit/wizrobe/marisa,
+/obj/item/clothing/suit/wizrobe/black,
+/obj/item/clothing/suit/wizrobe,
+/obj/machinery/power/apc/auto_name/north,
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/carpet/royalblue,
+/area/ship/crew/dorm)
+"CF" = (
+/turf/closed/wall/mineral/uranium/safe{
+	desc = "A wall plated with emerald.";
+	name = "emerald wall"
+	},
+/area/ship/crew/toilet)
+"CH" = (
+/obj/structure/sign/poster/random,
+/turf/closed/wall/mineral/uranium/safe{
+	desc = "A wall plated with emerald.";
+	name = "emerald wall"
+	},
+/area/ship/crew/canteen/kitchen)
+"Db" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/terminal,
+/turf/open/floor/plating,
+/area/ship/maintenance/aft)
+"Dg" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 1
+	},
+/turf/open/floor/bronze,
+/area/ship/cargo)
+"DP" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/spider/stickyweb,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 1
+	},
+/turf/open/floor/engine/cult,
+/area/ship/science)
+"Ee" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ship/hallway/central)
+"Ek" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/carpet/royalblack,
+/area/ship/hallway/starboard)
+"El" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/item/kirbyplants/random,
+/obj/item/book/granter/spell/smoke/lesser,
+/turf/open/floor/wood,
+/area/ship/crew/library)
+"Es" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "1-6"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ship/hallway/aft)
+"Eu" = (
+/obj/structure/table/wood/fancy/purple,
+/turf/open/floor/carpet/purple,
+/area/ship/crew/canteen)
+"Ez" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 5
+	},
+/turf/open/floor/wood,
+/area/ship/crew/library)
+"Fu" = (
+/obj/item/statuebust{
+	pixel_y = 12
+	},
+/obj/structure/table/wood/fancy/royalblack,
+/turf/open/floor/carpet/orange,
+/area/ship/crew/library)
+"FQ" = (
+/obj/structure/chair/stool/bar{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/wood,
+/area/ship/crew/canteen)
+"Ge" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ship/hallway/aft)
+"Gf" = (
+/obj/effect/decal/cleanable/food/egg_smudge,
+/turf/open/floor/wood,
+/area/ship/crew/canteen/kitchen)
+"Gh" = (
+/turf/closed/wall/mineral/uranium/safe{
+	desc = "A wall plated with emerald.";
+	name = "emerald wall"
+	},
+/area/ship/crew/canteen/kitchen)
+"GA" = (
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
+	name = "Study"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ship/hallway/aft)
+"GL" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/trash/candy,
+/turf/open/floor/wood,
+/area/ship/hallway/aft)
+"GM" = (
+/turf/open/floor/carpet/orange,
+/area/ship/crew/library)
+"HS" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet/purple,
+/area/ship/crew/canteen)
+"HV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 1
+	},
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plating,
+/area/ship/maintenance/aft)
+"Ia" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/ship/maintenance/aft)
+"Ix" = (
+/obj/machinery/power/apc/auto_name/north,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/wood,
+/area/ship/hallway/aft)
+"IJ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/spider/stickyweb,
+/obj/item/clothing/head/jackbros{
+	pixel_y = 7
+	},
+/obj/item/clothing/shoes/jackbros{
+	pixel_y = -8
+	},
+/obj/item/clothing/under/costume/jackbros{
+	pixel_x = -1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/engine/cult,
+/area/ship/science)
+"IN" = (
+/turf/closed/wall/mineral/uranium/safe{
+	desc = "A wall plated with emerald.";
+	name = "emerald wall"
+	},
+/area/ship/hallway/aft)
+"Jn" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/carpet/royalblue,
+/area/ship/hallway/aft)
+"Jo" = (
+/obj/item/trash/can,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ship/hallway/central)
+"JB" = (
+/obj/structure/sign/poster/random,
+/turf/closed/wall/mineral/uranium/safe{
+	desc = "A wall plated with emerald.";
+	name = "emerald wall"
+	},
+/area/ship/crew/library)
+"JP" = (
+/obj/item/storage/bag/tray,
+/obj/item/reagent_containers/food/snacks/burger/spell,
+/obj/structure/table/wood/fancy/cyan,
+/turf/open/floor/carpet/royalblue,
+/area/ship/crew/dorm)
+"JS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/cigbutt,
+/obj/item/cigbutt{
+	pixel_x = -9;
+	pixel_y = -3
+	},
+/turf/open/floor/wood,
+/area/ship/crew/canteen)
+"Ke" = (
+/obj/item/trash/popcorn,
+/turf/open/floor/carpet/orange,
+/area/ship/crew/library)
+"Ki" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 6
+	},
+/turf/open/floor/engine/cult,
+/area/ship/science)
+"Kj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm/directional/east,
+/obj/structure/sink{
+	pixel_y = 24
+	},
+/turf/open/floor/wood,
+/area/ship/crew/canteen/kitchen)
+"Kz" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile{
+	color = "#008000"
+	},
+/obj/structure/curtain/cloth/fancy,
+/turf/open/floor/plating,
+/area/ship/hallway/aft)
+"KS" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ship/hallway/aft)
+"KW" = (
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/wood,
+/area/ship/hallway/aft)
+"Ll" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ship/maintenance/aft)
+"LZ" = (
+/obj/structure/sign/poster/contraband/random,
+/turf/closed/wall/mineral/uranium/safe{
+	desc = "A wall plated with emerald.";
+	name = "emerald wall"
+	},
+/area/ship/crew/dorm)
+"Ma" = (
+/obj/machinery/computer/autopilot,
+/turf/open/floor/carpet/stellar,
+/area/ship/bridge)
+"Mb" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/carpet/stellar,
+/area/ship/bridge)
+"Me" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/cigbutt{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ship/crew/canteen)
+"Mf" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 10
+	},
+/turf/open/floor/carpet/royalblue,
+/area/ship/hallway/aft)
+"Mn" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/item/areaeditor/shuttle,
+/obj/item/clothing/shoes/sandal/magic{
+	pixel_y = -7
+	},
+/obj/item/clothing/suit/wizrobe/magusblue{
+	pixel_y = 5
+	},
+/obj/item/clothing/head/wizard/magus{
+	pixel_y = 11
+	},
+/turf/open/floor/carpet/stellar,
+/area/ship/bridge)
+"Mq" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ship/crew/canteen)
+"MA" = (
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 4
+	},
+/obj/structure/table/wood/fancy/purple,
+/turf/open/floor/carpet/purple,
+/area/ship/crew/canteen)
+"MB" = (
+/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ship/storage)
+"MX" = (
+/obj/structure/sign/poster/random,
+/turf/closed/wall/mineral/uranium/safe{
+	desc = "A wall plated with emerald.";
+	name = "emerald wall"
+	},
+/area/ship/hallway/aft)
+"Nm" = (
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/wood,
+/area/ship/crew/canteen/kitchen)
+"No" = (
+/turf/template_noop,
+/area/space)
+"Np" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 8
+	},
+/turf/open/floor/carpet/green,
+/area/ship/hallway/central)
+"Ny" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 5
+	},
+/turf/open/floor/bronze,
+/area/ship/cargo)
+"NF" = (
+/obj/machinery/chem_dispenser/drinks{
+	dir = 4
+	},
+/obj/structure/table/wood/fancy/purple,
+/turf/open/floor/carpet/purple,
+/area/ship/crew/canteen)
+"NI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 5
+	},
+/turf/open/floor/wood,
+/area/ship/crew/canteen)
+"NN" = (
+/obj/structure/bookcase/random,
+/turf/open/floor/carpet/orange,
+/area/ship/crew/library)
+"Ot" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/bookcase/random/religion,
+/obj/structure/spider/stickyweb,
+/turf/open/floor/engine/cult,
+/area/ship/science)
+"OC" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/table/wood/fancy/royalblue,
+/obj/item/book/granter/spell/charge{
+	pixel_y = 4
+	},
+/obj/item/gun/energy/e_gun/mini{
+	desc = "The small and submissive wand of wizards-in-training, firing bursts of raw magical energy to disable or kill foes. Comes with built-in nightlight!";
+	gunlight_state = "nothingwand";
+	icon = 'icons/obj/guns/magic.dmi';
+	icon_state = "nothingwand";
+	name = "acolyte's training wand of duality";
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/machinery/power/apc/auto_name/west,
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/carpet/stellar,
+/area/ship/bridge)
+"OQ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/libraryscanner,
+/turf/open/floor/wood,
+/area/ship/crew/library)
+"Pc" = (
+/obj/effect/turf_decal/industrial/warning,
+/obj/structure/closet/crate,
+/obj/item/radio,
+/obj/item/radio,
+/obj/item/radio,
+/obj/item/radio,
+/obj/item/radio,
+/obj/structure/window/reinforced/survival_pod,
+/turf/open/floor/plasteel,
+/area/ship/storage)
+"PT" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile{
+	color = "#008000"
+	},
+/obj/structure/curtain/cloth/fancy,
+/turf/open/floor/plating,
+/area/ship/maintenance/aft)
+"Ql" = (
+/obj/machinery/bookbinder,
+/turf/open/floor/carpet/orange,
+/area/ship/crew/library)
+"QD" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ship/external)
+"RD" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile{
+	color = "#008000"
+	},
+/obj/structure/curtain/cloth/fancy,
+/turf/open/floor/plating,
+/area/ship/crew/canteen/kitchen)
+"RE" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ship/crew/library)
+"Sc" = (
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
+	name = "Kitchen"
+	},
+/obj/effect/decal/cleanable/food/pie_smudge,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ship/crew/canteen/kitchen)
+"Si" = (
+/obj/structure/cable{
+	icon_state = "4-9"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/carpet/royalblue,
+/area/ship/hallway/aft)
+"So" = (
+/turf/closed/wall/mineral/uranium/safe{
+	desc = "A wall plated with emerald.";
+	name = "emerald wall"
+	},
+/area/ship/science)
+"Sq" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ship/hallway/aft)
+"St" = (
+/obj/structure/chair/comfy/black,
+/turf/open/floor/carpet/orange,
+/area/ship/crew/library)
+"SC" = (
+/obj/machinery/airalarm/directional/north,
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 10
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/wood,
+/area/ship/crew/canteen)
+"Tc" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/vomit/old,
+/obj/item/cigbutt/roach,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 5
+	},
+/turf/open/floor/plasteel/white,
+/area/ship/crew/toilet)
+"Tn" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/trash/semki,
+/turf/open/floor/wood,
+/area/ship/hallway/aft)
+"Tt" = (
+/turf/closed/wall/mineral/uranium/safe{
+	desc = "A wall plated with emerald.";
+	name = "emerald wall"
+	},
+/area/ship/bridge)
+"TQ" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ship/hallway/aft)
+"TY" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/spider/stickyweb,
+/turf/open/floor/engine/cult,
+/area/ship/science)
+"Uu" = (
+/obj/structure/sign/poster/official/ue_no,
+/turf/closed/wall/mineral/uranium/safe{
+	desc = "A wall plated with emerald.";
+	name = "emerald wall"
+	},
+/area/ship/crew/canteen)
+"Va" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/engine/cult,
+/area/ship/science)
+"Vc" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ship/crew/canteen)
+"Vy" = (
+/turf/open/floor/wood,
+/area/ship/hallway/aft)
+"VC" = (
+/obj/structure/closet/cabinet,
+/obj/item/gun/ballistic/shotgun/doublebarrel{
+	desc = "Despite the fact you're on a ship meant for wizards, with spells and all that, a bartender is still never far from a double-barreled twelve-gauge shotgun.";
+	sawn_desc = "Gooblamaphous's coming!"
+	},
+/obj/item/storage/box/beanbag,
+/obj/item/clothing/suit/armor/vest/alt,
+/obj/item/clothing/glasses/sunglasses/reagent,
+/obj/item/clothing/head/wizard/black{
+	desc = "Strange-looking black hat-wear that most certainly belongs to a real bartender.";
+	name = "beer wizard hat"
+	},
+/obj/item/roulette_wheel_beacon,
+/obj/item/etherealballdeployer,
+/obj/item/storage/belt/bandolier,
+/turf/open/floor/carpet/purple,
+/area/ship/crew/canteen)
+"VP" = (
+/obj/item/storage/pill_bottle/dice{
+	icon_state = "magicdicebag";
+	pixel_y = 4
+	},
+/obj/structure/table/wood/fancy/green,
+/obj/item/table_bell/brass{
+	pixel_x = -8
+	},
+/turf/open/floor/carpet/royalblack,
+/area/ship/hallway/starboard)
+"VR" = (
+/obj/machinery/suit_storage_unit/open,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/clothing/suit/space/hardsuit/wizard,
+/obj/machinery/power/apc/auto_name/south,
+/obj/structure/cable,
+/turf/open/floor/bronze,
+/area/ship/cargo)
+"We" = (
+/obj/structure/sign/poster/contraband/random,
+/turf/closed/wall/mineral/uranium/safe{
+	desc = "A wall plated with emerald.";
+	name = "emerald wall"
+	},
+/area/ship/hallway/aft)
+"Wp" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/cigbutt/cigarbutt,
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/carpet/royalblack,
+/area/ship/hallway/starboard)
+"WE" = (
+/obj/item/bedsheet/wiz,
+/obj/structure/bed,
+/obj/structure/curtain/cloth/fancy,
+/obj/item/toy/plush/plushvar,
+/turf/open/floor/carpet/royalblue,
+/area/ship/crew/dorm)
+"WV" = (
+/obj/machinery/door/window/southright{
+	dir = 8
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/carpet/purple,
+/area/ship/crew/canteen)
+"Xm" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 8
+	},
+/turf/open/floor/bronze,
+/area/ship/cargo)
+"Xz" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ship/hallway/central)
+"XG" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/kirbyplants/random,
+/turf/open/floor/wood,
+/area/ship/hallway/aft)
+"XS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/carpet/royalblue,
+/area/ship/hallway/aft)
+"XX" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/vending/classicbeats,
+/turf/open/floor/wood,
+/area/ship/hallway/aft)
+"Yn" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer4,
+/turf/open/floor/carpet/green,
+/area/ship/hallway/central)
+"Yx" = (
+/turf/closed/wall/mineral/uranium/safe{
+	desc = "A wall plated with emerald.";
+	name = "emerald wall"
+	},
+/area/ship/crew/canteen)
+"YD" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 1
+	},
+/turf/open/floor/carpet/royalblue,
+/area/ship/crew/dorm)
+"YF" = (
+/obj/machinery/holopad/emergency/command,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 6
+	},
+/turf/open/floor/carpet/stellar,
+/area/ship/bridge)
+"Zj" = (
+/obj/machinery/suit_storage_unit/open,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/clothing/suit/space/hardsuit/wizard,
+/turf/open/floor/bronze,
+/area/ship/cargo)
+"ZW" = (
+/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/structure/closet/crate{
+	name = "alchemical supplies"
+	},
+/obj/item/slimepotion/genderchange{
+	name = "potion of gender";
+	pixel_x = 5
+	},
+/obj/item/dyespray,
+/obj/item/reagent_containers/food/drinks/soda_cans/canned_laughter{
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/pill/floorpill{
+	pixel_x = -9
+	},
+/turf/open/floor/plasteel,
+/area/ship/storage)
+
+(1,1,1) = {"
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+So
+So
+bZ
+qN
+bZ
+So
+IN
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+"}
+(2,1,1) = {"
+No
+No
+No
+No
+No
+No
+No
+nl
+nl
+nl
+So
+aL
+aT
+bb
+aT
+oB
+IN
+Kz
+Kz
+IN
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+"}
+(3,1,1) = {"
+No
+No
+No
+No
+No
+No
+nl
+Cq
+qU
+if
+aJ
+Va
+rH
+zT
+Ki
+DP
+GA
+Es
+gB
+MX
+IN
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+"}
+(4,1,1) = {"
+No
+No
+No
+No
+No
+nl
+JB
+NN
+GM
+OQ
+So
+bm
+uh
+TY
+IJ
+wE
+IN
+KS
+Si
+XX
+IN
+wj
+wj
+wj
+jQ
+oD
+cd
+jQ
+jQ
+No
+No
+"}
+(5,1,1) = {"
+No
+No
+No
+No
+nl
+nl
+El
+Ez
+An
+rh
+sJ
+aM
+aU
+Ot
+hq
+bn
+IN
+Vy
+Ge
+Vy
+IN
+bC
+bJ
+bP
+bW
+Ar
+bX
+cg
+jQ
+No
+No
+"}
+(6,1,1) = {"
+No
+No
+No
+No
+nl
+NN
+dd
+RE
+St
+rp
+So
+So
+So
+So
+So
+So
+We
+kN
+fx
+cD
+bA
+bD
+MB
+bQ
+Dg
+pf
+Ny
+Zj
+jQ
+No
+No
+"}
+(7,1,1) = {"
+No
+Tt
+Tt
+Tt
+Tt
+iT
+Ke
+RE
+Ql
+Fu
+Yx
+VC
+aW
+MA
+NF
+bo
+IN
+Vy
+Ge
+KS
+wj
+ZW
+bK
+Pc
+bY
+kC
+Xm
+VR
+jQ
+No
+No
+"}
+(8,1,1) = {"
+Tt
+Tt
+OC
+Mn
+Tt
+ay
+zA
+at
+ay
+ay
+Yx
+aO
+aP
+aP
+HS
+bp
+IN
+KS
+Jn
+Tn
+tv
+tv
+LZ
+tv
+jC
+jC
+ce
+jC
+jC
+jC
+No
+"}
+(9,1,1) = {"
+ab
+Ma
+io
+Mb
+ab
+aV
+Ee
+Xz
+az
+aF
+Uu
+WV
+qY
+nQ
+Cc
+Eu
+IN
+Ix
+Sq
+TQ
+tv
+Cy
+bL
+bR
+jC
+ca
+cf
+en
+Db
+ck
+cl
+"}
+(10,1,1) = {"
+ab
+ac
+pj
+YF
+aj
+am
+Np
+Yn
+hh
+am
+aK
+NI
+aY
+aY
+aY
+FQ
+Kz
+Vy
+hA
+cD
+bf
+YD
+mr
+WE
+PT
+cb
+Ll
+oE
+Db
+ck
+cl
+"}
+(11,1,1) = {"
+ab
+ad
+af
+wq
+ab
+bd
+qJ
+Jo
+aA
+aG
+Yx
+SC
+do
+je
+Vc
+Mq
+pn
+cD
+pR
+Vy
+tv
+bF
+bM
+JP
+jC
+vk
+gL
+ch
+Db
+ck
+cl
+"}
+(12,1,1) = {"
+Tt
+Tt
+ag
+ai
+Tt
+ay
+ay
+au
+ay
+ay
+iu
+ui
+Me
+iU
+wT
+zN
+IN
+KW
+XS
+Vy
+CF
+CF
+qT
+CF
+jC
+cc
+Ia
+HV
+cj
+ee
+QD
+"}
+(13,1,1) = {"
+No
+Tt
+Tt
+Tt
+Tt
+an
+aq
+Ek
+aB
+VP
+Yx
+aR
+dH
+cr
+JS
+bq
+IN
+gz
+Ge
+Vy
+CF
+bG
+bN
+bT
+jC
+jC
+PT
+jC
+jC
+jC
+No
+"}
+(14,1,1) = {"
+No
+No
+No
+No
+ni
+ao
+ar
+lq
+wX
+aI
+Gh
+Gh
+RD
+Sc
+RD
+Gh
+We
+GL
+Mf
+cD
+bB
+bH
+Tc
+bU
+CF
+No
+No
+No
+No
+No
+No
+"}
+(15,1,1) = {"
+No
+No
+No
+No
+ni
+ni
+as
+Wp
+aq
+an
+Gh
+aS
+cA
+jA
+oz
+zn
+IN
+Vy
+Vy
+KS
+IN
+bI
+bO
+bV
+CF
+No
+No
+No
+No
+No
+No
+"}
+(16,1,1) = {"
+No
+No
+No
+No
+No
+ni
+mv
+ao
+aC
+av
+CH
+oz
+aZ
+bg
+xc
+bs
+IN
+Vy
+by
+kO
+IN
+CF
+ud
+CF
+CF
+No
+No
+No
+No
+No
+No
+"}
+(17,1,1) = {"
+No
+No
+No
+No
+No
+No
+ni
+ni
+eN
+sX
+Gh
+Gf
+ba
+bh
+bl
+rg
+IN
+KS
+XG
+IN
+IN
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+"}
+(18,1,1) = {"
+No
+No
+No
+No
+No
+No
+No
+ni
+ni
+ni
+Gh
+Kj
+Nm
+bi
+nC
+bu
+IN
+Kz
+Kz
+IN
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+"}
+(19,1,1) = {"
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+Gh
+Gh
+RD
+Gh
+RD
+Gh
+Gh
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+"}
