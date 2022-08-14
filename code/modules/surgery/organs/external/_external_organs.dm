@@ -7,7 +7,7 @@
 	name = "external organ"
 	desc = "An external organ that is too external."
 
-	organ_flags = ORGAN_EXTERNAL | ORGAN_EDIBLE
+	organ_flags = ORGAN_EDIBLE
 	visual = TRUE
 
 	///Sometimes we need multiple layers, for like the back, middle and front of the person
