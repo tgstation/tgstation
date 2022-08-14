@@ -12,8 +12,6 @@
 	var/short_name
 	///The antag datum to give a player on join
 	var/antag_datum
-	///Should this ship be able to be password protected
-	var/disable_passwords
 
 	///List of job slots
 	var/list/job_slots = list()
