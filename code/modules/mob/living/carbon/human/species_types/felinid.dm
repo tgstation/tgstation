@@ -42,6 +42,10 @@
 			mutantears = /obj/item/organ/internal/ears
 	return ..()
 
+/datum/species/human/felinid/randomize_features(mob/living/carbon/human/human_mob)
+	randomize_external_organs(human_mob)
+	return ..()
+
 /proc/mass_purrbation()
 	for(var/mob in GLOB.human_list)
 		purrbation_apply(mob)
