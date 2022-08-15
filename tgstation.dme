@@ -4683,6 +4683,7 @@
 #include "voidcrew\_DEFINES\nanite_defines.dm"
 #include "voidcrew\_DEFINES\nanite_signals.dm"
 #include "voidcrew\_HELPERS\data_huds.dm"
+#include "voidcrew\edits\jobs.dm"
 #include "voidcrew\mapping\_mapping.dm"
 #include "voidcrew\mapping\areas.dm"
 #include "voidcrew\mapping\shuttles\_shuttle.dm"

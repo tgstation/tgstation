@@ -1233,7 +1233,7 @@
 /obj/item/circuitboard/machine/sleeper,
 /obj/item/circuitboard/machine/limbgrower,
 /obj/item/circuitboard/machine/biogenerator,
-/obj/item/clothing/suit/toggle/hazard,
+/obj/item/clothing/suit/hooded/wintercoat/engineering,
 /obj/item/clothing/head/hardhat,
 /obj/item/clothing/glasses/meson/engine,
 /obj/item/clothing/gloves/combat,

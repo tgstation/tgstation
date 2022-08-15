@@ -20,7 +20,7 @@
 /datum/outfit/job/assistant/provo
 	name = "Provisional IRA Member"
 
-	head = /obj/item/clothing/head/beret/sec/officer
+	head = /obj/item/clothing/head/beret/sec
 	mask = /obj/item/clothing/mask/balaclava
 	gloves = /obj/item/clothing/gloves/color/black
 	neck = /obj/item/clothing/neck/tie/red

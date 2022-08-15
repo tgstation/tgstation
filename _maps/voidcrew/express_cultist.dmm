@@ -1942,7 +1942,7 @@
 /obj/item/clothing/under/suit/white,
 /obj/item/clothing/suit/armor/hos/trenchcoat,
 /obj/item/clothing/glasses/sunglasses,
-/obj/item/clothing/head/caphat/cowboy,
+/obj/item/clothing/head/cowboy_hat_red,
 /obj/item/gun/ballistic/automatic/pistol/m1911,
 /obj/structure/closet/secure_closet/wall{
 	dir = 8;

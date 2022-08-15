@@ -1238,9 +1238,9 @@
 /obj/item/clothing/shoes/workboots,
 /obj/item/clothing/shoes/workboots,
 /obj/item/clothing/shoes/workboots,
-/obj/item/clothing/suit/toggle/hazard,
-/obj/item/clothing/suit/toggle/hazard,
-/obj/item/clothing/suit/toggle/hazard,
+/obj/item/clothing/suit/hooded/wintercoat/engineering,
+/obj/item/clothing/suit/hooded/wintercoat/engineering,
+/obj/item/clothing/suit/hooded/wintercoat/engineering,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/suit/hazardvest,
@@ -1612,7 +1612,7 @@
 /obj/effect/turf_decal/corner/blue/half{
 	dir = 1
 	},
-/obj/item/clothing/head/caphat/cowboy,
+/obj/item/clothing/head/cowboy_hat_red,
 /turf/open/floor/plasteel/dark,
 /area/ship/bridge)
 "Ka" = (
