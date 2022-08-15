@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aJ" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "bi" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 10
@@ -23,7 +23,7 @@
 /obj/effect/turf_decal/corner/lime/mono,
 /obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/mineral/titanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "cJ" = (
 /obj/effect/turf_decal/corner/red/mono,
 /obj/machinery/vending/security/marine/solgov,
@@ -34,18 +34,18 @@
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/food/snacks/pizza/meat,
 /turf/open/floor/mineral/titanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "dh" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
-/area/station/bridge)
+/area/station/command/bridge)
 "dm" = (
 /obj/effect/turf_decal/corner/blue/mono,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "dy" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/corner/red/mono,
@@ -57,7 +57,7 @@
 "dB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "dH" = (
 /obj/effect/turf_decal/corner/yellow/mono,
 /obj/machinery/computer/mech_bay_power_console,
@@ -90,7 +90,7 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "eO" = (
 /obj/machinery/atmospherics/components/unary/shuttle/heater{
 	dir = 4
@@ -111,7 +111,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
-/area/station/bridge)
+/area/station/command/bridge)
 "fy" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -121,7 +121,7 @@
 	name = "Dormitories"
 	},
 /turf/open/floor/mineral/titanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "fC" = (
 /obj/effect/turf_decal/corner/yellow/mono,
 /obj/machinery/button/door{
@@ -185,14 +185,14 @@
 	dir = 6
 	},
 /turf/open/floor/mineral/titanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "iK" = (
 /obj/machinery/computer/autopilot{
 	dir = 8
 	},
 /obj/effect/turf_decal/corner/blue/mono,
 /turf/open/floor/mineral/titanium,
-/area/station/bridge)
+/area/station/command/bridge)
 "iO" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
 /obj/structure/cable,
@@ -207,7 +207,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "jc" = (
 /obj/effect/turf_decal/corner/red/mono,
 /obj/structure/rack,
@@ -240,7 +240,7 @@
 	},
 /obj/effect/turf_decal/corner/blue/mono,
 /turf/open/floor/mineral/titanium,
-/area/station/bridge)
+/area/station/command/bridge)
 "lk" = (
 /obj/effect/turf_decal/corner/yellow/mono,
 /obj/structure/cable,
@@ -252,7 +252,7 @@
 /obj/structure/table/optable,
 /obj/effect/turf_decal/corner/blue/mono,
 /turf/open/floor/mineral/titanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "me" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/mineral/titanium,
@@ -271,7 +271,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium,
-/area/station/bridge)
+/area/station/command/bridge)
 "nC" = (
 /turf/closed/wall/mineral/titanium,
 /area/station/security/armory)
@@ -305,7 +305,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "oy" = (
 /turf/closed/wall/mineral/titanium,
 /area/station/maintenance/aft)
@@ -321,7 +321,7 @@
 	preferred_direction = 4
 	},
 /turf/open/floor/iron,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "oU" = (
 /obj/effect/turf_decal/corner/red/mono,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -342,15 +342,15 @@
 /obj/machinery/computer/operating,
 /obj/effect/turf_decal/corner/blue/mono,
 /turf/open/floor/mineral/titanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "pG" = (
 /turf/closed/wall/mineral/titanium,
-/area/station/bridge)
+/area/station/command/bridge)
 "pO" = (
 /obj/effect/turf_decal/corner/blue/mono,
 /obj/machinery/suit_storage_unit/ert/command,
 /turf/open/floor/mineral/titanium,
-/area/station/bridge)
+/area/station/command/bridge)
 "pR" = (
 /obj/effect/turf_decal/corner/red/mono,
 /obj/structure/cable,
@@ -459,14 +459,14 @@
 /obj/item/reagent_containers/food/snacks/rationpack,
 /obj/effect/turf_decal/corner/lime/mono,
 /turf/open/floor/mineral/titanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "tp" = (
 /turf/closed/wall/mineral/titanium,
 /area/station/cargo)
 "tr" = (
 /obj/effect/turf_decal/corner/lime/mono,
 /turf/open/floor/mineral/titanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "tD" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -495,7 +495,7 @@
 	dir = 9
 	},
 /turf/open/floor/mineral/titanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "ur" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/structure/cable,
@@ -508,10 +508,10 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "uF" = (
 /turf/closed/wall/mineral/titanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "vq" = (
 /obj/machinery/power/terminal{
 	dir = 8
@@ -554,7 +554,7 @@
 /obj/item/storage/cans/sixbeer,
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/mineral/titanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "ya" = (
 /obj/machinery/power/terminal{
 	dir = 8
@@ -578,11 +578,11 @@
 	dir = 8
 	},
 /obj/item/gun/energy/laser/captain,
-/obj/item/radio/intercom/wideband{
+/obj/item/radio/intercom{
 	pixel_x = -26
 	},
 /turf/open/floor/mineral/titanium,
-/area/station/bridge)
+/area/station/command/bridge)
 "zL" = (
 /obj/machinery/power/terminal{
 	dir = 8
@@ -603,7 +603,7 @@
 	},
 /obj/effect/turf_decal/corner/lime/mono,
 /turf/open/floor/mineral/titanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "AA" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
 /turf/open/floor/mineral/titanium,
@@ -645,7 +645,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "Dk" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
@@ -670,7 +670,7 @@
 /obj/effect/turf_decal/corner/blue/mono,
 /obj/item/defibrillator/loaded,
 /turf/open/floor/mineral/titanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "EN" = (
 /obj/effect/turf_decal/corner/red/mono,
 /obj/machinery/light{
@@ -683,7 +683,7 @@
 /obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/effect/turf_decal/corner/blue/mono,
 /turf/open/floor/mineral/titanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "Ff" = (
 /obj/effect/turf_decal/corner/yellow/mono,
 /obj/machinery/mech_bay_recharge_port{
@@ -696,7 +696,7 @@
 /obj/structure/cable,
 /obj/machinery/holopad/emergency/command,
 /turf/open/floor/mineral/titanium,
-/area/station/bridge)
+/area/station/command/bridge)
 "Gw" = (
 /obj/effect/turf_decal/corner/red/mono,
 /obj/machinery/suit_storage_unit/ert/security,
@@ -705,7 +705,7 @@
 "Gy" = (
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "GG" = (
 /obj/effect/turf_decal/corner/blue/mono,
 /obj/structure/cable,
@@ -716,7 +716,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
-/area/station/bridge)
+/area/station/command/bridge)
 "HM" = (
 /obj/effect/turf_decal/corner/red/mono,
 /obj/machinery/airalarm/directional/south,
@@ -748,7 +748,7 @@
 /area/station/maintenance/aft)
 "Iv" = (
 /turf/open/floor/mineral/titanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "IW" = (
 /obj/machinery/power/smes/engineering{
 	dir = 4
@@ -772,7 +772,7 @@
 	},
 /obj/structure/chair/sofa/corner,
 /turf/open/floor/mineral/titanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "KX" = (
 /obj/effect/turf_decal/corner/bottlegreen/mono,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -799,7 +799,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "MH" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2,
 /turf/open/floor/plating,
@@ -836,7 +836,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "OQ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -890,7 +890,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/mineral/titanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "SG" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/cargo)
@@ -916,7 +916,7 @@
 /obj/effect/turf_decal/corner/blue/mono,
 /obj/machinery/door/airlock/command/glass,
 /turf/open/floor/mineral/titanium,
-/area/station/bridge)
+/area/station/command/bridge)
 "TK" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/maintenance/aft)
@@ -944,7 +944,7 @@
 /obj/effect/turf_decal/corner/blue/mono,
 /obj/structure/closet/crate/freezer/blood,
 /turf/open/floor/mineral/titanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "Vx" = (
 /obj/effect/turf_decal/corner/bottlegreen/mono,
 /obj/machinery/light,
@@ -991,7 +991,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "Xr" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/corner/red/mono,
@@ -1041,14 +1041,14 @@
 /obj/effect/turf_decal/corner/blue/mono,
 /obj/machinery/suit_storage_unit/ert/medical,
 /turf/open/floor/mineral/titanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "YX" = (
 /obj/machinery/computer/helm{
 	dir = 8
 	},
 /obj/effect/turf_decal/corner/blue/mono,
 /turf/open/floor/mineral/titanium,
-/area/station/bridge)
+/area/station/command/bridge)
 "YY" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8

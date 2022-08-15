@@ -115,7 +115,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/security)
 "G" = (
-/obj/item/radio/intercom/wideband{
+/obj/item/radio/intercom{
 	pixel_y = -29
 	},
 /obj/structure/cable,

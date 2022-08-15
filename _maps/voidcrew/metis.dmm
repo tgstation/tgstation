@@ -16,7 +16,7 @@
 	name = "window shutters"
 	},
 /turf/open/floor/mineral/titanium/tiled/blue,
-/area/station/bridge)
+/area/station/command/bridge)
 "au" = (
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 4
@@ -53,11 +53,11 @@
 /obj/item/trash/can/food/peaches/maint,
 /obj/effect/decal/cleanable/insectguts,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "aX" = (
 /obj/structure/sign/poster/official/science,
 /turf/closed/wall/mineral/titanium,
-/area/station/crew/office)
+/area/station/commons/office)
 "bn" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/box/monkeycubes,
@@ -136,11 +136,11 @@
 /turf/closed/wall/mineral/titanium{
 	baseturfs = /turf/open/floor/mineral/titanium/tiled/white
 	},
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "cG" = (
 /obj/machinery/vending/cola/random,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "cK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -172,21 +172,21 @@
 "dg" = (
 /obj/machinery/nanite_chamber,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/toilet)
+/area/station/commons/toilet)
 "di" = (
 /obj/effect/decal/cleanable/food/salt,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "dm" = (
 /obj/structure/chair{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "dt" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "dD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/warning/electric_shock,
@@ -202,7 +202,7 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/tiled/blue,
-/area/station/bridge)
+/area/station/command/bridge)
 "dQ" = (
 /obj/item/shard,
 /obj/machinery/mecha_part_fabricator,
@@ -224,7 +224,7 @@
 "ej" = (
 /obj/machinery/computer/helm,
 /turf/open/floor/mineral/titanium/tiled/blue,
-/area/station/bridge)
+/area/station/command/bridge)
 "em" = (
 /obj/structure/sign/poster/official/anniversary_vintage_reprint,
 /turf/closed/wall/mineral/titanium,
@@ -235,7 +235,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "ep" = (
 /obj/machinery/smartfridge/extract/preloaded,
 /obj/structure/disposalpipe/segment,
@@ -295,17 +295,17 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/item/radio/intercom/wideband{
+/obj/item/radio/intercom{
 	dir = 4;
 	pixel_x = 27;
 	set_dir_on_move = 0
 	},
 /turf/open/floor/mineral/titanium/tiled/blue,
-/area/station/bridge)
+/area/station/command/bridge)
 "eV" = (
 /obj/structure/bookcase/random,
 /turf/open/floor/carpet/purple,
-/area/station/crew/office)
+/area/station/commons/office)
 "fb" = (
 /obj/effect/decal/cleanable/oil,
 /obj/item/circuitboard/machine/bepis,
@@ -331,7 +331,7 @@
 /obj/item/aiModule/toyAI,
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/carpet/purple,
-/area/station/crew/office)
+/area/station/commons/office)
 "fo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/robot_debris/gib,
@@ -343,7 +343,7 @@
 /obj/structure/window/reinforced/plasma/spawner/east,
 /obj/structure/window/plasma/reinforced/spawner,
 /turf/open/floor/carpet/purple,
-/area/station/crew/office)
+/area/station/commons/office)
 "fH" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/science)
@@ -416,7 +416,7 @@
 /obj/machinery/light/small,
 /obj/structure/frame/machine,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/toilet)
+/area/station/commons/toilet)
 "gW" = (
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
@@ -424,7 +424,7 @@
 	},
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "gY" = (
 /obj/machinery/vending/wardrobe/robo_wardrobe,
 /turf/open/floor/mineral/titanium/tiled,
@@ -433,7 +433,7 @@
 /obj/structure/chair,
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "hb" = (
 /obj/machinery/power/smes/engineering{
 	dir = 1
@@ -451,7 +451,7 @@
 "hr" = (
 /obj/structure/filingcabinet/chestdrawer/wheeled,
 /turf/open/floor/carpet/purple,
-/area/station/crew/office)
+/area/station/commons/office)
 "hs" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
@@ -464,7 +464,7 @@
 	dir = 6
 	},
 /turf/open/floor/mineral/titanium/tiled/blue,
-/area/station/bridge)
+/area/station/command/bridge)
 "hu" = (
 /obj/structure/tank_dispenser,
 /turf/open/floor/plating,
@@ -509,7 +509,7 @@
 "hP" = (
 /mob/living/simple_animal/hostile/alien/sentinel,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "hR" = (
 /obj/structure/holosign/barrier/medical,
 /obj/machinery/light/floor,
@@ -537,10 +537,10 @@
 /area/station/hallway/aft)
 "if" = (
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/bridge)
+/area/station/command/bridge)
 "ih" = (
 /turf/closed/wall/mineral/titanium,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "ij" = (
 /obj/machinery/atmospherics/components/unary/tank/toxins{
 	dir = 1
@@ -616,7 +616,7 @@
 /obj/structure/window/reinforced/plasma/spawner/west,
 /obj/structure/statue/gold/rd,
 /turf/open/floor/carpet/purple,
-/area/station/crew/office)
+/area/station/commons/office)
 "jy" = (
 /obj/structure/table/reinforced,
 /obj/machinery/reagentgrinder{
@@ -658,7 +658,7 @@
 /obj/machinery/light/broken,
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "kz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -671,7 +671,7 @@
 /obj/item/kirbyplants/random,
 /obj/item/toy/figure/rd,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "kK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8
@@ -688,7 +688,7 @@
 /obj/item/gun/energy/laser,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/bridge)
+/area/station/command/bridge)
 "kS" = (
 /turf/closed/wall/mineral/titanium{
 	baseturfs = /turf/open/floor/mineral/titanium/tiled/white
@@ -734,7 +734,7 @@
 /obj/machinery/airalarm/directional/east,
 /obj/structure/curtain,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/toilet)
+/area/station/commons/toilet)
 "lu" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 29
@@ -751,19 +751,19 @@
 /obj/structure/falsewall/titanium,
 /obj/structure/sign/poster/retro/science,
 /turf/open/floor/plating,
-/area/station/bridge)
+/area/station/command/bridge)
 "lz" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin,
 /obj/item/pen/fountain/captain,
 /turf/open/floor/carpet/purple,
-/area/station/crew/office)
+/area/station/commons/office)
 "lJ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 4
 	},
 /turf/open/floor/carpet/purple,
-/area/station/crew/office)
+/area/station/commons/office)
 "lK" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
@@ -780,7 +780,7 @@
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "mc" = (
 /obj/machinery/holopad/emergency/science,
 /obj/effect/decal/cleanable/dirt,
@@ -788,7 +788,7 @@
 	dir = 10
 	},
 /turf/open/floor/carpet/purple,
-/area/station/crew/office)
+/area/station/commons/office)
 "md" = (
 /obj/structure/sign/poster/random,
 /turf/closed/wall/mineral/titanium{
@@ -797,7 +797,7 @@
 /area/station/hallway/aft)
 "me" = (
 /turf/closed/wall/mineral/titanium,
-/area/station/crew/office)
+/area/station/commons/office)
 "ml" = (
 /obj/machinery/power/port_gen/pacman/uranium,
 /obj/structure/cable,
@@ -822,7 +822,7 @@
 	},
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "mJ" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
@@ -845,17 +845,17 @@
 /obj/machinery/suit_storage_unit/rd,
 /obj/structure/window/reinforced/plasma/spawner/east,
 /turf/open/floor/carpet/purple,
-/area/station/crew/office)
+/area/station/commons/office)
 "mM" = (
 /turf/open/floor/carpet/purple,
-/area/station/crew/office)
+/area/station/commons/office)
 "mN" = (
 /obj/effect/gibspawner/human,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "mT" = (
 /obj/structure/cable,
 /obj/machinery/airalarm/directional/north,
@@ -870,7 +870,7 @@
 /obj/item/shard,
 /obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/mineral/titanium/tiled/blue,
-/area/station/bridge)
+/area/station/command/bridge)
 "nr" = (
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/station/science/ai_chamber)
@@ -883,7 +883,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/toilet)
+/area/station/commons/toilet)
 "nI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 8
@@ -898,7 +898,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "nR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 8
@@ -937,7 +937,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "or" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 6
@@ -972,7 +972,7 @@
 "oV" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "px" = (
 /obj/machinery/door/firedoor/window,
 /obj/effect/spawner/structure/window/reinforced/shuttle,
@@ -985,7 +985,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/bridge)
+/area/station/command/bridge)
 "pF" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
@@ -1009,7 +1009,7 @@
 	dir = 5
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "pL" = (
 /obj/machinery/light,
 /obj/effect/decal/cleanable/dirt,
@@ -1017,13 +1017,13 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/purple,
-/area/station/crew/office)
+/area/station/commons/office)
 "pV" = (
 /obj/machinery/modular_computer/console/preset/research{
 	dir = 8
 	},
 /turf/open/floor/carpet/purple,
-/area/station/crew/office)
+/area/station/commons/office)
 "pZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/autolathe,
@@ -1039,17 +1039,17 @@
 	},
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "qo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/cigbutt,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "qu" = (
 /obj/effect/mob_spawn/human/scientist,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "qB" = (
 /turf/closed/wall/mineral/titanium,
 /area/station/science)
@@ -1059,7 +1059,7 @@
 	},
 /obj/structure/frame/computer,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/toilet)
+/area/station/commons/toilet)
 "qP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -1101,7 +1101,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/purple,
-/area/station/crew/office)
+/area/station/commons/office)
 "rh" = (
 /obj/machinery/door/airlock/science/glass,
 /obj/structure/barricade/wooden/crude,
@@ -1113,7 +1113,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "rp" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/decal/cleanable/dirt,
@@ -1142,7 +1142,7 @@
 /area/station/hallway/fore)
 "rK" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/crew/toilet)
+/area/station/commons/toilet)
 "rT" = (
 /obj/structure/festivus,
 /obj/effect/decal/cleanable/dirt,
@@ -1165,7 +1165,7 @@
 	dir = 5
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/toilet)
+/area/station/commons/toilet)
 "sk" = (
 /obj/effect/decal/cleanable/robot_debris/gib,
 /obj/item/bodypart/r_leg/robot,
@@ -1197,7 +1197,7 @@
 	},
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
-/area/station/bridge)
+/area/station/command/bridge)
 "sy" = (
 /obj/structure/ore_box,
 /obj/structure/cable,
@@ -1226,7 +1226,7 @@
 "sQ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "sV" = (
 /obj/effect/decal/cleanable/oil,
 /obj/item/bodypart/l_leg/robot,
@@ -1269,14 +1269,14 @@
 "uk" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /turf/open/floor/carpet/purple,
-/area/station/crew/office)
+/area/station/commons/office)
 "um" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "foreshutter"
 	},
 /turf/open/floor/plating,
-/area/station/bridge)
+/area/station/command/bridge)
 "ur" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/mob_spawn/human/corpse/damaged,
@@ -1378,7 +1378,7 @@
 "wa" = (
 /obj/structure/frame/machine,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/toilet)
+/area/station/commons/toilet)
 "wl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
@@ -1412,7 +1412,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "wK" = (
 /obj/structure/table/glass,
 /obj/item/paper{
@@ -1432,7 +1432,7 @@
 /obj/structure/table,
 /obj/item/reagent_containers/food/snacks/cubancarp,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "xg" = (
 /obj/machinery/power/port_gen/pacman,
 /obj/item/stack/sheet/mineral/plasma/five,
@@ -1527,7 +1527,7 @@
 "yk" = (
 /obj/machinery/vending/coffee,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "ym" = (
 /obj/machinery/door/airlock/command/glass,
 /obj/machinery/door/firedoor/border_only,
@@ -1541,7 +1541,7 @@
 	id = "rdshutter"
 	},
 /turf/open/floor/carpet/purple,
-/area/station/crew/office)
+/area/station/commons/office)
 "yr" = (
 /obj/effect/decal/cleanable/blood/gibs/limb,
 /obj/effect/turf_decal/trimline/black/filled/warning{
@@ -1558,7 +1558,7 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/purple,
-/area/station/crew/office)
+/area/station/commons/office)
 "yG" = (
 /obj/structure/window/reinforced/spawner,
 /obj/machinery/pipedispenser,
@@ -1583,14 +1583,14 @@
 /turf/closed/wall/mineral/titanium{
 	baseturfs = /turf/open/floor/mineral/titanium/tiled/white
 	},
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "yW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 5
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/toilet)
+/area/station/commons/toilet)
 "zb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/holopad/emergency/science,
@@ -1598,7 +1598,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/bridge)
+/area/station/command/bridge)
 "zg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/external,
@@ -1625,7 +1625,7 @@
 	name = "clear labcoat"
 	},
 /turf/open/floor/carpet/purple,
-/area/station/crew/office)
+/area/station/commons/office)
 "zx" = (
 /obj/machinery/door/airlock/vault,
 /obj/effect/mapping_helpers/airlock/locked,
@@ -1645,7 +1645,7 @@
 "zJ" = (
 /obj/structure/sign/departments/xenobio,
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "zV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
@@ -1653,7 +1653,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/carpet/purple,
-/area/station/crew/office)
+/area/station/commons/office)
 "zY" = (
 /obj/structure/holosign/barrier,
 /obj/structure/cable,
@@ -1778,7 +1778,7 @@
 /obj/item/clothing/mask/facehugger/lamarr,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/purple,
-/area/station/crew/office)
+/area/station/commons/office)
 "BC" = (
 /turf/closed/wall/mineral/titanium{
 	baseturfs = /turf/open/floor/mineral/titanium/tiled/white
@@ -1795,7 +1795,7 @@
 	id = "rdshutter"
 	},
 /turf/open/floor/plating,
-/area/station/crew/office)
+/area/station/commons/office)
 "Ce" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/mop,
@@ -1848,11 +1848,11 @@
 /area/station/storage)
 "CF" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "CI" = (
 /obj/structure/sign/poster/official/anniversary_vintage_reprint,
 /turf/closed/wall/mineral/titanium,
-/area/station/crew/office)
+/area/station/commons/office)
 "CK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/relic,
@@ -1875,7 +1875,7 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/purple,
-/area/station/crew/office)
+/area/station/commons/office)
 "CZ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 4
@@ -1972,7 +1972,7 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/firedoor/window,
 /turf/open/floor/plating,
-/area/station/crew/office)
+/area/station/commons/office)
 "DT" = (
 /mob/living/simple_animal/hostile/hivebot/range,
 /obj/structure/cable,
@@ -2020,7 +2020,7 @@
 "Eh" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/toilet)
+/area/station/commons/toilet)
 "Ej" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light{
@@ -2058,14 +2058,14 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "EP" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "foreshutter"
 	},
 /turf/open/floor/plating,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "ET" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/snacks/soup/electron,
@@ -2073,7 +2073,7 @@
 	pixel_y = 25
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "Fk" = (
 /obj/structure/window/reinforced/spawner,
 /obj/structure/window/reinforced/spawner/west,
@@ -2095,7 +2095,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/toilet)
+/area/station/commons/toilet)
 "Fr" = (
 /obj/machinery/power/terminal,
 /obj/structure/cable/orange,
@@ -2110,7 +2110,7 @@
 /area/station/science/robotics)
 "Ft" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/crew/office)
+/area/station/commons/office)
 "Fy" = (
 /obj/structure/sign/warning/xeno_mining,
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -2132,12 +2132,12 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "FQ" = (
 /obj/effect/decal/cleanable/vomit,
 /obj/item/circuitboard/computer/aiupload,
 /turf/open/floor/carpet/purple,
-/area/station/crew/office)
+/area/station/commons/office)
 "FX" = (
 /obj/machinery/power/smes,
 /obj/structure/cable,
@@ -2197,11 +2197,11 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/toilet)
+/area/station/commons/toilet)
 "GL" = (
 /obj/structure/sign/poster/random,
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/crew/toilet)
+/area/station/commons/toilet)
 "GU" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
@@ -2215,7 +2215,7 @@
 "He" = (
 /obj/structure/chair/wood,
 /turf/open/floor/carpet/purple,
-/area/station/crew/office)
+/area/station/commons/office)
 "Hg" = (
 /obj/effect/decal/cleanable/xenoblood,
 /obj/item/bodypart/head/robot,
@@ -2256,7 +2256,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "HA" = (
 /mob/living/simple_animal/slime,
 /obj/machinery/conveyor{
@@ -2363,7 +2363,7 @@
 	pixel_y = 25
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/toilet)
+/area/station/commons/toilet)
 "Iq" = (
 /obj/machinery/power/terminal,
 /obj/structure/cable,
@@ -2384,7 +2384,7 @@
 /obj/structure/table,
 /obj/item/reagent_containers/food/snacks/burger/xeno,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "IE" = (
 /obj/structure/barricade/wooden,
 /obj/structure/disposalpipe/segment{
@@ -2477,7 +2477,7 @@
 	dir = 9
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "JB" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/engineering/electrical)
@@ -2487,7 +2487,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "JL" = (
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -2496,7 +2496,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "JO" = (
 /obj/effect/decal/cleanable/glass,
 /obj/effect/turf_decal/trimline/black/filled/warning{
@@ -2518,7 +2518,7 @@
 /area/station/science)
 "Kb" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/bridge)
+/area/station/command/bridge)
 "Kj" = (
 /obj/structure/door_assembly/door_assembly_science,
 /obj/machinery/door/firedoor/border_only{
@@ -2537,11 +2537,11 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/toilet)
+/area/station/commons/toilet)
 "Ky" = (
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "Kz" = (
 /obj/effect/decal/cleanable/blood,
 /mob/living/carbon/human/species/monkey,
@@ -2565,7 +2565,7 @@
 /obj/item/bedsheet/rd,
 /obj/structure/curtain/cloth/grey,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "KO" = (
 /obj/structure/holosign/barrier,
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -2649,7 +2649,7 @@
 "Mg" = (
 /obj/structure/sign/poster/official/random,
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "My" = (
 /obj/structure/disposalpipe/segment{
 	dir = 2
@@ -2673,7 +2673,7 @@
 "MK" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "MR" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
@@ -2683,7 +2683,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/tiled/purple,
-/area/station/bridge)
+/area/station/command/bridge)
 "Nb" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -2694,7 +2694,7 @@
 "Nm" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "Np" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/box/syringes,
@@ -2721,7 +2721,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "NP" = (
 /obj/item/book/manual/wiki/robotics_cyborgs,
 /obj/structure/cable,
@@ -2745,7 +2745,7 @@
 /obj/item/bedsheet/cosmos,
 /obj/structure/curtain/cloth/grey,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "NY" = (
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/station/hallway/aft)
@@ -2772,7 +2772,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /turf/open/floor/carpet/purple,
-/area/station/crew/office)
+/area/station/commons/office)
 "Oc" = (
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 9
@@ -2832,7 +2832,7 @@
 /area/station/science)
 "OV" = (
 /turf/closed/wall/mineral/titanium,
-/area/station/crew/toilet)
+/area/station/commons/toilet)
 "Pj" = (
 /obj/structure/showcase/cyborg/old,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
@@ -2995,14 +2995,14 @@
 	},
 /obj/machinery/door/firedoor/window,
 /turf/open/floor/plating,
-/area/station/crew/office)
+/area/station/commons/office)
 "Rx" = (
 /obj/effect/decal/cleanable/vomit/old,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "RM" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
@@ -3043,13 +3043,13 @@
 	pixel_y = -25
 	},
 /turf/open/floor/carpet/purple,
-/area/station/crew/office)
+/area/station/commons/office)
 "Sd" = (
 /obj/structure/table,
 /obj/item/clothing/mask/facehugger/toy,
 /obj/item/pai_card,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "Se" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
@@ -3068,7 +3068,7 @@
 "Sh" = (
 /obj/structure/sign/poster/contraband/lamarr,
 /turf/closed/wall/mineral/titanium,
-/area/station/crew/office)
+/area/station/commons/office)
 "Sj" = (
 /mob/living/simple_animal/slime,
 /obj/structure/disposalpipe/segment{
@@ -3103,7 +3103,7 @@
 	name = "creature bed"
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "SZ" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
@@ -3112,7 +3112,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled/purple,
-/area/station/bridge)
+/area/station/command/bridge)
 "Te" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/science/ai_chamber)
@@ -3142,7 +3142,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "TE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light{
@@ -3160,14 +3160,14 @@
 	pixel_y = -6
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "TQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 5
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "TV" = (
 /obj/effect/decal/cleanable/glass,
 /obj/effect/decal/cleanable/dirt,
@@ -3227,7 +3227,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "Uv" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
@@ -3265,7 +3265,7 @@
 	},
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/carpet/purple,
-/area/station/crew/office)
+/area/station/commons/office)
 "UL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -3320,15 +3320,15 @@
 "Vz" = (
 /obj/machinery/vending/classicbeats,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "VA" = (
 /obj/machinery/computer/security/research,
 /turf/open/floor/mineral/titanium/tiled/purple,
-/area/station/bridge)
+/area/station/command/bridge)
 "VE" = (
 /obj/machinery/shower/directional/south,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/toilet)
+/area/station/commons/toilet)
 "VJ" = (
 /obj/structure/sign/warning/no_smoking,
 /turf/closed/wall/mineral/titanium,
@@ -3366,7 +3366,7 @@
 "VY" = (
 /obj/machinery/computer/mecha,
 /turf/open/floor/mineral/titanium/tiled/purple,
-/area/station/bridge)
+/area/station/command/bridge)
 "Wo" = (
 /obj/structure/table/reinforced,
 /obj/item/mmi/posibrain,
@@ -3485,13 +3485,13 @@
 /turf/closed/wall/mineral/titanium{
 	baseturfs = /turf/open/floor/mineral/titanium/tiled/white
 	},
-/area/station/crew/canteen)
+/area/station/commons/canteen)
 "XB" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "XF" = (
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
@@ -3501,7 +3501,7 @@
 /area/station/science)
 "XG" = (
 /turf/closed/wall/mineral/titanium,
-/area/station/bridge)
+/area/station/command/bridge)
 "XH" = (
 /obj/machinery/flasher{
 	pixel_y = 23
@@ -3553,7 +3553,7 @@
 	name = "clear labcoat"
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/toilet)
+/area/station/commons/toilet)
 "Yf" = (
 /obj/machinery/firealarm{
 	pixel_y = 25
@@ -3619,7 +3619,7 @@
 	pixel_y = 25
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "YP" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden/layer2{
 	dir = 9
@@ -3670,7 +3670,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/engineering/engine)
 "ZJ" = (
-/obj/item/radio/intercom/wideband{
+/obj/item/radio/intercom{
 	pixel_y = 27
 	},
 /obj/machinery/button/flasher{

@@ -12,7 +12,7 @@
 	},
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/mineral/titanium,
-/area/station/crew)
+/area/station/commons)
 "as" = (
 /obj/structure/closet/secure_closet/engineering_electrical,
 /turf/open/floor/mineral/titanium/yellow,
@@ -27,7 +27,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium,
-/area/station/crew)
+/area/station/commons)
 "bd" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/station/medical)
@@ -49,11 +49,11 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/radio/intercom/wideband{
+/obj/item/radio/intercom{
 	pixel_y = 28
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/station/bridge)
+/area/station/command/bridge)
 "cF" = (
 /turf/open/floor/mineral/titanium/yellow,
 /area/station/engineering)
@@ -71,7 +71,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium,
-/area/station/crew)
+/area/station/commons)
 "dI" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
@@ -81,14 +81,14 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
-/area/station/crew)
+/area/station/commons)
 "eC" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
-/area/station/crew)
+/area/station/commons)
 "eJ" = (
 /obj/structure/chair/comfy/brown{
 	dir = 4
@@ -98,7 +98,7 @@
 	},
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/mineral/titanium/yellow,
-/area/station/bridge)
+/area/station/command/bridge)
 "fr" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced{
@@ -108,11 +108,11 @@
 /obj/item/storage/firstaid/regular,
 /obj/item/storage/firstaid/regular,
 /turf/open/floor/mineral/titanium/yellow,
-/area/station/bridge)
+/area/station/command/bridge)
 "fH" = (
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/crew)
+/area/station/commons)
 "fU" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
@@ -138,7 +138,7 @@
 "hh" = (
 /obj/machinery/holopad,
 /turf/open/floor/mineral/titanium/purple,
-/area/station/crew)
+/area/station/commons)
 "iy" = (
 /obj/machinery/light{
 	dir = 4
@@ -146,7 +146,7 @@
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/machinery/door/firedoor/border_only,
 /turf/open/floor/mineral/titanium/white,
-/area/station/crew)
+/area/station/commons)
 "iC" = (
 /obj/machinery/power/shuttle/engine/fueled/plasma{
 	dir = 4
@@ -170,7 +170,7 @@
 /obj/structure/table/reinforced,
 /obj/item/radio,
 /turf/open/floor/mineral/titanium/yellow,
-/area/station/bridge)
+/area/station/command/bridge)
 "ka" = (
 /obj/machinery/firealarm{
 	pixel_y = -26
@@ -191,7 +191,7 @@
 	},
 /obj/machinery/door/firedoor/border_only,
 /turf/closed/wall/mineral/titanium,
-/area/station/crew)
+/area/station/commons)
 "lI" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 9
@@ -200,7 +200,7 @@
 	dir = 10
 	},
 /turf/open/floor/mineral/titanium/purple,
-/area/station/crew)
+/area/station/commons)
 "lK" = (
 /obj/machinery/power/shuttle/engine/fueled/plasma{
 	dir = 4
@@ -218,7 +218,7 @@
 /obj/structure/fans/tiny,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/titanium/white,
-/area/station/crew)
+/area/station/commons)
 "oa" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
@@ -244,7 +244,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/purple,
-/area/station/crew)
+/area/station/commons)
 "pD" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/machinery/firealarm{
@@ -252,7 +252,7 @@
 	pixel_x = 26
 	},
 /turf/open/floor/mineral/titanium/white,
-/area/station/crew)
+/area/station/commons)
 "pG" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -261,7 +261,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/station/bridge)
+/area/station/command/bridge)
 "qj" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Cockpit"
@@ -280,7 +280,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/station/bridge)
+/area/station/command/bridge)
 "qL" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/sheet/iron/fifty,
@@ -294,7 +294,7 @@
 /obj/item/t_scanner/adv_mining_scanner/lesser,
 /obj/item/storage/bag/ore,
 /turf/open/floor/mineral/titanium/white,
-/area/station/crew)
+/area/station/commons)
 "ra" = (
 /obj/structure/fans/tiny,
 /obj/machinery/button/door{
@@ -305,7 +305,7 @@
 	id = "goon"
 	},
 /turf/open/floor/mineral/titanium/white,
-/area/station/crew)
+/area/station/commons)
 "ro" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 4
@@ -321,7 +321,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/white,
-/area/station/crew)
+/area/station/commons)
 "sd" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 10
@@ -330,7 +330,7 @@
 	dir = 10
 	},
 /turf/open/floor/mineral/titanium,
-/area/station/crew)
+/area/station/commons)
 "tW" = (
 /obj/structure/table,
 /obj/machinery/airalarm/directional/north,
@@ -350,10 +350,10 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/purple,
-/area/station/crew)
+/area/station/commons)
 "vF" = (
 /turf/closed/wall/mineral/titanium,
-/area/station/bridge)
+/area/station/command/bridge)
 "vW" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
@@ -387,12 +387,12 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/titanium,
-/area/station/crew)
+/area/station/commons)
 "wf" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/mineral/titanium,
-/area/station/crew)
+/area/station/commons)
 "wE" = (
 /obj/structure/window/reinforced/survival_pod{
 	dir = 1
@@ -405,7 +405,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /obj/item/soap/nanotrasen,
 /turf/open/floor/mineral/titanium/purple,
-/area/station/crew)
+/area/station/commons)
 "xI" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -429,7 +429,7 @@
 "zf" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/titanium/white,
-/area/station/crew)
+/area/station/commons)
 "An" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
@@ -439,7 +439,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
-/area/station/crew)
+/area/station/commons)
 "Ao" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/emergency,
@@ -447,7 +447,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/station/bridge)
+/area/station/command/bridge)
 "As" = (
 /obj/machinery/computer/operating{
 	dir = 4
@@ -457,7 +457,7 @@
 "AP" = (
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall/mineral/titanium,
-/area/station/crew)
+/area/station/commons)
 "Be" = (
 /obj/machinery/sleeper,
 /turf/open/floor/mineral/titanium/blue,
@@ -508,7 +508,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/purple,
-/area/station/crew)
+/area/station/commons)
 "BV" = (
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	dir = 8
@@ -525,7 +525,7 @@
 	pixel_y = -26
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/station/bridge)
+/area/station/command/bridge)
 "Du" = (
 /obj/structure/closet/secure_closet/medical3,
 /obj/machinery/atmospherics/components/binary/volume_pump{
@@ -535,7 +535,7 @@
 /area/station/medical)
 "Ea" = (
 /turf/open/floor/mineral/titanium,
-/area/station/crew)
+/area/station/commons)
 "Eg" = (
 /obj/machinery/light{
 	dir = 4
@@ -548,35 +548,35 @@
 	pixel_x = 32
 	},
 /turf/open/floor/mineral/titanium/purple,
-/area/station/crew)
+/area/station/commons)
 "Ej" = (
 /obj/structure/ore_box,
 /turf/open/floor/mineral/titanium/white,
-/area/station/crew)
+/area/station/commons)
 "EJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /obj/machinery/door/firedoor/border_only,
 /turf/open/floor/mineral/titanium/white,
-/area/station/crew)
+/area/station/commons)
 "ET" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
-/area/station/crew)
+/area/station/commons)
 "Fl" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/titanium,
-/area/station/crew)
+/area/station/commons)
 "Ft" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
-/area/station/bridge)
+/area/station/command/bridge)
 "HK" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on/layer4,
 /turf/open/floor/plating,
-/area/station/crew)
+/area/station/commons)
 "Ia" = (
 /obj/structure/chair/comfy/brown{
 	dir = 4
@@ -585,14 +585,14 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/mineral/titanium/yellow,
-/area/station/bridge)
+/area/station/command/bridge)
 "Ix" = (
 /obj/machinery/atmospherics/pipe/simple/purple/hidden,
 /turf/closed/wall/mineral/titanium,
 /area/station/engineering)
 "IN" = (
 /turf/closed/wall/mineral/titanium,
-/area/station/crew)
+/area/station/commons)
 "IZ" = (
 /turf/template_noop,
 /area/template_noop)
@@ -604,17 +604,17 @@
 	launch_status = 0
 	},
 /turf/open/floor/plating,
-/area/station/bridge)
+/area/station/command/bridge)
 "Jy" = (
 /obj/machinery/cryopod,
 /turf/open/floor/mineral/titanium/purple,
-/area/station/crew)
+/area/station/commons)
 "JH" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced,
 /obj/item/areaeditor/shuttle,
 /turf/open/floor/mineral/titanium/yellow,
-/area/station/bridge)
+/area/station/command/bridge)
 "JP" = (
 /obj/machinery/stasis,
 /turf/open/floor/mineral/titanium/blue,
@@ -659,7 +659,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/purple,
-/area/station/crew)
+/area/station/commons)
 "Lr" = (
 /obj/machinery/power/port_gen/pacman,
 /obj/structure/cable,
@@ -676,7 +676,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/yellow,
-/area/station/bridge)
+/area/station/command/bridge)
 "Ng" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
@@ -709,14 +709,14 @@
 	name = "The Captain of This God Damn Ship"
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/station/bridge)
+/area/station/command/bridge)
 "Rw" = (
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = -24
 	},
 /turf/open/floor/mineral/titanium,
-/area/station/crew)
+/area/station/commons)
 "RI" = (
 /obj/structure/bed/pod,
 /obj/structure/window/reinforced/survival_pod{
@@ -727,7 +727,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/purple,
-/area/station/crew)
+/area/station/commons)
 "RZ" = (
 /obj/machinery/power/shuttle/engine/electric{
 	dir = 4
@@ -742,13 +742,13 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/titanium/white,
-/area/station/crew)
+/area/station/commons)
 "TR" = (
 /turf/closed/wall/mineral/titanium,
 /area/station/engineering)
 "TW" = (
 /turf/open/floor/mineral/titanium/white,
-/area/station/crew)
+/area/station/commons)
 "Uo" = (
 /obj/machinery/vending/wallmed,
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -786,7 +786,7 @@
 /obj/structure/table,
 /obj/machinery/microwave,
 /turf/open/floor/mineral/titanium/purple,
-/area/station/crew)
+/area/station/commons)
 "WD" = (
 /obj/structure/table,
 /obj/item/storage/backpack/duffelbag/med/surgery,
@@ -886,7 +886,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/titanium,
-/area/station/crew)
+/area/station/commons)
 "ZQ" = (
 /obj/machinery/mineral/ore_redemption{
 	dir = 8
@@ -895,7 +895,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/white,
-/area/station/crew)
+/area/station/commons)
 
 (1,1,1) = {"
 IZ

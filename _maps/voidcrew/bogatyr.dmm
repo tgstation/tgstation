@@ -19,13 +19,13 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "bl" = (
 /obj/structure/bed,
 /obj/item/bedsheet/random,
 /obj/structure/curtain/cloth/grey,
 /turf/open/floor/mineral/plastitanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "br" = (
 /obj/structure/table,
 /obj/item/toy/cards/deck/syndicate{
@@ -67,7 +67,7 @@
 "cL" = (
 /obj/machinery/computer/communications,
 /turf/open/floor/mineral/plastitanium,
-/area/station/bridge)
+/area/station/command/bridge)
 "cT" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/blue,
@@ -91,7 +91,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "dS" = (
 /obj/structure/rack,
 /obj/item/gun/ballistic/shotgun/doublebarrel/improvised/sawn{
@@ -258,7 +258,7 @@
 /obj/machinery/light/small,
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/mineral/plastitanium,
-/area/station/bridge)
+/area/station/command/bridge)
 "lR" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -281,7 +281,7 @@
 /obj/machinery/modular_computer/console/preset/command,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
-/area/station/bridge)
+/area/station/command/bridge)
 "on" = (
 /turf/open/floor/mineral/plastitanium,
 /area/station/cargo)
@@ -358,7 +358,7 @@
 /area/station/maintenance/aft)
 "qo" = (
 /turf/closed/wall/r_wall,
-/area/station/bridge)
+/area/station/command/bridge)
 "qs" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/decal/cleanable/dirt,
@@ -458,7 +458,7 @@
 	dir = 10
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "sH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -566,7 +566,7 @@
 "xL" = (
 /obj/machinery/cryopod,
 /turf/open/floor/mineral/plastitanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "xR" = (
 /obj/structure/tank_dispenser,
 /turf/open/floor/mineral/titanium/yellow,
@@ -678,7 +678,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "AR" = (
 /obj/structure/closet/wall{
 	name = "captain's closet";
@@ -698,7 +698,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/bridge)
+/area/station/command/bridge)
 "AV" = (
 /mob/living/simple_animal/hostile/asteroid/wolf{
 	faction = list("neutral");
@@ -738,7 +738,7 @@
 "BA" = (
 /obj/structure/sign/poster/random,
 /turf/closed/wall/r_wall,
-/area/station/bridge)
+/area/station/command/bridge)
 "BE" = (
 /obj/structure/table,
 /obj/item/toy/plush/moth{
@@ -917,7 +917,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "Ho" = (
 /obj/structure/table,
 /obj/machinery/microwave{
@@ -989,11 +989,11 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/obj/item/radio/intercom/wideband{
+/obj/item/radio/intercom{
 	pixel_y = -32
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/bridge)
+/area/station/command/bridge)
 "Kq" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -1033,7 +1033,7 @@
 /area/station/medical)
 "LY" = (
 /turf/closed/wall/r_wall,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "Nd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/holopad/emergency,
@@ -1082,7 +1082,7 @@
 	dir = 6
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/bridge)
+/area/station/command/bridge)
 "Ot" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/oil,
@@ -1098,7 +1098,7 @@
 "OY" = (
 /obj/machinery/computer/helm,
 /turf/open/floor/mineral/plastitanium,
-/area/station/bridge)
+/area/station/command/bridge)
 "Pa" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
@@ -1130,7 +1130,7 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "QB" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/armor/vest/russian{
@@ -1199,7 +1199,7 @@
 "SB" = (
 /obj/structure/sign/poster/random,
 /turf/closed/wall/r_wall,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "SP" = (
 /obj/effect/decal/cleanable/oil,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -1217,7 +1217,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/bridge)
+/area/station/command/bridge)
 "TD" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium,
@@ -1334,7 +1334,7 @@
 	id = "bogatyr_bridge"
 	},
 /turf/open/floor/plating,
-/area/station/bridge)
+/area/station/command/bridge)
 "WX" = (
 /turf/closed/wall/r_wall,
 /area/station/science)
@@ -1364,11 +1364,11 @@
 /obj/item/clothing/under/pants/track,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "XL" = (
 /obj/machinery/computer/autopilot,
 /turf/open/floor/mineral/plastitanium,
-/area/station/bridge)
+/area/station/command/bridge)
 "Yr" = (
 /obj/machinery/light/broken{
 	dir = 1
@@ -1390,7 +1390,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "YV" = (
 /obj/structure/chair{
 	dir = 8

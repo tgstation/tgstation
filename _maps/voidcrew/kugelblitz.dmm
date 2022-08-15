@@ -310,7 +310,7 @@
 "fs" = (
 /obj/machinery/computer/helm,
 /turf/open/floor/mineral/plastitanium,
-/area/station/crew)
+/area/station/commons)
 "fQ" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped{
 	dir = 8;
@@ -325,7 +325,7 @@
 "ge" = (
 /obj/machinery/computer/autopilot,
 /turf/open/floor/mineral/plastitanium,
-/area/station/crew)
+/area/station/commons)
 "gf" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -438,11 +438,11 @@
 	all_items_free = 1
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/crew)
+/area/station/commons)
 "hS" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/crew)
+/area/station/commons)
 "ii" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 6
@@ -452,7 +452,7 @@
 	},
 /obj/machinery/holopad,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/crew)
+/area/station/commons)
 "ix" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8
@@ -461,7 +461,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/crew)
+/area/station/commons)
 "iE" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
@@ -478,7 +478,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/crew)
+/area/station/commons)
 "ja" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 6
@@ -661,14 +661,14 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/crew)
+/area/station/commons)
 "kM" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /obj/item/kirbyplants/random,
 /obj/item/mecha_parts/part/ripley_left_leg,
 /turf/open/floor/mineral/plastitanium,
-/area/station/crew)
+/area/station/commons)
 "kY" = (
 /obj/effect/turf_decal/corner/blue{
 	dir = 8
@@ -739,7 +739,7 @@
 /obj/item/reagent_containers/food/snacks/hotdog,
 /obj/item/reagent_containers/food/snacks/hotdog,
 /turf/open/floor/mineral/plastitanium,
-/area/station/crew)
+/area/station/commons)
 "mi" = (
 /obj/structure/chair/wood{
 	dir = 4
@@ -751,7 +751,7 @@
 	},
 /obj/item/stock_parts/cell/high/plus,
 /turf/open/floor/mineral/plastitanium,
-/area/station/crew)
+/area/station/commons)
 "mn" = (
 /obj/structure/table,
 /obj/item/radio,
@@ -762,7 +762,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/reagent_containers/food/snacks/rationpack,
 /turf/open/floor/mineral/plastitanium,
-/area/station/crew)
+/area/station/commons)
 "mC" = (
 /obj/structure/chair/wood{
 	dir = 8
@@ -772,7 +772,7 @@
 	},
 /obj/item/stock_parts/capacitor/adv,
 /turf/open/floor/mineral/plastitanium,
-/area/station/crew)
+/area/station/commons)
 "mL" = (
 /obj/effect/turf_decal/techfloor/orange{
 	dir = 8
@@ -787,7 +787,7 @@
 	},
 /obj/machinery/light,
 /turf/open/floor/mineral/plastitanium,
-/area/station/crew)
+/area/station/commons)
 "mV" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 8
@@ -814,7 +814,7 @@
 "nt" = (
 /obj/structure/closet/firecloset/wall,
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
-/area/station/crew)
+/area/station/commons)
 "nE" = (
 /obj/effect/turf_decal/techfloor/orange{
 	dir = 9
@@ -954,7 +954,7 @@
 /area/station/engineering/engine)
 "pC" = (
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
-/area/station/crew)
+/area/station/commons)
 "pS" = (
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
 /area/station/science/robotics)
@@ -1037,7 +1037,7 @@
 /obj/item/reagent_containers/hypospray/medipen/penacid,
 /obj/item/reagent_containers/hypospray/medipen/penacid,
 /turf/open/floor/mineral/plastitanium,
-/area/station/crew)
+/area/station/commons)
 "qY" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
@@ -1153,10 +1153,10 @@
 /area/station/engineering/engine)
 "sY" = (
 /obj/structure/table,
-/obj/item/radio/intercom/wideband,
+/obj/item/radio/intercom,
 /obj/item/circuitboard/mecha/ripley/peripherals,
 /turf/open/floor/mineral/plastitanium,
-/area/station/crew)
+/area/station/commons)
 "tp" = (
 /obj/structure/window/reinforced/plasma/spawner/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/oxygen_output{
@@ -1224,7 +1224,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/crew)
+/area/station/commons)
 "vw" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
@@ -1390,7 +1390,7 @@
 	name = "meditative moth plushie"
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/crew)
+/area/station/commons)
 "wK" = (
 /obj/effect/turf_decal/corner/yellow{
 	dir = 1
@@ -1403,7 +1403,7 @@
 "wN" = (
 /obj/machinery/status_display/shuttle,
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
-/area/station/crew)
+/area/station/commons)
 "wY" = (
 /obj/structure/rack,
 /obj/item/pickaxe,
@@ -1577,7 +1577,7 @@
 	pixel_y = 24
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/crew)
+/area/station/commons)
 "zJ" = (
 /obj/effect/turf_decal/industrial/warning{
 	dir = 8
@@ -1603,7 +1603,7 @@
 /obj/machinery/airalarm/directional/north,
 /obj/item/mecha_parts/mecha_equipment/drill,
 /turf/open/floor/mineral/plastitanium,
-/area/station/crew)
+/area/station/commons)
 "Ab" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
@@ -1634,7 +1634,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/crew)
+/area/station/commons)
 "Ao" = (
 /obj/effect/turf_decal/industrial/warning,
 /obj/machinery/portable_atmospherics/canister/air,
@@ -1664,7 +1664,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/crew)
+/area/station/commons)
 "Bd" = (
 /obj/structure/marker_beacon,
 /obj/effect/turf_decal/industrial/warning,
@@ -2054,14 +2054,14 @@
 	pixel_y = 32
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/crew)
+/area/station/commons)
 "Jy" = (
 /obj/structure/table,
 /obj/machinery/microwave{
 	desc = "Musty smelling microwave, old and shitty. If you could describe it, it would be green"
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/crew)
+/area/station/commons)
 "JE" = (
 /obj/structure/closet/secure{
 	icon_state = "ce";
@@ -2176,7 +2176,7 @@
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
 /area/station/engineering)
 "Lq" = (
-/obj/item/radio/intercom/wideband{
+/obj/item/radio/intercom{
 	pixel_x = 5;
 	pixel_y = -5
 	},
@@ -2441,7 +2441,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/crew)
+/area/station/commons)
 "Rt" = (
 /obj/structure/marker_beacon,
 /obj/effect/turf_decal/industrial/warning{
@@ -2661,7 +2661,7 @@
 	id = "kugelwindow"
 	},
 /turf/open/floor/plating,
-/area/station/crew)
+/area/station/commons)
 "Xt" = (
 /turf/open/floor/plating/airless,
 /area/station/external)
@@ -2718,7 +2718,7 @@
 /area/station/external)
 "ZW" = (
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/crew)
+/area/station/commons)
 
 (1,1,1) = {"
 Zf

@@ -43,7 +43,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "bL" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -133,7 +133,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "gu" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -178,7 +178,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "iJ" = (
 /obj/machinery/power/terminal{
 	dir = 8
@@ -205,7 +205,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/iron,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "lm" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 9
@@ -276,7 +276,7 @@
 /area/station/maintenance/aft)
 "oL" = (
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "pC" = (
 /obj/machinery/atmospherics/pipe/layer_manifold,
 /turf/open/floor/plating,
@@ -298,7 +298,7 @@
 	pixel_y = 24
 	},
 /turf/open/floor/wood,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "rk" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
@@ -309,7 +309,7 @@
 /area/station/hallway/central)
 "rA" = (
 /turf/closed/wall/mineral/titanium,
-/area/station/bridge)
+/area/station/command/bridge)
 "sb" = (
 /obj/structure/table/optable,
 /obj/effect/turf_decal/corner/purple/mono,
@@ -351,7 +351,7 @@
 /area/station/science)
 "uJ" = (
 /turf/closed/wall/mineral/titanium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "uM" = (
 /obj/machinery/door/airlock/research/glass,
 /obj/structure/cable,
@@ -370,7 +370,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "vG" = (
 /obj/machinery/autolathe,
 /obj/effect/turf_decal/corner/brown/mono,
@@ -478,7 +478,7 @@
 /area/station/science)
 "CL" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "CP" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
@@ -551,7 +551,7 @@
 	},
 /obj/effect/turf_decal/corner/blue/mono,
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "FI" = (
 /obj/machinery/atmospherics/components/unary/shuttle/heater{
 	dir = 4
@@ -568,7 +568,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "Gz" = (
 /obj/structure/window/reinforced/spawner/west,
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -577,7 +577,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "GS" = (
 /obj/structure/bed,
 /obj/item/bedsheet/dorms,
@@ -587,7 +587,7 @@
 	pixel_y = -26
 	},
 /turf/open/floor/wood,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "Hq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/structure/reagent_dispensers/fueltank,
@@ -618,7 +618,7 @@
 	},
 /obj/effect/turf_decal/corner/blue/mono,
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "IC" = (
 /obj/structure/tank_dispenser/oxygen,
 /obj/effect/turf_decal/corner/brown{
@@ -709,7 +709,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "Qo" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -743,7 +743,7 @@
 	pixel_y = 24
 	},
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "Rm" = (
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/siding/thinplating,
@@ -759,7 +759,7 @@
 	},
 /obj/effect/turf_decal/corner/blue/mono,
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "Sp" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -820,7 +820,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "WH" = (
 /obj/machinery/atmospherics/components/unary/tank/air,
 /turf/open/floor/plating,
@@ -829,7 +829,7 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
-/area/station/bridge)
+/area/station/command/bridge)
 "XT" = (
 /obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/structure/table,

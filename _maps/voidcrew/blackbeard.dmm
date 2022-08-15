@@ -47,7 +47,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/bridge)
+/area/station/command/bridge)
 "aT" = (
 /obj/structure/table/reinforced,
 /obj/item/gun/ballistic/rocketlauncher/unrestricted,
@@ -139,7 +139,7 @@
 /turf/open/floor/plating/catwalk_floor{
 	icon_state = "catwalk_above"
 	},
-/area/station/crew)
+/area/station/commons)
 "dy" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -220,13 +220,13 @@
 	suit_type = /obj/item/clothing/suit/space/hardsuit/syndi
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/crew)
+/area/station/commons)
 "fn" = (
 /obj/machinery/computer/autopilot{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/bridge)
+/area/station/command/bridge)
 "fy" = (
 /obj/machinery/power/shuttle/engine/electric{
 	dir = 4
@@ -386,7 +386,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/mineral/plastitanium,
-/area/station/bridge)
+/area/station/command/bridge)
 "kh" = (
 /obj/structure/closet/crate/engineering,
 /obj/item/stack/sheet/mineral/uranium/twenty,
@@ -422,7 +422,7 @@
 /turf/open/floor/plating/catwalk_floor{
 	icon_state = "catwalk_above"
 	},
-/area/station/bridge)
+/area/station/command/bridge)
 "ln" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/hatch{
@@ -438,7 +438,7 @@
 /turf/open/floor/plating/catwalk_floor{
 	icon_state = "catwalk_above"
 	},
-/area/station/bridge)
+/area/station/command/bridge)
 "lZ" = (
 /obj/machinery/power/shuttle/engine/fueled/plasma{
 	dir = 4
@@ -460,7 +460,7 @@
 /turf/open/floor/plating/catwalk_floor{
 	icon_state = "catwalk_above"
 	},
-/area/station/crew)
+/area/station/commons)
 "mX" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -496,7 +496,7 @@
 /turf/open/floor/plating/catwalk_floor{
 	icon_state = "catwalk_above"
 	},
-/area/station/bridge)
+/area/station/command/bridge)
 "nU" = (
 /obj/machinery/advanced_airlock_controller{
 	pixel_x = 24
@@ -734,7 +734,7 @@
 	pixel_y = -24
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/bridge)
+/area/station/command/bridge)
 "xY" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/hatch,
@@ -865,7 +865,7 @@
 /turf/open/floor/plating/catwalk_floor{
 	icon_state = "catwalk_above"
 	},
-/area/station/bridge)
+/area/station/command/bridge)
 "DN" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -891,7 +891,7 @@
 	pixel_y = -24
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/crew)
+/area/station/commons)
 "Ed" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer4,
@@ -947,7 +947,7 @@
 /turf/open/floor/plating/catwalk_floor{
 	icon_state = "catwalk_above"
 	},
-/area/station/crew)
+/area/station/commons)
 "GT" = (
 /obj/machinery/light{
 	dir = 1
@@ -988,7 +988,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/crew)
+/area/station/commons)
 "HG" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -1025,7 +1025,7 @@
 /turf/open/floor/plating/catwalk_floor{
 	icon_state = "catwalk_above"
 	},
-/area/station/crew)
+/area/station/commons)
 "Jm" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -1042,7 +1042,7 @@
 	},
 /obj/machinery/holopad/emergency/command,
 /turf/open/floor/mineral/plastitanium,
-/area/station/bridge)
+/area/station/command/bridge)
 "JC" = (
 /obj/machinery/light{
 	dir = 1
@@ -1072,7 +1072,7 @@
 /area/station/hallway/central)
 "Kh" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/crew)
+/area/station/commons)
 "Kj" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/station/hallway/fore)
@@ -1151,7 +1151,7 @@
 /obj/item/card/emag,
 /obj/item/areaeditor/shuttle,
 /turf/open/floor/mineral/plastitanium,
-/area/station/bridge)
+/area/station/command/bridge)
 "Pi" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/hatch,
@@ -1179,7 +1179,7 @@
 /area/station/cargo)
 "Qh" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/bridge)
+/area/station/command/bridge)
 "Qp" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
@@ -1380,7 +1380,7 @@
 /area/station/cargo)
 "VF" = (
 /turf/closed/wall/mineral/plastitanium,
-/area/station/crew)
+/area/station/commons)
 "VT" = (
 /obj/machinery/light{
 	dir = 4
@@ -1399,7 +1399,7 @@
 /turf/open/floor/plating/catwalk_floor{
 	icon_state = "catwalk_above"
 	},
-/area/station/crew)
+/area/station/commons)
 "WH" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/station/medical)
@@ -1412,7 +1412,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/mineral/plastitanium,
-/area/station/crew)
+/area/station/commons)
 "Xh" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -1483,13 +1483,13 @@
 /turf/open/floor/plating/catwalk_floor{
 	icon_state = "catwalk_above"
 	},
-/area/station/bridge)
+/area/station/command/bridge)
 "ZO" = (
 /obj/machinery/vending/security/marine{
 	all_items_free = 1
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/crew)
+/area/station/commons)
 "ZR" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{

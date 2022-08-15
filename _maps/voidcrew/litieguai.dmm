@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aF" = (
 /turf/closed/wall/mineral/titanium,
-/area/station/crew)
+/area/station/commons)
 "aL" = (
 /obj/machinery/power/smes/engineering{
 	charge = 1e+006
@@ -156,7 +156,7 @@
 	pixel_y = 5
 	},
 /turf/open/floor/iron/grimy,
-/area/station/crew)
+/area/station/commons)
 "cX" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/atmospherics/pipe/layer_manifold,
@@ -171,7 +171,7 @@
 /obj/structure/curtain/bounty,
 /obj/item/bedsheet/captain,
 /turf/open/floor/iron/dark,
-/area/station/bridge)
+/area/station/command/bridge)
 "dj" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Starboard Engines"
@@ -241,7 +241,7 @@
 	dir = 9
 	},
 /turf/open/floor/iron/grimy,
-/area/station/crew)
+/area/station/commons)
 "eo" = (
 /turf/open/floor/iron/showroomfloor,
 /area/station/science)
@@ -267,7 +267,7 @@
 	},
 /obj/machinery/door/window/brigdoor/left/directional/south,
 /turf/open/floor/iron/dark,
-/area/station/crew)
+/area/station/commons)
 "eS" = (
 /turf/open/floor/iron,
 /area/station/hallway/aft)
@@ -280,7 +280,7 @@
 	},
 /obj/machinery/cell_charger,
 /turf/open/floor/iron/grimy,
-/area/station/crew)
+/area/station/commons)
 "fe" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 6
@@ -318,7 +318,7 @@
 	pixel_y = -24
 	},
 /turf/open/floor/carpet/nanoweave,
-/area/station/bridge)
+/area/station/command/bridge)
 "fT" = (
 /obj/machinery/computer/operating,
 /obj/item/radio/intercom{
@@ -347,7 +347,7 @@
 /obj/item/storage/backpack/satchel/med,
 /obj/item/gun/energy/e_gun/mini,
 /turf/open/floor/carpet/nanoweave,
-/area/station/bridge)
+/area/station/command/bridge)
 "go" = (
 /obj/effect/turf_decal/industrial/hatch/red,
 /obj/machinery/computer/arcade/orion_trail,
@@ -442,7 +442,7 @@
 "ij" = (
 /obj/structure/sign/departments/medbay/alt,
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/crew)
+/area/station/commons)
 "ir" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/preopen{
@@ -450,7 +450,7 @@
 	name = "window blast door"
 	},
 /turf/open/floor/plating,
-/area/station/bridge)
+/area/station/command/bridge)
 "iu" = (
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -468,7 +468,7 @@
 	pixel_y = -24
 	},
 /turf/open/floor/iron/showroomfloor,
-/area/station/crew/toilet)
+/area/station/commons/toilet)
 "iK" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 4
@@ -493,7 +493,7 @@
 "iW" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /turf/open/floor/iron,
-/area/station/crew)
+/area/station/commons)
 "jB" = (
 /obj/machinery/door/airlock/virology/glass,
 /obj/structure/cable,
@@ -552,7 +552,7 @@
 	},
 /obj/structure/window/reinforced,
 /turf/open/floor/iron/dark,
-/area/station/crew)
+/area/station/commons)
 "kH" = (
 /obj/item/pickaxe/mini,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
@@ -636,7 +636,7 @@
 	name = "Crew Quarters"
 	},
 /turf/open/floor/iron/grimy,
-/area/station/crew)
+/area/station/commons)
 "mj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /turf/open/floor/iron/white,
@@ -681,7 +681,7 @@
 	name = "window blast door"
 	},
 /turf/open/floor/plating,
-/area/station/crew)
+/area/station/commons)
 "mP" = (
 /obj/structure/sign/departments/medbay/alt,
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -714,7 +714,7 @@
 /area/station/science)
 "nl" = (
 /turf/closed/wall/mineral/titanium,
-/area/station/bridge)
+/area/station/command/bridge)
 "nm" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /obj/structure/cable,
@@ -723,7 +723,7 @@
 /area/station/medical)
 "np" = (
 /turf/open/floor/carpet/cyan,
-/area/station/crew)
+/area/station/commons)
 "nu" = (
 /turf/open/floor/iron/white,
 /area/station/science)
@@ -808,7 +808,7 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron/showroomfloor,
-/area/station/crew/toilet)
+/area/station/commons/toilet)
 "pG" = (
 /obj/effect/turf_decal/trimline/neutral/filled/warning{
 	dir = 1
@@ -830,7 +830,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/crew)
+/area/station/commons)
 "qd" = (
 /obj/structure/sink/directional/west,
 /obj/structure/mirror{
@@ -841,7 +841,7 @@
 	pixel_y = 28
 	},
 /turf/open/floor/iron/showroomfloor,
-/area/station/crew/toilet)
+/area/station/commons/toilet)
 "qP" = (
 /obj/structure/cable,
 /obj/machinery/door/window/right/directional/west{
@@ -880,7 +880,7 @@
 /area/station/medical)
 "se" = (
 /turf/open/floor/iron/dark,
-/area/station/crew)
+/area/station/commons)
 "sp" = (
 /obj/structure/reagent_dispensers/virusfood,
 /turf/closed/wall/mineral/titanium,
@@ -902,7 +902,7 @@
 	dir = 10
 	},
 /turf/open/floor/iron,
-/area/station/crew)
+/area/station/commons)
 "sz" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
@@ -943,7 +943,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/grimy,
-/area/station/crew)
+/area/station/commons)
 "tw" = (
 /obj/structure/reagent_dispensers/watertank/high,
 /obj/effect/turf_decal/industrial/hatch/blue,
@@ -965,11 +965,11 @@
 	pixel_x = -32
 	},
 /turf/open/floor/iron/grimy,
-/area/station/crew)
+/area/station/commons)
 "tT" = (
 /obj/machinery/computer/helm,
 /turf/open/floor/iron/dark,
-/area/station/bridge)
+/area/station/command/bridge)
 "tW" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /obj/effect/turf_decal/corner/white/mono,
@@ -1025,7 +1025,7 @@
 "uW" = (
 /obj/machinery/computer/autopilot,
 /turf/open/floor/iron/dark,
-/area/station/bridge)
+/area/station/command/bridge)
 "ve" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced{
@@ -1171,12 +1171,12 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/structure/curtain,
 /turf/open/floor/plating,
-/area/station/bridge)
+/area/station/command/bridge)
 "yi" = (
 /obj/structure/table/reinforced,
 /obj/machinery/photocopier/faxmachine/longrange,
 /turf/open/floor/iron/dark,
-/area/station/bridge)
+/area/station/command/bridge)
 "yl" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/red/filled/warning{
@@ -1239,10 +1239,10 @@
 	pixel_y = 7
 	},
 /turf/open/floor/iron/dark,
-/area/station/bridge)
+/area/station/command/bridge)
 "zo" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/crew/toilet)
+/area/station/commons/toilet)
 "zp" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -1360,7 +1360,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/bridge)
+/area/station/command/bridge)
 "CA" = (
 /obj/machinery/power/port_gen/pacman,
 /obj/structure/cable,
@@ -1409,7 +1409,7 @@
 "Dy" = (
 /obj/machinery/computer/crew,
 /turf/open/floor/carpet/nanoweave,
-/area/station/bridge)
+/area/station/command/bridge)
 "DH" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 4
@@ -1462,7 +1462,7 @@
 /area/station/medical)
 "Ev" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/crew)
+/area/station/commons)
 "EA" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /obj/machinery/photocopier,
@@ -1515,7 +1515,7 @@
 "Gs" = (
 /obj/machinery/computer/med_data,
 /turf/open/floor/iron/dark,
-/area/station/bridge)
+/area/station/command/bridge)
 "GN" = (
 /obj/machinery/vending/cola/random,
 /obj/effect/turf_decal/trimline/red/filled/line,
@@ -1527,7 +1527,7 @@
 /area/station/hallway/aft)
 "GP" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/bridge)
+/area/station/command/bridge)
 "GT" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 1
@@ -1561,14 +1561,14 @@
 	pixel_x = -24
 	},
 /turf/open/floor/carpet/nanoweave,
-/area/station/bridge)
+/area/station/command/bridge)
 "Hq" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1;
 	name = "Helm"
 	},
 /turf/open/floor/carpet/nanoweave,
-/area/station/bridge)
+/area/station/command/bridge)
 "Hr" = (
 /obj/machinery/light,
 /obj/machinery/smartfridge/chemistry/virology,
@@ -1661,7 +1661,7 @@
 "Kc" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/bridge)
+/area/station/command/bridge)
 "Kh" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 1
@@ -1684,7 +1684,7 @@
 	dir = 5
 	},
 /turf/open/floor/iron,
-/area/station/crew)
+/area/station/commons)
 "Ko" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/turf_decal/industrial/outline/red,
@@ -1774,7 +1774,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/crew)
+/area/station/commons)
 "Lt" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 4
@@ -1797,7 +1797,7 @@
 /turf/open/floor/iron,
 /area/station/storage)
 "LH" = (
-/obj/item/radio/intercom/wideband{
+/obj/item/radio/intercom{
 	dir = 1;
 	pixel_y = -24
 	},
@@ -1805,7 +1805,7 @@
 	dir = 5
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/bridge)
+/area/station/command/bridge)
 "LM" = (
 /obj/structure/table/optable,
 /obj/effect/turf_decal/industrial/hatch/red,
@@ -1816,7 +1816,7 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/floor/carpet/nanoweave,
-/area/station/bridge)
+/area/station/command/bridge)
 "Mj" = (
 /obj/machinery/door/airlock/command{
 	name = "Bridge"
@@ -1829,7 +1829,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/bridge)
+/area/station/command/bridge)
 "Ml" = (
 /obj/structure/closet/l3closet/virology,
 /obj/item/reagent_containers/dropper,
@@ -1877,7 +1877,7 @@
 	req_access_txt = "5"
 	},
 /turf/open/floor/iron/dark,
-/area/station/crew)
+/area/station/commons)
 "MN" = (
 /obj/item/stack/sheet/mineral/plasma/twenty,
 /obj/machinery/atmospherics/components/binary/pump/on/layer2,
@@ -1917,10 +1917,10 @@
 /obj/item/clothing/shoes/sneakers/blue,
 /obj/item/clothing/shoes/sneakers/blue,
 /turf/open/floor/iron/grimy,
-/area/station/crew)
+/area/station/commons)
 "MY" = (
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/bridge)
+/area/station/command/bridge)
 "Na" = (
 /obj/effect/turf_decal/trimline/red/filled/warning{
 	dir = 1
@@ -2011,13 +2011,13 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /obj/item/clothing/glasses/hud/health,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/bridge)
+/area/station/command/bridge)
 "Pw" = (
 /obj/structure/bed,
 /obj/structure/curtain/bounty,
 /obj/item/bedsheet/cmo,
 /turf/open/floor/iron/dark,
-/area/station/bridge)
+/area/station/command/bridge)
 "PG" = (
 /obj/effect/turf_decal/trimline/red/line,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
@@ -2032,7 +2032,7 @@
 "PH" = (
 /obj/structure/sign/poster/contraband/random,
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/crew)
+/area/station/commons)
 "PL" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on,
 /turf/open/floor/plating,
@@ -2049,7 +2049,7 @@
 /obj/machinery/door/window/survival_pod,
 /obj/structure/curtain,
 /turf/open/floor/iron/showroomfloor,
-/area/station/crew/toilet)
+/area/station/commons/toilet)
 "Qm" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
@@ -2092,7 +2092,7 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/crew)
+/area/station/commons)
 "QY" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 1
@@ -2128,7 +2128,7 @@
 	req_access_txt = "5"
 	},
 /turf/open/floor/iron/dark,
-/area/station/crew)
+/area/station/commons)
 "Rh" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Port Engines"
@@ -2154,7 +2154,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/bridge)
+/area/station/command/bridge)
 "Rs" = (
 /obj/effect/turf_decal/trimline/red/filled/warning{
 	dir = 8
@@ -2169,7 +2169,7 @@
 "RS" = (
 /obj/machinery/vending/wardrobe/medi_wardrobe,
 /turf/open/floor/carpet/cyan,
-/area/station/crew)
+/area/station/commons)
 "RV" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/iron,
@@ -2190,7 +2190,7 @@
 	dir = 9
 	},
 /turf/open/floor/iron/grimy,
-/area/station/crew)
+/area/station/commons)
 "Sl" = (
 /obj/machinery/light,
 /obj/effect/turf_decal/trimline/neutral/filled/warning,
@@ -2242,7 +2242,7 @@
 /obj/machinery/door/window/survival_pod,
 /obj/item/soap,
 /turf/open/floor/iron/showroomfloor,
-/area/station/crew/toilet)
+/area/station/commons/toilet)
 "SR" = (
 /obj/machinery/autolathe,
 /obj/item/stack/sheet/iron/fifty,
@@ -2296,13 +2296,13 @@
 /area/station/maintenance/starboard)
 "TI" = (
 /turf/open/floor/iron,
-/area/station/crew)
+/area/station/commons)
 "TR" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/iron/grimy,
-/area/station/crew)
+/area/station/commons)
 "Ub" = (
 /obj/machinery/smartfridge/chemistry/virology/preloaded,
 /turf/open/floor/iron/white,
@@ -2374,7 +2374,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/grimy,
-/area/station/crew)
+/area/station/commons)
 "UX" = (
 /obj/item/gun/ballistic/automatic/vector{
 	spawnwithmagazine = 0
@@ -2416,7 +2416,7 @@
 	req_access_txt = "5"
 	},
 /turf/open/floor/iron/dark,
-/area/station/crew)
+/area/station/commons)
 "Va" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 1
@@ -2426,7 +2426,7 @@
 "Vf" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /turf/open/floor/carpet/cyan,
-/area/station/crew)
+/area/station/commons)
 "Vq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
@@ -2493,7 +2493,7 @@
 	name = "\proper Deuce"
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/bridge)
+/area/station/command/bridge)
 "VY" = (
 /obj/machinery/light/small,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
@@ -2506,7 +2506,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/iron/showroomfloor,
-/area/station/crew/toilet)
+/area/station/commons/toilet)
 "VZ" = (
 /turf/closed/wall/mineral/titanium,
 /area/station/maintenance/starboard)
@@ -2576,14 +2576,14 @@
 	dir = 4
 	},
 /turf/open/floor/iron/showroomfloor,
-/area/station/crew/toilet)
+/area/station/commons/toilet)
 "Xj" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1;
 	name = "Medical"
 	},
 /turf/open/floor/carpet/nanoweave,
-/area/station/bridge)
+/area/station/command/bridge)
 "Xs" = (
 /obj/structure/closet/l3closet/virology,
 /obj/item/clothing/suit/bio_suit,
@@ -2623,7 +2623,7 @@
 /obj/structure/curtain/bounty,
 /obj/item/bedsheet/blue,
 /turf/open/floor/carpet/cyan,
-/area/station/crew)
+/area/station/commons)
 "Yb" = (
 /obj/effect/turf_decal/trimline/red/line,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
@@ -2655,7 +2655,7 @@
 	pixel_y = -30
 	},
 /turf/open/floor/iron/grimy,
-/area/station/crew)
+/area/station/commons)
 "Yn" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
@@ -2747,11 +2747,11 @@
 	name = "\improper Colt Navy Special"
 	},
 /turf/open/floor/carpet/nanoweave,
-/area/station/bridge)
+/area/station/command/bridge)
 "Zz" = (
 /obj/structure/cable,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/bridge)
+/area/station/command/bridge)
 "ZC" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/maintenance/port)
@@ -2780,7 +2780,7 @@
 /obj/item/clothing/neck/stethoscope,
 /obj/machinery/recharger,
 /turf/open/floor/carpet/nanoweave,
-/area/station/bridge)
+/area/station/command/bridge)
 "ZU" = (
 /obj/item/radio/intercom{
 	dir = 8;

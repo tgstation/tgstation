@@ -116,7 +116,7 @@
 /obj/machinery/door/airlock,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "fg" = (
 /obj/structure/girder/reinforced,
 /obj/structure/barricade/wooden/crude,
@@ -197,7 +197,7 @@
 /obj/structure/cable,
 /obj/machinery/computer/helm,
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "gp" = (
 /obj/effect/turf_decal/techfloor/orange{
 	dir = 8
@@ -366,7 +366,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
-/area/station/crew)
+/area/station/commons)
 "lZ" = (
 /obj/effect/turf_decal/techfloor/orange,
 /obj/effect/turf_decal/techfloor/orange{
@@ -418,13 +418,13 @@
 "nq" = (
 /obj/structure/table/wood/reinforced,
 /obj/item/trash/sosjerky,
-/obj/item/radio/intercom/wideband{
+/obj/item/radio/intercom{
 	pixel_x = 28
 	},
 /obj/effect/spawner/random/maintenance,
 /obj/item/areaeditor/blueprints,
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "nz" = (
 /obj/effect/turf_decal/techfloor{
 	dir = 6
@@ -519,7 +519,7 @@
 /area/station/maintenance/central)
 "pC" = (
 /turf/closed/wall/r_wall/rust,
-/area/station/crew)
+/area/station/commons)
 "qi" = (
 /obj/effect/turf_decal/techfloor/orange{
 	dir = 8
@@ -556,7 +556,7 @@
 	dir = 9
 	},
 /turf/open/floor/iron,
-/area/station/crew)
+/area/station/commons)
 "re" = (
 /obj/machinery/atmospherics/pipe/simple/general/hidden/layer2{
 	dir = 4
@@ -567,7 +567,7 @@
 /obj/machinery/door/airlock,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/crew)
+/area/station/commons)
 "ry" = (
 /obj/machinery/mineral/ore_redemption,
 /turf/open/floor/plating,
@@ -593,7 +593,7 @@
 /area/station/maintenance/central)
 "rV" = (
 /turf/closed/wall/r_wall,
-/area/station/crew)
+/area/station/commons)
 "sv" = (
 /turf/closed/wall/r_wall/rust,
 /area/station/engineering)
@@ -646,7 +646,7 @@
 /obj/structure/bed,
 /obj/item/bedsheet/random,
 /turf/open/floor/iron,
-/area/station/crew)
+/area/station/commons)
 "vi" = (
 /obj/machinery/atmospherics/pipe/simple/general/hidden/layer2{
 	dir = 9
@@ -717,7 +717,7 @@
 /obj/machinery/light,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
-/area/station/crew)
+/area/station/commons)
 "we" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -746,7 +746,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron,
-/area/station/crew)
+/area/station/commons)
 "xD" = (
 /obj/effect/turf_decal/techfloor{
 	dir = 6
@@ -842,7 +842,7 @@
 /obj/structure/cable,
 /obj/machinery/light,
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "zQ" = (
 /obj/machinery/atmospherics/pipe/manifold/general/hidden/layer4{
 	dir = 1
@@ -869,7 +869,7 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
-/area/station/bridge)
+/area/station/command/bridge)
 "Bn" = (
 /obj/effect/turf_decal/techfloor/orange{
 	dir = 8
@@ -1009,7 +1009,7 @@
 /area/station/maintenance/central)
 "Fi" = (
 /turf/closed/wall/r_wall/rust,
-/area/station/bridge)
+/area/station/command/bridge)
 "FE" = (
 /obj/machinery/atmospherics/components/binary/pump/on/layer2{
 	dir = 1
@@ -1136,7 +1136,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
-/area/station/crew)
+/area/station/commons)
 "Ko" = (
 /obj/effect/turf_decal/techfloor/orange,
 /obj/effect/turf_decal/techfloor/orange{
@@ -1176,7 +1176,7 @@
 /obj/machinery/cryopod,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
-/area/station/crew)
+/area/station/commons)
 "Ma" = (
 /obj/structure/tank_dispenser,
 /turf/open/floor/plating,
@@ -1196,7 +1196,7 @@
 /obj/structure/girder/reinforced,
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/plating,
-/area/station/crew)
+/area/station/commons)
 "MB" = (
 /obj/machinery/ore_silo,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1246,7 +1246,7 @@
 /obj/structure/curtain/cloth/fancy,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
-/area/station/crew)
+/area/station/commons)
 "PA" = (
 /obj/effect/turf_decal/techfloor/orange/corner,
 /obj/effect/turf_decal/techfloor/orange/corner{
@@ -1271,7 +1271,7 @@
 "Qy" = (
 /obj/machinery/computer/autopilot,
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "QI" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /obj/structure/window/reinforced/tinted{
@@ -1280,10 +1280,10 @@
 /obj/machinery/vending/clothing,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/crew)
+/area/station/commons)
 "QM" = (
 /turf/closed/wall/r_wall,
-/area/station/bridge)
+/area/station/command/bridge)
 "Ra" = (
 /obj/effect/turf_decal/techfloor/orange{
 	dir = 8
@@ -1311,7 +1311,7 @@
 	pixel_x = -24
 	},
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "Rj" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/central)
@@ -1352,7 +1352,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/crew)
+/area/station/commons)
 "Si" = (
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
@@ -1400,7 +1400,7 @@
 	pixel_x = -32
 	},
 /turf/open/floor/iron,
-/area/station/crew)
+/area/station/commons)
 "Tc" = (
 /obj/structure/cable,
 /obj/machinery/door/poddoor/shutters{
@@ -1421,7 +1421,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
-/area/station/crew)
+/area/station/commons)
 "UQ" = (
 /obj/effect/turf_decal/techfloor/orange,
 /obj/effect/turf_decal/techfloor/orange/corner{
@@ -1473,7 +1473,7 @@
 	},
 /obj/machinery/holopad/emergency/command,
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "Wa" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/station/engineering)

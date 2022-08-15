@@ -125,7 +125,7 @@
 	name = "Medbay"
 	},
 /turf/open/floor/iron/dark,
-/area/station/crew)
+/area/station/commons)
 "az" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
@@ -346,14 +346,14 @@
 /area/station/cargo)
 "be" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/bridge)
+/area/station/command/bridge)
 "bf" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_bridge"
 	},
 /turf/open/floor/plating,
-/area/station/bridge)
+/area/station/command/bridge)
 "bg" = (
 /obj/structure/closet/emcloset/anchored,
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
@@ -527,7 +527,7 @@
 	pixel_y = 30
 	},
 /turf/open/floor/iron/dark,
-/area/station/bridge)
+/area/station/command/bridge)
 "by" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -583,7 +583,7 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/carpet/nanoweave/blue,
-/area/station/bridge)
+/area/station/command/bridge)
 "bK" = (
 /obj/machinery/computer/crew{
 	dir = 8
@@ -592,7 +592,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/bridge)
+/area/station/command/bridge)
 "bM" = (
 /obj/machinery/atmospherics/components/unary/cryo_cell{
 	dir = 4
@@ -703,7 +703,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/bridge)
+/area/station/command/bridge)
 "bZ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -714,12 +714,12 @@
 	dir = 10
 	},
 /turf/open/floor/carpet/nanoweave/blue,
-/area/station/bridge)
+/area/station/command/bridge)
 "ca" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/holopad/emergency/command,
 /turf/open/floor/carpet/nanoweave/blue,
-/area/station/bridge)
+/area/station/command/bridge)
 "cb" = (
 /obj/effect/turf_decal/corner/blue{
 	dir = 1
@@ -728,9 +728,9 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced,
-/obj/item/radio/intercom/wideband,
+/obj/item/radio/intercom,
 /turf/open/floor/iron/dark,
-/area/station/bridge)
+/area/station/command/bridge)
 "cc" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -826,7 +826,7 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/nanoweave/blue,
-/area/station/bridge)
+/area/station/command/bridge)
 "cn" = (
 /obj/structure/chair/comfy/shuttle{
 	desc = "STOP! YOU'RE GOING TO TEST THIS SHIP RIGHT INTO AN ICEBERG!";
@@ -834,7 +834,7 @@
 	name = "Helmsman"
 	},
 /turf/open/floor/carpet/nanoweave/blue,
-/area/station/bridge)
+/area/station/command/bridge)
 "co" = (
 /obj/machinery/computer/helm{
 	dir = 8
@@ -843,7 +843,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/bridge)
+/area/station/command/bridge)
 "cp" = (
 /obj/machinery/light/small,
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
@@ -928,7 +928,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/bridge)
+/area/station/command/bridge)
 "cy" = (
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
@@ -989,11 +989,11 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/crew)
+/area/station/commons)
 "cF" = (
 /obj/structure/sign/departments/restroom,
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/crew)
+/area/station/commons)
 "cG" = (
 /obj/structure/closet/emcloset/anchored,
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
@@ -1020,7 +1020,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/crew)
+/area/station/commons)
 "cI" = (
 /obj/machinery/light/built,
 /obj/structure/cable,
@@ -1044,7 +1044,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/station/crew)
+/area/station/commons)
 "cL" = (
 /obj/effect/turf_decal/corner/neutral/half{
 	dir = 8
@@ -1054,7 +1054,7 @@
 	pixel_y = 24
 	},
 /turf/open/floor/iron/dark,
-/area/station/crew)
+/area/station/commons)
 "cM" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/industrial/outline/yellow,
@@ -1077,7 +1077,7 @@
 	pixel_y = 24
 	},
 /turf/open/floor/iron/freezer,
-/area/station/crew)
+/area/station/commons)
 "cO" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -1087,7 +1087,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/freezer,
-/area/station/crew)
+/area/station/commons)
 "cP" = (
 /obj/structure/sink/directional/west,
 /obj/structure/mirror{
@@ -1100,27 +1100,27 @@
 	dir = 10
 	},
 /turf/open/floor/iron/freezer,
-/area/station/crew)
+/area/station/commons)
 "cQ" = (
 /obj/machinery/smartfridge/chemistry/preloaded,
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/crew)
+/area/station/commons)
 "cR" = (
 /obj/structure/filingcabinet/medical,
 /turf/open/floor/iron/dark,
-/area/station/crew)
+/area/station/commons)
 "cS" = (
 /obj/machinery/photocopier/faxmachine,
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
-/area/station/crew)
+/area/station/commons)
 "cT" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/wood,
-/area/station/crew)
+/area/station/commons)
 "cU" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -1133,7 +1133,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/station/crew)
+/area/station/commons)
 "cV" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -1142,13 +1142,13 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/crew)
+/area/station/commons)
 "cW" = (
 /obj/effect/turf_decal/corner/neutral/three_quarters{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/crew)
+/area/station/commons)
 "cX" = (
 /obj/machinery/computer/cryopod{
 	pixel_y = 24
@@ -1161,11 +1161,11 @@
 	},
 /obj/machinery/cryopod,
 /turf/open/floor/iron/dark,
-/area/station/crew)
+/area/station/commons)
 "cY" = (
 /obj/structure/sign/departments/medbay/alt,
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/crew)
+/area/station/commons)
 "cZ" = (
 /obj/machinery/chem_master,
 /obj/machinery/airalarm/all_access{
@@ -1180,7 +1180,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/freezer,
-/area/station/crew)
+/area/station/commons)
 "da" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 8
@@ -1189,7 +1189,7 @@
 	dir = 5
 	},
 /turf/open/floor/iron/freezer,
-/area/station/crew)
+/area/station/commons)
 "dc" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 8
@@ -1201,7 +1201,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/white,
-/area/station/crew)
+/area/station/commons)
 "dd" = (
 /obj/machinery/door/airlock{
 	name = "Restroom"
@@ -1219,7 +1219,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/crew)
+/area/station/commons)
 "de" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
@@ -1229,7 +1229,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/crew)
+/area/station/commons)
 "df" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
@@ -1241,7 +1241,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/station/crew)
+/area/station/commons)
 "dg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 8
@@ -1250,7 +1250,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/crew)
+/area/station/commons)
 "dh" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -1259,13 +1259,13 @@
 	dir = 9
 	},
 /turf/open/floor/wood,
-/area/station/crew)
+/area/station/commons)
 "di" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/station/crew)
+/area/station/commons)
 "dj" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -1273,17 +1273,17 @@
 /obj/structure/bed/dogbed/runtime,
 /obj/structure/curtain/bounty,
 /turf/open/floor/wood,
-/area/station/crew)
+/area/station/commons)
 "dk" = (
 /obj/structure/curtain,
 /obj/machinery/shower/directional/north,
 /obj/item/soap,
 /turf/open/floor/iron/freezer,
-/area/station/crew)
+/area/station/commons)
 "dl" = (
 /obj/machinery/smartfridge/organ,
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/crew)
+/area/station/commons)
 "dm" = (
 /obj/structure/table/glass,
 /obj/item/paper_bin,
@@ -1291,7 +1291,7 @@
 /obj/item/clothing/neck/stethoscope,
 /obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/iron/dark,
-/area/station/crew)
+/area/station/commons)
 "dn" = (
 /obj/structure/table/glass,
 /obj/item/folder/blue,
@@ -1305,12 +1305,12 @@
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/iron/dark,
-/area/station/crew)
+/area/station/commons)
 "do" = (
 /obj/structure/dresser,
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
-/area/station/crew)
+/area/station/commons)
 "dp" = (
 /obj/structure/bed,
 /obj/item/bedsheet/dorms,
@@ -1319,7 +1319,7 @@
 	pixel_x = 32
 	},
 /turf/open/floor/carpet/blue,
-/area/station/crew)
+/area/station/commons)
 "dq" = (
 /obj/structure/chair/office/light{
 	dir = 1
@@ -1329,14 +1329,14 @@
 	dir = 4
 	},
 /turf/open/floor/iron/white,
-/area/station/crew)
+/area/station/commons)
 "dr" = (
 /turf/open/floor/plasteel/mono/white,
 /area/station/medical)
 "ds" = (
 /obj/machinery/suit_storage_unit/cmo,
 /turf/open/floor/iron/dark,
-/area/station/crew)
+/area/station/commons)
 "dt" = (
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 4
@@ -1365,7 +1365,7 @@
 	pixel_y = 24
 	},
 /turf/open/floor/carpet/nanoweave/blue,
-/area/station/bridge)
+/area/station/command/bridge)
 "dz" = (
 /obj/effect/turf_decal/corner/blue{
 	dir = 4
@@ -1425,7 +1425,7 @@
 /obj/structure/closet/secure_closet/CMO,
 /obj/item/retractor/advanced,
 /turf/open/floor/iron/dark,
-/area/station/crew)
+/area/station/commons)
 "gE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -1533,11 +1533,11 @@
 /area/station/medical)
 "nQ" = (
 /turf/closed/wall/mineral/titanium,
-/area/station/crew)
+/area/station/commons)
 "ot" = (
 /obj/structure/sign/departments/medbay/alt,
 /turf/closed/wall/mineral/titanium,
-/area/station/crew)
+/area/station/commons)
 "qX" = (
 /obj/effect/turf_decal/corner/blue{
 	dir = 4
@@ -1553,7 +1553,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/station/bridge)
+/area/station/command/bridge)
 "sz" = (
 /obj/structure/bed,
 /obj/item/bedsheet/dorms,
@@ -1562,7 +1562,7 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/blue,
-/area/station/crew)
+/area/station/commons)
 "tw" = (
 /obj/machinery/power/shuttle/engine/electric{
 	dir = 4
@@ -1572,7 +1572,7 @@
 /area/station/engineering)
 "tD" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/crew)
+/area/station/commons)
 "tE" = (
 /obj/effect/turf_decal/corner/blue,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
@@ -1610,7 +1610,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/station/crew)
+/area/station/commons)
 "wd" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
@@ -1711,7 +1711,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/station/crew)
+/area/station/commons)
 "Bh" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -1783,7 +1783,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/station/crew)
+/area/station/commons)
 "FA" = (
 /obj/effect/turf_decal/corner/blue{
 	dir = 1
@@ -1824,7 +1824,7 @@
 	},
 /obj/machinery/door/window/left/directional/north,
 /turf/open/floor/iron/dark,
-/area/station/crew)
+/area/station/commons)
 "MG" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
@@ -1837,7 +1837,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/station/bridge)
+/area/station/command/bridge)
 "MR" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -1902,13 +1902,13 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/station/crew)
+/area/station/commons)
 "SJ" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
 /turf/open/floor/wood,
-/area/station/crew)
+/area/station/commons)
 "TB" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
@@ -1921,7 +1921,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/station/bridge)
+/area/station/command/bridge)
 "Ur" = (
 /obj/machinery/power/terminal{
 	dir = 8
@@ -1962,7 +1962,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/station/crew)
+/area/station/commons)
 "WP" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
@@ -1973,7 +1973,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/station/bridge)
+/area/station/command/bridge)
 "Ye" = (
 /obj/effect/turf_decal/corner/blue/three_quarters{
 	dir = 8
@@ -1986,7 +1986,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/white,
-/area/station/crew)
+/area/station/commons)
 "Yz" = (
 /obj/structure/bed/pod,
 /turf/open/floor/iron/white,

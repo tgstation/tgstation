@@ -198,7 +198,7 @@
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/machinery/light/broken,
 /obj/effect/landmark/start/assistant,
-/obj/item/radio/intercom/wideband{
+/obj/item/radio/intercom{
 	pixel_x = -26
 	},
 /turf/open/floor/plating,

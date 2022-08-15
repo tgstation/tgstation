@@ -56,7 +56,7 @@
 	pixel_y = 7
 	},
 /turf/open/floor/iron/dark,
-/area/station/bridge)
+/area/station/command/bridge)
 "cI" = (
 /obj/effect/turf_decal/industrial/warning{
 	dir = 8
@@ -75,7 +75,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/bridge)
+/area/station/command/bridge)
 "dt" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -113,13 +113,13 @@
 	},
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
-/area/station/bridge)
+/area/station/command/bridge)
 "gr" = (
 /obj/machinery/door/airlock/titanium/glass,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
-/area/station/bridge)
+/area/station/command/bridge)
 "gP" = (
 /obj/machinery/door/poddoor/multi_tile/four_tile_hor{
 	id = "pubbywspodne"
@@ -164,7 +164,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/bridge)
+/area/station/command/bridge)
 "hX" = (
 /obj/structure/window/reinforced,
 /obj/effect/turf_decal/box,
@@ -191,7 +191,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/bridge)
+/area/station/command/bridge)
 "iQ" = (
 /obj/machinery/door/poddoor/multi_tile/four_tile_hor{
 	id = "pubbywspodsw"
@@ -208,7 +208,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/station/bridge)
+/area/station/command/bridge)
 "jJ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -216,7 +216,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/radio/intercom/wideband{
+/obj/item/radio/intercom{
 	pixel_x = -24;
 	pixel_y = 28
 	},
@@ -224,7 +224,7 @@
 	dir = 10
 	},
 /turf/open/floor/iron/dark,
-/area/station/bridge)
+/area/station/command/bridge)
 "jO" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -250,7 +250,7 @@
 /area/station/cargo)
 "jV" = (
 /turf/closed/wall/mineral/titanium,
-/area/station/bridge)
+/area/station/command/bridge)
 "kw" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/chair/comfy/shuttle{
@@ -258,7 +258,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
-/area/station/bridge)
+/area/station/command/bridge)
 "kT" = (
 /obj/machinery/door/airlock/titanium,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -322,7 +322,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
-/area/station/bridge)
+/area/station/command/bridge)
 "nr" = (
 /obj/structure/window/reinforced,
 /obj/effect/turf_decal/box,
@@ -417,7 +417,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
-/area/station/bridge)
+/area/station/command/bridge)
 "qQ" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
@@ -427,7 +427,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/station/bridge)
+/area/station/command/bridge)
 "rX" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt,
@@ -574,7 +574,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/station/bridge)
+/area/station/command/bridge)
 "xo" = (
 /obj/machinery/door/airlock/titanium,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -593,7 +593,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/bridge)
+/area/station/command/bridge)
 "xV" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt,
@@ -723,7 +723,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/bridge)
+/area/station/command/bridge)
 "Gn" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt,
@@ -745,7 +745,7 @@
 /area/station/cargo)
 "If" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/bridge)
+/area/station/command/bridge)
 "Ix" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -787,7 +787,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/bridge)
+/area/station/command/bridge)
 "JV" = (
 /turf/open/floor/engine/hull,
 /area/station/engineering)
@@ -910,7 +910,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/bridge)
+/area/station/command/bridge)
 "PS" = (
 /obj/effect/turf_decal/industrial/stand_clear,
 /obj/effect/turf_decal/industrial/warning{
@@ -1000,7 +1000,7 @@
 	pixel_x = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/bridge)
+/area/station/command/bridge)
 "Tp" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt,
@@ -1018,7 +1018,7 @@
 	pixel_x = -32
 	},
 /turf/open/floor/iron/dark,
-/area/station/bridge)
+/area/station/command/bridge)
 "TG" = (
 /obj/machinery/computer/crew{
 	dir = 8
@@ -1026,7 +1026,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
-/area/station/bridge)
+/area/station/command/bridge)
 "Uh" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt,
@@ -1116,7 +1116,7 @@
 	id = "whiteship_bridge"
 	},
 /turf/open/floor/plating,
-/area/station/bridge)
+/area/station/command/bridge)
 "Xl" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/cargo)

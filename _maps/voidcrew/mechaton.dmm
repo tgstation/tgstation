@@ -262,7 +262,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
-/area/station/bridge)
+/area/station/command/bridge)
 "iZ" = (
 /obj/effect/turf_decal/spline/fancy/beige{
 	dir = 6
@@ -272,7 +272,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/bridge)
+/area/station/command/bridge)
 "jh" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/structure/closet/crate/rcd,
@@ -293,7 +293,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood,
-/area/station/bridge)
+/area/station/command/bridge)
 "kI" = (
 /obj/effect/turf_decal/spline/fancy/purple{
 	dir = 9
@@ -312,7 +312,7 @@
 /obj/machinery/vending/coffee,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood,
-/area/station/bridge)
+/area/station/command/bridge)
 "lj" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/structure/closet/crate,
@@ -489,7 +489,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/bridge)
+/area/station/command/bridge)
 "rQ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -608,7 +608,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/bridge)
+/area/station/command/bridge)
 "vd" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -681,7 +681,7 @@
 	name = "Bridge Shutters"
 	},
 /turf/open/floor/plating,
-/area/station/bridge)
+/area/station/command/bridge)
 "xe" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Engine Room"
@@ -779,7 +779,7 @@
 	location = "bridgeone"
 	},
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/bridge)
+/area/station/command/bridge)
 "zE" = (
 /obj/effect/turf_decal/spline/fancy/beige{
 	dir = 8
@@ -788,7 +788,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/bridge)
+/area/station/command/bridge)
 "zO" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -947,7 +947,7 @@
 /area/station/cargo)
 "CV" = (
 /turf/closed/wall/r_wall,
-/area/station/bridge)
+/area/station/command/bridge)
 "CW" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/spline/fancy/purple,
@@ -964,7 +964,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/bridge)
+/area/station/command/bridge)
 "Dk" = (
 /obj/effect/turf_decal/spline/fancy/purple{
 	dir = 1
@@ -1022,7 +1022,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood,
-/area/station/bridge)
+/area/station/command/bridge)
 "El" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/industrial/warning/fulltile,
@@ -1066,7 +1066,7 @@
 	name = "Bessie"
 	},
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/bridge)
+/area/station/command/bridge)
 "FC" = (
 /obj/machinery/power/smes/engineering,
 /obj/structure/cable,
@@ -1087,7 +1087,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
-/area/station/bridge)
+/area/station/command/bridge)
 "Gg" = (
 /obj/machinery/mineral/ore_redemption{
 	dir = 1;
@@ -1124,7 +1124,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/bridge)
+/area/station/command/bridge)
 "Hx" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -1135,7 +1135,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/bridge)
+/area/station/command/bridge)
 "HO" = (
 /obj/effect/turf_decal/spline/fancy/purple{
 	dir = 1
@@ -1175,7 +1175,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/bridge)
+/area/station/command/bridge)
 "Iw" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
@@ -1218,7 +1218,7 @@
 	location = "bridgetwo"
 	},
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/bridge)
+/area/station/command/bridge)
 "IX" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/rechargefloor,
@@ -1234,7 +1234,7 @@
 	name = "Walter"
 	},
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/bridge)
+/area/station/command/bridge)
 "Jm" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -1280,7 +1280,7 @@
 /obj/item/pen,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/bridge)
+/area/station/command/bridge)
 "KC" = (
 /obj/machinery/atmospherics/pipe/layer_manifold{
 	dir = 4
@@ -1394,7 +1394,7 @@
 /obj/item/megaphone/command,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/bridge)
+/area/station/command/bridge)
 "Ot" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/spline/fancy/beige{
@@ -1408,7 +1408,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/bridge)
+/area/station/command/bridge)
 "Ov" = (
 /obj/effect/turf_decal/industrial/fire/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -1566,7 +1566,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/bridge)
+/area/station/command/bridge)
 "RB" = (
 /obj/machinery/power/terminal{
 	dir = 8
@@ -1601,7 +1601,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/bridge)
+/area/station/command/bridge)
 "SS" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/spline/fancy/purple{
@@ -1642,7 +1642,7 @@
 /obj/item/soap,
 /obj/item/healthanalyzer,
 /turf/open/floor/wood,
-/area/station/bridge)
+/area/station/command/bridge)
 "Tq" = (
 /obj/machinery/conveyor_switch{
 	id = "exosuitconveyor";

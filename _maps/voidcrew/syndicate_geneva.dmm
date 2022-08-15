@@ -7,25 +7,25 @@
 	},
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/wood/yew,
-/area/station/crew/office)
+/area/station/commons/office)
 "am" = (
 /obj/machinery/computer/crew,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/bridge)
+/area/station/command/bridge)
 "an" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/radio/intercom/wideband,
+/obj/item/radio/intercom,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/bridge)
+/area/station/command/bridge)
 "aq" = (
 /obj/effect/turf_decal/corner/bottlegreen{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/crew/library)
+/area/station/commons/library)
 "aJ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
@@ -45,7 +45,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood/yew,
-/area/station/crew/office)
+/area/station/commons/office)
 "aY" = (
 /obj/effect/turf_decal/corner/bottlegreen{
 	dir = 8
@@ -66,14 +66,14 @@
 	pixel_x = 25
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/bridge)
+/area/station/command/bridge)
 "bK" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "spitfireshutters"
 	},
 /turf/open/floor/plating,
-/area/station/crew/hydroponics)
+/area/station/commons/hydroponics)
 "ca" = (
 /obj/effect/turf_decal/corner/bottlegreen{
 	dir = 10
@@ -92,18 +92,18 @@
 	},
 /obj/item/areaeditor/shuttle,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/bridge)
+/area/station/command/bridge)
 "cB" = (
 /turf/closed/wall,
 /area/station/medical)
 "cD" = (
 /obj/machinery/smartfridge/chemistry,
 /turf/closed/wall,
-/area/station/crew/hydroponics)
+/area/station/commons/hydroponics)
 "cE" = (
 /obj/machinery/chem_dispenser,
 /turf/open/floor/grass,
-/area/station/crew/hydroponics)
+/area/station/commons/hydroponics)
 "cI" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "Bridge"
@@ -120,34 +120,34 @@
 	},
 /obj/machinery/door/firedoor/border_only,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/bridge)
+/area/station/command/bridge)
 "cQ" = (
 /obj/machinery/cryopod{
 	dir = 1
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "cW" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/grass,
-/area/station/crew/hydroponics)
+/area/station/commons/hydroponics)
 "cX" = (
 /obj/machinery/vending/cigarette/syndicate,
 /obj/effect/turf_decal/corner/bottlegreen/three_quarters{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/crew/library)
+/area/station/commons/library)
 "dh" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/grass,
-/area/station/crew/hydroponics)
+/area/station/commons/hydroponics)
 "dj" = (
 /obj/machinery/chem_master,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/grass,
-/area/station/crew/hydroponics)
+/area/station/commons/hydroponics)
 "do" = (
 /obj/item/kirbyplants/random,
 /obj/item/vending_refill/medical,
@@ -180,7 +180,7 @@
 /obj/machinery/airalarm/directional/west,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
-/area/station/crew/library)
+/area/station/commons/library)
 "dy" = (
 /obj/machinery/washing_machine,
 /obj/structure/cable,
@@ -190,7 +190,7 @@
 	pixel_x = -24
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "dz" = (
 /obj/effect/turf_decal/corner/bottlegreen/three_quarters{
 	dir = 1
@@ -218,7 +218,7 @@
 /obj/item/clothing/under/syndicate/bloodred/sleepytime,
 /obj/item/clothing/under/syndicate/bloodred/sleepytime,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "dW" = (
 /obj/machinery/vending/hydroseeds{
 	all_items_free = 1
@@ -227,23 +227,23 @@
 	dir = 1
 	},
 /turf/open/floor/grass,
-/area/station/crew/hydroponics)
+/area/station/commons/hydroponics)
 "dZ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/grass,
-/area/station/crew/hydroponics)
+/area/station/commons/hydroponics)
 "eh" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "spitfireshutters"
 	},
 /turf/open/floor/plating,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "ej" = (
 /obj/structure/sink/puddle,
 /obj/item/reagent_containers/cup/bucket/wooden,
 /turf/open/floor/grass,
-/area/station/crew/hydroponics)
+/area/station/commons/hydroponics)
 "el" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 5
@@ -252,7 +252,7 @@
 	dir = 6
 	},
 /turf/open/floor/grass,
-/area/station/crew/hydroponics)
+/area/station/commons/hydroponics)
 "ew" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -263,7 +263,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/grass,
-/area/station/crew/hydroponics)
+/area/station/commons/hydroponics)
 "eL" = (
 /obj/machinery/door/airlock/wood/glass{
 	name = "Natural Sciences Lab"
@@ -282,7 +282,7 @@
 	dir = 4
 	},
 /turf/open/floor/grass,
-/area/station/crew/hydroponics)
+/area/station/commons/hydroponics)
 "eO" = (
 /obj/effect/turf_decal/syndicateemblem/middle/left,
 /obj/structure/cable,
@@ -297,7 +297,7 @@
 /obj/machinery/plantgenes,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/grass,
-/area/station/crew/hydroponics)
+/area/station/commons/hydroponics)
 "eU" = (
 /obj/effect/turf_decal/syndicateemblem/middle/middle,
 /obj/structure/cable,
@@ -334,7 +334,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "fF" = (
 /obj/effect/turf_decal/corner/bottlegreen{
 	dir = 10
@@ -368,7 +368,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "gA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 9
@@ -377,34 +377,34 @@
 	dir = 10
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "gC" = (
 /mob/living/simple_animal/bot/secbot/grievous/toy{
 	name = "Protector of Doctors"
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "gR" = (
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "gW" = (
 /obj/structure/bed/pod,
 /obj/item/bedsheet/syndie,
 /obj/machinery/airalarm/directional/north,
 /obj/item/toy/plush/nukeplushie,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "hy" = (
 /obj/machinery/seed_extractor,
 /turf/open/floor/grass,
-/area/station/crew/hydroponics)
+/area/station/commons/hydroponics)
 "hI" = (
 /turf/open/floor/grass,
-/area/station/crew/hydroponics)
+/area/station/commons/hydroponics)
 "hZ" = (
 /obj/machinery/hydroponics/constructable,
 /turf/open/floor/grass,
-/area/station/crew/hydroponics)
+/area/station/commons/hydroponics)
 "ic" = (
 /obj/machinery/hydroponics/constructable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -412,13 +412,13 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/grass,
-/area/station/crew/hydroponics)
+/area/station/commons/hydroponics)
 "iH" = (
 /obj/machinery/computer/cryopod{
 	pixel_y = 26
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "iQ" = (
 /obj/machinery/vending/hydronutrients{
 	all_items_free = 1
@@ -427,7 +427,7 @@
 	dir = 4
 	},
 /turf/open/floor/grass,
-/area/station/crew/hydroponics)
+/area/station/commons/hydroponics)
 "iR" = (
 /obj/effect/turf_decal/corner/bottlegreen/border{
 	dir = 10
@@ -468,7 +468,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/bridge)
+/area/station/command/bridge)
 "ju" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/corner/bottlegreen/border{
@@ -503,12 +503,12 @@
 	dir = 8
 	},
 /turf/open/floor/wood/yew,
-/area/station/crew/office)
+/area/station/commons/office)
 "ka" = (
 /obj/structure/table/wood,
 /obj/machinery/microwave,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "kq" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
@@ -519,17 +519,17 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "kx" = (
 /obj/machinery/light,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "kG" = (
 /obj/structure/bed/pod,
 /obj/item/bedsheet/syndie,
 /obj/item/toy/plush/nukeplushie,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "kM" = (
 /obj/machinery/power/port_gen/pacman,
 /obj/item/stack/sheet/mineral/plasma/twenty,
@@ -573,11 +573,11 @@
 /obj/item/circuitboard/machine/chem_heater,
 /obj/item/clothing/glasses/science,
 /turf/open/floor/grass,
-/area/station/crew/hydroponics)
+/area/station/commons/hydroponics)
 "lr" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
-/area/station/crew/hydroponics)
+/area/station/commons/hydroponics)
 "lV" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -588,7 +588,7 @@
 	},
 /obj/machinery/holopad/emergency/command,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/bridge)
+/area/station/command/bridge)
 "mz" = (
 /obj/effect/turf_decal/corner/bottlegreen/full,
 /obj/machinery/door/airlock/virology/glass{
@@ -609,12 +609,12 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/bridge)
+/area/station/command/bridge)
 "mR" = (
 /obj/structure/table/wood,
 /obj/structure/bedsheetbin/empty,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "mX" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/docking_port/mobile{
@@ -626,19 +626,19 @@
 	id = "spitfireshutters"
 	},
 /turf/open/floor/plating,
-/area/station/bridge)
+/area/station/command/bridge)
 "nc" = (
 /obj/structure/table/glass,
 /obj/machinery/computer/med_data/laptop,
 /turf/open/floor/wood/yew,
-/area/station/crew/office)
+/area/station/commons/office)
 "nd" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "spitfireshutters"
 	},
 /turf/open/floor/plating,
-/area/station/crew/office)
+/area/station/commons/office)
 "nf" = (
 /obj/machinery/power/terminal{
 	dir = 4
@@ -725,7 +725,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/crew/library)
+/area/station/commons/library)
 "pm" = (
 /obj/effect/turf_decal/corner/bottlegreen{
 	dir = 5
@@ -815,7 +815,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood/yew,
-/area/station/crew/office)
+/area/station/commons/office)
 "pO" = (
 /obj/effect/turf_decal/corner/red,
 /obj/structure/cable,
@@ -833,7 +833,7 @@
 /obj/machinery/autolathe,
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/bridge)
+/area/station/command/bridge)
 "qm" = (
 /obj/effect/turf_decal/corner/red{
 	dir = 8
@@ -891,7 +891,7 @@
 	},
 /obj/machinery/holopad,
 /turf/open/floor/iron/dark,
-/area/station/crew/library)
+/area/station/commons/library)
 "rZ" = (
 /obj/effect/turf_decal/techfloor{
 	dir = 8
@@ -911,7 +911,7 @@
 /area/station/engineering)
 "sd" = (
 /turf/closed/wall,
-/area/station/bridge)
+/area/station/command/bridge)
 "ss" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/iron/white,
@@ -932,7 +932,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/crew/library)
+/area/station/commons/library)
 "sG" = (
 /obj/effect/turf_decal/corner/bottlegreen{
 	dir = 9
@@ -941,7 +941,7 @@
 	all_items_free = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/crew/library)
+/area/station/commons/library)
 "sI" = (
 /obj/effect/turf_decal/corner/red{
 	dir = 1
@@ -971,19 +971,19 @@
 "tZ" = (
 /obj/machinery/computer/autopilot,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/bridge)
+/area/station/command/bridge)
 "uC" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/wood/yew,
-/area/station/crew/office)
+/area/station/commons/office)
 "uJ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/wood/yew,
-/area/station/crew/office)
+/area/station/commons/office)
 "vi" = (
 /obj/effect/turf_decal/corner/bottlegreen/three_quarters{
 	dir = 1
@@ -991,7 +991,7 @@
 /obj/machinery/computer/arcade/amputation,
 /obj/structure/cable,
 /turf/open/floor/iron/white,
-/area/station/crew/library)
+/area/station/commons/library)
 "vn" = (
 /obj/effect/turf_decal/techfloor{
 	dir = 8
@@ -1168,7 +1168,7 @@
 /area/station/engineering)
 "yf" = (
 /turf/open/floor/iron/dark,
-/area/station/crew/library)
+/area/station/commons/library)
 "yi" = (
 /obj/structure/chair/comfy/black,
 /obj/effect/turf_decal/corner/bottlegreen{
@@ -1177,7 +1177,7 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/crew/library)
+/area/station/commons/library)
 "yE" = (
 /obj/effect/turf_decal/corner/bottlegreen/full,
 /obj/machinery/door/airlock/virology/glass,
@@ -1197,7 +1197,7 @@
 	},
 /obj/machinery/duct,
 /turf/open/floor/iron/dark,
-/area/station/crew/library)
+/area/station/commons/library)
 "zc" = (
 /obj/effect/turf_decal/corner/brown{
 	dir = 9
@@ -1383,7 +1383,7 @@
 "Bu" = (
 /obj/machinery/computer/helm,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/bridge)
+/area/station/command/bridge)
 "BD" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/corner/brown{
@@ -1636,7 +1636,7 @@
 	id = "syndie3doors"
 	},
 /turf/open/floor/iron/dark,
-/area/station/crew/library)
+/area/station/commons/library)
 "GF" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/poddoor{
@@ -1647,7 +1647,7 @@
 	pixel_x = 25
 	},
 /turf/open/floor/iron/dark,
-/area/station/crew/library)
+/area/station/commons/library)
 "GK" = (
 /obj/structure/table/glass,
 /obj/item/storage/backpack/duffelbag/syndie/surgery,
@@ -1668,7 +1668,7 @@
 	},
 /obj/effect/decal/cleanable/vomit/old,
 /turf/open/floor/iron/dark,
-/area/station/crew/library)
+/area/station/commons/library)
 "GP" = (
 /obj/machinery/stasis,
 /obj/effect/turf_decal/corner/bottlegreen{
@@ -1722,30 +1722,30 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
-/area/station/crew/library)
+/area/station/commons/library)
 "Ik" = (
 /obj/structure/chair/office{
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/wood/yew,
-/area/station/crew/office)
+/area/station/commons/office)
 "In" = (
 /turf/closed/wall,
 /area/station/medical/surgery)
 "JA" = (
 /turf/closed/wall,
-/area/station/crew/office)
+/area/station/commons/office)
 "Lw" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/bridge)
+/area/station/command/bridge)
 "ME" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "NA" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
@@ -1755,21 +1755,21 @@
 	dir = 4
 	},
 /turf/open/floor/wood/yew,
-/area/station/crew/office)
+/area/station/commons/office)
 "QH" = (
 /turf/closed/wall,
 /area/station/cargo)
 "Sc" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/bridge)
+/area/station/command/bridge)
 "SE" = (
 /turf/closed/wall,
-/area/station/crew/library)
+/area/station/commons/library)
 "SI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "SR" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -1791,7 +1791,7 @@
 	id = "spitfireshutters"
 	},
 /turf/open/floor/plating,
-/area/station/bridge)
+/area/station/command/bridge)
 "Vn" = (
 /obj/effect/turf_decal/corner/red{
 	dir = 10
@@ -1821,7 +1821,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/crew/library)
+/area/station/commons/library)
 "WK" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -1876,7 +1876,7 @@
 /area/station/engineering)
 "Yq" = (
 /turf/closed/wall,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "Yz" = (
 /obj/effect/turf_decal/corner/bottlegreen/three_quarters{
 	dir = 4
@@ -1920,7 +1920,7 @@
 /obj/item/clothing/glasses/science,
 /obj/item/roller,
 /turf/open/floor/wood/yew,
-/area/station/crew/office)
+/area/station/commons/office)
 "YX" = (
 /obj/effect/turf_decal/corner/bottlegreen{
 	dir = 10
@@ -1933,7 +1933,7 @@
 /area/station/medical)
 "Zq" = (
 /turf/closed/wall,
-/area/station/crew/hydroponics)
+/area/station/commons/hydroponics)
 "ZB" = (
 /turf/template_noop,
 /area/template_noop)

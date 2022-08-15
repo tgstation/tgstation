@@ -3,7 +3,7 @@
 /obj/structure/cable,
 /obj/machinery/light,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "am" = (
 /obj/machinery/disposal/deliveryChute,
 /obj/structure/disposalpipe/trunk{
@@ -14,7 +14,7 @@
 "aO" = (
 /obj/structure/tank_dispenser/plasma,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "dr" = (
 /obj/effect/spawner/structure/window/reinforced/indestructable,
 /obj/structure/grille,
@@ -23,53 +23,53 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/bridge)
+/area/station/command/bridge)
 "dW" = (
 /obj/effect/spawner/structure/window/reinforced/indestructable,
 /obj/structure/grille,
 /turf/open/floor/plating,
-/area/station/bridge)
+/area/station/command/bridge)
 "fx" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /obj/machinery/vending/autodrobe/all_access,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "fL" = (
 /obj/structure/grille,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/bridge)
+/area/station/command/bridge)
 "gc" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on{
 	dir = 8
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "gN" = (
 /turf/closed/wall/mineral/bananium,
-/area/station/bridge)
+/area/station/command/bridge)
 "hf" = (
 /obj/machinery/vending/hydronutrients,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "hn" = (
 /obj/structure/window/reinforced/plasma,
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/machinery/light,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "hv" = (
 /obj/machinery/computer/helm,
 /obj/item/areaeditor/shuttle,
 /turf/open/floor/wood/yew,
-/area/station/bridge)
+/area/station/command/bridge)
 "hx" = (
 /obj/structure/window/reinforced/plasma,
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "iN" = (
 /obj/structure/window/reinforced/plasma,
 /obj/machinery/light,
@@ -77,28 +77,28 @@
 /obj/structure/cable,
 /obj/machinery/power/port_gen/pacman,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "kz" = (
 /obj/machinery/computer/autopilot,
 /turf/open/floor/wood/yew,
-/area/station/bridge)
+/area/station/command/bridge)
 "lc" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/open/floor/wood/yew,
-/area/station/bridge)
+/area/station/command/bridge)
 "mc" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/wood/yew,
-/area/station/bridge)
+/area/station/command/bridge)
 "mU" = (
 /obj/structure/grille,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "mV" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
 /obj/structure/cable,
@@ -110,14 +110,14 @@
 	alpha = 30
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/bridge)
+/area/station/command/bridge)
 "oo" = (
 /obj/structure/table/wood/fancy/royalblue,
 /obj/item/reagent_containers/food/snacks/grown/banana,
 /obj/item/reagent_containers/food/snacks/grown/banana,
 /obj/item/reagent_containers/food/snacks/grown/banana,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "qU" = (
 /obj/structure/fans/tiny,
 /turf/open/floor/light,
@@ -139,11 +139,11 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/mineral/bananium,
-/area/station/bridge)
+/area/station/command/bridge)
 "rT" = (
 /obj/structure/cable,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "rY" = (
 /obj/structure/fans/tiny,
 /obj/structure/railing{
@@ -265,7 +265,7 @@
 /obj/item/stack/tile/eighties,
 /obj/item/stack/tile/eighties,
 /turf/open/floor/plating,
-/area/station/crew)
+/area/station/commons)
 "tc" = (
 /obj/machinery/conveyor/auto{
 	dir = 4
@@ -275,7 +275,7 @@
 "tX" = (
 /obj/machinery/atmospherics/pipe/simple/yellow,
 /turf/closed/wall/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "vn" = (
 /obj/structure/cable,
 /obj/structure/table/wood/fancy/royalblue,
@@ -284,14 +284,14 @@
 /obj/item/storage/box/donkpockets/donkpockethonk,
 /obj/item/storage/box/donkpockets/donkpockethonk,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "vo" = (
 /obj/machinery/atmospherics/components/unary/tank/air,
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "wp" = (
 /obj/machinery/power/emitter,
 /obj/structure/cable,
@@ -306,10 +306,10 @@
 	alpha = 30
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "xf" = (
 /turf/open/floor/mineral/bananium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "xT" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -325,7 +325,7 @@
 	},
 /obj/structure/closet/crate,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "yB" = (
 /obj/structure/chair/e_chair{
 	dir = 4
@@ -335,7 +335,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "yE" = (
 /obj/structure/fans/tiny,
 /obj/machinery/power/rad_collector/anchored,
@@ -348,10 +348,10 @@
 	dir = 1
 	},
 /turf/closed/wall/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "AS" = (
 /turf/closed/wall/mineral/bananium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "AY" = (
 /turf/open/floor/light,
 /area/station/engineering/engine)
@@ -364,20 +364,20 @@
 "BK" = (
 /obj/structure/closet/crate,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "Cz" = (
 /obj/structure/tank_dispenser/oxygen,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "CJ" = (
 /obj/structure/window/reinforced/plasma,
 /obj/structure/cable,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "Do" = (
 /obj/structure/window/reinforced/plasma,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "Dt" = (
 /obj/machinery/conveyor/auto{
 	dir = 8
@@ -409,38 +409,38 @@
 /obj/item/dnainjector/timed/h2m,
 /obj/item/dnainjector/timed/h2m,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "FK" = (
 /obj/machinery/autolathe,
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "Hg" = (
 /obj/structure/table/wood/fancy/royalblue,
 /obj/item/toy/crayon/spraycan/lubecan,
 /obj/item/toy/crayon/spraycan/lubecan,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "Hi" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/air_input{
 	dir = 1
 	},
 /obj/item/storage/book/bible/koran,
 /turf/open/floor/plating,
-/area/station/crew)
+/area/station/commons)
 "Hr" = (
 /obj/machinery/biogenerator,
 /obj/item/reagent_containers/cup/beaker,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "HB" = (
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/iron/fifty,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "HX" = (
 /turf/closed/wall/mineral/bananium,
 /area/station/engineering/engine)
@@ -461,18 +461,18 @@
 /obj/item/stack/sheet/mineral/bananium,
 /obj/item/stack/sheet/mineral/bananium,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "IT" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "IX" = (
 /obj/structure/cable,
 /obj/structure/table/wood/fancy/royalblue,
 /obj/machinery/microwave,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "Jl" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8
@@ -488,7 +488,7 @@
 	id = "prisonint2"
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "Jy" = (
 /obj/structure/cable,
 /obj/machinery/button/door{
@@ -502,7 +502,7 @@
 	pixel_y = 34
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "KF" = (
 /obj/machinery/deepfryer,
 /turf/open/floor/light,
@@ -512,13 +512,13 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "KZ" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "LJ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8
@@ -537,12 +537,12 @@
 	dir = 2
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "Mg" = (
 /obj/structure/falsewall/bananium,
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/plating,
-/area/station/crew)
+/area/station/commons)
 "MZ" = (
 /obj/machinery/power/shuttle/engine/electric{
 	dir = 1
@@ -563,17 +563,17 @@
 /obj/item/bikehorn/golden,
 /obj/item/gun/ballistic/revolver/russian/soul,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "NI" = (
 /obj/structure/window/reinforced/fulltile,
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/yellow,
 /turf/open/floor/plating,
-/area/station/crew)
+/area/station/commons)
 "Ow" = (
 /obj/machinery/computer/cryopod,
 /turf/closed/wall/mineral/bananium,
-/area/station/crew/dorm)
+/area/station/commons/dorm)
 "Po" = (
 /obj/machinery/hydroponics/constructable,
 /obj/item/seeds/banana{
@@ -583,13 +583,13 @@
 	yield = 9
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "Pr" = (
 /obj/structure/reagent_dispensers/watertank/high,
 /obj/item/reagent_containers/cup/bucket,
 /obj/machinery/light,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "Pt" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
 /turf/open/floor/light,
@@ -598,7 +598,7 @@
 /obj/structure/cable,
 /obj/item/assembly/signaler,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "PU" = (
 /obj/structure/disposaloutlet,
 /obj/structure/disposalpipe/trunk{
@@ -626,7 +626,7 @@
 /obj/item/clothing/mask/gas/mime,
 /obj/effect/decal/remains/human,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "RJ" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/hardsuit/clown,
@@ -644,7 +644,7 @@
 /obj/item/stack/sheet/mineral/bananium,
 /obj/item/stack/sheet/mineral/bananium,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "RK" = (
 /obj/structure/fans/tiny,
 /obj/item/clothing/shoes/magboots,
@@ -653,7 +653,7 @@
 "SM" = (
 /obj/machinery/seed_extractor,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "TV" = (
 /obj/item/reagent_containers/food/snacks/egg,
 /obj/item/reagent_containers/food/snacks/egg,
@@ -780,11 +780,11 @@
 /obj/item/reagent_containers/food/snacks/egg,
 /obj/item/reagent_containers/food/snacks/egg,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "Up" = (
 /obj/item/pet_carrier,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "Ur" = (
 /obj/structure/window/reinforced/plasma,
 /obj/machinery/disposal/deliveryChute{
@@ -793,11 +793,11 @@
 /obj/structure/disposalpipe/trunk,
 /obj/structure/cable,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "Uv" = (
 /obj/vehicle/ridden/scooter/skateboard,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "UD" = (
 /obj/machinery/airalarm/all_access{
 	dir = 1
@@ -815,11 +815,11 @@
 "Vc" = (
 /obj/machinery/mineral/ore_redemption,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "Vl" = (
 /obj/machinery/ore_silo,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "VT" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/poddoor{
@@ -833,16 +833,16 @@
 	alpha = 30
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "Wc" = (
 /obj/structure/cable,
 /obj/structure/bed/dogbed,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "Wl" = (
 /obj/machinery/atmospherics/components/unary/passive_vent,
 /turf/open/floor/plating,
-/area/station/crew)
+/area/station/commons)
 "Ww" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -893,13 +893,13 @@
 /area/station/engineering/engine)
 "Xn" = (
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "XR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "Yd" = (
 /mob/living/simple_animal/pet/penguin/emperor/shamebrero{
 	desc = "Weakest Clown Player.";
@@ -910,7 +910,7 @@
 	},
 /obj/item/fugu_gland,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "YY" = (
 /turf/template_noop,
 /area/template_noop)
@@ -918,19 +918,19 @@
 /obj/machinery/mecha_part_fabricator,
 /obj/machinery/light,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "Zr" = (
 /obj/structure/grille,
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "Zw" = (
 /obj/machinery/door/poddoor{
 	id = "prisonext3"
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "ZI" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/hardsuit/clown,
@@ -948,10 +948,10 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 "ZT" = (
 /turf/closed/wall/mineral/bananium,
-/area/station/crew)
+/area/station/commons)
 
 (1,1,1) = {"
 YY

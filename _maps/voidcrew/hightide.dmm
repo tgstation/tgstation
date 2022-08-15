@@ -4,7 +4,7 @@
 /turf/open/floor/plating,
 /area/station/cargo)
 "aK" = (
-/obj/item/wrench/old,
+/obj/item/wrench,
 /obj/structure/rack,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)
@@ -337,7 +337,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "ob" = (
-/obj/item/radio/intercom/wideband{
+/obj/item/radio/intercom{
 	pixel_y = -32
 	},
 /turf/open/floor/plating,

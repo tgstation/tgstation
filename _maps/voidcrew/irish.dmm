@@ -19,7 +19,7 @@
 /obj/item/ammo_box/magazine/sniper_rounds,
 /obj/item/ammo_box/magazine/sniper_rounds,
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "bm" = (
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/window/reinforced,
@@ -108,7 +108,7 @@
 /obj/item/clothing/under/syndicate/camo,
 /obj/item/clothing/under/syndicate/camo,
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "fS" = (
 /obj/machinery/doppler_array/research,
 /turf/open/floor/iron,
@@ -219,7 +219,7 @@
 /obj/item/ammo_box/magazine/ak47,
 /obj/item/ammo_box/magazine/ak47,
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "nN" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -228,7 +228,7 @@
 	name = "Margaret Thatcher"
 	},
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "pf" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/poddoor{
@@ -254,7 +254,7 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/command/glass,
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "qc" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/reinforced,
 /turf/open/floor/engine,
@@ -298,7 +298,7 @@
 /obj/item/reagent_containers/cup/glass/bottle/molotov,
 /obj/item/reagent_containers/cup/glass/bottle/molotov,
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "ru" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -334,7 +334,7 @@
 "sI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "tj" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
@@ -391,7 +391,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "uw" = (
 /obj/machinery/power/smes/engineering,
 /obj/structure/cable,
@@ -414,12 +414,12 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "wr" = (
-/obj/item/radio/intercom/wideband{
+/obj/item/radio/intercom{
 	pixel_y = 28
 	},
 /obj/machinery/holopad/emergency,
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "wO" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 9
@@ -429,10 +429,10 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "xb" = (
 /turf/closed/wall,
-/area/station/bridge)
+/area/station/command/bridge)
 "xj" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
 /obj/machinery/power/port_gen/pacman,
@@ -511,7 +511,7 @@
 	dir = 10
 	},
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "Ar" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron,
@@ -543,7 +543,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "BV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 10
@@ -600,7 +600,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "Fh" = (
 /obj/structure/table/reinforced,
 /obj/item/grenade/chem_grenade/large,
@@ -883,17 +883,17 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "Vt" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "VH" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /obj/machinery/light/small,
 /turf/open/floor/iron,
-/area/station/bridge)
+/area/station/command/bridge)
 "Wq" = (
 /obj/machinery/igniter{
 	id = "toxins"
