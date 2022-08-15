@@ -7,7 +7,7 @@
 	name = "external organ"
 	desc = "An external organ that is too external."
 
-	organ_flags = ORGAN_EXTERNAL | ORGAN_EDIBLE
+	organ_flags = ORGAN_EDIBLE
 	visual = TRUE
 
 	///Sometimes we need multiple layers, for like the back, middle and front of the person
@@ -380,6 +380,9 @@
 	dna_block = DNA_POD_HAIR_BLOCK
 
 	color_source = ORGAN_COLOR_OVERRIDE
+
+/obj/item/organ/external/pod_hair/get_global_feature_list()
+	return GLOB.pod_hair_list
 
 /obj/item/organ/external/pod_hair/can_draw_on_bodypart(mob/living/carbon/human/human)
 	if(!(human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))

@@ -504,7 +504,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 				var/datum/species/new_human_species = GLOB.species_list[species_to_pick]
 				if(new_human_species)
 					new_human.set_species(new_human_species)
-					new_human_species.randomize_main_appearance_element(new_human)
+					new_human_species.randomize_features(new_human)
 					new_human.fully_replace_character_name(new_human.real_name, new_human_species.random_name(new_human.gender, TRUE, TRUE))
 				else
 					stack_trace("failed to spawn cadaver with species ID [species_to_pick]") //if it's invalid they'll just be a human, so no need to worry too much aside from yelling at the server owner lol.
@@ -618,7 +618,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		else if(isopenturf(thing))
 			if(locate(/obj/structure/bed/dogbed/ian) in thing)
 				new /obj/item/clothing/head/festive(thing)
-				var/obj/item/reagent_containers/food/drinks/bottle/champagne/iandrink = new(thing)
+				var/obj/item/reagent_containers/cup/glass/bottle/champagne/iandrink = new(thing)
 				iandrink.name = "dog champagne"
 				iandrink.pixel_y += 8
 				iandrink.pixel_x += 8
@@ -674,6 +674,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
  * ## trapdoor placer!
  *
  * This places an unlinked trapdoor in the tile its on (so someone with a remote needs to link it up first)
+ * Pre-mapped trapdoors (unlike player-made ones) are not conspicuous by default so nothing stands out with them
  * Admins may spawn this in the round for additional trapdoors if they so desire
  * if YOU want to learn more about trapdoors, read about the component at trapdoor.dm
  * note: this is not a turf subtype because the trapdoor needs the type of the turf to turn back into
@@ -685,7 +686,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 /obj/effect/mapping_helpers/trapdoor_placer/LateInitialize()
 	var/turf/component_target = get_turf(src)
-	component_target.AddComponent(/datum/component/trapdoor, starts_open = FALSE)
+	component_target.AddComponent(/datum/component/trapdoor, starts_open = FALSE, conspicuous = FALSE)
 	qdel(src)
 
 /obj/effect/mapping_helpers/ztrait_injector

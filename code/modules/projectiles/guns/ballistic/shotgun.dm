@@ -121,7 +121,7 @@
 
 /obj/item/gun/ballistic/shotgun/bulldog
 	name = "\improper Bulldog Shotgun"
-	desc = "A semi-auto, mag-fed shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines."
+	desc = "A semi-auto, mag-fed shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines. Can have a secondary magazine attached to quickly swap between ammo types, or just to keep shooting."
 	icon_state = "bulldog"
 	inhand_icon_state = "bulldog"
 	worn_icon_state = "cshotgun"
@@ -145,7 +145,91 @@
 	semi_auto = TRUE
 	internal_magazine = FALSE
 	tac_reloads = TRUE
+	///the type of secondary magazine for the bulldog
+	var/secondary_magazine_type
+	///the secondary magazine
+	var/obj/item/ammo_box/magazine/secondary_magazine
 
+/obj/item/gun/ballistic/shotgun/bulldog/Initialize(mapload)
+	. = ..()
+	secondary_magazine_type = secondary_magazine_type || mag_type
+	secondary_magazine = new secondary_magazine_type(src)
+	update_appearance()
+
+/obj/item/gun/ballistic/shotgun/bulldog/examine(mob/user)
+	. = ..()
+	if(secondary_magazine)
+		var/secondary_ammo_count = secondary_magazine.ammo_count()
+		. += "There is a secondary magazine."
+		. += "It has [secondary_ammo_count] round\s remaining."
+		. += "Shoot with right-click to swap to the secondary magazine after firing."
+		. += "If the magazine is empty, [src] will automatically swap to the secondary magazine."
+	. += "You can load a secondary magazine by right-clicking [src] with the magazine you want to load."
+	. += "You can remove a secondary magazine by alt-right-clicking [src]."
+	. += "Right-click to swap the magazine to the secondary position, and vice versa."
+
+/obj/item/gun/ballistic/shotgun/bulldog/update_overlays()
+	. = ..()
+	if(secondary_magazine)
+		. += "[icon_state]_secondary_mag_[initial(secondary_magazine.icon_state)]"
+		if(!secondary_magazine.ammo_count())
+			. += "[icon_state]_secondary_mag_empty"
+	else
+		. += "[icon_state]_no_secondary_mag"
+
+/obj/item/gun/ballistic/shotgun/bulldog/handle_chamber()
+	if(!secondary_magazine)
+		return ..()
+	var/secondary_shells_left = LAZYLEN(secondary_magazine.stored_ammo)
+	if(magazine)
+		var/shells_left = LAZYLEN(magazine.stored_ammo)
+		if(shells_left <= 0 && secondary_shells_left >= 1)
+			toggle_magazine()
+	else
+		toggle_magazine()
+	return ..()
+
+/obj/item/gun/ballistic/shotgun/bulldog/attack_self_secondary(mob/user, modifiers)
+	toggle_magazine()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/gun/ballistic/shotgun/bulldog/afterattack_secondary(mob/living/victim, mob/living/user, params)
+	if(secondary_magazine)
+		toggle_magazine()
+	return SECONDARY_ATTACK_CALL_NORMAL
+
+/obj/item/gun/ballistic/shotgun/bulldog/attackby_secondary(obj/item/weapon, mob/user, params)
+	if(!istype(weapon, secondary_magazine_type))
+		to_chat(user, span_warning("[weapon] doesn't seem to fit into [src]..."))
+		return SECONDARY_ATTACK_CALL_NORMAL
+	if(!user.transferItemToLoc(weapon, src))
+		to_chat(user, span_warning("You cannot seem to get [src] out of your hands!"))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	var/obj/item/ammo_box/magazine/old_mag = secondary_magazine
+	secondary_magazine = weapon
+	if(old_mag)
+		user.put_in_hands(old_mag)
+	to_chat(user, span_notice("You load a new [magazine_wording] into [src]."))
+	playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
+	update_appearance()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/gun/ballistic/shotgun/bulldog/alt_click_secondary(mob/user)
+	if(secondary_magazine)
+		var/obj/item/ammo_box/magazine/old_mag = secondary_magazine
+		secondary_magazine = null
+		user.put_in_hands(old_mag)
+		update_appearance()
+		playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/gun/ballistic/shotgun/bulldog/proc/toggle_magazine()
+	var/primary_magazine = magazine
+	var/alternative_magazine = secondary_magazine
+	magazine = alternative_magazine
+	secondary_magazine = primary_magazine
+	playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
+	update_appearance()
 
 /obj/item/gun/ballistic/shotgun/bulldog/unrestricted
 	pin = /obj/item/firing_pin

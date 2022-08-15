@@ -83,22 +83,53 @@
 		/obj/item/stack/tile/iron/sepia,
 	)
 
-/obj/item/stack/tile/iron/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_WELDER)
-		if(get_amount() < 4)
-			to_chat(user, span_warning("You need at least four tiles to do this!"))
-			return
-		if(W.use_tool(src, user, 0, volume=40))
-			var/obj/item/stack/sheet/iron/new_item = new(user.loc)
-			user.visible_message(span_notice("[user] shaped [src] into [new_item] with [W]."), \
-				span_notice("You shaped [src] into [new_item] with [W]."), \
-				span_hear("You hear welding."))
-			var/holding = user.is_holding(src)
-			use(4)
-			if(holding && QDELETED(src))
-				user.put_in_hands(new_item)
-	else
-		return ..()
+/obj/item/stack/tile/iron/two
+	amount = 2
+
+/obj/item/stack/tile/iron/four
+	amount = 4
+
+/obj/item/stack/tile/iron/Initialize(mapload)
+	. = ..()
+	var/static/list/tool_behaviors = list(
+		TOOL_WELDER = list(
+			SCREENTIP_CONTEXT_LMB = "Craft iron sheets",
+			SCREENTIP_CONTEXT_RMB = "Craft iron rods",
+		),
+	)
+	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+
+/obj/item/stack/tile/iron/welder_act(mob/living/user, obj/item/tool)
+	if(get_amount() < 4)
+		balloon_alert(user, "not enough tiles!")
+		return
+	if(tool.use_tool(src, user, delay = 0, volume = 40))
+		var/obj/item/stack/sheet/iron/new_item = new(user.loc)
+		user.visible_message(
+			span_notice("[user.name] shaped [src] into sheets with [tool]."),
+			blind_message = span_hear("You hear welding."),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+			ignored_mobs = user
+		)
+		use(4)
+		user.put_in_inactive_hand(new_item)
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/item/stack/tile/iron/welder_act_secondary(mob/living/user, obj/item/tool)
+	if(get_amount() < 2)
+		balloon_alert(user, "not enough tiles!")
+		return
+	if(tool.use_tool(src, user, delay = 0, volume = 40))
+		var/obj/item/stack/rods/new_item = new(user.loc)
+		user.visible_message(
+			span_notice("[user.name] shaped [src] into rods with [tool]."),
+			blind_message = span_hear("You hear welding."),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+			ignored_mobs = user
+		)
+		use(2)
+		user.put_in_inactive_hand(new_item)
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/stack/tile/iron/base //this subtype should be used for most stuff
 	merge_type = /obj/item/stack/tile/iron/base

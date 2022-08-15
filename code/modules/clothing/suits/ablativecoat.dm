@@ -15,6 +15,7 @@
 /obj/item/clothing/suit/hooded/ablative
 	name = "ablative trenchcoat"
 	desc = "Experimental trenchcoat specially crafted to reflect and absorb laser and disabler shots. Don't expect it to do all that much against an axe or a shotgun, however."
+	icon = 'icons/obj/clothing/suits/armor.dmi'
 	icon_state = "ablativecoat"
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	inhand_icon_state = "ablativecoat"

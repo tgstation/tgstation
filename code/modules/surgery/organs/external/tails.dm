@@ -6,7 +6,6 @@
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_EXTERNAL_TAIL
 	layers = EXTERNAL_FRONT|EXTERNAL_BEHIND
-	organ_flags = ORGAN_EDIBLE | ORGAN_EXTERNAL
 	feature_key = "tail"
 	render_key = "tail"
 	dna_block = DNA_TAIL_BLOCK
@@ -78,6 +77,9 @@
 	color_source = ORGAN_COLOR_HAIR
 	wag_flags = WAG_ABLE
 
+/obj/item/organ/external/tail/cat/get_global_feature_list()
+	return GLOB.tails_list_human
+
 /obj/item/organ/external/tail/monkey
 	color_source = NONE
 
@@ -89,6 +91,9 @@
 	wag_flags = WAG_ABLE
 	///A reference to the paired_spines, since for some fucking reason tail spines are tied to the spines themselves.
 	var/obj/item/organ/external/spines/paired_spines
+
+/obj/item/organ/external/tail/lizard/get_global_feature_list()
+	return GLOB.tails_list_lizard
 
 /obj/item/organ/external/tail/lizard/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()
