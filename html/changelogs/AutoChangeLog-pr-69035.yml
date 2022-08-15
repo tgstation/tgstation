@@ -1,5 +1,0 @@
-author: "lnGoror"
-delete-after: True
-changes: 
-  - bugfix: "fixed taste layering"
-  - code_imp: "changed exposing reagents"
