@@ -303,14 +303,14 @@
 		if(Adj)
 			return //Safety check so you don't blast yourself trying to refill your tank
 		var/datum/reagents/R = reagents
-		if(R.total_volume < 100)
+		if(R.total_volume < 50)
 			balloon_alert(user, "not enough halon!")
 			return
 		if(!COOLDOWN_FINISHED(src, resin_cooldown))
 			balloon_alert(user, "still recharging!")
 			return
 		COOLDOWN_START(src, resin_cooldown, 10 SECONDS)
-		R.remove_any(100)
+		R.remove_any(50)
 		var/obj/effect/resin_container/resin = new (get_turf(src))
 		user.log_message("used Resin Launcher", LOG_GAME)
 		playsound(src,'sound/items/syringeproj.ogg',40,TRUE)
