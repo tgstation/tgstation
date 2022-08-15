@@ -1,0 +1,4 @@
+author: "Wallem"
+delete-after: True
+changes: 
+  - imageadd: "Updates the newscaster wallframe sprite"
