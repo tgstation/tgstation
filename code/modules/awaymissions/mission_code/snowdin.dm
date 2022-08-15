@@ -181,7 +181,7 @@
 
 /turf/open/lava/plasma/attackby(obj/item/I, mob/user, params)
 	if(!I.is_open_container())
-		return
+		return ..()
 	if(!I.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(5, 10)))
 		to_chat(user, span_warning("[I] is full."))
 		return
