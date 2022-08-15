@@ -149,7 +149,7 @@
 		victim = null
 		return
 	victim.cure_blind("hypnochair")
-	REMOVE_TRAIT(victim, TRAIT_DEAF, "hypnochair")
+	REMOVE_TRAIT(victim, TRAIT_DEAF, HYPNOCHAIR_TRAIT)
 	if(!(victim.get_eye_protection() > 0))
 		var/time_diff = world.time - start_time
 		switch(time_diff)

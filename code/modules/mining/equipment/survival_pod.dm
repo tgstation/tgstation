@@ -205,9 +205,9 @@
 	pixel_y = -4
 	flags_1 = NODECONSTRUCT_1
 
-/obj/machinery/smartfridge/survival_pod/ComponentInitialize()
-	. = ..()
+/obj/machinery/smartfridge/survival_pod/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
+	return ..()
 
 /obj/machinery/smartfridge/survival_pod/preloaded/Initialize(mapload)
 	. = ..()

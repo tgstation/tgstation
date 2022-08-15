@@ -381,9 +381,9 @@
 	maxcharge = 50000
 	ratingdesc = FALSE
 
-/obj/item/stock_parts/cell/infinite/abductor/ComponentInitialize()
-	. = ..()
+/obj/item/stock_parts/cell/infinite/abductor/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
+	return ..()
 
 /obj/item/stock_parts/cell/potato
 	name = "potato battery"
@@ -403,9 +403,9 @@
 	desc = "An EMP-proof cell."
 	maxcharge = 500
 
-/obj/item/stock_parts/cell/emproof/ComponentInitialize()
-	. = ..()
+/obj/item/stock_parts/cell/emproof/Initialize(mapload)
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF)
+	return ..()
 
 /obj/item/stock_parts/cell/emproof/empty
 	empty = TRUE

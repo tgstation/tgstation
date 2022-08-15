@@ -23,11 +23,11 @@
 /area/ruin/space/djstation)
 "g" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/condiment/flour{
+/obj/item/reagent_containers/condiment/flour{
 	pixel_x = -2;
 	pixel_y = -2
 	},
-/obj/item/reagent_containers/food/condiment/flour{
+/obj/item/reagent_containers/condiment/flour{
 	pixel_x = 4;
 	pixel_y = 4
 	},
@@ -105,7 +105,7 @@
 /area/ruin/space/djstation)
 "R" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/condiment/enzyme{
+/obj/item/reagent_containers/condiment/enzyme{
 	pixel_x = 9;
 	pixel_y = 3
 	},

@@ -21,6 +21,9 @@
 	human.hair_color = "#bb9966" // brown
 	human.update_hair(is_creating = TRUE)
 
+/datum/species/human/randomize_features(mob/living/carbon/human/human_mob)
+	human_mob.skin_tone = random_skin_tone()
+
 /datum/species/human/get_scream_sound(mob/living/carbon/human/human)
 	if(human.gender == MALE)
 		if(prob(1))

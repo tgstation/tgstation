@@ -171,9 +171,8 @@
 		var/healing = HEALING_SLEEP_DEFAULT
 
 		// having high spirits helps us recover
-		var/datum/component/mood/mood = owner.GetComponent(/datum/component/mood)
-		if(mood != null)
-			switch(mood.sanity_level)
+		if(owner.mob_mood)
+			switch(owner.mob_mood.sanity_level)
 				if(SANITY_LEVEL_GREAT)
 					healing = 0.2
 				if(SANITY_LEVEL_NEUTRAL)
@@ -194,8 +193,8 @@
 		if(HAS_TRAIT_FROM(owner, TRAIT_BLIND, BLINDFOLD_TRAIT) || is_sleeping_in_darkness)
 			healing += 0.1
 
-		// sleeping with earmuffs helps blockout the noise as well
-		if(HAS_TRAIT_FROM(src, TRAIT_DEAF, CLOTHING_TRAIT))
+		// sleeping in silence is always better
+		if(HAS_TRAIT(src, TRAIT_DEAF))
 			healing += 0.1
 
 		// check for beds
@@ -527,13 +526,13 @@
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_PACIFISM, CLOTHING_TRAIT)
 	ADD_TRAIT(owner, TRAIT_MUTE, CLOTHING_TRAIT)
-	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, type, /datum/mood_event/gondola)
+	owner.add_mood_event(type, /datum/mood_event/gondola)
 	to_chat(owner, span_notice("You suddenly feel at peace and feel no need to make any sudden or rash actions..."))
 
 /datum/status_effect/gonbola_pacify/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, CLOTHING_TRAIT)
 	REMOVE_TRAIT(owner, TRAIT_MUTE, CLOTHING_TRAIT)
-	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, type)
+	owner.clear_mood_event(type)
 	return ..()
 
 /datum/status_effect/trance

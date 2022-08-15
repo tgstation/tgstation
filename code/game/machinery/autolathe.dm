@@ -30,17 +30,17 @@
 	var/hacked_price = 50
 
 	var/list/categories = list(
-							"Tools",
-							"Electronics",
-							"Construction",
-							"Material",
-							"T-Comm",
-							"Security",
-							"Machinery",
-							"Medical",
-							"Misc",
-							"Dinnerware",
-							"Imported"
+							RND_CATEGORY_TOOLS,
+							RND_CATEGORY_EQUIPMENT,
+							RND_CATEGORY_CONSTRUCTION,
+							RND_CATEGORY_MATERIAL,
+							RND_CATEGORY_TELECOMMS,
+							RND_CATEGORY_SECURITY,
+							RND_CATEGORY_MACHINERY,
+							RND_CATEGORY_MEDICAL,
+							RND_CATEGORY_MISC,
+							RND_CATEGORY_DINNERWARE,
+							RND_CATEGORY_IMPORTED
 							)
 
 /obj/machinery/autolathe/Initialize(mapload)
@@ -409,7 +409,7 @@
 	hacked = state
 	for(var/id in SSresearch.techweb_designs)
 		var/datum/design/D = SSresearch.techweb_design_by_id(id)
-		if((D.build_type & AUTOLATHE) && ("hacked" in D.category))
+		if((D.build_type & AUTOLATHE) && (RND_CATEGORY_HACKED in D.category))
 			if(hacked)
 				stored_research.add_design(D)
 			else
