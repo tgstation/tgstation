@@ -442,7 +442,7 @@
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/station/medical/surgery)
 "ei" = (
-/obj/machinery/suit_storage_unit/ert/command,
+/obj/machinery/suit_storage_unit/captain,
 /turf/open/floor/wood/yew,
 /area/station/cargo/office)
 "er" = (
@@ -514,8 +514,9 @@
 /turf/open/floor/plating,
 /area/station/commons/chapel)
 "fb" = (
-/obj/machinery/photocopier/faxmachine/longrange{
-	department = "Captain"
+/obj/machinery/fax{
+	name = "Phalanx Fax Machine";
+	fax_name = "Phalanx Fax"
 	},
 /obj/structure/table/wood,
 /obj/machinery/light/small{
@@ -542,7 +543,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 10
 	},
-/obj/machinery/suit_storage_unit/ert/engineer,
+/obj/machinery/suit_storage_unit/engine,
 /turf/open/floor/plating/catwalk_floor{
 	icon_state = "catwalk_above"
 	},
@@ -1548,7 +1549,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/suit_storage_unit/ert/security,
+/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/engine,
 /area/station/security)
 "rD" = (
@@ -1766,7 +1767,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/suit_storage_unit/ert/security,
+/obj/machinery/suit_storage_unit/security,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
@@ -2149,7 +2150,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/suit_storage_unit/ert/medical,
+/obj/machinery/suit_storage_unit/medical,
 /turf/open/floor/mineral/titanium/blue,
 /area/station/medical)
 "yZ" = (
@@ -3272,7 +3273,7 @@
 /turf/open/floor/plating,
 /area/station/commons/dorm)
 "MZ" = (
-/obj/machinery/suit_storage_unit/ert/medical,
+/obj/machinery/suit_storage_unit/medical,
 /turf/open/floor/mineral/titanium/blue,
 /area/station/medical)
 "Ne" = (
@@ -3364,7 +3365,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 9
 	},
-/obj/machinery/suit_storage_unit/ert/engineer,
+/obj/machinery/suit_storage_unit/engine,
 /turf/open/floor/plating/catwalk_floor{
 	icon_state = "catwalk_above"
 	},
@@ -3373,7 +3374,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/suit_storage_unit/ert/security,
+/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/engine,
 /area/station/security)
 "Oj" = (
@@ -3495,7 +3496,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/suit_storage_unit/ert/security,
+/obj/machinery/suit_storage_unit/security,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},

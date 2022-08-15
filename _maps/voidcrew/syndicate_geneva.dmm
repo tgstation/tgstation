@@ -37,7 +37,11 @@
 /area/station/medical)
 "aV" = (
 /obj/structure/table/glass,
-/obj/machinery/photocopier/faxmachine/longrange,
+/obj/machinery/fax{
+	name = "Geneva Fax Machine";
+	fax_name = "Geneva Fax";
+	syndicate_network = 1
+	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},

@@ -339,7 +339,10 @@
 /area/station/science/ai_chamber)
 "fC" = (
 /obj/structure/table/wood,
-/obj/machinery/photocopier/faxmachine/longrange,
+/obj/machinery/fax{
+	name = "Metis Ship Fax Machine";
+	fax_name = "Metis Fax"
+	},
 /obj/structure/window/reinforced/plasma/spawner/east,
 /obj/structure/window/plasma/reinforced/spawner,
 /turf/open/floor/carpet/purple,

@@ -1110,7 +1110,10 @@
 /turf/open/floor/iron/dark,
 /area/station/commons)
 "cS" = (
-/obj/machinery/photocopier/faxmachine,
+/obj/machinery/fax{
+	name = "Box Ship Fax Machine";
+	fax_name = "Box Fax"
+	},
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
 /area/station/commons)

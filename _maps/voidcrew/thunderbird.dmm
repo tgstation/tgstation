@@ -325,7 +325,7 @@
 "oU" = (
 /obj/effect/turf_decal/corner/red/mono,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
-/obj/machinery/suit_storage_unit/ert/security,
+/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/mineral/titanium,
 /area/station/security)
 "po" = (
@@ -348,7 +348,7 @@
 /area/station/command/bridge)
 "pO" = (
 /obj/effect/turf_decal/corner/blue/mono,
-/obj/machinery/suit_storage_unit/ert/command,
+/obj/machinery/suit_storage_unit/captain,
 /turf/open/floor/mineral/titanium,
 /area/station/command/bridge)
 "pR" = (
@@ -480,7 +480,7 @@
 "tQ" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/corner/red/mono,
-/obj/machinery/suit_storage_unit/ert/security,
+/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/mineral/titanium,
 /area/station/security)
 "uj" = (
@@ -699,7 +699,7 @@
 /area/station/command/bridge)
 "Gw" = (
 /obj/effect/turf_decal/corner/red/mono,
-/obj/machinery/suit_storage_unit/ert/security,
+/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/mineral/titanium,
 /area/station/security)
 "Gy" = (
@@ -1036,7 +1036,7 @@
 /area/station/hallway/central)
 "Yv" = (
 /obj/effect/turf_decal/corner/blue/mono,
-/obj/machinery/suit_storage_unit/ert/medical,
+/obj/machinery/suit_storage_unit/medical,
 /turf/open/floor/mineral/titanium,
 /area/station/commons/dorm)
 "YX" = (

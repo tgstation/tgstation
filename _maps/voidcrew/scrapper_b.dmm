@@ -1681,7 +1681,10 @@
 /area/station/engineering/electrical)
 "zg" = (
 /obj/structure/table/reinforced,
-/obj/machinery/photocopier/faxmachine/longrange,
+/obj/machinery/fax{
+	name = "Scrapper Entertainement Fax Machine";
+	fax_name = "Scrapper B Fax"
+	},
 /obj/effect/turf_decal/techfloor{
 	dir = 10
 	},

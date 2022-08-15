@@ -1174,7 +1174,10 @@
 /area/station/command/bridge)
 "yi" = (
 /obj/structure/table/reinforced,
-/obj/machinery/photocopier/faxmachine/longrange,
+/obj/machinery/fax{
+	name = "Litiguai Ship Fax Machine";
+	fax_name = "Litiguai Fax"
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "yl" = (

@@ -151,8 +151,9 @@
 /area/station/commons/solgov)
 "bE" = (
 /obj/structure/table/wood,
-/obj/machinery/photocopier/faxmachine/longrange{
-	department = "Internal Affairs"
+/obj/machinery/fax{
+	name = "Skipper Fax Machine";
+	fax_name = "Skipper Fax"
 	},
 /turf/open/floor/carpet/blue,
 /area/station/commons/solgov)

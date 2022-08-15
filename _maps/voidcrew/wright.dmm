@@ -1219,7 +1219,10 @@
 /area/station/commons/office)
 "Jq" = (
 /obj/structure/table,
-/obj/machinery/photocopier/faxmachine/longrange,
+/obj/machinery/fax{
+	name = "Wright Fax Machine";
+	fax_name = "Wright Fax"
+	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},

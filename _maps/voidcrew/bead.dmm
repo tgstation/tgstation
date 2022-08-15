@@ -36,7 +36,7 @@
 "cV" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
-/obj/machinery/suit_storage_unit/ert/command,
+/obj/machinery/suit_storage_unit/hos,
 /obj/effect/turf_decal/industrial/outline,
 /turf/open/floor/iron,
 /area/station/command/bridge)
@@ -113,7 +113,10 @@
 	pixel_y = -24
 	},
 /obj/structure/table/reinforced,
-/obj/machinery/photocopier/faxmachine/longrange,
+/obj/machinery/fax{
+	name = "Box Ship Fax Machine";
+	fax_name = "Box Fax"
+	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "jl" = (
@@ -390,7 +393,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 1
 	},
-/obj/machinery/suit_storage_unit/ert/security,
+/obj/machinery/suit_storage_unit/security,
 /obj/effect/turf_decal/industrial/outline/red,
 /turf/open/floor/iron,
 /area/station/cargo)
@@ -420,7 +423,7 @@
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/machinery/suit_storage_unit/ert/security,
+/obj/machinery/suit_storage_unit/security,
 /obj/effect/turf_decal/industrial/outline/red,
 /turf/open/floor/iron,
 /area/station/cargo)
@@ -440,7 +443,7 @@
 /area/station/command/bridge)
 "xu" = (
 /obj/structure/cable,
-/obj/machinery/suit_storage_unit/ert/engineer,
+/obj/machinery/suit_storage_unit/engine,
 /obj/effect/turf_decal/industrial/outline/yellow,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
@@ -625,7 +628,7 @@
 /turf/open/floor/plating,
 /area/station/engineering)
 "Je" = (
-/obj/machinery/suit_storage_unit/ert/engineer,
+/obj/machinery/suit_storage_unit/engine,
 /obj/effect/turf_decal/industrial/outline/yellow,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)
@@ -724,7 +727,7 @@
 /turf/open/floor/iron,
 /area/station/security)
 "MW" = (
-/obj/machinery/suit_storage_unit/ert/engineer,
+/obj/machinery/suit_storage_unit/engine,
 /obj/effect/turf_decal/industrial/outline/yellow,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)

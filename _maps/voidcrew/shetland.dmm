@@ -1723,7 +1723,10 @@
 /obj/effect/turf_decal/corner/neutral/half{
 	dir = 1
 	},
-/obj/machinery/photocopier/faxmachine/longrange,
+/obj/machinery/fax{
+	name = "Shetland Fax Machine";
+	fax_name = "Shetland Fax"
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "vJ" = (

@@ -936,7 +936,11 @@
 /turf/open/floor/cult,
 /area/station/cargo)
 "Ca" = (
-/obj/machinery/photocopier/faxmachine/longrange,
+/obj/machinery/fax{
+	name = "Cultist Fax Machine";
+	fax_name = "Cult Fax";
+	syndicate_network = 1
+	},
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/corner/blue/mono,
 /turf/open/floor/iron,

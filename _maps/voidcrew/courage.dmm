@@ -435,7 +435,10 @@
 /turf/open/floor/iron/dark,
 /area/station/commons)
 "RB" = (
-/obj/machinery/photocopier/faxmachine/longrange,
+/obj/machinery/fax{
+	name = "Courage Ship Fax Machine";
+	fax_name = "Courage Fax"
+	},
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/corner/red/three_quarters{
 	dir = 1

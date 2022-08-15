@@ -1855,9 +1855,6 @@
 "hR" = (
 /obj/structure/table,
 /obj/item/clothing/mask/facehugger/lamarr,
-/obj/machinery/photocopier/faxmachine{
-	department = "Research Director"
-	},
 /obj/effect/turf_decal/corner/purple{
 	dir = 9
 	},
@@ -2076,9 +2073,6 @@
 "je" = (
 /obj/structure/table/wood,
 /obj/item/melee/chainofcommand,
-/obj/machinery/photocopier/faxmachine/longrange{
-	department = "Captain"
-	},
 /obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/wood,
 /area/station/commons/toilet)
@@ -3292,9 +3286,6 @@
 "oe" = (
 /obj/structure/table,
 /mob/living/simple_animal/parrot/Poly,
-/obj/machinery/photocopier/faxmachine{
-	department = "Chief Engineer"
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
@@ -4271,8 +4262,9 @@
 /area/station/engineering/atmospherics)
 "sD" = (
 /obj/structure/table/reinforced,
-/obj/machinery/photocopier/faxmachine/longrange{
-	department = "Bridge"
+/obj/machinery/fax{
+	name = "Statio Ship Fax Machine";
+	fax_name = "Statio Fax"
 	},
 /obj/machinery/light{
 	dir = 4
@@ -5437,9 +5429,6 @@
 /area/station/storage)
 "xX" = (
 /obj/structure/table,
-/obj/machinery/photocopier/faxmachine{
-	department = "Chief Medical Officer"
-	},
 /obj/effect/turf_decal/corner/blue{
 	dir = 6
 	},
@@ -7822,9 +7811,6 @@
 /area/station/commons/janitor)
 "HL" = (
 /obj/structure/table/wood,
-/obj/machinery/photocopier/faxmachine/longrange{
-	department = "SolGov Office"
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/machinery/light{
 	dir = 4
@@ -11764,9 +11750,6 @@
 /area/station/engineering/engine)
 "ZT" = (
 /obj/structure/table,
-/obj/machinery/photocopier/faxmachine{
-	department = "Head of Security"
-	},
 /obj/effect/turf_decal/corner/red{
 	dir = 6
 	},

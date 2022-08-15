@@ -4161,7 +4161,10 @@
 	dir = 8
 	},
 /obj/structure/table/wood/reinforced,
-/obj/machinery/photocopier/faxmachine/longrange,
+/obj/machinery/fax{
+	name = "Twinkleshine Fax Machine";
+	fax_name = "Twinkleshine Fax"
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/station/commons/dorm)
 "QP" = (
