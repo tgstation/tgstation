@@ -28,7 +28,7 @@
 	modkit_design = /datum/design/unique_modkit/bounty
 
 /datum/design/unique_modkit
-	category = list("Mining Designs", "Cyborg Upgrade Modules") //can't be normally obtained
+	category = list(RND_CATEGORY_MINING_DESIGNS, RND_CATEGORY_CYBORG_UPGRADE_MODULES) //can't be normally obtained
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
@@ -594,6 +594,7 @@
 	name = "berserker armor"
 	desc = "Voices echo from the armor, driving the user insane. Is not space-proof."
 	icon_state = "berserker"
+	icon = 'icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	hoodtype = /obj/item/clothing/head/hooded/berserker
 	armor = list(MELEE = 30, BULLET = 30, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 0, FIRE = 100, ACID = 100)

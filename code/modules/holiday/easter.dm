@@ -69,6 +69,7 @@
 	name = "Easter Bunny Suit"
 	desc = "Hop Hop Hop!"
 	icon_state = "bunnysuit"
+	icon = 'icons/obj/clothing/suits/costume.dmi'
 	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
 	inhand_icon_state = "bunnysuit"
 	slowdown = -0.3

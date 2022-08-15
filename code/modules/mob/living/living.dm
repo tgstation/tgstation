@@ -1308,6 +1308,7 @@
 				/mob/living/simple_animal/pet/fox,
 				/mob/living/simple_animal/butterfly,
 				/mob/living/simple_animal/pet/cat/cak,
+				/mob/living/simple_animal/pet/dog/breaddog,
 				/mob/living/simple_animal/chick,
 			)
 			new_mob = new path(loc)
@@ -2306,13 +2307,13 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /// Adds a mood event to the mob
 /mob/living/proc/add_mood_event(category, type, ...)
-	if (!mob_mood)
+	if(QDELETED(mob_mood))
 		return
 	mob_mood.add_mood_event(arglist(args))
 
 /// Clears a mood event from the mob
 /mob/living/proc/clear_mood_event(category)
-	if (!mob_mood)
+	if(QDELETED(mob_mood))
 		return
 	mob_mood.clear_mood_event(category)
 

@@ -474,7 +474,7 @@
 
 	if(new_stat != HARD_CRIT)
 		return
-	var/list/organs = owner.getorganszone(BODY_ZONE_HEAD, 1)
+	var/list/organs = owner.getorganszone(BODY_ZONE_HEAD, TRUE)
 
 	for(var/obj/item/organ/I in organs)
 		qdel(I)

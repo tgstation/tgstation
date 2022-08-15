@@ -1,6 +1,9 @@
 ///Get a random food item exluding the blocked ones
 /proc/get_random_food()
-	var/list/blocked = list(
+	var/static/list/allowed_food = list()
+
+	if(!LAZYLEN(allowed_food)) //it's static so we only ever do this once
+		var/list/blocked = list(
 		/obj/item/food/drug,
 		/obj/item/food/spaghetti,
 		/obj/item/food/bread,
@@ -26,7 +29,13 @@
 		/obj/item/food/grown/shell
 		)
 
-	return pick(subtypesof(/obj/item/food) - blocked)
+		var/list/unfiltered_allowed_food = subtypesof(/obj/item/food) - blocked
+		for(var/obj/item/food/food as anything in unfiltered_allowed_food)
+			if(!initial(food.icon_state)) //food with no icon_state should probably not be spawned
+				continue
+			allowed_food.Add(food)
+
+	return pick(allowed_food)
 
 ///Gets a random drink excluding the blocked type
 /proc/get_random_drink()

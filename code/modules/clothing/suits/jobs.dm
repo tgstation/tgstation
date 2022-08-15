@@ -7,6 +7,7 @@
 	name = "apron"
 	desc = "A basic blue apron."
 	icon_state = "apron"
+	icon = 'icons/obj/clothing/suits/utility.dmi'
 	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
 	inhand_icon_state = "apron"
 	blood_overlay_type = "armor"
@@ -36,6 +37,7 @@
 	name = "chef's apron"
 	desc = "An apron-jacket used by a high class chef."
 	icon_state = "chef"
+	icon = 'icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
 	inhand_icon_state = "chef"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
@@ -99,6 +101,7 @@
 	name = "hazard vest"
 	desc = "A high-visibility vest used in work zones."
 	icon_state = "hazard"
+	icon = 'icons/obj/clothing/suits/utility.dmi'
 	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
 	inhand_icon_state = "hazard"
 	blood_overlay_type = "armor"
@@ -116,6 +119,7 @@
 	name = "blue suit jacket"
 	desc = "A snappy dress jacket."
 	icon_state = "suitjacket_blue"
+	icon = 'icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
 	inhand_icon_state = "suitjacket_blue"
 	blood_overlay_type = "coat"
@@ -234,6 +238,7 @@
 	name = "techpriest robes"
 	desc = "For those who REALLY love their toasters."
 	icon_state = "techpriest"
+	icon = 'icons/obj/clothing/suits/costume.dmi'
 	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
 	inhand_icon_state = "techpriest"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS

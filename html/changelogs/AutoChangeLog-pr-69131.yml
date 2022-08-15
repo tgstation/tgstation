@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Revolution victory correctly removes lathe taxes"
-  - bugfix: "Someone completing the weakpoint / hack traitor objectives correctly fails everyone else doing it"
-  - bugfix: "Having a dog no longer be ai controlled doesn't keep it keen on playing fetch"
