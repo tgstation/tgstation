@@ -157,7 +157,7 @@
 /area/ship/medical/morgue)
 "cu" = (
 /obj/machinery/power/terminal,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/structure/rack,
 /obj/item/pickaxe,
 /obj/item/storage/bag/ore,
@@ -730,7 +730,7 @@
 /area/ship/crew/hydroponics)
 "lf" = (
 /obj/machinery/power/terminal,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/structure/ore_box,
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
@@ -1408,9 +1408,7 @@
 	pixel_x = 28
 	},
 /obj/machinery/power/port_gen/pacman,
-/obj/structure/cable/yellow{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
 "ue" = (
@@ -2169,9 +2167,7 @@
 /area/ship/medical/morgue)
 "CX" = (
 /obj/machinery/power/port_gen/pacman,
-/obj/structure/cable/yellow{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -2720,9 +2716,7 @@
 /turf/open/floor/grass,
 /area/ship/crew/hydroponics)
 "Lr" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 1
 	},
@@ -3098,9 +3092,7 @@
 /area/ship/external)
 "QL" = (
 /obj/machinery/power/port_gen/pacman/uranium,
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/structure/sign/warning/electricshock{
 	pixel_x = -32
@@ -3152,9 +3144,7 @@
 /area/ship/crew/chapel)
 "Rg" = (
 /obj/machinery/power/port_gen/pacman/uranium,
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
@@ -3340,18 +3330,14 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 1
 	},
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
 "ST" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 1
 	},
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
 "SY" = (
@@ -3363,15 +3349,6 @@
 	},
 /turf/open/floor/carpet/nanoweave/blue,
 /area/ship/crew/chapel/office)
-"Tb" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
-	dir = 1
-	},
-/obj/structure/cable/yellow{
-	icon_state = "2-4"
-	},
-/turf/open/floor/plating,
-/area/ship/engineering/electrical)
 "Tl" = (
 /obj/machinery/light{
 	dir = 4
@@ -3565,9 +3542,7 @@
 /area/ship/crew/hydroponics)
 "UY" = (
 /obj/machinery/power/port_gen/pacman,
-/obj/structure/cable/yellow{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
 "Vd" = (
@@ -3830,12 +3805,7 @@
 /turf/open/floor/plasteel/dark,
 /area/ship/medical/morgue)
 "Xg" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 5
 	},
@@ -3851,15 +3821,8 @@
 /turf/closed/wall/mineral/iron,
 /area/ship/crew/dorm)
 "Xs" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 5
 	},
@@ -3869,15 +3832,8 @@
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
 "XI" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 10
 	},
@@ -4228,7 +4184,7 @@ NR
 Oh
 OG
 Rz
-Tb
+ST
 XI
 Lr
 NV

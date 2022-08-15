@@ -582,9 +582,7 @@
 /area/ship/science)
 "lI" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering)
 "lM" = (
@@ -729,9 +727,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering)
 "ps" = (
@@ -811,9 +807,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ship/cargo)
 "qo" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering)
 "qx" = (
@@ -995,13 +989,6 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ship/bridge)
-"tw" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable/yellow{
-	icon_state = "2-4"
-	},
-/turf/open/floor/plating,
-/area/ship/engineering)
 "tI" = (
 /obj/structure/cable{
 	icon_state = "2-8"
@@ -1139,12 +1126,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/ship/crew)
-"vS" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/ship/engineering)
 "vV" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -1652,13 +1633,6 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/ship/engineering)
-"FP" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
 /turf/open/floor/plating,
 /area/ship/engineering)
 "FT" = (
@@ -2557,7 +2531,7 @@
 /area/ship/bridge)
 "XG" = (
 /obj/effect/turf_decal/industrial/outline/yellow,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/machinery/power/port_gen/pacman/uranium,
 /obj/item/stack/sheet/mineral/uranium/five,
 /turf/open/floor/plating,
@@ -3157,7 +3131,7 @@ Bb
 (24,1,1) = {"
 ZH
 oz
-tw
+lI
 qo
 XG
 Fp
@@ -3197,7 +3171,7 @@ Vh
 (26,1,1) = {"
 wh
 US
-vS
+qo
 ps
 sL
 JX
@@ -3217,7 +3191,7 @@ Bb
 (27,1,1) = {"
 wh
 pf
-FP
+lI
 sh
 ZH
 qx

@@ -557,9 +557,7 @@
 /turf/closed/wall/r_wall/rust,
 /area/ship/maintenance/aft)
 "vr" = (
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/power/port_gen/pacman,
 /obj/item/stack/sheet/mineral/plasma/twenty,
 /turf/open/floor/plating,
@@ -779,7 +777,7 @@
 /obj/machinery/power/shuttle/engine/electric{
 	dir = 1
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/central)
 "Dn" = (
@@ -797,9 +795,7 @@
 /obj/machinery/power/smes/shuttle/precharged{
 	dir = 1
 	},
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/central)
 "DP" = (
@@ -883,9 +879,7 @@
 /obj/machinery/power/smes/shuttle/precharged{
 	dir = 1
 	},
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/central)
 "Jj" = (
@@ -958,7 +952,7 @@
 "MH" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/power/terminal,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/starboard)
 "MS" = (
@@ -1088,9 +1082,7 @@
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "RM" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/starboard)
 "RR" = (

@@ -573,9 +573,7 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/orange/visible{
 	dir = 8
 	},
@@ -912,9 +910,7 @@
 /area/ship/hallway/central)
 "LK" = (
 /obj/machinery/power/am_control_unit,
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -1187,9 +1183,7 @@
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 1
 	},
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "Yh" = (

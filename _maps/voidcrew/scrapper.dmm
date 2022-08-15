@@ -67,9 +67,7 @@
 /turf/open/floor/pod/light,
 /area/ship/cargo)
 "ay" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/effect/turf_decal/techfloor/orange{
 	dir = 8
 	},
@@ -469,14 +467,10 @@
 /turf/open/floor/pod/light,
 /area/ship/bridge)
 "fb" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
 "fg" = (
@@ -1015,12 +1009,7 @@
 /turf/open/floor/plasteel/tech/techmaint,
 /area/ship/maintenance/starboard)
 "mr" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/effect/turf_decal/techfloor/orange,
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
@@ -1142,7 +1131,7 @@
 /area/ship/engineering/electrical)
 "np" = (
 /obj/structure/window/reinforced/spawner,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/effect/turf_decal/industrial/hatch/yellow,
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
@@ -1469,7 +1458,7 @@
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/effect/turf_decal/industrial/hatch/yellow,
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
@@ -1616,9 +1605,7 @@
 /obj/effect/turf_decal/techfloor/orange/corner{
 	dir = 4
 	},
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
 "ts" = (
@@ -2118,9 +2105,7 @@
 /turf/open/floor/pod/light,
 /area/ship/cargo)
 "yY" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -2619,9 +2604,7 @@
 /turf/open/floor/plasteel/tech/techmaint,
 /area/ship/maintenance/starboard)
 "Eb" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/effect/turf_decal/techfloor/orange{
 	dir = 10
 	},
@@ -3004,9 +2987,7 @@
 /area/ship/hallway/aft)
 "Jk" = (
 /obj/structure/window/reinforced/spawner/north,
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/effect/turf_decal/industrial/hatch/yellow,
 /obj/machinery/power/port_gen/pacman/uranium{
 	anchored = 1
@@ -3241,12 +3222,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ship/hallway/aft)
 "LV" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-4"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 4
 	},
@@ -3476,9 +3452,7 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ship/cargo)
 "Ou" = (
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/power/terminal{
 	dir = 1
 	},
@@ -3723,15 +3697,8 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ship/maintenance/starboard)
 "QT" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 4
 	},
@@ -3951,9 +3918,7 @@
 /obj/machinery/power/port_gen/pacman/uranium{
 	anchored = 1
 	},
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/effect/turf_decal/industrial/hatch/yellow,
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
@@ -4165,9 +4130,7 @@
 /turf/open/floor/pod/light,
 /area/ship/cargo)
 "Vk" = (
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/power/terminal{
 	dir = 1
 	},
@@ -4318,9 +4281,7 @@
 /turf/open/floor/pod/light,
 /area/ship/crew/dorm)
 "Xb" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/effect/turf_decal/techfloor/orange{
 	dir = 6
 	},

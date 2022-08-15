@@ -639,7 +639,7 @@
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 1
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ship/engineering/engine)
 "cs" = (
@@ -729,9 +729,7 @@
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
 	dir = 5
 	},
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ship/engineering/engine)
 "cC" = (
@@ -869,12 +867,7 @@
 /turf/open/floor/plating,
 /area/ship/crew/janitor)
 "dx" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-4"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/light,
 /turf/open/floor/engine,
 /area/ship/engineering/engine)
@@ -1558,9 +1551,7 @@
 /turf/open/floor/wood,
 /area/ship/bridge)
 "fQ" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ship/engineering/engine)
 "fS" = (
@@ -1668,12 +1659,6 @@
 "gv" = (
 /turf/closed/wall/r_wall,
 /area/ship/engineering)
-"gz" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/turf/open/floor/engine,
-/area/ship/engineering/engine)
 "gA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 9
@@ -1825,12 +1810,7 @@
 /turf/open/floor/carpet/nanoweave/beige,
 /area/ship/crew/dorm)
 "hk" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-4"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
 	},
@@ -2399,12 +2379,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/structure/cable/yellow{
-	icon_state = "0-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ship/engineering/engine)
 "jW" = (
@@ -4208,9 +4183,7 @@
 /turf/open/floor/plasteel,
 /area/ship/hallway/fore)
 "qR" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/airalarm/directional/west,
 /obj/machinery/atmospherics/components/unary/portables_connector,
 /obj/machinery/portable_atmospherics/canister/nitrogen,
@@ -5015,9 +4988,7 @@
 	},
 /area/ship/crew/chapel)
 "uz" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/yellow/visible,
 /turf/open/floor/engine,
 /area/ship/engineering/engine)
@@ -6649,12 +6620,7 @@
 /turf/open/floor/plasteel,
 /area/ship/hallway/central)
 "AT" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-4"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ship/engineering/engine)
 "AW" = (
@@ -6752,9 +6718,7 @@
 /turf/open/floor/plasteel,
 /area/ship/storage)
 "Bs" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/machinery/camera/autoname{
 	dir = 10
 	},
@@ -6794,15 +6758,6 @@
 "Bz" = (
 /turf/open/floor/plasteel/white,
 /area/ship/maintenance/central)
-"BA" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-4"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/turf/open/floor/engine,
-/area/ship/engineering/engine)
 "BC" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor/border_only,
@@ -9058,9 +9013,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/structure/cable/yellow{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ship/engineering/engine)
 "Kj" = (
@@ -9900,9 +9853,7 @@
 /turf/open/floor/plasteel/dark,
 /area/ship/crew/canteen)
 "NS" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc/auto_name/west,
 /obj/structure/cable{
 	icon_state = "0-4"
@@ -10652,9 +10603,7 @@
 /obj/structure/window/plasma/reinforced/spawner/north,
 /obj/machinery/power/rad_collector/anchored,
 /obj/machinery/atmospherics/pipe/manifold/yellow/visible,
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ship/engineering/engine)
 "Rb" = (
@@ -11028,9 +10977,7 @@
 /turf/open/floor/wood,
 /area/ship/crew/toilet)
 "Sq" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -11064,7 +11011,7 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 6
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ship/engineering/engine)
 "Sy" = (
@@ -12143,9 +12090,7 @@
 /turf/closed/wall/r_wall,
 /area/ship/security/prison)
 "WO" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/machinery/camera/autoname,
 /turf/open/floor/engine,
 /area/ship/engineering/engine)
@@ -12475,12 +12420,6 @@
 /obj/effect/turf_decal/corner/yellow/diagonal,
 /turf/open/floor/plasteel/white,
 /area/ship/maintenance/central)
-"Yz" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-4"
-	},
-/turf/open/floor/engine,
-/area/ship/engineering/engine)
 "YA" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Hydroponics";
@@ -13233,7 +13172,7 @@ Hi
 uT
 of
 cB
-Yz
+fQ
 US
 "}
 (8,1,1) = {"
@@ -13285,7 +13224,7 @@ UN
 xK
 DV
 US
-BA
+AT
 cr
 Hi
 Xg
@@ -13343,7 +13282,7 @@ UN
 zI
 UN
 US
-BA
+AT
 cr
 Hi
 ZQ
@@ -13462,7 +13401,7 @@ US
 WO
 hk
 NS
-gz
+fQ
 qR
 uz
 Bs

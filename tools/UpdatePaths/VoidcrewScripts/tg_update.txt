@@ -1,0 +1,1 @@
+/obj/structure/cable/yellow : /obj/structure/cable

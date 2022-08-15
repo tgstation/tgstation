@@ -697,9 +697,7 @@
 /area/ship/maintenance/aft)
 "cb" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/power/terminal{
 	dir = 8
 	},
@@ -708,9 +706,7 @@
 "cc" = (
 /obj/machinery/power/port_gen/pacman,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable/yellow{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "cd" = (
@@ -1338,9 +1334,7 @@
 /area/ship/crew/canteen)
 "vk" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "wj" = (

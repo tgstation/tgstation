@@ -744,9 +744,7 @@
 /area/ship/crew)
 "Lr" = (
 /obj/machinery/power/port_gen/pacman,
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/item/stack/sheet/mineral/plasma/twenty,
 /obj/effect/turf_decal/box,
 /turf/open/floor/mineral/titanium/yellow,
@@ -922,9 +920,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/structure/cable/yellow{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/effect/turf_decal/box,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ship/engineering)

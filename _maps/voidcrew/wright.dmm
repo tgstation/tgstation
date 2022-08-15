@@ -382,9 +382,7 @@
 	},
 /obj/structure/window/reinforced/spawner/west,
 /obj/machinery/door/window/eastright,
-/obj/structure/cable/yellow{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "kt" = (
@@ -406,9 +404,7 @@
 /obj/machinery/power/shuttle/engine/electric{
 	dir = 4
 	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/external)
 "kD" = (
@@ -464,9 +460,7 @@
 	},
 /obj/structure/window/reinforced/spawner/west,
 /obj/machinery/door/window/eastleft,
-/obj/structure/cable/yellow{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "lc" = (
@@ -1666,9 +1660,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "PL" = (
@@ -1790,7 +1782,7 @@
 /area/ship/storage)
 "SX" = (
 /obj/machinery/power/port_gen/pacman,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "Ts" = (

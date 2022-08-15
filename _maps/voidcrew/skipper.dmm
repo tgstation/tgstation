@@ -42,9 +42,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 8
 	},
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/effect/turf_decal/corner/yellow{
 	dir = 4
 	},
@@ -435,12 +433,7 @@
 /turf/closed/wall,
 /area/ship/engineering)
 "ew" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/structure/catwalk/over/plated_catwalk/dark,
 /turf/open/floor/plating,
 /area/ship/engineering/engine)
@@ -518,9 +511,7 @@
 /area/ship/engineering)
 "fT" = (
 /obj/machinery/power/port_gen/pacman,
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /turf/open/floor/plasteel,
 /area/ship/engineering/engine)
@@ -743,9 +734,7 @@
 /area/ship/cargo)
 "iR" = (
 /obj/machinery/power/port_gen/pacman,
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ship/engineering/engine)
 "iT" = (
@@ -755,12 +744,7 @@
 /turf/open/floor/carpet/nanoweave,
 /area/ship/hallway/central)
 "ja" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/structure/catwalk/over/plated_catwalk/dark,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 8
@@ -1334,9 +1318,7 @@
 /turf/open/floor/plating,
 /area/ship/engineering/atmospherics)
 "qo" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ship/engineering)
 "qq" = (
@@ -1384,9 +1366,7 @@
 /turf/open/floor/plasteel/mono/dark,
 /area/ship/cargo)
 "qy" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /obj/effect/turf_decal/corner/yellow/half{
 	dir = 4
 	},
@@ -1512,9 +1492,7 @@
 /turf/open/floor/carpet/nanoweave,
 /area/ship/hallway/central)
 "rX" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/effect/turf_decal/corner/yellow/half{
 	dir = 4
 	},
@@ -1537,9 +1515,7 @@
 /area/ship/engineering)
 "sr" = (
 /obj/machinery/power/port_gen/pacman,
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/light_switch{
 	pixel_x = -25;
 	pixel_y = 25
@@ -1940,9 +1916,7 @@
 /turf/open/floor/plasteel/patterned,
 /area/ship/storage)
 "yW" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -2586,9 +2560,7 @@
 /area/ship/engineering/atmospherics)
 "Ft" = (
 /obj/machinery/power/port_gen/pacman/uranium,
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ship/engineering/engine)
 "Fu" = (
@@ -2940,9 +2912,7 @@
 /turf/open/floor/plasteel/dark,
 /area/ship/engineering/atmospherics)
 "JI" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/structure/catwalk/over/plated_catwalk/dark,
 /turf/open/floor/plating,
 /area/ship/engineering/engine)
@@ -3076,12 +3046,7 @@
 /turf/open/floor/carpet/nanoweave/blue,
 /area/ship/medical)
 "Ld" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/structure/catwalk/over/plated_catwalk/dark,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 9
@@ -3296,10 +3261,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ship/engineering)
 "Ot" = (
@@ -3441,7 +3403,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ship/engineering)
 "QG" = (
@@ -3936,9 +3898,7 @@
 /turf/open/floor/plasteel,
 /area/ship/engineering/atmospherics)
 "Xf" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/sign/warning/enginesafety{
 	pixel_x = 32
 	},
@@ -4014,9 +3974,7 @@
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering"
 	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
 	},

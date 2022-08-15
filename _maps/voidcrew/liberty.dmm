@@ -1182,9 +1182,7 @@
 /area/ship/hallway/port)
 "IV" = (
 /obj/effect/turf_decal/industrial/outline/yellow,
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/power/port_gen/pacman,
 /turf/open/floor/plating,
 /area/ship/hallway/port)
@@ -1325,14 +1323,12 @@
 /area/ship/hallway/starboard)
 "LU" = (
 /obj/effect/turf_decal/industrial/outline/yellow,
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/power/port_gen/pacman,
 /turf/open/floor/plating,
 /area/ship/hallway/starboard)
 "Mh" = (
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/machinery/power/terminal,
 /obj/structure/closet/firecloset/wall{
 	dir = 4;
@@ -1415,7 +1411,7 @@
 /turf/open/floor/plating,
 /area/ship/hallway/starboard)
 "Oo" = (
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/machinery/power/terminal,
 /obj/item/wrench,
 /obj/structure/closet/firecloset/wall{

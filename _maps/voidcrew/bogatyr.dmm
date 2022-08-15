@@ -217,7 +217,7 @@
 /obj/machinery/power/shuttle/engine/electric{
 	dir = 1
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/external)
 "kh" = (
@@ -1136,9 +1136,7 @@
 /area/ship/science)
 "KT" = (
 /obj/machinery/power/smes/shuttle/precharged,
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/door/window{
 	dir = 1
 	},
@@ -1253,9 +1251,7 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "Pv" = (
@@ -1437,9 +1433,7 @@
 /obj/machinery/power/port_gen/pacman/uranium,
 /obj/effect/turf_decal/box,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable/yellow{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "Vx" = (

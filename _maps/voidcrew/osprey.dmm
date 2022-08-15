@@ -74,9 +74,7 @@
 /obj/effect/turf_decal/industrial/warning{
 	dir = 1
 	},
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/cable/orange{
 	icon_state = "1-4"
 	},
@@ -755,7 +753,7 @@
 	dir = 1
 	},
 /obj/machinery/power/terminal,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/structure/catwalk/over/plated_catwalk,
 /turf/open/floor/plating,
 /area/ship/engineering/engine)
@@ -1272,9 +1270,7 @@
 "jg" = (
 /obj/machinery/suit_storage_unit/engine,
 /obj/effect/turf_decal/industrial/outline/yellow,
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/patterned/grid,
 /area/ship/engineering/engine)
 "jh" = (
@@ -1398,9 +1394,7 @@
 /turf/open/floor/plasteel/white,
 /area/ship/medical)
 "jU" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /obj/structure/catwalk/over,
 /turf/open/floor/plating,
 /area/ship/engineering/engine)
@@ -1676,9 +1670,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 9
 	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -3380,13 +3372,6 @@
 /obj/item/bedsheet/dorms,
 /turf/open/floor/carpet,
 /area/ship/crew/dorm)
-"xm" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/structure/catwalk/over,
-/turf/open/floor/plating,
-/area/ship/engineering/engine)
 "xp" = (
 /obj/effect/turf_decal/borderfloor{
 	dir = 8
@@ -3687,7 +3672,7 @@
 /obj/structure/sign/warning/electricshock{
 	pixel_x = 32
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/structure/catwalk/over/plated_catwalk,
 /turf/open/floor/plating,
 /area/ship/engineering/engine)
@@ -4679,9 +4664,7 @@
 /turf/open/floor/plating,
 /area/ship/maintenance/starboard)
 "Hh" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/light,
 /obj/structure/catwalk/over,
 /turf/open/floor/plating,
@@ -5702,18 +5685,14 @@
 /turf/open/floor/plasteel,
 /area/ship/crew/canteen)
 "OU" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/effect/turf_decal/industrial/warning{
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 4
 	},
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/patterned/grid,
 /area/ship/engineering/engine)
 "OV" = (
@@ -7083,7 +7062,7 @@
 /turf/open/floor/plasteel,
 /area/ship/hallway/port)
 "ZD" = (
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering/engine)
 "ZF" = (
@@ -8103,7 +8082,7 @@ QB
 Hb
 xh
 aC
-xm
+jU
 tc
 qa
 Bs
@@ -8161,7 +8140,7 @@ tj
 Ro
 xh
 aC
-xm
+jU
 AM
 sw
 sw

@@ -427,9 +427,7 @@
 /obj/machinery/power/shuttle/engine/electric{
 	dir = 8
 	},
-/obj/structure/cable/yellow{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/structure/shuttle/engine/platform/corner{
 	dir = 1
 	},
@@ -820,9 +818,7 @@
 /obj/machinery/power/shuttle/engine/electric{
 	dir = 8
 	},
-/obj/structure/cable/yellow{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/structure/shuttle/engine/platform/corner{
 	dir = 8
 	},
@@ -1469,9 +1465,7 @@
 /obj/structure/window/reinforced/survival_pod{
 	dir = 4
 	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/tech/grid,
 /area/ship/engineering/electrical)
 "xD" = (
@@ -1516,9 +1510,7 @@
 /obj/structure/window/reinforced/survival_pod{
 	dir = 6
 	},
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/tech/grid,
 /area/ship/engineering/electrical)
 "yK" = (
@@ -1737,7 +1729,7 @@
 /obj/structure/window/reinforced/survival_pod{
 	dir = 4
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/open/floor/plasteel/tech/grid,
 /area/ship/engineering/electrical)
 "BX" = (
@@ -1957,9 +1949,7 @@
 /obj/machinery/power/shuttle/engine/electric{
 	dir = 8
 	},
-/obj/structure/cable/yellow{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/tech,
 /area/ship/engineering/electrical)
 "Fz" = (
@@ -2202,9 +2192,7 @@
 /obj/structure/window/reinforced/survival_pod{
 	dir = 4
 	},
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/tech/grid,
 /area/ship/engineering/electrical)
 "JK" = (
@@ -2231,9 +2219,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced/survival_pod,
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/tech/grid,
 /area/ship/engineering/electrical)
 "JQ" = (
@@ -2969,9 +2955,7 @@
 /obj/structure/window/reinforced/survival_pod{
 	dir = 1
 	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/tech/grid,
 /area/ship/engineering/electrical)
 "Wh" = (

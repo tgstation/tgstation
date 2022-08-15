@@ -856,9 +856,7 @@
 /area/ship/crew/office)
 "ml" = (
 /obj/machinery/power/port_gen/pacman/uranium,
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/general/hidden/layer2{
 	dir = 6
 	},
@@ -2595,7 +2593,7 @@
 /area/ship/crew/toilet)
 "Iq" = (
 /obj/machinery/power/terminal,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/general/hidden/layer2{
 	dir = 5
 	},

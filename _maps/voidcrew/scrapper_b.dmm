@@ -65,9 +65,7 @@
 /turf/open/floor/pod/light,
 /area/ship/hallway/fore)
 "aW" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/effect/turf_decal/techfloor/orange{
 	dir = 10
 	},
@@ -182,9 +180,7 @@
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
 "bJ" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/effect/turf_decal/techfloor/orange{
 	dir = 8
 	},
@@ -203,9 +199,7 @@
 /turf/open/floor/pod/light,
 /area/ship/hallway/starboard)
 "bS" = (
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/power/terminal{
 	dir = 1
 	},
@@ -983,7 +977,7 @@
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/effect/turf_decal/box,
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
@@ -1231,12 +1225,7 @@
 /turf/open/floor/pod/dark,
 /area/ship/cargo)
 "qE" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/effect/turf_decal/techfloor/orange,
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
@@ -1597,7 +1586,7 @@
 /area/ship/crew/canteen)
 "va" = (
 /obj/structure/window/reinforced/spawner,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/effect/turf_decal/box,
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
@@ -1782,15 +1771,8 @@
 /turf/open/floor/pod/light,
 /area/ship/science/robotics)
 "yz" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 4
 	},
@@ -1817,9 +1799,7 @@
 /obj/effect/turf_decal/techfloor/orange/corner{
 	dir = 4
 	},
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
 "yP" = (
@@ -1848,12 +1828,7 @@
 /turf/open/floor/pod/light,
 /area/ship/science/robotics)
 "zc" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-4"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 4
 	},
@@ -1998,12 +1973,7 @@
 /turf/open/floor/plasteel/mono/dark,
 /area/ship/science)
 "AN" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 4
 	},
@@ -2494,9 +2464,7 @@
 /turf/open/floor/plasteel/mono/dark,
 /area/ship/science)
 "GT" = (
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/power/terminal{
 	dir = 1
 	},
@@ -2660,14 +2628,10 @@
 /turf/open/floor/eighties,
 /area/ship/crew/canteen)
 "IT" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
 "IY" = (
@@ -3140,9 +3104,7 @@
 /turf/open/floor/plasteel/mono/white,
 /area/ship/science)
 "NW" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -3417,9 +3379,7 @@
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
 "Rh" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/effect/turf_decal/techfloor/orange{
 	dir = 6
 	},
@@ -3950,9 +3910,7 @@
 /obj/machinery/power/port_gen/pacman/uranium{
 	anchored = 1
 	},
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/effect/turf_decal/box,
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
@@ -4098,9 +4056,7 @@
 /area/ship/crew/canteen)
 "Zt" = (
 /obj/structure/window/reinforced/spawner/north,
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/effect/turf_decal/box,
 /obj/machinery/power/port_gen/pacman/uranium{
 	anchored = 1
