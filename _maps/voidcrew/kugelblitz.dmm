@@ -214,7 +214,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible/layer4,
 /obj/machinery/power/smes/engineering,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/effect/turf_decal/industrial/warning{
 	dir = 4
 	},
@@ -304,7 +303,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/box,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/effect/turf_decal/industrial/warning/full,
 /turf/open/floor/engine,
@@ -534,7 +532,6 @@
 /area/ship/engineering)
 "jz" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8
 	},
@@ -547,7 +544,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ship/engineering)
 "jC" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/orange/hidden/layer1,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer2,
@@ -1153,7 +1149,6 @@
 /obj/machinery/atmospherics/pipe/simple/orange/hidden/layer1{
 	dir = 5
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/south,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
@@ -2134,7 +2129,6 @@
 /obj/effect/decal/cleanable/oil,
 /obj/effect/decal/cleanable/robot_debris,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/plasteel/tech/grid,
@@ -2620,8 +2614,6 @@
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer2,
 /obj/effect/turf_decal/techfloor/orange,
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer4,
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plasteel/tech/grid,
 /area/ship/engineering)

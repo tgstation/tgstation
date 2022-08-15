@@ -34,8 +34,6 @@
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plasteel/cult,
 /area/ship/hallway/central)
 "bg" = (
@@ -92,8 +90,6 @@
 /turf/open/floor/plasteel,
 /area/ship/cargo)
 "ch" = (
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
@@ -385,7 +381,6 @@
 "lr" = (
 /obj/machinery/power/smes/engineering,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/engine/cult,
 /area/ship/engineering/electrical)
 "lD" = (
@@ -546,7 +541,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ship/hallway/central)
@@ -959,8 +953,6 @@
 /area/ship/engineering/electrical)
 "BW" = (
 /obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
 	dir = 4
 	},
@@ -1064,7 +1056,6 @@
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plasteel/cult,
 /area/ship/storage)
 "Fe" = (
@@ -1122,7 +1113,6 @@
 /area/ship/engineering/electrical)
 "GN" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/closet/secure_closet/engineering_personal,
 /obj/effect/turf_decal/industrial/outline/yellow,
 /obj/item/clothing/gloves/color/yellow,
@@ -1154,7 +1144,6 @@
 "Hh" = (
 /obj/machinery/power/terminal,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/engine/cult,
 /area/ship/engineering/electrical)
 "Hn" = (
@@ -1164,7 +1153,6 @@
 /turf/open/floor/plasteel/cult,
 /area/ship/security)
 "HJ" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/suit_storage_unit/engine,
 /obj/machinery/airalarm/directional/north,
@@ -1821,7 +1809,6 @@
 /obj/machinery/door/airlock/cult/glass,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plasteel/cult,
 /area/ship/storage)

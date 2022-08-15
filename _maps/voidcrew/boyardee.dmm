@@ -94,7 +94,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/light_switch{
 	pixel_x = -24;
 	pixel_y = 24
@@ -193,7 +192,6 @@
 	dir = 8
 	},
 /obj/structure/table/wood/fancy/black,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/item/reagent_containers/food/condiment/peppermill,
 /obj/item/reagent_containers/food/condiment/saltshaker{
@@ -332,7 +330,6 @@
 /turf/open/floor/plasteel/mono/white,
 /area/ship/bridge)
 "fM" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
 	dir = 4
@@ -583,7 +580,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/disposalpipe/junction{
 	dir = 4
 	},
@@ -685,7 +681,6 @@
 "nF" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance)
 "nN" = (
@@ -762,7 +757,6 @@
 /area/ship/crew/canteen)
 "pt" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/item/stack/sheet/mineral/wood/fifty,
 /obj/item/stack/sheet/metal/fifty,
@@ -864,7 +858,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/effect/landmark/observer_start,
 /turf/open/floor/carpet/nanoweave,
 /area/ship/crew)
@@ -946,7 +939,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/carpet/nanoweave,
 /area/ship/crew)
@@ -1648,7 +1640,6 @@
 	dir = 5
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/autolathe,
 /turf/open/floor/plating,
 /area/ship/maintenance)
@@ -2255,8 +2246,6 @@
 	target_pressure = 500
 	},
 /obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance)
 "QH" = (
@@ -2309,7 +2298,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plasteel/mono/white,
 /area/ship/bridge)
@@ -2666,7 +2654,6 @@
 /area/ship/crew/janitor)
 "Yn" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2,
 /turf/open/floor/plasteel,

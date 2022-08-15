@@ -301,8 +301,6 @@
 /area/ship/maintenance/fore)
 "mX" = (
 /obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/visible/layer2,
 /turf/open/floor/plating,
 /area/ship/maintenance/central)
@@ -401,7 +399,6 @@
 /turf/open/floor/plating,
 /area/ship/maintenance/fore)
 "qn" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/visible/layer2,
 /turf/open/floor/plating,
@@ -581,8 +578,6 @@
 "yo" = (
 /obj/effect/decal/cleanable/oil/slippery,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 1
@@ -900,7 +895,6 @@
 "OG" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
@@ -910,7 +904,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/power/terminal,
 /mob/living/simple_animal/hostile/cockroach,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/central)
@@ -1084,7 +1077,6 @@
 "VK" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/power/terminal,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/central)

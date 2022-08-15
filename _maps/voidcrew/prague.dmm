@@ -208,7 +208,6 @@
 "fp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/effect/turf_decal/corner/neutral{
 	dir = 5
 	},
@@ -226,7 +225,6 @@
 /turf/open/floor/plasteel,
 /area/ship/engineering)
 "fO" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -634,7 +632,6 @@
 /area/ship/crew)
 "nt" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ship/engineering)
@@ -956,7 +953,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ship/bridge)
 "tI" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering)
@@ -1760,7 +1756,6 @@
 "JL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/mineral/titanium/white,
 /area/ship/science)
 "JO" = (
@@ -2002,7 +1997,6 @@
 "Oj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/mineral/titanium/white,
 /area/ship/science)
 "On" = (
@@ -2096,7 +2090,6 @@
 /area/ship/bridge)
 "PR" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 6
 	},
@@ -2179,7 +2172,6 @@
 /obj/effect/turf_decal/industrial/warning{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/effect/turf_decal/corner/neutral{
 	dir = 5

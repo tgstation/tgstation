@@ -447,7 +447,6 @@
 	dir = 5
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/port)
 "iv" = (
@@ -460,7 +459,6 @@
 /turf/open/floor/plasteel/tech,
 /area/ship/cargo)
 "ix" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
@@ -799,7 +797,6 @@
 /obj/effect/turf_decal/industrial/fire{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/airalarm/all_access{
 	pixel_y = 24
@@ -1145,7 +1142,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/catwalk/over,
 /turf/open/floor/plating,
 /area/ship/maintenance/port)
@@ -1431,7 +1427,6 @@
 "zQ" = (
 /obj/machinery/power/smes/engineering,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plasteel/tech/grid,
 /area/ship/maintenance/port)
 "zY" = (
@@ -1676,7 +1671,6 @@
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 6
@@ -1948,7 +1942,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/port)
 "Kj" = (
@@ -1999,7 +1992,6 @@
 /obj/effect/turf_decal/industrial/fire{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/port)
@@ -2288,7 +2280,6 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plasteel/tech,
 /area/ship/cargo)
 "Pw" = (
@@ -2379,7 +2370,6 @@
 /turf/open/floor/plating,
 /area/ship/storage)
 "Rc" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/structure/catwalk/over,
 /obj/machinery/atmospherics/pipe/simple/orange/hidden,

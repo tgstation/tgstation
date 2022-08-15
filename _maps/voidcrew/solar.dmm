@@ -587,7 +587,6 @@
 /obj/item/storage/toolbox/electrical,
 /obj/item/clothing/head/welding,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/effect/turf_decal/corner/purple{
 	dir = 10
 	},
@@ -1185,7 +1184,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ship/hallway)
 "zS" = (
@@ -1440,7 +1438,6 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
 	dir = 1
 	},
@@ -1588,7 +1585,6 @@
 /area/ship/engineering)
 "Hk" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2,
 /turf/open/floor/plasteel/mono,
@@ -1685,8 +1681,6 @@
 	dir = 8
 	},
 /obj/machinery/power/apc/auto_name/east,
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ship/engineering)
@@ -2094,7 +2088,6 @@
 "Uq" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
 /turf/open/floor/plasteel/mono,
 /area/ship/hallway)
@@ -2117,7 +2110,6 @@
 /area/ship/engineering)
 "UW" = (
 /obj/effect/turf_decal/industrial/warning,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ship/cargo)

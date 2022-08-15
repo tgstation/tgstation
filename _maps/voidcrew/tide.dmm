@@ -5,7 +5,6 @@
 /area/ship/maintenance/fore)
 "aM" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/effect/decal/cleanable/oil,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 4
@@ -247,8 +246,6 @@
 /area/ship/maintenance/central)
 "sw" = (
 /obj/machinery/power/apc/auto_name/east,
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/insectguts,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -652,7 +649,6 @@
 /area/ship/maintenance/fore)
 "Sf" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 8
@@ -705,7 +701,6 @@
 /area/ship/maintenance/starboard)
 "Xg" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/effect/decal/cleanable/oil/slippery,
 /obj/effect/decal/cleanable/blood/footprints,
 /obj/effect/decal/cleanable/blood/tracks,
@@ -755,7 +750,6 @@
 "Zj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/structure/cable,
 /obj/structure/cable,
 /mob/living/simple_animal/hostile/cockroach,
 /turf/open/floor/plating,

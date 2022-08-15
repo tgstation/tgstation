@@ -162,7 +162,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/apc/auto_name/north,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 10
 	},
@@ -275,7 +274,6 @@
 /area/ship/maintenance/central)
 "nq" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/item/storage/backpack/satchel/flat,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ship/maintenance/central)
@@ -305,11 +303,9 @@
 /obj/effect/decal/cleanable/oil,
 /obj/machinery/power/terminal,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "oz" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 1
@@ -488,8 +484,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/terminal,
 /obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "uh" = (
@@ -523,8 +517,6 @@
 "wt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
 	dir = 8
 	},
@@ -543,7 +535,6 @@
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "xb" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
@@ -759,7 +750,6 @@
 /area/ship/medical)
 "CP" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/ship/maintenance/central)
@@ -1184,7 +1174,6 @@
 	name = "Armory"
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 1
 	},
@@ -1335,7 +1324,6 @@
 /area/ship/security)
 "Wk" = (
 /obj/item/cigbutt,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 4

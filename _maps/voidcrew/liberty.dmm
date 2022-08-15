@@ -258,7 +258,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ship/security)
 "nt" = (
@@ -1091,7 +1090,6 @@
 	dir = 9
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plasteel/stairs,
 /area/ship/cargo)
 "HU" = (
@@ -1381,7 +1379,6 @@
 	dir = 6
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/hallway/port)
 "Py" = (
@@ -1482,7 +1479,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ship/cargo)
 "SR" = (
@@ -1560,7 +1556,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 10
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/hallway/starboard)
@@ -1718,7 +1713,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 10
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/hallway/starboard)

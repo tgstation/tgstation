@@ -73,9 +73,6 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/structure/cable/orange{
-	icon_state = "1-4"
-	},
 /turf/open/floor/plating,
 /area/ship/engineering/engine)
 "aC" = (
@@ -295,7 +292,6 @@
 /area/ship/engineering/engine)
 "cc" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/window/reinforced/spawner/west{
 	dir = 4
 	},
@@ -312,7 +308,6 @@
 /obj/machinery/atmospherics/pipe/simple/green/hidden/layer5{
 	dir = 5
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
 	dir = 8
@@ -741,7 +736,6 @@
 /area/ship/cargo)
 "fx" = (
 /obj/machinery/atmospherics/pipe/simple/orange/hidden,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
@@ -1573,7 +1567,6 @@
 	dir = 9
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plasteel/patterned/grid,
 /area/ship/engineering/engine)
 "lY" = (
@@ -1645,7 +1638,6 @@
 /turf/open/floor/engine/hull,
 /area/ship/external)
 "mo" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/light{
 	dir = 8
@@ -2603,9 +2595,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/industrial/caution,
-/obj/structure/cable/orange{
-	icon_state = "4-8"
-	},
+/obj/structure/cable/orange,
 /turf/open/floor/plating,
 /area/ship/engineering/engine)
 "td" = (
@@ -2844,7 +2834,6 @@
 "uP" = (
 /obj/machinery/atmospherics/pipe/simple/orange/hidden,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
 	dir = 4
 	},
@@ -2862,7 +2851,6 @@
 /area/ship/hallway/port)
 "uY" = (
 /obj/effect/decal/cleanable/oil/streak,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 4
@@ -3167,7 +3155,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2,
 /obj/structure/disposalpipe/junction{
@@ -3354,7 +3341,6 @@
 /area/ship/medical)
 "zz" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
@@ -3535,9 +3521,7 @@
 /obj/effect/turf_decal/industrial/warning{
 	dir = 5
 	},
-/obj/structure/cable/orange{
-	icon_state = "0-8"
-	},
+/obj/structure/cable/orange,
 /obj/machinery/power/port_gen/pacman/uranium,
 /turf/open/floor/plating,
 /area/ship/engineering/engine)
@@ -3722,7 +3706,6 @@
 /turf/open/floor/plasteel,
 /area/ship/hallway/starboard)
 "Ck" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -3919,7 +3902,6 @@
 /area/ship/engineering/atmospherics)
 "DI" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /obj/machinery/button/door{
 	dir = 8;
@@ -4074,7 +4056,6 @@
 /area/ship/crew/janitor)
 "EO" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 8
 	},
@@ -4169,8 +4150,6 @@
 /obj/machinery/atmospherics/pipe/simple/green/hidden/layer5{
 	dir = 6
 	},
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer4,
 /obj/structure/disposalpipe/segment{
@@ -4351,7 +4330,6 @@
 /area/ship/hallway/aft)
 "GC" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 4
 	},
@@ -4529,7 +4507,6 @@
 /area/ship/crew/dorm)
 "Im" = (
 /obj/effect/turf_decal/corner/white/mono,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 8
@@ -5169,7 +5146,6 @@
 /obj/machinery/atmospherics/pipe/simple/green/hidden/layer5,
 /obj/item/clothing/gloves/color/yellow,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/catwalk/over/plated_catwalk,
 /obj/structure/table,
 /turf/open/floor/plating,
@@ -5235,7 +5211,6 @@
 /turf/open/floor/plasteel/white,
 /area/ship/medical)
 "Oe" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -5745,7 +5720,6 @@
 /area/ship/crew/canteen)
 "RV" = (
 /obj/machinery/atmospherics/pipe/simple/orange/hidden,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
@@ -6343,7 +6317,6 @@
 "Wt" = (
 /obj/effect/turf_decal/corner/grey/mono,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/structure/disposalpipe/segment{
@@ -6482,8 +6455,6 @@
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 8
 	},
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer4,
 /obj/structure/disposalpipe/junction/flip{
@@ -6626,7 +6597,6 @@
 /turf/open/floor/plating,
 /area/ship/engineering/engine)
 "YK" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/port)

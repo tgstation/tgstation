@@ -408,7 +408,6 @@
 /area/ship/science/robotics)
 "hY" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 6
 	},
@@ -449,7 +448,6 @@
 /turf/open/floor/plasteel/mono/dark,
 /area/ship/construction)
 "iy" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/corner/neutral{
@@ -732,7 +730,6 @@
 /area/ship/security/prison)
 "nz" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plasteel/mono/dark,
 /area/ship/bridge)
 "nE" = (
@@ -765,8 +762,6 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plasteel/tech/grid,
 /area/ship/engineering/electrical)
@@ -1016,7 +1011,6 @@
 /area/ship/hallway/central)
 "sm" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 1
 	},
@@ -1073,7 +1067,6 @@
 /turf/open/floor/plasteel/mono/dark,
 /area/ship/construction)
 "ta" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/effect/turf_decal/corner/neutral{
 	dir = 10
@@ -1267,7 +1260,6 @@
 /obj/machinery/suit_storage_unit/independent/security,
 /obj/effect/turf_decal/industrial/outline/yellow,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ship/engineering)
 "wv" = (
@@ -1406,7 +1398,6 @@
 "za" = (
 /obj/machinery/power/apc/auto_name/south,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plasteel/tech/grid,
 /area/ship/engineering/electrical)
 "zg" = (
@@ -1440,7 +1431,6 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/structure/window/reinforced/survival_pod{
 	dir = 5
@@ -1525,7 +1515,6 @@
 /obj/effect/turf_decal/corner/neutral{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
@@ -1655,7 +1644,6 @@
 /turf/open/floor/plasteel/tech/grid,
 /area/ship/bridge)
 "CU" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plasteel/mono/dark,
 /area/ship/bridge)
@@ -1794,7 +1782,6 @@
 /area/ship/construction)
 "Gk" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 6
 	},
@@ -1810,7 +1797,6 @@
 /area/ship/hallway/central)
 "GD" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plasteel/tech/grid,
 /area/ship/bridge)
@@ -1841,11 +1827,9 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plasteel/tech,
 /area/ship/bridge)
 "Hb" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/ship/hallway/central)
@@ -2655,7 +2639,6 @@
 /turf/open/floor/plasteel/tech,
 /area/ship/bridge)
 "UR" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/white,

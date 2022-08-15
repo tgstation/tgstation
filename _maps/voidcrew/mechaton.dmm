@@ -779,7 +779,6 @@
 /area/ship/hallway/central)
 "zC" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/effect/turf_decal/spline/fancy/beige{
 	dir = 1
 	},
@@ -1051,7 +1050,6 @@
 /area/ship/science/robotics)
 "EF" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/effect/turf_decal/spline/fancy/purple{
 	dir = 9
 	},
@@ -1071,7 +1069,6 @@
 /turf/open/floor/noslip,
 /area/ship/hallway/central)
 "Fa" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/effect/turf_decal/spline/fancy/purple{
 	dir = 4
@@ -1289,7 +1286,6 @@
 /area/ship/science/robotics)
 "JO" = (
 /obj/machinery/power/smes/engineering,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
@@ -1726,7 +1722,6 @@
 /area/ship/hallway/central)
 "Vp" = (
 /obj/machinery/power/apc/auto_name/east,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/effect/decal/cleanable/dirt/dust,

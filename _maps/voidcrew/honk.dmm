@@ -358,8 +358,7 @@
 /turf/closed/wall/mineral/bananium,
 /area/ship/crew)
 "AH" = (
-/obj/structure/cable,/obj/structure/cable,on_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/mineral/bananium,
 /area/ship/crew)
 "AS" = (
@@ -504,7 +503,6 @@
 /area/ship/crew)
 "Jy" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/button/door{
 	id = "prisonext3";
 	name = "Prison Flush";
@@ -565,7 +563,6 @@
 /area/ship/crew)
 "MV" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/mineral/bananium,
 /area/ship/crew)
 "MZ" = (
@@ -621,7 +618,6 @@
 /area/ship/engineering/engine)
 "Pz" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/item/assembly/signaler,
 /turf/open/floor/mineral/bananium,
 /area/ship/crew)
@@ -644,7 +640,6 @@
 /turf/open/floor/light,
 /area/ship/engineering/engine)
 "QS" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/light,
 /area/ship/engineering/engine)

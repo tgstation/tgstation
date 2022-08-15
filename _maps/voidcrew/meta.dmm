@@ -380,7 +380,6 @@
 /area/ship/engineering)
 "aP" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 10
 	},
@@ -457,7 +456,6 @@
 /obj/machinery/airalarm/all_access{
 	pixel_y = 24
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
 	dir = 1
@@ -894,7 +892,6 @@
 /area/ship/crew/canteen)
 "bO" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/computer/helm/viewscreen{
 	pixel_x = 30;
 	pixel_y = 30
@@ -1133,7 +1130,6 @@
 /area/ship/engineering)
 "ck" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/orange/hidden,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
@@ -1204,7 +1200,6 @@
 /turf/open/floor/plasteel,
 /area/ship/crew/canteen)
 "cp" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/holopad/emergency/bar,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer2,
@@ -1827,7 +1822,6 @@
 /area/ship/cargo)
 "du" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8
 	},
@@ -1993,7 +1987,6 @@
 /turf/open/floor/plating,
 /area/ship/engineering)
 "dI" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 9
@@ -2250,7 +2243,6 @@
 /area/ship/crew/canteen)
 "el" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/effect/decal/cleanable/oil,
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 4
@@ -2284,7 +2276,6 @@
 /turf/open/floor/plating/airless,
 /area/ship/engineering)
 "fX" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 9
@@ -2492,7 +2483,6 @@
 /turf/open/floor/plating,
 /area/ship/bridge)
 "JR" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 4

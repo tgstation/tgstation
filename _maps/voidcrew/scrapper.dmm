@@ -96,7 +96,6 @@
 	dir = 10
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -227,7 +226,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/pod/light,
 /area/ship/crew/dorm)
 "cx" = (
@@ -295,7 +293,6 @@
 "dl" = (
 /obj/machinery/power/apc/auto_name/west,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /turf/open/floor/plating,
@@ -524,7 +521,6 @@
 /area/ship/crew/office)
 "gp" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/effect/turf_decal/siding/blue,
 /turf/open/floor/plasteel/white,
 /area/ship/medical)
@@ -741,7 +737,6 @@
 /area/ship/external)
 "jC" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/pod/light,
 /area/ship/cargo)
 "jF" = (
@@ -779,7 +774,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ship/hallway/central)
 "kv" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/pod/dark,
 /area/ship/cargo)
@@ -836,8 +830,6 @@
 "lw" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer4,
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/pod/light,
 /area/ship/hallway/starboard)
@@ -901,12 +893,9 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/pod/light,
 /area/ship/crew/dorm)
 "mb" = (
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
@@ -929,7 +918,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
 	dir = 8
@@ -1281,7 +1269,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering/engine)
 "qQ" = (
@@ -1589,7 +1576,6 @@
 /area/ship/hallway/fore)
 "va" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/light{
 	dir = 4
@@ -1982,7 +1968,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/carpet/blue,
 /area/ship/crew/canteen)
 "zy" = (
@@ -2005,7 +1990,6 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/pod/light,
 /area/ship/hallway/fore)
@@ -2175,7 +2159,6 @@
 /turf/open/floor/pod/light,
 /area/ship/hallway/central)
 "Bj" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/item/radio/intercom{
 	pixel_y = 28
@@ -2431,7 +2414,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/pod/light,
 /area/ship/crew/dorm)
@@ -2778,8 +2760,6 @@
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
 "Jp" = (
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
@@ -3444,7 +3424,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/effect/landmark/start/medical_doctor,
 /obj/effect/turf_decal/siding/purple/corner{
 	dir = 8
@@ -3710,7 +3689,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/pod/light,
 /area/ship/hallway/fore)
 "Ud" = (
@@ -3736,7 +3714,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/pod/light,
 /area/ship/hallway/starboard)
@@ -3893,7 +3870,6 @@
 /area/ship/crew/hydroponics)
 "Wj" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/computer/helm/viewscreen{
 	pixel_x = 32;
@@ -4102,7 +4078,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
 	dir = 1

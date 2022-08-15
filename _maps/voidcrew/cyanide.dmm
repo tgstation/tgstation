@@ -59,7 +59,6 @@
 "w" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/closet/wall/orange{
 	dir = 8;
 	name = "fuel locker";
@@ -103,7 +102,6 @@
 	desc = "A control terminal for the ship's electrical systems.";
 	name = "Syndicate Interceptor APC"
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/turretid{
 	desc = "Used to control the Inteceptor's automated defenses.";

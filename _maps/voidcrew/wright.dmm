@@ -40,7 +40,6 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
 	dir = 8
 	},
@@ -273,7 +272,6 @@
 "iY" = (
 /obj/effect/decal/cleanable/vomit/old,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/wood,
 /area/ship/hallway/central)
 "iZ" = (
@@ -481,7 +479,6 @@
 "lP" = (
 /obj/machinery/power/smes,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "lV" = (
@@ -627,7 +624,6 @@
 "px" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8
 	},
@@ -667,7 +663,6 @@
 	dir = 4;
 	pixel_y = 3
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/carpet/nanoweave/beige,
 /area/ship/crew/law_office)
@@ -913,7 +908,6 @@
 "zd" = (
 /obj/structure/closet/firecloset/full,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/layer_manifold/visible{
 	dir = 4
 	},
@@ -1154,7 +1148,6 @@
 /area/ship/crew/office)
 "Gc" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "Gy" = (
@@ -1301,7 +1294,6 @@
 /area/ship/crew/toilet)
 "KK" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
@@ -1728,7 +1720,6 @@
 /area/ship/maintenance/aft)
 "UE" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/wood,
 /area/ship/hallway/central)
 "UO" = (
@@ -1859,7 +1850,6 @@
 /turf/closed/wall,
 /area/ship/hallway/central)
 "XD" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)

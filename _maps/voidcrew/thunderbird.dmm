@@ -78,7 +78,6 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/corner/bottlegreen/mono,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 8
 	},
@@ -369,7 +368,6 @@
 	dir = 6
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "qj" = (
@@ -382,7 +380,6 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/item/tank/jetpack/suit,
 /obj/structure/rack,
@@ -416,7 +413,7 @@
 /turf/open/floor/mineral/titanium,
 /area/ship/hallway/central)
 "td" = (
-/obj/structure/cable,/obj/structure/cable,on_state = "2-8"
+/obj/structure/cable,
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -541,14 +538,12 @@
 "wl" = (
 /obj/machinery/power/smes/engineering,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "wp" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 5
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
@@ -734,7 +729,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/power/port_gen/pacman,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
@@ -754,7 +748,6 @@
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "Im" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/structure/closet/crate,
 /obj/item/am_containment,
@@ -806,15 +799,12 @@
 /area/ship/hallway/central)
 "Lw" = (
 /obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium,
 /area/ship/hallway/central)
 "LK" = (
 /obj/machinery/power/am_control_unit,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
@@ -827,7 +817,6 @@
 /area/ship/crew/dorm)
 "MC" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)

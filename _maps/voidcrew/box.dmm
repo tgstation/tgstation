@@ -191,7 +191,6 @@
 	dir = 6
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/effect/turf_decal/corner/blue{
 	dir = 1
 	},
@@ -313,7 +312,6 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/blue/corner{
 	dir = 8
@@ -879,7 +877,6 @@
 	pixel_y = 24
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering)
@@ -1447,7 +1444,6 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/blue{
 	dir = 8

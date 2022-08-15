@@ -266,7 +266,6 @@
 /area/ship/bridge)
 "pW" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 4
 	},
@@ -369,7 +368,6 @@
 /area/ship/bridge)
 "vW" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 4
 	},
@@ -403,8 +401,6 @@
 /turf/open/floor/mineral/titanium,
 /area/ship/crew)
 "wf" = (
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/mineral/titanium,

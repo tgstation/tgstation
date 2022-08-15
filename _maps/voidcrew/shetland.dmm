@@ -60,7 +60,6 @@
 /area/ship/crew/canteen)
 "bd" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/power/apc/auto_name/north,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
 	dir = 1
@@ -77,8 +76,6 @@
 /turf/open/floor/plating,
 /area/ship/engineering)
 "bm" = (
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ship/engineering)
@@ -202,7 +199,6 @@
 /turf/open/floor/plasteel/dark,
 /area/ship/cargo)
 "dh" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/airalarm/all_access{
 	dir = 8;
@@ -329,7 +325,6 @@
 /area/ship/engineering/engine)
 "eq" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
 	dir = 8
 	},
@@ -445,7 +440,6 @@
 /turf/closed/wall,
 /area/ship/construction)
 "fB" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
 	dir = 4
@@ -702,7 +696,6 @@
 /area/ship/crew/canteen)
 "iM" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering)
 "iO" = (
@@ -715,7 +708,6 @@
 /turf/open/floor/plasteel,
 /area/ship/security)
 "iP" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/airalarm/all_access{
 	dir = 1;
@@ -1013,7 +1005,6 @@
 /area/ship/cargo)
 "lZ" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 1
 	},
@@ -1166,7 +1157,6 @@
 /turf/open/floor/plating,
 /area/ship/hallway/fore)
 "oN" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ship/cargo)
@@ -1325,7 +1315,6 @@
 /area/ship/engineering/electrical)
 "qJ" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 1
 	},
@@ -1361,7 +1350,6 @@
 /turf/open/floor/plasteel/mono/white,
 /area/ship/medical)
 "rf" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/structure/chair/plastic{
 	dir = 8
@@ -1453,9 +1441,6 @@
 /turf/open/floor/plating,
 /area/ship/hallway/port)
 "rN" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
 	dir = 8
@@ -1820,8 +1805,6 @@
 /area/ship/crew/office)
 "wk" = (
 /obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 1
 	},
@@ -1839,8 +1822,6 @@
 /turf/open/floor/plasteel/dark,
 /area/ship/hallway/fore)
 "wr" = (
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
@@ -2084,7 +2065,6 @@
 /area/ship/hallway/fore)
 "zQ" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 6
 	},
@@ -2317,7 +2297,6 @@
 /area/ship/hallway/starboard)
 "DN" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 5
 	},
@@ -2399,7 +2378,6 @@
 /turf/open/floor/plasteel/dark,
 /area/ship/engineering)
 "ET" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/structure/catwalk/over/plated_catwalk/dark,
 /turf/open/floor/plating,
@@ -2527,7 +2505,6 @@
 /turf/open/floor/plasteel,
 /area/ship/engineering/atmospherics)
 "He" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
@@ -2737,7 +2714,6 @@
 /turf/open/floor/plasteel/dark,
 /area/ship/hallway/fore)
 "JJ" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering)
@@ -3626,7 +3602,6 @@
 /area/ship/security)
 "UC" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 4
 	},
@@ -3654,7 +3629,6 @@
 /turf/open/floor/plating,
 /area/ship/engineering)
 "UT" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/light/small{
 	dir = 1
@@ -3925,7 +3899,6 @@
 /area/ship/cargo)
 "Yj" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
@@ -4012,7 +3985,6 @@
 /turf/open/floor/plasteel,
 /area/ship/cargo)
 "Zo" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
 	dir = 1

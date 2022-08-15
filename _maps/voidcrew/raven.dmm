@@ -555,8 +555,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8
 	},
@@ -645,7 +643,6 @@
 /turf/open/floor/plasteel/dark,
 /area/ship/bridge)
 "bH" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
 	dir = 1
@@ -1039,7 +1036,6 @@
 "cC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /turf/open/floor/plasteel/white,
@@ -1394,8 +1390,6 @@
 /area/ship/crew)
 "dN" = (
 /obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/suit_storage_unit/engine,
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
@@ -1454,7 +1448,6 @@
 /area/ship/engineering/electrical)
 "dZ" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 5
 	},
@@ -1486,7 +1479,6 @@
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
 "ec" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8
@@ -1653,7 +1645,6 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ship/crew)
 "gK" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
@@ -1871,7 +1862,6 @@
 "oy" = (
 /obj/item/cigbutt,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
 "oO" = (
@@ -1951,7 +1941,6 @@
 /area/ship/engineering/electrical)
 "sf" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
 "ss" = (
@@ -1980,7 +1969,6 @@
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
 "tI" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/ship/engineering/electrical)
@@ -2085,7 +2073,6 @@
 /area/ship/crew)
 "wU" = (
 /obj/machinery/power/terminal,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 1
@@ -2420,8 +2407,6 @@
 /obj/machinery/power/port_gen/pacman,
 /obj/effect/turf_decal/industrial/outline/yellow,
 /obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
@@ -2495,7 +2480,6 @@
 /area/ship/crew)
 "Jy" = (
 /obj/machinery/power/terminal,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
@@ -2612,7 +2596,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/terminal,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
 "Lf" = (
@@ -2676,8 +2659,6 @@
 	dir = 1
 	},
 /obj/machinery/light,
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8
@@ -2884,7 +2865,6 @@
 /area/ship/engineering/electrical)
 "Uf" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8
 	},
@@ -3017,12 +2997,9 @@
 /obj/structure/cable,
 /obj/structure/reagent_dispensers/fueltank,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
 "Zg" = (
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8

@@ -1282,7 +1282,6 @@
 /area/ship/cargo)
 "qr" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
 	dir = 1
 	},
@@ -1747,7 +1746,6 @@
 /area/ship/medical)
 "xJ" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
 	dir = 1
 	},
@@ -1762,7 +1760,6 @@
 /turf/open/floor/plasteel,
 /area/ship/engineering/atmospherics)
 "yy" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 6
@@ -1830,7 +1827,6 @@
 /turf/open/floor/plasteel/patterned,
 /area/ship/storage)
 "yW" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 4
@@ -1945,7 +1941,6 @@
 /area/ship/crew)
 "Az" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
 	dir = 8
 	},
@@ -1959,7 +1954,6 @@
 	pixel_y = 28
 	},
 /obj/machinery/power/apc/auto_name/west,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 6
@@ -2384,7 +2378,6 @@
 /area/ship/crew/solgov)
 "EW" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /turf/open/floor/plating,
 /area/ship/engineering)
@@ -2470,7 +2463,6 @@
 /area/ship/bridge)
 "FN" = (
 /obj/machinery/power/smes/engineering,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/effect/turf_decal/corner/yellow/half{
 	dir = 4
@@ -2786,8 +2778,6 @@
 /area/ship/engineering/atmospherics)
 "JT" = (
 /obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
 	dir = 4
 	},
@@ -2929,7 +2919,6 @@
 /turf/open/floor/carpet/nanoweave,
 /area/ship/hallway/central)
 "LD" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
@@ -3129,7 +3118,6 @@
 /area/ship/crew/solgov)
 "OY" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 5
 	},
@@ -3288,7 +3276,6 @@
 /area/ship/crew/solgov)
 "RU" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /turf/open/floor/plasteel,
 /area/ship/engineering)
@@ -3317,7 +3304,6 @@
 /turf/open/floor/plasteel/mono/white,
 /area/ship/medical)
 "Sd" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
 	dir = 1
@@ -3839,7 +3825,6 @@
 /turf/open/floor/plasteel/white,
 /area/ship/crew/canteen)
 "Zx" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2,

@@ -211,7 +211,6 @@
 /area/ship/engineering/atmospherics)
 "gf" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering)
 "gs" = (
@@ -565,7 +564,6 @@
 "qB" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
@@ -828,7 +826,6 @@
 /area/ship/crew)
 "yq" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
@@ -1068,8 +1065,6 @@
 /area/ship/hallway/central)
 "Fn" = (
 /obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
 	dir = 1
 	},
@@ -1237,8 +1232,6 @@
 /area/ship/engineering/atmospherics)
 "Ka" = (
 /obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer2,
@@ -1294,7 +1287,6 @@
 /turf/closed/wall/mineral/titanium,
 /area/ship/engineering/atmospherics)
 "Mp" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,

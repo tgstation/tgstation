@@ -51,7 +51,6 @@
 /area/ship/cargo)
 "ef" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "ep" = (
@@ -85,7 +84,6 @@
 /turf/open/floor/plating,
 /area/ship/external)
 "gz" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 10
@@ -147,7 +145,6 @@
 /turf/open/floor/plasteel,
 /area/ship/hallway/central)
 "jI" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
@@ -244,7 +241,6 @@
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/power/rtg,
 /turf/open/floor/plating,
@@ -535,7 +531,6 @@
 "FF" = (
 /obj/machinery/power/apc/auto_name/east,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 9
 	},
@@ -622,8 +617,6 @@
 /area/ship/engineering)
 "II" = (
 /obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 8
 	},
@@ -680,7 +673,6 @@
 /turf/open/floor/plating,
 /area/ship/cargo)
 "Ke" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel,
@@ -785,7 +777,6 @@
 /turf/open/floor/plasteel,
 /area/ship/security/prison)
 "PM" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -1013,7 +1004,6 @@
 /turf/open/floor/plasteel,
 /area/ship/crew/dorm)
 "XH" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)

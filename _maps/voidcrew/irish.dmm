@@ -75,7 +75,6 @@
 	dir = 5
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
@@ -345,7 +344,6 @@
 	},
 /obj/machinery/power/apc/auto_name/north,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ship/storage)
 "tk" = (
@@ -484,7 +482,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ship/storage)
 "yA" = (
@@ -492,7 +489,6 @@
 /area/ship/medical)
 "yU" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 6
@@ -584,7 +580,6 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ship/storage)
 "DZ" = (
@@ -639,14 +634,11 @@
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ship/storage)
 "Gn" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ship/storage)
@@ -679,8 +671,6 @@
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "Iz" = (
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/power/terminal{
 	dir = 8

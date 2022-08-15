@@ -325,7 +325,6 @@
 "nu" = (
 /obj/machinery/duct,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
@@ -357,7 +356,6 @@
 /area/ship/maintenance/port)
 "oz" = (
 /obj/machinery/duct,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plating,
@@ -495,7 +493,6 @@
 /area/ship/maintenance/port)
 "tG" = (
 /obj/machinery/duct,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel/dark,
@@ -768,11 +765,6 @@
 /turf/closed/wall,
 /area/ship/maintenance/port)
 "FJ" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
@@ -1213,8 +1205,6 @@
 /area/ship/crew/dorm)
 "Vn" = (
 /obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
 	dir = 8
 	},
@@ -1402,7 +1392,6 @@
 /area/ship/medical)
 "Zz" = (
 /obj/machinery/duct,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
 	dir = 4

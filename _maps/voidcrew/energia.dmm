@@ -43,7 +43,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 1
 	},
@@ -61,7 +60,6 @@
 /obj/machinery/atmospherics/pipe/manifold/yellow/visible{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
@@ -189,7 +187,6 @@
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "hp" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 4
@@ -339,7 +336,6 @@
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "nY" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
@@ -734,8 +730,6 @@
 /area/ship/engineering/engine)
 "AZ" = (
 /obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/power/terminal{
 	dir = 8
 	},
@@ -1042,7 +1036,6 @@
 /turf/open/floor/plasteel,
 /area/ship/medical)
 "OI" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/power/terminal{
 	dir = 8

@@ -140,7 +140,6 @@
 /area/ship/crew/office)
 "cE" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/plasteel/dark,
@@ -240,7 +239,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 5
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering)
@@ -505,7 +503,6 @@
 "il" = (
 /obj/effect/turf_decal/siding/red,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 4
 	},
@@ -526,7 +523,6 @@
 /turf/open/floor/plasteel,
 /area/ship/hallway/starboard)
 "iu" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
 	dir = 8
@@ -611,7 +607,6 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering)
@@ -832,7 +827,6 @@
 /area/ship/crew/dorm)
 "oQ" = (
 /obj/machinery/power/terminal,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/structure/sign/warning/enginesafety{
 	pixel_y = 32
@@ -1352,7 +1346,6 @@
 /area/ship/security)
 "wJ" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
 	dir = 4
@@ -1442,7 +1435,6 @@
 	pixel_y = 4
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
 	dir = 4
@@ -1522,7 +1514,6 @@
 /area/ship/security)
 "yW" = (
 /obj/machinery/power/terminal,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering)
@@ -2159,7 +2150,6 @@
 /area/ship/crew)
 "Jr" = (
 /obj/machinery/power/terminal,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering)
@@ -2856,7 +2846,6 @@
 /turf/open/floor/plating,
 /area/ship/engineering)
 "Ua" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
 	dir = 4

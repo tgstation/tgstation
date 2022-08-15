@@ -67,7 +67,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/catwalk/over,
 /turf/open/floor/plating,
 /area/ship/crew)
@@ -498,7 +497,6 @@
 	},
 /obj/machinery/power/apc/auto_name/east,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/reagent_containers/glass/beaker{
@@ -561,8 +559,6 @@
 /area/ship/cargo)
 "nJ" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer2,
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/structure/catwalk/over,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
@@ -746,7 +742,6 @@
 /turf/open/floor/wood,
 /area/ship/crew)
 "sg" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/effect/turf_decal/industrial/warning,
@@ -1453,7 +1448,6 @@
 /area/ship/crew)
 "Mg" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 6
 	},
@@ -1790,7 +1784,6 @@
 /turf/open/floor/plasteel/dark,
 /area/ship/crew)
 "Xn" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 8

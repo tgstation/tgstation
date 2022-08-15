@@ -206,7 +206,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/pod/light,
 /area/ship/hallway/starboard)
 "cu" = (
@@ -341,8 +340,6 @@
 /area/ship/science)
 "eU" = (
 /obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
 	},
@@ -362,7 +359,6 @@
 "fC" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/pod/light,
 /area/ship/hallway/fore)
@@ -557,8 +553,6 @@
 "ip" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer4,
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/pod/light,
 /area/ship/hallway/starboard)
@@ -788,7 +782,6 @@
 /turf/open/floor/carpet/royalblue,
 /area/ship/construction)
 "mN" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/item/radio/intercom{
 	pixel_y = 28
@@ -1060,7 +1053,6 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/pod/light,
 /area/ship/cargo)
@@ -1452,7 +1444,6 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plasteel/mono/dark,
 /area/ship/science)
 "uV" = (
@@ -1551,7 +1542,6 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/pod/light,
 /area/ship/crew/dorm)
 "xq" = (
@@ -1578,7 +1568,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/pod/light,
 /area/ship/cargo)
@@ -1737,7 +1726,6 @@
 "zv" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/eighties,
 /area/ship/crew/canteen)
@@ -2392,7 +2380,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/ship/crew/canteen)
 "IE" = (
@@ -2408,7 +2395,6 @@
 /area/ship/engineering/atmospherics)
 "IG" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 5
@@ -2449,7 +2435,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/pod/light,
 /area/ship/hallway/fore)
@@ -2773,7 +2758,6 @@
 /area/ship/science/robotics)
 "MP" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 1
 	},
@@ -2813,7 +2797,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 6
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/pod/light,
 /area/ship/hallway/fore)
@@ -3002,7 +2985,6 @@
 /obj/machinery/power/apc/auto_name/east,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering/engine)
@@ -3428,7 +3410,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
 	dir = 4
 	},
@@ -3497,7 +3478,6 @@
 /area/ship/crew/canteen)
 "VD" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/effect/turf_decal/techfloor/orange{
 	dir = 1
@@ -3705,8 +3685,6 @@
 /turf/open/floor/pod/light,
 /area/ship/bridge)
 "Zn" = (
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/orange/visible,
 /turf/open/floor/plating,

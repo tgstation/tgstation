@@ -310,9 +310,7 @@
 /obj/effect/decal/cleanable/oil,
 /obj/item/circuitboard/machine/bepis,
 /obj/machinery/power/terminal,
-/obj/structure/cable/orange{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering/engine)
 "fc" = (
@@ -605,7 +603,6 @@
 "jk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/layer_manifold{
 	dir = 4
 	},
@@ -655,7 +652,6 @@
 /area/ship/science/robotics)
 "ka" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
@@ -1102,15 +1098,7 @@
 "rb" = (
 /mob/living/simple_animal/hostile/cockroach/glockroach,
 /obj/machinery/power/terminal,
-/obj/structure/cable/orange{
-	icon_state = "5-8"
-	},
-/obj/structure/cable/orange{
-	icon_state = "0-5"
-	},
-/obj/structure/cable/orange{
-	icon_state = "4-5"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering/engine)
 "rg" = (
@@ -1256,7 +1244,6 @@
 /area/ship/science/robotics)
 "to" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
 	dir = 1
 	},
@@ -1330,7 +1317,6 @@
 	},
 /area/ship/science)
 "uY" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
@@ -1460,9 +1446,7 @@
 "xg" = (
 /obj/machinery/power/port_gen/pacman,
 /obj/item/stack/sheet/mineral/plasma/five,
-/obj/structure/cable/orange{
-	icon_state = "0-8"
-	},
+/obj/structure/cable/orange,
 /turf/open/floor/plating,
 /area/ship/engineering/engine)
 "xs" = (
@@ -1693,7 +1677,6 @@
 "Af" = (
 /obj/effect/mob_spawn/human/corpse/damaged,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/ship/hallway/fore)
 "Ag" = (
@@ -1772,7 +1755,6 @@
 /turf/open/floor/plating,
 /area/ship/science)
 "Bf" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/light/small{
 	dir = 1
@@ -1858,7 +1840,6 @@
 /area/ship/science/ai_chamber)
 "Co" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/tiled,
 /area/ship/science/robotics)
@@ -1951,7 +1932,6 @@
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/ship/science)
 "Dr" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/ship/hallway/aft)
@@ -2143,9 +2123,7 @@
 /area/ship/crew/toilet)
 "Fr" = (
 /obj/machinery/power/terminal,
-/obj/structure/cable/orange{
-	icon_state = "0-8"
-	},
+/obj/structure/cable/orange,
 /turf/open/floor/plating,
 /area/ship/engineering/engine)
 "Fs" = (
@@ -2559,8 +2537,6 @@
 /area/ship/crew/dorm)
 "JL" = (
 /obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/ship/hallway/fore)
 "JM" = (
@@ -2625,7 +2601,6 @@
 /turf/open/floor/plating,
 /area/ship/science)
 "KA" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
@@ -2878,7 +2853,6 @@
 /area/ship/storage)
 "Ox" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/components/trinary/mixer/flipped/on/layer2{
 	node1_concentration = 0.21;
 	node2_concentration = 0.79
@@ -2934,9 +2908,7 @@
 "Pt" = (
 /obj/effect/decal/cleanable/oil,
 /obj/item/wrench/crescent,
-/obj/structure/cable/orange{
-	icon_state = "4-10"
-	},
+/obj/structure/cable/orange,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/plating,
 /area/ship/engineering/engine)
@@ -3506,9 +3478,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/ship/hallway/aft)
 "WF" = (
-/obj/structure/cable/orange{
-	icon_state = "4-8"
-	},
+/obj/structure/cable/orange,
 /turf/open/floor/plating,
 /area/ship/engineering/engine)
 "WG" = (
@@ -3686,7 +3656,6 @@
 /area/ship/storage)
 "Yk" = (
 /mob/living/simple_animal/hostile/hivebot,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/tiled,
 /area/ship/science/robotics)

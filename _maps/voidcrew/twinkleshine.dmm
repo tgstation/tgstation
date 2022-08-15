@@ -226,7 +226,6 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/catwalk/over,
 /turf/open/floor/plating,
 /area/ship/crew/dorm)
@@ -608,7 +607,6 @@
 	dir = 1
 	},
 /obj/structure/catwalk/over,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/crew/dorm)
@@ -1172,7 +1170,6 @@
 "lI" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ship/engineering)
 "lJ" = (
@@ -1675,7 +1672,6 @@
 /turf/open/floor/plating,
 /area/ship/crew/dorm)
 "rf" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ship/bridge)
@@ -2304,7 +2300,6 @@
 /area/ship/medical)
 "wA" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
 "wH" = (
@@ -2784,7 +2779,6 @@
 	dir = 5
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/catwalk/over,
 /turf/open/floor/plating,
 /area/ship/cargo)
@@ -2792,7 +2786,6 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ship/engineering)
@@ -3039,7 +3032,6 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
 	dir = 1
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/structure/catwalk/over,
 /turf/open/floor/plating,
@@ -4247,7 +4239,6 @@
 /area/ship/engineering)
 "Qc" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ship/engineering)
 "Qk" = (
@@ -4348,7 +4339,6 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ship/engineering)
@@ -4556,7 +4546,6 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/effect/turf_decal/corner/red/diagonal,
 /turf/open/floor/plasteel/white,

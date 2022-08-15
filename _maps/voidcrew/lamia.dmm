@@ -434,7 +434,6 @@
 "bD" = (
 /obj/effect/turf_decal/industrial/outline/yellow,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 1
 	},
@@ -697,7 +696,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
@@ -805,7 +803,6 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/west,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "eN" = (
@@ -818,7 +815,6 @@
 /turf/open/floor/carpet/royalblack,
 /area/ship/hallway/starboard)
 "fx" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 1
@@ -866,7 +862,6 @@
 /area/ship/maintenance/aft)
 "hh" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 1
 	},
@@ -882,7 +877,6 @@
 /turf/open/floor/engine/cult,
 /area/ship/science)
 "hA" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 1
@@ -931,7 +925,6 @@
 /area/ship/crew/canteen)
 "je" = (
 /obj/effect/decal/cleanable/vomit/old,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 8
@@ -1062,7 +1055,6 @@
 "oE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "pf" = (
@@ -1098,7 +1090,6 @@
 /area/ship/hallway/aft)
 "pR" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
@@ -1757,7 +1748,6 @@
 "NI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 5
 	},
@@ -1881,7 +1871,6 @@
 /area/ship/science)
 "Sq" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 1
@@ -1947,7 +1936,6 @@
 /area/ship/crew/canteen)
 "Va" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/engine/cult,
 /area/ship/science)
@@ -2033,7 +2021,6 @@
 /area/ship/crew/canteen)
 "Xm" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
@@ -2073,7 +2060,6 @@
 /turf/open/floor/wood,
 /area/ship/hallway/aft)
 "Yn" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer4,

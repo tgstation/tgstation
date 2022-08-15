@@ -240,7 +240,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ship/maintenance/fore)
 "iB" = (
@@ -814,7 +813,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel/tech/grid,
 /area/ship/maintenance/central)
@@ -1057,8 +1055,6 @@
 /obj/machinery/atmospherics/pipe/simple/purple/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plasteel/tech/grid,
 /area/ship/maintenance/central)
@@ -1469,7 +1465,6 @@
 /area/ship/maintenance/central)
 "VV" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/power/terminal{
 	dir = 8
 	},
@@ -1501,7 +1496,6 @@
 /obj/machinery/atmospherics/pipe/manifold/general/hidden/layer4{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ship/maintenance/fore)
