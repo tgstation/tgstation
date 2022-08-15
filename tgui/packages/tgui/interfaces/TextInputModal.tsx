@@ -26,7 +26,7 @@ export const SanitizeMultiline = (toSanitize: string) => {
 export const RemoveAllSkiplines = (toSanitize: string) => {
   const skiplinesFinder = RegExp('(\n|\r)+');
   while (toSanitize.search(skiplinesFinder) !== -1) {
-    toSanitize = toSanitize.replace(skiplinesFinder, ' ');
+    toSanitize = toSanitize.replace(skiplinesFinder, '');
   }
   return toSanitize;
 };
