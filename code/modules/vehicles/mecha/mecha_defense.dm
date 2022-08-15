@@ -41,7 +41,7 @@
 	if(damage_taken <= 0 || atom_integrity < 0)
 		return damage_taken
 
-	spark_system.start()
+	spark_system?.start()
 	try_deal_internal_damage(damage_taken)
 	if(damage_taken >= 5 || prob(33))
 		to_chat(occupants, "[icon2html(src, occupants)][span_userdanger("Taking damage!")]")
@@ -315,19 +315,34 @@
 		to_chat(user, span_notice("You close the hatch to the power unit."))
 
 /obj/vehicle/sealed/mecha/welder_act(mob/living/user, obj/item/W)
-	. = ..()
 	if(user.combat_mode)
 		return
 	. = TRUE
-	if(atom_integrity < max_integrity)
-		if(!W.use_tool(src, user, 0, volume=50, amount=1))
-			return
-		user.visible_message(span_notice("[user] repairs some damage to [name]."), span_notice("You repair some damage to [src]."))
-		atom_integrity += min(10, max_integrity-atom_integrity)
-		if(atom_integrity == max_integrity)
-			to_chat(user, span_notice("It looks to be fully repaired now."))
+	if(LAZYFIND(repairing_mobs, user))
+		balloon_alert(user, "you're already repairing it!")
 		return
-	to_chat(user, span_warning("[src] is at full integrity!"))
+	if(atom_integrity >= max_integrity)
+		balloon_alert(user, "it's not damaged!")
+		return
+	if(!W.tool_start_check(user, amount=1))
+		return
+	LAZYADD(repairing_mobs, user)
+	user.balloon_alert_to_viewers("started welding [src]", "started repairing [src]")
+	audible_message(span_hear("You hear welding."))
+	var/did_the_thing
+	while(atom_integrity < max_integrity)
+		if(W.use_tool(src, user, 2.5 SECONDS, volume=50, amount=1))
+			did_the_thing = TRUE
+			atom_integrity += min(10, (max_integrity - atom_integrity))
+			audible_message(span_hear("You hear welding."))
+		else
+			break
+	if(did_the_thing)
+		user.balloon_alert_to_viewers("[(atom_integrity >= max_integrity) ? "fully" : "partially"] repaired [src]")
+	else
+		user.balloon_alert_to_viewers("stopped welding [src]", "interrupted the repair!")
+	LAZYREMOVE(repairing_mobs, user)
+
 
 /obj/vehicle/sealed/mecha/proc/full_repair(charge_cell)
 	atom_integrity = max_integrity
@@ -356,31 +371,6 @@
 			visual_effect_icon = ATTACK_EFFECT_MECHTOXIN
 	..()
 
-/obj/vehicle/sealed/mecha/atom_destruction()
-	if(wreckage)
-		var/mob/living/silicon/ai/AI
-		for(var/crew in occupants)
-			if(isAI(crew))
-				if(AI)
-					var/mob/living/silicon/ai/unlucky_ais = crew
-					unlucky_ais.gib()
-					continue
-				AI = crew
-		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, AI)
-		for(var/obj/item/mecha_parts/mecha_equipment/E in flat_equipment)
-			if(E.detachable && prob(30))
-				WR.crowbar_salvage += E
-				E.detach(WR) //detaches from src into WR
-				E.activated = TRUE
-			else
-				E.detach(loc)
-				qdel(E)
-		if(cell)
-			WR.crowbar_salvage += cell
-			cell.forceMove(WR)
-			cell.charge = rand(0, cell.charge)
-			cell = null
-	. = ..()
 
 /obj/vehicle/sealed/mecha/proc/ammo_resupply(obj/item/mecha_ammo/A, mob/user,fail_chat_override = FALSE)
 	if(!A.rounds)

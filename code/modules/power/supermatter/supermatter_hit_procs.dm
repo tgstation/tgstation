@@ -39,7 +39,7 @@
 				has_been_powered = TRUE
 	else if(takes_damage)
 		damage += (projectile.damage * bullet_energy) * clamp((emergency_point - damage) / emergency_point, 0, 1)
-		if(damage > damage_penalty_point)
+		if(damage > danger_point)
 			visible_message(span_notice("[src] compresses under stress, resisting further impacts!"))
 	return BULLET_ACT_HIT
 
@@ -88,7 +88,7 @@
 	if(istype(item, /obj/item/destabilizing_crystal))
 		var/obj/item/destabilizing_crystal/destabilizing_crystal = item
 
-		if(!anomaly_event)
+		if(!is_main_engine)
 			to_chat(user, span_warning("You can't use \the [destabilizing_crystal] on \a [name]."))
 			return
 
@@ -98,15 +98,13 @@
 
 		to_chat(user, span_warning("You begin to attach \the [destabilizing_crystal] to \the [src]..."))
 		if(do_after(user, 3 SECONDS, src))
-			message_admins("[ADMIN_LOOKUPFLW(user)] attached [destabilizing_crystal] to the supermatter at [ADMIN_VERBOSEJMP(src)]")
-			log_game("[key_name(user)] attached [destabilizing_crystal] to the supermatter at [AREACOORD(src)]")
+			message_admins("[ADMIN_LOOKUPFLW(user)] attached [destabilizing_crystal] to the supermatter at [ADMIN_VERBOSEJMP(src)].")
+			user.log_message("attached [destabilizing_crystal] to the supermatter", LOG_GAME)
 			investigate_log("[key_name(user)] attached [destabilizing_crystal] to a supermatter crystal.", INVESTIGATE_ENGINE)
 			to_chat(user, span_danger("\The [destabilizing_crystal] snaps onto \the [src]."))
-			has_destabilizing_crystal = TRUE
-			cascade_initiated = TRUE
+			set_delam(SM_DELAM_PRIO_IN_GAME, /datum/sm_delam/cascade)
 			damage += 100
 			matter_power += 500
-			addtimer(CALLBACK(src, .proc/announce_incoming_cascade), 2 MINUTES)
 			qdel(destabilizing_crystal)
 		return
 

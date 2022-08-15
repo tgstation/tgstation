@@ -246,7 +246,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/give_antag_moodies()
 	if(!antag_moodlet)
 		return
-	SEND_SIGNAL(owner.current, COMSIG_ADD_MOOD_EVENT, "antag_moodlet", antag_moodlet)
+	owner.current.add_mood_event("antag_moodlet", antag_moodlet)
 
 /**
  * Proc that removes this antagonist's ascribed moodlet from the player.
@@ -254,10 +254,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/clear_antag_moodies()
 	if(!antag_moodlet)
 		return
-	SEND_SIGNAL(owner.current, COMSIG_CLEAR_MOOD_EVENT, "antag_moodlet")
+	owner.current.clear_mood_event("antag_moodlet")
 
 /**
- * Proc that will return the team this antagonist belongs to, when called. Helpful with antagonists that may belong to multiple potential teams in a single round, like families.
+ * Proc that will return the team this antagonist belongs to, when called. Helpful with antagonists that may belong to multiple potential teams in a single round.
  */
 /datum/antagonist/proc/get_team()
 	return

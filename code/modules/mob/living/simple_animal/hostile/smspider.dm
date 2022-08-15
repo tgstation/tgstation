@@ -27,7 +27,7 @@
 	faction = list("hostile")
 	see_in_dark = NIGHTVISION_FOV_RANGE
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	deathmessage = "falls to the ground, its shard dulling to a miserable grey!"
+	death_message = "falls to the ground, its shard dulling to a miserable grey!"
 	footstep_type = FOOTSTEP_MOB_CLAW
 	var/overcharged = FALSE // if true, spider will not die if it dusts a limb
 

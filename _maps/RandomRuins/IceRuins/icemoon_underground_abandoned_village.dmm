@@ -48,10 +48,10 @@
 /obj/item/food/sashimi{
 	pixel_y = 10
 	},
-/obj/item/reagent_containers/food/drinks/mug/coco{
+/obj/item/reagent_containers/cup/glass/mug/coco{
 	pixel_x = -10
 	},
-/obj/item/reagent_containers/food/drinks/mug/coco{
+/obj/item/reagent_containers/cup/glass/mug/coco{
 	pixel_x = 10;
 	pixel_y = -4
 	},
@@ -79,10 +79,10 @@
 /obj/item/clothing/head/bearpelt,
 /obj/structure/table/wood,
 /obj/item/food/burger/fish,
-/obj/item/reagent_containers/food/drinks/bottle/beer{
+/obj/item/reagent_containers/cup/glass/bottle/beer{
 	pixel_x = -4
 	},
-/obj/item/reagent_containers/food/drinks/bottle/beer{
+/obj/item/reagent_containers/cup/glass/bottle/beer{
 	pixel_x = 10;
 	pixel_y = 6
 	},
@@ -196,9 +196,9 @@
 /obj/item/food/fishmeat/carp,
 /obj/item/food/fishmeat/carp,
 /obj/item/food/fishmeat/carp,
-/obj/item/reagent_containers/food/condiment/pack/ketchup,
-/obj/item/reagent_containers/food/condiment/pack/ketchup,
-/obj/item/reagent_containers/food/condiment/pack/ketchup,
+/obj/item/reagent_containers/condiment/pack/ketchup,
+/obj/item/reagent_containers/condiment/pack/ketchup,
+/obj/item/reagent_containers/condiment/pack/ketchup,
 /turf/open/floor/iron/checker,
 /area/ruin/powered)
 "sG" = (
@@ -209,10 +209,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered)
 "sY" = (
-/obj/structure/sink/kitchen{
-	dir = 4;
-	pixel_x = -12
-	},
+/obj/structure/sink/kitchen/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/checker,
 /area/ruin/powered)
@@ -309,8 +306,8 @@
 /obj/structure/closet/cabinet,
 /obj/item/restraints/legcuffs/beartrap,
 /obj/item/restraints/legcuffs/beartrap,
-/obj/item/reagent_containers/glass/bottle/venom,
-/obj/item/reagent_containers/glass/bottle/curare,
+/obj/item/reagent_containers/cup/bottle/venom,
+/obj/item/reagent_containers/cup/bottle/curare,
 /obj/item/knife/combat/survival,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/food/meat/slab/human,
@@ -443,7 +440,7 @@
 "PQ" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /mob/living/simple_animal/hostile/illusion{
-	deathmessage = "disperses into the air in a cloud of red mist, you feel slightly more at ease.";
+	death_message = "disperses into the air in a cloud of red mist, you feel slightly more at ease.";
 	desc = "You can't quite make out what you're seeing.";
 	faction = list("cult");
 	health = 500;
@@ -543,7 +540,7 @@
 /turf/closed/wall,
 /area/icemoon/underground/explored)
 "Zw" = (
-/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
 /turf/open/misc/ice/icemoon,
 /area/icemoon/underground/explored)
 "Zx" = (

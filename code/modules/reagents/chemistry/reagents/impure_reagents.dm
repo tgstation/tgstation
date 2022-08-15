@@ -9,10 +9,8 @@
 	//by default, it will stay hidden on splitting, but take the name of the source on inverting. Cannot be fractioned down either if the reagent is somehow isolated.
 	chemical_flags = REAGENT_SNEAKYNAME | REAGENT_DONOTSPLIT | REAGENT_CAN_BE_SYNTHESIZED //impure can be synthed, and is one of the only ways to get almost pure impure
 	ph = 3
-	impure_chem = null
 	inverse_chem = null
 	inverse_chem_val = 0
-	failed_chem = null
 	metabolization_rate = 0.1 * REM //default impurity is 0.75, so we get 25% converted. Default metabolisation rate is 0.4, so we're 4 times slower.
 	var/liver_damage = 0.5
 
@@ -31,9 +29,7 @@
 	ph = 2
 	chemical_flags = REAGENT_SNEAKYNAME | REAGENT_DONOTSPLIT //Inverse generally cannot be synthed - they're difficult to get
 	//Mostly to be safe - but above flags will take care of this. Also prevents it from showing these on reagent lookups in the ui
-	impure_chem = null
 	inverse_chem = null
-	failed_chem = null
 	///how much this reagent does for tox damage too
 	var/tox_damage = 1
 

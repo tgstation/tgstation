@@ -221,6 +221,9 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 	if(species_exception)
 		species_exception = string_list(species_exception)
 
+	if(sharpness && force > 5) //give sharp objects butchering functionality, for consistency
+		AddComponent(/datum/component/butchering, speed = 8 SECONDS * toolspeed)
+
 	. = ..()
 
 	// Handle adding item associated actions
@@ -319,12 +322,6 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 /obj/item/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
 		atom_destruction(MELEE)
-
-/obj/item/ComponentInitialize()
-	. = ..()
-
-	if(sharpness && force > 5) //give sharp objects butchering functionality, for consistency
-		AddComponent(/datum/component/butchering, 80 * toolspeed)
 
 /**Makes cool stuff happen when you suicide with an item
  *
@@ -971,7 +968,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 
 /obj/item/MouseEntered(location, control, params)
 	. = ..()
-	if(((get(src, /mob) == usr) || src.loc.atom_storage || (src.item_flags & IN_STORAGE)) && !QDELETED(src))
+	if(((get(src, /mob) == usr) || loc?.atom_storage || (item_flags & IN_STORAGE)) && !QDELETED(src)) //nullspace exists.
 		var/mob/living/L = usr
 		if(usr.client.prefs.read_preference(/datum/preference/toggle/enable_tooltips))
 			var/timedelay = usr.client.prefs.read_preference(/datum/preference/numeric/tooltip_delay) / 100
@@ -984,15 +981,15 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 
 /obj/item/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
 	. = ..()
-	remove_filter("hover_outline") //get rid of the hover effect in case the mouse exit isn't called if someone drags and drops an item and somthing goes wrong
+	remove_filter(HOVER_OUTLINE_FILTER) //get rid of the hover effect in case the mouse exit isn't called if someone drags and drops an item and somthing goes wrong
 
 /obj/item/MouseExited()
 	deltimer(tip_timer) //delete any in-progress timer if the mouse is moved off the item before it finishes
 	closeToolTip(usr)
-	remove_filter("hover_outline")
+	remove_filter(HOVER_OUTLINE_FILTER)
 
 /obj/item/proc/apply_outline(outline_color = null)
-	if(((get(src, /mob) != usr) && !src.loc.atom_storage && !(src.item_flags & IN_STORAGE)) || QDELETED(src) || isobserver(usr)) //cancel if the item isn't in an inventory, is being deleted, or if the person hovering is a ghost (so that people spectating you don't randomly make your items glow)
+	if(((get(src, /mob) != usr) && !loc?.atom_storage && !(item_flags & IN_STORAGE)) || QDELETED(src) || isobserver(usr)) //cancel if the item isn't in an inventory, is being deleted, or if the person hovering is a ghost (so that people spectating you don't randomly make your items glow)
 		return FALSE
 	var/theme = lowertext(usr.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
 	if(!outline_color) //if we weren't provided with a color, take the theme's color
@@ -1016,7 +1013,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 	if(color)
 		outline_color = COLOR_WHITE //if the item is recolored then the outline will be too, let's make the outline white so it becomes the same color instead of some ugly mix of the theme and the tint
 
-	add_filter("hover_outline", 1, list("type" = "outline", "size" = 1, "color" = outline_color))
+	add_filter(HOVER_OUTLINE_FILTER, 1, list("type" = "outline", "size" = 1, "color" = outline_color))
 
 /// Called when a mob tries to use the item as a tool. Handles most checks.
 /obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount=0, volume=0, datum/callback/extra_checks)
@@ -1476,3 +1473,10 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 /obj/item/proc/mark_silver_slime_reaction()
 	SIGNAL_HANDLER
 	SEND_SIGNAL(src, COMSIG_FOOD_SILVER_SPAWNED)
+
+/**
+ * Returns null if this object cannot be used to interact with physical writing mediums such as paper.
+ * Returns a list of key attributes for this object interacting with paper otherwise.
+ */
+/obj/item/proc/get_writing_implement_details()
+	return null

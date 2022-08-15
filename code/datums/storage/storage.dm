@@ -120,7 +120,9 @@
 
 	RegisterSignal(resolve_parent, COMSIG_ITEM_ATTACK_SELF, .proc/mass_empty)
 
-	RegisterSignal(resolve_parent, list(COMSIG_ATOM_ATTACK_HAND_SECONDARY, COMSIG_CLICK_ALT, COMSIG_ATOM_ATTACK_GHOST), .proc/open_storage)
+	RegisterSignal(resolve_parent, list(COMSIG_CLICK_ALT, COMSIG_ATOM_ATTACK_GHOST), .proc/open_storage)
+	RegisterSignal(resolve_parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY, .proc/open_storage_secondary)
+	RegisterSignal(resolve_parent, COMSIG_PARENT_ATTACKBY_SECONDARY, .proc/open_storage_attackby_secondary)
 
 	RegisterSignal(resolve_location, COMSIG_ATOM_ENTERED, .proc/handle_enter)
 	RegisterSignal(resolve_location, COMSIG_ATOM_EXITED, .proc/handle_exit)
@@ -134,12 +136,15 @@
 /datum/storage/Destroy()
 	parent = null
 	real_location = null
-	boxes = null
-	closer = null
 
 	for(var/mob/person in is_using)
 		if(person.active_storage == src)
 			person.active_storage = null
+			person.client?.screen -= boxes
+			person.client?.screen -= closer
+
+	QDEL_NULL(boxes)
+	QDEL_NULL(closer)
 
 	is_using.Cut()
 
@@ -157,10 +162,14 @@
 	if(!istype(arrived))
 		return
 
+	var/atom/resolve_parent = parent?.resolve()
+	if(!resolve_parent)
+		return
+
+	resolve_parent.update_appearance(UPDATE_ICON_STATE)
+
 	arrived.item_flags |= IN_STORAGE
-
 	refresh_views()
-
 	arrived.on_enter_storage(src)
 
 /// Automatically ran on all object removals: flag marking and view refreshing.
@@ -170,10 +179,14 @@
 	if(!istype(gone))
 		return
 
+	var/atom/resolve_parent = parent?.resolve()
+	if(!resolve_parent)
+		return
+
+	resolve_parent.update_appearance(UPDATE_ICON_STATE)
+
 	gone.item_flags &= ~IN_STORAGE
-
 	remove_and_refresh(gone)
-
 	gone.on_exit_storage(src)
 
 /**
@@ -340,6 +353,11 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			to_chat(user, span_warning("\The [resolve_parent] cannot hold \the [to_insert]!"))
 		return FALSE
 
+	if(HAS_TRAIT(to_insert, TRAIT_NODROP))
+		if(messages)
+			to_chat(user, span_warning("\The [to_insert] is stuck on your hand!"))
+		return FALSE
+
 	var/datum/storage/biggerfish = resolve_parent.loc.atom_storage // this is valid if the container our resolve_parent is being held in is a storage item
 
 	if(biggerfish && biggerfish.max_specific_storage < max_specific_storage)
@@ -379,6 +397,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	to_insert.forceMove(resolve_location)
 	item_insertion_feedback(user, to_insert, override)
+
+	if(isobj(resolve_location))
+		resolve_location.update_appearance()
 
 	return TRUE
 
@@ -424,17 +445,25 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  *
  * @param mob/user the user who is transferring the items
  * @param atom/going_to the atom we're transferring to
+ * @param override enable override on attempt_insert
  */
-/datum/storage/proc/handle_mass_transfer(mob/user, atom/going_to)
+/datum/storage/proc/handle_mass_transfer(mob/user, atom/going_to, override = FALSE)
 	var/obj/item/resolve_location = real_location?.resolve()
 	if(!resolve_location)
+		return
+
+	var/obj/item/resolve_parent = parent?.resolve()
+	if(!resolve_parent)
 		return
 
 	if(!going_to.atom_storage)
 		return
 
+	if(rustle_sound)
+		playsound(resolve_parent, SFX_RUSTLE, 50, TRUE, -5)
+
 	for (var/atom/thing in resolve_location.contents)
-		going_to.atom_storage.attempt_insert(src, thing, user)
+		going_to.atom_storage.attempt_insert(src, thing, user, override = override)
 
 /**
  * Provides visual feedback in chat for an item insertion
@@ -447,8 +476,6 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	var/obj/item/resolve_parent = parent?.resolve()
 	if(!resolve_parent)
 		return
-
-	resolve_parent.update_appearance(UPDATE_ICON_STATE)
 
 	if(animated)
 		animate_parent()
@@ -662,7 +689,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	var/amount = length(turf_things)
 	if(!amount)
-		to_chat(user, span_warning("You failed to pick up anything with [resolve_parent]!"))
+		resolve_parent.balloon_alert(user, "nothing to pick up!")
 		return
 
 	var/datum/progressbar/progress = new(user, amount, thing.loc)
@@ -672,7 +699,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		stoplag(1)
 
 	progress.end_progress()
-	to_chat(user, span_notice("You put everything you could [insert_preposition]to [resolve_parent]."))
+	resolve_parent.balloon_alert(user, "picked up")
 
 /// Signal handler for whenever we drag the storage somewhere.
 /datum/storage/proc/mousedrop_onto(datum/source, atom/over_object, mob/user)
@@ -882,6 +909,50 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	closer.screen_loc = "[screen_start_x + cols]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y]"
 
+/// Signal handler for when we get attacked with secondary click by an item.
+/datum/storage/proc/open_storage_attackby_secondary(datum/source, atom/weapon, mob/toshow)
+	SIGNAL_HANDLER
+
+	return open_storage_secondary(source, toshow)
+
+/// Signal handler for when we get attacked with secondary click.
+/datum/storage/proc/open_storage_secondary(datum/source, mob/toshow)
+	SIGNAL_HANDLER
+
+	var/obj/item/resolve_parent = parent?.resolve()
+	if(!resolve_parent)
+		return
+
+	var/obj/item/resolve_location = real_location?.resolve()
+	if(!resolve_location)
+		return
+
+	if(isobserver(toshow))
+		show_contents(toshow)
+		return
+
+	if(!toshow.CanReach(resolve_parent))
+		resolve_parent.balloon_alert(toshow, "can't reach!")
+		return FALSE
+
+	if(!isliving(toshow) || toshow.incapacitated())
+		return FALSE
+
+	if(locked)
+		if(!silent)
+			to_chat(toshow, span_warning("[pick("Ka-chunk!", "Ka-chink!", "Plunk!", "Glorf!")] \The [resolve_parent] appears to be locked!"))
+		return FALSE
+
+	show_contents(toshow)
+
+	if(animated)
+		animate_parent()
+
+	if(rustle_sound)
+		playsound(resolve_parent, SFX_RUSTLE, 50, TRUE, -5)
+
+	return TRUE
+
 /// Signal handler for when we're showing ourselves to a mob.
 /datum/storage/proc/open_storage(datum/source, mob/toshow)
 	SIGNAL_HANDLER
@@ -907,7 +978,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	if(locked)
 		if(!silent)
-			to_chat(toshow, span_warning("[pick("Ka-chunk!", "Ka-chink!", "Plunk!", "Glorf!")] \The [resolve_parent] appears to be locked!"))
+			resolve_parent.balloon_alert(toshow, "locked!")
 		return FALSE
 
 	if(!quickdraw || toshow.get_active_held_item())
@@ -939,7 +1010,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/put_in_hands_async(mob/toshow, obj/item/toremove)
 	if(!toshow.put_in_hands(toremove))
 		if(!silent)
-			to_chat(toshow, span_notice("You fumble for [toremove] and it falls on the floor."))
+			toremove.balloon_alert(toshow, "fumbled!")
 		return TRUE
 
 /// Signal handler for whenever a mob walks away with us, close if they can't reach us.
@@ -1053,11 +1124,11 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	collection_mode = (collection_mode+1)%3
 	switch(collection_mode)
 		if(COLLECT_SAME)
-			to_chat(user, span_notice("[resolve_parent] now picks up all items of a single type at once."))
+			resolve_parent.balloon_alert(user, "will now only pick up a single type")
 		if(COLLECT_EVERYTHING)
-			to_chat(user, span_notice("[resolve_parent] now picks up all items in a tile at once."))
+			resolve_parent.balloon_alert(user, "will now pick up everything")
 		if(COLLECT_ONE)
-			to_chat(user, span_notice("[resolve_parent] now picks up one item at a time."))
+			resolve_parent.balloon_alert(user, "will now pick up one at a time")
 
 /// Gives a spiffy animation to our parent to represent opening and closing.
 /datum/storage/proc/animate_parent()

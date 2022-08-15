@@ -19,7 +19,6 @@
 	safe = FALSE
 	layer = BELOW_OPEN_DOOR_LAYER
 	closingLayer = CLOSED_FIREDOOR_LAYER
-	assemblytype = /obj/structure/firelock_frame
 	armor = list(MELEE = 10, BULLET = 30, LASER = 20, ENERGY = 20, BOMB = 30, BIO = 0, FIRE = 95, ACID = 70)
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
 
@@ -32,6 +31,9 @@
 	///Y offset for the overlay lights, so that they line up with the thin border firelocks
 	var/light_yoffset = 0
 
+
+	///The type of door frame to drop during deconstruction
+	var/assemblytype = /obj/structure/firelock_frame
 	var/boltslocked = TRUE
 	///List of areas we handle. See CalculateAffectingAreas()
 	var/list/affecting_areas
@@ -124,7 +126,7 @@
 
 	if (isnull(held_item))
 		if(density)
-			if(isalienadult(living_user) || issilicon(living_user))
+			if(isalienhumanoid(living_user) || issilicon(living_user))
 				context[SCREENTIP_CONTEXT_LMB] = "Open"
 				return CONTEXTUAL_SCREENTIP_SET
 			if(!living_user.combat_mode)
@@ -501,7 +503,7 @@
 	if(W.use_tool(src, user, DEFAULT_STEP_TIME, volume=50))
 		welded = !welded
 		user.visible_message(span_danger("[user] [welded?"welds":"unwelds"] [src]."), span_notice("You [welded ? "weld" : "unweld"] [src]."))
-		log_game("[key_name(user)] [welded ? "welded":"unwelded"] firedoor [src] with [W] at [AREACOORD(src)]")
+		user.log_message("[welded ? "welded":"unwelded"] firedoor [src] with [W].", LOG_GAME)
 		update_appearance()
 		correct_state()
 
@@ -650,9 +652,9 @@
 			new /obj/item/electronics/firelock (targetloc)
 	qdel(src)
 
-/obj/machinery/door/firedoor/Moved(atom/oldloc)
+/obj/machinery/door/firedoor/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
-	unregister_adjacent_turfs(oldloc)
+	unregister_adjacent_turfs(old_loc)
 	register_adjacent_turfs()
 
 /obj/machinery/door/firedoor/closed
@@ -689,7 +691,7 @@
 			light_xoffset = -2
 	update_icon()
 
-/obj/machinery/door/firedoor/border_only/Moved()
+/obj/machinery/door/firedoor/border_only/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	adjust_lights_starting_offset()
 

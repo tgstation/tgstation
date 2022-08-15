@@ -66,7 +66,7 @@ Difficulty: Hard
 	crusher_achievement_type = /datum/award/achievement/boss/hierophant_crusher
 	score_achievement_type = /datum/award/score/hierophant_score
 	del_on_death = TRUE
-	deathsound = 'sound/magic/repulse.ogg'
+	death_sound = 'sound/magic/repulse.ogg'
 	attack_action_types = list(/datum/action/innate/megafauna_attack/blink,
 							   /datum/action/innate/megafauna_attack/chaser_swarm,
 							   /datum/action/innate/megafauna_attack/cross_blasts,
@@ -483,10 +483,10 @@ Difficulty: Hard
 	if(!blinking)
 		. = ..()
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/Moved(oldLoc, movement_dir)
+/mob/living/simple_animal/hostile/megafauna/hierophant/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(!stat && .)
-		var/obj/effect/temp_visual/hierophant/squares/HS = new(oldLoc)
+		var/obj/effect/temp_visual/hierophant/squares/HS = new(old_loc)
 		HS.setDir(movement_dir)
 		playsound(src, 'sound/mecha/mechmove04.ogg', 150, TRUE, -4)
 		if(target)

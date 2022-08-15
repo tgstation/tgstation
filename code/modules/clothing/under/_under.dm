@@ -109,11 +109,11 @@
 		if(attached_accessory.above_suit)
 			H.update_inv_wear_suit()
 
-/obj/item/clothing/under/equipped(mob/user, slot)
+/obj/item/clothing/under/equipped(mob/living/user, slot)
 	..()
 	if(slot == ITEM_SLOT_ICLOTHING && freshly_laundered)
 		freshly_laundered = FALSE
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "fresh_laundry", /datum/mood_event/fresh_laundry)
+		user.add_mood_event("fresh_laundry", /datum/mood_event/fresh_laundry)
 
 /obj/item/clothing/under/dropped(mob/user)
 	if(attached_accessory)
@@ -131,7 +131,7 @@
 
 /mob/living/carbon/human/proc/update_sensor_list()
 	var/obj/item/clothing/under/U = w_uniform
-	if(istype(U) && U.has_sensor > 0 && U.sensor_mode)
+	if(istype(U) && U.has_sensor > NO_SENSORS && U.sensor_mode)
 		GLOB.suit_sensors_list |= src
 	else
 		GLOB.suit_sensors_list -= src
@@ -255,13 +255,13 @@
 	sensor_mode = modes.Find(switchMode) - 1
 	if (loc == usr)
 		switch(sensor_mode)
-			if(0)
+			if(SENSOR_OFF)
 				to_chat(usr, span_notice("You disable your suit's remote sensing equipment."))
-			if(1)
+			if(SENSOR_LIVING)
 				to_chat(usr, span_notice("Your suit will now only report whether you are alive or dead."))
-			if(2)
+			if(SENSOR_VITALS)
 				to_chat(usr, span_notice("Your suit will now only report your exact vital lifesigns."))
-			if(3)
+			if(SENSOR_COORDS)
 				to_chat(usr, span_notice("Your suit will now report your exact vital lifesigns as well as your coordinate position."))
 
 	if(ishuman(loc))

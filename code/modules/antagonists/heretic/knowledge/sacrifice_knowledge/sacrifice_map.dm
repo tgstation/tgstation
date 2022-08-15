@@ -18,7 +18,7 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 	/// What path this landmark is intended for.
 	var/for_heretic_path = PATH_START
 
-/obj/effect/landmark/heretic/Initialize()
+/obj/effect/landmark/heretic/Initialize(mapload)
 	. = ..()
 	GLOB.heretic_sacrifice_landmarks[for_heretic_path] = src
 
@@ -60,7 +60,7 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 	/// Light power of the signpost.
 	var/power = 0.8
 
-/obj/structure/no_effect_signpost/void/Initialize()
+/obj/structure/no_effect_signpost/void/Initialize(mapload)
 	. = ..()
 	set_light(range, power)
 

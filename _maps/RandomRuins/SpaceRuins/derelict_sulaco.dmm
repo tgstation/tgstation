@@ -179,9 +179,10 @@
 /turf/open/floor/pod/light,
 /area/ruin/unpowered)
 "mi" = (
-/obj/structure/stairs/west,
 /obj/machinery/door/window/brigdoor/left/directional/east,
-/turf/open/floor/plating,
+/turf/open/floor/iron/stairs{
+	dir = 8
+	},
 /area/ruin/unpowered)
 "mu" = (
 /obj/structure/frame/computer{
@@ -226,9 +227,10 @@
 /turf/open/floor/iron/airless,
 /area/ruin/unpowered)
 "pj" = (
-/obj/structure/stairs/west,
 /obj/machinery/door/window/brigdoor/right/directional/east,
-/turf/open/floor/plating,
+/turf/open/floor/iron/stairs{
+	dir = 8
+	},
 /area/ruin/unpowered)
 "pv" = (
 /obj/machinery/door/airlock/command/glass{
@@ -698,9 +700,7 @@
 "XC" = (
 /obj/structure/curtain,
 /obj/item/soap/deluxe,
-/obj/machinery/shower{
-	dir = 1
-	},
+/obj/machinery/shower/directional/north,
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/unpowered)
 "YA" = (

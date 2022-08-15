@@ -193,4 +193,4 @@
 		return
 
 	if(result["should_open"])
-		return COMPONENT_AIRLOCK_SHELL_ALLOW 
+		return COMPONENT_AIRLOCK_SHELL_ALLOW
