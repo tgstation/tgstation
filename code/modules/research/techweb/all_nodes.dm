@@ -1335,7 +1335,7 @@
 		"seed_extractor",
 		"adv_watering_can",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 14000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
 	required_experiments = list(/datum/experiment/scanning/random/plants/wild)
 	discount_experiments = list(/datum/experiment/scanning/random/plants/traits = 3000)
 
@@ -1776,7 +1776,7 @@
 	)
 	required_experiments = list(/datum/experiment/scanning/random/mecha_damage_scan)
 	discount_experiments = list(/datum/experiment/scanning/random/mecha_destroyed_scan = 5000)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 20000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 
 /datum/techweb_node/mech_scattershot
 	id = "mecha_tools"
