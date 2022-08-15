@@ -1,18 +1,21 @@
-/datum/round_event_control/vent_clog
-	name = "Clogged Vents: Normal"
-	typepath = /datum/round_event/vent_clog
+/datum/round_event_control/scrubber_overflow
+	name = "Scrubber Overflow: Normal"
+	typepath = /datum/round_event/scrubber_overflow
 	weight = 10
 	max_occurrences = 3
 	min_players = 10
 
-/datum/round_event/vent_clog
+/datum/round_event/scrubber_overflow
 	announce_when = 1
 	start_when = 5
 	end_when = 35
-	var/interval = 2
-	var/list/vents = list()
-	var/random_probability = 1
+	/// A list of scrubbers that will have reagents ejected from them
+	var/list/scrubbers = list()
+	/// The probability that the ejected reagents will be dangerous
+	var/danger_chance = 1
+	/// Amount of reagents ejected from each scrubber
 	var/reagents_amount = 50
+	/// The list of chems that scrubbers can produce
 	var/list/safer_chems = list(/datum/reagent/water,
 		/datum/reagent/carbon,
 		/datum/reagent/consumable/flour,
@@ -51,27 +54,27 @@
 	)
 	//needs to be chemid unit checked at some point
 
-/datum/round_event/vent_clog/announce()
+/datum/round_event/scrubber_overflow/announce()
 	priority_announce("The scrubbers network is experiencing a backpressure surge. Some ejection of contents may occur.", "Atmospherics alert")
 
-/datum/round_event/vent_clog/setup()
+/datum/round_event/scrubber_overflow/setup()
 	end_when = rand(25, 100)
 	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/temp_vent in GLOB.machines)
 		var/turf/scrubber_turf = get_turf(temp_vent)
 		if(scrubber_turf && is_station_level(scrubber_turf.z) && !temp_vent.welded)
-			vents += temp_vent
-	if(!vents.len)
+			scrubbers += temp_vent
+	if(!scrubbers.len)
 		return kill()
 
-/datum/round_event/vent_clog/start()
-	for(var/obj/machinery/atmospherics/components/unary/vent in vents)
+/datum/round_event/scrubber_overflow/start()
+	for(var/obj/machinery/atmospherics/components/unary/vent in scrubbers)
 		if(!vent.loc)
 			CHECK_TICK
 			return ..()
 
 		var/datum/reagents/dispensed_reagent = new/datum/reagents(1000)
 		dispensed_reagent.my_atom = vent
-		if (prob(random_probability))
+		if (prob(danger_chance))
 			dispensed_reagent.add_reagent(get_random_reagent_id(), reagents_amount)
 		else
 			dispensed_reagent.add_reagent(pick(safer_chems), reagents_amount)
@@ -84,26 +87,26 @@
 
 		CHECK_TICK
 
-/datum/round_event_control/vent_clog/threatening
-	name = "Clogged Vents: Threatening"
-	typepath = /datum/round_event/vent_clog/threatening
+/datum/round_event_control/scrubber_overflow/threatening
+	name = "Scrubber Overflow: Threatening"
+	typepath = /datum/round_event/scrubber_overflow/threatening
 	weight = 4
 	min_players = 25
 	max_occurrences = 1
 	earliest_start = 35 MINUTES
 
-/datum/round_event/vent_clog/threatening
-	random_probability = 10
+/datum/round_event/scrubber_overflow/threatening
+	danger_chance = 10
 	reagents_amount = 100
 
-/datum/round_event_control/vent_clog/catastrophic
-	name = "Clogged Vents: Catastrophic"
-	typepath = /datum/round_event/vent_clog/catastrophic
+/datum/round_event_control/scrubber_overflow/catastrophic
+	name = "Scrubber Overflow: Catastrophic"
+	typepath = /datum/round_event/scrubber_overflow/catastrophic
 	weight = 2
 	min_players = 35
 	max_occurrences = 1
 	earliest_start = 45 MINUTES
 
-/datum/round_event/vent_clog/catastrophic
-	random_probability = 30
+/datum/round_event/scrubber_overflow/catastrophic
+	danger_chance = 30
 	reagents_amount = 150
