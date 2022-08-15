@@ -1,3 +1,5 @@
+#define INFINITE_DURATION TRUE
+
 // The spooky "void" / "abyssal" / "madness" mask for heretics.
 /obj/item/clothing/mask/madness_mask
 	name = "Abyssal Mask"
@@ -23,7 +25,7 @@
 	else
 		. += span_danger("The eyes fill you with dread... You best avoid it.")
 
-/obj/item/clothing/mask/madness_mask/equipped(mob/user, slot)
+/obj/item/clothing/mask/madness_mask/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(slot != ITEM_SLOT_MASK)
 		return
@@ -36,13 +38,20 @@
 	if(IS_HERETIC_OR_MONSTER(user))
 		return
 
+	user.add_mood_event("abyssal_mask", /datum/mood_event/abyssal_mask, INFINITE_DURATION)
+
 	ADD_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
 	to_chat(user, span_userdanger("[src] clamps tightly to your face as you feel your soul draining away!"))
 
-/obj/item/clothing/mask/madness_mask/dropped(mob/M)
+/obj/item/clothing/mask/madness_mask/dropped(mob/living/carbon/human/user)
 	local_user = null
 	STOP_PROCESSING(SSobj, src)
 	REMOVE_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
+	
+	if(!ishuman(user))
+		return
+		
+	user.clear_mood_event("abyssal_mask")
 	return ..()
 
 /obj/item/clothing/mask/madness_mask/process(delta_time)
@@ -58,7 +67,7 @@
 		if(human_in_range.is_blind())
 			continue
 
-		human_in_range.mob_mood.direct_sanity_drain(rand(-2, -20) * delta_time)
+		human_in_range.add_mood_event("abyssal_mask", /datum/mood_event/abyssal_mask)
 
 		if(DT_PROB(60, delta_time))
 			human_in_range.hallucination = min(human_in_range.hallucination + 5, 120)
@@ -72,3 +81,5 @@
 
 		if(DT_PROB(25, delta_time))
 			human_in_range.set_timed_status_effect(10 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
+
+#undef INFINITE_DURATION
