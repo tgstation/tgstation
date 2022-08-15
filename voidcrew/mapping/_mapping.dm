@@ -12,6 +12,8 @@
 
 /datum/controller/subsystem/mapping/Initialize(timeofday)
 	. = ..()
+	if(initialized)
+		return
 	load_ship_templates()
 /*
 /datum/controller/subsystem/mapping/loadWorld()
