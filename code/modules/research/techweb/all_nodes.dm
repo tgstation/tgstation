@@ -334,8 +334,8 @@
 		"pandemic",
 		"soda_dispenser",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 12500)
-	discount_experiments = list(/datum/experiment/dissection/human = 10000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	required_experiments = list(/datum/experiment/dissection/human)
 
 /datum/techweb_node/adv_biotech
 	id = "adv_biotech"
@@ -356,11 +356,9 @@
 		"plasmarefiller",
 		"smoke_machine",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 15000)
-	discount_experiments = list(
-		/datum/experiment/scanning/random/material/meat = 4000,
-		/datum/experiment/dissection/nonhuman = 10000,
-		)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	required_experiments = list(/datum/experiment/dissection/nonhuman)
+	discount_experiments = list(/datum/experiment/scanning/random/material/meat = 4000)
 
 /datum/techweb_node/xenoorgan_biotech
 	id = "xenoorgan_bio"
@@ -1338,10 +1336,8 @@
 		"adv_watering_can",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 14000)
-	discount_experiments = list(
-		/datum/experiment/scanning/random/plants/traits = 3000,
-		/datum/experiment/scanning/random/plants/wild = 10000,
-	)
+	required_experiments = list(/datum/experiment/scanning/random/plants/wild)
+	discount_experiments = list(/datum/experiment/scanning/random/plants/traits = 3000)
 
 /datum/techweb_node/exp_tools
 	id = "exp_tools"
@@ -1778,10 +1774,8 @@
 		"mech_ccw_armor",
 		"mech_proj_armor",
 	)
-	discount_experiments = list(
-		/datum/experiment/scanning/random/mecha_destroyed_scan = 5000,
-		/datum/experiment/scanning/random/mecha_damage_scan = 10000,
-		)
+	required_experiments = list(/datum/experiment/scanning/random/mecha_damage_scan)
+	discount_experiments = list(/datum/experiment/scanning/random/mecha_destroyed_scan = 5000)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 20000)
 
 /datum/techweb_node/mech_scattershot
