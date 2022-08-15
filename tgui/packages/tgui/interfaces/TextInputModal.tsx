@@ -15,6 +15,22 @@ type TextInputData = {
   title: string;
 };
 
+export const SanitizeMultiline = (toSanitize: string) => {
+  const tooManySkiplinesFinder = RegExp('(\r\n\r\n\r\n|\n\n\n|\r\r\r)+');
+  while (toSanitize.search(tooManySkiplinesFinder) !== -1) {
+    toSanitize = toSanitize.replace(tooManySkiplinesFinder, '\n\n');
+  }
+  return toSanitize;
+};
+
+export const RemoveAllSkiplines = (toSanitize: string) => {
+  const skiplinesFinder = RegExp('(\n|\r)+');
+  while (toSanitize.search(skiplinesFinder) !== -1) {
+    toSanitize = toSanitize.replace(skiplinesFinder, ' ');
+  }
+  return toSanitize;
+};
+
 export const TextInputModal = (props, context) => {
   const { act, data } = useBackend<TextInputData>(context);
   const {
@@ -35,13 +51,18 @@ export const TextInputModal = (props, context) => {
     if (value === input) {
       return;
     }
-    setInput(value);
+    const sanitizedInput = multiline
+      ? SanitizeMultiline(value)
+      : RemoveAllSkiplines(value);
+    setInput(sanitizedInput);
   };
+
+  const visualMultiline = multiline || input.length >= 30;
   // Dynamically changes the window height based on the message.
   const windowHeight =
     135 +
     (message.length > 30 ? Math.ceil(message.length / 4) : 0) +
-    (multiline || input.length >= 30 ? 75 : 0) +
+    (visualMultiline ? 75 : 0) +
     (message.length && large_buttons ? 5 : 0);
 
   return (
@@ -50,7 +71,7 @@ export const TextInputModal = (props, context) => {
       <Window.Content
         onKeyDown={(event) => {
           const keyCode = window.event ? event.which : event.keyCode;
-          if (keyCode === KEY_ENTER) {
+          if (keyCode === KEY_ENTER && (!visualMultiline || !event.shiftKey)) {
             act('submit', { entry: input });
           }
           if (keyCode === KEY_ESCAPE) {
@@ -84,6 +105,8 @@ const InputArea = (props, context) => {
   const { max_length, multiline } = data;
   const { input, onType } = props;
 
+  const visualMultiline = multiline || input.length >= 30;
+
   return (
     <TextArea
       autoFocus
@@ -92,8 +115,11 @@ const InputArea = (props, context) => {
       maxLength={max_length}
       onEscape={() => act('cancel')}
       onEnter={(event) => {
-        act('submit', { entry: input });
+        if (visualMultiline && event.shiftKey) {
+          return;
+        }
         event.preventDefault();
+        act('submit', { entry: input });
       }}
       onInput={(_, value) => onType(value)}
       placeholder="Type something..."
