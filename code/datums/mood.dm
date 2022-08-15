@@ -464,10 +464,6 @@
 		qdel(moodlet)
 	update_mood()
 
-/// Helper to forcefully drain sanity
-/datum/mood/proc/direct_sanity_drain(amount)
-	set_sanity(sanity + amount, override = TRUE)
-
 /**
  * Returns true if you already have a mood from a provided category.
  * You may think to yourself, why am I trying to get a boolean from a component? Well, this system probably should not be a component.
