@@ -1,6 +1,10 @@
+/// List of weakrefs to containers for things which have fallen into chasms
+GLOBAL_LIST_INIT(chasm_storage, list())
+
 // Used by /turf/open/chasm and subtypes to implement the "dropping" mechanic
 /datum/component/chasm
 	var/turf/target_turf
+	var/obj/effect/abstract/chasm_storage/storage
 	var/fall_message = "GAH! Ah... where are you?"
 	var/oblivion_message = "You stumble and stare into the abyss before you. It stares back, and you fall into the enveloping dark."
 
@@ -26,12 +30,20 @@
 		/obj/effect/dummy/phased_mob,
 		/obj/effect/mapping_helpers,
 		/obj/effect/wisp,
+		/obj/effect/ebeam,
+		/obj/effect/fishing_lure,
 	))
 
 /datum/component/chasm/Initialize(turf/target)
 	RegisterSignal(parent, COMSIG_ATOM_ENTERED, .proc/Entered)
 	target_turf = target
 	START_PROCESSING(SSobj, src) // process on create, in case stuff is still there
+	src.parent.AddElement(/datum/element/lazy_fishing_spot, FISHING_SPOT_PRESET_CHASM)
+
+/datum/component/chasm/Destroy(force=FALSE, silent=FALSE)
+	STOP_PROCESSING(SSobj, src)
+	QDEL_NULL(storage)
+	return ..(force, silent)
 
 /datum/component/chasm/proc/Entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
@@ -92,6 +104,8 @@
 				return fall_into_chasm
 	return TRUE
 
+#define FALL_DAMAGE 300
+
 /datum/component/chasm/proc/drop(atom/movable/AM)
 	var/datum/weakref/falling_ref = WEAKREF(AM)
 	//Make sure the item is still there after our sleep
@@ -100,6 +114,7 @@
 		return
 	falling_atoms[falling_ref] = (falling_atoms[falling_ref] || 0) + 1
 	var/turf/T = target_turf
+	var/atom/parent = src.parent
 
 	if(T)
 		// send to the turf below
@@ -123,6 +138,7 @@
 		var/oldtransform = AM.transform
 		var/oldcolor = AM.color
 		var/oldalpha = AM.alpha
+
 		animate(AM, transform = matrix() - matrix(), alpha = 0, color = rgb(0, 0, 0), time = 10)
 		for(var/i in 1 to 5)
 			//Make sure the item is still there after our sleep
@@ -135,20 +151,41 @@
 		if(!AM || QDELETED(AM))
 			return
 
-		if(iscyborg(AM))
-			var/mob/living/silicon/robot/S = AM
-			qdel(S.mmi)
 		if(isliving(AM))
 			var/mob/living/L = AM
 			if(L.stat != DEAD)
 				L.death(TRUE)
+				L.notransform = FALSE
+			L.apply_damage(FALL_DAMAGE)
 
 		falling_atoms -= falling_ref
-		qdel(AM)
-		if(AM && !QDELETED(AM)) //It's indestructible
-			var/atom/parent = src.parent
+
+		AM.alpha = oldalpha
+		AM.color = oldcolor
+		AM.transform = oldtransform
+
+		if (!storage)
+			storage = new(get_turf(parent))
+			RegisterSignal(storage, COMSIG_ATOM_EXITED, .proc/left_chasm)
+			GLOB.chasm_storage += WEAKREF(storage)
+
+		if (AM.forceMove(storage))
+			SEND_SIGNAL(AM, COMSIG_MOVABLE_SECLUDED_LOCATION)
+		else
 			parent.visible_message(span_boldwarning("[parent] spits out [AM]!"))
-			AM.alpha = oldalpha
-			AM.color = oldcolor
-			AM.transform = oldtransform
 			AM.throw_at(get_edge_target_turf(parent,pick(GLOB.alldirs)),rand(1, 10),rand(1, 10))
+
+#undef FALL_DAMAGE
+
+/// Something has left the chasm tile, this might not necessarily be something which was inside it.
+/datum/component/chasm/proc/left_chasm(datum/source, atom/movable/gone)
+	SIGNAL_HANDLER
+	if (!droppable(gone))
+		return
+	to_chat(world, "left [gone]")
+
+/obj/effect/abstract/chasm_storage
+	name = "chasm depths"
+	desc = "The bottom of a hole, you shouldn't be able to interact with this."
+	anchored = TRUE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
