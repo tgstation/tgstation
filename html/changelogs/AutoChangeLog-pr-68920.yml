@@ -1,6 +1,0 @@
-author: "RandomGamer123"
-delete-after: True
-changes: 
-  - rscadd: "You can now make trapdoors. Craft a trapdoor kit and use it on an openspace tile to make one, then link and activate it with some trapdoor electronics (printable at an autolathe or the engineering lathe) and optionally a trapdoor remote (crafted in personal crafting menu)."
-  - qol: "You can now unlink trapdoors by using a multitool on them."
-  - balance: "Trapdoors now won't break if you just crowbar them. You need to block them from closing, such as with a lattice, cover it up with a wall, or fully destroy the floor tile its on to get rid of them."
