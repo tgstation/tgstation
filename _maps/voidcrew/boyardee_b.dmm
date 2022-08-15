@@ -761,7 +761,7 @@
 /turf/open/floor/carpet/red,
 /area/station/commons/canteen)
 "pK" = (
-/obj/machinery/holopad/emergency/bar,
+/obj/machinery/holopad,
 /turf/open/floor/wood,
 /area/station/commons/canteen)
 "pN" = (

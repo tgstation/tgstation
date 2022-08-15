@@ -335,7 +335,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/holopad/emergency/command,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/mono/dark,
 /area/station/command/bridge)
 "iM" = (

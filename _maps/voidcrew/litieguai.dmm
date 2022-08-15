@@ -1354,7 +1354,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/aft)
 "Ci" = (
-/obj/machinery/holopad/emergency/command,
+/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 6
 	},
@@ -1992,7 +1992,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/science)
 "Po" = (
-/obj/machinery/holopad/emergency/medical,
+/obj/machinery/holopad,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical)
 "Pp" = (

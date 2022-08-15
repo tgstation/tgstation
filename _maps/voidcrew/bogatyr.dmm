@@ -1036,7 +1036,7 @@
 /area/station/commons/dorm)
 "Nd" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/holopad/emergency,
+/obj/machinery/holopad,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 1

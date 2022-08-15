@@ -1197,7 +1197,7 @@
 /area/station/commons/canteen)
 "cp" = (
 /obj/structure/cable,
-/obj/machinery/holopad/emergency/bar,
+/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 4

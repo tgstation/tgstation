@@ -2207,7 +2207,7 @@
 	},
 /area/station/engineering)
 "zD" = (
-/obj/machinery/holopad/emergency/command,
+/obj/machinery/holopad,
 /turf/open/floor/carpet/executive,
 /area/station/command/bridge)
 "zN" = (

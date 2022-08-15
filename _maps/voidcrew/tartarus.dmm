@@ -1396,7 +1396,7 @@
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 8
 	},
-/obj/machinery/holopad/emergency/command,
+/obj/machinery/holopad,
 /obj/structure/cable,
 /turf/open/floor/plasteel/tech,
 /area/station/command/bridge)

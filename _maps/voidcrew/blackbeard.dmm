@@ -1040,7 +1040,7 @@
 	pixel_x = -8;
 	pixel_y = 24
 	},
-/obj/machinery/holopad/emergency/command,
+/obj/machinery/holopad,
 /turf/open/floor/mineral/plastitanium,
 /area/station/command/bridge)
 "JC" = (

@@ -486,7 +486,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 6
 	},
-/obj/machinery/holopad/emergency/engineering,
+/obj/machinery/holopad,
 /obj/structure/cable,
 /obj/effect/turf_decal/industrial/stand_clear,
 /turf/open/floor/engine,

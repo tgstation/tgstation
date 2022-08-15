@@ -1608,7 +1608,7 @@
 /turf/open/floor/plating,
 /area/station/external)
 "AJ" = (
-/obj/machinery/holopad/emergency/command,
+/obj/machinery/holopad,
 /turf/open/floor/carpet,
 /area/station/command/bridge)
 "AO" = (

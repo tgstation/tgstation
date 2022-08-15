@@ -417,7 +417,7 @@
 /obj/item/radio/intercom{
 	pixel_y = 28
 	},
-/obj/machinery/holopad/emergency,
+/obj/machinery/holopad,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "wO" = (

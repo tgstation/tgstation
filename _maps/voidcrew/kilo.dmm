@@ -684,7 +684,7 @@
 	dir = 5
 	},
 /obj/item/stack/rods,
-/obj/machinery/holopad/emergency/command,
+/obj/machinery/holopad,
 /turf/open/floor/mineral/titanium/blue,
 /area/station/command/bridge)
 "da" = (

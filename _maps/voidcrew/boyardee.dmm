@@ -1745,7 +1745,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 8
 	},
-/obj/machinery/holopad/emergency/bar,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/mono/dark,
 /area/station/commons/canteen)
 "HD" = (

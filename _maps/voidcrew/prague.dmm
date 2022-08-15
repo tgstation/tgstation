@@ -1510,7 +1510,7 @@
 /area/station/command/bridge)
 "Fm" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/holopad/emergency/command,
+/obj/machinery/holopad,
 /turf/open/floor/mineral/titanium/blue,
 /area/station/command/bridge)
 "Fp" = (

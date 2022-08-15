@@ -773,7 +773,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/holopad/emergency/command,
+/obj/machinery/holopad,
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=bridgetwo";
 	location = "bridgeone"

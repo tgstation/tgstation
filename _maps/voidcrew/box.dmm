@@ -717,7 +717,7 @@
 /area/station/command/bridge)
 "ca" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/holopad/emergency/command,
+/obj/machinery/holopad,
 /turf/open/floor/carpet/nanoweave/blue,
 /area/station/command/bridge)
 "cb" = (
@@ -1719,7 +1719,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/holopad/emergency/medical,
+/obj/machinery/holopad,
 /obj/structure/cable,
 /obj/effect/turf_decal/industrial/outline/yellow,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{

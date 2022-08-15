@@ -1227,7 +1227,7 @@
 /area/station/hallway/central)
 "Kr" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/holopad/emergency/command{
+/obj/machinery/holopad{
 	pixel_y = 16
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{

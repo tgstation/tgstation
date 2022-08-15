@@ -4694,7 +4694,7 @@
 /area/station/construction)
 "JQ" = (
 /obj/structure/railing,
-/obj/machinery/holopad/emergency/command,
+/obj/machinery/holopad,
 /obj/effect/turf_decal/corner/blue{
 	dir = 8
 	},

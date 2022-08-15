@@ -694,7 +694,7 @@
 "Gm" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
-/obj/machinery/holopad/emergency/command,
+/obj/machinery/holopad,
 /turf/open/floor/mineral/titanium,
 /area/station/command/bridge)
 "Gw" = (

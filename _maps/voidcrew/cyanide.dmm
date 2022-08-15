@@ -109,7 +109,7 @@
 	pixel_y = -10;
 	req_access = list(150)
 	},
-/obj/machinery/holopad/emergency/command{
+/obj/machinery/holopad{
 	name = "advanced holopad"
 	},
 /turf/open/floor/mineral/plastitanium/red,

@@ -95,7 +95,7 @@
 /turf/open/floor/iron/dark,
 /area/station/commons)
 "jk" = (
-/obj/machinery/holopad/emergency/command,
+/obj/machinery/holopad,
 /turf/open/floor/iron/dark,
 /area/station/commons)
 "ka" = (

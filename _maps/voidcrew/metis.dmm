@@ -785,7 +785,7 @@
 /turf/open/floor/mineral/titanium/tiled,
 /area/station/commons/canteen)
 "mc" = (
-/obj/machinery/holopad/emergency/science,
+/obj/machinery/holopad,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 10
@@ -1596,7 +1596,7 @@
 /area/station/commons/toilet)
 "zb" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/holopad/emergency/science,
+/obj/machinery/holopad,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
@@ -2594,7 +2594,7 @@
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/station/science/ai_chamber)
 "LG" = (
-/obj/machinery/holopad/emergency/science,
+/obj/machinery/holopad,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/station/science)
 "LH" = (

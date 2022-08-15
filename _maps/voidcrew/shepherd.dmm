@@ -1346,7 +1346,7 @@
 /turf/open/floor/carpet,
 /area/station/medical/morgue)
 "uJ" = (
-/obj/machinery/holopad/emergency/command,
+/obj/machinery/holopad,
 /turf/open/floor/carpet,
 /area/station/command/bridge)
 "uX" = (

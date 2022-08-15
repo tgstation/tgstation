@@ -285,7 +285,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/fore)
 "ea" = (
-/obj/machinery/holopad/emergency/command,
+/obj/machinery/holopad,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "ec" = (
