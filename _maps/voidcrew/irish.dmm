@@ -196,7 +196,7 @@
 /obj/structure/window/reinforced/spawner/west,
 /obj/machinery/door/window/left/directional/east,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/manifold/orange/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold/orange/visible,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "mw" = (
@@ -238,7 +238,7 @@
 /turf/open/floor/plating,
 /area/station/cargo)
 "po" = (
-/obj/machinery/atmospherics/pipe/manifold/orange/visible{
+/obj/machinery/atmospherics/pipe/smart/manifold/orange/visible{
 	dir = 4
 	},
 /obj/machinery/suit_storage_unit/independent/engineering,
@@ -478,7 +478,7 @@
 /area/station/maintenance/aft)
 "ya" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -569,10 +569,10 @@
 /turf/closed/wall,
 /area/station/cargo)
 "DA" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer4{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -633,7 +633,7 @@
 /turf/open/floor/iron,
 /area/station/storage)
 "Gn" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -656,7 +656,7 @@
 /turf/open/floor/iron,
 /area/station/cargo)
 "Ia" = (
-/obj/machinery/atmospherics/pipe/manifold/orange/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold/orange/visible,
 /turf/closed/wall,
 /area/station/maintenance/aft)
 "Im" = (

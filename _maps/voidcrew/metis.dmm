@@ -390,10 +390,10 @@
 	},
 /area/station/science)
 "gj" = (
-/obj/machinery/atmospherics/pipe/manifold/cyan/hidden/layer2{
+/obj/machinery/atmospherics/pipe/smart/manifold/cyan/hidden/layer2{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/general/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold/general/hidden{
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -718,7 +718,7 @@
 	pixel_y = -25
 	},
 /obj/item/stack/tile/mineral/titanium/tiled/white,
-/obj/machinery/atmospherics/pipe/manifold/general/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold/general/hidden{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -945,7 +945,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 6
 	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -1221,7 +1221,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -1237,10 +1237,10 @@
 /area/station/science/robotics)
 "to" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
+/obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -1346,13 +1346,13 @@
 "vE" = (
 /obj/effect/decal/cleanable/xenoblood/xsplatter,
 /obj/machinery/light/broken,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/station/hallway/fore)
 "vV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
+/obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
@@ -1471,7 +1471,7 @@
 /area/station/science)
 "xy" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/tiled/purple,
@@ -1677,7 +1677,7 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/station/science)
 "Ai" = (
-/obj/machinery/atmospherics/pipe/manifold/general/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold/general/hidden{
 	dir = 1
 	},
 /obj/machinery/disposal/deliveryChute{
@@ -1696,8 +1696,8 @@
 /area/station/science)
 "Al" = (
 /obj/effect/decal/cleanable/blood/gibs/core,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/station/hallway/fore)
 "At" = (
@@ -1919,7 +1919,7 @@
 /area/station/science)
 "Dt" = (
 /obj/structure/girder/displaced,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer2,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/station/hallway/aft)
@@ -1979,7 +1979,7 @@
 "DT" = (
 /mob/living/simple_animal/hostile/hivebot/range,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
+/obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
@@ -2207,10 +2207,10 @@
 /area/station/commons/toilet)
 "GU" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
+/obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/tiled/purple,
@@ -2314,7 +2314,7 @@
 "HW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 8
 	},
@@ -2420,7 +2420,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -2711,7 +2711,7 @@
 /obj/item/chair,
 /obj/effect/decal/cleanable/greenglow,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/visible/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible/layer4{
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment{
@@ -2738,7 +2738,7 @@
 /area/station/hallway/aft)
 "NS" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -2800,10 +2800,10 @@
 "OE" = (
 /obj/effect/decal/cleanable/xenoblood/xgibs/core,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
+/obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/tiled/purple,
@@ -2870,7 +2870,7 @@
 /area/station/science)
 "PJ" = (
 /mob/living/carbon/human/species/monkey,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
+/obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
@@ -2938,7 +2938,7 @@
 "Qo" = (
 /obj/effect/decal/cleanable/xenoblood/xsplatter,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
+/obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
@@ -3008,10 +3008,10 @@
 /area/station/commons/canteen)
 "RM" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
+/obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled/purple,
@@ -3055,7 +3055,7 @@
 /area/station/commons/dorm)
 "Se" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
+/obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer4,
@@ -3462,7 +3462,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 5
 	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/visible/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible/layer4{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/tiled/purple,
@@ -3643,7 +3643,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -3710,7 +3710,7 @@
 /obj/effect/spawner/random/maintenance/three,
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/effect/decal/cleanable/cobweb,
-/obj/item/storage/firstaid/medical,
+/obj/item/storage/medkit,
 /turf/open/floor/plating,
 /area/station/storage)
 "ZZ" = (

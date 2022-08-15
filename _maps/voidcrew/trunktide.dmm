@@ -65,7 +65,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
-/obj/machinery/atmospherics/pipe/manifold/purple/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold/purple/hidden{
 	dir = 8
 	},
 /turf/open/floor/plasteel/tech/grid,
@@ -844,10 +844,10 @@
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "zQ" = (
-/obj/machinery/atmospherics/pipe/manifold/general/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold/general/hidden/layer4{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/manifold/general/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold/general/hidden/layer2,
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
@@ -908,13 +908,13 @@
 /obj/effect/turf_decal/techfloor/orange{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
+/obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 6
 	},
-/obj/machinery/atmospherics/pipe/manifold/purple/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold/purple/hidden{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -1020,10 +1020,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "FH" = (
-/obj/machinery/atmospherics/pipe/manifold/general/hidden/layer2{
+/obj/machinery/atmospherics/pipe/smart/manifold/general/hidden/layer2{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/general/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold/general/hidden/layer4{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -1255,7 +1255,7 @@
 /obj/effect/turf_decal/techfloor/orange{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -1481,7 +1481,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/general/hidden/layer2{
 	dir = 5
 	},
-/obj/machinery/atmospherics/pipe/manifold/general/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold/general/hidden/layer4{
 	dir = 8
 	},
 /obj/structure/cable,
@@ -1520,7 +1520,7 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/station/maintenance/central)
 "ZL" = (
-/obj/machinery/atmospherics/pipe/manifold/general/hidden/layer2{
+/obj/machinery/atmospherics/pipe/smart/manifold/general/hidden/layer2{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/general/hidden/layer4{

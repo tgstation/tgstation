@@ -995,7 +995,7 @@
 /area/station/hallway/central)
 "sm" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2{
 	dir = 1
 	},
 /obj/effect/turf_decal/corner/neutral/three_quarters{
@@ -1205,7 +1205,7 @@
 /area/station/hallway/central)
 "vz" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2{
 	dir = 1
 	},
 /obj/effect/turf_decal/corner/neutral/three_quarters,
@@ -1470,7 +1470,7 @@
 /area/station/security)
 "AQ" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2{
 	dir = 8
 	},
 /turf/open/floor/iron/white,
@@ -1689,7 +1689,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/central)
 "EX" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2{
 	dir = 4
 	},
 /turf/open/floor/iron/white,
@@ -2386,7 +2386,7 @@
 /area/station/security/prison)
 "Sj" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2{
 	dir = 1
 	},
 /obj/effect/turf_decal/corner/neutral{
@@ -2473,7 +2473,7 @@
 /area/station/construction)
 "Tz" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2{
 	dir = 1
 	},
 /obj/effect/turf_decal/corner/neutral{
