@@ -47,9 +47,6 @@
 
 /datum/heretic_knowledge/limited_amount/starting/base_flesh/on_research(mob/user)
 	. = ..()
-	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
-	our_heretic.heretic_path = route
-
 	var/datum/objective/heretic_summon/summon_objective = new()
 	summon_objective.owner = our_heretic.owner
 	our_heretic.objectives += summon_objective

@@ -39,11 +39,6 @@
 	result_atoms = list(/obj/item/melee/sickly_blade/ash)
 	route = PATH_ASH
 
-/datum/heretic_knowledge/limited_amount/starting/base_ash/on_research(mob/user)
-	. = ..()
-	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
-	our_heretic.heretic_path = route
-
 /datum/heretic_knowledge/ashen_grasp
 	name = "Grasp of Ash"
 	desc = "Your Mansus Grasp will burn the eyes of the victim, causing damage and blindness."

@@ -37,11 +37,6 @@
 	result_atoms = list(/obj/item/melee/sickly_blade/void)
 	route = PATH_VOID
 
-/datum/heretic_knowledge/limited_amount/starting/base_void/on_research(mob/user)
-	. = ..()
-	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
-	our_heretic.heretic_path = route
-
 /datum/heretic_knowledge/limited_amount/starting/base_void/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	if(!isopenturf(loc))
 		loc.balloon_alert(user, "ritual failed, invalid location!")

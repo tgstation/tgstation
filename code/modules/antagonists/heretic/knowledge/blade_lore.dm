@@ -200,12 +200,11 @@
 
 /datum/heretic_knowledge/mark/blade_mark/create_mark(mob/living/source, mob/living/target)
 	var/datum/status_effect/eldritch/blade/blade_mark = ..()
-	if(!istype(blade_mark))
-		return
-
-	var/area/to_lock_to = get_area(target)
-	blade_mark.locked_to = to_lock_to
-	to_chat(target, span_hypnophrase("An otherworldly force is compelling you to stay in [get_area_name(to_lock_to)]!"))
+	if(istype(blade_mark))
+		var/area/to_lock_to = get_area(target)
+		blade_mark.locked_to = to_lock_to
+		to_chat(target, span_hypnophrase("An otherworldly force is compelling you to stay in [get_area_name(to_lock_to)]!"))
+	return blade_mark
 
 /datum/heretic_knowledge/mark/blade_mark/trigger_mark(mob/living/source, mob/living/target)
 	. = ..()
@@ -322,11 +321,21 @@
 	if(!source.Adjacent(target))
 		return
 
-	// Blade are 17 force: 17 + 17 = 34 (3 hits to crit, unarmored)
-	// So, -5 force is put on the offhand blade: 17 + 12 = 29 (4 hits to crit, unarmored)
-	blade.force -= 5
+	// We want to make sure that the offhand blade increases their hits to crit by one, just about
+	// So, let's do some quick math
+	// Find how much force we need to detract from the second blade
+	var/offand_force_decrement = 0
+	var/hits_to_crit_on_average = ROUND_UP(100 / (blade.force * 2))
+	while(hits_to_crit_on_average <= 3) // 3 hits and beyond is a bit too absurd
+		if(offand_force_decrement + 2 > blade.force * 0.5) // But also cutting the force beyond half is absurd
+			break
+
+		offand_force_decrement += 2
+		hits_to_crit_on_average = ROUND_UP(100 / (blade.force * 2 - offand_force_decrement))
+
+	blade.force -= offand_force_decrement
 	blade.melee_attack_chain(source, target)
-	blade.force += 5
+	blade.force += offand_force_decrement
 
 /datum/heretic_knowledge/spell/furious_steel
 	name = "Furious Steel"

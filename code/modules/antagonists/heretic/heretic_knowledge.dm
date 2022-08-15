@@ -249,6 +249,9 @@
 
 /datum/heretic_knowledge/limited_amount/starting/on_research(mob/user)
 	. = ..()
+	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+	our_heretic.heretic_path = route
+
 	SSblackbox.record_feedback("tally", "heretic_path_taken", 1, route)
 
 /*

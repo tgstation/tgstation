@@ -23,7 +23,7 @@
 	/// Lazylist of minds that we won't pick as targets.
 	var/list/datum/mind/target_blacklist
 	/// An assoc list of [ref] to [timers] - a list of all the timers of people in the shadow realm currently
-	var/return_timers
+	var/list/return_timers
 
 /datum/heretic_knowledge/hunt_and_sacrifice/Destroy(force, ...)
 	heretic_mind = null
@@ -36,14 +36,16 @@
 	heretic_mind = user.mind
 	if(!heretic_level_generated)
 		heretic_level_generated = TRUE
-		message_admins("Generating z-level for heretic sacrifices...")
+		log_game("Generating z-level for heretic sacrifices...")
 		INVOKE_ASYNC(src, .proc/generate_heretic_z_level)
 
 /// Generate the sacrifice z-level.
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/generate_heretic_z_level()
 	var/datum/map_template/heretic_sacrifice_level/new_level = new()
 	if(!new_level.load_new_z())
-		message_admins("The heretic sacrifice z-level failed to load. Any heretics are gonna have a field day disemboweling people, probably. Up to you if you're fine with it.")
+		log_game("The heretic sacrifice z-level failed to load.")
+		message_admins("The heretic sacrifice z-level failed to load. Heretic sacrifices won't be teleported to the shadow realm. \
+			If you want, you can spawn an /obj/effect/landmark/heretic somewhere to stop that from happening.")
 		CRASH("Failed to initialize heretic sacrifice z-level!")
 
 /datum/heretic_knowledge/hunt_and_sacrifice/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
@@ -216,9 +218,9 @@
 	if(!LAZYLEN(GLOB.heretic_sacrifice_landmarks))
 		CRASH("[type] - begin_sacrifice was called, but no heretic sacrifice landmarks were found!")
 
-	var/obj/effect/landmark/heretic/destination_landmark = GLOB.heretic_sacrifice_landmarks[our_heretic.heretic_path]
+	var/obj/effect/landmark/heretic/destination_landmark = GLOB.heretic_sacrifice_landmarks[our_heretic.heretic_path] || GLOB.heretic_sacrifice_landmarks[PATH_START]
 	if(!destination_landmark)
-		CRASH("[type] - begin_sacrifice could not find a destination landmark to send the sacrifice! (heretic's path: [our_heretic.heretic_path])")
+		CRASH("[type] - begin_sacrifice could not find a destination landmark OR default landmark to send the sacrifice! (Heretic's path: [our_heretic.heretic_path])")
 
 	var/turf/destination = get_turf(destination_landmark)
 
