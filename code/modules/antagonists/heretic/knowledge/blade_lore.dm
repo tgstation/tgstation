@@ -322,7 +322,7 @@
 		return
 
 	// We want to make sure that the offhand blade increases their hits to crit by one, just about
-	// So, let's do some quick math
+	// So, let's do some quick math. Yes this'll be inaccurate if their mainhand blade is buffed (whetstone), no I don't care
 	// Find how much force we need to detract from the second blade
 	var/offand_force_decrement = 0
 	var/hits_to_crit_on_average = ROUND_UP(100 / (blade.force * 2))
@@ -333,9 +333,13 @@
 		offand_force_decrement += 2
 		hits_to_crit_on_average = ROUND_UP(100 / (blade.force * 2 - offand_force_decrement))
 
+	// I really don't want someone to find a way to farm infinite force so we'll just save this
+	// to restore after the attack. It's not like they can whetstone the force mid-attack anyways
+	var/force_pre = blade.force
+
 	blade.force -= offand_force_decrement
 	blade.melee_attack_chain(source, target)
-	blade.force += offand_force_decrement
+	blade.force = force_pre
 
 /datum/heretic_knowledge/spell/furious_steel
 	name = "Furious Steel"
