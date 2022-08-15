@@ -7,7 +7,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/coffeemaker
 	pixel_y = 4 //needed to make it sit nicely on tables
-	var/obj/item/reagent_containers/glass/coffeepot = null
+	var/obj/item/reagent_containers/cup/coffeepot/coffeepot = null
 	var/brewing = FALSE
 	var/brew_time = 20 SECONDS
 	var/speed = 1
@@ -36,19 +36,24 @@
 /obj/machinery/coffeemaker/Initialize(mapload)
 	. = ..()
 	if(mapload)
-		coffeepot = new /obj/item/reagent_containers/glass/coffeepot(src)
+		coffeepot = new /obj/item/reagent_containers/cup/coffeepot(src)
 		cartridge = new /obj/item/coffee_cartridge(src)
 
 /obj/machinery/coffeemaker/deconstruct()
 	coffeepot?.forceMove(drop_location())
-	coffeepot = null
 	cartridge?.forceMove(drop_location())
-	cartridge = null
 	return ..()
 
 /obj/machinery/coffeemaker/Destroy()
 	QDEL_NULL(coffeepot)
 	QDEL_NULL(cartridge)
+	return ..()
+
+/obj/machinery/coffeemaker/Exited(atom/movable/gone, direction)
+	if(gone == coffeepot)
+		coffeepot = null
+	if(gone == cartridge)
+		cartridge = null
 	return ..()
 
 /obj/machinery/coffeemaker/RefreshParts()
@@ -91,28 +96,22 @@
 				. += span_notice("- grounds cartridge has [cartridge.charges] charges remaining.")
 
 	if (coffee_cups >= 1)
-		. += span_notice("There are [coffee_cups] cups left.")
+		. += span_notice("There [coffee_cups == 1 ? "is" : "are"] [coffee_cups] coffee cup[coffee_cups != 1 && "s"] left.")
 	else
 		. += span_notice("There are no cups left.")
 
-	if (sugar_packs > 1)
-		. += span_notice("There are [sugar_packs] packets of sugar left.")
-	else if (sugar_packs == 1)
-		. += span_notice("There is one packet of sugar left.")
+	if (sugar_packs >= 1)
+		. += span_notice("There [sugar_packs == 1 ? "is" : "are"] [sugar_packs] packet[sugar_packs != 1 && "s"] of sugar left.")
 	else
 		. += span_notice("There is no sugar left.")
 
-	if (sweetener_packs > 1)
-		. += span_notice("There are [sweetener_packs] packets of sweetener left.")
-	else if (sweetener_packs == 1)
-		. += span_notice("There is one packet of sweetener left.")
+	if (sweetener_packs >= 1)
+		. += span_notice("There [sweetener_packs == 1 ? "is" : "are"] [sweetener_packs] packet[sweetener_packs != 1 && "s"] of sweetener left.")
 	else
 		. += span_notice("There is no sweetener left.")
 
 	if (creamer_packs > 1)
-		. += span_notice("There are [creamer_packs] packets of creamer left.")
-	else if (creamer_packs == 1)
-		. += span_notice("There is one packet of creamer left.")
+		. += span_notice("There [creamer_packs == 1 ? "is" : "are"] [creamer_packs] packet[creamer_packs != 1 && "s"] of creamer left.")
 	else
 		. += span_notice("There is no creamer left.")
 
@@ -137,18 +136,19 @@
 	. = ..()
 	if(A == coffeepot)
 		coffeepot = null
-		update_appearance()
+	if(A == cartridge)
+		cartridge = null
+	update_appearance()
 
 /obj/machinery/coffeemaker/update_icon_state()
 	icon_state = "[base_icon_state][!!coffeepot][!!cartridge]"
 	return ..()
 
-/obj/machinery/coffeemaker/proc/replace_pot(mob/living/user, obj/item/reagent_containers/glass/coffeepot/new_coffeepot)
+/obj/machinery/coffeemaker/proc/replace_pot(mob/living/user, obj/item/reagent_containers/cup/coffeepot/new_coffeepot)
 	if(!user)
 		return FALSE
 	if(coffeepot)
 		try_put_in_hand(coffeepot, user)
-		coffeepot = null
 	if(new_coffeepot)
 		coffeepot = new_coffeepot
 	update_appearance()
@@ -159,7 +159,6 @@
 		return FALSE
 	if(cartridge)
 		try_put_in_hand(cartridge, user)
-		cartridge = null
 	if(new_cartridge)
 		cartridge = new_cartridge
 	update_appearance()
@@ -181,8 +180,8 @@
 	if(panel_open) //Can't insert objects when its screwed open
 		return TRUE
 
-	if (istype(attack_item, /obj/item/reagent_containers/glass/coffeepot) && !(attack_item.item_flags & ABSTRACT) && attack_item.is_open_container())
-		var/obj/item/reagent_containers/glass/coffeepot/new_pot = attack_item
+	if (istype(attack_item, /obj/item/reagent_containers/cup/coffeepot) && !(attack_item.item_flags & ABSTRACT) && attack_item.is_open_container())
+		var/obj/item/reagent_containers/cup/coffeepot/new_pot = attack_item
 		. = TRUE //no afterattack
 		if(!user.transferItemToLoc(new_pot, src))
 			return TRUE

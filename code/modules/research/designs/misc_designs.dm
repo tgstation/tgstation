@@ -762,7 +762,7 @@
 	id = "coffeepot"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass = 500, /datum/material/plastic = 500)
-	build_path = /obj/item/reagent_containers/glass/coffeepot
+	build_path = /obj/item/reagent_containers/cup/coffeepot
 	category = list("Equipment")
 
 /datum/design/coffeepot_bluespace
@@ -770,7 +770,7 @@
 	id = "bluespace_coffeepot"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 1000, /datum/material/plastic = 500, /datum/material/bluespace = 500)
-	build_path = /obj/item/reagent_containers/glass/coffeepot/bluespace
+	build_path = /obj/item/reagent_containers/cup/coffeepot/bluespace
 	category = list("Equipment")
 
 /datum/design/coffee_cartridge

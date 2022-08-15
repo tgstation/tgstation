@@ -262,4 +262,4 @@
 	name = "Coffeepot"
 	desc = "A standard-sized coffeepot, for use with a coffeemaker."
 	cost = PAYCHECK_CREW
-	contains = list(/obj/item/reagent_containers/glass/coffeepot)
+	contains = list(/obj/item/reagent_containers/cup/coffeepot)
