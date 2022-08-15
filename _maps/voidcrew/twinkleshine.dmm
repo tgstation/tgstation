@@ -2222,10 +2222,6 @@
 /obj/machinery/atmospherics/pipe/simple/purple/visible,
 /turf/open/floor/plating,
 /area/ship/engineering/atmospherics)
-"um" = (
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/ship/engineering/electrical)
 "up" = (
 /obj/machinery/vending/boozeomat/syndicate_access,
 /turf/open/floor/plasteel/dark,
@@ -2726,13 +2722,6 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ship/security)
-"yl" = (
-/obj/effect/turf_decal/industrial/warning{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/engine,
-/area/ship/engineering)
 "yo" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/drinks/coffee{
@@ -3469,7 +3458,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "starfurybcsupermatter";
 	rad_insulation = 0.1
@@ -3572,7 +3560,6 @@
 /area/ship/engineering)
 "HR" = (
 /obj/item/tank/internals/plasma/full,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/effect/turf_decal/industrial/warning{
 	dir = 4
@@ -5857,7 +5844,7 @@ ZF
 wA
 Da
 Jk
-um
+kz
 VU
 av
 Xu
@@ -6343,7 +6330,7 @@ ej
 ej
 vq
 HB
-yl
+ie
 ie
 uV
 ie

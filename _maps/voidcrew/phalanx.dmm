@@ -3247,7 +3247,6 @@
 "Id" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ship/engineering/electrical)
 "Im" = (

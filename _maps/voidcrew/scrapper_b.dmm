@@ -1772,7 +1772,6 @@
 /area/ship/science/robotics)
 "yz" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 4
 	},

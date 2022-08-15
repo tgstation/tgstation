@@ -1,1 +1,1 @@
-/obj/structure/cable/yellow : /obj/structure/cable
+/obj/structure/cable/yellow{@SUBTYPES} : /obj/structure/cable

@@ -3822,7 +3822,6 @@
 /area/ship/crew/dorm)
 "Xs" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 5
 	},
@@ -3832,7 +3831,6 @@
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
 "XI" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 10

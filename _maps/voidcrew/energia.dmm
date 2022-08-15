@@ -1064,7 +1064,6 @@
 /obj/effect/turf_decal/industrial/warning/corner,
 /obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ship/engineering/engine)
 "MF" = (

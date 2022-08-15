@@ -281,7 +281,6 @@
 /area/ship/crew)
 "hy" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/power/solar,
 /obj/effect/turf_decal/solarpanel,
 /turf/open/floor/plating/airless,
@@ -1339,12 +1338,6 @@
 "FP" = (
 /turf/open/floor/plating,
 /area/ship/cargo)
-"FS" = (
-/obj/structure/cable,
-/obj/machinery/power/solar,
-/obj/effect/turf_decal/solarpanel,
-/turf/open/floor/plating/airless,
-/area/ship/external)
 "Gv" = (
 /obj/structure/cable,
 /obj/machinery/door/firedoor/border_only{
@@ -1380,11 +1373,6 @@
 /obj/effect/turf_decal/corner/blue/half,
 /turf/open/floor/plasteel/dark,
 /area/ship/bridge)
-"He" = (
-/obj/structure/cable,
-/obj/structure/catwalk/over,
-/turf/open/floor/plating,
-/area/ship/engineering)
 "Hf" = (
 /obj/structure/cable,
 /obj/machinery/light,
@@ -1690,7 +1678,6 @@
 /turf/open/floor/plasteel,
 /area/ship/cargo)
 "Po" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/power/tracker,
 /obj/effect/turf_decal/solarpanel,
@@ -2087,7 +2074,7 @@ Ij
 IC
 bP
 om
-He
+he
 he
 Mg
 gf
@@ -2349,7 +2336,7 @@ OJ
 "}
 (20,1,1) = {"
 OJ
-FS
+jS
 ei
 hA
 vs
@@ -2363,12 +2350,12 @@ Al
 yx
 Qe
 Mb
-FS
+jS
 OJ
 "}
 (21,1,1) = {"
 OJ
-FS
+jS
 ei
 nM
 gs
@@ -2382,12 +2369,12 @@ FN
 HP
 Tl
 Mb
-FS
+jS
 OJ
 "}
 (22,1,1) = {"
 OJ
-FS
+jS
 ei
 sZ
 Px
@@ -2401,12 +2388,12 @@ ZB
 Fz
 Um
 Mb
-FS
+jS
 OJ
 "}
 (23,1,1) = {"
 OJ
-FS
+jS
 ei
 TX
 Xw
@@ -2420,12 +2407,12 @@ pU
 aY
 rU
 LZ
-FS
+jS
 OJ
 "}
 (24,1,1) = {"
 OJ
-FS
+jS
 ei
 fV
 Vb
@@ -2439,13 +2426,13 @@ rE
 Ia
 Mb
 LZ
-FS
+jS
 OJ
 "}
 (25,1,1) = {"
 OJ
 bW
-FS
+jS
 hy
 Po
 rE
@@ -2457,7 +2444,7 @@ iM
 rE
 hy
 hy
-FS
+jS
 bW
 OJ
 "}

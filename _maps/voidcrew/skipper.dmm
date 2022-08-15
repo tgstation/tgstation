@@ -2911,11 +2911,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ship/engineering/atmospherics)
-"JI" = (
-/obj/structure/cable,
-/obj/structure/catwalk/over/plated_catwalk/dark,
-/turf/open/floor/plating,
-/area/ship/engineering/engine)
 "JK" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrogen_output{
 	dir = 1
@@ -3399,13 +3394,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/ship/crew/canteen)
-"Qv" = (
-/obj/machinery/power/terminal{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/ship/engineering)
 "QG" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/firedoor/border_only{
@@ -4270,7 +4258,7 @@ yW
 qo
 qo
 Om
-Qv
+Om
 yA
 cr
 cr
@@ -4417,7 +4405,7 @@ kG
 mK
 SU
 Ft
-JI
+ew
 DV
 Ly
 ov

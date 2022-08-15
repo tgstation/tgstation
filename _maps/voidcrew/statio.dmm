@@ -6619,10 +6619,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/ship/hallway/central)
-"AT" = (
-/obj/structure/cable,
-/turf/open/floor/engine,
-/area/ship/engineering/engine)
 "AW" = (
 /turf/closed/wall,
 /area/ship/crew/canteen/kitchen)
@@ -13224,13 +13220,13 @@ UN
 xK
 DV
 US
-AT
+fQ
 cr
 Hi
 Xg
 of
 Ra
-AT
+fQ
 US
 "}
 (9,1,1) = {"
@@ -13282,13 +13278,13 @@ UN
 zI
 UN
 US
-AT
+fQ
 cr
 Hi
 ZQ
 of
 Ra
-AT
+fQ
 US
 "}
 (10,1,1) = {"

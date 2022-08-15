@@ -2335,7 +2335,6 @@
 /area/ship/engineering)
 "AN" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering/engine)
 "AR" = (
@@ -2615,10 +2614,6 @@
 /obj/structure/catwalk/over/plated_catwalk/dark,
 /turf/open/floor/plating,
 /area/ship/engineering)
-"EY" = (
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/ship/engineering/engine)
 "EZ" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 5
@@ -3579,11 +3574,6 @@
 /obj/effect/turf_decal/box,
 /turf/open/floor/plasteel/dark,
 /area/ship/crew/canteen)
-"Qx" = (
-/obj/machinery/power/terminal,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/ship/engineering/electrical)
 "Qz" = (
 /obj/machinery/vending/coffee,
 /obj/effect/turf_decal/corner/white{
@@ -4497,11 +4487,11 @@ LO
 Qb
 Qb
 rU
-EY
+xY
 ei
 UH
 fF
-EY
+xY
 fF
 Qb
 Qb
@@ -4587,7 +4577,7 @@ UH
 xY
 xY
 xY
-EY
+xY
 xY
 UH
 Dp
@@ -5024,7 +5014,7 @@ jn
 Pb
 mH
 TF
-Qx
+qD
 Pj
 wr
 zQ
