@@ -743,6 +743,7 @@
 				say("This book is already in my internal cache")
 				return
 			cache = held_book.book_data.return_copy()
+			flick("bigscanner1", src)
 			return TRUE
 		if("clear")
 			cache = null
