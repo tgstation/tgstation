@@ -157,7 +157,7 @@
 /obj/item/mining_scanner,
 /obj/item/mining_scanner,
 /obj/item/mining_scanner,
-/obj/item/areaeditor/shuttle,
+/obj/item/areaeditor,
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/security)
 "K" = (

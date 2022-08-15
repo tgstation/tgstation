@@ -12,7 +12,7 @@
 "b" = (
 /obj/structure/cable,
 /obj/item/stack/sheet/mineral/uranium/five,
-/obj/machinery/atmospherics/pipe/simple/scrubbers{
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers{
 	dir = 8
 	},
 /obj/structure/window/reinforced/spawner,
@@ -49,7 +49,7 @@
 /obj/item/storage/bag/ore,
 /obj/item/weldingtool/experimental,
 /obj/item/clothing/head/welding,
-/obj/item/areaeditor/shuttle,
+/obj/item/areaeditor,
 /obj/item/clothing/suit/space/hardsuit/carp/old,
 /obj/item/clothing/suit/space/hardsuit/carp/old,
 /obj/item/clothing/suit/space/hardsuit/carp/old,

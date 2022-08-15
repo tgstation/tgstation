@@ -26,7 +26,7 @@
 /turf/open/floor/plating/airless,
 /area/station/commons)
 "bN" = (
-/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+/obj/machinery/atmospherics/pipe/smart/simple/orange/hidden{
 	dir = 10
 	},
 /obj/machinery/power/terminal{
@@ -74,7 +74,7 @@
 /obj/effect/turf_decal/industrial/warning{
 	dir = 6
 	},
-/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+/obj/machinery/atmospherics/pipe/smart/simple/orange/hidden{
 	dir = 9
 	},
 /turf/open/floor/plating,
@@ -99,7 +99,7 @@
 /turf/open/floor/iron/dark,
 /area/station/commons)
 "ka" = (
-/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+/obj/machinery/atmospherics/pipe/smart/simple/orange/hidden{
 	dir = 4
 	},
 /obj/machinery/suit_storage_unit/syndicate,
@@ -191,7 +191,7 @@
 /turf/open/floor/iron/dark,
 /area/station/commons)
 "Bp" = (
-/obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/obj/machinery/atmospherics/pipe/smart/simple/orange/hidden,
 /obj/effect/turf_decal/corner/red{
 	dir = 10
 	},
@@ -208,7 +208,7 @@
 	dir = 1;
 	pixel_y = -26
 	},
-/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+/obj/machinery/atmospherics/pipe/smart/simple/orange/hidden{
 	dir = 9
 	},
 /obj/machinery/suit_storage_unit/syndicate,
@@ -334,7 +334,7 @@
 /turf/open/floor/iron/dark,
 /area/station/commons)
 "IU" = (
-/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+/obj/machinery/atmospherics/pipe/smart/simple/orange/hidden{
 	dir = 10
 	},
 /turf/open/floor/iron/dark,
@@ -473,7 +473,7 @@
 /obj/item/ammo_box/a357,
 /obj/item/ammo_box/a357,
 /obj/item/card/emag,
-/obj/item/areaeditor/shuttle,
+/obj/item/areaeditor,
 /obj/effect/turf_decal/corner/red/three_quarters{
 	dir = 4
 	},

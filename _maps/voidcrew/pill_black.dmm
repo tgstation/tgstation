@@ -16,7 +16,7 @@
 /area/station/storage)
 "b" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/scrubbers{
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers{
 	dir = 8
 	},
 /obj/machinery/power/apc/auto_name/directional/west{
@@ -96,7 +96,7 @@
 /obj/item/reagent_containers/cup/beaker/large,
 /obj/item/reagent_containers/cup/beaker/large,
 /obj/item/reagent_containers/cup/beaker/large,
-/obj/item/areaeditor/shuttle,
+/obj/item/areaeditor,
 /obj/structure/window/reinforced/tinted,
 /obj/structure/window/reinforced/tinted{
 	dir = 4

@@ -3,14 +3,14 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/commons/dorm)
 "bi" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
+/obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 10
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "bk" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
@@ -55,7 +55,7 @@
 /turf/open/floor/mineral/titanium,
 /area/station/security/armory)
 "dB" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium,
 /area/station/commons/dorm)
 "dH" = (
@@ -64,7 +64,7 @@
 /turf/open/floor/mineral/titanium,
 /area/station/cargo)
 "dJ" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible,
+/obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
@@ -104,7 +104,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 10
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -114,8 +114,8 @@
 /area/station/command/bridge)
 "fy" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/corner/lime/mono,
 /obj/machinery/door/airlock{
 	name = "Dormitories"
@@ -139,7 +139,7 @@
 /turf/open/floor/mineral/titanium,
 /area/station/hallway/central)
 "gJ" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/closed/wall/mineral/titanium,
 /area/station/security)
 "hc" = (
@@ -158,7 +158,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/station/security)
 "hJ" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
@@ -166,22 +166,22 @@
 "hU" = (
 /obj/effect/turf_decal/corner/red/mono,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium,
 /area/station/security/armory)
 "in" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/corner/red/mono,
 /obj/machinery/door/airlock/security/glass,
 /turf/open/floor/mineral/titanium,
 /area/station/security)
 "iq" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 6
 	},
 /turf/open/floor/mineral/titanium,
@@ -194,7 +194,7 @@
 /turf/open/floor/mineral/titanium,
 /area/station/command/bridge)
 "iO" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible,
+/obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
 /obj/structure/cable,
 /obj/machinery/light{
 	dir = 4
@@ -220,8 +220,8 @@
 /area/station/security)
 "jG" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium,
 /area/station/security)
 "ka" = (
@@ -231,7 +231,7 @@
 /area/station/security/armory)
 "kE" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium,
 /area/station/security)
 "kW" = (
@@ -244,8 +244,8 @@
 "lk" = (
 /obj/effect/turf_decal/corner/yellow/mono,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium,
 /area/station/cargo)
 "lN" = (
@@ -258,7 +258,7 @@
 /turf/open/floor/mineral/titanium,
 /area/station/security)
 "mn" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
+/obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -284,7 +284,7 @@
 /turf/open/floor/mineral/titanium,
 /area/station/cargo)
 "nV" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 9
 	},
 /turf/open/floor/mineral/titanium,
@@ -324,7 +324,7 @@
 /area/station/commons/dorm)
 "oU" = (
 /obj/effect/turf_decal/corner/red/mono,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/machinery/suit_storage_unit/ert/security,
 /turf/open/floor/mineral/titanium,
 /area/station/security)
@@ -333,7 +333,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
@@ -354,17 +354,17 @@
 "pR" = (
 /obj/effect/turf_decal/corner/red/mono,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 9
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
 /area/station/security/armory)
 "qh" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
+/obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 6
 	},
 /obj/structure/cable,
@@ -394,7 +394,7 @@
 /turf/open/floor/mineral/titanium,
 /area/station/security)
 "rk" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
+/obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 10
 	},
 /obj/structure/cable,
@@ -416,10 +416,10 @@
 /obj/structure/cable,
 },
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
@@ -469,29 +469,29 @@
 /area/station/commons/dorm)
 "tD" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
 /area/station/hallway/central)
 "tQ" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/corner/red/mono,
 /obj/machinery/suit_storage_unit/ert/security,
 /turf/open/floor/mineral/titanium,
 /area/station/security)
 "uj" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 6
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium,
 /area/station/cargo)
 "un" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 9
 	},
 /turf/open/floor/mineral/titanium,
@@ -523,7 +523,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "vN" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
@@ -531,8 +531,8 @@
 "wd" = (
 /obj/effect/turf_decal/corner/red/mono,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium,
 /area/station/security)
 "wl" = (
@@ -541,7 +541,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "wp" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
+/obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 5
 	},
 /obj/structure/cable,
@@ -626,7 +626,7 @@
 /turf/open/floor/mineral/titanium,
 /area/station/cargo)
 "Cu" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 6
 	},
 /obj/effect/turf_decal/corner/red/mono,
@@ -640,10 +640,10 @@
 /area/station/cargo)
 "Dd" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 5
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium,
 /area/station/commons/dorm)
 "Dk" = (
@@ -653,10 +653,10 @@
 /turf/open/floor/mineral/titanium,
 /area/station/security)
 "Dy" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 6
 	},
 /turf/open/floor/mineral/titanium,
@@ -709,10 +709,10 @@
 "GG" = (
 /obj/effect/turf_decal/corner/blue/mono,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
@@ -761,9 +761,6 @@
 "Km" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/corner/red/mono,
-/obj/item/gun_voucher/solgov,
-/obj/item/gun_voucher/solgov,
-/obj/item/gun_voucher,
 /turf/open/floor/mineral/titanium,
 /area/station/security/armory)
 "KW" = (
@@ -775,10 +772,10 @@
 /area/station/commons/dorm)
 "KX" = (
 /obj/effect/turf_decal/corner/bottlegreen/mono,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium,
 /area/station/hallway/central)
@@ -817,7 +814,7 @@
 "NT" = (
 /obj/effect/turf_decal/corner/bottlegreen/mono,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
@@ -833,8 +830,8 @@
 "OI" = (
 /obj/effect/turf_decal/corner/lime/mono,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium,
 /area/station/commons/dorm)
 "OQ" = (
@@ -845,8 +842,8 @@
 /area/station/security)
 "OZ" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/mining/glass,
 /obj/effect/turf_decal/corner/yellow/mono,
 /turf/open/floor/mineral/titanium,
@@ -858,8 +855,8 @@
 "Pp" = (
 /obj/effect/turf_decal/corner/bottlegreen/mono,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium,
 /area/station/hallway/central)
 "PN" = (
@@ -907,10 +904,10 @@
 /area/station/security)
 "Tj" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
 /obj/effect/turf_decal/corner/blue/mono,
@@ -954,7 +951,7 @@
 /turf/open/floor/mineral/titanium,
 /area/station/security/armory)
 "Wp" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 6
 	},
 /turf/open/floor/mineral/titanium,
@@ -1000,7 +997,7 @@
 /turf/open/floor/mineral/titanium,
 /area/station/security/armory)
 "Xz" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
+/obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 9
 	},
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -1020,7 +1017,7 @@
 /turf/open/floor/mineral/titanium,
 /area/station/security/armory)
 "XU" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
+/obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -1069,10 +1066,10 @@
 /area/station/cargo)
 "Zp" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/corner/red/mono,
 /obj/machinery/door/airlock/security/glass,
 /turf/open/floor/mineral/titanium,
@@ -1083,7 +1080,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "ZN" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
+/obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 9
 	},
 /obj/structure/cable,

@@ -1656,7 +1656,7 @@
 /turf/template_noop,
 /area/template_noop)
 "Ia" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible,
+/obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/engineering)
 "Ii" = (
@@ -2010,7 +2010,7 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/external,
-/obj/machinery/atmospherics/pipe/simple/orange/visible,
+/obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
 /turf/open/floor/iron/dark,
 /area/station/engineering)
 "Pp" = (
@@ -2046,7 +2046,7 @@
 /area/station/command/bridge)
 "PR" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
+/obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 6
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2074,7 +2074,7 @@
 /turf/open/floor/iron,
 /area/station/commons)
 "RA" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
+/obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 6
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2176,7 +2176,7 @@
 /turf/open/floor/plating,
 /area/station/engineering)
 "TQ" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible,
+/obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/engineering)
