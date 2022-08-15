@@ -2110,7 +2110,7 @@
 /turf/open/floor/iron/grimy,
 /area/station/crew/office)
 "Bh" = (
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/west,
@@ -2654,7 +2654,7 @@
 /area/station/engineering/atmospherics)
 "JM" = (
 /obj/structure/closet/crate,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/effect/turf_decal/box,
 /turf/open/floor/iron,
 /area/station/cargo)
@@ -2873,7 +2873,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/starboard)
 "MB" = (
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/west,

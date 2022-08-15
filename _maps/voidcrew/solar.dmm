@@ -1509,7 +1509,7 @@
 /obj/effect/turf_decal/industrial/warning,
 /obj/item/stack/sheet/mineral/titanium/twenty,
 /obj/structure/closet/crate,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo)
@@ -1869,7 +1869,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 4
 	},
 /obj/machinery/door/window/right/directional/east,
@@ -1965,7 +1965,7 @@
 	dir = 4;
 	name = "Engine Access"
 	},
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 4
 	},
 /obj/structure/cable,

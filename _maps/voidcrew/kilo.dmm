@@ -869,7 +869,7 @@
 	pixel_x = 3;
 	pixel_y = -1
 	},
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /turf/open/floor/mineral/plastitanium,
 /area/station/cargo)
 "hS" = (
@@ -1617,7 +1617,7 @@
 /obj/effect/turf_decal/industrial/warning{
 	dir = 8
 	},
-/obj/machinery/power/smes/shuttle{
+/obj/machinery/power/smes{
 	dir = 8
 	},
 /obj/structure/cable,
@@ -2070,7 +2070,7 @@
 /obj/effect/turf_decal/industrial/warning{
 	dir = 8
 	},
-/obj/machinery/power/smes/shuttle{
+/obj/machinery/power/smes{
 	dir = 8
 	},
 /obj/structure/cable,

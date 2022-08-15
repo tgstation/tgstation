@@ -211,7 +211,7 @@
 /turf/open/floor/iron/white,
 /area/station/science)
 "dR" = (
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 1
 	},
 /obj/structure/window/reinforced,
@@ -1388,7 +1388,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "Dj" = (
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 1
 	},
 /obj/structure/window/reinforced,
@@ -1941,7 +1941,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/science)
 "Ny" = (
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 1
 	},
 /obj/structure/window/reinforced,
@@ -2245,7 +2245,7 @@
 /area/station/crew/toilet)
 "SR" = (
 /obj/machinery/autolathe,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /obj/effect/turf_decal/industrial/hatch/red,
@@ -2253,7 +2253,7 @@
 /turf/open/floor/iron,
 /area/station/storage)
 "Ti" = (
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 1
 	},
 /obj/structure/window/reinforced,

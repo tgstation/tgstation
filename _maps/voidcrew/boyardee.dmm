@@ -586,7 +586,7 @@
 /area/station/cargo)
 "me" = (
 /obj/structure/window/reinforced/spawner/west,
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -758,7 +758,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/structure/cable,
 /obj/item/stack/sheet/mineral/wood/fifty,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/plating,
 /area/station/maintenance)

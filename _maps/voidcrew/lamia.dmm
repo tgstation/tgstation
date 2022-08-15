@@ -723,7 +723,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "ck" = (
-/obj/machinery/power/smes/shuttle/precharged,
+/obj/machinery/power/smes/engineering,
 /obj/structure/cable,
 /obj/machinery/door/window{
 	dir = 1

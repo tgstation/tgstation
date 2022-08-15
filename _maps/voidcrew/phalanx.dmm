@@ -1509,7 +1509,7 @@
 /turf/open/floor/carpet/red,
 /area/station/crew/chapel)
 "ra" = (
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 4
 	},
 /obj/structure/window/reinforced{

@@ -702,7 +702,7 @@
 "DJ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/window/reinforced/spawner,
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -780,7 +780,7 @@
 /area/space)
 "Jd" = (
 /obj/structure/window/reinforced/spawner,
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 1
 	},
 /obj/structure/cable,

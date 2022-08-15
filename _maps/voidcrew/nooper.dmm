@@ -772,7 +772,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/aft)
 "Ta" = (
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/west,

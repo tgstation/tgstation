@@ -1725,7 +1725,7 @@
 /turf/open/floor/plasteel/mono/white,
 /area/station/medical)
 "BE" = (
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/west,
@@ -1932,7 +1932,7 @@
 /obj/item/storage/bag/ore,
 /obj/item/mining_scanner,
 /obj/item/stack/sheet/glass/fifty,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/structure/closet/crate,
 /obj/item/circuitboard/machine/ore_redemption,
 /turf/open/floor/plating,

@@ -18,7 +18,7 @@
 	dir = 4;
 	name = "Engine Access"
 	},
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -1320,7 +1320,7 @@
 	dir = 4;
 	name = "Engine Access"
 	},
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 4
 	},
 /obj/structure/cable,

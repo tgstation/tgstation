@@ -556,7 +556,7 @@
 /turf/open/floor/iron,
 /area/station/crew/dorm)
 "GD" = (
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/west,
@@ -1014,12 +1014,12 @@
 	},
 /obj/effect/turf_decal/corner/red/border,
 /obj/machinery/autolathe,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/iron,
 /area/station/hallway/central)
 "ZB" = (
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/west,

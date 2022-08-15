@@ -268,7 +268,7 @@
 	name = "Engine Access"
 	},
 /obj/structure/cable,
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -1240,7 +1240,7 @@
 	name = "Engine Access"
 	},
 /obj/structure/cable,
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -1416,7 +1416,7 @@
 	name = "Engine Access"
 	},
 /obj/structure/cable,
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -1643,7 +1643,7 @@
 	name = "Engine Access"
 	},
 /obj/structure/cable,
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 1
 	},
 /turf/open/floor/plating,

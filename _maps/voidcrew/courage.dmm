@@ -277,7 +277,7 @@
 /turf/open/floor/iron/dark,
 /area/station/crew)
 "Gx" = (
-/obj/machinery/power/smes/shuttle{
+/obj/machinery/power/smes{
 	dir = 4
 	},
 /obj/structure/cable,

@@ -750,7 +750,7 @@
 /turf/open/floor/mineral/titanium,
 /area/station/crew/dorm)
 "IW" = (
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/west,
@@ -1064,7 +1064,7 @@
 /obj/effect/turf_decal/corner/yellow/mono,
 /obj/machinery/autolathe,
 /obj/item/stack/sheet/glass/fifty,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /turf/open/floor/mineral/titanium,
 /area/station/cargo)
 "Zp" = (

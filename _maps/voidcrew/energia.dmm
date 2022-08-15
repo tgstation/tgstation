@@ -854,7 +854,7 @@
 "HP" = (
 /obj/machinery/autolathe,
 /obj/item/stack/sheet/glass/fifty,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/effect/turf_decal/corner/brown/mono,
 /turf/open/floor/iron,
 /area/station/cargo)
@@ -1023,7 +1023,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "OU" = (
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/west,

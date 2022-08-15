@@ -343,7 +343,7 @@
 /turf/closed/wall,
 /area/station/hallway/central)
 "kr" = (
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/west,
@@ -417,7 +417,7 @@
 /turf/open/floor/wood,
 /area/station/storage)
 "lb" = (
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/west,

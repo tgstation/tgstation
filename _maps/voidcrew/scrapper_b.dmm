@@ -1411,7 +1411,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/engine)
 "uK" = (
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 1
 	},
 /obj/structure/window/reinforced/spawner,
@@ -1568,7 +1568,7 @@
 /turf/open/floor/pod/light,
 /area/station/cargo)
 "xU" = (
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 1
 	},
 /obj/structure/window/reinforced/spawner,
@@ -1645,7 +1645,7 @@
 /obj/structure/closet/crate/large{
 	name = "Extra Supply Crate"
 	},
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/mineral/wood/fifty,
 /turf/open/floor/pod/dark,
@@ -1867,7 +1867,7 @@
 /turf/open/floor/plasteel/mono/white,
 /area/station/science)
 "BQ" = (
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 1
 	},
 /obj/structure/window/reinforced/spawner,
@@ -2344,7 +2344,7 @@
 /turf/open/floor/plasteel/tech/techmaint,
 /area/station/science)
 "Iv" = (
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 1
 	},
 /obj/structure/window/reinforced/spawner,

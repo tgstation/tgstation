@@ -59,7 +59,7 @@
 /area/station/medical)
 "bd" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/machinery/button/door{
 	id = "spitfireshutters";

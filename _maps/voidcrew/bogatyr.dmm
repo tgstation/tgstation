@@ -75,7 +75,7 @@
 "dm" = (
 /obj/structure/closet/crate/science,
 /obj/item/stack/cable_coil/red,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/dirt,
@@ -1007,7 +1007,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/station/science)
 "KT" = (
-/obj/machinery/power/smes/shuttle/precharged,
+/obj/machinery/power/smes/engineering,
 /obj/structure/cable,
 /obj/machinery/door/window{
 	dir = 1

@@ -1528,7 +1528,7 @@
 	dir = 1;
 	pixel_y = 3
 	},
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 8
 	},
 /obj/structure/cable,
@@ -2466,7 +2466,7 @@
 	pixel_x = 4
 	},
 /obj/structure/window/reinforced,
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 8
 	},
 /obj/structure/cable,

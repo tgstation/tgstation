@@ -1300,7 +1300,7 @@
 /turf/open/floor/plasteel/tech,
 /area/station/hallway/central)
 "xi" = (
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 8
 	},
 /obj/structure/window/reinforced/survival_pod{
@@ -1928,7 +1928,7 @@
 /turf/open/floor/plasteel/tech,
 /area/station/construction)
 "JP" = (
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 8
 	},
 /obj/structure/window/reinforced/survival_pod{
@@ -2586,7 +2586,7 @@
 /turf/open/floor/plasteel/tech,
 /area/station/construction)
 "Wf" = (
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 8
 	},
 /obj/structure/window/reinforced/survival_pod{

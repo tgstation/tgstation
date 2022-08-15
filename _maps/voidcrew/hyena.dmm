@@ -157,7 +157,7 @@
 /area/station/storage)
 "dr" = (
 /obj/structure/window/reinforced/spawner/west,
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -425,7 +425,7 @@
 /area/station/cargo/office)
 "ir" = (
 /obj/structure/window/reinforced/spawner/west,
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -489,7 +489,7 @@
 /area/station/maintenance/starboard)
 "iQ" = (
 /obj/structure/window/reinforced/spawner/west,
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -1203,7 +1203,7 @@
 "vv" = (
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/glass/fifty,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/effect/turf_decal/industrial/outline,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/radio/intercom{
@@ -2428,7 +2428,7 @@
 /area/station/cargo)
 "SP" = (
 /obj/structure/window/reinforced/spawner/west,
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 4
 	},
 /obj/structure/cable,

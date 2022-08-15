@@ -656,7 +656,7 @@
 "iH" = (
 /obj/effect/turf_decal/industrial/outline/yellow,
 /obj/structure/closet/crate/engineering,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/plasteel/mono,
 /area/station/cargo)
@@ -971,7 +971,7 @@
 /turf/open/floor/plasteel/mono/white,
 /area/station/medical)
 "lv" = (
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/west,
@@ -1335,7 +1335,7 @@
 /turf/closed/wall,
 /area/station/crew)
 "qS" = (
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/west,
@@ -1798,7 +1798,7 @@
 /turf/open/floor/iron,
 /area/station/medical)
 "yK" = (
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/west,
@@ -2115,7 +2115,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmospherics)
 "CB" = (
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/west,

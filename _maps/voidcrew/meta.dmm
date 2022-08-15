@@ -187,7 +187,7 @@
 /turf/open/floor/plating/airless,
 /area/station/engineering)
 "ay" = (
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -2250,7 +2250,7 @@
 /turf/open/floor/iron/dark,
 /area/station/cargo)
 "fb" = (
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 4
 	},
 /obj/structure/cable,

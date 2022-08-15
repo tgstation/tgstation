@@ -2068,7 +2068,7 @@
 "Ix" = (
 /obj/effect/turf_decal/industrial/outline/yellow,
 /obj/structure/closet/cardboard,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/plasteel/patterned/grid,
 /area/station/cargo)
@@ -2763,7 +2763,7 @@
 /turf/open/floor/iron,
 /area/station/crew/dorm)
 "Ti" = (
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 1
 	},
 /obj/structure/window/plasma/reinforced/spawner,

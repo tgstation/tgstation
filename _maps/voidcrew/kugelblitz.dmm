@@ -1898,7 +1898,7 @@
 /obj/effect/turf_decal/techfloor/orange{
 	dir = 4
 	},
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/structure/table/reinforced,
 /obj/item/stack/rods/fifty,

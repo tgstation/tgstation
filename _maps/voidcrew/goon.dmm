@@ -283,8 +283,8 @@
 /area/station/bridge)
 "qL" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/metal/fifty,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/machinery/door/firedoor/border_only,
 /obj/item/pickaxe,
@@ -412,7 +412,7 @@
 	dir = 8;
 	pixel_y = 2
 	},
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -811,7 +811,7 @@
 	dir = 8;
 	pixel_y = 2
 	},
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 4
 	},
 /obj/structure/cable,

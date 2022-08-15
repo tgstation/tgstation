@@ -435,7 +435,7 @@
 /turf/open/floor/mineral/titanium/tiled,
 /area/station/crew/canteen)
 "hb" = (
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 1
 	},
 /obj/structure/window/reinforced/spawner,
@@ -3408,7 +3408,7 @@
 /area/station/science)
 "WQ" = (
 /obj/structure/window/reinforced/spawner,
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -3439,7 +3439,7 @@
 /area/station/science)
 "Xc" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/cable_coil/red,
 /obj/item/storage/belt/utility/full,

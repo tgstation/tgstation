@@ -190,7 +190,7 @@
 /turf/open/floor/iron,
 /area/station/storage)
 "lH" = (
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/west,
@@ -348,7 +348,7 @@
 /area/station/storage)
 "tk" = (
 /obj/machinery/autolathe,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/machinery/light/small{
 	dir = 4
@@ -918,7 +918,7 @@
 /turf/open/floor/iron,
 /area/station/medical)
 "Zj" = (
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/west,

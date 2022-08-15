@@ -2277,7 +2277,7 @@
 	dir = 4;
 	name = "Engine Access"
 	},
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -2286,7 +2286,7 @@
 "nf" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/item/storage/toolbox/electrical{
 	pixel_x = -3;
 	pixel_y = 8
@@ -2438,7 +2438,7 @@
 	dir = 4;
 	name = "Engine Access"
 	},
-/obj/machinery/power/smes/shuttle/precharged{
+/obj/machinery/power/smes/engineering{
 	dir = 4
 	},
 /obj/structure/cable,
