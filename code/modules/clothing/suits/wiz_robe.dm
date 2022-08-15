@@ -58,7 +58,9 @@
 /obj/item/clothing/suit/wizrobe
 	name = "wizard robe"
 	desc = "A magnificent, gem-lined robe that seems to radiate power."
+	icon = 'icons/obj/clothing/suits/wizard.dmi'
 	icon_state = "wizard"
+	worn_icon = 'icons/mob/clothing/suits/wizard.dmi'
 	inhand_icon_state = "wizrobe"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	armor = list(MELEE = 30, BULLET = 20, LASER = 20, ENERGY = 30, BOMB = 20, BIO = 100, FIRE = 100, ACID = 100, WOUND = 20)

@@ -28,7 +28,7 @@
 	var/obj/item/pizzabox/pizza_to_spawn = pick(list(/obj/item/pizzabox/margherita, /obj/item/pizzabox/mushroom, /obj/item/pizzabox/meat, /obj/item/pizzabox/vegetable, /obj/item/pizzabox/pineapple))
 	new pizza_to_spawn(toLaunch)
 	for(var/i in 1 to 6)
-		new /obj/item/reagent_containers/food/drinks/bottle/beer(toLaunch)
+		new /obj/item/reagent_containers/cup/glass/bottle/beer(toLaunch)
 	new /obj/effect/pod_landingzone(T, toLaunch)
 
 /datum/station_trait/galactic_grant
@@ -90,9 +90,9 @@
 		"A shipment of scarves was delivered to the station.",
 	)
 	scarves = typesof(/obj/item/clothing/neck/scarf) + list(
-		/obj/item/clothing/neck/stripedredscarf,
-		/obj/item/clothing/neck/stripedgreenscarf,
-		/obj/item/clothing/neck/stripedbluescarf,
+		/obj/item/clothing/neck/large_scarf/red,
+		/obj/item/clothing/neck/large_scarf/green,
+		/obj/item/clothing/neck/large_scarf/blue,
 	)
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, .proc/on_job_after_spawn)

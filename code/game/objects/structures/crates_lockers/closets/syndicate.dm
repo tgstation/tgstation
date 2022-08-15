@@ -8,23 +8,22 @@
 
 /obj/structure/closet/syndicate/personal/PopulateContents()
 	..()
+	new /obj/item/trench_tool(src)
+	new /obj/item/clothing/glasses/night(src)
+	new /obj/item/ammo_box/magazine/m10mm(src)
+	new /obj/item/storage/belt/military(src)
+	new /obj/item/storage/belt/holster/nukie(src)
+	new /obj/item/radio/headset/syndicate(src)
 	new /obj/item/clothing/under/syndicate(src)
 	new /obj/item/clothing/under/syndicate/skirt(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/radio/headset/syndicate(src)
-	new /obj/item/ammo_box/magazine/m9mm(src)
-	new /obj/item/storage/belt/military(src)
-	new /obj/item/crowbar/red(src)
-	new /obj/item/clothing/glasses/night(src)
-	new /obj/item/storage/belt/holster/nukie(src)
-	new /obj/item/pickaxe/drill/diamonddrill(src)
 
 /obj/structure/closet/syndicate/nuclear
 	desc = "It's a storage unit for a Syndicate boarding party."
 
 /obj/structure/closet/syndicate/nuclear/PopulateContents()
 	for(var/i in 1 to 5)
-		new /obj/item/ammo_box/magazine/m9mm(src)
+		new /obj/item/ammo_box/magazine/m10mm(src)
 	new /obj/item/storage/box/flashbangs(src)
 	new /obj/item/storage/box/teargas(src)
 	new /obj/item/storage/backpack/duffelbag/syndie/med(src)
@@ -45,9 +44,10 @@
 
 	//Sad trombone
 	if(pickednum == 1)
-		var/obj/item/paper/P = new /obj/item/paper(src)
-		P.name = "\improper IOU"
-		P.info = "Sorry man, we needed the money so we sold your stash. It's ok, we'll double our money for sure this time!"
+		var/obj/item/paper/paper = new /obj/item/paper(src)
+		paper.name = "\improper IOU"
+		paper.add_raw_text("Sorry man, we needed the money so we sold your stash. It's ok, we'll double our money for sure this time!")
+		paper.update_appearance()
 
 	//Iron (common ore)
 	if(pickednum >= 2)

@@ -61,7 +61,8 @@
 	var/datum/language_holder/language_holder
 	var/unconvertable = FALSE
 	var/late_joiner = FALSE
-
+	///has this mind ever been an AI
+	var/has_ever_been_ai = FALSE
 	var/last_death = 0
 
 	var/force_escaped = FALSE  // Set by Into The Sunset command of the shuttle manipulator
@@ -298,7 +299,7 @@
 	if(antag_team)
 		antag_team.add_member(src)
 	INVOKE_ASYNC(A, /datum/antagonist.proc/on_gain)
-	log_game("[key_name(src)] has gained antag datum [A.name]([A.type])")
+	log_game("[key_name(src)] has gained antag datum [A.name]([A.type]).")
 	return A
 
 /datum/mind/proc/remove_antag_datum(datum_type)

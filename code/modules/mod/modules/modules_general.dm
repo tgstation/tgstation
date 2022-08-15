@@ -481,7 +481,7 @@
 	/// Whitelist of attachable hats, read note in Initialize() below this line
 	var/static/list/attachable_hats_list
 
-/obj/item/mod/module/hat_stabilizer/Initialize()
+/obj/item/mod/module/hat_stabilizer/Initialize(mapload)
 	. = ..()
 	attachable_hats_list = typecacheof(
 	//List of attachable hats. Make sure these and their subtypes are all tested, so they dont appear janky.
@@ -505,8 +505,8 @@
 			/obj/item/clothing/head/nursehat,
 			/obj/item/clothing/head/chefhat,
 			/obj/item/clothing/head/papersack,
-			)) - /obj/item/clothing/head/caphat/beret
-			//Need to subtract the beret because its annoying
+			/obj/item/clothing/head/caphat/beret,
+			))
 
 /obj/item/mod/module/hat_stabilizer/on_suit_activation()
 	RegisterSignal(mod.helmet, COMSIG_PARENT_EXAMINE, .proc/add_examine)
