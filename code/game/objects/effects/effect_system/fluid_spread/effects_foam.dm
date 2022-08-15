@@ -398,6 +398,7 @@
 	alpha = 120
 	max_integrity = 10
 	pass_flags_self = PASSGLASS
+	var/list/ignored_gases = list(/datum/gas/nitrogen, /datum/gas/oxygen, /datum/gas/halon)
 
 /obj/structure/foamedmetal/resin/Initialize(mapload)
 	. = ..()
@@ -414,11 +415,8 @@
 
 		var/list/gases = air.gases
 		for(var/gas_type in gases)
-			switch(gas_type)
-				if(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/halon)
-					continue
-				else
-					gases[gas_type][MOLES] = 0
+			if(!(gas_type in ignored_gases))
+				gases[gas_type][MOLES] = 0
 		air.garbage_collect()
 
 	for(var/obj/machinery/atmospherics/components/unary/comp in location)
