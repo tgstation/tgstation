@@ -11,16 +11,17 @@
 
 /obj/item/clothing/head/foilhat/Initialize(mapload)
 	. = ..()
-	if(!warped)
-		AddComponent(/datum/component/anti_magic, \
-			antimagic_flags = MAGIC_RESISTANCE_MIND, \
-			inventory_flags = ITEM_SLOT_HEAD, \
-			charges = 6, \
-			drain_antimagic = CALLBACK(src, .proc/drain_antimagic), \
-			expiration = CALLBACK(src, .proc/warp_up) \
-		)
-	else
+	if(warped)
 		warp_up()
+		return
+
+	AddComponent(/datum/component/anti_magic, \
+		antimagic_flags = MAGIC_RESISTANCE_MIND, \
+		inventory_flags = ITEM_SLOT_HEAD, \
+		charges = 6, \
+		drain_antimagic = CALLBACK(src, .proc/drain_antimagic), \
+		expiration = CALLBACK(src, .proc/warp_up) \
+	)
 
 /obj/item/clothing/head/foilhat/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
