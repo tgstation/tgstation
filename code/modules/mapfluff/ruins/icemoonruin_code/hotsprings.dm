@@ -40,6 +40,7 @@
 					all_species += stype
 			var/random_race = pick(all_species)
 			H.set_species(random_race)
+			H.dna.update_dna_identity()
 			L = H
 	var/turf/T = find_safe_turf(extended_safety_checks = TRUE, dense_atoms = FALSE)
 	L.forceMove(T)

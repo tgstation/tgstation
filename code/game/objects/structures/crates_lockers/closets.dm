@@ -309,7 +309,7 @@
 	else if(istype(AM, /obj/structure/closet))
 		return FALSE
 	else if(isobj(AM))
-		if((!allow_dense && AM.density) || AM.anchored || AM.has_buckled_mobs() || ismecha(AM))
+		if((!allow_dense && AM.density) || AM.anchored || AM.has_buckled_mobs())
 			return FALSE
 		else if(isitem(AM) && !HAS_TRAIT(AM, TRAIT_NODROP))
 			return TRUE
@@ -408,7 +408,7 @@
 			user.visible_message(span_notice("[user] [welded ? "welds shut" : "unwelded"] \the [src]."),
 							span_notice("You [welded ? "weld" : "unwelded"] \the [src] with \the [W]."),
 							span_hear("You hear welding."))
-			user.log_message("[welded ? "welded":"unwelded"] closet [src] with [W]", LOG_GAME)
+			log_game("[key_name(user)] [welded ? "welded":"unwelded"] closet [src] with [W] at [AREACOORD(src)]")
 			update_appearance()
 	else if (can_install_electronics && istype(W, /obj/item/electronics/airlock)\
 			&& !secure && !electronics && !locked && (welded || !can_weld_shut) && !broken)

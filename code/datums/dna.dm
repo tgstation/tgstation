@@ -473,7 +473,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			new_race = mrace
 		else
 			return
-		death_sound = new_race.death_sound
+		deathsound = new_race.deathsound
 		dna.species.on_species_loss(src, new_race, pref_load)
 		var/datum/species/old_species = dna.species
 		dna.species = new_race

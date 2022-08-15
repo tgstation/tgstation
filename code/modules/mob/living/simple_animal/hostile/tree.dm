@@ -40,7 +40,7 @@
 	minbodytemp = 0
 	maxbodytemp = 1200
 
-	death_message = "is hacked into pieces!"
+	deathmessage = "is hacked into pieces!"
 	loot = list(/obj/item/stack/sheet/mineral/wood)
 	gold_core_spawnable = HOSTILE_SPAWN
 	del_on_death = 1

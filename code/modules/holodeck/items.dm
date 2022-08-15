@@ -204,11 +204,11 @@
 
 /obj/item/paper/fluff/holodeck/trek_diploma
 	name = "paper - Starfleet Academy Diploma"
-	default_raw_text = {"<h2>Starfleet Academy</h2></br><p>Official Diploma</p></br>"}
+	info = {"<h2>Starfleet Academy</h2></br><p>Official Diploma</p></br>"}
 
 /obj/item/paper/fluff/holodeck/disclaimer
 	name = "Holodeck Disclaimer"
-	default_raw_text = "Bruises sustained in the holodeck can be healed simply by sleeping."
+	info = "Bruises sustained in the holodeck can be healed simply by sleeping."
 
 /obj/vehicle/ridden/scooter/skateboard/pro/holodeck
 	name = "holographic skateboard"

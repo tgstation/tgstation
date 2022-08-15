@@ -46,9 +46,9 @@ no power level overlay is currently in the overlays list.
 	///Timer between 0 and 3 before the field gets made
 	var/warming_up = 0
 	///List of every containment fields connected to this generator
-	var/list/obj/machinery/field/containment/fields = list()
+	var/list/obj/machinery/field/containment/fields
 	///List of every field generators connected to this one
-	var/list/obj/machinery/field/generator/connected_gens = list()
+	var/list/obj/machinery/field/generator/connected_gens
 	///Check for asynk cleanups for this and the connected gens
 	var/clean_up = FALSE
 
@@ -64,12 +64,17 @@ no power level overlay is currently in the overlays list.
 
 /obj/machinery/field/generator/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
+	fields = list()
+	connected_gens = list()
 	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, .proc/block_singularity_if_active)
 
 /obj/machinery/field/generator/anchored/Initialize(mapload)
 	. = ..()
 	set_anchored(TRUE)
+
+/obj/machinery/field/generator/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/field/generator/process()
 	if(active == FG_ONLINE)

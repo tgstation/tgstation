@@ -407,7 +407,6 @@
 	name = "armor"
 	desc = "A slim armored vest that protects against most types of damage."
 	icon_state = "armor"
-	icon = 'icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	inhand_icon_state = "armor"
 	blood_overlay_type = "armor"
@@ -789,7 +788,7 @@
 	/// The badmin mode. Makes your projectiles act like the real deal.
 	var/real_hits = FALSE
 
-/obj/item/gun/energy/laser/chameleon/Initialize(mapload)
+/obj/item/gun/energy/laser/chameleon/Initialize()
 	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/gun

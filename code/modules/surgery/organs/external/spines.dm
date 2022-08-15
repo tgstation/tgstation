@@ -1,8 +1,4 @@
 /obj/item/organ/external/spines
-	name = "lizard spines"
-	desc = "Not an actual spine, obviously."
-	icon_state = "spines"
-
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_EXTERNAL_SPINES
 	layers = EXTERNAL_ADJACENT|EXTERNAL_BEHIND

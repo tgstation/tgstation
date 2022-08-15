@@ -2,8 +2,6 @@
 	name = "Spontaneous Brain Trauma"
 	typepath = /datum/round_event/brain_trauma
 	weight = 25
-	category = EVENT_CATEGORY_HEALTH
-	description = "A crewmember gains a random trauma."
 
 /datum/round_event/brain_trauma
 	fakeable = FALSE

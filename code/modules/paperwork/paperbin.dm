@@ -41,9 +41,8 @@
 	var/obj/item/paper/paper = new papertype(src)
 	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 		if(prob(30))
-			paper.add_raw_text("<font face=\"[CRAYON_FONT]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>")
+			paper.info = "<font face=\"[CRAYON_FONT]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>"
 			paper.AddElement(/datum/element/honkspam)
-			paper.update_appearance()
 	return paper
 
 /obj/item/paper_bin/Destroy()

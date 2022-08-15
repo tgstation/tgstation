@@ -1,144 +1,104 @@
 
-/*  Access is broken down by department, department special functions/rooms, and departmental roles
-*	The first access for the department will always be its general access function
-*	Please try to make the strings for any new accesses as close to the name of the define as possible
-*	If you are going to add an access to the list, make sure to also add it to its respective region further below
-*	If you're varediting on the map, it uses the string. If you're editing the object directly, use the define name
-*/
+/* Access is broken down by department, department special functions/rooms, and departmental roles
+	The first access for the department will always be its general access function
+	Access for departmental roles will start with the head and go down in level of succession
+	If we ever get to a point where we have more departmental roles than the five (four) available slots, we should be looking to make some job access more generic
+	Access goes from Command, Security, Engineering, Medical, Supply, Science, Service, Away Missions, Mech Access, Admin, then Antag
+	Please try to make the strings for any new accesses as close to the name of the define as possible
+	If you are going to add an access to the list, make sure to also add it to its respective region further below
+	If you're varediting on the map, it uses the string. If you're editing the object directly, use the define name*/
 
-/// Command General Access, typically used for accessing the doors to the bridge, as well as being the general access that Tablet/Computer Programs check for "heads".
+/// Command general access, EVA storage windoors, gateway shuters, AI integrity restorer, comms console
 #define ACCESS_COMMAND "command"
-/// Access to the AI Upload Room Doors as well as the AI satellite. Also used for controlling the machinery in the AI Upload (turrets, foam dispensers)
 #define ACCESS_AI_UPLOAD "ai_upload"
-/// Access to the Teleporter Room, and some cargo crates.
 #define ACCESS_TELEPORTER "teleporter"
-/// Access to the EVA Storage Room, and some cargo crates.
 #define ACCESS_EVA "eva"
-/// Access to make an announcement through the Requests Console found in an office.
+///Request console announcements
 #define ACCESS_RC_ANNOUNCE "rc_announce"
-/// Access used for events (Red Alert, BSA, Emergency Maintenance) which require at least two people to swipe at the same time to authorize it
+/// Used for events which require at least two people to confirm them
 #define ACCESS_KEYCARD_AUTH "keycard_auth"
-/// Access for the "minisat", but is actually used for the small maintenance cubicle some AI satellites may have.
 #define ACCESS_MINISAT "minisat"
-/// Access used to run the NTNet Tablet Application WireCarp, which allows you to diagnose and view NTNet logging.
+/// NTnet diagnostics/monitoring software
 #define ACCESS_NETWORK "network"
-/// Access used to access the Gateway Room, which will further lead you to get to Away Missions.
 #define ACCESS_GATEWAY "gateway"
-/// Access used to override "personal control" on a personal locker, meaning you are able to open any of those lockers/wardrobes.
 #define ACCESS_ALL_PERSONAL_LOCKERS "all_personal_lockers"
-/// Access used for Access-Changing Programs, this one will unlock all options that can be ever given via that program.
 #define ACCESS_CHANGE_IDS "change_ids"
-/// Access used for the Captain's personal quarters in mapping, as well as what allows one to order emergency shuttles.
 #define ACCESS_CAPTAIN "captain"
-/// Access used for the Head of Personnel's personal quarters in mapping, as well as the security console and other HoP-related things.
 #define ACCESS_HOP "hop"
 
-/// Security's General Access. In mapping, grants access to spaces such as to the "meeting room" or firing range, as well as being the general access that Tablet/Computer Programs check for "heads". Also unlocks other types of security equipment.
+/// Security general access, security records, gulag item storage, secbots
 #define ACCESS_SECURITY "security"
-/// Access that ONLY grants access to the front doors of the Brig. Never use this more for anything than that, please.
+/// Outer brig doors
 #define ACCESS_BRIG_ENTRANCE "brig_entrance"
-/// Access to brig cells, brig timers, permabrig, gulag, gulag teleporter, gulag shuttle, prisoner management console, and some security cargo crates.
+/// Brig cells+timers, permabrig, gulag+gulag shuttle, prisoner management console, security equipment
 #define ACCESS_BRIG "brig"
-/// Access to the armory, security incinerator (when present), and the execution/re-education chamber.
+/// Armory, gulag teleporter, execution chamber
 #define ACCESS_ARMORY "armory"
-/// Access to the "secure" portion of the courtroom, like where the judge and everyone sits..
 #define ACCESS_COURT "court"
-/// The "Weapons Permit" Access, or the one that lets you walk past secbots without them charging at you as you hold your weaponry.
+/// Weapon authorization for secbots
 #define ACCESS_WEAPONS "weapons"
-/// Access used for the Head of Security's personal quarters in mapping, as well as other HoS-related things.
 #define ACCESS_HOS "hos"
-/// Access for the detective to get into their office, the medical data console, and some other detective-related stuff.
+///Detective's office, forensics lockers, security+medical records
 #define ACCESS_DETECTIVE "detective"
 
-/// Engineering General Access, grants access to the standard parts of engineering (as well as the Supermatter and related equipment).
+/// Engineering general access, power monitor, power flow control console
 #define ACCESS_ENGINEERING "engineering"
-/// Access to Atmospherics Sections of the Engineering Department, as well as air alarms.
 #define ACCESS_ATMOSPHERICS "atmospherics"
-/// Access to all maintenance tunnels on the station. This overrides any "departmental maintenance" access, this has free roaming range everywhere.
 #define ACCESS_MAINT_TUNNELS "maint_tunnels"
-/// Access to get into APCs, engineering equipment lockers, typically mapped in for key power rooms across the station, engineering vending machines, emitters, and some other stuff.
+///APCs, EngiVend/YouTool, engineering equipment lockers
 #define ACCESS_ENGINE_EQUIP "engine_equip"
-/// Access to "construction" areas of the station. However, in mapping, it's used to get access to the front door and lathe room of the engineering department.
 #define ACCESS_CONSTRUCTION "construction"
-/// Access to the technical storage room (contains all the boards and other miscellaneous engineering gear).
 #define ACCESS_TECH_STORAGE "tech_storage"
-/// Access to the telecomms satellite, machinery, and tablets.
+/// has access to the entire telecomms satellite / machinery
 #define ACCESS_TCOMMS "tcomms"
-/// Access to the Auxiliary Base Room, as well as the ability over launching it.
+/// Room and launching.
 #define ACCESS_AUX_BASE "aux_base"
-/// Access to all external "space facing" airlocks on the station. Used such that people don't easily "jump ship", or restict free ingress/egress to only a few points on the station.
 #define ACCESS_EXTERNAL_AIRLOCKS "external airlocks"
-/// Access for the Chief Engineer's personal quarters in mapping, as well as some other CE-related things.
 #define ACCESS_CE "ce"
 
-/// General access to Medbay, like the front doors, the treatment center, the medical records console, defibrillator mounts, and more.
+/// Medical general access
 #define ACCESS_MEDICAL "medical"
-/// Access to the Morgue.
 #define ACCESS_MORGUE "morgue"
-/// Access to the Pharmacy, or the smaller room in medical with the multiple chem dispensers and pill pressers. The Chemist's main position.
+/// Pharmacy access (Chemistry room in Medbay)
 #define ACCESS_PHARMACY "pharmacy"
-/// Access to the surgery rooms.
 #define ACCESS_SURGERY "surgery"
-/// Allows access to the larger room for Chemistry plumbing machinery setups.
+///Allows access to chemistry factory areas on compatible maps
 #define ACCESS_PLUMBING "plumbing"
-/// Access to the Virology portion of the medical department, as well as the virology crate.
-#define ACCESS_VIROLOGY "virology"
-/// Access to the Psychologist's office.
-#define ACCESS_PSYCHOLOGY "psychology"
-/// Access for the Chief Medical Officer's personal quarters in mapping, as well as some other CMO-related things.
+
 #define ACCESS_CMO "cmo"
+#define ACCESS_VIROLOGY "virology"
+#define ACCESS_PSYCHOLOGY "psychology"
 
-/// General access for Cargo, allows for entry to Cargo Bay and Cargo's Office.
+///Cargo general access
 #define ACCESS_CARGO "cargo"
-/// Access to the Shipping and Mailing Rooms on several maps.
 #define ACCESS_SHIPPING "shipping"
-/// Access for a room where the ORM may be kept, or to release materials from the ORM.
+/// For releasing minerals from the ORM
 #define ACCESS_MINERAL_STOREROOM "mineral_storeroom"
-/// Access to the "on-station" Mining Portion of the Cargo Department.
-#define ACCESS_MINING "mining"
-/// Access to the "off-station" Mining Station, which contains gear dedicated for miners to do their job best, as well as seek shelter from the inhospitable elements.
 #define ACCESS_MINING_STATION "mining_station"
-/// Access to the vault on the station, for accessing the station's budget, the nuke core, or the Ore Silo.
 #define ACCESS_VAULT "vault"
-/// Access for the Quartermaster's personal quarters in mapping, as well as some other QM-related things.
 #define ACCESS_QM "qm"
+#define ACCESS_MINING "mining"
 
-/// General access for Science, allows for entry to the general hallways of Science, as well as the main lathe room.
+///Science general access
 #define ACCESS_SCIENCE "science"
-/// Access to the specialized research experimentation rooms within Science, as well as what gives access to lockers and access to TechWeb programs.
 #define ACCESS_RESEARCH "research"
-/// Access to the Ordnance Mixing Lab and the Ordnance Bomb Range.
-#define ACCESS_ORDNANCE "ordnance"
-/// Access to the Ordnance Storage Room, where all of the bomb-making gases are stored.
 #define ACCESS_ORDNANCE_STORAGE "ordnance_storage"
-/// Access to the Genetics division of Science.
-#define ACCESS_GENETICS "genetics"
-/// Access to the Robotics division of Science, as well as opening up silicon cyborgs and other simple robots.
-#define ACCESS_ROBOTICS "robotics"
-/// Access to the Xenobiology division of Science.
-#define ACCESS_XENOBIOLOGY "xenobiology"
-/// Access for the Research Director's personal quarters in mapping, as well as some other RD-related things.
 #define ACCESS_RD "rd"
+#define ACCESS_GENETICS "genetics"
+#define ACCESS_ROBOTICS "robotics"
+#define ACCESS_ORDNANCE "ordnance"
+#define ACCESS_XENOBIOLOGY "xenobiology"
 
-/// General access for Service, allows for entry to the Service Hallway.
+///Service general access
 #define ACCESS_SERVICE "service"
-/// Access to the Theatre, as well as other vending machines related to the theatre. Sometimes also used as the "clown's" access in code.
 #define ACCESS_THEATRE "theatre"
-/// Access to the Chaplain's office.
 #define ACCESS_CHAPEL_OFFICE "chapel_office"
-/// Access to the chapel's crematorium.
 #define ACCESS_CREMATORIUM "crematorium"
-/// Access to the curator's private rooms in the Library, as well as access both into and out of the Library via Maintenance.
 #define ACCESS_LIBRARY "library"
-/// Access to the Bar, the Bar's Backroom, the bar sign, the bar robot portal, and the bar's vending machines. Some other bar-things too.
 #define ACCESS_BAR "bar"
-/// Access to the Kitchen, the Kitchen's Coldroom, the kitchen's vending machines, and the food robot portal. Some other chef-things too.
 #define ACCESS_KITCHEN "kitchen"
-/// Access to the Botany Division of the station and some other Botanist things.
 #define ACCESS_HYDROPONICS "hydroponics"
-/// Access to the Janitor's room, and some tablet apps for control of the station's janitorial equipment.
 #define ACCESS_JANITOR "janitor"
-/// Access to the Lawyer's office.
 #define ACCESS_LAWYER "lawyer"
 
 /// - - - AWAY MISSIONS - - -

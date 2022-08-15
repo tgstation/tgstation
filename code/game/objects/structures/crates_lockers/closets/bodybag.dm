@@ -51,19 +51,20 @@
 			return
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
-		handle_tag("[t ? t : initial(name)]")
+		if(t)
+			name = "[initial(name)] - [t]"
+			tagged = TRUE
+			update_appearance()
+		else
+			name = initial(name)
 		return
 	if(!tagged)
 		return
 	if(interact_tool.tool_behaviour == TOOL_WIRECUTTER || interact_tool.get_sharpness())
 		to_chat(user, span_notice("You cut the tag off [src]."))
-		handle_tag()
-
-///Handles renaming of the bodybag's examine tag.
-/obj/structure/closet/body_bag/proc/handle_tag(tag_name)
-	name = tag_name ? "[initial(name)] - [tag_name]" : initial(name)
-	tagged = !!tag_name
-	update_appearance()
+		name = "body bag"
+		tagged = FALSE
+		update_appearance()
 
 /obj/structure/closet/body_bag/update_overlays()
 	. = ..()
@@ -308,7 +309,7 @@
 	user.visible_message(span_notice("[user] [sinched ? null : "un"]sinches [src]."),
 							span_notice("You [sinched ? null : "un"]sinch [src]."),
 							span_hear("You hear stretching followed by metal clicking from [src]."))
-	user.log_message("[sinched ? "sinched":"unsinched"] secure environmental bag [src]", LOG_GAME)
+	log_game("[key_name(user)] [sinched ? "sinched":"unsinched"] secure environmental bag [src] at [AREACOORD(src)]")
 	update_appearance()
 
 /obj/structure/closet/body_bag/environmental/prisoner/pressurized

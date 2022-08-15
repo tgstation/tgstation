@@ -3,7 +3,6 @@
 	name = "explorer suit"
 	desc = "An armoured suit for exploring harsh environments."
 	icon_state = "explorer"
-	icon = 'icons/obj/clothing/suits/utility.dmi'
 	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
 	inhand_icon_state = "explorer"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
@@ -71,7 +70,6 @@
 	adjustmask()
 
 /obj/item/clothing/suit/hooded/cloak
-	icon = 'icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 
 /obj/item/clothing/suit/hooded/cloak/goliath

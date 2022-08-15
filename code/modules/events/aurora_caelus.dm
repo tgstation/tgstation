@@ -4,11 +4,9 @@
 	max_occurrences = 1
 	weight = 1
 	earliest_start = 5 MINUTES
-	category = EVENT_CATEGORY_FRIENDLY
-	description = "A colourful display can be seen through select windows. And the kitchen."
 
 /datum/round_event_control/aurora_caelus/canSpawnEvent(players)
-	if(!CONFIG_GET(flag/starlight)&&!(SSmapping.empty_space))
+	if(!CONFIG_GET(flag/starlight))
 		return FALSE
 	return ..()
 
@@ -48,7 +46,7 @@
 				if(seymour.mind && istype(seymour.mind.assigned_role, /datum/job/cook))
 					seymour.say("My roast is ruined!!!", forced = "ruined roast")
 					seymour.emote("scream")
-
+				
 
 /datum/round_event/aurora_caelus/tick()
 	if(activeFor % 5 == 0)

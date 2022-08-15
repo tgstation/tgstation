@@ -56,7 +56,7 @@
 	inhand_icon_state = "rapid"
 	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
 
-/obj/item/clothing/gloves/rapid/Initialize(mapload)
+/obj/item/clothing/gloves/rapid/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/punchcooldown)
 

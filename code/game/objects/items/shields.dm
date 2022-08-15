@@ -129,6 +129,9 @@
 /obj/item/shield/riot/flash/Initialize(mapload)
 	. = ..()
 	embedded_flash = new(src)
+
+/obj/item/shield/riot/flash/ComponentInitialize()
+	. = .. ()
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/shield/riot/flash/attack(mob/living/M, mob/user)

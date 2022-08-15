@@ -1,6 +1,6 @@
 import { classes } from 'common/react';
 import { capitalizeAll } from 'common/string';
-import { useBackend, useLocalState } from 'tgui/backend';
+import { useBackend } from 'tgui/backend';
 import { Box, Button, Icon, LabeledList, NoticeBox, Section, Stack, Table } from 'tgui/components';
 import { Window } from 'tgui/layouts';
 
@@ -16,11 +16,6 @@ type VendingData = {
   extended_inventory: boolean;
   access: boolean;
   vending_machine_input: CustomInput[];
-  categories: Record<string, Category>;
-};
-
-type Category = {
-  icon: string;
 };
 
 type ProductRecord = {
@@ -29,14 +24,23 @@ type ProductRecord = {
   price: number;
   max_amount: number;
   ref: string;
-  category: string;
 };
 
-type CoinRecord = ProductRecord & {
+type CoinRecord = {
+  path: string;
+  name: string;
+  price: number;
+  max_amount: number;
+  ref: string;
   premium: boolean;
 };
 
-type HiddenRecord = ProductRecord & {
+type HiddenRecord = {
+  path: string;
+  name: string;
+  price: number;
+  max_amount: number;
+  ref: string;
   premium: boolean;
 };
 
@@ -61,48 +65,7 @@ type CustomInput = {
 
 export const Vending = (props, context) => {
   const { data } = useBackend<VendingData>(context);
-
-  const {
-    onstation,
-    product_records = [],
-    coin_records = [],
-    hidden_records = [],
-    stock,
-  } = data;
-
-  const [selectedCategory, setSelectedCategory] = useLocalState<string>(
-    context,
-    'selectedCategory',
-    Object.keys(data.categories)[0]
-  );
-
-  let inventory: (ProductRecord | CustomInput)[];
-  let custom = false;
-  if (data.vending_machine_input) {
-    inventory = data.vending_machine_input;
-    custom = true;
-  } else {
-    inventory = [...product_records, ...coin_records];
-    if (data.extended_inventory) {
-      inventory = [...inventory, ...hidden_records];
-    }
-  }
-
-  inventory = inventory
-    // Just in case we still have undefined values in the list
-    .filter((item) => !!item);
-
-  const filteredCategories = Object.fromEntries(
-    Object.entries(data.categories).filter(([categoryName]) => {
-      return inventory.find((product) => {
-        if ('category' in product) {
-          return product.category === categoryName;
-        } else {
-          return false;
-        }
-      });
-    })
-  );
+  const { onstation } = data;
 
   return (
     <Window width={450} height={600}>
@@ -114,22 +77,8 @@ export const Vending = (props, context) => {
             </Stack.Item>
           )}
           <Stack.Item grow>
-            <ProductDisplay
-              custom={custom}
-              inventory={inventory}
-              selectedCategory={selectedCategory}
-            />
+            <ProductDisplay />
           </Stack.Item>
-
-          {Object.keys(filteredCategories).length > 1 && (
-            <Stack.Item>
-              <CategorySelector
-                categories={filteredCategories}
-                selectedCategory={selectedCategory!}
-                onSelect={setSelectedCategory}
-              />
-            </Stack.Item>
-          )}
         </Stack>
       </Window.Content>
     </Window>
@@ -167,17 +116,29 @@ export const UserDetails = (props, context) => {
 };
 
 /** Displays  products in a section, with user balance at top */
-const ProductDisplay = (
-  props: {
-    custom: boolean;
-    selectedCategory: string | null;
-    inventory: (ProductRecord | CustomInput)[];
-  },
-  context
-) => {
+const ProductDisplay = (props, context) => {
   const { data } = useBackend<VendingData>(context);
-  const { custom, inventory, selectedCategory } = props;
-  const { stock, onstation, user } = data;
+  const {
+    onstation,
+    user,
+    product_records = [],
+    coin_records = [],
+    hidden_records = [],
+    stock,
+  } = data;
+  let inventory;
+  let custom = false;
+  if (data.vending_machine_input) {
+    inventory = data.vending_machine_input;
+    custom = true;
+  } else {
+    inventory = [...product_records, ...coin_records];
+    if (data.extended_inventory) {
+      inventory = [...inventory, ...hidden_records];
+    }
+  }
+  // Just in case we still have undefined values in the list
+  inventory = inventory.filter((item) => !!item);
 
   return (
     <Section
@@ -193,22 +154,14 @@ const ProductDisplay = (
         )
       }>
       <Table>
-        {inventory
-          .filter((product) => {
-            if ('category' in product) {
-              return product.category === selectedCategory;
-            } else {
-              return true;
-            }
-          })
-          .map((product) => (
-            <VendingRow
-              key={product.name}
-              custom={custom}
-              product={product}
-              productStock={stock[product.name]}
-            />
-          ))}
+        {inventory.map((product) => (
+          <VendingRow
+            key={product.name}
+            custom={custom}
+            product={product}
+            productStock={stock[product.name]}
+          />
+        ))}
       </Table>
     </Section>
   );
@@ -351,37 +304,5 @@ const ProductButton = (props, context) => {
       }>
       {standardPrice}
     </Button>
-  );
-};
-
-const CATEGORY_COLORS = {
-  'Contraband': 'red',
-  'Premium': 'yellow',
-};
-
-const CategorySelector = (props: {
-  categories: Record<string, Category>;
-  selectedCategory: string;
-  onSelect: (category: string) => void;
-}) => {
-  const { categories, selectedCategory, onSelect } = props;
-
-  return (
-    <Section>
-      <Stack grow>
-        <Stack.Item>
-          {Object.entries(categories).map(([name, category]) => (
-            <Button
-              key={name}
-              selected={name === selectedCategory}
-              color={CATEGORY_COLORS[name]}
-              icon={category.icon}
-              onClick={() => onSelect(name)}>
-              {name}
-            </Button>
-          ))}
-        </Stack.Item>
-      </Stack>
-    </Section>
   );
 };

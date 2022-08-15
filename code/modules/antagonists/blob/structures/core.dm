@@ -27,8 +27,7 @@
 	if(overmind)
 		overmind.blobstrain.on_gain()
 		update_appearance()
-	AddComponent(/datum/component/stationloving, FALSE, TRUE)
-	return ..()
+	. = ..()
 
 /obj/structure/blob/special/core/Destroy()
 	GLOB.blob_cores -= src
@@ -75,6 +74,10 @@
 	reinforce_area(delta_time)
 	produce_spores()
 	..()
+
+/obj/structure/blob/special/core/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/stationloving, FALSE, TRUE)
 
 /obj/structure/blob/special/core/on_changed_z_level(turf/old_turf, turf/new_turf)
 	if(overmind && is_station_level(new_turf?.z))

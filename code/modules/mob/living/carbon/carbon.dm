@@ -214,13 +214,6 @@
 		SEND_SIGNAL(src, COMSIG_CARBON_EMBED_RIP, I, L)
 		return
 
-	if(href_list["show_paper_note"])
-		var/obj/item/paper/paper_note = locate(href_list["show_paper_note"])
-		if(!paper_note)
-			return
-
-		paper_note.show_through_camera(usr)
-
 /mob/living/carbon/on_fall()
 	. = ..()
 	loc.handle_fall(src)//it's loc so it doesn't call the mob's handle_fall which does nothing
@@ -435,13 +428,13 @@
 		if(message)
 			visible_message(span_danger("[src] throws up all over [p_them()]self!"), \
 							span_userdanger("You throw up all over yourself!"))
-			add_mood_event("vomit", /datum/mood_event/vomitself)
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "vomit", /datum/mood_event/vomitself)
 		distance = 0
 	else
 		if(message)
 			visible_message(span_danger("[src] throws up!"), span_userdanger("You throw up!"))
 			if(!isflyperson(src))
-				add_mood_event("vomit", /datum/mood_event/vomit)
+				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "vomit", /datum/mood_event/vomit)
 
 	if(stun)
 		Paralyze(80)
@@ -834,10 +827,10 @@
 		drop_all_held_items()
 		stop_pulling()
 		throw_alert(ALERT_HANDCUFFED, /atom/movable/screen/alert/restrained/handcuffed, new_master = src.handcuffed)
-		add_mood_event("handcuffed", /datum/mood_event/handcuffed)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "handcuffed", /datum/mood_event/handcuffed)
 	else
 		clear_alert(ALERT_HANDCUFFED)
-		clear_mood_event("handcuffed")
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "handcuffed")
 	update_action_buttons_icon() //some of our action buttons might be unusable when we're handcuffed.
 	update_inv_handcuffed()
 	update_hud_handcuffed()
@@ -1137,8 +1130,10 @@
 		return TRUE
 	if(HAS_TRAIT(src, TRAIT_DUMB))
 		return TRUE
-	if(mob_mood.sanity < SANITY_UNSTABLE)
-		return TRUE
+	var/datum/component/mood/mood = src.GetComponent(/datum/component/mood)
+	if(mood)
+		if(mood.sanity < SANITY_UNSTABLE)
+			return TRUE
 
 /mob/living/carbon/wash(clean_types)
 	. = ..()

@@ -7,9 +7,7 @@ export const StateSelectModal = (props, context) => {
   const [input, setInput] = useLocalState(context, 'newStateName', '');
   const { states } = data;
   return (
-    <Modal
-      height={`${window.innerHeight * 0.5}px`}
-      width={`${window.innerWidth * 0.3}px`}>
+    <Modal height="400px" width="300px">
       <Section
         fill
         title="States"

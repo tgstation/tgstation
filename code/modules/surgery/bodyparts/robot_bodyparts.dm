@@ -213,12 +213,11 @@
 		. += span_info("It has a couple spots that still need to be <b>wired</b>.")
 
 /obj/item/bodypart/chest/robot/drop_organs(mob/user, violent_removal)
-	var/atom/drop_loc = drop_location()
 	if(wired)
-		new /obj/item/stack/cable_coil(drop_loc, 1)
+		new /obj/item/stack/cable_coil(drop_location(), 1)
 		wired = FALSE
 	if(cell)
-		cell.forceMove(drop_loc)
+		cell.forceMove(drop_location())
 		cell = null
 	..()
 
@@ -314,12 +313,11 @@
 
 
 /obj/item/bodypart/head/robot/drop_organs(mob/user, violent_removal)
-	var/atom/drop_loc = drop_location()
 	if(flash1)
-		flash1.forceMove(drop_loc)
+		flash1.forceMove(user.loc)
 		flash1 = null
 	if(flash2)
-		flash2.forceMove(drop_loc)
+		flash2.forceMove(user.loc)
 		flash2 = null
 	..()
 

@@ -180,13 +180,12 @@
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/grille/screwdriver_act(mob/living/user, obj/item/tool)
-	if(!isturf(loc))
+	if(!isturf(loc) || !anchored)
 		return FALSE
 	add_fingerprint(user)
 	if(shock(user, 90))
 		return FALSE
-	if(!tool.use_tool(src, user, 0, volume=100))
-		return FALSE
+	tool.play_tool_sound(src, 100)
 	set_anchored(!anchored)
 	user.visible_message(span_notice("[user] [anchored ? "fastens" : "unfastens"] [src]."), \
 		span_notice("You [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor."))

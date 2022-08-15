@@ -48,10 +48,7 @@ export class VariableMenu extends Component {
         fill
         buttons={
           <Button icon="times" color="transparent" mr={2} onClick={onClose} />
-        }
-        onMouseUp={(event) => {
-          event.preventDefault();
-        }}>
+        }>
         <Stack height="100%">
           <Stack.Item grow={1} mr={2}>
             <Section fill scrollable>
@@ -77,7 +74,9 @@ export class VariableMenu extends Component {
                         <Stack.Item>
                           <Button
                             fluid
-                            onMouseDown={(e) => handleMouseDownSetter(e, val)}
+                            onMouseDown={(e) =>
+                              handleMouseDownSetter(e, val.name)
+                            }
                             color={val.color}
                             disabled={!!val.is_list}
                             tooltip={multiline`
@@ -93,7 +92,9 @@ export class VariableMenu extends Component {
                             Drag me onto the circuit's grid
                             to make a getter for this variable`}
                             color={val.color}
-                            onMouseDown={(e) => handleMouseDownGetter(e, val)}
+                            onMouseDown={(e) =>
+                              handleMouseDownGetter(e, val.name)
+                            }
                             icon="book-open"
                           />
                         </Stack.Item>

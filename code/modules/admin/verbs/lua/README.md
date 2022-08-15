@@ -36,10 +36,7 @@ Equivalent to DM's `list[index] = value`
 Equivalent to DM's `list.Add(value)`
 
 ### list:to_table()
-Converts a DM list into a lua table.
-
-### list:of_type(type_path)
-Will extract only values of type `type_path`.
+Converts a DM list into a Lua table.
 
 ---
 

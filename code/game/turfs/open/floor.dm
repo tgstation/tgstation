@@ -323,10 +323,9 @@
 			new_airlock.update_appearance()
 			return TRUE
 		if(RCD_DECONSTRUCT)
-			var/old_turf_name = name
 			if(!ScrapeAway(flags = CHANGETURF_INHERIT_AIR))
 				return FALSE
-			to_chat(user, span_notice("You deconstruct the [old_turf_name]."))
+			to_chat(user, span_notice("You deconstruct [src]."))
 			return TRUE
 		if(RCD_WINDOWGRILLE)
 			if(locate(/obj/structure/grille) in src)

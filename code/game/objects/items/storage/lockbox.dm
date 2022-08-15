@@ -13,7 +13,7 @@
 	var/icon_closed = "lockbox"
 	var/icon_broken = "lockbox+b"
 
-/obj/item/storage/lockbox/Initialize(mapload)
+/obj/item/storage/lockbox/Initialize()
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_total_storage = 14
@@ -24,27 +24,27 @@
 	var/locked = atom_storage.locked
 	if(W.GetID())
 		if(broken)
-			balloon_alert(user, "broken!")
+			to_chat(user, span_danger("It appears to be broken."))
 			return
 		if(allowed(user))
 			atom_storage.locked = !locked
 			locked = atom_storage.locked
 			if(locked)
 				icon_state = icon_locked
+				to_chat(user, span_danger("You lock the [src.name]!"))
 				atom_storage.close_all()
+				return
 			else
 				icon_state = icon_closed
-
-			balloon_alert(user, locked ? "locked" : "unlocked")
-			return
-
+				to_chat(user, span_danger("You unlock the [src.name]!"))
+				return
 		else
-			balloon_alert(user, "access denied!")
+			to_chat(user, span_danger("Access Denied."))
 			return
 	if(!locked)
 		return ..()
 	else
-		balloon_alert(user, "locked!")
+		to_chat(user, span_danger("It's locked!"))
 
 /obj/item/storage/lockbox/emag_act(mob/user)
 	if(!broken)
@@ -96,7 +96,7 @@
 	icon_closed = "medalbox"
 	icon_broken = "medalbox+b"
 
-/obj/item/storage/lockbox/medal/Initialize(mapload)
+/obj/item/storage/lockbox/medal/Initialize()
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	atom_storage.max_slots = 10
@@ -169,12 +169,12 @@
 	name = "security medal box"
 	desc = "A locked box used to store medals to be given to members of the security department."
 	req_access = list(ACCESS_HOS)
-
+	
 /obj/item/storage/lockbox/medal/med
 	name = "medical medal box"
 	desc = "A locked box used to store medals to be given to members of the medical department."
 	req_access = list(ACCESS_CMO)
-
+	
 /obj/item/storage/lockbox/medal/med/PopulateContents()
 	new /obj/item/clothing/accessory/medal/med_medal(src)
 	new /obj/item/clothing/accessory/medal/med_medal2(src)
@@ -233,10 +233,11 @@
 		add_fingerprint(user)
 
 	if(id_card.registered_account != buyer_account)
-		balloon_alert(user, "incorrect bank account!")
+		to_chat(user, span_warning("Bank account does not match with buyer!"))
 		return
 
 	atom_storage.locked = !privacy_lock
 	privacy_lock = atom_storage.locked
 	user.visible_message(span_notice("[user] [privacy_lock ? "" : "un"]locks [src]'s privacy lock."),
 					span_notice("You [privacy_lock ? "" : "un"]lock [src]'s privacy lock."))
+

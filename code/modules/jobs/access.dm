@@ -6,8 +6,6 @@
 	//check if it doesn't require any access at all
 	if(check_access(null))
 		return TRUE
-	if(!istype(accessor)) //likely a TK user.
-		return FALSE
 	if(issilicon(accessor))
 		if(ispAI(accessor))
 			return FALSE

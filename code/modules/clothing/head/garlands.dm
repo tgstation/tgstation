@@ -4,11 +4,11 @@
 	icon_state = "garland"
 	worn_icon_state = "garland"
 
-/obj/item/clothing/head/garland/equipped(mob/living/user, slot)
+/obj/item/clothing/head/garland/equipped(mob/user, slot)
 	. = ..()
 	if(slot_flags & slot)
-		user.add_mood_event("garland", /datum/mood_event/garland)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "garland", /datum/mood_event/garland)
 
-/obj/item/clothing/head/garland/dropped(mob/living/user)
+/obj/item/clothing/head/garland/dropped(mob/user)
 	. = ..()
-	user.clear_mood_event("garland")
+	SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "garland")

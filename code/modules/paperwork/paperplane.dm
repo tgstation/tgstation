@@ -57,8 +57,11 @@
 
 /obj/item/paperplane/update_overlays()
 	. = ..()
-	for(var/stamp in internalPaper.stamp_cache)
-		. += "paperplane_[stamp]"
+	var/list/stamped = internalPaper.stamped
+	if(!LAZYLEN(stamped))
+		return
+	for(var/S in stamped)
+		. += "paperplane_[S]"
 
 /obj/item/paperplane/attack_self(mob/user)
 	to_chat(user, span_notice("You unfold [src]."))

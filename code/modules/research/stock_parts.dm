@@ -14,9 +14,16 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	var/pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/rped.ogg'
 	var/alt_sound = null
 
-/obj/item/storage/part_replacer/Initialize(mapload)
+/obj/item/storage/part_replacer/Initialize()
 	. = ..()
-	create_storage(type = /datum/storage/rped)
+
+	atom_storage.allow_quick_empty = TRUE
+	atom_storage.allow_quick_gather = TRUE
+	atom_storage.max_slots = 50
+	atom_storage.max_total_storage = 100
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.numerical_stacking = TRUE
+	atom_storage.set_holdable(list(/obj/item/stock_parts), null)
 
 /obj/item/storage/part_replacer/pre_attack(obj/attacked_object, mob/living/user, params)
 	if(!istype(attacked_object, /obj/machinery) && !istype(attacked_object, /obj/structure/frame/machine))
@@ -125,7 +132,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 
 	if(inserted_cell.rigged || inserted_cell.corrupted)
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has inserted rigged/corrupted [inserted_cell] into [src].")
-		usr.log_message("has inserted rigged/corrupted [inserted_cell] into [src].", LOG_GAME)
+		log_game("[key_name(usr)] has inserted rigged/corrupted [inserted_cell] into [src].")
 		usr.log_message("inserted rigged/corrupted [inserted_cell] into [src]", LOG_ATTACK)
 
 /**

@@ -9,7 +9,7 @@
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = SUPERVISOR_CAPTAIN
+	supervisors = "the captain"
 	selection_color = "#ffddff"
 	req_admin_notify = 1
 	minimal_player_age = 7

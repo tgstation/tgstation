@@ -245,7 +245,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	var/attacher = "UNKNOWN"
 	var/det_timer
 
-/obj/item/gibtonite/Initialize(mapload)
+/obj/item/gibtonite/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
 

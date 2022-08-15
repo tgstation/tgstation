@@ -17,7 +17,6 @@
 #define SEAFOOD (1<<16)
 #define ORANGES (1<<17)
 #define BUGS (1<<18)
-#define GORE (1<<19)
 
 /// A list of food type names, in order of their flags
 #define FOOD_FLAGS list( \
@@ -40,7 +39,6 @@
 	"SEAFOOD", \
 	"ORANGES", \
 	"BUGS", \
-	"GORE", \
 )
 
 /// IC meaning (more or less) for food flags
@@ -64,7 +62,6 @@
 	"Seafood", \
 	"Oranges", \
 	"Bugs", \
-	"Gore", \
 )
 
 #define DRINK_NICE 1

@@ -1,9 +1,7 @@
 /proc/wrap_lua_set_var(datum/thing_to_set, var_name, value)
-	SHOULD_NOT_SLEEP(TRUE)
 	thing_to_set.vv_edit_var(var_name, value)
 
 /proc/wrap_lua_datum_proc_call(datum/thing_to_call, proc_name, list/arguments)
-	SHOULD_NOT_SLEEP(TRUE)
 	if(!usr)
 		usr = GLOB.lua_usr
 	var/ret
@@ -18,7 +16,6 @@
 	return ret
 
 /proc/wrap_lua_global_proc_call(proc_name, list/arguments)
-	SHOULD_NOT_SLEEP(TRUE)
 	if(!usr)
 		usr = GLOB.lua_usr
 	var/ret
@@ -33,7 +30,6 @@
 	return ret
 
 /proc/wrap_lua_print(state_id, list/arguments)
-	SHOULD_NOT_SLEEP(TRUE)
 	var/datum/lua_state/target_state
 	for(var/datum/lua_state/state as anything in SSlua.states)
 		if(state.internal_id == state_id)
@@ -43,5 +39,5 @@
 		return
 	var/print_message = jointext(arguments, "\t")
 	var/result = list("status" = "print", "param" = print_message)
-	INVOKE_ASYNC(target_state, /datum/lua_state.proc/log_result, result, TRUE)
+	target_state.log_result(result, verbose = TRUE)
 	log_lua("[target_state]: [print_message]")

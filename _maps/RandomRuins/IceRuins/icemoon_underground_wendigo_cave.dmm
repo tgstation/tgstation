@@ -39,7 +39,7 @@
 /area/icemoon/underground/explored)
 "U" = (
 /obj/item/paper/crumpled/bloody{
-	default_raw_text = "for your own sake, do not enter"
+	info = "for your own sake, do not enter"
 	},
 /turf/open/misc/asteroid/snow/ice/icemoon,
 /area/icemoon/underground/unexplored)

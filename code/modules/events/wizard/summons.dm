@@ -4,7 +4,6 @@
 	typepath = /datum/round_event/wizard/summonguns
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
-	description = "Summons a gun for everyone. Might turn people into survivalists."
 
 /datum/round_event_control/wizard/summonguns/New()
 	if(CONFIG_GET(flag/no_summon_guns))
@@ -20,7 +19,6 @@
 	typepath = /datum/round_event/wizard/summonmagic
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
-	description = "Summons a magic item for everyone. Might turn people into survivalists."
 
 /datum/round_event_control/wizard/summonmagic/New()
 	if(CONFIG_GET(flag/no_summon_magic))

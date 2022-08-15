@@ -220,9 +220,6 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 	if(species_exception)
 		species_exception = string_list(species_exception)
 
-	if(sharpness && force > 5) //give sharp objects butchering functionality, for consistency
-		AddComponent(/datum/component/butchering, speed = 8 SECONDS * toolspeed)
-
 	. = ..()
 
 	// Handle adding item associated actions
@@ -321,6 +318,12 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 /obj/item/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
 		atom_destruction(MELEE)
+
+/obj/item/ComponentInitialize()
+	. = ..()
+
+	if(sharpness && force > 5) //give sharp objects butchering functionality, for consistency
+		AddComponent(/datum/component/butchering, 80 * toolspeed)
 
 /**Makes cool stuff happen when you suicide with an item
  *
@@ -1472,10 +1475,3 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 /obj/item/proc/mark_silver_slime_reaction()
 	SIGNAL_HANDLER
 	SEND_SIGNAL(src, COMSIG_FOOD_SILVER_SPAWNED)
-
-/**
- * Returns null if this object cannot be used to interact with physical writing mediums such as paper.
- * Returns a list of key attributes for this object interacting with paper otherwise.
- */
-/obj/item/proc/get_writing_implement_details()
-	return null

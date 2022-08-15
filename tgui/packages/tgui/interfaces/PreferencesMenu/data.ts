@@ -10,7 +10,6 @@ export enum Food {
   Dairy = 'DAIRY',
   Fried = 'FRIED',
   Fruit = 'FRUIT',
-  Gore = 'GORE',
   Grain = 'GRAIN',
   Gross = 'GROSS',
   Junkfood = 'JUNKFOOD',

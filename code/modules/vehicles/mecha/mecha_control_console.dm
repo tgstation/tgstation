@@ -68,8 +68,7 @@
 			var/obj/vehicle/sealed/mecha/M = MT.chassis
 			if(M)
 				MT.shock()
-				usr.log_message("has activated remote EMP on exosuit [M], located at [loc_name(M)], which is currently [LAZYLEN(M.occupants) ? "occupied by [M.occupants.Join(", ")]." : "without a pilot."]", LOG_ATTACK)
-				usr.log_message("has activated remote EMP on exosuit [M], located at [loc_name(M)], which is currently [LAZYLEN(M.occupants) ? "occupied by [M.occupants.Join(", ")]." : "without a pilot."]", LOG_GAME, log_globally = FALSE)
+				log_game("[key_name(usr)] has activated remote EMP on exosuit [M], located at [loc_name(M)], which is currently [LAZYLEN(M.occupants) ? "occupied by [M.occupants.Join(",")][ADMIN_FLW(M)]." : "without a pilot."]")
 				message_admins("[key_name_admin(usr)][ADMIN_FLW(usr)] has activated remote EMP on exosuit [M][ADMIN_JMP(M)], which is currently [LAZYLEN(M.occupants) ? "occupied by [M.occupants.Join(",")][ADMIN_FLW(M)]." : "without a pilot."]")
 				. = TRUE
 

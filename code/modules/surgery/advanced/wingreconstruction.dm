@@ -13,8 +13,6 @@
 	if(!istype(target))
 		return FALSE
 	var/obj/item/organ/external/wings/moth/wings = target.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
-	if(!istype(wings, /obj/item/organ/external/wings/moth))
-		return FALSE
 	return ..() && wings?.burnt
 
 /datum/surgery_step/wing_reconstruction
@@ -41,8 +39,7 @@
 			span_notice("[user] completes the surgery on [target]'s wings."))
 		display_pain(target, "You can feel your wings again!")
 		var/obj/item/organ/external/wings/moth/wings = target.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
-		if(istype(wings, /obj/item/organ/external/wings/moth)) //make sure we only heal moth wings.
-			wings.heal_wings()
+		wings?.heal_wings()
 
 		var/obj/item/organ/external/antennae/antennae = target.getorganslot(ORGAN_SLOT_EXTERNAL_ANTENNAE) //i mean we might aswell heal their antennae too
 		antennae?.heal_antennae()

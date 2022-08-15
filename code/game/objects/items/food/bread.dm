@@ -291,7 +291,7 @@
 	foodtypes = GRAIN | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/butterdog/Initialize(mapload)
+/obj/item/food/butterdog/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/slippery, 8 SECONDS)
 

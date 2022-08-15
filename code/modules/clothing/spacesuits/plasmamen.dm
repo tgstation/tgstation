@@ -142,7 +142,7 @@
 
 /obj/item/clothing/head/helmet/space/plasmaman/wash(clean_types)
 	. = ..()
-	if(smile && (clean_types & CLEAN_TYPE_HARD_DECAL))
+	if(smile && (clean_types & CLEAN_TYPE_PAINT))
 		smile = FALSE
 		update_appearance()
 		return TRUE

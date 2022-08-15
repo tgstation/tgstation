@@ -14,12 +14,13 @@
 	var/mob/living/silicon/ai/ai = user
 	var/turf/ai_turf = get_turf(ai)
 
-	for(var/obj/machinery/status_display/ai/ai_display as anything in GLOB.ai_status_displays)
+	for(var/_display in GLOB.ai_status_displays)
+		var/obj/machinery/status_display/ai/ai_display = _display
 		var/turf/display_turf = get_turf(ai_display)
 
-		// - Station AIs can change every display on the station Z.
-		// - Ghost role AIs (or AIs on the mining base?) can only affect their Z
-		if(!is_valid_z_level(ai_turf, display_turf))
+		// Derelict AIs can't affect station displays.
+		// TODO does this need to be made multiZ aware?
+		if(ai_turf.z != display_turf.z)
 			continue
 
 		ai_display.emotion = emotion

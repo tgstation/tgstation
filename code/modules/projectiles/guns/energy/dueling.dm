@@ -317,7 +317,7 @@
 	icon_broken = "medalbox+b"
 	base_icon_state = "medalbox"
 
-/obj/item/storage/lockbox/dueling/Initialize(mapload)
+/obj/item/storage/lockbox/dueling/Initialize()
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	atom_storage.max_slots = 2

@@ -116,13 +116,9 @@
 		voted += voter_card
 		to_chat(user,span_notice("You cast your vote."))
 
-/obj/structure/votebox/proc/valid_vote(obj/item/paper/voting_slip)
-	if(voting_slip.get_total_length() > VOTE_TEXT_LIMIT)
+/obj/structure/votebox/proc/valid_vote(obj/item/paper/I)
+	if(I.get_info_length() > VOTE_TEXT_LIMIT || findtext(I.info,"<h1>Voting Results:</h1><hr><ol>"))
 		return FALSE
-
-	for(var/datum/paper_input/text as anything in voting_slip.raw_text_inputs)
-		if(findtext(text.raw_text, "<h1>Voting Results:</h1><hr><ol>"))
-			return FALSE
 	return TRUE
 
 /obj/structure/votebox/proc/shred(mob/user)
@@ -167,26 +163,21 @@
 /obj/structure/votebox/proc/print_tally(mob/user)
 	var/list/results = list()
 	var/i = 0
-	for(var/obj/item/paper/paper_content in contents)
+	for(var/obj/item/paper/P in contents)
 		if(i++ > MAX_VOTES)
 			break
-		if(!valid_vote(paper_content))
+		var/text = P.info
+		if(!valid_vote(P))
 			continue
-
-		var/full_vote_text = ""
-		for(var/datum/paper_input/text as anything in paper_content.raw_text_inputs)
-			full_vote_text += "[text.raw_text]<br>"
-
-		if(!results[full_vote_text])
-			results[full_vote_text] = 1
+		if(!results[text])
+			results[text] = 1
 		else
-			results[full_vote_text] += 1
-
+			results[text] += 1
 	sortTim(results, cmp=/proc/cmp_numeric_dsc, associative = TRUE)
 	if(!COOLDOWN_FINISHED(src, vote_print_cooldown))
 		return
 	COOLDOWN_START(src, vote_print_cooldown, 60 SECONDS)
-	var/obj/item/paper/vote_tally_paper = new(drop_location())
+	var/obj/item/paper/P = new(drop_location())
 	var/list/tally = list()
 	tally += {"
 		<style>
@@ -212,10 +203,10 @@
 		tally += "<li>\"<div class='vote_box_content'>[option]</div>\" - [results[option]] Vote[results[option] > 1 ? "s" : ""].</li>"
 	tally += "</ol>"
 
-	vote_tally_paper.add_raw_text(tally.Join())
-	vote_tally_paper.name = "Voting Results"
-	vote_tally_paper.update_appearance()
-	user.put_in_hands(vote_tally_paper)
+	P.info = tally.Join()
+	P.name = "Voting Results"
+	P.update_appearance()
+	user.put_in_hands(P)
 	to_chat(user,span_notice("[src] prints out the voting tally."))
 
 /obj/structure/votebox/update_icon_state()

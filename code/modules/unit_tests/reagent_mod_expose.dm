@@ -16,7 +16,7 @@
 
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human)
 	var/obj/item/reagent_containers/dropper/dropper = allocate(/obj/item/reagent_containers/dropper)
-	var/obj/item/reagent_containers/cup/glass/bottle/drink = allocate(/obj/item/reagent_containers/cup/glass/bottle)
+	var/obj/item/reagent_containers/food/drinks/drink = allocate(/obj/item/reagent_containers/food/drinks/bottle)
 	var/obj/item/reagent_containers/pill/patch/patch = allocate(/obj/item/reagent_containers/pill/patch)
 	var/obj/item/reagent_containers/syringe/syringe = allocate(/obj/item/reagent_containers/syringe)
 

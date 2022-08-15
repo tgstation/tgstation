@@ -6,7 +6,7 @@
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the Head of Personnel and the Chief Medical Officer"
+	supervisors = "the head of personnel and the chief medical officer"
 	selection_color = "#bbe291"
 	exp_granted_type = EXP_TYPE_CREW
 

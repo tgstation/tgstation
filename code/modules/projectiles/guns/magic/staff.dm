@@ -178,12 +178,7 @@
 
 /obj/item/gun/magic/staff/spellblade/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, \
-	speed = 1.5 SECONDS, \
-	effectiveness = 125, \
-	bonus_modifier = 0, \
-	butcher_sound = hitsound, \
-	)
+	AddComponent(/datum/component/butchering, 15, 125, 0, hitsound)
 
 /obj/item/gun/magic/staff/spellblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)

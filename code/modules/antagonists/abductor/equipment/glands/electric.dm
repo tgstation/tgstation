@@ -7,11 +7,11 @@
 	mind_control_uses = 2
 	mind_control_duration = 900
 
-/obj/item/organ/internal/heart/gland/electric/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/heart/gland/electric/Insert(mob/living/carbon/M, special = 0)
 	..()
 	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, "abductor_gland")
 
-/obj/item/organ/internal/heart/gland/electric/Remove(mob/living/carbon/M, special = FALSE)
+/obj/item/organ/internal/heart/gland/electric/Remove(mob/living/carbon/M, special = 0)
 	REMOVE_TRAIT(owner, TRAIT_SHOCKIMMUNE, "abductor_gland")
 	..()
 

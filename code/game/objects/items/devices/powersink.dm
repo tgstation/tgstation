@@ -123,7 +123,7 @@
 				span_notice("You activate \the [src]."),
 				span_hear("You hear a click."))
 			message_admins("Power sink activated by [ADMIN_LOOKUPFLW(user)] at [ADMIN_VERBOSEJMP(src)]")
-			user.log_message("activated a powersink", LOG_GAME)
+			log_game("Power sink activated by [key_name(user)] at [AREACOORD(src)]")
 			set_mode(OPERATING)
 
 		if(OPERATING)
@@ -131,7 +131,6 @@
 				"[user] deactivates \the [src]!", \
 				span_notice("You deactivate \the [src]."),
 				span_hear("You hear a click."))
-			user.log_message("deactivated the powersink", LOG_GAME)
 			set_mode(CLAMPED_OFF)
 
 /// Removes internal heat and shares it with the atmosphere.

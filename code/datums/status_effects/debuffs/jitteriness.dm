@@ -15,12 +15,12 @@
 		return FALSE
 
 	RegisterSignal(owner, list(COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_LIVING_DEATH), .proc/remove_jitter)
-	owner.add_mood_event(id, /datum/mood_event/jittery)
+	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, id, /datum/mood_event/jittery)
 	return TRUE
 
 /datum/status_effect/jitter/on_remove()
 	UnregisterSignal(owner, list(COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_LIVING_DEATH))
-	owner.clear_mood_event(id)
+	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, id)
 	// juuust in case, reset our x and y's from our jittering
 	owner.pixel_x = 0
 	owner.pixel_y = 0

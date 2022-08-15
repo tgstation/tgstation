@@ -91,7 +91,7 @@
 	if(!holy_person.mind?.holy_role || HAS_TRAIT(holy_person, TRAIT_AGEUSIA))
 		return
 	to_chat(holy_person, span_notice("Truly, a piece of heaven!"))
-	holy_person.add_mood_event("Divine_chew", /datum/mood_event/holy_consumption)
+	SEND_SIGNAL(holy_person, COMSIG_ADD_MOOD_EVENT, "Divine_chew", /datum/mood_event/holy_consumption)
 	return FOOD_LIKED
 
 /// Barrel melon Seeds

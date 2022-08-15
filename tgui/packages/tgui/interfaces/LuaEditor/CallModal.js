@@ -9,9 +9,7 @@ export const CallModal = (props, context) => {
   const [toCall, setToCall] = useLocalState(context, 'toCallTaskInfo');
   const { type, params } = toCall;
   return (
-    <Modal
-      height={`${window.innerHeight * 0.8}px`}
-      width={`${window.innerWidth * 0.5}px`}>
+    <Modal height="600px" width="600px">
       <Section
         fill
         scrollable

@@ -31,7 +31,7 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 			creamface.icon_state = "creampie_monkey"
 		else
 			creamface.icon_state = "creampie_human"
-		H.add_mood_event("creampie", /datum/mood_event/creampie)
+		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "creampie", /datum/mood_event/creampie)
 	else if(iscorgi(parent))
 		creamface.icon_state = "creampie_corgi"
 	else if(isAI(parent))
@@ -45,8 +45,7 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 	A.cut_overlay(creamface)
 	qdel(creamface)
 	if(ishuman(A))
-		var/mob/living/carbon/human/human_parent = A
-		human_parent.clear_mood_event("creampie")
+		SEND_SIGNAL(A, COMSIG_CLEAR_MOOD_EVENT, "creampie")
 	return ..()
 
 /datum/component/creamed/RegisterWithParent()

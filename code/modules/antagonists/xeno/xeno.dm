@@ -40,5 +40,3 @@
 	..()
 	if(!mind.has_antag_datum(/datum/antagonist/xeno))
 		mind.add_antag_datum(/datum/antagonist/xeno)
-		mind.set_assigned_role(SSjob.GetJobType(/datum/job/xenomorph))
-		mind.special_role = ROLE_ALIEN

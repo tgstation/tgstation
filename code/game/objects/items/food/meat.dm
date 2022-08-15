@@ -470,7 +470,7 @@
 		bananas.faction = faction
 	if (!QDELETED(bananas))
 		visible_message(span_notice("[src] expands!"))
-		bananas.log_message("spawned via [src], Last attached mob: [key_name(spammer)].", LOG_ATTACK)
+		bananas.log_message("Spawned via [src] at [AREACOORD(src)], Last attached mob: [key_name(spammer)].", LOG_ATTACK)
 	else if (!spammer) // Visible message in case there are no fingerprints
 		visible_message(span_notice("[src] fails to expand!"))
 	qdel(src)
@@ -490,7 +490,6 @@
 	playsound(user, 'sound/items/eatfood.ogg', rand(10, 50), TRUE)
 	user.temporarilyRemoveItemFromInventory(src) //removes from hands, keeps in M
 	addtimer(CALLBACK(src, .proc/finish_suicide, user), 15) //you've eaten it, you can run now
-
 	return MANUAL_SUICIDE
 
 /obj/item/food/monkeycube/proc/finish_suicide(mob/living/user) ///internal proc called by a monkeycube's suicide_act using a timer and callback. takes as argument the mob/living who activated the suicide
@@ -616,9 +615,9 @@
 	tastes = list("meat" = 5, "clowns" = 3, "sixteen teslas" = 1)
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/meatclown/Initialize(mapload)
+/obj/item/food/meatclown/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/slippery, 3 SECONDS)
+	AddComponent(/datum/component/slippery, 30)
 
 /obj/item/food/lasagna
 	name = "Lasagna"
@@ -644,7 +643,7 @@
 	desc = "A human meat, on a stick."
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 16, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("tender meat" = 3, "metal" = 1)
-	foodtypes = MEAT | GORE
+	foodtypes = MEAT | GROSS
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/kebab/monkey
@@ -668,7 +667,7 @@
 	desc = "Severed lizard tail on a stick."
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 30, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("meat" = 8, "metal" = 4, "scales" = 1)
-	foodtypes = MEAT | GORE
+	foodtypes = MEAT
 
 /obj/item/food/kebab/rat
 	name = "rat-kebab"
@@ -678,7 +677,7 @@
 	trash_type = null
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("rat meat" = 1, "metal" = 1)
-	foodtypes = MEAT | GORE
+	foodtypes = MEAT | GROSS
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/kebab/rat/double
@@ -725,7 +724,7 @@
 /obj/item/food/meat/slab/human
 	name = "meat"
 	tastes = list("tender meat" = 1)
-	foodtypes = MEAT | RAW | GORE
+	foodtypes = MEAT | RAW | GROSS
 	venue_value = FOOD_MEAT_HUMAN
 
 /obj/item/food/meat/slab/human/MakeGrillable()
@@ -759,7 +758,7 @@
 	icon_state = "lizardmeat"
 	desc = "Delicious dino damage."
 	tastes = list("meat" = 4, "scales" = 1)
-	foodtypes = MEAT | RAW | GORE
+	foodtypes = MEAT | RAW
 	venue_value = FOOD_MEAT_MUTANT
 
 /obj/item/food/meat/slab/human/mutant/lizard/MakeGrillable()
@@ -776,7 +775,7 @@
 	icon_state = "shadowmeat"
 	desc = "Ow, the edge."
 	tastes = list("darkness" = 1, "meat" = 1)
-	foodtypes = MEAT | RAW | GORE
+	foodtypes = MEAT | RAW
 	venue_value = FOOD_MEAT_MUTANT_RARE
 
 /obj/item/food/meat/slab/human/mutant/fly
@@ -784,14 +783,14 @@
 	desc = "Nothing says tasty like maggot filled radioactive mutant flesh."
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/uranium = 3)
 	tastes = list("maggots" = 1, "the inside of a reactor" = 1)
-	foodtypes = MEAT | RAW | GROSS | BUGS | GORE
+	foodtypes = MEAT | RAW | GROSS | BUGS
 	venue_value = FOOD_MEAT_MUTANT
 
 /obj/item/food/meat/slab/human/mutant/moth
 	icon_state = "mothmeat"
 	desc = "Unpleasantly powdery and dry. Kind of pretty, though."
 	tastes = list("dust" = 1, "powder" = 1, "meat" = 2)
-	foodtypes = MEAT | RAW | BUGS | GORE
+	foodtypes = MEAT | RAW | BUGS
 	venue_value = FOOD_MEAT_MUTANT
 
 /obj/item/food/meat/slab/human/mutant/skeleton
@@ -799,7 +798,7 @@
 	icon_state = "skeletonmeat"
 	desc = "There's a point where this needs to stop, and clearly we have passed it."
 	tastes = list("bone" = 1)
-	foodtypes = GROSS | GORE
+	foodtypes = GROSS
 	venue_value = FOOD_MEAT_MUTANT_RARE
 
 /obj/item/food/meat/slab/human/mutant/skeleton/MakeProcessable()
@@ -810,14 +809,14 @@
 	icon_state = "rottenmeat"
 	desc = "Halfway to becoming fertilizer for your garden."
 	tastes = list("brains" = 1, "meat" = 1)
-	foodtypes = RAW | MEAT | TOXIC | GORE | GROSS
+	foodtypes = RAW | MEAT | TOXIC
 
 /obj/item/food/meat/slab/human/mutant/ethereal
 	icon_state = "etherealmeat"
 	desc = "So shiny you feel like ingesting it might make you shine too"
 	food_reagents = list(/datum/reagent/consumable/liquidelectricity/enriched = 10)
 	tastes = list("pure electricity" = 2, "meat" = 1)
-	foodtypes = RAW | MEAT | TOXIC | GORE
+	foodtypes = RAW | MEAT | TOXIC
 	venue_value = FOOD_MEAT_MUTANT
 
 ////////////////////////////////////// OTHER MEATS ////////////////////////////////////////////////////////
@@ -847,15 +846,10 @@
 	name = "monkey meat"
 	foodtypes = RAW | MEAT
 
-/obj/item/food/meat/slab/bugmeat
-	name = "bug meat"
-	icon_state = "spidermeat"
-	foodtypes = RAW | MEAT | BUGS
-
 /obj/item/food/meat/slab/mouse
 	name = "mouse meat"
 	desc = "A slab of mouse meat. Best not eat it raw."
-	foodtypes = RAW | MEAT | GORE
+	foodtypes = RAW | MEAT | GROSS
 
 /obj/item/food/meat/slab/mouse/Initialize(mapload)
 	. = ..()
@@ -865,25 +859,16 @@
 	name = "corgi meat"
 	desc = "Tastes like... well you know..."
 	tastes = list("meat" = 4, "a fondness for wearing hats" = 1)
-	foodtypes = RAW | MEAT | GORE
+	foodtypes = RAW | MEAT | GROSS
 
 /obj/item/food/meat/slab/corgi/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CORGI, CELL_VIRUS_TABLE_GENERIC_MOB)
 
-/obj/item/food/meat/slab/mothroach
-	name = "mothroach meat"
-	desc = "A light slab of meat."
-	foodtypes = RAW | MEAT | GROSS
-
-/obj/item/food/meat/slab/mothroach/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/swabable, CELL_VIRUS_TABLE_GENERIC_MOB)
-
 /obj/item/food/meat/slab/pug
 	name = "pug meat"
 	desc = "Tastes like... well you know..."
-	foodtypes = RAW | MEAT | GORE
+	foodtypes = RAW | MEAT | GROSS
 
 /obj/item/food/meat/slab/pug/Initialize(mapload)
 	. = ..()
@@ -1088,7 +1073,7 @@
 
 /obj/item/food/meat/steak/plain/human
 	tastes = list("tender meat" = 1)
-	foodtypes = MEAT | GORE
+	foodtypes = MEAT | GROSS
 
 ///Make sure the steak has the correct name
 /obj/item/food/meat/steak/plain/human/OnMicrowaveCooked(datum/source, obj/item/source_item, cooking_efficiency = 1)
@@ -1147,7 +1132,7 @@
 	name = "lizard steak"
 	icon_state = "birdsteak"
 	tastes = list("juicy chicken" = 3, "scales" = 1)
-	foodtypes = MEAT | GORE
+	foodtypes = MEAT
 
 /obj/item/food/meat/steak/meatproduct
 	name = "thermally processed meat product"
@@ -1195,7 +1180,7 @@
 
 /obj/item/food/meat/rawcutlet/plain/human
 	tastes = list("tender meat" = 1)
-	foodtypes = MEAT | RAW | GORE
+	foodtypes = MEAT | RAW | GROSS
 
 /obj/item/food/meat/rawcutlet/plain/human/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/cutlet/plain/human, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
@@ -1294,7 +1279,7 @@
 
 /obj/item/food/meat/cutlet/plain/human
 	tastes = list("tender meat" = 1)
-	foodtypes = MEAT | GORE
+	foodtypes = MEAT | GROSS
 
 /obj/item/food/meat/cutlet/plain/human/OnMicrowaveCooked(datum/source, atom/source_item, cooking_efficiency)
 	. = ..()

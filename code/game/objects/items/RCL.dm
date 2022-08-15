@@ -23,7 +23,8 @@
 	var/datum/radial_menu/persistent/wiring_gui_menu
 	var/mob/listeningTo
 
-/obj/item/rcl/Initialize(mapload)
+
+/obj/item/rcl/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 	AddComponent(/datum/component/two_handed, wield_callback = CALLBACK(src, .proc/on_wield), unwield_callback = CALLBACK(src, .proc/on_unwield))

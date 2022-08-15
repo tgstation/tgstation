@@ -10,7 +10,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
 	build_path = /obj/item/clothing/glasses/hud/health
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/health_hud_night
@@ -20,7 +20,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/uranium = 1000, /datum/material/silver = 350)
 	build_path = /obj/item/clothing/glasses/hud/health/night
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/security_hud
@@ -30,7 +30,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
 	build_path = /obj/item/clothing/glasses/hud/security
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/security_hud_night
@@ -40,7 +40,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/uranium = 1000, /datum/material/gold = 350)
 	build_path = /obj/item/clothing/glasses/hud/security/night
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/diagnostic_hud
@@ -50,7 +50,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
 	build_path = /obj/item/clothing/glasses/hud/diagnostic
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/diagnostic_hud_night
@@ -60,7 +60,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/uranium = 1000, /datum/material/plasma = 300)
 	build_path = /obj/item/clothing/glasses/hud/diagnostic/night
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /////////////////////////////////////////
@@ -74,7 +74,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
 	build_path = /obj/item/clothing/glasses/welding
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/welding_mask
@@ -84,7 +84,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 3000, /datum/material/glass = 1000)
 	build_path = /obj/item/clothing/mask/gas/welding
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/bright_helmet
@@ -94,7 +94,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 4000, /datum/material/glass = 1000, /datum/material/plastic = 3000, /datum/material/silver = 500)
 	build_path = /obj/item/clothing/head/hardhat/red/upgraded
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SECURITY | DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/mauna_mug
@@ -103,8 +103,8 @@
 	id = "mauna_mug"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 100)
-	category = list(RND_CATEGORY_EQUIPMENT)
-	build_path = /obj/item/reagent_containers/cup/maunamug
+	build_path = /obj/item/reagent_containers/glass/maunamug
+	category = list("Equipment")
 
 
 /datum/design/rolling_table
@@ -114,7 +114,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 4000)
 	build_path = /obj/structure/table/rolling
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 
 
 /datum/design/portaseeder
@@ -124,7 +124,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 400)
 	build_path = /obj/item/storage/bag/plants/portaseeder
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/air_horn
@@ -134,7 +134,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 4000, /datum/material/bananium = 1000)
 	build_path = /obj/item/bikehorn/airhorn
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 
 
 /datum/design/mesons
@@ -144,7 +144,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
 	build_path = /obj/item/clothing/glasses/meson
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/engine_goggles
@@ -154,7 +154,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/plasma = 100)
 	build_path = /obj/item/clothing/glasses/meson/engine
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/tray_goggles
@@ -164,7 +164,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
 	build_path = /obj/item/clothing/glasses/meson/engine/tray
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/nvgmesons
@@ -174,7 +174,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/plasma = 350, /datum/material/uranium = 1000)
 	build_path = /obj/item/clothing/glasses/meson/night
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/night_vision_goggles
@@ -184,7 +184,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/plasma = 350, /datum/material/uranium = 1000)
 	build_path = /obj/item/clothing/glasses/night
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/magboots
@@ -194,7 +194,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 4500, /datum/material/silver = 1500, /datum/material/gold = 2500)
 	build_path = /obj/item/clothing/shoes/magboots
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/forcefield_projector
@@ -204,7 +204,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 2500, /datum/material/glass = 1000)
 	build_path = /obj/item/forcefield_projector
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/sci_goggles
@@ -214,7 +214,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
 	build_path = /obj/item/clothing/glasses/science
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/nv_sci_goggles
@@ -224,7 +224,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/plasma = 350, /datum/material/uranium = 1000)
 	build_path = /obj/item/clothing/glasses/science/night
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/roastingstick
@@ -234,7 +234,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron=1000, /datum/material/glass = 500, /datum/material/bluespace = 250)
 	build_path = /obj/item/melee/roastingstick
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/locator
@@ -244,7 +244,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron=1000, /datum/material/glass = 500, /datum/material/silver = 500)
 	build_path = /obj/item/locator
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/quantum_keycard
@@ -254,7 +254,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass = 500, /datum/material/iron = 500, /datum/material/silver = 500, /datum/material/bluespace = 1000)
 	build_path = /obj/item/quantum_keycard
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/anomaly_neutralizer
@@ -264,7 +264,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 2000, /datum/material/gold = 2000, /datum/material/plasma = 5000, /datum/material/uranium = 2000)
 	build_path = /obj/item/anomaly_neutralizer
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/donksoft_refill
@@ -274,7 +274,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 25000, /datum/material/glass = 15000, /datum/material/plasma = 20000, /datum/material/gold = 10000, /datum/material/silver = 10000)
 	build_path = /obj/item/vending_refill/donksoft
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 
 /datum/design/oxygen_tank
 	name = "Oxygen Tank"
@@ -283,7 +283,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 2000)
 	build_path = /obj/item/tank/internals/oxygen/empty
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/plasma_tank
@@ -293,7 +293,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 2000)
 	build_path = /obj/item/tank/internals/plasma/empty
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/id
@@ -303,7 +303,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron=200, /datum/material/glass = 100)
 	build_path = /obj/item/card/id/advanced
-	category = list(RND_CATEGORY_ELECTRONICS)
+	category = list("Electronics")
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/eng_gloves
@@ -313,7 +313,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron=2000, /datum/material/silver=1500, /datum/material/gold = 1000)
 	build_path = /obj/item/clothing/gloves/color/latex/engineering
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/lavarods
@@ -322,7 +322,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron=1000, /datum/material/plasma=500, /datum/material/titanium=2000)
 	build_path = /obj/item/stack/rods/lava
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_STOCK_PARTS)
+	category = list("initial", "Stock Parts")
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/plasticducky
@@ -332,7 +332,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = 1000)
 	build_path = /obj/item/bikehorn/rubberducky/plasticducky
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 
 /datum/design/pneumatic_seal
 	name = "Pneumatic Airlock Seal"
@@ -341,7 +341,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 20000, /datum/material/plasma = 10000)
 	build_path = /obj/item/door_seal
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SECURITY | DEPARTMENT_BITFLAG_SCIENCE
 
 /////////////////////////////////////////
@@ -355,7 +355,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 2500, /datum/material/glass = 200)
 	build_path = /obj/item/mop/advanced
-	category = list(RND_CATEGORY_EQUIPMENT, RND_CATEGORY_TOOLS, RND_CATEGORY_TOOL_DESIGNS)
+	category = list("Equipment", "Tools", "Tool Designs")
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/normtrash
@@ -365,7 +365,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = 2000)
 	build_path = /obj/item/storage/bag/trash
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/blutrash
@@ -375,7 +375,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/gold = 1500, /datum/material/uranium = 250, /datum/material/plasma = 1500)
 	build_path = /obj/item/storage/bag/trash/bluespace
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/light_replacer
@@ -385,7 +385,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 1500, /datum/material/silver = 150, /datum/material/glass = 3000)
 	build_path = /obj/item/lightreplacer
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/buffer_upgrade
@@ -395,7 +395,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 3000, /datum/material/glass = 200)
 	build_path = /obj/item/janicart_upgrade/buffer
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/vacuum_upgrade
@@ -405,7 +405,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 3000, /datum/material/glass = 200)
 	build_path = /obj/item/janicart_upgrade/vacuum
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/paint_remover
@@ -416,7 +416,7 @@
 	materials = list(/datum/material/iron = 1000)
 	reagents_list = list(/datum/reagent/acetone = 60)
 	build_path = /obj/item/paint/paint_remover
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/spraybottle
@@ -426,7 +426,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 3000, /datum/material/glass = 200)
 	build_path = /obj/item/reagent_containers/spray
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/beartrap
@@ -436,7 +436,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 5000, /datum/material/titanium = 1000)
 	build_path = /obj/item/restraints/legcuffs/beartrap
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 
@@ -449,8 +449,8 @@
 	id = "adv_watering_can"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 2500, /datum/material/glass = 200)
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_TOOLS, RND_CATEGORY_TOOL_DESIGNS)
-	build_path = /obj/item/reagent_containers/cup/watering_can/advanced
+	build_path = /obj/item/reagent_containers/glass/watering_can/advanced
+	category = list("initial","Tools","Tool Designs")
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /////////////////////////////////////////
@@ -464,7 +464,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000)
 	build_path = /obj/item/holosign_creator
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/holobarrier_jani
@@ -474,7 +474,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000, /datum/material/silver = 1000)
 	build_path = /obj/item/holosign_creator/janibarrier
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 
@@ -485,7 +485,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 5000, /datum/material/glass = 1000, /datum/material/gold = 1000, /datum/material/silver = 1000)
 	build_path = /obj/item/holosign_creator/security
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/holosignengi
@@ -495,7 +495,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 5000, /datum/material/glass = 1000, /datum/material/gold = 1000, /datum/material/silver = 1000)
 	build_path = /obj/item/holosign_creator/engineering
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/holosignatmos
@@ -505,7 +505,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 5000, /datum/material/glass = 1000, /datum/material/gold = 1000, /datum/material/silver = 1000)
 	build_path = /obj/item/holosign_creator/atmos
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/holobarrier_med
@@ -515,7 +515,7 @@
 	build_path = /obj/item/holosign_creator/medical
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver = 100) //a hint of silver since it can troll 2 antags (bad viros and sentient disease)
 	id = "holobarrier_med"
-	category = list(RND_CATEGORY_MEDICAL_DESIGNS)
+	category = list("Medical Designs")
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /////////////////////////////////////////
@@ -529,7 +529,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 10000, /datum/material/diamond = 5000, /datum/material/uranium = 8000, /datum/material/silver = 4500, /datum/material/gold = 5000)
 	build_path = /obj/item/reactive_armour_shell
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/knight_armour
@@ -539,7 +539,7 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_CATEGORY_ITEM_MATERIAL = 10000)
 	build_path = /obj/item/clothing/suit/armor/riot/knight/greyscale
-	category = list(RND_CATEGORY_IMPORTED)
+	category = list("Imported")
 
 /datum/design/knight_helmet
 	name = "Knight Helmet"
@@ -548,7 +548,7 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_CATEGORY_ITEM_MATERIAL = 5000)
 	build_path = /obj/item/clothing/head/helmet/knight/greyscale
-	category = list(RND_CATEGORY_IMPORTED)
+	category = list("Imported")
 
 
 
@@ -563,7 +563,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 2500)
 	build_path = /obj/item/flashlight/seclite
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/detective_scanner
@@ -573,7 +573,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 5000, /datum/material/glass = 1000, /datum/material/gold = 2500, /datum/material/silver = 2000)
 	build_path = /obj/item/detective_scanner
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/pepperspray
@@ -583,7 +583,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 5000, /datum/material/glass = 1000)
 	build_path = /obj/item/reagent_containers/spray/pepper/empty
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/bola_energy
@@ -593,7 +593,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/silver = 500, /datum/material/plasma = 500, /datum/material/titanium = 500)
 	build_path = /obj/item/restraints/legcuffs/bola/energy
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 	autolathe_exportable = FALSE
 
@@ -604,7 +604,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = 250)
 	build_path = /obj/item/restraints/handcuffs/cable/zipties
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/evidencebag
@@ -614,7 +614,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = 100)
 	build_path = /obj/item/evidencebag
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/inspector
@@ -624,7 +624,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 5000, /datum/material/glass = 1000, /datum/material/gold = 1000, /datum/material/uranium = 2000)
 	build_path = /obj/item/inspector
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/plumbing_rcd
@@ -633,7 +633,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 75000, /datum/material/glass = 37500, /datum/material/plastic = 1000)
 	build_path = /obj/item/construction/plumbing
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/gas_filter
@@ -642,7 +642,7 @@
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(/datum/material/iron = 100)
 	build_path = /obj/item/gas_filter
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 
 /datum/design/plasmaman_gas_filter
 	name = "Plasmaman gas filter"
@@ -650,7 +650,7 @@
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(/datum/material/iron = 100)
 	build_path = /obj/item/gas_filter/plasmaman
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 
 /////////////////////////////////////////
 /////////////////Tape////////////////////
@@ -662,7 +662,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = 3000)
 	build_path = /obj/item/stack/sticky_tape/super
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/pointy_tape
@@ -671,7 +671,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 1500, /datum/material/plastic = 1000)
 	build_path = /obj/item/stack/sticky_tape/pointy
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/super_pointy_tape
@@ -680,7 +680,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 3000, /datum/material/plastic = 2000)
 	build_path = /obj/item/stack/sticky_tape/pointy/super
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /////////////////////////////////////////
@@ -693,7 +693,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = 2500)
 	build_path = /obj/item/clothing/gloves/tackler/dolphin
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/tackle_rocket
@@ -702,7 +702,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plasma = 1000, /datum/material/plastic = 2000)
 	build_path = /obj/item/clothing/gloves/tackler/rocket
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 
@@ -718,7 +718,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000)
 	build_path = /obj/item/holosign_creator/robot_seat/restaurant
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/holosign/bar
@@ -728,7 +728,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000)
 	build_path = /obj/item/holosign_creator/robot_seat/bar
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/oven_tray
@@ -738,7 +738,7 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 500)
 	build_path = /obj/item/plate/oven_tray
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
+	category = list("initial","Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /////////////////////////////////////////
@@ -751,4 +751,4 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/uranium = 1000, /datum/material/plastic = 2000)
 	build_path = /obj/item/fishing_rod/tech
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list("Equipment")

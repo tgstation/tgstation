@@ -28,7 +28,5 @@
 		return FALSE
 
 	to_chat(caster, span_warning("[human_victim.name] has been cursed!"))
-	if (isliving(target))
-		var/mob/living/target_mob = target
-		target_mob.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
+	SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
 	return TRUE

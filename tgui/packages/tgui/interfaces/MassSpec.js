@@ -138,9 +138,6 @@ const BeakerMassProfile = (props) => {
                 Mass
               </Table.Cell>
               <Table.Cell bold collapsing color="label">
-                Purity
-              </Table.Cell>
-              <Table.Cell bold collapsing color="label">
                 Type
               </Table.Cell>
               {!!details && (
@@ -165,11 +162,6 @@ const BeakerMassProfile = (props) => {
                   collapsing
                   color={reagent.selected ? 'green' : 'default'}>
                   {reagent.mass}
-                </Table.Cell>
-                <Table.Cell
-                  collapsing
-                  color={reagent.selected ? 'green' : 'default'}>
-                  {`${reagent.purity}%`}
                 </Table.Cell>
                 <Table.Cell collapsing color={reagent.color}>
                   ▮{reagent.type}

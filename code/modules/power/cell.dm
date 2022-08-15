@@ -178,8 +178,7 @@
 		return
 
 	message_admins("[ADMIN_LOOKUPFLW(usr)] has triggered a rigged/corrupted power cell explosion at [AREACOORD(T)].")
-	usr.log_message("triggered a rigged/corrupted power cell explosion", LOG_GAME)
-	usr.log_message("triggered a rigged/corrupted power cell explosion", LOG_VICTIM, log_globally = FALSE)
+	log_game("[key_name(usr)] has triggered a rigged/corrupted power cell explosion at [AREACOORD(T)].")
 
 	//explosion(T, 0, 1, 2, 2)
 	explosion(src, devastation_range = range_devastation, heavy_impact_range = range_heavy, light_impact_range = range_light, flash_range = range_flash)
@@ -381,9 +380,9 @@
 	maxcharge = 50000
 	ratingdesc = FALSE
 
-/obj/item/stock_parts/cell/infinite/abductor/Initialize(mapload)
+/obj/item/stock_parts/cell/infinite/abductor/ComponentInitialize()
+	. = ..()
 	AddElement(/datum/element/update_icon_blocker)
-	return ..()
 
 /obj/item/stock_parts/cell/potato
 	name = "potato battery"
@@ -403,9 +402,9 @@
 	desc = "An EMP-proof cell."
 	maxcharge = 500
 
-/obj/item/stock_parts/cell/emproof/Initialize(mapload)
+/obj/item/stock_parts/cell/emproof/ComponentInitialize()
+	. = ..()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF)
-	return ..()
 
 /obj/item/stock_parts/cell/emproof/empty
 	empty = TRUE

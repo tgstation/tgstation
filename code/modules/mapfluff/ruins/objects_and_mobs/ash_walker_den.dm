@@ -36,8 +36,7 @@
 	return ..()
 
 /obj/structure/lavaland/ash_walker/deconstruct(disassembled)
-	var/core_to_drop = pick(subtypesof(/obj/item/assembly/signaler/anomaly))
-	new core_to_drop (get_step(loc, pick(GLOB.alldirs)))
+	new /obj/item/assembly/signaler/anomaly (get_step(loc, pick(GLOB.alldirs)))
 	new /obj/effect/collapse(loc)
 	return ..()
 
@@ -86,9 +85,9 @@
 			atom_integrity = min(atom_integrity + max_integrity*0.05,max_integrity)//restores 5% hp of tendril
 			for(var/mob/living/L in view(src, 5))
 				if(L.mind?.has_antag_datum(/datum/antagonist/ashwalker))
-					L.add_mood_event("oogabooga", /datum/mood_event/sacrifice_good)
+					SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "oogabooga", /datum/mood_event/sacrifice_good)
 				else
-					L.add_mood_event("oogabooga", /datum/mood_event/sacrifice_bad)
+					SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "oogabooga", /datum/mood_event/sacrifice_bad)
 
 /obj/structure/lavaland/ash_walker/proc/remake_walker(datum/mind/oldmind, oldname)
 	var/mob/living/carbon/human/M = new /mob/living/carbon/human(get_step(loc, pick(GLOB.alldirs)))

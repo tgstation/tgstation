@@ -17,7 +17,6 @@
 	cost = 2
 	surplus = 0
 	illegal_tech = FALSE
-	purchasable_from = ~UPLINK_NUKE_OPS
 
 // Low progression cost
 

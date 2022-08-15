@@ -12,7 +12,6 @@ Slimecrossing Mobs
 	cooldown_time = 0 SECONDS
 
 	invocation_type = INVOCATION_NONE
-	spell_requirements = NONE
 
 	convert_damage = TRUE
 	convert_damage_type = CLONE

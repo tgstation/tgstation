@@ -38,7 +38,7 @@
 	if(has_latches)
 		. += latches
 
-/obj/item/storage/toolbox/Initialize(mapload)
+/obj/item/storage/toolbox/Initialize()
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 
@@ -101,7 +101,7 @@
 	force = 5
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/storage/toolbox/mechanical/old/heirloom/Initialize(mapload)
+/obj/item/storage/toolbox/mechanical/old/heirloom/Initialize()
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 
@@ -168,7 +168,7 @@
 	throwforce = 18
 	material_flags = NONE
 
-/obj/item/storage/toolbox/syndicate/Initialize(mapload)
+/obj/item/storage/toolbox/syndicate/Initialize()
 	. = ..()
 	atom_storage.silent = TRUE
 
@@ -205,7 +205,7 @@
 	w_class = WEIGHT_CLASS_GIGANTIC //Holds more than a regular toolbox!
 	material_flags = NONE
 
-/obj/item/storage/toolbox/artistic/Initialize(mapload)
+/obj/item/storage/toolbox/artistic/Initialize()
 	. = ..()
 	atom_storage.max_total_storage = 20
 	atom_storage.max_slots = 10
@@ -271,7 +271,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	has_latches = FALSE
 
-/obj/item/storage/toolbox/infiltrator/Initialize(mapload)
+/obj/item/storage/toolbox/infiltrator/Initialize()
 	. = ..()
 	atom_storage.max_slots = 10
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
@@ -310,7 +310,7 @@
 	if(!is_type_in_list(src, allowed_toolbox) && (type != /obj/item/storage/toolbox))
 		return
 	if(contents.len >= 1)
-		balloon_alert(user, "not empty!")
+		to_chat(user, span_warning("They won't fit in, as there is already stuff inside!"))
 		return
 	if(T.use(10))
 		var/obj/item/bot_assembly/floorbot/B = new
@@ -328,13 +328,16 @@
 				B.toolbox_color = "s"
 		user.put_in_hands(B)
 		B.update_appearance()
-		B.balloon_alert(user, "tiles added")
+		to_chat(user, span_notice("You add the tiles into the empty [name]. They protrude from the top."))
 		qdel(src)
 	else
-		balloon_alert(user, "needs 10 tiles!")
+		to_chat(user, span_warning("You need 10 floor tiles to start building a floorbot!"))
 		return
 
 
 /obj/item/storage/toolbox/haunted
 	name = "old toolbox"
 	custom_materials = list(/datum/material/hauntium = 500)
+
+
+

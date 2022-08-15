@@ -138,7 +138,10 @@ SUBSYSTEM_DEF(lua)
 				break
 
 	// Update every lua editor TGUI open for each state that had a task awakened or resumed
-	for(var/datum/lua_state/state in affected_states)
-		INVOKE_ASYNC(state, /datum/lua_state.proc/update_editors)
+	for(var/state in affected_states)
+		var/list/editor_list = LAZYACCESS(editors, "\ref[state]")
+		if(editor_list)
+			for(var/datum/lua_editor/editor in editor_list)
+				SStgui.update_uis(editor)
 
 #undef SSLUA_INIT_FAILED

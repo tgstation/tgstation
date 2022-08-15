@@ -504,7 +504,7 @@ function remove_listedturf() {
 }
 
 function remove_mc() {
-	removePermanentTab("MC");
+	removeStatusTab("MC");
 	if (current_tab == "MC") {
 		tab_change("Status");
 	}

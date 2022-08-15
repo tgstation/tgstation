@@ -47,7 +47,6 @@
 	button_icon_state = "spell_default"
 	check_flags = AB_CHECK_CONSCIOUS
 	panel = "Spells"
-	melee_cooldown_time = 0 SECONDS
 
 	/// The sound played on cast.
 	var/sound = null

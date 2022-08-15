@@ -4,7 +4,6 @@
 	name = "Bluespace Artillery Generator"
 	greyscale_colors = CIRCUIT_COLOR_COMMAND
 	build_path = /obj/machinery/bsa/back //No freebies!
-	specific_parts = TRUE
 	req_components = list(
 		/obj/item/stock_parts/capacitor/quadratic = 5,
 		/obj/item/stack/cable_coil = 2)
@@ -13,7 +12,6 @@
 	name = "Bluespace Artillery Bore"
 	greyscale_colors = CIRCUIT_COLOR_COMMAND
 	build_path = /obj/machinery/bsa/front
-	specific_parts = TRUE
 	req_components = list(
 		/obj/item/stock_parts/manipulator/femto = 5,
 		/obj/item/stack/cable_coil = 2)
@@ -30,7 +28,6 @@
 	name = "DNA Vault"
 	greyscale_colors = CIRCUIT_COLOR_COMMAND
 	build_path = /obj/machinery/dna_vault //No freebies!
-	specific_parts = TRUE
 	req_components = list(
 		/obj/item/stock_parts/capacitor/super = 5,
 		/obj/item/stock_parts/manipulator/pico = 5,
@@ -373,7 +370,7 @@
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/reagent_containers/cup/beaker = 2)
+		/obj/item/reagent_containers/glass/beaker = 2)
 
 /obj/item/circuitboard/machine/circuit_imprinter/offstation
 	name = "Ancient Circuit Imprinter"
@@ -424,7 +421,7 @@
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/stock_parts/manipulator = 2,
-		/obj/item/reagent_containers/cup/beaker = 2)
+		/obj/item/reagent_containers/glass/beaker = 2)
 
 /obj/item/circuitboard/machine/protolathe/offstation
 	name = "Ancient Protolathe"
@@ -511,7 +508,7 @@
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/stock_parts/manipulator = 2,
-		/obj/item/reagent_containers/cup/beaker = 2)
+		/obj/item/reagent_containers/glass/beaker = 2)
 
 /obj/item/circuitboard/machine/techfab/department
 	name = "\improper Departmental Techfab"
@@ -619,16 +616,6 @@
 		/obj/item/stock_parts/micro_laser = 1
 	)
 
-/obj/item/circuitboard/machine/fax
-	name = "Fax Machine"
-	greyscale_colors = CIRCUIT_COLOR_GENERIC
-	build_path = /obj/machinery/fax
-	req_components = list(
-		/obj/item/stock_parts/subspace/crystal = 1,
-		/obj/item/stock_parts/scanning_module = 1,
-		/obj/item/stock_parts/micro_laser = 1,
-		/obj/item/stock_parts/manipulator = 1,)
-
 //Medical
 
 /obj/item/circuitboard/machine/chem_dispenser
@@ -700,7 +687,7 @@
 	build_path = /obj/machinery/chem_master
 	desc = "You can turn the \"mode selection\" dial using a screwdriver."
 	req_components = list(
-		/obj/item/reagent_containers/cup/beaker = 2,
+		/obj/item/reagent_containers/glass/beaker = 2,
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/stack/sheet/glass = 1)
 	needs_anchored = FALSE
@@ -770,7 +757,7 @@
 	build_path = /obj/machinery/limbgrower
 	req_components = list(
 		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/reagent_containers/cup/beaker = 2,
+		/obj/item/reagent_containers/glass/beaker = 2,
 		/obj/item/stack/sheet/glass = 1)
 
 /obj/item/circuitboard/machine/limbgrower/fullupgrade
@@ -779,7 +766,7 @@
 	build_path = /obj/machinery/limbgrower
 	req_components = list(
 		/obj/item/stock_parts/manipulator/femto  = 1,
-		/obj/item/reagent_containers/cup/beaker/bluespace = 2,
+		/obj/item/reagent_containers/glass/beaker/bluespace = 2,
 		/obj/item/stack/sheet/glass = 1)
 
 /obj/item/circuitboard/machine/protolathe/department/medical

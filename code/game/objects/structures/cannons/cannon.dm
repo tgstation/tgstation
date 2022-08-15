@@ -75,8 +75,7 @@
 			balloon_alert(user, "needs [reagents.maximum_volume]u of charge!")
 			return
 		visible_message(ignition_message)
-		user.log_message("fired a cannon", LOG_ATTACK)
-		log_game("[key_name(user)] fired a cannon in [AREACOORD(src)]")
+		log_game("Cannon fired by [key_name(user)] in [AREACOORD(src)]")
 		addtimer(CALLBACK(src, .proc/fire), fire_delay)
 		charge_ignited = TRUE
 		return
@@ -85,7 +84,7 @@
 		var/obj/item/reagent_containers/powder_keg = used_item
 		if(!(powder_keg.reagent_flags & OPENCONTAINER))
 			return ..()
-		if(istype(powder_keg, /obj/item/reagent_containers/cup/rag))
+		if(istype(powder_keg, /obj/item/reagent_containers/glass/rag))
 			return ..()
 
 		if(!powder_keg.reagents.total_volume)

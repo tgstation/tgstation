@@ -5,6 +5,5 @@
 
 	school = SCHOOL_FORBIDDEN
 	invocation = "E'E'S"
-	spell_requirements = NONE
 
 	cast_range = 10

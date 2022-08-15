@@ -251,7 +251,7 @@
 /datum/objective/polaroid/update_explanation_text()
 	..()
 	if(target?.current)
-		explanation_text = "Take a photo of [target.name] while they're alive, and keep it in your bag."
+		explanation_text = "Take a photo of [target.name] while they're alive."
 	else
 		explanation_text = "Free Objective"
 

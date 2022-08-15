@@ -2,19 +2,19 @@
 	"jeanshorts": [
 		{
 			"type": "icon_state",
-			"icon_state": "buckle",
+			"icon_state": "jeanshorts_buckle",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "belt",
+			"icon_state": "jeanshorts_belt",
 			"blend_mode": "overlay",
 			"color_ids": [ 2 ]
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "jeanshorts",
+			"icon_state": "jeanshorts_base",
 			"blend_mode": "overlay",
 			"color_ids": [ 3 ]
 		}

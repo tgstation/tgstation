@@ -33,16 +33,16 @@
 		return
 	switch(quality)
 		if (DRINK_NICE)
-			exposed_mob.add_mood_event("quality_drink", /datum/mood_event/quality_nice)
+			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_nice)
 		if (DRINK_GOOD)
-			exposed_mob.add_mood_event("quality_drink", /datum/mood_event/quality_good)
+			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_good)
 		if (DRINK_VERYGOOD)
-			exposed_mob.add_mood_event("quality_drink", /datum/mood_event/quality_verygood)
+			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_verygood)
 		if (DRINK_FANTASTIC)
-			exposed_mob.add_mood_event("quality_drink", /datum/mood_event/quality_fantastic)
+			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_fantastic)
 			exposed_mob.mind?.add_memory(MEMORY_DRINK, list(DETAIL_DRINK = src), story_value = STORY_VALUE_OKAY)
 		if (FOOD_AMAZING)
-			exposed_mob.add_mood_event("quality_food", /datum/mood_event/amazingtaste)
+			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_food", /datum/mood_event/amazingtaste)
 
 /datum/reagent/consumable/nutriment
 	name = "Nutriment"
@@ -1014,7 +1014,7 @@
 
 /datum/reagent/consumable/peanut_butter/on_mob_life(mob/living/carbon/M, delta_time, times_fired) //ET loves peanut butter
 	if(isabductor(M))
-		M.add_mood_event("ET_pieces", /datum/mood_event/et_pieces, name)
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "ET_pieces", /datum/mood_event/et_pieces, name)
 		M.set_timed_status_effect(30 SECONDS * REM * delta_time, /datum/status_effect/drugginess)
 	..()
 

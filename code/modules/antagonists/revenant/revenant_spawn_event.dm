@@ -7,8 +7,6 @@
 	max_occurrences = 1
 	min_players = 5
 	dynamic_should_hijack = TRUE
-	category = EVENT_CATEGORY_ENTITIES
-	description = "Spawns an angry, soul sucking ghost."
 
 
 /datum/round_event/ghost_role/revenant
@@ -57,6 +55,6 @@
 	var/mob/living/simple_animal/revenant/revvie = new(pick(spawn_locs))
 	revvie.key = selected.key
 	message_admins("[ADMIN_LOOKUPFLW(revvie)] has been made into a revenant by an event.")
-	revvie.log_message("was spawned as a revenant by an event.", LOG_GAME)
+	log_game("[key_name(revvie)] was spawned as a revenant by an event.")
 	spawned_mobs += revvie
 	return SUCCESSFUL_SPAWN

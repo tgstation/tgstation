@@ -310,8 +310,7 @@
 			forceMove(O)
 			O.robot_suit = src
 
-			user.log_message("put the MMI/posibrain of [key_name(M.brainmob)] into a cyborg shell", LOG_GAME)
-			M.brainmob.log_message("was put into a cyborg shell by [key_name(user)]", LOG_GAME, log_globally = FALSE)
+			log_game("[key_name(user)] has put the MMI/posibrain of [key_name(M.brainmob)] into a cyborg shell at [AREACOORD(src)]")
 
 			if(!locomotion)
 				O.set_lockcharge(TRUE)

@@ -4,8 +4,7 @@
 	earliest_start = 10 MINUTES
 	min_players = 5
 	weight = 20
-	category = EVENT_CATEGORY_ENGINEERING
-	description = "Destroys all lights in a large area."
+	alert_observers = FALSE
 
 /datum/round_event/electrical_storm
 	var/lightsoutAmount = 1

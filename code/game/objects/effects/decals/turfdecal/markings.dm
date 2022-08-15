@@ -329,7 +329,7 @@
 
 /obj/effect/turf_decal/siding/wood
 	icon_state = "siding_wood_line"
-	color = "#916741"
+	color = "#55391A"
 
 /obj/effect/turf_decal/siding/wood/corner
 	icon_state = "siding_wood_corner"

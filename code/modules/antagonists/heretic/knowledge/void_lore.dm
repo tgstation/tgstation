@@ -76,8 +76,10 @@
 		return
 
 	var/mob/living/carbon/carbon_target = target
+	var/turf/open/target_turf = get_turf(carbon_target)
+	target_turf.TakeTemperature(-20)
+	carbon_target.adjust_bodytemperature(-40)
 	carbon_target.silent += 5
-	carbon_target.apply_status_effect(/datum/status_effect/void_chill)
 
 /datum/heretic_knowledge/cold_snap
 	name = "Aristocrat's Way"
@@ -105,7 +107,7 @@
 /datum/heretic_knowledge/mark/void_mark
 	name = "Mark of Void"
 	desc = "Your Mansus Grasp now applies the Mark of Void. The mark is triggered from an attack with your Void Blade. \
-		When triggered, further silences the victim and swiftly lowers the temperature of their body and the air around them."
+		When triggered, silences the victim and lowers their body temperature significantly."
 	gain_text = "A gust of wind? A shimmer in the air? The presence is overwhelming, \
 		my senses began to betray me. My mind is my own enemy."
 	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/void)
@@ -133,7 +135,7 @@
 	route = PATH_VOID
 
 /datum/heretic_knowledge/blade_upgrade/void
-	name = "Seeking Blade"
+	name = "Seeking blade"
 	desc = "You can now attack distant marked targets with your Void Blade, teleporting directly next to them."
 	gain_text = "Fleeting memories, fleeting feet. I mark my way with frozen blood upon the snow. Covered and forgotten."
 	next_knowledge = list(/datum/heretic_knowledge/spell/void_pull)
@@ -223,20 +225,22 @@
 		if(IS_HERETIC_OR_MONSTER(close_carbon))
 			continue
 		close_carbon.silent += 1
+		close_carbon.adjust_bodytemperature(-20)
 
-	// Telegraph the storm in every area on the station.
-	var/list/station_levels = SSmapping.levels_by_trait(ZTRAIT_STATION)
+	var/turf/open/source_turf = get_turf(source)
+	if(!isopenturf(source_turf))
+		return
+	source_turf.TakeTemperature(-20)
+
+	var/area/source_area = get_area(source)
+
 	if(!storm)
-		storm = new /datum/weather/void_storm(station_levels)
+		storm = new /datum/weather/void_storm(list(source_turf.z))
 		storm.telegraph()
 
-	// When the heretic enters a new area, intensify the storm in the new area,
-	// and lessen the intensity in the former area.
-	var/area/source_area = get_area(source)
-	if(!storm.impacted_areas[source_area])
-		storm.former_impacted_areas |= storm.impacted_areas
-		storm.impacted_areas = list(source_area)
-		storm.update_areas()
+	storm.area_type = source_area.type
+	storm.impacted_areas = list(source_area)
+	storm.update_areas()
 
 /**
  * Signal proc for [COMSIG_LIVING_DEATH].

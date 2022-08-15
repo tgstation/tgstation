@@ -18,6 +18,8 @@
 		add_overlay(overlay)
 	return ..()
 
+
+
 //[[[[BRAIN]]]]
 
 /obj/item/organ/internal/cyberimp/brain
@@ -118,7 +120,7 @@
 	. = ..()
 	UnregisterSignal(implant_owner, signalCache)
 
-/obj/item/organ/internal/cyberimp/brain/anti_stun/Insert(special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/cyberimp/brain/anti_stun/Insert()
 	. = ..()
 	RegisterSignal(owner, signalCache, .proc/on_signal)
 

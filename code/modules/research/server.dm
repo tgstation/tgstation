@@ -75,7 +75,7 @@
 /// Toggles whether or not researched_disabled is, yknow, disabled
 /obj/machinery/rnd/server/proc/toggle_disable(mob/user)
 	research_disabled = !research_disabled
-	user.log_message("[research_disabled ? "shut off" : "turned on"] [src]", LOG_GAME)
+	log_game("[key_name(user)] [research_disabled ? "shut off" : "turned on"] [src] at [loc_name(user)]")
 	refresh_working()
 
 /// Gets status text based on this server's status for the computer.
@@ -300,7 +300,7 @@
 			var/mob/user = usr
 
 			message_admins("[ADMIN_LOOKUPFLW(user)] deconstructed [ADMIN_JMP(src)].")
-			user.log_message("deconstructed [src].", LOG_GAME)
+			log_game("[key_name(user)] deconstructed [src].")
 			return ..()
 
 		message_admins("[ADMIN_JMP(src)] has been deconstructed by an unknown user.")

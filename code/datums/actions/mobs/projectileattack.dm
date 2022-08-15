@@ -18,7 +18,6 @@
 	var/projectile_speed_multiplier = 1
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/Activate(atom/target_atom)
-	StartCooldown(360 SECONDS, 360 SECONDS)
 	attack_sequence(owner, target_atom)
 	StartCooldown()
 
@@ -241,8 +240,9 @@
 	if(!islist(dirs))
 		dirs = GLOB.alldirs.Copy()
 	playsound(firer, projectile_sound, 200, TRUE, 2)
-	for(var/dir in dirs)
-		shoot_projectile(firer, target, dir2angle(dir), firer)
+	for(var/d in dirs)
+		var/turf/E = get_step(firer, d)
+		shoot_projectile(firer, E, null, firer, null, null)
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/alternating
 	name = "Alternating Shots"
@@ -286,7 +286,6 @@
 	cooldown_time = 2.5 SECONDS
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/colossus_final/Activate(atom/target_atom)
-	StartCooldown(360 SECONDS, 360 SECONDS)
 	attack_sequence(owner, target_atom)
 	StartCooldown()
 	Remove(owner)

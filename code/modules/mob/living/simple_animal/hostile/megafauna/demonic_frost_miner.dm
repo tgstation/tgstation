@@ -40,8 +40,8 @@ Difficulty: Extremely Hard
 	achievement_type = /datum/award/achievement/boss/demonic_miner_kill
 	crusher_achievement_type = /datum/award/achievement/boss/demonic_miner_crusher
 	score_achievement_type = /datum/award/score/demonic_miner_score
-	death_message = "falls to the ground, decaying into plasma particles."
-	death_sound = SFX_BODYFALL
+	deathmessage = "falls to the ground, decaying into plasma particles."
+	deathsound = SFX_BODYFALL
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	/// If the demonic frost miner is in its enraged state
 	var/enraged = FALSE
@@ -192,10 +192,8 @@ Difficulty: Extremely Hard
 	icon_state = "ice_1"
 	damage = 20
 	armour_penetration = 100
-	speed = 1
-	pixel_speed_multiplier = 0.1
-	range = 500
-	homing_turn_speed = 3
+	speed = 10
+	homing_turn_speed = 30
 	damage_type = BURN
 
 /obj/projectile/colossus/frost_orb/on_hit(atom/target, blocked = FALSE)
@@ -208,9 +206,7 @@ Difficulty: Extremely Hard
 	icon_state = "nuclear_particle"
 	damage = 5
 	armour_penetration = 100
-	speed = 1
-	pixel_speed_multiplier = 0.333
-	range = 150
+	speed = 3
 	damage_type = BRUTE
 	explode_hit_objects = FALSE
 
@@ -219,9 +215,7 @@ Difficulty: Extremely Hard
 	icon_state = "ice_2"
 	damage = 15
 	armour_penetration = 100
-	speed = 1
-	pixel_speed_multiplier = 0.333
-	range = 150
+	speed = 3
 	damage_type = BRUTE
 
 /obj/projectile/colossus/ice_blast/on_hit(atom/target, blocked = FALSE)

@@ -37,10 +37,9 @@
  *
  * Note that this proc can be overridden, and is in the case of screen objects.
  */
-/atom/Click(location, control, params)
+/atom/Click(location,control,params)
 	if(flags_1 & INITIALIZED_1)
 		SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, usr)
-
 		usr.ClickOn(src, params)
 
 /atom/DblClick(location,control,params)
@@ -69,7 +68,10 @@
 		return
 	next_click = world.time + 1
 
-	if(check_click_intercept(params,A) || notransform)
+	if(check_click_intercept(params,A))
+		return
+
+	if(notransform)
 		return
 
 	var/list/modifiers = params2list(params)
@@ -417,7 +419,7 @@
 	if(SEND_SIGNAL(src, COMSIG_CLICK_ALT, user) & COMPONENT_CANCEL_CLICK_ALT)
 		return
 	var/turf/T = get_turf(src)
-	if(T && (isturf(loc) || isturf(src)) && user.TurfAdjacent(T) && !HAS_TRAIT(user, TRAIT_MOVE_VENTCRAWLING))
+	if(T && (isturf(loc) || isturf(src)) && user.TurfAdjacent(T))
 		user.listed_turf = T
 		user.client.stat_panel.send_message("create_listedturf", T.name)
 

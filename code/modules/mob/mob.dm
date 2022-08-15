@@ -518,10 +518,6 @@
 	set name = "Examine"
 	set category = "IC"
 
-	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, .proc/run_examinate, examinify))
-
-/mob/proc/run_examinate(atom/examinify)
-
 	if(isturf(examinify) && !(sight & SEE_TURFS) && !(examinify in view(client ? client.view : world.view, src)))
 		// shift-click catcher may issue examinate() calls for out-of-sight turfs
 		return
@@ -709,10 +705,6 @@
 	set category = "Object"
 	set src = usr
 
-	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, .proc/execute_mode))
-
-///proc version to finish /mob/verb/mode() execution. used in case the proc needs to be queued for the tick after its first called
-/mob/proc/execute_mode()
 	if(ismecha(loc))
 		return
 
@@ -745,22 +737,22 @@
 		to_chat(usr, span_boldnotice("You must be dead to use this!"))
 		return
 
-	usr.log_message("used the respawn button.", LOG_GAME)
+	log_game("[key_name(usr)] used the respawn button.")
 
 	to_chat(usr, span_boldnotice("Please roleplay correctly!"))
 
 	if(!client)
-		usr.log_message("respawn failed due to disconnect.", LOG_GAME)
+		log_game("[key_name(usr)] respawn failed due to disconnect.")
 		return
 	client.screen.Cut()
 	client.screen += client.void
 	if(!client)
-		usr.log_message("respawn failed due to disconnect.", LOG_GAME)
+		log_game("[key_name(usr)] respawn failed due to disconnect.")
 		return
 
 	var/mob/dead/new_player/M = new /mob/dead/new_player()
 	if(!client)
-		usr.log_message("respawn failed due to disconnect.", LOG_GAME)
+		log_game("[key_name(usr)] respawn failed due to disconnect.")
 		qdel(M)
 		return
 
@@ -1110,8 +1102,7 @@
 /mob/proc/update_mouse_pointer()
 	if(!client)
 		return
-	if(client.mouse_pointer_icon != initial(client.mouse_pointer_icon))//only send changes to the client if theyre needed
-		client.mouse_pointer_icon = initial(client.mouse_pointer_icon)
+	client.mouse_pointer_icon = initial(client.mouse_pointer_icon)
 	if(examine_cursor_icon && client.keys_held["Shift"]) //mouse shit is hardcoded, make this non hard-coded once we make mouse modifiers bindable
 		client.mouse_pointer_icon = examine_cursor_icon
 	if(istype(loc, /obj/vehicle/sealed))
@@ -1138,15 +1129,10 @@
 /mob/proc/is_literate()
 	return HAS_TRAIT(src, TRAIT_LITERATE) && !HAS_TRAIT(src, TRAIT_ILLITERATE)
 
-/**
- * Proc that returns TRUE if the mob can write using the writing_instrument, FALSE otherwise.
- *
- * This proc a side effect, outputting a message to the mob's chat with a reason if it returns FALSE.
- */
-/mob/proc/can_write(obj/item/writing_instrument)
-	if(!istype(writing_instrument))
+/// Can this mob write
+/mob/proc/can_write(obj/writing_instrument)
+	if(!istype(writing_instrument, /obj/item/pen) && !istype(writing_instrument, /obj/item/toy/crayon))
 		to_chat(src, span_warning("You can't write with the [writing_instrument]!"))
-		return FALSE
 
 	if(!is_literate())
 		to_chat(src, span_warning("You try to write, but don't know how to spell anything!"))
@@ -1156,17 +1142,15 @@
 		to_chat(src, span_warning("It's too dark in here to write anything!"))
 		return FALSE
 
-	var/pen_info = writing_instrument.get_writing_implement_details()
-	if(!pen_info || (pen_info["interaction_mode"] != MODE_WRITING))
-		to_chat(src, span_warning("You can't write with the [writing_instrument]!"))
-		return FALSE
-
-	if(has_gravity())
-		return TRUE
-
 	var/obj/item/pen/pen = writing_instrument
+	var/writing_instrument_requires_gravity
 
-	if(istype(pen) && pen.requires_gravity)
+	if(istype(pen))
+		writing_instrument_requires_gravity = pen.requires_gravity
+	else if(istype(writing_instrument, /obj/item/toy/crayon))
+		writing_instrument_requires_gravity = FALSE
+
+	if(writing_instrument_requires_gravity && !has_gravity())
 		to_chat(src, span_warning("You try to write, but the [writing_instrument] doesn't work in zero gravity!"))
 		return FALSE
 

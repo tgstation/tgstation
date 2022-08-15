@@ -83,7 +83,10 @@
 		caste_options["Drone"] = drone
 
 	var/alien_caste = show_radial_menu(owner, owner, caste_options, radius = 38, require_near = TRUE, tooltips = TRUE)
-	if(QDELETED(src) || QDELETED(owner) || !IsAvailable() || isnull(alien_caste))
+	if(QDELETED(src) || QDELETED(owner) || !IsAvailable() || !alien_caste)
+		return
+
+	if(alien_caste == null)
 		return
 
 	var/mob/living/carbon/alien/humanoid/new_xeno

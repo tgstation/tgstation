@@ -119,7 +119,7 @@
 	if(stored_gun)
 		for(var/obj/item/borg/upgrade/modkit/modkit as anything in stored_gun.modkits)
 			modkit.uninstall(stored_gun)
-	death_message = "blows apart!"
+	deathmessage = "blows apart!"
 	..()
 
 /mob/living/simple_animal/hostile/mining_drone/attack_hand(mob/living/carbon/human/user, list/modifiers)

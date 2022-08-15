@@ -1,5 +1,0 @@
-author: "Kokonut/Thgvr"
-delete-after: True
-changes: 
-  - imageadd: "Updates Cigarette boxes and cigar case sprites to 3/4ths perspective."
-  - imageadd: "Updates matches (lit and burnt states)"

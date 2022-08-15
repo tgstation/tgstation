@@ -60,7 +60,7 @@
 	inhand_icon_state = "medkit"
 	desc = "A high capacity aid kit for doctors, full of medical supplies and basic surgical equipment"
 
-/obj/item/storage/medkit/surgery/Initialize(mapload)
+/obj/item/storage/medkit/surgery/Initialize()
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL //holds the same equipment as a medibelt
 	atom_storage.max_slots = 12
@@ -69,8 +69,8 @@
 		/obj/item/healthanalyzer,
 		/obj/item/dnainjector,
 		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/cup/beaker,
-		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/glass/beaker,
+		/obj/item/reagent_containers/glass/bottle,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/medigel,
@@ -256,10 +256,9 @@
 	name = "combat medical kit"
 	desc = "I hope you've got insurance."
 	icon_state = "medkit_tactical"
-	inhand_icon_state = "medkit-tactical"
 	damagetype_healed = "all"
 
-/obj/item/storage/medkit/tactical/Initialize(mapload)
+/obj/item/storage/medkit/tactical/Initialize()
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 
@@ -282,7 +281,7 @@
 
 	//Making a medibot!
 	if(contents.len >= 1)
-		balloon_alert(user, "items inside!")
+		to_chat(user, span_warning("You need to empty [src] out first!"))
 		return
 
 	var/obj/item/bot_assembly/medbot/medbot_assembly = new
@@ -297,7 +296,7 @@
 	else if (istype(src, /obj/item/storage/medkit/advanced))
 		medbot_assembly.set_skin("advanced")
 	user.put_in_hands(medbot_assembly)
-	medbot_assembly.balloon_alert(user, "arm added")
+	to_chat(user, span_notice("You add [bodypart] to [src]."))
 	medbot_assembly.robot_arm = bodypart.type
 	medbot_assembly.medkit_type = type
 	qdel(bodypart)
@@ -317,7 +316,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/storage/pill_bottle/Initialize(mapload)
+/obj/item/storage/pill_bottle/Initialize()
 	. = ..()
 	atom_storage.allow_quick_gather = TRUE
 	atom_storage.set_holdable(list(/obj/item/reagent_containers/pill))
@@ -525,17 +524,21 @@
 	/// var to prevent it freezing the same things over and over
 	var/cooling = FALSE
 
-/obj/item/storage/organbox/Initialize(mapload)
+/obj/item/storage/organbox/Initialize()
 	. = ..()
-
-	create_storage(type = /datum/storage/organ_box, max_specific_storage = WEIGHT_CLASS_BULKY, max_total_storage = 21)
+	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY /// you have to remove it from your bag before opening it but I think that's fine
+	atom_storage.max_total_storage = 21
 	atom_storage.set_holdable(list(
 		/obj/item/organ,
 		/obj/item/bodypart,
 		/obj/item/food/icecream
 		))
 
+/obj/item/storage/organbox/Initialize(mapload)
+	. = ..()
 	create_reagents(100, TRANSPARENT)
+	RegisterSignal(src, COMSIG_ATOM_ENTERED, .proc/freeze)
+	RegisterSignal(src, COMSIG_ATOM_EXITED, .proc/unfreeze)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/storage/organbox/process(delta_time)
@@ -595,12 +598,12 @@
 		var/obj/item/reagent_containers/RC = I
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transfered_by = user)
 		if(units)
-			balloon_alert(user, "[units]u transferred")
+			to_chat(user, span_notice("You transfer [units] units of the solution to [src]."))
 			return
 	if(istype(I, /obj/item/plunger))
-		balloon_alert(user, "plunging...")
+		to_chat(user, span_notice("You start furiously plunging [name]."))
 		if(do_after(user, 10, target = src))
-			balloon_alert(user, "plunged")
+			to_chat(user, span_notice("You finish plunging the [name]."))
 			reagents.clear_reagents()
 		return
 	return ..()

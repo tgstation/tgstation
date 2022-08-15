@@ -7,7 +7,6 @@ import DOMPurify from 'dompurify';
 // Default values
 const defTag = [
   'b',
-  'blockquote',
   'br',
   'center',
   'code',

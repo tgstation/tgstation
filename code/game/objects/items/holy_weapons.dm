@@ -49,13 +49,12 @@
 
 	var/obj/effect/rune/target_rune = target
 	if(target_rune.log_when_erased)
-		user.log_message("erased [target_rune.cultist_name] rune using a null rod", LOG_GAME)
+		log_game("[target_rune.cultist_name] rune erased by [key_name(user)] using a null rod.")
 		message_admins("[ADMIN_LOOKUPFLW(user)] erased a [target_rune.cultist_name] rune with a null rod.")
 	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
 
 /obj/item/nullrod/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!"))
-
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/nullrod/godhand
@@ -250,11 +249,7 @@
 
 /obj/item/nullrod/scythe/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, \
-	speed = 7 SECONDS, \
-	effectiveness = 110, \
-	)
-	//the harvest gives a high bonus chance
+	AddComponent(/datum/component/butchering, 70, 110) //the harvest gives a high bonus chance
 
 /obj/item/nullrod/scythe/vibro
 	name = "high frequency blade"
@@ -351,12 +346,7 @@
 /obj/item/nullrod/chainsaw/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
-	AddComponent(/datum/component/butchering, \
-	speed = 3 SECONDS, \
-	effectiveness = 100, \
-	bonus_modifier = 0, \
-	butcher_sound = hitsound, \
-	)
+	AddComponent(/datum/component/butchering, 30, 100, 0, hitsound)
 
 /obj/item/nullrod/clown
 	name = "clown dagger"
@@ -455,10 +445,7 @@
 /obj/item/nullrod/armblade/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
-	AddComponent(/datum/component/butchering, \
-	speed = 8 SECONDS, \
-	effectiveness = 70, \
-	)
+	AddComponent(/datum/component/butchering, 80, 70)
 
 /obj/item/nullrod/armblade/tentacle
 	name = "unholy blessing"
@@ -523,10 +510,7 @@
 /obj/item/nullrod/tribal_knife/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
-	AddComponent(/datum/component/butchering, \
-	speed = 5 SECONDS, \
-	effectiveness = 100, \
-	)
+	AddComponent(/datum/component/butchering, 50, 100)
 
 /obj/item/nullrod/tribal_knife/Destroy()
 	STOP_PROCESSING(SSobj, src)

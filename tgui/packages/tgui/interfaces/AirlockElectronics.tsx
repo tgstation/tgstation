@@ -11,7 +11,6 @@ type Data = {
   passedCycleId: number;
   regions: string[];
   accesses: string[];
-  shell: BooleanLike;
 };
 
 export const AirlockElectronics = (props, context) => {
@@ -23,7 +22,6 @@ export const AirlockElectronics = (props, context) => {
     passedCycleId,
     regions = [],
     unres_direction,
-    shell,
   } = data;
 
   return (
@@ -31,16 +29,6 @@ export const AirlockElectronics = (props, context) => {
       <Window.Content>
         <Section title="Main">
           <LabeledList>
-            <LabeledList.Item label="Integrated Circuit Shell">
-              <Button.Checkbox
-                content="Shell"
-                checked={shell}
-                onClick={() => {
-                  act('set_shell', { on: !shell });
-                }}
-                tooltip="Whether this airlock can have an integrated circuit placed inside of it or not."
-              />
-            </LabeledList.Item>
             <LabeledList.Item label="Access Required">
               <Button
                 icon={oneAccess ? 'unlock' : 'lock'}

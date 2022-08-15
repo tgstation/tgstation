@@ -33,7 +33,7 @@
 	var/can_hack_open = TRUE
 
 
-/obj/item/storage/secure/Initialize(mapload)
+/obj/item/storage/secure/Initialize()
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	atom_storage.max_total_storage = 14
@@ -56,25 +56,25 @@
 /obj/item/storage/secure/screwdriver_act(mob/living/user, obj/item/tool)
 	if(tool.use_tool(src, user, 20))
 		panel_open = !panel_open
-		balloon_alert(user, "panel [panel_open ? "opened" : "closed"]")
+		to_chat(user, span_notice("You [panel_open ? "open" : "close"] the service panel."))
 		return TRUE
 
 /obj/item/storage/secure/multitool_act(mob/living/user, obj/item/tool)
 	. = TRUE
 	if(lock_hacking)
-		balloon_alert(user, "already hacking!")
+		to_chat(user, span_danger("This safe is already being hacked."))
 		return
 	if(panel_open == TRUE)
-		balloon_alert(user, "hacking...")
+		to_chat(user, span_danger("Now attempting to reset internal memory, please hold."))
 		lock_hacking = TRUE
 		if (tool.use_tool(src, user, 400))
-			balloon_alert(user, "hacked")
+			to_chat(user, span_danger("Internal memory reset - lock has been disengaged."))
 			lock_set = FALSE
 
 		lock_hacking = FALSE
 		return
 
-	balloon_alert(user, "unscrew panel!")
+	to_chat(user, span_warning("You must <b>unscrew</b> the service panel before you can pulse the wiring!"))
 
 /obj/item/storage/secure/attack_self(mob/user)
 	var/locked = atom_storage.locked
@@ -143,7 +143,7 @@
 	new /obj/item/paper(src)
 	new /obj/item/pen(src)
 
-/obj/item/storage/secure/briefcase/Initialize(mapload)
+/obj/item/storage/secure/briefcase/Initialize()
 	. = ..()
 	atom_storage.max_total_storage = 21
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
@@ -172,7 +172,7 @@
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe, 32)
 
-/obj/item/storage/secure/safe/Initialize(mapload)
+/obj/item/storage/secure/safe/Initialize()
 	. = ..()
 	atom_storage.set_holdable(cant_hold_list = list(/obj/item/storage/secure/briefcase))
 	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC

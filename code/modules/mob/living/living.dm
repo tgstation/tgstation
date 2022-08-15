@@ -1,6 +1,5 @@
 /mob/living/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/movetype_handler)
 	register_init_signals()
 	if(unique_name)
 		set_name()
@@ -12,6 +11,10 @@
 	GLOB.mob_living_list += src
 	SSpoints_of_interest.make_point_of_interest(src)
 	update_fov()
+
+/mob/living/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/movetype_handler)
 
 /mob/living/prepare_huds()
 	..()
@@ -419,14 +422,12 @@
 /mob/living/pointed(atom/A as mob|obj|turf in view(client.view, src))
 	if(incapacitated())
 		return FALSE
-
-	return ..()
-
-/mob/living/_pointed(atom/pointing_at)
 	if(!..())
 		return FALSE
-	log_message("points at [pointing_at]", LOG_EMOTE)
-	visible_message("<span class='infoplain'>[span_name("[src]")] points at [pointing_at].</span>", span_notice("You point at [pointing_at]."))
+	visible_message("<span class='infoplain'>[span_name("[src]")] points at [A].</span>", span_notice("You point at [A]."))
+	log_message("points at [A]", LOG_EMOTE)
+	return TRUE
+
 
 /mob/living/verb/succumb(whispered as null)
 	set hidden = TRUE
@@ -990,10 +991,6 @@
 	set name = "Resist"
 	set category = "IC"
 
-	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, .proc/execute_resist))
-
-///proc extender of [/mob/living/verb/resist] meant to make the process queable if the server is overloaded when the verb is called
-/mob/living/proc/execute_resist()
 	if(!can_resist())
 		return
 	changeNext_move(CLICK_CD_RESIST)
@@ -1018,6 +1015,7 @@
 			resist_fire() //stop, drop, and roll
 		else if(last_special <= world.time)
 			resist_restraints() //trying to remove cuffs.
+
 
 /mob/proc/resist_grab(moving_resist)
 	return 1 //returning 0 means we successfully broke free
@@ -1308,7 +1306,6 @@
 				/mob/living/simple_animal/pet/fox,
 				/mob/living/simple_animal/butterfly,
 				/mob/living/simple_animal/pet/cat/cak,
-				/mob/living/simple_animal/pet/dog/breaddog,
 				/mob/living/simple_animal/chick,
 			)
 			new_mob = new path(loc)
@@ -1356,8 +1353,7 @@
 // Called when we are hit by a bolt of polymorph and changed
 // Generally the mob we are currently in is about to be deleted
 /mob/living/proc/wabbajack_act(mob/living/new_mob)
-	SEND_SIGNAL(src, COMSIG_LIVING_WABBAJACKED, new_mob)
-	log_message("was wabbajack polymorphed into: [new_mob.name]([new_mob.type]).", LOG_GAME)
+	log_game("[key_name(src)] is being wabbajack polymorphed into: [new_mob.name]([new_mob.type]).")
 	new_mob.name = real_name
 	new_mob.real_name = real_name
 
@@ -1489,7 +1485,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		adjust_fire_stacks(-fire_stacks / 2, fire_status.type)
 		spread_to.adjust_fire_stacks(fire_stacks, fire_status.type)
 		if(spread_to.ignite_mob())
-			log_message("bumped into [key_name(spread_to)] and set them on fire.", LOG_ATTACK)
+			log_game("[key_name(src)] bumped into [key_name(spread_to)] and set them on fire")
 		return
 
 	if(!their_fire_status || !their_fire_status.on_fire)
@@ -1720,8 +1716,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	. = ..()
 	VV_DROPDOWN_OPTION("", "---------")
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_SPEECH_IMPEDIMENT, "Impede Speech (Slurring, stuttering, etc)")
-	VV_DROPDOWN_OPTION(VV_HK_ADD_MOOD, "Add Mood Event")
-	VV_DROPDOWN_OPTION(VV_HK_REMOVE_MOOD, "Remove Mood Event")
 
 /mob/living/vv_do_topic(list/href_list)
 	. = ..()
@@ -1730,10 +1724,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(!check_rights(NONE))
 			return
 		admin_give_speech_impediment(usr)
-	if (href_list[VV_HK_ADD_MOOD])
-		admin_add_mood_event(usr)
-	if (href_list[VV_HK_REMOVE_MOOD])
-		admin_remove_mood_event(usr)
 
 /mob/living/proc/move_to_error_room()
 	var/obj/effect/landmark/error/error_landmark = locate(/obj/effect/landmark/error) in GLOB.landmarks_list
@@ -2276,47 +2266,3 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return
 
 	adjust_timed_status_effect(duration SECONDS, impediments[chosen])
-
-/mob/living/proc/admin_add_mood_event(mob/admin)
-	if (!admin || !check_rights(NONE))
-		return
-
-	var/list/mood_events = typesof(/datum/mood_event)
-
-	var/chosen = tgui_input_list(admin, "What mood event?", "Add Mood Event", mood_events)
-	if (!chosen || QDELETED(src) || !check_rights(NONE))
-		return
-
-	mob_mood.add_mood_event("[rand(1, 50)]", chosen)
-
-/mob/living/proc/admin_remove_mood_event(mob/admin)
-	if (!admin || !check_rights(NONE))
-		return
-
-	var/list/mood_events = list()
-	for (var/category in mob_mood.mood_events)
-		var/datum/mood_event/event = mob_mood.mood_events[category]
-		mood_events[event] = category
-
-
-	var/datum/mood_event/chosen = tgui_input_list(admin, "What mood event?", "Remove Mood Event", mood_events)
-	if (!chosen || QDELETED(src) || !check_rights(NONE))
-		return
-
-	mob_mood.clear_mood_event(mood_events[chosen])
-
-/// Adds a mood event to the mob
-/mob/living/proc/add_mood_event(category, type, ...)
-	if(QDELETED(mob_mood))
-		return
-	mob_mood.add_mood_event(arglist(args))
-
-/// Clears a mood event from the mob
-/mob/living/proc/clear_mood_event(category)
-	if(QDELETED(mob_mood))
-		return
-	mob_mood.clear_mood_event(category)
-
-/mob/living/played_game()
-	. = ..()
-	add_mood_event("gaming", /datum/mood_event/gaming)

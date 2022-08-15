@@ -16,7 +16,7 @@
 	max_integrity = 150
 	var/folder_path = /obj/item/folder //this is the path of the folder that gets spawned in New()
 
-/obj/item/storage/briefcase/Initialize(mapload)
+/obj/item/storage/briefcase/Initialize()
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_total_storage = 21
@@ -70,3 +70,4 @@
 	new /obj/item/ammo_box/magazine/sniper_rounds/soporific(src)
 	new /obj/item/ammo_box/magazine/sniper_rounds/soporific(src)
 	new /obj/item/suppressor/specialoffer(src)
+

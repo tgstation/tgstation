@@ -225,7 +225,7 @@
 		if(!isfelinid(exposed_mob))
 			return
 		exposed_mob.incapacitate(1) // startles the felinid, canceling any do_after
-		exposed_mob.add_mood_event("watersprayed", /datum/mood_event/watersprayed)
+		SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "watersprayed", /datum/mood_event/watersprayed)
 
 
 /datum/reagent/water/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -742,6 +742,7 @@
 	to_chat(H, span_warning("<b>You grit your teeth in pain as your body rapidly mutates!</b>"))
 	H.visible_message("<b>[H]</b> suddenly transforms!")
 	randomize_human(H)
+	H.dna.update_dna_identity()
 
 /datum/reagent/aslimetoxin
 	name = "Advanced Mutation Toxin"

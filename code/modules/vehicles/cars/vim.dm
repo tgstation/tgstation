@@ -18,8 +18,8 @@
 	light_power = 2
 	light_on = FALSE
 	engine_sound = 'sound/effects/servostep.ogg'
-		///What mobs are currently repairing us.
-	var/list/mob/living/repairing_mobs
+	///TRUE while the vim is being welded
+	var/being_repaired = FALSE
 	///Maximum size of a mob trying to enter the mech
 	var/maximum_mob_size = MOB_SIZE_SMALL
 	COOLDOWN_DECLARE(sound_cooldown)
@@ -51,34 +51,29 @@
 		return FALSE
 	return ..()
 
-/obj/vehicle/sealed/car/vim/welder_act(mob/living/user, obj/item/W)
-	if(user.combat_mode)
-		return
+/obj/vehicle/sealed/car/vim/welder_act(mob/living/user, obj/item/tool)
+	. = ..()
 	. = TRUE
-	if(LAZYFIND(repairing_mobs, user))
-		balloon_alert(user, "you're already repairing it!")
+	if(!tool.tool_start_check(user))
 		return
-	if(atom_integrity >= max_integrity)
-		balloon_alert(user, "it's not damaged!")
+	if(being_repaired)
+		user.balloon_alert(user, "already being repaired!")
 		return
-	if(!W.tool_start_check(user, amount=1))
+	if(atom_integrity == max_integrity)
+		user.balloon_alert(user, "already fully repaired!")
 		return
-	LAZYADD(repairing_mobs, user)
-	user.balloon_alert_to_viewers("started welding [src]", "started repairing [src]")
+
+	user.balloon_alert(user, "repairing [src]...")
 	audible_message(span_hear("You hear welding."))
-	var/did_the_thing
-	while(atom_integrity < max_integrity)
-		if(W.use_tool(src, user, 2.5 SECONDS, volume=50, amount=1))
-			did_the_thing = TRUE
-			atom_integrity += min(VIM_HEAL_AMOUNT, (max_integrity - atom_integrity))
-			audible_message(span_hear("You hear welding."))
-		else
-			break
-	if(did_the_thing)
-		user.balloon_alert_to_viewers("[(atom_integrity >= max_integrity) ? "fully" : "partially"] repaired [src]")
-	else
-		user.balloon_alert_to_viewers("stopped welding [src]", "interrupted the repair!")
-	LAZYREMOVE(repairing_mobs, user)
+	being_repaired = TRUE
+	if(!tool.use_tool(src, user, 3 SECONDS, volume=50))
+		being_repaired = FALSE
+		user.balloon_alert(user, "interrupted!")
+		return
+	being_repaired = FALSE
+
+	atom_integrity = min(atom_integrity + VIM_HEAL_AMOUNT, max_integrity)
+	user.balloon_alert(user, "[atom_integrity == max_integrity ? "fully " : ""]repaired [src]")
 
 /obj/vehicle/sealed/car/vim/mob_enter(mob/newoccupant, silent = FALSE)
 	. = ..()
@@ -142,7 +137,7 @@
 /obj/item/circuit_component/vim/proc/on_headlights_toggle(datum/source, headlights_on)
 	SIGNAL_HANDLER
 	are_headlights_on.set_output(headlights_on)
-
+	
 /obj/item/circuit_component/vim/proc/on_chime_used()
 	SIGNAL_HANDLER
 	chime.set_output(COMPONENT_SIGNAL)

@@ -10,7 +10,7 @@
 	var/list/combined_access
 	var/cached_flat_icon
 
-/obj/item/storage/wallet/Initialize(mapload)
+/obj/item/storage/wallet/Initialize()
 	. = ..()
 	atom_storage.max_slots = 4
 	atom_storage.set_holdable(list(

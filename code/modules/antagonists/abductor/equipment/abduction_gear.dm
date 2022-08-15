@@ -402,7 +402,7 @@
 	name = "Dissection Guide"
 	icon_state = "alienpaper_words"
 	show_written_words = FALSE
-	default_raw_text = {"<b>Dissection for Dummies</b><br>
+	info = {"<b>Dissection for Dummies</b><br>
 
 <br>
 1.Acquire fresh specimen.<br>
@@ -456,7 +456,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	var/sleep_time = 2 MINUTES
 	var/time_to_cuff = 3 SECONDS
 
-/obj/item/melee/baton/abductor/Initialize(mapload)
+/obj/item/melee/baton/abductor/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 
@@ -646,8 +646,11 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 /obj/item/radio/headset/abductor/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 	make_syndie()
+
+/obj/item/radio/headset/abductor/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 
 // Stops humans from disassembling abductor headsets.
 /obj/item/radio/headset/abductor/screwdriver_act(mob/living/user, obj/item/tool)
