@@ -1,0 +1,5 @@
+author: "Wallem, Imaginos"
+delete-after: True
+changes: 
+  - imageadd: "Improves the book scanner sprite"
+  - soundadd: "Adds a sound when scanning a book"
