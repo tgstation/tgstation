@@ -8,21 +8,21 @@
 	id = "wizardship_bridge"
 	},
 /turf/open/floor/plating,
-/area/ship/bridge)
+/area/station/bridge)
 "ac" = (
 /obj/machinery/computer/helm,
 /turf/open/floor/carpet/stellar,
-/area/ship/bridge)
+/area/station/bridge)
 "ad" = (
 /obj/machinery/computer/communications,
 /turf/open/floor/carpet/stellar,
-/area/ship/bridge)
+/area/station/bridge)
 "af" = (
 /obj/structure/chair/bronze{
 	dir = 1
 	},
 /turf/open/floor/carpet/stellar,
-/area/ship/bridge)
+/area/station/bridge)
 "ag" = (
 /obj/machinery/light{
 	dir = 4
@@ -34,7 +34,7 @@
 	},
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/carpet/stellar,
-/area/ship/bridge)
+/area/station/bridge)
 "ai" = (
 /obj/structure/showcase{
 	desc = "A historical figure of great importance to the wizard federation. He spent his long life learning magic, stealing artifacts, and harassing idiots with swords. May he rest forever, Rodney.";
@@ -43,7 +43,7 @@
 	name = "wizard of yendor showcase"
 	},
 /turf/open/floor/carpet/stellar,
-/area/ship/bridge)
+/area/station/bridge)
 "aj" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -57,7 +57,7 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/stellar,
-/area/ship/bridge)
+/area/station/bridge)
 "am" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -67,25 +67,25 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/ship/hallway/central)
+/area/station/hallway/central)
 "an" = (
 /turf/open/floor/carpet/royalblack,
-/area/ship/hallway/starboard)
+/area/station/hallway/starboard)
 "ao" = (
 /obj/structure/chair/wood/wings,
 /turf/open/floor/carpet/royalblack,
-/area/ship/hallway/starboard)
+/area/station/hallway/starboard)
 "aq" = (
 /obj/structure/chair/wood/wings{
 	dir = 4
 	},
 /turf/open/floor/carpet/royalblack,
-/area/ship/hallway/starboard)
+/area/station/hallway/starboard)
 "ar" = (
 /obj/structure/table/wood/poker,
 /obj/item/toy/figure/wizard,
 /turf/open/floor/carpet/royalblack,
-/area/ship/hallway/starboard)
+/area/station/hallway/starboard)
 "as" = (
 /obj/structure/chair/wood/wings{
 	dir = 8
@@ -96,7 +96,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/royalblack,
-/area/ship/hallway/starboard)
+/area/station/hallway/starboard)
 "at" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -109,7 +109,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/ship/hallway/central)
+/area/station/hallway/central)
 "au" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -123,19 +123,19 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/black,
-/area/ship/hallway/central)
+/area/station/hallway/central)
 "av" = (
 /obj/structure/chair/wood/wings{
 	dir = 1
 	},
 /turf/open/floor/carpet/royalblack,
-/area/ship/hallway/starboard)
+/area/station/hallway/starboard)
 "ay" = (
 /turf/closed/wall/mineral/uranium/safe{
 	desc = "A wall plated with emerald.";
 	name = "emerald wall"
 	},
-/area/ship/hallway/central)
+/area/station/hallway/central)
 "az" = (
 /obj/machinery/light/small{
 	brightness = 3;
@@ -144,7 +144,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/wood,
-/area/ship/hallway/central)
+/area/station/hallway/central)
 "aA" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -152,30 +152,30 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/ship/hallway/central)
+/area/station/hallway/central)
 "aB" = (
 /obj/machinery/vending/games,
 /turf/open/floor/carpet/royalblack,
-/area/ship/hallway/starboard)
+/area/station/hallway/starboard)
 "aC" = (
 /obj/structure/table/wood/poker,
 /obj/item/toy/cards/deck/tarot{
 	pixel_y = 4
 	},
 /turf/open/floor/carpet/royalblack,
-/area/ship/hallway/starboard)
+/area/station/hallway/starboard)
 "aF" = (
 /obj/machinery/vending/snack/random,
 /turf/open/floor/wood,
-/area/ship/hallway/central)
+/area/station/hallway/central)
 "aG" = (
 /obj/machinery/vending/cola/random,
 /turf/open/floor/wood,
-/area/ship/hallway/central)
+/area/station/hallway/central)
 "aI" = (
 /obj/machinery/light,
 /turf/open/floor/carpet/royalblack,
-/area/ship/hallway/starboard)
+/area/station/hallway/starboard)
 "aJ" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -183,7 +183,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/ship/science)
+/area/station/science)
 "aK" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -197,21 +197,21 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "aL" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/autolathe,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/engine/cult,
-/area/ship/science)
+/area/station/science)
 "aM" = (
 /obj/structure/chair/wood/wings,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/spider/stickyweb,
 /obj/item/soulstone/anybody,
 /turf/open/floor/engine/cult,
-/area/ship/science)
+/area/station/science)
 "aO" = (
 /obj/machinery/light{
 	dir = 1
@@ -219,26 +219,26 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/carpet/purple,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "aP" = (
 /turf/open/floor/carpet/purple,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "aR" = (
 /obj/machinery/vending/coffee,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "aS" = (
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/ship/crew/canteen/kitchen)
+/area/station/crew/canteen/kitchen)
 "aT" = (
 /obj/structure/frame/machine,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/engine/cult,
-/area/ship/science)
+/area/station/science)
 "aU" = (
 /obj/structure/destructible/cult/tome,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -247,22 +247,22 @@
 	pixel_x = -5
 	},
 /turf/open/floor/engine/cult,
-/area/ship/science)
+/area/station/science)
 "aV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood,
-/area/ship/hallway/central)
+/area/station/hallway/central)
 "aW" = (
 /obj/machinery/chem_master/condimaster{
 	name = "HoochMaster 3000"
 	},
 /turf/open/floor/carpet/purple,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "aY" = (
 /obj/structure/chair/stool/bar/directional/west,
 /turf/open/floor/wood,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "aZ" = (
 /obj/structure/table,
 /obj/item/shovel/spoon{
@@ -270,24 +270,24 @@
 	name = "staff of sustenance"
 	},
 /turf/open/floor/wood,
-/area/ship/crew/canteen/kitchen)
+/area/station/crew/canteen/kitchen)
 "ba" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder{
 	pixel_y = 7
 	},
 /turf/open/floor/wood,
-/area/ship/crew/canteen/kitchen)
+/area/station/crew/canteen/kitchen)
 "bb" = (
 /obj/structure/frame/computer,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/engine/cult,
-/area/ship/science)
+/area/station/science)
 "bd" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood,
-/area/ship/hallway/central)
+/area/station/hallway/central)
 "bf" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -301,7 +301,7 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/royalblue,
-/area/ship/crew/dorm)
+/area/station/crew/dorm)
 "bg" = (
 /obj/structure/table,
 /obj/item/storage/box/donkpockets{
@@ -315,7 +315,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/ship/crew/canteen/kitchen)
+/area/station/crew/canteen/kitchen)
 "bh" = (
 /obj/structure/table,
 /obj/machinery/microwave{
@@ -328,7 +328,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/ship/crew/canteen/kitchen)
+/area/station/crew/canteen/kitchen)
 "bi" = (
 /obj/effect/decal/cleanable/blood/gibs/up,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -341,18 +341,18 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/ship/crew/canteen/kitchen)
+/area/station/crew/canteen/kitchen)
 "bl" = (
 /obj/effect/decal/cleanable/blood/gibs/down,
 /turf/open/floor/wood,
-/area/ship/crew/canteen/kitchen)
+/area/station/crew/canteen/kitchen)
 "bm" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/trash/candle,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/engine/cult,
-/area/ship/science)
+/area/station/science)
 "bn" = (
 /obj/structure/chair/wood/wings{
 	dir = 1
@@ -363,33 +363,33 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/engine/cult,
-/area/ship/science)
+/area/station/science)
 "bo" = (
 /obj/machinery/vending/boozeomat/all_access,
 /turf/open/floor/carpet/purple,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "bp" = (
 /obj/machinery/light,
 /obj/item/radio/intercom{
 	pixel_y = -31
 	},
 /turf/open/floor/carpet/purple,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "bq" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/wood,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "bs" = (
 /obj/machinery/vending/dinnerware,
 /turf/open/floor/wood,
-/area/ship/crew/canteen/kitchen)
+/area/station/crew/canteen/kitchen)
 "bu" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /turf/open/floor/wood,
-/area/ship/crew/canteen/kitchen)
+/area/station/crew/canteen/kitchen)
 "by" = (
 /turf/open/floor/carpet/royalblue,
-/area/ship/hallway/aft)
+/area/station/hallway/aft)
 "bA" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -403,7 +403,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/ship/storage)
+/area/station/storage)
 "bB" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -417,7 +417,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/ship/crew/toilet)
+/area/station/crew/toilet)
 "bC" = (
 /obj/effect/turf_decal/industrial/outline/yellow,
 /obj/structure/closet/crate/medical,
@@ -428,7 +428,7 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/ship/storage)
+/area/station/storage)
 "bD" = (
 /obj/effect/turf_decal/industrial/outline/yellow,
 /obj/structure/cable,
@@ -439,7 +439,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/ship/storage)
+/area/station/storage)
 "bF" = (
 /obj/machinery/computer/cryopod{
 	pixel_y = 27
@@ -450,7 +450,7 @@
 	open_state = "bscanner_open"
 	},
 /turf/open/floor/carpet/royalblue,
-/area/ship/crew/dorm)
+/area/station/crew/dorm)
 "bG" = (
 /obj/structure/urinal{
 	pixel_y = 28
@@ -458,7 +458,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/white,
-/area/ship/crew/toilet)
+/area/station/crew/toilet)
 "bH" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -468,7 +468,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/white,
-/area/ship/crew/toilet)
+/area/station/crew/toilet)
 "bI" = (
 /obj/structure/sink/directional/south,
 /obj/item/razor{
@@ -483,7 +483,7 @@
 	pixel_y = 31
 	},
 /turf/open/floor/iron/white,
-/area/ship/crew/toilet)
+/area/station/crew/toilet)
 "bJ" = (
 /obj/effect/turf_decal/industrial/outline/yellow,
 /obj/machinery/light{
@@ -513,7 +513,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/ship/storage)
+/area/station/storage)
 "bK" = (
 /obj/effect/turf_decal/industrial/outline/yellow,
 /obj/structure/closet/crate/engineering,
@@ -530,7 +530,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/ship/storage)
+/area/station/storage)
 "bL" = (
 /obj/machinery/light/small{
 	brightness = 3;
@@ -540,7 +540,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/royalblue,
-/area/ship/crew/dorm)
+/area/station/crew/dorm)
 "bM" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -549,7 +549,7 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/royalblue,
-/area/ship/crew/dorm)
+/area/station/crew/dorm)
 "bN" = (
 /obj/machinery/light/small{
 	brightness = 3;
@@ -559,7 +559,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/white,
-/area/ship/crew/toilet)
+/area/station/crew/toilet)
 "bO" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -568,7 +568,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/white,
-/area/ship/crew/toilet)
+/area/station/crew/toilet)
 "bP" = (
 /obj/effect/turf_decal/industrial/warning,
 /obj/structure/closet/crate/science,
@@ -579,7 +579,7 @@
 /obj/machinery/airalarm/directional/west,
 /obj/structure/window/reinforced/survival_pod,
 /turf/open/floor/iron,
-/area/ship/storage)
+/area/station/storage)
 "bQ" = (
 /obj/effect/turf_decal/industrial/warning,
 /obj/structure/cable,
@@ -591,7 +591,7 @@
 	},
 /obj/machinery/door/window/survival_pod,
 /turf/open/floor/iron,
-/area/ship/storage)
+/area/station/storage)
 "bR" = (
 /obj/item/bedsheet/wiz,
 /obj/structure/bed,
@@ -599,20 +599,20 @@
 /obj/item/toy/plush/slimeplushie,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/carpet/royalblue,
-/area/ship/crew/dorm)
+/area/station/crew/dorm)
 "bT" = (
 /obj/machinery/shower/directional/north,
 /obj/structure/curtain,
 /obj/item/soap/deluxe,
 /turf/open/floor/iron/white,
-/area/ship/crew/toilet)
+/area/station/crew/toilet)
 "bU" = (
 /obj/structure/toilet{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/ship/crew/toilet)
+/area/station/crew/toilet)
 "bV" = (
 /obj/structure/table/wood/fancy,
 /obj/item/skub{
@@ -620,20 +620,20 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/ship/crew/toilet)
+/area/station/crew/toilet)
 "bW" = (
 /obj/structure/tank_dispenser/oxygen,
 /turf/open/floor/bronze,
-/area/ship/cargo)
+/area/station/cargo)
 "bX" = (
 /turf/open/floor/bronze,
-/area/ship/cargo)
+/area/station/cargo)
 "bY" = (
 /obj/machinery/mineral/ore_redemption{
 	req_access = null
 	},
 /turf/open/floor/bronze,
-/area/ship/cargo)
+/area/station/cargo)
 "bZ" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile{
@@ -641,13 +641,13 @@
 	},
 /obj/structure/curtain/cloth/fancy,
 /turf/open/floor/plating,
-/area/ship/science)
+/area/station/science)
 "ca" = (
 /obj/machinery/power/smes,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "cb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -655,13 +655,13 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "cc" = (
 /obj/machinery/power/port_gen/pacman,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "cd" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -669,7 +669,7 @@
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/bronze,
-/area/ship/cargo)
+/area/station/cargo)
 "ce" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -683,7 +683,7 @@
 	dir = 8
 	},
 /turf/open/floor/bronze,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "cf" = (
 /obj/effect/decal/cleanable/squid_ink{
 	name = "motor oil"
@@ -697,20 +697,20 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "cg" = (
 /obj/machinery/suit_storage_unit/open,
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/clothing/suit/space/hardsuit/wizard,
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/bronze,
-/area/ship/cargo)
+/area/station/cargo)
 "ch" = (
 /obj/item/storage/toolbox/mechanical,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "cj" = (
 /obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 1;
@@ -721,7 +721,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "ck" = (
 /obj/machinery/power/smes/shuttle/precharged,
 /obj/structure/cable,
@@ -730,14 +730,14 @@
 	},
 /obj/structure/window/reinforced/spawner,
 /turf/open/floor/plating,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "cl" = (
 /obj/machinery/power/shuttle/engine/electric{
 	dir = 1
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ship/external)
+/area/station/external)
 "cr" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -747,12 +747,12 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "cA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/ship/crew/canteen/kitchen)
+/area/station/crew/canteen/kitchen)
 "cD" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -762,11 +762,11 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/ship/hallway/aft)
+/area/station/hallway/aft)
 "dd" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/orange,
-/area/ship/crew/library)
+/area/station/crew/library)
 "do" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -776,10 +776,10 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "dH" = (
 /turf/open/floor/wood,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "ee" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 1
@@ -788,7 +788,7 @@
 	desc = "A wall plated with emerald.";
 	name = "emerald wall"
 	},
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "en" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
@@ -798,7 +798,7 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "eN" = (
 /obj/structure/chair/wood/wings{
 	dir = 8
@@ -807,7 +807,7 @@
 	pixel_y = 26
 	},
 /turf/open/floor/carpet/royalblack,
-/area/ship/hallway/starboard)
+/area/station/hallway/starboard)
 "fx" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
@@ -817,7 +817,7 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/royalblue,
-/area/ship/hallway/aft)
+/area/station/hallway/aft)
 "gz" = (
 /mob/living/simple_animal/hostile/carp/ranged{
 	desc = "A wizard's favorite familiar, the Magicarp!";
@@ -829,7 +829,7 @@
 	name = "Melchom's bed"
 	},
 /turf/open/floor/wood,
-/area/ship/hallway/aft)
+/area/station/hallway/aft)
 "gB" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -839,7 +839,7 @@
 	dir = 5
 	},
 /turf/open/floor/wood,
-/area/ship/hallway/aft)
+/area/station/hallway/aft)
 "gL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/gun/magic/wand/nothing{
@@ -853,7 +853,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "hh" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -863,17 +863,17 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/green,
-/area/ship/hallway/central)
+/area/station/hallway/central)
 "hq" = (
 /obj/structure/destructible/cult/tome,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/book/codex_gigas,
 /turf/open/floor/engine/cult,
-/area/ship/science)
+/area/station/science)
 "if" = (
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/ship/crew/library)
+/area/station/crew/library)
 "io" = (
 /obj/structure/chair/bronze{
 	dir = 1
@@ -884,18 +884,18 @@
 	pixel_y = 25
 	},
 /turf/open/floor/carpet/stellar,
-/area/ship/bridge)
+/area/station/bridge)
 "iu" = (
 /obj/structure/sign/poster/contraband/shamblers_juice,
 /turf/closed/wall/mineral/uranium/safe{
 	desc = "A wall plated with emerald.";
 	name = "emerald wall"
 	},
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "iT" = (
 /obj/structure/bookcase/random/reference,
 /turf/open/floor/carpet/orange,
-/area/ship/crew/library)
+/area/station/crew/library)
 "iU" = (
 /mob/living/carbon/human/species/monkey/punpun,
 /obj/structure/cable,
@@ -906,7 +906,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "je" = (
 /obj/effect/decal/cleanable/vomit/old,
 /obj/structure/cable,
@@ -917,7 +917,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "jA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -928,19 +928,19 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/ship/crew/canteen/kitchen)
+/area/station/crew/canteen/kitchen)
 "jC" = (
 /turf/closed/wall/mineral/uranium/safe{
 	desc = "A wall plated with emerald.";
 	name = "emerald wall"
 	},
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "jQ" = (
 /turf/closed/wall/mineral/uranium/safe{
 	desc = "A wall plated with emerald.";
 	name = "emerald wall"
 	},
-/area/ship/cargo)
+/area/station/cargo)
 "kC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -953,18 +953,18 @@
 	pixel_x = 29
 	},
 /turf/open/floor/bronze,
-/area/ship/cargo)
+/area/station/cargo)
 "kN" = (
 /obj/machinery/light/broken{
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/ship/hallway/aft)
+/area/station/hallway/aft)
 "kO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/vending/autodrobe/all_access,
 /turf/open/floor/wood,
-/area/ship/hallway/aft)
+/area/station/hallway/aft)
 "lq" = (
 /obj/structure/chair/wood/wings{
 	dir = 1
@@ -977,7 +977,7 @@
 	dir = 10
 	},
 /turf/open/floor/carpet/royalblack,
-/area/ship/hallway/starboard)
+/area/station/hallway/starboard)
 "mr" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 9
@@ -986,61 +986,61 @@
 	dir = 5
 	},
 /turf/open/floor/carpet/royalblue,
-/area/ship/crew/dorm)
+/area/station/crew/dorm)
 "mv" = (
 /obj/structure/sign/poster/official/high_class_martini,
 /turf/closed/wall/mineral/uranium/safe{
 	desc = "A wall plated with emerald.";
 	name = "emerald wall"
 	},
-/area/ship/hallway/starboard)
+/area/station/hallway/starboard)
 "ni" = (
 /turf/closed/wall/mineral/uranium/safe{
 	desc = "A wall plated with emerald.";
 	name = "emerald wall"
 	},
-/area/ship/hallway/starboard)
+/area/station/hallway/starboard)
 "nl" = (
 /turf/closed/wall/mineral/uranium/safe{
 	desc = "A wall plated with emerald.";
 	name = "emerald wall"
 	},
-/area/ship/crew/library)
+/area/station/crew/library)
 "nC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/ship/crew/canteen/kitchen)
+/area/station/crew/canteen/kitchen)
 "nQ" = (
 /obj/structure/table/wood/fancy/purple,
 /obj/item/clothing/head/collectable/wizard{
 	pixel_y = 3
 	},
 /turf/open/floor/carpet/purple,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "oz" = (
 /turf/open/floor/wood,
-/area/ship/crew/canteen/kitchen)
+/area/station/crew/canteen/kitchen)
 "oB" = (
 /obj/structure/frame/machine,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/engine/cult,
-/area/ship/science)
+/area/station/science)
 "oD" = (
 /obj/structure/sign/warning/vacuum/external,
 /turf/closed/wall/mineral/uranium/safe{
 	desc = "A wall plated with emerald.";
 	name = "emerald wall"
 	},
-/area/ship/cargo)
+/area/station/cargo)
 "oE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "pf" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
@@ -1050,14 +1050,14 @@
 	dir = 8
 	},
 /turf/open/floor/bronze,
-/area/ship/cargo)
+/area/station/cargo)
 "pj" = (
 /obj/structure/chair/bronze{
 	dir = 1
 	},
 /obj/structure/cable,
 /turf/open/floor/carpet/stellar,
-/area/ship/bridge)
+/area/station/bridge)
 "pn" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -1071,21 +1071,21 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/ship/hallway/aft)
+/area/station/hallway/aft)
 "pR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/ship/hallway/aft)
+/area/station/hallway/aft)
 "qJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/ship/hallway/central)
+/area/station/hallway/central)
 "qN" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile{
@@ -1098,19 +1098,19 @@
 	port_direction = 8
 	},
 /turf/open/floor/plating,
-/area/ship/science)
+/area/station/science)
 "qT" = (
 /obj/structure/sign/poster/official/no_erp,
 /turf/closed/wall/mineral/uranium/safe{
 	desc = "A wall plated with emerald.";
 	name = "emerald wall"
 	},
-/area/ship/crew/toilet)
+/area/station/crew/toilet)
 "qU" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/carpet/orange,
-/area/ship/crew/library)
+/area/station/crew/library)
 "qY" = (
 /obj/item/reagent_containers/food/snacks/pizzaslice/dank{
 	pixel_x = -1;
@@ -1118,12 +1118,12 @@
 	},
 /obj/structure/table/wood/fancy/purple,
 /turf/open/floor/carpet/purple,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "rg" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
 /obj/item/reagent_containers/condiment/enzyme,
 /turf/open/floor/wood,
-/area/ship/crew/canteen/kitchen)
+/area/station/crew/canteen/kitchen)
 "rh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small,
@@ -1138,7 +1138,7 @@
 	name = "The Grimoire of Rock Revelation"
 	},
 /turf/open/floor/wood,
-/area/ship/crew/library)
+/area/station/crew/library)
 "rp" = (
 /obj/machinery/computer/libraryconsole/bookmanagement,
 /obj/structure/table/wood/fancy/royalblack,
@@ -1146,7 +1146,7 @@
 	pixel_y = -31
 	},
 /turf/open/floor/carpet/orange,
-/area/ship/crew/library)
+/area/station/crew/library)
 "rH" = (
 /obj/structure/spider/stickyweb,
 /obj/item/relic,
@@ -1155,31 +1155,31 @@
 	dir = 6
 	},
 /turf/open/floor/engine/cult,
-/area/ship/science)
+/area/station/science)
 "sJ" = (
 /obj/structure/sign/poster/contraband/power,
 /turf/closed/wall/mineral/uranium/safe{
 	desc = "A wall plated with emerald.";
 	name = "emerald wall"
 	},
-/area/ship/science)
+/area/station/science)
 "sX" = (
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/carpet/royalblack,
-/area/ship/hallway/starboard)
+/area/station/hallway/starboard)
 "tv" = (
 /turf/closed/wall/mineral/uranium/safe{
 	desc = "A wall plated with emerald.";
 	name = "emerald wall"
 	},
-/area/ship/crew/dorm)
+/area/station/crew/dorm)
 "ud" = (
 /obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6,
 /turf/closed/wall/mineral/uranium/safe{
 	desc = "A wall plated with emerald.";
 	name = "emerald wall"
 	},
-/area/ship/crew/toilet)
+/area/station/crew/toilet)
 "uh" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/blood/old,
@@ -1188,7 +1188,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine/cult,
-/area/ship/science)
+/area/station/science)
 "ui" = (
 /obj/machinery/light{
 	dir = 1
@@ -1196,57 +1196,57 @@
 /obj/machinery/jukebox,
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "wj" = (
 /turf/closed/wall/mineral/uranium/safe{
 	desc = "A wall plated with emerald.";
 	name = "emerald wall"
 	},
-/area/ship/storage)
+/area/station/storage)
 "wq" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
 /turf/open/floor/carpet/stellar,
-/area/ship/bridge)
+/area/station/bridge)
 "wE" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/trash/candle,
 /turf/open/floor/engine/cult,
-/area/ship/science)
+/area/station/science)
 "wT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "wX" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
 /turf/open/floor/carpet/royalblack,
-/area/ship/hallway/starboard)
+/area/station/hallway/starboard)
 "xc" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/wood,
-/area/ship/crew/canteen/kitchen)
+/area/station/crew/canteen/kitchen)
 "zn" = (
 /obj/machinery/processor,
 /turf/open/floor/wood,
-/area/ship/crew/canteen/kitchen)
+/area/station/crew/canteen/kitchen)
 "zA" = (
 /obj/structure/sign/plaques/kiddie/library,
 /turf/closed/wall/mineral/uranium/safe{
 	desc = "A wall plated with emerald.";
 	name = "emerald wall"
 	},
-/area/ship/hallway/central)
+/area/station/hallway/central)
 "zN" = (
 /obj/machinery/light,
 /obj/machinery/computer/arcade,
 /turf/open/floor/wood,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "zT" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/trash/candle,
@@ -1255,34 +1255,34 @@
 	dir = 1
 	},
 /turf/open/floor/engine/cult,
-/area/ship/science)
+/area/station/science)
 "An" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/ship/crew/library)
+/area/station/crew/library)
 "Ar" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
 /turf/open/floor/bronze,
-/area/ship/cargo)
+/area/station/cargo)
 "Cc" = (
 /obj/item/reagent_containers/cup/glass/shaker{
 	pixel_x = -1
 	},
 /obj/structure/table/wood/fancy/purple,
 /turf/open/floor/carpet/purple,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "Cq" = (
 /obj/structure/sign/poster/official/fruit_bowl,
 /turf/closed/wall/mineral/uranium/safe{
 	desc = "A wall plated with emerald.";
 	name = "emerald wall"
 	},
-/area/ship/crew/library)
+/area/station/crew/library)
 "Cy" = (
 /obj/structure/closet/cabinet,
 /obj/item/clothing/head/wizard/yellow,
@@ -1298,26 +1298,26 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/carpet/royalblue,
-/area/ship/crew/dorm)
+/area/station/crew/dorm)
 "CF" = (
 /turf/closed/wall/mineral/uranium/safe{
 	desc = "A wall plated with emerald.";
 	name = "emerald wall"
 	},
-/area/ship/crew/toilet)
+/area/station/crew/toilet)
 "CH" = (
 /obj/structure/sign/poster/random,
 /turf/closed/wall/mineral/uranium/safe{
 	desc = "A wall plated with emerald.";
 	name = "emerald wall"
 	},
-/area/ship/crew/canteen/kitchen)
+/area/station/crew/canteen/kitchen)
 "Db" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/power/terminal,
 /turf/open/floor/plating,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "Dg" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -1327,7 +1327,7 @@
 	dir = 1
 	},
 /turf/open/floor/bronze,
-/area/ship/cargo)
+/area/station/cargo)
 "DP" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/spider/stickyweb,
@@ -1339,13 +1339,13 @@
 	dir = 1
 	},
 /turf/open/floor/engine/cult,
-/area/ship/science)
+/area/station/science)
 "Ee" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/ship/hallway/central)
+/area/station/hallway/central)
 "Ek" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -1355,7 +1355,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/royalblack,
-/area/ship/hallway/starboard)
+/area/station/hallway/starboard)
 "El" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/north,
@@ -1366,7 +1366,7 @@
 /obj/item/kirbyplants/random,
 /obj/item/book/granter/action/spell/smoke/lesser,
 /turf/open/floor/wood,
-/area/ship/crew/library)
+/area/station/crew/library)
 "Es" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -1377,11 +1377,11 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/ship/hallway/aft)
+/area/station/hallway/aft)
 "Eu" = (
 /obj/structure/table/wood/fancy/purple,
 /turf/open/floor/carpet/purple,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "Ez" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 6
@@ -1390,19 +1390,19 @@
 	dir = 5
 	},
 /turf/open/floor/wood,
-/area/ship/crew/library)
+/area/station/crew/library)
 "Fu" = (
 /obj/item/statuebust{
 	pixel_y = 12
 	},
 /obj/structure/table/wood/fancy/royalblack,
 /turf/open/floor/carpet/orange,
-/area/ship/crew/library)
+/area/station/crew/library)
 "FQ" = (
 /obj/structure/chair/stool/bar/directional/west,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/wood,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "Ge" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -1412,17 +1412,17 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/ship/hallway/aft)
+/area/station/hallway/aft)
 "Gf" = (
 /obj/effect/decal/cleanable/food/egg_smudge,
 /turf/open/floor/wood,
-/area/ship/crew/canteen/kitchen)
+/area/station/crew/canteen/kitchen)
 "Gh" = (
 /turf/closed/wall/mineral/uranium/safe{
 	desc = "A wall plated with emerald.";
 	name = "emerald wall"
 	},
-/area/ship/crew/canteen/kitchen)
+/area/station/crew/canteen/kitchen)
 "GA" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -1436,7 +1436,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/ship/hallway/aft)
+/area/station/hallway/aft)
 "GL" = (
 /obj/machinery/light{
 	dir = 1
@@ -1444,14 +1444,14 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/trash/candy,
 /turf/open/floor/wood,
-/area/ship/hallway/aft)
+/area/station/hallway/aft)
 "GM" = (
 /turf/open/floor/carpet/orange,
-/area/ship/crew/library)
+/area/station/crew/library)
 "HS" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/purple,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "HV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
@@ -1465,7 +1465,7 @@
 	},
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "Ia" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -1475,13 +1475,13 @@
 	dir = 10
 	},
 /turf/open/floor/plating,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "Ix" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/wood,
-/area/ship/hallway/aft)
+/area/station/hallway/aft)
 "IJ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/spider/stickyweb,
@@ -1498,13 +1498,13 @@
 	dir = 8
 	},
 /turf/open/floor/engine/cult,
-/area/ship/science)
+/area/station/science)
 "IN" = (
 /turf/closed/wall/mineral/uranium/safe{
 	desc = "A wall plated with emerald.";
 	name = "emerald wall"
 	},
-/area/ship/hallway/aft)
+/area/station/hallway/aft)
 "Jn" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -1514,7 +1514,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/royalblue,
-/area/ship/hallway/aft)
+/area/station/hallway/aft)
 "Jo" = (
 /obj/item/trash/can,
 /obj/effect/decal/cleanable/dirt,
@@ -1526,20 +1526,20 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/ship/hallway/central)
+/area/station/hallway/central)
 "JB" = (
 /obj/structure/sign/poster/random,
 /turf/closed/wall/mineral/uranium/safe{
 	desc = "A wall plated with emerald.";
 	name = "emerald wall"
 	},
-/area/ship/crew/library)
+/area/station/crew/library)
 "JP" = (
 /obj/item/storage/bag/tray,
 /obj/item/reagent_containers/food/snacks/burger/spell,
 /obj/structure/table/wood/fancy/cyan,
 /turf/open/floor/carpet/royalblue,
-/area/ship/crew/dorm)
+/area/station/crew/dorm)
 "JS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/cigbutt,
@@ -1548,11 +1548,11 @@
 	pixel_y = -3
 	},
 /turf/open/floor/wood,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "Ke" = (
 /obj/item/trash/popcorn,
 /turf/open/floor/carpet/orange,
-/area/ship/crew/library)
+/area/station/crew/library)
 "Ki" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
@@ -1563,13 +1563,13 @@
 	dir = 6
 	},
 /turf/open/floor/engine/cult,
-/area/ship/science)
+/area/station/science)
 "Kj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/east,
 /obj/structure/sink/directional/south,
 /turf/open/floor/wood,
-/area/ship/crew/canteen/kitchen)
+/area/station/crew/canteen/kitchen)
 "Kz" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile{
@@ -1577,15 +1577,15 @@
 	},
 /obj/structure/curtain/cloth/fancy,
 /turf/open/floor/plating,
-/area/ship/hallway/aft)
+/area/station/hallway/aft)
 "KS" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
-/area/ship/hallway/aft)
+/area/station/hallway/aft)
 "KW" = (
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/wood,
-/area/ship/hallway/aft)
+/area/station/hallway/aft)
 "Ll" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -1595,24 +1595,24 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "LZ" = (
 /obj/structure/sign/poster/contraband/random,
 /turf/closed/wall/mineral/uranium/safe{
 	desc = "A wall plated with emerald.";
 	name = "emerald wall"
 	},
-/area/ship/crew/dorm)
+/area/station/crew/dorm)
 "Ma" = (
 /obj/machinery/computer/autopilot,
 /turf/open/floor/carpet/stellar,
-/area/ship/bridge)
+/area/station/bridge)
 "Mb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
 /turf/open/floor/carpet/stellar,
-/area/ship/bridge)
+/area/station/bridge)
 "Me" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/cigbutt{
@@ -1623,7 +1623,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "Mf" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -1633,7 +1633,7 @@
 	dir = 10
 	},
 /turf/open/floor/carpet/royalblue,
-/area/ship/hallway/aft)
+/area/station/hallway/aft)
 "Mn" = (
 /obj/structure/table/wood/fancy/royalblue,
 /obj/item/areaeditor/shuttle,
@@ -1647,7 +1647,7 @@
 	pixel_y = 11
 	},
 /turf/open/floor/carpet/stellar,
-/area/ship/bridge)
+/area/station/bridge)
 "Mq" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -1657,14 +1657,14 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "MA" = (
 /obj/machinery/chem_dispenser/drinks/beer{
 	dir = 4
 	},
 /obj/structure/table/wood/fancy/purple,
 /turf/open/floor/carpet/purple,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "MB" = (
 /obj/effect/turf_decal/industrial/outline/yellow,
 /obj/structure/cable,
@@ -1675,19 +1675,19 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/ship/storage)
+/area/station/storage)
 "MX" = (
 /obj/structure/sign/poster/random,
 /turf/closed/wall/mineral/uranium/safe{
 	desc = "A wall plated with emerald.";
 	name = "emerald wall"
 	},
-/area/ship/hallway/aft)
+/area/station/hallway/aft)
 "Nm" = (
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/wood,
-/area/ship/crew/canteen/kitchen)
+/area/station/crew/canteen/kitchen)
 "No" = (
 /turf/template_noop,
 /area/space)
@@ -1700,7 +1700,7 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/green,
-/area/ship/hallway/central)
+/area/station/hallway/central)
 "Ny" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -1710,14 +1710,14 @@
 	dir = 5
 	},
 /turf/open/floor/bronze,
-/area/ship/cargo)
+/area/station/cargo)
 "NF" = (
 /obj/machinery/chem_dispenser/drinks{
 	dir = 4
 	},
 /obj/structure/table/wood/fancy/purple,
 /turf/open/floor/carpet/purple,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "NI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -1728,17 +1728,17 @@
 	dir = 5
 	},
 /turf/open/floor/wood,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "NN" = (
 /obj/structure/bookcase/random,
 /turf/open/floor/carpet/orange,
-/area/ship/crew/library)
+/area/station/crew/library)
 "Ot" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/bookcase/random/religion,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/engine/cult,
-/area/ship/science)
+/area/station/science)
 "OC" = (
 /obj/machinery/light{
 	dir = 8
@@ -1759,12 +1759,12 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/carpet/stellar,
-/area/ship/bridge)
+/area/station/bridge)
 "OQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/libraryscanner,
 /turf/open/floor/wood,
-/area/ship/crew/library)
+/area/station/crew/library)
 "Pc" = (
 /obj/effect/turf_decal/industrial/warning,
 /obj/structure/closet/crate,
@@ -1775,7 +1775,7 @@
 /obj/item/radio,
 /obj/structure/window/reinforced/survival_pod,
 /turf/open/floor/iron,
-/area/ship/storage)
+/area/station/storage)
 "PT" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile{
@@ -1783,17 +1783,17 @@
 	},
 /obj/structure/curtain/cloth/fancy,
 /turf/open/floor/plating,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "Ql" = (
 /obj/machinery/bookbinder,
 /turf/open/floor/carpet/orange,
-/area/ship/crew/library)
+/area/station/crew/library)
 "QD" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/ship/external)
+/area/station/external)
 "RD" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile{
@@ -1801,7 +1801,7 @@
 	},
 /obj/structure/curtain/cloth/fancy,
 /turf/open/floor/plating,
-/area/ship/crew/canteen/kitchen)
+/area/station/crew/canteen/kitchen)
 "RE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 4
@@ -1810,7 +1810,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/ship/crew/library)
+/area/station/crew/library)
 "Sc" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -1825,13 +1825,13 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/ship/crew/canteen/kitchen)
+/area/station/crew/canteen/kitchen)
 "So" = (
 /turf/closed/wall/mineral/uranium/safe{
 	desc = "A wall plated with emerald.";
 	name = "emerald wall"
 	},
-/area/ship/science)
+/area/station/science)
 "Sq" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
@@ -1839,11 +1839,11 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/ship/hallway/aft)
+/area/station/hallway/aft)
 "St" = (
 /obj/structure/chair/comfy/black,
 /turf/open/floor/carpet/orange,
-/area/ship/crew/library)
+/area/station/crew/library)
 "SC" = (
 /obj/machinery/airalarm/directional/north,
 /obj/structure/cable,
@@ -1855,7 +1855,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "Tc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/vomit/old,
@@ -1867,41 +1867,41 @@
 	dir = 5
 	},
 /turf/open/floor/iron/white,
-/area/ship/crew/toilet)
+/area/station/crew/toilet)
 "Tn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/trash/semki,
 /turf/open/floor/wood,
-/area/ship/hallway/aft)
+/area/station/hallway/aft)
 "Tt" = (
 /turf/closed/wall/mineral/uranium/safe{
 	desc = "A wall plated with emerald.";
 	name = "emerald wall"
 	},
-/area/ship/bridge)
+/area/station/bridge)
 "TQ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/ship/hallway/aft)
+/area/station/hallway/aft)
 "TY" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/engine/cult,
-/area/ship/science)
+/area/station/science)
 "Uu" = (
 /obj/structure/sign/poster/official/ue_no,
 /turf/closed/wall/mineral/uranium/safe{
 	desc = "A wall plated with emerald.";
 	name = "emerald wall"
 	},
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "Va" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
 /turf/open/floor/engine/cult,
-/area/ship/science)
+/area/station/science)
 "Vc" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
@@ -1911,10 +1911,10 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "Vy" = (
 /turf/open/floor/wood,
-/area/ship/hallway/aft)
+/area/station/hallway/aft)
 "VC" = (
 /obj/structure/closet/cabinet,
 /obj/item/gun/ballistic/shotgun/doublebarrel{
@@ -1932,7 +1932,7 @@
 /obj/item/etherealballdeployer,
 /obj/item/storage/belt/bandolier,
 /turf/open/floor/carpet/purple,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "VP" = (
 /obj/item/storage/pill_bottle/dice{
 	icon_state = "magicdicebag";
@@ -1943,7 +1943,7 @@
 	pixel_x = -8
 	},
 /turf/open/floor/carpet/royalblack,
-/area/ship/hallway/starboard)
+/area/station/hallway/starboard)
 "VR" = (
 /obj/machinery/suit_storage_unit/open,
 /obj/item/tank/internals/emergency_oxygen/engi,
@@ -1951,14 +1951,14 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/floor/bronze,
-/area/ship/cargo)
+/area/station/cargo)
 "We" = (
 /obj/structure/sign/poster/contraband/random,
 /turf/closed/wall/mineral/uranium/safe{
 	desc = "A wall plated with emerald.";
 	name = "emerald wall"
 	},
-/area/ship/hallway/aft)
+/area/station/hallway/aft)
 "Wp" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/item/cigbutt/cigarbutt,
@@ -1967,21 +1967,21 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/royalblack,
-/area/ship/hallway/starboard)
+/area/station/hallway/starboard)
 "WE" = (
 /obj/item/bedsheet/wiz,
 /obj/structure/bed,
 /obj/structure/curtain/cloth/fancy,
 /obj/item/toy/plush/plushvar,
 /turf/open/floor/carpet/royalblue,
-/area/ship/crew/dorm)
+/area/station/crew/dorm)
 "WV" = (
 /obj/machinery/door/window/right/directional/south{
 	dir = 8
 	},
 /obj/structure/cable,
 /turf/open/floor/carpet/purple,
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "Xm" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -1991,7 +1991,7 @@
 	dir = 8
 	},
 /turf/open/floor/bronze,
-/area/ship/cargo)
+/area/station/cargo)
 "Xz" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 4
@@ -2000,12 +2000,12 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/ship/hallway/central)
+/area/station/hallway/central)
 "XG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood,
-/area/ship/hallway/aft)
+/area/station/hallway/aft)
 "XS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -2016,24 +2016,24 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/royalblue,
-/area/ship/hallway/aft)
+/area/station/hallway/aft)
 "XX" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/vending/classicbeats,
 /turf/open/floor/wood,
-/area/ship/hallway/aft)
+/area/station/hallway/aft)
 "Yn" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet/green,
-/area/ship/hallway/central)
+/area/station/hallway/central)
 "Yx" = (
 /turf/closed/wall/mineral/uranium/safe{
 	desc = "A wall plated with emerald.";
 	name = "emerald wall"
 	},
-/area/ship/crew/canteen)
+/area/station/crew/canteen)
 "YD" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -2043,7 +2043,7 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/royalblue,
-/area/ship/crew/dorm)
+/area/station/crew/dorm)
 "YF" = (
 /obj/machinery/holopad/emergency/command,
 /obj/structure/cable,
@@ -2054,13 +2054,13 @@
 	dir = 6
 	},
 /turf/open/floor/carpet/stellar,
-/area/ship/bridge)
+/area/station/bridge)
 "Zj" = (
 /obj/machinery/suit_storage_unit/open,
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/clothing/suit/space/hardsuit/wizard,
 /turf/open/floor/bronze,
-/area/ship/cargo)
+/area/station/cargo)
 "ZW" = (
 /obj/effect/turf_decal/industrial/outline/yellow,
 /obj/structure/closet/crate{
@@ -2078,7 +2078,7 @@
 	pixel_x = -9
 	},
 /turf/open/floor/iron,
-/area/ship/storage)
+/area/station/storage)
 
 (1,1,1) = {"
 No

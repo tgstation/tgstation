@@ -4,7 +4,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/ship/engineering)
+/area/station/engineering)
 "aq" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
@@ -12,11 +12,11 @@
 	},
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/mineral/titanium,
-/area/ship/crew)
+/area/station/crew)
 "as" = (
 /obj/structure/closet/secure_closet/engineering_electrical,
 /turf/open/floor/mineral/titanium/yellow,
-/area/ship/engineering)
+/area/station/engineering)
 "at" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
@@ -27,10 +27,10 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium,
-/area/ship/crew)
+/area/station/crew)
 "bd" = (
 /turf/open/floor/mineral/titanium/blue,
-/area/ship/medical)
+/area/station/medical)
 "bg" = (
 /obj/structure/cable,
 /obj/structure/closet/crate/engineering/electrical,
@@ -41,7 +41,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/mineral/titanium/yellow,
-/area/ship/engineering)
+/area/station/engineering)
 "cn" = (
 /obj/structure/chair/comfy/brown{
 	dir = 4
@@ -53,10 +53,10 @@
 	pixel_y = 28
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/ship/bridge)
+/area/station/bridge)
 "cF" = (
 /turf/open/floor/mineral/titanium/yellow,
-/area/ship/engineering)
+/area/station/engineering)
 "cR" = (
 /obj/machinery/light{
 	dir = 4
@@ -64,14 +64,14 @@
 /obj/machinery/power/smes/engineering,
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/yellow,
-/area/ship/engineering)
+/area/station/engineering)
 "ds" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium,
-/area/ship/crew)
+/area/station/crew)
 "dI" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
@@ -81,14 +81,14 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
-/area/ship/crew)
+/area/station/crew)
 "eC" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
-/area/ship/crew)
+/area/station/crew)
 "eJ" = (
 /obj/structure/chair/comfy/brown{
 	dir = 4
@@ -98,7 +98,7 @@
 	},
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/mineral/titanium/yellow,
-/area/ship/bridge)
+/area/station/bridge)
 "fr" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced{
@@ -108,22 +108,22 @@
 /obj/item/storage/firstaid/regular,
 /obj/item/storage/firstaid/regular,
 /turf/open/floor/mineral/titanium/yellow,
-/area/ship/bridge)
+/area/station/bridge)
 "fH" = (
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/ship/crew)
+/area/station/crew)
 "fU" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
-/area/ship/engineering)
+/area/station/engineering)
 "fZ" = (
 /obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 4;
 	piping_layer = 2
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/ship/engineering)
+/area/station/engineering)
 "hg" = (
 /obj/machinery/atmospherics/components/unary/shuttle/heater{
 	dir = 4
@@ -134,11 +134,11 @@
 	},
 /obj/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/ship/engineering)
+/area/station/engineering)
 "hh" = (
 /obj/machinery/holopad,
 /turf/open/floor/mineral/titanium/purple,
-/area/ship/crew)
+/area/station/crew)
 "iy" = (
 /obj/machinery/light{
 	dir = 4
@@ -146,20 +146,20 @@
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/machinery/door/firedoor/border_only,
 /turf/open/floor/mineral/titanium/white,
-/area/ship/crew)
+/area/station/crew)
 "iC" = (
 /obj/machinery/power/shuttle/engine/fueled/plasma{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/ship/medical)
+/area/station/medical)
 "jL" = (
 /obj/machinery/light,
 /obj/machinery/shower/directional/west,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/mineral/titanium/blue,
-/area/ship/medical)
+/area/station/medical)
 "jV" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -170,20 +170,20 @@
 /obj/structure/table/reinforced,
 /obj/item/radio,
 /turf/open/floor/mineral/titanium/yellow,
-/area/ship/bridge)
+/area/station/bridge)
 "ka" = (
 /obj/machinery/firealarm{
 	pixel_y = -26
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/ship/medical)
+/area/station/medical)
 "kd" = (
 /obj/machinery/power/terminal{
 	dir = 8
 	},
 /obj/structure/cable,
 /turf/closed/wall/mineral/titanium,
-/area/ship/engineering)
+/area/station/engineering)
 "ku" = (
 /obj/structure/sign/poster/retro/nanotrasen_logo_70s,
 /obj/machinery/door/firedoor/border_only{
@@ -191,7 +191,7 @@
 	},
 /obj/machinery/door/firedoor/border_only,
 /turf/closed/wall/mineral/titanium,
-/area/ship/crew)
+/area/station/crew)
 "lI" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 9
@@ -200,17 +200,17 @@
 	dir = 10
 	},
 /turf/open/floor/mineral/titanium/purple,
-/area/ship/crew)
+/area/station/crew)
 "lK" = (
 /obj/machinery/power/shuttle/engine/fueled/plasma{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/ship/engineering)
+/area/station/engineering)
 "mj" = (
 /obj/structure/table/optable,
 /turf/open/floor/mineral/titanium/blue,
-/area/ship/medical)
+/area/station/medical)
 "mB" = (
 /obj/machinery/door/poddoor{
 	id = "goon"
@@ -218,7 +218,7 @@
 /obj/structure/fans/tiny,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/titanium/white,
-/area/ship/crew)
+/area/station/crew)
 "oa" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
@@ -228,23 +228,23 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/ship/medical)
+/area/station/medical)
 "or" = (
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/yellow,
-/area/ship/engineering)
+/area/station/engineering)
 "pi" = (
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/ship/engineering)
+/area/station/engineering)
 "po" = (
 /obj/structure/window/reinforced/survival_pod{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/purple,
-/area/ship/crew)
+/area/station/crew)
 "pD" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/machinery/firealarm{
@@ -252,7 +252,7 @@
 	pixel_x = 26
 	},
 /turf/open/floor/mineral/titanium/white,
-/area/ship/crew)
+/area/station/crew)
 "pG" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -261,7 +261,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/ship/bridge)
+/area/station/bridge)
 "qj" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Cockpit"
@@ -280,7 +280,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/ship/bridge)
+/area/station/bridge)
 "qL" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/sheet/metal/fifty,
@@ -294,7 +294,7 @@
 /obj/item/t_scanner/adv_mining_scanner/lesser,
 /obj/item/storage/bag/ore,
 /turf/open/floor/mineral/titanium/white,
-/area/ship/crew)
+/area/station/crew)
 "ra" = (
 /obj/structure/fans/tiny,
 /obj/machinery/button/door{
@@ -305,7 +305,7 @@
 	id = "goon"
 	},
 /turf/open/floor/mineral/titanium/white,
-/area/ship/crew)
+/area/station/crew)
 "ro" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 4
@@ -314,14 +314,14 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/ship/engineering)
+/area/station/engineering)
 "rX" = (
 /obj/machinery/autolathe,
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/white,
-/area/ship/crew)
+/area/station/crew)
 "sd" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 10
@@ -330,13 +330,13 @@
 	dir = 10
 	},
 /turf/open/floor/mineral/titanium,
-/area/ship/crew)
+/area/station/crew)
 "tW" = (
 /obj/structure/table,
 /obj/machinery/airalarm/directional/north,
 /obj/item/storage/firstaid/regular,
 /turf/open/floor/mineral/titanium/blue,
-/area/ship/medical)
+/area/station/medical)
 "uV" = (
 /obj/structure/window/reinforced/survival_pod{
 	dir = 8
@@ -350,10 +350,10 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/purple,
-/area/ship/crew)
+/area/station/crew)
 "vF" = (
 /turf/closed/wall/mineral/titanium,
-/area/ship/bridge)
+/area/station/bridge)
 "vW" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
@@ -363,7 +363,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/ship/engineering)
+/area/station/engineering)
 "vX" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Engineering"
@@ -382,17 +382,17 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/ship/engineering)
+/area/station/engineering)
 "wa" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/titanium,
-/area/ship/crew)
+/area/station/crew)
 "wf" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/mineral/titanium,
-/area/ship/crew)
+/area/station/crew)
 "wE" = (
 /obj/structure/window/reinforced/survival_pod{
 	dir = 1
@@ -405,7 +405,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /obj/item/soap/nanotrasen,
 /turf/open/floor/mineral/titanium/purple,
-/area/ship/crew)
+/area/station/crew)
 "xI" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -417,19 +417,19 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ship/engineering)
+/area/station/engineering)
 "ya" = (
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall/mineral/titanium,
-/area/ship/medical)
+/area/station/medical)
 "yi" = (
 /obj/machinery/vending/wallmed,
 /turf/closed/wall/mineral/titanium,
-/area/ship/engineering)
+/area/station/engineering)
 "zf" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/titanium/white,
-/area/ship/crew)
+/area/station/crew)
 "An" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
@@ -439,7 +439,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
-/area/ship/crew)
+/area/station/crew)
 "Ao" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/emergency,
@@ -447,25 +447,25 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/ship/bridge)
+/area/station/bridge)
 "As" = (
 /obj/machinery/computer/operating{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/ship/medical)
+/area/station/medical)
 "AP" = (
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall/mineral/titanium,
-/area/ship/crew)
+/area/station/crew)
 "Be" = (
 /obj/machinery/sleeper,
 /turf/open/floor/mineral/titanium/blue,
-/area/ship/medical)
+/area/station/medical)
 "Bg" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
-/area/ship/medical)
+/area/station/medical)
 "Bw" = (
 /obj/structure/table,
 /obj/machinery/door/window,
@@ -494,7 +494,7 @@
 	dir = 10
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/ship/medical)
+/area/station/medical)
 "BI" = (
 /obj/structure/bed/pod,
 /obj/structure/window/reinforced/survival_pod{
@@ -508,14 +508,14 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/purple,
-/area/ship/crew)
+/area/station/crew)
 "BV" = (
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	dir = 8
 	},
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/mineral/titanium/yellow,
-/area/ship/engineering)
+/area/station/engineering)
 "CW" = (
 /obj/structure/chair/comfy/brown{
 	dir = 4
@@ -525,17 +525,17 @@
 	pixel_y = -26
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/ship/bridge)
+/area/station/bridge)
 "Du" = (
 /obj/structure/closet/secure_closet/medical3,
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/ship/medical)
+/area/station/medical)
 "Ea" = (
 /turf/open/floor/mineral/titanium,
-/area/ship/crew)
+/area/station/crew)
 "Eg" = (
 /obj/machinery/light{
 	dir = 4
@@ -548,35 +548,35 @@
 	pixel_x = 32
 	},
 /turf/open/floor/mineral/titanium/purple,
-/area/ship/crew)
+/area/station/crew)
 "Ej" = (
 /obj/structure/ore_box,
 /turf/open/floor/mineral/titanium/white,
-/area/ship/crew)
+/area/station/crew)
 "EJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /obj/machinery/door/firedoor/border_only,
 /turf/open/floor/mineral/titanium/white,
-/area/ship/crew)
+/area/station/crew)
 "ET" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
-/area/ship/crew)
+/area/station/crew)
 "Fl" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/titanium,
-/area/ship/crew)
+/area/station/crew)
 "Ft" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
-/area/ship/bridge)
+/area/station/bridge)
 "HK" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on/layer4,
 /turf/open/floor/plating,
-/area/ship/crew)
+/area/station/crew)
 "Ia" = (
 /obj/structure/chair/comfy/brown{
 	dir = 4
@@ -585,14 +585,14 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/mineral/titanium/yellow,
-/area/ship/bridge)
+/area/station/bridge)
 "Ix" = (
 /obj/machinery/atmospherics/pipe/simple/purple/hidden,
 /turf/closed/wall/mineral/titanium,
-/area/ship/engineering)
+/area/station/engineering)
 "IN" = (
 /turf/closed/wall/mineral/titanium,
-/area/ship/crew)
+/area/station/crew)
 "IZ" = (
 /turf/template_noop,
 /area/template_noop)
@@ -604,21 +604,21 @@
 	launch_status = 0
 	},
 /turf/open/floor/plating,
-/area/ship/bridge)
+/area/station/bridge)
 "Jy" = (
 /obj/machinery/cryopod,
 /turf/open/floor/mineral/titanium/purple,
-/area/ship/crew)
+/area/station/crew)
 "JH" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced,
 /obj/item/areaeditor/shuttle,
 /turf/open/floor/mineral/titanium/yellow,
-/area/ship/bridge)
+/area/station/bridge)
 "JP" = (
 /obj/machinery/stasis,
 /turf/open/floor/mineral/titanium/blue,
-/area/ship/medical)
+/area/station/medical)
 "JX" = (
 /obj/machinery/atmospherics/components/unary/shuttle/heater{
 	dir = 4
@@ -631,7 +631,7 @@
 	pixel_y = 2
 	},
 /turf/open/floor/plating,
-/area/ship/medical)
+/area/station/medical)
 "JZ" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -644,7 +644,7 @@
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/atmospherics/pipe/simple/purple/visible,
 /turf/open/floor/mineral/titanium/yellow,
-/area/ship/engineering)
+/area/station/engineering)
 "Kx" = (
 /obj/machinery/door/window/survival_pod{
 	dir = 8
@@ -659,14 +659,14 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/purple,
-/area/ship/crew)
+/area/station/crew)
 "Lr" = (
 /obj/machinery/power/port_gen/pacman,
 /obj/structure/cable,
 /obj/item/stack/sheet/mineral/plasma/twenty,
 /obj/effect/turf_decal/box,
 /turf/open/floor/mineral/titanium/yellow,
-/area/ship/engineering)
+/area/station/engineering)
 "Mo" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 9
@@ -676,7 +676,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/yellow,
-/area/ship/bridge)
+/area/station/bridge)
 "Ng" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
@@ -684,22 +684,22 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/purple/visible,
 /turf/open/floor/mineral/titanium/yellow,
-/area/ship/engineering)
+/area/station/engineering)
 "ON" = (
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall/mineral/titanium,
-/area/ship/engineering)
+/area/station/engineering)
 "OQ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /obj/machinery/atmospherics/pipe/simple/purple/hidden,
 /turf/open/floor/mineral/titanium/blue,
-/area/ship/medical)
+/area/station/medical)
 "QI" = (
 /obj/structure/cable,
 /obj/structure/tank_dispenser/oxygen,
 /turf/open/floor/mineral/titanium/yellow,
-/area/ship/engineering)
+/area/station/engineering)
 "Rr" = (
 /obj/structure/chair/comfy/brown{
 	dir = 4
@@ -709,14 +709,14 @@
 	name = "The Captain of This God Damn Ship"
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/ship/bridge)
+/area/station/bridge)
 "Rw" = (
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = -24
 	},
 /turf/open/floor/mineral/titanium,
-/area/ship/crew)
+/area/station/crew)
 "RI" = (
 /obj/structure/bed/pod,
 /obj/structure/window/reinforced/survival_pod{
@@ -727,36 +727,36 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/purple,
-/area/ship/crew)
+/area/station/crew)
 "RZ" = (
 /obj/machinery/power/shuttle/engine/electric{
 	dir = 4
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ship/medical)
+/area/station/medical)
 "SH" = (
 /turf/closed/wall/mineral/titanium,
-/area/ship/medical)
+/area/station/medical)
 "SS" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/titanium/white,
-/area/ship/crew)
+/area/station/crew)
 "TR" = (
 /turf/closed/wall/mineral/titanium,
-/area/ship/engineering)
+/area/station/engineering)
 "TW" = (
 /turf/open/floor/mineral/titanium/white,
-/area/ship/crew)
+/area/station/crew)
 "Uo" = (
 /obj/machinery/vending/wallmed,
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/ship/medical)
+/area/station/medical)
 "UT" = (
 /obj/machinery/vending/wallmed,
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/ship/engineering)
+/area/station/engineering)
 "VQ" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
 	dir = 8
@@ -768,14 +768,14 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/ship/engineering)
+/area/station/engineering)
 "Wh" = (
 /obj/machinery/power/terminal{
 	dir = 8
 	},
 /obj/structure/cable,
 /turf/closed/wall/mineral/titanium,
-/area/ship/medical)
+/area/station/medical)
 "Wv" = (
 /obj/structure/window/reinforced/survival_pod{
 	dir = 1
@@ -786,12 +786,12 @@
 /obj/structure/table,
 /obj/machinery/microwave,
 /turf/open/floor/mineral/titanium/purple,
-/area/ship/crew)
+/area/station/crew)
 "WD" = (
 /obj/structure/table,
 /obj/item/storage/backpack/duffelbag/med/surgery,
 /turf/open/floor/mineral/titanium/blue,
-/area/ship/medical)
+/area/station/medical)
 "Xh" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
@@ -802,7 +802,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/purple/hidden,
 /turf/open/floor/mineral/titanium/blue,
-/area/ship/medical)
+/area/station/medical)
 "Xt" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -816,7 +816,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ship/medical)
+/area/station/medical)
 "Xx" = (
 /obj/machinery/power/port_gen/pacman,
 /obj/machinery/power/terminal{
@@ -825,20 +825,20 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/box,
 /turf/open/floor/mineral/titanium/yellow,
-/area/ship/engineering)
+/area/station/engineering)
 "YC" = (
 /obj/machinery/power/shuttle/engine/electric{
 	dir = 4
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ship/engineering)
+/area/station/engineering)
 "YI" = (
 /obj/machinery/atmospherics/components/binary/pump/layer2{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/ship/engineering)
+/area/station/engineering)
 "Zr" = (
 /obj/structure/cable,
 /obj/structure/table,
@@ -854,7 +854,7 @@
 	dir = 9
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/ship/engineering)
+/area/station/engineering)
 "Zs" = (
 /obj/machinery/light/small,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
@@ -862,7 +862,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/purple/hidden,
 /turf/open/floor/mineral/titanium/blue,
-/area/ship/medical)
+/area/station/medical)
 "ZH" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Infirmary"
@@ -881,12 +881,12 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/ship/medical)
+/area/station/medical)
 "ZO" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/titanium,
-/area/ship/crew)
+/area/station/crew)
 "ZQ" = (
 /obj/machinery/mineral/ore_redemption{
 	dir = 8
@@ -895,7 +895,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/white,
-/area/ship/crew)
+/area/station/crew)
 
 (1,1,1) = {"
 IZ

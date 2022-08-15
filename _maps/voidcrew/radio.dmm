@@ -5,13 +5,13 @@
 	},
 /obj/structure/window/bronze,
 /turf/open/floor/carpet/nanoweave/red,
-/area/ship/bridge)
+/area/station/bridge)
 "aA" = (
 /obj/structure/frame/computer{
 	anchored = 1
 	},
 /turf/open/floor/carpet/nanoweave/blue,
-/area/ship/bridge)
+/area/station/bridge)
 "aJ" = (
 /obj/structure/sink/directional/north,
 /obj/structure/mirror{
@@ -19,16 +19,16 @@
 	},
 /obj/machinery/light,
 /turf/open/floor/iron/freezer,
-/area/ship/bridge)
+/area/station/bridge)
 "aW" = (
 /obj/machinery/computer/autopilot,
 /turf/open/floor/carpet/nanoweave/blue,
-/area/ship/bridge)
+/area/station/bridge)
 "bD" = (
 /obj/structure/shuttle/engine/heater,
 /obj/structure/window/reinforced/spawner,
 /turf/open/floor/iron/freezer,
-/area/ship/bridge)
+/area/station/bridge)
 "bF" = (
 /obj/structure/table/bronze,
 /obj/item/storage/firstaid/advanced,
@@ -36,35 +36,35 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/nanoweave/blue,
-/area/ship/bridge)
+/area/station/bridge)
 "cS" = (
 /obj/structure/chair/bronze{
 	dir = 1
 	},
 /turf/open/floor/carpet/nanoweave/blue,
-/area/ship/bridge)
+/area/station/bridge)
 "de" = (
 /turf/open/floor/iron/freezer,
-/area/ship/bridge)
+/area/station/bridge)
 "eI" = (
 /obj/structure/table/bronze,
 /obj/item/storage/belt/utility,
 /turf/open/floor/carpet/nanoweave/blue,
-/area/ship/bridge)
+/area/station/bridge)
 "gb" = (
 /turf/open/floor/carpet/nanoweave/red,
-/area/ship/bridge)
+/area/station/bridge)
 "gG" = (
 /obj/machinery/light/floor,
 /turf/open/floor/carpet/nanoweave/blue,
-/area/ship/bridge)
+/area/station/bridge)
 "io" = (
 /obj/structure/chair/bronze,
 /obj/machinery/door/window{
 	dir = 1
 	},
 /turf/open/floor/carpet/nanoweave/beige,
-/area/ship/bridge)
+/area/station/bridge)
 "iX" = (
 /obj/structure/window/bronze{
 	dir = 4
@@ -77,32 +77,32 @@
 	pixel_y = 12
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/ship/bridge)
+/area/station/bridge)
 "lm" = (
 /obj/machinery/atmospherics/components/unary/tank/air,
 /obj/structure/curtain/cloth/grey,
 /turf/open/floor/iron/freezer,
-/area/ship/bridge)
+/area/station/bridge)
 "oK" = (
 /obj/machinery/power/shuttle/engine/void{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/ship/bridge)
+/area/station/bridge)
 "pO" = (
 /obj/structure/table/bronze,
 /turf/open/floor/carpet/nanoweave/blue,
-/area/ship/bridge)
+/area/station/bridge)
 "pY" = (
 /obj/structure/table/bronze,
 /turf/open/floor/carpet/nanoweave/orange,
-/area/ship/bridge)
+/area/station/bridge)
 "rm" = (
 /obj/structure/window/bronze,
 /obj/structure/table/bronze,
 /obj/item/storage/toolbox/mechanical/old/clean,
 /turf/open/floor/carpet/nanoweave/blue,
-/area/ship/bridge)
+/area/station/bridge)
 "sq" = (
 /obj/machinery/door/airlock/external/glass,
 /obj/structure/fans/tiny,
@@ -115,33 +115,33 @@
 	width = 11
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/ship/bridge)
+/area/station/bridge)
 "th" = (
 /obj/machinery/light/floor,
 /turf/open/floor/carpet/nanoweave/red,
-/area/ship/bridge)
+/area/station/bridge)
 "tv" = (
 /obj/structure/shuttle/engine/heater,
 /obj/structure/window/reinforced/spawner,
 /turf/open/floor/carpet/nanoweave/orange,
-/area/ship/bridge)
+/area/station/bridge)
 "up" = (
 /obj/structure/window/bronze,
 /turf/open/floor/carpet/nanoweave/blue,
-/area/ship/bridge)
+/area/station/bridge)
 "uS" = (
 /obj/structure/window/bronze{
 	dir = 4
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/ship/bridge)
+/area/station/bridge)
 "vt" = (
 /obj/structure/window/bronze{
 	dir = 4
 	},
 /obj/structure/table/bronze,
 /turf/open/floor/carpet/nanoweave/red,
-/area/ship/bridge)
+/area/station/bridge)
 "wJ" = (
 /obj/structure/tank_dispenser/oxygen,
 /obj/structure/window/bronze{
@@ -149,7 +149,7 @@
 	},
 /obj/machinery/light,
 /turf/open/floor/carpet/nanoweave/red,
-/area/ship/bridge)
+/area/station/bridge)
 "wV" = (
 /obj/structure/window/bronze{
 	dir = 8
@@ -162,14 +162,14 @@
 	pixel_y = -32
 	},
 /turf/open/floor/carpet/nanoweave/beige,
-/area/ship/bridge)
+/area/station/bridge)
 "xx" = (
 /obj/structure/table/bronze,
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/carpet/nanoweave,
-/area/ship/bridge)
+/area/station/bridge)
 "yX" = (
 /obj/machinery/shower/directional/north,
 /obj/structure/curtain,
@@ -177,82 +177,82 @@
 	dir = 8
 	},
 /turf/open/floor/iron/freezer,
-/area/ship/bridge)
+/area/station/bridge)
 "Au" = (
 /obj/structure/bed,
 /obj/item/bedsheet/syndie,
 /obj/structure/curtain/cloth/grey,
 /turf/open/floor/carpet/nanoweave,
-/area/ship/bridge)
+/area/station/bridge)
 "Ba" = (
 /obj/structure/window/bronze{
 	dir = 8
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/ship/bridge)
+/area/station/bridge)
 "BI" = (
 /obj/structure/table/bronze,
 /obj/item/trash/plate,
 /turf/open/floor/carpet/nanoweave/orange,
-/area/ship/bridge)
+/area/station/bridge)
 "EK" = (
 /turf/open/floor/carpet/nanoweave,
-/area/ship/bridge)
+/area/station/bridge)
 "EY" = (
 /obj/structure/table/bronze,
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/carpet/nanoweave/blue,
-/area/ship/bridge)
+/area/station/bridge)
 "GQ" = (
 /obj/machinery/door/window/right/directional/west{
 	dir = 2
 	},
 /turf/open/floor/carpet/nanoweave/blue,
-/area/ship/bridge)
+/area/station/bridge)
 "Hu" = (
 /obj/machinery/door/window/right/directional/west,
 /turf/open/floor/carpet/nanoweave,
-/area/ship/bridge)
+/area/station/bridge)
 "HJ" = (
 /obj/structure/window/bronze,
 /obj/structure/window/bronze{
 	dir = 8
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/ship/bridge)
+/area/station/bridge)
 "HZ" = (
 /obj/effect/mob_spawn/human/lavaland_syndicate/comms{
 	dir = 4
 	},
 /turf/open/floor/carpet/nanoweave,
-/area/ship/bridge)
+/area/station/bridge)
 "Jz" = (
 /obj/machinery/vending/autodrobe/all_access{
 	default_price = 0;
 	extra_price = 0
 	},
 /turf/open/floor/carpet/nanoweave,
-/area/ship/bridge)
+/area/station/bridge)
 "Kn" = (
 /obj/machinery/computer/helm,
 /turf/open/floor/carpet/nanoweave/blue,
-/area/ship/bridge)
+/area/station/bridge)
 "Kr" = (
 /turf/open/floor/carpet/nanoweave/blue,
-/area/ship/bridge)
+/area/station/bridge)
 "Ky" = (
 /turf/open/space/basic,
 /area/space)
 "KK" = (
 /turf/open/floor/carpet/nanoweave/beige,
-/area/ship/bridge)
+/area/station/bridge)
 "Lu" = (
 /obj/structure/table/bronze,
 /obj/item/kitchen/knife,
 /turf/open/floor/carpet/nanoweave/orange,
-/area/ship/bridge)
+/area/station/bridge)
 "Mj" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/structure/window/bronze{
@@ -260,7 +260,7 @@
 	},
 /obj/machinery/light,
 /turf/open/floor/carpet/nanoweave/red,
-/area/ship/bridge)
+/area/station/bridge)
 "Mo" = (
 /obj/structure/table/bronze,
 /obj/machinery/microwave,
@@ -268,30 +268,30 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/nanoweave/orange,
-/area/ship/bridge)
+/area/station/bridge)
 "MW" = (
 /obj/structure/curtain/cloth/grey,
 /obj/structure/table,
 /turf/open/floor/iron/freezer,
-/area/ship/bridge)
+/area/station/bridge)
 "Nh" = (
 /obj/machinery/door/window{
 	dir = 4
 	},
 /turf/open/floor/carpet/nanoweave/orange,
-/area/ship/bridge)
+/area/station/bridge)
 "Ob" = (
 /obj/structure/chair/plastic{
 	dir = 4
 	},
 /turf/open/floor/carpet/nanoweave/orange,
-/area/ship/bridge)
+/area/station/bridge)
 "Ph" = (
 /obj/structure/table/bronze,
 /obj/machinery/light/floor,
 /obj/item/radio/intercom,
 /turf/open/floor/carpet/nanoweave/red,
-/area/ship/bridge)
+/area/station/bridge)
 "Qw" = (
 /obj/structure/window/bronze{
 	dir = 1
@@ -300,39 +300,39 @@
 	dir = 4
 	},
 /turf/open/floor/iron/freezer,
-/area/ship/bridge)
+/area/station/bridge)
 "QG" = (
 /obj/structure/window/bronze{
 	dir = 8
 	},
 /obj/structure/table/bronze,
 /turf/open/floor/carpet/nanoweave/red,
-/area/ship/bridge)
+/area/station/bridge)
 "Rj" = (
 /obj/machinery/door/window{
 	dir = 1
 	},
 /turf/open/floor/iron/freezer,
-/area/ship/bridge)
+/area/station/bridge)
 "Tq" = (
 /turf/open/floor/carpet/nanoweave/orange,
-/area/ship/bridge)
+/area/station/bridge)
 "Ve" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
-/area/ship/bridge)
+/area/station/bridge)
 "Vx" = (
 /obj/structure/table/bronze,
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/carpet/nanoweave/orange,
-/area/ship/bridge)
+/area/station/bridge)
 "VS" = (
 /obj/machinery/telecomms/allinone,
 /obj/structure/window/bronze,
 /turf/open/floor/carpet/nanoweave/blue,
-/area/ship/bridge)
+/area/station/bridge)
 "Xu" = (
 /obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
@@ -340,7 +340,7 @@
 /obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/carpet/nanoweave/orange,
-/area/ship/bridge)
+/area/station/bridge)
 "Ya" = (
 /obj/machinery/door/window/right/directional/west{
 	dir = 2
@@ -350,10 +350,10 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/ship/bridge)
+/area/station/bridge)
 "Yx" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/ship/bridge)
+/area/station/bridge)
 "Zp" = (
 /obj/structure/window/bronze{
 	dir = 1
@@ -361,7 +361,7 @@
 /obj/structure/curtain/cloth/grey,
 /obj/structure/table,
 /turf/open/floor/iron/freezer,
-/area/ship/bridge)
+/area/station/bridge)
 
 (1,1,1) = {"
 Ky

@@ -6,7 +6,7 @@
 	pixel_y = 25
 	},
 /turf/open/floor/pod/dark,
-/area/ship/crew)
+/area/station/crew)
 "az" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -17,14 +17,14 @@
 /obj/machinery/power/smes/engineering,
 /obj/structure/cable,
 /turf/open/floor/pod/dark,
-/area/ship/crew)
+/area/station/crew)
 "bo" = (
 /obj/machinery/power/shuttle/engine/electric{
 	dir = 4
 	},
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/ship/crew)
+/area/station/crew)
 "bN" = (
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 10
@@ -34,17 +34,17 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ship/crew)
+/area/station/crew)
 "bZ" = (
 /obj/effect/turf_decal/corner/red,
 /turf/open/floor/iron/dark,
-/area/ship/crew)
+/area/station/crew)
 "dZ" = (
 /obj/machinery/power/shuttle/engine/fueled/plasma{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/ship/crew)
+/area/station/crew)
 "gl" = (
 /obj/machinery/door/airlock/hatch{
 	id_tag = "caravansyndicate3_bolt_port";
@@ -63,7 +63,7 @@
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/mineral/plastitanium,
-/area/ship/crew)
+/area/station/crew)
 "ha" = (
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
@@ -78,13 +78,13 @@
 	dir = 9
 	},
 /turf/open/floor/plating,
-/area/ship/crew)
+/area/station/crew)
 "hN" = (
 /obj/effect/turf_decal/corner/red/three_quarters{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/ship/crew)
+/area/station/crew)
 "je" = (
 /obj/machinery/computer/autopilot{
 	dir = 8
@@ -93,56 +93,56 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/ship/crew)
+/area/station/crew)
 "jk" = (
 /obj/machinery/holopad/emergency/command,
 /turf/open/floor/iron/dark,
-/area/ship/crew)
+/area/station/crew)
 "ka" = (
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 4
 	},
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/pod/dark,
-/area/ship/crew)
+/area/station/crew)
 "mG" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
-/area/ship/crew)
+/area/station/crew)
 "ns" = (
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/pod/dark,
-/area/ship/crew)
+/area/station/crew)
 "qE" = (
 /obj/effect/turf_decal/industrial/warning{
 	dir = 9
 	},
 /obj/machinery/stasis,
 /turf/open/floor/mineral/plastitanium,
-/area/ship/crew)
+/area/station/crew)
 "rz" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/machinery/light/small{
 	dir = 4
 	},
 /turf/open/floor/pod/dark,
-/area/ship/crew)
+/area/station/crew)
 "rD" = (
 /obj/effect/turf_decal/corner/red/three_quarters{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/ship/crew)
+/area/station/crew)
 "rU" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/iron/dark,
-/area/ship/crew)
+/area/station/crew)
 "rV" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/pod/dark,
-/area/ship/crew)
+/area/station/crew)
 "sn" = (
 /obj/structure/table/reinforced,
 /obj/machinery/airalarm/syndicate{
@@ -151,25 +151,25 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/pod/dark,
-/area/ship/crew)
+/area/station/crew)
 "ss" = (
 /obj/effect/turf_decal/corner/red{
 	dir = 5
 	},
 /turf/open/floor/iron/dark,
-/area/ship/crew)
+/area/station/crew)
 "uy" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/machinery/light/small{
 	dir = 8
 	},
 /turf/open/floor/pod/dark,
-/area/ship/crew)
+/area/station/crew)
 "vw" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/briefcase,
 /turf/open/floor/pod/dark,
-/area/ship/crew)
+/area/station/crew)
 "wH" = (
 /obj/machinery/atmospherics/components/unary/shuttle/heater{
 	dir = 4
@@ -183,26 +183,26 @@
 	name = "Engine Access"
 	},
 /turf/open/floor/plating/airless,
-/area/ship/crew)
+/area/station/crew)
 "xC" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/ship/crew)
+/area/station/crew)
 "Bp" = (
 /obj/machinery/atmospherics/pipe/simple/orange/hidden,
 /obj/effect/turf_decal/corner/red{
 	dir = 10
 	},
 /turf/open/floor/iron/dark,
-/area/ship/crew)
+/area/station/crew)
 "BQ" = (
 /obj/effect/turf_decal/corner/red{
 	dir = 10
 	},
 /turf/open/floor/iron/dark,
-/area/ship/crew)
+/area/station/crew)
 "Cm" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -213,7 +213,7 @@
 	},
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/pod/dark,
-/area/ship/crew)
+/area/station/crew)
 "Dt" = (
 /obj/effect/turf_decal/industrial/warning{
 	dir = 8
@@ -227,10 +227,10 @@
 /obj/item/storage/firstaid/tactical,
 /obj/item/storage/firstaid/tactical,
 /turf/open/floor/mineral/plastitanium,
-/area/ship/crew)
+/area/station/crew)
 "Dx" = (
 /turf/open/floor/iron/dark,
-/area/ship/crew)
+/area/station/crew)
 "EO" = (
 /obj/structure/table/reinforced,
 /obj/item/disk/design_disk/ammo_c9mm,
@@ -241,7 +241,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/pod/dark,
-/area/ship/crew)
+/area/station/crew)
 "Fa" = (
 /obj/effect/turf_decal/industrial/warning{
 	dir = 10
@@ -267,7 +267,7 @@
 /obj/item/ammo_box/magazine/pistolm9mm,
 /obj/item/ammo_box/magazine/pistolm9mm,
 /turf/open/floor/mineral/plastitanium,
-/area/ship/crew)
+/area/station/crew)
 "FM" = (
 /obj/structure/table/reinforced,
 /obj/item/assembly/flash/handheld,
@@ -275,7 +275,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/ship/crew)
+/area/station/crew)
 "Gx" = (
 /obj/machinery/power/smes/shuttle{
 	dir = 4
@@ -290,13 +290,13 @@
 	name = "Engine Access"
 	},
 /turf/open/floor/plating/airless,
-/area/ship/crew)
+/area/station/crew)
 "GR" = (
 /obj/effect/turf_decal/corner/red{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/ship/crew)
+/area/station/crew)
 "HB" = (
 /obj/machinery/computer/helm{
 	dir = 8
@@ -305,7 +305,7 @@
 	dir = 9
 	},
 /turf/open/floor/iron/dark,
-/area/ship/crew)
+/area/station/crew)
 "HJ" = (
 /obj/effect/turf_decal/industrial/warning{
 	dir = 8
@@ -315,7 +315,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/ship/crew)
+/area/station/crew)
 "HM" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light/small{
@@ -332,13 +332,13 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/ship/crew)
+/area/station/crew)
 "IU" = (
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 10
 	},
 /turf/open/floor/iron/dark,
-/area/ship/crew)
+/area/station/crew)
 "Jv" = (
 /turf/template_noop,
 /area/template_noop)
@@ -351,14 +351,14 @@
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/mineral/plastitanium,
-/area/ship/crew)
+/area/station/crew)
 "Ll" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
 /obj/structure/showcase/cyborg/assault,
 /turf/open/floor/pod/dark,
-/area/ship/crew)
+/area/station/crew)
 "Lq" = (
 /obj/effect/turf_decal/industrial/warning{
 	dir = 8
@@ -366,7 +366,7 @@
 /obj/structure/sign/warning/vacuum/directional/north,
 /obj/machinery/autolathe/hacked,
 /turf/open/floor/mineral/plastitanium,
-/area/ship/crew)
+/area/station/crew)
 "NH" = (
 /obj/effect/turf_decal/industrial/warning{
 	dir = 8
@@ -378,11 +378,11 @@
 	all_items_free = 1
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/ship/crew)
+/area/station/crew)
 "Pg" = (
 /obj/effect/turf_decal/corner/red/three_quarters,
 /turf/open/floor/iron/dark,
-/area/ship/crew)
+/area/station/crew)
 "Pt" = (
 /obj/effect/turf_decal/industrial/warning{
 	dir = 4
@@ -409,12 +409,12 @@
 	amount = 20
 	},
 /turf/open/floor/plating,
-/area/ship/crew)
+/area/station/crew)
 "PJ" = (
 /obj/structure/table/reinforced,
 /obj/item/toy/plush/nukeplushie,
 /turf/open/floor/pod/dark,
-/area/ship/crew)
+/area/station/crew)
 "PY" = (
 /obj/effect/turf_decal/industrial/hatch/yellow{
 	dir = 4
@@ -427,13 +427,13 @@
 /obj/structure/window/reinforced/plasma/spawner/east,
 /obj/structure/window/reinforced/plasma/spawner/north,
 /turf/open/floor/engine/plasma,
-/area/ship/crew)
+/area/station/crew)
 "Ri" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/ship/crew)
+/area/station/crew)
 "RB" = (
 /obj/machinery/photocopier/faxmachine/longrange,
 /obj/structure/table/reinforced,
@@ -441,7 +441,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/ship/crew)
+/area/station/crew)
 "Sl" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light/small{
@@ -451,10 +451,10 @@
 /obj/item/folder/syndicate/red,
 /obj/item/pen/red,
 /turf/open/floor/pod/dark,
-/area/ship/crew)
+/area/station/crew)
 "Tn" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/ship/crew)
+/area/station/crew)
 "Vf" = (
 /obj/machinery/door/airlock/hatch{
 	id_tag = "caravansyndicate3_bolt_port";
@@ -463,7 +463,7 @@
 	req_access_txt = "150"
 	},
 /turf/open/floor/iron/dark,
-/area/ship/crew)
+/area/station/crew)
 "VA" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light/small{
@@ -478,7 +478,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/ship/crew)
+/area/station/crew)
 "Wr" = (
 /obj/machinery/suit_storage_unit/syndicate{
 	name = "captain's suit storage unit";
@@ -487,7 +487,7 @@
 	},
 /obj/effect/turf_decal/corner/red/three_quarters,
 /turf/open/floor/iron/dark,
-/area/ship/crew)
+/area/station/crew)
 "YU" = (
 /obj/effect/turf_decal/industrial/warning{
 	dir = 10
@@ -508,10 +508,10 @@
 /obj/item/clothing/mask/gas/syndicate,
 /obj/item/clothing/mask/gas/syndicate,
 /turf/open/floor/mineral/plastitanium,
-/area/ship/crew)
+/area/station/crew)
 "ZB" = (
 /turf/closed/wall/mineral/plastitanium,
-/area/ship/crew)
+/area/station/crew)
 "ZI" = (
 /obj/effect/turf_decal/industrial/warning{
 	dir = 9
@@ -528,20 +528,20 @@
 /obj/item/pickaxe,
 /obj/item/pickaxe,
 /turf/open/floor/mineral/plastitanium,
-/area/ship/crew)
+/area/station/crew)
 "ZJ" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
 	name = "fuel pump"
 	},
 /turf/open/floor/iron/dark,
-/area/ship/crew)
+/area/station/crew)
 "ZZ" = (
 /obj/effect/turf_decal/corner/red/three_quarters{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/ship/crew)
+/area/station/crew)
 
 (1,1,1) = {"
 ZB

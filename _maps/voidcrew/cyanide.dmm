@@ -4,7 +4,7 @@
 /area/template_noop)
 "c" = (
 /turf/closed/wall/mineral/plastitanium,
-/area/ship/security)
+/area/station/security)
 "e" = (
 /obj/machinery/porta_turret/centcom_shuttle/ballistic{
 	dir = 5;
@@ -12,28 +12,28 @@
 	on = 0
 	},
 /turf/closed/wall/mineral/plastitanium,
-/area/ship/security)
+/area/station/security)
 "l" = (
 /obj/machinery/power/shuttle/engine/electric{
 	dir = 4
 	},
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/ship/security)
+/area/station/security)
 "m" = (
 /obj/machinery/power/smes/shuttle/precharged{
 	dir = 8
 	},
 /obj/structure/cable,
 /turf/closed/wall/mineral/plastitanium,
-/area/ship/security)
+/area/station/security)
 "q" = (
 /obj/machinery/power/terminal{
 	dir = 8
 	},
 /obj/structure/cable,
 /turf/closed/wall/mineral/plastitanium,
-/area/ship/security)
+/area/station/security)
 "s" = (
 /obj/machinery/computer/helm,
 /obj/structure/cable,
@@ -45,7 +45,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ship/security)
+/area/station/security)
 "t" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/smes/engineering,
@@ -55,7 +55,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ship/security)
+/area/station/security)
 "w" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -68,7 +68,7 @@
 	amount = 10
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ship/security)
+/area/station/security)
 "A" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/docking_port/mobile{
@@ -88,14 +88,14 @@
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
-/area/ship/security)
+/area/station/security)
 "C" = (
 /obj/machinery/power/terminal{
 	dir = 1
 	},
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ship/security)
+/area/station/security)
 "D" = (
 /obj/machinery/power/apc/auto_name/directional/east{
 	auto_name = 0;
@@ -113,7 +113,7 @@
 	name = "advanced holopad"
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ship/security)
+/area/station/security)
 "G" = (
 /obj/item/radio/intercom/wideband{
 	pixel_y = -29
@@ -121,7 +121,7 @@
 /obj/structure/cable,
 /obj/machinery/power/port_gen/pacman/uranium,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ship/security)
+/area/station/security)
 "H" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -159,7 +159,7 @@
 /obj/item/mining_scanner,
 /obj/item/areaeditor/shuttle,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ship/security)
+/area/station/security)
 "K" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -169,7 +169,7 @@
 /obj/machinery/autolathe,
 /obj/machinery/light,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ship/security)
+/area/station/security)
 "U" = (
 /obj/machinery/porta_turret/centcom_shuttle/ballistic{
 	dir = 6;
@@ -177,7 +177,7 @@
 	on = 0
 	},
 /turf/closed/wall/mineral/plastitanium,
-/area/ship/security)
+/area/station/security)
 
 (1,1,1) = {"
 a

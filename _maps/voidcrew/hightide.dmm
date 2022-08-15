@@ -2,16 +2,16 @@
 "aC" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plating,
-/area/ship/cargo)
+/area/station/cargo)
 "aK" = (
 /obj/item/wrench/old,
 /obj/structure/rack,
 /turf/open/floor/plating,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "aN" = (
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating,
-/area/ship/maintenance/fore)
+/area/station/maintenance/fore)
 "aW" = (
 /obj/structure/lattice,
 /turf/closed/wall,
@@ -20,35 +20,35 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/reagent_dispensers/beerkeg,
 /turf/open/floor/plating,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "be" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/ship/cargo)
+/area/station/cargo)
 "bg" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/suit_storage_unit/independent/mining/eva,
 /turf/open/floor/plating,
-/area/ship/cargo)
+/area/station/cargo)
 "bn" = (
 /obj/structure/girder/reinforced,
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "bA" = (
 /obj/effect/spawner/random/maintenance,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "bT" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 6
 	},
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "cb" = (
 /obj/structure/catwalk,
 /obj/item/trash/sosjerky,
@@ -61,7 +61,7 @@
 /obj/effect/spawner/random/maintenance,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "cy" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
@@ -70,61 +70,61 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "cI" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/power/smes,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "cQ" = (
 /turf/closed/wall/r_wall,
-/area/ship/maintenance/fore)
+/area/station/maintenance/fore)
 "dd" = (
 /mob/living/simple_animal/hostile/cockroach,
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "dk" = (
 /obj/item/wrench/medical,
 /obj/item/wrench/crescent,
 /obj/structure/rack,
 /turf/open/floor/plating,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "ds" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/wrench/combat,
 /obj/item/wrench/syndie,
 /obj/structure/rack,
 /turf/open/floor/plating,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "dy" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/airalarm/directional/east,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "dM" = (
 /turf/closed/wall,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "eb" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "ee" = (
 /obj/structure/girder/reinforced,
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/plating,
-/area/ship/cargo)
+/area/station/cargo)
 "ey" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/reagent_dispensers/cooking_oil,
 /turf/open/floor/plating,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "eD" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/structure/barricade/wooden/crude,
@@ -133,71 +133,71 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "fh" = (
 /turf/closed/wall/r_wall,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "fj" = (
 /turf/open/floor/plating,
-/area/ship/maintenance/fore)
+/area/station/maintenance/fore)
 "fO" = (
 /turf/closed/wall/r_wall/rust,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "gp" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ship/maintenance/fore)
+/area/station/maintenance/fore)
 "gw" = (
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "gy" = (
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
-/area/ship/cargo)
+/area/station/cargo)
 "gz" = (
 /obj/structure/girder/reinforced,
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/plating,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "gL" = (
 /obj/structure/table/wood,
 /obj/item/trash/sosjerky,
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "hh" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/computer/cryopod{
 	pixel_y = -32
 	},
 /turf/open/floor/plating,
-/area/ship/maintenance/fore)
+/area/station/maintenance/fore)
 "hy" = (
 /obj/machinery/photocopier,
 /obj/effect/decal/cleanable/glitter,
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "hH" = (
 /obj/effect/spawner/random/clothing/gloves,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "hK" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 9
 	},
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "hW" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ship/cargo)
+/area/station/cargo)
 "io" = (
 /obj/structure/catwalk,
 /obj/item/toy/plush/among,
@@ -211,21 +211,21 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/ship/maintenance/fore)
+/area/station/maintenance/fore)
 "jr" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "ka" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "kb" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
@@ -234,12 +234,12 @@
 	},
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "ki" = (
 /obj/item/trash/semki,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "ko" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "wrench storage"
@@ -249,7 +249,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "kB" = (
 /obj/structure/barricade/wooden,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -258,17 +258,17 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "lv" = (
 /obj/machinery/ore_silo,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/ship/cargo)
+/area/station/cargo)
 "lC" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "lQ" = (
 /obj/structure/window/reinforced/tinted{
 	dir = 4
@@ -277,7 +277,7 @@
 /obj/item/bedsheet/dorms,
 /obj/item/trash/chips,
 /turf/open/floor/plating,
-/area/ship/maintenance/fore)
+/area/station/maintenance/fore)
 "lY" = (
 /obj/structure/chair{
 	dir = 1
@@ -285,7 +285,7 @@
 /obj/item/trash/popcorn,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "mv" = (
 /obj/structure/closet/crate,
 /obj/item/reagent_containers/food/snacks/canned/beans,
@@ -294,62 +294,62 @@
 /obj/item/reagent_containers/food/snacks/canned/beans,
 /obj/effect/spawner/random/food_or_drink/pizzaparty,
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "mw" = (
 /obj/machinery/computer/autopilot,
 /turf/open/floor/plating,
-/area/ship/maintenance/fore)
+/area/station/maintenance/fore)
 "mX" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/visible/layer2,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "nc" = (
 /obj/structure/falsewall,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "ni" = (
 /turf/closed/wall,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "nm" = (
 /obj/machinery/portable_atmospherics/canister/plasma,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "np" = (
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "nB" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "nK" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/holopad/emergency/command,
 /turf/open/floor/plating,
-/area/ship/maintenance/fore)
+/area/station/maintenance/fore)
 "nT" = (
 /turf/closed/wall/r_wall/rust,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "nX" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /mob/living/simple_animal/hostile/cockroach,
 /turf/open/floor/plating,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "ob" = (
 /obj/item/radio/intercom/wideband{
 	pixel_y = -32
 	},
 /turf/open/floor/plating,
-/area/ship/maintenance/fore)
+/area/station/maintenance/fore)
 "of" = (
 /turf/closed/wall/rust,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "oh" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/plating,
-/area/ship/maintenance/fore)
+/area/station/maintenance/fore)
 "ou" = (
 /obj/structure/catwalk,
 /obj/item/toy/plush/among,
@@ -358,7 +358,7 @@
 /area/space)
 "oF" = (
 /turf/closed/wall/r_wall,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "oY" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/docking_port/mobile{
@@ -367,7 +367,7 @@
 	port_direction = 4
 	},
 /turf/open/floor/plating,
-/area/ship/cargo)
+/area/station/cargo)
 "po" = (
 /obj/structure/window/reinforced/tinted{
 	dir = 4
@@ -377,13 +377,13 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating,
-/area/ship/maintenance/fore)
+/area/station/maintenance/fore)
 "px" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/trash/can/food/peaches/maint,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "pY" = (
 /obj/structure/table/glass,
 /obj/item/storage/box/drinkingglasses,
@@ -393,27 +393,27 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "pZ" = (
 /obj/machinery/computer/helm,
 /turf/open/floor/plating,
-/area/ship/maintenance/fore)
+/area/station/maintenance/fore)
 "qy" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "qO" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plating,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "rd" = (
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "rj" = (
 /obj/machinery/mineral/ore_redemption,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -421,27 +421,27 @@
 	dir = 10
 	},
 /turf/open/floor/plating,
-/area/ship/cargo)
+/area/station/cargo)
 "rl" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/power/terminal,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "ro" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2{
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ship/cargo)
+/area/station/cargo)
 "rF" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "sa" = (
 /turf/open/floor/plating,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "sb" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
@@ -449,127 +449,127 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "sO" = (
 /obj/structure/table/wood,
 /obj/item/pen/fourcolor,
 /obj/item/trash/syndi_cakes,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "sW" = (
 /obj/structure/closet/secure_closet/freezer/meat,
 /turf/open/floor/plating,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "tn" = (
 /obj/structure/closet/athletic_mixed,
 /obj/item/trash/can/food/beans,
 /turf/open/floor/plating,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "tq" = (
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "ty" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/wrench,
 /obj/structure/rack,
 /turf/open/floor/plating,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "tL" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "tR" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ship/maintenance/fore)
+/area/station/maintenance/fore)
 "us" = (
 /obj/machinery/autolathe/hacked,
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "uw" = (
 /obj/structure/closet/athletic_mixed,
 /turf/open/floor/plating,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "uQ" = (
 /turf/closed/wall/r_wall/rust,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "vr" = (
 /obj/structure/cable,
 /obj/machinery/power/port_gen/pacman,
 /obj/item/stack/sheet/mineral/plasma/twenty,
 /turf/open/floor/plating,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "vK" = (
 /turf/closed/wall,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "vY" = (
 /obj/effect/decal/cleanable/oil/slippery,
 /obj/effect/spawner/random/maintenance/six,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "wc" = (
 /obj/structure/chair,
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "wj" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "wK" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/glitter/blue,
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "wZ" = (
 /obj/structure/girder/reinforced,
 /obj/structure/window/reinforced/spawner/east,
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/window/reinforced/spawner,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "xg" = (
 /turf/template_noop,
 /area/space)
 "xk" = (
 /obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "xp" = (
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "xq" = (
 /turf/closed/wall/r_wall/rust,
-/area/ship/cargo)
+/area/station/cargo)
 "xt" = (
 /obj/machinery/airalarm/directional/east,
 /obj/structure/closet/secure_closet/medical2,
 /obj/item/defibrillator/loaded,
 /obj/effect/spawner/random/maintenance/eight,
 /turf/open/floor/plating,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "xA" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "xI" = (
 /obj/machinery/deepfryer,
 /turf/open/floor/plating,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "xV" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "yo" = (
 /obj/effect/decal/cleanable/oil/slippery,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -578,18 +578,18 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "yw" = (
 /obj/machinery/cryopod{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/ship/maintenance/fore)
+/area/station/maintenance/fore)
 "yK" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "yL" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin{
@@ -597,14 +597,14 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "yY" = (
 /obj/machinery/airalarm/directional/west,
 /obj/structure/table,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/effect/spawner/random/maintenance/four,
 /turf/open/floor/plating,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "zb" = (
 /obj/structure/closet/secure_closet{
 	req_access = list(11)
@@ -616,7 +616,7 @@
 	},
 /obj/effect/spawner/random/maintenance/five,
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "zE" = (
 /obj/structure/table/reinforced,
 /obj/structure/cable,
@@ -624,43 +624,43 @@
 /obj/effect/decal/cleanable/glass,
 /obj/item/trash/cheesie,
 /turf/open/floor/plating,
-/area/ship/maintenance/fore)
+/area/station/maintenance/fore)
 "zL" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "zQ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "Ao" = (
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "At" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "AE" = (
 /obj/machinery/door/airlock/engineering,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "AJ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/tank_dispenser,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "AZ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
@@ -668,10 +668,10 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "Bp" = (
 /turf/closed/wall/rust,
-/area/ship/cargo)
+/area/station/cargo)
 "BK" = (
 /obj/structure/closet/secure_closet/engineering_personal,
 /obj/item/construction/rcd,
@@ -679,26 +679,26 @@
 /obj/effect/spawner/random/maintenance/eight,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "CO" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "Dl" = (
 /obj/machinery/power/shuttle/engine/electric{
 	dir = 1
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "Dn" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/airalarm/directional/east,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/plating,
-/area/ship/maintenance/fore)
+/area/station/maintenance/fore)
 "DJ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/window/reinforced/spawner,
@@ -707,43 +707,43 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "DP" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "Ef" = (
 /mob/living/simple_animal/hostile/cockroach,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "Eh" = (
 /turf/closed/wall/rust,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "Fn" = (
 /turf/closed/wall,
-/area/ship/cargo)
+/area/station/cargo)
 "FO" = (
 /obj/structure/barricade/wooden,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "FZ" = (
 /obj/structure/frame/machine,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "Gq" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "GF" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/ship/cargo)
+/area/station/cargo)
 "GI" = (
 /obj/item/storage/toolbox/mechanical/old,
 /obj/structure/rack,
@@ -752,14 +752,14 @@
 /obj/item/crowbar/red,
 /obj/item/screwdriver/power,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "Hs" = (
 /obj/structure/window/reinforced/tinted{
 	dir = 4
 	},
 /obj/structure/toilet,
 /turf/open/floor/plating,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "HE" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
@@ -768,10 +768,10 @@
 	},
 /obj/item/trash/can/food/beans,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "Il" = (
 /turf/closed/wall/r_wall,
-/area/ship/cargo)
+/area/station/cargo)
 "IV" = (
 /obj/structure/catwalk,
 /obj/structure/table,
@@ -785,35 +785,35 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "Jj" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/ship/cargo)
+/area/station/cargo)
 "Jn" = (
 /obj/item/trash/can,
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "Jt" = (
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "JH" = (
 /turf/closed/wall/r_wall/rust,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "JR" = (
 /obj/structure/closet/boxinggloves,
 /turf/open/floor/plating,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "JT" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "Kl" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
@@ -821,70 +821,70 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "KU" = (
 /turf/closed/wall/r_wall,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "LD" = (
 /obj/machinery/airalarm/directional/west,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating,
-/area/ship/cargo)
+/area/station/cargo)
 "LR" = (
 /obj/structure/closet/crate,
 /obj/item/kitchen/knife/letter_opener,
 /obj/item/flashlight/pen,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "LV" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/ship/maintenance/fore)
+/area/station/maintenance/fore)
 "LY" = (
 /turf/closed/wall/r_wall/rust,
-/area/ship/maintenance/fore)
+/area/station/maintenance/fore)
 "Me" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/ship/maintenance/fore)
+/area/station/maintenance/fore)
 "MH" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/power/terminal,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "MS" = (
 /obj/structure/falsewall,
 /turf/open/floor/plating,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "Nl" = (
 /obj/structure/closet/bombcloset,
 /turf/open/floor/plating,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "Nv" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/plating,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "Nw" = (
 /obj/structure/window/reinforced/tinted{
 	dir = 4
 	},
 /obj/machinery/shower/directional/east,
 /turf/open/floor/plating,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "NI" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "NY" = (
 /obj/structure/barricade/wooden,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "OG" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
@@ -892,33 +892,33 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "PC" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/power/terminal,
 /mob/living/simple_animal/hostile/cockroach,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "PP" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "PS" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "Qm" = (
 /obj/effect/decal/cleanable/glitter,
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "QC" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/grill/unwrenched,
 /turf/open/floor/plating,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "QJ" = (
 /obj/structure/catwalk,
 /turf/open/floor/plating,
@@ -928,15 +928,15 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
-/area/ship/cargo)
+/area/station/cargo)
 "Rd" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
-/area/ship/maintenance/fore)
+/area/station/maintenance/fore)
 "Rn" = (
 /turf/closed/wall,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "Ry" = (
 /obj/item/pickaxe/emergency,
 /obj/structure/closet/crate{
@@ -953,7 +953,7 @@
 /obj/effect/spawner/random/maintenance/eight,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating,
-/area/ship/cargo)
+/area/station/cargo)
 "RI" = (
 /mob/living/simple_animal/hostile/pirate/ranged{
 	desc = "Timmy is a classic pirate cosplayer. He was locked in this room by the previous owner. He's survived by eating the rats, this is why there are ZERO rats in the universe.";
@@ -963,11 +963,11 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/plating,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "RM" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "RR" = (
 /obj/structure/window/reinforced/spawner/east,
 /obj/structure/window/reinforced/spawner/west,
@@ -976,7 +976,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ship/cargo)
+/area/station/cargo)
 "Ss" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -984,38 +984,38 @@
 /obj/item/weldingtool/empty,
 /obj/item/clothing/mask/gas/welding,
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "St" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "SA" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/chair/office{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/ship/maintenance/fore)
+/area/station/maintenance/fore)
 "SU" = (
 /obj/structure/chair{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/glitter/blue,
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "TC" = (
 /obj/structure/window/reinforced/tinted{
 	dir = 4
 	},
 /obj/structure/sink/directional/east,
 /turf/open/floor/plating,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "TV" = (
 /obj/structure/girder/reinforced,
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/window/reinforced/spawner,
 /turf/open/floor/plating,
-/area/ship/cargo)
+/area/station/cargo)
 "Ub" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -1023,24 +1023,24 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ship/cargo)
+/area/station/cargo)
 "Ul" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/closed/wall/rust,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "Un" = (
 /obj/structure/closet/secure_closet/freezer/cream_pie,
 /turf/open/floor/plating,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "Uo" = (
 /obj/structure/table,
 /obj/machinery/microwave,
 /turf/open/floor/plating,
-/area/ship/maintenance/aft)
+/area/station/maintenance/aft)
 "Up" = (
 /obj/item/chair,
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "Uw" = (
 /obj/structure/lattice,
 /turf/template_noop,
@@ -1048,55 +1048,55 @@
 "UX" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /turf/open/floor/plating,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "Vr" = (
 /obj/effect/decal/cleanable/oil/slippery,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "Vx" = (
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "Vy" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "VK" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/power/terminal,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "VU" = (
 /turf/closed/wall/rust,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "Wh" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/ship/cargo)
+/area/station/cargo)
 "Wn" = (
 /obj/structure/falsewall,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "Wr" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 "Wt" = (
 /turf/closed/wall/rust,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "Wv" = (
 /obj/structure/table/optable,
 /turf/open/floor/plating,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "WH" = (
 /obj/effect/decal/cleanable/oil/slippery,
 /obj/structure/closet/crate,
@@ -1105,11 +1105,11 @@
 /obj/effect/spawner/random/decoration/glowstick,
 /obj/effect/spawner/random/decoration/glowstick,
 /turf/open/floor/plating,
-/area/ship/cargo)
+/area/station/cargo)
 "XL" = (
 /obj/machinery/medical_kiosk,
 /turf/open/floor/plating,
-/area/ship/maintenance/starboard)
+/area/station/maintenance/starboard)
 "XS" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/airalarm/directional/east,
@@ -1117,7 +1117,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "XU" = (
 /obj/machinery/cryopod{
 	dir = 4
@@ -1128,20 +1128,20 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plating,
-/area/ship/maintenance/fore)
+/area/station/maintenance/fore)
 "XZ" = (
 /obj/item/chair,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/plating,
-/area/ship/maintenance/port)
+/area/station/maintenance/port)
 "Yc" = (
 /turf/open/floor/plating,
-/area/ship/cargo)
+/area/station/cargo)
 "Zp" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plating,
-/area/ship/maintenance/central)
+/area/station/maintenance/central)
 
 (1,1,1) = {"
 xg

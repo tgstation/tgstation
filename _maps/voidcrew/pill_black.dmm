@@ -13,7 +13,7 @@
 	timer_set = 180
 	},
 /turf/open/floor/plasteel/tech/grid,
-/area/ship/storage)
+/area/station/storage)
 "b" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers{
@@ -43,7 +43,7 @@
 	pixel_y = 9
 	},
 /turf/open/floor/plasteel/tech/grid,
-/area/ship/storage)
+/area/station/storage)
 "c" = (
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas,
@@ -102,7 +102,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/tech/grid,
-/area/ship/storage)
+/area/station/storage)
 
 (1,1,1) = {"
 a
