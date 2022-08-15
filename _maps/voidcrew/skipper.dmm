@@ -1360,7 +1360,7 @@
 /area/station/engineering)
 "rl" = (
 /obj/structure/closet/crate,
-/obj/item/stack/sheet/mineral/plasma/fifty,
+/obj/item/stack/sheet/mineral/plasma/thirty,
 /obj/machinery/firealarm{
 	pixel_y = -28
 	},

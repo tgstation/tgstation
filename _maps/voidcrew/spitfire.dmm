@@ -975,7 +975,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/stack/sheet/mineral/plasma/twenty,
+/obj/item/stack/sheet/mineral/plasma/five,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "NA" = (

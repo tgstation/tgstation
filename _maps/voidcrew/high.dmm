@@ -1197,7 +1197,7 @@
 	},
 /obj/structure/window/plasma/reinforced/spawner,
 /obj/item/stack/sheet/mineral/uranium/five,
-/obj/item/stack/sheet/mineral/plasma/twenty,
+/obj/item/stack/sheet/mineral/plasma/five,
 /turf/open/floor/plating,
 /area/station/engineering)
 "uj" = (

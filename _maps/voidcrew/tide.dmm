@@ -344,7 +344,7 @@
 /area/station/cargo)
 "xk" = (
 /obj/machinery/power/port_gen/pacman,
-/obj/item/stack/sheet/mineral/plasma/twenty,
+/obj/item/stack/sheet/mineral/plasma/five,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)

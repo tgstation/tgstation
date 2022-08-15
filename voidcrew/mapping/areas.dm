@@ -83,3 +83,9 @@
 			height = new_width
 			dwidth = offset_y - 1
 			dheight = new_width - offset_x
+
+
+/area/station/external
+	name = "External"
+	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
+	icon_state = "space_near"

@@ -396,7 +396,7 @@
 	},
 /obj/structure/cable,
 /obj/structure/closet/crate,
-/obj/item/stack/sheet/mineral/plasma/twenty,
+/obj/item/stack/sheet/mineral/plasma/five,
 /turf/open/floor/plating,
 /area/station/engineering)
 "qi" = (

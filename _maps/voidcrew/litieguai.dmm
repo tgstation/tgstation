@@ -1741,7 +1741,7 @@
 /turf/open/floor/iron/white,
 /area/station/science)
 "Lh" = (
-/obj/item/stack/sheet/mineral/plasma/twenty,
+/obj/item/stack/sheet/mineral/plasma/five,
 /obj/machinery/atmospherics/components/binary/pump/on/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
@@ -1879,7 +1879,7 @@
 /turf/open/floor/iron/dark,
 /area/station/commons)
 "MN" = (
-/obj/item/stack/sheet/mineral/plasma/twenty,
+/obj/item/stack/sheet/mineral/plasma/five,
 /obj/machinery/atmospherics/components/binary/pump/on/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)
@@ -2335,10 +2335,10 @@
 /area/station/science)
 "UA" = (
 /obj/structure/table/glass,
-/obj/item/stack/sheet/mineral/plasma/fifty{
+/obj/item/stack/sheet/mineral/plasma/thirty{
 	pixel_y = 5
 	},
-/obj/item/stack/sheet/mineral/plasma/fifty,
+/obj/item/stack/sheet/mineral/plasma/thirty,
 /obj/item/storage/box/monkeycubes,
 /obj/item/stack/sheet/mineral/uranium/fifty,
 /turf/open/floor/iron/white,

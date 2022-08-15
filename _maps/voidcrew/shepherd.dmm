@@ -1051,7 +1051,7 @@
 /area/station/commons/chapel/office)
 "rA" = (
 /obj/structure/closet/crate/engineering,
-/obj/item/stack/sheet/mineral/plasma/fifty,
+/obj/item/stack/sheet/mineral/plasma/thirty,
 /obj/item/stack/sheet/mineral/uranium/twenty,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,

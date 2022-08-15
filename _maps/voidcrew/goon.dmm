@@ -663,7 +663,7 @@
 "Lr" = (
 /obj/machinery/power/port_gen/pacman,
 /obj/structure/cable,
-/obj/item/stack/sheet/mineral/plasma/twenty,
+/obj/item/stack/sheet/mineral/plasma/five,
 /obj/effect/turf_decal/box,
 /turf/open/floor/mineral/titanium/yellow,
 /area/station/engineering)

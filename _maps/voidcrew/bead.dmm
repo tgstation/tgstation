@@ -811,7 +811,7 @@
 /area/station/hallway/central)
 "Sx" = (
 /obj/structure/closet/crate,
-/obj/item/stack/sheet/mineral/plasma/fifty,
+/obj/item/stack/sheet/mineral/plasma/thirty,
 /obj/item/stack/sheet/mineral/uranium/five,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
 	dir = 4

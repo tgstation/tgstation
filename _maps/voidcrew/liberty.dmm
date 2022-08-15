@@ -1604,7 +1604,7 @@
 /obj/structure/closet/crate{
 	name = "fuel crate"
 	},
-/obj/item/stack/sheet/mineral/plasma/fifty,
+/obj/item/stack/sheet/mineral/plasma/thirty,
 /turf/open/floor/mineral/plastitanium,
 /area/station/cargo)
 "WK" = (

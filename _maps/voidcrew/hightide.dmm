@@ -499,7 +499,7 @@
 "vr" = (
 /obj/structure/cable,
 /obj/machinery/power/port_gen/pacman,
-/obj/item/stack/sheet/mineral/plasma/twenty,
+/obj/item/stack/sheet/mineral/plasma/five,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)
 "vK" = (

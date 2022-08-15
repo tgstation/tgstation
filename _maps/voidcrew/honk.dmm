@@ -73,7 +73,7 @@
 "iN" = (
 /obj/structure/window/reinforced/plasma,
 /obj/machinery/light,
-/obj/item/stack/sheet/mineral/plasma/twenty,
+/obj/item/stack/sheet/mineral/plasma/five,
 /obj/structure/cable,
 /obj/machinery/power/port_gen/pacman,
 /turf/open/floor/mineral/bananium,

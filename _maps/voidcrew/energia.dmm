@@ -730,7 +730,7 @@
 "BD" = (
 /obj/machinery/atmospherics/pipe/layer_manifold,
 /obj/structure/closet/crate,
-/obj/item/stack/sheet/mineral/plasma/fifty,
+/obj/item/stack/sheet/mineral/plasma/thirty,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "BF" = (
