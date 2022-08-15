@@ -3,7 +3,7 @@
 	var/description
 	/// An integer value that affects overall sanity over time
 	var/mood_change = 0
-	/// How long this mood event should last
+	/// How long this mood event should last (if 0, the mood event has an infinite duration and needs to be cleared manually)
 	var/timeout = 0
 	/// Is this mood event hidden on examine
 	var/hidden = FALSE
