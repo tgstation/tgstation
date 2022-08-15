@@ -274,7 +274,7 @@
 /obj/effect/turf_decal/radiation/white,
 /obj/effect/turf_decal/industrial/outline,
 /obj/effect/turf_decal/radiation/white,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
 /turf/open/floor/plasteel/tech/grid,
@@ -894,7 +894,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 4
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-6"
 	},
 /turf/open/floor/plasteel/tech/techmaint,
@@ -1013,7 +1013,7 @@
 /area/ship/storage)
 "rM" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
@@ -2069,10 +2069,10 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-9"
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-4"
 	},
 /obj/structure/cable{
@@ -2118,7 +2118,7 @@
 	dir = 4;
 	name = "Input to Fuel"
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-8"
 	},
 /obj/structure/catwalk/over,
@@ -3024,7 +3024,7 @@
 /area/ship/storage)
 "XP" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/terminal{

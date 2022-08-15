@@ -74,7 +74,7 @@
 /obj/effect/turf_decal/industrial/warning{
 	dir = 1
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/structure/cable/orange{
@@ -755,7 +755,7 @@
 	dir = 1
 	},
 /obj/machinery/power/terminal,
-/obj/structure/cable,
+/obj/structure/cable/yellow,
 /obj/structure/catwalk/over/plated_catwalk,
 /turf/open/floor/plating,
 /area/ship/engineering/engine)
@@ -1272,7 +1272,7 @@
 "jg" = (
 /obj/machinery/suit_storage_unit/engine,
 /obj/effect/turf_decal/industrial/outline/yellow,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/patterned/grid,
@@ -1398,7 +1398,7 @@
 /turf/open/floor/plasteel/white,
 /area/ship/medical)
 "jU" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "2-4"
 	},
 /obj/structure/catwalk/over,
@@ -1676,7 +1676,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 9
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/structure/cable{
@@ -3381,7 +3381,7 @@
 /turf/open/floor/carpet,
 /area/ship/crew/dorm)
 "xm" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/structure/catwalk/over,
@@ -3687,7 +3687,7 @@
 /obj/structure/sign/warning/electricshock{
 	pixel_x = 32
 	},
-/obj/structure/cable,
+/obj/structure/cable/yellow,
 /obj/structure/catwalk/over/plated_catwalk,
 /turf/open/floor/plating,
 /area/ship/engineering/engine)
@@ -4679,7 +4679,7 @@
 /turf/open/floor/plating,
 /area/ship/maintenance/starboard)
 "Hh" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/machinery/light,
@@ -5702,7 +5702,7 @@
 /turf/open/floor/plasteel,
 /area/ship/crew/canteen)
 "OU" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/industrial/warning{
@@ -5711,7 +5711,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 4
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/patterned/grid,
@@ -7083,7 +7083,7 @@
 /turf/open/floor/plasteel,
 /area/ship/hallway/port)
 "ZD" = (
-/obj/structure/cable,
+/obj/structure/cable/yellow,
 /turf/open/floor/plating,
 /area/ship/engineering/engine)
 "ZF" = (

@@ -65,7 +65,7 @@
 /turf/open/floor/pod/light,
 /area/ship/hallway/fore)
 "aW" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-4"
 	},
 /obj/effect/turf_decal/techfloor/orange{
@@ -182,7 +182,7 @@
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
 "bJ" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/techfloor/orange{
@@ -203,7 +203,7 @@
 /turf/open/floor/pod/light,
 /area/ship/hallway/starboard)
 "bS" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/terminal{
@@ -983,7 +983,7 @@
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/yellow,
 /obj/effect/turf_decal/box,
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
@@ -1231,10 +1231,10 @@
 /turf/open/floor/pod/dark,
 /area/ship/cargo)
 "qE" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-8"
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/techfloor/orange,
@@ -1597,7 +1597,7 @@
 /area/ship/crew/canteen)
 "va" = (
 /obj/structure/window/reinforced/spawner,
-/obj/structure/cable,
+/obj/structure/cable/yellow,
 /obj/effect/turf_decal/box,
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
@@ -1782,13 +1782,13 @@
 /turf/open/floor/pod/light,
 /area/ship/science/robotics)
 "yz" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
@@ -1817,7 +1817,7 @@
 /obj/effect/turf_decal/techfloor/orange/corner{
 	dir = 4
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
 /turf/open/floor/plating,
@@ -1848,10 +1848,10 @@
 /turf/open/floor/pod/light,
 /area/ship/science/robotics)
 "zc" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "2-4"
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
@@ -1998,10 +1998,10 @@
 /turf/open/floor/plasteel/mono/dark,
 /area/ship/science)
 "AN" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
@@ -2494,7 +2494,7 @@
 /turf/open/floor/plasteel/mono/dark,
 /area/ship/science)
 "GT" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/terminal{
@@ -2660,12 +2660,12 @@
 /turf/open/floor/eighties,
 /area/ship/crew/canteen)
 "IT" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
@@ -3140,7 +3140,7 @@
 /turf/open/floor/plasteel/mono/white,
 /area/ship/science)
 "NW" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/machinery/light{
@@ -3417,7 +3417,7 @@
 /turf/open/floor/plating,
 /area/ship/engineering/electrical)
 "Rh" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-8"
 	},
 /obj/effect/turf_decal/techfloor/orange{
@@ -3950,7 +3950,7 @@
 /obj/machinery/power/port_gen/pacman/uranium{
 	anchored = 1
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
 /obj/effect/turf_decal/box,
@@ -4098,7 +4098,7 @@
 /area/ship/crew/canteen)
 "Zt" = (
 /obj/structure/window/reinforced/spawner/north,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
 /obj/effect/turf_decal/box,

@@ -639,7 +639,7 @@
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/yellow,
 /turf/open/floor/engine,
 /area/ship/engineering/engine)
 "cs" = (
@@ -729,7 +729,7 @@
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
 	dir = 5
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
 /turf/open/floor/engine,
@@ -869,10 +869,10 @@
 /turf/open/floor/plating,
 /area/ship/crew/janitor)
 "dx" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-4"
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/machinery/light,
@@ -1558,7 +1558,7 @@
 /turf/open/floor/wood,
 /area/ship/bridge)
 "fQ" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "2-4"
 	},
 /turf/open/floor/engine,
@@ -1669,7 +1669,7 @@
 /turf/closed/wall/r_wall,
 /area/ship/engineering)
 "gz" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /turf/open/floor/engine,
@@ -1825,10 +1825,10 @@
 /turf/open/floor/carpet/nanoweave/beige,
 /area/ship/crew/dorm)
 "hk" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "2-4"
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
@@ -2399,10 +2399,10 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /turf/open/floor/engine,
@@ -4208,7 +4208,7 @@
 /turf/open/floor/plasteel,
 /area/ship/hallway/fore)
 "qR" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/machinery/airalarm/directional/west,
@@ -5015,7 +5015,7 @@
 	},
 /area/ship/crew/chapel)
 "uz" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/yellow/visible,
@@ -6649,10 +6649,10 @@
 /turf/open/floor/plasteel,
 /area/ship/hallway/central)
 "AT" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-4"
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /turf/open/floor/engine,
@@ -6752,7 +6752,7 @@
 /turf/open/floor/plasteel,
 /area/ship/storage)
 "Bs" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-8"
 	},
 /obj/machinery/camera/autoname{
@@ -6795,10 +6795,10 @@
 /turf/open/floor/plasteel/white,
 /area/ship/maintenance/central)
 "BA" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "2-4"
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /turf/open/floor/engine,
@@ -9058,7 +9058,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
 /turf/open/floor/engine,
@@ -9900,7 +9900,7 @@
 /turf/open/floor/plasteel/dark,
 /area/ship/crew/canteen)
 "NS" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/machinery/power/apc/auto_name/west,
@@ -10652,7 +10652,7 @@
 /obj/structure/window/plasma/reinforced/spawner/north,
 /obj/machinery/power/rad_collector/anchored,
 /obj/machinery/atmospherics/pipe/manifold/yellow/visible,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
 /turf/open/floor/engine,
@@ -11028,7 +11028,7 @@
 /turf/open/floor/wood,
 /area/ship/crew/toilet)
 "Sq" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/machinery/light{
@@ -11064,7 +11064,7 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 6
 	},
-/obj/structure/cable,
+/obj/structure/cable/yellow,
 /turf/open/floor/engine,
 /area/ship/engineering/engine)
 "Sy" = (
@@ -12143,7 +12143,7 @@
 /turf/closed/wall/r_wall,
 /area/ship/security/prison)
 "WO" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
 /obj/machinery/camera/autoname,
@@ -12476,7 +12476,7 @@
 /turf/open/floor/plasteel/white,
 /area/ship/maintenance/central)
 "Yz" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-4"
 	},
 /turf/open/floor/engine,

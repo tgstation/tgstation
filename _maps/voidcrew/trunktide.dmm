@@ -137,7 +137,7 @@
 /obj/machinery/atmospherics/components/unary/shuttle/heater{
 	dir = 1
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
 /turf/open/floor/plasteel/tech/techmaint,
@@ -737,7 +737,7 @@
 /turf/open/floor/plasteel/tech/grid,
 /area/ship/maintenance/central)
 "vt" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/port_gen/pacman,
@@ -786,7 +786,7 @@
 /turf/open/floor/plasteel,
 /area/ship/crew)
 "we" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
@@ -826,7 +826,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
 /turf/open/floor/plasteel/tech/techmaint,
@@ -861,7 +861,7 @@
 /obj/machinery/atmospherics/components/unary/shuttle/heater{
 	dir = 1
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
 /turf/open/floor/plasteel/tech/techmaint,
@@ -874,7 +874,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
 /turf/open/floor/plasteel/tech/techmaint,
@@ -1081,7 +1081,7 @@
 /obj/machinery/power/shuttle/engine/fueled/plasma{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/yellow,
 /turf/open/floor/plating,
 /area/ship/engineering)
 "Eb" = (
@@ -1590,7 +1590,7 @@
 /turf/open/floor/plasteel/tech/grid,
 /area/ship/maintenance/central)
 "VV" = (
-/obj/structure/cable,
+/obj/structure/cable/yellow,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -1639,7 +1639,7 @@
 /obj/machinery/power/shuttle/engine/electric{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/yellow,
 /turf/open/floor/plating,
 /area/ship/engineering)
 "YB" = (

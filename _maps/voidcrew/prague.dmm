@@ -582,7 +582,7 @@
 /area/ship/science)
 "lI" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
@@ -729,7 +729,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
 /turf/open/floor/plating,
@@ -811,7 +811,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ship/cargo)
 "qo" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
@@ -997,7 +997,7 @@
 /area/ship/bridge)
 "tw" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "2-4"
 	},
 /turf/open/floor/plating,
@@ -1140,7 +1140,7 @@
 /turf/open/floor/plasteel,
 /area/ship/crew)
 "vS" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
@@ -1656,7 +1656,7 @@
 /area/ship/engineering)
 "FP" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-8"
 	},
 /turf/open/floor/plating,
@@ -2557,7 +2557,7 @@
 /area/ship/bridge)
 "XG" = (
 /obj/effect/turf_decal/industrial/outline/yellow,
-/obj/structure/cable,
+/obj/structure/cable/yellow,
 /obj/machinery/power/port_gen/pacman/uranium,
 /obj/item/stack/sheet/mineral/uranium/five,
 /turf/open/floor/plating,

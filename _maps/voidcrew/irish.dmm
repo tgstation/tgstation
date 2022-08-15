@@ -284,10 +284,10 @@
 /area/ship/maintenance/aft)
 "qY" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "2-4"
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -355,10 +355,10 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -450,7 +450,7 @@
 /area/ship/maintenance/aft)
 "vP" = (
 /obj/machinery/power/port_gen/pacman,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
 /turf/open/floor/plating,
@@ -484,7 +484,7 @@
 "xj" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
 /obj/machinery/power/port_gen/pacman,
-/obj/structure/cable,
+/obj/structure/cable/yellow,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
@@ -542,7 +542,7 @@
 /area/ship/medical)
 "yU" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
 /obj/structure/cable{

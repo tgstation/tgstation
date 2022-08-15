@@ -268,10 +268,10 @@
 /area/ship/cargo)
 "cM" = (
 /obj/machinery/power/port_gen/pacman/uranium,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating/catwalk_floor{
@@ -289,7 +289,7 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-4"
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
@@ -366,7 +366,7 @@
 /turf/open/floor/engine,
 /area/ship/security)
 "dy" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /turf/open/floor/engine,
@@ -540,10 +540,10 @@
 /area/ship/cargo/office)
 "eM" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-8"
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /turf/open/floor/engine,
@@ -686,7 +686,7 @@
 /obj/machinery/power/shuttle/engine/electric{
 	dir = 4
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-4"
 	},
 /turf/open/floor/plating,
@@ -1080,7 +1080,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 5
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-8"
 	},
 /turf/open/floor/engine,
@@ -1297,7 +1297,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/ship/crew/dorm)
 "nR" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/structure/cable{
@@ -1404,10 +1404,10 @@
 /area/ship/engineering/electrical)
 "oI" = (
 /obj/effect/decal/cleanable/oil,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-4"
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /turf/open/floor/engine,
@@ -1586,7 +1586,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
@@ -1660,7 +1660,7 @@
 /obj/structure/sign/warning/electricshock{
 	pixel_y = -32
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-4"
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
@@ -1675,7 +1675,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating/catwalk_floor{
@@ -1696,7 +1696,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
 /turf/open/floor/plating/catwalk_floor{
@@ -1810,11 +1810,11 @@
 	},
 /area/ship/engineering)
 "sw" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/machinery/power/port_gen/pacman,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
 /turf/open/floor/plating/catwalk_floor{
@@ -2031,7 +2031,7 @@
 /turf/open/floor/wood/yew,
 /area/ship/cargo/office)
 "ux" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/engineering{
@@ -2116,7 +2116,7 @@
 "vR" = (
 /obj/machinery/power/port_gen/pacman,
 /obj/machinery/atmospherics/pipe/layer_manifold/visible,
-/obj/structure/cable,
+/obj/structure/cable/yellow,
 /turf/open/floor/plating/catwalk_floor{
 	icon_state = "catwalk_above"
 	},
@@ -2161,7 +2161,7 @@
 /area/ship/engineering/atmospherics)
 "wk" = (
 /obj/machinery/power/port_gen/pacman,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
 /turf/open/floor/plating/catwalk_floor{
@@ -2357,10 +2357,10 @@
 	dir = 4
 	},
 /obj/machinery/power/port_gen/pacman/uranium,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating/catwalk_floor{
@@ -2405,10 +2405,10 @@
 /turf/open/floor/engine,
 /area/ship/security)
 "yO" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /turf/open/floor/engine,
@@ -2768,8 +2768,8 @@
 	},
 /obj/machinery/power/port_gen/pacman/uranium,
 /obj/item/pipe,
-/obj/structure/cable,
-/obj/structure/cable{
+/obj/structure/cable/yellow,
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating/catwalk_floor{
@@ -3300,13 +3300,13 @@
 /area/ship/crew/chapel/office)
 "Id" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-8"
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-4"
 	},
 /turf/open/floor/engine,
@@ -3655,7 +3655,7 @@
 /area/ship/science)
 "LX" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/structure/cable{
@@ -3765,7 +3765,7 @@
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/ship/science)
 "NE" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
@@ -3798,7 +3798,7 @@
 /turf/open/floor/plasteel,
 /area/ship/hallway/central)
 "NQ" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
@@ -3943,11 +3943,11 @@
 /area/ship/cargo)
 "OV" = (
 /obj/item/pipe,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/machinery/power/port_gen/pacman,
-/obj/structure/cable,
+/obj/structure/cable/yellow,
 /turf/open/floor/plating/catwalk_floor{
 	icon_state = "catwalk_above"
 	},
@@ -4091,7 +4091,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 10
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-4"
 	},
 /turf/open/floor/engine,
@@ -4102,8 +4102,8 @@
 "Qr" = (
 /obj/machinery/power/port_gen/pacman/uranium,
 /obj/item/pipe,
-/obj/structure/cable,
-/obj/structure/cable{
+/obj/structure/cable/yellow,
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating/catwalk_floor{
@@ -4129,7 +4129,7 @@
 	},
 /area/ship/medical)
 "QI" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/engineering,
@@ -4596,10 +4596,10 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/ship/medical)
 "VE" = (
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "2-4"
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "1-4"
 	},
 /turf/open/floor/plating/catwalk_floor{
@@ -4854,7 +4854,7 @@
 /obj/structure/sign/warning/electricshock{
 	pixel_y = -32
 	},
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
