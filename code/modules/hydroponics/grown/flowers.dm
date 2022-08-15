@@ -233,7 +233,7 @@
 	product = /obj/item/grown/novaflower
 	genes = list(/datum/plant_gene/trait/backfire/novaflower_heat, /datum/plant_gene/trait/attack/novaflower_attack, /datum/plant_gene/trait/preserved)
 	mutatelist = null
-	reagents_add = list(/datum/reagent/consumable/condensedcapsaicin = 0.25, /datum/reagent/consumable/capsaicin = 0.3, /datum/reagent/consumable/nutriment = 0)
+	reagents_add = list(/datum/reagent/consumable/condensedcapsaicin = 0.25, /datum/reagent/consumable/capsaicin = 0.3, /datum/reagent/consumable/nutriment = 0, /datum/reagent/toxin/acid = 0.05)
 	rarity = 20
 
 /obj/item/grown/novaflower
