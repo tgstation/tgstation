@@ -152,11 +152,12 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 			return
 
 		if(isliving(AM))
-			var/mob/living/L = AM
-			if(L.stat != DEAD)
-				L.death(TRUE)
-				L.notransform = FALSE
-			L.apply_damage(FALL_DAMAGE)
+			var/mob/living/falling_mob = AM
+			if(falling_mob.stat != DEAD)
+				falling_mob.death(TRUE)
+				falling_mob.notransform = FALSE
+			falling_mob.apply_damage(FALL_DAMAGE)
+			RegisterSignal(falling_mob, COMSIG_LIVING_REVIVE, .proc/on_revive)
 
 		falling_atoms -= falling_ref
 
@@ -173,19 +174,43 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 			SEND_SIGNAL(AM, COMSIG_MOVABLE_SECLUDED_LOCATION)
 		else
 			parent.visible_message(span_boldwarning("[parent] spits out [AM]!"))
-			AM.throw_at(get_edge_target_turf(parent,pick(GLOB.alldirs)),rand(1, 10),rand(1, 10))
+			AM.throw_at(get_edge_target_turf(parent, pick(GLOB.alldirs)), rand(1, 10), rand(1, 10))
 
 #undef FALL_DAMAGE
 
-/// Something has left the chasm tile, this might not necessarily be something which was inside it.
-/datum/component/chasm/proc/left_chasm(datum/source, atom/movable/gone)
+/**
+ * Called when something has left the chasm depths storage.
+ * Arguments
+ *
+ * * source - Chasm object holder.
+ * * gone - Item which has just left the chasm contents.
+ */
+/datum/component/chasm/proc/left_chasm(atom/source, atom/movable/gone)
 	SIGNAL_HANDLER
-	if (!droppable(gone))
-		return
-	to_chat(world, "left [gone]")
+	UnregisterSignal(gone, COMSIG_LIVING_REVIVE)
+
+#define CHASM_TRAIT "chasm trait"
+
+/**
+ * Called if something comes back to life inside the pit. Expected sources are badmins and changelings.
+ * Ethereals should take enough damage to be smashed and not revive.
+ *
+ * Arguments
+ * * escapee - Lucky guy who just came back to life at the bottom of a hole.
+ */
+/datum/component/chasm/proc/on_revive(mob/living/escapee)
+	SIGNAL_HANDLER
+	var/atom/parent = src.parent
+	parent.visible_message(span_boldwarning("After a long climb, [escapee] leaps out of [parent]!"))
+	ADD_TRAIT(escapee, TRAIT_MOVE_FLYING, CHASM_TRAIT) //Otherwise they instantly fall back in
+	escapee.forceMove(get_turf(parent))
+	escapee.throw_at(get_edge_target_turf(parent, pick(GLOB.alldirs)), rand(1, 10), rand(1, 10))
+	REMOVE_TRAIT(escapee, TRAIT_MOVE_FLYING, CHASM_TRAIT)
+	escapee.Paralyze(20 SECONDS, TRUE) // They're really tired after doing that
+	UnregisterSignal(escapee, COMSIG_LIVING_REVIVE)
 
 /obj/effect/abstract/chasm_storage
 	name = "chasm depths"
-	desc = "The bottom of a hole, you shouldn't be able to interact with this."
+	desc = "The bottom of a hole. You shouldn't be able to interact with this."
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
