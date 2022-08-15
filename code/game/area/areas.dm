@@ -424,7 +424,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		return
 
 	if(ambient_buzz != old_area.ambient_buzz)
-		L.refresh_looping_ambience(old_area)
+		L.refresh_looping_ambience()
 
 ///Tries to play looping ambience to the mobs.
 /mob/proc/refresh_looping_ambience()
