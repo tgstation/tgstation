@@ -116,7 +116,7 @@
 	product = /obj/item/food/grown/banana/bluespace
 	mutatelist = null
 	genes = list(/datum/plant_gene/trait/slip, /datum/plant_gene/trait/teleport, /datum/plant_gene/trait/repeated_harvest)
-	reagents_add = list(/datum/reagent/bluespace = 0.2, /datum/reagent/consumable/banana = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.02)
+	reagents_add = list(/datum/reagent/bluespace = 0.2, /datum/reagent/consumable/banana = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.02, /datum/reagent/liquid_dark_matter = 0.2)
 	rarity = 30
 	graft_gene = /datum/plant_gene/trait/teleport
 
@@ -126,7 +126,7 @@
 	icon_state = "bluenana"
 	inhand_icon_state = "bluespace_peel"
 	trash_type = /obj/item/grown/bananapeel/bluespace
-	tastes = list("banana" = 1)
+	tastes = list("banana" = 1, "antimatter" = 1)
 	wine_power = 60
 	wine_flavor = "slippery hypercubes"
 
