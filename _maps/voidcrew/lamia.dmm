@@ -67,7 +67,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "an" = (
 /turf/open/floor/carpet/royalblack,
 /area/station/hallway/starboard)
@@ -109,7 +109,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "au" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -123,7 +123,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/black,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "av" = (
 /obj/structure/chair/wood/wings{
 	dir = 1
@@ -135,7 +135,7 @@
 	desc = "A wall plated with emerald.";
 	name = "emerald wall"
 	},
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "az" = (
 /obj/machinery/light/small{
 	brightness = 3;
@@ -144,7 +144,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/wood,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "aA" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -152,7 +152,7 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "aB" = (
 /obj/machinery/vending/games,
 /turf/open/floor/carpet/royalblack,
@@ -167,11 +167,11 @@
 "aF" = (
 /obj/machinery/vending/snack/random,
 /turf/open/floor/wood,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "aG" = (
 /obj/machinery/vending/cola/random,
 /turf/open/floor/wood,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "aI" = (
 /obj/machinery/light,
 /turf/open/floor/carpet/royalblack,
@@ -252,7 +252,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "aW" = (
 /obj/machinery/chem_master/condimaster{
 	name = "HoochMaster 3000"
@@ -287,7 +287,7 @@
 "bd" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "bf" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -863,7 +863,7 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/green,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "hq" = (
 /obj/structure/destructible/cult/tome,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1085,7 +1085,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "qN" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile{
@@ -1241,7 +1241,7 @@
 	desc = "A wall plated with emerald.";
 	name = "emerald wall"
 	},
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "zN" = (
 /obj/machinery/light,
 /obj/machinery/computer/arcade,
@@ -1345,7 +1345,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Ek" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
@@ -1526,7 +1526,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "JB" = (
 /obj/structure/sign/poster/random,
 /turf/closed/wall/mineral/uranium/safe{
@@ -1700,7 +1700,7 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/green,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Ny" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
@@ -2000,7 +2000,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "XG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/kirbyplants/random,
@@ -2027,7 +2027,7 @@
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet/green,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Yx" = (
 /turf/closed/wall/mineral/uranium/safe{
 	desc = "A wall plated with emerald.";

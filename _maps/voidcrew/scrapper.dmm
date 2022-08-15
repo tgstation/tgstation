@@ -438,7 +438,7 @@
 	dir = 5
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "fl" = (
 /obj/structure/rack,
 /obj/item/storage/toolbox/mechanical,
@@ -492,7 +492,7 @@
 	dir = 8
 	},
 /turf/open/floor/pod/light,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "gf" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 4
@@ -668,7 +668,7 @@
 	dir = 9
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "iH" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/station/engineering/electrical)
@@ -769,7 +769,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "kv" = (
 /obj/structure/cable,
 /turf/open/floor/pod/dark,
@@ -1053,7 +1053,7 @@
 	dir = 6
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "nE" = (
 /obj/effect/turf_decal/siding/red{
 	dir = 10
@@ -1506,7 +1506,7 @@
 	pixel_y = 24
 	},
 /turf/open/floor/pod/light,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "tA" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
@@ -1606,7 +1606,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "vB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4,
 /obj/structure/cable,
@@ -1693,7 +1693,7 @@
 	dir = 10
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "wv" = (
 /obj/structure/closet/emcloset,
 /obj/effect/spawner/random/maintenance,
@@ -1972,7 +1972,7 @@
 	dir = 1
 	},
 /turf/open/floor/pod/light,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "zA" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 6
@@ -2148,7 +2148,7 @@
 	name = "cargo bay blast door"
 	},
 /turf/open/floor/pod/light,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Bj" = (
 /obj/structure/cable,
 /obj/item/radio/intercom{
@@ -2245,7 +2245,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /turf/open/floor/pod/light,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "CM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 4
@@ -2683,7 +2683,7 @@
 	pixel_y = 24
 	},
 /turf/open/floor/pod/light,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "IE" = (
 /obj/machinery/door/poddoor{
 	id = "scrapdoorext";
@@ -2700,7 +2700,7 @@
 "IX" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /turf/open/floor/pod/light,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Jc" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/effect/landmark/start/shaft_miner,
@@ -2708,7 +2708,7 @@
 	dir = 4
 	},
 /turf/open/floor/pod/light,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Je" = (
 /obj/structure/rack,
 /obj/item/storage/toolbox/mechanical,
@@ -2877,7 +2877,7 @@
 	dir = 8
 	},
 /turf/open/floor/pod/light,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "KX" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/station/commons/office)
@@ -3015,7 +3015,7 @@
 "Nb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /turf/open/floor/pod/light,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Nj" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 4
@@ -3186,7 +3186,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/pod/light,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "OD" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 4
@@ -3867,7 +3867,7 @@
 /area/station/medical)
 "WF" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "WL" = (
 /obj/structure/table/reinforced,
 /obj/item/kitchen/rollingpin,
@@ -4112,7 +4112,7 @@
 	dir = 4
 	},
 /turf/open/floor/pod/light,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Zr" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{

@@ -6,7 +6,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer4,
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "ac" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
@@ -50,12 +50,12 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "bz" = (
 /obj/effect/turf_decal/spline/fancy/beige,
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "bC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
 	dir = 4
@@ -106,7 +106,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "dz" = (
 /obj/effect/turf_decal/spline/fancy/brown{
 	dir = 1
@@ -195,7 +195,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "hD" = (
 /obj/effect/turf_decal/spline/fancy/beige{
 	dir = 1
@@ -206,7 +206,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "hP" = (
 /obj/effect/turf_decal/industrial/warning{
 	dir = 9
@@ -302,7 +302,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "mX" = (
 /obj/effect/turf_decal/spline/fancy/blue{
 	dir = 8
@@ -340,7 +340,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer4,
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "od" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
@@ -367,7 +367,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "pu" = (
 /obj/effect/turf_decal/spline/fancy/brown{
 	dir = 8
@@ -479,7 +479,7 @@
 "rR" = (
 /obj/effect/turf_decal/spline/fancy/beige,
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "sm" = (
 /obj/effect/turf_decal/industrial/warning{
 	dir = 1
@@ -606,7 +606,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "xR" = (
 /obj/structure/rack,
 /obj/item/defibrillator/loaded,
@@ -653,7 +653,7 @@
 	dir = 9
 	},
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "zd" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
@@ -935,7 +935,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "KQ" = (
 /obj/machinery/computer/helm{
 	dir = 8
@@ -984,7 +984,7 @@
 	},
 /obj/machinery/light,
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Nf" = (
 /obj/machinery/door/poddoor{
 	id = "smejection"
@@ -1196,7 +1196,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "SN" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
@@ -1274,7 +1274,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "VE" = (
 /obj/machinery/door/airlock/medical/glass,
 /obj/structure/cable,
@@ -1303,7 +1303,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Wa" = (
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
@@ -1352,7 +1352,7 @@
 	dir = 5
 	},
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "ZE" = (
 /obj/structure/closet/radiation,
 /obj/item/clothing/suit/utility/radiation,

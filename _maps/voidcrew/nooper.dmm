@@ -55,7 +55,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "bP" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
@@ -110,7 +110,7 @@
 	pixel_y = -26
 	},
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "eY" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
@@ -223,7 +223,7 @@
 	dir = 5
 	},
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "lU" = (
 /turf/template_noop,
 /area/template_noop)
@@ -246,7 +246,7 @@
 /obj/machinery/light,
 /obj/machinery/vending/snack/random,
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "nK" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -306,7 +306,7 @@
 	dir = 5
 	},
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "rA" = (
 /turf/closed/wall/mineral/titanium,
 /area/station/command/bridge)
@@ -334,7 +334,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "uE" = (
 /obj/machinery/button/door{
 	id = "noopdoors";
@@ -423,7 +423,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "zU" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/corner/brown/mono,
@@ -470,7 +470,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "BX" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
@@ -488,7 +488,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Dj" = (
 /obj/structure/table/greyscale,
 /obj/item/storage/firstaid/advanced,
@@ -604,7 +604,7 @@
 	dir = 6
 	},
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Id" = (
 /obj/machinery/suit_storage_unit/engine,
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
@@ -626,7 +626,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "II" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
@@ -659,7 +659,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Lc" = (
 /obj/item/pipe_dispenser,
 /obj/item/construction/rcd/loaded,
@@ -697,7 +697,7 @@
 	dir = 10
 	},
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Qi" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
@@ -733,7 +733,7 @@
 	dir = 9
 	},
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Rd" = (
 /obj/machinery/airalarm/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -809,7 +809,7 @@
 	dir = 10
 	},
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Wz" = (
 /obj/item/areaeditor,
 /obj/structure/cable,

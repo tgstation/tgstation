@@ -904,7 +904,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "gD" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -1430,7 +1430,7 @@
 	},
 /obj/effect/turf_decal/corner/grey/mono,
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "kW" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/hidden,
 /obj/structure/cable,
@@ -2132,7 +2132,7 @@
 /obj/effect/turf_decal/corner/grey/mono,
 /obj/effect/turf_decal/corner/neutral/border,
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "ps" = (
 /obj/effect/turf_decal/corner/red,
 /obj/effect/turf_decal/corner/white{
@@ -2155,7 +2155,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "pJ" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
@@ -2224,7 +2224,7 @@
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer2,
 /obj/effect/turf_decal/corner/grey/mono,
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "qn" = (
 /turf/closed/wall/mineral/titanium,
 /area/station/command/bridge)
@@ -2613,7 +2613,7 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "tj" = (
 /obj/structure/sign/nanotrasen{
 	pixel_y = 32
@@ -2943,7 +2943,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "vB" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
@@ -2964,7 +2964,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "vN" = (
 /obj/effect/turf_decal/industrial/warning{
 	dir = 1
@@ -3228,7 +3228,7 @@
 /obj/effect/turf_decal/corner/grey/mono,
 /obj/effect/turf_decal/corner/neutral/border,
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "yG" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/storage)
@@ -3407,7 +3407,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/corner/grey/mono,
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Am" = (
 /obj/effect/turf_decal/industrial/warning{
 	dir = 8
@@ -3733,7 +3733,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "CA" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters{
@@ -3741,7 +3741,7 @@
 	name = "blast shutters"
 	},
 /turf/open/floor/plating,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "CC" = (
 /obj/effect/turf_decal/corner/purple/border{
 	dir = 5
@@ -3812,7 +3812,7 @@
 	pixel_y = -24
 	},
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Di" = (
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/corner/grey/half{
@@ -3827,7 +3827,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Do" = (
 /turf/open/floor/plasteel/tech/techmaint,
 /area/station/storage)
@@ -4098,7 +4098,7 @@
 	},
 /obj/effect/turf_decal/borderfloor,
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Fu" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -4383,7 +4383,7 @@
 	pixel_y = 22
 	},
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Hs" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -5448,7 +5448,7 @@
 	},
 /obj/effect/turf_decal/corner/grey/mono,
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Qq" = (
 /obj/effect/turf_decal/borderfloor{
 	dir = 1
@@ -5721,7 +5721,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Ss" = (
 /obj/effect/turf_decal/corner/grey/mono,
 /obj/effect/turf_decal/corner/neutral/border{
@@ -5735,7 +5735,7 @@
 	pixel_x = -28
 	},
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "SF" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
@@ -5980,7 +5980,7 @@
 	dir = 5
 	},
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Ub" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
@@ -6031,7 +6031,7 @@
 /area/station/maintenance/port)
 "Uk" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Um" = (
 /obj/structure/sink/kitchen/directional/east,
 /obj/structure/mirror{

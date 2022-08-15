@@ -73,7 +73,7 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "dN" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/corner/bottlegreen/mono,
@@ -85,7 +85,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "dS" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/shuttle,
@@ -135,7 +135,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "gJ" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/closed/wall/mineral/titanium,
@@ -335,7 +335,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "pq" = (
 /obj/machinery/computer/operating,
 /obj/effect/turf_decal/corner/blue/mono,
@@ -409,7 +409,7 @@
 /obj/effect/turf_decal/corner/bottlegreen/mono,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/mineral/titanium,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "td" = (
 /obj/structure/cable,
 },
@@ -421,7 +421,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "tj" = (
 /obj/item/reagent_containers/food/snacks/canned/beans{
 	pixel_x = -5;
@@ -474,7 +474,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "tQ" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/corner/red/mono,
@@ -776,13 +776,13 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Lw" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "LK" = (
 /obj/machinery/power/am_control_unit,
 /obj/structure/cable,
@@ -817,7 +817,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Oa" = (
 /obj/machinery/power/shuttle/engine/electric{
 	dir = 4
@@ -849,19 +849,19 @@
 "Pc" = (
 /obj/effect/turf_decal/corner/bottlegreen/mono,
 /turf/open/floor/mineral/titanium,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Pp" = (
 /obj/effect/turf_decal/corner/bottlegreen/mono,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "PN" = (
 /obj/effect/turf_decal/corner/bottlegreen/mono,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/mineral/titanium,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Qb" = (
 /obj/structure/cable,
 /obj/structure/rack,
@@ -944,7 +944,7 @@
 /obj/effect/turf_decal/corner/bottlegreen/mono,
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "VV" = (
 /turf/open/floor/mineral/titanium,
 /area/station/security/armory)
@@ -1031,7 +1031,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Yv" = (
 /obj/effect/turf_decal/corner/blue/mono,
 /obj/machinery/suit_storage_unit/medical,

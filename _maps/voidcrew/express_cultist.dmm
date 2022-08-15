@@ -35,7 +35,7 @@
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/cult,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "bg" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 8
@@ -179,7 +179,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/cult,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "eb" = (
 /obj/machinery/power/smes/engineering{
 	dir = 1
@@ -335,7 +335,7 @@
 /area/station/engineering/electrical)
 "kl" = (
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "ky" = (
 /obj/structure/ore_box,
 /obj/effect/turf_decal/industrial/outline/yellow,
@@ -530,7 +530,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "qf" = (
 /obj/effect/turf_decal/corner/brown{
 	dir = 5
@@ -889,7 +889,7 @@
 "BG" = (
 /obj/structure/cable,
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "BH" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
@@ -1283,7 +1283,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /turf/open/floor/cult,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Mf" = (
 /obj/effect/turf_decal/industrial/stand_clear{
 	dir = 4
@@ -1328,7 +1328,7 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/floor/cult,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "MQ" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 6
@@ -1583,7 +1583,7 @@
 /area/station/storage)
 "Sh" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Sl" = (
 /obj/effect/turf_decal/corner/yellow/mono,
 /obj/machinery/suit_storage_unit/mining/eva,
@@ -1656,7 +1656,7 @@
 /area/station/command/bridge)
 "Uq" = (
 /turf/open/floor/cult,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "Uv" = (
 /turf/closed/wall/mineral/titanium,
 /area/station/commons/dorm)

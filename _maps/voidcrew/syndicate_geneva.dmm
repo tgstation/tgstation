@@ -166,7 +166,7 @@
 /obj/item/vending_refill/autodrobe,
 /obj/effect/turf_decal/syndicateemblem/top/left,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "dr" = (
 /obj/item/kirbyplants/random,
 /obj/item/seeds/replicapod,
@@ -175,7 +175,7 @@
 	},
 /obj/effect/turf_decal/syndicateemblem/top/right,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "dw" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/corner/bottlegreen{
@@ -295,7 +295,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "eR" = (
 /obj/structure/table/glass,
 /obj/machinery/plantgenes,
@@ -308,7 +308,7 @@
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "eV" = (
 /obj/effect/turf_decal/syndicateemblem/middle/right,
 /obj/structure/cable,
@@ -319,7 +319,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "fB" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Crew Quarters"
@@ -440,7 +440,7 @@
 /obj/machinery/light,
 /obj/effect/turf_decal/syndicateemblem/bottom/left,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "iU" = (
 /obj/effect/turf_decal/syndicateemblem/bottom/middle,
 /obj/structure/cable,
@@ -449,7 +449,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "iY" = (
 /obj/effect/turf_decal/techfloor{
 	dir = 4
@@ -485,7 +485,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "jD" = (
 /obj/effect/turf_decal/corner/bottlegreen/full,
 /obj/structure/cable,
@@ -1720,7 +1720,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/hallway/central)
+/area/station/hallway/primary/central)
 "HY" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
