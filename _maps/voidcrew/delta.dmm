@@ -1454,7 +1454,7 @@
 /area/ship/engineering)
 "cC" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
@@ -1574,7 +1574,7 @@
 	anchored = 1
 	},
 /obj/item/wrench,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering)
 "cO" = (
@@ -2257,7 +2257,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/orange/visible,

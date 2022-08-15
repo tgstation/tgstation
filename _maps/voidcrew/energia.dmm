@@ -16,7 +16,7 @@
 "ao" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
 /obj/machinery/power/port_gen/pacman,
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-2"
 	},
 /turf/open/floor/plating,
@@ -36,7 +36,7 @@
 /obj/effect/turf_decal/industrial/warning{
 	dir = 1
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "2-4"
 	},
 /turf/open/floor/engine,
@@ -258,8 +258,8 @@
 	dir = 8
 	},
 /obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable/yellow,
-/obj/structure/cable/yellow{
+/obj/structure/cable,
+/obj/structure/cable{
 	icon_state = "1-2"
 	},
 /turf/open/floor/engine,
@@ -413,7 +413,7 @@
 /obj/machinery/atmospherics/pipe/manifold/green/visible{
 	dir = 4
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "2-8"
 	},
 /turf/open/floor/engine,
@@ -451,7 +451,7 @@
 	filter_type = "plasma"
 	},
 /obj/effect/turf_decal/industrial/warning/full,
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /turf/open/floor/engine,
@@ -469,7 +469,7 @@
 /area/ship/external)
 "rl" = (
 /obj/machinery/atmospherics/pipe/manifold4w/green/visible,
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /turf/open/floor/engine,
@@ -568,7 +568,7 @@
 	dir = 8
 	},
 /obj/effect/spawner/structure/window/plasma/reinforced,
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
@@ -591,7 +591,7 @@
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /turf/open/floor/engine,
@@ -731,12 +731,12 @@
 /area/ship/engineering/engine)
 "yK" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/terminal,
 /obj/machinery/power/port_gen/pacman,
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
@@ -783,7 +783,7 @@
 /obj/effect/turf_decal/industrial/warning{
 	dir = 6
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
@@ -798,8 +798,8 @@
 	dir = 8
 	},
 /obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable/yellow,
-/obj/structure/cable/yellow{
+/obj/structure/cable,
+/obj/structure/cable{
 	icon_state = "1-2"
 	},
 /turf/open/floor/engine,
@@ -1017,8 +1017,8 @@
 /obj/effect/turf_decal/industrial/warning{
 	dir = 4
 	},
-/obj/structure/cable/yellow,
-/obj/structure/cable/yellow{
+/obj/structure/cable,
+/obj/structure/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
@@ -1090,11 +1090,11 @@
 "LU" = (
 /obj/effect/turf_decal/industrial/warning/corner,
 /obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable/yellow,
-/obj/structure/cable/yellow{
+/obj/structure/cable,
+/obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-8"
 	},
 /turf/open/floor/engine,
@@ -1235,7 +1235,7 @@
 /obj/machinery/atmospherics/pipe/manifold/yellow/visible{
 	dir = 8
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-4"
 	},
 /obj/machinery/power/smes/engineering,
@@ -1259,7 +1259,7 @@
 /obj/effect/turf_decal/industrial/warning{
 	dir = 10
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ship/engineering/engine)
 "QB" = (
@@ -1314,7 +1314,7 @@
 /obj/effect/turf_decal/industrial/warning/corner{
 	dir = 1
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /turf/open/floor/engine,

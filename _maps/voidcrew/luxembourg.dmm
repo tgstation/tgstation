@@ -155,7 +155,7 @@
 /turf/open/floor/plating,
 /area/ship/engineering)
 "dB" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-8"
 	},
 /obj/machinery/power/port_gen/pacman,
@@ -564,7 +564,7 @@
 /area/ship/engineering)
 "jL" = (
 /obj/machinery/power/port_gen/pacman,
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-4"
 	},
 /obj/item/stack/sheet/mineral/plasma/five,
@@ -610,10 +610,10 @@
 /turf/open/floor/plasteel/dark,
 /area/ship/medical)
 "lr" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "2-8"
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -2122,7 +2122,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor/border_only,

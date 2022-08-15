@@ -10,10 +10,10 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ship/hallway/central)
 "av" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "2-8"
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
@@ -50,7 +50,7 @@
 /obj/machinery/door/poddoor{
 	id = "blackbeardblastdoor1"
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
@@ -67,7 +67,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ship/cargo)
 "bl" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -102,7 +102,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ship/hallway/central)
 "cs" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -121,13 +121,13 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ship/medical)
 "dc" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-4"
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "2-4"
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -149,7 +149,7 @@
 	},
 /area/ship/engineering)
 "dx" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/auto_name/west,
@@ -162,7 +162,7 @@
 	},
 /area/ship/crew)
 "dy" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -180,13 +180,13 @@
 	},
 /area/ship/hallway/fore)
 "dA" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-8"
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "2-8"
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer4,
@@ -206,7 +206,7 @@
 	},
 /area/ship/engineering)
 "dM" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -232,10 +232,10 @@
 /obj/machinery/atmospherics/pipe/manifold/orange/visible{
 	dir = 4
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-4"
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "2-4"
 	},
 /obj/structure/window/reinforced{
@@ -271,7 +271,7 @@
 /obj/machinery/power/shuttle/engine/electric{
 	dir = 4
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-4"
 	},
 /turf/open/floor/plating,
@@ -295,10 +295,10 @@
 /turf/open/floor/plating,
 /area/ship/external)
 "fZ" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
@@ -318,10 +318,10 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ship/medical)
 "gW" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-8"
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/auto_name/north,
@@ -337,7 +337,7 @@
 	},
 /area/ship/cargo)
 "hK" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -348,7 +348,7 @@
 	},
 /area/ship/engineering)
 "hR" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -374,7 +374,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ship/medical)
 "iS" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -385,7 +385,7 @@
 	},
 /area/ship/hallway/central)
 "jk" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
@@ -412,7 +412,7 @@
 /turf/open/floor/plating,
 /area/ship/hallway/fore)
 "jM" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -427,10 +427,10 @@
 	},
 /area/ship/hallway/central)
 "jW" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
@@ -478,7 +478,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ship/hallway/central)
 "li" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -493,7 +493,7 @@
 	},
 /area/ship/bridge)
 "ln" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/hatch{
@@ -517,7 +517,7 @@
 /turf/open/floor/plating,
 /area/ship/external)
 "mG" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/hatch{
@@ -535,7 +535,7 @@
 	},
 /area/ship/crew)
 "mX" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -548,10 +548,10 @@
 	},
 /area/ship/hallway/fore)
 "nm" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-8"
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
@@ -562,10 +562,10 @@
 	},
 /area/ship/hallway/fore)
 "nE" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "2-8"
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/structure/catwalk/over/plated_catwalk/dark,
@@ -599,10 +599,10 @@
 	},
 /area/ship/hallway/central)
 "on" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -616,7 +616,7 @@
 	},
 /area/ship/engineering)
 "pi" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -640,7 +640,7 @@
 	},
 /area/ship/cargo)
 "pV" = (
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/machinery/power/smes/engineering,
 /turf/open/floor/plating/catwalk_floor{
 	icon_state = "catwalk_above"
@@ -705,7 +705,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ship/medical)
 "sV" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-8"
 	},
 /obj/machinery/navbeacon{
@@ -717,7 +717,7 @@
 	},
 /area/ship/medical)
 "sY" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -765,7 +765,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ship/hallway/fore)
 "uw" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -816,7 +816,7 @@
 	},
 /area/ship/cargo)
 "wx" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -855,7 +855,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ship/bridge)
 "xW" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/smes/engineering,
@@ -864,7 +864,7 @@
 	},
 /area/ship/engineering)
 "xY" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/hatch,
@@ -905,7 +905,7 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ship/hallway/central)
 "Be" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -920,7 +920,7 @@
 	},
 /area/ship/hallway/fore)
 "Bw" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-4"
 	},
 /obj/structure/catwalk/over/plated_catwalk/dark,
@@ -930,7 +930,7 @@
 	},
 /area/ship/hallway/central)
 "BE" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -966,7 +966,7 @@
 	},
 /area/ship/cargo)
 "Cn" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/auto_name/north,
@@ -1001,7 +1001,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ship/cargo)
 "DC" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/computer/helm{
@@ -1039,13 +1039,13 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ship/crew)
 "Ed" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-8"
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer4,
@@ -1056,7 +1056,7 @@
 	},
 /area/ship/hallway/fore)
 "EB" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
@@ -1067,7 +1067,7 @@
 	},
 /area/ship/hallway/central)
 "EK" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/hatch{
@@ -1090,7 +1090,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ship/cargo)
 "Gc" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -1114,13 +1114,13 @@
 /obj/machinery/door/poddoor{
 	id = "blackbeardblastdoor1"
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "2-8"
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-8"
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-8"
 	},
 /turf/open/floor/plating,
@@ -1167,7 +1167,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ship/crew)
 "HG" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -1199,7 +1199,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ship/hallway/central)
 "Jb" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/structure/catwalk/over/plated_catwalk/dark,
@@ -1239,7 +1239,7 @@
 	},
 /area/ship/engineering)
 "JR" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
@@ -1271,7 +1271,7 @@
 	},
 /area/ship/hallway/central)
 "Mc" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/hatch{
@@ -1345,11 +1345,11 @@
 /obj/machinery/door/poddoor{
 	id = "blackbeardblastdoor1"
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/bridge)
 "Pi" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/hatch,
@@ -1365,7 +1365,7 @@
 	},
 /area/ship/hallway/central)
 "PV" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -1381,7 +1381,7 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ship/bridge)
 "Qp" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
@@ -1396,7 +1396,7 @@
 	},
 /area/ship/hallway/central)
 "Qx" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/structure/catwalk/over/plated_catwalk/dark,
@@ -1409,7 +1409,7 @@
 	},
 /area/ship/hallway/central)
 "Qz" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
@@ -1426,7 +1426,7 @@
 	},
 /area/ship/hallway/fore)
 "Rl" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
@@ -1486,7 +1486,7 @@
 /obj/machinery/power/smes/shuttle/precharged{
 	dir = 4
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-8"
 	},
 /turf/open/floor/plating,
@@ -1503,15 +1503,15 @@
 	},
 /area/ship/engineering)
 "SJ" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "2-8"
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-8"
 	},
 /obj/structure/catwalk/over/plated_catwalk/dark,
@@ -1520,7 +1520,7 @@
 	},
 /area/ship/hallway/central)
 "Tj" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
@@ -1533,11 +1533,11 @@
 	},
 /area/ship/hallway/central)
 "Tp" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/power/apc/auto_name/west,
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -1571,7 +1571,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ship/hallway/fore)
 "Uu" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/auto_name/north,
@@ -1587,7 +1587,7 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/machinery/door/window/brigdoor{
 	dir = 8
 	},
@@ -1620,7 +1620,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ship/hallway/central)
 "Wp" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -1662,7 +1662,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ship/cargo)
 "XG" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -1707,7 +1707,7 @@
 /obj/machinery/door/poddoor{
 	id = "blackbeardblastdoor1"
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-2"
 	},
 /turf/open/floor/plating,
@@ -1724,7 +1724,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ship/medical)
 "ZG" = (
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/machinery/power/apc/auto_name/south,
 /obj/structure/catwalk/over/plated_catwalk/dark,
 /turf/open/floor/plating/catwalk_floor{
@@ -1738,7 +1738,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ship/crew)
 "ZR" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -1757,7 +1757,7 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/door/window/brigdoor{

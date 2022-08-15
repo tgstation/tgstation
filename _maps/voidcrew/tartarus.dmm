@@ -427,7 +427,7 @@
 /obj/machinery/power/shuttle/engine/electric{
 	dir = 8
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-8"
 	},
 /obj/structure/shuttle/engine/platform/corner{
@@ -820,7 +820,7 @@
 /obj/machinery/power/shuttle/engine/electric{
 	dir = 8
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-8"
 	},
 /obj/structure/shuttle/engine/platform/corner{
@@ -1469,7 +1469,7 @@
 /obj/structure/window/reinforced/survival_pod{
 	dir = 4
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-4"
 	},
 /turf/open/floor/plasteel/tech/grid,
@@ -1516,7 +1516,7 @@
 /obj/structure/window/reinforced/survival_pod{
 	dir = 6
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-2"
 	},
 /turf/open/floor/plasteel/tech/grid,
@@ -1737,7 +1737,7 @@
 /obj/structure/window/reinforced/survival_pod{
 	dir = 4
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/open/floor/plasteel/tech/grid,
 /area/ship/engineering/electrical)
 "BX" = (
@@ -1957,7 +1957,7 @@
 /obj/machinery/power/shuttle/engine/electric{
 	dir = 8
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-8"
 	},
 /turf/open/floor/plasteel/tech,
@@ -2202,7 +2202,7 @@
 /obj/structure/window/reinforced/survival_pod{
 	dir = 4
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/tech/grid,
@@ -2231,7 +2231,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced/survival_pod,
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-4"
 	},
 /turf/open/floor/plasteel/tech/grid,
@@ -2969,7 +2969,7 @@
 /obj/structure/window/reinforced/survival_pod{
 	dir = 1
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-4"
 	},
 /turf/open/floor/plasteel/tech/grid,

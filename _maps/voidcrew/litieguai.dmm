@@ -1485,7 +1485,7 @@
 /area/ship/bridge)
 "CA" = (
 /obj/machinery/power/port_gen/pacman,
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-2"
 	},
 /obj/effect/turf_decal/industrial/hatch/yellow,
@@ -1772,7 +1772,7 @@
 /area/ship/hallway/aft)
 "Je" = (
 /obj/machinery/power/terminal,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/item/wrench/crescent,
 /obj/item/radio/intercom{
 	dir = 4;
@@ -2047,7 +2047,7 @@
 /area/ship/maintenance/starboard)
 "MP" = (
 /obj/machinery/power/port_gen/pacman,
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-2"
 	},
 /obj/effect/turf_decal/industrial/hatch/yellow,
@@ -3021,7 +3021,7 @@
 	pixel_x = 24
 	},
 /obj/machinery/power/terminal,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/starboard)
 

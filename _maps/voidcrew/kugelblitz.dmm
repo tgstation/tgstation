@@ -14,7 +14,7 @@
 /obj/machinery/atmospherics/pipe/manifold/green/visible{
 	dir = 4
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-2"
 	},
 /obj/structure/window/plasma/reinforced/spawner/west,
@@ -87,7 +87,7 @@
 /area/ship/engineering/engine)
 "bv" = (
 /obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-2"
 	},
 /obj/structure/window/plasma/reinforced/spawner/west,
@@ -128,7 +128,7 @@
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 8
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-2"
 	},
 /obj/structure/window/plasma/reinforced/spawner/east,
@@ -145,7 +145,7 @@
 /area/ship/engineering/engine)
 "cK" = (
 /obj/machinery/atmospherics/pipe/simple/orange,
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-8"
 	},
 /obj/machinery/power/port_gen/pacman,
@@ -167,7 +167,7 @@
 /area/ship/science/robotics)
 "dh" = (
 /obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-2"
 	},
 /obj/structure/window/plasma/reinforced/spawner/east,
@@ -203,13 +203,13 @@
 /area/ship/engineering/engine)
 "dL" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible,
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/industrial/warning/corner{
 	dir = 1
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "2-4"
 	},
 /obj/effect/turf_decal/industrial/warning/corner{
@@ -224,7 +224,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ship/engineering/engine)
 "dV" = (
@@ -245,7 +245,7 @@
 /turf/open/floor/engine,
 /area/ship/engineering/engine)
 "ed" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/industrial/stand_clear{
@@ -276,10 +276,10 @@
 /turf/open/floor/plasteel/white,
 /area/ship/medical)
 "ew" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-8"
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/green/visible{
@@ -298,19 +298,19 @@
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 9
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-8"
 	},
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "0-8"
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "2-8"
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -968,7 +968,7 @@
 /turf/open/floor/plasteel/white,
 /area/ship/medical)
 "of" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/industrial/warning/corner{
@@ -1023,7 +1023,7 @@
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 4
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-4"
 	},
 /turf/open/floor/engine,
@@ -1045,10 +1045,10 @@
 /turf/open/floor/plasteel/tech/grid,
 /area/ship/engineering)
 "pt" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-4"
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/oil,
@@ -1326,7 +1326,7 @@
 /obj/machinery/door/airlock/engineering/glass,
 /obj/machinery/atmospherics/pipe/simple/orange/hidden/layer1,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor/border_only,
