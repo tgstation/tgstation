@@ -614,9 +614,7 @@
 /turf/open/floor/iron,
 /area/station/commons/janitor)
 "ef" = (
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 1
-	},
+/obj/machinery/space_heater,
 /obj/structure/window/plasma/reinforced/spawner,
 /obj/machinery/door/window/right/directional/east{
 	dir = 1;
@@ -5893,9 +5891,7 @@
 /turf/open/floor/plasteel/patterned/grid,
 /area/station/engineering/engine)
 "Tu" = (
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 1
-	},
+/obj/machinery/space_heater,
 /obj/structure/window/plasma/reinforced/spawner,
 /obj/machinery/door/window/left/directional/east{
 	dir = 1;

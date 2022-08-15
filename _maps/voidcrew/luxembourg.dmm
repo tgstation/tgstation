@@ -745,9 +745,7 @@
 /turf/open/floor/engine/air,
 /area/station/engineering)
 "qg" = (
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 1
-	},
+/obj/machinery/space_heater,
 /obj/structure/window/reinforced/spawner,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
@@ -1041,9 +1039,7 @@
 /turf/open/floor/plating,
 /area/station/engineering)
 "wE" = (
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 1
-	},
+/obj/machinery/space_heater,
 /obj/structure/window/reinforced/spawner,
 /turf/open/floor/plating,
 /area/station/engineering)

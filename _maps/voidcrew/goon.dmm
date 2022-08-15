@@ -125,9 +125,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/station/engineering)
 "hg" = (
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 4
-	},
+/obj/machinery/space_heater,
 /obj/structure/window/reinforced{
 	dir = 8;
 	pixel_y = 2
@@ -620,9 +618,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/station/medical)
 "JX" = (
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 4
-	},
+/obj/machinery/space_heater,
 /obj/structure/window/reinforced{
 	dir = 1
 	},

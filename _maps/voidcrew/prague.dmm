@@ -825,9 +825,7 @@
 /obj/machinery/door/window/right/directional/east{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 8
-	},
+/obj/machinery/space_heater,
 /turf/open/floor/plating{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
@@ -1278,9 +1276,7 @@
 /obj/machinery/door/window/left/directional/east{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 8
-	},
+/obj/machinery/space_heater,
 /turf/open/floor/plating{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},

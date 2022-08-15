@@ -376,9 +376,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/starboard)
 "ff" = (
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 4
-	},
+/obj/machinery/space_heater,
 /obj/structure/window/reinforced/spawner/west,
 /obj/machinery/door/window/left/directional/east,
 /obj/structure/window/reinforced/spawner/north,
@@ -2144,9 +2142,7 @@
 /obj/structure/window/reinforced/spawner/west,
 /obj/machinery/door/window/right/directional/east,
 /obj/structure/window/reinforced/spawner,
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 4
-	},
+/obj/machinery/space_heater,
 /turf/open/floor/plating,
 /area/station/engineering)
 "Ci" = (
@@ -3875,9 +3871,7 @@
 /obj/structure/window/reinforced/spawner/west,
 /obj/machinery/door/window/left/directional/east,
 /obj/structure/window/reinforced/spawner/north,
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 4
-	},
+/obj/machinery/space_heater,
 /turf/open/floor/plating,
 /area/station/engineering)
 "ZB" = (

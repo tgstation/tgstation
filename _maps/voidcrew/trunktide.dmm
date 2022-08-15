@@ -126,9 +126,7 @@
 /obj/effect/turf_decal/techfloor{
 	dir = 6
 	},
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 1
-	},
+/obj/machinery/space_heater,
 /obj/structure/cable,
 /turf/open/floor/plasteel/tech/techmaint,
 /area/station/engineering)
@@ -783,9 +781,7 @@
 /obj/effect/turf_decal/techfloor{
 	dir = 10
 	},
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 1
-	},
+/obj/machinery/space_heater,
 /obj/structure/cable,
 /turf/open/floor/plasteel/tech/techmaint,
 /area/station/engineering)

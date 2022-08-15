@@ -8573,9 +8573,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "Lo" = (
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 4
-	},
+/obj/machinery/space_heater,
 /obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/plating,
 /area/station/commons/janitor)

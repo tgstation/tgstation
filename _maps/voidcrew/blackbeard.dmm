@@ -674,9 +674,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/central)
 "wm" = (
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 4
-	},
+/obj/machinery/space_heater,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
@@ -712,9 +710,7 @@
 	},
 /area/station/hallway/central)
 "wX" = (
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 4
-	},
+/obj/machinery/space_heater,
 /turf/open/floor/plating,
 /area/station/engineering)
 "xi" = (

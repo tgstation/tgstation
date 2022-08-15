@@ -954,9 +954,7 @@
 	dir = 1;
 	name = "Engine Access"
 	},
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 1
-	},
+/obj/machinery/space_heater,
 /turf/open/floor/plating,
 /area/station/engineering/atmospherics)
 "mJ" = (
@@ -3749,9 +3747,7 @@
 	dir = 1;
 	name = "Engine Access"
 	},
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 1
-	},
+/obj/machinery/space_heater,
 /turf/open/floor/plating,
 /area/station/engineering/engine)
 "Vi" = (

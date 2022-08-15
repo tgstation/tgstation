@@ -748,9 +748,7 @@
 /obj/structure/window/reinforced/spawner{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 4
-	},
+/obj/machinery/space_heater,
 /turf/open/floor/plating,
 /area/station/engineering/engine)
 "yP" = (

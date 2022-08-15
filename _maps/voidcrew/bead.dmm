@@ -94,9 +94,7 @@
 /turf/open/floor/plating,
 /area/station/command/bridge)
 "hs" = (
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 4
-	},
+/obj/machinery/space_heater,
 /obj/structure/window/reinforced/spawner/west,
 /obj/machinery/door/window/right/directional/east,
 /obj/structure/window/reinforced/spawner/north,

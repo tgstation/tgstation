@@ -2376,9 +2376,7 @@
 /turf/open/floor/iron,
 /area/station/commons/canteen)
 "qt" = (
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 4
-	},
+/obj/machinery/space_heater,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -2389,9 +2387,7 @@
 /turf/open/floor/plating/airless,
 /area/station/engineering)
 "tN" = (
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 4
-	},
+/obj/machinery/space_heater,
 /obj/structure/window/reinforced{
 	dir = 8
 	},

@@ -280,9 +280,7 @@
 /turf/open/floor/plasteel/mono/white,
 /area/station/medical)
 "hK" = (
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 4
-	},
+/obj/machinery/space_heater,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -1150,9 +1148,7 @@
 /turf/open/floor/plasteel/tech/grid,
 /area/station/engineering)
 "CO" = (
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 4
-	},
+/obj/machinery/space_heater,
 /obj/structure/window/reinforced{
 	dir = 8
 	},

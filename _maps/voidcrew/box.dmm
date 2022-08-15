@@ -89,9 +89,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 4
-	},
+/obj/machinery/space_heater,
 /obj/machinery/door/window/left/directional/north{
 	dir = 4;
 	name = "Engine Access"
@@ -1590,9 +1588,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 4
-	},
+/obj/machinery/space_heater,
 /obj/machinery/door/window/right/directional/north{
 	dir = 4;
 	name = "Engine Access"

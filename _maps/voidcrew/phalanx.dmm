@@ -3903,9 +3903,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/central)
 "TT" = (
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 4
-	},
+/obj/machinery/space_heater,
 /obj/structure/window/reinforced{
 	dir = 8
 	},

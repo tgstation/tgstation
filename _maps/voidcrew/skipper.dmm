@@ -158,9 +158,7 @@
 /turf/open/floor/carpet/blue,
 /area/station/commons/solgov)
 "bF" = (
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 4
-	},
+/obj/machinery/space_heater,
 /obj/structure/window/reinforced/spawner/west,
 /obj/machinery/door/window/left/directional/east,
 /turf/open/floor/plating,
@@ -532,9 +530,7 @@
 /turf/template_noop,
 /area/space)
 "gv" = (
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 4
-	},
+/obj/machinery/space_heater,
 /obj/structure/window/reinforced/spawner/west,
 /obj/machinery/door/window/right/directional/east,
 /turf/open/floor/plating,
@@ -2162,9 +2158,7 @@
 /turf/open/floor/iron/grimy,
 /area/station/commons/solgov)
 "CZ" = (
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 4
-	},
+/obj/machinery/space_heater,
 /obj/structure/window/reinforced/spawner/west,
 /obj/machinery/door/window/left/directional/east,
 /turf/open/floor/plating,
@@ -2803,9 +2797,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/engine)
 "KK" = (
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 4
-	},
+/obj/machinery/space_heater,
 /obj/structure/window/reinforced/spawner/west,
 /obj/machinery/door/window/right/directional/east,
 /turf/open/floor/plating,

@@ -1096,9 +1096,7 @@
 /obj/effect/turf_decal/industrial/warning{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 8
-	},
+/obj/machinery/space_heater,
 /obj/machinery/door/window/right/directional/west,
 /turf/open/floor/plating/airless,
 /area/station/engineering/engine)
@@ -1607,9 +1605,7 @@
 /obj/effect/turf_decal/industrial/warning{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 8
-	},
+/obj/machinery/space_heater,
 /obj/machinery/door/window/left/directional/west,
 /turf/open/floor/plating/airless,
 /area/station/engineering/engine)

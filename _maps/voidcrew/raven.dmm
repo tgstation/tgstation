@@ -1720,9 +1720,7 @@
 /area/station/storage)
 "kd" = (
 /obj/structure/window/reinforced,
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 1
-	},
+/obj/machinery/space_heater,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "ravenengine"
 	},

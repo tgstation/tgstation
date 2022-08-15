@@ -568,9 +568,7 @@
 /area/station/cargo/office)
 "kr" = (
 /obj/structure/window/reinforced/spawner/west,
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 4
-	},
+/obj/machinery/space_heater,
 /obj/machinery/door/poddoor{
 	id = "wrecker_engine_stbd"
 	},
@@ -2317,9 +2315,7 @@
 /area/station/security/armory)
 "PL" = (
 /obj/structure/window/reinforced/spawner/west,
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 4
-	},
+/obj/machinery/space_heater,
 /obj/machinery/door/poddoor{
 	id = "wrecker_engine_port"
 	},

@@ -1049,9 +1049,7 @@
 /area/station/command/bridge)
 "xh" = (
 /obj/structure/window/reinforced/spawner/west,
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
-	dir = 4
-	},
+/obj/machinery/space_heater,
 /turf/open/floor/plating,
 /area/station/maintenance)
 "xO" = (
