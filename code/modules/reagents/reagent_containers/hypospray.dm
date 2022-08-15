@@ -158,6 +158,9 @@
 
 		. += span_notice("Theres a small LCD screen on the side of the medipen which reads, 'WARNING: This medipen contains [reagent_text]. Do not use if allergic to any listed chemicals.' in small text.") //cheapskates at nanotrasen couldnt ball out for LED
 
+	else
+		. += span_notice("Theres a blank LCD screen on the side of the medipen.")
+
 /obj/item/reagent_containers/hypospray/medipen/stimpack //goliath kiting
 	name = "stimpack medipen"
 	desc = "A rapid way to stimulate your body's adrenaline, allowing for freer movement in restrictive armor."
@@ -265,8 +268,7 @@
 	amount_per_transfer_from_this = initial(amount_per_transfer_from_this) * 0.5
 	return ..()
 
-
-/obj/item/reagent_containers/hypospray/medipen/survival/luxury // clueless
+/obj/item/reagent_containers/hypospray/medipen/survival/luxury
 	name = "luxury medipen"
 	desc = "Cutting edge bluespace technology allowed Nanotrasen to compact 60u of volume into a single medipen. Contains rare and powerful chemicals used to aid in exploration of very hard enviroments. WARNING: DO NOT MIX WITH EPINEPHRINE OR ATROPINE."
 	icon_state = "luxpen"
@@ -292,6 +294,14 @@
 	base_icon_state = "snail"
 	list_reagents = list(/datum/reagent/snail = 10)
 
+/obj/item/reagent_containers/hypospray/medipen/snail/examine()		// no LCD screen for the snails :(
+	. = ..()
+	if(length(reagents?.reagent_list))
+		. += span_notice("It is currently loaded.")
+
+	else
+		. += span_notice("It is spent")
+
 /obj/item/reagent_containers/hypospray/medipen/magillitis
 	name = "experimental autoinjector"
 	desc = "A custom-frame needle injector with a small single-use reservoir, containing an experimental serum. Unlike the more common medipen frame, it cannot pierce through protective armor or space suits, nor can the chemical inside be extracted."
@@ -311,6 +321,11 @@
 	list_reagents = list(/datum/reagent/drug/pumpup = 15)
 	icon_state = "maintenance"
 	base_icon_state = "maintenance"
+
+/obj/item/reagent_containers/hypospray/medipen/pumpup/examine()
+	. = ..()
+	if(length(reagents?.reagent_list))
+		. += span_notice("Theres a small LCD screen on the side of the medipen which reads, 'ERROR: Unidentified chemical contained inside medipen, use with caution!' in small text.")
 
 /obj/item/reagent_containers/hypospray/medipen/ekit
 	name = "emergency first-aid autoinjector"
