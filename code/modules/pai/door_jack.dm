@@ -42,7 +42,7 @@
 		track_thing(hacking_cable)
 		return TRUE
 	hacking_cable.forceMove(drop_location())
-	hacking_cable.visible_message(span_notice("A port on [src] opens to reveal a cable, which promptly falls to the floor."), span_hear("You hear the soft click of a plastic component fall to the ground."))
+	hacking_cable.visible_message(message = span_notice("A port on [src] opens to reveal a cable, which promptly falls to the floor."), blind_message = span_hear("You hear the soft click of a plastic component fall to the ground."), vision_distance = 3)
 	track_pai()
 	track_thing(hacking_cable)
 	return TRUE
