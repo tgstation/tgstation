@@ -36,10 +36,10 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/powered/seedvault)
 "ai" = (
-/obj/item/reagent_containers/glass/beaker/bluespace,
-/obj/item/reagent_containers/glass/beaker/bluespace,
-/obj/item/reagent_containers/glass/beaker/bluespace,
-/obj/item/reagent_containers/glass/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
 /obj/structure/table/wood,
 /obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/dark,
@@ -304,11 +304,11 @@
 /turf/open/floor/iron/dark,
 /area/ruin/powered/seedvault)
 "aT" = (
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/structure/table/wood,
-/obj/item/reagent_containers/glass/bucket,
-/obj/item/reagent_containers/glass/bucket,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
+/obj/item/reagent_containers/cup/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
 	},

@@ -1,0 +1,10 @@
+{
+	"waistcoat": [
+		{
+			"type": "icon_state",
+			"icon_state": "waistcoat",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

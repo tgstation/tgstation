@@ -121,7 +121,7 @@
 	attack_verb_simple = "hit"
 	attack_sound = 'sound/weapons/genhit1.ogg'
 	del_on_death = TRUE
-	deathmessage = "explodes into a cloud of gas!"
+	death_message = "explodes into a cloud of gas!"
 	gold_core_spawnable = NO_SPAWN //gold slime cores should only spawn the independent subtype
 	var/death_cloud_size = 1 //size of cloud produced from a dying spore
 	var/mob/living/carbon/human/oldguy
@@ -167,7 +167,7 @@
 		to_chat(user, span_warning("Someone else already took this spore!"))
 		return
 	key = user.key
-	log_game("[key_name(src)] took control of [name].")
+	src.log_message("took control of [name].", LOG_GAME)
 
 /mob/living/simple_animal/hostile/blob/blobspore/proc/Zombify(mob/living/carbon/human/H)
 	is_zombie = 1

@@ -40,7 +40,7 @@
 /area/station/maintenance/central/greater)
 "u" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/item/mop,
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)

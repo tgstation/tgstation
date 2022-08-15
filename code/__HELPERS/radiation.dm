@@ -35,6 +35,7 @@
 	pulse_information.threshold = threshold
 	pulse_information.chance = chance
 	pulse_information.minimum_exposure_time = minimum_exposure_time
+	pulse_information.turfs_to_process = RANGE_TURFS(max_range, source)
 
 	SSradiation.processing += pulse_information
 
@@ -46,6 +47,7 @@
 	var/threshold
 	var/chance
 	var/minimum_exposure_time
+	var/list/turfs_to_process
 
 #define MEDIUM_RADIATION_THRESHOLD_RANGE 0.5
 #define EXTREME_RADIATION_CHANCE 30

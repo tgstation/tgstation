@@ -65,7 +65,7 @@
 	to_chat(owner, span_mind_control("[command]"))
 	active_mind_control = TRUE
 	message_admins("[key_name(user)] sent an abductor mind control message to [key_name(owner)]: [command]")
-	log_game("[key_name(user)] sent an abductor mind control message to [key_name(owner)]: [command]")
+	user.log_message("sent an abductor mind control message to [key_name(owner)]: [command]", LOG_GAME)
 	update_gland_hud()
 	var/atom/movable/screen/alert/mind_control/mind_alert = owner.throw_alert(ALERT_MIND_CONTROL, /atom/movable/screen/alert/mind_control)
 	mind_alert.command = command
@@ -89,7 +89,7 @@
 	clear_mind_control()
 	..()
 
-/obj/item/organ/internal/heart/gland/Insert(mob/living/carbon/M, special = FALSE)
+/obj/item/organ/internal/heart/gland/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	..()
 	if(special != 2 && uses) // Special 2 means abductor surgery
 		Start()

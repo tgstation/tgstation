@@ -1577,7 +1577,7 @@
 				update_icon()
 				forged = TRUE
 				to_chat(user, span_notice("You successfully forge the ID card."))
-				log_game("[key_name(user)] has forged \the [initial(name)] with name \"[registered_name]\", occupation \"[assignment]\" and trim \"[trim?.assignment]\".")
+				user.log_message("forged \the [initial(name)] with name \"[registered_name]\", occupation \"[assignment]\" and trim \"[trim?.assignment]\".", LOG_GAME)
 
 				if(!registered_account)
 					if(ishuman(user))
@@ -1594,7 +1594,7 @@
 				assignment = initial(assignment)
 				SSid_access.remove_trim_from_chameleon_card(src)
 				REMOVE_TRAIT(src, TRAIT_MAGNETIC_ID_CARD, CHAMELEON_ITEM_TRAIT)
-				log_game("[key_name(user)] has reset \the [initial(name)] named \"[src]\" to default.")
+				user.log_message("reset \the [initial(name)] named \"[src]\" to default.", LOG_GAME)
 				update_label()
 				update_icon()
 				forged = FALSE

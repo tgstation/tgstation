@@ -3,6 +3,8 @@
 //this singleton datum is used by the events controller to dictate how it selects events
 /datum/round_event_control
 	var/name //The human-readable name of the event
+	var/category //The category of the event
+	var/description //The description of the event
 	var/typepath //The typepath of the event datum /datum/round_event
 
 	var/weight = 10 //The weight this event has in the random-selection process.
@@ -34,6 +36,7 @@
 		min_players = CEILING(min_players * CONFIG_GET(number/events_min_players_mul), 1)
 
 /datum/round_event_control/wizard
+	category = EVENT_CATEGORY_WIZARD
 	wizardevent = TRUE
 
 // Checks if the event can be spawned. Used by event controller and "false alarm" event.
@@ -92,7 +95,13 @@
 		log_admin_private("[key_name(usr)] cancelled event [name].")
 		SSblackbox.record_feedback("tally", "event_admin_cancelled", 1, typepath)
 
-/datum/round_event_control/proc/runEvent(random = FALSE)
+/*
+Runs the event
+* Arguments:
+* - random: shows if the event was triggered randomly, or by on purpose by an admin or an item
+* - announce_chance_override: if the value is not null, overrides the announcement chance when an admin calls an event
+*/
+/datum/round_event_control/proc/runEvent(random = FALSE, announce_chance_override = null, admin_forced = FALSE)
 	/*
 	* We clear our signals first so we dont cancel a wanted event by accident,
 	* the majority of time the admin will probably want to cancel a single midround spawned random events
@@ -105,11 +114,14 @@
 	E.control = src
 	occurrences++
 
+	if(announce_chance_override != null)
+		E.announceChance = announce_chance_override
+
 	testing("[time2text(world.time, "hh:mm:ss")] [E.type]")
 	triggering = TRUE
 
-	if (alert_observers)
-		message_admins("Random Event triggering in [DisplayTimeText(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)]: [name] (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>)")
+	if (alert_observers && !admin_forced)
+		message_admins("Random Event triggering in [DisplayTimeText(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)]: [name] (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>).")
 		sleep(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)
 
 	if(!triggering)
@@ -119,10 +131,10 @@
 
 	triggering = FALSE
 	if(random)
-		log_game("Random Event triggering: [name] ([typepath])")
+		log_game("Random Event triggering: [name] ([typepath]).")
 
 	if(alert_observers)
-		deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered!", "<b>[name]</b>", message_type=DEADCHAT_ANNOUNCEMENT) //STOP ASSUMING IT'S BADMINS!
+		deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered!", "<b>[name]</b>.", message_type=DEADCHAT_ANNOUNCEMENT) //STOP ASSUMING IT'S BADMINS!
 
 	SSblackbox.record_feedback("tally", "event_ran", 1, "[E]")
 	return E
@@ -142,7 +154,7 @@
 
 	var/startWhen = 0 //When in the lifetime to call start().
 	var/announceWhen = 0 //When in the lifetime to call announce(). If you don't want it to announce use announceChance, below.
-	var/announceChance = 100 // Probability of announcing, used in prob(), 0 to 100, default 100. Used in ion storms currently.
+	var/announceChance = 100 // Probability of announcing, used in prob(), 0 to 100, default 100. Called in process, and for a second time in the ion storm event.
 	var/endWhen = 0 //When in the lifetime the event should end.
 
 	var/activeFor = 0 //How long the event has existed. You don't need to change this.

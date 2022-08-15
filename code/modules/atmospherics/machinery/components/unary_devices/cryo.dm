@@ -94,7 +94,7 @@
 	var/heat_capacity = 20000
 	var/conduction_coefficient = 0.3
 
-	var/obj/item/reagent_containers/glass/beaker = null
+	var/obj/item/reagent_containers/cup/beaker = null
 	var/consume_gas = FALSE
 
 	var/obj/item/radio/radio
@@ -413,7 +413,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/reagent_containers/glass))
+	if(istype(I, /obj/item/reagent_containers/cup))
 		. = 1 //no afterattack
 		if(beaker)
 			to_chat(user, span_warning("A beaker is already loaded into [src]!"))
@@ -424,7 +424,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		user.visible_message(span_notice("[user] places [I] in [src]."), \
 							span_notice("You place [I] in [src]."))
 		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
-		log_game("[key_name(user)] added an [I] to cryo containing [reagentlist]")
+		user.log_message("added an [I] to cryo containing [reagentlist].", LOG_GAME)
 		return
 	return ..()
 
@@ -455,10 +455,10 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		else if (HAS_TRAIT(mob_occupant, TRAIT_KNOCKEDOUT))
 			data["occupant"]["stat"] = "Unconscious"
 			data["occupant"]["statstate"] = "good"
-		else 
+		else
 			data["occupant"]["stat"] = "Conscious"
 			data["occupant"]["statstate"] = "bad"
-			
+
 		data["occupant"]["bodyTemperature"] = round(mob_occupant.bodytemperature, 1)
 		if(mob_occupant.bodytemperature < T0C) // Green if the mob can actually be healed by cryoxadone.
 			data["occupant"]["temperaturestatus"] = "good"

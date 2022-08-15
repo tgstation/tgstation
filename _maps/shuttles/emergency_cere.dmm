@@ -651,7 +651,7 @@
 /area/shuttle/escape)
 "cm" = (
 /obj/structure/table,
-/obj/item/reagent_containers/glass/beaker/cryoxadone,
+/obj/item/reagent_containers/cup/beaker/cryoxadone,
 /obj/item/wrench,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1

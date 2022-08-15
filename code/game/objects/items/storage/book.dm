@@ -10,24 +10,18 @@
 	resistance_flags = FLAMMABLE
 	var/title = "book"
 
-/obj/item/storage/book/Initialize()
+/obj/item/storage/book/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 1
 
 /obj/item/storage/book/attack_self(mob/user)
-	to_chat(user, span_notice("The pages of [title] have been cut out!"))
+	balloon_alert(user, "pages cut out!")
 
 GLOBAL_LIST_INIT(biblenames, list("Bible", "Quran", "Scrapbook", "Burning Bible", "Clown Bible", "Banana Bible", "Creeper Bible", "White Bible", "Holy Light", "The God Delusion", "Tome", "The King in Yellow", "Ithaqua", "Scientology", "Melted Bible", "Necronomicon", "Insulationism", "Guru Granth Sahib"))
 //If you get these two lists not matching in size, there will be runtimes and I will hurt you in ways you couldn't even begin to imagine
 // if your bible has no custom itemstate, use one of the existing ones
 GLOBAL_LIST_INIT(biblestates, list("bible", "koran", "scrapbook", "burning", "honk1", "honk2", "creeper", "white", "holylight", "atheist", "tome", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon", "insuls", "gurugranthsahib"))
 GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning", "honk1", "honk2", "creeper", "white", "holylight", "atheist", "tome", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon", "kingyellow", "gurugranthsahib"))
-
-/mob/proc/bible_check() //The bible, if held, might protect against certain things
-	var/obj/item/storage/book/bible/B = locate() in src
-	if(is_holding(B))
-		return B
-	return 0
 
 /obj/item/storage/book/bible
 	name = "bible"
@@ -52,6 +46,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 
 /obj/item/storage/book/bible/Initialize(mapload)
 	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE_HOLY)
 
 /obj/item/storage/book/bible/suicide_act(mob/user)
@@ -129,7 +124,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	var/mob/living/carbon/human/H = L
 	for(var/obj/item/bodypart/bodypart as anything in H.bodyparts)
 		if(!IS_ORGANIC_LIMB(bodypart))
-			to_chat(user, span_warning("[src.deity_name] refuses to heal this metallic taint!"))
+			balloon_alert(user, "can't heal metal!")
 			return 0
 
 	var/heal_amt = 10
@@ -143,13 +138,13 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		H.visible_message(span_notice("[user] heals [H] with the power of [deity_name]!"))
 		to_chat(H, span_boldnotice("May the power of [deity_name] compel you to be healed!"))
 		playsound(src.loc, SFX_PUNCH, 25, TRUE, -1)
-		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
+		H.add_mood_event("blessing", /datum/mood_event/blessing)
 	return TRUE
 
 /obj/item/storage/book/bible/attack(mob/living/M, mob/living/carbon/human/user, heal_mode = TRUE)
 
 	if (!ISADVANCEDTOOLUSER(user))
-		to_chat(user, span_warning("You don't have the dexterity to do this!"))
+		balloon_alert(user, "not dextrous enough!")
 		return
 
 	if (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
@@ -172,7 +167,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		return
 
 	if(user == M)
-		to_chat(user, span_warning("You can't heal yourself!"))
+		balloon_alert(user, "can't heal yourself!")
 		return
 
 	var/smack = TRUE
@@ -183,7 +178,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		var/mob/living/carbon/C = M
 		if(!istype(C.head, /obj/item/clothing/head/helmet))
 			C.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5, 60)
-			to_chat(C, span_danger("You feel dumber."))
+			C.balloon_alert(C, "you feel dumber")
 
 	if(smack)
 		M.visible_message(span_danger("[user] beats [M] over the head with [src]!"), \
@@ -205,21 +200,21 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 				return
 			for(var/obj/effect/rune/nearby_runes in orange(2,user))
 				nearby_runes.invisibility = 0
-		to_chat(user, span_notice("You hit the floor with the bible."))
+		bible_smacked.balloon_alert(user, "floor smacked")
 
 	if(user?.mind?.holy_role)
 		if(bible_smacked.reagents && bible_smacked.reagents.has_reagent(/datum/reagent/water)) // blesses all the water in the holder
-			to_chat(user, span_notice("You bless [bible_smacked]."))
+			bible_smacked.balloon_alert(user, "blessed")
 			var/water2holy = bible_smacked.reagents.get_reagent_amount(/datum/reagent/water)
 			bible_smacked.reagents.del_reagent(/datum/reagent/water)
 			bible_smacked.reagents.add_reagent(/datum/reagent/water/holywater,water2holy)
 		if(bible_smacked.reagents && bible_smacked.reagents.has_reagent(/datum/reagent/fuel/unholywater)) // yeah yeah, copy pasted code - sue me
-			to_chat(user, span_notice("You purify [bible_smacked]."))
+			bible_smacked.balloon_alert(user, "purified")
 			var/unholy2clean = bible_smacked.reagents.get_reagent_amount(/datum/reagent/fuel/unholywater)
 			bible_smacked.reagents.del_reagent(/datum/reagent/fuel/unholywater)
 			bible_smacked.reagents.add_reagent(/datum/reagent/water/holywater,unholy2clean)
 		if(istype(bible_smacked, /obj/item/storage/book/bible) && !istype(bible_smacked, /obj/item/storage/book/bible/syndicate))
-			to_chat(user, span_notice("You purify [bible_smacked], conforming it to your belief."))
+			bible_smacked.balloon_alert(user, "converted")
 			var/obj/item/storage/book/bible/B = bible_smacked
 			B.name = name
 			B.icon_state = icon_state
@@ -227,7 +222,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 
 	if(istype(bible_smacked, /obj/item/cult_bastard) && !IS_CULTIST(user))
 		var/obj/item/cult_bastard/sword = bible_smacked
-		to_chat(user, span_notice("You begin to exorcise [sword]."))
+		bible_smacked.balloon_alert(user, "exorcising...")
 		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
 		if(do_after(user, 40, target = sword))
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
@@ -251,7 +246,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	desc = "To be applied to the head repeatedly."
 
 /obj/item/storage/book/bible/booze/PopulateContents()
-	new /obj/item/reagent_containers/food/drinks/bottle/whiskey(src)
+	new /obj/item/reagent_containers/cup/glass/bottle/whiskey(src)
 
 /obj/item/storage/book/bible/syndicate
 	icon_state ="ebook"
