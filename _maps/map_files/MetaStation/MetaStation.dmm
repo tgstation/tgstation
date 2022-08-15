@@ -3657,7 +3657,7 @@
 /turf/open/floor/iron,
 /area/station/command/gateway)
 "bmx" = (
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/aft)
 "bmz" = (
@@ -5288,7 +5288,9 @@
 /area/station/commons/toilet/restrooms)
 "bUk" = (
 /obj/structure/table/reinforced,
-/obj/structure/window/spawner/west,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /obj/item/defibrillator/loaded{
 	pixel_y = 6
 	},
@@ -5612,7 +5614,7 @@
 	name = "Chapel Shutters";
 	dir = 8
 	},
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/service/chapel/funeral)
 "cdv" = (
@@ -5701,7 +5703,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "ceE" = (
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/medical/storage)
 "ceF" = (
@@ -7703,11 +7705,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
-"cSQ" = (
-/obj/effect/spawner/structure/window,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/maintenance/fore/lesser)
 "cTj" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -11626,7 +11623,7 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "elU" = (
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chapel_shutters_parlour";
 	name = "Chapel Shutters"
@@ -12438,7 +12435,7 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "ezD" = (
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/fore)
 "ezT" = (
@@ -12454,11 +12451,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/science/general,
 /turf/open/floor/iron/white,
 /area/station/science/research)
-"ezV" = (
-/obj/effect/spawner/structure/window,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/maintenance/port/fore)
 "eAe" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -13925,7 +13917,7 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "ffZ" = (
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
@@ -19898,7 +19890,7 @@
 /turf/open/floor/iron,
 /area/station/service/bar)
 "hrC" = (
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "hrG" = (
@@ -20567,7 +20559,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "hDR" = (
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chapel_shutters_parlour";
 	name = "Chapel Shutters";
@@ -21824,7 +21816,7 @@
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "hYJ" = (
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/fore)
 "hYN" = (
@@ -22353,7 +22345,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "iji" = (
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
 "ijv" = (
@@ -25851,7 +25843,7 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/supply)
 "jmU" = (
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "jmY" = (
@@ -25943,7 +25935,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "jou" = (
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -27088,7 +27080,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "jIR" = (
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/maintenance/space_hut)
 "jIV" = (
@@ -31897,7 +31889,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "ltc" = (
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/cargo/miningoffice)
 "ltg" = (
@@ -32583,7 +32575,9 @@
 	name = "First Aid Supplies";
 	req_access = list("medical")
 	},
-/obj/structure/window/spawner/west,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /obj/item/storage/medkit/regular{
 	pixel_x = 3;
 	pixel_y = -3
@@ -36915,7 +36909,7 @@
 	},
 /area/station/command/heads_quarters/ce)
 "nix" = (
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "niz" = (
@@ -37545,7 +37539,7 @@
 /turf/open/floor/iron,
 /area/station/command/gateway)
 "nsk" = (
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "nsq" = (
@@ -37931,6 +37925,10 @@
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron,
 /area/station/security/office)
+"nxR" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/commons/fitness/recreation)
 "nxU" = (
 /obj/machinery/light/small/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -38215,7 +38213,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/storage)
 "nDB" = (
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/cargo/drone_bay)
 "nDF" = (
@@ -39150,7 +39148,9 @@
 /area/station/medical/medbay/central)
 "nWB" = (
 /obj/structure/table/reinforced,
-/obj/structure/window/spawner/west,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /obj/item/storage/box/syringes{
 	pixel_y = 4
 	},
@@ -39902,7 +39902,7 @@
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
 "olo" = (
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chapel_shutters_space";
 	name = "Chapel Shutters"
@@ -41817,7 +41817,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "oVU" = (
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/aft)
 "oVY" = (
@@ -47699,10 +47699,6 @@
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
-"qZs" = (
-/obj/effect/spawner/structure/window,
-/turf/open/floor/plating,
-/area/station/cargo/storage)
 "qZv" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -52059,7 +52055,9 @@
 	name = "First Aid Supplies";
 	req_access = list("medical")
 	},
-/obj/structure/window/spawner/west,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /obj/item/storage/medkit/regular{
 	pixel_x = 3;
 	pixel_y = -3
@@ -55049,7 +55047,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "tuY" = (
-/obj/structure/window/spawner,
+/obj/structure/window/reinforced,
 /obj/item/storage/medkit/regular{
 	pixel_x = 3;
 	pixel_y = -3
@@ -57625,7 +57623,7 @@
 /turf/open/floor/plating,
 /area/station/medical/abandoned)
 "upN" = (
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/science/xenobiology/hallway)
 "upR" = (
@@ -59456,7 +59454,7 @@
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "uUo" = (
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "uUu" = (
@@ -60817,7 +60815,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "vsH" = (
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "vsO" = (
@@ -63992,7 +63990,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "wAV" = (
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "wBe" = (
@@ -67567,7 +67565,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmospherics_engine)
 "xPE" = (
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
 "xPN" = (
@@ -68210,7 +68208,9 @@
 /turf/open/floor/carpet,
 /area/station/service/theater)
 "yaV" = (
-/obj/structure/window/spawner/north,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /obj/item/storage/medkit/regular{
 	pixel_x = 3;
 	pixel_y = -3
@@ -85106,13 +85106,13 @@ lMJ
 lMJ
 lMJ
 lMJ
-qZs
+hxo
 aSZ
 lXG
 hxo
 lXG
 deU
-qZs
+hxo
 lMJ
 lMJ
 lMJ
@@ -85363,13 +85363,13 @@ ltc
 hKg
 aaa
 aaa
-qZs
+hxo
 bnA
 oDp
 oDJ
 xvv
 fyz
-qZs
+hxo
 aaa
 aaa
 cbz
@@ -85618,17 +85618,17 @@ dCp
 sAs
 mdL
 hKg
-qZs
-qZs
-qZs
+hxo
+hxo
+hxo
 uor
 waB
 cbz
 waB
 dZB
-qZs
-qZs
-qZs
+hxo
+hxo
+hxo
 cbz
 uyj
 pyv
@@ -89720,7 +89720,7 @@ twr
 kwi
 jXu
 xVc
-ezV
+fsQ
 aaa
 rlU
 qrg
@@ -89977,7 +89977,7 @@ pOi
 bPM
 jXu
 loQ
-ezV
+fsQ
 aaa
 rlU
 trx
@@ -90234,7 +90234,7 @@ knQ
 mkd
 udC
 mZy
-ezV
+fsQ
 aaa
 rlU
 cTU
@@ -90491,7 +90491,7 @@ jXu
 jXu
 jXu
 oyO
-ezV
+fsQ
 aaa
 rlU
 vis
@@ -92298,7 +92298,7 @@ aaa
 xOF
 aaa
 aaa
-cSQ
+mFi
 xYW
 ipy
 ipy
@@ -103326,7 +103326,7 @@ rrt
 aaa
 aaa
 aaa
-rvo
+nxR
 lLw
 ePA
 ilh
@@ -103840,7 +103840,7 @@ rrt
 aaa
 aaa
 aaa
-rvo
+nxR
 dYl
 eZN
 liO
@@ -104097,7 +104097,7 @@ rrt
 aaa
 aaa
 aaa
-rvo
+nxR
 wsx
 eZN
 oew
@@ -104354,7 +104354,7 @@ rrt
 aaa
 aaa
 aaa
-rvo
+nxR
 wsx
 eZN
 ewf
@@ -104868,7 +104868,7 @@ dwJ
 aaa
 aaa
 aaa
-rvo
+nxR
 iVO
 eZN
 sqz
@@ -105125,7 +105125,7 @@ dwJ
 aaa
 aaa
 aaa
-rvo
+nxR
 qli
 clE
 byz
@@ -105382,7 +105382,7 @@ dwJ
 aaa
 aaa
 aaa
-rvo
+nxR
 qWw
 xrf
 mnl
@@ -105894,7 +105894,7 @@ aaa
 aaa
 szp
 szp
-rvo
+nxR
 szp
 szp
 kUX
@@ -106149,7 +106149,7 @@ aaa
 aaa
 aaa
 aaa
-rvo
+nxR
 gBY
 pjd
 adS
@@ -106924,7 +106924,7 @@ kfL
 aaa
 aaa
 aaa
-rvo
+nxR
 afD
 afD
 afD
@@ -107181,7 +107181,7 @@ lMJ
 aaa
 aaa
 aaa
-rvo
+nxR
 afD
 afD
 afD
@@ -107438,7 +107438,7 @@ cpH
 aaa
 aaa
 aaa
-rvo
+nxR
 afD
 afD
 ykI
@@ -107695,7 +107695,7 @@ lMJ
 aaa
 wOY
 aaa
-rvo
+nxR
 afD
 afD
 afD
@@ -107952,7 +107952,7 @@ lMJ
 aaa
 aaa
 aaa
-rvo
+nxR
 pvY
 afD
 afD
@@ -108209,7 +108209,7 @@ lMJ
 aaa
 aaa
 aaa
-rvo
+nxR
 afD
 afD
 afD
@@ -108466,7 +108466,7 @@ cpH
 aaa
 aaa
 aaa
-rvo
+nxR
 afD
 afD
 afD
@@ -108723,7 +108723,7 @@ lMJ
 aaa
 aaa
 aaa
-rvo
+nxR
 afD
 afD
 afD
@@ -108980,7 +108980,7 @@ lMJ
 aaa
 aaa
 aaa
-rvo
+nxR
 afD
 afD
 afD
