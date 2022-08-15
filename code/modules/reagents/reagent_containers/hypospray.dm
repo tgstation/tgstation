@@ -156,7 +156,7 @@
 			reagent_names_list += "[second_to_last_reagent.name] and [last_reagent.name]"
 			reagent_text = reagent_names_list.Join("")
 
-		. += span_notice("Theres a small LCD screen on a side of the medipen which reads, 'WARNING: This medipen contains [reagent_text]. Do not use if allergic to any listed chemicals.' in small text.") //cheapskates at nanotrasen couldnt ball out for LED
+		. += span_notice("Theres a small LCD screen on the side of the medipen which reads, 'WARNING: This medipen contains [reagent_text]. Do not use if allergic to any listed chemicals.' in small text.") //cheapskates at nanotrasen couldnt ball out for LED
 
 /obj/item/reagent_containers/hypospray/medipen/stimpack //goliath kiting
 	name = "stimpack medipen"
@@ -266,7 +266,7 @@
 	return ..()
 
 
-/obj/item/reagent_containers/hypospray/medipen/survival/luxury // hmmm today I will combine this with the survival pen, surely I will recieve a boosted healing effect
+/obj/item/reagent_containers/hypospray/medipen/survival/luxury // clueless
 	name = "luxury medipen"
 	desc = "Cutting edge bluespace technology allowed Nanotrasen to compact 60u of volume into a single medipen. Contains rare and powerful chemicals used to aid in exploration of very hard enviroments. WARNING: DO NOT MIX WITH EPINEPHRINE OR ATROPINE."
 	icon_state = "luxpen"
