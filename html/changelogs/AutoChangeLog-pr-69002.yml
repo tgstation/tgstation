@@ -1,0 +1,4 @@
+author: "Capybara Holly"
+delete-after: True
+changes: 
+  - bugfix: "ambience buzzing no longer resets if you move between areas that share a buzz (e.g. maintenance areas)"
