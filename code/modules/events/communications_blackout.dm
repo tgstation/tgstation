@@ -2,6 +2,8 @@
 	name = "Communications Blackout"
 	typepath = /datum/round_event/communications_blackout
 	weight = 30
+	category = EVENT_CATEGORY_ENGINEERING
+	description = "Heavily emps all telecommunication machines, blocking all communication for a while."
 
 /datum/round_event/communications_blackout
 	announceWhen = 1

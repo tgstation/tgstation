@@ -41,7 +41,7 @@
 	var/can_customise = TRUE
 	var/default_picture_name
 
-/obj/item/camera/Initialize()
+/obj/item/camera/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/shell, list(new /obj/item/circuit_component/camera), SHELL_CAPACITY_SMALL)
 

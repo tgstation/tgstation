@@ -193,7 +193,7 @@
 		/obj/item/food/grown/eggplant = 1,
 		/obj/item/food/oven_baked_corn = 1,
 		/datum/reagent/water = 10,
-		/obj/item/reagent_containers/glass/bowl = 1
+		/obj/item/reagent_containers/cup/bowl = 1
 	)
 	result = /obj/item/food/soup/moth_cotton_soup
 	subcategory = CAT_MOTH
@@ -206,7 +206,7 @@
 		/obj/item/food/grown/potato/sweet = 1,
 		/datum/reagent/consumable/flour = 5,
 		/datum/reagent/consumable/milk = 5,
-		/obj/item/reagent_containers/glass/bowl = 1
+		/obj/item/reagent_containers/cup/bowl = 1
 	)
 	result = /obj/item/food/soup/moth_cheese_soup
 	subcategory = CAT_MOTH
@@ -219,7 +219,7 @@
 		/obj/item/seeds/ambrosia = 1,
 		/datum/reagent/water = 10,
 		/datum/reagent/consumable/vinegar = 5,
-		/obj/item/reagent_containers/glass/bowl = 1
+		/obj/item/reagent_containers/cup/bowl = 1
 	)
 	result = /obj/item/food/soup/moth_seed_soup
 	subcategory = CAT_MOTH
@@ -234,7 +234,7 @@
 		/obj/item/food/grown/chili = 1,
 		/obj/item/food/oven_baked_corn = 1,
 		/datum/reagent/water = 5,
-		/obj/item/reagent_containers/glass/bowl = 1
+		/obj/item/reagent_containers/cup/bowl = 1
 	)
 	result = /obj/item/food/soup/moth_bean_stew
 	subcategory = CAT_MOTH
@@ -247,7 +247,7 @@
 		/obj/item/food/grown/parsnip = 1,
 		/obj/item/food/grown/carrot = 1,
 		/datum/reagent/water = 5,
-		/obj/item/reagent_containers/glass/bowl = 1
+		/obj/item/reagent_containers/cup/bowl = 1
 	)
 	result = /obj/item/food/soup/moth_oat_stew
 	subcategory = CAT_MOTH
@@ -259,7 +259,7 @@
 		/obj/item/food/tofu = 1,
 		/datum/reagent/consumable/yoghurt = 10,
 		/datum/reagent/consumable/vinegar = 2,
-		/obj/item/reagent_containers/glass/bowl = 1
+		/obj/item/reagent_containers/cup/bowl = 1
 	)
 	result = /obj/item/food/soup/moth_fire_soup
 	subcategory = CAT_MOTH
@@ -299,7 +299,7 @@
 	reqs = list(
 		/datum/reagent/consumable/cornmeal = 10,
 		/datum/reagent/water = 10,
-		/obj/item/reagent_containers/glass/bowl = 1
+		/obj/item/reagent_containers/cup/bowl = 1
 	)
 	result = /obj/item/food/soup/cornmeal_porridge
 	subcategory = CAT_MOTH
@@ -488,7 +488,7 @@
 /datum/crafting_recipe/food/chili_sin_carne
 	name = "Chili sin carne (vegetarian chili)"
 	reqs = list(
-		/obj/item/reagent_containers/glass/bowl = 1,
+		/obj/item/reagent_containers/cup/bowl = 1,
 		/datum/reagent/water = 10,
 		/datum/reagent/consumable/salt = 1,
 		/obj/item/food/grown/chili = 1,

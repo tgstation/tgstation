@@ -23,9 +23,9 @@
 	///cool/heat power
 	var/heater_coefficient = 0.05 //same lvl as acclimator
 	///Beaker that holds the acidic buffer. I don't want to deal with snowflaking so it's just a separate thing. It's a small (50u) beaker
-	var/obj/item/reagent_containers/glass/beaker/acidic_beaker
+	var/obj/item/reagent_containers/cup/beaker/acidic_beaker
 	///beaker that holds the alkaline buffer.
-	var/obj/item/reagent_containers/glass/beaker/alkaline_beaker
+	var/obj/item/reagent_containers/cup/beaker/alkaline_beaker
 
 /obj/machinery/plumbing/reaction_chamber/Initialize(mapload, bolt, layer)
 	. = ..()

@@ -213,7 +213,7 @@
 	var/mob/living/living_pawn = controller.pawn
 	if(!living_pawn.get_num_held_items())
 		return //we want to fail the search if we don't have something held
-	. = ..()
+	return ..()
 
 /**
  * Variant of find and set that also requires the item to be edible. checks hands too

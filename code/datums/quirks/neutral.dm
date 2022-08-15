@@ -316,22 +316,22 @@
 	human_holder.hairstyle = old_hair
 	human_holder.update_hair(is_creating = TRUE)
 	UnregisterSignal(human_holder, list(COMSIG_CARBON_EQUIP_HAT, COMSIG_CARBON_UNEQUIP_HAT))
-	SEND_SIGNAL(human_holder, COMSIG_CLEAR_MOOD_EVENT, "bad_hair_day")
+	human_holder.clear_mood_event("bad_hair_day")
 
 ///Checks if the headgear equipped is a wig and sets the mood event accordingly
 /datum/quirk/item_quirk/bald/proc/equip_hat(mob/user, obj/item/hat)
 	SIGNAL_HANDLER
 
 	if(istype(hat, /obj/item/clothing/head/wig))
-		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bad_hair_day", /datum/mood_event/confident_mane) //Our head is covered, but also by a wig so we're happy.
+		quirk_holder.add_mood_event("bad_hair_day", /datum/mood_event/confident_mane) //Our head is covered, but also by a wig so we're happy.
 	else
-		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "bad_hair_day") //Our head is covered
+		quirk_holder.clear_mood_event("bad_hair_day") //Our head is covered
 
 ///Applies a bad moodlet for having an uncovered head
 /datum/quirk/item_quirk/bald/proc/unequip_hat(mob/user, obj/item/clothing, force, newloc, no_move, invdrop, silent)
 	SIGNAL_HANDLER
 
-	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bad_hair_day", /datum/mood_event/bald)
+	quirk_holder.add_mood_event("bad_hair_day", /datum/mood_event/bald)
 
 /datum/quirk/item_quirk/tongue_tied
 	name = "Tongue Tied"
@@ -449,7 +449,7 @@
 	SIGNAL_HANDLER
 	// Epic gamer victory
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	SEND_SIGNAL(human_holder, COMSIG_ADD_MOOD_EVENT, "gamer_won", /datum/mood_event/gamer_won)
+	human_holder.add_mood_event("gamer_won", /datum/mood_event/gamer_won)
 
 /**
  * Gamer lost a game
@@ -462,7 +462,7 @@
 	SIGNAL_HANDLER
 	// Executed when a gamer has lost
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	SEND_SIGNAL(human_holder, COMSIG_ADD_MOOD_EVENT, "gamer_lost", /datum/mood_event/gamer_lost)
+	human_holder.add_mood_event("gamer_lost", /datum/mood_event/gamer_lost)
 	// Executed asynchronously due to say()
 	INVOKE_ASYNC(src, .proc/gamer_moment)
 /**
@@ -476,7 +476,7 @@
 
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	// Remove withdrawal malus
-	SEND_SIGNAL(human_holder, COMSIG_CLEAR_MOOD_EVENT, "gamer_withdrawal")
+	human_holder.clear_mood_event("gamer_withdrawal")
 	// Reset withdrawal timer
 	if (gaming_withdrawal_timer)
 		deltimer(gaming_withdrawal_timer)
@@ -490,6 +490,6 @@
 
 /datum/quirk/gamer/proc/enter_withdrawal()
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	SEND_SIGNAL(human_holder, COMSIG_ADD_MOOD_EVENT, "gamer_withdrawal", /datum/mood_event/gamer_withdrawal)
+	human_holder.add_mood_event("gamer_withdrawal", /datum/mood_event/gamer_withdrawal)
 
 #undef GAMING_WITHDRAWAL_TIME

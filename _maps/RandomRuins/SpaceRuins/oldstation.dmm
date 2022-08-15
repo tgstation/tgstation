@@ -1015,8 +1015,8 @@
 	desc = "A highly-pressurized water tank, this one seems almost empty..";
 	tank_volume = 1000
 	},
-/obj/item/reagent_containers/glass/bucket,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hydro)
@@ -1620,18 +1620,18 @@
 /area/ruin/space/ancientstation/charlie/sec)
 "eW" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/glass/bottle/mercury{
+/obj/item/reagent_containers/cup/bottle/mercury{
 	pixel_x = 6;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/glass/bottle/nitrogen{
+/obj/item/reagent_containers/cup/bottle/nitrogen{
 	pixel_x = -6;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/glass/bottle/oxygen{
+/obj/item/reagent_containers/cup/bottle/oxygen{
 	pixel_x = 6
 	},
-/obj/item/reagent_containers/glass/bottle/phosphorus{
+/obj/item/reagent_containers/cup/bottle/phosphorus{
 	pixel_x = -6
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2331,7 +2331,7 @@
 "hb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/soda_cans/cola,
+/obj/item/reagent_containers/cup/soda_cans/cola,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
@@ -2737,14 +2737,14 @@
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/folder/white,
-/obj/item/reagent_containers/glass/beaker,
+/obj/item/reagent_containers/cup/beaker,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
 "ip" = (
 /obj/machinery/chem_master,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/glass/beaker,
+/obj/item/reagent_containers/cup/beaker,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 5
 	},
@@ -5107,11 +5107,11 @@
 /area/ruin/space/ancientstation/delta/biolab)
 "pM" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/condiment/saltshaker{
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/food/condiment/peppermill{
+/obj/item/reagent_containers/condiment/peppermill{
 	pixel_x = 5;
 	pixel_y = -2
 	},
@@ -5296,14 +5296,14 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/glass,
-/obj/item/reagent_containers/glass/bottle{
+/obj/item/reagent_containers/cup/bottle{
 	pixel_x = 4;
 	list_reagents = list(/datum/reagent/growthserum=30);
 	name = "Experimental solution";
 	renamedByPlayer = 1;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/glass/bottle{
+/obj/item/reagent_containers/cup/bottle{
 	pixel_x = -4;
 	list_reagents = list(/datum/reagent/consumable/nutriment/peptides=30);
 	name = "Solution for Molly";
@@ -5718,13 +5718,13 @@
 /area/ruin/space/ancientstation/delta/biolab)
 "vL" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/glass/bottle/iodine{
+/obj/item/reagent_containers/cup/bottle/iodine{
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/glass/bottle/iron{
+/obj/item/reagent_containers/cup/bottle/iron{
 	pixel_x = 6
 	},
-/obj/item/reagent_containers/glass/bottle/lithium{
+/obj/item/reagent_containers/cup/bottle/lithium{
 	pixel_x = -6
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -5754,10 +5754,10 @@
 /area/ruin/space/ancientstation/beta/supermatter)
 "vS" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/glass/bottle/silver{
+/obj/item/reagent_containers/cup/bottle/silver{
 	pixel_x = 6
 	},
-/obj/item/reagent_containers/glass/bottle/sodium{
+/obj/item/reagent_containers/cup/bottle/sodium{
 	pixel_x = -6
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -6365,7 +6365,7 @@
 "Bq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/reagent_containers/food/condiment/enzyme{
+/obj/item/reagent_containers/condiment/enzyme{
 	layer = 5
 	},
 /turf/open/floor/iron/cafeteria,
@@ -6519,7 +6519,7 @@
 /area/ruin/space/ancientstation/charlie/hall)
 "CK" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/glass/beaker/oldstation,
+/obj/item/reagent_containers/cup/beaker/oldstation,
 /turf/open/floor/engine,
 /area/ruin/space/ancientstation/delta/biolab)
 "CN" = (
@@ -6781,7 +6781,7 @@
 /obj/item/storage/medkit/ancient,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/paper/fluff/ruins/oldstation/protosleep{
-	info = "<b>*Prototype Sleeper*</b><br><br>We have deliverted the lastest in medical technology to the medical bay for your use."
+	default_raw_text = "<b>*Prototype Sleeper*</b><br><br>We have deliverted the lastest in medical technology to the medical bay for your use."
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue,
@@ -7350,10 +7350,10 @@
 /area/ruin/solars/ancientstation/charlie/solars)
 "JC" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/glass/bottle/sacid{
+/obj/item/reagent_containers/cup/bottle/sacid{
 	pixel_x = 6
 	},
-/obj/item/reagent_containers/glass/bottle/silicon{
+/obj/item/reagent_containers/cup/bottle/silicon{
 	pixel_x = -6
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -7458,10 +7458,10 @@
 /area/ruin/space/ancientstation/charlie/hall)
 "Kb" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/glass/bottle/carbon{
+/obj/item/reagent_containers/cup/bottle/carbon{
 	pixel_x = 6
 	},
-/obj/item/reagent_containers/glass/bottle/chlorine{
+/obj/item/reagent_containers/cup/bottle/chlorine{
 	pixel_x = -6
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -7653,10 +7653,10 @@
 /area/ruin/space/ancientstation/delta/hall)
 "LM" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/glass/bottle/sugar{
+/obj/item/reagent_containers/cup/bottle/sugar{
 	pixel_x = 6
 	},
-/obj/item/reagent_containers/glass/bottle/sulfur{
+/obj/item/reagent_containers/cup/bottle/sulfur{
 	pixel_x = -6
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -7703,13 +7703,13 @@
 /area/ruin/space/ancientstation/beta/atmos)
 "LW" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/glass/bottle/potassium{
+/obj/item/reagent_containers/cup/bottle/potassium{
 	pixel_x = 6
 	},
-/obj/item/reagent_containers/glass/bottle/radium{
+/obj/item/reagent_containers/cup/bottle/radium{
 	pixel_x = -6
 	},
-/obj/item/reagent_containers/glass/bottle/welding_fuel{
+/obj/item/reagent_containers/cup/bottle/welding_fuel{
 	pixel_y = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -7765,13 +7765,13 @@
 /area/ruin/space/ancientstation/delta/hall)
 "MN" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/glass/bottle/fluorine{
+/obj/item/reagent_containers/cup/bottle/fluorine{
 	pixel_x = 6
 	},
-/obj/item/reagent_containers/glass/bottle/hydrogen{
+/obj/item/reagent_containers/cup/bottle/hydrogen{
 	pixel_x = -6
 	},
-/obj/item/reagent_containers/glass/bottle/water{
+/obj/item/reagent_containers/cup/bottle/water{
 	pixel_y = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -8211,10 +8211,10 @@
 /area/ruin/space/ancientstation/charlie/hall)
 "QO" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/glass/bottle/aluminium{
+/obj/item/reagent_containers/cup/bottle/aluminium{
 	pixel_x = 6
 	},
-/obj/item/reagent_containers/glass/bottle/bromine{
+/obj/item/reagent_containers/cup/bottle/bromine{
 	pixel_x = -6
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -8471,7 +8471,7 @@
 /obj/item/raw_anomaly_core/bluespace,
 /obj/item/raw_anomaly_core/random,
 /obj/item/clothing/suit/toggle/labcoat/science,
-/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb,
+/obj/item/reagent_containers/cup/soda_cans/dr_gibb,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "ST" = (
@@ -8603,10 +8603,10 @@
 /area/ruin/space/ancientstation/delta/biolab)
 "TZ" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/glass/bottle/copper{
+/obj/item/reagent_containers/cup/bottle/copper{
 	pixel_x = 6
 	},
-/obj/item/reagent_containers/glass/bottle/ethanol{
+/obj/item/reagent_containers/cup/bottle/ethanol{
 	pixel_x = -6
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -8915,7 +8915,7 @@
 /obj/structure/janitorialcart{
 	dir = 4
 	},
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/item/mop,
 /turf/open/floor/plating/rust{
 	initial_gas_mix = "co2=6;o2=16;n2=82;TEMP=293.15"

@@ -94,13 +94,7 @@
 	// "Shared cooldowns" covers actions which are not the same type,
 	// but have the same cooldown group and are on the same mob
 	if(shared_cooldown)
-		for(var/datum/action/cooldown/shared_ability in owner.actions - src)
-			if(!(shared_cooldown & shared_ability.shared_cooldown))
-				continue
-			if(isnum(override_cooldown_time))
-				shared_ability.StartCooldownSelf(override_cooldown_time)
-			else
-				shared_ability.StartCooldownSelf(cooldown_time)
+		StartCooldownOthers(override_cooldown_time)
 
 	StartCooldownSelf(override_cooldown_time)
 
@@ -118,6 +112,17 @@
 		next_use_time = world.time + cooldown_time
 	UpdateButtons()
 	START_PROCESSING(SSfastprocess, src)
+
+/// Starts a cooldown time for other abilities that share a cooldown with this. Has some niche usage with more complicated attack ai!
+/// Will use default cooldown time if an override is not specified
+/datum/action/cooldown/proc/StartCooldownOthers(override_cooldown_time)
+	for(var/datum/action/cooldown/shared_ability in owner.actions - src)
+		if(!(shared_cooldown & shared_ability.shared_cooldown))
+			continue
+		if(isnum(override_cooldown_time))
+			shared_ability.StartCooldownSelf(override_cooldown_time)
+		else
+			shared_ability.StartCooldownSelf(cooldown_time)
 
 /datum/action/cooldown/Trigger(trigger_flags, atom/target)
 	. = ..()
@@ -174,7 +179,8 @@
 /datum/action/cooldown/proc/PreActivate(atom/target)
 	if(SEND_SIGNAL(owner, COMSIG_MOB_ABILITY_STARTED, src) & COMPONENT_BLOCK_ABILITY_START)
 		return
-	StartCooldown(360 SECONDS, 360 SECONDS)
+	// Note, that PreActivate handles no cooldowns at all by default.
+	// Be sure to call StartCooldown() in Activate() where necessary.
 	. = Activate(target)
 	// There is a possibility our action (or owner) is qdeleted in Activate().
 	if(!QDELETED(src) && !QDELETED(owner))

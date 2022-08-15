@@ -76,7 +76,7 @@
 	name = "beef noodle"
 	desc = "Nutritious, beefy and noodly."
 	icon_state = "beefnoodle"
-	trash_type = /obj/item/reagent_containers/glass/bowl
+	trash_type = /obj/item/reagent_containers/cup/bowl
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/liquidgibs = 3)
 	tastes = list("noodle" = 1, "meat" = 1)
 	foodtypes = GRAIN | MEAT | VEGETABLES

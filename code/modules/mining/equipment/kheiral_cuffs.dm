@@ -22,7 +22,7 @@
 	/// If we're off the station's Z-level
 	var/far_from_home = FALSE
 
-/obj/item/kheiral_cuffs/Initialize()
+/obj/item/kheiral_cuffs/Initialize(mapload)
 	. = ..()
 	update_icon(UPDATE_OVERLAYS)
 	RegisterSignal(src, COMSIG_MOVABLE_Z_CHANGED, .proc/check_z)
@@ -62,7 +62,7 @@
 	var/obj/item/card/id/id_card = user.get_idcard(hand_first = FALSE)
 	if(id_card)
 		gps_name = id_card.registered_name
-	AddComponent(/datum/component/gps, "*[gps_name]'s Kheiral Link")
+	AddComponent(/datum/component/gps/kheiral_cuffs, "*[gps_name]'s Kheiral Link")
 	balloon_alert(user, "GPS activated")
 	ADD_TRAIT(user, TRAIT_MULTIZ_SUIT_SENSORS, REF(src))
 	gps_enabled = TRUE
@@ -74,7 +74,6 @@
 	if(on_wrist && far_from_home)
 		return
 	balloon_alert(user, "GPS de-activated")
-	qdel(GetComponent(/datum/component/gps))
 	REMOVE_TRAIT(user, TRAIT_MULTIZ_SUIT_SENSORS, REF(src))
 	gps_enabled = FALSE
 
