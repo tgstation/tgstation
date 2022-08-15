@@ -49,7 +49,7 @@
  * * * !!!! blacklisting BODY_ZONE_CHEST is really risky since it's the only bodypart guarunteed to ALWAYS exists  !!!!
  * * * !!!! Only do that if you're REALLY CERTAIN they have limbs, otherwise we'll CRASH() !!!!
  *
- * * ran_zone has a base prob(80) to return the chest vs something in our generated list of limbs.
+ * * ran_zone has a base prob(80) to return the _zone (or if null, BODY_ZONE_CHEST) vs something in our generated list of limbs.
  * * this probability is overriden when either blacklisted_parts contains BODY_ZONE_CHEST and we aren't passed a _zone (since the default fallback for ran_zone would be the chest in that scenario), or if even_weights is enabled.
  * * you can also manually adjust this probability by altering _probability
  *
