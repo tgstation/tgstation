@@ -6,9 +6,9 @@
 	min_players = 10
 
 /datum/round_event/vent_clog
-	announceWhen = 1
-	startWhen = 5
-	endWhen = 35
+	announce_when = 1
+	start_when = 5
+	end_when = 35
 	var/interval = 2
 	var/list/vents = list()
 	var/random_probability = 1
@@ -55,7 +55,7 @@
 	priority_announce("The scrubbers network is experiencing a backpressure surge. Some ejection of contents may occur.", "Atmospherics alert")
 
 /datum/round_event/vent_clog/setup()
-	endWhen = rand(25, 100)
+	end_when = rand(25, 100)
 	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/temp_vent in GLOB.machines)
 		var/turf/scrubber_turf = get_turf(temp_vent)
 		if(scrubber_turf && is_station_level(scrubber_turf.z) && !temp_vent.welded)

@@ -7,8 +7,8 @@
 	description = "This anomaly sets things on fire, and creates a pyroclastic slime."
 
 /datum/round_event/anomaly/anomaly_pyro
-	startWhen = 3
-	announceWhen = 10
+	start_when = 3
+	announce_when = 10
 	anomaly_path = /obj/effect/anomaly/pyro
 
 /datum/round_event/anomaly/anomaly_pyro/announce(fake)

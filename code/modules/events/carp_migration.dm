@@ -18,12 +18,12 @@
 
 
 /datum/round_event/carp_migration
-	announceWhen = 3
-	startWhen = 50
+	announce_when = 3
+	start_when = 50
 	var/hasAnnounced = FALSE
 
 /datum/round_event/carp_migration/setup()
-	startWhen = rand(40, 60)
+	start_when = rand(40, 60)
 
 /datum/round_event/carp_migration/announce(fake)
 	priority_announce("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")

@@ -11,7 +11,7 @@
 /datum/round_event/anomaly
 	var/area/impact_area
 	var/obj/effect/anomaly/anomaly_path = /obj/effect/anomaly/flux
-	announceWhen = 1
+	announce_when = 1
 
 
 /datum/round_event/anomaly/proc/findEventArea()

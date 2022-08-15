@@ -8,8 +8,8 @@
 	description = "This anomaly sucks in and detonates items."
 
 /datum/round_event/anomaly/anomaly_vortex
-	startWhen = 10
-	announceWhen = 3
+	start_when = 10
+	announce_when = 3
 	anomaly_path = /obj/effect/anomaly/bhole
 
 /datum/round_event/anomaly/anomaly_vortex/announce(fake)
