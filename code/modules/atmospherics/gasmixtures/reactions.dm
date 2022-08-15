@@ -861,7 +861,7 @@
 	var/obj/effect/particle_effect/fluid/foam/foam = locate() in location
 	var/obj/structure/foamedmetal/resin = locate() in location
 	if(heat_efficiency > HALON_COMBUSTION_MINIMUM_RESIN_MOLES && location && !foam && !resin)
-		var/datum/effect_system/fluid_spread/foam/metal/resin/foaming = new
+		var/datum/effect_system/fluid_spread/foam/metal/resin/halon/foaming = new
 		foaming.set_up(amount = HALON_COMBUSTION_RESIN_VOLUME, holder = holder, location = location)
 		foaming.start()
 
