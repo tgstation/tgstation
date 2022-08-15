@@ -13,14 +13,12 @@
 /turf/open/floor/carpet/nanoweave/blue,
 /area/ship/bridge)
 "aJ" = (
-/obj/structure/sink{
-	dir = 1
-	},
+/obj/structure/sink/directional/north,
 /obj/structure/mirror{
 	pixel_y = -30
 	},
 /obj/machinery/light,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/ship/bridge)
 "aW" = (
 /obj/machinery/computer/autopilot,
@@ -29,7 +27,7 @@
 "bD" = (
 /obj/structure/shuttle/engine/heater,
 /obj/structure/window/reinforced/spawner,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/ship/bridge)
 "bF" = (
 /obj/structure/table/bronze,
@@ -46,7 +44,7 @@
 /turf/open/floor/carpet/nanoweave/blue,
 /area/ship/bridge)
 "de" = (
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/ship/bridge)
 "eI" = (
 /obj/structure/table/bronze,
@@ -83,7 +81,7 @@
 "lm" = (
 /obj/machinery/atmospherics/components/unary/tank/air,
 /obj/structure/curtain/cloth/grey,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/ship/bridge)
 "oK" = (
 /obj/machinery/power/shuttle/engine/void{
@@ -173,14 +171,12 @@
 /turf/open/floor/carpet/nanoweave,
 /area/ship/bridge)
 "yX" = (
-/obj/machinery/shower{
-	dir = 1
-	},
+/obj/machinery/shower/directional/north,
 /obj/structure/curtain,
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/ship/bridge)
 "Au" = (
 /obj/structure/bed,
@@ -210,13 +206,13 @@
 /turf/open/floor/carpet/nanoweave/blue,
 /area/ship/bridge)
 "GQ" = (
-/obj/machinery/door/window/westright{
+/obj/machinery/door/window/right/directional/west{
 	dir = 2
 	},
 /turf/open/floor/carpet/nanoweave/blue,
 /area/ship/bridge)
 "Hu" = (
-/obj/machinery/door/window/westright,
+/obj/machinery/door/window/right/directional/west,
 /turf/open/floor/carpet/nanoweave,
 /area/ship/bridge)
 "HJ" = (
@@ -276,7 +272,7 @@
 "MW" = (
 /obj/structure/curtain/cloth/grey,
 /obj/structure/table,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/ship/bridge)
 "Nh" = (
 /obj/machinery/door/window{
@@ -303,7 +299,7 @@
 /obj/structure/toilet{
 	dir = 4
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/ship/bridge)
 "QG" = (
 /obj/structure/window/bronze{
@@ -316,13 +312,13 @@
 /obj/machinery/door/window{
 	dir = 1
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/ship/bridge)
 "Tq" = (
 /turf/open/floor/carpet/nanoweave/orange,
 /area/ship/bridge)
 "Ve" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/ship/bridge)
 "Vx" = (
@@ -338,15 +334,15 @@
 /turf/open/floor/carpet/nanoweave/blue,
 /area/ship/bridge)
 "Xu" = (
-/obj/effect/spawner/lootdrop/donkpockets,
-/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/structure/closet/secure_closet/freezer,
-/obj/effect/spawner/lootdrop/donkpockets,
-/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/carpet/nanoweave/orange,
 /area/ship/bridge)
 "Ya" = (
-/obj/machinery/door/window/westright{
+/obj/machinery/door/window/right/directional/west{
 	dir = 2
 	},
 /obj/machinery/holopad,
@@ -364,7 +360,7 @@
 	},
 /obj/structure/curtain/cloth/grey,
 /obj/structure/table,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/ship/bridge)
 
 (1,1,1) = {"

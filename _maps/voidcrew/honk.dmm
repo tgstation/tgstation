@@ -55,9 +55,7 @@
 /turf/open/floor/mineral/bananium,
 /area/ship/crew)
 "hn" = (
-/obj/structure/window/plasma/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/plasma,
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/machinery/light,
 /turf/open/floor/mineral/bananium,
@@ -68,16 +66,12 @@
 /turf/open/floor/wood/yew,
 /area/ship/bridge)
 "hx" = (
-/obj/structure/window/plasma/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/plasma,
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/mineral/bananium,
 /area/ship/crew)
 "iN" = (
-/obj/structure/window/plasma/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/plasma,
 /obj/machinery/light,
 /obj/item/stack/sheet/mineral/plasma/twenty,
 /obj/structure/cable,
@@ -97,7 +91,7 @@
 /area/ship/bridge)
 "mc" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/east,
+/obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/wood/yew,
 /area/ship/bridge)
 "mU" = (
@@ -161,7 +155,7 @@
 /obj/machinery/power/smes/shuttle/precharged{
 	dir = 1
 	},
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering/engine)
@@ -349,17 +343,11 @@
 /obj/structure/railing,
 /turf/open/floor/light,
 /area/ship/engineering/engine)
-"zv" = (
-/obj/structure/cable,
-/turf/open/floor/mineral/bananium,
-/area/ship/crew)
 "zT" = (
-/obj/machinery/airalarm/all_access,
+/obj/machinery/airalarm/all_access{
+	dir = 1
+	},
 /turf/closed/wall/mineral/bananium,
-/area/ship/crew)
-"AH" = (
-/obj/structure/cable,
-/turf/open/floor/mineral/bananium,
 /area/ship/crew)
 "AS" = (
 /turf/closed/wall/mineral/bananium,
@@ -382,12 +370,12 @@
 /turf/open/floor/mineral/bananium,
 /area/ship/crew)
 "CJ" = (
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/structure/cable,
 /turf/open/floor/mineral/bananium,
 /area/ship/crew)
 "Do" = (
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /turf/open/floor/mineral/bananium,
 /area/ship/crew)
 "Dt" = (
@@ -397,7 +385,7 @@
 /turf/open/floor/glass/reinforced,
 /area/ship/engineering/engine)
 "El" = (
-/mob/living/carbon/monkey,
+/mob/living/carbon/human/species/monkey,
 /obj/structure/cable,
 /turf/open/floor/light,
 /area/ship/engineering/engine)
@@ -444,7 +432,7 @@
 /area/ship/crew)
 "Hr" = (
 /obj/machinery/biogenerator,
-/obj/item/reagent_containers/glass/beaker,
+/obj/item/reagent_containers/cup/beaker,
 /turf/open/floor/mineral/bananium,
 /area/ship/crew)
 "HB" = (
@@ -476,7 +464,7 @@
 /area/ship/crew)
 "IT" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/mineral/bananium,
 /area/ship/crew)
 "IX" = (
@@ -515,12 +503,6 @@
 	},
 /turf/open/floor/mineral/bananium,
 /area/ship/crew)
-"Kf" = (
-/obj/structure/window/plasma/reinforced{
-	dir = 4
-	},
-/turf/open/floor/mineral/bananium,
-/area/ship/crew)
 "KF" = (
 /obj/machinery/deepfryer,
 /turf/open/floor/light,
@@ -547,7 +529,7 @@
 /turf/open/floor/glass/reinforced,
 /area/ship/engineering/engine)
 "LW" = (
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/structure/disposaloutlet{
 	dir = 1
 	},
@@ -560,10 +542,6 @@
 /obj/structure/falsewall/bananium,
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/plating,
-/area/ship/crew)
-"MV" = (
-/obj/structure/cable,
-/turf/open/floor/mineral/bananium,
 /area/ship/crew)
 "MZ" = (
 /obj/machinery/power/shuttle/engine/electric{
@@ -608,7 +586,7 @@
 /area/ship/crew)
 "Pr" = (
 /obj/structure/reagent_dispensers/watertank/high,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/machinery/light,
 /turf/open/floor/mineral/bananium,
 /area/ship/crew)
@@ -808,7 +786,7 @@
 /turf/open/floor/mineral/bananium,
 /area/ship/crew)
 "Ur" = (
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/machinery/disposal/deliveryChute{
 	dir = 1
 	},
@@ -821,7 +799,9 @@
 /turf/open/floor/mineral/bananium,
 /area/ship/crew)
 "UD" = (
-/obj/machinery/airalarm/all_access,
+/obj/machinery/airalarm/all_access{
+	dir = 1
+	},
 /turf/closed/wall/mineral/bananium,
 /area/ship/engineering/engine)
 "UT" = (
@@ -865,7 +845,7 @@
 /area/ship/crew)
 "Ww" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/south,
+/obj/machinery/power/apc/auto_name/directional/south,
 /obj/item/reagent_containers/food/snacks/sausage,
 /obj/item/reagent_containers/food/snacks/sausage,
 /obj/item/reagent_containers/food/snacks/sausage,
@@ -909,16 +889,6 @@
 /obj/item/reagent_containers/food/snacks/sausage,
 /obj/item/reagent_containers/food/snacks/sausage,
 /obj/item/reagent_containers/food/snacks/sausage,
-/turf/open/floor/light,
-/area/ship/engineering/engine)
-"WJ" = (
-/obj/structure/window/plasma/reinforced{
-	dir = 8
-	},
-/turf/open/floor/mineral/bananium,
-/area/ship/crew)
-"Xf" = (
-/obj/structure/cable,
 /turf/open/floor/light,
 /area/ship/engineering/engine)
 "Xn" = (
@@ -1077,7 +1047,7 @@ Nj
 Uv
 Yd
 Xn
-zv
+rT
 Zp
 ZT
 ZT
@@ -1103,7 +1073,7 @@ ZT
 Vc
 Xn
 Xn
-zv
+rT
 Xn
 Xn
 ZT
@@ -1181,7 +1151,7 @@ YY
 ZT
 ZI
 Xn
-zv
+rT
 Xn
 Xn
 Xn
@@ -1207,7 +1177,7 @@ YY
 ZT
 IO
 Xn
-zv
+rT
 Xn
 Xn
 Xn
@@ -1233,10 +1203,10 @@ YY
 ZT
 ZT
 KZ
-zv
+rT
 Xn
-Kf
-Kf
+Do
+Do
 hx
 hn
 ZT
@@ -1259,11 +1229,11 @@ YY
 YY
 zT
 Xn
-MV
+rT
 Ur
 PU
-Xf
-Xf
+QS
+QS
 QS
 Ww
 HX
@@ -1285,7 +1255,7 @@ YY
 Wl
 tX
 XR
-AH
+rT
 LW
 am
 AY
@@ -1314,7 +1284,7 @@ ZT
 Jy
 CJ
 mV
-Xf
+QS
 yE
 Jl
 LJ
@@ -1363,10 +1333,10 @@ YY
 Zw
 Rx
 mU
-MV
+rT
 CJ
 mV
-Xf
+QS
 yE
 xT
 rq
@@ -1389,7 +1359,7 @@ ZT
 ZT
 Jq
 mU
-zv
+rT
 Do
 KF
 AY
@@ -1415,11 +1385,11 @@ ZT
 fx
 Xn
 Xn
-MV
+rT
 CJ
 Bn
 El
-Xf
+QS
 QS
 wp
 HX
@@ -1441,11 +1411,11 @@ ZT
 hf
 Xn
 Xn
-zv
+rT
 Xn
-WJ
-WJ
-WJ
+Do
+Do
+Do
 iN
 ZT
 ZT
@@ -1467,7 +1437,7 @@ SM
 Xn
 Xn
 Xn
-zv
+rT
 Xn
 Xn
 Xn
@@ -1493,7 +1463,7 @@ Xn
 Xn
 Xn
 Xn
-zv
+rT
 Xn
 Xn
 Xn
@@ -1519,7 +1489,7 @@ Xn
 Xn
 Xn
 Xn
-zv
+rT
 Xn
 Xn
 Xn
@@ -1545,7 +1515,7 @@ Xn
 Xn
 Xn
 Xn
-zv
+rT
 Xn
 Xn
 Xn
@@ -1571,7 +1541,7 @@ Xn
 Xn
 Xn
 Xn
-zv
+rT
 Xn
 Xn
 Pr
@@ -1597,7 +1567,7 @@ Xn
 Xn
 Xn
 Xn
-zv
+rT
 TV
 Cz
 ZT

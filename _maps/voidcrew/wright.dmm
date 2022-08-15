@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "av" = (
 /obj/structure/table/wood,
-/obj/item/paicard{
+/obj/item/pai_card{
 	pixel_x = 3;
 	pixel_y = 2
 	},
@@ -217,7 +217,7 @@
 /area/ship/crew/toilet)
 "hz" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/drinkingglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass{
 	list_reagents = list(/datum/reagent/consumable/ethanol/sugar_rush = 30);
 	pixel_x = 3;
 	pixel_y = 4
@@ -225,7 +225,7 @@
 /turf/open/floor/wood,
 /area/ship/hallway/central)
 "hO" = (
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/item/clothing/head/helmet/justice,
 /obj/item/stack/sheet/glass,
@@ -265,7 +265,7 @@
 /turf/open/floor/wood,
 /area/ship/hallway/central)
 "iP" = (
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/carpet/nanoweave/purple,
 /area/ship/crew/dorm)
@@ -347,7 +347,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/west,
-/obj/machinery/door/window/eastright,
+/obj/machinery/door/window/right/directional/east,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
@@ -395,7 +395,7 @@
 /obj/structure/chair/office/light{
 	dir = 8
 	},
-/obj/machinery/power/apc/auto_name/east,
+/obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -421,7 +421,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/west,
-/obj/machinery/door/window/eastleft,
+/obj/machinery/door/window/left/directional/east,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
@@ -449,7 +449,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
 	dir = 4
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass{
 	list_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 30);
 	pixel_x = -2;
 	pixel_y = 4
@@ -544,10 +544,7 @@
 /turf/open/floor/carpet/nanoweave/beige,
 /area/ship/crew/office)
 "nF" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12
-	},
+/obj/structure/sink/directional/east,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plastic,
 /area/ship/crew/toilet)
@@ -565,7 +562,7 @@
 /area/ship/maintenance/aft)
 "nN" = (
 /obj/effect/decal/cleanable/cobweb,
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 4
@@ -605,7 +602,7 @@
 /obj/machinery/light/small/broken,
 /obj/item/stack/cable_coil/red,
 /obj/effect/decal/cleanable/glass,
-/obj/machinery/power/apc/auto_name/south,
+/obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /obj/item/bot_assembly/secbot,
 /turf/open/floor/plating,
@@ -644,7 +641,7 @@
 "qE" = (
 /obj/structure/table/wood,
 /obj/item/picket_sign,
-/obj/effect/spawner/lootdrop/minor/kittyears_or_rabbitears,
+/obj/effect/spawner/random/clothing/kittyears_or_rabbitears,
 /turf/open/floor/wood,
 /area/ship/storage)
 "qH" = (
@@ -821,13 +818,13 @@
 /turf/open/floor/carpet/nanoweave/beige,
 /area/ship/crew/office)
 "wR" = (
-/obj/structure/sign/warning/enginesafety,
+/obj/structure/sign/warning/engine_safety,
 /turf/closed/wall,
 /area/ship/maintenance/aft)
 "xg" = (
 /obj/structure/closet/crate,
 /obj/item/stock_parts/manipulator,
-/obj/effect/spawner/lootdrop/maintenance/three,
+/obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "xw" = (
@@ -874,7 +871,7 @@
 /area/ship/crew/toilet)
 "yV" = (
 /obj/machinery/light,
-/obj/machinery/power/apc/auto_name/south,
+/obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/carpet/blue,
@@ -982,7 +979,7 @@
 	},
 /obj/machinery/light,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/power/apc/auto_name/south,
+/obj/machinery/power/apc/auto_name/directional/south,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8
 	},
@@ -1035,11 +1032,6 @@
 /obj/structure/chair/wood,
 /turf/open/floor/wood,
 /area/ship/hallway/central)
-"CC" = (
-/obj/effect/decal/cleanable/oil,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/ship/maintenance/aft)
 "CP" = (
 /obj/structure/closet/crate/bin,
 /obj/item/stock_parts/matter_bin,
@@ -1175,7 +1167,7 @@
 	name = "Air to Distro";
 	target_pressure = 500
 	},
-/obj/machinery/door/window/southleft,
+/obj/machinery/door/window/left/directional/south,
 /turf/open/floor/plating,
 /area/ship/crew/office)
 "HE" = (
@@ -1551,7 +1543,7 @@
 	name = "gumshoe shoes"
 	},
 /obj/item/clothing/under/rank/security/detective,
-/obj/item/clothing/suit/det_suit,
+/obj/item/clothing/suit/jacket/det_suit,
 /obj/item/clothing/head/fedora/det_hat{
 	name = "hard-worn fedora"
 	},
@@ -1784,7 +1776,7 @@
 /turf/closed/wall,
 /area/ship/crew/toilet)
 "Wh" = (
-/obj/structure/sign/warning/electricshock,
+/obj/structure/sign/warning/electric_shock,
 /turf/closed/wall,
 /area/ship/crew/toilet)
 "Wi" = (
@@ -1849,10 +1841,6 @@
 "Xt" = (
 /turf/closed/wall,
 /area/ship/hallway/central)
-"XD" = (
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/ship/maintenance/aft)
 "XH" = (
 /obj/machinery/vending/autodrobe/all_access,
 /turf/open/floor/wood,
@@ -1862,7 +1850,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -1874,10 +1862,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/wood,
 /area/ship/hallway/central)
-"YA" = (
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/ship/maintenance/aft)
 "YG" = (
 /turf/closed/wall,
 /area/ship/storage)
@@ -2060,7 +2044,7 @@ KQ
 kf
 zd
 Gc
-YA
+Gc
 tp
 Iz
 hU
@@ -2081,7 +2065,7 @@ Sl
 CP
 Xt
 gP
-XD
+Gc
 zM
 zi
 oI
@@ -2103,7 +2087,7 @@ Md
 Md
 Xt
 HT
-CC
+oy
 gh
 tp
 xg

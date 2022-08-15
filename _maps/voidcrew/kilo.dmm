@@ -100,7 +100,7 @@
 /turf/open/floor/plating,
 /area/ship/cargo)
 "aJ" = (
-/obj/structure/sign/warning/enginesafety,
+/obj/structure/sign/warning/engine_safety,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/ship/engineering/engine)
 "aK" = (
@@ -145,7 +145,7 @@
 "bg" = (
 /obj/structure/ore_box,
 /obj/effect/turf_decal/box/corners{
-	dir = 1
+	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -160,9 +160,7 @@
 /obj/effect/turf_decal/industrial/warning{
 	dir = 5
 	},
-/obj/structure/sign/warning/electricshock{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/electric_shock/directional/north,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering/engine)
@@ -177,9 +175,7 @@
 	pixel_y = -8;
 	specialfunctions = 4
 	},
-/obj/structure/sign/warning/xeno_mining{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/xeno_mining/directional/north,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 26
@@ -300,7 +296,7 @@
 /obj/item/mining_scanner,
 /obj/effect/turf_decal/box/corners,
 /obj/effect/turf_decal/box/corners{
-	dir = 4
+	dir = 1
 	},
 /obj/structure/cable,
 /obj/item/gun/energy/kinetic_accelerator,
@@ -321,7 +317,7 @@
 /turf/open/floor/plating,
 /area/ship/engineering/engine)
 "bP" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_bridge";
 	name = "Cockpit Emergency Blast door"
@@ -591,9 +587,7 @@
 "cJ" = (
 /obj/effect/turf_decal/industrial/outline/yellow,
 /obj/structure/closet/emcloset/anchored,
-/obj/structure/sign/warning/vacuum/external{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/west,
 /obj/machinery/airalarm/all_access{
 	dir = 1;
 	pixel_y = -24
@@ -625,7 +619,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/ship/bridge)
 "cP" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows";
 	name = "Exterior Window Blast door"
@@ -660,7 +654,7 @@
 /obj/structure/bed,
 /obj/effect/turf_decal/industrial/warning,
 /obj/machinery/airalarm/all_access{
-	dir = 8;
+	dir = 4;
 	pixel_x = 24
 	},
 /obj/machinery/light/small{
@@ -713,9 +707,8 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = -32
 	},
-/turf/open/floor/wood{
-	icon_state = "wood-broken"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
 /area/ship/crew/canteen)
 "dc" = (
 /obj/structure/chair/sofa/left{
@@ -731,14 +724,13 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 4
 	},
-/turf/open/floor/wood{
-	icon_state = "wood-broken3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
 /area/ship/crew/canteen)
 "de" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/reagent_dispensers/watertank,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/item/mop,
 /obj/item/storage/bag/trash{
 	pixel_x = 6
@@ -749,7 +741,7 @@
 	dir = 10
 	},
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/south,
+/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/plating,
 /area/ship/engineering/engine)
 "dh" = (
@@ -804,7 +796,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/ship/crew/canteen)
 "fv" = (
 /obj/effect/turf_decal/industrial/warning{
@@ -973,7 +965,7 @@
 /obj/machinery/status_display/evac{
 	pixel_y = 32
 	},
-/obj/item/paicard,
+/obj/item/pai_card,
 /obj/item/clothing/shoes/cowboy/white,
 /obj/item/clothing/head/cowboy_hat_red,
 /turf/open/floor/carpet,
@@ -1098,7 +1090,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/industrial/warning/corner,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/ship/crew/canteen)
 "qp" = (
 /obj/effect/turf_decal/industrial/warning{
@@ -1107,7 +1099,7 @@
 /obj/machinery/atmospherics/components/unary/shuttle/heater{
 	dir = 8
 	},
-/obj/machinery/door/window/westright,
+/obj/machinery/door/window/right/directional/west,
 /turf/open/floor/plating/airless,
 /area/ship/engineering/engine)
 "qw" = (
@@ -1165,10 +1157,8 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/cable,
-/obj/machinery/shower{
-	pixel_y = 18
-	},
-/obj/machinery/power/apc/auto_name/west,
+/obj/machinery/shower/directional/south,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ship/cargo)
 "sD" = (
@@ -1183,9 +1173,8 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
-/turf/open/floor/wood{
-	icon_state = "wood-broken3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
 /area/ship/crew/canteen)
 "sW" = (
 /obj/effect/turf_decal/industrial/warning{
@@ -1214,10 +1203,10 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/ship/crew/canteen)
 "vv" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_bridge";
 	name = "Cockpit Emergency Blast door"
@@ -1280,7 +1269,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
-/turf/open/floor/plasteel/showroomfloor,
+/turf/open/floor/iron/showroomfloor,
 /area/ship/crew)
 "xe" = (
 /obj/effect/turf_decal/industrial/warning{
@@ -1315,7 +1304,7 @@
 /obj/effect/turf_decal/corner/red{
 	dir = 1
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/ship/crew/canteen)
 "xk" = (
 /obj/effect/turf_decal/industrial/warning/corner{
@@ -1326,14 +1315,14 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
 	dir = 1
 	},
-/turf/open/floor/plasteel/showroomfloor,
+/turf/open/floor/iron/showroomfloor,
 /area/ship/crew)
 "xF" = (
 /obj/structure/chair/sofa/right{
@@ -1345,14 +1334,13 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
-/turf/open/floor/wood{
-	icon_state = "wood-broken6"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
 /area/ship/crew/canteen)
 "yn" = (
 /obj/effect/turf_decal/box/corners,
 /obj/effect/turf_decal/box/corners{
-	dir = 8
+	dir = 4
 	},
 /obj/item/wrench,
 /obj/effect/decal/cleanable/blood/old,
@@ -1367,7 +1355,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
-/turf/open/floor/plasteel/showroomfloor,
+/turf/open/floor/iron/showroomfloor,
 /area/ship/crew)
 "zM" = (
 /obj/structure/sign/warning/fire,
@@ -1433,7 +1421,7 @@
 /turf/open/floor/wood,
 /area/ship/crew)
 "Bu" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_bridge";
 	name = "Cockpit Emergency Blast door"
@@ -1441,7 +1429,7 @@
 /turf/open/floor/plating,
 /area/ship/bridge)
 "BS" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_bridge";
 	name = "Cockpit Emergency Blast door"
@@ -1499,7 +1487,7 @@
 /obj/structure/rack,
 /obj/item/storage/box/lights/mixed,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/spawner/random/maintenance/two,
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = -32
 	},
@@ -1536,7 +1524,8 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/all_access{
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 4
@@ -1621,7 +1610,7 @@
 /obj/machinery/atmospherics/components/unary/shuttle/heater{
 	dir = 8
 	},
-/obj/machinery/door/window/westleft,
+/obj/machinery/door/window/left/directional/west,
 /turf/open/floor/plating/airless,
 /area/ship/engineering/engine)
 "Hm" = (
@@ -1632,7 +1621,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/door/window/westleft,
+/obj/machinery/door/window/left/directional/west,
 /obj/structure/window/reinforced/spawner,
 /turf/open/floor/plating/airless,
 /area/ship/engineering/engine)
@@ -1649,7 +1638,7 @@
 /turf/open/floor/plating,
 /area/ship/engineering/engine)
 "Ih" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows";
 	name = "Exterior Window Blast door"
@@ -1725,12 +1714,13 @@
 	pixel_y = 8
 	},
 /obj/machinery/airalarm/all_access{
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /turf/open/floor/carpet,
 /area/ship/crew)
 "La" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows";
 	name = "Exterior Window Blast door"
@@ -1781,7 +1771,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 9
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/ship/crew/canteen)
 "NB" = (
 /obj/structure/closet/secure_closet/personal,
@@ -1938,7 +1928,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ship/crew/canteen)
 "Ti" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows";
 	name = "Exterior Window Blast door"
@@ -1958,7 +1948,7 @@
 /turf/open/floor/plating,
 /area/ship/cargo)
 "Ua" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows";
 	name = "Exterior Window Blast door"
@@ -2084,7 +2074,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/door/window/westright,
+/obj/machinery/door/window/right/directional/west,
 /obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/plating/airless,
 /area/ship/engineering/engine)
@@ -2110,7 +2100,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/ship/crew/canteen)
 "Yu" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -2137,7 +2127,7 @@
 	pixel_x = -6;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/food/condiment/enzyme{
+/obj/item/reagent_containers/condiment/enzyme{
 	layer = 5;
 	pixel_x = 12;
 	pixel_y = 6
@@ -2163,7 +2153,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/ship/crew/canteen)
 "YL" = (
 /obj/effect/decal/cleanable/greenglow,
@@ -2178,7 +2168,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/ship/crew/canteen)
 "Zg" = (
 /obj/machinery/door/airlock/external{
@@ -2218,7 +2208,7 @@
 	pixel_y = 5
 	},
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/west,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/ship/crew/canteen)
 "ZA" = (
@@ -2227,7 +2217,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/ship/bridge)
 "ZF" = (

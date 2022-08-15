@@ -41,7 +41,7 @@
 /area/ship/engineering)
 "aS" = (
 /obj/structure/grille,
-/obj/structure/window/plasma/reinforced/plastitanium,
+/obj/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/door/poddoor{
 	id = "blackbeardblastdoor1"
 	},
@@ -131,7 +131,7 @@
 /area/ship/engineering)
 "dx" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/west,
+/obj/machinery/power/apc/auto_name/directional/west,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -272,7 +272,7 @@
 /area/ship/medical)
 "gW" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 10
 	},
@@ -344,7 +344,7 @@
 	},
 /area/ship/cargo)
 "jm" = (
-/obj/structure/window/plasma/reinforced/plastitanium,
+/obj/structure/window/reinforced/plasma/plastitanium,
 /obj/structure/grille,
 /obj/machinery/door/poddoor{
 	id = "bbwindowblastdoors1"
@@ -401,7 +401,7 @@
 	id = "bbwindowblastdoors1"
 	},
 /obj/structure/grille,
-/obj/structure/window/plasma/reinforced/plastitanium,
+/obj/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/ship/hallway/central)
 "kB" = (
@@ -525,27 +525,14 @@
 	icon_state = "catwalk_above"
 	},
 /area/ship/engineering)
-"pi" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 4
-	},
-/turf/open/floor/plating/catwalk_floor{
-	icon_state = "catwalk_above"
-	},
-/area/ship/engineering)
 "pU" = (
 /obj/machinery/microwave,
 /obj/structure/table,
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium{
-	icon_state = "plastitanium_dam4"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/mineral/plastitanium,
 /area/ship/cargo)
 "pV" = (
 /obj/structure/cable,
@@ -580,7 +567,8 @@
 	},
 /obj/machinery/airalarm/all_access{
 	pixel_x = null;
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /turf/open/floor/plating/catwalk_floor{
 	icon_state = "catwalk_above"
@@ -658,9 +646,8 @@
 /area/ship/cargo)
 "tQ" = (
 /obj/machinery/light,
-/turf/open/floor/mineral/plastitanium{
-	icon_state = "plastitanium_dam4"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/mineral/plastitanium,
 /area/ship/cargo)
 "uk" = (
 /obj/machinery/light{
@@ -679,18 +666,13 @@
 	},
 /area/ship/hallway/central)
 "vP" = (
-/obj/structure/window/plasma/reinforced/plastitanium,
+/obj/structure/window/reinforced/plasma/plastitanium,
 /obj/structure/grille,
 /obj/machinery/door/poddoor{
 	id = "bbwindowblastdoors1"
 	},
 /turf/open/floor/plating,
 /area/ship/hallway/central)
-"vW" = (
-/turf/open/floor/mineral/plastitanium/red{
-	icon_state = "plastitanium_dam5"
-	},
-/area/ship/cargo)
 "wm" = (
 /obj/machinery/atmospherics/components/unary/shuttle/heater{
 	dir = 4
@@ -713,9 +695,8 @@
 	icon_state = "floor3-old"
 	},
 /obj/structure/tank_dispenser/oxygen,
-/turf/open/floor/mineral/plastitanium{
-	icon_state = "plastitanium_dam2"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/mineral/plastitanium,
 /area/ship/cargo)
 "wx" = (
 /obj/structure/cable,
@@ -769,9 +750,8 @@
 	},
 /area/ship/cargo)
 "xZ" = (
-/turf/open/floor/mineral/plastitanium/red{
-	icon_state = "plastitanium_dam1"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/mineral/plastitanium/red,
 /area/ship/cargo)
 "yl" = (
 /obj/machinery/mineral/ore_redemption{
@@ -809,7 +789,7 @@
 "Bw" = (
 /obj/structure/cable,
 /obj/structure/catwalk/over/plated_catwalk/dark,
-/obj/machinery/power/apc/auto_name/west,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/plating/catwalk_floor{
 	icon_state = "catwalk_above"
 	},
@@ -843,14 +823,9 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/mineral/plastitanium,
 /area/ship/hallway/central)
-"Ck" = (
-/turf/open/floor/mineral/plastitanium/red{
-	icon_state = "plastitanium_dam4"
-	},
-/area/ship/cargo)
 "Cn" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/item/clothing/gloves/color/latex/nitrile/evil,
 /obj/item/defibrillator/compact/combat/loaded,
 /obj/item/storage/firstaid/tactical,
@@ -973,15 +948,6 @@
 	icon_state = "catwalk_above"
 	},
 /area/ship/crew)
-"GK" = (
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/plastitanium,
-/obj/machinery/door/poddoor{
-	id = "blackbeardblastdoor1"
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/ship/bridge)
 "GT" = (
 /obj/machinery/light{
 	dir = 1
@@ -1289,21 +1255,15 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ship/cargo)
 "Rt" = (
-/obj/machinery/atmospherics/miner/toxins,
+/obj/machinery/atmospherics/miner/plasma,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
 	dir = 8;
 	filter_types = list("plasma")
 	},
-/obj/structure/window/plasma/reinforced{
-	dir = 8
-	},
-/obj/structure/window/plasma/reinforced{
-	dir = 1
-	},
-/obj/structure/window/plasma/reinforced{
-	dir = 4
-	},
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
+/obj/structure/window/reinforced/plasma,
+/obj/structure/window/reinforced/plasma,
+/obj/structure/window/reinforced/plasma,
 /turf/open/floor/plating/catwalk_floor{
 	icon_state = "catwalk_above"
 	},
@@ -1349,7 +1309,7 @@
 /area/ship/hallway/central)
 "Tp" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/west,
+/obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 1
@@ -1383,7 +1343,7 @@
 /area/ship/hallway/fore)
 "Uu" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 6
 	},
@@ -1415,9 +1375,8 @@
 	},
 /area/ship/hallway/central)
 "Vl" = (
-/turf/open/floor/mineral/plastitanium{
-	icon_state = "plastitanium_dam3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/mineral/plastitanium,
 /area/ship/cargo)
 "VF" = (
 /turf/closed/wall/mineral/plastitanium,
@@ -1499,7 +1458,7 @@
 	},
 /area/ship/hallway/central)
 "Yt" = (
-/obj/structure/window/plasma/reinforced/plastitanium,
+/obj/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/door/poddoor{
 	id = "bbwindowblastdoors1"
 	},
@@ -1519,7 +1478,7 @@
 /area/ship/medical)
 "ZG" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/south,
+/obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/catwalk/over/plated_catwalk/dark,
 /turf/open/floor/plating/catwalk_floor{
 	icon_state = "catwalk_above"
@@ -1627,7 +1586,7 @@ rE
 qW
 JC
 Os
-pi
+dc
 Os
 Nm
 qW
@@ -2002,7 +1961,7 @@ im
 xY
 aS
 aS
-GK
+aS
 aS
 aS
 xY
@@ -2093,7 +2052,7 @@ pX
 CP
 xZ
 CP
-vW
+xZ
 CP
 TI
 im
@@ -2109,7 +2068,7 @@ CP
 CP
 Ga
 CP
-Ck
+xZ
 CP
 im
 TQ

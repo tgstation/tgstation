@@ -97,7 +97,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ship/security)
 "D" = (
-/obj/machinery/power/apc/auto_name/east{
+/obj/machinery/power/apc/auto_name/directional/east{
 	auto_name = 0;
 	desc = "A control terminal for the ship's electrical systems.";
 	name = "Syndicate Interceptor APC"
@@ -170,13 +170,6 @@
 /obj/machinery/light,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ship/security)
-"R" = (
-/obj/machinery/power/terminal{
-	dir = 8
-	},
-/obj/structure/cable,
-/turf/closed/wall/mineral/plastitanium,
-/area/ship/security)
 "U" = (
 /obj/machinery/porta_turret/centcom_shuttle/ballistic{
 	dir = 6;
@@ -216,7 +209,7 @@ w
 D
 H
 K
-R
+q
 c
 "}
 (4,1,1) = {"

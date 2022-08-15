@@ -38,7 +38,7 @@
 /turf/open/floor/plating,
 /area/ship/maintenance/port)
 "bA" = (
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
@@ -58,7 +58,7 @@
 /obj/structure/table/wood,
 /obj/item/pen/fountain/solgov,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/port)
@@ -180,7 +180,7 @@
 /turf/open/floor/plating,
 /area/ship/maintenance/port)
 "hH" = (
-/obj/effect/spawner/lootdrop/gloves,
+/obj/effect/spawner/random/clothing/gloves,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating,
 /area/ship/maintenance/port)
@@ -292,7 +292,7 @@
 /obj/item/reagent_containers/food/snacks/canned/beans,
 /obj/item/reagent_containers/food/snacks/canned/beans,
 /obj/item/reagent_containers/food/snacks/canned/beans,
-/obj/effect/spawner/lootdrop/pizzaparty,
+/obj/effect/spawner/random/food_or_drink/pizzaparty,
 /turf/open/floor/plating,
 /area/ship/maintenance/port)
 "mw" = (
@@ -312,7 +312,7 @@
 /turf/closed/wall,
 /area/ship/maintenance/starboard)
 "nm" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/portable_atmospherics/canister/plasma,
 /turf/open/floor/plating,
 /area/ship/maintenance/central)
 "np" = (
@@ -389,7 +389,7 @@
 /obj/item/storage/box/drinkingglasses,
 /obj/item/storage/cans/sixbeer,
 /obj/item/storage/cans/sixbeer,
-/obj/machinery/power/apc/auto_name/east,
+/obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating,
@@ -398,11 +398,6 @@
 /obj/machinery/computer/helm,
 /turf/open/floor/plating,
 /area/ship/maintenance/fore)
-"qn" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/visible/layer2,
-/turf/open/floor/plating,
-/area/ship/maintenance/central)
 "qy" = (
 /obj/structure/chair{
 	dir = 1
@@ -416,7 +411,7 @@
 /area/ship/maintenance/starboard)
 "rd" = (
 /obj/structure/closet,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/ship/maintenance/port)
 "rj" = (
@@ -512,7 +507,7 @@
 /area/ship/maintenance/port)
 "vY" = (
 /obj/effect/decal/cleanable/oil/slippery,
-/obj/effect/spawner/lootdrop/maintenance/six,
+/obj/effect/spawner/random/maintenance/six,
 /turf/open/floor/plating,
 /area/ship/maintenance/central)
 "wc" = (
@@ -523,7 +518,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/plating,
 /area/ship/maintenance/central)
 "wK" = (
@@ -557,12 +552,12 @@
 /obj/machinery/airalarm/directional/east,
 /obj/structure/closet/secure_closet/medical2,
 /obj/item/defibrillator/loaded,
-/obj/effect/spawner/lootdrop/maintenance/eight,
+/obj/effect/spawner/random/maintenance/eight,
 /turf/open/floor/plating,
 /area/ship/maintenance/starboard)
 "xA" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/power/apc/auto_name/west,
+/obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/starboard)
@@ -572,7 +567,7 @@
 /area/ship/maintenance/aft)
 "xV" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/ship/maintenance/central)
 "yo" = (
@@ -606,8 +601,8 @@
 "yY" = (
 /obj/machinery/airalarm/directional/west,
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/donkpockets,
-/obj/effect/spawner/lootdrop/maintenance/four,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/effect/spawner/random/maintenance/four,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "zb" = (
@@ -619,13 +614,13 @@
 	desc = "Smells feighntly of plastic.";
 	name = "research equipment"
 	},
-/obj/effect/spawner/lootdrop/maintenance/five,
+/obj/effect/spawner/random/maintenance/five,
 /turf/open/floor/plating,
 /area/ship/maintenance/port)
 "zE" = (
 /obj/structure/table/reinforced,
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/south,
+/obj/machinery/power/apc/auto_name/directional/south,
 /obj/effect/decal/cleanable/glass,
 /obj/item/trash/cheesie,
 /turf/open/floor/plating,
@@ -681,7 +676,7 @@
 /obj/structure/closet/secure_closet/engineering_personal,
 /obj/item/construction/rcd,
 /obj/item/pipe_dispenser,
-/obj/effect/spawner/lootdrop/maintenance/eight,
+/obj/effect/spawner/random/maintenance/eight,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/starboard)
@@ -780,7 +775,7 @@
 "IV" = (
 /obj/structure/catwalk,
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/two_percent_xeno_egg_spawner,
+/obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
 /turf/open/floor/plating,
 /area/space)
 "Jd" = (
@@ -871,16 +866,14 @@
 "Nv" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "Nw" = (
 /obj/structure/window/reinforced/tinted{
 	dir = 4
 	},
-/obj/machinery/shower{
-	dir = 4
-	},
+/obj/machinery/shower/directional/east,
 /turf/open/floor/plating,
 /area/ship/maintenance/starboard)
 "NI" = (
@@ -933,9 +926,8 @@
 "Rc" = (
 /obj/effect/decal/cleanable/robot_debris,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
 /area/ship/cargo)
 "Rd" = (
 /obj/structure/grille,
@@ -958,7 +950,7 @@
 /obj/item/mining_scanner,
 /obj/item/storage/bag/ore,
 /obj/item/pickaxe/emergency,
-/obj/effect/spawner/lootdrop/maintenance/eight,
+/obj/effect/spawner/random/maintenance/eight,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating,
 /area/ship/cargo)
@@ -1015,10 +1007,7 @@
 /obj/structure/window/reinforced/tinted{
 	dir = 4
 	},
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12
-	},
+/obj/structure/sink/directional/east,
 /turf/open/floor/plating,
 /area/ship/maintenance/starboard)
 "TV" = (
@@ -1029,7 +1018,7 @@
 /area/ship/cargo)
 "Ub" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/south,
+/obj/machinery/power/apc/auto_name/directional/south,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
@@ -1111,10 +1100,10 @@
 "WH" = (
 /obj/effect/decal/cleanable/oil/slippery,
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance/five,
-/obj/effect/spawner/lootdrop/glowstick,
-/obj/effect/spawner/lootdrop/glowstick,
-/obj/effect/spawner/lootdrop/glowstick,
+/obj/effect/spawner/random/maintenance/five,
+/obj/effect/spawner/random/decoration/glowstick,
+/obj/effect/spawner/random/decoration/glowstick,
+/obj/effect/spawner/random/decoration/glowstick,
 /turf/open/floor/plating,
 /area/ship/cargo)
 "XL" = (
@@ -1143,18 +1132,12 @@
 "XZ" = (
 /obj/item/chair,
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/west,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/plating,
 /area/ship/maintenance/port)
 "Yc" = (
 /turf/open/floor/plating,
 /area/ship/cargo)
-"Zi" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/power/terminal,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/ship/maintenance/central)
 "Zp" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plating,
@@ -1425,7 +1408,7 @@ yo
 Wn
 lC
 bA
-qn
+mX
 PP
 Ef
 dy
@@ -1559,7 +1542,7 @@ ds
 QC
 dM
 yK
-Zi
+VK
 Jd
 Dl
 "}

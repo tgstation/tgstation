@@ -39,7 +39,7 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/item/storage/toolbox/electrical,
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/east,
+/obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ship/engineering)
 "cn" = (
@@ -114,7 +114,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/ship/crew)
 "fU" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/ship/engineering)
 "fZ" = (
@@ -155,11 +155,9 @@
 /area/ship/medical)
 "jL" = (
 /obj/machinery/light,
-/obj/machinery/shower{
-	dir = 8
-	},
+/obj/machinery/shower/directional/west,
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/south,
+/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/ship/medical)
 "jV" = (
@@ -264,16 +262,6 @@
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/ship/bridge)
-"pW" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/ship/medical)
 "qj" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Cockpit"
@@ -402,7 +390,7 @@
 /area/ship/crew)
 "wf" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/west,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/mineral/titanium,
 /area/ship/crew)
 "wE" = (
@@ -410,23 +398,13 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/donkpockets,
-/obj/effect/spawner/lootdrop/donkpockets,
-/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/item/storage/cans/sixbeer,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /obj/item/soap/nanotrasen,
 /turf/open/floor/mineral/titanium/purple,
-/area/ship/crew)
-"wV" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium,
 /area/ship/crew)
 "xI" = (
 /obj/structure/window/reinforced,
@@ -485,7 +463,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/ship/medical)
 "Bg" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/ship/medical)
 "Bw" = (
@@ -506,7 +484,7 @@
 	},
 /obj/item/storage/belt/medical,
 /obj/item/storage/belt/medical,
-/obj/item/reagent_containers/glass/bottle/formaldehyde,
+/obj/item/reagent_containers/cup/bottle/formaldehyde,
 /obj/structure/window/reinforced{
 	dir = 8;
 	pixel_y = 2
@@ -582,7 +560,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/ship/crew)
 "ET" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/ship/crew)
 "Fl" = (
@@ -592,22 +570,12 @@
 /turf/open/floor/mineral/titanium,
 /area/ship/crew)
 "Ft" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/ship/bridge)
 "HK" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on/layer4,
 /turf/open/floor/plating,
-/area/ship/crew)
-"HV" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium,
 /area/ship/crew)
 "Ia" = (
 /obj/structure/chair/comfy/brown{
@@ -615,7 +583,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/west,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ship/bridge)
 "Ix" = (
@@ -629,7 +597,7 @@
 /turf/template_noop,
 /area/template_noop)
 "Jc" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/docking_port/mobile{
 	can_move_docking_ports = 1;
 	dir = 8;
@@ -1011,7 +979,7 @@ IZ
 IZ
 Bg
 JP
-pW
+oa
 jL
 TR
 cR
@@ -1041,7 +1009,7 @@ dI
 aq
 wf
 ds
-HV
+dI
 Ea
 Rw
 at
@@ -1065,7 +1033,7 @@ IN
 ZQ
 rX
 ku
-wV
+dI
 Wv
 Kx
 uV
@@ -1091,7 +1059,7 @@ ra
 TW
 TW
 qL
-wV
+dI
 po
 hh
 RI
@@ -1104,7 +1072,7 @@ IN
 pD
 Ej
 iy
-wV
+dI
 Eg
 Jy
 fH

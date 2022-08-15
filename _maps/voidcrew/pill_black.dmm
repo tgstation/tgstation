@@ -19,7 +19,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers{
 	dir = 8
 	},
-/obj/machinery/power/apc/auto_name/west{
+/obj/machinery/power/apc/auto_name/directional/west{
 	pixel_x = -6
 	},
 /obj/item/stack/ore/diamond,
@@ -93,9 +93,9 @@
 	real_name = "Life-Size Moth Plushie"
 	},
 /obj/item/bedsheet/black,
-/obj/item/reagent_containers/glass/beaker/large,
-/obj/item/reagent_containers/glass/beaker/large,
-/obj/item/reagent_containers/glass/beaker/large,
+/obj/item/reagent_containers/cup/beaker/large,
+/obj/item/reagent_containers/cup/beaker/large,
+/obj/item/reagent_containers/cup/beaker/large,
 /obj/item/areaeditor/shuttle,
 /obj/structure/window/reinforced/tinted,
 /obj/structure/window/reinforced/tinted{
