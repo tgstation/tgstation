@@ -166,9 +166,7 @@
 	},
 /area/ship/hallway/central)
 "dH" = (
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/power/port_gen/pacman/uranium,
 /turf/open/floor/plating/catwalk_floor{
 	icon_state = "catwalk_above"
@@ -1177,9 +1175,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating/catwalk_floor{
 	icon_state = "catwalk_above"
 	},

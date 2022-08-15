@@ -15,9 +15,7 @@
 /obj/structure/mineral_door/wood{
 	name = "Dormitory"
 	},
-/obj/structure/cable{
-	icon_state = "9-10"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/carpet/nanoweave/purple,
@@ -30,9 +28,7 @@
 /turf/open/floor/wood,
 /area/ship/storage)
 "bN" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
 	dir = 1
@@ -43,12 +39,8 @@
 /obj/structure/chair/wood{
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "5-10"
-	},
-/obj/structure/cable{
-	icon_state = "9-10"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
 	dir = 8
 	},
@@ -83,9 +75,7 @@
 /turf/open/floor/carpet/blue,
 /area/ship/bridge)
 "ct" = (
-/obj/structure/cable{
-	icon_state = "4-9"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8
 	},
@@ -106,9 +96,7 @@
 /area/ship/hallway/central)
 "dI" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/structure/cable{
-	icon_state = "5-10"
-	},
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/ship/hallway/central)
 "dM" = (
@@ -134,18 +122,14 @@
 /turf/closed/wall,
 /area/ship/maintenance/aft)
 "eq" = (
-/obj/structure/cable{
-	icon_state = "5-10"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 8
 	},
-/obj/structure/cable{
-	icon_state = "1-10"
-	},
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/ship/hallway/central)
 "eB" = (
@@ -181,9 +165,7 @@
 /area/ship/crew/office)
 "fZ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
-	icon_state = "5-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 1
 	},
@@ -215,9 +197,7 @@
 /obj/structure/mineral_door/wood{
 	name = "Office"
 	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8
 	},
@@ -247,9 +227,7 @@
 /area/ship/hallway/central)
 "hO" = (
 /obj/machinery/power/apc/auto_name/north,
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/item/clothing/head/helmet/justice,
 /obj/item/stack/sheet/glass,
 /obj/structure/closet/crate/wooden/toy,
@@ -269,9 +247,7 @@
 /area/ship/maintenance/aft)
 "hV" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable{
-	icon_state = "6-9"
-	},
+/obj/structure/cable,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
@@ -286,26 +262,18 @@
 /area/ship/crew/office)
 "iG" = (
 /obj/machinery/jukebox,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/ship/hallway/central)
 "iP" = (
 /obj/machinery/power/apc/auto_name/north,
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/open/floor/carpet/nanoweave/purple,
 /area/ship/crew/dorm)
 "iY" = (
 /obj/effect/decal/cleanable/vomit/old,
-/obj/structure/cable{
-	icon_state = "5-10"
-	},
-/obj/structure/cable{
-	icon_state = "5-6"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/ship/hallway/central)
 "iZ" = (
@@ -408,9 +376,7 @@
 /turf/open/floor/plating,
 /area/ship/external)
 "kD" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8
 	},
@@ -432,9 +398,7 @@
 	dir = 8
 	},
 /obj/machinery/power/apc/auto_name/east,
-/obj/structure/cable{
-	icon_state = "0-10"
-	},
+/obj/structure/cable,
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
@@ -496,9 +460,7 @@
 /area/ship/hallway/central)
 "lJ" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable{
-	icon_state = "4-10"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8
 	},
@@ -518,12 +480,8 @@
 /area/ship/crew/office)
 "lP" = (
 /obj/machinery/power/smes,
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/obj/structure/cable{
-	icon_state = "0-10"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "lV" = (
@@ -533,9 +491,7 @@
 	pixel_y = 25
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable{
-	icon_state = "4-10"
-	},
+/obj/structure/cable,
 /obj/structure/spirit_board,
 /turf/open/floor/wood,
 /area/ship/storage)
@@ -606,18 +562,14 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "nN" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/machinery/power/apc/auto_name/north,
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 4
 	},
@@ -648,9 +600,7 @@
 /area/ship/hallway/central)
 "oy" = (
 /obj/effect/decal/cleanable/oil,
-/obj/structure/cable{
-	icon_state = "5-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "oI" = (
@@ -676,12 +626,8 @@
 /area/ship/crew/dorm)
 "px" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable{
-	icon_state = "6-8"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8
 	},
@@ -706,9 +652,7 @@
 /turf/open/floor/wood,
 /area/ship/storage)
 "qH" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8
 	},
@@ -723,27 +667,19 @@
 	dir = 4;
 	pixel_y = 3
 	},
-/obj/structure/cable{
-	icon_state = "6-9"
-	},
-/obj/structure/cable{
-	icon_state = "5-6"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /turf/open/floor/carpet/nanoweave/beige,
 /area/ship/crew/law_office)
 "rg" = (
-/obj/structure/cable{
-	icon_state = "5-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible/layer4{
 	dir = 9
 	},
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "rt" = (
-/obj/structure/cable{
-	icon_state = "6-9"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
 /turf/open/floor/carpet/nanoweave/beige,
@@ -771,9 +707,7 @@
 /obj/structure/mineral_door/wood{
 	name = "Backstage"
 	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8
 	},
@@ -784,9 +718,7 @@
 /area/ship/storage)
 "sp" = (
 /obj/machinery/door/airlock/maintenance,
-/obj/structure/cable{
-	icon_state = "5-10"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8
 	},
@@ -811,9 +743,7 @@
 /turf/closed/wall,
 /area/ship/crew/toilet)
 "uy" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8
 	},
@@ -835,9 +765,7 @@
 /area/ship/crew/law_office)
 "uF" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8
 	},
@@ -864,9 +792,7 @@
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "wi" = (
-/obj/structure/cable{
-	icon_state = "5-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
 /turf/open/floor/wood,
@@ -875,9 +801,7 @@
 /obj/structure/mineral_door/wood{
 	name = "Lounge"
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /obj/effect/turf_decal/siding/wood{
@@ -956,9 +880,7 @@
 "yV" = (
 /obj/machinery/light,
 /obj/machinery/power/apc/auto_name/south,
-/obj/structure/cable{
-	icon_state = "0-9"
-	},
+/obj/structure/cable,
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/carpet/blue,
 /area/ship/bridge)
@@ -990,12 +912,8 @@
 /area/ship/hallway/central)
 "zd" = (
 /obj/structure/closet/firecloset/full,
-/obj/structure/cable{
-	icon_state = "2-6"
-	},
-/obj/structure/cable{
-	icon_state = "6-8"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/layer_manifold/visible{
 	dir = 4
 	},
@@ -1012,9 +930,7 @@
 /area/ship/crew/law_office)
 "zi" = (
 /obj/item/clothing/gloves/color/yellow,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "zk" = (
@@ -1044,9 +960,7 @@
 /area/ship/crew/dorm)
 "zM" = (
 /obj/item/clothing/head/welding,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "Aj" = (
@@ -1063,9 +977,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/oil,
-/obj/structure/cable{
-	icon_state = "5-6"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/plating,
@@ -1083,9 +995,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 8
 	},
-/obj/structure/cable{
-	icon_state = "0-9"
-	},
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/ship/hallway/central)
 "BJ" = (
@@ -1099,9 +1009,7 @@
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "BT" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8
 	},
@@ -1135,9 +1043,7 @@
 /area/ship/hallway/central)
 "CC" = (
 /obj/effect/decal/cleanable/oil,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "CP" = (
@@ -1194,9 +1100,7 @@
 "EI" = (
 /obj/structure/table,
 /obj/item/phone,
-/obj/structure/cable{
-	icon_state = "6-9"
-	},
+/obj/structure/cable,
 /turf/open/floor/carpet/nanoweave/beige,
 /area/ship/crew/office)
 "Fb" = (
@@ -1238,9 +1142,7 @@
 	pixel_x = 9;
 	pixel_y = 27
 	},
-/obj/structure/cable{
-	icon_state = "5-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/carpet/nanoweave/purple,
 /area/ship/crew/dorm)
 "FZ" = (
@@ -1251,12 +1153,8 @@
 /turf/open/floor/carpet/nanoweave/beige,
 /area/ship/crew/office)
 "Gc" = (
-/obj/structure/cable{
-	icon_state = "1-10"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "Gy" = (
@@ -1289,9 +1187,7 @@
 /area/ship/crew/office)
 "HE" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable{
-	icon_state = "5-10"
-	},
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/ship/storage)
 "HK" = (
@@ -1372,9 +1268,7 @@
 /turf/open/floor/carpet/nanoweave/beige,
 /area/ship/crew/law_office)
 "JQ" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8
 	},
@@ -1396,9 +1290,7 @@
 /obj/structure/mineral_door/wood{
 	name = "Restroom"
 	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8
 	},
@@ -1409,12 +1301,8 @@
 /area/ship/crew/toilet)
 "KK" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable{
-	icon_state = "2-5"
-	},
-/obj/structure/cable{
-	icon_state = "2-9"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /obj/effect/turf_decal/siding/wood/corner{
@@ -1441,9 +1329,7 @@
 /turf/open/floor/wood,
 /area/ship/hallway/central)
 "KT" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8
 	},
@@ -1500,9 +1386,7 @@
 /area/ship/crew/office)
 "MS" = (
 /obj/effect/decal/cleanable/food/egg_smudge,
-/obj/structure/cable{
-	icon_state = "1-10"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/wood,
@@ -1511,9 +1395,7 @@
 /obj/structure/mineral_door/wood{
 	name = "Cockpit"
 	},
-/obj/structure/cable{
-	icon_state = "6-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8
 	},
@@ -1527,9 +1409,7 @@
 /turf/open/floor/carpet/blue,
 /area/ship/bridge)
 "Np" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8
 	},
@@ -1618,9 +1498,7 @@
 /obj/machinery/door/window{
 	dir = 8
 	},
-/obj/structure/cable{
-	icon_state = "4-9"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8
 	},
@@ -1644,9 +1522,7 @@
 /area/ship/hallway/central)
 "PA" = (
 /obj/machinery/holopad/emergency/command,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 10
 	},
@@ -1706,9 +1582,7 @@
 /area/ship/bridge)
 "QO" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable{
-	icon_state = "6-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
 	dir = 1
 	},
@@ -1728,9 +1602,7 @@
 /obj/structure/chair/office/light{
 	dir = 4
 	},
-/obj/structure/cable{
-	icon_state = "6-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/carpet/nanoweave/beige,
 /area/ship/crew/law_office)
 "Rh" = (
@@ -1738,9 +1610,7 @@
 /area/ship/crew/dorm)
 "Ri" = (
 /obj/machinery/vending/clothing,
-/obj/structure/cable{
-	icon_state = "6-9"
-	},
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/ship/storage)
 "Rk" = (
@@ -1849,9 +1719,7 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/components/trinary/filter/flipped/on/layer4{
 	dir = 1;
 	filter_type = "n2"
@@ -1859,12 +1727,8 @@
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "UE" = (
-/obj/structure/cable{
-	icon_state = "5-10"
-	},
-/obj/structure/cable{
-	icon_state = "5-6"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/ship/hallway/central)
 "UO" = (
@@ -1896,9 +1760,7 @@
 /area/ship/crew/law_office)
 "Vo" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable{
-	icon_state = "4-9"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 8
 	},
@@ -1997,12 +1859,8 @@
 /turf/closed/wall,
 /area/ship/hallway/central)
 "XD" = (
-/obj/structure/cable{
-	icon_state = "4-9"
-	},
-/obj/structure/cable{
-	icon_state = "2-9"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "XH" = (
@@ -2015,9 +1873,7 @@
 	dir = 1
 	},
 /obj/machinery/power/apc/auto_name/north,
-/obj/structure/cable{
-	icon_state = "0-6"
-	},
+/obj/structure/cable,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
@@ -2029,9 +1885,7 @@
 /turf/open/floor/wood,
 /area/ship/hallway/central)
 "YA" = (
-/obj/structure/cable{
-	icon_state = "1-10"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "YG" = (

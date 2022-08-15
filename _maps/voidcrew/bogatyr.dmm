@@ -4,9 +4,7 @@
 /area/ship/maintenance/aft)
 "aL" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
-	icon_state = "6-10"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 4
@@ -111,9 +109,7 @@
 "en" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/snacks/meat/slab/bear,
-/obj/structure/cable{
-	icon_state = "8-10"
-	},
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/ship/maintenance/central)
 "eB" = (
@@ -131,17 +127,13 @@
 /obj/item/stack/cable_coil/red,
 /obj/item/stack/cable_coil/red,
 /obj/machinery/power/terminal,
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "fa" = (
 /obj/structure/frame/computer,
 /obj/effect/decal/cleanable/blood/gibs/down,
-/obj/structure/cable{
-	icon_state = "5-10"
-	},
+/obj/structure/cable,
 /turf/open/floor/mineral/titanium/purple,
 /area/ship/science)
 "fm" = (
@@ -169,12 +161,8 @@
 "gg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/apc/auto_name/north,
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 10
 	},
@@ -193,9 +181,7 @@
 "gv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 4
@@ -275,9 +261,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ship/bridge)
 "lR" = (
-/obj/structure/cable{
-	icon_state = "8-9"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
@@ -290,20 +274,14 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ship/maintenance/central)
 "nq" = (
-/obj/structure/cable{
-	icon_state = "2-10"
-	},
-/obj/structure/cable{
-	icon_state = "1-10"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /obj/item/storage/backpack/satchel/flat,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ship/maintenance/central)
 "ol" = (
 /obj/machinery/modular_computer/console/preset/command,
-/obj/structure/cable{
-	icon_state = "2-10"
-	},
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/ship/bridge)
 "on" = (
@@ -313,9 +291,7 @@
 /obj/machinery/door/airlock/medical{
 	name = "Infirmary"
 	},
-/obj/structure/cable{
-	icon_state = "5-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 8
 	},
@@ -328,28 +304,18 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/oil,
 /obj/machinery/power/terminal,
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "oz" = (
-/obj/structure/cable{
-	icon_state = "2-6"
-	},
-/obj/structure/cable{
-	icon_state = "2-5"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/obj/structure/cable{
-	icon_state = "2-9"
-	},
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/ship/maintenance/central)
 "oS" = (
@@ -388,9 +354,7 @@
 /area/ship/security)
 "pV" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
@@ -406,9 +370,7 @@
 /area/ship/cargo)
 "qw" = (
 /obj/machinery/vending/cigarette,
-/obj/structure/cable{
-	icon_state = "1-9"
-	},
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ship/maintenance/central)
 "qC" = (
@@ -421,26 +383,20 @@
 /area/ship/medical)
 "qQ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
-	icon_state = "4-6"
-	},
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ship/maintenance/central)
 "qR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/trash/syndi_cakes,
 /obj/machinery/power/apc/auto_name/south,
-/obj/structure/cable{
-	icon_state = "0-5"
-	},
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/ship/cargo)
 "ri" = (
 /obj/effect/decal/cleanable/glass,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
-	icon_state = "6-9"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 1
 	},
@@ -489,9 +445,7 @@
 "sx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
-/obj/structure/cable{
-	icon_state = "6-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 8
 	},
@@ -511,9 +465,7 @@
 /area/ship/crew/dorm)
 "sH" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
-	icon_state = "5-9"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 1
 	},
@@ -523,9 +475,7 @@
 "tk" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/drinks/bottle/vodka,
-/obj/structure/cable{
-	icon_state = "8-10"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 8
 	},
@@ -538,12 +488,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/terminal,
 /obj/structure/cable,
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "uh" = (
@@ -565,9 +511,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/structure/cable{
-	icon_state = "1-10"
-	},
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/ship/maintenance/central)
 "vX" = (
@@ -578,15 +522,9 @@
 /area/ship/cargo)
 "wt" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "2-5"
-	},
-/obj/structure/cable{
-	icon_state = "4-10"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
 	dir = 8
 	},
@@ -605,12 +543,8 @@
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "xb" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "6-10"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/plastitanium/red,
@@ -629,17 +563,13 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/apc/auto_name/north,
-/obj/structure/cable{
-	icon_state = "0-10"
-	},
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ship/security)
 "xy" = (
 /obj/structure/closet/crate/internals,
 /obj/effect/spawner/lootdrop/maintenance/three,
-/obj/structure/cable{
-	icon_state = "2-10"
-	},
+/obj/structure/cable,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ship/cargo)
 "xL" = (
@@ -665,9 +595,7 @@
 /area/ship/medical)
 "zc" = (
 /obj/machinery/power/smes,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "zf" = (
@@ -698,9 +626,7 @@
 /area/ship/security)
 "zz" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
-	icon_state = "2-10"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
@@ -717,9 +643,7 @@
 /obj/item/toy/figure/assistant{
 	pixel_x = 6
 	},
-/obj/structure/cable{
-	icon_state = "8-10"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
@@ -790,9 +714,7 @@
 	name = "Anastasia"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
-	icon_state = "1-6"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
@@ -805,18 +727,14 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/obj/structure/cable{
-	icon_state = "4-5"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/obj/structure/cable{
-	icon_state = "8-9"
-	},
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/ship/maintenance/central)
 "By" = (
@@ -836,19 +754,13 @@
 	name = "emotional support moth plushie"
 	},
 /obj/machinery/power/apc/auto_name/north,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/mineral/titanium/blue,
 /area/ship/medical)
 "CP" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
-	icon_state = "6-10"
-	},
-/obj/structure/cable{
-	icon_state = "1-10"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/ship/maintenance/central)
 "CY" = (
@@ -863,9 +775,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ship/maintenance/central)
 "Dj" = (
-/obj/structure/cable{
-	icon_state = "4-9"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 8
 	},
@@ -881,17 +791,13 @@
 /obj/item/reagent_containers/food/snacks/deadmouse,
 /mob/living/simple_animal/hostile/cockroach/glockroach,
 /mob/living/simple_animal/pet/dog/corgi,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ship/cargo)
 "Do" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
@@ -905,9 +811,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
-	icon_state = "4-5"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
 	dir = 8
 	},
@@ -923,9 +827,7 @@
 	desc = "A little bit of nature contained in a pot. It looks dead, and reeks of potato liquor.";
 	name = "potted plant"
 	},
-/obj/structure/cable{
-	icon_state = "2-6"
-	},
+/obj/structure/cable,
 /obj/item/radio/intercom{
 	pixel_y = 26
 	},
@@ -960,9 +862,7 @@
 /area/ship/cargo)
 "EF" = (
 /obj/structure/chair,
-/obj/structure/cable{
-	icon_state = "1-10"
-	},
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/ship/maintenance/central)
 "EK" = (
@@ -977,9 +877,7 @@
 /area/ship/cargo)
 "EQ" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/structure/cable{
-	icon_state = "2-5"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
@@ -990,9 +888,7 @@
 /turf/closed/wall/r_wall,
 /area/ship/maintenance/aft)
 "FF" = (
-/obj/structure/cable{
-	icon_state = "1-10"
-	},
+/obj/structure/cable,
 /turf/open/floor/mineral/titanium/blue,
 /area/ship/medical)
 "FI" = (
@@ -1000,9 +896,7 @@
 /obj/structure/bed/dogbed{
 	name = "Anastasia's bed"
 	},
-/obj/structure/cable{
-	icon_state = "5-9"
-	},
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ship/maintenance/central)
 "Gf" = (
@@ -1025,9 +919,7 @@
 /obj/machinery/door/airlock{
 	name = "Dormitories"
 	},
-/obj/structure/cable{
-	icon_state = "6-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
@@ -1041,9 +933,7 @@
 /obj/machinery/microwave{
 	pixel_y = 4
 	},
-/obj/structure/cable{
-	icon_state = "2-5"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 8
 	},
@@ -1054,9 +944,7 @@
 /area/ship/maintenance/central)
 "Hw" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
-	icon_state = "4-10"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 8
 	},
@@ -1066,9 +954,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ship/maintenance/central)
 "Ie" = (
-/obj/structure/cable{
-	icon_state = "5-9"
-	},
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ship/maintenance/central)
 "Je" = (
@@ -1076,9 +962,7 @@
 	name = "Engines"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
@@ -1129,9 +1013,7 @@
 "Ks" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/frame/machine,
-/obj/structure/cable{
-	icon_state = "6-10"
-	},
+/obj/structure/cable,
 /turf/open/floor/mineral/titanium/purple,
 /area/ship/science)
 "KT" = (
@@ -1144,9 +1026,7 @@
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "LM" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium/yellow,
@@ -1167,17 +1047,13 @@
 "MQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/frame/machine,
-/obj/structure/cable{
-	icon_state = "5-9"
-	},
+/obj/structure/cable,
 /turf/open/floor/mineral/titanium/purple,
 /area/ship/science)
 "Nd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/holopad/emergency,
-/obj/structure/cable{
-	icon_state = "4-5"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 1
 	},
@@ -1214,9 +1090,7 @@
 /area/ship/security)
 "NW" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
-	icon_state = "2-5"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 10
 	},
@@ -1228,9 +1102,7 @@
 "Ot" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/oil,
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 9
 	},
@@ -1267,16 +1139,12 @@
 /obj/effect/decal/cleanable/blood/innards,
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/power/apc/auto_name/east,
-/obj/structure/cable{
-	icon_state = "0-10"
-	},
+/obj/structure/cable,
 /turf/open/floor/mineral/titanium/purple,
 /area/ship/science)
 "Qr" = (
 /obj/machinery/power/apc/auto_name/west,
-/obj/structure/cable{
-	icon_state = "0-9"
-	},
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/ship/crew/dorm)
 "QB" = (
@@ -1300,9 +1168,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ship/security)
 "Rv" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 1
 	},
@@ -1317,12 +1183,8 @@
 /obj/machinery/door/airlock/vault{
 	name = "Armory"
 	},
-/obj/structure/cable{
-	icon_state = "2-9"
-	},
-/obj/structure/cable{
-	icon_state = "2-5"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 1
 	},
@@ -1366,9 +1228,7 @@
 /obj/machinery/door/airlock/command{
 	name = "Bridge"
 	},
-/obj/structure/cable{
-	icon_state = "1-6"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 1
@@ -1388,9 +1248,7 @@
 	name = "Cargo"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
-	icon_state = "1-6"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 1
 	},
@@ -1403,9 +1261,7 @@
 	name = "Laboratory"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
-	icon_state = "5-10"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
@@ -1437,9 +1293,7 @@
 /turf/open/floor/plating,
 /area/ship/maintenance/aft)
 "Vx" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 8
 	},
@@ -1459,9 +1313,7 @@
 /area/ship/medical)
 "VL" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
@@ -1472,9 +1324,7 @@
 /area/ship/security)
 "VS" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 1
 	},
@@ -1485,12 +1335,8 @@
 /area/ship/security)
 "Wk" = (
 /obj/item/cigbutt,
-/obj/structure/cable{
-	icon_state = "2-5"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
@@ -1522,9 +1368,7 @@
 /area/ship/science)
 "WY" = (
 /obj/effect/decal/cleanable/oil,
-/obj/structure/cable{
-	icon_state = "2-9"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 10
 	},
@@ -1605,15 +1449,11 @@
 	pixel_x = -6;
 	pixel_y = 9
 	},
-/obj/structure/cable{
-	icon_state = "5-9"
-	},
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ship/maintenance/central)
 "ZP" = (
-/obj/structure/cable{
-	icon_state = "0-6"
-	},
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ship/maintenance/central)
 "ZX" = (
@@ -1624,9 +1464,7 @@
 /area/ship/external)
 "ZZ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
-	icon_state = "1-5"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 9
 	},

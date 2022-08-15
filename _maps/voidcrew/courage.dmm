@@ -15,18 +15,14 @@
 	dir = 4
 	},
 /obj/machinery/power/smes/engineering,
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/open/floor/pod/dark,
 /area/ship/crew)
 "bo" = (
 /obj/machinery/power/shuttle/engine/electric{
 	dir = 4
 	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ship/crew)
 "bN" = (
@@ -36,9 +32,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/crew)
 "bZ" = (
@@ -154,9 +148,7 @@
 /obj/machinery/airalarm/syndicate{
 	pixel_y = 24
 	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/pod/dark,
 /area/ship/crew)
 "ss" = (
@@ -246,9 +238,7 @@
 	name = "Syndicate Drop Ship APC";
 	pixel_y = 25
 	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/pod/dark,
 /area/ship/crew)
 "Fa" = (
@@ -289,9 +279,7 @@
 /obj/machinery/power/smes/shuttle{
 	dir = 4
 	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/structure/window/reinforced{
 	dir = 8;
 	pixel_x = -4
@@ -419,12 +407,8 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 20
 	},

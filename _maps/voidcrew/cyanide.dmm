@@ -17,34 +17,26 @@
 /obj/machinery/power/shuttle/engine/electric{
 	dir = 4
 	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ship/security)
 "m" = (
 /obj/machinery/power/smes/shuttle/precharged{
 	dir = 8
 	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/closed/wall/mineral/plastitanium,
 /area/ship/security)
 "q" = (
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/closed/wall/mineral/plastitanium,
 /area/ship/security)
 "s" = (
 /obj/machinery/computer/helm,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -57,9 +49,7 @@
 "t" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/smes/engineering,
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/cryopod{
 	alpha = 30;
 	dir = 1
@@ -68,12 +58,8 @@
 /area/ship/security)
 "w" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /obj/structure/closet/wall/orange{
 	dir = 8;
 	name = "fuel locker";
@@ -108,9 +94,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ship/security)
 "D" = (
@@ -119,9 +103,7 @@
 	desc = "A control terminal for the ship's electrical systems.";
 	name = "Syndicate Interceptor APC"
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/turretid{
 	desc = "Used to control the Inteceptor's automated defenses.";
@@ -145,9 +127,7 @@
 "H" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/closet/wall/red{
 	dir = 8;
 	name = "uniform closet";
@@ -184,9 +164,7 @@
 /area/ship/security)
 "K" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/computer/cryopod{
 	pixel_y = -32
 	},

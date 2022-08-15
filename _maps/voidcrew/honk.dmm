@@ -1,8 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aj" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/machinery/light,
 /turf/open/floor/mineral/bananium,
 /area/ship/crew)
@@ -23,9 +21,7 @@
 /obj/docking_port/mobile{
 	dir = 2
 	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/bridge)
 "dW" = (
@@ -84,9 +80,7 @@
 	},
 /obj/machinery/light,
 /obj/item/stack/sheet/mineral/plasma/twenty,
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/machinery/power/port_gen/pacman,
 /turf/open/floor/mineral/bananium,
 /area/ship/crew)
@@ -102,9 +96,7 @@
 /turf/open/floor/wood/yew,
 /area/ship/bridge)
 "mc" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc/auto_name/east,
 /turf/open/floor/wood/yew,
 /area/ship/bridge)
@@ -115,9 +107,7 @@
 /area/ship/crew)
 "mV" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/light,
 /area/ship/engineering/engine)
 "ns" = (
@@ -153,15 +143,11 @@
 /obj/item/grown/bananapeel/bluespace{
 	alpha = 30
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/mineral/bananium,
 /area/ship/bridge)
 "rT" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/mineral/bananium,
 /area/ship/crew)
 "rY" = (
@@ -176,9 +162,7 @@
 	dir = 1
 	},
 /obj/structure/window/plasma/reinforced,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ship/engineering/engine)
 "ta" = (
@@ -299,9 +283,7 @@
 /turf/closed/wall/mineral/bananium,
 /area/ship/crew)
 "vn" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/structure/table/wood/fancy/royalblue,
 /obj/item/storage/box/donkpockets/donkpockethonk,
 /obj/item/storage/box/donkpockets/donkpockethonk,
@@ -354,9 +336,7 @@
 /obj/structure/chair/e_chair{
 	dir = 4
 	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -370,9 +350,7 @@
 /turf/open/floor/light,
 /area/ship/engineering/engine)
 "zv" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/mineral/bananium,
 /area/ship/crew)
 "zT" = (
@@ -380,11 +358,7 @@
 /turf/closed/wall/mineral/bananium,
 /area/ship/crew)
 "AH" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
+/obj/structure/cable,/obj/structure/cable,on_state = "4-8"
 	},
 /turf/open/floor/mineral/bananium,
 /area/ship/crew)
@@ -395,9 +369,7 @@
 /turf/open/floor/light,
 /area/ship/engineering/engine)
 "Bn" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/pipedispenser,
 /obj/item/pipe_dispenser,
 /turf/open/floor/light,
@@ -412,9 +384,7 @@
 /area/ship/crew)
 "CJ" = (
 /obj/structure/window/plasma/reinforced,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/mineral/bananium,
 /area/ship/crew)
 "Do" = (
@@ -429,16 +399,12 @@
 /area/ship/engineering/engine)
 "El" = (
 /mob/living/carbon/monkey,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/light,
 /area/ship/engineering/engine)
 "En" = (
 /obj/structure/fans/tiny,
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/structure/railing{
 	dir = 4
 	},
@@ -510,16 +476,12 @@
 /turf/open/floor/mineral/bananium,
 /area/ship/crew)
 "IT" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/mineral/bananium,
 /area/ship/crew)
 "IX" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/structure/table/wood/fancy/royalblue,
 /obj/machinery/microwave,
 /turf/open/floor/mineral/bananium,
@@ -541,12 +503,8 @@
 /turf/open/floor/mineral/bananium,
 /area/ship/crew)
 "Jy" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /obj/machinery/button/door{
 	id = "prisonext3";
 	name = "Prison Flush";
@@ -606,12 +564,8 @@
 /turf/open/floor/plating,
 /area/ship/crew)
 "MV" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /turf/open/floor/mineral/bananium,
 /area/ship/crew)
 "MZ" = (
@@ -666,12 +620,8 @@
 /turf/open/floor/light,
 /area/ship/engineering/engine)
 "Pz" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /obj/item/assembly/signaler,
 /turf/open/floor/mineral/bananium,
 /area/ship/crew)
@@ -680,9 +630,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/light,
 /area/ship/engineering/engine)
 "Qc" = (
@@ -696,12 +644,8 @@
 /turf/open/floor/light,
 /area/ship/engineering/engine)
 "QS" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /turf/open/floor/light,
 /area/ship/engineering/engine)
 "Rx" = (
@@ -874,9 +818,7 @@
 	dir = 1
 	},
 /obj/structure/disposalpipe/trunk,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/mineral/bananium,
 /area/ship/crew)
 "Uv" = (
@@ -918,9 +860,7 @@
 /turf/open/floor/mineral/bananium,
 /area/ship/crew)
 "Wc" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/structure/bed/dogbed,
 /turf/open/floor/mineral/bananium,
 /area/ship/crew)
@@ -983,9 +923,7 @@
 /turf/open/floor/mineral/bananium,
 /area/ship/crew)
 "Xf" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/light,
 /area/ship/engineering/engine)
 "Xn" = (
@@ -1019,9 +957,7 @@
 "Zr" = (
 /obj/structure/grille,
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/mineral/bananium,
 /area/ship/crew)
 "Zw" = (

@@ -3,9 +3,7 @@
 /obj/machinery/power/shuttle/engine/electric{
 	dir = 4
 	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4
 	},
@@ -17,9 +15,7 @@
 /turf/open/floor/plasteel/tech/grid,
 /area/ship/storage)
 "b" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers{
 	dir = 8
 	},
@@ -52,9 +48,7 @@
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/structure/bed,
 /obj/machinery/computer/helm{
 	density = 0;
