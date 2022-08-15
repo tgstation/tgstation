@@ -9,9 +9,16 @@
 	export_types = list(/obj/item/food)
 	include_subtypes = TRUE
 	exclude_types = list(/obj/item/food/grown)
+	/// Have we already set the cost of this export? Necessary to avoid the cost being constantly reset.
+	var/cost_obtained_from_venue_value = FALSE
 
 /datum/export/food/get_cost(obj/object, allowed_categories, apply_elastic)
 	var/obj/item/food/sold_food = object
 	if(sold_food.food_flags & FOOD_SILVER_SPAWNED)
 		return FOOD_PRICE_WORTHLESS
-	return sold_food.venue_value
+
+	if(!cost_obtained_from_venue_value)
+		cost = sold_food.venue_value
+		cost_obtained_from_venue_value = TRUE
+
+	return ..()

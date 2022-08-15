@@ -221,15 +221,26 @@
 #define BEAUTY_LEVEL_GREAT 100
 
 //Moods levels for humans
-#define MOOD_LEVEL_HAPPY4 15
-#define MOOD_LEVEL_HAPPY3 10
-#define MOOD_LEVEL_HAPPY2 6
-#define MOOD_LEVEL_HAPPY1 2
-#define MOOD_LEVEL_NEUTRAL 0
-#define MOOD_LEVEL_SAD1 -3
-#define MOOD_LEVEL_SAD2 -7
-#define MOOD_LEVEL_SAD3 -15
-#define MOOD_LEVEL_SAD4 -20
+#define MOOD_HAPPY4 15
+#define MOOD_HAPPY3 10
+#define MOOD_HAPPY2 6
+#define MOOD_HAPPY1 2
+#define MOOD_NEUTRAL 0
+#define MOOD_SAD1 -3
+#define MOOD_SAD2 -7
+#define MOOD_SAD3 -15
+#define MOOD_SAD4 -20
+
+//Moods levels for humans
+#define MOOD_LEVEL_HAPPY4 9
+#define MOOD_LEVEL_HAPPY3 8
+#define MOOD_LEVEL_HAPPY2 7
+#define MOOD_LEVEL_HAPPY1 6
+#define MOOD_LEVEL_NEUTRAL 5
+#define MOOD_LEVEL_SAD1 4
+#define MOOD_LEVEL_SAD2 3
+#define MOOD_LEVEL_SAD3 2
+#define MOOD_LEVEL_SAD4 1
 
 //Sanity values for humans
 #define SANITY_MAXIMUM 150
@@ -439,6 +450,13 @@
 
 #define MAX_REVIVE_FIRE_DAMAGE 180
 #define MAX_REVIVE_BRUTE_DAMAGE 180
+
+#define DEFAULT_BRUTE_EXAMINE_TEXT "bruising"
+#define DEFAULT_BURN_EXAMINE_TEXT "burns"
+#define DEFAULT_CLONE_EXAMINE_TEXT "cellular damage"
+
+#define ROBOTIC_BRUTE_EXAMINE_TEXT "denting"
+#define ROBOTIC_BURN_EXAMINE_TEXT "charring"
 
 // If a mob has a higher threshold than this, the icon shown will be increased to the big fire icon.
 #define MOB_BIG_FIRE_STACK_THRESHOLD 3

@@ -94,7 +94,7 @@
 	var/heat_capacity = 20000
 	var/conduction_coefficient = 0.3
 
-	var/obj/item/reagent_containers/glass/beaker = null
+	var/obj/item/reagent_containers/cup/beaker = null
 	var/consume_gas = FALSE
 
 	var/obj/item/radio/radio
@@ -413,7 +413,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/reagent_containers/glass))
+	if(istype(I, /obj/item/reagent_containers/cup))
 		. = 1 //no afterattack
 		if(beaker)
 			to_chat(user, span_warning("A beaker is already loaded into [src]!"))

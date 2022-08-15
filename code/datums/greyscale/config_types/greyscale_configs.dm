@@ -552,7 +552,7 @@
 
 /datum/greyscale_config/heck_suit
 	name = "H.E.C.K. Suit"
-	icon_file = 'icons/obj/clothing/suits.dmi'
+	icon_file = 'icons/obj/clothing/suits/armor.dmi'
 	json_config = 'code/datums/greyscale/json_configs/heck_suit.json'
 
 /datum/greyscale_config/heck_suit/worn
@@ -732,7 +732,7 @@
 
 /datum/greyscale_config/sweater
 	name = "Sweater"
-	icon_file = 'icons/obj/clothing/suits.dmi'
+	icon_file = 'icons/obj/clothing/suits/jacket.dmi'
 	json_config = 'code/datums/greyscale/json_configs/sweater.json'
 
 /datum/greyscale_config/sweater_worn
@@ -742,7 +742,7 @@
 
 /datum/greyscale_config/jacket_oversized
 	name = "Oversized Jacket"
-	icon_file = 'icons/obj/clothing/suits.dmi'
+	icon_file = 'icons/obj/clothing/suits/jacket.dmi'
 	json_config = 'code/datums/greyscale/json_configs/jacket_oversized.json'
 
 /datum/greyscale_config/jacket_oversized_worn
@@ -782,7 +782,7 @@
 
 /datum/greyscale_config/football_armor
 	name = "Football Armor"
-	icon_file = 'icons/obj/clothing/suits.dmi'
+	icon_file = 'icons/obj/clothing/suits/costume.dmi'
 	json_config = 'code/datums/greyscale/json_configs/football_armor.json'
 
 /datum/greyscale_config/football_armor_worn
@@ -812,10 +812,62 @@
 
 /datum/greyscale_config/fancy_coat
 	name = "Fancy Coat"
-	icon_file = 'icons/obj/clothing/suits.dmi'
+	icon_file = 'icons/obj/clothing/suits/jacket.dmi'
 	json_config = 'code/datums/greyscale/json_configs/fancy_coat.json'
 
 /datum/greyscale_config/fancy_coat_worn
 	name = "Worn Fancy Coat"
 	icon_file = 'icons/mob/clothing/suits/jacket.dmi'
 	json_config = 'code/datums/greyscale/json_configs/fancy_coat_worn.json'
+
+/datum/greyscale_config/encryptionkey_basic
+	name = "Basic Encryptionkey"
+	icon_file = 'icons/obj/radio.dmi'
+	json_config = 'code/datums/greyscale/json_configs/encryptionkey_basic.json'
+
+/datum/greyscale_config/encryptionkey_cube
+	name = "Block Encryptionkey"
+	icon_file = 'icons/obj/radio.dmi'
+	json_config = 'code/datums/greyscale/json_configs/encryptionkey_cube.json'
+
+
+/datum/greyscale_config/encryptionkey_research
+	name = "Research Encryptionkey"
+	icon_file = 'icons/obj/radio.dmi'
+	json_config = 'code/datums/greyscale/json_configs/encryptionkey_research.json'
+
+/datum/greyscale_config/encryptionkey_syndicate
+	name = "Syndicate Encryptionkey"
+	icon_file = 'icons/obj/radio.dmi'
+	json_config = 'code/datums/greyscale/json_configs/encryptionkey_syndicate.json'
+
+/datum/greyscale_config/encryptionkey_medical
+	name = "Medical Encryptionkey"
+	icon_file = 'icons/obj/radio.dmi'
+	json_config = 'code/datums/greyscale/json_configs/encryptionkey_medical.json'
+
+/datum/greyscale_config/encryptionkey_service
+	name = "Service Encryptionkey"
+	icon_file = 'icons/obj/radio.dmi'
+	json_config = 'code/datums/greyscale/json_configs/encryptionkey_service.json'
+
+/datum/greyscale_config/encryptionkey_engineering
+	name = "Engineering Encryptionkey"
+	icon_file = 'icons/obj/radio.dmi'
+	json_config = 'code/datums/greyscale/json_configs/encryptionkey_engineering.json'
+
+/datum/greyscale_config/encryptionkey_centcom
+	name = "Centcom Encryptionkey"
+	icon_file = 'icons/obj/radio.dmi'
+	json_config = 'code/datums/greyscale/json_configs/encryptionkey_centcom.json'
+
+/datum/greyscale_config/encryptionkey_cargo
+	name = "Cargo Encryptionkey"
+	icon_file = 'icons/obj/radio.dmi'
+	json_config = 'code/datums/greyscale/json_configs/encryptionkey_cargo.json'
+
+/datum/greyscale_config/encryptionkey_security
+	name = "Security Encryptionkey"
+	icon_file = 'icons/obj/radio.dmi'
+	json_config = 'code/datums/greyscale/json_configs/encryptionkey_security.json'
+

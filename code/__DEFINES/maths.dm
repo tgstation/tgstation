@@ -1,7 +1,13 @@
 // Remove these once we have Byond implementation.
-#define ISNAN(a) (a!=a)
-#define ISINF(a) (!ISNAN(a) && ISNAN(a-a))
-#define IS_INF_OR_NAN(a) (ISNAN(a-a))
+// ------------------------------------
+#define IS_NAN(a) (a!=a)
+
+#define IS_INF__UNSAFE(a) (a==a && a-a!=a-a)
+#define IS_INF(a) (isnum(a) && IS_INF__UNSAFE(a))
+
+#define IS_FINITE__UNSAFE(a) (a-a==a-a)
+#define IS_FINITE(a) (isnum(a) && IS_FINITE__UNSAFE(a))
+// ------------------------------------
 // Aight dont remove the rest
 
 // Credits to Nickr5 for the useful procs I've taken from his library resource.
@@ -104,7 +110,7 @@
 	. = list()
 	var/d = b*b - 4 * a * c
 	var/bottom  = 2 * a
-	if(d < 0 || IS_INF_OR_NAN(d) || IS_INF_OR_NAN(bottom))
+	if(d < 0 || !IS_FINITE__UNSAFE(d) || !IS_FINITE__UNSAFE(bottom))
 		return
 	var/root = sqrt(d)
 	. += (-b + root) / bottom

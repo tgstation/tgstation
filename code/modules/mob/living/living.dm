@@ -1,5 +1,6 @@
 /mob/living/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/movetype_handler)
 	register_init_signals()
 	if(unique_name)
 		set_name()
@@ -11,10 +12,6 @@
 	GLOB.mob_living_list += src
 	SSpoints_of_interest.make_point_of_interest(src)
 	update_fov()
-
-/mob/living/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/movetype_handler)
 
 /mob/living/prepare_huds()
 	..()
@@ -1311,6 +1308,7 @@
 				/mob/living/simple_animal/pet/fox,
 				/mob/living/simple_animal/butterfly,
 				/mob/living/simple_animal/pet/cat/cak,
+				/mob/living/simple_animal/pet/dog/breaddog,
 				/mob/living/simple_animal/chick,
 			)
 			new_mob = new path(loc)
@@ -1358,6 +1356,7 @@
 // Called when we are hit by a bolt of polymorph and changed
 // Generally the mob we are currently in is about to be deleted
 /mob/living/proc/wabbajack_act(mob/living/new_mob)
+	SEND_SIGNAL(src, COMSIG_LIVING_WABBAJACKED, new_mob)
 	log_message("was wabbajack polymorphed into: [new_mob.name]([new_mob.type]).", LOG_GAME)
 	new_mob.name = real_name
 	new_mob.real_name = real_name
@@ -1721,6 +1720,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	. = ..()
 	VV_DROPDOWN_OPTION("", "---------")
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_SPEECH_IMPEDIMENT, "Impede Speech (Slurring, stuttering, etc)")
+	VV_DROPDOWN_OPTION(VV_HK_ADD_MOOD, "Add Mood Event")
+	VV_DROPDOWN_OPTION(VV_HK_REMOVE_MOOD, "Remove Mood Event")
 
 /mob/living/vv_do_topic(list/href_list)
 	. = ..()
@@ -1729,6 +1730,10 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(!check_rights(NONE))
 			return
 		admin_give_speech_impediment(usr)
+	if (href_list[VV_HK_ADD_MOOD])
+		admin_add_mood_event(usr)
+	if (href_list[VV_HK_REMOVE_MOOD])
+		admin_remove_mood_event(usr)
 
 /mob/living/proc/move_to_error_room()
 	var/obj/effect/landmark/error/error_landmark = locate(/obj/effect/landmark/error) in GLOB.landmarks_list
@@ -2271,3 +2276,47 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return
 
 	adjust_timed_status_effect(duration SECONDS, impediments[chosen])
+
+/mob/living/proc/admin_add_mood_event(mob/admin)
+	if (!admin || !check_rights(NONE))
+		return
+
+	var/list/mood_events = typesof(/datum/mood_event)
+
+	var/chosen = tgui_input_list(admin, "What mood event?", "Add Mood Event", mood_events)
+	if (!chosen || QDELETED(src) || !check_rights(NONE))
+		return
+
+	mob_mood.add_mood_event("[rand(1, 50)]", chosen)
+
+/mob/living/proc/admin_remove_mood_event(mob/admin)
+	if (!admin || !check_rights(NONE))
+		return
+
+	var/list/mood_events = list()
+	for (var/category in mob_mood.mood_events)
+		var/datum/mood_event/event = mob_mood.mood_events[category]
+		mood_events[event] = category
+
+
+	var/datum/mood_event/chosen = tgui_input_list(admin, "What mood event?", "Remove Mood Event", mood_events)
+	if (!chosen || QDELETED(src) || !check_rights(NONE))
+		return
+
+	mob_mood.clear_mood_event(mood_events[chosen])
+
+/// Adds a mood event to the mob
+/mob/living/proc/add_mood_event(category, type, ...)
+	if(QDELETED(mob_mood))
+		return
+	mob_mood.add_mood_event(arglist(args))
+
+/// Clears a mood event from the mob
+/mob/living/proc/clear_mood_event(category)
+	if(QDELETED(mob_mood))
+		return
+	mob_mood.clear_mood_event(category)
+
+/mob/living/played_game()
+	. = ..()
+	add_mood_event("gaming", /datum/mood_event/gaming)
