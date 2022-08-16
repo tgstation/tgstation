@@ -2508,7 +2508,7 @@
 
 /datum/supply_pack/costumes_toys/trekkie
 	name = "Trekkie Costume Crate"
-	desc = "Wear the scrapped concepts for NanoTrasen's jumpsuits, based off popular late-20th century Earth media! While they couldn't be used for the official jumpsuits due to copyright infringement, it's been assured that they can still legally be sold under the label of being 'failed designs'."
+	desc = "Wear the scrapped concepts for Nanotrasen's jumpsuits, based off popular late-20th century Earth media! While they couldn't be used for the official jumpsuits due to copyright infringement, it's been assured that they can still legally be sold under the label of being 'failed designs'."
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(
 		/obj/item/clothing/under/trek/command,
