@@ -1,4 +1,0 @@
-author: "Vire"
-delete-after: True
-changes: 
-  - bugfix: "The cryopod on the Cere emergency shuttle can now be connected while the shuttle is docked."

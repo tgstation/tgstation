@@ -1,4 +1,0 @@
-author: "GoldenAlpharex, but really Valtosin for suggesting the fix"
-delete-after: True
-changes: 
-  - bugfix: "Chat saving will no longer break if the CSS stylesheets contain unsupported CSS rules."
