@@ -42,8 +42,10 @@
 		if(WINDOW_IN_FRAME)
 			. += span_notice("The window is <i>unscrewed</i> but <b>pried</b> into the frame.")
 		if(WINDOW_OUT_OF_FRAME)
-			. += span_notice( anchored ? "The window is <b>screwed</b> to the floor." :
-			"The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.")
+			if (anchored)
+				. += span_notice("The window is <b>screwed</b> to the floor.")
+			else
+				. += span_notice("The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.")
 
 /obj/structure/window/Initialize(mapload, direct)
 	. = ..()
@@ -253,8 +255,8 @@
 				to_chat(user, span_notice("You pry the window out of the frame."))
 		if(WINDOW_OUT_OF_FRAME)
 			to_chat(user, span_notice("You begin to lever the window back into the frame..."))
-			if(tool.use_tool(src, user, 10 SECONDS, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
-				state = WINDOW_IN_FRAME
+			if(tool.use_tool(src, user, 5 SECONDS, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+				state = WINDOW_SCREWED_TO_FRAME
 				to_chat(user, span_notice("You pry the window back into the frame."))
 
 	return TOOL_ACT_TOOLTYPE_SUCCESS

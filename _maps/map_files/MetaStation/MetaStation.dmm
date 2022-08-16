@@ -27333,7 +27333,7 @@
 /obj/effect/turf_decal/trimline/brown/warning{
 	dir = 6
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window{
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/purple,
