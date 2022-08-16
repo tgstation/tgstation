@@ -39,3 +39,7 @@
 		/obj/item/stock_parts/manipulator = 2,
 		/obj/item/stock_parts/matter_bin = 2,
 	)
+
+/obj/item/circuitboard/computer/shuttle/helm
+	name = "Shuttle Helm (Computer Board)"
+	build_path = /obj/machinery/computer/helm

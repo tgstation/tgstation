@@ -17,10 +17,11 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 /obj/machinery/computer/cryopod
 	name = "cryogenic oversight console"
 	desc = "An interface between crew and the cryogenic storage oversight systems."
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'voidcrew/modules/cryo/icons/cryogenic.dmi'
 	icon_state = "cellconsole_1"
 	// circuit = /obj/item/circuitboard/cryopodcontrol
 	density = FALSE
+	resistance_flags = INDESTRUCTIBLE|LAVA_PROOF|FIRE_PROOF|UNACIDABLE|ACID_PROOF
 
 	/// The ship object representing the ship that this console is on.
 //	var/obj/structure/overmap/ship/simulated/linked_ship //voidcrew todo: ship functionality

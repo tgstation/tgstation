@@ -4684,6 +4684,7 @@
 #include "voidcrew\_DEFINES\nanite_signals.dm"
 #include "voidcrew\_HELPERS\data_huds.dm"
 #include "voidcrew\edits\jobs.dm"
+#include "voidcrew\edits\techwebs.dm"
 #include "voidcrew\mapping\_mapping.dm"
 #include "voidcrew\mapping\areas.dm"
 #include "voidcrew\mapping\docking_port\_docking.port.dm"
@@ -4708,7 +4709,6 @@
 #include "voidcrew\modules\nanites\code\nanite_designs.dm"
 #include "voidcrew\modules\nanites\code\nanite_disease.dm"
 #include "voidcrew\modules\nanites\code\nanites_subsystem.dm"
-#include "voidcrew\modules\nanites\code\research.dm"
 #include "voidcrew\modules\nanites\code\scanner.dm"
 #include "voidcrew\modules\nanites\code\extra_settings\_extra_settings.dm"
 #include "voidcrew\modules\nanites\code\extra_settings\boolean.dm"
@@ -4742,4 +4742,5 @@
 #include "voidcrew\modules\shuttle\engine\fuel.dm"
 #include "voidcrew\modules\shuttle\engine\liquid.dm"
 #include "voidcrew\modules\shuttle\engine\void.dm"
+#include "voidcrew\modules\shuttle\helm\_helm.dm"
 // END_INCLUDE

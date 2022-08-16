@@ -2,11 +2,12 @@
 /obj/machinery/cryopod
 	name = "cryogenic freezer"
 	desc = "Suited for Cyborgs and Humanoids, the pod is a safe place for personnel affected by the Space Sleep Disorder to get some rest."
-	icon = 'icons/obj/cryogenic2.dmi'
+	icon = 'voidcrew/modules/cryo/icons/cryogenic.dmi'
 	icon_state = "cryopod-open"
 	density = TRUE
 	anchored = TRUE
 	state_open = TRUE
+	resistance_flags = INDESTRUCTIBLE|LAVA_PROOF|FIRE_PROOF|UNACIDABLE|ACID_PROOF
 
 	var/open_state = "cryopod-open"
 	var/close_state = "cryopod"
