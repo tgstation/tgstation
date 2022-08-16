@@ -13,7 +13,7 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/felinid
 	disliked_food = GROSS | CLOTH | RAW
-	liked_food = SEAFOOD | ORANGES | BUGS
+	liked_food = SEAFOOD | ORANGES | BUGS | GORE
 	var/original_felinid = TRUE //set to false for felinids created by mass-purrbation
 	payday_modifier = 0.75
 	ass_image = 'icons/ass/asscat.png'
@@ -40,6 +40,10 @@
 			ears.Insert(target_human, drop_if_replaced = FALSE)
 		else
 			mutantears = /obj/item/organ/internal/ears
+	return ..()
+
+/datum/species/human/felinid/randomize_features(mob/living/carbon/human/human_mob)
+	randomize_external_organs(human_mob)
 	return ..()
 
 /proc/mass_purrbation()

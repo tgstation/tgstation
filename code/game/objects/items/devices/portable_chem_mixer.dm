@@ -18,15 +18,15 @@
 	///If the UI has the pH meter shown
 	var/show_ph = TRUE
 
-/obj/item/storage/portable_chem_mixer/Initialize()
+/obj/item/storage/portable_chem_mixer/Initialize(mapload)
 	. = ..()
 	atom_storage.max_total_storage = 200
 	atom_storage.max_slots = 50
 	atom_storage.set_holdable(list(
-		/obj/item/reagent_containers/glass/beaker,
-		/obj/item/reagent_containers/glass/bottle,
-		/obj/item/reagent_containers/food/drinks/waterbottle,
-		/obj/item/reagent_containers/food/condiment,
+		/obj/item/reagent_containers/cup/beaker,
+		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/glass/waterbottle,
+		/obj/item/reagent_containers/condiment,
 	))
 
 /obj/item/storage/portable_chem_mixer/Destroy()

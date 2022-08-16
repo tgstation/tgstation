@@ -142,7 +142,7 @@
 	pixel_y = -32
 	},
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/glass/mortar{
+/obj/item/reagent_containers/cup/mortar{
 	pixel_y = 8
 	},
 /obj/item/pestle,
@@ -1360,7 +1360,7 @@
 	pixel_y = -32
 	},
 /obj/machinery/light/dim/directional/south,
-/obj/item/reagent_containers/food/drinks/trophy{
+/obj/item/reagent_containers/cup/glass/trophy{
 	pixel_y = 10
 	},
 /turf/open/floor/iron/dark,
@@ -1737,12 +1737,12 @@
 /area/shuttle/escape)
 "yP" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/condiment/saltshaker{
 	layer = 3.1;
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/food/condiment/peppermill{
+/obj/item/reagent_containers/condiment/peppermill{
 	pixel_x = 5;
 	pixel_y = 6
 	},
@@ -1818,7 +1818,7 @@
 /area/shuttle/escape)
 "zP" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/mug/tea,
+/obj/item/reagent_containers/cup/glass/mug/tea,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "zQ" = (
@@ -1852,7 +1852,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Ac" = (
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Ad" = (
@@ -2021,8 +2021,8 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Cn" = (
-/obj/item/reagent_containers/glass/bucket,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 9
 	},
@@ -2168,7 +2168,7 @@
 /area/shuttle/escape)
 "Eb" = (
 /obj/structure/water_source/puddle,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/grass,
 /area/shuttle/escape)
@@ -2258,7 +2258,7 @@
 /area/shuttle/escape)
 "Fm" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/bottle/holywater{
+/obj/item/reagent_containers/cup/glass/bottle/holywater{
 	pixel_x = -2;
 	pixel_y = 2
 	},
@@ -2271,11 +2271,11 @@
 /area/shuttle/escape)
 "Fx" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/condiment/saltshaker{
 	pixel_x = 3;
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/food/condiment/peppermill,
+/obj/item/reagent_containers/condiment/peppermill,
 /obj/item/storage/box/ingredients/wildcard{
 	layer = 3.1
 	},
@@ -2856,7 +2856,7 @@
 /area/shuttle/escape)
 "Nf" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/condiment/flour,
 /obj/item/kitchen/rollingpin,
 /obj/item/knife/kitchen,
 /obj/machinery/light/small/directional/south,
@@ -3122,7 +3122,7 @@
 "Qs" = (
 /obj/structure/table/wood,
 /obj/item/newspaper,
-/obj/item/reagent_containers/food/drinks/coffee,
+/obj/item/reagent_containers/cup/glass/coffee,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Qt" = (
@@ -3388,7 +3388,7 @@
 /area/shuttle/escape)
 "SR" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/bottle/wine{
+/obj/item/reagent_containers/cup/glass/bottle/wine{
 	pixel_y = 8
 	},
 /turf/open/floor/iron/dark,
@@ -3480,7 +3480,7 @@
 /area/shuttle/escape)
 "Tx" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/trophy{
+/obj/item/reagent_containers/cup/glass/trophy{
 	pixel_y = 8
 	},
 /turf/open/floor/carpet,
@@ -3806,7 +3806,7 @@
 /area/shuttle/escape)
 "XK" = (
 /obj/structure/closet/crate/bin,
-/obj/item/reagent_containers/glass/rag,
+/obj/item/reagent_containers/cup/rag,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)

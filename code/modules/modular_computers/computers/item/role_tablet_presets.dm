@@ -321,7 +321,7 @@
 	greyscale_colors = null
 	insert_type = /obj/item/toy/crayon/rainbow
 
-/obj/item/modular_computer/tablet/pda/clown/ComponentInitialize()
+/obj/item/modular_computer/tablet/pda/clown/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/slippery/clowning, 120, NO_SLIP_WHEN_WALKING, CALLBACK(src, .proc/AfterSlip), slot_whitelist = list(ITEM_SLOT_ID, ITEM_SLOT_BELT))
 	AddComponent(/datum/component/wearertargeting/sitcomlaughter, CALLBACK(src, .proc/after_sitcom_laugh))

@@ -9,7 +9,7 @@
 		/datum/surgery_step/saw,
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/incise,
-		/datum/surgery_step/manipulate_organs, //there should be bone fixing
+		/datum/surgery_step/manipulate_organs/internal,
 		/datum/surgery_step/close)
 
 /datum/surgery/organ_manipulation/soft
@@ -19,7 +19,7 @@
 		/datum/surgery_step/retract_skin,
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/incise,
-		/datum/surgery_step/manipulate_organs,
+		/datum/surgery_step/manipulate_organs/internal,
 		/datum/surgery_step/close)
 
 /datum/surgery/organ_manipulation/alien
@@ -31,7 +31,7 @@
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
 		/datum/surgery_step/saw,
-		/datum/surgery_step/manipulate_organs,
+		/datum/surgery_step/manipulate_organs/internal,
 		/datum/surgery_step/close)
 
 /datum/surgery/organ_manipulation/mechanic
@@ -45,7 +45,7 @@
 		/datum/surgery_step/open_hatch,
 		/datum/surgery_step/mechanic_unwrench,
 		/datum/surgery_step/prepare_electronics,
-		/datum/surgery_step/manipulate_organs,
+		/datum/surgery_step/manipulate_organs/internal,
 		/datum/surgery_step/mechanic_wrench,
 		/datum/surgery_step/mechanic_close)
 
@@ -55,11 +55,20 @@
 		/datum/surgery_step/mechanic_open,
 		/datum/surgery_step/open_hatch,
 		/datum/surgery_step/prepare_electronics,
-		/datum/surgery_step/manipulate_organs,
+		/datum/surgery_step/manipulate_organs/internal,
 		/datum/surgery_step/mechanic_close)
 
+/datum/surgery/organ_manipulation/external
+	name = "Feature manipulation"
+	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/manipulate_organs/external,
+		/datum/surgery_step/close)
+
+///Organ manipulation base class. Do not use, it wont work. Use it's subtypes
 /datum/surgery_step/manipulate_organs
-	time = 64
 	name = "manipulate organs"
 	repeatable = TRUE
 	implements = list(
@@ -67,6 +76,7 @@
 		/obj/item/borg/apparatus/organ_storage = 100)
 	preop_sound = 'sound/surgery/organ2.ogg'
 	success_sound = 'sound/surgery/organ1.ogg'
+
 	var/implements_extract = list(TOOL_HEMOSTAT = 100, TOOL_CROWBAR = 55, /obj/item/kitchen/fork = 35)
 	var/current_type
 	var/obj/item/organ/target_organ
@@ -82,13 +92,13 @@
 		success_sound = initial(success_sound)
 		if(!length(tool.contents))
 			to_chat(user, span_warning("There is nothing inside [tool]!"))
-			return -1
+			return SURGERY_STEP_FAIL
 		target_organ = tool.contents[1]
 		if(!isorgan(target_organ))
 			if (target_zone == BODY_ZONE_PRECISE_EYES)
 				target_zone = check_zone(target_zone)
 			to_chat(user, span_warning("You cannot put [target_organ] into [target]'s [parse_zone(target_zone)]!"))
-			return -1
+			return SURGERY_STEP_FAIL
 		tool = target_organ
 	if(isorgan(tool))
 		current_type = "insert"
@@ -97,11 +107,15 @@
 		target_organ = tool
 		if(target_zone != target_organ.zone || target.getorganslot(target_organ.slot))
 			to_chat(user, span_warning("There is no room for [target_organ] in [target]'s [parse_zone(target_zone)]!"))
-			return -1
+			return SURGERY_STEP_FAIL
 		var/obj/item/organ/meatslab = tool
 		if(!meatslab.useable)
 			to_chat(user, span_warning("[target_organ] seems to have been chewed on, you can't use this!"))
-			return -1
+			return SURGERY_STEP_FAIL
+
+		if(!can_use_organ(user, meatslab))
+			return SURGERY_STEP_FAIL
+
 		if (target_zone == BODY_ZONE_PRECISE_EYES)
 			target_zone = check_zone(target_zone)
 		display_results(user, target, span_notice("You begin to insert [tool] into [target]'s [parse_zone(target_zone)]..."),
@@ -112,12 +126,16 @@
 
 	else if(implement_type in implements_extract)
 		current_type = "extract"
-		var/list/organs = target.getorganszone(target_zone)
+		var/list/unfiltered_organs = target.getorganszone(target_zone)
+		var/list/organs = list()
+		for(var/organ in unfiltered_organs)
+			if(can_use_organ(user, organ))
+				organs.Add(organ)
 		if (target_zone == BODY_ZONE_PRECISE_EYES)
 			target_zone = check_zone(target_zone)
 		if(!length(organs))
 			to_chat(user, span_warning("There are no removable organs in [target]'s [parse_zone(target_zone)]!"))
-			return -1
+			return SURGERY_STEP_FAIL
 		else
 			for(var/obj/item/organ/organ in organs)
 				organ.on_find(user)
@@ -126,22 +144,21 @@
 
 			var/chosen_organ = tgui_input_list(user, "Remove which organ?", "Surgery", sort_list(organs))
 			if(isnull(chosen_organ))
-				return -1
+				return SURGERY_STEP_FAIL
 			target_organ = chosen_organ
 			if(user && target && user.Adjacent(target) && user.get_active_held_item() == tool)
 				target_organ = organs[target_organ]
 				if(!target_organ)
-					return -1
+					return SURGERY_STEP_FAIL
 				if(target_organ.organ_flags & ORGAN_UNREMOVABLE)
 					to_chat(user, span_warning("[target_organ] is too well connected to take out!"))
-					return -1
+					return SURGERY_STEP_FAIL
 				display_results(user, target, span_notice("You begin to extract [target_organ] from [target]'s [parse_zone(target_zone)]..."),
 					span_notice("[user] begins to extract [target_organ] from [target]'s [parse_zone(target_zone)]."),
 					span_notice("[user] begins to extract something from [target]'s [parse_zone(target_zone)]."))
 				display_pain(target, "You can feel your [target_organ] being removed from your [parse_zone(target_zone)]!")
 			else
-				return -1
-
+				return SURGERY_STEP_FAIL
 
 /datum/surgery_step/manipulate_organs/success(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	if (target_zone == BODY_ZONE_PRECISE_EYES)
@@ -176,3 +193,25 @@
 				span_notice("[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!"),
 				span_notice("[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!"))
 	return FALSE
+
+///You can never use this MUHAHAHAHAHAHAH (because its the byond version of abstract)
+/datum/surgery_step/manipulate_organs/proc/can_use_organ(mob/user, obj/item/organ/organ)
+	return FALSE
+
+///Surgery step for internal organs, like hearts and brains
+/datum/surgery_step/manipulate_organs/internal
+	time = 6.4 SECONDS
+	name = "manipulate organs"
+
+///only operate on internal organs
+/datum/surgery_step/manipulate_organs/internal/can_use_organ(mob/user, obj/item/organ/organ)
+	return istype(organ, /obj/item/organ/internal)
+
+///Surgery step for external organs/features, like tails, frills, wings etc
+/datum/surgery_step/manipulate_organs/external
+	time = 3.2 SECONDS
+	name = "manipulate features"
+
+///Only operate on external organs
+/datum/surgery_step/manipulate_organs/external/can_use_organ(mob/user, obj/item/organ/organ)
+	return istype(organ, /obj/item/organ/external)

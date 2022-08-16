@@ -1,4 +1,5 @@
 /obj/item/clothing/suit/jacket
+	icon = 'icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/radio)
 	body_parts_covered = CHEST|GROIN|ARMS
@@ -10,6 +11,7 @@
 	name = "sweater jacket"
 	desc = "A sweater jacket."
 	icon_state = "sweater"
+	icon = 'icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
 	greyscale_config = /datum/greyscale_config/sweater
 	greyscale_config_worn = /datum/greyscale_config/sweater_worn

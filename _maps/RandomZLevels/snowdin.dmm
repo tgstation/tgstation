@@ -1255,7 +1255,7 @@
 /area/awaymission/snowdin/post/kitchen)
 "dv" = (
 /obj/structure/table,
-/obj/item/reagent_containers/glass/beaker/large,
+/obj/item/reagent_containers/cup/beaker/large,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/kitchen)
 "dw" = (
@@ -1371,7 +1371,7 @@
 /area/awaymission/snowdin/post/kitchen)
 "dT" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/condiment/enzyme,
+/obj/item/reagent_containers/condiment/enzyme,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/kitchen)
 "dU" = (
@@ -5007,7 +5007,7 @@
 /area/awaymission/snowdin/outside)
 "nA" = (
 /obj/structure/reagent_dispensers/watertank/high,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/hydro)
 "nB" = (
@@ -5472,7 +5472,7 @@
 /obj/structure/closet/crate/hydroponics,
 /obj/item/shovel/spade,
 /obj/item/wrench,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/item/wirecutters,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/hydro)
@@ -8856,7 +8856,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/cave)
 "CI" = (
-/obj/item/reagent_containers/food/drinks/bottle/beer{
+/obj/item/reagent_containers/cup/glass/bottle/beer{
 	list_reagents = null
 	},
 /obj/effect/turf_decal/tile/neutral,
@@ -8976,7 +8976,7 @@
 /area/awaymission/snowdin/cave)
 "Df" = (
 /obj/item/stack/rods,
-/obj/item/reagent_containers/food/drinks/bottle/beer{
+/obj/item/reagent_containers/cup/glass/bottle/beer{
 	list_reagents = null
 	},
 /obj/effect/turf_decal/tile/neutral,
@@ -8996,7 +8996,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/item/reagent_containers/food/drinks/bottle/beer{
+/obj/item/reagent_containers/cup/glass/bottle/beer{
 	list_reagents = null
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -9033,7 +9033,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/item/reagent_containers/food/drinks/bottle/beer{
+/obj/item/reagent_containers/cup/glass/bottle/beer{
 	list_reagents = null
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -9135,7 +9135,7 @@
 /turf/open/floor/iron/dark/snowdin,
 /area/awaymission/snowdin/cave)
 "Ea" = (
-/obj/item/reagent_containers/food/drinks/bottle/beer{
+/obj/item/reagent_containers/cup/glass/bottle/beer{
 	list_reagents = null
 	},
 /turf/open/floor/iron/dark,
@@ -9183,7 +9183,7 @@
 /area/awaymission/snowdin/cave)
 "Eo" = (
 /obj/effect/turf_decal/weather/snow,
-/obj/item/reagent_containers/food/drinks/bottle/beer{
+/obj/item/reagent_containers/cup/glass/bottle/beer{
 	list_reagents = null
 	},
 /turf/open/floor/iron/dark/snowdin,
@@ -9205,7 +9205,7 @@
 /area/awaymission/snowdin/cave)
 "Eu" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/drinks/bottle/beer{
+/obj/item/reagent_containers/cup/glass/bottle/beer{
 	list_reagents = null
 	},
 /turf/open/floor/iron/dark,
@@ -9215,7 +9215,7 @@
 	dir = 4
 	},
 /obj/item/stack/rods,
-/obj/item/reagent_containers/food/drinks/bottle/beer{
+/obj/item/reagent_containers/cup/glass/bottle/beer{
 	list_reagents = null
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -9237,7 +9237,7 @@
 	dir = 10
 	},
 /obj/item/shard,
-/obj/item/reagent_containers/food/drinks/bottle/beer{
+/obj/item/reagent_containers/cup/glass/bottle/beer{
 	list_reagents = null
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -9246,7 +9246,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/item/reagent_containers/glass/beaker,
+/obj/item/reagent_containers/cup/beaker,
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/snowdin/cave)
 "ED" = (
@@ -11894,7 +11894,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/snowdin/post/broken_shuttle)
 "PQ" = (
-/obj/item/reagent_containers/food/drinks/bottle/beer{
+/obj/item/reagent_containers/cup/glass/bottle/beer{
 	list_reagents = null
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,

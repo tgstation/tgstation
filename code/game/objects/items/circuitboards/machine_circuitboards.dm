@@ -373,7 +373,7 @@
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/reagent_containers/glass/beaker = 2)
+		/obj/item/reagent_containers/cup/beaker = 2)
 
 /obj/item/circuitboard/machine/circuit_imprinter/offstation
 	name = "Ancient Circuit Imprinter"
@@ -424,7 +424,7 @@
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/stock_parts/manipulator = 2,
-		/obj/item/reagent_containers/glass/beaker = 2)
+		/obj/item/reagent_containers/cup/beaker = 2)
 
 /obj/item/circuitboard/machine/protolathe/offstation
 	name = "Ancient Protolathe"
@@ -511,7 +511,7 @@
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/stock_parts/manipulator = 2,
-		/obj/item/reagent_containers/glass/beaker = 2)
+		/obj/item/reagent_containers/cup/beaker = 2)
 
 /obj/item/circuitboard/machine/techfab/department
 	name = "\improper Departmental Techfab"
@@ -619,6 +619,16 @@
 		/obj/item/stock_parts/micro_laser = 1
 	)
 
+/obj/item/circuitboard/machine/fax
+	name = "Fax Machine"
+	greyscale_colors = CIRCUIT_COLOR_GENERIC
+	build_path = /obj/machinery/fax
+	req_components = list(
+		/obj/item/stock_parts/subspace/crystal = 1,
+		/obj/item/stock_parts/scanning_module = 1,
+		/obj/item/stock_parts/micro_laser = 1,
+		/obj/item/stock_parts/manipulator = 1,)
+
 //Medical
 
 /obj/item/circuitboard/machine/chem_dispenser
@@ -690,7 +700,7 @@
 	build_path = /obj/machinery/chem_master
 	desc = "You can turn the \"mode selection\" dial using a screwdriver."
 	req_components = list(
-		/obj/item/reagent_containers/glass/beaker = 2,
+		/obj/item/reagent_containers/cup/beaker = 2,
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/stack/sheet/glass = 1)
 	needs_anchored = FALSE
@@ -760,7 +770,7 @@
 	build_path = /obj/machinery/limbgrower
 	req_components = list(
 		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/reagent_containers/glass/beaker = 2,
+		/obj/item/reagent_containers/cup/beaker = 2,
 		/obj/item/stack/sheet/glass = 1)
 
 /obj/item/circuitboard/machine/limbgrower/fullupgrade
@@ -769,7 +779,7 @@
 	build_path = /obj/machinery/limbgrower
 	req_components = list(
 		/obj/item/stock_parts/manipulator/femto  = 1,
-		/obj/item/reagent_containers/glass/beaker/bluespace = 2,
+		/obj/item/reagent_containers/cup/beaker/bluespace = 2,
 		/obj/item/stack/sheet/glass = 1)
 
 /obj/item/circuitboard/machine/protolathe/department/medical
@@ -1352,3 +1362,15 @@
 		/obj/item/stack/sheet/plasteel = 5,
 		/obj/item/stock_parts/scanning_module = 4,
 		)
+
+/obj/item/circuitboard/machine/coffeemaker
+	name = "Coffeemaker (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/coffeemaker
+	req_components = list(
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/reagent_containers/cup/beaker = 2,
+		/obj/item/stock_parts/water_recycler = 1,
+		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/stock_parts/micro_laser = 1,
+	)

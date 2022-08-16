@@ -1,5 +1,4 @@
-
-/obj/item/reagent_containers/glass
+/obj/item/reagent_containers/cup
 	name = "glass"
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50)
@@ -8,9 +7,54 @@
 	spillable = TRUE
 	resistance_flags = ACID_PROOF
 
+	lefthand_file = 'icons/mob/inhands/misc/drinks_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/drinks_righthand.dmi'
 
-/obj/item/reagent_containers/glass/attack(mob/M, mob/living/user, obj/target)
-	if(!canconsume(M, user))
+	///Like Edible's food type, what kind of drink is this?
+	var/drink_type = NONE
+	///The last time we have checked for taste.
+	var/last_check_time
+	///How much we drink at once, shot glasses drink more.
+	var/gulp_size = 5
+	///Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it.
+	var/isGlass = FALSE
+
+/obj/item/reagent_containers/cup/examine(mob/user)
+	. = ..()
+	if(drink_type)
+		var/list/types = bitfield_to_list(drink_type, FOOD_FLAGS)
+		. += span_notice("It is [lowertext(english_list(types))].")
+
+/obj/item/reagent_containers/cup/proc/checkLiked(fraction, mob/M)
+	if(last_check_time + 50 >= world.time)
+		return
+	if(!ishuman(M))
+		return
+	var/mob/living/carbon/human/H = M
+	if(HAS_TRAIT(H, TRAIT_AGEUSIA))
+		if(drink_type & H.dna.species.toxic_food)
+			to_chat(H, span_warning("You don't feel so good..."))
+			H.adjust_disgust(25 + 30 * fraction)
+	else
+		if(drink_type & H.dna.species.toxic_food)
+			to_chat(H,span_warning("What the hell was that thing?!"))
+			H.adjust_disgust(25 + 30 * fraction)
+			H.add_mood_event("toxic_food", /datum/mood_event/disgusting_food)
+		else if(drink_type & H.dna.species.disliked_food)
+			to_chat(H,span_notice("That didn't taste very good..."))
+			H.adjust_disgust(11 + 15 * fraction)
+			H.add_mood_event("gross_food", /datum/mood_event/gross_food)
+		else if(drink_type & H.dna.species.liked_food)
+			to_chat(H,span_notice("I love this taste!"))
+			H.adjust_disgust(-5 + -2.5 * fraction)
+			H.add_mood_event("fav_food", /datum/mood_event/favorite_food)
+
+	if((drink_type & BREAKFAST) && world.time - SSticker.round_start_time < STOP_SERVING_BREAKFAST)
+		H.add_mood_event("breakfast", /datum/mood_event/breakfast)
+	last_check_time = world.time
+
+/obj/item/reagent_containers/cup/attack(mob/living/target_mob, mob/living/user, obj/target)
+	if(!canconsume(target_mob, user))
 		return
 
 	if(!spillable)
@@ -20,35 +64,41 @@
 		to_chat(user, span_warning("[src] is empty!"))
 		return
 
-	if(istype(M))
-		if(M != user)
-			M.visible_message(span_danger("[user] attempts to feed [M] something from [src]."), \
-						span_userdanger("[user] attempts to feed you something from [src]."))
-			if(!do_mob(user, M))
-				return
-			if(!reagents || !reagents.total_volume)
-				return // The drink might be empty after the delay, such as by spam-feeding
-			M.visible_message(span_danger("[user] feeds [M] something from [src]."), \
-						span_userdanger("[user] feeds you something from [src]."))
-			log_combat(user, M, "fed", reagents.get_reagent_log_string())
-		else
-			to_chat(user, span_notice("You swallow a gulp of [src]."))
-		SEND_SIGNAL(src, COMSIG_GLASS_DRANK, M, user)
-		addtimer(CALLBACK(reagents, /datum/reagents.proc/trans_to, M, 5, TRUE, TRUE, FALSE, user, FALSE, INGEST), 5)
-		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
-		if(iscarbon(M))
-			var/mob/living/carbon/carbon_drinker = M
-			var/list/diseases = carbon_drinker.get_static_viruses()
-			if(LAZYLEN(diseases))
-				var/list/datum/disease/diseases_to_add = list()
-				for(var/d in diseases)
-					var/datum/disease/malady = d
-					if(malady.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS)
-						diseases_to_add += malady
-				if(LAZYLEN(diseases_to_add))
-					AddComponent(/datum/component/infective, diseases_to_add)
+	if(!istype(target_mob))
+		return
 
-/obj/item/reagent_containers/glass/afterattack(obj/target, mob/living/user, proximity)
+	if(target_mob != user)
+		target_mob.visible_message(span_danger("[user] attempts to feed [target_mob] something from [src]."), \
+					span_userdanger("[user] attempts to feed you something from [src]."))
+		if(!do_mob(user, target_mob))
+			return
+		if(!reagents || !reagents.total_volume)
+			return // The drink might be empty after the delay, such as by spam-feeding
+		target_mob.visible_message(span_danger("[user] feeds [target_mob] something from [src]."), \
+					span_userdanger("[user] feeds you something from [src]."))
+		log_combat(user, target_mob, "fed", reagents.get_reagent_log_string())
+	else
+		to_chat(user, span_notice("You swallow a gulp of [src]."))
+
+	SEND_SIGNAL(src, COMSIG_GLASS_DRANK, target_mob, user)
+	var/fraction = min(gulp_size/reagents.total_volume, 1)
+	reagents.trans_to(target_mob, gulp_size, transfered_by = user, methods = INGEST)
+	checkLiked(fraction, target_mob)
+	playsound(target_mob.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
+	if(!iscarbon(target_mob))
+		return
+	var/mob/living/carbon/carbon_drinker = target_mob
+	var/list/diseases = carbon_drinker.get_static_viruses()
+	if(!LAZYLEN(diseases))
+		return
+	var/list/datum/disease/diseases_to_add = list()
+	for(var/datum/disease/malady as anything in diseases)
+		if(malady.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS)
+			diseases_to_add += malady
+	if(LAZYLEN(diseases_to_add))
+		AddComponent(/datum/component/infective, diseases_to_add)
+
+/obj/item/reagent_containers/cup/afterattack(obj/target, mob/living/user, proximity)
 	. = ..()
 	if((!proximity) || !check_allowed_items(target,target_self=1))
 		return
@@ -82,7 +132,7 @@
 
 	target.update_appearance()
 
-/obj/item/reagent_containers/glass/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/reagent_containers/cup/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	if((!proximity_flag) || !check_allowed_items(target,target_self=1))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -104,11 +154,12 @@
 	target.update_appearance()
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
-/obj/item/reagent_containers/glass/attackby(obj/item/I, mob/user, params)
+/obj/item/reagent_containers/cup/attackby(obj/item/I, mob/user, params)
 	var/hotness = I.get_temperature()
 	if(hotness && reagents)
 		reagents.expose_temperature(hotness)
 		to_chat(user, span_notice("You heat [name] with [I]!"))
+		return
 
 	//Cooling method
 	if(istype(I, /obj/item/extinguisher))
@@ -123,28 +174,32 @@
 		to_chat(user, span_notice("You cool the [name] with the [I]!"))
 		playsound(loc, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
 		extinguisher.reagents.remove_all(1)
+		return
 
 	if(istype(I, /obj/item/food/egg)) //breaking eggs
 		var/obj/item/food/egg/E = I
-		if(reagents)
-			if(reagents.total_volume >= reagents.maximum_volume)
-				to_chat(user, span_notice("[src] is full."))
-			else
-				to_chat(user, span_notice("You break [E] in [src]."))
-				E.reagents.trans_to(src, E.reagents.total_volume, transfered_by = user)
-				qdel(E)
+		if(!reagents)
 			return
-	..()
+		if(reagents.total_volume >= reagents.maximum_volume)
+			to_chat(user, span_notice("[src] is full."))
+		else
+			to_chat(user, span_notice("You break [E] in [src]."))
+			for(var/datum/reagent/consumable/egg_reagents in E.food_reagents)
+				reagents.add_reagent(egg_reagents)
+			qdel(E)
+		return
+
+	return ..()
 
 /*
  * On accidental consumption, make sure the container is partially glass, and continue to the reagent_container proc
  */
-/obj/item/reagent_containers/glass/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item, discover_after = TRUE)
-	if(!custom_materials)
+/obj/item/reagent_containers/cup/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item, discover_after = TRUE)
+	if(isGlass && !custom_materials)
 		set_custom_materials(list(GET_MATERIAL_REF(/datum/material/glass) = 5))//sets it to glass so, later on, it gets picked up by the glass catch (hope it doesn't 'break' things lol)
 	return ..()
 
-/obj/item/reagent_containers/glass/beaker
+/obj/item/reagent_containers/cup/beaker
 	name = "beaker"
 	desc = "A beaker. It can hold up to 50 units."
 	icon = 'icons/obj/chemical.dmi'
@@ -154,20 +209,20 @@
 	custom_materials = list(/datum/material/glass=500)
 	fill_icon_thresholds = list(0, 1, 20, 40, 60, 80, 100)
 
-/obj/item/reagent_containers/glass/beaker/Initialize(mapload)
+/obj/item/reagent_containers/cup/beaker/Initialize(mapload)
 	. = ..()
 	update_appearance()
 
-/obj/item/reagent_containers/glass/beaker/get_part_rating()
+/obj/item/reagent_containers/cup/beaker/get_part_rating()
 	return reagents.maximum_volume
 
-/obj/item/reagent_containers/glass/beaker/jar
+/obj/item/reagent_containers/cup/beaker/jar
 	name = "honey jar"
 	desc = "A jar for honey. It can hold up to 50 units of sweet delight."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "vapour"
 
-/obj/item/reagent_containers/glass/beaker/large
+/obj/item/reagent_containers/cup/beaker/large
 	name = "large beaker"
 	desc = "A large beaker. Can hold up to 100 units."
 	icon_state = "beakerlarge"
@@ -177,7 +232,7 @@
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
 	fill_icon_thresholds = list(0, 1, 20, 40, 60, 80, 100)
 
-/obj/item/reagent_containers/glass/beaker/plastic
+/obj/item/reagent_containers/cup/beaker/plastic
 	name = "x-large beaker"
 	desc = "An extra-large beaker. Can hold up to 120 units."
 	icon_state = "beakerwhite"
@@ -187,7 +242,7 @@
 	possible_transfer_amounts = list(5,10,15,20,25,30,60,120)
 	fill_icon_thresholds = list(0, 1, 10, 20, 40, 60, 80, 100)
 
-/obj/item/reagent_containers/glass/beaker/meta
+/obj/item/reagent_containers/cup/beaker/meta
 	name = "metamaterial beaker"
 	desc = "A large beaker. Can hold up to 180 units."
 	icon_state = "beakergold"
@@ -197,7 +252,7 @@
 	possible_transfer_amounts = list(5,10,15,20,25,30,60,120,180)
 	fill_icon_thresholds = list(0, 1, 10, 25, 35, 50, 60, 80, 100)
 
-/obj/item/reagent_containers/glass/beaker/noreact
+/obj/item/reagent_containers/cup/beaker/noreact
 	name = "cryostasis beaker"
 	desc = "A cryostasis beaker that allows for chemical storage without \
 		reactions. Can hold up to 50 units."
@@ -207,7 +262,7 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 
-/obj/item/reagent_containers/glass/beaker/bluespace
+/obj/item/reagent_containers/cup/beaker/bluespace
 	name = "bluespace beaker"
 	desc = "A bluespace beaker, powered by experimental bluespace technology \
 		and Element Cuban combined with the Compound Pete. Can hold up to \
@@ -218,35 +273,35 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
 
-/obj/item/reagent_containers/glass/beaker/cryoxadone
+/obj/item/reagent_containers/cup/beaker/cryoxadone
 	list_reagents = list(/datum/reagent/medicine/cryoxadone = 30)
 
-/obj/item/reagent_containers/glass/beaker/sulfuric
+/obj/item/reagent_containers/cup/beaker/sulfuric
 	list_reagents = list(/datum/reagent/toxin/acid = 50)
 
-/obj/item/reagent_containers/glass/beaker/slime
+/obj/item/reagent_containers/cup/beaker/slime
 	list_reagents = list(/datum/reagent/toxin/slimejelly = 50)
 
-/obj/item/reagent_containers/glass/beaker/large/libital
+/obj/item/reagent_containers/cup/beaker/large/libital
 	name = "libital reserve tank (diluted)"
 	list_reagents = list(/datum/reagent/medicine/c2/libital = 10,/datum/reagent/medicine/granibitaluri = 40)
 
-/obj/item/reagent_containers/glass/beaker/large/aiuri
+/obj/item/reagent_containers/cup/beaker/large/aiuri
 	name = "aiuri reserve tank (diluted)"
 	list_reagents = list(/datum/reagent/medicine/c2/aiuri = 10, /datum/reagent/medicine/granibitaluri = 40)
 
-/obj/item/reagent_containers/glass/beaker/large/multiver
+/obj/item/reagent_containers/cup/beaker/large/multiver
 	name = "multiver reserve tank (diluted)"
 	list_reagents = list(/datum/reagent/medicine/c2/multiver = 10, /datum/reagent/medicine/granibitaluri = 40)
 
-/obj/item/reagent_containers/glass/beaker/large/epinephrine
+/obj/item/reagent_containers/cup/beaker/large/epinephrine
 	name = "epinephrine reserve tank (diluted)"
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 50)
 
-/obj/item/reagent_containers/glass/beaker/synthflesh
+/obj/item/reagent_containers/cup/beaker/synthflesh
 	list_reagents = list(/datum/reagent/medicine/c2/synthflesh = 50)
 
-/obj/item/reagent_containers/glass/bucket
+/obj/item/reagent_containers/cup/bucket
 	name = "bucket"
 	desc = "It's a bucket."
 	icon = 'icons/obj/janitor.dmi'
@@ -274,7 +329,7 @@
 		ITEM_SLOT_DEX_STORAGE
 	)
 
-/obj/item/reagent_containers/glass/bucket/wooden
+/obj/item/reagent_containers/cup/bucket/wooden
 	name = "wooden bucket"
 	icon_state = "woodbucket"
 	inhand_icon_state = "woodbucket"
@@ -282,7 +337,7 @@
 	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 50)
 	resistance_flags = FLAMMABLE
 
-/obj/item/reagent_containers/glass/bucket/attackby(obj/O, mob/user, params)
+/obj/item/reagent_containers/cup/bucket/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/mop))
 		if(reagents.total_volume < 1)
 			to_chat(user, span_warning("[src] is out of water!"))
@@ -290,16 +345,18 @@
 			reagents.trans_to(O, 5, transfered_by = user)
 			to_chat(user, span_notice("You wet [O] in [src]."))
 			playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
+		return
 	else if(isprox(O)) //This works with wooden buckets for now. Somewhat unintended, but maybe someone will add sprites for it soon(TM)
 		to_chat(user, span_notice("You add [O] to [src]."))
 		qdel(O)
 		qdel(src)
 		user.put_in_hands(new /obj/item/bot_assembly/cleanbot)
-	else
-		..()
+		return
 
-/obj/item/reagent_containers/glass/bucket/equipped(mob/user, slot)
-	..()
+	return ..()
+
+/obj/item/reagent_containers/cup/bucket/equipped(mob/user, slot)
+	. = ..()
 	if (slot == ITEM_SLOT_HEAD)
 		if(reagents.total_volume)
 			to_chat(user, span_userdanger("[src]'s contents spill all over you!"))
@@ -307,11 +364,11 @@
 			reagents.clear_reagents()
 		reagents.flags = NONE
 
-/obj/item/reagent_containers/glass/bucket/dropped(mob/user)
+/obj/item/reagent_containers/cup/bucket/dropped(mob/user)
 	. = ..()
 	reagents.flags = initial(reagent_flags)
 
-/obj/item/reagent_containers/glass/bucket/equip_to_best_slot(mob/M)
+/obj/item/reagent_containers/cup/bucket/equip_to_best_slot(mob/M)
 	if(reagents.total_volume) //If there is water in a bucket, don't quick equip it to the head
 		var/index = slot_equipment_priority.Find(ITEM_SLOT_HEAD)
 		slot_equipment_priority.Remove(ITEM_SLOT_HEAD)
@@ -328,7 +385,7 @@
 	icon_state = "pestle"
 	force = 7
 
-/obj/item/reagent_containers/glass/mortar
+/obj/item/reagent_containers/cup/mortar
 	name = "mortar"
 	desc = "A specially formed bowl of ancient design. It is possible to crush or juice items placed in it using a pestle; however the process, unlike modern methods, is slow and physically exhausting. Alt click to eject the item."
 	icon_state = "mortar"
@@ -340,13 +397,13 @@
 	spillable = TRUE
 	var/obj/item/grinded
 
-/obj/item/reagent_containers/glass/mortar/AltClick(mob/user)
+/obj/item/reagent_containers/cup/mortar/AltClick(mob/user)
 	if(grinded)
 		grinded.forceMove(drop_location())
 		grinded = null
 		to_chat(user, span_notice("You eject the item inside."))
 
-/obj/item/reagent_containers/glass/mortar/attackby(obj/item/I, mob/living/carbon/human/user)
+/obj/item/reagent_containers/cup/mortar/attackby(obj/item/I, mob/living/carbon/human/user)
 	..()
 	if(istype(I,/obj/item/pestle))
 		if(grinded)
@@ -382,7 +439,23 @@
 		return
 	to_chat(user, span_warning("You can't grind this!"))
 
-/obj/item/reagent_containers/glass/saline
+/obj/item/reagent_containers/cup/saline
 	name = "saline canister"
 	volume = 5000
 	list_reagents = list(/datum/reagent/medicine/salglu_solution = 5000)
+
+//Coffeepots: for reference, a standard cup is 30u, to allow 20u for sugar/sweetener/milk/creamer
+/obj/item/reagent_containers/cup/coffeepot
+	name = "coffeepot"
+	desc = "A large pot for dispensing that ambrosia of corporate life known to mortals only as coffee. Contains 4 standard cups."
+	volume = 120
+	icon_state = "coffeepot"
+	fill_icon_state = "coffeepot"
+	fill_icon_thresholds = list(0, 1, 40, 80, 120)
+
+/obj/item/reagent_containers/cup/coffeepot/bluespace
+	name = "bluespace coffeepot"
+	desc = "The most advanced coffeepot the eggheads could cook up: sleek design; graduated lines; connection to a pocket dimension for coffee containment; yep, it's got it all. Contains 8 standard cups."
+	volume = 240
+	icon_state = "coffeepot_bluespace"
+	fill_icon_thresholds = list(0)

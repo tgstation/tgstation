@@ -70,15 +70,12 @@
 
 /obj/item/hierophant_club/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
 	blink = new(src)
 
 /obj/item/hierophant_club/Destroy()
 	QDEL_NULL(blink)
 	return ..()
-
-/obj/item/hierophant_club/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/hierophant_club/examine(mob/user)
 	. = ..()

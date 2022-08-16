@@ -457,7 +457,8 @@
 		to_chat(headrev_mind.current, span_hear("You hear something crackle in your ears for a moment before a voice speaks. \
 			\"Please stand by for a message from your benefactor. Message as follows, provocateur. \
 			<b>You have been chosen out of your fellow provocateurs to rename the station. Choose wisely.</b> Message ends.\""))
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_REVOLUTION_TAX_REMOVAL)
+
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_REVOLUTION_VICTORY)
 
 	for (var/mob/living/player as anything in GLOB.player_list)
 		var/datum/mind/player_mind = player.mind
