@@ -9,6 +9,7 @@ NOVA TODO:
 #define MAX_OVERMAP_EVENT_CLUSTERS 8
 #define MAX_OVERMAP_EVENTS 70
 #define MAX_OVERMAP_PLACEMENT_ATTEMPTS 20
+#define MAX_OVERMAP_PLANETS_TO_SPAWN 5
 
 SUBSYSTEM_DEF(overmap)
 	name = "Overmap"
@@ -28,6 +29,7 @@ SUBSYSTEM_DEF(overmap)
 	create_map()
 	setup_sun()
 	setup_dangers()
+	setup_planets()
 
 	return ..()
 
@@ -106,3 +108,29 @@ SUBSYSTEM_DEF(overmap)
 				continue
 			new event_type(turf_to_spawn)
 
+/datum/controller/subsystem/overmap/proc/setup_planets()
+	var/list/orbits = list()
+	for (var/i in 2 to LAZYLEN(radius_tiles))
+		orbits += "[i]"
+
+	for (var/_ in 1 to MAX_OVERMAP_PLANETS_TO_SPAWN)
+		if (LAZYLEN(orbits) == 0 || !orbits)
+			break // can't fit anymore in
+		var/selected_orbit = text2num(pick(orbits))
+
+		var/turf/turf_for_planet = get_unused_overmap_square(selected_orbit)
+		if (!turf_for_planet || !istype(turf_for_planet))
+			orbits -= "[selected_orbit]" // this one is full
+			continue
+		var/planet_type = pick(subtypesof(/datum/overmap/planet))
+		var/obj/structure/overmap/planet/planet_to_spawn = new
+		planet_to_spawn.planet = planet_type
+		planet_to_spawn.forceMove(turf_for_planet)
+
+		// Transfer all of the data from the planet datum onto the planet object
+		var/datum/overmap/planet/planet_info = new planet_to_spawn.planet
+		planet_to_spawn.name = planet_info.name
+		planet_to_spawn.desc = planet_info.desc
+		planet_to_spawn.icon_state = planet_info.icon_state
+		planet_to_spawn.color = planet_info.color
+		qdel(planet_info)

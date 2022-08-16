@@ -4727,6 +4727,8 @@
 #include "voidcrew\modules\overmap\code\game\turfs\open\overmap.dm"
 #include "voidcrew\modules\overmap\code\modules\overmap\_overmap.dm"
 #include "voidcrew\modules\overmap\code\modules\overmap\events.dm"
+#include "voidcrew\modules\overmap\code\modules\overmap\planet.dm"
 #include "voidcrew\modules\overmap\code\modules\overmap\stars.dm"
+#include "voidcrew\modules\overmap\code\modules\overmap\behaviour\planets.dm"
 #include "voidcrew\modules\overmap\code\modules\overmap\behaviour\stars.dm"
 // END_INCLUDE
