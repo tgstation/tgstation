@@ -11,8 +11,7 @@ const getComponent = (interfacePath, requireInterface) => {
 
   try {
     esModule = requireInterface(interfacePath);
-  }
-  catch (err) {
+  } catch (err) {
     if (err.code !== 'MODULE_NOT_FOUND') {
       throw err;
     }

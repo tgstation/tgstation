@@ -10,7 +10,7 @@ import { selectDebug } from './debug/selectors';
 import { Window } from './layouts';
 
 // voidcrew edit - modular tgui
-import { loadInterface } from "../voidcrew_tgui";
+import { loadInterface } from '../voidcrew_tgui';
 // const requireInterface = require.context('./interfaces');
 
 const routingError = (type, name) => () => {
