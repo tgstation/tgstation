@@ -48,10 +48,9 @@
 	STOP_PROCESSING(SSobj, src)
 	REMOVE_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
 	
-	if(!ishuman(user))
-		return
-		
-	user.clear_mood_event("abyssal_mask")
+	if(ishuman(user))
+		user.clear_mood_event("abyssal_mask")
+
 	return ..()
 
 /obj/item/clothing/mask/madness_mask/process(delta_time)
