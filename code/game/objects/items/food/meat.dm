@@ -181,6 +181,22 @@
 
 ////////////////////////////////////////////MEATS AND ALIKE////////////////////////////////////////////
 
+
+/obj/item/food/meat/slab/pig
+	name = "raw pork"
+	icon_state = "pig_meat"
+	tastes = list("pig" = 1)
+	foodtypes = MEAT | RAW | GROSS
+
+/obj/item/food/meat/slab/pig/MakeGrillable()
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain/pig, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
+
+/obj/item/food/meat/steak/plain/pig
+	name = "pork steak"
+	icon_state = "pigsteak"
+	tastes = list("pig" = 1)
+	foodtypes = MEAT | GROSS
+
 /obj/item/food/tofu
 	name = "tofu"
 	desc = "We all love tofu."
