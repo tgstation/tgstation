@@ -391,12 +391,12 @@
 	timeout = 2 MINUTES
 
 /datum/mood_event/abyssal_mask
-	description = "I wonder... The face under the mask... Is that... your true face?"
+	description = "I wonder... The face under the mask... Is that... my true face?" // -Moon Child
 	mood_change = -15
 	timeout = 1 MINUTES
 
 /datum/mood_event/abyssal_mask/add_effects(is_wearing_mask)
 	if(is_wearing_mask)
-		description = "I wonder...what makes you happy...does it make...others happy, too?"
+		description = "I wonder...what makes me happy...does it make...others happy, too?" // -Moon Child
 		mood_change = -25
 		timeout = 0 // infinite duration until mask is taken off
