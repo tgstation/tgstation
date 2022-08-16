@@ -392,8 +392,8 @@
 
 /datum/mood_event/abyssal_mask
 	description = "I wonder... The face under the mask... Is that... your true face?"
-	mood_change = -10
-	timeout = 5 MINUTES
+	mood_change = -15
+	timeout = 1 MINUTES
 
 /datum/mood_event/abyssal_mask/add_effects(is_wearing_mask)
 	if(is_wearing_mask)
