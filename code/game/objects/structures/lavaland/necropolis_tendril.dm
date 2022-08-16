@@ -88,6 +88,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 	. = ..()
 	emitted_light = new(loc)
 	visible_message(span_boldannounce("The tendril writhes in fury as the earth around it begins to crack and break apart! Get back!"))
+	balloon_alert_to_viewers("interact to grab loot before collapse!", vision_distance = 7)
 	playsound(loc,'sound/effects/tendril_destroyed.ogg', 200, FALSE, 50, TRUE, TRUE)
 	addtimer(CALLBACK(src, .proc/collapse), 50)
 
