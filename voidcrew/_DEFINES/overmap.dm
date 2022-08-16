@@ -2,7 +2,7 @@
 #define OVERMAP_Z_LEVEL 1 // aka centcom z
 
 // size of the overmap (OVERMAP_SIZE x OVERMAP_SIZE)
-#define OVERMAP_SIZE 10
+#define OVERMAP_SIZE 11 // keep this odd to provide a centre tile
 
 // These overmap coords are configured to place it in the top left of the z level
 #define OVERMAP_LEFT_SIDE_COORD 1
