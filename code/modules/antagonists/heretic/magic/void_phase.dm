@@ -24,7 +24,8 @@
 /datum/action/cooldown/spell/pointed/void_phase/is_valid_target(atom/cast_on)
 	// We do the close range check first
 	if(get_dist(get_turf(owner), get_turf(cast_on)) < min_cast_range)
-		owner.balloon_alert(owner, "too close!")
+		if(owner)
+			owner.balloon_alert(owner, "too close!")
 		return FALSE
 
 	return ..()

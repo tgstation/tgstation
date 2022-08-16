@@ -49,7 +49,7 @@
 		crit_wound.apply_wound(bodypart)
 		victim.apply_damage(20, BURN, wound_bonus = CANT_WOUND)
 
-		new /obj/effect/temp_visual/cleave(victim.drop_location())
+		new /obj/effect/temp_visual/cleave(get_turf(victim))
 
 	return TRUE
 

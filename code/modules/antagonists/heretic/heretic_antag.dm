@@ -49,15 +49,8 @@
 	var/static/list/scribing_tools = typecacheof(list(/obj/item/pen, /obj/item/toy/crayon))
 	/// A blacklist of turfs we cannot scribe on.
 	var/static/list/blacklisted_rune_turfs = typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/lava, /turf/open/chasm))
-
-/datum/antagonist/heretic/Destroy()
-	LAZYNULL(sac_targets)
-	return ..()
-
-/datum/antagonist/heretic/ui_data(mob/user)
-	var/list/data = list()
-
-	var/static/list/path_to_color = list(
+	/// Static list of what each path converts to in the UI (colors are TGUI colors)
+	var/static/list/path_to_ui_color = list(
 		PATH_START = "grey",
 		PATH_SIDE = "green",
 		PATH_RUST = "brown",
@@ -66,6 +59,13 @@
 		PATH_VOID = "blue",
 		PATH_BLADE = "label", // my favorite color is label
 	)
+
+/datum/antagonist/heretic/Destroy()
+	LAZYNULL(sac_targets)
+	return ..()
+
+/datum/antagonist/heretic/ui_data(mob/user)
+	var/list/data = list()
 
 	data["charges"] = knowledge_points
 	data["total_sacrifices"] = total_sacrifices
@@ -88,7 +88,7 @@
 			knowledge_data["disabled"] = !can_ascend()
 
 		knowledge_data["hereticPath"] = initial(knowledge.route)
-		knowledge_data["color"] = path_to_color[initial(knowledge.route)] || "grey"
+		knowledge_data["color"] = path_to_ui_color[initial(knowledge.route)] || "grey"
 
 		data["learnableKnowledge"] += list(knowledge_data)
 
@@ -107,7 +107,7 @@
 		knowledge_data["gainFlavor"] = found_knowledge.gain_text
 		knowledge_data["cost"] = found_knowledge.cost
 		knowledge_data["hereticPath"] = found_knowledge.route
-		knowledge_data["color"] = path_to_color[found_knowledge.route] || "grey"
+		knowledge_data["color"] = path_to_ui_color[found_knowledge.route] || "grey"
 
 		data["learnedKnowledge"] += list(knowledge_data)
 
@@ -563,7 +563,7 @@
 	var/datum/heretic_knowledge/initialized_knowledge = new knowledge_type()
 	researched_knowledge[knowledge_type] = initialized_knowledge
 	initialized_knowledge.on_research(owner.current)
-	update_static_data(owner.curent)
+	update_static_data(owner.current)
 	return TRUE
 
 /**

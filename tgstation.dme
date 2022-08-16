@@ -2272,6 +2272,7 @@
 #include "code\modules\antagonists\heretic\magic\mansus_grasp.dm"
 #include "code\modules\antagonists\heretic\magic\mirror_walk.dm"
 #include "code\modules\antagonists\heretic\magic\nightwatcher_rebirth.dm"
+#include "code\modules\antagonists\heretic\magic\rust_construction.dm"
 #include "code\modules\antagonists\heretic\magic\rust_wave.dm"
 #include "code\modules\antagonists\heretic\magic\void_phase.dm"
 #include "code\modules\antagonists\heretic\magic\void_pull.dm"
