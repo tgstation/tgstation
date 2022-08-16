@@ -3,7 +3,9 @@
 /datum/element/update_icon_updates_onmob
 	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
+	///The ITEM_SLOT_X flags to update on the parent mob. (Ex: ITEM_SLOT_HANDS|ITEM_SLOT_FEET)
 	var/update_flags = NONE
+	///Should the element call [/mob/proc/update_body()] in addition to clothing updates?
 	var/update_body = FALSE
 
 /datum/element/update_icon_updates_onmob/Attach(datum/target, flags, body = FALSE)
