@@ -66,7 +66,9 @@
 		if(human_in_range.is_blind())
 			continue
 
-		human_in_range.add_mood_event("abyssal_mask", /datum/mood_event/abyssal_mask)
+		var/obj/item/clothing/mask/madness_mask/abyssal_mask = human_in_range.get_item_by_slot(ITEM_SLOT_MASK)
+		var/is_wearing_mask = istype(abyssal_mask)
+		human_in_range.add_mood_event("abyssal_mask", /datum/mood_event/abyssal_mask, is_wearing_mask)
 
 		if(DT_PROB(60, delta_time))
 			human_in_range.hallucination = min(human_in_range.hallucination + 5, 120)
