@@ -26,7 +26,8 @@
 	background = "fishing_background_lavaland"
 	fish_table = list(
 		FISHING_DUD = 5,
-		/obj/item/chasm_detritus = 20
+		/obj/item/fish/chrab = 15,
+		/obj/item/chasm_detritus = 30,
 	)
 
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
