@@ -389,3 +389,14 @@
 	description = "I just got squeezed way too hard."
 	mood_change = -1
 	timeout = 2 MINUTES
+
+/datum/mood_event/abyssal_mask
+	description = "I wonder... The face under the mask... Is that... your true face?"
+	mood_change = -10
+	timeout = 5 MINUTES
+
+/datum/mood_event/abyssal_mask/add_effects(is_wearing_mask)
+	if(is_wearing_mask)
+		description = "I wonder...what makes you happy...does it make...others happy, too?"
+		mood_change = -25
+		timeout = 0 // infinite duration until mask is taken off
