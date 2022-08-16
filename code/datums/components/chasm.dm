@@ -42,8 +42,22 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 
 /datum/component/chasm/Destroy(force=FALSE, silent=FALSE)
 	STOP_PROCESSING(SSobj, src)
-	QDEL_NULL(storage)
+	remove_storage()
 	return ..(force, silent)
+
+/**
+ * Deletes the chasm storage object and removes empty weakrefs from global list
+ */
+/obj/component/chasm/proc/remove_storage()
+	if (!storage)
+		return
+	QDEL_NULL(storage)
+	var/list/chasm_storage = list()
+	for (var/datum/weakref/ref as anything in GLOB.chasm_storage)
+		if (!ref.resolve())
+			continue
+		chasm_storage += ref
+	GLOB.chasm_storage = chasm_storage
 
 /datum/component/chasm/proc/Entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
@@ -209,6 +223,9 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 	escapee.Paralyze(20 SECONDS, TRUE) // They're really tired after doing that
 	UnregisterSignal(escapee, COMSIG_LIVING_REVIVE)
 
+/**
+ * An abstract object which is basically just a bag that the chasm puts people inside
+ */
 /obj/effect/abstract/chasm_storage
 	name = "chasm depths"
 	desc = "The bottom of a hole. You shouldn't be able to interact with this."

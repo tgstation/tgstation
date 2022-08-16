@@ -14,26 +14,25 @@
 /obj/item/chasm_detritus/Initialize(mapload)
 	. = ..()
 	if (prob(25))
-		to_chat(world, "random chance")
 		create_default_object()
 		return
 
 	var/list/chasm_stuff = find_chasm_contents()
 	if (!chasm_stuff.len)
-		to_chat(world, "chasms empty")
 		create_default_object()
 		return
 
 	var/atom/movable/detritus = pick(chasm_stuff)
 	var/moved = detritus.forceMove(get_turf(src))
-	to_chat(world, "retrieved [detritus] [moved] [get_turf(src)]")
 	qdel(src)
 
+/// Instantiates something from the default list.
 /obj/item/chasm_detritus/proc/create_default_object()
 	var/contents_type = pick(default_contents)
 	new contents_type(get_turf(src))
 	qdel(src)
 
+/// Returns a list of every object which is currently inside of a chasm.
 /obj/item/chasm_detritus/proc/find_chasm_contents()
 	var/list/chasm_contents = list()
 	if (!GLOB.chasm_storage.len)
@@ -46,11 +45,3 @@
 			chasm_contents += thing
 
 	return chasm_contents
-
-/obj/item/chasm_detritus/proc/clean_storage_refs()
-	var/list/chasm_storage = list()
-	for (var/datum/weakref/ref as anything in GLOB.chasm_storage)
-		if (!ref.resolve())
-			continue
-		chasm_storage += ref
-	GLOB.chasm_storage = chasm_storage
