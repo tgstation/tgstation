@@ -314,7 +314,9 @@
 			var/obj/item/food/deadmouse/mouse = new(loc)
 			mouse.icon_state = icon_dead
 			mouse.name = name
-	SSmobs.cheeserats -= src // remove rats on death
+		qdel(src)
+	else
+		SSmobs.cheeserats -= src // remove rats on death
 	return ..()
 
 /mob/living/simple_animal/hostile/rat/revive(full_heal = FALSE, admin_revive = FALSE)

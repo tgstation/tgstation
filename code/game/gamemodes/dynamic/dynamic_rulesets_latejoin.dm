@@ -196,8 +196,8 @@
 	)
 	required_candidates = 1
 	weight = 4
-	cost = 7
-	requirements = list(101,101,101,10,10,10,10,10,10,10)
+	cost = 6
+	requirements = list(101,101,50,10,10,10,10,10,10,10)
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/latejoin/heretic_smuggler/execute()

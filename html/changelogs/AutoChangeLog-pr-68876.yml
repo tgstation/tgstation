@@ -1,6 +1,0 @@
-author: "FernandoJ8"
-delete-after: True
-changes: 
-  - code_imp: "changed the randomize_human() proc to call species procs instead of being mostly hardcoded and cleaned up some code"
-  - bugfix: "randomize_human() can now assign plural gender to a mob and will always do so for species without sexes"
-  - bugfix: "the external features of non-humans are now randomized properly by randomize_human() and all mechanics that call the proc, such as mulligans"
