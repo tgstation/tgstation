@@ -4079,6 +4079,7 @@
 #include "code\modules\reagents\chemistry\machinery\chem_master.dm"
 #include "code\modules\reagents\chemistry\machinery\chem_recipe_debug.dm"
 #include "code\modules\reagents\chemistry\machinery\chem_synthesizer.dm"
+#include "code\modules\reagents\chemistry\machinery\coffeemaker.dm"
 #include "code\modules\reagents\chemistry\machinery\pandemic.dm"
 #include "code\modules\reagents\chemistry\machinery\reagentgrinder.dm"
 #include "code\modules\reagents\chemistry\machinery\smoke_machine.dm"
