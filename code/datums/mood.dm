@@ -466,7 +466,8 @@
 
 /// Helper to forcefully drain sanity
 /datum/mood/proc/direct_sanity_drain(amount)
-	set_sanity(sanity + amount, override = TRUE)
+	var/new_sanity = clamp(sanity + amount, SANITY_INSANE, SANITY_MAXIMUM)
+	set_sanity(new_sanity, override = TRUE)
 
 /**
  * Returns true if you already have a mood from a provided category.
