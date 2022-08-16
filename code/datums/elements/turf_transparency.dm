@@ -46,8 +46,8 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 	plane = HUD_PLANE
 	anchored = TRUE
 	move_resist = INFINITY
-	invisibility = 101
-	
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
 /datum/z_pillar
 	/// Assoc list in the form displayed turf -> list of sources
 	var/list/turf_sources = list()
@@ -72,7 +72,7 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 		var/turf/visual_target = to_display.above()
 		/// Basically, if we used to be under a non transparent turf, but are no longer in that position
 		/// Then we add to the transparent turf we're now under, and nuke the old object
-		if(!HAS_TRAIT(visual_target, TURF_Z_TRANSPARENT_TRAIT))
+		if(!istransparentturf(visual_target))
 			return
 
 		holding.vis_contents -= to_display
@@ -83,7 +83,7 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 
 	var/turf/visual_target = to_display.above()
 	// The isopenspaceturf() here isn't nessesarry for behavior, but serves as an optimization for large openspace areas
-	if(HAS_TRAIT(visual_target, TURF_Z_TRANSPARENT_TRAIT) || isopenspaceturf(visual_target))
+	if(istransparentturf(visual_target) || isopenspaceturf(visual_target))
 		visual_target.vis_contents += to_display
 	else
 		var/obj/effect/abstract/z_holder/hold_this = new(visual_target)
