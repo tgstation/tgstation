@@ -51,6 +51,7 @@
 
 /mob/living/basic/cow/proc/tamed(mob/living/tamer)
 	buckle_lying = 0
+	visible_message("[src] lets out a happy moo as it seems to bond with [tamer].", "You let out a happy moo, recognizing [tamer] as your new pal.")
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/cow)
 
 /*
