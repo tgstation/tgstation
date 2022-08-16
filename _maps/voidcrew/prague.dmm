@@ -2371,7 +2371,7 @@
 "XG" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
-/obj/machinery/power/port_gen/pacman/uranium,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
 /obj/item/stack/sheet/mineral/uranium/five,
 /turf/open/floor/plating,
 /area/station/engineering)

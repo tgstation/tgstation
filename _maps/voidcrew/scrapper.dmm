@@ -2724,7 +2724,7 @@
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/cable,
 /obj/effect/turf_decal/industrial/hatch/yellow,
-/obj/machinery/power/port_gen/pacman/uranium{
+/obj/machinery/power/port_gen/pacman/pre_loaded{
 	anchored = 1
 	},
 /obj/effect/turf_decal/techfloor/orange/corner,
@@ -3566,7 +3566,7 @@
 /area/station/hallway/aft)
 "Ti" = (
 /obj/structure/window/reinforced/spawner/north,
-/obj/machinery/power/port_gen/pacman/uranium{
+/obj/machinery/power/port_gen/pacman/pre_loaded{
 	anchored = 1
 	},
 /obj/structure/cable,

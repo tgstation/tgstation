@@ -59,7 +59,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
-/obj/effect/turf_decal/tile/red/border,
+/obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "gg" = (
@@ -118,11 +118,11 @@
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "jl" = (
-/obj/effect/turf_decal/tile/red/border,
+/obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "jr" = (
-/obj/effect/turf_decal/tile/red/border{
+/obj/effect/turf_decal/tile/red{
 	dir = 5
 	},
 /obj/structure/rack,
@@ -169,7 +169,7 @@
 /area/station/cargo)
 "kt" = (
 /obj/structure/closet/secure_closet/security,
-/obj/effect/turf_decal/tile/red/border{
+/obj/effect/turf_decal/tile/red{
 	dir = 10
 	},
 /obj/item/gun/energy/e_gun/mini,
@@ -177,23 +177,23 @@
 /area/station/security)
 "kW" = (
 /obj/structure/window/reinforced/spawner/east,
-/obj/effect/turf_decal/tile/red/border{
+/obj/effect/turf_decal/tile/red{
 	dir = 6
 	},
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/bed,
 /obj/item/clothing/head/soft/orange,
 /obj/item/clothing/under/rank/prisoner,
-/obj/item/reagent_containers/food/snacks/tofu/prison,
-/obj/item/reagent_containers/food/snacks/tofu/prison,
-/obj/item/reagent_containers/food/snacks/tofu/prison,
-/obj/item/reagent_containers/food/snacks/tofu/prison,
-/obj/item/reagent_containers/food/snacks/tofu/prison,
-/obj/item/reagent_containers/food/snacks/tofu/prison,
-/obj/item/reagent_containers/food/snacks/tofu/prison,
-/obj/item/reagent_containers/food/snacks/tofu/prison,
-/obj/item/reagent_containers/food/snacks/tofu/prison,
-/obj/item/reagent_containers/food/snacks/tofu/prison,
+/obj/item/food/tofu/prison,
+/obj/item/food/tofu/prison,
+/obj/item/food/tofu/prison,
+/obj/item/food/tofu/prison,
+/obj/item/food/tofu/prison,
+/obj/item/food/tofu/prison,
+/obj/item/food/tofu/prison,
+/obj/item/food/tofu/prison,
+/obj/item/food/tofu/prison,
+/obj/item/food/tofu/prison,
 /turf/open/floor/iron,
 /area/station/security/prison)
 "ln" = (
@@ -244,7 +244,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/red/border{
+/obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
 /obj/structure/closet/secure_closet/security,
@@ -255,7 +255,7 @@
 /obj/structure/window/reinforced/spawner/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/rack,
-/obj/effect/turf_decal/tile/red/border{
+/obj/effect/turf_decal/tile/red{
 	dir = 5
 	},
 /obj/item/restraints/handcuffs,
@@ -300,7 +300,7 @@
 /area/station/maintenance/aft)
 "qI" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/tile/red/border,
+/obj/effect/turf_decal/tile/red,
 /obj/machinery/door/window/brigdoor/security/cell{
 	dir = 1
 	},
@@ -311,7 +311,7 @@
 	pixel_y = 32
 	},
 /obj/structure/tank_dispenser/oxygen,
-/obj/effect/turf_decal/tile/red/border{
+/obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -456,7 +456,7 @@
 /area/station/maintenance/starboard)
 "Am" = (
 /obj/machinery/airalarm/directional/north,
-/obj/effect/turf_decal/tile/red/border{
+/obj/effect/turf_decal/tile/red{
 	dir = 9
 	},
 /obj/machinery/vending/sustenance,
@@ -512,7 +512,7 @@
 /area/station/security/prison)
 "DU" = (
 /obj/structure/sign/departments/cargo/directional/north,
-/obj/effect/turf_decal/tile/red/border{
+/obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -619,7 +619,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/machinery/power/port_gen/pacman/uranium,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/item/wrench,
@@ -679,7 +679,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer4,
 /obj/structure/window/reinforced/spawner/east,
-/obj/effect/turf_decal/tile/red/border{
+/obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -695,7 +695,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/red/border{
+/obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
 /obj/structure/rack,
@@ -717,7 +717,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/station/engineering)
 "ML" = (
-/obj/effect/turf_decal/tile/red/border{
+/obj/effect/turf_decal/tile/red{
 	dir = 9
 	},
 /obj/structure/closet/secure_closet/security,
@@ -745,7 +745,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/engineering)
 "OD" = (
-/obj/effect/turf_decal/tile/red/border{
+/obj/effect/turf_decal/tile/red{
 	dir = 10
 	},
 /obj/machinery/door/window/brigdoor/security/cell{
@@ -774,7 +774,7 @@
 /obj/structure/sign/poster/official/nanotrasen_logo{
 	pixel_x = 32
 	},
-/obj/effect/turf_decal/tile/red/border,
+/obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "Rk" = (
@@ -806,7 +806,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/cargo)
 "RV" = (
-/obj/effect/turf_decal/tile/red/border,
+/obj/effect/turf_decal/tile/red,
 /obj/machinery/stasis,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
@@ -839,14 +839,14 @@
 	dir = 4;
 	pixel_x = -24
 	},
-/obj/effect/turf_decal/tile/red/border{
+/obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
 /turf/open/floor/iron,
 /area/station/security/prison)
 "ST" = (
 /obj/machinery/light,
-/obj/effect/turf_decal/tile/red/border,
+/obj/effect/turf_decal/tile/red,
 /obj/structure/table/reinforced,
 /obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/item/storage/medkit,
@@ -856,7 +856,7 @@
 "Tr" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
-/obj/effect/turf_decal/tile/red/border{
+/obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -920,7 +920,7 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/effect/turf_decal/tile/red/border{
+/obj/effect/turf_decal/tile/red{
 	dir = 6
 	},
 /obj/machinery/vending/security,
@@ -936,26 +936,26 @@
 "WB" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
-/obj/effect/turf_decal/tile/red/border,
+/obj/effect/turf_decal/tile/red,
 /obj/structure/window/reinforced/spawner/east,
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/bed,
 /obj/item/clothing/head/soft/orange,
 /obj/item/clothing/under/rank/prisoner,
-/obj/item/reagent_containers/food/snacks/tofu/prison,
-/obj/item/reagent_containers/food/snacks/tofu/prison,
-/obj/item/reagent_containers/food/snacks/tofu/prison,
-/obj/item/reagent_containers/food/snacks/tofu/prison,
-/obj/item/reagent_containers/food/snacks/tofu/prison,
-/obj/item/reagent_containers/food/snacks/tofu/prison,
-/obj/item/reagent_containers/food/snacks/tofu/prison,
-/obj/item/reagent_containers/food/snacks/tofu/prison,
-/obj/item/reagent_containers/food/snacks/tofu/prison,
-/obj/item/reagent_containers/food/snacks/tofu/prison,
-/obj/item/reagent_containers/food/snacks/tofu/prison,
-/obj/item/reagent_containers/food/snacks/tofu/prison,
-/obj/item/reagent_containers/food/snacks/tofu/prison,
-/obj/item/reagent_containers/food/snacks/tofu/prison,
+/obj/item/food/tofu/prison,
+/obj/item/food/tofu/prison,
+/obj/item/food/tofu/prison,
+/obj/item/food/tofu/prison,
+/obj/item/food/tofu/prison,
+/obj/item/food/tofu/prison,
+/obj/item/food/tofu/prison,
+/obj/item/food/tofu/prison,
+/obj/item/food/tofu/prison,
+/obj/item/food/tofu/prison,
+/obj/item/food/tofu/prison,
+/obj/item/food/tofu/prison,
+/obj/item/food/tofu/prison,
+/obj/item/food/tofu/prison,
 /turf/open/floor/iron,
 /area/station/security/prison)
 "WN" = (
@@ -973,7 +973,7 @@
 "XD" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
-/obj/effect/turf_decal/tile/red/border{
+/obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -1001,7 +1001,7 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/effect/turf_decal/tile/red/border,
+/obj/effect/turf_decal/tile/red,
 /obj/machinery/recharger,
 /obj/structure/table/reinforced,
 /turf/open/floor/iron,
@@ -1010,7 +1010,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/red/border,
+/obj/effect/turf_decal/tile/red,
 /obj/machinery/autolathe,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
@@ -1029,7 +1029,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/red/border{
+/obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -1051,7 +1051,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/red/border{
+/obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /obj/item/clothing/under/rank/prisoner,

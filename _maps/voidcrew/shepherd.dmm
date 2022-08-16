@@ -2798,7 +2798,7 @@
 /turf/open/floor/plating,
 /area/station/external)
 "QL" = (
-/obj/machinery/power/port_gen/pacman/uranium,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/structure/sign/warning/electric_shock/directional/west,
@@ -2846,7 +2846,7 @@
 /turf/open/floor/mineral/gold,
 /area/station/commons/chapel)
 "Rg" = (
-/obj/machinery/power/port_gen/pacman/uranium,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /turf/open/floor/plating,

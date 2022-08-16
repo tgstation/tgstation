@@ -167,7 +167,7 @@
 /area/station/hallway/primary/central)
 "dH" = (
 /obj/structure/cable,
-/obj/machinery/power/port_gen/pacman/uranium,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
 /turf/open/floor/plating/catwalk_floor{
 	icon_state = "catwalk_above"
 	},

@@ -119,7 +119,7 @@
 	pixel_y = -29
 	},
 /obj/structure/cable,
-/obj/machinery/power/port_gen/pacman/uranium,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/security)
 "H" = (

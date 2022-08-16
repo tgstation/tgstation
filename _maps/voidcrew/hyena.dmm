@@ -257,7 +257,7 @@
 /turf/open/floor/plasteel/tech/grid,
 /area/station/storage)
 "fi" = (
-/obj/machinery/power/port_gen/pacman/uranium,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
 /obj/effect/turf_decal/radiation/white,
 /obj/effect/turf_decal/bot_white,
 /obj/effect/turf_decal/radiation/white,

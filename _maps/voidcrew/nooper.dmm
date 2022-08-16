@@ -189,7 +189,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "ke" = (
-/obj/machinery/power/port_gen/pacman/uranium,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)

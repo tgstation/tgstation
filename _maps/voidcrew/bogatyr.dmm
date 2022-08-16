@@ -1269,7 +1269,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/security)
 "UZ" = (
-/obj/machinery/power/port_gen/pacman/uranium,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
 /obj/effect/turf_decal/box,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,

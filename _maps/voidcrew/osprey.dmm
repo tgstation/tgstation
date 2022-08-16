@@ -3513,7 +3513,7 @@
 	dir = 5
 	},
 /obj/structure/cable/orange,
-/obj/machinery/power/port_gen/pacman/uranium,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
 /turf/open/floor/plating,
 /area/station/engineering/engine)
 "AP" = (

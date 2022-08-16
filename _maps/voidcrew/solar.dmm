@@ -1227,7 +1227,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 9
 	},
-/obj/machinery/power/port_gen/pacman/uranium,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
 /obj/structure/cable,
 /obj/item/stack/sheet/mineral/uranium/five,
 /obj/item/stack/sheet/mineral/uranium/five,

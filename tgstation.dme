@@ -4731,4 +4731,12 @@
 #include "voidcrew\modules\nanites\code\programs\supression.dm"
 #include "voidcrew\modules\nanites\code\programs\utility.dm"
 #include "voidcrew\modules\nanites\code\programs\weapon.dm"
+#include "voidcrew\modules\shuttle\_shuttle.dm"
+#include "voidcrew\modules\shuttle\boards.dm"
+#include "voidcrew\modules\shuttle\design.dm"
+#include "voidcrew\modules\shuttle\engine\_engine.dm"
+#include "voidcrew\modules\shuttle\engine\electric.dm"
+#include "voidcrew\modules\shuttle\engine\fuel.dm"
+#include "voidcrew\modules\shuttle\engine\liquid.dm"
+#include "voidcrew\modules\shuttle\engine\void.dm"
 // END_INCLUDE

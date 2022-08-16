@@ -257,7 +257,7 @@
 	},
 /area/station/cargo)
 "cM" = (
-/obj/machinery/power/port_gen/pacman/uranium,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
 /obj/structure/cable,
 /turf/open/floor/plating/catwalk_floor{
 	icon_state = "catwalk_above"
@@ -2103,7 +2103,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/power/port_gen/pacman/uranium,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
 /obj/structure/cable,
 /turf/open/floor/plating/catwalk_floor{
 	icon_state = "catwalk_above"
@@ -2462,7 +2462,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/power/port_gen/pacman/uranium,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
 /obj/item/pipe,
 /obj/structure/cable,
 /turf/open/floor/plating/catwalk_floor{
@@ -3611,7 +3611,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/commons/dorms)
 "Qr" = (
-/obj/machinery/power/port_gen/pacman/uranium,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
 /obj/item/pipe,
 /obj/structure/cable,
 /turf/open/floor/plating/catwalk_floor{

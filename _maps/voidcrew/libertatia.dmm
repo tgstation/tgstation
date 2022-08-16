@@ -1111,7 +1111,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/station/hallway/port)
 "IV" = (
-/obj/machinery/power/port_gen/pacman/uranium,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/bot,
@@ -1203,7 +1203,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/starboard)
 "LU" = (
-/obj/machinery/power/port_gen/pacman/uranium,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
 /obj/structure/cable,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,

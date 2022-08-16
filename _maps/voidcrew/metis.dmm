@@ -802,7 +802,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/station/commons/office)
 "ml" = (
-/obj/machinery/power/port_gen/pacman/uranium,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/general/hidden/layer2{
 	dir = 6

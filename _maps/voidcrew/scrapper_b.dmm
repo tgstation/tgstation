@@ -3552,7 +3552,7 @@
 /area/station/engineering/atmospherics)
 "WZ" = (
 /obj/structure/window/reinforced/spawner/north,
-/obj/machinery/power/port_gen/pacman/uranium{
+/obj/machinery/power/port_gen/pacman/pre_loaded{
 	anchored = 1
 	},
 /obj/structure/cable,
@@ -3691,7 +3691,7 @@
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/cable,
 /obj/effect/turf_decal/box,
-/obj/machinery/power/port_gen/pacman/uranium{
+/obj/machinery/power/port_gen/pacman/pre_loaded{
 	anchored = 1
 	},
 /obj/effect/turf_decal/techfloor/orange/corner,

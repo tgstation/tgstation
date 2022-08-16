@@ -14,7 +14,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
-/obj/effect/turf_decal/tile/red/border{
+/obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /turf/open/floor/plasteel/mono/white,
@@ -315,7 +315,7 @@
 /turf/open/floor/iron,
 /area/station/cargo)
 "ei" = (
-/obj/machinery/power/port_gen/pacman/uranium,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
 /obj/structure/cable,
 /obj/effect/turf_decal/industrial/hatch,
 /turf/open/floor/plating,
@@ -1711,7 +1711,7 @@
 /area/station/cargo)
 "vD" = (
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/red/border{
+/obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /turf/open/floor/plasteel/mono/white,
