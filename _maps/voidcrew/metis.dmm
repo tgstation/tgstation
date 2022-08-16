@@ -53,7 +53,7 @@
 /obj/item/trash/can/food/peaches/maint,
 /obj/effect/decal/cleanable/insectguts,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "aX" = (
 /obj/structure/sign/poster/official/science,
 /turf/closed/wall/mineral/titanium,
@@ -136,7 +136,7 @@
 /turf/closed/wall/mineral/titanium{
 	baseturfs = /turf/open/floor/mineral/titanium/tiled/white
 	},
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "cG" = (
 /obj/machinery/vending/cola/random,
 /turf/open/floor/mineral/titanium/tiled,
@@ -235,7 +235,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "ep" = (
 /obj/machinery/smartfridge/extract/preloaded,
 /obj/structure/disposalpipe/segment,
@@ -940,7 +940,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "or" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 6
@@ -1012,7 +1012,7 @@
 	dir = 5
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "pL" = (
 /obj/machinery/light,
 /obj/effect/decal/cleanable/dirt,
@@ -1415,7 +1415,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "wK" = (
 /obj/structure/table/glass,
 /obj/item/paper{
@@ -2135,7 +2135,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "FQ" = (
 /obj/effect/decal/cleanable/vomit,
 /obj/item/circuitboard/computer/aiupload,
@@ -2480,7 +2480,7 @@
 	dir = 9
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "JB" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/engineering/electrical)
@@ -2490,7 +2490,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "JL" = (
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -2499,7 +2499,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "JO" = (
 /obj/effect/decal/cleanable/glass,
 /obj/effect/turf_decal/trimline/black/filled/warning{
@@ -2544,7 +2544,7 @@
 "Ky" = (
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Kz" = (
 /obj/effect/decal/cleanable/blood,
 /mob/living/carbon/human/species/monkey,
@@ -2568,7 +2568,7 @@
 /obj/item/bedsheet/rd,
 /obj/structure/curtain/cloth/grey,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "KO" = (
 /obj/structure/holosign/barrier,
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -2697,7 +2697,7 @@
 "Nm" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Np" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/box/syringes,
@@ -2724,7 +2724,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "NP" = (
 /obj/item/book/manual/wiki/robotics_cyborgs,
 /obj/structure/cable,
@@ -2748,7 +2748,7 @@
 /obj/item/bedsheet/cosmos,
 /obj/structure/curtain/cloth/grey,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "NY" = (
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/station/hallway/aft)
@@ -3052,7 +3052,7 @@
 /obj/item/clothing/mask/facehugger/toy,
 /obj/item/pai_card,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Se" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2{
@@ -3106,7 +3106,7 @@
 	name = "creature bed"
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "SZ" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
@@ -3163,7 +3163,7 @@
 	pixel_y = -6
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "TQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
@@ -3323,7 +3323,7 @@
 "Vz" = (
 /obj/machinery/vending/classicbeats,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "VA" = (
 /obj/machinery/computer/security/research,
 /turf/open/floor/mineral/titanium/tiled/purple,
@@ -3494,7 +3494,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "XF" = (
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
@@ -3622,7 +3622,7 @@
 	pixel_y = 25
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "YP" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/hidden/layer2{
 	dir = 9

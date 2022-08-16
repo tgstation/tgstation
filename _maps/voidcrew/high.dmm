@@ -8,7 +8,7 @@
 	},
 /obj/item/storage/medkit,
 /turf/open/floor/wood/bamboo,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "ay" = (
 /turf/closed/wall,
 /area/station/hallway/primary/central)
@@ -56,7 +56,7 @@
 /obj/structure/mopbucket,
 /obj/item/mop,
 /turf/open/floor/plasteel/patterned/ridged,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "bd" = (
 /obj/machinery/computer/autopilot{
 	dir = 8
@@ -148,7 +148,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/wood/bamboo,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "dq" = (
 /obj/structure/closet/wall{
 	dir = 8;
@@ -228,7 +228,7 @@
 /obj/effect/turf_decal/corner/white/diagonal,
 /obj/structure/closet/crate/bin,
 /turf/open/floor/iron,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "ej" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
 	dir = 10
@@ -333,7 +333,7 @@
 "fO" = (
 /obj/machinery/door/airlock/wood,
 /turf/open/floor/carpet/nanoweave/beige,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "fR" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 5
@@ -366,7 +366,7 @@
 /area/station/commons/chapel/office)
 "gt" = (
 /turf/open/floor/wood/bamboo,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "gA" = (
 /obj/structure/railing{
 	layer = 3.1
@@ -493,7 +493,7 @@
 "hY" = (
 /obj/effect/turf_decal/corner/white/diagonal,
 /turf/open/floor/iron,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "ii" = (
 /obj/effect/turf_decal/industrial/warning{
 	dir = 10
@@ -596,7 +596,7 @@
 	pixel_y = -28
 	},
 /turf/open/floor/wood/bamboo,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "jW" = (
 /obj/structure/closet/crate/bin,
 /obj/item/toy/plush/among,
@@ -697,7 +697,7 @@
 	dir = 9
 	},
 /turf/open/floor/carpet/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "lL" = (
 /obj/structure/noticeboard{
 	pixel_y = 32
@@ -774,7 +774,7 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "nA" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
@@ -818,7 +818,7 @@
 /area/station/security)
 "oL" = (
 /turf/closed/wall/r_wall,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "oQ" = (
 /obj/machinery/power/terminal,
 /obj/structure/cable,
@@ -836,7 +836,7 @@
 	pixel_y = 5
 	},
 /turf/open/floor/iron,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "pu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4{
 	dir = 4
@@ -965,7 +965,7 @@
 /area/station/hallway/starboard)
 "rF" = (
 /turf/closed/wall,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "rJ" = (
 /turf/open/floor/iron/dark,
 /area/station/engineering)
@@ -1038,7 +1038,7 @@
 	},
 /obj/effect/turf_decal/corner/blue/diagonal,
 /turf/open/floor/iron/white,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "sr" = (
 /obj/effect/turf_decal/siding/blue{
 	dir = 9
@@ -1071,7 +1071,7 @@
 "sx" = (
 /obj/machinery/door/airlock/public/glass,
 /turf/open/floor/plasteel/patterned/ridged,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "sz" = (
 /obj/structure/railing/corner{
 	dir = 8
@@ -1139,7 +1139,7 @@
 /obj/item/storage/fancy/cigarettes/cigars,
 /obj/item/lighter,
 /turf/open/floor/carpet/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "tI" = (
 /obj/structure/table,
 /obj/item/modular_computer/laptop/preset/civilian,
@@ -1159,7 +1159,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/wood/bamboo,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "tL" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
@@ -1182,7 +1182,7 @@
 	pixel_x = 32
 	},
 /turf/open/floor/wood/bamboo,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "ui" = (
 /obj/structure/rack{
 	desc = "Different from the Middle Ages version. Put your coat here?"
@@ -1239,7 +1239,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/wood/bamboo,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "uC" = (
 /obj/effect/turf_decal/industrial/warning{
 	dir = 6
@@ -1259,7 +1259,7 @@
 	pixel_x = -26
 	},
 /turf/open/floor/wood/bamboo,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "uZ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 4
@@ -1378,7 +1378,7 @@
 "xb" = (
 /obj/machinery/light,
 /turf/open/floor/wood/bamboo,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "xg" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/siding/blue{
@@ -1446,7 +1446,7 @@
 /obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/iron,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "yq" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 4
@@ -1465,7 +1465,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/wood/bamboo,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "yS" = (
 /obj/effect/turf_decal/siding/red{
 	dir = 8
@@ -1565,7 +1565,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /turf/open/floor/wood/bamboo,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Aq" = (
 /turf/template_noop,
 /area/template_noop)
@@ -1699,7 +1699,7 @@
 "Ca" = (
 /obj/structure/sign/warning/no_smoking,
 /turf/closed/wall,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Ci" = (
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 4
@@ -1751,7 +1751,7 @@
 	name = "external shutters"
 	},
 /turf/open/floor/plating,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "CZ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
@@ -1837,7 +1837,7 @@
 	},
 /obj/effect/turf_decal/corner/red/diagonal,
 /turf/open/floor/iron/white,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Fl" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
@@ -1945,7 +1945,7 @@
 /obj/machinery/light/small,
 /obj/machinery/vending/wardrobe/jani_wardrobe,
 /turf/open/floor/plasteel/patterned/ridged,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "GD" = (
 /turf/open/floor/plating,
 /area/station/external)
@@ -1971,7 +1971,7 @@
 	name = "Blue Restroom"
 	},
 /turf/open/floor/iron/white,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "GX" = (
 /obj/structure/window/plasma/reinforced/spawner,
 /obj/machinery/door/firedoor/border_only{
@@ -2020,7 +2020,7 @@
 /obj/item/reagent_containers/food/snacks/pizza/donkpocket,
 /obj/item/kitchen/fork,
 /turf/open/floor/carpet/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "HW" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
@@ -2095,7 +2095,7 @@
 	},
 /obj/item/poster/random_contraband,
 /turf/open/floor/carpet/nanoweave/beige,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "IS" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -2318,7 +2318,7 @@
 /obj/item/storage/medkit,
 /obj/item/clothing/under/suit/white,
 /turf/open/floor/iron/white,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "LZ" = (
 /obj/machinery/door/airlock/wood/glass{
 	name = "Corporate Lounge"
@@ -2336,7 +2336,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood/bamboo,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Mc" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/firedoor/border_only{
@@ -2377,7 +2377,7 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Mm" = (
 /obj/structure/railing{
 	dir = 8;
@@ -2427,7 +2427,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/nanoweave/beige,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "MU" = (
 /obj/effect/turf_decal/siding/red,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
@@ -2459,7 +2459,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood/bamboo,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Nr" = (
 /obj/structure/chair/comfy{
 	dir = 4
@@ -2501,7 +2501,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood/bamboo,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "NP" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/item/radio/intercom{
@@ -2529,7 +2529,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/nanoweave/beige,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "NY" = (
 /obj/structure/table/wood,
 /obj/item/pen{
@@ -2598,7 +2598,7 @@
 "Pm" = (
 /obj/effect/turf_decal/corner/blue/diagonal,
 /turf/open/floor/iron/white,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "PC" = (
 /obj/structure/closet/firecloset/wall{
 	dir = 4;
@@ -2626,7 +2626,7 @@
 /obj/effect/turf_decal/corner/white/diagonal,
 /obj/machinery/processor,
 /turf/open/floor/iron,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "PV" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/portables_connector{
@@ -2698,7 +2698,7 @@
 "Ri" = (
 /obj/effect/turf_decal/corner/red/diagonal,
 /turf/open/floor/iron/white,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Rw" = (
 /turf/closed/wall/r_wall,
 /area/station/engineering)
@@ -2739,7 +2739,7 @@
 /area/station/command/bridge)
 "SB" = (
 /turf/open/floor/carpet/nanoweave/beige,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "SC" = (
 /obj/effect/turf_decal/corner/white/diagonal,
 /obj/structure/table,
@@ -2747,7 +2747,7 @@
 	pixel_y = 7
 	},
 /turf/open/floor/iron,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "SD" = (
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/o2{
 	dir = 8
@@ -2764,7 +2764,7 @@
 	pixel_x = 32
 	},
 /turf/open/floor/iron,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Ti" = (
 /obj/machinery/power/smes/engineering{
 	dir = 1
@@ -2779,14 +2779,14 @@
 "Tt" = (
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/wood/bamboo,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Tw" = (
 /obj/structure/toilet{
 	dir = 8
 	},
 /obj/effect/turf_decal/corner/blue/diagonal,
 /turf/open/floor/iron/white,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "TF" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
@@ -2883,7 +2883,7 @@
 /obj/structure/closet/cabinet,
 /obj/item/clothing/suit/jacket/letterman_nanotrasen,
 /turf/open/floor/carpet/nanoweave/beige,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Vv" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /turf/open/floor/carpet/nanoweave/red,
@@ -2908,7 +2908,7 @@
 	},
 /obj/effect/turf_decal/corner/red/diagonal,
 /turf/open/floor/iron/white,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "VV" = (
 /obj/effect/turf_decal/industrial/loading{
 	dir = 4
@@ -2931,7 +2931,7 @@
 	name = "Red Restroom"
 	},
 /turf/open/floor/iron/white,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "We" = (
 /obj/structure/catwalk,
 /turf/template_noop,
@@ -3090,7 +3090,7 @@
 	desc = "\"Top Secret\" Nanotrasen documents, filled with complex diagrams and lists of names, dates and coordinates. On second glance, most of the documents are spreadsheets for elaborate Yo Momma jokes."
 	},
 /turf/open/floor/carpet/nanoweave/beige,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Zz" = (
 /obj/machinery/door/airlock/wood/glass{
 	name = "CEO's Room"

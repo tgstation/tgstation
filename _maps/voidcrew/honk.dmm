@@ -309,7 +309,7 @@
 /area/station/commons)
 "xf" = (
 /turf/open/floor/mineral/bananium,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "xT" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -351,7 +351,7 @@
 /area/station/commons)
 "AS" = (
 /turf/closed/wall/mineral/bananium,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "AY" = (
 /turf/open/floor/light,
 /area/station/engineering/engine)
@@ -512,7 +512,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "KZ" = (
 /obj/machinery/light{
 	dir = 1
@@ -573,7 +573,7 @@
 "Ow" = (
 /obj/machinery/computer/cryopod,
 /turf/closed/wall/mineral/bananium,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Po" = (
 /obj/machinery/hydroponics/constructable,
 /obj/item/seeds/banana{

@@ -274,7 +274,7 @@
 /area/station/cargo)
 "op" = (
 /turf/closed/wall/mineral/titanium,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "os" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
@@ -553,7 +553,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/iron,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "GD" = (
 /obj/machinery/power/smes/engineering{
 	dir = 4
@@ -566,7 +566,7 @@
 "HG" = (
 /obj/structure/sign/poster/official/nanotrasen_logo,
 /turf/closed/wall/mineral/titanium,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "HK" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
@@ -586,7 +586,7 @@
 "If" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Iw" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/turf_decal/siding/thinplating{
@@ -983,7 +983,7 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Yg" = (
 /obj/item/pipe_dispenser,
 /obj/item/construction/rcd/loaded,
@@ -995,7 +995,7 @@
 /obj/structure/bed,
 /obj/structure/curtain/bounty,
 /turf/open/floor/iron,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Yx" = (
 /obj/machinery/firealarm{
 	dir = 1;

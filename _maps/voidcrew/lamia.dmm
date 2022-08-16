@@ -301,7 +301,7 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/royalblue,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "bg" = (
 /obj/structure/table,
 /obj/item/storage/box/donkpockets{
@@ -450,7 +450,7 @@
 	open_state = "bscanner_open"
 	},
 /turf/open/floor/carpet/royalblue,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "bG" = (
 /obj/structure/urinal{
 	pixel_y = 28
@@ -540,7 +540,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/royalblue,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "bM" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -549,7 +549,7 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/royalblue,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "bN" = (
 /obj/machinery/light/small{
 	brightness = 3;
@@ -599,7 +599,7 @@
 /obj/item/toy/plush/slimeplushie,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/carpet/royalblue,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "bT" = (
 /obj/machinery/shower/directional/north,
 /obj/structure/curtain,
@@ -986,7 +986,7 @@
 	dir = 5
 	},
 /turf/open/floor/carpet/royalblue,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "mv" = (
 /obj/structure/sign/poster/official/high_class_martini,
 /turf/closed/wall/mineral/uranium/safe{
@@ -1172,7 +1172,7 @@
 	desc = "A wall plated with emerald.";
 	name = "emerald wall"
 	},
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "ud" = (
 /obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6,
 /turf/closed/wall/mineral/uranium/safe{
@@ -1298,7 +1298,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/carpet/royalblue,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "CF" = (
 /turf/closed/wall/mineral/uranium/safe{
 	desc = "A wall plated with emerald.";
@@ -1539,7 +1539,7 @@
 /obj/item/reagent_containers/food/snacks/burger/spell,
 /obj/structure/table/wood/fancy/cyan,
 /turf/open/floor/carpet/royalblue,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "JS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/cigbutt,
@@ -1602,7 +1602,7 @@
 	desc = "A wall plated with emerald.";
 	name = "emerald wall"
 	},
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Ma" = (
 /obj/machinery/computer/autopilot,
 /turf/open/floor/carpet/stellar,
@@ -1974,7 +1974,7 @@
 /obj/structure/curtain/cloth/fancy,
 /obj/item/toy/plush/plushvar,
 /turf/open/floor/carpet/royalblue,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "WV" = (
 /obj/machinery/door/window/right/directional/south{
 	dir = 8
@@ -2043,7 +2043,7 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/royalblue,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "YF" = (
 /obj/machinery/holopad,
 /obj/structure/cable,

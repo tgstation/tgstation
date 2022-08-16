@@ -130,7 +130,7 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "cW" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/grass,
@@ -194,7 +194,7 @@
 	pixel_x = -24
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "dz" = (
 /obj/effect/turf_decal/corner/bottlegreen/three_quarters{
 	dir = 1
@@ -222,7 +222,7 @@
 /obj/item/clothing/under/syndicate/bloodred/sleepytime,
 /obj/item/clothing/under/syndicate/bloodred/sleepytime,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "dW" = (
 /obj/machinery/vending/hydroseeds{
 	all_items_free = 1
@@ -242,7 +242,7 @@
 	id = "spitfireshutters"
 	},
 /turf/open/floor/plating,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "ej" = (
 /obj/structure/sink/puddle,
 /obj/item/reagent_containers/cup/bucket/wooden,
@@ -338,7 +338,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "fF" = (
 /obj/effect/turf_decal/corner/bottlegreen{
 	dir = 10
@@ -372,7 +372,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "gA" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 9
@@ -381,23 +381,23 @@
 	dir = 10
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "gC" = (
 /mob/living/simple_animal/bot/secbot/grievous/toy{
 	name = "Protector of Doctors"
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "gR" = (
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "gW" = (
 /obj/structure/bed/pod,
 /obj/item/bedsheet/syndie,
 /obj/machinery/airalarm/directional/north,
 /obj/item/toy/plush/nukeplushie,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "hy" = (
 /obj/machinery/seed_extractor,
 /turf/open/floor/grass,
@@ -422,7 +422,7 @@
 	pixel_y = 26
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "iQ" = (
 /obj/machinery/vending/hydronutrients{
 	all_items_free = 1
@@ -512,7 +512,7 @@
 /obj/structure/table/wood,
 /obj/machinery/microwave,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "kq" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
@@ -523,17 +523,17 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "kx" = (
 /obj/machinery/light,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "kG" = (
 /obj/structure/bed/pod,
 /obj/item/bedsheet/syndie,
 /obj/item/toy/plush/nukeplushie,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "kM" = (
 /obj/machinery/power/port_gen/pacman,
 /obj/item/stack/sheet/mineral/plasma/five,
@@ -618,7 +618,7 @@
 /obj/structure/table/wood,
 /obj/structure/bedsheetbin/empty,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "mX" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/docking_port/mobile{
@@ -1749,7 +1749,7 @@
 "ME" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "NA" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer4{
@@ -1773,7 +1773,7 @@
 "SI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "SR" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -1880,7 +1880,7 @@
 /area/station/engineering)
 "Yq" = (
 /turf/closed/wall,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Yz" = (
 /obj/effect/turf_decal/corner/bottlegreen/three_quarters{
 	dir = 4

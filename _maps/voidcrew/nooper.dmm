@@ -205,7 +205,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /turf/open/floor/iron,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "lm" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 9
@@ -298,7 +298,7 @@
 	pixel_y = 24
 	},
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "rk" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
@@ -351,7 +351,7 @@
 /area/station/science)
 "uJ" = (
 /turf/closed/wall/mineral/titanium,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "uM" = (
 /obj/machinery/door/airlock/research/glass,
 /obj/structure/cable,
@@ -370,7 +370,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "vG" = (
 /obj/machinery/autolathe,
 /obj/effect/turf_decal/corner/brown/mono,
@@ -478,7 +478,7 @@
 /area/station/science)
 "CL" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "CP" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2{
@@ -575,7 +575,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "GS" = (
 /obj/structure/bed,
 /obj/item/bedsheet/dorms,
@@ -585,7 +585,7 @@
 	pixel_y = -26
 	},
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Hq" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/structure/reagent_dispensers/fueltank,
@@ -818,7 +818,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "WH" = (
 /obj/machinery/atmospherics/components/unary/tank/air,
 /turf/open/floor/plating,

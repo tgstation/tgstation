@@ -233,7 +233,7 @@
 	name = "blood-red curtains"
 	},
 /turf/open/floor/carpet/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "ec" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
@@ -511,7 +511,7 @@
 "jf" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "jt" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "wreckerwindows";
@@ -684,7 +684,7 @@
 	on = 0
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "nx" = (
 /obj/machinery/button/door{
 	id = "wreckerarmory";
@@ -813,14 +813,14 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "pv" = (
 /obj/structure/dresser,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /obj/machinery/light/small,
 /turf/open/floor/carpet/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "px" = (
 /obj/item/kirbyplants/random,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1039,7 +1039,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "tw" = (
 /obj/machinery/suit_storage_unit/syndicate{
 	name = "captain's suit storage unit";
@@ -1405,7 +1405,7 @@
 	dir = 9
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "zv" = (
 /obj/structure/table,
 /obj/machinery/microwave,
@@ -1486,7 +1486,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Az" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 4
@@ -1496,7 +1496,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/carpet/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "AF" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/orange/hidden{
@@ -1537,7 +1537,7 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "AV" = (
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 1
@@ -1585,7 +1585,7 @@
 	pixel_x = -24
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "CW" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/station/maintenance/starboard)
@@ -1671,7 +1671,7 @@
 /obj/machinery/light,
 /obj/effect/turf_decal/borderfloor,
 /turf/open/floor/mineral/plastitanium,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Ff" = (
 /obj/structure/table/reinforced,
 /obj/structure/closet/wall/white/med{
@@ -1687,7 +1687,7 @@
 /obj/effect/turf_decal/borderfloor,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Fr" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
@@ -1780,7 +1780,7 @@
 /area/station/cargo)
 "GV" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Hk" = (
 /obj/effect/turf_decal/industrial/warning{
 	dir = 6
@@ -1845,7 +1845,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "IO" = (
 /obj/structure/closet/crate/bin,
 /obj/effect/decal/cleanable/dirt,
@@ -2123,7 +2123,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "My" = (
 /obj/effect/turf_decal/industrial/outline,
 /obj/machinery/autolathe,
@@ -2166,7 +2166,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Nl" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4;
@@ -2390,7 +2390,7 @@
 	location = "dorms"
 	},
 /turf/open/floor/carpet/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Sg" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/plasma/plastitanium,
@@ -2399,7 +2399,7 @@
 	name = "blast shutters"
 	},
 /turf/open/floor/plating,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Sh" = (
 /turf/open/floor/plasteel/tech,
 /area/station/hallway/primary/central)
@@ -2539,7 +2539,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/mineral/plastitanium,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Vv" = (
 /obj/machinery/light{
 	dir = 4
@@ -2672,7 +2672,7 @@
 	pixel_y = 28
 	},
 /turf/open/floor/carpet/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Wd" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,

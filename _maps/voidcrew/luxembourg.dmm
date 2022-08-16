@@ -61,7 +61,7 @@
 	pixel_y = 26
 	},
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "cv" = (
 /turf/open/floor/iron/dark,
 /area/station/medical)
@@ -145,7 +145,7 @@
 /area/station/medical)
 "dj" = (
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "dw" = (
 /obj/machinery/suit_storage_unit/engine,
 /turf/open/floor/plating,
@@ -281,7 +281,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "go" = (
 /obj/structure/closet/secure_closet/chemical/heisenberg{
 	req_access = list(21,41)
@@ -404,7 +404,7 @@
 /area/station/medical)
 "ie" = (
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "ig" = (
 /obj/machinery/vending/dinnerware,
 /turf/open/floor/mineral/plastitanium,
@@ -462,7 +462,7 @@
 	dir = 6
 	},
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "jb" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
@@ -561,7 +561,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "lm" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
@@ -664,7 +664,7 @@
 /obj/machinery/washing_machine,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "of" = (
 /obj/structure/chair/plastic,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
@@ -700,7 +700,7 @@
 /obj/structure/table,
 /obj/structure/bedsheetbin/empty,
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "pv" = (
 /obj/machinery/light{
 	dir = 4
@@ -726,7 +726,7 @@
 /obj/item/radio/headset/syndicate/alt,
 /obj/item/radio/headset/syndicate/alt,
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "pR" = (
 /obj/machinery/power/smes/engineering,
 /obj/structure/cable,
@@ -1073,7 +1073,7 @@
 	pixel_y = -24
 	},
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "xx" = (
 /obj/machinery/light,
 /obj/item/storage/belt/utility,
@@ -1130,7 +1130,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "zO" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/poddoor/shutters{
@@ -1159,7 +1159,7 @@
 	dir = 9
 	},
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "AE" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -1281,7 +1281,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "DS" = (
 /obj/structure/closet/crate/trashcart,
 /obj/effect/spawner/random/maintenance/eight,
@@ -1320,7 +1320,7 @@
 /area/station/engineering)
 "EO" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "EU" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
@@ -1525,7 +1525,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "LI" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
@@ -1578,7 +1578,7 @@
 /obj/structure/bed/pod,
 /obj/item/bedsheet/syndie,
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "MX" = (
 /obj/item/toy/sword,
 /obj/structure/closet/crate/wooden/toy,
@@ -1636,14 +1636,14 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "OF" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/door/poddoor/shutters{
 	id = "externalshutters"
 	},
 /turf/open/floor/plating,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "OI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer4{
 	dir = 8
@@ -1769,7 +1769,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Rl" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
@@ -1843,7 +1843,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "ST" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
@@ -1874,7 +1874,7 @@
 /obj/item/clothing/head/HoS/beret/syndicate,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "TW" = (
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/command/bridge)
@@ -1993,7 +1993,7 @@
 /obj/item/bedsheet/syndie,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Xe" = (
 /obj/item/banner/cargo,
 /obj/machinery/firealarm{
@@ -2091,7 +2091,7 @@
 	pixel_x = -32
 	},
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "ZH" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{

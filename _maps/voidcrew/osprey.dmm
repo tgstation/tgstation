@@ -108,7 +108,7 @@
 /obj/item/radio,
 /obj/item/radio,
 /turf/open/floor/iron/grimy,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "aF" = (
 /obj/effect/turf_decal/borderfloor{
 	dir = 4
@@ -384,7 +384,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/grimy,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "cx" = (
 /obj/structure/closet/emcloset/wall{
 	dir = 1;
@@ -802,7 +802,7 @@
 	pixel_x = 32
 	},
 /turf/open/floor/carpet,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "fZ" = (
 /obj/effect/turf_decal/corner/white{
 	dir = 8
@@ -1032,7 +1032,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/grimy,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "il" = (
 /obj/machinery/power/terminal,
 /obj/structure/cable,
@@ -1348,7 +1348,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/grimy,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "kp" = (
 /obj/effect/turf_decal/industrial/warning{
 	dir = 8
@@ -1463,12 +1463,12 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/patterned,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "lh" = (
 /obj/structure/chair/office,
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/carpet,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "li" = (
 /obj/effect/turf_decal/corner/purple{
 	dir = 1
@@ -1675,7 +1675,7 @@
 /area/station/cargo)
 "mE" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "mI" = (
 /obj/effect/turf_decal/borderfloor{
 	dir = 4
@@ -1921,7 +1921,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/grimy,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "nT" = (
 /turf/closed/wall/mineral/titanium,
 /area/station/hallway/starboard)
@@ -1942,7 +1942,7 @@
 	pixel_y = -28
 	},
 /turf/open/floor/carpet,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "og" = (
 /obj/structure/chair/office{
 	dir = 4
@@ -2159,7 +2159,7 @@
 "pJ" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "pO" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/hallway/aft)
@@ -2238,7 +2238,7 @@
 	},
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/plasteel/patterned,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "qA" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/hidden,
 /obj/structure/cable,
@@ -2397,7 +2397,7 @@
 /obj/structure/bedsheetbin,
 /obj/structure/table/wood,
 /turf/open/floor/iron/grimy,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "rv" = (
 /obj/effect/landmark/start/cook,
 /turf/open/floor/iron/showroomfloor,
@@ -2580,7 +2580,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/grimy,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "tc" = (
 /obj/effect/turf_decal/industrial/warning{
 	dir = 1
@@ -2603,7 +2603,7 @@
 	name = "blast shutters"
 	},
 /turf/open/floor/plating,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "tf" = (
 /obj/machinery/vending/coffee,
 /obj/effect/turf_decal/corner/grey/half{
@@ -3098,7 +3098,7 @@
 	dir = 10
 	},
 /turf/open/floor/iron/grimy,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "wP" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/turf_decal/borderfloor{
@@ -3167,7 +3167,7 @@
 /obj/structure/curtain/bounty,
 /obj/item/bedsheet/dorms,
 /turf/open/floor/carpet,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "xp" = (
 /obj/effect/turf_decal/borderfloor{
 	dir = 8
@@ -3297,7 +3297,7 @@
 	},
 /obj/machinery/navbeacon/wayfinding/dorms,
 /turf/open/floor/iron/grimy,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "zk" = (
 /obj/structure/table,
 /obj/item/storage/box/mousetraps,
@@ -3482,7 +3482,7 @@
 /obj/item/storage/backpack,
 /obj/item/storage/backpack,
 /turf/open/floor/iron/grimy,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "AK" = (
 /obj/machinery/autolathe,
 /obj/effect/turf_decal/industrial/hatch/yellow,
@@ -3541,7 +3541,7 @@
 	name = "Crew Quarters"
 	},
 /turf/open/floor/iron,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "AW" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 4
@@ -4079,7 +4079,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/grimy,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Fn" = (
 /obj/structure/chair/office/light{
 	dir = 4
@@ -4475,7 +4475,7 @@
 /area/station/hallway/aft)
 "If" = (
 /turf/closed/wall/mineral/titanium,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Im" = (
 /obj/effect/turf_decal/corner/white/mono,
 /obj/structure/cable,
@@ -4794,7 +4794,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /turf/open/floor/iron/grimy,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Ky" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
@@ -4938,7 +4938,7 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/tech/grid,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Mn" = (
 /obj/effect/turf_decal/corner/grey/mono,
 /obj/effect/turf_decal/corner/neutral/border,
@@ -5055,7 +5055,7 @@
 	},
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/tech/grid,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Nb" = (
 /obj/effect/turf_decal/corner/grey/mono,
 /turf/open/floor/iron,
@@ -5111,7 +5111,7 @@
 	name = "Crew Quarters"
 	},
 /turf/open/floor/iron,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "NA" = (
 /obj/item/storage/toolbox/electrical,
 /obj/machinery/atmospherics/pipe/smart/simple/green/hidden/layer5,
@@ -5341,7 +5341,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/carpet,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Pm" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 10
@@ -5662,7 +5662,7 @@
 	},
 /obj/machinery/door/firedoor/border_only,
 /turf/open/floor/plasteel/patterned,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "RG" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/science)
@@ -5698,7 +5698,7 @@
 	pixel_y = 28
 	},
 /turf/open/floor/iron/grimy,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Sb" = (
 /obj/structure/sign/departments/custodian,
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -5767,7 +5767,7 @@
 	pixel_x = -6
 	},
 /turf/open/floor/carpet,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "SP" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
@@ -5955,7 +5955,7 @@
 /obj/structure/window/reinforced/tinted/frosted,
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/iron/showroomfloor,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "TV" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters{
@@ -6058,14 +6058,14 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/iron/grimy,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "UC" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /turf/open/floor/plasteel/patterned,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "UE" = (
 /obj/effect/turf_decal/industrial/warning{
 	dir = 4
@@ -6149,7 +6149,7 @@
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel/patterned,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Vp" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
@@ -6487,7 +6487,7 @@
 	pixel_y = -22
 	},
 /turf/open/floor/carpet,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Ym" = (
 /obj/effect/turf_decal/industrial/warning{
 	dir = 6
@@ -6553,7 +6553,7 @@
 /obj/item/soap/nanotrasen,
 /obj/item/bikehorn/rubberducky,
 /turf/open/floor/iron/showroomfloor,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Zt" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/hidden{
 	dir = 8

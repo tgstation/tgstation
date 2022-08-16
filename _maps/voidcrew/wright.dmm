@@ -19,7 +19,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "bs" = (
 /turf/open/floor/wood,
 /area/station/hallway/primary/central)
@@ -87,7 +87,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "cW" = (
 /obj/structure/window/spawner/west,
 /obj/structure/window/spawner/north,
@@ -104,7 +104,7 @@
 /obj/item/book/manual/wiki/security_space_law,
 /obj/item/storage/briefcase/lawyer,
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "dO" = (
 /obj/structure/chair/wood{
 	dir = 1
@@ -268,7 +268,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "iY" = (
 /obj/effect/decal/cleanable/vomit/old,
 /obj/structure/cable,
@@ -279,7 +279,7 @@
 /obj/item/book/manual/wiki/security_space_law,
 /obj/item/storage/briefcase/lawyer,
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "jd" = (
 /obj/structure/table/wood,
 /obj/item/toy/redbutton{
@@ -512,7 +512,7 @@
 	open_state = "sleeper_clockwork-open"
 	},
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "ng" = (
 /obj/machinery/light_switch{
 	pixel_x = -21;
@@ -574,7 +574,7 @@
 	pixel_y = 29
 	},
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "ob" = (
 /turf/open/floor/carpet/nanoweave/beige,
 /area/station/commons/law_office)
@@ -617,7 +617,7 @@
 /obj/item/bedsheet/random,
 /obj/structure/curtain/cloth/fancy,
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "px" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
@@ -892,7 +892,7 @@
 "yZ" = (
 /obj/structure/sign/poster/random,
 /turf/closed/wall,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "zb" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 8
@@ -948,7 +948,7 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "zM" = (
 /obj/item/clothing/head/welding,
 /obj/structure/cable,
@@ -962,7 +962,7 @@
 "Aq" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "AG" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -1055,7 +1055,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Dv" = (
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/plating,
@@ -1082,7 +1082,7 @@
 "Ey" = (
 /obj/structure/dresser,
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "EI" = (
 /obj/structure/table,
 /obj/item/phone,
@@ -1130,7 +1130,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "FZ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/siding/wood{
@@ -1245,7 +1245,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "JI" = (
 /obj/machinery/light{
 	dir = 4
@@ -1273,7 +1273,7 @@
 	open_state = "sleeper_clockwork-open"
 	},
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Ki" = (
 /obj/structure/mineral_door/wood{
 	name = "Restroom"
@@ -1454,7 +1454,7 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Oc" = (
 /obj/structure/table/wood,
 /obj/item/clipboard{
@@ -1584,7 +1584,7 @@
 	dir = 5
 	},
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Rg" = (
 /obj/structure/chair/office/light{
 	dir = 4
@@ -1594,7 +1594,7 @@
 /area/station/commons/law_office)
 "Rh" = (
 /turf/closed/wall,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Ri" = (
 /obj/machinery/vending/clothing,
 /obj/structure/cable,
@@ -1726,7 +1726,7 @@
 "US" = (
 /obj/structure/sign/poster/official/no_erp,
 /turf/closed/wall,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Vd" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "cockpitshutter"
@@ -1766,7 +1766,7 @@
 /area/station/storage)
 "Vy" = (
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "VY" = (
 /obj/structure/table/wood,
 /obj/structure/mirror{
@@ -1792,7 +1792,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/carpet/nanoweave/purple,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Wv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/cyan/visible/layer4{
 	dir = 4

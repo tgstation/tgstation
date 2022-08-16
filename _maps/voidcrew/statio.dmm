@@ -263,7 +263,7 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/nanoweave/beige,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "bb" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/effect/turf_decal/corner/purple{
@@ -726,7 +726,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/freezer,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "cR" = (
 /obj/effect/turf_decal/corner/blue{
 	dir = 1
@@ -1093,13 +1093,13 @@
 	pixel_y = 32
 	},
 /turf/open/floor/carpet/nanoweave/beige,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "eB" = (
 /obj/structure/table/wood,
 /obj/structure/bedsheetbin,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "eG" = (
 /obj/machinery/camera/directional/east{
 	c_tag = "Xenobiology Cell 6";
@@ -1619,7 +1619,7 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "gQ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -1692,7 +1692,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/nanoweave/beige,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "hk" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
@@ -2234,7 +2234,7 @@
 /obj/machinery/shower/directional/north,
 /obj/structure/curtain,
 /turf/open/floor/iron/freezer,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "jX" = (
 /turf/closed/wall,
 /area/station/commons/canteen)
@@ -3102,7 +3102,7 @@
 /obj/structure/cable,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/carpet/nanoweave/beige,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "nt" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
 	dir = 5
@@ -3941,7 +3941,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/nanoweave/beige,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "ri" = (
 /obj/structure/disposalpipe/segment{
 	dir = 8
@@ -4215,7 +4215,7 @@
 "sn" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "sp" = (
 /obj/structure/closet/secure_closet/captains,
 /turf/open/floor/wood,
@@ -4246,7 +4246,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/freezer,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "sz" = (
 /obj/machinery/suit_storage_unit/mining/eva,
 /obj/effect/turf_decal/corner/brown{
@@ -4726,7 +4726,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
 /turf/open/floor/carpet/nanoweave/beige,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "uT" = (
 /obj/machinery/light{
 	dir = 8
@@ -4876,7 +4876,7 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/nanoweave/beige,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "vp" = (
 /obj/structure/closet/l3closet/virology,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -5460,7 +5460,7 @@
 /obj/structure/bed,
 /obj/item/bedsheet/syndie,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "ye" = (
 /turf/closed/wall,
 /area/station/hallway/starboard)
@@ -5935,7 +5935,7 @@
 	dir = 10
 	},
 /turf/open/floor/carpet/nanoweave/beige,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "zW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/corner/yellow{
@@ -5955,7 +5955,7 @@
 /area/station/security/prison)
 "zZ" = (
 /turf/closed/wall,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Ac" = (
 /obj/effect/turf_decal/corner/bar/diagonal,
 /obj/structure/table/wood,
@@ -6040,7 +6040,7 @@
 "Au" = (
 /obj/machinery/cryopod,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Av" = (
 /obj/structure/closet/secure_closet/atmospherics,
 /obj/effect/turf_decal/corner/blue{
@@ -6685,7 +6685,7 @@
 	},
 /obj/machinery/door/firedoor/border_only,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Du" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 4
@@ -6749,7 +6749,7 @@
 	},
 /obj/machinery/door/firedoor/border_only,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "DK" = (
 /obj/structure/table/wood,
 /obj/item/storage/book/bible,
@@ -6844,7 +6844,7 @@
 	pixel_y = -26
 	},
 /turf/open/floor/carpet/nanoweave/beige,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "DV" = (
 /obj/machinery/power/port_gen/pacman,
 /turf/open/floor/plating,
@@ -7097,7 +7097,7 @@
 	pixel_x = -27
 	},
 /turf/open/floor/carpet/nanoweave/beige,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Fb" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -7374,7 +7374,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/carpet/nanoweave/beige,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "FX" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "L7"
@@ -7833,7 +7833,7 @@
 "HO" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/carpet/nanoweave/beige,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "HP" = (
 /obj/machinery/computer/monitor{
 	dir = 1;
@@ -7952,7 +7952,7 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "In" = (
 /obj/structure/table,
 /turf/open/floor/iron/dark,
@@ -8173,7 +8173,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light,
 /turf/open/floor/carpet/nanoweave/beige,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Jo" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -8908,7 +8908,7 @@
 "MW" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/nanoweave/beige,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "MX" = (
 /obj/structure/disposalpipe/segment{
 	dir = 2
@@ -8954,14 +8954,14 @@
 /area/station/commons/canteen)
 "Ng" = (
 /turf/open/floor/carpet/nanoweave/beige,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Nh" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 5
 	},
 /turf/open/floor/carpet/nanoweave/beige,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Ni" = (
 /obj/machinery/ore_silo,
 /turf/open/floor/circuit/green{
@@ -9008,7 +9008,7 @@
 	pixel_x = -24
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Ny" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer2{
 	dir = 4
@@ -9973,7 +9973,7 @@
 /area/station/engineering)
 "RK" = (
 /turf/closed/wall/r_wall,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "RL" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -10514,7 +10514,7 @@
 /obj/structure/bed,
 /obj/item/bedsheet/nanotrasen,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Uh" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Brig";
@@ -10970,7 +10970,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/nanoweave/beige,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Wj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4

@@ -19,13 +19,13 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "bl" = (
 /obj/structure/bed,
 /obj/item/bedsheet/random,
 /obj/structure/curtain/cloth/grey,
 /turf/open/floor/mineral/plastitanium,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "br" = (
 /obj/structure/table,
 /obj/item/toy/cards/deck/syndicate{
@@ -91,7 +91,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "dS" = (
 /obj/structure/rack,
 /obj/item/gun/ballistic/shotgun/doublebarrel/improvised/sawn{
@@ -458,7 +458,7 @@
 	dir = 10
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "sH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -566,7 +566,7 @@
 "xL" = (
 /obj/machinery/cryopod,
 /turf/open/floor/mineral/plastitanium,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "xR" = (
 /obj/structure/tank_dispenser,
 /turf/open/floor/mineral/titanium/yellow,
@@ -678,7 +678,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "AR" = (
 /obj/structure/closet/wall{
 	name = "captain's closet";
@@ -917,7 +917,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Ho" = (
 /obj/structure/table,
 /obj/machinery/microwave{
@@ -1033,7 +1033,7 @@
 /area/station/medical)
 "LY" = (
 /turf/closed/wall/r_wall,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Nd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/holopad,
@@ -1130,7 +1130,7 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "QB" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/armor/vest/russian{
@@ -1199,7 +1199,7 @@
 "SB" = (
 /obj/structure/sign/poster/random,
 /turf/closed/wall/r_wall,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "SP" = (
 /obj/effect/decal/cleanable/oil,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -1364,7 +1364,7 @@
 /obj/item/clothing/under/pants/track,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "XL" = (
 /obj/machinery/computer/autopilot,
 /turf/open/floor/mineral/plastitanium,
@@ -1390,7 +1390,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "YV" = (
 /obj/structure/chair{
 	dir = 8

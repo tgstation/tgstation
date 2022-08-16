@@ -291,7 +291,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "mE" = (
 /obj/effect/turf_decal/spline/fancy/beige{
 	dir = 6
@@ -456,7 +456,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "rC" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4
@@ -571,7 +571,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "wl" = (
 /turf/closed/wall/mineral/titanium,
 /area/station/medical)
@@ -590,7 +590,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "xw" = (
 /obj/machinery/power/supermatter_crystal/shard,
 /obj/machinery/mass_driver{
@@ -671,7 +671,7 @@
 /area/station/cargo)
 "zW" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "An" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2,
 /turf/open/floor/plating,
@@ -1050,7 +1050,7 @@
 	pixel_y = -24
 	},
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Pt" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	dir = 1;
@@ -1074,7 +1074,7 @@
 /obj/machinery/airalarm/directional/west,
 /obj/item/areaeditor,
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Ql" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
 	dir = 8
@@ -1104,7 +1104,7 @@
 /area/station/engineering/engine)
 "QB" = (
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "QY" = (
 /obj/machinery/space_heater,
 /obj/structure/window/reinforced/spawner/west,
@@ -1142,7 +1142,7 @@
 "Rw" = (
 /obj/machinery/vending/clothing,
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "RB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/green/visible{
 	dir = 1
@@ -1245,7 +1245,7 @@
 /obj/structure/cable,
 /obj/machinery/vending/snack/random,
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "US" = (
 /obj/machinery/cryopod{
 	dir = 4
@@ -1257,10 +1257,10 @@
 	pixel_y = -24
 	},
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Vj" = (
 /turf/closed/wall/mineral/titanium,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Vn" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/spline/fancy/beige{
@@ -1340,7 +1340,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Zj" = (
 /obj/machinery/stasis,
 /obj/effect/turf_decal/corner/blue/mono,

@@ -57,7 +57,7 @@
 /obj/structure/curtain/bounty,
 /obj/item/bedsheet/random,
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "aF" = (
 /obj/machinery/power/apc/auto_name/directional/west{
 	auto_name = 0;
@@ -267,7 +267,7 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "cW" = (
 /obj/machinery/power/terminal{
 	dir = 8
@@ -403,7 +403,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "ea" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 8
@@ -696,7 +696,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "hA" = (
 /obj/structure/table/wood,
 /obj/item/storage/fancy/candle_box{
@@ -757,7 +757,7 @@
 "ip" = (
 /obj/structure/table/wood/poker,
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "iw" = (
 /obj/structure/sign/departments/medbay/alt,
 /turf/closed/wall/mineral/titanium,
@@ -940,7 +940,7 @@
 "ki" = (
 /obj/structure/chair/stool/directional/west,
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "kj" = (
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron,
@@ -949,7 +949,7 @@
 /obj/machinery/camera/directional/east,
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "km" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer4{
 	dir = 1
@@ -1174,7 +1174,7 @@
 /area/station/commons/chapel/office)
 "nA" = (
 /turf/closed/wall/mineral/titanium,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "nR" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
@@ -1219,7 +1219,7 @@
 	dir = 4
 	},
 /turf/closed/wall/mineral/titanium,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "oi" = (
 /obj/machinery/light{
 	dir = 1
@@ -1391,7 +1391,7 @@
 "qb" = (
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "qd" = (
 /obj/structure/chair/stool/directional/west,
 /obj/machinery/airalarm/directional/west,
@@ -1544,7 +1544,7 @@
 	},
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact/compact/compact,
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "rx" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -1866,7 +1866,7 @@
 	dir = 6
 	},
 /turf/closed/wall/mineral/titanium,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "vz" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Morgue";
@@ -2015,7 +2015,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "xw" = (
 /turf/open/floor/iron/dark,
 /area/station/commons/chapel)
@@ -2197,7 +2197,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "zC" = (
 /obj/machinery/camera/directional/north,
 /obj/structure/mopbucket,
@@ -2274,7 +2274,7 @@
 /obj/structure/bed,
 /obj/item/bedsheet/random,
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "AA" = (
 /obj/machinery/door/airlock/command{
 	name = "Captain's Quarters";
@@ -2349,7 +2349,7 @@
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Bz" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 8
@@ -2565,7 +2565,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Ee" = (
 /obj/machinery/light{
 	dir = 8
@@ -2587,7 +2587,7 @@
 	},
 /obj/structure/chair/stool/directional/west,
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Eu" = (
 /turf/open/floor/engine,
 /area/station/security/armory)
@@ -3034,7 +3034,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Kg" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 9
@@ -3123,7 +3123,7 @@
 /area/station/security/armory)
 "KR" = (
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "KS" = (
 /obj/machinery/door/airlock/science,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
@@ -3271,7 +3271,7 @@
 /obj/structure/window/reinforced/tinted/fulltile,
 /obj/structure/grille,
 /turf/open/floor/plating,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "MZ" = (
 /obj/machinery/suit_storage_unit/medical,
 /turf/open/floor/mineral/titanium/blue,
@@ -3609,7 +3609,7 @@
 /area/station/engineering/electrical)
 "Qm" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Qr" = (
 /obj/machinery/power/port_gen/pacman/uranium,
 /obj/item/pipe,
@@ -3765,7 +3765,7 @@
 /obj/item/kirbyplants/random,
 /obj/machinery/light,
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "SD" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 8
@@ -3977,7 +3977,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "UR" = (
 /obj/structure/bed/dogbed/renault,
 /mob/living/simple_animal/pet/fox/Renault,
@@ -4071,7 +4071,7 @@
 	dir = 4
 	},
 /turf/closed/wall/mineral/titanium,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "VX" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
@@ -4193,7 +4193,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Yp" = (
 /obj/machinery/mineral/ore_redemption{
 	dir = 1

@@ -119,7 +119,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/pod/light,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "bt" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 4
@@ -225,7 +225,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/pod/light,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "cx" = (
 /obj/machinery/power/shuttle/engine/electric{
 	dir = 1
@@ -548,7 +548,7 @@
 /area/station/storage)
 "gJ" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "gK" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2,
@@ -626,7 +626,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/pod/light,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "hq" = (
 /obj/effect/turf_decal/industrial/hatch/yellow,
 /obj/machinery/atmospherics/components/unary/tank/air{
@@ -891,7 +891,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/pod/light,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "mb" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
@@ -1245,7 +1245,7 @@
 	},
 /obj/machinery/door/firedoor/border_only,
 /turf/open/floor/pod/light,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "qp" = (
 /obj/structure/chair/comfy/brown{
 	dir = 4
@@ -1629,7 +1629,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/pod/light,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "vR" = (
 /obj/machinery/light{
 	dir = 8
@@ -2188,7 +2188,7 @@
 	},
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/pod/light,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "BQ" = (
 /obj/machinery/door/poddoor{
 	id = "scrapdoorint";
@@ -2393,7 +2393,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/pod/light,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Er" = (
 /obj/machinery/smartfridge/organ,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
@@ -3094,7 +3094,7 @@
 	dir = 1
 	},
 /turf/open/floor/pod/light,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "NS" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 5
@@ -3116,7 +3116,7 @@
 	pixel_x = -32
 	},
 /turf/open/floor/pod/light,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Ob" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/effect/turf_decal/siding/yellow,
@@ -3270,7 +3270,7 @@
 /obj/structure/curtain/bounty,
 /obj/machinery/door/firedoor/window,
 /turf/open/floor/plating,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "PC" = (
 /turf/open/floor/pod/light,
 /area/station/command/bridge)
@@ -3283,7 +3283,7 @@
 	},
 /obj/machinery/door/firedoor/border_only,
 /turf/open/floor/pod/light,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "PR" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/hydroponics/constructable,
@@ -3309,7 +3309,7 @@
 	},
 /obj/machinery/door/firedoor/border_only,
 /turf/open/floor/pod/light,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Qb" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4{
@@ -3631,7 +3631,7 @@
 	pixel_y = 24
 	},
 /turf/open/floor/pod/light,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "TO" = (
 /obj/machinery/computer/helm,
 /obj/effect/turf_decal/box,
@@ -3646,7 +3646,7 @@
 	dir = 1
 	},
 /turf/open/floor/pod/light,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "TW" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -3724,7 +3724,7 @@
 /area/station/cargo)
 "UR" = (
 /turf/open/floor/pod/light,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "UT" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
@@ -3849,7 +3849,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/pod/light,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Wz" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/hydroponics/constructable,
@@ -3888,7 +3888,7 @@
 	dir = 4
 	},
 /turf/open/floor/pod/light,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Xb" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/techfloor/orange{
@@ -3927,12 +3927,12 @@
 /obj/machinery/light,
 /obj/structure/closet/firecloset/full,
 /turf/open/floor/pod/light,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Xn" = (
 /obj/structure/table,
 /obj/structure/bedsheetbin,
 /turf/open/floor/pod/light,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Xq" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/secure_closet/hydroponics,

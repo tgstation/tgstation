@@ -39,31 +39,31 @@
 	dir = 8
 	},
 /turf/open/floor/iron/showroomfloor,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "aT" = (
 /obj/machinery/door/window/right/directional/east,
 /turf/open/floor/iron/showroomfloor,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "bt" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "bu" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/poddoor{
 	id = "chapel_recdoor"
 	},
 /turf/open/floor/plating,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "bO" = (
 /obj/structure/curtain,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 5
 	},
 /turf/open/floor/iron/showroomfloor,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "bP" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green{
@@ -86,7 +86,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/showroomfloor,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "ca" = (
 /obj/structure/reagent_dispensers/watertank/high,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
@@ -101,7 +101,7 @@
 /obj/structure/table/wood/fancy,
 /obj/effect/spawner/random/food_or_drink/three_course_meal,
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "ch" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2{
@@ -111,7 +111,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "ci" = (
 /turf/open/floor/mineral/gold,
 /area/station/commons/chapel)
@@ -140,7 +140,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "cq" = (
 /obj/structure/bookcase/random/adult,
 /turf/open/floor/carpet/red,
@@ -385,7 +385,7 @@
 "gi" = (
 /obj/machinery/shower/directional/east,
 /turf/open/floor/iron/showroomfloor,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "gj" = (
 /obj/structure/window/reinforced/tinted/frosted{
 	dir = 4
@@ -395,7 +395,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/showroomfloor,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "gk" = (
 /obj/structure/table,
 /obj/item/flashlight/lantern,
@@ -425,7 +425,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "gU" = (
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -458,7 +458,7 @@
 /obj/structure/window/reinforced/spawner/east,
 /obj/machinery/vending/wardrobe/chap_wardrobe,
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "hJ" = (
 /obj/machinery/cryopod{
 	dir = 4
@@ -467,7 +467,7 @@
 	dir = 1
 	},
 /turf/open/floor/carpet,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "hX" = (
 /obj/machinery/vending/hydronutrients,
 /turf/open/floor/iron/dark,
@@ -483,7 +483,7 @@
 	pixel_y = 20
 	},
 /turf/open/floor/iron/showroomfloor,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "iv" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
@@ -496,7 +496,7 @@
 /area/station/commons/library)
 "iH" = (
 /turf/open/floor/carpet,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "iK" = (
 /turf/open/floor/carpet,
 /area/station/commons/chapel)
@@ -542,7 +542,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "jx" = (
 /obj/structure/fluff/divine/nexus,
 /obj/structure/railing{
@@ -574,7 +574,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "jP" = (
 /obj/structure/grille,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -657,7 +657,7 @@
 	pixel_x = -26
 	},
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "kW" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
@@ -741,7 +741,7 @@
 	pixel_y = 34
 	},
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "lG" = (
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -750,7 +750,7 @@
 /obj/structure/window/reinforced/spawner/east,
 /obj/machinery/vending/snack/random,
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "lZ" = (
 /turf/open/floor/iron/stairs/medium{
 	dir = 1
@@ -761,7 +761,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "mk" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/layer_manifold/visible,
@@ -794,7 +794,7 @@
 	pixel_y = -22
 	},
 /turf/open/floor/carpet,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "nt" = (
 /obj/machinery/photocopier,
 /turf/open/floor/wood,
@@ -911,10 +911,10 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "po" = (
 /turf/closed/wall,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "pr" = (
 /obj/structure/chair/pew{
 	dir = 4
@@ -932,7 +932,7 @@
 /obj/item/bedsheet/random,
 /obj/structure/curtain/cloth/fancy,
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "pB" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 8
@@ -1002,7 +1002,7 @@
 "rf" = (
 /obj/structure/chair/wood,
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "rt" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
@@ -1463,7 +1463,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "wC" = (
 /obj/structure/mineral_door/wood{
 	name = "Garden Storeroom"
@@ -1485,7 +1485,7 @@
 /area/station/storage)
 "wD" = (
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "wE" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
@@ -1706,7 +1706,7 @@
 	dir = 1
 	},
 /turf/open/floor/carpet,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "zD" = (
 /obj/machinery/atmospherics/components/binary/valve/digital{
 	dir = 8;
@@ -1720,7 +1720,7 @@
 	pixel_y = -26
 	},
 /turf/open/floor/carpet,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "zL" = (
 /obj/machinery/door/airlock/external,
 /obj/docking_port/mobile{
@@ -1784,7 +1784,7 @@
 "Aq" = (
 /obj/machinery/cryopod,
 /turf/open/floor/carpet,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "AD" = (
 /obj/structure/chair/pew/right{
 	dir = 4
@@ -2555,7 +2555,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Nv" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/firedoor/border_only{
@@ -2693,7 +2693,7 @@
 "OQ" = (
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "OU" = (
 /obj/structure/table/wood,
 /obj/item/storage/book/bible,
@@ -2828,7 +2828,7 @@
 	},
 /obj/structure/dresser,
 /turf/open/floor/wood,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "QZ" = (
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/dark,
@@ -3448,7 +3448,7 @@
 /area/station/engineering/atmospherics)
 "Xn" = (
 /turf/closed/wall/mineral/iron,
-/area/station/commons/dorm)
+/area/station/commons/dorms)
 "Xs" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
