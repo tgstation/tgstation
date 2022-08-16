@@ -23,7 +23,7 @@
 		return
 
 	var/atom/movable/detritus = pick(chasm_stuff)
-	var/moved = detritus.forceMove(get_turf(src))
+	detritus.forceMove(get_turf(src))
 	qdel(src)
 
 /// Instantiates something from the default list.
@@ -38,7 +38,6 @@
 	if (!GLOB.chasm_storage.len)
 		return chasm_contents
 
-	clean_storage_refs()
 	var/list/chasm_storage_resolved = recursive_list_resolve(GLOB.chasm_storage)
 	for (var/obj/storage as anything in chasm_storage_resolved)
 		for (var/thing as anything in storage.contents)

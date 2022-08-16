@@ -48,7 +48,7 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 /**
  * Deletes the chasm storage object and removes empty weakrefs from global list
  */
-/obj/component/chasm/proc/remove_storage()
+/datum/component/chasm/proc/remove_storage()
 	if (!storage)
 		return
 	QDEL_NULL(storage)
@@ -165,14 +165,6 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 		if(!AM || QDELETED(AM))
 			return
 
-		if(isliving(AM))
-			var/mob/living/falling_mob = AM
-			if(falling_mob.stat != DEAD)
-				falling_mob.death(TRUE)
-				falling_mob.notransform = FALSE
-			falling_mob.apply_damage(FALL_DAMAGE)
-			RegisterSignal(falling_mob, COMSIG_LIVING_REVIVE, .proc/on_revive)
-
 		falling_atoms -= falling_ref
 
 		AM.alpha = oldalpha
@@ -189,6 +181,15 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 		else
 			parent.visible_message(span_boldwarning("[parent] spits out [AM]!"))
 			AM.throw_at(get_edge_target_turf(parent, pick(GLOB.alldirs)), rand(1, 10), rand(1, 10))
+
+		if(isliving(AM))
+			var/mob/living/falling_mob = AM
+			if(falling_mob.stat != DEAD)
+				falling_mob.death(TRUE)
+				falling_mob.notransform = FALSE
+			falling_mob.apply_damage(FALL_DAMAGE)
+			if (falling_mob) // Might have been deleted from taking damage
+				RegisterSignal(falling_mob, COMSIG_LIVING_REVIVE, .proc/on_revive)
 
 #undef FALL_DAMAGE
 
