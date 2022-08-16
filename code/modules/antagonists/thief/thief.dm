@@ -161,7 +161,7 @@
 	// This outfit is used by the assets SS, which is ran before the atoms SS
 	if(SSatoms.initialized == INITIALIZATION_INSSATOMS)
 		thief.w_uniform?.update_greyscale()
-		thief.update_inv_w_uniform()
+		thief.update_worn_undersuit()
 	thief.physique = FEMALE //update_body() and gender block or something
 	thief.hair_color = "#2A71DC" //hair color dna block
 	thief.skin_tone = "caucasian2" //skin tone dna block
@@ -174,4 +174,4 @@
 	// This outfit is used by the assets SS, which is ran before the atoms SS
 	if (SSatoms.initialized == INITIALIZATION_INSSATOMS)
 		thief.wear_mask?.update_greyscale()
-		thief.update_inv_wear_mask()
+		thief.update_worn_mask()

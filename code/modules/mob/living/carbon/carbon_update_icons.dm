@@ -1,3 +1,37 @@
+/mob/living/carbon/human/update_clothing(slot_flags)
+	if(slot_flags & ITEM_SLOT_BACK)
+		update_worn_back()
+	if(slot_flags & ITEM_SLOT_MASK)
+		update_worn_mask()
+	if(slot_flags & ITEM_SLOT_NECK)
+		update_worn_neck()
+	if(slot_flags & ITEM_SLOT_HANDCUFFED)
+		update_worn_handcuffs()
+	if(slot_flags & ITEM_SLOT_LEGCUFFED)
+		update_worn_legcuffs()
+	if(slot_flags & ITEM_SLOT_BELT)
+		update_worn_belt()
+	if(slot_flags & ITEM_SLOT_ID)
+		update_worn_id()
+	if(slot_flags & ITEM_SLOT_EARS)
+		update_inv_ears()
+	if(slot_flags & ITEM_SLOT_EYES)
+		update_worn_glasses()
+	if(slot_flags & ITEM_SLOT_GLOVES)
+		update_worn_gloves()
+	if(slot_flags & ITEM_SLOT_HEAD)
+		update_worn_head()
+	if(slot_flags & ITEM_SLOT_FEET)
+		update_worn_shoes()
+	if(slot_flags & ITEM_SLOT_OCLOTHING)
+		update_worn_oversuit()
+	if(slot_flags & ITEM_SLOT_ICLOTHING)
+		update_worn_undersuit()
+	if(slot_flags & ITEM_SLOT_SUITSTORE)
+		update_suit_storage()
+	if(slot_flags & ITEM_SLOT_LPOCKET || slot_flags & ITEM_SLOT_RPOCKET)
+		update_pockets()
+
 //IMPORTANT: Multiple animate() calls do not stack well, so try to do them all at once if you can.
 /mob/living/carbon/perform_update_transform()
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
@@ -37,17 +71,26 @@
 		cut_overlay(I)
 		overlays_standing[cache_index] = null
 
+//used when putting/removing clothes that hide certain mutant body parts to just update those and not update the whole body.
+/mob/living/carbon/human/proc/update_mutant_bodyparts()
+	dna.species.handle_mutant_bodyparts(src)
+	update_body_parts()
+
+/mob/living/carbon/update_body(is_creating = FALSE)
+	dna.species.handle_body(src) //This calls `handle_mutant_bodyparts` which calls `update_mutant_bodyparts()`. Don't double call!
+	update_body_parts(is_creating)
+
 /mob/living/carbon/regenerate_icons()
 	if(notransform)
 		return 1
 	icon_render_keys = list() //Clear this bad larry out
-	update_inv_hands()
-	update_inv_handcuffed()
-	update_inv_legcuffed()
+	update_held_items()
+	update_worn_handcuffs()
+	update_worn_legcuffs()
 	update_fire()
-	update_body_parts()
+	update_body()
 
-/mob/living/carbon/update_inv_hands()
+/mob/living/carbon/update_held_items()
 	remove_overlay(HANDS_LAYER)
 	if (handcuffed)
 		drop_all_held_items()
@@ -126,7 +169,7 @@
 
 	apply_overlay(WOUND_LAYER)
 
-/mob/living/carbon/update_inv_wear_mask()
+/mob/living/carbon/update_worn_mask()
 	remove_overlay(FACEMASK_LAYER)
 
 	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
@@ -143,7 +186,7 @@
 
 	apply_overlay(FACEMASK_LAYER)
 
-/mob/living/carbon/update_inv_neck()
+/mob/living/carbon/update_worn_neck()
 	remove_overlay(NECK_LAYER)
 
 	if(client && hud_used?.inv_slots[TOBITSHIFT(ITEM_SLOT_NECK) + 1])
@@ -157,7 +200,7 @@
 
 	apply_overlay(NECK_LAYER)
 
-/mob/living/carbon/update_inv_back()
+/mob/living/carbon/update_worn_back()
 	remove_overlay(BACK_LAYER)
 
 	if(client && hud_used?.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK) + 1])
@@ -170,7 +213,7 @@
 
 	apply_overlay(BACK_LAYER)
 
-/mob/living/carbon/update_inv_head()
+/mob/living/carbon/update_worn_head()
 	remove_overlay(HEAD_LAYER)
 
 	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
@@ -187,7 +230,7 @@
 	apply_overlay(HEAD_LAYER)
 
 
-/mob/living/carbon/update_inv_handcuffed()
+/mob/living/carbon/update_worn_handcuffs()
 	remove_overlay(HANDCUFF_LAYER)
 	if(handcuffed)
 		var/mutable_appearance/handcuff_overlay = mutable_appearance('icons/mob/mob.dmi', "handcuff1", -HANDCUFF_LAYER)
@@ -238,9 +281,6 @@
 		return
 
 	. += emissive_blocker(standing.icon, standing.icon_state, alpha = standing.alpha)
-
-/mob/living/carbon/update_body(is_creating)
-	update_body_parts(is_creating)
 
 ///Checks to see if any bodyparts need to be redrawn, then does so. update_limb_data = TRUE redraws the limbs to conform to the owner.
 /mob/living/carbon/proc/update_body_parts(update_limb_data)

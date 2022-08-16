@@ -129,7 +129,6 @@
 	var/list/loot = list()
 	///Causes mob to be deleted on death, useful for mobs that spawn lootable corpses.
 	var/del_on_death = 0
-	var/deathmessage = ""
 
 	var/allow_movement_on_non_turfs = FALSE
 
@@ -430,12 +429,6 @@
 		verb_say = pick(speak_emote)
 	return ..()
 
-
-/mob/living/simple_animal/emote(act, m_type=1, message = null, intentional = FALSE, force_silence = FALSE)
-	if(stat)
-		return FALSE
-	return ..()
-
 /mob/living/simple_animal/proc/set_varspeed(var_value)
 	speed = var_value
 	update_simplemob_varspeed()
@@ -462,9 +455,6 @@
 	drop_loot()
 	if(dextrous)
 		drop_all_held_items()
-	if(!gibbed)
-		if(deathsound || deathmessage || !del_on_death)
-			emote("deathgasp")
 	if(del_on_death)
 		..()
 		//Prevent infinite loops if the mob Destroy() is overridden in such
@@ -617,9 +607,9 @@
 
 /mob/living/simple_animal/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE, ignore_animation = TRUE)
 	. = ..()
-	update_inv_hands()
+	update_held_items()
 
-/mob/living/simple_animal/update_inv_hands()
+/mob/living/simple_animal/update_held_items()
 	if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 		for(var/obj/item/I in held_items)
 			var/index = get_held_index_of_item(I)

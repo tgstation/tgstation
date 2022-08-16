@@ -39,7 +39,7 @@
 	..()
 	if(ismob(loc))
 		var/mob/M = loc
-		M.update_inv_gloves()
+		M.update_worn_gloves()
 
 /obj/item/clothing/gloves/wirecutter_act(mob/living/user, obj/item/I)
 	. = ..()

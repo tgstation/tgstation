@@ -221,9 +221,9 @@
 	)
 	required_candidates = 1
 	weight = 3
-	cost = 15
+	cost = 10
 	scaling_cost = 9
-	requirements = list(101,101,101,40,35,20,20,15,10,10)
+	requirements = list(101,101,60,30,30,25,20,15,10,10)
 	antag_cap = list("denominator" = 24)
 
 
@@ -390,6 +390,7 @@
 	requirements = list(90,90,90,80,60,40,30,20,10,10)
 	flags = HIGH_IMPACT_RULESET
 	antag_cap = list("denominator" = 18, "offset" = 1)
+	var/required_role = ROLE_NUCLEAR_OPERATIVE
 	var/datum/team/nuclear/nuke_team
 
 /datum/dynamic_ruleset/roundstart/nuclear/ready(population, forced = FALSE)
@@ -410,15 +411,16 @@
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/nuclear/execute()
-	var/leader = TRUE
-	for(var/datum/mind/M in assigned)
-		if (leader)
-			leader = FALSE
-			var/datum/antagonist/nukeop/leader/new_op = M.add_antag_datum(antag_leader_datum)
-			nuke_team = new_op.nuke_team
-		else
-			var/datum/antagonist/nukeop/new_op = new antag_datum()
-			M.add_antag_datum(new_op)
+	var/datum/mind/most_experienced = get_most_experienced(assigned, required_role)
+	if(!most_experienced)
+		most_experienced = assigned[1]
+	var/datum/antagonist/nukeop/leader/leader = most_experienced.add_antag_datum(antag_leader_datum)
+	nuke_team = leader.nuke_team
+	for(var/datum/mind/assigned_player in assigned)
+		if(assigned_player == most_experienced)
+			continue
+		var/datum/antagonist/nukeop/new_op = new antag_datum()
+		assigned_player.add_antag_datum(new_op)
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/nuclear/round_result()
@@ -493,8 +495,6 @@
 	blocking_rules = list(/datum/dynamic_ruleset/latejoin/provocateur)
 	// I give up, just there should be enough heads with 35 players...
 	minimum_players = 35
-	/// How much threat should be injected when the revolution wins?
-	var/revs_win_threat_injection = 20
 	var/datum/team/revolution/revolution
 	var/finished = FALSE
 
@@ -537,7 +537,7 @@
 	..()
 
 /datum/dynamic_ruleset/roundstart/revs/rule_process()
-	var/winner = revolution.process_victory(revs_win_threat_injection)
+	var/winner = revolution.process_victory()
 	if (isnull(winner))
 		return
 
@@ -595,6 +595,7 @@
 	antag_flag_override = ROLE_OPERATIVE
 	antag_leader_datum = /datum/antagonist/nukeop/leader/clownop
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
+	required_role = ROLE_CLOWN_OPERATIVE
 
 /datum/dynamic_ruleset/roundstart/nuclear/clown_ops/pre_execute()
 	. = ..()

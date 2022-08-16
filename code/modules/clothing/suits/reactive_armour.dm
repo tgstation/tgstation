@@ -2,7 +2,7 @@
 	name = "reactive armour shell"
 	desc = "An experimental suit of armour, awaiting installation of an anomaly core."
 	icon_state = "reactiveoff"
-	icon = 'icons/obj/clothing/suits.dmi'
+	icon = 'icons/obj/clothing/suits/armor.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/reactive_armour_shell/attackby(obj/item/weapon, mob/user, params)
@@ -52,7 +52,7 @@
 
 /obj/item/clothing/suit/armor/reactive/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_OCLOTHING)
 
 /obj/item/clothing/suit/armor/reactive/update_icon_state()
 	. = ..()
@@ -310,7 +310,7 @@
 	owner.apply_damage(10, BRUTE)
 	owner.apply_damage(40, STAMINA)
 	playsound(owner, 'sound/effects/tableslam.ogg', 90, TRUE)
-	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table)
+	owner.add_mood_event("table", /datum/mood_event/table)
 	do_teleport(owner, get_turf(owner), tele_range, no_effects = TRUE, channel = TELEPORT_CHANNEL_BLUESPACE)
 	new /obj/structure/table(get_turf(owner))
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration

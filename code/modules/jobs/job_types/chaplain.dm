@@ -6,7 +6,7 @@
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the head of personnel"
+	supervisors = SUPERVISOR_HOP
 	selection_color = "#bbe291"
 	exp_granted_type = EXP_TYPE_CREW
 
@@ -21,10 +21,10 @@
 		/datum/job_department/service,
 		)
 
-	family_heirlooms = list(/obj/item/toy/windup_toolbox, /obj/item/reagent_containers/food/drinks/bottle/holywater)
+	family_heirlooms = list(/obj/item/toy/windup_toolbox, /obj/item/reagent_containers/cup/glass/bottle/holywater)
 
 	mail_goodies = list(
-		/obj/item/reagent_containers/food/drinks/bottle/holywater = 30,
+		/obj/item/reagent_containers/cup/glass/bottle/holywater = 30,
 		/obj/item/toy/plush/awakenedplushie = 10,
 		/obj/item/grenade/chem_grenade/holy = 5,
 		/obj/item/toy/plush/narplush = 2,

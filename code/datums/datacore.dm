@@ -312,3 +312,52 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 
 /datum/datacore/proc/get_id_photo(mob/living/carbon/human/human, show_directions = list(SOUTH))
 	return get_flat_existing_human_icon(human, show_directions)
+
+//Todo: Add citations to the prinout - you get them from sec record's "citation" field, same as "crim" (which is frankly a terrible fucking field name)
+///Standardized printed records. SPRs. Like SATs but for bad guys who probably didn't actually finish school. Input the records and out comes a paper.
+/proc/print_security_record(datum/data/record/general_data, datum/data/record/security, atom/location)
+	if(!istype(general_data) && !istype(security))
+		stack_trace("called without any datacores! this may or may not be intentional!")
+	if(!isatom(location)) //can't drop the paper if we didn't get passed an atom.
+		CRASH("NO VALID LOCATION PASSED.")
+
+	GLOB.data_core.securityPrintCount++ //just alters the name of the paper.
+	var/obj/item/paper/printed_paper = new(location)
+	var/final_paper_text = "<CENTER><B>Security Record - (SR-[GLOB.data_core.securityPrintCount])</B></CENTER><BR>"
+	if((istype(general_data, /datum/data/record) && GLOB.data_core.general.Find(general_data)))
+		final_paper_text += text("Name: [] ID: []<BR>\nGender: []<BR>\nAge: []<BR>", general_data.fields["name"], general_data.fields["id"], general_data.fields["gender"], general_data.fields["age"])
+		final_paper_text += "\nSpecies: [general_data.fields["species"]]<BR>"
+		final_paper_text += text("\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>", general_data.fields["fingerprint"], general_data.fields["p_stat"], general_data.fields["m_stat"])
+	else
+		final_paper_text += "<B>General Record Lost!</B><BR>"
+	if((istype(security, /datum/data/record) && GLOB.data_core.security.Find(security)))
+		final_paper_text += text("<BR>\n<CENTER><B>Security Data</B></CENTER><BR>\nCriminal Status: []", security.fields["criminal"])
+
+		final_paper_text += "<BR>\n<BR>\nCrimes:<BR>\n"
+		final_paper_text +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
+<tr>
+<th>Crime</th>
+<th>Details</th>
+<th>Author</th>
+<th>Time Added</th>
+</tr>"}
+		for(var/datum/data/crime/c in security.fields["crim"])
+			final_paper_text += "<tr><td>[c.crimeName]</td>"
+			final_paper_text += "<td>[c.crimeDetails]</td>"
+			final_paper_text += "<td>[c.author]</td>"
+			final_paper_text += "<td>[c.time]</td>"
+			final_paper_text += "</tr>"
+		final_paper_text += "</table>"
+
+		final_paper_text += text("<BR>\nImportant Notes:<BR>\n\t[]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", security.fields["notes"])
+		var/counter = 1
+		while(security.fields[text("com_[]", counter)])
+			final_paper_text += text("[]<BR>", security.fields[text("com_[]", counter)])
+			counter++
+		printed_paper.name = text("SR-[] '[]'", GLOB.data_core.securityPrintCount, general_data.fields["name"])
+	else //if no security record
+		final_paper_text += "<B>Security Record Lost!</B><BR>"
+		printed_paper.name = text("SR-[] '[]'", GLOB.data_core.securityPrintCount, "Record Lost")
+	final_paper_text += "</TT>"
+	printed_paper.add_raw_text(final_paper_text)
+	printed_paper.update_appearance() //make sure we make the paper look like it has writing on it.
