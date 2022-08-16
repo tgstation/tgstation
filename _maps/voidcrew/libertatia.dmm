@@ -63,7 +63,7 @@
 	name = "\improper Officer Berzerksky"
 	},
 /obj/effect/decal/cleanable/oil/streak,
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/mineral/plastitanium,
 /area/station/cargo)
 "bz" = (
@@ -105,7 +105,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/station/external)
 "dD" = (
-/obj/effect/turf_decal/industrial/warning,
+/obj/effect/turf_decal/stripes,
 /turf/open/floor/mineral/plastitanium,
 /area/station/cargo)
 "eV" = (
@@ -237,10 +237,10 @@
 /obj/item/radio/intercom{
 	pixel_y = 22
 	},
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 8
 	},
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -317,10 +317,10 @@
 /obj/item/radio/intercom{
 	pixel_y = 22
 	},
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 8
 	},
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -367,7 +367,7 @@
 	dir = 8;
 	pixel_y = 12
 	},
-/obj/effect/turf_decal/industrial/warning/corner{
+/obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
 /obj/machinery/suit_storage_unit/inherit,
@@ -387,7 +387,7 @@
 "pH" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 9
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -401,7 +401,7 @@
 	icon_state = "lethalshot_box";
 	name = "dusty shotshell box"
 	},
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 5
 	},
 /obj/structure/closet/wall/red{
@@ -418,7 +418,7 @@
 /obj/item/clothing/mask/breath,
 /obj/item/tank/internals/oxygen,
 /obj/item/clothing/head/helmet/space,
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 8
 	},
 /obj/structure/closet/wall/red{
@@ -442,7 +442,7 @@
 /area/station/security)
 "rc" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/industrial/warning,
+/obj/effect/turf_decal/stripes,
 /turf/open/floor/mineral/plastitanium,
 /area/station/cargo)
 "rd" = (
@@ -450,14 +450,14 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/station/security)
 "rF" = (
 /obj/item/gun/ballistic/shotgun/doublebarrel,
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 4
 	},
 /obj/structure/closet/wall/red{
@@ -482,7 +482,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 10
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -496,7 +496,7 @@
 /obj/item/clothing/mask/breath,
 /obj/item/tank/internals/oxygen,
 /obj/item/clothing/head/helmet/space,
-/obj/effect/turf_decal/industrial/warning/corner{
+/obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
 /obj/structure/closet/wall/red{
@@ -528,7 +528,7 @@
 /obj/machinery/light/small{
 	pixel_x = -12
 	},
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 10
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -546,7 +546,7 @@
 	pixel_y = -5
 	},
 /obj/item/storage/belt/security/webbing,
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 6
 	},
 /obj/structure/closet/wall/red{
@@ -604,7 +604,7 @@
 	},
 /obj/structure/sign/warning/vacuum/external/directional/north,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 8
 	},
 /turf/open/floor/pod/light,
@@ -623,7 +623,7 @@
 	pixel_y = -24
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 4
 	},
 /turf/open/floor/pod/light,
@@ -956,7 +956,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/effect/turf_decal/industrial/outline,
+/obj/effect/turf_decal/bot_white,
 /turf/open/floor/pod/light,
 /area/station/commons)
 "Ef" = (
@@ -1081,7 +1081,7 @@
 /turf/open/floor/pod/light,
 /area/station/cargo)
 "HY" = (
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -1114,15 +1114,15 @@
 /obj/machinery/power/port_gen/pacman/uranium,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/station/hallway/port)
 "Ji" = (
-/obj/machinery/atmospherics/components/unary/tank/air{
+/obj/machinery/atmospherics/components/tank/air{
 	piping_layer = 2
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/station/hallway/port)
 "Jr" = (
@@ -1174,7 +1174,7 @@
 /area/station/cargo)
 "KV" = (
 /obj/effect/decal/cleanable/glass,
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/mineral/plastitanium,
 /area/station/cargo)
 "Le" = (
@@ -1195,17 +1195,17 @@
 /turf/open/floor/plating,
 /area/station/hallway/port)
 "LD" = (
-/obj/machinery/atmospherics/components/unary/tank/air{
+/obj/machinery/atmospherics/components/tank/air{
 	piping_layer = 2
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/station/hallway/starboard)
 "LU" = (
 /obj/machinery/power/port_gen/pacman/uranium,
 /obj/structure/cable,
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/station/hallway/starboard)
 "Mh" = (
@@ -1242,13 +1242,13 @@
 "Nq" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 9
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/station/cargo)
 "Nz" = (
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -1256,14 +1256,14 @@
 "NN" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/station/cargo)
 "NS" = (
 /obj/structure/cable,
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 5
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -1309,7 +1309,7 @@
 /area/station/hallway/port)
 "OO" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -1350,7 +1350,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -1405,7 +1405,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/landmark/start/station_engineer,
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -1424,7 +1424,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/stack/sheet/mineral/uranium/five,
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/mineral/plastitanium,
 /area/station/cargo)
 "Sw" = (
@@ -1468,7 +1468,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/mineral/plastitanium,
 /area/station/cargo)
 "SA" = (
@@ -1480,7 +1480,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/oil,
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -1533,7 +1533,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -1615,14 +1615,14 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 1
 	},
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/station/cargo)
 "WC" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/mineral/plastitanium,
 /area/station/cargo)
 "WK" = (
@@ -1637,7 +1637,7 @@
 /obj/item/radio,
 /obj/item/radio,
 /obj/item/radio,
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/mineral/plastitanium,
 /area/station/cargo)
 "WM" = (
@@ -1659,7 +1659,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -1739,7 +1739,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 6
 	},
 /turf/open/floor/mineral/plastitanium,

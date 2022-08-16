@@ -20,17 +20,17 @@
 /area/station/security)
 "bL" = (
 /obj/structure/weightmachine/weightlifter,
-/obj/effect/turf_decal/corner/lime/mono,
+/obj/effect/turf_decal/tile/lime/mono,
 /obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/mineral/titanium,
 /area/station/commons/dorms)
 "cJ" = (
-/obj/effect/turf_decal/corner/red/mono,
-/obj/machinery/vending/security/marine/solgov,
+/obj/effect/turf_decal/tile/red/mono,
+/obj/machinery/vending/security,
 /turf/open/floor/mineral/titanium,
 /area/station/security/armory)
 "cM" = (
-/obj/effect/turf_decal/corner/lime/mono,
+/obj/effect/turf_decal/tile/lime/mono,
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/food/snacks/pizza/meat,
 /turf/open/floor/mineral/titanium,
@@ -41,14 +41,14 @@
 /turf/open/floor/plating,
 /area/station/command/bridge)
 "dm" = (
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium,
 /area/station/commons/dorms)
 "dy" = (
 /obj/structure/rack,
-/obj/effect/turf_decal/corner/red/mono,
+/obj/effect/turf_decal/tile/red/mono,
 /obj/machinery/airalarm/directional/south,
 /obj/item/gun/ballistic/shotgun/riot,
 /obj/item/gun/ballistic/shotgun/riot,
@@ -59,7 +59,7 @@
 /turf/open/floor/mineral/titanium,
 /area/station/commons/dorms)
 "dH" = (
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /obj/machinery/computer/mech_bay_power_console,
 /turf/open/floor/mineral/titanium,
 /area/station/cargo)
@@ -69,14 +69,14 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "dK" = (
-/obj/effect/turf_decal/corner/bottlegreen/mono,
+/obj/effect/turf_decal/tile/bottlegreen/mono,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium,
 /area/station/hallway/primary/central)
 "dN" = (
 /obj/structure/cable,
-/obj/effect/turf_decal/corner/bottlegreen/mono,
+/obj/effect/turf_decal/tile/bottlegreen/mono,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2{
 	dir = 8
@@ -114,14 +114,14 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/corner/lime/mono,
+/obj/effect/turf_decal/tile/lime/mono,
 /obj/machinery/door/airlock{
 	name = "Dormitories"
 	},
 /turf/open/floor/mineral/titanium,
 /area/station/commons/dorms)
 "fC" = (
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /obj/machinery/button/door{
 	id = "cargodoors";
 	name = "Blast Door Control";
@@ -130,7 +130,7 @@
 /turf/open/floor/mineral/titanium,
 /area/station/cargo)
 "gp" = (
-/obj/effect/turf_decal/corner/bottlegreen/mono,
+/obj/effect/turf_decal/tile/bottlegreen/mono,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
@@ -149,7 +149,7 @@
 /turf/open/floor/plating,
 /area/station/cargo)
 "hm" = (
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /turf/open/floor/mineral/titanium,
 /area/station/cargo)
 "hx" = (
@@ -162,7 +162,7 @@
 /turf/open/floor/mineral/titanium,
 /area/station/cargo)
 "hU" = (
-/obj/effect/turf_decal/corner/red/mono,
+/obj/effect/turf_decal/tile/red/mono,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 1
@@ -174,7 +174,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/corner/red/mono,
+/obj/effect/turf_decal/tile/red/mono,
 /obj/machinery/door/airlock/security/glass,
 /turf/open/floor/mineral/titanium,
 /area/station/security)
@@ -188,7 +188,7 @@
 /obj/machinery/computer/autopilot{
 	dir = 8
 	},
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /turf/open/floor/mineral/titanium,
 /area/station/command/bridge)
 "iO" = (
@@ -200,14 +200,14 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "iY" = (
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
 /area/station/commons/dorms)
 "jc" = (
-/obj/effect/turf_decal/corner/red/mono,
+/obj/effect/turf_decal/tile/red/mono,
 /obj/structure/rack,
 /obj/item/clothing/mask/gas/sechailer/swat,
 /obj/item/clothing/mask/gas/sechailer/swat,
@@ -224,7 +224,7 @@
 /area/station/security)
 "ka" = (
 /obj/machinery/vending/security,
-/obj/effect/turf_decal/corner/red/mono,
+/obj/effect/turf_decal/tile/red/mono,
 /turf/open/floor/mineral/titanium,
 /area/station/security/armory)
 "kE" = (
@@ -236,11 +236,11 @@
 /obj/machinery/computer/crew{
 	dir = 8
 	},
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /turf/open/floor/mineral/titanium,
 /area/station/command/bridge)
 "lk" = (
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
@@ -248,7 +248,7 @@
 /area/station/cargo)
 "lN" = (
 /obj/structure/table/optable,
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /turf/open/floor/mineral/titanium,
 /area/station/commons/dorms)
 "me" = (
@@ -263,7 +263,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "mR" = (
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -274,7 +274,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/station/security/armory)
 "nD" = (
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /obj/machinery/mineral/equipment_vendor,
 /obj/machinery/light{
 	dir = 8
@@ -294,7 +294,7 @@
 	pixel_x = -3;
 	pixel_y = 5
 	},
-/obj/effect/turf_decal/corner/lime/mono,
+/obj/effect/turf_decal/tile/lime/mono,
 /obj/structure/window/reinforced/spawner,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
@@ -321,7 +321,7 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "oU" = (
-/obj/effect/turf_decal/corner/red/mono,
+/obj/effect/turf_decal/tile/red/mono,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/machinery/suit_storage_unit/security,
 /turf/open/floor/mineral/titanium,
@@ -338,19 +338,19 @@
 /area/station/hallway/primary/central)
 "pq" = (
 /obj/machinery/computer/operating,
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /turf/open/floor/mineral/titanium,
 /area/station/commons/dorms)
 "pG" = (
 /turf/closed/wall/mineral/titanium,
 /area/station/command/bridge)
 "pO" = (
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /obj/machinery/suit_storage_unit/captain,
 /turf/open/floor/mineral/titanium,
 /area/station/command/bridge)
 "pR" = (
-/obj/effect/turf_decal/corner/red/mono,
+/obj/effect/turf_decal/tile/red/mono,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 9
@@ -384,7 +384,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "qJ" = (
-/obj/effect/turf_decal/corner/red/mono,
+/obj/effect/turf_decal/tile/red/mono,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -402,11 +402,11 @@
 /obj/structure/closet/secure_closet/lethalshots{
 	req_access = null
 	},
-/obj/effect/turf_decal/corner/red/mono,
+/obj/effect/turf_decal/tile/red/mono,
 /turf/open/floor/mineral/titanium,
 /area/station/security)
 "sZ" = (
-/obj/effect/turf_decal/corner/bottlegreen/mono,
+/obj/effect/turf_decal/tile/bottlegreen/mono,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/mineral/titanium,
 /area/station/hallway/primary/central)
@@ -455,14 +455,14 @@
 /obj/item/reagent_containers/food/snacks/rationpack,
 /obj/item/reagent_containers/food/snacks/rationpack,
 /obj/item/reagent_containers/food/snacks/rationpack,
-/obj/effect/turf_decal/corner/lime/mono,
+/obj/effect/turf_decal/tile/lime/mono,
 /turf/open/floor/mineral/titanium,
 /area/station/commons/dorms)
 "tp" = (
 /turf/closed/wall/mineral/titanium,
 /area/station/cargo)
 "tr" = (
-/obj/effect/turf_decal/corner/lime/mono,
+/obj/effect/turf_decal/tile/lime/mono,
 /turf/open/floor/mineral/titanium,
 /area/station/commons/dorms)
 "tD" = (
@@ -477,7 +477,7 @@
 /area/station/hallway/primary/central)
 "tQ" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/corner/red/mono,
+/obj/effect/turf_decal/tile/red/mono,
 /obj/machinery/suit_storage_unit/security,
 /turf/open/floor/mineral/titanium,
 /area/station/security)
@@ -501,7 +501,7 @@
 /area/station/maintenance/aft)
 "uD" = (
 /obj/machinery/stasis,
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -527,7 +527,7 @@
 /turf/open/floor/mineral/titanium,
 /area/station/security/armory)
 "wd" = (
-/obj/effect/turf_decal/corner/red/mono,
+/obj/effect/turf_decal/tile/red/mono,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
@@ -546,7 +546,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "ww" = (
-/obj/effect/turf_decal/corner/lime/mono,
+/obj/effect/turf_decal/tile/lime/mono,
 /obj/structure/table/reinforced,
 /obj/item/kitchen/knife/plastic,
 /obj/item/storage/cans/sixbeer,
@@ -571,7 +571,7 @@
 "zv" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -589,7 +589,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "zQ" = (
-/obj/effect/turf_decal/corner/red/mono,
+/obj/effect/turf_decal/tile/red/mono,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -599,7 +599,7 @@
 /obj/machinery/cryopod{
 	dir = 4
 	},
-/obj/effect/turf_decal/corner/lime/mono,
+/obj/effect/turf_decal/tile/lime/mono,
 /turf/open/floor/mineral/titanium,
 /area/station/commons/dorms)
 "AA" = (
@@ -615,7 +615,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "Cj" = (
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /obj/structure/rack,
 /obj/item/t_scanner/adv_mining_scanner/lesser,
 /obj/item/t_scanner/adv_mining_scanner/lesser,
@@ -627,12 +627,12 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 6
 	},
-/obj/effect/turf_decal/corner/red/mono,
+/obj/effect/turf_decal/tile/red/mono,
 /obj/structure/tank_dispenser/oxygen,
 /turf/open/floor/mineral/titanium,
 /area/station/security)
 "Cv" = (
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/mineral/titanium,
 /area/station/cargo)
@@ -647,7 +647,7 @@
 "Dk" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
-/obj/effect/turf_decal/corner/red/mono,
+/obj/effect/turf_decal/tile/red/mono,
 /turf/open/floor/mineral/titanium,
 /area/station/security)
 "Dy" = (
@@ -665,12 +665,12 @@
 /obj/item/storage/firstaid/fire,
 /obj/item/storage/firstaid/toxin,
 /obj/item/storage/firstaid/advanced,
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /obj/item/defibrillator/loaded,
 /turf/open/floor/mineral/titanium,
 /area/station/commons/dorms)
 "EN" = (
-/obj/effect/turf_decal/corner/red/mono,
+/obj/effect/turf_decal/tile/red/mono,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -679,11 +679,11 @@
 "Fc" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/backpack/duffelbag/med/surgery,
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /turf/open/floor/mineral/titanium,
 /area/station/commons/dorms)
 "Ff" = (
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /obj/machinery/mech_bay_recharge_port{
 	dir = 2
 	},
@@ -696,7 +696,7 @@
 /turf/open/floor/mineral/titanium,
 /area/station/command/bridge)
 "Gw" = (
-/obj/effect/turf_decal/corner/red/mono,
+/obj/effect/turf_decal/tile/red/mono,
 /obj/machinery/suit_storage_unit/security,
 /turf/open/floor/mineral/titanium,
 /area/station/security)
@@ -705,7 +705,7 @@
 /turf/open/floor/mineral/titanium,
 /area/station/commons/dorms)
 "GG" = (
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 4
@@ -716,7 +716,7 @@
 /turf/open/floor/mineral/titanium,
 /area/station/command/bridge)
 "HM" = (
-/obj/effect/turf_decal/corner/red/mono,
+/obj/effect/turf_decal/tile/red/mono,
 /obj/machinery/airalarm/directional/south,
 /obj/structure/rack,
 /obj/item/tank/jetpack/oxygen/security,
@@ -758,7 +758,7 @@
 /area/station/maintenance/aft)
 "Km" = (
 /obj/structure/rack,
-/obj/effect/turf_decal/corner/red/mono,
+/obj/effect/turf_decal/tile/red/mono,
 /turf/open/floor/mineral/titanium,
 /area/station/security/armory)
 "KW" = (
@@ -769,7 +769,7 @@
 /turf/open/floor/mineral/titanium,
 /area/station/commons/dorms)
 "KX" = (
-/obj/effect/turf_decal/corner/bottlegreen/mono,
+/obj/effect/turf_decal/tile/bottlegreen/mono,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 1
 	},
@@ -806,11 +806,11 @@
 /turf/open/floor/plating,
 /area/station/external)
 "Ns" = (
-/obj/effect/turf_decal/corner/red/mono,
+/obj/effect/turf_decal/tile/red/mono,
 /turf/open/floor/mineral/titanium,
 /area/station/security/armory)
 "NT" = (
-/obj/effect/turf_decal/corner/bottlegreen/mono,
+/obj/effect/turf_decal/tile/bottlegreen/mono,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 4
@@ -826,7 +826,7 @@
 /turf/open/floor/plating,
 /area/station/external)
 "OI" = (
-/obj/effect/turf_decal/corner/lime/mono,
+/obj/effect/turf_decal/tile/lime/mono,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
@@ -843,22 +843,22 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/mining/glass,
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /turf/open/floor/mineral/titanium,
 /area/station/cargo)
 "Pc" = (
-/obj/effect/turf_decal/corner/bottlegreen/mono,
+/obj/effect/turf_decal/tile/bottlegreen/mono,
 /turf/open/floor/mineral/titanium,
 /area/station/hallway/primary/central)
 "Pp" = (
-/obj/effect/turf_decal/corner/bottlegreen/mono,
+/obj/effect/turf_decal/tile/bottlegreen/mono,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium,
 /area/station/hallway/primary/central)
 "PN" = (
-/obj/effect/turf_decal/corner/bottlegreen/mono,
+/obj/effect/turf_decal/tile/bottlegreen/mono,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/station/hallway/primary/central)
@@ -874,13 +874,13 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "Ss" = (
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium,
 /area/station/cargo)
 "SC" = (
-/obj/effect/turf_decal/corner/lime/mono,
+/obj/effect/turf_decal/tile/lime/mono,
 /obj/machinery/computer/cryopod{
 	pixel_y = 32
 	},
@@ -890,11 +890,11 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/cargo)
 "SQ" = (
-/obj/machinery/atmospherics/components/unary/tank/air{
+/obj/machinery/atmospherics/components/tank/air{
 	dir = 1;
 	piping_layer = 4
 	},
-/obj/effect/turf_decal/corner/red/mono,
+/obj/effect/turf_decal/tile/red/mono,
 /turf/open/floor/mineral/titanium,
 /area/station/security)
 "SS" = (
@@ -908,7 +908,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /obj/machinery/door/airlock/command/glass,
 /turf/open/floor/mineral/titanium,
 /area/station/command/bridge)
@@ -916,19 +916,19 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/maintenance/aft)
 "Vc" = (
-/obj/effect/turf_decal/corner/red/mono,
+/obj/effect/turf_decal/tile/red/mono,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium,
 /area/station/security)
 "Vg" = (
-/obj/effect/turf_decal/corner/red/mono,
+/obj/effect/turf_decal/tile/red/mono,
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
 /turf/open/floor/mineral/titanium,
 /area/station/security/armory)
 "Vi" = (
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /obj/machinery/ore_silo,
 /turf/open/floor/mineral/titanium,
 /area/station/cargo)
@@ -936,12 +936,12 @@
 /turf/open/floor/mineral/titanium,
 /area/station/cargo)
 "Vs" = (
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /obj/structure/closet/crate/freezer/blood,
 /turf/open/floor/mineral/titanium,
 /area/station/commons/dorms)
 "Vx" = (
-/obj/effect/turf_decal/corner/bottlegreen/mono,
+/obj/effect/turf_decal/tile/bottlegreen/mono,
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium,
 /area/station/hallway/primary/central)
@@ -959,13 +959,13 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "WR" = (
-/obj/machinery/atmospherics/components/unary/tank/toxins{
+/obj/machinery/atmospherics/components/tank/plasma{
 	dir = 8
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "WY" = (
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /obj/structure/rack,
 /obj/item/pickaxe/silver,
 /obj/item/pickaxe/silver,
@@ -981,7 +981,7 @@
 /turf/open/floor/mineral/titanium,
 /area/station/cargo)
 "Xc" = (
-/obj/effect/turf_decal/corner/lime/mono,
+/obj/effect/turf_decal/tile/lime/mono,
 /obj/structure/chair/sofa/corner{
 	dir = 4
 	},
@@ -989,7 +989,7 @@
 /area/station/commons/dorms)
 "Xr" = (
 /obj/structure/rack,
-/obj/effect/turf_decal/corner/red/mono,
+/obj/effect/turf_decal/tile/red/mono,
 /obj/item/gun/energy/e_gun,
 /obj/item/gun/energy/e_gun,
 /turf/open/floor/mineral/titanium,
@@ -1006,7 +1006,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "XM" = (
-/obj/effect/turf_decal/corner/red/mono,
+/obj/effect/turf_decal/tile/red/mono,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -1026,14 +1026,14 @@
 /turf/open/floor/mineral/titanium,
 /area/station/cargo)
 "Yp" = (
-/obj/effect/turf_decal/corner/bottlegreen/mono,
+/obj/effect/turf_decal/tile/bottlegreen/mono,
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium,
 /area/station/hallway/primary/central)
 "Yv" = (
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /obj/machinery/suit_storage_unit/medical,
 /turf/open/floor/mineral/titanium,
 /area/station/commons/dorms)
@@ -1041,7 +1041,7 @@
 /obj/machinery/computer/helm{
 	dir = 8
 	},
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /turf/open/floor/mineral/titanium,
 /area/station/command/bridge)
 "YY" = (
@@ -1051,12 +1051,12 @@
 /turf/open/floor/mineral/titanium,
 /area/station/cargo)
 "Zd" = (
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium,
 /area/station/cargo)
 "Zg" = (
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /obj/machinery/autolathe,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/iron/fifty,
@@ -1068,7 +1068,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/corner/red/mono,
+/obj/effect/turf_decal/tile/red/mono,
 /obj/machinery/door/airlock/security/glass,
 /turf/open/floor/mineral/titanium,
 /area/station/security/armory)
@@ -1092,7 +1092,7 @@
 /obj/item/gun/energy/beam_rifle{
 	pin = /obj/item/firing_pin
 	},
-/obj/effect/turf_decal/corner/red/mono,
+/obj/effect/turf_decal/tile/red/mono,
 /turf/open/floor/mineral/titanium,
 /area/station/security/armory)
 

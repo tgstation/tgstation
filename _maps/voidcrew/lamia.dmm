@@ -419,7 +419,7 @@
 /turf/open/floor/wood,
 /area/station/commons/toilet)
 "bC" = (
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /obj/structure/closet/crate/medical,
 /obj/item/storage/firstaid/regular,
 /obj/item/storage/firstaid/o2,
@@ -430,7 +430,7 @@
 /turf/open/floor/iron,
 /area/station/storage)
 "bD" = (
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 1
@@ -485,7 +485,7 @@
 /turf/open/floor/iron/white,
 /area/station/commons/toilet)
 "bJ" = (
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -515,7 +515,7 @@
 /turf/open/floor/iron,
 /area/station/storage)
 "bK" = (
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /obj/structure/closet/crate/engineering,
 /obj/item/stack/sheet/mineral/plasma/five,
 /obj/item/stack/sheet/mineral/plasma/five,
@@ -570,7 +570,7 @@
 /turf/open/floor/iron/white,
 /area/station/commons/toilet)
 "bP" = (
-/obj/effect/turf_decal/industrial/warning,
+/obj/effect/turf_decal/stripes,
 /obj/structure/closet/crate/science,
 /obj/item/storage/box/rndboards{
 	desc = "A box containing a gift for worthy wizards.";
@@ -581,7 +581,7 @@
 /turf/open/floor/iron,
 /area/station/storage)
 "bQ" = (
-/obj/effect/turf_decal/industrial/warning,
+/obj/effect/turf_decal/stripes,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 1
@@ -712,7 +712,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "cj" = (
-/obj/machinery/atmospherics/components/unary/tank/air{
+/obj/machinery/atmospherics/components/tank/air{
 	dir = 1;
 	piping_layer = 4
 	},
@@ -1666,7 +1666,7 @@
 /turf/open/floor/carpet/purple,
 /area/station/commons/canteen)
 "MB" = (
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2{
 	dir = 4
@@ -1766,7 +1766,7 @@
 /turf/open/floor/wood,
 /area/station/commons/library)
 "Pc" = (
-/obj/effect/turf_decal/industrial/warning,
+/obj/effect/turf_decal/stripes,
 /obj/structure/closet/crate,
 /obj/item/radio,
 /obj/item/radio,
@@ -2062,7 +2062,7 @@
 /turf/open/floor/bronze,
 /area/station/cargo)
 "ZW" = (
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /obj/structure/closet/crate{
 	name = "alchemical supplies"
 	},

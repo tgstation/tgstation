@@ -964,7 +964,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/station/cargo)
 "Hb" = (
-/obj/machinery/atmospherics/components/unary/tank/air{
+/obj/machinery/atmospherics/components/tank/air{
 	dir = 8;
 	piping_layer = 4
 	},
@@ -1481,7 +1481,7 @@
 	},
 /area/station/command/bridge)
 "ZO" = (
-/obj/machinery/vending/security/marine{
+/obj/machinery/vending/security{
 	all_items_free = 1
 	},
 /turf/open/floor/mineral/plastitanium,

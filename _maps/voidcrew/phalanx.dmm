@@ -751,7 +751,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/effect/turf_decal/industrial/warning/fulltile,
+/obj/effect/turf_decal/stripes/fulltile,
 /turf/open/floor/engine,
 /area/station/engineering/electrical)
 "ip" = (
@@ -1757,7 +1757,7 @@
 /turf/open/floor/engine,
 /area/station/security/armory)
 "uf" = (
-/obj/machinery/vending/security/marine/solgov,
+/obj/machinery/vending/security,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -2999,7 +2999,7 @@
 "JM" = (
 /obj/machinery/power/smes/engineering,
 /obj/structure/cable,
-/obj/effect/turf_decal/industrial/warning/fulltile,
+/obj/effect/turf_decal/stripes/fulltile,
 /turf/open/floor/engine,
 /area/station/engineering/electrical)
 "JP" = (
@@ -3593,7 +3593,7 @@
 /obj/machinery/camera{
 	dir = 5
 	},
-/obj/machinery/atmospherics/components/unary/tank/toxins{
+/obj/machinery/atmospherics/components/tank/plasma{
 	dir = 1
 	},
 /turf/open/floor/plating/catwalk_floor{
@@ -3792,7 +3792,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/effect/turf_decal/industrial/warning/fulltile,
+/obj/effect/turf_decal/stripes/fulltile,
 /turf/open/floor/engine,
 /area/station/engineering/electrical)
 "SP" = (
@@ -4211,7 +4211,7 @@
 /turf/open/floor/plasteel/mono/white,
 /area/station/commons/canteen)
 "Yz" = (
-/obj/machinery/vending/security/marine/solgov,
+/obj/machinery/vending/security,
 /turf/open/floor/engine,
 /area/station/security)
 "YB" = (

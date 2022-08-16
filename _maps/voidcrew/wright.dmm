@@ -308,7 +308,7 @@
 /turf/closed/wall,
 /area/station/command/bridge)
 "jB" = (
-/obj/machinery/atmospherics/components/unary/tank/air{
+/obj/machinery/atmospherics/components/tank/air{
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -579,7 +579,7 @@
 /turf/open/floor/carpet/nanoweave/beige,
 /area/station/commons/law_office)
 "oc" = (
-/obj/machinery/atmospherics/components/unary/tank/air{
+/obj/machinery/atmospherics/components/tank/air{
 	dir = 1;
 	piping_layer = 2
 	},

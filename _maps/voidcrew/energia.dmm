@@ -22,14 +22,14 @@
 /obj/item/circuitboard/computer/selling_pad_control,
 /obj/item/circuitboard/machine/selling_pad,
 /obj/item/circuitboard/computer/cargo/express,
-/obj/effect/turf_decal/corner/brown/mono,
+/obj/effect/turf_decal/tile/brown/mono,
 /turf/open/floor/iron,
 /area/station/cargo)
 "aF" = (
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 4
 	},
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -115,14 +115,14 @@
 /area/station/cargo)
 "dD" = (
 /obj/machinery/computer/crew,
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "dG" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 5
 	},
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 10
 	},
 /turf/open/floor/engine,
@@ -159,7 +159,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible{
 	dir = 8
 	},
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 8
 	},
 /obj/machinery/light{
@@ -208,7 +208,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "hP" = (
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
@@ -223,7 +223,7 @@
 /area/station/cargo)
 "in" = (
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible,
-/obj/effect/turf_decal/industrial/warning/corner{
+/obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
 /obj/machinery/power/rad_collector/anchored,
@@ -270,7 +270,7 @@
 /area/station/maintenance/aft)
 "li" = (
 /obj/machinery/suit_storage_unit/mining/eva,
-/obj/effect/turf_decal/corner/brown/mono,
+/obj/effect/turf_decal/tile/brown/mono,
 /turf/open/floor/iron,
 /area/station/cargo)
 "mg" = (
@@ -316,7 +316,7 @@
 /turf/open/floor/iron,
 /area/station/medical)
 "ny" = (
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -387,13 +387,13 @@
 /obj/machinery/atmospherics/components/trinary/filter/flipped{
 	filter_type = "plasma"
 	},
-/obj/effect/turf_decal/industrial/warning/full,
+/obj/effect/turf_decal/stripes/full,
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/engine)
 "qG" = (
 /obj/structure/table/optable,
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /turf/open/floor/iron,
 /area/station/medical)
 "ri" = (
@@ -408,7 +408,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/engine)
 "rn" = (
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
@@ -481,7 +481,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "sm" = (
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 1
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -503,7 +503,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/engine)
 "tc" = (
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -557,7 +557,7 @@
 /turf/open/floor/iron,
 /area/station/cargo)
 "uL" = (
-/obj/machinery/atmospherics/components/unary/tank/toxins{
+/obj/machinery/atmospherics/components/tank/plasma{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -618,7 +618,7 @@
 /obj/item/storage/pill_bottle/mutadone,
 /obj/item/storage/pill_bottle/penacid,
 /obj/item/storage/pill_bottle/potassiodide,
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /turf/open/floor/iron,
 /area/station/medical)
 "xY" = (
@@ -636,7 +636,7 @@
 	min_temperature = 3;
 	target_temperature = 3
 	},
-/obj/effect/turf_decal/industrial/warning/full,
+/obj/effect/turf_decal/stripes/full,
 /turf/open/floor/engine,
 /area/station/engineering/engine)
 "yK" = (
@@ -678,7 +678,7 @@
 /area/station/maintenance/aft)
 "AC" = (
 /obj/machinery/power/rad_collector/anchored,
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 6
 	},
 /obj/structure/cable,
@@ -692,7 +692,7 @@
 	dir = 4
 	},
 /obj/machinery/power/rad_collector/anchored,
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 8
 	},
 /obj/machinery/power/rad_collector/anchored,
@@ -710,7 +710,7 @@
 	dir = 1;
 	filter_type = "n2o"
 	},
-/obj/effect/turf_decal/industrial/warning/full,
+/obj/effect/turf_decal/stripes/full,
 /turf/open/floor/engine,
 /area/station/engineering/engine)
 "AZ" = (
@@ -724,7 +724,7 @@
 /obj/machinery/computer/autopilot{
 	dir = 8
 	},
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "BD" = (
@@ -737,7 +737,7 @@
 /obj/machinery/computer/operating{
 	dir = 8
 	},
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /turf/open/floor/iron,
 /area/station/medical)
 "BU" = (
@@ -756,7 +756,7 @@
 /turf/open/floor/plating,
 /area/station/external)
 "CL" = (
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
@@ -819,7 +819,7 @@
 /area/station/command/bridge)
 "EJ" = (
 /obj/machinery/atmospherics/components/unary/portables_connector,
-/obj/effect/turf_decal/industrial/warning/full,
+/obj/effect/turf_decal/stripes/full,
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/engine,
 /area/station/engineering/engine)
@@ -830,7 +830,7 @@
 /turf/open/floor/iron,
 /area/station/cargo)
 "Ff" = (
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -855,7 +855,7 @@
 /obj/machinery/autolathe,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/iron/fifty,
-/obj/effect/turf_decal/corner/brown/mono,
+/obj/effect/turf_decal/tile/brown/mono,
 /turf/open/floor/iron,
 /area/station/cargo)
 "In" = (
@@ -871,7 +871,7 @@
 /obj/structure/holosign/barrier/atmos,
 /obj/structure/window/reinforced/plasma/spawner/east,
 /obj/structure/window/reinforced/plasma/spawner/west,
-/obj/effect/turf_decal/industrial/warning,
+/obj/effect/turf_decal/stripes,
 /turf/open/floor/engine,
 /area/station/engineering/engine)
 "Ir" = (
@@ -886,12 +886,12 @@
 "IZ" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/backpack/duffelbag/med/surgery,
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /turf/open/floor/iron,
 /area/station/medical)
 "Jw" = (
 /obj/machinery/power/rad_collector/anchored,
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -940,7 +940,7 @@
 /obj/machinery/computer/helm{
 	dir = 8
 	},
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "KT" = (
@@ -954,7 +954,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/maintenance/aft)
 "LU" = (
-/obj/effect/turf_decal/industrial/warning/corner,
+/obj/effect/turf_decal/stripes/corner,
 /obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable,
 /turf/open/floor/engine,
@@ -962,7 +962,7 @@
 "MF" = (
 /obj/machinery/ore_silo,
 /obj/item/multitool,
-/obj/effect/turf_decal/corner/brown/mono,
+/obj/effect/turf_decal/tile/brown/mono,
 /turf/open/floor/iron,
 /area/station/cargo)
 "MO" = (
@@ -993,8 +993,8 @@
 /turf/open/floor/engine,
 /area/station/engineering/engine)
 "Nr" = (
-/obj/effect/turf_decal/industrial/warning,
-/obj/effect/turf_decal/industrial/warning/full,
+/obj/effect/turf_decal/stripes,
+/obj/effect/turf_decal/stripes/full,
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	dir = 1;
 	min_temperature = 3;
@@ -1032,7 +1032,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "OW" = (
-/obj/machinery/atmospherics/components/unary/tank/air,
+/obj/machinery/atmospherics/components/tank/air,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "Pa" = (
@@ -1057,8 +1057,8 @@
 	min_temperature = 3;
 	target_temperature = 3
 	},
-/obj/effect/turf_decal/industrial/warning,
-/obj/effect/turf_decal/industrial/warning/full,
+/obj/effect/turf_decal/stripes,
+/obj/effect/turf_decal/stripes/full,
 /turf/open/floor/engine,
 /area/station/engineering/engine)
 "Pz" = (
@@ -1096,7 +1096,7 @@
 	dir = 9
 	},
 /obj/machinery/power/rad_collector/anchored,
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 10
 	},
 /obj/structure/cable,
@@ -1126,7 +1126,7 @@
 /obj/structure/rack,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/storage/toolbox/electrical,
-/obj/effect/turf_decal/corner/brown/mono,
+/obj/effect/turf_decal/tile/brown/mono,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -1147,7 +1147,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/green/visible{
 	dir = 1
 	},
-/obj/effect/turf_decal/industrial/warning/corner{
+/obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -1173,10 +1173,10 @@
 /area/station/maintenance/aft)
 "Sq" = (
 /obj/structure/cable,
-/obj/effect/turf_decal/industrial/warning/corner{
+/obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/effect/turf_decal/industrial/warning/corner{
+/obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -1312,7 +1312,7 @@
 /area/station/medical)
 "WE" = (
 /obj/structure/cable,
-/obj/effect/turf_decal/industrial/warning/full,
+/obj/effect/turf_decal/stripes/full,
 /obj/machinery/power/emitter/welded,
 /turf/open/floor/engine,
 /area/station/engineering/engine)
@@ -1343,7 +1343,7 @@
 /area/station/commons/dorms)
 "Zj" = (
 /obj/machinery/stasis,
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron,
 /area/station/medical)
@@ -1364,7 +1364,7 @@
 /obj/item/storage/firstaid/toxin,
 /obj/item/storage/pill_bottle/penacid,
 /obj/item/storage/pill_bottle/potassiodide,
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 5
 	},
 /obj/item/storage/firstaid/toxin,
@@ -1391,11 +1391,11 @@
 /obj/item/t_scanner/adv_mining_scanner/lesser,
 /obj/item/t_scanner/adv_mining_scanner/lesser,
 /obj/item/t_scanner/adv_mining_scanner/lesser,
-/obj/effect/turf_decal/corner/brown/mono,
+/obj/effect/turf_decal/tile/brown/mono,
 /turf/open/floor/iron,
 /area/station/cargo)
 "ZP" = (
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 6
 	},
 /obj/machinery/button/massdriver{

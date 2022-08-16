@@ -258,7 +258,7 @@
 /turf/open/floor/engine,
 /area/station/science)
 "qQ" = (
-/obj/machinery/atmospherics/components/unary/tank/air,
+/obj/machinery/atmospherics/components/tank/air,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "qY" = (
@@ -408,7 +408,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "wk" = (
-/obj/machinery/atmospherics/components/unary/tank/toxins,
+/obj/machinery/atmospherics/components/tank/plasma,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "wr" = (

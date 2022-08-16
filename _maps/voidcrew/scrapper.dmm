@@ -69,7 +69,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 4
 	},
-/obj/effect/turf_decal/corner_techfloor_grid{
+/obj/effect/turf_decal/tile_techfloor_grid{
 	dir = 8
 	},
 /obj/effect/turf_decal/techfloor/orange/corner{
@@ -629,7 +629,7 @@
 /area/station/commons/dorms)
 "hq" = (
 /obj/effect/turf_decal/industrial/hatch/yellow,
-/obj/machinery/atmospherics/components/unary/tank/air{
+/obj/machinery/atmospherics/components/tank/air{
 	piping_layer = 1
 	},
 /turf/open/floor/plating,
@@ -851,7 +851,7 @@
 /obj/machinery/computer/helm/viewscreen{
 	pixel_y = 32
 	},
-/obj/machinery/atmospherics/components/unary/tank/toxins,
+/obj/machinery/atmospherics/components/tank/plasma,
 /turf/open/floor/plating,
 /area/station/engineering/atmospherics)
 "lJ" = (
@@ -1947,7 +1947,7 @@
 /area/station/engineering/engine)
 "zq" = (
 /obj/effect/turf_decal/industrial/hatch/yellow,
-/obj/machinery/atmospherics/components/unary/tank/air{
+/obj/machinery/atmospherics/components/tank/air{
 	piping_layer = 1
 	},
 /turf/open/floor/plating,
@@ -2668,7 +2668,7 @@
 /obj/machinery/computer/helm/viewscreen{
 	pixel_y = 32
 	},
-/obj/machinery/atmospherics/components/unary/tank/toxins,
+/obj/machinery/atmospherics/components/tank/plasma,
 /turf/open/floor/plating,
 /area/station/engineering/engine)
 "ID" = (

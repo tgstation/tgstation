@@ -174,7 +174,7 @@
 /turf/open/floor/wood/mahogany,
 /area/station/commons/chapel/office)
 "dr" = (
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /obj/structure/closet/cardboard,
 /obj/item/storage/box/drinkingglasses,
 /obj/item/reagent_containers/cup/glass/bottle/wine,
@@ -225,7 +225,7 @@
 	},
 /area/station/command/bridge)
 "ei" = (
-/obj/effect/turf_decal/corner/white/diagonal,
+/obj/effect/turf_decal/tile/white/diagonal,
 /obj/structure/closet/crate/bin,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
@@ -248,7 +248,7 @@
 	id = "corpcargobay1";
 	name = "cargo bay exterior blast door"
 	},
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 8
 	},
 /obj/machinery/button/door{
@@ -302,7 +302,7 @@
 /turf/open/floor/carpet/nanoweave,
 /area/station/command/bridge)
 "eU" = (
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 5
 	},
 /obj/structure/window/reinforced/plasma/spawner/north,
@@ -382,7 +382,7 @@
 /turf/open/floor/plating,
 /area/station/engineering)
 "gN" = (
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /obj/structure/reagent_dispensers/beerkeg,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
@@ -485,17 +485,17 @@
 /turf/open/floor/wood/yew,
 /area/station/commons/chapel/office)
 "hW" = (
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 4
 	},
 /turf/open/floor/engine,
 /area/station/cargo)
 "hY" = (
-/obj/effect/turf_decal/corner/white/diagonal,
+/obj/effect/turf_decal/tile/white/diagonal,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "ii" = (
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 10
 	},
 /turf/open/floor/engine,
@@ -566,9 +566,9 @@
 /obj/item/clothing/suit/toggle/lawyer/black,
 /obj/item/clothing/suit/toggle/lawyer/black,
 /obj/item/clothing/suit/toggle/lawyer/black,
-/obj/item/clothing/suit/toggle/lawyer/brown,
-/obj/item/clothing/suit/toggle/lawyer/brown,
-/obj/item/clothing/suit/toggle/lawyer/brown,
+/obj/item/clothing/suit/toggle/lawyer/purple,
+/obj/item/clothing/suit/toggle/lawyer/purple,
+/obj/item/clothing/suit/toggle/lawyer/purple,
 /obj/item/clothing/under/suit/black,
 /obj/item/clothing/under/suit/black,
 /obj/item/clothing/under/suit/black,
@@ -644,7 +644,7 @@
 /obj/effect/turf_decal/industrial/stand_clear{
 	dir = 1
 	},
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 1
 	},
 /turf/open/floor/engine,
@@ -664,7 +664,7 @@
 /turf/open/floor/engine/o2,
 /area/station/engineering)
 "lo" = (
-/obj/effect/turf_decal/industrial/warning,
+/obj/effect/turf_decal/stripes,
 /turf/open/floor/engine,
 /area/station/cargo)
 "lw" = (
@@ -830,7 +830,7 @@
 /turf/open/floor/carpet,
 /area/station/command/bridge)
 "pt" = (
-/obj/effect/turf_decal/corner/white/diagonal,
+/obj/effect/turf_decal/tile/white/diagonal,
 /obj/structure/table,
 /obj/machinery/microwave{
 	pixel_y = 5
@@ -978,7 +978,7 @@
 /area/station/hallway/starboard)
 "rV" = (
 /obj/structure/fans/tiny,
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 8
 	},
 /obj/machinery/door/poddoor{
@@ -1036,7 +1036,7 @@
 /obj/structure/mirror{
 	pixel_x = 24
 	},
-/obj/effect/turf_decal/corner/blue/diagonal,
+/obj/effect/turf_decal/tile/blue/diagonal,
 /turf/open/floor/iron/white,
 /area/station/commons/dorms)
 "sr" = (
@@ -1241,7 +1241,7 @@
 /turf/open/floor/wood/bamboo,
 /area/station/commons/dorms)
 "uC" = (
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 6
 	},
 /turf/open/floor/engine,
@@ -1282,7 +1282,7 @@
 /area/station/commons/office)
 "vW" = (
 /obj/structure/reagent_dispensers/watertank,
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/patterned/grid,
 /area/station/cargo)
 "wf" = (
@@ -1370,7 +1370,7 @@
 /turf/open/floor/carpet/stellar,
 /area/station/commons/office)
 "wX" = (
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 8
 	},
 /turf/open/floor/engine,
@@ -1441,7 +1441,7 @@
 /turf/open/floor/plating,
 /area/station/engineering)
 "yl" = (
-/obj/effect/turf_decal/corner/white/diagonal,
+/obj/effect/turf_decal/tile/white/diagonal,
 /obj/structure/closet/secure_closet/freezer/fridge,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
@@ -1835,7 +1835,7 @@
 /obj/structure/mirror{
 	pixel_x = -24
 	},
-/obj/effect/turf_decal/corner/red/diagonal,
+/obj/effect/turf_decal/tile/red/diagonal,
 /turf/open/floor/iron/white,
 /area/station/commons/dorms)
 "Fl" = (
@@ -1966,7 +1966,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/starboard)
 "GU" = (
-/obj/effect/turf_decal/corner/blue/diagonal,
+/obj/effect/turf_decal/tile/blue/diagonal,
 /obj/machinery/door/airlock/public{
 	name = "Blue Restroom"
 	},
@@ -2069,7 +2069,7 @@
 /turf/open/floor/plating,
 /area/station/engineering)
 "Ix" = (
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /obj/structure/closet/cardboard,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
@@ -2210,7 +2210,7 @@
 /turf/open/floor/carpet/stellar,
 /area/station/commons/office)
 "Ko" = (
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /obj/machinery/mineral/ore_redemption,
 /turf/open/floor/plasteel/patterned/grid,
 /area/station/cargo)
@@ -2308,7 +2308,7 @@
 /turf/open/floor/carpet,
 /area/station/command/bridge)
 "LS" = (
-/obj/effect/turf_decal/corner/blue/diagonal,
+/obj/effect/turf_decal/tile/blue/diagonal,
 /obj/item/reagent_containers/syringe/contraband/methamphetamine,
 /obj/structure/closet/wall{
 	dir = 4;
@@ -2485,7 +2485,7 @@
 /turf/open/floor/carpet/nanoweave/red,
 /area/station/security)
 "NB" = (
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /obj/structure/reagent_dispensers/fueltank,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
@@ -2596,7 +2596,7 @@
 /turf/open/floor/plating,
 /area/station/engineering)
 "Pm" = (
-/obj/effect/turf_decal/corner/blue/diagonal,
+/obj/effect/turf_decal/tile/blue/diagonal,
 /turf/open/floor/iron/white,
 /area/station/commons/dorms)
 "PC" = (
@@ -2623,7 +2623,7 @@
 /turf/open/floor/wood/bamboo,
 /area/station/hallway/starboard)
 "PR" = (
-/obj/effect/turf_decal/corner/white/diagonal,
+/obj/effect/turf_decal/tile/white/diagonal,
 /obj/machinery/processor,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
@@ -2696,7 +2696,7 @@
 /turf/open/floor/wood/maple,
 /area/station/command/bridge)
 "Ri" = (
-/obj/effect/turf_decal/corner/red/diagonal,
+/obj/effect/turf_decal/tile/red/diagonal,
 /turf/open/floor/iron/white,
 /area/station/commons/dorms)
 "Rw" = (
@@ -2741,7 +2741,7 @@
 /turf/open/floor/carpet/nanoweave/beige,
 /area/station/commons/dorms)
 "SC" = (
-/obj/effect/turf_decal/corner/white/diagonal,
+/obj/effect/turf_decal/tile/white/diagonal,
 /obj/structure/table,
 /obj/machinery/reagentgrinder{
 	pixel_y = 7
@@ -2755,7 +2755,7 @@
 /turf/open/floor/plating,
 /area/station/engineering)
 "SX" = (
-/obj/effect/turf_decal/corner/white/diagonal,
+/obj/effect/turf_decal/tile/white/diagonal,
 /obj/structure/table,
 /obj/item/kitchen/knife,
 /obj/item/kitchen/rollingpin,
@@ -2784,7 +2784,7 @@
 /obj/structure/toilet{
 	dir = 8
 	},
-/obj/effect/turf_decal/corner/blue/diagonal,
+/obj/effect/turf_decal/tile/blue/diagonal,
 /turf/open/floor/iron/white,
 /area/station/commons/dorms)
 "TF" = (
@@ -2906,7 +2906,7 @@
 /obj/structure/toilet{
 	dir = 4
 	},
-/obj/effect/turf_decal/corner/red/diagonal,
+/obj/effect/turf_decal/tile/red/diagonal,
 /turf/open/floor/iron/white,
 /area/station/commons/dorms)
 "VV" = (
@@ -2926,7 +2926,7 @@
 /turf/open/floor/iron/dark,
 /area/station/cargo)
 "Wa" = (
-/obj/effect/turf_decal/corner/red/diagonal,
+/obj/effect/turf_decal/tile/red/diagonal,
 /obj/machinery/door/airlock/public{
 	name = "Red Restroom"
 	},
@@ -3018,7 +3018,7 @@
 /turf/open/floor/carpet/nanoweave,
 /area/station/command/bridge)
 "XO" = (
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 9
 	},
 /obj/structure/window/reinforced/plasma/spawner/north,

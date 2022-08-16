@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ay" = (
-/obj/machinery/atmospherics/components/unary/tank/toxins,
+/obj/machinery/atmospherics/components/tank/plasma,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "aB" = (
@@ -48,10 +48,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
-/obj/effect/turf_decal/corner/green{
+/obj/effect/turf_decal/tile/green{
 	dir = 10
 	},
-/obj/effect/turf_decal/corner/blue{
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -94,16 +94,16 @@
 "dy" = (
 /obj/machinery/selling_pad,
 /obj/machinery/airalarm/directional/west,
-/obj/effect/turf_decal/corner/brown/mono,
+/obj/effect/turf_decal/tile/brown/mono,
 /turf/open/floor/iron,
 /area/station/cargo)
 "dz" = (
 /obj/machinery/suit_storage_unit/mining/eva,
-/obj/effect/turf_decal/corner/brown/mono,
+/obj/effect/turf_decal/tile/brown/mono,
 /turf/open/floor/iron,
 /area/station/cargo)
 "en" = (
-/obj/effect/turf_decal/corner/green{
+/obj/effect/turf_decal/tile/green{
 	dir = 10
 	},
 /obj/machinery/firealarm{
@@ -219,7 +219,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
-/obj/effect/turf_decal/corner/brown{
+/obj/effect/turf_decal/tile/brown{
 	dir = 5
 	},
 /turf/open/floor/iron,
@@ -237,10 +237,10 @@
 /area/station/maintenance/aft)
 "nH" = (
 /obj/machinery/airalarm/directional/west,
-/obj/effect/turf_decal/corner/purple{
+/obj/effect/turf_decal/tile/purple{
 	dir = 10
 	},
-/obj/effect/turf_decal/corner/yellow{
+/obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
 /obj/machinery/light,
@@ -285,7 +285,7 @@
 /obj/structure/frame/computer{
 	dir = 8
 	},
-/obj/effect/turf_decal/corner/purple/mono,
+/obj/effect/turf_decal/tile/purple/mono,
 /turf/open/floor/iron,
 /area/station/science)
 "qd" = (
@@ -302,7 +302,7 @@
 "rk" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
-/obj/effect/turf_decal/corner/brown{
+/obj/effect/turf_decal/tile/brown{
 	dir = 5
 	},
 /turf/open/floor/iron,
@@ -312,7 +312,7 @@
 /area/station/command/bridge)
 "sb" = (
 /obj/structure/table/optable,
-/obj/effect/turf_decal/corner/purple/mono,
+/obj/effect/turf_decal/tile/purple/mono,
 /obj/machinery/light,
 /turf/open/floor/iron,
 /area/station/science)
@@ -327,7 +327,7 @@
 /turf/open/floor/iron,
 /area/station/cargo)
 "uf" = (
-/obj/effect/turf_decal/corner/brown{
+/obj/effect/turf_decal/tile/brown{
 	dir = 5
 	},
 /obj/machinery/light{
@@ -373,7 +373,7 @@
 /area/station/commons/dorms)
 "vG" = (
 /obj/machinery/autolathe,
-/obj/effect/turf_decal/corner/brown/mono,
+/obj/effect/turf_decal/tile/brown/mono,
 /obj/item/stack/sheet/metal/ten,
 /obj/item/stack/sheet/glass,
 /obj/item/stack/sheet/glass,
@@ -416,17 +416,17 @@
 /area/station/cargo)
 "zR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/effect/turf_decal/corner/blue{
+/obj/effect/turf_decal/tile/blue{
 	dir = 6
 	},
-/obj/effect/turf_decal/corner/brown{
+/obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "zU" = (
 /obj/structure/rack,
-/obj/effect/turf_decal/corner/brown/mono,
+/obj/effect/turf_decal/tile/brown/mono,
 /obj/item/pickaxe/silver,
 /obj/item/pickaxe/silver,
 /obj/item/pickaxe/silver,
@@ -452,14 +452,14 @@
 /area/station/science)
 "Bl" = (
 /obj/structure/frame/machine,
-/obj/effect/turf_decal/corner/purple/mono,
+/obj/effect/turf_decal/tile/purple/mono,
 /turf/open/floor/iron,
 /area/station/science)
 "Bv" = (
 /obj/machinery/computer/selling_pad_control{
 	dir = 4
 	},
-/obj/effect/turf_decal/corner/brown/mono,
+/obj/effect/turf_decal/tile/brown/mono,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -499,7 +499,7 @@
 /obj/item/storage/firstaid/fire{
 	pixel_x = -6
 	},
-/obj/effect/turf_decal/corner/purple/mono,
+/obj/effect/turf_decal/tile/purple/mono,
 /turf/open/floor/iron,
 /area/station/science)
 "DT" = (
@@ -509,7 +509,7 @@
 "Em" = (
 /obj/machinery/ore_silo,
 /obj/item/multitool,
-/obj/effect/turf_decal/corner/brown/mono,
+/obj/effect/turf_decal/tile/brown/mono,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -549,7 +549,7 @@
 /obj/machinery/computer/autopilot{
 	dir = 8
 	},
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "FI" = (
@@ -600,7 +600,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer4{
 	dir = 1
 	},
-/obj/effect/turf_decal/corner/blue{
+/obj/effect/turf_decal/tile/blue{
 	dir = 6
 	},
 /turf/open/floor/iron,
@@ -614,15 +614,15 @@
 /obj/machinery/computer/helm{
 	dir = 8
 	},
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "IC" = (
 /obj/structure/tank_dispenser/oxygen,
-/obj/effect/turf_decal/corner/brown{
+/obj/effect/turf_decal/tile/brown{
 	dir = 5
 	},
-/obj/effect/turf_decal/corner/yellow{
+/obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -639,7 +639,7 @@
 /obj/machinery/computer/cargo/express{
 	dir = 1
 	},
-/obj/effect/turf_decal/corner/brown/mono,
+/obj/effect/turf_decal/tile/brown/mono,
 /turf/open/floor/iron,
 /area/station/cargo)
 "Ka" = (
@@ -673,7 +673,7 @@
 	},
 /obj/item/storage/toolbox/electrical,
 /obj/item/multitool,
-/obj/effect/turf_decal/corner/purple/mono,
+/obj/effect/turf_decal/tile/purple/mono,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -693,7 +693,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/obj/effect/turf_decal/corner/purple{
+/obj/effect/turf_decal/tile/purple{
 	dir = 10
 	},
 /turf/open/floor/iron,
@@ -729,7 +729,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/effect/turf_decal/corner/yellow{
+/obj/effect/turf_decal/tile/yellow{
 	dir = 9
 	},
 /turf/open/floor/iron,
@@ -755,7 +755,7 @@
 /obj/structure/frame/computer{
 	dir = 8
 	},
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "Sp" = (
@@ -805,7 +805,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 1
 	},
-/obj/effect/turf_decal/corner/purple{
+/obj/effect/turf_decal/tile/purple{
 	dir = 10
 	},
 /turf/open/floor/iron,
@@ -820,7 +820,7 @@
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "WH" = (
-/obj/machinery/atmospherics/components/unary/tank/air,
+/obj/machinery/atmospherics/components/tank/air,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "WT" = (
@@ -831,7 +831,7 @@
 "XT" = (
 /obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/structure/table,
-/obj/effect/turf_decal/corner/purple/mono,
+/obj/effect/turf_decal/tile/purple/mono,
 /obj/item/defibrillator,
 /turf/open/floor/iron,
 /area/station/science)

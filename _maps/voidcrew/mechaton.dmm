@@ -54,7 +54,7 @@
 "bH" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
-/obj/effect/turf_decal/industrial/warning/fulltile,
+/obj/effect/turf_decal/stripes/fulltile,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 4
 	},
@@ -231,7 +231,7 @@
 /area/station/hallway/primary/central)
 "iK" = (
 /obj/machinery/door/firedoor,
-/obj/effect/turf_decal/industrial/warning/fulltile,
+/obj/effect/turf_decal/stripes/fulltile,
 /obj/machinery/door/airlock/research/glass{
 	name = "Robotics Lab"
 	},
@@ -244,7 +244,7 @@
 	dir = 1;
 	pixel_y = -26
 	},
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plasteel/mono/dark,
 /area/station/cargo)
@@ -361,7 +361,7 @@
 /area/station/engineering/engine)
 "mW" = (
 /obj/machinery/door/firedoor,
-/obj/effect/turf_decal/industrial/warning/fulltile,
+/obj/effect/turf_decal/stripes/fulltile,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 4
 	},
@@ -394,7 +394,7 @@
 /area/station/hallway/primary/central)
 "nY" = (
 /obj/machinery/door/firedoor,
-/obj/effect/turf_decal/industrial/warning/fulltile,
+/obj/effect/turf_decal/stripes/fulltile,
 /obj/machinery/door/airlock/research/glass{
 	name = "Cargo Bay"
 	},
@@ -447,7 +447,7 @@
 /turf/open/floor/plasteel/mono/dark,
 /area/station/cargo)
 "pI" = (
-/obj/machinery/atmospherics/components/unary/tank/toxins{
+/obj/machinery/atmospherics/components/tank/plasma{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
@@ -530,7 +530,7 @@
 /turf/open/floor/plasteel/tech,
 /area/station/hallway/primary/central)
 "sj" = (
-/obj/machinery/atmospherics/components/unary/tank/air{
+/obj/machinery/atmospherics/components/tank/air{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
@@ -647,7 +647,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
-/obj/effect/turf_decal/industrial/warning/fulltile,
+/obj/effect/turf_decal/stripes/fulltile,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plasteel/mono/dark,
 /area/station/science/robotics)
@@ -693,7 +693,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
-/obj/effect/turf_decal/industrial/warning/fulltile,
+/obj/effect/turf_decal/stripes/fulltile,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine)
@@ -790,7 +790,7 @@
 "zO" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
-/obj/effect/turf_decal/industrial/warning/fulltile,
+/obj/effect/turf_decal/stripes/fulltile,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 4
 	},
@@ -830,7 +830,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "AP" = (
-/obj/effect/turf_decal/industrial/outline,
+/obj/effect/turf_decal/bot_white,
 /obj/structure/closet/crate/internals,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/clothing/mask/breath,
@@ -910,7 +910,7 @@
 /area/station/hallway/primary/central)
 "Bt" = (
 /obj/machinery/suit_storage_unit/mining/eva,
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plasteel/mono/dark,
 /area/station/cargo)
@@ -939,7 +939,7 @@
 /obj/item/storage/box/donkpockets/donkpocketpizza,
 /obj/item/storage/box/donkpockets/donkpocketpizza,
 /obj/item/storage/box/donkpockets/donkpocketpizza,
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plasteel/mono/dark,
 /area/station/cargo)
@@ -983,7 +983,7 @@
 /area/station/science/robotics)
 "Dt" = (
 /obj/machinery/autolathe,
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plasteel/mono/dark,
 /area/station/cargo)
@@ -1023,7 +1023,7 @@
 /area/station/command/bridge)
 "El" = (
 /obj/machinery/door/firedoor,
-/obj/effect/turf_decal/industrial/warning/fulltile,
+/obj/effect/turf_decal/stripes/fulltile,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 4
 	},
@@ -1091,7 +1091,7 @@
 	dir = 1;
 	output_dir = 1
 	},
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plasteel/mono/dark,
 /area/station/cargo)
@@ -1323,7 +1323,7 @@
 "Md" = (
 /obj/machinery/suit_storage_unit/mining/eva,
 /obj/machinery/airalarm/directional/south,
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plasteel/mono/dark,
 /area/station/cargo)
@@ -1430,7 +1430,7 @@
 /turf/closed/wall/r_wall,
 /area/station/hallway/primary/central)
 "Pn" = (
-/obj/effect/turf_decal/industrial/outline,
+/obj/effect/turf_decal/bot_white,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/closet/crate/freezer,
 /obj/item/storage/cans/sixbeer,
@@ -1486,7 +1486,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "Ql" = (
-/obj/effect/turf_decal/industrial/outline,
+/obj/effect/turf_decal/bot_white,
 /obj/structure/closet/crate,
 /obj/item/pickaxe/emergency,
 /obj/item/flashlight,
@@ -1738,7 +1738,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "Wf" = (
-/obj/effect/turf_decal/industrial/outline,
+/obj/effect/turf_decal/bot_white,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/crate/science,
@@ -1788,7 +1788,7 @@
 "YV" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
-/obj/effect/turf_decal/industrial/warning/fulltile,
+/obj/effect/turf_decal/stripes/fulltile,
 /obj/machinery/door/airlock/engineering{
 	name = "Engine Room"
 	},

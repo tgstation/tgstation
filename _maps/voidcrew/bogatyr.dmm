@@ -526,7 +526,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/station/cargo)
 "wN" = (
-/obj/machinery/atmospherics/components/unary/tank/air{
+/obj/machinery/atmospherics/components/tank/air{
 	dir = 4;
 	piping_layer = 4
 	},

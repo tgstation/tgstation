@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "an" = (
-/obj/effect/turf_decal/corner/brown{
+/obj/effect/turf_decal/tile/brown{
 	dir = 10
 	},
 /obj/machinery/ore_silo,
@@ -46,7 +46,7 @@
 /turf/open/floor/cult,
 /area/station/cargo)
 "bk" = (
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -159,7 +159,7 @@
 /area/station/engineering/electrical)
 "dv" = (
 /obj/machinery/computer/atmos_alert,
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "dA" = (
@@ -236,7 +236,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/station/engineering/electrical)
 "gN" = (
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /obj/machinery/autolathe,
 /turf/open/floor/cult,
 /area/station/storage)
@@ -246,7 +246,7 @@
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "ib" = (
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
 	},
@@ -304,7 +304,7 @@
 /turf/open/floor/cult,
 /area/station/security)
 "jO" = (
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /obj/machinery/firealarm{
 	pixel_y = -26
 	},
@@ -338,7 +338,7 @@
 /area/station/hallway/primary/central)
 "ky" = (
 /obj/structure/ore_box,
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/cult,
 /area/station/storage)
 "kB" = (
@@ -361,7 +361,7 @@
 /turf/open/floor/cult,
 /area/station/commons/dorms)
 "lk" = (
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -388,7 +388,7 @@
 /area/station/security)
 "lP" = (
 /obj/item/kirbyplants/random,
-/obj/effect/turf_decal/corner/blue{
+/obj/effect/turf_decal/tile/blue{
 	dir = 10
 	},
 /obj/machinery/light,
@@ -409,7 +409,7 @@
 /area/station/commons/dorms)
 "mz" = (
 /obj/machinery/computer/helm,
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "mC" = (
@@ -485,7 +485,7 @@
 /turf/open/floor/cult,
 /area/station/security)
 "oW" = (
-/obj/effect/turf_decal/industrial/traffic/fulltile,
+/obj/effect/turf_decal/stripes/white/fulltile,
 /obj/structure/fans/tiny,
 /obj/docking_port/mobile{
 	dir = 4;
@@ -509,7 +509,7 @@
 /turf/open/floor/cult,
 /area/station/security)
 "pC" = (
-/obj/effect/turf_decal/corner/brown{
+/obj/effect/turf_decal/tile/brown{
 	dir = 10
 	},
 /obj/machinery/light{
@@ -532,7 +532,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "qf" = (
-/obj/effect/turf_decal/corner/brown{
+/obj/effect/turf_decal/tile/brown{
 	dir = 5
 	},
 /obj/machinery/door/firedoor/border_only{
@@ -558,7 +558,7 @@
 /turf/open/floor/engine/cult,
 /area/station/engineering/electrical)
 "qS" = (
-/obj/effect/turf_decal/industrial/traffic/fulltile,
+/obj/effect/turf_decal/stripes/white/fulltile,
 /obj/structure/fans/tiny,
 /obj/machinery/door/poddoor{
 	id = "portloadingbay";
@@ -571,7 +571,7 @@
 /turf/open/floor/iron,
 /area/station/storage)
 "re" = (
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /obj/effect/turf_decal/industrial/stand_clear{
 	dir = 4
 	},
@@ -588,7 +588,7 @@
 /turf/open/floor/engine/cult,
 /area/station/engineering/electrical)
 "rz" = (
-/obj/effect/turf_decal/corner/brown{
+/obj/effect/turf_decal/tile/brown{
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
@@ -606,7 +606,7 @@
 "sF" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
-/obj/effect/turf_decal/corner/blue{
+/obj/effect/turf_decal/tile/blue{
 	dir = 10
 	},
 /obj/structure/cable,
@@ -616,7 +616,7 @@
 /turf/open/floor/cult,
 /area/station/security)
 "sO" = (
-/obj/effect/turf_decal/corner/blue{
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -659,7 +659,7 @@
 /turf/open/floor/cult,
 /area/station/commons/dorms)
 "uD" = (
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -669,7 +669,7 @@
 /obj/machinery/modular_computer/console/preset/command{
 	dir = 8
 	},
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -682,7 +682,7 @@
 /area/station/engineering/electrical)
 "uX" = (
 /obj/item/kirbyplants/random,
-/obj/effect/turf_decal/corner/blue{
+/obj/effect/turf_decal/tile/blue{
 	dir = 10
 	},
 /obj/machinery/light,
@@ -705,7 +705,7 @@
 /turf/open/floor/cult,
 /area/station/cargo)
 "vD" = (
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /obj/machinery/computer/cargo/express{
 	dir = 1
 	},
@@ -717,7 +717,7 @@
 /turf/open/floor/engine/cult,
 /area/station/commons/dorms)
 "wb" = (
-/obj/effect/turf_decal/industrial/traffic/fulltile,
+/obj/effect/turf_decal/stripes/white/fulltile,
 /obj/structure/fans/tiny,
 /obj/machinery/door/poddoor{
 	id = "portloadingbay";
@@ -771,7 +771,7 @@
 /area/station/commons/dorms)
 "xQ" = (
 /obj/machinery/suit_storage_unit/mining/eva,
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -803,7 +803,7 @@
 /turf/open/floor/engine/cult,
 /area/station/engineering/electrical)
 "yV" = (
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /obj/effect/turf_decal/industrial/stand_clear{
 	dir = 8
 	},
@@ -820,7 +820,7 @@
 /turf/open/floor/iron,
 /area/station/cargo)
 "zQ" = (
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /obj/effect/turf_decal/industrial/stand_clear{
 	dir = 8
 	},
@@ -843,7 +843,7 @@
 "AR" = (
 /obj/structure/window/reinforced,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /obj/item/storage/toolbox/electrical{
 	pixel_x = -2;
 	pixel_y = 5
@@ -879,7 +879,7 @@
 /turf/open/floor/engine/cult,
 /area/station/storage)
 "Bx" = (
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
 	},
@@ -925,7 +925,7 @@
 /turf/open/floor/engine/cult,
 /area/station/engineering/electrical)
 "BY" = (
-/obj/effect/turf_decal/corner/brown{
+/obj/effect/turf_decal/tile/brown{
 	dir = 5
 	},
 /obj/machinery/door/firedoor/border_only{
@@ -940,7 +940,7 @@
 	syndicate_network = 1
 	},
 /obj/structure/table/reinforced,
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "Cd" = (
@@ -956,11 +956,11 @@
 /area/station/external)
 "CC" = (
 /obj/machinery/computer/station_alert,
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "Dg" = (
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /turf/open/floor/iron,
 /area/station/cargo)
 "Dj" = (
@@ -974,7 +974,7 @@
 /area/station/cargo)
 "Dk" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/unary/tank/toxins,
+/obj/machinery/atmospherics/components/tank/plasma,
 /turf/open/floor/engine/cult,
 /area/station/engineering/electrical)
 "Dn" = (
@@ -1052,7 +1052,7 @@
 "FX" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -1068,13 +1068,13 @@
 /turf/open/floor/cult,
 /area/station/storage)
 "GI" = (
-/obj/machinery/atmospherics/components/unary/tank/toxins,
+/obj/machinery/atmospherics/components/tank/plasma,
 /turf/open/floor/engine/cult,
 /area/station/engineering/electrical)
 "GN" = (
 /obj/structure/cable,
 /obj/structure/closet/secure_closet/engineering_personal,
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /obj/item/clothing/gloves/color/yellow,
 /turf/open/floor/engine/cult,
 /area/station/engineering/electrical)
@@ -1172,7 +1172,7 @@
 /area/station/commons/dorms)
 "JL" = (
 /obj/machinery/smartfridge/drying_rack,
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "Ka" = (
@@ -1191,7 +1191,7 @@
 /area/station/commons/dorms)
 "Kw" = (
 /obj/machinery/computer/autopilot,
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "Kz" = (
@@ -1232,7 +1232,7 @@
 /turf/open/floor/engine/cult,
 /area/station/engineering/electrical)
 "Ly" = (
-/obj/effect/turf_decal/industrial/traffic/fulltile,
+/obj/effect/turf_decal/stripes/white/fulltile,
 /obj/structure/fans/tiny,
 /obj/machinery/door/poddoor{
 	id = "starboardloadingbay";
@@ -1241,10 +1241,10 @@
 /turf/open/floor/cult,
 /area/station/cargo)
 "LB" = (
-/obj/effect/turf_decal/corner/brown{
+/obj/effect/turf_decal/tile/brown{
 	dir = 6
 	},
-/obj/effect/turf_decal/corner/brown{
+/obj/effect/turf_decal/tile/brown{
 	dir = 5
 	},
 /obj/machinery/power/floodlight,
@@ -1366,7 +1366,7 @@
 /area/station/commons/dorms)
 "NW" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/unary/tank/air,
+/obj/machinery/atmospherics/components/tank/air,
 /turf/open/floor/engine/cult,
 /area/station/engineering/electrical)
 "Oi" = (
@@ -1401,7 +1401,7 @@
 /area/station/security)
 "OO" = (
 /obj/structure/cable,
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/item/clothing/gloves/color/yellow,
@@ -1409,7 +1409,7 @@
 /turf/open/floor/engine/cult,
 /area/station/engineering/electrical)
 "OQ" = (
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /obj/machinery/power/floodlight,
 /turf/open/floor/iron,
 /area/station/cargo)
@@ -1436,7 +1436,7 @@
 /turf/open/floor/engine/cult,
 /area/station/engineering/electrical)
 "Pw" = (
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/firealarm{
 	pixel_y = 26
@@ -1444,7 +1444,7 @@
 /turf/open/floor/iron,
 /area/station/cargo)
 "PA" = (
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/station/cargo)
@@ -1459,7 +1459,7 @@
 /turf/open/floor/engine/cult,
 /area/station/external)
 "PM" = (
-/obj/effect/turf_decal/corner/blue{
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -1473,14 +1473,14 @@
 /turf/open/floor/engine/cult,
 /area/station/storage)
 "Qn" = (
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 8
 	},
 /turf/open/floor/cult,
 /area/station/cargo)
 "Qx" = (
-/obj/effect/turf_decal/corner/brown{
+/obj/effect/turf_decal/tile/brown{
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
@@ -1495,7 +1495,7 @@
 /turf/open/floor/cult,
 /area/station/storage)
 "QJ" = (
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /obj/structure/table/reinforced,
 /obj/item/areaeditor,
 /obj/item/megaphone/command{
@@ -1520,7 +1520,7 @@
 	name = "dried tobacco leaves"
 	},
 /obj/item/clothing/mask/cigarette/pipe/cobpipe,
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -1537,7 +1537,7 @@
 /turf/open/floor/cult,
 /area/station/security)
 "QU" = (
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /turf/open/floor/cult,
 /area/station/cargo)
 "QV" = (
@@ -1548,7 +1548,7 @@
 /turf/open/floor/engine/cult,
 /area/station/engineering/electrical)
 "Rw" = (
-/obj/effect/turf_decal/corner/brown{
+/obj/effect/turf_decal/tile/brown{
 	dir = 10
 	},
 /obj/machinery/door/firedoor/border_only{
@@ -1585,16 +1585,16 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/hallway/primary/central)
 "Sl" = (
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /obj/machinery/suit_storage_unit/mining/eva,
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/storage)
 "Sq" = (
-/obj/effect/turf_decal/corner/yellow/mono,
+/obj/effect/turf_decal/tile/yellow/mono,
 /obj/machinery/firealarm{
 	pixel_y = 26
 	},
@@ -1602,7 +1602,7 @@
 /area/station/cargo)
 "SE" = (
 /obj/machinery/suit_storage_unit/mining/eva,
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -1646,7 +1646,7 @@
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "Up" = (
-/obj/effect/turf_decal/corner/blue{
+/obj/effect/turf_decal/tile/blue{
 	dir = 10
 	},
 /obj/machinery/firealarm{
@@ -1726,7 +1726,7 @@
 	},
 /obj/structure/table/reinforced,
 /obj/item/areaeditor,
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "Xr" = (
@@ -1746,7 +1746,7 @@
 /turf/open/floor/cult,
 /area/station/storage)
 "XJ" = (
-/obj/effect/turf_decal/corner/blue{
+/obj/effect/turf_decal/tile/blue{
 	dir = 10
 	},
 /obj/machinery/airalarm/directional/south,
@@ -1755,11 +1755,11 @@
 /area/station/command/bridge)
 "XV" = (
 /obj/machinery/computer/crew,
-/obj/effect/turf_decal/corner/blue/mono,
+/obj/effect/turf_decal/tile/blue/mono,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "XY" = (
-/obj/effect/turf_decal/corner/brown{
+/obj/effect/turf_decal/tile/brown{
 	dir = 5
 	},
 /turf/open/floor/cult,
@@ -1811,7 +1811,7 @@
 /turf/open/floor/engine/cult,
 /area/station/engineering/electrical)
 "YJ" = (
-/obj/effect/turf_decal/industrial/traffic/fulltile,
+/obj/effect/turf_decal/stripes/white/fulltile,
 /obj/structure/fans/tiny,
 /obj/machinery/door/poddoor{
 	id = "starboardloadingbay";

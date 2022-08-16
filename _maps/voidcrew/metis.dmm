@@ -545,7 +545,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/station/commons/canteen)
 "ij" = (
-/obj/machinery/atmospherics/components/unary/tank/toxins{
+/obj/machinery/atmospherics/components/tank/plasma{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -1085,7 +1085,7 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/station/hallway/fore)
 "ra" = (
-/obj/machinery/atmospherics/components/unary/tank/nitrogen{
+/obj/machinery/atmospherics/components/tank/nitrogen{
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -3062,7 +3062,7 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/station/hallway/fore)
 "Sg" = (
-/obj/machinery/atmospherics/components/unary/tank/oxygen{
+/obj/machinery/atmospherics/components/tank/oxygen{
 	dir = 4;
 	piping_layer = 2
 	},

@@ -213,7 +213,7 @@
 /obj/machinery/computer/helm/viewscreen{
 	pixel_y = 32
 	},
-/obj/machinery/atmospherics/components/unary/tank/toxins,
+/obj/machinery/atmospherics/components/tank/plasma,
 /turf/open/floor/plating,
 /area/station/engineering/atmospherics)
 "cI" = (
@@ -872,7 +872,7 @@
 /obj/effect/turf_decal/siding/yellow{
 	dir = 8
 	},
-/obj/effect/turf_decal/corner_techfloor_grid,
+/obj/effect/turf_decal/tile_techfloor_grid,
 /obj/effect/turf_decal/techfloor/corner,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
@@ -1623,7 +1623,7 @@
 /obj/machinery/computer/helm/viewscreen{
 	pixel_y = 32
 	},
-/obj/machinery/atmospherics/components/unary/tank/toxins,
+/obj/machinery/atmospherics/components/tank/plasma,
 /obj/effect/turf_decal/box,
 /turf/open/floor/plating,
 /area/station/engineering/engine)
@@ -2089,7 +2089,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/atmospherics)
 "EZ" = (
-/obj/effect/turf_decal/corner_techfloor_grid{
+/obj/effect/turf_decal/tile_techfloor_grid{
 	dir = 8
 	},
 /obj/effect/turf_decal/techfloor/orange/corner{
@@ -2206,7 +2206,7 @@
 /turf/open/floor/pod/light,
 /area/station/cargo)
 "Gv" = (
-/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/tech,
 /area/station/cargo)
 "Gw" = (
@@ -3282,7 +3282,7 @@
 /turf/open/floor/pod/dark,
 /area/station/cargo)
 "TD" = (
-/obj/effect/turf_decal/corner_techfloor_grid{
+/obj/effect/turf_decal/tile_techfloor_grid{
 	dir = 4
 	},
 /obj/effect/turf_decal/techfloor/corner{
@@ -3547,7 +3547,7 @@
 /area/station/commons/canteen)
 "WR" = (
 /obj/effect/turf_decal/box,
-/obj/machinery/atmospherics/components/unary/tank/air,
+/obj/machinery/atmospherics/components/tank/air,
 /turf/open/floor/plating,
 /area/station/engineering/atmospherics)
 "WZ" = (
@@ -3617,7 +3617,7 @@
 /area/station/commons/dorms)
 "Yk" = (
 /obj/effect/turf_decal/box,
-/obj/machinery/atmospherics/components/unary/tank/air,
+/obj/machinery/atmospherics/components/tank/air,
 /turf/open/floor/plating,
 /area/station/engineering/engine)
 "Yu" = (

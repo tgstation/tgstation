@@ -78,13 +78,13 @@
 /obj/effect/turf_decal/techfloor{
 	dir = 6
 	},
-/obj/machinery/atmospherics/components/unary/tank/toxins{
+/obj/machinery/atmospherics/components/tank/plasma{
 	dir = 8
 	},
 /turf/open/floor/plasteel/tech/techmaint,
 /area/station/maintenance/central)
 "em" = (
-/obj/effect/turf_decal/industrial/warning,
+/obj/effect/turf_decal/stripes,
 /obj/structure/fans/tiny,
 /obj/docking_port/mobile{
 	launch_status = 0;
@@ -294,7 +294,7 @@
 /turf/open/floor/plasteel/tech/techmaint,
 /area/station/engineering)
 "jJ" = (
-/obj/effect/turf_decal/industrial/warning,
+/obj/effect/turf_decal/stripes,
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/station/cargo)
@@ -849,7 +849,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/fore)
 "zY" = (
-/obj/machinery/atmospherics/components/unary/tank/air{
+/obj/machinery/atmospherics/components/tank/air{
 	dir = 1;
 	piping_layer = 2
 	},
@@ -1076,7 +1076,7 @@
 /obj/effect/turf_decal/techfloor{
 	dir = 5
 	},
-/obj/machinery/atmospherics/components/unary/tank/toxins{
+/obj/machinery/atmospherics/components/tank/plasma{
 	dir = 8
 	},
 /turf/open/floor/plasteel/tech/techmaint,

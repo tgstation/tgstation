@@ -36,7 +36,7 @@
 /turf/open/floor/plating,
 /area/station/commons)
 "bZ" = (
-/obj/effect/turf_decal/corner/red,
+/obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron/dark,
 /area/station/commons)
 "dZ" = (
@@ -71,7 +71,7 @@
 /obj/item/wrench,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/orange/hidden{
@@ -80,7 +80,7 @@
 /turf/open/floor/plating,
 /area/station/commons)
 "hN" = (
-/obj/effect/turf_decal/corner/red/three_quarters{
+/obj/effect/turf_decal/tile/red/three_quarters{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -89,7 +89,7 @@
 /obj/machinery/computer/autopilot{
 	dir = 8
 	},
-/obj/effect/turf_decal/corner/red/three_quarters{
+/obj/effect/turf_decal/tile/red/three_quarters{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -115,7 +115,7 @@
 /turf/open/floor/pod/dark,
 /area/station/commons)
 "qE" = (
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 9
 	},
 /obj/machinery/stasis,
@@ -129,7 +129,7 @@
 /turf/open/floor/pod/dark,
 /area/station/commons)
 "rD" = (
-/obj/effect/turf_decal/corner/red/three_quarters{
+/obj/effect/turf_decal/tile/red/three_quarters{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -153,7 +153,7 @@
 /turf/open/floor/pod/dark,
 /area/station/commons)
 "ss" = (
-/obj/effect/turf_decal/corner/red{
+/obj/effect/turf_decal/tile/red{
 	dir = 5
 	},
 /turf/open/floor/iron/dark,
@@ -190,13 +190,13 @@
 /area/station/commons)
 "Bp" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/hidden,
-/obj/effect/turf_decal/corner/red{
+/obj/effect/turf_decal/tile/red{
 	dir = 10
 	},
 /turf/open/floor/iron/dark,
 /area/station/commons)
 "BQ" = (
-/obj/effect/turf_decal/corner/red{
+/obj/effect/turf_decal/tile/red{
 	dir = 10
 	},
 /turf/open/floor/iron/dark,
@@ -213,7 +213,7 @@
 /turf/open/floor/pod/dark,
 /area/station/commons)
 "Dt" = (
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 8
 	},
 /obj/machinery/light/small,
@@ -241,7 +241,7 @@
 /turf/open/floor/pod/dark,
 /area/station/commons)
 "Fa" = (
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 10
 	},
 /obj/structure/rack,
@@ -269,7 +269,7 @@
 "FM" = (
 /obj/structure/table/reinforced,
 /obj/item/assembly/flash/handheld,
-/obj/effect/turf_decal/corner/red/three_quarters{
+/obj/effect/turf_decal/tile/red/three_quarters{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -290,7 +290,7 @@
 /turf/open/floor/plating/airless,
 /area/station/commons)
 "GR" = (
-/obj/effect/turf_decal/corner/red{
+/obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -299,13 +299,13 @@
 /obj/machinery/computer/helm{
 	dir = 8
 	},
-/obj/effect/turf_decal/corner/red{
+/obj/effect/turf_decal/tile/red{
 	dir = 9
 	},
 /turf/open/floor/iron/dark,
 /area/station/commons)
 "HJ" = (
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 8
 	},
 /obj/structure/sign/warning/vacuum/directional/south,
@@ -326,7 +326,7 @@
 /obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
-/obj/effect/turf_decal/corner/red/three_quarters{
+/obj/effect/turf_decal/tile/red/three_quarters{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -358,7 +358,7 @@
 /turf/open/floor/pod/dark,
 /area/station/commons)
 "Lq" = (
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 8
 	},
 /obj/structure/sign/warning/vacuum/directional/north,
@@ -366,23 +366,23 @@
 /turf/open/floor/mineral/plastitanium,
 /area/station/commons)
 "NH" = (
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 8
 	},
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/vending/security/marine{
+/obj/machinery/vending/security{
 	all_items_free = 1
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/station/commons)
 "Pg" = (
-/obj/effect/turf_decal/corner/red/three_quarters,
+/obj/effect/turf_decal/tile/red/three_quarters,
 /turf/open/floor/iron/dark,
 /area/station/commons)
 "Pt" = (
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 4
 	},
 /obj/structure/closet/crate,
@@ -438,7 +438,7 @@
 	fax_name = "Courage Fax"
 	},
 /obj/structure/table/reinforced,
-/obj/effect/turf_decal/corner/red/three_quarters{
+/obj/effect/turf_decal/tile/red/three_quarters{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -475,7 +475,7 @@
 /obj/item/ammo_box/a357,
 /obj/item/card/emag,
 /obj/item/areaeditor,
-/obj/effect/turf_decal/corner/red/three_quarters{
+/obj/effect/turf_decal/tile/red/three_quarters{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -486,11 +486,11 @@
 	storage_type = /obj/item/clothing/shoes/magboots/syndie;
 	suit_type = /obj/item/clothing/suit/space/hardsuit/syndi/elite
 	},
-/obj/effect/turf_decal/corner/red/three_quarters,
+/obj/effect/turf_decal/tile/red/three_quarters,
 /turf/open/floor/iron/dark,
 /area/station/commons)
 "YU" = (
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 10
 	},
 /obj/structure/closet/syndicate{
@@ -514,7 +514,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/station/commons)
 "ZI" = (
-/obj/effect/turf_decal/industrial/warning{
+/obj/effect/turf_decal/stripes{
 	dir = 9
 	},
 /obj/structure/ore_box,
@@ -538,7 +538,7 @@
 /turf/open/floor/iron/dark,
 /area/station/commons)
 "ZZ" = (
-/obj/effect/turf_decal/corner/red/three_quarters{
+/obj/effect/turf_decal/tile/red/three_quarters{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
