@@ -151,7 +151,7 @@
 	helmet_on = !helmet_on
 	icon_state = "[initial(icon_state)][helmet_on ? "-light":""]"
 	inhand_icon_state = icon_state
-	user.update_inv_head() //So the mob overlay updates
+	user.update_worn_head() //So the mob overlay updates
 
 	if(helmet_on)
 		if(!up)

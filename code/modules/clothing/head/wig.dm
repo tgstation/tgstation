@@ -107,4 +107,4 @@
 		if (color != user.hair_color) // only update if necessary
 			add_atom_colour(user.hair_color, FIXED_COLOUR_PRIORITY)
 			update_appearance()
-		user.update_inv_head()
+		user.update_worn_head()

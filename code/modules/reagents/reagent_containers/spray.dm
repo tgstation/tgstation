@@ -409,7 +409,7 @@
 			inhand_icon_state = "sprayer_med_yellow"
 		if("sprayer_med_blue")
 			inhand_icon_state = "sprayer_med_blue"
-	M.update_inv_hands()
+	M.update_held_items()
 
 /obj/item/reagent_containers/spray/hercuri
 	name = "medical spray (hercuri)"
