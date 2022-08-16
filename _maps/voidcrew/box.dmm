@@ -109,7 +109,7 @@
 	dir = 8;
 	pixel_x = -26
 	},
-/obj/effect/turf_decal/tile/neutral/three_quarters,
+/obj/effect/turf_decal/tile/neutral/anticorner,
 /turf/open/floor/iron/dark,
 /area/station/medical)
 "aw" = (
@@ -181,7 +181,7 @@
 /obj/item/storage/firstaid/o2,
 /obj/item/storage/firstaid/toxin,
 /obj/item/storage/firstaid/regular,
-/obj/effect/turf_decal/tile/neutral/three_quarters,
+/obj/effect/turf_decal/tile/neutral/anticorner,
 /turf/open/floor/iron/dark,
 /area/station/medical)
 "aI" = (
@@ -586,7 +586,7 @@
 /obj/machinery/computer/crew{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/blue/three_quarters{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -790,7 +790,7 @@
 	dir = 4
 	},
 /obj/item/kirbyplants/random,
-/obj/effect/turf_decal/tile/neutral/three_quarters{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -837,7 +837,7 @@
 /obj/machinery/computer/helm{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/blue/three_quarters{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -1145,7 +1145,7 @@
 /turf/open/floor/wood,
 /area/station/commons)
 "cW" = (
-/obj/effect/turf_decal/tile/neutral/three_quarters{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -1527,7 +1527,7 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/effect/turf_decal/tile/neutral/three_quarters{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -1803,7 +1803,7 @@
 /turf/open/floor/iron/white,
 /area/station/cargo)
 "Jq" = (
-/obj/effect/turf_decal/tile/blue/three_quarters,
+/obj/effect/turf_decal/tile/blue/anticorner,
 /turf/open/floor/iron/white,
 /area/station/medical)
 "Lt" = (
@@ -1811,7 +1811,7 @@
 	dir = 4
 	},
 /obj/item/kirbyplants/random,
-/obj/effect/turf_decal/tile/neutral/three_quarters{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -1974,7 +1974,7 @@
 /turf/open/floor/plating,
 /area/station/command/bridge)
 "Ye" = (
-/obj/effect/turf_decal/tile/blue/three_quarters{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 8
 	},
 /turf/open/floor/iron/white,

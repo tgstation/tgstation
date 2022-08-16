@@ -1070,7 +1070,7 @@
 /obj/machinery/computer/autopilot{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/blue/three_quarters{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1424,7 +1424,7 @@
 	anchored = 1;
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/blue/three_quarters{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,

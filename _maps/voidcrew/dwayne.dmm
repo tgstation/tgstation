@@ -190,7 +190,7 @@
 /area/station/engineering)
 "gr" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/yellow/three_quarters{
+/obj/effect/turf_decal/tile/yellow/anticorner{
 	dir = 4
 	},
 /obj/structure/guncase/shotgun,

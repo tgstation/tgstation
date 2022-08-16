@@ -36,7 +36,7 @@
 /obj/machinery/status_display/shuttle{
 	pixel_y = -32
 	},
-/obj/effect/turf_decal/tile/blue/three_quarters{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -46,7 +46,7 @@
 /obj/machinery/status_display/shuttle{
 	pixel_y = -32
 	},
-/obj/effect/turf_decal/tile/blue/three_quarters,
+/obj/effect/turf_decal/tile/blue/anticorner,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "ai" = (
@@ -70,7 +70,7 @@
 /obj/item/restraints/handcuffs,
 /obj/item/reagent_containers/food/snacks/chocolatebar,
 /obj/item/assembly/flash,
-/obj/effect/turf_decal/tile/blue/three_quarters{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -111,7 +111,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "aq" = (
-/obj/effect/turf_decal/tile/blue/three_quarters{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -146,7 +146,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "av" = (
-/obj/effect/turf_decal/tile/blue/three_quarters{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -259,7 +259,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/extinguisher,
 /obj/machinery/airalarm/directional/south,
-/obj/effect/turf_decal/tile/blue/three_quarters,
+/obj/effect/turf_decal/tile/blue/anticorner,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "aO" = (
@@ -387,7 +387,7 @@
 /area/station/security/prison)
 "be" = (
 /obj/machinery/computer/operating,
-/obj/effect/turf_decal/tile/white/three_quarters{
+/obj/effect/turf_decal/tile/white/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -425,7 +425,7 @@
 	dir = 1;
 	pixel_y = 26
 	},
-/obj/effect/turf_decal/tile/white/three_quarters{
+/obj/effect/turf_decal/tile/white/anticorner{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -472,7 +472,7 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/north,
-/obj/effect/turf_decal/tile/white/three_quarters{
+/obj/effect/turf_decal/tile/white/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -482,7 +482,7 @@
 /obj/machinery/sleeper,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/white/three_quarters{
+/obj/effect/turf_decal/tile/white/anticorner{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -711,7 +711,7 @@
 	dir = 4;
 	pixel_x = -24
 	},
-/obj/effect/turf_decal/tile/white/three_quarters{
+/obj/effect/turf_decal/tile/white/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -863,7 +863,7 @@
 "cg" = (
 /obj/structure/rack,
 /obj/item/defibrillator/loaded,
-/obj/effect/turf_decal/tile/white/three_quarters{
+/obj/effect/turf_decal/tile/white/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -943,7 +943,7 @@
 	},
 /obj/item/storage/firstaid/fire,
 /obj/item/clothing/suit/space/hardsuit/medical,
-/obj/effect/turf_decal/tile/white/three_quarters,
+/obj/effect/turf_decal/tile/white/anticorner,
 /turf/open/floor/iron,
 /area/station/medical)
 "cm" = (

@@ -259,7 +259,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/bar/three_quarters{
+/obj/effect/turf_decal/tile/bar/anticorner{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -2634,7 +2634,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/bar/three_quarters{
+/obj/effect/turf_decal/tile/bar/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,

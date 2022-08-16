@@ -1210,7 +1210,7 @@
 	desc = "A box containing boards for research equipment.";
 	name = "research equipment box"
 	},
-/obj/effect/turf_decal/tile/purple/three_quarters{
+/obj/effect/turf_decal/tile/purple/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron/white,
@@ -1416,7 +1416,7 @@
 	pixel_y = 5
 	},
 /obj/item/stack/sheet/mineral/plasma,
-/obj/effect/turf_decal/tile/yellow/three_quarters{
+/obj/effect/turf_decal/tile/yellow/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron/white,
@@ -1981,7 +1981,7 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /obj/machinery/aug_manipulator,
-/obj/effect/turf_decal/tile/purple/three_quarters{
+/obj/effect/turf_decal/tile/purple/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron/white,
@@ -2146,7 +2146,7 @@
 "WM" = (
 /obj/machinery/light,
 /obj/structure/tank_dispenser,
-/obj/effect/turf_decal/tile/purple/three_quarters,
+/obj/effect/turf_decal/tile/purple/anticorner,
 /turf/open/floor/iron/white,
 /area/station/science)
 "Xg" = (

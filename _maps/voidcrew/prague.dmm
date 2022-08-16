@@ -66,7 +66,7 @@
 "bM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/white/corner,
-/obj/effect/turf_decal/tile/neutral/three_quarters{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -100,7 +100,7 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/neutral/three_quarters{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -590,7 +590,7 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/neutral/three_quarters{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -638,7 +638,7 @@
 /obj/item/stock_parts/cell/high/plus,
 /obj/effect/turf_decal/box/corners,
 /obj/item/stock_parts/cell/high/plus,
-/obj/effect/turf_decal/tile/neutral/three_quarters,
+/obj/effect/turf_decal/tile/neutral/anticorner,
 /turf/open/floor/iron/dark,
 /area/station/engineering)
 "oz" = (
@@ -757,7 +757,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/yellow/corner,
-/obj/effect/turf_decal/tile/neutral/three_quarters{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -953,7 +953,7 @@
 /obj/effect/turf_decal/trimline/white/corner{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral/three_quarters,
+/obj/effect/turf_decal/tile/neutral/anticorner,
 /turf/open/floor/iron,
 /area/station/commons)
 "uk" = (
@@ -1014,7 +1014,7 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral/three_quarters{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -1033,7 +1033,7 @@
 "vt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/blue/corner,
-/obj/effect/turf_decal/tile/neutral/three_quarters{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -1381,7 +1381,7 @@
 /obj/item/radio/intercom{
 	pixel_y = 20
 	},
-/obj/effect/turf_decal/tile/neutral/three_quarters,
+/obj/effect/turf_decal/tile/neutral/anticorner,
 /turf/open/floor/mineral/plastitanium,
 /area/station/command/bridge)
 "Cp" = (
@@ -1421,7 +1421,7 @@
 /obj/effect/turf_decal/trimline/white/corner{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/neutral/three_quarters{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -2035,7 +2035,7 @@
 /obj/effect/turf_decal/trimline/blue/corner{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/neutral/three_quarters{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -2188,7 +2188,7 @@
 "Uy" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/white/corner,
-/obj/effect/turf_decal/tile/neutral/three_quarters{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -2363,7 +2363,7 @@
 /obj/item/radio/intercom{
 	pixel_y = -30
 	},
-/obj/effect/turf_decal/tile/neutral/three_quarters{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium,

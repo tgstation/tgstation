@@ -67,7 +67,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/effect/turf_decal/tile/blue/three_quarters{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 8
 	},
 /obj/machinery/airalarm/directional/north,
@@ -105,7 +105,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/blue/three_quarters,
+/obj/effect/turf_decal/tile/blue/anticorner,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24

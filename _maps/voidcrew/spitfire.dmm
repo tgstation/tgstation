@@ -57,7 +57,7 @@
 "dw" = (
 /obj/machinery/duct,
 /obj/structure/rack,
-/obj/effect/turf_decal/tile/brown/three_quarters{
+/obj/effect/turf_decal/tile/brown/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -115,7 +115,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/yellow/three_quarters{
+/obj/effect/turf_decal/tile/yellow/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -169,7 +169,7 @@
 /area/station/command/bridge)
 "iH" = (
 /obj/machinery/chem_master,
-/obj/effect/turf_decal/tile/yellow/three_quarters{
+/obj/effect/turf_decal/tile/yellow/anticorner{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -236,7 +236,7 @@
 /area/station/medical/surgery)
 "kT" = (
 /obj/machinery/chem_heater,
-/obj/effect/turf_decal/tile/yellow/three_quarters{
+/obj/effect/turf_decal/tile/yellow/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -251,12 +251,12 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/surgery)
 "kZ" = (
-/obj/effect/turf_decal/tile/blue/three_quarters,
+/obj/effect/turf_decal/tile/blue/anticorner,
 /turf/open/floor/iron/dark,
 /area/station/medical)
 "lw" = (
 /obj/machinery/stasis,
-/obj/effect/turf_decal/tile/blue/three_quarters{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -432,7 +432,7 @@
 "rL" = (
 /obj/machinery/duct,
 /obj/structure/rack,
-/obj/effect/turf_decal/tile/brown/three_quarters,
+/obj/effect/turf_decal/tile/brown/anticorner,
 /turf/open/floor/iron/dark,
 /area/station/cargo)
 "rN" = (
@@ -500,7 +500,7 @@
 "tU" = (
 /obj/structure/table/glass,
 /obj/item/storage/firstaid/regular,
-/obj/effect/turf_decal/tile/blue/three_quarters{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -595,7 +595,7 @@
 "yX" = (
 /obj/structure/closet/secure_closet/engineering_personal,
 /obj/item/wrench/combat,
-/obj/effect/turf_decal/tile/blue/three_quarters{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -640,7 +640,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/effect/turf_decal/tile/blue/three_quarters{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -656,7 +656,7 @@
 "BK" = (
 /obj/machinery/duct,
 /obj/machinery/vending/medical/syndicate_access,
-/obj/effect/turf_decal/tile/blue/three_quarters{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -795,7 +795,7 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/obj/effect/turf_decal/tile/blue/three_quarters{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -847,7 +847,7 @@
 /area/station/commons/dorms)
 "It" = (
 /obj/structure/closet/secure_closet/medical3,
-/obj/effect/turf_decal/tile/blue/three_quarters{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -907,7 +907,7 @@
 /obj/structure/closet/secure_closet/medical3,
 /obj/item/storage/belt/medical/paramedic,
 /obj/item/clothing/head/soft/paramedic,
-/obj/effect/turf_decal/tile/blue/three_quarters,
+/obj/effect/turf_decal/tile/blue/anticorner,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "Lm" = (
@@ -998,7 +998,7 @@
 	pixel_x = -24
 	},
 /obj/structure/sink/directional/east,
-/obj/effect/turf_decal/tile/blue/three_quarters{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -1143,7 +1143,7 @@
 "Tu" = (
 /obj/structure/window/reinforced/survival_pod,
 /obj/structure/closet/secure_closet/CMO,
-/obj/effect/turf_decal/tile/blue/three_quarters{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -1153,7 +1153,7 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/surgery)
 "TJ" = (
-/obj/effect/turf_decal/tile/brown/three_quarters{
+/obj/effect/turf_decal/tile/brown/anticorner{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -1171,7 +1171,7 @@
 /obj/machinery/smartfridge/chemistry,
 /obj/machinery/door/window/survival_pod,
 /obj/machinery/door/firedoor/border_only,
-/obj/effect/turf_decal/tile/yellow/three_quarters,
+/obj/effect/turf_decal/tile/yellow/anticorner,
 /turf/open/floor/iron/dark,
 /area/station/medical)
 "Ux" = (

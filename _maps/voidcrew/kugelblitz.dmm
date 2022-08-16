@@ -227,7 +227,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/engine)
 "ee" = (
-/obj/effect/turf_decal/tile/yellow/three_quarters{
+/obj/effect/turf_decal/tile/yellow/anticorner{
 	dir = 8
 	},
 /obj/structure/closet/secure{
@@ -869,7 +869,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/engine)
 "oa" = (
-/obj/effect/turf_decal/tile/yellow/three_quarters{
+/obj/effect/turf_decal/tile/yellow/anticorner{
 	dir = 4
 	},
 /obj/item/kirbyplants/random,
@@ -966,7 +966,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/engineering)
 "pW" = (
-/obj/effect/turf_decal/tile/purple/three_quarters{
+/obj/effect/turf_decal/tile/purple/anticorner{
 	dir = 4
 	},
 /obj/machinery/mecha_part_fabricator,
@@ -1452,7 +1452,7 @@
 /turf/open/floor/mineral/plastitanium/airless,
 /area/station/external)
 "xu" = (
-/obj/effect/turf_decal/tile/yellow/three_quarters{
+/obj/effect/turf_decal/tile/yellow/anticorner{
 	dir = 1
 	},
 /obj/item/radio/intercom{
@@ -1672,7 +1672,7 @@
 /area/station/external)
 "Bh" = (
 /obj/machinery/atmospherics/components/binary/pump,
-/obj/effect/turf_decal/tile/yellow/three_quarters{
+/obj/effect/turf_decal/tile/yellow/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron/white,
@@ -1912,7 +1912,7 @@
 /area/station/engineering)
 "GL" = (
 /obj/machinery/atmospherics/components/binary/pump,
-/obj/effect/turf_decal/tile/purple/three_quarters,
+/obj/effect/turf_decal/tile/purple/anticorner,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "Hn" = (
@@ -1929,7 +1929,7 @@
 	dir = 1
 	},
 /obj/machinery/light,
-/obj/effect/turf_decal/tile/yellow/three_quarters{
+/obj/effect/turf_decal/tile/yellow/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron/white,
@@ -1941,7 +1941,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical)
 "HA" = (
-/obj/effect/turf_decal/tile/yellow/three_quarters,
+/obj/effect/turf_decal/tile/yellow/anticorner,
 /obj/item/kirbyplants/random,
 /obj/item/stock_parts/scanning_module/adv,
 /obj/item/radio/intercom{
@@ -2001,7 +2001,7 @@
 /area/station/engineering)
 "Ik" = (
 /obj/machinery/mech_bay_recharge_port,
-/obj/effect/turf_decal/tile/purple/three_quarters{
+/obj/effect/turf_decal/tile/purple/anticorner{
 	dir = 1
 	},
 /obj/machinery/airalarm/directional/south,
@@ -2023,7 +2023,7 @@
 /obj/machinery/computer/mech_bay_power_console{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/purple/three_quarters,
+/obj/effect/turf_decal/tile/purple/anticorner,
 /obj/machinery/light,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics)

@@ -814,7 +814,7 @@
 /area/station/engineering/atmospherics)
 "kr" = (
 /obj/machinery/suit_storage_unit/mining,
-/obj/effect/turf_decal/tile/black/three_quarters,
+/obj/effect/turf_decal/tile/black/anticorner,
 /turf/open/floor/iron,
 /area/station/cargo)
 "ks" = (
@@ -845,7 +845,7 @@
 "ky" = (
 /obj/structure/table,
 /obj/effect/spawner/random/maintenance,
-/obj/effect/turf_decal/tile/black/three_quarters{
+/obj/effect/turf_decal/tile/black/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -1378,7 +1378,7 @@
 /turf/closed/wall,
 /area/station/hallway/primary/central)
 "rG" = (
-/obj/effect/turf_decal/tile/yellow/three_quarters{
+/obj/effect/turf_decal/tile/yellow/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -1759,7 +1759,7 @@
 /area/station/engineering)
 "yB" = (
 /obj/machinery/vending/tool,
-/obj/effect/turf_decal/tile/yellow/three_quarters{
+/obj/effect/turf_decal/tile/yellow/anticorner{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -2094,7 +2094,7 @@
 "Cm" = (
 /obj/machinery/ore_silo,
 /obj/item/multitool,
-/obj/effect/turf_decal/tile/black/three_quarters{
+/obj/effect/turf_decal/tile/black/anticorner{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -2284,7 +2284,7 @@
 /area/station/engineering/atmospherics)
 "Ed" = (
 /obj/machinery/suit_storage_unit/mining/eva,
-/obj/effect/turf_decal/tile/black/three_quarters{
+/obj/effect/turf_decal/tile/black/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron,

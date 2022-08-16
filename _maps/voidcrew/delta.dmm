@@ -804,7 +804,7 @@
 /obj/item/shard,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/blue/three_quarters{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -1724,7 +1724,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/white/three_quarters{
+/obj/effect/turf_decal/tile/white/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -1810,7 +1810,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/white/three_quarters{
+/obj/effect/turf_decal/tile/white/anticorner{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -2053,7 +2053,7 @@
 /obj/machinery/computer/autopilot{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/blue/three_quarters{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,

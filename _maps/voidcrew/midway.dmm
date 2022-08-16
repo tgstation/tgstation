@@ -109,7 +109,7 @@
 /area/station/engineering/atmospherics)
 "cW" = (
 /obj/machinery/suit_storage_unit/mining/eva,
-/obj/effect/turf_decal/tile/brown/three_quarters{
+/obj/effect/turf_decal/tile/brown/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -117,7 +117,7 @@
 "do" = (
 /obj/machinery/hydroponics/constructable,
 /obj/machinery/light,
-/obj/effect/turf_decal/tile/green/three_quarters{
+/obj/effect/turf_decal/tile/green/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -155,7 +155,7 @@
 "eY" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/suit_storage_unit/mining/eva,
-/obj/effect/turf_decal/tile/brown/three_quarters{
+/obj/effect/turf_decal/tile/brown/anticorner{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -367,7 +367,7 @@
 	amount = 10
 	},
 /obj/item/stack/sheet/metal/twenty,
-/obj/effect/turf_decal/tile/brown/three_quarters{
+/obj/effect/turf_decal/tile/brown/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -475,7 +475,7 @@
 /obj/structure/bed,
 /obj/item/bedsheet/brown,
 /obj/machinery/light,
-/obj/effect/turf_decal/tile/green/three_quarters,
+/obj/effect/turf_decal/tile/green/anticorner,
 /turf/open/floor/iron,
 /area/station/commons)
 "oC" = (
@@ -801,7 +801,7 @@
 /area/station/cargo)
 "ya" = (
 /obj/structure/tank_dispenser/oxygen,
-/obj/effect/turf_decal/tile/brown/three_quarters,
+/obj/effect/turf_decal/tile/brown/anticorner,
 /turf/open/floor/iron,
 /area/station/cargo)
 "ym" = (
@@ -917,7 +917,7 @@
 /obj/machinery/computer/monitor{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/blue/three_quarters{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -1304,7 +1304,7 @@
 /obj/machinery/computer/helm{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/blue/three_quarters,
+/obj/effect/turf_decal/tile/blue/anticorner,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "Nz" = (
@@ -1673,7 +1673,7 @@
 "Un" = (
 /obj/machinery/hydroponics/constructable,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/green/three_quarters{
+/obj/effect/turf_decal/tile/green/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -1808,7 +1808,7 @@
 /obj/machinery/computer/autopilot{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/blue/three_quarters,
+/obj/effect/turf_decal/tile/blue/anticorner,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "Yw" = (
@@ -1824,7 +1824,7 @@
 "YG" = (
 /obj/structure/bed,
 /obj/item/bedsheet/brown,
-/obj/effect/turf_decal/tile/green/three_quarters{
+/obj/effect/turf_decal/tile/green/anticorner{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -1832,7 +1832,7 @@
 "YK" = (
 /obj/structure/closet/emcloset/anchored,
 /obj/effect/decal/cleanable/blood,
-/obj/effect/turf_decal/tile/blue/three_quarters{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -1855,7 +1855,7 @@
 "Zx" = (
 /obj/machinery/computer/crew,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/blue/three_quarters{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -1879,7 +1879,7 @@
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
 /obj/item/storage/firstaid/regular,
-/obj/effect/turf_decal/tile/blue/three_quarters{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 8
 	},
 /turf/open/floor/iron,

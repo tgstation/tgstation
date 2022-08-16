@@ -409,7 +409,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 6
 	},
-/obj/effect/turf_decal/tile/neutral/three_quarters,
+/obj/effect/turf_decal/tile/neutral/anticorner,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "id" = (
@@ -990,7 +990,7 @@
 /area/station/command/bridge)
 "rH" = (
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral/three_quarters,
+/obj/effect/turf_decal/tile/neutral/anticorner,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "sm" = (
@@ -998,7 +998,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral/three_quarters{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -1165,7 +1165,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 6
 	},
-/obj/effect/turf_decal/tile/neutral/three_quarters{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -1175,7 +1175,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/neutral/three_quarters{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -1208,7 +1208,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral/three_quarters,
+/obj/effect/turf_decal/tile/neutral/anticorner,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "vE" = (
@@ -1348,7 +1348,7 @@
 /area/station/engineering/electrical)
 "yK" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral/three_quarters,
+/obj/effect/turf_decal/tile/neutral/anticorner,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "yT" = (
@@ -1444,7 +1444,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 9
 	},
-/obj/effect/turf_decal/tile/neutral/three_quarters{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -1761,7 +1761,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/neutral/three_quarters{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -2459,7 +2459,7 @@
 /turf/open/floor/plasteel/tech/grid,
 /area/station/engineering/electrical)
 "Tw" = (
-/obj/effect/turf_decal/tile/neutral/three_quarters{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,

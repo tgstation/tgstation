@@ -53,7 +53,7 @@
 "aY" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/box,
-/obj/effect/turf_decal/tile/neutral/three_quarters{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -1108,7 +1108,7 @@
 "ol" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/box,
-/obj/effect/turf_decal/tile/neutral/three_quarters{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -1209,7 +1209,7 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/effect/turf_decal/tile/neutral/three_quarters{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -1756,7 +1756,7 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
-/obj/effect/turf_decal/tile/neutral/three_quarters{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 1
 	},
 /obj/item/radio/intercom{
@@ -1776,7 +1776,7 @@
 /obj/item/radio/intercom{
 	pixel_y = 32
 	},
-/obj/effect/turf_decal/tile/neutral/three_quarters{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -1815,7 +1815,7 @@
 /turf/open/floor/plasteel/mono/white,
 /area/station/medical)
 "xq" = (
-/obj/effect/turf_decal/tile/neutral/three_quarters{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 4
 	},
 /obj/structure/frame/computer{
@@ -2083,7 +2083,7 @@
 /area/station/engineering)
 "AR" = (
 /obj/item/kirbyplants/dead,
-/obj/effect/turf_decal/tile/neutral/three_quarters,
+/obj/effect/turf_decal/tile/neutral/anticorner,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -2218,7 +2218,7 @@
 /area/station/engineering/atmospherics)
 "Dy" = (
 /obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/neutral/three_quarters{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 1
 	},
 /obj/structure/reagent_dispensers/fueltank,
@@ -2325,7 +2325,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmospherics)
 "Ft" = (
-/obj/effect/turf_decal/tile/neutral/three_quarters{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 1
 	},
 /obj/structure/frame/computer{
@@ -2611,7 +2611,7 @@
 	dir = 8
 	},
 /obj/machinery/vending/cola/random,
-/obj/effect/turf_decal/tile/white/three_quarters{
+/obj/effect/turf_decal/tile/white/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -2632,7 +2632,7 @@
 /obj/item/radio/intercom{
 	pixel_y = -32
 	},
-/obj/effect/turf_decal/tile/neutral/three_quarters{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -2762,7 +2762,7 @@
 	pixel_y = -24
 	},
 /obj/structure/table/reinforced,
-/obj/effect/turf_decal/tile/neutral/three_quarters{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 4
 	},
 /obj/item/phone,
@@ -3883,7 +3883,7 @@
 	pixel_y = 24;
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral/three_quarters,
+/obj/effect/turf_decal/tile/neutral/anticorner,
 /turf/open/floor/iron/dark,
 /area/station/hallway/fore)
 "ZK" = (

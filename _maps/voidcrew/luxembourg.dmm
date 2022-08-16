@@ -48,7 +48,7 @@
 "cl" = (
 /obj/structure/tank_dispenser/oxygen,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/brown/three_quarters{
+/obj/effect/turf_decal/tile/brown/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -632,7 +632,7 @@
 /mob/living/simple_animal/bot/secbot/grievous/toy,
 /obj/effect/decal/cleanable/blood/old,
 /obj/item/hand_labeler_refill,
-/obj/effect/turf_decal/tile/brown/three_quarters{
+/obj/effect/turf_decal/tile/brown/anticorner{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -921,7 +921,7 @@
 "ur" = (
 /obj/machinery/light,
 /obj/item/banner/cargo,
-/obj/effect/turf_decal/tile/brown/three_quarters{
+/obj/effect/turf_decal/tile/brown/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -1022,7 +1022,7 @@
 /obj/item/circuitboard/machine/microwave,
 /obj/item/circuitboard/machine/microwave,
 /obj/item/circuitboard/machine/microwave,
-/obj/effect/turf_decal/tile/brown/three_quarters{
+/obj/effect/turf_decal/tile/brown/anticorner{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -1543,7 +1543,7 @@
 	helmet_type = /obj/item/clothing/head/helmet/space/syndicate/blue;
 	suit_type = /obj/item/clothing/suit/space/syndicate/surplus
 	},
-/obj/effect/turf_decal/tile/brown/three_quarters,
+/obj/effect/turf_decal/tile/brown/anticorner,
 /turf/open/floor/iron/dark,
 /area/station/cargo)
 "LQ" = (
@@ -1593,7 +1593,7 @@
 /obj/item/soap/syndie,
 /obj/item/soap/syndie,
 /obj/item/soap/syndie,
-/obj/effect/turf_decal/tile/brown/three_quarters{
+/obj/effect/turf_decal/tile/brown/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -1667,7 +1667,7 @@
 /obj/item/storage/box/donkpockets/donkpocketpizza,
 /obj/item/storage/box/donkpockets/donkpocketpizza,
 /obj/item/storage/box/donkpockets/donkpocketpizza,
-/obj/effect/turf_decal/tile/brown/three_quarters{
+/obj/effect/turf_decal/tile/brown/anticorner{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -1782,7 +1782,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/brown/three_quarters,
+/obj/effect/turf_decal/tile/brown/anticorner,
 /turf/open/floor/iron/dark,
 /area/station/storage)
 "Ry" = (
@@ -2004,7 +2004,7 @@
 /area/station/command/bridge)
 "Xk" = (
 /obj/structure/ore_box,
-/obj/effect/turf_decal/tile/brown/three_quarters{
+/obj/effect/turf_decal/tile/brown/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -2077,7 +2077,7 @@
 /obj/item/storage/box/donkpockets/donkpocketteriyaki,
 /obj/item/storage/box/donkpockets/donkpocketteriyaki,
 /obj/item/storage/box/donkpockets/donkpocketteriyaki,
-/obj/effect/turf_decal/tile/brown/three_quarters{
+/obj/effect/turf_decal/tile/brown/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
