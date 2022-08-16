@@ -40,7 +40,8 @@
 	can_buckle = TRUE
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/pig)
-	
+	visible_message(span_notice("[src] snorts respectfully."))
+
 /datum/ai_controller/basic_controller/pig
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
