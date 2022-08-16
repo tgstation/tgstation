@@ -85739,7 +85739,6 @@
 	dir = 1
 	},
 /obj/structure/disposalpipe/segment,
-/obj/machinery/duct,
 /obj/effect/mapping_helpers/airlock/access/any/security/maintenance,
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
