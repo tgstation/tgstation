@@ -80,35 +80,36 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 			LAZYREMOVE(found_safeties, S)
 	return LAZYLEN(found_safeties)
 
-/datum/component/chasm/proc/drop_stuff(AM)
+/datum/component/chasm/proc/drop_stuff(dropped_thing)
 	if (is_safe())
 		return FALSE
 
 	var/atom/parent = src.parent
-	var/to_check = AM ? list(AM) : parent.contents
+	var/to_check = dropped_thing ? list(dropped_thing) : parent.contents
 	for (var/thing in to_check)
 		if (droppable(thing))
 			. = TRUE
 			INVOKE_ASYNC(src, .proc/drop, thing)
 
-/datum/component/chasm/proc/droppable(atom/movable/AM)
-	var/datum/weakref/falling_ref = WEAKREF(AM)
+/datum/component/chasm/proc/droppable(atom/movable/dropped_thing)
+	var/datum/weakref/falling_ref = WEAKREF(dropped_thing)
 	// avoid an infinite loop, but allow falling a large distance
 	if(falling_atoms[falling_ref] && falling_atoms[falling_ref] > 30)
 		return FALSE
-	if(!isliving(AM) && !isobj(AM))
+	if(!isliving(dropped_thing) && !isobj(dropped_thing))
 		return FALSE
-	if(is_type_in_typecache(AM, forbidden_types) || AM.throwing || (AM.movement_type & (FLOATING|FLYING)))
+	if(is_type_in_typecache(dropped_thing, forbidden_types) || dropped_thing.throwing || (dropped_thing.movement_type & (FLOATING|FLYING)))
 		return FALSE
+
 	//Flies right over the chasm
-	if(ismob(AM))
-		var/mob/M = AM
+	if(ismob(dropped_thing))
+		var/mob/M = dropped_thing
 		if(M.buckled) //middle statement to prevent infinite loops just in case!
 			var/mob/buckled_to = M.buckled
 			if((!ismob(M.buckled) || (buckled_to.buckled != M)) && !droppable(M.buckled))
 				return FALSE
-		if(ishuman(AM))
-			var/mob/living/carbon/human/victim = AM
+		if(ishuman(dropped_thing))
+			var/mob/living/carbon/human/victim = dropped_thing
 			if(istype(victim.belt, /obj/item/wormhole_jaunter))
 				var/obj/item/wormhole_jaunter/jaunter = victim.belt
 				var/turf/chasm = get_turf(victim)
@@ -118,12 +119,10 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 				return fall_into_chasm
 	return TRUE
 
-#define FALL_DAMAGE 300
-
-/datum/component/chasm/proc/drop(atom/movable/AM)
-	var/datum/weakref/falling_ref = WEAKREF(AM)
+/datum/component/chasm/proc/drop(atom/movable/dropped_thing)
+	var/datum/weakref/falling_ref = WEAKREF(dropped_thing)
 	//Make sure the item is still there after our sleep
-	if(!AM || !falling_ref?.resolve())
+	if(!dropped_thing || !falling_ref?.resolve())
 		falling_atoms -= falling_ref
 		return
 	falling_atoms[falling_ref] = (falling_atoms[falling_ref] || 0) + 1
@@ -132,66 +131,67 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 
 	if(T)
 		// send to the turf below
-		AM.visible_message(span_boldwarning("[AM] falls into [parent]!"), span_userdanger("[fall_message]"))
-		T.visible_message(span_boldwarning("[AM] falls from above!"))
-		AM.forceMove(T)
-		if(isliving(AM))
-			var/mob/living/L = AM
+		dropped_thing.visible_message(span_boldwarning("[dropped_thing] falls into [parent]!"), span_userdanger("[fall_message]"))
+		T.visible_message(span_boldwarning("[dropped_thing] falls from above!"))
+		dropped_thing.forceMove(T)
+		if(isliving(dropped_thing))
+			var/mob/living/L = dropped_thing
 			L.Paralyze(100)
 			L.adjustBruteLoss(30)
 		falling_atoms -= falling_ref
+		return
 
-	else
-		// send to oblivion
-		AM.visible_message(span_boldwarning("[AM] falls into [parent]!"), span_userdanger("[oblivion_message]"))
-		if (isliving(AM))
-			var/mob/living/L = AM
-			L.notransform = TRUE
-			L.Paralyze(20 SECONDS)
+	// send to oblivion
+	dropped_thing.visible_message(span_boldwarning("[dropped_thing] falls into [parent]!"), span_userdanger("[oblivion_message]"))
+	if (isliving(dropped_thing))
+		var/mob/living/falling_mob = dropped_thing
+		falling_mob.notransform = TRUE
+		falling_mob.Paralyze(20 SECONDS)
 
-		var/oldtransform = AM.transform
-		var/oldcolor = AM.color
-		var/oldalpha = AM.alpha
+	var/oldtransform = dropped_thing.transform
+	var/oldcolor = dropped_thing.color
+	var/oldalpha = dropped_thing.alpha
 
-		animate(AM, transform = matrix() - matrix(), alpha = 0, color = rgb(0, 0, 0), time = 10)
-		for(var/i in 1 to 5)
-			//Make sure the item is still there after our sleep
-			if(!AM || QDELETED(AM))
-				return
-			AM.pixel_y--
-			sleep(2)
-
+	animate(dropped_thing, transform = matrix() - matrix(), alpha = 0, color = rgb(0, 0, 0), time = 10)
+	for(var/i in 1 to 5)
 		//Make sure the item is still there after our sleep
-		if(!AM || QDELETED(AM))
+		if(!dropped_thing || QDELETED(dropped_thing))
 			return
+		dropped_thing.pixel_y--
+		sleep(2)
 
-		falling_atoms -= falling_ref
+	//Make sure the item is still there after our sleep
+	if(!dropped_thing || QDELETED(dropped_thing))
+		return
 
-		AM.alpha = oldalpha
-		AM.color = oldcolor
-		AM.transform = oldtransform
+	if (!storage)
+		storage = new(get_turf(parent))
+		RegisterSignal(storage, COMSIG_ATOM_EXITED, .proc/left_chasm)
+		GLOB.chasm_storage += WEAKREF(storage)
 
-		if (!storage)
-			storage = new(get_turf(parent))
-			RegisterSignal(storage, COMSIG_ATOM_EXITED, .proc/left_chasm)
-			GLOB.chasm_storage += WEAKREF(storage)
+	if (storage.contains(dropped_thing))
+		return
 
-		if (AM.forceMove(storage))
-			SEND_SIGNAL(AM, COMSIG_MOVABLE_SECLUDED_LOCATION)
-		else
-			parent.visible_message(span_boldwarning("[parent] spits out [AM]!"))
-			AM.throw_at(get_edge_target_turf(parent, pick(GLOB.alldirs)), rand(1, 10), rand(1, 10))
+	dropped_thing.alpha = oldalpha
+	dropped_thing.color = oldcolor
+	dropped_thing.transform = oldtransform
 
-		if(isliving(AM))
-			var/mob/living/falling_mob = AM
-			if(falling_mob.stat != DEAD)
-				falling_mob.death(TRUE)
-				falling_mob.notransform = FALSE
-			falling_mob.apply_damage(FALL_DAMAGE)
-			if (falling_mob) // Might have been deleted from taking damage
-				RegisterSignal(falling_mob, COMSIG_LIVING_REVIVE, .proc/on_revive)
+	if (dropped_thing.forceMove(storage))
+		if (isliving(dropped_thing))
+			RegisterSignal(dropped_thing, COMSIG_LIVING_REVIVE, .proc/on_revive)
+		SEND_SIGNAL(dropped_thing, COMSIG_MOVABLE_SECLUDED_LOCATION)
+	else
+		parent.visible_message(span_boldwarning("[parent] spits out [dropped_thing]!"))
+		dropped_thing.throw_at(get_edge_target_turf(parent, pick(GLOB.alldirs)), rand(1, 10), rand(1, 10))
 
-#undef FALL_DAMAGE
+	if (isliving(dropped_thing))
+		var/mob/living/fallen_mob = dropped_thing
+		if(fallen_mob.stat != DEAD)
+			fallen_mob.death(TRUE)
+			fallen_mob.notransform = FALSE
+			fallen_mob.apply_damage(300)
+
+	falling_atoms -= falling_ref
 
 /**
  * Called when something has left the chasm depths storage.
@@ -221,8 +221,10 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 	escapee.forceMove(get_turf(parent))
 	escapee.throw_at(get_edge_target_turf(parent, pick(GLOB.alldirs)), rand(1, 10), rand(1, 10))
 	REMOVE_TRAIT(escapee, TRAIT_MOVE_FLYING, CHASM_TRAIT)
-	escapee.Paralyze(20 SECONDS, TRUE) // They're really tired after doing that
+	escapee.Paralyze(20 SECONDS, TRUE)
 	UnregisterSignal(escapee, COMSIG_LIVING_REVIVE)
+
+#undef CHASM_TRAIT
 
 /**
  * An abstract object which is basically just a bag that the chasm puts people inside
