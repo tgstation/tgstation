@@ -26,7 +26,7 @@
 /obj/effect/turf_decal/tile/red/mono,
 /obj/machinery/vending/security,
 /turf/open/floor/mineral/titanium,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "cM" = (
 /obj/effect/turf_decal/tile/lime/mono,
 /obj/structure/table/reinforced,
@@ -51,7 +51,7 @@
 /obj/item/gun/ballistic/shotgun/riot,
 /obj/item/gun/ballistic/shotgun/riot,
 /turf/open/floor/mineral/titanium,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "dB" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium,
@@ -161,7 +161,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "in" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
@@ -216,7 +216,7 @@
 /obj/machinery/vending/security,
 /obj/effect/turf_decal/tile/red/mono,
 /turf/open/floor/mineral/titanium,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "kE" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
@@ -262,7 +262,7 @@
 /area/station/command/bridge)
 "nC" = (
 /turf/closed/wall/mineral/titanium,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "nD" = (
 /obj/effect/turf_decal/tile/yellow/mono,
 /obj/machinery/mineral/equipment_vendor,
@@ -344,7 +344,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "qh" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 6
@@ -357,7 +357,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "qu" = (
 /obj/machinery/power/terminal{
 	dir = 8
@@ -495,7 +495,7 @@
 "vN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/mineral/titanium,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "wd" = (
 /obj/effect/turf_decal/tile/red/mono,
 /obj/structure/cable,
@@ -564,7 +564,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "Aa" = (
 /obj/machinery/cryopod{
 	dir = 4
@@ -718,7 +718,7 @@
 /obj/structure/rack,
 /obj/effect/turf_decal/tile/red/mono,
 /turf/open/floor/mineral/titanium,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "KW" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -764,7 +764,7 @@
 "Ns" = (
 /obj/effect/turf_decal/tile/red/mono,
 /turf/open/floor/mineral/titanium,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "NT" = (
 /obj/effect/turf_decal/tile/bottlegreen/mono,
 /obj/structure/cable,
@@ -876,7 +876,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
 /turf/open/floor/mineral/titanium,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "Vi" = (
 /obj/effect/turf_decal/tile/yellow/mono,
 /obj/machinery/ore_silo,
@@ -897,7 +897,7 @@
 /area/station/hallway/primary/central)
 "VV" = (
 /turf/open/floor/mineral/titanium,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "Wp" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium,
@@ -941,7 +941,7 @@
 /obj/item/gun/energy/e_gun,
 /obj/item/gun/energy/e_gun,
 /turf/open/floor/mineral/titanium,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "Xz" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 9
@@ -961,7 +961,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "XU" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 1
@@ -1017,7 +1017,7 @@
 /obj/effect/turf_decal/tile/red/mono,
 /obj/machinery/door/airlock/security/glass,
 /turf/open/floor/mineral/titanium,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "Zy" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/shuttle,
@@ -1040,7 +1040,7 @@
 	},
 /obj/effect/turf_decal/tile/red/mono,
 /turf/open/floor/mineral/titanium,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 
 (1,1,1) = {"
 zq

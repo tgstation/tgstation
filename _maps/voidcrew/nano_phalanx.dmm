@@ -205,7 +205,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/engine,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "cz" = (
 /obj/machinery/computer/autopilot{
 	dir = 8
@@ -538,7 +538,7 @@
 	dir = 1
 	},
 /turf/open/floor/engine,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "fR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -594,7 +594,7 @@
 /area/station/cargo)
 "ha" = (
 /turf/closed/wall/mineral/titanium,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "hc" = (
 /turf/closed/wall/mineral/titanium,
 /area/station/commons/chapel)
@@ -643,7 +643,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/engine,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "hs" = (
 /obj/machinery/firealarm{
 	pixel_x = -26
@@ -1625,7 +1625,7 @@
 	req_access_txt = "null"
 	},
 /turf/open/floor/engine,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "uf" = (
 /obj/machinery/vending/security,
 /obj/machinery/light{
@@ -1697,7 +1697,7 @@
 	req_access_txt = "null"
 	},
 /turf/open/floor/engine,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "uE" = (
 /turf/open/floor/engine/n2,
 /area/station/engineering/atmospherics)
@@ -2261,7 +2261,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "CR" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -2406,7 +2406,7 @@
 /area/station/commons/dorms)
 "Eu" = (
 /turf/open/floor/engine,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "Ex" = (
 /turf/closed/wall/mineral/titanium,
 /area/station/cargo)
@@ -2433,7 +2433,7 @@
 /area/station/hallway/primary/fore)
 "EI" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "EP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/ore_box,
@@ -2898,7 +2898,7 @@
 "KQ" = (
 /obj/structure/cable,
 /turf/open/floor/engine,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "KR" = (
 /turf/open/floor/wood,
 /area/station/commons/dorms)
@@ -3068,7 +3068,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "Nt" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
@@ -3509,7 +3509,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "SM" = (
 /obj/machinery/power/smes/engineering,
 /obj/machinery/light{
@@ -3539,7 +3539,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/engine,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "Tm" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/structure/closet/secure_closet/medical3,
@@ -3626,7 +3626,7 @@
 	tempfreq = 1337
 	},
 /turf/open/floor/engine,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "Ug" = (
 /obj/structure/altar_of_gods,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -3936,7 +3936,7 @@
 	dir = 5
 	},
 /turf/open/floor/engine,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "Zd" = (
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/layer4{
 	dir = 4
@@ -3961,7 +3961,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/engine,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "Zl" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/station/medical)
