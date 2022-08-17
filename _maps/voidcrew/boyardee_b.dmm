@@ -429,7 +429,7 @@
 "kw" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "kD" = (
 /obj/structure/rack,
 /obj/structure/window/reinforced/spawner/east,
@@ -438,7 +438,7 @@
 /obj/item/gun/energy/laser/retro,
 /obj/machinery/door/window/right/directional/north,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "kH" = (
 /obj/machinery/vending/clothing,
 /turf/open/floor/carpet/neon/simple/cyan,
@@ -831,7 +831,7 @@
 	},
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "rB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2{
 	dir = 4
@@ -879,7 +879,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "uB" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/box/drinkingglasses,
@@ -1336,7 +1336,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "FI" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/hidden{
 	dir = 10
@@ -1465,7 +1465,7 @@
 /area/station/service/cafeteria)
 "IE" = (
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "IJ" = (
 /obj/machinery/door/airlock/external,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
@@ -1535,7 +1535,7 @@
 /obj/machinery/door/window/right/directional/north,
 /obj/item/disk/design_disk/ammo_38_hunting,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "JF" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
@@ -1741,7 +1741,7 @@
 /obj/item/gun/energy/laser/scatter,
 /obj/item/gun/energy/taser,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "Pk" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 8
@@ -1934,7 +1934,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "SQ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch,

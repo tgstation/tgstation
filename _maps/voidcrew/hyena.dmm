@@ -61,7 +61,7 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron/dark/grid,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "bN" = (
 /turf/open/floor/plasteel/tech,
 /area/station/cargo)
@@ -78,7 +78,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "cf" = (
 /obj/structure/table/reinforced,
 /obj/item/radio/intercom{
@@ -223,7 +223,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "dQ" = (
 /obj/structure/bed,
 /obj/item/bedsheet/black,
@@ -281,7 +281,7 @@
 	all_items_free = 1
 	},
 /turf/open/floor/iron/dark/grid,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "fA" = (
 /obj/structure/tank_dispenser/oxygen,
 /obj/machinery/light/small{
@@ -329,7 +329,7 @@
 "fY" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "gh" = (
 /obj/structure/closet/secure_closet/freezer{
 	anchored = 1;
@@ -598,7 +598,7 @@
 	pixel_y = 24
 	},
 /turf/open/floor/iron/dark/grid,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "le" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
@@ -1251,7 +1251,7 @@
 /obj/item/toy/nuke,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "wP" = (
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/plasteel/tech/techmaint,
@@ -1466,7 +1466,7 @@
 /obj/structure/table,
 /obj/machinery/recharger,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "Ay" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 4
@@ -1617,7 +1617,7 @@
 	name = "Security Shutters"
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "DU" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
@@ -1637,7 +1637,7 @@
 "EH" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "EL" = (
 /obj/effect/turf_decal/industrial/fire{
 	dir = 4
@@ -1776,7 +1776,7 @@
 /area/station/cargo)
 "HJ" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "HT" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
@@ -1996,7 +1996,7 @@
 	},
 /obj/effect/turf_decal/stripes,
 /turf/open/floor/mineral/plastitanium,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "KW" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
@@ -2234,7 +2234,7 @@
 	all_items_free = 1
 	},
 /turf/open/floor/iron/dark/grid,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "Pn" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
@@ -2286,7 +2286,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "PL" = (
 /obj/structure/window/reinforced/spawner/west,
 /obj/machinery/space_heater,
@@ -2551,7 +2551,7 @@
 "VA" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "VC" = (
 /obj/machinery/computer/helm{
 	dir = 8
@@ -2665,7 +2665,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "Wt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
@@ -2861,7 +2861,7 @@
 	},
 /obj/effect/turf_decal/stripes,
 /turf/open/floor/mineral/plastitanium,
-/area/station/security/armory)
+/area/station/ai_monitored/security/armory)
 "Zi" = (
 /obj/effect/turf_decal/stripes{
 	dir = 1
