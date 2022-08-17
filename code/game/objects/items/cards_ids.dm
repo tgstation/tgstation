@@ -1361,7 +1361,7 @@
 	// If we're attacking a human, we want it to be covert. We're not ATTACKING them, we're trying
 	// to sneakily steal their accesses by swiping our agent ID card near them. As a result, we
 	// return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN to cancel any part of the following the attack chain.
-	if(istype(target, /mob/living/carbon/human))
+	if(ishuman(target))
 		to_chat(user, "<span class='notice'>You covertly start to scan [target] with \the [src], hoping to pick up a wireless ID card signal...</span>")
 
 		if(!do_mob(user, target, 2 SECONDS))

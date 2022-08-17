@@ -231,7 +231,7 @@ SUBSYSTEM_DEF(points_of_interest)
 		return 2
 	if(istype(target, /mob/living/silicon/robot))
 		return 3
-	if(istype(target, /mob/living/carbon/human))
+	if(ishuman(target))
 		return 4
 	if(isbrain(target))
 		return 5

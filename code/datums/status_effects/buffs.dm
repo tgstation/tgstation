@@ -340,7 +340,7 @@
 	owner.adjustFireLoss(-25)
 	owner.remove_CC()
 	owner.bodytemperature = owner.get_body_temp_normal()
-	if(istype(owner, /mob/living/carbon/human))
+	if(ishuman(owner))
 		var/mob/living/carbon/human/humi = owner
 		humi.set_coretemperature(humi.get_body_temp_normal())
 	return TRUE

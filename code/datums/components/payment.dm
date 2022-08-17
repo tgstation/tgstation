@@ -119,7 +119,7 @@
 		var/obj/item/holochip/holochange = new /obj/item/holochip(user.loc) //Change is made in holocredits exclusively.
 		holochange.credits = physical_cash_total
 		holochange.name = "[holochange.credits] credit holochip"
-		if(istype(user, /mob/living/carbon/human))
+		if(ishuman(user))
 			var/mob/living/carbon/human/paying_customer = user
 			if(!INVOKE_ASYNC(paying_customer, /mob.proc/put_in_hands, holochange))
 				user.pulling = holochange
