@@ -29,7 +29,7 @@
 	blood_volume = BLOOD_VOLUME_NORMAL
 	ai_controller = /datum/ai_controller/basic_controller/cow
 	/// what this cow munches on, and what can be used to tame it.
-	var/static/list/food_types = list(/obj/item/food/grown/wheat)
+	var/list/food_types = list(/obj/item/food/grown/wheat)
 
 /mob/living/basic/cow/Initialize(mapload)
 	AddComponent(/datum/component/tippable, \
@@ -37,11 +37,10 @@
 		untip_time = 0.5 SECONDS, \
 		self_right_time = rand(25 SECONDS, 50 SECONDS), \
 		post_tipped_callback = CALLBACK(src, .proc/after_cow_tipped))
-	AddElement(/datum/element/basic_eating, 10, food_types)
 	AddElement(/datum/element/pet_bonus, "moos happily!")
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COW, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	udder_component()
-	make_tameable()
+	setup_eating()
 	. = ..()
 	ai_controller.blackboard[BB_BASIC_FOODS] = food_types
 
@@ -50,8 +49,12 @@
 	AddComponent(/datum/component/udder)
 
 ///wrapper for the tameable component addition so you can have non tamable cow subtypes
-/mob/living/basic/cow/proc/make_tameable()
+/mob/living/basic/cow/proc/setup_eating()
+	var/static/list/food_types
+	if(!food_types)
+		food_types = src.food_types.Copy()
 	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 25, bonus_tame_chance = 15, after_tame = CALLBACK(src, .proc/tamed))
+	AddElement(/datum/element/basic_eating, 10, food_types)
 
 /mob/living/basic/cow/proc/tamed(mob/living/tamer)
 	buckle_lying = 0
