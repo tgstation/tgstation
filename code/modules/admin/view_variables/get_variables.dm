@@ -31,7 +31,7 @@
 	else if(istype(var_value, /datum/weakref))
 		. = VV_WEAKREF
 
-	else if(istype(var_value, /datum))
+	else if(isdatum(var_value))
 		. = VV_DATUM_REFERENCE
 
 	else if(ispath(var_value))
