@@ -151,7 +151,7 @@
 	for(var/turf/T in RANGE_TURFS(2, center))
 		if(isindestructiblefloor(T))
 			continue
-		if(!istype(T, /turf/closed/indestructible))
+		if(!isindestructiblewall(T))
 			T.ChangeTurf(/turf/open/misc/asteroid/basalt/lava_land_surface, flags = CHANGETURF_INHERIT_AIR)
 		else
 			indestructible_turfs += T
@@ -182,7 +182,7 @@
 		for(var/turf/T in turfs)
 			if(!(T in empty))
 				new /obj/effect/temp_visual/lava_warning(T)
-			else if(!istype(T, /turf/closed/indestructible))
+			else if(!isindestructiblewall(T))
 				new /obj/effect/temp_visual/lava_safe(T)
 		amount--
 		SLEEP_CHECK_DEATH(2.4 SECONDS, owner)
