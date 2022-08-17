@@ -143,7 +143,7 @@
 
 /obj/item/robot_model/proc/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
 	SHOULD_CALL_PARENT(TRUE)
-	
+
 	for(var/datum/robot_energy_storage/storage_datum in storages)
 		storage_datum.energy = min(storage_datum.max_energy, storage_datum.energy + coeff * storage_datum.recharge_rate)
 
@@ -410,7 +410,7 @@
 	wash_audio = new(owner)
 
 /datum/action/toggle_buffer/IsAvailable()
-	if(!istype(owner, /mob/living/silicon/robot))
+	if(!iscyborg(owner))
 		return FALSE
 	return ..()
 

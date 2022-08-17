@@ -229,7 +229,7 @@ SUBSYSTEM_DEF(points_of_interest)
 		return 1
 	if(istype(target, /mob/living/silicon/pai))
 		return 2
-	if(istype(target, /mob/living/silicon/robot))
+	if(iscyborg(target))
 		return 3
 	if(ishuman(target))
 		return 4
