@@ -69,7 +69,6 @@
 /turf/open/floor/mineral/titanium,
 /area/station/hallway/primary/central)
 "dN" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/tile/bottlegreen/mono,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -379,8 +378,6 @@
 /turf/open/floor/mineral/titanium,
 /area/station/hallway/primary/central)
 "td" = (
-/obj/structure/cable,
-},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,

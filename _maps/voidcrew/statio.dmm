@@ -1912,7 +1912,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "jK" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -7276,7 +7275,6 @@
 /area/station/cargo)
 "Ki" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
-/obj/structure/cable,
 /obj/machinery/power/terminal{
 	dir = 1
 	},
@@ -8464,7 +8462,6 @@
 "Qo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
-/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/iron,

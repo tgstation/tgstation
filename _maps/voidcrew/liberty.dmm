@@ -1428,7 +1428,6 @@
 "VC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /obj/machinery/airalarm/all_access{
 	dir = 4;
 	pixel_x = 24

@@ -204,7 +204,6 @@
 /turf/open/floor/iron/dark/grid,
 /area/station/security/prison)
 "en" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "TartBridgeLockdown"

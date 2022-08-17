@@ -791,7 +791,6 @@
 /turf/open/floor/plating,
 /area/station/engineering/engine)
 "gy" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/hidden/layer5,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -3112,7 +3111,6 @@
 /turf/open/floor/carpet/blue,
 /area/station/command/bridge)
 "Ac" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment{
@@ -4843,7 +4841,6 @@
 /turf/open/floor/iron,
 /area/station/service/cafeteria)
 "OU" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes{
 	dir = 8
 	},

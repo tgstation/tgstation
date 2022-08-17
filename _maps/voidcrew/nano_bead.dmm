@@ -547,7 +547,6 @@
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
-/obj/structure/cable,
 /obj/machinery/power/port_gen/pacman/pre_loaded,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,

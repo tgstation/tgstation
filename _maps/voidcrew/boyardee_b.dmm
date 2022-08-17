@@ -545,7 +545,6 @@
 /obj/machinery/ore_silo,
 /obj/item/multitool,
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/cargo)
 "ng" = (
 /obj/structure/table/reinforced,
@@ -896,7 +895,6 @@
 /area/station/cargo/miningoffice)
 "yx" = (
 /obj/structure/table/reinforced,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/item/reagent_containers/cup/glass/bottle/beer{
 	pixel_x = 5;
 	pixel_y = -2
@@ -1154,7 +1152,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/cargo)
 "GU" = (
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
@@ -1213,7 +1210,6 @@
 /obj/machinery/computer/bank_machine,
 /obj/item/card/id/departmental_budget/car,
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/cargo)
 "Ia" = (
 /obj/machinery/holopad,
@@ -1531,7 +1527,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/cargo)
 "Rq" = (
 /obj/machinery/firealarm{
@@ -1798,7 +1793,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/cargo)
 "Xv" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
@@ -1844,7 +1838,6 @@
 /obj/item/toy/redbutton,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/cargo)
 "Yr" = (
 /obj/structure/table/reinforced,
