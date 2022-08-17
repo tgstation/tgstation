@@ -1382,11 +1382,11 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced,
-/obj/item/storage/firstaid/fire{
+/obj/item/storage/medkit/fire{
 	pixel_x = 4;
 	pixel_y = 2
 	},
-/obj/item/storage/firstaid/advanced{
+/obj/item/storage/medkit/advanced{
 	pixel_y = -2
 	},
 /obj/item/megaphone/command,

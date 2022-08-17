@@ -742,7 +742,7 @@
 "ih" = (
 /obj/structure/table/reinforced,
 /obj/item/megaphone/command,
-/obj/item/melee/classic_baton/telescopic,
+/obj/item/melee/baton/telescopic,
 /turf/open/floor/carpet/executive,
 /area/station/command/bridge)
 "io" = (
@@ -2512,7 +2512,7 @@
 /obj/item/gun/ballistic/shotgun/doublebarrel,
 /obj/item/storage/box/rubbershot,
 /obj/item/soulstone/anybody/chaplain,
-/obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor,
+/obj/item/mod/control/pre_equipped/responsory/inquisitory,
 /obj/item/megaphone,
 /obj/item/book/granter/action/spell/smoke/lesser,
 /obj/effect/turf_decal/siding/wood/corner{
@@ -3442,9 +3442,9 @@
 /obj/item/storage/box/beakers,
 /obj/item/storage/box/syringes,
 /obj/item/reagent_containers/cup/bottle/formaldehyde,
-/obj/item/storage/firstaid/toxin,
-/obj/item/storage/firstaid/brute,
-/obj/item/storage/firstaid/fire,
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/brute,
+/obj/item/storage/medkit/fire,
 /obj/item/reagent_containers/spray/cleaner,
 /obj/item/storage/belt/medical,
 /obj/item/clothing/gloves/color/latex/nitrile,
@@ -3826,9 +3826,9 @@
 /obj/item/storage/box/beakers,
 /obj/item/storage/box/syringes,
 /obj/item/reagent_containers/cup/bottle/formaldehyde,
-/obj/item/storage/firstaid/toxin,
-/obj/item/storage/firstaid/brute,
-/obj/item/storage/firstaid/fire,
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/brute,
+/obj/item/storage/medkit/fire,
 /obj/item/reagent_containers/spray/cleaner,
 /obj/item/storage/belt/medical,
 /obj/item/clothing/gloves/color/latex/nitrile,

@@ -966,10 +966,10 @@
 /area/station/cargo)
 "JC" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/toxin{
+/obj/item/storage/medkit/toxin{
 	pixel_y = 8
 	},
-/obj/item/storage/firstaid/o2{
+/obj/item/storage/medkit/o2{
 	pixel_y = -1
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -1412,7 +1412,7 @@
 /area/space)
 "ZE" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/mineral/titanium/blue,
 /area/station/medical)
 "ZK" = (

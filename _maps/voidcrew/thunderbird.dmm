@@ -661,10 +661,10 @@
 /area/station/security)
 "Ei" = (
 /obj/structure/rack,
-/obj/item/storage/firstaid/brute,
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/toxin,
-/obj/item/storage/firstaid/advanced,
+/obj/item/storage/medkit/brute,
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/advanced,
 /obj/effect/turf_decal/tile/blue/mono,
 /obj/item/defibrillator/loaded,
 /turf/open/floor/mineral/titanium,

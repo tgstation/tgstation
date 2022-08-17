@@ -3338,7 +3338,7 @@
 	pixel_y = 28
 	},
 /obj/machinery/suit_storage_unit/inherit,
-/obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor,
+/obj/item/mod/control/pre_equipped/responsory/inquisitory,
 /obj/item/tank/internals/oxygen/red,
 /obj/item/clothing/mask/breath,
 /turf/open/floor/carpet/nanoweave/blue,

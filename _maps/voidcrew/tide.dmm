@@ -452,7 +452,7 @@
 /area/station/maintenance/starboard)
 "FA" = (
 /obj/structure/cable,
-/obj/item/storage/firstaid/fire,
+/obj/item/storage/medkit/fire,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/light_construct{
 	dir = 1

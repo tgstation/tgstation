@@ -2314,7 +2314,7 @@
 	dir = 4;
 	pixel_x = -28
 	},
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/item/storage/medkit,
 /obj/item/clothing/under/suit/white,
 /turf/open/floor/iron/white,

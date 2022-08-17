@@ -1038,7 +1038,7 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/item/radio/off,
 /obj/item/areaeditor,
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	pixel_x = -8;
 	pixel_y = -8
 	},
@@ -1318,8 +1318,8 @@
 	pixel_x = -5;
 	pixel_y = -4
 	},
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/o2{
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/o2{
 	pixel_x = 4;
 	pixel_y = 3
 	},

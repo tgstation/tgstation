@@ -21,7 +21,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/science)
 "aT" = (
-/obj/item/clothing/suit/space/hardsuit/combatmedic,
+/obj/item/mod/control/pre_equipped/medical,
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/clothing/mask/gas/sechailer,
 /obj/effect/turf_decal/bot_red,
@@ -73,7 +73,7 @@
 /turf/open/floor/iron,
 /area/station/storage)
 "bC" = (
-/obj/item/clothing/suit/space/hardsuit/combatmedic,
+/obj/item/mod/control/pre_equipped/medical,
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/clothing/mask/gas/sechailer,
 /obj/effect/turf_decal/bot_red,
@@ -1428,14 +1428,14 @@
 	icon_state = "med";
 	name = "medicine locker"
 	},
-/obj/item/storage/firstaid/brute,
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/o2,
-/obj/item/storage/firstaid/toxin,
+/obj/item/storage/medkit/brute,
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/o2,
+/obj/item/storage/medkit/toxin,
 /obj/item/storage/box/medipens,
 /obj/item/storage/box/syringes,
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/iron/white,
 /area/station/medical)
 "DU" = (
@@ -2221,7 +2221,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical)
 "SH" = (
-/obj/item/clothing/suit/space/hardsuit/combatmedic,
+/obj/item/mod/control/pre_equipped/medical,
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/clothing/mask/gas/sechailer,
 /obj/structure/extinguisher_cabinet{

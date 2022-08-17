@@ -2322,7 +2322,7 @@
 /area/station/hallway/fore)
 "Ic" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/firstaid,
+/obj/item/storage/medkit,
 /obj/item/reagent_containers/cup/bucket,
 /obj/item/assembly/prox_sensor,
 /obj/item/assembly/prox_sensor,

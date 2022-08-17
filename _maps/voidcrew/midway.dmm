@@ -1180,7 +1180,7 @@
 "IH" = (
 /obj/structure/table,
 /obj/item/healthanalyzer,
-/obj/item/storage/firstaid/o2,
+/obj/item/storage/medkit/o2,
 /obj/effect/turf_decal/tile/blue/full,
 /turf/open/floor/iron,
 /area/station/medical)
@@ -1326,8 +1326,8 @@
 /area/station/engineering)
 "Oh" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/brute,
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/brute,
 /obj/effect/turf_decal/tile/blue/full,
 /turf/open/floor/iron,
 /area/station/medical)
@@ -1877,8 +1877,8 @@
 /area/station/hallway/primary/central)
 "ZN" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular,
 /obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 8
 	},

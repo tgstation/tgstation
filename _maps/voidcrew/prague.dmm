@@ -234,7 +234,7 @@
 	pixel_x = -5;
 	pixel_y = -24
 	},
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/machinery/button/door{
 	id = "golemwindows";
 	name = "Window Blast Door Control";
@@ -275,12 +275,12 @@
 /turf/open/floor/plating,
 /area/station/engineering)
 "hm" = (
-/obj/item/storage/firstaid/brute{
+/obj/item/storage/medkit/brute{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/storage/firstaid/brute,
-/obj/item/storage/firstaid/brute{
+/obj/item/storage/medkit/brute,
+/obj/item/storage/medkit/brute{
 	pixel_x = -4;
 	pixel_y = -4
 	},
@@ -303,12 +303,12 @@
 /turf/open/floor/iron/dark,
 /area/station/commons)
 "hB" = (
-/obj/item/storage/firstaid/fire{
+/obj/item/storage/medkit/fire{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/fire{
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/fire{
 	pixel_x = -4;
 	pixel_y = -4
 	},

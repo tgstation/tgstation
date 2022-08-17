@@ -3,7 +3,7 @@
 /obj/machinery/suit_storage_unit/syndicate{
 	name = "captain's suit storage unit";
 	storage_type = /obj/item/clothing/shoes/magboots/syndie;
-	suit_type = /obj/item/clothing/suit/space/hardsuit/syndi/elite
+	suit_type = /obj/item/mod/control/pre_equipped/elite
 	},
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/wood/yew,
@@ -1061,8 +1061,8 @@
 	dir = 1
 	},
 /obj/item/pinpointer/crew,
-/obj/item/storage/firstaid/toxin,
-/obj/item/storage/firstaid/o2,
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/o2,
 /obj/item/roller,
 /turf/open/floor/iron/white,
 /area/station/medical)
@@ -1086,8 +1086,8 @@
 	dir = 1
 	},
 /obj/item/pinpointer/crew,
-/obj/item/storage/firstaid/toxin,
-/obj/item/storage/firstaid/o2,
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/o2,
 /obj/item/roller,
 /turf/open/floor/iron/white,
 /area/station/medical)
@@ -1376,7 +1376,7 @@
 	dir = 8
 	},
 /obj/structure/table/glass,
-/obj/item/storage/firstaid/o2,
+/obj/item/storage/medkit/o2,
 /obj/machinery/duct,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -1918,7 +1918,7 @@
 /obj/machinery/firealarm{
 	pixel_y = -26
 	},
-/obj/item/storage/firstaid/tactical,
+/obj/item/storage/medkit/tactical,
 /obj/item/card/emag,
 /obj/item/storage/box/hypospray/CMO,
 /obj/item/clothing/glasses/science,

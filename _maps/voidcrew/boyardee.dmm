@@ -968,7 +968,7 @@
 /area/station/commons/canteen)
 "uI" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/plasteel/mono/dark,
 /area/station/commons/canteen)
 "uR" = (
@@ -1125,7 +1125,7 @@
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/metal/twenty,
 /obj/item/gun/ballistic/shotgun/doublebarrel,
-/obj/item/storage/firstaid/advanced,
+/obj/item/storage/medkit/advanced,
 /turf/open/floor/plasteel/mono/dark,
 /area/station/commons/canteen)
 "xS" = (
@@ -1975,7 +1975,7 @@
 /obj/item/radio/intercom{
 	pixel_x = 27
 	},
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/wood,
 /area/station/commons)
 "Mo" = (

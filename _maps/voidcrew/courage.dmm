@@ -221,9 +221,9 @@
 /obj/item/storage/backpack/duffelbag/syndie/surgery,
 /obj/item/defibrillator/compact/combat,
 /obj/item/soap/syndie,
-/obj/item/storage/firstaid/tactical,
-/obj/item/storage/firstaid/tactical,
-/obj/item/storage/firstaid/tactical,
+/obj/item/storage/medkit/tactical,
+/obj/item/storage/medkit/tactical,
+/obj/item/storage/medkit/tactical,
 /turf/open/floor/mineral/plastitanium,
 /area/station/commons)
 "Dx" = (
@@ -248,22 +248,19 @@
 /obj/item/melee/transforming/energy/sword/saber/red,
 /obj/item/melee/transforming/energy/sword/saber/red,
 /obj/item/melee/transforming/energy/sword/saber/red,
-/obj/item/gun/ballistic/automatic/pistol/APS,
-/obj/item/gun/ballistic/automatic/pistol/APS,
-/obj/item/gun/ballistic/automatic/pistol/APS,
-/obj/item/ammo_box/magazine/pistolm9mm,
-/obj/item/ammo_box/magazine/pistolm9mm,
-/obj/item/ammo_box/magazine/pistolm9mm,
-/obj/item/ammo_box/magazine/pistolm9mm,
-/obj/item/ammo_box/magazine/pistolm9mm,
-/obj/item/ammo_box/magazine/pistolm9mm,
-/obj/item/ammo_box/magazine/pistolm9mm,
-/obj/item/ammo_box/magazine/pistolm9mm,
-/obj/item/ammo_box/magazine/pistolm9mm,
-/obj/item/ammo_box/magazine/pistolm9mm,
-/obj/item/ammo_box/magazine/pistolm9mm,
-/obj/item/ammo_box/magazine/pistolm9mm,
-/obj/item/ammo_box/magazine/pistolm9mm,
+/obj/item/gun/ballistic/automatic/pistol/aps,
+/obj/item/gun/ballistic/automatic/pistol/aps,
+/obj/item/gun/ballistic/automatic/pistol/aps,
+/obj/item/ammo_box/magazine/m9mm_aps,
+/obj/item/ammo_box/magazine/m9mm_aps,
+/obj/item/ammo_box/magazine/m9mm_aps,
+/obj/item/ammo_box/magazine/m9mm_aps,
+/obj/item/ammo_box/magazine/m9mm_aps,
+/obj/item/ammo_box/magazine/m9mm_aps,
+/obj/item/ammo_box/magazine/m9mm_aps,
+/obj/item/ammo_box/magazine/m9mm_aps,
+/obj/item/ammo_box/magazine/m9mm_aps,
+/obj/item/ammo_box/magazine/m9mm_aps,
 /turf/open/floor/mineral/plastitanium,
 /area/station/commons)
 "FM" = (
@@ -484,7 +481,7 @@
 /obj/machinery/suit_storage_unit/syndicate{
 	name = "captain's suit storage unit";
 	storage_type = /obj/item/clothing/shoes/magboots/syndie;
-	suit_type = /obj/item/clothing/suit/space/hardsuit/syndi/elite
+	suit_type = /obj/item/mod/control/pre_equipped/elite
 	},
 /obj/effect/turf_decal/tile/red/anticorner,
 /turf/open/floor/iron/dark,

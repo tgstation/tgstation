@@ -446,7 +446,7 @@
 /area/station/engineering/engine)
 "IO" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/space/hardsuit/clown,
+/obj/item/mod/control/pre_equipped/cosmohonk,
 /obj/item/pickaxe/drill,
 /obj/item/storage/bag/ore,
 /obj/machinery/light{
@@ -629,7 +629,7 @@
 /area/station/commons)
 "RJ" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/space/hardsuit/clown,
+/obj/item/mod/control/pre_equipped/cosmohonk,
 /obj/item/pickaxe/drill,
 /obj/item/storage/bag/ore,
 /obj/structure/window{
@@ -933,7 +933,7 @@
 /area/station/commons)
 "ZI" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/space/hardsuit/clown,
+/obj/item/mod/control/pre_equipped/cosmohonk,
 /obj/item/pickaxe/drill,
 /obj/item/storage/bag/ore,
 /obj/item/clothing/shoes/clown_shoes/banana_shoes,

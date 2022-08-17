@@ -818,7 +818,7 @@
 /area/station/cargo)
 "qJ" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/plasteel/tech,
 /area/station/commons/canteen)
 "qU" = (
@@ -1015,9 +1015,9 @@
 "wu" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/rack,
-/obj/item/storage/firstaid/advanced,
-/obj/item/storage/firstaid/toxin,
-/obj/item/storage/firstaid/tactical,
+/obj/item/storage/medkit/advanced,
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/tactical,
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/window/reinforced/spawner/east,
 /obj/machinery/door/window/left/directional/north,
@@ -2037,8 +2037,8 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/structure/cable,
-/obj/item/storage/firstaid/brute,
-/obj/item/storage/firstaid/fire,
+/obj/item/storage/medkit/brute,
+/obj/item/storage/medkit/fire,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "TH" = (

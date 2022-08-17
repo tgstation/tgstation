@@ -1410,7 +1410,7 @@
 	name = "emergency supplies"
 	},
 /obj/item/storage/toolbox/emergency/shuttle/electric,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/item/mining_scanner,
 /obj/item/pickaxe/emergency,
 /obj/item/stock_parts/matter_bin,

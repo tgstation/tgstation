@@ -31,7 +31,7 @@
 /area/station/command/bridge)
 "bF" = (
 /obj/structure/table/bronze,
-/obj/item/storage/firstaid/advanced,
+/obj/item/storage/medkit/advanced,
 /obj/machinery/light{
 	dir = 1
 	},

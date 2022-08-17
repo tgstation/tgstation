@@ -254,11 +254,11 @@
 /area/station/cargo)
 "in" = (
 /obj/structure/closet/cabinet,
-/obj/item/clothing/suit/space/hardsuit/cult,
-/obj/item/clothing/suit/space/hardsuit/cult,
-/obj/item/clothing/suit/space/hardsuit/cult,
-/obj/item/clothing/suit/space/hardsuit/cult,
-/obj/item/clothing/suit/space/hardsuit/cult,
+/obj/item/clothing/suit/hooded/cultrobes/alt,
+/obj/item/clothing/suit/hooded/cultrobes/alt,
+/obj/item/clothing/suit/hooded/cultrobes/alt,
+/obj/item/clothing/suit/hooded/cultrobes/alt,
+/obj/item/clothing/suit/hooded/cultrobes/alt,
 /obj/item/melee/cultblade,
 /obj/item/melee/cultblade,
 /obj/item/melee/cultblade,

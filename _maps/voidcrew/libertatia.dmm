@@ -371,7 +371,7 @@
 	dir = 8
 	},
 /obj/machinery/suit_storage_unit/inherit,
-/obj/item/clothing/suit/space/hardsuit/swat,
+/obj/item/clothing/suit/armor/swat,
 /obj/item/tank/jetpack/carbondioxide,
 /turf/open/floor/mineral/plastitanium,
 /area/station/security)
@@ -750,12 +750,12 @@
 /area/station/commons)
 "zR" = (
 /obj/structure/rack,
-/obj/item/storage/firstaid/brute{
+/obj/item/storage/medkit/brute{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/regular{
 	pixel_x = -4;
 	pixel_y = -4
 	},

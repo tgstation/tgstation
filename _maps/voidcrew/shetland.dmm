@@ -1607,8 +1607,8 @@
 	pixel_x = -24
 	},
 /obj/machinery/door/window/right/directional/east,
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/regular,
 /obj/effect/turf_decal/borderfloor{
 	dir = 8
 	},
@@ -2731,7 +2731,7 @@
 /area/station/engineering/atmospherics)
 "Kq" = (
 /obj/machinery/suit_storage_unit/cmo{
-	suit_type = /obj/item/clothing/suit/space/hardsuit/medical
+	suit_type = /obj/item/mod/control/pre_equipped/medical
 	},
 /obj/effect/turf_decal/box,
 /obj/effect/turf_decal/borderfloor{

@@ -491,12 +491,12 @@
 /area/station/hallway/primary/central)
 "Dj" = (
 /obj/structure/table/greyscale,
-/obj/item/storage/firstaid/advanced,
-/obj/item/storage/firstaid/brute{
+/obj/item/storage/medkit/advanced,
+/obj/item/storage/medkit/brute{
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/storage/firstaid/fire{
+/obj/item/storage/medkit/fire{
 	pixel_x = -6
 	},
 /obj/effect/turf_decal/tile/purple/mono,

@@ -122,12 +122,12 @@
 /area/station/medical)
 "gL" = (
 /obj/structure/table/glass,
-/obj/item/storage/firstaid/toxin{
+/obj/item/storage/medkit/toxin{
 	pixel_x = 3;
 	pixel_y = 2
 	},
-/obj/item/storage/firstaid/brute,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/brute,
+/obj/item/storage/medkit/regular,
 /obj/item/defibrillator/compact/loaded,
 /obj/structure/window/reinforced/survival_pod{
 	dir = 1
@@ -499,7 +499,7 @@
 /area/station/medical)
 "tU" = (
 /obj/structure/table/glass,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 1
 	},
@@ -635,8 +635,8 @@
 /area/station/command/bridge)
 "By" = (
 /obj/structure/table/glass,
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/o2{
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/o2{
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -960,7 +960,7 @@
 	dir = 8
 	},
 /obj/structure/table/glass,
-/obj/item/storage/firstaid/o2,
+/obj/item/storage/medkit/o2,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
@@ -1071,7 +1071,7 @@
 /area/station/medical)
 "Ru" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/firstaid/tactical,
+/obj/item/storage/medkit/tactical,
 /turf/open/floor/mineral/plastitanium,
 /area/station/command/bridge)
 "RG" = (
@@ -1133,7 +1133,7 @@
 	dir = 8
 	},
 /obj/structure/table/glass,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 6
 	},

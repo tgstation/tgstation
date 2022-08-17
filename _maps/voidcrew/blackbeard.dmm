@@ -217,7 +217,7 @@
 	helmet_type = /obj/item/tank/internals/oxygen/yellow;
 	mask_type = /obj/item/clothing/mask/gas/syndicate;
 	storage_type = /obj/item/tank/jetpack/oxygen/harness;
-	suit_type = /obj/item/clothing/suit/space/hardsuit/syndi
+	suit_type = /obj/item/mod/control/pre_equipped/traitor
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/station/commons)
@@ -382,15 +382,15 @@
 	helmet_type = /obj/item/tank/internals/oxygen/yellow;
 	mask_type = /obj/item/clothing/mask/gas/syndicate;
 	storage_type = /obj/item/tank/jetpack/oxygen/harness;
-	suit_type = /obj/item/clothing/suit/space/hardsuit/syndi/elite
+	suit_type = /obj/item/mod/control/pre_equipped/elite
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/mineral/plastitanium,
 /area/station/command/bridge)
 "kh" = (
 /obj/structure/closet/crate/engineering,
-/obj/item/stack/sheet/mineral/uranium/twenty,
-/obj/item/wrench/syndie,
+/obj/item/stack/sheet/mineral/uranium/five,
+/obj/item/wrench/combat,
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating/catwalk_floor{
 	icon_state = "catwalk_above"
@@ -715,13 +715,11 @@
 /area/station/engineering)
 "xi" = (
 /obj/structure/closet/syndicate,
-/obj/item/clothing/suit/aclf,
-/obj/item/clothing/head/aclfcap,
 /obj/item/clothing/gloves/krav_maga/combatglovesplus,
 /obj/item/clothing/glasses/sunglasses,
 /obj/item/clothing/under/syndicate/aclf,
 /obj/item/clothing/shoes/combat,
-/obj/item/melee/classic_baton/telescopic,
+/obj/item/melee/baton/telescopic,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
@@ -822,18 +820,18 @@
 "Cn" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
-/obj/item/clothing/gloves/color/latex/nitrile/evil,
+/obj/item/clothing/gloves/color/latex/nitrile,
 /obj/item/defibrillator/compact/combat/loaded,
-/obj/item/storage/firstaid/tactical,
-/obj/item/storage/firstaid/o2,
-/obj/item/storage/firstaid/toxin,
-/obj/item/storage/firstaid/brute,
-/obj/item/storage/firstaid/fire,
+/obj/item/storage/medkit/tactical,
+/obj/item/storage/medkit/o2,
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/brute,
+/obj/item/storage/medkit/fire,
 /obj/item/storage/medkit,
 /obj/item/stack/medical/gauze/twelve,
 /obj/item/stack/medical/gauze/twelve,
 /obj/item/stack/medical/gauze/twelve,
-/obj/item/clothing/suit/space/hardsuit/syndi,
+/obj/item/mod/control/pre_equipped/traitor,
 /obj/item/storage/belt/medical/webbing,
 /obj/structure/closet/syndicate,
 /turf/open/floor/plating/catwalk_floor{
@@ -873,12 +871,12 @@
 /area/station/hallway/primary/central)
 "DZ" = (
 /obj/structure/rack,
-/obj/item/gun/ballistic/automatic/pistol/APS,
-/obj/item/gun/ballistic/automatic/pistol/APS,
-/obj/item/ammo_box/magazine/pistolm9mm,
-/obj/item/ammo_box/magazine/pistolm9mm,
-/obj/item/ammo_box/magazine/pistolm9mm,
-/obj/item/ammo_box/magazine/pistolm9mm,
+/obj/item/gun/ballistic/automatic/pistol/aps,
+/obj/item/gun/ballistic/automatic/pistol/aps,
+/obj/item/ammo_box/magazine/m9mm_aps,
+/obj/item/ammo_box/magazine/m9mm_aps,
+/obj/item/ammo_box/magazine/m9mm_aps,
+/obj/item/ammo_box/magazine/m9mm_aps,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
@@ -1404,7 +1402,7 @@
 	helmet_type = /obj/item/tank/internals/oxygen/yellow;
 	mask_type = /obj/item/clothing/mask/gas/syndicate;
 	storage_type = /obj/item/tank/jetpack/oxygen/harness;
-	suit_type = /obj/item/clothing/suit/space/hardsuit/syndi
+	suit_type = /obj/item/mod/control/pre_equipped/traitor
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/mineral/plastitanium,

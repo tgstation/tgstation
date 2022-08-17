@@ -1645,9 +1645,9 @@
 	name = "armor_locker";
 	req_access = list(3,150)
 	},
-/obj/item/clothing/suit/space/hardsuit/syndi,
-/obj/item/clothing/suit/space/hardsuit/syndi,
-/obj/item/clothing/suit/space/hardsuit/syndi,
+/obj/item/mod/control/pre_equipped/traitor,
+/obj/item/mod/control/pre_equipped/traitor,
+/obj/item/mod/control/pre_equipped/traitor,
 /obj/item/clothing/suit/armor/bulletproof,
 /obj/item/clothing/suit/armor/bulletproof,
 /obj/item/clothing/suit/armor/bulletproof,
@@ -3236,7 +3236,7 @@
 /obj/item/clothing/gloves/krav_maga/combatglovesplus,
 /obj/item/ammo_box/magazine/m10mm/ap,
 /obj/item/ammo_box/magazine/m10mm/ap,
-/obj/item/melee/classic_baton/telescopic,
+/obj/item/melee/baton/telescopic,
 /obj/item/clothing/under/syndicate,
 /obj/item/melee/transforming/energy/sword/saber/blue,
 /turf/open/floor/carpet/red,
@@ -3669,7 +3669,7 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/storage/firstaid,
+/obj/item/storage/medkit,
 /turf/open/floor/carpet/nanoweave/red,
 /area/station/commons/dorms)
 "ME" = (
@@ -4464,7 +4464,7 @@
 "Tx" = (
 /obj/machinery/suit_storage_unit/syndicate{
 	name = "captain's suit storage unit";
-	suit_type = /obj/item/clothing/suit/space/hardsuit/syndi/elite
+	suit_type = /obj/item/mod/control/pre_equipped/elite
 	},
 /turf/open/floor/carpet/nanoweave/red,
 /area/station/commons/dorms)

@@ -4173,11 +4173,11 @@
 /turf/open/floor/plating,
 /area/station/engineering/engine)
 "FL" = (
-/obj/item/storage/firstaid/fire{
+/obj/item/storage/medkit/fire{
 	pixel_x = -4;
 	pixel_y = 5
 	},
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/effect/turf_decal/tile/blue{
 	dir = 6
 	},

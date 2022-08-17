@@ -1781,7 +1781,7 @@
 	pixel_x = 5;
 	pixel_y = 8
 	},
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	pixel_x = -7;
 	pixel_y = 4
 	},
@@ -2926,11 +2926,11 @@
 /area/station/command/bridge)
 "Ml" = (
 /obj/structure/table/glass,
-/obj/item/storage/firstaid/o2{
+/obj/item/storage/medkit/o2{
 	pixel_x = 4;
 	pixel_y = 3
 	},
-/obj/item/storage/firstaid/fire{
+/obj/item/storage/medkit/fire{
 	pixel_x = -6
 	},
 /obj/machinery/door/window/right/directional/north,
@@ -3521,7 +3521,7 @@
 /area/station/commons/canteen)
 "Vq" = (
 /obj/machinery/suit_storage_unit/cmo{
-	suit_type = /obj/item/clothing/suit/space/hardsuit/medical
+	suit_type = /obj/item/mod/control/pre_equipped/medical
 	},
 /obj/machinery/light_switch{
 	pixel_x = -25;

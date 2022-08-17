@@ -50,9 +50,9 @@
 /obj/item/weldingtool/experimental,
 /obj/item/clothing/head/welding,
 /obj/item/areaeditor,
-/obj/item/clothing/suit/space/hardsuit/carp/old,
-/obj/item/clothing/suit/space/hardsuit/carp/old,
-/obj/item/clothing/suit/space/hardsuit/carp/old,
+/obj/item/clothing/suit/hooded/carp_costume/spaceproof/old,
+/obj/item/clothing/suit/hooded/carp_costume/spaceproof/old,
+/obj/item/clothing/suit/hooded/carp_costume/spaceproof/old,
 /obj/item/tank/internals/oxygen,
 /obj/item/tank/internals/oxygen,
 /obj/item/tank/internals/oxygen,
@@ -66,10 +66,10 @@
 	dir = 8;
 	pixel_x = 5
 	},
-/obj/item/storage/firstaid/toxin,
-/obj/item/storage/firstaid/advanced,
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/advanced,
 /obj/item/storage/backpack/duffelbag/med/surgery,
-/obj/item/storage/firstaid/o2,
+/obj/item/storage/medkit/o2,
 /obj/machinery/light/floor,
 /obj/structure/window/reinforced/spawner{
 	dir = 4

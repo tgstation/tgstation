@@ -129,7 +129,7 @@
 /obj/item/storage/box/ids{
 	pixel_x = -7
 	},
-/obj/item/melee/classic_baton/telescopic,
+/obj/item/melee/baton/telescopic,
 /obj/item/folder/blue{
 	pixel_x = -1;
 	pixel_y = 8
@@ -368,7 +368,7 @@
 	dir = 8;
 	pixel_y = 12
 	},
-/obj/item/clothing/suit/space/hardsuit/solgov,
+/obj/item/mod/control/pre_equipped/magnate,
 /obj/item/clothing/mask/gas/sechailer/swat/spacepol,
 /obj/item/tank/jetpack/oxygen,
 /obj/structure/closet/wall/red{
@@ -435,7 +435,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
-/obj/item/clothing/suit/space/hardsuit/solgov,
+/obj/item/mod/control/pre_equipped/magnate,
 /obj/item/clothing/mask/gas/sechailer/swat/spacepol,
 /obj/item/tank/jetpack/oxygen,
 /obj/structure/closet/wall/red{
@@ -512,7 +512,7 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/item/clothing/suit/space/hardsuit/solgov,
+/obj/item/mod/control/pre_equipped/magnate,
 /obj/item/clothing/mask/gas/sechailer/swat/spacepol,
 /obj/item/tank/jetpack/oxygen,
 /obj/structure/closet/wall/red{
@@ -751,12 +751,12 @@
 /area/station/commons)
 "zR" = (
 /obj/structure/rack,
-/obj/item/storage/firstaid/brute{
+/obj/item/storage/medkit/brute{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/regular{
 	pixel_x = -4;
 	pixel_y = -4
 	},
@@ -1152,7 +1152,7 @@
 /obj/item/gun/ballistic/automatic/pistol/solgov,
 /obj/item/ammo_box/magazine/pistol556mm,
 /obj/item/ammo_box/magazine/pistol556mm,
-/obj/item/melee/classic_baton/telescopic,
+/obj/item/melee/baton/telescopic,
 /obj/structure/closet/wall{
 	dir = 4;
 	icon_door = "red_wall";

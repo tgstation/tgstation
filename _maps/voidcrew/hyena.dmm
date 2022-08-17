@@ -1044,7 +1044,7 @@
 /obj/machinery/suit_storage_unit/syndicate{
 	name = "captain's suit storage unit";
 	storage_type = /obj/item/clothing/shoes/magboots/syndie;
-	suit_type = /obj/item/clothing/suit/space/hardsuit/syndi/elite
+	suit_type = /obj/item/mod/control/pre_equipped/elite
 	},
 /obj/structure/window/reinforced/tinted/frosted,
 /turf/open/floor/carpet/black,
@@ -1679,7 +1679,7 @@
 	name = "medicine locker";
 	pixel_y = -28
 	},
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/item/storage/medkit{
 	pixel_x = -5;
 	pixel_y = -4
@@ -2817,7 +2817,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4{
 	dir = 1
 	},
-/obj/item/wrench/syndie,
+/obj/item/wrench/combat,
 /turf/open/floor/plasteel/tech/techmaint,
 /area/station/maintenance/port)
 "XQ" = (

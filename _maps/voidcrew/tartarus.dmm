@@ -1102,8 +1102,8 @@
 /area/station/hallway/primary/central)
 "tL" = (
 /obj/machinery/light,
-/obj/item/melee/classic_baton/telescopic,
-/obj/item/melee/classic_baton/telescopic,
+/obj/item/melee/baton/telescopic,
+/obj/item/melee/baton/telescopic,
 /obj/item/reagent_containers/spray/pepper,
 /obj/item/clothing/accessory/holster,
 /obj/structure/closet/secure_closet/wall{
@@ -2049,7 +2049,7 @@
 /area/station/commons)
 "Me" = (
 /obj/structure/rack,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plasteel/tech/grid,
 /area/station/storage)

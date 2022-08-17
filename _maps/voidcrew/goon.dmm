@@ -105,8 +105,8 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced,
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/mineral/titanium/yellow,
 /area/station/command/bridge)
 "fH" = (
@@ -332,7 +332,7 @@
 "tW" = (
 /obj/structure/table,
 /obj/machinery/airalarm/directional/north,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/mineral/titanium/blue,
 /area/station/medical)
 "uV" = (
@@ -470,13 +470,13 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/storage/firstaid/toxin{
+/obj/item/storage/medkit/toxin{
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/item/storage/firstaid/regular,
-/obj/item/clothing/suit/space/hardsuit/medical,
-/obj/item/storage/firstaid/brute{
+/obj/item/storage/medkit/regular,
+/obj/item/mod/control/pre_equipped/medical,
+/obj/item/storage/medkit/brute{
 	pixel_x = -5;
 	pixel_y = -5
 	},

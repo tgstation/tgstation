@@ -131,10 +131,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/station/hallway/starboard)
 "ay" = (
-/turf/closed/wall/mineral/uranium/safe{
-	desc = "A wall plated with emerald.";
-	name = "emerald wall"
-	},
+/turf/closed/wall/mineral/iron,
 /area/station/hallway/primary/central)
 "az" = (
 /obj/machinery/light/small{
@@ -421,9 +418,9 @@
 "bC" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate/medical,
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/o2,
-/obj/item/storage/firstaid/toxin,
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/o2,
+/obj/item/storage/medkit/toxin,
 /obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
@@ -701,7 +698,7 @@
 "cg" = (
 /obj/machinery/suit_storage_unit/open,
 /obj/item/tank/internals/emergency_oxygen/engi,
-/obj/item/clothing/suit/space/hardsuit/wizard,
+/obj/item/mod/control/pre_equipped/enchanted,
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/bronze,
 /area/station/cargo)
@@ -784,10 +781,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 1
 	},
-/turf/closed/wall/mineral/uranium/safe{
-	desc = "A wall plated with emerald.";
-	name = "emerald wall"
-	},
+/turf/closed/wall/mineral/iron,
 /area/station/maintenance/aft)
 "en" = (
 /obj/effect/decal/cleanable/dirt,
@@ -887,10 +881,7 @@
 /area/station/command/bridge)
 "iu" = (
 /obj/structure/sign/poster/contraband/shamblers_juice,
-/turf/closed/wall/mineral/uranium/safe{
-	desc = "A wall plated with emerald.";
-	name = "emerald wall"
-	},
+/turf/closed/wall/mineral/iron,
 /area/station/commons/canteen)
 "iT" = (
 /obj/structure/bookcase/random/reference,
@@ -930,16 +921,10 @@
 /turf/open/floor/wood,
 /area/station/commons/canteen/kitchen)
 "jC" = (
-/turf/closed/wall/mineral/uranium/safe{
-	desc = "A wall plated with emerald.";
-	name = "emerald wall"
-	},
+/turf/closed/wall/mineral/iron,
 /area/station/maintenance/aft)
 "jQ" = (
-/turf/closed/wall/mineral/uranium/safe{
-	desc = "A wall plated with emerald.";
-	name = "emerald wall"
-	},
+/turf/closed/wall/mineral/iron,
 /area/station/cargo)
 "kC" = (
 /obj/effect/decal/cleanable/dirt,
@@ -989,22 +974,13 @@
 /area/station/commons/dorms)
 "mv" = (
 /obj/structure/sign/poster/official/high_class_martini,
-/turf/closed/wall/mineral/uranium/safe{
-	desc = "A wall plated with emerald.";
-	name = "emerald wall"
-	},
+/turf/closed/wall/mineral/iron,
 /area/station/hallway/starboard)
 "ni" = (
-/turf/closed/wall/mineral/uranium/safe{
-	desc = "A wall plated with emerald.";
-	name = "emerald wall"
-	},
+/turf/closed/wall/mineral/iron,
 /area/station/hallway/starboard)
 "nl" = (
-/turf/closed/wall/mineral/uranium/safe{
-	desc = "A wall plated with emerald.";
-	name = "emerald wall"
-	},
+/turf/closed/wall/mineral/iron,
 /area/station/commons/library)
 "nC" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1031,10 +1007,7 @@
 /area/station/science)
 "oD" = (
 /obj/structure/sign/warning/vacuum/external,
-/turf/closed/wall/mineral/uranium/safe{
-	desc = "A wall plated with emerald.";
-	name = "emerald wall"
-	},
+/turf/closed/wall/mineral/iron,
 /area/station/cargo)
 "oE" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1101,10 +1074,7 @@
 /area/station/science)
 "qT" = (
 /obj/structure/sign/poster/official/no_erp,
-/turf/closed/wall/mineral/uranium/safe{
-	desc = "A wall plated with emerald.";
-	name = "emerald wall"
-	},
+/turf/closed/wall/mineral/iron,
 /area/station/commons/toilet)
 "qU" = (
 /obj/machinery/power/apc/auto_name/directional/west,
@@ -1158,27 +1128,18 @@
 /area/station/science)
 "sJ" = (
 /obj/structure/sign/poster/contraband/power,
-/turf/closed/wall/mineral/uranium/safe{
-	desc = "A wall plated with emerald.";
-	name = "emerald wall"
-	},
+/turf/closed/wall/mineral/iron,
 /area/station/science)
 "sX" = (
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/carpet/royalblack,
 /area/station/hallway/starboard)
 "tv" = (
-/turf/closed/wall/mineral/uranium/safe{
-	desc = "A wall plated with emerald.";
-	name = "emerald wall"
-	},
+/turf/closed/wall/mineral/iron,
 /area/station/commons/dorms)
 "ud" = (
 /obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6,
-/turf/closed/wall/mineral/uranium/safe{
-	desc = "A wall plated with emerald.";
-	name = "emerald wall"
-	},
+/turf/closed/wall/mineral/iron,
 /area/station/commons/toilet)
 "uh" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1198,10 +1159,7 @@
 /turf/open/floor/wood,
 /area/station/commons/canteen)
 "wj" = (
-/turf/closed/wall/mineral/uranium/safe{
-	desc = "A wall plated with emerald.";
-	name = "emerald wall"
-	},
+/turf/closed/wall/mineral/iron,
 /area/station/storage)
 "wq" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -1237,10 +1195,7 @@
 /area/station/commons/canteen/kitchen)
 "zA" = (
 /obj/structure/sign/plaques/kiddie/library,
-/turf/closed/wall/mineral/uranium/safe{
-	desc = "A wall plated with emerald.";
-	name = "emerald wall"
-	},
+/turf/closed/wall/mineral/iron,
 /area/station/hallway/primary/central)
 "zN" = (
 /obj/machinery/light,
@@ -1278,10 +1233,7 @@
 /area/station/commons/canteen)
 "Cq" = (
 /obj/structure/sign/poster/official/fruit_bowl,
-/turf/closed/wall/mineral/uranium/safe{
-	desc = "A wall plated with emerald.";
-	name = "emerald wall"
-	},
+/turf/closed/wall/mineral/iron,
 /area/station/commons/library)
 "Cy" = (
 /obj/structure/closet/cabinet,
@@ -1300,17 +1252,11 @@
 /turf/open/floor/carpet/royalblue,
 /area/station/commons/dorms)
 "CF" = (
-/turf/closed/wall/mineral/uranium/safe{
-	desc = "A wall plated with emerald.";
-	name = "emerald wall"
-	},
+/turf/closed/wall/mineral/iron,
 /area/station/commons/toilet)
 "CH" = (
 /obj/structure/sign/poster/random,
-/turf/closed/wall/mineral/uranium/safe{
-	desc = "A wall plated with emerald.";
-	name = "emerald wall"
-	},
+/turf/closed/wall/mineral/iron,
 /area/station/commons/canteen/kitchen)
 "Db" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1418,10 +1364,7 @@
 /turf/open/floor/wood,
 /area/station/commons/canteen/kitchen)
 "Gh" = (
-/turf/closed/wall/mineral/uranium/safe{
-	desc = "A wall plated with emerald.";
-	name = "emerald wall"
-	},
+/turf/closed/wall/mineral/iron,
 /area/station/commons/canteen/kitchen)
 "GA" = (
 /obj/machinery/door/airlock{
@@ -1500,10 +1443,7 @@
 /turf/open/floor/engine/cult,
 /area/station/science)
 "IN" = (
-/turf/closed/wall/mineral/uranium/safe{
-	desc = "A wall plated with emerald.";
-	name = "emerald wall"
-	},
+/turf/closed/wall/mineral/iron,
 /area/station/hallway/aft)
 "Jn" = (
 /obj/structure/cable,
@@ -1529,10 +1469,7 @@
 /area/station/hallway/primary/central)
 "JB" = (
 /obj/structure/sign/poster/random,
-/turf/closed/wall/mineral/uranium/safe{
-	desc = "A wall plated with emerald.";
-	name = "emerald wall"
-	},
+/turf/closed/wall/mineral/iron,
 /area/station/commons/library)
 "JP" = (
 /obj/item/storage/bag/tray,
@@ -1598,10 +1535,7 @@
 /area/station/maintenance/aft)
 "LZ" = (
 /obj/structure/sign/poster/contraband/random,
-/turf/closed/wall/mineral/uranium/safe{
-	desc = "A wall plated with emerald.";
-	name = "emerald wall"
-	},
+/turf/closed/wall/mineral/iron,
 /area/station/commons/dorms)
 "Ma" = (
 /obj/machinery/computer/autopilot,
@@ -1678,10 +1612,7 @@
 /area/station/storage)
 "MX" = (
 /obj/structure/sign/poster/random,
-/turf/closed/wall/mineral/uranium/safe{
-	desc = "A wall plated with emerald.";
-	name = "emerald wall"
-	},
+/turf/closed/wall/mineral/iron,
 /area/station/hallway/aft)
 "Nm" = (
 /obj/effect/decal/cleanable/blood,
@@ -1827,10 +1758,7 @@
 /turf/open/floor/wood,
 /area/station/commons/canteen/kitchen)
 "So" = (
-/turf/closed/wall/mineral/uranium/safe{
-	desc = "A wall plated with emerald.";
-	name = "emerald wall"
-	},
+/turf/closed/wall/mineral/iron,
 /area/station/science)
 "Sq" = (
 /obj/structure/cable,
@@ -1874,10 +1802,7 @@
 /turf/open/floor/wood,
 /area/station/hallway/aft)
 "Tt" = (
-/turf/closed/wall/mineral/uranium/safe{
-	desc = "A wall plated with emerald.";
-	name = "emerald wall"
-	},
+/turf/closed/wall/mineral/iron,
 /area/station/command/bridge)
 "TQ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -1892,10 +1817,7 @@
 /area/station/science)
 "Uu" = (
 /obj/structure/sign/poster/official/ue_no,
-/turf/closed/wall/mineral/uranium/safe{
-	desc = "A wall plated with emerald.";
-	name = "emerald wall"
-	},
+/turf/closed/wall/mineral/iron,
 /area/station/commons/canteen)
 "Va" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1947,17 +1869,14 @@
 "VR" = (
 /obj/machinery/suit_storage_unit/open,
 /obj/item/tank/internals/emergency_oxygen/engi,
-/obj/item/clothing/suit/space/hardsuit/wizard,
+/obj/item/mod/control/pre_equipped/enchanted,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/floor/bronze,
 /area/station/cargo)
 "We" = (
 /obj/structure/sign/poster/contraband/random,
-/turf/closed/wall/mineral/uranium/safe{
-	desc = "A wall plated with emerald.";
-	name = "emerald wall"
-	},
+/turf/closed/wall/mineral/iron,
 /area/station/hallway/aft)
 "Wp" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -2029,10 +1948,7 @@
 /turf/open/floor/carpet/green,
 /area/station/hallway/primary/central)
 "Yx" = (
-/turf/closed/wall/mineral/uranium/safe{
-	desc = "A wall plated with emerald.";
-	name = "emerald wall"
-	},
+/turf/closed/wall/mineral/iron,
 /area/station/commons/canteen)
 "YD" = (
 /obj/structure/cable,
@@ -2058,7 +1974,7 @@
 "Zj" = (
 /obj/machinery/suit_storage_unit/open,
 /obj/item/tank/internals/emergency_oxygen/engi,
-/obj/item/clothing/suit/space/hardsuit/wizard,
+/obj/item/mod/control/pre_equipped/enchanted,
 /turf/open/floor/bronze,
 /area/station/cargo)
 "ZW" = (

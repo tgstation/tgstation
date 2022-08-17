@@ -93,7 +93,7 @@
 "ds" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/wrench/combat,
-/obj/item/wrench/syndie,
+/obj/item/wrench/combat,
 /obj/structure/rack,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)
