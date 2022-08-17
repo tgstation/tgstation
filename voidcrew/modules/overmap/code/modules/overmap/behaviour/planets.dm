@@ -1,4 +1,4 @@
-// NOVA TODO: all of the commented out code in here has to do with planet generation
+// voidcrew TODO: all of the commented out code in here has to do with planet generation
 
 /datum/overmap/planet
 	///Name of the planet

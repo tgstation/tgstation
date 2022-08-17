@@ -1,5 +1,5 @@
 /*
-NOVA TODO:
+voidcrew TODO:
 	SSovermap originally fired to apply the planet effects but these would be way better off just using signals
 
 
@@ -19,13 +19,11 @@ SUBSYSTEM_DEF(overmap)
 	runlevels = RUNLEVEL_SETUP | RUNLEVEL_GAME
 
 	/// Map of tiles at each radius around the sun
-	var/list/list/radius_tiles
+	var/list/list/radius_tiles = list()
 	/// List of all events
-	var/list/events
+	var/list/events = list()
 
 /datum/controller/subsystem/overmap/Initialize(start_timeofday)
-	events = list()
-
 	create_map()
 	setup_sun()
 	setup_dangers()
@@ -57,7 +55,6 @@ SUBSYSTEM_DEF(overmap)
 	new /obj/effect/landmark/observer_start(centre_tile)
 
 	var/list/unsorted_turfs = get_area_turfs(/area/overmap, target_z = OVERMAP_Z_LEVEL)
-	radius_tiles = list()
 	for (var/i in 1 to (OVERMAP_SIZE - 2) / 2)
 		radius_tiles += list(list())
 		for (var/turf/turf in unsorted_turfs)

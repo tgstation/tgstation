@@ -5,4 +5,4 @@
 	icon_state = "object"
 
 
-// NOVA TODO: add the rest of overmap shit later
+// voidcrew TODO: add the rest of overmap shit later
