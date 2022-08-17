@@ -1171,7 +1171,7 @@
 	id = "ospreydoors";
 	name = "cargo bay blast door"
 	},
-/turf/open/floor/plasteel/tech/grid,
+/turf/open/floor/iron/dark/grid,
 /area/station/hallway/primary/fore)
 "jn" = (
 /turf/open/floor/plasteel/tech/techmaint,
@@ -4848,7 +4848,7 @@
 /obj/structure/sign/poster/official/random{
 	pixel_x = 32
 	},
-/turf/open/floor/plasteel/tech/grid,
+/turf/open/floor/iron/dark/grid,
 /area/station/commons/dorms)
 "Mn" = (
 /obj/effect/turf_decal/tile/grey/mono,
@@ -4962,7 +4962,7 @@
 	dir = 8
 	},
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/tech/grid,
+/turf/open/floor/iron/dark/grid,
 /area/station/commons/dorms)
 "Nb" = (
 /obj/effect/turf_decal/tile/grey/mono,

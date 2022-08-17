@@ -277,7 +277,7 @@
 "jh" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high/plus,
+/obj/item/stock_parts/cell/high,
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/light/broken{
 	dir = 8

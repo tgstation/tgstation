@@ -1734,7 +1734,7 @@
 "Bp" = (
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high/plus,
+/obj/item/stock_parts/cell/high,
 /obj/machinery/firealarm{
 	pixel_y = 25
 	},
