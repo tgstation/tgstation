@@ -235,7 +235,7 @@ SUBSYSTEM_DEF(points_of_interest)
 		return 4
 	if(isbrain(target))
 		return 5
-	if(istype(target, /mob/living/carbon/alien))
+	if(isalien(target))
 		return 6
 	if(istype(target, /mob/dead/observer))
 		return 7
