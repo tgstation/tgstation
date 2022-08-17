@@ -214,4 +214,4 @@
 
 ///Only operate on external organs
 /datum/surgery_step/manipulate_organs/external/can_use_organ(mob/user, obj/item/organ/organ)
-	return istype(organ, /obj/item/organ/external)
+	return isexternalorgan(organ)
