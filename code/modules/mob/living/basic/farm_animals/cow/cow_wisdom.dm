@@ -11,9 +11,6 @@
 /datum/ai_controller/basic_controller/cow/wisdom
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/tip_reaction,
-		/datum/ai_planning_subtree/find_food,
-		//attacking the food will eat it
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/random_speech/cow/wisdom,
 	)
 
