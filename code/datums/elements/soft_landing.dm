@@ -17,9 +17,17 @@
 	UnregisterSignal(target, COMSIG_ATOM_INTERCEPT_Z_FALL)
 
 ///signal called by the stat of the target changing
-/datum/element/soft_landing/proc/intercept_z_fall(obj/soft_object, falling_movables, levels)
+/datum/element/soft_landing/proc/intercept_z_fall(atom/soft_object, falling_movables, levels)
 	SIGNAL_HANDLER
 
-	for (var/mob/living/falling_victim in falling_movables)
-		to_chat(falling_victim, span_notice("[soft_object] provides a soft landing for you!"))
+	for(var/mob/living/falling_victim in falling_movables)
+		var/turf/falling_spot = get_turf(falling_victim)
+		
+		if(locate(/obj/structure/stairs/traveling_down) in falling_spot)
+			FALL_INTERCEPTED | FALL_NO_MESSAGE
+		
+		if(soft_object == falling_victim)
+			to_chat(falling_victim, span_notice("Your fall is cushioned by your body to provide a soft landing!"))
+		else
+			to_chat(falling_victim, span_notice("[soft_object] provides a soft landing for you!"))
 	return FALL_INTERCEPTED | FALL_NO_MESSAGE
