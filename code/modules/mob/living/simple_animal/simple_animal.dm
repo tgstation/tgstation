@@ -506,7 +506,7 @@
 /mob/living/simple_animal/ignite_mob()
 	if(!flammable)
 		return FALSE
-	. = ..()
+	return ..()
 
 /mob/living/simple_animal/on_fire_stack(delta_time, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
 	adjust_bodytemperature((maxbodytemp + (fire_handler.stacks * 12)) * 0.5 * delta_time)
