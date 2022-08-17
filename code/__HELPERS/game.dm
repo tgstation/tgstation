@@ -35,7 +35,7 @@
 
 		var/atom/object_to_check = processing_list[index]
 
-		if(istype(object_to_check, /obj/item/organ))
+		if(isorgan(object_to_check))
 			found_organ = object_to_check
 			found_organ.organ_flags ^= ORGAN_FROZEN
 

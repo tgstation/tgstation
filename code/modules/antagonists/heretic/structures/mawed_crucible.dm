@@ -82,7 +82,7 @@
 		consume_fuel(user, consumed)
 		return TRUE
 
-	if(istype(weapon, /obj/item/organ))
+	if(isorgan(weapon))
 		var/obj/item/organ/consumed = weapon
 		if(consumed.status != ORGAN_ORGANIC || (consumed.organ_flags & ORGAN_SYNTHETIC))
 			balloon_alert(user, "not organic!")
