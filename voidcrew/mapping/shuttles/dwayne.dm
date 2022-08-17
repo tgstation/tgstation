@@ -1,4 +1,4 @@
-/datum/map_template/shuttle/voidcrew/dawyne
+/datum/map_template/shuttle/voidcrew/dwayne
 	name = "Dwayne-class Long Range Mining Transport"
 	suffix = "dwayne"
 	short_name = "Dwayne-class"

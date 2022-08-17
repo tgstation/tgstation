@@ -1,19 +1,19 @@
-/datum/map_template/shuttle/voidcrew/luxembourg
-	name = "Luxembourg-class Delivery Vessel"
-	suffix = "luxembourg"
-	short_name = "Luxembourg-Class"
+/datum/map_template/shuttle/voidcrew/phalanx
+	name = "Phalanx-Class Super Battlecruiser"
+	suffix = "nano_phalanx"
+	short_name = "Phalanx-Class"
 
 	job_slots = list(
 		list(
-			name = "Quartermaster",
+			name = "Captain",
 			officer = TRUE,
-			outfit = /datum/outfit/job/quartermaster,
+			outfit = /datum/outfit/job/captain,
 			slots = 1,
 		),
 		list(
-			name = "Cargo Technician",
-			outfit = /datum/outfit/job/cargo_tech,
-			slots = 2,
+			name = "Chaplain",
+			outfit = /datum/outfit/job/chaplain,
+			slots = 1,
 		),
 		list(
 			name = "Station Engineer",
@@ -26,14 +26,19 @@
 			slots = 1,
 		),
 		list(
-			name = "Bartender",
-			outfit = /datum/outfit/job/bartender,
+			name = "Medical Doctor",
+			outfit = /datum/outfit/job/doctor,
+			slots = 2,
+		),
+		list(
+			name = "Cook",
+			outfit = /datum/outfit/job/cook,
 			slots = 1,
 		),
 		list(
-			name = "Medical Doctor",
-			outfit = /datum/outfit/job/doctor,
-			slots = 1,
+			name = "Security Officer",
+			outfit = /datum/outfit/job/security,
+			slots = 10,
 		),
 		list(
 			name = "Assistant",

@@ -1,7 +1,7 @@
-/datum/map_template/shuttle/voidcrew/bead
-	name = "Bead-class Corporate Frigate"
-	suffix = "nano_bead"
-	short_name = "Bead-Class"
+/datum/map_template/shuttle/voidcrew/thunderbird
+	name = "Thunderbird-class Emergency military vessel"
+	suffix = "nano_thunderbird"
+	short_name = "Thunderbird-Class"
 
 	job_slots = list(
 		list(
@@ -21,8 +21,18 @@
 			slots = 1,
 		),
 		list(
+			name = "Scientist",
+			outfit = /datum/outfit/job/scientist,
+			slots = 2,
+		),
+		list(
+			name = "Medical Doctor",
+			outfit = /datum/outfit/job/doctor,
+			slots = 2,
+		),
+		list(
 			name = "Security Officer",
 			outfit = /datum/outfit/job/security,
-			slots = 3,
+			slots = 2,
 		),
 	)

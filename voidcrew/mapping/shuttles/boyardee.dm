@@ -1,4 +1,4 @@
-/datum/map_template/shuttle/voidcrew/bogatyr
+/datum/map_template/shuttle/voidcrew/bogardee
 	name = "Boyardee-Class Type Entertainement Vessel"
 	suffix = "boyardee"
 	short_name = "Boyardee-class"
