@@ -1,3 +1,6 @@
+#define SINGULAR_STORAGE_IMPLANT_SLOT_COUNT 2
+#define SINGULAR_STORAGE_IMPLANT_STORAGE_AMOUNT 6
+
 /obj/item/implant/storage
 	name = "storage implant"
 	desc = "Stores up to two big items in a bluespace pocket."
@@ -29,9 +32,13 @@
 	for(var/X in target.implants)
 		if(istype(X, type))
 			var/obj/item/implant/storage/imp_e = X
-			if(!imp_e.atom_storage || (imp_e.atom_storage && imp_e.atom_storage.max_slots < max_slot_stacking))
+			if(!imp_e.atom_storage)
 				imp_e.create_storage(type = /datum/storage/implant)
 				qdel(src)
+				return TRUE
+			if(imp_e.atom_storage && imp_e.atom_storage.max_slots < max_slot_stacking)
+				imp_e.atom_storage.max_slots += SINGULAR_STORAGE_IMPLANT_SLOT_COUNT
+				imp_e.atom_storage.max_total_storage += SINGULAR_STORAGE_IMPLANT_STORAGE_AMOUNT
 				return TRUE
 			return FALSE
 	create_storage(type = /datum/storage/implant)
@@ -41,3 +48,6 @@
 /obj/item/implanter/storage
 	name = "implanter (storage)"
 	imp_type = /obj/item/implant/storage
+
+#undef SINGULAR_STORAGE_IMPLANT_SLOT_COUNT
+#undef SINGULAR_STORAGE_IMPLANT_STORAGE_AMOUNT
