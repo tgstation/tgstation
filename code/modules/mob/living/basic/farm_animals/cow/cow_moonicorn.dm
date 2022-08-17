@@ -39,7 +39,7 @@
 
 /datum/ai_controller/basic_controller/cow/moonicorn
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/moonicorn(),
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items/moonicorn(),
 		BB_BASIC_MOB_TIP_REACTING = FALSE,
 		BB_BASIC_MOB_TIPPER = null,
 	)
@@ -62,9 +62,9 @@
 	action_cooldown = 2 SECONDS
 
 ///moonicorns will not attack people holding something that could tame them.
-/datum/targetting_datum/basic/moonicorn
+/datum/targetting_datum/basic/allow_items/moonicorn
 
-/datum/targetting_datum/basic/moonicorn/can_attack(mob/living/living_mob, atom/the_target)
+/datum/targetting_datum/basic/allow_items/moonicorn/can_attack(mob/living/living_mob, atom/the_target)
 	. = ..()
 	if(!.)
 		return FALSE

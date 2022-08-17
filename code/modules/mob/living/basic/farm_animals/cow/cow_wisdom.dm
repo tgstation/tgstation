@@ -10,6 +10,12 @@
 	return //cannot tame me!
 
 /datum/ai_controller/basic_controller/cow/wisdom
+	//don't give a targetting datum
+	blackboard = list(
+		BB_BASIC_MOB_TIP_REACTING = FALSE,
+		BB_BASIC_MOB_TIPPER = null,
+	)
+
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/tip_reaction,
 		/datum/ai_planning_subtree/random_speech/cow/wisdom,

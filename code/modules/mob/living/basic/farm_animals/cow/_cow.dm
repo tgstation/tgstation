@@ -29,7 +29,7 @@
 	blood_volume = BLOOD_VOLUME_NORMAL
 	ai_controller = /datum/ai_controller/basic_controller/cow
 	/// what this cow munches on, and what can be used to tame it.
-	var/list/food_types = list(/obj/item/food/grown/wheat)
+	var/static/list/food_types = list(/obj/item/food/grown/wheat)
 
 /mob/living/basic/cow/Initialize(mapload)
 	AddComponent(/datum/component/tippable, \

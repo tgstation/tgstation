@@ -43,3 +43,11 @@
 			if(refs[WEAKREF(i)])
 				continue
 			. |= i
+
+/// sometimes delightfully (and painfully) modular systems pass in arguments that can be what we're looking for
+/// ...or a weakref of what we're looking for. This helper will resolve a weakref if need be.
+/// returns the instance, unless it was a weakref AND resolved to null... in which case it returns said null.
+/proc/resolve_if_weakref(datum/weakref/weakref_or_not)
+	if(!isweakref(weakref_or_not))
+		return weakref_or_not
+	return weakref_or_not.resolve()

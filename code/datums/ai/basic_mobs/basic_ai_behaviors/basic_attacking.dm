@@ -4,12 +4,17 @@
 
 /datum/ai_behavior/basic_melee_attack/setup(datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
-	controller.current_movement_target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key] //Hiding location is priority
+	//Hiding location is priority
+	var/atom/target = resolve_if_weakref(controller.blackboard[hiding_location_key] || controller.blackboard[target_key])
+	if(!target)
+		return FALSE
+	controller.current_movement_target = target
 
 /datum/ai_behavior/basic_melee_attack/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
 	var/mob/living/basic/basic_mob = controller.pawn
-	var/atom/target = controller.blackboard[target_key]
+	//targetting datum will kill the action if not real anymore
+	var/atom/target = resolve_if_weakref(controller.blackboard[target_key])
 	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
 
 	if(!targetting_datum.can_attack(basic_mob, target))
