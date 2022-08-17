@@ -250,7 +250,7 @@
 /area/station/command/bridge)
 "Lu" = (
 /obj/structure/table/bronze,
-/obj/item/kitchen/knife,
+/obj/item/knife,
 /turf/open/floor/carpet/nanoweave/orange,
 /area/station/command/bridge)
 "Mj" = (

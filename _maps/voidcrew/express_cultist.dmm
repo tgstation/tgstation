@@ -9,7 +9,7 @@
 	dir = 8
 	},
 /turf/open/floor/cult,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "ay" = (
 /obj/structure/rack,
 /obj/item/stack/sheet/runed_metal/five,
@@ -19,7 +19,7 @@
 /area/station/security)
 "aD" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "aN" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 8
@@ -29,7 +29,7 @@
 	dir = 8
 	},
 /turf/open/floor/cult,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "ba" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
@@ -134,7 +134,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "dg" = (
 /obj/machinery/power/terminal,
 /obj/structure/cable,
@@ -208,7 +208,7 @@
 	dir = 1
 	},
 /turf/open/floor/cult,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "fw" = (
 /obj/structure/dresser,
 /obj/machinery/power/apc/auto_name/directional/east,
@@ -235,7 +235,7 @@
 /obj/effect/turf_decal/tile/yellow/mono,
 /obj/machinery/autolathe,
 /turf/open/floor/cult,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "ht" = (
 /obj/structure/table/reinforced,
 /obj/item/radio/intercom,
@@ -278,7 +278,7 @@
 	filter_types = list("o2","n2")
 	},
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "jr" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
 	dir = 6
@@ -334,7 +334,7 @@
 /obj/structure/ore_box,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/cult,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "kB" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
 	dir = 4
@@ -559,7 +559,7 @@
 "rd" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "re" = (
 /obj/effect/turf_decal/tile/yellow/mono,
 /obj/effect/turf_decal/industrial/stand_clear{
@@ -637,7 +637,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/engine/cult,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "uu" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 8
@@ -688,7 +688,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/cult,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "vd" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /obj/effect/decal/cleanable/blood/old,
@@ -700,7 +700,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "vF" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/effect/spawner/structure/window/reinforced/shuttle,
@@ -765,7 +765,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "xU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/purple/visible{
 	dir = 1
@@ -829,7 +829,7 @@
 /obj/machinery/selling_pad,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "AR" = (
 /obj/structure/window/reinforced,
 /obj/effect/decal/cleanable/dirt,
@@ -867,7 +867,7 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/firedoor,
 /turf/open/floor/engine/cult,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Bx" = (
 /obj/effect/turf_decal/tile/yellow/mono,
 /obj/machinery/door/firedoor,
@@ -884,7 +884,7 @@
 /obj/machinery/computer/selling_pad_control,
 /obj/structure/cable,
 /turf/open/floor/cult,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "BJ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /obj/machinery/door/firedoor,
@@ -998,13 +998,13 @@
 /area/station/engineering/electrical)
 "EI" = (
 /turf/open/floor/cult,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "EZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/cult,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Fe" = (
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/machinery/door/firedoor,
@@ -1042,7 +1042,7 @@
 "Gr" = (
 /obj/structure/ore_box,
 /turf/open/floor/cult,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "GI" = (
 /obj/machinery/atmospherics/components/tank/plasma,
 /turf/open/floor/engine/cult,
@@ -1313,7 +1313,7 @@
 /obj/machinery/door/airlock/cult/glass,
 /obj/machinery/door/firedoor,
 /turf/open/floor/cult,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Nr" = (
 /obj/structure/destructible/cult/tome,
 /turf/open/floor/cult,
@@ -1324,7 +1324,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "NR" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
@@ -1352,11 +1352,11 @@
 /area/station/engineering/electrical)
 "ON" = (
 /obj/structure/closet/cabinet,
-/obj/item/kitchen/knife/ritual,
-/obj/item/kitchen/knife/ritual,
-/obj/item/kitchen/knife/ritual,
-/obj/item/kitchen/knife/ritual,
-/obj/item/kitchen/knife/ritual,
+/obj/item/knife/ritual,
+/obj/item/knife/ritual,
+/obj/item/knife/ritual,
+/obj/item/knife/ritual,
+/obj/item/knife/ritual,
 /obj/item/clothing/suit/hooded/cultrobes/alt,
 /obj/item/clothing/suit/hooded/cultrobes/alt,
 /obj/item/clothing/suit/hooded/cultrobes/alt,
@@ -1445,7 +1445,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/engine/cult,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Qn" = (
 /obj/effect/turf_decal/tile/yellow/mono,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
@@ -1461,13 +1461,13 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/cult,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "QI" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/cult,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "QJ" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/table/reinforced,
@@ -1552,7 +1552,7 @@
 	pixel_y = 26
 	},
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Sh" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/hallway/primary/central)
@@ -1564,7 +1564,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Sq" = (
 /obj/effect/turf_decal/tile/yellow/mono,
 /obj/machinery/firealarm{
@@ -1580,7 +1580,7 @@
 	},
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "SH" = (
 /turf/open/floor/cult,
 /area/station/cargo)
@@ -1606,7 +1606,7 @@
 "TV" = (
 /obj/structure/cable,
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Ug" = (
 /obj/machinery/door/airlock/command{
 	name = "Bridge"
@@ -1658,7 +1658,7 @@
 	dir = 1
 	},
 /turf/open/floor/cult,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "WD" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/binary/volume_pump,
@@ -1714,7 +1714,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/cult,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "XJ" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 10
@@ -1841,7 +1841,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/engine/cult,
-/area/station/storage)
+/area/station/commons/storage/primary)
 
 (1,1,1) = {"
 RC

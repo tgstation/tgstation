@@ -1625,7 +1625,7 @@
 "IC" = (
 /obj/structure/closet/wall,
 /obj/item/circuitboard/machine/microwave,
-/obj/item/kitchen/knife,
+/obj/item/knife,
 /obj/item/kitchen/fork,
 /obj/item/reagent_containers/condiment/enzyme,
 /obj/item/reagent_containers/condiment/flour,

@@ -8,7 +8,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "b" = (
 /obj/structure/cable,
 /obj/item/stack/sheet/mineral/uranium/five,
@@ -36,7 +36,7 @@
 	pixel_y = 8
 	},
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "c" = (
 /obj/item/pickaxe/drill,
 /obj/item/pickaxe/drill,
@@ -92,7 +92,7 @@
 /obj/item/storage/box/stockparts/basic,
 /obj/item/circuitboard/machine/autolathe,
 /turf/open/floor/carpet/nanoweave/red,
-/area/station/storage)
+/area/station/commons/storage/primary)
 
 (1,1,1) = {"
 a

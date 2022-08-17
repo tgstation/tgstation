@@ -171,7 +171,7 @@
 /obj/machinery/door/airlock/highsecurity,
 /obj/structure/cable,
 /turf/open/floor/plasteel/tech/grid,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "dJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow{
@@ -187,7 +187,7 @@
 "dL" = (
 /obj/machinery/vending/security,
 /turf/open/floor/plasteel/tech/grid,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "dR" = (
 /turf/open/floor/plasteel/mono,
 /area/station/hallway/primary/central)
@@ -588,7 +588,7 @@
 	},
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/plasteel/tech/grid,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "lL" = (
 /turf/closed/wall/rust,
 /area/station/commons)
@@ -764,7 +764,7 @@
 /obj/item/ammo_box/magazine/m45,
 /obj/item/ammo_box/magazine/m45,
 /turf/open/floor/plasteel/tech/grid,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "ol" = (
 /obj/machinery/power/terminal{
 	dir = 4
@@ -874,7 +874,7 @@
 /obj/item/ammo_box/c38,
 /obj/item/ammo_box/c38,
 /turf/open/floor/plasteel/tech/grid,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "qJ" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 1
@@ -930,10 +930,10 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/tech/grid,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "rs" = (
 /turf/closed/wall/rust,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "rt" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -1080,7 +1080,7 @@
 	req_access_txt = "1"
 	},
 /turf/open/floor/plasteel/tech/grid,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "tO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
@@ -1286,7 +1286,7 @@
 /area/station/hallway/primary/central)
 "yx" = (
 /turf/closed/wall,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "yC" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/neutral{
@@ -1451,7 +1451,7 @@
 /area/station/security/prison)
 "Bc" = (
 /turf/closed/wall/r_wall,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Bi" = (
 /obj/machinery/vending/cola/random,
 /obj/effect/turf_decal/tile/bar/diagonal,
@@ -1477,7 +1477,7 @@
 /area/station/security/prison)
 "BO" = (
 /turf/closed/wall/r_wall/rust,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "BW" = (
 /obj/machinery/power/port_gen/pacman,
 /obj/machinery/light/small,
@@ -1791,7 +1791,7 @@
 "IM" = (
 /obj/machinery/door/airlock/highsecurity,
 /turf/open/floor/plasteel/tech/grid,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "IN" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -1800,7 +1800,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/tech/grid,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Jc" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "carrier_hangar"
@@ -1901,7 +1901,7 @@
 /obj/item/ammo_box/magazine/co9mm,
 /obj/item/ammo_box/magazine/co9mm,
 /turf/open/floor/plasteel/tech/grid,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Ka" = (
 /obj/structure/railing{
 	dir = 8
@@ -1996,7 +1996,7 @@
 /obj/item/storage/medkit/regular,
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plasteel/tech/grid,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Mg" = (
 /obj/machinery/mineral/ore_redemption,
 /turf/open/floor/iron/dark,
@@ -2156,7 +2156,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/tech/grid,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Pj" = (
 /obj/structure/cable,
 /turf/open/floor/iron/white,
@@ -2210,7 +2210,7 @@
 /obj/item/ammo_box/c38_box/hunting,
 /obj/structure/rack,
 /turf/open/floor/plasteel/tech/grid,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "QD" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/rack,
@@ -2284,7 +2284,7 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/floor/plasteel/tech/grid,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "RD" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/tech/grid,
@@ -2436,12 +2436,12 @@
 	pixel_y = -28
 	},
 /turf/closed/wall/r_wall,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "TT" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
 /turf/open/floor/plasteel/tech/grid,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Ub" = (
 /obj/structure/window/reinforced/survival_pod{
 	dir = 8
@@ -2578,7 +2578,7 @@
 /obj/item/stock_parts/cell/gun/mini,
 /obj/item/stock_parts/cell/gun/mini,
 /turf/open/floor/plasteel/tech/grid,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Wx" = (
 /obj/machinery/door/airlock/highsecurity,
 /turf/open/floor/plasteel/mono,

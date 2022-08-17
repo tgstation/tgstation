@@ -77,7 +77,7 @@
 	id = "spitfireshutters"
 	},
 /turf/open/floor/plating,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "ca" = (
 /obj/effect/turf_decal/tile/bottlegreen{
 	dir = 10
@@ -103,11 +103,11 @@
 "cD" = (
 /obj/machinery/smartfridge/chemistry,
 /turf/closed/wall,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "cE" = (
 /obj/machinery/chem_dispenser,
 /turf/open/floor/grass,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "cI" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "Bridge"
@@ -127,7 +127,7 @@
 "cW" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/grass,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "cX" = (
 /obj/machinery/vending/cigarette/syndicate,
 /obj/effect/turf_decal/tile/bottlegreen/anticorner{
@@ -138,13 +138,13 @@
 "dh" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/grass,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "dj" = (
 /obj/machinery/chem_master,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/grass,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "do" = (
 /obj/item/kirbyplants/random,
 /obj/item/vending_refill/medical,
@@ -224,11 +224,11 @@
 	dir = 1
 	},
 /turf/open/floor/grass,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "dZ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/grass,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "eh" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -240,19 +240,19 @@
 /obj/structure/sink/puddle,
 /obj/item/reagent_containers/cup/bucket/wooden,
 /turf/open/floor/grass,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "el" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/grass,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "ew" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/grass,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "eL" = (
 /obj/machinery/door/airlock/wood/glass{
 	name = "Natural Sciences Lab"
@@ -262,7 +262,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /turf/open/floor/grass,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "eO" = (
 /obj/effect/turf_decal/syndicateemblem/middle/left,
 /obj/structure/cable,
@@ -275,7 +275,7 @@
 /obj/machinery/plantgenes,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/grass,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "eU" = (
 /obj/effect/turf_decal/syndicateemblem/middle/middle,
 /obj/structure/cable,
@@ -354,14 +354,14 @@
 "hy" = (
 /obj/machinery/seed_extractor,
 /turf/open/floor/grass,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "hI" = (
 /turf/open/floor/grass,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "hZ" = (
 /obj/machinery/hydroponics/constructable,
 /turf/open/floor/grass,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "ic" = (
 /obj/machinery/hydroponics/constructable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -369,7 +369,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/grass,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "iH" = (
 /obj/machinery/computer/cryopod{
 	pixel_y = 26
@@ -384,7 +384,7 @@
 	dir = 4
 	},
 /turf/open/floor/grass,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "iR" = (
 /obj/effect/turf_decal/tile/bottlegreen/border{
 	dir = 10
@@ -520,11 +520,11 @@
 /obj/item/circuitboard/machine/chem_heater,
 /obj/item/clothing/glasses/science,
 /turf/open/floor/grass,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "lr" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "lV" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1802,7 +1802,7 @@
 /area/station/medical)
 "Zq" = (
 /turf/closed/wall,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "ZB" = (
 /turf/template_noop,
 /area/template_noop)

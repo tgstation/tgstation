@@ -31,7 +31,7 @@
 /area/station/command/bridge)
 "bq" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "bM" = (
 /obj/machinery/airalarm/all_access{
 	dir = 4;
@@ -44,7 +44,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "ce" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 8
@@ -483,7 +483,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "lg" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/wood,
@@ -851,7 +851,7 @@
 "sg" = (
 /obj/machinery/smartfridge/drinks,
 /turf/closed/wall,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "sy" = (
 /obj/item/stack/sheet/mineral/gold/fifty,
 /obj/structure/closet/secure_closet/wall{
@@ -1102,7 +1102,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Ap" = (
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
 /area/station/cargo)
@@ -1301,7 +1301,7 @@
 /area/station/command/bridge)
 "EE" = (
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "ES" = (
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -1845,7 +1845,7 @@
 "Rf" = (
 /obj/machinery/status_display/shuttle,
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Rh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2{
 	dir = 8
@@ -2095,7 +2095,7 @@
 /obj/item/food/rationpack,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Vk" = (
 /obj/structure/table/reinforced,
 /obj/item/table_bell,

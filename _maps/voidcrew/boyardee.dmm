@@ -28,7 +28,7 @@
 "bv" = (
 /obj/machinery/smartfridge/drinks,
 /turf/closed/wall,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "bM" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /obj/structure/closet/secure_closet/freezer/meat/open,
@@ -41,7 +41,7 @@
 	},
 /obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "bQ" = (
 /obj/machinery/newscaster{
 	pixel_x = -30;
@@ -96,7 +96,7 @@
 	},
 /obj/machinery/holopad,
 /turf/open/floor/iron/freezer,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "cA" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/condiment/rice,
@@ -301,10 +301,10 @@
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "fs" = (
 /turf/open/floor/iron,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "fG" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 8
@@ -312,7 +312,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/iron/freezer,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "fK" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 8
@@ -367,7 +367,7 @@
 /obj/structure/table/glass,
 /obj/machinery/plantgenes,
 /turf/open/floor/iron/dark,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "hQ" = (
 /obj/structure/window/reinforced/spawner/east,
 /obj/machinery/biogenerator,
@@ -375,7 +375,7 @@
 /obj/structure/window/reinforced/spawner/west,
 /obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "ie" = (
 /obj/machinery/advanced_airlock_controller{
 	pixel_x = 24
@@ -397,7 +397,7 @@
 "iB" = (
 /obj/machinery/status_display/shuttle,
 /turf/closed/wall,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "jh" = (
 /obj/machinery/door/airlock/external,
 /obj/docking_port/mobile{
@@ -450,10 +450,10 @@
 	req_access = list()
 	},
 /obj/item/clothing/suit/toggle/labcoat/chemist,
-/obj/item/clothing/under/rank/medical/chemist/junior_chemist,
-/obj/item/clothing/under/rank/medical/chemist/junior_chemist/skirt,
+/obj/item/clothing/under/rank/medical/chemist,
+/obj/item/clothing/under/rank/medical/chemist/skirt,
 /obj/item/storage/bag/chemistry,
-/obj/item/clothing/head/beret/chem,
+/obj/item/clothing/head/beret/medical,
 /obj/effect/turf_decal/box,
 /obj/item/reagent_containers/cup/beaker/large,
 /obj/item/reagent_containers/cup/beaker/large,
@@ -487,7 +487,7 @@
 /obj/machinery/door/airlock/glass,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "lp" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 1
@@ -499,7 +499,7 @@
 "ls" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /turf/open/floor/iron,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "ly" = (
 /obj/machinery/advanced_airlock_controller{
 	pixel_y = 24
@@ -599,10 +599,10 @@
 /area/station/commons/canteen)
 "mn" = (
 /turf/closed/wall/r_wall,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "mr" = (
 /turf/closed/wall,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "mH" = (
 /obj/machinery/power/port_gen/pacman,
 /obj/structure/cable,
@@ -637,8 +637,8 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/structure/cable,
-/obj/item/kitchen/knife/butcher,
-/obj/item/kitchen/knife/butcher,
+/obj/item/knife/butcher,
+/obj/item/knife/butcher,
 /obj/item/sharpener,
 /obj/item/sharpener,
 /turf/open/floor/plasteel/mono/white,
@@ -711,7 +711,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/freezer,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "oO" = (
 /obj/structure/chair/wood,
 /turf/open/floor/wood,
@@ -821,7 +821,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/mono,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "rm" = (
 /obj/structure/urinal{
 	pixel_y = 32
@@ -856,16 +856,16 @@
 /area/station/external)
 "sg" = (
 /turf/closed/wall,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "si" = (
 /obj/effect/turf_decal/box,
 /obj/structure/bed/dogbed/runtime,
-/mob/living/simple_animal/pet/cat/Runtime,
+/mob/living/simple_animal/pet/cat/runtime,
 /obj/item/storage/box/lights/mixed,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/floor/plasteel/mono,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "sp" = (
 /obj/structure/chair/stool/bar,
 /obj/effect/turf_decal/tile/neutral{
@@ -885,7 +885,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/mono,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "sI" = (
 /obj/machinery/status_display/shuttle,
 /turf/closed/wall,
@@ -912,7 +912,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "tM" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/iron/dark,
@@ -977,7 +977,7 @@
 	},
 /obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "vq" = (
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
@@ -1165,7 +1165,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "yW" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
@@ -1198,7 +1198,7 @@
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel/mono,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "zM" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -1206,7 +1206,7 @@
 /area/station/commons/canteen)
 "zP" = (
 /turf/open/floor/iron/freezer,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "zQ" = (
 /obj/machinery/firealarm{
 	pixel_y = -28
@@ -1245,7 +1245,7 @@
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel/mono,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "Ar" = (
 /obj/machinery/hydroponics/constructable,
 /obj/machinery/light,
@@ -1259,10 +1259,10 @@
 	pixel_y = -28
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "Au" = (
 /turf/closed/wall/r_wall,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Aw" = (
 /obj/item/radio/intercom{
 	pixel_y = 20
@@ -1415,7 +1415,7 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "CV" = (
 /obj/structure/reagent_dispensers/watertank/high,
 /obj/item/reagent_containers/cup/bucket,
@@ -1520,7 +1520,7 @@
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "Ee" = (
 /obj/structure/sink/kitchen/directional/east,
 /obj/structure/extinguisher_cabinet{
@@ -1590,7 +1590,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "Fm" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 5
@@ -1641,7 +1641,7 @@
 /area/station/command/bridge)
 "FO" = (
 /turf/closed/wall,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "FR" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
@@ -1651,7 +1651,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "FU" = (
 /obj/machinery/power/smes/engineering,
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2,
@@ -1675,7 +1675,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4,
 /turf/open/floor/iron,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "GJ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 8
@@ -1692,7 +1692,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/freezer,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "GZ" = (
 /obj/machinery/power/terminal{
 	dir = 8
@@ -1729,7 +1729,7 @@
 /obj/structure/cable,
 /obj/machinery/holopad,
 /turf/open/floor/iron,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "In" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
@@ -1790,7 +1790,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron/dark,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "Jj" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/box/drinkingglasses,
@@ -1991,7 +1991,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/mono,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "Nc" = (
 /obj/effect/turf_decal/box,
 /obj/item/radio/intercom{
@@ -1999,7 +1999,7 @@
 	},
 /obj/machinery/icecream_vat,
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Ng" = (
 /obj/machinery/vending/wardrobe/bar_wardrobe,
 /obj/effect/turf_decal/tile/neutral{
@@ -2176,7 +2176,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "QO" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green{
@@ -2205,7 +2205,7 @@
 "Ro" = (
 /obj/machinery/smartfridge/food,
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "Rq" = (
 /obj/machinery/firealarm{
 	pixel_y = -28
@@ -2299,7 +2299,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/freezer,
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Tv" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 8
@@ -2330,7 +2330,7 @@
 /area/station/command/bridge)
 "TD" = (
 /turf/closed/wall/r_wall,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "TL" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 8
@@ -2434,7 +2434,7 @@
 	pixel_y = -5
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "Vo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/orange/hidden,
 /turf/open/floor/plating,
@@ -2456,7 +2456,7 @@
 /obj/item/storage/box/disks_plantgene,
 /obj/item/storage/box/disks_plantgene,
 /turf/open/floor/iron/dark,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "WH" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -2473,12 +2473,12 @@
 "WP" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /turf/open/floor/iron,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "Xd" = (
 /obj/machinery/seed_extractor,
 /obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "Xg" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 1
@@ -2486,7 +2486,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "Xv" = (
 /obj/item/radio/intercom{
 	pixel_x = 27
@@ -2532,7 +2532,7 @@
 	id = "windowlockdown"
 	},
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "Yd" = (
 /obj/machinery/vending/wardrobe/jani_wardrobe{
 	density = 0;
@@ -2542,13 +2542,13 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/mono,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "Yn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2,
 /turf/open/floor/iron,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "Yx" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 6
@@ -2597,7 +2597,7 @@
 	pixel_y = -24
 	},
 /turf/open/floor/iron,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "ZR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 8

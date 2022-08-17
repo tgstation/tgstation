@@ -111,7 +111,7 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "cV" = (
 /obj/machinery/light{
 	dir = 1
@@ -155,7 +155,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/tech/techmaint,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "dr" = (
 /obj/structure/window/reinforced/spawner/west,
 /obj/machinery/power/smes/engineering{
@@ -253,7 +253,7 @@
 /obj/item/t_scanner/adv_mining_scanner/lesser,
 /obj/item/t_scanner/adv_mining_scanner/lesser,
 /turf/open/floor/plasteel/tech/grid,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "fi" = (
 /obj/machinery/power/port_gen/pacman/pre_loaded,
 /obj/effect/turf_decal/radiation/white,
@@ -521,7 +521,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "jG" = (
 /obj/machinery/light,
 /obj/effect/decal/cleanable/dirt,
@@ -543,7 +543,7 @@
 /area/station/cargo)
 "jI" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "jT" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
@@ -786,7 +786,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/tech/grid,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "oV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/industrial/fire{
@@ -906,7 +906,7 @@
 /obj/structure/cable,
 /obj/effect/landmark/start/station_engineer,
 /turf/open/floor/plasteel/tech/techmaint,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "rd" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
@@ -941,7 +941,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/plasteel/tech/grid,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "rM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -1071,7 +1071,7 @@
 	},
 /obj/item/gps/mining,
 /turf/open/floor/plasteel/tech/grid,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "tI" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
@@ -1273,7 +1273,7 @@
 	},
 /obj/effect/landmark/start/shaft_miner,
 /turf/open/floor/plasteel/tech/techmaint,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "xQ" = (
 /obj/structure/chair/sofa/corner{
 	dir = 4
@@ -1438,7 +1438,7 @@
 	},
 /obj/item/gps/mining,
 /turf/open/floor/plasteel/tech/grid,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "zZ" = (
 /obj/structure/cable,
 /obj/machinery/power/terminal{
@@ -1562,7 +1562,7 @@
 	location = "storage"
 	},
 /turf/open/floor/plating,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "BB" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plasteel/tech,
@@ -1873,7 +1873,7 @@
 	suit_type = /obj/item/clothing/suit/space/syndicate
 	},
 /turf/open/floor/plasteel/tech/grid,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "JL" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/station/maintenance/port)
@@ -1889,7 +1889,7 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "JS" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/poddoor{
@@ -1906,7 +1906,7 @@
 /area/station/maintenance/fore)
 "Kf" = (
 /turf/closed/wall/mineral/plastitanium,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Ki" = (
 /turf/open/floor/catwalk_floor,
 /obj/machinery/atmospherics/pipe/layer_manifold{
@@ -2076,7 +2076,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/tech/grid,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Ma" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/red_gold,
@@ -2178,7 +2178,7 @@
 	},
 /turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Oo" = (
 /obj/machinery/status_display/shuttle{
 	pixel_x = -32
@@ -2206,7 +2206,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/start/shaft_miner,
 /turf/open/floor/plasteel/tech/techmaint,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "OJ" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Locker Room"
@@ -2223,7 +2223,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/tech,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "OL" = (
 /obj/structure/cable,
 /obj/machinery/power/terminal{
@@ -2332,7 +2332,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Rc" = (
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
@@ -2345,7 +2345,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Rn" = (
 /obj/machinery/porta_turret/centcom_shuttle/ballistic{
 	dir = 1;
@@ -2588,7 +2588,7 @@
 	on = 0
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "VQ" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/bot_white,
@@ -2598,7 +2598,7 @@
 /obj/item/pickaxe/drill,
 /obj/item/pickaxe/drill,
 /turf/open/floor/plasteel/tech/grid,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "VR" = (
 /obj/effect/turf_decal/bot_white,
 /obj/effect/decal/cleanable/dirt,
@@ -2607,7 +2607,7 @@
 	storage_type = null
 	},
 /turf/open/floor/plasteel/tech/grid,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "VY" = (
 /obj/structure/closet/secure_closet{
 	anchored = 1;
@@ -2770,7 +2770,7 @@
 	storage_type = null
 	},
 /turf/open/floor/plasteel/tech/grid,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "XP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,

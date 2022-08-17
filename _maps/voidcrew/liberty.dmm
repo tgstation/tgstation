@@ -469,9 +469,9 @@
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
-/obj/item/kitchen/knife/combat,
-/obj/item/kitchen/knife/combat,
-/obj/item/kitchen/knife/combat,
+/obj/item/knife/combat,
+/obj/item/knife/combat,
+/obj/item/knife/combat,
 /obj/item/storage/box/zipties{
 	pixel_x = 7;
 	pixel_y = 3
@@ -784,7 +784,7 @@
 "Bi" = (
 /obj/structure/table,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
-/obj/item/kitchen/knife/plastic{
+/obj/item/knife/plastic{
 	pixel_x = -3
 	},
 /obj/item/kitchen/fork/plastic{
@@ -1286,7 +1286,7 @@
 /obj/machinery/newscaster/security_unit{
 	pixel_x = -28
 	},
-/obj/item/kitchen/knife/letter_opener,
+/obj/item/knife/letter_opener,
 /turf/open/floor/carpet/nanoweave/red,
 /area/station/cargo)
 "Nq" = (

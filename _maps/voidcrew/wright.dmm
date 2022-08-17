@@ -10,7 +10,7 @@
 	pixel_y = 3
 	},
 /turf/open/floor/wood,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "aK" = (
 /obj/structure/mineral_door/wood{
 	name = "Dormitory"
@@ -26,7 +26,7 @@
 "bD" = (
 /obj/machinery/vending/games,
 /turf/open/floor/wood,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "bN" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2,
@@ -113,7 +113,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "dY" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 8
@@ -177,7 +177,7 @@
 "gi" = (
 /obj/structure/sign/poster/random,
 /turf/closed/wall,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "gP" = (
 /obj/structure/closet/firecloset/full,
 /obj/machinery/light/small{
@@ -231,7 +231,7 @@
 /obj/item/stack/sheet/glass,
 /obj/structure/closet/crate/wooden/toy,
 /turf/open/floor/wood,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "hP" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 5
@@ -292,7 +292,7 @@
 	},
 /obj/item/toy/windupToolbox,
 /turf/open/floor/wood,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "jz" = (
 /obj/item/kirbyplants/random{
 	name = "Charley"
@@ -330,7 +330,7 @@
 /obj/item/toy/plush/spider,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/wood,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "kc" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/effect/turf_decal/siding/wood{
@@ -415,7 +415,7 @@
 	},
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/wood,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "lb" = (
 /obj/machinery/power/smes/engineering{
 	dir = 4
@@ -491,7 +491,7 @@
 /obj/structure/cable,
 /obj/structure/spirit_board,
 /turf/open/floor/wood,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "mj" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -611,7 +611,7 @@
 /obj/item/pizzabox/mushroom,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "pa" = (
 /obj/structure/bed,
 /obj/item/bedsheet/random,
@@ -628,11 +628,11 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "pQ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "qy" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
@@ -643,7 +643,7 @@
 /obj/item/picket_sign,
 /obj/effect/spawner/random/clothing/kittyears_or_rabbitears,
 /turf/open/floor/wood,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "qH" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
@@ -678,7 +678,7 @@
 /area/station/commons/office)
 "rC" = (
 /turf/open/floor/wood,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "rK" = (
 /obj/structure/chair/wood{
 	dir = 4
@@ -707,7 +707,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "sp" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/structure/cable,
@@ -729,7 +729,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "ud" = (
 /obj/structure/sign/poster/random,
 /turf/closed/wall,
@@ -788,7 +788,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "wp" = (
 /obj/structure/mineral_door/wood{
 	name = "Lounge"
@@ -848,7 +848,7 @@
 	pixel_x = 5
 	},
 /turf/open/floor/wood,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "yg" = (
 /obj/structure/toilet{
 	dir = 1
@@ -864,7 +864,7 @@
 "yu" = (
 /obj/effect/decal/cleanable/food/pie_smudge,
 /turf/open/floor/wood,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "yJ" = (
 /obj/structure/sign/poster/official/cohiba_robusto_ad,
 /turf/closed/wall,
@@ -958,7 +958,7 @@
 /obj/structure/statue/bananium/clown,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/wood,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Aq" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/nanoweave/purple,
@@ -1174,7 +1174,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "HK" = (
 /obj/structure/chair/office{
 	dir = 4
@@ -1346,7 +1346,7 @@
 	},
 /obj/structure/musician/piano/unanchored,
 /turf/open/floor/wood,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "LN" = (
 /turf/closed/wall,
 /area/station/commons/law_office)
@@ -1404,7 +1404,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Nr" = (
 /obj/structure/closet{
 	name = "emergency supplies"
@@ -1599,7 +1599,7 @@
 /obj/machinery/vending/clothing,
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Rk" = (
 /obj/structure/table,
 /obj/item/papercutter,
@@ -1636,7 +1636,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /turf/open/floor/wood,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "SX" = (
 /obj/machinery/power/port_gen/pacman,
 /obj/structure/cable,
@@ -1671,7 +1671,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "TK" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -1763,7 +1763,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Vy" = (
 /turf/open/floor/carpet/nanoweave/purple,
 /area/station/commons/dorms)
@@ -1774,7 +1774,7 @@
 	},
 /obj/item/dyespray,
 /turf/open/floor/wood,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Wa" = (
 /turf/closed/wall,
 /area/station/commons/toilet)
@@ -1807,7 +1807,7 @@
 	dir = 10
 	},
 /turf/open/floor/wood,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "WK" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
@@ -1847,7 +1847,7 @@
 "XH" = (
 /obj/machinery/vending/autodrobe/all_access,
 /turf/open/floor/wood,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "XW" = (
 /obj/structure/chair/office/light,
 /obj/machinery/light{
@@ -1867,7 +1867,7 @@
 /area/station/hallway/primary/central)
 "YG" = (
 /turf/closed/wall,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "YT" = (
 /obj/structure/filingcabinet/employment,
 /obj/effect/turf_decal/siding/wood,

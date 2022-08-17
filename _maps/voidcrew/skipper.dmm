@@ -161,7 +161,7 @@
 /area/station/commons/canteen)
 "bN" = (
 /turf/closed/wall/r_wall,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "bP" = (
 /obj/effect/spawner/structure/window/reinforced/shutters,
 /turf/open/floor/plating,
@@ -582,7 +582,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "hH" = (
 /obj/structure/cable,
 /turf/open/floor/carpet/nanoweave/blue,
@@ -608,7 +608,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/patterned,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "iu" = (
 /obj/machinery/autolathe,
 /obj/effect/turf_decal/tile/black{
@@ -870,7 +870,7 @@
 /obj/item/food/rationpack,
 /obj/item/storage/cans/sixsoda,
 /turf/open/floor/plasteel/patterned,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "kU" = (
 /obj/machinery/light,
 /obj/structure/ore_box,
@@ -1625,7 +1625,7 @@
 /obj/effect/spawner/random/maintenance,
 /obj/effect/spawner/random/clothing/gloves,
 /turf/open/floor/plasteel/patterned,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "wK" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste,
 /turf/open/floor/catwalk_floor,
@@ -1654,7 +1654,7 @@
 	name = "kitchen freezer"
 	},
 /turf/open/floor/plasteel/patterned,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "xj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 1
@@ -1755,7 +1755,7 @@
 /obj/structure/closet/secure_closet/freezer/meat,
 /obj/effect/spawner/random/clothing/kittyears_or_rabbitears,
 /turf/open/floor/plasteel/patterned,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "yW" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
@@ -1838,14 +1838,14 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /turf/open/floor/plasteel/patterned,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Ah" = (
 /obj/machinery/light_switch{
 	pixel_x = -25;
 	pixel_y = 25
 	},
 /turf/open/floor/plasteel/patterned,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Aj" = (
 /obj/structure/displaycase/captain{
 	req_access = null;
@@ -1886,7 +1886,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/patterned,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "AL" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -2018,7 +2018,7 @@
 /area/station/engineering/atmospherics)
 "Cj" = (
 /turf/open/floor/plasteel/patterned,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Cl" = (
 /obj/machinery/light_switch{
 	pixel_x = 25;
@@ -2136,7 +2136,7 @@
 /obj/structure/closet/emcloset/wall,
 /obj/effect/spawner/random/maintenance,
 /turf/closed/wall/r_wall,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "DG" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
@@ -2191,7 +2191,7 @@
 "DR" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plasteel/patterned,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "DS" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1
@@ -2484,7 +2484,7 @@
 "Hv" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /turf/open/floor/plasteel/patterned,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "HB" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -2578,7 +2578,7 @@
 /obj/structure/closet/firecloset/wall,
 /obj/effect/spawner/random/maintenance,
 /turf/closed/wall/r_wall,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "IV" = (
 /obj/machinery/power/terminal{
 	dir = 8
@@ -2768,7 +2768,7 @@
 "Lo" = (
 /obj/structure/table/reinforced,
 /obj/item/kitchen/rollingpin,
-/obj/item/kitchen/knife,
+/obj/item/knife,
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 9
@@ -2909,7 +2909,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/patterned,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Nh" = (
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
@@ -3555,7 +3555,7 @@
 	},
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/plasteel/patterned,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Yh" = (
 /turf/closed/wall,
 /area/station/engineering)

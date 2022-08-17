@@ -995,7 +995,7 @@
 /obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
-/obj/item/kitchen/knife,
+/obj/item/knife,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 4
 	},
@@ -1136,7 +1136,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "cZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
@@ -1167,13 +1167,13 @@
 	},
 /obj/item/multitool,
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "dc" = (
 /obj/effect/turf_decal/box/white/corners{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "dd" = (
 /obj/effect/turf_decal/box/white/corners{
 	dir = 1
@@ -1184,7 +1184,7 @@
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/head/hardhat/red,
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "de" = (
 /obj/structure/cable,
 /turf/open/floor/iron/white,
@@ -1225,14 +1225,14 @@
 	pixel_x = -24
 	},
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "dk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "dm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/miningcar{
@@ -1252,7 +1252,7 @@
 /obj/item/clothing/suit/hooded/explorer,
 /obj/item/mining_scanner,
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "dn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -1273,7 +1273,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /turf/open/floor/iron/white,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "du" = (
 /obj/effect/turf_decal/stripes{
 	dir = 6
@@ -1675,7 +1675,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "kd" = (
 /obj/structure/window/reinforced,
 /obj/machinery/space_heater,
@@ -1837,7 +1837,7 @@
 	},
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/white,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "rd" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
@@ -1852,7 +1852,7 @@
 /area/station/commons)
 "rs" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "rt" = (
 /obj/effect/turf_decal/stripes{
 	dir = 6
@@ -1922,7 +1922,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/iron/white,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "uT" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 6
@@ -1931,7 +1931,7 @@
 	dir = 10
 	},
 /turf/open/floor/iron/white,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "uU" = (
 /obj/machinery/power/terminal{
 	dir = 1
@@ -1971,7 +1971,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/tank_dispenser/oxygen,
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "vM" = (
 /obj/structure/window{
 	dir = 4
@@ -2009,7 +2009,7 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron/white,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "xJ" = (
 /obj/structure/table/reinforced,
 /obj/machinery/chem_dispenser/drinks/beer{
@@ -2219,10 +2219,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/suit_storage_unit/mining/eva,
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Ej" = (
 /turf/open/floor/iron/white,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Ek" = (
 /obj/effect/turf_decal/stripes{
 	dir = 4
@@ -2269,7 +2269,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Fq" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Emergency Shuttle Cargo Bay"
@@ -2277,7 +2277,7 @@
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "FJ" = (
 /obj/effect/turf_decal/stripes/white/corner,
 /obj/effect/decal/cleanable/dirt,
@@ -2372,7 +2372,7 @@
 	dir = 9
 	},
 /turf/open/floor/iron/white,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "IR" = (
 /obj/effect/turf_decal/stripes/white{
 	dir = 10
@@ -2537,7 +2537,7 @@
 "LB" = (
 /obj/structure/sign/departments/cargo,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "LU" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/poddoor{
@@ -2583,7 +2583,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/white,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "NZ" = (
 /obj/effect/turf_decal/stripes{
 	dir = 4
@@ -2617,7 +2617,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "OU" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 1
@@ -2743,7 +2743,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Tw" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/rack,
@@ -2758,7 +2758,7 @@
 "TZ" = (
 /obj/effect/turf_decal/box/white/corners,
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Ue" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/emcloset,
@@ -2801,7 +2801,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "WG" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Emergency Shuttle Cargo Bay"
@@ -2814,7 +2814,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/white,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "WT" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/purple/visible{
 	dir = 1

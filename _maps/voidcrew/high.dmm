@@ -2679,7 +2679,7 @@
 "SX" = (
 /obj/effect/turf_decal/tile/white/diagonal,
 /obj/structure/table,
-/obj/item/kitchen/knife,
+/obj/item/knife,
 /obj/item/kitchen/rollingpin,
 /obj/structure/sink/kitchen/directional/west,
 /obj/structure/sign/poster/contraband/eat{

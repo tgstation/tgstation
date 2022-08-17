@@ -21,7 +21,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "ag" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -57,7 +57,7 @@
 /area/station/commons/canteen/kitchen)
 "ao" = (
 /turf/closed/wall,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "ap" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/mining/glass{
@@ -247,7 +247,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "bd" = (
 /obj/effect/turf_decal/tile/bar/diagonal,
 /obj/structure/chair/wood{
@@ -370,7 +370,7 @@
 	dir = 5
 	},
 /turf/open/floor/iron,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "bD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -450,7 +450,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "bW" = (
 /obj/machinery/computer/helm{
 	dir = 1
@@ -637,7 +637,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "cH" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/airlock/engineering/glass{
@@ -729,7 +729,7 @@
 /obj/item/reagent_containers/cup/bucket,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "dx" = (
 /obj/structure/cable,
 /obj/machinery/light,
@@ -748,7 +748,7 @@
 /area/station/security/prison)
 "dB" = (
 /obj/structure/bed/dogbed/runtime,
-/mob/living/simple_animal/pet/cat/Runtime,
+/mob/living/simple_animal/pet/cat/runtime,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/machinery/airalarm/directional/west,
@@ -1361,7 +1361,7 @@
 "gm" = (
 /obj/machinery/hydroponics/constructable,
 /turf/open/floor/iron,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "go" = (
 /obj/machinery/deepfryer,
 /obj/effect/turf_decal/tile/bar/diagonal,
@@ -1705,7 +1705,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "im" = (
 /obj/machinery/door/window/right/directional/south{
 	dir = 1
@@ -1871,7 +1871,7 @@
 	pixel_y = -26
 	},
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "ji" = (
 /obj/structure/chair/office,
 /obj/machinery/camera/directional/north,
@@ -1974,7 +1974,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "jL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown{
@@ -2241,7 +2241,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "kT" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -2290,7 +2290,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "lc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -2804,7 +2804,7 @@
 "nD" = (
 /obj/machinery/vending/wardrobe/jani_wardrobe,
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "nF" = (
 /obj/machinery/computer/crew{
 	dir = 1
@@ -2881,7 +2881,7 @@
 "oa" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "ob" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -2993,7 +2993,7 @@
 "oB" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "oC" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -3028,7 +3028,7 @@
 	},
 /obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "oO" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -3117,7 +3117,7 @@
 "pm" = (
 /obj/machinery/smartfridge/food,
 /turf/closed/wall,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "pn" = (
 /turf/closed/wall/r_wall,
 /area/station/science)
@@ -3249,7 +3249,7 @@
 /obj/machinery/camera/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "pR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -3302,7 +3302,7 @@
 "qi" = (
 /obj/machinery/mineral/ore_redemption,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "qj" = (
 /obj/machinery/camera/directional/north,
 /obj/machinery/light{
@@ -4015,7 +4015,7 @@
 	pixel_x = -24
 	},
 /turf/open/floor/iron,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "tY" = (
 /turf/closed/wall/r_wall,
 /area/station/commons/library)
@@ -4089,7 +4089,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "up" = (
 /obj/machinery/air_sensor/atmos/carbon_tank,
 /turf/open/floor/engine/co2,
@@ -4227,7 +4227,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "vb" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -4319,7 +4319,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "vo" = (
 /obj/machinery/vending/autodrobe/all_access{
 	default_price = 0;
@@ -4414,7 +4414,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "vL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red{
@@ -4518,7 +4518,7 @@
 "wh" = (
 /obj/machinery/chem_dispenser/mutagensaltpeter,
 /turf/open/floor/iron,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "wi" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer2{
@@ -4817,7 +4817,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "xH" = (
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/light/dim,
@@ -4828,7 +4828,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "xM" = (
 /obj/machinery/door/window/left/directional/north{
 	dir = 4;
@@ -4848,7 +4848,7 @@
 	},
 /obj/effect/turf_decal/tile/brown/anticorner,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "xX" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/blue{
@@ -4892,7 +4892,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "yh" = (
 /obj/machinery/firealarm{
 	pixel_y = -26
@@ -4982,7 +4982,7 @@
 /obj/vehicle/ridden/janicart,
 /obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "yN" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window{
@@ -5029,7 +5029,7 @@
 "yU" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "yW" = (
 /obj/machinery/vending/wardrobe/chem_wardrobe,
 /obj/machinery/light,
@@ -5232,7 +5232,7 @@
 	name = "Engines And Janitor"
 	},
 /turf/open/floor/iron,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "zJ" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin,
@@ -5448,7 +5448,7 @@
 /area/station)
 "AJ" = (
 /turf/closed/wall,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "AL" = (
 /obj/structure/table/reinforced,
 /obj/structure/disposalpipe/segment{
@@ -5587,7 +5587,7 @@
 /obj/structure/cable,
 /obj/machinery/recharger,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Bs" = (
 /obj/structure/cable,
 /obj/machinery/camera/autoname{
@@ -5607,7 +5607,7 @@
 	dir = 5
 	},
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Bv" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -5730,7 +5730,7 @@
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "Ck" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
@@ -5807,7 +5807,7 @@
 	dir = 10
 	},
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "CH" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -5827,7 +5827,7 @@
 "CL" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "CM" = (
 /obj/structure/table,
 /obj/item/storage/belt/janitor/full,
@@ -5859,7 +5859,7 @@
 	pixel_x = 26
 	},
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "CN" = (
 /obj/effect/turf_decal/tile/bar/diagonal,
 /obj/structure/table/wood,
@@ -5945,7 +5945,7 @@
 	},
 /obj/machinery/light,
 /turf/open/floor/iron,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "Dj" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/nitrous_input{
 	dir = 1
@@ -6128,7 +6128,7 @@
 "DV" = (
 /obj/machinery/power/port_gen/pacman,
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "DW" = (
 /obj/structure/window/reinforced/spawner/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -6145,7 +6145,7 @@
 /obj/structure/cable,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "Ed" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -6454,7 +6454,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "Fx" = (
 /obj/structure/closet/secure_closet/quartermaster,
 /obj/machinery/camera/autoname{
@@ -6529,7 +6529,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "FI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -6685,7 +6685,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "Gl" = (
 /obj/machinery/computer/secure_data,
 /obj/effect/turf_decal/tile/red{
@@ -6745,7 +6745,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "Gy" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -6956,7 +6956,7 @@
 "Hv" = (
 /obj/machinery/biogenerator,
 /turf/open/floor/iron,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "Hw" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/brown{
@@ -6997,7 +6997,7 @@
 /obj/structure/closet/l3closet/janitor,
 /obj/item/clothing/suit/hooded/carp_costume/spaceproof,
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "HL" = (
 /obj/structure/table/wood,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -7144,7 +7144,7 @@
 /area/station/commons/toilet)
 "IA" = (
 /turf/closed/wall/r_wall,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "IB" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/camera/autoname/directional/south,
@@ -7187,7 +7187,7 @@
 	},
 /obj/machinery/door/window/left/directional/north,
 /turf/open/floor/iron,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "IJ" = (
 /obj/structure/table,
 /obj/item/clothing/glasses/science,
@@ -7387,7 +7387,7 @@
 /area/station/command/bridge)
 "JD" = (
 /turf/open/floor/iron,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "JF" = (
 /obj/machinery/rnd/destructive_analyzer,
 /obj/machinery/light{
@@ -7531,7 +7531,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "Kt" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -7576,7 +7576,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "KM" = (
 /obj/machinery/door/window{
 	dir = 8
@@ -7702,7 +7702,7 @@
 /obj/machinery/space_heater,
 /obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "Lp" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Morgue";
@@ -7862,7 +7862,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "Mn" = (
 /obj/structure/disposalpipe/segment{
 	dir = 2
@@ -7894,7 +7894,7 @@
 	name = "Throne of Custodia"
 	},
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "Mr" = (
 /obj/structure/table/glass,
 /obj/structure/window/reinforced/spawner{
@@ -8090,7 +8090,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Nw" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -8115,7 +8115,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "NF" = (
 /turf/closed/wall/r_wall,
 /area/station/commons/canteen/kitchen)
@@ -8157,7 +8157,7 @@
 /obj/machinery/autolathe,
 /obj/machinery/door/window/left/directional/north,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "NO" = (
 /obj/structure/closet/secure_closet/hos,
 /obj/structure/cable,
@@ -8222,7 +8222,7 @@
 /obj/structure/cable,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "Oc" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -8245,7 +8245,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Og" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -8338,7 +8338,7 @@
 /obj/machinery/power/port_gen/pacman,
 /obj/machinery/light/dim,
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "OE" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -8953,7 +8953,7 @@
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/iron,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "RD" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
@@ -9399,7 +9399,7 @@
 "TD" = (
 /obj/machinery/vending/hydroseeds,
 /turf/open/floor/iron,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "TG" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall/r_wall,
@@ -9480,7 +9480,7 @@
 "Uf" = (
 /obj/structure/janitorialcart,
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "Ug" = (
 /obj/structure/bed,
 /obj/item/bedsheet/nanotrasen,
@@ -9649,7 +9649,7 @@
 /area/station/cargo)
 "UN" = (
 /turf/closed/wall/r_wall,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "UO" = (
 /obj/machinery/vending/medical,
 /obj/structure/curtain,
@@ -9788,7 +9788,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Vs" = (
 /obj/effect/turf_decal/tile/bar/diagonal,
 /obj/structure/table/wood,
@@ -9883,7 +9883,7 @@
 	dir = 5
 	},
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "VW" = (
 /obj/structure/closet/crate,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -9974,7 +9974,7 @@
 	dir = 6
 	},
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Wv" = (
 /obj/structure/disposalpipe/segment{
 	dir = 8
@@ -10124,7 +10124,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "Xa" = (
 /obj/structure/table/wood,
 /obj/item/nullrod,
@@ -10243,7 +10243,7 @@
 "XS" = (
 /obj/structure/sink/directional/east,
 /turf/open/floor/iron,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "XT" = (
 /obj/structure/table/reinforced,
 /obj/item/hand_tele,
@@ -10371,7 +10371,7 @@
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "YB" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/mix_output{
 	dir = 1
@@ -10437,7 +10437,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "YT" = (
 /obj/machinery/computer/station_alert,
 /obj/effect/turf_decal/tile/yellow/anticorner{
@@ -10539,7 +10539,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/commons/hydroponics)
+/area/station/service/hydroponics)
 "Zz" = (
 /obj/machinery/door/window/left/directional/north{
 	dir = 8;

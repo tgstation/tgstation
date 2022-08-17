@@ -157,7 +157,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/pod/light,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "bC" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4{
@@ -249,7 +249,7 @@
 "dz" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table/reinforced,
-/obj/item/kitchen/knife/butcher,
+/obj/item/knife/butcher,
 /turf/open/floor/iron/showroomfloor,
 /area/station/maintenance/starboard)
 "dC" = (
@@ -286,7 +286,7 @@
 	},
 /obj/structure/frame/machine,
 /turf/open/floor/pod/light,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "dT" = (
 /obj/machinery/vending/wardrobe/science_wardrobe,
 /turf/open/floor/plasteel/mono/dark,
@@ -533,7 +533,7 @@
 	dir = 8
 	},
 /turf/open/floor/pod/light,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "ip" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
@@ -731,7 +731,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /turf/open/floor/pod/light,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "mt" = (
 /obj/effect/turf_decal/techfloor{
 	dir = 10
@@ -1126,7 +1126,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/pod/light,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "qR" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 4
@@ -1189,7 +1189,7 @@
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
 /turf/open/floor/pod/light,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "sk" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4{
@@ -1210,7 +1210,7 @@
 	},
 /obj/structure/frame/machine,
 /turf/open/floor/pod/light,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "sK" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -1297,7 +1297,7 @@
 	pixel_y = 8
 	},
 /turf/open/floor/pod/light,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "us" = (
 /obj/structure/closet/secure_closet/engineering_personal,
 /obj/item/clothing/gloves/color/yellow{
@@ -1314,7 +1314,7 @@
 	dir = 10
 	},
 /turf/open/floor/pod/light,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "ut" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
@@ -1439,7 +1439,7 @@
 /obj/structure/frame/machine,
 /obj/structure/frame/machine,
 /turf/open/floor/pod/light,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "wx" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/station/commons/canteen)
@@ -1455,7 +1455,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/pod/light,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "wL" = (
 /obj/machinery/nanite_program_hub,
 /turf/open/floor/pod/light,
@@ -1499,7 +1499,7 @@
 /obj/effect/turf_decal/techfloor/orange,
 /obj/structure/cable,
 /turf/open/floor/pod/light,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "xN" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /turf/open/floor/carpet/royalblue,
@@ -1795,7 +1795,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /turf/open/floor/pod/light,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Bz" = (
 /obj/machinery/vending/dinnerware,
 /obj/machinery/firealarm{
@@ -1861,7 +1861,7 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/effect/turf_decal/techfloor/orange,
 /turf/open/floor/pod/light,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "CD" = (
 /obj/effect/turf_decal/techfloor{
 	dir = 6
@@ -2030,7 +2030,7 @@
 	dir = 8
 	},
 /turf/open/floor/pod/light,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Fa" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
@@ -2233,7 +2233,7 @@
 	},
 /obj/item/pipe_dispenser,
 /turf/open/floor/pod/light,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "HU" = (
 /obj/machinery/power/shuttle/engine/electric{
 	dir = 1
@@ -2383,7 +2383,7 @@
 /area/station/hallway/primary/central)
 "JQ" = (
 /turf/open/floor/pod/light,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "JY" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table/reinforced,
@@ -2427,7 +2427,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/pod/light,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Ky" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
@@ -2598,7 +2598,7 @@
 	dir = 10
 	},
 /turf/open/floor/pod/light,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Mb" = (
 /obj/effect/turf_decal/techfloor/orange{
 	dir = 1
@@ -3014,7 +3014,7 @@
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
 /turf/open/floor/pod/light,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "RC" = (
 /obj/machinery/light{
 	dir = 8
@@ -3060,7 +3060,7 @@
 /area/station/commons/canteen)
 "RS" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Sc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2{
 	dir = 4
@@ -3199,7 +3199,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/pod/light,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "TM" = (
 /obj/structure/chair/comfy,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
@@ -3225,7 +3225,7 @@
 "TU" = (
 /obj/structure/chair,
 /turf/open/floor/pod/light,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "TW" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/station/cargo)
@@ -3296,7 +3296,7 @@
 	},
 /obj/structure/frame/machine,
 /turf/open/floor/pod/light,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "UG" = (
 /obj/effect/turf_decal/siding/yellow{
 	dir = 8
@@ -3601,7 +3601,7 @@
 	dir = 1
 	},
 /turf/open/floor/pod/light,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "ZJ" = (
 /obj/machinery/light,
 /obj/machinery/status_display/shuttle{

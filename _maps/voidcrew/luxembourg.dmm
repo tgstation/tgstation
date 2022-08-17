@@ -27,7 +27,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "bj" = (
 /obj/machinery/computer/autopilot{
 	dir = 4;
@@ -128,7 +128,7 @@
 	dir = 9
 	},
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "dh" = (
 /obj/structure/table/glass,
 /obj/item/storage/medkit/toxin{
@@ -162,7 +162,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "dO" = (
 /obj/structure/table,
 /obj/item/areaeditor,
@@ -256,7 +256,7 @@
 	dir = 9
 	},
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "fI" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/station/medical)
@@ -460,7 +460,7 @@
 "jn" = (
 /obj/structure/table,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
-/obj/item/kitchen/knife{
+/obj/item/knife{
 	pixel_x = -8
 	},
 /obj/effect/spawner/random/food_or_drink/donkpockets,
@@ -597,7 +597,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "no" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -743,13 +743,13 @@
 	dir = 9
 	},
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "re" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "rV" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos/air_output{
 	dir = 4
@@ -834,7 +834,7 @@
 	dir = 6
 	},
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "tN" = (
 /obj/item/card/id/syndicate,
 /obj/item/clothing/under/syndicate/skirt,
@@ -878,7 +878,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "vd" = (
 /obj/structure/table,
 /obj/machinery/chem_dispenser/drinks{
@@ -953,7 +953,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "vU" = (
 /obj/machinery/light,
 /obj/machinery/computer/atmos_control/tank/air_tank{
@@ -1134,7 +1134,7 @@
 	dir = 6
 	},
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Ck" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/engineering/glass,
@@ -1151,10 +1151,10 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "CP" = (
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Db" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/syndicate,
@@ -1223,7 +1223,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "FH" = (
 /obj/machinery/button/door{
 	id = "syndiefuck";
@@ -1270,7 +1270,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Hy" = (
 /obj/machinery/atmospherics/pipe/layer_manifold{
 	dir = 4
@@ -1350,7 +1350,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "JQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown{
@@ -1360,7 +1360,7 @@
 /area/station/cargo)
 "Ka" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Kh" = (
 /obj/machinery/sleeper/syndie{
 	dir = 4
@@ -1467,7 +1467,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Nc" = (
 /obj/machinery/light,
 /turf/open/floor/mineral/plastitanium,
@@ -1541,7 +1541,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "OZ" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/brown{
@@ -1623,7 +1623,7 @@
 	dir = 9
 	},
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Rb" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer4{
@@ -1647,7 +1647,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown/anticorner,
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Ry" = (
 /obj/structure/closet/crate/freezer,
 /obj/item/storage/box/donkpockets,
@@ -1678,7 +1678,7 @@
 	dir = 9
 	},
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "RG" = (
 /obj/machinery/ore_silo,
 /obj/effect/turf_decal/tile/brown{
@@ -1757,7 +1757,7 @@
 	id = "externalshutters"
 	},
 /turf/open/floor/plating,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Ux" = (
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/mineral/plastitanium,
@@ -1785,7 +1785,7 @@
 	extra_price = 0
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Vz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1801,7 +1801,7 @@
 	dir = 6
 	},
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "VR" = (
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
 /area/station/engineering)
@@ -1852,7 +1852,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "XP" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1892,7 +1892,7 @@
 	dir = 6
 	},
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "YD" = (
 /obj/structure/closet/crate/freezer,
 /obj/item/storage/box/donkpockets/donkpocketteriyaki,
@@ -1921,7 +1921,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "YF" = (
 /obj/machinery/vending/autodrobe/all_access{
 	default_price = 0;

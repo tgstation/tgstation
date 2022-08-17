@@ -8,7 +8,7 @@
 /obj/structure/closet/crate/trashcart,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "ag" = (
 /obj/structure/table/reinforced,
 /obj/machinery/button/door{
@@ -252,7 +252,7 @@
 /obj/item/stack/sheet/mineral/plasma/five,
 /obj/item/stack/sheet/mineral/plasma/five,
 /turf/open/floor/plating,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "ez" = (
 /obj/effect/decal/cleanable/xenoblood/xgibs/down,
 /obj/structure/cable,
@@ -491,7 +491,7 @@
 	req_access = null
 	},
 /turf/open/floor/plating,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "hI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
@@ -586,7 +586,7 @@
 /obj/item/stack/sheet/mineral/uranium/five,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "jd" = (
 /turf/closed/wall/mineral/titanium{
 	baseturfs = /turf/open/floor/mineral/titanium/tiled/white
@@ -1105,7 +1105,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "rt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood,
@@ -1161,7 +1161,7 @@
 "sn" = (
 /obj/machinery/ore_silo,
 /turf/open/floor/plating,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "so" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -1187,7 +1187,7 @@
 /obj/structure/ore_box,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "sG" = (
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -1380,7 +1380,7 @@
 /area/station/hallway/aft)
 "wu" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "wz" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 4
@@ -1496,7 +1496,7 @@
 /obj/item/radio,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "yj" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -1546,7 +1546,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "yM" = (
 /obj/structure/sign/warning/biohazard,
 /turf/closed/wall/mineral/titanium{
@@ -1607,7 +1607,7 @@
 "zG" = (
 /obj/structure/sign/poster/random,
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "zJ" = (
 /obj/structure/sign/departments/xenobio,
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -1696,7 +1696,7 @@
 	name = "clear labcoat"
 	},
 /turf/open/floor/plating,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "AQ" = (
 /obj/item/extinguisher/empty,
 /obj/machinery/light/small{
@@ -1770,7 +1770,7 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/plating,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Cm" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
@@ -1811,7 +1811,7 @@
 	dir = 1
 	},
 /turf/closed/wall/mineral/titanium,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "CF" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/commons/canteen)
@@ -2105,7 +2105,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/statue/silver/secborg,
 /turf/open/floor/plating,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Gj" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 8
@@ -2633,7 +2633,7 @@
 /area/station/science)
 "Nl" = (
 /turf/closed/wall/mineral/titanium,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Nm" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/tiled,
@@ -2728,7 +2728,7 @@
 /turf/closed/wall/mineral/titanium{
 	baseturfs = /turf/open/floor/mineral/titanium/tiled/white
 	},
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Ox" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/trinary/mixer/flipped/on/layer2{
@@ -3208,7 +3208,7 @@
 /turf/closed/wall/mineral/titanium{
 	baseturfs = /turf/open/floor/mineral/titanium/tiled/white
 	},
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Vb" = (
 /obj/structure/AIcore,
 /obj/item/mmi/posibrain,
@@ -3282,7 +3282,7 @@
 	dir = 10
 	},
 /turf/open/floor/plating,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "VW" = (
 /obj/effect/decal/cleanable/greenglow,
 /obj/structure/cable,
@@ -3499,7 +3499,7 @@
 /obj/item/storage/bag/ore,
 /obj/item/storage/bag/ore,
 /turf/open/floor/plating,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Yk" = (
 /mob/living/simple_animal/hostile/hivebot,
 /obj/structure/cable,
@@ -3575,7 +3575,7 @@
 "Zq" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Zr" = (
 /obj/effect/decal/cleanable/blood/gibs/torso,
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -3636,7 +3636,7 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/storage/medkit,
 /turf/open/floor/plating,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "ZZ" = (
 /turf/closed/wall/mineral/titanium,
 /area/station/science/ai_chamber)

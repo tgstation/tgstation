@@ -804,7 +804,7 @@
 /area/station/cargo)
 "LR" = (
 /obj/structure/closet/crate,
-/obj/item/kitchen/knife/letter_opener,
+/obj/item/knife/letter_opener,
 /obj/item/flashlight/pen,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,

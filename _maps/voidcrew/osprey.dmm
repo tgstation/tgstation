@@ -188,7 +188,7 @@
 /obj/structure/fans/tiny,
 /obj/machinery/door/firedoor/heavy,
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "bD" = (
 /obj/machinery/power/smes/engineering{
 	dir = 1
@@ -400,7 +400,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "cK" = (
 /obj/structure/closet/secure_closet{
 	icon_state = "med";
@@ -594,7 +594,7 @@
 "ec" = (
 /obj/structure/janitorialcart,
 /turf/open/floor/iron,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "ef" = (
 /obj/machinery/space_heater,
 /obj/structure/window/plasma/reinforced/spawner,
@@ -698,7 +698,7 @@
 	pixel_y = -22
 	},
 /turf/open/floor/iron,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "fq" = (
 /obj/effect/turf_decal/tile/brown/border{
 	dir = 8
@@ -1026,7 +1026,7 @@
 /obj/effect/turf_decal/borderfloor/full,
 /obj/machinery/door/firedoor/heavy,
 /turf/open/floor/plasteel/tech,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "it" = (
 /obj/effect/turf_decal/tile/brown/border{
 	dir = 8
@@ -1149,7 +1149,7 @@
 /area/station/engineering/atmospherics)
 "ja" = (
 /turf/closed/wall/mineral/titanium,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "jf" = (
 /obj/structure/sign/warning/vacuum/external,
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -1214,7 +1214,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/tech/techmaint,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "jE" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4
@@ -1308,7 +1308,7 @@
 	name = "blast shutters"
 	},
 /turf/open/floor/plating,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "kj" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/status_display/shuttle{
@@ -1420,7 +1420,7 @@
 /obj/item/storage/bag/trash,
 /obj/item/mop,
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "lf" = (
 /obj/machinery/suit_storage_unit/atmos,
 /obj/effect/turf_decal/bot,
@@ -1476,7 +1476,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/patterned/cargo_one,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "lq" = (
 /obj/machinery/light{
 	dir = 8
@@ -1495,7 +1495,7 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/tech/techmaint,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "lO" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 6
@@ -1592,7 +1592,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/tech/techmaint,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "mn" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 1
@@ -1874,7 +1874,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/mono,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "nS" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/siding/wood{
@@ -2019,7 +2019,7 @@
 "oK" = (
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/mono,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "oL" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/visible{
 	dir = 4
@@ -2046,7 +2046,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/mono,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "oR" = (
 /obj/effect/turf_decal/tile/brown/border{
 	dir = 1
@@ -2058,7 +2058,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/tech/techmaint,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "oW" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate{
@@ -2066,7 +2066,7 @@
 	},
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/plasteel/mono,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "pf" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/hidden{
 	dir = 8
@@ -2132,7 +2132,7 @@
 /area/station/hallway/aft)
 "pT" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "pU" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -2168,7 +2168,7 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/item/supplypod_beacon,
 /turf/open/floor/plasteel/mono,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "qf" = (
 /obj/effect/turf_decal/tile/purple/border{
 	dir = 4
@@ -2230,7 +2230,7 @@
 	location = "cargo"
 	},
 /turf/open/floor/plasteel/patterned/cargo_one,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "qD" = (
 /obj/machinery/advanced_airlock_controller{
 	pixel_y = 28
@@ -2276,7 +2276,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/plasteel/mono,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "qT" = (
 /obj/effect/turf_decal/stripes{
 	dir = 8
@@ -2320,7 +2320,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "rq" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
@@ -2374,7 +2374,7 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/floor/plasteel/tech/techmaint,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "rF" = (
 /obj/item/trash/can/food,
 /obj/effect/turf_decal/tile/purple/border{
@@ -2492,7 +2492,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/tech/techmaint,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "sN" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 6
@@ -2523,7 +2523,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/tech/techmaint,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "ta" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
@@ -2601,7 +2601,7 @@
 /obj/structure/chair/office,
 /obj/effect/landmark/start/janitor,
 /turf/open/floor/iron,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "tM" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/hidden{
 	dir = 8
@@ -2633,7 +2633,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/tech/techmaint,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "tW" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer2{
 	dir = 5
@@ -2672,7 +2672,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/tech/techmaint,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "ui" = (
 /obj/effect/turf_decal/borderfloor{
 	dir = 1
@@ -2746,7 +2746,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/tech/techmaint,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "uE" = (
 /obj/effect/turf_decal/tile/purple/border{
 	dir = 8
@@ -2954,7 +2954,7 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/patterned/cargo_one,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "we" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -3031,7 +3031,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/tech/techmaint,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "wv" = (
 /obj/effect/turf_decal/tile/white/mono,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
@@ -3138,7 +3138,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /turf/open/floor/plasteel/patterned/cargo_one,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "xM" = (
 /obj/effect/turf_decal/tile/white/mono,
 /obj/effect/turf_decal/tile/blue/border{
@@ -3181,7 +3181,7 @@
 /area/station/hallway/primary/central)
 "yG" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "yU" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/hidden,
 /obj/structure/cable,
@@ -3256,7 +3256,7 @@
 	pixel_y = -24
 	},
 /turf/open/floor/iron,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "zm" = (
 /obj/effect/turf_decal/tile/purple/border{
 	dir = 4
@@ -3300,7 +3300,7 @@
 	pixel_y = 28
 	},
 /turf/open/floor/plasteel/tech/techmaint,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "zI" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/construction)
@@ -3725,7 +3725,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/tech/techmaint,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "CW" = (
 /obj/item/trash/cheesie,
 /turf/open/floor/plasteel/tech/techmaint,
@@ -3764,7 +3764,7 @@
 /area/station/hallway/primary/central)
 "Do" = (
 /turf/open/floor/plasteel/tech/techmaint,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Dp" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/hallway/primary/fore)
@@ -3780,7 +3780,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "Dz" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -3889,7 +3889,7 @@
 	pixel_y = -24
 	},
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "Ep" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -3974,7 +3974,7 @@
 /area/station/hallway/aft)
 "EN" = (
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "EO" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
@@ -4572,7 +4572,7 @@
 	},
 /obj/machinery/navbeacon/wayfinding/janitor,
 /turf/open/floor/iron,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "JF" = (
 /obj/effect/turf_decal/borderfloor{
 	dir = 1
@@ -4643,7 +4643,7 @@
 "JU" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "JV" = (
 /obj/machinery/light{
 	dir = 1
@@ -4689,7 +4689,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "Ko" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 1
@@ -4723,7 +4723,7 @@
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel/tech/techmaint,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "KO" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
@@ -4870,7 +4870,7 @@
 "Ms" = (
 /obj/structure/table/reinforced,
 /obj/item/kitchen/rollingpin,
-/obj/item/kitchen/knife,
+/obj/item/knife,
 /obj/item/reagent_containers/condiment/enzyme{
 	pixel_y = 5
 	},
@@ -4949,7 +4949,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/tech/techmaint,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "MQ" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -4983,7 +4983,7 @@
 /obj/item/reagent_containers/cup/bucket,
 /obj/item/reagent_containers/spray/cleaner,
 /turf/open/floor/iron,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "Nu" = (
 /obj/structure/closet/emcloset/wall{
 	dir = 1;
@@ -5056,7 +5056,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "NV" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
@@ -5253,7 +5253,7 @@
 	name = "blast shutters"
 	},
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "PJ" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/external)
@@ -5326,7 +5326,7 @@
 /obj/structure/sign/warning/deathsposal/directional/north,
 /obj/item/trash/can/food/beans,
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "Qp" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4,
@@ -5352,7 +5352,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/patterned,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Qu" = (
 /obj/machinery/computer/atmos_alert{
 	dir = 8
@@ -5413,7 +5413,7 @@
 	id = "osprey_conveyor"
 	},
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "QJ" = (
 /obj/machinery/atmospherics/components/binary/pump/on/layer2{
 	dir = 1;
@@ -5525,7 +5525,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/patterned/cargo_one,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "RC" = (
 /obj/effect/turf_decal/tile/brown/border,
 /obj/structure/cable,
@@ -5534,7 +5534,7 @@
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel/tech/techmaint,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "RE" = (
 /obj/machinery/door/airlock{
 	name = "Head"
@@ -5583,18 +5583,18 @@
 "Sb" = (
 /obj/structure/sign/departments/custodian,
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "Sc" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/ore_box,
 /turf/open/floor/plasteel/mono,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Sl" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/structure/closet/crate/coffin,
 /turf/open/floor/iron,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "Sr" = (
 /obj/effect/turf_decal/tile/grey/mono,
 /obj/effect/turf_decal/tile/neutral/border{
@@ -5629,7 +5629,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "SN" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/turf_decal/borderfloor{
@@ -5700,13 +5700,13 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/plasteel/patterned/cargo_one,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "SZ" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 9
 	},
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "Td" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -5716,7 +5716,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "Ti" = (
 /obj/effect/turf_decal/tile/brown/border{
 	dir = 4
@@ -5910,7 +5910,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/tech/techmaint,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Uv" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -5937,7 +5937,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/patterned/cargo_one,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "UG" = (
 /obj/effect/turf_decal/stripes{
 	dir = 4
@@ -5948,7 +5948,7 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/patterned/cargo_one,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "US" = (
 /obj/machinery/door/airlock/external/glass,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -6095,7 +6095,7 @@
 	id = "osprey_conveyor"
 	},
 /turf/open/floor/plating,
-/area/station/commons/janitor)
+/area/station/service/janitor)
 "VX" = (
 /obj/structure/closet/emcloset/wall{
 	dir = 1;
@@ -6239,7 +6239,7 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate/internals,
 /turf/open/floor/plasteel/mono,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "XB" = (
 /obj/structure/railing{
 	dir = 8
@@ -6317,7 +6317,7 @@
 	pixel_x = 22
 	},
 /turf/open/floor/plasteel/tech/techmaint,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "XS" = (
 /obj/structure/closet/secure_closet{
 	icon_state = "cap";

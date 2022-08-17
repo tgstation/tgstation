@@ -280,7 +280,7 @@
 "mx" = (
 /obj/machinery/ore_silo,
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "mL" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -311,7 +311,7 @@
 	pixel_x = 26
 	},
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "om" = (
 /obj/effect/turf_decal/tile/brown/half{
 	dir = 1
@@ -346,7 +346,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "oP" = (
 /obj/effect/turf_decal/tile/brown/half,
 /turf/open/floor/iron/dark,
@@ -447,7 +447,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "tu" = (
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -496,13 +496,13 @@
 "uF" = (
 /obj/machinery/autolathe,
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "uQ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "vd" = (
 /obj/effect/turf_decal/tile/blue/half{
 	dir = 4
@@ -813,10 +813,10 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "IH" = (
 /turf/closed/wall,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "JH" = (
 /turf/open/floor/carpet/nanoweave/red,
 /area/station/commons/dorms)

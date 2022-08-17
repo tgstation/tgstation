@@ -27,7 +27,7 @@
 /obj/item/assembly/signaler,
 /obj/item/assembly/signaler,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "bv" = (
 /obj/structure/rack,
 /obj/item/pipe_dispenser,
@@ -46,7 +46,7 @@
 /obj/item/assembly/infra,
 /obj/item/assembly/infra,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "cH" = (
 /obj/machinery/chem_dispenser,
 /obj/machinery/light/small,
@@ -67,7 +67,7 @@
 /obj/item/assembly/prox_sensor,
 /obj/item/assembly/prox_sensor,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "eo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -79,7 +79,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "fo" = (
 /turf/template_noop,
 /area/template_noop)
@@ -135,7 +135,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "hC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -159,7 +159,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "kv" = (
 /obj/structure/window/reinforced,
 /obj/structure/rack,
@@ -168,13 +168,13 @@
 /obj/item/assembly/signaler,
 /obj/item/assembly/signaler,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "lD" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "lH" = (
 /obj/machinery/power/smes/engineering{
 	dir = 4
@@ -283,10 +283,10 @@
 	},
 /obj/machinery/light/small,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "rx" = (
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "rK" = (
 /obj/structure/table/reinforced,
 /obj/machinery/syndicatebomb/empty,
@@ -319,7 +319,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "tk" = (
 /obj/machinery/autolathe,
 /obj/item/stack/sheet/iron/fifty,
@@ -449,7 +449,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "yA" = (
 /turf/closed/wall,
 /area/station/medical)
@@ -462,7 +462,7 @@
 "yY" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "zg" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
 /turf/open/floor/plating,
@@ -535,7 +535,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "DZ" = (
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/window/reinforced/spawner/north,
@@ -545,7 +545,7 @@
 /obj/item/assembly/igniter,
 /obj/item/assembly/igniter,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Ep" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -583,19 +583,19 @@
 /obj/item/assembly/mousetrap,
 /obj/item/assembly/mousetrap,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Ga" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Gn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Gp" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -659,7 +659,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Lb" = (
 /obj/item/food/canned/beans{
 	pixel_x = -5;
@@ -730,7 +730,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "MQ" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
@@ -766,7 +766,7 @@
 /obj/structure/cable,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "Ob" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 9
@@ -796,7 +796,7 @@
 /obj/item/assembly/timer,
 /obj/item/assembly/timer,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "PP" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/heater,
 /turf/open/floor/iron,

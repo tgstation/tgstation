@@ -237,7 +237,7 @@
 /obj/item/construction/plumbing,
 /obj/item/clothing/suit/hooded/wintercoat/engineering,
 /obj/item/pipe_dispenser,
-/obj/item/clothing/head/beret/chem,
+/obj/item/clothing/head/beret/medical,
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/storage/belt{
 	pixel_x = -5;

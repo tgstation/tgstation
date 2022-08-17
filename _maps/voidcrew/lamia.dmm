@@ -360,7 +360,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "bB" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -381,14 +381,14 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "bD" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "bF" = (
 /obj/machinery/computer/cryopod{
 	pixel_y = 27
@@ -458,7 +458,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "bK" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate/engineering,
@@ -475,7 +475,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "bL" = (
 /obj/machinery/light/small{
 	brightness = 3;
@@ -524,7 +524,7 @@
 /obj/machinery/airalarm/directional/west,
 /obj/structure/window/reinforced/survival_pod,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "bQ" = (
 /obj/effect/turf_decal/stripes,
 /obj/structure/cable,
@@ -532,7 +532,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/window/survival_pod,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "bR" = (
 /obj/item/bedsheet/wiz,
 /obj/structure/bed,
@@ -1048,7 +1048,7 @@
 /area/station/commons/canteen)
 "wj" = (
 /turf/closed/wall/mineral/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "wq" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -1435,7 +1435,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "MX" = (
 /obj/structure/sign/poster/random,
 /turf/closed/wall/mineral/iron,
@@ -1524,7 +1524,7 @@
 /obj/item/radio,
 /obj/structure/window/reinforced/survival_pod,
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 "PT" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile{
@@ -1774,7 +1774,7 @@
 	pixel_x = -9
 	},
 /turf/open/floor/iron,
-/area/station/storage)
+/area/station/commons/storage/primary)
 
 (1,1,1) = {"
 No
