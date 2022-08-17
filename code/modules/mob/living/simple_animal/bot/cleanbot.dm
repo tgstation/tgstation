@@ -374,7 +374,7 @@
 		target = null
 
 	else if(bot_cover_flags & BOT_COVER_EMAGGED) //Emag functions
-		if(istype(A, /mob/living/carbon))
+		if(iscarbon(A))
 			var/mob/living/carbon/victim = A
 			if(victim.stat == DEAD)//cleanbots always finish the job
 				return

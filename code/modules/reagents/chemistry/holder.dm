@@ -470,7 +470,7 @@
 		R = target
 		target_atom = R.my_atom
 	else
-		if(!ignore_stomach && (methods & INGEST) && istype(target, /mob/living/carbon))
+		if(!ignore_stomach && (methods & INGEST) && iscarbon(target))
 			var/mob/living/carbon/eater = target
 			var/obj/item/organ/internal/stomach/belly = eater.getorganslot(ORGAN_SLOT_STOMACH)
 			if(!belly)
