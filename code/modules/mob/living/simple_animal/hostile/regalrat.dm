@@ -93,7 +93,7 @@
 /mob/living/simple_animal/hostile/regalrat/CanAttack(atom/the_target)
 	if(istype(the_target,/mob/living/simple_animal))
 		var/mob/living/A = the_target
-		if(istype(the_target, /mob/living/simple_animal/hostile/regalrat) && A.stat == CONSCIOUS)
+		if(isregalrat(the_target) && A.stat == CONSCIOUS)
 			return TRUE
 		if(israt(the_target) && A.stat == CONSCIOUS)
 			var/mob/living/simple_animal/hostile/rat/R = the_target
@@ -346,7 +346,7 @@
 /mob/living/simple_animal/hostile/rat/CanAttack(atom/the_target)
 	if(istype(the_target,/mob/living/simple_animal))
 		var/mob/living/A = the_target
-		if(istype(the_target, /mob/living/simple_animal/hostile/regalrat) && A.stat == CONSCIOUS)
+		if(isregalrat(the_target) && A.stat == CONSCIOUS)
 			var/mob/living/simple_animal/hostile/regalrat/ratking = the_target
 			if(ratking.faction_check_mob(src, TRUE))
 				return FALSE
