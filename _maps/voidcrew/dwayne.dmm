@@ -1422,7 +1422,6 @@
 /area/station/cargo)
 "NY" = (
 /obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/yellow/border{
 	dir = 8

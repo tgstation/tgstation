@@ -1781,7 +1781,6 @@
 /obj/effect/turf_decal/stripes{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/machinery/power/terminal{
 	dir = 8
 	},

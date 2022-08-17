@@ -700,7 +700,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "Mo" = (
-/obj/structure/cable,
 /obj/machinery/power/terminal{
 	dir = 8
 	},

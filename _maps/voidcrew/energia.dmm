@@ -577,7 +577,6 @@
 /area/station/engineering/engine)
 "yK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
-/obj/structure/cable,
 /obj/machinery/power/terminal,
 /obj/machinery/power/port_gen/pacman,
 /obj/structure/cable,
