@@ -1,7 +1,7 @@
-/datum/map_template/shuttle/voidcrew/energia
-	name = "Energia-class Experimental Vessel"
-	suffix = "energia"
-	short_name = "Energia-class"
+/datum/map_template/shuttle/voidcrew/meta
+	name = "Meta-class Freighter"
+	suffix = "meta"
+	short_name = "Meta-Class"
 
 	job_slots = list(
 		list(
@@ -11,23 +11,28 @@
 			slots = 1,
 		),
 		list(
+			name = "Quartermaster",
+			outfit = /datum/outfit/job/quartermaster,
+			slots = 1,
+		),
+		list(
 			name = "Medical Doctor",
 			outfit = /datum/outfit/job/doctor,
-			slots = 2,
+			slots = 1,
 		),
 		list(
 			name = "Station Engineer",
-			outfit = /datum/outfit/job/engineer/western,
-			slots = 2,
+			outfit = /datum/outfit/job/engineer,
+			slots = 1,
 		),
 		list(
 			name = "Shaft Miner",
-			outfit = /datum/outfit/job/miner/western,
-			slots = 3,
+			outfit = /datum/outfit/job/miner,
+			slots = 2,
 		),
 		list(
 			name = "Assistant",
 			outfit = /datum/outfit/job/assistant,
-			slots = 2,
+			slots = 3,
 		),
 	)

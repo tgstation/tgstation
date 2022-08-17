@@ -1,7 +1,7 @@
-/datum/map_template/shuttle/voidcrew/dawyne
-	name = "Dwayne-class Long Range Mining Transport"
-	suffix = "dwayne"
-	short_name = "Dwayne-class"
+/datum/map_template/shuttle/voidcrew/kilo
+	name = "Kilo-class Mining Ship"
+	suffix = "kilo"
+	short_name = "Kilo-Class"
 
 	job_slots = list(
 		list(
@@ -16,12 +16,12 @@
 			slots = 1,
 		),
 		list(
-			name = "Medical Doctor",
+			name = "Ship's Doctor",
 			outfit = /datum/outfit/job/doctor,
-			slots = 1,
+			slots = 2,
 		),
 		list(
-			name = "Station Engineer",
+			name = "Ship's Engineer",
 			outfit = /datum/outfit/job/engineer/western,
 			slots = 1,
 		),
@@ -33,6 +33,6 @@
 		list(
 			name = "Deckhand",
 			outfit = /datum/outfit/job/assistant,
-			slots = 3,
+			slots = 2,
 		),
 	)

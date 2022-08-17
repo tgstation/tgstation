@@ -12,10 +12,9 @@
 /datum/outfit/job/quartermaster/corporate
 	name = "Quartermaster (Corporate)"
 
-	uniform = /obj/item/clothing/under/suit/qm
 	suit = /obj/item/clothing/suit/toggle/lawyer/black
 	shoes = /obj/item/clothing/shoes/laceup
-	neck = /obj/item/clothing/neck/tie/brown
+	neck = /obj/item/clothing/neck/tie/horrible
 	head = /obj/item/clothing/head/beret/cargo
 
 /datum/outfit/job/security/corporate
@@ -23,8 +22,8 @@
 
 	shoes = /obj/item/clothing/shoes/jackboots
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
-	head = /obj/item/clothing/head/beret/sec/officer
-	suit = /obj/item/clothing/suit/armor/vest/security/officer
+	head = /obj/item/clothing/head/beret/sec/navyofficer
+	suit = /obj/item/clothing/suit/armor/vest/marine/security
 
 /datum/outfit/job/engineer/corporate
 	name = "Station Engineer (Corporate)"

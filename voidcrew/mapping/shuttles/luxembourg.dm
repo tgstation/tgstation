@@ -1,19 +1,19 @@
-/datum/map_template/shuttle/voidcrew/goon
-	name = "Goon-class Repurposed Emergency Shuttle"
-	suffix = "goon"
-	short_name = "Goon-class"
+/datum/map_template/shuttle/voidcrew/luxembourg
+	name = "Luxembourg-class Delivery Vessel"
+	suffix = "luxembourg"
+	short_name = "Luxembourg-Class"
 
 	job_slots = list(
 		list(
-			name = "Captain",
+			name = "Quartermaster",
 			officer = TRUE,
-			outfit = /datum/outfit/job/captain,
+			outfit = /datum/outfit/job/quartermaster,
 			slots = 1,
 		),
 		list(
-			name = "Shaft Miner",
-			outfit = /datum/outfit/job/miner,
-			slots = 1,
+			name = "Cargo Technician",
+			outfit = /datum/outfit/job/cargo_tech,
+			slots = 2,
 		),
 		list(
 			name = "Station Engineer",
@@ -23,6 +23,11 @@
 		list(
 			name = "Atmospherics Technician",
 			outfit = /datum/outfit/job/atmos,
+			slots = 1,
+		),
+		list(
+			name = "Bartender",
+			outfit = /datum/outfit/job/bartender,
 			slots = 1,
 		),
 		list(

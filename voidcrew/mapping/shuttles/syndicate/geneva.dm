@@ -22,7 +22,7 @@
 		),
 		list(
 			name = "Station Engineer",
-			outfit = /datum/outfit/job/engineer/gec,
+			outfit = /datum/outfit/job/engineer/syndicate,
 			slots = 2,
 		),
 		list(
@@ -31,7 +31,7 @@
 			slots = 2,
 		),
 		list(
-			name = "Paramedic"
+			name = "Paramedic",
 			outfit = /datum/outfit/job/paramedic/syndicate/gorlex,
 			slots = 1,
 		),
