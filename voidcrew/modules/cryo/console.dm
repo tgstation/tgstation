@@ -18,6 +18,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	name = "cryogenic oversight console"
 	desc = "An interface between crew and the cryogenic storage oversight systems."
 	icon = 'voidcrew/modules/cryo/icons/cryogenic.dmi'
+	icon_keyboard = null
 	icon_state = "cellconsole_1"
 	// circuit = /obj/item/circuitboard/cryopodcontrol
 	density = FALSE
