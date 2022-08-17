@@ -370,7 +370,7 @@
 
 	if(payees[AM] < threshold) //Suggestions for those with no arms/simple animals.
 		var/armless
-		if(!ishuman(AM) && !istype(AM, /mob/living/simple_animal/slime))
+		if(!ishuman(AM) && !isslime(AM))
 			armless = TRUE
 		else
 			var/mob/living/carbon/human/H = AM
