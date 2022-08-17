@@ -223,7 +223,7 @@ SUBSYSTEM_DEF(points_of_interest)
 
 /// Priority list broadly stolen from /proc/sortmobs. Lower numbers are higher priorities when sorted and appear closer to the top or start of lists.
 /datum/point_of_interest/mob_poi/proc/get_type_sort_priority()
-	if(istype(target, /mob/living/silicon/ai))
+	if(isAI(target))
 		return 0
 	if(istype(target, /mob/camera))
 		return 1

@@ -86,7 +86,7 @@
 	if(iscyborg(src))
 		modularInterface.saved_job = "Cyborg"
 		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/robot)
-	if(istype(src, /mob/living/silicon/ai))
+	if(isAI(src))
 		modularInterface.saved_job = "AI"
 		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/ai)
 	if(istype(src, /mob/living/silicon/pai))
