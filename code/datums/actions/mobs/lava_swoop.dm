@@ -149,7 +149,7 @@
 		drakewalls += new /obj/effect/temp_visual/drakewall(T) // no people with lava immunity can just run away from the attack for free
 	var/list/indestructible_turfs = list()
 	for(var/turf/T in RANGE_TURFS(2, center))
-		if(istype(T, /turf/open/indestructible))
+		if(isindestructiblefloor(T))
 			continue
 		if(!istype(T, /turf/closed/indestructible))
 			T.ChangeTurf(/turf/open/misc/asteroid/basalt/lava_land_surface, flags = CHANGETURF_INHERIT_AIR)
