@@ -239,7 +239,7 @@ SUBSYSTEM_DEF(points_of_interest)
 		return 6
 	if(isobserver(target))
 		return 7
-	if(istype(target, /mob/dead/new_player))
+	if(isnewplayer(target))
 		return 8
 	if(isslime(target))
 		return 9
