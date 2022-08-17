@@ -366,7 +366,7 @@
 		playsound(src, 'sound/effects/spray2.ogg', 50, TRUE, -6)
 		A.acid_act(75, 10)
 		target = null
-	else if(istype(A, /mob/living/basic/cockroach) || istype(A, /mob/living/simple_animal/mouse))
+	else if(istype(A, /mob/living/basic/cockroach) || ismouse(A))
 		var/mob/living/living_target = A
 		if(!living_target.stat)
 			visible_message(span_danger("[src] smashes [living_target] with its mop!"))
