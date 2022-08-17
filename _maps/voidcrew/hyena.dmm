@@ -374,7 +374,6 @@
 /turf/open/floor/carpet/black,
 /area/station/command/bridge)
 "hy" = (
-/obj/structure/lattice,
 /obj/structure/sign/number/eight{
 	dir = 1
 	},
@@ -758,7 +757,6 @@
 /turf/open/floor/plasteel/tech,
 /area/station/cargo)
 "oO" = (
-/obj/structure/lattice,
 /turf/closed/wall/mineral/plastitanium,
 /area/station/maintenance/fore)
 "oR" = (
@@ -2477,7 +2475,6 @@
 /turf/open/floor/plasteel/tech,
 /area/station/cargo)
 "TY" = (
-/obj/structure/lattice,
 /obj/structure/sign/number/four{
 	dir = 1
 	},
@@ -2798,7 +2795,6 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/station/maintenance/fore)
 "Yf" = (
-/obj/structure/lattice,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/station/maintenance/fore)
 "Yv" = (
