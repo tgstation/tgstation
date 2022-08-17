@@ -69,7 +69,7 @@
 	return
 
 /obj/machinery/computer/prisoner/management/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/card/id))
+	if(isidcard(I))
 		if(screen)
 			id_insert(user)
 		else

@@ -263,7 +263,7 @@
 	var/points = 500
 
 /obj/item/card/mining_point_card/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/card/id))
+	if(isidcard(I))
 		if(points)
 			var/obj/item/card/id/C = I
 			C.mining_points += points

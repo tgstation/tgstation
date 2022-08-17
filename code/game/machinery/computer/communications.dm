@@ -110,7 +110,7 @@
 	return authenticated
 
 /obj/machinery/computer/communications/attackby(obj/I, mob/user, params)
-	if(istype(I, /obj/item/card/id))
+	if(isidcard(I))
 		attack_hand(user)
 	else
 		return ..()
