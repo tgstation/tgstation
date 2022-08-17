@@ -526,7 +526,7 @@
 /mob/living/simple_animal/extinguish_mob()
 	if(!flammable)
 		return
-	. = ..()
+	return ..()
 
 /mob/living/simple_animal/revive(full_heal = FALSE, admin_revive = FALSE)
 	. = ..()
