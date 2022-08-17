@@ -225,7 +225,7 @@ SUBSYSTEM_DEF(points_of_interest)
 /datum/point_of_interest/mob_poi/proc/get_type_sort_priority()
 	if(isAI(target))
 		return 0
-	if(istype(target, /mob/camera))
+	if(iscameramob(target))
 		return 1
 	if(ispAI(target))
 		return 2
