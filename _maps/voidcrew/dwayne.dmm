@@ -153,7 +153,6 @@
 /area/station/command/bridge)
 "fy" = (
 /turf/open/floor/catwalk_floor,
-/turf/template_noop,
 /area/station/external)
 "fV" = (
 /obj/machinery/door/poddoor/preopen{
@@ -554,7 +553,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/catwalk_floor,
 /obj/effect/landmark/start/station_engineer,
-/turf/open/floor/plating,
 /area/station/engineering)
 "or" = (
 /obj/effect/turf_decal/stripes{
@@ -574,7 +572,6 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating,
 /area/station/commons)
 "pq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -936,7 +933,6 @@
 /turf/closed/wall,
 /area/station/medical)
 "zq" = (
-/turf/open/floor/catwalk_floor,
 /obj/machinery/atmospherics/components/unary/outlet_injector/on/layer4{
 	dir = 1
 	},

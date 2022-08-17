@@ -2331,7 +2331,6 @@
 "OT" = (
 /turf/open/floor/catwalk_floor,
 /obj/machinery/light/floor,
-/turf/template_noop,
 /area/station/external)
 "Pj" = (
 /obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped{
@@ -2650,7 +2649,6 @@
 /area/station/commons/dorms)
 "We" = (
 /turf/open/floor/catwalk_floor,
-/turf/template_noop,
 /area/station/external)
 "Ww" = (
 /obj/machinery/power/port_gen/pacman,

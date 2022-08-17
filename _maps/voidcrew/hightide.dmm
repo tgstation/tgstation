@@ -186,12 +186,11 @@
 /turf/open/floor/plating,
 /area/station/cargo)
 "io" = (
-/turf/open/floor/catwalk_floor,
 /obj/item/toy/plush/among,
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space)
 "iS" = (
 /obj/machinery/door/airlock/maintenance_hatch,
