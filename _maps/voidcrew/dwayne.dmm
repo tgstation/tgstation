@@ -767,12 +767,12 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/clothing/head/hardhat/mining{
+/obj/item/clothing/head/hardhat/orange{
 	pixel_x = -4;
 	pixel_y = -4
 	},
-/obj/item/clothing/head/hardhat/mining,
-/obj/item/clothing/head/hardhat/mining{
+/obj/item/clothing/head/hardhat/orange,
+/obj/item/clothing/head/hardhat/orange{
 	pixel_x = 4;
 	pixel_y = 4
 	},
@@ -1357,7 +1357,7 @@
 /area/station/command/bridge)
 "JH" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/head/hardhat/mining{
+/obj/item/clothing/head/hardhat/orange{
 	pixel_x = -18;
 	pixel_y = 8
 	},
@@ -1501,7 +1501,7 @@
 /area/station/command/bridge)
 "NN" = (
 /obj/structure/closet/crate/engineering,
-/obj/item/stack/sheet/metal/twenty,
+/obj/item/stack/sheet/iron/twenty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/effect/turf_decal/box,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,

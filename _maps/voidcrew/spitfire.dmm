@@ -94,7 +94,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/dorms)
 "fF" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -190,7 +190,7 @@
 /obj/machinery/computer/cryopod{
 	pixel_y = 26
 	},
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/dorms)
 "jt" = (
 /obj/machinery/plumbing/synthesizer,
@@ -206,7 +206,7 @@
 "ku" = (
 /obj/structure/table/wood,
 /obj/item/toy/prize/mauler,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/dorms)
 "kE" = (
 /obj/effect/turf_decal/tile/blue/half{
@@ -268,7 +268,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/holopad,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/dorms)
 "lV" = (
 /obj/structure/cable,
@@ -438,7 +438,7 @@
 "td" = (
 /obj/structure/table/wood,
 /obj/item/toy/plush/nukeplushie,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/dorms)
 "tl" = (
 /obj/structure/table/reinforced,
@@ -487,7 +487,7 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/dorms)
 "uD" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -523,7 +523,7 @@
 /obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/dorms)
 "vY" = (
 /obj/effect/turf_decal/tile/blue/half{
@@ -658,7 +658,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/dorms)
 "Dp" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -731,7 +731,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/dorms)
 "Gj" = (
 /turf/template_noop,
@@ -740,7 +740,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/dorms)
 "Hp" = (
 /obj/structure/table/glass,
@@ -797,7 +797,7 @@
 /area/station/medical)
 "In" = (
 /obj/machinery/camera/directional/north,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/dorms)
 "It" = (
 /obj/structure/closet/secure_closet/medical3,
@@ -818,7 +818,7 @@
 /turf/closed/wall,
 /area/station/commons/storage/primary)
 "JH" = (
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/dorms)
 "Kj" = (
 /obj/structure/closet/cabinet,
@@ -838,7 +838,7 @@
 /obj/item/clothing/under/syndicate/tacticool,
 /obj/item/clothing/under/syndicate/tacticool,
 /obj/item/clothing/under/syndicate/tacticool,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/dorms)
 "Ks" = (
 /obj/machinery/door/window/survival_pod,
@@ -872,7 +872,7 @@
 /obj/structure/bed/pod,
 /obj/item/bedsheet/syndie,
 /obj/structure/curtain/bounty,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/dorms)
 "Lw" = (
 /obj/structure/chair/comfy/shuttle{
@@ -887,7 +887,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/dorms)
 "Mg" = (
 /obj/machinery/door/airlock/medical/glass,
@@ -1099,7 +1099,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/dorms)
 "Vn" = (
 /obj/structure/cable,

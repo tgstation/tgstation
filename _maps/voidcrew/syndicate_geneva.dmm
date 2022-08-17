@@ -10,7 +10,7 @@
 /area/station/commons/office)
 "am" = (
 /obj/machinery/computer/crew,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/command/bridge)
 "an" = (
 /obj/structure/table/reinforced,
@@ -18,7 +18,7 @@
 	dir = 8
 	},
 /obj/item/radio/intercom,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/command/bridge)
 "aq" = (
 /obj/effect/turf_decal/tile/bottlegreen{
@@ -69,7 +69,7 @@
 	id = "spitfireshutters";
 	pixel_x = 25
 	},
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/command/bridge)
 "bK" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -95,7 +95,7 @@
 	pixel_x = -24
 	},
 /obj/item/areaeditor,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/command/bridge)
 "cB" = (
 /turf/closed/wall,
@@ -116,13 +116,13 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/command/bridge)
 "cQ" = (
 /obj/machinery/cryopod{
 	dir = 1
 	},
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/dorms)
 "cW" = (
 /obj/item/kirbyplants/random,
@@ -186,7 +186,7 @@
 	dir = 4;
 	pixel_x = -24
 	},
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/dorms)
 "dz" = (
 /obj/effect/turf_decal/tile/bottlegreen/anticorner{
@@ -214,7 +214,7 @@
 /obj/item/clothing/under/syndicate/bloodred/sleepytime,
 /obj/item/clothing/under/syndicate/bloodred/sleepytime,
 /obj/item/clothing/under/syndicate/bloodred/sleepytime,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/dorms)
 "dW" = (
 /obj/machinery/vending/hydroseeds{
@@ -298,7 +298,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/dorms)
 "fF" = (
 /obj/effect/turf_decal/tile/bottlegreen{
@@ -328,28 +328,28 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/dorms)
 "gA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/dorms)
 "gC" = (
 /mob/living/simple_animal/bot/secbot/grievous/toy{
 	name = "Protector of Doctors"
 	},
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/dorms)
 "gR" = (
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/dorms)
 "gW" = (
 /obj/structure/bed/pod,
 /obj/item/bedsheet/syndie,
 /obj/machinery/airalarm/directional/north,
 /obj/item/toy/plush/nukeplushie,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/dorms)
 "hy" = (
 /obj/machinery/seed_extractor,
@@ -374,7 +374,7 @@
 /obj/machinery/computer/cryopod{
 	pixel_y = 26
 	},
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/dorms)
 "iQ" = (
 /obj/machinery/vending/hydronutrients{
@@ -422,7 +422,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/command/bridge)
 "ju" = (
 /obj/item/kirbyplants/random,
@@ -454,7 +454,7 @@
 "ka" = (
 /obj/structure/table/wood,
 /obj/machinery/microwave,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/dorms)
 "kq" = (
 /obj/structure/table/wood,
@@ -465,17 +465,17 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/dorms)
 "kx" = (
 /obj/machinery/light,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/dorms)
 "kG" = (
 /obj/structure/bed/pod,
 /obj/item/bedsheet/syndie,
 /obj/item/toy/plush/nukeplushie,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/dorms)
 "kM" = (
 /obj/machinery/power/port_gen/pacman,
@@ -530,7 +530,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/holopad,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/command/bridge)
 "mz" = (
 /obj/effect/turf_decal/tile/bottlegreen/full,
@@ -548,12 +548,12 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/command/bridge)
 "mR" = (
 /obj/structure/table/wood,
 /obj/structure/bedsheetbin/empty,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/dorms)
 "mX" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -757,7 +757,7 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/machinery/autolathe,
 /obj/machinery/airalarm/directional/south,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/command/bridge)
 "qm" = (
 /obj/effect/turf_decal/tile/red{
@@ -883,7 +883,7 @@
 /area/station/medical)
 "tZ" = (
 /obj/machinery/computer/autopilot,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/command/bridge)
 "uC" = (
 /obj/item/kirbyplants/random,
@@ -1283,7 +1283,7 @@
 /area/station/medical/surgery)
 "Bu" = (
 /obj/machinery/computer/helm,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/command/bridge)
 "BD" = (
 /obj/structure/rack,
@@ -1630,7 +1630,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/command/bridge)
 "ME" = (
 /obj/effect/spawner/structure/window,
@@ -1658,7 +1658,7 @@
 /area/station/commons/library)
 "SI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/dorms)
 "SR" = (
 /obj/effect/spawner/structure/window/reinforced,

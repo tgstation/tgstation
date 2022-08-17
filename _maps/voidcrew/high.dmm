@@ -21,7 +21,7 @@
 	id = "corpseclockdown"
 	},
 /obj/machinery/recharger,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/security)
 "aN" = (
 /obj/effect/spawner/structure/window/plasma/reinforced/shutters,
@@ -286,7 +286,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/security)
 "eM" = (
 /obj/structure/table/reinforced,
@@ -438,7 +438,7 @@
 /obj/item/clothing/suit/armor/vest/security/officer,
 /obj/item/clothing/head/beret/sec,
 /obj/item/reagent_containers/spray/pepper,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/security)
 "hD" = (
 /obj/structure/railing,
@@ -801,7 +801,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/security)
 "oL" = (
 /turf/closed/wall/r_wall,
@@ -1128,7 +1128,7 @@
 	pixel_x = 32;
 	pixel_y = -10
 	},
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/security)
 "tK" = (
 /obj/structure/sign/poster/official/no_erp{
@@ -1456,7 +1456,7 @@
 	pixel_x = -37;
 	pixel_y = 32
 	},
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/security)
 "yY" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste{
@@ -1493,7 +1493,7 @@
 /area/station/commons/chapel/office)
 "zs" = (
 /obj/machinery/vending/security,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/security)
 "Ac" = (
 /obj/structure/table/wood,
@@ -1699,7 +1699,7 @@
 /obj/item/reagent_containers/cup/glass/mug{
 	pixel_x = 8
 	},
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/security)
 "CT" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -1883,7 +1883,7 @@
 /area/station/command/bridge)
 "Gr" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/security)
 "Gy" = (
 /obj/machinery/door/airlock/wood,
@@ -2407,7 +2407,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 4
 	},
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/security)
 "NB" = (
 /obj/effect/turf_decal/bot,
@@ -2625,7 +2625,7 @@
 /turf/closed/wall/r_wall,
 /area/station/engineering)
 "Rx" = (
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/security)
 "Ry" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -2806,7 +2806,7 @@
 /area/station/commons/dorms)
 "Vv" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/security)
 "Vw" = (
 /obj/machinery/computer/helm,
@@ -2911,7 +2911,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 9
 	},
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/security)
 "XL" = (
 /obj/structure/cable,
@@ -2967,7 +2967,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 9
 	},
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/security)
 "YH" = (
 /obj/effect/spawner/structure/window/reinforced,

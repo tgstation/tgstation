@@ -7,7 +7,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4
 	},
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/storage/primary)
 "b" = (
 /obj/structure/cable,
@@ -35,7 +35,7 @@
 /obj/machinery/computer/cryopod{
 	pixel_y = 8
 	},
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/storage/primary)
 "c" = (
 /obj/item/pickaxe/drill,
@@ -91,7 +91,7 @@
 /obj/item/storage/toolbox/mechanical/old,
 /obj/item/storage/box/stockparts/basic,
 /obj/item/circuitboard/machine/autolathe,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/commons/storage/primary)
 
 (1,1,1) = {"

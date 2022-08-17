@@ -174,7 +174,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "aL" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -196,21 +196,21 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/carpet/purple,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "aP" = (
 /turf/open/floor/carpet/purple,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "aR" = (
 /obj/machinery/vending/coffee,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "aS" = (
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/station/commons/canteen/kitchen)
+/area/station/service/cafeteria/kitchen)
 "aT" = (
 /obj/structure/frame/machine,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -235,11 +235,11 @@
 	name = "HoochMaster 3000"
 	},
 /turf/open/floor/carpet/purple,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "aY" = (
 /obj/structure/chair/stool/bar/directional/west,
 /turf/open/floor/wood,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "aZ" = (
 /obj/structure/table,
 /obj/item/shovel/spoon{
@@ -247,14 +247,14 @@
 	name = "staff of sustenance"
 	},
 /turf/open/floor/wood,
-/area/station/commons/canteen/kitchen)
+/area/station/service/cafeteria/kitchen)
 "ba" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder{
 	pixel_y = 7
 	},
 /turf/open/floor/wood,
-/area/station/commons/canteen/kitchen)
+/area/station/service/cafeteria/kitchen)
 "bb" = (
 /obj/structure/frame/computer,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -284,7 +284,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/commons/canteen/kitchen)
+/area/station/service/cafeteria/kitchen)
 "bh" = (
 /obj/structure/table,
 /obj/machinery/microwave{
@@ -293,7 +293,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/commons/canteen/kitchen)
+/area/station/service/cafeteria/kitchen)
 "bi" = (
 /obj/effect/decal/cleanable/blood/gibs/up,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -302,11 +302,11 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/station/commons/canteen/kitchen)
+/area/station/service/cafeteria/kitchen)
 "bl" = (
 /obj/effect/decal/cleanable/blood/gibs/down,
 /turf/open/floor/wood,
-/area/station/commons/canteen/kitchen)
+/area/station/service/cafeteria/kitchen)
 "bm" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/trash/candle,
@@ -328,26 +328,26 @@
 "bo" = (
 /obj/machinery/vending/boozeomat/all_access,
 /turf/open/floor/carpet/purple,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "bp" = (
 /obj/machinery/light,
 /obj/item/radio/intercom{
 	pixel_y = -31
 	},
 /turf/open/floor/carpet/purple,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "bq" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/wood,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "bs" = (
 /obj/machinery/vending/dinnerware,
 /turf/open/floor/wood,
-/area/station/commons/canteen/kitchen)
+/area/station/service/cafeteria/kitchen)
 "bu" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /turf/open/floor/wood,
-/area/station/commons/canteen/kitchen)
+/area/station/service/cafeteria/kitchen)
 "by" = (
 /turf/open/floor/carpet/royalblue,
 /area/station/hallway/aft)
@@ -674,12 +674,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "cA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/station/commons/canteen/kitchen)
+/area/station/service/cafeteria/kitchen)
 "cD" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -697,10 +697,10 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "dH" = (
 /turf/open/floor/wood,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "ee" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/closed/wall/mineral/iron,
@@ -792,7 +792,7 @@
 "iu" = (
 /obj/structure/sign/poster/contraband/shamblers_juice,
 /turf/closed/wall/mineral/iron,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "iT" = (
 /obj/structure/bookcase/random/reference,
 /turf/open/floor/carpet/orange,
@@ -803,7 +803,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "je" = (
 /obj/effect/decal/cleanable/vomit/old,
 /obj/structure/cable,
@@ -814,14 +814,14 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "jA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/commons/canteen/kitchen)
+/area/station/service/cafeteria/kitchen)
 "jC" = (
 /turf/closed/wall/mineral/iron,
 /area/station/maintenance/aft)
@@ -882,17 +882,17 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/station/commons/canteen/kitchen)
+/area/station/service/cafeteria/kitchen)
 "nQ" = (
 /obj/structure/table/wood/fancy/purple,
 /obj/item/clothing/head/collectable/wizard{
 	pixel_y = 3
 	},
 /turf/open/floor/carpet/purple,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "oz" = (
 /turf/open/floor/wood,
-/area/station/commons/canteen/kitchen)
+/area/station/service/cafeteria/kitchen)
 "oB" = (
 /obj/structure/frame/machine,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -978,12 +978,12 @@
 	},
 /obj/structure/table/wood/fancy/purple,
 /turf/open/floor/carpet/purple,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "rg" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
 /obj/item/reagent_containers/condiment/enzyme,
 /turf/open/floor/wood,
-/area/station/commons/canteen/kitchen)
+/area/station/service/cafeteria/kitchen)
 "rh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small,
@@ -1045,7 +1045,7 @@
 /obj/machinery/jukebox,
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "wj" = (
 /turf/closed/wall/mineral/iron,
 /area/station/commons/storage/primary)
@@ -1066,7 +1066,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "wX" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -1076,11 +1076,11 @@
 "xc" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/wood,
-/area/station/commons/canteen/kitchen)
+/area/station/service/cafeteria/kitchen)
 "zn" = (
 /obj/machinery/processor,
 /turf/open/floor/wood,
-/area/station/commons/canteen/kitchen)
+/area/station/service/cafeteria/kitchen)
 "zA" = (
 /obj/structure/sign/plaques/kiddie/library,
 /turf/closed/wall/mineral/iron,
@@ -1089,7 +1089,7 @@
 /obj/machinery/light,
 /obj/machinery/computer/arcade,
 /turf/open/floor/wood,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "zT" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/trash/candle,
@@ -1116,7 +1116,7 @@
 	},
 /obj/structure/table/wood/fancy/purple,
 /turf/open/floor/carpet/purple,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "Cq" = (
 /obj/structure/sign/poster/official/fruit_bowl,
 /turf/closed/wall/mineral/iron,
@@ -1143,7 +1143,7 @@
 "CH" = (
 /obj/structure/sign/poster/random,
 /turf/closed/wall/mineral/iron,
-/area/station/commons/canteen/kitchen)
+/area/station/service/cafeteria/kitchen)
 "Db" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -1197,7 +1197,7 @@
 "Eu" = (
 /obj/structure/table/wood/fancy/purple,
 /turf/open/floor/carpet/purple,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "Ez" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1214,7 +1214,7 @@
 /obj/structure/chair/stool/bar/directional/west,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/wood,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "Ge" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1224,10 +1224,10 @@
 "Gf" = (
 /obj/effect/decal/cleanable/food/egg_smudge,
 /turf/open/floor/wood,
-/area/station/commons/canteen/kitchen)
+/area/station/service/cafeteria/kitchen)
 "Gh" = (
 /turf/closed/wall/mineral/iron,
-/area/station/commons/canteen/kitchen)
+/area/station/service/cafeteria/kitchen)
 "GA" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -1252,7 +1252,7 @@
 "HS" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/purple,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "HV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
@@ -1327,7 +1327,7 @@
 	pixel_y = -3
 	},
 /turf/open/floor/wood,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "Ke" = (
 /obj/item/trash/popcorn,
 /turf/open/floor/carpet/orange,
@@ -1344,7 +1344,7 @@
 /obj/machinery/airalarm/directional/east,
 /obj/structure/sink/directional/south,
 /turf/open/floor/wood,
-/area/station/commons/canteen/kitchen)
+/area/station/service/cafeteria/kitchen)
 "Kz" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile{
@@ -1391,7 +1391,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "Mf" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1417,14 +1417,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "MA" = (
 /obj/machinery/chem_dispenser/drinks/beer{
 	dir = 4
 	},
 /obj/structure/table/wood/fancy/purple,
 /turf/open/floor/carpet/purple,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "MB" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
@@ -1444,7 +1444,7 @@
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/wood,
-/area/station/commons/canteen/kitchen)
+/area/station/service/cafeteria/kitchen)
 "No" = (
 /turf/template_noop,
 /area/space)
@@ -1470,14 +1470,14 @@
 	},
 /obj/structure/table/wood/fancy/purple,
 /turf/open/floor/carpet/purple,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "NI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "NN" = (
 /obj/structure/bookcase/random,
 /turf/open/floor/carpet/orange,
@@ -1550,7 +1550,7 @@
 	},
 /obj/structure/curtain/cloth/fancy,
 /turf/open/floor/plating,
-/area/station/commons/canteen/kitchen)
+/area/station/service/cafeteria/kitchen)
 "RE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1566,7 +1566,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/commons/canteen/kitchen)
+/area/station/service/cafeteria/kitchen)
 "So" = (
 /turf/closed/wall/mineral/iron,
 /area/station/science)
@@ -1589,7 +1589,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "Tc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/vomit/old,
@@ -1620,7 +1620,7 @@
 "Uu" = (
 /obj/structure/sign/poster/official/ue_no,
 /turf/closed/wall/mineral/iron,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "Va" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
@@ -1633,7 +1633,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "Vy" = (
 /turf/open/floor/wood,
 /area/station/hallway/aft)
@@ -1654,14 +1654,14 @@
 /obj/item/etherealballdeployer,
 /obj/item/storage/belt/bandolier,
 /turf/open/floor/carpet/purple,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "VP" = (
 /obj/item/storage/pill_bottle/dice{
 	icon_state = "magicdicebag";
 	pixel_y = 4
 	},
 /obj/structure/table/wood/fancy/green,
-/obj/item/table_bell/brass{
+/obj/structure/desk_bell/brass{
 	pixel_x = -8
 	},
 /turf/open/floor/carpet/royalblack,
@@ -1700,7 +1700,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/carpet/purple,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "Xm" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1737,7 +1737,7 @@
 /area/station/hallway/primary/central)
 "Yx" = (
 /turf/closed/wall/mineral/iron,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "YD" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
