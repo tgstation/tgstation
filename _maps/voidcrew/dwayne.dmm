@@ -548,7 +548,7 @@
 /turf/open/floor/iron,
 /area/station/cargo)
 "nJ" = (
-/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4,
@@ -928,7 +928,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
-/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/commons)
 "xx" = (

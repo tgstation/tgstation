@@ -377,7 +377,7 @@
 /turf/open/floor/plating,
 /area/station/external)
 "rl" = (
-/obj/machinery/atmospherics/pipe/manifold4w/green/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/engine)

@@ -136,7 +136,7 @@
 /area/station/cargo)
 "bT" = (
 /obj/structure/closet/secure_closet/engineering_electrical,
-/obj/machinery/atmospherics/pipe/manifold4w/orange,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange,
 /turf/open/floor/catwalk_floor,
 /area/station/engineering)
 "bV" = (
@@ -563,7 +563,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
@@ -1022,8 +1022,8 @@
 	},
 /area/station/cargo)
 "mo" = (
-/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/iron{
 	icon_state = "steel"
@@ -1136,7 +1136,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "of" = (
-/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer4{
 	dir = 4
 	},
@@ -3650,7 +3650,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/iron{
 	icon_state = "steel"
@@ -3867,8 +3867,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "XS" = (
-/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/security)
@@ -3995,7 +3995,7 @@
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/station/science)
 "ZE" = (
-/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/blue,
 /area/station/medical)

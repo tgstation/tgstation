@@ -185,7 +185,7 @@
 /turf/open/floor/plating,
 /area/station/commons/dorms)
 "cl" = (
-/obj/machinery/atmospherics/pipe/manifold4w/purple/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/purple/visible,
 /turf/open/floor/plating,
 /area/station/engineering/atmospherics)
 "co" = (
