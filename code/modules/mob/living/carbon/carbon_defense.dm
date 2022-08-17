@@ -59,7 +59,7 @@
 	return TRUE
 
 /mob/living/carbon/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
-	if(!skipcatch && can_catch_item() && istype(AM, /obj/item) && !HAS_TRAIT(AM, TRAIT_UNCATCHABLE) && isturf(AM.loc))
+	if(!skipcatch && can_catch_item() && isitem(AM) && !HAS_TRAIT(AM, TRAIT_UNCATCHABLE) && isturf(AM.loc))
 		var/obj/item/I = AM
 		I.attack_hand(src)
 		if(get_active_held_item() == I) //if our attack_hand() picks up the item...

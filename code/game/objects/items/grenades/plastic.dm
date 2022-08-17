@@ -105,7 +105,7 @@
 
 		moveToNullspace() //Yep
 
-		if(istype(bomb_target, /obj/item)) //your crappy throwing star can't fly so good with a giant brick of c4 on it.
+		if(isitem(bomb_target)) //your crappy throwing star can't fly so good with a giant brick of c4 on it.
 			var/obj/item/thrown_weapon = bomb_target
 			thrown_weapon.throw_speed = max(1, (thrown_weapon.throw_speed - 3))
 			thrown_weapon.throw_range = max(1, (thrown_weapon.throw_range - 3))

@@ -678,7 +678,7 @@ Striking a noncultist, however, will tear their flesh."}
 		to_chat(user, "That doesn't seem to do anything useful.")
 		return
 
-	if(!istype(A, /obj/item))
+	if(!isitem(A))
 		..()
 		to_chat(user, span_warning("\The [src] can only transport items!"))
 		return

@@ -154,7 +154,7 @@
 			return spec_return
 	var/obj/item/I
 	var/throwpower = 30
-	if(istype(AM, /obj/item))
+	if(isitem(AM))
 		I = AM
 		throwpower = I.throwforce
 		if(I.thrownby == WEAKREF(src)) //No throwing stuff at yourself to trigger hit reactions
