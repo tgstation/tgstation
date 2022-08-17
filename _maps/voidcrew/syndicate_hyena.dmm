@@ -1557,7 +1557,6 @@
 	codes_txt = "patrol;next_patrol=dorms";
 	location = "storage"
 	},
-/turf/open/floor/plating,
 /area/station/commons/storage/primary)
 "BB" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1890,7 +1889,7 @@
 /obj/structure/fans/tiny,
 /obj/machinery/door/poddoor{
 	id = "wreckercargobay";
-	name = "cargo bay exterior blast door"
+	name = "Cargo Bay Exterior Blast Door"
 	},
 /obj/effect/turf_decal/stripes/fulltile,
 /turf/open/floor/plating,
@@ -1939,7 +1938,7 @@
 "KA" = (
 /obj/machinery/door/window/left/directional/north{
 	dir = 2;
-	name = "captain's bunk"
+	name = "Captain's Bunk"
 	},
 /turf/open/floor/carpet/black,
 /area/station/command/bridge)

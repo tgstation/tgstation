@@ -689,7 +689,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 4
 	},
-/turf/open/floor/plating,
 /area/station/engineering/engine)
 "ji" = (
 /obj/machinery/door/airlock/external,
@@ -1627,7 +1626,6 @@
 /area/station/commons/storage/primary)
 "wK" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste,
-/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating/airless,
 /area/station/engineering/atmospherics)
 "wP" = (

@@ -626,7 +626,6 @@
 /obj/machinery/power/smes/engineering,
 /turf/open/floor/catwalk_floor,
 /obj/structure/cable,
-/turf/open/floor/plating,
 /area/station/engineering/engine)
 "eB" = (
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
@@ -5006,7 +5005,6 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /obj/structure/table,
-/turf/open/floor/plating,
 /area/station/engineering/engine)
 "NP" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
@@ -6376,7 +6374,6 @@
 	},
 /turf/open/floor/catwalk_floor,
 /obj/structure/cable,
-/turf/open/floor/plating,
 /area/station/engineering/engine)
 "YK" = (
 /obj/structure/cable,
