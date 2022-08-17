@@ -128,7 +128,7 @@
 	},
 /area/station/commons/dorms)
 "cG" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/mineral/titanium/tiled,
 /area/station/service/cafeteria)
 "cK" = (

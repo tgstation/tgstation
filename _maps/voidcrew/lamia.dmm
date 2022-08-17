@@ -146,11 +146,11 @@
 /turf/open/floor/carpet/royalblack,
 /area/station/hallway/starboard)
 "aF" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/wood,
 /area/station/hallway/primary/central)
 "aG" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/wood,
 /area/station/hallway/primary/central)
 "aI" = (

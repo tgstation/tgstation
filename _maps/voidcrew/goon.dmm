@@ -50,9 +50,6 @@
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/station/command/bridge)
-"cF" = (
-/turf/open/floor/mineral/titanium/yellow,
-/area/station/engineering)
 "cR" = (
 /obj/machinery/light{
 	dir = 4
@@ -115,12 +112,11 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/station/engineering)
 "hg" = (
-/obj/machinery/space_heater,
-/obj/structure/window/reinforced{
-	dir = 8;
-	pixel_y = 2
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 4
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/north,
 /turf/open/floor/plating,
 /area/station/engineering)
 "hh" = (
@@ -128,11 +124,19 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/station/commons)
 "iy" = (
+/obj/structure/table/reinforced,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/storage/bag/ore,
+/obj/item/t_scanner/adv_mining_scanner/lesser,
+/obj/item/t_scanner/adv_mining_scanner/lesser,
+/obj/item/storage/bag/ore,
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/suit_storage_unit/standard_unit,
-/obj/machinery/door/firedoor,
 /turf/open/floor/mineral/titanium/white,
 /area/station/commons)
 "iC" = (
@@ -166,17 +170,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/station/medical)
 "kd" = (
-/obj/machinery/power/terminal{
-	dir = 8
-	},
 /obj/structure/cable,
-/turf/closed/wall/mineral/titanium,
-/area/station/engineering)
-"ku" = (
-/obj/structure/sign/poster/retro/nanotrasen_logo_70s,
-/obj/machinery/door/firedoor,
-/turf/closed/wall/mineral/titanium,
-/area/station/commons)
+/turf/open/floor/mineral/titanium/blue,
+/area/station/medical)
 "lI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -249,20 +245,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/mineral/titanium/yellow,
 /area/station/command/bridge)
-"qL" = (
-/obj/structure/table/reinforced,
-/obj/item/stack/sheet/iron/fifty,
-/obj/item/stack/sheet/iron/fifty,
-/obj/item/stack/sheet/glass/fifty,
-/obj/machinery/door/firedoor,
-/obj/item/pickaxe,
-/obj/item/pickaxe,
-/obj/item/storage/bag/ore,
-/obj/item/t_scanner/adv_mining_scanner/lesser,
-/obj/item/t_scanner/adv_mining_scanner/lesser,
-/obj/item/storage/bag/ore,
-/turf/open/floor/mineral/titanium/white,
-/area/station/commons)
 "ra" = (
 /obj/structure/fans/tiny,
 /obj/machinery/button/door{
@@ -281,7 +263,6 @@
 /area/station/engineering)
 "rX" = (
 /obj/machinery/autolathe,
-/obj/machinery/door/firedoor,
 /turf/open/floor/mineral/titanium/white,
 /area/station/commons)
 "tW" = (
@@ -298,7 +279,6 @@
 /obj/structure/window/reinforced/survival_pod{
 	dir = 4
 	},
-/obj/structure/curtain/cloth,
 /obj/machinery/door/window/survival_pod{
 	dir = 1
 	},
@@ -357,10 +337,6 @@
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall/mineral/titanium,
 /area/station/medical)
-"yi" = (
-/obj/machinery/vending/wallmed,
-/turf/closed/wall/mineral/titanium,
-/area/station/engineering)
 "zf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium/white,
@@ -384,7 +360,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/station/commons)
 "Be" = (
-/obj/machinery/sleeper,
+/obj/structure/closet/secure_closet/medical3,
 /turf/open/floor/mineral/titanium/blue,
 /area/station/medical)
 "Bg" = (
@@ -414,7 +390,6 @@
 	dir = 8;
 	pixel_y = 2
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/purple/hidden,
 /turf/open/floor/mineral/titanium/blue,
 /area/station/medical)
@@ -423,7 +398,6 @@
 /obj/structure/window/reinforced/survival_pod{
 	dir = 4
 	},
-/obj/structure/curtain/cloth,
 /obj/machinery/door/window/survival_pod{
 	dir = 1
 	},
@@ -437,6 +411,8 @@
 	dir = 8
 	},
 /obj/structure/reagent_dispensers/fueltank,
+/obj/structure/cable,
+/obj/machinery/power/terminal,
 /turf/open/floor/mineral/titanium/yellow,
 /area/station/engineering)
 "CW" = (
@@ -450,10 +426,11 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/station/command/bridge)
 "Du" = (
-/obj/structure/closet/secure_closet/medical3,
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	dir = 8
 	},
+/obj/machinery/power/terminal,
+/obj/structure/cable,
 /turf/open/floor/mineral/titanium/blue,
 /area/station/medical)
 "Ea" = (
@@ -479,7 +456,6 @@
 "EJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/firedoor,
 /turf/open/floor/mineral/titanium/white,
 /area/station/commons)
 "ET" = (
@@ -491,7 +467,7 @@
 /turf/open/floor/plating,
 /area/station/command/bridge)
 "HK" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer4,
+/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2,
 /turf/open/floor/plating,
 /area/station/commons)
 "Ia" = (
@@ -537,14 +513,11 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/station/medical)
 "JX" = (
-/obj/machinery/space_heater,
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8;
-	pixel_y = 2
-	},
+/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner,
 /turf/open/floor/plating,
 /area/station/medical)
 "JZ" = (
@@ -564,7 +537,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/firedoor,
 /turf/open/floor/mineral/titanium/purple,
 /area/station/commons)
 "Lr" = (
@@ -625,7 +597,6 @@
 /obj/structure/window/reinforced/survival_pod{
 	dir = 4
 	},
-/obj/structure/curtain/cloth,
 /obj/machinery/door/window/survival_pod{
 	dir = 1
 	},
@@ -657,7 +628,6 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/medical)
 "UT" = (
-/obj/machinery/vending/wallmed,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/engineering)
 "VQ" = (
@@ -666,13 +636,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/purple/visible,
 /turf/open/floor/mineral/titanium/yellow,
 /area/station/engineering)
-"Wh" = (
-/obj/machinery/power/terminal{
-	dir = 8
-	},
-/obj/structure/cable,
-/turf/closed/wall/mineral/titanium,
-/area/station/medical)
 "Wv" = (
 /obj/structure/window/reinforced/survival_pod{
 	dir = 1
@@ -733,7 +696,6 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/station/engineering)
 "Zr" = (
-/obj/structure/cable,
 /obj/structure/table,
 /obj/item/storage/toolbox/electrical{
 	pixel_x = -10;
@@ -768,7 +730,6 @@
 /obj/machinery/mineral/ore_redemption{
 	dir = 8
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/mineral/titanium/white,
 /area/station/commons)
 
@@ -781,7 +742,7 @@ SH
 TR
 TR
 TR
-yi
+TR
 lK
 IZ
 "}
@@ -801,18 +762,18 @@ YC
 (3,1,1) = {"
 Xt
 Du
-bd
+kd
 bd
 bd
 fU
 YI
 pi
-cF
+or
 BV
 xI
 "}
 (4,1,1) = {"
-Wh
+SH
 Bw
 OQ
 Xh
@@ -822,7 +783,7 @@ JZ
 VQ
 Ng
 Zr
-kd
+TR
 "}
 (5,1,1) = {"
 SH
@@ -907,7 +868,7 @@ AP
 IN
 ZQ
 rX
-ku
+TW
 dI
 Wv
 Kx
@@ -933,7 +894,7 @@ IZ
 ra
 TW
 TW
-qL
+TW
 dI
 po
 hh

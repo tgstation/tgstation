@@ -261,7 +261,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/item/gun/energy/kinetic_accelerator,
+/obj/item/gun/energy/recharge/kinetic_accelerator,
 /turf/open/floor/plating,
 /area/station/cargo)
 "bO" = (
@@ -1580,12 +1580,12 @@
 /obj/item/clothing/shoes/cowboy,
 /obj/item/clothing/shoes/cowboy,
 /obj/item/clothing/shoes/cowboy,
-/obj/item/clothing/head/cowboy,
-/obj/item/clothing/head/cowboy,
-/obj/item/clothing/head/cowboy,
-/obj/item/clothing/head/cowboy,
-/obj/item/clothing/head/cowboy,
-/obj/item/clothing/head/cowboy,
+/obj/item/clothing/head/cowboy_hat_brown
+/obj/item/clothing/head/cowboy_hat_brown
+/obj/item/clothing/head/cowboy_hat_brown
+/obj/item/clothing/head/cowboy_hat_brown
+/obj/item/clothing/head/cowboy_hat_brown
+/obj/item/clothing/head/cowboy_hat_brown
 /turf/open/floor/mineral/plastitanium,
 /area/station/commons)
 "NI" = (
@@ -1606,12 +1606,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/obj/item/clothing/under/utility,
-/obj/item/clothing/under/utility,
-/obj/item/clothing/under/utility,
-/obj/item/clothing/under/utility/skirt,
-/obj/item/clothing/under/utility/skirt,
-/obj/item/clothing/under/utility/skirt,
 /obj/item/clothing/suit/hooded/wintercoat/engineering,
 /obj/item/clothing/suit/hooded/wintercoat/engineering,
 /obj/item/clothing/suit/hooded/wintercoat/engineering,

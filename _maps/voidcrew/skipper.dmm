@@ -363,7 +363,7 @@
 /turf/open/floor/iron/dark,
 /area/station/commons/solgov)
 "eN" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "eS" = (
@@ -678,7 +678,7 @@
 /turf/open/floor/carpet/neon/simple/red,
 /area/station/hallway/primary/central)
 "jR" = (
-/obj/effect/turf_decal/tile/blue/mono,
+/obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/white,
 /area/station/medical)
 "jS" = (
@@ -738,7 +738,7 @@
 /turf/open/floor/iron,
 /area/station/cargo)
 "kE" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/structure/sign/poster/official/high_class_martini{
 	pixel_y = 32
 	},
@@ -842,7 +842,7 @@
 /obj/machinery/sleeper{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/blue/mono,
+/obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/white,
 /area/station/medical)
 "lv" = (
@@ -1017,7 +1017,7 @@
 /turf/closed/wall,
 /area/station/engineering/engine)
 "oA" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "oC" = (
@@ -1055,7 +1055,7 @@
 /obj/effect/turf_decal/tile/yellow/border{
 	dir = 9
 	},
-/obj/effect/turf_decal/tile/yellow/bordercorner,
+/obj/effect/turf_decal/tile/yellow/anticorner,
 /turf/open/floor/iron,
 /area/station/cargo)
 "pe" = (
@@ -1380,7 +1380,7 @@
 /obj/structure/sign/warning/no_smoking/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/tile/blue/mono,
+/obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/white,
 /area/station/medical)
 "uN" = (
@@ -1425,7 +1425,7 @@
 /obj/effect/turf_decal/tile/yellow/border{
 	dir = 10
 	},
-/obj/effect/turf_decal/tile/yellow/bordercorner{
+/obj/effect/turf_decal/tile/yellow/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -1600,7 +1600,7 @@
 /turf/closed/wall/r_wall,
 /area/station/hallway/primary/central)
 "zQ" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/random/vending/colavend,
 /obj/structure/sign/poster/official/random{
 	pixel_y = 32
 	},
@@ -1681,7 +1681,7 @@
 /obj/effect/turf_decal/tile/yellow/border{
 	dir = 6
 	},
-/obj/effect/turf_decal/tile/yellow/bordercorner{
+/obj/effect/turf_decal/tile/yellow/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -1927,7 +1927,7 @@
 /obj/effect/turf_decal/tile/yellow/border{
 	dir = 5
 	},
-/obj/effect/turf_decal/tile/yellow/bordercorner{
+/obj/effect/turf_decal/tile/yellow/anticorner{
 	dir = 8
 	},
 /obj/machinery/computer/selling_pad_control,

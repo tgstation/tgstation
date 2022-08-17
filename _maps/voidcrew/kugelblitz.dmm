@@ -24,9 +24,6 @@
 /turf/open/floor/engine,
 /area/station/engineering/engine)
 "ao" = (
-/obj/effect/turf_decal/number/five{
-	dir = 1
-	},
 /turf/open/floor/plating/airless,
 /area/station/external)
 "aH" = (
@@ -34,9 +31,6 @@
 /turf/open/floor/plating/airless,
 /area/station/external)
 "aQ" = (
-/obj/effect/turf_decal/number/two{
-	dir = 1
-	},
 /turf/open/floor/plating/airless,
 /area/station/external)
 "aR" = (
@@ -228,7 +222,7 @@
 /area/station/engineering/engine)
 "eF" = (
 /obj/structure/cable,
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/engineering)
 "eX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
@@ -932,12 +926,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/medical)
 "rS" = (
-/obj/effect/turf_decal/number/six{
-	dir = 1
-	},
 /turf/open/floor/plating/airless,
 /area/station/external)
 "se" = (
@@ -1011,7 +1002,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "uQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1140,7 +1131,7 @@
 	dir = 1
 	},
 /turf/open/floor/circuit/red,
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/engineering)
 "ww" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden/layer1,
@@ -1163,7 +1154,7 @@
 "wy" = (
 /obj/machinery/door/airlock/atmos/glass,
 /obj/machinery/door/firedoor,
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/engineering/atmospherics)
 "wz" = (
 /obj/structure/chair/comfy/shuttle{
@@ -1246,7 +1237,7 @@
 	input_dir = 4;
 	output_dir = 8
 	},
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "xE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
@@ -1476,7 +1467,7 @@
 /obj/machinery/door/airlock/medical/glass,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/medical)
 "CP" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/visible,
@@ -1544,7 +1535,7 @@
 /obj/machinery/door/airlock/research/glass,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /obj/machinery/door/firedoor,
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "EF" = (
 /obj/machinery/door/airlock/atmos/glass,
@@ -1552,7 +1543,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/engineering/atmospherics)
 "Fd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
@@ -1782,7 +1773,7 @@
 /obj/item/storage/toolbox/electrical,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/engineering)
 "JW" = (
 /obj/effect/decal/cleanable/oil{
@@ -1798,7 +1789,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/engineering)
 "Ka" = (
 /obj/effect/decal/cleanable/oil,
@@ -2015,7 +2006,7 @@
 /area/station/medical)
 "Qf" = (
 /obj/effect/decal/cleanable/oil,
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/engineering)
 "Qn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden/layer1,
@@ -2023,14 +2014,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/engineering)
 "Qt" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/circuit/red,
 /area/station/engineering)
 "QB" = (
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/engineering)
 "QX" = (
 /obj/structure/sign/poster/official/wtf_is_co2,

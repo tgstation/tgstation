@@ -12,7 +12,7 @@
 	name = "Alternative Bluespace Jump Device";
 	timer_set = 180
 	},
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/commons/storage/primary)
 "b" = (
 /obj/structure/cable,
@@ -40,7 +40,7 @@
 /obj/machinery/computer/cryopod{
 	pixel_y = 9
 	},
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/commons/storage/primary)
 "c" = (
 /obj/item/clothing/mask/gas,
@@ -99,7 +99,7 @@
 /obj/structure/window/reinforced/tinted{
 	dir = 4
 	},
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/commons/storage/primary)
 
 (1,1,1) = {"

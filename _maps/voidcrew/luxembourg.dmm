@@ -91,7 +91,7 @@
 /obj/item/card/emag,
 /obj/item/radio/headset/syndicate/alt,
 /obj/item/storage/belt/sabre,
-/obj/item/gun/energy/kinetic_accelerator,
+/obj/item/gun/energy/recharge/kinetic_accelerator,
 /obj/item/tank/internals/emergency_oxygen/double,
 /obj/item/clothing/under/syndicate/intern,
 /obj/item/storage/backpack/duffelbag/syndie,

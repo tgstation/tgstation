@@ -87,7 +87,7 @@
 /obj/effect/turf_decal/industrial/loading{
 	dir = 4
 	},
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "cb" = (
 /obj/structure/table/reinforced,
@@ -175,7 +175,7 @@
 /obj/item/reagent_containers/cup/glass/bottle/wine,
 /obj/item/reagent_containers/cup/glass/bottle/wine,
 /obj/item/clothing/under/suit/cargo_tech,
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "dA" = (
 /turf/template_noop,
@@ -367,7 +367,7 @@
 /obj/structure/reagent_dispensers/beerkeg,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "gQ" = (
 /obj/effect/turf_decal/siding/red,
@@ -689,7 +689,7 @@
 /area/station/engineering)
 "ob" = (
 /obj/machinery/selling_pad,
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "om" = (
 /turf/closed/wall/r_wall,
@@ -919,7 +919,7 @@
 /area/station/command/bridge)
 "ss" = (
 /obj/machinery/suit_storage_unit/mining/eva,
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "su" = (
 /obj/machinery/door/airlock/wood{
@@ -1115,7 +1115,7 @@
 	pixel_x = -23;
 	pixel_y = 21
 	},
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "vv" = (
 /turf/closed/wall/r_wall,
@@ -1123,7 +1123,7 @@
 "vW" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "wf" = (
 /obj/machinery/autolathe,
@@ -1140,7 +1140,7 @@
 	pixel_x = 23;
 	pixel_y = 21
 	},
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "wq" = (
 /obj/machinery/power/apc/auto_name/directional/west,
@@ -1652,7 +1652,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "FF" = (
 /obj/structure/window/reinforced/plasma/spawner/north,
@@ -1820,13 +1820,13 @@
 /obj/structure/closet/cardboard,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "IC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "IE" = (
 /obj/structure/chair/comfy{
@@ -1943,7 +1943,7 @@
 "Ko" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/mineral/ore_redemption,
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "Kp" = (
 /obj/structure/railing{
@@ -2179,7 +2179,7 @@
 /obj/structure/reagent_dispensers/fueltank,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "ND" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2230,7 +2230,7 @@
 /turf/open/floor/wood/maple,
 /area/station/command/bridge)
 "Od" = (
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "Or" = (
 /obj/structure/window/reinforced/plasma/spawner/north,
@@ -2317,7 +2317,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "Qf" = (
 /obj/effect/turf_decal/siding/red{
@@ -2481,7 +2481,7 @@
 	dir = 4
 	},
 /obj/structure/window/plasma/reinforced/spawner,
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "UP" = (
 /obj/structure/chair/comfy/lime{
@@ -2711,7 +2711,7 @@
 /area/station/cargo)
 "ZE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 
 (1,1,1) = {"
