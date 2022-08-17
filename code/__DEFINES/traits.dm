@@ -642,7 +642,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_UNBREAKABLE "unbreakable"
 
 /// trait that prevents AI controllers from planning detached from ai_status to prevent weird state stuff.
-#define AI_PAUSED "ai_paused"
+#define TRAIT_AI_PAUSED "TRAIT_AI_PAUSED"
 
 //Medical Categories for quirks
 #define CAT_QUIRK_ALL 0

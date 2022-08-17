@@ -30,7 +30,7 @@
 	if(isanimal(parent))
 		var/mob/living/simple_animal/simple_parent = parent
 		simple_parent.stop_automated_movement = FALSE
-	REMOVE_TRAIT(parent, AI_PAUSED, REF(src))
+	REMOVE_TRAIT(parent, TRAIT_AI_PAUSED, REF(src))
 	return ..()
 
 /datum/component/riding/creature/RegisterWithParent()
@@ -76,7 +76,7 @@
 	rider.layer = initial(rider.layer)
 	if(can_be_driven)
 		//let the player take over if they should be controlling movement
-		ADD_TRAIT(ridden, AI_PAUSED, REF(src))
+		ADD_TRAIT(ridden, TRAIT_AI_PAUSED, REF(src))
 	if(rider.pulling == ridden)
 		rider.stop_pulling()
 	RegisterSignal(rider, COMSIG_LIVING_TRY_PULL, .proc/on_rider_try_pull)
@@ -95,7 +95,7 @@
 		former_rider.log_message("is no longer riding [formerly_ridden].", LOG_GAME, color="pink")
 	remove_abilities(former_rider)
 	if(!formerly_ridden.buckled_mobs.len)
-		REMOVE_TRAIT(formerly_ridden, AI_PAUSED, REF(src))
+		REMOVE_TRAIT(formerly_ridden, TRAIT_AI_PAUSED, REF(src))
 	UnregisterSignal(former_rider, COMSIG_LIVING_TRY_PULL)
 	// We gotta reset those layers at some point, don't we?
 	former_rider.layer = MOB_LAYER
