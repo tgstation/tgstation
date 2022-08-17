@@ -573,7 +573,7 @@
 		var/obj/item/organ/internal/int_organ = I
 		int_organ.organ_flags |= ORGAN_FROZEN
 		return
-	if(istype(I, /obj/item/bodypart))
+	if(isbodypart(I))
 		var/obj/item/bodypart/B = I
 		for(var/obj/item/organ/internal/int_organ in B.contents)
 			int_organ.organ_flags |= ORGAN_FROZEN
@@ -585,7 +585,7 @@
 		var/obj/item/organ/internal/int_organ = I
 		int_organ.organ_flags &= ~ORGAN_FROZEN
 		return
-	if(istype(I, /obj/item/bodypart))
+	if(isbodypart(I))
 		var/obj/item/bodypart/B = I
 		for(var/obj/item/organ/internal/int_organ in B.contents)
 			int_organ.organ_flags &= ~ORGAN_FROZEN

@@ -72,7 +72,7 @@
 		balloon_alert(user, "[anchored ? "":"un"]anchored")
 		return TRUE
 
-	if(istype(weapon, /obj/item/bodypart))
+	if(isbodypart(weapon))
 
 		var/obj/item/bodypart/consumed = weapon
 		if(!IS_ORGANIC_LIMB(consumed))
