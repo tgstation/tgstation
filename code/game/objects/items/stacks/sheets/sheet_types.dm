@@ -145,6 +145,16 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	cost = 500
 	source = /datum/robot_energy_storage/iron
 
+/obj/item/stack/sheet/iron/Initialize(mapload)
+	. = ..()
+	var/static/list/tool_behaviors = list(
+		TOOL_WELDER = list(
+			SCREENTIP_CONTEXT_LMB = "Craft iron rods",
+			SCREENTIP_CONTEXT_RMB = "Craft floor tiles",
+		),
+	)
+	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+
 /obj/item/stack/sheet/iron/examine(mob/user)
 	. = ..()
 	. += span_notice("You can build a wall girder (unanchored) by right clicking on an empty floor.")
@@ -172,6 +182,32 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 /obj/item/stack/sheet/iron/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins whacking [user.p_them()]self over the head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
+
+/obj/item/stack/sheet/iron/welder_act(mob/living/user, obj/item/tool)
+	if(tool.use_tool(src, user, delay = 0, volume = 40))
+		var/obj/item/stack/rods/two/new_item = new(user.loc)
+		user.visible_message(
+			span_notice("[user.name] shaped [src] into floor rods with [tool]."),
+			blind_message = span_hear("You hear welding."),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+			ignored_mobs = user
+		)
+		use(1)
+		user.put_in_inactive_hand(new_item)
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/item/stack/sheet/iron/welder_act_secondary(mob/living/user, obj/item/tool)
+	if(tool.use_tool(src, user, delay = 0, volume = 40))
+		var/obj/item/stack/tile/iron/four/new_item = new(user.loc)
+		user.visible_message(
+			span_notice("[user.name] shaped [src] into floor tiles with [tool]."),
+			blind_message = span_hear("You hear welding."),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+			ignored_mobs = user
+		)
+		use(1)
+		user.put_in_inactive_hand(new_item)
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/stack/sheet/iron/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	if(istype(target, /turf/open))

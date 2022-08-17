@@ -1308,6 +1308,7 @@
 				/mob/living/simple_animal/pet/fox,
 				/mob/living/simple_animal/butterfly,
 				/mob/living/simple_animal/pet/cat/cak,
+				/mob/living/simple_animal/pet/dog/breaddog,
 				/mob/living/simple_animal/chick,
 			)
 			new_mob = new path(loc)
@@ -2122,8 +2123,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 		REMOVE_TRAIT(src, TRAIT_FAT, OBESITY)
 		remove_movespeed_modifier(/datum/movespeed_modifier/obesity)
-		update_inv_w_uniform()
-		update_inv_wear_suit()
+		update_worn_undersuit()
+		update_worn_oversuit()
 
 	// Reset overeat duration.
 	overeatduration = 0
@@ -2306,13 +2307,13 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /// Adds a mood event to the mob
 /mob/living/proc/add_mood_event(category, type, ...)
-	if (!mob_mood)
+	if(QDELETED(mob_mood))
 		return
 	mob_mood.add_mood_event(arglist(args))
 
 /// Clears a mood event from the mob
 /mob/living/proc/clear_mood_event(category)
-	if (!mob_mood)
+	if(QDELETED(mob_mood))
 		return
 	mob_mood.clear_mood_event(category)
 

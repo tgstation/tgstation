@@ -23,7 +23,7 @@
 
 /obj/item/clothing/mask/joy/reskin_obj(mob/user)
 	. = ..()
-	user.update_inv_wear_mask()
+	user.update_worn_mask()
 	current_skin = null//so we can infinitely reskin
 
 /obj/item/clothing/mask/mummy

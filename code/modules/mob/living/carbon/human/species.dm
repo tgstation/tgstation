@@ -786,10 +786,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(BODY_FRONT_LAYER)
 			return "FRONT"
 
-///Proc that will randomise the hair, or primary appearance element (i.e. for moths wings) of a species' associated mob
-/datum/species/proc/randomize_main_appearance_element(mob/living/carbon/human/human_mob)
-	human_mob.hairstyle = random_hairstyle(human_mob.gender)
-	human_mob.update_hair(is_creating = TRUE)
 
 ///Proc that will randomise the underwear (i.e. top, pants and socks) of a species' associated mob
 /datum/species/proc/randomize_active_underwear(mob/living/carbon/human/human_mob)
@@ -797,6 +793,19 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	human_mob.underwear = random_underwear(human_mob.gender)
 	human_mob.socks = random_socks(human_mob.gender)
 	human_mob.update_body()
+
+///Proc that will randomize all the external organs (i.e. horns, frills, tails etc.) of a species' associated mob
+/datum/species/proc/randomize_external_organs(mob/living/carbon/human/human_mob)
+	for(var/obj/item/organ/external/organ_path as anything in external_organs)
+		var/obj/item/organ/external/randomized_organ = human_mob.getorgan(organ_path)
+		if(randomized_organ)
+			var/new_look = pick(randomized_organ.get_global_feature_list())
+			human_mob.dna.features["[randomized_organ.feature_key]"] = new_look
+			mutant_bodyparts["[randomized_organ.feature_key]"] = new_look
+
+///Proc that randomizes all the appearance elements (external organs, markings, hair etc.) of a species' associated mob. Function set by child procs
+/datum/species/proc/randomize_features(mob/living/carbon/human/human_mob)
+	return
 
 /datum/species/proc/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
 	if(HAS_TRAIT(H, TRAIT_NOBREATH))
@@ -1278,13 +1287,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(bloody) //Apply blood
 				if(human.wear_mask)
 					human.wear_mask.add_mob_blood(human)
-					human.update_inv_wear_mask()
+					human.update_worn_mask()
 				if(human.head)
 					human.head.add_mob_blood(human)
-					human.update_inv_head()
+					human.update_worn_head()
 				if(human.glasses && prob(33))
 					human.glasses.add_mob_blood(human)
-					human.update_inv_glasses()
+					human.update_worn_glasses()
 
 		if(BODY_ZONE_CHEST)
 			if(human.stat == CONSCIOUS && !weapon.get_sharpness() && armor_block < 50)
@@ -1296,10 +1305,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(bloody)
 				if(human.wear_suit)
 					human.wear_suit.add_mob_blood(human)
-					human.update_inv_wear_suit()
+					human.update_worn_oversuit()
 				if(human.w_uniform)
 					human.w_uniform.add_mob_blood(human)
-					human.update_inv_w_uniform()
+					human.update_worn_undersuit()
 
 	/// Triggers force say events
 	if(weapon.force > 10 || weapon.force >= 5 && prob(33))
