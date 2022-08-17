@@ -69,7 +69,7 @@
 		if(prob(50))
 			to_chat(mover, span_danger("You get stuck in \the [src] for a moment."))
 			return FALSE
-	else if(istype(mover, /obj/projectile))
+	else if(isprojectile(mover))
 		return prob(30)
 
 /obj/structure/spider/stickyweb/sealed
@@ -97,7 +97,7 @@
 		if(prob(50))
 			to_chat(mover, span_danger("You get stuck in \the [src] for a moment."))
 			return FALSE
-	else if(istype(mover, /obj/projectile))
+	else if(isprojectile(mover))
 		return prob(30)
 
 /obj/structure/spider/spiderling

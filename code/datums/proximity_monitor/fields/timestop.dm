@@ -103,7 +103,7 @@
 	var/frozen = TRUE
 	if(isliving(A))
 		freeze_mob(A)
-	else if(istype(A, /obj/projectile))
+	else if(isprojectile(A))
 		freeze_projectile(A)
 	else if(ismecha(A))
 		freeze_mecha(A)
@@ -139,7 +139,7 @@
 		unfreeze_throwing(A)
 	if(isliving(A))
 		unfreeze_mob(A)
-	else if(istype(A, /obj/projectile))
+	else if(isprojectile(A))
 		unfreeze_projectile(A)
 	else if(ismecha(A))
 		unfreeze_mecha(A)
