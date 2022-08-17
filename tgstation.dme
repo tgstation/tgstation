@@ -4698,6 +4698,7 @@
 #include "voidcrew\mapping\shuttles\dwayne.dm"
 #include "voidcrew\mapping\shuttles\energia.dm"
 #include "voidcrew\mapping\shuttles\resistance.dm"
+#include "voidcrew\mapping\shuttles\syndicate\geneva.dm"
 #include "voidcrew\mapping\spawners\nanites.dm"
 #include "voidcrew\modules\cryo\console.dm"
 #include "voidcrew\modules\cryo\machine.dm"

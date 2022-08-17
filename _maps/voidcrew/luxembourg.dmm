@@ -90,7 +90,7 @@
 /obj/structure/closet/secure_closet/quartermaster,
 /obj/item/clothing/suit/armor/vest/capcarapace/syndicate,
 /obj/item/storage/box/syndie_kit/chameleon,
-/obj/item/card/id/syndicate,
+/obj/item/card/id/advanced/black/syndicate_command,
 /obj/item/clothing/head/HoS/beret/syndicate,
 /obj/item/card/emag,
 /obj/item/radio/headset/syndicate/alt,
@@ -567,7 +567,7 @@
 	dir = 8
 	},
 /obj/item/clothing/head/HoS/beret/syndicate,
-/obj/item/card/id/syndicate,
+/obj/item/card/id/advanced/black/syndicate_command,
 /obj/item/clothing/under/syndicate,
 /obj/item/clothing/under/syndicate/skirt,
 /obj/item/clothing/under/syndicate/bloodred/sleepytime,
@@ -605,7 +605,7 @@
 /area/station/command/bridge)
 "nx" = (
 /obj/item/clothing/head/HoS/beret/syndicate,
-/obj/item/card/id/syndicate,
+/obj/item/card/id/advanced/black/syndicate_command,
 /obj/item/clothing/under/syndicate/skirt,
 /obj/item/clothing/under/syndicate/bloodred/sleepytime,
 /obj/item/radio/headset/syndicate/alt,
@@ -670,9 +670,9 @@
 	dir = 4
 	},
 /obj/structure/rack,
-/obj/item/card/id/syndicate,
-/obj/item/card/id/syndicate,
-/obj/item/card/id/syndicate,
+/obj/item/card/id/advanced/black/syndicate_command,
+/obj/item/card/id/advanced/black/syndicate_command,
+/obj/item/card/id/advanced/black/syndicate_command,
 /obj/item/radio/headset/syndicate/alt,
 /obj/item/radio/headset/syndicate/alt,
 /obj/item/radio/headset/syndicate/alt,
@@ -836,7 +836,7 @@
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/primary)
 "tN" = (
-/obj/item/card/id/syndicate,
+/obj/item/card/id/advanced/black/syndicate_command,
 /obj/item/clothing/under/syndicate/skirt,
 /obj/item/clothing/under/syndicate/bloodred/sleepytime,
 /obj/item/clothing/head/HoS/beret/syndicate,
@@ -1298,7 +1298,7 @@
 /obj/structure/closet/secure_closet/personal{
 	name = "cargo tech's locker"
 	},
-/obj/item/card/id/syndicate,
+/obj/item/card/id/advanced/black/syndicate_command,
 /obj/item/clothing/under/syndicate/skirt,
 /obj/item/clothing/under/syndicate/bloodred/sleepytime,
 /obj/item/clothing/head/HoS/beret/syndicate,
@@ -1325,7 +1325,7 @@
 /obj/structure/closet/secure_closet/personal{
 	name = "cargo tech's locker"
 	},
-/obj/item/card/id/syndicate,
+/obj/item/card/id/advanced/black/syndicate_command,
 /obj/item/clothing/under/syndicate/skirt,
 /obj/item/clothing/under/syndicate/bloodred/sleepytime,
 /obj/item/clothing/head/HoS/beret/syndicate,

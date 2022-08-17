@@ -3742,7 +3742,7 @@
 	req_access = null;
 	req_access_txt = "151"
 	},
-/obj/item/card/id/syndicate_command{
+/obj/item/card/id/advanced/black/syndicate_command_command{
 	access_txt = "150;151";
 	desc = "The spare ID from the syndicate battlecruiser's captain himself.";
 	name = "captain's spare ID"
