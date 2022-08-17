@@ -111,7 +111,7 @@
 	if(istype(A, /obj/item/clothing/suit/space))
 		to_chat(user, span_alert("Error unable to interface with device."))
 		return FALSE
-	if(istype(A, /obj))
+	if(isobj(A))
 		O = A
 	if(C)
 		var/done_any = FALSE
