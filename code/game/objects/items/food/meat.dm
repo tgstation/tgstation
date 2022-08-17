@@ -181,7 +181,6 @@
 
 ////////////////////////////////////////////MEATS AND ALIKE////////////////////////////////////////////
 
-
 /obj/item/food/meat/slab/pig
 	name = "raw pork"
 	icon_state = "pig_meat"
@@ -192,10 +191,45 @@
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain/pig, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
 
 /obj/item/food/meat/steak/plain/pig
-	name = "pork steak"
+	name = "pork chops"
 	icon_state = "pigsteak"
 	tastes = list("pig" = 1)
 	foodtypes = MEAT | GROSS
+
+/obj/item/food/tempeh
+	name = "raw tempeh block"
+	desc = "Fungus fermented soybean cake, warm to the touch."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "tempeh"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 8)
+	tastes = list("earthy" = 3, "nutty" = 2, "bland" = 1 )
+	foodtypes = VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_CHEAP
+
+// sliceable into 4xtempehslices
+/obj/item/food/tempeh/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/tempehslice, 4, 5 SECONDS, table_required = TRUE)
+
+//add an icon for slices
+/obj/item/food/tempehslice
+	name = "tempeh slice"
+	desc = "A slice of tempeh, a slice of wkwkwk."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "tempehslice"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
+	tastes = list("earthy" = 3, "nutty" = 2, "bland" = 1)
+	foodtypes = VEGETABLES
+
+//add an icon for blends
+/obj/item/food/tempehstarter
+	name = "tempeh starter"
+	desc = "a mix of soy and joy, it's warm, it's moving?."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "tempeh"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
+	tastes = list("nutty" = 2, "bland" = 2)
+	foodtypes = VEGETABLES | GROSS
 
 /obj/item/food/tofu
 	name = "tofu"
