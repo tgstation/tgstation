@@ -1503,19 +1503,19 @@
 	pixel_y = 9
 	},
 /obj/item/storage/box/matches,
-/obj/item/reagent_containers/food/snacks/grown/tobacco{
+/obj/item/food/grown/tobacco{
 	dry = 1;
 	name = "dried tobacco leaves"
 	},
-/obj/item/reagent_containers/food/snacks/grown/tobacco{
+/obj/item/food/grown/tobacco{
 	dry = 1;
 	name = "dried tobacco leaves"
 	},
-/obj/item/reagent_containers/food/snacks/grown/tobacco{
+/obj/item/food/grown/tobacco{
 	dry = 1;
 	name = "dried tobacco leaves"
 	},
-/obj/item/reagent_containers/food/snacks/grown/tobacco{
+/obj/item/food/grown/tobacco{
 	dry = 1;
 	name = "dried tobacco leaves"
 	},

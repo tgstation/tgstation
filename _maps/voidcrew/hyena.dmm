@@ -174,15 +174,15 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)
 "dA" = (
-/obj/item/reagent_containers/food/snacks/canned/beans{
+/obj/item/food/canned/beans{
 	pixel_x = -5;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/snacks/canned/beans{
+/obj/item/food/canned/beans{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/snacks/canned/beans{
+/obj/item/food/canned/beans{
 	pixel_x = -2
 	},
 /obj/item/reagent_containers/cup/glass/waterbottle/large{
@@ -1461,7 +1461,7 @@
 /obj/structure/table,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
-/obj/item/reagent_containers/food/snacks/syndicake,
+/obj/item/food/syndicake,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = -32

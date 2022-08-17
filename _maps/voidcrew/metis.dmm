@@ -1433,7 +1433,7 @@
 /area/station/science)
 "wR" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/cubancarp,
+/obj/item/food/cubancarp,
 /turf/open/floor/mineral/titanium/tiled,
 /area/station/commons/canteen)
 "xg" = (
@@ -2071,7 +2071,7 @@
 /area/station/commons/canteen)
 "ET" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/soup/electron,
+/obj/item/food/soup/electron,
 /obj/machinery/firealarm{
 	pixel_y = 25
 	},
@@ -2385,7 +2385,7 @@
 /area/station/hallway/aft)
 "IB" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/burger/xeno,
+/obj/item/food/burger/xeno,
 /turf/open/floor/mineral/titanium/tiled,
 /area/station/commons/canteen)
 "IE" = (

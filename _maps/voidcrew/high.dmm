@@ -2017,7 +2017,7 @@
 /area/station/commons)
 "HV" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/pizza/donkpocket,
+/obj/item/storage/box/donkpockets,
 /obj/item/kitchen/fork,
 /turf/open/floor/carpet/red,
 /area/station/commons/dorms)

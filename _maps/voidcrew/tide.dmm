@@ -150,7 +150,7 @@
 /area/station/cargo)
 "mB" = (
 /obj/structure/cable,
-/obj/item/reagent_containers/food/snacks/deadmouse{
+/obj/item/food/deadmouse{
 	pixel_y = 14
 	},
 /obj/item/stack/cable_coil/cut/red,
@@ -167,7 +167,7 @@
 /obj/item/trash/syndi_cakes,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/spawner/random/maintenance/eight,
-/obj/item/reagent_containers/food/snacks/canned/peaches/maint,
+/obj/item/trash/can/food/peaches/maint,
 /obj/structure/closet/secure_closet/engineering_personal,
 /mob/living/basic/cockroach/glockroach,
 /turf/open/floor/plating,
@@ -663,7 +663,7 @@
 /obj/structure/closet/crate,
 /obj/effect/decal/cleanable/glass,
 /obj/item/storage/toolbox/mechanical/old,
-/obj/item/reagent_containers/food/snacks/canned/beans,
+/obj/item/food/canned/beans,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "We" = (
@@ -705,14 +705,14 @@
 "YV" = (
 /obj/structure/table,
 /obj/item/trash/cheesie,
-/obj/item/reagent_containers/food/snacks/kebab/rat{
+/obj/item/food/kebab/rat{
 	pixel_y = -6
 	},
-/obj/item/reagent_containers/food/snacks/kebab/rat/double{
+/obj/item/food/kebab/rat/double{
 	pixel_x = 2;
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/food/snacks/burger/rat,
+/obj/item/food/burger/rat,
 /obj/item/cigbutt,
 /obj/item/reagent_containers/cup/glass/sillycup/smallcarton{
 	list_reagents = list(/datum/reagent/consumable/ethanol/vodka = 100)

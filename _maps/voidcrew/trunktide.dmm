@@ -20,7 +20,7 @@
 /area/station/maintenance/fore)
 "bp" = (
 /obj/structure/rack,
-/obj/item/reagent_containers/food/snacks/canned/peaches/maint,
+/obj/item/trash/can/food/peaches/maint,
 /obj/item/food/rationpack,
 /obj/item/food/rationpack,
 /obj/item/food/rationpack,

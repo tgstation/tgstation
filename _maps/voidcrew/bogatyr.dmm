@@ -94,7 +94,7 @@
 /area/station/commons/dorms)
 "dS" = (
 /obj/structure/rack,
-/obj/item/gun/ballistic/shotgun/doublebarrel/improvised/sawn{
+/obj/item/gun/ballistic/shotgun/doublebarrel{
 	name = "\improper TOZ-1"
 	},
 /obj/item/ammo_casing/shotgun/laserslug{
@@ -108,7 +108,7 @@
 /area/station/security)
 "en" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/meat/slab/bear,
+/obj/item/food/meat/slab/bear,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/station/maintenance/central)
@@ -696,7 +696,7 @@
 /obj/structure/closet/crate/critter{
 	name = "rare and exotic russian native animals"
 	},
-/obj/item/reagent_containers/food/snacks/deadmouse,
+/obj/item/food/deadmouse,
 /mob/living/basic/cockroach/glockroach,
 /mob/living/simple_animal/pet/dog/corgi,
 /obj/structure/cable,

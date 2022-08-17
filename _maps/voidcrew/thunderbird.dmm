@@ -30,7 +30,7 @@
 "cM" = (
 /obj/effect/turf_decal/tile/lime/mono,
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/snacks/pizza/meat,
+/obj/item/food/pizza/meat/raw,
 /turf/open/floor/mineral/titanium,
 /area/station/commons/dorms)
 "dh" = (
@@ -403,15 +403,15 @@
 /turf/open/floor/mineral/titanium,
 /area/station/hallway/primary/central)
 "tj" = (
-/obj/item/reagent_containers/food/snacks/canned/beans{
+/obj/item/food/canned/beans{
 	pixel_x = -5;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/snacks/canned/beans{
+/obj/item/food/canned/beans{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/snacks/canned/beans{
+/obj/item/food/canned/beans{
 	pixel_x = -2
 	},
 /obj/item/reagent_containers/cup/glass/waterbottle/large{

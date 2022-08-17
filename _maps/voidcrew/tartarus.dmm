@@ -2033,7 +2033,7 @@
 "Ng" = (
 /obj/structure/railing,
 /obj/structure/rack,
-/obj/item/reagent_containers/food/snacks/donut/berry,
+/obj/item/food/donut/berry,
 /obj/item/reagent_containers/cup/glass/coffee,
 /turf/open/floor/carpet/black,
 /area/station/commons)
@@ -2306,7 +2306,7 @@
 "RR" = (
 /obj/structure/railing,
 /obj/structure/rack,
-/obj/item/reagent_containers/food/snacks/donut/berry,
+/obj/item/food/donut/berry,
 /obj/item/reagent_containers/cup/glass/coffee,
 /turf/open/floor/carpet,
 /area/station/commons)

@@ -915,15 +915,15 @@
 /turf/closed/wall/r_wall,
 /area/station/engineering)
 "wm" = (
-/obj/item/reagent_containers/food/snacks/canned/beans{
+/obj/item/food/canned/beans{
 	pixel_x = -5;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/snacks/canned/beans{
+/obj/item/food/canned/beans{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/snacks/canned/beans{
+/obj/item/food/canned/beans{
 	pixel_x = -2
 	},
 /obj/item/reagent_containers/cup/glass/waterbottle/large{

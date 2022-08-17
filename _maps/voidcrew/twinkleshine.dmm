@@ -311,8 +311,8 @@
 /area/station/command/bridge)
 "dH" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/snacks/syndicake,
-/obj/item/reagent_containers/food/snacks/syndicake{
+/obj/item/food/syndicake,
+/obj/item/food/syndicake{
 	pixel_x = -5;
 	pixel_y = 5
 	},

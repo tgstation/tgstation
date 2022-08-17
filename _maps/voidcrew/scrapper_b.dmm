@@ -3420,7 +3420,7 @@
 "UP" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/snacks/meat/slab/killertomato,
+/obj/item/food/meat/slab/killertomato,
 /turf/open/floor/iron/showroomfloor,
 /area/station/maintenance/starboard)
 "Vo" = (

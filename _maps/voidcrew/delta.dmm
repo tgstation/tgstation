@@ -160,24 +160,24 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/closet/crate,
-/obj/item/reagent_containers/food/snacks/candy{
+/obj/item/food/candy{
 	pixel_x = -3;
 	pixel_y = 1
 	},
-/obj/item/reagent_containers/food/snacks/candy,
-/obj/item/reagent_containers/food/snacks/candy{
+/obj/item/food/candy,
+/obj/item/food/candy{
 	pixel_x = 3;
 	pixel_y = -1
 	},
-/obj/item/reagent_containers/food/snacks/cookie{
+/obj/item/food/cookie{
 	pixel_x = -2;
 	pixel_y = -2
 	},
-/obj/item/reagent_containers/food/snacks/cookie{
+/obj/item/food/cookie{
 	pixel_x = -5;
 	pixel_y = -5
 	},
-/obj/item/reagent_containers/food/snacks/chocolatebar,
+/obj/item/food/chocolatebar,
 /turf/open/floor/iron/dark,
 /area/station/commons/canteen)
 "au" = (
@@ -1301,13 +1301,13 @@
 	locked = 0;
 	name = "fridge"
 	},
-/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/food/sausage,
 /obj/item/reagent_containers/cup/glass/beer{
 	pixel_x = -3;
 	pixel_y = 3
 	},
 /obj/item/reagent_containers/cup/glass/beer,
-/obj/item/reagent_containers/food/snacks/sandwich,
+/obj/item/food/sandwich,
 /obj/effect/turf_decal/tile/bar/diagonal,
 /turf/open/floor/iron,
 /area/station/commons/canteen)

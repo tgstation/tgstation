@@ -972,7 +972,7 @@
 /turf/open/floor/carpet/orange,
 /area/station/commons/library)
 "qY" = (
-/obj/item/reagent_containers/food/snacks/pizzaslice/dank{
+/obj/item/food/dankpocket{
 	pixel_x = -1;
 	pixel_y = 4
 	},
@@ -1315,7 +1315,7 @@
 /area/station/commons/library)
 "JP" = (
 /obj/item/storage/bag/tray,
-/obj/item/reagent_containers/food/snacks/burger/spell,
+/obj/item/food/burger/spell,
 /obj/structure/table/wood/fancy/cyan,
 /turf/open/floor/carpet/royalblue,
 /area/station/commons/dorms)

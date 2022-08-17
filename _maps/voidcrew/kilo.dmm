@@ -1167,7 +1167,7 @@
 /obj/structure/table/wood,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/bag/tray,
-/obj/item/reagent_containers/food/snacks/burger/bearger,
+/obj/item/food/burger/bearger,
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
@@ -1915,8 +1915,8 @@
 	locked = 0;
 	name = "fridge"
 	},
-/obj/item/reagent_containers/food/snacks/sausage,
-/obj/item/reagent_containers/food/snacks/sandwich,
+/obj/item/food/sausage,
+/obj/item/food/sandwich,
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 1
 	},

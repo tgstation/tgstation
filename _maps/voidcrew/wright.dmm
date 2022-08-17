@@ -59,7 +59,7 @@
 /area/station/maintenance/aft)
 "cm" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/soup/clownstears{
+/obj/item/food/soup/clownstears{
 	pixel_y = 5
 	},
 /turf/open/floor/wood,
@@ -360,7 +360,7 @@
 /area/station/hallway/primary/central)
 "kw" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/burger/cheese,
+/obj/item/food/burger/cheese,
 /turf/open/floor/wood,
 /area/station/hallway/primary/central)
 "kA" = (
@@ -1310,7 +1310,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 9
 	},
-/obj/item/reagent_containers/food/snacks/spaghetti/spesslaw{
+/obj/item/food/spaghetti/spesslaw{
 	pixel_y = 4
 	},
 /turf/open/floor/wood,

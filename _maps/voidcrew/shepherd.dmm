@@ -1529,7 +1529,7 @@
 /area/station/storage)
 "wS" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/customizable/bread,
+/obj/item/food/bread/plain,
 /obj/item/reagent_containers/cup/glass/bottle/wine{
 	pixel_x = 6;
 	pixel_y = 2
@@ -1992,10 +1992,9 @@
 /area/station/hallway/starboard)
 "Ds" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/grown/ash_flora/whitesands/puce,
-/obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_leaf,
-/obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_leaf,
-/obj/item/reagent_containers/food/snacks/grown/ash_flora/cactus_fruit,
+/obj/item/food/grown/ash_flora/mushroom_leaf,
+/obj/item/food/grown/ash_flora/mushroom_leaf,
+/obj/item/food/grown/ash_flora/cactus_fruit,
 /turf/open/floor/wood,
 /area/station/medical)
 "DC" = (
@@ -2455,7 +2454,7 @@
 /area/station/engineering/electrical)
 "Ls" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/food/snacks/grown/poppy,
+/obj/item/food/grown/poppy,
 /turf/open/floor/carpet,
 /area/station/medical/morgue)
 "LI" = (

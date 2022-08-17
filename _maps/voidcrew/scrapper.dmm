@@ -879,7 +879,7 @@
 "lU" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/snacks/meat/rawcrab,
+/obj/item/food/meat/slab/rawcrab,
 /turf/open/floor/plasteel/tech/techmaint,
 /area/station/maintenance/starboard)
 "lW" = (
