@@ -61,7 +61,7 @@
 		return
 	if(sealed)
 		return FALSE
-	if(istype(mover, /mob/living/simple_animal/hostile/giant_spider))
+	if(isspider(mover))
 		return TRUE
 	else if(isliving(mover))
 		if(istype(mover.pulledby, /mob/living/simple_animal/hostile/giant_spider))
