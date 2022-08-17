@@ -16,7 +16,7 @@
 /area/station/commons/storage/primary)
 "b" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers{
 	dir = 8
 	},
 /obj/machinery/power/apc/auto_name/directional/west,

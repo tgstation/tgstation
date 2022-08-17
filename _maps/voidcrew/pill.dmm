@@ -7,12 +7,12 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4
 	},
-/turf/open/floor/carpet/neon/simple/cyan,
+/turf/open/floor/carpet/neon/simple/red,
 /area/station/commons/storage/primary)
 "b" = (
 /obj/structure/cable,
 /obj/item/stack/sheet/mineral/uranium/five,
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers{
 	dir = 8
 	},
 /obj/structure/window/reinforced/spawner,
@@ -33,7 +33,7 @@
 /obj/machinery/computer/cryopod{
 	pixel_y = 8
 	},
-/turf/open/floor/carpet/neon/simple/cyan,
+/turf/open/floor/carpet/neon/simple/red,
 /area/station/commons/storage/primary)
 "c" = (
 /obj/item/pickaxe/drill,
@@ -89,7 +89,7 @@
 /obj/item/storage/toolbox/mechanical/old,
 /obj/item/storage/box/stockparts/basic,
 /obj/item/circuitboard/machine/autolathe,
-/turf/open/floor/carpet/neon/simple/cyan,
+/turf/open/floor/carpet/neon/simple/red,
 /area/station/commons/storage/primary)
 
 (1,1,1) = {"
