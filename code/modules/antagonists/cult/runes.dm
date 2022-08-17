@@ -104,7 +104,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 		fail_invoke()
 
 /obj/effect/rune/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	if(isshade(user) || istype(user, /mob/living/simple_animal/hostile/construct))
+	if(isshade(user) || isconstruct(user))
 		if(istype(user, /mob/living/simple_animal/hostile/construct/wraith/angelic) || istype(user, /mob/living/simple_animal/hostile/construct/juggernaut/angelic) || istype(user, /mob/living/simple_animal/hostile/construct/artificer/angelic))
 			to_chat(user, span_warning("You purge the rune!"))
 			qdel(src)
