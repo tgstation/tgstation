@@ -152,7 +152,7 @@
 	if(target == src)
 		to_chat(src, span_warning("You almost bite yourself, but then decide against it."))
 		return
-	if(istype(target, /turf/closed/wall))
+	if(iswallturf(target))
 		if(tearing_wall)
 			return
 		tearing_wall = TRUE

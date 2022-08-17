@@ -626,7 +626,7 @@
 	post_noise = FALSE
 
 /obj/item/toy/crayon/spraycan/isValidSurface(surface)
-	return (isfloorturf(surface) || istype(surface, /turf/closed/wall))
+	return (isfloorturf(surface) || iswallturf(surface))
 
 
 /obj/item/toy/crayon/spraycan/suicide_act(mob/user)
