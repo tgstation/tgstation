@@ -2976,7 +2976,7 @@
 #include "code\modules\food_and_drinks\recipes\processor_recipes.dm"
 #include "code\modules\food_and_drinks\recipes\drinks\drinks_alcoholic.dm"
 #include "code\modules\food_and_drinks\recipes\drinks\drinks_lizard.dm"
-#include "code\modules\food_and_drinks\recipes\drinks\drinks_moffic.dm"
+#include "code\modules\food_and_drinks\recipes\drinks\drinks_moth.dm"
 #include "code\modules\food_and_drinks\recipes\drinks\drinks_non-alcoholic.dm"
 #include "code\modules\food_and_drinks\recipes\tablecraft\recipes_bread.dm"
 #include "code\modules\food_and_drinks\recipes\tablecraft\recipes_burger.dm"
