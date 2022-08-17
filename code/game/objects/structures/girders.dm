@@ -55,7 +55,7 @@
 			qdel(src)
 			return
 
-	else if(istype(W, /obj/item/stack))
+	else if(isstack(W))
 		if(iswallturf(loc) || (locate(/obj/structure/falsewall) in src.loc.contents))
 			balloon_alert(user, "wall already present!")
 			return

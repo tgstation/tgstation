@@ -92,7 +92,7 @@
 
 			// Using stacks
 			else
-				if(istype(I, /obj/item/stack))
+				if(isstack(I))
 					. = I.use_tool(parent, user, 0, volume=50, amount=current_step["amount"])
 
 

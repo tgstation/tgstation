@@ -84,7 +84,7 @@
 			. += module
 
 /obj/item/robot_model/proc/add_module(obj/item/added_module, nonstandard, requires_rebuild)
-	if(istype(added_module, /obj/item/stack))
+	if(isstack(added_module))
 		var/obj/item/stack/sheet_module = added_module
 		if(ispath(sheet_module.source, /datum/robot_energy_storage))
 			sheet_module.source = get_or_create_estorage(sheet_module.source)

@@ -332,7 +332,7 @@
 			. += RG
 			Deletion -= RG
 			continue
-		else if(istype(part, /obj/item/stack))
+		else if(isstack(part))
 			var/obj/item/stack/ST = locate(part) in Deletion
 			if(ST.amount > partlist[part])
 				ST.amount = partlist[part]
