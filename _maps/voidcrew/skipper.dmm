@@ -1355,7 +1355,6 @@
 /turf/open/floor/iron,
 /area/station/medical)
 "ui" = (
-/obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /obj/machinery/light{
@@ -2635,7 +2634,6 @@
 /turf/open/floor/iron,
 /area/station/cargo)
 "MV" = (
-/obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /obj/machinery/door/firedoor,

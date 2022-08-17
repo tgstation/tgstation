@@ -896,7 +896,6 @@
 /turf/open/floor/iron,
 /area/station/security)
 "XG" = (
-/obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /turf/open/floor/iron,

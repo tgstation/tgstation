@@ -925,7 +925,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/station/engineering)
 "Tp" = (
-/obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,

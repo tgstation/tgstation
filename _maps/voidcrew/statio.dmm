@@ -4104,7 +4104,6 @@
 /turf/open/floor/iron/median/darktogrime,
 /area/station/commons/chapel)
 "uV" = (
-/obj/structure/cable,
 /obj/machinery/power/smes/engineering,
 /obj/structure/cable,
 /turf/open/floor/engine,
@@ -7981,7 +7980,6 @@
 /turf/open/floor/iron/dark,
 /area/station/service/cafeteria)
 "NS" = (
-/obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/engine,

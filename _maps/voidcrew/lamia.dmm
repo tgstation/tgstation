@@ -708,7 +708,6 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/plating,

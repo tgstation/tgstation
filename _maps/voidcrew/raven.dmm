@@ -2717,7 +2717,6 @@
 /area/station/commons)
 "Zc" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/structure/reagent_dispensers/fueltank,
 /obj/structure/cable,
 /turf/open/floor/plating,

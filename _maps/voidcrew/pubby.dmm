@@ -769,7 +769,6 @@
 /area/station/cargo)
 "My" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -1088,7 +1087,6 @@
 /obj/machinery/power/smes{
 	charge = 1e+006
 	},
-/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
