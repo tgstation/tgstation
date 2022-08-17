@@ -94,7 +94,6 @@
 	. = ..()
 	for(var/datum/reagent/toxin/pestkiller/current_reagent in reagents)
 		apply_damage(50 * volume_modifier, STAMINA, BODY_ZONE_CHEST)
-			return
 
 /**
  * # Spider Hunter
