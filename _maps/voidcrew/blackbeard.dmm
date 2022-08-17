@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ad" = (
-/obj/machinery/vending/medical/syndicate_access,
+/obj/machinery/vending/medical/syndicate_access/cybersun,
 /turf/open/floor/mineral/plastitanium,
 /area/station/medical)
 "aj" = (
@@ -61,7 +61,7 @@
 /area/station/hallway/primary/central)
 "ch" = (
 /obj/machinery/airalarm/all_access{
-	dir = 4;
+	dir = 8;
 	pixel_x = -24
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -419,9 +419,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/station/cargo)
 "ss" = (
-/obj/structure/table/reinforced,
-/obj/item/stack/medical/gauze/twelve,
-/obj/item/stack/medical/gauze/twelve,
+/obj/machinery/computer/operating{
+	dir = 1
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/station/medical)
 "sv" = (
@@ -429,7 +429,6 @@
 	dir = 8
 	},
 /obj/machinery/airalarm/all_access{
-	dir = 1;
 	pixel_y = -24
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -531,7 +530,6 @@
 	dir = 1
 	},
 /obj/machinery/airalarm/all_access{
-	dir = 1;
 	pixel_y = -24
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -655,7 +653,6 @@
 	dir = 1
 	},
 /obj/machinery/airalarm/all_access{
-	dir = 1;
 	pixel_y = -24
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -886,7 +883,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/machinery/airalarm/all_access{
-	dir = 4;
+	dir = 8;
 	pixel_x = -24
 	},
 /turf/open/floor/catwalk_floor,
@@ -1063,7 +1060,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/airalarm/all_access{
-	dir = 1;
 	pixel_y = -24
 	},
 /turf/open/floor/catwalk_floor,
