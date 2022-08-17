@@ -674,7 +674,7 @@
 	},
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "dc" = (
 /obj/structure/chair/sofa/left{
 	color = "#c45c57"
@@ -691,7 +691,7 @@
 	},
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "de" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/reagent_dispensers/watertank,
@@ -762,7 +762,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/white,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "fv" = (
 /obj/effect/turf_decal/stripes{
 	dir = 8
@@ -948,7 +948,7 @@
 	name = "Old Mining Turret"
 	},
 /turf/closed/wall/mineral/titanium,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "kA" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/station/engineering/engine)
@@ -1047,7 +1047,7 @@
 	},
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/iron/white,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "qp" = (
 /obj/effect/turf_decal/stripes{
 	dir = 8
@@ -1118,7 +1118,7 @@
 "sD" = (
 /obj/machinery/vending/boozeomat/all_access,
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "sG" = (
 /obj/structure/table/wood,
 /obj/effect/decal/cleanable/dirt,
@@ -1129,7 +1129,7 @@
 	},
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "sW" = (
 /obj/effect/turf_decal/stripes{
 	dir = 4
@@ -1158,7 +1158,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/white,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "vv" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
@@ -1252,7 +1252,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/white,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "xk" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -1283,7 +1283,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "yn" = (
 /obj/effect/turf_decal/box/corners,
 /obj/effect/turf_decal/box/corners{
@@ -1488,7 +1488,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/plastitanium,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "EU" = (
 /obj/effect/turf_decal/stripes,
 /obj/effect/turf_decal/stripes/corner{
@@ -1572,7 +1572,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "Jf" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/engineering/engine)
@@ -1697,7 +1697,7 @@
 	dir = 9
 	},
 /turf/open/floor/iron/white,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "NB" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/effect/turf_decal/trimline/white/filled/line{
@@ -1851,7 +1851,7 @@
 	},
 /obj/item/storage/cans/sixbeer,
 /turf/open/floor/mineral/plastitanium,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "Ti" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
@@ -1882,7 +1882,7 @@
 "Ud" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/crate,
-/obj/item/stack/sheet/metal/twenty,
+/obj/item/stack/sheet/iron/twenty,
 /obj/item/stack/sheet/glass{
 	amount = 10
 	},
@@ -1967,7 +1967,7 @@
 /area/station/command/bridge)
 "Vx" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "We" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/rack,
@@ -2024,7 +2024,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/white,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "Yu" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/status_display{
@@ -2060,7 +2060,7 @@
 	pixel_y = -24
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "YJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/greenglow,
@@ -2077,7 +2077,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/white,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "YL" = (
 /obj/effect/decal/cleanable/greenglow,
 /obj/structure/cable,
@@ -2092,7 +2092,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/white,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "Zg" = (
 /obj/machinery/door/airlock/external{
 	name = "External Freight Airlock"
@@ -2130,7 +2130,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/mineral/plastitanium,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "ZA" = (
 /obj/effect/turf_decal/stripes{
 	dir = 5

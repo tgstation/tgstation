@@ -1043,7 +1043,7 @@
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/cell/high,
 /obj/item/stock_parts/cell/high,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/cargo)
 "Hh" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
@@ -1057,7 +1057,7 @@
 	pixel_y = 32
 	},
 /obj/structure/filingcabinet/chestdrawer,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/cargo)
 "Hw" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
@@ -1149,12 +1149,12 @@
 	name = "brig officer's closet";
 	pixel_x = -28
 	},
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/cargo)
 "Jx" = (
 /obj/effect/landmark/start/warden,
 /obj/structure/chair/office,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/cargo)
 "Ko" = (
 /turf/open/floor/iron/dark,
@@ -1283,7 +1283,7 @@
 	pixel_x = -28
 	},
 /obj/item/knife/letter_opener,
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/cargo)
 "Nq" = (
 /obj/structure/table,
@@ -1299,7 +1299,7 @@
 /obj/item/desk_flag/solgov{
 	pixel_x = -14
 	},
-/turf/open/floor/carpet/nanoweave/red,
+/turf/open/floor/carpet/neon/simple/cyan,
 /area/station/cargo)
 "Nz" = (
 /obj/machinery/door_timer{

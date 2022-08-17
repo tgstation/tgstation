@@ -138,7 +138,7 @@
 "cG" = (
 /obj/machinery/vending/cola/random,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "cK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -174,17 +174,17 @@
 "di" = (
 /obj/effect/decal/cleanable/food/salt,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "dm" = (
 /obj/structure/chair{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "dt" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "dD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/warning/electric_shock,
@@ -420,7 +420,7 @@
 	},
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "gY" = (
 /obj/machinery/vending/wardrobe/robo_wardrobe,
 /turf/open/floor/mineral/titanium/tiled,
@@ -429,7 +429,7 @@
 /obj/structure/chair,
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "hb" = (
 /obj/machinery/power/smes/engineering{
 	dir = 1
@@ -505,7 +505,7 @@
 "hP" = (
 /mob/living/simple_animal/hostile/alien/sentinel,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "hR" = (
 /obj/structure/holosign/barrier/medical,
 /obj/machinery/light/floor,
@@ -536,7 +536,7 @@
 /area/station/command/bridge)
 "ih" = (
 /turf/closed/wall/mineral/titanium,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "ij" = (
 /obj/machinery/atmospherics/components/tank/plasma{
 	dir = 1
@@ -654,7 +654,7 @@
 /obj/machinery/light/broken,
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "kz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -667,7 +667,7 @@
 /obj/item/kirbyplants/random,
 /obj/item/toy/figure/rd,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "kK" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 8
@@ -776,7 +776,7 @@
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "mc" = (
 /obj/machinery/holopad,
 /obj/effect/decal/cleanable/dirt,
@@ -815,7 +815,7 @@
 	},
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "mJ" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
@@ -848,7 +848,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "mT" = (
 /obj/structure/cable,
 /obj/machinery/airalarm/directional/north,
@@ -891,7 +891,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "nR" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 8
@@ -962,7 +962,7 @@
 "oV" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "px" = (
 /obj/machinery/door/firedoor/window,
 /obj/effect/spawner/structure/window/reinforced/shuttle,
@@ -1027,17 +1027,17 @@
 	},
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "qo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/cigbutt,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "qu" = (
 /obj/effect/mob_spawn/human/scientist,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "qB" = (
 /turf/closed/wall/mineral/titanium,
 /area/station/science)
@@ -1098,7 +1098,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "rp" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/decal/cleanable/dirt,
@@ -1211,7 +1211,7 @@
 "sQ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "sV" = (
 /obj/effect/decal/cleanable/oil,
 /obj/item/bodypart/l_leg/robot,
@@ -1412,7 +1412,7 @@
 /obj/structure/table,
 /obj/item/food/cubancarp,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "xg" = (
 /obj/machinery/power/port_gen/pacman,
 /obj/item/stack/sheet/mineral/plasma/five,
@@ -1504,7 +1504,7 @@
 "yk" = (
 /obj/machinery/vending/coffee,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "ym" = (
 /obj/machinery/door/airlock/command/glass,
 /obj/machinery/door/firedoor,
@@ -1552,7 +1552,7 @@
 /turf/closed/wall/mineral/titanium{
 	baseturfs = /turf/open/floor/mineral/titanium/tiled/white
 	},
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "yW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
@@ -1611,7 +1611,7 @@
 "zJ" = (
 /obj/structure/sign/departments/xenobio,
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "zV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
@@ -1814,7 +1814,7 @@
 /area/station/commons/storage/primary)
 "CF" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "CI" = (
 /obj/structure/sign/poster/official/anniversary_vintage_reprint,
 /turf/closed/wall/mineral/titanium,
@@ -2019,14 +2019,14 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "EP" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "foreshutter"
 	},
 /turf/open/floor/plating,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "ET" = (
 /obj/structure/table,
 /obj/item/food/soup/electron,
@@ -2034,7 +2034,7 @@
 	pixel_y = 25
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "Fk" = (
 /obj/structure/window/reinforced/spawner,
 /obj/structure/window/reinforced/spawner/west,
@@ -2214,7 +2214,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "HA" = (
 /mob/living/simple_animal/slime,
 /obj/machinery/conveyor{
@@ -2339,7 +2339,7 @@
 /obj/structure/table,
 /obj/item/food/burger/xeno,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "IE" = (
 /obj/structure/barricade/wooden,
 /obj/structure/disposalpipe/segment{
@@ -2592,7 +2592,7 @@
 "Mg" = (
 /obj/structure/sign/poster/official/random,
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "My" = (
 /obj/structure/disposalpipe/segment{
 	dir = 2
@@ -2616,7 +2616,7 @@
 "MK" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "MR" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
@@ -2938,7 +2938,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "RM" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2{
@@ -3076,7 +3076,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "TE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light{
@@ -3101,7 +3101,7 @@
 	dir = 5
 	},
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "TV" = (
 /obj/effect/decal/cleanable/glass,
 /obj/effect/decal/cleanable/dirt,
@@ -3161,7 +3161,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "Uv" = (
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
@@ -3412,7 +3412,7 @@
 /turf/closed/wall/mineral/titanium{
 	baseturfs = /turf/open/floor/mineral/titanium/tiled/white
 	},
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "XB" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 8

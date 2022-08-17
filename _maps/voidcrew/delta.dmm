@@ -8,7 +8,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "ac" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/commons)
@@ -22,7 +22,7 @@
 /area/station/commons)
 "ae" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "af" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -44,7 +44,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "ah" = (
 /turf/closed/wall/mineral/titanium,
 /area/station/engineering)
@@ -123,7 +123,7 @@
 /obj/structure/chair/stool/bar,
 /obj/effect/turf_decal/tile/bar/diagonal,
 /turf/open/floor/iron,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "ar" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table,
@@ -137,7 +137,7 @@
 	},
 /obj/effect/turf_decal/tile/bar/diagonal,
 /turf/open/floor/iron,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "as" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
@@ -145,7 +145,7 @@
 	},
 /obj/effect/turf_decal/tile/bar/diagonal,
 /turf/open/floor/iron,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "at" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -170,7 +170,7 @@
 	},
 /obj/item/food/chocolatebar,
 /turf/open/floor/iron/dark,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "au" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/firealarm{
@@ -179,7 +179,7 @@
 /obj/structure/closet/crate/bin,
 /obj/effect/turf_decal/tile/bar/diagonal,
 /turf/open/floor/iron,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "aw" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/crate,
@@ -202,10 +202,10 @@
 	pixel_y = -3
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "ax" = (
 /turf/closed/wall/mineral/titanium,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "ay" = (
 /obj/machinery/power/shuttle/engine/fueled/plasma{
 	dir = 4
@@ -289,14 +289,14 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/turf_decal/tile/bar/diagonal,
 /turf/open/floor/iron,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "aI" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/chair/stool/bar/directional/south,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/turf_decal/tile/bar/diagonal,
 /turf/open/floor/iron,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "aJ" = (
 /obj/machinery/light/small/built,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -318,7 +318,7 @@
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/effect/turf_decal/tile/bar/diagonal,
 /turf/open/floor/iron,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "aL" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
@@ -497,7 +497,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "bb" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
@@ -509,7 +509,7 @@
 	},
 /obj/effect/turf_decal/tile/bar/diagonal,
 /turf/open/floor/iron,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "bc" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden{
@@ -520,7 +520,7 @@
 	},
 /obj/effect/turf_decal/tile/bar/diagonal,
 /turf/open/floor/iron,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "bd" = (
 /obj/machinery/light/small/built{
 	dir = 4
@@ -528,7 +528,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/autolathe,
 /turf/open/floor/iron/dark,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "be" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -540,7 +540,7 @@
 	},
 /obj/effect/turf_decal/tile/bar/diagonal,
 /turf/open/floor/iron,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "bg" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
@@ -557,7 +557,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "bh" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -578,7 +578,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "bi" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -699,7 +699,7 @@
 /obj/structure/chair,
 /obj/effect/turf_decal/tile/bar/diagonal,
 /turf/open/floor/iron,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "bv" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
@@ -723,7 +723,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/tile/bar/diagonal,
 /turf/open/floor/iron,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "by" = (
 /obj/effect/turf_decal/stripes{
 	dir = 8
@@ -820,14 +820,14 @@
 /obj/structure/chair,
 /obj/effect/turf_decal/tile/bar/diagonal,
 /turf/open/floor/iron,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "bJ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table,
 /obj/machinery/microwave,
 /obj/effect/turf_decal/tile/bar/diagonal,
 /turf/open/floor/iron,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "bK" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table,
@@ -844,23 +844,23 @@
 	},
 /obj/effect/turf_decal/tile/bar/diagonal,
 /turf/open/floor/iron,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "bL" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table,
 /obj/item/storage/fancy/donut_box,
 /obj/effect/turf_decal/tile/bar/diagonal,
 /turf/open/floor/iron,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "bN" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "bO" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/space_heater,
 /turf/open/floor/iron/dark,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "bP" = (
 /obj/effect/turf_decal/stripes{
 	dir = 8
@@ -898,7 +898,7 @@
 /obj/item/gun/ballistic/revolver/detective,
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron/dark,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "bS" = (
 /obj/machinery/turretid{
 	icon_state = "control_kill";
@@ -1255,7 +1255,7 @@
 /obj/item/food/sandwich,
 /obj/effect/turf_decal/tile/bar/diagonal,
 /turf/open/floor/iron,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "cx" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1264,7 +1264,7 @@
 /obj/item/wrench,
 /obj/item/multitool,
 /turf/open/floor/iron/dark,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "cz" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
@@ -1459,7 +1459,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
-/area/station/commons/canteen)
+/area/station/service/cafeteria)
 "cT" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Medbay"
@@ -1834,7 +1834,7 @@
 "dB" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/crate,
-/obj/item/stack/sheet/metal/twenty,
+/obj/item/stack/sheet/iron/twenty,
 /obj/item/stack/sheet/glass{
 	amount = 10
 	},

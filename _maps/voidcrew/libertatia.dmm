@@ -1650,7 +1650,7 @@
 /obj/structure/rack,
 /obj/item/storage/bag/ore,
 /obj/item/storage/bag/ore,
-/obj/item/clothing/head/hardhat/mining,
+/obj/item/clothing/head/hardhat/orange,
 /obj/item/clothing/suit/hazardvest,
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = 32
@@ -1658,8 +1658,8 @@
 /obj/item/clothing/suit/hazardvest,
 /obj/item/pickaxe/improvised,
 /obj/item/pickaxe/improvised,
-/obj/item/clothing/head/hardhat/mining,
-/obj/item/clothing/head/hardhat/mining,
+/obj/item/clothing/head/hardhat/orange,
+/obj/item/clothing/head/hardhat/orange,
 /turf/open/floor/pod/light,
 /area/station/cargo)
 "XB" = (
