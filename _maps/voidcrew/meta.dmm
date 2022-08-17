@@ -1569,14 +1569,14 @@
 	},
 /obj/machinery/processor,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral/diagonal,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/station/service/cafeteria)
 "cV" = (
 /obj/machinery/deepfryer,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral/diagonal,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/station/service/cafeteria)
@@ -2109,7 +2109,7 @@
 	pixel_y = 6
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral/diagonal,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/station/service/cafeteria)
@@ -2122,7 +2122,7 @@
 /obj/machinery/light/small/built{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/neutral/diagonal,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/station/service/cafeteria)
@@ -2292,7 +2292,7 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/effect/turf_decal/tile/neutral/diagonal,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/station/service/cafeteria)
@@ -2302,7 +2302,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral/diagonal,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/station/service/cafeteria)
@@ -2347,7 +2347,7 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/effect/turf_decal/tile/neutral/diagonal,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/station/service/cafeteria)
@@ -2365,7 +2365,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral/diagonal,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/station/service/cafeteria)
@@ -2374,7 +2374,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
-/obj/effect/turf_decal/tile/neutral/diagonal,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/station/service/cafeteria)
@@ -2385,7 +2385,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/neutral/diagonal,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/station/service/cafeteria)

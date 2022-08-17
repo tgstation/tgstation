@@ -1646,7 +1646,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/white/anticorner{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -1660,7 +1660,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/white{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 5
 	},
 /turf/open/floor/iron,
@@ -1670,7 +1670,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
-/obj/effect/turf_decal/tile/white{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 5
 	},
 /turf/open/floor/iron,
@@ -1727,7 +1727,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/white/anticorner{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -1870,7 +1870,7 @@
 	req_access = null
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/white{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 10
 	},
 /turf/open/floor/iron,
@@ -1899,7 +1899,7 @@
 /obj/item/storage/medkit/regular,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/white{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 9
 	},
 /turf/open/floor/iron,
@@ -2383,7 +2383,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/white{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 10
 	},
 /turf/open/floor/iron,
@@ -2529,7 +2529,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/white{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 6
 	},
 /turf/open/floor/iron,

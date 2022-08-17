@@ -22,7 +22,7 @@
 /area/station/commons)
 "aR" = (
 /obj/effect/turf_decal/industrial/hatch/yellow,
-/obj/machinery/suit_storage_unit/independent/mining/eva,
+/obj/machinery/suit_storage_unit/mining/eva,
 /turf/open/floor/iron,
 /area/station/cargo)
 "aS" = (
@@ -98,7 +98,7 @@
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical,
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/turf_decal/tile/blue/mono,
 /turf/open/floor/iron/white,
 /area/station/medical)
@@ -201,7 +201,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 10
 	},
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /turf/open/floor/iron/white,
 /area/station/medical)
 "gu" = (
@@ -270,7 +270,7 @@
 /obj/structure/mirror{
 	pixel_y = 28
 	},
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/turf_decal/tile/blue/border{
 	dir = 1
 	},
@@ -411,7 +411,7 @@
 /turf/open/floor/plating,
 /area/station/engineering)
 "jP" = (
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/turf_decal/tile/blue/border{
 	dir = 10
 	},
@@ -567,7 +567,7 @@
 /obj/item/radio/intercom{
 	pixel_y = 20
 	},
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/turf_decal/tile/blue/border{
 	dir = 1
 	},
@@ -744,7 +744,7 @@
 	pixel_y = 28
 	},
 /obj/structure/closet/crate/freezer/blood,
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/turf_decal/tile/blue/border{
 	dir = 1
 	},
@@ -861,7 +861,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/landmark/start/medical_doctor,
 /turf/open/floor/iron/white,
 /area/station/medical)
@@ -990,7 +990,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/industrial/hatch/yellow,
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/turf_decal/tile/blue/border{
 	dir = 9
 	},
@@ -1032,7 +1032,7 @@
 	},
 /obj/structure/bed,
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/turf_decal/tile/blue/border{
 	dir = 10
 	},
@@ -1202,7 +1202,7 @@
 	pixel_x = 24;
 	pixel_y = -24
 	},
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/turf_decal/tile/blue/border,
 /turf/open/floor/iron/white,
 /area/station/medical)
@@ -1210,7 +1210,7 @@
 /obj/structure/closet/secure_closet/medical2,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/turf_decal/tile/blue/border,
 /turf/open/floor/iron/white,
 /area/station/medical)
@@ -1332,7 +1332,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical,
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/turf_decal/tile/blue/mono,
 /turf/open/floor/iron/white,
 /area/station/medical)
@@ -1463,7 +1463,7 @@
 "MB" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/turf_decal/tile/blue/border,
 /turf/open/floor/iron/white,
 /area/station/medical)
@@ -1561,7 +1561,7 @@
 "Px" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /turf/open/floor/iron/white,
 /area/station/medical)
 "Qe" = (
@@ -1691,7 +1691,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/suit_storage_unit/independent/mining/eva,
+/obj/machinery/suit_storage_unit/mining/eva,
 /turf/open/floor/iron,
 /area/station/cargo)
 "VO" = (

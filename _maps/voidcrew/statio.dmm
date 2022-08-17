@@ -226,7 +226,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/turf/open/floor/carpet/nanoweave/beige,
+/turf/open/floor/carpet/neon/simple/cyan/beige,
 /area/station/commons/dorms)
 "bb" = (
 /obj/structure/filingcabinet/chestdrawer,
@@ -994,7 +994,7 @@
 /obj/machinery/computer/cryopod{
 	pixel_y = 32
 	},
-/turf/open/floor/carpet/nanoweave/beige,
+/turf/open/floor/carpet/neon/simple/cyan/beige,
 /area/station/commons/dorms)
 "eB" = (
 /obj/structure/table/wood,
@@ -1513,7 +1513,7 @@
 /obj/machinery/vending/clothing,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/carpet/nanoweave/beige,
+/turf/open/floor/carpet/neon/simple/cyan/beige,
 /area/station/commons/dorms)
 "hk" = (
 /obj/structure/cable,
@@ -2745,7 +2745,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/airalarm/directional/north,
-/turf/open/floor/carpet/nanoweave/beige,
+/turf/open/floor/carpet/neon/simple/cyan/beige,
 /area/station/commons/dorms)
 "nt" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
@@ -3503,7 +3503,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
-/turf/open/floor/carpet/nanoweave/beige,
+/turf/open/floor/carpet/neon/simple/cyan/beige,
 /area/station/commons/dorms)
 "ri" = (
 /obj/structure/disposalpipe/segment{
@@ -4195,7 +4195,7 @@
 "uS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
-/turf/open/floor/carpet/nanoweave/beige,
+/turf/open/floor/carpet/neon/simple/cyan/beige,
 /area/station/commons/dorms)
 "uT" = (
 /obj/machinery/light{
@@ -4331,7 +4331,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2{
 	dir = 1
 	},
-/turf/open/floor/carpet/nanoweave/beige,
+/turf/open/floor/carpet/neon/simple/cyan/beige,
 /area/station/commons/dorms)
 "vp" = (
 /obj/structure/closet/l3closet/virology,
@@ -5247,7 +5247,7 @@
 /obj/item/desk_flag/solgov{
 	pixel_x = -8
 	},
-/turf/open/floor/carpet/nanoweave/blue,
+/turf/open/floor/carpet/neon/simple/cyan/blue,
 /area/station/commons/solgov)
 "zK" = (
 /turf/closed/wall/r_wall,
@@ -5305,7 +5305,7 @@
 /obj/machinery/camera/autoname{
 	dir = 10
 	},
-/turf/open/floor/carpet/nanoweave/beige,
+/turf/open/floor/carpet/neon/simple/cyan/beige,
 /area/station/commons/dorms)
 "zW" = (
 /obj/effect/decal/cleanable/dirt,
@@ -6123,7 +6123,7 @@
 /obj/machinery/firealarm{
 	pixel_y = -26
 	},
-/turf/open/floor/carpet/nanoweave/beige,
+/turf/open/floor/carpet/neon/simple/cyan/beige,
 /area/station/commons/dorms)
 "DV" = (
 /obj/machinery/power/port_gen/pacman,
@@ -6362,7 +6362,7 @@
 /obj/structure/mirror{
 	pixel_x = -27
 	},
-/turf/open/floor/carpet/nanoweave/beige,
+/turf/open/floor/carpet/neon/simple/cyan/beige,
 /area/station/commons/dorms)
 "Fb" = (
 /obj/structure/cable,
@@ -6595,7 +6595,7 @@
 /obj/structure/chair/comfy{
 	dir = 1
 	},
-/turf/open/floor/carpet/nanoweave/blue,
+/turf/open/floor/carpet/neon/simple/cyan/blue,
 /area/station/commons/solgov)
 "FV" = (
 /obj/structure/disposalpipe/junction{
@@ -6615,7 +6615,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
-/turf/open/floor/carpet/nanoweave/beige,
+/turf/open/floor/carpet/neon/simple/cyan/beige,
 /area/station/commons/dorms)
 "FX" = (
 /obj/effect/turf_decal/plaque{
@@ -7004,7 +7004,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/carpet/nanoweave/blue,
+/turf/open/floor/carpet/neon/simple/cyan/blue,
 /area/station/commons/solgov)
 "HM" = (
 /obj/machinery/computer/teleporter{
@@ -7021,7 +7021,7 @@
 /area/station/engineering/communications)
 "HO" = (
 /obj/item/kirbyplants/random,
-/turf/open/floor/carpet/nanoweave/beige,
+/turf/open/floor/carpet/neon/simple/cyan/beige,
 /area/station/commons/dorms)
 "HP" = (
 /obj/machinery/computer/monitor{
@@ -7317,7 +7317,7 @@
 "Jn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light,
-/turf/open/floor/carpet/nanoweave/beige,
+/turf/open/floor/carpet/neon/simple/cyan/beige,
 /area/station/commons/dorms)
 "Jo" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -7640,7 +7640,7 @@
 /obj/structure/sign/poster/official/solgov_enlist{
 	pixel_y = 32
 	},
-/turf/open/floor/carpet/nanoweave/blue,
+/turf/open/floor/carpet/neon/simple/cyan/blue,
 /area/station/commons/solgov)
 "KV" = (
 /obj/machinery/light{
@@ -8016,7 +8016,7 @@
 /area/station/maintenance/starboard)
 "MW" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/carpet/nanoweave/beige,
+/turf/open/floor/carpet/neon/simple/cyan/beige,
 /area/station/commons/dorms)
 "MX" = (
 /obj/structure/disposalpipe/segment{
@@ -8048,12 +8048,12 @@
 /turf/open/floor/iron/dark,
 /area/station/service/cafeteria)
 "Ng" = (
-/turf/open/floor/carpet/nanoweave/beige,
+/turf/open/floor/carpet/neon/simple/cyan/beige,
 /area/station/commons/dorms)
 "Nh" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/carpet/nanoweave/beige,
+/turf/open/floor/carpet/neon/simple/cyan/beige,
 /area/station/commons/dorms)
 "Ni" = (
 /obj/machinery/ore_silo,
@@ -8380,7 +8380,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/camera/directional/north,
-/turf/open/floor/carpet/nanoweave/blue,
+/turf/open/floor/carpet/neon/simple/cyan/blue,
 /area/station/commons/solgov)
 "OL" = (
 /obj/effect/turf_decal/tile/bar/diagonal,
@@ -8424,7 +8424,7 @@
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
-/turf/open/floor/carpet/nanoweave/blue,
+/turf/open/floor/carpet/neon/simple/cyan/blue,
 /area/station/commons/solgov)
 "Pb" = (
 /obj/effect/turf_decal/tile/yellow,
@@ -9920,7 +9920,7 @@
 	name = "Dormitory"
 	},
 /obj/machinery/door/firedoor,
-/turf/open/floor/carpet/nanoweave/beige,
+/turf/open/floor/carpet/neon/simple/cyan/beige,
 /area/station/commons/dorms)
 "Wj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{

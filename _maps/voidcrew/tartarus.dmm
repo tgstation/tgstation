@@ -915,7 +915,7 @@
 /area/station/science/robotics)
 "qV" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/suit_storage_unit/independent/pilot,
+/obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/iron/dark,
 /area/station/engineering)
 "rd" = (
@@ -1196,7 +1196,7 @@
 /turf/open/floor/iron/dark/grid,
 /area/station/engineering/electrical)
 "wu" = (
-/obj/machinery/suit_storage_unit/independent/security,
+/obj/machinery/suit_storage_unit/security,
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,

@@ -1894,7 +1894,7 @@
 /area/station/science)
 "xH" = (
 /obj/structure/cable,
-/turf/open/floor/carpet/nanoweave/purple,
+/turf/open/floor/carpet/neon/simple/cyan/purple,
 /area/station/hallway/primary/central)
 "xK" = (
 /obj/structure/bodycontainer/crematorium/creamatorium{
@@ -3918,7 +3918,7 @@
 /turf/open/floor/engine,
 /area/station/security)
 "YM" = (
-/turf/open/floor/carpet/nanoweave/purple,
+/turf/open/floor/carpet/neon/simple/cyan/purple,
 /area/station/hallway/primary/central)
 "YW" = (
 /obj/machinery/power/terminal{

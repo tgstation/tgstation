@@ -227,7 +227,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/orange/visible{
 	dir = 4
 	},
-/obj/machinery/suit_storage_unit/independent/engineering,
+/obj/machinery/suit_storage_unit/engineering,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "ps" = (

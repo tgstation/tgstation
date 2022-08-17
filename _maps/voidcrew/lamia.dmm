@@ -1656,7 +1656,7 @@
 /turf/open/floor/carpet/purple,
 /area/station/service/cafeteria)
 "VP" = (
-/obj/item/storage/pill_bottle/dice{
+/obj/item/storage/dice{
 	icon_state = "magicdicebag";
 	pixel_y = 4
 	},

@@ -245,7 +245,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/carpet/nanoweave/purple,
+/turf/open/floor/carpet/neon/simple/cyan/purple,
 /area/station/command/bridge)
 "jh" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
@@ -422,7 +422,7 @@
 /area/station/cargo)
 "pN" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/suit_storage_unit/independent/pilot,
+/obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "pR" = (
@@ -446,7 +446,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/carpet/nanoweave/purple,
+/turf/open/floor/carpet/neon/simple/cyan/purple,
 /area/station/command/bridge)
 "rQ" = (
 /obj/structure/cable,
@@ -553,7 +553,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/carpet/nanoweave/purple,
+/turf/open/floor/carpet/neon/simple/cyan/purple,
 /area/station/command/bridge)
 "vd" = (
 /obj/structure/cable,
@@ -702,7 +702,7 @@
 	codes_txt = "patrol;next_patrol=bridgetwo";
 	location = "bridgeone"
 	},
-/turf/open/floor/carpet/nanoweave/purple,
+/turf/open/floor/carpet/neon/simple/cyan/purple,
 /area/station/command/bridge)
 "zE" = (
 /obj/effect/turf_decal/spline/fancy/beige{
@@ -711,7 +711,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/carpet/nanoweave/purple,
+/turf/open/floor/carpet/neon/simple/cyan/purple,
 /area/station/command/bridge)
 "zO" = (
 /obj/machinery/door/firedoor,
@@ -869,7 +869,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/carpet/nanoweave/purple,
+/turf/open/floor/carpet/neon/simple/cyan/purple,
 /area/station/command/bridge)
 "Dk" = (
 /obj/effect/turf_decal/spline/fancy/purple{
@@ -965,7 +965,7 @@
 /mob/living/simple_animal/cow{
 	name = "Bessie"
 	},
-/turf/open/floor/carpet/nanoweave/purple,
+/turf/open/floor/carpet/neon/simple/cyan/purple,
 /area/station/command/bridge)
 "FC" = (
 /obj/machinery/power/smes/engineering,
@@ -1015,7 +1015,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/carpet/nanoweave/purple,
+/turf/open/floor/carpet/neon/simple/cyan/purple,
 /area/station/command/bridge)
 "Hx" = (
 /obj/structure/cable,
@@ -1024,7 +1024,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/carpet/nanoweave/purple,
+/turf/open/floor/carpet/neon/simple/cyan/purple,
 /area/station/command/bridge)
 "HO" = (
 /obj/effect/turf_decal/spline/fancy/purple{
@@ -1064,7 +1064,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/carpet/nanoweave/purple,
+/turf/open/floor/carpet/neon/simple/cyan/purple,
 /area/station/command/bridge)
 "Iw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1101,7 +1101,7 @@
 	codes_txt = "patrol;next_patrol=hallfour";
 	location = "bridgetwo"
 	},
-/turf/open/floor/carpet/nanoweave/purple,
+/turf/open/floor/carpet/neon/simple/cyan/purple,
 /area/station/command/bridge)
 "IX" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1117,7 +1117,7 @@
 /mob/living/simple_animal/crab{
 	name = "Walter"
 	},
-/turf/open/floor/carpet/nanoweave/purple,
+/turf/open/floor/carpet/neon/simple/cyan/purple,
 /area/station/command/bridge)
 "Jm" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -1163,7 +1163,7 @@
 /obj/item/pen,
 /obj/item/pen,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/carpet/nanoweave/purple,
+/turf/open/floor/carpet/neon/simple/cyan/purple,
 /area/station/command/bridge)
 "KC" = (
 /obj/machinery/atmospherics/pipe/layer_manifold{
@@ -1250,7 +1250,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/suit_storage_unit/independent/pilot,
+/obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "Ok" = (
@@ -1267,7 +1267,7 @@
 	},
 /obj/item/megaphone/command,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/carpet/nanoweave/purple,
+/turf/open/floor/carpet/neon/simple/cyan/purple,
 /area/station/command/bridge)
 "Ot" = (
 /obj/structure/cable,
@@ -1277,7 +1277,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/carpet/nanoweave/purple,
+/turf/open/floor/carpet/neon/simple/cyan/purple,
 /area/station/command/bridge)
 "Ov" = (
 /obj/effect/turf_decal/industrial/fire/fulltile,
@@ -1421,7 +1421,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/carpet/nanoweave/purple,
+/turf/open/floor/carpet/neon/simple/cyan/purple,
 /area/station/command/bridge)
 "RB" = (
 /obj/machinery/power/terminal{
@@ -1456,7 +1456,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/carpet/nanoweave/purple,
+/turf/open/floor/carpet/neon/simple/cyan/purple,
 /area/station/command/bridge)
 "SS" = (
 /obj/structure/cable,

@@ -27,7 +27,7 @@
 /area/station/cargo)
 "bg" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/suit_storage_unit/independent/mining/eva,
+/obj/machinery/suit_storage_unit/mining/eva,
 /turf/open/floor/plating,
 /area/station/cargo)
 "bn" = (

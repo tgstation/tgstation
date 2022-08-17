@@ -442,7 +442,7 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/machinery/suit_storage_unit/independent/mining/eva,
+/obj/machinery/suit_storage_unit/mining/eva,
 /turf/open/floor/mineral/plastitanium,
 /area/station/cargo)
 "cj" = (
@@ -715,7 +715,7 @@
 	dir = 10
 	},
 /obj/effect/turf_decal/industrial/hatch/yellow,
-/obj/machinery/suit_storage_unit/independent/engineering,
+/obj/machinery/suit_storage_unit/engineering,
 /turf/open/floor/plating,
 /area/station/engineering/engine)
 "dF" = (
@@ -1672,7 +1672,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/industrial/hatch/yellow,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/suit_storage_unit/independent/mining/eva,
+/obj/machinery/suit_storage_unit/mining/eva,
 /turf/open/floor/mineral/plastitanium,
 /area/station/cargo)
 "MI" = (

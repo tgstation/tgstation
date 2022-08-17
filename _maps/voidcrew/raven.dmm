@@ -376,7 +376,7 @@
 /area/station/security/prison)
 "be" = (
 /obj/machinery/computer/operating,
-/obj/effect/turf_decal/tile/white/anticorner{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -389,7 +389,7 @@
 /obj/machinery/status_display/shuttle{
 	pixel_y = 32
 	},
-/obj/effect/turf_decal/tile/white{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 5
 	},
 /turf/open/floor/iron,
@@ -414,7 +414,7 @@
 	dir = 1;
 	pixel_y = 26
 	},
-/obj/effect/turf_decal/tile/white/anticorner{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -461,7 +461,7 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/north,
-/obj/effect/turf_decal/tile/white/anticorner{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -471,7 +471,7 @@
 /obj/machinery/sleeper,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/white/anticorner{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -555,7 +555,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/white{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 9
 	},
 /turf/open/floor/iron,
@@ -582,7 +582,7 @@
 	pixel_x = 28
 	},
 /obj/machinery/stasis,
-/obj/effect/turf_decal/tile/white{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 6
 	},
 /turf/open/floor/iron,
@@ -660,7 +660,7 @@
 /turf/open/floor/iron,
 /area/station/medical)
 "bM" = (
-/obj/effect/turf_decal/tile/white{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 6
 	},
 /turf/open/floor/iron,
@@ -689,7 +689,7 @@
 	dir = 4;
 	pixel_x = -24
 	},
-/obj/effect/turf_decal/tile/white/anticorner{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -733,7 +733,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
-/obj/effect/turf_decal/tile/white{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 10
 	},
 /turf/open/floor/iron,
@@ -835,7 +835,7 @@
 "cg" = (
 /obj/structure/rack,
 /obj/item/defibrillator/loaded,
-/obj/effect/turf_decal/tile/white/anticorner{
+/obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -901,7 +901,7 @@
 	pixel_y = 8
 	},
 /obj/structure/table/reinforced,
-/obj/effect/turf_decal/tile/white{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 10
 	},
 /turf/open/floor/iron,
@@ -915,7 +915,7 @@
 	},
 /obj/item/storage/medkit/fire,
 /obj/item/mod/control/pre_equipped/medical,
-/obj/effect/turf_decal/tile/white/anticorner,
+/obj/effect/turf_decal/tile/neutral/anticorner,
 /turf/open/floor/iron,
 /area/station/medical)
 "cm" = (
@@ -1041,7 +1041,7 @@
 /obj/machinery/cryopod{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/white{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 6
 	},
 /turf/open/floor/iron/dark,
@@ -1064,13 +1064,13 @@
 /obj/item/radio/intercom{
 	pixel_x = 28
 	},
-/obj/effect/turf_decal/tile/white{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 9
 	},
 /turf/open/floor/iron/dark,
 /area/station/commons)
 "cO" = (
-/obj/effect/turf_decal/tile/white{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 6
 	},
 /turf/open/floor/iron/dark,
@@ -1626,7 +1626,7 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/effect/turf_decal/tile/white{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 9
 	},
 /turf/open/floor/iron/dark,
@@ -2675,7 +2675,7 @@
 /obj/machinery/computer/cryopod{
 	pixel_y = -32
 	},
-/obj/effect/turf_decal/tile/white{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 6
 	},
 /turf/open/floor/iron/dark,
@@ -2771,7 +2771,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/white{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 9
 	},
 /turf/open/floor/iron/dark,

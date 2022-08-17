@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ab" = (
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/turf_decal/tile/blue/border,
 /obj/structure/closet/wall/white/med{
 	dir = 1;
@@ -441,7 +441,7 @@
 /obj/effect/turf_decal/borderfloor{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/white{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -631,7 +631,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/engine)
 "eB" = (
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 8
@@ -755,7 +755,7 @@
 /turf/open/floor/wood,
 /area/station/service/cafeteria)
 "fS" = (
-/obj/effect/turf_decal/tile/white{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue,
@@ -785,7 +785,7 @@
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "fZ" = (
-/obj/effect/turf_decal/tile/white{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/red,
@@ -1069,7 +1069,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/structure/disposalpipe/junction/flip,
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /turf/open/floor/iron/white,
 /area/station/medical)
 "iC" = (
@@ -1256,7 +1256,7 @@
 /turf/open/floor/iron/white,
 /area/station/hallway/aft)
 "jT" = (
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/turf_decal/tile/blue/border{
 	dir = 4
 	},
@@ -1452,7 +1452,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "lk" = (
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/turf_decal/tile/blue/border,
 /obj/machinery/light,
 /obj/structure/closet/wall/white/med{
@@ -1740,7 +1740,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "nk" = (
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 4
 	},
@@ -1807,7 +1807,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "nI" = (
-/obj/effect/turf_decal/tile/white{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue,
@@ -1919,7 +1919,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/structure/disposalpipe/junction,
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /turf/open/floor/iron/white,
 /area/station/medical)
 "op" = (
@@ -2101,7 +2101,7 @@
 /area/station/hallway/primary/central)
 "ps" = (
 /obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/white{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
 /obj/effect/turf_decal/borderfloor{
@@ -2620,7 +2620,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/starboard)
 "tO" = (
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 4
 	},
@@ -2968,7 +2968,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/turf_decal/tile/blue/border{
 	dir = 4
 	},
@@ -3032,7 +3032,7 @@
 /turf/open/floor/plasteel/tech/techmaint,
 /area/station/commons/storage/primary)
 "wv" = (
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/medical)
@@ -3139,7 +3139,7 @@
 /turf/open/floor/iron/dark/cargo_one,
 /area/station/commons/storage/primary)
 "xM" = (
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/turf_decal/tile/blue/border{
 	dir = 9
 	},
@@ -3162,7 +3162,7 @@
 /turf/open/floor/wood,
 /area/station/service/cafeteria)
 "yj" = (
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 8
@@ -3274,7 +3274,7 @@
 /turf/open/floor/iron/white,
 /area/station/science)
 "zv" = (
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/turf_decal/tile/blue/border{
 	dir = 10
 	},
@@ -3508,7 +3508,7 @@
 /turf/open/floor/plasteel/tech/techmaint,
 /area/station/hallway/starboard)
 "Bl" = (
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/turf_decal/tile/blue/border,
 /obj/machinery/door/airlock/medical/glass{
 	name = "Infirmary"
@@ -3547,7 +3547,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/turf_decal/tile/blue/border{
 	dir = 4
 	},
@@ -3590,7 +3590,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/turf_decal/tile/blue/border{
 	dir = 6
 	},
@@ -3730,7 +3730,7 @@
 /turf/open/floor/plasteel/tech/techmaint,
 /area/station/construction)
 "Dc" = (
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /turf/open/floor/iron/white,
 /area/station/medical)
 "Dg" = (
@@ -4017,7 +4017,7 @@
 /obj/structure/chair/office/light{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/landmark/start/paramedic,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /turf/open/floor/iron/white,
@@ -4208,7 +4208,7 @@
 /turf/open/floor/iron/dark/cargo_one,
 /area/station/science)
 "Gw" = (
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/turf_decal/tile/blue/border{
 	dir = 1
 	},
@@ -4396,7 +4396,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/station/commons/dorms)
 "Im" = (
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 8
@@ -4480,7 +4480,7 @@
 /turf/open/floor/iron/dark/grid,
 /area/station/engineering/engine)
 "Ji" = (
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical)
@@ -4924,7 +4924,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "MJ" = (
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/turf_decal/tile/blue/border{
 	dir = 1
 	},
@@ -5075,7 +5075,7 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /turf/open/floor/iron/white,
 /area/station/medical)
 "Oe" = (
@@ -5789,7 +5789,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/white{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
@@ -5802,7 +5802,7 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /turf/open/floor/iron/white,
 /area/station/medical)
 "TB" = (
@@ -5814,7 +5814,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/turf_decal/tile/blue/border{
 	dir = 4
 	},
@@ -5869,7 +5869,7 @@
 /obj/effect/turf_decal/borderfloor{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/white{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -6026,7 +6026,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/turf_decal/tile/blue/border{
 	dir = 5
 	},
@@ -6221,7 +6221,7 @@
 /area/station/cargo)
 "Xm" = (
 /obj/machinery/medical_kiosk,
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/turf_decal/tile/blue/border{
 	dir = 4
 	},
@@ -6287,7 +6287,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/white{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/orange/hidden{
@@ -6355,7 +6355,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/engine)
 "Yn" = (
-/obj/effect/turf_decal/tile/white/mono,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/turf_decal/tile/blue/border{
 	dir = 1
 	},
