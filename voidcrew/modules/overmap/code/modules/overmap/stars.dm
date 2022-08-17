@@ -19,7 +19,7 @@
 
 /obj/structure/overmap/star/Destroy()
 	QDEL_NULL(star_datum)
-	return
+	return ..()
 
 /obj/structure/overmap/star/proc/apply_star_colours(colour_one, colour_two)
 	if (colour_two == "")
