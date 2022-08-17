@@ -111,7 +111,7 @@
 
 /obj/projectile/beam/pulse/on_hit(atom/target, blocked = FALSE)
 	. = ..()
-	if (!QDELETED(target) && (isturf(target) || istype(target, /obj/structure/)))
+	if (!QDELETED(target) && (isturf(target) || isstructure(target)))
 		if(isobj(target))
 			SSexplosions.med_mov_atom += target
 		else
