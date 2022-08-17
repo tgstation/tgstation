@@ -91,7 +91,7 @@
 	var/spanned_message = say_quote(message)
 	var/rendered = "<font color=\"#EE4000\"><b>\[Blob Telepathy\] [real_name]</b> [spanned_message]</font>"
 	for(var/M in GLOB.mob_list)
-		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
+		if(isovermind(M) || isblobmonster(M))
 			to_chat(M, rendered)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)
