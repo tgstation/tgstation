@@ -163,7 +163,7 @@
 		if(istype(target, /turf/closed/wall/r_wall))
 			timetotear = 120
 		if(do_after(src, timetotear, target = thewall))
-			if(istype(thewall, /turf/open))
+			if(isopenturf(thewall))
 				return
 			thewall.dismantle_wall(1)
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
