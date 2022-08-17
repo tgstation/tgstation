@@ -19,7 +19,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/spline/fancy/purple,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "bi" = (
 /obj/effect/turf_decal/spline/fancy/purple{
@@ -57,7 +57,7 @@
 	name = "Robotics Lab"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "de" = (
 /obj/machinery/door/airlock/external,
@@ -79,7 +79,7 @@
 /obj/effect/turf_decal/industrial/stand_clear,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/ore_box,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "fb" = (
 /obj/effect/turf_decal/spline/fancy/purple{
@@ -98,7 +98,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "fJ" = (
 /obj/structure/cable,
@@ -140,7 +140,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "gi" = (
 /obj/structure/cable,
@@ -149,7 +149,7 @@
 /obj/item/bedsheet/purple,
 /obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "gJ" = (
 /obj/structure/cable,
@@ -159,7 +159,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "hm" = (
 /obj/machinery/power/terminal{
@@ -214,7 +214,7 @@
 	name = "Robotics Lab"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "iM" = (
 /obj/machinery/ore_silo,
@@ -224,7 +224,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "iV" = (
 /obj/machinery/door/firedoor,
@@ -319,7 +319,7 @@
 	codes_txt = "patrol;next_patrol=hallthree";
 	location = "cargotwo"
 	},
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "mu" = (
 /obj/machinery/power/port_gen/pacman{
@@ -338,7 +338,7 @@
 	name = "Cargo Bay"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "ns" = (
 /obj/effect/turf_decal/spline/fancy/purple{
@@ -363,7 +363,7 @@
 	name = "Cargo Bay"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "oJ" = (
 /obj/structure/cable,
@@ -404,7 +404,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "pI" = (
 /obj/machinery/atmospherics/components/tank/plasma{
@@ -418,7 +418,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "pN" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -465,7 +465,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "sb" = (
 /obj/machinery/light/small{
@@ -543,7 +543,7 @@
 	id = "factoryblasts";
 	name = "cargo bay blast door"
 	},
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "vc" = (
 /obj/machinery/computer/helm{
@@ -561,7 +561,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/oil/streak,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "vq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -589,7 +589,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/fulltile,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "ws" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -598,7 +598,7 @@
 	id = "exosuitconveyor"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "wJ" = (
 /obj/effect/turf_decal/industrial/stand_clear,
@@ -608,7 +608,7 @@
 	pixel_x = 26
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "wX" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -723,7 +723,7 @@
 	name = "Cargo Bay"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "An" = (
 /obj/structure/cable,
@@ -772,12 +772,12 @@
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/suit/hazardvest,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "AY" = (
 /obj/effect/turf_decal/industrial/stand_clear,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "Ba" = (
 /obj/structure/cable,
@@ -788,14 +788,14 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "Bb" = (
 /obj/effect/decal/cleanable/oil/streak,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "Bg" = (
 /obj/structure/window/reinforced/spawner{
@@ -822,7 +822,7 @@
 /obj/machinery/suit_storage_unit/mining/eva,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "BK" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -849,7 +849,7 @@
 /obj/item/storage/box/donkpockets/donkpocketpizza,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "CV" = (
 /turf/closed/wall/r_wall,
@@ -859,7 +859,7 @@
 /obj/effect/turf_decal/spline/fancy/purple,
 /obj/machinery/iv_drip,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "Dc" = (
 /obj/effect/turf_decal/spline/fancy/beige{
@@ -887,13 +887,13 @@
 /obj/item/multitool,
 /obj/item/multitool,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "Dt" = (
 /obj/machinery/autolathe,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "Dx" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -936,7 +936,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "EF" = (
 /obj/structure/cable,
@@ -947,7 +947,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "EI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -991,7 +991,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "GP" = (
 /obj/structure/fans/tiny,
@@ -1005,7 +1005,7 @@
 	name = "Mechaton-class Shuttle";
 	port_direction = 8
 	},
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "Hr" = (
 /obj/structure/cable,
@@ -1044,7 +1044,7 @@
 	pixel_y = 7
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "HR" = (
 /turf/template_noop,
@@ -1081,7 +1081,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "IO" = (
 /obj/structure/cable,
@@ -1135,7 +1135,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "Jw" = (
 /obj/effect/turf_decal/spline/fancy/purple{
@@ -1148,7 +1148,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "KB" = (
 /obj/effect/turf_decal/spline/fancy/beige{
@@ -1207,7 +1207,7 @@
 /obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "My" = (
 /obj/structure/railing,
@@ -1243,7 +1243,7 @@
 	codes_txt = "patrol;next_patrol=robotwo";
 	location = "roboone"
 	},
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "NL" = (
 /obj/machinery/light/small{
@@ -1328,7 +1328,7 @@
 	pixel_y = -3
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "PK" = (
 /turf/closed/wall/r_wall,
@@ -1364,7 +1364,7 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/item/flashlight,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "Qm" = (
 /obj/item/toy/figure/roboticist{
@@ -1391,7 +1391,7 @@
 "Qs" = (
 /obj/machinery/light,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "Ro" = (
 /obj/structure/cable,
@@ -1412,7 +1412,7 @@
 	codes_txt = "patrol;next_patrol=cargotwo";
 	location = "cargoone"
 	},
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "Rq" = (
 /obj/structure/cable,
@@ -1464,7 +1464,7 @@
 	dir = 10
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "Td" = (
 /obj/effect/decal/cleanable/oil/slippery,
@@ -1476,7 +1476,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "To" = (
 /obj/structure/cable,
@@ -1508,7 +1508,7 @@
 	codes_txt = "patrol;next_patrol=hallone";
 	location = "robotwo"
 	},
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "Uk" = (
 /obj/structure/cable,
@@ -1517,7 +1517,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "Vc" = (
 /obj/machinery/airalarm/directional/south,
@@ -1567,7 +1567,7 @@
 	id = "exosuitconveyor"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "VJ" = (
 /obj/structure/railing{
@@ -1599,7 +1599,7 @@
 /obj/item/circuitboard/mecha/ripley/main,
 /obj/item/circuitboard/mecha/ripley/peripherals,
 /obj/item/stack/rods/ten,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/cargo)
 "Wu" = (
 /obj/effect/turf_decal/spline/fancy/purple{
@@ -1633,7 +1633,7 @@
 /obj/item/assembly/prox_sensor,
 /obj/item/stock_parts/cell/high,
 /obj/item/stock_parts/cell/high,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "YV" = (
 /obj/machinery/door/firedoor,
@@ -1680,7 +1680,7 @@
 	id = "exosuitconveyor"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "ZW" = (
 /obj/effect/decal/cleanable/dirt/dust,

@@ -55,7 +55,7 @@
 "bc" = (
 /obj/structure/mopbucket,
 /obj/item/mop,
-/turf/open/floor/plasteel/patterned/ridged,
+/turf/open/floor/iron/dark/ridged,
 /area/station/commons/dorms)
 "bd" = (
 /obj/machinery/computer/autopilot{
@@ -91,7 +91,7 @@
 /obj/effect/turf_decal/industrial/loading{
 	dir = 4
 	},
-/turf/open/floor/plasteel/patterned/grid,
+/turf/open/floor/iron/dark/grid,
 /area/station/cargo)
 "cb" = (
 /obj/structure/table/reinforced,
@@ -181,7 +181,7 @@
 /obj/item/reagent_containers/cup/glass/bottle/wine,
 /obj/item/reagent_containers/cup/glass/bottle/wine,
 /obj/item/clothing/under/suit/cargo_tech,
-/turf/open/floor/plasteel/patterned/grid,
+/turf/open/floor/iron/dark/grid,
 /area/station/cargo)
 "dA" = (
 /turf/template_noop,
@@ -385,7 +385,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 4
 	},
-/turf/open/floor/plasteel/patterned/grid,
+/turf/open/floor/iron/dark/grid,
 /area/station/cargo)
 "gQ" = (
 /obj/effect/turf_decal/siding/red,
@@ -649,7 +649,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 4
 	},
-/turf/open/floor/plasteel/patterned/ridged,
+/turf/open/floor/iron/dark/ridged,
 /area/station/cargo)
 "lc" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/oxygen_output,
@@ -771,7 +771,7 @@
 /area/station/engineering)
 "ob" = (
 /obj/machinery/selling_pad,
-/turf/open/floor/plasteel/patterned/grid,
+/turf/open/floor/iron/dark/grid,
 /area/station/cargo)
 "om" = (
 /turf/closed/wall/r_wall,
@@ -1030,7 +1030,7 @@
 /area/station/command/bridge)
 "ss" = (
 /obj/machinery/suit_storage_unit/mining/eva,
-/turf/open/floor/plasteel/patterned/grid,
+/turf/open/floor/iron/dark/grid,
 /area/station/cargo)
 "su" = (
 /obj/machinery/door/airlock/wood{
@@ -1047,7 +1047,7 @@
 /area/station/commons/chapel/office)
 "sx" = (
 /obj/machinery/door/airlock/public/glass,
-/turf/open/floor/plasteel/patterned/ridged,
+/turf/open/floor/iron/dark/ridged,
 /area/station/commons/dorms)
 "sz" = (
 /obj/structure/railing/corner{
@@ -1240,7 +1240,7 @@
 	pixel_x = -23;
 	pixel_y = 21
 	},
-/turf/open/floor/plasteel/patterned/grid,
+/turf/open/floor/iron/dark/grid,
 /area/station/cargo)
 "vv" = (
 /turf/closed/wall/r_wall,
@@ -1248,14 +1248,14 @@
 "vW" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel/patterned/grid,
+/turf/open/floor/iron/dark/grid,
 /area/station/cargo)
 "wf" = (
 /obj/machinery/autolathe,
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/patterned/monofloor{
+/turf/open/floor/iron/dark/monofloor{
 	dir = 4
 	},
 /area/station/cargo)
@@ -1265,12 +1265,12 @@
 	pixel_x = 23;
 	pixel_y = 21
 	},
-/turf/open/floor/plasteel/patterned/grid,
+/turf/open/floor/iron/dark/grid,
 /area/station/cargo)
 "wq" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
-/turf/open/floor/plasteel/patterned/ridged,
+/turf/open/floor/iron/dark/ridged,
 /area/station/cargo)
 "ws" = (
 /turf/open/floor/engine/air,
@@ -1518,7 +1518,7 @@
 	dir = 4;
 	pixel_x = 26
 	},
-/turf/open/floor/plasteel/patterned/ridged,
+/turf/open/floor/iron/dark/ridged,
 /area/station/cargo)
 "Al" = (
 /obj/structure/cable,
@@ -1832,7 +1832,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 4
 	},
-/turf/open/floor/plasteel/patterned/grid,
+/turf/open/floor/iron/dark/grid,
 /area/station/cargo)
 "FF" = (
 /obj/structure/window/reinforced/plasma/spawner/north,
@@ -1895,7 +1895,7 @@
 "GB" = (
 /obj/machinery/light/small,
 /obj/machinery/vending/wardrobe/jani_wardrobe,
-/turf/open/floor/plasteel/patterned/ridged,
+/turf/open/floor/iron/dark/ridged,
 /area/station/commons/dorms)
 "GD" = (
 /turf/open/floor/plating,
@@ -2011,13 +2011,13 @@
 /obj/structure/closet/cardboard,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
-/turf/open/floor/plasteel/patterned/grid,
+/turf/open/floor/iron/dark/grid,
 /area/station/cargo)
 "IC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 1
 	},
-/turf/open/floor/plasteel/patterned/grid,
+/turf/open/floor/iron/dark/grid,
 /area/station/cargo)
 "IE" = (
 /obj/structure/chair/comfy{
@@ -2150,7 +2150,7 @@
 "Ko" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/mineral/ore_redemption,
-/turf/open/floor/plasteel/patterned/grid,
+/turf/open/floor/iron/dark/grid,
 /area/station/cargo)
 "Kp" = (
 /obj/structure/railing{
@@ -2291,7 +2291,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/patterned/ridged,
+/turf/open/floor/iron/dark/ridged,
 /area/station/cargo)
 "Mk" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
@@ -2376,7 +2376,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced/plasma/spawner/east,
-/turf/open/floor/plasteel/patterned/monofloor{
+/turf/open/floor/iron/dark/monofloor{
 	dir = 1
 	},
 /area/station/cargo)
@@ -2416,7 +2416,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 4
 	},
-/turf/open/floor/plasteel/patterned/grid,
+/turf/open/floor/iron/dark/grid,
 /area/station/cargo)
 "ND" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
@@ -2471,7 +2471,7 @@
 /turf/open/floor/wood/maple,
 /area/station/command/bridge)
 "Od" = (
-/turf/open/floor/plasteel/patterned/grid,
+/turf/open/floor/iron/dark/grid,
 /area/station/cargo)
 "Or" = (
 /obj/structure/window/reinforced/plasma/spawner/north,
@@ -2565,7 +2565,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 6
 	},
-/turf/open/floor/plasteel/patterned/grid,
+/turf/open/floor/iron/dark/grid,
 /area/station/cargo)
 "Qf" = (
 /obj/effect/turf_decal/siding/red{
@@ -2770,7 +2770,7 @@
 	dir = 4
 	},
 /obj/structure/window/plasma/reinforced/spawner,
-/turf/open/floor/plasteel/patterned/grid,
+/turf/open/floor/iron/dark/grid,
 /area/station/cargo)
 "UP" = (
 /obj/structure/chair/comfy/lime{
@@ -2820,7 +2820,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 4
 	},
-/turf/open/floor/plasteel/patterned/ridged,
+/turf/open/floor/iron/dark/ridged,
 /area/station/cargo)
 "VR" = (
 /obj/structure/toilet{
@@ -2862,7 +2862,7 @@
 "WH" = (
 /obj/machinery/airalarm/directional/west,
 /obj/structure/cable,
-/turf/open/floor/plasteel/patterned/ridged,
+/turf/open/floor/iron/dark/ridged,
 /area/station/cargo)
 "WK" = (
 /turf/open/floor/wood/maple,
@@ -3021,7 +3021,7 @@
 /area/station/cargo)
 "ZE" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
-/turf/open/floor/plasteel/patterned/grid,
+/turf/open/floor/iron/dark/grid,
 /area/station/cargo)
 
 (1,1,1) = {"

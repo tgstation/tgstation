@@ -947,7 +947,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/turf/open/floor/plasteel/median/floortogrime{
+/turf/open/floor/iron/median/floortogrime{
 	dir = 8
 	},
 /area/station/commons/chapel)
@@ -1021,7 +1021,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/median/darktogrime/fullcorner{
+/turf/open/floor/iron/median/darktogrime/fullcorner{
 	dir = 8
 	},
 /area/station/commons/chapel)
@@ -1504,7 +1504,7 @@
 	dir = 1
 	},
 /obj/machinery/camera/directional/north,
-/turf/open/floor/plasteel/median/floortogrime,
+/turf/open/floor/iron/median/floortogrime,
 /area/station/commons/chapel)
 "he" = (
 /turf/closed/wall/r_wall,
@@ -1760,7 +1760,7 @@
 /area/station/hallway)
 "iA" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/median/floortogrime{
+/turf/open/floor/iron/median/floortogrime{
 	dir = 1
 	},
 /area/station/commons/chapel)
@@ -2539,7 +2539,7 @@
 /turf/open/floor/iron/white,
 /area/station/science)
 "mx" = (
-/turf/open/floor/plasteel/median/darktogrime,
+/turf/open/floor/iron/median/darktogrime,
 /area/station/commons/chapel)
 "my" = (
 /obj/machinery/mass_driver{
@@ -3099,7 +3099,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "pk" = (
-/turf/open/floor/plasteel/median/floortogrime,
+/turf/open/floor/iron/median/floortogrime,
 /area/station/commons/chapel)
 "pl" = (
 /obj/effect/turf_decal/plaque{
@@ -3896,7 +3896,7 @@
 /area/station/engineering/atmospherics)
 "tp" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/median/floortogrime/corner,
+/turf/open/floor/iron/median/floortogrime/corner,
 /area/station/commons/chapel)
 "tr" = (
 /obj/machinery/atmospherics/miner/n2o,
@@ -4105,13 +4105,13 @@
 /obj/structure/chair/pew/left{
 	dir = 8
 	},
-/turf/open/floor/plasteel/median/darktogrime{
+/turf/open/floor/iron/median/darktogrime{
 	dir = 1
 	},
 /area/station/commons/chapel)
 "ux" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/median/darktogrime{
+/turf/open/floor/iron/median/darktogrime{
 	dir = 1
 	},
 /area/station/commons/chapel)
@@ -4213,7 +4213,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/turf/open/floor/plasteel/median/darktogrime,
+/turf/open/floor/iron/median/darktogrime,
 /area/station/commons/chapel)
 "uV" = (
 /obj/structure/cable,
@@ -4439,7 +4439,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/starboard)
 "vP" = (
-/turf/open/floor/plasteel/median/floortogrime{
+/turf/open/floor/iron/median/floortogrime{
 	dir = 1
 	},
 /area/station/commons/chapel)
@@ -5002,7 +5002,7 @@
 /area/station/medical)
 "yP" = (
 /obj/structure/table/wood,
-/turf/open/floor/plasteel/median/darktogrime{
+/turf/open/floor/iron/median/darktogrime{
 	dir = 8
 	},
 /area/station/commons/chapel)
@@ -5273,7 +5273,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/turf/open/floor/plasteel/median/darktogrime{
+/turf/open/floor/iron/median/darktogrime{
 	dir = 4
 	},
 /area/station/commons/chapel)
@@ -5416,7 +5416,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/median/floortogrime{
+/turf/open/floor/iron/median/floortogrime{
 	dir = 4
 	},
 /area/station/commons/chapel)
@@ -5515,12 +5515,12 @@
 /area/station/engineering/atmospherics)
 "Bb" = (
 /obj/structure/closet/crate/coffin,
-/turf/open/floor/plasteel/median/floortogrime{
+/turf/open/floor/iron/median/floortogrime{
 	dir = 1
 	},
 /area/station/commons/chapel)
 "Bc" = (
-/turf/open/floor/plasteel/median/floortogrime/corner{
+/turf/open/floor/iron/median/floortogrime/corner{
 	dir = 4
 	},
 /area/station/commons/chapel)
@@ -5789,7 +5789,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/turf/open/floor/plasteel/median/darktogrime{
+/turf/open/floor/iron/median/darktogrime{
 	dir = 1
 	},
 /area/station/commons/chapel)
@@ -6051,7 +6051,7 @@
 "DK" = (
 /obj/structure/table/wood,
 /obj/item/storage/book/bible,
-/turf/open/floor/plasteel/median/darktogrime/fullcorner{
+/turf/open/floor/iron/median/darktogrime/fullcorner{
 	dir = 1
 	},
 /area/station/commons/chapel)
@@ -6252,7 +6252,7 @@
 /area/station/engineering/atmospherics)
 "EB" = (
 /obj/structure/closet/wardrobe/chaplain_black,
-/turf/open/floor/plasteel/median/floortogrime/corner{
+/turf/open/floor/iron/median/floortogrime/corner{
 	dir = 1
 	},
 /area/station/commons/chapel)
@@ -6551,7 +6551,7 @@
 /obj/structure/chair/pew/right{
 	dir = 8
 	},
-/turf/open/floor/plasteel/median/darktogrime/fullcorner{
+/turf/open/floor/iron/median/darktogrime/fullcorner{
 	dir = 4
 	},
 /area/station/commons/chapel)
@@ -6658,7 +6658,7 @@
 /obj/structure/chair/pew/right{
 	dir = 8
 	},
-/turf/open/floor/plasteel/median/darktogrime,
+/turf/open/floor/iron/median/darktogrime,
 /area/station/commons/chapel)
 "Gg" = (
 /obj/machinery/light{
@@ -6867,7 +6867,7 @@
 /obj/machinery/camera/autoname{
 	dir = 10
 	},
-/turf/open/floor/plasteel/median/floortogrime{
+/turf/open/floor/iron/median/floortogrime{
 	dir = 4
 	},
 /area/station/commons/chapel)
@@ -8709,12 +8709,12 @@
 /area/station/engineering/atmospherics)
 "Qu" = (
 /obj/machinery/airalarm/directional/north,
-/turf/open/floor/plasteel/median/floortogrime,
+/turf/open/floor/iron/median/floortogrime,
 /area/station/commons/chapel)
 "Qw" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
-/turf/open/floor/plasteel/median/floortogrime,
+/turf/open/floor/iron/median/floortogrime,
 /area/station/commons/chapel)
 "Qx" = (
 /obj/structure/disposalpipe/segment{
@@ -8848,7 +8848,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "Rf" = (
-/turf/open/floor/plasteel/median/floortogrime{
+/turf/open/floor/iron/median/floortogrime{
 	dir = 4
 	},
 /area/station/commons/chapel)
@@ -8975,7 +8975,7 @@
 /area/station/engineering)
 "RF" = (
 /obj/machinery/light,
-/turf/open/floor/plasteel/median/floortogrime{
+/turf/open/floor/iron/median/floortogrime{
 	dir = 1
 	},
 /area/station/commons/chapel)
@@ -9749,7 +9749,7 @@
 /obj/machinery/firealarm{
 	pixel_y = -26
 	},
-/turf/open/floor/plasteel/median/floortogrime{
+/turf/open/floor/iron/median/floortogrime{
 	dir = 1
 	},
 /area/station/commons/chapel)
@@ -10128,7 +10128,7 @@
 "Xa" = (
 /obj/structure/table/wood,
 /obj/item/nullrod,
-/turf/open/floor/plasteel/median/darktogrime/fullcorner,
+/turf/open/floor/iron/median/darktogrime/fullcorner,
 /area/station/commons/chapel)
 "Xc" = (
 /turf/closed/wall/r_wall,
@@ -10169,7 +10169,7 @@
 /area/station/science/robotics)
 "Xx" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/median/floortogrime{
+/turf/open/floor/iron/median/floortogrime{
 	dir = 8
 	},
 /area/station/commons/chapel)
@@ -10210,7 +10210,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/surgery)
 "XN" = (
-/turf/open/floor/plasteel/median/floortogrime{
+/turf/open/floor/iron/median/floortogrime{
 	dir = 8
 	},
 /area/station/commons/chapel)
@@ -10606,7 +10606,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/turf/open/floor/plasteel/median/floortogrime/corner{
+/turf/open/floor/iron/median/floortogrime/corner{
 	dir = 8
 	},
 /area/station/commons/chapel)
