@@ -95,7 +95,7 @@
 		var/mob/living/A = the_target
 		if(istype(the_target, /mob/living/simple_animal/hostile/regalrat) && A.stat == CONSCIOUS)
 			return TRUE
-		if(istype(the_target, /mob/living/simple_animal/hostile/rat) && A.stat == CONSCIOUS)
+		if(israt(the_target) && A.stat == CONSCIOUS)
 			var/mob/living/simple_animal/hostile/rat/R = the_target
 			if(R.faction_check_mob(src, TRUE))
 				return FALSE
@@ -352,7 +352,7 @@
 				return FALSE
 			else
 				return TRUE
-		if(istype(the_target, /mob/living/simple_animal/hostile/rat) && A.stat == CONSCIOUS)
+		if(israt(the_target) && A.stat == CONSCIOUS)
 			var/mob/living/simple_animal/hostile/rat/R = the_target
 			if(R.faction_check_mob(src, TRUE))
 				return FALSE
