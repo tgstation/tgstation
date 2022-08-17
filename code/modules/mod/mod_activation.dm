@@ -198,19 +198,19 @@
 		part.alternate_worn_layer = mod_parts[part]
 	if(part == boots)
 		boots.icon_state = "[skin]-boots[seal ? "-sealed" : ""]"
-		wearer.update_inv_shoes()
+		wearer.update_worn_shoes()
 	if(part == gauntlets)
 		gauntlets.icon_state = "[skin]-gauntlets[seal ? "-sealed" : ""]"
-		wearer.update_inv_gloves()
+		wearer.update_worn_gloves()
 	if(part == chestplate)
 		chestplate.icon_state = "[skin]-chestplate[seal ? "-sealed" : ""]"
-		wearer.update_inv_wear_suit()
-		wearer.update_inv_w_uniform()
+		wearer.update_worn_oversuit()
+		wearer.update_worn_undersuit()
 	if(part == helmet)
 		helmet.icon_state = "[skin]-helmet[seal ? "-sealed" : ""]"
-		wearer.update_inv_head()
-		wearer.update_inv_wear_mask()
-		wearer.update_inv_glasses()
+		wearer.update_worn_head()
+		wearer.update_worn_mask()
+		wearer.update_worn_glasses()
 		wearer.update_body_parts()
 
 /// Finishes the suit's activation, starts processing

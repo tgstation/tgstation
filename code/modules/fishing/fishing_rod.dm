@@ -111,7 +111,7 @@
 	RegisterSignal(fishing_line_beam, COMSIG_PARENT_QDELETING, .proc/clear_line)
 	fishing_lines += fishing_line_beam
 	INVOKE_ASYNC(fishing_line_beam, /datum/beam/.proc/Start)
-	user.update_inv_hands()
+	user.update_held_items()
 	return fishing_line_beam
 
 /obj/item/fishing_rod/proc/clear_line(datum/source)
@@ -119,7 +119,7 @@
 	fishing_lines -= source
 	if(ismob(loc))
 		var/mob/user = loc
-		user.update_inv_hands()
+		user.update_held_items()
 
 /obj/item/fishing_rod/dropped(mob/user, silent)
 	. = ..()
