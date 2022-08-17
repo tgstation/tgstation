@@ -24,7 +24,7 @@
 		var/turf/falling_spot = get_turf(falling_victim)
 		
 		if(locate(/obj/structure/stairs) in falling_spot)
-			FALL_INTERCEPTED | FALL_NO_MESSAGE
+			return FALL_INTERCEPTED | FALL_NO_MESSAGE
 		
 		if(soft_object == falling_victim)
 			to_chat(falling_victim, span_notice("Your fall is cushioned by your body to provide a soft landing!"))
