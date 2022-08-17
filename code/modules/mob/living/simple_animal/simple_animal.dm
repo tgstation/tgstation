@@ -516,7 +516,7 @@
 	if(on_fire && isnull(last_icon_state))
 		add_overlay(fire_overlay)
 		return fire_overlay
-	else if(!on_fire && last_icon_state != null)
+	else if(!on_fire && !isnull(last_icon_state))
 		cut_overlay(fire_overlay)
 		return null
 	else if(on_fire && last_icon_state != null)
