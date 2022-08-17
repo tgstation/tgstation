@@ -245,6 +245,6 @@ SUBSYSTEM_DEF(points_of_interest)
 		return 9
 	if(istype(target, /mob/living/simple_animal))
 		return 10
-	if(istype(target, /mob/living/basic))
+	if(isbasicmob(target))
 		return 11
 	return 12
