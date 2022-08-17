@@ -18,6 +18,10 @@
 	apply_star_colours(colour_one, colour_two)
 	qdel(star_datum)
 
+/obj/structure/overmap/star/Destroy()
+	QDEL_NULL(star_datum)
+	return ..()
+
 /obj/structure/overmap/star/proc/apply_star_colours(colour_one, colour_two)
 	if (colour_two == "")
 		add_atom_colour(colour_one, FIXED_COLOUR_PRIORITY)
