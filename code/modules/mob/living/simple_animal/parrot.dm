@@ -787,7 +787,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 
 	if(!drop_gently)
-		if(istype(held_item, /obj/item/grenade))
+		if(isgrenade(held_item))
 			var/obj/item/grenade/G = held_item
 			G.forceMove(drop_location())
 			G.detonate()
