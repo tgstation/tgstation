@@ -1326,7 +1326,6 @@
 "RX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=starboard";
 	location = "port"
@@ -1355,7 +1354,6 @@
 "SR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=forward";
 	location = "starboard"
@@ -1418,7 +1416,6 @@
 /area/station/hallway/starboard)
 "Vp" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /obj/structure/closet/crate/engineering/electrical,
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/storage/toolbox/mechanical,
@@ -1540,7 +1537,6 @@
 "YQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /obj/machinery/airalarm/all_access{
 	dir = 4;
 	pixel_x = -24

@@ -406,7 +406,6 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "AC" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/cable,
 /obj/machinery/firealarm{

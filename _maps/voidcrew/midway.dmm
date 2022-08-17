@@ -1462,7 +1462,6 @@
 /turf/open/floor/engine,
 /area/station/cargo)
 "SN" = (
-/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,

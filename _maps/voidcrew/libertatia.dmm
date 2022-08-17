@@ -540,7 +540,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/obj/structure/cable,
 /obj/machinery/power/terminal,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,

@@ -1425,7 +1425,6 @@
 /turf/open/floor/catwalk_floor,
 /area/station/engineering)
 "sw" = (
-/obj/structure/cable,
 /obj/machinery/power/port_gen/pacman,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
@@ -3053,7 +3052,6 @@
 /area/station/cargo)
 "OV" = (
 /obj/item/pipe,
-/obj/structure/cable,
 /obj/machinery/power/port_gen/pacman,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
