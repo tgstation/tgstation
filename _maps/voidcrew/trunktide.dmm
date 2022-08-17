@@ -824,7 +824,6 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable,
 /turf/open/floor/iron/dark/grid,
 /area/station/maintenance/central)
 "zO" = (

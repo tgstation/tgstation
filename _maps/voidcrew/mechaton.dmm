@@ -541,7 +541,7 @@
 /obj/structure/fans/tiny,
 /obj/machinery/door/poddoor{
 	id = "factoryblasts";
-	name = "cargo bay blast door"
+	name = "Cargo Bay Blast Door"
 	},
 /turf/open/floor/iron/dark,
 /area/station/cargo)
@@ -997,7 +997,7 @@
 /obj/structure/fans/tiny,
 /obj/machinery/door/poddoor{
 	id = "factoryblasts";
-	name = "cargo bay blast door"
+	name = "Cargo Bay Blast Door"
 	},
 /obj/docking_port/mobile{
 	dir = 2;

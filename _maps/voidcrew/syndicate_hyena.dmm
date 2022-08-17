@@ -68,7 +68,7 @@
 "bV" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "wreckerarmory";
-	name = "security shutters"
+	name = "Security Shutters"
 	},
 /obj/effect/turf_decal/stripes,
 /obj/effect/turf_decal/stripes{
@@ -1612,7 +1612,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	id = "wreckerarmory";
-	name = "security shutters"
+	name = "Security Shutters"
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/station/ai_monitored/security/armory)
@@ -1727,7 +1727,7 @@
 	width = 28
 	},
 /obj/machinery/door/airlock/hatch{
-	name = "external airlock"
+	name = "External Airlock"
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
@@ -1991,7 +1991,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/poddoor/shutters{
 	id = "wreckerarmory";
-	name = "security shutters"
+	name = "Security Shutters"
 	},
 /obj/effect/turf_decal/stripes,
 /turf/open/floor/mineral/plastitanium,
@@ -2278,7 +2278,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/poddoor/shutters{
 	id = "wreckerarmory";
-	name = "security shutters"
+	name = "Security Shutters"
 	},
 /obj/effect/turf_decal/stripes{
 	dir = 1
@@ -2337,7 +2337,6 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
 /area/station/commons/storage/primary)
 "Rn" = (
 /obj/machinery/porta_turret/centcom_shuttle/ballistic{
@@ -2649,7 +2648,7 @@
 	dir = 1
 	},
 /obj/machinery/door/airlock/hatch{
-	name = "external airlock"
+	name = "External Airlock"
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)

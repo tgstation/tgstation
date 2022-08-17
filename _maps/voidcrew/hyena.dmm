@@ -2335,7 +2335,6 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
 /area/station/commons/storage/primary)
 "Rn" = (
 /obj/machinery/porta_turret/centcom_shuttle/ballistic{

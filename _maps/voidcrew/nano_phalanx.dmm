@@ -1682,7 +1682,6 @@
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering"
 	},
-/obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/firedoor,
 /turf/open/floor/engine,
 /area/station/engineering/atmospherics)
@@ -3575,7 +3574,6 @@
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering"
 	},
-/obj/machinery/door/firedoor/heavy,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/layer_manifold{
 	dir = 8
