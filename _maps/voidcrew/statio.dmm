@@ -5697,7 +5697,7 @@
 /obj/structure/fans/tiny,
 /obj/machinery/door/poddoor{
 	id = "trash";
-	name = "disposal bay door"
+	name = "Disposal Bay Door"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)

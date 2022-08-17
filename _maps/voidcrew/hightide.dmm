@@ -230,7 +230,7 @@
 /area/station/maintenance/port)
 "ko" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "wrench storage"
+	name = "Wrench Storage"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,

@@ -26,9 +26,7 @@
 	anchored = 1;
 	density = 0
 	},
-/obj/machinery/power/apc/auto_name/directional/west{
-	pixel_x = -6
-	},
+/obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/window/reinforced/spawner{
 	dir = 8
 	},

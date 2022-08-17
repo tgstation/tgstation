@@ -1819,7 +1819,7 @@
 "dz" = (
 /obj/machinery/door/poddoor{
 	id = "cargobaydoors";
-	name = "cargo bay door"
+	name = "Cargo Bay Door"
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,

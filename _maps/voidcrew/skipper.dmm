@@ -1281,7 +1281,7 @@
 /obj/structure/fans/tiny,
 /obj/machinery/door/poddoor{
 	id = "amogusdoors";
-	name = "cargo bay blast door"
+	name = "Cargo Bay Blast Door"
 	},
 /turf/open/floor/plating,
 /area/station/cargo)

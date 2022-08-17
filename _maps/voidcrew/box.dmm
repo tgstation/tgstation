@@ -514,7 +514,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/door/window/left/directional/south{
-	name = "equipment storage"
+	name = "Equipment Storage"
 	},
 /obj/structure/window/reinforced/spawner/west,
 /obj/item/reagent_containers/cup/bottle/formaldehyde{

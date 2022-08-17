@@ -203,7 +203,7 @@
 /obj/structure/grille,
 /obj/machinery/door/poddoor/shutters{
 	id = "pirateshutters";
-	name = "blast shutters"
+	name = "Blast Shutters"
 	},
 /obj/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
@@ -341,7 +341,7 @@
 /obj/structure/grille,
 /obj/machinery/door/poddoor/shutters{
 	id = "pirateshutters";
-	name = "blast shutters"
+	name = "Blast Shutters"
 	},
 /obj/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/atmospherics/pipe/layer_manifold{
@@ -583,9 +583,7 @@
 /turf/open/floor/pod/dark,
 /area/station/commons)
 "ui" = (
-/obj/machinery/door/airlock/hatch{
-	name = "external access hatch"
-	},
+/obj/machinery/door/airlock/hatch,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
@@ -623,9 +621,7 @@
 /turf/open/floor/pod/light,
 /area/station/commons)
 "vo" = (
-/obj/machinery/door/airlock/hatch{
-	name = "external access hatch"
-	},
+/obj/machinery/door/airlock/hatch,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 4
 	},
@@ -720,7 +716,7 @@
 /obj/structure/grille,
 /obj/machinery/door/poddoor/shutters{
 	id = "pirateshutters";
-	name = "blast shutters"
+	name = "Blast Shutters"
 	},
 /obj/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
@@ -1670,7 +1666,7 @@
 /obj/structure/grille,
 /obj/machinery/door/poddoor/shutters{
 	id = "pirateshutters";
-	name = "blast shutters"
+	name = "Blast Shutters"
 	},
 /obj/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,

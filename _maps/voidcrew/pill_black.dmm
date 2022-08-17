@@ -19,9 +19,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers{
 	dir = 8
 	},
-/obj/machinery/power/apc/auto_name/directional/west{
-	pixel_x = -6
-	},
+/obj/machinery/power/apc/auto_name/directional/west,
 /obj/item/stack/ore/diamond,
 /obj/item/stack/ore/diamond,
 /obj/item/stack/ore/diamond,

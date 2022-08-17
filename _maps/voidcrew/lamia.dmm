@@ -29,7 +29,7 @@
 	},
 /obj/machinery/button/door{
 	id = "wizardship_bridge";
-	name = "bridge shutters";
+	name = "Bridge Shutters";
 	pixel_y = 31
 	},
 /obj/machinery/airalarm/directional/east,
@@ -1763,7 +1763,6 @@
 	name = "alchemical supplies"
 	},
 /obj/item/slimepotion/genderchange{
-	name = "potion of gender";
 	pixel_x = 5
 	},
 /obj/item/dyespray,

@@ -243,7 +243,7 @@
 /obj/structure/fans/tiny,
 /obj/machinery/door/poddoor{
 	id = "corpcargobay1";
-	name = "cargo bay exterior blast door"
+	name = "Cargo Bay Blast Door"
 	},
 /obj/effect/turf_decal/stripes{
 	dir = 8
@@ -316,7 +316,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chwindow";
-	name = "external shutters"
+	name = "External Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/engineering)
@@ -904,7 +904,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chwindow";
-	name = "external shutters"
+	name = "External Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/engineering)
@@ -965,7 +965,7 @@
 	},
 /obj/machinery/door/poddoor{
 	id = "corpcargobay1";
-	name = "cargo bay exterior blast door"
+	name = "Cargo Bay Blast Door"
 	},
 /turf/open/floor/plating,
 /area/station/cargo)
@@ -1193,7 +1193,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	id = "corpcargobay2";
-	name = "cargo bay blast door"
+	name = "Cargo Bay Blast Door"
 	},
 /turf/open/floor/iron/dark,
 /area/station/cargo)
@@ -1705,7 +1705,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chwindow";
-	name = "external shutters"
+	name = "External Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/commons/dorms)
@@ -1763,7 +1763,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chwindow";
-	name = "external shutters"
+	name = "External Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/command/bridge)
@@ -2038,7 +2038,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chwindow";
-	name = "external shutters"
+	name = "External Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/hallway/starboard)
@@ -2073,7 +2073,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chwindow";
-	name = "external shutters"
+	name = "External Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/commons/office)
@@ -2084,7 +2084,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chwindow";
-	name = "external shutters"
+	name = "External Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/commons/chapel/office)
@@ -2631,7 +2631,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chwindow";
-	name = "external shutters"
+	name = "External Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/engineering)
@@ -2724,7 +2724,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chwindow";
-	name = "external shutters"
+	name = "External Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/engineering)
@@ -2835,7 +2835,7 @@
 	},
 /obj/machinery/door/poddoor{
 	id = "corpcargobay2";
-	name = "cargo bay blast door"
+	name = "Cargo Bay Blast Door"
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
@@ -2883,7 +2883,7 @@
 "WZ" = (
 /obj/machinery/button/door{
 	id = "chwindow";
-	name = "external lockdown";
+	name = "External Lockdown";
 	pixel_x = -23;
 	pixel_y = 21
 	},
@@ -2973,7 +2973,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chwindow";
-	name = "external shutters"
+	name = "External Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/commons)
