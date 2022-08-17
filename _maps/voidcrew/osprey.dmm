@@ -181,7 +181,7 @@
 "bz" = (
 /obj/machinery/door/poddoor{
 	id = "osprey_disposals";
-	name = "disposals blast door"
+	name = "Disposals Blast Door"
 	},
 /obj/structure/fans/tiny,
 /obj/machinery/door/firedoor/heavy,

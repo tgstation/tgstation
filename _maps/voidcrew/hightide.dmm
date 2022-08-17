@@ -49,7 +49,6 @@
 "cb" = (
 /turf/open/floor/catwalk_floor,
 /obj/item/trash/sosjerky,
-/turf/open/floor/plating,
 /area/space)
 "cc" = (
 /obj/structure/table/wood,
