@@ -6,7 +6,6 @@
 	icon = null
 	icon_state = ""
 	slot_flags = NONE
-	throwforce = 5
 	var/mob/living/held_mob
 	var/destroying = FALSE
 
