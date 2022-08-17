@@ -80,7 +80,6 @@
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/closet/wall{
 	dir = 1;
-	icon_door = null;
 	name = "radio locker";
 	pixel_y = -28
 	},
@@ -202,7 +201,7 @@
 /obj/structure/window/reinforced/plasma/spawner/east,
 /obj/machinery/door/poddoor{
 	id = "osprey_thruster_starboard";
-	name = "thruster blast door"
+	name = "Thruster Blast Door"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)
@@ -347,7 +346,7 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters{
 	id = "ospreywindows";
-	name = "blast shutters"
+	name = "Blast Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/service/cafeteria)
@@ -605,7 +604,7 @@
 /obj/structure/window/reinforced/plasma/spawner/west,
 /obj/machinery/door/poddoor{
 	id = "osprey_thruster_port";
-	name = "thruster blast door"
+	name = "Thruster Blast Door"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port)
@@ -803,7 +802,7 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters{
 	id = "ospreywindows";
-	name = "blast shutters"
+	name = "Blast Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/construction)
@@ -1169,7 +1168,7 @@
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/poddoor{
 	id = "ospreydoors";
-	name = "cargo bay blast door"
+	name = "Cargo Bay Blast Door"
 	},
 /turf/open/floor/iron/dark/grid,
 /area/station/hallway/primary/fore)
@@ -1305,7 +1304,7 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters{
 	id = "ospreywindows";
-	name = "blast shutters"
+	name = "Blast Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/commons/storage/primary)
@@ -1786,7 +1785,7 @@
 /obj/structure/window/reinforced/plasma/spawner/west,
 /obj/machinery/door/poddoor{
 	id = "osprey_thruster_port";
-	name = "thruster blast door"
+	name = "Thruster Blast Door"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port)
@@ -1795,7 +1794,7 @@
 /obj/machinery/atmospherics/pipe/layer_manifold,
 /obj/machinery/door/poddoor/shutters{
 	id = "ospreywindows";
-	name = "blast shutters"
+	name = "Blast Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/engineering/engine)
@@ -2449,7 +2448,7 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters{
 	id = "ospreywindows";
-	name = "blast shutters"
+	name = "Blast Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/hallway/aft)
@@ -2559,7 +2558,7 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters{
 	id = "ospreywindows";
-	name = "blast shutters"
+	name = "Blast Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/commons/dorms)
@@ -3569,7 +3568,7 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters{
 	id = "ospreywindows";
-	name = "blast shutters"
+	name = "Blast Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/cargo)
@@ -3675,7 +3674,7 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters{
 	id = "ospreywindows";
-	name = "blast shutters"
+	name = "Blast Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/hallway/primary/central)
@@ -4519,7 +4518,7 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters{
 	id = "ospreywindows";
-	name = "blast shutters"
+	name = "Blast Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/engineering/atmospherics)
@@ -4783,7 +4782,7 @@
 /obj/structure/window/reinforced/plasma/spawner/west,
 /obj/machinery/door/poddoor{
 	id = "osprey_thruster_starboard";
-	name = "thruster blast door"
+	name = "Thruster Blast Door"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)
@@ -4808,7 +4807,7 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters{
 	id = "ospreywindows";
-	name = "blast shutters"
+	name = "Blast Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/science)
@@ -5250,7 +5249,7 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters{
 	id = "ospreywindows";
-	name = "blast shutters"
+	name = "Blast Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/service/janitor)
@@ -5402,7 +5401,7 @@
 "QH" = (
 /obj/machinery/button/massdriver{
 	id = "osprey_disposals";
-	name = "disposals button";
+	name = "Disposals Button";
 	pixel_x = 7;
 	pixel_y = 24
 	},
@@ -5441,7 +5440,7 @@
 	dir = 1
 	},
 /obj/machinery/disposal/bin{
-	name = "biohazard disposal unit"
+	name = "Biohazard Disposal Unit"
 	},
 /obj/structure/disposalpipe/trunk{
 	dir = 4
@@ -5668,7 +5667,7 @@
 /obj/structure/window/reinforced/plasma/spawner/west,
 /obj/machinery/door/poddoor{
 	id = "osprey_thruster_port";
-	name = "thruster blast door"
+	name = "Thruster Blast Door"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port)
@@ -5781,7 +5780,7 @@
 /obj/structure/window/reinforced/plasma/spawner/east,
 /obj/machinery/door/poddoor{
 	id = "osprey_thruster_starboard";
-	name = "thruster blast door"
+	name = "Thruster Blast Door"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)
@@ -5836,7 +5835,7 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters{
 	id = "ospreywindows";
-	name = "blast shutters"
+	name = "Blast Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/medical)

@@ -219,7 +219,7 @@
 /obj/structure/fans/tiny,
 /obj/machinery/door/poddoor{
 	id = "irishdoors";
-	name = "cargo bay blast door"
+	name = "Cargo Bay Blast Door"
 	},
 /turf/open/floor/plating,
 /area/station/cargo)
@@ -410,7 +410,7 @@
 /obj/structure/fans/tiny,
 /obj/machinery/door/poddoor{
 	id = "irishdoors";
-	name = "cargo bay blast door"
+	name = "Cargo Bay Blast Door"
 	},
 /obj/docking_port/mobile{
 	can_move_docking_ports = 1;
@@ -425,7 +425,7 @@
 "xI" = (
 /obj/machinery/door/poddoor{
 	id = "irishvent";
-	name = "toxins vent"
+	name = "Ordnance Vent"
 	},
 /turf/open/floor/engine,
 /area/station/science)

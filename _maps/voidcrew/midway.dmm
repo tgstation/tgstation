@@ -435,9 +435,7 @@
 /area/station/engineering/atmospherics)
 "nj" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/west{
-	pixel_x = -24
-	},
+/obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/turf_decal/tile/blue{
 	dir = 9
 	},
@@ -543,7 +541,7 @@
 /area/station/engineering)
 "qG" = (
 /obj/machinery/door/airlock/atmos{
-	name = "atmospherics Tank"
+	name = "Atmospherics Tank"
 	},
 /obj/machinery/atmospherics/pipe/layer_manifold,
 /turf/open/floor/iron,
@@ -1219,7 +1217,7 @@
 /area/station/hallway/primary/central)
 "ML" = (
 /obj/machinery/door/airlock/atmos{
-	name = "atmospherics Tank"
+	name = "Atmospherics Tank"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -1421,7 +1419,7 @@
 /area/station/cargo)
 "QM" = (
 /obj/machinery/door/airlock/atmos{
-	name = "atmospherics Tank"
+	name = "Atmospherics Tank"
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /turf/open/floor/iron,
@@ -1443,9 +1441,7 @@
 /turf/open/floor/iron,
 /area/station/commons)
 "Rn" = (
-/obj/machinery/power/apc/auto_name/directional/west{
-	pixel_x = -24
-	},
+/obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering)

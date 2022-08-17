@@ -213,13 +213,13 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/button/door{
 	id = "bogatyr_windows";
-	name = "window lockdown";
+	name = "Window Lockdown";
 	pixel_x = -24;
 	pixel_y = 7
 	},
 /obj/machinery/button/door{
 	id = "bogatyr_bridge";
-	name = "bridge lockdown";
+	name = "Bridge Lockdown";
 	pixel_x = -24;
 	pixel_y = -5
 	},
@@ -1089,7 +1089,7 @@
 "Ux" = (
 /obj/machinery/button/door{
 	id = "blastdoors";
-	name = "cargo bay blast doors";
+	name = "Cargo Bay Blast Doors";
 	pixel_x = -24
 	},
 /obj/effect/decal/cleanable/dirt,

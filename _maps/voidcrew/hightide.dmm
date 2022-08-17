@@ -13,7 +13,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "aW" = (
-/obj/structure/lattice,
 /turf/closed/wall,
 /area/space)
 "bd" = (
@@ -230,7 +229,7 @@
 /area/station/maintenance/port)
 "ko" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "wrench storage"
+	name = "Wrench Storage"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,

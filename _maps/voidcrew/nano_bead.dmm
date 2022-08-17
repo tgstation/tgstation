@@ -37,7 +37,7 @@
 /obj/effect/turf_decal/siding/thinplating,
 /obj/machinery/door/poddoor{
 	id = "bubbledoors";
-	name = "cargo bay blast door"
+	name = "Cargo Bay Blast Door"
 	},
 /turf/open/floor/plating,
 /area/station/cargo/miningoffice)
@@ -364,7 +364,7 @@
 /obj/effect/turf_decal/siding/thinplating,
 /obj/machinery/door/poddoor{
 	id = "bubbledoors";
-	name = "cargo bay blast door"
+	name = "Cargo Bay Blast Door"
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -596,7 +596,7 @@
 /obj/effect/turf_decal/siding/thinplating,
 /obj/machinery/door/poddoor{
 	id = "bubbledoors";
-	name = "cargo bay blast door"
+	name = "Cargo Bay Blast Door"
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4

@@ -139,7 +139,7 @@
 "hc" = (
 /obj/machinery/door/poddoor{
 	id = "cargodoors";
-	name = "cargo bay blast door"
+	name = "Cargo Bay Blast Door"
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,

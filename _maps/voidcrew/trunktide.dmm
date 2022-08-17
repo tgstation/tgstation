@@ -1356,7 +1356,7 @@
 "SH" = (
 /obj/machinery/door/poddoor/shutters{
 	desc = "Heavy duty metal shutters that open mechanically. This one appears to lack proper setup, thus functionally useless.";
-	name = "broken shutters"
+	name = "Broken Shutters"
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/fore)
