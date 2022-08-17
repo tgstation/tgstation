@@ -329,10 +329,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "ou" = (
-/turf/open/floor/catwalk_floor,
 /obj/item/toy/plush/among,
 /obj/structure/chair,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space)
 "oF" = (
 /turf/closed/wall/r_wall,
@@ -739,10 +738,9 @@
 /turf/closed/wall/r_wall,
 /area/station/cargo)
 "IV" = (
-/turf/open/floor/catwalk_floor,
 /obj/structure/table,
 /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space)
 "Jd" = (
 /obj/structure/window/reinforced/spawner,

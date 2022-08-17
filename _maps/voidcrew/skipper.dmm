@@ -2222,7 +2222,6 @@
 "GO" = (
 /turf/open/floor/catwalk_floor,
 /obj/machinery/atmospherics/components/unary/vent_scrubber,
-/turf/open/floor/plating/airless,
 /area/station/engineering/atmospherics)
 "GP" = (
 /obj/machinery/door/airlock/external,
@@ -2502,7 +2501,6 @@
 /turf/open/floor/catwalk_floor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating,
 /area/station/engineering/engine)
 "Lf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
