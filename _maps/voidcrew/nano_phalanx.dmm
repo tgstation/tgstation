@@ -3529,7 +3529,6 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/station/medical)
 "VG" = (
-/obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/engine,

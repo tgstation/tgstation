@@ -173,7 +173,6 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
@@ -242,7 +241,6 @@
 /area/station/engineering)
 "eX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
-/obj/structure/cable,
 /obj/machinery/power/terminal{
 	dir = 4
 	},

@@ -1060,7 +1060,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "Sq" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
@@ -1138,7 +1137,6 @@
 /turf/closed/wall/mineral/titanium,
 /area/station/commons/dorms)
 "Vn" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/spline/fancy/beige{
 	dir = 8
 	},

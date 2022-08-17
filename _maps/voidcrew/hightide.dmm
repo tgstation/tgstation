@@ -60,7 +60,6 @@
 /area/station/maintenance/port)
 "cy" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},

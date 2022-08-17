@@ -611,7 +611,6 @@
 	pixel_y = 6
 	},
 /obj/item/stock_parts/cell/high,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/open/floor/iron/dark/grid,
 /area/station/engineering)
@@ -856,7 +855,6 @@
 /turf/open/floor/iron/dark,
 /area/station/commons)
 "xh" = (
-/obj/structure/cable,
 /obj/effect/landmark/start/assistant,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -1380,7 +1378,6 @@
 /turf/open/floor/iron,
 /area/station/medical)
 "MQ" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/components/binary/pump/on/layer2{
 	dir = 1;
 	name = "Air to Distro";

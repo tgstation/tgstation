@@ -29,7 +29,6 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/station/medical)
 "bg" = (
-/obj/structure/cable,
 /obj/structure/closet/crate/engineering/electrical,
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/multitool,
