@@ -871,7 +871,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			bug.gib()
 		else
 			qdel(target)
-	else if(is_type_in_typecache(target, strong_against) && isliving(target))
+		return
+	if(is_type_in_typecache(target, strong_against) && isliving(target))
 		var/mob/living/living_target = target
 		living_target.adjustBruteLoss(extra_strength_damage)
 
