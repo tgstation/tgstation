@@ -2238,7 +2238,7 @@
 	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
-/obj/machinery/smartfridge/bloodbank/preloaded,
+/obj/structure/closet/crate/freezer/blood,
 /turf/open/floor/mineral/titanium/blue,
 /area/station/medical)
 "CG" = (
@@ -3193,7 +3193,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/structure/closet/secure_closet/medical3,
-/obj/item/clothing/glasses/hud/health/prescription,
+/obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/storage/box/beakers,
 /obj/item/storage/box/syringes,
@@ -3543,7 +3543,7 @@
 "Tm" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/structure/closet/secure_closet/medical3,
-/obj/item/clothing/glasses/hud/health/prescription,
+/obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/storage/box/beakers,
 /obj/item/storage/box/syringes,

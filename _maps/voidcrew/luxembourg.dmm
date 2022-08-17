@@ -251,10 +251,7 @@
 	id = "warehouse";
 	pixel_x = -25
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
+/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/brown{
 	dir = 9
 	},
@@ -264,12 +261,7 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/station/medical)
 "fU" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass,
 /turf/open/floor/iron/dark,
 /area/station/medical)
@@ -290,7 +282,7 @@
 /turf/open/floor/iron/dark,
 /area/station/medical)
 "gw" = (
-/obj/machinery/smartfridge/bloodbank/preloaded,
+/obj/structure/closet/crate/freezer/blood,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/station/medical)
 "gz" = (
@@ -312,12 +304,7 @@
 /obj/machinery/mineral/ore_redemption{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/brown{
 	dir = 6
 	},
@@ -366,10 +353,7 @@
 	dir = 8
 	},
 /obj/machinery/autolathe,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/siding/red{
 	dir = 1
 	},
@@ -383,10 +367,7 @@
 /area/station/cargo)
 "hE" = (
 /obj/structure/chair/plastic,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/siding/red{
 	dir = 1
 	},
@@ -495,10 +476,7 @@
 /obj/machinery/door/airlock/engineering/glass,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/engineering)
 "jF" = (
@@ -553,10 +531,7 @@
 /turf/open/floor/carpet/donk,
 /area/station/commons/dorms)
 "lm" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass,
 /turf/open/floor/iron/dark,
 /area/station/medical)
@@ -651,10 +626,7 @@
 /obj/structure/chair/plastic,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/siding/red{
 	dir = 1
 	},
@@ -669,10 +641,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/siding/red{
 	dir = 1
 	},
@@ -712,10 +681,7 @@
 "pR" = (
 /obj/machinery/power/smes/engineering,
 /obj/structure/cable,
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/engineering)
 "pV" = (
@@ -924,12 +890,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/brown{
 	dir = 6
 	},
@@ -1117,10 +1078,7 @@
 /turf/open/floor/plating,
 /area/station/engineering)
 "AI" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/siding/red{
 	dir = 1
 	},
@@ -1134,10 +1092,7 @@
 "Be" = (
 /obj/structure/chair/plastic,
 /obj/effect/decal/cleanable/vomit/old,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/siding/red{
 	dir = 1
 	},
@@ -1162,10 +1117,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass,
 /turf/open/floor/iron/dark,
 /area/station/medical)
@@ -1177,10 +1129,7 @@
 /obj/machinery/door/poddoor/shutters{
 	id = "warehouse"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
+/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/brown{
 	dir = 6
 	},
@@ -1191,10 +1140,7 @@
 /obj/machinery/door/airlock/engineering/glass,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/engineering)
 "Cu" = (
@@ -1304,10 +1250,7 @@
 /obj/machinery/door/airlock/engineering/glass,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/engineering)
 "GM" = (
@@ -1374,12 +1317,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass,
 /turf/open/floor/iron/dark,
 /area/station/medical)
@@ -1605,12 +1543,7 @@
 /turf/open/floor/iron/dark,
 /area/station/storage)
 "OZ" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/brown{
 	dir = 6
 	},
@@ -1882,10 +1815,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/engineering)
 "Wd" = (
@@ -2011,12 +1941,7 @@
 /turf/open/floor/plating,
 /area/station/engineering)
 "ZT" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/brown{
 	dir = 6
 	},

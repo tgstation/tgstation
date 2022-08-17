@@ -60,9 +60,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/blood/gibs,
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/cult,
 /area/station/cargo)
 "bz" = (
@@ -84,9 +82,7 @@
 /area/station/engineering/electrical)
 "bV" = (
 /obj/effect/mob_spawn/human/corpse/cargo_tech,
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/cargo)
 "ch" = (
@@ -247,9 +243,7 @@
 /area/station/command/bridge)
 "ib" = (
 /obj/effect/turf_decal/tile/yellow/mono,
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/cargo)
 "in" = (
@@ -349,9 +343,7 @@
 /turf/open/floor/engine/cult,
 /area/station/engineering/electrical)
 "kP" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/cult,
 /area/station/cargo)
 "kS" = (
@@ -535,9 +527,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 5
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/cargo)
 "qg" = (
@@ -880,9 +870,7 @@
 /area/station/storage)
 "Bx" = (
 /obj/effect/turf_decal/tile/yellow/mono,
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/station/cargo)
@@ -899,9 +887,7 @@
 /area/station/storage)
 "BJ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/cult,
 /area/station/cargo)
 "BR" = (
@@ -928,9 +914,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 5
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/cult,
 /area/station/cargo)
 "Ca" = (
@@ -986,9 +970,7 @@
 "Dy" = (
 /obj/item/supplypod_beacon,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/cargo)
 "DG" = (
@@ -1006,9 +988,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 8
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/cult,
 /area/station/cargo)
 "Ef" = (
@@ -1027,9 +1007,7 @@
 /area/station/storage)
 "Fe" = (
 /obj/effect/decal/cleanable/blood/gibs,
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/cargo)
 "Ft" = (
@@ -1044,9 +1022,7 @@
 /area/station/command/bridge)
 "FQ" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/cult,
 /area/station/cargo)
 "FX" = (
@@ -1114,9 +1090,7 @@
 /turf/open/floor/engine/cult,
 /area/station/engineering/electrical)
 "HL" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/cult,
 /area/station/cargo)
 "HN" = (
@@ -1551,9 +1525,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 10
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
 /obj/machinery/firealarm{
 	pixel_y = -26
 	},
@@ -1662,9 +1634,7 @@
 /area/station/commons/dorms)
 "UV" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/cult,
 /area/station/cargo)
 "UX" = (

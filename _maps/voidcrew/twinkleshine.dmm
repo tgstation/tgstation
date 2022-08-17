@@ -58,9 +58,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 8
 	},
@@ -80,16 +78,14 @@
 "bj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/orange/visible,
 /obj/effect/turf_decal/stripes,
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /turf/open/floor/engine,
 /area/station/engineering)
 "bl" = (
 /obj/effect/turf_decal/stripes{
 	dir = 8
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/engine,
 /area/station/engineering)
 "bt" = (
@@ -149,12 +145,7 @@
 /turf/open/floor/plating,
 /area/station/commons/dorms)
 "bV" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch{
 	name = "Syndicate Ship Airlock";
 	req_one_access_txt = "150"
@@ -247,10 +238,7 @@
 	name = "Engineering External Access";
 	req_access_txt = "150"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/engineering/atmospherics)
 "cX" = (
@@ -316,10 +304,7 @@
 	pixel_x = -5;
 	pixel_y = 5
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/commons/canteen)
 "dJ" = (
@@ -327,7 +312,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes,
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /obj/machinery/light,
 /turf/open/floor/engine,
 /area/station/engineering)
@@ -378,12 +363,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes{
 	dir = 8
 	},
@@ -401,12 +381,7 @@
 	},
 /obj/machinery/airalarm/directional/north,
 /obj/structure/cable,
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
@@ -437,16 +412,11 @@
 /obj/effect/turf_decal/stripes{
 	dir = 10
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /turf/open/floor/engine,
 /area/station/engineering)
 "eo" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
@@ -490,10 +460,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/structure/cable,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/white,
 /area/station/medical)
 "eJ" = (
@@ -513,12 +480,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch{
 	name = "Syndicate Ship Airlock";
 	req_one_access_txt = "150"
@@ -556,9 +518,7 @@
 	dir = 1;
 	req_one_access_txt = "150"
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/carpet/nanoweave/red,
 /area/station/command/bridge)
 "fb" = (
@@ -586,12 +546,7 @@
 "fm" = (
 /obj/machinery/door/airlock/engineering,
 /obj/structure/cable,
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/engineering/engine)
 "fw" = (
@@ -670,10 +625,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/structure/cable,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes,
 /turf/open/floor/plasteel/mono/dark,
 /area/station/commons/dorms)
@@ -697,12 +649,7 @@
 /turf/open/floor/carpet/nanoweave/red,
 /area/station/command/bridge)
 "gm" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch{
 	name = "Syndicate Ship Airlock";
 	req_one_access_txt = "150"
@@ -737,12 +684,7 @@
 	name = "Operative's Office";
 	req_access_txt = "3;150"
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/carpet/nanoweave/red,
 /area/station/security)
 "gC" = (
@@ -757,10 +699,7 @@
 /turf/open/floor/plasteel/tech,
 /area/station/commons/dorms)
 "gM" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch{
 	name = "Armory";
 	req_access_txt = "3;150"
@@ -799,10 +738,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/security)
 "hk" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering,
 /turf/open/floor/plasteel/mono/dark,
 /area/station/engineering/engine)
@@ -860,10 +796,7 @@
 	name = "Engineering External Access";
 	req_access_txt = "150"
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/engineering/atmospherics)
 "ii" = (
@@ -931,9 +864,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 4
 	},
@@ -955,10 +886,7 @@
 /turf/open/floor/plasteel/tech,
 /area/station/commons/dorms)
 "iT" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch{
 	name = "Syndicate Ship Airlock";
 	req_one_access_txt = "150"
@@ -1065,10 +993,7 @@
 /turf/open/floor/engine,
 /area/station/engineering)
 "ku" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
@@ -1297,10 +1222,7 @@
 	pixel_x = 2;
 	pixel_y = -5
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/commons/canteen)
 "nO" = (
@@ -1310,12 +1232,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 8
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch{
 	name = "Syndicate Ship Airlock";
 	req_one_access_txt = "150"
@@ -1326,9 +1243,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/engine,
 /area/station/engineering)
 "oa" = (
@@ -1352,19 +1267,11 @@
 /obj/structure/table/reinforced,
 /obj/item/pizzabox/meat,
 /obj/item/toy/cards/deck/syndicate,
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/commons/canteen)
 "op" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch{
 	name = "Syndicate Ship Airlock";
 	req_one_access_txt = "150"
@@ -1468,12 +1375,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
@@ -1505,10 +1407,7 @@
 	dir = 1;
 	req_one_access_txt = "150"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
+/obj/machinery/door/firedoor,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/commons/canteen)
@@ -1677,12 +1576,7 @@
 /turf/open/floor/plasteel/tech/grid,
 /area/station/engineering)
 "rs" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes{
 	dir = 8
 	},
@@ -1712,10 +1606,7 @@
 /area/station/engineering)
 "rE" = (
 /obj/machinery/door/airlock/engineering,
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/mono/dark,
 /area/station/engineering/engine)
 "rF" = (
@@ -1745,10 +1636,7 @@
 /turf/open/floor/engine,
 /area/station/engineering)
 "rJ" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
+/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes,
 /obj/effect/turf_decal/stripes{
 	dir = 1
@@ -1808,9 +1696,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 6
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/pod/dark,
 /area/station/cargo)
 "sE" = (
@@ -1911,10 +1797,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/structure/cable,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch{
 	name = "Syndicate Ship Airlock";
 	req_one_access_txt = "150"
@@ -2169,12 +2052,7 @@
 /area/station/medical/surgery)
 "wc" = (
 /obj/machinery/light,
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
@@ -2190,12 +2068,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 8
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
@@ -2345,10 +2218,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/commons/dorms)
 "xn" = (
@@ -2382,12 +2252,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 8
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/diagonal,
 /turf/open/floor/iron/white,
@@ -2423,7 +2288,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/security)
 "xH" = (
-/obj/machinery/smartfridge/bloodbank/preloaded,
+/obj/structure/closet/crate/freezer/blood,
 /obj/effect/turf_decal/tile/red/diagonal,
 /turf/open/floor/plasteel/white/airless,
 /area/station/medical)
@@ -2432,9 +2297,7 @@
 	dir = 9
 	},
 /obj/structure/tank_dispenser/oxygen,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/carpet/nanoweave/red,
 /area/station/commons/dorms)
 "xM" = (
@@ -2556,18 +2419,14 @@
 /obj/effect/turf_decal/stripes{
 	dir = 8
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/engine,
 /area/station/engineering)
 "zA" = (
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 6
 	},
@@ -2695,7 +2554,7 @@
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/o2{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /turf/open/floor/engine,
 /area/station/engineering)
 "Bg" = (
@@ -2975,10 +2834,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 10
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /turf/open/floor/engine,
 /area/station/engineering)
 "Ey" = (
@@ -3042,9 +2898,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 9
 	},
@@ -3146,7 +3000,7 @@
 "GW" = (
 /obj/effect/turf_decal/stripes,
 /obj/machinery/atmospherics/pipe/smart/manifold/orange/visible,
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /turf/open/floor/engine,
 /area/station/engineering)
 "Hf" = (
@@ -3221,10 +3075,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/orange/visible{
 	dir = 1
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/engine,
 /area/station/engineering)
 "HZ" = (
@@ -3246,10 +3097,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/structure/cable,
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/mono/dark,
 /area/station/engineering/engine)
 "Ie" = (
@@ -3276,21 +3124,11 @@
 	},
 /obj/effect/turf_decal/tile/bar,
 /obj/structure/cable,
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/commons/canteen)
 "Im" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
@@ -3305,10 +3143,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
+/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes,
 /obj/structure/cable,
 /turf/open/floor/plasteel/mono/dark,
@@ -3355,10 +3190,7 @@
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "syndikitchen"
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/white{
 	dir = 1
 	},
@@ -3487,9 +3319,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 5
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
 /obj/machinery/mineral/ore_redemption{
 	dir = 4
 	},
@@ -3524,12 +3354,7 @@
 /turf/open/floor/plating,
 /area/station/command/bridge)
 "Ln" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch{
 	name = "Syndicate Ship Airlock";
 	req_one_access_txt = "150"
@@ -3581,10 +3406,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/commons/canteen)
 "LR" = (
@@ -3678,7 +3500,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /turf/open/floor/carpet/nanoweave/red,
 /area/station/security)
 "MF" = (
@@ -3756,10 +3578,7 @@
 /obj/machinery/door/airlock/engineering,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/mono/dark,
 /area/station/commons/dorms)
 "Nz" = (
@@ -3828,12 +3647,7 @@
 /turf/open/floor/iron,
 /area/station/commons/canteen)
 "NZ" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
@@ -3906,9 +3720,7 @@
 /area/station/cargo)
 "Pe" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/pod/dark,
 /area/station/commons/dorms)
 "Pg" = (
@@ -3984,10 +3796,7 @@
 /turf/open/floor/engine,
 /area/station/engineering)
 "Pz" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
+/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
@@ -4048,17 +3857,12 @@
 /obj/item/clothing/head/helmet/space/syndicate,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/carpet/nanoweave/red,
 /area/station/commons/dorms)
 "PO" = (
 /obj/machinery/door/airlock/engineering,
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/mono/dark,
 /area/station/commons/dorms)
 "PR" = (
@@ -4097,9 +3901,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/pod/dark,
 /area/station/cargo)
 "Qn" = (
@@ -4167,9 +3969,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 5
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/engine,
 /area/station/engineering)
 "QR" = (
@@ -4200,7 +4000,7 @@
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	dir = 8
 	},
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering)
@@ -4270,7 +4070,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/orange/visible{
 	dir = 1
 	},
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /turf/open/floor/engine,
 /area/station/engineering)
 "RW" = (
@@ -4303,10 +4103,7 @@
 "Sh" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch{
 	name = "Syndicate Ship Airlock";
 	req_one_access_txt = "150"
@@ -4317,9 +4114,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 9
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/engine,
 /area/station/engineering)
 "Sl" = (
@@ -4382,10 +4177,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /turf/open/floor/engine,
 /area/station/engineering)
 "SF" = (
@@ -4502,9 +4294,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 8
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
@@ -4553,9 +4343,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 8
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 8
 	},
@@ -4656,10 +4444,7 @@
 /obj/machinery/door/airlock/engineering,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /obj/structure/cable,
 /turf/open/floor/plasteel/mono/dark,
 /area/station/engineering/engine)
@@ -4707,7 +4492,7 @@
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 8
 	},
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/engine,
@@ -4720,12 +4505,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
@@ -4744,7 +4524,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes,
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /turf/open/floor/engine,
 /area/station/engineering)
 "WD" = (
@@ -4772,12 +4552,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 8
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/commons/canteen)
 "WT" = (
@@ -4788,10 +4563,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
+/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes,
 /obj/effect/turf_decal/stripes{
 	dir = 1
@@ -4925,7 +4697,7 @@
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 8
 	},
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /turf/open/floor/engine,
 /area/station/engineering)
 "Yj" = (
@@ -5062,12 +4834,7 @@
 /area/station/engineering)
 "Zj" = (
 /obj/structure/cable,
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch{
 	name = "Syndicate Ship Airlock";
 	req_one_access_txt = "150"
@@ -5095,10 +4862,7 @@
 "Zy" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch{
 	name = "Syndicate Ship Airlock";
 	req_one_access_txt = "150"

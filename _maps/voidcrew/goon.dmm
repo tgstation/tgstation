@@ -22,10 +22,7 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/structure/fans/tiny,
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/mineral/titanium,
 /area/station/commons)
 "bd" = (
@@ -142,7 +139,7 @@
 	dir = 4
 	},
 /obj/machinery/suit_storage_unit/standard_unit,
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /turf/open/floor/mineral/titanium/white,
 /area/station/commons)
 "iC" = (
@@ -184,10 +181,7 @@
 /area/station/engineering)
 "ku" = (
 /obj/structure/sign/poster/retro/nanotrasen_logo_70s,
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /turf/closed/wall/mineral/titanium,
 /area/station/commons)
 "lI" = (
@@ -271,12 +265,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/mineral/titanium/yellow,
 /area/station/command/bridge)
 "qL" = (
@@ -284,7 +273,7 @@
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /obj/item/pickaxe,
 /obj/item/pickaxe,
 /obj/item/storage/bag/ore,
@@ -315,9 +304,7 @@
 /area/station/engineering)
 "rX" = (
 /obj/machinery/autolathe,
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/mineral/titanium/white,
 /area/station/commons)
 "sd" = (
@@ -373,12 +360,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/mineral/titanium/yellow,
 /area/station/engineering)
 "wa" = (
@@ -554,7 +536,7 @@
 "EJ" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
-/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor,
 /turf/open/floor/mineral/titanium/white,
 /area/station/commons)
 "ET" = (
@@ -651,9 +633,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/mineral/titanium/purple,
 /area/station/commons)
 "Lr" = (
@@ -870,12 +850,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/mineral/titanium/blue,
 /area/station/medical)
 "ZO" = (
@@ -887,9 +862,7 @@
 /obj/machinery/mineral/ore_redemption{
 	dir = 8
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/mineral/titanium/white,
 /area/station/commons)
 
