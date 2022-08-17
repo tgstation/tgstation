@@ -11,7 +11,7 @@
 			continue
 		if(HAS_TRAIT(item, TRAIT_NEEDS_TWO_HANDS) || controller.blackboard[BB_MONKEY_BLACKLISTITEMS][item])
 			continue
-		if(gun_neurons_activated && istype(item, /obj/item/gun))
+		if(gun_neurons_activated && isgun(item))
 			// We have a gun, why bother looking for something inferior
 			// Also yes it is intentional that pawns dont know how to pick the best gun
 			return item
@@ -24,7 +24,7 @@
 			continue
 		if(HAS_TRAIT(item, TRAIT_NEEDS_TWO_HANDS) || controller.blackboard[BB_MONKEY_BLACKLISTITEMS][item])
 			continue
-		if(gun_neurons_activated && istype(item, /obj/item/gun))
+		if(gun_neurons_activated && isgun(item))
 			return item
 		if(item.force <= top_force)
 			continue
