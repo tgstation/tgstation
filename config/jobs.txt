@@ -1,49 +1,49 @@
-#This allows easy configuration of the number of positions allowed for each job
-#Format is: [Job name]=[total positions],[spawn positions]
+#This allows easy configuration of the number of positions allowed for each job and the playtime and account age requirements for each
+#Format is: [Job name]=[total positions],[spawn positions],[playtime requirement in minutes],[account age requirement in days]
 #Job names must be identical to the title var of each job datum
 #Positions can be set to -1 to allow unlimited slots
-Captain=1,1
-Head of Personnel=1,1
-Head of Security=1,1
-Chief Engineer=1,1
-Research Director=1,1
-Chief Medical Officer=1,1
+Captain=1,1,180,14
+Head of Personnel=1,1,180,10
+Head of Security=1,1,300,14
+Chief Engineer=1,1,180,7
+Research Director=1,1,180,7
+Chief Medical Officer=1,1,180,7
 
-Assistant=-1,-1
-Prisoner=0,2
+Assistant=-1,-1,0,0
+Prisoner=0,2,0,0
 
-Quartermaster=1,1
-Cargo Technician=3,2
-Shaft Miner=3,3
+Quartermaster=1,1,0,7
+Cargo Technician=3,2,0,0
+Shaft Miner=3,3,0,0
 
-Bartender=1,1
-Cook=2,1
-Botanist=3,2
-Janitor=2,1
+Bartender=1,1,0,0
+Cook=2,1,0,0
+Botanist=3,2,0,0
+Janitor=2,1,0,0
 
-Clown=1,1
-Mime=1,1
-Curator=1,1
-Lawyer=2,2
+Clown=1,1,0,0
+Mime=1,1,0,0
+Curator=1,1,0,0
+Lawyer=2,2,0,0
 
-Chaplain=1,1
+Chaplain=1,1,0,0
 
-Station Engineer=5,5
-Atmospheric Technician=3,2
+Station Engineer=5,5,60,0
+Atmospheric Technician=3,2,60,0
 
-Medical Doctor=5,3
-Paramedic=2,2
-Chemist=2,2
-Geneticist=2,2
-Virologist=1,1
-Psychologist=1,1
+Medical Doctor=5,3,0,0
+Paramedic=2,2,0,0
+Chemist=2,2,60,0
+Geneticist=2,2,60,0
+Virologist=1,1,60,0
+Psychologist=1,1,0,0
 
-Scientist=5,3
-Roboticist=2,2
+Scientist=5,3,60,0
+Roboticist=2,2,60,0
 
-Warden=1,1
-Detective=1,1
-Security Officer=5,5
+Warden=1,1,300,7
+Detective=1,1,300,7
+Security Officer=5,5,300,7
 
-AI=0,1
-Cyborg=0,1
+AI=0,1,180,30
+Cyborg=0,1,120,21
