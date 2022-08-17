@@ -47155,7 +47155,6 @@
 	desc = "Cooks and boils stuff, somehow.";
 	pixel_y = 5
 	},
-/obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/service/kitchen/abandoned)
@@ -63111,7 +63110,6 @@
 /obj/item/stack/package_wrap,
 /obj/effect/turf_decal/bot,
 /obj/item/knife/kitchen,
-/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron,
 /area/station/service/kitchen/abandoned)
 "pGC" = (
