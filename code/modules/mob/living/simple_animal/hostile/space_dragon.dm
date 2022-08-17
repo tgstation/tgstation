@@ -178,7 +178,7 @@
 					adjustHealth(-L.maxHealth * 0.25)
 			return
 	. = ..()
-	if(istype(target, /obj/vehicle/sealed/mecha))
+	if(ismecha(target))
 		var/obj/vehicle/sealed/mecha/M = target
 		M.take_damage(50, BRUTE, MELEE, 1)
 
