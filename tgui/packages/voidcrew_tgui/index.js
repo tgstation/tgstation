@@ -21,7 +21,7 @@ const getComponent = (interfacePath, requireInterface) => {
 };
 
 /**
- * This places precedence on Fulp's interfaces over the default ones
+ * This places precedence on Voidcrew's interfaces over the default ones
  */
 export const loadInterface = (interfacePath) => {
   let esModule = getComponent(interfacePath, requireModularInterface);
