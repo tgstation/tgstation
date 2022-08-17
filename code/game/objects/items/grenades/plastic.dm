@@ -112,7 +112,7 @@
 			if(thrown_weapon.embedding)
 				thrown_weapon.embedding["embed_chance"] = 0
 				thrown_weapon.updateEmbedding()
-		else if(istype(bomb_target, /mob/living))
+		else if(isliving(bomb_target))
 			plastic_overlay.layer = FLOAT_LAYER
 
 		target.add_overlay(plastic_overlay)
