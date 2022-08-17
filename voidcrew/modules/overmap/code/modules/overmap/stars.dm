@@ -16,11 +16,10 @@
 	var/colour_two = "[star_datum.colours_to_pick > 1 ? pick(star_datum.colours_and_descs) : ""]"
 
 	apply_star_colours(colour_one, colour_two)
-	qdel(star_datum)
 
 /obj/structure/overmap/star/Destroy()
 	QDEL_NULL(star_datum)
-	return ..()
+	return
 
 /obj/structure/overmap/star/proc/apply_star_colours(colour_one, colour_two)
 	if (colour_two == "")
