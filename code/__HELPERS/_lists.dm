@@ -959,3 +959,46 @@
 		if(i < target_list.len)
 			CHECK_TICK
 	return ret
+
+/// Returns a copy of a list where text values (except assoc-keys and string representations of lua-only values) are
+/// wrapped in quotes and existing quote marks are escaped,
+/// and nulls are replaced with the string "null"
+/proc/encode_text_and_nulls(list/target_list, list/visited)
+	var/static/regex/lua_reference_regex
+	if(!lua_reference_regex)
+		lua_reference_regex = regex(@"^((function)|(table)|(thread)|(userdata)): 0x[0-9a-fA-F]+$")
+	if(!visited)
+		visited = list()
+	var/list/ret = list()
+	visited[target_list] = TRUE
+	for(var/i in 1 to target_list.len)
+		var/key = target_list[i]
+		var/new_key = key
+		if(istext(key) && !target_list[key] && !lua_reference_regex.Find(key))
+			new_key = "\"[replacetext(key, "\"", "\\\"")]\""
+		else if(islist(key))
+			var/found_index = visited.Find(key)
+			if(found_index)
+				new_key = visited[found_index]
+			else
+				new_key = encode_text_and_nulls(key, visited)
+		else if(isnull(key))
+			new_key = "null"
+		var/value
+		if(istext(key) || islist(key) || ispath(key) || isdatum(key) || key == world)
+			value = target_list[key]
+		if(istext(value) && !lua_reference_regex.Find(value))
+			value = "\"[replacetext(value, "\"", "\\\"")]\""
+		else if(islist(value))
+			var/found_index = visited.Find(value)
+			if(found_index)
+				value = visited[found_index]
+			else
+				value = encode_text_and_nulls(value, visited)
+		var/list/to_add = list(new_key)
+		if(value)
+			to_add[new_key] = value
+		ret += to_add
+		if(i < target_list.len)
+			CHECK_TICK
+	return ret
