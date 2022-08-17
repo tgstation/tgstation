@@ -5,7 +5,7 @@
 	},
 /obj/effect/landmark/start/captain,
 /obj/effect/turf_decal/box,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "aD" = (
 /obj/machinery/power/shuttle/engine/electric{
@@ -153,7 +153,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "fy" = (
 /turf/open/floor/catwalk_floor,
@@ -202,7 +202,7 @@
 	dir = 10
 	},
 /obj/effect/turf_decal/tile/white/mono,
-/turf/open/floor/plasteel/mono/white,
+/turf/open/floor/iron/white,
 /area/station/medical)
 "gu" = (
 /obj/effect/turf_decal/industrial/hatch/yellow,
@@ -274,7 +274,7 @@
 /obj/effect/turf_decal/tile/blue/border{
 	dir = 1
 	},
-/turf/open/floor/plasteel/mono/white,
+/turf/open/floor/iron/white,
 /area/station/medical)
 "hK" = (
 /obj/machinery/space_heater,
@@ -331,7 +331,7 @@
 	dir = 8
 	},
 /obj/machinery/holopad,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "iM" = (
 /obj/structure/table/reinforced,
@@ -421,7 +421,7 @@
 /obj/item/clothing/mask/surgical,
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/gloves/color/latex/nitrile,
-/turf/open/floor/plasteel/mono/white,
+/turf/open/floor/iron/white,
 /area/station/medical)
 "kf" = (
 /obj/structure/cable,
@@ -571,7 +571,7 @@
 /obj/effect/turf_decal/tile/blue/border{
 	dir = 1
 	},
-/turf/open/floor/plasteel/mono/white,
+/turf/open/floor/iron/white,
 /area/station/medical)
 "oa" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/general/hidden{
@@ -748,7 +748,7 @@
 /obj/effect/turf_decal/tile/blue/border{
 	dir = 1
 	},
-/turf/open/floor/plasteel/mono/white,
+/turf/open/floor/iron/white,
 /area/station/medical)
 "tG" = (
 /obj/item/clothing/suit/hazardvest{
@@ -863,7 +863,7 @@
 	},
 /obj/effect/turf_decal/tile/white/mono,
 /obj/effect/landmark/start/medical_doctor,
-/turf/open/floor/plasteel/mono/white,
+/turf/open/floor/iron/white,
 /area/station/medical)
 "vJ" = (
 /obj/structure/cable,
@@ -994,7 +994,7 @@
 /obj/effect/turf_decal/tile/blue/border{
 	dir = 9
 	},
-/turf/open/floor/plasteel/mono/white,
+/turf/open/floor/iron/white,
 /area/station/medical)
 "zn" = (
 /obj/structure/closet/emcloset/wall,
@@ -1036,7 +1036,7 @@
 /obj/effect/turf_decal/tile/blue/border{
 	dir = 10
 	},
-/turf/open/floor/plasteel/mono/white,
+/turf/open/floor/iron/white,
 /area/station/medical)
 "Aj" = (
 /obj/machinery/firealarm{
@@ -1204,7 +1204,7 @@
 	},
 /obj/effect/turf_decal/tile/white/mono,
 /obj/effect/turf_decal/tile/blue/border,
-/turf/open/floor/plasteel/mono/white,
+/turf/open/floor/iron/white,
 /area/station/medical)
 "EF" = (
 /obj/structure/closet/secure_closet/medical2,
@@ -1212,7 +1212,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/white/mono,
 /obj/effect/turf_decal/tile/blue/border,
-/turf/open/floor/plasteel/mono/white,
+/turf/open/floor/iron/white,
 /area/station/medical)
 "Fz" = (
 /obj/structure/cable,
@@ -1353,7 +1353,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command/glass,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "JH" = (
 /obj/structure/table/reinforced,
@@ -1432,7 +1432,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 8
 	},
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "Mo" = (
 /obj/structure/closet/crate/large,
@@ -1465,7 +1465,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/white/mono,
 /obj/effect/turf_decal/tile/blue/border,
-/turf/open/floor/plasteel/mono/white,
+/turf/open/floor/iron/white,
 /area/station/medical)
 "MN" = (
 /obj/machinery/light/small,
@@ -1473,7 +1473,7 @@
 /obj/machinery/sleeper{
 	dir = 8
 	},
-/turf/open/floor/plasteel/mono,
+/turf/open/floor/iron,
 /area/station/medical)
 "MQ" = (
 /obj/structure/cable,
@@ -1562,7 +1562,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/white/mono,
-/turf/open/floor/plasteel/mono/white,
+/turf/open/floor/iron/white,
 /area/station/medical)
 "Qe" = (
 /turf/open/floor/iron/grimy,
@@ -1592,7 +1592,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/box,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "RU" = (
 /obj/structure/closet/crate/wooden,
@@ -1645,7 +1645,7 @@
 	pixel_x = -5;
 	pixel_y = -4
 	},
-/turf/open/floor/plasteel/mono,
+/turf/open/floor/iron,
 /area/station/medical)
 "Um" = (
 /obj/structure/table/wood,
@@ -1662,7 +1662,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command/glass,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "UY" = (
 /obj/effect/spawner/random/maintenance,
@@ -1762,7 +1762,7 @@
 	pixel_y = 28
 	},
 /obj/effect/turf_decal/box,
-/turf/open/floor/plasteel/mono/dark,
+/turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "Xw" = (
 /obj/structure/table,
@@ -1778,7 +1778,7 @@
 	},
 /obj/structure/cable,
 /obj/item/storage/belt/medical,
-/turf/open/floor/plasteel/mono,
+/turf/open/floor/iron,
 /area/station/medical)
 "Yf" = (
 /obj/structure/cable,
