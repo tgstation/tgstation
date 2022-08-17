@@ -4693,7 +4693,6 @@
 #include "voidcrew\mapping\shuttles\box.dm"
 #include "voidcrew\mapping\shuttles\boyardee.dm"
 #include "voidcrew\mapping\shuttles\boyardee_b.dm"
-#include "voidcrew\mapping\shuttles\cultist.dm"
 #include "voidcrew\mapping\shuttles\delta.dm"
 #include "voidcrew\mapping\shuttles\dwayne.dm"
 #include "voidcrew\mapping\shuttles\energia.dm"
