@@ -35,7 +35,10 @@
 	world.update_status()
 	client.screen = list() //remove hud items just in case
 	client.images = list()
-	client.set_right_click_menu_mode(shift_to_open_context_menu)
+	if (istype(src, /mob/dead/observer))
+		client.set_right_click_menu_mode(FALSE)
+	else
+		client.set_right_click_menu_mode(TRUE)
 
 	if(!hud_used)
 		create_mob_hud()
