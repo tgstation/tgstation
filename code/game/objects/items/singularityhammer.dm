@@ -57,7 +57,7 @@
 	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		if(charged)
 			charged = FALSE
-			if(istype(A, /mob/living/))
+			if(isliving(A))
 				var/mob/living/Z = A
 				Z.take_bodypart_damage(20,0)
 			playsound(user, 'sound/weapons/marauder.ogg', 50, TRUE)
