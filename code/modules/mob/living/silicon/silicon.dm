@@ -89,7 +89,7 @@
 	if(isAI(src))
 		modularInterface.saved_job = "AI"
 		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/ai)
-	if(istype(src, /mob/living/silicon/pai))
+	if(ispAI(src))
 		modularInterface.saved_job = "pAI Messenger"
 		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/ai)
 

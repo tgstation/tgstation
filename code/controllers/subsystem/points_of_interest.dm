@@ -227,7 +227,7 @@ SUBSYSTEM_DEF(points_of_interest)
 		return 0
 	if(istype(target, /mob/camera))
 		return 1
-	if(istype(target, /mob/living/silicon/pai))
+	if(ispAI(target))
 		return 2
 	if(iscyborg(target))
 		return 3
