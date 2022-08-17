@@ -289,6 +289,7 @@
 	name = "ship viewscreen"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "telescreen"
+	icon_keyboard = null
 	layer = SIGN_LAYER
 	density = FALSE
 	viewer = TRUE
