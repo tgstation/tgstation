@@ -513,7 +513,7 @@
 
 /mob/living/simple_animal/update_fire_overlay(stacks, on_fire, last_icon_state, suffix = "")
 	var/mutable_appearance/fire_overlay = mutable_appearance('icons/mob/onfire.dmi', "generic_fire")
-	if(on_fire && last_icon_state == null)
+	if(on_fire && isnull(last_icon_state))
 		add_overlay(fire_overlay)
 		return fire_overlay
 	else if(!on_fire && last_icon_state != null)
