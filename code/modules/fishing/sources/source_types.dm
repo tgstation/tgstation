@@ -26,7 +26,7 @@
 	background = "fishing_background_lavaland"
 	fish_table = list(
 		FISHING_DUD = 5,
-		/obj/item/fish/chrab = 15,
+		/obj/item/fish/chasm_crab = 15,
 		/obj/item/chasm_detritus = 30,
 	)
 

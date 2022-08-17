@@ -40,10 +40,9 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 	START_PROCESSING(SSobj, src) // process on create, in case stuff is still there
 	src.parent.AddElement(/datum/element/lazy_fishing_spot, FISHING_SPOT_PRESET_CHASM)
 
-/datum/component/chasm/Destroy(force=FALSE, silent=FALSE)
+/datum/component/chasm/UnregisterFromParent()
 	STOP_PROCESSING(SSobj, src)
 	remove_storage()
-	return ..(force, silent)
 
 /**
  * Deletes the chasm storage object and removes empty weakrefs from global list

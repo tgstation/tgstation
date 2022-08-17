@@ -182,7 +182,7 @@
 	fish_ai_type = FISH_AI_SLOW
 
 //Chasm fish
-/obj/item/fish/chrab
+/obj/item/fish/chasm_crab
 	name = "chasm chrab"
 	desc = "The young of the lobstrosity mature in pools below the earth, eating what falls in until large enough to clamber out. Those found near the station are well-fed."
 	icon_state = "chrab"
