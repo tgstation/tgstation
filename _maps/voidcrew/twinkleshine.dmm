@@ -133,7 +133,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2,
 /obj/structure/cable,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/commons/dorms)
@@ -144,7 +144,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2{
 	dir = 8
 	},
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/commons/dorms)
@@ -180,7 +180,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/commons/dorms)
@@ -226,7 +226,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2,
 /obj/structure/cable,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/commons/dorms)
 "cz" = (
@@ -357,7 +357,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/commons/dorms)
 "dX" = (
@@ -606,7 +606,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2{
 	dir = 1
 	},
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/commons/dorms)
@@ -657,7 +657,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/commons/dorms)
 "fW" = (
@@ -844,7 +844,7 @@
 "hU" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/commons/dorms)
@@ -1115,7 +1115,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/commons/dorms)
 "kV" = (
@@ -1497,7 +1497,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/commons/dorms)
 "pI" = (
@@ -1541,7 +1541,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/commons/dorms)
 "qj" = (
@@ -1627,7 +1627,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 6
 	},
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/commons/dorms)
 "ri" = (
@@ -1836,7 +1836,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 9
 	},
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/commons/dorms)
@@ -2710,7 +2710,7 @@
 	dir = 5
 	},
 /obj/structure/cable,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/cargo)
 "Bk" = (
@@ -2789,7 +2789,7 @@
 "CI" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/commons/dorms)
@@ -2960,7 +2960,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/structure/cable,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/commons/dorms)
 "Eu" = (
@@ -3034,7 +3034,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/commons/dorms)
 "Fv" = (
@@ -3571,7 +3571,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/structure/cable,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/cargo)
 "LQ" = (
@@ -3605,7 +3605,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 8
 	},
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/commons/dorms)
@@ -4249,7 +4249,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/commons/dorms)
@@ -4690,7 +4690,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/cargo)
 "Wh" = (

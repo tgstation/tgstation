@@ -2585,7 +2585,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "OT" = (
-/obj/structure/catwalk,
+/turf/open/floor/catwalk_floor,
 /obj/machinery/light/floor,
 /turf/template_noop,
 /area/station/external)
@@ -2933,7 +2933,7 @@
 /turf/open/floor/iron/white,
 /area/station/commons/dorms)
 "We" = (
-/obj/structure/catwalk,
+/turf/open/floor/catwalk_floor,
 /turf/template_noop,
 /area/station/external)
 "Ww" = (

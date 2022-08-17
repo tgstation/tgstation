@@ -127,7 +127,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "cv" = (
 /obj/structure/sign/warning/vacuum/external,
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -168,7 +168,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "dg" = (
 /obj/machinery/nanite_chamber,
 /turf/open/floor/mineral/titanium/tiled,
@@ -220,7 +220,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "ej" = (
 /obj/machinery/computer/helm,
 /turf/open/floor/mineral/titanium/tiled/blue,
@@ -259,7 +259,7 @@
 /obj/effect/decal/cleanable/xenoblood/xgibs/down,
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "eB" = (
 /obj/structure/sign/departments/nanites,
 /turf/closed/wall/mineral/titanium,
@@ -370,7 +370,7 @@
 /area/station/hallway/aft)
 "fU" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "ga" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
@@ -772,7 +772,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/machinery/door/firedoor/closed,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "lM" = (
 /obj/machinery/atmospherics/pipe/smart/simple/general/hidden{
 	dir = 9
@@ -962,11 +962,11 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "oK" = (
 /obj/structure/sign/poster/official/fruit_bowl,
 /turf/closed/wall/mineral/titanium,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "oT" = (
 /obj/effect/decal/cleanable/glass,
 /obj/effect/decal/cleanable/dirt,
@@ -983,7 +983,7 @@
 	id = "foreshutter"
 	},
 /turf/open/floor/plating,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "pA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/west,
@@ -1068,7 +1068,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "qR" = (
 /obj/effect/decal/cleanable/robot_debris/gib,
 /obj/effect/decal/cleanable/generic,
@@ -1083,7 +1083,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "ra" = (
 /obj/machinery/atmospherics/components/tank/nitrogen{
 	dir = 8
@@ -1142,7 +1142,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "rK" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/commons/toilet)
@@ -1153,11 +1153,11 @@
 	dir = 10
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "rY" = (
 /obj/effect/decal/cleanable/xenoblood/xgibs,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "sb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
@@ -1225,7 +1225,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "sQ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/tiled,
@@ -1244,7 +1244,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "tt" = (
 /obj/structure/sign/poster/contraband/borg_fancy_2,
 /turf/closed/wall/mineral/titanium,
@@ -1268,7 +1268,7 @@
 "tG" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "uk" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /turf/open/floor/carpet/purple,
@@ -1333,7 +1333,7 @@
 "vs" = (
 /obj/machinery/door/firedoor/closed,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "vt" = (
 /obj/effect/turf_decal/trimline/black/filled/warning{
 	dir = 8
@@ -1348,7 +1348,7 @@
 /obj/machinery/light/broken,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "vV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -1504,7 +1504,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "yc" = (
 /obj/machinery/door/airlock/maintenance/external,
 /obj/machinery/door/firedoor/border_only,
@@ -1615,7 +1615,7 @@
 "zr" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "zw" = (
 /obj/structure/closet/secure_closet/RD,
 /obj/item/reagent_containers/cup/glass/flask/gold,
@@ -1661,7 +1661,7 @@
 /obj/structure/holosign/barrier,
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "Ab" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
@@ -1671,7 +1671,7 @@
 /obj/effect/mob_spawn/human/corpse/damaged,
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "Ag" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -1699,13 +1699,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "At" = (
 /obj/item/wirerod,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "AD" = (
 /obj/machinery/recharge_station,
 /obj/item/robot_suit,
@@ -1790,7 +1790,7 @@
 "BD" = (
 /obj/structure/sign/poster/official/random,
 /turf/closed/wall/mineral/titanium,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "BM" = (
 /obj/machinery/door/firedoor/window,
 /obj/effect/spawner/structure/window/reinforced/shuttle,
@@ -1884,7 +1884,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "Dd" = (
 /obj/machinery/door/firedoor/window,
 /obj/effect/spawner/structure/window/reinforced/shuttle,
@@ -1941,7 +1941,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "DM" = (
 /obj/structure/sink/directional/north,
 /obj/structure/disposalpipe/segment{
@@ -1959,7 +1959,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "DQ" = (
 /obj/item/banner/science/mundane,
 /obj/effect/decal/cleanable/dirt,
@@ -1967,7 +1967,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "DS" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "rdshutter"
@@ -1995,7 +1995,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "Ef" = (
 /obj/effect/decal/cleanable/generic,
 /obj/structure/cable,
@@ -2159,7 +2159,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "Gk" = (
 /obj/effect/decal/cleanable/blood,
 /obj/structure/cable,
@@ -2168,7 +2168,7 @@
 	dir = 6
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "Go" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
@@ -2291,7 +2291,7 @@
 "HQ" = (
 /obj/item/shard,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "HS" = (
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/item/reagent_containers/dropper{
@@ -2319,7 +2319,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "Ic" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/medkit,
@@ -2352,7 +2352,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "In" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/cable,
@@ -2444,7 +2444,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/machinery/door/firedoor,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "Jj" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
@@ -2472,7 +2472,7 @@
 /obj/effect/decal/cleanable/oil/slippery,
 /obj/machinery/door/firedoor,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "Js" = (
 /obj/structure/table,
 /obj/structure/bedsheetbin,
@@ -2494,7 +2494,7 @@
 "JL" = (
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "JM" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/airalarm/directional/north,
@@ -2562,7 +2562,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "KK" = (
 /obj/structure/bed/pod,
 /obj/item/bedsheet/rd,
@@ -2578,7 +2578,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "Le" = (
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/glass,
@@ -2619,7 +2619,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "LP" = (
 /obj/machinery/door/airlock/science,
 /obj/machinery/door/firedoor/border_only{
@@ -2943,10 +2943,10 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "Qu" = (
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "QB" = (
 /obj/structure/sign/poster/random,
 /turf/closed/wall/mineral/titanium,
@@ -2990,7 +2990,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "Rn" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters{
@@ -3060,7 +3060,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer4,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "Sg" = (
 /obj/machinery/atmospherics/components/tank/oxygen{
 	dir = 4;
@@ -3186,7 +3186,7 @@
 "Uk" = (
 /obj/effect/decal/cleanable/generic,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "Uo" = (
 /obj/machinery/disposal/deliveryChute{
 	dir = 8
@@ -3251,7 +3251,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "UD" = (
 /obj/structure/grille/broken,
 /obj/item/shard,
@@ -3261,7 +3261,7 @@
 	id = "foreshutter"
 	},
 /turf/open/floor/plating,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "UH" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 5
@@ -3301,7 +3301,7 @@
 /area/station/science/ai_chamber)
 "Vw" = (
 /turf/closed/wall/mineral/titanium,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "Vx" = (
 /obj/machinery/door/airlock/science,
 /obj/machinery/door/firedoor/border_only{
@@ -3473,7 +3473,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "Xw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -3562,7 +3562,7 @@
 	pixel_y = 25
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "Yi" = (
 /obj/structure/closet/crate,
 /obj/item/resonator,
@@ -3638,7 +3638,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "YW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,

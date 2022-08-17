@@ -415,7 +415,7 @@
 /area/station/engineering)
 "ew" = (
 /obj/structure/cable,
-/obj/structure/catwalk/over/plated_catwalk/dark,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/engineering/engine)
 "ey" = (
@@ -711,7 +711,7 @@
 /area/station/hallway/primary/central)
 "ja" = (
 /obj/structure/cable,
-/obj/structure/catwalk/over/plated_catwalk/dark,
+/turf/open/floor/catwalk_floor,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 8
 	},
@@ -1676,8 +1676,7 @@
 /area/station/storage)
 "wK" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste,
-/obj/structure/catwalk,
-/obj/structure/catwalk,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating/airless,
 /area/station/engineering/atmospherics)
 "wP" = (
@@ -2506,7 +2505,7 @@
 /turf/open/floor/iron,
 /area/station/cargo)
 "GO" = (
-/obj/structure/catwalk,
+/turf/open/floor/catwalk_floor,
 /obj/machinery/atmospherics/components/unary/vent_scrubber,
 /turf/open/floor/plating/airless,
 /area/station/engineering/atmospherics)
@@ -2834,7 +2833,7 @@
 /area/station/medical)
 "Ld" = (
 /obj/structure/cable,
-/obj/structure/catwalk/over/plated_catwalk/dark,
+/turf/open/floor/catwalk_floor,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 9
 	},

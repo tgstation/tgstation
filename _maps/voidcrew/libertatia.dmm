@@ -437,7 +437,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2{
 	dir = 8
 	},
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/security)
 "rc" = (
@@ -514,7 +514,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/security)
 "sx" = (
@@ -656,7 +656,7 @@
 	codes_txt = "patrol;next_patrol=port";
 	location = "forward"
 	},
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/commons)
 "vW" = (
@@ -702,7 +702,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/commons)
 "yf" = (
@@ -774,7 +774,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/landmark/observer_start,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/commons)
 "AL" = (
@@ -866,7 +866,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2{
 	dir = 8
 	},
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/commons)
 "Cj" = (

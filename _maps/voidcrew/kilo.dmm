@@ -755,7 +755,7 @@
 /area/station/engineering/engine)
 "dF" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on/layer4,
-/obj/structure/catwalk,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating/airless,
 /area/station/external)
 "eo" = (

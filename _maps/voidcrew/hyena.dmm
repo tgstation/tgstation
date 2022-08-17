@@ -636,7 +636,6 @@
 /turf/open/floor/plasteel/tech/grid,
 /area/station/hallway/primary/central)
 "lX" = (
-/obj/structure/sign/syndicate,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/station/commons)
 "mf" = (
@@ -993,7 +992,6 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/station/maintenance/starboard)
 "sG" = (
-/obj/structure/sign/syndicate,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/station/hallway/primary/central)
 "sH" = (
@@ -1140,7 +1138,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "uq" = (
@@ -1150,7 +1148,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/orange/hidden/layer4{
 	dir = 10
 	},
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "uO" = (
@@ -1568,7 +1566,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=dorms";
 	location = "storage"
@@ -1698,7 +1696,7 @@
 /area/station/cargo)
 "Ft" = (
 /obj/structure/cable,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /obj/machinery/atmospherics/pipe/smart/simple/orange/hidden,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 1
@@ -1920,7 +1918,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/station/storage)
 "Ki" = (
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /obj/machinery/atmospherics/pipe/layer_manifold{
 	dir = 4
 	},
@@ -1969,7 +1967,7 @@
 	name = "Input to Fuel"
 	},
 /obj/structure/cable,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "KJ" = (
@@ -2193,7 +2191,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4{
 	dir = 4
 	},
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/storage)
 "Oo" = (
@@ -2352,12 +2350,12 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/storage)
 "Rc" = (
 /obj/structure/cable,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /obj/machinery/atmospherics/pipe/smart/simple/orange/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2{
 	dir = 8

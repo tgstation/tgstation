@@ -149,7 +149,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "cR" = (
 /obj/structure/table,
 /obj/machinery/microwave{
@@ -745,7 +745,7 @@
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer2,
 /turf/open/floor/iron/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "oe" = (
 /obj/machinery/door/window/right/directional/west,
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -824,7 +824,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "qc" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
@@ -912,7 +912,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "sH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
@@ -929,7 +929,7 @@
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/iron/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "sP" = (
 /obj/structure/table/glass,
 /obj/machinery/reagentgrinder{
@@ -1059,7 +1059,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "vr" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 4
@@ -1192,7 +1192,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "yA" = (
 /obj/structure/cable,
 /turf/open/floor/iron/white,
@@ -1322,7 +1322,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "AJ" = (
 /turf/closed/wall/mineral/titanium,
 /area/station/hallway/aft)
@@ -1340,7 +1340,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "BN" = (
 /obj/docking_port/mobile{
 	launch_status = 0;
@@ -1488,7 +1488,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "FE" = (
 /obj/structure/sign/poster/official/cleanliness{
 	pixel_y = 32
@@ -1701,7 +1701,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "KD" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -1756,7 +1756,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/iron/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "Ln" = (
 /obj/effect/turf_decal/industrial/loading{
 	dir = 1
@@ -2009,7 +2009,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "Ps" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /obj/item/clothing/glasses/hud/health,
@@ -2325,7 +2325,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "Uy" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/neutral/filled/warning{
@@ -2354,7 +2354,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "UF" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/science)
@@ -2524,7 +2524,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "Wd" = (
 /obj/effect/turf_decal/trimline/red/filled/warning{
 	dir = 4
@@ -2667,7 +2667,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/white,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "Yr" = (
 /obj/machinery/light{
 	dir = 4

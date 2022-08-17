@@ -210,7 +210,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "eY" = (
-/obj/structure/catwalk,
+/turf/open/floor/catwalk_floor,
 /turf/template_noop,
 /area/station/external)
 "fv" = (
@@ -1367,7 +1367,7 @@
 /turf/open/floor/plating,
 /area/station/hallway)
 "Db" = (
-/obj/structure/catwalk,
+/turf/open/floor/catwalk_floor,
 /obj/machinery/atmospherics/components/unary/outlet_injector/on/layer4{
 	dir = 4
 	},
@@ -1454,7 +1454,7 @@
 /turf/open/floor/plating,
 /area/station/engineering)
 "EQ" = (
-/obj/structure/catwalk,
+/turf/open/floor/catwalk_floor,
 /obj/machinery/light/small{
 	dir = 8
 	},

@@ -67,7 +67,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/commons)
 "bP" = (
@@ -76,7 +76,7 @@
 	dir = 8;
 	name = "engine fuel pump"
 	},
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/engineering)
 "bW" = (
@@ -159,7 +159,7 @@
 /turf/open/floor/plasteel/mono/dark,
 /area/station/command/bridge)
 "fy" = (
-/obj/structure/catwalk,
+/turf/open/floor/catwalk_floor,
 /turf/template_noop,
 /area/station/external)
 "fV" = (
@@ -173,7 +173,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/structure/cable,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/engineering)
 "gf" = (
@@ -185,7 +185,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2{
 	dir = 4
 	},
-/obj/structure/catwalk/over/plated_catwalk/dark,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/engineering)
 "gr" = (
@@ -226,7 +226,7 @@
 /area/station/external)
 "he" = (
 /obj/structure/cable,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/engineering)
 "hj" = (
@@ -510,7 +510,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/commons)
 "ms" = (
@@ -538,7 +538,7 @@
 "nr" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/structure/cable,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/engineering)
 "nu" = (
@@ -550,7 +550,7 @@
 "nJ" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer2,
 /obj/structure/cable,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/commons)
@@ -582,12 +582,12 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/engineering)
 "om" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /obj/effect/landmark/start/station_engineer,
 /turf/open/floor/plating,
 /area/station/engineering)
@@ -609,7 +609,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 4
 	},
@@ -927,7 +927,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/commons)
@@ -1012,7 +1012,7 @@
 /turf/closed/wall,
 /area/station/medical)
 "zq" = (
-/obj/structure/catwalk,
+/turf/open/floor/catwalk_floor,
 /obj/machinery/atmospherics/components/unary/outlet_injector/on/layer4{
 	dir = 1
 	},
@@ -1034,7 +1034,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/engineering)
 "zW" = (
@@ -1103,7 +1103,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/commons)
 "AE" = (
@@ -1335,7 +1335,7 @@
 /obj/machinery/computer/helm/viewscreen{
 	pixel_y = 30
 	},
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/engineering)
 "IF" = (
@@ -1658,7 +1658,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/structure/catwalk/over,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/commons)
 "TX" = (

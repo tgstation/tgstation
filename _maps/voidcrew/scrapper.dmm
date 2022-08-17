@@ -255,7 +255,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/pod/light,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "cX" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold/orange/visible{
@@ -311,7 +311,7 @@
 	dir = 4
 	},
 /turf/open/floor/pod/light,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "dr" = (
 /obj/structure/table,
 /obj/item/storage/backpack/duffelbag/med/surgery,
@@ -338,7 +338,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/atmospherics)
 "dN" = (
-/obj/structure/catwalk,
+/turf/open/floor/catwalk_floor,
 /turf/template_noop,
 /area/station/external)
 "dP" = (
@@ -1104,7 +1104,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/pod/light,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "oo" = (
 /obj/effect/turf_decal/siding/yellow{
 	dir = 8
@@ -1218,7 +1218,7 @@
 	pixel_y = 24
 	},
 /turf/open/floor/pod/light,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "pR" = (
 /obj/effect/turf_decal/techfloor{
 	dir = 4
@@ -1393,7 +1393,7 @@
 /obj/machinery/door/firedoor/window,
 /obj/structure/curtain/bounty,
 /turf/open/floor/plating,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "sQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
@@ -1569,7 +1569,7 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/floor/pod/light,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "va" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /obj/structure/cable,
@@ -1698,7 +1698,7 @@
 /obj/structure/closet/emcloset,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/pod/light,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "wx" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/seed_extractor,
@@ -1982,7 +1982,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/pod/light,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "zB" = (
 /obj/machinery/computer/autopilot,
 /obj/effect/turf_decal/box,
@@ -2415,7 +2415,7 @@
 /turf/open/floor/iron/stairs{
 	dir = 4
 	},
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "EG" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plasteel/tech/techmaint,
@@ -2913,7 +2913,7 @@
 	dir = 4
 	},
 /turf/open/floor/pod/light,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "LR" = (
 /obj/effect/turf_decal/techfloor,
 /obj/machinery/firealarm{
@@ -3656,7 +3656,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/pod/light,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "Ud" = (
 /obj/machinery/light,
 /obj/machinery/status_display/shuttle{
@@ -3670,7 +3670,7 @@
 /turf/open/floor/iron/stairs{
 	dir = 4
 	},
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "Ui" = (
 /obj/machinery/airalarm/all_access{
 	dir = 4;

@@ -332,7 +332,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 9
 	},
-/obj/structure/catwalk/over/plated_catwalk,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/engineering/atmospherics)
 "fy" = (
@@ -565,7 +565,7 @@
 /area/station/command/bridge)
 "jC" = (
 /obj/structure/lattice,
-/obj/structure/catwalk,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/external)
 "jJ" = (
@@ -862,7 +862,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "og" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 5
@@ -873,7 +873,7 @@
 /obj/machinery/airalarm/directional/north,
 /obj/structure/cable,
 /turf/open/floor/carpet,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "ol" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
@@ -883,7 +883,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "ou" = (
 /obj/structure/chair/wood{
 	dir = 1
@@ -942,7 +942,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "pP" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
@@ -970,7 +970,7 @@
 	dir = 8
 	},
 /turf/open/floor/carpet,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "qK" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
@@ -991,14 +991,14 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "rc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "rf" = (
 /obj/structure/chair/wood,
 /turf/open/floor/wood,
@@ -1017,7 +1017,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "rv" = (
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
@@ -1338,7 +1338,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "uB" = (
 /obj/structure/chair/pew/left{
 	dir = 4
@@ -1424,7 +1424,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/grille,
 /turf/open/floor/plating,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "vS" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/power/apc/auto_name/directional/west,
@@ -1450,7 +1450,7 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "wt" = (
-/obj/structure/catwalk,
+/turf/open/floor/catwalk_floor,
 /obj/structure/window/reinforced/spawner/east,
 /obj/structure/grille,
 /turf/open/floor/plating,
@@ -1616,7 +1616,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/atmospherics)
 "ys" = (
-/obj/structure/catwalk,
+/turf/open/floor/catwalk_floor,
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible,
 /obj/structure/window/reinforced/spawner/east,
 /obj/structure/grille,
@@ -1639,7 +1639,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "yL" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4{
 	dir = 1
@@ -1755,7 +1755,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/item/clothing/glasses/welding,
 /obj/item/clothing/head/welding,
-/obj/structure/catwalk/over/plated_catwalk,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/engineering/atmospherics)
 "Af" = (
@@ -1829,7 +1829,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /turf/open/floor/iron/dark,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "BJ" = (
 /obj/machinery/light{
 	dir = 1
@@ -1843,11 +1843,11 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/carpet,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "BP" = (
 /obj/structure/cable,
 /turf/open/floor/carpet,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "Cb" = (
 /obj/machinery/light{
 	dir = 4
@@ -1909,7 +1909,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "Cy" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
@@ -1940,7 +1940,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /turf/open/floor/iron/dark,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "CS" = (
 /obj/structure/window/reinforced/spawner,
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/air_input,
@@ -2019,7 +2019,7 @@
 /turf/open/floor/iron/dark,
 /area/station/commons/chapel)
 "Ef" = (
-/obj/structure/catwalk,
+/turf/open/floor/catwalk_floor,
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 10
 	},
@@ -2151,7 +2151,7 @@
 /turf/open/floor/wood,
 /area/station/medical)
 "Hq" = (
-/obj/structure/catwalk,
+/turf/open/floor/catwalk_floor,
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible,
 /obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/plating,
@@ -2410,7 +2410,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmospherics)
 "Lb" = (
-/obj/structure/catwalk,
+/turf/open/floor/catwalk_floor,
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on,
 /turf/open/floor/plating,
 /area/station/external)
@@ -2791,7 +2791,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/port)
 "QF" = (
-/obj/structure/catwalk,
+/turf/open/floor/catwalk_floor,
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste{
 	dir = 1
 	},
@@ -2852,7 +2852,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/electrical)
 "Ri" = (
-/obj/structure/catwalk,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/external)
 "Rx" = (
@@ -3080,7 +3080,7 @@
 	},
 /obj/machinery/door/airlock/public/glass,
 /turf/open/floor/iron/dark,
-/area/station/hallway/fore)
+/area/station/hallway/primary/fore)
 "TP" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2{
@@ -3323,7 +3323,7 @@
 /turf/open/floor/iron/dark,
 /area/station/commons/chapel)
 "VV" = (
-/obj/structure/catwalk,
+/turf/open/floor/catwalk_floor,
 /obj/structure/sign/warning/docking/directional/east,
 /turf/open/floor/plating,
 /area/station/external)
@@ -3537,7 +3537,7 @@
 /area/station/engineering/atmospherics)
 "Yw" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
-/obj/structure/catwalk/over/plated_catwalk,
+/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/station/engineering/atmospherics)
 "Yx" = (
@@ -3631,7 +3631,7 @@
 	},
 /area/station/commons/hydroponics)
 "ZH" = (
-/obj/structure/catwalk,
+/turf/open/floor/catwalk_floor,
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
 	dir = 9
 	},
