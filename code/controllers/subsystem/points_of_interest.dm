@@ -237,7 +237,7 @@ SUBSYSTEM_DEF(points_of_interest)
 		return 5
 	if(isalien(target))
 		return 6
-	if(istype(target, /mob/dead/observer))
+	if(isobserver(target))
 		return 7
 	if(istype(target, /mob/dead/new_player))
 		return 8
