@@ -1,7 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes: 
-  - rscdel: "Reverts https://github.com/tgstation/tgstation/pull/49103. Krav Maga is back to a much older state. Mostly."
-  - balance: "Krav maga right click shoves again, and can have a chance of stealing held items."
-  - balance: "Most attacks with krav maga no longer check armor, and do a flat amount of damage."
-  - balance: "Legsweep deals 5 brute instead of stamina damage."

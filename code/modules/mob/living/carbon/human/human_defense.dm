@@ -560,10 +560,10 @@
 		if(head_clothes)
 			if(!(head_clothes.resistance_flags & UNACIDABLE))
 				head_clothes.acid_act(acidpwr, acid_volume)
-				update_inv_glasses()
-				update_inv_wear_mask()
-				update_inv_neck()
-				update_inv_head()
+				update_worn_glasses()
+				update_worn_mask()
+				update_worn_neck()
+				update_worn_head()
 			else
 				to_chat(src, span_notice("Your [head_clothes.name] protects your head and face from the acid!"))
 		else
@@ -583,8 +583,8 @@
 		if(chest_clothes)
 			if(!(chest_clothes.resistance_flags & UNACIDABLE))
 				chest_clothes.acid_act(acidpwr, acid_volume)
-				update_inv_w_uniform()
-				update_inv_wear_suit()
+				update_worn_undersuit()
+				update_worn_oversuit()
 			else
 				to_chat(src, span_notice("Your [chest_clothes.name] protects your body from the acid!"))
 		else
@@ -614,9 +614,9 @@
 		if(arm_clothes)
 			if(!(arm_clothes.resistance_flags & UNACIDABLE))
 				arm_clothes.acid_act(acidpwr, acid_volume)
-				update_inv_gloves()
-				update_inv_w_uniform()
-				update_inv_wear_suit()
+				update_worn_gloves()
+				update_worn_undersuit()
+				update_worn_oversuit()
 			else
 				to_chat(src, span_notice("Your [arm_clothes.name] protects your arms and hands from the acid!"))
 		else
@@ -640,9 +640,9 @@
 		if(leg_clothes)
 			if(!(leg_clothes.resistance_flags & UNACIDABLE))
 				leg_clothes.acid_act(acidpwr, acid_volume)
-				update_inv_shoes()
-				update_inv_w_uniform()
-				update_inv_wear_suit()
+				update_worn_shoes()
+				update_worn_undersuit()
+				update_worn_oversuit()
 			else
 				to_chat(src, span_notice("Your [leg_clothes.name] protects your legs and feet from the acid!"))
 		else
