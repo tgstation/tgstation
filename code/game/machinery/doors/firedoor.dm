@@ -662,22 +662,22 @@
 	density = TRUE
 	alarm_type = FIRELOCK_ALARM_TYPE_GENERIC
 
-/obj/machinery/door/firedoor
+/obj/machinery/door/firedoor/border_only
 	icon = 'icons/obj/doors/edge_Doorfire.dmi'
 	can_crush = FALSE
 	flags_1 = ON_BORDER_1
 	can_atmos_pass = ATMOS_PASS_PROC
 
-/obj/machinery/door/firedoor/closed
+/obj/machinery/door/firedoor/border_only/closed
 	icon_state = "door_closed"
 	density = TRUE
 	alarm_type = FIRELOCK_ALARM_TYPE_GENERIC
 
-/obj/machinery/door/firedoor/Initialize(mapload)
+/obj/machinery/door/firedoor/border_only/Initialize(mapload)
 	. = ..()
 	adjust_lights_starting_offset()
 
-/obj/machinery/door/firedoor/adjust_lights_starting_offset()
+/obj/machinery/door/firedoor/border_only/adjust_lights_starting_offset()
 	light_xoffset = 0
 	light_yoffset = 0
 	switch(dir)
@@ -691,19 +691,19 @@
 			light_xoffset = -2
 	update_icon()
 
-/obj/machinery/door/firedoor/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+/obj/machinery/door/firedoor/border_only/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	adjust_lights_starting_offset()
 
-/obj/machinery/door/firedoor/CanAllowThrough(atom/movable/mover, border_dir)
+/obj/machinery/door/firedoor/border_only/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(!(border_dir == dir)) //Make sure looking at appropriate border
 		return TRUE
 
-/obj/machinery/door/firedoor/CanAStarPass(obj/item/card/id/ID, to_dir, no_id = FALSE)
+/obj/machinery/door/firedoor/border_only/CanAStarPass(obj/item/card/id/ID, to_dir, no_id = FALSE)
 	return !density || (dir != to_dir)
 
-/obj/machinery/door/firedoor/proc/on_exit(datum/source, atom/movable/leaving, direction)
+/obj/machinery/door/firedoor/border_only/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER
 	if(leaving.movement_type & PHASING)
 		return
@@ -714,7 +714,7 @@
 		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
-/obj/machinery/door/firedoor/can_atmos_pass(turf/T, vertical = FALSE)
+/obj/machinery/door/firedoor/border_only/can_atmos_pass(turf/T, vertical = FALSE)
 	if(get_dir(loc, T) == dir)
 		return !density
 	else

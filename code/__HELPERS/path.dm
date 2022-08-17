@@ -418,7 +418,7 @@
 		if(!iter_rail.CanAStarPass(ID, actual_dir, no_id = no_id))
 			return TRUE
 
-	for(var/obj/machinery/door/firedoor/firedoor in src)
+	for(var/obj/machinery/door/firedoor/border_only/firedoor in src)
 		if(!firedoor.CanAStarPass(ID, actual_dir, no_id = no_id))
 			return TRUE
 

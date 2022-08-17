@@ -1,1 +1,0 @@
-/obj/structure/cable/yellow{@SUBTYPES} : /obj/structure/cable

@@ -25,7 +25,7 @@
 /obj/machinery/portable_atmospherics/canister/toxins : /obj/machinery/portable_atmospherics/canister/plasma
 /obj/machinery/air_sensor/atmos/toxin_tank : /obj/machinery/air_sensor/atmos/plasma_tank
 /obj/machinery/computer/atmos_control/tank/toxin_tank : /obj/machinery/computer/atmos_control/tank/plasma_tank
-/obj/machinery/atmospherics/components/tank/plasma : /obj/machinery/atmospherics/components/tank/plasma
+/obj/machinery/atmospherics/components/tank/toxins : /obj/machinery/atmospherics/components/tank/plasma
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxin_input : /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/plasma_input
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxin_output : /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/plasma_output
 /obj/machinery/atmospherics/miner/toxins : /obj/machinery/atmospherics/miner/plasma
