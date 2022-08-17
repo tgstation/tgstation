@@ -68,7 +68,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/commons)
 "bP" = (
 /obj/structure/cable,
@@ -77,7 +76,6 @@
 	name = "engine fuel pump"
 	},
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/engineering)
 "bW" = (
 /obj/structure/cable,
@@ -171,7 +169,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/engineering)
 "gf" = (
 /obj/structure/cable,
@@ -183,7 +180,6 @@
 	dir = 4
 	},
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/engineering)
 "gr" = (
 /obj/effect/decal/cleanable/dirt,
@@ -224,7 +220,6 @@
 "he" = (
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/engineering)
 "hj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
@@ -508,7 +503,6 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/commons)
 "ms" = (
 /obj/machinery/door/poddoor/preopen{
@@ -536,7 +530,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/engineering)
 "nu" = (
 /obj/effect/turf_decal/tile/yellow/half{
@@ -580,7 +573,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/engineering)
 "om" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1024,7 +1016,6 @@
 	dir = 4
 	},
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/engineering)
 "zW" = (
 /obj/machinery/light{
@@ -1093,7 +1084,6 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/commons)
 "AE" = (
 /obj/machinery/atmospherics/pipe/smart/simple/general/hidden{
@@ -1317,7 +1307,6 @@
 	pixel_y = 30
 	},
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/engineering)
 "IF" = (
 /obj/machinery/power/port_gen/pacman,
@@ -1632,7 +1621,6 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/commons)
 "TX" = (
 /obj/structure/table,

@@ -892,7 +892,6 @@
 /area/station/maintenance/starboard)
 "QJ" = (
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/space)
 "Rc" = (
 /obj/effect/decal/cleanable/robot_debris,

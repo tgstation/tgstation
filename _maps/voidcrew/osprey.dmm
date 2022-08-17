@@ -74,7 +74,6 @@
 /area/station/engineering/engine)
 "aC" = (
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/engineering/engine)
 "aE" = (
 /obj/effect/turf_decal/siding/wood,
@@ -245,7 +244,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/green/hidden/layer5,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/engineering/engine)
 "bP" = (
 /turf/closed/wall/mineral/titanium,
@@ -679,7 +677,6 @@
 /obj/machinery/power/terminal,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/engineering/engine)
 "ff" = (
 /obj/machinery/atmospherics/components/tank/plasma{
@@ -1273,7 +1270,6 @@
 "jU" = (
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/engineering/engine)
 "jV" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1335,7 +1331,6 @@
 	dir = 4
 	},
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/maintenance/starboard)
 "kq" = (
 /obj/effect/turf_decal/tile/grey/mono,
@@ -1367,7 +1362,6 @@
 	pixel_y = -22
 	},
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/maintenance/starboard)
 "kO" = (
 /obj/machinery/door/airlock/engineering{
@@ -2024,7 +2018,6 @@
 	dir = 4
 	},
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/engineering/atmospherics)
 "oO" = (
 /obj/structure/mecha_wreckage/ripley,
@@ -2246,7 +2239,6 @@
 	pixel_y = -28
 	},
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/maintenance/port)
 "qK" = (
 /obj/effect/turf_decal/siding/wood{
@@ -3392,7 +3384,6 @@
 /obj/structure/sign/warning/electric_shock/directional/east,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/engineering/engine)
 "Ax" = (
 /obj/structure/chair/office,
@@ -3813,7 +3804,6 @@
 	dir = 4
 	},
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/maintenance/port)
 "DG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/orange/visible,
@@ -3999,7 +3989,6 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/engineering/engine)
 "ES" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
@@ -4103,7 +4092,6 @@
 /obj/machinery/navbeacon/wayfinding/engineering,
 /obj/item/stack/sheet/mineral/uranium/twenty,
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/engineering/engine)
 "FL" = (
 /obj/item/storage/medkit/fire{
@@ -4278,7 +4266,6 @@
 /obj/structure/cable,
 /obj/machinery/light,
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/engineering/engine)
 "Hp" = (
 /obj/effect/turf_decal/tile/grey/mono,
@@ -4730,7 +4717,6 @@
 "KV" = (
 /obj/machinery/light,
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/engineering/engine)
 "Lh" = (
 /obj/structure/closet/secure_closet{
@@ -4896,7 +4882,6 @@
 	pixel_y = -22
 	},
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/maintenance/port)
 "Mx" = (
 /obj/structure/chair/office,
@@ -5973,7 +5958,6 @@
 "UY" = (
 /obj/structure/sign/warning/engine_safety/directional/north,
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/engineering/engine)
 "Va" = (
 /obj/machinery/advanced_airlock_controller{
@@ -5991,7 +5975,6 @@
 	pixel_y = -28
 	},
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/maintenance/starboard)
 "Ve" = (
 /obj/machinery/light{

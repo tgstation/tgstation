@@ -404,7 +404,6 @@
 "ew" = (
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/engineering/engine)
 "ey" = (
 /obj/machinery/door/firedoor,

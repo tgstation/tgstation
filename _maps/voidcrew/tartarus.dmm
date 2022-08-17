@@ -1121,7 +1121,6 @@
 /area/station/hallway/primary/central)
 "uK" = (
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/construction)
 "uO" = (
 /obj/effect/spawner/structure/window/reinforced,

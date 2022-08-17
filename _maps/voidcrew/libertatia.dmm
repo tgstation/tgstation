@@ -435,7 +435,6 @@
 	dir = 8
 	},
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/security)
 "rc" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -512,7 +511,6 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/security)
 "sx" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
@@ -647,7 +645,6 @@
 	location = "forward"
 	},
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/commons)
 "vW" = (
 /obj/structure/table,
@@ -693,7 +690,6 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/commons)
 "yf" = (
 /obj/structure/chair/plastic,
@@ -765,7 +761,6 @@
 /obj/structure/cable,
 /obj/effect/landmark/observer_start,
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/commons)
 "AL" = (
 /obj/structure/table,
@@ -857,7 +852,6 @@
 	dir = 8
 	},
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/commons)
 "Cj" = (
 /obj/structure/chair/plastic{

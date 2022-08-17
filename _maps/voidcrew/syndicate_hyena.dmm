@@ -1130,7 +1130,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/maintenance/port)
 "uq" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/hidden/layer2{
@@ -1140,7 +1139,6 @@
 	dir = 10
 	},
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/maintenance/port)
 "uO" = (
 /obj/structure/table/reinforced,
@@ -1956,7 +1954,6 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/maintenance/port)
 "KJ" = (
 /obj/machinery/light/small{
@@ -2175,7 +2172,6 @@
 	dir = 4
 	},
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/commons/storage/primary)
 "Oo" = (
 /obj/machinery/status_display/shuttle{
@@ -2329,7 +2325,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer4,
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/station/commons/storage/primary)
 "Rc" = (
 /obj/structure/cable,
