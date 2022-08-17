@@ -1,7 +1,8 @@
 /datum/action/cooldown/spell/touch/flesh_surgery
 	name = "Knit Flesh"
-	desc = "A touch spell that allows you to extract the organs of a victim without needing to complete surgery or disembowel. \
-		Can also be used to restore failing or destroyed organs to optimal condition, or restore health to your minions and summons."
+	desc = "A touch spell that allows you to either harvest or restore flesh of target. \
+		Left-clicking will extract the organs of a victim without needing to complete surgery or disembowel. \
+		Right-clicking, if done on summons or minions, will restore health. Can also be used to heal damaged organs."
 	background_icon_state = "bg_ecult"
 	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "mad_touch"
@@ -27,13 +28,57 @@
 		return heal_organ(hand, victim, caster)
 
 	if(isliving(victim))
-		var/mob/living/mob_victim = victim
-		if(mob_victim.stat != DEAD && IS_HERETIC_MONSTER(mob_victim))
-			return heal_heretic_monster(hand, mob_victim, caster)
-		else
-			return steal_organ_from_mob(hand, mob_victim, caster)
+		return steal_organ_from_mob(hand, victim, caster)
 
 	return FALSE
+
+/datum/action/cooldown/spell/touch/flesh_surgery/cast_on_secondary_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
+	if(isorgan(victim))
+		return SECONDARY_ATTACK_CALL_NORMAL
+
+	if(isliving(victim))
+		var/mob/living/mob_victim = victim
+		if(mob_victim.stat == DEAD || !IS_HERETIC_MONSTER(mob_victim))
+			return SECONDARY_ATTACK_CALL_NORMAL
+
+		if(heal_heretic_monster(hand, mob_victim, caster))
+			return SECONDARY_ATTACK_CONTINUE_CHAIN
+
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/datum/action/cooldown/spell/touch/flesh_surgery/register_hand_signals()
+	. = ..()
+	RegisterSignal(attached_hand, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, .proc/add_item_context)
+	attached_hand.item_flags |= ITEM_HAS_CONTEXTUAL_SCREENTIPS
+
+/datum/action/cooldown/spell/touch/flesh_surgery/unregister_hand_signals()
+	. = ..()
+	UnregisterSignal(attached_hand, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET)
+
+/// Signal proc for [COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET] to add some context to the hand.
+/datum/action/cooldown/spell/touch/flesh_surgery/proc/add_item_context(obj/item/melee/touch_attack/source, list/context, atom/victim, mob/living/user)
+	SIGNAL_HANDLER
+
+	. = NONE
+
+	if(isliving(victim))
+		var/mob/living/mob_victim = victim
+
+		if(iscarbon(mob_victim))
+			context[SCREENTIP_CONTEXT_LMB] = "Extract Organ"
+			. = CONTEXTUAL_SCREENTIP_SET
+
+		if(IS_HERETIC_MONSTER(mob_victim))
+			context[SCREENTIP_CONTEXT_RMB] = "Heal [ishuman(mob_victim) ? "minion" : "summon"]"
+			. = CONTEXTUAL_SCREENTIP_SET
+
+	else if(isorgan(victim))
+		// RMB or LMB both work but we'll just show RMB
+		// to be consistent about "RMB = heal"
+		context[SCREENTIP_CONTEXT_RMB] = "Heal Organ"
+		. = CONTEXTUAL_SCREENTIP_SET
+
+	return .
 
 /// If cast on an organ, we'll restore it's health and even un-fail it.
 /datum/action/cooldown/spell/touch/flesh_surgery/proc/heal_organ(obj/item/melee/touch_attack/hand, obj/item/organ/to_heal, mob/living/carbon/caster)

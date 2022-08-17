@@ -69,10 +69,7 @@
 		return FALSE
 
 	attached_hand = new_hand
-	RegisterSignal(attached_hand, COMSIG_ITEM_AFTERATTACK, .proc/on_hand_hit)
-	RegisterSignal(attached_hand, COMSIG_ITEM_AFTERATTACK_SECONDARY, .proc/on_secondary_hand_hit)
-	RegisterSignal(attached_hand, COMSIG_PARENT_QDELETING, .proc/on_hand_deleted)
-	RegisterSignal(attached_hand, COMSIG_ITEM_DROPPED, .proc/on_hand_dropped)
+	register_hand_signals()
 	to_chat(cast_on, draw_message)
 	return TRUE
 
@@ -84,7 +81,7 @@
  */
 /datum/action/cooldown/spell/touch/proc/remove_hand(mob/living/hand_owner, reset_cooldown_after = FALSE)
 	if(!QDELETED(attached_hand))
-		UnregisterSignal(attached_hand, list(COMSIG_ITEM_AFTERATTACK, COMSIG_ITEM_AFTERATTACK_SECONDARY, COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED))
+		unregister_hand_signals()
 		hand_owner?.temporarilyRemoveItemFromInventory(attached_hand)
 		QDEL_NULL(attached_hand)
 
@@ -94,6 +91,26 @@
 		reset_spell_cooldown()
 	else
 		StartCooldown()
+
+/// Registers all signal procs for the hand.
+/datum/action/cooldown/spell/touch/proc/register_hand_signals()
+	SHOULD_CALL_PARENT(TRUE)
+
+	RegisterSignal(attached_hand, COMSIG_ITEM_AFTERATTACK, .proc/on_hand_hit)
+	RegisterSignal(attached_hand, COMSIG_ITEM_AFTERATTACK_SECONDARY, .proc/on_secondary_hand_hit)
+	RegisterSignal(attached_hand, COMSIG_ITEM_DROPPED, .proc/on_hand_dropped)
+	RegisterSignal(attached_hand, COMSIG_PARENT_QDELETING, .proc/on_hand_deleted)
+
+/// Unregisters all signal procs for the hand.
+/datum/action/cooldown/spell/touch/proc/unregister_hand_signals()
+	SHOULD_CALL_PARENT(TRUE)
+
+	UnregisterSignal(attached_hand, list(
+		COMSIG_ITEM_AFTERATTACK,
+		COMSIG_ITEM_AFTERATTACK_SECONDARY,
+		COMSIG_ITEM_DROPPED,
+		COMSIG_PARENT_QDELETING,
+	))
 
 // Touch spells don't go on cooldown OR give off an invocation until the hand is used itself.
 /datum/action/cooldown/spell/touch/before_cast(atom/cast_on)
