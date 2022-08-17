@@ -600,7 +600,7 @@
 "oI" = (
 /obj/item/rack_parts,
 /obj/machinery/light/small/broken,
-/obj/item/stack/cable_coil/red,
+/obj/item/stack/cable_coil,
 /obj/effect/decal/cleanable/glass,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,

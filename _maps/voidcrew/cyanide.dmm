@@ -141,7 +141,7 @@
 /obj/item/tank/internals/emergency_oxygen/double,
 /obj/item/tank/internals/emergency_oxygen/double,
 /obj/item/storage/toolbox/syndicate,
-/obj/item/stack/cable_coil/red,
+/obj/item/stack/cable_coil,
 /obj/item/resonator,
 /obj/item/resonator,
 /obj/item/resonator,

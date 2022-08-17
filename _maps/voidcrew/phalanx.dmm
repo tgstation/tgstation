@@ -2125,7 +2125,7 @@
 	},
 /obj/structure/table/glass,
 /obj/item/screwdriver,
-/obj/item/stack/cable_coil/red,
+/obj/item/stack/cable_coil,
 /obj/item/assembly/timer,
 /obj/item/assembly/timer,
 /obj/item/assembly/timer,

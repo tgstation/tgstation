@@ -631,7 +631,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stack/cable_coil/red{
+/obj/item/stack/cable_coil{
 	pixel_x = 2;
 	pixel_y = 6
 	},

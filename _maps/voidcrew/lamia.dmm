@@ -464,7 +464,7 @@
 /obj/structure/closet/crate/engineering,
 /obj/item/stack/sheet/mineral/plasma/five,
 /obj/item/stack/sheet/mineral/plasma/five,
-/obj/item/stack/cable_coil/red,
+/obj/item/stack/cable_coil,
 /obj/item/clothing/gloves/color/yellow{
 	desc = "These enchanted gloves provide protection against electric shock.";
 	icon_state = "wizard";

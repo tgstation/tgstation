@@ -169,7 +169,7 @@
 /obj/effect/spawner/random/maintenance/eight,
 /obj/item/reagent_containers/food/snacks/canned/peaches/maint,
 /obj/structure/closet/secure_closet/engineering_personal,
-/mob/living/simple_animal/hostile/cockroach/glockroach,
+/mob/living/basic/cockroach/glockroach,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)
 "nh" = (
@@ -450,7 +450,7 @@
 	},
 /obj/machinery/power/terminal,
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/cockroach/glockroach,
+/mob/living/basic/cockroach/glockroach,
 /turf/open/floor/plating,
 /area/station/maintenance/central)
 "FQ" = (

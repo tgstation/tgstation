@@ -332,7 +332,7 @@
 /area/station/science/robotics)
 "gJ" = (
 /obj/structure/rack,
-/obj/item/stack/cable_coil/red,
+/obj/item/stack/cable_coil,
 /obj/item/stock_parts/cell,
 /obj/item/stock_parts/cell,
 /obj/item/stock_parts/cell,

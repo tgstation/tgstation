@@ -831,7 +831,7 @@
 /obj/structure/cable,
 /obj/item/storage/belt/utility/full,
 /obj/item/clothing/gloves/color/yellow,
-/obj/item/stack/cable_coil/red,
+/obj/item/stack/cable_coil,
 /turf/open/floor/plating,
 /area/station/engineering/electrical)
 "mK" = (
@@ -1091,7 +1091,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/electrical)
 "rb" = (
-/mob/living/simple_animal/hostile/cockroach/glockroach,
+/mob/living/basic/cockroach/glockroach,
 /obj/machinery/power/terminal,
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -3444,7 +3444,7 @@
 /obj/structure/table/reinforced,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
-/obj/item/stack/cable_coil/red,
+/obj/item/stack/cable_coil,
 /obj/item/storage/belt/utility/full,
 /obj/item/clothing/mask/gas/welding,
 /turf/open/floor/mineral/titanium/tiled,
