@@ -23,7 +23,6 @@
 "bl" = (
 /obj/structure/bed,
 /obj/item/bedsheet/random,
-/obj/structure/curtain/cloth/grey,
 /turf/open/floor/mineral/plastitanium,
 /area/station/commons/dorms)
 "br" = (
@@ -42,7 +41,7 @@
 "bC" = (
 /obj/structure/sign/poster/random,
 /turf/closed/wall/r_wall,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "bU" = (
 /obj/item/clothing/suit/toggle/labcoat/science,
 /obj/effect/decal/cleanable/blood/gibs,
@@ -63,7 +62,7 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "cL" = (
 /obj/machinery/computer/communications,
 /turf/open/floor/mineral/plastitanium,
@@ -113,10 +112,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/station/maintenance/central)
 "eB" = (
-/obj/structure/closet/wall{
-	name = "engineering closet";
-	pixel_x = 30
-	},
 /obj/item/storage/toolbox/mechanical{
 	pixel_x = -1
 	},
@@ -148,7 +143,7 @@
 /obj/item/storage/bag/ore,
 /obj/item/storage/bag/ore,
 /turf/open/floor/mineral/titanium/yellow,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "fA" = (
 /obj/structure/chair,
 /obj/effect/decal/cleanable/dirt,
@@ -184,7 +179,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/mineral/titanium/yellow,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "iN" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/central)
@@ -204,12 +199,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/plastitanium,
-/area/station/cargo)
-"kL" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/plastitanium/red,
-/area/station/maintenance/central)
+/area/station/cargo/miningoffice)
 "la" = (
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -252,13 +242,20 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/maintenance/central)
 "ol" = (
-/obj/machinery/modular_computer/console/preset/command,
-/obj/structure/cable,
+/obj/structure/closet/secure_closet/captains,
+/obj/item/clothing/head/helmet/rus_ushanka,
+/obj/item/clothing/shoes/russian,
+/obj/item/clothing/under/costume/russian_officer,
+/obj/item/clothing/suit/jacket/officer/tan,
+/obj/item/reagent_containers/cup/glass/flask/gold{
+	list_reagents = list(/datum/reagent/consumable/ethanol/sbiten=30)
+	},
+/obj/item/areaeditor,
 /turf/open/floor/mineral/plastitanium,
 /area/station/command/bridge)
 "on" = (
 /turf/open/floor/mineral/plastitanium,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "oq" = (
 /obj/machinery/door/airlock/medical{
 	name = "Infirmary"
@@ -291,11 +288,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/mineral/titanium/yellow,
-/area/station/cargo)
-"pe" = (
-/obj/structure/sign/poster/retro/science,
-/turf/closed/wall/r_wall,
-/area/station/science)
+/area/station/cargo/miningoffice)
 "pF" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/light/small{
@@ -329,7 +322,7 @@
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/yellow,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "qw" = (
 /obj/machinery/vending/cigarette,
 /obj/structure/cable,
@@ -354,7 +347,7 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "ri" = (
 /obj/effect/decal/cleanable/glass,
 /obj/effect/decal/cleanable/dirt,
@@ -442,7 +435,7 @@
 	pixel_y = 26
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "vH" = (
 /obj/structure/chair{
 	dir = 8
@@ -455,7 +448,7 @@
 	req_access = null
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "wt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -466,7 +459,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "wN" = (
 /obj/machinery/atmospherics/components/tank/air{
 	dir = 4;
@@ -504,7 +497,7 @@
 /obj/effect/spawner/random/maintenance/three,
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/yellow,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "xL" = (
 /obj/machinery/cryopod,
 /turf/open/floor/mineral/plastitanium,
@@ -512,13 +505,13 @@
 "xR" = (
 /obj/structure/tank_dispenser,
 /turf/open/floor/mineral/titanium/yellow,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "yG" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "yR" = (
 /obj/structure/table,
 /obj/item/storage/backpack/duffelbag/med/surgery{
@@ -541,13 +534,13 @@
 /area/station/maintenance/central)
 "zl" = (
 /obj/structure/rack,
-/obj/item/kitchen/knife/hunting{
+/obj/item/knife/hunting{
 	pixel_y = -1
 	},
-/obj/item/kitchen/knife/hunting{
+/obj/item/knife/hunting{
 	pixel_y = 7
 	},
-/obj/item/kitchen/knife/hunting{
+/obj/item/knife/hunting{
 	pixel_y = -9
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -601,7 +594,7 @@
 	port_direction = 8
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "AQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
@@ -610,19 +603,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/station/commons/dorms)
 "AR" = (
-/obj/structure/closet/wall{
-	name = "captain's closet";
-	pixel_y = -31
-	},
-/obj/item/areaeditor,
-/obj/item/reagent_containers/cup/glass/flask/gold{
-	list_reagents = list(/datum/reagent/consumable/ethanol/sbiten = 30)
-	},
-/obj/item/clothing/suit/jacket/officer/tan,
-/obj/item/clothing/under/costume/russian_officer,
-/obj/item/clothing/shoes/russian,
-/obj/item/clothing/head/helmet/rus_ushanka,
-/obj/item/storage/belt/sabre,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -660,7 +640,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "BA" = (
 /obj/structure/sign/poster/random,
 /turf/closed/wall/r_wall,
@@ -686,12 +666,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/mineral/plastitanium,
 /area/station/maintenance/central)
-"Dj" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/plastitanium/red,
-/area/station/maintenance/central)
 "Dk" = (
 /obj/structure/closet/crate/critter{
 	name = "rare and exotic russian native animals"
@@ -703,7 +677,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium/yellow,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "Do" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -759,7 +733,7 @@
 "ED" = (
 /obj/structure/sign/poster/contraband/d_day_promo,
 /turf/closed/wall/r_wall,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "EF" = (
 /obj/structure/chair,
 /obj/structure/cable,
@@ -772,7 +746,7 @@
 "EN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium/yellow,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "EQ" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/cable,
@@ -832,13 +806,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/plastitanium,
 /area/station/maintenance/central)
-"Hw" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/plastitanium/red,
-/area/station/maintenance/central)
 "Ie" = (
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
@@ -852,14 +819,14 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "Jl" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/poddoor{
 	id = "blastdoors"
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "JC" = (
 /obj/structure/table,
 /obj/item/storage/medkit/toxin{
@@ -872,7 +839,7 @@
 /area/station/medical)
 "JP" = (
 /turf/open/floor/mineral/titanium/yellow,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "Kj" = (
 /obj/structure/chair/office{
 	dir = 1
@@ -916,7 +883,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium/yellow,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "LQ" = (
 /obj/machinery/vending/sovietsoda,
 /obj/effect/decal/cleanable/dirt,
@@ -956,7 +923,7 @@
 /obj/item/reagent_containers/cup/glass/bottle/vodka/badminka,
 /obj/machinery/light/broken,
 /turf/open/floor/mineral/titanium/yellow,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "NC" = (
 /obj/machinery/door/airlock/external,
 /obj/structure/fans/tiny,
@@ -1046,7 +1013,7 @@
 "RD" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/mineral/titanium/yellow,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "RN" = (
 /obj/machinery/door/airlock/vault{
 	name = "Armory"
@@ -1080,7 +1047,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "To" = (
 /obj/machinery/door/airlock/command{
 	name = "Bridge"
@@ -1093,7 +1060,7 @@
 "TD" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "TF" = (
 /obj/machinery/vending/sustenance,
 /turf/open/floor/mineral/plastitanium/red,
@@ -1107,7 +1074,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/plastitanium,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "Ut" = (
 /obj/structure/barricade/wooden/crude,
 /obj/machinery/door/airlock/science{
@@ -1127,7 +1094,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "UX" = (
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
@@ -1155,16 +1122,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/mineral/titanium/yellow,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "VM" = (
 /turf/closed/wall/r_wall,
-/area/station/security)
-"VS" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/plastitanium/red,
 /area/station/security)
 "Wk" = (
 /obj/item/cigbutt,
@@ -1198,10 +1158,10 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "Xh" = (
 /turf/closed/wall/r_wall,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "Xx" = (
 /obj/structure/closet{
 	name = "mastercraft traditional russian clothes"
@@ -1216,7 +1176,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/station/commons/dorms)
 "XL" = (
-/obj/machinery/computer/autopilot,
+/obj/machinery/modular_computer/console/preset/command,
 /turf/open/floor/mineral/plastitanium,
 /area/station/command/bridge)
 "Yr" = (
@@ -1423,7 +1383,7 @@ AV
 mM
 rO
 aL
-kL
+rO
 bC
 EN
 By
@@ -1445,7 +1405,7 @@ Do
 qw
 TF
 LQ
-Dj
+lR
 Xh
 xR
 RD
@@ -1467,7 +1427,7 @@ Hb
 LY
 LY
 SB
-Dj
+lR
 VM
 pO
 VM
@@ -1513,7 +1473,7 @@ bl
 LY
 AD
 RN
-VS
+ZZ
 ZZ
 Ak
 NM
@@ -1533,7 +1493,7 @@ bb
 AQ
 bl
 LY
-Hw
+zz
 VM
 xm
 QB
@@ -1546,7 +1506,7 @@ jT
 "}
 (13,1,1) = {"
 Zr
-pe
+WX
 Gw
 cx
 Ks

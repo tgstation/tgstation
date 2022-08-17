@@ -3068,7 +3068,7 @@
 /area/station/external)
 "TE" = (
 /obj/structure/grille,
-/obj/structure/curtain/cloth/grey,
+/obj/structure/curtain/cloth,
 /obj/effect/spawner/structure/window,
 /turf/open/floor/iron/dark,
 /area/station/commons/chapel/office)

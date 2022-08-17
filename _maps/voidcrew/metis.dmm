@@ -2566,7 +2566,7 @@
 "KK" = (
 /obj/structure/bed/pod,
 /obj/item/bedsheet/rd,
-/obj/structure/curtain/cloth/grey,
+/obj/structure/curtain/cloth,
 /turf/open/floor/mineral/titanium/tiled,
 /area/station/commons/dorms)
 "KO" = (
@@ -2746,7 +2746,7 @@
 "NW" = (
 /obj/structure/bed/pod,
 /obj/item/bedsheet/cosmos,
-/obj/structure/curtain/cloth/grey,
+/obj/structure/curtain/cloth,
 /turf/open/floor/mineral/titanium/tiled,
 /area/station/commons/dorms)
 "NY" = (
@@ -3157,7 +3157,7 @@
 "TH" = (
 /obj/structure/bed/pod,
 /obj/item/bedsheet/purple,
-/obj/structure/curtain/cloth/grey,
+/obj/structure/curtain/cloth,
 /obj/item/transfer_valve{
 	pixel_x = 5;
 	pixel_y = -6

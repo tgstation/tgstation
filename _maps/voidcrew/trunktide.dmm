@@ -740,7 +740,7 @@
 /turf/open/floor/plasteel/tech/grid,
 /area/station/maintenance/central)
 "xp" = (
-/obj/structure/curtain/cloth/grey,
+/obj/structure/curtain/cloth,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron,

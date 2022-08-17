@@ -1893,10 +1893,10 @@
 	name = "armory locker";
 	pixel_x = 32
 	},
-/obj/item/kitchen/knife/hunting{
+/obj/item/knife/hunting{
 	pixel_y = -5
 	},
-/obj/item/kitchen/knife/hunting{
+/obj/item/knife/hunting{
 	pixel_y = 5
 	},
 /obj/item/melee/baton,

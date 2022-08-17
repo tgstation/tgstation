@@ -80,7 +80,7 @@
 /area/station/command/bridge)
 "lm" = (
 /obj/machinery/atmospherics/components/tank/air,
-/obj/structure/curtain/cloth/grey,
+/obj/structure/curtain/cloth,
 /turf/open/floor/iron/freezer,
 /area/station/command/bridge)
 "oK" = (
@@ -181,7 +181,7 @@
 "Au" = (
 /obj/structure/bed,
 /obj/item/bedsheet/syndie,
-/obj/structure/curtain/cloth/grey,
+/obj/structure/curtain/cloth,
 /turf/open/floor/carpet/nanoweave,
 /area/station/command/bridge)
 "Ba" = (
@@ -270,7 +270,7 @@
 /turf/open/floor/carpet/nanoweave/orange,
 /area/station/command/bridge)
 "MW" = (
-/obj/structure/curtain/cloth/grey,
+/obj/structure/curtain/cloth,
 /obj/structure/table,
 /turf/open/floor/iron/freezer,
 /area/station/command/bridge)
@@ -358,7 +358,7 @@
 /obj/structure/window/bronze{
 	dir = 1
 	},
-/obj/structure/curtain/cloth/grey,
+/obj/structure/curtain/cloth,
 /obj/structure/table,
 /turf/open/floor/iron/freezer,
 /area/station/command/bridge)

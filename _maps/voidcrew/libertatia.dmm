@@ -538,11 +538,11 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/item/kitchen/knife/hunting{
+/obj/item/knife/hunting{
 	pixel_y = 5
 	},
-/obj/item/kitchen/knife/hunting,
-/obj/item/kitchen/knife/hunting{
+/obj/item/knife/hunting,
+/obj/item/knife/hunting{
 	pixel_y = -5
 	},
 /obj/item/storage/belt/security/webbing,

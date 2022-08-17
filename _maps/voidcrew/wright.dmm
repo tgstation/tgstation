@@ -1065,7 +1065,7 @@
 /turf/open/floor/carpet/nanoweave/beige,
 /area/station/commons/law_office)
 "DF" = (
-/obj/structure/curtain/cloth/grey,
+/obj/structure/curtain/cloth,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/commons/office)
@@ -1643,7 +1643,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "Ts" = (
-/obj/structure/curtain/cloth/grey,
+/obj/structure/curtain/cloth,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/commons/law_office)

@@ -575,7 +575,7 @@
 "ou" = (
 /obj/item/bedsheet/dorms,
 /obj/structure/bed,
-/obj/structure/curtain/cloth/grey,
+/obj/structure/curtain/cloth,
 /turf/open/floor/carpet,
 /area/station/commons)
 "oT" = (
@@ -2106,7 +2106,7 @@
 /area/station/medical)
 "Vd" = (
 /obj/structure/bed,
-/obj/structure/curtain/cloth/grey,
+/obj/structure/curtain/cloth,
 /obj/item/bedsheet/dorms,
 /turf/open/floor/carpet,
 /area/station/commons)
@@ -2213,7 +2213,7 @@
 "Zb" = (
 /obj/item/bedsheet/dorms,
 /obj/structure/bed,
-/obj/structure/curtain/cloth/grey,
+/obj/structure/curtain/cloth,
 /obj/machinery/light{
 	dir = 1
 	},
