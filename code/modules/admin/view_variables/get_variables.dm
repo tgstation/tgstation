@@ -28,7 +28,7 @@
 	else if(istype(var_value, /client))
 		. = VV_CLIENT
 
-	else if(istype(var_value, /datum/weakref))
+	else if(isweakref(var_value))
 		. = VV_WEAKREF
 
 	else if(isdatum(var_value))
