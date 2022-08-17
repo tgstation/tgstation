@@ -399,9 +399,6 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/hallway/primary/central)
 "iY" = (
-/obj/effect/turf_decal/techfloor{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 9
 	},
@@ -409,7 +406,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/dark,
+/turf/open/floor/circuit,
 /area/station/engineering)
 "jh" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -576,13 +573,10 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/effect/turf_decal/techfloor{
-	dir = 9
-	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/machinery/airalarm/directional/west,
 /obj/structure/cable,
-/turf/open/floor/iron/dark,
+/turf/open/floor/circuit,
 /area/station/engineering)
 "nu" = (
 /obj/effect/turf_decal/tile/red{
@@ -592,17 +586,11 @@
 /area/station/medical)
 "nw" = (
 /obj/machinery/power/smes/engineering,
-/obj/effect/turf_decal/techfloor{
-	dir = 5
-	},
-/obj/effect/turf_decal/techfloor{
-	dir = 5
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/iron/dark,
+/turf/open/floor/circuit,
 /area/station/engineering)
 "nA" = (
 /obj/machinery/stasis,
@@ -698,21 +686,15 @@
 /turf/open/floor/iron/white,
 /area/station/medical)
 "pH" = (
-/obj/effect/turf_decal/techfloor{
-	dir = 9
-	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/machinery/atmospherics/components/tank/air{
 	dir = 4;
 	piping_layer = 4
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/circuit,
 /area/station/engineering)
 "pI" = (
 /obj/effect/turf_decal/tile_techfloor_grid{
-	dir = 1
-	},
-/obj/effect/turf_decal/techfloor/corner{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow{
@@ -726,7 +708,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark,
+/turf/open/floor/circuit,
 /area/station/engineering)
 "pL" = (
 /obj/machinery/door/airlock/command/glass{
@@ -794,15 +776,12 @@
 /turf/open/floor/iron/dark,
 /area/station/commons/library)
 "rZ" = (
-/obj/effect/turf_decal/techfloor{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/dark,
+/turf/open/floor/circuit,
 /area/station/engineering)
 "sc" = (
 /obj/effect/turf_decal/tile/yellow/mono,
@@ -888,9 +867,6 @@
 /turf/open/floor/iron/white,
 /area/station/commons/library)
 "vn" = (
-/obj/effect/turf_decal/techfloor{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -898,7 +874,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/circuit,
 /area/station/engineering)
 "vv" = (
 /obj/effect/turf_decal/tile/yellow/mono,
@@ -907,9 +883,6 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering)
 "vE" = (
-/obj/effect/turf_decal/techfloor{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 9
 	},
@@ -919,7 +892,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/circuit,
 /area/station/engineering)
 "vJ" = (
 /obj/effect/turf_decal/tile/bottlegreen{
@@ -1010,15 +983,12 @@
 /turf/open/floor/iron/dark,
 /area/station/cargo)
 "wK" = (
-/obj/effect/turf_decal/techfloor{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/oil,
-/turf/open/floor/iron/dark,
+/turf/open/floor/circuit,
 /area/station/engineering)
 "wP" = (
 /obj/effect/turf_decal/tile/yellow/mono,
@@ -1048,16 +1018,13 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 9
 	},
-/obj/effect/turf_decal/techfloor{
-	dir = 4
-	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/construction/plumbing,
 /obj/item/stack/ducts/fifty,
 /obj/item/circuitboard/machine/shuttle/engine/electric,
 /obj/item/circuitboard/machine/shuttle/smes,
 /obj/item/circuitboard/computer/rdconsole,
-/turf/open/floor/iron/dark,
+/turf/open/floor/circuit,
 /area/station/engineering)
 "yf" = (
 /turf/open/floor/iron/dark,
@@ -1209,9 +1176,6 @@
 /area/station/maintenance/port)
 "Au" = (
 /obj/machinery/duct,
-/obj/effect/turf_decal/techfloor{
-	dir = 10
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
@@ -1219,11 +1183,10 @@
 	dir = 4;
 	pixel_x = -24
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/circuit,
 /area/station/engineering)
 "Aw" = (
 /obj/machinery/duct,
-/obj/effect/turf_decal/techfloor,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -1231,7 +1194,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark,
+/turf/open/floor/circuit,
 /area/station/engineering)
 "AW" = (
 /obj/effect/spawner/structure/window,
@@ -1667,27 +1630,21 @@
 /turf/open/floor/iron/dark,
 /area/station/commons/library)
 "WO" = (
-/obj/effect/turf_decal/techfloor{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 9
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/dark,
+/turf/open/floor/circuit,
 /area/station/engineering)
 "Xt" = (
 /obj/machinery/duct,
-/obj/effect/turf_decal/techfloor{
-	dir = 6
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/dark,
+/turf/open/floor/circuit,
 /area/station/engineering)
 "Yo" = (
 /obj/machinery/door/airlock/engineering/glass{

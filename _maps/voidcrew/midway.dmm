@@ -351,14 +351,14 @@
 	pixel_x = 6;
 	pixel_y = -2
 	},
-/obj/item/trash/plate{
+/obj/item/plate{
 	pixel_x = -6;
 	pixel_y = -2
 	},
-/obj/item/trash/plate{
+/obj/item/plate{
 	pixel_y = 12
 	},
-/obj/item/trash/plate{
+/obj/item/plate{
 	pixel_x = 11;
 	pixel_y = 4
 	},

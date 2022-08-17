@@ -813,14 +813,14 @@
 /obj/item/reagent_containers/cup/bottle/epinephrine{
 	pixel_x = 6
 	},
-/obj/item/reagent_containers/cup/bottle/charcoal{
+/obj/item/reagent_containers/cup/bottle/multiver{
 	pixel_x = -3
 	},
 /obj/item/reagent_containers/cup/bottle/epinephrine{
 	pixel_x = -3;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/cup/bottle/charcoal{
+/obj/item/reagent_containers/cup/bottle/multiver{
 	pixel_x = 6;
 	pixel_y = 8
 	},
@@ -1612,7 +1612,6 @@
 /turf/open/floor/iron/white,
 /area/station/engineering/electrical)
 "mn" = (
-/obj/effect/turf_decal/industrial/hatch,
 /obj/machinery/door/poddoor/preopen{
 	id = "escape_cockpit_blast";
 	name = "Cockpit Blast Door"
@@ -1891,7 +1890,6 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/station/engineering/electrical)
 "yo" = (
-/obj/effect/turf_decal/industrial/hatch,
 /obj/machinery/door/poddoor/preopen{
 	id = "escape_cockpit_blast";
 	name = "Cockpit Blast Door"
@@ -1985,7 +1983,6 @@
 /turf/open/floor/iron/white,
 /area/station/engineering/electrical)
 "AH" = (
-/obj/effect/turf_decal/industrial/hatch,
 /obj/machinery/door/poddoor/preopen{
 	id = "escape_cockpit_blast";
 	name = "Cockpit Blast Door"
@@ -2098,7 +2095,6 @@
 /turf/open/floor/plating,
 /area/station/engineering/electrical)
 "Ff" = (
-/obj/effect/turf_decal/industrial/hatch,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "escape_cargo_shutters";
 	name = "Cargo Bay Shutters"
@@ -2417,7 +2413,6 @@
 /turf/open/floor/plating,
 /area/station/commons)
 "OM" = (
-/obj/effect/turf_decal/industrial/hatch,
 /obj/machinery/button/door{
 	id = "escape_cargo_shutters";
 	name = "Cargo Bay Shutters";
@@ -2565,7 +2560,6 @@
 /turf/open/floor/iron/dark,
 /area/station/commons)
 "Wy" = (
-/obj/effect/turf_decal/industrial/hatch,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "escape_cargo_shutters";
 	name = "Cargo Bay Shutters"

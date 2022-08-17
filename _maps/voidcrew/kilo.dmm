@@ -6,7 +6,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/cargo)
 "ak" = (
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/machinery/door/airlock/external{
 	id_tag = "ntms_exterior";
 	name = "NTMS-037 Mining Airlock"
@@ -41,7 +41,7 @@
 /turf/open/floor/plating,
 /area/station/cargo)
 "av" = (
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/machinery/door/airlock/external{
 	name = "NTMS-037 Mining Airlock"
 	},
@@ -172,7 +172,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/station/cargo)
 "bn" = (
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/machinery/door/airlock/external{
 	id_tag = "ntms_exterior";
 	name = "NTMS-037 Mining Airlock"
@@ -209,7 +209,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/command/bridge)
 "bG" = (
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/machinery/door/airlock/shuttle{
 	name = "Captain's Quarters"
 	},
@@ -286,7 +286,7 @@
 /turf/open/floor/plating,
 /area/station/command/bridge)
 "bQ" = (
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/machinery/door/airlock/external{
 	name = "NTMS-037 Mining Airlock"
 	},
@@ -337,7 +337,7 @@
 /turf/open/floor/plating,
 /area/station/cargo)
 "bY" = (
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/machinery/door/airlock/shuttle{
 	name = "Captain's Quarters"
 	},
@@ -389,7 +389,7 @@
 /area/station/cargo)
 "ci" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/machinery/airalarm/all_access{
 	dir = 1;
 	pixel_y = -24
@@ -399,7 +399,7 @@
 /area/station/cargo)
 "cj" = (
 /obj/structure/tank_dispenser/oxygen,
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/firealarm{
 	dir = 4;
@@ -450,7 +450,7 @@
 /area/station/engineering/engine)
 "cr" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/machinery/light,
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
@@ -469,7 +469,7 @@
 /turf/open/floor/plating,
 /area/station/cargo)
 "cw" = (
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/machinery/door/airlock/command{
 	name = "Ship Control"
 	},
@@ -598,7 +598,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/table_frame,
-/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/iron,
 /turf/open/floor/mineral/plastitanium,
 /area/station/command/bridge)
 "db" = (
@@ -643,7 +643,7 @@
 	pixel_x = 6
 	},
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/effect/turf_decal/stripes{
 	dir = 10
 	},
@@ -656,7 +656,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 10
 	},
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/machinery/suit_storage_unit/engineering,
 /turf/open/floor/plating,
 /area/station/engineering/engine)
@@ -769,7 +769,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/station/cargo)
 "hS" = (
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/machinery/door/airlock/shuttle{
 	name = "Bunk A"
 	},
@@ -779,7 +779,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/station/commons)
 "ig" = (
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/machinery/door/airlock/shuttle{
 	name = "Bunk B"
 	},
@@ -1104,7 +1104,7 @@
 /turf/open/floor/plating,
 /area/station/cargo)
 "wc" = (
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/machinery/door/airlock/shuttle{
 	name = "Ship Lockers"
 	},
@@ -1211,12 +1211,12 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/machinery/portable_atmospherics/scrubber/huge,
 /turf/open/floor/plating,
 /area/station/engineering/engine)
 "AE" = (
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/machinery/door/airlock/shuttle{
 	name = "Captain's Quarters"
 	},
@@ -1354,7 +1354,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/station/command/bridge)
 "EG" = (
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/machinery/door/airlock/shuttle{
 	name = "Ship Saloon"
 	},
@@ -1375,7 +1375,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/station/command/bridge)
 "Fz" = (
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/machinery/door/airlock/command{
 	name = "Ship Control"
 	},
@@ -1423,7 +1423,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 9
 	},
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/open/floor/plating,
 /area/station/engineering/engine)
@@ -1533,7 +1533,7 @@
 /area/station/cargo)
 "Mj" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/suit_storage_unit/mining/eva,
 /turf/open/floor/mineral/plastitanium,
@@ -1807,7 +1807,7 @@
 	pixel_y = -30
 	},
 /obj/effect/turf_decal/bot,
-/obj/item/stack/cable_coil/cut,
+/obj/item/stack/cable_coil,
 /turf/open/floor/mineral/plastitanium,
 /area/station/command/bridge)
 "Vx" = (
@@ -1822,7 +1822,7 @@
 	pixel_y = 3
 	},
 /obj/item/radio/off,
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /turf/open/floor/mineral/plastitanium,
 /area/station/cargo)
 "Wg" = (

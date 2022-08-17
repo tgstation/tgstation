@@ -2379,7 +2379,7 @@
 	dir = 1
 	},
 /obj/structure/table/glass,
-/obj/item/stack/sheet/metal/five,
+/obj/item/stack/sheet/iron/five,
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/station/science)
 "GG" = (

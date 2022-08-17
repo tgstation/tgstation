@@ -21,7 +21,7 @@
 /turf/open/floor/iron/dark,
 /area/station/commons)
 "aR" = (
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/machinery/suit_storage_unit/mining/eva,
 /turf/open/floor/iron,
 /area/station/cargo)
@@ -179,9 +179,9 @@
 	dir = 4
 	},
 /obj/structure/guncase/shotgun,
-/obj/item/gun/ballistic/shotgun/winchester,
-/obj/item/gun/ballistic/shotgun/winchester,
-/obj/item/gun/ballistic/shotgun/winchester,
+/obj/item/gun/ballistic/shotgun,
+/obj/item/gun/ballistic/shotgun,
+/obj/item/gun/ballistic/shotgun,
 /obj/item/pai_card,
 /turf/open/floor/iron,
 /area/station/cargo)
@@ -191,7 +191,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical)
 "gu" = (
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/closet/firecloset/full{
 	anchored = 1
@@ -218,10 +218,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/effect/turf_decal/techfloor{
-	dir = 4
-	},
-/turf/open/floor/iron/dark/techmaint,
+/turf/open/floor/circuit,
 /area/station/engineering)
 "hp" = (
 /obj/machinery/button/door{
@@ -256,7 +253,7 @@
 	pixel_y = 28
 	},
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/effect/turf_decal/tile/blue/border{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron/white,
@@ -306,10 +303,7 @@
 	pixel_x = 32;
 	pixel_y = -32
 	},
-/obj/effect/turf_decal/techfloor{
-	dir = 6
-	},
-/turf/open/floor/iron/dark/techmaint,
+/turf/open/floor/circuit,
 /area/station/engineering)
 "iz" = (
 /obj/machinery/light{
@@ -395,7 +389,7 @@
 /area/station/engineering)
 "jP" = (
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/effect/turf_decal/tile/blue/border{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 10
 	},
 /obj/structure/table,
@@ -410,14 +404,11 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/techfloor{
-	dir = 8
-	},
 /obj/effect/turf_decal/industrial/caution{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
-/turf/open/floor/iron/dark/techmaint,
+/turf/open/floor/circuit,
 /area/station/engineering)
 "kD" = (
 /obj/structure/fans/tiny,
@@ -531,7 +522,7 @@
 	pixel_y = 20
 	},
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/effect/turf_decal/tile/blue/border{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron/white,
@@ -692,7 +683,7 @@
 	},
 /obj/structure/closet/crate/freezer/blood,
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/effect/turf_decal/tile/blue/border{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron/white,
@@ -745,11 +736,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
-/obj/effect/turf_decal/techfloor{
-	dir = 8
-	},
 /obj/machinery/door/airlock/engineering,
-/turf/open/floor/iron,
+/turf/open/floor/circuit,
 /area/station/engineering)
 "tX" = (
 /obj/structure/ore_box,
@@ -906,9 +894,9 @@
 /obj/machinery/computer/operating{
 	dir = 4
 	},
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/effect/turf_decal/tile/blue/border{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 9
 	},
 /turf/open/floor/iron/white,
@@ -946,7 +934,7 @@
 /obj/structure/bed,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/effect/turf_decal/tile/blue/border{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 10
 	},
 /turf/open/floor/iron/white,
@@ -956,7 +944,7 @@
 	pixel_y = -28
 	},
 /obj/effect/turf_decal/tile/yellow/half,
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/machinery/autolathe,
 /turf/open/floor/iron,
 /area/station/cargo)
@@ -1101,7 +1089,7 @@
 	pixel_y = -24
 	},
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/effect/turf_decal/tile/blue/border,
+/obj/effect/turf_decal/tile/blue/anticorner,
 /turf/open/floor/iron/white,
 /area/station/medical)
 "EF" = (
@@ -1109,7 +1097,7 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/effect/turf_decal/tile/blue/border,
+/obj/effect/turf_decal/tile/blue/anticorner,
 /turf/open/floor/iron/white,
 /area/station/medical)
 "Fz" = (
@@ -1135,15 +1123,12 @@
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering,
-/obj/effect/turf_decal/techfloor{
-	dir = 8
-	},
 /turf/open/floor/iron,
 /area/station/engineering)
 "Gx" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow/border,
-/turf/open/floor/iron/dark,
+/turf/open/floor/circuit,
 /area/station/commons)
 "GU" = (
 /obj/machinery/vending/snack/random,
@@ -1300,10 +1285,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/techfloor{
-	dir = 1
-	},
-/turf/open/floor/iron/dark/techmaint,
+/turf/open/floor/circuit,
 /area/station/engineering)
 "Mk" = (
 /obj/machinery/power/port_gen/pacman,
@@ -1347,7 +1329,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/effect/turf_decal/tile/blue/border,
+/obj/effect/turf_decal/tile/blue/anticorner,
 /turf/open/floor/iron/white,
 /area/station/medical)
 "MN" = (
@@ -1365,8 +1347,7 @@
 	target_pressure = 500
 	},
 /obj/structure/cable,
-/obj/effect/turf_decal/techfloor,
-/turf/open/floor/iron/dark/techmaint,
+/turf/open/floor/circuit,
 /area/station/engineering)
 "Nw" = (
 /obj/machinery/status_display/shuttle,
@@ -1490,11 +1471,8 @@
 /area/station/commons)
 "TF" = (
 /obj/structure/cable,
-/obj/effect/turf_decal/techfloor{
-	dir = 9
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
-/turf/open/floor/iron/dark/techmaint,
+/turf/open/floor/circuit,
 /area/station/engineering)
 "TX" = (
 /obj/structure/table,
@@ -1545,7 +1523,7 @@
 /turf/open/floor/plating,
 /area/station/engineering)
 "VF" = (
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -1571,11 +1549,8 @@
 	pixel_x = -24;
 	pixel_y = -24
 	},
-/obj/effect/turf_decal/techfloor{
-	dir = 10
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
-/turf/open/floor/iron/dark/techmaint,
+/turf/open/floor/circuit,
 /area/station/engineering)
 "Xe" = (
 /obj/item/radio/intercom{
@@ -1599,10 +1574,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/techfloor{
-	dir = 5
-	},
-/turf/open/floor/iron/dark/techmaint,
+/turf/open/floor/circuit,
 /area/station/engineering)
 "Xo" = (
 /obj/structure/chair/comfy/shuttle{
@@ -1624,7 +1596,7 @@
 /obj/item/reagent_containers/cup/bottle/epinephrine{
 	pixel_x = -4
 	},
-/obj/item/reagent_containers/cup/bottle/charcoal{
+/obj/item/reagent_containers/cup/bottle/multiver{
 	pixel_x = 7;
 	pixel_y = 4
 	},

@@ -323,7 +323,7 @@
 	name = "fridge"
 	},
 /obj/item/storage/cans/sixbeer,
-/obj/effect/turf_decal/tile/bar/diagonal,
+/obj/effect/turf_decal/tile/bar/diagonal_centre,
 /turf/open/floor/iron,
 /area/station/commons)
 "gM" = (
@@ -1114,7 +1114,7 @@
 /turf/open/floor/iron/dark/grid,
 /area/station/maintenance/port)
 "vN" = (
-/obj/effect/turf_decal/tile/bar/diagonal,
+/obj/effect/turf_decal/tile/bar/diagonal_centre,
 /turf/open/floor/iron,
 /area/station/commons)
 "vR" = (
@@ -1286,7 +1286,7 @@
 	pixel_x = -28
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/bar/diagonal,
+/obj/effect/turf_decal/tile/bar/diagonal_centre,
 /turf/open/floor/iron,
 /area/station/commons)
 "zA" = (
@@ -1341,7 +1341,7 @@
 	pixel_y = -32
 	},
 /obj/machinery/light/small,
-/obj/effect/turf_decal/tile/bar/diagonal,
+/obj/effect/turf_decal/tile/bar/diagonal_centre,
 /turf/open/floor/iron,
 /area/station/commons)
 "Ap" = (
@@ -1671,7 +1671,6 @@
 /turf/open/floor/iron/dark/techmaint,
 /area/station/maintenance/port)
 "Ik" = (
-/obj/effect/turf_decal/industrial/hatch,
 /obj/machinery/selling_pad,
 /obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/iron/dark,
@@ -1694,7 +1693,7 @@
 /obj/structure/closet/crate/bin,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/food/egg_smudge,
-/obj/effect/turf_decal/tile/bar/diagonal,
+/obj/effect/turf_decal/tile/bar/diagonal_centre,
 /turf/open/floor/iron,
 /area/station/commons)
 "Jv" = (

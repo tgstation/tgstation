@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ab" = (
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/effect/turf_decal/tile/blue/border,
+/obj/effect/turf_decal/tile/blue/anticorner,
 /obj/structure/closet/wall/white/med{
 	dir = 1;
 	name = "medbay equipment locker";
@@ -440,7 +440,7 @@
 	pixel_x = 24;
 	pixel_y = 10
 	},
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/machinery/computer/cargo/express{
 	dir = 8
 	},
@@ -579,7 +579,7 @@
 /obj/machinery/computer/atmos_alert{
 	dir = 8
 	},
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/machinery/airalarm/all_access{
 	dir = 1;
 	pixel_y = -24
@@ -830,7 +830,7 @@
 /area/station/construction)
 "gU" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/structure/sign/poster/official/random{
 	pixel_x = -32
 	},
@@ -1059,7 +1059,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/port)
 "iS" = (
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/machinery/atmospherics/components/tank/air{
 	dir = 8
 	},
@@ -1080,16 +1080,12 @@
 /area/station/engineering/engine)
 "jh" = (
 /obj/structure/fans/tiny,
-/obj/effect/turf_decal/techfloor/orange{
-	dir = 1
-	},
-/obj/effect/turf_decal/techfloor/orange,
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/poddoor{
 	id = "ospreydoors";
 	name = "Cargo Bay Blast Door"
 	},
-/turf/open/floor/iron/dark/grid,
+/turf/open/floor/circuit/red,
 /area/station/hallway/primary/fore)
 "jn" = (
 /turf/open/floor/plasteel/tech/techmaint,
@@ -1172,7 +1168,7 @@
 /area/station/hallway/aft)
 "jT" = (
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/effect/turf_decal/tile/blue/border{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 4
 	},
 /obj/machinery/disposal/bin,
@@ -1201,7 +1197,7 @@
 "ka" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /obj/machinery/pipedispenser,
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /turf/open/floor/iron/dark/grid,
 /area/station/engineering/atmospherics)
 "kf" = (
@@ -1349,7 +1345,7 @@
 /area/station/command/bridge)
 "lk" = (
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/effect/turf_decal/tile/blue/border,
+/obj/effect/turf_decal/tile/blue/anticorner,
 /obj/machinery/light,
 /obj/structure/closet/wall/white/med{
 	dir = 1;
@@ -2558,7 +2554,6 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -28
 	},
-/obj/item/survey_handheld,
 /turf/open/floor/iron/white,
 /area/station/science)
 "uH" = (
@@ -2707,7 +2702,7 @@
 /obj/machinery/atmospherics/components/tank/plasma{
 	dir = 8
 	},
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /turf/open/floor/iron/dark/grid,
 /area/station/engineering/atmospherics)
 "vT" = (
@@ -2751,7 +2746,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/effect/turf_decal/tile/blue/border{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 4
 	},
 /turf/open/floor/iron/white,
@@ -2766,7 +2761,7 @@
 /obj/item/mining_scanner,
 /obj/item/clothing/head/hardhat/orange,
 /obj/item/clothing/head/hardhat/mining,
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/effect/turf_decal/tile/brown/border{
 	dir = 4
 	},
@@ -2792,7 +2787,7 @@
 /area/station/hallway/aft)
 "wo" = (
 /obj/machinery/ore_silo,
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/effect/turf_decal/tile/brown/border{
 	dir = 8
 	},
@@ -2908,7 +2903,7 @@
 /area/station/commons/storage/primary)
 "xM" = (
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/effect/turf_decal/tile/blue/border{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 9
 	},
 /obj/structure/cable,
@@ -3036,7 +3031,7 @@
 /area/station/science)
 "zv" = (
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/effect/turf_decal/tile/blue/border{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 10
 	},
 /obj/structure/cable,
@@ -3181,7 +3176,7 @@
 /area/station/commons/dorms)
 "AK" = (
 /obj/machinery/autolathe,
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/effect/turf_decal/tile/brown/border{
 	dir = 8
 	},
@@ -3250,7 +3245,7 @@
 /area/station/hallway/starboard)
 "Bl" = (
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/effect/turf_decal/tile/blue/border,
+/obj/effect/turf_decal/tile/blue/anticorner,
 /obj/machinery/door/airlock/medical/glass{
 	name = "Infirmary"
 	},
@@ -3285,7 +3280,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/effect/turf_decal/tile/blue/border{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 4
 	},
 /obj/machinery/airalarm/all_access{
@@ -3326,7 +3321,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/effect/turf_decal/tile/blue/border{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 6
 	},
 /turf/open/floor/iron/white,
@@ -3903,7 +3898,7 @@
 /area/station/science)
 "Gw" = (
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/effect/turf_decal/tile/blue/border{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 1
 	},
 /obj/machinery/door/airlock/medical/glass{
@@ -4398,7 +4393,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/cargo)
 "Lq" = (
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/machinery/computer/selling_pad_control{
 	dir = 8
 	},
@@ -4548,7 +4543,7 @@
 /area/station/command/bridge)
 "MJ" = (
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/effect/turf_decal/tile/blue/border{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 1
 	},
 /obj/effect/landmark/start/medical_doctor,
@@ -4931,7 +4926,7 @@
 /obj/machinery/computer/atmos_alert{
 	dir = 8
 	},
-/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/turf_decal/trimline/neutral/warning,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -5336,7 +5331,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/effect/turf_decal/tile/blue/border{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 4
 	},
 /obj/machinery/power/apc/auto_name/directional/east,
@@ -5519,7 +5514,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/effect/turf_decal/tile/blue/border{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 5
 	},
 /turf/open/floor/iron/white,
@@ -5693,7 +5688,7 @@
 "Xm" = (
 /obj/machinery/medical_kiosk,
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/effect/turf_decal/tile/blue/border{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 4
 	},
 /obj/machinery/light{
@@ -5819,7 +5814,7 @@
 /area/station/engineering/engine)
 "Yn" = (
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/effect/turf_decal/tile/blue/border{
+/obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
