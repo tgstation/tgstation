@@ -101,5 +101,5 @@
 		if(istype(target, i))
 			explosion(target, heavy_impact_range = 1, light_impact_range = 1, flash_range = 2, explosion_cause = src)
 			return BULLET_ACT_HIT
-	//if(istype(target, /turf/closed) || ismecha(target))
+	//if(isclosedturf(target) || ismecha(target))
 	new /obj/item/broken_missile(get_turf(src), 1)

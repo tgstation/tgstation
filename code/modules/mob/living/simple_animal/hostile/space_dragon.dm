@@ -314,7 +314,7 @@
 	turfs = line_target(0, range, at)
 	var/delayFire = -1.0
 	for(var/turf/T in turfs)
-		if(istype(T, /turf/closed))
+		if(isclosedturf(T))
 			return
 		for(var/obj/structure/window/W in T.contents)
 			return
