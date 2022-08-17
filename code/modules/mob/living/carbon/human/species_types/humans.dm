@@ -72,7 +72,7 @@
 /datum/species/human/create_pref_unique_perks()
 	var/list/to_add = list()
 
-	if(CONFIG_GET(number/default_laws) == 0) // Default lawset is set to Asimov
+	if(CONFIG_GET(number/default_laws) == 0 || CONFIG_GET(flag/silicon_human_supremacy_override)) // Default lawset is set to Asimov
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "robot",
