@@ -79,7 +79,7 @@
 	id = /obj/item/card/id/advanced/black/syndicate_command/crew_id
 
 /datum/outfit/job/atmos/syndicate
-	name = "Atmospherics Technician (Syndicate)"
+	name = "Atmospheric Technician (Syndicate)"
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/hazardvest
 	head = /obj/item/clothing/head/hardhat

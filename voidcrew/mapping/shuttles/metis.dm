@@ -1,4 +1,4 @@
-/datum/map_template/shuttle/voidcrew/meta
+/datum/map_template/shuttle/voidcrew/metis
 	name = "Metis-class Experimental Extrasolar Pathfinder"
 	suffix = "metis"
 	short_name = "Metis-Class"
@@ -13,26 +13,21 @@
 		list(
 			name = "Invertebrate Xenofauna Morphology Analyst",
 			outfit = /datum/outfit/job/scientist,
+			slots = 4,
+		),
+		list(
+			name = "Mechatronic Hydraulics Calibration Engineer",
+			outfit = /datum/outfit/job/roboticist,
 			slots = 1,
 		),
 		list(
-			name = "Medical Doctor",
-			outfit = /datum/outfit/job/doctor,
-			slots = 1,
-		),
-		list(
-			name = "Station Engineer",
+			name = "Ionic Dynamo Engineer",
 			outfit = /datum/outfit/job/engineer,
 			slots = 1,
 		),
 		list(
-			name = "Shaft Miner",
+			name = "Percussive Acquisitions-Focused Minerologist",
 			outfit = /datum/outfit/job/miner,
 			slots = 2,
-		),
-		list(
-			name = "Assistant",
-			outfit = /datum/outfit/job/assistant,
-			slots = 3,
 		),
 	)

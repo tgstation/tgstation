@@ -16,7 +16,7 @@
 			slots = 1,
 		),
 		list(
-			name = "Atmospherics Technician",
+			name = "Atmospheric Technician",
 			outfit = /datum/outfit/job/atmos,
 			slots = 1,
 		),

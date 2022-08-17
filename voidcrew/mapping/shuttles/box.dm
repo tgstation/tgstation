@@ -1,4 +1,4 @@
-/datum/map_template/shuttle/voidcrew/bogatyr
+/datum/map_template/shuttle/voidcrew/box
 	name = "Box-class Hospital Ship"
 	suffix = "box"
 	short_name = "Box-class"
