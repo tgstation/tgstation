@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes: 
-  - bugfix: "The messages for using a PAI hacking module have been tweaked, and will no longer speak to everyone in the first person."

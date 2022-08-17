@@ -1,4 +1,0 @@
-author: "RandomGamer123"
-delete-after: True
-changes: 
-  - bugfix: "Kudzu that has been planted from a seed which already had mutations on it cannot gain duplicate copies of those mutations"

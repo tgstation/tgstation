@@ -1,6 +1,0 @@
-author: "Pickle-Coding"
-delete-after: True
-changes: 
-  - balance: "Changes hydrogen and tritium gas reaction stoichiometry. 1 mol of hydrogen/tritium and 0.5 mols of oxygen getting consumed will produce 1 mol of water vapour."
-  - balance: "Hydrogen and tritium burn rate has been changed to be the minimum of half the hydrogen/tritium, or 1/20th of the oxygen, rather than a binary if check on whether there is more oxygen or not."
-  - balance: "Hydrogen and tritium energy release has been reduced by 90%."
