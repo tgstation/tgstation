@@ -132,7 +132,7 @@
 /obj/machinery/computer/mech_bay_power_console{
 	dir = 1
 	},
-/turf/open/floor/plasteel/tech,
+/turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "ge" = (
 /obj/machinery/computer/robotics,
@@ -394,7 +394,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/plasteel/tech,
+/turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "ps" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2,
@@ -423,12 +423,12 @@
 "pN" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/suit_storage_unit/independent/pilot,
-/turf/open/floor/plasteel/tech,
+/turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "pR" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/computer/mech_bay_power_console,
-/turf/open/floor/plasteel/tech,
+/turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "pZ" = (
 /obj/structure/cable,
@@ -479,7 +479,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/computer/mech_bay_power_console,
-/turf/open/floor/plasteel/tech,
+/turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "sj" = (
 /obj/machinery/atmospherics/components/tank/air{
@@ -827,7 +827,7 @@
 "BK" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plasteel/tech,
+/turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "Co" = (
 /obj/structure/cable,
@@ -916,7 +916,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/rechargefloor,
-/turf/open/floor/plasteel/tech,
+/turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "Ej" = (
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -1106,7 +1106,7 @@
 "IX" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/rechargefloor,
-/turf/open/floor/plasteel/tech,
+/turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "Jg" = (
 /obj/structure/cable,
@@ -1251,7 +1251,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/suit_storage_unit/independent/pilot,
-/turf/open/floor/plasteel/tech,
+/turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "Ok" = (
 /obj/effect/turf_decal/spline/fancy/beige{
@@ -1525,7 +1525,7 @@
 /obj/machinery/computer/mech_bay_power_console{
 	dir = 1
 	},
-/turf/open/floor/plasteel/tech,
+/turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "Vg" = (
 /obj/machinery/atmospherics/pipe/layer_manifold,
@@ -1631,8 +1631,8 @@
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/assembly/prox_sensor,
 /obj/item/assembly/prox_sensor,
-/obj/item/stock_parts/cell/high/plus,
-/obj/item/stock_parts/cell/high/plus,
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel/mono/dark,
 /area/station/science/robotics)
 "YV" = (
@@ -1690,7 +1690,7 @@
 /obj/machinery/mech_bay_recharge_port{
 	dir = 8
 	},
-/turf/open/floor/plasteel/tech,
+/turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 
 (1,1,1) = {"

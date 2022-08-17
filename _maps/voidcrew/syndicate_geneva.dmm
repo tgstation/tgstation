@@ -484,7 +484,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/tech/grid,
+/turf/open/floor/iron/dark/grid,
 /area/station/engineering)
 "lm" = (
 /obj/structure/closet/secure_closet{
@@ -1393,7 +1393,7 @@
 /obj/machinery/door/poddoor/preopen{
 	id = "spitfireshutters"
 	},
-/turf/open/floor/plasteel/tech/grid,
+/turf/open/floor/iron/dark/grid,
 /area/station/engineering)
 "Dm" = (
 /obj/machinery/power/shuttle/engine/liquid/oil,
@@ -1402,7 +1402,7 @@
 /obj/machinery/door/poddoor/preopen{
 	id = "spitfireshutters"
 	},
-/turf/open/floor/plasteel/tech/grid,
+/turf/open/floor/iron/dark/grid,
 /area/station/engineering)
 "Dt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
