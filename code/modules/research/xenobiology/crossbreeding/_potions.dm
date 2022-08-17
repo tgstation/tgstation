@@ -14,7 +14,7 @@ Slimecrossing Potions
 /obj/item/slimepotion/extract_cloner/afterattack(obj/item/target, mob/user , proximity)
 	if(!proximity)
 		return
-	if(istype(target, /obj/item/reagent_containers))
+	if(is_reagent_container(target))
 		return ..(target, user, proximity)
 	if(istype(target, /obj/item/slimecross))
 		to_chat(user, span_warning("[target] is too complex for the potion to clone!"))
