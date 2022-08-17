@@ -23,7 +23,7 @@
 	for(var/mob/living/falling_victim in falling_movables)
 		var/turf/falling_spot = get_turf(falling_victim)
 		
-		if(locate(/obj/structure/stairs/traveling_down) in falling_spot)
+		if(locate(/obj/structure/stairs) in falling_spot)
 			FALL_INTERCEPTED | FALL_NO_MESSAGE
 		
 		if(soft_object == falling_victim)
