@@ -161,10 +161,6 @@
 /obj/machinery/door/airlock/security/glass,
 /turf/open/floor/mineral/titanium,
 /area/station/security)
-"iq" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/titanium,
-/area/station/commons/dorms)
 "iK" = (
 /obj/machinery/computer/autopilot{
 	dir = 8
@@ -195,12 +191,6 @@
 /obj/item/clothing/mask/gas/sechailer/swat,
 /obj/item/clothing/mask/gas/sechailer/swat,
 /obj/item/clothing/mask/gas/sechailer/swat,
-/turf/open/floor/mineral/titanium,
-/area/station/security)
-"jG" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium,
 /area/station/security)
 "ka" = (
@@ -236,11 +226,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/mineral/titanium,
 /area/station/security)
-"mn" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/maintenance/aft)
 "mR" = (
 /obj/effect/turf_decal/tile/blue/mono,
 /obj/machinery/airalarm/directional/south,
@@ -332,11 +317,6 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/station/ai_monitored/security/armory)
-"qh" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/maintenance/aft)
 "qj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -360,11 +340,6 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/mineral/titanium,
 /area/station/security)
-"rk" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/maintenance/aft)
 "su" = (
 /obj/structure/closet/secure_closet/lethalshots{
 	req_access = null
@@ -375,12 +350,6 @@
 "sZ" = (
 /obj/effect/turf_decal/tile/bottlegreen/mono,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/turf/open/floor/mineral/titanium,
-/area/station/hallway/primary/central)
-"td" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium,
 /area/station/hallway/primary/central)
 "tj" = (
@@ -426,12 +395,6 @@
 /obj/effect/turf_decal/tile/lime/mono,
 /turf/open/floor/mineral/titanium,
 /area/station/commons/dorms)
-"tD" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/titanium,
-/area/station/hallway/primary/central)
 "tQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/red/mono,
@@ -443,10 +406,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium,
 /area/station/cargo)
-"un" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/titanium,
-/area/station/commons/dorms)
 "ur" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/structure/cable,
@@ -484,11 +443,6 @@
 /area/station/security)
 "wl" = (
 /obj/machinery/power/smes/engineering,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/maintenance/aft)
-"wp" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
@@ -710,12 +664,6 @@
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium,
 /area/station/hallway/primary/central)
-"Lw" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/titanium,
-/area/station/hallway/primary/central)
 "LK" = (
 /obj/machinery/power/am_control_unit,
 /obj/structure/cable,
@@ -779,13 +727,6 @@
 /area/station/cargo)
 "Pc" = (
 /obj/effect/turf_decal/tile/bottlegreen/mono,
-/turf/open/floor/mineral/titanium,
-/area/station/hallway/primary/central)
-"Pp" = (
-/obj/effect/turf_decal/tile/bottlegreen/mono,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium,
 /area/station/hallway/primary/central)
 "PN" = (
@@ -875,10 +816,6 @@
 "VV" = (
 /turf/open/floor/mineral/titanium,
 /area/station/ai_monitored/security/armory)
-"Wp" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/titanium,
-/area/station/cargo)
 "Ww" = (
 /obj/machinery/am_shielding,
 /turf/open/floor/plating,
@@ -937,11 +874,6 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/station/ai_monitored/security/armory)
-"XU" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/maintenance/aft)
 "Yh" = (
 /obj/machinery/mineral/ore_redemption,
 /turf/open/floor/mineral/titanium,
@@ -994,11 +926,6 @@
 "Zy" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/shuttle,
-/turf/open/floor/plating,
-/area/station/maintenance/aft)
-"ZN" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "ZX" = (
@@ -1081,17 +1008,17 @@ zq
 zq
 Zy
 zL
-rk
+dJ
 dJ
 iO
-wp
+dJ
 Ww
 Ww
 Ww
-qh
+dJ
 dJ
 iO
-ZN
+dJ
 zL
 Zy
 zq
@@ -1105,11 +1032,11 @@ oy
 oy
 oy
 TK
-mn
+dJ
 wl
 LK
 Im
-mn
+dJ
 TK
 TK
 oy
@@ -1128,7 +1055,7 @@ SQ
 oy
 bi
 vq
-XU
+dJ
 dJ
 Xz
 oy
@@ -1187,10 +1114,10 @@ gJ
 oU
 kE
 bk
-jG
+bk
 wd
 in
-Pp
+NT
 dN
 KX
 Zp
@@ -1212,7 +1139,7 @@ jc
 HM
 hx
 Pc
-tD
+po
 Vx
 aJ
 uF
@@ -1254,13 +1181,13 @@ Cv
 dH
 tp
 Yp
-td
+po
 dK
 uF
 SC
 Iv
 Iv
-iq
+dB
 KW
 cM
 dS
@@ -1270,18 +1197,18 @@ hc
 hm
 Vl
 Vl
-Wp
+nV
 uj
 lk
 OZ
-Pp
-Lw
-Pp
+NT
+po
+NT
 fy
 OI
 Dd
 dB
-un
+dB
 Iv
 tr
 oO
@@ -1296,7 +1223,7 @@ hJ
 Zd
 Yh
 Pc
-tD
+po
 Vx
 uF
 bL

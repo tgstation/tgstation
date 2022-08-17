@@ -1080,15 +1080,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/service/cafeteria)
-"vv" = (
-/obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
-	id = "whiteship_bridge";
-	name = "Cockpit Emergency Blas Door"
-	},
-/obj/machinery/door/firedoor,
-/turf/open/floor/plating,
-/area/station/command/bridge)
 "vC" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -1269,15 +1260,6 @@
 	id = "whiteship_bridge";
 	name = "Cockpit Emergency Blas Door"
 	},
-/turf/open/floor/plating,
-/area/station/command/bridge)
-"BS" = (
-/obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
-	id = "whiteship_bridge";
-	name = "Cockpit Emergency Blas Door"
-	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/command/bridge)
 "BZ" = (
@@ -2051,7 +2033,7 @@ ac
 ng
 gC
 oj
-BS
+bP
 Bu
 aa
 "}
@@ -2067,7 +2049,7 @@ cM
 hh
 oP
 BZ
-BS
+bP
 Bu
 "}
 (5,1,1) = {"
@@ -2083,7 +2065,7 @@ cY
 FB
 Ca
 Uv
-vv
+bP
 "}
 (6,1,1) = {"
 aa
@@ -2113,7 +2095,7 @@ da
 UY
 EU
 XQ
-vv
+bP
 "}
 (8,1,1) = {"
 aa

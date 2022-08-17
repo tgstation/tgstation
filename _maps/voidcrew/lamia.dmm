@@ -690,12 +690,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/orange,
 /area/station/commons/library)
-"do" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/wood,
-/area/station/service/cafeteria)
 "dH" = (
 /turf/open/floor/wood,
 /area/station/service/cafeteria)
@@ -1135,12 +1129,6 @@
 /obj/machinery/power/terminal,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
-"Dg" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/bronze,
-/area/station/cargo)
 "DP" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/spider/stickyweb,
@@ -1172,13 +1160,6 @@
 /obj/item/book/granter/action/spell/smoke/lesser,
 /turf/open/floor/wood,
 /area/station/commons/library)
-"Es" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/wood,
-/area/station/hallway/aft)
 "Eu" = (
 /obj/structure/table/wood/fancy/purple,
 /turf/open/floor/carpet/purple,
@@ -1200,12 +1181,6 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/wood,
 /area/station/service/cafeteria)
-"Ge" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/wood,
-/area/station/hallway/aft)
 "Gf" = (
 /obj/effect/decal/cleanable/food/egg_smudge,
 /turf/open/floor/wood,
@@ -1280,12 +1255,6 @@
 "IN" = (
 /turf/closed/wall/mineral/iron,
 /area/station/hallway/aft)
-"Jn" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/carpet/royalblue,
-/area/station/hallway/aft)
 "Jo" = (
 /obj/item/trash/can,
 /obj/effect/decal/cleanable/dirt,
@@ -1346,12 +1315,6 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/wood,
 /area/station/hallway/aft)
-"Ll" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating,
-/area/station/maintenance/aft)
 "LZ" = (
 /obj/structure/sign/poster/contraband/random,
 /turf/closed/wall/mineral/iron,
@@ -1377,12 +1340,6 @@
 	},
 /turf/open/floor/wood,
 /area/station/service/cafeteria)
-"Mf" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/carpet/royalblue,
-/area/station/hallway/aft)
 "Mn" = (
 /obj/structure/table/wood/fancy/royalblue,
 /obj/item/areaeditor,
@@ -1397,12 +1354,6 @@
 	},
 /turf/open/floor/carpet/stellar,
 /area/station/command/bridge)
-"Mq" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/wood,
-/area/station/service/cafeteria)
 "MA" = (
 /obj/machinery/chem_dispenser/drinks/beer{
 	dir = 4
@@ -1410,13 +1361,6 @@
 /obj/structure/table/wood/fancy/purple,
 /turf/open/floor/carpet/purple,
 /area/station/service/cafeteria)
-"MB" = (
-/obj/effect/turf_decal/bot,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
-/area/station/commons/storage/primary)
 "MX" = (
 /obj/structure/sign/poster/random,
 /turf/closed/wall/mineral/iron,
@@ -1429,18 +1373,6 @@
 "No" = (
 /turf/template_noop,
 /area/space)
-"Np" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/carpet/green,
-/area/station/hallway/primary/central)
-"Ny" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/bronze,
-/area/station/cargo)
 "NF" = (
 /obj/machinery/chem_dispenser/drinks{
 	dir = 4
@@ -1528,11 +1460,6 @@
 /obj/structure/curtain/cloth/fancy,
 /turf/open/floor/plating,
 /area/station/service/cafeteria/kitchen)
-"RE" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/wood,
-/area/station/commons/library)
 "Sc" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -1600,12 +1527,6 @@
 /obj/structure/cable,
 /turf/open/floor/engine/cult,
 /area/station/science)
-"Vc" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/wood,
-/area/station/service/cafeteria)
 "Vy" = (
 /turf/open/floor/wood,
 /area/station/hallway/aft)
@@ -1673,12 +1594,6 @@
 /obj/structure/cable,
 /turf/open/floor/carpet/purple,
 /area/station/service/cafeteria)
-"Xm" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/bronze,
-/area/station/cargo)
 "Xz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1701,12 +1616,6 @@
 /obj/machinery/vending/classicbeats,
 /turf/open/floor/wood,
 /area/station/hallway/aft)
-"Yn" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/carpet/green,
-/area/station/hallway/primary/central)
 "Yx" = (
 /turf/closed/wall/mineral/iron,
 /area/station/service/cafeteria)
@@ -1831,7 +1740,7 @@ zT
 Ki
 DP
 GA
-Es
+pR
 gB
 MX
 IN
@@ -1865,7 +1774,7 @@ IJ
 wE
 IN
 KS
-Jn
+fx
 XX
 IN
 wj
@@ -1898,7 +1807,7 @@ hq
 bn
 IN
 Vy
-Ge
+cD
 Vy
 IN
 bC
@@ -1920,7 +1829,7 @@ No
 nl
 NN
 dd
-RE
+Ez
 St
 rp
 So
@@ -1935,11 +1844,11 @@ fx
 cD
 bA
 bD
-MB
+bD
 bQ
-Dg
 pf
-Ny
+pf
+pf
 Zj
 jQ
 No
@@ -1953,7 +1862,7 @@ Tt
 Tt
 iT
 Ke
-RE
+Ez
 Ql
 Fu
 Yx
@@ -1964,7 +1873,7 @@ NF
 bo
 IN
 Vy
-Ge
+cD
 KS
 wj
 ZW
@@ -1972,7 +1881,7 @@ bK
 Pc
 bY
 kC
-Xm
+pf
 VR
 jQ
 No
@@ -1997,7 +1906,7 @@ HS
 bp
 IN
 KS
-Jn
+fx
 Tn
 tv
 tv
@@ -2051,8 +1960,8 @@ pj
 YF
 aj
 am
-Np
-Yn
+hh
+hh
 hh
 am
 aK
@@ -2071,7 +1980,7 @@ mr
 WE
 PT
 cb
-Ll
+Ia
 oE
 Db
 ck
@@ -2090,10 +1999,10 @@ aA
 aG
 Yx
 SC
-do
+cr
 je
-Vc
-Mq
+cr
+cr
 pn
 cD
 pR
@@ -2162,7 +2071,7 @@ JS
 bq
 IN
 gz
-Ge
+cD
 Vy
 CF
 bG
@@ -2195,7 +2104,7 @@ RD
 Gh
 We
 GL
-Mf
+fx
 cD
 bB
 bH

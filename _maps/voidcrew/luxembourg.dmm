@@ -153,12 +153,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/engineering)
-"dK" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark,
-/area/station/commons/storage/primary)
 "dO" = (
 /obj/structure/table,
 /obj/item/areaeditor,
@@ -522,17 +516,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet/donk,
 /area/station/commons/dorms)
-"lm" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/medical/glass,
-/turf/open/floor/iron/dark,
-/area/station/medical)
-"lr" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
-/area/station/engineering)
 "lJ" = (
 /obj/machinery/light{
 	dir = 1
@@ -686,12 +669,6 @@
 /obj/machinery/space_heater,
 /obj/structure/window/reinforced/spawner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
-/area/station/engineering)
-"qp" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/engineering)
 "qP" = (
@@ -998,11 +975,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/command/bridge)
-"yI" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
 "zj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /obj/structure/cable,
@@ -1029,20 +1001,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/cargo)
-"zU" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark,
-/area/station/cargo)
 "Af" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/station/medical)
-"Ah" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/carpet/donk,
-/area/station/commons/dorms)
 "AE" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -1157,11 +1119,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/cargo)
-"Ef" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
 "Eo" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1200,19 +1157,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/cargo)
-"FY" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
-/area/station/engineering)
-"FZ" = (
-/obj/structure/cable,
-/obj/machinery/door/airlock/engineering/glass,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/firedoor,
-/turf/open/floor/plating,
-/area/station/engineering)
 "GM" = (
 /obj/structure/table,
 /obj/item/reagent_containers/cup/rag,
@@ -1273,14 +1217,6 @@
 /obj/item/hand_labeler_refill,
 /turf/open/floor/plating,
 /area/station/engineering)
-"Io" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/medical/glass,
-/turf/open/floor/iron/dark,
-/area/station/medical)
 "IN" = (
 /obj/structure/closet/secure_closet/personal{
 	name = "cargo tech's locker"
@@ -1337,11 +1273,6 @@
 /obj/machinery/air_sensor/atmos/plasma_tank,
 /turf/open/floor/engine/plasma,
 /area/station/engineering)
-"KR" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
 "Ls" = (
 /obj/machinery/airalarm/directional/west,
 /obj/item/stack/sheet/cardboard/fifty,
@@ -1457,11 +1388,6 @@
 /obj/structure/sink/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/medical)
-"Og" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark,
-/area/station/cargo)
 "Ox" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
@@ -1474,11 +1400,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/commons/dorms)
-"OI" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
 "OW" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /obj/item/storage/box/donkpockets,
@@ -1580,13 +1501,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/primary)
-"Rb" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/carpet/donk,
-/area/station/commons/dorms)
 "Rl" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1659,12 +1573,6 @@
 	},
 /turf/open/floor/carpet/donk,
 /area/station/commons/dorms)
-"ST" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark,
-/area/station/medical)
 "Tj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -1689,12 +1597,6 @@
 "TW" = (
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/command/bridge)
-"TX" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
-/area/station/engineering)
 "Ul" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
@@ -1736,11 +1638,6 @@
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/station/commons/storage/primary)
-"Vz" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
 "VF" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
@@ -1768,12 +1665,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/engineering)
-"Wd" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark,
-/area/station/medical)
 "Wj" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
@@ -2001,7 +1892,7 @@ Po
 es
 hx
 fb
-Og
+fb
 zu
 gz
 Cj
@@ -2028,7 +1919,7 @@ HF
 RG
 yl
 Tj
-zU
+fb
 kb
 Mi
 LI
@@ -2036,7 +1927,7 @@ LP
 Ka
 vF
 FG
-dK
+aF
 uO
 Ry
 rd
@@ -2067,9 +1958,9 @@ Ka
 nm
 re
 aF
-dK
+aF
 Jw
-dK
+aF
 Ck
 tW
 Rl
@@ -2115,7 +2006,7 @@ Yv
 cV
 TW
 ay
-yI
+no
 TW
 hE
 HQ
@@ -2173,19 +2064,19 @@ TW
 TW
 TW
 TW
-Ef
-KR
+no
+no
 of
 dO
-OI
-KR
-KR
+no
+no
+no
 jB
-qp
+jb
 EU
-FY
 EU
-lr
+EU
+kl
 VZ
 kl
 sA
@@ -2202,7 +2093,7 @@ Bd
 TW
 TW
 TW
-Vz
+no
 TW
 hE
 fg
@@ -2289,7 +2180,7 @@ fI
 fI
 fI
 fU
-Io
+BN
 fI
 fI
 fI
@@ -2298,12 +2189,12 @@ EO
 EO
 YF
 Lx
-Rb
+zL
 lf
 lf
 lf
-FZ
-TX
+Ck
+kl
 HS
 Nu
 vp
@@ -2318,7 +2209,7 @@ Af
 dh
 NW
 cv
-ST
+dY
 gO
 Kh
 fI
@@ -2327,7 +2218,7 @@ Dt
 Sa
 iW
 lf
-Ah
+iW
 WC
 Ml
 xm
@@ -2347,7 +2238,7 @@ fI
 jF
 cv
 oy
-Wd
+dY
 dY
 dY
 BN
@@ -2379,7 +2270,7 @@ go
 eC
 cv
 cv
-lm
+fU
 dj
 WC
 Ml

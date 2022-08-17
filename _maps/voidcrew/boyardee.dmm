@@ -301,7 +301,6 @@
 /obj/structure/chair/wood{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/service/bar)
 "gX" = (
@@ -780,16 +779,13 @@
 /area/station/commons)
 "tK" = (
 /obj/machinery/hydroponics/constructable,
-/obj/machinery/airalarm/all_access{
-	dir = 1;
-	pixel_y = -24
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "tM" = (
@@ -916,13 +912,13 @@
 /turf/open/floor/iron/white,
 /area/station/command/bridge)
 "wn" = (
-/obj/structure/chair/sofa/left{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/newscaster{
 	pixel_y = -30
+	},
+/obj/structure/chair/sofa/right{
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
@@ -1482,7 +1478,7 @@
 /area/station/commons/toilet)
 "Iz" = (
 /obj/structure/chair/sofa/corner{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
@@ -1966,7 +1962,6 @@
 "Tv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -2028,16 +2023,17 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/mineral/ore_redemption,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "UB" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/freezer,
-/turf/open/floor/iron/dark,
-/area/station/commons)
+/turf/open/floor/carpet/neon/simple/red,
+/area/station/service/bar)
 "UF" = (
 /obj/machinery/door/window/left/directional/west,
 /obj/structure/cable,
@@ -2115,7 +2111,6 @@
 	pixel_y = -24
 	},
 /obj/structure/ore_box,
-/obj/machinery/mineral/ore_redemption,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "XJ" = (
@@ -2420,7 +2415,7 @@ vZ
 vZ
 cC
 GO
-dQ
+UB
 MI
 lJ
 dQ
@@ -2441,7 +2436,7 @@ vZ
 vZ
 xr
 lJ
-Yx
+MI
 gN
 lp
 xp
@@ -2537,9 +2532,9 @@ LX
 sg
 CL
 sg
-UB
-uR
-JR
+Tn
+sg
+Au
 vZ
 "}
 (16,1,1) = {"

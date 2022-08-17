@@ -879,12 +879,6 @@
 /obj/structure/cable,
 /turf/open/floor/wood/yew,
 /area/station/commons/office)
-"uJ" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/wood/yew,
-/area/station/commons/office)
 "vi" = (
 /obj/effect/turf_decal/tile/bottlegreen/anticorner{
 	dir = 1
@@ -1618,12 +1612,6 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/station/commons/dorms)
-"NA" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/wood/yew,
-/area/station/commons/office)
 "QH" = (
 /turf/closed/wall,
 /area/station/cargo)
@@ -1644,12 +1632,6 @@
 	id = "spitfireshutters"
 	},
 /turf/open/floor/plating,
-/area/station/medical)
-"TJ" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/white,
 /area/station/medical)
 "Ux" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -1684,12 +1666,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/commons/library)
-"WK" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/white,
-/area/station/medical)
 "WO" = (
 /obj/effect/turf_decal/techfloor{
 	dir = 4
@@ -1973,7 +1949,7 @@ eL
 Zq
 Zq
 oc
-WK
+aJ
 ss
 YX
 In
@@ -2053,7 +2029,7 @@ fB
 Yq
 Yq
 po
-WK
+aJ
 sY
 vZ
 In
@@ -2073,7 +2049,7 @@ gy
 ka
 ME
 pu
-TJ
+aJ
 tr
 wd
 zc
@@ -2193,8 +2169,8 @@ Yq
 JA
 nc
 Ik
-NA
-uJ
+jG
+jG
 Es
 Ac
 Da

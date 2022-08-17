@@ -5,10 +5,6 @@
 "ab" = (
 /turf/closed/wall/mineral/titanium,
 /area/station/cargo)
-"ad" = (
-/obj/structure/sign/departments/medbay/alt,
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/cargo)
 "ae" = (
 /obj/docking_port/mobile{
 	callTime = 250;
@@ -52,9 +48,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/cargo)
-"al" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/medical)
 "am" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -90,9 +83,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/station/engineering)
-"at" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/engineering)
 "au" = (
 /obj/structure/closet/secure_closet/medical3{
@@ -287,7 +277,7 @@
 /turf/open/floor/iron/dark,
 /area/station/cargo)
 "be" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
+/turf/closed/wall/mineral/titanium,
 /area/station/command/bridge)
 "bf" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
@@ -418,14 +408,12 @@
 	},
 /obj/item/storage/box/zipties,
 /obj/item/assembly/flash/handheld,
-/obj/item/melee/baton/telescopic,
 /obj/item/megaphone{
 	pixel_x = 3;
 	pixel_y = -3
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
-/obj/item/gun/energy/e_gun/mini,
 /obj/machinery/requests_console{
 	announcementConsole = 1;
 	department = "Cockpit";
@@ -770,6 +758,8 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/structure/closet/secure_closet/chief_medical,
+/obj/item/gun/energy/e_gun/mini,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "cy" = (
@@ -824,7 +814,7 @@
 /area/station/commons)
 "cF" = (
 /obj/structure/sign/departments/restroom,
-/turf/closed/wall/mineral/titanium/nodiagonal,
+/turf/closed/wall/mineral/titanium,
 /area/station/commons)
 "cG" = (
 /obj/structure/closet/emcloset/anchored,
@@ -913,7 +903,7 @@
 /area/station/commons)
 "cQ" = (
 /obj/machinery/smartfridge/chemistry/preloaded,
-/turf/closed/wall/mineral/titanium/nodiagonal,
+/turf/closed/wall/mineral/titanium,
 /area/station/commons)
 "cR" = (
 /obj/structure/filingcabinet/medical,
@@ -970,10 +960,6 @@
 	},
 /obj/machinery/cryopod,
 /turf/open/floor/iron/dark,
-/area/station/commons)
-"cY" = (
-/obj/structure/sign/departments/medbay/alt,
-/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/commons)
 "cZ" = (
 /obj/machinery/chem_master,
@@ -1047,7 +1033,7 @@
 /area/station/commons)
 "dl" = (
 /obj/machinery/smartfridge/organ,
-/turf/closed/wall/mineral/titanium/nodiagonal,
+/turf/closed/wall/mineral/titanium,
 /area/station/commons)
 "dm" = (
 /obj/structure/window/reinforced/spawner/north,
@@ -1142,7 +1128,7 @@
 /area/station/engineering)
 "eB" = (
 /obj/structure/sign/departments/engineering,
-/turf/closed/wall/mineral/titanium/nodiagonal,
+/turf/closed/wall/mineral/titanium,
 /area/station/engineering)
 "fJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -1281,9 +1267,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/station/engineering)
-"tD" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/commons)
 "tE" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -1291,9 +1274,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical)
-"uD" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/cargo)
 "uM" = (
 /obj/machinery/door/window/right/directional/north{
 	dir = 4;
@@ -1489,12 +1469,6 @@
 /obj/machinery/door/window/left/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/commons)
-"MR" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
-/area/station/engineering)
 "Nq" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -1628,9 +1602,9 @@ aa
 aa
 aa
 vk
-at
+aS
 aa
-at
+aS
 vk
 aa
 aa
@@ -1647,9 +1621,9 @@ aa
 aa
 aS
 as
-at
+aS
 aa
-at
+aS
 uM
 aS
 aa
@@ -1664,13 +1638,13 @@ aa
 aa
 aa
 aa
-at
+aS
 cG
-at
+aS
 aa
-at
+aS
 bg
-at
+aS
 aa
 aa
 aa
@@ -1683,13 +1657,13 @@ aa
 aa
 aa
 aa
-at
+aS
 bh
 by
 Ps
 cc
 cp
-at
+aS
 aa
 aa
 aa
@@ -1702,13 +1676,13 @@ aa
 aa
 aa
 aa
-at
+aS
 bi
-at
+aS
 aa
-at
+aS
 cq
-at
+aS
 aa
 aa
 aa
@@ -1721,13 +1695,13 @@ aa
 aa
 aa
 aa
-at
+aS
 DP
-at
+aS
 aa
-at
+aS
 bj
-at
+aS
 aa
 aa
 aa
@@ -1740,13 +1714,13 @@ aa
 aa
 aa
 aa
-at
+aS
 bk
-at
+aS
 tw
-at
+aS
 bj
-at
+aS
 aa
 aa
 aa
@@ -1759,13 +1733,13 @@ aa
 aa
 aa
 aS
-at
+aS
 dt
-at
+aS
 BE
-at
+aS
 wh
-at
+aS
 aS
 aa
 aa
@@ -1777,15 +1751,15 @@ aa
 aa
 aa
 aa
-at
+aS
 cJ
 bm
-at
+aS
 Ur
-at
+aS
 bj
 dY
-at
+aS
 aa
 aa
 aa
@@ -1796,15 +1770,15 @@ aa
 aa
 aa
 aa
-at
+aS
 aT
 bn
 iI
-MR
+cr
 iI
 cr
 cy
-at
+aS
 aa
 aa
 aa
@@ -1815,15 +1789,15 @@ aa
 aa
 aa
 aa
-at
+aS
 aU
 bo
-at
+aS
 gh
-at
+aS
 cs
 cz
-at
+aS
 aa
 aa
 aa
@@ -1834,15 +1808,15 @@ aa
 aa
 aa
 aS
-at
+aS
 bl
 aV
-at
+aS
 aa
-at
+aS
 bp
 ct
-at
+aS
 aS
 aa
 aa
@@ -1852,17 +1826,17 @@ aa
 aa
 aa
 aa
-at
+aS
 aF
 aW
 bq
-at
+aS
 OD
-at
+aS
 cu
 cB
 cM
-at
+aS
 aa
 aa
 aa
@@ -1871,17 +1845,17 @@ aa
 aa
 aa
 aa
-at
-at
+aS
+aS
 aX
 eB
-at
+aS
 bM
-at
-at
-at
-at
-at
+aS
+aS
+aS
+aS
+aS
 aa
 aa
 aa
@@ -1890,7 +1864,7 @@ aa
 aa
 aa
 ag
-al
+ag
 aH
 zy
 br
@@ -1898,9 +1872,9 @@ bz
 bN
 cd
 cv
-tD
+nQ
 cN
-tD
+nQ
 nQ
 aa
 aa
@@ -1908,7 +1882,7 @@ aa
 (16,1,1) = {"
 aa
 ag
-al
+ag
 au
 aI
 aZ
@@ -1920,7 +1894,7 @@ wd
 cE
 cO
 cZ
-tD
+nQ
 nQ
 aa
 "}
@@ -1940,26 +1914,26 @@ cF
 cP
 da
 dk
-tD
+nQ
 aa
 "}
 (18,1,1) = {"
 aG
-uD
-uD
+ab
+ab
 aw
 cH
-tD
+nQ
 wG
 dr
 Bh
 xP
 nC
-tD
-tD
+nQ
+nQ
 dd
-tD
-tD
+nQ
+nQ
 ot
 "}
 (19,1,1) = {"
@@ -1974,7 +1948,7 @@ qX
 bT
 xP
 ED
-tD
+nQ
 cR
 dc
 dm
@@ -1993,7 +1967,7 @@ dz
 bS
 ch
 QS
-tD
+nQ
 cS
 dc
 LG
@@ -2006,13 +1980,13 @@ aj
 aB
 az
 aM
-uD
+ab
 bu
 lI
 mE
 xP
 Nq
-tD
+nQ
 cT
 de
 dn
@@ -2025,13 +1999,13 @@ aj
 aA
 Yz
 cI
-uD
+ab
 bI
 Ye
 bs
 Jq
 Dp
-tD
+nQ
 wc
 df
 UP
@@ -2044,13 +2018,13 @@ aj
 yU
 OA
 aN
-uD
-al
+ab
+ag
 ZO
 fJ
 lL
-al
-tD
+ag
+nQ
 zZ
 dg
 do
@@ -2059,7 +2033,7 @@ Rx
 "}
 (24,1,1) = {"
 aG
-uD
+ab
 cD
 aC
 bb
@@ -2073,7 +2047,7 @@ cK
 cU
 dg
 sz
-tD
+nQ
 ot
 "}
 (25,1,1) = {"
@@ -2083,11 +2057,11 @@ aq
 bc
 bc
 bc
-al
+ag
 cl
 fJ
 Lt
-al
+ag
 SJ
 cV
 di
@@ -2098,7 +2072,7 @@ aa
 (26,1,1) = {"
 aa
 ab
-uD
+ab
 aE
 aQ
 bd
@@ -2110,7 +2084,7 @@ be
 cL
 cW
 dj
-tD
+nQ
 nQ
 aa
 "}
@@ -2118,7 +2092,7 @@ aa
 aa
 aa
 ab
-uD
+ab
 aR
 be
 be
@@ -2128,7 +2102,7 @@ cm
 be
 be
 cX
-tD
+nQ
 nQ
 aa
 aa
@@ -2138,7 +2112,7 @@ aa
 aa
 aa
 ab
-ad
+aG
 be
 bx
 bJ
@@ -2146,7 +2120,7 @@ ca
 cn
 cx
 be
-cY
+ot
 nQ
 aa
 aa

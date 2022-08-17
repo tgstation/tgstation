@@ -187,7 +187,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/external)
+/area/station/maintenance/aft)
 "kh" = (
 /obj/structure/sign/poster/contraband/free_tonto,
 /turf/closed/wall/r_wall,
@@ -225,12 +225,6 @@
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/mineral/plastitanium,
 /area/station/command/bridge)
-"lR" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/plastitanium/red,
-/area/station/maintenance/central)
 "mM" = (
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/maintenance/central)
@@ -380,9 +374,6 @@
 	dir = 8
 	},
 /obj/item/ammo_box/a762,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
 /obj/item/ammo_box/a762,
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/security)
@@ -428,9 +419,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/radio/intercom{
-	pixel_y = 26
-	},
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/mineral/titanium/yellow,
 /area/station/cargo/miningoffice)
 "vH" = (
@@ -539,13 +528,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/security)
-"zz" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/plastitanium/red,
-/area/station/maintenance/central)
 "zL" = (
 /obj/structure/table,
 /obj/item/toy/figure/secofficer{
@@ -562,6 +544,9 @@
 "Ak" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/security)
 "AD" = (
@@ -686,9 +671,7 @@
 	name = "potted plant"
 	},
 /obj/structure/cable,
-/obj/item/radio/intercom{
-	pixel_y = 26
-	},
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/maintenance/central)
 "Eo" = (
@@ -705,9 +688,7 @@
 	},
 /obj/structure/bed,
 /obj/machinery/airalarm/directional/east,
-/obj/item/radio/intercom{
-	pixel_y = 26
-	},
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/station/medical)
 "ED" = (
@@ -832,9 +813,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/obj/item/radio/intercom{
-	pixel_y = -32
-	},
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/mineral/plastitanium,
 /area/station/command/bridge)
 "Kq" = (
@@ -979,17 +958,17 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/security)
 "Rv" = (
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/maintenance/central)
+/area/station/security)
 "RD" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/mineral/titanium/yellow,
@@ -1161,9 +1140,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/item/radio/intercom{
-	pixel_y = 26
-	},
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/mineral/titanium/purple,
 /area/station/science)
 "YI" = (
@@ -1207,7 +1184,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/station/external)
+/area/station/maintenance/aft)
 "ZZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -1271,7 +1248,7 @@ Dt
 Nd
 AY
 oz
-Rv
+xb
 Uk
 kp
 JP
@@ -1287,7 +1264,7 @@ qo
 qo
 qo
 BA
-zz
+aL
 EF
 zL
 en
@@ -1375,13 +1352,13 @@ WR
 ol
 Kj
 qo
-lR
+xb
 FI
 Do
 qw
 TF
 LQ
-lR
+xb
 Xh
 xR
 RD
@@ -1403,7 +1380,7 @@ Hb
 LY
 LY
 SB
-lR
+xb
 VM
 pO
 VM
@@ -1450,7 +1427,7 @@ LY
 AD
 RN
 ZZ
-ZZ
+Rv
 Ak
 NM
 Pa
@@ -1469,7 +1446,7 @@ bb
 AQ
 bl
 LY
-zz
+aL
 VM
 xm
 QB
@@ -1508,9 +1485,9 @@ WX
 VD
 Qo
 dm
-WX
-PC
-PC
+LY
+LY
+LY
 BE
 FF
 Wu

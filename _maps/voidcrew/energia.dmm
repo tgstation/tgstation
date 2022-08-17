@@ -166,12 +166,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
-"hp" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
 "hD" = (
 /obj/effect/turf_decal/spline/fancy/beige{
 	dir = 1
@@ -233,11 +227,6 @@
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/station/cargo)
-"lc" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/maintenance/aft)
 "li" = (
 /obj/machinery/suit_storage_unit/mining/eva,
 /obj/effect/turf_decal/tile/brown/mono,
@@ -295,12 +284,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
-"nY" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
 "od" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -356,11 +339,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/external)
-"rl" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
-/obj/structure/cable,
-/turf/open/floor/engine,
-/area/station/engineering/engine)
 "rn" = (
 /obj/effect/turf_decal/stripes{
 	dir = 4
@@ -464,11 +442,6 @@
 /obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
-"tI" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
-/obj/structure/cable,
-/turf/open/floor/engine,
-/area/station/engineering/engine)
 "tL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
@@ -485,11 +458,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
-"uf" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/maintenance/aft)
 "ux" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
@@ -775,11 +743,6 @@
 /obj/effect/turf_decal/tile/brown/mono,
 /turf/open/floor/iron,
 /area/station/cargo)
-"In" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/maintenance/aft)
 "Iq" = (
 /obj/machinery/door/window/brigdoor{
 	dir = 1
@@ -1071,15 +1034,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/engine,
 /area/station/engineering/engine)
-"SM" = (
-/obj/effect/turf_decal/spline/fancy/beige{
-	dir = 1
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
 "SN" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1158,12 +1112,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
-"VS" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
 "Wa" = (
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
@@ -1316,14 +1264,14 @@ RT
 AZ
 AZ
 AZ
-uf
+bC
 jq
 jq
 ri
 ri
 jq
 LK
-uf
+bC
 AZ
 AZ
 AZ
@@ -1345,7 +1293,7 @@ QY
 QY
 jq
 cf
-lc
+bC
 ao
 yK
 Ql
@@ -1362,10 +1310,10 @@ pY
 qa
 Ir
 ha
-In
 bC
 bC
-In
+bC
+bC
 od
 Pa
 cD
@@ -1457,7 +1405,7 @@ KL
 SN
 Sq
 WE
-tI
+ou
 Iq
 NN
 xw
@@ -1473,13 +1421,13 @@ KE
 zd
 YD
 JV
-SM
-nY
+hD
+ab
 rR
 KT
 ny
 yf
-rl
+ou
 Nr
 rC
 fI
@@ -1518,7 +1466,7 @@ pY
 pY
 qa
 dc
-VS
+ab
 Nc
 Hq
 ZE
@@ -1540,7 +1488,7 @@ OH
 xR
 wl
 xF
-hp
+ab
 bz
 cD
 Hq
@@ -1562,7 +1510,7 @@ BU
 cZ
 VE
 hD
-nY
+ab
 rR
 Vj
 Rw

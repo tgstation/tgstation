@@ -1339,18 +1339,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/cargo)
-"Sw" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/station/cargo)
-"SA" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/station/cargo)
 "SR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1820,7 +1808,7 @@ FH
 Hw
 Ko
 Nz
-Sw
+Sc
 WC
 br
 dD
@@ -1847,7 +1835,7 @@ NN
 HU
 Ks
 NN
-Sw
+Sc
 WK
 KV
 dD
@@ -1874,7 +1862,7 @@ NN
 Id
 KD
 HU
-SA
+Sc
 WZ
 OO
 ZB

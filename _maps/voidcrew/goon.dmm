@@ -284,11 +284,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/mineral/titanium/white,
 /area/station/commons)
-"sd" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/titanium,
-/area/station/commons)
 "tW" = (
 /obj/structure/table,
 /obj/machinery/airalarm/directional/north,
@@ -328,11 +323,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/mineral/titanium/yellow,
 /area/station/engineering)
-"wa" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/titanium,
-/area/station/commons)
 "wf" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
@@ -374,12 +364,6 @@
 "zf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium/white,
-/area/station/commons)
-"An" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/titanium,
 /area/station/commons)
 "Ao" = (
 /obj/structure/table/reinforced,
@@ -501,12 +485,6 @@
 "ET" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
-/area/station/commons)
-"Fl" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/titanium,
 /area/station/commons)
 "Ft" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
@@ -786,11 +764,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/mineral/titanium/blue,
 /area/station/medical)
-"ZO" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/titanium,
-/area/station/commons)
 "ZQ" = (
 /obj/machinery/mineral/ore_redemption{
 	dir = 8
@@ -920,11 +893,11 @@ at
 at
 Ea
 Ea
-sd
 eC
-An
-wa
-ZO
+eC
+dI
+eC
+eC
 Ea
 Ea
 at
@@ -948,7 +921,7 @@ mB
 zf
 SS
 EJ
-Fl
+dI
 wE
 lI
 BI

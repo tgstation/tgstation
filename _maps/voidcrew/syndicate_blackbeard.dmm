@@ -57,7 +57,7 @@
 /area/station/hallway/primary/central)
 "ch" = (
 /obj/machinery/airalarm/all_access{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -107,12 +107,6 @@
 /obj/machinery/power/port_gen/pacman/pre_loaded,
 /turf/open/floor/mineral/plastitanium,
 /area/station/engineering)
-"dM" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/catwalk_floor,
-/area/station/hallway/primary/central)
 "dN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/open/floor/mineral/plastitanium,
@@ -159,12 +153,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/engineering)
-"fZ" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/catwalk_floor,
-/area/station/hallway/primary/central)
 "gN" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/station/hallway/primary/central)
@@ -203,12 +191,6 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/station/medical)
-"iS" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/catwalk_floor,
-/area/station/hallway/primary/central)
 "jk" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -227,18 +209,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/hallway/primary/fore)
-"jM" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/catwalk_floor,
-/area/station/hallway/primary/central)
-"jW" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/catwalk_floor,
-/area/station/hallway/primary/central)
 "jX" = (
 /obj/machinery/suit_storage_unit{
 	helmet_type = /obj/item/tank/internals/oxygen/yellow;
@@ -307,18 +277,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
 /area/station/commons)
-"mX" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/catwalk_floor,
-/area/station/hallway/primary/fore)
-"nm" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/catwalk_floor,
-/area/station/hallway/primary/fore)
 "nE" = (
 /obj/structure/cable,
 /obj/machinery/navbeacon{
@@ -411,7 +369,8 @@
 	dir = 8
 	},
 /obj/machinery/airalarm/all_access{
-	pixel_y = -24
+	pixel_y = -24;
+	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/station/medical)
@@ -512,7 +471,8 @@
 	dir = 1
 	},
 /obj/machinery/airalarm/all_access{
-	pixel_y = -24
+	pixel_y = -24;
+	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/station/command/bridge)
@@ -635,7 +595,8 @@
 	dir = 1
 	},
 /obj/machinery/airalarm/all_access{
-	pixel_y = -24
+	pixel_y = -24;
+	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/station/commons)
@@ -831,12 +792,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/primary/central)
-"PV" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/catwalk_floor,
-/area/station/cargo)
 "Qh" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/station/command/bridge)
@@ -848,28 +803,16 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/primary/central)
-"Qx" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/catwalk_floor,
-/area/station/hallway/primary/central)
 "Qz" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/airalarm/all_access{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/primary/fore)
-"Rl" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/catwalk_floor,
-/area/station/hallway/primary/central)
 "Rp" = (
 /obj/structure/table/reinforced,
 /obj/structure/railing{
@@ -907,17 +850,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering)
-"RJ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
-/obj/structure/window/reinforced/plasma/spawner/west,
-/turf/open/floor/mineral/plastitanium,
-/area/station/engineering)
-"SJ" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/catwalk_floor,
-/area/station/hallway/primary/central)
 "Tj" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1028,7 +960,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/airalarm/all_access{
-	pixel_y = -24
+	pixel_y = -24;
+	dir = 1
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/cargo)
@@ -1069,12 +1002,6 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/station/commons)
-"ZR" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/catwalk_floor,
-/area/station/hallway/primary/fore)
 
 (1,1,1) = {"
 TQ
@@ -1111,7 +1038,7 @@ TQ
 gN
 gN
 gN
-RJ
+aP
 Uw
 em
 xF
@@ -1203,7 +1130,7 @@ rE
 DN
 Bw
 en
-Qx
+cs
 HS
 ch
 DN
@@ -1215,13 +1142,13 @@ TQ
 TQ
 Yt
 rE
-Rl
-SJ
-iS
+cs
+cs
+cs
 dA
-iS
-iS
-Qx
+cs
+cs
+cs
 bl
 vP
 TQ
@@ -1230,13 +1157,13 @@ TQ
 TQ
 vP
 rE
-dM
+cs
 WH
 WH
 EK
 WH
 WH
-dM
+cs
 rE
 kx
 TQ
@@ -1245,13 +1172,13 @@ TQ
 gN
 gN
 gN
-dM
+cs
 WH
 ad
 hR
 yv
 WH
-dM
+cs
 gN
 gN
 gN
@@ -1260,13 +1187,13 @@ gN
 Id
 aM
 BG
-Qx
+cs
 WH
 Cn
 sV
 sv
 WH
-Rl
+cs
 bM
 fR
 Ol
@@ -1281,7 +1208,7 @@ iH
 Zz
 cu
 WH
-jM
+cs
 UB
 nU
 Ol
@@ -1290,13 +1217,13 @@ Ol
 gN
 gN
 gN
-dM
+cs
 WH
 gU
 qX
 ss
 WH
-dM
+cs
 gN
 gN
 gN
@@ -1305,13 +1232,13 @@ gN
 TQ
 vP
 rE
-dM
+cs
 WH
 WH
 WH
 WH
 WH
-dM
+cs
 rE
 vP
 TQ
@@ -1320,13 +1247,13 @@ TQ
 TQ
 vP
 rE
-jW
-dM
+cs
+cs
 uw
 Qp
 uw
-dM
-fZ
+cs
+cs
 rE
 vP
 TQ
@@ -1335,13 +1262,13 @@ TQ
 TQ
 vP
 rE
-dM
+cs
 aj
 rE
 kB
 rE
 aj
-dM
+cs
 rE
 vP
 TQ
@@ -1350,13 +1277,13 @@ TQ
 TQ
 vP
 VT
-dM
+cs
 Kh
 Kh
 VF
 Kh
 Kh
-dM
+cs
 VT
 vP
 TQ
@@ -1380,13 +1307,13 @@ TQ
 TQ
 TQ
 Kj
-ZR
+av
 Kh
 et
 Jb
 ZO
 Kh
-ZR
+av
 Kj
 TQ
 TQ
@@ -1395,7 +1322,7 @@ TQ
 TQ
 TQ
 Kj
-ZR
+av
 Kh
 WT
 Gc
@@ -1410,13 +1337,13 @@ TQ
 TQ
 TQ
 Kj
-ZR
+av
 Kh
 et
 Wp
 HE
 Kh
-ZR
+av
 Kj
 TQ
 TQ
@@ -1425,13 +1352,13 @@ TQ
 TQ
 TQ
 jm
-ZR
+av
 Kh
 Kh
 mG
 Kh
 Kh
-ZR
+av
 jm
 TQ
 TQ
@@ -1441,12 +1368,12 @@ TQ
 TQ
 jm
 av
-mX
+av
 Qz
 Ed
 Tp
-mX
-nm
+av
+av
 jm
 TQ
 TQ
@@ -1455,13 +1382,13 @@ TQ
 TQ
 TQ
 jm
-ZR
+av
 uk
 Hu
-ZR
+av
 Ub
 uk
-ZR
+av
 jm
 TQ
 TQ
@@ -1470,13 +1397,13 @@ TQ
 TQ
 TQ
 jm
-ZR
+av
 Qh
 Qh
 ln
 Qh
 Qh
-ZR
+av
 jm
 TQ
 TQ
@@ -1485,13 +1412,13 @@ TQ
 TQ
 TQ
 Kj
-ZR
+av
 Qh
 jX
 li
 xi
 Qh
-ZR
+av
 Kj
 TQ
 TQ
@@ -1500,13 +1427,13 @@ TQ
 TQ
 TQ
 Kj
-ZR
+av
 Qh
 Jm
 nE
 ZG
 Qh
-ZR
+av
 Kj
 TQ
 TQ
@@ -1515,13 +1442,13 @@ TQ
 TQ
 TQ
 Kj
-ZR
+av
 Qh
 Ow
 DC
 fn
 Qh
-ZR
+av
 Kj
 TQ
 TQ
@@ -1561,11 +1488,11 @@ TQ
 TQ
 im
 gW
-PV
-PV
+BE
+BE
 jk
-PV
-PV
+BE
+BE
 XG
 im
 TQ

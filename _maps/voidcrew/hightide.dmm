@@ -47,8 +47,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "cb" = (
-/turf/open/floor/catwalk_floor,
 /obj/item/trash/sosjerky,
+/turf/open/floor/catwalk_floor,
 /area/space)
 "cc" = (
 /obj/structure/table/wood,
@@ -175,11 +175,6 @@
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
-"hK" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
-/area/station/maintenance/central)
 "hW" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -242,11 +237,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/station/cargo)
-"lC" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
-/area/station/maintenance/central)
 "lQ" = (
 /obj/structure/window/reinforced/tinted{
 	dir = 4
@@ -596,18 +586,6 @@
 /obj/item/trash/cheesie,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
-"zL" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
-/area/station/maintenance/central)
-"zQ" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/glass,
-/turf/open/floor/plating,
-/area/station/maintenance/central)
 "Ao" = (
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating,
@@ -858,12 +836,6 @@
 /obj/machinery/power/terminal,
 /mob/living/simple_animal/hostile/cockroach,
 /obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/maintenance/central)
-"PP" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/central)
 "PS" = (
@@ -1262,10 +1234,10 @@ tR
 Dn
 Me
 iS
-lC
-zL
-lC
-PP
+eb
+eb
+eb
+Kl
 HE
 vK
 Up
@@ -1361,18 +1333,18 @@ nT
 wj
 yo
 Wn
-lC
+eb
 bA
 mX
-PP
+Kl
 Ef
 dy
-PP
-zQ
+Kl
+kb
 mX
-lC
+eb
 AE
-lC
+eb
 OG
 KU
 xg
@@ -1513,8 +1485,8 @@ Rc
 rj
 hW
 Wh
-lC
-hK
+eb
+eb
 UX
 sa
 sa

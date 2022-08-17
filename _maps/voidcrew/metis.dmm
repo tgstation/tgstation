@@ -915,11 +915,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/science)
-"pG" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/titanium/tiled,
-/area/station/commons/dorms)
 "pL" = (
 /obj/machinery/light,
 /obj/effect/decal/cleanable/dirt,
@@ -1366,12 +1361,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/station/science)
-"xY" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/primary/fore)
 "yc" = (
 /obj/machinery/door/airlock/maintenance/external,
 /obj/machinery/door/firedoor,
@@ -1505,11 +1494,6 @@
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/station/hallway/primary/fore)
-"Ab" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/titanium/tiled/white,
-/area/station/science)
 "Af" = (
 /obj/effect/mob_spawn/human/corpse/damaged,
 /obj/structure/cable,
@@ -1761,12 +1745,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/tiled,
 /area/station/science/robotics)
-"DK" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/primary/fore)
 "DM" = (
 /obj/structure/sink/directional/north,
 /obj/structure/disposalpipe/segment{
@@ -1957,19 +1935,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/station/hallway/primary/fore)
-"Gk" = (
-/obj/effect/decal/cleanable/blood,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/titanium/tiled/white,
-/area/station/hallway/primary/fore)
-"Go" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/titanium/tiled/white,
-/area/station/science)
 "Gw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -1996,12 +1961,6 @@
 /obj/structure/sign/poster/random,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/commons/toilet)
-"GU" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/titanium/tiled/purple,
-/area/station/science)
 "He" = (
 /obj/structure/chair/wood,
 /turf/open/floor/carpet/purple,
@@ -2111,12 +2070,6 @@
 	},
 /turf/open/floor/mineral/titanium/tiled,
 /area/station/science/robotics)
-"Id" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/titanium/tiled/white,
-/area/station/science)
 "Ig" = (
 /obj/machinery/door/airlock/titanium/glass{
 	name = "Bridge"
@@ -2466,11 +2419,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/station/hallway/aft)
-"NS" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/titanium/tiled/white,
-/area/station/science)
 "NW" = (
 /obj/structure/bed/pod,
 /obj/item/bedsheet/cosmos,
@@ -2595,17 +2543,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/science)
-"PX" = (
-/obj/machinery/door/airlock/science,
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "slimelock";
-	name = "Lockdown Shutters"
-	},
-/turf/open/floor/mineral/titanium/tiled/purple,
-/area/station/science)
 "PY" = (
 /mob/living/simple_animal/hostile/alien/sentinel{
 	dir = 4
@@ -2694,12 +2631,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/mineral/titanium/tiled,
 /area/station/service/cafeteria)
-"RM" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/titanium/tiled/purple,
-/area/station/science)
 "RQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -3282,13 +3213,6 @@
 /obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/station/hallway/primary/fore)
-"YW" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/titanium/tiled/white,
-/area/station/science)
 "Zq" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -3447,7 +3371,7 @@ mD
 lS
 Xx
 or
-Ab
+or
 Us
 bn
 WZ
@@ -3539,7 +3463,7 @@ YC
 tv
 HC
 LG
-NS
+tv
 hx
 YC
 bS
@@ -3558,7 +3482,7 @@ sQ
 mN
 wR
 Xx
-PX
+LP
 fH
 IJ
 NA
@@ -3566,11 +3490,11 @@ PJ
 WG
 xy
 Fm
-Go
-YW
+mK
 vV
-Go
-Id
+vV
+mK
+mK
 Qn
 Ox
 HV
@@ -3641,7 +3565,7 @@ dm
 dt
 nM
 rh
-DK
+to
 Al
 Qu
 Jq
@@ -3671,7 +3595,7 @@ BD
 Vw
 zr
 to
-DK
+to
 Jg
 KB
 Qo
@@ -3809,11 +3733,11 @@ hs
 zb
 Ig
 rH
-DK
+to
 Se
 FF
 op
-pG
+op
 aT
 XI
 Vb
@@ -3950,12 +3874,12 @@ Sa
 fU
 BD
 Qu
-xY
+to
 ee
 lK
 YU
 ee
-Gk
+rH
 DT
 VW
 Ef
@@ -4090,11 +4014,11 @@ mc
 zV
 ym
 la
-GU
+la
 la
 la
 OE
-RM
+la
 la
 oc
 fK

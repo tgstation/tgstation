@@ -392,14 +392,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
-"qQ" = (
-/obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
-	id = "whiteship_bridge"
-	},
-/obj/machinery/door/firedoor,
-/turf/open/floor/plating,
-/area/station/command/bridge)
 "rX" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt,
@@ -522,14 +514,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/engineering)
-"xe" = (
-/obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
-	id = "whiteship_bridge"
-	},
-/obj/machinery/door/firedoor,
-/turf/open/floor/plating,
-/area/station/command/bridge)
 "xo" = (
 /obj/machinery/door/airlock/titanium,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -846,14 +830,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/engine,
 /area/station/cargo)
-"Ql" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark,
-/area/station/cargo)
 "QO" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -961,16 +937,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/engine,
 /area/station/cargo)
-"Us" = (
-/obj/effect/turf_decal/stripes{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
-/area/station/engineering)
 "VK" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt,
@@ -1216,7 +1182,7 @@ rX
 kZ
 Yu
 Ow
-Us
+Ow
 Wb
 BD
 xV
@@ -1299,7 +1265,7 @@ PS
 Zz
 Lg
 WG
-Ql
+sr
 GW
 aR
 WN
@@ -1355,7 +1321,7 @@ PS
 Zz
 Lg
 sx
-Ql
+sr
 GW
 nr
 WN
@@ -1450,7 +1416,7 @@ qx
 (24,1,1) = {"
 qx
 qx
-xe
+iZ
 Xc
 TG
 JU
@@ -1465,9 +1431,9 @@ qx
 qx
 qx
 qx
-xe
-qQ
-qQ
+iZ
+iZ
+iZ
 fh
 fh
 iZ

@@ -210,8 +210,8 @@
 /turf/open/floor/pod/dark,
 /area/station/cargo/miningoffice)
 "hw" = (
-/obj/item/stack/sheet/mineral/silver,
 /obj/machinery/airalarm/directional/east,
+/obj/machinery/ore_silo,
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/cargo)
 "hB" = (
@@ -281,18 +281,6 @@
 /area/station/service/cafeteria)
 "jn" = (
 /obj/structure/cable,
-/obj/item/clothing/under/suit/waiter,
-/obj/item/clothing/under/suit/waiter,
-/obj/item/clothing/under/suit/waiter,
-/obj/item/clothing/under/suit/waiter,
-/obj/item/clothing/under/suit/waiter,
-/obj/item/clothing/under/suit/waiter,
-/obj/item/clothing/shoes/laceup,
-/obj/item/clothing/shoes/laceup,
-/obj/item/clothing/shoes/laceup,
-/obj/item/clothing/shoes/laceup,
-/obj/item/clothing/shoes/laceup,
-/obj/item/clothing/shoes/laceup,
 /obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -539,12 +527,10 @@
 /turf/open/floor/iron/white,
 /area/station/medical)
 "na" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/ore_silo,
-/obj/item/multitool,
-/turf/open/floor/catwalk_floor,
+/obj/structure/table/wood,
+/obj/item/stack/sheet/mineral/gold,
+/obj/item/stack/sheet/mineral/silver,
+/turf/open/floor/mineral/plastitanium/red,
 /area/station/cargo)
 "ng" = (
 /obj/structure/table/reinforced,
@@ -717,7 +703,6 @@
 /turf/closed/wall,
 /area/station/service/bar/backroom)
 "sy" = (
-/obj/item/stack/sheet/mineral/gold,
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/cargo)
 "tq" = (
@@ -1202,13 +1187,16 @@
 	},
 /turf/open/floor/pod/dark,
 /area/station/cargo/miningoffice)
+"HQ" = (
+/obj/structure/table/wood,
+/obj/item/multitool,
+/turf/open/floor/mineral/plastitanium/red,
+/area/station/cargo)
 "HY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/light/floor,
-/obj/machinery/computer/bank_machine,
-/obj/item/card/id/departmental_budget/car,
 /turf/open/floor/catwalk_floor,
 /area/station/cargo)
 "Ia" = (
@@ -1738,6 +1726,7 @@
 /area/station/commons)
 "Vm" = (
 /obj/machinery/vending/games,
+/turf/open/floor/mineral/plastitanium/red,
 /area/station/cargo)
 "VA" = (
 /obj/machinery/newscaster{
@@ -1768,7 +1757,6 @@
 /area/station/cargo)
 "WP" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/item/stack/sheet/mineral/gold,
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/cargo)
 "WU" = (
@@ -1832,10 +1820,6 @@
 "Yn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/structure/table/wood,
-/obj/item/stack/spacecash/c100,
-/obj/item/stack/spacecash/c100,
-/obj/item/toy/redbutton,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/catwalk_floor,
 /area/station/cargo)
@@ -1856,6 +1840,12 @@
 /obj/structure/cable,
 /turf/open/floor/carpet/red,
 /area/station/service/cafeteria)
+"Zr" = (
+/obj/machinery/computer/bank_machine{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/station/cargo)
 "Zz" = (
 /obj/machinery/cryopod{
 	dir = 1
@@ -1863,7 +1853,9 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/commons)
 "ZE" = (
-/obj/item/stack/sheet/mineral/silver,
+/obj/structure/table/wood,
+/obj/item/stack/spacecash/c100,
+/obj/item/card/id/departmental_budget/car,
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/cargo)
 "ZF" = (
@@ -2284,7 +2276,7 @@ vv
 Vm
 Wv
 ZI
-ZE
+sy
 Ap
 vZ
 "}
@@ -2305,7 +2297,7 @@ vv
 Ap
 sy
 QH
-ZE
+na
 Ap
 vZ
 "}
@@ -2325,8 +2317,8 @@ ES
 Cs
 Ap
 sy
-na
-ZE
+QH
+HQ
 Ap
 vZ
 "}
@@ -2368,7 +2360,7 @@ JM
 eZ
 Xg
 Yn
-ZE
+Zr
 Ap
 vZ
 "}

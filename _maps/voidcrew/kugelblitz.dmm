@@ -1456,11 +1456,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/open/floor/mineral/plastitanium,
 /area/station/science/robotics)
-"Aj" = (
-/obj/effect/turf_decal/stripes,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
-/turf/open/floor/mineral/plastitanium,
-/area/station/science/robotics)
 "An" = (
 /obj/machinery/door/airlock/engineering/glass,
 /obj/machinery/door/firedoor,
@@ -1534,10 +1529,6 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/iron/white,
-/area/station/medical)
-"Cn" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/open/floor/iron/white,
 /area/station/medical)
 "CE" = (
@@ -1973,13 +1964,6 @@
 /obj/structure/tank_dispenser/oxygen,
 /turf/open/floor/iron/dark/grid,
 /area/station/engineering)
-"LC" = (
-/obj/effect/turf_decal/techfloor/orange,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark/grid,
-/area/station/engineering)
 "LL" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange,
@@ -2008,10 +1992,6 @@
 /obj/item/circuitboard/mecha/ripley/main,
 /turf/open/floor/iron/dark/grid,
 /area/station/engineering)
-"Mf" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
-/turf/open/floor/iron/white,
-/area/station/medical)
 "Mj" = (
 /obj/effect/turf_decal/techfloor/orange{
 	dir = 4
@@ -2618,7 +2598,7 @@ pC
 Nr
 Vi
 VH
-Mf
+xL
 Bj
 Hp
 Jl
@@ -2644,7 +2624,7 @@ pC
 dm
 xo
 vR
-Mf
+xL
 BJ
 Ht
 Ws
@@ -2671,7 +2651,7 @@ Nu
 xo
 PO
 xL
-Cn
+xL
 Hy
 Jn
 Xt
@@ -2804,7 +2784,7 @@ zJ
 DS
 RP
 JT
-LC
+jb
 Mx
 "}
 (14,1,1) = {"
@@ -3034,7 +3014,7 @@ WF
 VP
 vI
 Pj
-Aj
+gA
 Gp
 Je
 KD

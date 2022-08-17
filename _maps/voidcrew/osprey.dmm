@@ -564,8 +564,8 @@
 /area/station/engineering/engine)
 "eq" = (
 /obj/machinery/power/smes/engineering,
-/turf/open/floor/catwalk_floor,
 /obj/structure/cable,
+/turf/open/floor/catwalk_floor,
 /area/station/engineering/engine)
 "eB" = (
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
@@ -2624,16 +2624,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/engineering/engine)
-"ve" = (
-/obj/effect/turf_decal/tile/purple/border{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/iron/white,
-/area/station/science)
 "vj" = (
 /obj/effect/turf_decal/borderfloor,
 /obj/machinery/door/airlock/mining/glass{
@@ -2987,8 +2977,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/fax{
 	name = "Osprey Fax Machine";
-	fax_name = "Osprey
-	 Fax"
+	fax_name = "Osprey Fax"
 	},
 /obj/structure/sign/poster/official/random{
 	pixel_x = -32
@@ -3939,18 +3928,6 @@
 "GD" = (
 /turf/closed/wall/mineral/titanium,
 /area/station/medical)
-"Hb" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/segment{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/grey/mono,
-/obj/effect/turf_decal/tile/neutral/border,
-/turf/open/floor/iron,
-/area/station/hallway/aft)
 "Hd" = (
 /obj/effect/turf_decal/borderfloor{
 	dir = 4
@@ -4185,14 +4162,6 @@
 /obj/effect/turf_decal/tile/grey/mono,
 /obj/effect/turf_decal/tile/neutral/border{
 	dir = 8
-	},
-/turf/open/floor/iron,
-/area/station/hallway/aft)
-"Js" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/tile/grey/mono,
-/obj/effect/turf_decal/tile/neutral/border{
-	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/hallway/aft)
@@ -4480,15 +4449,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/science)
-"LS" = (
-/obj/effect/turf_decal/stripes{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/dark/cargo_one,
-/area/station/construction)
 "Mj" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/light{
@@ -4674,8 +4634,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/hidden/layer5,
 /obj/item/clothing/gloves/color/yellow,
 /obj/structure/cable,
-/turf/open/floor/catwalk_floor,
 /obj/structure/table,
+/turf/open/floor/catwalk_floor,
 /area/station/engineering/engine)
 "NP" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
@@ -4953,16 +4913,6 @@
 /obj/item/trash/can/food/beans,
 /turf/open/floor/plating,
 /area/station/service/janitor)
-"Qp" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/segment{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/grey/mono,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
 "Qq" = (
 /obj/effect/turf_decal/borderfloor{
 	dir = 1
@@ -5113,18 +5063,6 @@
 /obj/effect/turf_decal/stripes,
 /turf/open/floor/plating,
 /area/station/engineering/engine)
-"Ro" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/segment{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/grey/mono,
-/obj/effect/turf_decal/tile/neutral/border,
-/turf/open/floor/iron,
-/area/station/hallway/aft)
 "Rv" = (
 /obj/effect/turf_decal/tile/brown/border{
 	dir = 8
@@ -5291,15 +5229,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port)
-"SY" = (
-/obj/effect/turf_decal/stripes{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/dark/cargo_one,
-/area/station/commons/storage/primary)
 "SZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
@@ -5515,15 +5444,6 @@
 	},
 /turf/open/floor/iron/dark/cargo_one,
 /area/station/commons/storage/primary)
-"UG" = (
-/obj/effect/turf_decal/stripes{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/dark/cargo_one,
-/area/station/commons/storage/primary)
 "US" = (
 /obj/machinery/door/airlock/external/glass,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -5639,15 +5559,6 @@
 /obj/structure/curtain/cloth/fancy,
 /turf/open/floor/carpet/blue,
 /area/station/command/bridge)
-"VQ" = (
-/obj/effect/turf_decal/stripes{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/dark/cargo_one,
-/area/station/construction)
 "VT" = (
 /obj/structure/disposaloutlet{
 	dir = 1
@@ -5941,8 +5852,8 @@
 /obj/machinery/computer/monitor{
 	dir = 8
 	},
-/turf/open/floor/catwalk_floor,
 /obj/structure/cable,
+/turf/open/floor/catwalk_floor,
 /area/station/engineering/engine)
 "YK" = (
 /obj/structure/cable,
@@ -6737,7 +6648,7 @@ uE
 wW
 wV
 fL
-ve
+fL
 Cf
 Ss
 TZ
@@ -6759,7 +6670,7 @@ zW
 Lh
 sB
 Ve
-Ro
+BC
 xh
 aC
 KV
@@ -6783,12 +6694,12 @@ vu
 xp
 zJ
 ui
-VQ
-VQ
+qT
+qT
 Am
 qT
-VQ
-LS
+qT
+qT
 gc
 Rg
 EO
@@ -6817,7 +6728,7 @@ AW
 VO
 sB
 tj
-Ro
+BC
 xh
 aC
 aC
@@ -6856,7 +6767,7 @@ yV
 zm
 hq
 vD
-Qp
+kU
 vz
 sf
 QT
@@ -6924,7 +6835,7 @@ FA
 Gw
 Bl
 HD
-Js
+sN
 Mn
 td
 Ow
@@ -6991,7 +6902,7 @@ dJ
 XL
 vp
 QB
-Hb
+BC
 xh
 aC
 jU
@@ -7018,9 +6929,9 @@ Qq
 UE
 UE
 qC
-UG
 xx
-SY
+xx
+xx
 mv
 OV
 uY
@@ -7049,7 +6960,7 @@ tr
 ae
 sB
 tj
-Ro
+BC
 xh
 aC
 jU
@@ -7107,7 +7018,7 @@ dI
 XS
 sB
 JV
-Ro
+BC
 xh
 ER
 Hh

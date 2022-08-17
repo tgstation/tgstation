@@ -352,14 +352,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/station/engineering)
-"aP" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
-/area/station/engineering)
 "aQ" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -373,13 +365,6 @@
 /turf/open/floor/plating,
 /area/station/cargo)
 "aR" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/white,
-/area/station/cargo)
-"aU" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -401,13 +386,6 @@
 	pixel_y = 24;
 	dir = 1
 	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/white,
-/area/station/commons)
-"aY" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -538,14 +516,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/station/engineering)
-"bj" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
-/area/station/engineering)
 "bk" = (
 /obj/structure/rack,
 /obj/item/storage/belt/utility,
@@ -602,13 +572,6 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
-/area/station/commons)
-"br" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/white,
 /area/station/commons)
 "bs" = (
 /obj/structure/closet/emcloset/anchored,
@@ -1185,14 +1148,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/station/service/cafeteria)
-"cB" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/tile/bar/diagonal,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron,
-/area/station/service/cafeteria)
 "cC" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -1372,14 +1327,6 @@
 	pixel_x = 8;
 	pixel_y = 4
 	},
-/obj/effect/turf_decal/tile/bar/diagonal,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron,
-/area/station/service/cafeteria)
-"cN" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/bar/diagonal,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
@@ -1652,32 +1599,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
 /area/station/cargo)
-"dt" = (
-/obj/machinery/door/airlock/external,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
-/area/station/cargo)
-"du" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/white,
-/area/station/cargo)
-"dv" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/white,
-/area/station/cargo)
 "dw" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -1690,13 +1611,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/white,
 /area/station/cargo)
-"dx" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/white,
-/area/station/service/cafeteria)
 "dy" = (
 /obj/machinery/light/small/built,
 /obj/machinery/airalarm/all_access{
@@ -2380,8 +2294,8 @@ do
 aa
 am
 aC
-aP
-bj
+aO
+aO
 by
 bI
 bS
@@ -2389,7 +2303,7 @@ ck
 cw
 bI
 by
-bj
+aO
 fX
 dK
 am
@@ -2409,7 +2323,7 @@ cx
 cI
 YW
 YW
-dt
+aQ
 YW
 YW
 aa
@@ -2428,7 +2342,7 @@ bU
 YW
 YW
 da
-du
+aR
 dL
 YW
 ad
@@ -2447,7 +2361,7 @@ cy
 cJ
 cP
 db
-du
+aR
 ap
 dY
 eh
@@ -2466,7 +2380,7 @@ ap
 ap
 cQ
 dc
-du
+aR
 em
 ap
 eh
@@ -2475,7 +2389,7 @@ eh
 ae
 aq
 ap
-aU
+aR
 bn
 bB
 bL
@@ -2485,7 +2399,7 @@ nT
 wM
 cR
 dd
-dv
+aR
 tZ
 ap
 eh
@@ -2494,7 +2408,7 @@ eh
 ae
 ar
 ap
-du
+aR
 de
 ap
 ap
@@ -2504,7 +2418,7 @@ hv
 ap
 ap
 bm
-du
+aR
 ap
 dZ
 eh
@@ -2513,7 +2427,7 @@ eh
 ae
 as
 ap
-du
+aR
 bo
 bC
 ap
@@ -2523,7 +2437,7 @@ bo
 cK
 cS
 dc
-du
+aR
 dM
 ea
 eh
@@ -2532,7 +2446,7 @@ eh
 ad
 YW
 aG
-du
+aR
 bp
 YW
 YW
@@ -2542,7 +2456,7 @@ bU
 YW
 YW
 df
-du
+aR
 dN
 YW
 ad
@@ -2580,7 +2494,7 @@ cz
 cM
 bD
 dg
-dx
+dh
 dO
 eb
 aa
@@ -2590,13 +2504,13 @@ do
 ai
 ai
 aX
-br
+aW
 cT
 bO
 cb
 cp
-cB
-cN
+cb
+cb
 cT
 dh
 dy
@@ -2608,7 +2522,7 @@ do
 nK
 at
 aI
-aY
+aW
 bs
 bD
 bP

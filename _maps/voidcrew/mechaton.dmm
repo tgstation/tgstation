@@ -353,16 +353,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
 /area/station/cargo)
-"oJ" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/spline/fancy/purple{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/dark,
-/area/station/hallway/primary/central)
 "oW" = (
 /obj/effect/turf_decal/spline/fancy/purple{
 	dir = 8
@@ -447,13 +437,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/engineering/engine)
-"rZ" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/dark,
-/area/station/cargo)
 "sb" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -503,15 +486,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/station/engineering/engine)
-"tD" = (
-/obj/effect/turf_decal/spline/fancy/purple{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/dark,
-/area/station/hallway/primary/central)
 "uM" = (
 /obj/effect/turf_decal/spline/fancy/purple{
 	dir = 8
@@ -614,15 +588,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine)
-"xr" = (
-/obj/effect/turf_decal/spline/fancy/purple{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/dark,
-/area/station/hallway/primary/central)
 "xQ" = (
 /obj/effect/turf_decal/spline/fancy/purple{
 	dir = 10
@@ -643,15 +608,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/oil/slippery,
 /turf/open/floor/iron/dark,
-/area/station/hallway/primary/central)
-"yE" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/trimline/bar/warning{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/noslip,
 /area/station/hallway/primary/central)
 "yN" = (
 /obj/structure/window/reinforced/spawner{
@@ -717,16 +673,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/engine)
-"Ay" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/spline/fancy/purple{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/dark,
-/area/station/hallway/primary/central)
 "AP" = (
 /obj/effect/turf_decal/bot_white,
 /obj/structure/closet/crate/internals,
@@ -953,17 +899,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/station/engineering/engine)
-"FF" = (
-/obj/machinery/door/firedoor,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/airlock/command{
-	name = "Bridge"
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/dark,
-/area/station/command/bridge)
 "Gg" = (
 /obj/machinery/mineral/ore_redemption{
 	dir = 1;
@@ -1044,33 +979,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/neon/simple/red/purple,
 /area/station/command/bridge)
-"Iw" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/trimline/bar/warning{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/noslip,
-/area/station/hallway/primary/central)
-"IH" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/dark,
-/area/station/cargo)
-"IO" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/spline/fancy/purple{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/dark,
-/area/station/hallway/primary/central)
 "IT" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/spline/fancy/beige,
@@ -1323,14 +1231,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/engineering/engine)
-"Qa" = (
-/obj/effect/turf_decal/spline/fancy/purple{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/dark,
-/area/station/hallway/primary/central)
 "Ql" = (
 /obj/effect/turf_decal/bot_white,
 /obj/structure/closet/crate,
@@ -1781,10 +1681,10 @@ HR
 HR
 Pc
 sy
-tD
+bi
 bi
 lp
-oJ
+fJ
 nR
 pZ
 pZ
@@ -1864,7 +1764,7 @@ pK
 iM
 PK
 pR
-yE
+vq
 EI
 Vc
 bz
@@ -1876,7 +1776,7 @@ bz
 (14,1,1) = {"
 uX
 Wf
-IH
+pK
 Gg
 PK
 IX
@@ -1892,11 +1792,11 @@ bz
 (15,1,1) = {"
 uX
 AY
-rZ
+pK
 Bt
 Xa
 ZW
-Iw
+iB
 yP
 ZW
 La
@@ -1912,7 +1812,7 @@ lK
 Md
 PK
 pN
-Iw
+iB
 yP
 BK
 bz
@@ -1924,11 +1824,11 @@ ZK
 (17,1,1) = {"
 uX
 wJ
-rZ
+pK
 Qs
 PK
 NL
-Iw
+iB
 Vz
 pe
 bz
@@ -1960,9 +1860,9 @@ ak
 xZ
 oW
 oW
-xr
+ip
 sl
-Qa
+sl
 oW
 oW
 Ro
@@ -1973,14 +1873,14 @@ HR
 HR
 Pc
 KD
-IO
-Ay
+fJ
+fJ
 ns
 bE
 VM
 Dy
 fJ
-IO
+fJ
 Zm
 Pc
 HR
@@ -1990,7 +1890,7 @@ HR
 CV
 CV
 wX
-FF
+iV
 wX
 CV
 CV

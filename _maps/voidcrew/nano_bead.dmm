@@ -537,12 +537,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering)
-"II" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
 "IL" = (
 /obj/effect/turf_decal/stripes{
 	dir = 1
@@ -689,12 +683,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/security/prison)
-"PM" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
 "QH" = (
 /obj/structure/sign/poster/official/nanotrasen_logo{
 	pixel_x = 32
@@ -706,12 +694,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/closed/wall/mineral/titanium,
 /area/station/engineering)
-"Rz" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
-/area/station/security)
 "RO" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -942,12 +924,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"ZM" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
-/area/station/security/prison)
 "ZQ" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating,
@@ -982,12 +958,6 @@
 /obj/item/clothing/shoes/sneakers/orange,
 /turf/open/floor/iron,
 /area/station/security/prison)
-"ZZ" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
 
 (1,1,1) = {"
 VB
@@ -1127,15 +1097,15 @@ VB
 VQ
 VQ
 XD
-Rz
+vI
 vI
 os
-PM
-II
+HS
+HS
 fQ
 Pa
 Cc
-ZM
+Cc
 WB
 nH
 nH
@@ -1150,7 +1120,7 @@ LK
 VO
 VQ
 Tr
-ZZ
+HS
 Yx
 nH
 ZR
@@ -1169,7 +1139,7 @@ VQ
 VQ
 VQ
 ZD
-ZZ
+HS
 ST
 nH
 ny
@@ -1188,7 +1158,7 @@ Jt
 VI
 MY
 ju
-ZZ
+HS
 RV
 MJ
 vz
@@ -1207,7 +1177,7 @@ nS
 Dj
 mV
 DU
-ZZ
+HS
 jl
 Ve
 TP

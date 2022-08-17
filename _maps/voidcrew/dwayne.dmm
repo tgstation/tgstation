@@ -477,12 +477,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/open/floor/iron/dark/grid,
 /area/station/engineering)
-"lv" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor,
-/area/station/commons)
 "ms" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "mining_ship_blast"
@@ -519,8 +513,8 @@
 "nJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/turf/open/floor/catwalk_floor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor,
 /area/station/commons)
 "nL" = (
 /obj/effect/spawner/random/maintenance,
@@ -550,8 +544,8 @@
 /area/station/engineering)
 "om" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/catwalk_floor,
 /obj/effect/landmark/start/station_engineer,
+/turf/open/floor/catwalk_floor,
 /area/station/engineering)
 "or" = (
 /obj/effect/turf_decal/stripes{
@@ -569,8 +563,8 @@
 "oR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/turf/open/floor/catwalk_floor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/catwalk_floor,
 /area/station/commons)
 "pq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -794,14 +788,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/commons)
-"vn" = (
-/obj/structure/cable,
-/obj/machinery/power/terminal{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
-/turf/open/floor/iron/dark/grid,
-/area/station/engineering)
 "vs" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -854,8 +840,8 @@
 /obj/effect/landmark/start/assistant,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/turf/open/floor/catwalk_floor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/catwalk_floor,
 /area/station/commons)
 "xx" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1510,12 +1496,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/open/floor/iron/dark/techmaint,
 /area/station/engineering)
-"TP" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor,
-/area/station/commons)
 "TX" = (
 /obj/structure/table,
 /obj/item/storage/medkit/o2{
@@ -1766,7 +1746,7 @@ OJ
 OJ
 Ij
 CD
-vn
+ls
 hO
 Mk
 IF
@@ -1885,7 +1865,7 @@ oB
 Aj
 eM
 aI
-TP
+bv
 yH
 bj
 Rr
@@ -1904,7 +1884,7 @@ pq
 nf
 uc
 or
-lv
+bv
 sD
 Mb
 Rr
@@ -1942,7 +1922,7 @@ Pd
 gr
 uc
 or
-lv
+bv
 sD
 Mb
 Rr
@@ -1961,7 +1941,7 @@ jh
 YJ
 tG
 IZ
-lv
+bv
 xz
 bj
 Rr
@@ -1980,7 +1960,7 @@ qW
 YJ
 LJ
 Sg
-lv
+bv
 eu
 bj
 Rr
@@ -1999,7 +1979,7 @@ RU
 YJ
 GU
 Zo
-lv
+bv
 Yf
 bj
 Rr
@@ -2018,7 +1998,7 @@ ei
 ei
 zn
 my
-lv
+bv
 Gx
 bj
 LZ
@@ -2037,7 +2017,7 @@ zW
 jP
 oC
 my
-lv
+bv
 Gx
 bj
 Mz
