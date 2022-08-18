@@ -19,6 +19,8 @@
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	ai_controller = /datum/ai_controller/basic_controller/cow/moonicorn
 	food_types = list(/obj/item/food/grown/galaxythistle)
+	tame_message = "nods with respect"
+	self_tame_message = "nod with respect"
 
 /mob/living/basic/cow/moonicorn/Initialize(mapload)
 	. = ..()
@@ -37,7 +39,6 @@
 
 /mob/living/basic/cow/moonicorn/tamed(mob/living/tamer)
 	. = ..()
-	visible_message(span_notice("[src] nods with respect."))
 	///stop killing my FRIENDS
 	faction |= tamer.faction
 

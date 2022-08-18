@@ -30,6 +30,10 @@
 	ai_controller = /datum/ai_controller/basic_controller/cow
 	/// what this cow munches on, and what can be used to tame it.
 	var/list/food_types = list(/obj/item/food/grown/wheat)
+	/// message sent when tamed
+	var/tame_message = "lets out a happy moo"
+	/// singular version for player cows
+	var/self_tame_message = "let out a happy moo"
 
 /mob/living/basic/cow/Initialize(mapload)
 	AddComponent(/datum/component/tippable, \
@@ -58,6 +62,7 @@
 
 /mob/living/basic/cow/proc/tamed(mob/living/tamer)
 	buckle_lying = 0
+	visible_message("[src] [tame_message] as it seems to bond with [tamer].", "You [self_tame_message], recognizing [tamer] as your new pal.")
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/cow)
 
 /*
