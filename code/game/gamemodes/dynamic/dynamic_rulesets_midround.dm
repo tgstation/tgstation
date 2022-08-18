@@ -578,11 +578,6 @@
 	var/list/spawn_locs = list()
 
 /datum/dynamic_ruleset/midround/from_ghosts/nightmare/acceptable(population=0, threat=0)
-	if (!SSmapping.empty_space)
-		return FALSE
-	return ..()
-
-/datum/dynamic_ruleset/midround/from_ghosts/nightmare/execute()
 	for(var/X in GLOB.xeno_spawn)
 		var/turf/T = X
 		var/light_amount = T.get_lumcount()
