@@ -394,11 +394,11 @@
 
 /obj/item/showpiece_dummy/Initialize(mapload, path)
 	. = ..()
-	var/obj/item/I = path
-	name = initial(I.name)
-	desc = initial(I.desc)
-	icon = initial(I.icon)
-	icon_state = initial(I.icon_state)
+	var/obj/item/item_path = path
+	name = initial(item_path.name)
+	desc = initial(item_path.desc)
+	icon = initial(item_path.icon)
+	icon_state = initial(item_path.icon_state)
 
 /obj/structure/displaycase/forsale
 	name = "vend-a-tray"

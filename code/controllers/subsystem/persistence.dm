@@ -242,9 +242,8 @@ SUBSYSTEM_DEF(persistence)
 
 /// Puts trophies into trophy cases.
 /datum/controller/subsystem/persistence/proc/set_up_trophies(list/trophy_items)
-	for(var/A in GLOB.trophy_cases)
-		var/obj/structure/displaycase/trophy/T = A
-		if (T.showpiece)
+	for(var/obj/structure/displaycase/trophy/trophy_case in GLOB.trophy_cases)
+		if (trophy_case.showpiece)
 			continue
 
 		var/trophy_data = pick_n_take(trophy_items)
@@ -261,13 +260,13 @@ SUBSYSTEM_DEF(persistence)
 		if(!path)
 			continue
 
-		T.showpiece = new /obj/item/showpiece_dummy(T, path)
-		T.trophy_message = trim(html_encode(chosen_trophy["message"]), MAX_BROADCAST_LEN)
-		if(T.trophy_message == "")
-			T.trophy_message = T.showpiece.desc
-		T.placer_key = trim(html_encode(chosen_trophy["placer_key"]))
-		T.holographic_showpiece = TRUE
-		T.update_appearance()
+		trophy_case.showpiece = new /obj/item/showpiece_dummy(trophy_case, path)
+		trophy_case.trophy_message = trim(html_encode(chosen_trophy["message"]), MAX_BROADCAST_LEN)
+		if(trophy_case.trophy_message == "")
+			trophy_case.trophy_message = trophy_case.showpiece.desc
+		trophy_case.placer_key = trim(html_encode(chosen_trophy["placer_key"]))
+		trophy_case.holographic_showpiece = TRUE
+		trophy_case.update_appearance()
 
 ///Loads up the photo album source file.
 /datum/controller/subsystem/persistence/proc/get_photo_albums()
@@ -379,12 +378,12 @@ SUBSYSTEM_DEF(persistence)
 			ukeys[tkey] = TRUE
 
 ///Save the trophy, if the trophy was not a roundstart item, it exists, and has a message attached.
-/datum/controller/subsystem/persistence/proc/save_trophy(obj/structure/displaycase/trophy/T)
-	if(!T.holographic_showpiece && T.showpiece && T.trophy_message)
+/datum/controller/subsystem/persistence/proc/save_trophy(obj/structure/displaycase/trophy/trophy_case)
+	if(!trophy_case.holographic_showpiece && trophy_case.showpiece && trophy_case.trophy_message)
 		var/list/data = list()
-		data["path"] = T.showpiece.type
-		data["message"] = T.trophy_message
-		data["placer_key"] = T.placer_key
+		data["path"] = trophy_case.showpiece.type
+		data["message"] = trophy_case.trophy_message
+		data["placer_key"] = trophy_case.placer_key
 		saved_trophies += list(data)
 
 ///Updates the list of the most recent maps.
