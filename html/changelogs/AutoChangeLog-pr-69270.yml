@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes: 
+  - bugfix: "The Tiziran Canned Goods Pack on the chef's console now gives you the proper supply box."
