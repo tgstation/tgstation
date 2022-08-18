@@ -25,7 +25,6 @@
 	var/minimum_round_time = 0
 	/// Abstract root value
 	var/abstract_type = /datum/dynamic_ruleset/midround
-	//if (initial(thing.abstract_type) != thing.abstract_type)
 
 /datum/dynamic_ruleset/midround/from_ghosts
 	weight = 0
