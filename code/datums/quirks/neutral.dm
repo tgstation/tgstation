@@ -369,16 +369,6 @@
 	lose_text = "<span class='danger'>You forget how photo cameras work.</span>"
 	medical_record_text = "Patient mentions photography as a stress-relieving hobby."
 
-/datum/quirk/item_quirk/journalist
-	name = "Journalist"
-	desc = "Herkesin tanıdığı ünlü bir gazetecisin, iş arkadaşlarının arasında yaptıkların hayranlıkla konuşuluyor. Dürüstlüğüne herkes güveniyor, senin sözün nanotrasen için altın değerinde, nasıl kullanacağın sana kalmış."
-	icon = "camera"
-	value = 300
-	mob_trait = TRAIT_JOURNALIST
-	gain_text = "<span class='notice'>Habercilik ve insanları manipüle etmek hakkında her şeyi biliyorsun."
-	lose_text = "<span class='notice'>Bunu okuyorsan discorddan vicirdek'e yaz."
-	medical_record_text = "Patient mentions journalism is a lifestyle. They would not be here without it."
-
 /datum/quirk/item_quirk/photographer/add_unique()
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/obj/item/storage/photo_album/personal/photo_album = new(get_turf(human_holder))

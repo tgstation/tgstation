@@ -48,7 +48,7 @@
 		/obj/item/stack/sheet/plasteel/fifty = 1,
 		/obj/item/stack/sheet/mineral/wood/fifty = 1,
 		/obj/item/stack/sheet/glass/fifty = 1,
-		/obj/item/reagent_containers/food/drinks/soda_cans/cola = 1,
+		/obj/item/reagent_containers/cup/soda_cans/cola = 1,
 		)
 	belt = /obj/item/storage/belt/utility/full/engi
 	ears = /obj/item/radio/headset/headset_eng
