@@ -187,7 +187,7 @@
 
 	for(var/knowledge_index in researched_knowledge)
 		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
-		knowledge.on_lose(owner.current)
+		knowledge.on_lose(owner.current, src)
 
 	GLOB.reality_smash_track.remove_tracked_mind(owner)
 	QDEL_LIST_ASSOC_VAL(researched_knowledge)
@@ -211,8 +211,8 @@
 	. = ..()
 	for(var/knowledge_index in researched_knowledge)
 		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
-		knowledge.on_lose(old_body)
-		knowledge.on_gain(new_body)
+		knowledge.on_lose(old_body, src)
+		knowledge.on_gain(new_body, src)
 
 /*
  * Signal proc for [COMSIG_MOB_BEFORE_SPELL_CAST] and [COMSIG_MOB_SPELL_ACTIVATED].
@@ -462,7 +462,7 @@
 		to_chat(admin, span_warning("The heretic doesn't have a living heart knowledge for some reason. What?"))
 		return
 
-	heart_knowledge.on_research(owner.current)
+	heart_knowledge.on_research(owner.current, src)
 
 /**
  * Admin proc for adding a marked mob to a heretic's sac list.
@@ -562,7 +562,7 @@
 		return FALSE
 	var/datum/heretic_knowledge/initialized_knowledge = new knowledge_type()
 	researched_knowledge[knowledge_type] = initialized_knowledge
-	initialized_knowledge.on_research(owner.current)
+	initialized_knowledge.on_research(owner.current, src)
 	update_static_data(owner.current)
 	return TRUE
 

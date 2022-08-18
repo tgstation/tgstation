@@ -30,10 +30,10 @@
 	LAZYCLEARLIST(target_blacklist)
 	return ..()
 
-/datum/heretic_knowledge/hunt_and_sacrifice/on_research(mob/user, regained = FALSE)
+/datum/heretic_knowledge/hunt_and_sacrifice/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
 	obtain_targets(user, silent = TRUE)
-	heretic_mind = user.mind
+	heretic_mind = our_heretic.owner
 	if(!heretic_level_generated)
 		heretic_level_generated = TRUE
 		log_game("Generating z-level for heretic sacrifices...")

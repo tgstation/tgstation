@@ -45,9 +45,8 @@
 	limit = 3 // Bumped up so they can arm up their ghouls too.
 	route = PATH_FLESH
 
-/datum/heretic_knowledge/limited_amount/starting/base_flesh/on_research(mob/user)
+/datum/heretic_knowledge/limited_amount/starting/base_flesh/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
-	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
 	var/datum/objective/heretic_summon/summon_objective = new()
 	summon_objective.owner = our_heretic.owner
 	our_heretic.objectives += summon_objective
@@ -66,10 +65,10 @@
 	cost = 1
 	route = PATH_FLESH
 
-/datum/heretic_knowledge/limited_amount/flesh_grasp/on_gain(mob/user)
+/datum/heretic_knowledge/limited_amount/flesh_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
 
-/datum/heretic_knowledge/limited_amount/flesh_grasp/on_lose(mob/user)
+/datum/heretic_knowledge/limited_amount/flesh_grasp/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
 
 /datum/heretic_knowledge/limited_amount/flesh_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)

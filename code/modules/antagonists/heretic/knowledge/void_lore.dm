@@ -58,10 +58,10 @@
 	cost = 1
 	route = PATH_VOID
 
-/datum/heretic_knowledge/void_grasp/on_gain(mob/user)
+/datum/heretic_knowledge/void_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
 
-/datum/heretic_knowledge/void_grasp/on_lose(mob/user)
+/datum/heretic_knowledge/void_grasp/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
 
 /datum/heretic_knowledge/void_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
@@ -89,11 +89,11 @@
 	cost = 1
 	route = PATH_VOID
 
-/datum/heretic_knowledge/cold_snap/on_gain(mob/user)
+/datum/heretic_knowledge/cold_snap/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	ADD_TRAIT(user, TRAIT_RESISTCOLD, type)
 	ADD_TRAIT(user, TRAIT_NOBREATH, type)
 
-/datum/heretic_knowledge/cold_snap/on_lose(mob/user)
+/datum/heretic_knowledge/cold_snap/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	REMOVE_TRAIT(user, TRAIT_RESISTCOLD, type)
 	REMOVE_TRAIT(user, TRAIT_NOBREATH, type)
 
@@ -199,7 +199,7 @@
 	RegisterSignal(user, COMSIG_LIVING_LIFE, .proc/on_life)
 	RegisterSignal(user, COMSIG_LIVING_DEATH, .proc/on_death)
 
-/datum/heretic_knowledge/final/void_final/on_lose(mob/user)
+/datum/heretic_knowledge/final/void_final/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	on_death() // Losing is pretty much dying. I think
 	RegisterSignal(user, list(COMSIG_LIVING_LIFE, COMSIG_LIVING_DEATH))
 
@@ -238,7 +238,7 @@
  *
  * Stop the storm when the heretic passes away.
  */
-/datum/heretic_knowledge/final/void_final/proc/on_death()
+/datum/heretic_knowledge/final/void_final/proc/on_death(datum/source)
 	SIGNAL_HANDLER
 
 	if(sound_loop)

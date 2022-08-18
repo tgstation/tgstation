@@ -51,10 +51,9 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	/// The typepath of the organ type required for our heart.
 	var/required_organ_type = /obj/item/organ/internal/heart
 
-/datum/heretic_knowledge/living_heart/on_research(mob/user)
+/datum/heretic_knowledge/living_heart/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
 
-	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
 	var/obj/item/organ/where_to_put_our_heart = user.getorganslot(our_heretic.living_heart_organ_slot)
 
 	// If a heretic is made from a species without a heart, we need to find a backup.
@@ -86,8 +85,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	else
 		to_chat(user, span_boldnotice("You don't have a heart, or any chest organs for that matter. You didn't get a Living Heart because of it."))
 
-/datum/heretic_knowledge/living_heart/on_lose(mob/user)
-	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+/datum/heretic_knowledge/living_heart/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	var/obj/item/organ/our_living_heart = user.getorganslot(our_heretic.living_heart_organ_slot)
 	if(our_living_heart)
 		qdel(our_living_heart.GetComponent(/datum/component/living_heart))

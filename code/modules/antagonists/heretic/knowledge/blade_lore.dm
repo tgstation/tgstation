@@ -49,10 +49,10 @@
 	cost = 1
 	route = PATH_BLADE
 
-/datum/heretic_knowledge/blade_grasp/on_gain(mob/user)
+/datum/heretic_knowledge/blade_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
 
-/datum/heretic_knowledge/blade_grasp/on_lose(mob/user)
+/datum/heretic_knowledge/blade_grasp/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
 
 /datum/heretic_knowledge/blade_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
@@ -111,10 +111,10 @@
 	/// Used instead of cooldowns, so we can give feedback when it's ready again
 	var/riposte_ready = TRUE
 
-/datum/heretic_knowledge/blade_dance/on_gain(mob/user)
+/datum/heretic_knowledge/blade_dance/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HUMAN_CHECK_SHIELDS, .proc/on_shield_reaction)
 
-/datum/heretic_knowledge/blade_dance/on_lose(mob/user)
+/datum/heretic_knowledge/blade_dance/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	UnregisterSignal(user, COMSIG_HUMAN_CHECK_SHIELDS)
 
 /datum/heretic_knowledge/blade_dance/proc/on_shield_reaction(
@@ -237,7 +237,7 @@
 	/// Whether we're currently in duelist stance, gaining certain buffs (low health)
 	var/in_duelist_stance = FALSE
 
-/datum/heretic_knowledge/duel_stance/on_gain(mob/user)
+/datum/heretic_knowledge/duel_stance/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	ADD_TRAIT(user, TRAIT_NODISMEMBER, type)
 	RegisterSignal(user, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	RegisterSignal(user, COMSIG_CARBON_GAIN_WOUND, .proc/on_wound_gain)
@@ -245,7 +245,7 @@
 
 	on_health_update(user) // Run this once, so if the knowledge is learned while hurt it activates properly
 
-/datum/heretic_knowledge/duel_stance/on_lose(mob/user)
+/datum/heretic_knowledge/duel_stance/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	REMOVE_TRAIT(user, TRAIT_NODISMEMBER, type)
 	if(in_duelist_stance)
 		REMOVE_TRAIT(user, TRAIT_HARDLY_WOUNDED, type)
