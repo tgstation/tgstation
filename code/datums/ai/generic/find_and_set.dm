@@ -4,7 +4,7 @@
  * cool tip: search_tactic() can set lists
  */
 /datum/ai_behavior/find_and_set
-	action_cooldown = 5 SECONDS
+	action_cooldown = 2 SECONDS
 
 /datum/ai_behavior/find_and_set/perform(delta_time, datum/ai_controller/controller, set_key, locate_path, search_range)
 	. = ..()

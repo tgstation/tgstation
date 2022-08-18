@@ -3,7 +3,8 @@
 
 /datum/ai_planning_subtree/basic_melee_attack_subtree/SelectBehaviors(datum/ai_controller/controller, delta_time)
 	. = ..()
-	var/atom/target = resolve_if_weakref(controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET])
+	var/datum/weakref/weak_target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	var/atom/target = weak_target?.resolve()
 
 	if(!target || QDELETED(target))
 		return
@@ -16,7 +17,8 @@
 
 /datum/ai_planning_subtree/basic_ranged_attack_subtree/SelectBehaviors(datum/ai_controller/controller, delta_time)
 	. = ..()
-	var/atom/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	var/datum/weakref/weak_target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	var/atom/target = weak_target?.resolve()
 	if(!target || QDELETED(target))
 		return
 	controller.queue_behavior(ranged_attack_behavior, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETTING_DATUM, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)

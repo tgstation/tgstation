@@ -20,15 +20,24 @@
 	src.heal_amt = heal_amt
 	src.food_types = food_types
 
-	RegisterSignal(target, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, .proc/pre_attackingtarget)
+	//this lets players eat
+	RegisterSignal(target, COMSIG_LIVING_UNARMED_ATTACK, .proc/on_unarm_attack)
+	//this lets ai eat. yes, i'm serious
+	RegisterSignal(target, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, .proc/on_pre_attackingtarget)
 
 /datum/element/basic_eating/Detach(datum/target)
-	UnregisterSignal(target, COMSIG_HOSTILE_PRE_ATTACKINGTARGET)
+	UnregisterSignal(target, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HOSTILE_PRE_ATTACKINGTARGET))
 	return ..()
 
-/datum/element/basic_eating/proc/pre_attackingtarget(mob/living/eater, atom/target)
+/datum/element/basic_eating/proc/on_unarm_attack(mob/living/eater, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
+	try_eating(eater, target)
 
+/datum/element/basic_eating/proc/on_pre_attackingtarget(mob/living/eater, atom/target)
+	SIGNAL_HANDLER
+	try_eating(eater, target)
+
+/datum/element/basic_eating/proc/try_eating(mob/living/eater, atom/target)
 	if(eater.combat_mode)
 		return
 	if(!is_type_in_list(target, food_types))
