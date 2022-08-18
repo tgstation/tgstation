@@ -3,7 +3,7 @@
 /obj/item/slime_extract
 	name = "slime extract"
 	desc = "Goo extracted from a slime. Legends claim these to have \"magical powers\"."
-	icon = 'icons/mob/slimes.dmi'
+	icon = 'icons/mob/simplemob/slimes.dmi'
 	icon_state = "grey slime extract"
 	force = 0
 	w_class = WEIGHT_CLASS_TINY

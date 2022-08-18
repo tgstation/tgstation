@@ -19,7 +19,7 @@
 ///dead slimes, with a var for whatever color you want.
 /obj/effect/mob_spawn/corpse/slime
 	mob_type = /mob/living/simple_animal/slime
-	icon = 'icons/mob/slimes.dmi'
+	icon = 'icons/mob/simplemob/slimes.dmi'
 	icon_state = "grey baby slime" //sets the icon in the map editor
 	///the color of the slime you're spawning.
 	var/slime_species = "grey"

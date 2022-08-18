@@ -1,7 +1,7 @@
 /obj/item/clothing/head/wig
 	name = "wig"
 	desc = "A bunch of hair without a head attached."
-	icon = 'icons/mob/human_face.dmi'   // default icon for all hairs
+	icon = 'icons/mob/humanoid/human_face.dmi'   // default icon for all hairs
 	icon_state = "hair_vlong"
 	inhand_icon_state = "pwig"
 	worn_icon_state = "wig"

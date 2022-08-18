@@ -1,7 +1,7 @@
 /mob/living/basic/bileworm
 	name = "bileworm"
 	desc = "Bileworms are dangerous detritivores that attack with the highly acidic bile they produce from consuming detritus."
-	icon = 'icons/mob/lavaland/bileworm.dmi'
+	icon = 'icons/mob/simplemob/lavaland/bileworm.dmi'
 	icon_state = "bileworm"
 	icon_living = "bileworm"
 	icon_dead = "bileworm_dead"

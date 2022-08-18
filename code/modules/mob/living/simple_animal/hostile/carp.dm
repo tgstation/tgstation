@@ -3,7 +3,7 @@
 /mob/living/simple_animal/hostile/carp
 	name = "space carp"
 	desc = "A ferocious, fang-bearing creature that resembles a fish."
-	icon = 'icons/mob/carp.dmi'
+	icon = 'icons/mob/simplemob/carp.dmi'
 	icon_state = "base"
 	icon_living = "base"
 	icon_dead = "base_dead"
@@ -164,7 +164,7 @@
 	return
 
 /mob/living/simple_animal/hostile/carp/megacarp
-	icon = 'icons/mob/broadMobs.dmi'
+	icon = 'icons/mob/simplemob/broadMobs.dmi'
 	name = "Mega Space Carp"
 	desc = "A ferocious, fang bearing creature that resembles a shark. This one seems especially ticked off."
 	icon_state = "megacarp"
@@ -252,7 +252,7 @@
 	/// Keeping track of the nuke disk for the functionality of storing it.
 	var/obj/item/disk/nuclear/disky
 	/// Location of the file storing disk overlays
-	var/icon/disk_overlay_file = 'icons/mob/carp.dmi'
+	var/icon/disk_overlay_file = 'icons/mob/simplemob/carp.dmi'
 	/// Colored disk mouth appearance for adding it as a mouth overlay
 	var/mutable_appearance/colored_disk_mouth
 

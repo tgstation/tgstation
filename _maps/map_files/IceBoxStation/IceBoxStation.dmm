@@ -75536,7 +75536,7 @@
 /obj/structure/statue{
 	desc = "A lifelike statue of a horrifying monster.";
 	dir = 8;
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi';
+	icon = 'icons/mob/simplemob/lavaland/lavaland_monsters.dmi';
 	icon_state = "goliath";
 	name = "goliath"
 	},

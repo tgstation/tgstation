@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/smspider
 	name = "supermatter spider"
 	desc= "A sliver of supermatter placed upon a robotically enhanced pedestal."
-	icon = 'icons/mob/smspider.dmi'
+	icon = 'icons/mob/simplemob/smspider.dmi'
 	icon_state = "smspider"
 	icon_living = "smspider"
 	icon_dead = "smspider_dead"

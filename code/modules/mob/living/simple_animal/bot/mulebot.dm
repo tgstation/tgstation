@@ -846,7 +846,7 @@
 	. = ..()
 	if(!isobserver(load))
 		return
-	var/mutable_appearance/ghost_overlay = mutable_appearance('icons/mob/mob.dmi', "ghost", layer + 0.01) //use a generic ghost icon, otherwise you can metagame who's dead if they have a custom ghost set
+	var/mutable_appearance/ghost_overlay = mutable_appearance('icons/mob/simplemob/mob.dmi', "ghost", layer + 0.01) //use a generic ghost icon, otherwise you can metagame who's dead if they have a custom ghost set
 	ghost_overlay.pixel_y = 12
 	. += ghost_overlay
 

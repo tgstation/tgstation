@@ -4,14 +4,14 @@
 	force = 3
 	throwforce = 3
 	w_class = WEIGHT_CLASS_SMALL
-	icon = 'icons/mob/human_parts.dmi'
+	icon = 'icons/mob/humanoid/human_parts.dmi'
 	icon_state = "" //Leave this blank! Bodyparts are built using overlays
 	/// The icon for Organic limbs using greyscale
 	VAR_PROTECTED/icon_greyscale = DEFAULT_BODYPART_ICON_ORGANIC
 	///The icon for non-greyscale limbs
-	VAR_PROTECTED/icon_static = 'icons/mob/human_parts.dmi'
+	VAR_PROTECTED/icon_static = 'icons/mob/humanoid/human_parts.dmi'
 	///The icon for husked limbs
-	VAR_PROTECTED/icon_husk = 'icons/mob/human_parts.dmi'
+	VAR_PROTECTED/icon_husk = 'icons/mob/humanoid/human_parts.dmi'
 	///The type of husk for building an iconstate
 	var/husk_type = "humanoid"
 	layer = BELOW_MOB_LAYER //so it isn't hidden behind objects when on the floor
@@ -709,18 +709,30 @@
 		image_dir = SOUTH
 		if(dmg_overlay_type)
 			if(brutestate)
-				. += image('icons/mob/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0", -DAMAGE_LAYER, image_dir)
+				. += image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0", -DAMAGE_LAYER, image_dir)
 			if(burnstate)
-				. += image('icons/mob/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]", -DAMAGE_LAYER, image_dir)
+				. += image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]", -DAMAGE_LAYER, image_dir)
 
 	var/image/limb = image(layer = -BODYPARTS_LAYER, dir = image_dir)
 	var/image/aux
 
 	if(animal_origin)
 		if(IS_ORGANIC_LIMB(src))
-			limb.icon = 'icons/mob/animal_parts.dmi'
+
+			// it used to be that all animal parts were in the same file, and selection between them was done entirely dynamically via iconstates
+			// however:
+			// 1. this forced all animal parts into the same folder, which is ugly and annoying
+			// 2. it was only ever implemented for monkeys and xenos, so there wasnt much point in not just doing a check
+			// 3. if you want to do a fancy dynamic system, it's probably better anyway to keep a ref to the relevant file and/or state in
+			//    the mob datum in question anyway (ie, /simplemob/yourmobhere/var/limb_icons), rather than semi-hardcoding the file and icon name like this.
+
+			if (animal_origin == MONKEY_BODYPART)						// <- this is what currently selects between xenos and monkeys
+				limb.icon = 'icons/mob/humanoid/monkey/monkey_parts.dmi'
+			else
+				limb.icon = 'icons/mob/nonhuman-player/alien_parts.dmi'
+			
 			if(limb_id == "husk")
-				limb.icon_state = "[animal_origin]_husk_[body_zone]"
+				limb.icon_state = "[animal_origin]_husk_[body_zone]"	// <- this used to be entirely what selected between xenos and monkeys
 			else
 				limb.icon_state = "[animal_origin]_[body_zone]"
 		else

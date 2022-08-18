@@ -17,7 +17,7 @@
 	desc = "Buzzy buzzy bee, stingy sti- Ouch!"
 	icon_state = ""
 	icon_living = ""
-	icon = 'icons/mob/bees.dmi'
+	icon = 'icons/mob/simplemob/bees.dmi'
 	gender = FEMALE
 	speak_emote = list("buzzes")
 	emote_hear = list("buzzes")
@@ -135,7 +135,7 @@
 	add_overlay("[icon_base]_base")
 
 	var/static/mutable_appearance/greyscale_overlay
-	greyscale_overlay = greyscale_overlay || mutable_appearance('icons/mob/bees.dmi')
+	greyscale_overlay = greyscale_overlay || mutable_appearance('icons/mob/simplemob/bees.dmi')
 	greyscale_overlay.icon_state = "[icon_base]_grey"
 	greyscale_overlay.color = col
 	add_overlay(greyscale_overlay)
@@ -307,7 +307,7 @@
 	desc = "She's the queen of bees, BZZ BZZ!"
 	icon_state = "queen_item"
 	inhand_icon_state = ""
-	icon = 'icons/mob/bees.dmi'
+	icon = 'icons/mob/simplemob/bees.dmi'
 	/// The actual mob that our bee item corresponds to
 	var/mob/living/simple_animal/hostile/bee/queen/queen
 
@@ -374,7 +374,7 @@
 /obj/item/trash/bee
 	name = "bee"
 	desc = "No wonder the bees are dying out, you monster."
-	icon = 'icons/mob/bees.dmi'
+	icon = 'icons/mob/simplemob/bees.dmi'
 	icon_state = "bee_item"
 	var/datum/reagent/beegent
 

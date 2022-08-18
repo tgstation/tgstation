@@ -13,7 +13,7 @@ I'd rather there be something than the clockwork ruin be entirely empty though s
 	maxHealth = 300
 	icon_state = "clockwork_defender"
 	icon_living = "clockwork_defender"
-	icon = 'icons/mob/icemoon/icemoon_monsters.dmi'
+	icon = 'icons/mob/simplemob/icemoon/icemoon_monsters.dmi'
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/bladeslice.ogg'

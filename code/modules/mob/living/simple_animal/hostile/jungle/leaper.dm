@@ -6,7 +6,7 @@
 /mob/living/simple_animal/hostile/jungle/leaper
 	name = "leaper"
 	desc = "Commonly referred to as 'leapers', the Geron Toad is a massive beast that spits out highly pressurized bubbles containing a unique toxin, knocking down its prey and then crushing it with its girth."
-	icon = 'icons/mob/jungle/leaper.dmi'
+	icon = 'icons/mob/simplemob/jungle/leaper.dmi'
 	icon_state = "leaper"
 	icon_living = "leaper"
 	icon_dead = "leaper_dead"

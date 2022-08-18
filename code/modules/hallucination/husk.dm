@@ -11,15 +11,15 @@
 		var/turf/open/floor/husk_point = pick(possible_points)
 		switch(rand(1,4))
 			if(1)
-				var/image/body = image('icons/mob/human.dmi',husk_point,"husk",TURF_LAYER)
+				var/image/body = image('icons/mob/humanoid/human.dmi',husk_point,"husk",TURF_LAYER)
 				var/matrix/M = matrix()
 				M.Turn(90)
 				body.transform = M
 				halbody = body
 			if(2,3)
-				halbody = image('icons/mob/human.dmi',husk_point,"husk",TURF_LAYER)
+				halbody = image('icons/mob/humanoid/human.dmi',husk_point,"husk",TURF_LAYER)
 			if(4)
-				halbody = image('icons/mob/alien.dmi',husk_point,"alienother",TURF_LAYER)
+				halbody = image('icons/mob/nonhuman-player/alien.dmi',husk_point,"alienother",TURF_LAYER)
 
 		if(target.client)
 			target.client.images += halbody

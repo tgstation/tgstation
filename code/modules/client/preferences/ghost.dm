@@ -74,7 +74,7 @@
 	var/list/values = list()
 
 	for (var/ghost_form in ghost_forms)
-		values[ghost_form] = icon('icons/mob/mob.dmi', ghost_form)
+		values[ghost_form] = icon('icons/mob/simplemob/mob.dmi', ghost_form)
 
 	return values
 

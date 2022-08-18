@@ -3,7 +3,7 @@
 	name = "necropolis tendril"
 	desc = "A vile tendril of corruption, originating deep underground. Terrible monsters are pouring out of it."
 
-	icon = 'icons/mob/nest.dmi'
+	icon = 'icons/mob/simplemob/lavaland/nest.dmi'
 	icon_state = "tendril"
 
 	faction = list("mining")
@@ -71,7 +71,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 	name = "collapsing necropolis tendril"
 	desc = "Get clear!"
 	layer = TABLE_LAYER
-	icon = 'icons/mob/nest.dmi'
+	icon = 'icons/mob/simplemob/lavaland/nest.dmi'
 	icon_state = "tendril"
 	anchored = TRUE
 	density = TRUE

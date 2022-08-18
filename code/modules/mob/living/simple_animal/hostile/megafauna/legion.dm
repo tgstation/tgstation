@@ -29,7 +29,7 @@
 	icon_living = "mega_legion"
 	health_doll_icon = "mega_legion"
 	desc = "One of many."
-	icon = 'icons/mob/lavaland/96x96megafauna.dmi'
+	icon = 'icons/mob/simplemob/lavaland/96x96megafauna.dmi'
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
@@ -72,7 +72,7 @@
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/megafauna/legion/medium
-	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
+	icon = 'icons/mob/simplemob/lavaland/64x64megafauna.dmi'
 	pixel_x = -16
 	pixel_y = -8
 	maxHealth = 350
@@ -88,7 +88,7 @@
 	icon_state = "mega_legion_right"
 
 /mob/living/simple_animal/hostile/megafauna/legion/small
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon = 'icons/mob/simplemob/lavaland/lavaland_monsters.dmi'
 	icon_state = "mega_legion"
 	pixel_x = 0
 	pixel_y = 0
@@ -99,7 +99,7 @@
 
 /datum/action/innate/megafauna_attack/create_skull
 	name = "Create Legion Skull"
-	icon_icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon_icon = 'icons/mob/simplemob/lavaland/lavaland_monsters.dmi'
 	button_icon_state = "legion_head"
 	chosen_message = "<span class='colossus'>You are now creating legion skulls.</span>"
 	chosen_attack_num = 1
@@ -113,7 +113,7 @@
 
 /datum/action/innate/megafauna_attack/create_turrets
 	name = "Create Sentinels"
-	icon_icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon_icon = 'icons/mob/simplemob/lavaland/lavaland_monsters.dmi'
 	button_icon_state = "legion_turret"
 	chosen_message = "<span class='colossus'>You are now creating legion sentinels.</span>"
 	chosen_attack_num = 3
@@ -264,7 +264,7 @@
 /obj/structure/legionturret
 	name = "\improper Legion sentinel"
 	desc = "The eye pierces your soul."
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon = 'icons/mob/simplemob/lavaland/lavaland_monsters.dmi'
 	icon_state = "legion_turret"
 	light_power = 0.5
 	light_range = 2

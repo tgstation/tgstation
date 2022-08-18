@@ -21,4 +21,4 @@
 	. = ..()
 
 /datum/antagonist/revenant/get_preview_icon()
-	return finish_preview_icon(icon('icons/mob/mob.dmi', "revenant_idle"))
+	return finish_preview_icon(icon('icons/mob/simplemob/mob.dmi', "revenant_idle"))

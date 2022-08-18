@@ -2,7 +2,7 @@
 /mob/living/basic/cow
 	name = "cow"
 	desc = "Known for their milk, just don't tip them over."
-	icon = 'icons/mob/cows.dmi'
+	icon = 'icons/mob/simplemob/cows.dmi'
 	icon_state = "cow"
 	icon_living = "cow"
 	icon_dead = "cow_dead"

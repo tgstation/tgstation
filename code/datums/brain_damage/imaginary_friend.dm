@@ -141,11 +141,11 @@
 		appearance_job = SSjob.GetJob(JOB_ASSISTANT)
 
 	if(istype(appearance_job, /datum/job/ai))
-		human_image = icon('icons/mob/ai.dmi', icon_state = resolve_ai_icon(appearance_from_prefs.read_preference(/datum/preference/choiced/ai_core_display)), dir = SOUTH)
+		human_image = icon('icons/mob/silicon/ai.dmi', icon_state = resolve_ai_icon(appearance_from_prefs.read_preference(/datum/preference/choiced/ai_core_display)), dir = SOUTH)
 		return
 
 	if(istype(appearance_job, /datum/job/cyborg))
-		human_image = icon('icons/mob/robots.dmi', icon_state = "robot")
+		human_image = icon('icons/mob/silicon/robots.dmi', icon_state = "robot")
 		return
 
 	human_image = get_flat_human_icon(null, appearance_job, appearance_from_prefs)
@@ -214,7 +214,7 @@
 
 	//speech bubble
 	if(owner.client)
-		var/mutable_appearance/MA = mutable_appearance('icons/mob/talk.dmi', src, "default[say_test(message)]", FLY_LAYER)
+		var/mutable_appearance/MA = mutable_appearance('icons/mob/effects/talk.dmi', src, "default[say_test(message)]", FLY_LAYER)
 		MA.plane = ABOVE_GAME_PLANE
 		MA.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 		INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, MA, list(owner.client), 30)
@@ -319,4 +319,4 @@
 /mob/camera/imaginary_friend/trapped/setup_friend()
 	real_name = "[owner.real_name]?"
 	name = real_name
-	human_image = icon('icons/mob/lavaland/lavaland_monsters.dmi', icon_state = "curseblob")
+	human_image = icon('icons/mob/simplemob/lavaland/lavaland_monsters.dmi', icon_state = "curseblob")

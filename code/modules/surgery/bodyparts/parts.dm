@@ -35,8 +35,8 @@
 	..()
 
 /obj/item/bodypart/chest/monkey
-	icon = 'icons/mob/animal_parts.dmi'
-	icon_static = 'icons/mob/animal_parts.dmi'
+	icon = 'icons/mob/humanoid/monkey/monkey_parts.dmi'
+	icon_static = 'icons/mob/humanoid/monkey/monkey_parts.dmi'
 	icon_state = "default_monkey_chest"
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = FALSE
@@ -46,7 +46,7 @@
 	acceptable_bodytype = BODYTYPE_MONKEY
 
 /obj/item/bodypart/chest/alien
-	icon = 'icons/mob/animal_parts.dmi'
+	icon = 'icons/mob/nonhuman-player/alien_parts.dmi'
 	icon_state = "alien_chest"
 	limb_id = BODYPART_TYPE_ALIEN
 	dismemberable = 0
@@ -54,7 +54,7 @@
 	animal_origin = ALIEN_BODYPART
 
 /obj/item/bodypart/chest/larva
-	icon = 'icons/mob/animal_parts.dmi'
+	icon = 'icons/mob/nonhuman-player/alien_parts.dmi'
 	icon_state = "larva_chest"
 	dismemberable = 0
 	max_damage = 50
@@ -141,8 +141,8 @@
 
 
 /obj/item/bodypart/l_arm/monkey
-	icon = 'icons/mob/animal_parts.dmi'
-	icon_static = 'icons/mob/animal_parts.dmi'
+	icon = 'icons/mob/humanoid/monkey/monkey_parts.dmi'
+	icon_static = 'icons/mob/humanoid/monkey/monkey_parts.dmi'
 	icon_state = "default_monkey_l_arm"
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = FALSE
@@ -153,7 +153,7 @@
 	px_y = -3
 
 /obj/item/bodypart/l_arm/alien
-	icon = 'icons/mob/animal_parts.dmi'
+	icon = 'icons/mob/nonhuman-player/alien_parts.dmi'
 	icon_state = "alien_l_arm"
 	limb_id = BODYPART_TYPE_ALIEN
 	px_x = 0
@@ -242,8 +242,8 @@
 
 
 /obj/item/bodypart/r_arm/monkey
-	icon = 'icons/mob/animal_parts.dmi'
-	icon_static = 'icons/mob/animal_parts.dmi'
+	icon = 'icons/mob/humanoid/monkey/monkey_parts.dmi'
+	icon_static = 'icons/mob/humanoid/monkey/monkey_parts.dmi'
 	icon_state = "default_monkey_r_arm"
 	limb_id = SPECIES_MONKEY
 	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
@@ -253,7 +253,7 @@
 	px_y = -3
 
 /obj/item/bodypart/r_arm/alien
-	icon = 'icons/mob/animal_parts.dmi'
+	icon = 'icons/mob/nonhuman-player/alien_parts.dmi'
 	icon_state = "alien_r_arm"
 	limb_id = BODYPART_TYPE_ALIEN
 	px_x = 0
@@ -332,8 +332,8 @@
 		owner.set_usable_legs(owner.usable_legs + 1)
 
 /obj/item/bodypart/l_leg/monkey
-	icon = 'icons/mob/animal_parts.dmi'
-	icon_static = 'icons/mob/animal_parts.dmi'
+	icon = 'icons/mob/humanoid/monkey/monkey_parts.dmi'
+	icon_static = 'icons/mob/humanoid/monkey/monkey_parts.dmi'
 	icon_state = "default_monkey_l_leg"
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = FALSE
@@ -343,7 +343,7 @@
 	px_y = 4
 
 /obj/item/bodypart/l_leg/alien
-	icon = 'icons/mob/animal_parts.dmi'
+	icon = 'icons/mob/nonhuman-player/alien_parts.dmi'
 	icon_state = "alien_l_leg"
 	limb_id = BODYPART_TYPE_ALIEN
 	px_x = 0
@@ -431,7 +431,7 @@
 		owner.set_usable_legs(owner.usable_legs + 1)
 
 /obj/item/bodypart/r_leg/monkey
-	icon = 'icons/mob/animal_parts.dmi'
+	icon = 'icons/mob/humanoid/monkey/monkey_parts.dmi'
 	icon_state = "default_monkey_r_leg"
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = FALSE
@@ -441,7 +441,7 @@
 	px_y = 4
 
 /obj/item/bodypart/r_leg/alien
-	icon = 'icons/mob/animal_parts.dmi'
+	icon = 'icons/mob/nonhuman-player/alien_parts.dmi'
 	icon_state = "alien_r_leg"
 	limb_id = BODYPART_TYPE_ALIEN
 	px_x = 0

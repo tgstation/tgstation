@@ -41,7 +41,7 @@
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	death_sound = 'sound/creatures/space_dragon_roar.ogg'
-	icon = 'icons/mob/spacedragon.dmi'
+	icon = 'icons/mob/nonhuman-player/spacedragon.dmi'
 	icon_state = "spacedragon"
 	icon_living = "spacedragon"
 	icon_dead = "spacedragon_dead"

@@ -1,7 +1,7 @@
 /// Simple, mostly AI-controlled critters, such as pets, bots, and drones.
 /mob/living/simple_animal
 	name = "animal"
-	icon = 'icons/mob/animal.dmi'
+	icon = 'icons/mob/simplemob/animal.dmi'
 	health = 20
 	maxHealth = 20
 	gender = PLURAL //placeholder

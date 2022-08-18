@@ -145,7 +145,7 @@
 	max_integrity = 50
 	spawn_time = 600 //1 minute
 	max_mobs = 15
-	icon = 'icons/mob/nest.dmi'
+	icon = 'icons/mob/simplemob/lavaland/nest.dmi'
 	spawn_text = "crawls through"
 	mob_types = list(/mob/living/simple_animal/hostile/netherworld/migo, /mob/living/simple_animal/hostile/netherworld, /mob/living/simple_animal/hostile/netherworld/blankbody)
 	faction = list("nether")

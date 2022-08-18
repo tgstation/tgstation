@@ -576,7 +576,7 @@
 
 /atom/movable/screen/healths/guardian
 	name = "summoner health"
-	icon = 'icons/mob/guardian.dmi'
+	icon = 'icons/mob/nonhuman-player/guardian.dmi'
 	icon_state = "base"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
