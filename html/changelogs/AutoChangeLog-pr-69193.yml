@@ -1,0 +1,5 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - balance: "Tendrils now drop their loot when you interact with them during the collapse."
+  - balance: "But they can be interacted with by multiple people, so mining with a friend brings more loot!"
