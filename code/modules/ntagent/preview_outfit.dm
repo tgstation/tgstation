@@ -8,9 +8,9 @@
 /datum/outfit/ntagent_preview/post_equip(mob/living/carbon/human/H, visualsOnly)
 	var/obj/item/mod/module/armor_booster/booster = locate() in H.back
 	booster.active = TRUE
-	H.update_inv_back()
+	H.update_worn_back()
 	var/obj/item/melee/energy/sword/sword = locate() in H.held_items
 	sword.icon_state = "e_sword_on_blue"
 	sword.worn_icon_state = "e_sword_on_blue"
 
-	H.update_inv_hands()
+	H.update_held_items()

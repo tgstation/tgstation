@@ -8,15 +8,15 @@
 	var/charge_time = 1800
 
 /obj/item/announcer/attack_self(mob/living/user)
-	if(!ISJOURNALIST(user))
+	if(!(HAS_TRAIT(user, TRAIT_JOURNALIST)))
 		to_chat(user, span_warning("Bu aletin nasıl çalıştığını anlamıyorsun."))
 		return
 	if(charge <= 0)
-		to_chat(user, span_warning("Alet şarz oluyor!")) //henüz çalışmıyor bir ara yapıcam
+		to_chat(user, span_warning("Alet şarj oluyor!")) //henüz çalışmıyor bir ara yapıcam
 		return
 	var/input = tgui_input_text(user, "Message to announce to the station crew", "Announcement")
 	var/list/players = get_communication_players()
-	if(ISJOURNALIST(user))
+	if((HAS_TRAIT(user, TRAIT_JOURNALIST)))
 		make_announcement(user, input, players)
 		return
 
