@@ -140,7 +140,7 @@
 	synchronize_bodytypes(phantom_owner)
 	phantom_owner.update_health_hud() //update the healthdoll
 	phantom_owner.update_body()
-	phantom_owner.update_hair()
+	phantom_owner.update_body_parts()
 
 	if(!drop_loc) // drop_loc = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
 		qdel(src)
@@ -417,6 +417,21 @@
 			pill.forceMove(new_head_owner)
 			pill_action.Grant(new_head_owner)
 			break
+
+	///Transfer existing hair properties to the new human.
+	if(!special && ishuman(new_head_owner))
+		var/mob/living/carbon/human/sexy_chad = new_head_owner
+		sexy_chad.hairstyle = hair_style
+		sexy_chad.hair_color = hair_color
+		sexy_chad.facial_hair_color = facial_hair_color
+		sexy_chad.facial_hairstyle = facial_hairstyle
+		if(hair_gradient_style || facial_hair_gradient_style)
+			LAZYSETLEN(sexy_chad.grad_style, GRADIENTS_LEN)
+			LAZYSETLEN(sexy_chad.grad_color, GRADIENTS_LEN)
+			sexy_chad.grad_style[GRADIENT_HAIR_KEY] =  hair_gradient_style
+			sexy_chad.grad_color[GRADIENT_HAIR_KEY] =  hair_gradient_color
+			sexy_chad.grad_style[GRADIENT_FACIAL_HAIR_KEY] = facial_hair_gradient_style
+			sexy_chad.grad_color[GRADIENT_FACIAL_HAIR_KEY] = facial_hair_gradient_color
 
 	new_head_owner.updatehealth()
 	new_head_owner.update_body()
