@@ -4390,6 +4390,7 @@
 #include "code\modules\surgery\advanced\bioware\vein_threading.dm"
 #include "code\modules\surgery\bodyparts\_bodyparts.dm"
 #include "code\modules\surgery\bodyparts\dismemberment.dm"
+#include "code\modules\surgery\bodyparts\hair.dm"
 #include "code\modules\surgery\bodyparts\head.dm"
 #include "code\modules\surgery\bodyparts\helpers.dm"
 #include "code\modules\surgery\bodyparts\parts.dm"
