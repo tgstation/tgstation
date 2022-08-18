@@ -77,8 +77,6 @@
 	var/obj/item/organ/internal/heart/ethereal/ethereal_heart = C.getorganslot(ORGAN_SLOT_HEART)
 	ethereal_heart.ethereal_color = default_color
 
-	//The following code is literally only to make admin-spawned ethereals not be black.
-	C.dna.features["mcolor"] = C.dna.features["ethcolor"] //Ethcolor and Mut color are both dogshit and i hate them
 	for(var/obj/item/bodypart/limb as anything in C.bodyparts)
 		if(limb.limb_id == SPECIES_ETHEREAL)
 			limb.update_limb(is_creating = TRUE)
@@ -121,7 +119,9 @@
 	else
 		ethereal_light.set_light_on(FALSE)
 		fixed_mut_color = rgb(128,128,128)
-	ethereal.update_body(is_creating = TRUE)
+	ethereal.hair_color = current_color
+	ethereal.facial_hair_color = current_color
+	ethereal.update_body()
 
 /datum/species/ethereal/proc/on_emp_act(mob/living/carbon/human/H, severity)
 	SIGNAL_HANDLER
