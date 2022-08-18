@@ -649,3 +649,14 @@
       busy printing.
   necromanceranne:
   - bugfix: Rats no longer drop a food item and their own corpse when they die.
+2022-08-18:
+  Kapu1178:
+  - bugfix: Ethereal hair now inherits from their glow again.
+  Melbert:
+  - bugfix: Fixes stuttered words with anxiety being capitalized
+  TerraGS:
+  - bugfix: Gutlunch should now eat gibs as intended
+  dragomagol:
+  - bugfix: holopads look properly open when screwdrivered
+  kreindo:
+  - rscadd: Added Tempeh
