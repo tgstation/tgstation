@@ -12,7 +12,7 @@
 			TEST_FAIL("[ruleset] has no scaling cost, but is also not a lone/highlander ruleset.")
 
 	for (var/datum/dynamic_ruleset/midround/ruleset as anything in subtypesof(/datum/dynamic_ruleset/midround))
-		if(initial(ruleset.abstract_type) == initial(ruleset.type))
+		if(initial(ruleset.abstract_type) == ruleset)
 			if(initial(ruleset.weight))
 				TEST_FAIL("[ruleset] is abstract and should never run, it should also have 0 weight set.")
 			continue
