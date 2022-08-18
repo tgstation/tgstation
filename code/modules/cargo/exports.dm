@@ -99,7 +99,7 @@ Then the player gets the profit from selling his own wasted time.
 		else
 			return round(cost * amount) //alternative form derived from L'Hopital to avoid division by 0
 	else
-		return round(init_cost * amount)
+		return round(cost * amount)
 
 // Checks the amount of exportable in object. Credits in the bill, sheets in the stack, etc.
 // Usually acts as a multiplier for a cost, so item that has 0 amount will be skipped in export.
