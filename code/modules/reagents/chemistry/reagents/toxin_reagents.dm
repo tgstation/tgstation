@@ -997,13 +997,13 @@
 
 //ACID
 
-
 /datum/reagent/toxin/acid
 	name = "Sulfuric Acid"
 	description = "A strong mineral acid with the molecular formula H2SO4."
 	color = "#00FF32"
-	toxpwr = 1
-	var/acidpwr = 10 //the amount of protection removed from the armour
+	toxpwr = 0 // Acid causes burns and brute damage, not toxin
+	penetrates_skin = NONE // Acid needs to be directly injected/ingested to metabolize (vapor/foam effects are deadly enough)
+	var/acidpwr = 10 //the amount of protection removed from the armour (also used to calculate damage if metabolized)
 	taste_description = "acid"
 	self_consuming = TRUE
 	ph = 2.75
@@ -1013,21 +1013,20 @@
 /datum/reagent/toxin/acid/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(type, 1))
-		mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 1))
-		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 1.5))
-		mytray.adjust_weedlevel(-rand(1,2))
+		var/acid_dmg = acidpwr * 0.1 // results in 1 for sulphric acid, 4.2 for flurosuluric acid, and 0.5 for nitric acid
+		mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * acid_dmg))
+		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * acid_dmg))
+		mytray.adjust_weedlevel(-rand(1, 1 + round(acid_dmg)))
+		mytray.adjust_pestlevel(-rand(1, 1 + round(acid_dmg))) // RIP spiderlings
 
 /datum/reagent/toxin/acid/expose_mob(mob/living/carbon/exposed_carbon, methods=TOUCH, reac_volume)
 	. = ..()
 	if(!istype(exposed_carbon))
 		return
+	if(methods & INGEST|INJECT)
+		return
+
 	reac_volume = round(reac_volume,0.1)
-	if(methods & INGEST)
-		exposed_carbon.adjustBruteLoss(min(6*toxpwr, reac_volume * toxpwr))
-		return
-	if(methods & INJECT)
-		exposed_carbon.adjustBruteLoss(1.5 * min(6*toxpwr, reac_volume * toxpwr))
-		return
 	exposed_carbon.acid_act(acidpwr, reac_volume)
 
 /datum/reagent/toxin/acid/expose_obj(obj/exposed_obj, reac_volume)
@@ -1044,29 +1043,30 @@
 	reac_volume = round(reac_volume,0.1)
 	exposed_turf.acid_act(acidpwr, reac_volume)
 
+// when you ingest acid (not the fun kind) death awaits... 
+/datum/reagent/toxin/acid/on_mob_life(mob/living/carbon/victim, delta_time, times_fired)
+	var/acid_dmg = acidpwr * 0.1 // results in 1 for sulphric acid, 4.2 for flurosuluric acid, and 0.5 for nitric acid 
+	victim.adjustBruteLoss(acid_dmg * REM * delta_time, 0)
+	victim.adjustFireLoss(acid_dmg * 2 * REM * delta_time, 0) // take double burn damage
+
+	if(DT_PROB(16, delta_time))
+		victim.adjustOrganLoss(ORGAN_SLOT_STOMACH, acid_dmg * REM * delta_time)
+		victim.emote("gurgle")
+	else if(DT_PROB(16, delta_time))
+		victim.adjustOrganLoss(ORGAN_SLOT_LIVER, acid_dmg * REM * delta_time)
+		victim.emote("grimace")	
+	..()
+	//return TRUE  (is this needed?)
+
 /datum/reagent/toxin/acid/fluacid
 	name = "Fluorosulfuric Acid"
 	description = "Fluorosulfuric acid is an extremely corrosive chemical substance."
 	color = "#5050FF"
 	creation_purity = REAGENT_STANDARD_PURITY
 	purity = REAGENT_STANDARD_PURITY
-	toxpwr = 2
 	acidpwr = 42.0
 	ph = 0.0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-// SERIOUSLY
-/datum/reagent/toxin/acid/fluacid/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(chems.has_reagent(type, 1))
-		mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 2))
-		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 3))
-		mytray.adjust_weedlevel(-rand(1,4))
-
-/datum/reagent/toxin/acid/fluacid/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjustFireLoss((current_cycle/15) * REM * normalise_creation_purity() * delta_time, 0)
-	. = TRUE
-	..()
 
 /datum/reagent/toxin/acid/nitracid
 	name = "Nitric Acid"
@@ -1074,15 +1074,9 @@
 	color = "#5050FF"
 	creation_purity = REAGENT_STANDARD_PURITY
 	purity = REAGENT_STANDARD_PURITY
-	toxpwr = 3
 	acidpwr = 5.0
 	ph = 1.3
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/toxin/acid/nitracid/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjustFireLoss((volume/10) * REM * normalise_creation_purity() * delta_time, FALSE) //here you go nervar
-	. = TRUE
-	..()
 
 /datum/reagent/toxin/delayed
 	name = "Toxin Microcapsules"
