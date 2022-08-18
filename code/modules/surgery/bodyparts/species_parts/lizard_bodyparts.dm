@@ -25,7 +25,7 @@
 	limb_id = SPECIES_LIZARD
 
 /obj/item/bodypart/l_leg/digitigrade
-	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/humanoid/lizard/bodyparts.dmi'
 	limb_id = BODYPART_TYPE_DIGITIGRADE
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
 
