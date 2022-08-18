@@ -23,10 +23,14 @@
 
 	/// The minimum round time before this ruleset will show up
 	var/minimum_round_time = 0
+	/// Abstract root value
+	var/abstract_type = /datum/dynamic_ruleset/midround
+	//if (initial(thing.abstract_type) != thing.abstract_type)
 
 /datum/dynamic_ruleset/midround/from_ghosts
 	weight = 0
 	required_type = /mob/dead/observer
+	abstract_type = /datum/dynamic_ruleset/midround/from_ghosts
 	/// Whether the ruleset should call generate_ruleset_body or not.
 	var/makeBody = TRUE
 	/// The rule needs this many applicants to be properly executed.
@@ -193,6 +197,7 @@
 ///subtype to handle checking players
 /datum/dynamic_ruleset/midround/from_living
 	weight = 0
+	abstract_type = /datum/dynamic_ruleset/midround/from_living
 
 /datum/dynamic_ruleset/midround/from_living/ready(forced)
 	if(!check_candidates())
