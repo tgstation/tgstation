@@ -31,7 +31,7 @@ function SS13.await(thing_to_call, proc_to_call, ...)
 		proc_to_call = "/proc/" .. proc_to_call
 	end
 	local promise = SS13.new("/datum/auxtools_promise", thing_to_call, proc_to_call, ...)
-	while promise.statis == 0 do
+	while promise.status == 0 do
 		sleep()
 	end
 	return promise.return_value, promise.runtime_message
