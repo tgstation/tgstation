@@ -1,0 +1,5 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - bugfix: "Fixes visual bugs related to cows and pulling."
+  - bugfix: "Fixes cpws moving and having AI while you don't pull them during riding"
