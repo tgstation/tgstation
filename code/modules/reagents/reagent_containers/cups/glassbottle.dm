@@ -579,6 +579,9 @@
 			isGlass = FALSE
 	return
 
+/obj/item/reagent_containers/cup/glass/bottle/molotov/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..(hit_atom, throwingdatum, do_splash = FALSE)
+
 /obj/item/reagent_containers/cup/glass/bottle/molotov/smash(atom/target, mob/thrower, ranged = FALSE)
 	var/firestarter = 0
 	for(var/datum/reagent/contained_reagent in reagents.reagent_list)
@@ -587,8 +590,11 @@
 				firestarter = 1
 				break
 	if(firestarter && active)
+		SplashReagents(target, TRUE)
 		target.fire_act()
 		new /obj/effect/hotspot(get_turf(target))
+	else
+		SplashReagents(target, TRUE)
 	..()
 
 /obj/item/reagent_containers/cup/glass/bottle/molotov/attackby(obj/item/I, mob/user, params)
