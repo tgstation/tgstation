@@ -6,6 +6,7 @@
 	background_icon_state = "bg_ecult"
 	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "mad_touch"
+	sound = null
 
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 20 SECONDS

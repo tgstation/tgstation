@@ -422,9 +422,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Maybe worth generalizing into a general "is sneaky" / "is stealth" trait in the future.
 #define TRAIT_ALIEN_SNEAK "sneaking_alien"
 
-/// Item still allows you to examine items while blind and actively held.
-#define TRAIT_BLIND_TOOL "blind_tool"
-
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
 // to various drinks and foodstuffs. Security liking donuts is a classic
@@ -554,6 +551,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_LIVING_HEART "living_heart"
 /// Prevents the same person from being chosen multiple times for kidnapping objective
 #define TRAIT_HAS_BEEN_KIDNAPPED "has_been_kidnapped"
+/// Item still allows you to examine items while blind and actively held.
+#define TRAIT_BLIND_TOOL "blind_tool"
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"
@@ -915,3 +914,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Currently fishing
 #define TRAIT_GONE_FISHING "fishing"
+
+/// Is runechat for this atom/movable currently disabled, regardless of prefs or anything?
+#define TRAIT_RUNECHAT_HIDDEN "runechat_hudden"

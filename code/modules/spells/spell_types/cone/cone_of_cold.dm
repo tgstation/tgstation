@@ -25,6 +25,19 @@
 	/// How long do objects remain frozen for?
 	var/unfreeze_object_duration = 20 SECONDS
 
+/datum/action/cooldown/spell/cone/staggered/cone_of_cold/calculate_cone_shape(current_level)
+	// Level 2 will always be three wide.
+	if(current_level == 2)
+		return 3
+
+	// But, after level 2, we will only grow once every two levels.
+	// Even levels will return the normal formula - 1
+	if(ISEVEN(current_level))
+		return ..(current_level - 1)
+
+	// Odd levels will return the normal formula
+	return ..()
+
 /datum/action/cooldown/spell/cone/staggered/cone_of_cold/do_turf_cone_effect(turf/target_turf, atom/caster, level)
 	if(!isopenturf(target_turf))
 		return

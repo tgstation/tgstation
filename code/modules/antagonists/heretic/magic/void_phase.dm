@@ -21,14 +21,14 @@
 	/// The radius of damage around the void bubble
 	var/damage_radius = 1
 
-/datum/action/cooldown/spell/pointed/void_phase/is_valid_target(atom/cast_on)
-	// We do the close range check first
-	if(get_dist(get_turf(owner), get_turf(cast_on)) < min_cast_range)
-		if(owner)
-			owner.balloon_alert(owner, "too close!")
-		return FALSE
+/datum/action/cooldown/spell/pointed/void_phase/before_cast(atom/cast_on)
+	. = ..()
+	if(. & SPELL_CANCEL_CAST)
+		return
 
-	return ..()
+	if(owner && get_dist(get_turf(owner), get_turf(cast_on)) < min_cast_range)
+		cast_on.balloon_alert(owner, "too close!")
+		return . | SPELL_CANCEL_CAST
 
 /datum/action/cooldown/spell/pointed/void_phase/cast(atom/cast_on)
 	. = ..()
@@ -43,12 +43,12 @@
 	playsound(targeted_turf, 'sound/magic/voidblink.ogg', 60, FALSE)
 
 	for(var/mob/living/living_mob in range(damage_radius, source_turf))
-		if(IS_HERETIC_OR_MONSTER(living_mob) || living_mob == cast_on)
+		if(IS_HERETIC_OR_MONSTER(living_mob) || living_mob == owner)
 			continue
 		living_mob.apply_damage(40, BRUTE, wound_bonus = CANT_WOUND)
 
 	for(var/mob/living/living_mob in range(damage_radius, targeted_turf))
-		if(IS_HERETIC_OR_MONSTER(living_mob) || living_mob == cast_on)
+		if(IS_HERETIC_OR_MONSTER(living_mob) || living_mob == owner)
 			continue
 		living_mob.apply_damage(40, BRUTE, wound_bonus = CANT_WOUND)
 

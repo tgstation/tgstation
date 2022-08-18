@@ -32,7 +32,6 @@
 /datum/status_effect/void_chill/lasting
 	id = "lasting_void_chill"
 	duration = -1
-	cooling_per_tick = -10
 
 /datum/movespeed_modifier/void_chill
 	multiplicative_slowdown = 0.3

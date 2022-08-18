@@ -70,39 +70,51 @@
 			left_dir = SOUTH
 			right_dir = NORTH
 
-	for(var/i in 1 to cone_levels)
+	// Go though every level of the cone levels and generate the cone.
+	for(var/level in 1 to cone_levels)
 		var/list/level_turfs = list()
+		// Our center turf always exists, it's straight ahead of the caster.
 		turf_to_use = get_step(turf_to_use, dir_to_use)
 		level_turfs += turf_to_use
-		if(i != 1)
-			left_turf = get_step(turf_to_use, left_dir)
-			level_turfs += left_turf
-			right_turf = get_step(turf_to_use, right_dir)
-			level_turfs += right_turf
-			for(var/left_i in 1 to i -calculate_cone_shape(i))
-				if(left_turf.density && respect_density)
+		// Level 1 only ever has 1 turf, it's a cone.
+		if(level != 1)
+			var/level_width_in_each_direction = round((calculate_cone_shape(level) - 1) / 2)
+			left_turf = turf_to_use
+			right_turf = turf_to_use
+			// Check turfs to the left...
+			for(var/left_of_center in 1 to level_width_in_each_direction)
+				if(respect_density && left_turf.density)
 					break
 				left_turf = get_step(left_turf, left_dir)
 				level_turfs += left_turf
-			for(var/right_i in 1 to i -calculate_cone_shape(i))
-				if(right_turf.density && respect_density)
+			// And turfs to the right.
+			for(var/right_of_enter in 1 to level_width_in_each_direction)
+				if(respect_density && right_turf.density)
 					break
 				right_turf = get_step(right_turf, right_dir)
 				level_turfs += right_turf
+		// Add the list of all turfs on this level to the turfs to return
 		turfs_to_return += list(level_turfs)
-		if(i == cone_levels)
-			continue
-		if(turf_to_use.density && respect_density)
+
+		// If we're at the last level, we're done
+		if(level == cone_levels)
 			break
+		// But if we're not at the last level, we should check that we can keep going
+		if(respect_density && turf_to_use.density)
+			break
+
 	return turfs_to_return
 
-///This proc adjusts the cones width depending on the level.
+/**
+ * Adjusts the width of the cone at the passed level.
+ * This is never called on the first level of the cone (level 1 is always 1 width)
+ *
+ * Return a number - the TOTAL width of the cone at the passed level.
+ */
 /datum/action/cooldown/spell/cone/proc/calculate_cone_shape(current_level)
-	var/end_taper_start = round(cone_levels * 0.8)
-	if(current_level > end_taper_start)
-		return (current_level % end_taper_start) * 2 //someone more talented and probably come up with a better formula.
-	else
-		return 2
+	// By default, our width scales linearly (3 -> 5 -> 7 -> 9, and so on).
+	// Override to implement formulas on a per-cone-spell basis
+	return current_level + (current_level % 2) + 1
 
 /**
  * ### Staggered Cone

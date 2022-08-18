@@ -33,12 +33,14 @@
 		carbon_victim.reagents?.add_reagent(/datum/reagent/eldritch, min(1, 6 - level))
 
 /datum/action/cooldown/spell/cone/staggered/entropic_plume/calculate_cone_shape(current_level)
-	if(current_level == cone_levels)
-		return 5
-	else if(current_level == cone_levels - 1)
+	// At the first level (that isn't level 1) we will be small
+	if(current_level == 2)
 		return 3
-	else
-		return 2
+	// At the max level, we turn small again
+	if(current_level == cone_levels)
+		return 3
+	// Otherwise, all levels in between will be wider
+	return 5
 
 /obj/effect/temp_visual/dir_setting/entropic
 	icon = 'icons/effects/160x160.dmi'

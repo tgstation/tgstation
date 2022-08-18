@@ -153,6 +153,7 @@
 		return
 
 	INVOKE_ASYNC(src, .proc/do_secondary_hand_hit, source, victim, caster)
+	return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
 
 /**
  * Calls cast_on_hand_hit() from the caster onto the victim.

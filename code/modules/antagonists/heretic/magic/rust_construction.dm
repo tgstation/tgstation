@@ -5,6 +5,7 @@
 	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "cleave"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/throw_target.dmi'
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_HANDS_BLOCKED
 
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 5 SECONDS
@@ -35,11 +36,16 @@
 
 /datum/action/cooldown/spell/pointed/rust_construction/before_cast(turf/open/cast_on)
 	. = ..()
-	invocation = span_danger("<b>[cast_on]</b> raises a wall of rust out of [cast_on]!")
-	invocation_self_message = span_notice("You raise a wall of rust out of [cast_on].")
+	if(!isliving(owner))
+		return // Just allow it
+
+	var/mob/living/living_owner = owner
+	invocation = span_danger("<b>[owner]</b> drags [owner.p_their()] hand[living_owner.usable_hands == 1 ? "":"s"] upwards as a wall of rust rises out of [cast_on]!")
+	invocation_self_message = span_notice("You drag [living_owner.usable_hands == 1 ? "a hand":"your hands"] upwards as a wall of rust rises out of [cast_on].")
 
 /datum/action/cooldown/spell/pointed/rust_construction/cast(turf/open/cast_on)
 	. = ..()
+	var/rises_message = "rises out of [cast_on]"
 	var/turf/closed/wall/new_wall = cast_on.PlaceOnTop(/turf/closed/wall)
 	if(!istype(new_wall))
 		return
@@ -62,8 +68,8 @@
 	for(var/mob/living/living_mob in cast_on)
 		message_shown = TRUE
 		living_mob.visible_message(
-			span_warning("[new_wall] rises out of [cast_on] and slams into [living_mob]!"),
-			span_userdanger("[new_wall] rises out of [cast_on] beneath your feet and slams into you!"),
+			span_warning("\A [new_wall] [rises_message] and slams into [living_mob]!"),
+			span_userdanger("\A [new_wall] [rises_message] beneath your feet and slams into you!"),
 		)
 		living_mob.apply_damage(10, BRUTE, wound_bonus = 10)
 		var/list/turfs_by_us = get_adjacent_open_turfs(cast_on)
@@ -72,10 +78,10 @@
 			continue
 
 		living_mob.Knockdown(5 SECONDS)
-		living_mob.forceMove(pick(turfs_by_us))
+		living_mob.throw_at(pick(turfs_by_us), 1, 3, owner)
 
 	if(!message_shown)
-		new_wall.visible_message(span_warning("[new_wall] rises out of [cast_on]!"))
+		new_wall.visible_message(span_warning("\A [new_wall] [rises_message]!"))
 
 /datum/action/cooldown/spell/pointed/rust_construction/proc/fade_wall_filter(turf/closed/wall)
 	if(QDELETED(wall))
