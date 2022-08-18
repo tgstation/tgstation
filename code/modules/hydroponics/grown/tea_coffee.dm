@@ -33,7 +33,7 @@
 	plantname = "Tea Astra Plant"
 	product = /obj/item/food/grown/tea/astra
 	mutatelist = null
-	reagents_add = list(/datum/reagent/medicine/synaptizine = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/toxin/teapowder = 0.1, /datum/reagent/fluorine = 0.1)
+	reagents_add = list(/datum/reagent/medicine/synaptizine = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/toxin/teapowder = 0.1)
 	rarity = 20
 
 /obj/item/food/grown/tea/astra
@@ -82,7 +82,7 @@
 	plantname = "Coffee Robusta Bush"
 	product = /obj/item/food/grown/coffee/robusta
 	mutatelist = null
-	reagents_add = list(/datum/reagent/medicine/ephedrine = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/toxin/coffeepowder = 0.1, /datum/reagent/fluorine = 0.02)
+	reagents_add = list(/datum/reagent/medicine/ephedrine = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/toxin/coffeepowder = 0.1)
 	rarity = 20
 
 /obj/item/food/grown/coffee/robusta
