@@ -28,8 +28,8 @@
 	ai_controller = /datum/ai_controller/basic_controller/sheep
 
 /mob/living/basic/sheep/Initialize(mapload)
-    AddComponent(/datum/component/mob_harvest, /obj/item/mob_harvest/sheep)
-    . = ..()
+	AddComponent(/datum/component/mob_harvest, /obj/item/mob_harvest/sheep)
+	. = ..()
 
 /datum/ai_controller/basic_controller/sheep
 	ai_traits = STOP_MOVING_WHEN_PULLED
