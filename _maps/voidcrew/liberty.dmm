@@ -97,7 +97,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/station/hallway/starboard)
+/area/station/hallway/primary/starboard)
 "fd" = (
 /obj/structure/fans/tiny,
 /obj/docking_port/mobile{
@@ -108,7 +108,7 @@
 	id = "piratecargo";
 	name = "Cargo Bay"
 	},
-/turf/open/floor/engine/hull/interior,
+/turf/open/floor/engine/hull/reinforced,
 /area/station/cargo)
 "fi" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -171,7 +171,7 @@
 	name = "Port Launch Tube"
 	},
 /obj/structure/fans/tiny,
-/turf/open/floor/engine/hull/interior,
+/turf/open/floor/engine/hull/reinforced,
 /area/station/security)
 "hb" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -192,7 +192,7 @@
 	name = "Starboard Launch Tube"
 	},
 /obj/structure/fans/tiny,
-/turf/open/floor/engine/hull/interior,
+/turf/open/floor/engine/hull/reinforced,
 /area/station/security)
 "kK" = (
 /obj/structure/grille,
@@ -263,7 +263,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/station/hallway/port)
+/area/station/hallway/primary/port)
 "nv" = (
 /obj/effect/turf_decal/tile/neutral/full,
 /obj/structure/railing,
@@ -574,7 +574,7 @@
 /obj/structure/cable,
 /obj/machinery/power/terminal,
 /turf/open/floor/plating,
-/area/station/hallway/starboard)
+/area/station/hallway/primary/starboard)
 "tZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -809,7 +809,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/station/hallway/port)
+/area/station/hallway/primary/port)
 "Ce" = (
 /obj/machinery/door/window/right/directional/east,
 /obj/effect/turf_decal/siding{
@@ -849,7 +849,7 @@
 /obj/machinery/power/terminal,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/hallway/starboard)
+/area/station/hallway/primary/starboard)
 "Df" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/sign/warning/no_smoking/directional/west,
@@ -977,7 +977,7 @@
 /area/station/cargo)
 "FR" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/hallway/port)
+/area/station/hallway/primary/port)
 "He" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1037,23 +1037,23 @@
 /area/station/cargo)
 "IF" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/hallway/starboard)
+/area/station/hallway/primary/starboard)
 "IS" = (
 /turf/closed/wall/mineral/titanium,
-/area/station/hallway/port)
+/area/station/hallway/primary/port)
 "IV" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
 /obj/machinery/power/port_gen/pacman,
 /turf/open/floor/plating,
-/area/station/hallway/port)
+/area/station/hallway/primary/port)
 "Ji" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/components/tank/air{
 	piping_layer = 2
 	},
 /turf/open/floor/plating,
-/area/station/hallway/port)
+/area/station/hallway/primary/port)
 "Jr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1154,7 +1154,7 @@
 /area/station/cargo)
 "Le" = (
 /turf/closed/wall/mineral/titanium,
-/area/station/hallway/starboard)
+/area/station/hallway/primary/starboard)
 "Ll" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -1168,20 +1168,20 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/station/hallway/port)
+/area/station/hallway/primary/port)
 "LD" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/components/tank/air{
 	piping_layer = 2
 	},
 /turf/open/floor/plating,
-/area/station/hallway/starboard)
+/area/station/hallway/primary/starboard)
 "LU" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
 /obj/machinery/power/port_gen/pacman,
 /turf/open/floor/plating,
-/area/station/hallway/starboard)
+/area/station/hallway/primary/starboard)
 "Mh" = (
 /obj/structure/cable,
 /obj/machinery/power/terminal,
@@ -1190,13 +1190,13 @@
 	pixel_x = -28
 	},
 /turf/open/floor/plating,
-/area/station/hallway/port)
+/area/station/hallway/primary/port)
 "Mp" = (
 /obj/machinery/atmospherics/components/binary/pump/on/layer2,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/hallway/port)
+/area/station/hallway/primary/port)
 "MC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1248,7 +1248,7 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/hallway/starboard)
+/area/station/hallway/primary/starboard)
 "Oo" = (
 /obj/structure/cable,
 /obj/machinery/power/terminal,
@@ -1258,7 +1258,7 @@
 	pixel_x = 28
 	},
 /turf/open/floor/plating,
-/area/station/hallway/starboard)
+/area/station/hallway/primary/starboard)
 "OA" = (
 /obj/machinery/power/smes/engineering{
 	charge = 1e+006
@@ -1267,7 +1267,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/station/hallway/port)
+/area/station/hallway/primary/port)
 "OO" = (
 /obj/effect/turf_decal/stripes{
 	dir = 4
@@ -1279,7 +1279,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/hallway/port)
+/area/station/hallway/primary/port)
 "Py" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Port Engines"
@@ -1289,7 +1289,7 @@
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
-/area/station/hallway/port)
+/area/station/hallway/primary/port)
 "Qj" = (
 /obj/effect/turf_decal/stripes{
 	dir = 8
@@ -1298,7 +1298,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/hallway/port)
+/area/station/hallway/primary/port)
 "QO" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Port Engines"
@@ -1322,7 +1322,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/station/hallway/starboard)
+/area/station/hallway/primary/starboard)
 "RX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1365,7 +1365,7 @@
 	name = "Cargo Bay"
 	},
 /obj/structure/fans/tiny,
-/turf/open/floor/engine/hull/interior,
+/turf/open/floor/engine/hull/reinforced,
 /area/station/cargo)
 "TT" = (
 /obj/effect/turf_decal/stripes{
@@ -1375,7 +1375,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/hallway/starboard)
+/area/station/hallway/primary/starboard)
 "Ut" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Starboard Engines"
@@ -1385,13 +1385,13 @@
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
-/area/station/hallway/starboard)
+/area/station/hallway/primary/starboard)
 "Uv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/hallway/starboard)
+/area/station/hallway/primary/starboard)
 "US" = (
 /obj/machinery/power/smes/engineering{
 	charge = 1e+006
@@ -1401,7 +1401,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/station/hallway/starboard)
+/area/station/hallway/primary/starboard)
 "Vp" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/closet/crate/engineering/electrical,
@@ -1412,7 +1412,7 @@
 /obj/item/clothing/glasses/welding,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/hallway/port)
+/area/station/hallway/primary/port)
 "VC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1422,7 +1422,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/hallway/port)
+/area/station/hallway/primary/port)
 "VO" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/airalarm/all_access{
@@ -1491,7 +1491,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/station/hallway/starboard)
+/area/station/hallway/primary/starboard)
 "WZ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -1530,12 +1530,12 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/hallway/starboard)
+/area/station/hallway/primary/starboard)
 "YS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/hallway/starboard)
+/area/station/hallway/primary/starboard)
 "Zc" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -1543,7 +1543,7 @@
 /obj/machinery/power/terminal,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/hallway/port)
+/area/station/hallway/primary/port)
 "Zf" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -1551,7 +1551,7 @@
 /obj/machinery/power/terminal,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/hallway/port)
+/area/station/hallway/primary/port)
 "ZB" = (
 /obj/effect/turf_decal/stripes{
 	dir = 6

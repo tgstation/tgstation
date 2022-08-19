@@ -25,7 +25,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/library)
+/area/station/service/library)
 "aJ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -131,7 +131,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/library)
+/area/station/service/library)
 "dh" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/grass,
@@ -174,7 +174,7 @@
 /obj/machinery/airalarm/directional/west,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
-/area/station/commons/library)
+/area/station/service/library)
 "dy" = (
 /obj/machinery/washing_machine,
 /obj/structure/cable,
@@ -646,7 +646,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/library)
+/area/station/service/library)
 "pm" = (
 /obj/effect/turf_decal/tile/bottlegreen{
 	dir = 5
@@ -774,7 +774,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/holopad,
 /turf/open/floor/iron/dark,
-/area/station/commons/library)
+/area/station/service/library)
 "rZ" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
@@ -812,7 +812,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/commons/library)
+/area/station/service/library)
 "sG" = (
 /obj/effect/turf_decal/tile/bottlegreen{
 	dir = 9
@@ -821,7 +821,7 @@
 	all_items_free = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/library)
+/area/station/service/library)
 "sI" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -865,7 +865,7 @@
 /obj/machinery/computer/arcade/amputation,
 /obj/structure/cable,
 /turf/open/floor/iron/white,
-/area/station/commons/library)
+/area/station/service/library)
 "vn" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
@@ -1028,7 +1028,7 @@
 /area/station/engineering)
 "yf" = (
 /turf/open/floor/iron/dark,
-/area/station/commons/library)
+/area/station/service/library)
 "yi" = (
 /obj/structure/chair/comfy/black,
 /obj/effect/turf_decal/tile/bottlegreen{
@@ -1037,7 +1037,7 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/commons/library)
+/area/station/service/library)
 "yE" = (
 /obj/effect/turf_decal/tile/bottlegreen/full,
 /obj/machinery/door/airlock/virology/glass,
@@ -1054,7 +1054,7 @@
 	},
 /obj/machinery/duct,
 /turf/open/floor/iron/dark,
-/area/station/commons/library)
+/area/station/service/library)
 "zc" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 9
@@ -1465,7 +1465,7 @@
 	id = "syndie3doors"
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/library)
+/area/station/service/library)
 "GF" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/poddoor{
@@ -1476,7 +1476,7 @@
 	pixel_x = 25
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/library)
+/area/station/service/library)
 "GK" = (
 /obj/structure/table/glass,
 /obj/item/storage/backpack/duffelbag/syndie/surgery,
@@ -1497,7 +1497,7 @@
 	},
 /obj/effect/decal/cleanable/vomit/old,
 /turf/open/floor/iron/dark,
-/area/station/commons/library)
+/area/station/service/library)
 "GP" = (
 /obj/machinery/stasis,
 /obj/effect/turf_decal/tile/bottlegreen{
@@ -1551,7 +1551,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
-/area/station/commons/library)
+/area/station/service/library)
 "Ik" = (
 /obj/structure/chair/office{
 	dir = 1
@@ -1584,7 +1584,7 @@
 /area/station/command/bridge)
 "SE" = (
 /turf/closed/wall,
-/area/station/commons/library)
+/area/station/service/library)
 "SI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/carpet/neon/simple/red,
@@ -1628,7 +1628,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/library)
+/area/station/service/library)
 "WO" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 9
