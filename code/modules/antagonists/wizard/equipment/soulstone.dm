@@ -392,58 +392,25 @@
 	soulstone_spirit.cancel_camera()
 	update_appearance()
 	if(user)
+		var/master
 		if(IS_CULTIST(user))
 			to_chat(soulstone_spirit, span_bold("Your soul has been captured! \
 				You are now bound to the cult's will. Help them succeed in their goals at all costs."))
+			master = "the cult"
 		else if(role_check(user))
 			to_chat(soulstone_spirit, span_bold("Your soul has been captured! You are now bound to [user.real_name]'s will. \
 				Help [user.p_them()] succeed in [user.p_their()] goals at all costs."))
+			master = user.real_name
 
-		var/datum/shade_popup/popup = new()
-		popup.ui_interact(soulstone_spirit)
+		if(master)
+			var/datum/shade_popup/popup = new(master)
+			popup.ui_interact(soulstone_spirit)
 
 		if(message_user)
 			to_chat(user, "[span_info("<b>Capture successful!</b>:")] [victim.real_name]'s soul has been ripped \
 				from [victim.p_their()] body and stored within [src].")
 
 	victim.dust(drop_items = TRUE)
-
-/obj/item/soulstone/proc/ui_test(mob/user)
-	var/datum/shade_popup/popup = new(src)
-	popup.ui_interact(user)
-
-/obj/item/soulstone/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "InfoShade")
-		ui.open()
-
-/obj/item/soulstone/ui_data(mob/user)
-	var/list/data = list()
-	data["master_name"] = "jonathonesque longname"
-	return data
-
-/obj/item/soulstone/ui_act(action, params)
-	if(..())
-		return
-
-/datum/shade_popup
-	var/master = "bob"
-
-/datum/shade_popup/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "InfoShade")
-		ui.open()
-
-/datum/shade_popup/ui_data(mob/user)
-	var/list/data = list()
-	data["master_name"] = master
-	return data
-
-/datum/shade_popup/ui_act(action, params)
-	if(..())
-		return
 
 /**
  * Gets a ghost from dead chat to replace a missing player when a shade is created.
@@ -571,3 +538,31 @@
 
 /obj/item/soulstone/anybody/mining
 	grab_sleeping = FALSE
+
+/**
+ * Holder for the popup to display to emphasise that you're someone's minion
+ */
+/datum/shade_popup
+	/// Name of the person whose goals you must pursue as your own.
+	var/master
+
+/datum/shade_popup/New(var/master_name)
+	src.master = master_name
+
+/datum/shade_popup/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "InfoShade")
+		ui.open()
+
+/datum/shade_popup/ui_state(mob/user)
+	return GLOB.always_state
+
+/datum/shade_popup/ui_data(mob/user)
+	var/list/data = list()
+	data["master_name"] = master
+	return data
+
+/datum/shade_popup/ui_act(action, params)
+	if(..())
+		return
