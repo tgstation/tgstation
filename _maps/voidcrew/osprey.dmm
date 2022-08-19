@@ -3799,7 +3799,7 @@
 	pixel_y = 28
 	},
 /obj/machinery/navbeacon/wayfinding/engineering,
-/obj/item/stack/sheet/mineral/uranium/twenty,
+/obj/item/stack/sheet/mineral/uranium/five,
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/engine)
 "FL" = (
