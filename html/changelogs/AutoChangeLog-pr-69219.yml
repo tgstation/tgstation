@@ -1,0 +1,4 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes: 
+  - bugfix: "Multiline inputs can now finally support line breaks, accessible via shift-enter! A maximum of two consecutive line breaks is allowed, any more than that will be automatically stripped. This only applies to input boxes that start with the multiline view enabled, and will thus not work on input boxes that aren't meant to support it."
