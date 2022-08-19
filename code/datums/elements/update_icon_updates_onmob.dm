@@ -13,6 +13,8 @@
 	if(!istype(target, /obj/item))
 		return ELEMENT_INCOMPATIBLE
 	RegisterSignal(target, COMSIG_ATOM_UPDATED_ICON, .proc/update_onmob)
+	update_flags = flags
+	update_body = body
 
 /datum/element/update_icon_updates_onmob/proc/update_onmob(obj/item/target)
 	SIGNAL_HANDLER
