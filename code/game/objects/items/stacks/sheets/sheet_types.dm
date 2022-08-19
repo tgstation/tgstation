@@ -307,30 +307,6 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	. = ..()
 	. += GLOB.wood_recipes
 
-/obj/item/stack/sheet/mineral/wood/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	if(istype(target, /turf/open))
-		var/turf/open/build_on = target
-		if(!user.Adjacent(build_on))
-			balloon_alert(user, "get closer!")
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		if(!isfloorturf(build_on))
-			user.balloon_alert(user, "can't place siding here!")
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		if(!do_after(user, 4 SECONDS, build_on))
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-			balloon_alert(user, "Placing siding...")
-		if(!use(1))
-			user.balloon_alert(user, "not enough material!")
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		build_on.AddElement(/datum/element/decal, 'icons/turf/decals.dmi', "siding_wood_line", user.dir, null, null, alpha, "#916741", null, FALSE, null)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
-
-
-/obj/item/stack/sheet/mineral/wood/examine(mob/user)
-	. = ..()
-	. += span_notice("You can place wooden sidings by right clicking on floors.")
-
 /obj/item/stack/sheet/mineral/wood/fifty
 	amount = 50
 
