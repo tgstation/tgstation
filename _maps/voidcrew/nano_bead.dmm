@@ -4,6 +4,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)
+"bp" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/security/brig)
 "bT" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -61,11 +70,15 @@
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "gl" = (
-/obj/effect/turf_decal/stripes{
-	dir = 1
+/obj/effect/turf_decal/tile/red{
+	dir = 4
 	},
-/turf/open/floor/plating,
-/area/station/security)
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/vending/security,
+/turf/open/floor/iron,
+/area/station/security/brig)
 "gz" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -103,9 +116,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "jr" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 5
-	},
 /obj/structure/rack,
 /obj/item/clothing/suit/armor/bulletproof,
 /obj/item/clothing/suit/armor/bulletproof,
@@ -116,8 +126,11 @@
 /obj/item/clothing/mask/gas/sechailer/swat,
 /obj/item/clothing/mask/gas/sechailer/swat,
 /obj/item/clothing/mask/gas/sechailer/swat,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
 /turf/open/floor/iron,
-/area/station/security)
+/area/station/security/brig)
 "ju" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
@@ -144,10 +157,15 @@
 /area/station/cargo/miningoffice)
 "kt" = (
 /obj/effect/turf_decal/tile/red{
-	dir = 10
+	dir = 4
 	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/security)
+/area/station/security/brig)
 "kW" = (
 /obj/structure/window/reinforced/spawner/east,
 /obj/effect/turf_decal/tile/red{
@@ -209,12 +227,15 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/structure/closet/secure_closet/security,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/structure/closet/secure_closet/security,
 /turf/open/floor/iron,
-/area/station/security)
+/area/station/security/brig)
 "ny" = (
 /obj/structure/window/reinforced/spawner/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -245,7 +266,7 @@
 /obj/machinery/door/airlock/security,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
-/area/station/security)
+/area/station/security/brig)
 "oI" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/public,
@@ -285,6 +306,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/command/bridge)
+"st" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/structure/closet/secure_closet/security,
+/turf/open/floor/iron,
+/area/station/security/brig)
 "sO" = (
 /obj/machinery/door/airlock/mining/glass,
 /obj/structure/cable,
@@ -321,11 +352,10 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "vI" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
-/area/station/security)
+/area/station/security/brig)
 "vR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/closed/wall/mineral/titanium,
@@ -426,7 +456,7 @@
 /area/station/command/bridge)
 "BJ" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/security)
+/area/station/maintenance/aft)
 "Cc" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -613,9 +643,6 @@
 /turf/open/floor/plating,
 /area/station/engineering)
 "LK" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
 /obj/structure/rack,
 /obj/item/shield/riot,
 /obj/item/shield/riot,
@@ -629,18 +656,24 @@
 /obj/item/clothing/mask/gas/sechailer/swat,
 /obj/item/clothing/mask/gas/sechailer/swat,
 /obj/item/clothing/mask/gas/sechailer/swat,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
 /turf/open/floor/iron,
-/area/station/security)
+/area/station/security/brig)
 "MJ" = (
 /turf/closed/wall/mineral/titanium,
 /area/station/engineering)
 "ML" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 9
-	},
 /obj/structure/closet/secure_closet/security,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
 /turf/open/floor/iron,
-/area/station/security)
+/area/station/security/brig)
 "MW" = (
 /obj/machinery/suit_storage_unit/engine,
 /obj/effect/turf_decal/bot,
@@ -817,14 +850,22 @@
 	pixel_y = -24
 	},
 /obj/effect/turf_decal/tile/red{
-	dir = 6
+	dir = 8
 	},
-/obj/machinery/vending/security,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
 /turf/open/floor/iron,
-/area/station/security)
+/area/station/security/brig)
 "VQ" = (
-/turf/closed/wall/mineral/titanium,
-/area/station/security)
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/security/brig)
 "Wz" = (
 /obj/structure/sign/poster/official/nanotrasen_logo,
 /turf/closed/wall/mineral/titanium,
@@ -861,20 +902,12 @@
 /turf/open/floor/plating,
 /area/station/cargo/miningoffice)
 "Xn" = (
-/obj/effect/turf_decal/stripes{
-	dir = 9
-	},
-/turf/open/floor/plating,
-/area/station/security)
+/turf/closed/wall/mineral/titanium,
+/area/station/security/brig)
 "XD" = (
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
-/area/station/security)
+/area/station/security/brig)
 "XG" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
@@ -1056,31 +1089,31 @@ VB
 "}
 (6,1,1) = {"
 VB
-VQ
-VQ
-VQ
-VQ
-VQ
+Ob
+Ob
+Ob
+Ob
+Ob
 BJ
 Ob
 sV
 Ob
-nH
-nH
-nH
-nH
-nH
-nH
+Ob
+Ob
+Ob
+Ob
+Ob
+Ob
 VB
 "}
 (7,1,1) = {"
 VB
-VQ
-VQ
+Xn
+st
 ML
 nr
 kt
-VQ
+Xn
 rK
 vY
 YA
@@ -1094,11 +1127,11 @@ VB
 "}
 (8,1,1) = {"
 VB
-VQ
+Xn
 VQ
 XD
 vI
-vI
+bp
 os
 HS
 HS
@@ -1114,11 +1147,11 @@ VB
 (9,1,1) = {"
 VB
 Xn
-VQ
+gl
 jr
 LK
 VO
-VQ
+Xn
 Tr
 HS
 Yx
@@ -1132,12 +1165,12 @@ VB
 "}
 (10,1,1) = {"
 VB
-gl
-VQ
-VQ
-VQ
-VQ
-VQ
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
 ZD
 HS
 ST
