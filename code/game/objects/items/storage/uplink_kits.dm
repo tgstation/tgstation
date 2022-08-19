@@ -321,7 +321,7 @@
 	name= "box"
 	desc = "A sleek, sturdy box."
 	icon_state = "nanobox"
-	illustration = "null"
+	illustration = "writing"
 
 /obj/item/storage/box/syndie_kit/origami_bundle
 	name = "origami kit"
