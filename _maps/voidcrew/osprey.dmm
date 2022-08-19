@@ -2354,7 +2354,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/caution/stand_clear,
-/obj/structure/cable/orange,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/engine)
 "td" = (
@@ -3201,7 +3201,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 5
 	},
-/obj/structure/cable/orange,
+/obj/structure/cable,
 /obj/machinery/power/port_gen/pacman/pre_loaded,
 /turf/open/floor/plating,
 /area/station/engineering/engine)
