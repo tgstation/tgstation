@@ -140,6 +140,8 @@
 	if(hud)
 		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, .proc/on_offset_change)
 	offset_change(hud.current_plane_offset)
+	set_alpha(mymob.lighting_alpha)
+
 
 /atom/movable/screen/plane_master/rendering_plate/lighting/hide_from(mob/oldmob)
 	oldmob.clear_fullscreen("lighting_backdrop_lit")

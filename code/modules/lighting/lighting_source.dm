@@ -33,6 +33,8 @@
 
 	/// Whether we have applied our light yet or not.
 	var/applied = FALSE
+	/// Weather this lighting source interacts with mutliz or not
+	var/uses_multiz = FALSE
 
 	/// whether we are to be added to SSlighting's sources_queue list for an update
 	var/needs_update = LIGHTING_NO_UPDATE
@@ -141,9 +143,15 @@
 // As such this all gets counted as a single line.
 // The braces and semicolons are there to be able to do this on a single line.
 #define LUM_FALLOFF(C, T) (1 - CLAMP01(sqrt((C.x - T.x) ** 2 + (C.y - T.y) ** 2 + LIGHTING_HEIGHT) / max(1, light_range)))
+#define LUM_FALLOFF_MULTIZ(C, T) (1 - CLAMP01(ROOT(3, (C.x - T.x) ** 3 + (C.y - T.y) ** 3 + abs(C.z - T.z) ** 3 + LIGHTING_HEIGHT) / max(1, light_range)))
 
-#define APPLY_CORNER(C)                          \
-	. = LUM_FALLOFF(C, pixel_turf);              \
+#define APPLY_CORNER(C, use_multiz)              \
+	if(use_multiz) {                             \
+		. = LUM_FALLOFF(C, pixel_turf);          \
+	}                                            \
+	else {                                       \
+		. = LUM_FALLOFF_MULTIZ(C, pixel_turf)   \
+	}                                            \
 	. *= light_power;                            \
 	var/OLD = effect_str[C];                     \
 	                                             \
@@ -178,9 +186,20 @@
 		REMOVE_CORNER(corner)
 		effect_str[corner] = 0
 
-	APPLY_CORNER(corner)
+	APPLY_CORNER(corner, uses_multiz)
 	effect_str[corner] = .
 
+
+#define INSERT_CORNERS(insert_into, draw_from) \
+	do {\
+		if (!draw_from.lighting_corners_initialised) { \
+			draw_from.generate_missing_corners(); \
+		} \
+		insert_into[draw_from.lighting_corner_NE] = 0; \
+		insert_into[draw_from.lighting_corner_SE] = 0; \
+		insert_into[draw_from.lighting_corner_SW] = 0; \
+		insert_into[draw_from.lighting_corner_NW] = 0; \
+	} while(FALSE)
 
 /datum/light_source/proc/update_corners()
 	var/update = FALSE
@@ -247,36 +266,69 @@
 	var/list/turf/turfs = list()
 
 	if (source_turf)
+		uses_multiz = !!GET_LOWEST_STACK_OFFSET(source_turf.z)
 		var/oldlum = source_turf.luminosity
 		source_turf.luminosity = CEILING(light_range, 1)
-		for(var/turf/T in view(CEILING(light_range, 1), source_turf))
-			if(!IS_OPAQUE_TURF(T))
-				if (!T.lighting_corners_initialised)
-					T.generate_missing_corners()
-				corners[T.lighting_corner_NE] = 0
-				corners[T.lighting_corner_SE] = 0
-				corners[T.lighting_corner_SW] = 0
-				corners[T.lighting_corner_NW] = 0
-			turfs += T
+		if(uses_multiz)
+			for(var/turf/T in view(CEILING(light_range, 1), source_turf))
+				turfs += T
+				if(IS_OPAQUE_TURF(T))
+					continue
+				INSERT_CORNERS(corners, T)
+
+				var/turf/below = SSmapping.get_turf_below(T)
+				var/turf/previous = T
+				while(below)
+					// If we find a non transparent previous, end
+					if(!istransparentturf(previous))
+						break
+					if(IS_OPAQUE_TURF(below))
+						// If we're opaque but the tile above us is transparent, then we should be counted as part of the potential "space"
+						// Of this corner
+						turfs += below
+						break
+					// Now we do lighting things to it
+					INSERT_CORNERS(corners, below)
+					// ANNND then we add the one below it
+					previous = below
+					turfs += below
+					below = SSmapping.get_turf_below(below)
+
+				var/turf/above = SSmapping.get_turf_above(T)
+				while(above)
+					turfs += above
+					// If we find a non transparent turf, end
+					if(!istransparentturf(above) || IS_OPAQUE_TURF(above))
+						break
+					INSERT_CORNERS(corners, above)
+					turfs += above
+					above = SSmapping.get_turf_above(above)
+		else // Yes I know this could be acomplished with an if in the for loop, but it's fukin lighting code man
+			for(var/turf/T in view(CEILING(light_range, 1), source_turf))
+				turfs += T
+				if(IS_OPAQUE_TURF(T))
+					continue
+				INSERT_CORNERS(corners, T)
+
 		source_turf.luminosity = oldlum
 
 	var/list/datum/lighting_corner/new_corners = (corners - effect_str)
 	LAZYINITLIST(effect_str)
 	if (needs_update == LIGHTING_VIS_UPDATE)
 		for (var/datum/lighting_corner/corner as anything in new_corners)
-			APPLY_CORNER(corner)
+			APPLY_CORNER(corner, uses_multiz)
 			if (. != 0)
 				LAZYADD(corner.affecting, src)
 				effect_str[corner] = .
 	else
 		for (var/datum/lighting_corner/corner as anything in new_corners)
-			APPLY_CORNER(corner)
+			APPLY_CORNER(corner, uses_multiz)
 			if (. != 0)
 				LAZYADD(corner.affecting, src)
 				effect_str[corner] = .
 
 		for (var/datum/lighting_corner/corner as anything in corners - new_corners) // Existing corners
-			APPLY_CORNER(corner)
+			APPLY_CORNER(corner, uses_multiz)
 			if (. != 0)
 				effect_str[corner] = .
 			else
