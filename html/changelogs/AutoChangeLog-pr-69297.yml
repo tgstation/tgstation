@@ -1,0 +1,4 @@
+author: "RandomGamer123"
+delete-after: True
+changes: 
+  - bugfix: "Circuit view sensors should no longer display undertile objects or abstract objects or other people's hallucinations etc."
