@@ -82,7 +82,7 @@
 /obj/effect/spawner/random/decoration/statue/make_item(spawn_loc, type_path_to_make)
 	var/obj/structure/statue/statue = ..()
 	if(istype(statue))
-		statue.anchored = TRUE
+		statue.set_anchored(TRUE)
 
 	return statue
 
