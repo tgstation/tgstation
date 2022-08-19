@@ -71,6 +71,7 @@
 	required_candidates = 1
 	weight = 4
 	cost = 8
+	scaling_cost = 9
 	minimum_players = 5
 	antag_cap = list("denominator" = 24)
 	requirements = list(70,60,40,40,40,40,40,40,10,10)
