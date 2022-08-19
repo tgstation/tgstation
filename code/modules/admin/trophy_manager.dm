@@ -24,4 +24,4 @@
 
 /datum/trophy_manager/ui_data(mob/user)
 	. = list()
-	.["trophies"] = SSpersistence.trophy_ui_data(filter = NONE)
+	.["trophies"] = SSpersistence.trophy_ui_data()

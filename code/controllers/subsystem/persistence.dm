@@ -204,8 +204,17 @@ SUBSYSTEM_DEF(persistence)
 			return
 		saved_trophies = json_decode(saved_json)
 		fdel("data/npc_saves/TrophyItems.sav")
-	else
+	else if(fexists("data/npc_saves/TrophyItems.json"))
 		var/json_file = file("data/npc_saves/TrophyItems.json")
+		if(!fexists(json_file))
+			return
+		var/list/json = json_decode(file2text(json_file))
+		if(!json)
+			return
+		saved_trophies = json["data"]
+		fdel("data/npc_saves/TrophyItems.json")
+	else
+		var/json_file = file("data/trophy_items.json")
 		if(!fexists(json_file))
 			return
 		var/list/json = json_decode(file2text(json_file))
@@ -215,7 +224,7 @@ SUBSYSTEM_DEF(persistence)
 	set_up_trophies(saved_trophies.Copy())
 
 /// Returns a filtered list for the admin trophy panel.
-/datum/controller/subsystem/persistence/proc/trophy_ui_data(filter=NONE, search_text)
+/datum/controller/subsystem/persistence/proc/trophy_ui_data()
 	. = saved_trophies
 
 /// Loads up the amount of times maps appeared to alter their appearance in voting and rotation.
@@ -359,7 +368,7 @@ SUBSYSTEM_DEF(persistence)
 	for(var/trophy_case in GLOB.trophy_cases)
 		save_trophy(trophy_case)
 
-	var/json_file = file("data/npc_saves/TrophyItems.json")
+	var/json_file = file("data/trophy_items.json")
 	var/list/file_data = list()
 	file_data["data"] = remove_duplicate_trophies(saved_trophies)
 	fdel(json_file)
