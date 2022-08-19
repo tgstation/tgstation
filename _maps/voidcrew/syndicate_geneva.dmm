@@ -1012,7 +1012,7 @@
 /obj/item/clothing/head/hardhat,
 /obj/item/clothing/glasses/meson/engine,
 /obj/item/clothing/gloves/combat,
-/obj/item/clothing/under/syndicate/intern,
+/obj/item/clothing/under/syndicate,
 /obj/item/clothing/mask/gas/syndicate,
 /obj/item/clothing/suit/hooded/wintercoat/medical,
 /obj/effect/turf_decal/tile/yellow{
@@ -1684,7 +1684,7 @@
 /obj/item/clothing/gloves/color/latex/nitrile,
 /obj/item/defibrillator/compact/combat,
 /obj/item/clothing/suit/armor/vest/capcarapace/syndicate,
-/obj/item/clothing/head/HoS/beret/syndicate,
+/obj/item/clothing/head/hos/beret/syndicate,
 /obj/item/clothing/mask/surgical,
 /obj/item/clothing/mask/gas/syndicate,
 /obj/item/clothing/suit/hooded/wintercoat/medical,

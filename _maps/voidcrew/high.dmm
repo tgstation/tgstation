@@ -267,6 +267,11 @@
 	},
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
+"fG" = (
+/obj/structure/window/reinforced/spawner,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/floor/plating,
+/area/station/engineering/atmos)
 "fJ" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1;
@@ -356,6 +361,7 @@
 /turf/open/floor/wood,
 /area/station/command/bridge)
 "ho" = (
+/obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/engine/air,
 /area/station/engineering/atmos)
 "ht" = (
@@ -447,6 +453,13 @@
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
+"jf" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos)
 "ji" = (
 /obj/structure/window/reinforced/plasma/spawner/east,
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/air_input,
@@ -663,7 +676,6 @@
 /turf/closed/wall/r_wall,
 /area/station/commons/dorms)
 "oQ" = (
-/obj/machinery/power/terminal,
 /obj/structure/cable,
 /obj/structure/sign/warning/engine_safety/directional/north,
 /turf/open/floor/plating,
@@ -956,9 +968,9 @@
 	pixel_y = -4
 	},
 /obj/item/multitool,
-/obj/structure/window/reinforced/plasma/spawner,
 /obj/item/stack/sheet/mineral/uranium/five,
 /obj/item/stack/sheet/mineral/plasma/five,
+/obj/structure/window/reinforced/spawner,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
 "uj" = (
@@ -1068,7 +1080,6 @@
 /turf/closed/wall,
 /area/station/security/brig)
 "wJ" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
@@ -1512,6 +1523,7 @@
 /turf/open/floor/iron/white,
 /area/station/commons/dorms)
 "Fo" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/engine/o2,
 /area/station/engineering/atmos)
 "Fu" = (
@@ -1623,8 +1635,8 @@
 /turf/open/floor/iron/white,
 /area/station/commons/dorms)
 "GX" = (
-/obj/structure/window/reinforced/plasma/spawner,
 /obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/structure/window/reinforced/spawner,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
 "GY" = (
@@ -1656,9 +1668,6 @@
 "HW" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
@@ -2285,9 +2294,8 @@
 /obj/machinery/power/smes/engineering{
 	dir = 1
 	},
-/obj/structure/window/reinforced/plasma/spawner,
 /obj/structure/cable,
-/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced/spawner,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
 "Tt" = (
@@ -2300,6 +2308,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/commons/dorms)
+"Uc" = (
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/turf/open/floor/engine/n2,
+/area/station/engineering/atmos)
 "Uk" = (
 /obj/machinery/light{
 	dir = 4
@@ -2321,6 +2333,10 @@
 	},
 /turf/open/floor/carpet/stellar,
 /area/station/commons/lounge)
+"UB" = (
+/obj/structure/window/reinforced/spawner/north,
+/turf/open/floor/catwalk_floor,
+/area/station/external)
 "UO" = (
 /obj/structure/table/wood,
 /obj/item/areaeditor,
@@ -2402,7 +2418,6 @@
 /turf/open/floor/catwalk_floor,
 /area/station/external)
 "Ww" = (
-/obj/machinery/power/port_gen/pacman,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -2887,7 +2902,7 @@ JE
 JE
 JE
 oQ
-Ti
+fG
 Kt
 "}
 (9,1,1) = {"
@@ -2965,7 +2980,7 @@ rJ
 rJ
 xy
 rJ
-rJ
+jf
 HW
 gJ
 uZ
@@ -3014,7 +3029,7 @@ ej
 em
 gJ
 ui
-We
+UB
 "}
 (12,1,1) = {"
 Aq
@@ -3056,7 +3071,7 @@ PC
 dZ
 gJ
 GX
-We
+UB
 "}
 (13,1,1) = {"
 Aq
@@ -3180,8 +3195,8 @@ Dn
 Bc
 Pj
 jv
-As
-Ti
+gJ
+fG
 Kt
 "}
 (16,1,1) = {"
@@ -3259,7 +3274,7 @@ Wa
 Pm
 Ri
 oL
-ws
+Uc
 on
 CJ
 DF

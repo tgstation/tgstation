@@ -75,13 +75,10 @@
 /turf/open/floor/iron,
 /area/station/cargo)
 "as" = (
-/obj/machinery/door/window/left/directional/north{
-	dir = 4;
-	name = "Engine Access"
-	},
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4
 	},
+/obj/structure/window/reinforced/plasma/spawner/east,
 /turf/open/floor/plating,
 /area/station/engineering)
 "au" = (
@@ -1274,16 +1271,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical)
-"uM" = (
-/obj/machinery/door/window/right/directional/north{
-	dir = 4;
-	name = "Engine Access"
-	},
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/station/engineering)
 "vk" = (
 /obj/machinery/power/shuttle/engine/fueled/plasma{
 	dir = 4
@@ -1624,7 +1611,7 @@ as
 aS
 aa
 aS
-uM
+as
 aS
 aa
 aa
