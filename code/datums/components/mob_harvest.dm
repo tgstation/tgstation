@@ -113,13 +113,14 @@
  * * mob/user - who is trying to do this
  */
 /obj/item/mob_harvest/proc/harvest_item(mob/user)
-	if(amount_ready >= 1)
-		to_chat(user, span_notice("You harvest some [produced_item_typepath] from [harvest_mob]."))
-		amount_ready--
-		new produced_item_typepath(get_turf(harvest_mob))
-		return
-	else
+	if(amount_ready < 1)
 		to_chat(user, span_warning("[harvest_mob] doesn't seem ready yet to harvest from."))
+		return
+	to_chat(user, span_notice("You harvest some [produced_item_typepath] from [harvest_mob]."))
+	amount_ready--
+	new produced_item_typepath(get_turf(harvest_mob))
+	return
+
 
 /**
  * # Sheep's mob_harvest item
@@ -143,6 +144,9 @@
 		harvest_mob.update_icon()
 
 /obj/item/mob_harvest/sheep/harvest_item(mob/user)
+	if(amount_ready < 1)
+		to_chat(user, span_warning("[harvest_mob] doesn't seem like they have enough [produced_item_desc] to get anything of value."))
+		return
 	to_chat(user, span_notice("You start to shear [harvest_mob].."))
 	if(do_after(user, 30, target = src) && amount_ready >= 1)
 		to_chat(user, span_notice("You shear some [produced_item_desc] from [harvest_mob]."))
@@ -153,5 +157,4 @@
 			harvest_mob.icon_state = "sheep_harvested"
 			harvest_mob.update_icon()
 		return
-	else
-		to_chat(user, span_warning("[harvest_mob] doesn't seem like they had enough [produced_item_desc] to get anything of value."))
+
