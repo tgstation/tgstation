@@ -169,7 +169,6 @@
 /obj/item/bodypart/head/update_limb(dropping_limb, is_creating)
 	. = ..()
 
-	var/atom/location = loc || owner || src
 	real_name = owner.real_name
 	if(HAS_TRAIT(owner, TRAIT_HUSK))
 		real_name = "Unknown"
