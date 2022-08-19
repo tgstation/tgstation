@@ -812,7 +812,7 @@
 
 /obj/machinery/hydroponics/attackby(obj/item/O, mob/user, params)
 	//Called when mob user "attacks" it with object O
-	if(IS_EDIBLE(O) || istype(O, /obj/item/reagent_containers))  // Syringe stuff (and other reagent containers now too)
+	if(IS_EDIBLE(O) || is_reagent_container(O))  // Syringe stuff (and other reagent containers now too)
 		var/obj/item/reagent_containers/reagent_source = O
 
 		if(!reagent_source.reagents.total_volume)

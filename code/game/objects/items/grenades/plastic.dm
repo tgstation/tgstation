@@ -105,14 +105,14 @@
 
 		moveToNullspace() //Yep
 
-		if(istype(bomb_target, /obj/item)) //your crappy throwing star can't fly so good with a giant brick of c4 on it.
+		if(isitem(bomb_target)) //your crappy throwing star can't fly so good with a giant brick of c4 on it.
 			var/obj/item/thrown_weapon = bomb_target
 			thrown_weapon.throw_speed = max(1, (thrown_weapon.throw_speed - 3))
 			thrown_weapon.throw_range = max(1, (thrown_weapon.throw_range - 3))
 			if(thrown_weapon.embedding)
 				thrown_weapon.embedding["embed_chance"] = 0
 				thrown_weapon.updateEmbedding()
-		else if(istype(bomb_target, /mob/living))
+		else if(isliving(bomb_target))
 			plastic_overlay.layer = FLOAT_LAYER
 
 		target.add_overlay(plastic_overlay)

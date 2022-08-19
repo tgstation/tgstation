@@ -92,7 +92,7 @@ handles linking back and forth.
 /datum/component/remote_materials/proc/OnAttackBy(datum/source, obj/item/I, mob/user)
 	SIGNAL_HANDLER
 
-	if (silo && istype(I, /obj/item/stack))
+	if (silo && isstack(I))
 		if (silo.remote_attackby(parent, user, I, mat_container_flags))
 			return COMPONENT_NO_AFTERATTACK
 

@@ -87,7 +87,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 		update_appearance()
 		return
 
-	if(istype(item, /obj/item/reagent_containers) && !(item.item_flags & ABSTRACT) && item.is_open_container())
+	if(is_reagent_container(item) && !(item.item_flags & ABSTRACT) && item.is_open_container())
 		var/obj/item/reagent_containers/beaker = item
 		. = TRUE //no afterattack
 		if(!user.transferItemToLoc(beaker, src))
@@ -109,7 +109,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 	if(default_deconstruction_crowbar(item))
 		return
 
-	if(istype(item, /obj/item/reagent_containers) && !(item.item_flags & ABSTRACT) && item.is_open_container())
+	if(is_reagent_container(item) && !(item.item_flags & ABSTRACT) && item.is_open_container())
 		var/obj/item/reagent_containers/beaker = item
 		if(!user.transferItemToLoc(beaker, src))
 			return

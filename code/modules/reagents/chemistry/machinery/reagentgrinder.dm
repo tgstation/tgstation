@@ -157,7 +157,7 @@
 	if(panel_open) //Can't insert objects when its screwed open
 		return TRUE
 
-	if (istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
+	if (is_reagent_container(I) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		var/obj/item/reagent_containers/B = I
 		. = TRUE //no afterattack
 		if(!user.transferItemToLoc(B, src))

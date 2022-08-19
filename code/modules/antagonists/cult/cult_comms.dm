@@ -289,7 +289,7 @@
 	COOLDOWN_DECLARE(cult_mark_cooldown)
 
 /datum/action/innate/cult/ghostmark/IsAvailable()
-	return ..() && istype(owner, /mob/dead/observer)
+	return ..() && isobserver(owner)
 
 /datum/action/innate/cult/ghostmark/Activate()
 	var/datum/antagonist/cult/cultist = owner.mind?.has_antag_datum(/datum/antagonist/cult, TRUE)

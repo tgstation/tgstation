@@ -142,7 +142,7 @@
 /// Checks what can be hooked
 /obj/item/fishing_rod/proc/can_be_hooked(atom/movable/target)
 	// Could be made dependent on actual hook, ie magnet to hook metallic items
-	return istype(target, /obj/item)
+	return isitem(target)
 
 /obj/item/fishing_rod/proc/clear_hooked_item()
 	SIGNAL_HANDLER

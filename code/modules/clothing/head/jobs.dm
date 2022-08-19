@@ -36,7 +36,7 @@
 	return(FIRELOSS)
 
 /obj/item/clothing/head/chefhat/relaymove(mob/living/user, direction)
-	if(!istype(user, /mob/living/simple_animal/mouse) || !isliving(loc) || !prob(mouse_control_probability))
+	if(!ismouse(user) || !isliving(loc) || !prob(mouse_control_probability))
 		return
 	var/mob/living/L = loc
 	if(L.incapacitated(IGNORE_RESTRAINTS)) //just in case

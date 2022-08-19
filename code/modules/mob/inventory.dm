@@ -209,7 +209,7 @@
 		return FALSE
 
 	// If the item is a stack and we're already holding a stack then merge
-	if (istype(I, /obj/item/stack))
+	if (isstack(I))
 		var/obj/item/stack/item_stack = I
 		var/obj/item/stack/active_stack = get_active_held_item()
 
