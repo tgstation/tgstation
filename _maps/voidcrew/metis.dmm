@@ -326,7 +326,7 @@
 	fax_name = "Metis Fax"
 	},
 /obj/structure/window/reinforced/plasma/spawner/east,
-/obj/structure/window/plasma/reinforced/spawner,
+/obj/structure/window/reinforced/plasma/spawner,
 /turf/open/floor/carpet/purple,
 /area/station/commons/office)
 "fH" = (
@@ -567,7 +567,7 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/station/science)
 "jq" = (
-/obj/structure/window/plasma/reinforced/spawner,
+/obj/structure/window/reinforced/plasma/spawner,
 /obj/structure/window/reinforced/plasma/spawner/east,
 /obj/structure/window/reinforced/plasma/spawner/west,
 /obj/structure/statue/gold/rd,
@@ -2515,7 +2515,7 @@
 /area/station/science/ai_chamber)
 "Pt" = (
 /obj/effect/decal/cleanable/oil,
-/obj/item/wrench/crescent,
+/obj/item/wrench,
 /obj/structure/cable/orange,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/plating,

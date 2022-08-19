@@ -242,7 +242,7 @@
 /area/station/service/cafeteria)
 "aZ" = (
 /obj/structure/table,
-/obj/item/shovel/spoon{
+/obj/item/shovel{
 	desc = "This mighty silver staff seems to have irreversibly lost it's luster.";
 	name = "staff of sustenance"
 	},

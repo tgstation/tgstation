@@ -97,7 +97,7 @@
 /turf/open/floor/iron,
 /area/station/cargo)
 "cH" = (
-/obj/structure/window/plasma/reinforced/spawner,
+/obj/structure/window/reinforced/plasma/spawner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /turf/open/floor/engine/vacuum,
 /area/station/engineering/atmospherics)
@@ -254,7 +254,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 1
 	},
-/obj/structure/window/plasma/reinforced/spawner,
+/obj/structure/window/reinforced/plasma/spawner,
 /turf/open/floor/engine/vacuum,
 /area/station/engineering/atmospherics)
 "jb" = (
@@ -385,7 +385,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 1
 	},
-/obj/structure/window/plasma/reinforced/spawner,
+/obj/structure/window/reinforced/plasma/spawner,
 /turf/open/floor/engine/vacuum,
 /area/station/engineering/atmospherics)
 "mb" = (
@@ -427,7 +427,7 @@
 /area/station/engineering)
 "nJ" = (
 /obj/structure/window/reinforced/plasma/spawner/west,
-/obj/structure/window/plasma/reinforced/spawner,
+/obj/structure/window/reinforced/plasma/spawner,
 /obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/iron,
 /area/station/engineering/atmospherics)
@@ -441,7 +441,7 @@
 "oC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /obj/structure/window/reinforced/plasma/spawner/east,
-/obj/structure/window/plasma/reinforced/spawner,
+/obj/structure/window/reinforced/plasma/spawner,
 /obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/iron,
 /area/station/engineering/atmospherics)
@@ -942,7 +942,7 @@
 /turf/open/floor/plating,
 /area/station/engineering)
 "Er" = (
-/obj/structure/window/plasma/reinforced/spawner,
+/obj/structure/window/reinforced/plasma/spawner,
 /turf/open/floor/engine/vacuum,
 /area/station/engineering/atmospherics)
 "Fx" = (
@@ -1085,7 +1085,7 @@
 /turf/open/floor/iron,
 /area/station/cargo)
 "KP" = (
-/obj/structure/window/plasma/reinforced/spawner,
+/obj/structure/window/reinforced/plasma/spawner,
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos,
 /turf/open/floor/engine/vacuum,
 /area/station/engineering/atmospherics)

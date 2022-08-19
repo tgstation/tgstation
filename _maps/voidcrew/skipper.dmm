@@ -528,7 +528,7 @@
 /area/station/commons/storage/primary)
 "hH" = (
 /obj/structure/cable,
-/turf/open/floor/carpet/neon/simple/red/blue,
+/turf/open/floor/carpet/neon/simple/blue,
 /area/station/medical)
 "hN" = (
 /obj/machinery/airalarm/directional/north,
@@ -641,7 +641,7 @@
 /obj/item/radio/intercom{
 	pixel_x = -28
 	},
-/turf/open/floor/carpet/neon/simple/red/blue,
+/turf/open/floor/carpet/neon/simple/blue,
 /area/station/medical)
 "jr" = (
 /obj/effect/spawner/structure/window/reinforced/shutters,
@@ -921,7 +921,7 @@
 "mR" = (
 /obj/machinery/medical_kiosk,
 /obj/structure/sign/departments/medbay/alt/directional/east,
-/turf/open/floor/carpet/neon/simple/red/blue,
+/turf/open/floor/carpet/neon/simple/blue,
 /area/station/medical)
 "mT" = (
 /obj/structure/chair,
@@ -970,7 +970,7 @@
 "nE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/carpet/neon/simple/red/blue,
+/turf/open/floor/carpet/neon/simple/blue,
 /area/station/medical)
 "nI" = (
 /obj/effect/turf_decal/bot,
@@ -1471,7 +1471,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/carpet/neon/simple/red/blue,
+/turf/open/floor/carpet/neon/simple/blue,
 /area/station/medical)
 "xo" = (
 /obj/structure/cable,
@@ -2042,7 +2042,7 @@
 /area/station/service/cafeteria)
 "Fg" = (
 /obj/structure/sign/departments/medbay/alt/directional/east,
-/turf/open/floor/carpet/neon/simple/red/blue,
+/turf/open/floor/carpet/neon/simple/blue,
 /area/station/medical)
 "Fo" = (
 /obj/structure/cable,
@@ -2106,7 +2106,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/carpet/neon/simple/red/blue,
+/turf/open/floor/carpet/neon/simple/blue,
 /area/station/medical)
 "Gq" = (
 /obj/effect/turf_decal/atmos/plasma,
@@ -2128,7 +2128,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/carpet/neon/simple/red/blue,
+/turf/open/floor/carpet/neon/simple/blue,
 /area/station/medical)
 "GH" = (
 /obj/structure/rack,
@@ -2241,7 +2241,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/turf/open/floor/carpet/neon/simple/red/blue,
+/turf/open/floor/carpet/neon/simple/blue,
 /area/station/medical)
 "IM" = (
 /obj/effect/turf_decal/tile/black{
@@ -2271,7 +2271,7 @@
 /obj/structure/sign/poster/official/random{
 	pixel_x = -32
 	},
-/turf/open/floor/carpet/neon/simple/red/blue,
+/turf/open/floor/carpet/neon/simple/blue,
 /area/station/medical)
 "Jm" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -2379,7 +2379,7 @@
 /obj/item/kirbyplants/random,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
-/turf/open/floor/carpet/neon/simple/red/blue,
+/turf/open/floor/carpet/neon/simple/blue,
 /area/station/medical)
 "Lf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
@@ -2925,7 +2925,7 @@
 	dir = 8;
 	pixel_x = -28
 	},
-/turf/open/floor/carpet/neon/simple/red/blue,
+/turf/open/floor/carpet/neon/simple/blue,
 /area/station/medical)
 "VI" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/nitrogen_input{

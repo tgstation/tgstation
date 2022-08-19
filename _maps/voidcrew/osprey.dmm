@@ -184,7 +184,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/structure/window/plasma/reinforced/spawner,
+/obj/structure/window/reinforced/plasma/spawner,
 /obj/machinery/door/window/left/directional/east{
 	dir = 1;
 	name = "Engine Access"
@@ -534,7 +534,7 @@
 /area/station/service/janitor)
 "ef" = (
 /obj/machinery/space_heater,
-/obj/structure/window/plasma/reinforced/spawner,
+/obj/structure/window/reinforced/plasma/spawner,
 /obj/machinery/door/window/right/directional/east{
 	dir = 1;
 	name = "Engine Access"
@@ -1648,7 +1648,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/structure/window/plasma/reinforced/spawner,
+/obj/structure/window/reinforced/plasma/spawner,
 /obj/machinery/door/window/right/directional/east{
 	dir = 1;
 	name = "Engine Access"
@@ -4385,7 +4385,7 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/item/clothing/under/rank/command/head_of_personnel/nt,
+/obj/item/clothing/under/rank/centcom/officer,
 /obj/item/clothing/head/hopcap/nt,
 /turf/open/floor/carpet/blue,
 /area/station/command/bridge)
@@ -4408,7 +4408,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/structure/window/plasma/reinforced/spawner,
+/obj/structure/window/reinforced/plasma/spawner,
 /obj/machinery/door/window/left/directional/east{
 	dir = 1;
 	name = "Engine Access"
@@ -5197,7 +5197,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/structure/window/plasma/reinforced/spawner,
+/obj/structure/window/reinforced/plasma/spawner,
 /obj/machinery/door/window/right/directional/east{
 	dir = 1;
 	name = "Engine Access"
@@ -5290,7 +5290,7 @@
 /area/station/engineering/engine)
 "Tu" = (
 /obj/machinery/space_heater,
-/obj/structure/window/plasma/reinforced/spawner,
+/obj/structure/window/reinforced/plasma/spawner,
 /obj/machinery/door/window/left/directional/east{
 	dir = 1;
 	name = "Engine Access"
@@ -5782,7 +5782,7 @@
 	req_access_txt = "20"
 	},
 /obj/item/storage/backpack/captain,
-/obj/item/clothing/under/rank/command/captain/nt,
+/obj/item/clothing/under/rank/centcom/commander,
 /obj/item/clothing/shoes/laceup,
 /obj/item/clothing/gloves/color/captain,
 /obj/item/clothing/head/caphat/nt,

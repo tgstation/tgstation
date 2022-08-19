@@ -80,7 +80,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
-/obj/item/toy/plush/among,
+/obj/item/toy/plush/moth,
 /obj/docking_port/mobile{
 	can_move_docking_ports = 1;
 	dir = 8;

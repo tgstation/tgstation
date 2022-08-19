@@ -6,7 +6,7 @@
 	suit_type = /obj/item/mod/control/pre_equipped/elite
 	},
 /obj/machinery/airalarm/directional/north,
-/turf/open/floor/wood/yew,
+/turf/open/floor/wood,
 /area/station/commons/office)
 "am" = (
 /obj/machinery/computer/crew,
@@ -45,7 +45,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/wood/yew,
+/turf/open/floor/wood,
 /area/station/commons/office)
 "aY" = (
 /obj/effect/turf_decal/tile/bottlegreen{
@@ -439,7 +439,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/wood/yew,
+/turf/open/floor/wood,
 /area/station/commons/office)
 "ka" = (
 /obj/structure/table/wood,
@@ -560,7 +560,7 @@
 "nc" = (
 /obj/structure/table/glass,
 /obj/machinery/computer/med_data/laptop,
-/turf/open/floor/wood/yew,
+/turf/open/floor/wood,
 /area/station/commons/office)
 "nd" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -718,7 +718,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
-/turf/open/floor/wood/yew,
+/turf/open/floor/wood,
 /area/station/commons/office)
 "pO" = (
 /obj/effect/turf_decal/tile/red,
@@ -856,7 +856,7 @@
 /obj/item/kirbyplants/random,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
-/turf/open/floor/wood/yew,
+/turf/open/floor/wood,
 /area/station/commons/office)
 "vi" = (
 /obj/effect/turf_decal/tile/bottlegreen/anticorner{
@@ -1557,7 +1557,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/turf/open/floor/wood/yew,
+/turf/open/floor/wood,
 /area/station/commons/office)
 "In" = (
 /turf/closed/wall,
@@ -1696,7 +1696,7 @@
 /obj/item/storage/box/hypospray/CMO,
 /obj/item/clothing/glasses/science,
 /obj/item/roller,
-/turf/open/floor/wood/yew,
+/turf/open/floor/wood,
 /area/station/commons/office)
 "YX" = (
 /obj/effect/turf_decal/tile/bottlegreen{

@@ -72,7 +72,7 @@
 "cQ" = (
 /obj/structure/table,
 /obj/item/radio/intercom,
-/obj/item/toy/plush/among,
+/obj/item/toy/plush/moth,
 /turf/open/floor/mineral/plastitanium,
 /area/station/command/bridge)
 "cV" = (

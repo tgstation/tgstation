@@ -52,7 +52,7 @@
 /area/space)
 "cc" = (
 /obj/structure/table/wood,
-/obj/item/pen/fountain/solgov,
+/obj/item/pen/fountain,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/random/maintenance,
 /obj/structure/cable,
@@ -76,12 +76,12 @@
 /turf/closed/wall/r_wall,
 /area/station/maintenance/fore)
 "dd" = (
-/mob/living/simple_animal/hostile/cockroach,
+/mob/living/basic/cockroach,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "dk" = (
 /obj/item/wrench/medical,
-/obj/item/wrench/crescent,
+/obj/item/wrench,
 /obj/structure/rack,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)
@@ -181,7 +181,7 @@
 /turf/open/floor/plating,
 /area/station/cargo)
 "io" = (
-/obj/item/toy/plush/among,
+/obj/item/toy/plush/moth,
 /obj/structure/chair{
 	dir = 1
 	},
@@ -263,10 +263,6 @@
 /obj/effect/spawner/random/food_or_drink/pizzaparty,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
-"mw" = (
-/obj/machinery/computer/autopilot,
-/turf/open/floor/plating,
-/area/station/maintenance/fore)
 "mX" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
@@ -301,7 +297,7 @@
 /area/station/maintenance/central)
 "nX" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/mob/living/simple_animal/hostile/cockroach,
+/mob/living/basic/cockroach,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "ob" = (
@@ -319,7 +315,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "ou" = (
-/obj/item/toy/plush/among,
+/obj/item/toy/plush/moth,
 /obj/structure/chair,
 /turf/open/floor/plating/airless,
 /area/space)
@@ -659,7 +655,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "Ef" = (
-/mob/living/simple_animal/hostile/cockroach,
+/mob/living/basic/cockroach,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
@@ -693,7 +689,7 @@
 /obj/item/storage/toolbox/mechanical/old,
 /obj/structure/rack,
 /obj/item/clothing/gloves/color/fyellow,
-/obj/item/multitool/old,
+/obj/item/multitool,
 /obj/item/crowbar/red,
 /obj/item/screwdriver/power,
 /turf/open/floor/plating,
@@ -770,7 +766,6 @@
 /area/station/cargo)
 "LR" = (
 /obj/structure/closet/crate,
-/obj/item/knife/letter_opener,
 /obj/item/flashlight/pen,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
@@ -834,7 +829,7 @@
 "PC" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/power/terminal,
-/mob/living/simple_animal/hostile/cockroach,
+/mob/living/basic/cockroach,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/central)
@@ -875,9 +870,9 @@
 	},
 /obj/item/storage/bag/ore,
 /obj/item/mining_scanner,
-/obj/item/shovel/spoon,
+/obj/item/shovel,
 /obj/machinery/light,
-/obj/item/shovel/spoon,
+/obj/item/shovel,
 /obj/item/mining_scanner,
 /obj/item/storage/bag/ore,
 /obj/item/pickaxe/emergency,
@@ -910,7 +905,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/reagent_dispensers/fueltank,
-/obj/item/weldingtool/empty,
+/obj/item/weldingtool,
 /obj/item/clothing/mask/gas/welding,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
@@ -1196,7 +1191,7 @@ nT
 "}
 (5,1,1) = {"
 Rd
-mw
+fj
 ob
 cQ
 lQ

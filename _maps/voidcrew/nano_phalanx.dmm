@@ -109,7 +109,7 @@
 /area/station/service/cafeteria)
 "bA" = (
 /obj/structure/closet/secure_closet/captains,
-/turf/open/floor/wood/yew,
+/turf/open/floor/wood,
 /area/station/cargo/office)
 "bO" = (
 /obj/machinery/vending/wardrobe/chap_wardrobe,
@@ -389,7 +389,7 @@
 /area/station/medical/surgery)
 "ei" = (
 /obj/machinery/suit_storage_unit/captain,
-/turf/open/floor/wood/yew,
+/turf/open/floor/wood,
 /area/station/cargo/office)
 "er" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -430,7 +430,7 @@
 "eI" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/wood/yew,
+/turf/open/floor/wood,
 /area/station/cargo/office)
 "eM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
@@ -465,7 +465,7 @@
 	dir = 8
 	},
 /obj/item/radio/headset/headset_cent/commander,
-/turf/open/floor/wood/yew,
+/turf/open/floor/wood,
 /area/station/cargo/office)
 "fl" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -544,7 +544,7 @@
 /area/station/cargo)
 "gv" = (
 /obj/machinery/airalarm/directional/north,
-/turf/open/floor/wood/yew,
+/turf/open/floor/wood,
 /area/station/cargo/office)
 "gB" = (
 /obj/machinery/power/shuttle/engine/electric{
@@ -796,7 +796,7 @@
 	dir = 8
 	},
 /obj/structure/displaycase/captain,
-/turf/open/floor/wood/yew,
+/turf/open/floor/wood,
 /area/station/cargo/office)
 "ke" = (
 /obj/machinery/door/airlock/engineering{
@@ -976,7 +976,7 @@
 "mL" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
-/turf/open/floor/wood/yew,
+/turf/open/floor/wood,
 /area/station/cargo/office)
 "mM" = (
 /obj/structure/cable,
@@ -1309,7 +1309,7 @@
 /area/station/medical/surgery)
 "rt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/wood/yew,
+/turf/open/floor/wood,
 /area/station/cargo/office)
 "rv" = (
 /obj/structure/window/reinforced/tinted{
@@ -1540,7 +1540,7 @@
 /area/station/commons/chapel)
 "us" = (
 /obj/structure/cable,
-/turf/open/floor/wood/yew,
+/turf/open/floor/wood,
 /area/station/cargo/office)
 "uC" = (
 /obj/machinery/mass_driver{
@@ -1731,7 +1731,7 @@
 /area/station/science)
 "xH" = (
 /obj/structure/cable,
-/turf/open/floor/carpet/neon/simple/red/purple,
+/turf/open/floor/carpet/neon/simple/purple,
 /area/station/hallway/primary/central)
 "xK" = (
 /obj/structure/bodycontainer/crematorium/creamatorium{
@@ -1940,7 +1940,7 @@
 	req_access_txt = "20"
 	},
 /obj/structure/cable,
-/turf/open/floor/wood/yew,
+/turf/open/floor/wood,
 /area/station/security)
 "AI" = (
 /obj/structure/window/reinforced{
@@ -2226,7 +2226,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/wood/yew,
+/turf/open/floor/wood,
 /area/station/cargo/office)
 "EW" = (
 /obj/machinery/light{
@@ -2529,7 +2529,7 @@
 	name = "Captain's Quarters";
 	req_access_txt = "20"
 	},
-/turf/open/floor/wood/yew,
+/turf/open/floor/wood,
 /area/station/security)
 "JS" = (
 /obj/machinery/light,
@@ -2603,7 +2603,7 @@
 "Kx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/turf/open/floor/wood/yew,
+/turf/open/floor/wood,
 /area/station/cargo/office)
 "KB" = (
 /obj/structure/window/reinforced/plasma,
@@ -3049,7 +3049,7 @@
 "QN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/wood/yew,
+/turf/open/floor/wood,
 /area/station/cargo/office)
 "QO" = (
 /obj/machinery/door/airlock/command{
@@ -3278,7 +3278,7 @@
 /obj/machinery/camera{
 	dir = 10
 	},
-/turf/open/floor/wood/yew,
+/turf/open/floor/wood,
 /area/station/cargo/office)
 "UT" = (
 /obj/structure/chair/sofa{
@@ -3390,7 +3390,7 @@
 /turf/open/floor/carpet/executive,
 /area/station/command/bridge)
 "Xb" = (
-/turf/open/floor/wood/yew,
+/turf/open/floor/wood,
 /area/station/cargo/office)
 "Xe" = (
 /obj/machinery/atmospherics/components/binary/pump{
@@ -3407,7 +3407,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/turf/open/floor/wood/yew,
+/turf/open/floor/wood,
 /area/station/cargo/office)
 "Xp" = (
 /obj/machinery/firealarm{
@@ -3426,7 +3426,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/wood/yew,
+/turf/open/floor/wood,
 /area/station/cargo/office)
 "XI" = (
 /turf/closed/wall/mineral/titanium,
@@ -3443,7 +3443,7 @@
 /obj/item/bedsheet/captain,
 /obj/structure/bed,
 /obj/effect/landmark/start/captain,
-/turf/open/floor/wood/yew,
+/turf/open/floor/wood,
 /area/station/cargo/office)
 "Yk" = (
 /obj/machinery/cryopod{
@@ -3478,7 +3478,7 @@
 /turf/open/floor/engine,
 /area/station/security)
 "YM" = (
-/turf/open/floor/carpet/neon/simple/red/purple,
+/turf/open/floor/carpet/neon/simple/purple,
 /area/station/hallway/primary/central)
 "YW" = (
 /obj/machinery/power/terminal{
