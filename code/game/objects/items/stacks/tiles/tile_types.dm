@@ -151,8 +151,8 @@
 			user.balloon_alert(user, "can't place siding here!")
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 		if(!do_after(user, 4 SECONDS, build_on))
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 			balloon_alert(user, "Placing siding...")
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 		if(!use(1))
 			user.balloon_alert(user, "not enough material!")
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
