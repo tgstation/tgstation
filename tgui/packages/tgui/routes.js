@@ -9,7 +9,9 @@ import { Icon, Section, Stack } from './components';
 import { selectDebug } from './debug/selectors';
 import { Window } from './layouts';
 
-const requireInterface = require.context('./interfaces');
+// voidcrew edit - modular tgui
+import { loadInterface } from '../voidcrew_tgui';
+// const requireInterface = require.context('./interfaces');
 
 const routingError = (type, name) => () => {
   return (
@@ -83,7 +85,8 @@ export const getRoutedComponent = (store) => {
     const interfacePathBuilder = interfacePathBuilders.shift();
     const interfacePath = interfacePathBuilder(name);
     try {
-      esModule = requireInterface(interfacePath);
+      // voidcrew edit - modular TGUI
+      esModule = loadInterface(interfacePath);
     } catch (err) {
       if (err.code !== 'MODULE_NOT_FOUND') {
         throw err;
