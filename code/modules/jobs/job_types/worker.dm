@@ -42,7 +42,7 @@
 
 	id_trim = /datum/id_trim/job/worker
 	uniform = /obj/item/clothing/under/pants/jeans
-	suit = /obj/item/clothing/under/rank/engineering/engineer/hazard
+	suit = /obj/item/clothing/suit/hazardvest
 	backpack_contents = list(
 		/obj/item/stack/sheet/iron/fifty = 1,
 		/obj/item/stack/sheet/plasteel/fifty = 1,
