@@ -7,13 +7,13 @@ GLOBAL_VAR_INIT(meteor_wave_delay, 625) //minimum wait between waves in tenths o
 
 //Meteors probability of spawning during a given wave
 GLOBAL_LIST_INIT(meteors_normal, list(/obj/effect/meteor/dust=3, /obj/effect/meteor/medium=8, /obj/effect/meteor/big=3, \
-						  /obj/effect/meteor/flaming=1, /obj/effect/meteor/irradiated=3)) //for normal meteor event
+						  /obj/effect/meteor/flaming=1, /obj/effect/meteor/irradiated=3, /obj/effect/meteor/carp=1)) //for normal meteor event
 
 GLOBAL_LIST_INIT(meteors_threatening, list(/obj/effect/meteor/medium=4, /obj/effect/meteor/big=8, \
-						  /obj/effect/meteor/flaming=3, /obj/effect/meteor/irradiated=3)) //for threatening meteor event
+						  /obj/effect/meteor/flaming=3, /obj/effect/meteor/irradiated=3, /obj/effect/meteor/cluster=1, /obj/effect/meteor/carp=1)) //for threatening meteor event
 
 GLOBAL_LIST_INIT(meteors_catastrophic, list(/obj/effect/meteor/medium=5, /obj/effect/meteor/big=75, \
-						  /obj/effect/meteor/flaming=10, /obj/effect/meteor/irradiated=10, /obj/effect/meteor/tunguska = 1)) //for catastrophic meteor event
+						  /obj/effect/meteor/flaming=10, /obj/effect/meteor/irradiated=10, /obj/effect/meteor/cluster=3, /obj/effect/meteor/tunguska=1, /obj/effect/meteor/carp=1)) //for catastrophic meteor event
 
 GLOBAL_LIST_INIT(meteorsB, list(/obj/effect/meteor/meaty=5, /obj/effect/meteor/meaty/xeno=1)) //for meaty ore event
 
@@ -289,6 +289,41 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 	explosion(src, light_impact_range = 4, flash_range = 3, adminlog = FALSE)
 	new /obj/effect/decal/cleanable/greenglow(get_turf(src))
 	radiation_pulse(src, max_range = 3, threshold = RAD_MEDIUM_INSULATION, chance = 80)
+
+/obj/effect/meteor/cluster
+	name = "cluster meteor"
+	icon_state = "glowing" //ADD SPRITE
+	hits = 8
+	heavy = TRUE
+	meteorsound = 'sound/effects/break_stone.ogg'
+	threat = 25
+	///Number of fragmentation meteors to be spawned
+	var/cluster_count = 8
+
+/obj/effect/meteor/cluster/meteor_effect()
+	..()
+
+	while(cluster_count > 0)
+		var/startZ = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
+		var/startSide = pick(GLOB.cardinals)
+		var/turf/destination = spaceDebrisStartLoc(startSide, startZ)
+		new /obj/effect/meteor/cluster_fragment(get_turf(src), destination)
+		cluster_count--
+
+	explosion(src, heavy_impact_range = 2, light_impact_range = 3, flash_range = 4, adminlog = FALSE)
+
+/obj/effect/meteor/cluster_fragment
+	name = "cluster meteor fragment"
+	icon_state = "small" //make a small little baby sprite for this
+
+/obj/effect/meteor/carp
+	name = "frozen carp"
+	icon_state = "meateor" //fish in ice cube sprite or something
+	desc = "Am I glad he's frozen in there, and that we're out here."
+	hits = 2
+	meteorsound = 'sound/effects/ethereal_revive_fail.ogg'
+	meteordrop = list(/mob/living/simple_animal/hostile/carp)
+	threat = 2
 
 //Meaty Ore
 /obj/effect/meteor/meaty
