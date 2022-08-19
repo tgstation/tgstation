@@ -186,7 +186,7 @@
 	icon_state = "pokemeat"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("rice and meat" = 4, "lettuce" = 2, "soy sauce" = 2)
-	foodtypes = SEAFOOD | VEGETABLES
+	foodtypes = SEAFOOD | MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/fish_poke
