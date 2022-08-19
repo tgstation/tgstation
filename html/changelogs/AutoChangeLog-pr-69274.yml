@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes: 
-  - bugfix: "Pun Pun shouldn't save the name \"Unknown\" between rounds unless that is actually their real name for some reason."

@@ -1,4 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - bugfix: "Removed a heap of situations where dynamic rulesets could fail while executing, causing runtimes"
