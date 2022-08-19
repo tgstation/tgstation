@@ -657,7 +657,7 @@
 	dir = 10
 	},
 /obj/effect/turf_decal/trimline/neutral/warning,
-/obj/machinery/suit_storage_unit/engineering,
+/obj/machinery/suit_storage_unit/engine,
 /turf/open/floor/plating,
 /area/station/engineering/engine)
 "dF" = (

@@ -459,7 +459,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/suit_storage_unit/engineering,
+/obj/machinery/suit_storage_unit/engine,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "ym" = (

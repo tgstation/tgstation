@@ -110,8 +110,8 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "fD" = (
-/obj/machinery/atmospherics/pipe/layer_manifold,
 /obj/machinery/suit_storage_unit/ce,
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "fI" = (
@@ -759,7 +759,7 @@
 /turf/open/floor/iron,
 /area/station/medical)
 "OT" = (
-/obj/machinery/atmospherics/pipe/layer_manifold,
+/obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "OU" = (
