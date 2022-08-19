@@ -152,7 +152,7 @@
 	if(target == src)
 		to_chat(src, span_warning("You almost bite yourself, but then decide against it."))
 		return
-	if(istype(target, /turf/closed/wall))
+	if(iswallturf(target))
 		if(tearing_wall)
 			return
 		tearing_wall = TRUE
@@ -163,7 +163,7 @@
 		if(istype(target, /turf/closed/wall/r_wall))
 			timetotear = 120
 		if(do_after(src, timetotear, target = thewall))
-			if(istype(thewall, /turf/open))
+			if(isopenturf(thewall))
 				return
 			thewall.dismantle_wall(1)
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
@@ -178,7 +178,7 @@
 					adjustHealth(-L.maxHealth * 0.25)
 			return
 	. = ..()
-	if(istype(target, /obj/vehicle/sealed/mecha))
+	if(ismecha(target))
 		var/obj/vehicle/sealed/mecha/M = target
 		M.take_damage(50, BRUTE, MELEE, 1)
 
@@ -314,7 +314,7 @@
 	turfs = line_target(0, range, at)
 	var/delayFire = -1.0
 	for(var/turf/T in turfs)
-		if(istype(T, /turf/closed))
+		if(isclosedturf(T))
 			return
 		for(var/obj/structure/window/W in T.contents)
 			return

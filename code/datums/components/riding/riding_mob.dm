@@ -149,7 +149,7 @@
 
 /// If the ridden creature has abilities, and some var yet to be made is set to TRUE, the rider will be able to control those abilities
 /datum/component/riding/creature/proc/setup_abilities(mob/living/rider)
-	if(!istype(parent, /mob/living))
+	if(!isliving(parent))
 		return
 
 	var/mob/living/ridden_creature = parent
@@ -159,7 +159,7 @@
 
 /// Takes away the riding parent's abilities from the rider
 /datum/component/riding/creature/proc/remove_abilities(mob/living/rider)
-	if(!istype(parent, /mob/living))
+	if(!isliving(parent))
 		return
 
 	var/mob/living/ridden_creature = parent

@@ -105,7 +105,7 @@
 	use_autosurgeon(target, user, 8 SECONDS)
 
 /obj/item/autosurgeon/attackby(obj/item/attacking_item, mob/user, params)
-	if(istype(attacking_item, /obj/item/organ))
+	if(isorgan(attacking_item))
 		load_organ(attacking_item, user)
 	else
 		return ..()

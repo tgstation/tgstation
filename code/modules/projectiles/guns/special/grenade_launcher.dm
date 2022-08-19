@@ -20,7 +20,7 @@
 
 	if(istype(I, /obj/item/grenade/c4))
 		return
-	if((istype(I, /obj/item/grenade)))
+	if((isgrenade(I)))
 		if(grenades.len < max_grenades)
 			if(!user.transferItemToLoc(I, src))
 				return

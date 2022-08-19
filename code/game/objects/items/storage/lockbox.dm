@@ -225,7 +225,7 @@
 	buyer_account = _buyer_account
 
 /obj/item/storage/lockbox/order/attackby(obj/item/W, mob/user, params)
-	if(!istype(W, /obj/item/card/id))
+	if(!isidcard(W))
 		return ..()
 
 	var/obj/item/card/id/id_card = W

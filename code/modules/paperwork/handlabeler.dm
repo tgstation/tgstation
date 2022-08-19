@@ -16,7 +16,7 @@
 	user.real_name += " (suicide)"
 	// no conflicts with their identification card
 	for(var/atom/A in user.get_all_contents())
-		if(istype(A, /obj/item/card/id))
+		if(isidcard(A))
 			var/obj/item/card/id/their_card = A
 
 			// only renames their card, as opposed to tagging everyone's

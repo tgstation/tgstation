@@ -101,7 +101,7 @@
 	. = ..()
 	if(mover == set_target)
 		return FALSE
-	if(istype(mover, /obj/projectile))
+	if(isprojectile(mover))
 		var/obj/projectile/P = mover
 		if(P.firer == set_target)
 			return FALSE

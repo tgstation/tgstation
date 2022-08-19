@@ -10,7 +10,7 @@
 
 /datum/element/update_icon_updates_onmob/Attach(datum/target, flags, body = FALSE)
 	. = ..()
-	if(!istype(target, /obj/item))
+	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 	RegisterSignal(target, COMSIG_ATOM_UPDATED_ICON, .proc/update_onmob)
 

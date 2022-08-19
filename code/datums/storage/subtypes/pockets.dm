@@ -55,7 +55,7 @@
 
 /datum/storage/pockets/chefhat/can_insert(obj/item/to_insert, mob/user, messages, force)
 	. = ..()
-	if(istype(to_insert, /obj/item/clothing/head/mob_holder))
+	if(ispickedupmob(to_insert))
 		var/obj/item/clothing/head/mob_holder/mausholder = to_insert
 		if(locate(/mob/living/simple_animal/mouse) in mausholder.contents)
 			return
