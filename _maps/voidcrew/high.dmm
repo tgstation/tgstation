@@ -1860,7 +1860,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/external)
+/area/station/engineering/atmos)
 "Ku" = (
 /obj/structure/railing,
 /obj/structure/cable,
