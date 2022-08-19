@@ -124,7 +124,7 @@
 	spillable = TRUE
 
 /obj/item/reagent_containers/cup/glass/mug/update_icon_state()
-	icon_state = reagents.total_volume ? "tea" : "tea_empty"
+	icon_state = reagents?.total_volume ? "tea" : "tea_empty"
 	return ..()
 
 /obj/item/reagent_containers/cup/glass/mug/tea
@@ -329,7 +329,7 @@
 	isGlass = FALSE
 
 /obj/item/reagent_containers/cup/glass/sillycup/update_icon_state()
-	icon_state = reagents.total_volume ? "water_cup" : "water_cup_e"
+	icon_state = reagents?.total_volume ? "water_cup" : "water_cup_e"
 	return ..()
 
 /obj/item/reagent_containers/cup/glass/sillycup/smallcarton
