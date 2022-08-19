@@ -143,7 +143,7 @@
 // As such this all gets counted as a single line.
 // The braces and semicolons are there to be able to do this on a single line.
 #define LUM_FALLOFF(C, T) (1 - CLAMP01(sqrt((C.x - T.x) ** 2 + (C.y - T.y) ** 2 + LIGHTING_HEIGHT) / max(1, light_range)))
-#define LUM_FALLOFF_MULTIZ(C, T) (1 - CLAMP01(ROOT(3, max((C.x - T.x) ** 3 + (C.y - T.y) ** 3 + abs(C.z - T.z) ** 3 + LIGHTING_HEIGHT) / max(1, light_range), 0)))
+#define LUM_FALLOFF_MULTIZ(C, T) (1 - CLAMP01(ROOT(3, max((C.x - T.x) ** 3 + (C.y - T.y) ** 3 + abs(C.z - T.z) ** 3 + LIGHTING_HEIGHT, 0) / max(1, light_range))))
 
 #define APPLY_CORNER(C, use_multiz)              \
 	if(use_multiz) {                             \
