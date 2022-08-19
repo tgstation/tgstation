@@ -5,26 +5,16 @@
 	},
 /turf/open/floor/plating,
 /area/station/external)
-"ak" = (
-/obj/structure/window/reinforced/spawner{
-	dir = 8
-	},
-/obj/structure/closet/crate/rcd,
-/obj/item/pipe_dispenser,
-/turf/open/floor/plating,
-/area/station/engineering/main)
 "bf" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "bi" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/station/hallway/primary/central)
+/turf/open/floor/plating,
+/area/station/engineering/main)
 "bz" = (
 /turf/closed/wall/r_wall,
 /area/station/science/robotics)
@@ -66,7 +56,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/ore_box,
 /turf/open/floor/iron/dark,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "fb" = (
 /obj/machinery/light{
 	dir = 8
@@ -183,7 +173,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "iV" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -248,7 +238,7 @@
 	location = "cargotwo"
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "mu" = (
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
@@ -267,11 +257,23 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "ns" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/dark,
-/area/station/hallway/primary/central)
+/obj/structure/window/reinforced/spawner{
+	dir = 8
+	},
+/obj/structure/closet/crate/rcd,
+/obj/item/pipe_dispenser,
+/turf/open/floor/plating,
+/area/station/engineering/main)
+"nR" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 4
+	},
+/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/north,
+/turf/open/floor/plating,
+/area/station/engineering/main)
 "nY" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research/glass{
@@ -279,7 +281,17 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
+"oW" = (
+/obj/structure/window/reinforced/spawner{
+	dir = 8
+	},
+/obj/machinery/power/smes/engineering{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/engineering/main)
 "pe" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -304,7 +316,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "pI" = (
 /obj/machinery/atmospherics/components/tank/plasma{
 	dir = 1
@@ -318,7 +330,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "pN" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/suit_storage_unit/standard_unit,
@@ -372,19 +384,13 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/station/engineering/main)
-"sl" = (
+"sy" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/engineering/main)
-"sy" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 4
-	},
-/obj/structure/window/reinforced/plasma/spawner/east,
-/obj/structure/window/reinforced/plasma/spawner/north,
-/turf/open/floor/plating,
-/area/station/engineering/main)
+/turf/open/floor/iron/dark,
+/area/station/hallway/primary/central)
 "sT" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -410,7 +416,7 @@
 	name = "Cargo Bay Blast Door"
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "vc" = (
 /obj/machinery/computer/helm{
 	dir = 8
@@ -425,7 +431,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/oil/streak,
 /turf/open/floor/iron/dark,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "vq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -467,7 +473,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "wX" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters{
@@ -545,7 +551,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "An" = (
 /obj/machinery/power/terminal{
 	dir = 4
@@ -581,11 +587,11 @@
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/suit/hazardvest,
 /turf/open/floor/iron/dark,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "AY" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "Ba" = (
 /obj/structure/cable,
 /obj/machinery/computer/operating{
@@ -605,10 +611,9 @@
 /obj/structure/window/reinforced/spawner{
 	dir = 8
 	},
-/obj/machinery/power/smes/engineering{
-	dir = 4
-	},
-/obj/structure/cable,
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/mineral/plasma/thirty,
+/obj/item/stack/sheet/mineral/plasma/thirty,
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "Bo" = (
@@ -626,7 +631,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "BK" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/reagent_dispensers/watertank,
@@ -648,7 +653,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "CV" = (
 /turf/closed/wall/r_wall,
 /area/station/command/bridge)
@@ -686,7 +691,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "Dx" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -765,7 +770,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "GP" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/poddoor{
@@ -779,7 +784,14 @@
 	port_direction = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
+"Hr" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet/neon/simple/purple,
+/area/station/command/bridge)
 "Hx" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -830,14 +842,9 @@
 /turf/open/floor/carpet/neon/simple/purple,
 /area/station/command/bridge)
 "IX" = (
-/obj/structure/window/reinforced/spawner{
-	dir = 8
-	},
-/obj/structure/closet/crate,
-/obj/item/stack/sheet/mineral/plasma/thirty,
-/obj/item/stack/sheet/mineral/plasma/thirty,
-/turf/open/floor/plating,
-/area/station/engineering/main)
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/station/hallway/primary/central)
 "Jg" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -919,7 +926,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "My" = (
 /obj/structure/railing,
 /obj/structure/lattice/catwalk,
@@ -969,13 +976,6 @@
 	pixel_y = -2
 	},
 /obj/item/megaphone/command,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/carpet/neon/simple/purple,
-/area/station/command/bridge)
-"Ot" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/neon/simple/purple,
 /area/station/command/bridge)
@@ -1029,10 +1029,10 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "PK" = (
 /turf/closed/wall/r_wall,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "PW" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/components/binary/pump{
@@ -1053,7 +1053,7 @@
 /obj/item/flashlight,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "Qm" = (
 /obj/item/toy/figure/roboticist{
 	pixel_x = 3;
@@ -1078,7 +1078,7 @@
 /obj/machinery/light,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "Rp" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1089,7 +1089,7 @@
 	location = "cargoone"
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "Rq" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1249,7 +1249,7 @@
 /obj/item/circuitboard/mecha/ripley/peripherals,
 /obj/item/stack/rods/ten,
 /turf/open/floor/iron/dark,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "Wu" = (
 /obj/machinery/airalarm/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -1261,7 +1261,7 @@
 "Xa" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/cargo)
+/area/station/cargo/miningoffice)
 "YO" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
@@ -1351,12 +1351,12 @@ HR
 HR
 ir
 ir
+oW
 Bg
-IX
-sy
+nR
 yN
-ak
-Bg
+ns
+oW
 ir
 HR
 HR
@@ -1402,7 +1402,7 @@ fU
 Zd
 sj
 FC
-sl
+bi
 Vp
 sT
 ir
@@ -1432,7 +1432,7 @@ Pc
 kI
 fb
 ip
-ns
+IX
 uM
 Wu
 zA
@@ -1445,9 +1445,9 @@ HR
 (8,1,1) = {"
 HR
 Pc
-bi
-bi
-bi
+sy
+sy
+sy
 lp
 fJ
 Co
@@ -1496,10 +1496,10 @@ Ql
 Rp
 CL
 PK
-ns
+IX
 Na
 yP
-ns
+IX
 bz
 YO
 Tq
@@ -1544,7 +1544,7 @@ Wf
 pK
 Gg
 PK
-ns
+IX
 iB
 Jm
 DK
@@ -1623,13 +1623,13 @@ HR
 Pc
 fJ
 xZ
-ns
-ns
+IX
+IX
 ip
 Vj
 Vj
-ns
-ns
+IX
+IX
 fJ
 Pc
 HR
@@ -1640,7 +1640,7 @@ Pc
 KD
 fJ
 fJ
-ns
+IX
 bE
 VM
 Dy
@@ -1671,12 +1671,12 @@ HR
 HR
 CV
 Ej
-Ot
+Hr
 zE
 Se
 HX
 zE
-Ot
+Hr
 kO
 CV
 HR
