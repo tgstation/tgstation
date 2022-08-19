@@ -21,6 +21,27 @@
 	. = ..()
 	update_appearance()
 
+
+	var/static/list/hovering_item_typechecks = list(
+		/obj/item/reagent_containers/dropper = list(
+			SCREENTIP_CONTEXT_LMB = "Use dropper",
+		),
+
+		/obj/item/reagent_containers/syringe = list(
+			SCREENTIP_CONTEXT_LMB = "Inject sample",
+			SCREENTIP_CONTEXT_RMB = "Draw sample"
+		),
+	)
+
+	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
+
+	AddElement( \
+		/datum/element/contextual_screentip_bare_hands, \
+		lmb_text = "Open interface", \
+		rmb_text = "Remove beaker", \
+	)
+
+
 /obj/machinery/computer/pandemic/Destroy()
 	QDEL_NULL(beaker)
 	return ..()
@@ -58,6 +79,19 @@
 	return ..()
 
 /obj/machinery/computer/pandemic/attackby(obj/item/held_item, mob/user, params)
+	//Advanced science! Percision instruments (eg droppers and syringes) are precise enough to modify the loaded sample!
+	if(istype(held_item, /obj/item/reagent_containers/dropper) || istype(held_item, /obj/item/reagent_containers/syringe))
+		if(!beaker)
+			balloon_alert(user, "no beaker")
+			return ..()
+		var/list/modifiers = params2list(params)
+		if(istype(held_item, /obj/item/reagent_containers/syringe) && LAZYACCESS(modifiers, RIGHT_CLICK))
+			held_item.afterattack_secondary(beaker, user, Adjacent(user), params)
+		else
+			held_item.afterattack(beaker, user, Adjacent(user), params)
+		SStgui.update_uis(src)
+		return TRUE
+
 	if(!is_reagent_container(held_item) || held_item.item_flags & ABSTRACT || !held_item.is_open_container())
 		return ..()
 	. = TRUE //no afterattack
