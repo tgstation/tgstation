@@ -68,6 +68,7 @@ export const DmTarget = new Juke.Target({
     'html/**',
     'icons/**',
     'interface/**',
+    'voidcrew/**', //voidcrew edit: adds our folder to build
     `${DME_NAME}.dme`,
   ],
   outputs: [
