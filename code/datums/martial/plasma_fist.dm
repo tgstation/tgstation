@@ -93,7 +93,7 @@
 		var/mob/living/carbon/human/human_attacker = user
 		human_attacker.set_species(/datum/species/plasmaman)
 		ADD_TRAIT(human_attacker, TRAIT_FORCED_STANDING, type)
-		human_attacker.dna.species.species_traits += TRAIT_BOMBIMMUNE
+		ADD_TRAIT(human_attacker, TRAIT_BOMBIMMUNE, type)
 		human_attacker.unequip_everything()
 		human_attacker.underwear = "Nude"
 		human_attacker.undershirt = "Nude"
@@ -119,7 +119,7 @@
 	if(ishuman(dying))
 		var/mob/living/carbon/human/dying_human = dying
 		REMOVE_TRAIT(dying_human, TRAIT_FORCED_STANDING, type)
-		dying_human.dna.species.species_traits -= TRAIT_BOMBIMMUNE
+		REMOVE_TRAIT(dying_human, TRAIT_BOMBIMMUNE, type)
 	if(dying.stat == DEAD)
 		return
 	dying.death()
