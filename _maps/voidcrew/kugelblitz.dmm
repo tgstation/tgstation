@@ -1131,7 +1131,6 @@
 	dir = 1
 	},
 /turf/open/floor/circuit/red,
-/turf/open/floor/iron/dark,
 /area/station/engineering)
 "ww" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden/layer1,
