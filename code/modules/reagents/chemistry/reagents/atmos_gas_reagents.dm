@@ -9,19 +9,17 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 	addiction_types = list(/datum/addiction/stimulants = 14)
 
-/datum/reagent/nitrium_high_metabolization/on_mob_metabolize(mob/living/L)
+/datum/reagent/nitrium_high_metabolization/on_mob_metabolize(mob/living/breather)
 	. = ..()
-	ADD_TRAIT(L, TRAIT_STUNIMMUNE, type)
-	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
+	ADD_TRAIT(breather, TRAIT_SLEEPIMMUNE, type)
 
-/datum/reagent/nitrium_high_metabolization/on_mob_end_metabolize(mob/living/L)
-	REMOVE_TRAIT(L, TRAIT_STUNIMMUNE, type)
-	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
+/datum/reagent/nitrium_high_metabolization/on_mob_end_metabolize(mob/living/breather)
+	REMOVE_TRAIT(breather, TRAIT_SLEEPIMMUNE, type)
 	return ..()
 
-/datum/reagent/nitrium_high_metabolization/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjustStaminaLoss(-2 * REM * delta_time, 0)
-	M.adjustToxLoss(0.1 * current_cycle * REM * delta_time, 0) // 1 toxin damage per cycle at cycle 10
+/datum/reagent/nitrium_high_metabolization/on_mob_life(mob/living/carbon/breather, delta_time, times_fired)
+	breather.adjustStaminaLoss(-2 * REM * delta_time, 0)
+	breather.adjustToxLoss(0.1 * current_cycle * REM * delta_time, 0) // 1 toxin damage per cycle at cycle 10
 	return ..()
 
 /datum/reagent/nitrium_low_metabolization
@@ -34,12 +32,12 @@
 	ph = 2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/nitrium_low_metabolization/on_mob_metabolize(mob/living/L)
+/datum/reagent/nitrium_low_metabolization/on_mob_metabolize(mob/living/breather)
 	. = ..()
-	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nitrium)
+	breather.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nitrium)
 
-/datum/reagent/nitrium_low_metabolization/on_mob_end_metabolize(mob/living/L)
-	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nitrium)
+/datum/reagent/nitrium_low_metabolization/on_mob_end_metabolize(mob/living/breather)
+	breather.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nitrium)
 	return ..()
 
 /datum/reagent/freon
@@ -51,12 +49,12 @@
 	taste_description = "burning"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/freon/on_mob_metabolize(mob/living/L)
+/datum/reagent/freon/on_mob_metabolize(mob/living/breather)
 	. = ..()
-	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/freon)
+	breather.add_movespeed_modifier(/datum/movespeed_modifier/reagent/freon)
 
-/datum/reagent/freon/on_mob_end_metabolize(mob/living/L)
-	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/freon)
+/datum/reagent/freon/on_mob_end_metabolize(mob/living/breather)
+	breather.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/freon)
 	return ..()
 
 /datum/reagent/hypernoblium
@@ -68,14 +66,14 @@
 	taste_description = "searingly cold"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/hypernoblium/on_mob_metabolize(mob/living/L)
+/datum/reagent/hypernoblium/on_mob_metabolize(mob/living/breather)
 	. = ..()
-	if(isplasmaman(L))
-		ADD_TRAIT(L, TRAIT_NOFIRE, type)
+	if(isplasmaman(breather))
+		ADD_TRAIT(breather, TRAIT_NOFIRE, type)
 
-/datum/reagent/hypernoblium/on_mob_end_metabolize(mob/living/L)
-	if(isplasmaman(L))
-		REMOVE_TRAIT(L, TRAIT_NOFIRE, type)
+/datum/reagent/hypernoblium/on_mob_end_metabolize(mob/living/breather)
+	if(isplasmaman(breather))
+		REMOVE_TRAIT(breather, TRAIT_NOFIRE, type)
 	return ..()
 
 /datum/reagent/healium
@@ -87,12 +85,12 @@
 	taste_description = "rubbery"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/healium/on_mob_metabolize(mob/living/L)
+/datum/reagent/healium/on_mob_metabolize(mob/living/breather)
 	. = ..()
-	L.PermaSleeping()
+	breather.PermaSleeping()
 
-/datum/reagent/healium/on_mob_end_metabolize(mob/living/L)
-	L.SetSleeping(10)
+/datum/reagent/healium/on_mob_end_metabolize(mob/living/breather)
+	breather.SetSleeping(10)
 	return ..()
 
 /datum/reagent/healium/on_mob_life(mob/living/breather, delta_time, times_fired)
@@ -111,14 +109,14 @@
 	taste_description = "minty"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/halon/on_mob_metabolize(mob/living/L)
+/datum/reagent/halon/on_mob_metabolize(mob/living/breather)
 	. = ..()
-	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/halon)
-	ADD_TRAIT(L, TRAIT_RESISTHEAT, type)
+	breather.add_movespeed_modifier(/datum/movespeed_modifier/reagent/halon)
+	ADD_TRAIT(breather, TRAIT_RESISTHEAT, type)
 
-/datum/reagent/halon/on_mob_end_metabolize(mob/living/L)
-	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/halon)
-	REMOVE_TRAIT(L, TRAIT_RESISTHEAT, type)
+/datum/reagent/halon/on_mob_end_metabolize(mob/living/breather)
+	breather.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/halon)
+	REMOVE_TRAIT(breather, TRAIT_RESISTHEAT, type)
 	return ..()
 
 /datum/reagent/zauker
@@ -150,9 +148,9 @@
 /datum/reagent/pluoxium/on_mob_life(mob/living/carbon/breather, delta_time, times_fired)
 	if(!HAS_TRAIT(breather, TRAIT_KNOCKEDOUT))
 		..()
-		return
+		return ..()
 
-	for(var/organ in breather.internal_organs)
+	for(var/organ as anything in breather.internal_organs)
 		var/obj/item/organ/organ_being_healed = organ
 		organ_being_healed.applyOrganDamage(-0.5)
 
