@@ -11,7 +11,6 @@
 /area/station/commons/storage/primary)
 "b" = (
 /obj/structure/cable,
-/obj/item/stack/sheet/mineral/uranium/five,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers{
 	dir = 8
 	},
@@ -33,6 +32,7 @@
 /obj/machinery/computer/cryopod{
 	pixel_y = 8
 	},
+/obj/item/stack/sheet/mineral/plasma/thirty,
 /turf/open/floor/carpet/neon/simple/red,
 /area/station/commons/storage/primary)
 "c" = (
@@ -80,7 +80,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
-/obj/item/toy/plush/moth,
 /obj/docking_port/mobile{
 	can_move_docking_ports = 1;
 	dir = 8;
