@@ -26,6 +26,11 @@
 			slots = 1,
 		),
 		list(
+			name = "Cook",
+			outfit = /datum/outfit/job/cook,
+			slots = 1,
+		),
+		list(
 			name = "Shaft Miner",
 			outfit = /datum/outfit/job/miner,
 			slots = 2,
