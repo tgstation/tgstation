@@ -720,29 +720,21 @@
 		clear_fullscreen("brute")
 
 //Proc used to resuscitate a mob, for full_heal see fully_heal()
-/mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE, excess_healing = 0)
+/mob/living/proc/revive(full_heal_flags = NONE, excess_healing = 0)
 	if(excess_healing)
-		if(iscarbon(src) && excess_healing)
-			var/mob/living/carbon/C = src
-			if(!(C.dna?.species && (NOBLOOD in C.dna.species.species_traits)))
-				C.blood_volume += (excess_healing*2)//1 excess = 10 blood
-
-			for(var/obj/item/organ/organ as anything in C.internal_organs)
-				if(organ.organ_flags & ORGAN_SYNTHETIC)
-					continue
-				organ.applyOrganDamage(excess_healing * -1)//1 excess = 5 organ damage healed
-
-		adjustOxyLoss(-20, TRUE)
-		adjustToxLoss(-20, TRUE, TRUE) //slime friendly
+		adjustOxyLoss(-excess_healing)
+		adjustToxLoss(-excess_healing, forced = TRUE) //slime friendly
 		updatehealth()
-		grab_ghost()
-	if(full_heal)
-		fully_heal(admin_revive ? ADMIN_FULL_HEAL : NON_ADMIN_FULL_HEAL)
+
+	grab_ghost()
+	if(full_heal_flags)
+		fully_heal(full_heal_flags)
+
 	if(stat == DEAD && can_be_revived()) //in some cases you can't revive (e.g. no brain)
 		set_suicide(FALSE)
 		set_stat(UNCONSCIOUS) //the mob starts unconscious,
 		updatehealth() //then we check if the mob should wake up.
-		if(admin_revive)
+		if(full_heal_flags == ADMIN_FULL_HEAL)
 			get_up(TRUE)
 		update_sight()
 		clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
@@ -751,15 +743,16 @@
 		if(excess_healing)
 			INVOKE_ASYNC(src, .proc/emote, "gasp")
 			log_combat(src, src, "revived")
-	else if(admin_revive)
+
+	else if(full_heal_flags == ADMIN_FULL_HEAL)
 		updatehealth()
 		get_up(TRUE)
+
 	// The signal is called after everything else so components can properly check the updated values
-	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
+	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal_flags)
 
-
-/*
- * Heals up the [target] to up to [heal_to] of the main damage types.
+/**
+ * Heals up the mob up to [heal_to] of the main damage types.
  * EX: If heal_to is 50, and they have 150 brute damage, they will heal 100 brute (up to 50 brute damage)
  *
  * If the target is dead, also revives them and heals their organs / restores blood.

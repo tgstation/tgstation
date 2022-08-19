@@ -632,7 +632,7 @@
 					H.set_heartattack(FALSE)
 					if(defib_result == DEFIB_POSSIBLE)
 						H.grab_ghost()
-					H.revive(full_heal = FALSE, admin_revive = FALSE)
+					H.revive()
 					H.emote("gasp")
 					H.set_timed_status_effect(200 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 					SEND_SIGNAL(H, COMSIG_LIVING_MINOR_SHOCK)

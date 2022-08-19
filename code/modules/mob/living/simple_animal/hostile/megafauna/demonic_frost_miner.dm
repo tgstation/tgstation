@@ -257,7 +257,7 @@ Difficulty: Extremely Hard
 	clone.updateappearance(mutcolor_update=1)
 	var/turf/T = find_safe_turf()
 	user.forceMove(T)
-	user.revive(full_heal = TRUE, admin_revive = TRUE)
+	user.revive(ADMIN_FULL_HEAL)
 	INVOKE_ASYNC(user, /mob/living/carbon.proc/set_species, /datum/species/shadow)
 	to_chat(user, span_notice("You blink and find yourself in [get_area_name(T)]... feeling a bit darker."))
 	clone.dust()

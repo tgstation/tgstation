@@ -439,7 +439,7 @@
 					H.set_species(/datum/species/shadow, 1)
 					H.regenerate_limbs()
 					H.regenerate_organs()
-					H.revive(full_heal = TRUE, admin_revive = FALSE)
+					H.revive(NON_ADMIN_FULL_HEAL)
 					ADD_TRAIT(H, TRAIT_BADDNA, MAGIC_TRAIT) //Free revives, but significantly limits your options for reviving except via the crystal
 					H.grab_ghost(force = TRUE)
 

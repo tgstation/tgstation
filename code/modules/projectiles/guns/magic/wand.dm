@@ -78,7 +78,7 @@
 	if(isliving(user))
 		var/mob/living/L = user
 		if(L.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
-			user.revive(full_heal = TRUE, admin_revive = TRUE)
+			user.revive(ADMIN_FULL_HEAL)
 			to_chat(user, span_notice("You feel great!"))
 			return
 	to_chat(user, "<span class='warning'>You irradiate yourself with pure negative energy! \
@@ -122,7 +122,7 @@
 			</span>")
 			user.death(0)
 			return
-	user.revive(full_heal = TRUE, admin_revive = TRUE)
+	user.revive(ADMIN_FULL_HEAL)
 	to_chat(user, span_notice("You feel great!"))
 
 /obj/item/gun/magic/wand/resurrection/debug //for testing

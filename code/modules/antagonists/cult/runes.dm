@@ -607,8 +607,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 			fail_invoke()
 			return
 		sacrifices_used += SOULS_TO_REVIVE
-		mob_to_revive.revive(full_heal = TRUE, admin_revive = TRUE) //This does remove traits and such, but the rune might actually see some use because of it!
-		mob_to_revive.grab_ghost()
+		mob_to_revive.revive(ADMIN_FULL_HEAL) //This does remove traits and such, but the rune might actually see some use because of it! //Why did you think this was a good idea
+
 	if(!mob_to_revive.client || mob_to_revive.client.is_afk())
 		set waitfor = FALSE
 		var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as a [mob_to_revive.real_name], an inactive blood cultist?", ROLE_CULTIST, ROLE_CULTIST, 5 SECONDS, mob_to_revive)

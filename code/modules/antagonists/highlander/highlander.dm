@@ -56,7 +56,7 @@
 		if(!H.dropItemToGround(I))
 			qdel(I)
 	H.regenerate_icons()
-	H.revive(full_heal = TRUE, admin_revive = TRUE)
+	H.revive(ADMIN_FULL_HEAL)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/costume/kilt/highlander(H), ITEM_SLOT_ICLOTHING)
 	H.equip_to_slot_or_del(new /obj/item/radio/headset/syndicate(H), ITEM_SLOT_EARS)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/highlander(H), ITEM_SLOT_HEAD)
@@ -95,7 +95,7 @@
 	var/mob/living/silicon/robot/robotlander = owner.current
 	if(!istype(robotlander))
 		return ..()
-	robotlander.revive(full_heal = TRUE, admin_revive = TRUE)
+	robotlander.revive(ADMIN_FULL_HEAL)
 	robotlander.set_connected_ai() //DISCONNECT FROM AI
 	robotlander.laws.clear_inherent_laws()
 	robotlander.laws.set_zeroth_law("THERE CAN BE ONLY ONE")

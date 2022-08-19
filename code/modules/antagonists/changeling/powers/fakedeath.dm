@@ -31,17 +31,18 @@
 	if(!user || !istype(user))
 		return
 	user.cure_fakedeath("changeling")
-	user.revive(full_heal = TRUE, admin_revive = FALSE)
+	// Heal all damage and some minor afflictions, but not organs or bodyparts
+	user.revive(HEAL_DAMAGE|HEAL_WOUNDS|HEAL_BLOOD|HEAL_TEMP|HEAL_ALL_REAGENTS|HEAL_STATUS)
+
 	var/static/list/dont_regenerate = list(BODY_ZONE_HEAD) // headless changelings are funny
 	var/list/missing = user.get_missing_limbs() - dont_regenerate
-	if(missing.len)
+	if(length(missing))
 		playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
-		user.visible_message("<span class='warning'>[user]'s missing limbs \
-			reform, making a loud, grotesque sound!</span>",
-			"<span class='userdanger'>Your limbs regrow, making a \
-			loud, crunchy sound and giving you great pain!</span>",
-			"<span class='hear'>You hear organic matter ripping \
-			and tearing!</span>")
+		user.visible_message(
+			span_warning("[user]'s missing limbs reform, making a loud, grotesque sound!"),
+			span_userdanger("Your limbs regrow, making a loud, crunchy sound and giving you great pain!"),
+			span_hear("You hear organic matter ripping and tearing!"),
+		)
 		user.emote("scream")
 		user.regenerate_limbs(dont_regenerate)
 	user.regenerate_organs()

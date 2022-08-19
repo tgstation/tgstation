@@ -13,7 +13,7 @@
 				R.Remove(src)
 			var/datum/action/innate/slime/evolve/E = new
 			E.Grant(src)
-			revive(full_heal = TRUE, admin_revive = FALSE)
+			revive(NON_ADMIN_FULL_HEAL)
 			regenerate_icons()
 			update_name()
 			return

@@ -50,18 +50,20 @@
 		return
 	icon_state = pre_attack_icon
 
-/mob/living/simple_animal/hostile/asteroid/goliath/revive(full_heal = FALSE, admin_revive = FALSE)//who the fuck anchors mobs
-	if(..())
-		move_force = MOVE_FORCE_VERY_STRONG
-		move_resist = MOVE_FORCE_VERY_STRONG
-		pull_force = MOVE_FORCE_VERY_STRONG
-		. = 1
+/mob/living/simple_animal/hostile/asteroid/goliath/revive(full_heal_flags = NONE, excess_healing = 0)//who the fuck anchors mobs
+	. = ..()
+	if(!.)
+		return
+
+	move_force = initial(move_force)
+	move_resist = initial(move_resist)
+	pull_force = initial(pull_force)
 
 /mob/living/simple_animal/hostile/asteroid/goliath/death(gibbed)
 	move_force = MOVE_FORCE_DEFAULT
 	move_resist = MOVE_RESIST_DEFAULT
 	pull_force = PULL_FORCE_DEFAULT
-	..(gibbed)
+	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/goliath/OpenFire()
 	var/tturf = get_turf(target)

@@ -247,13 +247,15 @@
 	excluded_zones |= BODY_ZONE_HEAD
 
 ///Retrieving the owner's head for better ahealing.
-/obj/item/dullahan_relay/proc/retrieve_head(datum/source, full_heal, admin_revive)
+/obj/item/dullahan_relay/proc/retrieve_head(datum/source, full_heal_flags)
 	SIGNAL_HANDLER
-	if(admin_revive)
-		var/obj/item/bodypart/head/head = loc
-		var/turf/body_turf = get_turf(owner)
-		if(head && istype(head) && body_turf && !(head in owner.get_all_contents()))
-			head.forceMove(body_turf)
+	if(full_heal_flags != ADMIN_FULL_HEAL)
+		return
+
+	var/obj/item/bodypart/head/head = loc
+	var/turf/body_turf = get_turf(owner)
+	if(head && istype(head) && body_turf && !(head in owner.get_all_contents()))
+		head.forceMove(body_turf)
 
 /obj/item/dullahan_relay/Destroy()
 	if(!QDELETED(owner))

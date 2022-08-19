@@ -361,7 +361,7 @@
 		if(12)
 			//Healing
 			selected_turf.visible_message(span_userdanger("[user] looks very healthy!"))
-			user.revive(full_heal = TRUE, admin_revive = TRUE)
+			user.revive(ADMIN_FULL_HEAL)
 		if(13)
 			//Mad Dosh
 			selected_turf.visible_message(span_userdanger("Mad dosh shoots out of [src]!"))

@@ -85,13 +85,17 @@
 		else
 			make_tameable()
 
-/mob/living/simple_animal/hostile/carp/revive(full_heal, admin_revive)
-	if (tamed)
-		var/datum/weakref/friendref = ai_controller.blackboard[BB_HOSTILE_FRIEND]
-		var/mob/living/friend = friendref?.resolve()
-		if(friend)
-			tamed(friend)
-	return ..()
+/mob/living/simple_animal/hostile/carp/revive(full_heal_flags = NONE, excess_healing = 0)
+	. = ..()
+	if(!. || !tamed)
+		return
+
+	var/datum/weakref/friendref = ai_controller.blackboard[BB_HOSTILE_FRIEND]
+	var/mob/living/friend = friendref?.resolve()
+	if(friend)
+		tamed(friend)
+
+	update_icon()
 
 /mob/living/simple_animal/hostile/carp/death(gibbed)
 	if (tamed)
@@ -129,11 +133,6 @@
 	else
 		our_color = pick(carp_colors)
 		set_greyscale(colors=list(carp_colors[our_color]))
-
-/mob/living/simple_animal/hostile/carp/revive(full_heal = FALSE, admin_revive = FALSE)
-	. = ..()
-	if(.)
-		update_icon()
 
 /mob/living/simple_animal/hostile/carp/proc/chomp_plastic()
 	var/obj/item/storage/cans/tasty_plastic = locate(/obj/item/storage/cans) in view(1, src)
