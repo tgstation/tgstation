@@ -16,19 +16,11 @@ type TextInputData = {
 };
 
 export const SanitizeMultiline = (toSanitize: string) => {
-  const tooManySkiplinesFinder = RegExp('(\r\n\r\n\r\n|\n\n\n|\r\r\r)+');
-  while (toSanitize.search(tooManySkiplinesFinder) !== -1) {
-    toSanitize = toSanitize.replace(tooManySkiplinesFinder, '\n\n');
-  }
-  return toSanitize;
+  return toSanitize.replace(/(\n|\r\n){3,}/, '\n\n');
 };
 
 export const RemoveAllSkiplines = (toSanitize: string) => {
-  const skiplinesFinder = RegExp('(\n|\r)+');
-  while (toSanitize.search(skiplinesFinder) !== -1) {
-    toSanitize = toSanitize.replace(skiplinesFinder, '');
-  }
-  return toSanitize;
+  return toSanitize.replace(/[\r\n]+/, '');
 };
 
 export const TextInputModal = (props, context) => {
