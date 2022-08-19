@@ -1056,10 +1056,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/spec_updatehealth(mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/spec_fully_heal(mob/living/carbon/human/H)
-	return
-
-
 /datum/species/proc/help(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(target.body_position == STANDING_UP || (target.health >= 0 && !HAS_TRAIT(target, TRAIT_FAKEDEATH)))
 		target.help_shake_act(user)

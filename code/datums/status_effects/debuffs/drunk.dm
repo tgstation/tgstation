@@ -14,19 +14,13 @@
 	id = "drunk"
 	tick_interval = 2 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
+	remove_on_fullheal = TRUE
 	/// The level of drunkness we are currently at.
 	var/drunk_value = 0
 
 /datum/status_effect/inebriated/on_creation(mob/living/new_owner, drunk_value = 0)
 	. = ..()
 	set_drunk_value(drunk_value)
-
-/datum/status_effect/inebriated/on_apply()
-	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, .proc/clear_drunkenness)
-	return TRUE
-
-/datum/status_effect/inebriated/on_remove()
-	UnregisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL)
 
 /datum/status_effect/inebriated/get_examine_text()
 	// Dead people don't look drunk

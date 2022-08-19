@@ -737,7 +737,7 @@
 		updatehealth()
 		grab_ghost()
 	if(full_heal)
-		fully_heal(admin_revive = admin_revive)
+		fully_heal(admin_revive ? ADMIN_FULL_HEAL : NON_ADMIN_FULL_HEAL)
 	if(stat == DEAD && can_be_revived()) //in some cases you can't revive (e.g. no brain)
 		set_suicide(FALSE)
 		set_stat(UNCONSCIOUS) //the mob starts unconscious,
@@ -802,49 +802,64 @@
 
 	return stat != DEAD
 
-/mob/living/proc/remove_CC()
-	SetStun(0)
-	SetKnockdown(0)
-	SetImmobilized(0)
-	SetParalyzed(0)
-	SetSleeping(0)
-	setStaminaLoss(0)
-	SetUnconscious(0)
+/**
+ * A grand proc used whenever this mob is, quote, "fully healed".
+ * Fully healed could mean a number of things, such as "healing all the main damage types", "healing all the organs", etc
+ * So, you can pass flags to specify
+ *
+ * See [mobs.dm] for more information on the flags
+ *
+ * Admin calling this proc will result in ADMIN_FULL_HEAL (ALL) being passed - you can check for this by checking for it exactly
+ *
+ * If you ever think "hey I'm adding something and want it to be reverted on full heal",
+ * consider handling it via signal instead of implementing it in this proc
+ */
+/mob/living/proc/fully_heal(heal_flags = NON_ADMIN_FULL_HEAL)
+	SHOULD_CALL_PARENT(TRUE)
 
+	if(heal_flags & HEAL_TOX)
+		setToxLoss(0, FALSE, TRUE)
+	if(heal_flags & HEAL_OXY)
+		setToxLoss(0, FALSE, TRUE)
+	if(heal_flags & HEAL_CLONE)
+		setCloneLoss(0, FALSE, TRUE)
+	if(heal_flags & HEAL_BRUTE)
+		setBruteLoss(0, FALSE, TRUE)
+	if(heal_flags & HEAL_BURN)
+		setFireLoss(0, FALSE, TRUE)
+	if(heal_flags & HEAL_STAM)
+		setStaminaLoss(0, FALSE, TRUE)
 
-
-
-
-//proc used to completely heal a mob.
-//admin_revive = TRUE is used in other procs, for example mob/living/carbon/fully_heal()
-/mob/living/proc/fully_heal(admin_revive = FALSE)
-	restore_blood()
-	setToxLoss(0, 0) //zero as second argument not automatically call updatehealth().
-	setOxyLoss(0, 0)
-	setCloneLoss(0, 0)
-	remove_CC()
-	set_disgust(0)
-	losebreath = 0
 	set_nutrition(NUTRITION_LEVEL_FED + 50)
-	bodytemperature = get_body_temp_normal(apply_change=FALSE)
+
+	// These should be status effects
+	losebreath = 0
+	hallucination = 0
 	set_blindness(0)
 	set_blurriness(0)
+	set_drowsyness(0)
+	set_disgust(0)
 	cure_nearsighted()
 	cure_blind()
 	cure_husk()
-	hallucination = 0
-	heal_overall_damage(INFINITY, INFINITY, INFINITY, null, TRUE) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
-	extinguish_mob()
-	set_drowsyness(0)
+
+	if(heal_flags & HEAL_TEMP)
+		bodytemperature = get_body_temp_normal(apply_change = FALSE)
+	if(heal_flags & HEAL_BLOOD)
+		restore_blood()
+	if(reagents && (heal_flags & HEAL_ALL_REAGENTS))
+		reagents.clear_reagents()
+
+	updatehealth()
 	stop_sound_channel(CHANNEL_HEARTBEAT)
-	SEND_SIGNAL(src, COMSIG_LIVING_POST_FULLY_HEAL, admin_revive)
+	SEND_SIGNAL(src, COMSIG_LIVING_POST_FULLY_HEAL, heal_flags)
 
-
-//proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
+/// Checks if we are actually able to ressuscitate this mob.
+/// (We don't want to revive then to have them instantly die again)
 /mob/living/proc/can_be_revived()
-	. = TRUE
 	if(health <= HEALTH_THRESHOLD_DEAD)
 		return FALSE
+	return TRUE
 
 /mob/living/proc/update_damage_overlays()
 	return

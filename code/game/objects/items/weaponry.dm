@@ -156,7 +156,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/claymore/highlander/attack(mob/living/target, mob/living/user)
 	. = ..()
 	if(!QDELETED(target) && target.stat == DEAD && target.mind && target.mind.special_role == "highlander")
-		user.fully_heal(admin_revive = FALSE) //STEAL THE LIFE OF OUR FALLEN FOES
+		user.fully_heal() //STEAL THE LIFE OF OUR FALLEN FOES
 		add_notch(user)
 		target.visible_message(span_warning("[target] crumbles to dust beneath [user]'s blows!"), span_userdanger("As you fall, your body crumbles to dust!"))
 		target.dust()

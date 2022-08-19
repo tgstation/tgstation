@@ -857,36 +857,51 @@
 
 	return ..()
 
-/mob/living/carbon/fully_heal(admin_revive = FALSE)
-	if(reagents)
-		reagents.clear_reagents()
+/mob/living/carbon/fully_heal(heal_flags = NON_ADMIN_FULL_HEAL)
+
+	// Should be handled via signal on embeded, or via heal on bodypart
+	remove_all_embedded_objects()
+
 	if(mind)
 		for(var/addiction_type in subtypesof(/datum/addiction))
 			mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS) //Remove the addiction!
-	for(var/obj/item/organ/organ as anything in internal_organs)
-		organ.setOrganDamage(0)
-	for(var/thing in diseases)
-		var/datum/disease/D = thing
-		if(D.severity != DISEASE_SEVERITY_POSITIVE)
-			D.cure(FALSE)
-	for(var/thing in all_wounds)
-		var/datum/wound/W = thing
-		W.remove_wound()
-	if(admin_revive)
-		suiciding = FALSE
+
+	if(heal_flags & HEAL_NEGATIVE_DISEASES)
+		for(var/datum/disease/disease as anything in diseases)
+			if(disease.severity != DISEASE_SEVERITY_POSITIVE)
+				disease.cure(FALSE)
+
+	if(heal_flags & HEAL_WOUNDS)
+		for(var/datum/wound/wound as anything in all_wounds)
+			wound.remove_wound()
+
+	if(heal_flags & HEAL_LIMBS)
 		regenerate_limbs()
-		regenerate_organs()
+
+	if(heal_flags & HEAL_ORGANS)
+		set_heartattack(FALSE)
+		if(heal_flags == ADMIN_FULL_HEAL)
+			regenerate_organs()
+		else
+			for(var/obj/item/organ/organ as anything in internal_organs)
+				organ.setOrganDamage(0)
+
+	if(heal_flags & HEAL_TRAUMAS)
+		cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
+
+	if(heal_flags == ADMIN_FULL_HEAL)
+		suiciding = FALSE
 		QDEL_NULL(handcuffed)
 		QDEL_NULL(legcuffed)
 		set_handcuffed(null)
 		update_handcuffed()
-	cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
-	..()
+
+	return ..()
 
 /mob/living/carbon/can_be_revived()
-	. = ..()
 	if(!getorgan(/obj/item/organ/internal/brain) && (!mind || !mind.has_antag_datum(/datum/antagonist/changeling)) || HAS_TRAIT(src, TRAIT_HUSK))
 		return FALSE
+	return ..()
 
 /mob/living/carbon/proc/can_defib()
 

@@ -338,7 +338,7 @@
 	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
 	owner.adjustBruteLoss(-25)
 	owner.adjustFireLoss(-25)
-	owner.remove_CC()
+	owner.fully_heal(HEAL_STUNS)
 	owner.bodytemperature = owner.get_body_temp_normal()
 	if(istype(owner, /mob/living/carbon/human))
 		var/mob/living/carbon/human/humi = owner

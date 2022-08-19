@@ -296,7 +296,7 @@
 	. += shine
 
 
-/obj/item/organ/internal/heart/ethereal/proc/on_owner_fully_heal(mob/living/carbon/healed, admin_heal)
+/obj/item/organ/internal/heart/ethereal/proc/on_owner_fully_heal(mob/living/carbon/healed, heal_flags)
 	SIGNAL_HANDLER
 
 	QDEL_NULL(current_crystal) //Kicks out the ethereal

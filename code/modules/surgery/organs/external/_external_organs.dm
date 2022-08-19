@@ -358,8 +358,11 @@
 	set_sprite("Burnt Off")
 
 ///heal our antennae back up!!
-/obj/item/organ/external/antennae/proc/heal_antennae()
+/obj/item/organ/external/antennae/proc/heal_antennae(datum/source, heal_flags)
 	SIGNAL_HANDLER
+
+	if(!(heal_flags & HEAL_ORGANS))
+		return
 
 	if(burnt)
 		burnt = FALSE
@@ -395,4 +398,3 @@
 /obj/item/organ/external/pod_hair/override_color(rgb_value)
 	var/list/rgb_list = rgb2num(rgb_value)
 	return rgb(255 - rgb_list[1], 255 - rgb_list[2], 255 - rgb_list[3])
-

@@ -24,6 +24,8 @@
 	var/atom/movable/screen/alert/status_effect/linked_alert
 	/// Used to define if the status effect should be using SSfastprocess or SSprocessing
 	var/processing_speed = STATUS_EFFECT_FAST_PROCESS
+	//// Do we self-terminate when a fullheal is called?
+	var/remove_on_fullheal = FALSE
 
 /datum/status_effect/New(list/arguments)
 	on_creation(arglist(arguments))
@@ -53,22 +55,24 @@
 		switch(processing_speed)
 			if(STATUS_EFFECT_FAST_PROCESS)
 				START_PROCESSING(SSfastprocess, src)
-			if (STATUS_EFFECT_NORMAL_PROCESS)
+			if(STATUS_EFFECT_NORMAL_PROCESS)
 				START_PROCESSING(SSprocessing, src)
 
+	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, .proc/remove_effect_on_heal)
 	return TRUE
 
 /datum/status_effect/Destroy()
 	switch(processing_speed)
 		if(STATUS_EFFECT_FAST_PROCESS)
 			STOP_PROCESSING(SSfastprocess, src)
-		if (STATUS_EFFECT_NORMAL_PROCESS)
+		if(STATUS_EFFECT_NORMAL_PROCESS)
 			STOP_PROCESSING(SSprocessing, src)
 	if(owner)
 		linked_alert = null
 		owner.clear_alert(id)
 		LAZYREMOVE(owner.status_effects, src)
 		on_remove()
+		UnregisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL)
 		owner = null
 	return ..()
 
@@ -135,6 +139,14 @@
 /// Adds nextmove adjustment additiviely to the owner while applied
 /datum/status_effect/proc/nextmove_adjust()
 	return 0
+
+/datum/status_effect/proc/remove_effect_on_heal(datum/source, heal_flags)
+	SIGNAL_HANDLER
+
+	if(!remove_on_fullheal || !(heal_flags & HEAL_STATUS))
+		return
+
+	qdel(src)
 
 /// Alert base type for status effect alerts
 /atom/movable/screen/alert/status_effect

@@ -1,6 +1,7 @@
 /datum/status_effect/speech
 	id = null
 	alert_type = null
+	remove_on_fullheal = TRUE
 
 /datum/status_effect/speech/on_creation(mob/living/new_owner, duration = 10 SECONDS)
 	src.duration = duration
@@ -8,18 +9,10 @@
 
 /datum/status_effect/speech/on_apply()
 	RegisterSignal(owner, COMSIG_LIVING_TREAT_MESSAGE, .proc/handle_message)
-	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, .proc/on_heal)
 	return TRUE
 
 /datum/status_effect/speech/on_remove()
 	UnregisterSignal(owner, COMSIG_LIVING_TREAT_MESSAGE)
-	UnregisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL)
-
-/// Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL], removes all stutters and slurring on full heal
-/datum/status_effect/speech/proc/on_heal(datum/source, admin_revive)
-	SIGNAL_HANDLER
-
-	qdel(src)
 
 /**
  * Signal proc for [COMSIG_LIVING_TREAT_MESSAGE]

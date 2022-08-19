@@ -234,8 +234,11 @@
 	set_sprite("Burnt Off")
 
 ///heal our wings back up!!
-/obj/item/organ/external/wings/moth/proc/heal_wings()
+/obj/item/organ/external/wings/moth/proc/heal_wings(datum/source, heal_flags)
 	SIGNAL_HANDLER
+
+	if(!(heal_flags & HEAL_ORGANS))
+		return
 
 	if(burnt)
 		burnt = FALSE

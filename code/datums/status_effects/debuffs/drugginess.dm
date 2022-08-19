@@ -2,13 +2,14 @@
 /datum/status_effect/drugginess
 	id = "drugged"
 	alert_type = /atom/movable/screen/alert/status_effect/high
+	remove_on_fullheal = TRUE
 
 /datum/status_effect/drugginess/on_creation(mob/living/new_owner, duration = 10 SECONDS)
 	src.duration = duration
 	return ..()
 
 /datum/status_effect/drugginess/on_apply()
-	RegisterSignal(owner, list(COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_LIVING_DEATH), .proc/remove_drugginess)
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, .proc/remove_drugginess)
 
 	owner.add_mood_event(id, /datum/mood_event/high)
 	owner.overlay_fullscreen(id, /atom/movable/screen/fullscreen/high)
@@ -17,7 +18,7 @@
 	return TRUE
 
 /datum/status_effect/drugginess/on_remove()
-	UnregisterSignal(owner, list(COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_LIVING_DEATH))
+	UnregisterSignal(owner, COMSIG_LIVING_DEATH)
 
 	owner.clear_mood_event(id)
 	owner.clear_fullscreen(id)

@@ -714,3 +714,56 @@
 
 /// Possible value of [/atom/movable/buckle_lying]. If set to a different (positive-or-zero) value than this, the buckling thing will force a lying angle on the buckled.
 #define NO_BUCKLE_LYING -1
+
+// Flags for fully_heal().
+
+/// Heals all brute damage.
+#define HEAL_BRUTE (1<<0)
+/// Heals all burn damage.
+#define HEAL_BURN (1<<1)
+/// Heals all toxin damage, slime people included.
+#define HEAL_TOX (1<<2)
+/// Heals all oxyloss.
+#define HEAL_OXY (1<<3)
+/// Heals all cellular damage.
+#define HEAL_CLONE (1<<4)
+/// Heals all stamina damage.
+#define HEAL_STAM (1<<5)
+/// Restore all limbs to their initial state.
+#define HEAL_LIMBS (1<<6)
+/// Heals all organs from failing. If done as a part of an admin heal, will instead restore all organs to their initial state.
+#define HEAL_ORGANS (1<<7)
+/// Removes all wounds.
+#define HEAL_WOUNDS (1<<8)
+/// Removes all brain traumas, not including permanent ones.
+#define HEAL_TRAUMAS (1<<9)
+/// Removes all reagents present.
+#define HEAL_ALL_REAGENTS (1<<10)
+/// Removes all non-positive diseases.
+#define HEAL_NEGATIVE_DISEASES (1<<11)
+/// Restores body temperature back to nominal.
+#define HEAL_TEMP (1<<12)
+/// Restores blood levels to normal.
+#define HEAL_BLOOD (1<<13)
+/// Removes all non-positive mutations (neutral included).
+#define HEAL_NEGATIVE_MUTATIONS (1<<14)
+/// Removes status effects which have remove_on_fullheal = TRUE.
+#define HEAL_STATUS (1<<14)
+
+/// Helper combination flag to only heal the main damage types.
+#define HEAL_DAMAGE (HEAL_BRUTE|HEAL_BURN|HEAL_TOX|HEAL_OXY|HEAL_CLONE|HEAL_STAM)
+/// Helper combination flag to only heal things messed up things about the mob's body itself.
+#define HEAL_BODY (HEAL_LIMBS|HEAL_ORGANS|HEAL_WOUNDS|HEAL_TRAUMAS|HEAL_BLOOD|HEAL_TEMP)
+/// Helper combination flag to heal negative things affecting the mob.
+#define HEAL_AFFLICTIONS (HEAL_NEGATIVE_DISEASES|HEAL_NEGATIVE_MUTATIONS|HEAL_ALL_REAGENTS|HEAL_STATUS)
+
+/// Consists of all of the above, which consists of all the existing flags.
+/// Used to differentiate between an admin heal (ALL) vs just a very thorough heal (All existing flags)
+#define NON_ADMIN_FULL_HEAL (HEAL_DAMAGE|HEAL_BODY|HEAL_AFFLICTIONS)
+
+/// Removes all crowd-control related effects from the mob.
+#define HEAL_STUNS (HEAL_STAM|HEAL_STATUS)
+
+/// Heals everything, for real.
+/// This is hard checked (flags == ALL) in some places to determine if we're actually doing an admin heal or just a very thorough heal.
+#define ADMIN_FULL_HEAL ALL

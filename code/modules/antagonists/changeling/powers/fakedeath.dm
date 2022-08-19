@@ -27,13 +27,13 @@
 		addtimer(CALLBACK(src, .proc/ready_to_regenerate, user), LING_FAKEDEATH_TIME, TIMER_UNIQUE)
 	return TRUE
 
-/datum/action/changeling/fakedeath/proc/revive(mob/living/user)
+/datum/action/changeling/fakedeath/proc/revive(mob/living/carbon/user)
 	if(!user || !istype(user))
 		return
 	user.cure_fakedeath("changeling")
 	user.revive(full_heal = TRUE, admin_revive = FALSE)
-	var/list/missing = user.get_missing_limbs()
-	missing -= BODY_ZONE_HEAD // headless changelings are funny
+	var/static/list/dont_regenerate = list(BODY_ZONE_HEAD) // headless changelings are funny
+	var/list/missing = user.get_missing_limbs() - dont_regenerate
 	if(missing.len)
 		playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
 		user.visible_message("<span class='warning'>[user]'s missing limbs \
@@ -43,7 +43,7 @@
 			"<span class='hear'>You hear organic matter ripping \
 			and tearing!</span>")
 		user.emote("scream")
-		user.regenerate_limbs(list(BODY_ZONE_HEAD))
+		user.regenerate_limbs(dont_regenerate)
 	user.regenerate_organs()
 
 /datum/action/changeling/fakedeath/proc/ready_to_regenerate(mob/user)

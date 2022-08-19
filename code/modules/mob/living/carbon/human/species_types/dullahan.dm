@@ -211,7 +211,7 @@
 	owner = new_owner
 	START_PROCESSING(SSobj, src)
 	RegisterSignal(owner, COMSIG_CLICK_SHIFT, .proc/examinate_check)
-	RegisterSignal(owner, COMSIG_LIVING_REGENERATE_LIMBS, .proc/unlist_head)
+	RegisterSignal(owner, COMSIG_CARBON_REGENERATE_LIMBS, .proc/unlist_head)
 	RegisterSignal(owner, COMSIG_LIVING_REVIVE, .proc/retrieve_head)
 	become_hearing_sensitive(ROUNDSTART_TRAIT)
 

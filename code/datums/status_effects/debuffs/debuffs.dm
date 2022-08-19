@@ -4,6 +4,7 @@
 	tick_interval = 0
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
+	remove_on_fullheal = TRUE
 	var/needs_update_stat = FALSE
 
 /datum/status_effect/incapacitating/on_creation(mob/living/new_owner, set_duration)
