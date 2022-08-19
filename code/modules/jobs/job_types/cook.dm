@@ -25,18 +25,18 @@
 		)
 
 	family_heirlooms = list(
-		/obj/item/reagent_containers/food/condiment/saltshaker,
+		/obj/item/reagent_containers/condiment/saltshaker,
 		/obj/item/kitchen/rollingpin,
 		/obj/item/clothing/head/chefhat,
 	)
 
 	mail_goodies = list(
 		/obj/item/storage/box/ingredients/random = 80,
-		/obj/item/reagent_containers/glass/bottle/caramel = 20,
-		/obj/item/reagent_containers/food/condiment/flour = 20,
-		/obj/item/reagent_containers/food/condiment/rice = 20,
-		/obj/item/reagent_containers/food/condiment/enzyme = 15,
-		/obj/item/reagent_containers/food/condiment/soymilk = 15,
+		/obj/item/reagent_containers/cup/bottle/caramel = 20,
+		/obj/item/reagent_containers/condiment/flour = 20,
+		/obj/item/reagent_containers/condiment/rice = 20,
+		/obj/item/reagent_containers/condiment/enzyme = 15,
+		/obj/item/reagent_containers/condiment/soymilk = 15,
 		/obj/item/knife/kitchen = 4,
 		/obj/item/knife/butcher = 2
 	)

@@ -7,7 +7,7 @@
 	attack_verb_continuous = list("skubs")
 	attack_verb_simple = list("skub")
 
-/obj/item/skub/ComponentInitialize()
+/obj/item/skub/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/container_item/tank_holder, "holder_skub", FALSE)
 

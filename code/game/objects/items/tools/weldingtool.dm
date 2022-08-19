@@ -51,14 +51,11 @@
 
 /obj/item/weldingtool/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
+	AddElement(/datum/element/tool_flash, light_range)
 	create_reagents(max_fuel)
 	reagents.add_reagent(/datum/reagent/fuel, max_fuel)
 	update_appearance()
-
-/obj/item/weldingtool/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
-	AddElement(/datum/element/tool_flash, light_range)
 
 /obj/item/weldingtool/update_icon_state()
 	if(welding)
@@ -171,13 +168,13 @@
 			var/mob/living/attacked_mob = attacked_atom
 			if(attacked_mob.ignite_mob())
 				message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(attacked_mob)] on fire with [src] at [AREACOORD(user)].")
-				user.log_message("set [key_name(attacked_mob)] on fire with [src] at [AREACOORD(user)].", LOG_ATTACK)
+				user.log_message("set [key_name(attacked_mob)] on fire with [src]", LOG_ATTACK)
 
 
 /obj/item/weldingtool/attack_self(mob/user)
 	if(src.reagents.has_reagent(/datum/reagent/toxin/plasma))
 		message_admins("[ADMIN_LOOKUPFLW(user)] activated a rigged welder at [AREACOORD(user)].")
-		user.log_message("activated a rigged welder at [AREACOORD(user)].", LOG_VICTIM)
+		user.log_message("activated a rigged welder", LOG_VICTIM)
 		explode()
 	switched_on(user)
 

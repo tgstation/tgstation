@@ -19,7 +19,10 @@
 /datum/species/human/prepare_human_for_preview(mob/living/carbon/human/human)
 	human.hairstyle = "Business Hair"
 	human.hair_color = "#bb9966" // brown
-	human.update_hair(is_creating = TRUE)
+	human.update_body_parts()
+
+/datum/species/human/randomize_features(mob/living/carbon/human/human_mob)
+	human_mob.skin_tone = random_skin_tone()
 
 /datum/species/human/get_scream_sound(mob/living/carbon/human/human)
 	if(human.gender == MALE)

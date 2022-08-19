@@ -70,15 +70,12 @@
 
 /obj/item/hierophant_club/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
 	blink = new(src)
 
 /obj/item/hierophant_club/Destroy()
 	QDEL_NULL(blink)
 	return ..()
-
-/obj/item/hierophant_club/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/hierophant_club/examine(mob/user)
 	. = ..()
@@ -764,7 +761,7 @@
 		var/turf/open/T = get_turf(target)
 		if(!istype(T))
 			return
-		if(!istype(T, /turf/open/lava))
+		if(!islava(T))
 			var/obj/effect/temp_visual/lavastaff/L = new /obj/effect/temp_visual/lavastaff(T)
 			L.alpha = 0
 			animate(L, alpha = 255, time = create_delay)

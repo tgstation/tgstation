@@ -74,7 +74,7 @@
 	var/fail_prob = 0//100 - fail_prob = success_prob
 	var/advance = FALSE
 
-	if(preop(user, target, target_zone, tool, surgery) == -1)
+	if(preop(user, target, target_zone, tool, surgery) == SURGERY_STEP_FAIL)
 		surgery.step_in_progress = FALSE
 		return FALSE
 

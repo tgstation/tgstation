@@ -10,6 +10,7 @@
  */
 
 /obj/item/clothing/suit/utility
+	icon = 'icons/obj/clothing/suits/utility.dmi'
 	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
 
 /obj/item/clothing/suit/utility/fire

@@ -413,10 +413,9 @@
 			//new you new stuff
 			SSquirks.randomise_quirks(owner)
 			owner.reagents.remove_all(1000)
-			var/datum/component/mood/mood = owner.GetComponent(/datum/component/mood)
-			mood.remove_temp_moods() //New you, new moods.
+			owner.mob_mood.remove_temp_moods() //New you, new moods.
 			var/mob/living/carbon/human/human_mob = owner
-			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "Eigentrip", /datum/mood_event/eigentrip)
+			owner.add_mood_event("Eigentrip", /datum/mood_event/eigentrip)
 			if(QDELETED(human_mob))
 				return
 			if(prob(1))//low chance of the alternative reality returning to monkey
@@ -424,7 +423,7 @@
 				monkey_tail.Insert(human_mob, drop_if_replaced = FALSE)
 			var/datum/species/human_species = human_mob.dna?.species
 			if(human_species)
-				human_species.randomize_main_appearance_element(human_mob)
+				human_species.randomize_features(human_mob)
 				human_species.randomize_active_underwear(human_mob)
 
 			owner.remove_status_effect(/datum/status_effect/eigenstasium)

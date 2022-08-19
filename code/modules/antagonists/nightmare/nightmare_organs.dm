@@ -36,9 +36,9 @@
 	/// The armblade granted to the host of this heart.
 	var/obj/item/light_eater/blade
 
-/obj/item/organ/internal/heart/nightmare/ComponentInitialize()
-	. = ..()
+/obj/item/organ/internal/heart/nightmare/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
+	return ..()
 
 /obj/item/organ/internal/heart/nightmare/attack(mob/M, mob/living/carbon/user, obj/target)
 	if(M != user)

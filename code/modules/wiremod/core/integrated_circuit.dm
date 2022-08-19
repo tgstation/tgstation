@@ -155,7 +155,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		user.visible_message(span_notice("[user] inserts a power cell into [src]."), span_notice("You insert the power cell into [src]."))
 		return
 
-	if(istype(I, /obj/item/card/id))
+	if(isidcard(I))
 		balloon_alert(user, "owner id set for [I]")
 		owner_id = WEAKREF(I)
 		return

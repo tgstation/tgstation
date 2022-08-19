@@ -563,7 +563,7 @@
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
 			return
 	return ..()
-	
+
 //Will always check hands first, because access_card is internal to the mob and can't be removed or swapped.
 /mob/living/simple_animal/get_idcard(hand_first)
 	return (..() || access_card)
@@ -608,9 +608,9 @@
 
 /mob/living/simple_animal/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE, ignore_animation = TRUE)
 	. = ..()
-	update_inv_hands()
+	update_held_items()
 
-/mob/living/simple_animal/update_inv_hands()
+/mob/living/simple_animal/update_held_items()
 	if(!client || !hud_used || hud_used.hud_version == HUD_STYLE_NOHUD)
 		return
 	var/turf/our_turf = get_turf(src)

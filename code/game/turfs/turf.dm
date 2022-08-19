@@ -156,8 +156,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	// apply materials properly from the default custom_materials value
 	set_custom_materials(custom_materials)
 
-	ComponentInitialize()
-
 	if(uses_integrity)
 		atom_integrity = max_integrity
 

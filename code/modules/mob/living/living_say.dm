@@ -441,14 +441,20 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	return TRUE
 
 
-
-/mob/living/proc/treat_message(message)
+/**
+ * Treats the passed message with things that may modify speech (stuttering, slurring etc).
+ *
+ * message - The message to treat.
+ * capitalize_message - Whether we run capitalize() on the message after we're done.
+ */
+/mob/living/proc/treat_message(message, capitalize_message = TRUE)
 	if(HAS_TRAIT(src, TRAIT_UNINTELLIGIBLE_SPEECH))
 		message = unintelligize(message)
 
 	SEND_SIGNAL(src, COMSIG_LIVING_TREAT_MESSAGE, args)
 
-	message = capitalize(message)
+	if(capitalize_message)
+		message = capitalize(message)
 
 	return message
 

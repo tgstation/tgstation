@@ -96,7 +96,7 @@
 	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return // prevent intraction when T-scanner revealed
 
-	else if (istype(I, /obj/item/card/id) || istype(I, /obj/item/modular_computer/tablet))
+	else if (isidcard(I) || istype(I, /obj/item/modular_computer/tablet))
 		if(open)
 			if (src.allowed(user))
 				src.locked = !src.locked

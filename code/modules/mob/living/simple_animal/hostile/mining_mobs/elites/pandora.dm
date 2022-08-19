@@ -187,9 +187,9 @@
 /obj/item/clothing/accessory/pandora_hope/on_uniform_equip(obj/item/clothing/under/U, user)
 	var/mob/living/L = user
 	if(L?.mind)
-		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "hope_lavaland", /datum/mood_event/hope_lavaland)
+		L.add_mood_event("hope_lavaland", /datum/mood_event/hope_lavaland)
 
 /obj/item/clothing/accessory/pandora_hope/on_uniform_dropped(obj/item/clothing/under/U, user)
 	var/mob/living/L = user
 	if(L?.mind)
-		SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "hope_lavaland")
+		L.clear_mood_event("hope_lavaland")

@@ -95,12 +95,12 @@
 	qdel(src)
 
 /datum/proximity_monitor/advanced/projectile_dampener/field_edge_uncrossed(atom/movable/movable, turf/location)
-	if(istype(movable, /obj/projectile) && get_dist(movable, host) > current_range)
+	if(isprojectile(movable) && get_dist(movable, host) > current_range)
 		if(movable in tracked)
 			release_projectile(movable)
 
 /datum/proximity_monitor/advanced/projectile_dampener/field_edge_crossed(atom/movable/movable, turf/location)
-	if(istype(movable, /obj/projectile) && !(movable in tracked))
+	if(isprojectile(movable) && !(movable in tracked))
 		capture_projectile(movable)
 
 /datum/proximity_monitor/advanced/projectile_dampener/peaceborg/process(delta_time)

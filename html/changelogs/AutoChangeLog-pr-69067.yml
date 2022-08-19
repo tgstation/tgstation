@@ -1,6 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - qol: "Rightclicking someone you're holding up will now shoot at them."
-  - bugfix: "You can no longer hold someone up from across the station."
-  - bugfix: "Holding someone at gunpoint will now check if you can actually see the person you're holding up more often."

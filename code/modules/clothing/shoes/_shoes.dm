@@ -68,7 +68,7 @@
 	if(offset && (slot_flags & slot))
 		user.pixel_y += offset
 		worn_y_dimension -= (offset * 2)
-		user.update_inv_shoes()
+		user.update_worn_shoes()
 		equipped_before_drop = TRUE
 
 /obj/item/clothing/shoes/equipped(mob/user, slot)
@@ -96,7 +96,7 @@
 	..()
 	if(ismob(loc))
 		var/mob/M = loc
-		M.update_inv_shoes()
+		M.update_worn_shoes()
 
 /**
  * adjust_laces adjusts whether our shoes (assuming they can_be_tied) and tied, untied, or knotted
@@ -213,7 +213,7 @@
 		our_guy.Paralyze(5)
 		our_guy.Knockdown(10)
 		our_guy.visible_message(span_danger("[our_guy] trips on [our_guy.p_their()] knotted shoelaces and falls! What a klutz!"), span_userdanger("You trip on your knotted shoelaces and fall over!"))
-		SEND_SIGNAL(our_guy, COMSIG_ADD_MOOD_EVENT, "trip", /datum/mood_event/tripped) // well we realized they're knotted now!
+		our_guy.add_mood_event("trip", /datum/mood_event/tripped) // well we realized they're knotted now!
 		our_alert_ref = WEAKREF(our_guy.throw_alert(ALERT_SHOES_KNOT, /atom/movable/screen/alert/shoes/knotted))
 
 	else if(tied == SHOES_UNTIED)
@@ -222,7 +222,7 @@
 			if(1) // .1% chance to trip and fall over (note these are per step while our laces are undone)
 				our_guy.Paralyze(5)
 				our_guy.Knockdown(10)
-				SEND_SIGNAL(our_guy, COMSIG_ADD_MOOD_EVENT, "trip", /datum/mood_event/tripped) // well we realized they're knotted now!
+				our_guy.add_mood_event("trip", /datum/mood_event/tripped) // well we realized they're knotted now!
 				our_guy.visible_message(span_danger("[our_guy] trips on [our_guy.p_their()] untied shoelaces and falls! What a klutz!"), span_userdanger("You trip on your untied shoelaces and fall over!"))
 
 			if(2 to 5) // .4% chance to stumble and lurch forward
@@ -245,7 +245,7 @@
 			if(26 to 1000)
 				wiser = FALSE
 		if(wiser)
-			SEND_SIGNAL(our_guy, COMSIG_ADD_MOOD_EVENT, "untied", /datum/mood_event/untied) // well we realized they're untied now!
+			our_guy.add_mood_event("untied", /datum/mood_event/untied) // well we realized they're untied now!
 			our_alert_ref = WEAKREF(our_guy.throw_alert(ALERT_SHOES_KNOT, /atom/movable/screen/alert/shoes/untied))
 
 

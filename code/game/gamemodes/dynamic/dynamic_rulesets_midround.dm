@@ -23,10 +23,13 @@
 
 	/// The minimum round time before this ruleset will show up
 	var/minimum_round_time = 0
+	/// Abstract root value
+	var/abstract_type = /datum/dynamic_ruleset/midround
 
 /datum/dynamic_ruleset/midround/from_ghosts
 	weight = 0
 	required_type = /mob/dead/observer
+	abstract_type = /datum/dynamic_ruleset/midround/from_ghosts
 	/// Whether the ruleset should call generate_ruleset_body or not.
 	var/makeBody = TRUE
 	/// The rule needs this many applicants to be properly executed.
@@ -80,8 +83,8 @@
 // You can then for example prompt dead players in execute() to join as strike teams or whatever
 // Or autotator someone
 
-// IMPORTANT, since /datum/dynamic_ruleset/midround may accept candidates from both living, dead, and even antag players, you need to manually check whether there are enough candidates
-// (see /datum/dynamic_ruleset/midround/autotraitor/ready(forced = FALSE) for example)
+// IMPORTANT, since /datum/dynamic_ruleset/midround may accept candidates from both living, dead, and even antag players
+// subtype your midround with /from_ghosts or /from_living to get candidate checking. Or check yourself by subtyping from neither
 /datum/dynamic_ruleset/midround/ready(forced = FALSE)
 	if (forced)
 		return TRUE
@@ -181,7 +184,7 @@
 
 /// Fired when there are no valid candidates. Will spawn a sleeper agent or latejoin traitor.
 /datum/dynamic_ruleset/midround/from_ghosts/proc/attempt_replacement()
-	var/datum/dynamic_ruleset/midround/autotraitor/sleeper_agent = new
+	var/datum/dynamic_ruleset/midround/from_living/autotraitor/sleeper_agent = new
 
 	mode.configure_ruleset(sleeper_agent)
 
@@ -190,13 +193,24 @@
 
 	mode.picking_specific_rule(/datum/dynamic_ruleset/latejoin/infiltrator)
 
+///subtype to handle checking players
+/datum/dynamic_ruleset/midround/from_living
+	weight = 0
+	abstract_type = /datum/dynamic_ruleset/midround/from_living
+
+/datum/dynamic_ruleset/midround/from_living/ready(forced)
+	if(!check_candidates())
+		return FALSE
+	return ..()
+
+
 //////////////////////////////////////////////
 //                                          //
 //           SYNDICATE TRAITORS             //
 //                                          //
 //////////////////////////////////////////////
 
-/datum/dynamic_ruleset/midround/autotraitor
+/datum/dynamic_ruleset/midround/from_living/autotraitor
 	name = "Syndicate Sleeper Agent"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
 	antag_datum = /datum/antagonist/traitor
@@ -222,7 +236,7 @@
 	requirements = list(3,3,3,3,3,3,3,3,3,3)
 	repeatable = TRUE
 
-/datum/dynamic_ruleset/midround/autotraitor/trim_candidates()
+/datum/dynamic_ruleset/midround/from_living/autotraitor/trim_candidates()
 	..()
 	for(var/mob/living/player in living_players)
 		if(issilicon(player)) // Your assigned role doesn't change when you are turned into a silicon.
@@ -232,13 +246,7 @@
 		else if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
 			living_players -= player // We don't autotator people with roles already
 
-/datum/dynamic_ruleset/midround/autotraitor/ready(forced = FALSE)
-	if (required_candidates > living_players.len)
-		log_dynamic("FAIL: [src] does not have enough candidates, using living_players ([required_candidates] needed, [living_players.len] found)")
-		return FALSE
-	return ..()
-
-/datum/dynamic_ruleset/midround/autotraitor/execute()
+/datum/dynamic_ruleset/midround/from_living/autotraitor/execute()
 	var/mob/M = pick(living_players)
 	assigned += M
 	living_players -= M
@@ -437,7 +445,7 @@
 	return body
 
 /// Infects a random player, making them explode into a blob.
-/datum/dynamic_ruleset/midround/blob_infection
+/datum/dynamic_ruleset/midround/from_living/blob_infection
 	name = "Blob Infection"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
 	antag_datum = /datum/antagonist/blob/infection
@@ -470,7 +478,7 @@
 	minimum_players = 25
 	repeatable = TRUE
 
-/datum/dynamic_ruleset/midround/blob_infection/trim_candidates()
+/datum/dynamic_ruleset/midround/from_living/blob_infection/trim_candidates()
 	..()
 	candidates = living_players
 	for(var/mob/living/player as anything in candidates)
@@ -482,7 +490,7 @@
 		if(player.mind && (player.mind.special_role || length(player.mind.antag_datums) > 0))
 			candidates -= player
 
-/datum/dynamic_ruleset/midround/blob_infection/execute()
+/datum/dynamic_ruleset/midround/from_living/blob_infection/execute()
 	if(!candidates || !candidates.len)
 		return FALSE
 	var/mob/living/carbon/human/blob_antag = pick_n_take(candidates)
@@ -569,7 +577,7 @@
 	repeatable = TRUE
 	var/list/spawn_locs = list()
 
-/datum/dynamic_ruleset/midround/from_ghosts/nightmare/execute()
+/datum/dynamic_ruleset/midround/from_ghosts/nightmare/acceptable(population=0, threat=0)
 	for(var/X in GLOB.xeno_spawn)
 		var/turf/T = X
 		var/light_amount = T.get_lumcount()
@@ -865,7 +873,7 @@
 	return ..()
 
 /// Obsessed ruleset
-/datum/dynamic_ruleset/midround/obsessed
+/datum/dynamic_ruleset/midround/from_living/obsessed
 	name = "Obsessed"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
 	antag_datum = /datum/antagonist/obsessed
@@ -887,7 +895,7 @@
 	cost = 3 // Doesn't have the same impact on rounds as revenants, dragons, sentient disease (10) or syndicate infiltrators (5).
 	repeatable = TRUE
 
-/datum/dynamic_ruleset/midround/obsessed/trim_candidates()
+/datum/dynamic_ruleset/midround/from_living/obsessed/trim_candidates()
 	..()
 	candidates = living_players
 	for(var/mob/living/carbon/human/candidate in candidates)
@@ -900,17 +908,15 @@
 		)
 			candidates -= candidate
 
-/datum/dynamic_ruleset/midround/obsessed/execute()
-	if(!candidates || !candidates.len)
-		return FALSE
+/datum/dynamic_ruleset/midround/from_living/obsessed/execute()
 	var/mob/living/carbon/human/obsessed = pick_n_take(candidates)
 	obsessed.gain_trauma(/datum/brain_trauma/special/obsessed)
 	message_admins("[ADMIN_LOOKUPFLW(obsessed)] has been made Obsessed by the midround ruleset.")
 	log_game("[key_name(obsessed)] was made Obsessed by the midround ruleset.")
-	return ..()
+	return TRUE
 
 /// Thief ruleset
-/datum/dynamic_ruleset/midround/opportunist
+/datum/dynamic_ruleset/midround/from_living/opportunist
 	name = "Opportunist"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
 	antag_datum = /datum/antagonist/thief
@@ -935,7 +941,7 @@
 	requirements = list(10,10,10,10,10,10,10,10,10,10)
 	repeatable = TRUE
 
-/datum/dynamic_ruleset/midround/opportunist/trim_candidates()
+/datum/dynamic_ruleset/midround/from_living/opportunist/trim_candidates()
 	..()
 	candidates = living_players
 	for(var/mob/living/carbon/human/candidate in candidates)
@@ -953,14 +959,12 @@
 		)
 			candidates -= candidate
 
-/datum/dynamic_ruleset/midround/opportunist/execute()
-	if(!candidates || !candidates.len)
-		return FALSE
+/datum/dynamic_ruleset/midround/from_living/opportunist/execute()
 	var/mob/living/carbon/human/thief = pick_n_take(candidates)
 	thief.mind.add_antag_datum(antag_datum)
 	message_admins("[ADMIN_LOOKUPFLW(thief)] has been made a Thief by the midround ruleset.")
 	log_game("[key_name(thief)] was made a Thief by the midround ruleset.")
-	return ..()
+	return TRUE
 
 /// Probability the AI going malf will be accompanied by an ion storm announcement and some ion laws.
 #undef MALF_ION_PROB

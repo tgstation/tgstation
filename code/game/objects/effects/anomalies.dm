@@ -376,7 +376,7 @@
 		var/policy = get_policy(ROLE_PYROCLASTIC_SLIME)
 		if (policy)
 			to_chat(S, policy)
-		S.log_message("was made into a slime by pyroclastic anomaly at [AREACOORD(T)].", LOG_GAME)
+		S.log_message("was made into a slime by pyroclastic anomaly", LOG_GAME)
 
 /////////////////////
 

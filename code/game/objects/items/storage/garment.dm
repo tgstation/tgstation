@@ -30,7 +30,7 @@
 	name = "chief engineer's garment bag"
 	desc = "A bag for storing extra clothes and shoes. This one belongs to the chief engineer."
 
-/obj/item/storage/bag/garment/Initialize()
+/obj/item/storage/bag/garment/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.numerical_stacking = FALSE
@@ -120,4 +120,3 @@
 	new /obj/item/clothing/neck/cloak/ce(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/engineering/ce(src)
-

@@ -101,7 +101,7 @@
 
 /obj/machinery/smoke_machine/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
-	if(istype(I, /obj/item/reagent_containers) && I.is_open_container())
+	if(is_reagent_container(I) && I.is_open_container())
 		var/obj/item/reagent_containers/RC = I
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transfered_by = user)
 		if(units)
@@ -161,7 +161,7 @@
 			update_appearance()
 			if(on)
 				message_admins("[ADMIN_LOOKUPFLW(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [ADMIN_VERBOSEJMP(src)].")
-				usr.log_message("activated a smoke machine that contains [english_list(reagents.reagent_list)] at [AREACOORD(src)].", LOG_GAME)
+				usr.log_message("activated a smoke machine that contains [english_list(reagents.reagent_list)]", LOG_GAME)
 				log_combat(usr, src, "has activated [src] which contains [english_list(reagents.reagent_list)] at [AREACOORD(src)].")
 		if("goScreen")
 			screen = params["screen"]

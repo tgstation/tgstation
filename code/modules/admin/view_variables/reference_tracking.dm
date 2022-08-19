@@ -82,7 +82,7 @@
 	CHECK_TICK
 	#endif
 
-	if(istype(potential_container, /datum))
+	if(isdatum(potential_container))
 		var/datum/datum_container = potential_container
 		if(datum_container.last_find_references == search_time)
 			return

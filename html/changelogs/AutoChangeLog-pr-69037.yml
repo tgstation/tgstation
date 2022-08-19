@@ -1,6 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "The Quartermaster and his items will now trigger phobias related to command staff!"
-  - bugfix: "Command rank bedsheets, jackets, cloaks, and headsets will now trigger phobias related to command staff."
-  - bugfix: "The QM's bedsheets will now make you dream of authority and silvery IDs!"

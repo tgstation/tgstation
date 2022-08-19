@@ -488,7 +488,7 @@
 	return ..()
 
 /obj/machinery/atmospherics/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	if(istype(arrived, /mob/living))
+	if(isliving(arrived))
 		var/mob/living/L = arrived
 		L.ventcrawl_layer = piping_layer
 	return ..()

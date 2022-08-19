@@ -144,7 +144,7 @@
 			user.put_in_hands(grenade)
 			grenade = null
 		return
-	if(istype(I, /obj/item/grenade))
+	if(isgrenade(I))
 		if(stuffed)
 			to_chat(user, span_warning("You need to remove some stuffing first!"))
 			return
@@ -156,8 +156,7 @@
 		user.visible_message(span_warning("[user] slides [grenade] into [src]."), \
 		span_danger("You slide [I] into [src]."))
 		grenade = I
-		var/turf/grenade_turf = get_turf(src)
-		user.log_message("added a grenade ([I.name]) to [src] at [AREACOORD(grenade_turf)].", LOG_GAME)
+		user.log_message("added a grenade ([I.name]) to [src]", LOG_GAME)
 		return
 	if(istype(I, /obj/item/toy/plush))
 		love(I, user)
@@ -577,7 +576,7 @@
 	icon_state = "plushie_awake"
 	inhand_icon_state = "plushie_awake"
 
-/obj/item/toy/plush/awakenedplushie/ComponentInitialize()
+/obj/item/toy/plush/awakenedplushie/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/edit_complainer)
 

@@ -1,6 +1,0 @@
-author: "VioletN"
-delete-after: True
-changes: 
-  - balance: "Instead of directly lowering body temperature by a small amount, the Grasp of Void and Mark of Void heretic abilities now inflict a status condition called void chill, which steadily lowers the victim's body temperature and also inflicts a mild slowdown."
-  - balance: "The void storm summoned by ascended void heretics now inflicts less direct burn damage, but lowers body temperature much more strongly."
-  - bugfix: "The void storm visual overlays now properly update when the heretic exits an area, making them a more accurate indicator of which area the heretic is in."

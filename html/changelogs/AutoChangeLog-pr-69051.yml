@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed traitors not getting a new kidnapping objective if they previously failed to kidnap someone else."

@@ -832,7 +832,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	for(var/obj/item/thing in resolve_location.contents)
 		var/total_amnt = 1
 
-		if(istype(thing, /obj/item/stack))
+		if(isstack(thing))
 			var/obj/item/stack/things = thing
 			total_amnt = things.amount
 

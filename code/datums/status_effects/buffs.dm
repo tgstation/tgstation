@@ -321,7 +321,7 @@
 		owner.adjust_timed_status_effect(-4 SECONDS, /datum/status_effect/dizziness)
 		owner.adjust_timed_status_effect(-4 SECONDS, /datum/status_effect/jitter)
 		owner.adjust_timed_status_effect(-1 SECONDS, /datum/status_effect/confusion)
-		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "goodmusic", /datum/mood_event/goodmusic)
+		owner.add_mood_event("goodmusic", /datum/mood_event/goodmusic)
 
 /atom/movable/screen/alert/status_effect/regenerative_core
 	name = "Regenerative Core Tendrils"
@@ -340,7 +340,7 @@
 	owner.adjustFireLoss(-25)
 	owner.remove_CC()
 	owner.bodytemperature = owner.get_body_temp_normal()
-	if(istype(owner, /mob/living/carbon/human))
+	if(ishuman(owner))
 		var/mob/living/carbon/human/humi = owner
 		humi.set_coretemperature(humi.get_body_temp_normal())
 	return TRUE

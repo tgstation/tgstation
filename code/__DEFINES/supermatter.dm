@@ -28,8 +28,9 @@
 #define ZAUKER_TRANSMIT_MODIFIER 20
 #define ANTINOBLIUM_TRANSMIT_MODIFIER -5
 #define HYPERNOBLIUM_TRANSMIT_MODIFIER 3
-
-#define BZ_RADIOACTIVITY_MODIFIER 5 //Improves the effect of transmit modifiers
+#define H20_TRANSMIT_MODIFIER -2.5
+#define FREON_TRANSMIT_MODIFIER -30
+#define CO2_TRANSMIT_MODIFIER 10
 
 #define N2O_HEAT_RESISTANCE 6          //Higher == Gas makes the crystal more resistant against heat damage.
 #define HYDROGEN_HEAT_RESISTANCE 2 // just a bit of heat resistance to spice it up

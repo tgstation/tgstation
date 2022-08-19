@@ -1,4 +1,0 @@
-author: "XyzzyThePretender"
-delete-after: True
-changes: 
-  - bugfix: "Newly built turrets start unlocked."

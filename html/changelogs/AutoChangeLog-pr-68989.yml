@@ -1,4 +1,0 @@
-author: "Zonespace27"
-delete-after: True
-changes: 
-  - bugfix: "Butcher's meat hook no longer fails when the user has TRAIT_NOGUNS"

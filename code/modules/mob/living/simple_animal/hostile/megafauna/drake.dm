@@ -83,7 +83,7 @@
 	/// Lava swoop ability
 	var/datum/action/cooldown/mob_cooldown/lava_swoop/lava_swoop
 
-/mob/living/simple_animal/hostile/megafauna/dragon/Initialize()
+/mob/living/simple_animal/hostile/megafauna/dragon/Initialize(mapload)
 	. = ..()
 	fire_cone = new /datum/action/cooldown/mob_cooldown/fire_breath/cone()
 	meteors = new /datum/action/cooldown/mob_cooldown/meteors()
@@ -181,7 +181,7 @@
 /proc/dragon_fire_line(atom/source, list/turfs, frozen = FALSE)
 	var/list/hit_list = list()
 	for(var/turf/T in turfs)
-		if(istype(T, /turf/closed))
+		if(isclosedturf(T))
 			break
 		var/obj/effect/hotspot/drake_fire_hotspot = new /obj/effect/hotspot(T)
 		if(frozen)
@@ -271,7 +271,7 @@
 		M.take_damage(45, BRUTE, MELEE, 1)
 
 	// changes turf to lava temporarily
-	if(!istype(T, /turf/closed) && !istype(T, /turf/open/lava))
+	if(!isclosedturf(T) && !islava(T))
 		var/lava_turf = /turf/open/lava/smooth
 		var/reset_turf = T.type
 		T.ChangeTurf(lava_turf, flags = CHANGETURF_INHERIT_AIR)
@@ -359,7 +359,7 @@
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
 	attack_action_types = list()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/lesser/Initialize()
+/mob/living/simple_animal/hostile/megafauna/dragon/lesser/Initialize(mapload)
 	. = ..()
 	fire_cone.Remove(src)
 	meteors.Remove(src)

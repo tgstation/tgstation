@@ -318,7 +318,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 				to_chat(user, span_warning("[src] already has that upgrade!"))
 			return
 
-		else if(istype(attacking_item, /obj/item/assembly/prox_sensor))
+		else if(isprox(attacking_item))
 			if(!isMotion())
 				if(!user.temporarilyRemoveItemFromInventory(attacking_item))
 					return

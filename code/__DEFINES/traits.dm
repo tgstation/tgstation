@@ -641,6 +641,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// trait denoting someone will sometimes recover out of crit
 #define TRAIT_UNBREAKABLE "unbreakable"
 
+/// trait that prevents AI controllers from planning detached from ai_status to prevent weird state stuff.
+#define TRAIT_AI_PAUSED "TRAIT_AI_PAUSED"
+
 //Medical Categories for quirks
 #define CAT_QUIRK_ALL 0
 #define CAT_QUIRK_NOTES 1
@@ -813,7 +816,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define LIPSTICK_TRAIT "lipstick_trait"
 /// Self-explainatory.
 #define BEAUTY_ELEMENT_TRAIT "beauty_element"
-#define MOOD_COMPONENT_TRAIT "mood_component"
+#define MOOD_DATUM_TRAIT "mood_datum"
 #define DRONE_SHY_TRAIT "drone_shy"
 /// Pacifism trait given by stabilized light pink extracts.
 #define STABILIZED_LIGHT_PINK_TRAIT "stabilized_light_pink"

@@ -25,12 +25,9 @@
 
 /obj/item/grenade/c4/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 	plastic_overlay = mutable_appearance(icon, "[inhand_icon_state]2", HIGH_OBJ_LAYER)
 	wires = new /datum/wires/explosive/c4(src)
-
-/obj/item/grenade/c4/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 
 /obj/item/grenade/c4/Destroy()
 	qdel(wires)
@@ -108,14 +105,14 @@
 
 		moveToNullspace() //Yep
 
-		if(istype(bomb_target, /obj/item)) //your crappy throwing star can't fly so good with a giant brick of c4 on it.
+		if(isitem(bomb_target)) //your crappy throwing star can't fly so good with a giant brick of c4 on it.
 			var/obj/item/thrown_weapon = bomb_target
 			thrown_weapon.throw_speed = max(1, (thrown_weapon.throw_speed - 3))
 			thrown_weapon.throw_range = max(1, (thrown_weapon.throw_range - 3))
 			if(thrown_weapon.embedding)
 				thrown_weapon.embedding["embed_chance"] = 0
 				thrown_weapon.updateEmbedding()
-		else if(istype(bomb_target, /mob/living))
+		else if(isliving(bomb_target))
 			plastic_overlay.layer = FLOAT_LAYER
 
 		target.add_overlay(plastic_overlay)

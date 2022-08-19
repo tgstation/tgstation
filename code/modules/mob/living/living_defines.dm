@@ -212,3 +212,6 @@
 	var/list/fov_traits
 	///what multiplicative slowdown we get from turfs currently.
 	var/current_turf_slowdown = 0
+
+	/// Living mob's mood datum
+	var/datum/mood/mob_mood

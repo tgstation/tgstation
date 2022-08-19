@@ -74,7 +74,6 @@
 			log_telecomms("Created [src]([REF(src)] in nullspace, assuming network to be in station")
 			network_id = NETWORK_NAME_COMBINE(STATION_NETWORK_ROOT, network_id) // I regret nothing!!
 		AddComponent(/datum/component/ntnet_interface, network_id, id_tag)
-		/// Needs to run before as ComponentInitialize runs after this statement...why do we have ComponentInitialize again?
 
 
 /obj/Destroy(force)

@@ -99,7 +99,7 @@
 		to_chat(the_folder, span_warning("You wrestle with [src], but it won't fold while unzipped."))
 		return
 	for(var/content_thing in contents)
-		if(istype(content_thing, /mob) || istype(content_thing, /obj))
+		if(istype(content_thing, /mob) || isobj(content_thing))
 			to_chat(the_folder, span_warning("There are too many things inside of [src] to fold it up!"))
 			return
 	// toto we made it!
@@ -308,7 +308,7 @@
 	user.visible_message(span_notice("[user] [sinched ? null : "un"]sinches [src]."),
 							span_notice("You [sinched ? null : "un"]sinch [src]."),
 							span_hear("You hear stretching followed by metal clicking from [src]."))
-	user.log_message("[sinched ? "sinched":"unsinched"] secure environmental bag [src] at [AREACOORD(src)]", LOG_GAME)
+	user.log_message("[sinched ? "sinched":"unsinched"] secure environmental bag [src]", LOG_GAME)
 	update_appearance()
 
 /obj/structure/closet/body_bag/environmental/prisoner/pressurized

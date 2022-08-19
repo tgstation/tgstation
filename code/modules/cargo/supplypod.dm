@@ -376,7 +376,7 @@
 
 	else if(isobj(to_insert))
 		var/obj/obj_to_insert = to_insert
-		if(istype(obj_to_insert, /obj/structure/closet/supplypod))
+		if(issupplypod(obj_to_insert))
 			return FALSE
 		if(istype(obj_to_insert, /obj/effect/supplypod_smoke))
 			return FALSE

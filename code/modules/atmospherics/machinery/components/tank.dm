@@ -474,7 +474,7 @@
 			icon_state = "plated_frame"
 
 /obj/structure/tank_frame/attackby(obj/item/item, mob/living/user, params)
-	if(construction_state == TANK_FRAME && istype(item, /obj/item/stack) && add_plating(user, item))
+	if(construction_state == TANK_FRAME && isstack(item) && add_plating(user, item))
 		return
 	return ..()
 

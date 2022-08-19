@@ -244,7 +244,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			if(!length(baseturfs))
 				baseturfs = list(baseturfs)
 			var/list/old_baseturfs = baseturfs.Copy()
-			if(!istype(src, /turf/closed))
+			if(!isclosedturf(src))
 				old_baseturfs += type
 			newT = ChangeTurf(fake_turf_type, null, flags)
 			newT.assemble_baseturfs(initial(fake_turf_type.baseturfs)) // The baseturfs list is created like roundstart
@@ -255,13 +255,13 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			return newT
 		if(!length(baseturfs))
 			baseturfs = list(baseturfs)
-		if(!istype(src, /turf/closed))
+		if(!isclosedturf(src))
 			new_baseturfs = list(type) + new_baseturfs
 		baseturfs = baseturfs_string_list(baseturfs + new_baseturfs, src)
 		return ChangeTurf(fake_turf_type, null, flags)
 	if(!length(baseturfs))
 		baseturfs = list(baseturfs)
-	if(!istype(src, /turf/closed))
+	if(!isclosedturf(src))
 		baseturfs = baseturfs_string_list(baseturfs + type, src)
 	var/turf/change_type
 	if(length(new_baseturfs))
@@ -302,10 +302,10 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	levelupdate()
 	if(flags & CHANGETURF_RECALC_ADJACENT)
 		immediate_calculate_adjacent_turfs()
-		if(ispath(oldType, /turf/closed) && istype(src, /turf/open))
+		if(ispath(oldType, /turf/closed) && isopenturf(src))
 			SSair.add_to_active(src)
 	else //In effect, I want closed turfs to make their tile active when sheered, but we need to queue it since they have no adjacent turfs
-		CALCULATE_ADJACENT_TURFS(src, (!(ispath(oldType, /turf/closed) && istype(src, /turf/open)) ? NORMAL_TURF : MAKE_ACTIVE))
+		CALCULATE_ADJACENT_TURFS(src, (!(ispath(oldType, /turf/closed) && isopenturf(src)) ? NORMAL_TURF : MAKE_ACTIVE))
 	//update firedoor adjacency
 	var/list/turfs_to_check = get_adjacent_open_turfs(src) | src
 	for(var/I in turfs_to_check)
