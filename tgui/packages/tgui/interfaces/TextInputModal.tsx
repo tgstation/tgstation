@@ -15,11 +15,11 @@ type TextInputData = {
   title: string;
 };
 
-export const SanitizeMultiline = (toSanitize: string) => {
+export const sanitizeMultiline = (toSanitize: string) => {
   return toSanitize.replace(/(\n|\r\n){3,}/, '\n\n');
 };
 
-export const RemoveAllSkiplines = (toSanitize: string) => {
+export const removeAllSkiplines = (toSanitize: string) => {
   return toSanitize.replace(/[\r\n]+/, '');
 };
 
@@ -44,8 +44,8 @@ export const TextInputModal = (props, context) => {
       return;
     }
     const sanitizedInput = multiline
-      ? SanitizeMultiline(value)
-      : RemoveAllSkiplines(value);
+      ? sanitizeMultiline(value)
+      : removeAllSkiplines(value);
     setInput(sanitizedInput);
   };
 
