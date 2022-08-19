@@ -392,18 +392,13 @@
 	soulstone_spirit.cancel_camera()
 	update_appearance()
 	if(user)
-		var/master
 		if(IS_CULTIST(user))
 			to_chat(soulstone_spirit, span_bold("Your soul has been captured! \
 				You are now bound to the cult's will. Help them succeed in their goals at all costs."))
-			master = "the cult"
 		else if(role_check(user))
 			to_chat(soulstone_spirit, span_bold("Your soul has been captured! You are now bound to [user.real_name]'s will. \
 				Help [user.p_them()] succeed in [user.p_their()] goals at all costs."))
-			master = user.real_name
-
-		if(master)
-			var/datum/shade_popup/popup = new(master)
+			var/datum/shade_popup/popup = new(user.real_name)
 			popup.ui_interact(soulstone_spirit)
 
 		if(message_user)
@@ -546,7 +541,7 @@
 	/// Name of the person whose goals you must pursue as your own.
 	var/master
 
-/datum/shade_popup/New(var/master_name)
+/datum/shade_popup/New(master_name)
 	src.master = master_name
 
 /datum/shade_popup/ui_interact(mob/user, datum/tgui/ui)
