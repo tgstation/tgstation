@@ -507,6 +507,7 @@
 	M.Scale(x1,y1)
 	transform = M
 
+// lemon todo: fix ghosts spawning in on the wrong plane
 /atom/movable/screen/click_catcher
 	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "catcher"
@@ -531,6 +532,16 @@
 	var/matrix/M = new
 	M.Scale(px/sx, py/sy)
 	transform = M
+
+/atom/movable/screen/click_catcher/Initialize(mapload)
+	. = ..()
+	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, .proc/offset_increased)
+	offset_increased(SSmapping, 0, SSmapping.max_plane_offset)
+
+// Draw to the lowest plane level offered
+/atom/movable/screen/click_catcher/proc/offset_increased(datum/source, old_offset, new_offset)
+	SIGNAL_HANDLER
+	SET_PLANE_W_SCALAR(src, initial(plane), new_offset)
 
 /atom/movable/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)

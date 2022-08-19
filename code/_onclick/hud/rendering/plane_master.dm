@@ -162,6 +162,25 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	else
 		unhide_plane(our_mob)
 
+/atom/movable/screen/plane_master/clickcatcher
+	name = "Click Catcher"
+	documentation = "Contains the screen object we use as a backdrop to catch clicks on portions of the screen that would otherwise contain nothing else. \
+		<br>Will always be below almost everything else"
+	plane = CLICKCATCHER_PLANE
+	// Lemon todo: rename this var
+	accepts_input = FALSE
+
+/atom/movable/screen/plane_master/clickcatcher/Initialize(mapload, datum/plane_master_group/home, offset)
+	. = ..()
+	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, .proc/offset_increased)
+
+/atom/movable/screen/plane_master/clickcatcher/proc/offset_increased(datum/source, old_off, new_off)
+	SIGNAL_HANDLER
+	// We only want need the lowest level
+	// If my system better supported changing PM plane values mid op I'd do that, but I do NOT so
+	if(new_off > offset)
+		hide_plane(home?.our_hud?.mymob)
+
 /atom/movable/screen/plane_master/parallax_white
 	name = "Parallax whitifier"
 	documentation = "Essentially a backdrop for the parallax plane. We're rendered just below it, so we'll be multiplied by its well, parallax.\
