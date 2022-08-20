@@ -28,6 +28,8 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 	blood_volume = BLOOD_VOLUME_NORMAL
 	ai_controller = /datum/ai_controller/basic_controller/cow
+	var/tame_message = "lets out a happy moo"
+	var/self_tame_message = "let out a happy moo"
 
 /mob/living/basic/cow/Initialize(mapload)
 	AddComponent(/datum/component/tippable, \
@@ -51,6 +53,7 @@
 
 /mob/living/basic/cow/proc/tamed(mob/living/tamer)
 	buckle_lying = 0
+	visible_message("[src] [tame_message] as it seems to bond with [tamer].", "You [self_tame_message], recognizing [tamer] as your new pal.")
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/cow)
 
 /*
@@ -132,6 +135,8 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	ai_controller = /datum/ai_controller/basic_controller/cow/moonicorn
+	tame_message = "nods with respect"
+	self_tame_message = "nod with respect"
 
 /mob/living/basic/cow/moonicorn/Initialize(mapload)
 	. = ..()
@@ -146,7 +151,6 @@
 
 /mob/living/basic/cow/moonicorn/tamed(mob/living/tamer)
 	. = ..()
-	visible_message(span_notice("[src] nods with respect."))
 	///stop killing my FRIENDS
 	faction |= tamer.faction
 

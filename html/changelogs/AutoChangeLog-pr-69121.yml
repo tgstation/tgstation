@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Fix an issue where exceptionally large tape recorder printed transcripts could be generated. They now split across multiple pieces of paper. I sure hope you have a filing cabinet handy!"

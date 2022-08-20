@@ -1,4 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes: 
-  - qol: "Vending machines now support categories. Premium/contraband is moved to categories, and the ClothesMate has special categories for different levels."

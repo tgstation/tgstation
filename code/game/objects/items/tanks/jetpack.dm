@@ -122,7 +122,7 @@
 	return loc
 
 /obj/item/tank/jetpack/suicide_act(mob/user)
-	if (!istype(user, /mob/living/carbon/human))
+	if (!ishuman(user))
 		return ..()
 	var/mob/living/carbon/human/suffocater = user
 	suffocater.say("WHAT THE FUCK IS CARBON DIOXIDE?")

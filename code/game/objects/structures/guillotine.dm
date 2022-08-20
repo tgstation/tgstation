@@ -203,7 +203,7 @@
 		to_chat(usr, span_warning("[src] needs to be wrenched to the floor!"))
 		return FALSE
 
-	if (!istype(M, /mob/living/carbon/human))
+	if (!ishuman(M))
 		to_chat(usr, span_warning("It doesn't look like [M.p_they()] can fit into this properly!"))
 		return FALSE // Can't decapitate non-humans
 
@@ -214,7 +214,7 @@
 	return ..(M, user, check_loc = FALSE) //check_loc = FALSE to allow moving people in from adjacent turfs
 
 /obj/structure/guillotine/post_buckle_mob(mob/living/M)
-	if (!istype(M, /mob/living/carbon/human))
+	if (!ishuman(M))
 		return
 
 	M.add_mood_event("dying", /datum/mood_event/deaths_door)

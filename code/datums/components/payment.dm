@@ -95,7 +95,7 @@
 
 	if(physical_cash_total < total_cost)
 		var/armless //Suggestions for those with no arms/simple animals.
-		if(!ishuman(user) && !istype(user, /mob/living/simple_animal/slime))
+		if(!ishuman(user) && !isslime(user))
 			armless = TRUE
 		else
 			var/mob/living/carbon/human/harmless_armless = user
@@ -119,7 +119,7 @@
 		var/obj/item/holochip/holochange = new /obj/item/holochip(user.loc) //Change is made in holocredits exclusively.
 		holochange.credits = physical_cash_total
 		holochange.name = "[holochange.credits] credit holochip"
-		if(istype(user, /mob/living/carbon/human))
+		if(ishuman(user))
 			var/mob/living/carbon/human/paying_customer = user
 			if(!INVOKE_ASYNC(paying_customer, /mob.proc/put_in_hands, holochange))
 				user.pulling = holochange

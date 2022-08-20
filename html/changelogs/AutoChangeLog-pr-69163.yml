@@ -1,5 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes: 
-  - code_imp: "Removes an unused bible proc"
-  - bugfix: "Normal items once again do not fit into bibles."

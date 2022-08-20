@@ -495,7 +495,9 @@ class ChatRenderer {
       const cssRules = styleSheets[i].cssRules;
       for (let i = 0; i < cssRules.length; i++) {
         const rule = cssRules[i];
-        cssText += rule.cssText + '\n';
+        if (rule && typeof rule.cssText === 'string') {
+          cssText += rule.cssText + '\n';
+        }
       }
     }
     cssText += 'body, html { background-color: #141414 }\n';

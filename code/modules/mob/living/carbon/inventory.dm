@@ -89,7 +89,7 @@
 			if(back)
 				return
 			back = I
-			update_inv_back()
+			update_worn_back()
 		if(ITEM_SLOT_MASK)
 			if(wear_mask)
 				return
@@ -105,16 +105,16 @@
 			if(wear_neck)
 				return
 			wear_neck = I
-			update_inv_neck(I)
+			update_worn_neck(I)
 		if(ITEM_SLOT_HANDCUFFED)
 			set_handcuffed(I)
 			update_handcuffed()
 		if(ITEM_SLOT_LEGCUFFED)
 			legcuffed = I
-			update_inv_legcuffed()
+			update_worn_legcuffs()
 		if(ITEM_SLOT_HANDS)
 			put_in_hands(I)
-			update_inv_hands()
+			update_held_items()
 		if(ITEM_SLOT_BACKPACK)
 			if(!back || !back.atom_storage?.attempt_insert(back, I, src, override = TRUE))
 				not_handled = TRUE
@@ -146,7 +146,7 @@
 	else if(I == back)
 		back = null
 		if(!QDELETED(src))
-			update_inv_back()
+			update_worn_back()
 	else if(I == wear_mask)
 		wear_mask = null
 		if(!QDELETED(src))
@@ -154,7 +154,7 @@
 	if(I == wear_neck)
 		wear_neck = null
 		if(!QDELETED(src))
-			update_inv_neck(I)
+			update_worn_neck(I)
 	else if(I == handcuffed)
 		set_handcuffed(null)
 		if(buckled?.buckle_requires_restraints)
@@ -164,29 +164,29 @@
 	else if(I == legcuffed)
 		legcuffed = null
 		if(!QDELETED(src))
-			update_inv_legcuffed()
+			update_worn_legcuffs()
 	update_equipment_speed_mods()
 
 //handle stuff to update when a mob equips/unequips a mask.
 /mob/living/proc/wear_mask_update(obj/item/I, toggle_off = 1)
-	update_inv_wear_mask()
+	update_worn_mask()
 
 /mob/living/carbon/wear_mask_update(obj/item/I, toggle_off = 1)
 	var/obj/item/clothing/C = I
 	if(istype(C) && (C.tint || initial(C.tint)))
 		update_tint()
-	update_inv_wear_mask()
+	update_worn_mask()
 
 //handle stuff to update when a mob equips/unequips a headgear.
 /mob/living/carbon/proc/head_update(obj/item/I, forced)
-	if(istype(I, /obj/item/clothing))
+	if(isclothing(I))
 		var/obj/item/clothing/C = I
 		if(C.tint || initial(C.tint))
 			update_tint()
 		update_sight()
 	if(I.flags_inv & HIDEMASK || forced)
-		update_inv_wear_mask()
-	update_inv_head()
+		update_worn_mask()
+	update_worn_head()
 
 /mob/living/carbon/proc/get_holding_bodypart_of_item(obj/item/I)
 	var/index = get_held_index_of_item(I)

@@ -223,6 +223,15 @@
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_ELECTRONICS)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
+/datum/design/trapdoor_electronics
+	name = "Trapdoor Controller Electronics"
+	id = "trapdoor_electronics"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 50, /datum/material/glass = 50)
+	build_path = /obj/item/assembly/trapdoor
+	category = list("initial", "Electronics")
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
 /datum/design/camera
 	name = "Camera"
 	id = "camera"

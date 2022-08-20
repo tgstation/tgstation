@@ -541,7 +541,7 @@
 			if(prob(max(5,(nearby_people*12.5*moodmod)))) //Minimum 1/20 chance of stutter
 				// Add a short stutter, THEN treat our word
 				quirker.adjust_timed_status_effect(0.5 SECONDS, /datum/status_effect/speech/stutter)
-				new_message += quirker.treat_message(word)
+				new_message += quirker.treat_message(word, capitalize_message = FALSE)
 
 			else
 				new_message += word
