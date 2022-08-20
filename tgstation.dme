@@ -1124,6 +1124,7 @@
 #include "code\datums\memory\memory.dm"
 #include "code\datums\memory\tattoo_kit.dm"
 #include "code\datums\mergers\_merger.dm"
+#include "code\datums\mind\_mind.dm"
 #include "code\datums\mind\antag.dm"
 #include "code\datums\mind\initialization.dm"
 #include "code\datums\mind\skills.dm"
