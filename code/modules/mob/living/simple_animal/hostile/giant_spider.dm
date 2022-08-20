@@ -30,7 +30,7 @@
 	health = 80
 	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1)
 	flammable = TRUE
-	status_flags = 0
+	status_flags = NONE
 	unsuitable_cold_damage = 4
 	unsuitable_heat_damage = 4
 	obj_damage = 30
@@ -202,7 +202,6 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	move_to_delay = 8
 	speed = 1
-	status_flags = NONE
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = NO_SPAWN
 	menu_description = "Tank spider variant with an enormous amount of health and damage, but is very slow when not on webbing. It also has a charge ability to close distance with a target after a small windup."
