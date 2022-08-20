@@ -3,13 +3,27 @@
 	desc = "A machine used to deposit and withdraw station funds."
 	icon_screen = "vault"
 	icon_keyboard = "security_key"
+	req_access = list(ACCESS_VAULT)
+	///Whether the machine is currently being siphoned
 	var/siphoning = FALSE
-	var/unauthorized = FALSE
-	var/next_warning = 0
-	var/obj/item/radio/radio
-	var/radio_channel = RADIO_CHANNEL_COMMON
-	var/minimum_time_between_warnings = 400
+	///While siphoning, how much money do we have? Will drop this once siphon is complete.
 	var/syphoning_credits = 0
+	///Whether siphoning is authorized or not (has access)
+	var/unauthorized = FALSE
+	///Amount of time before the next warning over the radio is announced.
+	var/next_warning = 0
+	///The amount of time we have between warnings
+	var/minimum_time_between_warnings = 40 SECONDS
+
+	///The machine's internal radio, used to broadcast alerts.
+	var/obj/item/radio/radio
+	///The channel we announce a siphon over.
+	var/radio_channel = RADIO_CHANNEL_COMMON
+
+	///What department to check to link our bank account to.
+	var/account_department = ACCOUNT_CAR
+	///Weakref of our bank account.
+	var/datum/weakref/bank_account_ref
 
 /obj/machinery/computer/bank_machine/Initialize(mapload)
 	. = ..()
@@ -18,46 +32,50 @@
 	radio.canhear_range = 0
 	radio.set_listening(FALSE)
 	radio.recalculateChannels()
+	var/datum/bank_account/department_account = SSeconomy.get_dep_account(account_department)
+	if(department_account)
+		bank_account_ref = WEAKREF(department_account)
 
 /obj/machinery/computer/bank_machine/Destroy()
 	QDEL_NULL(radio)
-	. = ..()
+	bank_account_ref = null
+	return ..()
 
-/obj/machinery/computer/bank_machine/attackby(obj/item/I, mob/user)
+/obj/machinery/computer/bank_machine/attackby(obj/item/weapon, mob/user, params)
 	var/value = 0
-	if(istype(I, /obj/item/stack/spacecash))
-		var/obj/item/stack/spacecash/C = I
-		value = C.value * C.amount
-	else if(istype(I, /obj/item/holochip))
-		var/obj/item/holochip/H = I
-		value = H.credits
+	if(istype(weapon, /obj/item/stack/spacecash))
+		var/obj/item/stack/spacecash/inserted_cash = weapon
+		value = inserted_cash.value * inserted_cash.amount
+	else if(istype(weapon, /obj/item/holochip))
+		var/obj/item/holochip/inserted_holochip = weapon
+		value = inserted_holochip.credits
 	if(value)
-		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
-		if(D)
-			D.adjust_money(value)
-			to_chat(user, span_notice("You deposit [I]. The Cargo Budget is now [D.account_balance] cr."))
-		qdel(I)
+		var/datum/bank_account/bank_account = bank_account_ref.resolve()
+		if(bank_account)
+			bank_account.adjust_money(value)
+			to_chat(user, span_notice("You deposit [weapon]. The [bank_account.account_holder] is now [bank_account.account_balance] cr."))
+		qdel(weapon)
 		return
 	return ..()
 
 /obj/machinery/computer/bank_machine/process(delta_time)
-	..()
+	. = ..()
 	if(!siphoning)
 		return
-	if (machine_stat & (BROKEN|NOPOWER))
+	if (machine_stat & (BROKEN | NOPOWER))
 		say("Insufficient power. Halting siphon.")
 		end_siphon()
 		return
 	var/siphon_am = 100 * delta_time
-	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
-	if(!D.has_money(siphon_am))
-		say("Cargo budget depleted. Halting siphon.")
+	var/datum/bank_account/bank_account = bank_account_ref.resolve()
+	if(!bank_account.has_money(siphon_am))
+		say("[bank_account.account_holder] depleted. Halting siphon.")
 		end_siphon()
 		return
 
 	playsound(src, 'sound/items/poster_being_created.ogg', 100, TRUE)
 	syphoning_credits += siphon_am
-	D.adjust_money(-siphon_am)
+	bank_account.adjust_money(-siphon_am)
 	if(next_warning < world.time && prob(15))
 		var/area/A = get_area(loc)
 		var/message = "[unauthorized ? "Unauthorized c" : "C"]redit withdrawal underway in [initial(A.name)][unauthorized ? "!!" : "..."]"
@@ -73,10 +91,10 @@
 
 /obj/machinery/computer/bank_machine/ui_data(mob/user)
 	var/list/data = list()
-	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	var/datum/bank_account/bank_account = bank_account_ref.resolve()
 
-	if(D)
-		data["current_balance"] = D.account_balance
+	if(bank_account)
+		data["current_balance"] = bank_account.account_balance
 	else
 		data["current_balance"] = 0
 	data["siphoning"] = siphoning
@@ -110,5 +128,5 @@
 	unauthorized = TRUE
 	var/obj/item/card/id/card = user.get_idcard(hand_first = TRUE)
 	if(istype(card))
-		if(ACCESS_VAULT in card.GetAccess())
+		if(req_access in card.GetAccess())
 			unauthorized = FALSE
