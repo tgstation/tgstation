@@ -24,9 +24,11 @@
 	var/item_reduction_time = 2 SECONDS
 	///how long it takes to harvest from the mob
 	var/item_harvest_time = 5 SECONDS
+	///typepath of harvest sound
+	var/item_harvest_sound = 'sound/items/welder2.ogg'
 
 //harvest_type, produced_item_typepath and speedup_type are typepaths, not reference
-/datum/component/mob_harvest/Initialize(harvest_tool, fed_item, produced_item_typepath, produced_item_desc, max_ready, item_generation_wait, item_reduction_time, item_harvest_time)
+/datum/component/mob_harvest/Initialize(harvest_tool, fed_item, produced_item_typepath, produced_item_desc, max_ready, item_generation_wait, item_reduction_time, item_harvest_time, item_harvest_sound)
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.harvest_tool = harvest_tool
@@ -74,7 +76,7 @@
 	SIGNAL_HANDLER
 
 	if(istype(used_item, harvest_tool))
-		harvest_item(user)
+		INVOKE_ASYNC(src, .proc/harvest_item, user)
 	if(istype(used_item, fed_item))
 		remove_wait_time(user)
 		qdel(used_item)
@@ -105,7 +107,8 @@
 		to_chat(user, span_warning("[parent] doesn't seem to have enough [produced_item_desc] to harvest."))
 		return
 	to_chat(user, span_notice("You start to harvest [produced_item_desc] from [parent].."))
-	if(do_after(user, item_harvest_time, target = src))
+	if(do_after(user, item_harvest_time, target = parent))
+		playsound(parent, item_harvest_sound, 20, TRUE)
 		to_chat(user, span_notice("You harvest some [produced_item_desc] from [parent]."))
 		amount_ready--
 		SEND_SIGNAL(parent, COMSIG_LIVING_HARVEST_UPDATE, amount_ready)
