@@ -2914,7 +2914,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_STOCK
 
-/datum/reagent/consumable/ethanol/thehat
+/datum/reagent/consumable/ethanol/the_hat
 	name = "The Hat"
 	description = "A fancy drink, usually served in a man's hat."
 	color = "#b90a5c"
