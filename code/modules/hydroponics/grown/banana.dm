@@ -31,7 +31,7 @@
 /obj/item/food/grown/banana/Initialize(mapload)
 	. = ..()
 	if(prob(1))
-		AddComponent(/datum/component/boomerang, throw_range + 4, TRUE)
+		AddComponent(/datum/component/boomerang, boomerang_throw_range = throw_range + 4, thrower_easy_catch_enabled = TRUE)
 		desc += " The curve on this one looks particularly acute."
 
 /obj/item/food/grown/banana/generate_trash(atom/location)
