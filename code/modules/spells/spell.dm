@@ -182,10 +182,12 @@
 		if(spell_requirements & SPELL_REQUIRES_WIZARD_GARB)
 			var/mob/living/carbon/human/human_owner = owner
 			if(!(human_owner.wear_suit?.clothing_flags & CASTING_CLOTHES))
-				to_chat(owner, span_warning("You don't feel strong enough without your robe!"))
+				if(feedback)
+					to_chat(owner, span_warning("You don't feel strong enough without your robe!"))
 				return FALSE
 			if(!(human_owner.head?.clothing_flags & CASTING_CLOTHES))
-				to_chat(owner, span_warning("You don't feel strong enough without your hat!"))
+				if(feedback)
+					to_chat(owner, span_warning("You don't feel strong enough without your hat!"))
 				return FALSE
 
 	else

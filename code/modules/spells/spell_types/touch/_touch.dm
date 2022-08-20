@@ -157,6 +157,8 @@
 
 /**
  * Calls cast_on_hand_hit() from the caster onto the victim.
+ *
+ * Implements checks for antimagic.
  */
 /datum/action/cooldown/spell/touch/proc/do_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
 	SEND_SIGNAL(src, COMSIG_SPELL_TOUCH_HAND_HIT, victim, caster, hand)
@@ -174,6 +176,8 @@
 
 /**
  * Calls do_secondary_hand_hit() from the caster onto the victim.
+ *
+ * Does NOT check for antimagic on its own. Implement your own checks if you want the r-click to abide by it.
  */
 /datum/action/cooldown/spell/touch/proc/do_secondary_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
 	var/secondary_result = cast_on_secondary_hand_hit(hand, victim, caster)
@@ -235,6 +239,9 @@
 
 	remove_hand(dropper, reset_cooldown_after = TRUE)
 
+/**
+ * Called whenever our spell is cast, but blocked by antimagic.
+ */
 /datum/action/cooldown/spell/touch/proc/on_antimagic_triggered(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
 	return
 
@@ -276,7 +283,7 @@
  * However, if you want to consume the hand and not give a cooldown,
  * such as adding a unique behavior to the hand specifically, this function will do that.
  */
-/obj/item/melee/touch_attack/mansus_fist/proc/remove_hand_with_no_refund(mob/holder)
+/obj/item/melee/touch_attack/proc/remove_hand_with_no_refund(mob/holder)
 	var/datum/action/cooldown/spell/touch/hand_spell = spell_which_made_us?.resolve()
 	if(!QDELETED(hand_spell))
 		hand_spell.remove_hand(holder, reset_cooldown_after = FALSE)
