@@ -56,11 +56,13 @@
 		JOB_WARDEN = "Sgt.",
 		JOB_DETECTIVE = "Det.",
 		JOB_SECURITY_OFFICER = "Officer",
+		JOB_BRIG_PHYSICIAN = "Medic",
 	)
 	var/static/list/engineering_titles = list(
 		JOB_CHIEF_ENGINEER = "Chief Engineer",
 		JOB_STATION_ENGINEER = "Engineer",
 		JOB_ATMOSPHERIC_TECHNICIAN = "Technician",
+		JOB_WORKER = "Amele",
 	)
 	var/static/list/medical_titles = list(
 		JOB_CHIEF_MEDICAL_OFFICER = "C.M.O.",

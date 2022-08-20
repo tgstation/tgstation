@@ -13,6 +13,7 @@
 	progression_minimum = 10 MINUTES
 	desc = "A traditional clusterbang grenade with a payload consisting entirely of Syndicate soap. Useful in any scenario!"
 	item = /obj/item/grenade/clusterbuster/soap
+	purchasable_from = ~UPLINK_NANO
 	cost = 3
 
 // Medium progression cost
@@ -32,6 +33,7 @@
 	item = /obj/item/storage/backpack/duffelbag/syndie/c4
 	progression_minimum = 20 MINUTES
 	cost = 8 //20% discount!
+	purchasable_from = ~UPLINK_NANO
 	cant_discount = TRUE
 
 /datum/uplink_item/explosives/x4bag
@@ -42,6 +44,7 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/storage/backpack/duffelbag/syndie/x4
 	cost = 4
+	purchasable_from = ~UPLINK_NANO
 	cant_discount = TRUE
 
 /datum/uplink_item/explosives/detomatix
@@ -60,6 +63,7 @@
 			security's energy weapons and silicon lifeforms when you're in a tight spot."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/storage/box/syndie_kit/emp
+	purchasable_from = ~UPLINK_NANO
 	cost = 2
 
 /datum/uplink_item/explosives/pizza_bomb
@@ -78,7 +82,7 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/grenade/syndieminibomb
 	cost = 6
-	purchasable_from = ~UPLINK_CLOWN_OPS
+	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_NANO)
 
 
 /datum/uplink_item/explosives/syndicate_bomb/emp
@@ -86,6 +90,7 @@
 	desc = "A variation of the syndicate bomb designed to produce a large EMP effect."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/sbeacondrop/emp
+	purchasable_from = ~UPLINK_NANO
 	cost = 7
 
 // High progression cost
@@ -100,4 +105,5 @@
 			The bomb core can be pried out and manually detonated with other explosives."
 	progression_minimum = 40 MINUTES
 	item = /obj/item/sbeacondrop/bomb
+	purchasable_from = ~UPLINK_NANO
 	cost = 11

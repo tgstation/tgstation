@@ -23,6 +23,7 @@
 			Used just like a regular headset, but can be disabled to use external headsets normally and to avoid detection."
 	item = /obj/item/storage/box/syndie_kit/imp_radio
 	cost = 4
+	purchasable_from = ~UPLINK_NANO
 	restricted = TRUE
 
 
@@ -48,6 +49,7 @@
 	cost = UPLINK_IMPLANT_TELECRYSTAL_COST
 	// An empty uplink is kinda useless.
 	surplus = 0
+	purchasable_from = ~UPLINK_NANO
 	restricted = TRUE
 
 /datum/uplink_item/implants/uplink/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)

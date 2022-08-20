@@ -815,6 +815,62 @@
 		),
 	)
 
+/datum/mod_theme/ntagent
+	name = "Unknown"
+	desc = " A suit which looks very familiar. There is no description on it. Offering armor and protection from space."
+	extended_desc = "A technological wonder, looking very similar to ERT modsuits. On the inside \
+		It has layers of shaped plasteel, chromium steel fibers and ceramic kevlar plates on the inside, \
+		also it has hybrid weave solidified plasma plates to redirect high rays of energy beams, offering immense protection \
+		against every kind of danger in the galaxy, Upon further examination you can see on the inside of the suit, \
+		there is a small logo that reads: Nt."
+	default_skin = "nt"
+	armor = list(MELEE = 20, BULLET = 15, LASER = 20, ENERGY = 15, BOMB = 40, BIO = 100, FIRE = 50, ACID = 85, WOUND = 20)
+	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
+	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
+	siemens_coefficient = 0
+	complexity_max = 20
+	slowdown_inactive = 0.75
+	slowdown_active = 0.5
+	ui_theme = "ntos"
+	inbuilt_modules = list(/obj/item/mod/module/armor_booster)
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/ammo_box,
+		/obj/item/ammo_casing,
+		/obj/item/restraints/handcuffs,
+		/obj/item/assembly/flash,
+		/obj/item/melee/baton,
+		/obj/item/melee/energy/sword,
+		/obj/item/shield/energy,
+	)
+	skins = list(
+		"nt" = list(
+			HELMET_FLAGS = list(
+				UNSEALED_LAYER = NECK_LAYER,
+				UNSEALED_CLOTHING = SNUG_FIT,
+				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT,
+				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEHAIR|HIDEJUMPSUIT,
+				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
+				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
+			),
+			CHESTPLATE_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				SEALED_INVISIBILITY = HIDEJUMPSUIT,
+			),
+			GAUNTLETS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+			),
+			BOOTS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+			),
+		),
+	)
 /datum/mod_theme/syndicate
 	name = "syndicate"
 	desc = "A suit designed by Gorlex Marauders, offering armor ruled illegal in most of Spinward Stellar."

@@ -83,6 +83,7 @@
 #define SECHUD_ATMOSPHERIC_TECHNICIAN "hudatmospherictechnician"
 #define SECHUD_BARTENDER "hudbartender"
 #define SECHUD_BOTANIST "hudbotanist"
+#define SECHUD_BRIG_PHYSICIAN "hudbrigphysician"
 #define SECHUD_CAPTAIN "hudcaptain"
 #define SECHUD_CARGO_TECHNICIAN "hudcargotechnician"
 #define SECHUD_CHAPLAIN "hudchaplain"
@@ -92,6 +93,7 @@
 #define SECHUD_CLOWN "hudclown"
 #define SECHUD_COOK "hudcook"
 #define SECHUD_CURATOR "hudcurator"
+#define SECHUD_JOURNALIST "hudjournalist"
 #define SECHUD_DETECTIVE "huddetective"
 #define SECHUD_GENETICIST "hudgeneticist"
 #define SECHUD_HEAD_OF_PERSONNEL "hudheadofpersonnel"
@@ -112,6 +114,7 @@
 #define SECHUD_STATION_ENGINEER "hudstationengineer"
 #define SECHUD_VIROLOGIST "hudvirologist"
 #define SECHUD_WARDEN "hudwarden"
+#define SECHUD_WORKER "hudworker"
 
 #define SECHUD_CHEF "hudchef"
 

@@ -317,6 +317,12 @@
 	icon_state = "syndiebox"
 	illustration = "writing_syndie"
 
+/obj/item/storage/box/nano_kit
+	name= "box"
+	desc = "A sleek, sturdy box."
+	icon_state = "nanobox"
+	illustration = "writing"
+
 /obj/item/storage/box/syndie_kit/origami_bundle
 	name = "origami kit"
 	desc = "A box full of a number of rather masterfully engineered paper planes and a manual on \"The Art of Origami\"."
@@ -406,6 +412,14 @@
 	for(var/i in 1 to 5)
 		new /obj/item/grenade/empgrenade(src)
 	new /obj/item/implanter/emp(src)
+
+/obj/item/storage/box/nano_kit/smg
+	name = "SMG kit"
+
+/obj/item/storage/box/nano_kit/smg/PopulateContents()
+	new /obj/item/gun/ballistic/automatic/proto/unrestricted(src)
+	new /obj/item/suppressor(src)
+	new /obj/item/ammo_box/magazine/smgm9mm(src)
 
 /obj/item/storage/box/syndie_kit/chemical
 	name = "chemical kit"

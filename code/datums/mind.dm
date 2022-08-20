@@ -49,6 +49,7 @@
 	var/datum/martial_art/martial_art
 	var/static/default_martial_art = new/datum/martial_art
 	var/miming = FALSE // Mime's vow of silence
+	var/clowning = FALSE // Hihihaha
 	var/list/antag_datums
 	///this mind's ANTAG_HUD should have this icon_state
 	var/antag_hud_icon_state = null

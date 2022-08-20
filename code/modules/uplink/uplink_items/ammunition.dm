@@ -30,6 +30,30 @@
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	illegal_tech = FALSE
 
+/datum/uplink_item/ammo/submachine_gun
+	name = "SMG Magazine"
+	desc = "Nanotrasen Saber SMG ammo"
+	progression_minimum = 10 MINUTES
+	item = /obj/item/ammo_box/magazine/smgm9mm
+	cost = 2
+	purchasable_from = UPLINK_NANO
+
+/datum/uplink_item/ammo/submachine_gun_ap
+	name = "AP SMG Magazine"
+	desc = "Armor Penetrating Nanotrasen SMG ammo. Useful when you are underequipped for the job."
+	progression_minimum = 10 MINUTES
+	item = /obj/item/ammo_box/magazine/smgm9mm/ap
+	cost = 3
+	purchasable_from = UPLINK_NANO
+
+/datum/uplink_item/ammo/submachine_gun_fire
+	name = "Fire SMG Magazine"
+	desc = "Incendiary Nanotrasen SMG ammo. Rain Hellfire on them."
+	progression_minimum = 10 MINUTES
+	item = /obj/item/ammo_box/magazine/smgm9mm/fire
+	cost = 3
+	purchasable_from = UPLINK_NANO
+
 // Medium progression cost
 
 /datum/uplink_item/ammo/pistolap

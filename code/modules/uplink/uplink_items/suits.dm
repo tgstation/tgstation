@@ -16,7 +16,7 @@
 	item = /obj/item/storage/toolbox/infiltrator
 	cost = 6
 	limited_stock = 1 //you only get one so you don't end up with too many gun cases
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS |UPLINK_NANO)
 
 /datum/uplink_item/suits/space_suit
 	name = "Syndicate Space Suit"
@@ -24,6 +24,7 @@
 			fits inside bags, and has a weapon slot. Nanotrasen crew members are trained to report red space suit \
 			sightings, however."
 	item = /obj/item/storage/box/syndie_kit/space
+	purchasable_from = ~UPLINK_NANO
 	cost = 4
 
 // Low progression cost
@@ -33,8 +34,25 @@
 	desc = "The feared MODsuit of a Syndicate agent. Features armoring and a set of inbuilt modules."
 	item = /obj/item/mod/control/pre_equipped/traitor
 	cost = 8
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) //you can't buy it in nuke, because the elite modsuit costs the same while being better
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_NANO) //you can't buy it in nuke, because the elite modsuit costs the same while being better
 	progression_minimum = 20 MINUTES
+
+/datum/uplink_item/suits/ntmodsuit
+	name = "Nanotrasen MODsuit"
+	desc = "The budget version of the ERT MODsuit. Features armoring and a set of inbuilt modules. \
+	Comes with a flamethrower! Free of charge."
+	item = /obj/item/mod/control/pre_equipped/ntagentmod
+	cost = 9
+	purchasable_from = UPLINK_NANO
+	progression_minimum = 20 MINUTES
+
+/datum/uplink_item/suits/antimagic
+	name = "MODsuit Anti-Magic Module"
+	desc = "For anything unholy standing in our way to Nanotrasen's glory."
+	item = /obj/item/mod/module/anti_magic
+	progression_minimum = 20 MINUTES
+	cost = 2
+	purchasable_from = UPLINK_NANO
 
 /datum/uplink_item/suits/thermal
 	name = "MODsuit Thermal Visor Module"
@@ -83,4 +101,5 @@
 	// This one costs more than the nuke op counterpart
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	progression_minimum = 90 MINUTES
+	purchasable_from = ~UPLINK_NANO
 	cost = 16
