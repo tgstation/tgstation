@@ -23,16 +23,23 @@
 /datum/antagonist/shade_minion/create_team(datum/team/shade_pact/team)
 	if (!istype(team))
 		return
-	for (var/datum/mind/member as anything in team.members)
-		if (member == owner)
-			continue
-		var/mob/master = member.current
-		if (!master)
-			CRASH("Master was not added to shade's team.")
-		master_name = master.real_name
+	master_name = team.master.current?.real_name
 
 /**
  * A team containing just the shade and master, so you can know who your master is.
  */
 /datum/team/shade_pact
 	show_roundend_report = FALSE
+	/// The master of the pact
+	var/datum/mind/master
+
+/**
+ * Create a new team consisting of a "pact master" and a subservient shade.
+ * The first player passed in should be the one everyone else needs to obey.
+ */
+/datum/team/shade_pact/New(starting_members)
+	. = ..()
+	if(islist(starting_members))
+		master = starting_members[0]
+		return
+	master = starting_members

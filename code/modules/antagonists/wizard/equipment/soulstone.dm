@@ -102,7 +102,6 @@
 
 	update_appearance()
 	for(var/mob/shade_to_deconvert in contents)
-		shade_to_deconvert.mind?.remove_antag_datum(/datum/antagonist/cult)
 		assign_master(shade_to_deconvert, exorcist)
 
 	exorcist.visible_message(span_notice("[exorcist] purifies [src]!"))
@@ -328,10 +327,6 @@
 		return FALSE
 	shade.AddComponent(/datum/component/soulstoned, src)
 	update_appearance()
-	if(theme == THEME_HOLY)
-		for(var/mob/shade_to_deconvert in contents)
-			shade_to_deconvert.mind?.remove_antag_datum(/datum/antagonist/cult)
-			assign_master(shade_to_deconvert, user)
 
 	to_chat(shade, span_notice("Your soul has been captured by [src]. \
 		Its arcane energies are reknitting your ethereal form."))
@@ -339,6 +334,7 @@
 	if(user != shade)
 		to_chat(user, "[span_info("<b>Capture successful!</b>:")] [shade.real_name]'s soul \
 			has been captured and stored within [src].")
+		assign_master(shade, user)
 
 	return TRUE
 
@@ -412,8 +408,26 @@
  * Assigns the bearer as the new master of a shade.
  */
 /obj/item/soulstone/proc/assign_master(mob/shade, mob/user)
-	if (!shade || !user)
+	if (!shade || !user || !shade.mind)
 		return
+
+	// Cult shades get cult datum
+	if (user.mind.has_antag_datum(/datum/antagonist/cult))
+		shade.mind.remove_antag_datum(/datum/antagonist/shade_minion)
+		shade.mind.add_antag_datum(/datum/antagonist/cult)
+		return
+
+	// Only blessed soulstones can de-cult shades
+	if(theme == THEME_HOLY)
+		shade.mind.remove_antag_datum(/datum/antagonist/cult)
+
+	var/datum/antagonist/shade_minion/shade_datum = shade.mind.has_antag_datum(/datum/antagonist/shade_minion)
+	if (shade_datum)
+		// Don't bother to reassign if this person is already the master of this shade
+		if (shade_datum.master_name == user.real_name)
+			return
+		shade.mind.remove_antag_datum(/datum/antagonist/shade_minion)
+
 	var/datum/team/shade_pact/pact = new(user.mind)
 	shade.mind.add_antag_datum(/datum/antagonist/shade_minion, pact)
 
