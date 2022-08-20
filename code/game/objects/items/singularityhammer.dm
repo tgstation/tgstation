@@ -21,10 +21,10 @@
 /obj/item/singularityhammer/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/kneejerk)
-
-/obj/item/singularityhammer/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/two_handed, force_multiplier=4, icon_wielded="[base_icon_state]1")
+	AddComponent(/datum/component/two_handed, \
+		force_multiplier = 4, \
+		icon_wielded = "[base_icon_state]1", \
+	)
 
 /obj/item/singularityhammer/update_icon_state()
 	icon_state = "[base_icon_state]0"
@@ -80,9 +80,13 @@
 	throw_range = 7
 	w_class = WEIGHT_CLASS_HUGE
 
-/obj/item/mjollnir/ComponentInitialize()
+/obj/item/mjollnir/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_multiplier=5, icon_wielded="[base_icon_state]1", attacksound=SFX_SPARKS)
+	AddComponent(/datum/component/two_handed, \
+		force_multiplier = 5, \
+		icon_wielded = "[base_icon_state]1", \
+		attacksound = SFX_SPARKS, \
+	)
 
 /obj/item/mjollnir/update_icon_state()
 	icon_state = "[base_icon_state]0"

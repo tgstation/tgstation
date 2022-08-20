@@ -105,7 +105,7 @@
 
 	to_chat(user, span_notice("You remove the card from \the [src]."))
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
-	holder.update_appearance()
+	holder?.update_appearance()
 
 	stored_card = null
 	current_identification = null

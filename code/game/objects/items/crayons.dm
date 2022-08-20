@@ -440,6 +440,14 @@
 	else
 		..()
 
+/obj/item/toy/crayon/get_writing_implement_details()
+	return list(
+		interaction_mode = MODE_WRITING,
+		font = CRAYON_FONT,
+		color = paint_color,
+		use_bold = TRUE,
+	)
+
 /obj/item/toy/crayon/red
 	name = "red crayon"
 	icon_state = "crayonred"
@@ -717,7 +725,7 @@
 				var/obj/item/target_item = target
 				var/mob/living/holder = target.loc
 				if(holder.is_holding(target_item))
-					holder.update_inv_hands()
+					holder.update_held_items()
 				else
 					holder.update_clothing(target_item.slot_flags)
 			SEND_SIGNAL(target, COMSIG_OBJ_PAINTED, color_is_dark)

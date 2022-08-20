@@ -42,12 +42,18 @@
 /// Kudzu spread multiplier is a reciporal function of production speed, such that the better the production speed, ie. the lower the speed value is, the faster it spreads
 #define SPREAD_MULTIPLIER_MAX 50
 
+/// Kudzu's maximum possible maximum mutation severity (assuming ideal potency), used to balance mutation appearance chance
+#define IDEAL_MAX_SEVERITY 20
+
+
 /datum/round_event_control/spacevine
 	name = "Space Vines"
 	typepath = /datum/round_event/spacevine
 	weight = 15
 	max_occurrences = 3
 	min_players = 10
+	category = EVENT_CATEGORY_ENTITIES
+	description = "Kudzu begins to overtake the station. Might spawn man-traps."
 
 /datum/round_event/spacevine
 	fakeable = FALSE
@@ -522,7 +528,7 @@
 	var/spread_multiplier = 5 // corresponds to artifical kudzu with production speed of 1, approaches 10% of total vines will spread per second
 	///Maximum spreading limit (ie. how many kudzu can there be) for this controller
 	var/spread_cap = 30 // corresponds to artifical kudzu with production speed of 3.5
-	var/list/vine_mutations_list
+	var/static/list/vine_mutations_list
 	var/mutativeness = 1
 	///Maximum sum of mutation severities
 	var/max_mutation_severity = 20
@@ -537,10 +543,11 @@
 	if(event)
 		event.announce_to_ghosts(vine)
 	START_PROCESSING(SSobj, src)
-	vine_mutations_list = list()
-	init_subtypes(/datum/spacevine_mutation/, vine_mutations_list)
-	for(var/datum/spacevine_mutation/mutation as anything in vine_mutations_list)
-		vine_mutations_list[mutation] = max_mutation_severity - mutation.severity // this is intended to be before the potency check as the ideal maximum potency is used for weighting
+	if(!vine_mutations_list)
+		vine_mutations_list = list()
+		init_subtypes(/datum/spacevine_mutation/, vine_mutations_list)
+		for(var/datum/spacevine_mutation/mutation as anything in vine_mutations_list)
+			vine_mutations_list[mutation] = IDEAL_MAX_SEVERITY - mutation.severity // the ideal maximum potency is used for weighting
 	if(potency != null)
 		mutativeness = potency * MUTATIVENESS_SCALE_FACTOR // If potency is 100, 20 mutativeness; if 1: 0.2 mutativeness
 		max_mutation_severity = round(potency * MAX_SEVERITY_LINEAR_COEFF + MAX_SEVERITY_CONSTANT_TERM) // If potency is 100, 25 max mutation severity; if 1, 10 max mutation severity
@@ -758,3 +765,4 @@
 #undef SPREAD_CAP_LINEAR_COEFF
 #undef SPREAD_CAP_CONSTANT_TERM
 #undef SPREAD_MULTIPLIER_MAX
+#undef IDEAL_MAX_SEVERITY

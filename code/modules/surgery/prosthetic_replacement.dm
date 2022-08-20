@@ -34,11 +34,11 @@
 	if(istype(tool, /obj/item/borg/apparatus/organ_storage))
 		if(!tool.contents.len)
 			to_chat(user, span_warning("There is nothing inside [tool]!"))
-			return -1
+			return SURGERY_STEP_FAIL
 		var/obj/item/organ_storage_contents = tool.contents[1]
 		if(!isbodypart(organ_storage_contents))
 			to_chat(user, span_warning("[organ_storage_contents] cannot be attached!"))
-			return -1
+			return SURGERY_STEP_FAIL
 		tool = organ_storage_contents
 	if(istype(tool, /obj/item/bodypart))
 		var/obj/item/bodypart/bodypart_to_attach = tool
@@ -49,7 +49,7 @@
 				var/obj/item/bodypart/chest/target_chest = human_target.get_bodypart(BODY_ZONE_CHEST)
 				if(!(bodypart_to_attach.bodytype & target_chest.acceptable_bodytype))
 					to_chat(user, span_warning("[bodypart_to_attach] doesn't match the patient's morphology."))
-					return -1
+					return SURGERY_STEP_FAIL
 				if(human_target.dna.species.id != bodypart_to_attach.limb_id)
 					organ_rejection_dam = 30
 
@@ -59,14 +59,14 @@
 				span_notice("[user] begins to replace [target]'s [parse_zone(target_zone)]."))
 		else
 			to_chat(user, span_warning("[tool] isn't the right type for [parse_zone(target_zone)]."))
-			return -1
+			return SURGERY_STEP_FAIL
 	else if(target_zone == BODY_ZONE_L_ARM || target_zone == BODY_ZONE_R_ARM)
 		display_results(user, target, span_notice("You begin to attach [tool] onto [target]..."),
 			span_notice("[user] begins to attach [tool] onto [target]'s [parse_zone(target_zone)]."),
 			span_notice("[user] begins to attach something onto [target]'s [parse_zone(target_zone)]."))
 	else
 		to_chat(user, span_warning("[tool] must be installed onto an arm."))
-		return -1
+		return SURGERY_STEP_FAIL
 
 /datum/surgery_step/add_prosthetic/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	. = ..()

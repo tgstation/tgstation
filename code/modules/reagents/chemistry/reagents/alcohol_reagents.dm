@@ -59,7 +59,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/expose_obj(obj/exposed_obj, reac_volume)
 	if(istype(exposed_obj, /obj/item/paper))
 		var/obj/item/paper/paperaffected = exposed_obj
-		paperaffected.clearpaper()
+		paperaffected.clear_paper()
 		to_chat(usr, span_notice("[paperaffected]'s ink washes away."))
 	if(istype(exposed_obj, /obj/item/book))
 		if(reac_volume >= 5)
@@ -1996,7 +1996,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/between_the_sheets
 	name = "Between the Sheets"
-	description = "A provocatively named classic. Funny enough, doctors recommend drinking it before taking a nap."
+	description = "A provocatively named classic. Funny enough, doctors recommend drinking it before taking a nap while underneath bedsheets."
 	color = "#F4C35A"
 	boozepwr = 55
 	quality = DRINK_GOOD
@@ -2009,16 +2009,25 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/between_the_sheets/on_mob_life(mob/living/drinker, delta_time, times_fired)
 	..()
-	if(drinker.IsSleeping())
-		if(drinker.getBruteLoss() && drinker.getFireLoss()) //If you are damaged by both types, slightly increased healing but it only heals one. The more the merrier wink wink.
-			if(prob(50))
-				drinker.adjustBruteLoss(-0.25 * REM * delta_time)
-			else
-				drinker.adjustFireLoss(-0.25 * REM * delta_time)
-		else if(drinker.getBruteLoss()) //If you have only one, it still heals but not as well.
-			drinker.adjustBruteLoss(-0.2 * REM * delta_time)
-		else if(drinker.getFireLoss())
-			drinker.adjustFireLoss(-0.2 * REM * delta_time)
+	var/is_between_the_sheets = FALSE
+	for(var/obj/item/bedsheet/bedsheet in range(drinker.loc, 0))
+		if(bedsheet.loc != drinker.loc) // bedsheets in your backpack/neck don't count
+			continue
+		is_between_the_sheets = TRUE
+		break
+		
+	if(!drinker.IsSleeping() || !is_between_the_sheets)
+		return
+	
+	if(drinker.getBruteLoss() && drinker.getFireLoss()) //If you are damaged by both types, slightly increased healing but it only heals one. The more the merrier wink wink.
+		if(prob(50))
+			drinker.adjustBruteLoss(-0.25 * REM * delta_time)
+		else
+			drinker.adjustFireLoss(-0.25 * REM * delta_time)
+	else if(drinker.getBruteLoss()) //If you have only one, it still heals but not as well.
+		drinker.adjustBruteLoss(-0.2 * REM * delta_time)
+	else if(drinker.getFireLoss())
+		drinker.adjustFireLoss(-0.2 * REM * delta_time)
 
 /datum/reagent/consumable/ethanol/kamikaze
 	name = "Kamikaze"
@@ -2641,7 +2650,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/drunken_espatier/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	drinker.hal_screwyhud = SCREWYHUD_HEALTHY //almost makes you forget how much it hurts
-	SEND_SIGNAL(drinker, COMSIG_ADD_MOOD_EVENT, "numb", /datum/mood_event/narcotic_medium, name) //comfortably numb
+	drinker.add_mood_event("numb", /datum/mood_event/narcotic_medium, name) //comfortably numb
 	..()
 
 /datum/reagent/consumable/ethanol/protein_blend
@@ -2691,7 +2700,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/triumphal_arch/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	if(islizard(drinker))
-		SEND_SIGNAL(drinker, COMSIG_ADD_MOOD_EVENT, "triumph", /datum/mood_event/memories_of_home, name)
+		drinker.add_mood_event("triumph", /datum/mood_event/memories_of_home, name)
 	..()
 
 /datum/reagent/consumable/ethanol/the_juice

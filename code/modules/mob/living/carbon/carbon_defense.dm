@@ -96,13 +96,13 @@
 				if(affecting.body_zone == BODY_ZONE_HEAD)
 					if(wear_mask)
 						wear_mask.add_mob_blood(src)
-						update_inv_wear_mask()
+						update_worn_mask()
 					if(wear_neck)
 						wear_neck.add_mob_blood(src)
-						update_inv_neck()
+						update_worn_neck()
 					if(head)
 						head.add_mob_blood(src)
-						update_inv_head()
+						update_worn_head()
 
 		return TRUE //successful attack
 
@@ -143,6 +143,9 @@
 
 /mob/living/carbon/attack_drone(mob/living/simple_animal/drone/user)
 	return //so we don't call the carbon's attack_hand().
+
+/mob/living/carbon/attack_drone_secondary(mob/living/simple_animal/drone/user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/carbon/attack_hand(mob/living/carbon/human/user, list/modifiers)
@@ -199,7 +202,7 @@
 		return TRUE
 
 
-/mob/living/carbon/attack_slime(mob/living/simple_animal/slime/M)
+/mob/living/carbon/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
 	if(..()) //successful slime attack
 		if(M.powerlevel > 0)
 			var/stunprob = M.powerlevel * 7 + 10  // 17 at level 1, 80 at level 10
@@ -432,25 +435,37 @@
 		if(HAS_TRAIT(src, TRAIT_BADTOUCH)) //How dare they!
 			to_chat(helper, span_warning("[src] makes a grumbling noise as you pull on [p_their()] tail."))
 		else
-			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "tailpulled", /datum/mood_event/tailpulled)
+			add_mood_event("tailpulled", /datum/mood_event/tailpulled)
 
 	else
-		helper.visible_message(span_notice("[helper] hugs [src] to make [p_them()] feel better!"), \
-					null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(helper, src))
-		to_chat(helper, span_notice("You hug [src] to make [p_them()] feel better!"))
-		to_chat(src, span_notice("[helper] hugs you to make you feel better!"))
+		if (helper.grab_state >= GRAB_AGGRESSIVE)
+			helper.visible_message(span_notice("[helper] embraces [src] in a tight bear hug!"), \
+						null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(helper, src))
+			to_chat(helper, span_notice("You wrap [src] into a tight bear hug!"))
+			to_chat(src, span_notice("[helper] squeezes you super tightly in a firm bear hug!"))
+		else
+			helper.visible_message(span_notice("[helper] hugs [src] to make [p_them()] feel better!"), \
+						null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(helper, src))
+			to_chat(helper, span_notice("You hug [src] to make [p_them()] feel better!"))
+			to_chat(src, span_notice("[helper] hugs you to make you feel better!"))
 
 		// Warm them up with hugs
 		share_bodytemperature(helper)
 
 		// No moodlets for people who hate touches
 		if(!HAS_TRAIT(src, TRAIT_BADTOUCH))
-			if(bodytemperature > helper.bodytemperature)
-				if(!HAS_TRAIT(helper, TRAIT_BADTOUCH))
-					SEND_SIGNAL(helper, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/warmhug, src) // Hugger got a warm hug (Unless they hate hugs)
-				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug) // Reciver always gets a mood for being hugged
+			if (helper.grab_state >= GRAB_AGGRESSIVE)
+				add_mood_event("hug", /datum/mood_event/bear_hug)
 			else
-				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/warmhug, helper) // You got a warm hug
+				if(bodytemperature > helper.bodytemperature)
+					if(!HAS_TRAIT(helper, TRAIT_BADTOUCH))
+						helper.add_mood_event("hug", /datum/mood_event/warmhug, src) // Hugger got a warm hug (Unless they hate hugs)
+					add_mood_event("hug", /datum/mood_event/hug) // Receiver always gets a mood for being hugged
+				else
+					add_mood_event("hug", /datum/mood_event/warmhug, helper) // You got a warm hug
+		else
+			if (helper.grab_state >= GRAB_AGGRESSIVE)
+				add_mood_event("hug", /datum/mood_event/bad_touch_bear_hug)
 
 		// Let people know if they hugged someone really warm or really cold
 		if(helper.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
@@ -464,12 +479,11 @@
 			to_chat(helper, span_warning("It feels like [src] is freezing as you hug [p_them()]."))
 
 		if(HAS_TRAIT(helper, TRAIT_FRIENDLY))
-			var/datum/component/mood/hugger_mood = helper.GetComponent(/datum/component/mood)
-			if (hugger_mood.sanity >= SANITY_GREAT)
+			if (helper.mob_mood.sanity >= SANITY_GREAT)
 				new /obj/effect/temp_visual/heart(loc)
-				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/besthug, helper)
-			else if (hugger_mood.sanity >= SANITY_DISTURBED)
-				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, helper)
+				add_mood_event("friendly_hug", /datum/mood_event/besthug, helper)
+			else if (helper.mob_mood.sanity >= SANITY_DISTURBED)
+				add_mood_event("friendly_hug", /datum/mood_event/betterhug, helper)
 
 		if(HAS_TRAIT(src, TRAIT_BADTOUCH))
 			to_chat(helper, span_warning("[src] looks visibly upset as you hug [p_them()]."))

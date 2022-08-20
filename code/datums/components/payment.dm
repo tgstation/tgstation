@@ -31,9 +31,15 @@
 		target_acc = SSeconomy.get_dep_account(ACCOUNT_CIV)
 	cost = _cost
 	transaction_style = _style
+
+/datum/component/payment/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_OBJ_ATTEMPT_CHARGE, .proc/attempt_charge)
 	RegisterSignal(parent, COMSIG_OBJ_ATTEMPT_CHARGE_CHANGE, .proc/change_cost)
-	RegisterSignal(parent, COMSIG_GLOB_REVOLUTION_TAX_REMOVAL, .proc/clean_up)
+	RegisterSignal(SSdcs, COMSIG_GLOB_REVOLUTION_VICTORY, .proc/clean_up)
+
+/datum/component/payment/UnregisterFromParent()
+	UnregisterSignal(parent, list(COMSIG_OBJ_ATTEMPT_CHARGE, COMSIG_OBJ_ATTEMPT_CHARGE_CHANGE))
+	UnregisterSignal(SSdcs, COMSIG_GLOB_REVOLUTION_VICTORY)
 
 /datum/component/payment/proc/attempt_charge(datum/source, atom/movable/target, extra_fees = 0)
 	SIGNAL_HANDLER
@@ -43,7 +49,7 @@
 	if(!ismob(target))
 		return COMPONENT_OBJ_CANCEL_CHARGE
 	var/mob/living/user = target
-	if(issilicon(user) || isdrone(user)) //They have evolved beyond the need for mere credits
+	if(issilicon(user) || isdrone(user) || isAdminGhostAI(user)) //They have evolved beyond the need for mere credits
 		return
 	var/obj/item/card/id/card
 	if(istype(user))
@@ -165,5 +171,3 @@
 	SIGNAL_HANDLER
 	target_acc = null
 	qdel(src)
-	return
-

@@ -24,9 +24,15 @@
 	toolspeed = 1.5 //Turn it on first you dork
 	var/on = FALSE
 
-/obj/item/chainsaw/ComponentInitialize()
+/obj/item/chainsaw/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 30, 100, 0, 'sound/weapons/chainsawhit.ogg', TRUE)
+	AddComponent(/datum/component/butchering, \
+		speed = 3 SECONDS, \
+		effectiveness = 100, \
+		bonus_modifier = 0, \
+		butcher_sound = 'sound/weapons/chainsawhit.ogg', \
+		disabled = TRUE, \
+	)
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
 
 /obj/item/chainsaw/suicide_act(mob/living/carbon/user)
@@ -57,7 +63,7 @@
 
 	toolspeed = on ? 0.5 : initial(toolspeed) //Turning it on halves the speed
 	if(src == user.get_active_held_item()) //update inhands
-		user.update_inv_hands()
+		user.update_held_items()
 	update_action_buttons()
 
 /obj/item/chainsaw/doomslayer

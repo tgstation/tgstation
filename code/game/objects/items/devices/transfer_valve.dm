@@ -148,7 +148,7 @@
 
 	if(change_volume)
 		target_mix.volume += other_mix.volume
-	
+
 	target_mix.merge(other_mix.remove_ratio(1))
 	return TRUE
 
@@ -199,6 +199,7 @@
 		GLOB.bombers += admin_bomb_message
 		message_admins(admin_bomb_message)
 		log_game("Bomb valve opened in [AREACOORD(bombturf)][attachment_message][bomber_message]")
+		bomber.log_message("opened bomb valve", LOG_GAME, log_globally = FALSE)
 
 		valve_open = merge_gases(target, change_volume)
 

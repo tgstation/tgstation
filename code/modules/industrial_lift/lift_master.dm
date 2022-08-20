@@ -31,8 +31,6 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 	///overridable ID string to link control units to this specific lift_master datum. created by placing a lift id landmark object
 	///somewhere on the tram, if its anywhere on the tram we'll find it in init and set this to whatever it specifies
 	var/specific_lift_id
-	///what directions we're allowed to move
-	var/allowed_travel_directions = ALL
 
 	///if true, the lift cannot be manually moved.
 	var/controls_locked = FALSE
@@ -239,6 +237,42 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 
 	return winner
 
+/// Returns a lift platform on the z-level which is vertically closest to the passed target_z
+/datum/lift_master/proc/return_closest_platform_to_z(target_z)
+	var/obj/structure/industrial_lift/found_platform
+	for(var/obj/structure/industrial_lift/lift as anything in lift_platforms)
+		// Already at the same Z-level, we can stop
+		if(lift.z == target_z)
+			found_platform = lift
+			break
+
+		// Set up an initial lift to compare to
+		if(!found_platform)
+			found_platform = lift
+			continue
+
+		// Same level, we can go with the one we currently have
+		if(lift.z == found_platform.z)
+			continue
+
+		// If the difference between the current found platform and the target
+		// if less than the distance between the next lift and the target,
+		// our current platform is closer to the target than the next one, so we can skip it
+		if(abs(found_platform.z - target_z) < abs(lift.z - target_z))
+			continue
+
+		// The difference is smaller for this lift, so it's closer
+		found_platform = lift
+
+	return found_platform
+
+/// Returns a list of all the z-levels our lift is currently on.
+/datum/lift_master/proc/get_zs_we_are_on()
+	var/list/zs_we_are_present_on = list()
+	for(var/obj/structure/industrial_lift/lift as anything in lift_platforms)
+		zs_we_are_present_on |= lift.z
+	return zs_we_are_present_on
+
 ///returns all industrial_lifts associated with this tram on the given z level or given atoms z level
 /datum/lift_master/proc/get_platforms_on_level(atom/atom_reference_OR_z_level_number)
 	var/z = atom_reference_OR_z_level_number
@@ -259,13 +293,12 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 /**
  * Moves the lift UP or DOWN, this is what users invoke with their hand.
  * This is a SAFE proc, ensuring every part of the lift moves SANELY.
- * It also locks controls for the (miniscule) duration of the movement, so the elevator cannot be broken by spamming.
+ *
  * Arguments:
  * going - UP or DOWN directions, where the lift should go. Keep in mind by this point checks of whether it should go up or down have already been done.
  * user - Whomever made the lift movement.
  */
-/datum/lift_master/proc/MoveLift(going, mob/user)
-	set_controls(LIFT_PLATFORM_LOCKED)
+/datum/lift_master/proc/move_lift_vertically(going, mob/user)
 	//lift_platforms are sorted in order of lowest z to highest z, so going upwards we need to move them in reverse order to not collide
 	if(going == UP)
 		var/obj/structure/industrial_lift/platform_to_move
@@ -280,14 +313,208 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 	else if(going == DOWN)
 		for(var/obj/structure/industrial_lift/lift_platform as anything in lift_platforms)
 			lift_platform.travel(going)
+
+/**
+ * Moves the lift after a passed delay.
+ *
+ * This is a more "user friendly" or "realistic" lift move.
+ * It includes things like:
+ * - Allowing lift "travel time"
+ * - Shutting elevator safety doors
+ * - Sound effects while moving
+ * - Safety warnings for anyone below the lift (while it's moving downwards)
+ *
+ * Arguments:
+ * duration - required, how long do we wait to move the lift?
+ * door_duration - optional, how long should we wait to open the doors after arriving? If null, we won't open or close doors
+ * direction - which direction are we moving the lift?
+ * user - optional, who is moving the lift?
+ */
+/datum/lift_master/proc/move_after_delay(lift_move_duration, door_duration, direction, mob/user)
+	if(!isnum(lift_move_duration))
+		CRASH("[type] move_after_delay called with invalid duration ([lift_move_duration]).")
+	if(lift_move_duration <= 0 SECONDS)
+		move_lift_vertically(direction, user)
+		return
+
+	// Get the lowest or highest lift according to which direction we're moving
+	var/obj/structure/industrial_lift/prime_lift = return_closest_platform_to_z(direction == UP ? world.maxz : 0)
+
+	// If anyone changes the hydraulic sound effect I sure hope they update this variable...
+	var/hydraulic_sfx_duration = 2 SECONDS
+	// ...because we use the duration of the sound effect to make it last for roughly the duration of the lift travel
+	playsound(prime_lift, 'sound/mecha/hydraulic.ogg', 25, vary = TRUE, frequency = clamp(hydraulic_sfx_duration / lift_move_duration, 0.33, 3))
+
+	// Move the lift after a timer
+	addtimer(CALLBACK(src, .proc/move_lift_vertically, direction, user), lift_move_duration, TIMER_UNIQUE)
+	// Open doors after the set duration if supplied
+	if(isnum(door_duration))
+		addtimer(CALLBACK(src, .proc/open_lift_doors_callback), door_duration, TIMER_UNIQUE)
+
+	// Here on we only care about lifts going DOWN
+	if(direction != DOWN)
+		return
+
+	// Okay we're going down, let's try to display some warnings to people below
+	var/list/turf/lift_locs = list()
+	for(var/obj/structure/industrial_lift/going_to_move as anything in lift_platforms)
+		// This lift has no warnings so we don't even need to worry about it
+		if(!going_to_move.warns_on_down_movement)
+			continue
+		// Collect all the turfs our lift is found at
+		lift_locs |= going_to_move.locs
+
+	for(var/turf/moving in lift_locs)
+		// Find what's below the turf that's moving
+		var/turf/below_us = get_step_multiz(moving, DOWN)
+		// Hold up the turf below us is also in our locs list. Multi-z lift? Don't show a warning
+		if(below_us in lift_locs)
+			continue
+		// Display the warning for until we land
+		new /obj/effect/temp_visual/telegraphing/lift_travel(below_us, lift_move_duration)
+
+/**
+ * Simple wrapper for checking if we can move 1 zlevel, and if we can, do said move.
+ * Locks controls, closes all doors, then moves the lift and re-opens the doors afterwards.
+ *
+ * Arguments:
+ * direction - which direction are we moving?
+ * lift_move_duration - how long does the move take? can be 0 or null for instant move.
+ * door_duration - how long does it take for the doors to open after a move?
+ * user - optional, who moved it?
+ */
+/datum/lift_master/proc/simple_move_wrapper(direction, lift_move_duration, mob/user)
+	if(!Check_lift_move(direction))
+		return FALSE
+
+	// Lock controls, to prevent moving-while-moving memes
+	set_controls(LIFT_PLATFORM_LOCKED)
+	// Close all lift doors
+	update_lift_doors(action = CLOSE_DOORS)
+
+	if(isnull(lift_move_duration) || lift_move_duration <= 0 SECONDS)
+		// Do an instant move
+		move_lift_vertically(direction, user)
+		// Open doors on the zs we arrive at
+		update_lift_doors(get_zs_we_are_on(), action = OPEN_DOORS)
+		// And unlock the controls after
+		set_controls(LIFT_PLATFORM_UNLOCKED)
+		return TRUE
+
+	// Do a delayed move
+	move_after_delay(
+		lift_move_duration = lift_move_duration,
+		door_duration = lift_move_duration * 1.5,
+		direction = direction,
+		user = user,
+	)
+
+	addtimer(CALLBACK(src, .proc/set_controls, LIFT_PLATFORM_UNLOCKED), lift_move_duration * 1.5)
+	return TRUE
+
+/**
+ * Moves the lift to the passed z-level.
+ *
+ * Checks for validity of the move: Are we moving to the same z-level, can we actually move to that z-level?
+ * Does NOT check if the lift controls are currently locked.
+ *
+ * Moves to the passed z-level by calling move_after_delay repeatedly until the passed z-level is reached.
+ * This proc sleeps as it moves.
+ *
+ * Arguments:
+ * target_z - required, the Z we want to move to
+ * loop_callback - optional, an additional callback invoked during the l oop that allows the move to cancel.
+ * user - optional, who started the move
+ */
+/datum/lift_master/proc/move_to_zlevel(target_z, datum/callback/loop_callback, mob/user)
+	if(!isnum(target_z) || target_z <= 0)
+		CRASH("[type] move_to_zlevel was passed an invalid target_z ([target_z]).")
+
+	var/obj/structure/industrial_lift/prime_lift = return_closest_platform_to_z(target_z)
+	var/lift_z = prime_lift.z
+	// We're already at the desired z-level!
+	if(target_z == lift_z)
+		return FALSE
+
+	// The amount of z levels between the our and target_z
+	var/z_difference = abs(target_z - lift_z)
+	// Direction (up/down) needed to go to reach target_z
+	var/direction = lift_z < target_z ? UP : DOWN
+
+	// We can't go that way anymore, or possibly ever
+	if(!Check_lift_move(direction))
+		return FALSE
+
+	// Okay we're ready to start moving now.
+	set_controls(LIFT_PLATFORM_LOCKED)
+	var/travel_speed = prime_lift.elevator_vertical_speed
+
+	// Close all lift doors
+	update_lift_doors(action = CLOSE_DOORS)
+	// Approach the desired z-level one step at a time
+	for(var/i in 1 to z_difference)
+		if(!Check_lift_move(direction))
+			break
+		if(loop_callback && !loop_callback.Invoke())
+			break
+		// move_after_delay will set up a timer and cause us to move after a time
+		move_after_delay(
+			lift_move_duration = travel_speed,
+			direction = direction,
+			user = user,
+		)
+		// and we don't want to send another request until the timer's done
+		stoplag(travel_speed + 0.1 SECONDS)
+		if(QDELETED(src) || QDELETED(prime_lift))
+			return
+
+	addtimer(CALLBACK(src, .proc/open_lift_doors_callback), 2 SECONDS)
 	set_controls(LIFT_PLATFORM_UNLOCKED)
+	return TRUE
+
+/**
+ * Updates all blast doors and shutters that share an ID with our lift.
+ *
+ * Arguments:
+ * on_z_level - optional, only open doors on this z-level or list of z-levels
+ * action - how do we update the doors? OPEN_DOORS to make them open, CLOSE_DOORS to make them shut
+ */
+/datum/lift_master/proc/update_lift_doors(on_z_level, action)
+
+	if(!isnull(on_z_level) && !islist(on_z_level))
+		on_z_level = list(on_z_level)
+
+	var/played_ding = FALSE
+	for(var/obj/machinery/door/poddoor/elevator_door in GLOB.machines)
+		if(elevator_door.id != specific_lift_id)
+			continue
+		if(on_z_level && !(elevator_door.z in on_z_level))
+			continue
+
+		switch(action)
+			if(OPEN_DOORS)
+				INVOKE_ASYNC(elevator_door, /obj/machinery/door/poddoor.proc/open)
+
+			if(CLOSE_DOORS)
+				INVOKE_ASYNC(elevator_door, /obj/machinery/door/poddoor.proc/close)
+
+			else
+				stack_trace("Elevator lift update_lift_doors called with an improper action ([action]).")
+
+		if(!played_ding)
+			playsound(elevator_door, 'sound/machines/ding.ogg', 50, TRUE)
+			played_ding = TRUE
+
+/// Helper used in callbacks to open all the doors our lift is on
+/datum/lift_master/proc/open_lift_doors_callback()
+	update_lift_doors(get_zs_we_are_on(), action = OPEN_DOORS)
 
 /**
  * Moves the lift, this is what users invoke with their hand.
  * This is a SAFE proc, ensuring every part of the lift moves SANELY.
  * It also locks controls for the (miniscule) duration of the movement, so the elevator cannot be broken by spamming.
  */
-/datum/lift_master/proc/MoveLiftHorizontal(going)
+/datum/lift_master/proc/move_lift_horizontally(going)
 	set_controls(LIFT_PLATFORM_LOCKED)
 
 	if(multitile_platform)

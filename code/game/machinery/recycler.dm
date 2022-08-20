@@ -33,7 +33,11 @@
 		/datum/material/bluespace
 	)
 	AddComponent(/datum/component/material_container, allowed_materials, INFINITY, MATCONTAINER_NO_INSERT|BREAKDOWN_FLAGS_RECYCLER)
-	AddComponent(/datum/component/butchering/recycler, 1, amount_produced,amount_produced/5)
+	AddComponent(/datum/component/butchering/recycler, \
+	speed = 0.1 SECONDS, \
+	effectiveness = amount_produced, \
+	bonus_modifier = amount_produced/5, \
+	)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
@@ -221,6 +225,6 @@
 
 /obj/item/paper/guides/recycler
 	name = "paper - 'garbage duty instructions'"
-	info = "<h2>New Assignment</h2> You have been assigned to collect garbage from trash bins, located around the station. The crewmembers will put their trash into it and you will collect said trash.<br><br>There is a recycling machine near your closet, inside maintenance; use it to recycle the trash for a small chance to get useful minerals. Then, deliver these minerals to cargo or engineering. You are our last hope for a clean station. Do not screw this up!"
+	default_raw_text = "<h2>New Assignment</h2> You have been assigned to collect garbage from trash bins, located around the station. The crewmembers will put their trash into it and you will collect said trash.<br><br>There is a recycling machine near your closet, inside maintenance; use it to recycle the trash for a small chance to get useful minerals. Then, deliver these minerals to cargo or engineering. You are our last hope for a clean station. Do not screw this up!"
 
 #undef SAFETY_COOLDOWN

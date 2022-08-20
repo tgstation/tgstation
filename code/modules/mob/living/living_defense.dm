@@ -208,7 +208,7 @@
 	return TRUE
 
 
-/mob/living/attack_slime(mob/living/simple_animal/slime/M)
+/mob/living/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
 	if(!SSticker.HasRoundStarted())
 		to_chat(M, "You cannot attack people before the game has started.")
 		return
@@ -288,7 +288,7 @@
 		return martial_result
 
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		if (user != src)
+		if (user != src && iscarbon(src))
 			user.disarm(src)
 			return TRUE
 	if (!user.combat_mode)
@@ -315,7 +315,7 @@
 
 	return FALSE
 
-/mob/living/attack_larva(mob/living/carbon/alien/larva/L)
+/mob/living/attack_larva(mob/living/carbon/alien/larva/L, list/modifiers)
 	if(L.combat_mode)
 		if(HAS_TRAIT(L, TRAIT_PACIFISM))
 			to_chat(L, span_warning("You don't want to hurt anyone!"))
@@ -452,6 +452,7 @@
 
 	overlay_fullscreen("flash", type)
 	addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", length), length)
+	SEND_SIGNAL(src, COMSIG_MOB_FLASHED, intensity, override_blindness_check, affect_silicon, visual, type, length)
 	return TRUE
 
 //called when the mob receives a loud bang

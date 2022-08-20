@@ -67,17 +67,17 @@
 	else
 		owner.adjustPlasma(0.1 * plasma_rate * delta_time)
 
-/obj/item/organ/internal/alien/plasmavessel/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/internal/alien/plasmavessel/Insert(mob/living/carbon/organ_owner, special = FALSE, drop_if_replaced = TRUE)
 	..()
-	if(isalien(M))
-		var/mob/living/carbon/alien/A = M
-		A.updatePlasmaDisplay()
+	if(isalien(organ_owner))
+		var/mob/living/carbon/alien/target_alien = organ_owner
+		target_alien.updatePlasmaDisplay()
 
-/obj/item/organ/internal/alien/plasmavessel/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/internal/alien/plasmavessel/Remove(mob/living/carbon/organ_owner, special = FALSE)
 	..()
-	if(isalien(M))
-		var/mob/living/carbon/alien/A = M
-		A.updatePlasmaDisplay()
+	if(isalien(organ_owner))
+		var/mob/living/carbon/alien/organ_owner_alien = organ_owner
+		organ_owner_alien.updatePlasmaDisplay()
 
 #define QUEEN_DEATH_DEBUFF_DURATION 2400
 
@@ -91,14 +91,14 @@
 	/// Indicates if the queen died recently, aliens are heavily weakened while this is active.
 	var/recent_queen_death = FALSE
 
-/obj/item/organ/internal/alien/hivenode/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/internal/alien/hivenode/Insert(mob/living/carbon/organ_owner, special = FALSE, drop_if_replaced = TRUE)
 	..()
-	M.faction |= ROLE_ALIEN
-	ADD_TRAIT(M, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
+	organ_owner.faction |= ROLE_ALIEN
+	ADD_TRAIT(organ_owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
 
-/obj/item/organ/internal/alien/hivenode/Remove(mob/living/carbon/M, special = 0)
-	M.faction -= ROLE_ALIEN
-	REMOVE_TRAIT(M, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
+/obj/item/organ/internal/alien/hivenode/Remove(mob/living/carbon/organ_owner, special = FALSE)
+	organ_owner.faction -= ROLE_ALIEN
+	REMOVE_TRAIT(organ_owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
 	..()
 
 //When the alien queen dies, all aliens suffer a penalty as punishment for failing to protect her.
@@ -199,8 +199,13 @@
 
 /obj/item/organ/internal/stomach/alien/proc/consume_thing(atom/movable/thing)
 	RegisterSignal(thing, COMSIG_MOVABLE_MOVED, .proc/content_moved)
+	RegisterSignal(thing, COMSIG_PARENT_QDELETING, .proc/content_deleted)
 	if(isliving(thing))
+		var/mob/living/lad = thing
 		RegisterSignal(thing, COMSIG_LIVING_DEATH, .proc/content_died)
+		if(lad.stat == DEAD)
+			qdel(lad)
+			return
 	stomach_contents += thing
 	thing.forceMove(owner || src) // We assert that if we have no owner, we will not be nullspaced
 
@@ -208,18 +213,22 @@
 	SIGNAL_HANDLER
 	qdel(source)
 
+/obj/item/organ/internal/stomach/alien/proc/content_deleted(atom/movable/source)
+	SIGNAL_HANDLER
+	stomach_contents -= source
+
 /obj/item/organ/internal/stomach/alien/proc/content_moved(atom/movable/source)
 	SIGNAL_HANDLER
 	if(source.loc == src || source.loc == owner) // not in us? out da list then
 		return
 	stomach_contents -= source
-	UnregisterSignal(source, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_DEATH))
+	UnregisterSignal(source, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING))
 
-/obj/item/organ/internal/stomach/alien/Insert(mob/living/carbon/stomach_owner, special)
+/obj/item/organ/internal/stomach/alien/Insert(mob/living/carbon/stomach_owner, special = FALSE, drop_if_replaced = TRUE)
 	RegisterSignal(stomach_owner, COMSIG_ATOM_RELAYMOVE, .proc/something_moved)
 	return ..()
 
-/obj/item/organ/internal/stomach/alien/Remove(mob/living/carbon/stomach_owner, special)
+/obj/item/organ/internal/stomach/alien/Remove(mob/living/carbon/stomach_owner, special = FALSE)
 	UnregisterSignal(stomach_owner, COMSIG_ATOM_RELAYMOVE)
 	return ..()
 

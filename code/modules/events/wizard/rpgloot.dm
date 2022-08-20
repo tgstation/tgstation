@@ -4,6 +4,7 @@
 	typepath = /datum/round_event/wizard/rpgloot
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
+	description = "Every item in the world will have fantastical names."
 
 /datum/round_event/wizard/rpgloot/start()
 	GLOB.rpgloot_controller = new /datum/rpgloot_controller

@@ -530,7 +530,7 @@
 		return FALSE
 
 	message_admins("[ADMIN_LOOKUPFLW(owner)] set its directive to: '[spider.directive]'.")
-	log_game("[key_name(owner)] set its directive to: '[spider.directive]'.")
+	owner.log_message("set its directive to: '[spider.directive]'.", LOG_GAME)
 	return TRUE
 
 /datum/action/innate/spider/comm

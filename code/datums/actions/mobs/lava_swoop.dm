@@ -23,6 +23,7 @@
 	REMOVE_TRAIT(M, TRAIT_NOFIRE, REF(src))
 
 /datum/action/cooldown/mob_cooldown/lava_swoop/Activate(atom/target_atom)
+	StartCooldown(360 SECONDS, 360 SECONDS)
 	attack_sequence(target_atom)
 	StartCooldown()
 

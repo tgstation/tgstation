@@ -40,7 +40,7 @@
 
 /mob/living/simple_animal/hostile/hivebot/Initialize(mapload)
 	. = ..()
-	deathmessage = "[src] blows apart!"
+	death_message = "[src] blows apart!"
 
 /mob/living/simple_animal/hostile/hivebot/Aggro()
 	. = ..()

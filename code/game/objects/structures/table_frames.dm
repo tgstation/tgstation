@@ -13,7 +13,7 @@
 	name = "table frame"
 	desc = "Four metal legs with four framing rods for a table. You could easily pass through this."
 	icon = 'icons/obj/structures.dmi'
-	icon_state = "nu_table_frame"
+	icon_state = "table_frame"
 	density = FALSE
 	anchored = FALSE
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
@@ -90,7 +90,7 @@
 /obj/structure/table_frame/wood
 	name = "wooden table frame"
 	desc = "Four wooden legs with four framing wooden rods for a wooden table. You could easily pass through this."
-	icon_state = "nu_wood_frame"
+	icon_state = "wood_frame"
 	framestack = /obj/item/stack/sheet/mineral/wood
 	framestackamount = 2
 	resistance_flags = FLAMMABLE

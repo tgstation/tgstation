@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "You can no longer remove the toner cartridge from a printer while it's busy printing."

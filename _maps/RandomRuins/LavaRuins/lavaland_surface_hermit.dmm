@@ -27,7 +27,7 @@
 	},
 /area/ruin/powered)
 "i" = (
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /turf/open/misc/asteroid{
 	name = "dirt"
 	},

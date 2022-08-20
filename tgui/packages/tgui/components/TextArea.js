@@ -15,7 +15,6 @@ export class TextArea extends Component {
   constructor(props, context) {
     super(props, context);
     this.textareaRef = props.innerRef || createRef();
-    this.displayedContainerRef = createRef();
     this.state = {
       editing: false,
       scrolledAmount: 0,
@@ -126,9 +125,10 @@ export class TextArea extends Component {
     this.handleScroll = (e) => {
       const { displayedValue } = this.props;
       const input = this.textareaRef.current;
-      const displayedContainer = this.displayedContainerRef.current;
-      if (displayedValue && input && displayedContainer) {
-        displayedContainer.scrollTop = input.scrollTop;
+      if (displayedValue && input) {
+        this.setState({
+          scrolledAmount: input.scrollTop,
+        });
       }
     };
   }
@@ -180,6 +180,8 @@ export class TextArea extends Component {
       value,
       maxLength,
       placeholder,
+      scrollbar,
+      noborder,
       displayedValue,
       ...boxProps
     } = this.props;
@@ -188,24 +190,33 @@ export class TextArea extends Component {
     const { scrolledAmount } = this.state;
     return (
       <Box
-        className={classes(['TextArea', fluid && 'TextArea--fluid', className])}
+        className={classes([
+          'TextArea',
+          fluid && 'TextArea--fluid',
+          noborder && 'TextArea--noborder',
+          className,
+        ])}
         {...rest}>
         {!!displayedValue && (
-          <div
-            className={classes([
-              'TextArea__textarea',
-              'TextArea__textarea_custom',
-            ])}
-            style={{
-              'transform': `translateY(-${scrolledAmount}px)`,
-            }}
-            ref={this.displayedContainerRef}>
-            {displayedValue}
-          </div>
+          <Box position="absolute" width="100%" height="100%" overflow="hidden">
+            <div
+              className={classes([
+                'TextArea__textarea',
+                'TextArea__textarea_custom',
+              ])}
+              style={{
+                'transform': `translateY(-${scrolledAmount}px)`,
+              }}>
+              {displayedValue}
+            </div>
+          </Box>
         )}
         <textarea
           ref={this.textareaRef}
-          className="TextArea__textarea"
+          className={classes([
+            'TextArea__textarea',
+            scrollbar && 'TextArea__textarea--scrollable',
+          ])}
           placeholder={placeholder}
           onChange={this.handleOnChange}
           onKeyDown={this.handleKeyDown}

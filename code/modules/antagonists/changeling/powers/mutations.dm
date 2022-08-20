@@ -33,7 +33,7 @@
 		if(!silent)
 			playsound(user, 'sound/effects/blobattack.ogg', 30, TRUE)
 			user.visible_message(span_warning("With a sickening crunch, [user] reforms [user.p_their()] [weapon_name_simple] into an arm!"), span_notice("We assimilate the [weapon_name_simple] back into our body."), "<span class='italics>You hear organic matter ripping and tearing!</span>")
-		user.update_inv_hands()
+		user.update_held_items()
 		return 1
 
 /datum/action/changeling/weapon/sting_action(mob/living/user)
@@ -93,8 +93,8 @@
 		H.visible_message(span_warning("[H] casts off [H.p_their()] [suit_name_simple]!"), span_warning("We cast off our [suit_name_simple]."), span_hear("You hear the organic matter ripping and tearing!"))
 		H.temporarilyRemoveItemFromInventory(H.head, TRUE) //The qdel on dropped() takes care of it
 		H.temporarilyRemoveItemFromInventory(H.wear_suit, TRUE)
-		H.update_inv_wear_suit()
-		H.update_inv_head()
+		H.update_worn_oversuit()
+		H.update_worn_head()
 		H.update_hair(is_creating = TRUE)
 
 		if(blood_on_castoff)
@@ -175,7 +175,10 @@
 		loc.visible_message(span_warning("A grotesque blade forms around [loc.name]\'s arm!"), span_warning("Our arm twists and mutates, transforming it into a deadly blade."), span_hear("You hear organic matter ripping and tearing!"))
 	if(synthetic)
 		can_drop = TRUE
-	AddComponent(/datum/component/butchering, 60, 80)
+	AddComponent(/datum/component/butchering, \
+	speed = 6 SECONDS, \
+	effectiveness = 80, \
+	)
 
 /obj/item/melee/arm_blade/afterattack(atom/target, mob/user, proximity)
 	. = ..()

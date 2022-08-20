@@ -218,7 +218,7 @@ at the cost of risking a vicious bite.**/
 	visible_message(span_danger("[src] emits a flash of light and creates... pants?"))
 	for(var/mob/living/viewing_mob in viewers(7, src))
 		viewing_mob.flash_act()
-	var/obj/item/clothing/under/pants/altar/pants = new(get_turf(src))
+	var/obj/item/clothing/under/pants/slacks/altar/pants = new(get_turf(src))
 	pants.add_atom_colour(pants_color, ADMIN_COLOUR_PRIORITY)
 	COOLDOWN_START(src, use_cooldown, use_cooldown_duration)
 	addtimer(CALLBACK(src, /atom.proc/update_icon), 1 MINUTES + 0.1 SECONDS)
@@ -231,10 +231,11 @@ at the cost of risking a vicious bite.**/
 		return FALSE
 	return TRUE
 
-/obj/item/clothing/under/pants/altar
+/obj/item/clothing/under/pants/slacks/altar
 	name = "strange pants"
-	desc = "A pair of pants. They do not look natural. They smell like fresh blood."
-	icon_state = "whitepants"
+	desc = "A pair of pants. They do not look or feel natural, and smell like fresh blood."
+	greyscale_colors = "#ffffff#ffffff#ffffff"
+	flags_1 = NONE //If IS_PLAYER_COLORABLE gets added color-changing support (i.e. spraycans), these won't end up getting it too. Plus, it already has its own recolor.
 
 #undef ALTAR_INACTIVE
 #undef ALTAR_STAGEONE

@@ -79,7 +79,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/claymore/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 40, 105)
+	AddComponent(/datum/component/butchering, \
+	speed = 4 SECONDS, \
+	effectiveness = 105, \
+	)
 
 /obj/item/claymore/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is falling on [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -390,8 +393,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/switchblade/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
-	AddComponent(/datum/component/butchering, 7 SECONDS, 100)
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
+	AddComponent(/datum/component/butchering, \
+	speed = 7 SECONDS, \
+	effectiveness = 100, \
+	)
 	AddComponent(/datum/component/transforming, \
 		start_transformed = start_extended, \
 		force_on = 20, \
@@ -699,10 +705,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		name = "cricket bat"
 		icon_state = "baseball_bat_brit"
 		inhand_icon_state = "baseball_bat_brit"
-		if(prob(50))
-			desc = "You've got red on you."
-		else
-			desc = "You gotta know what a crumpet is to understand cricket."
+		desc = pick("You've got red on you.", "You gotta know what a crumpet is to understand cricket.")
 
 	AddElement(/datum/element/kneecapping)
 
@@ -799,6 +802,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/melee/baseball_bat/homerun
 	name = "home run bat"
 	desc = "This thing looks dangerous... Dangerously good at baseball, that is."
+	icon_state = "baseball_bat_home"
+	inhand_icon_state = "baseball_bat_home"
 	homerun_able = TRUE
 	mob_thrower = TRUE
 
@@ -955,11 +960,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/highfrequencyblade/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
-
-/obj/item/highfrequencyblade/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/two_handed, wield_callback = CALLBACK(src, .proc/on_wield), unwield_callback = CALLBACK(src, .proc/on_unwield))
+	AddComponent(/datum/component/two_handed, \
+		wield_callback = CALLBACK(src, .proc/on_wield), \
+		unwield_callback = CALLBACK(src, .proc/on_unwield), \
+	)
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
 
 /obj/item/highfrequencyblade/update_icon_state()
 	icon_state = "hfrequency[HAS_TRAIT(src, TRAIT_WIELDED)]"

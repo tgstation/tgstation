@@ -384,3 +384,8 @@
 	description = "I gambled my life and lost! I guess this is the end..."
 	mood_change = -20
 	timeout = 10 MINUTES
+
+/datum/mood_event/bad_touch_bear_hug
+	description = "I just got squeezed way too hard."
+	mood_change = -1
+	timeout = 2 MINUTES

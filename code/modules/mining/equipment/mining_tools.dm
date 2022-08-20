@@ -130,7 +130,11 @@
 
 /obj/item/shovel/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 150, 40) //it's sharp, so it works, but barely.
+	AddComponent(/datum/component/butchering, \
+	speed = 15 SECONDS, \
+	effectiveness = 40, \
+	)
+	//it's sharp, so it works, but barely.
 
 /obj/item/shovel/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins digging their own grave! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -228,7 +232,7 @@
 			attack_verb_continuous = list("hits", "pierces", "slices", "attacks")
 			attack_verb_simple = list("hit", "pierce", "slice", "attack")
 	playsound(src, 'sound/items/ratchet.ogg', 50, vary = TRUE)
-	user.update_inv_hands()
+	user.update_held_items()
 
 /obj/item/trench_tool/proc/check_menu(mob/user)
 	if(!istype(user))

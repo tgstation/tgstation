@@ -164,7 +164,7 @@
 	pushed_mob.visible_message(span_danger("[user] slams [pushed_mob] onto \the [src]!"), \
 								span_userdanger("[user] slams you onto \the [src]!"))
 	log_combat(user, pushed_mob, "tabled", null, "onto [src]")
-	SEND_SIGNAL(pushed_mob, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table)
+	pushed_mob.add_mood_event("table", /datum/mood_event/table)
 
 /obj/structure/table/proc/tablelimbsmash(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.Knockdown(30)
@@ -181,7 +181,7 @@
 	pushed_mob.visible_message(span_danger("[user] smashes [pushed_mob]'s [banged_limb.name] against \the [src]!"),
 								span_userdanger("[user] smashes your [banged_limb.name] against \the [src]"))
 	log_combat(user, pushed_mob, "head slammed", null, "against [src]")
-	SEND_SIGNAL(pushed_mob, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table_limbsmash, banged_limb)
+	pushed_mob.add_mood_event("table", /datum/mood_event/table_limbsmash, banged_limb)
 
 /obj/structure/table/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	if(flags_1 & NODECONSTRUCT_1 || !deconstruction_ready)
@@ -681,7 +681,7 @@
 	buckle_lying = NO_BUCKLE_LYING
 	buckle_requires_restraints = TRUE
 	custom_materials = list(/datum/material/silver = 2000)
-	var/mob/living/carbon/human/patient = null
+	var/mob/living/carbon/patient = null
 	var/obj/machinery/computer/operating/computer = null
 
 /obj/structure/table/optable/Initialize(mapload)
@@ -691,44 +691,57 @@
 		if(computer)
 			computer.table = src
 			break
+	RegisterSignal(loc, COMSIG_ATOM_ENTERED, .proc/mark_patient)
+	RegisterSignal(loc, COMSIG_ATOM_EXITED, .proc/unmark_patient)
 
 /obj/structure/table/optable/Destroy()
-	. = ..()
 	if(computer && computer.table == src)
 		computer.table = null
+	patient = null
+	UnregisterSignal(loc, COMSIG_ATOM_ENTERED)
+	UnregisterSignal(loc, COMSIG_ATOM_EXITED)
+	return ..()
 
 /obj/structure/table/optable/tablepush(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(loc)
 	pushed_mob.set_resting(TRUE, TRUE)
 	visible_message(span_notice("[user] lays [pushed_mob] on [src]."))
-	get_patient()
 
-/obj/structure/table/optable/proc/get_patient()
-	var/mob/living/carbon/M = locate(/mob/living/carbon) in loc
-	if(M)
-		if(M.resting)
-			set_patient(M)
-	else
-		set_patient(null)
-
-/obj/structure/table/optable/proc/set_patient(new_patient)
-	if(patient)
-		UnregisterSignal(patient, COMSIG_PARENT_QDELETING)
-	patient = new_patient
-	if(patient)
-		RegisterSignal(patient, COMSIG_PARENT_QDELETING, .proc/patient_deleted)
-
-/obj/structure/table/optable/proc/patient_deleted(datum/source)
+/// Any mob that enters our tile will be marked as a potential patient. They will be turned into a patient if they lie down.
+/obj/structure/table/optable/proc/mark_patient(datum/source, mob/living/carbon/potential_patient)
 	SIGNAL_HANDLER
-	set_patient(null)
+	if(!istype(potential_patient))
+		return
+	RegisterSignal(potential_patient, COMSIG_LIVING_SET_BODY_POSITION, .proc/recheck_patient)
+	recheck_patient(potential_patient) // In case the mob is already lying down before they entered.
 
-/obj/structure/table/optable/proc/check_eligible_patient()
-	get_patient()
-	if(!patient)
-		return FALSE
-	if(ishuman(patient))
-		return TRUE
-	return FALSE
+/// Unmark the potential patient.
+/obj/structure/table/optable/proc/unmark_patient(datum/source, mob/living/carbon/potential_patient)
+	SIGNAL_HANDLER
+	if(!istype(potential_patient))
+		return
+	if(potential_patient == patient)
+		recheck_patient(patient) // Can just set patient to null, but doing the recheck lets us find a replacement patient.
+	UnregisterSignal(potential_patient, COMSIG_LIVING_SET_BODY_POSITION)
+
+/// Someone on our tile just lied down, got up, moved in, or moved out.
+/// potential_patient is the mob that had one of those four things change.
+/// The check is a bit broad so we can find a replacement patient.
+/obj/structure/table/optable/proc/recheck_patient(mob/living/carbon/potential_patient)
+	SIGNAL_HANDLER
+	if(patient && patient != potential_patient)
+		return
+
+	if(potential_patient.body_position == LYING_DOWN && potential_patient.loc == loc)
+		patient = potential_patient
+		return
+	
+	// Find another lying mob as a replacement.
+	for (var/mob/living/carbon/replacement_patient in loc.contents)
+		if(replacement_patient.body_position == LYING_DOWN)
+			patient = replacement_patient
+			return
+	patient = null
 
 /*
  * Racks

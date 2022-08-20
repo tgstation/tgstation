@@ -57,7 +57,7 @@
 	..()
 	if(ismob(loc))
 		var/mob/M = loc
-		M.update_inv_wear_mask()
+		M.update_worn_mask()
 
 //Proc that moves gas/breath masks out of the way, disabling them and allowing pill/food consumption
 /obj/item/clothing/mask/proc/adjustmask(mob/living/user)

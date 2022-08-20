@@ -1,6 +1,3 @@
-///Dummy mob reserve slot for manifest
-#define DUMMY_HUMAN_SLOT_MANIFEST "dummy_manifest_generation"
-
 GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 
 //TODO: someone please get rid of this shit
@@ -136,7 +133,7 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		if(N.new_character)
 			log_manifest(N.ckey,N.new_character.mind,N.new_character)
 		if(ishuman(N.new_character))
-			manifest_inject(N.new_character, N.client)
+			manifest_inject(N.new_character)
 		CHECK_TICK
 
 /datum/datacore/proc/manifest_modify(name, assignment, trim)
@@ -218,7 +215,7 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 	return dat
 
 
-/datum/datacore/proc/manifest_inject(mob/living/carbon/human/H, client/C)
+/datum/datacore/proc/manifest_inject(mob/living/carbon/human/H)
 	set waitfor = FALSE
 	var/static/list/show_directions = list(SOUTH, WEST)
 	if(H.mind?.assigned_role.job_flags & JOB_CREW_MANIFEST)
@@ -226,9 +223,7 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 
 		var/static/record_id_num = 1001
 		var/id = num2hex(record_id_num++,6)
-		if(!C)
-			C = H.client
-		var/image = get_id_photo(H, C, show_directions)
+		var/image = get_id_photo(H, show_directions)
 		var/datum/picture/pf = new
 		var/datum/picture/ps = new
 		pf.picture_name = "[H]"
@@ -315,16 +310,54 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		locked += L
 	return
 
-/datum/datacore/proc/get_id_photo(mob/living/carbon/human/human, client/client, show_directions = list(SOUTH))
-	var/datum/job/humans_job = human.mind.assigned_role
-	var/datum/preferences/humans_prefs
-	if(!client)
-		client = human.client
-	if(client)
-		humans_prefs = client.prefs
-	if (human.dna.species.roundstart_changed)
-		return get_flat_human_icon(null, humans_job, null, DUMMY_HUMAN_SLOT_MANIFEST, show_directions)
-	else
-		return get_flat_human_icon(null, humans_job, humans_prefs, DUMMY_HUMAN_SLOT_MANIFEST, show_directions)
+/datum/datacore/proc/get_id_photo(mob/living/carbon/human/human, show_directions = list(SOUTH))
+	return get_flat_existing_human_icon(human, show_directions)
 
-#undef DUMMY_HUMAN_SLOT_MANIFEST
+//Todo: Add citations to the prinout - you get them from sec record's "citation" field, same as "crim" (which is frankly a terrible fucking field name)
+///Standardized printed records. SPRs. Like SATs but for bad guys who probably didn't actually finish school. Input the records and out comes a paper.
+/proc/print_security_record(datum/data/record/general_data, datum/data/record/security, atom/location)
+	if(!istype(general_data) && !istype(security))
+		stack_trace("called without any datacores! this may or may not be intentional!")
+	if(!isatom(location)) //can't drop the paper if we didn't get passed an atom.
+		CRASH("NO VALID LOCATION PASSED.")
+
+	GLOB.data_core.securityPrintCount++ //just alters the name of the paper.
+	var/obj/item/paper/printed_paper = new(location)
+	var/final_paper_text = "<CENTER><B>Security Record - (SR-[GLOB.data_core.securityPrintCount])</B></CENTER><BR>"
+	if((istype(general_data, /datum/data/record) && GLOB.data_core.general.Find(general_data)))
+		final_paper_text += text("Name: [] ID: []<BR>\nGender: []<BR>\nAge: []<BR>", general_data.fields["name"], general_data.fields["id"], general_data.fields["gender"], general_data.fields["age"])
+		final_paper_text += "\nSpecies: [general_data.fields["species"]]<BR>"
+		final_paper_text += text("\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>", general_data.fields["fingerprint"], general_data.fields["p_stat"], general_data.fields["m_stat"])
+	else
+		final_paper_text += "<B>General Record Lost!</B><BR>"
+	if((istype(security, /datum/data/record) && GLOB.data_core.security.Find(security)))
+		final_paper_text += text("<BR>\n<CENTER><B>Security Data</B></CENTER><BR>\nCriminal Status: []", security.fields["criminal"])
+
+		final_paper_text += "<BR>\n<BR>\nCrimes:<BR>\n"
+		final_paper_text +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
+<tr>
+<th>Crime</th>
+<th>Details</th>
+<th>Author</th>
+<th>Time Added</th>
+</tr>"}
+		for(var/datum/data/crime/c in security.fields["crim"])
+			final_paper_text += "<tr><td>[c.crimeName]</td>"
+			final_paper_text += "<td>[c.crimeDetails]</td>"
+			final_paper_text += "<td>[c.author]</td>"
+			final_paper_text += "<td>[c.time]</td>"
+			final_paper_text += "</tr>"
+		final_paper_text += "</table>"
+
+		final_paper_text += text("<BR>\nImportant Notes:<BR>\n\t[]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", security.fields["notes"])
+		var/counter = 1
+		while(security.fields[text("com_[]", counter)])
+			final_paper_text += text("[]<BR>", security.fields[text("com_[]", counter)])
+			counter++
+		printed_paper.name = text("SR-[] '[]'", GLOB.data_core.securityPrintCount, general_data.fields["name"])
+	else //if no security record
+		final_paper_text += "<B>Security Record Lost!</B><BR>"
+		printed_paper.name = text("SR-[] '[]'", GLOB.data_core.securityPrintCount, "Record Lost")
+	final_paper_text += "</TT>"
+	printed_paper.add_raw_text(final_paper_text)
+	printed_paper.update_appearance() //make sure we make the paper look like it has writing on it.

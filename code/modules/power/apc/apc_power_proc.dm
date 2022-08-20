@@ -39,7 +39,7 @@
 		return
 	operating = !operating
 	add_hiddenprint(user)
-	log_game("[key_name(user)] turned [operating ? "on" : "off"] the [src] in [AREACOORD(src)]")
+	user.log_message("turned [operating ? "on" : "off"] the [src]", LOG_GAME)
 	update()
 	update_appearance()
 
@@ -121,6 +121,8 @@
 			return
 
 	failure_timer = max(failure_timer, round(duration))
+	update()
+	queue_icon_update()
 
 /obj/machinery/power/apc/proc/set_nightshift(on)
 	set waitfor = FALSE

@@ -131,7 +131,7 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 	. = ..()
 	if(.)
 		return
-	if(!can_harvest(user) || !harvest_with_hands)
+	if(!can_harvest(user))
 		return
 
 	user.visible_message(span_notice("[user] starts to [harvest_verb] [src]..."),
@@ -182,7 +182,7 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
  * Returns: TRUE if they can harvest, FALSE if not. Null if it's not harvestable at all.
  */
 /obj/structure/flora/proc/can_harvest(mob/user, obj/item/harvesting_item)
-	. = FALSE
+
 	if(harvested || !harvestable)
 		return null
 
@@ -199,6 +199,13 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 		//Check to see if stone flora is being attacked by a mining item (same reason as above)
 		if((flora_flags & FLORA_STONE) && (harvesting_item.tool_behaviour == TOOL_MINING))
 			return TRUE
+		//We checked all item interactions and could not harvest, lets return
+		return FALSE
+
+	//If there was no harvesting item supplied, check if it is hand harvestable
+	if(harvest_with_hands)
+		return TRUE
+
 	return FALSE
 
 /*
