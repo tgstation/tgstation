@@ -1,0 +1,2261 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ab" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile{
+	color = "#008000"
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "wizardship_bridge"
+	},
+/turf/open/floor/plating,
+/area/station/command/bridge)
+"ac" = (
+/obj/machinery/computer/helm,
+/turf/open/floor/carpet/stellar,
+/area/station/command/bridge)
+"ad" = (
+/obj/machinery/computer/communications,
+/turf/open/floor/carpet/stellar,
+/area/station/command/bridge)
+"af" = (
+/obj/structure/chair/bronze{
+	dir = 1
+	},
+/turf/open/floor/carpet/stellar,
+/area/station/command/bridge)
+"ag" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/button/door{
+	id = "wizardship_bridge";
+	name = "Bridge Shutters";
+	pixel_y = 31
+	},
+/obj/machinery/airalarm/directional/east,
+/turf/open/floor/carpet/stellar,
+/area/station/command/bridge)
+"ai" = (
+/obj/structure/showcase{
+	desc = "A historical figure of great importance to the wizard federation. He spent his long life learning magic, stealing artifacts, and harassing idiots with swords. May he rest forever, Rodney.";
+	icon = 'icons/mob/mob.dmi';
+	icon_state = "nim";
+	name = "wizard of yendor showcase"
+	},
+/turf/open/floor/carpet/stellar,
+/area/station/command/bridge)
+"aj" = (
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
+	name = "Cockpit"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/carpet/stellar,
+/area/station/command/bridge)
+"am" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/station/hallway/primary/central)
+"an" = (
+/turf/open/floor/carpet/royalblack,
+/area/station/hallway/primary/starboard)
+"ao" = (
+/obj/structure/chair/wood/wings,
+/turf/open/floor/carpet/royalblack,
+/area/station/hallway/primary/starboard)
+"aq" = (
+/obj/structure/chair/wood/wings{
+	dir = 4
+	},
+/turf/open/floor/carpet/royalblack,
+/area/station/hallway/primary/starboard)
+"ar" = (
+/obj/structure/table/wood/poker,
+/obj/item/toy/figure/wizard,
+/turf/open/floor/carpet/royalblack,
+/area/station/hallway/primary/starboard)
+"as" = (
+/obj/structure/chair/wood/wings{
+	dir = 8
+	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/carpet/royalblack,
+/area/station/hallway/primary/starboard)
+"at" = (
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
+	name = "Archives"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/station/hallway/primary/central)
+"au" = (
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
+	name = "Game Room"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/carpet/black,
+/area/station/hallway/primary/central)
+"av" = (
+/obj/structure/chair/wood/wings{
+	dir = 1
+	},
+/turf/open/floor/carpet/royalblack,
+/area/station/hallway/primary/starboard)
+"ay" = (
+/turf/closed/wall/mineral/iron,
+/area/station/hallway/primary/central)
+"az" = (
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/wood,
+/area/station/hallway/primary/central)
+"aA" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/station/hallway/primary/central)
+"aB" = (
+/obj/machinery/vending/games,
+/turf/open/floor/carpet/royalblack,
+/area/station/hallway/primary/starboard)
+"aC" = (
+/obj/structure/table/wood/poker,
+/obj/item/toy/cards/deck/tarot{
+	pixel_y = 4
+	},
+/turf/open/floor/carpet/royalblack,
+/area/station/hallway/primary/starboard)
+"aF" = (
+/obj/effect/spawner/random/vending/snackvend,
+/turf/open/floor/wood,
+/area/station/hallway/primary/central)
+"aG" = (
+/obj/effect/spawner/random/vending/colavend,
+/turf/open/floor/wood,
+/area/station/hallway/primary/central)
+"aI" = (
+/obj/machinery/light,
+/turf/open/floor/carpet/royalblack,
+/area/station/hallway/primary/starboard)
+"aJ" = (
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
+	name = "Study"
+	},
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/station/science)
+"aK" = (
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
+	name = "Bar"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"aL" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/autolathe,
+/obj/structure/spider/stickyweb,
+/turf/open/floor/engine/cult,
+/area/station/science)
+"aM" = (
+/obj/structure/chair/wood/wings,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/spider/stickyweb,
+/obj/item/soulstone/anybody,
+/turf/open/floor/engine/cult,
+/area/station/science)
+"aO" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/turf/open/floor/carpet/purple,
+/area/station/service/cafeteria)
+"aP" = (
+/turf/open/floor/carpet/purple,
+/area/station/service/cafeteria)
+"aR" = (
+/obj/machinery/vending/coffee,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"aS" = (
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"aT" = (
+/obj/structure/frame/machine,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/engine/cult,
+/area/station/science)
+"aU" = (
+/obj/structure/destructible/cult/item_dispenser/archives/library,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/storage/fancy/candle_box,
+/obj/item/storage/box/matches{
+	pixel_x = -5
+	},
+/turf/open/floor/engine/cult,
+/area/station/science)
+"aV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/kirbyplants/random,
+/turf/open/floor/wood,
+/area/station/hallway/primary/central)
+"aW" = (
+/obj/machinery/chem_master/condimaster{
+	name = "HoochMaster 3000"
+	},
+/turf/open/floor/carpet/purple,
+/area/station/service/cafeteria)
+"aY" = (
+/obj/structure/chair/stool/bar/directional/west,
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"aZ" = (
+/obj/structure/table,
+/obj/item/shovel{
+	desc = "This mighty silver staff seems to have irreversibly lost it's luster.";
+	name = "staff of sustenance"
+	},
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"ba" = (
+/obj/structure/table,
+/obj/machinery/reagentgrinder{
+	pixel_y = 7
+	},
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"bb" = (
+/obj/structure/frame/computer,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/spider/stickyweb,
+/turf/open/floor/engine/cult,
+/area/station/science)
+"bd" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/wood,
+/area/station/hallway/primary/central)
+"bf" = (
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
+	name = "Personal Quarters"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/carpet/royalblue,
+/area/station/commons/dorms)
+"bg" = (
+/obj/structure/table,
+/obj/item/storage/box/donkpockets{
+	pixel_y = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/storage/box/donkpockets/donkpocketpizza,
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"bh" = (
+/obj/structure/table,
+/obj/machinery/microwave{
+	pixel_y = 6
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"bi" = (
+/obj/effect/decal/cleanable/blood/gibs/up,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"bl" = (
+/obj/effect/decal/cleanable/blood/gibs/down,
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"bm" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/trash/candle,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/turf/open/floor/engine/cult,
+/area/station/science)
+"bn" = (
+/obj/structure/chair/wood/wings{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/sord{
+	desc = "This thing is so unspeakably powerful you are having a hard time even holding it."
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/engine/cult,
+/area/station/science)
+"bo" = (
+/obj/machinery/vending/boozeomat/all_access,
+/turf/open/floor/carpet/purple,
+/area/station/service/cafeteria)
+"bp" = (
+/obj/machinery/light,
+/obj/item/radio/intercom{
+	pixel_y = -31
+	},
+/turf/open/floor/carpet/purple,
+/area/station/service/cafeteria)
+"bq" = (
+/obj/machinery/vending/cigarette,
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"bs" = (
+/obj/machinery/vending/dinnerware,
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"bu" = (
+/obj/structure/closet/secure_closet/freezer/fridge,
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"by" = (
+/turf/open/floor/carpet/royalblue,
+/area/station/hallway/primary/aft)
+"bA" = (
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
+	name = "Cargo"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/station/commons/storage/primary)
+"bB" = (
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
+	name = "Bathroom"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/station/commons/toilet)
+"bC" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate/medical,
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/o2,
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
+"bD" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
+"bF" = (
+/obj/machinery/computer/cryopod{
+	pixel_y = 27
+	},
+/obj/machinery/cryopod{
+	close_state = "bscanner_green";
+	icon_state = "bscanner_open";
+	open_state = "bscanner_open"
+	},
+/turf/open/floor/carpet/royalblue,
+/area/station/commons/dorms)
+"bG" = (
+/obj/structure/urinal{
+	pixel_y = 28
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/iron/white,
+/area/station/commons/toilet)
+"bH" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white,
+/area/station/commons/toilet)
+"bI" = (
+/obj/structure/sink/directional/south,
+/obj/item/razor{
+	desc = "The latest and greatest magic razor born from the science of shaving.";
+	name = "wand of hair slaying";
+	pixel_x = 11;
+	pixel_y = 7
+	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
+/obj/structure/mirror/magic/lesser{
+	pixel_y = 31
+	},
+/turf/open/floor/iron/white,
+/area/station/commons/toilet)
+"bJ" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/closet/crate/miningcar{
+	name = "mining car"
+	},
+/obj/item/pickaxe/emergency{
+	attack_verb = list("hit","spelled","cantripped","ensorceled");
+	desc = "Forged by the greatest smiths of the academy, enchanted by the archmagus council, this is a TRUE boulder eradicator.";
+	icon = 'icons/obj/guns/magic.dmi';
+	icon_state = "staffofflight";
+	name = "staff of rock removal"
+	},
+/obj/item/pickaxe/emergency{
+	attack_verb = list("hit","spelled","cantripped","ensorceled");
+	desc = "Forged by the greatest smiths of the academy, enchanted by the archmagus council, this is a TRUE boulder eradicator.";
+	icon = 'icons/obj/guns/magic.dmi';
+	icon_state = "staffofflight";
+	name = "staff of rock removal"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
+"bK" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate/engineering,
+/obj/item/stack/sheet/mineral/plasma/five,
+/obj/item/stack/sheet/mineral/plasma/five,
+/obj/item/stack/cable_coil,
+/obj/item/clothing/gloves/color/yellow{
+	desc = "These enchanted gloves provide protection against electric shock.";
+	icon_state = "wizard";
+	name = "gloves of shock resistance"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
+"bL" = (
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/carpet/royalblue,
+/area/station/commons/dorms)
+"bM" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/carpet/royalblue,
+/area/station/commons/dorms)
+"bN" = (
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/station/commons/toilet)
+"bO" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/station/commons/toilet)
+"bP" = (
+/obj/effect/turf_decal/stripes,
+/obj/structure/closet/crate/science,
+/obj/item/storage/box/rndboards{
+	desc = "A box containing a gift for worthy wizards.";
+	name = "\proper the archmagus's legacy"
+	},
+/obj/machinery/airalarm/directional/west,
+/obj/structure/window/reinforced/survival_pod,
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
+"bQ" = (
+/obj/effect/turf_decal/stripes,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/window/survival_pod,
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
+"bR" = (
+/obj/item/bedsheet/wiz,
+/obj/structure/bed,
+/obj/structure/curtain/cloth/fancy,
+/obj/item/toy/plush/slimeplushie,
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/carpet/royalblue,
+/area/station/commons/dorms)
+"bT" = (
+/obj/machinery/shower/directional/north,
+/obj/structure/curtain,
+/obj/item/soap/deluxe,
+/turf/open/floor/iron/white,
+/area/station/commons/toilet)
+"bU" = (
+/obj/structure/toilet{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/white,
+/area/station/commons/toilet)
+"bV" = (
+/obj/structure/table/wood/fancy,
+/obj/item/skub{
+	pixel_y = 11
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/white,
+/area/station/commons/toilet)
+"bW" = (
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/bronze,
+/area/station/cargo/miningoffice)
+"bX" = (
+/turf/open/floor/bronze,
+/area/station/cargo/miningoffice)
+"bY" = (
+/obj/machinery/mineral/ore_redemption{
+	req_access = null
+	},
+/turf/open/floor/bronze,
+/area/station/cargo/miningoffice)
+"bZ" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile{
+	color = "#008000"
+	},
+/obj/structure/curtain/cloth/fancy,
+/turf/open/floor/plating,
+/area/station/science)
+"ca" = (
+/obj/machinery/power/smes,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/aft)
+"cb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/aft)
+"cc" = (
+/obj/machinery/power/port_gen/pacman,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/aft)
+"cd" = (
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
+	name = "External Airlock"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/bronze,
+/area/station/cargo/miningoffice)
+"ce" = (
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
+	name = "Engine"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/bronze,
+/area/station/maintenance/aft)
+"cf" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/station/maintenance/aft)
+"cg" = (
+/obj/machinery/suit_storage_unit/open,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/mod/control/pre_equipped/enchanted,
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/bronze,
+/area/station/cargo/miningoffice)
+"ch" = (
+/obj/item/storage/toolbox/mechanical,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/aft)
+"cj" = (
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 1;
+	piping_layer = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/station/maintenance/aft)
+"ck" = (
+/obj/machinery/power/smes/engineering,
+/obj/structure/cable,
+/obj/machinery/door/window{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner,
+/turf/open/floor/plating,
+/area/station/maintenance/aft)
+"cl" = (
+/obj/machinery/power/shuttle/engine/electric{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/external)
+"cr" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"cA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"cD" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/station/hallway/primary/aft)
+"dd" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet/orange,
+/area/station/service/library)
+"dH" = (
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"ee" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/closed/wall/mineral/iron,
+/area/station/maintenance/aft)
+"en" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/aft)
+"eN" = (
+/obj/structure/chair/wood/wings{
+	dir = 8
+	},
+/obj/item/radio/intercom{
+	pixel_y = 26
+	},
+/turf/open/floor/carpet/royalblack,
+/area/station/hallway/primary/starboard)
+"fx" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/carpet/royalblue,
+/area/station/hallway/primary/aft)
+"gz" = (
+/mob/living/simple_animal/hostile/carp/ranged{
+	desc = "A wizard's favorite familiar, the Magicarp!";
+	faction = list("neutral");
+	name = "Melchom"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bed/dogbed/cayenne{
+	name = "Melchom's bed"
+	},
+/turf/open/floor/wood,
+/area/station/hallway/primary/aft)
+"gB" = (
+/obj/item/kirbyplants/random,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/station/hallway/primary/aft)
+"gL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/gun/magic/wand/nothing{
+	desc = "A clever little artifact, devised to help with engine failures. You're not so confident about it, though.";
+	name = "emergency engine ignition wand"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/station/maintenance/aft)
+"hh" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/carpet/green,
+/area/station/hallway/primary/central)
+"hq" = (
+/obj/structure/destructible/cult/item_dispenser/archives/library,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/book/codex_gigas,
+/turf/open/floor/engine/cult,
+/area/station/science)
+"if" = (
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/station/service/library)
+"io" = (
+/obj/structure/chair/bronze{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/item/radio/intercom{
+	pixel_x = -29;
+	pixel_y = 25
+	},
+/turf/open/floor/carpet/stellar,
+/area/station/command/bridge)
+"iu" = (
+/obj/structure/sign/poster/contraband/shamblers_juice,
+/turf/closed/wall/mineral/iron,
+/area/station/service/cafeteria)
+"iT" = (
+/obj/structure/bookcase/random/reference,
+/turf/open/floor/carpet/orange,
+/area/station/service/library)
+"je" = (
+/obj/effect/decal/cleanable/vomit/old,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"jA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"jC" = (
+/turf/closed/wall/mineral/iron,
+/area/station/maintenance/aft)
+"jQ" = (
+/turf/closed/wall/mineral/iron,
+/area/station/cargo/miningoffice)
+"kC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/radio/intercom{
+	pixel_x = 29
+	},
+/turf/open/floor/bronze,
+/area/station/cargo/miningoffice)
+"kN" = (
+/obj/machinery/light/broken{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/station/hallway/primary/aft)
+"kO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/vending/autodrobe/all_access,
+/turf/open/floor/wood,
+/area/station/hallway/primary/aft)
+"lq" = (
+/obj/structure/chair/wood/wings{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/carpet/royalblack,
+/area/station/hallway/primary/starboard)
+"mr" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/carpet/royalblue,
+/area/station/commons/dorms)
+"mv" = (
+/obj/structure/sign/poster/official/high_class_martini,
+/turf/closed/wall/mineral/iron,
+/area/station/hallway/primary/starboard)
+"ni" = (
+/turf/closed/wall/mineral/iron,
+/area/station/hallway/primary/starboard)
+"nl" = (
+/turf/closed/wall/mineral/iron,
+/area/station/service/library)
+"nC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"nQ" = (
+/obj/structure/table/wood/fancy/purple,
+/obj/item/clothing/head/collectable/wizard{
+	pixel_y = 3
+	},
+/turf/open/floor/carpet/purple,
+/area/station/service/cafeteria)
+"oz" = (
+/mob/living/carbon/human/species/monkey/angry,
+/turf/open/floor/carpet/purple,
+/area/station/service/cafeteria)
+"oB" = (
+/obj/structure/frame/machine,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/spider/stickyweb,
+/turf/open/floor/engine/cult,
+/area/station/science)
+"oD" = (
+/obj/structure/sign/warning/vacuum/external,
+/turf/closed/wall/mineral/iron,
+/area/station/cargo/miningoffice)
+"oE" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/aft)
+"pf" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/bronze,
+/area/station/cargo/miningoffice)
+"pj" = (
+/obj/structure/chair/bronze{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/carpet/stellar,
+/area/station/command/bridge)
+"pn" = (
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
+	name = "Bar"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/station/hallway/primary/aft)
+"pR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/station/hallway/primary/aft)
+"qJ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/station/hallway/primary/central)
+"qN" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile{
+	color = "#008000"
+	},
+/obj/structure/curtain/cloth/fancy,
+/obj/docking_port/mobile{
+	dir = 4;
+	launch_status = 0;
+	port_direction = 8
+	},
+/turf/open/floor/plating,
+/area/station/science)
+"qT" = (
+/obj/structure/sign/poster/official/no_erp,
+/turf/closed/wall/mineral/iron,
+/area/station/commons/toilet)
+"qU" = (
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/turf/open/floor/carpet/orange,
+/area/station/service/library)
+"qY" = (
+/obj/item/food/dankpocket{
+	pixel_x = -1;
+	pixel_y = 4
+	},
+/obj/structure/table/wood/fancy/purple,
+/turf/open/floor/carpet/purple,
+/area/station/service/cafeteria)
+"rg" = (
+/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/item/reagent_containers/condiment/enzyme,
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"rh" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small,
+/obj/structure/table/wood/fancy/royalblack,
+/obj/item/paper_bin/bundlenatural{
+	pixel_y = 5
+	},
+/obj/item/mining_scanner{
+	desc = "A grimoire penned by the mighty magus Antoras. Revelations of Rock is regarded as one of the most important and influential tomes to ever grace the Federation, granting it's reader the ability to divine minerals. And we mean REALLY divine. The book contains detailed information on hundreds of thousands of types of soil, minerals, gemstones, and more. A wizard wielding this tome could indeed, within seconds, precisely deduce how many individual grains of sand were on a planet. This tome alone is touted as the grandfather of the modern Wizard Federation, and certainly is responsible for your gem-encrusted hardsuits and your emerald-plated vessel. Your operations will, through the power of this stony grimoire, surely proceed smooth as slate and clear as crystal. That.. being said... It would appear that some, okay well, MOST of the pages have been ripped out of this copy. Through your wizardly intellect however, you deduce that missing pages will not lessen it's power. After all, tomes don't ACTUALLY utilize those pages, right?";
+	icon = 'icons/obj/library.dmi';
+	icon_state = "book";
+	name = "The Grimoire of Rock Revelation"
+	},
+/turf/open/floor/wood,
+/area/station/service/library)
+"rp" = (
+/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/structure/table/wood/fancy/royalblack,
+/obj/item/radio/intercom{
+	pixel_y = -31
+	},
+/turf/open/floor/carpet/orange,
+/area/station/service/library)
+"rH" = (
+/obj/structure/spider/stickyweb,
+/obj/item/relic,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/engine/cult,
+/area/station/science)
+"sJ" = (
+/obj/structure/sign/poster/contraband/power,
+/turf/closed/wall/mineral/iron,
+/area/station/science)
+"sX" = (
+/obj/machinery/airalarm/directional/east,
+/turf/open/floor/carpet/royalblack,
+/area/station/hallway/primary/starboard)
+"tv" = (
+/turf/closed/wall/mineral/iron,
+/area/station/commons/dorms)
+"ud" = (
+/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6,
+/turf/closed/wall/mineral/iron,
+/area/station/commons/toilet)
+"uh" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/old,
+/obj/structure/spider/spiderling,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/engine/cult,
+/area/station/science)
+"ui" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/jukebox,
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"wj" = (
+/turf/closed/wall/mineral/iron,
+/area/station/commons/storage/primary)
+"wq" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/carpet/stellar,
+/area/station/command/bridge)
+"wE" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/trash/candle,
+/turf/open/floor/engine/cult,
+/area/station/science)
+"wT" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"wX" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/carpet/royalblack,
+/area/station/hallway/primary/starboard)
+"xc" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"zn" = (
+/obj/machinery/processor,
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"zA" = (
+/obj/structure/sign/plaques/kiddie/library,
+/turf/closed/wall/mineral/iron,
+/area/station/hallway/primary/central)
+"zN" = (
+/obj/machinery/light,
+/obj/machinery/computer/arcade,
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"zT" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/trash/candle,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/engine/cult,
+/area/station/science)
+"An" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/station/service/library)
+"Ar" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/bronze,
+/area/station/cargo/miningoffice)
+"Cc" = (
+/obj/item/reagent_containers/cup/glass/shaker{
+	pixel_x = -1
+	},
+/obj/structure/table/wood/fancy/purple,
+/turf/open/floor/carpet/purple,
+/area/station/service/cafeteria)
+"Cq" = (
+/obj/structure/sign/poster/official/fruit_bowl,
+/turf/closed/wall/mineral/iron,
+/area/station/service/library)
+"Cy" = (
+/obj/structure/closet/cabinet,
+/obj/item/clothing/head/wizard/yellow,
+/obj/item/clothing/head/wizard/red,
+/obj/item/clothing/head/wizard/marisa,
+/obj/item/clothing/head/wizard/black,
+/obj/item/clothing/head/wizard,
+/obj/item/clothing/suit/wizrobe/yellow,
+/obj/item/clothing/suit/wizrobe/red,
+/obj/item/clothing/suit/wizrobe/marisa,
+/obj/item/clothing/suit/wizrobe/black,
+/obj/item/clothing/suit/wizrobe,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/turf/open/floor/carpet/royalblue,
+/area/station/commons/dorms)
+"CF" = (
+/turf/closed/wall/mineral/iron,
+/area/station/commons/toilet)
+"CH" = (
+/obj/structure/sign/poster/random,
+/turf/closed/wall/mineral/iron,
+/area/station/service/cafeteria)
+"Db" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/terminal,
+/turf/open/floor/plating,
+/area/station/maintenance/aft)
+"DP" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/spider/stickyweb,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/engine/cult,
+/area/station/science)
+"Ee" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/station/hallway/primary/central)
+"Ek" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/carpet/royalblack,
+/area/station/hallway/primary/starboard)
+"El" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/item/kirbyplants/random,
+/obj/item/book/granter/action/spell/smoke/lesser,
+/turf/open/floor/wood,
+/area/station/service/library)
+"Eu" = (
+/obj/structure/table/wood/fancy/purple,
+/turf/open/floor/carpet/purple,
+/area/station/service/cafeteria)
+"Ez" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/station/service/library)
+"Fu" = (
+/obj/item/statuebust{
+	pixel_y = 12
+	},
+/obj/structure/table/wood/fancy/royalblack,
+/turf/open/floor/carpet/orange,
+/area/station/service/library)
+"FQ" = (
+/obj/structure/chair/stool/bar/directional/west,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"Gf" = (
+/obj/effect/decal/cleanable/food/egg_smudge,
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"Gh" = (
+/turf/closed/wall/mineral/iron,
+/area/station/service/cafeteria)
+"GA" = (
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
+	name = "Study"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/station/hallway/primary/aft)
+"GL" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/trash/candy,
+/turf/open/floor/wood,
+/area/station/hallway/primary/aft)
+"GM" = (
+/turf/open/floor/carpet/orange,
+/area/station/service/library)
+"HS" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet/purple,
+/area/station/service/cafeteria)
+"HV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plating,
+/area/station/maintenance/aft)
+"Ia" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/station/maintenance/aft)
+"Ix" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/wood,
+/area/station/hallway/primary/aft)
+"IJ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/spider/stickyweb,
+/obj/item/clothing/head/jackbros{
+	pixel_y = 7
+	},
+/obj/item/clothing/shoes/jackbros{
+	pixel_y = -8
+	},
+/obj/item/clothing/under/costume/jackbros{
+	pixel_x = -1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/engine/cult,
+/area/station/science)
+"IN" = (
+/turf/closed/wall/mineral/iron,
+/area/station/hallway/primary/aft)
+"Jo" = (
+/obj/item/trash/can,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/station/hallway/primary/central)
+"JB" = (
+/obj/structure/sign/poster/random,
+/turf/closed/wall/mineral/iron,
+/area/station/service/library)
+"JP" = (
+/obj/item/storage/bag/tray,
+/obj/item/food/burger/spell,
+/obj/structure/table/wood/fancy/cyan,
+/turf/open/floor/carpet/royalblue,
+/area/station/commons/dorms)
+"JS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/cigbutt,
+/obj/item/cigbutt{
+	pixel_x = -9;
+	pixel_y = -3
+	},
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"Ke" = (
+/obj/item/trash/popcorn,
+/turf/open/floor/carpet/orange,
+/area/station/service/library)
+"Ki" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/engine/cult,
+/area/station/science)
+"Kj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm/directional/east,
+/obj/structure/sink/directional/south,
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"Kz" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile{
+	color = "#008000"
+	},
+/obj/structure/curtain/cloth/fancy,
+/turf/open/floor/plating,
+/area/station/hallway/primary/aft)
+"KS" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/station/hallway/primary/aft)
+"KW" = (
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/wood,
+/area/station/hallway/primary/aft)
+"LZ" = (
+/obj/structure/sign/poster/contraband/random,
+/turf/closed/wall/mineral/iron,
+/area/station/commons/dorms)
+"Ma" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/item/gun/energy/e_gun/mini{
+	desc = "The small and submissive wand of wizards-in-training, firing bursts of raw magical energy to disable or kill foes. Comes with built-in nightlight!";
+	gunlight_state = "nothingwand";
+	icon = 'icons/obj/guns/magic.dmi';
+	icon_state = "nothingwand";
+	name = "acolyte's training wand of duality";
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/turf/open/floor/carpet/stellar,
+/area/station/command/bridge)
+"Mb" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/carpet/stellar,
+/area/station/command/bridge)
+"Me" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/cigbutt{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"Mn" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/item/areaeditor,
+/obj/item/clothing/shoes/sandal/magic{
+	pixel_y = -7
+	},
+/obj/item/clothing/suit/wizrobe/magusblue{
+	pixel_y = 5
+	},
+/obj/item/clothing/head/wizard/magus{
+	pixel_y = 11
+	},
+/turf/open/floor/carpet/stellar,
+/area/station/command/bridge)
+"MA" = (
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 4
+	},
+/obj/structure/table/wood/fancy/purple,
+/turf/open/floor/carpet/purple,
+/area/station/service/cafeteria)
+"MX" = (
+/obj/structure/sign/poster/random,
+/turf/closed/wall/mineral/iron,
+/area/station/hallway/primary/aft)
+"Nm" = (
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"No" = (
+/turf/template_noop,
+/area/space)
+"NF" = (
+/obj/machinery/chem_dispenser/drinks{
+	dir = 4
+	},
+/obj/structure/table/wood/fancy/purple,
+/turf/open/floor/carpet/purple,
+/area/station/service/cafeteria)
+"NN" = (
+/obj/structure/bookcase/random,
+/turf/open/floor/carpet/orange,
+/area/station/service/library)
+"Ot" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/bookcase/random/religion,
+/obj/structure/spider/stickyweb,
+/turf/open/floor/engine/cult,
+/area/station/science)
+"OC" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/table/wood/fancy/royalblue,
+/obj/item/book/granter/action/spell/charge{
+	pixel_y = 4
+	},
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/turf/open/floor/carpet/stellar,
+/area/station/command/bridge)
+"OQ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/libraryscanner,
+/turf/open/floor/wood,
+/area/station/service/library)
+"Pc" = (
+/obj/effect/turf_decal/stripes,
+/obj/structure/closet/crate,
+/obj/item/radio,
+/obj/item/radio,
+/obj/item/radio,
+/obj/item/radio,
+/obj/item/radio,
+/obj/structure/window/reinforced/survival_pod,
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
+"PT" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile{
+	color = "#008000"
+	},
+/obj/structure/curtain/cloth/fancy,
+/turf/open/floor/plating,
+/area/station/maintenance/aft)
+"Ql" = (
+/obj/machinery/bookbinder,
+/turf/open/floor/carpet/orange,
+/area/station/service/library)
+"QD" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/external)
+"RD" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile{
+	color = "#008000"
+	},
+/obj/structure/curtain/cloth/fancy,
+/turf/open/floor/plating,
+/area/station/service/cafeteria)
+"Sc" = (
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
+	name = "Kitchen"
+	},
+/obj/effect/decal/cleanable/food/pie_smudge,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"So" = (
+/turf/closed/wall/mineral/iron,
+/area/station/science)
+"Sq" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood,
+/area/station/hallway/primary/aft)
+"St" = (
+/obj/structure/chair/comfy/black,
+/turf/open/floor/carpet/orange,
+/area/station/service/library)
+"SC" = (
+/obj/machinery/airalarm/directional/north,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
+"Tc" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/vomit/old,
+/obj/item/cigbutt/roach,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white,
+/area/station/commons/toilet)
+"Tn" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/trash/semki,
+/turf/open/floor/wood,
+/area/station/hallway/primary/aft)
+"Tt" = (
+/turf/closed/wall/mineral/iron,
+/area/station/command/bridge)
+"TQ" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/station/hallway/primary/aft)
+"TY" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/spider/stickyweb,
+/turf/open/floor/engine/cult,
+/area/station/science)
+"Uu" = (
+/obj/structure/sign/poster/official/ue_no,
+/turf/closed/wall/mineral/iron,
+/area/station/service/cafeteria)
+"Va" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/engine/cult,
+/area/station/science)
+"Vy" = (
+/turf/open/floor/wood,
+/area/station/hallway/primary/aft)
+"VC" = (
+/obj/structure/closet/cabinet,
+/obj/item/gun/ballistic/shotgun/doublebarrel{
+	desc = "Despite the fact you're on a ship meant for wizards, with spells and all that, a bartender is still never far from a double-barreled twelve-gauge shotgun.";
+	sawn_desc = "Gooblamaphous's coming!"
+	},
+/obj/item/storage/box/beanbag,
+/obj/item/clothing/suit/armor/vest/alt,
+/obj/item/clothing/glasses/sunglasses/reagent,
+/obj/item/clothing/head/wizard/black{
+	desc = "Strange-looking black hat-wear that most certainly belongs to a real bartender.";
+	name = "beer wizard hat"
+	},
+/obj/item/roulette_wheel_beacon,
+/obj/item/etherealballdeployer,
+/obj/item/storage/belt/bandolier,
+/turf/open/floor/carpet/purple,
+/area/station/service/cafeteria)
+"VP" = (
+/obj/item/storage/dice{
+	icon_state = "magicdicebag";
+	pixel_y = 4
+	},
+/obj/structure/table/wood/fancy/green,
+/obj/structure/desk_bell{
+	pixel_x = -8
+	},
+/turf/open/floor/carpet/royalblack,
+/area/station/hallway/primary/starboard)
+"VR" = (
+/obj/machinery/suit_storage_unit/open,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/mod/control/pre_equipped/enchanted,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
+/turf/open/floor/bronze,
+/area/station/cargo/miningoffice)
+"We" = (
+/obj/structure/sign/poster/contraband/random,
+/turf/closed/wall/mineral/iron,
+/area/station/hallway/primary/aft)
+"Wp" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/cigbutt/cigarbutt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/carpet/royalblack,
+/area/station/hallway/primary/starboard)
+"WE" = (
+/obj/item/bedsheet/wiz,
+/obj/structure/bed,
+/obj/structure/curtain/cloth/fancy,
+/obj/item/toy/plush/ratplush,
+/turf/open/floor/carpet/royalblue,
+/area/station/commons/dorms)
+"WV" = (
+/obj/machinery/door/window/right/directional/south{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/carpet/purple,
+/area/station/service/cafeteria)
+"Xz" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/station/hallway/primary/central)
+"XG" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/kirbyplants/random,
+/turf/open/floor/wood,
+/area/station/hallway/primary/aft)
+"XS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/carpet/royalblue,
+/area/station/hallway/primary/aft)
+"YD" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/carpet/royalblue,
+/area/station/commons/dorms)
+"YF" = (
+/obj/machinery/holopad,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/carpet/stellar,
+/area/station/command/bridge)
+"Zj" = (
+/obj/machinery/suit_storage_unit/open,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/mod/control/pre_equipped/enchanted,
+/turf/open/floor/bronze,
+/area/station/cargo/miningoffice)
+"ZW" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate{
+	name = "alchemical supplies"
+	},
+/obj/item/slimepotion/genderchange{
+	pixel_x = 5
+	},
+/obj/item/dyespray,
+/obj/item/reagent_containers/cup/soda_cans/canned_laughter{
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/pill/maintenance{
+	pixel_x = -9
+	},
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
+
+(1,1,1) = {"
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+So
+So
+bZ
+qN
+bZ
+So
+IN
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+"}
+(2,1,1) = {"
+No
+No
+No
+No
+No
+No
+No
+nl
+nl
+nl
+So
+aL
+aT
+bb
+aT
+oB
+IN
+Kz
+Kz
+IN
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+"}
+(3,1,1) = {"
+No
+No
+No
+No
+No
+No
+nl
+Cq
+qU
+if
+aJ
+Va
+rH
+zT
+Ki
+DP
+GA
+pR
+gB
+MX
+IN
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+"}
+(4,1,1) = {"
+No
+No
+No
+No
+No
+nl
+JB
+NN
+GM
+OQ
+So
+bm
+uh
+TY
+IJ
+wE
+IN
+KS
+fx
+KS
+IN
+wj
+wj
+wj
+jQ
+oD
+cd
+jQ
+jQ
+No
+No
+"}
+(5,1,1) = {"
+No
+No
+No
+No
+nl
+nl
+El
+Ez
+An
+rh
+sJ
+aM
+aU
+Ot
+hq
+bn
+IN
+Vy
+cD
+Vy
+IN
+bC
+bJ
+bP
+bW
+Ar
+bX
+cg
+jQ
+No
+No
+"}
+(6,1,1) = {"
+No
+No
+No
+No
+nl
+NN
+dd
+Ez
+St
+rp
+So
+So
+So
+So
+So
+So
+We
+kN
+fx
+cD
+bA
+bD
+bD
+bQ
+pf
+pf
+pf
+Zj
+jQ
+No
+No
+"}
+(7,1,1) = {"
+No
+Tt
+Tt
+Tt
+Tt
+iT
+Ke
+Ez
+Ql
+Fu
+Gh
+VC
+aW
+MA
+NF
+bo
+IN
+Vy
+cD
+KS
+wj
+ZW
+bK
+Pc
+bY
+kC
+pf
+VR
+jQ
+No
+No
+"}
+(8,1,1) = {"
+Tt
+Tt
+OC
+Mn
+Tt
+ay
+zA
+at
+ay
+ay
+Gh
+aO
+aP
+oz
+HS
+bp
+IN
+KS
+fx
+Tn
+tv
+tv
+LZ
+tv
+jC
+jC
+ce
+jC
+jC
+jC
+No
+"}
+(9,1,1) = {"
+ab
+Ma
+io
+Mb
+ab
+aV
+Ee
+Xz
+az
+aF
+Uu
+WV
+qY
+nQ
+Cc
+Eu
+IN
+Ix
+Sq
+TQ
+tv
+Cy
+bL
+bR
+jC
+ca
+cf
+en
+Db
+ck
+cl
+"}
+(10,1,1) = {"
+ab
+ac
+pj
+YF
+aj
+am
+hh
+hh
+hh
+am
+aK
+jA
+aY
+aY
+aY
+FQ
+Kz
+Vy
+fx
+cD
+bf
+YD
+mr
+WE
+PT
+cb
+Ia
+oE
+Db
+ck
+cl
+"}
+(11,1,1) = {"
+ab
+ad
+af
+wq
+ab
+bd
+qJ
+Jo
+aA
+aG
+Gh
+SC
+cr
+je
+cr
+cr
+pn
+cD
+pR
+Vy
+tv
+bF
+bM
+JP
+jC
+oE
+gL
+ch
+Db
+ck
+cl
+"}
+(12,1,1) = {"
+Tt
+Tt
+ag
+ai
+Tt
+ay
+ay
+au
+ay
+ay
+iu
+ui
+Me
+cr
+wT
+zN
+IN
+KW
+XS
+Vy
+CF
+CF
+qT
+CF
+jC
+cc
+Ia
+HV
+cj
+ee
+QD
+"}
+(13,1,1) = {"
+No
+Tt
+Tt
+Tt
+Tt
+an
+aq
+Ek
+aB
+VP
+Gh
+aR
+dH
+cr
+JS
+bq
+IN
+gz
+cD
+Vy
+CF
+bG
+bN
+bT
+jC
+jC
+PT
+jC
+jC
+jC
+No
+"}
+(14,1,1) = {"
+No
+No
+No
+No
+ni
+ao
+ar
+lq
+wX
+aI
+Gh
+Gh
+RD
+Sc
+RD
+Gh
+We
+GL
+fx
+cD
+bB
+bH
+Tc
+bU
+CF
+No
+No
+No
+No
+No
+No
+"}
+(15,1,1) = {"
+No
+No
+No
+No
+ni
+ni
+as
+Wp
+aq
+an
+Gh
+aS
+cA
+jA
+dH
+zn
+IN
+Vy
+Vy
+KS
+IN
+bI
+bO
+bV
+CF
+No
+No
+No
+No
+No
+No
+"}
+(16,1,1) = {"
+No
+No
+No
+No
+No
+ni
+mv
+ao
+aC
+av
+CH
+dH
+aZ
+bg
+xc
+bs
+IN
+Vy
+by
+kO
+IN
+CF
+ud
+CF
+CF
+No
+No
+No
+No
+No
+No
+"}
+(17,1,1) = {"
+No
+No
+No
+No
+No
+No
+ni
+ni
+eN
+sX
+Gh
+Gf
+ba
+bh
+bl
+rg
+IN
+KS
+XG
+IN
+IN
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+"}
+(18,1,1) = {"
+No
+No
+No
+No
+No
+No
+No
+ni
+ni
+ni
+Gh
+Kj
+Nm
+bi
+nC
+bu
+IN
+Kz
+Kz
+IN
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+"}
+(19,1,1) = {"
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+Gh
+Gh
+RD
+Gh
+RD
+Gh
+Gh
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+No
+"}

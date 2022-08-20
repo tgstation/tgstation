@@ -1,0 +1,1577 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aj" = (
+/obj/structure/cable,
+/obj/machinery/light,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"am" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/open/floor/light,
+/area/station/engineering/supermatter)
+"aO" = (
+/obj/structure/tank_dispenser/plasma,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"dr" = (
+/obj/effect/spawner/structure/window/reinforced/indestructible,
+/obj/structure/grille,
+/obj/docking_port/mobile{
+	dir = 2
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/command/bridge)
+"dW" = (
+/obj/effect/spawner/structure/window/reinforced/indestructible,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/station/command/bridge)
+"fx" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/vending/autodrobe/all_access,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"fL" = (
+/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/command/bridge)
+"gc" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on{
+	dir = 8
+	},
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"gN" = (
+/turf/closed/wall/mineral/bananium,
+/area/station/command/bridge)
+"hf" = (
+/obj/machinery/vending/hydronutrients,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"hn" = (
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/machinery/light,
+/obj/structure/window/reinforced/plasma/spawner/east,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"hv" = (
+/obj/machinery/computer/helm,
+/turf/open/floor/wood,
+/area/station/command/bridge)
+"hx" = (
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/structure/window/reinforced/plasma/spawner/east,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"iN" = (
+/obj/machinery/light,
+/obj/item/stack/sheet/mineral/plasma/five,
+/obj/structure/cable,
+/obj/machinery/power/port_gen/pacman,
+/obj/structure/window/reinforced/plasma/spawner/west,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"kz" = (
+/obj/item/areaeditor,
+/turf/open/floor/wood,
+/area/station/command/bridge)
+"lc" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/station/command/bridge)
+"mc" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east,
+/turf/open/floor/wood,
+/area/station/command/bridge)
+"mU" = (
+/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"mV" = (
+/obj/structure/cable,
+/turf/open/floor/light,
+/area/station/engineering/supermatter)
+"ns" = (
+/obj/machinery/door/airlock/bananium/glass,
+/obj/item/grown/bananapeel/bluespace{
+	alpha = 30
+	},
+/turf/open/floor/mineral/bananium,
+/area/station/command/bridge)
+"oo" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/item/food/grown/banana,
+/obj/item/food/grown/banana,
+/obj/item/food/grown/banana,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"rq" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/obj/machinery/conveyor/auto{
+	dir = 10
+	},
+/obj/machinery/power/supermatter_crystal/shard,
+/turf/open/floor/glass/reinforced,
+/area/station/engineering/supermatter)
+"rz" = (
+/obj/machinery/door/airlock/bananium/glass,
+/obj/item/grown/bananapeel/bluespace{
+	alpha = 30
+	},
+/obj/structure/cable,
+/turf/open/floor/mineral/bananium,
+/area/station/command/bridge)
+"rT" = (
+/obj/structure/cable,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"rY" = (
+/obj/structure/fans/tiny,
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/light,
+/area/station/engineering/supermatter)
+"sM" = (
+/obj/machinery/power/smes/engineering{
+	dir = 1
+	},
+/obj/structure/window/reinforced/plasma,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/engineering/supermatter)
+"ta" = (
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/obj/item/stack/tile/eighties,
+/turf/open/floor/plating,
+/area/station/commons)
+"tc" = (
+/obj/machinery/conveyor/auto{
+	dir = 4
+	},
+/turf/open/floor/glass/reinforced,
+/area/station/engineering/supermatter)
+"tX" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow,
+/turf/closed/wall/mineral/bananium,
+/area/station/commons)
+"vn" = (
+/obj/structure/cable,
+/obj/structure/table/wood/fancy/royalblue,
+/obj/item/storage/box/donkpockets/donkpockethonk,
+/obj/item/storage/box/donkpockets/donkpockethonk,
+/obj/item/storage/box/donkpockets/donkpockethonk,
+/obj/item/storage/box/donkpockets/donkpockethonk,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"vo" = (
+/obj/machinery/atmospherics/components/tank/air,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"wp" = (
+/obj/structure/cable,
+/obj/machinery/power/emitter{
+	dir = 8
+	},
+/turf/open/floor/light,
+/area/station/engineering/supermatter)
+"wr" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/poddoor{
+	id = "honkext3"
+	},
+/obj/item/grown/bananapeel/bluespace{
+	alpha = 30
+	},
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"xf" = (
+/obj/structure/window/reinforced/plasma/spawner/east,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"xT" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/obj/machinery/conveyor/auto{
+	dir = 6
+	},
+/turf/open/floor/glass/reinforced,
+/area/station/engineering/supermatter)
+"yr" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/closet/crate,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"yB" = (
+/obj/structure/chair/e_chair{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"yE" = (
+/obj/structure/fans/tiny,
+/obj/structure/cable,
+/obj/structure/railing,
+/turf/open/floor/light,
+/area/station/engineering/supermatter)
+"AS" = (
+/obj/machinery/airalarm/all_access{
+	dir = 1;
+	pixel_y = 26
+	},
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"AY" = (
+/obj/machinery/jukebox/disco{
+	anchored = 1
+	},
+/turf/open/floor/light,
+/area/station/engineering/supermatter)
+"Bn" = (
+/obj/structure/cable,
+/obj/item/pipe_dispenser,
+/obj/structure/table/wood/fancy,
+/turf/open/floor/light,
+/area/station/engineering/supermatter)
+"BK" = (
+/obj/structure/closet/crate,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"Cz" = (
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"CJ" = (
+/obj/structure/window/reinforced/plasma,
+/obj/structure/cable,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"Do" = (
+/obj/structure/window/reinforced/plasma,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"Dt" = (
+/obj/machinery/conveyor/auto{
+	dir = 8
+	},
+/turf/open/floor/glass/reinforced,
+/area/station/engineering/supermatter)
+"El" = (
+/mob/living/carbon/human/species/monkey,
+/obj/structure/cable,
+/turf/open/floor/light,
+/area/station/engineering/supermatter)
+"En" = (
+/obj/structure/fans/tiny,
+/obj/structure/cable,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/light,
+/area/station/engineering/supermatter)
+"EC" = (
+/obj/structure/window{
+	dir = 4
+	},
+/obj/structure/window{
+	dir = 8
+	},
+/obj/machinery/door/window,
+/obj/structure/table/wood/fancy,
+/obj/item/dnainjector/timed/h2m,
+/obj/item/dnainjector/timed/h2m,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"FK" = (
+/obj/machinery/autolathe,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"Hg" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/item/toy/crayon/spraycan/lubecan,
+/obj/item/toy/crayon/spraycan/lubecan,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"Hi" = (
+/turf/open/floor/plating,
+/area/station/commons)
+"Hr" = (
+/obj/machinery/biogenerator,
+/obj/item/reagent_containers/cup/beaker,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"HB" = (
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"HX" = (
+/obj/structure/fans/tiny,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/machinery/airalarm/all_access{
+	pixel_y = -26
+	},
+/turf/open/floor/light,
+/area/station/engineering/supermatter)
+"IO" = (
+/obj/structure/rack,
+/obj/item/mod/control/pre_equipped/cosmohonk,
+/obj/item/pickaxe/drill,
+/obj/item/storage/bag/ore,
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/clothing/shoes/clown_shoes/banana_shoes,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"IT" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"IX" = (
+/obj/structure/cable,
+/obj/structure/table/wood/fancy/royalblue,
+/obj/machinery/microwave,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"Jl" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 8
+	},
+/obj/machinery/conveyor/auto{
+	dir = 5
+	},
+/turf/open/floor/glass/reinforced,
+/area/station/engineering/supermatter)
+"Jq" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/poddoor/shutters{
+	id = "prisonint2"
+	},
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"Jy" = (
+/obj/structure/cable,
+/obj/machinery/button/door{
+	id = "prisonext3";
+	name = "Prison Flush";
+	pixel_y = 25
+	},
+/obj/machinery/button/door{
+	id = "prisonint2";
+	name = "Prison Shutters";
+	pixel_y = 34
+	},
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"KF" = (
+/obj/structure/table/wood/fancy,
+/obj/item/storage/toolbox/mechanical,
+/turf/open/floor/light,
+/area/station/engineering/supermatter)
+"KM" = (
+/obj/machinery/cryopod{
+	dir = 1
+	},
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"KZ" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"LJ" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 8
+	},
+/obj/machinery/conveyor/auto{
+	dir = 9
+	},
+/turf/open/floor/glass/reinforced,
+/area/station/engineering/supermatter)
+"LW" = (
+/obj/structure/window/reinforced/plasma,
+/obj/structure/disposaloutlet{
+	dir = 1
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 2
+	},
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"Mg" = (
+/obj/structure/falsewall/bananium,
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plating,
+/area/station/commons)
+"MZ" = (
+/obj/machinery/power/shuttle/engine/electric{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/engineering/supermatter)
+"Nj" = (
+/obj/structure/table/glass,
+/obj/item/clothing/head/clownmitre,
+/obj/item/storage/toolbox/mechanical,
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/pneumatic_cannon/pie/selfcharge,
+/obj/item/nullrod/clown,
+/obj/item/clothing/neck/petcollar,
+/obj/item/bikehorn/golden,
+/obj/item/gun/ballistic/revolver/russian/soul,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"NI" = (
+/obj/structure/window/reinforced/fulltile,
+/obj/structure/grille,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow,
+/turf/open/floor/plating,
+/area/station/commons)
+"Ow" = (
+/obj/machinery/computer/cryopod,
+/turf/closed/wall/mineral/bananium,
+/area/station/commons)
+"Po" = (
+/obj/machinery/hydroponics/constructable,
+/obj/item/seeds/banana{
+	growthstages = 2;
+	potency = 75;
+	production = 2;
+	yield = 9
+	},
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"Pr" = (
+/obj/structure/reagent_dispensers/watertank/high,
+/obj/item/reagent_containers/cup/bucket,
+/obj/machinery/light,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"Pt" = (
+/obj/structure/window/reinforced/plasma/spawner/west,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"Pz" = (
+/obj/structure/cable,
+/obj/item/assembly/signaler,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"PU" = (
+/obj/structure/disposaloutlet,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/light,
+/area/station/engineering/supermatter)
+"Qc" = (
+/obj/structure/fans/tiny,
+/obj/machinery/power/terminal,
+/obj/structure/cable,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/light,
+/area/station/engineering/supermatter)
+"Rx" = (
+/obj/effect/landmark/start/mime,
+/obj/item/clothing/mask/gas/mime,
+/obj/effect/decal/remains/human,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"RJ" = (
+/obj/structure/rack,
+/obj/item/mod/control/pre_equipped/cosmohonk,
+/obj/item/pickaxe/drill,
+/obj/item/storage/bag/ore,
+/obj/structure/window{
+	dir = 8
+	},
+/obj/item/clothing/shoes/clown_shoes/banana_shoes,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"RK" = (
+/turf/open/floor/light,
+/area/station/engineering/supermatter)
+"SM" = (
+/obj/machinery/seed_extractor,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"TV" = (
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"Up" = (
+/obj/item/pet_carrier,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"Ur" = (
+/obj/structure/window/reinforced/plasma,
+/obj/structure/disposalpipe/trunk,
+/obj/structure/cable,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"Uv" = (
+/obj/vehicle/ridden/scooter/skateboard,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"UD" = (
+/turf/closed/wall/mineral/bananium,
+/area/station/engineering/supermatter)
+"UT" = (
+/obj/structure/fans/tiny,
+/obj/structure/railing,
+/turf/open/floor/light,
+/area/station/engineering/supermatter)
+"Vc" = (
+/obj/machinery/mineral/ore_redemption,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"Vl" = (
+/obj/machinery/ore_silo,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"VT" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/poddoor{
+	id = "honkext3"
+	},
+/obj/machinery/button/door{
+	id = "honkext3";
+	pixel_y = -25
+	},
+/obj/item/grown/bananapeel/bluespace{
+	alpha = 30
+	},
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"Wc" = (
+/obj/structure/cable,
+/obj/structure/bed/dogbed,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"Wl" = (
+/obj/machinery/atmospherics/components/unary/passive_vent,
+/turf/open/floor/plating,
+/area/station/commons)
+"Ww" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/item/melee/roastingstick,
+/obj/structure/closet,
+/obj/item/food/raw_sausage,
+/obj/item/food/raw_sausage,
+/obj/item/food/raw_sausage,
+/obj/item/food/raw_sausage,
+/obj/item/food/raw_sausage,
+/obj/item/food/raw_sausage,
+/turf/open/floor/light,
+/area/station/engineering/supermatter)
+"Xn" = (
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"XR" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"Yd" = (
+/mob/living/simple_animal/pet/penguin/emperor/shamebrero{
+	desc = "Weakest Clown Player.";
+	icon = 'icons/mob/clown_mobs.dmi';
+	icon_living = "chlown";
+	icon_state = "chlown";
+	name = "Chlowne"
+	},
+/obj/item/fugu_gland,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"YY" = (
+/turf/template_noop,
+/area/template_noop)
+"Zp" = (
+/obj/machinery/mecha_part_fabricator,
+/obj/machinery/light,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"Zr" = (
+/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"Zw" = (
+/obj/machinery/door/poddoor{
+	id = "prisonext3"
+	},
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"ZI" = (
+/obj/structure/rack,
+/obj/item/mod/control/pre_equipped/cosmohonk,
+/obj/item/pickaxe/drill,
+/obj/item/storage/bag/ore,
+/obj/item/clothing/shoes/clown_shoes/banana_shoes,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/bananium,
+/area/station/commons)
+"ZT" = (
+/turf/closed/wall/mineral/bananium,
+/area/station/commons)
+
+(1,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+ZT
+ZT
+ZT
+ta
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+"}
+(2,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+FK
+HB
+Up
+ZT
+Mg
+ZT
+ZT
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+"}
+(3,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+IT
+rT
+rT
+rT
+Wc
+ZT
+ZT
+YY
+YY
+YY
+YY
+YY
+YY
+"}
+(4,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+Nj
+Uv
+Yd
+Xn
+rT
+Zp
+ZT
+ZT
+YY
+YY
+YY
+YY
+YY
+"}
+(5,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+Vc
+Xn
+Xn
+rT
+Xn
+Xn
+ZT
+ZT
+YY
+YY
+YY
+YY
+"}
+(6,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+Vl
+Xn
+Xn
+IX
+oo
+Xn
+Xn
+ZT
+ZT
+YY
+YY
+YY
+"}
+(7,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+RJ
+Xn
+vn
+Hg
+Xn
+Xn
+Xn
+Ow
+ZT
+YY
+YY
+"}
+(8,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZI
+Xn
+rT
+Xn
+Xn
+Xn
+Xn
+KM
+ZT
+YY
+YY
+"}
+(9,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+IO
+Xn
+rT
+Xn
+Xn
+Xn
+Xn
+Xn
+ZT
+YY
+YY
+"}
+(10,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+KZ
+rT
+Xn
+xf
+xf
+hx
+hn
+ZT
+ZT
+YY
+"}
+(11,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+AS
+rT
+Ur
+PU
+mV
+mV
+mV
+Ww
+UD
+YY
+"}
+(12,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+Wl
+tX
+XR
+rT
+LW
+am
+RK
+RK
+En
+Qc
+sM
+MZ
+"}
+(13,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+ZT
+Jy
+CJ
+mV
+mV
+yE
+Jl
+LJ
+UD
+YY
+"}
+(14,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+Zw
+yB
+Zr
+Pz
+Do
+RK
+AY
+UT
+tc
+Dt
+UD
+YY
+"}
+(15,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+Zw
+Rx
+mU
+rT
+CJ
+mV
+mV
+yE
+xT
+rq
+UD
+YY
+"}
+(16,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+Jq
+mU
+rT
+Do
+KF
+RK
+RK
+rY
+HX
+UD
+YY
+"}
+(17,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+fx
+Xn
+Xn
+rT
+CJ
+Bn
+El
+mV
+mV
+wp
+UD
+YY
+"}
+(18,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+hf
+Xn
+Xn
+rT
+Xn
+Pt
+Pt
+Pt
+iN
+ZT
+ZT
+YY
+"}
+(19,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+SM
+Xn
+Xn
+Xn
+rT
+Xn
+Xn
+Xn
+Xn
+Xn
+NI
+Hi
+YY
+"}
+(20,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+Hr
+Xn
+Xn
+Xn
+Xn
+rT
+Xn
+Xn
+Xn
+Xn
+aO
+ZT
+YY
+YY
+"}
+(21,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+ZT
+EC
+Xn
+Xn
+Xn
+Xn
+Xn
+rT
+Xn
+Xn
+Xn
+Po
+ZT
+ZT
+YY
+YY
+"}
+(22,1,1) = {"
+YY
+YY
+YY
+YY
+ZT
+ZT
+ZT
+yr
+BK
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+rT
+Xn
+Xn
+Xn
+Po
+ZT
+YY
+YY
+YY
+"}
+(23,1,1) = {"
+YY
+fL
+gN
+gN
+gN
+vo
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+rT
+Xn
+Xn
+Pr
+ZT
+ZT
+YY
+YY
+YY
+"}
+(24,1,1) = {"
+dr
+fL
+hv
+lc
+ns
+gc
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+rT
+TV
+Cz
+ZT
+ZT
+YY
+YY
+YY
+YY
+"}
+(25,1,1) = {"
+dW
+fL
+kz
+mc
+rz
+rT
+rT
+rT
+rT
+rT
+rT
+rT
+rT
+rT
+rT
+aj
+ZT
+ZT
+ZT
+YY
+YY
+YY
+YY
+YY
+"}
+(26,1,1) = {"
+YY
+fL
+gN
+gN
+gN
+wr
+wr
+wr
+wr
+wr
+wr
+wr
+wr
+wr
+wr
+VT
+ZT
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+"}
