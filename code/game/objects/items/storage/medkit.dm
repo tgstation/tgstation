@@ -573,7 +573,7 @@
 		var/obj/item/organ/internal/int_organ = I
 		int_organ.organ_flags |= ORGAN_FROZEN
 		return
-	if(istype(I, /obj/item/bodypart))
+	if(isbodypart(I))
 		var/obj/item/bodypart/B = I
 		for(var/obj/item/organ/internal/int_organ in B.contents)
 			int_organ.organ_flags |= ORGAN_FROZEN
@@ -585,13 +585,13 @@
 		var/obj/item/organ/internal/int_organ = I
 		int_organ.organ_flags &= ~ORGAN_FROZEN
 		return
-	if(istype(I, /obj/item/bodypart))
+	if(isbodypart(I))
 		var/obj/item/bodypart/B = I
 		for(var/obj/item/organ/internal/int_organ in B.contents)
 			int_organ.organ_flags &= ~ORGAN_FROZEN
 
 /obj/item/storage/organbox/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/reagent_containers) && I.is_open_container())
+	if(is_reagent_container(I) && I.is_open_container())
 		var/obj/item/reagent_containers/RC = I
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transfered_by = user)
 		if(units)

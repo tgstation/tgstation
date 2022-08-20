@@ -781,7 +781,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 	var/itempush = 1
 	if(w_class < 4)
 		itempush = 0 //too light to push anything
-	if(istype(hit_atom, /mob/living)) //Living mobs handle hit sounds differently.
+	if(isliving(hit_atom)) //Living mobs handle hit sounds differently.
 		var/volume = get_volume_by_throwforce_and_or_w_class()
 		if (throwforce > 0)
 			if (mob_throw_hit_sound)

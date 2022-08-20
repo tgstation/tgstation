@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - qol: "Added a new mob helper complementary to ran_zone() called get_random_valid_zone(), which can only return zones/bodyparts that a mob DOES have."

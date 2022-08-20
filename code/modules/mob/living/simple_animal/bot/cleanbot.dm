@@ -363,12 +363,12 @@
 		target = null
 		mode = BOT_IDLE
 
-	else if(istype(A, /obj/item) || istype(A, /obj/effect/decal/remains))
+	else if(isitem(A) || istype(A, /obj/effect/decal/remains))
 		visible_message(span_danger("[src] sprays hydrofluoric acid at [A]!"))
 		playsound(src, 'sound/effects/spray2.ogg', 50, TRUE, -6)
 		A.acid_act(75, 10)
 		target = null
-	else if(istype(A, /mob/living/basic/cockroach) || istype(A, /mob/living/simple_animal/mouse))
+	else if(istype(A, /mob/living/basic/cockroach) || ismouse(A))
 		var/mob/living/living_target = A
 		if(!living_target.stat)
 			visible_message(span_danger("[src] smashes [living_target] with its mop!"))
@@ -376,7 +376,7 @@
 		target = null
 
 	else if(bot_cover_flags & BOT_COVER_EMAGGED) //Emag functions
-		if(istype(A, /mob/living/carbon))
+		if(iscarbon(A))
 			var/mob/living/carbon/victim = A
 			if(victim.stat == DEAD)//cleanbots always finish the job
 				return

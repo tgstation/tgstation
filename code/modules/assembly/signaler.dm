@@ -226,7 +226,7 @@
 	return
 
 /obj/item/assembly/signaler/internal/can_interact(mob/user)
-	if(istype(user, /mob/living/silicon/pai))
+	if(ispAI(user))
 		return TRUE
 	. = ..()
 
