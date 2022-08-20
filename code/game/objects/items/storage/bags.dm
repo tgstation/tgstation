@@ -194,6 +194,7 @@
 	icon_state = "plantbag"
 	worn_icon_state = "plantbag"
 	resistance_flags = FLAMMABLE
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
 
 /obj/item/storage/bag/plants/Initialize(mapload)
 	. = ..()
