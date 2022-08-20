@@ -2316,6 +2316,7 @@
 #include "code\modules\antagonists\separatist\nation_creation.dm"
 #include "code\modules\antagonists\separatist\objectives.dm"
 #include "code\modules\antagonists\separatist\separatist.dm"
+#include "code\modules\antagonists\shade\shade_minion.dm"
 #include "code\modules\antagonists\slaughter\imp_antag.dm"
 #include "code\modules\antagonists\slaughter\slaughter.dm"
 #include "code\modules\antagonists\slaughter\slaughter_antag.dm"

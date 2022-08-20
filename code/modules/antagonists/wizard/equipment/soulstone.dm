@@ -103,6 +103,7 @@
 	update_appearance()
 	for(var/mob/shade_to_deconvert in contents)
 		shade_to_deconvert.mind?.remove_antag_datum(/datum/antagonist/cult)
+		assign_master(shade_to_deconvert, exorcist)
 
 	exorcist.visible_message(span_notice("[exorcist] purifies [src]!"))
 	UnregisterSignal(src, COMSIG_BIBLE_SMACKED)
@@ -330,6 +331,7 @@
 	if(theme == THEME_HOLY)
 		for(var/mob/shade_to_deconvert in contents)
 			shade_to_deconvert.mind?.remove_antag_datum(/datum/antagonist/cult)
+			assign_master(shade_to_deconvert, user)
 
 	to_chat(shade, span_notice("Your soul has been captured by [src]. \
 		Its arcane energies are reknitting your ethereal form."))
@@ -398,14 +400,22 @@
 		else if(role_check(user))
 			to_chat(soulstone_spirit, span_bold("Your soul has been captured! You are now bound to [user.real_name]'s will. \
 				Help [user.p_them()] succeed in [user.p_their()] goals at all costs."))
-			var/datum/shade_popup/popup = new(user.real_name)
-			popup.ui_interact(soulstone_spirit)
+			assign_master(soulstone_spirit, user)
 
 		if(message_user)
 			to_chat(user, "[span_info("<b>Capture successful!</b>:")] [victim.real_name]'s soul has been ripped \
 				from [victim.p_their()] body and stored within [src].")
 
 	victim.dust(drop_items = TRUE)
+
+/**
+ * Assigns the bearer as the new master of a shade.
+ */
+/obj/item/soulstone/proc/assign_master(mob/shade, mob/user)
+	if (!user)
+		return
+	var/datum/team/shade_pact/pact = new(user.mind)
+	shade.mind?.add_antag_datum(/datum/antagonist/shade_minion, pact)
 
 /**
  * Gets a ghost from dead chat to replace a missing player when a shade is created.
@@ -533,31 +543,3 @@
 
 /obj/item/soulstone/anybody/mining
 	grab_sleeping = FALSE
-
-/**
- * Holder for the popup to display to emphasise that you're someone's minion
- */
-/datum/shade_popup
-	/// Name of the person whose goals you must pursue as your own.
-	var/master
-
-/datum/shade_popup/New(master_name)
-	src.master = master_name
-
-/datum/shade_popup/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "InfoShade")
-		ui.open()
-
-/datum/shade_popup/ui_state(mob/user)
-	return GLOB.always_state
-
-/datum/shade_popup/ui_data(mob/user)
-	var/list/data = list()
-	data["master_name"] = master
-	return data
-
-/datum/shade_popup/ui_act(action, params)
-	if(..())
-		return

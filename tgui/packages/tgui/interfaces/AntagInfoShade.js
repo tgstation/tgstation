@@ -2,9 +2,8 @@ import { useBackend } from '../backend';
 import { Icon, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
-export const InfoShade = (props, context) => {
+export const AntagInfoShade = (props, context) => {
   const { act, data } = useBackend(context);
-  // Extract `health` and `color` variables from the `data` object.
   const { master_name } = data;
   return (
     <Window width={400} height={400} theme="abductor">
