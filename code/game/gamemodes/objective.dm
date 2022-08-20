@@ -881,10 +881,6 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	var/obj/item/gun/gun = current_item
 	return !(gun.gun_flags & NOT_A_REAL_GUN)
 
-/datum/objective/steal_n_of_type/summon_guns/thief
-	explanation_text = "Steal at least 3 guns!"
-	amount = 3
-
 /datum/objective/steal_n_of_type/summon_magic
 	name = "steal magic"
 	explanation_text = "Steal at least five magical artefacts!"
