@@ -52,7 +52,12 @@
 /mob/living/basic/cow/proc/udder_component()
 	AddComponent(/datum/component/udder)
 
-///wrapper for the tameable component addition so you can have non tamable cow subtypes
+/*
+ * food related components and elements are set up here for a few reasons:
+ *
+ * * static list can be created per-subtype, since static lists cannot be inherited and then changed
+ * * all eating-related components and elements share the same pool of food the mob likes
+ */
 /mob/living/basic/cow/proc/setup_eating()
 	var/static/list/food_types
 	if(!food_types)
