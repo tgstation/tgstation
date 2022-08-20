@@ -82,7 +82,7 @@
 	//Advanced science! Percision instruments (eg droppers and syringes) are precise enough to modify the loaded sample!
 	if(istype(held_item, /obj/item/reagent_containers/dropper) || istype(held_item, /obj/item/reagent_containers/syringe))
 		if(!beaker)
-			balloon_alert(user, "no beaker")
+			balloon_alert(user, "no beaker!")
 			return ..()
 		var/list/modifiers = params2list(params)
 		if(istype(held_item, /obj/item/reagent_containers/syringe) && LAZYACCESS(modifiers, RIGHT_CLICK))
@@ -98,7 +98,7 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		return ..()
 	if(beaker)
-		balloon_alert(user, "pandemic full")
+		balloon_alert(user, "pandemic full!")
 		return ..()
 	if(!user.transferItemToLoc(held_item, src))
 		return ..()
