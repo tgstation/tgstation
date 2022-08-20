@@ -682,3 +682,26 @@
   - bugfix: Fixes cpws moving and having AI while you don't pull them during riding
   - bugfix: Removed a heap of situations where dynamic rulesets could fail while executing,
       causing runtimes
+2022-08-20:
+  Azlan, Wallem:
+  - imageadd: Ports Azlan's portable atmos machines from Baystation
+  GoldenAlpharex:
+  - bugfix: Multiline inputs can now finally support line breaks, accessible via shift-enter!
+      A maximum of two consecutive line breaks is allowed, any more than that will
+      be automatically stripped. This only applies to input boxes that start with
+      the multiline view enabled, and will thus not work on input boxes that aren't
+      meant to support it.
+  Profakos:
+  - spellcheck: reflavoured the path of blades
+  RandomGamer123:
+  - bugfix: Circuit view sensors should no longer display undertile objects or abstract
+      objects or other people's hallucinations etc.
+  ShizCalev:
+  - bugfix: Icons will now actually update on mobs lol
+  - admin: Admin messages regarding gas canisters being opened now have the opener's
+      lookup / follow link.
+  VioletN:
+  - bugfix: The heretic Cleave spell no longer hits targets twice.
+  itseasytosee:
+  - bugfix: riot darts no longer become invisible when you take the cap off with a
+      screwdriver.
