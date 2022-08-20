@@ -19,7 +19,7 @@
 /datum/controller/subsystem/mapping/proc/level_has_any_trait(z, list/traits)
 	var/datum/space_level/level_to_check = z_list[z]
 	if (length(level_to_check.traits & traits))
-			return TRUE
+		return TRUE
 	return FALSE
 
 /// Check if levels[z] has all of the specified traits
