@@ -53,7 +53,7 @@
 		var/datum/bank_account/bank_account = bank_account_ref.resolve()
 		if(bank_account)
 			bank_account.adjust_money(value)
-			to_chat(user, span_notice("You deposit [weapon]. The [bank_account.account_holder] is now [bank_account.account_balance] cr."))
+			say("Credits deposited! The [bank_account.account_holder] is now [bank_account.account_balance] cr.")
 		qdel(weapon)
 		return
 	return ..()
