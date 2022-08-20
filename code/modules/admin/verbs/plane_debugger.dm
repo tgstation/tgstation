@@ -17,7 +17,9 @@
 	src.owner = owner
 
 /datum/plane_master_debug/Destroy()
-	owner = null
+	if(owner)
+		owner.plane_debug = null
+		owner = null
 	return ..()
 
 /datum/plane_master_debug/proc/set_target(mob/new_mob)
@@ -261,17 +263,25 @@
 		// We've reached the end of a depth block
 		// Increment the depth and stick another command on the end of the queue
 		if(entry == COMMAND_DEPTH_INCREASE)
+			// The plane to continue on with, assuming we can find an unvisited head to use
+			var/continue_on_with = ""
 			// Don't wanna infinite loop now
 			if(i == length(processing_queue))
 				for(var/plane in TRUE_PLANE_TO_OFFSETS(RENDER_PLANE_MASTER))
 					if(!plane_to_depth["[plane]"])
-						processing_queue += "[plane]"
-				continue
+						continue_on_with = "[plane]"
+						// We only want to handle one plane master at a time
+						break
+				if(!continue_on_with)
+					continue
 			// Increment our depth
 			depth += 1
 			treelike_output += list(list())
 			// If this isn't the end, stick another entry on the end to ensure batches work proper
 			processing_queue += COMMAND_DEPTH_INCREASE
+			// If we found a plane to use to extend our process, tack it on the end here as god intended
+			if(continue_on_with)
+				processing_queue += continue_on_with
 			continue
 		if(entry == COMMAND_NEXT_PARENT)
 			parent_head += 1
@@ -286,11 +296,12 @@
 
 		// If it's not a command, it must be a plane string
 		var/list/plane = plane_info[entry]
-		/// We want master planes to ALWAYS bubble down to their own space. So if the entry before and after us
-		/// Are not expansion commands, then we insert at the very end and wait
+		/// We want master planes to ALWAYS bubble down to their own space.
 		/// Just ignore this if this is the head we're processing, yeah?
 		if(PLANE_TO_TRUE(plane["real_plane"]) == RENDER_PLANE_MASTER && i > 2)
-			if(processing_queue[i - 2] != COMMAND_DEPTH_INCREASE || processing_queue[i + 1] != COMMAND_DEPTH_INCREASE)
+			// If there's other stuff already in your depth entry, or there's more then one thing (a depth increase command)
+			// Left in the queue, "bubble" down a layer.
+			if(length(treelike_output[depth]) || i + 1 != length(processing_queue))
 				processing_queue += COMMAND_NEXT_PARENT
 				parents += parents[parent_head]
 				processing_queue += entry
