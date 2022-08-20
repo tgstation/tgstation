@@ -136,10 +136,11 @@
 		rift.time_charged = rift.max_charge
 
 /**
- * Gives Space Dragon their the rift speed buff permanantly.
+ * Gives Space Dragon their the rift speed buff permanantly and fully heals the user.
  *
  * Gives Space Dragon the enraged speed buff from charging rifts permanantly.
  * Only happens in circumstances where Space Dragon completes their objective.
+ * Also gives them a full heal.
  */
 /datum/antagonist/space_dragon/proc/permanant_empower()
 	owner.current.fully_heal()

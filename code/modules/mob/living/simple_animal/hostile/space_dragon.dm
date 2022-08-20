@@ -171,7 +171,6 @@
 
 /mob/living/simple_animal/hostile/space_dragon/death(gibbed)
 	empty_contents()
-	tiredness_mult = 5
 	..()
 	add_dragon_overlay()
 	UnregisterSignal(small_sprite, COMSIG_ACTION_TRIGGER)
