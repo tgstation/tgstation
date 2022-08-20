@@ -57,10 +57,10 @@
  * * Setting even_weight to TRUE will make it just a straight up pick() between all possible bodyparts.
  *
  */
-/mob/proc/get_random_valid_zone(list/blacklisted_parts, even_weights, base_zone, base_probability = 80)
+/mob/proc/get_random_valid_zone(base_zone, base_probability = 80, list/blacklisted_parts, even_weights)
 	return BODY_ZONE_CHEST //even though they don't really have a chest, let's just pass the default of check_zone to be safe.
 
-/mob/living/carbon/get_random_valid_zone(list/blacklisted_parts, even_weights, base_zone, base_probability = 80)
+/mob/living/carbon/get_random_valid_zone(base_zone, base_probability = 80, list/blacklisted_parts, even_weights)
 	var/list/limbs = list()
 	for(var/obj/item/bodypart/part as anything in bodyparts)
 		var/limb_zone = part.body_zone //cache the zone since we're gonna check it a ton.

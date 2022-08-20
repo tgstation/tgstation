@@ -193,7 +193,7 @@
 			to_chat(our_guy, span_userdanger("You stamp on [user]'s hand! What the- [user.p_they()] [user.p_were()] [tied ? "knotting" : "untying"] your shoelaces!"))
 			user.emote("scream")
 			if(istype(L))
-				var/obj/item/bodypart/ouchie = L.get_bodypart(pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+				var/obj/item/bodypart/ouchie = L.get_bodypart(L.get_random_valid_zone(blacklisted_parts = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG),even_weights = TRUE))
 				if(ouchie)
 					ouchie.receive_damage(brute = 10, stamina = 40)
 				L.Paralyze(10)

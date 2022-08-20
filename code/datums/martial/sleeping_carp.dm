@@ -27,7 +27,7 @@
 ///Gnashing Teeth: Harm Harm, consistent 20 force punch on every second harm punch
 /datum/martial_art/the_sleeping_carp/proc/strongPunch(mob/living/A, mob/living/D)
 	///this var is so that the strong punch is always aiming for the body part the user is targeting and not trying to apply to the chest before deviating
-	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
+	var/obj/item/bodypart/affecting = D.get_bodypart(D.get_random_valid_zone(A.zone_selected))
 	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 	var/atk_verb = pick("precisely kick", "brutally chop", "cleanly hit", "viciously slam")
 	D.visible_message(span_danger("[A] [atk_verb]s [D]!"), \
@@ -80,7 +80,7 @@
 	add_to_streak("H",D)
 	if(check_streak(A,D))
 		return TRUE
-	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
+	var/obj/item/bodypart/affecting = D.get_bodypart(D.get_random_valid_zone(A.zone_selected))
 	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 	var/atk_verb = pick("kick", "chop", "hit", "slam")
 	D.visible_message(span_danger("[A] [atk_verb]s [D]!"), \
