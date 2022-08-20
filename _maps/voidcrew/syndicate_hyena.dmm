@@ -69,10 +69,6 @@
 /area/station/ai_monitored/security/armory)
 "cf" = (
 /obj/structure/table/reinforced,
-/obj/item/radio/intercom{
-	dir = 8;
-	pixel_x = 22
-	},
 /obj/item/toy/figure/syndie{
 	pixel_x = 11;
 	pixel_y = -3
@@ -82,6 +78,7 @@
 	fax_name = "Hyena Fax"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "ch" = (
@@ -315,12 +312,6 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/starboard)
 "hs" = (
-/obj/structure/closet/secure_closet{
-	anchored = 1;
-	icon_state = "hos";
-	name = "captain's locker";
-	req_access_txt = "20"
-	},
 /obj/item/storage/backpack/security,
 /obj/item/clothing/under/syndicate/combat,
 /obj/item/clothing/suit/armor/vest/capcarapace/syndicate,
@@ -332,6 +323,7 @@
 /obj/item/ammo_box/a357/match,
 /obj/item/pen/edagger,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/secure_closet/hos,
 /turf/open/floor/carpet/black,
 /area/station/command/bridge)
 "hy" = (
@@ -507,7 +499,8 @@
 /obj/machinery/button/door{
 	id = "wreckerarmory";
 	name = "Armory Shutters";
-	pixel_y = 24
+	pixel_y = 24;
+	req_access = list("armory")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
@@ -580,7 +573,7 @@
 	id = "wreckerarmory";
 	name = "Armory Shutters";
 	pixel_y = 24;
-	req_one_access_txt = "list(56, 20)"
+	req_access = list("armory")
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -702,11 +695,8 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "pI" = (
-/obj/item/radio/intercom{
-	dir = 8;
-	pixel_x = 22
-	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "pP" = (
@@ -914,23 +904,8 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/white,
 /area/station/hallway/primary/central)
-"un" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden/layer4{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor,
-/area/station/maintenance/port)
 "uq" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer2{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden/layer4{
-	dir = 10
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port)
 "uO" = (
@@ -984,8 +959,7 @@
 /area/station/cargo)
 "vG" = (
 /obj/machinery/atmospherics/components/tank/plasma{
-	dir = 1;
-	piping_layer = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port)
@@ -1072,11 +1046,11 @@
 /obj/structure/closet/crate/radiation{
 	name = "fuel crate"
 	},
-/obj/item/stack/sheet/mineral/uranium/five,
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/item/stack/sheet/mineral/plasma/five,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port)
 "yM" = (
@@ -1264,9 +1238,6 @@
 /turf/open/floor/carpet/red,
 /area/station/commons/dorms)
 "AV" = (
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 1
-	},
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/button/door{
@@ -1274,6 +1245,9 @@
 	id = "wrecker_engine_port";
 	name = "Thruster Doors";
 	pixel_y = -24
+	},
+/obj/machinery/atmospherics/components/unary/portables_connector/layer2{
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port)
@@ -1399,7 +1373,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/port)
 "FA" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1438,7 +1412,7 @@
 "Gw" = (
 /obj/machinery/atmospherics/components/tank/air{
 	dir = 1;
-	piping_layer = 2
+	piping_layer = 4
 	},
 /obj/machinery/firealarm{
 	dir = 8;
@@ -1493,9 +1467,8 @@
 /turf/open/floor/carpet/red,
 /area/station/cargo/office)
 "Ic" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden/layer4,
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/binary/pump/on/layer2{
+/obj/machinery/atmospherics/components/binary/pump/on/layer4{
 	dir = 8;
 	name = "Distribution"
 	},
@@ -1575,14 +1548,11 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/station/commons/storage/primary)
 "Ki" = (
-/obj/machinery/atmospherics/pipe/layer_manifold{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/port)
 "Kn" = (
 /obj/structure/cable,
@@ -1602,13 +1572,9 @@
 /turf/open/floor/carpet/black,
 /area/station/command/bridge)
 "KH" = (
-/obj/machinery/atmospherics/components/binary/pump/layer2{
-	dir = 4;
-	name = "Input to Air"
-	},
 /obj/machinery/atmospherics/components/binary/pump/layer4{
 	dir = 4;
-	name = "Input to Fuel"
+	name = "Input to Air"
 	},
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
@@ -1662,12 +1628,11 @@
 /turf/open/floor/carpet/red,
 /area/station/cargo/office)
 "La" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden/layer4,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/analyzer,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port)
 "Lg" = (
@@ -1851,7 +1816,7 @@
 	id = "wreckerarmory";
 	name = "Armory Shutters";
 	pixel_y = -24;
-	req_one_access_txt = "list(56, 20)"
+	req_access = list("armory")
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1979,23 +1944,20 @@
 /area/station/maintenance/port)
 "SV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/hidden,
-/obj/machinery/atmospherics/components/binary/pump/layer4{
+/obj/effect/decal/cleanable/oil,
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/binary/pump/layer2{
 	dir = 8;
 	name = "Input to Waste"
 	},
-/obj/effect/decal/cleanable/oil,
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port)
 "SW" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/green/hidden,
-/obj/machinery/atmospherics/pipe/layer_manifold{
-	dir = 4
-	},
 /obj/structure/sign/warning/no_smoking/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port)
 "Tg" = (
@@ -2257,12 +2219,6 @@
 /obj/item/wrench/combat,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port)
-"XQ" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
-/turf/open/floor/iron/white,
-/area/station/cargo)
 "Yv" = (
 /obj/machinery/nuclearbomb/beer{
 	desc = "An evidently-decommissioned nuclear warhead. Sloppy paint on the casing declares 'VICTORY OVER NANOTRASEN,' followed by a badly-smudged date of 25-something. A drink tap has been drilled directly into the metal.";
@@ -2448,7 +2404,7 @@ iT
 zA
 XP
 Ki
-un
+Ki
 Ft
 Lj
 Ok
@@ -2693,7 +2649,7 @@ PG
 fY
 VA
 KT
-XQ
+Fr
 yw
 pP
 fL

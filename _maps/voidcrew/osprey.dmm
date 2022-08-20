@@ -4568,8 +4568,7 @@
 "XS" = (
 /obj/structure/closet/secure_closet/captains{
 	icon_state = "cap";
-	name = "\proper captain's locker";
-	req_access_txt = "20"
+	name = "\proper captain's locker"
 	},
 /obj/item/clothing/under/rank/centcom/commander,
 /obj/structure/sign/poster/official/random{

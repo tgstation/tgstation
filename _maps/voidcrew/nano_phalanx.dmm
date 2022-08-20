@@ -142,16 +142,14 @@
 /area/station/security/brig)
 "bV" = (
 /obj/machinery/door/airlock/highsecurity{
-	name = "Armory";
-	req_access_txt = "1"
+	name = "Armory"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/security/armory,
 /turf/open/floor/engine,
 /area/station/security/brig)
 "bW" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Morgue";
-	req_access_txt = null;
-	req_one_access_txt = "22,27,6"
+	name = "Morgue"
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/trimline/white/filled/corner{
@@ -160,6 +158,8 @@
 /obj/effect/turf_decal/siding/blue{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/access/any/medical/morgue,
+/obj/effect/mapping_helpers/airlock/access/any/service/crematorium,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "ca" = (
@@ -195,9 +195,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/closet/secure_closet{
-	req_access_txt = "null"
-	},
+/obj/structure/closet/secure_closet,
 /turf/open/floor/engine,
 /area/station/ai_monitored/security/armory)
 "cz" = (
@@ -285,10 +283,10 @@
 /area/station/medical/surgery)
 "du" = (
 /obj/machinery/door/airlock/highsecurity{
-	name = "Security Access";
-	req_access_txt = "1"
+	name = "Security Access"
 	},
 /obj/machinery/door/firedoor/heavy,
+/obj/effect/mapping_helpers/airlock/access/any/security/general,
 /turf/open/floor/iron/white,
 /area/station/security/brig)
 "dw" = (
@@ -311,11 +309,11 @@
 "dz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/freezer{
-	name = "Kitchen Coldroom";
-	req_access_txt = "28"
+	name = "Kitchen Coldroom"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/service/kitchen)
 "dG" = (
@@ -733,9 +731,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/grunge{
-	name = "Morgue";
-	req_access_txt = null;
-	req_one_access_txt = "22,27,6"
+	name = "Morgue"
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/trimline/white/filled/corner{
@@ -745,6 +741,8 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/any/medical/morgue,
+/obj/effect/mapping_helpers/airlock/access/any/service/crematorium,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "jE" = (
@@ -784,6 +782,7 @@
 	name = "Engineering"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/engine,
 /area/station/engineering/atmos)
 "kc" = (
@@ -801,6 +800,7 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/engine,
 /area/station/engineering/atmos)
 "kf" = (
@@ -810,6 +810,7 @@
 	name = "Bridge"
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/any/command/general,
 /turf/open/floor/carpet/executive,
 /area/station/command/bridge)
 "ki" = (
@@ -839,8 +840,7 @@
 /area/station/engineering/main)
 "kA" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Morgue";
-	req_access_txt = "22"
+	name = "Morgue"
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/trimline/white/filled/corner{
@@ -850,6 +850,8 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/blue,
+/obj/effect/mapping_helpers/airlock/access/all/service/crematorium,
+/obj/effect/mapping_helpers/airlock/access/all/service/chapel_office,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/office)
 "kE" = (
@@ -1103,6 +1105,7 @@
 "oB" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/engineering,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/engine,
 /area/station/engineering/storage)
 "oI" = (
@@ -1147,8 +1150,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/grunge{
-	name = "Morgue";
-	req_access_txt = "22"
+	name = "Morgue"
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/trimline/white/filled/corner{
@@ -1157,6 +1159,8 @@
 /obj/effect/turf_decal/siding/blue,
 /obj/effect/turf_decal/siding/blue,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/service/crematorium,
+/obj/effect/mapping_helpers/airlock/access/all/service/chapel_office,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/office)
 "pw" = (
@@ -1231,11 +1235,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/highsecurity{
-	name = "Security Access";
-	req_access_txt = "1"
+	name = "Security Access"
 	},
 /obj/machinery/door/firedoor/heavy,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/any/security/general,
 /turf/open/floor/iron/white,
 /area/station/security/brig)
 "qz" = (
@@ -1568,14 +1572,14 @@
 /area/station/medical/morgue)
 "vz" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Morgue";
-	req_access_txt = null;
-	req_one_access_txt = "22,27,6"
+	name = "Morgue"
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/siding/blue{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/airlock/access/any/medical/morgue,
+/obj/effect/mapping_helpers/airlock/access/any/service/crematorium,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "vB" = (
@@ -1930,10 +1934,10 @@
 /area/station/commons/dorms)
 "AA" = (
 /obj/machinery/door/airlock/command{
-	name = "Captain's Quarters";
-	req_access_txt = "20"
+	name = "Captain's Quarters"
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/any/command/captain,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "AI" = (
@@ -2054,10 +2058,10 @@
 /area/station/medical/surgery)
 "CT" = (
 /obj/machinery/door/airlock/highsecurity{
-	name = "Armory";
-	req_access_txt = "1"
+	name = "Armory"
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/security/armory,
 /turf/open/floor/engine,
 /area/station/security/brig)
 "CX" = (
@@ -2494,9 +2498,9 @@
 /area/station/engineering/storage)
 "JP" = (
 /obj/machinery/door/airlock/command{
-	name = "Captain's Quarters";
-	req_access_txt = "20"
+	name = "Captain's Quarters"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/command/captain,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "JS" = (
@@ -2621,6 +2625,7 @@
 	name = "Engineering"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/engine,
 /area/station/engineering/atmos)
 "Lw" = (
@@ -2790,10 +2795,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/grunge{
-	name = "Chaplain's Quarters";
-	req_access_txt = "22"
+	name = "Chaplain's Quarters"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/service/chapel_office,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/office)
 "NU" = (
@@ -2982,6 +2987,7 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/engineering,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/engine,
 /area/station/engineering/storage)
 "QK" = (
@@ -3015,6 +3021,7 @@
 /obj/machinery/door/airlock/command{
 	name = "Bridge"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/command/general,
 /turf/open/floor/carpet/executive,
 /area/station/command/bridge)
 "Ra" = (
@@ -3147,6 +3154,7 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/engine,
 /area/station/engineering/atmos)
 "TO" = (
@@ -3489,12 +3497,12 @@
 "Zn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/glass{
-	name = "Kitchen";
-	req_access_txt = "28"
+	name = "Kitchen"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
 /turf/open/floor/iron,
 /area/station/service/kitchen)
 "Zq" = (

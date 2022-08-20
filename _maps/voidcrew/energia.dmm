@@ -799,8 +799,7 @@
 "Pz" = (
 /obj/machinery/airalarm/directional/east,
 /obj/structure/displaycase/captain{
-	req_access = null;
-	req_access_txt = "20"
+	req_access = null
 	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
