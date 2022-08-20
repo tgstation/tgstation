@@ -147,12 +147,10 @@
 
 /datum/reagent/pluoxium/on_mob_life(mob/living/carbon/breather, delta_time, times_fired)
 	if(!HAS_TRAIT(breather, TRAIT_KNOCKEDOUT))
-		..()
 		return ..()
 
-	for(var/organ as anything in breather.internal_organs)
-		var/obj/item/organ/organ_being_healed = organ
-		organ_being_healed.applyOrganDamage(-0.5)
+	for(var/obj/item/organ/organ_being_healed as anything in breather.internal_organs)
+		organ_being_healed.applyOrganDamage(-0.5 * REM * delta_time)
 
 	..()
 	return TRUE
