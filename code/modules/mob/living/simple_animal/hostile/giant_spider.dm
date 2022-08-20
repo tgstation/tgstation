@@ -92,10 +92,8 @@
 
 /mob/living/simple_animal/hostile/giant_spider/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, volume_modifier=1, show_message=TRUE)
 	. = ..()
-	for(var/datum/reagent/current_reagent as anything in reagents)
-		if(istype(current_reagent, /datum/reagent/toxin/pestkiller))
-			apply_damage(50 * volume_modifier, STAMINA, BODY_ZONE_CHEST)
-			return
+	for(var/datum/reagent/toxin/pestkiller/current_reagent in reagents)
+		apply_damage(50 * volume_modifier, STAMINA, BODY_ZONE_CHEST)
 
 /**
  * # Spider Hunter
