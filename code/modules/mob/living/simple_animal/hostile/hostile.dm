@@ -428,7 +428,7 @@
 		playsound(src, projectilesound, 100, TRUE)
 		var/targeted_zone
 		if(ismob(targeted_atom))
-			targeted_mob = targeted_atom
+			var/mob/targeted_mob = targeted_atom
 			targeted_zone = targeted_mob.get_random_valid_zone()
 		else
 			targeted_zone = ran_zone()

@@ -22,7 +22,7 @@
 	RegisterSignal(user, COMSIG_LIVING_SLAM_TABLE, .proc/table_slam, override = TRUE)
 	if(slot == ITEM_SLOT_FEET)
 		for(var/mob/living/occupant in contents)
-			var/target_zone = user.get_random_valid_zone(blacklisted_parts = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM), even_weights = TRUE)
+			var/target_zone = user.get_random_valid_zone(blacklisted_parts = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM), even_weights = TRUE, bypass_warning = TRUE)
 			if(!target_zone) //we broke their legs right on off!
 				break
 			occupant.forceMove(user.drop_location())

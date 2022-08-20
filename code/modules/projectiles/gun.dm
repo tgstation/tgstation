@@ -270,7 +270,7 @@
 	if(clumsy_check)
 		if(istype(user))
 			if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(40))
-				var/target_zone = user.get_random_valid_zone(blacklisted_parts = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM), even_weights = TRUE)
+				var/target_zone = user.get_random_valid_zone(blacklisted_parts = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM), even_weights = TRUE, bypass_warning = TRUE)
 				if(!target_zone)
 					return
 				to_chat(user, span_userdanger("You shoot yourself in the foot with [src]!"))

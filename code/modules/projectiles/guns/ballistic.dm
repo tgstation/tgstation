@@ -462,7 +462,7 @@
 		SpinAnimation(4,2)
 		if(flip_cooldown <= world.time)
 			if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(40))
-				to_chat(user, span_userdanger("While trying to flip [src] you pull the trigger and accidentaly shoot yourself!"))
+				to_chat(user, span_userdanger("While trying to flip [src] you pull the trigger and accidentally shoot yourself!"))
 				process_fire(user, user, FALSE, user.get_random_valid_zone(even_weights = TRUE))
 				user.dropItemToGround(src, TRUE)
 				return
