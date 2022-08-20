@@ -412,10 +412,10 @@
  * Assigns the bearer as the new master of a shade.
  */
 /obj/item/soulstone/proc/assign_master(mob/shade, mob/user)
-	if (!user)
+	if (!shade || !user)
 		return
 	var/datum/team/shade_pact/pact = new(user.mind)
-	shade.mind?.add_antag_datum(/datum/antagonist/shade_minion, pact)
+	shade.mind.add_antag_datum(/datum/antagonist/shade_minion, pact)
 
 /**
  * Gets a ghost from dead chat to replace a missing player when a shade is created.
