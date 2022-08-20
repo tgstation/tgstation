@@ -17,12 +17,12 @@
 		),
 		list(
 			name = "Station Engineer",
-			outfit = /datum/outfit/job/engineer/hazard,
+			outfit = /datum/outfit/job/engineer/western,
 			slots = 2,
 		),
 		list(
 			name = "Shaft Miner",
-			outfit = /datum/outfit/job/miner/hazard,
+			outfit = /datum/outfit/job/miner/western,
 			slots = 3,
 		),
 		list(

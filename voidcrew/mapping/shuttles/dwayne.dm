@@ -1,4 +1,4 @@
-/datum/map_template/shuttle/voidcrew/dawyne
+/datum/map_template/shuttle/voidcrew/dwayne
 	name = "Dwayne-class Long Range Mining Transport"
 	suffix = "dwayne"
 	short_name = "Dwayne-class"
@@ -22,12 +22,12 @@
 		),
 		list(
 			name = "Station Engineer",
-			outfit = /datum/outfit/job/engineer/hazard,
+			outfit = /datum/outfit/job/engineer/western,
 			slots = 1,
 		),
 		list(
 			name = "Asteroid Miner",
-			outfit = /datum/outfit/job/miner/hazard,
+			outfit = /datum/outfit/job/miner/western,
 			slots = 2,
 		),
 		list(

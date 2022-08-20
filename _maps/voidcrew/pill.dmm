@@ -7,12 +7,11 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4
 	},
-/turf/open/floor/carpet/nanoweave/red,
-/area/station/storage)
+/turf/open/floor/carpet/neon/simple/red,
+/area/station/commons/storage/primary)
 "b" = (
 /obj/structure/cable,
-/obj/item/stack/sheet/mineral/uranium/five,
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers{
 	dir = 8
 	},
 /obj/structure/window/reinforced/spawner,
@@ -22,21 +21,20 @@
 /obj/machinery/cryopod{
 	density = 0
 	},
-/obj/machinery/power/port_gen/pacman/uranium{
+/obj/machinery/power/port_gen/pacman/pre_loaded{
 	anchored = 1;
 	density = 0
 	},
-/obj/machinery/power/apc/auto_name/directional/west{
-	pixel_x = -6
-	},
+/obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/window/reinforced/spawner{
 	dir = 8
 	},
 /obj/machinery/computer/cryopod{
 	pixel_y = 8
 	},
-/turf/open/floor/carpet/nanoweave/red,
-/area/station/storage)
+/obj/item/stack/sheet/mineral/plasma/thirty,
+/turf/open/floor/carpet/neon/simple/red,
+/area/station/commons/storage/primary)
 "c" = (
 /obj/item/pickaxe/drill,
 /obj/item/pickaxe/drill,
@@ -50,9 +48,9 @@
 /obj/item/weldingtool/experimental,
 /obj/item/clothing/head/welding,
 /obj/item/areaeditor,
-/obj/item/clothing/suit/space/hardsuit/carp/old,
-/obj/item/clothing/suit/space/hardsuit/carp/old,
-/obj/item/clothing/suit/space/hardsuit/carp/old,
+/obj/item/clothing/suit/hooded/carp_costume/spaceproof/old,
+/obj/item/clothing/suit/hooded/carp_costume/spaceproof/old,
+/obj/item/clothing/suit/hooded/carp_costume/spaceproof/old,
 /obj/item/tank/internals/oxygen,
 /obj/item/tank/internals/oxygen,
 /obj/item/tank/internals/oxygen,
@@ -66,10 +64,10 @@
 	dir = 8;
 	pixel_x = 5
 	},
-/obj/item/storage/firstaid/toxin,
-/obj/item/storage/firstaid/advanced,
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/advanced,
 /obj/item/storage/backpack/duffelbag/med/surgery,
-/obj/item/storage/firstaid/o2,
+/obj/item/storage/medkit/o2,
 /obj/machinery/light/floor,
 /obj/structure/window/reinforced/spawner{
 	dir = 4
@@ -82,7 +80,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
-/obj/item/toy/plush/among,
 /obj/docking_port/mobile{
 	can_move_docking_ports = 1;
 	dir = 8;
@@ -91,8 +88,8 @@
 /obj/item/storage/toolbox/mechanical/old,
 /obj/item/storage/box/stockparts/basic,
 /obj/item/circuitboard/machine/autolathe,
-/turf/open/floor/carpet/nanoweave/red,
-/area/station/storage)
+/turf/open/floor/carpet/neon/simple/red,
+/area/station/commons/storage/primary)
 
 (1,1,1) = {"
 a

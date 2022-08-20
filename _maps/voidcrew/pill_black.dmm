@@ -12,22 +12,14 @@
 	name = "Alternative Bluespace Jump Device";
 	timer_set = 180
 	},
-/turf/open/floor/plasteel/tech/grid,
-/area/station/storage)
+/turf/open/floor/iron/dark,
+/area/station/commons/storage/primary)
 "b" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers{
 	dir = 8
 	},
-/obj/machinery/power/apc/auto_name/directional/west{
-	pixel_x = -6
-	},
-/obj/item/stack/ore/diamond,
-/obj/item/stack/ore/diamond,
-/obj/item/stack/ore/diamond,
-/obj/item/stack/sheet/mineral/diamond,
-/obj/item/stack/ore/diamond,
-/obj/item/stack/ore/diamond,
+/obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/window/reinforced/tinted,
 /obj/structure/window/reinforced/tinted{
 	dir = 8
@@ -38,12 +30,12 @@
 /obj/machinery/cryopod{
 	dir = 4
 	},
-/obj/machinery/power/port_gen/pacman/diamond,
 /obj/machinery/computer/cryopod{
 	pixel_y = 9
 	},
-/turf/open/floor/plasteel/tech/grid,
-/area/station/storage)
+/obj/item/stack/sheet/mineral/plasma/thirty,
+/turf/open/floor/iron/dark,
+/area/station/commons/storage/primary)
 "c" = (
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas,
@@ -88,10 +80,6 @@
 /obj/item/pickaxe/improvised,
 /obj/item/pickaxe/improvised,
 /obj/item/pickaxe/improvised,
-/mob/living/carbon/human/species/moth{
-	name = "Life-size Moth Plushie";
-	real_name = "Life-Size Moth Plushie"
-	},
 /obj/item/bedsheet/black,
 /obj/item/reagent_containers/cup/beaker/large,
 /obj/item/reagent_containers/cup/beaker/large,
@@ -101,8 +89,11 @@
 /obj/structure/window/reinforced/tinted{
 	dir = 4
 	},
-/turf/open/floor/plasteel/tech/grid,
-/area/station/storage)
+/obj/machinery/power/port_gen/pacman/pre_loaded{
+	density = 0
+	},
+/turf/open/floor/iron/dark,
+/area/station/commons/storage/primary)
 
 (1,1,1) = {"
 a

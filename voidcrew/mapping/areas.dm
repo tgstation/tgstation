@@ -28,13 +28,13 @@
 /area/station/proc/link_to_shuttle(obj/docking_port/mobile/link)
 	station_ship = link
 
-/datum/station/proc/on_area_creation(datum/source, area/created, area/overwritten, mob/creator)
+/area/station/proc/on_area_creation(datum/source, area/created, area/overwritten, mob/creator)
 	SIGNAL_HANDLER
 
 	if(!(overwritten in created)) //not our ship? not our problem.
 		return
 
-	INVOKE_ASYNC(station_ship, recalculate_bounds)
+	INVOKE_ASYNC(station_ship, /obj/docking_port/mobile/.proc/recalculate_bounds)
 
 // VERY EXPENSIVE (I think)
 /obj/docking_port/mobile/proc/recalculate_bounds() //from shiptest
@@ -87,5 +87,5 @@
 
 /area/station/external
 	name = "External"
-	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
+	area_flags = UNIQUE_AREA | NO_ALERTS | AREA_USES_STARLIGHT
 	icon_state = "space_near"
