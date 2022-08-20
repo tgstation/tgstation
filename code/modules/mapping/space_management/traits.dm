@@ -17,23 +17,21 @@
 
 /// Check if levels[z] has any of the specified traits
 /datum/controller/subsystem/mapping/proc/level_has_any_trait(z, list/traits)
-	for (var/trait in traits)
-		if (z in z_trait_levels[trait])
+	var/datum/space_level/level_to_check = z_list[z]
+	if (length(level_to_check.traits & traits))
 			return TRUE
 	return FALSE
 
 /// Check if levels[z] has all of the specified traits
 /datum/controller/subsystem/mapping/proc/level_has_all_traits(z, list/traits)
-	for (var/trait in traits)
-		if (!z_trait_levels[trait])
-			return FALSE
-		if (!(z in z_trait_levels[trait]))
-			return FALSE
-	return TRUE
+	var/datum/space_level/level_to_check = z_list[z]
+	if (length(level_to_check.traits & traits) == length(traits))
+		return TRUE
+	return FALSE
 
 /// Get a list of all z which have the specified trait
 /datum/controller/subsystem/mapping/proc/levels_by_trait(trait)
-	return z_trait_levels[trait] ? z_trait_levels[trait] : list()
+	return z_trait_levels[trait] || list()
 
 /// Get a list of all z which have any of the specified traits
 /datum/controller/subsystem/mapping/proc/levels_by_any_trait(list/traits)
