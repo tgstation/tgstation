@@ -28,8 +28,20 @@
 	ai_controller = /datum/ai_controller/basic_controller/sheep
 
 /mob/living/basic/sheep/Initialize(mapload)
-	AddComponent(/datum/component/mob_harvest, /obj/item/mob_harvest/sheep)
+	AddComponent(/datum/component/mob_harvest, /obj/item/razor, /obj/item/food/grown/grass, /obj/item/stack/sheet/cotton/wool, "soft wool", 10, 3 MINUTES, 30 SECONDS, 5 SECONDS)
+	RegisterSignal(src, COMSIG_LIVING_HARVEST_UPDATE, .proc/wool_status)
 	. = ..()
+
+/mob/living/basic/sheep/proc/wool_status(atom/movable/source, amount_ready)
+	SIGNAL_HANDLER
+
+	if(amount_ready < 1)
+		icon_state = "sheep_harvested"
+		update_icon()
+	else
+		icon_state = "sheep"
+		update_icon()
+
 
 /datum/ai_controller/basic_controller/sheep
 	ai_traits = STOP_MOVING_WHEN_PULLED
