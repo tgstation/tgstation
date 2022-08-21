@@ -59,3 +59,4 @@ SUBSYSTEM_DEF(nightshift)
 			APC.set_nightshift(nightshift_active)
 		if(MC_TICK_CHECK)
 			return
+
