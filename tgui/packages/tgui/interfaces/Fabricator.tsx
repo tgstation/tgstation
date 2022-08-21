@@ -1,7 +1,7 @@
 import { useBackend, useSharedState } from '../backend';
 import { Stack, Section, Button, Input, Icon, Tabs, Dimmer } from '../components';
 import { Window } from '../layouts';
-import { Material, MaterialAmount, MaterialFormatting, MATERIAL_KEYS } from './common/Materials';
+import { Material, MaterialAmount, MaterialFormatting, Materials, MATERIAL_KEYS } from './common/Materials';
 
 type Design = {
   name: string;
@@ -14,7 +14,7 @@ type Design = {
 };
 
 type FabricatorData = {
-  materials?: Material[];
+  materials: Material[];
   fab_name: string;
   on_hold: boolean;
   designs: { [K: string]: Design };
@@ -29,9 +29,6 @@ export const Fabricator = (props, context) => {
   const sortedDesigns = Object.values(designs).sort((a, b) =>
     a.name > b.name ? 1 : 0
   );
-  const sortedMaterials = (data.materials || [])
-    .splice(0)
-    .sort((a, b) => (a.name > b.name ? 1 : 0));
   const categoryCounts: { [K: string]: number } = {};
   const [selectedCategory, setSelectedCategory] = useSharedState(
     context,
@@ -65,6 +62,9 @@ export const Fabricator = (props, context) => {
     },
     {}
   ) as AvailableMaterials;
+  const sortedMaterials = (data.materials || [])
+    .splice(0)
+    .sort((a, b) => (a.name > b.name ? 1 : 0));
 
   // This smells. You got a better idea?
   delete categoryCounts['initial'];
@@ -75,165 +75,111 @@ export const Fabricator = (props, context) => {
   );
 
   return (
-    <Window title={data.fab_name} width={550} height={650}>
+    <Window title={data.fab_name} width={550} height={675}>
       <Window.Content>
-        <Stack fill>
-          <Stack.Item>
-            <Section fill title="Categories">
-              <Tabs vertical>
-                <Tabs.Tab
-                  fluid
-                  selected={selectedCategory === '__MAT'}
-                  onClick={() => setSelectedCategory('__MAT')}
-                  color="transparent">
-                  Material Storage
-                </Tabs.Tab>
-
-                <Tabs.Tab
-                  fluid
-                  selected={selectedCategory === '__ALL'}
-                  onClick={() => setSelectedCategory('__ALL')}
-                  color="transparent">
-                  All Recipes ({recipeCount})
-                </Tabs.Tab>
-
-                {Object.values(namedCategories).map((categoryName) => (
-                  <Tabs.Tab
-                    key={categoryName}
-                    selected={selectedCategory === categoryName}
-                    onClick={() => setSelectedCategory(categoryName)}
-                    fluid
-                    color="transparent">
-                    {categoryName} ({categoryCounts[categoryName]})
-                  </Tabs.Tab>
-                ))}
-              </Tabs>
-            </Section>
-          </Stack.Item>
+        <Stack vertical fill>
           <Stack.Item grow>
-            <Section
-              fill
-              scrollable
-              title="Recipes"
-              buttons={
-                <span>
-                  <Button.Checkbox
-                    onClick={() => setDisplayMatCost(!displayMatCost)}
-                    checked={displayMatCost}>
-                    Display Material Costs
-                  </Button.Checkbox>
-                  <Button content="R&D Sync" onClick={() => act('sync_rnd')} />
-                </span>
-              }>
-              <Stack vertical>
-                <Stack.Item>
-                  <Stack align="baseline">
+            <Stack fill>
+              <Stack.Item>
+                <Section fill title="Categories">
+                  <Tabs vertical>
+                    <Tabs.Tab
+                      fluid
+                      selected={selectedCategory === '__ALL'}
+                      onClick={() => setSelectedCategory('__ALL')}
+                      color="transparent">
+                      All Recipes ({recipeCount})
+                    </Tabs.Tab>
+
+                    {Object.values(namedCategories).map((categoryName) => (
+                      <Tabs.Tab
+                        key={categoryName}
+                        selected={selectedCategory === categoryName}
+                        onClick={() => setSelectedCategory(categoryName)}
+                        fluid
+                        color="transparent">
+                        {categoryName} ({categoryCounts[categoryName]})
+                      </Tabs.Tab>
+                    ))}
+                  </Tabs>
+                </Section>
+              </Stack.Item>
+              <Stack.Item grow>
+                <Section
+                  fill
+                  scrollable
+                  title="Recipes"
+                  buttons={
+                    <span>
+                      <Button.Checkbox
+                        onClick={() => setDisplayMatCost(!displayMatCost)}
+                        checked={displayMatCost}>
+                        Display Material Costs
+                      </Button.Checkbox>
+                      <Button
+                        content="R&D Sync"
+                        onClick={() => act('sync_rnd')}
+                      />
+                    </span>
+                  }>
+                  <Stack vertical>
                     <Stack.Item>
-                      <Icon name="search" />
+                      <Stack align="baseline">
+                        <Stack.Item>
+                          <Icon name="search" />
+                        </Stack.Item>
+                        <Stack.Item grow>
+                          <Input
+                            fluid
+                            placeholder="Search for..."
+                            onInput={(_e: unknown, v: string) =>
+                              setSearchText(v.toLowerCase())
+                            }
+                          />
+                        </Stack.Item>
+                      </Stack>
                     </Stack.Item>
                     <Stack.Item grow>
-                      <Input
-                        fluid
-                        placeholder="Search for..."
-                        onInput={(_e: unknown, v: string) =>
-                          setSearchText(v.toLowerCase())
-                        }
-                      />
+                      <Section>
+                        {Object.values(sortedDesigns)
+                          .filter(
+                            (design) =>
+                              selectedCategory === '__ALL' ||
+                              design.categories?.indexOf(selectedCategory) !==
+                                -1
+                          )
+                          .filter(
+                            (design) =>
+                              design.name.toLowerCase().indexOf(searchText) !==
+                              -1
+                          )
+                          .map((design) => (
+                            <Recipe
+                              key={design.name}
+                              design={design}
+                              available={availableMaterials}
+                            />
+                          ))}
+                      </Section>
                     </Stack.Item>
                   </Stack>
-                </Stack.Item>
-                <Stack.Item grow>
-                  <Section>
-                    {selectedCategory === '__MAT'
-                      ? Object.values(sortedMaterials).map((material) => (
-                        <div key={material.name} class="Fabricator__Recipe">
-                          <Stack justify="space-between" align="stretch">
-                            <Stack.Item grow>
-                              <Button
-                                color={'transparent'}
-                                fluid
-                                disabled={material.amount < 2000}
-                                onClick={() =>
-                                  act('remove_mat', {
-                                    ref: material.ref,
-                                    amount: 1,
-                                  })
-                                }>
-                                {material.name}
-                              </Button>
-                            </Stack.Item>
-                            <Stack.Item>
-                              <Button
-                                color={'transparent'}
-                                fluid
-                                disabled={material.amount < 10000}
-                                onClick={() =>
-                                  act('remove_mat', {
-                                    ref: material.ref,
-                                    amount: 5,
-                                  })
-                                }>
-                                x5
-                              </Button>
-                            </Stack.Item>
-                            <Stack.Item>
-                              <Button
-                                color={'transparent'}
-                                fluid
-                                disabled={material.amount < 50000}
-                                onClick={() =>
-                                  act('remove_mat', {
-                                    ref: material.ref,
-                                    amount: 10,
-                                  })
-                                }>
-                                x10
-                              </Button>
-                              <Stack.Item>
-                                <Button
-                                  color={'transparent'}
-                                  fluid
-                                  disabled={material.amount < 100_000}
-                                  onClick={() =>
-                                    act('remove_mat', {
-                                      ref: material.ref,
-                                      amount: 50,
-                                    })
-                                  }>
-                                  x50
-                                </Button>
-                              </Stack.Item>
-                            </Stack.Item>
-                          </Stack>
-                        </div>
-                      ))
-                      : Object.values(sortedDesigns)
-                        .filter(
-                          (design) =>
-                            selectedCategory === '__ALL' ||
-                            design.categories?.indexOf(selectedCategory) !== -1
-                        )
-                        .filter(
-                          (design) =>
-                            design.name.toLowerCase().indexOf(searchText) !== -1
-                        )
-                        .map((design) => (
-                          <Recipe
-                            key={design.name}
-                            design={design}
-                            available={availableMaterials}
-                          />
-                        ))}
-                  </Section>
-                </Stack.Item>
-              </Stack>
+                </Section>
+                {busy ? (
+                  <Dimmer style={{ 'font-size': '2em' }}>
+                    <Icon name="cog" spin />
+                    {' Building items...'}
+                  </Dimmer>
+                ) : undefined}
+              </Stack.Item>
+            </Stack>
+          </Stack.Item>
+          <Stack.Item>
+            <Section>
+              <Materials
+                materials={sortedMaterials}
+                onEject={(ref, amount) => act('remove_mat', { ref, amount })}
+              />
             </Section>
-            {busy ? (
-              <Dimmer style={{ 'font-size': '2em' }}>
-                <Icon name="cog" spin />
-                {' Building items...'}
-              </Dimmer>
-            ) : undefined}
           </Stack.Item>
         </Stack>
       </Window.Content>
@@ -300,7 +246,6 @@ const PrintButton = (
           <MaterialCost design={design} amount={amount} available={available} />
         )
       }
-      disabled={cantPrint}
       color={'transparent'}
       onClick={() => act('build', { ref: design.id, amount })}>
       x{amount}
@@ -331,11 +276,10 @@ const Recipe = (
         <Stack.Item grow>
           <Button
             color={'transparent'}
-            className={[
-              'Fabricator__Button',
-              cantPrint && 'Fabricator__Button--disabled',
-            ]}
-            disabled={cantPrint}
+            className={`
+              Fabricator__Button
+              ${cantPrint ? 'Fabricator__Button--disabled' : ''},
+            `}
             fluid
             tooltip={
               displayMatCost && (
