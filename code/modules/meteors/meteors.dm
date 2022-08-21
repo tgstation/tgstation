@@ -386,7 +386,7 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=20, /obj/effect/meteor
 	meteordrop = list(/obj/item/food/meat/slab/human, /obj/item/food/meat/slab/human/mutant, /obj/item/organ/internal/heart, /obj/item/organ/internal/lungs, /obj/item/organ/internal/tongue, /obj/item/organ/internal/appendix/)
 	var/meteorgibs = /obj/effect/gibspawner/generic
 	threat = 2
-	signature = "culinary"
+	signature = "culinary material"
 
 /obj/effect/meteor/meaty/Initialize(mapload)
 	for(var/path in meteordrop)
