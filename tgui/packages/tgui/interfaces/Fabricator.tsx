@@ -131,7 +131,7 @@ export const Fabricator = (props, context) => {
 
   // Find the number of items in each unique category, and the sum total of all
   // printable items.
-  const categoryCounts: { [K: string]: number } = {};
+  const categoryCounts: Record<string, number> = {};
   let totalRecipes = 0;
 
   for (const design of sortedDesigns) {
