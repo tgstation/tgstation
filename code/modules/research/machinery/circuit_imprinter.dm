@@ -12,7 +12,7 @@
 	var/total_rating = 1.4
 
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		total_rating -= M.rating * 2 // There is only one.
+		total_rating -= M.rating * 0.2 // There is only one.
 
 	efficiency_coeff = max(total_rating, 0)
 
