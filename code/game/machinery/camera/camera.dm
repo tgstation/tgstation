@@ -309,6 +309,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 			assembly_ref = null
 		if(attacking_item.tool_behaviour == TOOL_ANALYZER)
 			if(!isXRay(TRUE)) //don't reveal it was already upgraded if was done via MALF AI Upgrade Camera Network ability
+				var/area/dorms_check = get_area(src)
+				if(is_type_in_list(dorms_check, GLOB.no_xray_in_dorms))
+					playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
+					balloon_alert_to_viewers("no xray in dorms!")
+					return
 				if(!user.temporarilyRemoveItemFromInventory(attacking_item))
 					return
 				upgradeXRay(FALSE, TRUE)
