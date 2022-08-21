@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - refactor: "A bunch of things that used to not do anything (or just fall back on the chest) when targeting a limb that someone was missing will now be far more likely to attack another limb!"
