@@ -87,7 +87,10 @@ export const Fabricator = (props, context) => {
                     <Tabs.Tab
                       fluid
                       selected={selectedCategory === '__ALL'}
-                      onClick={() => setSelectedCategory('__ALL')}
+                      onClick={() => {
+                        setSelectedCategory('__ALL');
+                        setSearchText('');
+                      }}
                       color="transparent">
                       All Recipes ({recipeCount})
                     </Tabs.Tab>
@@ -96,7 +99,10 @@ export const Fabricator = (props, context) => {
                       <Tabs.Tab
                         key={categoryName}
                         selected={selectedCategory === categoryName}
-                        onClick={() => setSelectedCategory(categoryName)}
+                        onClick={() => {
+                          setSelectedCategory(categoryName);
+                          setSearchText('');
+                        }}
                         fluid
                         color="transparent">
                         {categoryName} ({categoryCounts[categoryName]})
