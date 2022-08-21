@@ -125,6 +125,12 @@
 	switch (action)
 		if("remove_mat")
 			var/datum/material/material = locate(params["ref"])
+
+			if(!materials.can_hold_material(material))
+				// I don't know who you are or what you want, but whatever it is,
+				// we don't have it.
+				return
+
 			eject_sheets(material, params["amount"])
 
 		if("sync_rnd")
