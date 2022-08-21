@@ -273,6 +273,7 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=20, /obj/effect/meteor
 //Flaming meteor
 /obj/effect/meteor/flaming
 	name = "flaming meteor"
+	desc = "An veritable shooting star, both beautiful and frightening. You should probably keep your distance from this."
 	icon_state = "flaming"
 	hits = 5
 	heavy = TRUE
@@ -288,6 +289,7 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=20, /obj/effect/meteor
 //Radiation meteor
 /obj/effect/meteor/irradiated
 	name = "glowing meteor"
+	desc = "An irradiated chunk of space rock. You could probably stop and appreciate its incandescent green glow, if it weren't moving so fast."
 	icon_state = "glowing"
 	heavy = TRUE
 	meteordrop = list(/obj/item/stack/ore/uranium)
@@ -327,6 +329,7 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=20, /obj/effect/meteor
 
 /obj/effect/meteor/cluster_fragment
 	name = "cluster meteor fragment"
+	desc = "A fast-moving fragment of exploded cluster-rock."
 	icon_state = "dust"
 
 //frozen carp "meteor"
@@ -349,6 +352,7 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=20, /obj/effect/meteor
 //bluespace meteor
 /obj/effect/meteor/bluespace
 	name = "bluespace meteor"
+	desc = "A large geode containing bluespace dust at its core, hurtling through space. That's the stuff the crew are here to research. How convenient for them."
 	icon_state = "bluespace"
 	dropamt = 3
 	hits = 12
@@ -366,7 +370,7 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=20, /obj/effect/meteor
 	desc = "Maybe it's a chunk blasted off of the legendary Clown Planet... How annoying."
 	icon_state = "bananium"
 	dropamt = 4
-	hits = 175 //Travels through a lot of stuff, and can simply pass through the station without detonating if lucky
+	hits = 175 //Travels through a lot of stuff, and can simply pass through the station without detonating if the angle/density of stuff is right
 	meteordrop = list(/obj/item/stack/ore/bananium)
 	meteorsound = 'sound/items/bikehorn.ogg'
 	threat = 15
@@ -392,7 +396,7 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=20, /obj/effect/meteor
 
 /obj/effect/meteor/emp
 	name = "electromagnetically charged meteor"
-	desc = "It radiates with captive energy, ready to be released into the open world."
+	desc = "It radiates with captive energy, ready to be let loose upon the world."
 	icon_state = "bluespace"
 	hits = 6
 	threat = 10
@@ -451,6 +455,7 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=20, /obj/effect/meteor
 	color = "#5EFF00"
 	meteordrop = list(/obj/item/food/meat/slab/xeno, /obj/item/organ/internal/tongue/alien)
 	meteorgibs = /obj/effect/gibspawner/xeno
+	signature = "exotic culinary material"
 
 /obj/effect/meteor/meaty/xeno/Initialize(mapload)
 	meteordrop += subtypesof(/obj/item/organ/internal/alien)
