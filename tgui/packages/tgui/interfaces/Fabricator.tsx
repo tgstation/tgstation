@@ -5,7 +5,7 @@ import { Material, MaterialAmount, MaterialFormatting, Materials, MATERIAL_KEYS 
 import { Fragment } from 'inferno';
 import { sortBy } from 'common/collections';
 
-type MaterialMap = Record<keyof typeof MATERIAL_KEYS, number>;
+type MaterialMap = Partial<Record<keyof typeof MATERIAL_KEYS, number>>;
 
 /**
  * A single design that the fabricator can print.
@@ -148,7 +148,7 @@ export const Fabricator = (props, context) => {
   }
 
   // Reduce the material count array to a map of actually available materials.
-  const availableMaterials = {};
+  const availableMaterials: MaterialMap = {};
 
   for (let material of data.materials) {
     availableMaterials[material.name] = material.amount;
@@ -237,7 +237,7 @@ export const Fabricator = (props, context) => {
                             <Recipe
                               key={design.name}
                               design={design}
-                              available={availableMaterials as MaterialMap}
+                              available={availableMaterials}
                             />
                           ))}
                       </Section>
