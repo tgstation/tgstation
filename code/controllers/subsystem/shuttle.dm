@@ -252,16 +252,16 @@ SUBSYSTEM_DEF(shuttle)
 	emergency_no_recall = FALSE
 
 /datum/controller/subsystem/shuttle/proc/getShuttle(id)
-	for(var/obj/docking_port/mobile/M in mobile_docking_ports)
-		if(M.shuttle_id == id)
-			return M
-	WARNING("couldn't find shuttle with id: [id]")
+	for(var/obj/docking_port/mobile/mobile_ports as anything in mobile_docking_ports)
+		if(mobile_ports.shuttle_id == id)
+			return mobile_ports
+	WARNING("couldn't find shuttle with shuttle_id: [id]")
 
 /datum/controller/subsystem/shuttle/proc/getDock(id)
-	for(var/obj/docking_port/stationary/S in stationary_docking_ports)
-		if(S.shuttle_id == id)
-			return S
-	WARNING("couldn't find dock with id: [id]")
+	for(var/obj/docking_port/stationary/stationary_ports in stationary_docking_ports)
+		if(stationary_ports.shuttle_id == id)
+			return stationary_ports
+	WARNING("couldn't find dock with shuttle_id: [id]")
 
 /// Check if we can call the evac shuttle.
 /// Returns TRUE if we can. Otherwise, returns a string detailing the problem.
@@ -903,8 +903,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	// Status panel
 	data["shuttles"] = list()
-	for(var/i in mobile_docking_ports)
-		var/obj/docking_port/mobile/M = i
+	for(var/obj/docking_port/mobile/M as anything in mobile_docking_ports)
 		var/timeleft = M.timeLeft(1)
 		var/list/L = list()
 		L["name"] = M.name
@@ -915,13 +914,16 @@ SUBSYSTEM_DEF(shuttle)
 			L["timeleft"] = "Infinity"
 		L["can_fast_travel"] = M.timer && timeleft >= 50
 		L["can_fly"] = TRUE
+
 		if(istype(M, /obj/docking_port/mobile/emergency))
 			L["can_fly"] = FALSE
 		else if(!M.destination)
 			L["can_fast_travel"] = FALSE
+
 		if (M.mode != SHUTTLE_IDLE)
 			L["mode"] = capitalize(M.mode)
 		L["status"] = M.getDbgStatusText()
+
 		if(M == existing_shuttle)
 			data["existing_shuttle"] = L
 
@@ -943,13 +945,12 @@ SUBSYSTEM_DEF(shuttle)
 	switch(action)
 		if("select_template")
 			if(S)
-				existing_shuttle = getShuttle(S.port_id)
 				selected = S
+				existing_shuttle = getShuttle(S.port_id)
 				. = TRUE
 		if("jump_to")
 			if(params["type"] == "mobile")
-				for(var/i in mobile_docking_ports)
-					var/obj/docking_port/mobile/M = i
+				for(var/obj/docking_port/mobile/M as anything in mobile_docking_ports)
 					if(M.shuttle_id == params["id"])
 						user.forceMove(get_turf(M))
 						. = TRUE
