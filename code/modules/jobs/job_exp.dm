@@ -23,7 +23,7 @@ GLOBAL_PROTECT(exp_to_update)
 	if((my_exp MINUTES) >= job_requirement) // The evaluation done here is done on the deciseconds level using the time defines.
 		return 0
 	else
-		return (job_requirement - my_exp MINUTES)
+		return (job_requirement - (my_exp MINUTES))
 #undef IS_XP_LOCKED
 
 
