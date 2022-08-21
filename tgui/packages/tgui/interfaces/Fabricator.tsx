@@ -166,9 +166,18 @@ export const Fabricator = (props, context) => {
                     ))}
                 </Section>
                 {busy ? (
-                  <Dimmer style={{ 'font-size': '2em' }}>
+                  <Dimmer
+                    style={{ 'font-size': '2em', 'text-align': 'center' }}>
                     <Icon name="cog" spin />
                     {' Building items...'}
+                  </Dimmer>
+                ) : undefined}
+                {on_hold ? (
+                  <Dimmer
+                    style={{ 'font-size': '2em', 'text-align': 'center' }}>
+                    {
+                      'Mineral access is on hold, please contact the quartermaster.'
+                    }
                   </Dimmer>
                 ) : undefined}
               </Stack.Item>
