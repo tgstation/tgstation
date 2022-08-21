@@ -140,22 +140,22 @@
 	if(reagents)
 		reagents.maximum_volume = 0
 
-		for(var/obj/item/reagent_containers/cup/G in component_parts)
-			reagents.maximum_volume += G.volume
-			G.reagents.trans_to(src, G.reagents.total_volume)
+		for(var/obj/item/reagent_containers/cup/beaker in component_parts)
+			reagents.maximum_volume += beaker.volume
+			beaker.reagents.trans_to(src, beaker.reagents.total_volume)
 
 	if(materials)
 		var/total_storage = 0
 
-		for(var/obj/item/stock_parts/matter_bin/M in component_parts)
-			total_storage += M.rating * 75000
+		for(var/obj/item/stock_parts/matter_bin/bin in component_parts)
+			total_storage += bin.rating * 75000
 
 		materials.set_local_size(total_storage)
 
 	var/total_rating = 1.2
 
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		total_rating -= M.rating * 0.1
+	for(var/obj/item/stock_parts/manipulator/manipulator in component_parts)
+		total_rating -= manipulator.rating * 0.1
 
 	efficiency_coeff = max(total_rating, 0)
 
@@ -320,10 +320,10 @@
 	if(production_animation)
 		flick(production_animation, src)
 
-	var/timecoeff = design.lathe_time_factor * efficiency_coeff
+	var/time_coefficient = design.lathe_time_factor * efficiency_coeff
 
-	addtimer(CALLBACK(src, .proc/reset_busy), (30 * timecoeff * print_quantity) ** 0.5)
-	addtimer(CALLBACK(src, .proc/do_print, design.build_path, print_quantity, efficient_mats, design.dangerous_construction), (32 * timecoeff * print_quantity) ** 0.8)
+	addtimer(CALLBACK(src, .proc/reset_busy), (30 * time_coefficient * print_quantity) ** 0.5)
+	addtimer(CALLBACK(src, .proc/do_print, design.build_path, print_quantity, efficient_mats, design.dangerous_construction), (32 * time_coefficient * print_quantity) ** 0.8)
 
 	return TRUE
 
