@@ -5,6 +5,7 @@
 	icon_state = "sheep"
 	icon_state = "sheep"
 	icon_dead = "sheep_dead"
+	var/cult_icon
 	gender = FEMALE
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST
 	speak_emote = list("baas","bleats")
@@ -41,6 +42,12 @@
 	else
 		icon_state = "sheep"
 		update_icon()
+
+/mob/living/basic/sheep/proc/cult_time()
+	if(!cult_icon)
+		say("BAAAAAAAAH!")
+		cult_icon = mutable_appearance('icons/mob/sheep.dmi', "hat")
+		add_overlay(cult_icon)
 
 
 /datum/ai_controller/basic_controller/sheep

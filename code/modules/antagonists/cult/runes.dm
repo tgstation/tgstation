@@ -303,6 +303,13 @@ structure_check() searches for nearby cultist structures required for the invoca
 		log_game("Offer rune with [sacrificial] on it failed - tried sacrificing pAI.")
 		return FALSE
 
+	if(istype(sacrificial, /mob/living/basic/sheep))
+		var/mob/living/basic/sheep/sacrifice = sacrificial
+		for(var/M in invokers)
+			to_chat(M, span_cultitalic("This feels a bit too cliché, don't you think?"))
+		sacrifice.cult_time()
+		return
+
 	var/big_sac = FALSE
 	if((((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || C.cult_team.is_sacrifice_target(sacrificial.mind)) && length(invokers) < 3)
 		for(var/M in invokers)
