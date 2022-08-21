@@ -134,23 +134,23 @@ export const Fabricator = (props, context) => {
   const categoryCounts: { [K: string]: number } = {};
   let totalRecipes = 0;
 
-  for (let design of sortedDesigns) {
+  for (const design of sortedDesigns) {
     totalRecipes += 1;
 
-    for (let category of design.categories ?? []) {
+    for (const category of design.categories ?? []) {
       categoryCounts[category] = (categoryCounts[category] ?? 0) + 1;
     }
   }
 
   // Strip blacklisted categories from the output.
-  for (let blacklistedCategory in BLACKLISTED_CATEGORIES) {
+  for (const blacklistedCategory in BLACKLISTED_CATEGORIES) {
     delete categoryCounts[blacklistedCategory];
   }
 
   // Reduce the material count array to a map of actually available materials.
   const availableMaterials: MaterialMap = {};
 
-  for (let material of data.materials) {
+  for (const material of data.materials) {
     availableMaterials[material.name] = material.amount;
   }
 
