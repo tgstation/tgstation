@@ -11,7 +11,7 @@
 /datum/round_event/stray_meteor
 	announceWhen = 1
 	fakeable = FALSE //Already faked by meteors that miss
-	var/sensor_name = "buggy"
+	var/sensor_name = "runtime"
 
 /datum/round_event/stray_meteor/start()
 	spawn_meteor(GLOB.meteorsD)
