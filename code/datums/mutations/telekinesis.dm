@@ -37,4 +37,9 @@
 		return
 	if(!tkMaxRangeCheck(source, target) || source.z != target.z)
 		return
-	return target.attack_tk(source)
+	var/did_tk_succeed = target.attack_tk(source)
+	if(did_tk_succeed)
+		var/mob/living/carbon/human/tk_griefer = source
+		tk_griefer.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10)
+		to_chat(tk_griefer, span_warning("<i>Your brain hurts a bit.</i>"))
+	return did_tk_succeed
