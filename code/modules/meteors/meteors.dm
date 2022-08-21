@@ -304,7 +304,7 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=20, /obj/effect/meteor
 /obj/effect/meteor/cluster
 	name = "cluster meteor"
 	icon_state = "glowing" //ADD SPRITE
-	hits = 8
+	hits = 9
 	heavy = TRUE
 	meteorsound = 'sound/effects/break_stone.ogg'
 	threat = 25
@@ -367,9 +367,19 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=20, /obj/effect/meteor
 /obj/effect/meteor/banana/meteor_effect()
 	..()
 	playsound(src, 'sound/items/AirHorn.ogg', 100, TRUE, -1)
-	for(var/atom/movable/object in view(7, get_turf(src)))
+	for(var/atom/movable/object in view(8, get_turf(src)))
 		var/turf/throwtarget = get_edge_target_turf(get_turf(src), get_dir(get_turf(src), get_step_away(object, get_turf(src))))
-		object.safe_throw_at(throwtarget, 7, 2, force = MOVE_FORCE_STRONG) //this was a lot more destructive than I thought holy shit
+		object.safe_throw_at(throwtarget, 5, 2, force = MOVE_FORCE_STRONG) //this was a lot more destructive than I thought holy shit
+
+/obj/effect/meteor/banana/Bump(atom/bumped)
+	if(bumped)
+		for(var/mob/living/slipped in get_turf(bumped))
+			playsound(slipped, 'sound/items/bikehorn.ogg', 100, TRUE, -1)
+			slipped.slip(100, slipped.loc,- GALOSHES_DONT_HELP|SLIDE, 0, FALSE)
+			slipped.visible_message(span_warning("[src] honks [bumped] to the floor!"), span_userdanger("[src] harmlessly passes through you, knocking you over."))
+	playsound(src.loc, meteorsound, 40, TRUE)
+	get_hit()
+
 
 /obj/effect/meteor/banana/Bump()
 	playsound(get_turf(src), 'sound/items/bikehorn.ogg', 50, TRUE)

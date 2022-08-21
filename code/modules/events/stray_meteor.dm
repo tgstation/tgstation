@@ -19,4 +19,4 @@
 /datum/round_event/stray_meteor/announce(fake)
 	var/obj/effect/meteor/new_meteor = pick(GLOB.meteor_list) //If we accidentally pick a meteor not spawned by the event, we're still technically not wrong
 	sensor_name = new_meteor.signature
-	priority_announce("Our [sensor_name] sensors have detected an incoming signature approaching the [GLOB.station_name]. Please brace for impact.", "Meteor Alert")
+	priority_announce("Our [sensor_name] sensors have detected an incoming signature approaching [GLOB.station_name]. Please brace for impact.", "Meteor Alert")
