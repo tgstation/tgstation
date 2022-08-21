@@ -33,9 +33,6 @@
 
 	/// Whether we have applied our light yet or not.
 	var/applied = FALSE
-	/// Weather this lighting source interacts with mutliz or not
-	var/uses_multiz = FALSE
-
 	/// whether we are to be added to SSlighting's sources_queue list for an update
 	var/needs_update = LIGHTING_NO_UPDATE
 
@@ -142,15 +139,16 @@
 // If you're wondering what's with the backslashes, the backslashes cause BYOND to not automatically end the line.
 // As such this all gets counted as a single line.
 // The braces and semicolons are there to be able to do this on a single line.
+GLOBAL_VAR_INIT(z_light_sclar, 3)
 #define LUM_FALLOFF(C, T) (1 - CLAMP01(sqrt((C.x - T.x) ** 2 + (C.y - T.y) ** 2 + LIGHTING_HEIGHT) / max(1, light_range)))
-#define LUM_FALLOFF_MULTIZ(C, T) (1 - CLAMP01(ROOT(3, max((C.x - T.x) ** 3 + (C.y - T.y) ** 3 + abs(C.z - T.z) ** 3 + LIGHTING_HEIGHT, 0) / max(1, light_range))))
+#define LUM_FALLOFF_MULTIZ(C, T) (1 - CLAMP01(sqrt((C.x - T.x) ** 2 + (C.y - T.y) ** 2 + (abs(C.z - T.z) * GLOB.z_light_sclar) ** 2 + LIGHTING_HEIGHT) / max(1, light_range)))
 
-#define APPLY_CORNER(C, use_multiz)              \
-	if(use_multiz) {                             \
-		. = LUM_FALLOFF(C, pixel_turf);          \
+#define APPLY_CORNER(C)                          \
+	if(C.z != pixel_turf.z) {                    \
+		. = LUM_FALLOFF_MULTIZ(C, pixel_turf)    \
 	}                                            \
 	else {                                       \
-		. = LUM_FALLOFF_MULTIZ(C, pixel_turf)   \
+		. = LUM_FALLOFF(C, pixel_turf);          \
 	}                                            \
 	. *= light_power;                            \
 	var/OLD = effect_str[C];                     \
@@ -186,7 +184,7 @@
 		REMOVE_CORNER(corner)
 		effect_str[corner] = 0
 
-	APPLY_CORNER(corner, uses_multiz)
+	APPLY_CORNER(corner)
 	effect_str[corner] = .
 
 
@@ -266,7 +264,7 @@
 	var/list/turf/turfs = list()
 
 	if (source_turf)
-		uses_multiz = !!GET_LOWEST_STACK_OFFSET(source_turf.z)
+		var/uses_multiz = !!GET_LOWEST_STACK_OFFSET(source_turf.z)
 		var/oldlum = source_turf.luminosity
 		source_turf.luminosity = CEILING(light_range, 1)
 		if(uses_multiz)
@@ -316,19 +314,19 @@
 	LAZYINITLIST(effect_str)
 	if (needs_update == LIGHTING_VIS_UPDATE)
 		for (var/datum/lighting_corner/corner as anything in new_corners)
-			APPLY_CORNER(corner, uses_multiz)
+			APPLY_CORNER(corner)
 			if (. != 0)
 				LAZYADD(corner.affecting, src)
 				effect_str[corner] = .
 	else
 		for (var/datum/lighting_corner/corner as anything in new_corners)
-			APPLY_CORNER(corner, uses_multiz)
+			APPLY_CORNER(corner)
 			if (. != 0)
 				LAZYADD(corner.affecting, src)
 				effect_str[corner] = .
 
 		for (var/datum/lighting_corner/corner as anything in corners - new_corners) // Existing corners
-			APPLY_CORNER(corner, uses_multiz)
+			APPLY_CORNER(corner)
 			if (. != 0)
 				effect_str[corner] = .
 			else
