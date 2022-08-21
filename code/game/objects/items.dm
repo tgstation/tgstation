@@ -1480,3 +1480,34 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
  */
 /obj/item/proc/get_writing_implement_details()
 	return null
+
+/**
+ * Makes our item haunted, applying the haunted element.
+ *
+ * color - Optional. The color of the aura around our item.
+ * haunt_duration - Optional. How long the haunting lasts.
+ * aggro_radius - Optional. If supplied our item will aggro people in the radius when the haunting begins.
+ */
+/obj/item/proc/make_haunted(color, haunt_duration, aggro_radius)
+	AddElement(/datum/element/haunted, color)
+
+	if(!isnull(haunt_duration))
+		addtimer(CALLBACK(src, .proc/clear_haunting, color), haunt_duration)
+
+	if(!ai_controller || isnull(aggro_radius))
+		return
+
+	for(var/mob/living/victim in view(aggro_radius, src))
+		if(victim.stat == DEAD)
+			continue
+		if(victim.mob_biotypes & MOB_SPIRIT)
+			continue
+		ai_controller.blackboard[BB_TO_HAUNT_LIST][WEAKREF(victim)] = 5
+
+/**
+ * Clears haunting from our item.
+ *
+ * color - Optional. What color of haunting should be removed from our item.
+ */
+/obj/item/proc/clear_haunting(color)
+	RemoveElement(/datum/element/haunted, color)

@@ -404,5 +404,57 @@
 		tray.set_weedlevel(rand(8, 10))
 		tray.set_toxic(rand(45, 55))
 
+#define HAUNT_COLOR "#823abb"
+
+/datum/action/cooldown/spell/aoe/revenant/haunt_object
+	name = "Haunt Object"
+	desc = "Empower nearby objects to you with ghostly energy, causing them to attack nearby mortals. \
+		Items closer to you are more likely to be haunted."
+	icon_icon = 'icons/mob/actions/actions_revenant.dmi'
+	button_icon_state = "r_haunt"
+	aoe_radius = 5
+	max_targets = 7
+
+	unlock_amount = 50
+	cast_amount = 40
+	stun_duration = 4 SECONDS
+	reveal_duration = 6 SECONDS
+
+/datum/action/cooldown/spell/aoe/revenant/haunt_object/get_things_to_cast_on(atom/center)
+	var/list/things = list()
+	for(var/obj/item/nearby_item in range(aoe_radius, center))
+		if(nearby_item.anchored || nearby_item.density)
+			continue
+		if(nearby_item.item_flags & ABSTRACT)
+			continue
+		if(nearby_item.invisibility >= INVISIBILITY_REVENANT)
+			continue
+		things += nearby_item
+
+	return things
+
+/datum/action/cooldown/spell/aoe/revenant/haunt_object/cast_on_thing_in_aoe(obj/item/victim, mob/living/simple_animal/revenant/caster)
+	var/distance_from_caster = get_dist(get_turf(victim), get_turf(caster))
+	var/chance_of_haunting = 100 * (1 / distance_from_caster)
+	if(!prob(chance_of_haunting))
+		return
+
+	new /obj/effect/temp_visual/revenant(get_turf(victim))
+	victim.make_haunted(HAUNT_COLOR, rand(2 MINUTES, 4 MINUTES), 4)
+	victim.visible_message(span_revenwarning("[victim] begins to float and twirl into the air as it glows a ghastly purple!"))
+	RegisterSignal(victim, COMSIG_ELEMENT_DETACH, .proc/on_element_detach)
+
+/// Signal proc for [COMSIG_ELEMENT_DETACH] to give a message when our haunt ends.
+/datum/action/cooldown/spell/aoe/revenant/haunt_object/proc/on_element_detach(obj/item/source, datum/element/detached)
+	SIGNAL_HANDLER
+
+	if(!istype(detached, /datum/element/haunted))
+		return
+
+	source.visible_message(span_revenwarning("[source] falls back to the ground, stationary once more."))
+	UnregisterSignal(source, COMSIG_ELEMENT_DETACH)
+
+#undef HAUNT_COLOR
+
 #undef REVENANT_DEFILE_MIN_DAMAGE
 #undef REVENANT_DEFILE_MAX_DAMAGE

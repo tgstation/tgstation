@@ -96,6 +96,9 @@
 	var/datum/action/cooldown/spell/aoe/revenant/malfunction/shuttle_go_emag = new(src)
 	shuttle_go_emag.Grant(src)
 
+	var/datum/action/cooldown/spell/aoe/revenant/haunt_object/plants_go_thud = new(src)
+	plants_go_thud.Grant(src)
+
 	RegisterSignal(src, COMSIG_LIVING_BANED, .proc/on_baned)
 	random_revenant_name()
 
