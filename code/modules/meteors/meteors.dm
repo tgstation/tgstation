@@ -22,7 +22,7 @@ GLOBAL_LIST_INIT(meteorsB, list(/obj/effect/meteor/meaty=5, /obj/effect/meteor/m
 GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust event
 
 GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=20, /obj/effect/meteor/big=12, \
-						  /obj/effect/meteor/flaming=30, /obj/effect/meteor/irradiated=30, /obj/effect/meteor/carp=35, /obj/effect/meteor/bluespace=30, \
+						  /obj/effect/meteor/flaming=25, /obj/effect/meteor/irradiated=30, /obj/effect/meteor/carp=25, /obj/effect/meteor/bluespace=30, \
 						  /obj/effect/meteor/banana=25, /obj/effect/meteor/meaty=10, /obj/effect/meteor/meaty/xeno=8, /obj/effect/meteor/emp = 30, \
 						  /obj/effect/meteor/tunguska=1)) //for stray meteor event (bigger numbers for a bit finer weighting)
 
