@@ -166,7 +166,7 @@ handles linking back and forth.
 
 /// Returns `TRUE` if and only if the given material ref can be inserted/removed from this component
 /datum/component/remote_materials/proc/can_hold_material(datum/material/material_ref)
-	if(isnull(mat_container) || !mat_container.can_hold_material(material_ref))
+	if(!mat_container)
 		return FALSE
 
-	return TRUE
+	return mat_container.can_hold_material(material_ref)
