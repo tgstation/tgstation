@@ -65,13 +65,11 @@
 		return FALSE
 	if (isindestructiblewall(affected_turf))
 		return FALSE
-	if (istype(affected_wall, replace_walls))
-		return FALSE
-	affected_wall.ChangeTurf(replace_walls)
+	affected_turf.ChangeTurf(replace_walls)
 	return TRUE
 
 /datum/dimension_theme/proc/transform_floor(turf/open/floor/affected_floor)
-	if (replace_floors.len == 0 || (affected_floor in replace_floors))
+	if (replace_floors.len == 0)
 		return FALSE
 	affected_floor.ChangeTurf(pick_weight(replace_floors), flags = CHANGETURF_INHERIT_AIR)
 	return TRUE

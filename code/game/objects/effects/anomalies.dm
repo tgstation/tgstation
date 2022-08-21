@@ -514,7 +514,7 @@
 /obj/effect/anomaly/hallucination
 	name = "hallucination anomaly"
 	icon_state = "hallucination_anomaly"
-	aSignal = /obj/item/assembly/signaler/anomaly/
+	aSignal = /obj/item/assembly/signaler/anomaly/hallucination
 	/// Time passed since the last effect, increased by delta_time of the SSobj
 	var/ticks = 0
 	/// How many seconds between each small hallucination pulses
