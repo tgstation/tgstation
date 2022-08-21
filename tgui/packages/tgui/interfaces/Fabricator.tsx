@@ -113,9 +113,8 @@ export const Fabricator = (props, context) => {
               </Stack.Item>
               <Stack.Item grow>
                 <Section
-                  fill
-                  scrollable
                   title="Recipes"
+                  fill
                   buttons={
                     <Fragment>
                       <Button.Checkbox
@@ -129,48 +128,60 @@ export const Fabricator = (props, context) => {
                       />
                     </Fragment>
                   }>
-                  <Stack align="baseline">
+                  <Stack vertical fill>
                     <Stack.Item>
-                      <Icon name="search" />
+                      <Section>
+                        <Stack align="baseline">
+                          <Stack.Item>
+                            <Icon name="search" />
+                          </Stack.Item>
+                          <Stack.Item grow>
+                            <Input
+                              fluid
+                              placeholder="Search for..."
+                              onInput={(_e: unknown, v: string) =>
+                                setSearchText(v.toLowerCase())
+                              }
+                              value={searchText}
+                            />
+                          </Stack.Item>
+                        </Stack>
+                      </Section>
                     </Stack.Item>
                     <Stack.Item grow>
-                      <Input
-                        fluid
-                        placeholder="Search for..."
-                        onInput={(_e: unknown, v: string) =>
-                          setSearchText(v.toLowerCase())
-                        }
-                        value={searchText}
-                      />
+                      <Section fill scrollable>
+                        {Object.values(sortedDesigns)
+                          .filter(
+                            (design) =>
+                              selectedCategory === '__ALL' ||
+                              design.categories?.indexOf(selectedCategory) !==
+                                -1
+                          )
+                          .filter(
+                            (design) =>
+                              design.name.toLowerCase().indexOf(searchText) !==
+                              -1
+                          )
+                          .map((design) => (
+                            <Recipe
+                              key={design.name}
+                              design={design}
+                              available={availableMaterials}
+                            />
+                          ))}
+                        {busy ? (
+                          <Dimmer
+                            style={{
+                              'font-size': '2em',
+                              'text-align': 'center',
+                            }}>
+                            <Icon name="cog" spin />
+                            {' Building items...'}
+                          </Dimmer>
+                        ) : undefined}
+                      </Section>
                     </Stack.Item>
                   </Stack>
-
-                  <br />
-
-                  {Object.values(sortedDesigns)
-                    .filter(
-                      (design) =>
-                        selectedCategory === '__ALL' ||
-                        design.categories?.indexOf(selectedCategory) !== -1
-                    )
-                    .filter(
-                      (design) =>
-                        design.name.toLowerCase().indexOf(searchText) !== -1
-                    )
-                    .map((design) => (
-                      <Recipe
-                        key={design.name}
-                        design={design}
-                        available={availableMaterials}
-                      />
-                    ))}
-                  {busy ? (
-                    <Dimmer
-                      style={{ 'font-size': '2em', 'text-align': 'center' }}>
-                      <Icon name="cog" spin />
-                      {' Building items...'}
-                    </Dimmer>
-                  ) : undefined}
                 </Section>
                 {on_hold ? (
                   <Dimmer
@@ -226,11 +237,11 @@ const MaterialCost = (
 };
 
 const PrintButton = (
-  props: { design: Design; amount: number; available: AvailableMaterials },
+  props: { design: Design; quantity: number; available: AvailableMaterials },
   context
 ) => {
   const { act, data } = useBackend<FabricatorData>(context);
-  const { design, amount, available } = props;
+  const { design, quantity, available } = props;
 
   const [displayMatCost] = useSharedState(
     context,
@@ -239,7 +250,7 @@ const PrintButton = (
   );
   const cantPrint = Object.entries(design.cost).some(
     ([material, amount]) =>
-      !available[material] || amount > (available[material] || 0) * amount
+      !available[material] || amount * quantity > (available[material] || 0)
   );
 
   return (
@@ -249,12 +260,16 @@ const PrintButton = (
       }`}
       tooltip={
         displayMatCost && (
-          <MaterialCost design={design} amount={amount} available={available} />
+          <MaterialCost
+            design={design}
+            amount={quantity}
+            available={available}
+          />
         )
       }
       color={'transparent'}
-      onClick={() => act('build', { ref: design.id, amount })}>
-      x{amount}
+      onClick={() => act('build', { ref: design.id, amount: quantity })}>
+      x{quantity}
     </Button>
   );
 };
@@ -300,10 +315,10 @@ const Recipe = (
           </Button>
         </Stack.Item>
         <Stack.Item>
-          <PrintButton design={design} amount={5} available={available} />
+          <PrintButton design={design} quantity={5} available={available} />
         </Stack.Item>
         <Stack.Item>
-          <PrintButton design={design} amount={10} available={available} />
+          <PrintButton design={design} quantity={10} available={available} />
         </Stack.Item>
       </Stack>
     </div>
