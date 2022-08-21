@@ -344,15 +344,15 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=20, /obj/effect/meteor
 	name = "bluespace meteor"
 	icon_state = "glowing" //ADD SPRITE
 	dropamt = 3
-	hits = 9
+	hits = 12
 	meteordrop = list(/obj/item/stack/ore/bluespace_crystal)
-	threat = 10
+	threat = 15
 	signature = "bluespace flux"
 
 /obj/effect/meteor/bluespace/Bump()
 	..()
-	if(prob(25)) //hee hoo using do_teleport() deletes effects so I cannot do that oh no :(
-		do_teleport(src, get_turf(src), 5, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
+	if(prob(35))
+		do_teleport(src, get_turf(src), 6, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /obj/effect/meteor/banana
 	name = "bananium meteor"
@@ -380,6 +380,9 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=20, /obj/effect/meteor
 	playsound(src.loc, meteorsound, 40, TRUE)
 	get_hit()
 
+/obj/effect/meteor/banana/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+	..()
+	return
 
 /obj/effect/meteor/banana/Bump()
 	playsound(get_turf(src), 'sound/items/bikehorn.ogg', 50, TRUE)
