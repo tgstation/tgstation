@@ -175,47 +175,6 @@
 
 	SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[type]", "[path]"))
 
-/**
- * Returns how many times over the given material requirement for the given design is satisfied.
- *
- * Arguments:
- * - [being_built][/datum/design]: The design being referenced.
- * - material: The material being checked.
- */
-/obj/machinery/rnd/production/proc/check_material_req(datum/design/being_built, material)
-	if(!materials.mat_container)  // no connected silo
-		return 0
-
-	var/mat_amt = materials.mat_container.get_material_amount(material)
-
-	if(!mat_amt)
-		return 0
-
-	// these types don't have their .materials set in do_print, so don't allow
-	// them to be constructed efficiently
-	var/efficiency = efficient_with(being_built.build_path) ? efficiency_coeff : 1
-	return round(mat_amt / max(1, being_built.materials[material] * efficiency))
-
-/**
- * Returns how many times over the given reagent requirement for the given design is satisfied.
- *
- * Arguments:
- * - [being_built][/datum/design]: The design being referenced.
- * - reagent: The reagent being checked.
- */
-/obj/machinery/rnd/production/proc/check_reagent_req(datum/design/being_built, reagent)
-	if(!reagents)  // no reagent storage
-		return 0
-
-	var/chem_amt = reagents.get_reagent_amount(reagent)
-	if(!chem_amt)
-		return 0
-
-	// these types don't have their .materials set in do_print, so don't allow
-	// them to be constructed efficiently
-	var/efficiency = efficient_with(being_built.build_path) ? efficiency_coeff : 1
-	return round(chem_amt / max(1, being_built.reagents_list[reagent] * efficiency))
-
 /obj/machinery/rnd/production/proc/efficient_with(path)
 	return !ispath(path, /obj/item/stack/sheet) && !ispath(path, /obj/item/stack/ore/bluespace_crystal)
 
