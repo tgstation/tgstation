@@ -2,13 +2,13 @@
 /datum/element/haunted
 	element_flags = ELEMENT_DETACH
 
-/datum/element/haunted/Attach(datum/target)
+/datum/element/haunted/Attach(datum/target, haunt_color = "#f8f8ff")
 	. = ..()
 	if(!isitem(target))
 		return COMPONENT_INCOMPATIBLE
 	//Make em look spooky
 	var/obj/item/master = target
-	master.add_filter("haunt_glow", 2, list("type" = "outline", "color" = "#f8f8ff", "size" = 1))
+	master.add_filter("haunt_glow", 2, list("type" = "outline", "color" = haunt_color, "size" = 1))
 	master.ai_controller = new /datum/ai_controller/haunted(master)
 	master.AddElement(/datum/element/movetype_handler)
 	ADD_TRAIT(master, TRAIT_MOVE_FLYING, ELEMENT_TRAIT(type))
@@ -21,5 +21,3 @@
 	REMOVE_TRAIT(master, TRAIT_MOVE_FLYING, ELEMENT_TRAIT(type))
 	master.RemoveElement(/datum/element/movetype_handler)
 	return ..()
-
-
