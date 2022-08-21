@@ -44464,7 +44464,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "ppM" = (
-/obj/structure/window/reinforced/fulltile,
+/obj/structure/window/reinforced/tinted/fulltile,
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/station/science/breakroom)
