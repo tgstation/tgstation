@@ -337,8 +337,14 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=20, /obj/effect/meteor
 	hits = 2
 	meteorsound = 'sound/effects/ethereal_revive_fail.ogg'
 	meteordrop = list(/mob/living/simple_animal/hostile/carp)
-	threat = 3
+	dropamt = 1
+	threat = 5
 	signature = "fishing and trawling"
+
+/obj/effect/meteor/carp/Initialize(mapload)
+	if(prob(2))
+		meteordrop = list(/mob/living/simple_animal/hostile/carp/megacarp) //hehe
+	return ..()
 
 //bluespace meteor
 /obj/effect/meteor/bluespace
