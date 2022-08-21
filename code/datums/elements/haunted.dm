@@ -6,11 +6,12 @@
 	. = ..()
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
-	if(istype(target.ai_controller, /datum/ai_controller/haunted))
+
+	var/obj/item/master = target
+	if(istype(master.ai_controller, /datum/ai_controller/haunted))
 		return ELEMENT_INCOMPATIBLE
 
 	//Make em look spooky
-	var/obj/item/master = target
 	master.add_filter("haunt_glow", 2, list("type" = "outline", "color" = haunt_color, "size" = 1))
 	master.ai_controller = new /datum/ai_controller/haunted(master)
 	master.AddElement(/datum/element/movetype_handler)
