@@ -33,11 +33,13 @@
 
 /obj/machinery/rnd/production/Initialize(mapload)
 	. = ..()
-	create_reagents(0, OPENCONTAINER)
+
 	cached_designs = list()
-	update_designs()
 	materials = AddComponent(/datum/component/remote_materials, "lathe", mapload, mat_container_flags=BREAKDOWN_FLAGS_LATHE)
 	AddComponent(/datum/component/payment, 0, SSeconomy.get_dep_account(payment_department), PAYMENT_CLINICAL, TRUE)
+
+	create_reagents(0, OPENCONTAINER)
+	update_designs()
 	RefreshParts()
 	update_icon(UPDATE_OVERLAYS)
 
@@ -50,11 +52,11 @@
 /obj/machinery/rnd/production/proc/update_designs()
 	cached_designs.Cut()
 
-	for(var/i in stored_research.researched_designs)
-		var/datum/design/d = SSresearch.techweb_design_by_id(i)
+	for(var/design_id in stored_research.researched_designs)
+		var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
 
-		if((isnull(allowed_department_flags) || (d.departmental_flags & allowed_department_flags)) && (d.build_type & allowed_buildtypes))
-			cached_designs |= d
+		if((isnull(allowed_department_flags) || (design.departmental_flags & allowed_department_flags)) && (design.build_type & allowed_buildtypes))
+			cached_designs |= design
 
 	update_static_data(usr)
 
@@ -85,17 +87,16 @@
 	for(var/datum/design/design in cached_designs)
 		var/cost = list()
 
-		for(var/datum/material/mat in design.materials)
-			var/coeff = efficient_with(design.build_path) ? efficiency_coeff : 1
-			cost[mat.name] = design.materials[mat] * coeff
+		for(var/datum/material/material in design.materials)
+			var/coefficient = efficient_with(design.build_path) ? efficiency_coeff : 1
+			cost[material.name] = design.materials[material] * coeff
 
 		designs[design.id] = list(
 			"name" = design.name,
 			"desc" = design.get_description(),
 			"cost" = cost,
 			"id" = design.id,
-			"categories" = design.category,
-			"maxstack" = design.maxstack
+			"categories" = design.category
 		)
 
 	data["designs"] = designs
@@ -122,8 +123,8 @@
 
 	switch (action)
 		if("remove_mat")
-			var/datum/material/M = locate(params["ref"])
-			eject_sheets(M, params["amount"])
+			var/datum/material/material = locate(params["ref"])
+			eject_sheets(material, params["amount"])
 
 		if("sync_rnd")
 			update_designs()
@@ -217,8 +218,8 @@
 /obj/machinery/rnd/production/proc/efficient_with(path)
 	return !ispath(path, /obj/item/stack/sheet) && !ispath(path, /obj/item/stack/ore/bluespace_crystal)
 
-/obj/machinery/rnd/production/proc/user_try_print_id(id, print_quantity)
-	if(!id)
+/obj/machinery/rnd/production/proc/user_try_print_id(design_id, print_quantity)
+	if(!design_id)
 		return FALSE
 
 	if(istext(print_quantity))
@@ -227,20 +228,20 @@
 	if(isnull(print_quantity))
 		print_quantity = 1
 
-	var/datum/design/D = stored_research.researched_designs[id] ? SSresearch.techweb_design_by_id(id) : null
+	var/datum/design/design = stored_research.researched_designs[design_id] ? SSresearch.techweb_design_by_id(design_id) : null
 
-	if(!istype(D))
+	if(!istype(design))
 		return FALSE
 
 	if(busy)
 		say("Warning: fabricator is busy!")
 		return FALSE
 
-	if(!(isnull(allowed_department_flags) || (D.departmental_flags & allowed_department_flags)))
+	if(!(isnull(allowed_department_flags) || (design.departmental_flags & allowed_department_flags)))
 		say("This fabricator does not have the necessary keys to decrypt this design.")
 		return FALSE
 
-	if(D.build_type && !(D.build_type & allowed_buildtypes))
+	if(D.build_type && !(design.build_type & allowed_buildtypes))
 		say("This fabricator does not have the necessary manipulation systems for this design.")
 		return FALSE
 
@@ -256,23 +257,24 @@
 
 	print_quantity = clamp(print_quantity, 1, 50)
 
-	for(var/M in D.materials)
-		power += round(D.materials[M] * print_quantity / 35)
+	for(var/material in design.materials)
+		power += round(design.materials[material] * print_quantity / 35)
 
 	power = min(active_power_usage, power)
 	use_power(power)
 
-	var/coeff = efficient_with(D.build_path) ? efficiency_coeff : 1
+	var/coefficient = efficient_with(D.build_path) ? efficiency_coeff : 1
 	var/list/efficient_mats = list()
-	for(var/MAT in D.materials)
-		efficient_mats[MAT] = D.materials[MAT] * coeff
+
+	for(var/material in design.materials)
+		efficient_mats[material] = design.materials[material] * coeff
 
 	if(!materials.mat_container.has_materials(efficient_mats, print_quantity))
 		say("Not enough materials to complete prototype[print_quantity > 1? "s" : ""].")
 		return FALSE
 
-	for(var/R in D.reagents_list)
-		if(!reagents.has_reagent(R, D.reagents_list[R]*print_quantity * coeff))
+	for(var/reagent in design.reagents_list)
+		if(!reagents.has_reagent(reagent, design.reagents_list[reagent] * print_quantity * coeff))
 			say("Not enough reagents to complete prototype[print_quantity > 1? "s" : ""].")
 			return FALSE
 
@@ -309,8 +311,8 @@
 	materials.mat_container.use_materials(efficient_mats, print_quantity)
 	materials.silo_log(src, "built", -print_quantity, "[D.name]", efficient_mats)
 
-	for(var/R in D.reagents_list)
-		reagents.remove_reagent(R, D.reagents_list[R]*print_quantity/coeff)
+	for(var/reagent in design.reagents_list)
+		reagents.remove_reagent(reagent, design.reagents_list[reagent] * print_quantity / coeff)
 
 	busy = TRUE
 
@@ -326,36 +328,49 @@
 
 /obj/machinery/rnd/production/proc/eject_sheets(eject_sheet, eject_amt)
 	var/datum/component/material_container/mat_container = materials.mat_container
+
 	if(!mat_container)
 		say("No access to material storage, please contact the quartermaster.")
 		return 0
+
 	if(materials.on_hold())
 		say("Mineral access is on hold, please contact the quartermaster.")
 		return 0
+
 	var/count = mat_container.retrieve_sheets(text2num(eject_amt), eject_sheet, drop_location())
+
 	var/list/matlist = list()
 	matlist[eject_sheet] = MINERAL_MATERIAL_AMOUNT
+
 	materials.silo_log(src, "ejected", -count, "sheets", matlist)
+
 	return count
 
 // Stuff for the stripe on the department machines
 /obj/machinery/rnd/production/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
 	. = ..()
+
 	update_icon(UPDATE_OVERLAYS)
 
 /obj/machinery/rnd/production/update_overlays()
 	. = ..()
+
 	if(!stripe_color)
 		return
+
 	var/mutable_appearance/stripe = mutable_appearance('icons/obj/machines/research.dmi', "protolate_stripe")
+
 	if(!panel_open)
 		stripe.icon_state = "protolathe_stripe"
 	else
 		stripe.icon_state = "protolathe_stripe_t"
+
 	stripe.color = stripe_color
+
 	. += stripe
 
 /obj/machinery/rnd/production/examine(mob/user)
 	. = ..()
+
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Storing up to <b>[materials.local_size]</b> material units.<br>Material consumption at <b>[efficiency_coeff * 100]%</b>.<br>Build time reduced by <b>[100 - efficiency_coeff * 100]%</b>.")

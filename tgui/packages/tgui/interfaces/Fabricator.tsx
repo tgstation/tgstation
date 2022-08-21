@@ -3,33 +3,88 @@ import { Stack, Section, Button, Input, Icon, Tabs, Dimmer } from '../components
 import { Window } from '../layouts';
 import { Material, MaterialAmount, MaterialFormatting, Materials, MATERIAL_KEYS } from './common/Materials';
 import { Fragment } from 'inferno';
+import { sortBy } from 'common/collections';
 
+type MaterialMap = Record<keyof typeof MATERIAL_KEYS, number>;
+
+/**
+ * A single design that the fabricator can print.
+ */
 type Design = {
+  /**
+   * The name of the design.
+   */
   name: string;
+
+  /**
+   * A human-readable description of the design.
+   */
   desc: string;
-  cost: { [K in keyof typeof MATERIAL_KEYS]: number };
+
+  /**
+   * The individual material cost to print the design, adjusted for the
+   * fabricator's part efficiency.
+   */
+  cost: MaterialMap;
+
+  /**
+   * A reference to the design's design datum.
+   */
   id: string;
+
+  /**
+   * The categories the design should be present in.
+   */
   categories?: string[];
-  maxstack: number;
-  icon: string;
 };
 
 type FabricatorData = {
+  /**
+   * The materials available to the fabricator, via ore silo or local storage.
+   */
   materials: Material[];
+
+  /**
+   * The name of the fabricator, as displayed on the title bar.
+   */
   fab_name: string;
+
+  /**
+   * Whether mineral access is disabled from the ore silo (contact the
+   * quartermaster).
+   */
   on_hold: boolean;
-  designs: { [K: string]: Design };
+
+  /**
+   * The set of designs that this fabricator can print, ordered by their ID.
+   */
+  designs: Record<string, Design>;
+
+  /**
+   * Whether the fabricator is currently printing an item.
+   */
   busy: boolean;
 };
 
-type AvailableMaterials = { [K in keyof typeof MATERIAL_KEYS]?: number };
+/**
+ * Categories present in this object are not rendered to the final fabricator
+ * UI.
+ */
+const BLACKLISTED_CATEGORIES: Record<string, boolean> = {
+  'initial': true,
+  'core': true,
+};
 
-const SearchBar = (props, context) => {
-  const [searchText, setSearchText] = useSharedState(
-    context,
-    'search_text',
-    ''
-  );
+/**
+ * A dummy category that, when selected, renders ALL recipes to the UI.
+ */
+const ALL_CATEGORY = '__ALL';
+
+const SearchBar = (
+  props: { searchText: string; setSearchText: (text: string) => void },
+  context
+) => {
+  const { searchText, setSearchText } = props;
 
   return (
     <Stack align="baseline">
@@ -51,14 +106,11 @@ const SearchBar = (props, context) => {
 export const Fabricator = (props, context) => {
   const { act, data } = useBackend<FabricatorData>(context);
   const { materials, fab_name, on_hold, designs, busy } = data;
-  const sortedDesigns = Object.values(designs).sort((a, b) =>
-    a.name > b.name ? 1 : 0
-  );
-  const categoryCounts: { [K: string]: number } = {};
+
   const [selectedCategory, setSelectedCategory] = useSharedState(
     context,
     'selected_category',
-    '__ALL'
+    ALL_CATEGORY
   );
   const [searchText, setSearchText] = useSharedState(
     context,
@@ -71,34 +123,38 @@ export const Fabricator = (props, context) => {
     true
   );
 
-  let recipeCount = 0;
-
-  Object.values(sortedDesigns).map((design) => {
-    Object.values(design.categories || []).map((name) => {
-      categoryCounts[name] = (categoryCounts[name] || 0) + 1;
-    });
-
-    recipeCount += 1;
-  });
-
-  const availableMaterials = Object.values(data.materials || []).reduce(
-    (state, value) => {
-      state[value.name] = state[value.name] || 0 + value.amount;
-      return state;
-    },
-    {}
-  ) as AvailableMaterials;
-  const sortedMaterials = (data.materials || [])
-    .splice(0)
-    .sort((a, b) => (a.name > b.name ? 1 : 0));
-
-  // This smells. You got a better idea?
-  delete categoryCounts['initial'];
-  delete categoryCounts['core'];
-
-  const namedCategories = Object.keys(categoryCounts).sort((a, b) =>
-    a > b ? 1 : 0
+  // Sort the designs by name.
+  const sortedDesigns = sortBy((design: Design) => design.name)(
+    Object.values(designs)
   );
+
+  // Find the number of items in each unique category, and the sum total of all
+  // printable items.
+  const categoryCounts: { [K: string]: number } = {};
+  let totalRecipes = 0;
+
+  for (let design of sortedDesigns) {
+    totalRecipes += 1;
+
+    for (let category of design.categories || []) {
+      categoryCounts[category] = (categoryCounts[category] || 0) + 1;
+    }
+  }
+
+  // Strip blacklisted categories from the output.
+  for (let blacklistedCategory in BLACKLISTED_CATEGORIES) {
+    delete categoryCounts[blacklistedCategory];
+  }
+
+  // Reduce the material count array to a map of actually available materials.
+  const availableMaterials = {};
+
+  for (let material of data.materials) {
+    availableMaterials[material.name] = material.amount;
+  }
+
+  // Render all categories with items, sorted by name.
+  const namedCategories = Object.keys(categoryCounts).sort();
 
   return (
     <Window title={data.fab_name} width={670} height={768}>
@@ -111,16 +167,16 @@ export const Fabricator = (props, context) => {
                   <Tabs vertical>
                     <Tabs.Tab
                       fluid
-                      selected={selectedCategory === '__ALL'}
+                      selected={selectedCategory === ALL_CATEGORY}
                       onClick={() => {
-                        setSelectedCategory('__ALL');
+                        setSelectedCategory(ALL_CATEGORY);
                         setSearchText('');
                       }}
                       color="transparent">
-                      All Recipes ({recipeCount})
+                      All Designs ({totalRecipes})
                     </Tabs.Tab>
 
-                    {Object.values(namedCategories).map((categoryName) => (
+                    {namedCategories.map((categoryName) => (
                       <Tabs.Tab
                         key={categoryName}
                         selected={selectedCategory === categoryName}
@@ -138,7 +194,7 @@ export const Fabricator = (props, context) => {
               </Stack.Item>
               <Stack.Item grow>
                 <Section
-                  title="Recipes"
+                  title="Designs"
                   fill
                   buttons={
                     <Fragment>
@@ -156,15 +212,18 @@ export const Fabricator = (props, context) => {
                   <Stack vertical fill>
                     <Stack.Item>
                       <Section>
-                        <SearchBar />
+                        <SearchBar
+                          searchText={searchText}
+                          setSearchText={setSearchText}
+                        />
                       </Section>
                     </Stack.Item>
                     <Stack.Item grow>
                       <Section fill scrollable>
-                        {Object.values(sortedDesigns)
+                        {sortedDesigns
                           .filter(
                             (design) =>
-                              selectedCategory === '__ALL' ||
+                              selectedCategory === ALL_CATEGORY ||
                               design.categories?.indexOf(selectedCategory) !==
                                 -1
                           )
@@ -177,11 +236,11 @@ export const Fabricator = (props, context) => {
                             <Recipe
                               key={design.name}
                               design={design}
-                              available={availableMaterials}
+                              available={availableMaterials as MaterialMap}
                             />
                           ))}
                       </Section>
-                      {busy ? (
+                      {!!busy && (
                         <Dimmer
                           style={{
                             'font-size': '2em',
@@ -190,25 +249,27 @@ export const Fabricator = (props, context) => {
                           <Icon name="cog" spin />
                           {' Building items...'}
                         </Dimmer>
-                      ) : undefined}
+                      )}
                     </Stack.Item>
                   </Stack>
                 </Section>
-                {on_hold ? (
+                {!!on_hold && (
                   <Dimmer
                     style={{ 'font-size': '2em', 'text-align': 'center' }}>
                     {
                       'Mineral access is on hold, please contact the quartermaster.'
                     }
                   </Dimmer>
-                ) : undefined}
+                )}
               </Stack.Item>
             </Stack>
           </Stack.Item>
           <Stack.Item>
             <Section>
               <Materials
-                materials={sortedMaterials}
+                materials={sortBy((a: Material) => a.name)(
+                  data.materials || []
+                )}
                 onEject={(ref, amount) => act('remove_mat', { ref, amount })}
               />
             </Section>
@@ -220,7 +281,7 @@ export const Fabricator = (props, context) => {
 };
 
 const MaterialCost = (
-  props: { design: Design; amount: number; available: AvailableMaterials },
+  props: { design: Design; amount: number; available: MaterialMap },
   context
 ) => {
   const { design, amount, available } = props;
@@ -248,7 +309,7 @@ const MaterialCost = (
 };
 
 const PrintButton = (
-  props: { design: Design; quantity: number; available: AvailableMaterials },
+  props: { design: Design; quantity: number; available: MaterialMap },
   context
 ) => {
   const { act, data } = useBackend<FabricatorData>(context);
@@ -259,7 +320,7 @@ const PrintButton = (
     'display_material_cost',
     true
   );
-  const cantPrint = Object.entries(design.cost).some(
+  const canPrint = !Object.entries(design.cost).some(
     ([material, amount]) =>
       !available[material] || amount * quantity > (available[material] || 0)
   );
@@ -267,7 +328,7 @@ const PrintButton = (
   return (
     <Button
       className={`Fabricator__PrintAmount ${
-        cantPrint ? 'Fabricator__PrintAmount--disabled' : ''
+        !canPrint ? 'Fabricator__PrintAmount--disabled' : ''
       }`}
       tooltip={
         displayMatCost && (
@@ -285,10 +346,7 @@ const PrintButton = (
   );
 };
 
-const Recipe = (
-  props: { design: Design; available: AvailableMaterials },
-  context
-) => {
+const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
   const { act, data } = useBackend<FabricatorData>(context);
   const { design, available } = props;
 
@@ -297,7 +355,7 @@ const Recipe = (
     'display_material_cost',
     true
   );
-  const cantPrint = Object.entries(design.cost).some(
+  const canPrint = !Object.entries(design.cost).some(
     ([material, amount]) =>
       !available[material] || amount > (available[material] || 0)
   );
@@ -309,7 +367,7 @@ const Recipe = (
           <Button
             color={'transparent'}
             className={`Fabricator__Button ${
-              cantPrint ? 'Fabricator__Button--disabled' : ''
+              !canPrint ? 'Fabricator__Button--disabled' : ''
             }`}
             fluid
             tooltip={
