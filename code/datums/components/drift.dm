@@ -32,6 +32,7 @@
 	RegisterSignal(drifting_loop, COMSIG_MOVELOOP_STOP, .proc/drifting_stop)
 	RegisterSignal(drifting_loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, .proc/before_move)
 	RegisterSignal(drifting_loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/after_move)
+	RegisterSignal(movable_parent, COMSIG_MOVABLE_NEWTONIAN_MOVE, .proc/newtonian_impulse)
 	RegisterSignal(drifting_loop, COMSIG_PARENT_QDELETING, .proc/loop_death)
 	if(drifting_loop.running)
 		drifting_start(drifting_loop) // There's a good chance it'll autostart, gotta catch that
@@ -76,7 +77,8 @@
 	SIGNAL_HANDLER
 	var/atom/movable/movable_parent = parent
 	inertia_last_loc = movable_parent.loc
-	drifting_loop.direction = inertia_direction
+	if(drifting_loop)
+		drifting_loop.direction = inertia_direction
 	if(!inertia_direction)
 		qdel(src)
 	return COMPONENT_MOVABLE_NEWTONIAN_BLOCK
@@ -86,7 +88,6 @@
 	var/atom/movable/movable_parent = parent
 	inertia_last_loc = movable_parent.loc
 	RegisterSignal(movable_parent, COMSIG_MOVABLE_MOVED, .proc/handle_move)
-	RegisterSignal(movable_parent, COMSIG_MOVABLE_NEWTONIAN_MOVE, .proc/newtonian_impulse)
 	// We will use glide size to intuit how long to delay our loop's next move for
 	// This way you can't ride two movements at once while drifting, since that'd be dumb as fuck
 	RegisterSignal(movable_parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, .proc/handle_glidesize_update)
@@ -98,7 +99,7 @@
 	var/atom/movable/movable_parent = parent
 	movable_parent.inertia_moving = FALSE
 	ignore_next_glide = FALSE
-	UnregisterSignal(movable_parent, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_NEWTONIAN_MOVE, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, COMSIG_ATOM_NO_LONGER_PULLING))
+	UnregisterSignal(movable_parent, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, COMSIG_ATOM_NO_LONGER_PULLING))
 
 /datum/component/drift/proc/before_move(datum/source)
 	SIGNAL_HANDLER
@@ -126,7 +127,6 @@
 /datum/component/drift/proc/loop_death(datum/source)
 	SIGNAL_HANDLER
 	drifting_loop = null
-	UnregisterSignal(parent, COMSIG_MOVABLE_NEWTONIAN_MOVE)
 
 /datum/component/drift/proc/handle_move(datum/source, old_loc)
 	SIGNAL_HANDLER
