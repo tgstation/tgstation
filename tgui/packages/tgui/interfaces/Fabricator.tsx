@@ -137,8 +137,8 @@ export const Fabricator = (props, context) => {
   for (let design of sortedDesigns) {
     totalRecipes += 1;
 
-    for (let category of design.categories || []) {
-      categoryCounts[category] = (categoryCounts[category] || 0) + 1;
+    for (let category of design.categories ?? []) {
+      categoryCounts[category] = (categoryCounts[category] ?? 0) + 1;
     }
   }
 
@@ -269,7 +269,7 @@ export const Fabricator = (props, context) => {
             <Section>
               <Materials
                 materials={sortBy((a: Material) => a.name)(
-                  data.materials || []
+                  data.materials ?? []
                 )}
                 onEject={(ref, amount) => act('remove_mat', { ref, amount })}
               />
@@ -323,7 +323,7 @@ const PrintButton = (
   );
   const canPrint = !Object.entries(design.cost).some(
     ([material, amount]) =>
-      !available[material] || amount * quantity > (available[material] || 0)
+      !available[material] || amount * quantity > (available[material] ?? 0)
   );
 
   return (
@@ -358,7 +358,7 @@ const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
   );
   const canPrint = !Object.entries(design.cost).some(
     ([material, amount]) =>
-      !available[material] || amount > (available[material] || 0)
+      !available[material] || amount > (available[material] ?? 0)
   );
 
   return (
