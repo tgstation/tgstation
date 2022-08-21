@@ -87,7 +87,6 @@
 /datum/plane_master_group/proc/prep_plane_instance(atom/movable/screen/plane_master/instance)
 	return
 
-// LEMON TODO: add a button to disable/change scaling of this in the debug ui
 /datum/plane_master_group/proc/transform_lower_turfs(datum/hud/source, old_offset, new_offset)
 	// No offset? piss off
 	if(!SSmapping.max_plane_offset)

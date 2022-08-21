@@ -400,7 +400,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	blend_mode_override = BLEND_ADD
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-// Lemon todo: over lights somehow break when... scaled? test this
+/// This will not work through multiz, because of a byond bug with BLEND_MULTIPLY
+/// Bug report is up, waiting on a fix
 /atom/movable/screen/plane_master/o_light_visual
 	name = "Overlight light visual"
 	documentation = "Holds overlay lighting objects, or the sort of lighting that's a well, overlay stuck to something.\

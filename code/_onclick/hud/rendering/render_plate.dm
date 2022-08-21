@@ -107,7 +107,6 @@
 		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))
 
 ///Contains all lighting objects
-/// Lemon todo: make lighting respect client prefs if reloaded
 /atom/movable/screen/plane_master/rendering_plate/lighting
 	name = "Lighting plate"
 	documentation = "Anything on this plane will be <b>multiplied</b> with the plane it's rendered onto (typically the game plane).\
