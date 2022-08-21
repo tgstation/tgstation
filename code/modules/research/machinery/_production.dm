@@ -50,10 +50,10 @@
 /obj/machinery/rnd/production/proc/update_designs()
 	cached_designs.Cut()
 
-	for (var/i in stored_research.researched_designs)
+	for(var/i in stored_research.researched_designs)
 		var/datum/design/d = SSresearch.techweb_design_by_id(i)
 
-		if ((isnull(allowed_department_flags) || (d.departmental_flags & allowed_department_flags)) && (d.build_type & allowed_buildtypes))
+		if((isnull(allowed_department_flags) || (d.departmental_flags & allowed_department_flags)) && (d.build_type & allowed_buildtypes))
 			cached_designs |= d
 
 	update_static_data(usr)
@@ -74,7 +74,7 @@
 
 	ui = SStgui.try_update_ui(user, src, ui)
 
-	if (!ui)
+	if(!ui)
 		ui = new(user, src, "Fabricator")
 		ui.open()
 
@@ -82,10 +82,10 @@
 	var/list/data = list()
 	var/list/designs = list()
 
-	for (var/datum/design/design in cached_designs)
+	for(var/datum/design/design in cached_designs)
 		var/cost = list()
 
-		for (var/datum/material/mat in design.materials)
+		for(var/datum/material/mat in design.materials)
 			var/coeff = efficient_with(design.build_path) ? efficiency_coeff : 1
 			cost[mat.name] = design.materials[mat] * coeff
 
@@ -115,37 +115,37 @@
 /obj/machinery/rnd/production/ui_act(action, list/params)
 	. = ..()
 
-	if (.)
+	if(.)
 		return
 
 	. = TRUE
 
 	switch (action)
-		if ("remove_mat")
+		if("remove_mat")
 			var/datum/material/M = locate(params["ref"])
 			eject_sheets(M, params["amount"])
 
-		if ("sync_rnd")
+		if("sync_rnd")
 			update_designs()
 
-		if ("build")
+		if("build")
 			user_try_print_id(params["ref"], params["amount"])
 
 /// Updates the fabricator's efficiency coefficient based on the installed parts.
 /obj/machinery/rnd/production/proc/calculate_efficiency()
 	efficiency_coeff = 1
 
-	if (reagents)
+	if(reagents)
 		reagents.maximum_volume = 0
 
-		for (var/obj/item/reagent_containers/cup/G in component_parts)
+		for(var/obj/item/reagent_containers/cup/G in component_parts)
 			reagents.maximum_volume += G.volume
 			G.reagents.trans_to(src, G.reagents.total_volume)
 
-	if (materials)
+	if(materials)
 		var/total_storage = 0
 
-		for (var/obj/item/stock_parts/matter_bin/M in component_parts)
+		for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 			total_storage += M.rating * 75000
 
 		materials.set_local_size(total_storage)
@@ -164,11 +164,11 @@
 	return ..()
 
 /obj/machinery/rnd/production/proc/do_print(path, amount, list/matlist, notify_admins)
-	if (notify_admins)
+	if(notify_admins)
 		investigate_log("[key_name(usr)] built [amount] of [path] at [src]([type]).", INVESTIGATE_RESEARCH)
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has built [amount] of [path] at \a [src]([type]).")
 
-	for (var/i in 1 to amount)
+	for(var/i in 1 to amount)
 		new path(get_turf(src))
 
 	SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[type]", "[path]"))
@@ -181,12 +181,12 @@
  * - material: The material being checked.
  */
 /obj/machinery/rnd/production/proc/check_material_req(datum/design/being_built, material)
-	if (!materials.mat_container)  // no connected silo
+	if(!materials.mat_container)  // no connected silo
 		return 0
 
 	var/mat_amt = materials.mat_container.get_material_amount(material)
 
-	if (!mat_amt)
+	if(!mat_amt)
 		return 0
 
 	// these types don't have their .materials set in do_print, so don't allow
@@ -286,7 +286,7 @@
 		var/mob/living/user = usr
 		var/obj/item/card/id/card = user.get_idcard(TRUE)
 
-		if (!card && istype(user.pulling, /obj/item/card/id))
+		if(!card && istype(user.pulling, /obj/item/card/id))
 			card = user.pulling
 
 		if(card && card.registered_account)
@@ -309,12 +309,12 @@
 	materials.mat_container.use_materials(efficient_mats, print_quantity)
 	materials.silo_log(src, "built", -print_quantity, "[D.name]", efficient_mats)
 
-	for (var/R in D.reagents_list)
+	for(var/R in D.reagents_list)
 		reagents.remove_reagent(R, D.reagents_list[R]*print_quantity/coeff)
 
 	busy = TRUE
 
-	if (production_animation)
+	if(production_animation)
 		flick(production_animation, src)
 
 	var/timecoeff = D.lathe_time_factor * efficiency_coeff
@@ -326,10 +326,10 @@
 
 /obj/machinery/rnd/production/proc/eject_sheets(eject_sheet, eject_amt)
 	var/datum/component/material_container/mat_container = materials.mat_container
-	if (!mat_container)
+	if(!mat_container)
 		say("No access to material storage, please contact the quartermaster.")
 		return 0
-	if (materials.on_hold())
+	if(materials.on_hold())
 		say("Mineral access is on hold, please contact the quartermaster.")
 		return 0
 	var/count = mat_container.retrieve_sheets(text2num(eject_amt), eject_sheet, drop_location())
