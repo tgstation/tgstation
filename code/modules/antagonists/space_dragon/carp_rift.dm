@@ -30,7 +30,7 @@
 		return
 	if(locate(/obj/structure/carp_rift) in owner.loc)
 		return
-	var/obj/structure/carp_rift/new_rift = new /obj/structure/carp_rift(get_turf(owner))
+	var/obj/structure/carp_rift/new_rift = new(get_turf(owner))
 	playsound(owner.loc, 'sound/vehicles/rocketlaunch.ogg', 100, TRUE)
 	dragon.riftTimer = -1
 	new_rift.dragon = dragon
