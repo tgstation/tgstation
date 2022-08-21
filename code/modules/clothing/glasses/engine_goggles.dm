@@ -199,31 +199,38 @@
 	if(mode == MODE_ATMOS_THERMAL)
 		atmos_thermal(user)
 
+#define TEMP_SHADE_CYAN 273.15
+#define TEMP_SHADE_GREEN 283.15
+#define TEMP_SHADE_YELLOW 300
+#define TEMP_SHADE_RED 500
+
 /proc/atmos_thermal(mob/viewer, range = 4, duration = 10)
 	if(!ismob(viewer) || !viewer.client)
 		return
 	for(var/turf/open in view(range, viewer))
 		if(open.blocks_air)
 			continue
-		var/calc
 		var/datum/gas_mixture/environment = open.return_air()
 		var/temp = round(environment.temperature)
 		var/image/pic = image('icons/turf/overlays.dmi', open, "greyOverlay", ABOVE_ALL_MOB_LAYER)
-		if(temp <= 273.15)
-			pic.color = COLOR_STRONG_BLUE
-		if(temp > 273.15 && temp <= 283.15)
-			calc = max(round(temp/280, 0.01), 0)
-			pic.color = BlendRGB(COLOR_DARK_CYAN, COLOR_LIME, calc)
-		else if(temp >= 100)
-			pic.color = COLOR_RED
-		else if(temp > 280 && temp <= 1000)
-			calc =    clamp(round((temp-280)/720, 0.01), 0, 1)
-			pic.color = BlendRGB(COLOR_LIME, COLOR_YELLOW, calc)
-		else
-			calc =    clamp(round((temp-1000)/4000, 0.01), 0, 1)
-			pic.color = BlendRGB(COLOR_YELLOW, COLOR_RED, calc)
+		// Lower than TEMP_SHADE_CYAN should be deep blue
+		switch(temp)
+			if(TCMB to TEMP_SHADE_CYAN)
+				pic.color = COLOR_STRONG_BLUE
+			// Between TEMP_SHADE_CYAN and TEMP_SHADE_GREEN
+			if(274.15 to TEMP_SHADE_GREEN)
+				pic.color = BlendRGB(COLOR_DARK_CYAN, COLOR_LIME, max(round((temp - TEMP_SHADE_CYAN)/(TEMP_SHADE_GREEN - TEMP_SHADE_CYAN), 0.01), 0))
+			// Between TEMP_SHADE_GREEN and TEMP_SHADE_YELLOW
+			if(284.15 to TEMP_SHADE_YELLOW)
+				pic.color = BlendRGB(COLOR_LIME, COLOR_YELLOW, clamp(round((temp-TEMP_SHADE_GREEN)/(TEMP_SHADE_YELLOW - TEMP_SHADE_GREEN), 0.01), 0, 1))
+			// Between TEMP_SHADE_YELLOW and TEMP_SHADE_RED
+			if(301 to TEMP_SHADE_RED)
+				pic.color = BlendRGB(COLOR_YELLOW, COLOR_RED, clamp(round((temp-TEMP_SHADE_YELLOW)/(TEMP_SHADE_RED - TEMP_SHADE_YELLOW), 0.01), 0, 1))
+			// Over TEMP_SHADE_RED should be red
+			if(501 to FUSION_MAXIMUM_TEMPERATURE)
+				pic.color = COLOR_RED
 		pic.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-		pic.alpha = 255
+		pic.alpha = 200
 		flick_overlay(pic, list(viewer.client), duration)
 
 
