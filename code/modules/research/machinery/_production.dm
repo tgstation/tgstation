@@ -90,7 +90,7 @@
 
 		for(var/datum/material/material in design.materials)
 			var/coefficient = efficient_with(design.build_path) ? efficiency_coeff : 1
-			cost[material.name] = design.materials[material] * coeff
+			cost[material.name] = design.materials[material] * coefficient
 
 		designs[design.id] = list(
 			"name" = design.name,
@@ -242,7 +242,7 @@
 		say("This fabricator does not have the necessary keys to decrypt this design.")
 		return FALSE
 
-	if(D.build_type && !(design.build_type & allowed_buildtypes))
+	if(design.build_type && !(design.build_type & allowed_buildtypes))
 		say("This fabricator does not have the necessary manipulation systems for this design.")
 		return FALSE
 
@@ -264,18 +264,18 @@
 	power = min(active_power_usage, power)
 	use_power(power)
 
-	var/coefficient = efficient_with(D.build_path) ? efficiency_coeff : 1
+	var/coefficient = efficient_with(design.build_path) ? efficiency_coeff : 1
 	var/list/efficient_mats = list()
 
 	for(var/material in design.materials)
-		efficient_mats[material] = design.materials[material] * coeff
+		efficient_mats[material] = design.materials[material] * coefficient
 
 	if(!materials.mat_container.has_materials(efficient_mats, print_quantity))
 		say("Not enough materials to complete prototype[print_quantity > 1? "s" : ""].")
 		return FALSE
 
 	for(var/reagent in design.reagents_list)
-		if(!reagents.has_reagent(reagent, design.reagents_list[reagent] * print_quantity * coeff))
+		if(!reagents.has_reagent(reagent, design.reagents_list[reagent] * print_quantity * coefficient))
 			say("Not enough reagents to complete prototype[print_quantity > 1? "s" : ""].")
 			return FALSE
 
@@ -310,20 +310,20 @@
 		borg.cell.use(SILICON_LATHE_TAX)
 
 	materials.mat_container.use_materials(efficient_mats, print_quantity)
-	materials.silo_log(src, "built", -print_quantity, "[D.name]", efficient_mats)
+	materials.silo_log(src, "built", -print_quantity, "[design.name]", efficient_mats)
 
 	for(var/reagent in design.reagents_list)
-		reagents.remove_reagent(reagent, design.reagents_list[reagent] * print_quantity / coeff)
+		reagents.remove_reagent(reagent, design.reagents_list[reagent] * print_quantity * coefficient)
 
 	busy = TRUE
 
 	if(production_animation)
 		flick(production_animation, src)
 
-	var/timecoeff = D.lathe_time_factor * efficiency_coeff
+	var/timecoeff = design.lathe_time_factor * efficiency_coeff
 
 	addtimer(CALLBACK(src, .proc/reset_busy), (30 * timecoeff * print_quantity) ** 0.5)
-	addtimer(CALLBACK(src, .proc/do_print, D.build_path, print_quantity, efficient_mats, D.dangerous_construction), (32 * timecoeff * print_quantity) ** 0.8)
+	addtimer(CALLBACK(src, .proc/do_print, design.build_path, print_quantity, efficient_mats, design.dangerous_construction), (32 * timecoeff * print_quantity) ** 0.8)
 
 	return TRUE
 
