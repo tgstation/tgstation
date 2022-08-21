@@ -40,7 +40,7 @@
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
-	deathsound = 'sound/creatures/space_dragon_roar.ogg'
+	death_sound = 'sound/creatures/space_dragon_roar.ogg'
 	icon = 'icons/mob/spacedragon.dmi'
 	icon_state = "spacedragon"
 	icon_living = "spacedragon"
@@ -61,7 +61,7 @@
 	ranged = TRUE
 	mouse_opacity = MOUSE_OPACITY_ICON
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
-	deathmessage = "screeches as its wings turn to dust and it collapses on the floor, its life extinguished."
+	death_message = "screeches as its wings turn to dust and it collapses on the floor, its life extinguished."
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
@@ -105,6 +105,7 @@
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_HEALS_FROM_CARP_RIFTS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_ALERT_GHOSTS_ON_DEATH, INNATE_TRAIT)
+	AddElement(/datum/element/content_barfer)
 	small_sprite = new
 	small_sprite.Grant(src)
 	RegisterSignal(small_sprite, COMSIG_ACTION_TRIGGER, .proc/add_dragon_overlay)
@@ -141,10 +142,9 @@
 		return
 	if(riftTimer >= maxRiftTimer)
 		to_chat(src, span_boldwarning("You've failed to summon the rift in a timely manner! You're being pulled back from whence you came!"))
-		destroy_rifts()
-		empty_contents()
+		death(TRUE)
 		playsound(src, 'sound/magic/demon_dies.ogg', 100, TRUE)
-		QDEL_NULL(src)
+		qdel(src)
 
 /mob/living/simple_animal/hostile/space_dragon/AttackingTarget()
 	if(using_special)
@@ -152,7 +152,7 @@
 	if(target == src)
 		to_chat(src, span_warning("You almost bite yourself, but then decide against it."))
 		return
-	if(istype(target, /turf/closed/wall))
+	if(iswallturf(target))
 		if(tearing_wall)
 			return
 		tearing_wall = TRUE
@@ -163,7 +163,7 @@
 		if(istype(target, /turf/closed/wall/r_wall))
 			timetotear = 120
 		if(do_after(src, timetotear, target = thewall))
-			if(istype(thewall, /turf/open))
+			if(isopenturf(thewall))
 				return
 			thewall.dismantle_wall(1)
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
@@ -178,7 +178,7 @@
 					adjustHealth(-L.maxHealth * 0.25)
 			return
 	. = ..()
-	if(istype(target, /obj/vehicle/sealed/mecha))
+	if(ismecha(target))
 		var/obj/vehicle/sealed/mecha/M = target
 		M.take_damage(50, BRUTE, MELEE, 1)
 
@@ -314,7 +314,7 @@
 	turfs = line_target(0, range, at)
 	var/delayFire = -1.0
 	for(var/turf/T in turfs)
-		if(istype(T, /turf/closed))
+		if(isclosedturf(T))
 			return
 		for(var/obj/structure/window/W in T.contents)
 			return

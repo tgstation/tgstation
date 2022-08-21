@@ -190,7 +190,7 @@
 	if(user != M && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if (HAS_TRAIT(H, TRAIT_CLUMSY)) //only clowns can unlock its true powers
-			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "honk", /datum/mood_event/honk)
+			M.add_mood_event("honk", /datum/mood_event/honk)
 	return ..()
 
 /obj/item/bikehorn/suicide_act(mob/user)
@@ -233,7 +233,7 @@
 	COOLDOWN_START(src, golden_horn_cooldown, 1 SECONDS)
 
 //canned laughter
-/obj/item/reagent_containers/food/drinks/soda_cans/canned_laughter
+/obj/item/reagent_containers/cup/soda_cans/canned_laughter
 	name = "Canned Laughter"
 	desc = "Just looking at this makes you want to giggle."
 	icon_state = "laughter"

@@ -197,7 +197,7 @@
 	var/portrait_state
 	var/portrait_desc
 
-/obj/structure/sign/picture_frame/portrait/Initialize()
+/obj/structure/sign/picture_frame/portrait/Initialize(mapload)
 	. = ..()
 	switch(rand(1,4))
 		if(1) // Deempisi
@@ -265,7 +265,7 @@
 	del_id_on_destroy = TRUE
 
 ///Generates a persistence id unique to the current map. Every bar should feel a little bit different after all.
-/obj/structure/sign/picture_frame/portrait/bar/Initialize()
+/obj/structure/sign/picture_frame/portrait/bar/Initialize(mapload)
 	if(SSmapping.config.map_path != CUSTOM_MAP_PATH) //skip adminloaded custom maps.
 		persistence_id = "frame_bar_[SSmapping.config.map_name]"
 	return ..()

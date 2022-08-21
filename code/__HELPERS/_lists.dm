@@ -206,7 +206,7 @@
  * Arguments:
  * - [type_to_check][/datum]: An instance to check.
  * - [list_to_check][/list]: A list of typepaths to check the type_to_check against.
- * - zebra: Whether to use the value of the mathing type in the list instead of just returning true when a match is found.
+ * - zebra: Whether to use the value of the matching type in the list instead of just returning true when a match is found.
  */
 /proc/is_type_in_list(datum/type_to_check, list/list_to_check, zebra = FALSE)
 	if(!LAZYLEN(list_to_check) || !type_to_check)

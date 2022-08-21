@@ -5,7 +5,6 @@
 	icon_state = "retractor"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	inhand_icon_state = "clamps"
 	custom_materials = list(/datum/material/iron = 6000, /datum/material/glass = 3000, /datum/material/silver = 3000)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
@@ -25,7 +24,6 @@
 	icon_state = "hemostat"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	inhand_icon_state = "clamps"
 	custom_materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500, /datum/material/silver = 2500)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
@@ -47,7 +45,6 @@
 	icon_state = "cautery"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	inhand_icon_state = "cautery"
 	custom_materials = list(/datum/material/iron = 2500, /datum/material/glass = 750, /datum/material/silver = 1250)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
@@ -69,6 +66,8 @@
 	desc = "It projects a high power laser used for medical applications."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "e_cautery"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	custom_materials = list(/datum/material/iron = 4000, /datum/material/glass = 2000, /datum/material/plasma = 2000, /datum/material/uranium = 3000, /datum/material/titanium = 3000)
 	hitsound = 'sound/items/welder.ogg'
 	w_class = WEIGHT_CLASS_NORMAL
@@ -109,8 +108,8 @@
 	desc = "You can drill using this item. You dig?"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "drill"
-	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 6000, /datum/material/silver = 5000)
 	flags_1 = CONDUCT_1
@@ -151,7 +150,6 @@
 	icon_state = "scalpel"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	inhand_icon_state = "scalpel"
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	force = 10
@@ -277,6 +275,8 @@
 	desc = "An advanced scalpel which uses laser technology to cut."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "e_scalpel"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	custom_materials = list(/datum/material/iron = 6000, /datum/material/glass = 1500, /datum/material/silver = 2000, /datum/material/gold = 1500, /datum/material/diamond = 200, /datum/material/titanium = 4000)
 	hitsound = 'sound/weapons/blade1.ogg'
 	force = 16
@@ -284,7 +284,7 @@
 	toolspeed = 0.7
 	light_system = MOVABLE_LIGHT
 	light_range = 1
-	light_color = LIGHT_COLOR_GREEN
+	light_color = LIGHT_COLOR_BLUE
 	sharpness = SHARP_EDGED
 
 /obj/item/scalpel/advanced/Initialize(mapload)
@@ -328,6 +328,8 @@
 	icon = 'icons/obj/surgery.dmi'
 	custom_materials = list(/datum/material/iron = 12000, /datum/material/glass = 4000, /datum/material/silver = 4000, /datum/material/titanium = 5000)
 	icon_state = "adv_retractor"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
 
@@ -442,7 +444,7 @@
 	name = "bonesetter"
 	desc = "For setting things right."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "bone setter"
+	icon_state = "bonesetter"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	custom_materials = list(/datum/material/iron = 5000,  /datum/material/glass = 2500, /datum/material/silver = 2500)

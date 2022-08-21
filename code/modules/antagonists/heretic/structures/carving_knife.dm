@@ -244,5 +244,5 @@
 	carbon_victim.set_timed_status_effect(20 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 	carbon_victim.set_timed_status_effect(40 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 	carbon_victim.blind_eyes(2)
-	SEND_SIGNAL(carbon_victim, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
+	carbon_victim.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
 	playsound(src, 'sound/magic/blind.ogg', 75, TRUE)

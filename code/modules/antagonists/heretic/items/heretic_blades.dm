@@ -102,4 +102,4 @@
 	desc = "A blade made of brilliant silver that shines gloriously. Unknown rage is bottled within."
 	icon_state = "dark_blade"
 	inhand_icon_state = "dark_blade"
-	after_use_message = "The Colonel hears your call..."
+	after_use_message = "The Torn Champion hears your call..."

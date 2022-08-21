@@ -329,7 +329,7 @@
 	if(!L.len) //no requirements
 		return TRUE
 
-	if(!istype(I, /obj/item/card/id) && isitem(I))
+	if(!isidcard(I) && isitem(I))
 		I = I.GetID()
 
 	if(!I || !I.access) //not ID or no access
@@ -376,7 +376,9 @@
 /mob/living/silicon/robot/proc/self_destruct(mob/usr)
 	var/turf/groundzero = get_turf(src)
 	message_admins(span_notice("[ADMIN_LOOKUPFLW(usr)] detonated [key_name_admin(src, client)] at [ADMIN_VERBOSEJMP(groundzero)]!"))
-	log_game("[key_name(usr)] detonated [key_name(src)]!")
+	usr.log_message("detonated [key_name(src)]!", LOG_ATTACK)
+	log_message("was detonated by [key_name(usr)]!", LOG_ATTACK, log_globally = FALSE)
+
 	log_combat(usr, src, "detonated cyborg")
 	log_silicon("CYBORG: [key_name(src)] has been detonated by [key_name(usr)].")
 	if(connected_ai)

@@ -1,7 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes: 
-  - refactor: "The Force Event UI has been refactored"
-  - refactor: "Events now have categories and descriptions"
-  - refactor: "Admin triggered events happen immediately"
-  - balance: "Fake Virus and Electric Storms are shown to admins, making them cancelable"

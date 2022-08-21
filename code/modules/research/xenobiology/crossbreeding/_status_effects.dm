@@ -810,7 +810,6 @@
 		originalname = H.real_name
 		H.dna.copy_dna(originalDNA)
 		randomize_human(H)
-		H.dna.update_dna_identity()
 	return ..()
 
 // Only occasionally give examiners a warning.

@@ -33,7 +33,7 @@
 	var/can_hack_open = TRUE
 
 
-/obj/item/storage/secure/Initialize()
+/obj/item/storage/secure/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	atom_storage.max_total_storage = 14
@@ -143,7 +143,7 @@
 	new /obj/item/paper(src)
 	new /obj/item/pen(src)
 
-/obj/item/storage/secure/briefcase/Initialize()
+/obj/item/storage/secure/briefcase/Initialize(mapload)
 	. = ..()
 	atom_storage.max_total_storage = 21
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
@@ -172,7 +172,7 @@
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe, 32)
 
-/obj/item/storage/secure/safe/Initialize()
+/obj/item/storage/secure/safe/Initialize(mapload)
 	. = ..()
 	atom_storage.set_holdable(cant_hold_list = list(/obj/item/storage/secure/briefcase))
 	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC

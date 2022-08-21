@@ -11,7 +11,7 @@
 /area/mine/explored)
 "h" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/bottle/beer{
+/obj/item/reagent_containers/cup/glass/bottle/beer{
 	pixel_x = 7;
 	pixel_y = 5
 	},

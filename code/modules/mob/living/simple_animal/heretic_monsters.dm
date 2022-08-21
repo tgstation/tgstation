@@ -28,7 +28,7 @@
 	movement_type = GROUND
 	pressure_resistance = 100
 	del_on_death = TRUE
-	deathmessage = "implodes into itself."
+	death_message = "implodes into itself."
 	loot = list(/obj/effect/gibspawner/human)
 	faction = list(FACTION_HERETIC)
 	simple_mob_flags = SILENCE_RANGED_MESSAGE
@@ -416,7 +416,7 @@
 	melee_damage_upper = 20
 	sight = SEE_MOBS
 	actions_to_add = list(
-		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash,
 		/datum/action/cooldown/spell/shapeshift/eldritch,
+		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash,
 		/datum/action/cooldown/spell/emp/eldritch,
 	)

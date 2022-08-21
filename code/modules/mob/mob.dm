@@ -722,7 +722,7 @@
 	var/obj/item/I = get_active_held_item()
 	if(I)
 		I.attack_self(src)
-		update_inv_hands()
+		update_held_items()
 		return
 
 	limb_attack_self()
@@ -745,22 +745,22 @@
 		to_chat(usr, span_boldnotice("You must be dead to use this!"))
 		return
 
-	log_game("[key_name(usr)] used the respawn button.")
+	usr.log_message("used the respawn button.", LOG_GAME)
 
 	to_chat(usr, span_boldnotice("Please roleplay correctly!"))
 
 	if(!client)
-		log_game("[key_name(usr)] respawn failed due to disconnect.")
+		usr.log_message("respawn failed due to disconnect.", LOG_GAME)
 		return
 	client.screen.Cut()
 	client.screen += client.void
 	if(!client)
-		log_game("[key_name(usr)] respawn failed due to disconnect.")
+		usr.log_message("respawn failed due to disconnect.", LOG_GAME)
 		return
 
 	var/mob/dead/new_player/M = new /mob/dead/new_player()
 	if(!client)
-		log_game("[key_name(usr)] respawn failed due to disconnect.")
+		usr.log_message("respawn failed due to disconnect.", LOG_GAME)
 		qdel(M)
 		return
 
@@ -1063,7 +1063,7 @@
 	var/search_pda = 1
 
 	for(var/A in searching)
-		if( search_id && istype(A, /obj/item/card/id) )
+		if( search_id && isidcard(A) )
 			var/obj/item/card/id/ID = A
 			if(ID.registered_name == oldname)
 				ID.registered_name = newname

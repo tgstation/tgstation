@@ -241,9 +241,8 @@
 	if(!islist(dirs))
 		dirs = GLOB.alldirs.Copy()
 	playsound(firer, projectile_sound, 200, TRUE, 2)
-	for(var/d in dirs)
-		var/turf/E = get_step(firer, d)
-		shoot_projectile(firer, E, null, firer, null, null)
+	for(var/dir in dirs)
+		shoot_projectile(firer, target, dir2angle(dir), firer)
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/alternating
 	name = "Alternating Shots"

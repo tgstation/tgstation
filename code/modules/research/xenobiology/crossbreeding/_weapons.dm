@@ -28,7 +28,7 @@ Slimecrossing Weapons
 	damtype = BRUTE
 
 /obj/item/knife/rainbowknife/afterattack(atom/O, mob/user, proximity)
-	if(proximity && istype(O, /mob/living))
+	if(proximity && isliving(O))
 		damtype = pick(BRUTE, BURN, TOX, OXY, CLONE)
 	switch(damtype)
 		if(BRUTE)
@@ -71,7 +71,7 @@ Slimecrossing Weapons
 	attack_verb_simple = list("bash", "pound", "slam")
 	item_flags = SLOWS_WHILE_IN_HAND
 
-/obj/item/shield/adamantineshield/ComponentInitialize()
+/obj/item/shield/adamantineshield/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE, force_wielded=15)
 

@@ -92,7 +92,7 @@
 		O.play_tool_sound(src)
 		deconstruct()
 		return 1
-	if(istype(O, /obj/item/reagent_containers)) //Refilling bottles with oil
+	if(is_reagent_container(O)) //Refilling bottles with oil
 		var/obj/item/reagent_containers/RG = O
 		if(RG.is_refillable())
 			if(!RG.reagents.holder_full())
@@ -152,7 +152,7 @@
 			new /obj/item/hemostat(src)
 
 		if(6)
-			new /obj/item/reagent_containers/glass/beaker(src)
+			new /obj/item/reagent_containers/cup/beaker(src)
 			new /obj/item/clothing/glasses/science(src)
 		if(7)
 			new /obj/item/clothing/glasses/sunglasses(src)
@@ -180,7 +180,7 @@
 					locked = TRUE
 					dump_contents()
 					update_appearance()
-					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "graverobbing", /datum/mood_event/graverobbing)
+					user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
 					if(lead_tomb == TRUE && first_open == TRUE)
 						user.gain_trauma(/datum/brain_trauma/magic/stalker)
 						to_chat(user, span_boldwarning("Oh no, no no no, THEY'RE EVERYWHERE! EVERY ONE OF THEM IS EVERYWHERE!"))
@@ -199,7 +199,7 @@
 			to_chat(user, span_notice("You start to remove \the [src]  with \the [S]."))
 			if (do_after(user,15, target = src))
 				to_chat(user, span_notice("You remove \the [src]  completely."))
-				SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "graverobbing", /datum/mood_event/graverobbing)
+				user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
 				deconstruct(TRUE)
 				return 1
 	return

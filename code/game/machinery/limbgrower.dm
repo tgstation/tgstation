@@ -96,7 +96,7 @@
 	return data
 
 /obj/machinery/limbgrower/on_deconstruction()
-	for(var/obj/item/reagent_containers/glass/our_beaker in component_parts)
+	for(var/obj/item/reagent_containers/cup/our_beaker in component_parts)
 		reagents.trans_to(our_beaker, our_beaker.reagents.maximum_volume)
 	..()
 
@@ -233,7 +233,7 @@
 /obj/machinery/limbgrower/RefreshParts()
 	. = ..()
 	reagents.maximum_volume = 0
-	for(var/obj/item/reagent_containers/glass/our_beaker in component_parts)
+	for(var/obj/item/reagent_containers/cup/our_beaker in component_parts)
 		reagents.maximum_volume += our_beaker.volume
 		our_beaker.reagents.trans_to(src, our_beaker.reagents.total_volume)
 	production_coefficient = 1.25
@@ -269,7 +269,7 @@
 	. = ..()
 	for(var/id in SSresearch.techweb_designs)
 		var/datum/design/found_design = SSresearch.techweb_design_by_id(id)
-		if((found_design.build_type & LIMBGROWER) && !("emagged" in found_design.category))
+		if((found_design.build_type & LIMBGROWER) && !(RND_CATEGORY_EMAGGED in found_design.category))
 			stored_research.add_design(found_design)
 
 /// Emagging a limbgrower allows you to build synthetic armblades.
@@ -278,7 +278,7 @@
 		return
 	for(var/design_id in SSresearch.techweb_designs)
 		var/datum/design/found_design = SSresearch.techweb_design_by_id(design_id)
-		if((found_design.build_type & LIMBGROWER) && ("emagged" in found_design.category))
+		if((found_design.build_type & LIMBGROWER) && (RND_CATEGORY_EMAGGED in found_design.category))
 			stored_research.add_design(found_design)
 	to_chat(user, span_warning("Safety overrides have been deactivated!"))
 	obj_flags |= EMAGGED

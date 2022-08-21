@@ -42,6 +42,14 @@ GLOBAL_LIST_INIT(gondola_recipes, list ( \
 	new/datum/stack_recipe("gondola suit", /obj/item/clothing/under/costume/gondola, 2), \
 	))
 
+/obj/item/stack/sheet/animalhide/mothroach
+	name = "mothroach hide"
+	desc = "A thin layer of mothroach hide."
+	singular_name = "mothroach hide piece"
+	icon_state = "sheet-mothroach"
+	inhand_icon_state = "sheet-mothroach"
+	merge_type = /obj/item/stack/sheet/animalhide/mothroach
+
 /obj/item/stack/sheet/animalhide/gondola
 	name = "gondola hide"
 	desc = "The extremely valuable product of gondola hunting."

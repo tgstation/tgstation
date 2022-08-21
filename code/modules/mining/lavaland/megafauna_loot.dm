@@ -70,15 +70,12 @@
 
 /obj/item/hierophant_club/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
 	blink = new(src)
 
 /obj/item/hierophant_club/Destroy()
 	QDEL_NULL(blink)
 	return ..()
-
-/obj/item/hierophant_club/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/hierophant_club/examine(mob/user)
 	. = ..()
@@ -176,7 +173,7 @@
 			user.update_action_buttons_icon()
 			beacon.icon_state = "hierophant_tele_off"
 			return
-		user.log_message("teleported self from [AREACOORD(source)] to [beacon]", LOG_GAME)
+		user.log_message("teleported self from [AREACOORD(source)] to [beacon].", LOG_GAME)
 		new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, user)
 		new /obj/effect/temp_visual/hierophant/telegraph/teleport(source, user)
 		for(var/t in RANGE_TURFS(1, T))
@@ -764,7 +761,7 @@
 		var/turf/open/T = get_turf(target)
 		if(!istype(T))
 			return
-		if(!istype(T, /turf/open/lava))
+		if(!islava(T))
 			var/obj/effect/temp_visual/lavastaff/L = new /obj/effect/temp_visual/lavastaff(T)
 			L.alpha = 0
 			animate(L, alpha = 255, time = create_delay)
@@ -775,7 +772,7 @@
 				if(T.TerraformTurf(turf_type, flags = CHANGETURF_INHERIT_AIR))
 					user.visible_message(span_danger("[user] turns \the [old_name] into [transform_string]!"))
 					message_admins("[ADMIN_LOOKUPFLW(user)] fired the lava staff at [ADMIN_VERBOSEJMP(T)]")
-					log_game("[key_name(user)] fired the lava staff at [AREACOORD(T)].")
+					user.log_message("fired the lava staff at [AREACOORD(T)].", LOG_ATTACK)
 					timer = world.time + create_cooldown
 					playsound(T,'sound/magic/fireball.ogg', 200, TRUE)
 			else
@@ -982,7 +979,7 @@
 	user.transform *= 1.2
 	animate(user, color = old_color, transform = old_transform, time = 1 SECONDS)
 	affected_weather.wind_down()
-	log_game("[user] ([key_name(user)]) has dispelled a storm at [AREACOORD(user_turf)]")
+	user.log_message("has dispelled a storm at [AREACOORD(user_turf)].", LOG_GAME)
 
 /obj/item/storm_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -1014,7 +1011,7 @@
 	addtimer(CALLBACK(src, .proc/throw_thunderbolt, target_turf, power_boosted), 1.5 SECONDS)
 	thunder_charges--
 	addtimer(CALLBACK(src, .proc/recharge), thunder_charge_time)
-	log_game("[key_name(user)] fired the staff of storms at [AREACOORD(target_turf)].")
+	user.log_message("fired the staff of storms at [AREACOORD(target_turf)].", LOG_ATTACK)
 
 /obj/item/storm_staff/proc/recharge(mob/user)
 	thunder_charges = min(thunder_charges + 1, max_thunder_charges)

@@ -41,6 +41,6 @@
 	dragon.mind.add_antag_datum(/datum/antagonist/space_dragon)
 	playsound(dragon, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
 	message_admins("[ADMIN_LOOKUPFLW(dragon)] has been made into a Space Dragon by an event.")
-	log_game("[key_name(dragon)] was spawned as a Space Dragon by an event.")
+	dragon.log_message("was spawned as a Space Dragon by an event.", LOG_GAME)
 	spawned_mobs += dragon
 	return SUCCESSFUL_SPAWN

@@ -9,6 +9,8 @@
 	if(M.ckey)
 		dat += "<center><p>Ckey</p></center>"
 		dat += "<center>"
+		dat += individual_logging_panel_link(M, INDIVIDUAL_GAME_LOG, LOGSRC_CKEY, "Game Log", source, ntype)
+		dat += " | "
 		dat += individual_logging_panel_link(M, INDIVIDUAL_ATTACK_LOG, LOGSRC_CKEY, "Attack Log", source, ntype)
 		dat += " | "
 		dat += individual_logging_panel_link(M, INDIVIDUAL_SAY_LOG, LOGSRC_CKEY, "Say Log", source, ntype)
@@ -28,6 +30,8 @@
 	dat += "<center><p>Mob</p></center>"
 	//Add the links for the mob specific log
 	dat += "<center>"
+	dat += individual_logging_panel_link(M, INDIVIDUAL_GAME_LOG, LOGSRC_MOB, "Game Log", source, ntype)
+	dat += " | "
 	dat += individual_logging_panel_link(M, INDIVIDUAL_ATTACK_LOG, LOGSRC_MOB, "Attack Log", source, ntype)
 	dat += " | "
 	dat += individual_logging_panel_link(M, INDIVIDUAL_SAY_LOG, LOGSRC_MOB, "Say Log", source, ntype)

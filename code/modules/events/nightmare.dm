@@ -41,6 +41,6 @@
 	S.set_species(/datum/species/shadow/nightmare)
 	playsound(S, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
 	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Nightmare by an event.")
-	log_game("[key_name(S)] was spawned as a Nightmare by an event.")
+	S.log_message("was spawned as a Nightmare by an event.", LOG_GAME)
 	spawned_mobs += S
 	return SUCCESSFUL_SPAWN

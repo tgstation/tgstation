@@ -37,22 +37,23 @@
 		flooded_turf = parent_turf.ScrapeAway(1, CHANGETURF_INHERIT_AIR)
 		delete_parent = FALSE
 
-	flooded_turf.atmos_spawn_air("[gas_id]=[gas_amount];TEMP=[temp_amount || trigger_temperature]")
-	
+	flooded_turf.atmos_spawn_air("[gas_id]=[gas_amount]; TEMP=[temp_amount || trigger_temperature]")
+
 	// Logging-related
 	var/admin_message = "[parent] ignited in [ADMIN_VERBOSEJMP(flooded_turf)]"
-	var/log_message = "[parent] ignited in [AREACOORD(flooded_turf)]"
+	var/log_message = "ignited [parent]"
 	if(user)
 		admin_message += " by [ADMIN_LOOKUPFLW(user)]"
-		log_message += " by [key_name(user)]"
+		user.log_message(log_message, LOG_ATTACK, log_globally = FALSE)//only individual log
 	else
+		log_message = "[key_name(user)] " + log_message
 		admin_message += " by fire"
 		log_message += " by fire"
+		log_attack(log_message)
 	message_admins(admin_message)
-	log_game(log_message)
 
 	if(delete_parent && !QDELETED(parent))
-		qdel(parent) // For things with the explodable component like plasma mats this isn't necessary, but there's no harm. 
+		qdel(parent) // For things with the explodable component like plasma mats this isn't necessary, but there's no harm.
 	qdel(src)
 
 /// fire_act reaction.

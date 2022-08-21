@@ -242,7 +242,7 @@
 /obj/item/organ/internal/heart/freedom
 	name = "heart of freedom"
 	desc = "This heart pumps with the passion to give... something freedom."
-	organ_flags = ORGAN_SYNTHETIC //the power of freedom prevents heart attacks
+	organ_flags = ORGAN_SYNTHETIC  //the power of freedom prevents heart attacks
 	/// The cooldown until the next time this heart can give the host an adrenaline boost.
 	COOLDOWN_DECLARE(adrenaline_cooldown)
 
@@ -344,7 +344,7 @@
 	crystalize_timer_id = addtimer(CALLBACK(src, .proc/crystalize, victim), CRYSTALIZE_PRE_WAIT_TIME, TIMER_STOPPABLE)
 
 	RegisterSignal(victim, COMSIG_HUMAN_DISARM_HIT, .proc/reset_crystalizing)
-	RegisterSignal(victim, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(victim, COMSIG_PARENT_EXAMINE, .proc/on_examine, override = TRUE)
 	RegisterSignal(victim, COMSIG_MOB_APPLY_DAMAGE, .proc/on_take_damage)
 
 ///Ran when disarmed, prevents the ethereal from reviving

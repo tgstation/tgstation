@@ -27,12 +27,9 @@
 
 /obj/item/clothing/glasses/meson/engine/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_EYES)
 	START_PROCESSING(SSobj, src)
 	update_appearance()
-
-/obj/item/clothing/glasses/meson/engine/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/clothing/glasses/meson/engine/Destroy()
 	STOP_PROCESSING(SSobj, src)

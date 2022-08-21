@@ -183,7 +183,10 @@
 
 /mob/living/silicon/pai/handle_atom_del(atom/deleting_atom)
 	if(deleting_atom == hacking_cable)
+		untrack_pai()
+		untrack_thing(hacking_cable)
 		hacking_cable = null
+		SStgui.update_user_uis(src)
 		if(!QDELETED(card))
 			card.update_appearance()
 	if(deleting_atom == atmos_analyzer)
@@ -285,7 +288,7 @@
 	var/mob/living/carbon/holder
 	if(!holoform && iscarbon(card.loc))
 		holder = card.loc
-	if(holoform && istype(loc, /obj/item/clothing/head/mob_holder) && iscarbon(loc.loc))
+	if(holoform && ispickedupmob(loc) && iscarbon(loc.loc))
 		holder = loc.loc
 	if(!holder || !iscarbon(holder))
 		return FALSE
