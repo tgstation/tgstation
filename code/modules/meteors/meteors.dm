@@ -10,12 +10,12 @@ GLOBAL_LIST_INIT(meteors_normal, list(/obj/effect/meteor/dust=3, /obj/effect/met
 						  /obj/effect/meteor/flaming=1, /obj/effect/meteor/irradiated=3, /obj/effect/meteor/carp=1, /obj/effect/meteor/bluespace=1, \
 						  /obj/effect/meteor/banana=1)) //for normal meteor event
 
-GLOBAL_LIST_INIT(meteors_threatening, list(/obj/effect/meteor/medium=4, /obj/effect/meteor/big=8, \
-						  /obj/effect/meteor/flaming=3, /obj/effect/meteor/irradiated=3, /obj/effect/meteor/cluster=1, /obj/effect/meteor/carp=1, /obj/effect/meteor/bluespace=2)) //for threatening meteor event
+GLOBAL_LIST_INIT(meteors_threatening, list(/obj/effect/meteor/medium=4, /obj/effect/meteor/big=8, /obj/effect/meteor/flaming=3, \
+						  /obj/effect/meteor/irradiated=3, /obj/effect/meteor/cluster=1, /obj/effect/meteor/carp=1, /obj/effect/meteor/bluespace=2, /obj/effect/meteor/emp = 2)) //for threatening meteor event
 
 GLOBAL_LIST_INIT(meteors_catastrophic, list(/obj/effect/meteor/medium=5, /obj/effect/meteor/big=75, \
-						  /obj/effect/meteor/flaming=10, /obj/effect/meteor/irradiated=10, /obj/effect/meteor/cluster=3, /obj/effect/meteor/tunguska=1, \
-						  /obj/effect/meteor/carp=1, /obj/effect/meteor/bluespace=4)) //for catastrophic meteor event
+						  /obj/effect/meteor/flaming=10, /obj/effect/meteor/irradiated=10, /obj/effect/meteor/cluster=8, /obj/effect/meteor/tunguska=1, \
+						  /obj/effect/meteor/carp=2, /obj/effect/meteor/bluespace=10, /obj/effect/meteor/emp = 8)) //for catastrophic meteor event
 
 GLOBAL_LIST_INIT(meteorsB, list(/obj/effect/meteor/meaty=5, /obj/effect/meteor/meaty/xeno=1)) //for meaty ore event
 
@@ -23,7 +23,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 
 GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=20, /obj/effect/meteor/big=12, \
 						  /obj/effect/meteor/flaming=30, /obj/effect/meteor/irradiated=30, /obj/effect/meteor/carp=35, /obj/effect/meteor/bluespace=30, \
-						  /obj/effect/meteor/banana=25, /obj/effect/meteor/meaty=20, /obj/effect/meteor/meaty/xeno=15, \
+						  /obj/effect/meteor/banana=25, /obj/effect/meteor/meaty=10, /obj/effect/meteor/meaty/xeno=8, /obj/effect/meteor/emp = 30, \
 						  /obj/effect/meteor/tunguska=1)) //for stray meteor event (bigger numbers for a bit finer weighting)
 
 ///////////////////////////////
@@ -303,6 +303,7 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=20, /obj/effect/meteor
 //Cluster meteor
 /obj/effect/meteor/cluster
 	name = "cluster meteor"
+	desc = "A cluster of densely packed rocks, with a volatile core. You should probably get out of the way."
 	icon_state = "sharp"
 	hits = 9
 	heavy = TRUE
@@ -336,7 +337,7 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=20, /obj/effect/meteor
 	hits = 2
 	meteorsound = 'sound/effects/ethereal_revive_fail.ogg'
 	meteordrop = list(/mob/living/simple_animal/hostile/carp)
-	threat = 2
+	threat = 3
 	signature = "fishing and trawling"
 
 //bluespace meteor
@@ -362,7 +363,7 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=20, /obj/effect/meteor
 	hits = 50
 	meteordrop = list(/obj/item/stack/ore/bananium)
 	meteorsound = 'sound/items/bikehorn.ogg'
-	threat = 25
+	threat = 15
 	movement_type = PHASING
 	signature = "comedy"
 
@@ -388,6 +389,24 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=20, /obj/effect/meteor
 /obj/effect/meteor/banana/Bump()
 	playsound(get_turf(src), 'sound/items/bikehorn.ogg', 50, TRUE)
 	get_hit()
+
+/obj/effect/meteor/emp
+	name = "electromagnetically charged meteor"
+	desc = "It radiates with captive energy, ready to "
+	icon_state = "bluespace"
+	hits = 6
+	threat = 10
+	signature = "electromagnetic interference"
+
+/obj/effect/meteor/emp/Move()
+	. = ..()
+	if(.)
+		new /obj/effect/temp_visual/impact_effect/ion(get_turf(src))
+
+/obj/effect/meteor/emp/meteor_effect()
+	..()
+	playsound(src, 'sound/weapons/zapbang.ogg', 100, TRUE, -1)
+	empulse(src, 3, 8)
 
 //Meaty Ore
 /obj/effect/meteor/meaty
@@ -452,7 +471,7 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=20, /obj/effect/meteor
 	meteorsound = 'sound/effects/bamf.ogg'
 	meteordrop = list(/obj/item/stack/ore/plasma)
 	threat = 50
-	signature = "doomsday"
+	signature = "armageddon"
 
 /obj/effect/meteor/tunguska/Move()
 	. = ..()
