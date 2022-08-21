@@ -412,25 +412,34 @@
 		Items closer to you are more likely to be haunted."
 	icon_icon = 'icons/mob/actions/actions_revenant.dmi'
 	button_icon_state = "r_haunt"
-	aoe_radius = 5
 	max_targets = 7
+	aoe_radius = 5
 
 	unlock_amount = 50
 	cast_amount = 40
 	stun_duration = 4 SECONDS
 	reveal_duration = 6 SECONDS
 
+	/// Static list of types that, if our haunted items are smacked with one of these, they will stop being haunted.
+	var/static/list/types_which_dispell_us = list(/obj/item/nullrod, /obj/item/storage/book/bible)
+
 /datum/action/cooldown/spell/aoe/revenant/haunt_object/get_things_to_cast_on(atom/center)
 	var/list/things = list()
 	for(var/obj/item/nearby_item in range(aoe_radius, center))
-		if(nearby_item.anchored || nearby_item.density)
+		// Don't throw around anchored things or dense things
+		// (Or things not on a turf but I am not sure if range can catch that)
+		if(nearby_item.anchored || nearby_item.density || !isturf(nearby_item.loc))
 			continue
+		// Don't throw abstract things
 		if(nearby_item.item_flags & ABSTRACT)
 			continue
+		// Don't throw things we can't see
 		if(nearby_item.invisibility >= INVISIBILITY_REVENANT)
 			continue
+		// Don't throw things that are already throwing themself
 		if(istype(nearby_item.ai_controller, /datum/ai_controller/haunted))
 			continue
+
 		things += nearby_item
 
 	return things
@@ -444,8 +453,20 @@
 	new /obj/effect/temp_visual/revenant(get_turf(victim))
 	victim.make_haunted(HAUNT_COLOR, rand(2 MINUTES, 4 MINUTES), 4)
 	victim.visible_message(span_revenwarning("[victim] begins to float and twirl into the air as it glows a ghastly purple!"))
-	victim.throwforce = min(victim.throwforce + 5, 15)
+	victim.throwforce = min(victim.throwforce + 3, 15)
 	RegisterSignal(victim, COMSIG_ELEMENT_DETACH, .proc/on_element_detach)
+	RegisterSignal(victim, COMSIG_PARENT_ATTACKBY, .proc/on_hit_by_holy_tool)
+
+/// Signal proc for [COMSIG_PARENT_ATTACKBY], when we get smacked by holy stuff we should stop being ghostly.
+/datum/action/cooldown/spell/aoe/revenant/haunt_object/proc/on_hit_by_holy_tool(obj/item/source, obj/item/attacking_item, mob/living/attacker, params)
+	SIGNAL_HANDLER
+
+	if(!is_type_in_list(attacking_item, types_which_dispell_us))
+		return
+
+	attacker.visible_message(span_warning("[attacker] dispells the ghostly energy from [source]!"), span_warning("You dispel the ghostly energy from [source]!"))
+	source.clear_haunting()
+	return COMPONENT_NO_AFTERATTACK
 
 /// Signal proc for [COMSIG_ELEMENT_DETACH] to give a message when our haunt ends.
 /datum/action/cooldown/spell/aoe/revenant/haunt_object/proc/on_element_detach(obj/item/source, datum/element/detached)
@@ -456,7 +477,7 @@
 
 	source.visible_message(span_revenwarning("[source] falls back to the ground, stationary once more."))
 	source.throwforce = initial(source.throwforce)
-	UnregisterSignal(source, COMSIG_ELEMENT_DETACH)
+	UnregisterSignal(source, list(COMSIG_ELEMENT_DETACH, COMSIG_PARENT_ATTACKBY))
 
 #undef HAUNT_COLOR
 
