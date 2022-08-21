@@ -114,7 +114,7 @@
 			auth_id = "\[NULL\]"
 		if("toggle-logs")
 			should_log = !should_log
-			operator.log_message("set the logs of [src] [should_log ? "On" : "Off"].")
+			operator.log_message("set the logs of [src] [should_log ? "On" : "Off"].", LOG_GAME)
 		if("restore-console")
 			restoring = TRUE
 			addtimer(CALLBACK(src, .proc/restore_comp), rand(3,5) * 9)
@@ -136,7 +136,7 @@
 			APC.remote_control = src
 			APC.ui_interact(operator)
 			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
-			operator.log_message("remotely accessed [APC] from [src].")
+			operator.log_message("remotely accessed [APC] from [src].", LOG_GAME)
 			log_activity("[auth_id] remotely accessed APC in [get_area_name(APC.area, TRUE)]")
 			if(APC.locked)
 				APC.say("Remote access detected. Interface unlocked.")

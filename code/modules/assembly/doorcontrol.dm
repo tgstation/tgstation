@@ -175,59 +175,6 @@
 
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 50)
 
-//how long it spends on each floor when moving somewhere, so it'd take 4 seconds to reach you if it had to travel up 2 floors
-#define FLOOR_TRAVEL_TIME 2 SECONDS
-/obj/item/assembly/control/elevator
-	name = "elevator controller"
-	desc = "A small device used to call elevators to the current floor."
-
-/obj/item/assembly/control/elevator/activate()
-	if(cooldown)
-		return
-	cooldown = TRUE
-	var/datum/lift_master/lift
-	for(var/datum/lift_master/possible_match as anything in GLOB.active_lifts_by_type[BASIC_LIFT_ID])
-		if(possible_match.specific_lift_id != id || !check_z(possible_match) || possible_match.controls_locked)
-			continue
-
-		lift = possible_match
-		break
-
-	if(!lift)
-		addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 2 SECONDS)
-		return
-
-	var/obj/structure/industrial_lift/target = lift.lift_platforms[1]
-	var/target_z = target.z
-
-	lift.set_controls(LIFT_PLATFORM_LOCKED)
-	///The z level to which the elevator should travel
-	var/targetZ = (abs(loc.z)) //The target Z (where the elevator should move to) is not our z level (we are just some assembly in nullspace) but actually the Z level of whatever we are contained in (e.g. elevator button)
-	///The amount of z levels between the our and targetZ
-	var/difference = abs(targetZ - target_z)
-	///Direction (up/down) needed to go to reach targetZ
-	var/direction = target_z < targetZ ? UP : DOWN
-	///How long it will/should take us to reach the target Z level
-	var/travel_duration = FLOOR_TRAVEL_TIME * difference //100 / 2 floors up = 50 seconds on every floor, will always reach destination in the same time
-	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), travel_duration)
-
-	for(var/i in 1 to difference)
-		sleep(FLOOR_TRAVEL_TIME)//hey this should be alright... right?
-		if(QDELETED(lift) || QDELETED(src))//elevator control or button gone = don't go up anymore
-			return
-		lift.MoveLift(direction, null)
-	lift.set_controls(LIFT_PLATFORM_UNLOCKED)
-
-///check if any of the lift platforms are already here
-/obj/item/assembly/control/elevator/proc/check_z(datum/lift_master/lift)
-	for(var/obj/structure/industrial_lift/platform as anything in lift.lift_platforms)
-		if(platform.z == loc.z)
-			return FALSE
-
-	return TRUE
-
-#undef FLOOR_TRAVEL_TIME
-
 /obj/item/assembly/control/tram
 	name = "tram call button"
 	desc = "A small device used to bring trams to you."

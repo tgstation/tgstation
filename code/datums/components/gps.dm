@@ -167,7 +167,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 
 			gpstag = a
 			. = TRUE
-			usr.log_message("renamed [parentasatom] to \"global positioning system ([gpstag])\".")
+			usr.log_message("renamed [parentasatom] to \"global positioning system ([gpstag])\".", LOG_GAME)
 			parentasatom.name = "global positioning system ([gpstag])"
 
 		if("power")

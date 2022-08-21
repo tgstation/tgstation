@@ -7,7 +7,7 @@
 
 /obj/item/implant/storage/activate()
 	. = ..()
-	atom_storage?.open_storage(src, imp_in)
+	atom_storage?.open_storage(imp_in)
 
 /obj/item/implant/storage/removed(source, silent = FALSE, special = 0)
 	if(!special)

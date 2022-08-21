@@ -9,7 +9,7 @@
 	var/smokeradius = 1
 	var/mutable_appearance/weed_overlay
 
-/obj/structure/toiletbong/Initialize()
+/obj/structure/toiletbong/Initialize(mapload)
 	. = ..()
 	create_storage()
 	atom_storage.attack_hand_interact = FALSE

@@ -207,7 +207,7 @@
 	for(var/mob/living/simple_animal/slime/slime in range(1,src))
 		if(slime.loc == src)
 			continue
-		if(istype(slime, /mob/living/simple_animal/slime))
+		if(isslime(slime))
 			if(slime.stat)
 				picked_slime = slime
 				break

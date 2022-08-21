@@ -4,18 +4,22 @@
 	max_total_storage = 50
 	rustle_sound = FALSE
 
-/datum/storage/pockets/attempt_insert(datum/source, obj/item/to_insert, mob/user, override, force)
+/datum/storage/pockets/attempt_insert(obj/item/to_insert, mob/user, override, force)
 	. = ..()
+	if(!.)
+		return
 
 	var/obj/item/resolve_parent = parent?.resolve()
 	if(!resolve_parent)
 		return
 
-	if(. && silent && !override)
-		if(quickdraw)
-			to_chat(user, span_notice("You discreetly slip [to_insert] into [resolve_parent]. Right-click [resolve_parent] to remove it."))
-		else
-			to_chat(user, span_notice("You discreetly slip [to_insert] into [resolve_parent]."))
+	if(!silent || override)
+		return
+
+	if(quickdraw)
+		to_chat(user, span_notice("You discreetly slip [to_insert] into [resolve_parent]. Right-click [resolve_parent] to remove it."))
+	else
+		to_chat(user, span_notice("You discreetly slip [to_insert] into [resolve_parent]."))
 
 /datum/storage/pockets/small
 	max_slots = 1
@@ -55,7 +59,7 @@
 
 /datum/storage/pockets/chefhat/can_insert(obj/item/to_insert, mob/user, messages, force)
 	. = ..()
-	if(istype(to_insert, /obj/item/clothing/head/mob_holder))
+	if(ispickedupmob(to_insert))
 		var/obj/item/clothing/head/mob_holder/mausholder = to_insert
 		if(locate(/mob/living/simple_animal/mouse) in mausholder.contents)
 			return
@@ -153,9 +157,9 @@
 
 /datum/storage/pockets/helmet/New()
 	. = ..()
-	set_holdable(list(/obj/item/reagent_containers/food/drinks/bottle/vodka,
-					  /obj/item/reagent_containers/food/drinks/bottle/molotov,
-					  /obj/item/reagent_containers/food/drinks/drinkingglass,
+	set_holdable(list(/obj/item/reagent_containers/cup/glass/bottle/vodka,
+					  /obj/item/reagent_containers/cup/glass/bottle/molotov,
+					  /obj/item/reagent_containers/cup/glass/drinkingglass,
 					  /obj/item/ammo_box/a762))
 
 
@@ -177,7 +181,7 @@
 		/obj/item/melee/rune_carver,
 		/obj/item/melee/sickly_blade, // Normal sized, so you can only fit one.
 		/obj/item/organ, // Organs are also often used in rituals.
-		/obj/item/reagent_containers/glass/beaker/eldritch,
+		/obj/item/reagent_containers/cup/beaker/eldritch,
 	))
 
 	var/static/list/exception_cache = typecacheof(list(/obj/item/bodypart, /obj/item/melee/sickly_blade))

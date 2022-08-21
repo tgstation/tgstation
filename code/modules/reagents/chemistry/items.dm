@@ -238,8 +238,8 @@
 /obj/item/burner/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(lit && M.ignite_mob())
 		message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(M)] on fire with [src] at [AREACOORD(user)]")
-		user.log_message("set [key_name(M)] on fire with [src] at [AREACOORD(user)].", LOG_GAME)
-		M.log_message("was set on fire by [key_name(user)] with [src] at [AREACOORD(M)].", LOG_VICTIM)
+		user.log_message("set [key_name(M)] on fire with [src]", LOG_GAME)
+		M.log_message("was set on fire by [key_name(user)] with [src]", LOG_VICTIM, log_globally = FALSE)
 	return ..()
 
 /obj/item/burner/process()

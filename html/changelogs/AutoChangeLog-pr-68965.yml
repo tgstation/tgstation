@@ -1,4 +1,0 @@
-author: "Mooshimi"
-delete-after: True
-changes: 
-  - bugfix: "Things that are ventcrawling can no longer alt click tiles to see what is outside the pipes."

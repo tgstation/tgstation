@@ -95,6 +95,7 @@
 				span_userdanger("[user] tries to put [equipping] on you."),
 				ignored_mobs = user,
 			)
+
 		else
 			source.visible_message(
 				span_notice("[user] tries to put [equipping] on [source]."),
@@ -108,6 +109,9 @@
 				if(victim_human.stat <= SOFT_CRIT && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
 					var/list/new_entry = list(list(user.name, "tried equipping you with [equipping]", world.time))
 					LAZYADD(victim_human.afk_thefts, new_entry)
+
+			else if(victim_human.is_blind())
+				to_chat(source, span_userdanger("You feel someone trying to put something on you."))
 
 	to_chat(user, span_notice("You try to put [equipping] on [source]..."))
 
@@ -153,6 +157,7 @@
 	source.visible_message(
 		span_warning("[user] tries to remove [source]'s [item.name]."),
 		span_userdanger("[user] tries to remove your [item.name]."),
+		blind_message = span_hear("You hear rustling."),
 		ignored_mobs = user,
 	)
 
@@ -167,6 +172,9 @@
 			if(victim_human.stat <= SOFT_CRIT && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
 				var/list/new_entry = list(list(user.name, "tried unequipping your [item.name]", world.time))
 				LAZYADD(victim_human.afk_thefts, new_entry)
+
+		else if(victim_human.is_blind())
+			to_chat(source, span_userdanger("You feel someone fumble with your belongings."))
 
 	return TRUE
 

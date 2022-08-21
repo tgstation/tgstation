@@ -247,6 +247,10 @@
 			continue
 		banned_knowledge += final_knowledge_type
 
+/datum/heretic_knowledge/limited_amount/starting/on_research(mob/user)
+	. = ..()
+	SSblackbox.record_feedback("tally", "heretic_path_taken", 1, route)
+
 /*
  * A knowledge subtype for heretic knowledge
  * that applies a mark on use.
@@ -631,7 +635,7 @@
 		human_user.physiology.brute_mod *= 0.5
 		human_user.physiology.burn_mod *= 0.5
 
-
+	SSblackbox.record_feedback("tally", "heretic_ascended", 1, route)
 	log_heretic_knowledge("[key_name(user)] completed their final ritual at [worldtime2text()].")
 	return TRUE
 

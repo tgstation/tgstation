@@ -124,6 +124,8 @@
 
 // /mob/living
 #define VV_HK_GIVE_SPEECH_IMPEDIMENT "impede_speech"
+#define VV_HK_ADD_MOOD "addmood"
+#define VV_HK_REMOVE_MOOD "removemood"
 
 // /mob/living/carbon
 #define VV_HK_MAKE_AI "aiify"

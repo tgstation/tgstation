@@ -144,7 +144,7 @@
 /turf/open/floor/pod/dark,
 /area/awaymission/bmpship/aft)
 "gC" = (
-/obj/item/reagent_containers/food/drinks/bottle/beer/almost_empty{
+/obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty{
 	pixel_x = 11;
 	pixel_y = 12
 	},
@@ -550,7 +550,7 @@
 /obj/structure/chair/office/light{
 	dir = 8
 	},
-/obj/item/reagent_containers/food/drinks/bottle/beer/almost_empty{
+/obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty{
 	pixel_x = -13;
 	pixel_y = 9
 	},

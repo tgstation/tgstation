@@ -76,7 +76,7 @@
 	else
 		target.take_bodypart_damage(damage)
 
-	SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "eye_stab", /datum/mood_event/eye_stab)
+	target.add_mood_event("eye_stab", /datum/mood_event/eye_stab)
 
 	log_combat(user, target, "attacked", "[item.name]", "(Combat mode: [user.combat_mode ? "On" : "Off"])")
 

@@ -152,7 +152,7 @@
 	var/turf/T = get_turf(src)
 	if(default_deconstruction_crowbar(I))
 		message_admins("[src] has been deconstructed by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)].")
-		user.log_message("deconstructed [src] at [AREACOORD(src)].", LOG_GAME)
+		user.log_message("deconstructed [src]", LOG_GAME)
 		investigate_log("deconstructed by [key_name(user)] at [AREACOORD(src)].", INVESTIGATE_ENGINE)
 		return
 	else if(panel_open && I.tool_behaviour == TOOL_CROWBAR)

@@ -3,9 +3,9 @@
 #define DEEPFRYER_BURNTIME 120
 
 GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
-	/obj/item/reagent_containers/glass,
+	/obj/item/reagent_containers/cup,
 	/obj/item/reagent_containers/syringe,
-	/obj/item/reagent_containers/food/condiment,
+	/obj/item/reagent_containers/condiment,
 	/obj/item/storage,
 	/obj/item/delivery,
 	/obj/item/his_grace)))
