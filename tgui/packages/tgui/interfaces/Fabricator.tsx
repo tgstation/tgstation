@@ -75,7 +75,7 @@ export const Fabricator = (props, context) => {
   );
 
   return (
-    <Window title={data.fab_name} width={550} height={675}>
+    <Window title={data.fab_name} width={768} height={750}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item grow>
@@ -201,9 +201,6 @@ const MaterialCost = (
             name={material as keyof typeof MATERIAL_KEYS}
             amount={cost * amount}
             formatting={MaterialFormatting.SIUnits}
-            style={{
-              transform: 'scale(0.75) translate(0%, 10%)',
-            }}
             color={
               cost * amount > available[material]
                 ? 'bad'
@@ -237,10 +234,9 @@ const PrintButton = (
 
   return (
     <Button
-      className={[
-        'Fabricator__PrintAmount',
-        cantPrint && 'Fabricator__PrintAmount--disabled',
-      ]}
+      className={`Fabricator__PrintAmount ${
+        cantPrint ? 'Fabricator__PrintAmount--disabled' : ''
+      }`}
       tooltip={
         displayMatCost && (
           <MaterialCost design={design} amount={amount} available={available} />
@@ -276,10 +272,9 @@ const Recipe = (
         <Stack.Item grow>
           <Button
             color={'transparent'}
-            className={`
-              Fabricator__Button
-              ${cantPrint ? 'Fabricator__Button--disabled' : ''},
-            `}
+            className={`Fabricator__Button ${
+              cantPrint ? 'Fabricator__Button--disabled' : ''
+            }`}
             fluid
             tooltip={
               displayMatCost && (
