@@ -3,9 +3,6 @@
 //Can hear deadchat, but are NOT normal ghosts and do NOT have x-ray vision
 //Admin-spawn or random event
 
-#define INVISIBILITY_REVENANT 50
-#define REVENANT_NAME_FILE "revenant_names.json"
-
 /mob/living/simple_animal/revenant
 	name = "revenant"
 	desc = "A malevolent spirit."
