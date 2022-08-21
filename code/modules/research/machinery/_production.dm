@@ -64,6 +64,7 @@
 
 /obj/machinery/rnd/production/RefreshParts()
 	. = ..()
+
 	calculate_efficiency()
 
 /obj/machinery/rnd/production/ui_assets(mob/user)
