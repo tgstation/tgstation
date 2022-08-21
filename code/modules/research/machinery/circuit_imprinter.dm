@@ -11,10 +11,10 @@
 
 	var/total_rating = 1.2
 
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		total_rating -= M.rating * 0.2 // There is only one.
+	for(var/obj/item/stock_parts/manipulator/manipulator in component_parts)
+		total_rating -= manipulator.rating * 0.2 // There is only one.
 
-	efficiency_coeff = max(total_rating * 0.5, 0)
+	efficiency_coeff = max(total_rating, 0)
 
 /obj/machinery/rnd/production/circuit_imprinter/offstation
 	name = "ancient circuit imprinter"
