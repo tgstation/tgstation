@@ -139,9 +139,10 @@
 // If you're wondering what's with the backslashes, the backslashes cause BYOND to not automatically end the line.
 // As such this all gets counted as a single line.
 // The braces and semicolons are there to be able to do this on a single line.
-GLOBAL_VAR_INIT(z_light_sclar, 3)
 #define LUM_FALLOFF(C, T) (1 - CLAMP01(sqrt((C.x - T.x) ** 2 + (C.y - T.y) ** 2 + LIGHTING_HEIGHT) / max(1, light_range)))
-#define LUM_FALLOFF_MULTIZ(C, T) (1 - CLAMP01(sqrt((C.x - T.x) ** 2 + (C.y - T.y) ** 2 + (abs(C.z - T.z) * GLOB.z_light_sclar) ** 2 + LIGHTING_HEIGHT) / max(1, light_range)))
+// You may notice we still use squares here even though there are three components
+// Because z diffs are so functionally small, cubes and cube roots are too aggressive
+#define LUM_FALLOFF_MULTIZ(C, T) (1 - CLAMP01(sqrt((C.x - T.x) ** 2 + (C.y - T.y) ** 2 + abs(C.z - T.z) ** 2 + LIGHTING_HEIGHT) / max(1, light_range)))
 
 #define APPLY_CORNER(C)                          \
 	if(C.z != pixel_turf.z) {                    \
