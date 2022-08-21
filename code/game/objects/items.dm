@@ -1505,9 +1505,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 		ai_controller.blackboard[BB_TO_HAUNT_LIST][WEAKREF(victim)] = 5
 
 /**
- * Clears haunting from our item.
- *
- * color - Optional. What color of haunting should be removed from our item.
+ * Clears haunting from our item, for use in callbacks generally.
  */
-/obj/item/proc/clear_haunting(color)
-	RemoveElement(/datum/element/haunted, color)
+/obj/item/proc/clear_haunting()
+	RemoveElement(/datum/element/haunted)

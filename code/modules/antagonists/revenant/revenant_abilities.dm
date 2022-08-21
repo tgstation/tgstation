@@ -429,6 +429,8 @@
 			continue
 		if(nearby_item.invisibility >= INVISIBILITY_REVENANT)
 			continue
+		if(istype(nearby_item.ai_controller, /datum/ai_controller/haunted))
+			continue
 		things += nearby_item
 
 	return things
