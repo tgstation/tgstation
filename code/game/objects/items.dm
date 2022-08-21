@@ -1497,10 +1497,13 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 	if(!ai_controller || isnull(aggro_radius))
 		return
 
+	// We were given an aggro radius, we'll start attacking people nearby
 	for(var/mob/living/victim in view(aggro_radius, src))
-		if(victim.stat == DEAD)
+		if(victim.stat != CONSCIOUS)
 			continue
 		if(victim.mob_biotypes & MOB_SPIRIT)
+			continue
+		if(victim.invisibility >= INVISIBILITY_REVENANT)
 			continue
 		ai_controller.blackboard[BB_TO_HAUNT_LIST][WEAKREF(victim)] = 5
 

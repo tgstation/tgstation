@@ -437,13 +437,14 @@
 
 /datum/action/cooldown/spell/aoe/revenant/haunt_object/cast_on_thing_in_aoe(obj/item/victim, mob/living/simple_animal/revenant/caster)
 	var/distance_from_caster = get_dist(get_turf(victim), get_turf(caster))
-	var/chance_of_haunting = 100 * (1 / distance_from_caster)
+	var/chance_of_haunting = 150 * (1 / distance_from_caster)
 	if(!prob(chance_of_haunting))
 		return
 
 	new /obj/effect/temp_visual/revenant(get_turf(victim))
 	victim.make_haunted(HAUNT_COLOR, rand(2 MINUTES, 4 MINUTES), 4)
 	victim.visible_message(span_revenwarning("[victim] begins to float and twirl into the air as it glows a ghastly purple!"))
+	victim.throwforce = min(victim.throwforce + 5, 15)
 	RegisterSignal(victim, COMSIG_ELEMENT_DETACH, .proc/on_element_detach)
 
 /// Signal proc for [COMSIG_ELEMENT_DETACH] to give a message when our haunt ends.
@@ -454,6 +455,7 @@
 		return
 
 	source.visible_message(span_revenwarning("[source] falls back to the ground, stationary once more."))
+	source.throwforce = initial(source.throwforce)
 	UnregisterSignal(source, COMSIG_ELEMENT_DETACH)
 
 #undef HAUNT_COLOR
