@@ -1490,11 +1490,13 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
  */
 /obj/item/proc/make_haunted(color, haunt_duration, aggro_radius)
 	AddElement(/datum/element/haunted, color)
+	if(!ai_controller) // failed to make spooky, maybe already spooky??
+		return
 
 	if(!isnull(haunt_duration))
-		addtimer(CALLBACK(src, .proc/clear_haunting, color), haunt_duration)
+		addtimer(CALLBACK(src, .proc/clear_haunting), haunt_duration)
 
-	if(!ai_controller || isnull(aggro_radius))
+	if(isnull(aggro_radius))
 		return
 
 	// We were given an aggro radius, we'll start attacking people nearby
@@ -1505,6 +1507,8 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 			continue
 		if(victim.invisibility >= INVISIBILITY_REVENANT)
 			continue
+		// This gives all mobs in view "5" haunt level
+		// For reference picking one up gives "2"
 		ai_controller.blackboard[BB_TO_HAUNT_LIST][WEAKREF(victim)] = 5
 
 /**
