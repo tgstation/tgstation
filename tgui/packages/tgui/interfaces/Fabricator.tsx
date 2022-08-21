@@ -206,7 +206,7 @@ const MaterialCost = (
               cost * amount > available[material]
                 ? 'bad'
                 : cost * amount * 2 > available[material]
-                  ? 'danger'
+                  ? 'average'
                   : 'normal'
             }
           />
