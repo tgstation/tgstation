@@ -1123,7 +1123,7 @@
 	dir = 8;
 	dwidth = 3;
 	height = 15;
-	id = "arrivals_stationary";
+	shuttle_id = "arrivals_stationary";
 	name = "arrivals";
 	roundstart_template = /datum/map_template/shuttle/arrival/box;
 	width = 7
@@ -1247,7 +1247,7 @@
 	dir = 8;
 	dwidth = 2;
 	height = 13;
-	id = "ferry_home";
+	shuttle_id = "ferry_home";
 	name = "port bay 2";
 	width = 5
 	},
@@ -1278,7 +1278,7 @@
 	dir = 4;
 	dwidth = 4;
 	height = 7;
-	id = "supply_home";
+	shuttle_id = "supply_home";
 	name = "Cargo Bay";
 	width = 12
 	},
@@ -1428,7 +1428,7 @@
 	dir = 2;
 	dwidth = 11;
 	height = 15;
-	id = "whiteship_home";
+	shuttle_id = "whiteship_home";
 	name = "SS13: Auxiliary Dock, Station-Port";
 	width = 28
 	},
@@ -1485,7 +1485,7 @@
 	dir = 2;
 	dwidth = 9;
 	height = 25;
-	id = "emergency_home";
+	shuttle_id = "emergency_home";
 	name = "Runtimestation emergency evac bay";
 	width = 29
 	},
@@ -2098,7 +2098,7 @@
 /area/station/construction)
 "tG" = (
 /obj/docking_port/stationary/random{
-	id = "pod_lavaland";
+	shuttle_id = "pod_lavaland";
 	name = "lavaland"
 	},
 /turf/open/space/basic,

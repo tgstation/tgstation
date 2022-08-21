@@ -37,7 +37,7 @@
 /area/station/security/checkpoint/medical/medsci)
 "aat" = (
 /obj/docking_port/stationary/random{
-	id = "pod_2_lavaland";
+	shuttle_id = "pod_2_lavaland";
 	name = "lavaland"
 	},
 /turf/open/space,
@@ -263,7 +263,7 @@
 	dir = 2;
 	dwidth = 4;
 	height = 17;
-	id = "arrivals_stationary";
+	shuttle_id = "arrivals_stationary";
 	name = "delta arrivals";
 	roundstart_template = /datum/map_template/shuttle/arrival/delta;
 	width = 9
@@ -707,7 +707,7 @@
 	dir = 8;
 	dwidth = 12;
 	height = 17;
-	id = "syndicate_ne";
+	shuttle_id = "syndicate_ne";
 	name = "northeast of station";
 	width = 23
 	},
@@ -718,7 +718,7 @@
 	dir = 8;
 	dwidth = 11;
 	height = 22;
-	id = "whiteship_home";
+	shuttle_id = "whiteship_home";
 	name = "SS13: Auxiliary Dock, Station-Fore";
 	width = 35
 	},
@@ -817,7 +817,7 @@
 /obj/docking_port/stationary{
 	dwidth = 2;
 	height = 13;
-	id = "ferry_home";
+	shuttle_id = "ferry_home";
 	name = "port bay 2";
 	width = 5
 	},
@@ -2678,7 +2678,7 @@
 	dir = 4;
 	dwidth = 4;
 	height = 7;
-	id = "supply_home";
+	shuttle_id = "supply_home";
 	name = "Cargo Bay";
 	width = 12
 	},
@@ -6374,7 +6374,7 @@
 	dir = 2;
 	dwidth = 11;
 	height = 18;
-	id = "emergency_home";
+	shuttle_id = "emergency_home";
 	name = "DeltaStation emergency evac bay";
 	width = 30
 	},
@@ -30281,7 +30281,7 @@
 /area/station/security/execution/transfer)
 "hmx" = (
 /obj/docking_port/stationary/random{
-	id = "pod_lavaland";
+	shuttle_id = "pod_lavaland";
 	name = "lavaland"
 	},
 /turf/open/space/basic,
@@ -38383,7 +38383,7 @@
 "jmn" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
-	id = "pod_4_lavaland";
+	shuttle_id = "pod_4_lavaland";
 	name = "lavaland"
 	},
 /turf/open/space,
@@ -49364,7 +49364,7 @@
 	dir = 4;
 	dwidth = 4;
 	height = 9;
-	id = "aux_base_zone";
+	shuttle_id = "aux_base_zone";
 	name = "Aux Base Zone";
 	roundstart_template = /datum/map_template/shuttle/aux_base/default;
 	width = 9

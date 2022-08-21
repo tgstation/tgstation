@@ -141,7 +141,7 @@
 	var/crash_strength = rand(min_crash_strength,max_crash_strength)
 	for (var/S in SSshuttle.stationary_docking_ports)
 		var/obj/docking_port/stationary/SM = S
-		if (SM.id == "emergency_home")
+		if (SM.shuttle_id == "emergency_home")
 			var/new_dir = turn(SM.dir, 180)
 			SM.forceMove(get_ranged_target_turf(SM, new_dir, crash_strength))
 			break

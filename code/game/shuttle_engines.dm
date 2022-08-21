@@ -17,75 +17,102 @@
 	desc = "A bluespace engine used to make shuttles move."
 	density = TRUE
 	anchored = TRUE
+
 	var/engine_power = 1
-	var/state = ENGINE_WELDED //welding shmelding
+	///Construction state of the Engine.
+	var/engine_state = ENGINE_WELDED //welding shmelding //i love welding
+
+	///The mobile ship we are connected to.
+	var/datum/weakref/connected_ship
+
+/obj/structure/shuttle/engine/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+	. = ..()
+	if(!port)
+		return FALSE
+	connected_ship = WEAKREF(port)
+	port.engine_list += src
+	port.current_engines++
+	if(mapload)
+		port.initial_engines++
+
+/obj/structure/shuttle/engine/Destroy()
+	if(engine_state == ENGINE_WELDED)
+		alter_engine_power(-engine_power)
+	unsync_ship()
+	return ..()
+
+/**
+ * Called on destroy and when we need to unsync an engine from their ship.
+ */
+/obj/structure/shuttle/engine/proc/unsync_ship()
+	if(!connected_ship)
+		return
+	var/obj/docking_port/mobile/port = connected_ship.resolve()
+	port.engine_list -= src
+	connected_ship = null
 
 //Ugh this is a lot of copypasta from emitters, welding need some boilerplate reduction
 /obj/structure/shuttle/engine/can_be_unfasten_wrench(mob/user, silent)
-	if(state == ENGINE_WELDED)
+	if(engine_state == ENGINE_WELDED)
 		if(!silent)
 			to_chat(user, span_warning("[src] is welded to the floor!"))
 		return FAILED_UNFASTEN
 	return ..()
 
-/obj/structure/shuttle/engine/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
+/obj/structure/shuttle/engine/default_unfasten_wrench(mob/user, obj/item/tool, time = 20)
 	. = ..()
 	if(. == SUCCESSFUL_UNFASTEN)
 		if(anchored)
-			state = ENGINE_WRENCHED
+			connect_to_shuttle(port = SSshuttle.get_containing_shuttle(src)) //connect to a new ship, if needed
+			engine_state = ENGINE_WRENCHED
 		else
-			state = ENGINE_UNWRENCHED
+			unsync_ship() //not part of the ship anymore
+			engine_state = ENGINE_UNWRENCHED
 
 /obj/structure/shuttle/engine/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/structure/shuttle/engine/welder_act(mob/living/user, obj/item/I)
+/obj/structure/shuttle/engine/welder_act(mob/living/user, obj/item/tool)
 	. = ..()
-	switch(state)
+	switch(engine_state)
 		if(ENGINE_UNWRENCHED)
 			to_chat(user, span_warning("The [src.name] needs to be wrenched to the floor!"))
 		if(ENGINE_WRENCHED)
-			if(!I.tool_start_check(user, amount=0))
+			if(!tool.tool_start_check(user, amount=0))
 				return TRUE
 
 			user.visible_message(span_notice("[user.name] starts to weld the [name] to the floor."), \
 				span_notice("You start to weld \the [src] to the floor..."), \
 				span_hear("You hear welding."))
 
-			if(I.use_tool(src, user, ENGINE_WELDTIME, volume=50))
-				state = ENGINE_WELDED
+			if(tool.use_tool(src, user, ENGINE_WELDTIME, volume=50))
+				engine_state = ENGINE_WELDED
 				to_chat(user, span_notice("You weld \the [src] to the floor."))
 				alter_engine_power(engine_power)
 
 		if(ENGINE_WELDED)
-			if(!I.tool_start_check(user, amount=0))
+			if(!tool.tool_start_check(user, amount=0))
 				return TRUE
 
 			user.visible_message(span_notice("[user.name] starts to cut the [name] free from the floor."), \
 				span_notice("You start to cut \the [src] free from the floor..."), \
 				span_hear("You hear welding."))
 
-			if(I.use_tool(src, user, ENGINE_WELDTIME, volume=50))
-				state = ENGINE_WRENCHED
+			if(tool.use_tool(src, user, ENGINE_WELDTIME, volume=50))
+				engine_state = ENGINE_WRENCHED
 				to_chat(user, span_notice("You cut \the [src] free from the floor."))
 				alter_engine_power(-engine_power)
 	return TRUE
 
-/obj/structure/shuttle/engine/Destroy()
-	if(state == ENGINE_WELDED)
-		alter_engine_power(-engine_power)
-	. = ..()
-
 //Propagates the change to the shuttle.
 /obj/structure/shuttle/engine/proc/alter_engine_power(mod)
-	if(mod == 0)
+	if(!mod)
 		return
-	if(SSshuttle.is_in_shuttle_bounds(src))
-		var/obj/docking_port/mobile/M = SSshuttle.get_containing_shuttle(src)
-		if(M)
-			M.alter_engines(mod)
+	var/obj/docking_port/mobile/port = connected_ship.resolve()
+	if(port)
+		port.alter_engines(mod)
 
 /obj/structure/shuttle/engine/heater
 	name = "engine heater"
@@ -125,7 +152,7 @@
 	desc = "An engine that releases a large bluespace burst to propel it."
 
 /obj/structure/shuttle/engine/propulsion/burst/cargo
-	state = ENGINE_UNWRENCHED
+	engine_state = ENGINE_UNWRENCHED
 	anchored = FALSE
 
 /obj/structure/shuttle/engine/propulsion/burst/left
@@ -143,10 +170,10 @@
 
 /obj/structure/shuttle/engine/large
 	name = "engine"
-	opacity = TRUE
 	icon = 'icons/obj/2x2.dmi'
 	icon_state = "large_engine"
 	desc = "A very large bluespace engine used to propel very large ships."
+	opacity = TRUE
 	bound_width = 64
 	bound_height = 64
 	appearance_flags = LONG_GLIDE
@@ -160,10 +187,10 @@
 
 /obj/structure/shuttle/engine/huge
 	name = "engine"
-	opacity = TRUE
 	icon = 'icons/obj/3x3.dmi'
 	icon_state = "huge_engine"
 	desc = "An extremely large bluespace engine used to propel extremely large ships."
+	opacity = TRUE
 	bound_width = 96
 	bound_height = 96
 	appearance_flags = LONG_GLIDE

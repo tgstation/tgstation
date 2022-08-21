@@ -1,6 +1,6 @@
 /obj/docking_port/mobile/arrivals
 	name = "arrivals shuttle"
-	id = "arrivals"
+	shuttle_id = "arrivals"
 
 	dwidth = 3
 	width = 7

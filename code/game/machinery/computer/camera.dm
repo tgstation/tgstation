@@ -58,10 +58,10 @@
 	QDEL_NULL(cam_background)
 	return ..()
 
-/obj/machinery/computer/security/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+/obj/machinery/computer/security/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	for(var/i in network)
 		network -= i
-		network += "[port.id]_[i]"
+		network += "[port.shuttle_id]_[i]"
 
 /obj/machinery/computer/security/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -303,7 +303,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 
 	INVOKE_ASYNC(src, /atom.proc/interact, usr)
 
-///Sets the monitor's icon to the selected state, and says an announcement 
+///Sets the monitor's icon to the selected state, and says an announcement
 /obj/machinery/computer/security/telescreen/entertainment/proc/notify(on, announcement)
 	if(on && icon_state == icon_state_off)
 		icon_state = icon_state_on
@@ -354,7 +354,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 		"Spears! Camera! Action! LIVE NOW!")
 	/// List of phrases the entertainment console may say when the show ends
 	var/list/tv_enders = list("Thank you for tuning in to the slaughter!",
-		"What a show! And we guarantee next one will be bigger!", 
+		"What a show! And we guarantee next one will be bigger!",
 		"Celebrate the results with Thundermerch!",
 		"This show was brought to you by Nanotrasen.")
 

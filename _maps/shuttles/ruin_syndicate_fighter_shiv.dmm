@@ -83,7 +83,7 @@
 	dir = 4;
 	dwidth = 4;
 	height = 5;
-	id = "caravansyndicate1";
+	shuttle_id = "caravansyndicate1";
 	ignitionTime = 25;
 	name = "Syndicate Fighter";
 	port_direction = 2;
