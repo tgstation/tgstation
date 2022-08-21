@@ -303,7 +303,7 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=20, /obj/effect/meteor
 //Cluster meteor
 /obj/effect/meteor/cluster
 	name = "cluster meteor"
-	icon_state = "glowing" //ADD SPRITE
+	icon_state = "sharp"
 	hits = 9
 	heavy = TRUE
 	meteorsound = 'sound/effects/break_stone.ogg'
@@ -326,12 +326,12 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=20, /obj/effect/meteor
 
 /obj/effect/meteor/cluster_fragment
 	name = "cluster meteor fragment"
-	icon_state = "small" //make a small little baby sprite for this
+	icon_state = "dust"
 
 //frozen carp "meteor"
 /obj/effect/meteor/carp
 	name = "frozen carp"
-	icon_state = "meateor" //fish in ice cube sprite or something
+	icon_state = "carp"
 	desc = "Am I glad he's frozen in there, and that we're out here."
 	hits = 2
 	meteorsound = 'sound/effects/ethereal_revive_fail.ogg'
@@ -342,7 +342,7 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=20, /obj/effect/meteor
 //bluespace meteor
 /obj/effect/meteor/bluespace
 	name = "bluespace meteor"
-	icon_state = "glowing" //ADD SPRITE
+	icon_state = "bluespace"
 	dropamt = 3
 	hits = 12
 	meteordrop = list(/obj/item/stack/ore/bluespace_crystal)
@@ -357,7 +357,7 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=20, /obj/effect/meteor
 /obj/effect/meteor/banana
 	name = "bananium meteor"
 	desc = "Maybe it's a chunk blasted off of the legendary Clown Planet... How annoying."
-	icon_state = "glowing" //ADD SPRITE
+	icon_state = "bananium"
 	dropamt = 4
 	hits = 50
 	meteordrop = list(/obj/item/stack/ore/bananium)
@@ -370,14 +370,14 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=20, /obj/effect/meteor
 	playsound(src, 'sound/items/AirHorn.ogg', 100, TRUE, -1)
 	for(var/atom/movable/object in view(6, get_turf(src)))
 		var/turf/throwtarget = get_edge_target_turf(get_turf(src), get_dir(get_turf(src), get_step_away(object, get_turf(src))))
-		object.safe_throw_at(throwtarget, 5, 2, force = MOVE_FORCE_STRONG) //this was a lot more destructive than I thought holy shit
+		object.safe_throw_at(throwtarget, 5, 2, force = MOVE_FORCE_STRONG)
 
 /obj/effect/meteor/banana/ram_turf(turf/bumped)
 	for(var/mob/living/slipped in get_turf(bumped))
 		playsound(slipped, 'sound/items/bikehorn.ogg', 100, TRUE, -1)
 		slipped.slip(100, slipped.loc,- GALOSHES_DONT_HELP|SLIDE, 0, FALSE)
 		slipped.visible_message(span_warning("[src] honks [bumped] to the floor!"), span_userdanger("[src] harmlessly passes through you, knocking you over."))
-	playsound(src.loc, meteorsound, 40, TRUE)
+	playsound(get_turf(src), meteorsound, 40, TRUE)
 	get_hit()
 
 /obj/effect/meteor/banana/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
