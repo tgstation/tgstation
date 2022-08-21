@@ -109,18 +109,19 @@
 /// Adds contextual screentips
 /obj/structure/sign/poster/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	if (held_item?.tool_behaviour == TOOL_WIRECUTTER)
+	if (!held_item)
+		if (ruined)
+			return .
+		context[SCREENTIP_CONTEXT_LMB] = "Rip up poster"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if (held_item.tool_behaviour == TOOL_WIRECUTTER)
 		if (ruined)
 			context[SCREENTIP_CONTEXT_LMB] = "Clean up remnants"
 			return CONTEXTUAL_SCREENTIP_SET
 		context[SCREENTIP_CONTEXT_LMB] = "Take down poster"
 		return CONTEXTUAL_SCREENTIP_SET
-
-	if (ruined)
-		return .
-
-	context[SCREENTIP_CONTEXT_LMB] = "Rip up poster"
-	return CONTEXTUAL_SCREENTIP_SET
+	return .
 
 /obj/structure/sign/poster/proc/randomise(base_type)
 	var/list/poster_types = subtypesof(base_type)
