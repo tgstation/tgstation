@@ -194,7 +194,7 @@
 	dir = 4;
 	dwidth = 13;
 	height = 3;
-	id = "pirateship_home";
+	shuttle_id = "pirateship_home";
 	name = "Deep Space";
 	width = 26
 	},

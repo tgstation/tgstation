@@ -453,12 +453,13 @@
 	SSshuttle.mobile_docking_ports -= src
 
 /obj/docking_port/mobile/Destroy(force)
-	unregister()
-	destination = null
-	previous = null
-	QDEL_NULL(assigned_transit) //don't need it where we're goin'!
-	shuttle_areas = null
-	remove_ripples()
+	if(force)
+		unregister()
+		destination = null
+		previous = null
+		QDEL_NULL(assigned_transit) //don't need it where we're goin'!
+		shuttle_areas = null
+		remove_ripples()
 	return ..()
 
 /obj/docking_port/mobile/Initialize(mapload)
