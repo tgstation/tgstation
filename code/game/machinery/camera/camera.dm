@@ -1,3 +1,5 @@
+GLOBAL_LIST_INIT(no_xray_in_dorms, list(/area/station/commons/dorms, /area/station/maintenance/department/crew_quarters/dorms))
+
 #define CAMERA_UPGRADE_XRAY (1<<0)
 #define CAMERA_UPGRADE_EMP_PROOF (1<<1)
 #define CAMERA_UPGRADE_MOTION (1<<2)
@@ -73,10 +75,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	if(old_assembly) //check to see if the camera assembly was upgraded at all.
 		assembly = old_assembly
 		assembly_ref = WEAKREF(assembly) //important to do this now since upgrades call back to the assembly_ref
-		if(assembly.xray_module)
-			upgradeXRay()
-		else if(assembly.malf_xray_firmware_present) //if it was secretly upgraded via the MALF AI Upgrade Camera Network ability
-			upgradeXRay(TRUE)
+		var/area/dorms_check = get_area(src)
+		if(assembly.xray_module || assembly.malf_xray_firmware_present)
+			if(is_type_in_list(dorms_check, GLOB.no_xray_in_dorms))
+				if(!assembly_malf_xray_firmware_present) // dont alert them there's a malf AI doing xrays
+					playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
+					balloon_alert_to_viewers("no xray in dorms!")
+			else
+				if(assembly.malf_xray_firmware_present) //if it was secretly upgraded via the MALF AI Upgrade Camera Network ability
+					upgradeXRay(TRUE)
+				else
+					upgradeXRay()
 
 		if(assembly.emp_module)
 			upgradeEmpProof()
