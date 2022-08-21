@@ -108,7 +108,7 @@
 
 	for(var/plane_key in plane_masters)
 		var/atom/movable/screen/plane_master/plane = plane_masters[plane_key]
-		if(!plane.accepts_input || !plane.allows_offsetting)
+		if(!plane.multiz_scaled || !plane.allows_offsetting)
 			continue
 		var/visual_offset = plane.offset - new_offset
 		if(plane.force_hidden || visual_offset < 0)

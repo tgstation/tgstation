@@ -47,9 +47,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	/// Use alpha for that
 	var/force_hidden = FALSE
 
-	/// If this plane is used OUTSIDE of the plane master relay tree or not
-	/// Basically, do we draw to this? or does it just exist to apply effects and such
-	var/accepts_input = TRUE
+	/// If this plane should be scaled by multiz
+	/// Planes with this set should NEVER be relay'd into each other, as that will cause visual fuck
+	var/multiz_scaled = TRUE
 
 /atom/movable/screen/plane_master/Initialize(mapload, datum/plane_master_group/home, offset = 0)
 	src.offset = offset
@@ -167,8 +167,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	documentation = "Contains the screen object we use as a backdrop to catch clicks on portions of the screen that would otherwise contain nothing else. \
 		<br>Will always be below almost everything else"
 	plane = CLICKCATCHER_PLANE
-	// Lemon todo: rename this var
-	accepts_input = FALSE
+	multiz_scaled = FALSE
 
 /atom/movable/screen/plane_master/clickcatcher/Initialize(mapload, datum/plane_master_group/home, offset)
 	. = ..()
@@ -198,7 +197,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	plane = PLANE_SPACE_PARALLAX
 	blend_mode = BLEND_MULTIPLY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	accepts_input = FALSE
+	multiz_scaled = FALSE
 
 /atom/movable/screen/plane_master/parallax/Initialize(mapload, datum/plane_master_group/home, offset)
 	. = ..()
@@ -269,9 +268,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	// We do NOT allow offsetting, because there's no case where you would want to block only one layer, at least currently
 	allows_offsetting = FALSE
 	start_hidden = TRUE
-	// We mark as accepts_input FALSE so transforms don't effect us, and we draw to the planes below us as if they were us.
+	// We mark as multiz_scaled FALSE so transforms don't effect us, and we draw to the planes below us as if they were us.
 	// This is safe because we will ALWAYS be on the top z layer, so it DON'T MATTER
-	accepts_input = FALSE
+	multiz_scaled = FALSE
 
 /atom/movable/screen/plane_master/field_of_vision_blocker/Initialize(mapload, datum/plane_master_group/home, offset)
 	. = ..()
@@ -322,9 +321,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		<br>Of note: plane master blackness, and the blackness that comes from having nothing to display look similar, but are not the same thing,\
 		mind yourself when you're working with this plane, you might have accidentially been trying to work with the wrong thing."
 	plane = BLACKNESS_PLANE
-	// Note: we don't set this to blend multiply because it just dies when its alpha is modified, since there's no backdrop I think
-	// Marked as accepts input = FALSE because it should not scale, scaling lets you see "through" the floor
-	accepts_input = FALSE
+	// Note: we don't set this to blend multiply because it just dies when its alpha is modified, because of fun byond bugs
+	// Marked as multiz_scaled = FALSE because it should not scale, scaling lets you see "through" the floor
+	multiz_scaled = FALSE
 
 /atom/movable/screen/plane_master/blackness/show_to(mob/mymob)
 	. = ..()

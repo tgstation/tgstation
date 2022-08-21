@@ -25,7 +25,7 @@
  */
 /atom/movable/screen/plane_master/rendering_plate
 	name = "Default rendering plate"
-	accepts_input = FALSE
+	multiz_scaled = FALSE
 
 ///this plate renders the final screen to show to the player
 /atom/movable/screen/plane_master/rendering_plate/master
@@ -96,7 +96,6 @@
 	plane = RENDER_PLANE_GAME_WORLD
 	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
-	accepts_input = FALSE
 
 /atom/movable/screen/plane_master/rendering_plate/game_world/show_to(mob/mymob)
 	. = ..()
