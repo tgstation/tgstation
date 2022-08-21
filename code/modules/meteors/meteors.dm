@@ -7,7 +7,8 @@ GLOBAL_VAR_INIT(meteor_wave_delay, 625) //minimum wait between waves in tenths o
 
 //Meteors probability of spawning during a given wave
 GLOBAL_LIST_INIT(meteors_normal, list(/obj/effect/meteor/dust=3, /obj/effect/meteor/medium=8, /obj/effect/meteor/big=3, \
-						  /obj/effect/meteor/flaming=1, /obj/effect/meteor/irradiated=3, /obj/effect/meteor/carp=1, /obj/effect/meteor/bluespace=2)) //for normal meteor event
+						  /obj/effect/meteor/flaming=1, /obj/effect/meteor/irradiated=3, /obj/effect/meteor/carp=1, /obj/effect/meteor/bluespace=2, \
+						  /obj/effect/meteor/banana)) //for normal meteor event
 
 GLOBAL_LIST_INIT(meteors_threatening, list(/obj/effect/meteor/medium=4, /obj/effect/meteor/big=8, \
 						  /obj/effect/meteor/flaming=3, /obj/effect/meteor/irradiated=3, /obj/effect/meteor/cluster=1, /obj/effect/meteor/carp=1, /obj/effect/meteor/bluespace=3)) //for threatening meteor event
@@ -341,6 +342,26 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 	..()
 	if(prob(25)) //hee hoo using do_teleport() deletes effects so I cannot do that oh no :(
 		do_teleport(src, get_turf(src), 5, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
+
+/obj/effect/meteor/banana
+	name = "bananium meteor"
+	desc = "Maybe it's a chunk blasted off of the legendary Clown Planet... How annoying."
+	icon_state = "glowing" //ADD SPRITE
+	dropamt = 2
+	hits = 50
+	meteordrop = list(/obj/item/stack/ore/bananium)
+	threat = 25
+
+/obj/effect/meteor/banana/meteor_effect()
+	..()
+	playsound(src, 'sound/items/AirHorn.ogg', 100, TRUE, -1)
+	for(var/atom/movable/object in view(7, get_turf(src)))
+		var/turf/throwtarget = get_edge_target_turf(get_turf(src), get_dir(get_turf(src), get_step_away(object, get_turf(src))))
+		object.safe_throw_at(throwtarget, 7, 2, force = MOVE_FORCE_STRONG) //this was a lot more destructive than I thought holy shit
+
+/obj/effect/meteor/banana/Bump()
+	playsound(get_turf(src), 'sound/items/bikehorn.ogg', 50, TRUE)
+	get_hit()
 
 //Meaty Ore
 /obj/effect/meteor/meaty
