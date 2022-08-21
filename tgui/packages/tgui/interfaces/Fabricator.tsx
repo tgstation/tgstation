@@ -73,6 +73,7 @@ type FabricatorData = {
 const BLACKLISTED_CATEGORIES: Record<string, boolean> = {
   'initial': true,
   'core': true,
+  'hacked': true,
 };
 
 /**
@@ -363,6 +364,14 @@ const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
   return (
     <div class="Fabricator__Recipe">
       <Stack justify="space-between" align="stretch">
+        <Stack.Item>
+          <Button
+            icon="question-circle"
+            color="transparent"
+            tooltip={design.desc}
+            tooltipPosition="left"
+          />
+        </Stack.Item>
         <Stack.Item grow>
           <Button
             color={'transparent'}
