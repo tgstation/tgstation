@@ -78,7 +78,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		var/area/dorms_check = get_area(src)
 		if(assembly.xray_module || assembly.malf_xray_firmware_present)
 			if(is_type_in_list(dorms_check, GLOB.no_xray_in_dorms))
-				if(!assembly_malf_xray_firmware_present) // dont alert them there's a malf AI doing xrays
+				if(!assembly.malf_xray_firmware_present) // dont alert them there's a malf AI doing xrays
 					playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
 					balloon_alert_to_viewers("no xray in dorms!")
 			else
