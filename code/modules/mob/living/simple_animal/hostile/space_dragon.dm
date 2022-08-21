@@ -514,32 +514,36 @@
 	button_icon_state = "carp_rift"
 
 /datum/action/innate/summon_rift/Activate()
-	var/mob/living/simple_animal/hostile/space_dragon/S = owner
-	if(S.using_special)
+	var/mob/living/simple_animal/hostile/space_dragon/dragon = owner
+	if(dragon.using_special)
 		return
-	if(S.riftTimer == -1)
-		to_chat(S, span_warning("Your death has left you unable to summon rifts!"))
+	if(dragon.riftTimer == -1)
+		to_chat(dragon, span_warning("Your death has left you unable to summon rifts!"))
 		return
-	var/area/A = get_area(S)
-	if(!(A.area_flags & VALID_TERRITORY))
-		to_chat(S, span_warning("You can't summon a rift here! Try summoning somewhere secure within the station!"))
+	var/area/rift_spawn_area = get_area(dragon)
+	if(!(rift_spawn_area.area_flags & VALID_TERRITORY))
+		to_chat(dragon, span_warning("You can't summon a rift here! Try summoning somewhere secure within the station!"))
 		return
-	for(var/obj/structure/carp_rift/rift in S.rift_list)
-		var/area/RA = get_area(rift)
-		if(RA == A)
-			to_chat(S, span_warning("You've already summoned a rift in this area! You have to summon again somewhere else!"))
+	for(var/obj/structure/carp_rift/rift in dragon.rift_list)
+		var/area/other_rift_area = get_area(rift)
+		if(other_rift_area == rift_spawn_area)
+			to_chat(dragon, span_warning("You've already summoned a rift in this area! You have to summon again somewhere else!"))
 			return
-	to_chat(S, span_warning("You begin to open a rift..."))
-	if(do_after(S, 100, target = S))
-		for(var/obj/structure/carp_rift/c in S.loc.contents)
+	var/turf/rift_spawn_turf = get_turf(dragon)
+	if(isopenspaceturf(rift_spawn_turf))
+		dragon.balloon_alert(dragon, "needs stable ground!")
+		return
+	to_chat(dragon, span_warning("You begin to open a rift..."))
+	if(do_after(dragon, 100, target = dragon))
+		for(var/obj/structure/carp_rift/already_spawned in dragon.loc.contents)
 			return
-		var/obj/structure/carp_rift/CR = new /obj/structure/carp_rift(S.loc)
-		playsound(S, 'sound/vehicles/rocketlaunch.ogg', 100, TRUE)
-		S.riftTimer = -1
-		CR.dragon = S
-		S.rift_list += CR
-		to_chat(S, span_boldwarning("The rift has been summoned. Prevent the crew from destroying it at all costs!"))
-		notify_ghosts("The Space Dragon has opened a rift!", source = CR, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Carp Rift Opened")
+		var/obj/structure/carp_rift/carp_rift = new /obj/structure/carp_rift(dragon.loc)
+		playsound(dragon, 'sound/vehicles/rocketlaunch.ogg', 100, TRUE)
+		dragon.riftTimer = -1
+		carp_rift.dragon = dragon
+		dragon.rift_list += carp_rift
+		to_chat(dragon, span_boldwarning("The rift has been summoned. Prevent the crew from destroying it at all costs!"))
+		notify_ghosts("The Space Dragon has opened a rift!", source = carp_rift, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Carp Rift Opened")
 		qdel(src)
 
 /**
