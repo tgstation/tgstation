@@ -230,7 +230,6 @@
 		/obj/item/reagent_containers/condiment/vinegar = 1,
 		/obj/item/reagent_containers/condiment/peanut_butter = 1,
 		/obj/item/reagent_containers/condiment/quality_oil = 1,
-		/obj/item/reagent_containers/condiment/honey = 1,
 		/obj/item/reagent_containers/condiment/cherryjelly = 1,
 	)
 
