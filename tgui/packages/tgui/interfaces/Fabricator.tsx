@@ -164,14 +164,14 @@ export const Fabricator = (props, context) => {
                         available={availableMaterials}
                       />
                     ))}
+                  {busy ? (
+                    <Dimmer
+                      style={{ 'font-size': '2em', 'text-align': 'center' }}>
+                      <Icon name="cog" spin />
+                      {' Building items...'}
+                    </Dimmer>
+                  ) : undefined}
                 </Section>
-                {busy ? (
-                  <Dimmer
-                    style={{ 'font-size': '2em', 'text-align': 'center' }}>
-                    <Icon name="cog" spin />
-                    {' Building items...'}
-                  </Dimmer>
-                ) : undefined}
                 {on_hold ? (
                   <Dimmer
                     style={{ 'font-size': '2em', 'text-align': 'center' }}>
