@@ -153,7 +153,7 @@
 	var/total_rating = 1.2
 
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		total_rating -= total_rating - (M.rating * 0.1)
+		total_rating -= (M.rating * 0.1)
 
 	efficiency_coeff = max(total_rating, 0)
 
@@ -354,3 +354,8 @@
 		stripe.icon_state = "protolathe_stripe_t"
 	stripe.color = stripe_color
 	. += stripe
+
+/obj/machinery/rnd/production/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += span_notice("The status display reads: Storing up to <b>[materials.local_size]</b> material units.<br>Material consumption at <b>[efficiency_coeff * 100]%</b>.<br>Build time reduced by <b>[100 - efficiency_coeff * 100]%</b>.")

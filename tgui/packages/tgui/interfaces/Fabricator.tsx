@@ -2,6 +2,7 @@ import { useBackend, useSharedState } from '../backend';
 import { Stack, Section, Button, Input, Icon, Tabs, Dimmer } from '../components';
 import { Window } from '../layouts';
 import { Material, MaterialAmount, MaterialFormatting, Materials, MATERIAL_KEYS } from './common/Materials';
+import { Fragment } from 'inferno';
 
 type Design = {
   name: string;
@@ -75,7 +76,7 @@ export const Fabricator = (props, context) => {
   );
 
   return (
-    <Window title={data.fab_name} width={768} height={750}>
+    <Window title={data.fab_name} width={670} height={768}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item grow>
@@ -110,7 +111,7 @@ export const Fabricator = (props, context) => {
                   scrollable
                   title="Recipes"
                   buttons={
-                    <span>
+                    <Fragment>
                       <Button.Checkbox
                         onClick={() => setDisplayMatCost(!displayMatCost)}
                         checked={displayMatCost}>
@@ -120,49 +121,43 @@ export const Fabricator = (props, context) => {
                         content="R&D Sync"
                         onClick={() => act('sync_rnd')}
                       />
-                    </span>
+                    </Fragment>
                   }>
-                  <Stack vertical>
+                  <Stack align="baseline">
                     <Stack.Item>
-                      <Stack align="baseline">
-                        <Stack.Item>
-                          <Icon name="search" />
-                        </Stack.Item>
-                        <Stack.Item grow>
-                          <Input
-                            fluid
-                            placeholder="Search for..."
-                            onInput={(_e: unknown, v: string) =>
-                              setSearchText(v.toLowerCase())
-                            }
-                          />
-                        </Stack.Item>
-                      </Stack>
+                      <Icon name="search" />
                     </Stack.Item>
                     <Stack.Item grow>
-                      <Section>
-                        {Object.values(sortedDesigns)
-                          .filter(
-                            (design) =>
-                              selectedCategory === '__ALL' ||
-                              design.categories?.indexOf(selectedCategory) !==
-                                -1
-                          )
-                          .filter(
-                            (design) =>
-                              design.name.toLowerCase().indexOf(searchText) !==
-                              -1
-                          )
-                          .map((design) => (
-                            <Recipe
-                              key={design.name}
-                              design={design}
-                              available={availableMaterials}
-                            />
-                          ))}
-                      </Section>
+                      <Input
+                        fluid
+                        placeholder="Search for..."
+                        onInput={(_e: unknown, v: string) =>
+                          setSearchText(v.toLowerCase())
+                        }
+                        value={searchText}
+                      />
                     </Stack.Item>
                   </Stack>
+
+                  <br />
+
+                  {Object.values(sortedDesigns)
+                    .filter(
+                      (design) =>
+                        selectedCategory === '__ALL' ||
+                        design.categories?.indexOf(selectedCategory) !== -1
+                    )
+                    .filter(
+                      (design) =>
+                        design.name.toLowerCase().indexOf(searchText) !== -1
+                    )
+                    .map((design) => (
+                      <Recipe
+                        key={design.name}
+                        design={design}
+                        available={availableMaterials}
+                      />
+                    ))}
                 </Section>
                 {busy ? (
                   <Dimmer style={{ 'font-size': '2em' }}>
@@ -194,7 +189,7 @@ const MaterialCost = (
   const { design, amount, available } = props;
 
   return (
-    <Stack>
+    <Stack wrap justify="space-around">
       {Object.entries(design.cost).map(([material, cost]) => (
         <Stack.Item key={material}>
           <MaterialAmount
@@ -204,7 +199,7 @@ const MaterialCost = (
             color={
               cost * amount > available[material]
                 ? 'bad'
-                : cost * (amount + 1) > available['material']
+                : cost * amount * 2 > available[material]
                   ? 'danger'
                   : 'normal'
             }
@@ -225,7 +220,7 @@ const PrintButton = (
   const [displayMatCost] = useSharedState(
     context,
     'display_material_cost',
-    false
+    true
   );
   const cantPrint = Object.entries(design.cost).some(
     ([material, amount]) =>
@@ -259,7 +254,7 @@ const Recipe = (
   const [displayMatCost] = useSharedState(
     context,
     'display_material_cost',
-    false
+    true
   );
   const cantPrint = Object.entries(design.cost).some(
     ([material, amount]) =>
@@ -299,16 +294,3 @@ const Recipe = (
     </div>
   );
 };
-
-/*
-<Materials
-                vertical
-                materials={data.materials || []}
-                onEject={(ref, amount) => {
-                  act('remove_mat', {
-                    ref: ref,
-                    amount: amount,
-                  });
-                }}
-              />
-              */
