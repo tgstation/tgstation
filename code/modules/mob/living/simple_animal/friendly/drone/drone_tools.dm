@@ -16,6 +16,7 @@
 		/obj/item/wrench/drone,
 		/obj/item/weldingtool/drone,
 		/obj/item/wirecutters/drone,
+		/obj/item/multitool/drone,
 	)
 	atom_storage.max_total_storage = 40
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
@@ -31,6 +32,7 @@
 	builtintools += new /obj/item/wrench/drone(src)
 	builtintools += new /obj/item/weldingtool/drone(src)
 	builtintools += new /obj/item/wirecutters/drone(src)
+	builtintools += new /obj/item/multitool/drone(src)
 
 	for(var/obj/item/tool as anything in builtintools)
 		tool.AddComponent(/datum/component/holderloving, src, TRUE)
@@ -86,3 +88,11 @@
 	inhand_icon_state = "cutters"
 	item_flags = NO_MAT_REDEMPTION
 	random_color = FALSE
+
+/obj/item/multitool/drone
+	name = "built-in multitool"
+	desc = "A multitool built into your chassis."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "multitool_cyborg"
+	item_flags = NO_MAT_REDEMPTION
+	toolspeed = 0.5
