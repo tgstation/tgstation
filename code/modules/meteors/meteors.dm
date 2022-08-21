@@ -24,7 +24,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=20, /obj/effect/meteor/big=12, \
 						  /obj/effect/meteor/flaming=25, /obj/effect/meteor/irradiated=30, /obj/effect/meteor/carp=25, /obj/effect/meteor/bluespace=30, \
 						  /obj/effect/meteor/banana=25, /obj/effect/meteor/meaty=10, /obj/effect/meteor/meaty/xeno=8, /obj/effect/meteor/emp = 30, \
-						  /obj/effect/meteor/tunguska=1)) //for stray meteor event (bigger numbers for a bit finer weighting)
+						  /obj/effect/meteor/cluster=20, /obj/effect/meteor/tunguska=1)) //for stray meteor event (bigger numbers for a bit finer weighting)
 
 ///////////////////////////////
 //Meteor spawning global procs
@@ -360,7 +360,7 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=20, /obj/effect/meteor
 	desc = "Maybe it's a chunk blasted off of the legendary Clown Planet... How annoying."
 	icon_state = "bananium"
 	dropamt = 4
-	hits = 50
+	hits = 175 //Travels through a lot of stuff, and can simply pass through the station without detonating if lucky
 	meteordrop = list(/obj/item/stack/ore/bananium)
 	meteorsound = 'sound/items/bikehorn.ogg'
 	threat = 15
@@ -370,29 +370,23 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=20, /obj/effect/meteor
 /obj/effect/meteor/banana/meteor_effect()
 	..()
 	playsound(src, 'sound/items/AirHorn.ogg', 100, TRUE, -1)
-	for(var/atom/movable/object in view(6, get_turf(src)))
+	for(var/atom/movable/object in view(4, get_turf(src)))
 		var/turf/throwtarget = get_edge_target_turf(get_turf(src), get_dir(get_turf(src), get_step_away(object, get_turf(src))))
-		object.safe_throw_at(throwtarget, 5, 2, force = MOVE_FORCE_STRONG)
+		object.safe_throw_at(throwtarget, 5, 1, force = MOVE_FORCE_STRONG)
 
 /obj/effect/meteor/banana/ram_turf(turf/bumped)
 	for(var/mob/living/slipped in get_turf(bumped))
-		playsound(slipped, 'sound/items/bikehorn.ogg', 100, TRUE, -1)
 		slipped.slip(100, slipped.loc,- GALOSHES_DONT_HELP|SLIDE, 0, FALSE)
-		slipped.visible_message(span_warning("[src] honks [bumped] to the floor!"), span_userdanger("[src] harmlessly passes through you, knocking you over."))
-	playsound(get_turf(src), meteorsound, 40, TRUE)
+		slipped.visible_message(span_warning("[src] honks [slipped] to the floor!"), span_userdanger("[src] harmlessly passes through you, knocking you over."))
 	get_hit()
 
 /obj/effect/meteor/banana/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	..()
 	return
 
-/obj/effect/meteor/banana/Bump()
-	playsound(get_turf(src), 'sound/items/bikehorn.ogg', 50, TRUE)
-	get_hit()
-
 /obj/effect/meteor/emp
 	name = "electromagnetically charged meteor"
-	desc = "It radiates with captive energy, ready to "
+	desc = "It radiates with captive energy, ready to be released into the open world."
 	icon_state = "bluespace"
 	hits = 6
 	threat = 10

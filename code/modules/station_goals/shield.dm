@@ -179,6 +179,8 @@
 	// Update the weight of all meteor events
 	for(var/datum/round_event_control/meteor_wave/meteors in SSevents.control)
 		meteors.weight *= mod
+	for(var/datum/round_event_control/stray_meteor/stray_meteor in SSevents.control)
+		stray_meteor.weight *= mod
 
 /obj/machinery/satellite/meteor_shield/Destroy()
 	. = ..()
