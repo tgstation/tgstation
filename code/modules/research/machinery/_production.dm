@@ -66,6 +66,7 @@
 	. = ..()
 
 	calculate_efficiency()
+	update_static_data(usr)
 
 /obj/machinery/rnd/production/ui_assets(mob/user)
 	return list(
