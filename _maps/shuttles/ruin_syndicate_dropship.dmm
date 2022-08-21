@@ -50,7 +50,7 @@
 	dir = 2;
 	dwidth = 6;
 	height = 7;
-	id = "caravansyndicate3";
+	shuttle_id = "caravansyndicate3";
 	name = "Syndicate Drop Ship";
 	port_direction = 8;
 	preferred_direction = 4;

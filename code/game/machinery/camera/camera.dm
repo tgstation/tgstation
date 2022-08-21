@@ -102,10 +102,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 
 	alarm_manager = new(src)
 
-/obj/machinery/camera/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+/obj/machinery/camera/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	for(var/i in network)
 		network -= i
-		network += "[port.id]_[i]"
+		network += "[port.shuttle_id]_[i]"
 
 /obj/machinery/camera/proc/create_prox_monitor()
 	if(!proximity_monitor)

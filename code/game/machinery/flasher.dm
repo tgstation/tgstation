@@ -39,8 +39,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 		bulb = new(src)
 
 
-/obj/machinery/flasher/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
-	id = "[port.id]_[id]"
+/obj/machinery/flasher/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+	id = "[port.shuttle_id]_[id]"
 
 /obj/machinery/flasher/Destroy()
 	QDEL_NULL(bulb)

@@ -27,7 +27,7 @@
 	dir = 4;
 	dwidth = 3;
 	height = 12;
-	id = "huntership";
+	shuttle_id = "huntership";
 	name = "hunter shuttle";
 	rechargeTime = 1800;
 	width = 7

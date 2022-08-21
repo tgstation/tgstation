@@ -134,9 +134,9 @@
 		A.id = id
 	initialized_button = 1
 
-/obj/machinery/button/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+/obj/machinery/button/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	if(id)
-		id = "[port.id]_[id]"
+		id = "[port.shuttle_id]_[id]"
 		setup_device()
 
 /obj/machinery/button/attack_hand(mob/user, list/modifiers)
