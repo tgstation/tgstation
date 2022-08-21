@@ -24,6 +24,30 @@ type FabricatorData = {
 
 type AvailableMaterials = { [K in keyof typeof MATERIAL_KEYS]?: number };
 
+const SearchBar = (props, context) => {
+  const [searchText, setSearchText] = useSharedState(
+    context,
+    'search_text',
+    ''
+  );
+
+  return (
+    <Stack align="baseline">
+      <Stack.Item>
+        <Icon name="search" />
+      </Stack.Item>
+      <Stack.Item grow>
+        <Input
+          fluid
+          placeholder="Search for..."
+          onInput={(_e: unknown, v: string) => setSearchText(v.toLowerCase())}
+          value={searchText}
+        />
+      </Stack.Item>
+    </Stack>
+  );
+};
+
 export const Fabricator = (props, context) => {
   const { act, data } = useBackend<FabricatorData>(context);
   const { materials, fab_name, on_hold, designs, busy } = data;
@@ -46,6 +70,7 @@ export const Fabricator = (props, context) => {
     'display_material_cost',
     true
   );
+
   let recipeCount = 0;
 
   Object.values(sortedDesigns).map((design) => {
@@ -131,21 +156,7 @@ export const Fabricator = (props, context) => {
                   <Stack vertical fill>
                     <Stack.Item>
                       <Section>
-                        <Stack align="baseline">
-                          <Stack.Item>
-                            <Icon name="search" />
-                          </Stack.Item>
-                          <Stack.Item grow>
-                            <Input
-                              fluid
-                              placeholder="Search for..."
-                              onInput={(_e: unknown, v: string) =>
-                                setSearchText(v.toLowerCase())
-                              }
-                              value={searchText}
-                            />
-                          </Stack.Item>
-                        </Stack>
+                        <SearchBar />
                       </Section>
                     </Stack.Item>
                     <Stack.Item grow>
