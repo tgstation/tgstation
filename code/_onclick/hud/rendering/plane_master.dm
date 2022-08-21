@@ -56,7 +56,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	true_alpha = alpha
 	real_plane = plane
 
-	set_home(home)
+	if(!set_home(home))
+		return INITIALIZE_HINT_QDEL
 	update_offset()
 	if(!documentation && !(istype(src, /atom/movable/screen/plane_master) || istype(src, /atom/movable/screen/plane_master/rendering_plate)))
 		stack_trace("Plane master created without a description. Document how your thing works so people will know in future, and we can display it in the debug menu")
@@ -75,14 +76,15 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	QDEL_LIST(relays)
 
 /// Sets the plane group that owns us, it also determines what screen we render to
+/// Returns FALSE if the set_home fails, TRUE otherwise
 /atom/movable/screen/plane_master/proc/set_home(datum/plane_master_group/home)
 	if(!istype(home, /datum/plane_master_group))
-		qdel(src)
-		return
+		return FALSE
 	src.home = home
 	if(home.map)
 		screen_loc = "[home.map]:[screen_loc]"
 		assigned_map = home.map
+	return TRUE
 
 /// Updates our "offset", basically what layer of multiz we're meant to render
 /// Top is 0, goes up as you go down

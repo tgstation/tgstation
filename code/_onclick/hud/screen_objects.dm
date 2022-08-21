@@ -6,6 +6,8 @@
 	They are used with the client/screen list and the screen_loc var.
 	For more information, see the byond documentation on the screen_loc and screen vars.
 */
+// Lemon todo: screens need to set their plane based off the plane of their parent, and mirror it similarly
+// That or ensure all screen objects are on absolute plane masters 
 /atom/movable/screen
 	name = ""
 	icon = 'icons/hud/screen_gen.dmi'
