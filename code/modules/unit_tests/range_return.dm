@@ -1,4 +1,4 @@
-/// This tests for an undefined bit of behavior we rely on in energy_ball.dm code
+/// This tests for an unspecified bit of behavior we rely on in energy_ball.dm code
 /// Essentially, as of the current byond version, range and view will return turfs in what looks "roughly" like a circle
 /// So we can be guarenteed that if we find a turf, it will be the closest turf of that sort, or at least one of them
 /// This code tests for that. If this ever fails, remove the logic fron energy_ball.dm, and test if spiral_turfs would be faster
