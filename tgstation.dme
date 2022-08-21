@@ -2889,6 +2889,7 @@
 #include "code\modules\events\spacevine.dm"
 #include "code\modules\events\spider_infestation.dm"
 #include "code\modules\events\stray_cargo.dm"
+#include "code\modules\events\stray_meteor.dm"
 #include "code\modules\events\wisdomcow.dm"
 #include "code\modules\events\wormholes.dm"
 #include "code\modules\events\holiday\halloween.dm"

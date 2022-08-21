@@ -7,11 +7,11 @@ GLOBAL_VAR_INIT(meteor_wave_delay, 625) //minimum wait between waves in tenths o
 
 //Meteors probability of spawning during a given wave
 GLOBAL_LIST_INIT(meteors_normal, list(/obj/effect/meteor/dust=3, /obj/effect/meteor/medium=8, /obj/effect/meteor/big=3, \
-						  /obj/effect/meteor/flaming=1, /obj/effect/meteor/irradiated=3, /obj/effect/meteor/carp=1, /obj/effect/meteor/bluespace=2, \
-						  /obj/effect/meteor/banana)) //for normal meteor event
+						  /obj/effect/meteor/flaming=1, /obj/effect/meteor/irradiated=3, /obj/effect/meteor/carp=1, /obj/effect/meteor/bluespace=1, \
+						  /obj/effect/meteor/banana=1)) //for normal meteor event
 
 GLOBAL_LIST_INIT(meteors_threatening, list(/obj/effect/meteor/medium=4, /obj/effect/meteor/big=8, \
-						  /obj/effect/meteor/flaming=3, /obj/effect/meteor/irradiated=3, /obj/effect/meteor/cluster=1, /obj/effect/meteor/carp=1, /obj/effect/meteor/bluespace=3)) //for threatening meteor event
+						  /obj/effect/meteor/flaming=3, /obj/effect/meteor/irradiated=3, /obj/effect/meteor/cluster=1, /obj/effect/meteor/carp=1, /obj/effect/meteor/bluespace=2)) //for threatening meteor event
 
 GLOBAL_LIST_INIT(meteors_catastrophic, list(/obj/effect/meteor/medium=5, /obj/effect/meteor/big=75, \
 						  /obj/effect/meteor/flaming=10, /obj/effect/meteor/irradiated=10, /obj/effect/meteor/cluster=3, /obj/effect/meteor/tunguska=1, \
@@ -21,6 +21,10 @@ GLOBAL_LIST_INIT(meteorsB, list(/obj/effect/meteor/meaty=5, /obj/effect/meteor/m
 
 GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust event
 
+GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=20, /obj/effect/meteor/big=12, \
+						  /obj/effect/meteor/flaming=30, /obj/effect/meteor/irradiated=30, /obj/effect/meteor/carp=35, /obj/effect/meteor/bluespace=30, \
+						  /obj/effect/meteor/banana=25, /obj/effect/meteor/meaty=20, /obj/effect/meteor/meaty/xeno=15, \
+						  /obj/effect/meteor/tunguska=1)) //for stray meteor event (bigger numbers for a bit finer weighting)
 
 ///////////////////////////////
 //Meteor spawning global procs
@@ -116,6 +120,9 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 	var/atom/dest
 	///Lifetime in seconds
 	var/lifetime = DEFAULT_METEOR_LIFETIME
+
+	///Used by Stray Meteor event to indicate meteor type (the type of sensor that "detected" it) in announcement
+	var/signature = "motion"
 
 /obj/effect/meteor/Initialize(mapload, turf/target)
 	. = ..()
@@ -272,6 +279,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 	meteorsound = 'sound/effects/bamf.ogg'
 	meteordrop = list(/obj/item/stack/ore/plasma)
 	threat = 20
+	signature = "thermal"
 
 /obj/effect/meteor/flaming/meteor_effect()
 	..()
@@ -284,7 +292,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 	heavy = TRUE
 	meteordrop = list(/obj/item/stack/ore/uranium)
 	threat = 15
-
+	signature = "radiation"
 
 /obj/effect/meteor/irradiated/meteor_effect()
 	..()
@@ -300,6 +308,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 	heavy = TRUE
 	meteorsound = 'sound/effects/break_stone.ogg'
 	threat = 25
+	signature = "ordnance"
 	///Number of fragmentation meteors to be spawned
 	var/cluster_count = 8
 
@@ -328,6 +337,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 	meteorsound = 'sound/effects/ethereal_revive_fail.ogg'
 	meteordrop = list(/mob/living/simple_animal/hostile/carp)
 	threat = 2
+	signature = "fishing and trawling"
 
 //bluespace meteor
 /obj/effect/meteor/bluespace
@@ -337,6 +347,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 	hits = 9
 	meteordrop = list(/obj/item/stack/ore/bluespace_crystal)
 	threat = 10
+	signature = "bluespace flux"
 
 /obj/effect/meteor/bluespace/Bump()
 	..()
@@ -347,10 +358,11 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 	name = "bananium meteor"
 	desc = "Maybe it's a chunk blasted off of the legendary Clown Planet... How annoying."
 	icon_state = "glowing" //ADD SPRITE
-	dropamt = 2
+	dropamt = 4
 	hits = 50
 	meteordrop = list(/obj/item/stack/ore/bananium)
 	threat = 25
+	signature = "comedy"
 
 /obj/effect/meteor/banana/meteor_effect()
 	..()
@@ -374,6 +386,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 	meteordrop = list(/obj/item/food/meat/slab/human, /obj/item/food/meat/slab/human/mutant, /obj/item/organ/internal/heart, /obj/item/organ/internal/lungs, /obj/item/organ/internal/tongue, /obj/item/organ/internal/appendix/)
 	var/meteorgibs = /obj/effect/gibspawner/generic
 	threat = 2
+	signature = "culinary"
 
 /obj/effect/meteor/meaty/Initialize(mapload)
 	for(var/path in meteordrop)
@@ -425,6 +438,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 	meteorsound = 'sound/effects/bamf.ogg'
 	meteordrop = list(/obj/item/stack/ore/plasma)
 	threat = 50
+	signature = "doomsday"
 
 /obj/effect/meteor/tunguska/Move()
 	. = ..()
