@@ -361,6 +361,7 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=20, /obj/effect/meteor
 	dropamt = 4
 	hits = 50
 	meteordrop = list(/obj/item/stack/ore/bananium)
+	meteorsound = 'sound/items/bikehorn.ogg'
 	threat = 25
 	movement_type = PHASING
 	signature = "comedy"
