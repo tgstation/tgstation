@@ -320,3 +320,15 @@
 	category_index = CATEGORY_SAUCES_REAGENTS
 	item_instance = /obj/item/reagent_containers/condiment/peanut_butter
 	cost_per_order = 30
+
+/datum/orderable_item/honey
+	name = "Honey"
+	category_index = CATEGORY_SAUCES_REAGENTS
+	item_instance = /obj/item/reagent_containers/condiment/honey
+	cost_per_order = 50
+
+/datum/orderable_item/cherryjelly
+	name = "Cherry Jelly"
+	category_index = CATEGORY_SAUCES_REAGENTS
+	item_instance = /obj/item/reagent_containers/condiment/cherryjelly
+	cost_per_order = 30

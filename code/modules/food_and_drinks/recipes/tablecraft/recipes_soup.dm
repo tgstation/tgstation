@@ -343,3 +343,16 @@
 	)
 	result = /obj/item/food/soup/zurek
 	subcategory = CAT_SOUP
+
+/datum/crafting_recipe/food/cullen_skink
+	name = "Cullen Skink"
+	reqs = list(
+		/datum/reagent/consumable/milk = 5,
+		/obj/item/food/fishmeat = 1,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/grown/potato = 1,
+		/datum/reagent/consumable/blackpepper = 2,
+		/obj/item/reagent_containers/cup/bowl = 1
+	)
+	result = /obj/item/food/soup/cullen_skink
+	subcategory = CAT_SOUP
