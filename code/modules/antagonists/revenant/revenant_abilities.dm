@@ -404,8 +404,6 @@
 		tray.set_weedlevel(rand(8, 10))
 		tray.set_toxic(rand(45, 55))
 
-#define HAUNT_COLOR "#823abb"
-
 /datum/action/cooldown/spell/aoe/revenant/haunt_object
 	name = "Haunt Object"
 	desc = "Empower nearby objects to you with ghostly energy, causing them to attack nearby mortals. \
@@ -451,35 +449,14 @@
 		return
 
 	new /obj/effect/temp_visual/revenant(get_turf(victim))
-	victim.make_haunted(HAUNT_COLOR, rand(2 MINUTES, 4 MINUTES), 4)
-	victim.visible_message(span_revenwarning("[victim] begins to float and twirl into the air as it glows a ghastly purple!"))
-	victim.throwforce = min(victim.throwforce + 3, 15)
-	RegisterSignal(victim, COMSIG_ELEMENT_DETACH, .proc/on_element_detach)
-	RegisterSignal(victim, COMSIG_PARENT_ATTACKBY, .proc/on_hit_by_holy_tool)
 
-/// Signal proc for [COMSIG_PARENT_ATTACKBY], when we get smacked by holy stuff we should stop being ghostly.
-/datum/action/cooldown/spell/aoe/revenant/haunt_object/proc/on_hit_by_holy_tool(obj/item/source, obj/item/attacking_item, mob/living/attacker, params)
-	SIGNAL_HANDLER
-
-	if(!is_type_in_list(attacking_item, types_which_dispell_us))
-		return
-
-	attacker.visible_message(span_warning("[attacker] dispells the ghostly energy from [source]!"), span_warning("You dispel the ghostly energy from [source]!"))
-	source.clear_haunting()
-	return COMPONENT_NO_AFTERATTACK
-
-/// Signal proc for [COMSIG_ELEMENT_DETACH] to give a message when our haunt ends.
-/datum/action/cooldown/spell/aoe/revenant/haunt_object/proc/on_element_detach(obj/item/source, datum/element/detached)
-	SIGNAL_HANDLER
-
-	if(!istype(detached, /datum/element/haunted))
-		return
-
-	source.visible_message(span_revenwarning("[source] falls back to the ground, stationary once more."))
-	source.throwforce = initial(source.throwforce)
-	UnregisterSignal(source, list(COMSIG_ELEMENT_DETACH, COMSIG_PARENT_ATTACKBY))
-
-#undef HAUNT_COLOR
+	victim.AddComponent(/datum/component/haunted_item, \
+		haunt_color = "#823abb", \
+		haunt_duration = rand(1 MINUTES, 3 MINUTES), \
+		aggro_radius = aoe_radius - 1, \
+		spawn_message = span_revenwarning("[victim] begins to float and twirl into the air as it glows a ghastly purple!"), \
+		despawn_message = span_revenwarning("[victim] falls back to the ground, stationary once more."), \
+	)
 
 #undef REVENANT_DEFILE_MIN_DAMAGE
 #undef REVENANT_DEFILE_MAX_DAMAGE
