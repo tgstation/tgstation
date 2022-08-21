@@ -24,6 +24,10 @@ Equivalent to DM's `datum.procName(...)`
 
 This function is used to evaluate the truthiness of a DM var. The lua statement `if datum:is_null() then` is equivalent to the DM statement `if(datum)`.
 
+### datum.vars
+
+Returns a userdatum that allows you to access and modifiy the vars of a DM datum by index. `datum.vars.foo` is equivalent to `datum:get_var("foo")`, while `datum.vars.foo = bar` is equivalent to `datum:set_var("foo", bar)`
+
 ---
 
 ## Lists
@@ -65,6 +69,10 @@ Will extract only values of type `type_path`.
 ### list:is_null()
 
 A similar truthiness test to [`datum:is_null()`](#datumisnull). This function only has the possibility of returning `false` for lists that are inherently attached to a datum (`vars`, `contents`, `overlays`, `underlays`, `vis_contents`, and `vis_locs`).
+
+### list.entries
+
+Returns a userdatum that allows you to access and modifiy the entries of the list by index. `list.entries.foo` is equivalent to `list:get("foo")`, while `list.entries.foo = bar` is equivalent to `list:set("foo", bar)`
 
 ---
 

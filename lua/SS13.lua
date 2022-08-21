@@ -1,12 +1,11 @@
 local SS13 = {}
 
-SS13.SSlua = dm.global_vars.SSlua
+SS13.SSlua = dm.global_vars.vars.SSlua
 
 SS13.global_proc = "some_magic_bullshit"
 
-local states = SS13.SSlua.states:to_table()
-for _, state in states do
-	if state.internal_id == dm.state_id then
+for _, state in SS13.SSlua.vars.states do
+	if state.vars.internal_id == dm.state_id then
 		SS13.state = state
 		break
 	end
@@ -18,7 +17,7 @@ end
 
 function SS13.new(type, ...)
 	local datum = dm.global_proc("_new", type, { ... })
-	local references = SS13.state.references
+	local references = SS13.state.vars.references
 	references:add(datum)
 	return datum
 end
@@ -31,10 +30,13 @@ function SS13.await(thing_to_call, proc_to_call, ...)
 		proc_to_call = "/proc/" .. proc_to_call
 	end
 	local promise = SS13.new("/datum/auxtools_promise", thing_to_call, proc_to_call, ...)
-	while promise.status == 0 do
+	local promise_vars = promise.vars
+	while promise_vars.status == 0 do
 		sleep()
 	end
-	return promise.return_value, promise.runtime_message
+	local return_value, runtime_message = promise_vars.return_value, promise_vars.runtime_message
+	dm.global_proc("qdel", promise)
+	return return_value, runtime_message
 end
 
 function SS13.wait(time, timer)
@@ -64,7 +66,7 @@ function SS13.register_signal(datum, signal, func, make_easy_clear_function)
 	local callback = SS13.new("/datum/callback", SS13.state, "call_function_return_first")
 	callback:call_proc("RegisterSignal", datum, signal, "Invoke")
 	local path = { "SS13", "signal_handlers", datum, signal, callback, "func" }
-	callback.arguments = { path }
+	callback.vars.arguments = { path }
 	if not SS13.signal_handlers[datum]["_cleanup"] then
 		local cleanup_path = { "SS13", "signal_handlers", datum, "_cleanup", "func" }
 		local cleanup_callback = SS13.new("/datum/callback", SS13.state, "call_function_return_first", cleanup_path)
@@ -78,15 +80,14 @@ function SS13.register_signal(datum, signal, func, make_easy_clear_function)
 		}
 	end
 	if signal == "parent_qdeleting" then --We want to make sure that the cleanup function is the very last signal handler called.
-		local comp_lookup = datum.comp_lookup
+		local comp_lookup = datum.vars.comp_lookup
 		if comp_lookup then
-			local lookup_table = comp_lookup:to_table()
-			local lookup_for_signal = lookup_table.parent_qdeleting
+			local lookup_for_signal = comp_lookup.entries.parent_qdeleting
 			if lookup_for_signal and not SS13.istype(lookup_for_signal, "/datum") then
 				local cleanup_callback_index =
 					dm.global_proc("_list_find", lookup_for_signal, SS13.signal_handlers[datum]["_cleanup"].callback)
 				if cleanup_callback_index ~= 0 and cleanup_callback_index ~= #comp_lookup then
-					dm.global_proc("_list_swap", lookup_for_signal, cleanup_callback_index, lookup_for_signal.len)
+					dm.global_proc("_list_swap", lookup_for_signal, cleanup_callback_index, #lookup_for_signal)
 				end
 			end
 		end
@@ -180,7 +181,7 @@ function SS13.set_timeout(time, func, timer)
 		func()
 	end
 	local path = { "SS13", "timeouts", callback }
-	callback.arguments = { path }
+	callback.vars.arguments = { path }
 end
 
 return SS13
