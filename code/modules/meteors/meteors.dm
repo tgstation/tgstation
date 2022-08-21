@@ -1,4 +1,4 @@
-#define DEFAULT_METEOR_LIFETIME 1800
+#define DEFAULT_METEOR_LIFETIME 18001
 #define MAP_EDGE_PAD 5
 
 GLOBAL_VAR_INIT(meteor_wave_delay, 625) //minimum wait between waves in tenths of seconds
@@ -8,7 +8,7 @@ GLOBAL_VAR_INIT(meteor_wave_delay, 625) //minimum wait between waves in tenths o
 //Meteors probability of spawning during a given wave
 GLOBAL_LIST_INIT(meteors_normal, list(/obj/effect/meteor/dust=3, /obj/effect/meteor/medium=8, /obj/effect/meteor/big=3, \
 						  /obj/effect/meteor/flaming=1, /obj/effect/meteor/irradiated=3, /obj/effect/meteor/carp=1, /obj/effect/meteor/bluespace=1, \
-						  /obj/effect/meteor/banana=1)) //for normal meteor event
+						  /obj/effect/meteor/banana=1, /obj/effect/meteor/emp = 1)) //for normal meteor event
 
 GLOBAL_LIST_INIT(meteors_threatening, list(/obj/effect/meteor/medium=4, /obj/effect/meteor/big=8, /obj/effect/meteor/flaming=3, \
 						  /obj/effect/meteor/irradiated=3, /obj/effect/meteor/cluster=1, /obj/effect/meteor/carp=1, /obj/effect/meteor/bluespace=2, /obj/effect/meteor/emp = 2)) //for threatening meteor event
