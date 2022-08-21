@@ -4,7 +4,14 @@
 	name = "Base Shuttle Template"
 	var/prefix = "_maps/shuttles/"
 	var/suffix
+	/**
+	 * Port ID is the place this template should be docking at
+	 * Make sure that shuttle_id is the same, as getShuttle() compares port_id to shuttle_id to find
+	 * an already existing shuttle. Otherwise, this will cause shuttles to spam themselves
+	 * instead of replacing one another (like through admins).
+	 */
 	var/port_id
+	///ID of the shuttle, make sure it matches port_id if necessary.
 	var/shuttle_id
 
 	var/description
