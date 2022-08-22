@@ -200,6 +200,9 @@
 /obj/machinery/computer/emergency_shuttle/proc/attempt_hijack_stage(mob/living/user)
 	if(!user.CanReach(src))
 		return
+	if(!HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+		to_chat(user, span_warning("You need your hands free before you can manipulate [src]."))
+		return
 	if(!user?.mind?.get_hijack_speed())
 		to_chat(user, span_warning("You manage to open a user-mode shell on [src], and hundreds of lines of debugging output fly through your vision. It is probably best to leave this alone."))
 		return
