@@ -306,7 +306,7 @@
 			icon_state = "[initial(icon_state)]_2"
 		if(4.1 to 7)
 			icon_state = "[initial(icon_state)]_3"
-		if(7.1 to 10)
+		if(7.1 to INFINITY)
 			icon_state = "[initial(icon_state)]_4"
 
 	AddComponent(/datum/component/caltrop, min_damage = 0.1, max_damage = ant_bite_damage, flags = ant_flags, soundfile = bite_sound)
@@ -325,7 +325,6 @@
 	desc = "A small colony no longer. We are the fire nation."
 	icon_state = "fire_ants"
 	mergeable_decal = FALSE
-	reagent_amount = 25
 
 /obj/effect/decal/cleanable/ants/fire/update_ant_damage()
 	AddComponent(/datum/component/caltrop, min_damage = 15, max_damage = 25, flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN | CALTROP_BYPASS_SHOES), soundfile = bite_sound)
