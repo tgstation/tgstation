@@ -141,7 +141,7 @@
 	update_appearance()
 
 /obj/machinery/coffeemaker/update_icon_state()
-	icon_state = "[base_icon_state][!!coffeepot][!!cartridge]"
+	icon_state = "[base_icon_state][coffeepot ? "_pot" : "_nopot"][cartridge ? "_cart": "_nocart"]"
 	return ..()
 
 /obj/machinery/coffeemaker/proc/replace_pot(mob/living/user, obj/item/reagent_containers/cup/coffeepot/new_coffeepot)
