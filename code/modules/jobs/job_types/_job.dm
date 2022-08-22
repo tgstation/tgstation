@@ -52,8 +52,8 @@
 	/// The job's outfit that will be assigned for plasmamen.
 	var/plasmaman_outfit = null
 
-	/// Minutes of experience-time required to play in this job. The type is determined by [exp_required_type] and [exp_required_type_department] depending on configs.
-	var/exp_requirements = 0
+	/// Hours of experience-time required to play in this job. There are codebase defined constants for this, but this can be overwritten via config using `USE_EXP_RESTRICTIONS_HEADS_HOURS`.
+	var/exp_requirements = 0 HOURS
 	/// Experience required to play this job, if the config is enabled, and `exp_required_type_department` is not enabled with the proper config.
 	var/exp_required_type = ""
 	/// Department experience required to play this job, if the config is enabled.

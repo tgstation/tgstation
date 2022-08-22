@@ -705,3 +705,44 @@
   itseasytosee:
   - bugfix: riot darts no longer become invisible when you take the cap off with a
       screwdriver.
+2022-08-21:
+  FernandoJ8:
+  - bugfix: changed the directions of the bottom decals on the nature emergency shuttle
+      and the bottom gambling machine on the disco inferno shuttle from 3 (north+south)
+      to simply 2 (south), as they should be.
+  Jolly:
+  - bugfix: On Delta, in the abandoned kitchen, there is no longer four air alarms.
+      Stop being greedy, sheesh.
+  Melbert:
+  - bugfix: Fixes storage to storage mass transfering not being instant
+  - bugfix: Fixes two do_afters for storage mass transfer
+  - bugfix: Dumping storage spreads its items around again
+  - bugfix: Drag-opening a storage won't try to dump inside you
+  - bugfix: Transferring a ton of things into a fridge won't deafen you anymore
+  - rscadd: You can now mass transfer onto griddles
+  - bugfix: Some things that made you BOMBIMMUNE now actually make you BOMBIMMUNE,
+      probably
+  - bugfix: Fixes a runtime that occurred when bodyparts received damage while disconnected
+      from a mob
+  ShizCalev:
+  - qol: Added a new mob helper complementary to ran_zone() called get_random_valid_zone(),
+      which can only return zones/bodyparts that a mob DOES have.
+  - admin: Fixed Abyssal Gaze being logged when it wasn't actually being used
+  dragomagol:
+  - code_imp: split drinks_recipe into multiple files by category
+  - bugfix: tempeh starter uses the correct icon, desc fixes
+  timothymtorres:
+  - bugfix: Fix haunted tarot deck exploit
+  - qol: Add wisdom text to fortune cookies
+  tralezab:
+  - rscdel: Thieves are gone, and so are Opportunists, their midround counterpart.
+2022-08-22:
+  ShizCalev:
+  - refactor: A bunch of things that used to not do anything (or just fall back on
+      the chest) when targeting a limb that someone was missing will now be far more
+      likely to attack another limb!
+  SuperDrish:
+  - rscadd: Mortar now gives you an option. Do you want to grind or juice your thing?
+  san7890:
+  - admin: Whenever a turf is lit up by fire (like plasma floors combusting due to
+      fire above them), the name of that turf is now explicitly logged.

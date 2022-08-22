@@ -1,4 +1,0 @@
-author: "Jolly"
-delete-after: True
-changes: 
-  - bugfix: "On Delta, in the abandoned kitchen, there is no longer four air alarms. Stop being greedy, sheesh."
