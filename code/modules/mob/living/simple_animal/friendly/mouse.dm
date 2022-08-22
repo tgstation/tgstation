@@ -64,6 +64,8 @@
 			if(toast)
 				M.add_atom_colour("#3A3A3A", FIXED_COLOUR_PRIORITY)
 				M.desc = "They're toast."
+				M.foodtypes &= ~ RAW //it's toast!
+				M.foodtypes |= FRIED
 		qdel(src)
 	else
 		SSmobs.cheeserats -= src // remove play controlled mouse also
