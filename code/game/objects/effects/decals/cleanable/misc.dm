@@ -323,7 +323,7 @@
 /obj/effect/decal/cleanable/ants/fire
 	name = "space fire ants"
 	desc = "A small colony no longer. We are the fire nation."
-	icon_state = "ants_4"
+	icon_state = "fire_ants"
 	mergeable_decal = FALSE
 	reagent_amount = 25
 
