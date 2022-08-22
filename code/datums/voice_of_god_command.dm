@@ -261,8 +261,16 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 ///just states the target's name, but also includes the renaming funny.
 /datum/voice_of_god_command/who_are_you/proc/state_name(mob/living/target)
-	if(isanimal_or_basicmob(target) && target.name == initial(target.name))
-		target.fully_replace_character_name(target.real_name, pick(GLOB.first_names))
+	if(isanimal_or_basicmob(target) && target.name == initial(target.name) && target:gold_core_spawnable = FRIENDLY_SPAWN)
+		var/canonical_deep_lore_name
+		switch(target.gender)
+			if(MALE)
+				canonical_deep_lore_name = pick(GLOB.first_names_male)
+			if(FEMALE)
+				canonical_deep_lore_name = pick(GLOB.first_names_female)
+			else
+				canonical_deep_lore_name = pick(GLOB.first_names)
+		target.fully_replace_character_name(target.real_name, canonical_deep_lore_name)
 	target.say(target.real_name)
 
 /// This command forces the listeners to say the user's name
