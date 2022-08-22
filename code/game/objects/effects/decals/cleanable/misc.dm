@@ -321,7 +321,7 @@
 	qdel(src)
 
 /obj/effect/decal/cleanable/ants/fire
-	name = "fire space ants"
+	name = "space fire ants"
 	desc = "A small colony no longer. We are the fire nation."
 	icon_state = "ants_4"
 	mergeable_decal = FALSE
