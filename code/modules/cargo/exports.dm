@@ -78,17 +78,11 @@ Then the player gets the profit from selling his own wasted time.
 	/// Types excluded from export
 	var/list/exclude_types = list()
 
-	/// cost includes elasticity, this does not.
-
-
 
 /datum/export/New()
 	..()
 	export_types = typecacheof(export_types, only_root_path = !include_subtypes, ignore_root_path = FALSE)
 	exclude_types = typecacheof(exclude_types)
-
-/datum/export/Destroy()
-	return ..()
 
 // Checks the cost. 0 cost items are skipped in export.
 /datum/export/proc/get_cost(obj/O, apply_elastic = TRUE)
