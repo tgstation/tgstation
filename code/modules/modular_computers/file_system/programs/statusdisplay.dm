@@ -12,8 +12,8 @@
 	usage_flags = PROGRAM_ALL
 	available_on_ntnet = FALSE
 
-	var/upper_text
-	var/lower_text
+	var/upper_text = ""
+	var/lower_text = ""
 
 /**
  * Post status display radio packet.
@@ -67,18 +67,13 @@
 		return
 
 	switch(action)
-		if("stat_message")
-			post_message(upper_text, lower_text)
-		if("stat_picture")
-			post_picture(params["picture"])
-		if("stat_update")
-			var/text = reject_bad_text(params["text"] || "", MAX_STATUS_LINE_LENGTH)
+		if("setStatusMessage")
+			upper_text = reject_bad_text(params["upperText"] || "", MAX_STATUS_LINE_LENGTH)
+			lower_text = reject_bad_text(params["lowerText"] || "", MAX_STATUS_LINE_LENGTH)
 
-			switch(params["position"])
-				if("upper")
-					upper_text = text
-				if("lower")
-					lower_text = text
+			post_message(upper_text, lower_text)
+		if("setStatusPicture")
+			post_picture(params["picture"])
 
 /datum/computer_file/program/status/ui_static_data(mob/user)
 	var/list/data = list()
@@ -89,7 +84,7 @@
 /datum/computer_file/program/status/ui_data(mob/user)
 	var/list/data = get_header_data()
 
-	data["upper"] = upper_text
-	data["lower"] = lower_text
+	data["upperText"] = upper_text
+	data["lowerText"] = lower_text
 
 	return data
