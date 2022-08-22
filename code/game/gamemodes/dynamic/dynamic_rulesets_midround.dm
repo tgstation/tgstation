@@ -238,13 +238,14 @@
 
 /datum/dynamic_ruleset/midround/from_living/autotraitor/trim_candidates()
 	..()
-	for(var/mob/living/player in living_players)
+	candidates = living_players
+	for(var/mob/living/player in candidates)
 		if(issilicon(player)) // Your assigned role doesn't change when you are turned into a silicon.
-			living_players -= player
+			candidates -= player
 		else if(is_centcom_level(player.z))
-			living_players -= player // We don't autotator people in CentCom
+			candidates -= player // We don't autotator people in CentCom
 		else if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
-			living_players -= player // We don't autotator people with roles already
+			candidates -= player // We don't autotator people with roles already
 
 /datum/dynamic_ruleset/midround/from_living/autotraitor/execute()
 	var/mob/M = pick(living_players)
