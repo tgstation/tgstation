@@ -110,6 +110,8 @@
 /obj/structure/shuttle/engine/proc/alter_engine_power(mod)
 	if(!mod)
 		return
+	if(!connected_ship)
+		return
 	var/obj/docking_port/mobile/port = connected_ship.resolve()
 	if(port)
 		port.alter_engines(mod)
