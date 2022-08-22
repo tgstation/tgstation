@@ -66,7 +66,7 @@ ENABLE_LOCALHOST_RANK
 ## Unhash this to enable playtime requirements for head jobs.
 #USE_EXP_RESTRICTIONS_HEADS
 ## Unhash this to override head jobs' playtime requirements with this number of hours.
-## Leave this commented out to use the values defined in the job datums. Values in the datums are stored as minutes.
+## Leave this commented out to use the values defined in the job datums.
 #USE_EXP_RESTRICTIONS_HEADS_HOURS 3
 ## Unhash this to change head jobs' playtime requirements so that they're based on department playtime, rather than crew playtime.
 #USE_EXP_RESTRICTIONS_HEADS_DEPARTMENT

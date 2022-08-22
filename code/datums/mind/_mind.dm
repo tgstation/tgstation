@@ -30,15 +30,20 @@
 */
 
 /datum/mind
+	/// Key of the mob
 	var/key
-	var/name //replaces mob/var/original_name
-	var/ghostname //replaces name for observers name if set
+	/// The name linked to this mind
+	var/name
+	/// replaces name for observers name if set
+	var/ghostname
+	/// Current mob this mind datum is attached to
 	var/mob/living/current
+	/// Is this mind active?
 	var/active = FALSE
 
-	///a list of /datum/memories. assoc type of memory = memory datum. only one type of memory will be stored, new ones of the same type overriding the last.
+	/// a list of /datum/memories. assoc type of memory = memory datum. only one type of memory will be stored, new ones of the same type overriding the last.
 	var/list/memories = list()
-	///reference to the memory panel tgui
+	/// reference to the memory panel tgui
 	var/datum/memory_panel/memory_panel
 
 	/// Job datum indicating the mind's role. This should always exist after initialization, as a reference to a singleton.
@@ -46,11 +51,14 @@
 	var/special_role
 	var/list/restricted_roles = list()
 
+	/// Martial art on this mind
 	var/datum/martial_art/martial_art
 	var/static/default_martial_art = new/datum/martial_art
-	var/miming = FALSE // Mime's vow of silence
+	/// Mime's vow of silence
+	var/miming = FALSE
+	/// List of antag datums on this mind
 	var/list/antag_datums
-	///this mind's ANTAG_HUD should have this icon_state
+	/// this mind's ANTAG_HUD should have this icon_state
 	var/antag_hud_icon_state = null
 	///this mind's antag HUD
 	var/datum/atom_hud/alternate_appearance/basic/antagonist_hud/antag_hud = null
@@ -61,11 +69,12 @@
 	var/datum/language_holder/language_holder
 	var/unconvertable = FALSE
 	var/late_joiner = FALSE
-	///has this mind ever been an AI
+	/// has this mind ever been an AI
 	var/has_ever_been_ai = FALSE
 	var/last_death = 0
 
-	var/force_escaped = FALSE  // Set by Into The Sunset command of the shuttle manipulator
+	/// Set by Into The Sunset command of the shuttle manipulator
+	var/force_escaped = FALSE
 
 	var/list/learned_recipes //List of learned recipe TYPES.
 
@@ -187,295 +196,10 @@
 /datum/mind/proc/set_original_character(new_original_character)
 	original_character = WEAKREF(new_original_character)
 
-/datum/mind/proc/init_known_skills()
-	for (var/type in GLOB.skill_types)
-		known_skills[type] = list(SKILL_LEVEL_NONE, 0)
-
-///Return the amount of EXP needed to go to the next level. Returns 0 if max level
-/datum/mind/proc/exp_needed_to_level_up(skill)
-	var/lvl = update_skill_level(skill)
-	if (lvl >= length(SKILL_EXP_LIST)) //If we're already past the last exp threshold
-		return 0
-	return SKILL_EXP_LIST[lvl+1] - known_skills[skill][SKILL_EXP]
-
-///Adjust experience of a specific skill
-/datum/mind/proc/adjust_experience(skill, amt, silent = FALSE, force_old_level = 0)
-	var/datum/skill/S = GetSkillRef(skill)
-	var/old_level = force_old_level ? force_old_level : known_skills[skill][SKILL_LVL] //Get current level of the S skill
-	experience_multiplier = initial(experience_multiplier)
-	for(var/key in experience_multiplier_reasons)
-		experience_multiplier += experience_multiplier_reasons[key]
-	known_skills[skill][SKILL_EXP] = max(0, known_skills[skill][SKILL_EXP] + amt*experience_multiplier) //Update exp. Prevent going below 0
-	known_skills[skill][SKILL_LVL] = update_skill_level(skill)//Check what the current skill level is based on that skill's exp
-	if(silent)
-		return
-	if(known_skills[skill][SKILL_LVL] > old_level)
-		S.level_gained(src, known_skills[skill][SKILL_LVL], old_level)
-	else if(known_skills[skill][SKILL_LVL] < old_level)
-		S.level_lost(src, known_skills[skill][SKILL_LVL], old_level)
-
-///Set experience of a specific skill to a number
-/datum/mind/proc/set_experience(skill, amt, silent = FALSE)
-	var/old_level = known_skills[skill][SKILL_EXP]
-	known_skills[skill][SKILL_EXP] = amt
-	adjust_experience(skill, 0, silent, old_level) //Make a call to adjust_experience to handle updating level
-
-///Set level of a specific skill
-/datum/mind/proc/set_level(skill, newlevel, silent = FALSE)
-	var/oldlevel = get_skill_level(skill)
-	var/difference = SKILL_EXP_LIST[newlevel] - SKILL_EXP_LIST[oldlevel]
-	adjust_experience(skill, difference, silent)
-
-///Check what the current skill level is based on that skill's exp
-/datum/mind/proc/update_skill_level(skill)
-	var/i = 0
-	for (var/exp in SKILL_EXP_LIST)
-		i ++
-		if (known_skills[skill][SKILL_EXP] >= SKILL_EXP_LIST[i])
-			continue
-		return i - 1 //Return level based on the last exp requirement that we were greater than
-	return i //If we had greater EXP than even the last exp threshold, we return the last level
-
-///Gets the skill's singleton and returns the result of its get_skill_modifier
-/datum/mind/proc/get_skill_modifier(skill, modifier)
-	var/datum/skill/S = GetSkillRef(skill)
-	return S.get_skill_modifier(modifier, known_skills[skill][SKILL_LVL])
-
-///Gets the player's current level number from the relevant skill
-/datum/mind/proc/get_skill_level(skill)
-	return known_skills[skill][SKILL_LVL]
-
-///Gets the player's current exp from the relevant skill
-/datum/mind/proc/get_skill_exp(skill)
-	return known_skills[skill][SKILL_EXP]
-
-/datum/mind/proc/get_skill_level_name(skill)
-	var/level = get_skill_level(skill)
-	return SSskills.level_names[level]
-
-/datum/mind/proc/print_levels(user)
-	var/list/shown_skills = list()
-	for(var/i in known_skills)
-		if(known_skills[i][SKILL_LVL] > SKILL_LEVEL_NONE) //Do we actually have a level in this?
-			shown_skills += i
-	if(!length(shown_skills))
-		to_chat(user, span_notice("You don't seem to have any particularly outstanding skills."))
-		return
-	var/msg = "[span_info("<EM>Your skills</EM>")]\n<span class='notice'>"
-	for(var/i in shown_skills)
-		var/datum/skill/the_skill = i
-		msg += "[initial(the_skill.name)] - [get_skill_level_name(the_skill)]\n"
-	msg += "</span>"
-	to_chat(user, examine_block(msg))
-
 /datum/mind/proc/set_death_time()
 	SIGNAL_HANDLER
 
 	last_death = world.time
-
-// Datum antag mind procs
-/datum/mind/proc/add_antag_datum(datum_type_or_instance, team)
-	if(!datum_type_or_instance)
-		return
-	var/datum/antagonist/A
-	if(!ispath(datum_type_or_instance))
-		A = datum_type_or_instance
-		if(!istype(A))
-			return
-	else
-		A = new datum_type_or_instance()
-	//Choose snowflake variation if antagonist handles it
-	var/datum/antagonist/S = A.specialization(src)
-	if(S && S != A)
-		qdel(A)
-		A = S
-	if(!A.can_be_owned(src))
-		qdel(A)
-		return
-	A.owner = src
-	LAZYADD(antag_datums, A)
-	A.create_team(team)
-	var/datum/team/antag_team = A.get_team()
-	if(antag_team)
-		antag_team.add_member(src)
-	INVOKE_ASYNC(A, /datum/antagonist.proc/on_gain)
-	log_game("[key_name(src)] has gained antag datum [A.name]([A.type]).")
-	return A
-
-/datum/mind/proc/remove_antag_datum(datum_type)
-	if(!datum_type)
-		return
-	var/datum/antagonist/A = has_antag_datum(datum_type)
-	if(A)
-		A.on_removal()
-		return TRUE
-
-
-/datum/mind/proc/remove_all_antag_datums() //For the Lazy amongst us.
-	for(var/a in antag_datums)
-		var/datum/antagonist/A = a
-		A.on_removal()
-
-/datum/mind/proc/has_antag_datum(datum_type, check_subtypes = TRUE)
-	if(!datum_type)
-		return
-	for(var/a in antag_datums)
-		var/datum/antagonist/A = a
-		if(check_subtypes && istype(A, datum_type))
-			return A
-		else if(A.type == datum_type)
-			return A
-
-/*
-	Removes antag type's references from a mind.
-	objectives, uplinks, powers etc are all handled.
-*/
-
-/datum/mind/proc/remove_changeling()
-	var/datum/antagonist/changeling/C = has_antag_datum(/datum/antagonist/changeling)
-	if(C)
-		remove_antag_datum(/datum/antagonist/changeling)
-		special_role = null
-
-/datum/mind/proc/remove_traitor()
-	remove_antag_datum(/datum/antagonist/traitor)
-
-/datum/mind/proc/remove_nukeop()
-	var/datum/antagonist/nukeop/nuke = has_antag_datum(/datum/antagonist/nukeop,TRUE)
-	if(nuke)
-		remove_antag_datum(nuke.type)
-		special_role = null
-
-/datum/mind/proc/remove_wizard()
-	remove_antag_datum(/datum/antagonist/wizard)
-	special_role = null
-
-/datum/mind/proc/remove_rev()
-	var/datum/antagonist/rev/rev = has_antag_datum(/datum/antagonist/rev)
-	if(rev)
-		remove_antag_datum(rev.type)
-		special_role = null
-
-
-/datum/mind/proc/remove_antag_equip()
-	var/list/Mob_Contents = current.get_contents()
-	for(var/obj/item/I in Mob_Contents)
-		var/datum/component/uplink/O = I.GetComponent(/datum/component/uplink) //Todo make this reset signal
-		if(O)
-			O.unlock_code = null
-
-/// Remove the antagonists that should not persist when being borged
-/datum/mind/proc/remove_antags_for_borging()
-	remove_antag_datum(/datum/antagonist/cult)
-
-	var/datum/antagonist/rev/revolutionary = has_antag_datum(/datum/antagonist/rev)
-	revolutionary?.remove_revolutionary(borged = TRUE)
-
-/**
- * ## give_uplink
- *
- * A mind proc for giving anyone an uplink.
- * arguments:
- * * silent: if this should send a message to the mind getting the uplink. traitors do not use this silence, but the silence var on their antag datum.
- * * antag_datum: the antag datum of the uplink owner, for storing it in antag memory. optional!
- */
-/datum/mind/proc/give_uplink(silent = FALSE, datum/antagonist/antag_datum)
-	if(!current)
-		return
-	var/mob/living/carbon/human/traitor_mob = current
-	if (!istype(traitor_mob))
-		return
-
-	var/list/all_contents = traitor_mob.get_all_contents()
-	var/obj/item/modular_computer/tablet/pda/PDA = locate() in all_contents
-	var/obj/item/radio/R = locate() in all_contents
-	var/obj/item/pen/P
-
-	if (PDA) // Prioritize PDA pen, otherwise the pocket protector pens will be chosen, which causes numerous ahelps about missing uplink
-		P = locate() in PDA
-	if (!P) // If we couldn't find a pen in the PDA, or we didn't even have a PDA, do it the old way
-		P = locate() in all_contents
-
-	var/obj/item/uplink_loc
-	var/implant = FALSE
-
-	var/uplink_spawn_location = traitor_mob.client?.prefs?.read_preference(/datum/preference/choiced/uplink_location)
-	switch (uplink_spawn_location)
-		if(UPLINK_PDA)
-			uplink_loc = PDA
-			if(!uplink_loc)
-				uplink_loc = R
-			if(!uplink_loc)
-				uplink_loc = P
-		if(UPLINK_RADIO)
-			uplink_loc = R
-			if(!uplink_loc)
-				uplink_loc = PDA
-			if(!uplink_loc)
-				uplink_loc = P
-		if(UPLINK_PEN)
-			uplink_loc = P
-		if(UPLINK_IMPLANT)
-			implant = TRUE
-
-	if(!uplink_loc) // We've looked everywhere, let's just implant you
-		implant = TRUE
-
-	if(implant)
-		var/obj/item/implant/uplink/starting/new_implant = new(traitor_mob)
-		new_implant.implant(traitor_mob, null, silent = TRUE)
-		if(!silent)
-			to_chat(traitor_mob, span_boldnotice("Your Syndicate Uplink has been cunningly implanted in you, for a small TC fee. Simply trigger the uplink to access it."))
-		return new_implant
-
-	. = uplink_loc
-	var/unlock_text
-	var/datum/component/uplink/new_uplink = uplink_loc.AddComponent(/datum/component/uplink, traitor_mob.key)
-	if(!new_uplink)
-		CRASH("Uplink creation failed.")
-	new_uplink.setup_unlock_code()
-	new_uplink.uplink_handler.owner = traitor_mob.mind
-	new_uplink.uplink_handler.assigned_role = traitor_mob.mind.assigned_role.title
-	new_uplink.uplink_handler.assigned_species = traitor_mob.dna.species.id
-	if(uplink_loc == R)
-		unlock_text = "Your Uplink is cunningly disguised as your [R.name]. Simply dial the frequency [format_frequency(new_uplink.unlock_code)] to unlock its hidden features."
-	else if(uplink_loc == PDA)
-		unlock_text = "Your Uplink is cunningly disguised as your [PDA.name]. Simply enter the code \"[new_uplink.unlock_code]\" into the ring tone selection to unlock its hidden features."
-	else if(uplink_loc == P)
-		unlock_text = "Your Uplink is cunningly disguised as your [P.name]. Simply twist the top of the pen [english_list(new_uplink.unlock_code)] from its starting position to unlock its hidden features."
-	new_uplink.unlock_text = unlock_text
-	if(!silent)
-		to_chat(traitor_mob, span_boldnotice(unlock_text))
-	if(antag_datum)
-		antag_datum.antag_memory += new_uplink.unlock_note + "<br>"
-
-
-//Link a new mobs mind to the creator of said mob. They will join any team they are currently on, and will only switch teams when their creator does.
-
-/datum/mind/proc/enslave_mind_to_creator(mob/living/creator)
-	if(IS_CULTIST(creator))
-		add_antag_datum(/datum/antagonist/cult)
-
-	else if(IS_REVOLUTIONARY(creator))
-		var/datum/antagonist/rev/converter = creator.mind.has_antag_datum(/datum/antagonist/rev,TRUE)
-		converter.add_revolutionary(src,FALSE)
-
-	else if(IS_NUKE_OP(creator))
-		var/datum/antagonist/nukeop/converter = creator.mind.has_antag_datum(/datum/antagonist/nukeop,TRUE)
-		var/datum/antagonist/nukeop/N = new()
-		N.send_to_spawnpoint = FALSE
-		N.nukeop_outfit = null
-		add_antag_datum(N,converter.nuke_team)
-
-
-	enslaved_to = creator
-
-	current.faction |= creator.faction
-	creator.faction |= current.faction
-
-	if(creator.mind.special_role)
-		message_admins("[ADMIN_LOOKUPFLW(current)] has been created by [ADMIN_LOOKUPFLW(creator)], an antagonist.")
-		to_chat(current, span_userdanger("Despite your creator's current allegiances, your true master remains [creator.real_name]. If their loyalties change, so do yours. This will never change unless your creator's body is destroyed."))
 
 /datum/mind/Topic(href, href_list)
 	if(!check_rights(R_ADMIN))
@@ -728,74 +452,6 @@
 		usr = current
 	traitor_panel()
 
-
-/datum/mind/proc/get_all_objectives()
-	var/list/all_objectives = list()
-	for(var/datum/antagonist/A in antag_datums)
-		all_objectives |= A.objectives
-	return all_objectives
-
-/datum/mind/proc/announce_objectives()
-	var/obj_count = 1
-	to_chat(current, span_notice("Your current objectives:"))
-	for(var/datum/objective/objective as anything in get_all_objectives())
-		to_chat(current, "<B>[objective.objective_name] #[obj_count]</B>: [objective.explanation_text]")
-		obj_count++
-
-/datum/mind/proc/find_syndicate_uplink(check_unlocked)
-	var/list/L = current.get_all_contents()
-	for (var/i in L)
-		var/atom/movable/I = i
-		var/datum/component/uplink/found_uplink = I.GetComponent(/datum/component/uplink)
-		if(!found_uplink || (check_unlocked && found_uplink.locked))
-			continue
-		return found_uplink
-
-/**
-* Checks to see if the mind has an accessible uplink (their own, if they are a traitor; any unlocked uplink otherwise),
-* and gives them a fallback spell if no uplink was found
-*/
-/datum/mind/proc/try_give_equipment_fallback()
-	var/uplink_exists
-	var/datum/antagonist/traitor/traitor_datum = has_antag_datum(/datum/antagonist/traitor)
-	if(traitor_datum)
-		uplink_exists = traitor_datum.uplink_ref
-	if(!uplink_exists)
-		uplink_exists = find_syndicate_uplink(check_unlocked = TRUE)
-	if(!uplink_exists && !(locate(/datum/action/special_equipment_fallback) in current.actions))
-		var/datum/action/special_equipment_fallback/fallback = new(src)
-		fallback.Grant(current)
-
-/datum/mind/proc/take_uplink()
-	qdel(find_syndicate_uplink())
-
-/datum/mind/proc/make_traitor()
-	if(!(has_antag_datum(/datum/antagonist/traitor)))
-		add_antag_datum(/datum/antagonist/traitor)
-
-/datum/mind/proc/make_changeling()
-	var/datum/antagonist/changeling/C = has_antag_datum(/datum/antagonist/changeling)
-	if(!C)
-		C = add_antag_datum(/datum/antagonist/changeling)
-		special_role = ROLE_CHANGELING
-	return C
-
-
-/datum/mind/proc/make_wizard()
-	if(has_antag_datum(/datum/antagonist/wizard))
-		return
-	set_assigned_role(SSjob.GetJobType(/datum/job/space_wizard))
-	special_role = ROLE_WIZARD
-	add_antag_datum(/datum/antagonist/wizard)
-
-
-/datum/mind/proc/make_rev()
-	var/datum/antagonist/rev/head/head = new()
-	head.give_flash = TRUE
-	head.give_hud = TRUE
-	add_antag_datum(head)
-	special_role = ROLE_REV_HEAD
-
 /datum/mind/proc/transfer_martial_arts(mob/living/new_character)
 	if(!ishuman(new_character))
 		return
@@ -804,6 +460,11 @@
 			martial_art.remove(new_character)
 		else
 			martial_art.teach(new_character)
+
+/datum/mind/proc/has_martialart(string)
+	if(martial_art && martial_art.id == string)
+		return martial_art
+	return FALSE
 
 /datum/mind/proc/get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
 	for(var/mob/dead/observer/G in (ghosts_with_clients ? GLOB.player_list : GLOB.dead_mob_list))
@@ -817,27 +478,6 @@
 	. = G
 	if(G)
 		G.reenter_corpse()
-
-/// Sets our can_hijack to the fastest speed our antag datums allow.
-/datum/mind/proc/get_hijack_speed()
-	. = 0
-	for(var/datum/antagonist/A in antag_datums)
-		. = max(., A.hijack_speed())
-
-/datum/mind/proc/has_objective(objective_type)
-	for(var/datum/antagonist/A in antag_datums)
-		for(var/O in A.objectives)
-			if(istype(O,objective_type))
-				return TRUE
-
-/mob/proc/sync_mind()
-	mind_initialize() //updates the mind (or creates and initializes one if one doesn't exist)
-	mind.active = TRUE //indicates that the mind is currently synced with a client
-
-/datum/mind/proc/has_martialart(string)
-	if(martial_art && martial_art.id == string)
-		return martial_art
-	return FALSE
 
 ///Adds addiction points to the specified addiction
 /datum/mind/proc/add_addiction_points(type, amount)
@@ -862,44 +502,12 @@
 	assigned_role = new_role
 
 
+/mob/proc/sync_mind()
+	mind_initialize() //updates the mind (or creates and initializes one if one doesn't exist)
+	mind.active = TRUE //indicates that the mind is currently synced with a client
+
 /mob/dead/new_player/sync_mind()
 	return
 
 /mob/dead/observer/sync_mind()
 	return
-
-
-//Initialisation procs
-/mob/proc/mind_initialize()
-	if(mind)
-		mind.key = key
-
-	else
-		mind = new /datum/mind(key)
-		SSticker.minds += mind
-	if(!mind.name)
-		mind.name = real_name
-	mind.set_current(src)
-
-/mob/living/carbon/mind_initialize()
-	..()
-	last_mind = mind
-
-
-//AI
-/mob/living/silicon/ai/mind_initialize()
-	. = ..()
-	mind.set_assigned_role(SSjob.GetJobType(/datum/job/ai))
-
-
-//BORG
-/mob/living/silicon/robot/mind_initialize()
-	. = ..()
-	mind.set_assigned_role(SSjob.GetJobType(/datum/job/cyborg))
-
-
-//PAI
-/mob/living/silicon/pai/mind_initialize()
-	. = ..()
-	mind.set_assigned_role(SSjob.GetJobType(/datum/job/personal_ai))
-	mind.special_role = ""
