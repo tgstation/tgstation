@@ -283,7 +283,7 @@
 	var/bite_sound = 'sound/weapons/bite.ogg'
 
 /obj/effect/decal/cleanable/ants/Initialize(mapload)
-	reagent_amount = rand(3, 5)
+	reagent_amount = rand((reagent_amount - 2), reagent_amount)
 	. = ..()
 	update_ant_damage()
 
@@ -315,6 +315,27 @@
 /obj/effect/decal/cleanable/ants/update_overlays()
 	. = ..()
 	. += emissive_appearance(icon, "[icon_state]_light", alpha = src.alpha)
+
+/obj/effect/decal/cleanable/ants/fire_act(exposed_temperature, exposed_volume)
+	new /obj/effect/decal/cleanable/ants/fire(loc)
+	qdel(src)
+
+/obj/effect/decal/cleanable/ants/fire
+	name = "fire space ants"
+	desc = "A small colony no longer. We are the fire nation."
+	icon_state = "ants_4"
+	mergeable_decal = FALSE
+	reagent_amount = 25
+
+/obj/effect/decal/cleanable/ants/fire/update_ant_damage()
+	AddComponent(/datum/component/caltrop, min_damage = 10, max_damage = 25, flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN | CALTROP_BYPASS_SHOES), soundfile = bite_sound)
+	update_icon(UPDATE_OVERLAYS)
+
+/obj/effect/decal/cleanable/ants/fire/fire_act(exposed_temperature, exposed_volume)
+	return
+
+/obj/effect/decal/cleanable/ants/fire/burn()
+	return
 
 /obj/effect/decal/cleanable/fuel_pool
 	name = "pool of fuel"
