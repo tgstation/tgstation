@@ -386,17 +386,19 @@ SUBSYSTEM_DEF(ticker)
 
 	var/captainless = TRUE
 
-	var/highest_rank = length(SSjob.chain_of_command) + 1
-	var/list/spare_id_candidates = list()
-	var/mob/dead/new_player/picked_spare_id_candidate
+	// chain_of_command is an ordered assoc list in the form job -> captain priority
+	// So if we take the last entry we'll get the lowest (highest) priority
+	var/highest_job = SSjobs.chain_of_command[length(SSjobs.chain_of_command)]
+	var/lowest_rank = SSjobs.chain_of_command[highest_job]
+	// List of lists in the form Priority -> Found applicants
+ 	var/list/spare_id_candidates = new list(lowest_rank)
+	for(var/i in 1 to lowest_rank)
+		spare_id_candidates[i] = list()
 
 	// Find a suitable player to hold captaincy.
 	var/count = 0
 	for(var/mob/dead/new_player/new_player_mob as anything in GLOB.new_player_list)
 		count++
-		if(is_banned_from(new_player_mob.ckey, list(JOB_CAPTAIN)))
-			CHECK_TICK
-			continue
 		if(!ishuman(new_player_mob.new_character))
 			continue
 		var/mob/living/carbon/human/new_player_human = new_player_mob.new_character
@@ -407,17 +409,21 @@ SUBSYSTEM_DEF(ticker)
 		var/player_assigned_role = new_player_human.mind.assigned_role.title
 		var/spare_id_priority = SSjob.chain_of_command[player_assigned_role]
 		if(spare_id_priority)
-			if(spare_id_priority < highest_rank)
-				spare_id_candidates.Cut()
-				spare_id_candidates += new_player_mob
-				highest_rank = spare_id_priority
-			else if(spare_id_priority == highest_rank)
-				spare_id_candidates += new_player_mob
+			spare_id_candidates[spare_id_priority] += new_player_mob
 		CHECK_TICK
 	log_roundstart("Captain selecting [count] players")
 
-	if(length(spare_id_candidates))
-		picked_spare_id_candidate = pick(spare_id_candidates)
+	// Now that we have a list of all canidates sorted by priority, we're gonna walk it from most to least preferable, and check for captain bans
+	// This operation is real slow, and negatives are arare which is why we're doing it here rather then back in the main loop
+	var/mob/dead/new_player/picked_spare_id_candidate
+	for(var/i in 1 to lowest_rank)
+		while(!picked_spare_id_candidate && length(spare_id_candidates))
+			var/mob/potential_lad = pick_n_take(spare_id_candidates)
+			if(is_banned_from(potential_lad.ckey, list(JOB_CAPTAIN)))
+				continue
+			picked_spare_id_candidate = potential_lad
+		if(picked_spare_id_candidate)
+			break
 
 	count = 0
 	for(var/mob/dead/new_player/new_player_mob as anything in GLOB.new_player_list)
