@@ -81,29 +81,6 @@ const BLACKLISTED_CATEGORIES: Record<string, boolean> = {
  */
 const ALL_CATEGORY = '__ALL';
 
-const SearchBar = (
-  props: { searchText: string; setSearchText: (text: string) => void },
-  context
-) => {
-  const { searchText, setSearchText } = props;
-
-  return (
-    <Stack align="baseline">
-      <Stack.Item>
-        <Icon name="search" />
-      </Stack.Item>
-      <Stack.Item grow>
-        <Input
-          fluid
-          placeholder="Search for..."
-          onInput={(_e: unknown, v: string) => setSearchText(v.toLowerCase())}
-          value={searchText}
-        />
-      </Stack.Item>
-    </Stack>
-  );
-};
-
 export const Fabricator = (props, context) => {
   const { act, data } = useBackend<FabricatorData>(context);
   const { materials, fab_name, on_hold, designs, busy } = data;
@@ -228,10 +205,8 @@ export const Fabricator = (props, context) => {
                               design.categories?.indexOf(selectedCategory) !==
                                 -1
                           )
-                          .filter(
-                            (design) =>
-                              design.name.toLowerCase().indexOf(searchText) !==
-                              -1
+                          .filter((design) =>
+                            design.name.toLowerCase().includes(searchText)
                           )
                           .map((design) => (
                             <Recipe
@@ -257,9 +232,7 @@ export const Fabricator = (props, context) => {
                 {!!on_hold && (
                   <Dimmer
                     style={{ 'font-size': '2em', 'text-align': 'center' }}>
-                    {
-                      'Mineral access is on hold, please contact the quartermaster.'
-                    }
+                    Mineral access is on hold, please contact the quartermaster.
                   </Dimmer>
                 )}
               </Stack.Item>
@@ -281,10 +254,38 @@ export const Fabricator = (props, context) => {
   );
 };
 
-const MaterialCost = (
-  props: { design: Design; amount: number; available: MaterialMap },
-  context
-) => {
+type SearchBarProps = {
+  searchText: string;
+  setSearchText: (text: string) => void;
+};
+
+const SearchBar = (props: SearchBarProps, context) => {
+  const { searchText, setSearchText } = props;
+
+  return (
+    <Stack align="baseline">
+      <Stack.Item>
+        <Icon name="search" />
+      </Stack.Item>
+      <Stack.Item grow>
+        <Input
+          fluid
+          placeholder="Search for..."
+          onInput={(_e: unknown, v: string) => setSearchText(v.toLowerCase())}
+          value={searchText}
+        />
+      </Stack.Item>
+    </Stack>
+  );
+};
+
+type MaterialCostProps = {
+  design: Design;
+  amount: number;
+  available: MaterialMap;
+};
+
+const MaterialCost = (props: MaterialCostProps, context) => {
   const { design, amount, available } = props;
 
   return (
@@ -309,10 +310,13 @@ const MaterialCost = (
   );
 };
 
-const PrintButton = (
-  props: { design: Design; quantity: number; available: MaterialMap },
-  context
-) => {
+type PrintButtonProps = {
+  design: Design;
+  quantity: number;
+  available: MaterialMap;
+};
+
+const PrintButton = (props: PrintButtonProps, context) => {
   const { act, data } = useBackend<FabricatorData>(context);
   const { design, quantity, available } = props;
 
