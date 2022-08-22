@@ -33,7 +33,7 @@ All ShuttleMove procs go here
 				M.stop_pulling()
 				M.visible_message(span_warning("[shuttle] slams into [M]!"))
 				SSblackbox.record_feedback("tally", "shuttle_gib", 1, M.type)
-				log_attack("[key_name(M)] was shuttle gibbed by [shuttle].")
+				log_shuttle("[key_name(M)] was shuttle gibbed by [shuttle].")
 				M.gib()
 
 

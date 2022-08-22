@@ -53,9 +53,12 @@
 	var/object_list = list()
 
 	for(var/atom/movable/target in view(5, get_turf(parent.shell)))
+		if(target.mouse_opacity == MOUSE_OPACITY_TRANSPARENT)
+			continue
 		if(target.invisibility > see_invisible)
 			continue
-
+		if(target.IsObscured())
+			continue
 		object_list += target
 
 	result.set_output(object_list)

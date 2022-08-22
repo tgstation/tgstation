@@ -141,7 +141,7 @@
 /datum/chemical_reaction/blastoff_ampoule/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/iteration in 1 to created_volume)
-		var/obj/item/reagent_containers/glass/blastoff_ampoule/new_ampoule = new(location)
+		var/obj/item/reagent_containers/cup/blastoff_ampoule/new_ampoule = new(location)
 		new_ampoule.pixel_x = rand(-6, 6)
 		new_ampoule.pixel_y = rand(-6, 6)
 

@@ -25,7 +25,7 @@
 /datum/admins/proc/restart()
 	set category = "Server"
 	set name = "Reboot World"
-	set desc="Restarts the world immediately"
+	set desc = "Restarts the world immediately"
 	if (!usr.client.holder)
 		return
 
@@ -82,8 +82,8 @@
 
 /datum/admins/proc/toggleooc()
 	set category = "Server"
-	set desc="Toggle dis bitch"
-	set name="Toggle OOC"
+	set desc = "Toggle dis bitch"
+	set name = "Toggle OOC"
 	toggle_ooc()
 	log_admin("[key_name(usr)] toggled OOC.")
 	message_admins("[key_name_admin(usr)] toggled OOC.")
@@ -91,8 +91,8 @@
 
 /datum/admins/proc/toggleoocdead()
 	set category = "Server"
-	set desc="Toggle dis bitch"
-	set name="Toggle Dead OOC"
+	set desc = "Toggle dis bitch"
+	set name = "Toggle Dead OOC"
 	toggle_dooc()
 
 	log_admin("[key_name(usr)] toggled OOC.")
@@ -101,8 +101,8 @@
 
 /datum/admins/proc/startnow()
 	set category = "Server"
-	set desc="Start the round RIGHT NOW"
-	set name="Start Now"
+	set desc = "Start the round RIGHT NOW"
+	set name = "Start Now"
 	if(SSticker.current_state == GAME_STATE_PREGAME || SSticker.current_state == GAME_STATE_STARTUP)
 		if(!SSticker.start_immediately)
 			var/localhost_addresses = list("127.0.0.1", "::1")
@@ -128,10 +128,38 @@
 		to_chat(usr, "<span class='warningplain'><font color='red'>Error: Start Now: Game has already started.</font></span>")
 	return FALSE
 
+/datum/admins/proc/delay_round_end()
+	set category = "Server"
+	set desc = "Prevent the server from restarting"
+	set name = "Delay Round End"
+
+	if(!check_rights(R_SERVER))
+		return
+
+	if(SSticker.delay_end)
+		tgui_alert(usr, "The round end is already delayed. The reason for the current delay is: \"[SSticker.admin_delay_notice]\"", "Alert", list("Ok"))
+		return
+
+	var/delay_reason = input(usr, "Enter a reason for delaying the round end", "Round Delay Reason") as null|text
+
+	if(isnull(delay_reason))
+		return
+
+	if(SSticker.delay_end)
+		tgui_alert(usr, "The round end is already delayed. The reason for the current delay is: \"[SSticker.admin_delay_notice]\"", "Alert", list("Ok"))
+		return
+
+	SSticker.delay_end = TRUE
+	SSticker.admin_delay_notice = delay_reason
+
+	log_admin("[key_name(usr)] delayed the round end for reason: [SSticker.admin_delay_notice]")
+	message_admins("[key_name_admin(usr)] delayed the round end for reason: [SSticker.admin_delay_notice]")
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Delay Round End", "Reason: [delay_reason]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /datum/admins/proc/toggleenter()
 	set category = "Server"
-	set desc="People can't enter"
-	set name="Toggle Entering"
+	set desc = "People can't enter"
+	set name = "Toggle Entering"
 	if(!SSlag_switch.initialized)
 		return
 	SSlag_switch.set_measure(DISABLE_NON_OBSJOBS, !SSlag_switch.measures[DISABLE_NON_OBSJOBS])
@@ -141,8 +169,8 @@
 
 /datum/admins/proc/toggleAI()
 	set category = "Server"
-	set desc="People can't be AI"
-	set name="Toggle AI"
+	set desc = "People can't be AI"
+	set name = "Toggle AI"
 	var/alai = CONFIG_GET(flag/allow_ai)
 	CONFIG_SET(flag/allow_ai, !alai)
 	if (alai)
@@ -155,8 +183,8 @@
 
 /datum/admins/proc/toggleaban()
 	set category = "Server"
-	set desc="Respawn basically"
-	set name="Toggle Respawn"
+	set desc = "Respawn basically"
+	set name = "Toggle Respawn"
 	var/new_nores = !CONFIG_GET(flag/norespawn)
 	CONFIG_SET(flag/norespawn, new_nores)
 	if (!new_nores)
@@ -170,8 +198,8 @@
 
 /datum/admins/proc/delay()
 	set category = "Server"
-	set desc="Delay the game start"
-	set name="Delay Pre-Game"
+	set desc = "Delay the game start"
+	set name = "Delay Pre-Game"
 
 	var/newtime = input("Set a new time in seconds. Set -1 for indefinite delay.","Set Delay",round(SSticker.GetTimeLeft()/10)) as num|null
 	if(SSticker.current_state > GAME_STATE_PREGAME)
@@ -214,8 +242,8 @@
 
 /datum/admins/proc/toggleguests()
 	set category = "Server"
-	set desc="Guests can't enter"
-	set name="Toggle guests"
+	set desc = "Guests can't enter"
+	set name = "Toggle guests"
 	var/new_guest_ban = !CONFIG_GET(flag/guest_ban)
 	CONFIG_SET(flag/guest_ban, new_guest_ban)
 	if (new_guest_ban)

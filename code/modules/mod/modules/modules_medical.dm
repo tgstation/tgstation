@@ -138,7 +138,7 @@
 	if(!.)
 		return
 	var/mob/living/carbon/human/wearer_human = mod.wearer
-	if(istype(target, /obj/item/organ))
+	if(isorgan(target))
 		if(!wearer_human.Adjacent(target))
 			return
 		var/atom/movable/organ = target

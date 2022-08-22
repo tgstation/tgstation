@@ -71,7 +71,7 @@
 	var/pet_type = possible_heads[target.title]
 	if(islist(pet_type))
 		for(var/type in pet_type)
-			target_pet = locate(pet_type) in GLOB.mob_living_list
+			target_pet = locate(type) in GLOB.mob_living_list
 			if(target_pet)
 				break
 	else

@@ -272,7 +272,7 @@
 			human.overlays_standing[SHOES_LAYER] = bloody_feet
 			human.apply_overlay(SHOES_LAYER)
 		else
-			human.update_inv_shoes()
+			human.update_worn_shoes()
 
 /datum/component/bloodysoles/feet/add_parent_to_footprint(obj/effect/decal/cleanable/blood/footprints/FP)
 	if(!ishuman(wielder))

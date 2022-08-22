@@ -29,6 +29,21 @@ have ways of interacting with a specific mob and control it.
 	)
 	idle_behavior = /datum/idle_behavior/idle_monkey
 
+	///Whether this AI is immune to being stunned by being crossed into.
+	var/crossed_immune = FALSE
+
+/datum/ai_controller/monkey/pun_pun
+	movement_delay = 0.7 SECONDS //pun pun moves slower so the bartender can keep track of them
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/generic_resist,
+		/datum/ai_planning_subtree/monkey_combat,
+		/datum/ai_planning_subtree/generic_hunger,
+		/datum/ai_planning_subtree/generic_play_instrument,
+		/datum/ai_planning_subtree/punpun_shenanigans,
+	)
+	idle_behavior = /datum/idle_behavior/idle_monkey/pun_pun
+	crossed_immune = TRUE
+
 /datum/ai_controller/monkey/angry
 
 /datum/ai_controller/monkey/angry/TryPossessPawn(atom/new_pawn)
@@ -42,7 +57,8 @@ have ways of interacting with a specific mob and control it.
 		return AI_CONTROLLER_INCOMPATIBLE
 
 	var/mob/living/living_pawn = new_pawn
-	RegisterSignal(new_pawn, COMSIG_MOVABLE_CROSS, .proc/on_crossed)
+	if(!crossed_immune)
+		RegisterSignal(new_pawn, COMSIG_MOVABLE_CROSS, .proc/on_crossed)
 	RegisterSignal(new_pawn, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
 	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
 	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_PAW, .proc/on_attack_paw)
@@ -60,8 +76,10 @@ have ways of interacting with a specific mob and control it.
 	return ..() //Run parent at end
 
 /datum/ai_controller/monkey/UnpossessPawn(destroy)
+	if(!crossed_immune)
+		UnregisterSignal(pawn, COMSIG_MOVABLE_CROSS)
+
 	UnregisterSignal(pawn, list(
-		COMSIG_MOVABLE_CROSS,
 		COMSIG_PARENT_ATTACKBY,
 		COMSIG_ATOM_ATTACK_HAND,
 		COMSIG_ATOM_ATTACK_PAW,
@@ -88,11 +106,11 @@ have ways of interacting with a specific mob and control it.
 	RegisterSignal(pawn, COMSIG_MOVABLE_CROSS, .proc/on_crossed)
 
 /datum/ai_controller/monkey/able_to_run()
-	. = ..()
 	var/mob/living/living_pawn = pawn
 
 	if(IS_DEAD_OR_INCAP(living_pawn))
 		return FALSE
+	return ..()
 
 ///re-used behavior pattern by monkeys for finding a weapon
 /datum/ai_controller/monkey/proc/TryFindWeapon()
@@ -164,14 +182,14 @@ have ways of interacting with a specific mob and control it.
 /datum/ai_controller/monkey/proc/on_bullet_act(datum/source, obj/projectile/Proj)
 	SIGNAL_HANDLER
 	var/mob/living/living_pawn = pawn
-	if(istype(Proj , /obj/projectile/beam)||istype(Proj, /obj/projectile/bullet))
+	if(istype(Proj, /obj/projectile/beam) || istype(Proj, /obj/projectile/bullet))
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
 			if(!Proj.nodamage && Proj.damage < living_pawn.health && isliving(Proj.firer))
 				retaliate(Proj.firer)
 
 /datum/ai_controller/monkey/proc/on_hitby(datum/source, atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
-	if(istype(AM, /obj/item))
+	if(isitem(AM))
 		var/mob/living/living_pawn = pawn
 		var/obj/item/I = AM
 		var/mob/thrown_by = I.thrownby?.resolve()

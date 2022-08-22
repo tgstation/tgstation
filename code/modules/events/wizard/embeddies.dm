@@ -4,6 +4,7 @@
 	typepath = /datum/round_event/wizard/embedpocalypse
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
+	description = "Everything becomes pointy enough to embed in people when thrown."
 
 ///behold... the only reason sticky is a subtype...
 /datum/round_event_control/wizard/embedpocalypse/canSpawnEvent(players_amt, gamemode)
@@ -19,6 +20,7 @@
 	typepath = /datum/round_event/wizard/embedpocalypse/sticky
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
+	description = "Everything becomes sticky enough to be glued to people when thrown."
 
 /datum/round_event/wizard/embedpocalypse/sticky/start()
 	GLOB.global_funny_embedding = new /datum/global_funny_embedding/sticky

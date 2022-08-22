@@ -145,7 +145,7 @@
 /mob/living/simple_animal/hostile/giant_spider/nurse/AttackingTarget()
 	if(DOING_INTERACTION(src, INTERACTION_SPIDER_KEY))
 		return
-	if(!istype(target, /mob/living/simple_animal/hostile/giant_spider))
+	if(!isspider(target))
 		return ..()
 	var/mob/living/simple_animal/hostile/giant_spider/hurt_spider = target
 	if(hurt_spider == src)
@@ -520,7 +520,7 @@
 	button_icon_state = "directive"
 
 /datum/action/innate/spider/set_directive/IsAvailable()
-	return ..() && istype(owner, /mob/living/simple_animal/hostile/giant_spider)
+	return ..() && isspider(owner)
 
 /datum/action/innate/spider/set_directive/Activate()
 	var/mob/living/simple_animal/hostile/giant_spider/midwife/spider = owner
@@ -530,7 +530,7 @@
 		return FALSE
 
 	message_admins("[ADMIN_LOOKUPFLW(owner)] set its directive to: '[spider.directive]'.")
-	log_game("[key_name(owner)] set its directive to: '[spider.directive]'.")
+	owner.log_message("set its directive to: '[spider.directive]'.", LOG_GAME)
 	return TRUE
 
 /datum/action/innate/spider/comm

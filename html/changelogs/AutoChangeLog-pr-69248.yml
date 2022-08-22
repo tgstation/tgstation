@@ -1,0 +1,7 @@
+author: "LukasBeedellCodestuff"
+delete-after: True
+changes: 
+  - rscadd: "Pig crate from cargo"
+  - rscadd: "feeding carrots to pigs lets you tame them and ride them"
+  - rscadd: "raw pork from killing a pig"
+  - rscadd: "pork chops from cooking raw pork"

@@ -24,7 +24,7 @@
 	var/respawn_time = 50
 	var/respawn_sound = 'sound/magic/staff_animation.ogg'
 
-/obj/structure/life_candle/ComponentInitialize()
+/obj/structure/life_candle/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/movetype_handler)
 

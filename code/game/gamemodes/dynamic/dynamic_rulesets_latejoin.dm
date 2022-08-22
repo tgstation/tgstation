@@ -32,7 +32,7 @@
 	var/threat = round(mode.threat_level/10)
 
 	if (job_check < required_enemies[threat])
-		log_game("DYNAMIC: FAIL: [src] is not ready, because there are not enough enemies: [required_enemies[threat]] needed, [job_check] found")
+		log_dynamic("FAIL: [src] is not ready, because there are not enough enemies: [required_enemies[threat]] needed, [job_check] found")
 		return FALSE
 
 	return ..()
@@ -119,8 +119,6 @@
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/revs)
 	var/required_heads_of_staff = 3
 	var/finished = FALSE
-	/// How much threat should be injected when the revolution wins?
-	var/revs_win_threat_injection = 20
 	var/datum/team/revolution/revolution
 
 /datum/dynamic_ruleset/latejoin/provocateur/ready(forced=FALSE)
@@ -150,12 +148,12 @@
 		SSshuttle.registerHostileEnvironment(revolution)
 		return TRUE
 	else
-		log_game("DYNAMIC: [ruletype] [name] discarded [M.name] from head revolutionary due to ineligibility.")
-		log_game("DYNAMIC: [ruletype] [name] failed to get any eligible headrevs. Refunding [cost] threat.")
+		log_dynamic("[ruletype] [name] discarded [M.name] from head revolutionary due to ineligibility.")
+		log_dynamic("[ruletype] [name] failed to get any eligible headrevs. Refunding [cost] threat.")
 		return FALSE
 
 /datum/dynamic_ruleset/latejoin/provocateur/rule_process()
-	var/winner = revolution.process_victory(revs_win_threat_injection)
+	var/winner = revolution.process_victory()
 	if (isnull(winner))
 		return
 
@@ -198,8 +196,8 @@
 	)
 	required_candidates = 1
 	weight = 4
-	cost = 7
-	requirements = list(101,101,101,10,10,10,10,10,10,10)
+	cost = 6
+	requirements = list(101,101,50,10,10,10,10,10,10,10)
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/latejoin/heretic_smuggler/execute()

@@ -21,7 +21,7 @@
 	message = "claps."
 	muzzle_ignore = TRUE
 	hands_use_check = TRUE
-	emote_type = EMOTE_AUDIBLE
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 	audio_cooldown = 5 SECONDS
 	vary = TRUE
 
@@ -66,7 +66,7 @@
 	key_third_person = "moans"
 	message = "moans!"
 	message_mime = "appears to moan!"
-	emote_type = EMOTE_AUDIBLE
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/carbon/noogie
 	key = "noogie"

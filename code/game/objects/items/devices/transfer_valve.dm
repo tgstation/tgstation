@@ -148,7 +148,7 @@
 
 	if(change_volume)
 		target_mix.volume += other_mix.volume
-	
+
 	target_mix.merge(other_mix.remove_ratio(1))
 	return TRUE
 
@@ -175,7 +175,7 @@
 		var/attachment
 		var/attachment_signal_log
 		if(attached_device)
-			if(istype(attached_device, /obj/item/assembly/signaler))
+			if(issignaler(attached_device))
 				var/obj/item/assembly/signaler/attached_signaller = attached_device
 				attachment = "<A HREF='?_src_=holder;[HrefToken()];secrets=list_signalers'>[attached_signaller]</A>"
 				attachment_signal_log = attached_signaller.last_receive_signal_log ? "The following log entry is the last one associated with the attached signaller<br>[attached_signaller.last_receive_signal_log]" : "There is no signal log entry."
@@ -199,6 +199,7 @@
 		GLOB.bombers += admin_bomb_message
 		message_admins(admin_bomb_message)
 		log_game("Bomb valve opened in [AREACOORD(bombturf)][attachment_message][bomber_message]")
+		bomber.log_message("opened bomb valve", LOG_GAME, log_globally = FALSE)
 
 		valve_open = merge_gases(target, change_volume)
 

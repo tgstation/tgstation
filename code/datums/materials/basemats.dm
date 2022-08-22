@@ -158,7 +158,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	color = list(119/255, 217/255, 396/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
 	greyscale_colors = "#4e7dffC8"
 	alpha = 200
-	categories = list(MAT_CATEGORY_ORE = TRUE)
+	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_ITEM_MATERIAL = TRUE)
 	beauty_modifier = 0.5
 	sheet_type = /obj/item/stack/sheet/bluespace_crystal
 	value_per_unit = 0.15
@@ -319,12 +319,12 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 
 /datum/material/mythril/on_applied_obj(atom/source, amount, material_flags)
 	. = ..()
-	if(istype(source, /obj/item))
+	if(isitem(source))
 		source.AddComponent(/datum/component/fantasy)
 
 /datum/material/mythril/on_removed_obj(atom/source, amount, material_flags)
 	. = ..()
-	if(istype(source, /obj/item))
+	if(isitem(source))
 		qdel(source.GetComponent(/datum/component/fantasy))
 
 /datum/material/mythril/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)

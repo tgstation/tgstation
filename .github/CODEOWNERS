@@ -6,12 +6,6 @@
 
 # MAINTAINERS
 
-# Cobby
-
-/code/modules/reagents/ @ExcessiveUseOfCobblestone
-/code/modules/research/designs/medical_designs.dm @ExcessiveUseOfCobblestone
-/code/game/objects/items/storage/medkit.dm @ExcessiveUseOfCobblestone
-
 # Cyberboss
 
 /code/__HELPERS/jatum.dm @Cyberboss
@@ -25,6 +19,17 @@
 /code/modules/admin/verbs/adminhelp.dm @Cyberboss
 /code/modules/admin/verbs/adminpm.dm @Cyberboss
 /code/modules/mapping/ @Cyberboss
+
+# Dragomagol/Tattle
+/code/__HELPERS/logging/ @dragomagol
+
+# Fikou
+
+/code/modules/awaymissions/ @Fikou
+/code/modules/mining/ @Fikou
+/code/modules/mod/ @Fikou
+/code/modules/ruins/lavalandruin_code/ @Fikou
+/code/modules/ruins/lavaland_ruin_code.dm @Fikou
 
 # JohnFulpWizard
 
@@ -86,8 +91,14 @@
 # stylemistake (explicitly disowned)
 
 /tgui/packages/tgui/interfaces/
+/tgui/packages/tgui/styles/interfaces/
 /tgui/packages/tgui-panel/styles/goon/chat-dark.scss
 /tgui/packages/tgui-panel/styles/goon/chat-light.scss
+
+# SuperNovaa41
+
+/code/modules/forensics/ @SuperNovaa41
+/code/datums/mood.dm @SuperNovaa41
 
 # Watermelon914
 
@@ -95,16 +106,11 @@
 
 # CONTRIBUTORS
 
-# Dragomagol/Tattle
-/code/__HELPERS/logging/ @Dragomagol
+# Cobby
 
-# Fikou
-
-/code/modules/mod/ @Fikou
-/code/modules/ruins/lavaland_ruin_code.dm @Fikou
-/code/modules/ruins/lavalandruin_code/ @Fikou
-/code/modules/mining/ @Fikou
-/code/modules/awaymissions/ @Fikou
+/code/modules/reagents/ @ExcessiveUseOfCobblestone
+/code/modules/research/designs/medical_designs.dm @ExcessiveUseOfCobblestone
+/code/game/objects/items/storage/medkit.dm @ExcessiveUseOfCobblestone
 
 # Jordie0608
 
@@ -115,7 +121,9 @@
 # Kapu1178
 
 /code/modules/surgery/bodyparts/ @Kapu1178
+/code/modules/surgery/organs/ @Kapu1178
 /code/modules/mob/living/carbon/carbon_update_icons.dm @Kapu1178
+/code/modules/mob/living/carbon/human/human_update_icons.dm @Kapu1178
 
 # MrStonedOne
 
@@ -140,6 +148,11 @@
 /code/__DEFINES/reactions.dm @Pickle-Coding
 /code/modules/atmospherics/ @Pickle-Coding
 /code/modules/power/ @Pickle-Coding
+
+# Time-Green
+
+/code/modules/plumbing/ @Time-Green
+/code/modules/surgery/organs/external/ @Time-Green
 
 # MULTIPLE OWNERS
 

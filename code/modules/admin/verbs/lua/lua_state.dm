@@ -38,6 +38,8 @@ GLOBAL_PROTECT(lua_usr)
 		SSlua.sleeps += src
 
 /datum/lua_state/proc/log_result(result, verbose = TRUE)
+	if(!islist(result))
+		return
 	if(!verbose && result["status"] != "errored" && result["status"] != "bad return" \
 		&& !(result["name"] == "input" && (result["status"] == "finished" || length(result["param"]))))
 		return
@@ -55,7 +57,8 @@ GLOBAL_PROTECT(lua_usr)
 				append_to_log = FALSE
 				break
 	if(append_to_log)
-		log += list(result)
+		log += list(weakrefify_list(result))
+	INVOKE_ASYNC(src, /datum/lua_state.proc/update_editors)
 
 /datum/lua_state/proc/load_script(script)
 	GLOB.IsLuaCall = TRUE
@@ -66,6 +69,8 @@ GLOBAL_PROTECT(lua_usr)
 	GLOB.lua_usr = tmp_usr
 
 	// Internal errors unrelated to the code being executed are returned as text rather than lists
+	if(isnull(result))
+		result = list("status" = "errored", "param" = "__lua_load returned null (it may have runtimed - check the runtime logs)", "name" = "input")
 	if(istext(result))
 		result = list("status" = "errored", "param" = result, "name" = "input")
 	result["chunk"] = script
@@ -88,6 +93,8 @@ GLOBAL_PROTECT(lua_usr)
 	GLOB.IsLuaCall = FALSE
 	GLOB.lua_usr = tmp_usr
 
+	if(isnull(result))
+		result = list("status" = "errored", "param" = "__lua_call returned null (it may have runtimed - check the runtime logs)", "name" = "input")
 	if(istext(result))
 		result = list("status" = "errored", "param" = result, "name" = islist(function) ? jointext(function, ".") : function)
 	check_if_slept(result)
@@ -105,6 +112,8 @@ GLOBAL_PROTECT(lua_usr)
 	var/result = __lua_awaken(internal_id)
 	GLOB.IsLuaCall = FALSE
 
+	if(isnull(result))
+		result = list("status" = "errored", "param" = "__lua_awaken returned null (it may have runtimed - check the runtime logs)", "name" = "input")
 	if(istext(result))
 		result = list("status" = "errored", "param" = result, "name" = "An attempted awaken")
 	check_if_slept(result)
@@ -120,18 +129,26 @@ GLOBAL_PROTECT(lua_usr)
 	var/result = __lua_resume(internal_id, index, call_args)
 	GLOB.IsLuaCall = FALSE
 
+	if(isnull(result))
+		result = list("status" = "errored", "param" = "__lua_resume returned null (it may have runtimed - check the runtime logs)", "name" = "input")
 	if(istext(result))
 		result = list("status" = "errored", "param" = result, "name" = "An attempted resume")
 	check_if_slept(result)
 	return result
 
 /datum/lua_state/proc/get_globals()
-	globals = __lua_get_globals(internal_id)
+	globals = weakrefify_list(__lua_get_globals(internal_id))
 
 /datum/lua_state/proc/get_tasks()
 	return __lua_get_tasks(internal_id)
 
 /datum/lua_state/proc/kill_task(task_info)
 	__lua_kill_task(internal_id, task_info)
+
+/datum/lua_state/proc/update_editors()
+	var/list/editor_list = LAZYACCESS(SSlua.editors, "\ref[src]")
+	if(editor_list)
+		for(var/datum/lua_editor/editor as anything in editor_list)
+			SStgui.update_uis(editor)
 
 #undef MAX_LOG_REPEAT_LOOKBACK

@@ -4,6 +4,7 @@
 	typepath = /datum/round_event/wizard/deprevolt
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
+	description = "A department is turned into an independent state."
 
 	///manual choice of what department to revolt for admins to pick
 	var/datum/job_department/picked_department

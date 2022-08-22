@@ -1,6 +1,7 @@
 // Given to heretic monsters.
 /datum/action/cooldown/spell/emp/eldritch
 	name = "Energetic Pulse"
+	desc = "A spell that causes a large EMP around you, disabling electronics."
 	background_icon_state = "bg_ecult"
 
 	school = SCHOOL_FORBIDDEN

@@ -206,7 +206,7 @@
  * Arguments:
  * - [type_to_check][/datum]: An instance to check.
  * - [list_to_check][/list]: A list of typepaths to check the type_to_check against.
- * - zebra: Whether to use the value of the mathing type in the list instead of just returning true when a match is found.
+ * - zebra: Whether to use the value of the matching type in the list instead of just returning true when a match is found.
  */
 /proc/is_type_in_list(datum/type_to_check, list/list_to_check, zebra = FALSE)
 	if(!LAZYLEN(list_to_check) || !type_to_check)
@@ -812,17 +812,20 @@
 	else
 		return element
 
-#define REFIFY_KVPIFY_MAX_LENGTH 1000
-
 /// Returns a copy of the list where any element that is a datum or the world is converted into a ref
 /proc/refify_list(list/target_list)
-	if(length(target_list) > REFIFY_KVPIFY_MAX_LENGTH)
-		return "list\[[length(target_list)]\]"
 	var/list/ret = list()
 	for(var/i in 1 to target_list.len)
 		var/key = target_list[i]
 		var/new_key = key
-		if(isdatum(key))
+		if(isweakref(key))
+			var/datum/weakref/ref = key
+			var/resolved = ref.resolve()
+			if(resolved)
+				new_key = "[resolved] [REF(resolved)]"
+			else
+				new_key = "null weakref [REF(key)]"
+		else if(isdatum(key))
 			new_key = "[key] [REF(key)]"
 		else if(key == world)
 			new_key = "world [REF(world)]"
@@ -831,7 +834,14 @@
 		var/value
 		if(istext(key) || islist(key) || ispath(key) || isdatum(key) || key == world)
 			value = target_list[key]
-		if(isdatum(value))
+		if(isweakref(value))
+			var/datum/weakref/ref = value
+			var/resolved = ref.resolve()
+			if(resolved)
+				value = "[resolved] [REF(resolved)]"
+			else
+				value = "null weakref [REF(key)]"
+		else if(isdatum(value))
 			value = "[value] [REF(value)]"
 		else if(value == world)
 			value = "world [REF(world)]"
@@ -841,6 +851,8 @@
 		if(value)
 			to_add[new_key] = value
 		ret += to_add
+		if(i < target_list.len)
+			CHECK_TICK
 	return ret
 
 /**
@@ -848,8 +860,6 @@
  * so that list keys that are themselves lists can be fully json-encoded
  */
 /proc/kvpify_list(list/target_list, depth = INFINITY)
-	if(length(target_list) > REFIFY_KVPIFY_MAX_LENGTH)
-		return "list\[[length(target_list)]\]"
 	var/list/ret = list()
 	for(var/i in 1 to target_list.len)
 		var/key = target_list[i]
@@ -865,9 +875,9 @@
 			ret += list(list("key" = new_key, "value" = value))
 		else
 			ret += list(list("key" = i, "value" = new_key))
+		if(i < target_list.len)
+			CHECK_TICK
 	return ret
-
-#undef REFIFY_KVPIFY_MAX_LENGTH
 
 /// Compares 2 lists, returns TRUE if they are the same
 /proc/deep_compare_list(list/list_1, list/list_2)
@@ -896,5 +906,29 @@
 					return FALSE
 			else if(value_1 != value_2)
 				return FALSE
-
 	return TRUE
+
+/// Returns a copy of the list where any element that is a datum is converted into a weakref
+/proc/weakrefify_list(list/target_list)
+	var/list/ret = list()
+	for(var/i in 1 to target_list.len)
+		var/key = target_list[i]
+		var/new_key = key
+		if(isdatum(key))
+			new_key = WEAKREF(key)
+		else if(islist(key))
+			new_key = weakrefify_list(key)
+		var/value
+		if(istext(key) || islist(key) || ispath(key) || isdatum(key) || key == world)
+			value = target_list[key]
+		if(isdatum(value))
+			value = WEAKREF(value)
+		else if(islist(value))
+			value = weakrefify_list(value)
+		var/list/to_add = list(new_key)
+		if(value)
+			to_add[new_key] = value
+		ret += to_add
+		if(i < target_list.len)
+			CHECK_TICK
+	return ret

@@ -4,6 +4,8 @@
 	max_occurrences = 1
 	min_players = 20
 	dynamic_should_hijack = TRUE
+	category = EVENT_CATEGORY_ENTITIES
+	description = "Spawns a nightmare, aiming to darken the station."
 
 /datum/round_event/ghost_role/nightmare
 	minimum_required = 1
@@ -39,6 +41,6 @@
 	S.set_species(/datum/species/shadow/nightmare)
 	playsound(S, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
 	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Nightmare by an event.")
-	log_game("[key_name(S)] was spawned as a Nightmare by an event.")
+	S.log_message("was spawned as a Nightmare by an event.", LOG_GAME)
 	spawned_mobs += S
 	return SUCCESSFUL_SPAWN
