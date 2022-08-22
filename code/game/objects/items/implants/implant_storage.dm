@@ -36,7 +36,7 @@
 				imp_e.create_storage(type = /datum/storage/implant)
 				qdel(src)
 				return TRUE
-			if(imp_e.atom_storage && imp_e.atom_storage.max_slots < max_slot_stacking)
+			else if(imp_e.atom_storage.max_slots < max_slot_stacking)
 				imp_e.atom_storage.max_slots += SINGULAR_STORAGE_IMPLANT_SLOT_COUNT
 				imp_e.atom_storage.max_total_storage += SINGULAR_STORAGE_IMPLANT_STORAGE_AMOUNT
 				return TRUE
