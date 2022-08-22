@@ -2324,6 +2324,7 @@
 #include "code\modules\antagonists\slaughter\slaughter.dm"
 #include "code\modules\antagonists\slaughter\slaughter_antag.dm"
 #include "code\modules\antagonists\slaughter\slaughterevent.dm"
+#include "code\modules\antagonists\space_dragon\carp_rift.dm"
 #include "code\modules\antagonists\space_dragon\space_dragon.dm"
 #include "code\modules\antagonists\space_ninja\space_ninja.dm"
 #include "code\modules\antagonists\survivalist\survivalist.dm"
