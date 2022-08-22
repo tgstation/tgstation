@@ -8,6 +8,7 @@
 	name = "\improper Loyal Shade"
 	show_in_antagpanel = FALSE
 	show_in_roundend = FALSE
+	silent = TRUE
 	ui_name = "AntagInfoShade"
 	/// Name of this shade's master.
 	var/master_name = "nobody?"
@@ -17,29 +18,12 @@
 	data["master_name"] = master_name
 	return data
 
-/**
- * Gets your master's name, they should be the only other member of the team
- */
-/datum/antagonist/shade_minion/create_team(datum/team/shade_pact/team)
-	if (!istype(team))
+/// Apply a new master to the shade, will display the popup again also.
+/datum/antagonist/shade_minion/proc/update_master(master_name)
+	if (src.master_name == master_name)
 		return
-	master_name = team.master.current?.real_name
 
-/**
- * A team containing just the shade and master, so you can know who your master is.
- */
-/datum/team/shade_pact
-	show_roundend_report = FALSE
-	/// The master of the pact
-	var/datum/mind/master
-
-/**
- * Create a new team consisting of a "pact master" and a subservient shade.
- * The first player passed in should be the one everyone else needs to obey.
- */
-/datum/team/shade_pact/New(starting_members)
-	. = ..()
-	if(islist(starting_members))
-		master = starting_members[0]
-		return
-	master = starting_members
+	src.master_name = master_name
+	update_static_data(owner.current)
+	var/datum/action/antag_info/info_button = info_button_ref?.resolve()
+	info_button?.Trigger()

@@ -422,14 +422,9 @@
 		shade.mind.remove_antag_datum(/datum/antagonist/cult)
 
 	var/datum/antagonist/shade_minion/shade_datum = shade.mind.has_antag_datum(/datum/antagonist/shade_minion)
-	if (shade_datum)
-		// Don't bother to reassign if this person is already the master of this shade
-		if (shade_datum.master_name == user.real_name)
-			return
-		shade.mind.remove_antag_datum(/datum/antagonist/shade_minion)
-
-	var/datum/team/shade_pact/pact = new(user.mind)
-	shade.mind.add_antag_datum(/datum/antagonist/shade_minion, pact)
+	if (!shade_datum)
+		shade_datum = shade.mind.add_antag_datum(/datum/antagonist/shade_minion)
+	shade_datum.update_master(user.real_name)
 
 /**
  * Gets a ghost from dead chat to replace a missing player when a shade is created.
