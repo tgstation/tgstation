@@ -21,10 +21,6 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 		separator = "|" // Shouldn't be at the start or end of the regex, or it won't work.
 	GLOB.all_voice_of_god_triggers = regex(all_triggers, "i")
 
-//////////////////////////////////////
-///////////VOICE OF GOD///////////////
-//////////////////////////////////////
-
 /*
  * The main proc for the voice of god power. it makes the user shout a message in an ominous way,
  * The first matching command (from a list of static datums) the listeners must obey,
@@ -253,14 +249,21 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 		target.throw_at(get_step_towards(user, target), 3 * power_multiplier, 1 * power_multiplier)
 
 /// This command forces the listeners to say their true name (so masks and hoods won't help).
+/// Basic and simple mobs who are forced to state their name and don't have one already will... reveal their actual one!
 /datum/voice_of_god_command/who_are_you
 	trigger = "who\\s*are\\s*you|say\\s*your\\s*name|state\\s*your\\s*name|identify"
 
 /datum/voice_of_god_command/who_are_you/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	var/iteration = 1
 	for(var/mob/living/target as anything in listeners)
-		addtimer(CALLBACK(target, /atom/movable/proc/say, target.real_name), 0.5 SECONDS * iteration)
+		addtimer(CALLBACK(src, .proc/state_name, target), 0.5 SECONDS * iteration)
 		iteration++
+
+///just states the target's name, but also includes the renaming funny.
+/datum/voice_of_god_command/who_are_you/proc/state_name(mob/living/target)
+	if(isanimal_or_basicmob(target) && target.name == initial(target.name))
+		target.fully_replace_character_name(target.real_name, pick(GLOB.first_names))
+	target.say(target.real_name)
 
 /// This command forces the listeners to say the user's name
 /datum/voice_of_god_command/say_my_name
