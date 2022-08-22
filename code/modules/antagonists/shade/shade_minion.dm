@@ -25,4 +25,5 @@
 
 	src.master_name = master_name
 	update_static_data(owner.current)
-	ui_interact(owner.current)
+	var/datum/action/antag_info/info_button = info_button_ref?.resolve()
+	info_button?.Trigger()
