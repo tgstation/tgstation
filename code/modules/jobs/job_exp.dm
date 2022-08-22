@@ -20,10 +20,10 @@ GLOBAL_PROTECT(exp_to_update)
 		return 0
 	var/my_exp = C.calc_exp_type(get_exp_req_type()) // this value is returned in minutes via the DB.
 	var/job_requirement = get_exp_req_amount() // this value is returned in deciseconds.
-	if((my_exp * (1 MINUTES)) >= job_requirement) // The evaluation done here is done on the deciseconds level using the time defines.
+	if(my_exp >= job_requirement) // The evaluation done here is done on the deciseconds level using the time defines.
 		return 0
 	else
-		return (job_requirement - (my_exp * (1 MINUTES)))
+		return (job_requirement - my_exp)
 #undef IS_XP_LOCKED
 
 
