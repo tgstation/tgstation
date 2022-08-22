@@ -262,7 +262,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 ///just states the target's name, but also includes the renaming funny.
 /datum/voice_of_god_command/who_are_you/proc/state_name(mob/living/target)
 	if(QDELETED(target))
-	   return
+		return
 	if(isanimal_or_basicmob(target) && target.name == initial(target.name) && target:gold_core_spawnable == FRIENDLY_SPAWN)
 		var/canonical_deep_lore_name
 		switch(target.gender)
