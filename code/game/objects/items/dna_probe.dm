@@ -97,7 +97,8 @@
 	if(!do_after(user, CARP_MIX_DNA_TIMER))
 		return
 	var/mob/living/simple_animal/hostile/space_dragon/new_dragon = user.change_mob_type(/mob/living/simple_animal/hostile/space_dragon, location = loc, delete_old_mob = TRUE)
-	new_dragon.permanant_empower()
+	new_dragon.add_filter("anger_glow", 3, list("type" = "outline", "color" = "#ff330030", "size" = 5))
+	new_dragon.add_movespeed_modifier(/datum/movespeed_modifier/dragon_rage)
 	priority_announce("A large organic energy flux has been recorded near of [station_name()], please stand-by.", "Lifesign Alert")
 	qdel(src)
 

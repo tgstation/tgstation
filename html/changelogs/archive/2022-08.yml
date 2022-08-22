@@ -736,3 +736,13 @@
   - qol: Add wisdom text to fortune cookies
   tralezab:
   - rscdel: Thieves are gone, and so are Opportunists, their midround counterpart.
+2022-08-22:
+  ShizCalev:
+  - refactor: A bunch of things that used to not do anything (or just fall back on
+      the chest) when targeting a limb that someone was missing will now be far more
+      likely to attack another limb!
+  SuperDrish:
+  - rscadd: Mortar now gives you an option. Do you want to grind or juice your thing?
+  san7890:
+  - admin: Whenever a turf is lit up by fire (like plasma floors combusting due to
+      fire above them), the name of that turf is now explicitly logged.

@@ -12,7 +12,7 @@
 			BP = def_zone
 		else
 			if(!def_zone)
-				def_zone = ran_zone(def_zone)
+				def_zone = get_random_valid_zone(def_zone)
 			BP = get_bodypart(check_zone(def_zone))
 			if(!BP)
 				BP = bodyparts[1]
