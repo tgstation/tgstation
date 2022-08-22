@@ -1677,7 +1677,6 @@
 #include "code\game\objects\items\food\egg.dm"
 #include "code\game\objects\items\food\frozen.dm"
 #include "code\game\objects\items\food\lizard.dm"
-#include "code\game\objects\items\food\meat.dm"
 #include "code\game\objects\items\food\mexican.dm"
 #include "code\game\objects\items\food\misc.dm"
 #include "code\game\objects\items\food\moth.dm"
