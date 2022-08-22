@@ -39,6 +39,7 @@
 	builtintools += new /obj/item/pipe_dispenser(src)
 	builtintools += new /obj/item/t_scanner(src)
 	builtintools += new /obj/item/analyzer(src)
+
 	for(var/obj/item/tool as anything in builtintools)
 		tool.AddComponent(/datum/component/holderloving, src, TRUE)
 
