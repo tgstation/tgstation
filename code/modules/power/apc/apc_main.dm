@@ -254,13 +254,12 @@
 		ui.open()
 
 /obj/machinery/power/apc/ui_data(mob/user)
-	var/cell_percentage = cell ? cell.percent() : null
 	var/list/data = list(
 		"locked" = locked,
 		"failTime" = failure_timer,
 		"isOperating" = operating,
 		"externalPower" = main_status,
-		"powerCellStatus" = cell_percentage,
+		"powerCellStatus" = cell ? cell.percent() : null,
 		"chargeMode" = chargemode,
 		"chargingStatus" = charging,
 		"totalLoad" = display_power(lastused_total),
