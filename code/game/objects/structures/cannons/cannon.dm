@@ -81,7 +81,7 @@
 		charge_ignited = TRUE
 		return
 
-	else if(istype(used_item, /obj/item/reagent_containers))
+	else if(is_reagent_container(used_item))
 		var/obj/item/reagent_containers/powder_keg = used_item
 		if(!(powder_keg.reagent_flags & OPENCONTAINER))
 			return ..()

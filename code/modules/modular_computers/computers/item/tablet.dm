@@ -228,7 +228,7 @@
 /obj/item/modular_computer/tablet/integrated/ui_data(mob/user)
 	. = ..()
 	.["has_light"] = TRUE
-	if(istype(borgo, /mob/living/silicon/robot))
+	if(iscyborg(borgo))
 		var/mob/living/silicon/robot/robo = borgo
 		.["light_on"] = robo.lamp_enabled
 		.["comp_light_color"] = robo.lamp_color
@@ -237,7 +237,7 @@
 /obj/item/modular_computer/tablet/integrated/toggle_flashlight()
 	if(!borgo || QDELETED(borgo))
 		return FALSE
-	if(istype(borgo, /mob/living/silicon/robot))
+	if(iscyborg(borgo))
 		var/mob/living/silicon/robot/robo = borgo
 		robo.toggle_headlamp()
 	return TRUE
@@ -246,7 +246,7 @@
 /obj/item/modular_computer/tablet/integrated/set_flashlight_color(color)
 	if(!borgo || QDELETED(borgo) || !color)
 		return FALSE
-	if(istype(borgo, /mob/living/silicon/robot))
+	if(iscyborg(borgo))
 		var/mob/living/silicon/robot/robo = borgo
 		robo.lamp_color = color
 		robo.toggle_headlamp(FALSE, TRUE)
@@ -270,7 +270,7 @@
 
 /obj/item/modular_computer/tablet/integrated/syndicate/Initialize(mapload)
 	. = ..()
-	if(istype(borgo, /mob/living/silicon/robot))
+	if(iscyborg(borgo))
 		var/mob/living/silicon/robot/robo = borgo
 		robo.lamp_color = COLOR_RED //Syndicate likes it red
 

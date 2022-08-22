@@ -140,6 +140,27 @@
 	resistance_flags = FREEZE_PROOF
 	custom_price = PAYCHECK_CREW * 1.2
 
+/obj/item/reagent_containers/cup/glass/mug/nanotrasen
+	name = "\improper Nanotrasen mug"
+	desc = "A mug to display your corporate pride."
+	icon_state = "mug_nt_empty"
+
+/obj/item/reagent_containers/cup/glass/mug/nanotrasen/update_icon_state()
+	icon_state = reagents.total_volume ? "mug_nt" : "mug_nt_empty"
+	return ..()
+
+/obj/item/reagent_containers/cup/glass/coffee_cup
+	name = "coffee cup"
+	desc = "A heat-formed plastic coffee cup. Can theoretically be used for other hot drinks, if you're feeling adventurous."
+	icon_state = "coffee_cup_e"
+	possible_transfer_amounts = list(10)
+	volume = 30
+	spillable = TRUE
+	isGlass = FALSE
+
+/obj/item/reagent_containers/cup/glass/coffee_cup/update_icon_state()
+	icon_state = reagents.total_volume ? "coffee_cup" : "coffee_cup_e"
+	return ..()
 
 /obj/item/reagent_containers/cup/glass/dry_ramen
 	name = "cup ramen"

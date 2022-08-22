@@ -29,7 +29,7 @@
 		return FALSE
 
 
-	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
+	var/obj/item/bodypart/affecting = D.get_bodypart(D.get_random_valid_zone(A.zone_selected))
 	var/armor_block = D.run_armor_check(affecting, MELEE)
 
 	playsound(D.loc, species.attack_sound, 25, TRUE, -1)

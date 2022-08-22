@@ -92,7 +92,7 @@
 		O.play_tool_sound(src)
 		deconstruct()
 		return 1
-	if(istype(O, /obj/item/reagent_containers)) //Refilling bottles with oil
+	if(is_reagent_container(O)) //Refilling bottles with oil
 		var/obj/item/reagent_containers/RG = O
 		if(RG.is_refillable())
 			if(!RG.reagents.holder_full())

@@ -4797,7 +4797,7 @@
 	dir = 8;
 	pixel_y = 6
 	},
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced,
 /obj/structure/curtain,
 /turf/open/floor/iron/freezer,
 /area/mine/living_quarters)

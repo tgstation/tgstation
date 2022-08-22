@@ -29,7 +29,7 @@
 /obj/structure/holopay/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 
-	if(istype(held_item, /obj/item/card/id))
+	if(isidcard(held_item))
 		context[SCREENTIP_CONTEXT_LMB] = "Pay"
 		var/obj/item/card/id/held_id = held_item
 		if(held_id.my_store && held_id.my_store == src)
@@ -72,7 +72,7 @@
 	if(!isliving(user))
 		return ..()
 	/// Users can pay with an ID to skip the UI
-	if(istype(held_item, /obj/item/card/id))
+	if(isidcard(held_item))
 		if(force_fee && tgui_alert(item_holder, "This holopay has a [force_fee] cr fee. Confirm?", "Holopay Fee", list("Pay", "Cancel")) != "Pay")
 			return TRUE
 		process_payment(user)
@@ -110,7 +110,7 @@
 
 /obj/structure/holopay/attackby_secondary(obj/item/weapon, mob/user, params)
 	/// Can kill it by right-clicking with ID because it seems useful and intuitive, to me, at least
-	if(!istype(weapon, /obj/item/card/id))
+	if(!isidcard(weapon))
 		return ..()
 	var/obj/item/card/id/attacking_id = weapon
 	if(!attacking_id.my_store || attacking_id.my_store != src)

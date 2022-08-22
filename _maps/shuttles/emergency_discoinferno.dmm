@@ -178,9 +178,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "I" = (
-/obj/machinery/computer/slot_machine{
-	dir = 3
-	},
+/obj/machinery/computer/slot_machine,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "J" = (

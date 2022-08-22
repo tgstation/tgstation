@@ -563,3 +563,186 @@
   lnGoror:
   - bugfix: fixed taste layering
   - code_imp: changed exposing reagents
+2022-08-16:
+  Capybara Holly:
+  - bugfix: ambience buzzing no longer resets if you move between areas that share
+      a buzz (e.g. maintenance areas)
+  Comxy:
+  - rscadd: Swap Spell - this spell allows you to swap location with any living being.
+  - soundadd: Swap Sounds
+  - imageadd: Swap Icons
+  FernandoJ8:
+  - code_imp: changed the randomize_human() proc to call species procs instead of
+      being mostly hardcoded and cleaned up some code
+  - bugfix: randomize_human() can now assign plural gender to a mob and will always
+      do so for species without sexes
+  - bugfix: the external features of non-humans are now randomized properly by randomize_human()
+      and all mechanics that call the proc, such as mulligans
+  GoldenAlpharex, but really Valtosin for suggesting the fix:
+  - bugfix: Chat saving will no longer break if the CSS stylesheets contain unsupported
+      CSS rules.
+  JohnFulpWillard:
+  - bugfix: Clown cyborgs now repair their flash when recharging
+  Kokonut/Thgvr:
+  - imageadd: Updates Cigarette boxes and cigar case sprites to 3/4ths perspective.
+  - imageadd: Updates matches (lit and burnt states)
+  Melbert:
+  - qol: Meta Medbay's fax is no longer in the hallway, it's in the office with the
+      suit sensor computer now. I also added some paper, folders, pens, wallmounts
+      and stuff while I was here.
+  RandomGamer123:
+  - spellcheck: Fix RCD deconstruction message for turfs being incorrect
+  ShizCalev:
+  - imageadd: You can now see through glass tables again!
+  - bugfix: Fixed a runtime caused by ghosts examining artwork. Your ancestors will
+      no longer be able to admire your crayon drawings, sorry.
+  - bugfix: Fixed mechas with infinite powercells draining the cells on destruction
+  Spookuni:
+  - balance: All required techweb experiments have been substituted for expensive
+      discount experiments.
+  Time-Green:
+  - qol: geysers no longer need to be plungered
+  Vire:
+  - bugfix: The cryopod on the Cere emergency shuttle can now be connected while the
+      shuttle is docked.
+  Wallem:
+  - imageadd: Updates the newscaster wallframe sprite
+  Wallem, Imaginos:
+  - imageadd: Improves the book scanner sprite
+  - soundadd: Adds a sound when scanning a book
+  dragomagol:
+  - admin: lavaland elite summoning is now logged in game.log
+  necromanceranne:
+  - rscdel: Reverts https://github.com/tgstation/tgstation/pull/49103. Krav Maga is
+      back to a much older state. Mostly.
+  - balance: Krav maga right click shoves again, and can have a chance of stealing
+      held items.
+  - balance: Most attacks with krav maga no longer check armor, and do a flat amount
+      of damage.
+  - balance: Legsweep deals 5 brute instead of stamina damage.
+  timothymtorres:
+  - rscadd: Add liquid dark matter to bluespace bananas.
+2022-08-17:
+  EOBGames:
+  - rscadd: Having struck a deal with Piccionaia Home Appliances, Nanotrasen has now
+      distributed coffeemakers to break rooms across the Spinward Sector. Get cartridges
+      at cargo, and enjoy the ambrosia of the corporate masses on your station today!
+  Melbert:
+  - balance: Default heretic threat costs have been bumped down, and they can appear
+      at slightly lower pop if the round is high threat. (Server configuration may
+      differ from this)
+  Pickle-Coding:
+  - balance: Changes hydrogen and tritium gas reaction stoichiometry. 1 mol of hydrogen/tritium
+      and 0.5 mols of oxygen getting consumed will produce 1 mol of water vapour.
+  - balance: Hydrogen and tritium burn rate has been changed to be the minimum of
+      half the hydrogen/tritium, or 1/20th of the oxygen, rather than a binary if
+      check on whether there is more oxygen or not.
+  - balance: Hydrogen and tritium energy release has been reduced by 90%.
+  RandomGamer123:
+  - bugfix: Kudzu that has been planted from a seed which already had mutations on
+      it cannot gain duplicate copies of those mutations
+  Rhials:
+  - bugfix: The messages for using a PAI hacking module have been tweaked, and will
+      no longer speak to everyone in the first person.
+  ShizCalev:
+  - bugfix: You can no longer remove the toner cartridge from a printer while it's
+      busy printing.
+  necromanceranne:
+  - bugfix: Rats no longer drop a food item and their own corpse when they die.
+2022-08-18:
+  Kapu1178:
+  - bugfix: Ethereal hair now inherits from their glow again.
+  Melbert:
+  - bugfix: Fixes stuttered words with anxiety being capitalized
+  TerraGS:
+  - bugfix: Gutlunch should now eat gibs as intended
+  dragomagol:
+  - bugfix: holopads look properly open when screwdrivered
+  kreindo:
+  - rscadd: Added Tempeh
+2022-08-19:
+  CursedBirb:
+  - bugfix: This time correct banana side sprite
+  Jacquerel:
+  - bugfix: Pun Pun shouldn't save the name "Unknown" between rounds unless that is
+      actually their real name for some reason.
+  JohnFulpWillard:
+  - bugfix: Hilbert Hotel's 'Note to the Institute' and Cybersun ship's password,
+      now has the text they are supposed to have, on them.
+  Rhials:
+  - bugfix: The Tiziran Canned Goods Pack on the chef's console now gives you the
+      proper supply box.
+  scriptis:
+  - balance: nitrium no longer grants stun immunity
+  tralezab:
+  - balance: Tendrils now drop their loot when you interact with them during the collapse.
+  - balance: But they can be interacted with by multiple people, so mining with a
+      friend brings more loot!
+  - bugfix: Fixes visual bugs related to cows and pulling.
+  - bugfix: Fixes cpws moving and having AI while you don't pull them during riding
+  - bugfix: Removed a heap of situations where dynamic rulesets could fail while executing,
+      causing runtimes
+2022-08-20:
+  Azlan, Wallem:
+  - imageadd: Ports Azlan's portable atmos machines from Baystation
+  GoldenAlpharex:
+  - bugfix: Multiline inputs can now finally support line breaks, accessible via shift-enter!
+      A maximum of two consecutive line breaks is allowed, any more than that will
+      be automatically stripped. This only applies to input boxes that start with
+      the multiline view enabled, and will thus not work on input boxes that aren't
+      meant to support it.
+  Profakos:
+  - spellcheck: reflavoured the path of blades
+  RandomGamer123:
+  - bugfix: Circuit view sensors should no longer display undertile objects or abstract
+      objects or other people's hallucinations etc.
+  ShizCalev:
+  - bugfix: Icons will now actually update on mobs lol
+  - admin: Admin messages regarding gas canisters being opened now have the opener's
+      lookup / follow link.
+  VioletN:
+  - bugfix: The heretic Cleave spell no longer hits targets twice.
+  itseasytosee:
+  - bugfix: riot darts no longer become invisible when you take the cap off with a
+      screwdriver.
+2022-08-21:
+  FernandoJ8:
+  - bugfix: changed the directions of the bottom decals on the nature emergency shuttle
+      and the bottom gambling machine on the disco inferno shuttle from 3 (north+south)
+      to simply 2 (south), as they should be.
+  Jolly:
+  - bugfix: On Delta, in the abandoned kitchen, there is no longer four air alarms.
+      Stop being greedy, sheesh.
+  Melbert:
+  - bugfix: Fixes storage to storage mass transfering not being instant
+  - bugfix: Fixes two do_afters for storage mass transfer
+  - bugfix: Dumping storage spreads its items around again
+  - bugfix: Drag-opening a storage won't try to dump inside you
+  - bugfix: Transferring a ton of things into a fridge won't deafen you anymore
+  - rscadd: You can now mass transfer onto griddles
+  - bugfix: Some things that made you BOMBIMMUNE now actually make you BOMBIMMUNE,
+      probably
+  - bugfix: Fixes a runtime that occurred when bodyparts received damage while disconnected
+      from a mob
+  ShizCalev:
+  - qol: Added a new mob helper complementary to ran_zone() called get_random_valid_zone(),
+      which can only return zones/bodyparts that a mob DOES have.
+  - admin: Fixed Abyssal Gaze being logged when it wasn't actually being used
+  dragomagol:
+  - code_imp: split drinks_recipe into multiple files by category
+  - bugfix: tempeh starter uses the correct icon, desc fixes
+  timothymtorres:
+  - bugfix: Fix haunted tarot deck exploit
+  - qol: Add wisdom text to fortune cookies
+  tralezab:
+  - rscdel: Thieves are gone, and so are Opportunists, their midround counterpart.
+2022-08-22:
+  ShizCalev:
+  - refactor: A bunch of things that used to not do anything (or just fall back on
+      the chest) when targeting a limb that someone was missing will now be far more
+      likely to attack another limb!
+  SuperDrish:
+  - rscadd: Mortar now gives you an option. Do you want to grind or juice your thing?
+  san7890:
+  - admin: Whenever a turf is lit up by fire (like plasma floors combusting due to
+      fire above them), the name of that turf is now explicitly logged.
