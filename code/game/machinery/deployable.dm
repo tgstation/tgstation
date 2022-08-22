@@ -41,7 +41,7 @@
 	. = ..()
 	if(locate(/obj/structure/barricade) in get_turf(mover))
 		return TRUE
-	else if(istype(mover, /obj/projectile))
+	else if(isprojectile(mover))
 		if(!anchored)
 			return TRUE
 		var/obj/projectile/proj = mover

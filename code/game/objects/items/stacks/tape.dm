@@ -72,7 +72,7 @@
 		to_chat(user, span_notice("You finish wrapping [target] with [src]."))
 		target.name = "[prefix] [target.name]"
 
-		if(istype(target, /obj/item/grenade))
+		if(isgrenade(target))
 			var/obj/item/grenade/sticky_bomb = target
 			sticky_bomb.sticky = TRUE
 

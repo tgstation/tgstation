@@ -83,13 +83,13 @@
 	modularInterface.layer = ABOVE_HUD_PLANE
 	modularInterface.plane = ABOVE_HUD_PLANE
 	modularInterface.saved_identification = real_name || name
-	if(istype(src, /mob/living/silicon/robot))
+	if(iscyborg(src))
 		modularInterface.saved_job = "Cyborg"
 		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/robot)
-	if(istype(src, /mob/living/silicon/ai))
+	if(isAI(src))
 		modularInterface.saved_job = "AI"
 		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/ai)
-	if(istype(src, /mob/living/silicon/pai))
+	if(ispAI(src))
 		modularInterface.saved_job = "pAI Messenger"
 		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/ai)
 

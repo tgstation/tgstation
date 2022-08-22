@@ -116,7 +116,7 @@
 			put_in_hands(I)
 			update_held_items()
 		if(ITEM_SLOT_BACKPACK)
-			if(!back || !back.atom_storage?.attempt_insert(back, I, src, override = TRUE))
+			if(!back || !back.atom_storage?.attempt_insert(I, src, override = TRUE))
 				not_handled = TRUE
 		else
 			not_handled = TRUE
@@ -179,7 +179,7 @@
 
 //handle stuff to update when a mob equips/unequips a headgear.
 /mob/living/carbon/proc/head_update(obj/item/I, forced)
-	if(istype(I, /obj/item/clothing))
+	if(isclothing(I))
 		var/obj/item/clothing/C = I
 		if(C.tint || initial(C.tint))
 			update_tint()

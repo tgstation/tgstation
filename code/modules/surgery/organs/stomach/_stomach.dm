@@ -44,7 +44,7 @@
 	. = ..()
 
 	//Manage species digestion
-	if(istype(owner, /mob/living/carbon/human))
+	if(ishuman(owner))
 		var/mob/living/carbon/human/humi = owner
 		if(!(organ_flags & ORGAN_FAILING))
 			handle_hunger(humi, delta_time, times_fired)

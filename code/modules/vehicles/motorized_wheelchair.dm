@@ -137,7 +137,7 @@
 /obj/vehicle/ridden/wheelchair/motorized/Bump(atom/A)
 	. = ..()
 	// Here is the shitty emag functionality.
-	if(obj_flags & EMAGGED && (istype(A, /turf/closed) || isliving(A)))
+	if(obj_flags & EMAGGED && (isclosedturf(A) || isliving(A)))
 		explosion(src, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 3, flash_range = 2, adminlog = FALSE)
 		visible_message(span_boldwarning("[src] explodes!!"))
 		return

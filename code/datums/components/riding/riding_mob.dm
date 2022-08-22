@@ -149,7 +149,7 @@
 
 /// If the ridden creature has abilities, and some var yet to be made is set to TRUE, the rider will be able to control those abilities
 /datum/component/riding/creature/proc/setup_abilities(mob/living/rider)
-	if(!istype(parent, /mob/living))
+	if(!isliving(parent))
 		return
 
 	var/mob/living/ridden_creature = parent
@@ -159,7 +159,7 @@
 
 /// Takes away the riding parent's abilities from the rider
 /datum/component/riding/creature/proc/remove_abilities(mob/living/rider)
-	if(!istype(parent, /mob/living))
+	if(!isliving(parent))
 		return
 
 	var/mob/living/ridden_creature = parent
@@ -333,6 +333,13 @@
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
 
+/datum/component/riding/creature/pig/handle_specials()
+	. = ..()
+	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 8), TEXT_SOUTH = list(0, 8), TEXT_EAST = list(-2, 8), TEXT_WEST = list(2, 8)))
+	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
+	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
+	set_vehicle_dir_layer(EAST, OBJ_LAYER)
+	set_vehicle_dir_layer(WEST, OBJ_LAYER)
 
 /datum/component/riding/creature/bear/handle_specials()
 	. = ..()
