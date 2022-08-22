@@ -14,7 +14,7 @@
 	for(var/obj/item/stock_parts/manipulator/manipulator in component_parts)
 		rating += manipulator.rating // There is only one.
 
-	efficiency_coeff = max(0.5 ** max(rating - 1, 0), 0) // One sheet, half sheet, quarter sheet, eighth sheet.
+	efficiency_coeff = 0.5 ** max(rating - 1, 0) // One sheet, half sheet, quarter sheet, eighth sheet.
 
 /obj/machinery/rnd/production/circuit_imprinter/offstation
 	name = "ancient circuit imprinter"
