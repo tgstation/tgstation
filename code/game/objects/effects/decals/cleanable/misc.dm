@@ -328,7 +328,7 @@
 	reagent_amount = 25
 
 /obj/effect/decal/cleanable/ants/fire/update_ant_damage()
-	AddComponent(/datum/component/caltrop, min_damage = 10, max_damage = 25, flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN | CALTROP_BYPASS_SHOES), soundfile = bite_sound)
+	AddComponent(/datum/component/caltrop, min_damage = 15, max_damage = 25, flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN | CALTROP_BYPASS_SHOES), soundfile = bite_sound)
 	update_icon(UPDATE_OVERLAYS)
 
 /obj/effect/decal/cleanable/ants/fire/fire_act(exposed_temperature, exposed_volume)
