@@ -368,6 +368,7 @@ SUBSYSTEM_DEF(ticker)
 		if(CHECK_TICK)
 			log_roundstart("Generating [count] player characters")
 			count = 0
+	log_roundstart("Generating [count] player characters")
 
 
 /datum/controller/subsystem/ticker/proc/collect_minds()
@@ -381,7 +382,7 @@ SUBSYSTEM_DEF(ticker)
 		if(CHECK_TICK)
 			log_roundstart("Creating [count] minds")
 			count = 0
-
+	log_roundstart("Creating [count] minds")
 
 /datum/controller/subsystem/ticker/proc/equip_characters()
 	init_roundstart_logs
@@ -424,6 +425,7 @@ SUBSYSTEM_DEF(ticker)
 		if(CHECK_TICK)
 			log_roundstart("Captain selecting [count] players")
 			count = 0
+	log_roundstart("Captain selecting [count] players")
 
 	if(length(spare_id_candidates))
 		picked_spare_id_candidate = pick(spare_id_candidates)
@@ -458,6 +460,7 @@ SUBSYSTEM_DEF(ticker)
 		if(CHECK_TICK)
 			log_roundstart("Doing misc player work #[count]")
 			count = 0
+	log_roundstart("Doing misc player work #[count]")
 
 	count = 0
 	if(captainless)
@@ -469,6 +472,7 @@ SUBSYSTEM_DEF(ticker)
 			if(CHECK_TICK)
 				log_roundstart("Informing [count] players about the lack of captain")
 				count = 0
+		log_roundstart("Informing [count] players about the lack of captain")
 
 
 /datum/controller/subsystem/ticker/proc/decide_security_officer_departments(
