@@ -354,7 +354,6 @@ SUBSYSTEM_DEF(ticker)
 		qdel(bomb)
 
 /datum/controller/subsystem/ticker/proc/create_characters()
-	init_roundstart_logs
 	var/count = 0
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/player = i
@@ -372,7 +371,6 @@ SUBSYSTEM_DEF(ticker)
 
 
 /datum/controller/subsystem/ticker/proc/collect_minds()
-	init_roundstart_logs
 	var/count = 0
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/P = i
@@ -385,7 +383,6 @@ SUBSYSTEM_DEF(ticker)
 	log_roundstart("Creating [count] minds")
 
 /datum/controller/subsystem/ticker/proc/equip_characters()
-	init_roundstart_logs
 	GLOB.security_officer_distribution = decide_security_officer_departments(
 		shuffle(GLOB.new_player_list),
 		shuffle(GLOB.available_depts),
