@@ -228,10 +228,10 @@ NEAR_DEATH_EXPERIENCE
 
 DEFAULT_LAWS 0
 
-## SILICON HUMAN SUPREMACY OVERRIDE ###
-## This makes "Asimov supremacy" show up as a perk for humans in the character creation menu even if asimov is not the default lawset, such as when used with asimov++
-## Uncomment this out to make "Asimov Supremacy" show up as a perk for humans
-# SILICON_HUMAN_SUPREMACY_OVERRIDE
+## SILICON ASIMOV SUPERIORITY OVERRIDE ###
+## This makes "Asimov Superiority" show up as a perk for humans in the character creation menu even if asimov is not the default lawset, such as when used with asimov++
+## Uncomment this out to make "Asimov Superiority" show up as a perk for humans
+# SILICON_ASIMOV_SUPERIORITY_OVERRIDE
 
 ## SPECIFIED LAWS ##
 ## ------------------------------------------------------------------------------------------
