@@ -2,7 +2,7 @@
 	var/list/values = list()
 
 	var/icon/lizard = icon('icons/mob/species/lizard/bodyparts.dmi', "lizard_head", EAST)
-	var/icon/eyes = icon('icons/mob/species/human_face.dmi', "eyes", EAST)
+	var/icon/eyes = icon('icons/mob/species/human/human_face.dmi', "eyes", EAST)
 	eyes.Blend(COLOR_GRAY, ICON_MULTIPLY)
 	lizard.Blend(eyes, ICON_OVERLAY)
 

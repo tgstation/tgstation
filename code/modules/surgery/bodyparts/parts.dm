@@ -35,8 +35,8 @@
 	..()
 
 /obj/item/bodypart/chest/monkey
-	icon = 'icons/mob/species/monkey/monkey_parts.dmi'
-	icon_static = 'icons/mob/species/monkey/monkey_parts.dmi'
+	icon = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_state = "default_monkey_chest"
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = FALSE
@@ -141,8 +141,8 @@
 
 
 /obj/item/bodypart/l_arm/monkey
-	icon = 'icons/mob/species/monkey/monkey_parts.dmi'
-	icon_static = 'icons/mob/species/monkey/monkey_parts.dmi'
+	icon = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_state = "default_monkey_l_arm"
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = FALSE
@@ -242,8 +242,8 @@
 
 
 /obj/item/bodypart/r_arm/monkey
-	icon = 'icons/mob/species/monkey/monkey_parts.dmi'
-	icon_static = 'icons/mob/species/monkey/monkey_parts.dmi'
+	icon = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_state = "default_monkey_r_arm"
 	limb_id = SPECIES_MONKEY
 	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
@@ -332,8 +332,8 @@
 		owner.set_usable_legs(owner.usable_legs + 1)
 
 /obj/item/bodypart/l_leg/monkey
-	icon = 'icons/mob/species/monkey/monkey_parts.dmi'
-	icon_static = 'icons/mob/species/monkey/monkey_parts.dmi'
+	icon = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_state = "default_monkey_l_leg"
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = FALSE
@@ -431,7 +431,7 @@
 		owner.set_usable_legs(owner.usable_legs + 1)
 
 /obj/item/bodypart/r_leg/monkey
-	icon = 'icons/mob/species/monkey/monkey_parts.dmi'
+	icon = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_state = "default_monkey_r_leg"
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = FALSE
