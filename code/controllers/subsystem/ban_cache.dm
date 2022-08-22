@@ -22,38 +22,39 @@ SUBSYSTEM_DEF(ban_cache)
 	for(var/ckey in GLOB.directory)
 		var/client/lad = GLOB.directory[ckey]
 		// If they've already got a ban cached, or a request goin, don't do it
-		if(lad.ban_cache || lad.ban_cache_start < current_time)
+		if(lad.ban_cache || lad.ban_cache_start)
 			continue
 		look_for += ckey
 		lad.ban_cache_start = current_time
 	// We're gonna try and make a query for clients
 	var/datum/db_query/query_batch_ban_cache = SSdbcore.NewQuery(
 		"SELECT ckey, role, applies_to_admins FROM [format_table_name("ban")] WHERE ckey IN (:ckeys) AND unbanned_datetime IS NULL AND (expiration_time IS NULL OR expiration_time > NOW())",
-		list("ckeys" = look_for)
+		list("ckeys" = look_for.Join(","))
 	)
 
 	var/succeeded = query_batch_ban_cache.Execute()
-	for(var/client/lad in GLOB.clients)
-		if(lad.ban_cache_start == current_time)
-			lad.ban_cache_start = 0
+	for(var/ckey in look_for)
+		var/client/lad = GLOB.directory[ckey]
+		if(!lad || lad.ban_cache_start != current_time)
+			continue
+		lad.ban_cache_start = 0
 
 	if(!succeeded)
 		qdel(query_batch_ban_cache)
 		return
 
+	var/list/ckey_to_bans = list()
 	// Runs after the check for safety, don't want to override anything
-	for(var/client/lad in GLOB.clients)
-		// We want to ensure we reset their ban cache if they have none
-		// But NOT if they have some already applied ban. I may be slightly paranoid
-		lad.ban_cache = lad.ban_cache || list()
+	for(var/ckey in look_for)
+		ckey_to_bans[ckey] = list()
 
 	while(query_batch_ban_cache.NextRow())
 		var/ckey = query_batch_ban_cache.item[1]
 		var/role = query_batch_ban_cache.item[2]
 		var/hits_admins = query_batch_ban_cache.item[3]
 
-		var/client/lad = GLOB.directory[ckey]
-		if(!lad)
+		var/list/bans = ckey_to_bans[ckey]
+		if(!bans)
 			continue
 
 		// Yes I know this is slightly unoptimal, no I do not care
@@ -61,6 +62,12 @@ SUBSYSTEM_DEF(ban_cache)
 		if(is_admin && !text2num(hits_admins))
 			continue
 
-		lad.ban_cache[role] = TRUE
+		bans[role] = TRUE
+
+	for(var/ckey in ckey_to_bans)
+		var/client/lad = GLOB.directory[ckey]
+		if(!lad)
+			continue
+		lad.ban_cache = ckey_to_bans[ckey]
 
 	qdel(query_batch_ban_cache)
