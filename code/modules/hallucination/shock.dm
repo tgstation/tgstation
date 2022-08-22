@@ -9,7 +9,7 @@
 	shock_image.appearance_flags |= KEEP_APART
 	shock_image.color = rgb(0,0,0)
 	shock_image.override = TRUE
-	electrocution_skeleton_anim = image('icons/mob/humanoid/human.dmi', target, icon_state = "electrocuted_base", layer=ABOVE_MOB_LAYER)
+	electrocution_skeleton_anim = image('icons/mob/species/human.dmi', target, icon_state = "electrocuted_base", layer=ABOVE_MOB_LAYER)
 	electrocution_skeleton_anim.appearance_flags |= RESET_COLOR|KEEP_APART
 	to_chat(target, span_userdanger("You feel a powerful shock course through your body!"))
 	if(target.client)

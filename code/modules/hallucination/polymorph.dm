@@ -26,7 +26,7 @@
 				A = image('icons/effects/effects.dmi',H,"nothing")
 				A.name = "..."
 			if("monkey")//Monkey
-				A = image('icons/mob/humanoid/human.dmi',H,"monkey")
+				A = image('icons/mob/species/human.dmi',H,"monkey")
 				A.name = "Monkey ([rand(1,999)])"
 			if("carp")//Carp
 				A = image('icons/mob/simplemob/carp.dmi',H,"carp")
@@ -35,10 +35,10 @@
 				A = image('icons/mob/simplemob/pets.dmi',H,"corgi")
 				A.name = "Corgi"
 			if("skeleton")//Skeletons
-				A = image('icons/mob/humanoid/human.dmi',H,"skeleton")
+				A = image('icons/mob/species/human.dmi',H,"skeleton")
 				A.name = "Skeleton"
 			if("zombie")//Zombies
-				A = image('icons/mob/humanoid/human.dmi',H,"zombie")
+				A = image('icons/mob/species/human.dmi',H,"zombie")
 				A.name = "Zombie"
 			if("demon")//Demon
 				A = image('icons/mob/simplemob/mob.dmi',H,"daemon")
@@ -70,15 +70,15 @@
 	feedback_details += "Type: [kind]"
 	switch(kind)
 		if("monkey")//Monkey
-			A = image('icons/mob/humanoid/human.dmi',target,"monkey")
+			A = image('icons/mob/species/human.dmi',target,"monkey")
 		if("carp")//Carp
 			A = image('icons/mob/simplemob/animal.dmi',target,"carp")
 		if("corgi")//Corgi
 			A = image('icons/mob/simplemob/pets.dmi',target,"corgi")
 		if("skeleton")//Skeletons
-			A = image('icons/mob/humanoid/human.dmi',target,"skeleton")
+			A = image('icons/mob/species/human.dmi',target,"skeleton")
 		if("zombie")//Zombies
-			A = image('icons/mob/humanoid/human.dmi',target,"zombie")
+			A = image('icons/mob/species/human.dmi',target,"zombie")
 		if("demon")//Demon
 			A = image('icons/mob/simplemob/mob.dmi',target,"daemon")
 		if("robot")//Cyborg

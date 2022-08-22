@@ -1,5 +1,5 @@
 /obj/item/bodypart/head/ethereal
-	icon_greyscale = 'icons/mob/humanoid/ethereal/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/species/ethereal/bodyparts.dmi'
 	limb_id = SPECIES_ETHEREAL
 	is_dimorphic = FALSE
 
@@ -11,7 +11,7 @@
 		species_color = eth_holder.current_color
 
 /obj/item/bodypart/chest/ethereal
-	icon_greyscale = 'icons/mob/humanoid/ethereal/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/species/ethereal/bodyparts.dmi'
 	limb_id = SPECIES_ETHEREAL
 	is_dimorphic = FALSE
 
@@ -23,7 +23,7 @@
 		species_color = eth_holder.current_color
 
 /obj/item/bodypart/l_arm/ethereal
-	icon_greyscale = 'icons/mob/humanoid/ethereal/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/species/ethereal/bodyparts.dmi'
 	limb_id = SPECIES_ETHEREAL
 
 /obj/item/bodypart/l_arm/ethereal/update_limb(dropping_limb, is_creating)
@@ -34,7 +34,7 @@
 		species_color = eth_holder.current_color
 
 /obj/item/bodypart/r_arm/ethereal
-	icon_greyscale = 'icons/mob/humanoid/ethereal/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/species/ethereal/bodyparts.dmi'
 	limb_id = SPECIES_ETHEREAL
 
 /obj/item/bodypart/r_arm/ethereal/update_limb(dropping_limb, is_creating)
@@ -46,7 +46,7 @@
 
 
 /obj/item/bodypart/l_leg/ethereal
-	icon_greyscale = 'icons/mob/humanoid/ethereal/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/species/ethereal/bodyparts.dmi'
 	limb_id = SPECIES_ETHEREAL
 
 /obj/item/bodypart/l_leg/ethereal/update_limb(dropping_limb, is_creating)
@@ -57,7 +57,7 @@
 		species_color = eth_holder.current_color
 
 /obj/item/bodypart/r_leg/ethereal
-	icon_greyscale = 'icons/mob/humanoid/ethereal/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/species/ethereal/bodyparts.dmi'
 	limb_id = SPECIES_ETHEREAL
 
 /obj/item/bodypart/r_leg/ethereal/update_limb(dropping_limb, is_creating)

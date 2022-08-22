@@ -4,14 +4,14 @@
 	force = 3
 	throwforce = 3
 	w_class = WEIGHT_CLASS_SMALL
-	icon = 'icons/mob/humanoid/human_parts.dmi'
+	icon = 'icons/mob/species/human_parts.dmi'
 	icon_state = "" //Leave this blank! Bodyparts are built using overlays
 	/// The icon for Organic limbs using greyscale
 	VAR_PROTECTED/icon_greyscale = DEFAULT_BODYPART_ICON_ORGANIC
 	///The icon for non-greyscale limbs
-	VAR_PROTECTED/icon_static = 'icons/mob/humanoid/human_parts.dmi'
+	VAR_PROTECTED/icon_static = 'icons/mob/species/human_parts.dmi'
 	///The icon for husked limbs
-	VAR_PROTECTED/icon_husk = 'icons/mob/humanoid/human_parts.dmi'
+	VAR_PROTECTED/icon_husk = 'icons/mob/species/human_parts.dmi'
 	///The type of husk for building an iconstate
 	var/husk_type = "humanoid"
 	layer = BELOW_MOB_LAYER //so it isn't hidden behind objects when on the floor
@@ -727,7 +727,7 @@
 			//    the mob datum in question anyway (ie, /simplemob/yourmobhere/var/limb_icons), rather than semi-hardcoding the file and icon name like this.
 
 			if (animal_origin == MONKEY_BODYPART)						// <- this is what currently selects between xenos and monkeys
-				limb.icon = 'icons/mob/humanoid/monkey/monkey_parts.dmi'
+				limb.icon = 'icons/mob/species/monkey/monkey_parts.dmi'
 			else
 				limb.icon = 'icons/mob/nonhuman-player/alien_parts.dmi'
 			
