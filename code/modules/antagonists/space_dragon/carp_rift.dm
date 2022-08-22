@@ -25,6 +25,10 @@
 		if(used_location == rift_location)
 			to_chat(owner, span_warning("You've already summoned a rift in this area! You have to summon again somewhere else!"))
 			return
+	var/turf/rift_spawn_turf = get_turf(dragon)
+	if(isopenspaceturf(rift_spawn_turf))
+		dragon.balloon_alert(dragon, "needs stable ground!")
+		return
 	owner.balloon_alert(owner, "You begin to open a rift...")
 	if(!do_after(owner, 10 SECONDS, target = owner))
 		return
