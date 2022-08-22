@@ -127,21 +127,6 @@
 	foodtypes = RAW | MEAT | TOXIC | GORE
 	venue_value = FOOD_MEAT_MUTANT
 
-/obj/item/food/meat/slab/pig
-	name = "raw pork"
-	icon_state = "pig_meat"
-	tastes = list("pig" = 1)
-	foodtypes = MEAT | RAW | GORE
-
-/obj/item/food/meat/slab/pig/MakeGrillable()
-	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain/pig, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
-
-/obj/item/food/meat/steak/plain/pig
-	name = "pork chops"
-	icon_state = "pigsteak"
-	tastes = list("pig" = 1)
-	foodtypes = MEAT
-
 ////////////////////////////////////// OTHER MEATS ////////////////////////////////////////////////////////
 
 /obj/item/food/meat/slab/synthmeat
@@ -332,7 +317,6 @@
 /obj/item/food/meat/slab/gondola/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/gondola, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe?
 
-
 /obj/item/food/meat/slab/penguin
 	name = "penguin meat"
 	icon_state = "birdmeat"
@@ -384,6 +368,16 @@
 /obj/item/food/meat/slab/chicken/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB)
+
+/obj/item/food/meat/slab/pig
+	name = "raw pork"
+	icon_state = "pig_meat"
+	tastes = list("pig" = 1)
+	foodtypes = RAW | MEAT | GORE
+
+/obj/item/food/meat/slab/pig/MakeGrillable()
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain/pig, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
+
 
 ////////////////////////////////////// MEAT STEAKS ///////////////////////////////////////////////////////////
 /obj/item/food/meat/steak
@@ -480,6 +474,12 @@
 	desc = "A synthetic meat steak. It doesn't look quite right, now does it?"
 	icon_state = "meatsteak_old"
 	tastes = list("meat" = 4, "cryoxandone" = 1)
+
+/obj/item/food/meat/steak/plain/pig
+	name = "pork chops"
+	icon_state = "pigsteak"
+	tastes = list("pig" = 1)
+	foodtypes = MEAT
 
 //////////////////////////////// MEAT CUTLETS ///////////////////////////////////////////////////////
 
