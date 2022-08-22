@@ -5682,7 +5682,7 @@
 "bJq" = (
 /obj/docking_port/stationary/random/icemoon{
 	dir = 4;
-	id = "pod_4_lavaland";
+	shuttle_id = "pod_4_lavaland";
 	name = "lavaland"
 	},
 /turf/open/misc/asteroid/snow/icemoon,
@@ -6386,7 +6386,7 @@
 "bUb" = (
 /obj/docking_port/stationary/random/icemoon{
 	dir = 8;
-	id = "pod_2_lavaland";
+	shuttle_id = "pod_2_lavaland";
 	name = "lavaland"
 	},
 /turf/open/misc/asteroid/snow/icemoon,
@@ -30129,7 +30129,7 @@
 "jhM" = (
 /obj/docking_port/stationary/random/icemoon{
 	dir = 8;
-	id = "pod_lavaland";
+	shuttle_id = "pod_lavaland";
 	name = "lavaland"
 	},
 /turf/open/misc/asteroid/snow/icemoon,
@@ -66119,7 +66119,7 @@
 /area/station/medical/treatment_center)
 "uqa" = (
 /obj/docking_port/stationary/random/icemoon{
-	id = "pod_3_lavaland";
+	shuttle_id = "pod_3_lavaland";
 	name = "lavaland"
 	},
 /turf/open/misc/asteroid/snow/icemoon,
