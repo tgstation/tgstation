@@ -9,6 +9,8 @@
 	var/icon_state
 	/// Typepath of custom material to use for objects.
 	var/datum/material/material
+	/// Sound to play when transforming a tile
+	var/sound = 'sound/magic/blind.ogg'
 	/// Weighted list of turfs to replace the floor with.
 	var/list/replace_floors = list(/turf/open/floor/material = 1)
 	/// Typepath of turf to replace walls with.
@@ -37,6 +39,7 @@
 /datum/dimension_theme/proc/apply_theme(turf/affected_turf)
 	if (!replace_turf(affected_turf))
 		return
+	playsound(affected_turf, sound, 100, TRUE)
 	for (var/obj/object in affected_turf)
 		replace_object(object)
 	if (material)
@@ -147,21 +150,25 @@
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "clown"
 	material = /datum/material/bananium
+	sound = 'sound/items/bikehorn.ogg'
 
 /datum/dimension_theme/radioactive
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "Uranium ore"
 	material = /datum/material/uranium
+	sound = 'sound/items/welder.ogg'
 
 /datum/dimension_theme/meat
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = "meat"
 	material = /datum/material/meat
+	sound = 'sound/items/eatfood.ogg'
 
 /datum/dimension_theme/pizza
 	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	icon_state = "pizzamargherita"
 	material = /datum/material/pizza
+	sound = 'sound/items/eatfood.ogg'
 
 /datum/dimension_theme/natural
 	icon = 'icons/obj/hydroponics/harvest.dmi'
@@ -216,6 +223,7 @@
 	icon_state = "small"
 	material = /datum/material/glass
 	replace_floors = list(/turf/open/floor/glass = 1)
+	sound = SFX_SHATTER
 
 /datum/dimension_theme/fancy
 	icon = 'icons/obj/clothing/hats.dmi'
