@@ -269,7 +269,7 @@
 		"malfStatus" = get_malf_status(user),
 		"emergencyLights" = !emergency_lights,
 		"nightshiftLights" = nightshift_lights,
-		"disable_nightshift_toggle" = (low_power_nightshift_lights || !cell || (cell_percentage < 30 && long_term_power < 0)),
+		"disable_nightshift_toggle" = low_power_nightshift_lights,
 
 		"powerChannels" = list(
 			list(
