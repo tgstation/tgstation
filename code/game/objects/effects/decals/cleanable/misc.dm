@@ -283,7 +283,7 @@
 	var/bite_sound = 'sound/weapons/bite.ogg'
 
 /obj/effect/decal/cleanable/ants/Initialize(mapload)
-	reagent_amount = rand((reagent_amount - 2), reagent_amount)
+	reagent_amount = rand(3, 5)
 	. = ..()
 	update_ant_damage()
 
