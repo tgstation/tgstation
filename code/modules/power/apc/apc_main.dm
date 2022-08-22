@@ -152,7 +152,7 @@
 	has_electronics = APC_ELECTRONICS_SECURED
 	// is starting with a power cell installed, create it and set its charge level
 	if(cell_type)
-		cell = new cell_type
+		cell = new cell_type(src)
 		cell.charge = start_charge * cell.maxcharge / 100 // (convert percentage to actual value)
 
 	var/area/our_area = get_area(loc)
@@ -206,10 +206,13 @@
 		disconnect_terminal()
 	. = ..()
 
-/obj/machinery/power/apc/handle_atom_del(atom/atom_to_check)
-	if(atom_to_check == cell)
+/obj/machinery/power/apc/handle_atom_del(atom/deleting_atom)
+	if(deleting_atom == cell)
 		cell = null
+		charging = APC_NOT_CHARGING
 		update_appearance()
+		SStgui.update_uis(src)
+	return ..()
 
 /obj/machinery/power/apc/examine(mob/user)
 	. = ..()
