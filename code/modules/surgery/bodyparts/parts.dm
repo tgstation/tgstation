@@ -46,7 +46,7 @@
 	acceptable_bodytype = BODYTYPE_MONKEY
 
 /obj/item/bodypart/chest/alien
-	icon = 'icons/mob/nonhuman-player/alien_parts.dmi'
+	icon = 'icons/mob/species/alien/bodyparts.dmi'
 	icon_state = "alien_chest"
 	limb_id = BODYPART_TYPE_ALIEN
 	dismemberable = 0
@@ -54,7 +54,7 @@
 	animal_origin = ALIEN_BODYPART
 
 /obj/item/bodypart/chest/larva
-	icon = 'icons/mob/nonhuman-player/alien_parts.dmi'
+	icon = 'icons/mob/species/alien/bodyparts.dmi'
 	icon_state = "larva_chest"
 	dismemberable = 0
 	max_damage = 50
@@ -153,7 +153,7 @@
 	px_y = -3
 
 /obj/item/bodypart/l_arm/alien
-	icon = 'icons/mob/nonhuman-player/alien_parts.dmi'
+	icon = 'icons/mob/species/alien/bodyparts.dmi'
 	icon_state = "alien_l_arm"
 	limb_id = BODYPART_TYPE_ALIEN
 	px_x = 0
@@ -253,7 +253,7 @@
 	px_y = -3
 
 /obj/item/bodypart/r_arm/alien
-	icon = 'icons/mob/nonhuman-player/alien_parts.dmi'
+	icon = 'icons/mob/species/alien/bodyparts.dmi'
 	icon_state = "alien_r_arm"
 	limb_id = BODYPART_TYPE_ALIEN
 	px_x = 0
@@ -343,7 +343,7 @@
 	px_y = 4
 
 /obj/item/bodypart/l_leg/alien
-	icon = 'icons/mob/nonhuman-player/alien_parts.dmi'
+	icon = 'icons/mob/species/alien/bodyparts.dmi'
 	icon_state = "alien_l_leg"
 	limb_id = BODYPART_TYPE_ALIEN
 	px_x = 0
@@ -441,7 +441,7 @@
 	px_y = 4
 
 /obj/item/bodypart/r_leg/alien
-	icon = 'icons/mob/nonhuman-player/alien_parts.dmi'
+	icon = 'icons/mob/species/alien/bodyparts.dmi'
 	icon_state = "alien_r_leg"
 	limb_id = BODYPART_TYPE_ALIEN
 	px_x = 0

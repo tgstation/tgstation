@@ -202,10 +202,10 @@
 			if(!brain)
 				var/image/debrain_overlay = image(layer = -HAIR_LAYER, dir = SOUTH)
 				if(animal_origin == ALIEN_BODYPART)
-					debrain_overlay.icon = 'icons/mob/nonhuman-player/alien_parts.dmi'
+					debrain_overlay.icon = 'icons/mob/species/alien/bodyparts.dmi'
 					debrain_overlay.icon_state = "debrained_alien"
 				else if(animal_origin == LARVA_BODYPART)
-					debrain_overlay.icon = 'icons/mob/nonhuman-player/alien_parts.dmi'
+					debrain_overlay.icon = 'icons/mob/species/alien/bodyparts.dmi'
 					debrain_overlay.icon_state = "debrained_larva"
 				else if(!(NOBLOOD in species_flags_list))
 					debrain_overlay.icon = 'icons/mob/species/human_face.dmi'
@@ -299,7 +299,7 @@
 	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
 
 /obj/item/bodypart/head/alien
-	icon = 'icons/mob/nonhuman-player/alien_parts.dmi'
+	icon = 'icons/mob/species/alien/bodyparts.dmi'
 	icon_state = "alien_head"
 	px_x = 0
 	px_y = 0
@@ -308,7 +308,7 @@
 	animal_origin = ALIEN_BODYPART
 
 /obj/item/bodypart/head/larva
-	icon = 'icons/mob/nonhuman-player/alien_parts.dmi'
+	icon = 'icons/mob/species/alien/bodyparts.dmi'
 	icon_state = "larva_head"
 	px_x = 0
 	px_y = 0

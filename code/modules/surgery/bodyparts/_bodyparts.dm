@@ -729,7 +729,7 @@
 			if (animal_origin == MONKEY_BODYPART)						// <- this is what currently selects between xenos and monkeys
 				limb.icon = 'icons/mob/species/monkey/monkey_parts.dmi'
 			else
-				limb.icon = 'icons/mob/nonhuman-player/alien_parts.dmi'
+				limb.icon = 'icons/mob/species/alien/bodyparts.dmi'
 			
 			if(limb_id == "husk")
 				limb.icon_state = "[animal_origin]_husk_[body_zone]"	// <- this used to be entirely what selected between xenos and monkeys
