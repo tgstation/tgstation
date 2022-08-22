@@ -127,6 +127,8 @@
 	siphoning = TRUE
 	unauthorized = TRUE
 	var/obj/item/card/id/card = user.get_idcard(hand_first = TRUE)
-	if(istype(card))
-		if(req_access in card.GetAccess())
-			unauthorized = FALSE
+	if(!istype(card))
+		return
+	if(!check_access(card))
+		return
+	unauthorized = FALSE
