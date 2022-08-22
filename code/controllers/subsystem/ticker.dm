@@ -364,9 +364,7 @@ SUBSYSTEM_DEF(ticker)
 				continue
 			player.create_character(destination)
 		count++
-		if(CHECK_TICK)
-			log_roundstart("Generating [count] player characters")
-			count = 0
+		CHECK_TICK
 	log_roundstart("Generating [count] player characters")
 
 
@@ -377,9 +375,7 @@ SUBSYSTEM_DEF(ticker)
 		if(P.new_character && P.new_character.mind)
 			SSticker.minds += P.new_character.mind
 		count++
-		if(CHECK_TICK)
-			log_roundstart("Creating [count] minds")
-			count = 0
+		CHECK_TICK
 	log_roundstart("Creating [count] minds")
 
 /datum/controller/subsystem/ticker/proc/equip_characters()
@@ -399,9 +395,7 @@ SUBSYSTEM_DEF(ticker)
 	for(var/mob/dead/new_player/new_player_mob as anything in GLOB.new_player_list)
 		count++
 		if(is_banned_from(new_player_mob.ckey, list(JOB_CAPTAIN)))
-			if(CHECK_TICK)
-				log_roundstart("Captain selecting [count] players")
-				count = 0
+			CHECK_TICK
 			continue
 		if(!ishuman(new_player_mob.new_character))
 			continue
@@ -419,9 +413,7 @@ SUBSYSTEM_DEF(ticker)
 				highest_rank = spare_id_priority
 			else if(spare_id_priority == highest_rank)
 				spare_id_candidates += new_player_mob
-		if(CHECK_TICK)
-			log_roundstart("Captain selecting [count] players")
-			count = 0
+		CHECK_TICK
 	log_roundstart("Captain selecting [count] players")
 
 	if(length(spare_id_candidates))
@@ -431,15 +423,11 @@ SUBSYSTEM_DEF(ticker)
 	for(var/mob/dead/new_player/new_player_mob as anything in GLOB.new_player_list)
 		count++
 		if(QDELETED(new_player_mob) || !isliving(new_player_mob.new_character))
-			if(CHECK_TICK)
-				log_roundstart("Doing misc player work #[count]")
-				count = 0
+			CHECK_TICK
 			continue
 		var/mob/living/new_player_living = new_player_mob.new_character
 		if(!new_player_living.mind)
-			if(CHECK_TICK)
-				log_roundstart("Doing misc player work #[count]")
-				count = 0
+			CHECK_TICK
 			continue
 		var/datum/job/player_assigned_role = new_player_living.mind.assigned_role
 		if(player_assigned_role.job_flags & JOB_EQUIP_RANK)
@@ -454,10 +442,8 @@ SUBSYSTEM_DEF(ticker)
 			if(new_player_mob.client?.prefs?.should_be_random_hardcore(player_assigned_role, new_player_living.mind))
 				new_player_mob.client.prefs.hardcore_random_setup(new_player_living)
 			SSquirks.AssignQuirks(new_player_living, new_player_mob.client)
-		if(CHECK_TICK)
-			log_roundstart("Doing misc player work #[count]")
-			count = 0
-	log_roundstart("Doing misc player work #[count]")
+		CHECK_TICK
+	log_roundstart("Doing misc player work [count]")
 
 	count = 0
 	if(captainless)
@@ -466,9 +452,7 @@ SUBSYSTEM_DEF(ticker)
 			var/mob/living/carbon/human/new_player_human = new_player_mob.new_character
 			if(new_player_human)
 				to_chat(new_player_mob, span_notice("Captainship not forced on anyone."))
-			if(CHECK_TICK)
-				log_roundstart("Informing [count] players about the lack of captain")
-				count = 0
+			CHECK_TICK
 		log_roundstart("Informing [count] players about the lack of captain")
 
 

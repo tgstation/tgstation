@@ -70,5 +70,5 @@ GLOBAL_VAR_INIT(roundstart_step_tracker, 0)
 	do { \
 		var/_delta = REAL_TIME_IN_MS - GLOB.roundstart_step_tracker; \
 		GLOB.roundstart_step_tracker = REAL_TIME_IN_MS; \
-		log_game("ROUNDSTART: [step] step took [_delta] deciseconds"); \
+		log_game("ROUNDSTART: [step] took [_delta] deciseconds"); \
 	} while(FALSE)
