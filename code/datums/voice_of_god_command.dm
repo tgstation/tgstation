@@ -263,7 +263,14 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 /datum/voice_of_god_command/who_are_you/proc/state_name(mob/living/target)
 	if(QDELETED(target))
 		return
-	if(isanimal_or_basicmob(target) && target.name == initial(target.name) && target:gold_core_spawnable == FRIENDLY_SPAWN)
+	var/gold_core_spawnable = NO_SPAWN
+	if(isbasicmob(target))
+		var/mob/living/basic/basic_bandy = target
+		gold_core_spawnable = basic_bandy.gold_core_spawnable
+	if(isanimal(target))
+		var/mob/living/simple_animal/simple_sandy = target
+		gold_core_spawnable = simple_sandy.gold_core_spawnable
+	if(target.name == initial(target.name) && gold_core_spawnable == FRIENDLY_SPAWN)
 		var/canonical_deep_lore_name
 		switch(target.gender)
 			if(MALE)
