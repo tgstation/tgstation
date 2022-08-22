@@ -2172,10 +2172,18 @@
 /datum/supply_pack/critter/sheep
 	name = "Sheep Crate"
 	desc = "The sheep goes BAAAA!"
-	cost = CARGO_CRATE_VALUE * 5
+	cost = CARGO_CRATE_VALUE * 6
 	access_view = ACCESS_HYDROPONICS
 	contains = list(/mob/living/basic/sheep)
 	crate_name = "sheep crate"
+
+/datum/supply_pack/critter/pig
+	name = "Pig Crate"
+	desc = "The pig goes oink!"
+	cost = CARGO_CRATE_VALUE * 6
+	access_view = ACCESS_KITCHEN
+	contains = list(/mob/living/basic/pig)
+	crate_name = "pig crate"
 
 /datum/supply_pack/critter/crab
 	name = "Crab Rocket"

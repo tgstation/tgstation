@@ -255,7 +255,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	return ..()
 
 /obj/item/gibtonite/attackby(obj/item/I, mob/user, params)
-	if(!wires && istype(I, /obj/item/assembly/igniter))
+	if(!wires && isigniter(I))
 		user.visible_message(span_notice("[user] attaches [I] to [src]."), span_notice("You attach [I] to [src]."))
 		wires = new /datum/wires/explosive/gibtonite(src)
 		attacher = key_name(user)

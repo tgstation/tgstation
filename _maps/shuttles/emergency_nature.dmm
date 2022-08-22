@@ -59,12 +59,6 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"cL" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 3
-	},
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "cR" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
@@ -80,13 +74,11 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "dj" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 3
-	},
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /obj/item/radio/intercom/directional/south,
+/obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "dP" = (
@@ -958,12 +950,10 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Kx" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 3
-	},
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
+/obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "KT" = (
@@ -1030,10 +1020,8 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "OS" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 3
-	},
 /obj/machinery/vending/coffee,
+/obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Ps" = (
@@ -1292,20 +1280,16 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "YW" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 3
-	},
 /obj/machinery/vending/wardrobe/hydro_wardrobe,
+/obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Zd" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 3
-	},
 /obj/machinery/light/directional/south,
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
+/obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Zg" = (
@@ -1676,7 +1660,7 @@ Bt
 ST
 wg
 PG
-cL
+Zt
 gj
 Um
 cm
