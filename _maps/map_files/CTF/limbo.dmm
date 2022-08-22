@@ -892,12 +892,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/yellow,
-/obj/structure/showcase{
-	desc = "A historical figure of great importance to the wizard federation. He spent his long life learning magic, stealing artifacts, and harassing idiots with swords. May he rest forever, Rodney.";
-	icon = 'icons/mob/simple/mob.dmi';
-	icon_state = "nim";
-	name = "wizard of yendor showcase"
-	},
+/obj/structure/showcase/wizard,
 /turf/open/floor/carpet/orange,
 /area/centcom/ctf)
 "PO" = (
@@ -912,12 +907,7 @@
 /obj/effect/turf_decal/siding/blue{
 	dir = 1
 	},
-/obj/structure/showcase{
-	desc = "A historical figure of great importance to the wizard federation. He spent his long life learning magic, stealing artifacts, and harassing idiots with swords. May he rest forever, Rodney.";
-	icon = 'icons/mob/simple/mob.dmi';
-	icon_state = "nim";
-	name = "wizard of yendor showcase"
-	},
+/obj/structure/showcase/wizard,
 /turf/open/floor/carpet/blue,
 /area/centcom/ctf)
 "QY" = (

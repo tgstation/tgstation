@@ -75534,11 +75534,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/structure/statue{
-	desc = "A lifelike statue of a horrifying monster.";
-	dir = 8;
-	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi';
-	icon_state = "goliath";
-	name = "goliath"
+	dir = 8
 	},
 /turf/open/floor/iron/white,
 /area/mine/living_quarters)

@@ -248,6 +248,14 @@
 	impressiveness = 100
 	abstract_type = /obj/structure/statue/elder_atmosian //This one is uncarvable
 
+///////////Goliath//////////////////////////////////////////////////
+/obj/structure/statue/goliath
+	desc = "A lifelike statue of a horrifying monster."
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
+	icon_state = "goliath"
+	name = "goliath"
+
+///////////Other Stuff//////////////////////////////////////////////
 /obj/item/chisel
 	name = "chisel"
 	desc = "Breaking and making art since 4000 BC. This one uses advanced technology to allow the creation of lifelike moving statues."
