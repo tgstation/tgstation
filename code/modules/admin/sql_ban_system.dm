@@ -10,7 +10,7 @@
 		return
 	var/client/player_client = GLOB.directory[player_ckey]
 	if(player_client)
-		var/list/ban_cache = retrive_ban_cache(player_client)
+		var/list/ban_cache = retrieve_ban_cache(player_client)
 		if(!islist(ban_cache))
 			return // Disconnected while building the list.
 		if(islist(roles))
@@ -88,7 +88,7 @@
 /// Gets the ban cache of the passed in client
 /// If the cache has not been generated, we start off a query
 /// If we still have a query going for this request, we just sleep until it's recieved back
-/proc/retrive_ban_cache(client/player_client)
+/proc/retrieve_ban_cache(client/player_client)
 	if(QDELETED(player_client))
 		return
 
