@@ -660,7 +660,7 @@
 					var/list/personnel_list = list()
 
 					for(var/datum/data/record/record_datum in GLOB.data_core.locked)//Look in data core locked.
-						personnel_list["[record_datum.fields["name"]]: [record_datum.fields["rank"]]"] = record_datum.fields["image"]//Pull names, rank, and image.
+						personnel_list["[record_datum.fields["name"]]: [record_datum.fields["rank"]]"] = record_datum.fields["character_appearance"]//Pull names, rank, and image.
 
 					if(!length(personnel_list))
 						tgui_alert(usr,"No suitable records found. Aborting.")
@@ -670,10 +670,14 @@
 						return
 					if(isnull(personnel_list[input]))
 						return
-					var/icon/character_icon = personnel_list[input]
+					var/character_icon = personnel_list[input]
 					if(character_icon)
 						qdel(holo_icon)//Clear old icon so we're not storing it in memory.
-						holo_icon = getHologramIcon(icon(character_icon))
+						var/static/atom/movable/screen/appearance_holder = new()
+						appearance_holder.appearance = character_icon
+
+						var/icon/icon_for_holo = getFlatIcon(appearance_holder)
+						holo_icon = getHologramIcon(icon(icon_for_holo))
 
 				if("My Character")
 					switch(tgui_alert(usr,"WARNING: Your AI hologram will take the appearance of your currently selected character ([usr.client.prefs?.read_preference(/datum/preference/name/real_name)]). Are you sure you want to proceed?", "Customize", list("Yes","No")))
