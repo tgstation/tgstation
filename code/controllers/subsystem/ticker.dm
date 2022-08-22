@@ -411,7 +411,6 @@ SUBSYSTEM_DEF(ticker)
 		if(spare_id_priority)
 			spare_id_candidates[spare_id_priority] += new_player_mob
 		CHECK_TICK
-	log_roundstart("Captain selecting [count] players")
 
 	// Now that we have a list of all canidates sorted by priority, we're gonna walk it from most to least preferable, and check for captain bans
 	// This operation is real slow, and negatives are arare which is why we're doing it here rather then back in the main loop
@@ -424,6 +423,7 @@ SUBSYSTEM_DEF(ticker)
 			picked_spare_id_candidate = potential_lad
 		if(picked_spare_id_candidate)
 			break
+	log_roundstart("Captain selecting [count] players")
 
 	count = 0
 	for(var/mob/dead/new_player/new_player_mob as anything in GLOB.new_player_list)
