@@ -388,10 +388,10 @@ SUBSYSTEM_DEF(ticker)
 
 	// chain_of_command is an ordered assoc list in the form job -> captain priority
 	// So if we take the last entry we'll get the lowest (highest) priority
-	var/highest_job = SSjobs.chain_of_command[length(SSjobs.chain_of_command)]
-	var/lowest_rank = SSjobs.chain_of_command[highest_job]
+	var/highest_job = SSjob.chain_of_command[length(SSjob.chain_of_command)]
+	var/lowest_rank = SSjob.chain_of_command[highest_job]
 	// List of lists in the form Priority -> Found applicants
- 	var/list/spare_id_candidates = new list(lowest_rank)
+	var/list/spare_id_candidates = new /list(lowest_rank)
 	for(var/i in 1 to lowest_rank)
 		spare_id_candidates[i] = list()
 
