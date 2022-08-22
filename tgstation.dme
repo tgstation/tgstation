@@ -3407,6 +3407,7 @@
 #include "code\modules\mob\living\basic\basic_defense.dm"
 #include "code\modules\mob\living\basic\health_adjustment.dm"
 #include "code\modules\mob\living\basic\farm_animals\cows.dm"
+#include "code\modules\mob\living\basic\farm_animals\pig.dm"
 #include "code\modules\mob\living\basic\lavaland\bileworm\_bileworm.dm"
 #include "code\modules\mob\living\basic\lavaland\bileworm\bileworm_actions.dm"
 #include "code\modules\mob\living\basic\lavaland\bileworm\bileworm_ai.dm"

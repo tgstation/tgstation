@@ -16,6 +16,7 @@
 	///Legacy code, handles the coloring of the overlay of the cutlets made from this.
 	var/slab_color = "#FF0000"
 
+
 /obj/item/food/meat/slab/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/dryable,  /obj/item/food/sosjerky/healthy)
@@ -126,8 +127,22 @@
 	foodtypes = RAW | MEAT | TOXIC | GORE
 	venue_value = FOOD_MEAT_MUTANT
 
-////////////////////////////////////// OTHER MEATS ////////////////////////////////////////////////////////
+/obj/item/food/meat/slab/pig
+	name = "raw pork"
+	icon_state = "pig_meat"
+	tastes = list("pig" = 1)
+	foodtypes = MEAT | RAW | GORE
 
+/obj/item/food/meat/slab/pig/MakeGrillable()
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain/pig, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
+
+/obj/item/food/meat/steak/plain/pig
+	name = "pork chops"
+	icon_state = "pigsteak"
+	tastes = list("pig" = 1)
+	foodtypes = MEAT
+
+////////////////////////////////////// OTHER MEATS ////////////////////////////////////////////////////////
 
 /obj/item/food/meat/slab/synthmeat
 	name = "synthmeat"
