@@ -63,7 +63,7 @@
 			item = "[name_part] = <a href='?_src_=vars;[HrefToken()];Vars=[REF(value)]'>[DV.type] [REF(value)]</a>"
 		if(istype(value,/datum/weakref))
 			var/datum/weakref/weakref = value
-			item += " <a href='?_src_=vars;[HrefToken()];Vars=[REF(weakref.reference)]'>(Resolve)</a>"
+			item += " <a href='?_src_=vars;[HrefToken()];Vars=[weakref.reference]'>(Resolve)</a>"
 
 	else if (islist(value))
 		var/list/L = value
