@@ -62,3 +62,12 @@
 /// Logging for lua scripting
 /proc/log_lua(text)
 	WRITE_LOG(GLOB.lua_log, text)
+
+#define REAL_TIME_IN_MS (REALTIMEOFDAY + ((TICK_USAGE / 100) * world.tick_lag))
+#define init_roundstart_logs var/roundstart_step_tracker = REAL_TIME_IN_MS
+#define log_roundstart(step) \
+	do { \
+		var/_delta = REAL_TIME_IN_MS - roundstart_step_tracker; \
+		roundstart_step_tracker = REAL_TIME_IN_MS; \
+		log_game("ROUNDSTART: [step] step took [_delta] deciseconds"); \
+	} while(FALSE)
