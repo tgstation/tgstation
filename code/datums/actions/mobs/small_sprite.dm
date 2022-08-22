@@ -15,7 +15,7 @@
 
 /datum/action/small_sprite/megafauna
 	icon_icon = 'icons/mob/actions/actions_xeno.dmi'
-	small_icon = 'icons/mob/simplemob/lavaland/lavaland_monsters.dmi'
+	small_icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 
 /datum/action/small_sprite/megafauna/drake
 	small_icon_state = "ash_whelp"
@@ -30,14 +30,14 @@
 	small_icon_state = "mega_legion"
 
 /datum/action/small_sprite/mega_arachnid
-	small_icon = 'icons/mob/simplemob/jungle/arachnid.dmi'
+	small_icon = 'icons/mob/simple/jungle/arachnid.dmi'
 	small_icon_state = "arachnid_mini"
 	background_icon_state = "bg_demon"
 
 /datum/action/small_sprite/space_dragon
-	small_icon = 'icons/mob/simplemob/carp.dmi'
+	small_icon = 'icons/mob/simple/carp.dmi'
 	small_icon_state = "carp"
-	icon_icon = 'icons/mob/simplemob/carp.dmi'
+	icon_icon = 'icons/mob/simple/carp.dmi'
 	button_icon_state = "carp"
 
 /datum/action/small_sprite/Trigger(trigger_flags)

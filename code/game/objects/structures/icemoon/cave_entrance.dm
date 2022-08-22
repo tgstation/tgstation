@@ -12,7 +12,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 /obj/structure/spawner/ice_moon
 	name = "cave entrance"
 	desc = "A hole in the ground, filled with monsters ready to defend it."
-	icon = 'icons/mob/simplemob/lavaland/nest.dmi'
+	icon = 'icons/mob/simple/lavaland/nest.dmi'
 	icon_state = "hole"
 	faction = list("mining")
 	max_mobs = 3
@@ -108,7 +108,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	name = "collapsing demonic portal"
 	desc = "It's slowly fading!"
 	layer = TABLE_LAYER
-	icon = 'icons/mob/simplemob/lavaland/nest.dmi'
+	icon = 'icons/mob/simple/lavaland/nest.dmi'
 	icon_state = "nether"
 	anchored = TRUE
 	density = TRUE

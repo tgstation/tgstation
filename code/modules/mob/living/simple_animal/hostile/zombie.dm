@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/zombie
 	name = "Shambling Corpse"
 	desc = "When there is no more room in hell, the dead will walk in outer space."
-	icon = 'icons/mob/simplemob/simple_human.dmi'
+	icon = 'icons/mob/simple/simple_human.dmi'
 	icon_state = "zombie"
 	icon_living = "zombie"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID

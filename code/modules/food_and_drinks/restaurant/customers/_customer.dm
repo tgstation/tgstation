@@ -33,7 +33,7 @@
 	///Prefix file to uise
 	var/prefix_file = "strings/names/american_prefix.txt"
 	///Base icon for the customer
-	var/base_icon = 'icons/mob/simplemob/tourists.dmi'
+	var/base_icon = 'icons/mob/simple/tourists.dmi'
 	///Base icon state for the customer
 	var/base_icon_state = "amerifat"
 	///Sound to use when this robot type speaks

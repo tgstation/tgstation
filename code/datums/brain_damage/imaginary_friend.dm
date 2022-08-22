@@ -319,4 +319,4 @@
 /mob/camera/imaginary_friend/trapped/setup_friend()
 	real_name = "[owner.real_name]?"
 	name = real_name
-	human_image = icon('icons/mob/simplemob/lavaland/lavaland_monsters.dmi', icon_state = "curseblob")
+	human_image = icon('icons/mob/simple/lavaland/lavaland_monsters.dmi', icon_state = "curseblob")

@@ -29,10 +29,10 @@
 				A = image('icons/mob/species/human/human.dmi',H,"monkey")
 				A.name = "Monkey ([rand(1,999)])"
 			if("carp")//Carp
-				A = image('icons/mob/simplemob/carp.dmi',H,"carp")
+				A = image('icons/mob/simple/carp.dmi',H,"carp")
 				A.name = "Space Carp"
 			if("corgi")//Corgi
-				A = image('icons/mob/simplemob/pets.dmi',H,"corgi")
+				A = image('icons/mob/simple/pets.dmi',H,"corgi")
 				A.name = "Corgi"
 			if("skeleton")//Skeletons
 				A = image('icons/mob/species/human/human.dmi',H,"skeleton")
@@ -41,7 +41,7 @@
 				A = image('icons/mob/species/human/human.dmi',H,"zombie")
 				A.name = "Zombie"
 			if("demon")//Demon
-				A = image('icons/mob/simplemob/mob.dmi',H,"daemon")
+				A = image('icons/mob/simple/mob.dmi',H,"daemon")
 				A.name = "Demon"
 			if("custom")
 				A = image(custom_icon_file, H, custom_icon)
@@ -72,15 +72,15 @@
 		if("monkey")//Monkey
 			A = image('icons/mob/species/human/human.dmi',target,"monkey")
 		if("carp")//Carp
-			A = image('icons/mob/simplemob/animal.dmi',target,"carp")
+			A = image('icons/mob/simple/animal.dmi',target,"carp")
 		if("corgi")//Corgi
-			A = image('icons/mob/simplemob/pets.dmi',target,"corgi")
+			A = image('icons/mob/simple/pets.dmi',target,"corgi")
 		if("skeleton")//Skeletons
 			A = image('icons/mob/species/human/human.dmi',target,"skeleton")
 		if("zombie")//Zombies
 			A = image('icons/mob/species/human/human.dmi',target,"zombie")
 		if("demon")//Demon
-			A = image('icons/mob/simplemob/mob.dmi',target,"daemon")
+			A = image('icons/mob/simple/mob.dmi',target,"daemon")
 		if("robot")//Cyborg
 			A = image('icons/mob/silicon/robots.dmi',target,"robot")
 			target.playsound_local(target,'sound/voice/liveagain.ogg', 75, 1)

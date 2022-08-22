@@ -14,7 +14,7 @@ Difficulty: Extremely Hard
 	maxHealth = 1500
 	icon_state = "demonic_miner"
 	icon_living = "demonic_miner"
-	icon = 'icons/mob/simplemob/icemoon/icemoon_monsters.dmi'
+	icon = 'icons/mob/simple/icemoon/icemoon_monsters.dmi'
 	attack_verb_continuous = "pummels"
 	attack_verb_simple = "pummels"
 	attack_sound = 'sound/weapons/sonic_jackhammer.ogg'

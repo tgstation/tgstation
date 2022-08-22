@@ -30,7 +30,7 @@
 
 /obj/effect/temp_visual/dir_setting/ash_shift
 	name = "ash_shift"
-	icon = 'icons/mob/simplemob/mob.dmi'
+	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "ash_shift2"
 	duration = 1.3 SECONDS
 

@@ -350,7 +350,7 @@
 /obj/item/hand_item/kisser
 	name = "kiss"
 	desc = "I want you all to know, everyone and anyone, to seal it with a kiss."
-	icon = 'icons/mob/simplemob/animal.dmi'
+	icon = 'icons/mob/simple/animal.dmi'
 	icon_state = "heart"
 	inhand_icon_state = "nothing"
 	/// The kind of projectile this version of the kiss blower fires
@@ -410,7 +410,7 @@
 
 /obj/projectile/kiss
 	name = "kiss"
-	icon = 'icons/mob/simplemob/animal.dmi'
+	icon = 'icons/mob/simple/animal.dmi'
 	icon_state = "heart"
 	hitsound = 'sound/effects/kiss.ogg'
 	hitsound_wall = 'sound/effects/kiss.ogg'

@@ -80,7 +80,7 @@
 #undef XENO_ATTACK_STAGE_FINISH
 
 /obj/effect/hallucination/simple/clown
-	image_icon = 'icons/mob/simplemob/animal.dmi'
+	image_icon = 'icons/mob/simple/animal.dmi'
 	image_state = "clown"
 
 /obj/effect/hallucination/simple/clown/Initialize(mapload, mob/living/carbon/T, duration)
@@ -93,7 +93,7 @@
 
 /obj/effect/hallucination/simple/bubblegum
 	name = "Bubblegum"
-	image_icon = 'icons/mob/simplemob/lavaland/96x96megafauna.dmi'
+	image_icon = 'icons/mob/simple/lavaland/96x96megafauna.dmi'
 	image_state = "bubblegum"
 	px = -32
 

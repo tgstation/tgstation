@@ -1,6 +1,6 @@
 /obj/structure/spawner
 	name = "monster nest"
-	icon = 'icons/mob/simplemob/animal.dmi'
+	icon = 'icons/mob/simple/animal.dmi'
 	icon_state = "hole"
 	max_integrity = 100
 
@@ -37,7 +37,7 @@
 	name = "bone pit"
 	desc = "A pit full of bones, and some still seem to be moving..."
 	icon_state = "hole"
-	icon = 'icons/mob/simplemob/lavaland/nest.dmi'
+	icon = 'icons/mob/simple/lavaland/nest.dmi'
 	max_integrity = 150
 	max_mobs = 15
 	spawn_time = 150
@@ -63,7 +63,7 @@
 	icon_state = "hole"
 	max_integrity = 200
 	max_mobs = 3
-	icon = 'icons/mob/simplemob/lavaland/nest.dmi'
+	icon = 'icons/mob/simple/lavaland/nest.dmi'
 	spawn_text = "crawls out of"
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/goldgrub, /mob/living/simple_animal/hostile/asteroid/goliath, /mob/living/simple_animal/hostile/asteroid/hivelord, /mob/living/simple_animal/hostile/asteroid/basilisk, /mob/living/simple_animal/hostile/asteroid/fugu)
 	faction = list("mining")

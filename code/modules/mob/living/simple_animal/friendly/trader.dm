@@ -8,7 +8,7 @@
 /mob/living/simple_animal/hostile/retaliate/trader
 	name = "Trader"
 	desc = "Come buy some!"
-	icon = 'icons/mob/simplemob/simple_human.dmi'
+	icon = 'icons/mob/simple/simple_human.dmi'
 	icon_state = "faceless"
 	maxHealth = 200
 	health = 200

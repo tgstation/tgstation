@@ -47,7 +47,7 @@ Difficulty: Hard
 	health_doll_icon = "hierophant"
 	friendly_verb_continuous = "stares down"
 	friendly_verb_simple = "stare down"
-	icon = 'icons/mob/simplemob/lavaland/hierophant_new.dmi'
+	icon = 'icons/mob/simple/lavaland/hierophant_new.dmi'
 	faction = list("boss") //asteroid mobs? get that shit out of my beautiful square house
 	speak_emote = list("preaches")
 	armour_penetration = 50

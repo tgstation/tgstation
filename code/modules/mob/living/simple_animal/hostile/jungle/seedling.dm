@@ -9,7 +9,7 @@
 	name = "seedling"
 	desc = "This oversized, predatory flower conceals what can only be described as an organic energy cannon, and it will not die until its hidden vital organs are sliced out. \
 		The concentrated streams of energy it sometimes produces require its full attention, attacking it during this time will prevent it from finishing its attack."
-	icon = 'icons/mob/simplemob/jungle/seedling.dmi'
+	icon = 'icons/mob/simple/jungle/seedling.dmi'
 	icon_state = "seedling"
 	icon_living = "seedling"
 	icon_dead = "seedling_dead"
@@ -101,7 +101,7 @@
 	seedling_screen_object.transform = final
 
 /atom/movable/screen/seedling
-	icon = 'icons/mob/simplemob/jungle/arachnid.dmi'
+	icon = 'icons/mob/simple/jungle/arachnid.dmi'
 	icon_state = "seedling_beam_indicator"
 	screen_loc = "CENTER:-16,CENTER:-16"
 

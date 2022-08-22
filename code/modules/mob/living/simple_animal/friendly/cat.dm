@@ -2,7 +2,7 @@
 /mob/living/simple_animal/pet/cat
 	name = "cat"
 	desc = "Kitty!!"
-	icon = 'icons/mob/simplemob/pets.dmi'
+	icon = 'icons/mob/simple/pets.dmi'
 	icon_state = "cat2"
 	icon_living = "cat2"
 	icon_dead = "cat2_dead"

@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/dark_wizard
 	name = "Dark Wizard"
 	desc = "Killing amateurs since the dawn of times."
-	icon = 'icons/mob/simplemob/simple_human.dmi'
+	icon = 'icons/mob/simple/simple_human.dmi'
 	icon_state = "dark_wizard"
 	icon_living = "dark_wizard"
 	move_to_delay = 10

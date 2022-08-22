@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/cat_butcherer
 	name = "Cat Surgeon"
 	desc = "A man with the quest of chasing endless feline tail."
-	icon = 'icons/mob/simplemob/simple_human.dmi'
+	icon = 'icons/mob/simple/simple_human.dmi'
 	icon_state = "cat_butcher"
 	icon_living = "cat_butcher"
 	icon_dead = "syndicate_dead"

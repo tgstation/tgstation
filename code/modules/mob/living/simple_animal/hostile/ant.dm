@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/ant
 	name = "giant ant"
 	desc = "A writhing mass of ants, glued together to make an adorable pet!"
-	icon = 'icons/mob/simplemob/pets.dmi'
+	icon = 'icons/mob/simple/pets.dmi'
 	icon_state = "ant"
 	icon_living = "ant"
 	icon_dead = "ant_dead"

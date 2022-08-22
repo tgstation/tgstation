@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/asteroid/ice_whelp
 	name = "ice whelp"
 	desc = "The offspring of an ice drake, weak in comparison but still terrifying."
-	icon = 'icons/mob/simplemob/icemoon/icemoon_monsters.dmi'
+	icon = 'icons/mob/simple/icemoon/icemoon_monsters.dmi'
 	icon_state = "ice_whelp"
 	icon_living = "ice_whelp"
 	icon_dead = "ice_whelp_dead"

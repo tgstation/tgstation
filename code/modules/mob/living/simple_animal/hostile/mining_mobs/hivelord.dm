@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/asteroid/hivelord
 	name = "hivelord"
 	desc = "A truly alien creature, it is a mass of unknown organic material, constantly fluctuating. When attacking, pieces of it split off and attack in tandem with the original."
-	icon = 'icons/mob/simplemob/lavaland/lavaland_monsters.dmi'
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "Hivelord"
 	icon_living = "Hivelord"
 	icon_aggro = "Hivelord_alert"
@@ -61,7 +61,7 @@
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood
 	name = "hivelord brood"
 	desc = "A fragment of the original Hivelord, rallying behind its original. One isn't much of a threat, but..."
-	icon = 'icons/mob/simplemob/lavaland/lavaland_monsters.dmi'
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "Hivelordbrood"
 	icon_living = "Hivelordbrood"
 	icon_aggro = "Hivelordbrood"
@@ -102,7 +102,7 @@
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion
 	name = "legion"
 	desc = "You can still see what was once a human under the shifting mass of corruption."
-	icon = 'icons/mob/simplemob/lavaland/lavaland_monsters.dmi'
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "legion"
 	icon_living = "legion"
 	icon_aggro = "legion"
@@ -169,7 +169,7 @@
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion
 	name = "legion"
 	desc = "One of many."
-	icon = 'icons/mob/simplemob/lavaland/lavaland_monsters.dmi'
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "legion_head"
 	icon_living = "legion_head"
 	icon_aggro = "legion_head"
@@ -247,7 +247,7 @@
 /mob/living/simple_animal/hostile/big_legion
 	name = "legion"
 	desc = "One of many."
-	icon = 'icons/mob/simplemob/lavaland/64x64megafauna.dmi'
+	icon = 'icons/mob/simple/lavaland/64x64megafauna.dmi'
 	icon_state = "legion"
 	icon_living = "legion"
 	icon_dead = "legion"
@@ -285,7 +285,7 @@
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow
 	name = "snow legion"
 	desc = "You can still see what was once a human under the shifting snowy mass, clearly decorated by a clown."
-	icon = 'icons/mob/simplemob/icemoon/icemoon_monsters.dmi'
+	icon = 'icons/mob/simple/icemoon/icemoon_monsters.dmi'
 	icon_state = "snowlegion"
 	icon_living = "snowlegion"
 	icon_aggro = "snowlegion_alive"
@@ -301,7 +301,7 @@
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow
 	name = "snow legion"
 	desc = "One of many."
-	icon = 'icons/mob/simplemob/icemoon/icemoon_monsters.dmi'
+	icon = 'icons/mob/simple/icemoon/icemoon_monsters.dmi'
 	icon_state = "snowlegion_head"
 	icon_living = "snowlegion_head"
 	icon_aggro = "snowlegion_head"

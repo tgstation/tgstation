@@ -984,7 +984,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			SEND_SOUND(M, pick(sound('sound/ambience/antag/bloodcult.ogg'),sound('sound/voice/ghost_whisper.ogg'),sound('sound/misc/ghosty_wind.ogg')))
 		else
 			var/construct = pick("floater","artificer","behemoth")
-			var/image/B = image('icons/mob/simplemob/mob.dmi',M,construct, ABOVE_MOB_LAYER)
+			var/image/B = image('icons/mob/simple/mob.dmi',M,construct, ABOVE_MOB_LAYER)
 			B.override = 1
 			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/noncult, "mob_apoc", B, NONE)
 			addtimer(CALLBACK(M,/atom/.proc/remove_alt_appearance,"mob_apoc",TRUE), duration)

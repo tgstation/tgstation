@@ -2,7 +2,7 @@
 /mob/living/simple_animal/hostile/asteroid/gutlunch
 	name = "gutlunch"
 	desc = "A scavenger that eats raw meat, often found alongside ash walkers. Produces a thick, nutritious milk."
-	icon = 'icons/mob/simplemob/lavaland/lavaland_monsters.dmi'
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "gutlunch"
 	icon_living = "gutlunch"
 	icon_dead = "gutlunch"

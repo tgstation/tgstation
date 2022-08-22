@@ -690,19 +690,19 @@
 
 		if("Animal")
 			var/list/icon_list = list(
-			"bear" = 'icons/mob/simplemob/animal.dmi',
-			"carp" = 'icons/mob/simplemob/carp.dmi',
-			"chicken" = 'icons/mob/simplemob/animal.dmi',
-			"corgi" = 'icons/mob/simplemob/pets.dmi',
-			"cow" = 'icons/mob/simplemob/animal.dmi',
-			"crab" = 'icons/mob/simplemob/animal.dmi',
-			"fox" = 'icons/mob/simplemob/pets.dmi',
-			"goat" = 'icons/mob/simplemob/animal.dmi',
-			"cat" = 'icons/mob/simplemob/pets.dmi',
-			"cat2" = 'icons/mob/simplemob/pets.dmi',
-			"poly" = 'icons/mob/simplemob/animal.dmi',
-			"pug" = 'icons/mob/simplemob/pets.dmi',
-			"spider" = 'icons/mob/simplemob/animal.dmi'
+			"bear" = 'icons/mob/simple/animal.dmi',
+			"carp" = 'icons/mob/simple/carp.dmi',
+			"chicken" = 'icons/mob/simple/animal.dmi',
+			"corgi" = 'icons/mob/simple/pets.dmi',
+			"cow" = 'icons/mob/simple/animal.dmi',
+			"crab" = 'icons/mob/simple/animal.dmi',
+			"fox" = 'icons/mob/simple/pets.dmi',
+			"goat" = 'icons/mob/simple/animal.dmi',
+			"cat" = 'icons/mob/simple/pets.dmi',
+			"cat2" = 'icons/mob/simple/pets.dmi',
+			"poly" = 'icons/mob/simple/animal.dmi',
+			"pug" = 'icons/mob/simple/pets.dmi',
+			"spider" = 'icons/mob/simple/animal.dmi'
 			)
 
 			input = tgui_input_list(usr, "Select a hologram", "Hologram", sort_list(icon_list))

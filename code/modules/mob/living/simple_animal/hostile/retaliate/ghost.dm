@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/retaliate/ghost
 	name = "ghost"
 	desc = "A soul of the dead, spooky."
-	icon = 'icons/mob/simplemob/mob.dmi'
+	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "ghost"
 	icon_living = "ghost"
 	mob_biotypes = MOB_SPIRIT

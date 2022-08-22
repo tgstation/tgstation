@@ -151,7 +151,7 @@ There are several things that need to be remembered:
 		var/icon_file
 
 		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))
-			icon_file = 'icons/mob/simplemob/mob.dmi'
+			icon_file = 'icons/mob/simple/mob.dmi'
 
 		id_overlay = wear_id.build_worn_icon(default_layer = ID_LAYER, default_icon_file = icon_file)
 
@@ -532,7 +532,7 @@ There are several things that need to be remembered:
 	remove_overlay(LEGCUFF_LAYER)
 	clear_alert("legcuffed")
 	if(legcuffed)
-		overlays_standing[LEGCUFF_LAYER] = mutable_appearance('icons/mob/simplemob/mob.dmi', "legcuff1", -LEGCUFF_LAYER)
+		overlays_standing[LEGCUFF_LAYER] = mutable_appearance('icons/mob/simple/mob.dmi', "legcuff1", -LEGCUFF_LAYER)
 		apply_overlay(LEGCUFF_LAYER)
 		throw_alert("legcuffed", /atom/movable/screen/alert/restrained/legcuffed, new_master = src.legcuffed)
 

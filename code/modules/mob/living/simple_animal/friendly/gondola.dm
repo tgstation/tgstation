@@ -17,7 +17,7 @@
 	response_harm_simple = "kick"
 	faction = list("gondola")
 	turns_per_move = 10
-	icon = 'icons/mob/simplemob/gondolas.dmi'
+	icon = 'icons/mob/simple/gondolas.dmi'
 	icon_state = "gondola"
 	icon_living = "gondola"
 	loot = list(/obj/effect/decal/cleanable/blood/gibs, /obj/item/stack/sheet/animalhide/gondola = 1, /obj/item/food/meat/slab/gondola = 1)
