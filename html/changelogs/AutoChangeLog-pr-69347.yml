@@ -1,0 +1,4 @@
+author: "EOBGames"
+delete-after: True
+changes: 
+  - bugfix: "Coffeemaker boards can now be printed at the service, engineering and science board printers."
