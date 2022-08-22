@@ -64,7 +64,7 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 
 	var/mutable_appearance/character_appearance = fields["character_appearance"]
 
-	var/atom/movable/screen/appearance_holder = new()
+	var/static/atom/movable/screen/appearance_holder = new()
 	appearance_holder.appearance = character_appearance
 	appearance_holder.setDir(orientation)
 
