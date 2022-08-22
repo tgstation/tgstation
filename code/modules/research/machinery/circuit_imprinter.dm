@@ -9,12 +9,12 @@
 /obj/machinery/rnd/production/circuit_imprinter/calculate_efficiency()
 	. = ..()
 
-	var/total_rating = 1.2
+	var/rating = 0
 
 	for(var/obj/item/stock_parts/manipulator/manipulator in component_parts)
-		total_rating -= manipulator.rating * 0.2 // There is only one.
+		rating += manipulator.rating // There is only one.
 
-	efficiency_coeff = max(total_rating, 0)
+	efficiency_coeff = max(0.5 ** max(rating - 1, 0), 0) // One sheet, half sheet, quarter sheet, eighth sheet.
 
 /obj/machinery/rnd/production/circuit_imprinter/offstation
 	name = "ancient circuit imprinter"
