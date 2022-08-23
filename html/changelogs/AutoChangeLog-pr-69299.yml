@@ -1,0 +1,5 @@
+author: "AnywayFarus"
+delete-after: True
+changes: 
+  - rscadd: "Added a meat and fish poke"
+  - rscadd: "Meat and fish poke was added to robo-tourist order"
