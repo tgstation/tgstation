@@ -267,7 +267,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	if(isbasicmob(target))
 		var/mob/living/basic/basic_bandy = target
 		gold_core_spawnable = basic_bandy.gold_core_spawnable
-	if(isanimal(target))
+	else if(isanimal(target))
 		var/mob/living/simple_animal/simple_sandy = target
 		gold_core_spawnable = simple_sandy.gold_core_spawnable
 	if(target.name == initial(target.name) && gold_core_spawnable == FRIENDLY_SPAWN)
