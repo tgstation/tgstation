@@ -1,19 +1,36 @@
 /datum/round_event_control/stray_meteor
 	name = "Stray Meteor"
 	typepath = /datum/round_event/stray_meteor
-	weight = 13 //Number subject to change based on how often meteors actually collide with the station
+	weight = 15 //Number subject to change based on how often meteors actually collide with the station
 	min_players = 15
 	max_occurrences = 3
 	earliest_start = 20 MINUTES
 	category = EVENT_CATEGORY_SPACE
 	description = "Throw a random meteor somewhere near the station."
+	///The selected meteor type if chosen through admin setup.
+	var/list/chosen_meteor = list()
+
+/datum/round_event_control/stray_meteor/admin_setup()
+	if(!check_rights(R_FUN))
+		return
+
+	var/list/meteor_list = list()
+
+	for(var/obj/effect/meteor/meteor_type in GLOB.meteorsD)
+		meteor_list += meteor_type
+
+	chosen_meteor = input(usr, "Too lazy for buildmode?","Throw meteor") as null|anything in sort_names(meteor_list)
 
 /datum/round_event/stray_meteor
 	announceWhen = 1
 	fakeable = FALSE //Already faked by meteors that miss
 
 /datum/round_event/stray_meteor/start()
-	spawn_meteor(GLOB.meteorsD)
+	var/datum/round_event_control/stray_meteor/meteor_event = control
+	if(meteor_event.chosen_meteor)
+		spawn_meteor(meteor_event.chosen_meteor)
+	else
+		spawn_meteor(GLOB.meteorsD)
 
 /datum/round_event/stray_meteor/announce(fake)
 	if(GLOB.meteor_list)
