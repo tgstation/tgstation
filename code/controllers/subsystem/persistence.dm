@@ -196,13 +196,14 @@ SUBSYSTEM_DEF(persistence)
 
 /// Loads the trophies from the source file, and places a few in trophy display cases.
 /datum/controller/subsystem/persistence/proc/load_trophies()
+	var/list/raw_saved_trophies = list()
 	if(fexists("data/npc_saves/TrophyItems.sav")) //legacy compatability to convert old format to new
 		var/savefile/S = new /savefile("data/npc_saves/TrophyItems.sav")
 		var/saved_json
 		S >> saved_json
 		if(!saved_json)
 			return
-		saved_trophies = json_decode(saved_json)
+		raw_saved_trophies = json_decode(saved_json)
 		fdel("data/npc_saves/TrophyItems.sav")
 	else if(fexists("data/npc_saves/TrophyItems.json"))
 		var/json_file = file("data/npc_saves/TrophyItems.json")
@@ -211,7 +212,7 @@ SUBSYSTEM_DEF(persistence)
 		var/list/json = json_decode(file2text(json_file))
 		if(!json)
 			return
-		saved_trophies = json["data"]
+		raw_saved_trophies = json["data"]
 		fdel("data/npc_saves/TrophyItems.json")
 	else
 		var/json_file = file("data/trophy_items.json")
@@ -220,12 +221,42 @@ SUBSYSTEM_DEF(persistence)
 		var/list/json = json_decode(file2text(json_file))
 		if(!json)
 			return
-		saved_trophies = json["data"]
-	set_up_trophies(saved_trophies.Copy())
+		raw_saved_trophies = json["data"]
 
-/// Returns a filtered list for the admin trophy panel.
+	for(var/raw_json in raw_saved_trophies)
+		var/datum/trophy_data/parsed_trophy_data = new
+		parsed_trophy_data.load_from_json(raw_json)
+		saved_trophies += parsed_trophy_data
+
+	set_up_trophies()
+
+///trophy data datum, for admin manipulation
+/datum/trophy_data
+	///path of the item the trophy will try to mimic, null if path_string is invalid
+	var/path
+	///the message that appears under the item
+	var/message
+	///the key of the one who placed the item in the trophy case
+	var/placer_key
+
+/datum/trophy_data/proc/load_from_json(list/json_data)
+	path = json_data["path"]
+	message = json_data["message"]
+	placer_key = json_data["placer_key"]
+
+/datum/trophy_data/proc/to_json()
+	var/list/new_data = list()
+	new_data["path"] = path
+	new_data["message"] = message
+	new_data["placer_key"] = placer_key
+	return new_data
+
+/// Returns a list for the admin trophy panel.
 /datum/controller/subsystem/persistence/proc/trophy_ui_data()
-	. = saved_trophies
+	for(var/datum/trophy_data/data in saved_trophies)
+		var/list/pdata = data.to_json()
+		pdata["ref"] = REF(data)
+		. += list(pdata)
 
 /// Loads up the amount of times maps appeared to alter their appearance in voting and rotation.
 /datum/controller/subsystem/persistence/proc/load_recent_maps()
@@ -250,30 +281,32 @@ SUBSYSTEM_DEF(persistence)
 			blocked_maps += VM.map_name
 
 /// Puts trophies into trophy cases.
-/datum/controller/subsystem/persistence/proc/set_up_trophies(list/trophy_items)
+/datum/controller/subsystem/persistence/proc/set_up_trophies()
+
+	var/valid_trophies = list()
+
+	for(var/datum/trophy_data/data in saved_trophies)
+
+		if(!data) //sanity for incorrect deserialization
+			continue
+
+		var/path = text2path(data.path)
+		if(!path) //If the item no longer exist, ignore it
+			continue
+
+		valid_trophies += data
+
 	for(var/obj/structure/displaycase/trophy/trophy_case in GLOB.trophy_cases)
 		if (trophy_case.showpiece)
 			continue
 
-		var/trophy_data = pick_n_take(trophy_items)
+		var/datum/trophy_data/chosen_trophy = pick_n_take(valid_trophies)
 
-		if(!islist(trophy_data))
-			continue
-
-		var/list/chosen_trophy = trophy_data
-
-		if(!length(chosen_trophy)) //Malformed
-			continue
-
-		var/path = text2path(chosen_trophy["path"]) //If the item no longer exist, this returns null
-		if(!path)
-			continue
-
-		trophy_case.showpiece = new /obj/item/showpiece_dummy(trophy_case, path)
-		trophy_case.trophy_message = trim(html_encode(chosen_trophy["message"]), MAX_BROADCAST_LEN)
+		trophy_case.showpiece = new /obj/item/showpiece_dummy(trophy_case, text2path(chosen_trophy.path))
+		trophy_case.trophy_message = trim(html_encode(chosen_trophy.message), MAX_BROADCAST_LEN)
 		if(trophy_case.trophy_message == "")
 			trophy_case.trophy_message = trophy_case.showpiece.desc
-		trophy_case.placer_key = trim(html_encode(chosen_trophy["placer_key"]))
+		trophy_case.placer_key = trim(html_encode(chosen_trophy.placer_key))
 		trophy_case.holographic_showpiece = TRUE
 		trophy_case.update_appearance()
 
@@ -370,30 +403,23 @@ SUBSYSTEM_DEF(persistence)
 
 	var/json_file = file("data/trophy_items.json")
 	var/list/file_data = list()
-	file_data["data"] = remove_duplicate_trophies(saved_trophies)
+	var/list/converted_data = list()
+
+	for(var/datum/trophy_data/data in saved_trophies)
+		converted_data += list(data.to_json())
+
+	file_data["data"] = converted_data
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
-///removes all trophies with identical path and message
-/datum/controller/subsystem/persistence/proc/remove_duplicate_trophies(list/trophies)
-	var/list/ukeys = list()
-	. = list()
-	for(var/trophy in trophies)
-		var/tkey = "[trophy["path"]]-[trophy["message"]]"
-		if(ukeys[tkey])
-			continue
-		else
-			. += list(trophy)
-			ukeys[tkey] = TRUE
-
-///Save the trophy, if the trophy was not a roundstart item, it exists, and has a message attached.
+///If there is a trophy in the trophy case, saved it, if the trophy was not a holo trophy and has a message attached.
 /datum/controller/subsystem/persistence/proc/save_trophy(obj/structure/displaycase/trophy/trophy_case)
 	if(!trophy_case.holographic_showpiece && trophy_case.showpiece && trophy_case.trophy_message)
-		var/list/data = list()
-		data["path"] = trophy_case.showpiece.type
-		data["message"] = trophy_case.trophy_message
-		data["placer_key"] = trophy_case.placer_key
-		saved_trophies += list(data)
+		var/datum/trophy_data/data = new
+		data.path = trophy_case.showpiece.type
+		data.message = trophy_case.trophy_message
+		data.placer_key = trophy_case.placer_key
+		saved_trophies += data
 
 ///Updates the list of the most recent maps.
 /datum/controller/subsystem/persistence/proc/collect_maps()

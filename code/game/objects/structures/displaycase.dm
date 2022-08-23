@@ -390,7 +390,7 @@
 	desc = "The key to the curator's display cases."
 
 /obj/item/showpiece_dummy
-	name = "Holographic replica"
+	name = "holographic replica"
 
 /obj/item/showpiece_dummy/Initialize(mapload, path)
 	. = ..()

@@ -30,7 +30,7 @@ export const Trophycase = (props, context) => {
             </Section>
           </Stack.Item>
           <Stack.Item grow>
-              <ShowpieceDescription />
+            <ShowpieceDescription />
           </Stack.Item>
         </Stack>
       </Window.Content>
@@ -54,9 +54,9 @@ const ShowpieceImage = (props, context) => {
     />
   ) : (
     <Box height="96px" width="96px">
-        <Dimmer fontSize="32px">
-          <Icon name="landmark" spin />
-        </Dimmer>
+      <Dimmer fontSize="32px">
+        <Icon name="landmark" spin />
+      </Dimmer>
     </Box>
   );
 };
