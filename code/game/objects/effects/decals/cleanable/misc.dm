@@ -335,9 +335,6 @@
 /obj/effect/decal/cleanable/ants/fire/fire_act(exposed_temperature, exposed_volume)
 	return
 
-/obj/effect/decal/cleanable/ants/fire/burn()
-	return
-
 /obj/effect/decal/cleanable/fuel_pool
 	name = "pool of fuel"
 	desc = "A pool of flammable fuel. Its probably wise to clean this off before something ignites it..."
