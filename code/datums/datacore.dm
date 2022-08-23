@@ -63,12 +63,9 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		return new /icon()
 
 	var/mutable_appearance/character_appearance = fields["character_appearance"]
+	character_appearance.setDir(orientation)
 
-	var/static/atom/movable/screen/appearance_holder = new()
-	appearance_holder.appearance = character_appearance
-	appearance_holder.setDir(orientation)
-
-	var/icon/picture_image = getFlatIcon(appearance_holder)
+	var/icon/picture_image = getFlatIcon(character_appearance)
 
 	var/datum/picture/picture = new
 	picture.picture_name = "[fields["name"]]"
