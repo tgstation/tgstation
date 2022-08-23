@@ -292,13 +292,6 @@
 	list_reagents = list(/datum/reagent/consumable/peanut_butter = 50)
 	fill_icon_thresholds = null
 
-/obj/item/reagent_containers/condiment/honey
-	name = "honey"
-	desc = "A cheerful bear-shaped bottle of tasty honey."
-	icon_state = "honey"
-	list_reagents = list(/datum/reagent/consumable/honey = 50)
-	fill_icon_thresholds = null
-
 /obj/item/reagent_containers/condiment/cherryjelly
 	name = "cherry jelly"
 	desc = "A jar of super-sweet cherry jelly."
@@ -331,7 +324,6 @@
 		/datum/reagent/consumable/astrotame = list("condi_astrotame", "Astrotame", "The sweetness of a thousand sugars but none of the calories."),
 		/datum/reagent/consumable/bbqsauce = list("condi_bbq", "BBQ sauce", "Hand wipes not included."),
 		/datum/reagent/consumable/peanut_butter = list("condi_peanutbutter", "Peanut Butter", "A creamy paste made from ground peanuts."),
-		/datum/reagent/consumable/honey = list("condi_honey", "Honey", "Tasty, sticky, golden honey."),
 		/datum/reagent/consumable/cherryjelly = list("condi_cherryjelly", "Cherry Jelly", "A jar of super-sweet cherry jelly."),
 	)
 	/// Can't use initial(name) for this. This stores the name set by condimasters.
