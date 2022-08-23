@@ -125,6 +125,7 @@
 	name = "Greek salad"
 	reqs = list(
 		/obj/item/reagent_containers/cup/bowl = 1,
+		/obj/item/food/grown/olive = 1,
 		/obj/item/food/grown/tomato = 1,
 		/obj/item/food/onion_slice/red = 2,
 		/obj/item/food/cheese/wedge = 1,
