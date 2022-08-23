@@ -336,7 +336,8 @@ SUBSYSTEM_DEF(dbcore)
 	for (var/datum/db_query/query as anything in queries)
 		if (!istype(query))
 			queries -= query
-			stack_trace("Invalid query passed to Query_Select: `[query]` [REF(query)]")
+			stack_trace("Invalid query passed to QuerySelect: `[query]` [REF(query)]")
+			continue
 		
 		if (warn)
 			INVOKE_ASYNC(query, /datum/db_query.proc/warn_execute)
