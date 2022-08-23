@@ -6,7 +6,8 @@
 /obj/effect/anomaly
 	name = "anomaly"
 	desc = "A mysterious anomaly, seen commonly only in the region of space that the station orbits..."
-	icon_state = "bhole3"
+	icon = 'icons/effects/anomalies.dmi'
+	icon_state = "vortex"
 	density = FALSE
 	anchored = TRUE
 	light_range = 3
@@ -121,6 +122,7 @@
 
 /obj/effect/anomaly/grav
 	name = "gravitational anomaly"
+	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield2"
 	density = FALSE
 	aSignal = /obj/item/assembly/signaler/anomaly/grav
@@ -208,7 +210,7 @@
 
 /obj/effect/anomaly/flux
 	name = "flux wave anomaly"
-	icon_state = "electricity2"
+	icon_state = "flux"
 	density = TRUE
 	aSignal = /obj/item/assembly/signaler/anomaly/flux
 	var/canshock = FALSE
@@ -331,7 +333,7 @@
 
 /obj/effect/anomaly/pyro
 	name = "pyroclastic anomaly"
-	icon_state = "mustard"
+	icon_state = "pyroclastic"
 	var/ticks = 0
 	/// How many seconds between each gas release
 	var/releasedelay = 10
@@ -377,7 +379,7 @@
 
 /obj/effect/anomaly/bhole
 	name = "vortex anomaly"
-	icon_state = "bhole3"
+	icon_state = "vortex"
 	desc = "That's a nice station you have there. It'd be a shame if something happened to it."
 	aSignal = /obj/item/assembly/signaler/anomaly/vortex
 
@@ -441,7 +443,7 @@
 
 /obj/effect/anomaly/bioscrambler
 	name = "bioscrambler anomaly"
-	icon_state = "bioscrambler_anomaly"
+	icon_state = "bioscrambler"
 	aSignal = /obj/item/assembly/signaler/anomaly/bioscrambler
 	immortal = TRUE
 	/// Cooldown for every anomaly pulse
@@ -513,7 +515,7 @@
 
 /obj/effect/anomaly/hallucination
 	name = "hallucination anomaly"
-	icon_state = "hallucination_anomaly"
+	icon_state = "hallucination"
 	aSignal = /obj/item/assembly/signaler/anomaly/hallucination
 	/// Time passed since the last effect, increased by delta_time of the SSobj
 	var/ticks = 0
@@ -561,7 +563,7 @@
 
 /obj/effect/anomaly/dimensional
 	name = "dimensional anomaly"
-	icon_state = "dimensional_anomaly"
+	icon_state = "dimensional"
 	aSignal = /obj/item/assembly/signaler/anomaly/dimensional
 	immortal = TRUE
 	immobile = TRUE
@@ -577,6 +579,9 @@
 /obj/effect/anomaly/dimensional/Initialize(mapload, new_lifespan, drops_core)
 	. = ..()
 	overlays += mutable_appearance('icons/effects/effects.dmi', "dimensional_overlay")
+
+	animate(src, transform = matrix()*0.85, time = 3, loop = -1)
+	animate(transform = matrix(), time = 3, loop = -1)
 
 /obj/effect/anomaly/dimensional/anomalyEffect(delta_time)
 	. = ..()
@@ -607,7 +612,7 @@
 
 /obj/effect/anomaly/dimensional/proc/apply_theme_icon()
 	overlays -= theme_icon
-	theme_icon = mutable_appearance(theme.icon, theme.icon_state, FLOAT_LAYER - 1)
+	theme_icon = mutable_appearance(theme.icon, theme.icon_state, FLOAT_LAYER - 1, appearance_flags = appearance_flags | RESET_TRANSFORM)
 	theme_icon.blend_mode = BLEND_INSET_OVERLAY
 	overlays += theme_icon
 
