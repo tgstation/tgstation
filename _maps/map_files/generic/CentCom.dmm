@@ -296,6 +296,18 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /turf/closed/indestructible/syndicate,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
+"aY" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "FBBZ1";
+	name = "Security Shutters"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/mineral/titanium,
+/area/centcom/syndicate_mothership/control)
 "aZ" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
@@ -3405,18 +3417,6 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/prison)
-"jC" = (
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 8;
-	height = 7;
-	shuttle_id = "supply_away";
-	json_key = "cargo";
-	name = "CentCom";
-	width = 20
-	},
-/turf/open/space,
-/area/space)
 "jD" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 8
@@ -11651,18 +11651,6 @@
 	},
 /turf/open/floor/vault/rock,
 /area/centcom/central_command_areas/holding)
-"HM" = (
-/obj/effect/turf_decal/delivery,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 1
-	},
-/obj/machinery/door/poddoor/shutters{
-	id = "FBBZ1";
-	name = "Security Shutters"
-	},
-/obj/structure/fans/tiny,
-/turf/open/floor/mineral/titanium,
-/area/centcom/syndicate_mothership/control)
 "HN" = (
 /turf/open/floor/mineral/titanium,
 /area/centcom/syndicate_mothership/control)
@@ -12320,6 +12308,18 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/tdome/arena)
+"JN" = (
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 8;
+	height = 7;
+	shuttle_id = "cargo_away";
+	json_key = "cargo";
+	name = "CentCom";
+	width = 20
+	},
+/turf/open/space,
+/area/space)
 "JO" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark/end,
 /obj/machinery/vending/hydroseeds{
@@ -33694,7 +33694,7 @@ Zb
 ll
 ZJ
 rP
-HM
+aY
 ng
 nz
 nz
@@ -33951,7 +33951,7 @@ Zb
 ll
 ll
 ll
-HM
+aY
 oS
 vL
 uv
@@ -34208,7 +34208,7 @@ Zb
 ll
 ll
 ll
-HM
+aY
 Dg
 vL
 uv
@@ -57071,7 +57071,7 @@ aa
 aa
 aa
 aa
-jC
+JN
 aa
 aa
 aa
