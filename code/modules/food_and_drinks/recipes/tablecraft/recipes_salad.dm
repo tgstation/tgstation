@@ -116,7 +116,7 @@
 		/obj/item/food/grown/carrot = 1,
 		/obj/item/food/onion_slice/red = 2,
 		/obj/item/food/grown/cabbage = 1,
-		/datum/reagent/consumable/quality_oil = 2
+		/datum/reagent/consumable/quality_oil = 2,
 	)
 	result = /obj/item/food/salad/kale_salad
 	subcategory = CAT_SALAD
@@ -128,7 +128,7 @@
 		/obj/item/food/grown/tomato = 1,
 		/obj/item/food/onion_slice/red = 2,
 		/obj/item/food/cheese/wedge = 1,
-		/datum/reagent/consumable/quality_oil = 5
+		/datum/reagent/consumable/quality_oil = 5,
 	)
 	result = /obj/item/food/salad/greek_salad
 	subcategory = CAT_SALAD
@@ -141,7 +141,7 @@
 		/obj/item/food/onion_slice/red = 1,
 		/obj/item/food/cheese/wedge = 1,
 		/datum/reagent/consumable/quality_oil = 5,
-		/obj/item/food/breadslice/plain = 1
+		/obj/item/food/breadslice/plain = 1,
 	)
 	result = /obj/item/food/salad/caesar_salad
 	subcategory = CAT_SALAD
@@ -153,7 +153,7 @@
 		/obj/item/food/grown/cabbage = 2,
 		/obj/item/food/grown/carrot = 1,
 		/obj/item/food/grown/peas = 1,
-		/datum/reagent/consumable/quality_oil = 5
+		/datum/reagent/consumable/quality_oil = 5,
 	)
 	result = /obj/item/food/salad/spring_salad
 	subcategory = CAT_SALAD
@@ -165,7 +165,7 @@
 		/obj/item/food/grown/potato = 2,
 		/obj/item/food/boiledegg = 2,
 		/obj/item/food/grown/onion = 1,
-		/datum/reagent/consumable/mayonnaise = 5
+		/datum/reagent/consumable/mayonnaise = 5,
 	)
 	result = /obj/item/food/salad/potato_salad
 	subcategory = CAT_SALAD
@@ -177,7 +177,7 @@
 		/obj/item/food/grown/herbs = 3,
 		/obj/item/food/grown/berries = 2,
 		/obj/item/food/pineappleslice = 2,
-		/datum/reagent/consumable/quality_oil = 2
+		/datum/reagent/consumable/quality_oil = 2,
 	)
 	result = /obj/item/food/salad/spinach_fruit_salad
 	subcategory = CAT_SALAD
@@ -190,7 +190,7 @@
 		/obj/item/food/grown/olive = 1,
 		/obj/item/food/grown/tomato = 1,
 		/obj/item/food/meat/cutlet = 1,
-		/obj/item/food/cheese/mozzarella = 1
+		/obj/item/food/cheese/mozzarella = 1,
 	)
 	result = /obj/item/food/salad/antipasto_salad
 	subcategory = CAT_SALAD
