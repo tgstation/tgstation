@@ -110,7 +110,7 @@
 
 /datum/mood_event/table_limbsmash/add_effects(obj/item/bodypart/banged_limb)
 	if(banged_limb)
-		description = "My fucking [banged_limb.name], man that hurts..."
+		description = "My fucking [banged_limb.plaintext_zone], man that hurts..."
 
 /datum/mood_event/brain_damage
 	mood_change = -3
