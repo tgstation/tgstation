@@ -39,6 +39,11 @@
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 
+/obj/machinery/ticket_machine/examine(mob/user)
+	. = ..()
+	. += span_notice("The ticket machine shows that ticket #[current_number] is currently being served.")
+	. += span_notice("You can take a ticket out with <b>Left-Click</b> to be number [ticket_number + 1] in queue.")
+
 /obj/machinery/ticket_machine/multitool_act(mob/living/user, obj/item/I)
 	if(!multitool_check_buffer(user, I)) //make sure it has a data buffer
 		return
@@ -124,7 +129,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 	else
 		return FALSE
 
-/obj/item/assembly/control/ticket_machine/activate()
+/obj/item/assembly/control/ticket_machine/activate(mob/activator)
 	if(cooldown)
 		return
 	if(!linked)
@@ -134,6 +139,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 		return
 	cooldown = TRUE
 	machine.increment()
+	if(machine.current_ticket == null)
+		to_chat(activator, span_notice("The button light indicates that there are no more tickets to be processed."))
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10)
 
 /obj/machinery/ticket_machine/update_icon()
@@ -151,7 +158,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 	return ..()
 
 /obj/machinery/ticket_machine/proc/handle_maptext()
-	switch(ticket_number) //This is here to handle maptext offsets so that the numbers align.
+	switch(current_number) //This is here to handle maptext offsets so that the numbers align.
 		if(0 to 9)
 			maptext_x = 13
 		if(10 to 99)
@@ -198,7 +205,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 		return
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 100, FALSE)
 	ticket_number++
-	to_chat(user, span_notice("You take a ticket from [src], looks like you're ticket number #[ticket_number]..."))
+	to_chat(user, span_notice("You take a ticket from [src], looks like you're number [ticket_number] in queue..."))
 	var/obj/item/ticket_machine_ticket/theirticket = new /obj/item/ticket_machine_ticket(get_turf(src), ticket_number)
 	theirticket.source = src
 	theirticket.owner_ref = user_ref
@@ -213,6 +220,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 		user.adjust_fire_stacks(1)
 		user.ignite_mob()
 		return
+	update_appearance()
 
 /obj/item/ticket_machine_ticket
 	name = "Ticket"
@@ -235,6 +243,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 	name += " #[number]"
 	saved_maptext = MAPTEXT(number)
 	maptext = saved_maptext
+
+/obj/item/ticket_machine_ticket/examine(mob/user)
+	. = ..()
+	. += span_notice("The ticket reads shimmering text that tells you that you are number [number] in queue.")
+	if(source)
+		. += span_notice("Below that, you can see that you are [number - source.current_number] spot\s away from being served.")
 
 /obj/item/ticket_machine_ticket/attack_hand(mob/user, list/modifiers)
 	. = ..()
