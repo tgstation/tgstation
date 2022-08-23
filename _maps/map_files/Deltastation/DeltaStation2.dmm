@@ -261,7 +261,7 @@
 	dir = 2;
 	dwidth = 4;
 	height = 17;
-	shuttle_id = "arrivals_stationary";
+	shuttle_id = "arrival_stationary";
 	name = "delta arrivals";
 	roundstart_template = /datum/map_template/shuttle/arrival/delta;
 	width = 9
@@ -2422,7 +2422,7 @@
 	dir = 4;
 	dwidth = 4;
 	height = 7;
-	shuttle_id = "supply_home";
+	shuttle_id = "cargo_home";
 	name = "Cargo Bay";
 	width = 12
 	},

@@ -7452,7 +7452,7 @@
 	dir = 4;
 	dwidth = 3;
 	height = 14;
-	shuttle_id = "arrivals_stationary";
+	shuttle_id = "arrival_stationary";
 	name = "kilo arrivals";
 	roundstart_template = /datum/map_template/shuttle/arrival/kilo;
 	width = 7
@@ -63377,7 +63377,7 @@
 	dir = 4;
 	dwidth = 4;
 	height = 7;
-	shuttle_id = "supply_home";
+	shuttle_id = "cargo_home";
 	name = "Cargo Bay";
 	width = 12
 	},

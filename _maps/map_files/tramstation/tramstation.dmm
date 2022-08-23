@@ -14390,7 +14390,7 @@
 	dir = 8;
 	dwidth = 3;
 	height = 15;
-	shuttle_id = "arrivals_stationary";
+	shuttle_id = "arrival_stationary";
 	name = "arrivals";
 	roundstart_template = /datum/map_template/shuttle/arrival/box;
 	width = 7
@@ -42126,7 +42126,7 @@
 /obj/docking_port/stationary{
 	dwidth = 5;
 	height = 7;
-	shuttle_id = "supply_home";
+	shuttle_id = "cargo_home";
 	name = "Cargo Bay";
 	width = 12
 	},
