@@ -758,7 +758,7 @@ What a mess.*/
 					if("show_photo_front")
 						if(active1)
 							var/front_photo = active1.get_front_photo()
-							if(front_photo && istype(front_photo, /obj/item/photo))
+							if(istype(front_photo, /obj/item/photo))
 								var/obj/item/photo/photo = front_photo
 								photo.show(usr)
 					if("upd_photo_front")
@@ -782,7 +782,7 @@ What a mess.*/
 					if("show_photo_side")
 						if(active1)
 							var/side_photo = active1.get_side_photo()
-							if(side_photo && istype(side_photo, /obj/item/photo))
+							if(istype(side_photo, /obj/item/photo))
 								var/obj/item/photo/photo = side_photo
 								photo.show(usr)
 					if("upd_photo_side")
