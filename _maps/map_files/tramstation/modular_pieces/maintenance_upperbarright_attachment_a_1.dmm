@@ -77,10 +77,6 @@
 /area/station/maintenance/department/cargo)
 "W" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/glass/bucket{
-	pixel_x = -7;
-	pixel_y = -7
-	},
 /obj/item/clothing/suit/caution{
 	pixel_x = 10;
 	pixel_y = 20
@@ -101,6 +97,9 @@
 	dir = 4
 	},
 /obj/effect/landmark/xeno_spawn,
+/obj/item/reagent_containers/cup/bucket{
+	pixel_y = -7
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 

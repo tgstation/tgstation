@@ -2,18 +2,22 @@
 "a" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/sillycup{
-	pixel_y = 5;
-	pixel_x = -6
+/obj/item/reagent_containers/cup/glass/sillycup{
+	pixel_y = 4;
+	pixel_x = -7
 	},
-/obj/item/reagent_containers/food/drinks/sillycup{
-	pixel_x = 4;
-	pixel_y = 6
+/obj/item/reagent_containers/cup/glass/sillycup{
+	pixel_y = 12
 	},
-/obj/item/reagent_containers/food/drinks/sillycup,
-/obj/item/reagent_containers/food/drinks/sillycup{
-	pixel_y = -5;
-	pixel_x = 7
+/obj/item/reagent_containers/cup/glass/sillycup{
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/cup/glass/sillycup{
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/cup/glass/sillycup{
+	pixel_y = -1;
+	pixel_x = 6
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
@@ -83,6 +87,10 @@
 	},
 /obj/item/chair/plastic{
 	pixel_y = 6
+	},
+/obj/item/reagent_containers/cup/glass/sillycup{
+	pixel_y = -1;
+	pixel_x = 10
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)

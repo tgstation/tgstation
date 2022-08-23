@@ -35,6 +35,10 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/greater)
+"du" = (
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/turf/open/misc/asteroid,
+/area/template_noop)
 "fy" = (
 /obj/effect/mapping_helpers/airlock/abandoned,
 /obj/effect/mapping_helpers/airlock/unres{
@@ -285,10 +289,6 @@
 /obj/item/plate/large,
 /obj/item/food/cheese_sandwich{
 	pixel_y = 10
-	},
-/obj/item/reagent_containers/food/drinks/bottle/beer{
-	pixel_x = 11;
-	pixel_y = -1
 	},
 /turf/open/misc/asteroid,
 /area/template_noop)
@@ -1002,7 +1002,7 @@ Xr
 Iy
 Xr
 sA
-uP
+du
 BF
 BF
 uP

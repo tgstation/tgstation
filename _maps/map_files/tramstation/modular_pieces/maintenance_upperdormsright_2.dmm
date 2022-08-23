@@ -50,8 +50,8 @@
 /area/station/maintenance/department/medical)
 "k" = (
 /obj/structure/reagent_dispensers/watertank,
-/obj/item/reagent_containers/glass/bucket,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/cup/bucket,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
 "l" = (

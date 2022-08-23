@@ -7,10 +7,6 @@
 /obj/structure/closet/crate{
 	name = "communion supplies"
 	},
-/obj/item/reagent_containers/food/drinks/bottle/wine/unlabeled{
-	desc = "Supposedly the blood of space-christ. My man must of been absolutely HAMMERED.";
-	name = "communion wine bottle"
-	},
 /obj/item/clothing/suit/chaplainsuit/whiterobe,
 /obj/item/clothing/suit/chaplainsuit/whiterobe,
 /obj/item/food/cracker{
@@ -32,6 +28,10 @@
 	name = "communion wafer"
 	},
 /obj/structure/window/reinforced/spawner/north,
+/obj/item/reagent_containers/cup/glass/bottle/wine/unlabeled{
+	desc = "Man, if this was the blood of Space-Christ, the dude must of been fucking HAMMERED.";
+	name = "communion wine bottle"
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/aft)
 "f" = (

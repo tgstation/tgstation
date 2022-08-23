@@ -4,6 +4,7 @@
 /area/station/maintenance/starboard/central)
 "b" = (
 /obj/effect/decal/cleanable/ash,
+/obj/item/reagent_containers/cup/bowl,
 /turf/open/misc/asteroid/dug,
 /area/station/maintenance/starboard/central)
 "c" = (
@@ -39,10 +40,6 @@
 	},
 /turf/open/misc/asteroid,
 /area/station/maintenance/starboard/central)
-"U" = (
-/obj/item/reagent_containers/glass/bowl,
-/turf/open/misc/asteroid,
-/area/station/maintenance/starboard/central)
 "Y" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/spawner/random/engineering/toolbox,
@@ -73,7 +70,7 @@ a
 a
 "}
 (4,1,1) = {"
-U
+c
 c
 a
 F

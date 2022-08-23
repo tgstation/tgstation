@@ -92,9 +92,9 @@
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/sink/directional/north,
-/obj/item/reagent_containers/glass/bucket{
-	pixel_x = 12;
-	pixel_y = -7
+/obj/item/reagent_containers/cup/bucket{
+	pixel_x = 9;
+	pixel_y = -4
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
