@@ -17316,20 +17316,6 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/escape)
 "gbM" = (
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 3;
-	height = 5;
-	shuttle_id = "mining_home";
-	name = "mining shuttle bay";
-	roundstart_template = /datum/map_template/shuttle/mining/box;
-	width = 7
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/docking_port/stationary/mining_home{
 	dir = 4
 	},
@@ -45385,9 +45371,7 @@
 /turf/open/floor/engine,
 /area/station/maintenance/disposal/incinerator)
 "pDW" = (
-/obj/structure/sign/warning/radiation/rad_area/directional/north{
-	dir = 1
-	},
+/obj/structure/sign/warning/radiation/rad_area/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -64565,9 +64549,7 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
 "wpo" = (
-/obj/structure/sign/warning/radiation/rad_area/directional/north{
-	dir = 1
-	},
+/obj/structure/sign/warning/radiation/rad_area/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -65620,20 +65602,6 @@
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "wIi" = (
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 3;
-	height = 5;
-	shuttle_id = "commonmining_home";
-	name = "SS13: Common Mining Dock";
-	roundstart_template = /datum/map_template/shuttle/mining_common/meta;
-	width = 7
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/docking_port/stationary/mining_home/common{
 	dir = 4
 	},
