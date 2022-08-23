@@ -1,6 +1,0 @@
-author: "Comxy"
-delete-after: True
-changes: 
-  - rscadd: "Swap Spell - this spell allows you to swap location with any living being."
-  - soundadd: "Swap Sounds"
-  - imageadd: "Swap Icons"

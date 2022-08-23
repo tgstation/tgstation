@@ -115,7 +115,7 @@
 		return ..()
 	var/obj/item/card/id/player_card = W.GetID()
 	if(player_card)
-		if(istype(W, /obj/item/card/id))
+		if(isidcard(W))
 			playsound(src, 'sound/machines/card_slide.ogg', 50, TRUE)
 		else
 			playsound(src, 'sound/machines/terminal_success.ogg', 50, TRUE)

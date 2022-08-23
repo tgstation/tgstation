@@ -58,7 +58,7 @@
 	return ..()
 
 /obj/machinery/computer/pandemic/attackby(obj/item/held_item, mob/user, params)
-	if(!istype(held_item, /obj/item/reagent_containers) || held_item.item_flags & ABSTRACT || !held_item.is_open_container())
+	if(!is_reagent_container(held_item) || held_item.item_flags & ABSTRACT || !held_item.is_open_container())
 		return ..()
 	. = TRUE //no afterattack
 	if(machine_stat & (NOPOWER|BROKEN))

@@ -179,7 +179,77 @@
 	foodtypes = SEAFOOD | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/food/meat_poke
+	name = "meat poke"
+	desc = "Simple poke, rice on the bottom, vegetables and meat on top. Should be mixed before eating."
+	icon = 'icons/obj/food/soupsalad.dmi'
+	icon_state = "pokemeat"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/nutriment/protein = 2)
+	tastes = list("rice and meat" = 4, "lettuce" = 2, "soy sauce" = 2)
+	foodtypes = SEAFOOD | MEAT | VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/fish_poke
+	name = "fish poke"
+	desc = "Simple poke, rice on the bottom, vegetables and fish on top. Should be mixed before eating."
+	icon = 'icons/obj/food/soupsalad.dmi'
+	icon_state = "pokefish"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/nutriment/protein = 2)
+	tastes = list("rice and fish" = 4, "lettuce" = 2, "soy sauce" = 2)
+	foodtypes = SEAFOOD | VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+
 ////////////////////////////////////////////MEATS AND ALIKE////////////////////////////////////////////
+
+/obj/item/food/meat/slab/pig
+	name = "raw pork"
+	icon_state = "pig_meat"
+	tastes = list("pig" = 1)
+	foodtypes = MEAT | RAW | GROSS
+
+/obj/item/food/meat/slab/pig/MakeGrillable()
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain/pig, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
+
+/obj/item/food/meat/steak/plain/pig
+	name = "pork chops"
+	icon_state = "pigsteak"
+	tastes = list("pig" = 1)
+	foodtypes = MEAT | GROSS
+
+/obj/item/food/tempeh
+	name = "raw tempeh block"
+	desc = "Fungus fermented soybean cake, warm to the touch."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "tempeh"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 8)
+	tastes = list("earthy" = 3, "nutty" = 2, "bland" = 1 )
+	foodtypes = VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_CHEAP
+
+// sliceable into 4xtempehslices
+/obj/item/food/tempeh/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/tempehslice, 4, 5 SECONDS, table_required = TRUE)
+
+//add an icon for slices
+/obj/item/food/tempehslice
+	name = "tempeh slice"
+	desc = "A slice of tempeh, a slice of wkwkwk."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "tempehslice"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
+	tastes = list("earthy" = 3, "nutty" = 2, "bland" = 1)
+	foodtypes = VEGETABLES
+
+//add an icon for blends
+/obj/item/food/tempehstarter
+	name = "tempeh starter"
+	desc = "A mix of soy and joy. It's warm... and moving?"
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "tempehstarter"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
+	tastes = list("nutty" = 2, "bland" = 2)
+	foodtypes = VEGETABLES | GROSS
 
 /obj/item/food/tofu
 	name = "tofu"

@@ -288,7 +288,7 @@
 	var/mob/living/carbon/holder
 	if(!holoform && iscarbon(card.loc))
 		holder = card.loc
-	if(holoform && istype(loc, /obj/item/clothing/head/mob_holder) && iscarbon(loc.loc))
+	if(holoform && ispickedupmob(loc) && iscarbon(loc.loc))
 		holder = loc.loc
 	if(!holder || !iscarbon(holder))
 		return FALSE

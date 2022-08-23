@@ -40,7 +40,7 @@
 			to_chat(user, span_warning("[organ_storage_contents] cannot be attached!"))
 			return SURGERY_STEP_FAIL
 		tool = organ_storage_contents
-	if(istype(tool, /obj/item/bodypart))
+	if(isbodypart(tool))
 		var/obj/item/bodypart/bodypart_to_attach = tool
 		if(IS_ORGANIC_LIMB(bodypart_to_attach))
 			organ_rejection_dam = 10
@@ -75,7 +75,7 @@
 		tool.desc = initial(tool.desc)
 		tool.cut_overlays()
 		tool = tool.contents[1]
-	if(istype(tool, /obj/item/bodypart) && user.temporarilyRemoveItemFromInventory(tool))
+	if(isbodypart(tool) && user.temporarilyRemoveItemFromInventory(tool))
 		var/obj/item/bodypart/limb_to_attach = tool
 		if(!limb_to_attach.attach_limb(target))
 			display_results(user, target, span_warning("You fail in replacing [target]'s [parse_zone(target_zone)]! Their body has rejected [limb_to_attach]!"),

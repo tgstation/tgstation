@@ -2228,17 +2228,6 @@
 	},
 /turf/open/floor/iron,
 /area/mine/lounge)
-"mJ" = (
-/obj/docking_port/stationary{
-	dwidth = 2;
-	height = 5;
-	shuttle_id = "laborcamp_away";
-	name = "labor camp";
-	width = 9
-	},
-/obj/effect/turf_decal/sand/plating/volcanic,
-/turf/open/floor/plating/lavaland_atmos,
-/area/lavaland/surface/outdoors)
 "mK" = (
 /obj/item/cigbutt,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -2478,6 +2467,18 @@
 	dir = 1
 	},
 /area/mine/laborcamp)
+"nE" = (
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 3;
+	height = 7;
+	shuttle_id = "lavaland_common_away";
+	name = "Mining base public dock";
+	width = 7
+	},
+/obj/effect/turf_decal/sand/plating/volcanic,
+/turf/open/floor/plating/lavaland_atmos,
+/area/lavaland/surface/outdoors)
 "nI" = (
 /obj/structure/sink/kitchen/directional/south{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
@@ -4106,17 +4107,6 @@
 	dir = 1
 	},
 /area/mine/storage/public)
-"yc" = (
-/obj/docking_port/stationary{
-	dir = 2;
-	dwidth = 11;
-	height = 22;
-	shuttle_id = "whiteship_lavaland";
-	name = "lavaland wastes";
-	width = 35
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "ye" = (
 /obj/structure/tank_holder/extinguisher,
 /obj/machinery/light/directional/east,
@@ -4792,15 +4782,6 @@
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
 /turf/open/floor/plating,
 /area/mine/maintenance/public/north)
-"CU" = (
-/obj/structure/toilet{
-	dir = 8;
-	pixel_y = 6
-	},
-/obj/structure/window/reinforced/tinted,
-/obj/structure/curtain,
-/turf/open/floor/iron/freezer,
-/area/mine/living_quarters)
 "CX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -4940,18 +4921,6 @@
 	},
 /turf/open/floor/iron/large,
 /area/mine/lounge)
-"Ec" = (
-/obj/docking_port/stationary{
-	dir = 2;
-	dwidth = 3;
-	height = 10;
-	shuttle_id = "mining_away";
-	name = "lavaland mine";
-	width = 7
-	},
-/obj/effect/turf_decal/sand/plating/volcanic,
-/turf/open/floor/plating/lavaland_atmos,
-/area/lavaland/surface/outdoors)
 "Ee" = (
 /obj/machinery/power/smes{
 	charge = 5e+006
@@ -5159,18 +5128,6 @@
 "Fv" = (
 /turf/open/floor/iron/smooth_edge,
 /area/mine/laborcamp/production)
-"Fx" = (
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 3;
-	height = 7;
-	shuttle_id = "lavaland_common_away";
-	name = "Mining base public dock";
-	width = 7
-	},
-/obj/effect/turf_decal/sand/plating/volcanic,
-/turf/open/floor/plating/lavaland_atmos,
-/area/lavaland/surface/outdoors)
 "FD" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner,
 /obj/effect/turf_decal/siding/yellow{
@@ -5199,6 +5156,17 @@
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"FR" = (
+/obj/docking_port/stationary{
+	dwidth = 2;
+	height = 5;
+	shuttle_id = "laborcamp_away";
+	name = "labor camp";
+	width = 9
+	},
+/obj/effect/turf_decal/sand/plating/volcanic,
+/turf/open/floor/plating/lavaland_atmos,
 /area/lavaland/surface/outdoors)
 "FT" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -6256,6 +6224,18 @@
 	dir = 8
 	},
 /area/mine/lounge)
+"Mi" = (
+/obj/docking_port/stationary{
+	dir = 2;
+	dwidth = 3;
+	height = 10;
+	shuttle_id = "mining_away";
+	name = "lavaland mine";
+	width = 7
+	},
+/obj/effect/turf_decal/sand/plating/volcanic,
+/turf/open/floor/plating/lavaland_atmos,
+/area/lavaland/surface/outdoors)
 "Mr" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -6703,6 +6683,15 @@
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plating/lavaland_atmos,
 /area/lavaland/surface/outdoors)
+"Pf" = (
+/obj/structure/toilet{
+	dir = 8;
+	pixel_y = 6
+	},
+/obj/structure/window/reinforced,
+/obj/structure/curtain,
+/turf/open/floor/iron/freezer,
+/area/mine/living_quarters)
 "Pi" = (
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/trimline/red/filled/line,
@@ -7365,6 +7354,17 @@
 	},
 /turf/open/floor/plating,
 /area/mine/production)
+"TO" = (
+/obj/docking_port/stationary{
+	dir = 2;
+	dwidth = 11;
+	height = 22;
+	shuttle_id = "whiteship_lavaland";
+	name = "lavaland wastes";
+	width = 35
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "TQ" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical{
@@ -25836,7 +25836,7 @@ BP
 BP
 BP
 BP
-mJ
+FR
 Dk
 Kq
 My
@@ -42030,7 +42030,7 @@ pU
 cW
 CX
 iu
-CU
+Pf
 eC
 qO
 iu
@@ -43845,7 +43845,7 @@ JD
 BP
 BP
 BP
-Fx
+nE
 BP
 BP
 BP
@@ -46925,7 +46925,7 @@ cc
 XM
 CM
 lM
-Ec
+Mi
 BP
 BP
 BP
@@ -56690,7 +56690,7 @@ ZY
 pU
 pU
 pU
-yc
+TO
 pU
 pU
 pU

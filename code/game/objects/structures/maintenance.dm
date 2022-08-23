@@ -93,7 +93,7 @@ at the cost of risking a vicious bite.**/
 	if(iscyborg(user) || isalien(user) || !CanReachInside(user))
 		return ..()
 	add_fingerprint(user)
-	if(istype(I, /obj/item/reagent_containers))
+	if(is_reagent_container(I))
 		if(istype(I, /obj/item/food/monkeycube))
 			var/obj/item/food/monkeycube/cube = I
 			cube.Expand()

@@ -519,5 +519,5 @@
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return prob(20)
 	else
-		if(istype(mover, /obj/projectile))
+		if(isprojectile(mover))
 			return prob(10)

@@ -387,7 +387,7 @@
 
 /obj/item/reagent_containers/cup/mortar
 	name = "mortar"
-	desc = "A specially formed bowl of ancient design. It is possible to crush or juice items placed in it using a pestle; however the process, unlike modern methods, is slow and physically exhausting. Alt click to eject the item."
+	desc = "A specially formed bowl of ancient design. It is possible to crush or juice items placed in it using a pestle; however the process, unlike modern methods, is slow and physically exhausting. <b>Alt click to eject the item.</b>"
 	icon_state = "mortar"
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50, 100)
@@ -410,22 +410,47 @@
 			if(user.getStaminaLoss() > 50)
 				to_chat(user, span_warning("You are too tired to work!"))
 				return
-			to_chat(user, span_notice("You start grinding..."))
-			if((do_after(user, 25, target = src)) && grinded)
-				user.adjustStaminaLoss(40)
-				if(grinded.juice_results) //prioritize juicing
-					grinded.on_juice()
-					reagents.add_reagent_list(grinded.juice_results)
-					to_chat(user, span_notice("You juice [grinded] into a fine liquid."))
-					QDEL_NULL(grinded)
-					return
-				grinded.on_grind()
-				reagents.add_reagent_list(grinded.grind_results)
-				if(grinded.reagents) //food and pills
-					grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
-				to_chat(user, span_notice("You break [grinded] into powder."))
-				QDEL_NULL(grinded)
-				return
+			var/list/choose_options = list(
+				"Grind" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_grind"),
+				"Juice" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_juice")
+			)
+			var/picked_option = show_radial_menu(user, src, choose_options, radius = 38, require_near = TRUE)
+			if(grinded && in_range(src, user) && user.is_holding(I) && picked_option)
+				to_chat(user, span_notice("You start grinding..."))
+				if(do_after(user, 25, target = src))
+					user.adjustStaminaLoss(40)
+					switch(picked_option)
+						if("Juice") //prioritize juicing
+							if(grinded.juice_results)
+								grinded.on_juice()
+								reagents.add_reagent_list(grinded.juice_results)
+								to_chat(user, span_notice("You juice [grinded] into a fine liquid."))
+								QDEL_NULL(grinded)
+								return
+							else
+								grinded.on_grind()
+								reagents.add_reagent_list(grinded.grind_results)
+								grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
+								to_chat(user, span_notice("You try to juice [grinded] but there is no liquids in it. Instead you get nice powder."))
+								QDEL_NULL(grinded)
+								return
+						if("Grind")
+							if(grinded.grind_results)
+								grinded.on_grind()
+								reagents.add_reagent_list(grinded.grind_results)
+								grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
+								to_chat(user, span_notice("You break [grinded] into powder."))
+								QDEL_NULL(grinded)
+								return
+							else
+								grinded.on_juice()
+								reagents.add_reagent_list(grinded.juice_results)
+								to_chat(user, span_notice("You try to grind [grinded] but it almost instantly turns into a fine liquid."))
+								QDEL_NULL(grinded)
+								return
+						else
+							to_chat(user, span_notice("You try to grind the mortar itself instead of [grinded]. You failed."))
+							return
 			return
 		else
 			to_chat(user, span_warning("There is nothing to grind!"))
@@ -443,3 +468,19 @@
 	name = "saline canister"
 	volume = 5000
 	list_reagents = list(/datum/reagent/medicine/salglu_solution = 5000)
+
+//Coffeepots: for reference, a standard cup is 30u, to allow 20u for sugar/sweetener/milk/creamer
+/obj/item/reagent_containers/cup/coffeepot
+	name = "coffeepot"
+	desc = "A large pot for dispensing that ambrosia of corporate life known to mortals only as coffee. Contains 4 standard cups."
+	volume = 120
+	icon_state = "coffeepot"
+	fill_icon_state = "coffeepot"
+	fill_icon_thresholds = list(0, 1, 40, 80, 120)
+
+/obj/item/reagent_containers/cup/coffeepot/bluespace
+	name = "bluespace coffeepot"
+	desc = "The most advanced coffeepot the eggheads could cook up: sleek design; graduated lines; connection to a pocket dimension for coffee containment; yep, it's got it all. Contains 8 standard cups."
+	volume = 240
+	icon_state = "coffeepot_bluespace"
+	fill_icon_thresholds = list(0)

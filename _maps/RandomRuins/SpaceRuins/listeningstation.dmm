@@ -241,14 +241,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
-"lk" = (
-/obj/effect/turf_decal/tile/red/opposingcorners,
-/obj/item/radio/intercom/directional/east,
-/obj/machinery/computer/camera_advanced{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/listeningstation)
 "lu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/toy/balloon/syndicate,
@@ -292,6 +284,16 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
+/area/ruin/space/has_grav/listeningstation)
+"qk" = (
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/item/radio/intercom/directional/east{
+	freerange = 1
+	},
+/obj/machinery/computer/camera_advanced{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
 "qD" = (
 /obj/machinery/door/airlock/external/ruin{
@@ -484,6 +486,17 @@
 "zp" = (
 /turf/closed/wall,
 /area/ruin/unpowered/no_grav)
+"zs" = (
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 4;
+	height = 5;
+	shuttle_id = "caravansyndicate1_listeningpost";
+	name = "Syndicate Listening Post";
+	width = 9
+	},
+/turf/template_noop,
+/area/template_noop)
 "zv" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -688,17 +701,6 @@
 "JB" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/listeningstation)
-"JD" = (
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 4;
-	height = 5;
-	shuttle_id = "caravansyndicate1_listeningpost";
-	name = "Syndicate Listening Post";
-	width = 9
-	},
-/turf/template_noop,
-/area/template_noop)
 "KG" = (
 /obj/structure/curtain,
 /obj/effect/decal/cleanable/dirt,
@@ -1038,7 +1040,7 @@ AV
 AV
 AV
 AV
-JD
+zs
 AV
 AV
 AV
@@ -1435,7 +1437,7 @@ vI
 JB
 xp
 SK
-lk
+qk
 tm
 TK
 rG

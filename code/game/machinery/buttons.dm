@@ -71,7 +71,7 @@
 
 /obj/machinery/button/attackby(obj/item/W, mob/living/user, params)
 	if(panel_open)
-		if(!device && istype(W, /obj/item/assembly))
+		if(!device && isassembly(W))
 			if(!user.transferItemToLoc(W, src))
 				to_chat(user, span_warning("\The [W] is stuck to you!"))
 				return

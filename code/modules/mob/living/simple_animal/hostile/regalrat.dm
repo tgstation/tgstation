@@ -93,9 +93,9 @@
 /mob/living/simple_animal/hostile/regalrat/CanAttack(atom/the_target)
 	if(istype(the_target,/mob/living/simple_animal))
 		var/mob/living/A = the_target
-		if(istype(the_target, /mob/living/simple_animal/hostile/regalrat) && A.stat == CONSCIOUS)
+		if(isregalrat(the_target) && A.stat == CONSCIOUS)
 			return TRUE
-		if(istype(the_target, /mob/living/simple_animal/hostile/rat) && A.stat == CONSCIOUS)
+		if(israt(the_target) && A.stat == CONSCIOUS)
 			var/mob/living/simple_animal/hostile/rat/R = the_target
 			if(R.faction_check_mob(src, TRUE))
 				return FALSE
@@ -314,7 +314,9 @@
 			var/obj/item/food/deadmouse/mouse = new(loc)
 			mouse.icon_state = icon_dead
 			mouse.name = name
-	SSmobs.cheeserats -= src // remove rats on death
+		qdel(src)
+	else
+		SSmobs.cheeserats -= src // remove rats on death
 	return ..()
 
 /mob/living/simple_animal/hostile/rat/revive(full_heal = FALSE, admin_revive = FALSE)
@@ -344,13 +346,13 @@
 /mob/living/simple_animal/hostile/rat/CanAttack(atom/the_target)
 	if(istype(the_target,/mob/living/simple_animal))
 		var/mob/living/A = the_target
-		if(istype(the_target, /mob/living/simple_animal/hostile/regalrat) && A.stat == CONSCIOUS)
+		if(isregalrat(the_target) && A.stat == CONSCIOUS)
 			var/mob/living/simple_animal/hostile/regalrat/ratking = the_target
 			if(ratking.faction_check_mob(src, TRUE))
 				return FALSE
 			else
 				return TRUE
-		if(istype(the_target, /mob/living/simple_animal/hostile/rat) && A.stat == CONSCIOUS)
+		if(israt(the_target) && A.stat == CONSCIOUS)
 			var/mob/living/simple_animal/hostile/rat/R = the_target
 			if(R.faction_check_mob(src, TRUE))
 				return FALSE
