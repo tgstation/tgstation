@@ -1,6 +1,6 @@
 /obj/item/clothing/suit/hooded/ethereal_raincoat
 	name = "ethereal raincoat"
-	desc = ""
+	desc = " A raincoat commonly worn by travelers, or tourists not too fond of Sprout's rainy weather."
 	icon = 'icons/obj/clothing/suits/ethereal.dmi'
 	icon_state = "eth_raincoat"
 	worn_icon = 'icons/mob/clothing/suits/ethereal.dmi'
@@ -16,16 +16,28 @@
 	if(!isinhands)
 		. += emissive_appearance('icons/mob/clothing/suits/ethereal.dmi', "eth_raincoat_glow_worn", alpha = src.alpha)
 
+/obj/item/clothing/suit/hooded/ethereal_raincoat/update_overlays()
+	. = ..()
+	. += emissive_appearance('icons/obj/clothing/suits/ethereal.dmi', "eth_raincoat_glow", alpha = src.alpha)
+
 /obj/item/clothing/suit/hooded/ethereal_raincoat/trailwarden
 	name = "trailwarden oilcoat"
-	desc = "A masterfully handcrafted oilslick coat, supposedly makes for excellent camouflage among Sprout's vegetation. Traditionally the bioluminescent patterns were painted with the blood of the wearer as it was said to bring good luck, it was later replaced by a mixture based on tree sap."
+	desc = "A masterfully handcrafted oilslick coat, supposedly makes for excellent camouflage among Sprout's vegetation. You can hear a faint electrical buzz emanating from the bioluminescent pattern."
 	greyscale_colors = "#32a87d"
 
+/obj/item/clothing/suit/hooded/ethereal_raincoat/trailwarden/equipped(mob/living/user, slot)
+	. = ..()
+	if(isethereal(user) && slot == ITEM_SLOT_OCLOTHING)
+		var/mob/living/carbon/human/ethereal = user
+		to_chat(ethereal, span_notice("[src] gently quivers for a moment as you put it on."))
+		set_greyscale(ethereal.dna.species.fixed_mut_color)
+		update_worn_oversuit()
+
 /obj/item/clothing/head/hooded/ethereal_rainhood
-	name = "winter hood"
-	desc = "A cozy winter hood attached to a heavy winter jacket."
+	name = "ethereal rainhood"
+	desc = "Perfect for a rainy day. And also most days on the ethereal homeplanet."
 	icon = 'icons/obj/clothing/head/ethereal.dmi'
 	icon_state = "eth_rainhood"
 	worn_icon = 'icons/mob/clothing/head/ethereal.dmi'
 	body_parts_covered = HEAD
-	flags_inv = HIDEHAIR|HIDEEARS
+	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACIALHAIR

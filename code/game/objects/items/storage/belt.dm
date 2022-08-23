@@ -847,3 +847,13 @@
 		/obj/item/seeds,
 		/obj/item/shovel/spade,
 		))
+
+/obj/item/storage/belt/saddlepouch
+	name = "saddlepack"
+	desc = "A set of pouches specifically designed to be either carried on a belt or saddled on a mount and seamlessly transfered between the two."
+	icon_state = "saddlepack"
+
+/obj/item/storage/belt/saddlepouch/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 9
+	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL

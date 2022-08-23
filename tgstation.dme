@@ -2802,6 +2802,7 @@
 #include "code\modules\clothing\under\accessories.dm"
 #include "code\modules\clothing\under\color.dm"
 #include "code\modules\clothing\under\costume.dm"
+#include "code\modules\clothing\under\ethereal.dm"
 #include "code\modules\clothing\under\miscellaneous.dm"
 #include "code\modules\clothing\under\pants.dm"
 #include "code\modules\clothing\under\shorts.dm"

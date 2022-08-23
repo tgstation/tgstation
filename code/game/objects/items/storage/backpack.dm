@@ -211,6 +211,7 @@
 	name = "emergency response team clown backpack"
 	desc = "A spacious backpack with lots of pockets, worn by Clowns of an Emergency Response Team."
 	icon_state = "ert_clown"
+
 /*
  * Satchel Types
  */
