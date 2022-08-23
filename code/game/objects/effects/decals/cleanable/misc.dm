@@ -283,23 +283,47 @@
 	var/bite_sound = 'sound/weapons/bite.ogg'
 
 /obj/effect/decal/cleanable/ants/Initialize(mapload)
-	reagent_amount = rand(3, 5)
+	if(mapload)
+		reagent_amount = rand(reagent_amount - 2, reagent_amount)
 	. = ..()
 	update_ant_damage()
+
+/obj/effect/decal/cleanable/ants/vv_edit_var(vname, vval)
+	. = ..()
+	if(vname == NAMEOF(src, bite_sound))
+		update_ant_damage()
 
 /obj/effect/decal/cleanable/ants/handle_merge_decal(obj/effect/decal/cleanable/merger)
 	. = ..()
 	var/obj/effect/decal/cleanable/ants/ants = merger
 	ants.update_ant_damage()
 
-/obj/effect/decal/cleanable/ants/proc/update_ant_damage()
-	var/ant_bite_damage = min(10, round((reagents.get_reagent_amount(/datum/reagent/ants) * 0.1),0.1)) // 100u ants = 10 max_damage
-
+/obj/effect/decal/cleanable/ants/proc/update_ant_damage(ant_min_damage, ant_max_damage)
+	if(!ant_max_damage)
+		ant_max_damage = min(10, round((reagents.get_reagent_amount(/datum/reagent/ants) * 0.1),0.1)) // 100u ants = 10 max_damage
+	if(!ant_min_damage)
+		ant_min_damage = 0.1
 	var/ant_flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN) /// Small amounts of ants won't be able to bite through shoes.
-	if(ant_bite_damage > 1)
+	if(ant_max_damage > 1)
 		ant_flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN | CALTROP_BYPASS_SHOES)
 
-	switch(ant_bite_damage)
+	var/datum/component/caltrop/caltrop_comp = GetComponent(/datum/component/caltrop)
+	if(caltrop_comp)
+		caltrop_com.min_damage = ant_min_damage
+		caltrop_comp.max_damage = ant_max_damage
+		caltrop_comp.flags = ant_flags
+		caltrop_comp.soundfile = bite_sound
+	else
+		AddComponent(/datum/component/caltrop, min_damage = ant_min_damage, max_damage = ant_max_damage, flags = ant_flags, soundfile = bite_sound)
+
+	update_appearance(UPDATE_ICON)
+
+/obj/effect/decal/cleanable/ants/update_icon_state()
+	if(istype(src, /obj/effect/decal/cleanable/ants/fire)) //i fucking hate this but you're forced to call parent in update_icon_state()
+		return ..()
+
+	var/datum/component/caltrop/caltrop_comp = GetComponent(/datum/component/caltrop)
+	switch(caltrop_comp.max_damage)
 		if(0 to 1)
 			icon_state = initial(icon_state)
 		if(1.1 to 4)
@@ -308,9 +332,7 @@
 			icon_state = "[initial(icon_state)]_3"
 		if(7.1 to INFINITY)
 			icon_state = "[initial(icon_state)]_4"
-
-	AddComponent(/datum/component/caltrop, min_damage = 0.1, max_damage = ant_bite_damage, flags = ant_flags, soundfile = bite_sound)
-	update_icon(UPDATE_OVERLAYS)
+	return ..()
 
 /obj/effect/decal/cleanable/ants/update_overlays()
 	. = ..()
@@ -328,9 +350,8 @@
 	icon_state = "fire_ants"
 	mergeable_decal = FALSE
 
-/obj/effect/decal/cleanable/ants/fire/update_ant_damage()
-	AddComponent(/datum/component/caltrop, min_damage = 15, max_damage = 25, flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN | CALTROP_BYPASS_SHOES), soundfile = bite_sound)
-	update_icon(UPDATE_OVERLAYS)
+/obj/effect/decal/cleanable/ants/fire/update_ant_damage(ant_min_damage, ant_max_damage)
+	return ..(15, 25)
 
 /obj/effect/decal/cleanable/ants/fire/fire_act(exposed_temperature, exposed_volume)
 	return
