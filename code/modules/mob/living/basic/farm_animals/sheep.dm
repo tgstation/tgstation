@@ -5,7 +5,6 @@
 	icon_state = "sheep"
 	icon_state = "sheep"
 	icon_dead = "sheep_dead"
-	var/cult_icon
 	gender = FEMALE
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST
 	speak_emote = list("baas","bleats")
@@ -27,6 +26,7 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 	blood_volume = BLOOD_VOLUME_NORMAL
 	ai_controller = /datum/ai_controller/basic_controller/sheep
+	var/mutable_appearance/cult_icon
 
 /mob/living/basic/sheep/Initialize(mapload)
 	AddComponent(/datum/component/mob_harvest, /obj/item/razor, /obj/item/food/grown/grass, /obj/item/stack/sheet/cotton/wool, "soft wool", 10, 3 MINUTES, 30 SECONDS, 5 SECONDS)
@@ -43,11 +43,17 @@
 		icon_state = "sheep"
 		update_icon()
 
+/mob/living/basic/sheep/update_overlays()
+	. = ..()
+	if(cult_icon)
+		. += cult_icon
+
 /mob/living/basic/sheep/proc/cult_time()
 	if(!cult_icon)
 		say("BAAAAAAAAH!")
-		cult_icon = mutable_appearance('icons/mob/sheep.dmi', "hat")
+		cult_icon = image('icons/mob/sheep.dmi', "hat")
 		add_overlay(cult_icon)
+		update_overlays()
 
 
 /datum/ai_controller/basic_controller/sheep
