@@ -17,7 +17,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal
 	name = "supermatter crystal"
 	desc = "A strangely translucent and iridescent crystal."
-	icon = 'icons/obj/supermatter.dmi'
+	icon = 'icons/obj/engine/supermatter.dmi'
 	icon_state = "darkmatter"
 	density = TRUE
 	anchored = TRUE
@@ -695,7 +695,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	icon_state = "darkmatter"
 
 /obj/overlay/psy
-	icon = 'icons/obj/supermatter.dmi'
+	icon = 'icons/obj/engine/supermatter.dmi'
 	icon_state = "psy"
 	layer = FLOAT_LAYER - 1
 

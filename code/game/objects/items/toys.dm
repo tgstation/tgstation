@@ -246,7 +246,7 @@
 /obj/item/toy/spinningtoy
 	name = "gravitational singularity"
 	desc = "\"Singulo\" brand spinning toy."
-	icon = 'icons/obj/singularity.dmi'
+	icon = 'icons/obj/engine/singularity.dmi'
 	icon_state = "singularity_s1"
 	item_flags = NO_PIXEL_RANDOM_DROP
 

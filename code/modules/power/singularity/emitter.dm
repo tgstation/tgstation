@@ -1,7 +1,7 @@
 /obj/machinery/power/emitter
 	name = "emitter"
 	desc = "A heavy-duty industrial laser, often used in containment fields and power generation."
-	icon = 'icons/obj/singularity.dmi'
+	icon = 'icons/obj/engine/singularity.dmi'
 	icon_state = "emitter"
 	base_icon_state = "emitter"
 
