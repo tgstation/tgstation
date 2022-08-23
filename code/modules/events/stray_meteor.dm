@@ -11,7 +11,6 @@
 /datum/round_event/stray_meteor
 	announceWhen = 1
 	fakeable = FALSE //Already faked by meteors that miss
-	var/sensor_name = "runtime"
 
 /datum/round_event/stray_meteor/start()
 	spawn_meteor(GLOB.meteorsD)
@@ -19,5 +18,5 @@
 /datum/round_event/stray_meteor/announce(fake)
 	if(GLOB.meteor_list)
 		var/obj/effect/meteor/new_meteor = pick(GLOB.meteor_list) //If we accidentally pick a meteor not spawned by the event, we're still technically not wrong
-		sensor_name = new_meteor.signature
+		var/sensor_name = new_meteor.signature
 		priority_announce("Our [sensor_name] sensors have detected an incoming signature approaching [GLOB.station_name]. Please brace for impact.", "Meteor Alert")
