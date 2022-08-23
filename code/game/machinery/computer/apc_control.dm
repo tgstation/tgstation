@@ -116,10 +116,7 @@
 	if(.)
 		return
 
-	var/mob/living/operator = ui.user
 
-	if(!istype(operator))
-		return
 
 	switch(action)
 		if("log-in")
@@ -127,6 +124,9 @@
 				authenticated = TRUE
 				auth_id = "Unknown (Unknown):"
 				log_activity("[auth_id] logged in to the terminal")
+				return
+			var/mob/living/operator = usr
+			if(!istype(operator))
 				return
 			var/obj/item/card/id/ID = operator.get_idcard(TRUE)
 			if(ID && istype(ID))
@@ -139,7 +139,7 @@
 					auth_id = "[ID.registered_name] ([ID.assignment]):"
 					log_activity("[auth_id] attempted to log into the terminal")
 					playsound(src, 'sound/machines/terminal_error.ogg', 50, FALSE)
-					to_chat(usr, span_danger("ID REJECTED - Access Denied."))
+					say("ID rejected, access denied!")
 				return
 			auth_id = "Unknown (Unknown):"
 			log_activity("[auth_id] attempted to log into the terminal")
@@ -150,7 +150,7 @@
 			auth_id = "\[NULL\]"
 		if("toggle-logs")
 			should_log = !should_log
-			operator.log_message("set the logs of [src] [should_log ? "On" : "Off"].", LOG_GAME)
+			usr.log_message("set the logs of [src] [should_log ? "On" : "Off"].", LOG_GAME)
 		if("restore-console")
 			restoring = TRUE
 			addtimer(CALLBACK(src, .proc/restore_comp), rand(3,5) * 9 SECONDS)
@@ -158,7 +158,7 @@
 			var/ref = params["ref"]
 			playsound(src, SFX_TERMINAL_TYPE, 50, FALSE)
 			var/obj/machinery/power/apc/APC = locate(ref) in GLOB.apcs_list
-			connect_apc(APC, operator)
+			connect_apc(APC, usr)
 		if("check-logs")
 			log_activity("Checked Logs")
 		if("check-apcs")
@@ -193,11 +193,11 @@
 				if(3)
 					setTo = "Auto On"
 			log_activity("Set APC [target.area.name] [type] to [setTo]")
-			operator.log_message("set APC [target.area.name] [type] to [setTo]]", LOG_GAME)
+			usr.log_message("set APC [target.area.name] [type] to [setTo]]", LOG_GAME)
 		if("breaker")
 			var/ref = params["ref"]
 			var/obj/machinery/power/apc/target = locate(ref) in GLOB.apcs_list
-			target.toggle_breaker(operator)
+			target.toggle_breaker(usr)
 			var/setTo = target.operating ? "On" : "Off"
 			log_activity("Turned APC [target.area.name]'s breaker [setTo]")
 
