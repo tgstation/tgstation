@@ -283,8 +283,8 @@
 	var/bite_sound = 'sound/weapons/bite.ogg'
 
 /obj/effect/decal/cleanable/ants/Initialize(mapload)
-	if(mapload)
-		reagent_amount = rand(reagent_amount - 2, reagent_amount)
+	if(mapload && reagent_amount > 2)
+		reagent_amount = rand((reagent_amount - 2), reagent_amount)
 	. = ..()
 	update_ant_damage()
 
@@ -309,7 +309,7 @@
 
 	var/datum/component/caltrop/caltrop_comp = GetComponent(/datum/component/caltrop)
 	if(caltrop_comp)
-		caltrop_com.min_damage = ant_min_damage
+		caltrop_comp.min_damage = ant_min_damage
 		caltrop_comp.max_damage = ant_max_damage
 		caltrop_comp.flags = ant_flags
 		caltrop_comp.soundfile = bite_sound
