@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - admin: "Admin deletion messages are now a little more verbose."
