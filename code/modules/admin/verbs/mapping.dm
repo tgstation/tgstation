@@ -568,10 +568,11 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 
 	for(var/turf/iterated_turf in world)
 		var/obj/machinery/atmospherics/components/unary/device = locate() in iterated_turf.contents
-		if(device)
-			var/list/obj/obstruction = locate(/obj) in iterated_turf.contents
-			if(!is_type_in_list(obstruction, ignore_list))
-				results += "There is an obstruction on top of an atmospherics machine at: [ADMIN_VERBOSEJMP(iterated_turf)].<br>"
+		if(!device)
+			continue
+		var/list/obj/obstruction = locate(/obj) in iterated_turf.contents
+		if(!is_type_in_list(obstruction, ignore_list))
+			results += "There is an obstruction on top of an atmospherics machine at: [ADMIN_VERBOSEJMP(iterated_turf)].<br>"
 
 	if(results.len == 1) // only the header is in the list, we're good
 		to_chat(src, "No obstructions detected.", confidential = TRUE)
