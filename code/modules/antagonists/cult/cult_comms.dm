@@ -8,8 +8,6 @@
 	ranged_mousepointer = 'icons/effects/mouse_pointers/cult_target.dmi'
 
 /datum/action/innate/cult/IsAvailable()
-	if(isshade(owner))
-		return TRUE
 	if(!IS_CULTIST(owner))
 		return FALSE
 	return ..()
@@ -18,6 +16,11 @@
 	name = "Communion"
 	desc = "Whispered words that all cultists can hear.<br><b>Warning:</b>Nearby non-cultists can still hear you."
 	button_icon_state = "cult_comms"
+
+/datum/action/innate/cult/comm/IsAvailable()
+	if(isshade(owner) && IS_CULTIST(owner))
+		return TRUE
+	return ..()
 
 /datum/action/innate/cult/comm/Activate()
 	var/input = tgui_input_text(usr, "Message to tell to the other acolytes", "Voice of Blood")
