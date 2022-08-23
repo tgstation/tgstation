@@ -58,7 +58,7 @@
 	name = "valentine"
 	desc = "A Valentine's card! Wonder what it says..."
 	icon = 'icons/obj/playing_cards.dmi'
-	icon_state = "sc_Ace of Hearts_syndicate" // shut up // bye felicia 
+	icon_state = "sc_Ace of Hearts_syndicate" // shut up // bye felicia
 	var/message = "A generic message of love or whatever."
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
@@ -96,7 +96,7 @@
 
 /obj/item/food/candyheart
 	name = "candy heart"
-	icon = 'icons/obj/holiday_misc.dmi'
+	icon = 'icons/obj/holiday/holiday_misc.dmi'
 	icon_state = "candyheart"
 	desc = "A heart-shaped candy that reads: "
 	food_reagents = list(/datum/reagent/consumable/sugar = 2)
