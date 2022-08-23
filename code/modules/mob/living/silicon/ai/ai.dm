@@ -670,13 +670,12 @@
 						return
 					if(isnull(personnel_list[input]))
 						return
-					var/character_icon = personnel_list[input]
+					var/mutable_appearance/character_icon = personnel_list[input]
 					if(character_icon)
 						qdel(holo_icon)//Clear old icon so we're not storing it in memory.
-						var/static/atom/movable/screen/appearance_holder = new()
-						appearance_holder.appearance = character_icon
+						character_icon.setDir(SOUTH)
 
-						var/icon/icon_for_holo = getFlatIcon(appearance_holder)
+						var/icon/icon_for_holo = getFlatIcon(character_icon)
 						holo_icon = getHologramIcon(icon(icon_for_holo))
 
 				if("My Character")
