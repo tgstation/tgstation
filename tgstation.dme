@@ -3926,6 +3926,7 @@
 #include "code\modules\power\singularity\narsie.dm"
 #include "code\modules\power\singularity\singularity.dm"
 #include "code\modules\power\supermatter\supermatter.dm"
+#include "code\modules\power\supermatter\supermatter_gas.dm"
 #include "code\modules\power\supermatter\supermatter_hit_procs.dm"
 #include "code\modules\power\supermatter\supermatter_process.dm"
 #include "code\modules\power\supermatter\supermatter_radiation.dm"
