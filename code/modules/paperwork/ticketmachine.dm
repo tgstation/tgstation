@@ -111,7 +111,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 /obj/item/assembly/control/ticket_machine
 	name = "ticket machine controller"
 	desc = "A remote controller for the HoP's ticket machine."
-	var/datum/weakref/linked //To whom are we linked?
+	///To whom are we linked?
+	var/datum/weakref/linked
 
 /obj/item/assembly/control/ticket_machine/Initialize(mapload)
 	..()
@@ -120,7 +121,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 /obj/item/assembly/control/ticket_machine/LateInitialize()
 	find_machine()
 
-/obj/item/assembly/control/ticket_machine/proc/find_machine() //Locate the one to which we're linked
+/// Locate the ticket machine to which we're linked by our ID
+/obj/item/assembly/control/ticket_machine/proc/find_machine()
 	for(var/obj/machinery/ticket_machine/ticketsplease in GLOB.machines)
 		if(ticketsplease.id == id)
 			linked = WEAKREF(ticketsplease)
