@@ -1,4 +1,0 @@
-author: "CPTANT"
-delete-after: True
-changes: 
-  - bugfix: "Lockers now give proper feedback when you are unable to close them and no longer try to toggle lock status when you fail to close them."
