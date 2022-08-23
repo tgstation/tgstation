@@ -39,7 +39,7 @@
 			. += span_warning("It is probably best to fortify your position as to be uninterrupted during the attempt, given the automatic announcements..")
 
 /obj/machinery/computer/emergency_shuttle/attackby(obj/item/I, mob/user,params)
-	if(istype(I, /obj/item/card/id))
+	if(isidcard(I))
 		say("Please equip your ID card into your ID slot to authenticate.")
 	. = ..()
 

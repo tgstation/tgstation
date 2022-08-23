@@ -5,7 +5,7 @@
 #define ID_ICON_BORDERS 1, 9, 32, 24
 
 /// Fallback time if none of the config entries are set for USE_LOW_LIVING_HOUR_INTERN
-#define INTERN_THRESHOLD_FALLBACK_HOURS 15
+#define INTERN_THRESHOLD_FALLBACK_TIME (15 HOURS)
 
 /// Max time interval between projecting holopays
 #define HOLOPAY_PROJECTION_INTERVAL 7 SECONDS
@@ -935,10 +935,11 @@
 	if(!SSdbcore.Connect())
 		return
 
-	var/intern_threshold = (CONFIG_GET(number/use_low_living_hour_intern_hours) * 60) || (CONFIG_GET(number/use_exp_restrictions_heads_hours) * 60) || INTERN_THRESHOLD_FALLBACK_HOURS * 60
-	var/playtime = user.client.get_exp_living(pure_numeric = TRUE)
+	var/intern_threshold = (CONFIG_GET(number/use_low_living_hour_intern_hours) * (1 HOURS)) || (CONFIG_GET(number/use_exp_restrictions_heads_hours) * (1 HOURS)) || INTERN_THRESHOLD_FALLBACK_TIME
+	var/playtime = user.client.get_exp_living(pure_numeric = TRUE) //Pure numeric, so any values returned by this proc will be in minutes (via the DB).
 
-	if((intern_threshold >= playtime) && (user.mind?.assigned_role.job_flags & JOB_CAN_BE_INTERN))
+	// The evaluation done here is done on the deciseconds level using the time defines.
+	if((intern_threshold >= (playtime MINUTES)) && (user.mind?.assigned_role.job_flags & JOB_CAN_BE_INTERN))
 		is_intern = TRUE
 		update_label()
 		return
@@ -1350,7 +1351,7 @@
 	if(!proximity)
 		return
 
-	if(istype(target, /obj/item/card/id))
+	if(isidcard(target))
 		theft_target = WEAKREF(target)
 		ui_interact(user)
 		return
@@ -1361,7 +1362,7 @@
 	// If we're attacking a human, we want it to be covert. We're not ATTACKING them, we're trying
 	// to sneakily steal their accesses by swiping our agent ID card near them. As a result, we
 	// return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN to cancel any part of the following the attack chain.
-	if(istype(target, /mob/living/carbon/human))
+	if(ishuman(target))
 		to_chat(user, "<span class='notice'>You covertly start to scan [target] with \the [src], hoping to pick up a wireless ID card signal...</span>")
 
 		if(!do_mob(user, target, 2 SECONDS))
@@ -1382,7 +1383,7 @@
 		ui_interact(user)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	if(istype(target, /obj/item))
+	if(isitem(target))
 		var/obj/item/target_item = target
 
 		to_chat(user, "<span class='notice'>You covertly start to scan [target] with your [src], hoping to pick up a wireless ID card signal...</span>")
@@ -1643,5 +1644,5 @@
 	desc = "A card used to identify members of the green team for CTF"
 	icon_state = "ctf_green"
 
-#undef INTERN_THRESHOLD_FALLBACK_HOURS
+#undef INTERN_THRESHOLD_FALLBACK_TIME
 #undef ID_ICON_BORDERS

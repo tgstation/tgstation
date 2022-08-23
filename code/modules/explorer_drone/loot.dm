@@ -176,7 +176,7 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 	ADD_TRAIT(user,TRAIT_IMMOBILIZED,src)
 	to_chat(user,span_notice("You begin to charge [src]"))
 	inhand_icon_state = "firelance_charging"
-	user.update_inv_hands()
+	user.update_held_items()
 	if(do_after(user,windup_time,interaction_key="firelance",extra_checks = CALLBACK(src, .proc/windup_checks)))
 		var/turf/start_turf = get_turf(user)
 		var/turf/last_turf = get_ranged_target_turf(start_turf,user.dir,melt_range)
@@ -185,7 +185,7 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 			if(turf_to_melt.density)
 				turf_to_melt.Melt()
 	inhand_icon_state = initial(inhand_icon_state)
-	user.update_inv_hands()
+	user.update_held_items()
 	REMOVE_TRAIT(user,TRAIT_IMMOBILIZED,src)
 
 /// Additional windup checks

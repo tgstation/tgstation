@@ -36,7 +36,7 @@
 	payment_department = ACCOUNT_SEC
 
 /obj/machinery/vending/security/pre_throw(obj/item/I)
-	if(istype(I, /obj/item/grenade))
+	if(isgrenade(I))
 		var/obj/item/grenade/G = I
 		G.arm_grenade()
 	else if(istype(I, /obj/item/flashlight))

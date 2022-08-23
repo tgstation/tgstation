@@ -34,12 +34,56 @@
  * probability controls the chance it chooses the passed in zone, or another random zone
  * defaults to 80
  */
-/proc/ran_zone(zone, probability = 80)
+/proc/ran_zone(zone, probability = 80, list/weighted_list)
 	if(prob(probability))
 		zone = check_zone(zone)
 	else
-		zone = pick_weight(list(BODY_ZONE_HEAD = 1, BODY_ZONE_CHEST = 1, BODY_ZONE_L_ARM = 4, BODY_ZONE_R_ARM = 4, BODY_ZONE_L_LEG = 4, BODY_ZONE_R_LEG = 4))
+		zone = pick_weight(weighted_list ? weighted_list : list(BODY_ZONE_HEAD = 1, BODY_ZONE_CHEST = 1, BODY_ZONE_L_ARM = 4, BODY_ZONE_R_ARM = 4, BODY_ZONE_L_LEG = 4, BODY_ZONE_R_LEG = 4))
 	return zone
+
+
+/**
+ * More or less ran_zone, but only returns bodyzones that the mob /actually/ has.
+ *
+ * * blacklisted_parts - allows you to specify zones that will not be chosen. eg: list(BODY_ZONE_CHEST, BODY_ZONE_R_LEG)
+ * * * !!!! blacklisting BODY_ZONE_CHEST is really risky since it's the only bodypart guarunteed to ALWAYS exists  !!!!
+ * * * !!!! Only do that if you're REALLY CERTAIN they have limbs, otherwise we'll CRASH() !!!!
+ *
+ * * ran_zone has a base prob(80) to return the base_zone (or if null, BODY_ZONE_CHEST) vs something in our generated list of limbs.
+ * * this probability is overriden when either blacklisted_parts contains BODY_ZONE_CHEST and we aren't passed a base_zone (since the default fallback for ran_zone would be the chest in that scenario), or if even_weights is enabled.
+ * * you can also manually adjust this probability by altering base_probability
+ *
+ * * even_weights - ran_zone has a 40% chance (after the prob(80) mentioned above) of picking a limb, vs the torso & head which have an additional 10% chance.
+ * * Setting even_weight to TRUE will make it just a straight up pick() between all possible bodyparts.
+ *
+ */
+/mob/proc/get_random_valid_zone(base_zone, base_probability = 80, list/blacklisted_parts, even_weights, bypass_warning)
+	return BODY_ZONE_CHEST //even though they don't really have a chest, let's just pass the default of check_zone to be safe.
+
+/mob/living/carbon/get_random_valid_zone(base_zone, base_probability = 80, list/blacklisted_parts, even_weights, bypass_warning)
+	var/list/limbs = list()
+	for(var/obj/item/bodypart/part as anything in bodyparts)
+		var/limb_zone = part.body_zone //cache the zone since we're gonna check it a ton.
+		if(limb_zone in blacklisted_parts)
+			continue
+		if(even_weights)
+			limbs += limb_zone[1]
+			continue
+		if(limb_zone == BODY_ZONE_CHEST || limb_zone == BODY_ZONE_HEAD)
+			limbs += limb_zone[1]
+		else
+			limbs += limb_zone[4]
+
+	if(base_zone && !(check_zone(base_zone) in limbs))
+		base_zone = null //check if the passed zone is infact valid
+
+	var/chest_blacklisted
+	if((BODY_ZONE_CHEST in blacklisted_parts))
+		chest_blacklisted = TRUE
+		if(bypass_warning && !limbs.len)
+			CRASH("limbs is empty and the chest is blacklisted. this may not be intended!")
+	return (((chest_blacklisted && !base_zone) || even_weights) ? pick_weight(limbs) : ran_zone(base_zone, base_probability, limbs))
+
 
 ///Would this zone be above the neck
 /proc/above_neck(zone)

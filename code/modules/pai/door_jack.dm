@@ -37,12 +37,12 @@
 	hacking_cable = new
 	var/mob/living/carbon/hacker = get_holder()
 	if(iscarbon(hacker) && hacker.put_in_hands(hacking_cable)) //important to double check since get_holder can return non-null values that aren't carbons.
-		hacker.visible_message(span_notice("A port on [src] opens to reveal a cable, which you quickly grab."), span_hear("You hear the soft click of a plastic	component and manage to catch the falling cable."))
+		hacker.visible_message(span_notice("A port on [src] opens to reveal a cable, which [hacker] quickly grabs."), span_notice("A port on [src] opens to reveal a cable, which you quickly grab."), span_hear("You hear the soft click of a plastic component and manage to catch the falling cable."))
 		track_pai()
 		track_thing(hacking_cable)
 		return TRUE
 	hacking_cable.forceMove(drop_location())
-	hacking_cable.visible_message(span_notice("A port on [src] opens to reveal a cable, which promptly falls to the floor."), span_hear("You hear the soft click of a plastic component fall to the ground."))
+	hacking_cable.visible_message(message = span_notice("A port on [src] opens to reveal a cable, which promptly falls to the floor."), blind_message = span_hear("You hear the soft click of a plastic component fall to the ground."))
 	track_pai()
 	track_thing(hacking_cable)
 	return TRUE

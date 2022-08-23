@@ -210,7 +210,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/stack/sheet/iron/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	if(istype(target, /turf/open))
+	if(isopenturf(target))
 		var/turf/open/build_on = target
 		if(!user.Adjacent(build_on))
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

@@ -722,7 +722,7 @@
 	var/obj/item/I = get_active_held_item()
 	if(I)
 		I.attack_self(src)
-		update_inv_hands()
+		update_held_items()
 		return
 
 	limb_attack_self()
@@ -1063,7 +1063,7 @@
 	var/search_pda = 1
 
 	for(var/A in searching)
-		if( search_id && istype(A, /obj/item/card/id) )
+		if( search_id && isidcard(A) )
 			var/obj/item/card/id/ID = A
 			if(ID.registered_name == oldname)
 				ID.registered_name = newname

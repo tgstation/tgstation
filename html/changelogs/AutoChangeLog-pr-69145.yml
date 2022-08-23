@@ -1,0 +1,5 @@
+author: "Pickle-Coding"
+delete-after: True
+changes: 
+  - balance: "Reduces CO2 heat penalty to 2, from 6."
+  - balance: "Removes CO2 power transmission bonus."

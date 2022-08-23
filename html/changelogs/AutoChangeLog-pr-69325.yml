@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes: 
+  - rscadd: "Bananas now have a 1% chance to be boomerang-bananas. These look identical to normal bananas, aside from a slightly unique examine text. Make sure to check your bananas before peeling it to slip the HOS, you may just have a rare item on your hands."

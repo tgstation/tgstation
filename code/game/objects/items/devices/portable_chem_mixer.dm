@@ -38,7 +38,7 @@
 		return ..()
 
 /obj/item/storage/portable_chem_mixer/attackby(obj/item/I, mob/user, params)
-	if (istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container() && atom_storage.locked)
+	if (is_reagent_container(I) && !(I.item_flags & ABSTRACT) && I.is_open_container() && atom_storage.locked)
 		var/obj/item/reagent_containers/B = I
 		. = TRUE //no afterattack
 		if(!user.transferItemToLoc(B, src))

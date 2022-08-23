@@ -157,7 +157,7 @@
 	to_chat(user, span_notice("You remove the activation mechanism from the [initial(name)] assembly."))
 
 /obj/item/grenade/chem_grenade/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/assembly) && stage == GRENADE_WIRED)
+	if(isassembly(item) && stage == GRENADE_WIRED)
 		wires.interact(user)
 	else if(stage == GRENADE_WIRED && is_type_in_list(item, allowed_containers))
 		. = TRUE //no afterattack

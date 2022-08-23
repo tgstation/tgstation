@@ -243,7 +243,9 @@
 /area/ruin/space/has_grav/listeningstation)
 "lk" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
-/obj/item/radio/intercom/directional/east,
+/obj/item/radio/intercom/directional/east{
+	freerange = 1
+	},
 /obj/machinery/computer/camera_advanced{
 	dir = 8
 	},
