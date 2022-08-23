@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Targeting limbs now works again. Honk!"
+  - bugfix: "Fixed a bunch of things that would say \"your human arm\" instead of just \"your arm\"."
