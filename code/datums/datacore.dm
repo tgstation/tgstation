@@ -346,9 +346,6 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		locked += L
 	return
 
-/datum/datacore/proc/get_id_photo(mob/living/carbon/human/human, show_directions = list(SOUTH))
-	return get_flat_existing_human_icon(human, show_directions)
-
 //Todo: Add citations to the prinout - you get them from sec record's "citation" field, same as "crim" (which is frankly a terrible fucking field name)
 ///Standardized printed records. SPRs. Like SATs but for bad guys who probably didn't actually finish school. Input the records and out comes a paper.
 /proc/print_security_record(datum/data/record/general_data, datum/data/record/security, atom/location)
