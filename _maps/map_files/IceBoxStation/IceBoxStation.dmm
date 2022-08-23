@@ -44259,7 +44259,8 @@
 /obj/machinery/button/door/directional/west{
 	id = "Toilet1";
 	name = "Lock Control";
-	specialfunctions = 4
+	specialfunctions = 4;
+	normaldoorcontrol = 1
 	},
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/freezer,
@@ -57123,7 +57124,8 @@
 /obj/machinery/button/door/directional/west{
 	id = "Toilet2";
 	name = "Lock Control";
-	specialfunctions = 4
+	specialfunctions = 4;
+	normaldoorcontrol = 1
 	},
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/freezer,
