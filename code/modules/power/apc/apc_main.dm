@@ -211,7 +211,8 @@
 		cell = null
 		charging = APC_NOT_CHARGING
 		update_appearance()
-		SStgui.update_uis(src)
+		if(!QDELING(src))
+			SStgui.update_uis(src)
 	return ..()
 
 /obj/machinery/power/apc/examine(mob/user)
