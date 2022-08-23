@@ -161,13 +161,13 @@ SUBSYSTEM_DEF(blackbox)
 			record_feedback("tally", "radio_usage", 1, "other")
 
 /datum/controller/subsystem/blackbox/proc/find_feedback_datum(key, key_type)
-	for(var/datum/feedback_variable/FV in feedback)
-		if(FV.key == key)
-			return FV
-
-	var/datum/feedback_variable/FV = new(key, key_type)
-	feedback += FV
-	return FV
+	var/datum/feedback_variable/FV = feedback[key]
+	if(FV)
+		return FV
+	else
+		FV = new(key, key_type)
+		feedback[key] = FV
+		return FV
 /*
 feedback data can be recorded in 5 formats:
 "text"
