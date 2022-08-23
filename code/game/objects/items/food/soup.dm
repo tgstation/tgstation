@@ -309,7 +309,7 @@
 
 /obj/item/food/soup/cullen_skink
 	name = "cullen skink"
-	desc = "A thick Scottish soup made of smoked fish, potatoes and onions.."
+	desc = "A thick Scottish soup made of smoked fish, potatoes and onions."
 	icon_state = "cullen_skink"
 	food_reagents = list (/datum/reagent/consumable/nutriment = 12, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/nutriment/protein = 6)
 	tastes = list("creamy broth"= 1, "fish" = 1, "vegetables" = 1)
