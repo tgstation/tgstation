@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Drones will no longer by shy when invisible mobs are around! (eg phased revenants, bloodcrawling slaughter demons, ect)"
