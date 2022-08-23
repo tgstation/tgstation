@@ -14,7 +14,14 @@
 
 /obj/item/poster/Initialize(mapload, obj/structure/sign/poster/new_poster_structure)
 	. = ..()
-	register_context()
+
+	var/static/list/hovering_item_typechecks = list(
+		/obj/item/shard = list(
+			SCREENTIP_CONTEXT_LMB = "Booby trap poster",
+		),
+	)
+	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
+
 	poster_structure = new_poster_structure
 	if(!new_poster_structure && poster_type)
 		poster_structure = new poster_type(src)
@@ -32,14 +39,6 @@
 		name = "[name] - [poster_structure.original_name]"
 		//If the poster structure is being deleted something has gone wrong, kill yourself off too
 		RegisterSignal(poster_structure, COMSIG_PARENT_QDELETING, .proc/react_to_deletion)
-
-/// Adds contextual screentips
-/obj/item/poster/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
-	if (!istype(held_item, /obj/item/shard))
-		return .
-	context[SCREENTIP_CONTEXT_LMB] = "Booby trap poster"
-	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/poster/attackby(obj/item/I, mob/user, params)
 	if(!istype(I, /obj/item/shard))
