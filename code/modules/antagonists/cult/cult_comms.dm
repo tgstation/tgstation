@@ -8,6 +8,8 @@
 	ranged_mousepointer = 'icons/effects/mouse_pointers/cult_target.dmi'
 
 /datum/action/innate/cult/IsAvailable()
+	if(isshade(owner))
+		return TRUE
 	if(!IS_CULTIST(owner))
 		return FALSE
 	return ..()
@@ -66,19 +68,19 @@
 /datum/action/innate/cult/comm/spirit/IsAvailable()
 	if(IS_CULTIST(owner.mind.current))
 		return TRUE
+	return ..()
 
 /datum/action/innate/cult/comm/spirit/cultist_commune(mob/living/user, message)
 	var/my_message
 	if(!message)
 		return
 	my_message = span_cultboldtalic("The [user.name]: [message]")
-	for(var/i in GLOB.player_list)
-		var/mob/M = i
-		if(IS_CULTIST(M))
-			to_chat(M, my_message)
-		else if(M in GLOB.dead_mob_list)
-			var/link = FOLLOW_LINK(M, user)
-			to_chat(M, "[link] [my_message]")
+	for(var/mob/player_list as anything in GLOB.player_list)
+		if(IS_CULTIST(player_list))
+			to_chat(player_list, my_message)
+		else if(player_list in GLOB.dead_mob_list)
+			var/link = FOLLOW_LINK(player_list, user)
+			to_chat(player_list, "[link] [my_message]")
 
 /datum/action/innate/cult/mastervote
 	name = "Assert Leadership"
