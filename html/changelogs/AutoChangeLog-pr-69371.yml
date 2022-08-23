@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - rscadd: "You can now ask critters their name with voice of god. Their ACTUAL name."
