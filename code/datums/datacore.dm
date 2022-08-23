@@ -19,8 +19,6 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 	var/list/fields = list()
 
 /datum/data/record/Destroy()
-	// We don't need to iterate over the records to see if they're in there,
-	// just let DM take the wheel.
 	GLOB.data_core.medical -= src
 	GLOB.data_core.security -= src
 	GLOB.data_core.general -= src
