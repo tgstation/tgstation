@@ -746,3 +746,27 @@
   san7890:
   - admin: Whenever a turf is lit up by fire (like plasma floors combusting due to
       fire above them), the name of that turf is now explicitly logged.
+2022-08-23:
+  AnywayFarus:
+  - rscadd: Added a meat and fish poke
+  - rscadd: Meat and fish poke was added to robo-tourist order
+  CPTANT:
+  - bugfix: Lockers now give proper feedback when you are unable to close them and
+      no longer try to toggle lock status when you fail to close them.
+  EOBGames:
+  - bugfix: Coffeemaker boards can now be printed at the service, engineering and
+      science board printers.
+  IndieanaJones:
+  - refactor: Refactored Space Dragon's antag datum to separate the antagonist objectives
+      from the mob itself.
+  LukasBeedellCodestuff:
+  - rscadd: Pig crate from cargo
+  - rscadd: feeding carrots to pigs lets you tame them and ride them
+  - rscadd: raw pork from killing a pig
+  - rscadd: pork chops from cooking raw pork
+  PositiveEntropy:
+  - imageadd: Wood flooring now looks browner.
+  ShizCalev:
+  - bugfix: The syndicate outpost intercom is now an actual functional syndicate intercom!
+  timothymtorres, antropod:
+  - bugfix: Fix protolathe displaying duplicate stock parts categories

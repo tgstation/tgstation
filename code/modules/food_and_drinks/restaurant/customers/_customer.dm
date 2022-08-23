@@ -204,6 +204,7 @@
 			/obj/item/food/muffin/berry = 2,
 			/obj/item/food/beef_stroganoff = 2,
 			/datum/custom_order/icecream = 4,
+			/obj/item/food/fish_poke = 5,
 		),
 		VENUE_BAR = list(
 			/datum/reagent/consumable/ethanol/sake = 8,
@@ -245,6 +246,7 @@
 			/obj/item/food/chawanmushi = 4,
 			/obj/item/food/meatbun = 4,
 			/obj/item/food/beef_stroganoff = 2,
+			/obj/item/food/meat_poke = 4,
 		),
 		VENUE_BAR = list(
 			/datum/reagent/consumable/ethanol/beer = 14,
