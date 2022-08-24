@@ -6,7 +6,7 @@
 /obj/structure/easel
 	name = "easel"
 	desc = "Only for the finest of art!"
-	icon = 'icons/obj/artstuff.dmi'
+	icon = 'icons/obj/art/artstuff.dmi'
 	icon_state = "easel"
 	density = TRUE
 	resistance_flags = FLAMMABLE
@@ -38,7 +38,7 @@
 /obj/item/canvas
 	name = "canvas"
 	desc = "Draw out your soul on this canvas!"
-	icon = 'icons/obj/artstuff.dmi'
+	icon = 'icons/obj/art/artstuff.dmi'
 	icon_state = "11x11"
 	flags_1 = UNPAINTABLE_1
 	resistance_flags = FLAMMABLE
@@ -404,7 +404,7 @@
 /obj/item/canvas/thirtysix_twentyfour/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/item_scaling, 1, 0.8)
-	icon = 'icons/obj/artstuff_64x64.dmi'
+	icon = 'icons/obj/art/artstuff_64x64.dmi'
 	icon_state = "36x24"
 
 /obj/item/canvas/fortyfive_twentyseven
@@ -427,7 +427,7 @@
 /obj/item/canvas/fortyfive_twentyseven/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/item_scaling, 1, 0.7)
-	icon = 'icons/obj/artstuff_64x64.dmi'
+	icon = 'icons/obj/art/artstuff_64x64.dmi'
 	icon_state = "45x27"
 
 /obj/item/wallframe/painting
@@ -647,7 +647,7 @@
 	our_frame.finalize_size()
 
 /obj/structure/sign/painting/large
-	icon = 'icons/obj/artstuff_64x64.dmi'
+	icon = 'icons/obj/art/artstuff_64x64.dmi'
 	custom_materials = list(/datum/material/wood = 4000)
 	accepted_canvas_types = list(
 		/obj/item/canvas/thirtysix_twentyfour,
@@ -754,7 +754,7 @@
 /obj/item/paint_palette
 	name = "paint palette"
 	desc = "paintbrush included"
-	icon = 'icons/obj/artstuff.dmi'
+	icon = 'icons/obj/art/artstuff.dmi'
 	icon_state = "palette"
 	lefthand_file = 'icons/mob/inhands/equipment/palette_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/palette_righthand.dmi'

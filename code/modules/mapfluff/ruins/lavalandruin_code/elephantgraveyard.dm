@@ -13,20 +13,20 @@
 	name = "colossal rib"
 	desc = "It's staggering to think that something this big could have lived, let alone died."
 	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*4)
-	icon = 'icons/obj/statuelarge.dmi'
+	icon = 'icons/obj/art/statuelarge.dmi'
 	icon_state = "rib"
 
 /obj/structure/statue/bone/skull
 	name = "colossal skull"
 	desc = "The gaping maw of a dead, titanic monster."
 	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*12)
-	icon = 'icons/obj/statuelarge.dmi'
+	icon = 'icons/obj/art/statuelarge.dmi'
 	icon_state = "skull"
 
 /obj/structure/statue/bone/skull/half
 	desc = "The gaping maw of a dead, titanic monster. This one is cracked in half."
 	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*6)
-	icon = 'icons/obj/statuelarge.dmi'
+	icon = 'icons/obj/art/statuelarge.dmi'
 	icon_state = "skull-half"
 
 //***Wasteland floor and rock turfs here.
