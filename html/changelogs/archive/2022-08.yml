@@ -705,3 +705,96 @@
   itseasytosee:
   - bugfix: riot darts no longer become invisible when you take the cap off with a
       screwdriver.
+2022-08-21:
+  FernandoJ8:
+  - bugfix: changed the directions of the bottom decals on the nature emergency shuttle
+      and the bottom gambling machine on the disco inferno shuttle from 3 (north+south)
+      to simply 2 (south), as they should be.
+  Jolly:
+  - bugfix: On Delta, in the abandoned kitchen, there is no longer four air alarms.
+      Stop being greedy, sheesh.
+  Melbert:
+  - bugfix: Fixes storage to storage mass transfering not being instant
+  - bugfix: Fixes two do_afters for storage mass transfer
+  - bugfix: Dumping storage spreads its items around again
+  - bugfix: Drag-opening a storage won't try to dump inside you
+  - bugfix: Transferring a ton of things into a fridge won't deafen you anymore
+  - rscadd: You can now mass transfer onto griddles
+  - bugfix: Some things that made you BOMBIMMUNE now actually make you BOMBIMMUNE,
+      probably
+  - bugfix: Fixes a runtime that occurred when bodyparts received damage while disconnected
+      from a mob
+  ShizCalev:
+  - qol: Added a new mob helper complementary to ran_zone() called get_random_valid_zone(),
+      which can only return zones/bodyparts that a mob DOES have.
+  - admin: Fixed Abyssal Gaze being logged when it wasn't actually being used
+  dragomagol:
+  - code_imp: split drinks_recipe into multiple files by category
+  - bugfix: tempeh starter uses the correct icon, desc fixes
+  timothymtorres:
+  - bugfix: Fix haunted tarot deck exploit
+  - qol: Add wisdom text to fortune cookies
+  tralezab:
+  - rscdel: Thieves are gone, and so are Opportunists, their midround counterpart.
+2022-08-22:
+  ShizCalev:
+  - refactor: A bunch of things that used to not do anything (or just fall back on
+      the chest) when targeting a limb that someone was missing will now be far more
+      likely to attack another limb!
+  SuperDrish:
+  - rscadd: Mortar now gives you an option. Do you want to grind or juice your thing?
+  san7890:
+  - admin: Whenever a turf is lit up by fire (like plasma floors combusting due to
+      fire above them), the name of that turf is now explicitly logged.
+2022-08-23:
+  AnywayFarus:
+  - rscadd: Added a meat and fish poke
+  - rscadd: Meat and fish poke was added to robo-tourist order
+  CPTANT:
+  - bugfix: Lockers now give proper feedback when you are unable to close them and
+      no longer try to toggle lock status when you fail to close them.
+  EOBGames:
+  - bugfix: Coffeemaker boards can now be printed at the service, engineering and
+      science board printers.
+  IndieanaJones:
+  - refactor: Refactored Space Dragon's antag datum to separate the antagonist objectives
+      from the mob itself.
+  LukasBeedellCodestuff:
+  - rscadd: Pig crate from cargo
+  - rscadd: feeding carrots to pigs lets you tame them and ride them
+  - rscadd: raw pork from killing a pig
+  - rscadd: pork chops from cooking raw pork
+  PositiveEntropy:
+  - imageadd: Wood flooring now looks browner.
+  ShizCalev:
+  - bugfix: The syndicate outpost intercom is now an actual functional syndicate intercom!
+  timothymtorres, antropod:
+  - bugfix: Fix protolathe displaying duplicate stock parts categories
+2022-08-24:
+  AdipemDragon:
+  - imageadd: When looking out into nearby space, your local planet might show off
+      more cleanely, now! Check it out, next time you have a mandated break!
+  DrDiasyl:
+  - soundadd: Virology got new mysterious ambient sounds.
+  Pickle-Coding:
+  - balance: Reduces CO2 heat penalty to 2, from 6.
+  - balance: Removes CO2 power transmission bonus.
+  Rhials:
+  - rscadd: Bananas now have a 1% chance to be boomerang-bananas. These look identical
+      to normal bananas, aside from a slightly unique examine text. Make sure to check
+      your bananas before peeling it to slip the HOS, you may just have a rare item
+      on your hands.
+  ShizCalev:
+  - qol: Drones now have multitools, pipe dispensers, t-scanners, and analyzers!
+  - bugfix: Toggling breakers via the power flow control console now actually works.
+  - bugfix: Targeting limbs now works again. Honk!
+  - bugfix: Fixed a bunch of things that would say "your human arm" instead of just
+      "your arm".
+  - bugfix: Drones will no longer by shy when invisible mobs are around! (eg phased
+      revenants, bloodcrawling slaughter demons, ect)
+  - admin: Admin deletion messages are now a little more verbose.
+  san7890:
+  - bugfix: You should now no longer need thousands of hours to unlock your favorite
+      head of staff role.
+  tralezab:
+  - rscadd: You can now ask critters their name with voice of god. Their ACTUAL name.

@@ -221,8 +221,8 @@
 		ADD_TRAIT(burn_limb, TRAIT_PLASMABURNT, name)
 		burn_human.update_body_parts()
 		burn_human.emote("scream")
-		burn_human.visible_message(span_warning("[burn_human]'s [burn_limb.name] melts down to the bone!"), \
-			span_userdanger("You scream out in pain as your [burn_limb.name] melts down to the bone, leaving an eerie plasma-like glow where flesh used to be!"))
+		burn_human.visible_message(span_warning("[burn_human]'s [burn_limb.plaintext_zone] melts down to the bone!"), \
+			span_userdanger("You scream out in pain as your [burn_limb.plaintext_zone] melts down to the bone, leaving an eerie plasma-like glow where flesh used to be!"))
 	if(!plasma_parts.len && !robo_parts.len) //a person with no potential organic limbs left AND no robotic limbs, time to turn them into a plasmaman
 		burn_human.ignite_mob()
 		burn_human.set_species(/datum/species/plasmaman)

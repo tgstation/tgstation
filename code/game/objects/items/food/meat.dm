@@ -179,7 +179,42 @@
 	foodtypes = SEAFOOD | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/food/meat_poke
+	name = "meat poke"
+	desc = "Simple poke, rice on the bottom, vegetables and meat on top. Should be mixed before eating."
+	icon = 'icons/obj/food/soupsalad.dmi'
+	icon_state = "pokemeat"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/nutriment/protein = 2)
+	tastes = list("rice and meat" = 4, "lettuce" = 2, "soy sauce" = 2)
+	foodtypes = SEAFOOD | MEAT | VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/fish_poke
+	name = "fish poke"
+	desc = "Simple poke, rice on the bottom, vegetables and fish on top. Should be mixed before eating."
+	icon = 'icons/obj/food/soupsalad.dmi'
+	icon_state = "pokefish"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/nutriment/protein = 2)
+	tastes = list("rice and fish" = 4, "lettuce" = 2, "soy sauce" = 2)
+	foodtypes = SEAFOOD | VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+
 ////////////////////////////////////////////MEATS AND ALIKE////////////////////////////////////////////
+
+/obj/item/food/meat/slab/pig
+	name = "raw pork"
+	icon_state = "pig_meat"
+	tastes = list("pig" = 1)
+	foodtypes = MEAT | RAW | GROSS
+
+/obj/item/food/meat/slab/pig/MakeGrillable()
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain/pig, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
+
+/obj/item/food/meat/steak/plain/pig
+	name = "pork chops"
+	icon_state = "pigsteak"
+	tastes = list("pig" = 1)
+	foodtypes = MEAT | GROSS
 
 /obj/item/food/tempeh
 	name = "raw tempeh block"

@@ -119,7 +119,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/antinoblium = ANTINOBLIUM_TRANSMIT_MODIFIER,
 		/datum/gas/freon = FREON_TRANSMIT_MODIFIER,
 		/datum/gas/water_vapor = H20_TRANSMIT_MODIFIER,
-		/datum/gas/carbon_dioxide = CO2_TRANSMIT_MODIFIER,
 	)
 	///The list of gases mapped against their heat penaltys. We use it to determin molar and heat output
 	var/list/gas_heat = list(
