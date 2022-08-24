@@ -44,6 +44,7 @@ GLOBAL_PROTECT(lua_usr)
 		&& !(result["name"] == "input" && (result["status"] == "finished" || length(result["param"]))))
 		return
 	var/append_to_log = TRUE
+	var/index_of_log
 	if(log.len)
 		for(var/index in log.len to max(log.len - MAX_LOG_REPEAT_LOOKBACK, 1) step -1)
 			var/list/entry = log[index]
@@ -53,12 +54,17 @@ GLOBAL_PROTECT(lua_usr)
 				&& ((entry["param"] == result["param"]) || deep_compare_list(entry["param"], result["param"])))
 				if(!entry["repeats"])
 					entry["repeats"] = 0
+				index_of_log = index
 				entry["repeats"]++
 				append_to_log = FALSE
 				break
 	if(append_to_log)
-		log += list(weakrefify_list(result))
+		if(islist(result["param"]))
+			result["param"] = weakrefify_list(encode_text_and_nulls(result["param"]))
+		log += list(result)
+		index_of_log = log.len
 	INVOKE_ASYNC(src, /datum/lua_state.proc/update_editors)
+	return index_of_log
 
 /datum/lua_state/proc/load_script(script)
 	GLOB.IsLuaCall = TRUE
@@ -76,7 +82,6 @@ GLOBAL_PROTECT(lua_usr)
 	result["chunk"] = script
 	check_if_slept(result)
 
-	message_admins("[key_name(usr)] executed [length(script)] bytes of lua code. [ADMIN_LUAVIEW_CHUNK(src, log.len)]")
 	log_lua("[key_name(usr)] executed the following lua code:\n<code>[script]</code>")
 
 	return result
@@ -137,7 +142,7 @@ GLOBAL_PROTECT(lua_usr)
 	return result
 
 /datum/lua_state/proc/get_globals()
-	globals = weakrefify_list(__lua_get_globals(internal_id))
+	globals = weakrefify_list(encode_text_and_nulls(__lua_get_globals(internal_id)))
 
 /datum/lua_state/proc/get_tasks()
 	return __lua_get_tasks(internal_id)
