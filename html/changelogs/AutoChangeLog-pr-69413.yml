@@ -1,0 +1,5 @@
+author: "Tastyfish"
+delete-after: True
+changes: 
+  - rscadd: "Added a new lift indicator for the public elevator."
+  - imageadd: "Added standalone sprites for the new lift indicator."
