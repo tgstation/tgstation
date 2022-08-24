@@ -287,12 +287,12 @@
 		if(tackle_target.is_holding_item_of_type(/obj/item/shield))
 			defense_mod += 2
 
-		if(HAS_TRAIT(tackle_target, TRAIT_TACKLING_TAILED_DEFENDER))
-			var/obj/item/organ/external/tail/el_tail = tackle_target.getorganslot(ORGAN_SLOT_EXTERNAL_TAIL)
-			if(!el_tail) // lizards without tails are off-balance
-				defense_mod -= 1
-			else if(el_tail.wag_flags & WAG_WAGGING) // lizard tail wagging is robust and can swat away assailants!
-				defense_mod += 1
+
+		var/obj/item/organ/external/tail/lizard/el_tail = tackle_target.getorganslot(ORGAN_SLOT_EXTERNAL_TAIL)
+		if(HAS_TRAIT(tackle_target, TRAIT_TACKLING_TAILED_DEFENDER) && !el_tail)
+			defense_mod -= 1
+		if(el_tail.wag_flags & WAG_WAGGING) // lizard tail wagging is robust and can swat away assailants!
+			defense_mod += 1
 
 	// OF-FENSE
 	var/mob/living/carbon/sacker = parent
@@ -310,11 +310,12 @@
 		attack_mod += 2
 
 	if(HAS_TRAIT(sacker, TRAIT_TACKLING_WINGED_ATTACKER))
-		var/obj/item/organ/external/wings/moth/sacker_wing = sacker.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
-		if(!sacker_wing || sacker_wing.burnt) // moths without wings/burnt ones can't tackle properly
+		var/obj/item/organ/external/wings/moth/sacker_moth_wing
+		if(!sacker_moth_wing || sacker_moth_wing.burnt)
 			attack_mod -= 2
-		else
-			attack_mod += 2 // healty wings are used as extra propulsion
+	var/obj/item/organ/external/wings/sacker_wing = sacker.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
+	if(sacker_wing)
+		attack_mod += 2
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/S = sacker
