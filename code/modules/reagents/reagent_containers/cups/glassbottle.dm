@@ -589,7 +589,6 @@
 			if(istype(contained_reagent, accelerant_type))
 				firestarter = 1
 				break
-	SplashReagents(target, TRUE)
 	if(firestarter && active)
 		target.fire_act()
 		new /obj/effect/hotspot(get_turf(target))
