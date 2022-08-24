@@ -245,15 +245,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 /obj/item/ticket_machine_ticket/New(loc, num)
 	. = ..()
 	number = num
-	name += " #[number]"
-	saved_maptext = MAPTEXT(number)
-	maptext = saved_maptext
+	if(number != null) // dont make a zero ticket or ill cry
+		name += " #[number]"
+		saved_maptext = MAPTEXT(number)
+		maptext = saved_maptext
 
 /obj/item/ticket_machine_ticket/examine(mob/user)
 	. = ..()
-	. += span_notice("The ticket reads shimmering text that tells you that you are number [number] in queue.")
-	if(source)
-		. += span_notice("Below that, you can see that you are [number - source.current_number] spot\s away from being served.")
+	if(number != null)
+		. += span_notice("The ticket reads shimmering text that tells you that you are number [number] in queue.")
+		if(source)
+			. += span_notice("Below that, you can see that you are [number - source.current_number] spot\s away from being served.")
 
 /obj/item/ticket_machine_ticket/attack_hand(mob/user, list/modifiers)
 	. = ..()
