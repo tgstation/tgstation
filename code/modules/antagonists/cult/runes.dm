@@ -847,12 +847,17 @@ structure_check() searches for nearby cultist structures required for the invoca
 			log_game("Manifest rune failed - no nearby ghosts")
 			return list()
 		var/mob/dead/observer/ghost_to_spawn = pick(ghosts_on_rune)
+
+		// Dear god, why is /mob/living/carbon/human/cult_ghost not a simple mob or species
+		// someone please fix this at some point -TimT August 2022
 		var/mob/living/carbon/human/cult_ghost/new_human = new(T)
 		new_human.real_name = ghost_to_spawn.real_name
 		new_human.alpha = 150 //Makes them translucent
 		new_human.equipOutfit(/datum/outfit/ghost_cultist) //give them armor
 		new_human.apply_status_effect(/datum/status_effect/cultghost) //ghosts can't summon more ghosts
 		new_human.see_invisible = SEE_INVISIBLE_OBSERVER
+		ADD_TRAIT(new_human, TRAIT_NOBREATH)
+
 		ghosts++
 		playsound(src, 'sound/magic/exit_blood.ogg', 50, TRUE)
 		visible_message(span_warning("A cloud of red mist forms above [src], and from within steps... a [new_human.gender == FEMALE ? "wo":""]man."))
