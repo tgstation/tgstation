@@ -299,7 +299,7 @@
 /obj/item/toy/gun
 	name = "cap gun"
 	desc = "Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps."
-	icon = 'icons/obj/guns/ballistic.dmi'
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "revolver"
 	inhand_icon_state = "gun"
 	worn_icon_state = "gun"
@@ -360,7 +360,7 @@
 /obj/item/toy/ammo/gun
 	name = "capgun ammo"
 	desc = "Make sure to recyle the box in an autolathe when it gets empty."
-	icon = 'icons/obj/guns/ammo.dmi'
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
 	icon_state = "357OLD-7"
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=10)
@@ -1274,7 +1274,7 @@
 /obj/item/toy/foamfinger
 	name = "foam finger"
 	desc = "root for the home team! wait, does this station even have a sports team?"
-	icon = 'icons/obj/guns/ballistic.dmi'
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "foamfinger"
 	inhand_icon_state = "foamfinger_inhand"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'

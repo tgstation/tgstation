@@ -277,7 +277,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	worn_icon_state = "spellblade"
-	icon = 'icons/obj/guns/magic.dmi'
+	icon = 'icons/obj/weapons/guns/magic.dmi'
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	menu_description = "A sharp blade which partially penetrates armor. Very effective at butchering bodies. Can be worn on the back."
 
@@ -558,7 +558,7 @@
 /obj/item/nullrod/egyptian
 	name = "egyptian staff"
 	desc = "A tutorial in mummification is carved into the staff. You could probably craft the wraps if you had some cloth."
-	icon = 'icons/obj/guns/magic.dmi'
+	icon = 'icons/obj/weapons/guns/magic.dmi'
 	icon_state = "pharoah_sceptre"
 	inhand_icon_state = "pharoah_sceptre"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'

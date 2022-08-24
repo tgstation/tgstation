@@ -429,7 +429,7 @@
 /obj/item/melee/cleric_mace
 	name = "cleric mace"
 	desc = "The grandson of the club, yet the grandfather of the baseball bat. Most notably used by holy orders in days past."
-	icon = 'icons/obj/items/cleric_mace.dmi'
+	icon = 'icons/obj/weapons/cleric_mace.dmi'
 	icon_state = "default"
 	inhand_icon_state = "default"
 	worn_icon_state = "default_worn"

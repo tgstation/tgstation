@@ -139,7 +139,7 @@
 		halitem.plane = ABOVE_HUD_PLANE
 		switch(rand(1,6))
 			if(1) //revolver
-				halitem.icon = 'icons/obj/guns/ballistic.dmi'
+				halitem.icon = 'icons/obj/weapons/guns/ballistic.dmi'
 				halitem.icon_state = "revolver"
 				halitem.name = "Revolver"
 			if(2) //c4

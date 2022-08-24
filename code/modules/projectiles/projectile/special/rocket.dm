@@ -90,7 +90,7 @@
 /obj/item/broken_missile
 	name = "\improper broken missile"
 	desc = "A missile that did not detonate. The tail has snapped and it is in no way fit to be used again."
-	icon = 'icons/obj/guns/projectiles.dmi'
+	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "missile_broken"
 	w_class = WEIGHT_CLASS_TINY
 

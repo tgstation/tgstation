@@ -3,7 +3,7 @@
 /obj/item/debug/human_spawner
 	name = "human spawner"
 	desc = "Spawn a human by aiming at a turf and clicking. Use in hand to change type."
-	icon = 'icons/obj/guns/magic.dmi'
+	icon = 'icons/obj/weapons/guns/magic.dmi'
 	icon_state = "nothingwand"
 	inhand_icon_state = "wand"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
