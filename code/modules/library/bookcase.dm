@@ -35,7 +35,7 @@
 	update_appearance()
 
 	if(SSlibrary.initialized)
-		load_shelf()
+		INVOKE_ASYNC(src, .proc/load_shelf)
 	else
 		SSlibrary.shelves_to_load += src
 
