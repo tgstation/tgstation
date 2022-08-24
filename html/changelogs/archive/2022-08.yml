@@ -770,3 +770,31 @@
   - bugfix: The syndicate outpost intercom is now an actual functional syndicate intercom!
   timothymtorres, antropod:
   - bugfix: Fix protolathe displaying duplicate stock parts categories
+2022-08-24:
+  AdipemDragon:
+  - imageadd: When looking out into nearby space, your local planet might show off
+      more cleanely, now! Check it out, next time you have a mandated break!
+  DrDiasyl:
+  - soundadd: Virology got new mysterious ambient sounds.
+  Pickle-Coding:
+  - balance: Reduces CO2 heat penalty to 2, from 6.
+  - balance: Removes CO2 power transmission bonus.
+  Rhials:
+  - rscadd: Bananas now have a 1% chance to be boomerang-bananas. These look identical
+      to normal bananas, aside from a slightly unique examine text. Make sure to check
+      your bananas before peeling it to slip the HOS, you may just have a rare item
+      on your hands.
+  ShizCalev:
+  - qol: Drones now have multitools, pipe dispensers, t-scanners, and analyzers!
+  - bugfix: Toggling breakers via the power flow control console now actually works.
+  - bugfix: Targeting limbs now works again. Honk!
+  - bugfix: Fixed a bunch of things that would say "your human arm" instead of just
+      "your arm".
+  - bugfix: Drones will no longer by shy when invisible mobs are around! (eg phased
+      revenants, bloodcrawling slaughter demons, ect)
+  - admin: Admin deletion messages are now a little more verbose.
+  san7890:
+  - bugfix: You should now no longer need thousands of hours to unlock your favorite
+      head of staff role.
+  tralezab:
+  - rscadd: You can now ask critters their name with voice of god. Their ACTUAL name.
