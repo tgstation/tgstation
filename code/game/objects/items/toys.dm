@@ -795,7 +795,7 @@
 /obj/item/toy/redbutton
 	name = "big red button"
 	desc = "A big, plastic red button. Reads 'From HonkCo Pranks!' on the back."
-	icon = 'icons/obj/assemblies.dmi'
+	icon = 'icons/obj/assemblies/assemblies.dmi'
 	icon_state = "bigred"
 	w_class = WEIGHT_CLASS_SMALL
 	var/cooldown = 0
