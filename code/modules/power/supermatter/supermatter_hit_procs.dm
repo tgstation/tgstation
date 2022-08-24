@@ -48,8 +48,9 @@
 	investigate_log("consumed by singularity.", INVESTIGATE_ENGINE)
 	message_admins("Singularity has consumed a supermatter shard and can now become stage six.")
 	visible_message(span_userdanger("[src] is consumed by the singularity!"))
+	var/turf/sm_turf = get_turf(src)
 	for(var/mob/hearing_mob as anything in GLOB.player_list)
-		if(hearing_mob.z != z)
+		if(!is_valid_z_level(get_turf(hearing_mob), sm_turf))
 			continue
 		SEND_SOUND(hearing_mob, 'sound/effects/supermatter.ogg') //everyone goan know bout this
 		to_chat(hearing_mob, span_boldannounce("A horrible screeching fills your ears, and a wave of dread washes over you..."))
