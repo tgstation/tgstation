@@ -50,3 +50,11 @@
 	var/list/tattoo = pick(SSpersistence.prison_tattoos_to_use)
 	tatted_limb.AddComponent(/datum/component/tattoo, tattoo["story"])
 	SSpersistence.prison_tattoos_to_use -= tattoo
+
+	var/crime_name = new_prisoner.client?.prefs?.read_preference(/datum/preference/choiced/prisoner_crime)
+	var/datum/data/record/target_record = find_record("name", new_prisoner.name, GLOB.data_core.security)
+	if(!crime_name || !target_record)
+		return
+	var/crime_description = GLOB.crimename2desc[crime_name]
+	var/crime = GLOB.data_core.createCrimeEntry(crime_name, crime_description, "Central Command", "Consult Legal")
+	GLOB.data_core.addCrime(target_record.fields["id"], crime)
