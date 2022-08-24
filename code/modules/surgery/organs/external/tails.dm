@@ -136,3 +136,10 @@
 /obj/item/organ/external/tail/lizard/fake
 	name = "fabricated lizard tail"
 	desc = "A fabricated severed lizard tail. This one's made of synthflesh. Probably not usable for lizard wine."
+
+/obj/item/organ/external/tail/fox
+	name = "tail"
+	preference = "feature_human_tail"
+	feature_key = "tail_cat"
+	color_source = ORGAN_COLOR_HAIR
+	wag_flags = WAG_ABLE
