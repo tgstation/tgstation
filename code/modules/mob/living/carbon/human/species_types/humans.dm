@@ -1,5 +1,6 @@
 /datum/species/human
-	name = "\improper Human"
+	name = "\improper Kitsune"
+	say_mod = "geckers"
 	id = SPECIES_HUMAN
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,HAS_FLESH,HAS_BONE)
 	inherent_traits = list(
@@ -8,7 +9,11 @@
 		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_LITERATE,
 	)
-	mutant_bodyparts = list("wings" = "None")
+	mutant_bodyparts = list("wings" = "None", "ears" = "Fox", "tail_cat" = "Fox")
+	mutantears = /obj/item/organ/internal/ears/fox
+	external_organs = list(
+		/obj/item/organ/external/tail/fox = "Fox",
+	)
 	use_skintones = 1
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	disliked_food = GROSS | RAW | CLOTH | BUGS | GORE
@@ -17,9 +22,35 @@
 	payday_modifier = 1
 
 /datum/species/human/prepare_human_for_preview(mob/living/carbon/human/human)
-	human.hairstyle = "Business Hair"
-	human.hair_color = "#bb9966" // brown
+	human.hairstyle = "Unkept"
+	human.hair_color = "#f08e33" // brown
+
+	var/obj/item/organ/internal/ears/fox/fox_ears = human.getorgan(/obj/item/organ/internal/ears/fox)
+	if (fox_ears)
+		fox_ears.color = human.hair_color
+		human.update_body()
+
 	human.update_body_parts()
+
+/datum/species/human/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		// Force everyone to have at least fox features. I am evil and fucked up. We don't want to
+		// override cat ears, so I'll do it like this. If you don't like it sue me.
+		if(H.dna.features["tail_cat"] == "None")
+			H.dna.features["tail_cat"] = "Fox"
+		if(H.dna.features["ears"] == "None")
+			H.dna.features["ears"] = "Fox"
+
+		if(H.dna.features["ears"] == "Fox")
+			var/obj/item/organ/internal/ears/fox/ears = new
+			ears.Insert(H, drop_if_replaced = FALSE)
+		else if (H.dna.features["ears"] == "Cat")
+			mutantears = /obj/item/organ/internal/ears/cat
+		if(H.dna.features["tail_cat"] == "Fox")
+			var/obj/item/organ/external/tail/fox/tail = new
+			tail.Insert(H, special = TRUE, drop_if_replaced = FALSE)
+	return ..()
 
 /datum/species/human/randomize_features(mob/living/carbon/human/human_mob)
 	human_mob.skin_tone = random_skin_tone()
@@ -46,28 +77,18 @@
 	)
 
 /datum/species/human/get_species_description()
-	return "Humans are the dominant species in the known galaxy. \
-		Their kind extend from old Earth to the edges of known space."
+	return "Kitsunes are the second most dominant species in the known galaxy. \
+		Their kind extend from Meridiana XIV to the edges of known space."
 
 /datum/species/human/get_species_lore()
 	return list(
-		"These primate-descended creatures, originating from the mostly harmless Earth, \
-		have long-since outgrown their home and semi-benign designation. \
-		The space age has taken humans out of their solar system and into the galaxy-at-large.",
-
-		"In traditional human fashion, this near-record pace from terra firma to the final frontier spat \
-		in the face of other races they now shared a stage with. \
-		This included the lizards - if anyone was offended by these upstarts, it was certainly lizardkind.",
-
-		"Humanity never managed to find the kind of peace to fully unite under one banner like other species. \
-		The pencil and paper pushing of the UN bureaucrat lives on in the mosaic that is TerraGov; \
-		a composite of the nation-states that still live on in human society.",
-
-		"The human spirit of opportunity and enterprise continues on in its peak form: \
-		the hypercorporation. Acting outside of TerraGov's influence, literally and figuratively, \
-		hypercorporations buy the senate votes they need and establish territory far past the Earth Government's reach. \
-		In hypercorporation territory company policy is law, giving new meaning to \"employee termination\".",
+		"Kitsunes are a species of humanoid mammalians most easily identified \
+		by their external features closely related to that of Vulpines from Earth. \
+		Be it fluffy tails, fuzzy ears, a tendency to gecker... Most Kitsunes exhibit \
+		fox-like traits and are usually distinguishable from fox-people thanks to their \
+		higher number of tails."
 	)
+
 
 /datum/species/human/create_pref_unique_perks()
 	var/list/to_add = list()
@@ -86,7 +107,7 @@
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "bullhorn",
 			SPECIES_PERK_NAME = "Chain of Command",
-			SPECIES_PERK_DESC = "Nanotrasen only recognizes humans for command roles, such as Captain.",
+			SPECIES_PERK_DESC = "Nanotrasen only recognizes kitsunes for command roles, such as Captain.",
 		))
 
 	return to_add
