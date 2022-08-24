@@ -52857,8 +52857,6 @@
 /area/mine/eva)
 "qjX" = (
 /obj/structure/table,
-/obj/structure/table,
-/obj/structure/table,
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/machinery/processor{
 	pixel_y = 6
