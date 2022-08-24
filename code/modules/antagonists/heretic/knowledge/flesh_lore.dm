@@ -82,28 +82,28 @@
 
 	if(LAZYLEN(created_items) >= limit)
 		target.balloon_alert(source, "at ghoul limit!")
-		return COMPONENT_BLOCK_CHARGE_USE
-
-	if(!IS_VALID_GHOUL_MOB(target))
-		target.balloon_alert(source, "invalid body!")
-		return COMPONENT_BLOCK_CHARGE_USE
-
-	// Get their ghost in here so we can raise them
-	target.grab_ghost()
-
-	if(!target.mind || !target.client)
-		target.balloon_alert(source, "no soul!")
-		return COMPONENT_BLOCK_CHARGE_USE
+		return COMPONENT_BLOCK_HAND_USE
 
 	if(HAS_TRAIT(target, TRAIT_HUSK))
 		target.balloon_alert(source, "husked!")
-		return COMPONENT_BLOCK_CHARGE_USE
+		return COMPONENT_BLOCK_HAND_USE
+
+	if(!IS_VALID_GHOUL_MOB(target))
+		target.balloon_alert(source, "invalid body!")
+		return COMPONENT_BLOCK_HAND_USE
+
+	target.grab_ghost()
+
+	// The grab failed, so they're mindless or playerless. We can't continue
+	if(!target.mind || !target.client)
+		target.balloon_alert(source, "no soul!")
+		return COMPONENT_BLOCK_HAND_USE
 
 	make_ghoul(source, target)
 
 /// Makes [victim] into a ghoul.
 /datum/heretic_knowledge/limited_amount/flesh_grasp/proc/make_ghoul(mob/living/user, mob/living/carbon/human/victim)
-	log_game("[key_name(user)] created a ghoul, controlled by [key_name(victim)].")
+	user.log_message("created a ghoul, controlled by [key_name(victim)].", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(user)] created a ghoul, [ADMIN_LOOKUPFLW(victim)].")
 
 	victim.apply_status_effect(
@@ -148,14 +148,18 @@
 		return FALSE
 
 	for(var/mob/living/carbon/human/body in atoms)
-		if(body.stat != DEAD || !IS_VALID_GHOUL_MOB(body) || HAS_TRAIT(body, TRAIT_HUSK))
-			atoms -= body
+		if(body.stat != DEAD)
+			continue
+		if(!IS_VALID_GHOUL_MOB(body) || HAS_TRAIT(body, TRAIT_HUSK))
+			to_chat(user, span_hierophant_warning("[body] is not in a valid state to be made into a ghoul."))
+			continue
 
-	if(!(locate(/mob/living/carbon/human) in atoms))
-		loc.balloon_alert(user, "ritual failed, no valid body!")
-		return FALSE
+		// We'll select any valid bodies here. If they're clientless, we'll give them a new one.
+		selected_atoms += body
+		return TRUE
 
-	return TRUE
+	loc.balloon_alert(user, "ritual failed, no valid body!")
+	return FALSE
 
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/mob/living/carbon/human/soon_to_be_ghoul = locate() in selected_atoms
@@ -180,10 +184,11 @@
 
 	selected_atoms -= soon_to_be_ghoul
 	make_ghoul(user, soon_to_be_ghoul)
+	return TRUE
 
 /// Makes [victim] into a ghoul.
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/proc/make_ghoul(mob/living/user, mob/living/carbon/human/victim)
-	log_game("[key_name(user)] created a voiceless dead, controlled by [key_name(victim)].")
+	user.log_message("created a voiceless dead, controlled by [key_name(victim)].", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(user)] created a voiceless dead, [ADMIN_LOOKUPFLW(victim)].")
 
 	victim.apply_status_effect(
@@ -231,7 +236,7 @@
 		/datum/heretic_knowledge/curse/paralysis,
 	)
 	required_atoms = list(
-		/obj/item/organ/eyes = 1,
+		/obj/item/organ/internal/eyes = 1,
 		/obj/effect/decal/cleanable/blood = 1,
 		/obj/item/bodypart/l_arm = 1,
 	)
@@ -268,9 +273,9 @@
 		/datum/heretic_knowledge/spell/cleave,
 	)
 	required_atoms = list(
-		/obj/item/organ/tail = 1,
-		/obj/item/organ/stomach = 1,
-		/obj/item/organ/tongue = 1,
+		/obj/item/organ/external/tail = 1,
+		/obj/item/organ/internal/stomach = 1,
+		/obj/item/organ/internal/tongue = 1,
 		/obj/item/pen = 1,
 		/obj/item/paper = 1,
 	)
@@ -297,7 +302,10 @@
 /datum/heretic_knowledge/final/flesh_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
 	priority_announce("[generate_heretic_text()] Ever coiling vortex. Reality unfolded. ARMS OUTREACHED, THE LORD OF THE NIGHT, [user.real_name] has ascended! Fear the ever twisting hand! [generate_heretic_text()]", "[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
-	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shed_human_form)
+
+	var/datum/action/cooldown/spell/shed_human_form/worm_spell = new(user.mind)
+	worm_spell.Grant(user)
+
 	user.client?.give_award(/datum/award/achievement/misc/flesh_ascension, user)
 
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)

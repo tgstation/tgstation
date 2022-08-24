@@ -13,7 +13,7 @@
 /turf/open/floor/iron/smooth_large,
 /area/ruin/powered/mailroom)
 "aG" = (
-/obj/structure/sign/warning/coldtemp,
+/obj/structure/sign/warning/cold_temp,
 /turf/closed/indestructible/reinforced,
 /area/ruin/powered/mailroom)
 "ba" = (
@@ -80,7 +80,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/ruin/powered/mailroom)
 "hN" = (
-/obj/item/reagent_containers/food/drinks/coffee,
+/obj/item/reagent_containers/cup/glass/coffee,
 /turf/open/floor/iron/smooth_large,
 /area/ruin/powered/mailroom)
 "iO" = (
@@ -238,7 +238,7 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/structure/flora/rock/icy,
+/obj/structure/flora/rock/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "zr" = (
@@ -256,7 +256,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/ruin/powered/mailroom)
 "AX" = (
-/obj/structure/sign/warning/nosmoking/circle,
+/obj/structure/sign/warning/no_smoking/circle,
 /turf/closed/indestructible/reinforced,
 /area/ruin/powered/mailroom)
 "BZ" = (
@@ -461,7 +461,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/powered/mailroom)
 "UB" = (
-/obj/structure/flora/rock/icy,
+/obj/structure/flora/rock/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "US" = (
@@ -469,7 +469,7 @@
 /turf/open/floor/iron/smooth_half,
 /area/ruin/powered/mailroom)
 "Vq" = (
-/obj/structure/flora/tree/pine,
+/obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Vz" = (
@@ -489,7 +489,7 @@
 /obj/structure/chair/plastic{
 	dir = 4
 	},
-/obj/item/reagent_containers/food/drinks/ice{
+/obj/item/reagent_containers/cup/glass/ice{
 	pixel_x = 4;
 	pixel_y = 3
 	},
@@ -511,7 +511,7 @@
 /turf/closed/wall/r_wall,
 /area/ruin/powered/mailroom)
 "Xa" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/secure_area,
 /turf/closed/indestructible/reinforced,
 /area/ruin/powered/mailroom)
 "XO" = (

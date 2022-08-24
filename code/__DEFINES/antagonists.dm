@@ -112,14 +112,15 @@
 	WIZARD_LOADOUT_SOULTAP, \
 )
 
+/// Used in logging spells for roundend results
+#define LOG_SPELL_TYPE "type"
+#define LOG_SPELL_AMOUNT "amount"
+
 ///File to the traitor flavor
 #define TRAITOR_FLAVOR_FILE "antagonist_flavor/traitor_flavor.json"
 
 ///File to the malf flavor
 #define MALFUNCTION_FLAVOR_FILE "antagonist_flavor/malfunction_flavor.json"
-
-///File to the thief flavor
-#define THIEF_FLAVOR_FILE "antagonist_flavor/thief_flavor.json"
 
 /// JSON string file for all of our heretic influence flavors
 #define HERETIC_INFLUENCE_FILE "antagonist_flavor/heretic_influences.json"
@@ -196,6 +197,9 @@ GLOBAL_LIST_INIT(ai_employers, list(
 /// Checks if the given mob is a nuclear operative
 #define IS_NUKE_OP(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/nukeop))
 
+//Tells whether or not someone is a space ninja
+#define IS_SPACE_NINJA(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/ninja))
+
 /// Checks if the given mob is a heretic.
 #define IS_HERETIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic))
 /// Check if the given mob is a heretic monster.
@@ -249,3 +253,10 @@ GLOBAL_LIST_INIT(ai_employers, list(
 #define OBJECTIVE_STATE_FAILED 4
 /// If the objective is no longer valid
 #define OBJECTIVE_STATE_INVALID 5
+
+/// Weights for traitor objective categories
+#define OBJECTIVE_WEIGHT_TINY    5
+#define OBJECTIVE_WEIGHT_SMALL 	 7
+#define OBJECTIVE_WEIGHT_DEFAULT 10
+#define OBJECTIVE_WEIGHT_BIG	 15
+#define OBJECTIVE_WEIGHT_HUGE	 20

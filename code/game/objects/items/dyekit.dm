@@ -47,4 +47,4 @@
 	human_target.grad_style[gradient_key] = new_grad_style
 	human_target.grad_color[gradient_key] = sanitize_hexcolor(new_grad_color)
 	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)
-	human_target.update_hair()
+	human_target.update_body_parts()

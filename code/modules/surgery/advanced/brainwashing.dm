@@ -20,7 +20,7 @@
 /datum/surgery/advanced/brainwashing/can_start(mob/user, mob/living/carbon/target)
 	if(!..())
 		return FALSE
-	var/obj/item/organ/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
 	if(!target_brain)
 		return FALSE
 	return TRUE
@@ -41,7 +41,7 @@
 /datum/surgery_step/brainwash/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	objective = tgui_input_text(user, "Choose the objective to imprint on your victim's brain", "Brainwashing")
 	if(!objective)
-		return -1
+		return SURGERY_STEP_FAIL
 	display_results(user, target, span_notice("You begin to brainwash [target]..."),
 		span_notice("[user] begins to fix [target]'s brain."),
 		span_notice("[user] begins to perform surgery on [target]'s brain."))
@@ -62,7 +62,7 @@
 	message_admins("[ADMIN_LOOKUPFLW(user)] surgically brainwashed [ADMIN_LOOKUPFLW(target)] with the objective '[objective]'.")
 	user.log_message("has brainwashed [key_name(target)] with the objective '[objective]' using brainwashing surgery.", LOG_ATTACK)
 	target.log_message("has been brainwashed with the objective '[objective]' by [key_name(user)] using brainwashing surgery.", LOG_VICTIM, log_globally=FALSE)
-	log_game("[key_name(user)] surgically brainwashed [key_name(target)] with the objective '[objective]'.")
+	user.log_message("surgically brainwashed [key_name(target)] with the objective '[objective]'.", LOG_GAME)
 	return ..()
 
 /datum/surgery_step/brainwash/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

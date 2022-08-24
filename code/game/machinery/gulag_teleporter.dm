@@ -52,9 +52,6 @@ The console is located at computer/gulag_teleporter.dm
 		return
 	toggle_open()
 
-/obj/machinery/gulag_teleporter/updateUsrDialog()
-	return
-
 /obj/machinery/gulag_teleporter/attackby(obj/item/I, mob/user)
 	if(!occupant && default_deconstruction_screwdriver(user, "[icon_state]", "[icon_state]",I))
 		update_appearance()

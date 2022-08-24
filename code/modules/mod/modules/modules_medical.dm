@@ -25,18 +25,18 @@
 
 /obj/item/mod/module/health_analyzer/add_ui_data()
 	. = ..()
-	.["userhealth"] = mod.wearer ? mod.wearer.health : 0
-	.["usermaxhealth"] = mod.wearer ? mod.wearer.getMaxHealth() : 0
-	.["userbrute"] = mod.wearer ? mod.wearer.getBruteLoss() : 0
-	.["userburn"] = mod.wearer ? mod.wearer.getFireLoss() : 0
-	.["usertoxin"] = mod.wearer ? mod.wearer.getToxLoss() : 0
-	.["useroxy"] = mod.wearer ? mod.wearer.getOxyLoss() : 0
+	.["userhealth"] = mod.wearer?.health || 0
+	.["usermaxhealth"] = mod.wearer?.getMaxHealth() || 0
+	.["userbrute"] = mod.wearer?.getBruteLoss() || 0
+	.["userburn"] = mod.wearer?.getFireLoss() || 0
+	.["usertoxin"] = mod.wearer?.getToxLoss() || 0
+	.["useroxy"] = mod.wearer?.getOxyLoss() || 0
 
 /obj/item/mod/module/health_analyzer/on_select_use(atom/target)
 	. = ..()
 	if(!.)
 		return
-	if(!isliving(target))
+	if(!isliving(target) || !mod.wearer.can_read(src))
 		return
 	switch(mode)
 		if(HEALTH_SCAN)
@@ -128,7 +128,9 @@
 	use_power_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/organ_thrower, /obj/item/mod/module/microwave_beam)
 	cooldown_time = 0.5 SECONDS
+	/// How many organs the module can hold.
 	var/max_organs = 5
+	/// A list of all our organs.
 	var/organ_list = list()
 
 /obj/item/mod/module/organ_thrower/on_select_use(atom/target)
@@ -136,7 +138,7 @@
 	if(!.)
 		return
 	var/mob/living/carbon/human/wearer_human = mod.wearer
-	if(istype(target, /obj/item/organ))
+	if(isorgan(target))
 		if(!wearer_human.Adjacent(target))
 			return
 		var/atom/movable/organ = target
@@ -165,6 +167,7 @@
 	nodamage = TRUE
 	hitsound = 'sound/effects/attackblob.ogg'
 	hitsound_wall = 'sound/effects/attackblob.ogg'
+	/// A reference to the organ we "are".
 	var/obj/item/organ/organ
 
 /obj/projectile/organ/Initialize(mapload, obj/item/stored_organ)

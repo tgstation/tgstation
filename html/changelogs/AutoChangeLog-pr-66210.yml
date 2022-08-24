@@ -1,4 +1,0 @@
-author: "Ghilker, shield sprite by @SnoopCooper"
-delete-after: True
-changes: 
-  - expansion: "canisters now have a toggle for shielding that will start to consume power if the temperature and pressure go over the labeled one (current limits are higher than old t1 but lower than old t2). Peak draw should be around 25 kW with fusion temperatures. Canisters have an internal cell that allows it to hold shielding in areas without power for a time, powercells can be upgraded, removed, replaced."

@@ -94,7 +94,7 @@ GLOBAL_LIST_INIT(possible_abductor_names, list("Alpha","Beta","Gamma","Delta","E
 	//Equip
 	var/mob/living/carbon/human/H = owner.current
 	H.set_species(/datum/species/abductor)
-	var/obj/item/organ/tongue/abductor/T = H.getorganslot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/internal/tongue/abductor/T = H.getorganslot(ORGAN_SLOT_TONGUE)
 	T.mothership = "[team.name]"
 
 	H.real_name = "[team.name] [sub_role]"

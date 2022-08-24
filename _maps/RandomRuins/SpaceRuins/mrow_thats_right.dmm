@@ -31,7 +31,7 @@
 "ai" = (
 /obj/structure/janitorialcart,
 /obj/item/mop,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
@@ -82,16 +82,16 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "aq" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "Misc Supplies";
-	req_access_txt = "201"
+	name = "Misc Supplies"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "ar" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "Custodial Supplies";
-	req_access_txt = "201"
+	name = "Custodial Supplies"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "as" = (
@@ -208,13 +208,13 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "aK" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/glass/bowl,
+/obj/item/reagent_containers/cup/bowl,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "aL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/glass/bowl,
+/obj/item/reagent_containers/cup/bowl,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "aM" = (
@@ -240,7 +240,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "meow";
-	name = "kitty protection door"
+	name = "Kitty Protection Door"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
@@ -248,11 +248,11 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/poddoor/preopen{
 	id = "meow";
-	name = "kitty protection door"
+	name = "Kitty Protection Door"
 	},
 /obj/machinery/door/window{
-	name = "kitty door";
-	req_access_txt = "200"
+	name = "Kitty Door";
+	req_access = list("away_general")
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
@@ -304,7 +304,7 @@
 "aX" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/glass/bowl,
+/obj/item/reagent_containers/cup/bowl,
 /obj/item/food/meat/slab/synthmeat{
 	desc = "A slab of cat meat. Tastes like furball.";
 	name = "cat meat"
@@ -353,7 +353,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
 "be" = (
-/obj/item/organ/tail/cat,
+/obj/item/organ/external/tail/cat,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/white/corner,
 /area/ruin/space/has_grav/powered/cat_man)
@@ -377,11 +377,11 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/poddoor/preopen{
 	id = "meow";
-	name = "kitty protection door"
+	name = "Kitty Protection Door"
 	},
 /obj/machinery/door/window/left/directional/west{
-	name = "kitty door";
-	req_access_txt = "200"
+	name = "Kitty Door";
+	req_access = list("away_general")
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
@@ -444,7 +444,7 @@
 "bt" = (
 /obj/structure/table/optable,
 /obj/effect/mob_spawn/corpse/human/damaged,
-/obj/item/organ/ears/cat,
+/obj/item/organ/internal/ears/cat,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/powered/cat_man)
@@ -611,11 +611,11 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/poddoor/preopen{
 	id = "meow";
-	name = "kitty protection door"
+	name = "Kitty Protection Door"
 	},
 /obj/machinery/door/window/left/directional/north{
-	name = "kitty door";
-	req_access_txt = "200"
+	name = "Kitty Door";
+	req_access = list("away_general")
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
@@ -691,9 +691,8 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "bY" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	req_access_txt = "201"
-	},
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "bZ" = (
@@ -741,13 +740,13 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "cg" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "Portable Atmos Equipment";
-	req_access_txt = "201"
+	name = "Portable Atmos Equipment"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/cat_man)
 "ch" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -795,9 +794,9 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "cp" = (
 /obj/machinery/door/airlock{
-	name = "Limb Storage";
-	req_access_txt = "200"
+	name = "Limb Storage"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/powered/cat_man)
 "cq" = (
@@ -836,12 +835,12 @@
 /obj/structure/closet/crate/freezer{
 	name = "cat ears"
 	},
-/obj/item/organ/ears/cat,
-/obj/item/organ/ears/cat,
-/obj/item/organ/ears/cat,
-/obj/item/organ/ears/cat,
-/obj/item/organ/ears/cat,
-/obj/item/organ/ears/cat,
+/obj/item/organ/internal/ears/cat,
+/obj/item/organ/internal/ears/cat,
+/obj/item/organ/internal/ears/cat,
+/obj/item/organ/internal/ears/cat,
+/obj/item/organ/internal/ears/cat,
+/obj/item/organ/internal/ears/cat,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/powered/cat_man)
 "cv" = (
@@ -890,12 +889,12 @@
 /obj/structure/closet/crate/freezer{
 	name = "cat tails"
 	},
-/obj/item/organ/tail/cat,
-/obj/item/organ/tail/cat,
-/obj/item/organ/tail/cat,
-/obj/item/organ/tail/cat,
-/obj/item/organ/tail/cat,
-/obj/item/organ/tail/cat,
+/obj/item/organ/external/tail/cat,
+/obj/item/organ/external/tail/cat,
+/obj/item/organ/external/tail/cat,
+/obj/item/organ/external/tail/cat,
+/obj/item/organ/external/tail/cat,
+/obj/item/organ/external/tail/cat,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/powered/cat_man)
 "jc" = (

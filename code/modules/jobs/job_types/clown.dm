@@ -5,14 +5,14 @@
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the head of personnel"
+	supervisors = SUPERVISOR_HOP
 	selection_color = "#bbe291"
 	exp_granted_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/clown
 	plasmaman_outfit = /datum/outfit/plasmaman/clown
 
-	paycheck = PAYCHECK_MINIMAL
+	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
 
 	liver_traits = list(TRAIT_COMEDY_METABOLISM)
@@ -46,6 +46,7 @@
 	name = "Clown"
 	jobtype = /datum/job/clown
 
+	id = /obj/item/card/id/advanced/rainbow
 	id_trim = /datum/id_trim/job/clown
 	uniform = /obj/item/clothing/under/rank/civilian/clown
 	backpack_contents = list(
@@ -96,4 +97,6 @@
 	for(var/datum/mutation/human/clumsy/M in H.dna.mutations)
 		M.mutadone_proof = TRUE
 	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]
-	fan.add_hud_to(H)
+	fan.show_to(H)
+	H.faction |= FACTION_CLOWN
+

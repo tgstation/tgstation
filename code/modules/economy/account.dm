@@ -123,6 +123,8 @@
 	if(!account_job)
 		return
 	var/money_to_transfer = round(account_job.paycheck * payday_modifier * amt_of_paychecks)
+	if(amt_of_paychecks == 1)
+		money_to_transfer = clamp(money_to_transfer, 0, PAYCHECK_CREW) //We want to limit single, passive paychecks to regular crew income.
 	if(free)
 		adjust_money(money_to_transfer)
 		SSblackbox.record_feedback("amount", "free_income", money_to_transfer)
@@ -149,7 +151,7 @@
 		return
 	for(var/obj/A in bank_cards)
 		var/icon_source = A
-		if(istype(A, /obj/item/card/id))
+		if(isidcard(A))
 			var/obj/item/card/id/id_card = A
 			icon_source = id_card.get_cached_flat_icon()
 		var/mob/card_holder = recursive_loc_check(A, /mob)

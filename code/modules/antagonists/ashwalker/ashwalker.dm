@@ -11,6 +11,7 @@
 	prevent_roundtype_conversion = FALSE
 	antagpanel_category = "Ash Walkers"
 	suicide_cry = "I HAVE NO IDEA WHAT THIS THING DOES!!"
+	count_against_dynamic_roll_chance = FALSE
 	var/datum/team/ashwalkers/ashie_team
 
 /datum/antagonist/ashwalker/create_team(datum/team/team)
@@ -41,4 +42,4 @@
 	SIGNAL_HANDLER
 
 	if(istype(A, /obj/structure/headpike))
-		SEND_SIGNAL(owner.current, COMSIG_ADD_MOOD_EVENT, "oogabooga", /datum/mood_event/sacrifice_good)
+		owner.current.add_mood_event("oogabooga", /datum/mood_event/sacrifice_good)

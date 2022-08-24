@@ -2,7 +2,7 @@
 #define OXYGEN_HEAT_PENALTY 1
 #define PLUOXIUM_HEAT_PENALTY -0.5 //Better then co2, worse then n2
 #define TRITIUM_HEAT_PENALTY 10
-#define CO2_HEAT_PENALTY 6
+#define CO2_HEAT_PENALTY 2
 #define NITROGEN_HEAT_PENALTY -1.5
 #define BZ_HEAT_PENALTY 5
 #define H2O_HEAT_PENALTY 12 //This'll get made slowly over time, I want my spice rock spicy god damnit
@@ -11,6 +11,8 @@
 #define HEALIUM_HEAT_PENALTY 4
 #define PROTO_NITRATE_HEAT_PENALTY -3
 #define ZAUKER_HEAT_PENALTY 8
+#define HYPERNOBLIUM_HEAT_PENALTY -13
+#define ANTINOBLIUM_HEAT_PENALTY 15
 
 //All of these get divided by 10-bzcomp * 5 before having 1 added and being multiplied with power to determine rads
 //Keep the negative values here above -10 and we won't get negative rads
@@ -24,8 +26,10 @@
 #define HEALIUM_TRANSMIT_MODIFIER 2.4
 #define PROTO_NITRATE_TRANSMIT_MODIFIER 15
 #define ZAUKER_TRANSMIT_MODIFIER 20
-
-#define BZ_RADIOACTIVITY_MODIFIER 5 //Improves the effect of transmit modifiers
+#define ANTINOBLIUM_TRANSMIT_MODIFIER -5
+#define HYPERNOBLIUM_TRANSMIT_MODIFIER 3
+#define H20_TRANSMIT_MODIFIER -2.5
+#define FREON_TRANSMIT_MODIFIER -30
 
 #define N2O_HEAT_RESISTANCE 6          //Higher == Gas makes the crystal more resistant against heat damage.
 #define HYDROGEN_HEAT_RESISTANCE 2 // just a bit of heat resistance to spice it up
@@ -64,21 +68,21 @@
 //Along with damage_penalty_point, makes flux anomalies.
 /// The cutoff for the minimum amount of power required to trigger the crystal invasion delamination event.
 #define EVENT_POWER_PENALTY_THRESHOLD 4500
-#define POWER_PENALTY_THRESHOLD 5000          //The cutoff on power properly doing damage, pulling shit around, and delamming into a tesla. Low chance of pyro anomalies, +2 bolts of electricity
-#define SEVERE_POWER_PENALTY_THRESHOLD 7000   //+1 bolt of electricity, allows for gravitational anomalies, and higher chances of pyro anomalies
+#define POWER_PENALTY_THRESHOLD 5000 //The cutoff on power properly doing damage, pulling shit around, and delamming into a tesla. Low chance of pyro anomalies, +2 bolts of electricity
+#define SEVERE_POWER_PENALTY_THRESHOLD 7000 //+1 bolt of electricity, allows for gravitational anomalies, and higher chances of pyro anomalies
 #define CRITICAL_POWER_PENALTY_THRESHOLD 9000 //+1 bolt of electricity.
-#define HEAT_PENALTY_THRESHOLD 40             //Higher == Crystal safe operational temperature is higher.
+#define HEAT_PENALTY_THRESHOLD 40 //Higher == Crystal safe operational temperature is higher.
 #define DAMAGE_HARDCAP 0.002
 #define DAMAGE_INCREASE_MULTIPLIER 0.25
 
 
-#define THERMAL_RELEASE_MODIFIER 5         //Higher == less heat released during reaction, not to be confused with the above values
-#define PLASMA_RELEASE_MODIFIER 750        //Higher == less plasma released by reaction
-#define OXYGEN_RELEASE_MODIFIER 325        //Higher == less oxygen released at high temperature/power
+#define THERMAL_RELEASE_MODIFIER 4 //Higher == less heat released during reaction, not to be confused with the above values
+#define PLASMA_RELEASE_MODIFIER 650 //Higher == less plasma released by reaction
+#define OXYGEN_RELEASE_MODIFIER 340 //Higher == less oxygen released at high temperature/power
 
-#define REACTION_POWER_MODIFIER 0.55       //Higher == more overall power
+#define REACTION_POWER_MODIFIER 0.65 //Higher == more overall power
 
-#define MATTER_POWER_CONVERSION 10         //Crystal converts 1/this value of stored matter into energy.
+#define MATTER_POWER_CONVERSION 10 //Crystal converts 1/this value of stored matter into energy.
 
 //These would be what you would get at point blank, decreases with distance
 #define DETONATION_HALLUCINATION 600
@@ -86,7 +90,7 @@
 /// All humans within this range will be irradiated
 #define DETONATION_RADIATION_RANGE 20
 
-#define WARNING_DELAY 60
+#define SUPERMATTER_WARNING_DELAY 60 SECONDS
 
 #define HALLUCINATION_RANGE(P) (min(7, round(P ** 0.25)))
 
@@ -94,13 +98,9 @@
 #define GRAVITATIONAL_ANOMALY "gravitational_anomaly"
 #define FLUX_ANOMALY "flux_anomaly"
 #define PYRO_ANOMALY "pyro_anomaly"
-
-//If integrity percent remaining is less than these values, the monitor sets off the relevant alarm.
-#define SUPERMATTER_DELAM_PERCENT 5
-#define SUPERMATTER_EMERGENCY_PERCENT 25
-#define SUPERMATTER_DANGER_PERCENT 50
-#define SUPERMATTER_WARNING_PERCENT 100
-#define CRITICAL_TEMPERATURE 10000
+#define BIOSCRAMBLER_ANOMALY "bioscrambler_anomaly"
+#define HALLUCINATION_ANOMALY "hallucination_anomaly"
+#define VORTEX_ANOMALY "vortex_anomaly"
 
 #define SUPERMATTER_COUNTDOWN_TIME 30 SECONDS
 
@@ -111,4 +111,42 @@
 #define SLIGHTLY_CHARGED_ZAP_ICON_STATE "sm_arc_supercharged"
 #define OVER_9000_ZAP_ICON_STATE "sm_arc_dbz_referance" //Witty I know
 
-#define MAX_SPACE_EXPOSURE_DAMAGE 2
+#define MAX_SPACE_EXPOSURE_DAMAGE 10
+
+#define SUPERMATTER_CASCADE_PERCENT 80
+
+/// The divisor scaling value for cubic power loss.
+#define POWERLOSS_CUBIC_DIVISOR 500
+/// The rate at which the linear power loss function scales with power.
+#define POWERLOSS_LINEAR_RATE 0.83
+/// How much a psychologist can reduce power loss.
+#define PSYCHOLOGIST_POWERLOSS_REDUCTION 0.2
+
+/// Means it's not forced, sm decides itself by checking the [/datum/sm_delam/proc/can_select]
+#define SM_DELAM_PRIO_NONE 0
+/// In-game factors like the destabilizing crystal [/obj/item/destabilizing_crystal].
+/// Purged when SM heals to 100
+#define SM_DELAM_PRIO_IN_GAME 1
+
+/// Purge the current forced delam and make it zero again (back to normal).
+/// Needs to be higher priority than current forced_delam though.
+#define SM_DELAM_STRATEGY_PURGE null
+
+// These are used by supermatter and supermatter monitor program, mostly for UI updating purposes. Higher should always be worse!
+// [/obj/machinery/power/supermatter_crystal/proc/get_status]
+/// Unknown status, shouldn't happen but just in case.
+#define SUPERMATTER_ERROR -1
+/// No or minimal energy
+#define SUPERMATTER_INACTIVE 0
+/// Normal operation
+#define SUPERMATTER_NORMAL 1
+/// Ambient temp 80% of the default temp for SM to take damage.
+#define SUPERMATTER_NOTIFY 2
+/// Integrity below [/obj/machinery/power/supermatter_crystal/var/warning_point]. Start complaining on comms.
+#define SUPERMATTER_WARNING 3
+/// Integrity below [/obj/machinery/power/supermatter_crystal/var/danger_point]. Start spawning anomalies.
+#define SUPERMATTER_DANGER 4
+/// Integrity below [/obj/machinery/power/supermatter_crystal/var/emergency_point]. Start complaining to more people.
+#define SUPERMATTER_EMERGENCY 5
+/// Currently counting down to delamination. True [/obj/machinery/power/supermatter_crystal/var/final_countdown]
+#define SUPERMATTER_DELAMINATING 6

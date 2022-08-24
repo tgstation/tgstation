@@ -23,6 +23,13 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/item/gun/energy/laser{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/item/gun/energy/laser{
+	pixel_y = 3
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "ac" = (
@@ -349,9 +356,7 @@
 /area/shuttle/pirate)
 "aI" = (
 /obj/machinery/light/small/directional/west,
-/obj/structure/sign/warning/vacuum/external{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
@@ -523,13 +528,8 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/gun/energy/laser{
-	pixel_x = -3;
-	pixel_y = 6
-	},
-/obj/item/gun/energy/laser{
-	pixel_y = 3
-	},
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "bm" = (
@@ -538,20 +538,18 @@
 /area/shuttle/pirate)
 "bo" = (
 /obj/machinery/light/small/directional/east,
-/obj/structure/sign/warning/vacuum/external{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "br" = (
 /obj/structure/table/wood,
 /obj/item/storage/box/matches,
-/obj/item/reagent_containers/food/drinks/bottle/rum{
+/obj/item/reagent_containers/cup/glass/bottle/rum{
 	name = "Captain Pete's Private Reserve Cuban Spaced Rum";
 	pixel_x = -6;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = 6;
 	pixel_y = 12
 	},
@@ -687,9 +685,7 @@
 /area/shuttle/pirate)
 "bK" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sink{
-	pixel_y = 24
-	},
+/obj/structure/sink/directional/south,
 /obj/structure/toilet{
 	dir = 8
 	},
@@ -1014,9 +1010,8 @@
 /area/shuttle/pirate)
 "Gk" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/shower{
-	name = "decontamination shower";
-	pixel_y = 12
+/obj/machinery/shower/directional/south{
+	name = "decontamination shower"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/window{

@@ -1,13 +1,10 @@
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { GenericUplink } from "./Uplink/GenericUplink";
+import { GenericUplink } from './Uplink/GenericUplink';
 
 export const MalfunctionModulePicker = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    processingTime,
-    categories,
-  } = data;
+  const { processingTime, categories } = data;
 
   const categoriesList = [];
   const items = [];
@@ -28,16 +25,13 @@ export const MalfunctionModulePicker = (props, context) => {
   }
 
   return (
-    <Window
-      width={620}
-      height={525}
-      theme="malfunction">
+    <Window width={620} height={525} theme="malfunction">
       <Window.Content scrollable>
         <GenericUplink
           categories={categoriesList}
           items={items}
           currency={`${processingTime} PT`}
-          handleBuy={(item) => act("buy", { name: item.name })}
+          handleBuy={(item) => act('buy', { name: item.name })}
         />
       </Window.Content>
     </Window>

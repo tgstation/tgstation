@@ -74,3 +74,42 @@ GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
 	turf.air.archive();\
 	turf.archived_cycle = SSair.times_fired;\
 	turf.temperature_archived = turf.temperature;
+
+/* Fetch the energy transferred when two gas mixtures's temperature equalize.
+ *
+ * To equalize two gas mixtures, we simply pool the energy and divide it by the pooled heat capacity.
+ * T' = (W1+W2) / (C1+C2)
+ * But if we want to moderate this conduction, maybe we can calculate the energy transferred 
+ * and multiply a coefficient to it instead.
+ * This is the energy transferred:
+ * W = T' * C1 - W1
+ * W = (W1+W2) / (C1+C2) * C1 - W1
+ * W = (W1C1 + W2C1) / (C1+C2) - W1
+ * W = ((W1C1 + W2C1) - (W1 * (C1+C2))) / (C1+C2)
+ * W = ((W1C1 + W2C1) - (W1C1 + W1C2)) / (C1+C2)
+ * W = (W1C1 - W1C1 + W2C1 - W1C2) / (C1+C2)
+ * W = (W2C1 - W1C2) / (C1+C2)
+ * W = (T2*C2*C1 - T1*C1*C2) / (C1+C2)
+ * W = (C1*C2) * (T2-T1) / (C1+C2)
+ * 
+ * W: Energy involved in the operation
+ * T': Combined temperature
+ * T1, C1, W1: Temp, heat cap, and thermal energy of the first gas mixture
+ * T2, C2, W2: Temp, heat cap, and thermal energy of the second gas mixture
+ *
+ * Not immediately obvious, but saves us operation time.
+ * 
+ * We put a lot of parentheses here because the numbers get really really big. 
+ * By prioritizing the division we try to tone the number down so we dont get overflows.
+ * 
+ * Arguments:
+ * * temperature_delta: T2 - T1. [/datum/gas_mixture/var/temperature]
+ * If you have any moderating (less than 1) coefficients and are dealing with very big numbers 
+ * multiply the temperature_delta by it first before passing so we get even more breathing room.
+ * * heat_capacity_one:  gasmix one's [/datum/gas_mixture/proc/heat_capacity]
+ * * heat_capacity_two: gasmix two's [/datum/gas_mixture/proc/heat_capacity]
+ * Returns: The energy gained by gas mixture one. Negative if gas mixture one loses energy.
+ * Honestly the heat capacity is interchangeable, just make sure the delta is right.
+ */
+#define CALCULATE_CONDUCTION_ENERGY(temperature_delta, heat_capacity_one, heat_capacity_two)\
+	((temperature_delta) * ((heat_capacity_one) * ((heat_capacity_two) / ((heat_capacity_one) + (heat_capacity_two)))))

@@ -8,10 +8,10 @@
 
 /mob/living/simple_animal/drone/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
 	if(..())
-		update_inv_hands()
+		update_held_items()
 		if(I == head)
 			head = null
-			update_inv_head()
+			update_worn_head()
 		if(I == internal_storage)
 			internal_storage = null
 			update_inv_internal_storage()
@@ -40,8 +40,15 @@
 			return head
 		if(ITEM_SLOT_DEX_STORAGE)
 			return internal_storage
+
 	return ..()
 
+/mob/living/simple_animal/drone/get_slot_by_item(obj/item/looking_for)
+	if(internal_storage == looking_for)
+		return ITEM_SLOT_DEX_STORAGE
+	if(head == looking_for)
+		return ITEM_SLOT_HEAD
+	return ..()
 
 /mob/living/simple_animal/drone/equip_to_slot(obj/item/I, slot)
 	if(!slot)
@@ -52,7 +59,7 @@
 	var/index = get_held_index_of_item(I)
 	if(index)
 		held_items[index] = null
-	update_inv_hands()
+	update_held_items()
 
 	if(I.pulledby)
 		I.pulledby.stop_pulling()
@@ -64,7 +71,7 @@
 	switch(slot)
 		if(ITEM_SLOT_HEAD)
 			head = I
-			update_inv_head()
+			update_worn_head()
 		if(ITEM_SLOT_DEX_STORAGE)
 			internal_storage = I
 			update_inv_internal_storage()

@@ -21,7 +21,7 @@
 	unsuitable_atmos_damage = 0.5
 	animal_species = /mob/living/simple_animal/pet/cat
 	childtype = list(/mob/living/simple_animal/pet/cat/kitten = 1)
-	butcher_results = list(/obj/item/food/meat/slab = 1, /obj/item/organ/ears/cat = 1, /obj/item/organ/tail/cat = 1, /obj/item/stack/sheet/animalhide/cat = 1)
+	butcher_results = list(/obj/item/food/meat/slab = 1, /obj/item/organ/internal/ears/cat = 1, /obj/item/organ/external/tail/cat = 1, /obj/item/stack/sheet/animalhide/cat = 1)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -72,7 +72,7 @@
 	icon_dead = "breadcat_dead"
 	collar_type = null
 	held_state = "breadcat"
-	butcher_results = list(/obj/item/food/meat/slab = 2, /obj/item/organ/ears/cat = 1, /obj/item/organ/tail/cat = 1, /obj/item/food/breadslice/plain = 1)
+	butcher_results = list(/obj/item/food/meat/slab = 2, /obj/item/organ/internal/ears/cat = 1, /obj/item/organ/external/tail/cat = 1, /obj/item/food/breadslice/plain = 1)
 
 /mob/living/simple_animal/pet/cat/breadcat/add_cell_sample()
 	return
@@ -281,13 +281,13 @@
 	maxHealth = 50
 	gender = FEMALE
 	harm_intent_damage = 10
-	butcher_results = list(/obj/item/organ/brain = 1, /obj/item/organ/heart = 1, /obj/item/food/cakeslice/birthday = 3,  \
+	butcher_results = list(/obj/item/organ/internal/brain = 1, /obj/item/organ/internal/heart = 1, /obj/item/food/cakeslice/birthday = 3,  \
 	/obj/item/food/meat/slab = 2)
 	response_harm_continuous = "takes a bite out of"
 	response_harm_simple = "take a bite out of"
 	attacked_sound = 'sound/items/eatfood.ogg'
-	deathmessage = "loses her false life and collapses!"
-	deathsound = SFX_BODYFALL
+	death_message = "loses her false life and collapses!"
+	death_sound = SFX_BODYFALL
 	held_state = "cak"
 
 /mob/living/simple_animal/pet/cat/cak/add_cell_sample()
@@ -295,16 +295,17 @@
 
 /mob/living/simple_animal/pet/cat/cak/CheckParts(list/parts)
 	..()
-	var/obj/item/organ/brain/B = locate(/obj/item/organ/brain) in contents
-	if(!B || !B.brainmob || !B.brainmob.mind)
+	var/obj/item/organ/internal/brain/candidate = locate(/obj/item/organ/internal/brain) in contents
+	if(!candidate || !candidate.brainmob || !candidate.brainmob.mind)
 		return
-	B.brainmob.mind.transfer_to(src)
-	to_chat(src, "<span class='big bold'>You are a cak!</span><b> You're a harmless cat/cake hybrid that everyone loves. People can take bites out of you if they're hungry, but you regenerate health \
+	candidate.brainmob.mind.transfer_to(src)
+	to_chat(src, "[span_boldbig("You are a cak!")]<b> You're a harmless cat/cake hybrid that everyone loves. People can take bites out of you if they're hungry, but you regenerate health \
 	so quickly that it generally doesn't matter. You're remarkably resilient to any damage besides this and it's hard for you to really die at all. You should go around and bring happiness and \
 	free cake to the station!</b>")
-	var/new_name = tgui_input_text(src, "Enter your name, or press \"Cancel\" to stick with Keeki.", "Name Change", max_length = MAX_NAME_LEN)
+	var/default_name = "Keeki"
+	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(src, "You are the [name]. Would you like to change your name to something else?", "Name change", default_name, MAX_NAME_LEN)), cap_after_symbols = FALSE)
 	if(new_name)
-		to_chat(src, span_notice("Your name is now <b>\"new_name\"</b>!"))
+		to_chat(src, span_notice("Your name is now <b>[new_name]</b>!"))
 		name = new_name
 
 /mob/living/simple_animal/pet/cat/cak/Life(delta_time = SSMOBS_DT, times_fired)

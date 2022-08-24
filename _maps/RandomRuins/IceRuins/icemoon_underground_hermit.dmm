@@ -7,7 +7,7 @@
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/shuttle)
 "bW" = (
-/obj/item/reagent_containers/glass/bucket/wooden,
+/obj/item/reagent_containers/cup/bucket/wooden,
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle)
 "cI" = (
@@ -47,7 +47,7 @@
 /turf/closed/wall/mineral/wood,
 /area/ruin/powered/shuttle)
 "oJ" = (
-/obj/structure/sink,
+/obj/structure/sink/directional/south,
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle)
 "pI" = (
@@ -118,7 +118,7 @@
 /turf/template_noop,
 /area/template_noop)
 "Rr" = (
-/obj/structure/flora/tree/pine,
+/obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Si" = (
@@ -136,7 +136,7 @@
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/shuttle)
 "Xh" = (
-/obj/structure/flora/tree/jungle/small,
+/obj/structure/flora/tree/jungle/small/style_random,
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/shuttle)
 "XI" = (

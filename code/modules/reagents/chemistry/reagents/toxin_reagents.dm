@@ -247,18 +247,20 @@
 	zombiepowder.data["method"] |= INGEST
 
 /datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/M, delta_time, times_fired)
-	..()
 	if(HAS_TRAIT(M, TRAIT_FAKEDEATH) && HAS_TRAIT(M, TRAIT_DEATHCOMA))
+		..()
 		return TRUE
 	switch(current_cycle)
 		if(1 to 5)
-			M.add_confusion(1 * REM * delta_time)
+			M.adjust_timed_status_effect(1 SECONDS * REM * delta_time, /datum/status_effect/confusion)
 			M.adjust_drowsyness(1 * REM * delta_time)
 			M.adjust_timed_status_effect(6 SECONDS * REM * delta_time, /datum/status_effect/speech/slurring/drunk)
 		if(5 to 8)
 			M.adjustStaminaLoss(40 * REM * delta_time, 0)
 		if(9 to INFINITY)
 			M.fakedeath(type)
+	..()
+	return TRUE
 
 /datum/reagent/toxin/ghoulpowder
 	name = "Ghoul Powder"
@@ -294,8 +296,7 @@
 	creation_purity = REAGENT_STANDARD_PURITY
 	purity = REAGENT_STANDARD_PURITY
 	ph = 11
-	impure_chem = /datum/reagent/impurity/rosenol
-	inverse_chem = null
+	inverse_chem = /datum/reagent/impurity/rosenol
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/hallucinogens = 18)  //7.2 per 2 seconds
 
@@ -424,7 +425,7 @@
 
 /datum/reagent/toxin/spore_burning/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_fire_stacks(2 * REM * delta_time)
-	M.IgniteMob()
+	M.ignite_mob()
 	return ..()
 
 /datum/reagent/toxin/chloralhydrate
@@ -438,13 +439,13 @@
 	toxpwr = 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	ph = 11
-	impure_chem = /datum/reagent/impurity/chloralax
+	inverse_chem = /datum/reagent/impurity/chloralax
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/chloralhydrate/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	switch(current_cycle)
 		if(1 to 10)
-			M.add_confusion(2 * REM * normalise_creation_purity() * delta_time)
+			M.adjust_timed_status_effect(2 SECONDS * REM * normalise_creation_purity() * delta_time, /datum/status_effect/confusion)
 			M.adjust_drowsyness(2 * REM * normalise_creation_purity() * delta_time)
 		if(10 to 50)
 			M.Sleeping(40 * REM * normalise_creation_purity() * delta_time)
@@ -599,7 +600,7 @@
 	purity = REAGENT_STANDARD_PURITY
 	toxpwr = 1
 	ph = 2.0
-	impure_chem = /datum/reagent/impurity/methanol
+	inverse_chem = /datum/reagent/impurity/methanol
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/formaldehyde/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -652,14 +653,14 @@
 	toxpwr = 0
 	ph = 9
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/opiods = 25)
+	addiction_types = list(/datum/addiction/opioids = 25)
 
 /datum/reagent/toxin/fentanyl/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * REM * normalise_creation_purity() * delta_time, 150)
 	if(M.toxloss <= 60)
 		M.adjustToxLoss(1 * REM * normalise_creation_purity() * delta_time, 0)
 	if(current_cycle >= 4)
-		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smacked out", /datum/mood_event/narcotic_heavy, name)
+		M.add_mood_event("smacked out", /datum/mood_event/narcotic_heavy, name)
 	if(current_cycle >= 18)
 		M.Sleeping(40 * REM * normalise_creation_purity() * delta_time)
 	..()
@@ -855,7 +856,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 0
 	ph = 6
-	impure_chem = /datum/reagent/impurity/ipecacide
+	inverse_chem = /datum/reagent/impurity/ipecacide
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/lipolicide/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -1176,7 +1177,13 @@
 
 /datum/reagent/toxin/bungotoxin/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjustOrganLoss(ORGAN_SLOT_HEART, 3 * REM * delta_time)
-	M.set_confusion(M.dizziness) //add a tertiary effect here if this is isn't an effective poison.
+
+	// If our mob's currently dizzy from anything else, we will also gain confusion
+	var/mob_dizziness = M.get_timed_status_effect_duration(/datum/status_effect/confusion)
+	if(mob_dizziness > 0)
+		// Gain confusion equal to about half the duration of our current dizziness
+		M.set_timed_status_effect(mob_dizziness / 2, /datum/status_effect/confusion)
+
 	if(current_cycle >= 12 && DT_PROB(4, delta_time))
 		var/tox_message = pick("You feel your heart spasm in your chest.", "You feel faint.","You feel you need to catch your breath.","You feel a prickle of pain in your chest.")
 		to_chat(M, span_notice("[tox_message]"))
@@ -1198,5 +1205,5 @@
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1 * REM * delta_time)
 	if(DT_PROB(0.5, delta_time))
 		to_chat(M, span_notice("Ah, what was that? You thought you heard something..."))
-		M.add_confusion(5)
+		M.adjust_timed_status_effect(5 SECONDS, /datum/status_effect/confusion)
 	return ..()

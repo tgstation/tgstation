@@ -4,7 +4,7 @@
 /datum/species/shadow/nightmare
 	name = "Nightmare"
 	id = SPECIES_NIGHTMARE
-	examine_limb_id = "shadow"
+	examine_limb_id = SPECIES_SHADOW
 	burnmod = 1.5
 	no_equip = list(ITEM_SLOT_MASK, ITEM_SLOT_OCLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET, ITEM_SLOT_ICLOTHING, ITEM_SLOT_SUITSTORE)
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NO_DNA_COPY,NOTRANSSTING,NOEYESPRITES)
@@ -22,9 +22,9 @@
 		TRAIT_NODISMEMBER,
 		TRAIT_NOHUNGER,
 	)
-	mutanteyes = /obj/item/organ/eyes/night_vision/nightmare
-	mutantheart = /obj/item/organ/heart/nightmare
-	mutantbrain = /obj/item/organ/brain/nightmare
+	mutanteyes = /obj/item/organ/internal/eyes/night_vision/nightmare
+	mutantheart = /obj/item/organ/internal/heart/nightmare
+	mutantbrain = /obj/item/organ/internal/brain/nightmare
 
 /datum/species/shadow/nightmare/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()

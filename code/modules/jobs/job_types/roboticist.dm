@@ -5,9 +5,9 @@
 	faction = FACTION_STATION
 	total_positions = 2
 	spawn_positions = 2
-	supervisors = "the research director"
+	supervisors = SUPERVISOR_RD
 	selection_color = "#ffeeff"
-	exp_requirements = 60
+	exp_requirements = 1 HOURS
 	exp_required_type = EXP_TYPE_CREW
 	exp_granted_type = EXP_TYPE_CREW
 	bounty_types = CIV_JOB_ROBO
@@ -18,7 +18,7 @@
 		/datum/job_department/science,
 		)
 
-	paycheck = PAYCHECK_MEDIUM
+	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SCI
 
 	display_order = JOB_DISPLAY_ORDER_ROBOTICIST
@@ -45,9 +45,6 @@
 	id_trim = /datum/id_trim/job/roboticist
 	uniform = /obj/item/clothing/under/rank/rnd/roboticist
 	suit = /obj/item/clothing/suit/toggle/labcoat/roboticist
-	backpack_contents = list(
-		/obj/item/modular_computer/tablet/preset/science = 1,
-		)
 	belt = /obj/item/storage/belt/utility/full
 	ears = /obj/item/radio/headset/headset_sci
 	l_pocket = /obj/item/modular_computer/tablet/pda/roboticist

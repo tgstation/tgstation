@@ -17,7 +17,7 @@
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "dorm_available"
 	icon_keyboard = null
-	req_one_access = list(ACCESS_AUX_BASE, ACCESS_HEADS)
+	req_one_access = list(ACCESS_AUX_BASE, ACCESS_COMMAND)
 	circuit = /obj/item/circuitboard/computer/auxiliary_base
 	/// Shuttle ID of the base
 	var/shuttleId = "colony_drop"
@@ -314,7 +314,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 /obj/docking_port/mobile/auxiliary_base/takeoff(list/old_turfs, list/new_turfs, list/moved_atoms, rotation, movement_direction, old_dock, area/underlying_old_area)
 	for(var/i in new_turfs)
 		var/turf/place = i
-		if(istype(place, /turf/closed/mineral))
+		if(ismineralturf(place))
 			place.ScrapeAway()
 	return ..()
 
@@ -325,7 +325,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 	dwidth = 3
 	width = 7
 	height = 5
-	area_type = /area/construction/mining/aux_base
+	area_type = /area/station/construction/mining/aux_base
 
 /obj/structure/mining_shuttle_beacon
 	name = "mining shuttle beacon"

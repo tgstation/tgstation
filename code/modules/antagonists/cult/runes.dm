@@ -104,7 +104,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 		fail_invoke()
 
 /obj/effect/rune/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	if(istype(user, /mob/living/simple_animal/shade) || istype(user, /mob/living/simple_animal/hostile/construct))
+	if(isshade(user) || isconstruct(user))
 		if(istype(user, /mob/living/simple_animal/hostile/construct/wraith/angelic) || istype(user, /mob/living/simple_animal/hostile/construct/juggernaut/angelic) || istype(user, /mob/living/simple_animal/hostile/construct/artificer/angelic))
 			to_chat(user, span_warning("You purge the rune!"))
 			qdel(src)
@@ -223,7 +223,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			myriad_targets |= M
 	if(!length(myriad_targets))
 		fail_invoke()
-		log_game("Offer rune failed - no eligible targets")
+		log_game("Offer rune failed - no eligible targets.")
 		return
 	rune_in_use = TRUE
 	visible_message(span_warning("[src] pulses blood red!"))
@@ -253,12 +253,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(length(invokers) < 2)
 		for(var/M in invokers)
 			to_chat(M, span_warning("You need at least two invokers to convert [convertee]!"))
-		log_game("Offer rune failed - tried conversion with one invoker")
+		log_game("Offer rune with [convertee] on it failed - tried conversion with one invoker.")
 		return FALSE
 	if(convertee.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, charge_cost = 0)) //No charge_cost because it can be spammed
 		for(var/M in invokers)
 			to_chat(M, span_warning("Something is shielding [convertee]'s mind!"))
-		log_game("Offer rune failed - convertee had anti-magic")
+		log_game("Offer rune with [convertee] on it failed - convertee had anti-magic.")
 		return FALSE
 	var/brutedamage = convertee.getBruteLoss()
 	var/burndamage = convertee.getFireLoss()
@@ -300,14 +300,14 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(ispAI(sacrificial))
 		for(var/M in invokers)
 			to_chat(M, span_cultitalic("You don't think this is what Nar'Sie had in mind when She asked for blood sacrifices..."))
-		log_game("Offer rune failed - tried sacrificing pAI")
+		log_game("Offer rune with [sacrificial] on it failed - tried sacrificing pAI.")
 		return FALSE
 
 	var/big_sac = FALSE
 	if((((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || C.cult_team.is_sacrifice_target(sacrificial.mind)) && length(invokers) < 3)
 		for(var/M in invokers)
 			to_chat(M, span_cultitalic("[sacrificial] is too greatly linked to the world! You need three acolytes!"))
-		log_game("Offer rune failed - not enough acolytes and target is living or sac target")
+		log_game("Offer rune with [sacrificial] on it failed - not enough acolytes and target is living or sac target")
 		return FALSE
 	if(sacrificial.mind)
 		LAZYADD(GLOB.sacrificed, WEAKREF(sacrificial.mind))
@@ -337,18 +337,17 @@ structure_check() searches for nearby cultist structures required for the invoca
 		sacrificial.grab_ghost()
 		make_new_construct_from_class(construct_class, THEME_CULT, sacrificial, first_invoker, TRUE, get_turf(src))
 		var/mob/living/silicon/robot/sacriborg = sacrificial
+		sacrificial.log_message("was sacrificed as a cyborg.", LOG_GAME)
 		sacriborg.mmi = null
 		qdel(sacrificial)
 		return TRUE
 	var/obj/item/soulstone/stone = new /obj/item/soulstone(get_turf(src))
 	if(sacrificial.mind && !sacrificial.suiciding)
-		stone.invisibility = INVISIBILITY_MAXIMUM //so it's not picked up during transfer_soul()
 		stone.capture_soul(sacrificial, first_invoker, TRUE)
-		stone.invisibility = 0
 
 	if(sacrificial)
 		playsound(sacrificial, 'sound/magic/disintegrate.ogg', 100, TRUE)
-		sacrificial.gib(TRUE)
+		sacrificial.gib()
 	return TRUE
 
 /obj/effect/rune/empower
@@ -387,6 +386,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/teleport/Destroy()
 	LAZYREMOVE(GLOB.teleport_runes, src)
+	if(inner_portal)
+		QDEL_NULL(inner_portal)
+	if(outer_portal)
+		QDEL_NULL(outer_portal)
 	return ..()
 
 /obj/effect/rune/teleport/invoke(list/invokers)
@@ -399,14 +402,14 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 	if(!length(potential_runes))
 		to_chat(user, span_warning("There are no valid runes to teleport to!"))
-		log_game("Teleport rune failed - no other teleport runes")
+		log_game("Teleport rune activated by [user] at [COORD(src)] failed - no other teleport runes.")
 		fail_invoke()
 		return
 
 	var/turf/T = get_turf(src)
 	if(is_away_level(T.z))
 		to_chat(user, "<span class='cult italic'>You are not in the right dimension!</span>")
-		log_game("Teleport rune failed - user in away mission")
+		log_game("Teleport rune activated by [user] at [COORD(src)] failed - [user] is in away mission.")
 		fail_invoke()
 		return
 
@@ -424,6 +427,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/turf/target = get_turf(actual_selected_rune)
 	if(target.is_blocked_turf(TRUE))
 		to_chat(user, span_warning("The target rune is blocked. Attempting to teleport to it would be massively unwise."))
+		log_game("Teleport rune activated by [user] at [COORD(src)] failed - destination blocked.")
 		fail_invoke()
 		return
 	var/movedsomething = FALSE
@@ -485,8 +489,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	addtimer(CALLBACK(src, .proc/close_portal), 600, TIMER_UNIQUE)
 
 /obj/effect/rune/teleport/proc/close_portal()
-	qdel(inner_portal)
-	qdel(outer_portal)
+	QDEL_NULL(inner_portal)
+	QDEL_NULL(outer_portal)
 	desc = initial(desc)
 	set_light_range(0)
 	update_light()
@@ -532,7 +536,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(locate(/obj/narsie) in SSpoints_of_interest.narsies)
 		for(var/invoker in invokers)
 			to_chat(invoker, span_warning("Nar'Sie is already on this plane!"))
-		log_game("Nar'Sie rune failed - already summoned")
+		log_game("Nar'Sie rune activated by [user] at [COORD(src)] failed - already summoned.")
 		return
 
 	//BEGIN THE SUMMONING
@@ -579,7 +583,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			potential_revive_mobs |= M
 	if(!length(potential_revive_mobs))
 		to_chat(user, "<span class='cult italic'>There are no dead cultists on the rune!</span>")
-		log_game("Raise Dead rune failed - no cultists to revive")
+		log_game("Raise Dead rune activated by [user] at [COORD(src)] failed - no cultists to revive.")
 		fail_invoke()
 		return
 	if(length(potential_revive_mobs) > 1)
@@ -633,7 +637,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return FALSE
 	if(!(target_mob in T.contents))
 		to_chat(user, "<span class='cult italic'>The cultist to revive has been moved!</span>")
-		log_game("Raise Dead rune failed - revival target moved")
+		log_game("Raise Dead rune activated by [user] at [COORD(src)] failed - revival target moved.")
 		return FALSE
 	return TRUE
 
@@ -691,32 +695,38 @@ structure_check() searches for nearby cultist structures required for the invoca
 		fail_invoke()
 		return
 	var/mob/living/cultist_to_summon = tgui_input_list(user, "Who do you wish to call to [src]?", "Followers of the Geometer", cultists)
+	var/fail_logmsg = "Summon Cultist rune activated by [user] at [COORD(src)] failed - "
 	if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated())
 		return
 	if(isnull(cultist_to_summon))
 		to_chat(user, "<span class='cult italic'>You require a summoning target!</span>")
+		fail_logmsg += "no target."
+		log_game(fail_logmsg)
 		fail_invoke()
-		log_game("Summon Cultist rune failed - no target")
 		return
 	if(cultist_to_summon.stat == DEAD)
 		to_chat(user, "<span class='cult italic'>[cultist_to_summon] has died!</span>")
+		fail_logmsg += "target died."
+		log_game(fail_logmsg)
 		fail_invoke()
-		log_game("Summon Cultist rune failed - target died")
 		return
 	if(cultist_to_summon.pulledby || cultist_to_summon.buckled)
 		to_chat(user, "<span class='cult italic'>[cultist_to_summon] is being held in place!</span>")
+		fail_logmsg += "target restrained."
+		log_game(fail_logmsg)
 		fail_invoke()
-		log_game("Summon Cultist rune failed - target restrained")
 		return
 	if(!IS_CULTIST(cultist_to_summon))
 		to_chat(user, "<span class='cult italic'>[cultist_to_summon] is not a follower of the Geometer!</span>")
+		fail_logmsg += "target deconverted."
+		log_game(fail_logmsg)
 		fail_invoke()
-		log_game("Summon Cultist rune failed - target was deconverted")
 		return
 	if(is_away_level(cultist_to_summon.z))
 		to_chat(user, "<span class='cult italic'>[cultist_to_summon] is not in our dimension!</span>")
+		fail_logmsg += "target is in away mission."
+		log_game(fail_logmsg)
 		fail_invoke()
-		log_game("Summon Cultist rune failed - target in away mission")
 		return
 	cultist_to_summon.visible_message(span_warning("[cultist_to_summon] suddenly disappears in a flash of red light!"), \
 									  "<span class='cult italic'><b>Overwhelming vertigo consumes you as you are hurled through the air!</b></span>")
@@ -903,9 +913,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 	no_brain = TRUE
 	. = ..()
 
-/mob/living/carbon/human/cult_ghost/getorganszone(zone, subzones = 0)
+/mob/living/carbon/human/cult_ghost/getorganszone(zone, include_children)
 	. = ..()
-	for(var/obj/item/organ/brain/B in .) //they're not that smart, really
+	for(var/obj/item/organ/internal/brain/B in .) //they're not that smart, really
 		. -= B
 
 
@@ -925,6 +935,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(rune_in_use)
 		return
 	. = ..()
+
 	var/area/place = get_area(src)
 	var/mob/living/user = invokers[1]
 	var/datum/antagonist/cult/user_antag = user.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
@@ -935,8 +946,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(!(place in summon_objective.summon_spots))
 		to_chat(user, span_cultlarge("The Apocalypse rune will remove a ritual site, where Nar'Sie can be summoned, it can only be scribed in [english_list(summon_objective.summon_spots)]!"))
 		return
+
 	summon_objective.summon_spots -= place
 	rune_in_use = TRUE
+
 	var/turf/T = get_turf(src)
 	new /obj/effect/temp_visual/dir_setting/curse/grasp_portal/fading(T)
 	var/intensity = 0
@@ -945,20 +958,23 @@ structure_check() searches for nearby cultist structures required for the invoca
 			intensity++
 	intensity = max(60, 360 - (360*(intensity/length(GLOB.player_list) + 0.3)**2)) //significantly lower intensity for "winning" cults
 	var/duration = intensity*10
+
 	playsound(T, 'sound/magic/enter_blood.ogg', 100, TRUE)
 	visible_message(span_warning("A colossal shockwave of energy bursts from the rune, disintegrating it in the process!"))
+
 	for(var/mob/living/target in range(src, 3))
 		target.Paralyze(30)
 	empulse(T, 0.42*(intensity), 1)
+
 	var/list/images = list()
 	var/zmatch = T.z
-	var/datum/atom_hud/AH = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
+	var/datum/atom_hud/sec_hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	for(var/mob/living/M in GLOB.alive_mob_list)
 		if(M.z != zmatch)
 			continue
 		if(ishuman(M))
 			if(!IS_CULTIST(M))
-				AH.remove_hud_from(M)
+				sec_hud.hide_from(M)
 				addtimer(CALLBACK(GLOBAL_PROC, .proc/hudFix, M), duration)
 			var/image/A = image('icons/mob/cult.dmi',M,"cultist", ABOVE_MOB_LAYER)
 			A.override = 1
@@ -1050,5 +1066,5 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return
 	var/obj/O = target.get_item_by_slot(ITEM_SLOT_EYES)
 	if(istype(O, /obj/item/clothing/glasses/hud/security))
-		var/datum/atom_hud/AH = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
-		AH.add_hud_to(target)
+		var/datum/atom_hud/sec_hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
+		sec_hud.show_to(target)

@@ -6,7 +6,7 @@
 /obj/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/door/poddoor/shutters{
 	id = "syndieshutters";
-	name = "blast shutters"
+	name = "Blast Shutters"
 	},
 /obj/structure/grille,
 /turf/open/floor/plating,
@@ -32,17 +32,17 @@
 "ag" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light/directional/west,
-/obj/item/reagent_containers/food/drinks/bottle/whiskey{
+/obj/item/reagent_containers/cup/glass/bottle/whiskey{
 	desc = "A bottle of whiskey. There's a label that reads 'tears' taped to the front.";
 	name = "Bottle of Tears";
 	pixel_x = 3;
 	pixel_y = 5
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = -7;
 	pixel_y = 10
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = -7;
 	pixel_y = 4
 	},
@@ -133,7 +133,7 @@
 	id = "syndieshutters";
 	name = "Bridge View Toggle";
 	pixel_y = 7;
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -255,12 +255,12 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/airlock/hatch{
 	id_tag = "infiltrator_bridge";
-	name = "Infiltrator Bridge";
-	req_access_txt = "150"
+	name = "Infiltrator Bridge"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/bridge)
 "aB" = (
@@ -325,7 +325,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
 "aJ" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/secure_area,
 /turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/airlock)
 "aK" = (
@@ -383,10 +383,10 @@
 /area/shuttle/syndicate/eva)
 "aR" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Preparation Room";
-	req_access_txt = "150"
+	name = "Preparation Room"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/eva)
 "aS" = (
@@ -441,10 +441,10 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/hatch{
-	name = "Infiltrator Access";
-	req_access_txt = "150"
+	name = "Infiltrator Access"
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/hallway)
 "aX" = (
@@ -535,10 +535,10 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/hatch{
-	name = "Infiltrator Access";
-	req_access_txt = "150"
+	name = "Infiltrator Access"
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/hallway)
 "bf" = (
@@ -595,7 +595,7 @@
 /obj/item/reagent_containers/hypospray/medipen{
 	pixel_y = -6
 	},
-/obj/item/reagent_containers/glass/bottle/multiver,
+/obj/item/reagent_containers/cup/bottle/multiver,
 /obj/structure/table/reinforced,
 /obj/machinery/light/directional/north,
 /obj/effect/decal/cleanable/dirt,
@@ -642,7 +642,7 @@
 /obj/machinery/button/door/directional/north{
 	id = "infiltrator_portblast";
 	name = "Infiltrator Port Hatch Control";
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/airlock)
@@ -655,7 +655,7 @@
 /obj/machinery/button/door/directional/east{
 	id = "infiltrator_medbay";
 	name = "Infiltrator Medical Bay Toggle";
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/medical)
@@ -786,8 +786,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/structure/sign/departments/medbay/alt{
-	pixel_x = -32;
+/obj/structure/sign/departments/medbay/alt/directional/west{
 	pixel_y = -32
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -913,7 +912,7 @@
 /obj/machinery/door/window{
 	dir = 1;
 	name = "Surgery Chamber";
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium,
@@ -967,6 +966,7 @@
 	id_tag = "infiltrator_portdoor";
 	name = "Infiltrator Port Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/airlock)
 "ca" = (
@@ -1000,13 +1000,13 @@
 /area/shuttle/syndicate/medical)
 "cd" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Preparation Room";
-	req_access_txt = "150"
+	name = "Preparation Room"
 	},
 /obj/effect/turf_decal/delivery,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/eva)
 "ce" = (
@@ -1071,7 +1071,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/medical)
 "ck" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/secure_area,
 /turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/hallway)
 "cl" = (
@@ -1154,7 +1154,7 @@
 /obj/machinery/button/door/directional/west{
 	id = "infiltrator_armorybay";
 	name = "Infiltrator Armory Bay Toggle";
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/armory)
@@ -1341,7 +1341,7 @@
 /obj/machinery/button/door/directional/north{
 	id = "infiltrator_starboardblast";
 	name = "Infiltrator Starboard Hatch Control";
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/airlock)
@@ -1433,14 +1433,14 @@
 /area/shuttle/syndicate/airlock)
 "dg" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Preparation Room";
-	req_access_txt = "150"
+	name = "Preparation Room"
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/eva)
 "dh" = (
@@ -1526,9 +1526,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/airlock)
 "do" = (
-/obj/structure/sign/departments/engineering{
-	pixel_x = 32
-	},
+/obj/structure/sign/departments/engineering/directional/east,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/caution/stand_clear,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -1576,9 +1574,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/armory)
 "dt" = (
-/obj/structure/sign/departments/medbay/alt{
-	pixel_x = -32
-	},
+/obj/structure/sign/departments/medbay/alt/directional/west,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/caution/stand_clear,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -1688,8 +1684,7 @@
 /area/shuttle/syndicate/hallway)
 "dD" = (
 /obj/structure/mirror/directional/west,
-/obj/machinery/shower{
-	dir = 4;
+/obj/machinery/shower/directional/east{
 	name = "emergency shower"
 	},
 /obj/effect/turf_decal/box,
@@ -1773,9 +1768,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
-/obj/structure/sign/warning/electricshock{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/electric_shock/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/north,
 /obj/structure/cable,
@@ -1856,8 +1849,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/structure/sign/departments/engineering{
-	pixel_x = 32;
+/obj/structure/sign/departments/engineering/directional/east{
 	pixel_y = -32
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -1955,15 +1947,14 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/warning/nosmoking{
+/obj/structure/sign/warning/no_smoking{
 	pixel_x = 28
 	},
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/armory)
 "ec" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Ordnance Storage";
-	req_access_txt = "150"
+	name = "Ordnance Storage"
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -1973,6 +1964,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/hallway)
 "ed" = (
@@ -2040,7 +2032,7 @@
 /obj/machinery/door/window{
 	dir = 1;
 	name = "Systems Chamber";
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium,
@@ -2059,8 +2051,7 @@
 /area/shuttle/syndicate/eva)
 "ek" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Ordnance Storage";
-	req_access_txt = "150"
+	name = "Ordnance Storage"
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -2070,6 +2061,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/hallway)
 "el" = (
@@ -2129,9 +2121,7 @@
 /area/shuttle/syndicate/armory)
 "ep" = (
 /obj/structure/mirror/directional/north,
-/obj/structure/sink{
-	pixel_y = 24
-	},
+/obj/structure/sink/directional/south,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1

@@ -13,7 +13,7 @@ Slimecrossing Armor
 	body_parts_covered = NONE
 	w_class = WEIGHT_CLASS_SMALL
 	clothing_traits = list(TRAIT_NOBREATH)
-	permeability_coefficient = 0.5
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
 	flags_cover = MASKCOVERSMOUTH
 	resistance_flags = NONE
 
@@ -129,6 +129,8 @@ Slimecrossing Armor
 	name = "adamantine armor"
 	desc = "A full suit of adamantine plate armor. Impressively resistant to damage, but weighs about as much as you do."
 	icon_state = "adamsuit"
+	icon = 'icons/obj/clothing/suits/armor.dmi'
+	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	inhand_icon_state = "adamsuit"
 	flags_inv = NONE
 	obj_flags = IMMUTABLE_SLOW

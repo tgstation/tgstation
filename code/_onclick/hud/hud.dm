@@ -78,8 +78,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/atom/movable/screen/healths
 	var/atom/movable/screen/stamina
 	var/atom/movable/screen/healthdoll
-	var/atom/movable/screen/internals
-	var/atom/movable/screen/wanted/wanted_lvl
 	var/atom/movable/screen/spacesuit
 	// subtypes can override this to force a specific UI style
 	var/ui_style
@@ -117,6 +115,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	owner.overlay_fullscreen("see_through_darkness", /atom/movable/screen/fullscreen/see_through_darkness)
 
+	AddComponent(/datum/component/zparallax, owner.client)
+
 /datum/hud/Destroy()
 	if(mymob.hud_used == src)
 		mymob.hud_used = null
@@ -144,8 +144,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	healths = null
 	stamina = null
 	healthdoll = null
-	wanted_lvl = null
-	internals = null
 	spacesuit = null
 	blobpwrdisplay = null
 	alien_plasma_display = null
@@ -343,6 +341,11 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	return
 
 /datum/hud/proc/position_action(atom/movable/screen/movable/action_button/button, position)
+	// This is kinda a hack, I'm sorry.
+	// Basically, FLOATING is never a valid position to pass into this proc. It exists as a generic marker for manually positioned buttons
+	// Not as a position to target
+	if(position == SCRN_OBJ_FLOATING)
+		return
 	if(button.location != SCRN_OBJ_DEFAULT)
 		hide_action(button)
 	switch(position)
@@ -354,6 +357,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 			listed_actions.insert_action(button)
 		if(SCRN_OBJ_IN_PALETTE)
 			palette_actions.insert_action(button)
+		if(SCRN_OBJ_INSERT_FIRST)
+			listed_actions.insert_action(button, index = 1)
+			position = SCRN_OBJ_IN_LIST
 		else // If we don't have it as a define, this is a screen_loc, and we should be floating
 			floating_actions += button
 			button.screen_loc = position
@@ -431,8 +437,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		var/atom/movable/screen/movable/action_button/button = action.viewers[src]
 		if(!button)
 			action.ShowTo(mymob)
-			button = action.viewers[src]
-		position_action(button, button.location)
+		else
+			position_action(button, button.location)
 
 /datum/action_group
 	/// The hud we're owned by

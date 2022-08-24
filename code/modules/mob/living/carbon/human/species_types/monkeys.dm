@@ -7,8 +7,9 @@
 	attack_effect = ATTACK_EFFECT_BITE
 	attack_sound = 'sound/weapons/bite.ogg'
 	miss_sound = 'sound/weapons/bite.ogg'
-	mutant_organs = list(/obj/item/organ/tail/monkey)
-	mutant_bodyparts = list("tail_monkey" = "Monkey")
+	external_organs = list(
+		/obj/item/organ/external/tail/monkey = "Monkey"
+	)
 	skinned_type = /obj/item/stack/sheet/animalhide/monkey
 	meat = /obj/item/food/meat/slab/monkey
 	knife_butcher_results = list(/obj/item/food/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
@@ -24,20 +25,20 @@
 	)
 	inherent_traits = list(
 		TRAIT_CAN_STRIP,
-		TRAIT_VENTCRAWLER_NUDE,
-		TRAIT_PRIMITIVE,
-		TRAIT_WEAK_SOUL,
 		TRAIT_GUN_NATURAL,
+		//TRAIT_LITERATE,
+		TRAIT_PRIMITIVE,
+		TRAIT_VENTCRAWLER_NUDE,
+		TRAIT_WEAK_SOUL,
 	)
 	no_equip = list(
 		ITEM_SLOT_OCLOTHING,
 		ITEM_SLOT_GLOVES,
 		ITEM_SLOT_FEET,
-		ITEM_SLOT_ICLOTHING,
 		ITEM_SLOT_SUITSTORE,
 	)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN | SLIME_EXTRACT
-	liked_food = MEAT | FRUIT
+	liked_food = MEAT | FRUIT | BUGS
 	disliked_food = CLOTH
 	damage_overlay_type = "monkey"
 	sexes = FALSE
@@ -54,7 +55,7 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/monkey,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/monkey,
 	)
-	fire_overlay = "Monkey_burning"
+	fire_overlay = "monkey"
 	dust_anim = "dust-m"
 	gib_anim = "gibbed-m"
 
@@ -71,10 +72,6 @@
 	. = ..()
 	H.pass_flags |= PASSTABLE
 	H.butcher_results = knife_butcher_results
-	if(!H.dna.features["tail_monkey"] || H.dna.features["tail_monkey"] == "None")
-		H.dna.features["tail_monkey"] = "Monkey"
-		handle_mutant_bodyparts(H)
-
 	H.dna.add_mutation(/datum/mutation/human/race, MUT_NORMAL)
 	H.dna.activate_mutation(/datum/mutation/human/race)
 
@@ -96,7 +93,7 @@
 		var/obj/item/bodypart/affecting = null
 		if(ishuman(victim))
 			var/mob/living/carbon/human/human_victim = victim
-			affecting = human_victim.get_bodypart(pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+			affecting = human_victim.get_bodypart(human_victim.get_random_valid_zone(even_weights = TRUE))
 		var/armor = victim.run_armor_check(affecting, MELEE)
 		if(prob(25))
 			victim.visible_message(span_danger("[user]'s bite misses [victim]!"),

@@ -33,26 +33,29 @@
 	wound_bonus = 10
 	bare_wound_bonus = 15
 	custom_materials = list(/datum/material/iron=70, /datum/material/glass=30)
-	///Whether the welding tool is on or off.
+	/// Whether the welding tool is on or off.
 	var/welding = FALSE
-	var/status = TRUE //Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
-	var/max_fuel = 20 //The max amount of fuel the welder can hold
-	var/change_icons = 1
-	var/can_off_process = 0
-	var/burned_fuel_for = 0 //when fuel was last removed
-	var/acti_sound = 'sound/items/welderactivate.ogg'
-	var/deac_sound = 'sound/items/welderdeactivate.ogg'
+	/// Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
+	var/status = TRUE
+	/// The max amount of fuel the welder can hold
+	var/max_fuel = 20
+	/// Whether or not we're changing the icon based on fuel left.
+	var/change_icons = TRUE
+	/// Used in process(), dictates whether or not we're calling STOP_PROCESSING whilst we're not welding.
+	var/can_off_process = FALSE
+	/// When fuel was last removed.
+	var/burned_fuel_for = 0
+
+	var/activation_sound = 'sound/items/welderactivate.ogg'
+	var/deactivation_sound = 'sound/items/welderdeactivate.ogg'
 
 /obj/item/weldingtool/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
+	AddElement(/datum/element/tool_flash, light_range)
 	create_reagents(max_fuel)
 	reagents.add_reagent(/datum/reagent/fuel, max_fuel)
 	update_appearance()
-
-/obj/item/weldingtool/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
-	AddElement(/datum/element/tool_flash, light_range)
 
 /obj/item/weldingtool/update_icon_state()
 	if(welding)
@@ -111,8 +114,13 @@
 
 /obj/item/weldingtool/proc/explode()
 	var/plasmaAmount = reagents.get_reagent_amount(/datum/reagent/toxin/plasma)
-	dyn_explosion(src, plasmaAmount/5, explosion_cause = src)//20 plasma in a standard welder has a 4 power explosion. no breaches, but enough to kill/dismember holder
+	dyn_explosion(src, plasmaAmount/5, explosion_cause = src) // 20 plasma in a standard welder has a 4 power explosion. no breaches, but enough to kill/dismember holder
 	qdel(src)
+
+/obj/item/weldingtool/use_tool(atom/target, mob/living/user, delay, amount, volume, datum/callback/extra_checks)
+	target.add_overlay(GLOB.welding_sparks)
+	. = ..()
+	target.cut_overlay(GLOB.welding_sparks)
 
 /obj/item/weldingtool/attack(mob/living/carbon/human/attacked_humanoid, mob/living/user)
 	if(!istype(attacked_humanoid))
@@ -139,9 +147,9 @@
 	if(isOn() && !QDELETED(attacked_atom) && isliving(attacked_atom)) // can't ignite something that doesn't exist
 		handle_fuel_and_temps(1, user)
 		var/mob/living/attacked_mob = attacked_atom
-		if(attacked_mob.IgniteMob())
+		if(attacked_mob.ignite_mob())
 			message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(attacked_mob)] on fire with [src] at [AREACOORD(user)]")
-			log_game("[key_name(user)] set [key_name(attacked_mob)] on fire with [src] at [AREACOORD(user)]")
+			user.log_message("set [key_name(attacked_mob)] on fire with [src].", LOG_ATTACK)
 
 	if(!status && attacked_atom.is_refillable())
 		reagents.trans_to(attacked_atom, reagents.total_volume, transfered_by = user)
@@ -158,32 +166,31 @@
 
 		if(!QDELETED(attacked_atom) && isliving(attacked_atom)) // can't ignite something that doesn't exist
 			var/mob/living/attacked_mob = attacked_atom
-			if(attacked_mob.IgniteMob())
-				message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(attacked_mob)] on fire with [src] at [AREACOORD(user)]")
-				log_game("[key_name(user)] set [key_name(attacked_mob)] on fire with [src] at [AREACOORD(user)]")
+			if(attacked_mob.ignite_mob())
+				message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(attacked_mob)] on fire with [src] at [AREACOORD(user)].")
+				user.log_message("set [key_name(attacked_mob)] on fire with [src]", LOG_ATTACK)
 
 
 /obj/item/weldingtool/attack_self(mob/user)
 	if(src.reagents.has_reagent(/datum/reagent/toxin/plasma))
 		message_admins("[ADMIN_LOOKUPFLW(user)] activated a rigged welder at [AREACOORD(user)].")
+		user.log_message("activated a rigged welder", LOG_VICTIM)
 		explode()
 	switched_on(user)
 
 	update_appearance()
 
-
-// Ah fuck, I can't believe you've done this
 /obj/item/weldingtool/proc/handle_fuel_and_temps(used = 0, mob/living/user)
 	use(used)
 	var/turf/location = get_turf(user)
 	location.hotspot_expose(700, 50, 1)
 
-// Returns the amount of fuel in the welder
+/// Returns the amount of fuel in the welder
 /obj/item/weldingtool/proc/get_fuel()
 	return reagents.get_reagent_amount(/datum/reagent/fuel)
 
 
-// Uses fuel from the welding tool.
+/// Uses fuel from the welding tool.
 /obj/item/weldingtool/use(used = 0)
 	if(!isOn() || !check_fuel())
 		return FALSE
@@ -199,7 +206,7 @@
 		return FALSE
 
 
-//Toggles the welding value.
+/// Toggles the welding value.
 /obj/item/weldingtool/proc/set_welding(new_value)
 	if(welding == new_value)
 		return
@@ -208,7 +215,7 @@
 	set_light_on(welding)
 
 
-//Turns off the welder if there is no more fuel (does this really need to be its own proc?)
+/// Turns off the welder if there is no more fuel (does this really need to be its own proc?)
 /obj/item/weldingtool/proc/check_fuel(mob/user)
 	if(get_fuel() <= 0 && welding)
 		set_light_on(FALSE)
@@ -217,7 +224,7 @@
 		return FALSE
 	return TRUE
 
-//Switches the welder on
+// /Switches the welder on
 /obj/item/weldingtool/proc/switched_on(mob/user)
 	if(!status)
 		to_chat(user, span_warning("[src] can't be turned on while unsecured!"))
@@ -225,22 +232,20 @@
 	set_welding(!welding)
 	if(welding)
 		if(get_fuel() >= 1)
-			to_chat(user, span_notice("You switch [src] on."))
-			playsound(loc, acti_sound, 50, TRUE)
+			playsound(loc, activation_sound, 50, TRUE)
 			force = 15
 			damtype = BURN
 			hitsound = 'sound/items/welder.ogg'
 			update_appearance()
 			START_PROCESSING(SSobj, src)
 		else
-			to_chat(user, span_warning("You need more fuel!"))
+			balloon_alert(user, "no fuel!")
 			switched_off(user)
 	else
-		to_chat(user, span_notice("You switch [src] off."))
-		playsound(loc, deac_sound, 50, TRUE)
+		playsound(loc, deactivation_sound, 50, TRUE)
 		switched_off(user)
 
-//Switches the welder off
+/// Switches the welder off
 /obj/item/weldingtool/proc/switched_off(mob/user)
 	set_welding(FALSE)
 
@@ -257,11 +262,11 @@
 /obj/item/weldingtool/get_temperature()
 	return welding * heat
 
-//Returns whether or not the welding tool is currently on.
+/// Returns whether or not the welding tool is currently on.
 /obj/item/weldingtool/proc/isOn()
 	return welding
 
-// If welding tool ran out of fuel during a construction task, construction fails.
+/// If welding tool ran out of fuel during a construction task, construction fails.
 /obj/item/weldingtool/tool_use_check(mob/living/user, amount)
 	if(!isOn() || !check_fuel())
 		to_chat(user, span_warning("[src] has to be on to complete this task!"))
@@ -273,7 +278,7 @@
 		to_chat(user, span_warning("You need more welding fuel to complete this task!"))
 		return FALSE
 
-
+/// Ran when the welder is attacked by a screwdriver.
 /obj/item/weldingtool/proc/flamethrower_screwdriver(obj/item/tool, mob/user)
 	if(welding)
 		to_chat(user, span_warning("Turn it off first!"))
@@ -287,6 +292,7 @@
 		reagents.flags |= OPENCONTAINER
 	add_fingerprint(user)
 
+/// First step of building a flamethrower (when a welder is attacked by rods)
 /obj/item/weldingtool/proc/flamethrower_rods(obj/item/tool, mob/user)
 	if(!status)
 		var/obj/item/stack/rods/used_rods = tool
@@ -373,9 +379,10 @@
 	inhand_icon_state = "exwelder"
 	max_fuel = 40
 	custom_materials = list(/datum/material/iron = 1000, /datum/material/glass = 500, /datum/material/plasma = 1500, /datum/material/uranium = 200)
-	change_icons = 0
-	can_off_process = 1
+	change_icons = FALSE
+	can_off_process = TRUE
 	light_range = 1
+	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.5
 	var/last_gen = 0
 	var/nextrefueltick = 0

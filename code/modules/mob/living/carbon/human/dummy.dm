@@ -38,11 +38,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			current_organ.Remove(src, special = TRUE) //Please don't somehow kill our dummy
 			SSwardrobe.stash_object(current_organ)
 
-	for(var/obj/item/organ/external/organ in internal_organs)
-		if(organ.type in current_species.external_organs)
-			organ.Remove(src)
-			SSwardrobe.stash_object(organ)
-
 //Instead of just deleting our equipment, we save what we can and reinsert it into SSwardrobe's store
 //Hopefully this makes preference reloading not the worst thing ever
 /mob/living/carbon/human/dummy/delete_equipment()
@@ -101,8 +96,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	dna.features["moth_wings"] = "Plain"
 	dna.features["snout"] = "Round"
 	dna.features["spines"] = "None"
-	dna.features["tail_human"] = "None"
+	dna.features["tail_cat"] = "None"
 	dna.features["tail_lizard"] = "Smooth"
+	dna.features["pod_hair"] = "Ivy"
 
 //Inefficient pooling/caching way.
 GLOBAL_LIST_EMPTY(human_dummy_list)
@@ -120,6 +116,7 @@ GLOBAL_LIST_EMPTY(dummy_mob_list)
 		GLOB.dummy_mob_list += D
 	else
 		D.regenerate_icons() //they were cut in wipe_state()
+		D.update_body_parts(update_limb_data = TRUE)
 	D.in_use = TRUE
 	return D
 

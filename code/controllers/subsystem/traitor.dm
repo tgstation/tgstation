@@ -37,6 +37,8 @@ SUBSYSTEM_DEF(traitor)
 	var/generate_objectives = TRUE
 	/// Objectives that have been completed by type. Used for limiting objectives.
 	var/list/taken_objectives_by_type = list()
+	/// A list of all existing objectives by type
+	var/list/all_objectives_by_type = list()
 
 /datum/controller/subsystem/traitor/Initialize(start_timeofday)
 	. = ..()
@@ -97,13 +99,17 @@ SUBSYSTEM_DEF(traitor)
 	if(!istype(objective))
 		return
 
-	var/datum/traitor_objective/current_type = objective.type
-	while(current_type != /datum/traitor_objective)
-		if(!taken_objectives_by_type[current_type])
-			taken_objectives_by_type[current_type] = list(objective)
-		else
-			taken_objectives_by_type[current_type] += objective
-		current_type = type2parent(current_type)
+	add_objective_to_list(objective, taken_objectives_by_type)
 
 /datum/controller/subsystem/traitor/proc/get_taken_count(datum/traitor_objective/objective_type)
 	return length(taken_objectives_by_type[objective_type])
+
+
+/datum/controller/subsystem/traitor/proc/add_objective_to_list(datum/traitor_objective/objective, list/objective_list)
+	var/datum/traitor_objective/current_type = objective.type
+	while(current_type != /datum/traitor_objective)
+		if(!objective_list[current_type])
+			objective_list[current_type] = list(objective)
+		else
+			objective_list[current_type] += objective
+		current_type = type2parent(current_type)

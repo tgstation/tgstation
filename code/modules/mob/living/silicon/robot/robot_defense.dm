@@ -204,7 +204,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		..()
 	return
 
-/mob/living/silicon/robot/attack_slime(mob/living/simple_animal/slime/M)
+/mob/living/silicon/robot/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
 	if(..()) //successful slime shock
 		flash_act()
 		var/stunprob = M.powerlevel * 7 + 10
@@ -312,7 +312,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 
 /mob/living/silicon/robot/fire_act()
 	if(!on_fire) //Silicons don't gain stacks from hotspots, but hotspots can ignite them
-		IgniteMob()
+		ignite_mob()
 
 /mob/living/silicon/robot/emp_act(severity)
 	. = ..()
@@ -363,7 +363,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	lawupdate = FALSE
 	set_connected_ai(null)
 	message_admins("[ADMIN_LOOKUPFLW(user)] emagged cyborg [ADMIN_LOOKUPFLW(src)].  Laws overridden.")
-	log_silicon("EMAG: [key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
+	log_silicon("EMAG: [key_name(user)] emagged cyborg [key_name(src)]. Laws overridden.")
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	if(user)
 		GLOB.lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")

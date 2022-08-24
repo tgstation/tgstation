@@ -15,9 +15,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "af" = (
-/obj/structure/sign/warning/vacuum{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/vacuum/directional/north,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
@@ -28,9 +26,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "ah" = (
-/obj/structure/sign/warning/vacuum{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/vacuum/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "ai" = (
@@ -68,7 +64,7 @@
 "ap" = (
 /obj/structure/table,
 /obj/machinery/light/directional/west,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "aq" = (
@@ -200,7 +196,7 @@
 "aQ" = (
 /obj/structure/closet/crate/radiation,
 /obj/item/clothing/head/radiation,
-/obj/item/clothing/suit/radiation,
+/obj/item/clothing/suit/utility/radiation,
 /obj/item/geiger_counter,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
@@ -293,9 +289,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost)
 "bk" = (
-/obj/structure/sign/warning/vacuum{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/vacuum/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost)
 "bl" = (
@@ -323,9 +317,7 @@
 "bo" = (
 /obj/structure/alien/weeds/creature,
 /obj/structure/glowshroom/single,
-/obj/structure/sign/warning/vacuum{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/vacuum/directional/north,
 /obj/effect/decal/cleanable/blood/old{
 	dir = 4;
 	icon_state = "trails_1";
@@ -589,9 +581,9 @@
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "cr" = (
 /obj/machinery/door/airlock/engineering{
-	name = "Power Storage";
-	req_access_txt = "10"
+	name = "Power Storage"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/structure/barricade/wooden,
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -612,7 +604,7 @@
 /obj/machinery/door/airlock/public/glass,
 /obj/machinery/door/poddoor{
 	id = "bigderelictcheckpoint";
-	name = "checkpoint security doors"
+	name = "Checkpoint Security Doors"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -1414,9 +1406,9 @@
 "Gy" = (
 /obj/machinery/door/airlock/security/glass{
 	id_tag = "innerbrig";
-	name = "Security Checkpoint";
-	req_access_txt = "63"
+	name = "Security Checkpoint"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/derelictoutpost)

@@ -25,7 +25,7 @@
 /proc/get_airlock_overlay(icon_state, icon_file, em_block)
 	var/static/list/airlock_overlays = list()
 
-	var/base_icon_key = "[icon_state][icon_file]"
+	var/base_icon_key = "[icon_state][REF(icon_file)]"
 	if(!(. = airlock_overlays[base_icon_key]))
 		. = airlock_overlays[base_icon_key] = mutable_appearance(icon_file, icon_state)
 	if(isnull(em_block))
@@ -84,7 +84,7 @@
 #define DOOR_VISION_DISTANCE 11 ///The maximum distance a door will see out to
 
 /obj/machinery/door/airlock
-	name = "airlock"
+	name = "Airlock"
 	icon = 'icons/obj/doors/airlocks/station/public.dmi'
 	icon_state = "closed"
 	max_integrity = 300
@@ -92,9 +92,6 @@
 	integrity_failure = 0.25
 	damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_N
 	autoclose = TRUE
-	secondsElectrified = MACHINE_NOT_ELECTRIFIED //How many seconds remain until the door is no longer electrified. -1/MACHINE_ELECTRIFIED_PERMANENT = permanently electrified until someone fixes it.
-	assemblytype = /obj/structure/door_assembly
-	normalspeed = 1
 	explosion_block = 1
 	hud_possible = list(DIAG_AIRLOCK_HUD)
 	smoothing_groups = list(SMOOTH_GROUP_AIRLOCK)
@@ -102,6 +99,8 @@
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
 	blocks_emissive = NONE // Custom emissive blocker. We don't want the normal behavior.
 
+	///The type of door frame to drop during deconstruction
+	var/assemblytype = /obj/structure/door_assembly
 	var/security_level = 0 //How much are wires secured
 	var/aiControlDisabled = AI_WIRE_NORMAL //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
 	var/hackProof = FALSE // if true, this door can't be hacked by the AI
@@ -121,6 +120,8 @@
 	var/obj/item/seal
 	var/detonated = FALSE
 	var/abandoned = FALSE
+	///Controls if the door closes quickly or not. FALSE = the door autocloses in 1.5 seconds, TRUE = 8 seconds - see autoclose_in()
+	var/normalspeed = TRUE
 	var/cutAiWire = FALSE
 	var/autoname = FALSE
 	var/doorOpen = 'sound/machines/airlock.ogg'
@@ -140,6 +141,10 @@
 	var/delayed_close_requested = FALSE // TRUE means the door will automatically close the next time it's opened.
 	var/air_tight = FALSE //TRUE means density will be set as soon as the door begins to close
 	var/prying_so_hard = FALSE
+	///Logging for door electrification.
+	var/shockedby
+	///How many seconds remain until the door is no longer electrified. -1/MACHINE_ELECTRIFIED_PERMANENT = permanently electrified until someone fixes it.
+	var/secondsElectrified = MACHINE_NOT_ELECTRIFIED
 
 	flags_1 = HTML_USE_INITAL_ICON_1
 	rad_insulation = RAD_MEDIUM_INSULATION
@@ -161,9 +166,11 @@
 		max_integrity = normal_integrity
 	if(damage_deflection == AIRLOCK_DAMAGE_DEFLECTION_N && security_level > AIRLOCK_SECURITY_IRON)
 		damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_R
+
 	prepare_huds()
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.add_to_hud(src)
+		diag_hud.add_atom_to_hud(src)
+
 	diag_hud_set_electrified()
 
 	RegisterSignal(src, COMSIG_MACHINERY_BROKEN, .proc/on_break)
@@ -211,11 +218,14 @@
 	FoundDoor.cyclelinkedairlock = src
 	cyclelinkedairlock = FoundDoor
 
-/obj/machinery/door/airlock/vv_edit_var(var_name)
+/obj/machinery/door/airlock/vv_edit_var(var_name, vval)
 	. = ..()
 	switch (var_name)
 		if (NAMEOF(src, cyclelinkeddir))
 			cyclelinkairlock()
+		if (NAMEOF(src, secondsElectrified))
+			set_electrified(vval < MACHINE_NOT_ELECTRIFIED ? MACHINE_ELECTRIFIED_PERMANENT : vval) //negative values are bad mkay (unless they're the intended negative value!)
+
 
 /obj/machinery/door/airlock/check_access_ntnet(datum/netdata/data)
 	return !requiresID() || ..()
@@ -333,7 +343,7 @@
 	QDEL_NULL(note)
 	QDEL_NULL(seal)
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.remove_from_hud(src)
+		diag_hud.remove_atom_from_hud(src)
 	return ..()
 
 /obj/machinery/door/airlock/handle_atom_del(atom/A)
@@ -389,15 +399,12 @@
 		if(secondsMainPowerLost>0)
 			if(!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
 				secondsMainPowerLost -= 1
-				updateDialog()
 			cont = TRUE
 		if(secondsBackupPowerLost>0)
 			if(!wires.is_cut(WIRE_BACKUP1) && !wires.is_cut(WIRE_BACKUP2))
 				secondsBackupPowerLost -= 1
-				updateDialog()
 			cont = TRUE
 	spawnPowerRestoreRunning = FALSE
-	updateDialog()
 	update_appearance()
 
 /obj/machinery/door/airlock/proc/loseMainPower()
@@ -572,6 +579,8 @@
 			. += note.examine(user)
 	if(seal)
 		. += "It's been braced with \a [seal]."
+	if(welded)
+		. += "It's welded shut."
 	if(panel_open)
 		switch(security_level)
 			if(AIRLOCK_SECURITY_NONE)
@@ -760,32 +769,14 @@
 		if(QDELETED(src))
 			return
 
-		secondsElectrified--
-		updateDialog()
+		if(secondsElectrified <= MACHINE_NOT_ELECTRIFIED) //make sure they weren't unelectrified during the sleep.
+			break
+		secondsElectrified = max(MACHINE_NOT_ELECTRIFIED, secondsElectrified - 1) //safety to make sure we don't end up permanently electrified during a timed electrification.
 	// This is to protect against changing to permanent, mid loop.
 	if(secondsElectrified == MACHINE_NOT_ELECTRIFIED)
 		set_electrified(MACHINE_NOT_ELECTRIFIED)
 	else
 		set_electrified(MACHINE_ELECTRIFIED_PERMANENT)
-	updateDialog()
-
-/obj/machinery/door/airlock/Topic(href, href_list, nowindow = 0)
-	// If you add an if(..()) check you must first remove the var/nowindow parameter.
-	// Otherwise it will runtime with this kind of error: null.Topic()
-	if(!nowindow)
-		..()
-	if(!usr.canUseTopic(src) && !isAdminGhostAI(usr))
-		return
-	add_fingerprint(usr)
-
-	if((in_range(src, usr) && isturf(loc)) && panel_open)
-		usr.set_machine(src)
-
-	add_fingerprint(usr)
-	if(!nowindow)
-		updateUsrDialog()
-	else
-		updateDialog()
 
 /obj/machinery/door/airlock/screwdriver_act(mob/living/user, obj/item/tool)
 	if(panel_open && detonated)
@@ -1027,7 +1018,7 @@
 	welded = !welded
 	user.visible_message(span_notice("[user] [welded? "welds shut":"unwelds"] [src]."), \
 		span_notice("You [welded ? "weld the airlock shut":"unweld the airlock"]."))
-	log_game("[key_name(user)] [welded ? "welded":"unwelded"] airlock [src] with [tool] at [AREACOORD(src)]")
+	user.log_message("[welded ? "welded":"unwelded"] airlock [src] with [tool].", LOG_GAME)
 	update_appearance()
 
 /obj/machinery/door/airlock/proc/weld_checks(obj/item/weldingtool/W, mob/user)
@@ -1130,11 +1121,9 @@
 		return
 
 	if(!operating)
-		if(istype(I, /obj/item/fireaxe)) //being fireaxe'd
-			var/obj/item/fireaxe/axe = I
-			if(axe && !axe.wielded)
-				to_chat(user, span_warning("You need to be wielding \the [axe] to do that!"))
-				return
+		if(istype(I, /obj/item/fireaxe) && !HAS_TRAIT(I, TRAIT_WIELDED)) //being fireaxe'd
+			to_chat(user, span_warning("You need to be wielding [I] to do that!"))
+			return
 		INVOKE_ASYNC(src, (density ? .proc/open : .proc/close), 2)
 
 /obj/machinery/door/airlock/open(forced=0)
@@ -1282,9 +1271,9 @@
 	assemblytype = initial(airlock.assemblytype)
 	update_appearance()
 
-/obj/machinery/door/airlock/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
+/obj/machinery/door/airlock/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller, no_id = FALSE)
 	//Airlock is passable if it is open (!density), bot has access, and is not bolted shut or powered off)
-	return !density || (check_access(ID) && !locked && hasPower())
+	return !density || (check_access(ID) && !locked && hasPower() && !no_id)
 
 /obj/machinery/door/airlock/emag_act(mob/user, obj/item/card/emag/doorjack/D)
 	if(!operating && density && hasPower() && !(obj_flags & EMAGGED))
@@ -1357,6 +1346,14 @@
 		panel_open = TRUE
 	wires.cut_all()
 
+/obj/machinery/door/airlock/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_SELF)
+		return
+	if(prob(severity*10 - 20) && (secondsElectrified < 30) && (secondsElectrified != MACHINE_ELECTRIFIED_PERMANENT))
+		set_electrified(30)
+		LAZYADD(shockedby, "\[[time_stamp()]\]EM Pulse")
+
 /obj/machinery/door/airlock/proc/set_electrified(seconds, mob/user)
 	secondsElectrified = seconds
 	diag_hud_set_electrified()
@@ -1383,6 +1380,15 @@
 	if(atom_integrity < (0.75 * max_integrity))
 		update_appearance()
 
+/obj/machinery/door/airlock/proc/prepare_deconstruction_assembly(obj/structure/door_assembly/assembly)
+	assembly.heat_proof_finished = heat_proof //tracks whether there's rglass in
+	assembly.set_anchored(TRUE)
+	assembly.glass = glass
+	assembly.state = AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS
+	assembly.created_name = name
+	assembly.previous_assembly = previous_airlock
+	assembly.update_name()
+	assembly.update_appearance()
 
 /obj/machinery/door/airlock/deconstruct(disassembled = TRUE, mob/user)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -1392,14 +1398,7 @@
 		else
 			A = new /obj/structure/door_assembly(loc)
 			//If you come across a null assemblytype, it will produce the default assembly instead of disintegrating.
-		A.heat_proof_finished = heat_proof //tracks whether there's rglass in
-		A.set_anchored(TRUE)
-		A.glass = glass
-		A.state = AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS
-		A.created_name = name
-		A.previous_assembly = previous_airlock
-		A.update_name()
-		A.update_appearance()
+		prepare_deconstruction_assembly(A)
 
 		if(!disassembled)
 			A?.update_integrity(A.max_integrity * 0.5)
@@ -1455,7 +1454,7 @@
 		return
 	else if(istype(note, /obj/item/paper))
 		var/obj/item/paper/pinned_paper = note
-		if(pinned_paper.info && pinned_paper.show_written_words)
+		if(pinned_paper.get_total_length() && pinned_paper.show_written_words)
 			return "note_words_[frame_state]"
 		else
 			return "note_[frame_state]"

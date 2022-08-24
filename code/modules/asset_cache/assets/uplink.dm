@@ -31,6 +31,7 @@
 				"restricted_roles" = item.restricted_roles,
 				"restricted_species" = item.restricted_species,
 				"progression_minimum" = item.progression_minimum,
+				"cost_override_string" = item.cost_override_string,
 			))
 		}
 		SStraitor.uplink_items += item

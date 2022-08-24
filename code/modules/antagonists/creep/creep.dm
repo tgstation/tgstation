@@ -6,6 +6,7 @@
 	antag_hud_name = "obsessed"
 	show_name_in_check_antagonists = TRUE
 	roundend_category = "obsessed"
+	count_against_dynamic_roll_chance = FALSE
 	silent = TRUE //not actually silent, because greet will be called by the trauma anyway.
 	suicide_cry = "FOR MY LOVE!!"
 	preview_outfit = /datum/outfit/obsessed
@@ -16,7 +17,7 @@
 	if(!istype(C))
 		to_chat(admin, "[roundend_category] come from a brain trauma, so they need to at least be a carbon!")
 		return
-	if(!C.getorgan(/obj/item/organ/brain)) // If only I had a brain
+	if(!C.getorgan(/obj/item/organ/internal/brain)) // If only I had a brain
 		to_chat(admin, "[roundend_category] come from a brain trauma, so they need to HAVE A BRAIN.")
 		return
 	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner)] into [name].")
@@ -40,7 +41,7 @@
 	var/mob/living/carbon/human/dummy/consistent/victim_dummy = new
 	victim_dummy.hair_color = "#bb9966" // Brown
 	victim_dummy.hairstyle = "Messy"
-	victim_dummy.update_hair()
+	victim_dummy.update_body_parts()
 
 	var/icon/obsessed_icon = render_preview_outfit(preview_outfit)
 	obsessed_icon.Blend(icon('icons/effects/blood.dmi', "uniformblood"), ICON_OVERLAY)
@@ -250,7 +251,7 @@
 /datum/objective/polaroid/update_explanation_text()
 	..()
 	if(target?.current)
-		explanation_text = "Take a photo of [target.name] while they're alive."
+		explanation_text = "Take a photo of [target.name] while they're alive, and keep it in your bag."
 	else
 		explanation_text = "Free Objective"
 

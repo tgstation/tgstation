@@ -7,4 +7,4 @@
 		var/canvas_icons = icon_states(canvas.icon)
 		for(var/frame_type in SSpersistent_paintings.frame_types_by_patronage_tier)
 			if(!("[canvas.icon_state]frame_[frame_type]" in canvas_icons))
-				Fail("Canvas [canvas.icon_state] doesn't have an icon state for frame: [frame_type].")
+				TEST_FAIL("Canvas [canvas.icon_state] doesn't have an icon state for frame: [frame_type].")

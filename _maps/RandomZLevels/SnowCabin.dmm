@@ -102,19 +102,12 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "as" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /obj/structure/mirror/directional/north,
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "at" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 2
-	},
+/obj/structure/sink/directional/east,
 /obj/structure/mirror/directional/north,
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
@@ -185,9 +178,8 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/baseturf_helper/asteroid/snow,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "aF" = (
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -202,9 +194,7 @@
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "aH" = (
-/obj/machinery/shower{
-	dir = 1
-	},
+/obj/machinery/shower/directional/north,
 /obj/structure/curtain,
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
@@ -237,9 +227,8 @@
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "aN" = (
 /obj/structure/chair/wood{
@@ -272,34 +261,32 @@
 	name = "geothermal generator"
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "aR" = (
 /obj/machinery/door/window/right/directional/west{
-	name = "fireplace"
+	name = "Fireplace"
 	},
 /obj/structure/fireplace,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "aS" = (
-/obj/structure/sink/kitchen{
+/obj/structure/sink/kitchen/directional/south{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	name = "sink";
-	pixel_y = 28
+	name = "sink"
 	},
 /obj/structure/janitorialcart,
 /obj/item/mop,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/item/clothing/suit/caution,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "aT" = (
 /obj/machinery/door/window/left/directional/east{
-	name = "fireplace"
+	name = "Fireplace"
 	},
 /obj/structure/fireplace,
 /obj/effect/decal/cleanable/dirt,
@@ -308,7 +295,7 @@
 "aU" = (
 /obj/structure/fireplace,
 /obj/machinery/door/window/right/directional/west{
-	name = "fireplace"
+	name = "Fireplace"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -320,7 +307,7 @@
 "aW" = (
 /obj/structure/fireplace,
 /obj/machinery/door/window/left/directional/east{
-	name = "fireplace"
+	name = "Fireplace"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -352,7 +339,7 @@
 /area/awaymission/cabin)
 "bc" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/britcup,
+/obj/item/reagent_containers/cup/glass/britcup,
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "bd" = (
@@ -372,7 +359,7 @@
 /area/awaymission/cabin)
 "bg" = (
 /obj/machinery/door/window/left/directional/west{
-	name = "manager's desk"
+	name = "Manager's Desk"
 	},
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
@@ -468,10 +455,9 @@
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "bz" = (
-/obj/structure/sink/kitchen{
+/obj/structure/sink/kitchen/directional/south{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	name = "sink";
-	pixel_y = 28
+	name = "sink"
 	},
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
@@ -498,17 +484,11 @@
 /turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "bG" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 2
-	},
+/obj/structure/sink/directional/east,
 /turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "bH" = (
-/obj/machinery/shower{
-	dir = 1
-	},
+/obj/machinery/shower/directional/north,
 /obj/structure/curtain,
 /obj/item/soap/nanotrasen{
 	pixel_x = -1;
@@ -520,10 +500,7 @@
 /turf/open/lava,
 /area/awaymission/cabin/caves/mountain)
 "bJ" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "bK" = (
@@ -577,7 +554,7 @@
 /area/awaymission/cabin)
 "bU" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/drinks/shaker,
+/obj/item/reagent_containers/cup/glass/shaker,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bV" = (
@@ -706,7 +683,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "cu" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	dir = 1
 	},
 /obj/machinery/light/directional/east,
@@ -728,7 +705,6 @@
 /obj/structure/cable,
 /obj/structure/musician/piano{
 	desc = "Very theatrical.";
-	icon_state = "piano";
 	name = "theatre piano"
 	},
 /turf/open/floor/wood,
@@ -790,18 +766,18 @@
 /area/awaymission/cabin)
 "cJ" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/condiment/peppermill{
+/obj/item/reagent_containers/condiment/peppermill{
 	pixel_x = 8;
 	pixel_y = 10
 	},
-/obj/item/reagent_containers/food/condiment/peppermill{
+/obj/item/reagent_containers/condiment/peppermill{
 	pixel_x = 8
 	},
-/obj/item/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/condiment/saltshaker{
 	pixel_x = -8;
 	pixel_y = 10
 	},
-/obj/item/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/condiment/saltshaker{
 	pixel_x = -8
 	},
 /obj/structure/cable,
@@ -809,7 +785,7 @@
 /area/awaymission/cabin)
 "cK" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/drinks/sillycup/smallcarton{
+/obj/item/reagent_containers/cup/glass/sillycup/smallcarton{
 	pixel_y = 4
 	},
 /turf/open/floor/wood,
@@ -859,9 +835,8 @@
 /area/awaymission/cabin)
 "cT" = (
 /obj/vehicle/ridden/atv,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "cU" = (
 /obj/machinery/light/directional/north,
@@ -873,15 +848,13 @@
 /area/awaymission/cabin)
 "cW" = (
 /obj/item/shovel,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "cX" = (
 /obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "cZ" = (
 /turf/open/floor/plating/snowed/snow_cabin,
@@ -905,7 +878,7 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka{
+/obj/item/reagent_containers/cup/glass/bottle/vodka/badminka{
 	desc = "A fancy bottle of vodka. The name isn't in Galactic Common though.";
 	name = "Porosha Vodka"
 	},
@@ -957,16 +930,6 @@
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
-"dm" = (
-/obj/structure/table/reinforced,
-/obj/item/modular_computer/tablet/pda/syndicate{
-	default_disk = /obj/item/computer_hardware/hard_drive/role/virus/mime;
-	desc = "A portable microcomputer by Thinktronic Systems, LTD. Seems like it may have useful information on it.";
-	name = "soviet tablet";
-	note = "TRANSLATED TO GALACTIC COMMON: My partner has left to help those Nanotrasen fucks three days ago. They said that a distress signal came from down south and they had to check it out. How fucking long does it take to investigate a mining outpost? Either those Nanotrasen fuckers betrayed us or something really did go wrong. Either way, I'm leaving before this becomes an issue for me and anyone else here. That dumb idiot."
-	},
-/turf/open/floor/plating/snowed/snow_cabin,
-/area/awaymission/cabin/snowforest/sovietsurface)
 "dn" = (
 /obj/structure/table/reinforced,
 /obj/item/megaphone/sec{
@@ -1000,15 +963,14 @@
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dt" = (
 /obj/structure/closet/secure_closet/freezer/fridge/open,
-/obj/item/reagent_containers/food/condiment/mayonnaise,
+/obj/item/reagent_containers/condiment/mayonnaise,
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "du" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "dv" = (
 /obj/structure{
@@ -1021,9 +983,8 @@
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "dw" = (
 /mob/living/simple_animal/hostile/bear/snow{
@@ -1172,9 +1133,8 @@
 /area/awaymission/cabin)
 "ec" = (
 /obj/machinery/light/directional/south,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "ed" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1252,7 +1212,7 @@
 "eq" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "garage_cabin";
-	name = "garage door"
+	name = "Garage Door"
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/plating/snowed/snow_cabin,
@@ -1276,7 +1236,7 @@
 /area/awaymission/cabin)
 "ev" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/glass/rag,
+/obj/item/reagent_containers/cup/rag,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "ew" = (
@@ -1316,10 +1276,6 @@
 /obj/item/stack/sheet/mineral/wood,
 /turf/open/floor/wood/freezing,
 /area/awaymission/cabin/lumbermill)
-"ey" = (
-/obj/structure/sign/warning/nosmoking/circle,
-/turf/closed/wall/mineral/wood,
-/area/awaymission/cabin/snowforest)
 "ez" = (
 /obj/structure/fence,
 /obj/effect/turf_decal/weather/snow/corner{
@@ -2113,11 +2069,11 @@
 "he" = (
 /obj/structure/table/wood,
 /obj/structure/cable,
-/obj/item/reagent_containers/food/drinks/mug/coco{
+/obj/item/reagent_containers/cup/glass/mug/coco{
 	desc = "Still hot!";
 	pixel_y = -2
 	},
-/obj/item/reagent_containers/food/drinks/mug/coco{
+/obj/item/reagent_containers/cup/glass/mug/coco{
 	desc = "Still hot!";
 	pixel_x = 8;
 	pixel_y = 8
@@ -2127,16 +2083,14 @@
 "hf" = (
 /obj/machinery/space_heater,
 /obj/effect/decal/remains/robot,
-/obj/structure/sign/warning/fire{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/fire/directional/north,
 /obj/machinery/space_heater,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "hg" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "janitor closet"
+	name = "Janitor Closet"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -2239,9 +2193,8 @@
 /obj/item/lightreplacer,
 /obj/item/storage/toolbox/mechanical,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "hx" = (
 /obj/structure/cable,
@@ -2252,7 +2205,7 @@
 /area/awaymission/cabin)
 "hy" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "heater storage"
+	name = "Heater Storage"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -2295,7 +2248,7 @@
 /area/awaymission/cabin)
 "hF" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/mug/coco{
+/obj/item/reagent_containers/cup/glass/mug/coco{
 	desc = "Still hot!";
 	pixel_y = 2
 	},
@@ -2347,7 +2300,7 @@
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/caves)
 "hQ" = (
-/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/caves)
 "hR" = (
@@ -2475,7 +2428,7 @@
 /area/awaymission/cabin/caves/sovietcave)
 "is" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
-/obj/item/reagent_containers/food/condiment/enzyme,
+/obj/item/reagent_containers/condiment/enzyme,
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "iv" = (
@@ -2536,7 +2489,7 @@
 /area/awaymission/cabin/caves)
 "iR" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/mug/coco{
+/obj/item/reagent_containers/cup/glass/mug/coco{
 	desc = "Still hot!";
 	pixel_x = -7;
 	pixel_y = -2
@@ -2545,7 +2498,7 @@
 /area/awaymission/cabin)
 "iS" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/mug/coco{
+/obj/item/reagent_containers/cup/glass/mug/coco{
 	desc = "Still hot!";
 	pixel_x = 7;
 	pixel_y = 2
@@ -2554,7 +2507,7 @@
 /area/awaymission/cabin)
 "iT" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/mug/coco{
+/obj/item/reagent_containers/cup/glass/mug/coco{
 	desc = "Still hot!";
 	pixel_x = -4;
 	pixel_y = 4
@@ -2563,12 +2516,12 @@
 /area/awaymission/cabin)
 "iU" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/mug/coco{
+/obj/item/reagent_containers/cup/glass/mug/coco{
 	desc = "Still hot!";
 	pixel_x = -5;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/food/drinks/mug/coco{
+/obj/item/reagent_containers/cup/glass/mug/coco{
 	desc = "Still hot!";
 	pixel_x = 7;
 	pixel_y = -2
@@ -2758,7 +2711,7 @@
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/shoes/winterboots,
 /obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/neck/stripedbluescarf,
+/obj/item/clothing/neck/large_scarf/blue,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "jv" = (
@@ -2770,7 +2723,7 @@
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/shoes/winterboots,
 /obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/neck/stripedgreenscarf,
+/obj/item/clothing/neck/large_scarf/green,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "jw" = (
@@ -2782,7 +2735,7 @@
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/shoes/winterboots,
 /obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/neck/stripedredscarf,
+/obj/item/clothing/neck/large_scarf/red,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "jx" = (
@@ -2795,14 +2748,14 @@
 /area/awaymission/cabin)
 "jy" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/drinks/bottle/wine{
+/obj/item/reagent_containers/cup/glass/bottle/wine{
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass{
 	pixel_x = -7;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass{
 	pixel_x = 7;
 	pixel_y = 3
 	},
@@ -2895,26 +2848,6 @@
 	name = "soviet floor"
 	},
 /area/awaymission/cabin/caves/sovietcave)
-"jO" = (
-/obj/structure/sign/warning/nosmoking{
-	pixel_x = 32
-	},
-/turf/open/floor/wood/freezing,
-/area/awaymission/cabin/lumbermill)
-"jP" = (
-/obj/structure/sign/warning/nosmoking{
-	pixel_x = -32
-	},
-/turf/open/floor/wood/freezing,
-/area/awaymission/cabin/lumbermill)
-"jQ" = (
-/obj/structure/table/wood,
-/obj/structure/sign/warning/nosmoking/circle{
-	pixel_x = -16;
-	pixel_y = 32
-	},
-/turf/open/floor/wood/freezing,
-/area/awaymission/cabin/lumbermill)
 "jR" = (
 /obj/structure/table/wood,
 /obj/item/hatchet{
@@ -3072,77 +3005,9 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin/caves)
 "ko" = (
-/turf/open/floor/wood/freezing{
-	icon_state = "wood-broken"
-	},
-/area/awaymission/cabin/caves)
-"kp" = (
-/turf/open/floor/wood/freezing{
-	icon_state = "wood-broken4"
-	},
-/area/awaymission/cabin/caves)
-"kq" = (
-/turf/open/floor/wood/freezing{
-	icon_state = "wood-broken5"
-	},
-/area/awaymission/cabin/caves)
-"kr" = (
-/turf/open/floor/wood/freezing{
-	icon_state = "wood-broken3"
-	},
-/area/awaymission/cabin/caves)
-"ks" = (
-/turf/open/floor/wood/freezing{
-	icon_state = "wood-broken2"
-	},
-/area/awaymission/cabin/caves)
-"ku" = (
-/turf/open/floor/wood/freezing{
-	icon_state = "wood-broken7"
-	},
-/area/awaymission/cabin/caves)
-"kD" = (
-/obj/structure/table/wood,
-/obj/item/hatchet{
-	desc = "A decent axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood.";
-	force = 4;
-	name = "weak hatchet";
-	pixel_x = 7;
-	throwforce = 4
-	},
-/obj/item/hatchet{
-	desc = "A decent axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood.";
-	force = 4;
-	name = "weak hatchet";
-	throwforce = 4
-	},
-/obj/item/hatchet{
-	desc = "A decent axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood.";
-	force = 4;
-	name = "weak hatchet";
-	pixel_x = -7;
-	throwforce = 4
-	},
-/obj/item/hatchet{
-	desc = "A decent axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood.";
-	force = 4;
-	name = "weak hatchet";
-	pixel_x = -3;
-	throwforce = 4
-	},
-/obj/item/hatchet{
-	desc = "A decent axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood.";
-	force = 4;
-	name = "weak hatchet";
-	pixel_x = 3;
-	throwforce = 4
-	},
-/obj/structure/sign/warning/nosmoking/circle{
-	pixel_x = 16;
-	pixel_y = -32
-	},
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood/freezing,
-/area/awaymission/cabin/lumbermill)
+/area/awaymission/cabin/caves)
 "kE" = (
 /obj/structure/closet,
 /obj/item/clothing/suit/hooded/wintercoat,
@@ -3191,7 +3056,7 @@
 "kK" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/drinks/bottle/vodka,
+/obj/item/reagent_containers/cup/glass/bottle/vodka,
 /turf/open/floor/mineral/plastitanium/red{
 	name = "soviet floor"
 	},
@@ -3311,13 +3176,6 @@
 	},
 /turf/closed/wall/ice,
 /area/awaymission/cabin/caves)
-"lQ" = (
-/obj/structure/sign/warning/enginesafety{
-	desc = "A sign detailing the various safety protocols when working on-site to ensure a safe shift. It seems to particularly focus on how dangerous the sawblade is.";
-	name = "\improper LUMBERMILL SAFETY"
-	},
-/turf/closed/wall/mineral/wood,
-/area/awaymission/cabin/lumbermill)
 "lS" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/spider/stickyweb,
@@ -3427,9 +3285,8 @@
 /turf/open/floor/plating/snowed/smoothed,
 /area/awaymission/cabin/caves)
 "mw" = (
-/obj/structure/sign/warning{
-	name = "\improper SAWBLADE WARNING";
-	pixel_x = -32
+/obj/structure/sign/warning/directional/west{
+	name = "\improper SAWBLADE WARNING"
 	},
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
@@ -3559,19 +3416,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating/snowed,
-/area/awaymission/cabin/caves)
-"nb" = (
-/obj/effect/turf_decal/weather/snow,
-/obj/item/modular_computer/tablet/pda/syndicate{
-	default_disk = /obj/item/computer_hardware/hard_drive/role/virus/clown;
-	desc = "A portable microcomputer by Thinktronic Systems, LTD. Seems like it may have useful information on it.";
-	name = "soviet tablet";
-	note = "TRANSLATED TO GALACTIC COMMON: DO NOT GO SOUTH."
-	},
-/obj/effect/decal/remains/human{
-	color = "#72e4fa"
-	},
-/turf/open/floor/iron/dark/snowdin,
 /area/awaymission/cabin/caves)
 "nc" = (
 /obj/effect/baseturf_helper/asteroid/snow,
@@ -3743,6 +3587,13 @@
 /obj/effect/decal/remains/human,
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
+"pj" = (
+/obj/structure/sign/warning/engine_safety{
+	desc = "A sign detailing the various safety protocols when working on-site to ensure a safe shift. It seems to particularly focus on how dangerous the sawblade is.";
+	name = "\improper LUMBERMILL SAFETY"
+	},
+/turf/closed/wall/mineral/wood,
+/area/awaymission/cabin/lumbermill)
 "pu" = (
 /obj/item/grenade/barrier{
 	pixel_x = -14;
@@ -3768,7 +3619,7 @@
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
 "pL" = (
-/obj/structure/flora/tree/pine,
+/obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "qe" = (
@@ -3987,7 +3838,7 @@
 	invoke_damage = 60;
 	name = "ice rune"
 	},
-/obj/item/clothing/suit/snowman{
+/obj/item/clothing/suit/costume/snowman{
 	desc = "The dead body of a snowman. There's holes to stick your own body in it.";
 	name = "snowman corpse"
 	},
@@ -3997,6 +3848,19 @@
 	pixel_y = 10
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
+/area/awaymission/cabin/caves)
+"vD" = (
+/obj/effect/turf_decal/weather/snow,
+/obj/item/modular_computer/tablet/pda/syndicate{
+	loaded_cartridge = /obj/item/computer_hardware/hard_drive/portable/virus/clown;
+	desc = "A portable microcomputer by Thinktronic Systems, LTD. Seems like it may have useful information on it.";
+	name = "soviet tablet";
+	note = "TRANSLATED TO GALACTIC COMMON: DO NOT GO SOUTH."
+	},
+/obj/effect/decal/remains/human{
+	color = "#72e4fa"
+	},
+/turf/open/floor/iron/dark/snowdin,
 /area/awaymission/cabin/caves)
 "vG" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -4059,7 +3923,7 @@
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
 "xy" = (
-/obj/structure/flora/tree/dead,
+/obj/structure/flora/tree/dead/style_random,
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "xJ" = (
@@ -4133,6 +3997,16 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/indestructible,
 /area/awaymission/cabin/caves/mountain)
+"yR" = (
+/obj/structure/table/reinforced,
+/obj/item/modular_computer/tablet/pda/syndicate{
+	loaded_cartridge = /obj/item/computer_hardware/hard_drive/portable/virus/mime;
+	desc = "A portable microcomputer by Thinktronic Systems, LTD. Seems like it may have useful information on it.";
+	name = "soviet tablet";
+	note = "TRANSLATED TO GALACTIC COMMON: My partner has left to help those Nanotrasen fucks three days ago. They said that a distress signal came from down south and they had to check it out. How fucking long does it take to investigate a mining outpost? Either those Nanotrasen fuckers betrayed us or something really did go wrong. Either way, I'm leaving before this becomes an issue for me and anyone else here. That dumb idiot."
+	},
+/turf/open/floor/plating/snowed/snow_cabin,
+/area/awaymission/cabin/snowforest/sovietsurface)
 "yY" = (
 /obj/vehicle/ridden/atv{
 	dir = 4
@@ -4164,6 +4038,10 @@
 	pixel_x = -7
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
+/area/awaymission/cabin/snowforest)
+"zm" = (
+/obj/structure/sign/warning/no_smoking/circle,
+/turf/closed/wall/mineral/wood,
 /area/awaymission/cabin/snowforest)
 "zn" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -4212,7 +4090,7 @@
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
 "Ao" = (
-/obj/structure/flora/rock/icy{
+/obj/structure/flora/rock/icy/style_random{
 	desc = "A mountain rock."
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
@@ -4238,7 +4116,7 @@
 	name = "wooden box"
 	},
 /obj/item/paper{
-	info = "Moving these crates through a tunnel that isn't even finished yet is really annoying. It's such a pain in the ass to haul even a single crate to the cabin. It made sense to haul food and other goods however these are fake fucking trophies. Why do they even need these fake artifacts for some asshole's trophy case? We'll just leave the crates in the cave that has all those bones inside. Fuck it.";
+	default_raw_text = "Moving these crates through a tunnel that isn't even finished yet is really annoying. It's such a pain in the ass to haul even a single crate to the cabin. It made sense to haul food and other goods however these are fake fucking trophies. Why do they even need these fake artifacts for some asshole's trophy case? We'll just leave the crates in the cave that has all those bones inside. Fuck it.";
 	name = "Shipment Delivery Note"
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
@@ -4265,7 +4143,7 @@
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
 "BZ" = (
-/obj/structure/flora/tree/pine,
+/obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
 "CA" = (
@@ -4317,7 +4195,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "Fz" = (
-/obj/structure/flora/rock/icy{
+/obj/structure/flora/rock/icy/style_random{
 	desc = "A mountain rock."
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
@@ -4365,7 +4243,7 @@
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "Ho" = (
-/obj/structure/flora/stump{
+/obj/structure/flora/tree/stump{
 	desc = "Breaking it should be easy.";
 	max_integrity = 20;
 	name = "old stump"
@@ -4450,6 +4328,10 @@
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
+"Lt" = (
+/obj/structure/sign/warning/no_smoking/directional/east,
+/turf/open/floor/wood/freezing,
+/area/awaymission/cabin/lumbermill)
 "LE" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/item/nullrod/claymore/multiverse{
@@ -4459,7 +4341,7 @@
 /turf/open/indestructible,
 /area/awaymission/cabin/caves/mountain)
 "LF" = (
-/obj/structure/flora/stump{
+/obj/structure/flora/tree/stump{
 	desc = "Breaking it should be easy.";
 	max_integrity = 20;
 	name = "old stump"
@@ -4592,8 +4474,16 @@
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/snowforest)
+"OF" = (
+/obj/structure/table/wood,
+/obj/structure/sign/warning/no_smoking/circle{
+	pixel_x = -16;
+	pixel_y = 32
+	},
+/turf/open/floor/wood/freezing,
+/area/awaymission/cabin/lumbermill)
 "OZ" = (
-/obj/structure/flora/tree/dead,
+/obj/structure/flora/tree/dead/style_random,
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
 "Pd" = (
@@ -4640,7 +4530,7 @@
 /turf/open/indestructible,
 /area/awaymission/cabin/caves/mountain)
 "QL" = (
-/obj/structure/flora/tree/pine,
+/obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin)
 "QT" = (
@@ -4661,7 +4551,7 @@
 /turf/open/floor/mineral/plastitanium/red/snow_cabin,
 /area/awaymission/cabin/caves/sovietcave)
 "Rs" = (
-/obj/structure/flora/stump{
+/obj/structure/flora/tree/stump{
 	desc = "Breaking it should be easy.";
 	max_integrity = 20;
 	name = "old stump"
@@ -4698,7 +4588,7 @@
 	desc = "It looks like fancy glitter to me.";
 	name = "icy wind"
 	},
-/mob/living/simple_animal/hostile/statue{
+/mob/living/simple_animal/hostile/netherworld/statue{
 	desc = "Just a snowman. Just a snowman. Oh god, it's just a snowman.";
 	faction = list("statue","mining");
 	health = 5000;
@@ -4739,7 +4629,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "Sd" = (
-/obj/structure/flora/stump{
+/obj/structure/flora/tree/stump{
 	desc = "Breaking it should be easy.";
 	max_integrity = 20;
 	name = "old stump"
@@ -4753,6 +4643,48 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
+"SQ" = (
+/obj/structure/table/wood,
+/obj/item/hatchet{
+	desc = "A decent axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood.";
+	force = 4;
+	name = "weak hatchet";
+	pixel_x = 7;
+	throwforce = 4
+	},
+/obj/item/hatchet{
+	desc = "A decent axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood.";
+	force = 4;
+	name = "weak hatchet";
+	throwforce = 4
+	},
+/obj/item/hatchet{
+	desc = "A decent axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood.";
+	force = 4;
+	name = "weak hatchet";
+	pixel_x = -7;
+	throwforce = 4
+	},
+/obj/item/hatchet{
+	desc = "A decent axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood.";
+	force = 4;
+	name = "weak hatchet";
+	pixel_x = -3;
+	throwforce = 4
+	},
+/obj/item/hatchet{
+	desc = "A decent axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood.";
+	force = 4;
+	name = "weak hatchet";
+	pixel_x = 3;
+	throwforce = 4
+	},
+/obj/structure/sign/warning/no_smoking/circle{
+	pixel_x = 16;
+	pixel_y = -32
+	},
+/turf/open/floor/wood/freezing,
+/area/awaymission/cabin/lumbermill)
 "SS" = (
 /obj/effect/decal/cleanable/glitter/blue{
 	desc = "It looks like fancy glitter to me.";
@@ -4811,6 +4743,10 @@
 	slowdown = 0
 	},
 /area/awaymission/cabin/caves)
+"Un" = (
+/obj/structure/sign/warning/no_smoking/directional/west,
+/turf/open/floor/wood/freezing,
+/area/awaymission/cabin/lumbermill)
 "Uu" = (
 /obj/structure/statue/snow/snowlegion{
 	anchored = 1;
@@ -4825,7 +4761,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/obj/structure/flora/tree/pine,
+/obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
 "UO" = (
@@ -18329,7 +18265,7 @@ mU
 mU
 mU
 mJ
-nb
+vD
 mW
 mW
 ab
@@ -20995,8 +20931,8 @@ Oe
 Oe
 ki
 ki
-kq
-ks
+ko
+ko
 ki
 ki
 ki
@@ -21255,7 +21191,7 @@ ki
 ki
 ki
 ki
-ku
+ko
 ki
 Oe
 Oe
@@ -24850,7 +24786,7 @@ ki
 ki
 ki
 ki
-kr
+ko
 Oe
 Oe
 gx
@@ -25105,7 +25041,7 @@ Oe
 ki
 ki
 ki
-kp
+ko
 ki
 ki
 Oe
@@ -35928,13 +35864,13 @@ RC
 RC
 ad
 ad
-jP
+Un
 af
 af
 af
 af
 af
-jP
+Un
 ad
 ad
 RC
@@ -37477,7 +37413,7 @@ af
 ak
 af
 af
-kD
+SQ
 ad
 RC
 RC
@@ -37726,7 +37662,7 @@ Sd
 RC
 RC
 ad
-jQ
+OF
 af
 ak
 jX
@@ -39269,13 +39205,13 @@ RC
 ae
 ad
 ad
-jO
+Lt
 af
 af
 af
 af
 af
-jO
+Lt
 ad
 ad
 fb
@@ -39529,7 +39465,7 @@ ad
 ad
 eH
 eG
-lQ
+pj
 eG
 eH
 ad
@@ -42446,7 +42382,7 @@ Xa
 Xa
 Xa
 dc
-dm
+yR
 di
 dG
 dP
@@ -42607,7 +42543,7 @@ RC
 RC
 Sd
 RC
-ey
+zm
 ez
 eC
 eC
@@ -42619,7 +42555,7 @@ eC
 eC
 eC
 fa
-ey
+zm
 RC
 RC
 RC

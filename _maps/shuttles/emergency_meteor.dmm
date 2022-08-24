@@ -3,7 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/turf/closed/mineral,
+/turf/closed/mineral/asteroid/porous,
 /area/shuttle/escape/meteor)
 "c" = (
 /obj/structure/window/reinforced{
@@ -67,7 +67,7 @@
 /obj/docking_port/mobile/emergency{
 	dwidth = 20;
 	height = 40;
-	movement_force = list("KNOCKDOWN" = 3, "THROW" = 6);
+	movement_force = list("KNOCKDOWN"=3,"THROW"=6);
 	name = "\proper a meteor with engines strapped to it";
 	width = 40
 	},

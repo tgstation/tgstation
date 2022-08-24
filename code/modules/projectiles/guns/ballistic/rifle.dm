@@ -12,7 +12,6 @@
 	internal_magazine = TRUE
 	fire_sound = 'sound/weapons/gun/rifle/shot.ogg'
 	fire_sound_volume = 90
-	vary_fire_sound = FALSE
 	rack_sound = 'sound/weapons/gun/rifle/bolt_out.ogg'
 	bolt_drop_sound = 'sound/weapons/gun/rifle/bolt_in.ogg'
 	tac_reloads = FALSE

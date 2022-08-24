@@ -8,21 +8,21 @@
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the head of security"
+	supervisors = SUPERVISOR_HOS
 	selection_color = "#ffeeee"
 	minimal_player_age = 7
-	exp_requirements = 300
+	exp_requirements = 5 HOURS
 	exp_required_type = EXP_TYPE_CREW
 	exp_granted_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/warden
 	plasmaman_outfit = /datum/outfit/plasmaman/warden
 
-	paycheck = PAYCHECK_HARD
+	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SEC
 
 	mind_traits = list(TRAIT_DONUT_LOVER)
-	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
+	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM, TRAIT_PRETENDER_ROYAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_WARDEN
 	bounty_types = CIV_JOB_SEC
@@ -54,7 +54,6 @@
 	suit_store = /obj/item/gun/energy/disabler
 	backpack_contents = list(
 		/obj/item/evidencebag = 1,
-		/obj/item/modular_computer/tablet/preset/advanced/security = 1,
 		)
 	belt = /obj/item/modular_computer/tablet/pda/warden
 	ears = /obj/item/radio/headset/headset_sec/alt

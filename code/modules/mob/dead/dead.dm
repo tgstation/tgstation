@@ -48,14 +48,14 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	else
 		. += "Time To Start: SOON"
 
-	. += "Players: [SSticker.totalPlayers]"
+	. += "Players: [LAZYLEN(GLOB.clients)]"
 	if(client.holder)
 		. += "Players Ready: [SSticker.totalPlayersReady]"
 		. += "Admins Ready: [SSticker.total_admins_ready] / [length(GLOB.admins)]"
 
 /mob/dead/proc/server_hop()
 	set category = "OOC"
-	set name = "Server Hop!"
+	set name = "Server Hop"
 	set desc= "Jump to the other server"
 	if(notransform)
 		return

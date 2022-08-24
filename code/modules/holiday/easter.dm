@@ -5,6 +5,8 @@
 	weight = -1
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
+	category = EVENT_CATEGORY_HOLIDAY
+	description = "Hides surprise filled easter eggs in maintenance."
 
 /datum/round_event/easter/announce(fake)
 	priority_announce(pick("Hip-hop into Easter!","Find some Bunny's stash!","Today is National 'Hunt a Wabbit' Day.","Be kind, give Chocolate Eggs!"))
@@ -16,6 +18,8 @@
 	typepath = /datum/round_event/rabbitrelease
 	weight = 5
 	max_occurrences = 10
+	category = EVENT_CATEGORY_HOLIDAY
+	description = "Summons a wave of cute rabbits."
 
 /datum/round_event/rabbitrelease/announce(fake)
 	priority_announce("Unidentified furry objects detected coming aboard [station_name()]. Beware of Adorable-ness.", "Fluffy Alert", ANNOUNCER_ALIENS)
@@ -36,8 +40,7 @@
 
 /obj/item/storage/basket/easter/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.set_holdable(list(/obj/item/food/egg, /obj/item/food/chocolateegg, /obj/item/food/boiledegg, /obj/item/surprise_egg))
+	atom_storage.set_holdable(list(/obj/item/food/egg, /obj/item/food/chocolateegg, /obj/item/food/boiledegg, /obj/item/surprise_egg))
 
 /obj/item/storage/basket/easter/proc/countEggs()
 	cut_overlays()
@@ -62,10 +65,12 @@
 	clothing_flags = THICKMATERIAL | SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
-/obj/item/clothing/suit/bunnysuit
+/obj/item/clothing/suit/costume/bunnysuit
 	name = "Easter Bunny Suit"
 	desc = "Hop Hop Hop!"
 	icon_state = "bunnysuit"
+	icon = 'icons/obj/clothing/suits/costume.dmi'
+	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
 	inhand_icon_state = "bunnysuit"
 	slowdown = -0.3
 	clothing_flags = THICKMATERIAL
@@ -98,7 +103,7 @@
 
 /obj/item/surprise_egg/proc/dispensePrize(turf/where)
 	var/static/list/prize_list = list(/obj/item/clothing/head/bunnyhead,
-		/obj/item/clothing/suit/bunnysuit,
+		/obj/item/clothing/suit/costume/bunnysuit,
 		/obj/item/storage/backpack/satchel/bunnysatchel,
 		/obj/item/food/grown/carrot,
 		/obj/item/toy/balloon,

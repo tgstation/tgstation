@@ -39,7 +39,7 @@
 	id = "escape_cockpit_windows";
 	name = "Cockpit Window Blast Doors";
 	pixel_x = -7;
-	req_access_txt = "19"
+	req_access = list("command")
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -259,7 +259,7 @@
 	id = "escape_cockpit_blast";
 	name = "Cockpit Airlock Blast Doors";
 	pixel_y = -26;
-	req_access_txt = "19"
+	req_access = list("command")
 	},
 /obj/effect/turf_decal/raven/two,
 /turf/open/floor/iron/dark,
@@ -278,7 +278,7 @@
 	},
 /obj/structure/rack,
 /obj/item/tank/internals/oxygen/red,
-/obj/item/clothing/suit/fire/firefighter,
+/obj/item/clothing/suit/utility/fire/firefighter,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/head/hardhat/red,
 /obj/effect/decal/cleanable/dirt,
@@ -481,7 +481,7 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Holding Area"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape/brig)
 "bl" = (
@@ -737,17 +737,17 @@
 /turf/open/floor/iron/white/side,
 /area/shuttle/escape)
 "bL" = (
-/obj/item/reagent_containers/glass/bottle/epinephrine{
+/obj/item/reagent_containers/cup/bottle/epinephrine{
 	pixel_x = 6
 	},
-/obj/item/reagent_containers/glass/bottle/multiver{
+/obj/item/reagent_containers/cup/bottle/multiver{
 	pixel_x = -3
 	},
-/obj/item/reagent_containers/glass/bottle/epinephrine{
+/obj/item/reagent_containers/cup/bottle/epinephrine{
 	pixel_x = -3;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/glass/bottle/multiver{
+/obj/item/reagent_containers/cup/bottle/multiver{
 	pixel_x = 6;
 	pixel_y = 8
 	},
@@ -1473,7 +1473,7 @@
 	},
 /obj/structure/rack,
 /obj/item/tank/internals/oxygen/red,
-/obj/item/clothing/suit/fire/firefighter,
+/obj/item/clothing/suit/utility/fire/firefighter,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/head/hardhat/red,
 /turf/open/floor/iron/dark,
@@ -1860,9 +1860,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dL" = (
-/obj/structure/sign/warning/electricshock{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/electric_shock/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dM" = (
@@ -2079,7 +2077,7 @@
 	pixel_x = 5;
 	pixel_y = 32;
 	req_access = null;
-	req_access_txt = "19"
+	req_access = list("command")
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)

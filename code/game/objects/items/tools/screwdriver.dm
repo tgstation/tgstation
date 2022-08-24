@@ -11,6 +11,7 @@
 	flags_1 = CONDUCT_1 | IS_PLAYER_COLORABLE_1
 	slot_flags = ITEM_SLOT_BELT
 	force = 5
+	demolition_mod = 0.5
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 5
 	throw_speed = 3
@@ -81,7 +82,6 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	custom_materials = list(/datum/material/iron=3500, /datum/material/silver=1500, /datum/material/titanium=2500) //what research value?
 	force = 8 //might or might not be too high, subject to change
-	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 8
 	throw_speed = 2
 	throw_range = 3//it's heavier than a screw driver/wrench, so it does more damage, but can't be thrown as far
@@ -89,6 +89,7 @@
 	attack_verb_simple = list("drill", "screw", "jab", "whack")
 	hitsound = 'sound/items/drill_hit.ogg'
 	usesound = 'sound/items/drill_use.ogg'
+	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
 	random_color = FALSE
 	greyscale_config = null
@@ -140,3 +141,10 @@
 	usesound = 'sound/items/drill_use.ogg'
 	toolspeed = 0.5
 	random_color = FALSE
+
+/obj/item/screwdriver/red
+	random_color = FALSE
+
+/obj/item/screwdriver/red/Initialize(mapload)
+	. = ..()
+	set_greyscale(colors=list(screwdriver_colors["red"]))

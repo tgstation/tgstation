@@ -47,28 +47,6 @@
 			to_chat(usr, span_danger("ERROR: Mob not found."), confidential = TRUE)
 			return
 		cmd_show_exp_panel(M.client)
-	else if(href_list["forceevent"])
-		if(!check_rights(R_FUN))
-			return
-		var/datum/round_event_control/E = locate(href_list["forceevent"]) in SSevents.control
-		if(E)
-			E.admin_setup(usr)
-			var/datum/round_event/event = E.runEvent()
-			if(event.announceWhen>0)
-				event.processing = FALSE
-				var/prompt = tgui_alert(usr, "Would you like to alert the crew?", "Alert", list("Yes", "No", "Cancel"))
-				switch(prompt)
-					if("Yes")
-						event.announceChance = 100
-					if("Cancel")
-						event.kill()
-						return
-					if("No")
-						event.announceChance = 0
-				event.processing = TRUE
-			message_admins("[key_name_admin(usr)] has triggered an event. ([E.name])")
-			log_admin("[key_name(usr)] has triggered an event. ([E.name])")
-		return
 
 	else if(href_list["editrightsbrowser"])
 		edit_admin_permissions(0)
@@ -156,28 +134,11 @@
 			return
 		shuttle_console.admin_controlled = !shuttle_console.admin_controlled
 		to_chat(usr, "[shuttle_console] was [shuttle_console.admin_controlled ? "locked" : "unlocked"].", confidential = TRUE)
+
 	else if(href_list["delay_round_end"])
-		if(!check_rights(R_SERVER))
-			return
+		// Permissions are checked in delay_round_end
+		delay_round_end()
 
-		if(SSticker.delay_end)
-			tgui_alert(usr, "The round end is already delayed. The reason for the current delay is: \"[SSticker.admin_delay_notice]\"", "Alert", list("Ok"))
-			return
-
-		var/delay_reason = input(usr, "Enter a reason for delaying the round end", "Round Delay Reason") as null|text
-
-		if(isnull(delay_reason))
-			return
-
-		if(SSticker.delay_end)
-			tgui_alert(usr, "The round end is already delayed. The reason for the current delay is: \"[SSticker.admin_delay_notice]\"", "Alert", list("Ok"))
-			return
-
-		SSticker.delay_end = TRUE
-		SSticker.admin_delay_notice = delay_reason
-
-		log_admin("[key_name(usr)] delayed the round end for reason: [SSticker.admin_delay_notice]")
-		message_admins("[key_name_admin(usr)] delayed the round end for reason: [SSticker.admin_delay_notice]")
 	else if(href_list["undelay_round_end"])
 		if(!check_rights(R_SERVER))
 			return
@@ -677,6 +638,7 @@
 		if(ishuman(L))
 			var/mob/living/carbon/human/observer = L
 			observer.equip_to_slot_or_del(new /obj/item/clothing/under/suit/black(observer), ITEM_SLOT_ICLOTHING)
+			observer.equip_to_slot_or_del(new /obj/item/clothing/neck/tie/black/tied(observer), ITEM_SLOT_NECK)
 			observer.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(observer), ITEM_SLOT_FEET)
 		L.Unconscious(100)
 		sleep(5)
@@ -941,7 +903,7 @@
 			return
 		var/obj/item/new_item = new H.dna.species.species_cookie(H)
 		if(H.put_in_hands(new_item))
-			H.update_inv_hands()
+			H.update_held_items()
 		else
 			qdel(new_item)
 			log_admin("[key_name(H)] has their hands full, so they did not receive their [new_item.name], spawned by [key_name(src.owner)].")
@@ -1729,7 +1691,7 @@
 		var/answer = href_list["slowquery"]
 		if(answer == "yes")
 			log_query_debug("[usr.key] | Reported a server hang")
-			if(tgui_alert(usr, "Had you just press any admin buttons?", "Query server hang report", list("Yes", "No")) == "Yes")
+			if(tgui_alert(usr, "Did you just press any admin buttons?", "Query server hang report", list("Yes", "No")) == "Yes")
 				var/response = input(usr,"What were you just doing?","Query server hang report") as null|text
 				if(response)
 					log_query_debug("[usr.key] | [response]")
@@ -1974,3 +1936,20 @@
 		if(!datum_to_mark)
 			return
 		return usr.client?.mark_datum(datum_to_mark)
+
+	else if(href_list["lua_state"])
+		if(!check_rights(R_DEBUG))
+			return
+		var/datum/lua_state/state_to_view = locate(href_list["lua_state"])
+		if(!state_to_view)
+			return
+		var/datum/lua_editor/editor = new(state_to_view)
+		var/log_index = href_list["log_index"]
+		if(log_index)
+			log_index = text2num(log_index)
+		if(log_index <= state_to_view.log.len)
+			var/list/log_entry = state_to_view.log[log_index]
+			if(log_entry["chunk"])
+				editor.force_view_chunk = log_entry["chunk"]
+				editor.force_modal = "viewChunk"
+		editor.ui_interact(usr)

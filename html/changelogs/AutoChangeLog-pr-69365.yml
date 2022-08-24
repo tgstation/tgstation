@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - rscadd: "Space ants will now turn into space fire ants when burned with fire."

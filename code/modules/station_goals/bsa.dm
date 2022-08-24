@@ -10,11 +10,13 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	name = "Bluespace Artillery"
 
 /datum/station_goal/bluespace_cannon/get_report()
-	return {"Our military presence is inadequate in your sector.
-		We need you to construct BSA-[rand(1,99)] Artillery position aboard your station.
-
-		Base parts are available for shipping via cargo.
-		-Nanotrasen Naval Command"}
+	return list(
+		"<blockquote>Our military presence is inadequate in your sector.",
+		"We need you to construct BSA-[rand(1,99)] Artillery position aboard your station.",
+		"",
+		"Base parts are available for shipping via cargo.",
+		"-Nanotrasen Naval Command</blockquote>",
+	).Join("\n")
 
 /datum/station_goal/bluespace_cannon/on_report()
 	//Unlock BSA parts
@@ -142,7 +144,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	pixel_x = -192
 	bound_width = 352
 	bound_x = -192
-	appearance_flags = NONE //Removes default TILE_BOUND
+	appearance_flags = LONG_GLIDE //Removes default TILE_BOUND
 
 /obj/machinery/bsa/full/wrench_act(mob/living/user, obj/item/I)
 	return FALSE
@@ -216,11 +218,11 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 
 	if(!blocker)
 		message_admins("[ADMIN_LOOKUPFLW(user)] has launched an artillery strike targeting [ADMIN_VERBOSEJMP(bullseye)].")
-		log_game("[key_name(user)] has launched an artillery strike targeting [AREACOORD(bullseye)].")
+		user.log_message("has launched an artillery strike targeting [AREACOORD(bullseye)].", LOG_GAME)
 		explosion(bullseye, devastation_range = ex_power, heavy_impact_range = ex_power*2, light_impact_range = ex_power*4, explosion_cause = src)
 	else
 		message_admins("[ADMIN_LOOKUPFLW(user)] has launched an artillery strike targeting [ADMIN_VERBOSEJMP(bullseye)] but it was blocked by [blocker] at [ADMIN_VERBOSEJMP(target)].")
-		log_game("[key_name(user)] has launched an artillery strike targeting [AREACOORD(bullseye)] but it was blocked by [blocker] at [AREACOORD(target)].")
+		user.log_message("has launched an artillery strike targeting [AREACOORD(bullseye)] but it was blocked by [blocker] at [AREACOORD(target)].", LOG_GAME)
 
 
 /obj/machinery/bsa/full/proc/reload()
@@ -350,9 +352,9 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	if(notice)
 		return null
 	//Totally nanite construction system not an immersion breaking spawning
-	var/datum/effect_system/smoke_spread/s = new
-	s.set_up(4,get_turf(centerpiece))
-	s.start()
+	var/datum/effect_system/fluid_spread/smoke/fourth_wall_guard = new
+	fourth_wall_guard.set_up(4, holder = src, location = get_turf(centerpiece))
+	fourth_wall_guard.start()
 	var/obj/machinery/bsa/full/cannon = new(get_turf(centerpiece),centerpiece.get_cannon_direction())
 	QDEL_NULL(centerpiece.front_ref)
 	QDEL_NULL(centerpiece.back_ref)

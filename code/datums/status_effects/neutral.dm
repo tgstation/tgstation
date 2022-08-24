@@ -92,7 +92,7 @@
 		rewarded = caster
 
 /datum/status_effect/bounty/on_apply()
-	to_chat(owner, span_boldnotice("You hear something behind you talking...</span> <span class='notice'>You have been marked for death by [rewarded]. If you die, they will be rewarded."))
+	to_chat(owner, span_boldnotice("You hear something behind you talking... \"You have been marked for death by [rewarded]. If you die, they will be rewarded.\""))
 	playsound(owner, 'sound/weapons/gun/shotgun/rack.ogg', 75, FALSE)
 	return ..()
 
@@ -103,13 +103,12 @@
 
 /datum/status_effect/bounty/proc/rewards()
 	if(rewarded && rewarded.mind && rewarded.stat != DEAD)
-		to_chat(owner, span_boldnotice("You hear something behind you talking...</span> <span class='notice'>Bounty claimed."))
+		to_chat(owner, span_boldnotice("You hear something behind you talking... \"Bounty claimed.\""))
 		playsound(owner, 'sound/weapons/gun/shotgun/shot.ogg', 75, FALSE)
 		to_chat(rewarded, span_greentext("You feel a surge of mana flow into you!"))
-		for(var/obj/effect/proc_holder/spell/spell in rewarded.mind.spell_list)
-			spell.charge_counter = spell.charge_max
-			spell.recharging = FALSE
-			spell.update_appearance()
+		for(var/datum/action/cooldown/spell/spell in rewarded.actions)
+			spell.reset_spell_cooldown()
+
 		rewarded.adjustBruteLoss(-25)
 		rewarded.adjustFireLoss(-25)
 		rewarded.adjustToxLoss(-25)
@@ -343,14 +342,14 @@
 
 		//phase 1
 		if(1 to EIGENSTASIUM_PHASE_1_END)
-			owner.Jitter(2)
+			owner.set_timed_status_effect(4 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 			owner.adjust_nutrition(-4)
 
 		//phase 2
 		if(EIGENSTASIUM_PHASE_1_END to EIGENSTASIUM_PHASE_2_END)
 			if(current_cycle == 51)
 				to_chat(owner, span_userdanger("You start to convlse violently as you feel your consciousness merges across realities, your possessions flying wildy off your body!"))
-				owner.Jitter(200)
+				owner.set_timed_status_effect(400 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 				owner.Knockdown(10)
 
 			var/list/items = list()
@@ -378,7 +377,7 @@
 			//Clone function - spawns a clone then deletes it - simulates multiple copies of the player teleporting in
 			switch(phase_3_cycle) //Loops 0 -> 1 -> 2 -> 1 -> 2 -> 1 ...ect.
 				if(0)
-					owner.Jitter(100)
+					owner.set_timed_status_effect(200 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 					to_chat(owner, span_userdanger("Your eigenstate starts to rip apart, drawing in alternative reality versions of yourself!"))
 				if(1)
 					var/typepath = owner.type
@@ -391,42 +390,7 @@
 					do_sparks(5,FALSE,alt_clone)
 					alt_clone.emote("spin")
 					owner.emote("spin")
-					var/static/list/say_phrases = list(
-						"Bugger me, whats all this then?",
-						"Sacre bleu! Ou suis-je?!",
-						"I knew powering the station using a singularity engine would lead to something like this...",
-						"Wow, I can't believe in your universe Cencomm got rid of cloning.",
-						"WHAT IS HAPPENING?!",
-						"YOU'VE CREATED A TIME PARADOX!",
-						"You trying to steal my job?",
-						"So that's what I'd look like if I was ugly...",
-						"So, two alternate universe twins walk into a bar...",
-						"YOU'VE DOOMED THE TIMELINE!",
-						"Ruffle a cat once in a while!",
-						"I'm starting to get why no one wants to hang out with me.",
-						"Why haven't you gotten around to starting that band?!",
-						"No!! I was just about to greentext!",
-						"Kept you waiting huh?",
-						"Oh god I think I'm ODing I'm seeing a fake version of me.",
-						"Hey, I remember that phase, glad I grew out of it.",
-						"Keep going lets see if more of us show up.",
-						"I bet we can finally take the clown now.",
-						"LING DISGUISED AS ME!",
-						"El psy congroo.",
-						"At long last! My evil twin!",
-						"Keep going lets see if more of us show up.",
-						"No! Dark spirits, do not torment me with these visions of my future self! It's horrible!",
-						"Good. Now that the council is assembled the meeting can begin.",
-						"Listen! I only have so much time before I'm ripped away. The secret behind the gas giants are...",
-						"Das ist nicht deutschland. Das ist nicht akzeptabel!!!",
-						"I've come from the future to warn you about eigenstasium! Oh no! I'm too late!",
-						"You fool! You took too much eigenstasium! You've doomed us all!",
-						"Don't trust any bagels you see until next month!",
-						"What...what's with these teleports? It's like one of my Japanese animes...!",
-						"Ik stond op het punt om mehki op tafel te zetten, en nu, waar ben ik?",
-						"Wake the fuck up spaceman we have a gas giant to burn",
-						"This is one hell of a beepsky smash.",
-						"Now neither of us will be virgins!")
+					var/list/say_phrases = strings(EIGENSTASIUM_FILE, "lines")
 					alt_clone.say(pick(say_phrases))
 				if(2)
 					phase_3_cycle = 0 //counter
@@ -442,25 +406,24 @@
 			do_teleport(owner, get_turf(owner), 2, no_effects=TRUE) //teleports clone so it's hard to find the real one!
 			do_sparks(5, FALSE, owner)
 			owner.Sleeping(100)
-			owner.Jitter(50)
+			owner.set_timed_status_effect(100 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 			to_chat(owner, span_userdanger("You feel your eigenstate settle, as \"you\" become an alternative version of yourself!"))
 			owner.emote("me",1,"flashes into reality suddenly, gasping as they gaze around in a bewildered and highly confused fashion!",TRUE)
-			log_game("FERMICHEM: [owner] ckey: [owner.key] has become an alternative universe version of themselves.")
+			owner.log_message("has become an alternative universe version of themselves via EIGENSTASIUM.", LOG_GAME)
 			//new you new stuff
 			SSquirks.randomise_quirks(owner)
 			owner.reagents.remove_all(1000)
-			var/datum/component/mood/mood = owner.GetComponent(/datum/component/mood)
-			mood.remove_temp_moods() //New you, new moods.
+			owner.mob_mood.remove_temp_moods() //New you, new moods.
 			var/mob/living/carbon/human/human_mob = owner
-			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "Eigentrip", /datum/mood_event/eigentrip)
+			owner.add_mood_event("Eigentrip", /datum/mood_event/eigentrip)
 			if(QDELETED(human_mob))
 				return
 			if(prob(1))//low chance of the alternative reality returning to monkey
-				var/obj/item/organ/tail/monkey/monkey_tail = new ()
+				var/obj/item/organ/external/tail/monkey/monkey_tail = new ()
 				monkey_tail.Insert(human_mob, drop_if_replaced = FALSE)
 			var/datum/species/human_species = human_mob.dna?.species
 			if(human_species)
-				human_species.randomize_main_appearance_element(human_mob)
+				human_species.randomize_features(human_mob)
 				human_species.randomize_active_underwear(human_mob)
 
 			owner.remove_status_effect(/datum/status_effect/eigenstasium)

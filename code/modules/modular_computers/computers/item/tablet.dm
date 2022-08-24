@@ -9,13 +9,16 @@
 	worn_icon_state = "tablet"
 	hardware_flag = PROGRAM_TABLET
 	max_hardware_size = 1
+	max_idle_programs = 2
 	w_class = WEIGHT_CLASS_SMALL
 	max_bays = 3
-	steel_sheet_cost = 1
+	steel_sheet_cost = 2
 	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
 	has_light = TRUE //LED flashlight!
 	comp_light_luminosity = 2.3 //Same as the PDA
 	looping_sound = FALSE
+	custom_materials = list(/datum/material/iron=300, /datum/material/glass=100, /datum/material/plastic=100)
+	interaction_flags_atom = INTERACT_ATOM_ALLOW_USER_LOCATION
 
 	var/has_variants = TRUE
 	var/finish_color = null
@@ -50,6 +53,8 @@
 	. = ..()
 
 	if(is_type_in_list(W, contained_item))
+		if(W.w_class >= WEIGHT_CLASS_SMALL) // Anything equal to or larger than small won't work
+			return
 		if(inserted_item)
 			to_chat(user, span_warning("There is already \a [inserted_item] in \the [src]!"))
 		else
@@ -72,6 +77,17 @@
 		return
 
 	remove_pen(user)
+
+///Finds how hard it is to send a virus to this tablet, checking all programs downloaded.
+/obj/item/modular_computer/tablet/proc/get_detomatix_difficulty()
+	var/detomatix_difficulty
+
+	var/obj/item/computer_hardware/hard_drive/hdd = all_components[MC_HDD]
+	if(hdd)
+		for(var/datum/computer_file/program/downloaded_apps as anything in hdd.stored_files)
+			detomatix_difficulty += downloaded_apps.detomatix_resistance
+
+	return detomatix_difficulty
 
 /obj/item/modular_computer/tablet/proc/tab_no_detonate()
 	SIGNAL_HANDLER
@@ -111,7 +127,7 @@
 
 	if(T)
 		T.hotspot_expose(700,125)
-		if(istype(all_components[MC_HDD_JOB], /obj/item/computer_hardware/hard_drive/role/virus/deto))
+		if(istype(all_components[MC_SDD], /obj/item/computer_hardware/hard_drive/portable/virus/deto))
 			explosion(src, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 3, flash_range = 4)
 		else
 			explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 2, flash_range = 3)
@@ -178,7 +194,7 @@
 	borgo = null
 	return ..()
 
-/obj/item/modular_computer/tablet/integrated/turn_on(mob/user)
+/obj/item/modular_computer/tablet/integrated/turn_on(mob/user, open_ui = FALSE)
 	if(borgo?.stat != DEAD)
 		return ..()
 	return FALSE
@@ -212,7 +228,7 @@
 /obj/item/modular_computer/tablet/integrated/ui_data(mob/user)
 	. = ..()
 	.["has_light"] = TRUE
-	if(istype(borgo, /mob/living/silicon/robot))
+	if(iscyborg(borgo))
 		var/mob/living/silicon/robot/robo = borgo
 		.["light_on"] = robo.lamp_enabled
 		.["comp_light_color"] = robo.lamp_color
@@ -221,7 +237,7 @@
 /obj/item/modular_computer/tablet/integrated/toggle_flashlight()
 	if(!borgo || QDELETED(borgo))
 		return FALSE
-	if(istype(borgo, /mob/living/silicon/robot))
+	if(iscyborg(borgo))
 		var/mob/living/silicon/robot/robo = borgo
 		robo.toggle_headlamp()
 	return TRUE
@@ -230,7 +246,7 @@
 /obj/item/modular_computer/tablet/integrated/set_flashlight_color(color)
 	if(!borgo || QDELETED(borgo) || !color)
 		return FALSE
-	if(istype(borgo, /mob/living/silicon/robot))
+	if(iscyborg(borgo))
 		var/mob/living/silicon/robot/robo = borgo
 		robo.lamp_color = color
 		robo.toggle_headlamp(FALSE, TRUE)
@@ -254,7 +270,7 @@
 
 /obj/item/modular_computer/tablet/integrated/syndicate/Initialize(mapload)
 	. = ..()
-	if(istype(borgo, /mob/living/silicon/robot))
+	if(iscyborg(borgo))
 		var/mob/living/silicon/robot/robo = borgo
 		robo.lamp_color = COLOR_RED //Syndicate likes it red
 
@@ -270,7 +286,10 @@
 	bypass_state = TRUE
 	allow_chunky = TRUE
 
-	var/default_disk = 0
+	///All applications this tablet has pre-installed
+	var/list/default_applications = list()
+	///The pre-installed cartridge that comes with the tablet
+	var/loaded_cartridge
 
 /obj/item/modular_computer/tablet/pda/update_overlays()
 	. = ..()
@@ -291,15 +310,17 @@
 /obj/item/modular_computer/tablet/pda/Initialize(mapload)
 	. = ..()
 	install_component(new /obj/item/computer_hardware/hard_drive/small)
-	install_component(new /obj/item/computer_hardware/processor_unit/small)
 	install_component(new /obj/item/computer_hardware/battery(src, /obj/item/stock_parts/cell/computer))
 	install_component(new /obj/item/computer_hardware/network_card)
 	install_component(new /obj/item/computer_hardware/card_slot)
-	install_component(new /obj/item/computer_hardware/identifier)
-	install_component(new /obj/item/computer_hardware/sensorpackage)
 
-	if(default_disk)
-		var/obj/item/computer_hardware/hard_drive/portable/disk = new default_disk(src)
+	if(!isnull(default_applications))
+		var/obj/item/computer_hardware/hard_drive/small/hard_drive = find_hardware_by_name("solid state drive")
+		for(var/datum/computer_file/program/default_programs as anything in default_applications)
+			hard_drive.store_file(new default_programs)
+
+	if(loaded_cartridge)
+		var/obj/item/computer_hardware/hard_drive/portable/disk = new loaded_cartridge(src)
 		install_component(disk)
 
 	if(insert_type)

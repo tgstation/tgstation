@@ -57,11 +57,11 @@
 
 /mob/living/simple_animal/robot_customer/MouseEntered(location, control, params)
 	. = ..()
-	hud_to_show_on_hover?.add_hud_to(usr)
+	hud_to_show_on_hover?.show_to(usr)
 
 /mob/living/simple_animal/robot_customer/MouseExited(location, control, params)
 	. = ..()
-	hud_to_show_on_hover?.remove_hud_from(usr)
+	hud_to_show_on_hover?.hide_from(usr)
 
 /mob/living/simple_animal/robot_customer/update_overlays()
 	. = ..()
@@ -94,4 +94,11 @@
 	. = ..()
 	if(ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER])
 		var/datum/venue/attending_venue = ai_controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
-		. += span_notice("Their order was: \"[attending_venue.order_food_line(ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER])].\"")
+		var/wanted_item = ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER]
+		var/order
+		if(istype(wanted_item, /datum/custom_order))
+			var/datum/custom_order/custom_order = wanted_item
+			order = custom_order.get_order_line(attending_venue)
+		else
+			order = attending_venue.order_food_line(wanted_item)
+		. += span_notice("Their order was: \"[order].\"")

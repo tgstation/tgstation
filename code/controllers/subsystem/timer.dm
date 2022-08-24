@@ -565,6 +565,7 @@ SUBSYSTEM_DEF(timer)
  * * callback the callback to call on timer finish
  * * wait deciseconds to run the timer for
  * * flags flags for this timer, see: code\__DEFINES\subsystems.dm
+ * * timer_subsystem the subsystem to insert this timer into
  */
 /proc/_addtimer(datum/callback/callback, wait = 0, flags = 0, datum/controller/subsystem/timer/timer_subsystem, file, line)
 	if (!callback)

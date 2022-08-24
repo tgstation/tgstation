@@ -1,4 +1,6 @@
 /obj/item/clothing/suit/armor
+	icon = 'icons/obj/clothing/suits/armor.dmi'
+	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	allowed = null
 	body_parts_covered = CHEST
 	cold_protection = CHEST|GROIN
@@ -53,6 +55,7 @@
 /obj/item/clothing/suit/armor/vest/marine/medic
 	name = "tactical medic's armor vest"
 	icon_state = "marine_medic"
+	body_parts_covered = CHEST|GROIN
 
 /obj/item/clothing/suit/armor/vest/old
 	name = "degrading armor vest"
@@ -66,7 +69,7 @@
 	desc = "A large, yet comfortable piece of armor, protecting you from some threats."
 	icon_state = "blueshift"
 	inhand_icon_state = "blueshift"
-	custom_premium_price = PAYCHECK_HARD
+	custom_premium_price = PAYCHECK_COMMAND
 
 /obj/item/clothing/suit/armor/vest/cuirass
 	name = "cuirass"
@@ -371,3 +374,10 @@
 /obj/item/clothing/suit/armor/centcom_formal/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/toggle_icon)
+
+/obj/item/clothing/suit/armor/vest/hop
+	name = "head of personnel's coat"
+	desc = "A stylish coat given to a Head of Personnel."
+	icon_state = "hop_coat"
+	inhand_icon_state = "b_suit"
+	body_parts_covered = CHEST|GROIN|ARMS

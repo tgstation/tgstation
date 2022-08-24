@@ -1,4 +1,4 @@
-#define COLOSSUS_ENRAGED (health < maxHealth/3)
+#define COLOSSUS_ENRAGED (health <= maxHealth / 3)
 
 /**
  * COLOSSUS
@@ -53,31 +53,37 @@
 	score_achievement_type = /datum/award/score/colussus_score
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/colossus/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/colossus)
-	deathmessage = "disintegrates, leaving a glowing core in its wake."
-	deathsound = 'sound/magic/demon_dies.ogg'
+	death_message = "disintegrates, leaving a glowing core in its wake."
+	death_sound = 'sound/magic/demon_dies.ogg'
 	small_sprite_type = /datum/action/small_sprite/megafauna/colossus
 	/// Spiral shots ability
-	var/datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/spiral_shots
+	var/datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/colossus/spiral_shots
 	/// Random shots ablity
-	var/datum/action/cooldown/mob_cooldown/projectile_attack/random_aoe/random_shots
+	var/datum/action/cooldown/mob_cooldown/projectile_attack/random_aoe/colossus/random_shots
 	/// Shotgun blast ability
-	var/datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/shotgun_blast
+	var/datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/colossus/shotgun_blast
 	/// Directional shots ability
-	var/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/alternating/dir_shots
+	var/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/alternating/colossus/dir_shots
+	/// Final attack ability
+	var/datum/action/cooldown/mob_cooldown/projectile_attack/colossus_final/colossus_final
+	/// Have we used DIE yet?
+	var/final_availible = TRUE
 
 /mob/living/simple_animal/hostile/megafauna/colossus/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT) //we don't want this guy to float, messes up his animations.
-	spiral_shots = new /datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots()
-	random_shots = new /datum/action/cooldown/mob_cooldown/projectile_attack/random_aoe()
-	shotgun_blast = new /datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast()
-	dir_shots = new /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/alternating()
+	spiral_shots = new /datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/colossus()
+	random_shots = new /datum/action/cooldown/mob_cooldown/projectile_attack/random_aoe/colossus()
+	shotgun_blast = new /datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/colossus()
+	dir_shots = new /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/alternating/colossus()
+	colossus_final = new /datum/action/cooldown/mob_cooldown/projectile_attack/colossus_final()
 	spiral_shots.Grant(src)
 	random_shots.Grant(src)
 	shotgun_blast.Grant(src)
 	dir_shots.Grant(src)
-	RegisterSignal(src, COMSIG_ABILITY_STARTED, .proc/start_attack)
-	RegisterSignal(src, COMSIG_ABILITY_FINISHED, .proc/finished_attack)
+	colossus_final.Grant(src)
+	RegisterSignal(src, COMSIG_MOB_ABILITY_STARTED, .proc/start_attack)
+	RegisterSignal(src, COMSIG_MOB_ABILITY_FINISHED, .proc/finished_attack)
 	AddElement(/datum/element/projectile_shield)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/Destroy()
@@ -89,7 +95,7 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/OpenFire()
-	anger_modifier = clamp(((maxHealth - health)/50),0,20)
+	anger_modifier = clamp(((maxHealth - health) / 40), 0, 20)
 
 	if(client)
 		return
@@ -97,7 +103,7 @@
 	if(enrage(target))
 		if(move_to_delay == initial(move_to_delay))
 			visible_message(span_colossus("\"<b>You can't dodge.</b>\""))
-		ranged_cooldown = world.time + 30
+		ranged_cooldown = world.time + 3 SECONDS
 		telegraph()
 		dir_shots.fire_in_directions(src, target, GLOB.alldirs)
 		move_to_delay = 3
@@ -105,21 +111,24 @@
 	else
 		move_to_delay = initial(move_to_delay)
 
-	if(prob(20+anger_modifier)) //Major attack
+	if(health <= maxHealth / 10 && !final_availible)
+		final_availible = FALSE
+		colossus_final.Trigger(target = target)
+	else if(prob(20 + anger_modifier)) //Major attack
 		spiral_shots.Trigger(target = target)
 	else if(prob(20))
 		random_shots.Trigger(target = target)
 	else
-		if(prob(70))
+		if(prob(60 + anger_modifier))
 			shotgun_blast.Trigger(target = target)
 		else
 			dir_shots.Trigger(target = target)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/telegraph()
-	for(var/mob/M in range(10,src))
-		if(M.client)
-			flash_color(M.client, "#C80000", 1)
-			shake_camera(M, 4, 3)
+	for(var/mob/viewer as anything in viewers(10, src))
+		if(viewer.client)
+			flash_color(viewer.client, "#C80000", 1)
+			shake_camera(viewer, 4, 3)
 	playsound(src, 'sound/magic/clockwork/narsie_attack.ogg', 200, TRUE)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/start_attack(mob/living/owner, datum/action/cooldown/activated)
@@ -128,25 +137,31 @@
 		spiral_shots.enraged = COLOSSUS_ENRAGED
 		telegraph()
 		icon_state = "eva_attack"
-		visible_message(COLOSSUS_ENRAGED ? span_colossus("\"<b>Die.</b>\"") : span_colossus("\"<b>Judgement.</b>\""))
+		INVOKE_ASYNC(src, /atom/movable.proc/say, "Judgement.", null, list("colossus", "yell"))
+	else if(activated == random_shots)
+		INVOKE_ASYNC(src, /atom/movable.proc/say, "Wrath.", null, list("colossus", "yell"))
+	else if(activated == shotgun_blast)
+		INVOKE_ASYNC(src, /atom/movable.proc/say, "Retribution.", null, list("colossus", "yell"))
+	else if(activated == dir_shots)
+		INVOKE_ASYNC(src, /atom/movable.proc/say, "Lament.", null, list("colossus", "yell"))
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/finished_attack(mob/living/owner, datum/action/cooldown/finished)
 	SIGNAL_HANDLER
 	if(finished == spiral_shots)
 		icon_state = initial(icon_state)
 
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/enrage(mob/living/L)
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
-		if(H.mind)
-			if(istype(H.mind.martial_art, /datum/martial_art/the_sleeping_carp))
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/enrage(mob/living/victim)
+	if(ishuman(victim))
+		var/mob/living/carbon/human/human_victim = victim
+		if(human_victim.mind)
+			if(istype(human_victim.mind.martial_art, /datum/martial_art/the_sleeping_carp))
 				. = TRUE
-		if (is_species(H, /datum/species/golem/sand))
+		if (is_species(human_victim, /datum/species/golem/sand))
 			. = TRUE
 
-/mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/L)
-	visible_message(span_colossus("[src] disintegrates [L]!"))
-	L.dust()
+/mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/victim)
+	visible_message(span_colossus("[src] disintegrates [victim]!"))
+	victim.dust()
 
 /obj/effect/temp_visual/at_shield
 	name = "anti-toolbox field"
@@ -348,14 +363,14 @@
 			NewTerrainWalls = /turf/closed/wall/mineral/wood
 			NewTerrainChairs = /obj/structure/chair/wood
 			NewTerrainTables = /obj/structure/table/glass
-			NewFlora = list(/obj/structure/flora/grass/green, /obj/structure/flora/grass/brown, /obj/structure/flora/grass/both)
+			NewFlora = list(/obj/structure/flora/grass/green/style_random, /obj/structure/flora/grass/brown/style_random, /obj/structure/flora/grass/both/style_random)
 		if("jungle") //Beneficial due to actually having breathable air. Plus, monkeys and bows and arrows.
 			NewTerrainFloors = /turf/open/floor/grass
 			NewTerrainWalls = /turf/closed/wall/mineral/wood
 			NewTerrainChairs = /obj/structure/chair/wood
 			NewTerrainTables = /obj/structure/table/wood
-			NewFlora = list(/obj/structure/flora/ausbushes/sparsegrass, /obj/structure/flora/ausbushes/fernybush, /obj/structure/flora/ausbushes/leafybush,
-							/obj/structure/flora/ausbushes/grassybush, /obj/structure/flora/ausbushes/sunnybush, /obj/structure/flora/tree/palm, /mob/living/carbon/human/species/monkey)
+			NewFlora = list(/obj/structure/flora/bush/sparsegrass/style_random, /obj/structure/flora/bush/ferny/style_random, /obj/structure/flora/bush/leavy/style_random,
+							/obj/structure/flora/bush/grassy/style_random, /obj/structure/flora/bush/sunny/style_random, /obj/structure/flora/tree/palm/style_random, /mob/living/carbon/human/species/monkey)
 			florachance = 20
 		if("ayy lmao") //Beneficial, turns stuff into alien alloy which is useful to cargo and research. Also repairs atmos.
 			NewTerrainFloors = /turf/open/floor/plating/abductor
@@ -506,7 +521,7 @@
 	remove_verb(src, /mob/living/verb/pulled)
 	remove_verb(src, /mob/verb/me_verb)
 	var/datum/atom_hud/medsensor = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-	medsensor.add_hud_to(src)
+	medsensor.show_to(src)
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
@@ -572,8 +587,8 @@
 		ADD_TRAIT(L, TRAIT_MUTE, STASIS_MUTE)
 		L.status_flags |= GODMODE
 		L.mind.transfer_to(holder_animal)
-		var/obj/effect/proc_holder/spell/targeted/exit_possession/P = new /obj/effect/proc_holder/spell/targeted/exit_possession
-		holder_animal.mind.AddSpell(P)
+		var/datum/action/exit_possession/escape = new(holder_animal)
+		escape.Grant(holder_animal)
 		remove_verb(holder_animal, /mob/living/verb/pulled)
 
 /obj/structure/closet/stasis/dump_contents(kill = 1)
@@ -584,7 +599,7 @@
 		L.notransform = 0
 		if(holder_animal)
 			holder_animal.mind.transfer_to(L)
-			L.mind.RemoveSpell(/obj/effect/proc_holder/spell/targeted/exit_possession)
+			holder_animal.gib()
 		if(kill || !isanimal(loc))
 			L.death(0)
 	..()
@@ -595,33 +610,27 @@
 /obj/structure/closet/stasis/ex_act()
 	return
 
-/obj/effect/proc_holder/spell/targeted/exit_possession
+/datum/action/exit_possession
 	name = "Exit Possession"
-	desc = "Exits the body you are possessing."
-	charge_max = 60
-	clothes_req = 0
-	invocation_type = INVOCATION_NONE
-	max_targets = 1
-	range = -1
-	include_user = TRUE
-	selection_type = "view"
-	action_icon = 'icons/mob/actions/actions_spells.dmi'
-	action_icon_state = "exit_possession"
-	sound = null
+	desc = "Exits the body you are possessing. They will explode violently when this occurs."
+	icon_icon = 'icons/mob/actions/actions_spells.dmi'
+	button_icon_state = "exit_possession"
 
-/obj/effect/proc_holder/spell/targeted/exit_possession/cast(list/targets, mob/living/user = usr)
-	if(!isfloorturf(user.loc))
-		return
-	var/datum/mind/target_mind = user.mind
-	for(var/i in user)
-		if(istype(i, /obj/structure/closet/stasis))
-			var/obj/structure/closet/stasis/S = i
-			S.dump_contents(0)
-			qdel(S)
-			break
-	user.gib()
-	target_mind.RemoveSpell(/obj/effect/proc_holder/spell/targeted/exit_possession)
+/datum/action/exit_possession/IsAvailable()
+	return ..() && isfloorturf(owner.loc)
 
+/datum/action/exit_possession/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	var/obj/structure/closet/stasis/stasis = locate() in owner
+	if(!stasis)
+		CRASH("[type] did not find a stasis closet thing in the owner.")
+
+	stasis.dump_contents(FALSE)
+	qdel(stasis)
+	qdel(src)
 
 #undef ACTIVATE_TOUCH
 #undef ACTIVATE_SPEECH

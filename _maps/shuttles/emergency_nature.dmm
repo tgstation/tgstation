@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "as" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "au" = (
@@ -9,7 +9,7 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "ay" = (
-/obj/structure/flora/ausbushes/leafybush,
+/obj/structure/flora/bush/leavy/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "aA" = (
@@ -22,12 +22,12 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "aJ" = (
-/obj/structure/flora/ausbushes/stalkybush,
-/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/bush/stalky/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "bd" = (
-/obj/structure/flora/rock/pile/largejungle,
+/obj/structure/flora/rock/pile/jungle/large/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "bg" = (
@@ -59,19 +59,11 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"cL" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 3
-	},
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "cR" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
 	},
-/obj/structure/sign/warning/nosmoking{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/no_smoking/directional/north,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "cZ" = (
@@ -82,13 +74,11 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "dj" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 3
-	},
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /obj/item/radio/intercom/directional/south,
+/obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "dP" = (
@@ -98,22 +88,12 @@
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"dT" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/shuttle/escape)
 "eq" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "ev" = (
 /obj/effect/turf_decal/trimline/green/filled/corner,
@@ -126,7 +106,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 6
 	},
-/obj/structure/flora/ausbushes/leafybush,
+/obj/structure/flora/bush/leavy/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "eB" = (
@@ -166,8 +146,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "fG" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/genericbush,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/generic/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "fJ" = (
@@ -201,7 +181,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "gl" = (
-/obj/structure/flora/junglebush/large,
+/obj/structure/flora/bush/large/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "gu" = (
@@ -268,12 +248,12 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4
 	},
-/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "it" = (
 /mob/living/carbon/human/species/monkey,
-/obj/structure/flora/grass/jungle/b{
+/obj/structure/flora/grass/jungle/b/style_random{
 	icon_state = "bushb3"
 	},
 /turf/open/floor/grass,
@@ -293,7 +273,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8
 	},
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "iO" = (
@@ -356,7 +336,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8
 	},
-/obj/structure/flora/ausbushes/leafybush,
+/obj/structure/flora/bush/leavy/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "lH" = (
@@ -371,9 +351,8 @@
 	dir = 8
 	},
 /obj/structure/grille/broken,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "lS" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -403,7 +382,7 @@
 /obj/item/food/soup/monkeysdelight{
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/food/drinks/soda_cans/monkey_energy{
+/obj/item/reagent_containers/cup/soda_cans/monkey_energy{
 	pixel_x = 6;
 	pixel_y = 5
 	},
@@ -413,15 +392,13 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
-/obj/structure/sign/warning/nosmoking{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/no_smoking/directional/north,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "mq" = (
 /mob/living/carbon/human/species/monkey,
 /obj/machinery/light/floor,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "mw" = (
@@ -438,7 +415,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "nD" = (
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/ferny/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "nQ" = (
@@ -464,7 +441,7 @@
 	dir = 8
 	},
 /obj/machinery/door/window/left/directional/west{
-	name = "Nature pen"
+	name = "Nature Pen"
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
@@ -478,7 +455,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "qD" = (
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "rg" = (
@@ -558,7 +535,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 10
 	},
-/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "ur" = (
@@ -573,9 +550,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "uI" = (
-/obj/structure/flora/rock/jungle{
-	icon_state = "rock3"
-	},
+/obj/structure/flora/rock/pile/jungle/style_3,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "vt" = (
@@ -629,7 +604,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8
 	},
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/ferny/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "xZ" = (
@@ -673,7 +648,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "zf" = (
-/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/flora/bush/pointy/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "zr" = (
@@ -684,7 +659,7 @@
 /area/shuttle/escape)
 "zs" = (
 /obj/machinery/light/floor,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "zD" = (
@@ -697,7 +672,7 @@
 /obj/machinery/door/airlock/security{
 	name = "Brig"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape/brig)
 "Ai" = (
@@ -717,7 +692,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "AM" = (
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Bm" = (
@@ -728,11 +703,11 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Bo" = (
-/obj/structure/flora/ausbushes/sunnybush,
+/obj/structure/flora/bush/sunny/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Bt" = (
-/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Bv" = (
@@ -766,13 +741,11 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "BM" = (
-/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Cb" = (
-/obj/structure/flora/rock/jungle{
-	icon_state = "bushc2"
-	},
+/obj/structure/flora/bush/jungle/c/style_2,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Co" = (
@@ -791,7 +764,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "CE" = (
-/obj/structure/flora/tree/jungle/small,
+/obj/structure/flora/tree/jungle/small/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "CQ" = (
@@ -843,7 +816,7 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Fp" = (
-/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/bush/grassy/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Gf" = (
@@ -864,7 +837,7 @@
 /obj/item/food/monkeycube{
 	pixel_x = 5
 	},
-/obj/item/paicard{
+/obj/item/pai_card{
 	pixel_x = -6;
 	pixel_y = 1
 	},
@@ -878,21 +851,19 @@
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 1
 	},
-/turf/open/floor/iron{
-	icon_state = "floorscorched1"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "Hi" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "Hq" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "HV" = (
@@ -903,7 +874,7 @@
 /area/shuttle/escape)
 "Ia" = (
 /mob/living/carbon/human/species/monkey,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Io" = (
@@ -914,7 +885,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Iw" = (
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /mob/living/simple_animal/hostile/retaliate/frog,
 /turf/open/floor/grass,
 /area/shuttle/escape)
@@ -966,7 +937,7 @@
 /area/shuttle/escape)
 "Ka" = (
 /obj/effect/turf_decal/weather/dirt,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Kv" = (
@@ -979,12 +950,10 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Kx" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 3
-	},
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
+/obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "KT" = (
@@ -997,7 +966,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
 	},
-/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/flora/bush/pointy/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "LG" = (
@@ -1008,9 +977,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "LO" = (
-/obj/structure/flora/rock/jungle{
-	icon_state = "grassa4"
-	},
+/obj/structure/flora/grass/jungle/a/style_4,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "LW" = (
@@ -1030,7 +997,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4
 	},
-/obj/structure/flora/ausbushes/leafybush,
+/obj/structure/flora/bush/leavy/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "MS" = (
@@ -1048,19 +1015,17 @@
 /obj/effect/turf_decal/trimline/green/filled/end,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/door/window/left/directional/south{
-	name = "Nature pen"
+	name = "Nature Pen"
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "OS" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 3
-	},
 /obj/machinery/vending/coffee,
+/obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Ps" = (
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "PG" = (
@@ -1073,11 +1038,11 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "PP" = (
-/obj/structure/flora/ausbushes/genericbush,
+/obj/structure/flora/bush/generic/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "QC" = (
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "QM" = (
@@ -1085,9 +1050,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "QO" = (
 /obj/effect/turf_decal/weather/dirt{
@@ -1131,7 +1095,7 @@
 	dir = 6
 	},
 /obj/structure/table/glass,
-/obj/item/clothing/suit/monkeysuit{
+/obj/item/clothing/suit/costume/monkeysuit{
 	pixel_x = -2;
 	pixel_y = 4
 	},
@@ -1152,9 +1116,7 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Ti" = (
-/obj/structure/flora/rock/jungle{
-	icon_state = "busha3"
-	},
+/obj/structure/flora/bush/jungle/a/style_3,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Ts" = (
@@ -1181,7 +1143,7 @@
 /area/shuttle/escape)
 "TT" = (
 /obj/effect/turf_decal/weather/dirt,
-/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Um" = (
@@ -1229,7 +1191,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "VM" = (
-/obj/structure/flora/tree/jungle,
+/obj/structure/flora/tree/jungle/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "VU" = (
@@ -1245,7 +1207,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 9
 	},
-/obj/structure/flora/ausbushes/reedbush,
+/obj/structure/flora/bush/reed/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Wz" = (
@@ -1258,15 +1220,15 @@
 /turf/template_noop,
 /area/template_noop)
 "WH" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/sunnybush,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/sunny/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "WL" = (
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Xm" = (
-/obj/structure/flora/rock,
+/obj/structure/flora/rock/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "XK" = (
@@ -1285,7 +1247,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
 	},
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Yp" = (
@@ -1302,7 +1264,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 9
 	},
-/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "YP" = (
@@ -1313,25 +1275,21 @@
 	dir = 4
 	},
 /obj/machinery/door/window/left/directional/east{
-	name = "Nature pen"
+	name = "Nature Pen"
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "YW" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 3
-	},
 /obj/machinery/vending/wardrobe/hydro_wardrobe,
+/obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Zd" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 3
-	},
 /obj/machinery/light/directional/south,
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
+/obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Zg" = (
@@ -1348,7 +1306,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 10
 	},
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/ferny/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Zt" = (
@@ -1606,7 +1564,7 @@ HV
 Kx
 Yu
 dP
-dT
+Hi
 Jw
 gu
 WE
@@ -1702,7 +1660,7 @@ Bt
 ST
 wg
 PG
-cL
+Zt
 gj
 Um
 cm

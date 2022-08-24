@@ -14,7 +14,7 @@
 		/obj/structure/reagent_dispensers/watertank = 1,
 		/obj/item/shard = 1,
 	)
-	result_atoms = list(/obj/item/reagent_containers/glass/beaker/eldritch)
+	result_atoms = list(/obj/item/reagent_containers/cup/beaker/eldritch)
 	cost = 1
 	route = PATH_SIDE
 
@@ -32,7 +32,7 @@
 	required_atoms = list(
 		/obj/item/wirecutters = 1,
 		/obj/effect/decal/cleanable/vomit = 1,
-		/obj/item/organ/heart = 1,
+		/obj/item/organ/internal/heart = 1,
 	)
 	duration = 2 MINUTES
 	cost = 1

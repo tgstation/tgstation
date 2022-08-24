@@ -7,6 +7,7 @@
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	force = 15
 	throwforce = 10
+	demolition_mod = 1.15
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
@@ -129,7 +130,11 @@
 
 /obj/item/shovel/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 150, 40) //it's sharp, so it works, but barely.
+	AddComponent(/datum/component/butchering, \
+	speed = 15 SECONDS, \
+	effectiveness = 40, \
+	)
+	//it's sharp, so it works, but barely.
 
 /obj/item/shovel/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins digging their own grave! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -162,3 +167,76 @@
 	attack_verb_continuous = list("slashes", "impales", "stabs", "slices")
 	attack_verb_simple = list("slash", "impale", "stab", "slice")
 	sharpness = SHARP_EDGED
+
+/obj/item/trench_tool
+	name = "entrenching tool"
+	desc = "The multi-purpose tool you always needed."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "trench_tool"
+	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
+	flags_1 = CONDUCT_1
+	force = 15
+	throwforce = 6
+	w_class = WEIGHT_CLASS_SMALL
+	tool_behaviour = TOOL_WRENCH
+	toolspeed = 0.75
+	usesound = 'sound/items/ratchet.ogg'
+	attack_verb_continuous = list("bashes", "bludgeons", "thrashes", "whacks")
+	attack_verb_simple = list("bash", "bludgeon", "thrash", "whack")
+	wound_bonus = 10
+
+/obj/item/trench_tool/examine(mob/user)
+	. = ..()
+	. += span_notice("Use in hand to switch configuration.")
+	. += span_notice("It functions as a [tool_behaviour] tool.")
+
+/obj/item/trench_tool/attack_self(mob/user, modifiers)
+	. = ..()
+	if(!user)
+		return
+	var/list/tool_list = list(
+		"Wrench" = image(icon = icon, icon_state = "trench_tool"),
+		"Shovel" = image(icon = icon, icon_state = "trench_tool_shovel"),
+		"Pick" = image(icon = icon, icon_state = "trench_tool_pick"),
+		)
+	var/tool_result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	if(!check_menu(user) || !tool_result)
+		return
+	switch(tool_result)
+		if("Wrench")
+			icon_state = "trench_tool"
+			tool_behaviour = TOOL_WRENCH
+			sharpness = NONE
+			toolspeed = 0.75
+			w_class = WEIGHT_CLASS_SMALL
+			usesound = 'sound/items/ratchet.ogg'
+			attack_verb_continuous = list("bashes", "bludgeons", "thrashes", "whacks")
+			attack_verb_simple = list("bash", "bludgeon", "thrash", "whack")
+		if("Shovel")
+			icon_state = "trench_tool_shovel"
+			tool_behaviour = TOOL_SHOVEL
+			sharpness = SHARP_EDGED
+			toolspeed = 0.25
+			w_class = WEIGHT_CLASS_NORMAL
+			usesound = 'sound/effects/shovel_dig.ogg'
+			attack_verb_continuous = list("slashes", "impales", "stabs", "slices")
+			attack_verb_simple = list("slash", "impale", "stab", "slice")
+		if("Pick")
+			icon_state = "trench_tool_pick"
+			tool_behaviour = TOOL_MINING
+			sharpness = SHARP_POINTY
+			toolspeed = 0.5
+			w_class = WEIGHT_CLASS_NORMAL
+			usesound = 'sound/effects/picaxe1.ogg'
+			attack_verb_continuous = list("hits", "pierces", "slices", "attacks")
+			attack_verb_simple = list("hit", "pierce", "slice", "attack")
+	playsound(src, 'sound/items/ratchet.ogg', 50, vary = TRUE)
+	user.update_held_items()
+
+/obj/item/trench_tool/proc/check_menu(mob/user)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated() || !user.Adjacent(src))
+		return FALSE
+	return TRUE

@@ -5,7 +5,7 @@
 /obj/machinery/disposal
 	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
 	density = TRUE
-	armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 100, BOMB = 0, BIO = 100, FIRE = 90, ACID = 30)
+	armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 90, ACID = 30)
 	max_integrity = 200
 	resistance_flags = FIRE_PROOF
 	interaction_flags_machine = INTERACT_MACHINE_OPEN | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
@@ -41,6 +41,7 @@
 	//gas.volume = 1.05 * CELLSTANDARD
 	update_appearance()
 	RegisterSignal(src, COMSIG_RAT_INTERACT, .proc/on_rat_rummage)
+	RegisterSignal(src, COMSIG_STORAGE_DUMP_CONTENT, .proc/on_storage_dump)
 	var/static/list/loc_connections = list(
 		COMSIG_CARBON_DISARM_COLLIDE = .proc/trash_carbon,
 	)
@@ -255,20 +256,23 @@
 		AM.forceMove(T)
 	..()
 
-/obj/machinery/disposal/get_dumping_location()
-	return src
-
 //How disposal handles getting a storage dump from a storage object
-/obj/machinery/disposal/storage_contents_dump_act(datum/component/storage/src_object, mob/user)
-	. = ..()
-	if(.)
-		return
-	for(var/obj/item/I in src_object.parent)
-		if(user.active_storage != src_object)
-			if(I.on_found(user))
-				return
-		src_object.remove_from_storage(I, src)
-	return TRUE
+/obj/machinery/disposal/proc/on_storage_dump(datum/source, obj/item/storage_source, mob/user)
+	SIGNAL_HANDLER
+
+	. = STORAGE_DUMP_HANDLED
+
+	to_chat(user, span_notice("You dump out [storage_source] into [src]."))
+
+	for(var/obj/item/to_dump in storage_source)
+		if(to_dump.loc != storage_source)
+			continue
+		if(user.active_storage != storage_source && to_dump.on_found(user))
+			return
+		if(!storage_source.atom_storage.attempt_remove(to_dump, src, silent = TRUE))
+			continue
+		to_dump.pixel_x = to_dump.base_pixel_x + rand(-5, 5)
+		to_dump.pixel_y = to_dump.base_pixel_y + rand(-5, 5)
 
 // Disposal bin
 // Holds items for disposal into pipe system
@@ -286,10 +290,9 @@
 /obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/storage/bag/trash)) //Not doing component overrides because this is a specific type.
 		var/obj/item/storage/bag/trash/T = I
-		var/datum/component/storage/STR = T.GetComponent(/datum/component/storage)
 		to_chat(user, span_warning("You empty the bag."))
 		for(var/obj/item/O in T.contents)
-			STR.remove_from_storage(O,src)
+			T.atom_storage.attempt_remove(O,src)
 		T.update_appearance()
 		update_appearance()
 	else
@@ -415,8 +418,6 @@
 			if(full_pressure)
 				do_flush()
 		flush_count = 0
-
-	updateDialog()
 
 	if(flush && air_contents.return_pressure() >= SEND_PRESSURE) // flush can happen even without power
 		do_flush()

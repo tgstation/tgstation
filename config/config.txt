@@ -5,6 +5,7 @@ $include dbconfig.txt
 $include comms.txt
 $include resources.txt
 $include interviews.txt
+$include lua.txt
 
 # You can use the @ character at the beginning of a config option to lock it from being edited in-game
 # Example usage:
@@ -65,7 +66,7 @@ ENABLE_LOCALHOST_RANK
 ## Unhash this to enable playtime requirements for head jobs.
 #USE_EXP_RESTRICTIONS_HEADS
 ## Unhash this to override head jobs' playtime requirements with this number of hours.
-## Leave this commented out to use the values defined in the job datums. Values in the datums are stored as minutes.
+## Leave this commented out to use the values defined in the job datums.
 #USE_EXP_RESTRICTIONS_HEADS_HOURS 3
 ## Unhash this to change head jobs' playtime requirements so that they're based on department playtime, rather than crew playtime.
 #USE_EXP_RESTRICTIONS_HEADS_DEPARTMENT
@@ -157,9 +158,6 @@ LOG_PICTURES
 ## log virus and actions
 LOG_VIRUS
 
-## log cloning actions
-LOG_CLONING
-
 ## log shuttle actions
 LOG_SHUTTLE
 
@@ -168,6 +166,9 @@ LOG_TOOLS
 
 ## Log all timers on timer auto reset
 # LOG_TIMERS_ON_BUCKET_RESET
+
+## log speech indicators
+LOG_SPEECH_INDICATORS
 
 ##Log camera pictures - Must have picture logging enabled
 PICTURE_LOGGING_CAMERA
@@ -304,10 +305,6 @@ ALLOW_HOLIDAYS
 
 ## Uncomment to show the names of the admin sending a pm from IRC instead of showing as a stealthmin.
 #SHOW_IRC_NAME
-
-## Defines the ticklimit for subsystem initialization (In percents of a byond tick). Lower makes world start smoother. Higher makes it faster.
-##This is currently a testing optimized setting. A good value for production would be 98.
-TICK_LIMIT_MC_INIT 500
 
 ##Defines the ticklag for the world. Ticklag is the amount of time between game ticks (aka byond ticks) (in 1/10ths of a second).
 ##	This also controls the client network update rate, as well as the default client fps

@@ -37,8 +37,6 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	var/picked_name
 	///Whether this positronic brain is currently looking for a ghost to enter it.
 	var/searching = FALSE
-	///If it pings on creation immediately
-	var/autoping = TRUE
 	///List of all ckeys who has already entered this posibrain once before.
 	var/list/ckeys_entered = list()
 
@@ -187,7 +185,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 			. += span_notice("Current consciousness seed: \"[ask_role]\"")
 		. += span_boldnotice("Alt-click to set a consciousness seed, specifying what [src] will be used for. This can help generate a personality interested in that role.")
 
-/obj/item/mmi/posibrain/Initialize(mapload)
+/obj/item/mmi/posibrain/Initialize(mapload, autoping = TRUE)
 	. = ..()
 	set_brainmob(new /mob/living/brain(src))
 	var/new_name

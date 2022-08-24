@@ -289,7 +289,7 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Emergency Shuttle Brig"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bo" = (
@@ -309,7 +309,7 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Brig"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bs" = (
@@ -348,7 +348,7 @@
 /obj/machinery/door/airlock/shuttle{
 	name = "Emergency Shuttle Airlock"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/plating,
 /area/shuttle/escape/brig)
 "bw" = (
@@ -554,8 +554,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "cb" = (
-/obj/structure/sign/departments/medbay/alt{
-	pixel_x = 32;
+/obj/structure/sign/departments/medbay/alt/directional/east{
 	pixel_y = -32
 	},
 /turf/open/floor/iron,
@@ -621,13 +620,13 @@
 /area/shuttle/escape)
 "cj" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/portable_atmospherics/canister/anesthetic_mix,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "ck" = (
@@ -635,29 +634,6 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
-"cl" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
-"cm" = (
-/obj/structure/table,
-/obj/item/reagent_containers/glass/beaker/cryoxadone,
-/obj/item/wrench,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -680,12 +656,6 @@
 "cp" = (
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
-"cq" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
-	dir = 5
-	},
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "cr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/iron/white,
@@ -693,12 +663,6 @@
 "cs" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
 	dir = 9
-	},
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
-"ct" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
@@ -942,11 +906,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "cX" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 2
-	},
+/obj/structure/sink/directional/east,
 /obj/structure/mirror/directional/west,
 /turf/open/floor/iron/freezer,
 /area/shuttle/escape)
@@ -1032,9 +992,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "di" = (
-/obj/structure/sign/warning/electricshock{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/electric_shock/directional/east,
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -1065,9 +1023,7 @@
 /area/shuttle/escape)
 "dl" = (
 /obj/structure/table,
-/obj/structure/sign/warning/enginesafety{
-	pixel_y = -32
-	},
+/obj/structure/sign/warning/engine_safety/directional/south,
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -1268,12 +1224,51 @@
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
+"NP" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
 "PD" = (
 /obj/structure/chair/comfy/beige{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"SZ" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/item/wrench/medical,
+/obj/item/reagent_containers/cup/beaker/cryoxadone,
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"UA" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
+	dir = 5
+	},
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Xo" = (
 /obj/machinery/computer/security{
@@ -1927,8 +1922,8 @@ bW
 bW
 bR
 ac
-cj
-cq
+SZ
+cp
 cw
 cC
 cF
@@ -2015,7 +2010,7 @@ aZ
 aZ
 bc
 ac
-cl
+cj
 cs
 cp
 cp
@@ -2059,8 +2054,8 @@ bc
 bc
 cd
 ab
-cm
-ct
+NP
+UA
 cp
 cp
 cp

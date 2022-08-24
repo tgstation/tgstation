@@ -34,12 +34,56 @@
  * probability controls the chance it chooses the passed in zone, or another random zone
  * defaults to 80
  */
-/proc/ran_zone(zone, probability = 80)
+/proc/ran_zone(zone, probability = 80, list/weighted_list)
 	if(prob(probability))
 		zone = check_zone(zone)
 	else
-		zone = pick_weight(list(BODY_ZONE_HEAD = 1, BODY_ZONE_CHEST = 1, BODY_ZONE_L_ARM = 4, BODY_ZONE_R_ARM = 4, BODY_ZONE_L_LEG = 4, BODY_ZONE_R_LEG = 4))
+		zone = pick_weight(weighted_list ? weighted_list : list(BODY_ZONE_HEAD = 1, BODY_ZONE_CHEST = 1, BODY_ZONE_L_ARM = 4, BODY_ZONE_R_ARM = 4, BODY_ZONE_L_LEG = 4, BODY_ZONE_R_LEG = 4))
 	return zone
+
+
+/**
+ * More or less ran_zone, but only returns bodyzones that the mob /actually/ has.
+ *
+ * * blacklisted_parts - allows you to specify zones that will not be chosen. eg: list(BODY_ZONE_CHEST, BODY_ZONE_R_LEG)
+ * * * !!!! blacklisting BODY_ZONE_CHEST is really risky since it's the only bodypart guarunteed to ALWAYS exists  !!!!
+ * * * !!!! Only do that if you're REALLY CERTAIN they have limbs, otherwise we'll CRASH() !!!!
+ *
+ * * ran_zone has a base prob(80) to return the base_zone (or if null, BODY_ZONE_CHEST) vs something in our generated list of limbs.
+ * * this probability is overriden when either blacklisted_parts contains BODY_ZONE_CHEST and we aren't passed a base_zone (since the default fallback for ran_zone would be the chest in that scenario), or if even_weights is enabled.
+ * * you can also manually adjust this probability by altering base_probability
+ *
+ * * even_weights - ran_zone has a 40% chance (after the prob(80) mentioned above) of picking a limb, vs the torso & head which have an additional 10% chance.
+ * * Setting even_weight to TRUE will make it just a straight up pick() between all possible bodyparts.
+ *
+ */
+/mob/proc/get_random_valid_zone(base_zone, base_probability = 80, list/blacklisted_parts, even_weights, bypass_warning)
+	return BODY_ZONE_CHEST //even though they don't really have a chest, let's just pass the default of check_zone to be safe.
+
+/mob/living/carbon/get_random_valid_zone(base_zone, base_probability = 80, list/blacklisted_parts, even_weights, bypass_warning)
+	var/list/limbs = list()
+	for(var/obj/item/bodypart/part as anything in bodyparts)
+		var/limb_zone = part.body_zone //cache the zone since we're gonna check it a ton.
+		if(limb_zone in blacklisted_parts)
+			continue
+		if(even_weights)
+			limbs[limb_zone] = 1
+			continue
+		if(limb_zone == BODY_ZONE_CHEST || limb_zone == BODY_ZONE_HEAD)
+			limbs[limb_zone] = 1
+		else
+			limbs[limb_zone] = 4
+
+	if(base_zone && !(check_zone(base_zone) in limbs))
+		base_zone = null //check if the passed zone is infact valid
+
+	var/chest_blacklisted
+	if((BODY_ZONE_CHEST in blacklisted_parts))
+		chest_blacklisted = TRUE
+		if(bypass_warning && !limbs.len)
+			CRASH("limbs is empty and the chest is blacklisted. this may not be intended!")
+	return (((chest_blacklisted && !base_zone) || even_weights) ? pick_weight(limbs) : ran_zone(base_zone, base_probability, limbs))
+
 
 ///Would this zone be above the neck
 /proc/above_neck(zone)
@@ -211,69 +255,69 @@
  * * notify_suiciders If it should notify suiciders (who do not qualify for many ghost roles)
  * * notify_volume How loud the sound should be to spook the user
  */
-/proc/notify_ghosts(message, ghost_sound = null, enter_link = null, atom/source = null, mutable_appearance/alert_overlay = null, action = NOTIFY_JUMP, flashwindow = TRUE, ignore_mapload = TRUE, ignore_key, header = null, notify_suiciders = TRUE, notify_volume = 100) //Easy notification of ghosts.
+/proc/notify_ghosts(message, ghost_sound, enter_link, atom/source, mutable_appearance/alert_overlay, action = NOTIFY_JUMP, flashwindow = TRUE, ignore_mapload = TRUE, ignore_key, header, notify_suiciders = TRUE, notify_volume = 100) //Easy notification of ghosts.
+
 	if(ignore_mapload && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR) //don't notify for objects created during a map load
 		return
-	for(var/mob/dead/observer/O in GLOB.player_list)
-		if(!notify_suiciders && (O in GLOB.suicided_mob_list))
+	for(var/mob/dead/observer/ghost in GLOB.player_list)
+		if(!notify_suiciders && (ghost in GLOB.suicided_mob_list))
 			continue
-		if (ignore_key && (O.ckey in GLOB.poll_ignore[ignore_key]))
+		if(ignore_key && (ghost.ckey in GLOB.poll_ignore[ignore_key]))
 			continue
 		var/orbit_link
-		if (source && action == NOTIFY_ORBIT)
-			orbit_link = " <a href='?src=[REF(O)];follow=[REF(source)]'>(Orbit)</a>"
-		to_chat(O, span_ghostalert("[message][(enter_link) ? " [enter_link]" : ""][orbit_link]"))
+		if(source && action == NOTIFY_ORBIT)
+			orbit_link = " <a href='?src=[REF(ghost)];follow=[REF(source)]'>(Orbit)</a>"
+		to_chat(ghost, span_ghostalert("[message][(enter_link) ? " [enter_link]" : ""][orbit_link]"))
 		if(ghost_sound)
-			SEND_SOUND(O, sound(ghost_sound, volume = notify_volume))
+			SEND_SOUND(ghost, sound(ghost_sound, volume = notify_volume))
 		if(flashwindow)
-			window_flash(O.client)
-		if(source)
-			var/atom/movable/screen/alert/notify_action/A = O.throw_alert("[REF(source)]_notify_action", /atom/movable/screen/alert/notify_action)
-			if(A)
-				var/ui_style = O.client?.prefs?.read_preference(/datum/preference/choiced/ui_style)
-				if(ui_style)
-					A.icon = ui_style2icon(ui_style)
-				if (header)
-					A.name = header
-				A.desc = message
-				A.action = action
-				A.target = source
-				if(!alert_overlay)
-					alert_overlay = new(source)
-					var/icon/size_check = icon(source.icon, source.icon_state)
-					var/scale = 1
-					var/width = size_check.Width()
-					var/height = size_check.Height()
-					if(width > world.icon_size || height > world.icon_size)
-						if(width >= height)
-							scale = world.icon_size / width
-						else
-							scale = world.icon_size / height
-					alert_overlay.transform = alert_overlay.transform.Scale(scale)
-					alert_overlay.appearance_flags |= TILE_BOUND
-				alert_overlay.layer = FLOAT_LAYER
-				alert_overlay.plane = FLOAT_PLANE
-				A.add_overlay(alert_overlay)
+			window_flash(ghost.client)
+		if(!source)
+			continue
+		var/atom/movable/screen/alert/notify_action/alert = ghost.throw_alert("[REF(source)]_notify_action", /atom/movable/screen/alert/notify_action)
+		if(!alert)
+			continue
+		var/ui_style = ghost.client?.prefs?.read_preference(/datum/preference/choiced/ui_style)
+		if(ui_style)
+			alert.icon = ui_style2icon(ui_style)
+		if (header)
+			alert.name = header
+		alert.desc = message
+		alert.action = action
+		alert.target = source
+		if(!alert_overlay)
+			alert_overlay = new(source)
+			var/icon/size_check = icon(source.icon, source.icon_state)
+			var/scale = 1
+			var/width = size_check.Width()
+			var/height = size_check.Height()
+			if(width > world.icon_size || height > world.icon_size)
+				if(width >= height)
+					scale = world.icon_size / width
+				else
+					scale = world.icon_size / height
+			alert_overlay.transform = alert_overlay.transform.Scale(scale)
+			alert_overlay.appearance_flags |= TILE_BOUND
+		alert_overlay.layer = FLOAT_LAYER
+		alert_overlay.plane = FLOAT_PLANE
+		alert.add_overlay(alert_overlay)
 
 /**
  * Heal a robotic body part on a mob
  */
-/proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute_heal, burn_heal)
-	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
-	if(affecting && !IS_ORGANIC_LIMB(affecting))
-		var/dam //changes repair text based on how much brute/burn was supplied
-		if(brute_heal > burn_heal)
-			dam = 1
-		else
-			dam = 0
-		if((brute_heal > 0 && affecting.brute_dam > 0) || (burn_heal > 0 && affecting.burn_dam > 0))
-			if(affecting.heal_damage(brute_heal, burn_heal, 0, BODYTYPE_ROBOTIC))
-				H.update_damage_overlays()
-			user.visible_message(span_notice("[user] fixes some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name]."), \
-			span_notice("You fix some of the [dam ? "dents on" : "burnt wires in"] [H == user ? "your" : "[H]'s"] [affecting.name]."))
-			return 1 //successful heal
-		else
-			to_chat(user, span_warning("[affecting] is already in good condition!"))
+/proc/item_heal_robotic(mob/living/carbon/human/human, mob/user, brute_heal, burn_heal)
+	var/obj/item/bodypart/affecting = human.get_bodypart(check_zone(user.zone_selected))
+	if(!affecting || IS_ORGANIC_LIMB(affecting))
+		to_chat(user, span_warning("[affecting] is already in good condition!"))
+		return FALSE
+	var/brute_damage = brute_heal > burn_heal //changes repair text based on how much brute/burn was supplied
+	if((brute_heal > 0 && affecting.brute_dam > 0) || (burn_heal > 0 && affecting.burn_dam > 0))
+		if(affecting.heal_damage(brute_heal, burn_heal, 0, BODYTYPE_ROBOTIC))
+			human.update_damage_overlays()
+		user.visible_message(span_notice("[user] fixes some of the [brute_damage ? "dents on" : "burnt wires in"] [human]'s [affecting.name]."), \
+			span_notice("You fix some of the [brute_damage ? "dents on" : "burnt wires in"] [human == user ? "your" : "[human]'s"]	[affecting.name]."))
+		return TRUE //successful heal
+
 
 ///Is the passed in mob a ghost with admin powers, doesn't check for AI interact like isAdminGhost() used to
 /proc/isAdminObserver(mob/user)
@@ -339,51 +383,6 @@
 		var/mob/living/T = pick(nearby_mobs)
 		ClickOn(T)
 
-/// Logs a message in a mob's individual log, and in the global logs as well if log_globally is true
-/mob/log_message(message, message_type, color=null, log_globally = TRUE)
-	if(!LAZYLEN(message))
-		stack_trace("Empty message")
-		return
-
-	// Cannot use the list as a map if the key is a number, so we stringify it (thank you BYOND)
-	var/smessage_type = num2text(message_type, MAX_BITFLAG_DIGITS)
-
-	if(client)
-		if(!islist(client.player_details.logging[smessage_type]))
-			client.player_details.logging[smessage_type] = list()
-
-	if(!islist(logging[smessage_type]))
-		logging[smessage_type] = list()
-
-	var/colored_message = message
-	if(color)
-		if(color[1] == "#")
-			colored_message = "<font color=[color]>[message]</font>"
-		else
-			colored_message = "<font color='[color]'>[message]</font>"
-
-	//This makes readability a bit better for admins.
-	switch(message_type)
-		if(LOG_WHISPER)
-			colored_message = "(WHISPER) [colored_message]"
-		if(LOG_OOC)
-			colored_message = "(OOC) [colored_message]"
-		if(LOG_ASAY)
-			colored_message = "(ASAY) [colored_message]"
-		if(LOG_EMOTE)
-			colored_message = "(EMOTE) [colored_message]"
-		if(LOG_RADIO_EMOTE)
-			colored_message = "(RADIOEMOTE) [colored_message]"
-
-	var/list/timestamped_message = list("\[[time_stamp(format = "YYYY-MM-DD hh:mm:ss")]\] [key_name(src)] [loc_name(src)] (Event #[LAZYLEN(logging[smessage_type])])" = colored_message)
-
-	logging[smessage_type] += timestamped_message
-
-	if(client)
-		client.player_details.logging[smessage_type] += timestamped_message
-
-	..()
-
 ///Can the mob hear
 /mob/proc/can_hear()
 	. = TRUE
@@ -426,3 +425,54 @@
 	if(client?.combo_hud_enabled && client?.prefs?.toggles & COMBOHUD_LIGHTING)
 		return LIGHTING_PLANE_ALPHA_INVISIBLE
 	return initial(lighting_alpha)
+
+/// Returns a generic path of the object based on the slot
+/proc/get_path_by_slot(slot_id)
+	switch(slot_id)
+		if(ITEM_SLOT_BACK)
+			return /obj/item/storage/backpack
+		if(ITEM_SLOT_MASK)
+			return /obj/item/clothing/mask
+		if(ITEM_SLOT_NECK)
+			return /obj/item/clothing/neck
+		if(ITEM_SLOT_HANDCUFFED)
+			return /obj/item/restraints/handcuffs
+		if(ITEM_SLOT_LEGCUFFED)
+			return /obj/item/restraints/legcuffs
+		if(ITEM_SLOT_BELT)
+			return /obj/item/storage/belt
+		if(ITEM_SLOT_ID)
+			return /obj/item/card/id/advanced
+		if(ITEM_SLOT_EARS)
+			return /obj/item/clothing/ears
+		if(ITEM_SLOT_EYES)
+			return /obj/item/clothing/glasses
+		if(ITEM_SLOT_GLOVES)
+			return /obj/item/clothing/gloves
+		if(ITEM_SLOT_HEAD)
+			return /obj/item/clothing/head
+		if(ITEM_SLOT_FEET)
+			return /obj/item/clothing/shoes
+		if(ITEM_SLOT_OCLOTHING)
+			return /obj/item/clothing/suit
+		if(ITEM_SLOT_ICLOTHING)
+			return /obj/item/clothing/under
+		if(ITEM_SLOT_LPOCKET)
+			return /obj/item
+		if(ITEM_SLOT_RPOCKET)
+			return /obj/item
+		if(ITEM_SLOT_SUITSTORE)
+			return /obj/item
+	return null
+
+/// Returns a client from a mob, mind or client
+/proc/get_player_client(player)
+	if(ismob(player))
+		var/mob/player_mob = player
+		player = player_mob.client
+	else if(istype(player, /datum/mind))
+		var/datum/mind/player_mind = player
+		player = player_mind.current.client
+	if(!istype(player, /client))
+		return
+	return player

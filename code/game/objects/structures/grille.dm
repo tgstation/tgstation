@@ -12,7 +12,7 @@
 	pass_flags_self = PASSGRILLE
 	flags_1 = CONDUCT_1
 	pressure_resistance = 5*ONE_ATMOSPHERE
-	armor = list(MELEE = 50, BULLET = 70, LASER = 70, ENERGY = 100, BOMB = 10, BIO = 100, FIRE = 0, ACID = 0)
+	armor = list(MELEE = 50, BULLET = 70, LASER = 70, ENERGY = 100, BOMB = 10, BIO = 0, FIRE = 0, ACID = 0)
 	max_integrity = 50
 	integrity_failure = 0.4
 	var/rods_type = /obj/item/stack/rods
@@ -163,12 +163,12 @@
 
 /obj/structure/grille/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(!. && istype(mover, /obj/projectile))
+	if(!. && isprojectile(mover))
 		return prob(30)
 
-/obj/structure/grille/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
+/obj/structure/grille/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller, no_id = FALSE)
 	. = !density
-	if(istype(caller))
+	if(caller)
 		. = . || (caller.pass_flags & PASSGRILLE)
 
 /obj/structure/grille/wirecutter_act(mob/living/user, obj/item/tool)
@@ -180,12 +180,13 @@
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/grille/screwdriver_act(mob/living/user, obj/item/tool)
-	if(!isturf(loc) || !anchored)
+	if(!isturf(loc))
 		return FALSE
 	add_fingerprint(user)
 	if(shock(user, 90))
 		return FALSE
-	tool.play_tool_sound(src, 100)
+	if(!tool.use_tool(src, user, 0, volume=100))
+		return FALSE
 	set_anchored(!anchored)
 	user.visible_message(span_notice("[user] [anchored ? "fastens" : "unfastens"] [src]."), \
 		span_notice("You [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor."))

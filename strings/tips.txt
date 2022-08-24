@@ -1,41 +1,3 @@
-Where the space map levels connect is randomized every round, but are otherwise kept consistent within rounds. Remember that they are not necessarily bidirectional!
-You can catch thrown items by toggling on your throw mode with an empty hand active.
-To crack the safe in the vault, use a stethoscope or three plastic explosives on it.
-You can climb onto a table by dragging yourself onto one. This takes time and drops the items in your hands on the table. Clicking on a table that someone else is climbing onto will knock them down.
-You can drag other players onto yourself to open the strip menu, letting you remove their equipment or force them to wear something. Note that exosuits or helmets will block your access to the clothing beneath them, and that certain items take longer to strip or put on than others.
-Clicking on a windoor rather then bumping into it will keep it open, you can click it again to close it.
-You can spray a fire extinguisher, throw items or fire a gun while floating through space to change your direction. Simply fire opposite to where you want to go.
-You can change the control scheme by pressing tab. One is WASD, the other is the arrow keys. Keep in mind that hotkeys are also changed with this.
-Firesuits and winter coats offer mild protection from the cold, allowing you to spend longer periods of time near breaches and space than if wearing nothing at all.
-Glass shards can be welded to make glass, and iron rods can be welded to make iron. Ores can be welded too, but this takes a lot of fuel.
-If you need to drag multiple people either to safety or to space, bring a locker or crate over and stuff them all in before hauling them off.
-You can grab someone by holding Ctrl and clicking on them, then upgrade the grab by Ctrl-clicking on them once more. An aggressive grab will momentarily stun someone, allow you to place them on a table by clicking on it, or throw them by toggling on throwing.
-Holding alt and left clicking a tile will allow you to see its contents in the top right window pane, which is much faster than right clicking.
-The resist button will allow you to resist out of handcuffs, being buckled to a chair or bed, out of locked lockers and more. Whenever you're stuck, try resisting!
-You can move an item out of the way by dragging it and then clicking on an adjacent tile with an empty hand.
-You can recolor certain items like jumpsuits and gloves in washing machines by also throwing in a crayon.
-Maintenance is full of equipment that is randomized every round. Look around and see if anything is worth using.
-Some roles cannot be antagonists by default, but antag selection is decided first. For instance, you can set Security Officer to High without affecting your chances of becoming an antag -- the game will just select a different role.
-There are many places around the station to hide contraband. A few for starters: linen boxes, toilet cisterns, body bags. Experiment to find more!
-You can use a machine in the vault to deposit cash or rob Cargo's department funds.
-When in doubt about technicial issues, clear your cache (byond launcher > cogwheel > preferences > game prefs), update your BYOND, and relog.
-Most things have special interactions with right, alt, shift, and control click. Experiment!
-You can screwdriver any non-chemical grenade to shorten fuses from 5 seconds, to 3 seconds, to instant boom! Nobody ever expects this.
-If you find yourself in a fistfight with another player, staying on the offensive is usually the smart move. Running away often won't accomplish much.
-Different weapons have different strengths. Some weapons, such as spears, floor tiles, and throwing stars, deal more damage when thrown compared to when attacked normally.
-A thrown glass of water can make a slippery tile, allowing you to slow down your pursuers in a pinch.
-When dealing with security, you can often get your sentence negated entirely through cooperation and deception.
-The P2P chat function found on tablet computers allows for a stealthy way to communicate with people.
-Experiment with different setups of the supermatter engine to maximize output, but don't risk the crew's safety to do so!
-We were all new once, be patient and guide new players in the right direction.
-On most clothing items that go in the exosuit slot, you can put certain small items into your suit storage, such as a spraycan, your emergency oxygen tank, or a flashlight.
-Most job-related exosuit clothing can fit job-related items into it, such as the atmospheric technician's winter coat holding an RPD, or labcoats holding most medicine.
-If you're using hotkey mode, you can stop pulling things using H.
-The station's self-destruct terminal is invincible. Go find the disk instead of trying to destroy it.
-If there's something you need from another department, try asking! This game isn't singleplayer and you'd be surprised what you can get accomplished together!
-You'll quickly lose your interest in the game if you play to win and kill. If you find yourself doing this, take a step back and talk to people - it's a much better experience!
-Felinids get temporarily distracted by laser pointers. Use this to your advantage when being pursued by one.
-Don't be afraid to ask for help, whether from your peers or from admins.
 As the Captain, you are one of the highest priority targets on the station. Everything from revolutions, to nuclear operatives, to traitors that need to rob you of your unique lasgun or your life are things to worry about.
 As the Captain, always take the nuclear disk and pinpointer with you every shift. It's a good idea to give one of these to another head you can trust with keeping it safe.
 As the Captain, you have absolute access and control over the station, but this does not mean that being a horrible person won't result in mutiny and a ban.
@@ -72,7 +34,6 @@ As a Scientist, you can maximize the number of uses you get out of a slime by fe
 As a Scientist, you can disable anomalies by scanning them with an analyzer, then send a signal on the frequency it gives you with a remote signaling device, or if researched, hit the anomaly an anomaly analyzer. This will leave behind an anomaly core, which can be used to construct a Phazon mech, reactive armors, or various unique and powerful weapons!
 As a Scientist, researchable stock parts can seriously improve the efficiency and speed of machines around the station. In some cases, it can even unlock new functions.
 As a Scientist, you can generate money for Science, and complete experiments by letting the tachyon-doppler array record increasingly large explosions.
-As a Scientist, getting drunk just enough will speed up research. Skol!
 As a Roboticist, keep an ear out for anomaly announcements. If you get your hands on a bluespace anomaly core, you can build a Phazon mech!
 As a Roboticist, you can repair your cyborgs with a welding tool. If they have taken burn damage, you can remove their battery, expose the wiring with a screwdriver and replace their wires with a cable coil.
 As a Roboticist, you can reset a cyborg's model by cutting and mending the reset wire with a wire cutter.
@@ -100,7 +61,6 @@ As an Engineer, you can temporarily power the station solely with the solar arra
 As an Engineer, you can cool the supermatter crystal by spraying it with a fire extinguisher. Only for the brave!
 As an Engineer, you can repair windows by using a welding tool on them while not in combat mode.
 As an Engineer, you can lock APCs, fire alarms, emitters and radiation collectors using your ID card to prevent others from disabling them.
-As an Engineer, don't underestimate the humble P.A.C.M.A.N. generators. With upgraded parts, a couple units working in tandem are sufficient to take over for an exploded engine or shattered solars.
 As an Engineer, your departmental protolathe and circuit printer can manufacture the necessary circuit boards and components to build just about anything. Make extra medical machinery everywhere! Build a gibber for security! Set up an array of emitters pointing down the hall! The possibilities are endless!
 As an Engineer, you can pry open secure storage blast doors by disabling the engine room APC's main breaker. This is obviously a bad idea if the engine is running.
 As an Engineer, your RCD can be reloaded with iron, glass or plasteel sheets instead of just compressed matter cartridges.
@@ -112,6 +72,7 @@ As an Atmospheric Technician, your backpack firefighter tank can launch resin. T
 As an Atmospheric Technician, your ATMOS holofan projector blocks gases while allowing objects to pass through. With it, you can quickly contain gas spills, fires and hull breaches.
 As an Atmospheric Technician, burning a plasma/oxygen mix inside the incinerator will not only produce power, but also gases such as tritium, water vapor and carbon dioxide.
 As an Atmospheric Technician, you can change the layer of a pipe by clicking with it on a wrenched pipe or other atmos component of the desired layer.
+As an Atmospheric Technician, pay attention to gas pipe meters. The meter will change color in response to temperature and the bar will increase and get thicker in response to higher pressures.
 As the Head of Security, you are expected to coordinate your security force to handle any threat that comes to the station. Sometimes it means making use of the armory to handle a blob, sometimes it means being ruthless during a revolution or cult.
 As the Head of Security, you can call for executions or forced cyborgization, but may require the Captain's approval.
 As the Head of Security, don't let the power go to your head. You may have high access, great equipment, and a miniature army at your side, but being a terrible person without a good reason is grounds for banning.
@@ -146,6 +107,7 @@ As a Botanist, you can hack the MegaSeed Vendor to get access to more exotic see
 As a Botanist, you can mutate the plants growing in your hydroponics trays with Left 4 Zed from your NutriMax vendor.  Once you've ground up a few plants in the biogenerator, it can also produce Left 4 Zed.  Isn't science amazing?
 As a Botanist, you should look into increasing the potency of your plants. This increases the size, amount of chemicals, points gained from grinding them in the biogenerator, and lets people know you are a proficient botanist.
 As a Botanist, you can combine production trait chemicals just like a Chemist. Hydrogen(grass) + water(peas) + sugar(grapes) equal mannitol!
+As a Botanist, you can combine production trait chemicals just like a Chemist. Potassium(bananas) + water(watermelons) equal... FUN!
 As a Cook, you can load your food into smartfridges and custom vending machines.
 As a Cook, you can create a very wide variety of food with the crafting menu. You can find it by looking for the hammer icon near your combat mode indicator.
 As a Cook, you can rename your custom made food with a pen.
@@ -251,3 +213,45 @@ Laying down will help slow down bloodloss. Death will halt it entirely.
 ♪ Hey, have you ever tried appending the % character before your messages when speaking in-game? ♫
 @You can use the |, + and _ characters to emphasize parts of what you say in-game (e.g. say"my _ass_ |is| +heavy+." will be outputted as "my <u>ass</u> <i>is</i> <b>heavy</b>."). You can also escape these emphasizers by appending backslashes before them (e.g. say"1\+2\+3" will come out as "1+2+3" and not "1\<b>2\</b>3").
 If you knock into somebody while doing a wicked grind on a skateboard, they will be floored for double the time. Radical!
+Sleeping can be used to recover from minor injuries. Sanity, darkness, blindfolds, earmuffs, tables, beds, and bedsheets affect the healing rate.
+You can cheat games by baking dice in microwaves to make them loaded. Cards can be seen with x-ray vision or be marked with either a pen or crayon to gain an edge.
+Where the space map levels connect is randomized every round, but are otherwise kept consistent within rounds. Remember that they are not necessarily bidirectional!
+You can catch thrown items by toggling on your throw mode with an empty hand active.
+To crack the safe in the vault, use a stethoscope or three plastic explosives on it.
+You can climb onto a table by dragging yourself onto one. This takes time and drops the items in your hands on the table. Clicking on a table that someone else is climbing onto will knock them down.
+You can drag other players onto yourself to open the strip menu, letting you remove their equipment or force them to wear something. Note that exosuits or helmets will block your access to the clothing beneath them, and that certain items take longer to strip or put on than others.
+Clicking on a windoor rather then bumping into it will keep it open, you can click it again to close it.
+You can spray a fire extinguisher, throw items or fire a gun while floating through space to change your direction. Simply fire opposite to where you want to go.
+You can change the control scheme by pressing tab. One is WASD, the other is the arrow keys. Keep in mind that hotkeys are also changed with this.
+Firesuits and winter coats offer mild protection from the cold, allowing you to spend longer periods of time near breaches and space than if wearing nothing at all.
+Glass shards can be welded to make glass, and iron rods can be welded to make iron. Ores can be welded too, but this takes a lot of fuel.
+If you need to drag multiple people either to safety or to space, bring a locker or crate over and stuff them all in before hauling them off.
+You can grab someone by holding Ctrl and clicking on them, then upgrade the grab by Ctrl-clicking on them once more. An aggressive grab will momentarily stun someone, allow you to place them on a table by clicking on it, or throw them by toggling on throwing.
+Holding alt and left clicking a tile will allow you to see its contents in the top right window pane, which is much faster than right clicking.
+The resist button will allow you to resist out of handcuffs, being buckled to a chair or bed, out of locked lockers and more. Whenever you're stuck, try resisting!
+You can move an item out of the way by dragging it and then clicking on an adjacent tile with an empty hand.
+You can recolor certain items like jumpsuits and gloves in washing machines by also throwing in a crayon.
+Maintenance is full of equipment that is randomized every round. Look around and see if anything is worth using.
+Some roles cannot be antagonists by default, but antag selection is decided first. For instance, you can set Security Officer to High without affecting your chances of becoming an antag -- the game will just select a different role.
+There are many places around the station to hide contraband. A few for starters: linen boxes, toilet cisterns, body bags. Experiment to find more!
+You can use a machine in the vault to deposit cash or rob Cargo's department funds.
+When in doubt about technicial issues, clear your cache (byond launcher > cogwheel > preferences > game prefs), update your BYOND, and relog.
+Most things have special interactions with right, alt, shift, and control click. Experiment!
+You can screwdriver any non-chemical grenade to shorten fuses from 5 seconds, to 3 seconds, to instant boom! Nobody ever expects this.
+If you find yourself in a fistfight with another player, staying on the offensive is usually the smart move. Running away often won't accomplish much.
+Different weapons have different strengths. Some weapons, such as spears, floor tiles, and throwing stars, deal more damage when thrown compared to when attacked normally.
+A thrown glass of water can make a slippery tile, allowing you to slow down your pursuers in a pinch.
+When dealing with security, you can often get your sentence negated entirely through cooperation and deception.
+The P2P chat function found on tablet computers allows for a stealthy way to communicate with people.
+Experiment with different setups of the supermatter engine to maximize output, but don't risk the crew's safety to do so!
+We were all new once, be patient and guide new players in the right direction.
+On most clothing items that go in the exosuit slot, you can put certain small items into your suit storage, such as a spraycan, your emergency oxygen tank, or a flashlight.
+Most job-related exosuit clothing can fit job-related items into it, such as the atmospheric technician's winter coat holding an RPD, or labcoats holding most medicine.
+If you're using hotkey mode, you can stop pulling things using H.
+The station's self-destruct terminal is invincible. Go find the disk instead of trying to destroy it.
+If there's something you need from another department, try asking! This game isn't singleplayer and you'd be surprised what you can get accomplished together!
+You'll quickly lose your interest in the game if you play to win and kill. If you find yourself doing this, take a step back and talk to people - it's a much better experience!
+Felinids get temporarily distracted by laser pointers. Use this to your advantage when being pursued by one.
+Don't be afraid to ask for help, whether from your peers or from admins.
+You can pin your MODsuit module buttons to your action bar in the suit UI.
+Some weapons are better at taking down robots and structures than others. Don't try to break a window with a scalpel, try a toolbox.

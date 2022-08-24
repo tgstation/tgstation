@@ -33,7 +33,7 @@
 	name = "Lizard tail kebab"
 	reqs = list(
 		/obj/item/stack/rods = 1,
-		/obj/item/organ/tail/lizard = 1
+		/obj/item/organ/external/tail/lizard = 1
 	)
 	result = /obj/item/food/kebab/tail
 	subcategory = CAT_MEAT
@@ -63,6 +63,15 @@
 	subcategory = CAT_MEAT
 
 ////////////////////////////////////////////////MISC RECIPE's////////////////////////////////////////////////
+
+/datum/crafting_recipe/food/tempehstarter
+	name = "Tempeh starter"
+	reqs = list(
+		/obj/item/food/grown/soybeans = 5,
+		/obj/item/seeds/plump = 1
+	)
+	result = /obj/item/food/tempehstarter
+	subcategory = CAT_MEAT
 
 /datum/crafting_recipe/food/cornedbeef
 	name = "Corned beef"

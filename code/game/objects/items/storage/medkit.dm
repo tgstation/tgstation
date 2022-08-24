@@ -60,18 +60,17 @@
 	inhand_icon_state = "medkit"
 	desc = "A high capacity aid kit for doctors, full of medical supplies and basic surgical equipment"
 
-/obj/item/storage/medkit/surgery/ComponentInitialize()
+/obj/item/storage/medkit/surgery/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL //holds the same equipment as a medibelt
-	STR.max_items = 12
-	STR.max_combined_w_class = 24
-	STR.set_holdable(list(
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL //holds the same equipment as a medibelt
+	atom_storage.max_slots = 12
+	atom_storage.max_total_storage = 24
+	atom_storage.set_holdable(list(
 		/obj/item/healthanalyzer,
 		/obj/item/dnainjector,
 		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/glass/beaker,
-		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/cup/beaker,
+		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/medigel,
@@ -240,7 +239,7 @@
 	desc = "An advanced kit to help deal with advanced wounds."
 	icon_state = "medkit_advanced"
 	inhand_icon_state = "medkit-rad"
-	custom_premium_price = PAYCHECK_HARD * 6
+	custom_premium_price = PAYCHECK_COMMAND * 6
 	damagetype_healed = "all"
 
 /obj/item/storage/medkit/advanced/PopulateContents()
@@ -257,12 +256,12 @@
 	name = "combat medical kit"
 	desc = "I hope you've got insurance."
 	icon_state = "medkit_tactical"
+	inhand_icon_state = "medkit-tactical"
 	damagetype_healed = "all"
 
-/obj/item/storage/medkit/tactical/ComponentInitialize()
+/obj/item/storage/medkit/tactical/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 
 /obj/item/storage/medkit/tactical/PopulateContents()
 	if(empty)
@@ -283,7 +282,7 @@
 
 	//Making a medibot!
 	if(contents.len >= 1)
-		to_chat(user, span_warning("You need to empty [src] out first!"))
+		balloon_alert(user, "items inside!")
 		return
 
 	var/obj/item/bot_assembly/medbot/medbot_assembly = new
@@ -298,7 +297,7 @@
 	else if (istype(src, /obj/item/storage/medkit/advanced))
 		medbot_assembly.set_skin("advanced")
 	user.put_in_hands(medbot_assembly)
-	to_chat(user, span_notice("You add [bodypart] to [src]."))
+	medbot_assembly.balloon_alert(user, "arm added")
 	medbot_assembly.robot_arm = bodypart.type
 	medbot_assembly.medkit_type = type
 	qdel(bodypart)
@@ -318,12 +317,10 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/storage/pill_bottle/ComponentInitialize()
+/obj/item/storage/pill_bottle/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.allow_quick_gather = TRUE
-	STR.click_gather = TRUE
-	STR.set_holdable(list(/obj/item/reagent_containers/pill))
+	atom_storage.allow_quick_gather = TRUE
+	atom_storage.set_holdable(list(/obj/item/reagent_containers/pill))
 
 /obj/item/storage/pill_bottle/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is trying to get the cap off [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -369,7 +366,7 @@
 
 /obj/item/storage/pill_bottle/probital
 	name = "bottle of probital pills"
-	desc = "Contains pills used to treat brute damage.The tag in the bottle states 'Eat before ingesting, may cause fatigue'."
+	desc = "Contains pills used to treat brute damage. The tag in the bottle states 'Eat before ingesting, may cause fatigue'."
 
 /obj/item/storage/pill_bottle/probital/PopulateContents()
 	for(var/i in 1 to 4)
@@ -377,7 +374,7 @@
 
 /obj/item/storage/pill_bottle/iron
 	name = "bottle of iron pills"
-	desc = "Contains pills used to reduce blood loss slowly.The tag in the bottle states 'Only take one each five minutes'."
+	desc = "Contains pills used to reduce blood loss slowly. The tag in the bottle states 'Only take one each five minutes'."
 
 /obj/item/storage/pill_bottle/iron/PopulateContents()
 	for(var/i in 1 to 4)
@@ -524,26 +521,21 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
-	custom_premium_price = PAYCHECK_MEDIUM * 4
+	custom_premium_price = PAYCHECK_CREW * 4
 	/// var to prevent it freezing the same things over and over
 	var/cooling = FALSE
 
-/obj/item/storage/organbox/ComponentInitialize()
+/obj/item/storage/organbox/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_BULKY /// you have to remove it from your bag before opening it but I think that's fine
-	STR.max_combined_w_class = 21
-	STR.set_holdable(list(
+
+	create_storage(type = /datum/storage/organ_box, max_specific_storage = WEIGHT_CLASS_BULKY, max_total_storage = 21)
+	atom_storage.set_holdable(list(
 		/obj/item/organ,
 		/obj/item/bodypart,
 		/obj/item/food/icecream
 		))
 
-/obj/item/storage/organbox/Initialize(mapload)
-	. = ..()
 	create_reagents(100, TRANSPARENT)
-	RegisterSignal(src, COMSIG_ATOM_ENTERED, .proc/freeze)
-	RegisterSignal(src, COMSIG_TRY_STORAGE_TAKE, .proc/unfreeze)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/storage/organbox/process(delta_time)
@@ -562,57 +554,53 @@
 		cooling = TRUE
 		update_appearance()
 		for(var/C in contents)
-			freeze(C)
+			freeze_contents(C)
 		return
 	if(cooling && !cool)
 		cooling = FALSE
 		update_appearance()
 		for(var/C in contents)
-			unfreeze(C)
+			unfreeze_contents(C)
 
 /obj/item/storage/organbox/update_icon_state()
 	icon_state = "[base_icon_state][cooling ? "-working" : null]"
 	return ..()
 
 ///freezes the organ and loops bodyparts like heads
-/obj/item/storage/organbox/proc/freeze(datum/source, obj/item/I)
+/obj/item/storage/organbox/proc/freeze_contents(datum/source, obj/item/I)
 	SIGNAL_HANDLER
-	if(isorgan(I))
-		var/obj/item/organ/organ = I
-		organ.organ_flags |= ORGAN_FROZEN
+	if(isinternalorgan(I))
+		var/obj/item/organ/internal/int_organ = I
+		int_organ.organ_flags |= ORGAN_FROZEN
 		return
-	if(istype(I, /obj/item/bodypart))
+	if(isbodypart(I))
 		var/obj/item/bodypart/B = I
-		for(var/O in B.contents)
-			if(isorgan(O))
-				var/obj/item/organ/organ = O
-				organ.organ_flags |= ORGAN_FROZEN
+		for(var/obj/item/organ/internal/int_organ in B.contents)
+			int_organ.organ_flags |= ORGAN_FROZEN
 
 ///unfreezes the organ and loops bodyparts like heads
-/obj/item/storage/organbox/proc/unfreeze(datum/source, obj/item/I)
+/obj/item/storage/organbox/proc/unfreeze_contents(datum/source, obj/item/I)
 	SIGNAL_HANDLER
-	if(isorgan(I))
-		var/obj/item/organ/organ = I
-		organ.organ_flags  &= ~ORGAN_FROZEN
+	if(isinternalorgan(I))
+		var/obj/item/organ/internal/int_organ = I
+		int_organ.organ_flags &= ~ORGAN_FROZEN
 		return
-	if(istype(I, /obj/item/bodypart))
+	if(isbodypart(I))
 		var/obj/item/bodypart/B = I
-		for(var/O in B.contents)
-			if(isorgan(O))
-				var/obj/item/organ/organ = O
-				organ.organ_flags  &= ~ORGAN_FROZEN
+		for(var/obj/item/organ/internal/int_organ in B.contents)
+			int_organ.organ_flags &= ~ORGAN_FROZEN
 
 /obj/item/storage/organbox/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/reagent_containers) && I.is_open_container())
+	if(is_reagent_container(I) && I.is_open_container())
 		var/obj/item/reagent_containers/RC = I
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transfered_by = user)
 		if(units)
-			to_chat(user, span_notice("You transfer [units] units of the solution to [src]."))
+			balloon_alert(user, "[units]u transferred")
 			return
 	if(istype(I, /obj/item/plunger))
-		to_chat(user, span_notice("You start furiously plunging [name]."))
+		balloon_alert(user, "plunging...")
 		if(do_after(user, 10, target = src))
-			to_chat(user, span_notice("You finish plunging the [name]."))
+			balloon_alert(user, "plunged")
 			reagents.clear_reagents()
 		return
 	return ..()

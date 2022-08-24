@@ -26,14 +26,18 @@
 		/obj/item/seeds/garlic = 3,
 		/obj/item/seeds/grape = 3,
 		/obj/item/seeds/grass = 3,
+		/obj/item/seeds/greenbean = 3,
 		/obj/item/seeds/herbs = 3,
 		/obj/item/seeds/korta_nut = 3,
 		/obj/item/seeds/lemon = 3,
 		/obj/item/seeds/lime = 3,
+		/obj/item/seeds/olive = 3,
 		/obj/item/seeds/onion = 3,
 		/obj/item/seeds/orange = 3,
+		/obj/item/seeds/peanut = 3,
 		/obj/item/seeds/peas = 3,
 		/obj/item/seeds/pineapple = 3,
+		/obj/item/seeds/plum = 3,
 		/obj/item/seeds/potato = 3,
 		/obj/item/seeds/poppy = 3,
 		/obj/item/seeds/pumpkin = 3,
@@ -49,7 +53,7 @@
 		/obj/item/seeds/tower = 3,
 		/obj/item/seeds/watermelon = 3,
 		/obj/item/seeds/wheat = 3,
-		/obj/item/seeds/whitebeet = 3
+		/obj/item/seeds/whitebeet = 3,
 	)
 	contraband = list(
 		/obj/item/seeds/amanita = 2,
@@ -60,14 +64,14 @@
 		/obj/item/seeds/reishi = 2,
 		/obj/item/seeds/cannabis = 3,
 		/obj/item/seeds/starthistle = 2,
-		/obj/item/seeds/random = 2
+		/obj/item/seeds/random = 2,
 	)
 	premium = list(
-		/obj/item/reagent_containers/spray/waterflower = 1
+		/obj/item/reagent_containers/spray/waterflower = 1,
 	)
 	refill_canister = /obj/item/vending_refill/hydroseeds
-	default_price = PAYCHECK_PRISONER
-	extra_price = PAYCHECK_ASSISTANT
+	default_price = PAYCHECK_LOWER
+	extra_price = PAYCHECK_CREW
 	payment_department = ACCOUNT_SRV
 
 /obj/item/vending_refill/hydroseeds

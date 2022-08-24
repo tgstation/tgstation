@@ -66,12 +66,12 @@
 	dir = 5
 	},
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/bottle/beer{
+/obj/item/reagent_containers/cup/glass/bottle/beer{
 	pixel_x = -5;
 	pixel_y = 8
 	},
 /obj/item/stack/cannonball/fourteen,
-/obj/item/reagent_containers/glass/bucket/wooden,
+/obj/item/reagent_containers/cup/bucket/wooden,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "an" = (
@@ -331,8 +331,8 @@
 	},
 /obj/machinery/light/small/directional/south,
 /obj/structure/fermenting_barrel/gunpowder,
-/obj/item/reagent_containers/glass/bucket/wooden,
-/obj/item/reagent_containers/glass/bucket/wooden,
+/obj/item/reagent_containers/cup/bucket/wooden,
+/obj/item/reagent_containers/cup/bucket/wooden,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "hz" = (
@@ -426,7 +426,7 @@
 "sf" = (
 /obj/machinery/door/airlock/vault{
 	color = "#825427";
-	name = "ye olde strong door"
+	name = "Ye Olde Strong Door"
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/wood/airless,
@@ -577,8 +577,8 @@
 	},
 /obj/machinery/light/small/directional/south,
 /obj/structure/fermenting_barrel/gunpowder,
-/obj/item/reagent_containers/glass/bucket/wooden,
-/obj/item/reagent_containers/glass/bucket/wooden,
+/obj/item/reagent_containers/cup/bucket/wooden,
+/obj/item/reagent_containers/cup/bucket/wooden,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "BK" = (
@@ -591,10 +591,10 @@
 	icon_state = "minibar";
 	name = "skeletal minibar"
 	},
-/obj/item/reagent_containers/food/condiment/milk{
+/obj/item/reagent_containers/condiment/milk{
 	pixel_x = -5
 	},
-/obj/item/reagent_containers/food/condiment/milk{
+/obj/item/reagent_containers/condiment/milk{
 	pixel_x = 5
 	},
 /turf/open/floor/wood/airless,
@@ -623,7 +623,7 @@
 /area/shuttle/pirate/flying_dutchman)
 "Dr" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/bottle/rum{
+/obj/item/reagent_containers/cup/glass/bottle/rum{
 	desc = "Rum with ghostly properties that can help the drinker enter the spirit realm. It has fermented under the sea of space for ages.";
 	name = "Ghost Pirate Rum";
 	pixel_x = -4;
@@ -632,7 +632,7 @@
 /obj/item/clothing/mask/cigarette/cigar{
 	pixel_x = 4
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = -7;
 	pixel_y = 5
 	},
@@ -887,7 +887,7 @@
 /obj/item/food/grown/sugarcane,
 /obj/item/food/grown/sugarcane,
 /obj/item/food/grown/sugarcane,
-/obj/item/reagent_containers/glass/bucket/wooden,
+/obj/item/reagent_containers/cup/bucket/wooden,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "Vm" = (

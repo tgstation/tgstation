@@ -113,7 +113,7 @@
 		blessed.visible_message(span_notice("[chap] heals [blessed] with the power of [GLOB.deity]!"))
 		to_chat(blessed, span_boldnotice("May the power of [GLOB.deity] compel you to be healed!"))
 		playsound(chap, SFX_PUNCH, 25, TRUE, -1)
-		SEND_SIGNAL(blessed, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
+		blessed.add_mood_event("blessing", /datum/mood_event/blessing)
 	return TRUE
 
 /**** Nanotrasen Approved God ****/
@@ -147,7 +147,7 @@
 		R.cell?.charge += charge_amt
 		R.visible_message(span_notice("[chap] charges [R] with the power of [GLOB.deity]!"))
 		to_chat(R, span_boldnotice("You are charged by the power of [GLOB.deity]!"))
-		SEND_SIGNAL(R, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
+		R.add_mood_event("blessing", /datum/mood_event/blessing)
 		playsound(chap, 'sound/effects/bang.ogg', 25, TRUE, -1)
 		return TRUE
 	if(!ishuman(target))
@@ -156,7 +156,7 @@
 
 	//first we determine if we can charge them
 	var/did_we_charge = FALSE
-	var/obj/item/organ/stomach/ethereal/eth_stomach = blessed.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/stomach/ethereal/eth_stomach = blessed.getorganslot(ORGAN_SLOT_STOMACH)
 	if(istype(eth_stomach))
 		eth_stomach.adjust_charge(60)
 		did_we_charge = TRUE
@@ -169,7 +169,7 @@
 		else
 			blessed.visible_message(span_notice("[chap] charges [blessed] with the power of [GLOB.deity]!"))
 			to_chat(blessed, span_boldnotice("You feel charged by the power of [GLOB.deity]!"))
-			SEND_SIGNAL(blessed, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
+			blessed.add_mood_event("blessing", /datum/mood_event/blessing)
 			playsound(chap, 'sound/machines/synth_yes.ogg', 25, TRUE, -1)
 		return TRUE
 
@@ -180,7 +180,7 @@
 	blessed.visible_message(span_notice("[chap] [did_we_charge ? "repairs" : "repairs and charges"] [blessed] with the power of [GLOB.deity]!"))
 	to_chat(blessed, span_boldnotice("The inner machinations of [GLOB.deity] [did_we_charge ? "repairs" : "repairs and charges"] you!"))
 	playsound(chap, 'sound/effects/bang.ogg', 25, TRUE, -1)
-	SEND_SIGNAL(blessed, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
+	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
 	return TRUE
 
 /datum/religion_sect/mechanical/on_sacrifice(obj/item/I, mob/living/chap)
@@ -264,7 +264,7 @@
 		blessed.visible_message(span_notice("[chap] barters a heal for [blessed] from [GLOB.deity]!"))
 		to_chat(blessed, span_boldnotice("May the power of [GLOB.deity] compel you to be healed! Thank you for choosing [GLOB.deity]!"))
 		playsound(chap, 'sound/effects/cashregister.ogg', 60, TRUE)
-		SEND_SIGNAL(blessed, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
+		blessed.add_mood_event("blessing", /datum/mood_event/blessing)
 	return TRUE
 
 #undef GREEDY_HEAL_COST
@@ -292,7 +292,7 @@
 	blessed.visible_message(span_notice("[chap] empowers [blessed] with the power of [GLOB.deity]!"))
 	to_chat(blessed, span_boldnotice("The power of [GLOB.deity] has made you harder to wound for a while!"))
 	playsound(chap, SFX_PUNCH, 25, TRUE, -1)
-	SEND_SIGNAL(blessed, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
+	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
 	return TRUE //trust me, you'll be feeling the pain from the maint drugs all well enough
 
 /datum/religion_sect/maintenance/on_sacrifice(obj/item/reagent_containers/offering, mob/living/user)
@@ -329,8 +329,8 @@
 	var/obj/item/sparring_contract/existing_contract
 	///places you can spar in. rites can be used to expand this list with new arenas!
 	var/list/arenas = list(
-		"Recreation Area" = /area/commons/fitness/recreation,
-		"Chapel" = /area/service/chapel
+		"Recreation Area" = /area/station/commons/fitness/recreation,
+		"Chapel" = /area/station/service/chapel,
 	)
 	///how many matches you've lost with holy stakes. 3 = excommunication
 	var/matches_lost = 0

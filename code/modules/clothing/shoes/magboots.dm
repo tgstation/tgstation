@@ -5,7 +5,7 @@
 	var/magboot_state = "magboots"
 	var/magpulse = FALSE
 	var/slowdown_active = 2
-	permeability_coefficient = 0.05
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 90, FIRE = 0, ACID = 0)
 	actions_types = list(/datum/action/item_action/toggle)
 	strip_delay = 70
 	equip_delay_other = 70
@@ -41,7 +41,7 @@
 	icon_state = "[magboot_state][magpulse]"
 	to_chat(user, span_notice("You [magpulse ? "enable" : "disable"] the mag-pulse traction system."))
 	update_gravity_trait(user)
-	user.update_inv_shoes() //so our mob-overlays update
+	user.update_worn_shoes() //so our mob-overlays update
 	user.update_gravity(user.has_gravity())
 	user.update_equipment_speed_mods() //we want to update our speed so we arent running at max speed in regular magboots
 	update_action_buttons()

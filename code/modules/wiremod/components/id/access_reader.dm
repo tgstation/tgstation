@@ -19,7 +19,7 @@
 
 /obj/item/circuit_component/id_access_reader/populate_ports()
 	target = add_input_port("Target", PORT_TYPE_ATOM)
-	access_port = add_output_port("Access", PORT_TYPE_LIST(PORT_TYPE_NUMBER))
+	access_port = add_output_port("Access", PORT_TYPE_LIST(PORT_TYPE_STRING))
 
 
 /obj/item/circuit_component/id_access_reader/input_received(datum/port/input/port)

@@ -11,14 +11,12 @@
 /obj/item/gun/magic/staff/proc/is_wizard_or_friend(mob/user)
 	if(!user?.mind?.has_antag_datum(/datum/antagonist/wizard) \
 		&& !user.mind.has_antag_datum(/datum/antagonist/survivalist/magic) \
-		&& !user.mind.has_antag_datum(/datum/antagonist/wizard_minion))
+		&& !user.mind.has_antag_datum(/datum/antagonist/wizard_minion) \
+		&& !allow_intruder_use)
 		return FALSE
 	return TRUE
 
 /obj/item/gun/magic/staff/check_botched(mob/living/user, atom/target)
-	if(allow_intruder_use)
-		return ..()
-
 	if(!is_wizard_or_friend(user))
 		return !on_intruder_use(user, target)
 	return ..()
@@ -114,7 +112,7 @@
 	no_den_usage = 1
 	school = SCHOOL_FORBIDDEN //this staff is evil. okay? it just is. look at this projectile type list. this is wrong.
 	var/allowed_projectile_types = list(/obj/projectile/magic/change, /obj/projectile/magic/animate, /obj/projectile/magic/resurrection,
-	/obj/projectile/magic/death, /obj/projectile/magic/teleport, /obj/projectile/magic/door, /obj/projectile/magic/aoe/fireball,
+	/obj/projectile/magic/death, /obj/projectile/magic/teleport, /obj/projectile/magic/door, /obj/projectile/magic/fireball,
 	/obj/projectile/magic/spellblade, /obj/projectile/magic/arcane_barrage, /obj/projectile/magic/locker, /obj/projectile/magic/flying,
 	/obj/projectile/magic/bounty, /obj/projectile/magic/antimagic, /obj/projectile/magic/fetch, /obj/projectile/magic/sapping,
 	/obj/projectile/magic/necropotence, /obj/projectile/magic, /obj/projectile/temp/chill, /obj/projectile/magic/wipe)
@@ -180,7 +178,12 @@
 
 /obj/item/gun/magic/staff/spellblade/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 15, 125, 0, hitsound)
+	AddComponent(/datum/component/butchering, \
+	speed = 1.5 SECONDS, \
+	effectiveness = 125, \
+	bonus_modifier = 0, \
+	butcher_sound = hitsound, \
+	)
 
 /obj/item/gun/magic/staff/spellblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)

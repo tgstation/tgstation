@@ -67,10 +67,10 @@
 		return
 
 	current_target.set_timed_status_effect(40 SECONDS, /datum/status_effect/speech/stutter)
-	var/obj/item/organ/ears/target_ears = current_target.getorganslot(ORGAN_SLOT_EARS)
-	if(target_ears && !HAS_TRAIT_FROM(current_target, TRAIT_DEAF, CLOTHING_TRAIT))
+	var/obj/item/organ/internal/ears/target_ears = current_target.getorganslot(ORGAN_SLOT_EARS)
+	if(target_ears && !HAS_TRAIT(current_target, TRAIT_DEAF))
 		target_ears.adjustEarDamage(0, 5) //far less damage than the H.O.N.K.
-	current_target.Jitter(5 SECONDS)
+	current_target.set_timed_status_effect(100 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 	current_target.Paralyze(6 SECONDS)
 	if(client) //prevent spam from players
 		limiting_spam = TRUE

@@ -6,6 +6,12 @@
 	anchored = TRUE
 	light_power = 2
 	debris = list(/obj/item/stack/sheet/runed_metal = 1)
+	/// Length of the cooldown between uses.
+	var/use_cooldown_duration = 5 MINUTES
+	/// If provided, a bonus tip displayed to cultists on examined.
+	var/cult_examine_tip
+	/// The cooldown for when items can be dispensed.
+	COOLDOWN_DECLARE(use_cooldown)
 
 /obj/structure/destructible/cult/examine_status(mob/user)
 	if(IS_CULTIST(user) || isobserver(user))
@@ -15,6 +21,11 @@
 /obj/structure/destructible/cult/examine(mob/user)
 	. = ..()
 	. += span_notice("[src] is [anchored ? "secured to":"unsecured from"] the floor.")
+	if(IS_CULTIST(user) || isobserver(user))
+		if(cult_examine_tip)
+			. += span_cult(cult_examine_tip)
+		if(!COOLDOWN_FINISHED(src, use_cooldown_duration))
+			. += span_cultitalic("The magic in [src] is too weak, it will be ready to use again in <b>[DisplayTimeText(COOLDOWN_TIMELEFT(src, use_cooldown_duration))]</b>.")
 
 /obj/structure/destructible/cult/set_anchored(anchorvalue)
 	. = ..()
@@ -74,24 +85,10 @@
 /obj/structure/destructible/cult/item_dispenser
 	/// An associated list of options this structure can make. See setup_options() for format.
 	var/list/options
-	/// Length of the cooldown between item dispenses.
-	var/use_cooldown_duration = 5 MINUTES
-	/// If provided, a bonus tip displayed to cultists on examined.
-	var/cult_examine_tip
-	/// The cooldown for when items can be dispensed.
-	COOLDOWN_DECLARE(use_cooldown)
 
 /obj/structure/destructible/cult/item_dispenser/Initialize(mapload)
 	. = ..()
 	setup_options()
-
-/obj/structure/destructible/cult/item_dispenser/examine(mob/user)
-	. = ..()
-	if(IS_CULTIST(user) || isobserver(user))
-		if(cult_examine_tip)
-			. += span_cult(cult_examine_tip)
-		if(!COOLDOWN_FINISHED(src, use_cooldown))
-			. += span_cultitalic("The magic in [src] is too weak, it will be ready to use again in <b>[DisplayTimeText(COOLDOWN_TIMELEFT(src, use_cooldown))]</b>.")
 
 /obj/structure/destructible/cult/item_dispenser/attack_hand(mob/living/user, list/modifiers)
 	. = ..()

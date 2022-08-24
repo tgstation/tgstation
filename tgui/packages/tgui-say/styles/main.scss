@@ -1,0 +1,13 @@
+@use 'sass:meta';
+
+// Core styles
+@include meta.load-css('~tgui/styles/reset.scss');
+// Atomic styles
+@include meta.load-css('~tgui/styles/atomic/text.scss');
+// External styles
+@include meta.load-css('~tgui/styles/components/TextArea.scss');
+// Local styles
+@include meta.load-css('./button.scss');
+@include meta.load-css('./dragzone.scss');
+@include meta.load-css('./modal.scss');
+@include meta.load-css('./textarea.scss');

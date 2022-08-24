@@ -132,6 +132,8 @@ SUBSYSTEM_DEF(shuttle)
 
 	/// Are we currently in the process of loading a shuttle? Useful to ensure we don't load more than one at once, to avoid weird inconsistencies and possible runtimes.
 	var/shuttle_loading
+	/// Did the supermatter start a cascade event?
+	var/supermatter_cascade = FALSE
 
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	order_number = rand(1, 9000)
@@ -263,10 +265,10 @@ SUBSYSTEM_DEF(shuttle)
 
 /// Check if we can call the evac shuttle.
 /// Returns TRUE if we can. Otherwise, returns a string detailing the problem.
-/datum/controller/subsystem/shuttle/proc/canEvac(mob/user)
-	var/srd = CONFIG_GET(number/shuttle_refuel_delay)
-	if(world.time - SSticker.round_start_time < srd)
-		return "The emergency shuttle is refueling. Please wait [DisplayTimeText(srd - (world.time - SSticker.round_start_time))] before attempting to call."
+/datum/controller/subsystem/shuttle/proc/canEvac()
+	var/shuttle_refuel_delay = CONFIG_GET(number/shuttle_refuel_delay)
+	if(world.time - SSticker.round_start_time < shuttle_refuel_delay)
+		return "The emergency shuttle is refueling. Please wait [DisplayTimeText(shuttle_refuel_delay - (world.time - SSticker.round_start_time))] before attempting to call."
 
 	switch(emergency.mode)
 		if(SHUTTLE_RECALL)
@@ -284,57 +286,72 @@ SUBSYSTEM_DEF(shuttle)
 
 	return TRUE
 
-/datum/controller/subsystem/shuttle/proc/requestEvac(mob/user, call_reason)
-	if(!emergency)
-		WARNING("requestEvac(): There is no emergency shuttle, but the \
-			shuttle was called. Using the backup shuttle instead.")
-		if(!backup_shuttle)
-			CRASH("requestEvac(): There is no emergency shuttle, \
-			or backup shuttle! The game will be unresolvable. This is \
-			possibly a mapping error, more likely a bug with the shuttle \
-			manipulation system, or badminry. It is possible to manually \
-			resolve this problem by loading an emergency shuttle template \
-			manually, and then calling register() on the mobile docking port. \
-			Good luck.")
-		emergency = backup_shuttle
+/datum/controller/subsystem/shuttle/proc/check_backup_emergency_shuttle()
+	if(emergency)
+		return TRUE
 
-	var/can_evac_or_fail_reason = SSshuttle.canEvac(user)
+	WARNING("check_backup_emergency_shuttle(): There is no emergency shuttle, but the \
+		shuttle was called. Using the backup shuttle instead.")
+
+	if(!backup_shuttle)
+		CRASH("check_backup_emergency_shuttle(): There is no emergency shuttle, \
+		or backup shuttle! The game will be unresolvable. This is \
+		possibly a mapping error, more likely a bug with the shuttle \
+		manipulation system, or badminry. It is possible to manually \
+		resolve this problem by loading an emergency shuttle template \
+		manually, and then calling register() on the mobile docking port. \
+		Good luck.")
+	emergency = backup_shuttle
+
+	return TRUE
+
+/datum/controller/subsystem/shuttle/proc/requestEvac(mob/user, call_reason)
+	if (!check_backup_emergency_shuttle())
+		return
+
+	var/can_evac_or_fail_reason = SSshuttle.canEvac()
 	if(can_evac_or_fail_reason != TRUE)
 		to_chat(user, span_alert("[can_evac_or_fail_reason]"))
 		return
 
-	call_reason = trim(html_encode(call_reason))
-
-	if(length(call_reason) < CALL_SHUTTLE_REASON_LENGTH && seclevel2num(get_security_level()) > SEC_LEVEL_GREEN)
+	if(length(trim(call_reason)) < CALL_SHUTTLE_REASON_LENGTH && SSsecurity_level.get_current_level_as_number() > SEC_LEVEL_GREEN)
 		to_chat(user, span_alert("You must provide a reason."))
 		return
 
 	var/area/signal_origin = get_area(user)
-	var/emergency_reason = "\nNature of emergency:\n\n[call_reason]"
-	var/security_num = seclevel2num(get_security_level())
-	switch(security_num)
-		if(SEC_LEVEL_RED,SEC_LEVEL_DELTA)
-			emergency.request(null, signal_origin, html_decode(emergency_reason), 1) //There is a serious threat we gotta move no time to give them five minutes.
-		else
-			emergency.request(null, signal_origin, html_decode(emergency_reason), 0)
-
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
-
-	if(!frequency)
-		return
-
-	var/datum/signal/status_signal = new(list("command" = "update")) // Start processing shuttle-mode displays to display the timer
-	frequency.post_signal(src, status_signal)
-
-	var/area/A = get_area(user)
+	call_evac_shuttle(call_reason, signal_origin)
 
 	log_shuttle("[key_name(user)] has called the emergency shuttle.")
-	deadchat_broadcast(" has called the shuttle at [span_name("[A.name]")].", span_name("[user.real_name]"), user, message_type=DEADCHAT_ANNOUNCEMENT)
+	deadchat_broadcast(" has called the shuttle at [span_name("[signal_origin.name]")].", span_name("[user.real_name]"), user, message_type=DEADCHAT_ANNOUNCEMENT)
 	if(call_reason)
 		SSblackbox.record_feedback("text", "shuttle_reason", 1, "[call_reason]")
 		log_shuttle("Shuttle call reason: [call_reason]")
 		SSticker.emergency_reason = call_reason
 	message_admins("[ADMIN_LOOKUPFLW(user)] has called the shuttle. (<A HREF='?_src_=holder;[HrefToken()];trigger_centcom_recall=1'>TRIGGER CENTCOM RECALL</A>)")
+
+/// Call the emergency shuttle.
+/// If you are doing this on behalf of a player, use requestEvac instead.
+/// `signal_origin` is fluff occasionally provided to players.
+/datum/controller/subsystem/shuttle/proc/call_evac_shuttle(call_reason, signal_origin)
+	if (!check_backup_emergency_shuttle())
+		return
+
+	call_reason = trim(html_encode(call_reason))
+
+	var/emergency_reason = "\nNature of emergency:\n\n[call_reason]"
+
+	emergency.request(
+		signal_origin = signal_origin,
+		reason = html_decode(emergency_reason),
+		red_alert = (SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
+	)
+
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
+
+	if(frequency)
+		// Start processing shuttle-mode displays to display the timer
+		var/datum/signal/status_signal = new(list("command" = "update"))
+		frequency.post_signal(src, status_signal)
 
 /datum/controller/subsystem/shuttle/proc/centcom_recall(old_timer, admiral_message)
 	if(emergency.mode != SHUTTLE_CALL || emergency.timer != old_timer)
@@ -374,7 +391,7 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/proc/canRecall()
 	if(!emergency || emergency.mode != SHUTTLE_CALL || admin_emergency_no_recall || emergency_no_recall)
 		return
-	var/security_num = seclevel2num(get_security_level())
+	var/security_num = SSsecurity_level.get_current_level_as_number()
 	switch(security_num)
 		if(SEC_LEVEL_GREEN)
 			if(emergency.timeLeft(1) < emergency_call_time)
@@ -388,7 +405,7 @@ SUBSYSTEM_DEF(shuttle)
 	return 1
 
 /datum/controller/subsystem/shuttle/proc/autoEvac()
-	if (!SSticker.IsRoundInProgress())
+	if (!SSticker.IsRoundInProgress() || supermatter_cascade)
 		return
 
 	var/callShuttle = TRUE

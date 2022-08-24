@@ -5,6 +5,7 @@
 	min_players = 20
 	max_occurrences = 2
 	weight = 10
+	description = "This anomaly sucks in and detonates items."
 
 /datum/round_event/anomaly/anomaly_vortex
 	startWhen = 10

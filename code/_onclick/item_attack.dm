@@ -166,18 +166,18 @@
  * Called from [/mob/living/proc/attackby]
  *
  * Arguments:
- * * mob/living/M - The mob being hit by this item
+ * * mob/living/target_mob - The mob being hit by this item
  * * mob/living/user - The mob hitting with this item
  * * params - Click params of this attack
  */
-/obj/item/proc/attack(mob/living/M, mob/living/user, params)
-	var/signal_return = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, M, user, params)
+/obj/item/proc/attack(mob/living/target_mob, mob/living/user, params)
+	var/signal_return = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, target_mob, user, params)
 	if(signal_return & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 	if(signal_return & COMPONENT_SKIP_ATTACK)
 		return
 
-	SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, M, user, params)
+	SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, target_mob, user, params)
 
 	if(item_flags & NOBLUDGEON)
 		return
@@ -191,16 +191,16 @@
 	else if(hitsound)
 		playsound(loc, hitsound, get_clamped_volume(), TRUE, extrarange = stealthy_audio ? SILENCED_SOUND_EXTRARANGE : -1, falloff_distance = 0)
 
-	M.lastattacker = user.real_name
-	M.lastattackerckey = user.ckey
+	target_mob.lastattacker = user.real_name
+	target_mob.lastattackerckey = user.ckey
 
-	if(force && M == user && user.client)
+	if(force && target_mob == user && user.client)
 		user.client.give_award(/datum/award/achievement/misc/selfouch, user)
 
-	user.do_attack_animation(M)
-	M.attacked_by(src, user)
+	user.do_attack_animation(target_mob)
+	target_mob.attacked_by(src, user)
 
-	log_combat(user, M, "attacked", src.name, "(COMBAT MODE: [uppertext(user.combat_mode)]) (DAMTYPE: [uppertext(damtype)])")
+	log_combat(user, target_mob, "attacked", src.name, "(COMBAT MODE: [uppertext(user.combat_mode)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
 
 /// The equivalent of [/obj/item/proc/attack] but for alternate attacks, AKA right clicking
@@ -242,18 +242,21 @@
 /area/attacked_by(obj/item/attacking_item, mob/living/user)
 	CRASH("areas are NOT supposed to have attacked_by() called on them!")
 
-/mob/living/attacked_by(obj/item/I, mob/living/user)
-	send_item_attack_message(I, user)
-	if(I.force)
-		apply_damage(I.force, I.damtype)
-		if(I.damtype == BRUTE)
-			if(prob(33))
-				I.add_mob_blood(src)
-				var/turf/location = get_turf(src)
-				add_splatter_floor(location)
-				if(get_dist(user, src) <= 1) //people with TK won't get smeared with blood
-					user.add_mob_blood(src)
-		return TRUE //successful attack
+/mob/living/attacked_by(obj/item/attacking_item, mob/living/user)
+	send_item_attack_message(attacking_item, user)
+	if(!attacking_item.force)
+		return FALSE
+	var/damage = attacking_item.force
+	if(mob_biotypes & MOB_ROBOTIC)
+		damage *= attacking_item.demolition_mod
+	apply_damage(damage, attacking_item.damtype)
+	if(attacking_item.damtype == BRUTE && prob(33))
+		attacking_item.add_mob_blood(src)
+		var/turf/location = get_turf(src)
+		add_splatter_floor(location)
+		if(get_dist(user, src) <= 1) //people with TK won't get smeared with blood
+			user.add_mob_blood(src)
+	return TRUE //successful attack
 
 /mob/living/simple_animal/attacked_by(obj/item/I, mob/living/user)
 	if(!attack_threshold_check(I.force, I.damtype, MELEE, FALSE))
@@ -328,8 +331,10 @@
 		attack_message_spectator = "[user] [message_verb_continuous] [src][message_hit_area] with [I]!"
 		attack_message_victim = "[user] [message_verb_continuous] you[message_hit_area] with [I]!"
 	if(user == src)
-		attack_message_victim = "You [message_verb_simple] yourself[message_hit_area] with [I]"
+		attack_message_victim = "You [message_verb_simple] yourself[message_hit_area] with [I]."
 	visible_message(span_danger("[attack_message_spectator]"),\
 		span_userdanger("[attack_message_victim]"), null, COMBAT_MESSAGE_RANGE, user)
+	if(is_blind())
+		to_chat(src, span_danger("Someone hits you[message_hit_area]!"))
 	to_chat(user, span_danger("[attack_message_attacker]"))
 	return 1

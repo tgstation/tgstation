@@ -34,6 +34,11 @@
 	icon_state = "ishell"
 	projectile_type = /obj/projectile/bullet/incendiary/shotgun
 
+/obj/item/ammo_casing/shotgun/incendiary/no_trail
+	name = "precision incendiary slug"
+	desc = "An incendiary-coated shotgun slug, specially treated to only ignite on impact."
+	projectile_type = /obj/projectile/bullet/incendiary/shotgun/no_trail
+
 /obj/item/ammo_casing/shotgun/dragonsbreath
 	name = "dragonsbreath shell"
 	desc = "A shotgun shell which fires a spread of incendiary pellets."

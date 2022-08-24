@@ -24,6 +24,9 @@
 /// How efficiently humans regenerate blood.
 #define BLOOD_REGEN_FACTOR 0.25
 
+/// Temperature at which blood loss and regen stops. [/mob/living/carbon/human/proc/handle_blood]
+#define BLOOD_STOP_TEMP 225
+
 //Sizes of mobs, used by mob/living/var/mob_size
 #define MOB_SIZE_TINY 0
 #define MOB_SIZE_SMALL 1
@@ -79,7 +82,7 @@
 ///The limb is snouted
 #define BODYTYPE_SNOUTED (1<<5)
 
-//Defines for Species IDs
+// Defines for Species IDs. Used to refer to the name of a species, for things like bodypart names or species preferences.
 #define SPECIES_ABDUCTOR "abductor"
 #define SPECIES_ANDROID "android"
 #define SPECIES_DULLAHAN "dullahan"
@@ -107,6 +110,11 @@
 #define SPECIES_ZOMBIE "zombie"
 #define SPECIES_ZOMBIE_INFECTIOUS "memezombie"
 #define SPECIES_ZOMBIE_KROKODIL "krokodil_zombie"
+
+// Like species IDs, but not specifically attached a species.
+#define BODYPART_TYPE_ALIEN "alien"
+#define BODYPART_TYPE_ROBOTIC "robotic"
+#define BODYPART_TYPE_DIGITIGRADE "digitigrade"
 
 //See: datum/species/var/digitigrade_customization
 ///The species does not have digitigrade legs in generation.
@@ -213,17 +221,28 @@
 #define BEAUTY_LEVEL_GREAT 100
 
 //Moods levels for humans
-#define MOOD_LEVEL_HAPPY4 15
-#define MOOD_LEVEL_HAPPY3 10
-#define MOOD_LEVEL_HAPPY2 6
-#define MOOD_LEVEL_HAPPY1 2
-#define MOOD_LEVEL_NEUTRAL 0
-#define MOOD_LEVEL_SAD1 -3
-#define MOOD_LEVEL_SAD2 -7
-#define MOOD_LEVEL_SAD3 -15
-#define MOOD_LEVEL_SAD4 -20
+#define MOOD_HAPPY4 15
+#define MOOD_HAPPY3 10
+#define MOOD_HAPPY2 6
+#define MOOD_HAPPY1 2
+#define MOOD_NEUTRAL 0
+#define MOOD_SAD1 -3
+#define MOOD_SAD2 -7
+#define MOOD_SAD3 -15
+#define MOOD_SAD4 -20
 
-//Sanity levels for humans
+//Moods levels for humans
+#define MOOD_LEVEL_HAPPY4 9
+#define MOOD_LEVEL_HAPPY3 8
+#define MOOD_LEVEL_HAPPY2 7
+#define MOOD_LEVEL_HAPPY1 6
+#define MOOD_LEVEL_NEUTRAL 5
+#define MOOD_LEVEL_SAD1 4
+#define MOOD_LEVEL_SAD2 3
+#define MOOD_LEVEL_SAD3 2
+#define MOOD_LEVEL_SAD4 1
+
+//Sanity values for humans
 #define SANITY_MAXIMUM 150
 #define SANITY_GREAT 125
 #define SANITY_NEUTRAL 100
@@ -231,6 +250,14 @@
 #define SANITY_UNSTABLE 50
 #define SANITY_CRAZY 25
 #define SANITY_INSANE 0
+
+//Sanity levels for humans
+#define SANITY_LEVEL_GREAT 1
+#define SANITY_LEVEL_NEUTRAL 2
+#define SANITY_LEVEL_DISTURBED 3
+#define SANITY_LEVEL_UNSTABLE 4
+#define SANITY_LEVEL_CRAZY 5
+#define SANITY_LEVEL_INSANE 6
 
 //Nutrition levels for humans
 #define NUTRITION_LEVEL_FAT 600
@@ -399,6 +426,8 @@
 
 #define HUNGER_FACTOR 0.05 //factor at which mob nutrition decreases
 #define ETHEREAL_CHARGE_FACTOR 0.8 //factor at which ethereal's charge decreases per second
+/// How much nutrition eating clothes as moth gives and drains
+#define CLOTHING_NUTRITION_GAIN 15
 #define REAGENTS_METABOLISM 0.2 //How many units of reagent are consumed per second, by default.
 #define REAGENTS_EFFECT_MULTIPLIER (REAGENTS_METABOLISM / 0.4) // By defining the effect multiplier this way, it'll exactly adjust all effects according to how they originally were with the 0.4 metabolism
 
@@ -422,7 +451,15 @@
 #define MAX_REVIVE_FIRE_DAMAGE 180
 #define MAX_REVIVE_BRUTE_DAMAGE 180
 
-#define HUMAN_FIRE_STACK_ICON_NUM 3
+#define DEFAULT_BRUTE_EXAMINE_TEXT "bruising"
+#define DEFAULT_BURN_EXAMINE_TEXT "burns"
+#define DEFAULT_CLONE_EXAMINE_TEXT "cellular damage"
+
+#define ROBOTIC_BRUTE_EXAMINE_TEXT "denting"
+#define ROBOTIC_BURN_EXAMINE_TEXT "charring"
+
+// If a mob has a higher threshold than this, the icon shown will be increased to the big fire icon.
+#define MOB_BIG_FIRE_STACK_THRESHOLD 3
 
 #define GRAB_PIXEL_SHIFT_PASSIVE 6
 #define GRAB_PIXEL_SHIFT_AGGRESSIVE 12
@@ -593,7 +630,7 @@
 #define SHOES_LAYER 20
 /// Ears layer (Spessmen have ears? Wow)
 #define EARS_LAYER 19
-/// Suit layer (armor, hardsuits, etc.)
+/// Suit layer (armor, coats, etc.)
 #define SUIT_LAYER 18
 /// Glasses layer
 #define GLASSES_LAYER 17

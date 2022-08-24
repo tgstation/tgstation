@@ -5,40 +5,40 @@
 "b" = (
 /obj/item/pickaxe/rusted,
 /turf/open/misc/asteroid,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "e" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/spawner/random/structure/girder,
 /turf/open/floor/plating,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "m" = (
 /turf/closed/wall,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "n" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "r" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "B" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "D" = (
 /obj/effect/turf_decal/sand,
 /obj/item/clothing/head/hardhat,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "E" = (
 /obj/item/stack/ore/iron{
 	pixel_x = -8;
 	pixel_y = -10
 	},
 /turf/open/misc/asteroid,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "G" = (
 /obj/item/stack/ore/iron{
 	pixel_x = 7;
@@ -46,31 +46,31 @@
 	},
 /obj/item/stack/ore/iron,
 /turf/open/misc/asteroid,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "L" = (
 /obj/effect/turf_decal/sand,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "M" = (
 /obj/modular_map_connector,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/barricade/wooden,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "N" = (
 /turf/open/misc/asteroid,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "P" = (
 /turf/closed/wall/rock,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "Q" = (
 /obj/item/stack/ore/iron,
 /turf/open/misc/asteroid,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "V" = (
 /obj/item/stack/ore/glass,
 /turf/open/misc/asteroid,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 
 (1,1,1) = {"
 a

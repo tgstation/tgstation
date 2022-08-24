@@ -16,6 +16,8 @@
 	var/charges = 0
 	var/recharge_rate = 8
 	var/charge_timer = 0
+	/// Whether this wand/staff recharges on its own over time.
+	/// (This is not related to the spell "Charge" whatsoever!)
 	var/can_charge = TRUE
 	var/ammo_type
 	var/no_den_usage
@@ -23,10 +25,46 @@
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL // Has no trigger at all, uses magic instead
 	pin = /obj/item/firing_pin/magic
 
+/obj/item/gun/magic/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ITEM_MAGICALLY_CHARGED, .proc/on_magic_charge)
+
+
+/obj/item/gun/magic/fire_sounds()
+	var/frequency_to_use = sin((90/max_charges) * charges)
+	if(suppressed)
+		playsound(src, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0, frequency = frequency_to_use)
+	else
+		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound, frequency = frequency_to_use)
+
+/**
+ * Signal proc for [COMSIG_ITEM_MAGICALLY_CHARGED]
+ *
+ * Adds uses to wands or staffs.
+ */
+/obj/item/gun/magic/proc/on_magic_charge(datum/source, datum/action/cooldown/spell/charge/spell, mob/living/caster)
+	SIGNAL_HANDLER
+
+	. = COMPONENT_ITEM_CHARGED
+
+	// Non-self charging staves and wands can potentially expire
+	if(!can_charge && max_charges && prob(80))
+		max_charges--
+
+	if(max_charges <= 0)
+		max_charges = 0
+		. |= COMPONENT_ITEM_BURNT_OUT
+
+	charges = max_charges
+	update_appearance(UPDATE_ICON_STATE)
+	recharge_newshot()
+
+	return .
+
 /obj/item/gun/magic/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread)
 	if(no_den_usage)
 		var/area/A = get_area(user)
-		if(istype(A, /area/wizard_station))
+		if(istype(A, /area/centcom/wizard_station))
 			add_fingerprint(user)
 			to_chat(user, span_warning("You know better than to violate the security of The Den, best wait until you leave to use [src]."))
 			return

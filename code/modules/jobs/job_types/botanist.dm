@@ -5,14 +5,14 @@
 	faction = FACTION_STATION
 	total_positions = 3
 	spawn_positions = 2
-	supervisors = "the head of personnel"
+	supervisors = SUPERVISOR_HOP
 	selection_color = "#bbe291"
 	exp_granted_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/botanist
 	plasmaman_outfit = /datum/outfit/plasmaman/botany
 
-	paycheck = PAYCHECK_EASY
+	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
 	display_order = JOB_DISPLAY_ORDER_BOTANIST
 	bounty_types = CIV_JOB_GROW
@@ -20,13 +20,18 @@
 		/datum/job_department/service,
 		)
 
-	family_heirlooms = list(/obj/item/cultivator, /obj/item/reagent_containers/glass/bucket, /obj/item/toy/plush/beeplushie)
+	family_heirlooms = list(
+		/obj/item/cultivator,
+		/obj/item/reagent_containers/cup/watering_can/wood,
+		/obj/item/toy/plush/beeplushie,
+		)
 
 	mail_goodies = list(
-		/obj/item/reagent_containers/glass/bottle/mutagen = 20,
-		/obj/item/reagent_containers/glass/bottle/saltpetre = 20,
-		/obj/item/reagent_containers/glass/bottle/diethylamine = 20,
+		/obj/item/reagent_containers/cup/bottle/mutagen = 20,
+		/obj/item/reagent_containers/cup/bottle/saltpetre = 20,
+		/obj/item/reagent_containers/cup/bottle/diethylamine = 20,
 		/obj/item/gun/energy/floragun = 10,
+		/obj/item/reagent_containers/cup/watering_can/advanced = 10,
 		/obj/effect/spawner/random/food_or_drink/seed_rare = 5,// These are strong, rare seeds, so use sparingly.
 		/obj/item/food/monkeycube/bee = 2
 	)

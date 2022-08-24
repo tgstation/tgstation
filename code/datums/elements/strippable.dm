@@ -95,6 +95,7 @@
 				span_userdanger("[user] tries to put [equipping] on you."),
 				ignored_mobs = user,
 			)
+
 		else
 			source.visible_message(
 				span_notice("[user] tries to put [equipping] on [source]."),
@@ -109,11 +110,13 @@
 					var/list/new_entry = list(list(user.name, "tried equipping you with [equipping]", world.time))
 					LAZYADD(victim_human.afk_thefts, new_entry)
 
+			else if(victim_human.is_blind())
+				to_chat(source, span_userdanger("You feel someone trying to put something on you."))
+
 	to_chat(user, span_notice("You try to put [equipping] on [source]..."))
 
-	var/log = "[key_name(source)] is having [equipping] put on them by [key_name(user)]"
-	user.log_message(log, LOG_ATTACK, color="red")
-	source.log_message(log, LOG_VICTIM, color="red", log_globally=FALSE)
+	user.log_message("is putting [equipping] on [key_name(source)]", LOG_ATTACK, color="red")
+	source.log_message("is having [equipping] put on them by [key_name(user)]", LOG_VICTIM, color="orange", log_globally=FALSE)
 
 	return TRUE
 
@@ -154,12 +157,13 @@
 	source.visible_message(
 		span_warning("[user] tries to remove [source]'s [item.name]."),
 		span_userdanger("[user] tries to remove your [item.name]."),
+		blind_message = span_hear("You hear rustling."),
 		ignored_mobs = user,
 	)
 
 	to_chat(user, span_danger("You try to remove [source]'s [item]..."))
-	user.log_message("[key_name(source)] is being stripped of [item] by [key_name(user)]", LOG_ATTACK, color="red")
-	source.log_message("[key_name(source)] is being stripped of [item] by [key_name(user)]", LOG_VICTIM, color="red", log_globally=FALSE)
+	user.log_message("is stripping [key_name(source)] of [item].", LOG_ATTACK, color="red")
+	source.log_message("is being stripped of [item] by [key_name(user)].", LOG_VICTIM, color="orange", log_globally=FALSE)
 	item.add_fingerprint(src)
 
 	if(ishuman(source))
@@ -168,6 +172,9 @@
 			if(victim_human.stat <= SOFT_CRIT && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
 				var/list/new_entry = list(list(user.name, "tried unequipping your [item.name]", world.time))
 				LAZYADD(victim_human.afk_thefts, new_entry)
+
+		else if(victim_human.is_blind())
+			to_chat(source, span_userdanger("You feel someone fumble with your belongings."))
 
 	return TRUE
 
@@ -262,6 +269,8 @@
 	var/mob/mob_source = source
 	mob_source.equip_to_slot(equipping, item_slot)
 
+	return finish_equip_mob(equipping, source, user)
+
 /datum/strippable_item/mob_item_slot/get_obscuring(atom/source)
 	if (iscarbon(source))
 		var/mob/living/carbon/carbon_source = source
@@ -292,6 +301,11 @@
 /datum/strippable_item/mob_item_slot/proc/get_equip_delay(obj/item/equipping)
 	return equipping.equip_delay_other
 
+/// A utility function for `/datum/strippable_item`s to finish equipping an item to a mob.
+/proc/finish_equip_mob(obj/item/item, mob/source, mob/user)
+	user.log_message("has put [item] on [key_name(source)].", LOG_ATTACK, color="red")
+	source.log_message("had [item] put on them by [key_name(user)].", LOG_VICTIM, color="orange", log_globally=FALSE)
+
 /// A utility function for `/datum/strippable_item`s to start unequipping an item from a mob.
 /proc/start_unequip_mob(obj/item/item, mob/source, mob/user, strip_delay)
 	if (!do_mob(user, source, strip_delay || item.strip_delay, interaction_key = REF(item)))
@@ -304,8 +318,8 @@
 	if (!item.doStrip(user, source))
 		return FALSE
 
-	user.log_message("[key_name(source)] has been stripped of [item] by [key_name(user)]", LOG_ATTACK, color="red")
-	source.log_message("[key_name(source)] has been stripped of [item] by [key_name(user)]", LOG_VICTIM, color="red", log_globally=FALSE)
+	user.log_message("has stripped [key_name(source)] of [item].", LOG_ATTACK, color="red")
+	source.log_message("has been stripped of [item] by [key_name(user)].", LOG_VICTIM, color="orange", log_globally=FALSE)
 
 	// Updates speed in case stripped speed affecting item
 	source.update_equipment_speed_mods()
@@ -434,9 +448,11 @@
 
 					// They equipped an item in the meantime
 					if (!isnull(strippable_item.get_item(owner)))
+						user.put_in_hands(held_item)
 						return
 
 					if (!user.Adjacent(owner))
+						user.put_in_hands(held_item)
 						return
 
 					strippable_item.finish_equip(owner, held_item, user)

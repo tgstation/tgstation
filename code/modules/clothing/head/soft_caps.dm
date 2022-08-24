@@ -1,6 +1,6 @@
 /obj/item/clothing/head/soft
 	name = "cargo cap"
-	desc = "It's a baseball hat in a tasteless yellow colour."
+	desc = "It's a baseball hat in a tasteful brown colour."
 	icon_state = "cargosoft"
 	inhand_icon_state = "helmet"
 	var/soft_type = "cargo"
@@ -36,7 +36,7 @@
 		else
 			icon_state = "[soft_type]soft"
 			to_chat(user, span_notice("You flip the hat back in normal position."))
-		usr.update_inv_head() //so our mob-overlays update
+		usr.update_worn_head() //so our mob-overlays update
 
 /obj/item/clothing/head/soft/examine(mob/user)
 	. = ..()

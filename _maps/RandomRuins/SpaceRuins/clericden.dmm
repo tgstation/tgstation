@@ -57,7 +57,7 @@
 /area/ruin/unpowered/no_grav)
 "o" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/drinks/bottle/holywater,
+/obj/item/reagent_containers/cup/glass/bottle/holywater,
 /turf/open/floor/carpet/airless,
 /area/ruin/unpowered/no_grav)
 "p" = (

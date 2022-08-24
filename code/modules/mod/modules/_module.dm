@@ -43,6 +43,8 @@
 	var/list/pinned_to = list()
 	/// If we're allowed to use this module while phased out.
 	var/allowed_in_phaseout = FALSE
+	/// If we're allowed to use this module while the suit is disabled.
+	var/allowed_inactive = FALSE
 	/// Timer for the cooldown
 	COOLDOWN_DECLARE(cooldown_timer)
 
@@ -53,13 +55,13 @@
 	if(ispath(device))
 		device = new device(src)
 		ADD_TRAIT(device, TRAIT_NODROP, MOD_TRAIT)
-		RegisterSignal(device, COMSIG_PARENT_PREQDELETED, .proc/on_device_deletion)
+		RegisterSignal(device, COMSIG_PARENT_QDELETING, .proc/on_device_deletion)
 		RegisterSignal(src, COMSIG_ATOM_EXITED, .proc/on_exit)
 
 /obj/item/mod/module/Destroy()
 	mod?.uninstall(src)
 	if(device)
-		UnregisterSignal(device, COMSIG_PARENT_PREQDELETED)
+		UnregisterSignal(device, COMSIG_PARENT_QDELETING)
 		QDEL_NULL(device)
 	return ..()
 
@@ -68,33 +70,10 @@
 	if(HAS_TRAIT(user, TRAIT_DIAGNOSTIC_HUD))
 		. += span_notice("Complexity level: [complexity]")
 
-/// Called from MODsuit's install() proc, so when the module is installed.
-/obj/item/mod/module/proc/on_install()
-	return
-
-/// Called from MODsuit's uninstall() proc, so when the module is uninstalled.
-/obj/item/mod/module/proc/on_uninstall(deleting = FALSE)
-	return
-
-/// Called when the MODsuit is activated
-/obj/item/mod/module/proc/on_suit_activation()
-	return
-
-/// Called when the MODsuit is deactivated
-/obj/item/mod/module/proc/on_suit_deactivation(deleting = FALSE)
-	return
-
-/// Called when the MODsuit is equipped
-/obj/item/mod/module/proc/on_equip()
-	return
-
-/// Called when the MODsuit is unequipped
-/obj/item/mod/module/proc/on_unequip()
-	return
 
 /// Called when the module is selected from the TGUI, radial or the action button
 /obj/item/mod/module/proc/on_select()
-	if(!mod.active || mod.activating || module_type == MODULE_PASSIVE)
+	if(((!mod.active || mod.activating) && !allowed_inactive) || module_type == MODULE_PASSIVE)
 		if(mod.wearer)
 			balloon_alert(mod.wearer, "not active!")
 		return
@@ -140,7 +119,7 @@
 			balloon_alert(mod.wearer, "[src] activated, [used_button]-click to use")
 	active = TRUE
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
-	mod.wearer.update_inv_back()
+	mod.wearer.update_clothing(mod.slot_flags)
 	SEND_SIGNAL(src, COMSIG_MODULE_ACTIVATED)
 	return TRUE
 
@@ -158,7 +137,7 @@
 		else
 			UnregisterSignal(mod.wearer, used_signal)
 			used_signal = null
-	mod.wearer.update_inv_back()
+	mod.wearer.update_clothing(mod.slot_flags)
 	SEND_SIGNAL(src, COMSIG_MODULE_DEACTIVATED)
 	return TRUE
 
@@ -177,8 +156,8 @@
 	if(SEND_SIGNAL(src, COMSIG_MODULE_TRIGGERED) & MOD_ABORT_USE)
 		return FALSE
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
-	addtimer(CALLBACK(mod.wearer, /mob.proc/update_inv_back), cooldown_time+1) //need to run it a bit after the cooldown starts to avoid conflicts
-	mod.wearer.update_inv_back()
+	addtimer(CALLBACK(mod.wearer, /mob.proc/update_clothing, mod.slot_flags), cooldown_time+1) //need to run it a bit after the cooldown starts to avoid conflicts
+	mod.wearer.update_clothing(mod.slot_flags)
 	SEND_SIGNAL(src, COMSIG_MODULE_USED)
 	return TRUE
 
@@ -212,6 +191,30 @@
 /obj/item/mod/module/proc/on_active_process(delta_time)
 	return
 
+/// Called from MODsuit's install() proc, so when the module is installed.
+/obj/item/mod/module/proc/on_install()
+	return
+
+/// Called from MODsuit's uninstall() proc, so when the module is uninstalled.
+/obj/item/mod/module/proc/on_uninstall(deleting = FALSE)
+	return
+
+/// Called when the MODsuit is activated
+/obj/item/mod/module/proc/on_suit_activation()
+	return
+
+/// Called when the MODsuit is deactivated
+/obj/item/mod/module/proc/on_suit_deactivation(deleting = FALSE)
+	return
+
+/// Called when the MODsuit is equipped
+/obj/item/mod/module/proc/on_equip()
+	return
+
+/// Called when the MODsuit is unequipped
+/obj/item/mod/module/proc/on_unequip()
+	return
+
 /// Drains power from the suit charge
 /obj/item/mod/module/proc/drain_power(amount)
 	if(!check_power(amount))
@@ -222,9 +225,7 @@
 
 /// Checks if there is enough power in the suit
 /obj/item/mod/module/proc/check_power(amount)
-	if(mod.get_charge() < amount)
-		return FALSE
-	return TRUE
+	return mod.check_charge(amount)
 
 /// Adds additional things to the MODsuit ui_data()
 /obj/item/mod/module/proc/add_ui_data()
@@ -293,12 +294,13 @@
 
 /// Pins the module to the user's action buttons
 /obj/item/mod/module/proc/pin(mob/user)
-	var/datum/action/item_action/mod/pinned_module/action = pinned_to[REF(user)]
-	if(action)
-		qdel(action)
-	else
-		action = new(mod, src, user)
-		action.Grant(user)
+	var/datum/action/item_action/mod/pinned_module/existing_action = pinned_to[REF(user)]
+	if(existing_action)
+		mod.remove_item_action(existing_action)
+		return
+
+	var/datum/action/item_action/mod/pinned_module/new_action = new(mod, src, user)
+	mod.add_item_action(new_action)
 
 /// On drop key, concels a device item.
 /obj/item/mod/module/proc/dropkey(mob/living/user)

@@ -23,7 +23,7 @@
 	smoothing_flags = SMOOTH_CORNERS | SMOOTH_OBJ
 	smoothing_groups = list(SMOOTH_GROUP_GAS_TANK)
 	canSmoothWith = list(SMOOTH_GROUP_GAS_TANK)
-	appearance_flags = KEEP_TOGETHER
+	appearance_flags = KEEP_TOGETHER|LONG_GLIDE
 
 	greyscale_config = /datum/greyscale_config/stationary_canister
 	greyscale_colors = "#ffffff"
@@ -474,7 +474,7 @@
 			icon_state = "plated_frame"
 
 /obj/structure/tank_frame/attackby(obj/item/item, mob/living/user, params)
-	if(construction_state == TANK_FRAME && istype(item, /obj/item/stack) && add_plating(user, item))
+	if(construction_state == TANK_FRAME && isstack(item) && add_plating(user, item))
 		return
 	return ..()
 

@@ -131,11 +131,11 @@
 	var/loot = rand(1,100) //100 different crates with varying chances of spawning
 	switch(loot)
 		if(1 to 5) //5% chance
-			new /obj/item/reagent_containers/food/drinks/bottle/rum(src)
-			new /obj/item/reagent_containers/food/drinks/bottle/whiskey(src)
-			new /obj/item/reagent_containers/food/drinks/bottle/whiskey(src)
+			new /obj/item/reagent_containers/cup/glass/bottle/rum(src)
+			new /obj/item/reagent_containers/cup/glass/bottle/whiskey(src)
+			new /obj/item/reagent_containers/cup/glass/bottle/whiskey(src)
 			new /obj/item/lighter(src)
-			new /obj/item/reagent_containers/food/drinks/bottle/absinthe/premium(src)
+			new /obj/item/reagent_containers/cup/glass/bottle/absinthe/premium(src)
 			for(var/i in 1 to 3)
 				new /obj/item/clothing/mask/cigarette/rollie(src)
 		if(6 to 10)
@@ -180,7 +180,7 @@
 		if(63 to 64)
 			new /obj/item/clothing/shoes/kindle_kicks(src)
 		if(65 to 66)
-			new /obj/item/clothing/suit/ianshirt(src)
+			new /obj/item/clothing/suit/costume/ianshirt(src)
 			new /obj/item/clothing/suit/hooded/ian_costume(src)
 		if(67 to 68)
 			new /obj/item/toy/plush/awakenedplushie(src)
@@ -205,7 +205,7 @@
 		if(87) //1% chance
 			new /obj/item/weed_extract(src)
 		if(88)
-			new /obj/item/reagent_containers/food/drinks/bottle/lizardwine(src)
+			new /obj/item/reagent_containers/cup/glass/bottle/lizardwine(src)
 		if(89)
 			new /obj/item/melee/energy/sword/bananium(src)
 		if(90)

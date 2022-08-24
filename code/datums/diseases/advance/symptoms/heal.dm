@@ -10,17 +10,7 @@
 	symptom_delay_min = 1
 	symptom_delay_max = 1
 	var/passive_message = "" //random message to infected but not actively healing people
-	threshold_descs = list(
-		"Stage Speed 6" = "Doubles healing speed.",
-		"Stealth 4" = "Healing will no longer be visible to onlookers.",
-	)
 
-/datum/symptom/heal/Start(datum/disease/advance/A)
-	. = ..()
-	if(!.)
-		return
-	if(A.totalStageSpeed() >= 6) //stronger healing
-		power = 2
 
 /datum/symptom/heal/Activate(datum/disease/advance/A)
 	. = ..()
@@ -455,7 +445,7 @@
 	. = 0
 	var/mob/living/M = A.affected_mob
 	if(M.fire_stacks < 0)
-		M.set_fire_stacks(min(M.fire_stacks + 1 * absorption_coeff, 0))
+		M.adjust_fire_stacks(min(absorption_coeff, -M.fire_stacks))
 		. += power
 	if(M.reagents.has_reagent(/datum/reagent/water/holywater, needs_metabolizing = FALSE))
 		M.reagents.remove_reagent(/datum/reagent/water/holywater, 0.5 * absorption_coeff)

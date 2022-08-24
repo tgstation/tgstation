@@ -9,7 +9,7 @@
 	see_in_dark = NIGHTVISION_FOV_RANGE
 	bubble_icon = "machine"
 	mob_biotypes = MOB_ROBOTIC
-	deathsound = 'sound/voice/borg_deathsound.ogg'
+	death_sound = 'sound/voice/borg_deathsound.ogg'
 	speech_span = SPAN_ROBOT
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	examine_cursor_icon = null
@@ -44,7 +44,8 @@
 	var/law_change_counter = 0
 	var/obj/machinery/camera/builtInCamera = null
 	var/updating = FALSE //portable camera camerachunk update
-
+	///Whether we have been emagged
+	var/emagged = FALSE
 	var/hack_software = FALSE //Will be able to use hacking actions
 	interaction_range = 7 //wireless control range
 
@@ -57,7 +58,7 @@
 	if(ispath(radio))
 		radio = new radio(src)
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.add_to_hud(src)
+		diag_hud.add_atom_to_hud(src)
 	diag_hud_set_status()
 	diag_hud_set_health()
 	add_sensors()
@@ -65,8 +66,7 @@
 	ADD_TRAIT(src, TRAIT_MARTIAL_ARTS_IMMUNE, ROUNDSTART_TRAIT)
 	ADD_TRAIT(src, TRAIT_NOFIRE_SPREAD, ROUNDSTART_TRAIT)
 	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, ROUNDSTART_TRAIT)
-
-
+	ADD_TRAIT(src, TRAIT_LITERATE, ROUNDSTART_TRAIT)
 
 /mob/living/silicon/Destroy()
 	QDEL_NULL(radio)
@@ -83,15 +83,15 @@
 	modularInterface.layer = ABOVE_HUD_PLANE
 	modularInterface.plane = ABOVE_HUD_PLANE
 	modularInterface.saved_identification = real_name || name
-	if(istype(src, /mob/living/silicon/robot))
+	if(iscyborg(src))
 		modularInterface.saved_job = "Cyborg"
-		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/integrated/borg)
-	if(istype(src, /mob/living/silicon/ai))
+		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/robot)
+	if(isAI(src))
 		modularInterface.saved_job = "AI"
-		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/integrated)
-	if(istype(src, /mob/living/silicon/pai))
+		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/ai)
+	if(ispAI(src))
 		modularInterface.saved_job = "pAI Messenger"
-		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/integrated)
+		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/ai)
 
 /mob/living/silicon/robot/model/syndicate/create_modularInterface()
 	if(!modularInterface)
@@ -226,6 +226,7 @@
 	return
 
 /mob/living/silicon/proc/statelaws(force = 0)
+	laws_sanity_check()
 	// Create a cache of our laws and lawcheck flags before we do anything else.
 	// These are used to prevent weirdness when laws are changed when the AI is mid-stating.
 	var/lawcache_zeroth = laws.zeroth
@@ -287,6 +288,7 @@
 
 ///Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew.
 /mob/living/silicon/proc/checklaws()
+	laws_sanity_check()
 	var/list = "<b>Which laws do you want to include when stating them for the crew?</b><br><br>"
 
 	var/law_display = "Yes"
@@ -377,17 +379,17 @@
 	var/datum/atom_hud/secsensor = GLOB.huds[sec_hud]
 	var/datum/atom_hud/medsensor = GLOB.huds[med_hud]
 	var/datum/atom_hud/diagsensor = GLOB.huds[d_hud]
-	secsensor.remove_hud_from(src)
-	medsensor.remove_hud_from(src)
-	diagsensor.remove_hud_from(src)
+	secsensor.hide_from(src)
+	medsensor.hide_from(src)
+	diagsensor.hide_from(src)
 
 /mob/living/silicon/proc/add_sensors()
 	var/datum/atom_hud/secsensor = GLOB.huds[sec_hud]
 	var/datum/atom_hud/medsensor = GLOB.huds[med_hud]
 	var/datum/atom_hud/diagsensor = GLOB.huds[d_hud]
-	secsensor.add_hud_to(src)
-	medsensor.add_hud_to(src)
-	diagsensor.add_hud_to(src)
+	secsensor.show_to(src)
+	medsensor.show_to(src)
+	diagsensor.show_to(src)
 
 /mob/living/silicon/proc/toggle_sensors()
 	if(incapacitated())
@@ -403,9 +405,6 @@
 /mob/living/silicon/proc/GetPhoto(mob/user)
 	if (aicamera)
 		return aicamera.selectpicture(user)
-
-/mob/living/silicon/is_literate()
-	return TRUE
 
 /mob/living/silicon/get_inactive_held_item()
 	return FALSE

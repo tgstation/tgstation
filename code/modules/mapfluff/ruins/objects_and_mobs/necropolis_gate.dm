@@ -53,11 +53,8 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/necropolis_gate/Destroy(force)
-	if(force)
-		qdel(sight_blocker, TRUE)
-		. = ..()
-	else
-		return QDEL_HINT_LETMELIVE
+	qdel(sight_blocker)
+	return ..()
 
 /obj/structure/necropolis_gate/singularity_pull()
 	return 0
@@ -92,13 +89,7 @@
 	anchored = TRUE
 
 /obj/structure/opacity_blocker/singularity_pull()
-	return 0
-
-/obj/structure/opacity_blocker/Destroy(force)
-	if(force)
-		. = ..()
-	else
-		return QDEL_HINT_LETMELIVE
+	return FALSE
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/necropolis_gate/attack_hand(mob/user, list/modifiers)
@@ -162,12 +153,9 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	GLOB.necropolis_gate = src
 
 /obj/structure/necropolis_gate/legion_gate/Destroy(force)
-	if(force)
-		if(GLOB.necropolis_gate == src)
-			GLOB.necropolis_gate = null
-		. = ..()
-	else
-		return QDEL_HINT_LETMELIVE
+	if(GLOB.necropolis_gate == src)
+		GLOB.necropolis_gate = null
+	return ..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/necropolis_gate/legion_gate/attack_hand(mob/user, list/modifiers)
@@ -193,13 +181,13 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 			log_game("Legion took damage while the necropolis gate was closed and released itself.")
 		else
 			message_admins("[user ? ADMIN_LOOKUPFLW(user):"Unknown"] has released Legion!")
-			log_game("[user ? key_name(user) : "Unknown"] released Legion.")
+			user.log_message("released Legion.", LOG_GAME)
 
 		var/sound/legion_sound = sound('sound/creatures/legion_spawn.ogg')
 		for(var/mob/M in GLOB.player_list)
 			if(M.z == z)
 				to_chat(M, span_userdanger("Discordant whispers flood your mind in a thousand voices. Each one speaks your name, over and over. Something horrible has been released."))
-				M.playsound_local(T, null, 100, FALSE, 0, FALSE, pressure_affected = FALSE, S = legion_sound)
+				M.playsound_local(T, null, 100, FALSE, 0, FALSE, pressure_affected = FALSE, sound_to_use = legion_sound)
 				flash_color(M, flash_color = "#FF0000", flash_time = 50)
 		var/mutable_appearance/release_overlay = mutable_appearance('icons/effects/effects.dmi', "legiondoor")
 		notify_ghosts("Legion has been released in the [get_area(src)]!", source = src, alert_overlay = release_overlay, action = NOTIFY_JUMP, flashwindow = FALSE)
@@ -241,12 +229,6 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 /obj/structure/necropolis_arch/singularity_pull()
 	return 0
 
-/obj/structure/necropolis_arch/Destroy(force)
-	if(force)
-		. = ..()
-	else
-		return QDEL_HINT_LETMELIVE
-
 #define STABLE 0 //The tile is stable and won't collapse/sink when crossed.
 #define COLLAPSE_ON_CROSS 1 //The tile is unstable and will temporary become unusable when crossed.
 #define DESTROY_ON_CROSS 2 //The tile is nearly broken and will permanently become unusable when crossed.
@@ -273,12 +255,6 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-/obj/structure/stone_tile/Destroy(force)
-	if(force || fallen)
-		. = ..()
-	else
-		return QDEL_HINT_LETMELIVE
-
 /obj/structure/stone_tile/singularity_pull()
 	return
 
@@ -290,7 +266,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	if(!islava(T) && !ischasm(T)) //nothing to sink or fall into
 		return
 	var/obj/item/I
-	if(istype(AM, /obj/item))
+	if(isitem(AM))
 		I = AM
 	var/mob/living/L
 	if(isliving(AM))

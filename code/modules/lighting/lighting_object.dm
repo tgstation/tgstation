@@ -43,6 +43,11 @@
 	return ..()
 
 /datum/lighting_object/proc/update()
+#ifdef VISUALIZE_LIGHT_UPDATES
+	affected_turf.add_atom_colour(COLOR_BLUE_LIGHT, ADMIN_COLOUR_PRIORITY)
+	animate(affected_turf, 10, color = null)
+	addtimer(CALLBACK(affected_turf, /atom/proc/remove_atom_colour, ADMIN_COLOUR_PRIORITY, COLOR_BLUE_LIGHT), 10, TIMER_UNIQUE|TIMER_OVERRIDE)
+#endif
 
 	// To the future coder who sees this and thinks
 	// "Why didn't he just use a loop?"

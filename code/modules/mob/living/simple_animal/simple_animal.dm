@@ -129,7 +129,6 @@
 	var/list/loot = list()
 	///Causes mob to be deleted on death, useful for mobs that spawn lootable corpses.
 	var/del_on_death = 0
-	var/deathmessage = ""
 
 	var/allow_movement_on_non_turfs = FALSE
 
@@ -214,8 +213,7 @@
 
 /mob/living/simple_animal/Destroy()
 	GLOB.simple_animals[AIStatus] -= src
-	if (SSnpcpool.state == SS_PAUSED && LAZYLEN(SSnpcpool.currentrun))
-		SSnpcpool.currentrun -= src
+	SSnpcpool.currentrun -= src
 
 	if(nest)
 		nest.spawned_mobs -= src
@@ -262,16 +260,23 @@
 
 /mob/living/simple_animal/proc/handle_automated_movement()
 	set waitfor = FALSE
-	if(!stop_automated_movement && wander)
-		if((isturf(loc) || allow_movement_on_non_turfs) && (mobility_flags & MOBILITY_MOVE)) //This is so it only moves if it's not inside a closet, gentics machine, etc.
-			turns_since_move++
-			if(turns_since_move >= turns_per_move)
-				if(!(stop_automated_movement_when_pulled && pulledby)) //Some animals don't move when pulled
-					var/anydir = pick(GLOB.cardinals)
-					if(Process_Spacemove(anydir))
-						Move(get_step(src, anydir), anydir)
-						turns_since_move = 0
-			return 1
+	if(stop_automated_movement || !wander)
+		return
+	if(!isturf(loc) && !allow_movement_on_non_turfs)
+		return
+	if(!(mobility_flags & MOBILITY_MOVE)) //This is so it only moves if it's not inside a closet, gentics machine, etc.
+		return TRUE
+
+	turns_since_move++
+	if(turns_since_move < turns_per_move)
+		return TRUE
+	if(stop_automated_movement_when_pulled && pulledby) //Some animals don't move when pulled
+		return TRUE
+	var/anydir = pick(GLOB.cardinals)
+	if(Process_Spacemove(anydir))
+		Move(get_step(src, anydir), anydir)
+		turns_since_move = 0
+	return TRUE
 
 /mob/living/simple_animal/proc/handle_automated_speech(override)
 	set waitfor = FALSE
@@ -318,7 +323,7 @@
 		var/turf/open/ST = loc
 		if(ST.air)
 			var/ST_gases = ST.air.gases
-			ST.air.assert_gases(arglist(GLOB.hardcoded_gases))
+			ST.air.assert_gases(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/plasma)
 
 			var/plas = ST_gases[/datum/gas/plasma][MOLES]
 			var/oxy = ST_gases[/datum/gas/oxygen][MOLES]
@@ -424,12 +429,6 @@
 		verb_say = pick(speak_emote)
 	return ..()
 
-
-/mob/living/simple_animal/emote(act, m_type=1, message = null, intentional = FALSE, force_silence = FALSE)
-	if(stat)
-		return FALSE
-	return ..()
-
 /mob/living/simple_animal/proc/set_varspeed(var_value)
 	speed = var_value
 	update_simplemob_varspeed()
@@ -456,9 +455,6 @@
 	drop_loot()
 	if(dextrous)
 		drop_all_held_items()
-	if(!gibbed)
-		if(deathsound || deathmessage || !del_on_death)
-			emote("deathgasp")
 	if(del_on_death)
 		..()
 		//Prevent infinite loops if the mob Destroy() is overridden in such
@@ -490,10 +486,7 @@
 			return FALSE
 	return TRUE
 
-/mob/living/simple_animal/handle_fire(delta_time, times_fired)
-	return TRUE
-
-/mob/living/simple_animal/IgniteMob()
+/mob/living/simple_animal/ignite_mob()
 	return FALSE
 
 /mob/living/simple_animal/extinguish_mob()
@@ -612,11 +605,11 @@
 		if(H)
 			H.update_appearance()
 
-/mob/living/simple_animal/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE)
-	. = ..(I, del_on_fail, merge_stacks)
-	update_inv_hands()
+/mob/living/simple_animal/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE, ignore_animation = TRUE)
+	. = ..()
+	update_held_items()
 
-/mob/living/simple_animal/update_inv_hands()
+/mob/living/simple_animal/update_held_items()
 	if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 		for(var/obj/item/I in held_items)
 			var/index = get_held_index_of_item(I)
@@ -636,6 +629,8 @@
 	return ..()
 
 /mob/living/simple_animal/proc/toggle_ai(togglestatus)
+	if(QDELETED(src))
+		return
 	if(!can_have_ai && (togglestatus != AI_OFF))
 		return
 	if (AIStatus != togglestatus)

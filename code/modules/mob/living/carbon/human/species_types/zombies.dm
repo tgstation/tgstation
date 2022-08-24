@@ -11,26 +11,27 @@
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
-		TRAIT_NOMETABOLISM,
+		TRAIT_EASILY_WOUNDED,
+		TRAIT_EASYDISMEMBER,
+		TRAIT_FAKEDEATH,
+		TRAIT_LIMBATTACHMENT,
+		TRAIT_LITERATE,
+		TRAIT_NOBREATH,
+		TRAIT_NOCLONELOSS,
+		TRAIT_NODEATH,
 		TRAIT_NOHUNGER,
-		TRAIT_TOXIMMUNE,
+		TRAIT_NOMETABOLISM,
+		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_RADIMMUNE,
-		TRAIT_EASYDISMEMBER,
-		TRAIT_EASILY_WOUNDED,
-		TRAIT_LIMBATTACHMENT,
-		TRAIT_NOBREATH,
-		TRAIT_NODEATH,
-		TRAIT_FAKEDEATH,
-		TRAIT_NOCLONELOSS,
+		TRAIT_TOXIMMUNE,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
-	mutanttongue = /obj/item/organ/tongue/zombie
+	mutanttongue = /obj/item/organ/internal/tongue/zombie
 	var/static/list/spooks = list('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')
 	disliked_food = NONE
-	liked_food = GROSS | MEAT | RAW
+	liked_food = GROSS | MEAT | RAW | GORE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | ERT_SPAWN
 	bodytemp_normal = T0C // They have no natural body heat, the environment regulates body temp
 	bodytemp_heat_damage_limit = FIRE_MINIMUM_TEMPERATURE_TO_EXIST // Take damage at fire temp
@@ -83,7 +84,7 @@
 	mutanthands = /obj/item/zombie_hand
 	armor = 20 // 120 damage to KO a zombie, which kills it
 	speedmod = 1.6
-	mutanteyes = /obj/item/organ/eyes/night_vision/zombie
+	mutanteyes = /obj/item/organ/internal/eyes/night_vision/zombie
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 	/// The rate the zombies regenerate at
 	var/heal_rate = 0.5
@@ -123,7 +124,7 @@
 //Congrats you somehow died so hard you stopped being a zombie
 /datum/species/zombie/infectious/spec_death(gibbed, mob/living/carbon/C)
 	. = ..()
-	var/obj/item/organ/zombie_infection/infection
+	var/obj/item/organ/internal/zombie_infection/infection
 	infection = C.getorganslot(ORGAN_SLOT_ZOMBIE)
 	if(infection)
 		qdel(infection)
@@ -134,7 +135,7 @@
 	// Deal with the source of this zombie corruption
 	//  Infection organ needs to be handled separately from mutant_organs
 	//  because it persists through species transitions
-	var/obj/item/organ/zombie_infection/infection
+	var/obj/item/organ/internal/zombie_infection/infection
 	infection = C.getorganslot(ORGAN_SLOT_ZOMBIE)
 	if(!infection)
 		infection = new()
@@ -146,7 +147,7 @@
 	id = SPECIES_ZOMBIE_KROKODIL
 	examine_limb_id = SPECIES_HUMAN
 	sexes = 0
-	mutanttongue = /obj/item/organ/tongue/zombie
+	mutanttongue = /obj/item/organ/internal/tongue/zombie
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
 	bodypart_overrides = list(
@@ -158,21 +159,5 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/zombie
 	)
 
-/datum/species/human/krokodil_addict/replace_body(mob/living/carbon/target, datum/species/new_species)
-	..()
-	var/skintone
-	if(ishuman(target))
-		var/mob/living/carbon/human/human_target = target
-		skintone = human_target.skin_tone
-
-	for(var/obj/item/bodypart/limb as anything in target.bodyparts)
-		if(IS_ORGANIC_LIMB(limb))
-			if(limb.body_zone == BODY_ZONE_HEAD || limb.body_zone == BODY_ZONE_CHEST)
-				limb.is_dimorphic = TRUE
-			limb.skin_tone ||= skintone
-			limb.limb_id = SPECIES_HUMAN
-			limb.should_draw_greyscale = TRUE
-			limb.name = "human [parse_zone(limb.body_zone)]"
-			limb.update_limb()
 
 #undef REGENERATION_DELAY

@@ -244,11 +244,6 @@
 		return
 	to_chat(owner, span_mind_control("[command]"))
 
-/atom/movable/screen/alert/drunk
-	name = "Drunk"
-	desc = "All that alcohol you've been drinking is impairing your speech, motor skills, and mental cognition. Make sure to act like it."
-	icon_state = ALERT_DRUNK
-
 /atom/movable/screen/alert/embeddedobject
 	name = "Embedded Object"
 	desc = "Something got lodged into your flesh and is causing major bleeding. It might fall out with time, but surgery is the safest way. \
@@ -379,8 +374,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	to_chat(rube, span_userdanger("[all_caps_for_emphasis]"))
 	playsound(offerer, 'sound/weapons/thudswoosh.ogg', 100, TRUE, 1)
 	rube.Knockdown(1 SECONDS)
-	SEND_SIGNAL(offerer, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/down_low)
-	SEND_SIGNAL(rube, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/too_slow)
+	offerer.add_mood_event("high_five", /datum/mood_event/down_low)
+	rube.add_mood_event("high_five", /datum/mood_event/too_slow)
 	qdel(src)
 
 /// If someone examine_more's the offerer while they're trying to pull a too-slow, it'll tip them off to the offerer's trickster ways
@@ -412,15 +407,12 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	. = ..()
 	if(!.)
 		return
-
 	var/mob/living/living_owner = owner
-	var/last_whisper = tgui_input_text(usr, "Do you have any last words?", "Final Words")
-	if (!last_whisper || !CAN_SUCCUMB(living_owner))
+	var/last_whisper = tgui_input_text(usr, "Do you have any last words?", "Goodnight, Sweet Prince")
+	if(isnull(last_whisper) || !CAN_SUCCUMB(living_owner))
 		return
-
-	if (length(last_whisper))
+	if(length(last_whisper))
 		living_owner.say("#[last_whisper]")
-
 	living_owner.succumb(whispered = length(last_whisper) > 0)
 
 //ALIENS
@@ -656,7 +648,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /atom/movable/screen/alert/emptycell/plasma
 	name = "Out of Power"
 	desc = "Unit's plasma core has no charge remaining. No modules available until plasma core is recharged. \
-		Unit can be refilled through plasma ore."
+		Unit can be refilled through plasma fuel."
 
 /atom/movable/screen/alert/emptycell/plasma/update_desc()
 	. = ..()
@@ -664,7 +656,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /atom/movable/screen/alert/lowcell/plasma
 	name = "Low Charge"
-	desc = "Unit's plasma core is running low. Unit can be refilled through plasma ore."
+	desc = "Unit's plasma core is running low. Unit can be refilled through plasma fuel."
 
 /atom/movable/screen/alert/lowcell/plasma/update_desc()
 	. = ..()

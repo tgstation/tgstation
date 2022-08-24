@@ -9,12 +9,12 @@
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the captain"
+	supervisors = SUPERVISOR_CAPTAIN
 	selection_color = "#ffddff"
 	req_admin_notify = 1
 	minimal_player_age = 7
 	exp_required_type_department = EXP_TYPE_SCIENCE
-	exp_requirements = 180
+	exp_requirements = 3 HOURS
 	exp_required_type = EXP_TYPE_CREW
 	exp_granted_type = EXP_TYPE_CREW
 
@@ -28,7 +28,7 @@
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_SCI
 
-	liver_traits = list(TRAIT_ROYAL_METABOLISM)
+	liver_traits = list(TRAIT_ROYAL_METABOLISM, TRAIT_BALLMER_SCIENTIST)
 
 	display_order = JOB_DISPLAY_ORDER_RESEARCH_DIRECTOR
 	bounty_types = CIV_JOB_SCI
@@ -60,7 +60,6 @@
 	suit = /obj/item/clothing/suit/toggle/labcoat
 	backpack_contents = list(
 		/obj/item/melee/baton/telescopic = 1,
-		/obj/item/modular_computer/tablet/preset/advanced/command = 1,
 		)
 	belt = /obj/item/modular_computer/tablet/pda/heads/rd
 	ears = /obj/item/radio/headset/heads/rd

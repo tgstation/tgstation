@@ -24,6 +24,7 @@
 		MECHA_ARMOR = 1,
 	)
 	wreckage = /obj/structure/mecha_wreckage/clarke
+	mech_type = EXOSUIT_MODULE_CLARKE
 	enter_delay = 40
 	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | OMNIDIRECTIONAL_ATTACKS
 	internals_req_access = list(ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE, ACCESS_MECH_MINING)

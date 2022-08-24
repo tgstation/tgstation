@@ -22,8 +22,7 @@
 	var/apply_type = PATCH
 	var/apply_method = "spray" //the thick gel is sprayed and then dries into patch like film.
 	var/self_delay = 30
-	var/squirt_mode = 0
-	custom_price = PAYCHECK_MEDIUM * 2
+	custom_price = PAYCHECK_CREW * 2
 	unique_reskin = list(
 		"Blue" = "medigel_blue",
 		"Cyan" = "medigel_cyan",
@@ -33,16 +32,9 @@
 		"Purple" = "medigel_purple"
 	)
 
-/obj/item/reagent_containers/medigel/attack_self(mob/user)
-	squirt_mode = !squirt_mode
-	return ..()
-
-/obj/item/reagent_containers/medigel/attack_self_secondary(mob/user)
-	squirt_mode = !squirt_mode
-	return ..()
-
 /obj/item/reagent_containers/medigel/mode_change_message(mob/user)
-	to_chat(user, span_notice("You will now apply the medigel's contents in [squirt_mode ? "short bursts":"extended sprays"]. You'll now use [amount_per_transfer_from_this] units per use."))
+	var/squirt_mode = amount_per_transfer_from_this == initial(amount_per_transfer_from_this)
+	to_chat(user, span_notice("You will now apply the medigel's contents in [squirt_mode ? "extended sprays":"short bursts"]. You'll now use [amount_per_transfer_from_this] units per use."))
 
 /obj/item/reagent_containers/medigel/attack(mob/M, mob/user, def_zone)
 	if(!reagents || !reagents.total_volume)
@@ -98,7 +90,7 @@
 	icon_state = "synthgel"
 	current_skin = "synthgel"
 	list_reagents = list(/datum/reagent/medicine/c2/synthflesh = 60)
-	custom_price = PAYCHECK_MEDIUM * 5
+	custom_price = PAYCHECK_CREW * 5
 
 /obj/item/reagent_containers/medigel/sterilizine
 	name = "sterilizer gel"
@@ -106,4 +98,4 @@
 	icon_state = "medigel_blue"
 	current_skin = "medigel_blue"
 	list_reagents = list(/datum/reagent/space_cleaner/sterilizine = 60)
-	custom_price = PAYCHECK_MEDIUM * 2
+	custom_price = PAYCHECK_CREW * 2

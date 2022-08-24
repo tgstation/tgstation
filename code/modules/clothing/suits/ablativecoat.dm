@@ -15,7 +15,9 @@
 /obj/item/clothing/suit/hooded/ablative
 	name = "ablative trenchcoat"
 	desc = "Experimental trenchcoat specially crafted to reflect and absorb laser and disabler shots. Don't expect it to do all that much against an axe or a shotgun, however."
+	icon = 'icons/obj/clothing/suits/armor.dmi'
 	icon_state = "ablativecoat"
+	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	inhand_icon_state = "ablativecoat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	armor = list(MELEE = 10, BULLET = 10, LASER = 60, ENERGY = 60, BOMB = 0, BIO = 0, FIRE = 100, ACID = 100)
@@ -40,7 +42,7 @@
 	var/mob/living/carbon/user = loc
 	var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	ADD_TRAIT(user, TRAIT_SECURITY_HUD, HELMET_TRAIT)
-	hud.add_hud_to(user)
+	hud.show_to(user)
 	balloon_alert(user, "you put on the hood, and enable the hud")
 	return ..()
 
@@ -48,8 +50,8 @@
 	if (!hood_up)
 		return ..()
 	var/mob/living/carbon/user = loc
-	var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
+	var/datum/atom_hud/sec_hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	REMOVE_TRAIT(user, TRAIT_SECURITY_HUD, HELMET_TRAIT)
-	hud.remove_hud_from(user)
+	sec_hud.hide_from(user)
 	balloon_alert(user, "you take off the hood, and disable the hud")
 	return ..()

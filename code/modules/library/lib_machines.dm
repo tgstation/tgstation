@@ -607,7 +607,7 @@
 	if(!book.content)
 		say("No content detected. Aborting")
 		return
-	var/msg = "[key_name(usr)] has uploaded the book titled [book.title], [length(book.content)] signs"
+	var/msg = "has uploaded the book titled [book.title], [length(book.content)] signs"
 	var/datum/db_query/query_library_upload = SSdbcore.NewQuery({"
 		INSERT INTO [format_table_name("library")] (author, title, content, category, ckey, datetime, round_id_created)
 		VALUES (:author, :title, :content, :category, :ckey, Now(), :round_id)
@@ -616,7 +616,7 @@
 		qdel(query_library_upload)
 		say("Database error encountered uploading to Archive")
 		return
-	log_game(msg)
+	usr.log_message(msg, LOG_GAME)
 	qdel(query_library_upload)
 	say("Upload Complete. Uploaded title will be available for printing in a moment")
 	ignore_hash = TRUE
@@ -743,6 +743,8 @@
 				say("This book is already in my internal cache")
 				return
 			cache = held_book.book_data.return_copy()
+			flick("bigscanner1", src)
+			playsound(src, 'sound/machines/scanner.ogg', vol = 50, vary = TRUE)
 			return TRUE
 		if("clear")
 			cache = null
@@ -786,6 +788,7 @@
 	audible_message(span_hear("[src] begins to hum as it warms up its printing drums."))
 	busy = TRUE
 	playsound(src, 'sound/machines/printer.ogg', 50)
+	flick("binder1", src)
 	addtimer(CALLBACK(src, .proc/bind_book, draw_from), 4.1 SECONDS)
 
 /obj/machinery/bookbinder/proc/bind_book(obj/item/paper/draw_from)
@@ -797,7 +800,7 @@
 		return
 	visible_message(span_notice("[src] whirs as it prints and binds a new book."))
 	var/obj/item/book/bound_book = new(loc)
-	bound_book.book_data.set_content(draw_from.info)
+	bound_book.book_data.set_content_using_paper(draw_from)
 	bound_book.name = "Print Job #" + "[rand(100, 999)]"
 	bound_book.gen_random_icon_state()
 	qdel(draw_from)

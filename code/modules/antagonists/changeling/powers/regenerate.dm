@@ -25,7 +25,7 @@
 			C.emote("scream")
 			C.regenerate_limbs()
 		if(!user.getorganslot(ORGAN_SLOT_BRAIN))
-			var/obj/item/organ/brain/B
+			var/obj/item/organ/internal/brain/B
 			if(C.has_dna() && C.dna.species.mutantbrain)
 				B = new C.dna.species.mutantbrain()
 			else

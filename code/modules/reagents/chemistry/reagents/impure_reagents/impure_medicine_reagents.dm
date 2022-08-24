@@ -143,21 +143,21 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		return
 	RegisterSignal(consumer, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
 	RegisterSignal(consumer, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
-	var/obj/item/organ/liver/this_liver = consumer.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/internal/liver/this_liver = consumer.getorganslot(ORGAN_SLOT_LIVER)
 	this_liver.alcohol_tolerance *= 2
 
 /datum/reagent/impurity/libitoil/proc/on_gained_organ(mob/prev_owner, obj/item/organ/organ)
 	SIGNAL_HANDLER
-	if(!istype(organ, /obj/item/organ/liver))
+	if(!istype(organ, /obj/item/organ/internal/liver))
 		return
-	var/obj/item/organ/liver/this_liver = organ
+	var/obj/item/organ/internal/liver/this_liver = organ
 	this_liver.alcohol_tolerance *= 2
 
 /datum/reagent/impurity/libitoil/proc/on_removed_organ(mob/prev_owner, obj/item/organ/organ)
 	SIGNAL_HANDLER
-	if(!istype(organ, /obj/item/organ/liver))
+	if(!istype(organ, /obj/item/organ/internal/liver))
 		return
-	var/obj/item/organ/liver/this_liver = organ
+	var/obj/item/organ/internal/liver/this_liver = organ
 	this_liver.alcohol_tolerance /= 2
 
 /datum/reagent/impurity/libitoil/on_mob_delete(mob/living/L)
@@ -165,7 +165,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/mob/living/carbon/consumer = L
 	UnregisterSignal(consumer, COMSIG_CARBON_LOSE_ORGAN)
 	UnregisterSignal(consumer, COMSIG_CARBON_GAIN_ORGAN)
-	var/obj/item/organ/liver/this_liver = consumer.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/internal/liver/this_liver = consumer.getorganslot(ORGAN_SLOT_LIVER)
 	if(!this_liver)
 		return
 	this_liver.alcohol_tolerance /= 2
@@ -370,19 +370,19 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	. = ..()
 	RegisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
 	RegisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
-	var/obj/item/organ/lungs/lungs = owner.getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/internal/lungs/lungs = owner.getorganslot(ORGAN_SLOT_LUNGS)
 	if(!lungs)
 		return
 	apply_lung_levels(lungs)
 
 /datum/reagent/inverse/healing/convermol/proc/on_gained_organ(mob/prev_owner, obj/item/organ/organ)
 	SIGNAL_HANDLER
-	if(!istype(organ, /obj/item/organ/lungs))
+	if(!istype(organ, /obj/item/organ/internal/lungs))
 		return
-	var/obj/item/organ/lungs/lungs = organ
+	var/obj/item/organ/internal/lungs/lungs = organ
 	apply_lung_levels(lungs)
 
-/datum/reagent/inverse/healing/convermol/proc/apply_lung_levels(obj/item/organ/lungs/lungs)
+/datum/reagent/inverse/healing/convermol/proc/apply_lung_levels(obj/item/organ/internal/lungs/lungs)
 	cached_heat_level_1 = lungs.heat_level_1_threshold
 	cached_heat_level_2 = lungs.heat_level_2_threshold
 	cached_heat_level_3 = lungs.heat_level_3_threshold
@@ -400,12 +400,12 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/healing/convermol/proc/on_removed_organ(mob/prev_owner, obj/item/organ/organ)
 	SIGNAL_HANDLER
-	if(!istype(organ, /obj/item/organ/lungs))
+	if(!istype(organ, /obj/item/organ/internal/lungs))
 		return
-	var/obj/item/organ/lungs/lungs = organ
+	var/obj/item/organ/internal/lungs/lungs = organ
 	restore_lung_levels(lungs)
 
-/datum/reagent/inverse/healing/convermol/proc/restore_lung_levels(obj/item/organ/lungs/lungs)
+/datum/reagent/inverse/healing/convermol/proc/restore_lung_levels(obj/item/organ/internal/lungs/lungs)
 	lungs.heat_level_1_threshold = cached_heat_level_1
 	lungs.heat_level_2_threshold = cached_heat_level_2
 	lungs.heat_level_3_threshold = cached_heat_level_3
@@ -417,7 +417,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	. = ..()
 	UnregisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN)
 	UnregisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN)
-	var/obj/item/organ/lungs/lungs = owner.getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/internal/lungs/lungs = owner.getorganslot(ORGAN_SLOT_LUNGS)
 	if(!lungs)
 		return
 	restore_lung_levels(lungs)
@@ -515,7 +515,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/back_from_the_dead = FALSE
 
 /datum/reagent/inverse/penthrite/on_mob_dead(mob/living/carbon/owner, delta_time)
-	var/obj/item/organ/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
 	if(!heart || heart.organ_flags & ORGAN_FAILING)
 		return ..()
 	metabolization_rate = 0.35
@@ -542,21 +542,21 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT)
 	//Following is for those brought back from the dead only
 	for(var/datum/wound/iter_wound as anything in owner.all_wounds)
-		iter_wound.blood_flow += (1-creation_purity)
+		iter_wound.adjust_blood_flow(1-creation_purity)
 	owner.adjustBruteLoss(5 * (1-creation_purity) * delta_time)
 	owner.adjustOrganLoss(ORGAN_SLOT_HEART, (1 + (1-creation_purity)) * delta_time)
 	if(owner.health < HEALTH_THRESHOLD_CRIT)
 		owner.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 	if(owner.health < HEALTH_THRESHOLD_FULLCRIT)
 		owner.add_actionspeed_modifier(/datum/actionspeed_modifier/nooartrium)
-	var/obj/item/organ/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
 	if(!heart || heart.organ_flags & ORGAN_FAILING)
 		remove_buffs(owner)
 	..()
 
 /datum/reagent/inverse/penthrite/on_mob_delete(mob/living/carbon/owner)
 	remove_buffs(owner)
-	var/obj/item/organ/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
 	if(owner.health < -500 || heart.organ_flags & ORGAN_FAILING)//Honestly commendable if you get -500
 		explosion(owner, light_impact_range = 1, explosion_cause = src)
 		qdel(heart)
@@ -566,7 +566,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/penthrite/overdose_start(mob/living/carbon/owner)
 	if(!back_from_the_dead)
 		return ..()
-	var/obj/item/organ/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
 	if(!heart) //No heart? No life!
 		REMOVE_TRAIT(owner, TRAIT_NODEATH, type)
 		owner.stat = DEAD
@@ -653,7 +653,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		/datum/brain_trauma/hypnosis // Hypnosis, same reason as obsessed, plus a bug makes it remain even after the neurowhine purges and then turn into "nothing" on the med reading upon a second application
 		)
 	traumalist -= forbiddentraumas
-	var/obj/item/organ/brain/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
 	traumalist = shuffle(traumalist)
 	for(var/trauma in traumalist)
 		if(brain.brain_gain_trauma(trauma, TRAUMA_RESILIENCE_MAGIC))
@@ -679,9 +679,9 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	chemical_flags = REAGENT_DEAD_PROCESS
 	tox_damage = 0
 	///The old heart we're swapping for
-	var/obj/item/organ/heart/original_heart
+	var/obj/item/organ/internal/heart/original_heart
 	///The new heart that's temp added
-	var/obj/item/organ/heart/cursed/manual_heart
+	var/obj/item/organ/internal/heart/cursed/manual_heart
 
 ///Creates a new cursed heart and puts the old inside of it, then replaces the position of the old
 /datum/reagent/inverse/corazargh/on_mob_metabolize(mob/living/owner)
@@ -705,7 +705,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 ///Intercepts the new heart and creates a new cursed heart - putting the old inside of it
 /datum/reagent/inverse/corazargh/proc/on_gained_organ(mob/owner, obj/item/organ/organ)
 	SIGNAL_HANDLER
-	if(!istype(organ, /obj/item/organ/heart))
+	if(!istype(organ, /obj/item/organ/internal/heart))
 		return
 	var/mob/living/carbon/carbon_mob = owner
 	original_heart = organ

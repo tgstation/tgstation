@@ -97,9 +97,6 @@
 /// log virology data
 /datum/config_entry/flag/log_virus
 
-/// log cloning actions.
-/datum/config_entry/flag/log_cloning
-
 /// log assets
 /datum/config_entry/flag/log_asset
 
@@ -133,6 +130,9 @@
 
 /// log telecomms messages
 /datum/config_entry/flag/log_telecomms
+
+/// log speech indicators(started/stopped speaking)
+/datum/config_entry/flag/log_speech_indicators
 
 /// log certain expliotable parrots and other such fun things in a JSON file of twitter valid phrases.
 /datum/config_entry/flag/log_twitter
@@ -176,7 +176,8 @@
 	integer = FALSE
 	min_val = 0
 
-/// vote does not default to nochange/norestart.
+/// If disabled, no-voters will automatically have their votes added to certain vote options
+/// (For eample: restart votes will default to "no restart", map votes will default to their preferred map / default map)
 /datum/config_entry/flag/default_no_vote
 
 /// Prevents dead people from voting.
@@ -221,10 +222,6 @@
 
 /datum/config_entry/flag/allow_holidays
 
-/datum/config_entry/number/tick_limit_mc_init //SSinitialization throttling
-	default = TICK_LIMIT_MC_INIT_DEFAULT
-	min_val = 0 //oranges warned us
-	integer = FALSE
 
 /datum/config_entry/flag/admin_legacy_system //Defines whether the server uses the legacy admin system with admins.txt or the SQL system
 	protection = CONFIG_ENTRY_LOCKED
@@ -546,7 +543,7 @@
 
 /datum/config_entry/flag/resume_after_initializations/ValidateAndSet(str_val)
 	. = ..()
-	if(. && Master.current_runlevel)
+	if(. && MC_RUNNING())
 		world.sleep_offline = !config_entry_value
 
 /datum/config_entry/number/rounds_until_hard_restart
@@ -629,3 +626,10 @@
 /datum/config_entry/flag/forbid_all_profiling
 
 /datum/config_entry/flag/forbid_admin_profiling
+
+
+/datum/config_entry/flag/morgue_cadaver_disable_nonhumans
+
+/datum/config_entry/number/morgue_cadaver_other_species_probability
+
+/datum/config_entry/string/morgue_cadaver_override_species

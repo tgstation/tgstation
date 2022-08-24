@@ -4,7 +4,7 @@
 	category = PROGRAM_CATEGORY_CREW
 	program_icon_state = "id"
 	extended_desc = "Program for programming employee ID cards to access parts of the station."
-	transfer_access = list(ACCESS_HEADS)
+	transfer_access = list(ACCESS_COMMAND)
 	requires_ntnet = 0
 	size = 8
 	tgui_id = "NtosCard"
@@ -59,7 +59,7 @@
 	var/list/managers = SSid_access.sub_department_managers_tgui
 	for(var/access_as_text in managers)
 		var/list/info = managers[access_as_text]
-		var/access = text2num(access_as_text)
+		var/access = access_as_text
 		if((access in id_card.access) && ((target_dept in info["regions"]) || !target_dept))
 			region_access |= info["regions"]
 			job_templates |= info["templates"]
@@ -141,7 +141,7 @@
 				return card_slot.try_eject(user)
 			else
 				var/obj/item/I = user.get_active_held_item()
-				if(istype(I, /obj/item/card/id))
+				if(isidcard(I))
 					return card_slot.try_insert(I, user)
 		// Eject the ID being modified.
 		if("PRG_ejectmodid")
@@ -152,7 +152,7 @@
 				return card_slot2.try_eject(user)
 			else
 				var/obj/item/I = user.get_active_held_item()
-				if(istype(I, /obj/item/card/id))
+				if(isidcard(I))
 					return card_slot2.try_insert(I, user)
 			return TRUE
 		// Used to fire someone. Wipes all access from their card and modifies their assignment.

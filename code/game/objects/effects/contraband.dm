@@ -14,6 +14,14 @@
 
 /obj/item/poster/Initialize(mapload, obj/structure/sign/poster/new_poster_structure)
 	. = ..()
+
+	var/static/list/hovering_item_typechecks = list(
+		/obj/item/shard = list(
+			SCREENTIP_CONTEXT_LMB = "Booby trap poster",
+		),
+	)
+	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
+
 	poster_structure = new_poster_structure
 	if(!new_poster_structure && poster_type)
 		poster_structure = new poster_type(src)
@@ -31,6 +39,20 @@
 		name = "[name] - [poster_structure.original_name]"
 		//If the poster structure is being deleted something has gone wrong, kill yourself off too
 		RegisterSignal(poster_structure, COMSIG_PARENT_QDELETING, .proc/react_to_deletion)
+
+/obj/item/poster/attackby(obj/item/I, mob/user, params)
+	if(!istype(I, /obj/item/shard))
+		return ..()
+
+	if (poster_structure.trap?.resolve())
+		to_chat(user, span_warning("This poster is already booby-trapped!"))
+		return
+
+	if(!user.transferItemToLoc(I, poster_structure))
+		return
+
+	poster_structure.trap = WEAKREF(I)
+	to_chat(user, span_notice("You conceal the [I.name] inside the rolled up poster."))
 
 /obj/item/poster/Destroy()
 	poster_structure = null
@@ -68,9 +90,12 @@
 	var/poster_item_desc = "This hypothetical poster item should not exist, let's be honest here."
 	var/poster_item_icon_state = "rolled_poster"
 	var/poster_item_type = /obj/item/poster
+	///A sharp shard of material can be hidden inside of a poster, attempts to embed when it is torn down.
+	var/datum/weakref/trap
 
 /obj/structure/sign/poster/Initialize(mapload)
 	. = ..()
+	register_context()
 	if(random_basetype)
 		randomise(random_basetype)
 	if(!ruined)
@@ -79,6 +104,23 @@
 		desc = "A large piece of space-resistant printed paper. [desc]"
 
 	AddElement(/datum/element/beauty, 300)
+
+/// Adds contextual screentips
+/obj/structure/sign/poster/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if (!held_item)
+		if (ruined)
+			return .
+		context[SCREENTIP_CONTEXT_LMB] = "Rip up poster"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if (held_item.tool_behaviour == TOOL_WIRECUTTER)
+		if (ruined)
+			context[SCREENTIP_CONTEXT_LMB] = "Clean up remnants"
+			return CONTEXTUAL_SCREENTIP_SET
+		context[SCREENTIP_CONTEXT_LMB] = "Take down poster"
+		return CONTEXTUAL_SCREENTIP_SET
+	return .
 
 /obj/structure/sign/poster/proc/randomise(base_type)
 	var/list/poster_types = subtypesof(base_type)
@@ -98,7 +140,6 @@
 	poster_item_icon_state = initial(selected.poster_item_icon_state)
 	ruined = initial(selected.ruined)
 
-
 /obj/structure/sign/poster/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WIRECUTTER)
 		I.play_tool_sound(src, 100)
@@ -115,14 +156,33 @@
 		return
 	if(ruined)
 		return
+
 	visible_message(span_notice("[user] rips [src] in a single, decisive motion!") )
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 100, TRUE)
+	spring_trap(user)
 
 	var/obj/structure/sign/poster/ripped/R = new(loc)
 	R.pixel_y = pixel_y
 	R.pixel_x = pixel_x
 	R.add_fingerprint(user)
 	qdel(src)
+
+/obj/structure/sign/poster/proc/spring_trap(mob/user)
+	var/obj/item/shard/payload = trap?.resolve()
+	if (!payload)
+		return
+
+	to_chat(user, span_warning("There's something sharp behind this! What the hell?"))
+	if(!can_embed_trap(user) || !payload.tryEmbed(user.get_active_hand(), TRUE))
+		visible_message(span_notice("A [payload.name] falls from behind the poster.") )
+		payload.forceMove(user.drop_location())
+	else
+		SEND_SIGNAL(src, COMSIG_POSTER_TRAP_SUCCEED, user)
+
+/obj/structure/sign/poster/proc/can_embed_trap(mob/living/carbon/human/user)
+	if (!istype(user))
+		return FALSE
+	return (!user.gloves && !HAS_TRAIT(user, TRAIT_PIERCEIMMUNE))
 
 /obj/structure/sign/poster/proc/roll_and_drop(loc)
 	pixel_x = 0
@@ -169,11 +229,14 @@
 			return
 
 		if(iswallturf(src) && user && user.loc == temp_loc) //Let's check if everything is still there
-			to_chat(user, span_notice("You place the poster!"))
+			D.on_placed_poster(user)
 			return
 
 	to_chat(user, span_notice("The poster falls down!"))
 	D.roll_and_drop(get_turf(user))
+
+/obj/structure/sign/poster/proc/on_placed_poster(mob/user)
+	to_chat(user, span_notice("You place the poster!"))
 
 // Various possible posters follow
 
@@ -510,10 +573,135 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/random, 32)
 	desc = "Andromeda Bitters: good for the body, good for the soul. Made in New Trinidad, now and forever."
 	icon_state = "andromeda_bitters"
 
+/obj/structure/sign/poster/contraband/blasto_detergent
+	name = "Blasto Brand Laundry Detergent"
+	desc = "Sheriff Blasto's here to take back Laundry County from the evil Johnny Dirt and the Clothstain Crew, and he's brought a posse. It's High Noon for Tough Stains: Blasto brand detergent, available at all good stores."
+	icon_state = "blasto_detergent"
+
+/obj/structure/sign/poster/contraband/eistee
+	name = "EisT: The New Revolution in Energy"
+	desc = "New from EisT, try EisT Energy, available in a kaleidoscope range of flavors. EisT: Precision German Engineering for your Thirst."
+	icon_state = "eistee"
+
+/obj/structure/sign/poster/contraband/eistee/examine_more(mob/user)
+	. = ..()
+	. += span_notice("<i>You browse some of the poster's information...</i>")
+	. += "\t[span_info("Get a taste of the tropics with Amethyst Sunrise, one of the many new flavours of EisT Energy now available from EisT.")]"
+	. += "\t[span_info("With pink grapefruit, yuzu, and yerba mate, Amethyst Sunrise gives you a great start in the morning, or a welcome boost throughout the day.")]"
+	. += "\t[span_info("Get EisT Energy today at your nearest retailer, or online at eist.de.tg/store/.")]"
+	return .
+
+/obj/structure/sign/poster/contraband/little_fruits
+	name = "Little Fruits: Honey, I Shrunk the Fruitbowl"
+	desc = "Little Fruits are the galaxy's leading vitamin-enriched gummy candy product, packed with everything you need to stay healthy in one great tasting package. Get yourself a bag today!"
+	icon_state = "little_fruits"
+
+/obj/structure/sign/poster/contraband/little_fruits/examine_more(mob/user)
+	. = ..()
+	. += span_notice("<i>You browse some of the poster's information...</i>")
+	. += "\t[span_info("Oh no, there's been a terrible accident at the Little Fruits factory! We shrunk the fruits!")]"
+	. += "\t[span_info("Wait, hang on, that's what we've always done! That's right, at Little Fruits our gummy candies are made to be as healthy as the real deal, but smaller and sweeter, too!")]"
+	. += "\t[span_info("Get yourself a bag of our Classic Mix today, or perhaps you're interested in our other options? See our full range today on the extranet at little_fruits.kr.tg.")]"
+	. += "\t[span_info("Little Fruits: Size Matters.")]"
+	return .
+
+/obj/structure/sign/poster/contraband/jumbo_bar
+	name = "Jumbo Ice Cream Bars"
+	desc = "Get a taste of the Big Life with Jumbo Ice Cream Bars, from Happy Heart."
+	icon_state = "jumbo_bar"
+
+/obj/structure/sign/poster/contraband/calada_jelly
+	name = "Calada Anobar Jelly"
+	desc = "A treat from Tizira to satisfy all tastes, made from the finest anobar wood and luxurious Taraviero honey. Calada: a full tree in every jar."
+	icon_state = "calada_jelly"
+
+/obj/structure/sign/poster/contraband/triumphal_arch
+	name = "Zagoskeld Art Print #1: The Arch on the March"
+	desc = "One of the Zagoskeld Art Print series. It depicts the Arch of Unity (also know as the Triumphal Arch) at the Plaza of Triumph, with the Avenue of the Victorious March in the background."
+	icon_state = "triumphal_arch"
+
+/obj/structure/sign/poster/contraband/mothic_rations
+	name = "Mothic Ration Chart"
+	desc = "A poster showing a commissary menu from the Mothic fleet flagship, the Va Lümla. It lists various consumable items alongside prices in ration tickets."
+	icon_state = "mothic_rations"
+
+/obj/structure/sign/poster/contraband/mothic_rations/examine_more(mob/user)
+	. = ..()
+	. += span_notice("<i>You browse some of the poster's information...</i>")
+	. += "\t[span_info("Va Lümla Commissary Menu (Spring 335)")]"
+	. += "\t[span_info("Windgrass Cigarettes, Half-Pack (6): 1 Ticket")]"
+	. += "\t[span_info("Töchtaüse Schnapps, Bottle (4 Measures): 2 Tickets")]"
+	. += "\t[span_info("Activin Gum, Pack (4): 1 Ticket")]"
+	. += "\t[span_info("A18 Sustenance Bar, Breakfast, Bar (4): 1 Ticket")]"
+	. += "\t[span_info("Pizza, Margherita, Standard Slice: 1 Ticket")]"
+	. += "\t[span_info("Keratin Wax, Medicated, Tin (20 Measures): 2 Tickets")]"
+	. += "\t[span_info("Setae Soap, Herb Scent, Bottle (20 Measures): 2 Tickets")]"
+	. += "\t[span_info("Additional Bedding, Floral Print, Sheet: 5 Tickets")]"
+	return .
+
+/obj/structure/sign/poster/contraband/wildcat
+	name = "Wildcat Customs Screambike"
+	desc = "A pinup poster showing a Wildcat Customs Dante Screambike- the fastest production sublight open-frame vessel in the galaxy."
+	icon_state = "wildcat"
+
+/obj/structure/sign/poster/contraband/babel_device
+	name = "Linguafacile Babel Device"
+	desc = "A poster advertising Linguafacile's new Babel Device model. 'Calibrated for excellent performance on all Human languages, as well as most common variants of Draconic and Mothic!'"
+	icon_state = "babel_device"
+
+/obj/structure/sign/poster/contraband/pizza_imperator
+	name = "Pizza Imperator"
+	desc = "An advertisement for Pizza Imperator. Their crusts may be tough and their sauce may be thin, but they're everywhere, so you've gotta give in."
+	icon_state = "pizza_imperator"
+
+/obj/structure/sign/poster/contraband/thunderdrome
+	name = "Thunderdrome Concert Advertisement"
+	desc = "An advertisement for a concert at the Adasta City Thunderdrome, the largest nightclub in human space."
+	icon_state = "thunderdrome"
+
+/obj/structure/sign/poster/contraband/rush_propaganda
+	name = "A New Life"
+	desc = "An old poster from around the time of the First Spinward Rush. It depicts a view of wide, unspoiled lands, ready for Humanity's Manifest Destiny."
+	icon_state = "rush_propaganda"
+
+/obj/structure/sign/poster/contraband/rush_propaganda/examine_more(mob/user)
+	. = ..()
+	. += span_notice("<i>You browse some of the poster's information...</i>")
+	. += "\t[span_info("TerraGov needs you!")]"
+	. += "\t[span_info("A new life in the colonies awaits intrepid adventurers! All registered colonists are guaranteed transport, land and subsidies!")]"
+	. += "\t[span_info("You could join the legacy of hardworking humans who settled such new frontiers as Mars, Adasta or Saint Mungo!")]"
+	. += "\t[span_info("To apply, inquire at your nearest Colonial Affairs office for evaluation. Our locations can be found at www.terra.gov/colonial_affairs.")]"
+	return .
+
+/obj/structure/sign/poster/contraband/tipper_cream_soda
+	name = "Tipper's Cream Soda"
+	desc = "An old advertisement for an obscure cream soda brand, now bankrupt due to legal problems."
+	icon_state = "tipper_cream_soda"
+
+/obj/structure/sign/poster/contraband/tea_over_tizira
+	name = "Movie Poster: Tea Over Tizira"
+	desc = "A poster for a thought-provoking arthouse movie about the Human-Lizard war, criticised by human supremacist groups for its morally-grey portrayal of the war."
+	icon_state = "tea_over_tizira"
+
+/obj/structure/sign/poster/contraband/tea_over_tizira/examine_more(mob/user)
+	. = ..()
+	. += span_notice("<i>You browse some of the poster's information...</i>")
+	. += "\t[span_info("At the climax of the Human-Lizard war, the human crew of a bomber rescue two enemy soldiers from the vacuum of space. Seeing the souls behind the propaganda, they begin to question their orders, and imprisonment turns to hospitality.")]"
+	. += "\t[span_info("Is victory worth losing our humanity?")]"
+	. += "\t[span_info("Starring Dara Reilly, Anton DuBois, Jennifer Clarke, Raz-Parla and Seri-Lewa. An Adriaan van Jenever production. A Carlos de Vivar film. Screenplay by Robert Dane. Music by Joel Karlsbad. Produced by Adriaan van Jenever. Directed by Carlos de Vivar.")]"
+	. += "\t[span_info("Heartbreaking and thought-provoking- Tea Over Tizira asks questions that few have had the boldness to ask before: The London New Inquirer")]"
+	. += "\t[span_info("Rated PG13. A Pangalactic Studios Picture.")]"
+	return .
+
 /obj/structure/sign/poster/contraband/syndiemoth	//Original PR at https://github.com/BeeStation/BeeStation-Hornet/pull/1747 (Also pull/1982); original art credit to AspEv
 	name = "Syndie Moth - Nuclear Operation"
 	desc = "A Syndicate-commissioned poster that uses Syndie Moth™ to tell the viewer to keep the nuclear authentication disk unsecured. \"Peace was never an option!\" No good employee would listen to this nonsense."
 	icon_state = "aspev_syndie"
+
+/obj/structure/sign/poster/contraband/microwave
+	name = "How To Charge Your PDA"
+	desc = "A perfectly legitimate poster that seems to advertise the very real and genuine method of charging your PDA in the future: microwaves."
+	icon_state = "microwave"
 
 /obj/structure/sign/poster/official
 	poster_item_name = "motivational poster"
@@ -745,6 +933,34 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/random, 32)
 	name = "Nanotrasen Corporate Perks: Vacation"
 	desc = "This informational poster provides information on some of the prizes available via the NT Corporate Perks program, including a two-week vacation for two on the resort world Idyllus."
 	icon_state = "corporate_perks_vacation"
+
+/obj/structure/sign/poster/official/jim_nortons
+	name = "Jim Norton's Québécois Coffee"
+	desc = "An advertisement for Jim Norton's, the Québécois coffee joint that's taken the galaxy by storm."
+	icon_state = "jim_nortons"
+
+/obj/structure/sign/poster/official/jim_nortons/examine_more(mob/user)
+	. = ..()
+	. += span_notice("<i>You browse some of the poster's information...</i>")
+	. += "\t[span_info("From our roots in Trois-Rivières, we've worked to bring you the best coffee money can buy since 1965.")]"
+	. += "\t[span_info("So stop by Jim's today- have a hot cup of coffee and a donut, and live like the Québécois do.")]"
+	. += "\t[span_info("Jim Norton's Québécois Coffee: Toujours Le Bienvenu.")]"
+	return .
+
+/obj/structure/sign/poster/official/twenty_four_seven
+	name = "24-Seven Supermarkets"
+	desc = "An advertisement for 24-Seven supermarkets, advertising their new 24-Stops as part of their partnership with Nanotrasen."
+	icon_state = "twenty_four_seven"
+
+/obj/structure/sign/poster/official/tactical_game_cards
+	name = "Nanotrasen Tactical Game Cards"
+	desc = "An advertisement for Nanotrasen's TCG cards: BUY MORE CARDS."
+	icon_state = "tactical_game_cards"
+
+/obj/structure/sign/poster/official/midtown_slice
+	name = "Midtown Slice Pizza"
+	desc = "An advertisement for Midtown Slice Pizza, the official pizzeria partner of Nanotrasen. Midtown Slice: like a slice of home, no matter where you are."
+	icon_state = "midtown_slice"
 
 //SafetyMoth Original PR at https://github.com/BeeStation/BeeStation-Hornet/pull/1747 (Also pull/1982)
 //SafetyMoth art credit goes to AspEv

@@ -121,7 +121,7 @@
 	else
 		H.hairstyle = "Skinhead"
 
-	H.update_hair()
+	H.update_body_parts()
 	playsound(loc, 'sound/items/welder2.ogg', 20, TRUE)
 
 
@@ -150,7 +150,7 @@
 					if(new_style && do_after(user, 60, target = H))
 						user.visible_message(span_notice("[user] successfully changes [H]'s facial hairstyle using [src]."), span_notice("You successfully change [H]'s facial hairstyle using [src]."))
 						H.facial_hairstyle = new_style
-						H.update_hair()
+						H.update_body_parts()
 						return
 				else
 					return
@@ -201,7 +201,7 @@
 				if(new_style && do_after(user, 60, target = H))
 					user.visible_message(span_notice("[user] successfully changes [H]'s hairstyle using [src]."), span_notice("You successfully change [H]'s hairstyle using [src]."))
 					H.hairstyle = new_style
-					H.update_hair()
+					H.update_body_parts()
 					return
 
 			else

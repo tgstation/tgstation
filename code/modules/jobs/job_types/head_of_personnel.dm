@@ -4,15 +4,15 @@
 		protect Ian, run the station when the captain dies."
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	department_head = list(JOB_CAPTAIN)
-	head_announce = list(RADIO_CHANNEL_SUPPLY, RADIO_CHANNEL_SERVICE)
+	head_announce = list(RADIO_CHANNEL_SERVICE)
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the captain"
+	supervisors = SUPERVISOR_HOP
 	selection_color = "#ddddff"
 	req_admin_notify = 1
 	minimal_player_age = 10
-	exp_requirements = 180
+	exp_requirements = 3 HOURS
 	exp_required_type = EXP_TYPE_CREW
 	exp_required_type_department = EXP_TYPE_SERVICE
 	exp_granted_type = EXP_TYPE_CREW
@@ -37,7 +37,7 @@
 		/obj/item/stack/sheet/bone = 5
 	)
 
-	family_heirlooms = list(/obj/item/reagent_containers/food/drinks/trophy/silver_cup)
+	family_heirlooms = list(/obj/item/reagent_containers/cup/glass/trophy/silver_cup)
 	rpg_title = "Guild Questgiver"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
@@ -62,7 +62,8 @@
 	belt = /obj/item/modular_computer/tablet/pda/heads/hop
 	ears = /obj/item/radio/headset/heads/hop
 	head = /obj/item/clothing/head/hopcap
-	shoes = /obj/item/clothing/shoes/sneakers/brown
+	shoes = /obj/item/clothing/shoes/laceup
+	suit = /obj/item/clothing/suit/armor/vest/hop
 
 	chameleon_extras = list(
 		/obj/item/gun/energy/e_gun,
@@ -85,7 +86,7 @@
 /obj/item/paper/fluff/ids_for_dummies
 	name = "Memo: New IDs and You"
 	desc = "It looks like this was left by the last Head of Personnel to man this station. It explains some information about new IDs."
-	info = {"
+	default_raw_text = {"
 <h1>Dummy's Guide To New IDs</h1>
 <h2>The Basics</h2>
 <p>Card Trim - This is the job assigned to the card. The card's trim decides what Basic accesses the card can hold. Basic accesses cost nothing! Grey ID cards cannot hold Head of Staff or Captain trims. Silver ID cards can hold Head of Staff trims but not Captain trims and are in a box in the Head of Personnel's office and orderable from cargo. Gold ID cards can hold all access. The only guaranteed Gold ID card is the Captain's Spare, held in a golden safe on the bridge with access codes given to the station's highest ranking officer. All other gold ID cards are carried exclusively by Captains.</p>

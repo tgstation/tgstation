@@ -173,6 +173,60 @@
 	species.disliked_food = initial(species.disliked_food)
 	UnregisterSignal(human_holder, COMSIG_SPECIES_GAIN)
 
+/datum/quirk/heterochromatic
+	name = "Heterochromatic"
+	desc = "One of your eyes is a different color than the other!"
+	icon = "eye-low-vision" // Ignore the icon name, its actually a fairly good representation of different color eyes
+	value = 0
+	var/color
+
+/datum/quirk/heterochromatic/add()
+	color = color || quirk_holder.client?.prefs?.read_preference(/datum/preference/color/heterochromatic)
+	if(!color)
+		return
+
+	link_to_holder()
+
+/datum/quirk/heterochromatic/post_add()
+	if(color)
+		return
+
+	color = quirk_holder.client?.prefs?.read_preference(/datum/preference/color/heterochromatic)
+	if(!color)
+		return
+
+	link_to_holder()
+
+/datum/quirk/heterochromatic/remove()
+	UnregisterSignal(quirk_holder, COMSIG_CARBON_LOSE_ORGAN)
+
+/datum/quirk/heterochromatic/proc/link_to_holder()
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	human_holder.eye_color_heterochromatic = TRUE
+	human_holder.eye_color_right = color
+	// We set override to TRUE as link to holder will be called whenever the preference is applied, given this quirk exists on the mob
+	RegisterSignal(human_holder, COMSIG_CARBON_LOSE_ORGAN, .proc/check_eye_removal, override=TRUE)
+
+	var/obj/item/organ/internal/eyes/eyes_of_the_holder = quirk_holder.getorgan(/obj/item/organ/internal/eyes)
+	if(!eyes_of_the_holder)
+		return
+
+	eyes_of_the_holder.eye_color_right = color
+	eyes_of_the_holder.old_eye_color_right = color
+	eyes_of_the_holder.refresh()
+
+/datum/quirk/heterochromatic/proc/check_eye_removal(datum/source, obj/item/organ/internal/eyes/removed)
+	SIGNAL_HANDLER
+
+	if(!istype(removed))
+		return
+
+	// Eyes were removed, remove heterochromia from the human holder and bid them adieu
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	human_holder.eye_color_heterochromatic = FALSE
+	human_holder.eye_color_right = initial(human_holder.eye_color_right)
+	UnregisterSignal(human_holder, COMSIG_CARBON_LOSE_ORGAN)
+
 /datum/quirk/monochromatic
 	name = "Monochromacy"
 	desc = "You suffer from full colorblindness, and perceive nearly the entire world in blacks and whites."
@@ -240,7 +294,7 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	old_hair = human_holder.hairstyle
 	human_holder.hairstyle = "Bald"
-	human_holder.update_hair()
+	human_holder.update_body_parts()
 	RegisterSignal(human_holder, COMSIG_CARBON_EQUIP_HAT, .proc/equip_hat)
 	RegisterSignal(human_holder, COMSIG_CARBON_UNEQUIP_HAT, .proc/unequip_hat)
 
@@ -260,24 +314,24 @@
 	. = ..()
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.hairstyle = old_hair
-	human_holder.update_hair()
+	human_holder.update_body_parts()
 	UnregisterSignal(human_holder, list(COMSIG_CARBON_EQUIP_HAT, COMSIG_CARBON_UNEQUIP_HAT))
-	SEND_SIGNAL(human_holder, COMSIG_CLEAR_MOOD_EVENT, "bad_hair_day")
+	human_holder.clear_mood_event("bad_hair_day")
 
 ///Checks if the headgear equipped is a wig and sets the mood event accordingly
 /datum/quirk/item_quirk/bald/proc/equip_hat(mob/user, obj/item/hat)
 	SIGNAL_HANDLER
 
 	if(istype(hat, /obj/item/clothing/head/wig))
-		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bad_hair_day", /datum/mood_event/confident_mane) //Our head is covered, but also by a wig so we're happy.
+		quirk_holder.add_mood_event("bad_hair_day", /datum/mood_event/confident_mane) //Our head is covered, but also by a wig so we're happy.
 	else
-		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "bad_hair_day") //Our head is covered
+		quirk_holder.clear_mood_event("bad_hair_day") //Our head is covered
 
 ///Applies a bad moodlet for having an uncovered head
 /datum/quirk/item_quirk/bald/proc/unequip_hat(mob/user, obj/item/clothing, force, newloc, no_move, invdrop, silent)
 	SIGNAL_HANDLER
 
-	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bad_hair_day", /datum/mood_event/bald)
+	quirk_holder.add_mood_event("bad_hair_day", /datum/mood_event/bald)
 
 /datum/quirk/item_quirk/tongue_tied
 	name = "Tongue Tied"
@@ -288,11 +342,11 @@
 
 /datum/quirk/item_quirk/tongue_tied/add_unique()
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/obj/item/organ/tongue/old_tongue = human_holder.getorganslot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/internal/tongue/old_tongue = human_holder.getorganslot(ORGAN_SLOT_TONGUE)
 	old_tongue.Remove(human_holder)
 	qdel(old_tongue)
 
-	var/obj/item/organ/tongue/tied/new_tongue = new(get_turf(human_holder))
+	var/obj/item/organ/internal/tongue/tied/new_tongue = new(get_turf(human_holder))
 	new_tongue.Insert(human_holder)
 	// Only tongues of people with this quirk can't be removed. Manually spawned or found tongues can be.
 	new_tongue.organ_flags |= ORGAN_UNREMOVABLE
@@ -395,7 +449,7 @@
 	SIGNAL_HANDLER
 	// Epic gamer victory
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	SEND_SIGNAL(human_holder, COMSIG_ADD_MOOD_EVENT, "gamer_won", /datum/mood_event/gamer_won)
+	human_holder.add_mood_event("gamer_won", /datum/mood_event/gamer_won)
 
 /**
  * Gamer lost a game
@@ -408,7 +462,7 @@
 	SIGNAL_HANDLER
 	// Executed when a gamer has lost
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	SEND_SIGNAL(human_holder, COMSIG_ADD_MOOD_EVENT, "gamer_lost", /datum/mood_event/gamer_lost)
+	human_holder.add_mood_event("gamer_lost", /datum/mood_event/gamer_lost)
 	// Executed asynchronously due to say()
 	INVOKE_ASYNC(src, .proc/gamer_moment)
 /**
@@ -422,7 +476,7 @@
 
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	// Remove withdrawal malus
-	SEND_SIGNAL(human_holder, COMSIG_CLEAR_MOOD_EVENT, "gamer_withdrawal")
+	human_holder.clear_mood_event("gamer_withdrawal")
 	// Reset withdrawal timer
 	if (gaming_withdrawal_timer)
 		deltimer(gaming_withdrawal_timer)
@@ -436,6 +490,6 @@
 
 /datum/quirk/gamer/proc/enter_withdrawal()
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	SEND_SIGNAL(human_holder, COMSIG_ADD_MOOD_EVENT, "gamer_withdrawal", /datum/mood_event/gamer_withdrawal)
+	human_holder.add_mood_event("gamer_withdrawal", /datum/mood_event/gamer_withdrawal)
 
 #undef GAMING_WITHDRAWAL_TIME

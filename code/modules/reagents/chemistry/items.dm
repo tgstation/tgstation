@@ -126,15 +126,9 @@
 	if(cont.reagents.is_reacting)
 		out_message += "[span_warning("A reaction appears to be occuring currently.")]<span class='notice'>\n"
 	for(var/datum/reagent/reagent in cont.reagents.reagent_list)
-		if(reagent.purity < 1) //If the reagent is impure
-			if(reagent.purity < reagent.inverse_chem_val && reagent.inverse_chem) //Below level and has an inverse
-				var/datum/reagent/inverse_reagent = GLOB.chemical_reagents_list[reagent.inverse_chem]
-				out_message += "[span_warning("Inverted reagent detected: ")]<span class='notice'><b>[round(reagent.volume, 0.01)]u of [inverse_reagent.name]</b>, <b>Purity:</b> [round(1 - reagent.purity, 0.01)*100]%, [(scanmode?"[(inverse_reagent.overdose_threshold?"<b>Overdose:</b> [inverse_reagent.overdose_threshold]u, ":"")]<b>Base pH:</b> [initial(inverse_reagent.ph)], <b>Current pH:</b> [reagent.ph].":"<b>Current pH:</b> [reagent.ph].")]\n"
-			else //Otherwise it is an impure reagent
-				out_message += "<b>[round(reagent.volume, 0.01)]u of [reagent.name]</b>, <b>Purity:</b> [round(reagent.purity, 0.01)*100]%, [(scanmode?"[(reagent.overdose_threshold?"<b>Overdose:</b> [reagent.overdose_threshold]u, ":"")]<b>Base pH:</b> [initial(reagent.ph)], <b>Current pH:</b> [reagent.ph].":"<b>Current pH:</b> [reagent.ph].")]\n"
-				if(reagent.impure_chem) // might not have impure chem, like multiver
-					var/datum/reagent/impure_reagent = GLOB.chemical_reagents_list[reagent.impure_chem]
-					out_message += "[span_warning("Impurities detected: ")]<span class='notice'><b>[round(reagent.volume - (reagent.volume * reagent.purity), 0.01)]u of [impure_reagent.name]</b>, [(scanmode?"[(reagent.overdose_threshold?"<b>Overdose:</b> [reagent.overdose_threshold]u, ":"")]":"")]\n"
+		if(reagent.purity < reagent.inverse_chem_val && reagent.inverse_chem) //If the reagent is impure
+			var/datum/reagent/inverse_reagent = GLOB.chemical_reagents_list[reagent.inverse_chem]
+			out_message += "[span_warning("Inverted reagent detected: ")]<span class='notice'><b>[round(reagent.volume, 0.01)]u of [inverse_reagent.name]</b>, <b>Purity:</b> [round(1 - reagent.purity, 0.01)*100]%, [(scanmode?"[(inverse_reagent.overdose_threshold?"<b>Overdose:</b> [inverse_reagent.overdose_threshold]u, ":"")]<b>Base pH:</b> [initial(inverse_reagent.ph)], <b>Current pH:</b> [reagent.ph].":"<b>Current pH:</b> [reagent.ph].")]\n"
 		else
 			out_message += "<b>[round(reagent.volume, 0.01)]u of [reagent.name]</b>, <b>Purity:</b> [round(reagent.purity, 0.01)*100]%, [(scanmode?"[(reagent.overdose_threshold?"<b>Overdose:</b> [reagent.overdose_threshold]u, ":"")]<b>Base pH:</b> [initial(reagent.ph)], <b>Current pH:</b> [reagent.ph].":"<b>Current pH:</b> [reagent.ph].")]\n"
 		if(scanmode)
@@ -242,9 +236,10 @@
 		user.visible_message(span_notice("[user] snuffs out [src]'s flame."))
 
 /obj/item/burner/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(lit && M.IgniteMob())
+	if(lit && M.ignite_mob())
 		message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(M)] on fire with [src] at [AREACOORD(user)]")
-		log_game("[key_name(user)] set [key_name(M)] on fire with [src] at [AREACOORD(user)]")
+		user.log_message("set [key_name(M)] on fire with [src]", LOG_GAME)
+		M.log_message("was set on fire by [key_name(user)] with [src]", LOG_VICTIM, log_globally = FALSE)
 	return ..()
 
 /obj/item/burner/process()

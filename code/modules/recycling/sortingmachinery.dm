@@ -110,10 +110,8 @@
 			sort_tag = dest_tagger.currTag
 			playsound(loc, 'sound/machines/twobeep_high.ogg', 100, TRUE)
 			update_appearance()
-
 	else if(istype(item, /obj/item/pen))
-		if(!user.is_literate())
-			to_chat(user, span_notice("You scribble illegibly on the side of [src]!"))
+		if(!user.can_write(item))
 			return
 		var/str = tgui_input_text(user, "Label text?", "Set label", max_length = MAX_NAME_LEN)
 		if(!user.canUseTopic(src, BE_CLOSE))
@@ -207,7 +205,7 @@
 	if(!attempt_pre_unwrap_contents(user))
 		return
 	unwrap_contents()
-	post_unwrap_contents(user)
+	post_unwrap_contents()
 
 /**
  * # Wrapped up items small enough to carry.
@@ -338,7 +336,7 @@
 
 /obj/item/sales_tagger/attackby(obj/item/item, mob/living/user, params)
 	. = ..()
-	if(istype(item, /obj/item/card/id))
+	if(isidcard(item))
 		var/obj/item/card/id/potential_acc = item
 		if(potential_acc.registered_account)
 			if(payments_acc == potential_acc.registered_account)

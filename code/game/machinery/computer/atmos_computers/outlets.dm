@@ -120,9 +120,13 @@
 	name = "incinerator chamber output inlet"
 	chamber_id = ATMOS_GAS_MONITOR_INCINERATOR
 
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/ordnance_mixing_output
-	name = "ordnance mixing output inlet"
-	chamber_id = ATMOS_GAS_MONITOR_ORDNANCE_LAB
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/ordnance_burn_chamber_output
+	name = "ordnance burn chamber output inlet"
+	chamber_id = ATMOS_GAS_MONITOR_ORDNANCE_BURN
+
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/ordnance_freezer_chamber_output
+	name = "ordnance freezer chamber output inlet"
+	chamber_id = ATMOS_GAS_MONITOR_ORDNANCE_FREEZER
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored
 	frequency = FREQ_ATMOS_STORAGE

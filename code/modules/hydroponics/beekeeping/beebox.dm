@@ -18,7 +18,7 @@
 /mob/living/carbon/human/bee_friendly()
 	if(dna && dna.species && dna.species.id == SPECIES_PODPERSON) //bees pollinate plants, duh.
 		return 1
-	if (wear_suit && head && istype(wear_suit, /obj/item/clothing) && istype(head, /obj/item/clothing))
+	if (wear_suit && head && isclothing(wear_suit) && isclothing(head))
 		var/obj/item/clothing/CS = wear_suit
 		var/obj/item/clothing/CH = head
 		if (CS.clothing_flags & CH.clothing_flags & THICKMATERIAL)
@@ -165,16 +165,16 @@
 			to_chat(user, span_warning("This hive already has a queen!"))
 			return
 
-		var/obj/item/queen_bee/qb = I
-		user.temporarilyRemoveItemFromInventory(qb)
+		var/obj/item/queen_bee/new_queen = I
+		user.temporarilyRemoveItemFromInventory(new_queen)
 
-		qb.queen.forceMove(src)
-		bees += qb.queen
-		queen_bee = qb.queen
-		qb.queen = null
+		bees += new_queen.queen
+		queen_bee = new_queen.queen
+
+		new_queen.queen.forceMove(src)
 
 		if(queen_bee)
-			visible_message(span_notice("[user] sets [qb] down inside the apiary, making it their new home."))
+			visible_message(span_notice("[user] sets [queen_bee] down inside the apiary, making it their new home."))
 			var/relocated = 0
 			for(var/b in bees)
 				var/mob/living/simple_animal/hostile/bee/B = b
@@ -190,7 +190,6 @@
 		else
 			to_chat(user, span_warning("The queen bee disappeared! Disappearing bees have been in the news lately..."))
 
-		qdel(qb)
 		return
 
 	..()

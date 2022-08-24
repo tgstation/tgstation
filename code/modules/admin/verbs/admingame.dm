@@ -18,7 +18,7 @@
 	body += "<body>Options panel for <b>[M]</b>"
 	if(M.client)
 		body += " played by <b>[M.client]</b> "
-		body += "\[<A href='?_src_=holder;[HrefToken()];editrights=[(GLOB.admin_datums[M.client.ckey] || GLOB.deadmins[M.client.ckey]) ? "rank" : "add"];key=[M.key]'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"
+		body += "\[<A href='?_src_=holder;[HrefToken()];editrights=[(GLOB.admin_datums[M.client.ckey] || GLOB.deadmins[M.client.ckey]) ? "rank" : "add"];key=[M.key]'>[M.client.holder ? M.client.holder.rank_names() : "Player"]</A>\]"
 		if(CONFIG_GET(flag/use_exp_tracking))
 			body += "\[<A href='?_src_=holder;[HrefToken()];getplaytimewindow=[REF(M)]'>" + M.client.get_exp_living(FALSE) + "</a>\]"
 
@@ -385,10 +385,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	for (var/hudtype in list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED))
 		var/datum/atom_hud/atom_hud = GLOB.huds[hudtype]
-		atom_hud.add_hud_to(mob)
+		atom_hud.show_to(mob)
 
 	for (var/datum/atom_hud/alternate_appearance/basic/antagonist_hud/antag_hud in GLOB.active_alternate_appearances)
-		antag_hud.add_hud_to(mob)
+		antag_hud.show_to(mob)
 
 	mob.lighting_alpha = mob.default_lighting_alpha()
 	mob.update_sight()
@@ -401,10 +401,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	for (var/hudtype in list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED))
 		var/datum/atom_hud/atom_hud = GLOB.huds[hudtype]
-		atom_hud.remove_hud_from(mob)
+		atom_hud.hide_from(mob)
 
 	for (var/datum/atom_hud/alternate_appearance/basic/antagonist_hud/antag_hud in GLOB.active_alternate_appearances)
-		antag_hud.remove_hud_from(mob)
+		antag_hud.hide_from(mob)
 
 	mob.lighting_alpha = mob.default_lighting_alpha()
 	mob.update_sight()

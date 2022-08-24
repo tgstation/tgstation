@@ -90,8 +90,8 @@
 	desc = "A handheld tracking device that points to crew suit sensors."
 	icon_state = "pinpointer_crew"
 	worn_icon_state = "pinpointer_crew"
-	custom_price = PAYCHECK_MEDIUM * 4
-	custom_premium_price = PAYCHECK_MEDIUM * 6
+	custom_price = PAYCHECK_CREW * 4
+	custom_premium_price = PAYCHECK_CREW * 6
 	var/has_owner = FALSE
 	var/pinpointer_owner = null
 	var/ignore_suit_sensor_level = FALSE /// Do we find people even if their suit sensors are turned off
@@ -161,28 +161,6 @@
 				target = null
 	if(!target) //target can be set to null from above code, or elsewhere
 		active = FALSE
-
-/obj/item/pinpointer/crew/prox //Weaker version of crew monitor primarily for EMT
-	name = "proximity crew pinpointer"
-	desc = "A handheld tracking device that displays its proximity to crew suit sensors."
-	icon_state = "pinpointer_crewprox"
-	worn_icon_state = "pinpointer_prox"
-	custom_price = PAYCHECK_MEDIUM * 3
-
-/obj/item/pinpointer/crew/prox/get_direction_icon(here, there)
-	var/size = ""
-	if(here == there)
-		size = "small"
-	else
-		switch(get_dist(here, there))
-			if(1 to 4)
-				size = "xtrlarge"
-			if(5 to 16)
-				size = "large"
-			//17 through 28 use the normal pinion, "pinondirect"
-			if(29 to INFINITY)
-				size = "small"
-	return "pinondirect[size]"
 
 /obj/item/pinpointer/pair
 	name = "pair pinpointer"

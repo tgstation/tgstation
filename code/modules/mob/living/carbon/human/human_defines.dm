@@ -27,7 +27,10 @@
 	var/facial_hairstyle = "Shaved"
 
 	//Eye colour
-	var/eye_color = "#000000"
+	var/eye_color_left = "#000000"
+	var/eye_color_right = "#000000"
+	/// Var used to keep track of a human mob having a heterochromatic right eye. To ensure prefs don't overwrite shit
+	var/eye_color_heterochromatic = FALSE
 
 	var/skin_tone = "caucasian1" //Skin tone
 
@@ -64,7 +67,6 @@
 	/// What types of mobs are allowed to ride/buckle to this mob
 	var/static/list/can_ride_typecache = typecacheof(list(/mob/living/carbon/human, /mob/living/simple_animal/slime, /mob/living/simple_animal/parrot))
 	var/lastpuke = 0
-	var/last_fire_update
 	var/account_id
 
 	var/hardcore_survival_score = 0
@@ -84,3 +86,4 @@
 	var/hal_screwydoll
 	/// When an braindead player has their equipment fiddled with, we log that info here for when they come back so they know who took their ID while they were DC'd for 30 seconds
 	var/list/afk_thefts
+

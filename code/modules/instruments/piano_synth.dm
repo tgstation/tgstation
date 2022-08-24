@@ -24,12 +24,12 @@
 	slot_flags = ITEM_SLOT_EARS | ITEM_SLOT_HEAD
 	force = 0
 	w_class = WEIGHT_CLASS_SMALL
-	custom_price = PAYCHECK_ASSISTANT * 2.5
+	custom_price = PAYCHECK_CREW * 2.5
 	instrument_range = 1
 	circuit_type = /obj/item/circuit_component/synth/headphones
 	shell_capacity = SHELL_CAPACITY_TINY
 
-/obj/item/instrument/piano_synth/headphones/ComponentInitialize()
+/obj/item/instrument/piano_synth/headphones/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 	RegisterSignal(src, COMSIG_INSTRUMENT_START, .proc/start_playing)
@@ -59,7 +59,7 @@
 	slot_flags = ITEM_SLOT_EARS
 	strip_delay = 100 //air pods don't fall out
 	instrument_range = 0 //you're paying for quality here
-	custom_premium_price = PAYCHECK_ASSISTANT * 36 //Save up 5 shifts worth of pay just to lose it down a drainpipe on the sidewalk
+	custom_premium_price = PAYCHECK_CREW * 36 //Save up 5 shifts worth of pay just to lose it down a drainpipe on the sidewalk
 
 /obj/item/circuit_component/synth
 	display_name = "Synthesizer"
@@ -127,8 +127,8 @@
 /obj/item/circuit_component/synth/unregister_shell(atom/movable/shell)
 	if(synth.song.music_player == src)
 		synth.song.stop_playing()
-	synth = null
 	UnregisterSignal(synth, list(COMSIG_INSTRUMENT_START, COMSIG_INSTRUMENT_END, COMSIG_INSTRUMENT_SHOULD_STOP_PLAYING))
+	synth = null
 	return ..()
 
 /obj/item/circuit_component/synth/proc/start_playing(datum/port/input/port)

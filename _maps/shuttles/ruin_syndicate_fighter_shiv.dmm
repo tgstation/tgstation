@@ -11,8 +11,7 @@
 	name = "Shuttle turret control";
 	pixel_x = 32;
 	pixel_y = -28;
-	req_access = null;
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/structure/cable,
 /mob/living/simple_animal/hostile/syndicate/ranged/smg/pilot{
@@ -46,7 +45,7 @@
 	id = "caravansyndicate1_bolt";
 	name = "External Bolt Control";
 	normaldoorcontrol = 1;
-	req_access_txt = "150";
+	req_access = list("syndicate");
 	specialfunctions = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -62,7 +61,7 @@
 	dir = 8;
 	name = "Syndicate Fighter APC";
 	pixel_x = -25;
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/machinery/computer/security{
 	dir = 1;
@@ -76,8 +75,7 @@
 /obj/machinery/door/airlock/hatch{
 	id_tag = "caravansyndicate1_bolt";
 	name = "External Airlock";
-	normalspeed = 0;
-	req_access_txt = "150"
+	normalspeed = 0
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/docking_port/mobile{
@@ -93,6 +91,7 @@
 	width = 9
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/plating,
 /area/shuttle/caravan/syndicate1)
 "Jv" = (

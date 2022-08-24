@@ -49,7 +49,7 @@
 
 /obj/machinery/computer/scan_consolenew
 	name = "DNA Console"
-	desc = "Scan DNA."
+	desc = "From here you can research mysteries of the DNA!"
 	icon_screen = "dna"
 	icon_keyboard = "med_key"
 	density = TRUE
@@ -79,11 +79,11 @@
 	var/max_injector_instability = 50
 
 	/// World time when injectors are ready to be printed
-	var/injectorready = 0
+	var/injector_ready = 0
 	/// World time when JOKER algorithm can be used in DNA Consoles
-	var/jokerready = 0
+	var/joker_ready = 0
 	/// World time when Scramble can be used in DNA Consoles
-	var/scrambleready = 0
+	var/scramble_ready = 0
 
 	/// Currently stored genetic data diskette
 	var/obj/item/disk/data/diskette = null
@@ -199,7 +199,9 @@
 			to_chat(user,span_notice("Recycled [item]."))
 			return
 		else
-			to_chat(user,span_notice("Cannot recycle unused activators."))
+			//recycle unused activators
+			qdel(item)
+			to_chat(user, span_notice("Recycled unused [item]."))
 			return
 	return ..()
 
@@ -220,9 +222,9 @@
 	connect_to_scanner()
 
 	// Set appropriate ready timers and limits for machines functions
-	injectorready = world.time + INJECTOR_TIMEOUT
-	scrambleready = world.time + SCRAMBLE_TIMEOUT
-	jokerready = world.time + JOKER_TIMEOUT
+	injector_ready = world.time + INJECTOR_TIMEOUT
+	scramble_ready = world.time + SCRAMBLE_TIMEOUT
+	joker_ready = world.time + JOKER_TIMEOUT
 	COOLDOWN_START(src, enzyme_copy_timer, ENZYME_COPY_BASE_COOLDOWN)
 
 	// Set the default tgui state
@@ -262,14 +264,14 @@
 	build_genetic_makeup_list()
 
 	// Populate variables for passing to tgui interface
-	is_scramble_ready = (scrambleready < world.time)
-	time_to_scramble = round((scrambleready - world.time)/10)
+	is_scramble_ready = (scramble_ready < world.time)
+	time_to_scramble = round((scramble_ready - world.time)/10)
 
-	is_joker_ready = (jokerready < world.time)
-	time_to_joker = round((jokerready - world.time)/10)
+	is_joker_ready = (joker_ready < world.time)
+	time_to_joker = round((joker_ready - world.time)/10)
 
-	is_injector_ready = (injectorready < world.time)
-	time_to_injector = round((injectorready - world.time)/10)
+	is_injector_ready = (injector_ready < world.time)
+	time_to_injector = round((injector_ready - world.time)/10)
 
 	is_pulsing = ((genetic_damage_pulse_index > 0) && (genetic_damage_pulse_timer > world.time))
 	time_to_pulse = round((genetic_damage_pulse_timer - world.time)/10)
@@ -421,12 +423,12 @@
 			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
 			//  operational guard checks.
 			// GUARD CHECK - Is scramble DNA actually ready?
-			if(!can_modify_occupant() || !(scrambleready < world.time))
+			if(!can_modify_occupant() || !(scramble_ready < world.time))
 				return
 
 			scanner_occupant.dna.remove_all_mutations(list(MUT_NORMAL, MUT_EXTRA))
 			scanner_occupant.dna.generate_dna_blocks()
-			scrambleready = world.time + SCRAMBLE_TIMEOUT
+			scramble_ready = world.time + SCRAMBLE_TIMEOUT
 			to_chat(usr,span_notice("DNA scrambled."))
 			scanner_occupant.AddComponent(/datum/component/genetic_damage, GENETIC_DAMAGE_STRENGTH_MULTIPLIER*50/(connected_scanner.damage_coeff ** 2))
 			connected_scanner.use_power(connected_scanner.active_power_usage)
@@ -531,10 +533,10 @@
 					scanner_occupant.dna.default_mutation_genes[path] = copytext(defaultseq, 1, genepos) + "X" + copytext(defaultseq, genepos + 1)
 				// Either try to apply a joker if selected in the interface, or iterate the next gene.
 				if(NEXT_GENE)
-					if((tgui_view_state["jokerActive"]) && (jokerready < world.time))
+					if((tgui_view_state["jokerActive"]) && (joker_ready < world.time))
 						var/truegenes = GET_SEQUENCE(path)
 						newgene = truegenes[genepos]
-						jokerready = world.time + JOKER_TIMEOUT - (JOKER_UPGRADE * (connected_scanner.precision_coeff-1))
+						joker_ready = world.time + JOKER_TIMEOUT - (JOKER_UPGRADE * (connected_scanner.precision_coeff-1))
 					else
 						var/current_letter = gene_letters.Find(sequence[genepos])
 						newgene = (current_letter == gene_letter_count) ? gene_letters[1] : gene_letters[current_letter + 1]
@@ -761,7 +763,7 @@
 			//  identify mutations from big ol' lists
 
 			// GUARD CHECK - Is the injector actually ready?
-			if(world.time < injectorready)
+			if(world.time < injector_ready)
 				return
 
 			var/search_flags = 0
@@ -801,9 +803,9 @@
 				//  to improve our injector's genetic damage generation
 				if(scanner_operational())
 					I.damage_coeff = connected_scanner.damage_coeff*4
-					injectorready = world.time + INJECTOR_TIMEOUT * (1 - 0.1 * connected_scanner.precision_coeff)
+					injector_ready = world.time + INJECTOR_TIMEOUT * (1 - 0.1 * connected_scanner.precision_coeff)
 				else
-					injectorready = world.time + INJECTOR_TIMEOUT
+					injector_ready = world.time + INJECTOR_TIMEOUT
 			else
 				I.name = "[HM.name] mutator"
 				I.doitanyway = TRUE
@@ -811,9 +813,9 @@
 				//  to improve our injector's genetic damage generation
 				if(scanner_operational())
 					I.damage_coeff = connected_scanner.damage_coeff
-					injectorready = world.time + INJECTOR_TIMEOUT * 5 * (1 - 0.1 * connected_scanner.precision_coeff)
+					injector_ready = world.time + INJECTOR_TIMEOUT * 5 * (1 - 0.1 * connected_scanner.precision_coeff)
 				else
-					injectorready = world.time + INJECTOR_TIMEOUT * 5
+					injector_ready = world.time + INJECTOR_TIMEOUT * 5
 			connected_scanner.use_power(connected_scanner.active_power_usage)
 			return
 
@@ -1323,7 +1325,7 @@
 			// If we successfully created an injector, don't forget to set the new
 			//  ready timer.
 			if(I)
-				injectorready = world.time + INJECTOR_TIMEOUT
+				injector_ready = world.time + INJECTOR_TIMEOUT
 			connected_scanner.use_power(connected_scanner.active_power_usage)
 			return
 
@@ -1486,7 +1488,7 @@
 			// identify mutations from big ol' lists.
 
 				// GUARD CHECK - Is the injector actually ready?
-			if(world.time < injectorready)
+			if(world.time < injector_ready)
 				return
 
 			var/inj_name = params["name"]
@@ -1515,9 +1517,9 @@
 			//  to improve our injector's genetic damage generation
 			if(scanner_operational())
 				I.damage_coeff = connected_scanner.damage_coeff
-				injectorready = world.time + INJECTOR_TIMEOUT * 8 * (1 - 0.1 * connected_scanner.precision_coeff)
+				injector_ready = world.time + INJECTOR_TIMEOUT * 8 * (1 - 0.1 * connected_scanner.precision_coeff)
 			else
-				injectorready = world.time + INJECTOR_TIMEOUT * 8
+				injector_ready = world.time + INJECTOR_TIMEOUT * 8
 
 			return
 

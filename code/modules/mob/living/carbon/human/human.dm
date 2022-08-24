@@ -7,6 +7,8 @@
 	//initialize limbs first
 	create_bodyparts()
 
+	setup_mood()
+
 	setup_human_dna()
 	prepare_huds() //Prevents a nasty runtime on human init
 
@@ -25,11 +27,18 @@
 	AddComponent(/datum/component/bloodysoles/feet)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/human)
 	AddElement(/datum/element/strippable, GLOB.strippable_human_items, /mob/living/carbon/human/.proc/should_strip)
-	GLOB.human_list += src
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	GLOB.human_list += src
+
+/mob/living/carbon/human/proc/setup_mood()
+	if (CONFIG_GET(flag/disable_human_mood))
+		return
+	if (isdummy(src))
+		return
+	mob_mood = new /datum/mood(src)
 
 /mob/living/carbon/human/proc/setup_human_dna()
 	//initialize dna. for spawned humans; overwritten by other code
@@ -37,15 +46,14 @@
 	randomize_human(src)
 	dna.initialize_dna()
 
-/mob/living/carbon/human/ComponentInitialize()
-	. = ..()
-	if(!CONFIG_GET(flag/disable_human_mood))
-		AddComponent(/datum/component/mood)
-
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)
 	QDEL_LIST(bioware)
 	GLOB.human_list -= src
+
+	if (mob_mood)
+		QDEL_NULL(mob_mood)
+
 	return ..()
 
 /mob/living/carbon/human/ZImpactDamage(turf/T, levels)
@@ -73,8 +81,6 @@
 
 /mob/living/carbon/human/get_status_tab_items()
 	. = ..()
-	. += "Combat mode: [combat_mode ? "On" : "Off"]"
-	. += "Move Mode: [m_intent]"
 	if (internal)
 		var/datum/gas_mixture/internal_air = internal.return_air()
 		if (!internal_air)
@@ -95,11 +101,6 @@
 			. += "Chemical Storage: [changeling.chem_charges]/[changeling.total_chem_storage]"
 			. += "Absorbed DNA: [changeling.absorbed_count]"
 
-// called when something steps onto a human
-/mob/living/carbon/human/proc/on_entered(datum/source, atom/movable/AM)
-	SIGNAL_HANDLER
-	spreadFire(AM)
-
 /mob/living/carbon/human/reset_perspective(atom/new_eye, force_reset = FALSE)
 	if(dna?.species?.prevent_perspective_change && !force_reset) // This is in case a species needs to prevent perspective changes in certain cases, like Dullahans preventing perspective changes when they're looking through their head.
 		update_fullscreen()
@@ -118,38 +119,41 @@
 	if(href_list["hud"])
 		if(!ishuman(usr))
 			return
-		var/mob/living/carbon/human/H = usr
+		var/mob/living/carbon/human/human_user = usr
 		var/perpname = get_face_name(get_id_name(""))
-		if(!HAS_TRAIT(H, TRAIT_SECURITY_HUD) && !HAS_TRAIT(H, TRAIT_MEDICAL_HUD))
+		if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD) && !HAS_TRAIT(human_user, TRAIT_MEDICAL_HUD))
 			return
-		var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.general)
+		if((text2num(href_list["examine_time"]) + 1 MINUTES) < world.time)
+			to_chat(human_user, "[span_notice("It's too late to use this now!")]")
+			return
+		var/datum/data/record/target_record = find_record("name", perpname, GLOB.data_core.general)
 		if(href_list["photo_front"] || href_list["photo_side"])
-			if(!R)
+			if(!target_record)
 				return
-			if(!H.canUseHUD())
+			if(!human_user.canUseHUD())
 				return
-			if(!HAS_TRAIT(H, TRAIT_SECURITY_HUD) && !HAS_TRAIT(H, TRAIT_MEDICAL_HUD))
+			if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD) && !HAS_TRAIT(human_user, TRAIT_MEDICAL_HUD))
 				return
-			var/obj/item/photo/P = null
+			var/obj/item/photo/photo_from_record = null
 			if(href_list["photo_front"])
-				P = R.fields["photo_front"]
+				photo_from_record = target_record.fields["photo_front"]
 			else if(href_list["photo_side"])
-				P = R.fields["photo_side"]
-			if(P)
-				P.show(H)
+				photo_from_record = target_record.fields["photo_side"]
+			if(photo_from_record)
+				photo_from_record.show(human_user)
 			return
 
 		if(href_list["hud"] == "m")
-			if(!HAS_TRAIT(H, TRAIT_MEDICAL_HUD))
+			if(!HAS_TRAIT(human_user, TRAIT_MEDICAL_HUD))
 				return
 			if(href_list["evaluation"])
 				if(!getBruteLoss() && !getFireLoss() && !getOxyLoss() && getToxLoss() < 20)
-					to_chat(usr, "[span_notice("No external injuries detected.")]<br>")
+					to_chat(human_user, "[span_notice("No external injuries detected.")]<br>")
 					return
 				var/span = "notice"
 				var/status = ""
 				if(getBruteLoss())
-					to_chat(usr, "<b>Physical trauma analysis:</b>")
+					to_chat(human_user, "<b>Physical trauma analysis:</b>")
 					for(var/X in bodyparts)
 						var/obj/item/bodypart/BP = X
 						var/brutedamage = BP.brute_dam
@@ -163,9 +167,9 @@
 							status = "sustained major trauma!"
 							span = "userdanger"
 						if(brutedamage)
-							to_chat(usr, "<span class='[span]'>[BP] appears to have [status]</span>")
+							to_chat(human_user, "<span class='[span]'>[BP] appears to have [status]</span>")
 				if(getFireLoss())
-					to_chat(usr, "<b>Analysis of skin burns:</b>")
+					to_chat(human_user, "<b>Analysis of skin burns:</b>")
 					for(var/X in bodyparts)
 						var/obj/item/bodypart/BP = X
 						var/burndamage = BP.burn_dam
@@ -179,122 +183,122 @@
 							status = "major burns!"
 							span = "userdanger"
 						if(burndamage)
-							to_chat(usr, "<span class='[span]'>[BP] appears to have [status]</span>")
+							to_chat(human_user, "<span class='[span]'>[BP] appears to have [status]</span>")
 				if(getOxyLoss())
-					to_chat(usr, span_danger("Patient has signs of suffocation, emergency treatment may be required!"))
+					to_chat(human_user, span_danger("Patient has signs of suffocation, emergency treatment may be required!"))
 				if(getToxLoss() > 20)
-					to_chat(usr, span_danger("Gathered data is inconsistent with the analysis, possible cause: poisoning."))
-			if(!H.wear_id) //You require access from here on out.
-				to_chat(H, span_warning("ERROR: Invalid access"))
+					to_chat(human_user, span_danger("Gathered data is inconsistent with the analysis, possible cause: poisoning."))
+			if(!human_user.wear_id) //You require access from here on out.
+				to_chat(human_user, span_warning("ERROR: Invalid access"))
 				return
-			var/list/access = H.wear_id.GetAccess()
+			var/list/access = human_user.wear_id.GetAccess()
 			if(!(ACCESS_MEDICAL in access))
-				to_chat(H, span_warning("ERROR: Invalid access"))
+				to_chat(human_user, span_warning("ERROR: Invalid access"))
 				return
 			if(href_list["p_stat"])
-				var/health_status = input(usr, "Specify a new physical status for this person.", "Medical HUD", R.fields["p_stat"]) in list("Active", "Physically Unfit", "*Unconscious*", "*Deceased*", "Cancel")
-				if(!R)
+				var/health_status = input(human_user, "Specify a new physical status for this person.", "Medical HUD", target_record.fields["p_stat"]) in list("Active", "Physically Unfit", "*Unconscious*", "*Deceased*", "Cancel")
+				if(!target_record)
 					return
-				if(!H.canUseHUD())
+				if(!human_user.canUseHUD())
 					return
-				if(!HAS_TRAIT(H, TRAIT_MEDICAL_HUD))
+				if(!HAS_TRAIT(human_user, TRAIT_MEDICAL_HUD))
 					return
 				if(health_status && health_status != "Cancel")
-					R.fields["p_stat"] = health_status
+					target_record.fields["p_stat"] = health_status
 				return
 			if(href_list["m_stat"])
-				var/health_status = input(usr, "Specify a new mental status for this person.", "Medical HUD", R.fields["m_stat"]) in list("Stable", "*Watch*", "*Unstable*", "*Insane*", "Cancel")
-				if(!R)
+				var/health_status = input(human_user, "Specify a new mental status for this person.", "Medical HUD", target_record.fields["m_stat"]) in list("Stable", "*Watch*", "*Unstable*", "*Insane*", "Cancel")
+				if(!target_record)
 					return
-				if(!H.canUseHUD())
+				if(!human_user.canUseHUD())
 					return
-				if(!HAS_TRAIT(H, TRAIT_MEDICAL_HUD))
+				if(!HAS_TRAIT(human_user, TRAIT_MEDICAL_HUD))
 					return
 				if(health_status && health_status != "Cancel")
-					R.fields["m_stat"] = health_status
+					target_record.fields["m_stat"] = health_status
 				return
 			if(href_list["quirk"])
 				var/quirkstring = get_quirk_string(TRUE, CAT_QUIRK_ALL)
 				if(quirkstring)
-					to_chat(usr,  "<span class='notice ml-1'>Detected physiological traits:</span>\n<span class='notice ml-2'>[quirkstring]</span>")
+					to_chat(human_user,  "<span class='notice ml-1'>Detected physiological traits:</span>\n<span class='notice ml-2'>[quirkstring]</span>")
 				else
-					to_chat(usr,  "<span class='notice ml-1'>No physiological traits found.</span>")
+					to_chat(human_user,  "<span class='notice ml-1'>No physiological traits found.</span>")
 			return //Medical HUD ends here.
 
 		if(href_list["hud"] == "s")
-			if(!HAS_TRAIT(H, TRAIT_SECURITY_HUD))
+			if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 				return
-			if(usr.stat || usr == src) //|| !usr.canmove || usr.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
+			if(human_user.stat || human_user == src) //|| !human_user.canmove || human_user.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
 				return   //Non-fluff: This allows sec to set people to arrest as they get disarmed or beaten
 			// Checks the user has security clearence before allowing them to change arrest status via hud, comment out to enable all access
 			var/allowed_access = null
-			var/obj/item/clothing/glasses/hud/security/G = H.glasses
-			if(istype(G) && (G.obj_flags & EMAGGED))
+			var/obj/item/clothing/glasses/hud/security/user_glasses = human_user.glasses
+			if(istype(user_glasses) && (user_glasses.obj_flags & EMAGGED))
 				allowed_access = "@%&ERROR_%$*"
 			else //Implant and standard glasses check access
-				if(H.wear_id)
-					var/list/access = H.wear_id.GetAccess()
+				if(human_user.wear_id)
+					var/list/access = human_user.wear_id.GetAccess()
 					if(ACCESS_SECURITY in access)
-						allowed_access = H.get_authentification_name()
+						allowed_access = human_user.get_authentification_name()
 
 			if(!allowed_access)
-				to_chat(H, span_warning("ERROR: Invalid access."))
+				to_chat(human_user, span_warning("ERROR: Invalid access."))
 				return
 
 			if(!perpname)
-				to_chat(H, span_warning("ERROR: Can not identify target."))
+				to_chat(human_user, span_warning("ERROR: Can not identify target."))
 				return
-			R = find_record("name", perpname, GLOB.data_core.security)
-			if(!R)
-				to_chat(usr, span_warning("ERROR: Unable to locate data core entry for target."))
+			target_record = find_record("name", perpname, GLOB.data_core.security)
+			if(!target_record)
+				to_chat(human_user, span_warning("ERROR: Unable to locate data core entry for target."))
 				return
 			if(href_list["status"])
-				var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Suspected", "Paroled", "Discharged", "Cancel")
+				var/setcriminal = input(human_user, "Specify a new criminal status for this person.", "Security HUD", target_record.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Suspected", "Paroled", "Discharged", "Cancel")
 				if(setcriminal != "Cancel")
-					if(!R)
+					if(!target_record)
 						return
-					if(!H.canUseHUD())
+					if(!human_user.canUseHUD())
 						return
-					if(!HAS_TRAIT(H, TRAIT_SECURITY_HUD))
+					if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 						return
-					investigate_log("[key_name(src)] has been set from [R.fields["criminal"]] to [setcriminal] by [key_name(usr)].", INVESTIGATE_RECORDS)
-					R.fields["criminal"] = setcriminal
+					investigate_log("[key_name(src)] has been set from [target_record.fields["criminal"]] to [setcriminal] by [key_name(human_user)].", INVESTIGATE_RECORDS)
+					target_record.fields["criminal"] = setcriminal
 					sec_hud_set_security_status()
 				return
 
 			if(href_list["view"])
-				if(!H.canUseHUD())
+				if(!human_user.canUseHUD())
 					return
-				if(!HAS_TRAIT(H, TRAIT_SECURITY_HUD))
+				if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
-				to_chat(usr, "<b>Name:</b> [R.fields["name"]] <b>Criminal Status:</b> [R.fields["criminal"]]")
-				for(var/datum/data/crime/c in R.fields["crim"])
-					to_chat(usr, "<b>Crime:</b> [c.crimeName]")
+				to_chat(human_user, "<b>Name:</b> [target_record.fields["name"]] <b>Criminal Status:</b> [target_record.fields["criminal"]]")
+				for(var/datum/data/crime/c in target_record.fields["crim"])
+					to_chat(human_user, "<b>Crime:</b> [c.crimeName]")
 					if (c.crimeDetails)
-						to_chat(usr, "<b>Details:</b> [c.crimeDetails]")
+						to_chat(human_user, "<b>Details:</b> [c.crimeDetails]")
 					else
-						to_chat(usr, "<b>Details:</b> <A href='?src=[REF(src)];hud=s;add_details=1;cdataid=[c.dataId]'>\[Add details]</A>")
-					to_chat(usr, "Added by [c.author] at [c.time]")
-					to_chat(usr, "----------")
-				to_chat(usr, "<b>Notes:</b> [R.fields["notes"]]")
+						to_chat(human_user, "<b>Details:</b> <A href='?src=[REF(src)];hud=s;add_details=1;cdataid=[c.dataId]'>\[Add details]</A>")
+					to_chat(human_user, "Added by [c.author] at [c.time]")
+					to_chat(human_user, "----------")
+				to_chat(human_user, "<b>Notes:</b> [target_record.fields["notes"]]")
 				return
 
 			if(href_list["add_citation"])
 				var/maxFine = CONFIG_GET(number/maxfine)
-				var/t1 = tgui_input_text(usr, "Citation crime", "Security HUD")
-				var/fine = tgui_input_number(usr, "Citation fine", "Security HUD", 50, maxFine, 5)
+				var/t1 = tgui_input_text(human_user, "Citation crime", "Security HUD")
+				var/fine = tgui_input_number(human_user, "Citation fine", "Security HUD", 50, maxFine, 5)
 				if(!fine)
 					return
-				if(!R || !t1 || !allowed_access)
+				if(!target_record || !t1 || !allowed_access)
 					return
-				if(!H.canUseHUD())
+				if(!human_user.canUseHUD())
 					return
-				if(!HAS_TRAIT(H, TRAIT_SECURITY_HUD))
+				if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
 
 				var/datum/data/crime/crime = GLOB.data_core.createCrimeEntry(t1, "", allowed_access, station_time_timestamp(), fine)
 				for (var/obj/item/modular_computer/tablet in GLOB.TabletMessengers)
-					if(tablet.saved_identification == R.fields["name"])
+					if(tablet.saved_identification == target_record.fields["name"])
 						var/message = "You have been fined [fine] credits for '[t1]'. Fines may be paid at security."
 						var/datum/signal/subspace/messaging/tablet_msg/signal = new(src, list(
 							"name" = "Security Citation",
@@ -304,85 +308,89 @@
 							"automated" = TRUE
 						))
 						signal.send_to_receivers()
-						usr.log_message("(PDA: Citation Server) sent \"[message]\" to [signal.format_target()]", LOG_PDA)
-				GLOB.data_core.addCitation(R.fields["id"], crime)
-				investigate_log("New Citation: <strong>[t1]</strong> Fine: [fine] | Added to [R.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
-				SSblackbox.ReportCitation(crime.dataId, usr.ckey, usr.real_name, R.fields["name"], t1, fine)
+						human_user.log_message("(PDA: Citation Server) sent \"[message]\" to [signal.format_target()]", LOG_PDA)
+				GLOB.data_core.addCitation(target_record.fields["id"], crime)
+				investigate_log("New Citation: <strong>[t1]</strong> Fine: [fine] | Added to [target_record.fields["name"]] by [key_name(human_user)]", INVESTIGATE_RECORDS)
+				SSblackbox.ReportCitation(crime.dataId, human_user.ckey, human_user.real_name, target_record.fields["name"], t1, fine)
 				return
 
 			if(href_list["add_crime"])
-				var/t1 = tgui_input_text(usr, "Crime name", "Security HUD")
-				if(!R || !t1 || !allowed_access)
+				var/t1 = tgui_input_text(human_user, "Crime name", "Security HUD")
+				if(!target_record || !t1 || !allowed_access)
 					return
-				if(!H.canUseHUD())
+				if(!human_user.canUseHUD())
 					return
-				if(!HAS_TRAIT(H, TRAIT_SECURITY_HUD))
+				if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
 				var/crime = GLOB.data_core.createCrimeEntry(t1, null, allowed_access, station_time_timestamp())
-				GLOB.data_core.addCrime(R.fields["id"], crime)
-				investigate_log("New Crime: <strong>[t1]</strong> | Added to [R.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
-				to_chat(usr, span_notice("Successfully added a crime."))
+				GLOB.data_core.addCrime(target_record.fields["id"], crime)
+				investigate_log("New Crime: <strong>[t1]</strong> | Added to [target_record.fields["name"]] by [key_name(human_user)]", INVESTIGATE_RECORDS)
+				to_chat(human_user, span_notice("Successfully added a crime."))
 				return
 
 			if(href_list["add_details"])
-				var/t1 = tgui_input_text(usr, "Crime details", "Security Records", multiline = TRUE)
-				if(!R || !t1 || !allowed_access)
+				var/t1 = tgui_input_text(human_user, "Crime details", "Security Records", multiline = TRUE)
+				if(!target_record || !t1 || !allowed_access)
 					return
-				if(!H.canUseHUD())
+				if(!human_user.canUseHUD())
 					return
-				if(!HAS_TRAIT(H, TRAIT_SECURITY_HUD))
+				if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
 				if(href_list["cdataid"])
-					GLOB.data_core.addCrimeDetails(R.fields["id"], href_list["cdataid"], t1)
-					investigate_log("New Crime details: [t1] | Added to [R.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
-					to_chat(usr, span_notice("Successfully added details."))
+					GLOB.data_core.addCrimeDetails(target_record.fields["id"], href_list["cdataid"], t1)
+					investigate_log("New Crime details: [t1] | Added to [target_record.fields["name"]] by [key_name(human_user)]", INVESTIGATE_RECORDS)
+					to_chat(human_user, span_notice("Successfully added details."))
 				return
 
 			if(href_list["view_comment"])
-				if(!H.canUseHUD())
+				if(!human_user.canUseHUD())
 					return
-				if(!HAS_TRAIT(H, TRAIT_SECURITY_HUD))
+				if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
-				to_chat(usr, "<b>Comments/Log:</b>")
+				to_chat(human_user, "<b>Comments/Log:</b>")
 				var/counter = 1
-				while(R.fields[text("com_[]", counter)])
-					to_chat(usr, R.fields[text("com_[]", counter)])
-					to_chat(usr, "----------")
+				while(target_record.fields[text("com_[]", counter)])
+					to_chat(human_user, target_record.fields[text("com_[]", counter)])
+					to_chat(human_user, "----------")
 					counter++
 				return
 
 			if(href_list["add_comment"])
-				var/t1 = tgui_input_text(usr, "Add a comment", "Security Records", multiline = TRUE)
-				if (!R || !t1 || !allowed_access)
+				var/t1 = tgui_input_text(human_user, "Add a comment", "Security Records", multiline = TRUE)
+				if (!target_record || !t1 || !allowed_access)
 					return
-				if(!H.canUseHUD())
+				if(!human_user.canUseHUD())
 					return
-				if(!HAS_TRAIT(H, TRAIT_SECURITY_HUD))
+				if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
 				var/counter = 1
-				while(R.fields[text("com_[]", counter)])
+				while(target_record.fields[text("com_[]", counter)])
 					counter++
-				R.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access, station_time_timestamp(), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
-				to_chat(usr, span_notice("Successfully added comment."))
+				target_record.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access, station_time_timestamp(), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
+				to_chat(human_user, span_notice("Successfully added comment."))
 				return
 
 	..() //end of this massive fucking chain. TODO: make the hud chain not spooky. - Yeah, great job doing that.
 
+//called when something steps onto a human
+/mob/living/carbon/human/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
+	spreadFire(AM)
 
 /mob/living/carbon/human/proc/canUseHUD()
 	return (mobility_flags & MOBILITY_USE)
 
 /mob/living/carbon/human/can_inject(mob/user, target_zone, injection_flags)
 	. = TRUE // Default to returning true.
-	if(user && !target_zone)
-		target_zone = user.zone_selected
 	// we may choose to ignore species trait pierce immunity in case we still want to check skellies for thick clothing without insta failing them (wounds)
 	if(injection_flags & INJECT_CHECK_IGNORE_SPECIES)
 		if(HAS_TRAIT_NOT_FROM(src, TRAIT_PIERCEIMMUNE, SPECIES_TRAIT))
 			. = FALSE
 	else if(HAS_TRAIT(src, TRAIT_PIERCEIMMUNE))
 		. = FALSE
-	var/obj/item/bodypart/the_part = get_bodypart(target_zone) || get_bodypart(BODY_ZONE_CHEST)
+	if(user && !target_zone)
+		target_zone = user.zone_selected
+	var/obj/item/bodypart/the_part = isbodypart(target_zone) ? target_zone : get_bodypart(check_zone(target_zone)) //keep these synced
 	// Loop through the clothing covering this bodypart and see if there's any thiccmaterials
 	if(!(injection_flags & INJECT_CHECK_PENETRATE_THICK))
 		for(var/obj/item/clothing/iter_clothing in clothingonpart(the_part))
@@ -393,7 +401,9 @@
 /mob/living/carbon/human/try_inject(mob/user, target_zone, injection_flags)
 	. = ..()
 	if(!. && (injection_flags & INJECT_TRY_SHOW_ERROR_MESSAGE) && user)
-		var/obj/item/bodypart/the_part = get_bodypart(target_zone || check_zone(user.zone_selected))
+		if(!target_zone)
+			target_zone = user.zone_selected
+		var/obj/item/bodypart/the_part = isbodypart(target_zone) ? target_zone : get_bodypart(check_zone(target_zone)) //keep these synced
 		to_chat(user, span_alert("There is no exposed flesh or thin material on [p_their()] [the_part.name]."))
 
 /mob/living/carbon/human/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null)
@@ -530,7 +540,7 @@
 			return FALSE
 
 		visible_message(span_notice("[src] performs CPR on [target.name]!"), span_notice("You perform CPR on [target.name]."))
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "saved_life", /datum/mood_event/saved_life)
+		add_mood_event("saved_life", /datum/mood_event/saved_life)
 		log_combat(src, target, "CPRed")
 
 		if (HAS_TRAIT(target, TRAIT_NOBREATH))
@@ -572,10 +582,10 @@
 
 	if(gloves)
 		if(gloves.wash(clean_types))
-			update_inv_gloves()
+			update_worn_gloves()
 	else if((clean_types & CLEAN_TYPE_BLOOD) && blood_in_hands > 0)
 		blood_in_hands = 0
-		update_inv_gloves()
+		update_worn_gloves()
 
 	return TRUE
 
@@ -613,12 +623,12 @@
 		. = TRUE
 
 	if(glasses && is_eyes_covered(FALSE, TRUE, TRUE) && glasses.wash(clean_types))
-		update_inv_glasses()
+		update_worn_glasses()
 		. = TRUE
 
 	var/obscured = check_obscured_slots()
 	if(wear_mask && !(obscured & ITEM_SLOT_MASK) && wear_mask.wash(clean_types))
-		update_inv_wear_mask()
+		update_worn_mask()
 		. = TRUE
 
 /**
@@ -629,18 +639,18 @@
 
 	// Wash equipped stuff that cannot be covered
 	if(wear_suit?.wash(clean_types))
-		update_inv_wear_suit()
+		update_worn_oversuit()
 		. = TRUE
 
 	if(belt?.wash(clean_types))
-		update_inv_belt()
+		update_worn_belt()
 		. = TRUE
 
 	// Check and wash stuff that can be covered
 	var/obscured = check_obscured_slots()
 
 	if(w_uniform && !(obscured & ITEM_SLOT_ICLOTHING) && w_uniform.wash(clean_types))
-		update_inv_w_uniform()
+		update_worn_undersuit()
 		. = TRUE
 
 	if(!is_mouth_covered() && clean_lips())
@@ -649,7 +659,7 @@
 	// Wash hands if exposed
 	if(!gloves && (clean_types & CLEAN_TYPE_BLOOD) && blood_in_hands > 0 && !(obscured & ITEM_SLOT_GLOVES))
 		blood_in_hands = 0
-		update_inv_gloves()
+		update_worn_gloves()
 		. = TRUE
 
 //Turns a mob black, flashes a skeleton overlay
@@ -759,7 +769,6 @@
 		regenerate_organs()
 	remove_all_embedded_objects()
 	set_heartattack(FALSE)
-	drunkenness = 0
 	for(var/datum/mutation/human/HM in dna.mutations)
 		if(HM.quality != POSITIVE)
 			dna.remove_mutation(HM.name)
@@ -767,8 +776,11 @@
 	heat_exposure_stacks = 0
 	return ..()
 
-/mob/living/carbon/human/is_literate()
-	return TRUE
+/mob/living/carbon/human/is_nearsighted()
+	var/obj/item/clothing/glasses/eyewear = glasses
+	if(istype(eyewear) && eyewear.vision_correction)
+		return FALSE
+	return ..()
 
 /mob/living/carbon/human/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1)
 	if(blood && (NOBLOOD in dna.species.species_traits) && !HAS_TRAIT(src, TRAIT_TOXINLOVER))
@@ -851,8 +863,8 @@
 	if(href_list[VV_HK_PURRBATION])
 		if(!check_rights(R_SPAWN))
 			return
-		if(!ishumanbasic(src))
-			to_chat(usr, "This can only be done to the basic human species at the moment.")
+		if(!ishuman(src))
+			to_chat(usr, "This can only be done to human species at the moment.")
 			return
 		var/success = purrbation_toggle(src)
 		if(success)

@@ -70,8 +70,8 @@
 	achievement_type = /datum/award/achievement/boss/drake_kill
 	crusher_achievement_type = /datum/award/achievement/boss/drake_crusher
 	score_achievement_type = /datum/award/score/drake_score
-	deathmessage = "collapses into a pile of bones, its flesh sloughing away."
-	deathsound = 'sound/magic/demon_dies.ogg'
+	death_message = "collapses into a pile of bones, its flesh sloughing away."
+	death_sound = 'sound/magic/demon_dies.ogg'
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	small_sprite_type = /datum/action/small_sprite/megafauna/drake
 	/// Fire cone ability
@@ -83,7 +83,7 @@
 	/// Lava swoop ability
 	var/datum/action/cooldown/mob_cooldown/lava_swoop/lava_swoop
 
-/mob/living/simple_animal/hostile/megafauna/dragon/Initialize()
+/mob/living/simple_animal/hostile/megafauna/dragon/Initialize(mapload)
 	. = ..()
 	fire_cone = new /datum/action/cooldown/mob_cooldown/fire_breath/cone()
 	meteors = new /datum/action/cooldown/mob_cooldown/meteors()
@@ -93,8 +93,8 @@
 	meteors.Grant(src)
 	mass_fire.Grant(src)
 	lava_swoop.Grant(src)
-	RegisterSignal(src, COMSIG_ABILITY_STARTED, .proc/start_attack)
-	RegisterSignal(src, COMSIG_ABILITY_FINISHED, .proc/finished_attack)
+	RegisterSignal(src, COMSIG_MOB_ABILITY_STARTED, .proc/start_attack)
+	RegisterSignal(src, COMSIG_MOB_ABILITY_FINISHED, .proc/finished_attack)
 	RegisterSignal(src, COMSIG_SWOOP_INVULNERABILITY_STARTED, .proc/swoop_invulnerability_started)
 	RegisterSignal(src, COMSIG_LAVA_ARENA_FAILED, .proc/on_arena_fail)
 
@@ -181,7 +181,7 @@
 /proc/dragon_fire_line(atom/source, list/turfs, frozen = FALSE)
 	var/list/hit_list = list()
 	for(var/turf/T in turfs)
-		if(istype(T, /turf/closed))
+		if(isclosedturf(T))
 			break
 		var/obj/effect/hotspot/drake_fire_hotspot = new /obj/effect/hotspot(T)
 		if(frozen)
@@ -271,7 +271,7 @@
 		M.take_damage(45, BRUTE, MELEE, 1)
 
 	// changes turf to lava temporarily
-	if(!istype(T, /turf/closed) && !istype(T, /turf/open/lava))
+	if(!isclosedturf(T) && !islava(T))
 		var/lava_turf = /turf/open/lava/smooth
 		var/reset_turf = T.type
 		T.ChangeTurf(lava_turf, flags = CHANGETURF_INHERIT_AIR)
@@ -359,7 +359,7 @@
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
 	attack_action_types = list()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/lesser/Initialize()
+/mob/living/simple_animal/hostile/megafauna/dragon/lesser/Initialize(mapload)
 	. = ..()
 	fire_cone.Remove(src)
 	meteors.Remove(src)

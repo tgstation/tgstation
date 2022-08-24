@@ -17,9 +17,6 @@
 	var/status_type = STATUS_EFFECT_UNIQUE
 	/// If TRUE, we call [proc/on_remove] when owner is deleted. Otherwise, we call [proc/be_replaced].
 	var/on_remove_on_mob_delete = FALSE
-	/// If defined, this text will appear when the mob is examined
-	/// To use he, she etc. use "SUBJECTPRONOUN" and replace it in the examines themselves
-	var/examine_text
 	/// The typepath to the alert thrown by the status effect when created.
 	/// Status effect "name"s and "description"s are shown to the owner here.
 	var/alert_type = /atom/movable/screen/alert/status_effect
@@ -78,12 +75,12 @@
 // Status effect process. Handles adjusting it's duration and ticks.
 // If you're adding processed effects, put them in [proc/tick]
 // instead of extending / overriding ththe process() proc.
-/datum/status_effect/process(delta_time)
+/datum/status_effect/process(delta_time, times_fired)
 	if(QDELETED(owner))
 		qdel(src)
 		return
 	if(tick_interval < world.time)
-		tick()
+		tick(delta_time, times_fired)
 		tick_interval = world.time + initial(tick_interval)
 	if(duration != -1 && duration < world.time)
 		qdel(src)
@@ -93,8 +90,13 @@
 /datum/status_effect/proc/on_apply()
 	return TRUE
 
+/// Gets and formats examine text associated with our status effect.
+/// Return 'null' to have no examine text appear (default behavior).
+/datum/status_effect/proc/get_examine_text()
+	return null
+
 /// Called every tick from process().
-/datum/status_effect/proc/tick()
+/datum/status_effect/proc/tick(delta_time, times_fired)
 	return
 
 /// Called whenever the buff expires or is removed (qdeleted)

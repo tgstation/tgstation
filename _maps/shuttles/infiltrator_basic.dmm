@@ -21,7 +21,7 @@
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/door/poddoor/shutters{
 	id = "syndieshutters";
-	name = "blast shutters"
+	name = "Blast Shutters"
 	},
 /turf/open/floor/plating,
 /area/shuttle/syndicate/bridge)
@@ -58,7 +58,7 @@
 /obj/machinery/button/door{
 	id = "syndieshutters";
 	name = "Cockpit View Control";
-	req_access_txt = "150";
+	req_access = list("syndicate");
 	pixel_y = 24
 	},
 /obj/item/aicard,
@@ -206,14 +206,14 @@
 "aY" = (
 /obj/machinery/door/poddoor{
 	id = "smindicate";
-	name = "outer blast door"
+	name = "Outer Blast Door"
 	},
 /obj/docking_port/mobile/infiltrator,
 /obj/structure/fans/tiny,
 /obj/machinery/button/door/directional/north{
 	id = "smindicate";
 	name = "external door control";
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
@@ -275,11 +275,11 @@
 /area/shuttle/syndicate/hallway)
 "bq" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/glass/beaker/large{
+/obj/item/reagent_containers/cup/beaker/large{
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/item/reagent_containers/glass/beaker,
+/obj/item/reagent_containers/cup/beaker,
 /obj/item/reagent_containers/dropper{
 	pixel_x = -4;
 	pixel_y = -8
@@ -423,12 +423,11 @@
 "bK" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner,
 /obj/effect/mapping_helpers/airlock/autoname,
-/obj/machinery/door/airlock/hatch{
-	req_access_txt = "150"
-	},
+/obj/machinery/door/airlock/hatch,
 /obj/effect/turf_decal/siding/thinplating_new{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/medical)
 "bM" = (
@@ -439,9 +438,8 @@
 	dir = 8
 	},
 /obj/effect/mapping_helpers/airlock/autoname,
-/obj/machinery/door/airlock/hatch{
-	req_access_txt = "150"
-	},
+/obj/machinery/door/airlock/hatch,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/engineering)
 "bO" = (
@@ -455,18 +453,18 @@
 /area/shuttle/syndicate/medical)
 "bR" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/glass/bottle/epinephrine{
+/obj/item/reagent_containers/cup/bottle/epinephrine{
 	pixel_x = -3;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/glass/bottle/multiver{
+/obj/item/reagent_containers/cup/bottle/multiver{
 	pixel_x = 6;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/glass/bottle/multiver{
+/obj/item/reagent_containers/cup/bottle/multiver{
 	pixel_x = -3
 	},
-/obj/item/reagent_containers/glass/bottle/epinephrine{
+/obj/item/reagent_containers/cup/bottle/epinephrine{
 	pixel_x = 6
 	},
 /obj/effect/turf_decal/tile/yellow/half{
@@ -681,9 +679,7 @@
 "hT" = (
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/syndicateemblem/bottom/right,
-/obj/structure/sign/departments/engineering{
-	pixel_x = 32
-	},
+/obj/structure/sign/departments/engineering/directional/east,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/hallway)
 "iE" = (
@@ -703,13 +699,12 @@
 /turf/open/floor/iron/dark/smooth_edge,
 /area/shuttle/syndicate/engineering)
 "lm" = (
-/obj/machinery/door/airlock/hatch{
-	req_access_txt = "150"
-	},
+/obj/machinery/door/airlock/hatch,
 /obj/effect/mapping_helpers/airlock/autoname,
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/bridge)
 "lo" = (
@@ -720,9 +715,8 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/autoname,
-/obj/machinery/door/airlock/hatch{
-	req_access_txt = "150"
-	},
+/obj/machinery/door/airlock/hatch,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/eva)
 "lJ" = (
@@ -812,9 +806,7 @@
 "ug" = (
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/syndicateemblem/bottom/left,
-/obj/structure/sign/departments/medbay/alt{
-	pixel_x = -32
-	},
+/obj/structure/sign/departments/medbay/alt/directional/west,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/hallway)
 "vl" = (
@@ -966,7 +958,7 @@
 "Ed" = (
 /obj/machinery/door/window/survival_pod{
 	dir = 1;
-	req_access_txt = "150";
+	req_access = list("syndicate");
 	name = "Telecommunications Centre"
 	},
 /obj/effect/turf_decal/siding/red,
@@ -993,9 +985,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/hallway)
 "Hl" = (
-/obj/machinery/door/airlock/external/ruin{
-	req_access_txt = "150"
-	},
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
 	},
@@ -1003,6 +993,7 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/autoname,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/airlock)
 "In" = (
@@ -1015,10 +1006,7 @@
 /turf/open/floor/iron/dark/textured_corner,
 /area/shuttle/syndicate/engineering)
 "JQ" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /obj/structure/mirror/directional/east,
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/white/side,
@@ -1112,10 +1100,9 @@
 /area/shuttle/syndicate/airlock)
 "Tu" = (
 /obj/effect/mapping_helpers/airlock/autoname,
-/obj/machinery/door/airlock/hatch{
-	req_access_txt = "150"
-	},
+/obj/machinery/door/airlock/hatch,
 /obj/effect/turf_decal/stripes/red/line,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/hallway)
 "TD" = (

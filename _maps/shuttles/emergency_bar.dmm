@@ -115,7 +115,7 @@
 	},
 /obj/structure/table/wood/poker,
 /obj/item/storage/box/drinkingglasses,
-/obj/item/reagent_containers/food/drinks/bottle/whiskey,
+/obj/item/reagent_containers/cup/glass/bottle/whiskey,
 /obj/machinery/light/directional/south,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
@@ -160,9 +160,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "aF" = (
-/obj/structure/musician/piano{
-	icon_state = "piano"
-	},
+/obj/structure/musician/piano,
 /turf/open/floor/iron/grimy,
 /area/shuttle/escape)
 "aG" = (
@@ -194,14 +192,14 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron,
 /area/shuttle/escape/brig)
 "aK" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "aL" = (
@@ -254,7 +252,7 @@
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/structure/table,
 /obj/item/storage/box/drinkingglasses,
-/obj/item/reagent_containers/food/drinks/bottle/lizardwine,
+/obj/item/reagent_containers/cup/glass/bottle/lizardwine,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -494,7 +492,7 @@
 "bN" = (
 /obj/structure/table,
 /obj/item/storage/box/drinkingglasses,
-/obj/item/reagent_containers/food/drinks/shaker,
+/obj/item/reagent_containers/cup/glass/shaker,
 /obj/item/storage/fancy/cigarettes/cigars/havana,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{

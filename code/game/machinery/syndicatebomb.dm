@@ -230,6 +230,7 @@
 	if(payload && !istype(payload, /obj/item/bombcore/training))
 		log_bomber(user, "has primed a", src, "for detonation (Payload: [payload.name])")
 		payload.adminlog = "The [name] that [key_name(user)] had primed detonated!"
+		user.log_message("primed the [src]. (Payload: [payload.name])", LOG_GAME, log_globally = FALSE)
 
 ///Bomb Subtypes///
 
@@ -331,7 +332,6 @@
 		holder.delayedlittle = FALSE
 		holder.explode_now = FALSE
 		holder.update_appearance()
-		holder.updateDialog()
 		STOP_PROCESSING(SSfastprocess, holder)
 
 /obj/item/bombcore/training/detonate()
@@ -443,12 +443,12 @@
 
 	var/list/reactants = list()
 
-	for(var/obj/item/reagent_containers/glass/G in beakers)
+	for(var/obj/item/reagent_containers/cup/G in beakers)
 		reactants += G.reagents
 
 	for(var/obj/item/slime_extract/S in beakers)
 		if(S.Uses)
-			for(var/obj/item/reagent_containers/glass/G in beakers)
+			for(var/obj/item/reagent_containers/cup/G in beakers)
 				G.reagents.trans_to(S, G.reagents.total_volume)
 
 			if(S && S.reagents && S.reagents.total_volume)
@@ -471,7 +471,7 @@
 			B.forceMove(drop_location())
 			beakers -= B
 		return
-	else if(istype(I, /obj/item/reagent_containers/glass/beaker) || istype(I, /obj/item/reagent_containers/glass/bottle))
+	else if(istype(I, /obj/item/reagent_containers/cup/beaker) || istype(I, /obj/item/reagent_containers/cup/bottle))
 		if(beakers.len < max_beakers)
 			if(!user.transferItemToLoc(I, src))
 				return
@@ -513,7 +513,7 @@
 		if(istype(G, /obj/item/grenade/chem_grenade/adv_release))
 			time_release += 50 // A typical bomb, using basic beakers, will explode over 2-4 seconds. Using two will make the reaction last for less time, but it will be more dangerous overall.
 
-		for(var/obj/item/reagent_containers/glass/B in G)
+		for(var/obj/item/reagent_containers/cup/B in G)
 			if(beakers.len < max_beakers)
 				beakers += B
 				B.forceMove(src)

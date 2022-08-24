@@ -112,7 +112,7 @@
 	if(stuffed || grenade)
 		to_chat(user, span_notice("You pet [src]. D'awww."))
 		if(grenade && !grenade.active)
-			log_game("[key_name(user)] activated a hidden grenade in [src].")
+			user.log_message("activated a hidden grenade in [src].", LOG_VICTIM)
 			grenade.arm_grenade(user, msg = FALSE, volume = 10)
 	else
 		to_chat(user, span_notice("You try to pet [src], but it has no stuffing. Aww..."))
@@ -129,10 +129,8 @@
 				stuffed = FALSE
 			else
 				to_chat(user, span_notice("What a fool you are. [src] is a god, how can you kill a god? What a grand and intoxicating innocence."))
-				if(iscarbon(user))
-					var/mob/living/carbon/C = user
-					if(C.drunkenness < 50)
-						C.drunkenness = min(C.drunkenness + 20, 50)
+				user.adjust_drunk_effect(20, up_to = 50)
+
 				var/turf/current_location = get_turf(user)
 				var/area/current_area = current_location.loc //copied from hand tele code
 				if(current_location && current_area && (current_area.area_flags & NOTELEPORT))
@@ -146,7 +144,7 @@
 			user.put_in_hands(grenade)
 			grenade = null
 		return
-	if(istype(I, /obj/item/grenade))
+	if(isgrenade(I))
 		if(stuffed)
 			to_chat(user, span_warning("You need to remove some stuffing first!"))
 			return
@@ -158,8 +156,7 @@
 		user.visible_message(span_warning("[user] slides [grenade] into [src]."), \
 		span_danger("You slide [I] into [src]."))
 		grenade = I
-		var/turf/grenade_turf = get_turf(src)
-		log_game("[key_name(user)] added a grenade ([I.name]) to [src] at [AREACOORD(grenade_turf)].")
+		user.log_message("added a grenade ([I.name]) to [src]", LOG_GAME)
 		return
 	if(istype(I, /obj/item/toy/plush))
 		love(I, user)
@@ -405,7 +402,7 @@
 	var/obj/item/toy/plush/narplush/clash_target
 	gender = MALE //he's a boy, right?
 
-/obj/item/toy/plush/ratplush/Moved()
+/obj/item/toy/plush/ratplush/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(clash_target)
 		return
@@ -492,7 +489,7 @@
 	var/clashing
 	gender = FEMALE //it's canon if the toy is
 
-/obj/item/toy/plush/narplush/Moved()
+/obj/item/toy/plush/narplush/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	var/obj/item/toy/plush/ratplush/P = locate() in range(1, src)
 	if(P && istype(P.loc, /turf/open) && !P.clash_target && !clashing)
@@ -579,7 +576,7 @@
 	icon_state = "plushie_awake"
 	inhand_icon_state = "plushie_awake"
 
-/obj/item/toy/plush/awakenedplushie/ComponentInitialize()
+/obj/item/toy/plush/awakenedplushie/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/edit_complainer)
 
@@ -696,3 +693,24 @@
 	attack_verb_continuous = list("slashes", "bites", "charges")
 	attack_verb_simple = list("slash", "bite", "charge")
 	squeak_override = list('sound/items/intents/Help.ogg' = 1)
+
+/obj/item/toy/plush/abductor
+	name = "abductor plushie"
+	desc = "A plushie depicting an alien abductor. The tag on it is in an indecipherable language."
+	icon_state = "abductor"
+	inhand_icon_state = "abductor"
+	attack_verb_continuous = list("abducts", "probes")
+	attack_verb_continuous = list("abduct", "probe")
+	squeak_override = list('sound/weather/ashstorm/inside/weak_end.ogg' = 1) //very faint sound since abductors are silent as far as "speaking" is concerned.
+
+/obj/item/toy/plush/abductor/agent
+	name = "abductor agent plushie"
+	desc = "A plushie depicting an alien abductor agent. The stun baton is attached to the hand of the plushie, and appears to be inert. I wouldn't stay alone with it."
+	icon_state = "abductor_agent"
+	inhand_icon_state = "abductor_agent"
+	attack_verb_continuous = list("abducts", "probes", "stuns")
+	attack_verb_continuous = list("abduct", "probe", "stun")
+	squeak_override = list(
+		'sound/weapons/egloves.ogg' = 2,
+		'sound/weapons/cablecuff.ogg' = 1,
+	)

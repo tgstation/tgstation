@@ -130,7 +130,7 @@
 	var/subsystem_type = /datum/controller/subsystem/machines
 	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
 
-	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
+	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN|INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_OPEN_SILICON|INTERACT_MACHINE_SET_MACHINE
 	var/fair_market_price = 69
 	var/market_verb = "Customer"
 	var/payment_department = ACCOUNT_ENG
@@ -143,6 +143,11 @@
 	var/last_used_time = 0
 	/// Mobtype of last user. Typecast to [/mob/living] for initial() usage
 	var/mob/living/last_user_mobtype
+	/// Do we want to hook into on_enter_area and on_exit_area?
+	/// Disables some optimizations
+	var/always_area_sensitive = FALSE
+	///Multiplier for power consumption.
+	var/machine_power_rectifier = 1
 
 /obj/machinery/Initialize(mapload)
 	if(!armor)
@@ -188,15 +193,22 @@
  * proc to call when the machine starts to require power after a duration of not requiring power
  * sets up power related connections to its area if it exists and becomes area sensitive
  * does not affect power usage itself
+ *
+ * Returns TRUE if it triggered a full registration, FALSE otherwise
+ * We do this so machinery that want to sidestep the area sensitiveity optimization can
  */
 /obj/machinery/proc/setup_area_power_relationship()
-	become_area_sensitive(INNATE_TRAIT)
-
 	var/area/our_area = get_area(src)
 	if(our_area)
 		RegisterSignal(our_area, COMSIG_AREA_POWER_CHANGE, .proc/power_change)
+
+	if(HAS_TRAIT_FROM(src, TRAIT_AREA_SENSITIVE, INNATE_TRAIT)) // If we for some reason have not lost our area sensitivity, there's no reason to set it back up
+		return FALSE
+
+	become_area_sensitive(INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/on_enter_area)
 	RegisterSignal(src, COMSIG_EXIT_AREA, .proc/on_exit_area)
+	return TRUE
 
 /**
  * proc to call when the machine stops requiring power after a duration of requiring power
@@ -208,18 +220,27 @@
 	if(our_area)
 		UnregisterSignal(our_area, COMSIG_AREA_POWER_CHANGE)
 
+	if(always_area_sensitive)
+		return
+
 	lose_area_sensitivity(INNATE_TRAIT)
 	UnregisterSignal(src, COMSIG_ENTER_AREA)
 	UnregisterSignal(src, COMSIG_EXIT_AREA)
 
 /obj/machinery/proc/on_enter_area(datum/source, area/area_to_register)
 	SIGNAL_HANDLER
+	// If we're always area sensitive, and this is called while we have no power usage, do nothing and return
+	if(always_area_sensitive && use_power == NO_POWER_USE)
+		return
 	update_current_power_usage()
 	power_change()
 	RegisterSignal(area_to_register, COMSIG_AREA_POWER_CHANGE, .proc/power_change)
 
 /obj/machinery/proc/on_exit_area(datum/source, area/area_to_unregister)
 	SIGNAL_HANDLER
+	// If we're always area sensitive, and this is called while we have no power usage, do nothing and return
+	if(always_area_sensitive && use_power == NO_POWER_USE)
+		return
 	unset_static_power()
 	UnregisterSignal(area_to_unregister, COMSIG_AREA_POWER_CHANGE)
 
@@ -540,6 +561,10 @@
 		to_chat(user, span_warning("This machine requires sight to use."))
 		return FALSE
 
+	// machines have their own lit up display screens and LED buttons so we don't need to check for light
+	if((interaction_flags_machine & INTERACT_MACHINE_REQUIRES_LITERACY) && !user.can_read(src, check_for_light = FALSE))
+		return FALSE
+
 	if(panel_open && !(interaction_flags_machine & INTERACT_MACHINE_OPEN))
 		return FALSE
 
@@ -720,6 +745,7 @@
 	LAZYCLEARLIST(component_parts)
 	return ..()
 
+
 /**
  * Spawns a frame where this machine is. If the machine was not disassmbled, the
  * frame is spawned damaged. If the frame couldn't exist on this turf, it's smashed
@@ -810,7 +836,7 @@
 	return TRUE
 
 /obj/proc/can_be_unfasten_wrench(mob/user, silent) //if we can unwrench this object; returns SUCCESSFUL_UNFASTEN and FAILED_UNFASTEN, which are both TRUE, or CANT_UNFASTEN, which isn't.
-	if(!(isfloorturf(loc) || istype(loc, /turf/open/indestructible)) && !anchored)
+	if(!(isfloorturf(loc) || isindestructiblefloor(loc)) && !anchored)
 		to_chat(user, span_warning("[src] needs to be on the floor to be secured!"))
 		return FAILED_UNFASTEN
 	return SUCCESSFUL_UNFASTEN
@@ -898,10 +924,10 @@
 					var/obj/item/stack/secondary_inserted = new secondary_stack.merge_type(null,used_amt)
 					component_parts += secondary_inserted
 				else
-					if(SEND_SIGNAL(replacer_tool, COMSIG_TRY_STORAGE_TAKE, secondary_part, src))
+					if(replacer_tool.atom_storage.attempt_remove(secondary_part, src))
 						component_parts += secondary_part
 						secondary_part.forceMove(src)
-				SEND_SIGNAL(replacer_tool, COMSIG_TRY_STORAGE_INSERT, primary_part, null, null, TRUE)
+				replacer_tool.atom_storage.attempt_insert(primary_part, user, TRUE)
 				component_parts -= primary_part
 				to_chat(user, span_notice("[capitalize(primary_part.name)] replaced with [secondary_part.name]."))
 				shouldplaysound = 1 //Only play the sound when parts are actually replaced!
@@ -935,7 +961,10 @@
 				. += "It appears heavily damaged."
 			if(0 to 25)
 				. += span_warning("It's falling apart!")
-	if(user.research_scanner && component_parts)
+
+/obj/machinery/examine_more(mob/user)
+	. = ..()
+	if(HAS_TRAIT(user, TRAIT_RESEARCH_SCANNER) && component_parts)
 		. += display_parts(user, TRUE)
 
 //called on machinery construction (i.e from frame to machinery) but not on initialization

@@ -136,7 +136,7 @@ Slimecrossing Items
 	icon_state = "slimebarrier_thick"
 	can_atmos_pass = ATMOS_PASS_NO
 	opacity = TRUE
-	timeleft = 100
+	initial_duration = 10 SECONDS
 
 //Rainbow barrier - Chilling Rainbow
 /obj/effect/forcefield/slimewall/rainbow
@@ -152,7 +152,7 @@ Slimecrossing Items
 	icon_state = "frozen"
 	density = TRUE
 	max_integrity = 100
-	armor = list(MELEE = 30, BULLET = 50, LASER = -50, ENERGY = -50, BOMB = 0, BIO = 100, FIRE = -80, ACID = 30)
+	armor = list(MELEE = 30, BULLET = 50, LASER = -50, ENERGY = -50, BOMB = 0, BIO = 0, FIRE = -80, ACID = 30)
 
 /obj/structure/ice_stasis/Initialize(mapload)
 	. = ..()
@@ -193,7 +193,7 @@ Slimecrossing Items
 			to_chat(user, span_warning("[M] refused to enter the device."))
 			return
 	else
-		if(istype(M, /mob/living/simple_animal/hostile) && !("neutral" in M.faction))
+		if(ishostile(M) && !("neutral" in M.faction))
 			to_chat(user, span_warning("This creature is too aggressive to capture."))
 			return
 	to_chat(user, span_notice("You store [M] in the capture device."))

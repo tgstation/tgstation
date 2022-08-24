@@ -119,6 +119,9 @@ PROTECT_ROLES_FROM_ANTAGONIST
 ## If non-human species are barred from joining as a head of staff
 #ENFORCE_HUMAN_AUTHORITY
 
+## If non-human species are barred from joining as a head of staff, including jobs flagged as allowed for non-humans, ie. Quartermaster.
+#ENFORCE_HUMAN_AUTHORITY_ON_EVERYONE
+
 ## If late-joining players have a chance to become a traitor/changeling
 ALLOW_LATEJOIN_ANTAGONISTS
 
@@ -159,9 +162,6 @@ ALLOW_AI_MULTICAM
 
 ## AWAY MISSIONS ###
 
-## Uncomment to load the virtual reality hub map
-#VIRTUAL_REALITY
-
 ## Uncomment to load one of the missions from awaymissionconfig.txt or away_missions/ at roundstart.
 #ROUNDSTART_AWAY
 
@@ -197,6 +197,12 @@ MINIMAL_ACCESS_THRESHOLD 20
 ## Comment this out this to make security officers spawn in departmental security posts
 #SEC_START_BRIG
 
+## This variable is how you may configure "Scaling Access" for Departmental Security Officers.
+## Set to 0/commented out for "off", Departmental Security Officers will never get additional room-specific access (beyond general departmental doors).
+## Set to 1 if you want to enable "Scaling Access", where Departmental Security Officers will get access to most rooms within a department depending on how many security officers there are relative to the number of people on a station.
+## Set to 2 if you want Departmental Security Officers to always have access to all rooms in a department.
+DEPSEC_ACCESS_LEVEL 1
+
 
 ## GHOST INTERACTION ###
 ## Uncomment to let ghosts spin chairs. You may be wondering why this is a config option. Don't ask.
@@ -211,20 +217,29 @@ NEAR_DEATH_EXPERIENCE
 #SILENT_AI
 #SILENT_BORG
 
-## SANDBOX PANEL AUTOCLOSE ###
-## The sandbox panel's item spawning dialog now stays open even after you click an option.
-## If you find that your players are abusing the sandbox panel, this option may slow them down
-## without preventing people from using it properly.
-## Only functions in sandbox game mode.
-#SANDBOX_AUTOCLOSE
-
 ## ROUNDSTART SILICON LAWS ###
 ## This controls what the AI's laws are at the start of the round.
 ## Set to 0/commented out for "off", silicons will just start with Asimov.
 ## Set to 1 for "custom", silicons will start with the custom laws defined in silicon_laws.txt. (If silicon_laws.txt is empty, the AI will spawn with asimov and Custom boards will auto-delete.)
 ## Set to 2 for "random", silicons will start with a random lawset picked from random laws specified below.
 ## Set to 3 for "weighted random", using values in "silicon_weights.txt", a law will be selected, with weights specifed in that file.
+## Set to 4 for "specified", silicons will start with an existing lawset. (If no specified lawset is identified, the AI will spawn with asimov.)
+
+
 DEFAULT_LAWS 0
+
+## SILICON ASIMOV SUPERIORITY OVERRIDE ###
+## This makes "Asimov Superiority" show up as a perk for humans in the character creation menu even if asimov is not the default lawset, such as when used with asimov++
+## Uncomment this out to make "Asimov Superiority" show up as a perk for humans
+# SILICON_ASIMOV_SUPERIORITY_OVERRIDE
+
+## SPECIFIED LAWS ##
+## ------------------------------------------------------------------------------------------
+## These control what lawset the AI will use, edit the specified law to an *existing* lawset to make it the default.
+## See datums\ai_laws.dm for the full law lists
+## IE, SPECIFIED_LAWS asimovpp, SPECIFIED_LAWS robocop, SPECIFIED_LAWS antimov
+
+SPECIFIED_LAWS asimovpp
 
 ## RANDOM LAWS ##
 ## ------------------------------------------------------------------------------------------
@@ -241,7 +256,6 @@ RANDOM_LAWS corporate
 ## Quirky laws. Shouldn't cause too much harm
 #RANDOM_LAWS hippocratic
 #RANDOM_LAWS maintain
-#RANDOM_LAWS drone
 #RANDOM_LAWS liveandletlive
 #RANDOM_LAWS peacekeeper
 #RANDOM_LAWS reporter
@@ -253,6 +267,7 @@ RANDOM_LAWS corporate
 #RANDOM_LAWS ninja
 #RANDOM_LAWS antimov
 #RANDOM_LAWS thermodynamic
+#RANDOM_LAWS drone
 
 ## meme laws. Honk
 #RANDOM_LAWS buildawall
@@ -265,28 +280,36 @@ RANDOM_LAWS corporate
 LAW_WEIGHT custom,0
 
 ## standard-ish laws. These are fairly ok to run
-LAW_WEIGHT asimov,32
-LAW_WEIGHT asimovpp,12
-LAW_WEIGHT paladin,12
-LAW_WEIGHT robocop,12
-LAW_WEIGHT corporate,12
+## Unique AI station trait uses weights so we don't want asimov
+LAW_WEIGHT asimov,0
+LAW_WEIGHT asimovpp,5
+LAW_WEIGHT paladin,5
+LAW_WEIGHT paladin5,5
+LAW_WEIGHT robocop,5
+LAW_WEIGHT corporate,5
+LAW_WEIGHT hippocratic,5
+LAW_WEIGHT maintain,5
+LAW_WEIGHT liveandletlive,5
+LAW_WEIGHT peacekeeper,5
+LAW_WEIGHT ten_commandments,5
+LAW_WEIGHT nutimov,5
 
 ## Quirky laws. Shouldn't cause too much harm
-LAW_WEIGHT hippocratic,3
-LAW_WEIGHT maintain,4
-LAW_WEIGHT drone,3
-LAW_WEIGHT liveandletlive,3
-LAW_WEIGHT peacekeeper,3
-LAW_WEIGHT reporter,4
-LAW_WEIGHT hulkamania,4
-LAW_WEIGHT ten_commandments,4
+LAW_WEIGHT reporter,3
+LAW_WEIGHT hulkamania,3
+LAW_WEIGHT tyrant,3
+LAW_WEIGHT overlord,3
+LAW_WEIGHT painter,3
+LAW_WEIGHT dungeon_master,3
 
 ## Bad idea laws. Probably shouldn't enable these
 LAW_WEIGHT syndie,0
 LAW_WEIGHT ninja,0
 LAW_WEIGHT antimov,0
+LAW_WEIGHT balance,0
 LAW_WEIGHT thermodynamic,0
 LAW_WEIGHT buildawall,0
+LAW_WEIGHT drone,0
 
 ##------------------------------------------------
 
@@ -368,6 +391,24 @@ ROUNDSTART_RACES ethereal
 ## Roundstart no-reset races
 ## Races defined here will not cause existing characters to be reset to human if they currently have a non-roundstart species defined.
 #ROUNDSTART_NO_HARD_CHECK felinid
+
+## Disable roundstart species morgue cadavers?
+## Cadavers in the morgue at the start of the round will be randomly picked from all enabled ROUNDSTART_RACES
+## Recommended to leave this commented out so nonhuman species will have viable replacement bodies / organs when they die.
+# MORGUE_CADAVER_DISABLE_NONHUMANS
+
+## Morgue Cadaver Species Probability
+## The probability for nonhuman cadavers to spawn in the morgue.
+## Only used if MORGUE_CADAVER_DISABLE_NONHUMANS is commented out
+## If left undefined, defaults to 50%.
+MORGUE_CADAVER_OTHER_SPECIES_PROBABILITY 50
+
+## A single specific Species ID to supplement human morgue cadavers.
+## Set MORGUE_CADAVER_OTHER_SPECIES_PROBABILITY to determine the chances between being a human and this specific species.
+## Only used if MORGUE_CADAVER_DISABLE_NONHUMANS is commented out
+## Prob = 100 means all corpses will be this race.
+#MORGUE_CADAVER_OVERRIDE_SPECIES lizard
+
 
 ##Overflow job. Default is assistant
 OVERFLOW_JOB Assistant
@@ -469,10 +510,12 @@ MAXFINE 2000
 ## How many played hours of DRONE_REQUIRED_ROLE required to be a Maintenance Done
 #DRONE_ROLE_PLAYTIME 14
 
-## Uncomment to enable SDQL spells
-## Warning: SDQL is a powerful tool and can break many things or expose security sensitive information.
-## Giving players access to it has major security concerns, be careful and deliberate when using this feature.
-#SDQL_SPELLS
-
 ## Whether native FoV is enabled for all people.
 #NATIVE_FOV
+
+## Whether circuit sounds are allowed to be played or not.
+#DISALLOW_CIRCUIT_SOUNDS
+
+## Comment if you wish to enable title music playing at the lobby screen. This flag is disabled by default to facilitate better code testing on local machines.
+## Do keep in mind that this flag will not affect individual player's preferences: if they opt-out on your server, it will never play for them.
+DISALLOW_TITLE_MUSIC

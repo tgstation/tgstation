@@ -32,16 +32,22 @@ export const ChatTabs = (props, context) => {
     <Flex align="center">
       <Flex.Item>
         <Tabs textAlign="center">
-          {pages.map(page => (
+          {pages.map((page) => (
             <Tabs.Tab
               key={page.id}
               selected={page === currentPage}
-              rightSlot={page.unreadCount > 0 && (
-                <UnreadCountWidget value={page.unreadCount} />
-              )}
-              onClick={() => dispatch(changeChatPage({
-                pageId: page.id,
-              }))}>
+              rightSlot={
+                page.unreadCount > 0 && (
+                  <UnreadCountWidget value={page.unreadCount} />
+                )
+              }
+              onClick={() =>
+                dispatch(
+                  changeChatPage({
+                    pageId: page.id,
+                  })
+                )
+              }>
               {page.name}
             </Tabs.Tab>
           ))}
@@ -54,7 +60,8 @@ export const ChatTabs = (props, context) => {
           onClick={() => {
             dispatch(addChatPage());
             dispatch(openChatSettings());
-          }} />
+          }}
+        />
       </Flex.Item>
     </Flex>
   );

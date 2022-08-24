@@ -5,6 +5,8 @@
 	max_occurrences = 1
 	min_players = 20
 	dynamic_should_hijack = TRUE
+	category = EVENT_CATEGORY_ENTITIES
+	description = "Spawns spider eggs, ready to hatch."
 
 /datum/round_event/spider_infestation
 	announceWhen = 400

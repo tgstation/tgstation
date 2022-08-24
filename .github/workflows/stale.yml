@@ -4,9 +4,15 @@ on:
   schedule:
   - cron: "0 0 * * *"
 
+permissions:
+  contents: read
+
 jobs:
   stale:
 
+    permissions:
+      issues: write  # for actions/stale to close stale issues
+      pull-requests: write  # for actions/stale to close stale PRs
     runs-on: ubuntu-20.04
 
     steps:
@@ -21,3 +27,4 @@ jobs:
         stale-issue-label: 'Cleanup Flagged'
         remove-issue-stale-when-updated: false
         exempt-pr-labels: 'RED LABEL,Good First PR'
+        operations-per-run: 300

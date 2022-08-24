@@ -88,6 +88,27 @@
 /obj/item/bodypart/r_leg/slime
 	limb_id = SPECIES_SLIMEPERSON
 
+///LUMINESCENT
+/obj/item/bodypart/head/luminescent
+	limb_id = SPECIES_LUMINESCENT
+	is_dimorphic = TRUE
+
+/obj/item/bodypart/chest/luminescent
+	limb_id = SPECIES_LUMINESCENT
+	is_dimorphic = TRUE
+
+/obj/item/bodypart/l_arm/luminescent
+	limb_id = SPECIES_LUMINESCENT
+
+/obj/item/bodypart/r_arm/luminescent
+	limb_id = SPECIES_LUMINESCENT
+
+/obj/item/bodypart/l_leg/luminescent
+	limb_id = SPECIES_LUMINESCENT
+
+/obj/item/bodypart/r_leg/luminescent
+	limb_id = SPECIES_LUMINESCENT
+
 ///ZOMBIE
 /obj/item/bodypart/head/zombie
 	limb_id = SPECIES_ZOMBIE

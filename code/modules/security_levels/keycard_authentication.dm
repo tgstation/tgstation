@@ -43,7 +43,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 	var/list/data = list()
 	data["waiting"] = waiting
 	data["auth_required"] = event_source ? event_source.event : 0
-	data["red_alert"] = (seclevel2num(get_security_level()) >= SEC_LEVEL_RED) ? 1 : 0
+	data["red_alert"] = (SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED) ? 1 : 0
 	data["emergency_maint"] = GLOB.emergency_access
 	data["bsa_unlock"] = GLOB.bsa_unlock
 	return data
@@ -121,7 +121,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 	update_appearance()
 
 /obj/machinery/keycard_auth/proc/trigger_event(confirmer)
-	log_game("[key_name(triggerer)] triggered and [key_name(confirmer)] confirmed event [event]")
+	triggerer.log_message("triggered and [key_name(confirmer)] confirmed event [event].", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(triggerer)] triggered and [ADMIN_LOOKUPFLW(confirmer)] confirmed event [event]")
 
 	var/area/A1 = get_area(triggerer)
@@ -131,7 +131,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 	deadchat_broadcast(" confirmed [event] at [span_name("[A2.name]")].", span_name("[confirmer]"), confirmer, message_type=DEADCHAT_ANNOUNCEMENT)
 	switch(event)
 		if(KEYCARD_RED_ALERT)
-			set_security_level(SEC_LEVEL_RED)
+			SSsecurity_level.set_level(SEC_LEVEL_RED)
 		if(KEYCARD_EMERGENCY_MAINTENANCE_ACCESS)
 			make_maint_all_access()
 		if(KEYCARD_BSA_UNLOCK)
@@ -139,7 +139,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 
 GLOBAL_VAR_INIT(emergency_access, FALSE)
 /proc/make_maint_all_access()
-	for(var/area/maintenance/A in world)
+	for(var/area/station/maintenance/A in world)
 		for(var/obj/machinery/door/airlock/D in A)
 			D.emergency = TRUE
 			D.update_icon(ALL, 0)
@@ -148,7 +148,7 @@ GLOBAL_VAR_INIT(emergency_access, FALSE)
 	SSblackbox.record_feedback("nested tally", "keycard_auths", 1, list("emergency maintenance access", "enabled"))
 
 /proc/revoke_maint_all_access()
-	for(var/area/maintenance/A in world)
+	for(var/area/station/maintenance/A in world)
 		for(var/obj/machinery/door/airlock/D in A)
 			D.emergency = FALSE
 			D.update_icon(ALL, 0)

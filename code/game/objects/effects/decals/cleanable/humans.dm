@@ -52,7 +52,7 @@
 		return TRUE
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
-	C.add_blood_DNA(return_blood_DNA())
+	C.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
 	if (bloodiness)
 		C.bloodiness = min((C.bloodiness + bloodiness), BLOOD_AMOUNT_PER_DECAL)
 	return ..()
@@ -377,10 +377,10 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 			var/mob/living/carbon/human/splashed_human = iter_atom
 			if(splashed_human.wear_suit)
 				splashed_human.wear_suit.add_blood_DNA(blood_dna_info)
-				splashed_human.update_inv_wear_suit()    //updates mob overlays to show the new blood (no refresh)
+				splashed_human.update_worn_oversuit()    //updates mob overlays to show the new blood (no refresh)
 			if(splashed_human.w_uniform)
 				splashed_human.w_uniform.add_blood_DNA(blood_dna_info)
-				splashed_human.update_inv_w_uniform()    //updates mob overlays to show the new blood (no refresh)
+				splashed_human.update_worn_undersuit()    //updates mob overlays to show the new blood (no refresh)
 			splatter_strength--
 	if(splatter_strength <= 0) // we used all the puff so we delete it.
 		qdel(src)

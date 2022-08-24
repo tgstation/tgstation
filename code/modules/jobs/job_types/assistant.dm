@@ -14,7 +14,7 @@ Assistant
 	exp_granted_type = EXP_TYPE_CREW
 	outfit = /datum/outfit/job/assistant
 	plasmaman_outfit = /datum/outfit/plasmaman
-	paycheck = PAYCHECK_ASSISTANT // Get a job. Job reassignment changes your paycheck now. Get over it.
+	paycheck = PAYCHECK_LOWER // Get a job. Job reassignment changes your paycheck now. Get over it.
 
 	paycheck_department = ACCOUNT_CIV
 	display_order = JOB_DISPLAY_ORDER_ASSISTANT
@@ -73,7 +73,7 @@ Assistant
 	// This outfit is used by the assets SS, which is ran before the atoms SS
 	if (SSatoms.initialized == INITIALIZATION_INSSATOMS)
 		H.w_uniform?.update_greyscale()
-		H.update_inv_w_uniform()
+		H.update_worn_undersuit()
 
 /proc/get_configured_colored_assistant_type()
 	return CONFIG_GET(flag/grey_assistants) ? /datum/colored_assistant/grey : /datum/colored_assistant/random

@@ -26,8 +26,7 @@ DEFINE_BITFIELD(smoothing_flags, list(
 
 #define QUEUE_SMOOTH(thing_to_queue) if(thing_to_queue.smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)) {SSicon_smooth.add_to_queue(thing_to_queue)}
 
-#define QUEUE_SMOOTH_NEIGHBORS(thing_to_queue) for(var/neighbor in orange(1, thing_to_queue)) {var/atom/atom_neighbor = neighbor; QUEUE_SMOOTH(atom_neighbor)}
-
+#define QUEUE_SMOOTH_NEIGHBORS(thing_to_queue) for(var/atom/atom_neighbor as anything in orange(1, thing_to_queue)) {QUEUE_SMOOTH(atom_neighbor)}
 
 /**SMOOTHING GROUPS
  * Groups of things to smooth with.
@@ -122,7 +121,7 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_ABDUCTOR_WALLS S_OBJ(10) ///turf/closed/wall/mineral/abductor, /obj/structure/falsewall/abductor
 #define SMOOTH_GROUP_TITANIUM_WALLS S_OBJ(11) ///turf/closed/wall/mineral/titanium, /obj/structure/falsewall/titanium
 #define SMOOTH_GROUP_PLASTITANIUM_WALLS S_OBJ(13) ///turf/closed/wall/mineral/plastitanium, /obj/structure/falsewall/plastitanium
-#define SMOOTH_GROUP_SURVIVAL_TIANIUM_POD S_OBJ(14) ///turf/closed/wall/mineral/titanium/survival/pod, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/reinforced/shuttle/survival_pod
+#define SMOOTH_GROUP_SURVIVAL_TITANIUM_POD S_OBJ(14) ///turf/closed/wall/mineral/titanium/survival/pod, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/reinforced/shuttle/survival_pod
 #define SMOOTH_GROUP_HIERO_WALL S_OBJ(15) ///obj/effect/temp_visual/elite_tumor_wall, /obj/effect/temp_visual/hierophant/wall
 #define SMOOTH_GROUP_BAMBOO_WALLS S_TURF(16) //![/turf/closed/wall/mineral/bamboo, /obj/structure/falsewall/bamboo]
 #define SMOOTH_GROUP_PLASTINUM_WALLS S_TURF(17) //![turf/closed/indestructible/riveted/plastinum]

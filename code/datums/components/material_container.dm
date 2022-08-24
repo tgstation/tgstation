@@ -129,7 +129,7 @@
 		to_chat(user, span_warning("[I] does not contain sufficient materials to be accepted by [parent]."))
 		return
 	if(!has_space(material_amount))
-		if(istype(I, /obj/item/stack))
+		if(isstack(I))
 			//figure out how much space is left
 			var/space_left = max_amount - total_amount
 			//figure out the amount of sheets that can fit that space
@@ -151,7 +151,7 @@
 	set waitfor = FALSE
 	var/requested_amount
 	var/active_held = user.get_active_held_item()  // differs from I when using TK
-	if(istype(held_item, /obj/item/stack) && precise_insertion)
+	if(isstack(held_item) && precise_insertion)
 		var/atom/current_parent = parent
 		var/obj/item/stack/item_stack = held_item
 		requested_amount = tgui_input_number(user, "How much do you want to insert?", "Inserting [item_stack.singular_name]s", item_stack.amount, item_stack.amount)
@@ -301,6 +301,8 @@
 		if(!materials[req_mat]) //Do we have the resource?
 			return FALSE //Can't afford it
 		var/amount_required = mats[x] * multiplier
+		if(amount_required < 0)
+			return FALSE //No negative mats
 		if(!(materials[req_mat] >= amount_required)) // do we have enough of the resource?
 			return FALSE //Can't afford it
 		mats_to_remove[req_mat] += amount_required //Add it to the assoc list of things to remove

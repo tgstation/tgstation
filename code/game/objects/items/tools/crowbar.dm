@@ -10,6 +10,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	force = 5
 	throwforce = 7
+	demolition_mod = 1.25
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron=50)
 	drop_sound = 'sound/items/handling/crowbar_drop.ogg'
@@ -43,7 +44,7 @@
 
 
 /obj/item/crowbar/large
-	name = "crowbar"
+	name = "large crowbar"
 	desc = "It's a big crowbar. It doesn't fit in your pockets, because it's big."
 	force = 12
 	w_class = WEIGHT_CLASS_NORMAL
@@ -54,6 +55,11 @@
 	inhand_icon_state = "crowbar"
 	worn_icon_state = "crowbar"
 	toolspeed = 0.7
+
+/obj/item/crowbar/large/emergency
+	name = "emergency crowbar"
+	desc = "It's a bulky crowbar. It almost seems deliberately designed to not be able to fit inside of a backpack."
+	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/crowbar/large/heavy //from space ruin
 	name = "heavy crowbar"
@@ -67,7 +73,7 @@
 	throwforce = 10
 	throw_speed = 2
 
-/obj/item/crowbar/large/old/Initialize()
+/obj/item/crowbar/large/old/Initialize(mapload)
 	. = ..()
 	if(prob(50))
 		icon_state = "crowbar_powergame"
@@ -83,6 +89,7 @@
 	custom_materials = list(/datum/material/iron = 4500, /datum/material/silver = 2500, /datum/material/titanium = 3500)
 	usesound = 'sound/items/jaws_pry.ogg'
 	force = 15
+	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
 	force_opens = TRUE
 
@@ -111,8 +118,9 @@
 
 /obj/item/crowbar/power/syndicate
 	name = "Syndicate jaws of life"
-	desc = "A re-engineered copy of Nanotrasen's standard jaws of life. Can be used to force open airlocks in its crowbar configuration."
+	desc = "A pocket sized re-engineered copy of Nanotrasen's standard jaws of life. Can be used to force open airlocks in its crowbar configuration."
 	icon_state = "jaws_syndie"
+	w_class = WEIGHT_CLASS_SMALL
 	toolspeed = 0.5
 	force_opens = TRUE
 
@@ -140,15 +148,8 @@
 		user.visible_message(span_notice("[user] cuts [attacked_carbon]'s restraints with [src]!"))
 		qdel(attacked_carbon.handcuffed)
 		return
-	else if(istype(attacked_carbon) && attacked_carbon.has_status_effect(/datum/status_effect/strandling) && tool_behaviour == TOOL_WIRECUTTER)
-		user.visible_message(span_notice("[user] attempts to cut the durathread strand from around [attacked_carbon]'s neck."))
-		if(do_after(user, 1.5 SECONDS, attacked_carbon))
-			user.visible_message(span_notice("[user] succesfully cuts the durathread strand from around [attacked_carbon]'s neck."))
-			attacked_carbon.remove_status_effect(/datum/status_effect/strandling)
-			playsound(loc, usesound, 50, TRUE, -1)
-		return
-	else
-		..()
+
+	return ..()
 
 /obj/item/crowbar/cyborg
 	name = "hydraulic crowbar"

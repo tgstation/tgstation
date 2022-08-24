@@ -28,6 +28,7 @@
 	var/colour = "#000000" //what colour the ink is!
 	var/degrees = 0
 	var/font = PEN_FONT
+	var/requires_gravity = TRUE // can you use this to write in zero-g
 	embedding = list(embed_chance = 50)
 	sharpness = SHARP_POINTY
 
@@ -79,9 +80,10 @@
 
 /obj/item/pen/fountain
 	name = "fountain pen"
-	desc = "It's a common fountain pen, with a faux wood body."
+	desc = "It's a common fountain pen, with a faux wood body. Rumored to work in zero gravity situations."
 	icon_state = "pen-fountain"
 	font = FOUNTAIN_PEN_FONT
+	requires_gravity = FALSE // fancy spess pens
 
 /obj/item/pen/charcoal
 	name = "charcoal stylus"
@@ -91,6 +93,7 @@
 	font = CHARCOAL_FONT
 	custom_materials = null
 	grind_results = list(/datum/reagent/ash = 5, /datum/reagent/cellulose = 10)
+	requires_gravity = FALSE // this is technically a pencil
 
 /datum/crafting_recipe/charcoal_stylus
 	name = "Charcoal Stylus"
@@ -120,7 +123,11 @@
 
 /obj/item/pen/fountain/captain/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 200, 115) //the pen is mightier than the sword
+	AddComponent(/datum/component/butchering, \
+	speed = 20 SECONDS, \
+	effectiveness = 115, \
+	)
+	//the pen is mightier than the sword
 
 /obj/item/pen/fountain/captain/reskin_obj(mob/M)
 	..()
@@ -201,6 +208,14 @@
 			to_chat(user, span_notice("You have successfully reset [O]'s name and description."))
 			O.renamedByPlayer = FALSE
 
+/obj/item/pen/get_writing_implement_details()
+	return list(
+		interaction_mode = MODE_WRITING,
+		font = font,
+		color = colour,
+		use_bold = FALSE,
+	)
+
 /*
  * Sleepypens
  */
@@ -230,10 +245,17 @@
 	attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts") //these won't show up if the pen is off
 	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_POINTY
+	armour_penetration = 20
+	bare_wound_bonus = 10
+	light_system = MOVABLE_LIGHT
+	light_range = 1.5
+	light_power = 0.75
+	light_color = COLOR_SOFT_RED
+	light_on = FALSE
 	/// The real name of our item when extended.
 	var/hidden_name = "energy dagger"
 	/// The real desc of our item when extended.
-	var/hidden_desc = "It's a normal black ink pen."
+	var/hidden_desc = "It's a normal black ink pe- Wait. That's a thing used to stab people!"
 	/// The real icons used when extended.
 	var/hidden_icon = "edagger"
 	/// Whether or pen is extended
@@ -241,7 +263,10 @@
 
 /obj/item/pen/edagger/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, _speed = 6 SECONDS, _butcher_sound = 'sound/weapons/blade1.ogg')
+	AddComponent(/datum/component/butchering, \
+	speed = 6 SECONDS, \
+	butcher_sound = 'sound/weapons/blade1.ogg', \
+	)
 	AddComponent(/datum/component/transforming, \
 		force_on = 18, \
 		throwforce_on = 35, \
@@ -288,16 +313,8 @@
 	updateEmbedding()
 	balloon_alert(user, "[hidden_name] [active ? "active":"concealed"]")
 	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 5, TRUE)
+	set_light_on(active)
 	return COMPONENT_NO_DEFAULT_MESSAGE
-
-///syndicate prototype for smuggling missions
-/obj/item/pen/edagger/prototype
-	name = "odd pen"
-	desc = "It's an abnormal black ink pen, with weird chunks of metal sticking out of it..."
-	hidden_name = "prototype hardlight dagger"
-	hidden_desc = "Waffle Corp R&D's prototype for energy daggers. Hardlight may be inferior \
-	to energy weapons, but it's still surprisingly deadly."
-	hidden_icon = "eprototypedagger"
 
 /obj/item/pen/survival
 	name = "survival pen"
@@ -315,3 +332,10 @@
 	toolspeed = 10 //You will never willingly choose to use one of these over a shovel.
 	font = FOUNTAIN_PEN_FONT
 	colour = "#0000FF"
+
+/obj/item/pen/destroyer
+	name = "Fine Tipped Pen"
+	desc = "A pen with an infinitly sharpened tip. Capable of striking the weakest point of a strucutre or robot and annihilating it instantly. Good at putting holes in people too."
+	force = 5
+	wound_bonus = 100
+	demolition_mod = 9000

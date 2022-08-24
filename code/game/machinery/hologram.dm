@@ -39,7 +39,8 @@ Possible to do for anyone motivated enough:
 	icon_state = "holopad0"
 	base_icon_state = "holopad"
 	layer = LOW_OBJ_LAYER
-	plane = FLOOR_PLANE
+	/// The plane is set such that it shows up without being covered by pipes/wires in a map editor, we change this on initialize.
+	plane = GAME_PLANE
 	req_access = list(ACCESS_KEYCARD_AUTH) //Used to allow for forced connecting to other (not secure) holopads. Anyone can make a call, though.
 	max_integrity = 300
 	armor = list(MELEE = 50, BULLET = 20, LASER = 20, ENERGY = 20, BOMB = 0, BIO = 0, FIRE = 50, ACID = 0)
@@ -86,6 +87,12 @@ Possible to do for anyone motivated enough:
 	///bitfield. used to turn on and off hearing sensitivity depending on if we can act on Hear() at all - meant for lowering the number of unessesary hearable atoms
 	var/can_hear_flags = NONE
 
+/obj/machinery/holopad/Initialize(mapload)
+	. = ..()
+	/// We set the plane on mapload such that we can see the holopad render over atmospherics pipe and cabling in a map editor (without initialization), but so it gets that "inset" look in the floor in-game.
+	plane = FLOOR_PLANE
+	update_appearance()
+
 /obj/machinery/holopad/secure
 	name = "secure holopad"
 	desc = "It's a floor-mounted device for projecting holographic images. This one will refuse to auto-connect incoming calls."
@@ -115,15 +122,14 @@ Possible to do for anyone motivated enough:
 			new_disk.forceMove(src)
 			disk = new_disk
 
-/obj/machinery/holopad/Moved(atom/OldLoc, Dir)
+/obj/machinery/holopad/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(!loc)
 		return
 	// move any relevant holograms, basically non-AI, and rays with the pad
 	if(replay_holo)
 		replay_holo.abstract_move(loc)
-	for(var/i in holorays)
-		var/obj/effect/overlay/holoray/ray = holorays[i]
+	for(var/obj/effect/overlay/holoray/ray as anything in holorays)
 		ray.abstract_move(loc)
 	var/list/non_call_masters = masters?.Copy()
 	for(var/datum/holocall/holocall as anything in holo_calls)
@@ -131,7 +137,7 @@ Possible to do for anyone motivated enough:
 			continue
 		non_call_masters -= holocall.user
 		// moving the eye moves the holo which updates the ray too
-		holocall.eye.setLoc(locate(clamp(x + (holocall.hologram.x - OldLoc.x), 1, world.maxx), clamp(y + (holocall.hologram.y - OldLoc.y), 1, world.maxy), z))
+		holocall.eye.setLoc(locate(clamp(x + (holocall.hologram.x - old_loc.x), 1, world.maxx), clamp(y + (holocall.hologram.y - old_loc.y), 1, world.maxy), z))
 	for(var/mob/living/holo_master as anything in non_call_masters)
 		var/obj/effect/holo = masters[holo_master]
 		update_holoray(holo_master, holo.loc)
@@ -210,6 +216,22 @@ Possible to do for anyone motivated enough:
 	. = ..()
 	default_unfasten_wrench(user, tool)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/holopad/set_anchored(anchorvalue)
+	. = ..()
+	if(isnull(.) || anchorvalue)
+		return
+
+	if(outgoing_call)
+		outgoing_call.ConnectionFailure(src) //disconnect the call if we got unwrenched.
+
+	for(var/datum/holocall/holocall_to_disconnect as anything in holo_calls)
+		holocall_to_disconnect.ConnectionFailure(src)
+
+	if(replay_mode)
+		replay_stop()
+	if(record_mode)
+		record_stop()
 
 /obj/machinery/holopad/attackby(obj/item/P, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "holopad_open", "holopad0", P))
@@ -559,6 +581,9 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(ringing)
 		icon_state = "[base_icon_state]_ringing"
 		return ..()
+	if(panel_open)
+		icon_state = "[base_icon_state]_open"
+		return ..()
 	icon_state = "[base_icon_state][(total_users || replay_mode) ? 1 : 0]"
 	return ..()
 
@@ -801,7 +826,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	HC = null
 	return ..()
 
-/obj/effect/overlay/holo_pad_hologram/Process_Spacemove(movement_dir = 0)
+/obj/effect/overlay/holo_pad_hologram/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	return TRUE
 
 /obj/effect/overlay/holo_pad_hologram/examine(mob/user)

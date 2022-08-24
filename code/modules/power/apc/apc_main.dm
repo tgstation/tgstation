@@ -105,12 +105,14 @@
 	var/obj/machinery/computer/apc_control/remote_control = null
 	///Represents a signel source of power alarms for this apc
 	var/datum/alarm_handler/alarm_manager
+	/// Offsets the object by APC_PIXEL_OFFSET (defined in apc_defines.dm) pixels in the direction we want it placed in. This allows the APC to be embedded in a wall, yet still inside an area (like mapping).
+	var/offset_old
 
 /obj/machinery/power/apc/New(turf/loc, ndir, building=0)
 	if(!req_access)
 		req_access = list(ACCESS_ENGINE_EQUIP)
 	if(!armor)
-		armor = list(MELEE = 20, BULLET = 20, LASER = 10, ENERGY = 100, BOMB = 30, BIO = 100, FIRE = 90, ACID = 50)
+		armor = list(MELEE = 20, BULLET = 20, LASER = 10, ENERGY = 100, BOMB = 30, BIO = 0, FIRE = 90, ACID = 50)
 	..()
 	GLOB.apcs_list += src
 
@@ -126,9 +128,6 @@
 		addtimer(CALLBACK(src, .proc/update), 5)
 		dir = ndir
 
-	// offset APC_PIXEL_OFFSET pixels in direction of dir
-	// this allows the APC to be embedded in a wall, yet still inside an area
-	var/offset_old
 	switch(dir)
 		if(NORTH)
 			offset_old = pixel_y
@@ -142,8 +141,6 @@
 		if(WEST)
 			offset_old = pixel_x
 			pixel_x = -APC_PIXEL_OFFSET
-	if(abs(offset_old) != APC_PIXEL_OFFSET && !building)
-		log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([dir] | [uppertext(dir2text(dir))]) has pixel_[dir & (WEST|EAST) ? "x" : "y"] value [offset_old] - should be [dir & (SOUTH|EAST) ? "-" : ""][APC_PIXEL_OFFSET]. Use the directional/ helpers!")
 
 /obj/machinery/power/apc/Initialize(mapload)
 	. = ..()
@@ -174,7 +171,7 @@
 
 	if(area)
 		if(area.apc)
-			log_mapping("Duplicate APC created at [AREACOORD(src)]")
+			log_mapping("Duplicate APC created at [AREACOORD(src)]. Original at [AREACOORD(area.apc)].")
 		area.apc = src
 
 	update_appearance()
@@ -182,6 +179,10 @@
 	make_terminal()
 
 	addtimer(CALLBACK(src, .proc/update), 5)
+
+	///This is how we test to ensure that mappers use the directional subtypes of APCs, rather than use the parent and pixel-shift it themselves.
+	if(abs(offset_old) != APC_PIXEL_OFFSET)
+		log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([dir] | [uppertext(dir2text(dir))]) has pixel_[dir & (WEST|EAST) ? "x" : "y"] value [offset_old] - should be [dir & (SOUTH|EAST) ? "-" : ""][APC_PIXEL_OFFSET]. Use the directional/ helpers!")
 
 /obj/machinery/power/apc/Destroy()
 	GLOB.apcs_list -= src
@@ -209,7 +210,6 @@
 	if(atom_to_check == cell)
 		cell = null
 		update_appearance()
-		updateUsrDialog()
 
 /obj/machinery/power/apc/examine(mob/user)
 	. = ..()
@@ -328,7 +328,7 @@
 			toggle_breaker(usr)
 			. = TRUE
 		if("toggle_nightshift")
-			toggle_nightshift_lights()
+			toggle_nightshift_lights(usr)
 			. = TRUE
 		if("charge")
 			chargemode = !chargemode
@@ -365,13 +365,14 @@
 				malfvacate()
 		if("reboot")
 			failure_timer = 0
+			force_update = FALSE
 			update_appearance()
 			update()
 		if("emergency_lighting")
 			emergency_lights = !emergency_lights
 			for(var/obj/machinery/light/L in area)
-				if(!initial(L.no_emergency)) //If there was an override set on creation, keep that override
-					L.no_emergency = emergency_lights
+				if(!initial(L.no_low_power)) //If there was an override set on creation, keep that override
+					L.no_low_power = emergency_lights
 					INVOKE_ASYNC(L, /obj/machinery/light/.proc/update, FALSE)
 				CHECK_TICK
 	return TRUE
@@ -384,8 +385,6 @@
 	if(!area || !area.requires_power)
 		return
 	if(failure_timer)
-		update()
-		queue_icon_update()
 		failure_timer--
 		force_update = TRUE
 		return
@@ -515,7 +514,7 @@
 	// update icon & area power if anything changed
 
 	if(last_lt != lighting || last_eq != equipment || last_en != environ || force_update)
-		force_update = 0
+		force_update = FALSE
 		queue_icon_update()
 		update()
 	else if(last_ch != charging)

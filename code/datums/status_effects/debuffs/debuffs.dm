@@ -133,21 +133,6 @@
 	alert_type = /atom/movable/screen/alert/status_effect/asleep
 	needs_update_stat = TRUE
 	tick_interval = 2 SECONDS
-	var/mob/living/carbon/carbon_owner
-	var/mob/living/carbon/human/human_owner
-
-/datum/status_effect/incapacitating/sleeping/on_creation(mob/living/new_owner)
-	. = ..()
-	if(.)
-		if(iscarbon(owner)) //to avoid repeated istypes
-			carbon_owner = owner
-		if(ishuman(owner))
-			human_owner = owner
-
-/datum/status_effect/incapacitating/sleeping/Destroy()
-	carbon_owner = null
-	human_owner = null
-	return ..()
 
 /datum/status_effect/incapacitating/sleeping/on_apply()
 	. = ..()
@@ -178,30 +163,69 @@
 	ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
 	tick_interval = initial(tick_interval)
 
+#define HEALING_SLEEP_DEFAULT 0.2
+
 /datum/status_effect/incapacitating/sleeping/tick()
 	if(owner.maxHealth)
 		var/health_ratio = owner.health / owner.maxHealth
-		var/healing = -0.2
+		var/healing = HEALING_SLEEP_DEFAULT
+
+		// having high spirits helps us recover
+		if(owner.mob_mood)
+			switch(owner.mob_mood.sanity_level)
+				if(SANITY_LEVEL_GREAT)
+					healing = 0.2
+				if(SANITY_LEVEL_NEUTRAL)
+					healing = 0.1
+				if(SANITY_LEVEL_DISTURBED)
+					healing = 0
+				if(SANITY_LEVEL_UNSTABLE)
+					healing = 0
+				if(SANITY_LEVEL_CRAZY)
+					healing = -0.1
+				if(SANITY_LEVEL_INSANE)
+					healing = -0.2
+
+		var/turf/rest_turf = get_turf(owner)
+		var/is_sleeping_in_darkness = rest_turf.get_lumcount() <= LIGHTING_TILE_IS_DARK
+
+		// sleeping with a blindfold or in the dark helps us rest
+		if(HAS_TRAIT_FROM(owner, TRAIT_BLIND, BLINDFOLD_TRAIT) || is_sleeping_in_darkness)
+			healing += 0.1
+
+		// sleeping in silence is always better
+		if(HAS_TRAIT(src, TRAIT_DEAF))
+			healing += 0.1
+
+		// check for beds
 		if((locate(/obj/structure/bed) in owner.loc))
-			healing -= 0.3
+			healing += 0.2
 		else if((locate(/obj/structure/table) in owner.loc))
-			healing -= 0.1
+			healing += 0.1
+
+		// don't forget the bedsheet
 		for(var/obj/item/bedsheet/bedsheet in range(owner.loc,0))
 			if(bedsheet.loc != owner.loc) //bedsheets in your backpack/neck don't give you comfort
 				continue
-			healing -= 0.1
+			healing += 0.1
 			break //Only count the first bedsheet
-		if(health_ratio > 0.8)
-			owner.adjustBruteLoss(healing)
-			owner.adjustFireLoss(healing)
-			owner.adjustToxLoss(healing * 0.5, TRUE, TRUE)
-		owner.adjustStaminaLoss(healing)
-	if(human_owner?.drunkenness)
-		human_owner.drunkenness *= 0.997 //reduce drunkenness by 0.3% per tick, 6% per 2 seconds
-	if(carbon_owner)
+
+		if(healing > 0 && health_ratio > 0.8)
+			owner.adjustBruteLoss(-1 * healing)
+			owner.adjustFireLoss(-1 * healing)
+			owner.adjustToxLoss(-1 * healing * 0.5, TRUE, TRUE)
+		owner.adjustStaminaLoss(min(-1 * healing, -1 * HEALING_SLEEP_DEFAULT))
+	// Drunkenness gets reduced by 0.3% per tick (6% per 2 seconds)
+	owner.set_drunk_effect(owner.get_drunk_amount() * 0.997)
+
+	if(iscarbon(owner))
+		var/mob/living/carbon/carbon_owner = owner
 		carbon_owner.handle_dreams()
+
 	if(prob(2) && owner.health > owner.crit_threshold)
 		owner.emote("snore")
+
+#undef HEALING_SLEEP_DEFAULT
 
 /atom/movable/screen/alert/status_effect/asleep
 	name = "Asleep"
@@ -239,7 +263,8 @@
 	ADD_TRAIT(owner, TRAIT_HANDS_BLOCKED, TRAIT_STATUS_EFFECT(id))
 	owner.add_filter("stasis_status_ripple", 2, list("type" = "ripple", "flags" = WAVE_BOUNDED, "radius" = 0, "size" = 2))
 	var/filter = owner.get_filter("stasis_status_ripple")
-	animate(filter, radius = 32, time = 15, size = 0, loop = -1)
+	animate(filter, radius = 0, time = 0.2 SECONDS, size = 2, easing = JUMP_EASING, loop = -1, flags = ANIMATION_PARALLEL)
+	animate(radius = 32, time = 1.5 SECONDS, size = 0)
 	if(iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner
 		carbon_owner.update_bodypart_bleed_overlays()
@@ -262,42 +287,6 @@
 	desc = "Your biological functions have halted. You could live forever this way, but it's pretty boring."
 	icon_state = "stasis"
 
-//GOLEM GANG
-
-//OTHER DEBUFFS
-/datum/status_effect/strandling //get it, strand as in durathread strand + strangling = strandling hahahahahahahahahahhahahaha i want to die
-	id = "strandling"
-	examine_text = "SUBJECTPRONOUN seems to be being choked by some durathread strands. You may be able to <b>cut</b> them off."
-	status_type = STATUS_EFFECT_UNIQUE
-	alert_type = /atom/movable/screen/alert/status_effect/strandling
-
-/datum/status_effect/strandling/on_apply()
-	ADD_TRAIT(owner, TRAIT_MAGIC_CHOKE, STATUS_EFFECT_TRAIT)
-	return ..()
-
-/datum/status_effect/strandling/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_MAGIC_CHOKE, STATUS_EFFECT_TRAIT)
-	return ..()
-
-/atom/movable/screen/alert/status_effect/strandling
-	name = "Choking strand"
-	desc = "A magical strand of Durathread is wrapped around your neck, preventing you from breathing! Click this icon to remove the strand."
-	icon_state = "his_grace"
-	alerttooltipstyle = "hisgrace"
-
-/atom/movable/screen/alert/status_effect/strandling/Click(location, control, params)
-	. = ..()
-	if(!.)
-		return
-
-	to_chat(owner, span_notice("You attempt to remove the durathread strand from around your neck."))
-	if(do_after(owner, 3.5 SECONDS, owner))
-		if(isliving(owner))
-			var/mob/living/living_owner = owner
-			to_chat(living_owner, span_notice("You succesfuly remove the durathread strand."))
-			living_owner.remove_status_effect(/datum/status_effect/strandling)
-
-//OTHER DEBUFFS
 /datum/status_effect/pacify
 	id = "pacify"
 	status_type = STATUS_EFFECT_REPLACE
@@ -383,199 +372,6 @@
 /datum/status_effect/crusher_mark/be_replaced()
 	owner.underlays -= marked_underlay //if this is being called, we should have an owner at this point.
 	..()
-
-/datum/status_effect/eldritch
-	id = "heretic_mark"
-	duration = 15 SECONDS
-	status_type = STATUS_EFFECT_REPLACE
-	alert_type = null
-	on_remove_on_mob_delete = TRUE
-	///underlay used to indicate that someone is marked
-	var/mutable_appearance/marked_underlay
-	/// icon file for the underlay
-	var/effect_icon = 'icons/effects/eldritch.dmi'
-	/// icon state for the underlay
-	var/effect_icon_state = ""
-
-/datum/status_effect/eldritch/on_creation(mob/living/new_owner, ...)
-	marked_underlay = mutable_appearance(effect_icon, effect_icon_state, BELOW_MOB_LAYER)
-	return ..()
-
-/datum/status_effect/eldritch/Destroy()
-	QDEL_NULL(marked_underlay)
-	return ..()
-
-/datum/status_effect/eldritch/on_apply()
-	if(owner.mob_size >= MOB_SIZE_HUMAN)
-		RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/update_owner_underlay)
-		owner.update_icon(UPDATE_OVERLAYS)
-		return TRUE
-	return FALSE
-
-/datum/status_effect/eldritch/on_remove()
-	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
-	owner.update_icon(UPDATE_OVERLAYS)
-	return ..()
-
-/**
- * Signal proc for [COMSIG_ATOM_UPDATE_OVERLAYS].
- *
- * Adds the generated mark overlay to the afflicted.
- */
-/datum/status_effect/eldritch/proc/update_owner_underlay(atom/source, list/overlays)
-	SIGNAL_HANDLER
-
-	overlays += marked_underlay
-
-/**
- * Called when the mark is activated by the heretic.
- */
-/datum/status_effect/eldritch/proc/on_effect()
-	SHOULD_CALL_PARENT(TRUE)
-
-	playsound(owner, 'sound/magic/repulse.ogg', 75, TRUE)
-	qdel(src) //what happens when this is procced.
-
-//Each mark has diffrent effects when it is destroyed that combine with the mansus grasp effect.
-/datum/status_effect/eldritch/flesh
-	effect_icon_state = "emark1"
-
-/datum/status_effect/eldritch/flesh/on_effect()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_owner = owner
-		var/obj/item/bodypart/bodypart = pick(human_owner.bodyparts)
-		var/datum/wound/slash/severe/crit_wound = new()
-		crit_wound.apply_wound(bodypart)
-
-	return ..()
-
-/datum/status_effect/eldritch/ash
-	effect_icon_state = "emark2"
-	/// Dictates how much stamina and burn damage the mark will cause on trigger.
-	var/repetitions = 1
-
-/datum/status_effect/eldritch/ash/on_creation(mob/living/new_owner, repetition = 5)
-	. = ..()
-	src.repetitions = max(1, repetition)
-
-/datum/status_effect/eldritch/ash/on_effect()
-	if(iscarbon(owner))
-		var/mob/living/carbon/carbon_owner = owner
-		carbon_owner.adjustStaminaLoss(6 * repetitions) // first one = 30 stam
-		carbon_owner.adjustFireLoss(3 * repetitions) // first one = 15 burn
-		for(var/mob/living/carbon/victim in shuffle(range(1, carbon_owner)))
-			if(IS_HERETIC(victim) || victim == carbon_owner)
-				continue
-			victim.apply_status_effect(type, repetitions - 1)
-			break
-
-	return ..()
-
-/datum/status_effect/eldritch/rust
-	effect_icon_state = "emark3"
-
-/datum/status_effect/eldritch/rust/on_effect()
-	if(iscarbon(owner))
-		var/mob/living/carbon/carbon_owner = owner
-		var/static/list/organs_to_damage = list(
-			ORGAN_SLOT_BRAIN,
-			ORGAN_SLOT_EARS,
-			ORGAN_SLOT_EYES,
-			ORGAN_SLOT_LIVER,
-			ORGAN_SLOT_LUNGS,
-			ORGAN_SLOT_STOMACH,
-			ORGAN_SLOT_HEART,
-		)
-
-		// Roughly 75% of their organs will take a bit of damage
-		for(var/organ_slot in organs_to_damage)
-			if(prob(75))
-				carbon_owner.adjustOrganLoss(organ_slot, 20)
-
-		// And roughly 75% of their items will take a smack, too
-		for(var/obj/item/thing in carbon_owner.get_all_gear())
-			if(!QDELETED(thing) && prob(75))
-				thing.take_damage(100)
-
-	return ..()
-
-/datum/status_effect/eldritch/void
-	effect_icon_state = "emark4"
-
-/datum/status_effect/eldritch/void/on_effect()
-	var/turf/open/our_turf = get_turf(owner)
-	our_turf.TakeTemperature(-40)
-	owner.adjust_bodytemperature(-20)
-
-	if(iscarbon(owner))
-		var/mob/living/carbon/carbon_owner = owner
-		carbon_owner.silent += 5
-
-	return ..()
-
-/datum/status_effect/eldritch/blade
-	effect_icon_state = "emark5"
-	/// If set, the owner of the status effect will not be able to leave this area.
-	var/area/locked_to
-
-/datum/status_effect/eldritch/blade/Destroy()
-	locked_to = null
-	return ..()
-
-/datum/status_effect/eldritch/blade/on_apply()
-	. = ..()
-	RegisterSignal(owner, COMSIG_MOVABLE_TELEPORTED, .proc/on_teleport)
-	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/on_move)
-
-/datum/status_effect/eldritch/blade/on_remove()
-	UnregisterSignal(owner, list(COMSIG_MOVABLE_TELEPORTED, COMSIG_MOVABLE_MOVED))
-	return ..()
-
-/// Signal proc for [COMSIG_MOVABLE_TELEPORTED] that blocks any teleports from our locked area
-/datum/status_effect/eldritch/blade/proc/on_teleport(mob/living/source, atom/destination, channel)
-	SIGNAL_HANDLER
-
-	if(!locked_to)
-		return
-
-	if(get_area(destination) == locked_to)
-		return
-
-	to_chat(source, span_hypnophrase("An otherworldly force prevents your escape from [get_area_name(locked_to)]!"))
-
-	source.Stun(1 SECONDS)
-	return COMPONENT_BLOCK_TELEPORT
-
-/// Signal proc for [COMSIG_MOVABLE_MOVED] that blocks any movement out of our locked area
-/datum/status_effect/eldritch/blade/proc/on_move(mob/living/source, turf/old_loc, movement_dir, forced)
-	SIGNAL_HANDLER
-
-	if(!locked_to)
-		return
-
-	if(get_area(source) == locked_to)
-		return
-
-	to_chat(source, span_hypnophrase("An otherworldly force prevents your escape from [get_area_name(locked_to)]!"))
-
-	source.Stun(1 SECONDS)
-	source.throw_at(old_loc, 5, 1)
-
-/// A status effect used for specifying confusion on a living mob.
-/// Created automatically with /mob/living/set_confusion.
-/datum/status_effect/confusion
-	id = "confusion"
-	alert_type = null
-	var/strength
-
-/datum/status_effect/confusion/tick()
-	strength -= 1
-	if (strength <= 0)
-		owner.remove_status_effect(/datum/status_effect/confusion)
-		return
-
-/datum/status_effect/confusion/proc/set_strength(new_strength)
-	strength = new_strength
 
 /datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"
@@ -730,13 +526,13 @@
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_PACIFISM, CLOTHING_TRAIT)
 	ADD_TRAIT(owner, TRAIT_MUTE, CLOTHING_TRAIT)
-	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, type, /datum/mood_event/gondola)
+	owner.add_mood_event(type, /datum/mood_event/gondola)
 	to_chat(owner, span_notice("You suddenly feel at peace and feel no need to make any sudden or rash actions..."))
 
 /datum/status_effect/gonbola_pacify/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, CLOTHING_TRAIT)
 	REMOVE_TRAIT(owner, TRAIT_MUTE, CLOTHING_TRAIT)
-	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, type)
+	owner.clear_mood_event(type)
 	return ..()
 
 /datum/status_effect/trance
@@ -744,7 +540,6 @@
 	status_type = STATUS_EFFECT_UNIQUE
 	duration = 300
 	tick_interval = 10
-	examine_text = span_warning("SUBJECTPRONOUN seems slow and unfocused.")
 	var/stun = TRUE
 	alert_type = /atom/movable/screen/alert/status_effect/trance
 
@@ -755,8 +550,8 @@
 
 /datum/status_effect/trance/tick()
 	if(stun)
-		owner.Stun(60, TRUE)
-	owner.dizziness = 20
+		owner.Stun(6 SECONDS, TRUE)
+	owner.set_timed_status_effect(40 SECONDS, /datum/status_effect/dizziness)
 
 /datum/status_effect/trance/on_apply()
 	if(!iscarbon(owner))
@@ -776,9 +571,12 @@
 /datum/status_effect/trance/on_remove()
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
 	REMOVE_TRAIT(owner, TRAIT_MUTE, STATUS_EFFECT_TRAIT)
-	owner.dizziness = 0
+	owner.remove_status_effect(/datum/status_effect/dizziness)
 	owner.remove_client_colour(/datum/client_colour/monochrome/trance)
 	to_chat(owner, span_warning("You snap out of your trance!"))
+
+/datum/status_effect/trance/get_examine_text()
+	return span_warning("[owner.p_they(TRUE)] seem[owner.p_s()] slow and unfocused.")
 
 /datum/status_effect/trance/proc/hypnotize(datum/source, list/hearing_args)
 	SIGNAL_HANDLER
@@ -791,8 +589,8 @@
 	var/mob/living/carbon/C = owner
 	C.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY) //clear previous hypnosis
 	// The brain trauma itself does its own set of logging, but this is the only place the source of the hypnosis phrase can be found.
-	hearing_speaker.log_message("has hypnotised [key_name(C)] with the phrase '[hearing_args[HEARING_RAW_MESSAGE]]'", LOG_ATTACK)
-	C.log_message("has been hypnotised by the phrase '[hearing_args[HEARING_RAW_MESSAGE]]' spoken by [key_name(hearing_speaker)]", LOG_VICTIM, log_globally = FALSE)
+	hearing_speaker.log_message("hypnotised [key_name(C)] with the phrase '[hearing_args[HEARING_RAW_MESSAGE]]'", LOG_ATTACK, color="red")
+	C.log_message("has been hypnotised by the phrase '[hearing_args[HEARING_RAW_MESSAGE]]' spoken by [key_name(hearing_speaker)]", LOG_VICTIM, color="orange", log_globally = FALSE)
 	addtimer(CALLBACK(C, /mob/living/carbon.proc/gain_trauma, /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, hearing_args[HEARING_RAW_MESSAGE]), 10)
 	addtimer(CALLBACK(C, /mob/living.proc/Stun, 60, TRUE, TRUE), 15) //Take some time to think about it
 	qdel(src)
@@ -869,8 +667,11 @@
 	if(prob(40))
 		var/obj/item/I = H.get_active_held_item()
 		if(I && H.dropItemToGround(I))
-			H.visible_message(span_notice("[H]'s hand convulses, and they drop their [I.name]!"),span_userdanger("Your hand convulses violently, and you drop what you were holding!"))
-			H.jitteriness += 5
+			H.visible_message(
+				span_notice("[H]'s hand convulses, and they drop their [I.name]!"),
+				span_userdanger("Your hand convulses violently, and you drop what you were holding!"),
+			)
+			H.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/jitter)
 
 /atom/movable/screen/alert/status_effect/convulsing
 	name = "Shaky Hands"
@@ -989,8 +790,8 @@
 		if(0 to 10)
 			human_owner.vomit()
 		if(20 to 30)
-			human_owner.Dizzy(50)
-			human_owner.Jitter(50)
+			human_owner.set_timed_status_effect(100 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
+			human_owner.set_timed_status_effect(100 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 		if(30 to 40)
 			human_owner.adjustOrganLoss(ORGAN_SLOT_LIVER, 5)
 		if(40 to 50)
@@ -1006,33 +807,7 @@
 		if(90 to 95)
 			human_owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20, 190)
 		if(95 to 100)
-			human_owner.add_confusion(12)
-
-/datum/status_effect/amok
-	id = "amok"
-	status_type = STATUS_EFFECT_REPLACE
-	alert_type = null
-	duration = 10 SECONDS
-	tick_interval = 1 SECONDS
-
-/datum/status_effect/amok/on_apply(mob/living/afflicted)
-	. = ..()
-	to_chat(owner, span_boldwarning("You feel filled with a rage that is not your own!"))
-
-/datum/status_effect/amok/tick()
-	. = ..()
-	var/prev_combat_mode = owner.combat_mode
-	owner.set_combat_mode(TRUE)
-
-	var/list/mob/living/targets = list()
-	for(var/mob/living/potential_target in oview(owner, 1))
-		if(IS_HERETIC_OR_MONSTER(potential_target))
-			continue
-		targets += potential_target
-	if(LAZYLEN(targets))
-		owner.log_message(" attacked someone due to the amok debuff.", LOG_ATTACK) //the following attack will log itself
-		owner.ClickOn(pick(targets))
-	owner.set_combat_mode(prev_combat_mode)
+			human_owner.adjust_timed_status_effect(12 SECONDS, /datum/status_effect/confusion)
 
 /datum/status_effect/cloudstruck
 	id = "cloudstruck"
@@ -1073,7 +848,6 @@
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/ants
 	duration = 2 MINUTES //Keeping the normal timer makes sure people can't somehow dump 300+ ants on someone at once so they stay there for like 30 minutes. Max w/ 1 dump is 57.6 brute.
-	examine_text = span_warning("SUBJECTPRONOUN is covered in ants!")
 	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 	/// Will act as the main timer as well as changing how much damage the ants do.
 	var/ants_remaining = 0
@@ -1109,13 +883,16 @@
 /datum/status_effect/ants/on_remove()
 	ants_remaining = 0
 	to_chat(owner, span_notice("All of the ants are off of your body!"))
-	UnregisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT, .proc/ants_washed)
+	UnregisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT)
 	. = ..()
 
 /datum/status_effect/ants/proc/ants_washed()
 	SIGNAL_HANDLER
 	owner.remove_status_effect(/datum/status_effect/ants)
 	return COMPONENT_CLEANED
+
+/datum/status_effect/ants/get_examine_text()
+	return span_warning("[owner.p_they(TRUE)] [owner.p_are()] covered in ants!")
 
 /datum/status_effect/ants/tick()
 	var/mob/living/carbon/human/victim = owner
@@ -1164,102 +941,6 @@
 	for (var/datum/status_effect/ants/ant_covered in living.status_effects)
 		to_chat(living, span_notice("You manage to get some of the ants off!"))
 		ant_covered.ants_remaining -= 10 // 5 Times more ants removed per second than just waiting in place
-
-/datum/status_effect/ghoul
-	id = "ghoul"
-	status_type = STATUS_EFFECT_UNIQUE
-	duration = -1
-	alert_type = /atom/movable/screen/alert/status_effect/ghoul
-	/// The new max health value set for the ghoul, if supplied
-	var/new_max_health
-	/// Reference to the master of the ghoul's mind
-	var/datum/mind/master_mind
-	/// An optional callback invoked when a ghoul is made (on_apply)
-	var/datum/callback/on_made_callback
-	/// An optional callback invoked when a goul is unghouled (on_removed)
-	var/datum/callback/on_lost_callback
-
-/datum/status_effect/ghoul/Destroy()
-	master_mind = null
-	QDEL_NULL(on_made_callback)
-	QDEL_NULL(on_lost_callback)
-	return ..()
-
-/datum/status_effect/ghoul/on_creation(
-	mob/living/new_owner,
-	new_max_health,
-	datum/mind/master_mind,
-	datum/callback/on_made_callback,
-	datum/callback/on_lost_callback,
-)
-
-	src.new_max_health = new_max_health
-	src.master_mind = master_mind
-	src.on_made_callback = on_made_callback
-	src.on_lost_callback = on_lost_callback
-
-	. = ..()
-
-	if(master_mind)
-		linked_alert.desc += " You are an eldritch monster reanimated to serve its master, [master_mind]."
-	if(isnum(new_max_health))
-		if(new_max_health > initial(new_owner.maxHealth))
-			linked_alert.desc += " You are stronger in this form."
-		else
-			linked_alert.desc += " You are more fragile in this form."
-
-/datum/status_effect/ghoul/on_apply()
-	if(!ishuman(owner))
-		return FALSE
-
-	var/mob/living/carbon/human/human_target = owner
-
-	RegisterSignal(human_target, COMSIG_LIVING_DEATH, .proc/remove_ghoul_status)
-	human_target.revive(full_heal = TRUE, admin_revive = TRUE)
-
-	if(new_max_health)
-		human_target.setMaxHealth(new_max_health)
-		human_target.health = new_max_health
-
-	on_made_callback?.Invoke(human_target)
-	human_target.become_husk(MAGIC_TRAIT)
-	human_target.faction |= FACTION_HERETIC
-
-	if(human_target.mind)
-		var/datum/antagonist/heretic_monster/heretic_monster = human_target.mind.add_antag_datum(/datum/antagonist/heretic_monster)
-		heretic_monster.set_owner(master_mind)
-
-	return TRUE
-
-/datum/status_effect/ghoul/on_remove()
-	remove_ghoul_status()
-	return ..()
-
-/// Removes the ghoul effects from our owner and returns them to normal.
-/datum/status_effect/ghoul/proc/remove_ghoul_status(datum/source)
-	SIGNAL_HANDLER
-
-	if(!ishuman(owner))
-		return
-	var/mob/living/carbon/human/human_target = owner
-
-	if(new_max_health)
-		human_target.setMaxHealth(initial(human_target.maxHealth))
-
-	on_lost_callback?.Invoke(human_target)
-	human_target.cure_husk(MAGIC_TRAIT)
-	human_target.faction -= FACTION_HERETIC
-	human_target.mind?.remove_antag_datum(/datum/antagonist/heretic_monster)
-
-	UnregisterSignal(human_target, COMSIG_LIVING_DEATH)
-	if(!QDELETED(src))
-		qdel(src)
-
-/atom/movable/screen/alert/status_effect/ghoul
-	name = "Flesh Servant"
-	desc = "You are a Ghoul!"
-	icon_state = ALERT_MIND_CONTROL
-
 
 /datum/status_effect/stagger
 	id = "stagger"

@@ -24,8 +24,8 @@
 	junkiness = 10
 	bite_consumption = 10
 	tastes = list("candy" = 5, "weight loss" = 4, "insect larva" = 1)
-	foodtypes = JUNKFOOD | RAW | GROSS
-	custom_price = PAYCHECK_ASSISTANT * 1.6 //Joke adjusted for inflation
+	foodtypes = JUNKFOOD | RAW | BUGS
+	custom_price = 80
 	w_class = WEIGHT_CLASS_TINY
 	var/revelation = FALSE
 
@@ -111,7 +111,7 @@
 	tastes = list("dried raisins" = 1)
 	foodtypes = JUNKFOOD | FRUIT | SUGAR
 	food_flags = FOOD_FINGER_FOOD
-	custom_price = PAYCHECK_ASSISTANT * 0.7
+	custom_price = PAYCHECK_CREW * 0.7
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/no_raisin/healthy
@@ -130,7 +130,7 @@
 	junkiness = 25
 	foodtypes = JUNKFOOD | GRAIN | SUGAR
 	food_flags = FOOD_FINGER_FOOD
-	custom_price = PAYCHECK_PRISONER
+	custom_price = PAYCHECK_LOWER
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/candy_trash
@@ -188,7 +188,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	tastes = list("peanuts" = 4, "anger" = 1)
 	foodtypes = JUNKFOOD | NUTS
-	custom_price = PAYCHECK_ASSISTANT * 0.8 //nuts are expensive in real life, and this is the best food in the vendor.
+	custom_price = PAYCHECK_CREW * 0.8 //nuts are expensive in real life, and this is the best food in the vendor.
 	junkiness = 10 //less junky than other options, since peanuts are a decently healthy snack option
 	w_class = WEIGHT_CLASS_SMALL
 	grind_results = list(/datum/reagent/consumable/peanut_butter = 5, /datum/reagent/consumable/cooking_oil = 2)
@@ -321,7 +321,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 1) //a healthy but expensive snack
 	tastes = list("pistachios" = 4, "subtle sweetness" = 1)
 	foodtypes = JUNKFOOD | NUTS
-	custom_price = PAYCHECK_MEDIUM//pistachios are even more expensive.
+	custom_price = PAYCHECK_CREW//pistachios are even more expensive.
 	junkiness = 10 //on par with peanuts
 	w_class = WEIGHT_CLASS_SMALL
 	grind_results = list(/datum/reagent/consumable/peanut_butter = 5, /datum/reagent/consumable/cooking_oil = 2)
@@ -334,7 +334,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	food_reagents = list(/datum/reagent/consumable/cornoil  = 1, /datum/reagent/consumable/salt = 6) //1 cornoil is equal to 1.33 nutriment
 	tastes = list("sunflowers" = 5)
 	foodtypes = JUNKFOOD | NUTS
-	custom_price = PAYCHECK_ASSISTANT * 0.4 //sunflowers are cheap in real life.
+	custom_price = PAYCHECK_LOWER * 0.4 //sunflowers are cheap in real life.
 	bite_consumption = 1
 	junkiness = 25
 	w_class = WEIGHT_CLASS_SMALL
@@ -356,7 +356,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	bite_consumption = 2
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/salt = 3)
 	junkiness = 20
-	custom_price = PAYCHECK_ASSISTANT * 0.8  //we are filled to the brim with flavor
+	custom_price = PAYCHECK_LOWER * 0.8  //we are filled to the brim with flavor
 	tastes = list("fried corn" = 1)
 	foodtypes = JUNKFOOD | FRIED
 	w_class = WEIGHT_CLASS_SMALL
@@ -366,35 +366,35 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 
 /obj/item/food/cornchips/blue
 	name = "\improper Coolest Ranch Boritos corn chips"
-	desc = "Triangular corn chips. This one is in coolest ranch and would probably go well with some kind of dipping sauce. Which came first, ranch or cool ranch?"
+	desc = "Which came first, ranch or cool ranch?"
 	icon_state = "boritos"
 	trash_type = /obj/item/trash/boritos
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/salt = 3, /datum/reagent/consumable/yoghurt = 1, /datum/reagent/consumable/garlic = 1)
-	tastes = list("fried corn" = 1, "coolest ranch" = 1)
+	tastes = list("fried corn" = 1, "coolest ranch" = 3)
 
 /obj/item/food/cornchips/green
 	name = "\improper Spess Salsa Boritos corn chips"
-	desc = "Triangular corn chips. This one is in spess salsa and would probably go well with some kind of dipping sauce."
+	desc = "It has the salsa baked in, so you don't need dip."
 	icon_state = "boritosgreen"
 	trash_type = /obj/item/trash/boritos/green
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/salt = 3, /datum/reagent/consumable/astrotame = 1, /datum/reagent/consumable/blackpepper = 1)
-	tastes = list("fried corn" = 1, "spess salsa" = 1)
+	tastes = list("fried corn" = 1, "spess salsa" = 3)
 
 /obj/item/food/cornchips/red
 	name = "\improper Nacho Cheese Boritos corn chips"
-	desc = "Triangular corn chips. This one is in nacho cheese and would probably go well with some kind of dipping sauce."
+	desc = "Notorious for helping cover everything you touch in orange cheese dust."
 	icon_state = "boritosred"
 	trash_type = /obj/item/trash/boritos/red
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/salt = 3, /datum/reagent/consumable/astrotame = 1, /datum/reagent/consumable/cornmeal = 1)
-	tastes = list("fried corn" = 1, "nacho cheese" = 1)
+	tastes = list("fried corn" = 1, "nacho cheese" = 3)
 
 /obj/item/food/cornchips/purple
 	name = "\improper Spicy Sweet Chili Boritos corn chips"
-	desc = "Triangular corn chips. This one is in spicy sweet chili and would probably go well with some kind of dipping sauce."
+	desc = "The only flavour that actually tastes spicy like proper nachos."
 	icon_state = "boritospurple"
 	trash_type = /obj/item/trash/boritos/purple
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/salt = 3, /datum/reagent/consumable/capsaicin = 1, /datum/reagent/consumable/sugar = 1)
-	tastes = list("fried corn" = 1, "spicy & sweet chili" = 1)
+	tastes = list("fried corn" = 1, "spicy & sweet chili" = 3)
 
 /obj/item/food/cornchips/random
 	name = "\improper Boritos cornchips"

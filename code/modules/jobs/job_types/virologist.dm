@@ -6,16 +6,16 @@
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the chief medical officer"
+	supervisors = SUPERVISOR_CMO
 	selection_color = "#ffeef0"
-	exp_requirements = 60
+	exp_requirements = 1 HOURS
 	exp_required_type = EXP_TYPE_CREW
 	exp_granted_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/virologist
 	plasmaman_outfit = /datum/outfit/plasmaman/viro
 
-	paycheck = PAYCHECK_MEDIUM
+	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_MED
 
 	liver_traits = list(TRAIT_MEDICAL_METABOLISM)
@@ -29,9 +29,9 @@
 	family_heirlooms = list(/obj/item/reagent_containers/syringe)
 
 	mail_goodies = list(
-		/obj/item/reagent_containers/glass/bottle/random_virus = 15,
-		/obj/item/reagent_containers/glass/bottle/formaldehyde = 10,
-		/obj/item/reagent_containers/glass/bottle/synaptizine = 10,
+		/obj/item/reagent_containers/cup/bottle/random_virus = 15,
+		/obj/item/reagent_containers/cup/bottle/formaldehyde = 10,
+		/obj/item/reagent_containers/cup/bottle/synaptizine = 10,
 		/obj/item/stack/sheet/mineral/plasma = 10,
 		/obj/item/stack/sheet/mineral/uranium = 5,
 	)

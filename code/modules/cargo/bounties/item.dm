@@ -30,3 +30,7 @@
 		shipped_count += O_is_a_stack.amount
 	else
 		shipped_count += 1
+
+/// If the user can actually get this bounty as a selection.
+/datum/bounty/proc/can_get()
+	return TRUE

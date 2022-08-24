@@ -3,12 +3,6 @@
 /obj/item/mecha_parts/mecha_equipment/medical
 	mech_flags = EXOSUIT_MODULE_MEDICAL
 
-/obj/item/mecha_parts/mecha_equipment/medical/can_attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
-	. = ..()
-	if(!ismedicalmecha(M))
-		return FALSE
-
-
 /obj/item/mecha_parts/mecha_equipment/medical/attach(obj/vehicle/sealed/mecha/M)
 	. = ..()
 	START_PROCESSING(SSobj, src)

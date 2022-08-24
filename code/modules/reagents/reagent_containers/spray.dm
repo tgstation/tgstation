@@ -73,8 +73,8 @@
 	var/puff_reagent_string = reagent_puff.reagents.get_reagent_log_string()
 	var/turf/src_turf = get_turf(src)
 
-	log_combat(user, src_turf, "fired a puff of reagents from", src, addition="with a range of \[[range]\], containing [puff_reagent_string]")
-	log_game("[key_name(user)] fired a puff of reagents from \a [src] with a range of \[[range]\] and containing [puff_reagent_string] at [AREACOORD(src_turf)].")
+	log_combat(user, src_turf, "fired a puff of reagents from", src, addition="with a range of \[[range]\], containing [puff_reagent_string].")
+	user.log_message("fired a puff of reagents from \a [src] with a range of \[[range]\] and containing [puff_reagent_string].", LOG_ATTACK)
 
 	// do_spray includes a series of step_towards and sleeps. As a result, it will handle deletion of the chempuff.
 	do_spray(target, wait_step, reagent_puff, range, puff_reagent_left, user)
@@ -378,7 +378,7 @@
 	spray_range = 4
 	stream_range = 2
 	volume = 100
-	custom_premium_price = PAYCHECK_HARD * 2
+	custom_premium_price = PAYCHECK_COMMAND * 2
 
 /obj/item/reagent_containers/spray/syndicate/Initialize(mapload)
 	. = ..()
@@ -409,7 +409,7 @@
 			inhand_icon_state = "sprayer_med_yellow"
 		if("sprayer_med_blue")
 			inhand_icon_state = "sprayer_med_blue"
-	M.update_inv_hands()
+	M.update_held_items()
 
 /obj/item/reagent_containers/spray/hercuri
 	name = "medical spray (hercuri)"

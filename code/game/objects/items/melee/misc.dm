@@ -21,6 +21,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	force = 10
 	throwforce = 7
+	demolition_mod = 0.25
 	wound_bonus = 15
 	bare_wound_bonus = 10
 	w_class = WEIGHT_CLASS_NORMAL
@@ -51,7 +52,11 @@
 
 /obj/item/melee/synthetic_arm_blade/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 60, 80) //very imprecise
+	AddComponent(/datum/component/butchering, \
+	speed = 6 SECONDS, \
+	effectiveness = 80, \
+	)
+	//very imprecise
 
 /obj/item/melee/sabre
 	name = "officer's sabre"
@@ -64,6 +69,7 @@
 	obj_flags = UNIQUE_RENAME
 	force = 15
 	throwforce = 10
+	demolition_mod = 0.75 //but not metal
 	w_class = WEIGHT_CLASS_BULKY
 	block_chance = 50
 	armour_penetration = 75
@@ -77,20 +83,25 @@
 
 /obj/item/melee/sabre/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 30, 95, 5) //fast and effective, but as a sword, it might damage the results.
+	AddComponent(/datum/component/butchering, \
+	speed = 3 SECONDS, \
+	effectiveness = 95, \
+	bonus_modifier = 5, \
+	)
+	//fast and effective, but as a sword, it might damage the results.
 
 /obj/item/melee/sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
 		final_block_chance = 0 //Don't bring a sword to a gunfight
 	return ..()
 
-/obj/item/melee/sabre/on_exit_storage(datum/component/storage/concrete/container)
-	var/obj/item/storage/belt/sabre/sabre = container.real_location()
+/obj/item/melee/sabre/on_exit_storage(datum/storage/container)
+	var/obj/item/storage/belt/sabre/sabre = container.real_location?.resolve()
 	if(istype(sabre))
 		playsound(sabre, 'sound/items/unsheath.ogg', 25, TRUE)
 
-/obj/item/melee/sabre/on_enter_storage(datum/component/storage/concrete/container)
-	var/obj/item/storage/belt/sabre/sabre = container.real_location()
+/obj/item/melee/sabre/on_enter_storage(datum/storage/container)
+	var/obj/item/storage/belt/sabre/sabre = container.real_location?.resolve()
 	if(istype(sabre))
 		playsound(sabre, 'sound/items/sheath.ogg', 25, TRUE)
 
@@ -252,7 +263,7 @@
 
 /obj/item/melee/supermatter_sword/proc/consume_everything(target)
 	if(isnull(target))
-		shard.Consume()
+		shard.Bump(target)
 	else if(!isturf(target))
 		shard.Bumped(target)
 	else
@@ -268,7 +279,7 @@
 		span_danger("[turf] smacks into [src] and rapidly flashes to ash."),
 		span_hear("You hear a loud crack as you are washed with a wave of heat."),
 	)
-	shard.Consume()
+	shard.Bump(turf)
 
 /obj/item/melee/supermatter_sword/add_blood_DNA(list/blood_dna)
 	return FALSE
@@ -283,6 +294,7 @@
 	worn_icon_state = "whip"
 	slot_flags = ITEM_SLOT_BELT
 	force = 15
+	demolition_mod = 0.25
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("flogs", "whips", "lashes", "disciplines")
 	attack_verb_simple = list("flog", "whip", "lash", "discipline")

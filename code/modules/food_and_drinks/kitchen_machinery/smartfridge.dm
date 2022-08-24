@@ -155,8 +155,8 @@
 		else
 			return TRUE
 	else
-		if(SEND_SIGNAL(O.loc, COMSIG_CONTAINS_STORAGE))
-			return SEND_SIGNAL(O.loc, COMSIG_TRY_STORAGE_TAKE, O, src)
+		if(O.loc.atom_storage)
+			return O.loc.atom_storage.attempt_remove(O, src, silent = TRUE)
 		else
 			O.forceMove(src)
 			return TRUE
@@ -378,9 +378,9 @@
 	base_build_path = /obj/machinery/smartfridge/drinks
 
 /obj/machinery/smartfridge/drinks/accept_check(obj/item/O)
-	if(!istype(O, /obj/item/reagent_containers) || (O.item_flags & ABSTRACT) || !O.reagents || !O.reagents.reagent_list.len)
+	if(!is_reagent_container(O) || (O.item_flags & ABSTRACT) || !O.reagents || !O.reagents.reagent_list.len)
 		return FALSE
-	if(istype(O, /obj/item/reagent_containers/glass) || istype(O, /obj/item/reagent_containers/food/drinks) || istype(O, /obj/item/reagent_containers/food/condiment))
+	if(istype(O, /obj/item/reagent_containers/cup) || istype(O, /obj/item/reagent_containers/cup/glass) || istype(O, /obj/item/reagent_containers/condiment))
 		return TRUE
 
 // ----------------------------
@@ -479,8 +479,8 @@
 /obj/machinery/smartfridge/chemistry/accept_check(obj/item/O)
 	var/static/list/chemfridge_typecache = typecacheof(list(
 					/obj/item/reagent_containers/syringe,
-					/obj/item/reagent_containers/glass/bottle,
-					/obj/item/reagent_containers/glass/beaker,
+					/obj/item/reagent_containers/cup/bottle,
+					/obj/item/reagent_containers/cup/beaker,
 					/obj/item/reagent_containers/spray,
 					/obj/item/reagent_containers/medigel,
 					/obj/item/reagent_containers/chem_pack
@@ -493,7 +493,7 @@
 					return FALSE
 			return TRUE
 		return FALSE
-	if(!istype(O, /obj/item/reagent_containers) || (O.item_flags & ABSTRACT))
+	if(!is_reagent_container(O) || (O.item_flags & ABSTRACT))
 		return FALSE
 	if(istype(O, /obj/item/reagent_containers/pill)) // empty pill prank ok
 		return TRUE
@@ -507,8 +507,8 @@
 	initial_contents = list(
 		/obj/item/reagent_containers/pill/epinephrine = 12,
 		/obj/item/reagent_containers/pill/multiver = 5,
-		/obj/item/reagent_containers/glass/bottle/epinephrine = 1,
-		/obj/item/reagent_containers/glass/bottle/multiver = 1)
+		/obj/item/reagent_containers/cup/bottle/epinephrine = 1,
+		/obj/item/reagent_containers/cup/bottle/multiver = 1)
 
 // ----------------------------
 // Virology Medical Smartfridge
@@ -521,13 +521,13 @@
 /obj/machinery/smartfridge/chemistry/virology/preloaded
 	initial_contents = list(
 		/obj/item/reagent_containers/syringe/antiviral = 4,
-		/obj/item/reagent_containers/glass/bottle/cold = 1,
-		/obj/item/reagent_containers/glass/bottle/flu_virion = 1,
-		/obj/item/reagent_containers/glass/bottle/mutagen = 1,
-		/obj/item/reagent_containers/glass/bottle/sugar = 1,
-		/obj/item/reagent_containers/glass/bottle/plasma = 1,
-		/obj/item/reagent_containers/glass/bottle/synaptizine = 1,
-		/obj/item/reagent_containers/glass/bottle/formaldehyde = 1)
+		/obj/item/reagent_containers/cup/bottle/cold = 1,
+		/obj/item/reagent_containers/cup/bottle/flu_virion = 1,
+		/obj/item/reagent_containers/cup/bottle/mutagen = 1,
+		/obj/item/reagent_containers/cup/bottle/sugar = 1,
+		/obj/item/reagent_containers/cup/bottle/plasma = 1,
+		/obj/item/reagent_containers/cup/bottle/synaptizine = 1,
+		/obj/item/reagent_containers/cup/bottle/formaldehyde = 1)
 
 // ----------------------------
 // Disk """fridge"""

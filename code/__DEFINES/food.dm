@@ -16,6 +16,8 @@
 #define NUTS (1<<15)
 #define SEAFOOD (1<<16)
 #define ORANGES (1<<17)
+#define BUGS (1<<18)
+#define GORE (1<<19)
 
 /// A list of food type names, in order of their flags
 #define FOOD_FLAGS list( \
@@ -37,6 +39,32 @@
 	"NUTS", \
 	"SEAFOOD", \
 	"ORANGES", \
+	"BUGS", \
+	"GORE", \
+)
+
+/// IC meaning (more or less) for food flags
+#define FOOD_FLAGS_IC list( \
+	"Meat", \
+	"Vegetables", \
+	"Raw food", \
+	"Junk food", \
+	"Grain", \
+	"Fruits", \
+	"Dairy products", \
+	"Fried food", \
+	"Alcohol", \
+	"Sugary food", \
+	"Gross food", \
+	"Toxic food", \
+	"Pineapples", \
+	"Breakfast food", \
+	"Clothing", \
+	"Nuts", \
+	"Seafood", \
+	"Oranges", \
+	"Bugs", \
+	"Gore", \
 )
 
 #define DRINK_NICE 1
@@ -47,7 +75,7 @@
 
 #define FOOD_IN_CONTAINER (1<<0)
 #define FOOD_FINGER_FOOD (1<<1)
-///Is this food item spawned from a silver slime? Prevent it from exporting for profit from cargo.
+///Is this food item spawned from a silver slime? Prevent it from exporting for profit from cargo and make it taste disgusting
 #define FOOD_SILVER_SPAWNED (1<<2)
 
 #define STOP_SERVING_BREAKFAST (15 MINUTES)
@@ -117,4 +145,5 @@
 #define ICE_CREAM_BLAND "bland"
 
 #define DEFAULT_MAX_ICE_CREAM_SCOOPS 3
-
+// the vertical distance in pixels from an ice cream scoop and another.
+#define ICE_CREAM_SCOOP_OFFSET 4

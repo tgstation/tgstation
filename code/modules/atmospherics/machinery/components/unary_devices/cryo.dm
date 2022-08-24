@@ -70,7 +70,7 @@
 	icon_state = "pod-off"
 	density = TRUE
 	max_integrity = 350
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, FIRE = 30, ACID = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 30, ACID = 30)
 	layer = MOB_LAYER
 	state_open = FALSE
 	circuit = /obj/item/circuitboard/machine/cryo_tube
@@ -90,10 +90,11 @@
 	var/efficiency = 1
 	var/sleep_factor = 0.00125
 	var/unconscious_factor = 0.001
+	/// Our approximation of a mob's heat capacity.
 	var/heat_capacity = 20000
 	var/conduction_coefficient = 0.3
 
-	var/obj/item/reagent_containers/glass/beaker = null
+	var/obj/item/reagent_containers/cup/beaker = null
 	var/consume_gas = FALSE
 
 	var/obj/item/radio/radio
@@ -184,7 +185,6 @@
 	..()
 	if(A == beaker)
 		beaker = null
-		updateUsrDialog()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_deconstruction()
 	if(beaker)
@@ -199,8 +199,8 @@
 	. = ..()
 	plane = initial(plane)
 
-GLOBAL_VAR_INIT(cryo_overlay_cover_on, mutable_appearance('icons/obj/cryogenics.dmi', "cover-on", layer = MOB_LAYER + 0.02))
-GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics.dmi', "cover-off", layer = MOB_LAYER + 0.02))
+GLOBAL_VAR_INIT(cryo_overlay_cover_on, mutable_appearance('icons/obj/cryogenics.dmi', "cover-on", layer = ABOVE_ALL_MOB_LAYER, plane = ABOVE_GAME_PLANE))
+GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics.dmi', "cover-off", layer = ABOVE_ALL_MOB_LAYER, plane = ABOVE_GAME_PLANE))
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_overlays()
 	. = ..()
@@ -305,10 +305,10 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		if(abs(temperature_delta) > 1)
 			var/air_heat_capacity = air1.heat_capacity()
 
-			var/heat = ((1 - cold_protection) * 0.1 + conduction_coefficient) * temperature_delta * (air_heat_capacity * heat_capacity / (air_heat_capacity + heat_capacity))
+			var/heat = ((1 - cold_protection) * 0.1 + conduction_coefficient) * CALCULATE_CONDUCTION_ENERGY(temperature_delta, heat_capacity, air_heat_capacity)
 
-			air1.temperature = clamp(air1.temperature - heat / air_heat_capacity, TCMB, MAX_TEMPERATURE)
 			mob_occupant.adjust_bodytemperature(heat / heat_capacity, TCMB)
+			air1.temperature = clamp(air1.temperature - heat / air_heat_capacity, TCMB, MAX_TEMPERATURE)
 
 			//lets have the core temp match the body temp in humans
 			if(ishuman(mob_occupant))
@@ -413,7 +413,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/reagent_containers/glass))
+	if(istype(I, /obj/item/reagent_containers/cup))
 		. = 1 //no afterattack
 		if(beaker)
 			to_chat(user, span_warning("A beaker is already loaded into [src]!"))
@@ -424,7 +424,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		user.visible_message(span_notice("[user] places [I] in [src]."), \
 							span_notice("You place [I] in [src]."))
 		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
-		log_game("[key_name(user)] added an [I] to cryo containing [reagentlist]")
+		user.log_message("added an [I] to cryo containing [reagentlist].", LOG_GAME)
 		return
 	return ..()
 
@@ -449,19 +449,22 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 	if(occupant)
 		var/mob/living/mob_occupant = occupant
 		data["occupant"]["name"] = mob_occupant.name
-		switch(mob_occupant.stat)
-			if(CONSCIOUS)
-				data["occupant"]["stat"] = "Conscious"
-				data["occupant"]["statstate"] = "good"
-			if(SOFT_CRIT)
-				data["occupant"]["stat"] = "Conscious"
-				data["occupant"]["statstate"] = "average"
-			if(UNCONSCIOUS, HARD_CRIT)
-				data["occupant"]["stat"] = "Unconscious"
-				data["occupant"]["statstate"] = "average"
-			if(DEAD)
-				data["occupant"]["stat"] = "Dead"
-				data["occupant"]["statstate"] = "bad"
+		if(mob_occupant.stat == DEAD)
+			data["occupant"]["stat"] = "Dead"
+			data["occupant"]["statstate"] = "bad"
+		else if (HAS_TRAIT(mob_occupant, TRAIT_KNOCKEDOUT))
+			data["occupant"]["stat"] = "Unconscious"
+			data["occupant"]["statstate"] = "good"
+		else
+			data["occupant"]["stat"] = "Conscious"
+			data["occupant"]["statstate"] = "bad"
+
+		data["occupant"]["bodyTemperature"] = round(mob_occupant.bodytemperature, 1)
+		if(mob_occupant.bodytemperature < T0C) // Green if the mob can actually be healed by cryoxadone.
+			data["occupant"]["temperaturestatus"] = "good"
+		else
+			data["occupant"]["temperaturestatus"] = "bad"
+
 		data["occupant"]["health"] = round(mob_occupant.health, 1)
 		data["occupant"]["maxHealth"] = mob_occupant.maxHealth
 		data["occupant"]["minHealth"] = HEALTH_THRESHOLD_DEAD
@@ -469,13 +472,6 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		data["occupant"]["oxyLoss"] = round(mob_occupant.getOxyLoss(), 1)
 		data["occupant"]["toxLoss"] = round(mob_occupant.getToxLoss(), 1)
 		data["occupant"]["fireLoss"] = round(mob_occupant.getFireLoss(), 1)
-		data["occupant"]["bodyTemperature"] = round(mob_occupant.bodytemperature, 1)
-		if(mob_occupant.bodytemperature < TCRYO)
-			data["occupant"]["temperaturestatus"] = "good"
-		else if(mob_occupant.bodytemperature < T0C)
-			data["occupant"]["temperaturestatus"] = "average"
-		else
-			data["occupant"]["temperaturestatus"] = "bad"
 
 	var/datum/gas_mixture/air1 = airs[1]
 	data["cellTemperature"] = round(air1.temperature, 1)
@@ -565,6 +561,9 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 			node.atmos_init()
 			node.add_member(src)
 		SSair.add_to_rebuild_queue(src)
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/update_layer()
+	return
 
 #undef MAX_TEMPERATURE
 #undef CRYO_MULTIPLY_FACTOR

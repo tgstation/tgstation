@@ -21,7 +21,7 @@
 	///Bitflag. Determines the range of the equipment.
 	var/range = MECHA_MELEE
 	/// Bitflag. Used by exosuit fabricator to assign sub-categories based on which exosuits can equip this.
-	var/mech_flags = NONE
+	var/mech_flags = ALL
 	///boolean: FALSE if this equipment can not be removed/salvaged
 	var/detachable = TRUE
 	///Boolean: whether a pacifist can use this equipment
@@ -43,6 +43,8 @@
 	if(can_attach(M, attach_right))
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return FALSE
+		if(special_attaching_interaction(attach_right, M, user))
+			return TRUE //The rest is handled in the special interactions proc
 		attach(M, attach_right)
 		user.visible_message(span_notice("[user] attaches [src] to [M]."), span_notice("You attach [src] to [M]."))
 		return TRUE
@@ -87,6 +89,9 @@
 	if(chassis.equipment_disabled)
 		to_chat(chassis.occupants, span_warning("Error -- Equipment control unit is unresponsive."))
 		return FALSE
+	if(get_integrity() <= 1)
+		to_chat(chassis.occupants, span_warning("Error -- Equipment critically damaged."))
+		return FALSE
 	if(TIMER_COOLDOWN_CHECK(chassis, COOLDOWN_MECHA_EQUIPMENT(type)))
 		return FALSE
 	return TRUE
@@ -122,15 +127,31 @@
 	return default_can_attach(M, attach_right)
 
 /obj/item/mecha_parts/mecha_equipment/proc/default_can_attach(obj/vehicle/sealed/mecha/mech, attach_right = FALSE)
+	if(!(mech_flags & mech.mech_type))
+		return FALSE
 	if(equipment_slot == MECHA_WEAPON)
 		if(attach_right)
-			if(mech.equip_by_category[MECHA_R_ARM])
+			if(mech.equip_by_category[MECHA_R_ARM] && (!special_attaching_interaction(attach_right, mech, checkonly = TRUE)))
 				return FALSE
 		else
-			if(mech.equip_by_category[MECHA_L_ARM])
+			if(mech.equip_by_category[MECHA_L_ARM] && (!special_attaching_interaction(attach_right, mech, checkonly = TRUE)))
 				return FALSE
 		return TRUE
 	return length(mech.equip_by_category[equipment_slot]) < mech.max_equip_by_category[equipment_slot]
+
+/**
+ * Special Attaching Interaction, used to bypass normal attachment procs.
+ *
+ * If an equipment needs to bypass the regular chain of events, this proc can be used to allow for that. If used, it
+ * must handle actually calling attach(), as well as any feedback to the user.
+ * Args:
+ * * attach_right: True if attaching the the right-hand equipment slot, false otherwise.
+ * * mech: ref to the mecha that we're attaching onto.
+ * * user: ref to the mob doing the attaching
+ * * checkonly: check if we are able to handle the attach procedure ourselves, but don't actually do it yet.
+ */
+/obj/item/mecha_parts/mecha_equipment/proc/special_attaching_interaction(attach_right = FALSE, obj/vehicle/sealed/mecha/mech, mob/user, checkonly = FALSE)
+	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/proc/attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
 	LAZYADD(M.flat_equipment, src)
@@ -145,6 +166,7 @@
 	else
 		M.equip_by_category[to_equip_slot] = src
 	chassis = M
+	SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_ATTACHED)
 	forceMove(M)
 	log_message("[src] initialized.", LOG_MECHA)
 
@@ -167,6 +189,7 @@
 		chassis.equip_by_category[to_unequip_slot] -= src
 	else
 		chassis.equip_by_category[to_unequip_slot] = null
+	SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_DETACHED)
 	log_message("[src] removed from equipment.", LOG_MECHA)
 	chassis = null
 

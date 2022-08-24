@@ -93,6 +93,7 @@
 
 // increment the power usage stats for an area
 /obj/machinery/proc/use_power(amount, chan = power_channel)
+	amount = max(amount * machine_power_rectifier, 0) // make sure we don't use negative power
 	var/area/A = get_area(src) // make sure it's in an area
 	A?.use_power(amount, chan)
 

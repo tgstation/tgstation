@@ -279,7 +279,7 @@
 	name = "Bee Day"
 	begin_day = 20
 	begin_month = MAY
-	drone_hat = /obj/item/clothing/mask/animal/rat/bee
+	drone_hat = /obj/item/clothing/mask/animal/small/bee
 
 /datum/holiday/bee/getStationPrefix()
 	return pick("Bee","Honey","Hive","Africanized","Mead","Buzz")
@@ -414,7 +414,7 @@
 
 /datum/holiday/indigenous/getStationPrefix()
 	return pick("Endangered language", "Word", "Language", "Language revitalization", "Potato", "Corn")
-	
+
 // AUGUST
 
 /datum/holiday/ukraine
@@ -611,7 +611,7 @@
 	name = "Mayan Doomsday Anniversary"
 	begin_day = 21
 	begin_month = DECEMBER
-	drone_hat = /obj/item/clothing/mask/animal/rat/tribal
+	drone_hat = /obj/item/clothing/mask/animal/small/tribal
 
 /datum/holiday/xmas
 	name = CHRISTMAS
@@ -794,3 +794,20 @@
 
 /datum/holiday/easter/getStationPrefix()
 	return pick("Fluffy","Bunny","Easter","Egg")
+
+/// Takes a holiday datum, a starting month, ending month, max amount of days to test in, and min/max year as input
+/// Returns a list in the form list("yyyy/m/d", ...) representing all days the holiday runs on in the tested range
+/proc/poll_holiday(datum/holiday/path, min_month, max_month, min_year, max_year, max_day)
+	var/list/deets = list()
+	for(var/year in min_year to max_year)
+		for(var/month in min_month to max_month)
+			for(var/day in 1 to max_day)
+				var/datum/holiday/new_day = new path()
+				if(new_day.shouldCelebrate(day, month, year, iso_to_weekday(day_of_month(year, month, day))))
+					deets += "[year]/[month]/[day]"
+	return deets
+
+/// Does the same as [/proc/poll_holiday], but prints the output to admins instead of returning it
+/proc/print_holiday(datum/holiday/path, min_month, max_month, min_year, max_year, max_day)
+	var/list/deets = poll_holiday(path, min_month, max_month, min_year, max_year, max_day)
+	message_admins("The accepted dates for [path] in the input range [min_year]-[max_year]/[min_month]-[max_month]/1-[max_day] are [deets.Join("\n")]")

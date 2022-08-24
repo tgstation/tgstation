@@ -53,7 +53,7 @@
 
 
 /datum/disease/transformation/proc/do_disease_transformation(mob/living/affected_mob)
-	if(istype(affected_mob, /mob/living/carbon) && affected_mob.stat != DEAD)
+	if(iscarbon(affected_mob) && affected_mob.stat != DEAD)
 		if(length(stage5))
 			to_chat(affected_mob, pick(stage5))
 		if(QDELETED(affected_mob))
@@ -104,7 +104,7 @@
 	spread_text = "Unknown"
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	viable_mobtypes = list(/mob/living/carbon/human)
-	permeability_mod = 1
+	spreading_modifier = 1
 	cure_chance = 0.5
 	disease_flags = CAN_CARRY|CAN_RESIST
 	desc = "A neutered but still dangerous descendent of the ancient \"Jungle Fever\", victims will eventually genetically backtrack into a primate. \
@@ -137,7 +137,7 @@
 		if(3)
 			if(DT_PROB(2, delta_time))
 				to_chat(affected_mob, span_danger("You feel a stabbing pain in your head."))
-				affected_mob.add_confusion(10)
+				affected_mob.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/confusion)
 		if(4)
 			if(DT_PROB(1.5, delta_time))
 				affected_mob.say(pick("Eeek, ook ook!", "Eee-eeek!", "Eeee!", "Ungh, ungh."), forced = "jungle fever")
@@ -227,7 +227,7 @@
 	stage3 = list("<span class='danger'>Your appendages are melting away.</span>", "<span class='danger'>Your limbs begin to lose their shape.</span>")
 	stage4 = list("<span class='danger'>You are turning into a slime.</span>")
 	stage5 = list("<span class='danger'>You have become a slime.</span>")
-	new_form = /mob/living/simple_animal/slime/random
+	new_form = /mob/living/simple_animal/slime
 
 
 /datum/disease/transformation/slime/stage_act(delta_time, times_fired)
@@ -237,15 +237,22 @@
 
 	switch(stage)
 		if(1)
-			if(ishuman(affected_mob) && affected_mob.dna)
-				if(affected_mob.dna.species.id == SPECIES_SLIMEPERSON || affected_mob.dna.species.id == SPECIES_STARGAZER || affected_mob.dna.species.id == SPECIES_LUMINESCENT)
+			if(ishuman(affected_mob))
+				var/mob/living/carbon/human/human = affected_mob
+				if(isjellyperson(human))
 					stage = 5
 		if(3)
 			if(ishuman(affected_mob))
 				var/mob/living/carbon/human/human = affected_mob
-				if(human.dna.species.id != SPECIES_SLIMEPERSON && affected_mob.dna.species.id != SPECIES_STARGAZER && affected_mob.dna.species.id != SPECIES_LUMINESCENT)
+				if(!ismonkey(human) && !isjellyperson(human))
 					human.set_species(/datum/species/jelly/slime)
 
+/datum/disease/transformation/slime/do_disease_transformation(mob/living/affected_mob)
+	if(affected_mob.client && ishuman(affected_mob)) // if they are a human who's not a monkey and are sentient, then let them have the old fun
+		var/mob/living/carbon/human/human = affected_mob
+		if(!ismonkey(human))
+			new_form = /mob/living/simple_animal/slime/random
+	return ..()
 
 /datum/disease/transformation/corgi
 	name = "The Barkening"

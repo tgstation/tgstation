@@ -14,6 +14,8 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	max_occurrences = 5
 	var/atom/special_target
 	var/force_looping = FALSE
+	category = EVENT_CATEGORY_SPACE
+	description = "The station passes through an immovable rod."
 
 /datum/round_event_control/immovable_rod/admin_setup()
 	if(!check_rights(R_FUN))
@@ -129,7 +131,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	if(destination.density && isturf(destination))
 		Bump(destination)
 
-/obj/effect/immovablerod/Moved()
+/obj/effect/immovablerod/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	if(!loc)
 		return ..()
 
@@ -196,7 +198,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 /obj/effect/immovablerod/singularity_pull()
 	return
 
-/obj/effect/immovablerod/Process_Spacemove()
+/obj/effect/immovablerod/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	return TRUE
 
 /obj/effect/immovablerod/Bump(atom/clong)
@@ -211,8 +213,8 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	// they ALSO collapse into a singulo.
 	if(istype(clong, /obj/effect/immovablerod))
 		visible_message(span_danger("[src] collides with [clong]! This cannot end well."))
-		var/datum/effect_system/smoke_spread/smoke = new
-		smoke.set_up(2, get_turf(src))
+		var/datum/effect_system/fluid_spread/smoke/smoke = new
+		smoke.set_up(2, holder = src, location = get_turf(src))
 		smoke.start()
 		var/obj/singularity/bad_luck = new(get_turf(src))
 		bad_luck.energy = 800

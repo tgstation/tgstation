@@ -95,7 +95,7 @@
 	desc = "A bunch of hair without a head attached. This one changes color to match the hair of the wearer. Nothing natural about that."
 	color = "#FFFFFF"
 	adjustablecolor = FALSE
-	custom_price = PAYCHECK_HARD
+	custom_price = PAYCHECK_COMMAND
 
 /obj/item/clothing/head/wig/natural/Initialize(mapload)
 	hairstyle = pick(GLOB.hairstyles_list - "Bald")
@@ -107,4 +107,4 @@
 		if (color != user.hair_color) // only update if necessary
 			add_atom_colour(user.hair_color, FIXED_COLOUR_PRIORITY)
 			update_appearance()
-		user.update_inv_head()
+		user.update_worn_head()

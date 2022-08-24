@@ -41,9 +41,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/medbay)
 "aj" = (
-/obj/structure/sign/warning/vacuum/external{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/east,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
@@ -244,12 +242,12 @@
 	locked = 0;
 	name = "fridge"
 	},
-/obj/item/reagent_containers/food/drinks/waterbottle{
+/obj/item/reagent_containers/cup/glass/waterbottle{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/drinks/waterbottle,
-/obj/item/reagent_containers/food/drinks/waterbottle{
+/obj/item/reagent_containers/cup/glass/waterbottle,
+/obj/item/reagent_containers/cup/glass/waterbottle{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -373,7 +371,7 @@
 /area/shuttle/abandoned/crew)
 "aN" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sign/warning/nosmoking{
+/obj/structure/sign/warning/no_smoking{
 	pixel_y = -30
 	},
 /obj/structure/table,
@@ -441,7 +439,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/bot,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/item/mop,
 /obj/item/storage/bag/trash{
 	pixel_x = 6
@@ -513,7 +511,7 @@
 	pixel_x = 6;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/drinks/soda_cans/cola{
+/obj/item/reagent_containers/cup/soda_cans/cola{
 	pixel_x = -6;
 	pixel_y = 4
 	},
@@ -575,9 +573,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "bi" = (
-/obj/structure/sign/warning/vacuum/external{
-	pixel_y = -32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
@@ -666,11 +662,11 @@
 "bt" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table/glass,
-/obj/item/reagent_containers/glass/beaker/cryoxadone{
+/obj/item/reagent_containers/cup/beaker/cryoxadone{
 	pixel_x = 7;
 	pixel_y = 1
 	},
-/obj/item/reagent_containers/glass/beaker/cryoxadone{
+/obj/item/reagent_containers/cup/beaker/cryoxadone{
 	pixel_x = -6;
 	pixel_y = 6
 	},
@@ -866,7 +862,6 @@
 /obj/machinery/computer/med_data{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/iron/white,
 /area/shuttle/abandoned/medbay)
 "bN" = (
@@ -1081,7 +1076,7 @@
 /area/shuttle/abandoned/medbay)
 "cj" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 1
 	},
 /obj/machinery/light/small/built/directional/east,
@@ -1162,9 +1157,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "cq" = (
-/obj/structure/sign/warning/vacuum/external{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/north,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
@@ -1203,7 +1196,6 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/iron/white,
 /area/shuttle/abandoned/medbay)
 "cw" = (
@@ -1354,20 +1346,14 @@
 /obj/structure/toilet{
 	pixel_y = 16
 	},
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 2
-	},
+/obj/structure/sink/directional/east,
 /obj/structure/mirror/directional/west,
 /turf/open/floor/iron/freezer,
 /area/shuttle/abandoned/medbay)
 "cJ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/shower{
-	pixel_y = 15
-	},
+/obj/machinery/shower/directional/south,
 /obj/item/soap,
 /obj/structure/curtain,
 /obj/machinery/light/small/built/directional/south,
@@ -1465,11 +1451,11 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/glass/bottle/epinephrine{
+/obj/item/reagent_containers/cup/bottle/epinephrine{
 	pixel_x = 7;
 	pixel_y = -3
 	},
-/obj/item/reagent_containers/glass/bottle/morphine{
+/obj/item/reagent_containers/cup/bottle/morphine{
 	pixel_x = -2;
 	pixel_y = -3
 	},
@@ -1613,7 +1599,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/structure/sign/warning/nosmoking{
+/obj/structure/sign/warning/no_smoking{
 	pixel_y = 30
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -1673,7 +1659,7 @@
 	pixel_x = -5;
 	pixel_y = 5
 	},
-/obj/item/reagent_containers/glass/bottle/morphine{
+/obj/item/reagent_containers/cup/bottle/morphine{
 	pixel_x = 8;
 	pixel_y = 4
 	},
@@ -1734,9 +1720,7 @@
 	},
 /area/shuttle/abandoned/medbay)
 "ds" = (
-/obj/structure/sign/warning/vacuum/external{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/east,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/built/directional/east,
 /turf/open/floor/plating,
@@ -1790,33 +1774,29 @@
 	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/engine)
-"kG" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w,
-/turf/template_noop,
-/area/shuttle/abandoned/engine)
 "kZ" = (
 /obj/structure/closet/crate{
 	name = "food crate"
 	},
-/obj/item/reagent_containers/food/drinks/waterbottle/large{
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
 	pixel_x = -5;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/drinks/waterbottle/large{
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/drinks/waterbottle/large{
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
 	pixel_x = -2
 	},
-/obj/item/reagent_containers/food/drinks/waterbottle/large{
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
 	pixel_x = 5
 	},
-/obj/item/reagent_containers/food/drinks/waterbottle/large{
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
 	pixel_x = 1;
 	pixel_y = -3
 	},
-/obj/item/reagent_containers/food/drinks/waterbottle/large{
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
 	pixel_x = 8;
 	pixel_y = -3
 	},
@@ -1835,10 +1815,6 @@
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/engine)
-"AX" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/abandoned/medbay)
 "Ct" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -1873,25 +1849,11 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/crew)
-"Hf" = (
-/obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
-	id = "whiteship_windows"
-	},
-/obj/machinery/atmospherics/pipe/heat_exchanging/junction{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/shuttle/abandoned/medbay)
 "JU" = (
 /obj/structure/shuttle/engine/propulsion/right{
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
-/area/shuttle/abandoned/engine)
-"Pp" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
-/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/engine)
 "Pz" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -2093,7 +2055,7 @@ ar
 at
 bm
 at
-kG
+aa
 at
 bm
 at
@@ -2112,7 +2074,7 @@ as
 aT
 bn
 at
-kG
+aa
 at
 cr
 cy
@@ -2131,7 +2093,7 @@ at
 aU
 bo
 at
-kG
+aa
 at
 cs
 cz
@@ -2150,7 +2112,7 @@ at
 bl
 aV
 at
-kG
+aa
 at
 bp
 bl
@@ -2169,7 +2131,7 @@ aF
 aW
 bq
 at
-Hf
+ah
 at
 cu
 cB
@@ -2189,8 +2151,8 @@ aX
 at
 at
 bM
-Pp
-Pp
+at
+at
 cC
 aG
 at
@@ -2228,7 +2190,7 @@ al
 bA
 bO
 ce
-AX
+al
 cE
 cO
 cZ
@@ -2247,7 +2209,7 @@ al
 al
 bP
 al
-AX
+al
 cF
 cP
 da
@@ -2266,7 +2228,7 @@ al
 bB
 bQ
 cf
-AX
+al
 cG
 cQ
 db
@@ -2285,7 +2247,7 @@ bs
 bC
 bR
 cg
-AX
+al
 cH
 cR
 dc
@@ -2304,7 +2266,7 @@ bt
 bD
 bS
 ch
-AX
+al
 al
 cS
 dd
@@ -2323,7 +2285,7 @@ bu
 bE
 bT
 ci
-AX
+al
 cI
 cT
 de
@@ -2342,7 +2304,7 @@ bI
 bF
 bU
 cj
-AX
+al
 cJ
 al
 df

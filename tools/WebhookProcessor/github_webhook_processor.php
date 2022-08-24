@@ -730,7 +730,7 @@ function checkchangelog($payload, $compile = true) {
 			case 'adds':
 			case 'rscadd':
 				if($item != 'Added new mechanics or gameplay changes' && $item != 'Added more things') {
-					$tags[] = 'Mechanic';
+					$tags[] = 'Feature';
 					$currentchangelogblock[] = array('type' => 'rscadd', 'body' => $item);
 				}
 				break;
@@ -763,9 +763,8 @@ function checkchangelog($payload, $compile = true) {
 				}
 				break;
 			case 'balance':
-			case 'rebalance':
 				if($item != 'rebalanced something'){
-					$tags[] = 'Balance/Rebalance';
+					$tags[] = 'Balance';
 					$currentchangelogblock[] = array('type' => 'balance', 'body' => $item);
 				}
 				break;
@@ -774,12 +773,6 @@ function checkchangelog($payload, $compile = true) {
 				if($item != 'changed some code'){
 					$tags[] = 'Code Improvement';
 					$currentchangelogblock[] = array('type' => 'code_imp', 'body' => $item);
-				}
-				break;
-			case 'expansion':
-				if($item != 'Expands content of an existing feature'){
-					$tags[] = 'Content Expansion';
-					$currentchangelogblock[] = array('type' => 'expansion', 'body' => $item);
 				}
 				break;
 			case 'refactor':

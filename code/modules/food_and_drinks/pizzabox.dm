@@ -215,8 +215,7 @@
 			to_chat(user, span_warning("[src] already has a bomb in it!"))
 	else if(istype(I, /obj/item/pen))
 		if(!open)
-			if(!user.is_literate())
-				to_chat(user, span_notice("You scribble illegibly on [src]!"))
+			if(!user.can_write(I))
 				return
 			var/obj/item/pizzabox/box = boxes.len ? boxes[boxes.len] : src
 			box.boxtag += tgui_input_text(user, "Write on [box]'s tag:", box, max_length = 30)
@@ -229,7 +228,7 @@
 	else if(is_wire_tool(I))
 		if(wires && bomb)
 			wires.interact(user)
-	else if(istype(I, /obj/item/reagent_containers/food))
+	else if(istype(I, /obj/item/reagent_containers/cup))
 		to_chat(user, span_warning("That's not a pizza!"))
 	..()
 

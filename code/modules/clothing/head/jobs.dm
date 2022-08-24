@@ -13,10 +13,14 @@
 	strip_delay = 10
 	equip_delay_other = 10
 
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/chefhat
 	dog_fashion = /datum/dog_fashion/head/chef
 	///the chance that the movements of a mouse inside of this hat get relayed to the human wearing the hat
 	var/mouse_control_probability = 20
+
+/obj/item/clothing/head/chefhat/Initialize(mapload)
+	. = ..()
+
+	create_storage(type = /datum/storage/pockets/chefhat)
 
 /obj/item/clothing/head/chefhat/i_am_assuming_direct_control
 	desc = "The commander in chef's head wear. Upon closer inspection, there seem to be dozens of tiny levers, buttons, dials, and screens inside of this hat. What the hell...?"
@@ -32,7 +36,7 @@
 	return(FIRELOSS)
 
 /obj/item/clothing/head/chefhat/relaymove(mob/living/user, direction)
-	if(!istype(user, /mob/living/simple_animal/mouse) || !isliving(loc) || !prob(mouse_control_probability))
+	if(!ismouse(user) || !isliving(loc) || !prob(mouse_control_probability))
 		return
 	var/mob/living/L = loc
 	if(L.incapacitated(IGNORE_RESTRAINTS)) //just in case
@@ -94,12 +98,14 @@
 	armor = list(MELEE = 25, BULLET = 5, LASER = 25, ENERGY = 35, BOMB = 0, BIO = 0, FIRE = 30, ACID = 50, WOUND = 5)
 	icon_state = "detective"
 	var/candy_cooldown = 0
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/fedora/detective
 	dog_fashion = /datum/dog_fashion/head/detective
 
 /obj/item/clothing/head/fedora/det_hat/Initialize(mapload)
 	. = ..()
-	new /obj/item/reagent_containers/food/drinks/flask/det(src)
+
+	create_storage(type = /datum/storage/pockets/small/fedora/detective)
+
+	new /obj/item/reagent_containers/cup/glass/flask/det(src)
 
 /obj/item/clothing/head/fedora/det_hat/examine(mob/user)
 	. = ..()
@@ -306,6 +312,26 @@
 	desc = "A beret in a distinct surgical turquoise!"
 	greyscale_colors = "#5EB8B8"
 
+/obj/item/clothing/head/surgerycap
+	name = "blue surgery cap"
+	icon_state = "surgicalcap"
+	desc = "A blue medical surgery cap to prevent the surgeon's hair from entering the insides of the patient!"
+
+/obj/item/clothing/head/surgerycap/purple
+	name = "burgundy surgery cap"
+	icon_state = "surgicalcapwine"
+	desc = "A burgundy medical surgery cap to prevent the surgeon's hair from entering the insides of the patient!"
+
+/obj/item/clothing/head/surgerycap/green
+	name = "green surgery cap"
+	icon_state = "surgicalcapgreen"
+	desc = "A green medical surgery cap to prevent the surgeon's hair from entering the insides of the patient!"
+
+/obj/item/clothing/head/surgerycap/cmo
+	name = "turquoise surgery cap"
+	icon_state = "surgicalcapcmo"
+	desc = "The CMO's medical surgery cap to prevent their hair from entering the insides of the patient!"
+
 
 //Engineering
 
@@ -327,7 +353,7 @@
 /obj/item/clothing/head/beret/cargo
 	name = "cargo beret"
 	desc = "No need to compensate when you can wear this beret!"
-	greyscale_colors = "#ECCA30"
+	greyscale_colors = "#c99840"
 	flags_1 = NONE
 
 

@@ -25,7 +25,7 @@
 	failure_sound = 'sound/surgery/organ2.ogg'
 
 /datum/surgery/brain_surgery/can_start(mob/user, mob/living/carbon/target)
-	var/obj/item/organ/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
 	if(!target_brain)
 		return FALSE
 	return TRUE

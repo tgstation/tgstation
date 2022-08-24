@@ -14,7 +14,7 @@
 
 /obj/machinery/abductor/gland_dispenser/Initialize(mapload)
 	. = ..()
-	gland_types = subtypesof(/obj/item/organ/heart/gland)
+	gland_types = subtypesof(/obj/item/organ/internal/heart/gland)
 	gland_types = shuffle(gland_types)
 	gland_colors = new/list(gland_types.len)
 	amounts = new/list(gland_types.len)
@@ -62,7 +62,7 @@
 			return TRUE
 
 /obj/machinery/abductor/gland_dispenser/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/organ/heart/gland))
+	if(istype(W, /obj/item/organ/internal/heart/gland))
 		if(!user.transferItemToLoc(W, src))
 			return
 		for(var/i in 1 to gland_colors.len)

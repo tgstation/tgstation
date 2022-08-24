@@ -12,6 +12,7 @@
 	throw_speed = 2
 	throw_range = 7
 	force = 10
+	demolition_mod = 1.25
 	custom_materials = list(/datum/material/iron = 90)
 	attack_verb_continuous = list("slams", "whacks", "bashes", "thunks", "batters", "bludgeons", "thrashes")
 	attack_verb_simple = list("slam", "whack", "bash", "thunk", "batter", "bludgeon", "thrash")
@@ -77,12 +78,9 @@
 
 /obj/item/extinguisher/Initialize(mapload)
 	. = ..()
-	refill()
-
-/obj/item/extinguisher/ComponentInitialize()
-	. = ..()
 	if(tank_holder_icon_state)
 		AddComponent(/datum/component/container_item/tank_holder, tank_holder_icon_state)
+	refill()
 
 /obj/item/extinguisher/advanced
 	name = "advanced fire extinguisher"
@@ -112,7 +110,7 @@
 /obj/item/extinguisher/attack_self(mob/user)
 	safety = !safety
 	src.icon_state = "[sprite_name][!safety]"
-	to_chat(user, "<span class='infoplain'>The safety is [safety ? "on" : "off"].</span>")
+	balloon_alert(user, "safety [safety ? "on" : "off"]")
 	return
 
 /obj/item/extinguisher/attack(mob/M, mob/living/user)
@@ -138,7 +136,7 @@
 /obj/item/extinguisher/proc/AttemptRefill(atom/target, mob/user)
 	if(istype(target, tanktype) && target.Adjacent(user))
 		if(reagents.total_volume == reagents.maximum_volume)
-			to_chat(user, span_warning("\The [src] is already full!"))
+			balloon_alert(user, "already full!")
 			return TRUE
 		var/obj/structure/reagent_dispensers/W = target //will it work?
 		var/transferred = W.reagents.trans_to(src, max_water, transfered_by = user)
@@ -168,7 +166,7 @@
 
 
 		if (src.reagents.total_volume < 1)
-			to_chat(usr, span_warning("\The [src] is empty!"))
+			balloon_alert(user, "it's empty!")
 			return
 
 		if (world.time < src.last_use + 12)

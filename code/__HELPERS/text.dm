@@ -22,15 +22,15 @@
 
 
 ///returns nothing with an alert instead of the message if it contains something in the ic filter, and sanitizes normally if the name is fine. It returns nothing so it backs out of the input the same way as if you had entered nothing.
-/proc/sanitize_name(t,allow_numbers=FALSE)
-	if(is_ic_filtered(t) || is_soft_ic_filtered(t))
+/proc/sanitize_name(target, allow_numbers = FALSE, cap_after_symbols = TRUE)
+	if(is_ic_filtered(target) || is_soft_ic_filtered(target))
 		tgui_alert(usr, "You cannot set a name that contains a word prohibited in IC chat!")
 		return ""
-	var/r = reject_bad_name(t,allow_numbers=allow_numbers,strict=TRUE)
-	if(!r)
+	var/result = reject_bad_name(target, allow_numbers = allow_numbers, strict = TRUE, cap_after_symbols = cap_after_symbols)
+	if(!result)
 		tgui_alert(usr, "Invalid name.")
 		return ""
-	return sanitize(r)
+	return sanitize(result)
 
 
 /// Runs byond's html encoding sanitization proc, after replacing new-lines and tabs for the # character.
@@ -101,23 +101,43 @@
 	return text
 
 
-/// Used to get a properly sanitized input, of max_length
-/// no_trim is self explanatory but it prevents the input from being trimed if you intend to parse newlines or whitespace.
+/**
+ * Used to get a properly sanitized input. Returns null if cancel is pressed.
+ *
+ * Arguments
+ ** user - Target of the input prompt.
+ ** message - The text inside of the prompt.
+ ** title - The window title of the prompt.
+ ** max_length - If you intend to impose a length limit - default is 1024.
+ ** no_trim - Prevents the input from being trimmed if you intend to parse newlines or whitespace.
+*/
 /proc/stripped_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN, no_trim=FALSE)
-	var/name = input(user, message, title, default) as text|null
-
+	var/user_input = input(user, message, title, default) as text|null
+	if(isnull(user_input)) // User pressed cancel
+		return
 	if(no_trim)
-		return copytext(html_encode(name), 1, max_length)
+		return copytext(html_encode(user_input), 1, max_length)
 	else
-		return trim(html_encode(name), max_length) //trim is "outside" because html_encode can expand single symbols into multiple symbols (such as turning < into &lt;)
+		return trim(html_encode(user_input), max_length) //trim is "outside" because html_encode can expand single symbols into multiple symbols (such as turning < into &lt;)
 
-// Used to get a properly sanitized multiline input, of max_length
+/**
+ * Used to get a properly sanitized input in a larger box. Works very similarly to stripped_input.
+ *
+ * Arguments
+ ** user - Target of the input prompt.
+ ** message - The text inside of the prompt.
+ ** title - The window title of the prompt.
+ ** max_length - If you intend to impose a length limit - default is 1024.
+ ** no_trim - Prevents the input from being trimmed if you intend to parse newlines or whitespace.
+*/
 /proc/stripped_multiline_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN, no_trim=FALSE)
-	var/name = input(user, message, title, default) as message|null
+	var/user_input = input(user, message, title, default) as message|null
+	if(isnull(user_input)) // User pressed cancel
+		return
 	if(no_trim)
-		return copytext(html_encode(name), 1, max_length)
+		return copytext(html_encode(user_input), 1, max_length)
 	else
-		return trim(html_encode(name), max_length)
+		return trim(html_encode(user_input), max_length)
 
 #define NO_CHARS_DETECTED 0
 #define SPACES_DETECTED 1
@@ -130,8 +150,9 @@
  *
  * * strict - return null immidiately instead of filtering out
  * * allow_numbers - allows numbers and common special characters - used for silicon/other weird things names
+ * * cap_after_symbols - words like Bob's will be capitalized to Bob'S by default. False is good for titles.
  */
-/proc/reject_bad_name(t_in, allow_numbers = FALSE, max_length = MAX_NAME_LEN, ascii_only = TRUE, strict = FALSE)
+/proc/reject_bad_name(t_in, allow_numbers = FALSE, max_length = MAX_NAME_LEN, ascii_only = TRUE, strict = FALSE, cap_after_symbols = TRUE)
 	if(!t_in)
 		return //Rejects the input if it is null
 
@@ -158,7 +179,7 @@
 
 			// a  .. z
 			if(97 to 122) //Lowercase Letters
-				if(last_char_group == NO_CHARS_DETECTED || last_char_group == SPACES_DETECTED || last_char_group == SYMBOLS_DETECTED) //start of a word
+				if(last_char_group == NO_CHARS_DETECTED || last_char_group == SPACES_DETECTED || cap_after_symbols && last_char_group == SYMBOLS_DETECTED) //start of a word
 					char = uppertext(char)
 				number_of_alphanumeric++
 				last_char_group = LETTERS_DETECTED
@@ -171,7 +192,6 @@
 					continue
 				number_of_alphanumeric++
 				last_char_group = NUMBERS_DETECTED
-
 			// '  -  .
 			if(39,45,46) //Common name punctuation
 				if(last_char_group == NO_CHARS_DETECTED)
@@ -583,7 +603,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 	t = parsemarkdown_basic_step1(t)
 
-	t = replacetext(t, regex("%s(?:ign)?(?=\\s|$)", "igm"), user ? "<font face=\"[SIGNFONT]\"><i>[user.real_name]</i></font>" : "<span class=\"paper_field\"></span>")
+	t = replacetext(t, regex("%s(?:ign)?(?=\\s|$)", "igm"), user ? "<font face=\"[SIGNATURE_FONT]\"><i>[user.real_name]</i></font>" : "<span class=\"paper_field\"></span>")
 	t = replacetext(t, regex("%f(?:ield)?(?=\\s|$)", "igm"), "<span class=\"paper_field\"></span>")
 
 	t = parsemarkdown_basic_step2(t)
@@ -972,7 +992,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	try
 		return json_decode(data)
 	catch
-		return
+		return null
 
 /proc/num2loadingbar(percent as num, numSquares = 20, reverse = FALSE)
 	var/loadstring = ""

@@ -159,6 +159,9 @@
 	///Var used in the meltdown phase
 	var/final_countdown = FALSE
 
+	///Flags used in the alert proc to select what messages to show when the HFR is delaminating (HYPERTORUS_FLAG_HIGH_POWER_DAMAGE | HYPERTORUS_FLAG_HIGH_FUEL_MIX_MOLE | HYPERTORUS_FLAG_IRON_CONTENT_DAMAGE | HYPERTORUS_FLAG_IRON_CONTENT_INCREASE | HYPERTORUS_FLAG_EMPED)
+	var/warning_damage_flags = NONE
+
 /obj/machinery/atmospherics/components/unary/hypertorus/core/Initialize(mapload)
 	. = ..()
 	internal_fusion = new

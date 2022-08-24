@@ -5,6 +5,8 @@
 
 /obj/item/circuitboard
 	name = "circuit board"
+	/// extension that is applied after the initial name AKA (Computer/Machine Board)
+	var/name_extension = null
 	icon = 'icons/obj/module.dmi'
 	icon_state = "circuit_map"
 	inhand_icon_state = "electronic"
@@ -17,8 +19,12 @@
 	var/build_path = null
 	///determines if the circuit board originated from a vendor off station or not.
 	var/onstation = TRUE
+	///determines if the board requires specific levels of parts. (ie specifically a femto menipulator vs generic manipulator)
+	var/specific_parts = FALSE
 
 /obj/item/circuitboard/Initialize(mapload)
+	if(name_extension)
+		name = "[initial(name)] [name_extension]"
 	set_greyscale(new_config = /datum/greyscale_config/circuit)
 	return ..()
 
@@ -62,6 +68,7 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 */
 
 /obj/item/circuitboard/machine
+	name_extension = "(Machine Board)"
 	var/needs_anchored = TRUE // Whether this machine must be anchored to be constructed.
 	var/list/req_components // Components required by the machine.
 							// Example: list(/obj/item/stock_parts/matter_bin = 5)
@@ -111,10 +118,14 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 			if(initial(stack_path.singular_name))
 				component_name = initial(stack_path.singular_name) //e.g. "glass sheet" vs. "glass"
 
-		else if(ispath(component_path, /obj/item/stock_parts))
+		else if(ispath(component_path, /obj/item/stock_parts) && !specific_parts)
 			var/obj/item/stock_parts/stock_part = component_path
 			if(initial(stock_part.base_name))
 				component_name = initial(stock_part.base_name)
+		else if(ispath(component_path, /obj/item/stock_parts))
+			var/obj/item/stock_parts/stock_part = component_path
+			if(initial(stock_part.name))
+				component_name = initial(stock_part.name)
 
 		nice_list += list("[component_amount] [component_name]\s")
 

@@ -118,6 +118,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	null, \
 	new/datum/stack_recipe("iron door", /obj/structure/mineral_door/iron, 20, one_per_turf = TRUE, on_floor = TRUE, applies_mats = TRUE), \
 	new/datum/stack_recipe("filing cabinet", /obj/structure/filingcabinet, 2, time = 10 SECONDS, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("desk bell", /obj/structure/desk_bell, 2, time = 3 SECONDS), \
 	new/datum/stack_recipe("floodlight frame", /obj/structure/floodlight_frame, 5, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("voting box", /obj/structure/votebox, 15, time = 50), \
 	new/datum/stack_recipe("pestle", /obj/item/pestle, 1, time = 50), \
@@ -143,7 +144,16 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	matter_amount = 4
 	cost = 500
 	source = /datum/robot_energy_storage/iron
-	tram_wall_type = /obj/structure/tramwall
+
+/obj/item/stack/sheet/iron/Initialize(mapload)
+	. = ..()
+	var/static/list/tool_behaviors = list(
+		TOOL_WELDER = list(
+			SCREENTIP_CONTEXT_LMB = "Craft iron rods",
+			SCREENTIP_CONTEXT_RMB = "Craft floor tiles",
+		),
+	)
+	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
 /obj/item/stack/sheet/iron/examine(mob/user)
 	. = ..()
@@ -173,8 +183,34 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	user.visible_message(span_suicide("[user] begins whacking [user.p_them()]self over the head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
+/obj/item/stack/sheet/iron/welder_act(mob/living/user, obj/item/tool)
+	if(tool.use_tool(src, user, delay = 0, volume = 40))
+		var/obj/item/stack/rods/two/new_item = new(user.loc)
+		user.visible_message(
+			span_notice("[user.name] shaped [src] into floor rods with [tool]."),
+			blind_message = span_hear("You hear welding."),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+			ignored_mobs = user
+		)
+		use(1)
+		user.put_in_inactive_hand(new_item)
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/item/stack/sheet/iron/welder_act_secondary(mob/living/user, obj/item/tool)
+	if(tool.use_tool(src, user, delay = 0, volume = 40))
+		var/obj/item/stack/tile/iron/four/new_item = new(user.loc)
+		user.visible_message(
+			span_notice("[user.name] shaped [src] into floor tiles with [tool]."),
+			blind_message = span_hear("You hear welding."),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+			ignored_mobs = user
+		)
+		use(1)
+		user.put_in_inactive_hand(new_item)
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/item/stack/sheet/iron/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	if(istype(target, /turf/open))
+	if(isopenturf(target))
 		var/turf/open/build_on = target
 		if(!user.Adjacent(build_on))
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -267,13 +303,13 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("apiary", /obj/structure/beebox, 40, time = 50),\
 	new/datum/stack_recipe("tiki mask", /obj/item/clothing/mask/gas/tiki_mask, 2), \
 	new/datum/stack_recipe("honey frame", /obj/item/honey_frame, 5, time = 10),\
-	new/datum/stack_recipe("wooden bucket", /obj/item/reagent_containers/glass/bucket/wooden, 3, time = 10),\
+	new/datum/stack_recipe("wooden bucket", /obj/item/reagent_containers/cup/bucket/wooden, 3, time = 10),\
 	new/datum/stack_recipe("rake", /obj/item/cultivator/rake, 5, time = 10),\
 	new/datum/stack_recipe("ore box", /obj/structure/ore_box, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE),\
 	new/datum/stack_recipe("wooden crate", /obj/structure/closet/crate/wooden, 6, time = 50, one_per_turf = TRUE, on_floor = TRUE),\
 	new/datum/stack_recipe("baseball bat", /obj/item/melee/baseball_bat, 5, time = 15),\
 	new/datum/stack_recipe("loom", /obj/structure/loom, 10, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
-	new/datum/stack_recipe("mortar", /obj/item/reagent_containers/glass/mortar, 3), \
+	new/datum/stack_recipe("mortar", /obj/item/reagent_containers/cup/mortar, 3), \
 	new/datum/stack_recipe("firebrand", /obj/item/match/firebrand, 2, time = 100), \
 	new/datum/stack_recipe("bonfire", /obj/structure/bonfire, 10, time = 60, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("easel", /obj/structure/easel, 5, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
@@ -362,7 +398,7 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	new/datum/stack_recipe("white jumpsuit", /obj/item/clothing/under/color/white, 3), \
 	new/datum/stack_recipe("white shoes", /obj/item/clothing/shoes/sneakers/white, 2), \
 	new/datum/stack_recipe("white scarf", /obj/item/clothing/neck/scarf, 1), \
-	new/datum/stack_recipe("white bandana", /obj/item/clothing/mask/bandana/color/white, 2), \
+	new/datum/stack_recipe("white bandana", /obj/item/clothing/mask/bandana/white, 2), \
 	null, \
 	new/datum/stack_recipe("backpack", /obj/item/storage/backpack, 4), \
 	new/datum/stack_recipe("duffel bag", /obj/item/storage/backpack/duffelbag, 6), \
@@ -376,7 +412,7 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	new/datum/stack_recipe("construction bag", /obj/item/storage/bag/construction, 4), \
 	null, \
 	new/datum/stack_recipe("improvised gauze", /obj/item/stack/medical/gauze/improvised, 1, 2, 6), \
-	new/datum/stack_recipe("rag", /obj/item/reagent_containers/glass/rag, 1), \
+	new/datum/stack_recipe("rag", /obj/item/reagent_containers/cup/rag, 1), \
 	new/datum/stack_recipe("bedsheet", /obj/item/bedsheet, 3), \
 	new/datum/stack_recipe("double bedsheet", /obj/item/bedsheet/double, 6), \
 	new/datum/stack_recipe("empty sandbag", /obj/item/emptysandbag, 4), \
@@ -421,7 +457,7 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	new/datum/stack_recipe("durathread jumpsuit", /obj/item/clothing/under/misc/durathread, 4, time = 40),
 	new/datum/stack_recipe("durathread beret", /obj/item/clothing/head/beret/durathread, 2, time = 40), \
 	new/datum/stack_recipe("durathread beanie", /obj/item/clothing/head/beanie/durathread, 2, time = 40), \
-	new/datum/stack_recipe("durathread bandana", /obj/item/clothing/mask/bandana/color/durathread, 1, time = 25), \
+	new/datum/stack_recipe("durathread bandana", /obj/item/clothing/mask/bandana/durathread, 1, time = 25), \
 	))
 
 /obj/item/stack/sheet/durathread
@@ -468,7 +504,7 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
  */
 GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	new/datum/stack_recipe("box", /obj/item/storage/box), \
-	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3), \
+	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/costume/cardborg, 3), \
 	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/cardborg), \
 	new/datum/stack_recipe("large box", /obj/structure/closet/cardboard, 4, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("cardboard cutout", /obj/item/cardboard_cutout, 5), \
@@ -565,59 +601,6 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	else
 		. = ..()
 
-
-/*
- * Runed Metal
- */
-
-GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
-	new /datum/stack_recipe("runed door (a weak door that stuns non-cultists who touch it)", /obj/machinery/door/airlock/cult, 1, time = 5 SECONDS, one_per_turf = TRUE, on_floor = TRUE), \
-	new /datum/stack_recipe("runed girder (not a recommended usage of runed metal)", /obj/structure/girder/cult, 1, time = 5 SECONDS, one_per_turf = TRUE, on_floor = TRUE), \
-	new /datum/stack_recipe("pylon (heals (and regenerates the blood of) nearby blood cultists and constructs, but also turns nearby floor tiles into engraved flooring)", /obj/structure/destructible/cult/pylon, 4, time = 4 SECONDS, one_per_turf = TRUE, on_floor = TRUE), \
-	new /datum/stack_recipe("daemon forge (can make Nar'Sien hardened armor, flagellant's robes, and eldritch longswords)", /obj/structure/destructible/cult/item_dispenser/forge, 3, time = 4 SECONDS, one_per_turf = TRUE, on_floor = TRUE), \
-	new /datum/stack_recipe("archives (can make zealot's blindfolds, shuttle curse orbs, and veil walker equipment)", /obj/structure/destructible/cult/item_dispenser/archives, 3, time = 4 SECONDS, one_per_turf = TRUE, on_floor = TRUE), \
-	new /datum/stack_recipe("altar (can make eldritch whetstones, construct shells, and flasks of unholy water)", /obj/structure/destructible/cult/item_dispenser/altar, 3, time = 4 SECONDS, one_per_turf = TRUE, on_floor = TRUE), \
-	))
-
-/obj/item/stack/sheet/runed_metal
-	name = "runed metal"
-	desc = "Sheets of cold metal with shifting inscriptions writ upon them."
-	singular_name = "runed metal sheet"
-	icon_state = "sheet-runed"
-	inhand_icon_state = "sheet-runed"
-	icon = 'icons/obj/stack_objects.dmi'
-	mats_per_unit = list(/datum/material/runedmetal = MINERAL_MATERIAL_AMOUNT)
-	sheettype = "runed"
-	merge_type = /obj/item/stack/sheet/runed_metal
-	novariants = TRUE
-	grind_results = list(/datum/reagent/iron = 5, /datum/reagent/blood = 15)
-	material_type = /datum/material/runedmetal
-	has_unique_girder = TRUE
-
-/obj/item/stack/sheet/runed_metal/attack_self(mob/living/user)
-	if(!IS_CULTIST(user))
-		to_chat(user, span_warning("Only one with forbidden knowledge could hope to work this metal..."))
-		return
-	var/turf/T = get_turf(user) //we may have moved. adjust as needed...
-	var/area/A = get_area(user)
-	if((!is_station_level(T.z) && !is_mining_level(T.z)) || (A && !(A.area_flags & CULT_PERMITTED)))
-		to_chat(user, span_warning("The veil is not weak enough here."))
-		return FALSE
-	return ..()
-
-/obj/item/stack/sheet/runed_metal/get_main_recipes()
-	. = ..()
-	. += GLOB.runed_metal_recipes
-
-/obj/item/stack/sheet/runed_metal/fifty
-	amount = 50
-
-/obj/item/stack/sheet/runed_metal/ten
-	amount = 10
-
-/obj/item/stack/sheet/runed_metal/five
-	amount = 5
-
 /*
  * Bronze
  */
@@ -631,7 +614,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	new/datum/stack_recipe("bronze pinion airlock assembly", /obj/structure/door_assembly/door_assembly_bronze/seethru, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("bronze floor tile", /obj/item/stack/tile/bronze, 1, 4, 20), \
 	new/datum/stack_recipe("bronze hat", /obj/item/clothing/head/bronze), \
-	new/datum/stack_recipe("bronze suit", /obj/item/clothing/suit/bronze), \
+	new/datum/stack_recipe("bronze suit", /obj/item/clothing/suit/costume/bronze), \
 	new/datum/stack_recipe("bronze boots", /obj/item/clothing/shoes/bronze), \
 	null,
 	new/datum/stack_recipe("bronze chair", /obj/structure/chair/bronze, 1, time = 0, one_per_turf = TRUE, on_floor = TRUE), \
@@ -720,9 +703,9 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	new /datum/stack_recipe("plastic floor tile", /obj/item/stack/tile/plastic, 1, 4, 20), \
 	new /datum/stack_recipe("folding plastic chair", /obj/structure/chair/plastic, 2), \
 	new /datum/stack_recipe("plastic flaps", /obj/structure/plasticflaps, 5, one_per_turf = TRUE, on_floor = TRUE, time = 40), \
-	new /datum/stack_recipe("water bottle", /obj/item/reagent_containers/food/drinks/waterbottle/empty), \
-	new /datum/stack_recipe("large water bottle", /obj/item/reagent_containers/food/drinks/waterbottle/large/empty, 3), \
-	new /datum/stack_recipe("colo cups", /obj/item/reagent_containers/food/drinks/colocup, 1), \
+	new /datum/stack_recipe("water bottle", /obj/item/reagent_containers/cup/glass/waterbottle/empty), \
+	new /datum/stack_recipe("large water bottle", /obj/item/reagent_containers/cup/glass/waterbottle/large/empty, 3), \
+	new /datum/stack_recipe("colo cups", /obj/item/reagent_containers/cup/glass/colocup, 1), \
 	new /datum/stack_recipe("wet floor sign", /obj/item/clothing/suit/caution, 2), \
 	new /datum/stack_recipe("warning cone", /obj/item/clothing/head/cone, 2), \
 	new /datum/stack_recipe("blank wall sign", /obj/item/sign, 1)))

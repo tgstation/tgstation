@@ -171,6 +171,8 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	var/obj/effect/gateway_portal_bumper/portal
 	/// Visual object for handling the viscontents
 	var/obj/effect/gateway_portal_effect/portal_visuals
+	/// Overlay of the lights. They light up fully when it charges fully.
+	var/image/light_overlay
 
 /obj/machinery/gateway/Initialize(mapload)
 	generate_destination()
@@ -205,6 +207,15 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 		if(target)
 			deactivate()
 		return
+	if(light_overlay)
+		return
+	for(var/datum/gateway_destination/destination as anything in GLOB.gateway_destinations)
+		if(!destination.is_available())
+			continue
+		light_overlay = image(icon, "portal_light")
+		light_overlay.alpha = 0
+		animate(light_overlay, 3 SECONDS, alpha = 255)
+		add_overlay(light_overlay)
 
 /obj/machinery/gateway/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	return
@@ -326,7 +337,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	G.activate(D)
 
 /obj/item/paper/fluff/gateway
-	info = "Congratulations,<br><br>Your station has been selected to carry out the Gateway Project.<br><br>The equipment will be shipped to you at the start of the next quarter.<br> You are to prepare a secure location to house the equipment as outlined in the attached documents.<br><br>--Nanotrasen Bluespace Research"
+	default_raw_text = "Congratulations,<br><br>Your station has been selected to carry out the Gateway Project.<br><br>The equipment will be shipped to you at the start of the next quarter.<br> You are to prepare a secure location to house the equipment as outlined in the attached documents.<br><br>--Nanotrasen Bluespace Research"
 	name = "Confidential Correspondence, Pg 1"
 
 /obj/effect/gateway_portal_effect

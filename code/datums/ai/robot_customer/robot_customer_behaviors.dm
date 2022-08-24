@@ -104,7 +104,9 @@
 	var/mob/living/simple_animal/robot_customer/customer_pawn = controller.pawn
 	var/datum/customer_data/customer_data = controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
 	var/mob/living/greytider = controller.blackboard[BB_CUSTOMER_CURRENT_TARGET]
-	if(greytider) //usually if we stop waiting, it's because we're done with the venue. but in this case we're beating some dude up so don't switch to leaving
+	//usually if we stop waiting, it's because we're done with the venue. but here we're either beating some dude up
+	//or are being qdeleted and don't want runtime errors, so don't switch to leaving
+	if(greytider || QDELETED(src))
 		return
 	controller.blackboard[BB_CUSTOMER_LEAVING] = TRUE
 	customer_pawn.update_icon() //They might have a special leaving accesoiry (french flag)

@@ -150,7 +150,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 /obj/effect/statclick/ticket_list/Click()
 	if (!usr.client?.holder)
 		message_admins("[key_name_admin(usr)] non-holder clicked on a ticket list statclick! ([src])")
-		log_game("[key_name(usr)] non-holder clicked on a ticket list statclick! ([src])")
+		usr.log_message("non-holder clicked on a ticket list statclick! ([src])", LOG_ADMIN)
 		return
 
 	GLOB.ahelp_tickets.BrowseTickets(current_state)
@@ -195,6 +195,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/list/opening_responders
 	/// Whether this ahelp has sent a webhook or not, and what type
 	var/webhook_sent = WEBHOOK_NONE
+	/// List of player interactions
+	var/list/player_interactions
 
 /**
  * Call this on its own to create a ticket, don't manually assign current_ticket
@@ -228,9 +230,10 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 	statclick = new(null, src)
 	ticket_interactions = list()
+	player_interactions = list()
 
 	if(is_bwoink)
-		AddInteraction("<font color='blue'>[key_name_admin(usr)] PM'd [LinkedReplyName()]</font>")
+		AddInteraction("<font color='blue'>[key_name_admin(usr)] PM'd [LinkedReplyName()]</font>", player_message = "<font color='blue'>[key_name_admin(usr, include_name = FALSE)] PM'd [LinkedReplyName()]</font>")
 		message_admins("<font color='blue'>Ticket [TicketHref("#[id]")] created</font>")
 	else
 		MessageNoRecipient(msg_raw, urgent)
@@ -342,11 +345,13 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	GLOB.ahelp_tickets.resolved_tickets -= src
 	return ..()
 
-/datum/admin_help/proc/AddInteraction(formatted_message)
+/datum/admin_help/proc/AddInteraction(formatted_message, player_message)
 	if(heard_by_no_admins && usr && usr.ckey != initiator_ckey)
 		heard_by_no_admins = FALSE
 		send2adminchat(initiator_ckey, "Ticket #[id]: Answered by [key_name(usr)]")
 	ticket_interactions += "[time_stamp()]: [formatted_message]"
+	if (!isnull(player_message))
+		player_interactions += "[time_stamp()]: [player_message]"
 
 //Removes the ahelp verb and returns it after 2 minutes
 /datum/admin_help/proc/TimeoutVerb()
@@ -360,29 +365,29 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	. = ADMIN_FULLMONTY_NONAME(initiator.mob)
 	if(state == AHELP_ACTIVE)
 		if (CONFIG_GET(flag/popup_admin_pm))
-			. += " (<A HREF='?_src_=holder;[HrefToken(TRUE)];adminpopup=[REF(initiator)]'>POPUP</A>)"
+			. += " (<A HREF='?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminpopup=[REF(initiator)]'>POPUP</A>)"
 		. += ClosureLinks(ref_src)
 
 //private
 /datum/admin_help/proc/ClosureLinks(ref_src)
 	if(!ref_src)
 		ref_src = "[REF(src)]"
-	. = " (<A HREF='?_src_=holder;[HrefToken(TRUE)];ahelp=[ref_src];ahelp_action=reject'>REJT</A>)"
-	. += " (<A HREF='?_src_=holder;[HrefToken(TRUE)];ahelp=[ref_src];ahelp_action=icissue'>IC</A>)"
-	. += " (<A HREF='?_src_=holder;[HrefToken(TRUE)];ahelp=[ref_src];ahelp_action=close'>CLOSE</A>)"
-	. += " (<A HREF='?_src_=holder;[HrefToken(TRUE)];ahelp=[ref_src];ahelp_action=resolve'>RSLVE</A>)"
+	. = " (<A HREF='?_src_=holder;[HrefToken(forceGlobal = TRUE)];ahelp=[ref_src];ahelp_action=reject'>REJT</A>)"
+	. += " (<A HREF='?_src_=holder;[HrefToken(forceGlobal = TRUE)];ahelp=[ref_src];ahelp_action=icissue'>IC</A>)"
+	. += " (<A HREF='?_src_=holder;[HrefToken(forceGlobal = TRUE)];ahelp=[ref_src];ahelp_action=close'>CLOSE</A>)"
+	. += " (<A HREF='?_src_=holder;[HrefToken(forceGlobal = TRUE)];ahelp=[ref_src];ahelp_action=resolve'>RSLVE</A>)"
 
 //private
 /datum/admin_help/proc/LinkedReplyName(ref_src)
 	if(!ref_src)
 		ref_src = "[REF(src)]"
-	return "<A HREF='?_src_=holder;[HrefToken(TRUE)];ahelp=[ref_src];ahelp_action=reply'>[initiator_key_name]</A>"
+	return "<A HREF='?_src_=holder;[HrefToken(forceGlobal = TRUE)];ahelp=[ref_src];ahelp_action=reply'>[initiator_key_name]</A>"
 
 //private
 /datum/admin_help/proc/TicketHref(msg, ref_src, action = "ticket")
 	if(!ref_src)
 		ref_src = "[REF(src)]"
-	return "<A HREF='?_src_=holder;[HrefToken(TRUE)];ahelp=[ref_src];ahelp_action=[action]'>[msg]</A>"
+	return "<A HREF='?_src_=holder;[HrefToken(forceGlobal = TRUE)];ahelp=[ref_src];ahelp_action=[action]'>[msg]</A>"
 
 //message from the initiator without a target, all admins will see this
 //won't bug irc/discord
@@ -390,9 +395,9 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	msg = sanitize(copytext_char(msg, 1, MAX_MESSAGE_LEN))
 	var/ref_src = "[REF(src)]"
 	//Message to be sent to all admins
-	var/admin_msg = span_adminnotice(span_adminhelp("Ticket [TicketHref("#[id]", ref_src)]</span><b>: [LinkedReplyName(ref_src)] [FullMonty(ref_src)]:</b> <span class='linkify'>[keywords_lookup(msg)]"))
+	var/admin_msg = span_adminnotice(span_adminhelp("Ticket [TicketHref("#[id]", ref_src)]</span><b>: [LinkedReplyName(ref_src)] [FullMonty(ref_src)]:</b> [span_linkify(keywords_lookup(msg))]"))
 
-	AddInteraction("<font color='red'>[LinkedReplyName(ref_src)]: [msg]</font>")
+	AddInteraction("<font color='red'>[LinkedReplyName(ref_src)]: [msg]</font>", player_message = "<font color='red'>[LinkedReplyName(ref_src)]: [msg]</font>")
 	log_admin_private("Ticket #[id]: [key_name(initiator)]: [msg]")
 
 	//send this msg to all admins
@@ -408,7 +413,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	//show it to the person adminhelping too
 	to_chat(initiator,
 		type = MESSAGE_TYPE_ADMINPM,
-		html = span_adminnotice("PM to-<b>Admins</b>: <span class='linkify'>[msg]</span>"),
+		html = span_adminnotice("PM to-<b>Admins</b>: [span_linkify(msg)]"),
 		confidential = TRUE)
 	SSblackbox.LogAhelp(id, "Ticket Opened", msg, null, initiator.ckey, urgent = urgent)
 
@@ -436,7 +441,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(initiator)
 		initiator.current_ticket = src
 
-	AddInteraction("<font color='purple'>Reopened by [key_name_admin(usr)]</font>")
+	AddInteraction("<font color='purple'>Reopened by [key_name_admin(usr)]</font>", player_message = "Ticket reopened!")
 	var/msg = span_adminhelp("Ticket [TicketHref("#[id]")] reopened by [key_name_admin(usr)].")
 	message_admins(msg)
 	log_admin_private(msg)
@@ -463,7 +468,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	RemoveActive()
 	state = AHELP_CLOSED
 	GLOB.ahelp_tickets.ListInsert(src)
-	AddInteraction("<font color='red'>Closed by [key_name].</font>")
+	AddInteraction("<font color='red'>Closed by [key_name].</font>", player_message = "<font color='red'>Ticket closed!</font>")
 	if(!silent)
 		SSblackbox.record_feedback("tally", "ahelp_stats", 1, "closed")
 		var/msg = "Ticket [TicketHref("#[id]")] closed by [key_name]."
@@ -481,7 +486,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 	addtimer(CALLBACK(initiator, /client/proc/giveadminhelpverb), 50)
 
-	AddInteraction("<font color='green'>Resolved by [key_name].</font>")
+	AddInteraction("<font color='green'>Resolved by [key_name].</font>", player_message = "<font color='green'>Ticket resolved!</font>")
 	to_chat(initiator, span_adminhelp("Your ticket has been resolved by an admin. The Adminhelp verb will be returned to you shortly."), confidential = TRUE)
 	if(!silent)
 		SSblackbox.record_feedback("tally", "ahelp_stats", 1, "resolved")
@@ -508,7 +513,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/msg = "Ticket [TicketHref("#[id]")] rejected by [key_name]"
 	message_admins(msg)
 	log_admin_private(msg)
-	AddInteraction("Rejected by [key_name].")
+	AddInteraction("Rejected by [key_name].", player_message = "Ticket rejected!")
 	SSblackbox.LogAhelp(id, "Rejected", "Rejected by [usr.key]", null, usr.ckey)
 	Close(silent = TRUE)
 
@@ -527,7 +532,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	msg = "Ticket [TicketHref("#[id]")] marked as IC by [key_name]"
 	message_admins(msg)
 	log_admin_private(msg)
-	AddInteraction("Marked as IC issue by [key_name]")
+	AddInteraction("Marked as IC issue by [key_name]", player_message = "Marked as IC issue!")
 	SSblackbox.LogAhelp(id, "IC Issue", "Marked as IC issue by [usr.key]", null,  usr.ckey)
 	Resolve(silent = TRUE)
 
@@ -622,6 +627,32 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		if("reopen")
 			Reopen()
 
+/datum/admin_help/proc/player_ticket_panel()
+	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Player Ticket</title></head>")
+	dat += "<b>State: "
+	switch(state)
+		if(AHELP_ACTIVE)
+			dat += "<font color='red'>OPEN</font></b>"
+		if(AHELP_RESOLVED)
+			dat += "<font color='green'>RESOLVED</font></b>"
+		if(AHELP_CLOSED)
+			dat += "CLOSED</b>"
+		else
+			dat += "UNKNOWN</b>"
+	dat += "\n[FOURSPACES]<A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];player_ticket_panel=1'>Refresh</A>"
+	dat += "<br><br>Opened at: [gameTimestamp("hh:mm:ss", opened_at)] (Approx [DisplayTimeText(world.time - opened_at)] ago)"
+	if(closed_at)
+		dat += "<br>Closed at: [gameTimestamp("hh:mm:ss", closed_at)] (Approx [DisplayTimeText(world.time - closed_at)] ago)"
+	dat += "<br><br>"
+	dat += "<br><b>Log:</b><br><br>"
+	for (var/interaction in player_interactions)
+		dat += "[interaction]<br>"
+
+	var/datum/browser/player_panel = new(usr, "ahelp[id]", 0, 620, 480)
+	player_panel.set_content(dat.Join())
+	player_panel.open()
+
+
 //
 // TICKET STATCLICK
 //
@@ -639,7 +670,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 /obj/effect/statclick/ahelp/Click()
 	if (!usr.client?.holder)
 		message_admins("[key_name_admin(usr)] non-holder clicked on an ahelp statclick! ([src])")
-		log_game("[key_name(usr)] non-holder clicked on an ahelp statclick! ([src])")
+		usr.log_message("non-holder clicked on an ahelp statclick! ([src])", LOG_ADMIN)
 		return
 
 	ahelp_datum.TicketPanel()
@@ -752,34 +783,68 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 	GLOB.admin_help_ui_handler.ui_interact(mob)
 	to_chat(src, span_boldnotice("Adminhelp failing to open or work? <a href='?src=[REF(src)];tguiless_adminhelp=1'>Click here</a>"))
 
+/client/verb/view_latest_ticket()
+	set category = "Admin"
+	set name = "View Latest Ticket"
+
+	if(!current_ticket)
+		// Check if the client had previous tickets, and show the latest one
+		var/list/prev_tickets = list()
+		var/datum/admin_help/last_ticket
+		// Check all resolved tickets for this player
+		for(var/datum/admin_help/resolved_ticket in GLOB.ahelp_tickets.resolved_tickets)
+			if(resolved_ticket.initiator_ckey == ckey) // Initiator is a misnomer, it's always the non-admin player even if an admin bwoinks first
+				prev_tickets += resolved_ticket
+		// Check all closed tickets for this player
+		for(var/datum/admin_help/closed_ticket in GLOB.ahelp_tickets.closed_tickets)
+			if(closed_ticket.initiator_ckey == ckey)
+				prev_tickets += closed_ticket
+		// Take the most recent entry of prev_tickets and open the panel on it
+		if(LAZYLEN(prev_tickets))
+			last_ticket = pop(prev_tickets)
+			last_ticket.player_ticket_panel()
+			return
+
+		// client had no tickets this round
+		to_chat(src, span_warning("You have not had an ahelp ticket this round."))
+		return
+
+	current_ticket.player_ticket_panel()
 
 //
 // LOGGING
 //
 
-//Use this proc when an admin takes action that may be related to an open ticket on what
-//what can be a client, ckey, or mob
-//log_in_blackbox: Whether or not this message with the blackbox system.
-//If disabled, this message should be logged with a different proc call
-/proc/admin_ticket_log(what, message, log_in_blackbox = TRUE)
-	var/client/C
+/// Use this proc when an admin takes action that may be related to an open ticket on what
+/// what can be a client, ckey, or mob
+/// player_message: If the message should be shown in the player ticket panel, fill this out
+/// log_in_blackbox: Whether or not this message with the blackbox system.
+/// If disabled, this message should be logged with a different proc call
+/proc/admin_ticket_log(what, message, player_message, log_in_blackbox = TRUE)
+	var/client/mob_client
 	var/mob/Mob = what
 	if(istype(Mob))
-		C = Mob.client
+		mob_client = Mob.client
 	else
-		C = what
-	if(istype(C) && C.current_ticket)
-		C.current_ticket.AddInteraction(message)
+		mob_client = what
+	if(istype(mob_client) && mob_client.current_ticket)
+		if (isnull(player_message))
+			mob_client.current_ticket.AddInteraction(message)
+		else
+			mob_client.current_ticket.AddInteraction(message, player_message)
 		if(log_in_blackbox)
-			SSblackbox.LogAhelp(C.current_ticket.id, "Interaction", message, C.ckey, usr.ckey)
-		return C.current_ticket
+			SSblackbox.LogAhelp(mob_client.current_ticket.id, "Interaction", message, mob_client.ckey, usr.ckey)
+		return mob_client.current_ticket
 	if(istext(what)) //ckey
-		var/datum/admin_help/AH = GLOB.ahelp_tickets.CKey2ActiveTicket(what)
-		if(AH)
-			AH.AddInteraction(message)
+		var/datum/admin_help/active_admin_help = GLOB.ahelp_tickets.CKey2ActiveTicket(what)
+		if(active_admin_help)
+			if (isnull(player_message))
+				active_admin_help.AddInteraction(message)
+			else
+				active_admin_help.AddInteraction(message, player_message)
 			if(log_in_blackbox)
-				SSblackbox.LogAhelp(AH.id, "Interaction", message, what, usr.ckey)
-			return AH
+				SSblackbox.LogAhelp(active_admin_help.id, "Interaction", message, what, usr.ckey)
+			return active_admin_help
 
 //
 // HELPER PROCS
@@ -935,7 +1000,7 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 							if(is_special_character(found))
 								is_antag = 1
 							founds += "Name: [found.name]([found.real_name]) Key: [found.key] Ckey: [found.ckey] [is_antag ? "(Antag)" : null] "
-							msg += "[original_word]<font size='1' color='[is_antag ? "red" : "black"]'>(<A HREF='?_src_=holder;[HrefToken(TRUE)];adminmoreinfo=[REF(found)]'>?</A>|<A HREF='?_src_=holder;[HrefToken(TRUE)];adminplayerobservefollow=[REF(found)]'>F</A>)</font> "
+							msg += "[original_word]<font size='1' color='[is_antag ? "red" : "black"]'>(<A HREF='?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminmoreinfo=[REF(found)]'>?</A>|<A HREF='?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminplayerobservefollow=[REF(found)]'>F</A>)</font> "
 							continue
 		msg += "[original_word] "
 	if(external)
@@ -1018,7 +1083,7 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 				var/datum/datum_check = locate(word_with_brackets)
 				if(!istype(datum_check))
 					continue
-				msglist[i] = "<u><a href='?_src_=vars;[HrefToken(TRUE)];Vars=[word_with_brackets]'>[word]</A></u>"
+				msglist[i] = "<u><a href='?_src_=vars;[HrefToken(forceGlobal = TRUE)];Vars=[word_with_brackets]'>[word]</A></u>"
 				modified = TRUE
 
 			if("#") // check if we're linking a ticket
@@ -1039,7 +1104,7 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 					if(AHELP_RESOLVED)
 						state_word = "Resolved"
 
-				msglist[i]= "<u><A href='?_src_=holder;[HrefToken()];ahelp=[REF(ahelp_check)];ahelp_action=ticket'>[word] ([state_word] | [ahelp_check.initiator_key_name])</A></u>"
+				msglist[i]= "<u><A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];ahelp=[REF(ahelp_check)];ahelp_action=ticket'>[word] ([state_word] | [ahelp_check.initiator_key_name])</A></u>"
 				modified = TRUE
 
 	if(modified)

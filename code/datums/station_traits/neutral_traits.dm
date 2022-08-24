@@ -21,8 +21,14 @@
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 5
 	show_in_report = TRUE
-	report_message = "For experimental purposes, this station AI might show divergence from default lawset. Do not meddle with this experiment."
+	report_message = "For experimental purposes, this station AI might show divergence from default lawset. Do not meddle with this experiment, we've removed \
+		access to your set of alternative upload modules because we know you're already thinking about meddling with this experiment."
 	trait_to_give = STATION_TRAIT_UNIQUE_AI
+
+/datum/station_trait/unique_ai/on_round_start()
+	. = ..()
+	for(var/mob/living/silicon/ai/ai as anything in GLOB.ai_list)
+		ai.show_laws()
 
 /datum/station_trait/ian_adventure
 	name = "Ian's Adventure"
@@ -127,3 +133,59 @@
 
 	var/new_colored_assistant_type = pick(subtypesof(/datum/colored_assistant) - get_configured_colored_assistant_type())
 	GLOB.colored_assistant = new new_colored_assistant_type
+
+/datum/station_trait/cargorilla
+	name = "Cargo Gorilla"
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 1
+	show_in_report = FALSE // Selective attention test. Did you spot the gorilla?
+
+	/// The gorilla we created, we only hold this ref until the round starts.
+	var/mob/living/simple_animal/hostile/gorilla/cargo_domestic/cargorilla
+
+/datum/station_trait/cargorilla/New()
+	. = ..()
+	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, .proc/replace_cargo)
+
+/// Replace some cargo equipment and 'personnel' with a gorilla.
+/datum/station_trait/cargorilla/proc/replace_cargo(datum/source)
+	SIGNAL_HANDLER
+
+	var/mob/living/simple_animal/sloth/cargo_sloth = GLOB.cargo_sloth
+	if(!cargo_sloth)
+		return
+
+	cargorilla = new(cargo_sloth.loc)
+	cargorilla.name = cargo_sloth.name
+	// We do a poll on roundstart, don't let ghosts in early
+	cargorilla.being_polled_for = TRUE
+	INVOKE_ASYNC(src, .proc/make_id_for_gorilla)
+
+	// hm our sloth looks funny today
+	qdel(cargo_sloth)
+
+	// monkey carries the crates, the age of robot is over
+	if(GLOB.cargo_ripley)
+		qdel(GLOB.cargo_ripley)
+
+/// Makes an ID card for the gorilla
+/datum/station_trait/cargorilla/proc/make_id_for_gorilla()
+	var/obj/item/card/id/advanced/cargo_gorilla/gorilla_id = new(cargorilla.loc)
+	gorilla_id.registered_name = cargorilla.name
+	gorilla_id.update_label()
+
+	cargorilla.put_in_hands(gorilla_id, del_on_fail = TRUE)
+
+/datum/station_trait/cargorilla/on_round_start()
+	if(!cargorilla)
+		return
+
+	addtimer(CALLBACK(src, .proc/get_ghost_for_gorilla, cargorilla), 12 SECONDS) // give ghosts a bit of time to funnel in
+	cargorilla = null
+
+/// Get us a ghost for the gorilla.
+/datum/station_trait/cargorilla/proc/get_ghost_for_gorilla(mob/living/simple_animal/hostile/gorilla/cargo_domestic/gorilla)
+	if(QDELETED(gorilla))
+		return
+
+	gorilla.poll_for_gorilla()

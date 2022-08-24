@@ -245,7 +245,7 @@
 				if(!ispath(item_path, /datum/uplink_item))
 					return
 				item = SStraitor.uplink_items_by_type[item_path]
-			uplink_handler.purchase_item(ui.user, item)
+			uplink_handler.purchase_item(ui.user, item, parent)
 		if("lock")
 			if(!lockable)
 				return TRUE
@@ -333,7 +333,6 @@
 		if(trim(lowertext(new_ring_text)) == trim(lowertext(failsafe_code)))
 			failsafe(user)
 			return COMPONENT_STOP_RINGTONE_CHANGE
-		to_chat(user, span_notice("Unlock failure."))
 		return
 	locked = FALSE
 	interact(null, user)
@@ -408,6 +407,7 @@
 	if(!T)
 		return
 	message_admins("[ADMIN_LOOKUPFLW(user)] has triggered an uplink failsafe explosion at [AREACOORD(T)] The owner of the uplink was [ADMIN_LOOKUPFLW(owner)].")
-	log_game("[key_name(user)] triggered an uplink failsafe explosion. The owner of the uplink was [key_name(owner)].")
+	user.log_message("triggered an uplink failsafe explosion. Uplink owner: [key_name(owner)].", LOG_ATTACK)
+
 	explosion(parent, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3)
 	qdel(parent) //Alternatively could brick the uplink.

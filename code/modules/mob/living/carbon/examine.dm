@@ -6,7 +6,7 @@
 	var/t_has = p_have()
 	var/t_is = p_are()
 
-	. = list("<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <EM>[src]</EM>!")
+	. = list("<span class='info'>This is [icon2html(src, user)] \a <EM>[src]</EM>!>")
 	var/obscured = check_obscured_slots()
 
 	if (handcuffed)
@@ -27,7 +27,7 @@
 	var/appears_dead = FALSE
 	if (stat == DEAD)
 		appears_dead = TRUE
-		if(getorgan(/obj/item/organ/brain))
+		if(getorgan(/obj/item/organ/internal/brain))
 			. += span_deadsay("[t_He] [t_is] limp and unresponsive, with no signs of life.")
 		else if(get_bodypart(BODY_ZONE_HEAD))
 			. += span_deadsay("It appears that [t_his] brain is missing...")
@@ -96,9 +96,9 @@
 	if(HAS_TRAIT(src, TRAIT_DUMB))
 		msg += "[t_He] seem[p_s()] to be clumsy and unable to think.\n"
 
-	if(fire_stacks > 0)
+	if(has_status_effect(/datum/status_effect/fire_handler/fire_stacks))
 		msg += "[t_He] [t_is] covered in something flammable.\n"
-	if(fire_stacks < 0)
+	if(has_status_effect(/datum/status_effect/fire_handler/wet_stacks))
 		msg += "[t_He] look[p_s()] a little soaked.\n"
 
 	if(pulledby?.grab_state)
@@ -135,22 +135,21 @@
 	if (!isnull(trait_exam))
 		. += trait_exam
 
-	var/datum/component/mood/mood = src.GetComponent(/datum/component/mood)
-	if(mood)
-		switch(mood.shown_mood)
-			if(-INFINITY to MOOD_LEVEL_SAD4)
+	if(mob_mood)
+		switch(mob_mood.shown_mood)
+			if(-INFINITY to MOOD_SAD4)
 				. += "[t_He] look[p_s()] depressed."
-			if(MOOD_LEVEL_SAD4 to MOOD_LEVEL_SAD3)
+			if(MOOD_SAD4 to MOOD_SAD3)
 				. += "[t_He] look[p_s()] very sad."
-			if(MOOD_LEVEL_SAD3 to MOOD_LEVEL_SAD2)
+			if(MOOD_SAD3 to MOOD_SAD2)
 				. += "[t_He] look[p_s()] a bit down."
-			if(MOOD_LEVEL_HAPPY2 to MOOD_LEVEL_HAPPY3)
+			if(MOOD_HAPPY2 to MOOD_HAPPY3)
 				. += "[t_He] look[p_s()] quite happy."
-			if(MOOD_LEVEL_HAPPY3 to MOOD_LEVEL_HAPPY4)
+			if(MOOD_HAPPY3 to MOOD_HAPPY4)
 				. += "[t_He] look[p_s()] very happy."
-			if(MOOD_LEVEL_HAPPY4 to INFINITY)
+			if(MOOD_HAPPY4 to INFINITY)
 				. += "[t_He] look[p_s()] ecstatic."
-	. += "*---------*</span>"
+	. += "</span>"
 
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
 
@@ -158,13 +157,14 @@
 	. = ..()
 	. += span_notice("<i>You examine [src] closer, and note the following...</i>")
 
-	//On closer inspection, this man isnt a man at all!
-	var/list/covered_zones = get_covered_body_zones()
-	for(var/obj/item/bodypart/part as anything in bodyparts)
-		if(part.body_zone in covered_zones)
-			continue
-		if(part.limb_id != (dna.species.examine_limb_id ? dna.species.examine_limb_id : dna.species.id))
-			. += "[span_info("[p_they(TRUE)] [p_have()] \an [part.name].")]"
+	if(dna) //not all carbons have it. eg - xenos
+		//On closer inspection, this man isnt a man at all!
+		var/list/covered_zones = get_covered_body_zones()
+		for(var/obj/item/bodypart/part as anything in bodyparts)
+			if(part.body_zone in covered_zones)
+				continue
+			if(part.limb_id != (dna.species.examine_limb_id ? dna.species.examine_limb_id : dna.species.id))
+				. += "[span_info("[p_they(TRUE)] [p_have()] \an [part.name].")]"
 
 	var/list/visible_scars
 	for(var/i in all_scars)

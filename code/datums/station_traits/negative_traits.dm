@@ -170,8 +170,8 @@
 			/obj/item/melee/baseball_bat = 10,
 			/obj/item/melee/chainofcommand/tailwhip = 10,
 			/obj/item/melee/chainofcommand/tailwhip/kitty = 10,
-			/obj/item/reagent_containers/food/drinks/bottle = 20,
-			/obj/item/reagent_containers/food/drinks/bottle/kong = 5,
+			/obj/item/reagent_containers/cup/glass/bottle = 20,
+			/obj/item/reagent_containers/cup/glass/bottle/kong = 5,
 			/obj/item/switchblade/extended = 10,
 			/obj/item/sign/random = 10,
 			/obj/item/gun/ballistic/automatic/pistol = 1,
@@ -181,7 +181,7 @@
 
 /datum/station_trait/revenge_of_pun_pun/proc/arm_monke()
 	SIGNAL_HANDLER
-	var/mob/living/carbon/human/species/monkey/punpun/punpun = locate()
+	var/mob/living/carbon/human/species/monkey/punpun/punpun = GLOB.the_one_and_only_punpun
 	if(!punpun)
 		return
 	var/weapon_type = pick_weight(weapon_types)

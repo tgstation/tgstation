@@ -1,6 +1,6 @@
 // This is to replace the previous datum/disease/alien_embryo for slightly improved handling and maintainability
 // It functions almost identically (see code/datums/diseases/alien_embryo.dm)
-/obj/item/organ/body_egg/alien_embryo
+/obj/item/organ/internal/body_egg/alien_embryo
 	name = "alien embryo"
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "larva0_dead"
@@ -12,11 +12,11 @@
 	/// How long does it take to advance one stage? Growth time * 5 = how long till we make a Larva!
 	var/growth_time = 60 SECONDS
 
-/obj/item/organ/body_egg/alien_embryo/Initialize(mapload)
+/obj/item/organ/internal/body_egg/alien_embryo/Initialize(mapload)
 	. = ..()
 	advance_embryo_stage()
 
-/obj/item/organ/body_egg/alien_embryo/on_find(mob/living/finder)
+/obj/item/organ/internal/body_egg/alien_embryo/on_find(mob/living/finder)
 	..()
 	if(stage < 5)
 		to_chat(finder, span_notice("It's small and weak, barely the size of a foetus."))
@@ -25,7 +25,7 @@
 		if(prob(10))
 			AttemptGrow(0)
 
-/obj/item/organ/body_egg/alien_embryo/on_life(delta_time, times_fired)
+/obj/item/organ/internal/body_egg/alien_embryo/on_life(delta_time, times_fired)
 	. = ..()
 	switch(stage)
 		if(3, 4)
@@ -55,23 +55,27 @@
 			owner.adjustToxLoss(5 * delta_time) // Why is this [TOX]?
 
 /// Controls Xenomorph Embryo growth. If embryo is fully grown (or overgrown), stop the proc. If not, increase the stage by one and if it's not fully grown (stage 6), add a timer to do this proc again after however long the growth time variable is.
-/obj/item/organ/body_egg/alien_embryo/proc/advance_embryo_stage()
+/obj/item/organ/internal/body_egg/alien_embryo/proc/advance_embryo_stage()
 	if(stage >= 6)
 		return
 	if(++stage < 6)
 		INVOKE_ASYNC(src, .proc/RefreshInfectionImage)
-		addtimer(CALLBACK(src, .proc/advance_embryo_stage), growth_time)
+		var/slowdown = 1
+		if(ishuman(owner))
+			var/mob/living/carbon/human/baby_momma = owner
+			slowdown = baby_momma.reagents.has_reagent(/datum/reagent/medicine/spaceacillin) ? 2 : 1 // spaceacillin doubles the time it takes to grow
+		addtimer(CALLBACK(src, .proc/advance_embryo_stage), growth_time*slowdown)
 
-/obj/item/organ/body_egg/alien_embryo/egg_process()
+/obj/item/organ/internal/body_egg/alien_embryo/egg_process()
 	if(stage == 6 && prob(50))
 		for(var/datum/surgery/S in owner.surgeries)
-			if(S.location == BODY_ZONE_CHEST && istype(S.get_surgery_step(), /datum/surgery_step/manipulate_organs))
+			if(S.location == BODY_ZONE_CHEST && istype(S.get_surgery_step(), /datum/surgery_step/manipulate_organs/internal))
 				AttemptGrow(0)
 				return
 		AttemptGrow()
 
 
-/obj/item/organ/body_egg/alien_embryo/proc/AttemptGrow(gib_on_success=TRUE)
+/obj/item/organ/internal/body_egg/alien_embryo/proc/AttemptGrow(gib_on_success=TRUE)
 	if(!owner || bursting)
 		return
 
@@ -128,7 +132,7 @@
 Proc: AddInfectionImages(C)
 Des: Adds the infection image to all aliens for this embryo
 ----------------------------------------*/
-/obj/item/organ/body_egg/alien_embryo/AddInfectionImages()
+/obj/item/organ/internal/body_egg/alien_embryo/AddInfectionImages()
 	for(var/mob/living/carbon/alien/alien in GLOB.player_list)
 		var/I = image('icons/mob/alien.dmi', loc = owner, icon_state = "infected[stage]")
 		alien.client?.images += I
@@ -137,7 +141,7 @@ Des: Adds the infection image to all aliens for this embryo
 Proc: RemoveInfectionImage(C)
 Des: Removes all images from the mob infected by this embryo
 ----------------------------------------*/
-/obj/item/organ/body_egg/alien_embryo/RemoveInfectionImages()
+/obj/item/organ/internal/body_egg/alien_embryo/RemoveInfectionImages()
 	for(var/mob/living/carbon/alien/alien in GLOB.player_list)
 		for(var/image/I in alien.client?.images)
 			var/searchfor = "infected"

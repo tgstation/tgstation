@@ -58,17 +58,17 @@
 		if(human_in_range.is_blind())
 			continue
 
-		SEND_SIGNAL(human_in_range, COMSIG_HERETIC_MASK_ACT, rand(-2, -20) * delta_time)
+		human_in_range.mob_mood.direct_sanity_drain(rand(-2, -20) * delta_time)
 
 		if(DT_PROB(60, delta_time))
 			human_in_range.hallucination = min(human_in_range.hallucination + 5, 120)
 
 		if(DT_PROB(40, delta_time))
-			human_in_range.Jitter(5)
+			human_in_range.set_timed_status_effect(10 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 
 		if(human_in_range.getStaminaLoss() <= 85 && DT_PROB(30, delta_time))
 			human_in_range.emote(pick("giggle", "laugh"))
 			human_in_range.adjustStaminaLoss(10)
 
 		if(DT_PROB(25, delta_time))
-			human_in_range.Dizzy(5)
+			human_in_range.set_timed_status_effect(10 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)

@@ -5,10 +5,10 @@
 	attack_sound = 'sound/weapons/etherealhit.ogg'
 	miss_sound = 'sound/weapons/etherealmiss.ogg'
 	meat = /obj/item/food/meat/slab/human/mutant/ethereal
-	mutantlungs = /obj/item/organ/lungs/ethereal
-	mutantstomach = /obj/item/organ/stomach/ethereal
-	mutanttongue = /obj/item/organ/tongue/ethereal
-	mutantheart = /obj/item/organ/heart/ethereal
+	mutantlungs = /obj/item/organ/internal/lungs/ethereal
+	mutantstomach = /obj/item/organ/internal/stomach/ethereal
+	mutanttongue = /obj/item/organ/internal/tongue/ethereal
+	mutantheart = /obj/item/organ/internal/heart/ethereal
 	exotic_blood = /datum/reagent/consumable/liquidelectricity //Liquid Electricity. fuck you think of something better gamer
 	siemens_coeff = 0.5 //They thrive on energy
 	brutemod = 1.25 //They're weak to punches
@@ -48,6 +48,7 @@
 	var/static/g2 = 164
 	var/static/b2 = 149
 	var/obj/effect/dummy/lighting_obj/ethereal_light
+	var/default_color
 
 
 
@@ -73,11 +74,9 @@
 	spec_updatehealth(ethereal)
 	C.set_safe_hunger_level()
 
-	var/obj/item/organ/heart/ethereal/ethereal_heart = C.getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/heart/ethereal/ethereal_heart = C.getorganslot(ORGAN_SLOT_HEART)
 	ethereal_heart.ethereal_color = default_color
 
-	//The following code is literally only to make admin-spawned ethereals not be black.
-	C.dna.features["mcolor"] = C.dna.features["ethcolor"] //Ethcolor and Mut color are both dogshit and i hate them
 	for(var/obj/item/bodypart/limb as anything in C.bodyparts)
 		if(limb.limb_id == SPECIES_ETHEREAL)
 			limb.update_limb(is_creating = TRUE)
@@ -98,14 +97,20 @@
 
 	return randname
 
+/datum/species/ethereal/randomize_features(mob/living/carbon/human/human_mob)
+	human_mob.dna.features["ethcolor"] = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)]
 
-/datum/species/ethereal/spec_updatehealth(mob/living/carbon/human/H)
+/datum/species/ethereal/spec_updatehealth(mob/living/carbon/human/ethereal)
 	. = ..()
 	if(!ethereal_light)
 		return
-
-	if(H.stat != DEAD && !EMPeffect)
-		var/healthpercent = max(H.health, 0) / 100
+	if(default_color != ethereal.dna.features["ethcolor"])
+		var/new_color = ethereal.dna.features["ethcolor"]
+		r1 = GETREDPART(new_color)
+		g1 = GETGREENPART(new_color)
+		b1 = GETBLUEPART(new_color)
+	if(ethereal.stat != DEAD && !EMPeffect)
+		var/healthpercent = max(ethereal.health, 0) / 100
 		if(!emageffect)
 			current_color = rgb(r2 + ((r1-r2)*healthpercent), g2 + ((g1-g2)*healthpercent), b2 + ((b1-b2)*healthpercent))
 		ethereal_light.set_light_range_power_color(1 + (2 * healthpercent), 1 + (1 * healthpercent), current_color)
@@ -114,7 +119,9 @@
 	else
 		ethereal_light.set_light_on(FALSE)
 		fixed_mut_color = rgb(128,128,128)
-	H.update_body(is_creating = TRUE)
+	ethereal.hair_color = current_color
+	ethereal.facial_hair_color = current_color
+	ethereal.update_body()
 
 /datum/species/ethereal/proc/on_emp_act(mob/living/carbon/human/H, severity)
 	SIGNAL_HANDLER

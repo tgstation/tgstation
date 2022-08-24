@@ -3,7 +3,6 @@
 	desc = "Teaches you the arts of Krav Maga in 5 short instructional videos beamed directly into your eyeballs."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state ="scroll2"
-	activated = 1
 	var/datum/martial_art/krav_maga/style = new
 
 /obj/item/implant/krav_maga/get_data()
@@ -34,4 +33,3 @@
 	name = "implant case - 'Krav Maga'"
 	desc = "A glass case containing an implant that can teach the user the arts of Krav Maga."
 	imp_type = /obj/item/implant/krav_maga
-

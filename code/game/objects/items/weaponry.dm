@@ -79,7 +79,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/claymore/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 40, 105)
+	AddComponent(/datum/component/butchering, \
+	speed = 4 SECONDS, \
+	effectiveness = 105, \
+	)
 
 /obj/item/claymore/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is falling on [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -318,7 +321,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			user.balloon_alert(user, "crafted spear")
 		return
 
-	if(istype(attacking_item, /obj/item/assembly/igniter) && !(HAS_TRAIT(attacking_item, TRAIT_NODROP)))
+	if(isigniter(attacking_item) && !(HAS_TRAIT(attacking_item, TRAIT_NODROP)))
 		var/datum/crafting_recipe/recipe_to_use = /datum/crafting_recipe/stunprod
 		user.balloon_alert(user, "crafting cattleprod...")
 		if(do_after(user, initial(recipe_to_use.time), src))
@@ -390,8 +393,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/switchblade/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
-	AddComponent(/datum/component/butchering, 7 SECONDS, 100)
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
+	AddComponent(/datum/component/butchering, \
+	speed = 7 SECONDS, \
+	effectiveness = 100, \
+	)
 	AddComponent(/datum/component/transforming, \
 		start_transformed = start_extended, \
 		force_on = 20, \
@@ -445,6 +451,41 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	custom_materials = list(/datum/material/iron=50)
 	attack_verb_continuous = list("bludgeons", "whacks", "disciplines", "thrashes")
 	attack_verb_simple = list("bludgeon", "whack", "discipline", "thrash")
+
+/obj/item/cane/white
+	name = "white cane"
+	desc = "A cane traditionally used by the blind to help them see. Folds down to be easier to transport."
+	icon_state = "cane_white"
+	inhand_icon_state = null
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	force = 1
+	w_class = WEIGHT_CLASS_SMALL
+	custom_materials = list(/datum/material/iron = 600)
+
+/obj/item/cane/white/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/transforming, \
+		force_on = 7, \
+		hitsound_on = hitsound, \
+		w_class_on = WEIGHT_CLASS_BULKY, \
+		clumsy_check = FALSE, \
+		attack_verb_continuous_on = list("smacks", "strikes", "cracks", "beats"), \
+		attack_verb_simple_on = list("smack", "strike", "crack", "beat"))
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+	ADD_TRAIT(src, TRAIT_BLIND_TOOL, ITEM_BLIND_TRAIT)
+
+/*
+ * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
+ *
+ * Gives feedback to the user and makes it show up inhand.
+ */
+/obj/item/cane/white/proc/on_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+
+	balloon_alert(user, active ? "extended" : "collapsed")
+	playsound(user ? user : src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/staff
 	name = "wizard staff"
@@ -616,7 +657,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "skateboard2"
 	inhand_icon_state = "skateboard2"
 	board_item_type = /obj/vehicle/ridden/scooter/skateboard/pro
-	custom_premium_price = PAYCHECK_HARD * 5
+	custom_premium_price = PAYCHECK_COMMAND * 5
 
 /obj/item/melee/skateboard/hoverboard
 	name = "hoverboard"
@@ -644,12 +685,19 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 12
 	wound_bonus = -10
 	throwforce = 12
+	demolition_mod = 1.25
 	attack_verb_continuous = list("beats", "smacks")
 	attack_verb_simple = list("beat", "smack")
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 3.5)
 	w_class = WEIGHT_CLASS_HUGE
-	var/homerun_ready = 0
-	var/homerun_able = 0
+	/// Are we able to do a homerun?
+	var/homerun_able = FALSE
+	/// Are we ready to do a homerun?
+	var/homerun_ready = FALSE
+	/// Can we launch mobs thrown at us away?
+	var/mob_thrower = FALSE
+	/// List of all thrown datums we sent.
+	var/list/thrown_datums = list()
 
 /obj/item/melee/baseball_bat/Initialize(mapload)
 	. = ..()
@@ -657,32 +705,22 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		name = "cricket bat"
 		icon_state = "baseball_bat_brit"
 		inhand_icon_state = "baseball_bat_brit"
-		if(prob(50))
-			desc = "You've got red on you."
-		else
-			desc = "You gotta know what a crumpet is to understand cricket."
+		desc = pick("You've got red on you.", "You gotta know what a crumpet is to understand cricket.")
 
 	AddElement(/datum/element/kneecapping)
 
-/obj/item/melee/baseball_bat/homerun
-	name = "home run bat"
-	desc = "This thing looks dangerous... Dangerously good at baseball, that is."
-	homerun_able = 1
-
 /obj/item/melee/baseball_bat/attack_self(mob/user)
 	if(!homerun_able)
-		..()
-		return
+		return ..()
 	if(homerun_ready)
 		to_chat(user, span_warning("You're already ready to do a home run!"))
-		..()
-		return
+		return ..()
 	to_chat(user, span_warning("You begin gathering strength..."))
 	playsound(get_turf(src), 'sound/magic/lightning_chargeup.ogg', 65, TRUE)
-	if(do_after(user, 90, target = src))
+	if(do_after(user, 9 SECONDS, target = src))
 		to_chat(user, span_userdanger("You gather power! Time for a home run!"))
-		homerun_ready = 1
-	..()
+		homerun_ready = TRUE
+	return ..()
 
 /obj/item/melee/baseball_bat/attack(mob/living/target, mob/living/user)
 	. = ..()
@@ -696,11 +734,78 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		target.throw_at(throw_target, rand(8,10), 14, user)
 		SSexplosions.medturf += throw_target
 		playsound(get_turf(src), 'sound/weapons/homerun.ogg', 100, TRUE)
-		homerun_ready = 0
+		homerun_ready = FALSE
 		return
 	else if(!target.anchored)
 		var/whack_speed = (prob(60) ? 1 : 4)
 		target.throw_at(throw_target, rand(1, 2), whack_speed, user, gentle = TRUE) // sorry friends, 7 speed batting caused wounds to absolutely delete whoever you knocked your target into (and said target)
+
+/obj/item/melee/baseball_bat/Destroy(force)
+	for(var/target in thrown_datums)
+		var/datum/thrownthing/throw_datum = thrown_datums[target]
+		throw_datum.callback.Invoke()
+	thrown_datums.Cut()
+	return ..()
+
+/obj/item/melee/baseball_bat/pre_attack(atom/movable/target, mob/living/user, params)
+	var/turf/target_turf = get_turf(target)
+	if(!target_turf)
+		return ..()
+	for(var/atom/movable/atom as anything in target_turf)
+		if(!try_launch(atom, user))
+			continue
+		return TRUE
+	return ..()
+
+/obj/item/melee/baseball_bat/proc/try_launch(atom/movable/target, mob/living/user)
+	if(!target.throwing || (ismob(target) && !mob_thrower))
+		return FALSE
+	var/datum/thrownthing/throw_datum = target.throwing
+	var/datum_throw_speed = throw_datum.speed
+	var/angle = 0
+	var/target_to_user = get_dir(target, user)
+	if(target.dir & turn(target_to_user, 90))
+		angle = 270
+	if(target.dir & turn(target_to_user, 270))
+		angle = 90
+	if(target.dir & turn(target_to_user, 180))
+		angle = 180
+	if(target.dir & target_to_user)
+		angle = 360
+	var/turf/return_to_sender = get_ranged_target_turf_direct(user, throw_datum.starting_turf, round(target.throw_range * 1.5, 1), offset = angle + (rand(-1, 1) * 10))
+	throw_datum.finalize(hit = FALSE)
+	target.mouse_opacity = MOUSE_OPACITY_TRANSPARENT //dont mess with our ball
+	target.color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,3) //make them super light
+	animate(target, 0.5 SECONDS, color = null, flags = ANIMATION_PARALLEL)
+	user.color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,3)
+	animate(user, 0.5 SECONDS, color = null, flags = ANIMATION_PARALLEL)
+	playsound(src, 'sound/items/baseballhit.ogg', 100, TRUE)
+	user.do_attack_animation(target, used_item = src)
+	ADD_TRAIT(user, TRAIT_IMMOBILIZED, type)
+	addtimer(CALLBACK(src, .proc/launch_back, target, user, return_to_sender, datum_throw_speed), 0.5 SECONDS)
+	return TRUE
+
+/obj/item/melee/baseball_bat/proc/launch_back(atom/movable/target, mob/living/user, turf/target_turf, datum_throw_speed)
+	playsound(target, 'sound/magic/tail_swing.ogg', 50, TRUE)
+	REMOVE_TRAIT(user, TRAIT_IMMOBILIZED, type)
+	target.mouse_opacity = initial(target.mouse_opacity)
+	target.add_filter("baseball_launch", 3, motion_blur_filter(1, 3))
+	target.throwforce *= 2
+	target.throw_at(target_turf, get_dist(target, target_turf), datum_throw_speed + 1, user, callback = CALLBACK(src, .proc/on_hit, target))
+	thrown_datums[target] = target.throwing
+
+/obj/item/melee/baseball_bat/proc/on_hit(atom/movable/target)
+	target.remove_filter("baseball_launch")
+	target.throwforce *= 0.5
+	thrown_datums -= target
+
+/obj/item/melee/baseball_bat/homerun
+	name = "home run bat"
+	desc = "This thing looks dangerous... Dangerously good at baseball, that is."
+	icon_state = "baseball_bat_home"
+	inhand_icon_state = "baseball_bat_home"
+	homerun_able = TRUE
+	mob_thrower = TRUE
 
 /obj/item/melee/baseball_bat/ablative
 	name = "metal baseball bat"
@@ -709,15 +814,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	inhand_icon_state = "baseball_bat_metal"
 	force = 12
 	throwforce = 15
+	mob_thrower = TRUE
 
 /obj/item/melee/baseball_bat/ablative/IsReflect()//some day this will reflect thrown items instead of lasers
-	var/picksound = rand(1,2)
-	var/turf = get_turf(src)
-	if(picksound == 1)
-		playsound(turf, 'sound/weapons/effects/batreflect1.ogg', 50, TRUE)
-	if(picksound == 2)
-		playsound(turf, 'sound/weapons/effects/batreflect2.ogg', 50, TRUE)
-	return 1
+	playsound(src, pick('sound/weapons/effects/batreflect1.ogg', 'sound/weapons/effects/batreflect2.ogg'), 50, TRUE)
+	return TRUE
 
 /obj/item/melee/flyswatter
 	name = "flyswatter"
@@ -848,8 +949,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
-	/// Wielding status.
-	var/wielded = FALSE
 	/// The color of the slash we create
 	var/slash_color = COLOR_BLUE
 	/// Previous x position of where we clicked on the target's icon
@@ -861,41 +960,39 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/highfrequencyblade/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
-	AddElement(/datum/element/update_icon_updates_onmob)
-
-/obj/item/highfrequencyblade/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/two_handed)
+	AddComponent(/datum/component/two_handed, \
+		wield_callback = CALLBACK(src, .proc/on_wield), \
+		unwield_callback = CALLBACK(src, .proc/on_unwield), \
+	)
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
 
 /obj/item/highfrequencyblade/update_icon_state()
-	icon_state = "hfrequency[wielded]"
+	icon_state = "hfrequency[HAS_TRAIT(src, TRAIT_WIELDED)]"
 	return ..()
 
 /obj/item/highfrequencyblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
-		if(wielded || prob(final_block_chance))
+		if(HAS_TRAIT(src, TRAIT_WIELDED) || prob(final_block_chance))
 			owner.visible_message(span_danger("[owner] deflects [attack_text] with [src]!"))
 			playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
 			return TRUE
 		return FALSE
-	if(prob(final_block_chance * (wielded ? 2 : 1)))
+	if(prob(final_block_chance * (HAS_TRAIT(src, TRAIT_WIELDED) ? 2 : 1)))
 		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
 		return TRUE
 
 /obj/item/highfrequencyblade/attack(mob/living/target, mob/living/user, params)
-	if(!wielded)
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		return ..()
 	slash(target, user, params)
 
 /obj/item/highfrequencyblade/attack_atom(atom/target, mob/living/user, params)
-	if(wielded)
+	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		return
 	return ..()
 
 /obj/item/highfrequencyblade/afterattack(atom/target, mob/user, proximity_flag, params)
-	if(!wielded)
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		return ..()
 	if(!proximity_flag || !(isclosedturf(target) || isitem(target) || ismachinery(target) || isstructure(target) || isvehicle(target)))
 		return
@@ -903,16 +1000,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /// triggered on wield of two handed item
 /obj/item/highfrequencyblade/proc/on_wield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
-	wielded = TRUE
 	update_icon(UPDATE_ICON_STATE)
 
 /// triggered on unwield of two handed item
 /obj/item/highfrequencyblade/proc/on_unwield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
-	wielded = FALSE
 	update_icon(UPDATE_ICON_STATE)
 
 /obj/item/highfrequencyblade/proc/slash(atom/target, mob/living/user, params)

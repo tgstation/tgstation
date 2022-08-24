@@ -12,8 +12,8 @@
 	if(slot != ITEM_SLOT_EYES)
 		return
 	if(hud_type)
-		var/datum/atom_hud/H = GLOB.huds[hud_type]
-		H.add_hud_to(user)
+		var/datum/atom_hud/our_hud = GLOB.huds[hud_type]
+		our_hud.show_to(user)
 	if(hud_trait)
 		ADD_TRAIT(user, hud_trait, GLASSES_TRAIT)
 
@@ -22,8 +22,8 @@
 	if(!istype(user) || user.glasses != src)
 		return
 	if(hud_type)
-		var/datum/atom_hud/H = GLOB.huds[hud_type]
-		H.remove_hud_from(user)
+		var/datum/atom_hud/our_hud = GLOB.huds[hud_type]
+		our_hud.hide_from(user)
 	if(hud_trait)
 		REMOVE_TRAIT(user, hud_trait, GLASSES_TRAIT)
 
@@ -132,6 +132,7 @@
 	chameleon_action.chameleon_name = "Glasses"
 	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/glasses/changeling, only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
+	add_item_action(chameleon_action)
 
 /obj/item/clothing/glasses/hud/security/chameleon/emp_act(severity)
 	. = ..()
@@ -197,8 +198,8 @@
 		return
 
 	if (hud_type)
-		var/datum/atom_hud/H = GLOB.huds[hud_type]
-		H.remove_hud_from(user)
+		var/datum/atom_hud/our_hud = GLOB.huds[hud_type]
+		our_hud.hide_from(user)
 
 	if (hud_type == DATA_HUD_MEDICAL_ADVANCED)
 		hud_type = null
@@ -208,8 +209,11 @@
 		hud_type = DATA_HUD_SECURITY_ADVANCED
 
 	if (hud_type)
-		var/datum/atom_hud/H = GLOB.huds[hud_type]
-		H.add_hud_to(user)
+		var/datum/atom_hud/our_hud = GLOB.huds[hud_type]
+		our_hud.show_to(user)
+
+/datum/action/item_action/switch_hud
+	name = "Switch HUD"
 
 /obj/item/clothing/glasses/hud/toggle/thermal
 	name = "thermal HUD scanner"
@@ -232,7 +236,7 @@
 		else
 			icon_state = "purple"
 			change_glass_color(user, /datum/client_colour/glass_colour/purple)
-	user.update_inv_glasses()
+	user.update_worn_glasses()
 
 /obj/item/clothing/glasses/hud/toggle/thermal/emp_act(severity)
 	. = ..()
@@ -255,4 +259,3 @@
 	desc = "These sunglasses are special, and let you view potential criminals."
 	icon_state = "sun"
 	inhand_icon_state = "sunglasses"
-

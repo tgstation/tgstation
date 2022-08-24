@@ -13,13 +13,13 @@
 	desc = "The cornerstone of every nutritious breakfast."
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
 	foodtypes = GRAIN | MEAT
-	custom_price = PAYCHECK_ASSISTANT * 0.8
+	custom_price = PAYCHECK_CREW * 0.8
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/burger/plain/Initialize(mapload)
 	. = ..()
 	if(prob(1))
-		new/obj/effect/particle_effect/smoke(get_turf(src))
+		new/obj/effect/particle_effect/fluid/smoke(get_turf(src))
 		playsound(src, 'sound/effects/smoke.ogg', 50, TRUE)
 		visible_message(span_warning("Oh, ye gods! [src] is ruined! But what if...?"))
 		name = "steamed ham"
@@ -33,7 +33,7 @@
 	desc = "A bloody burger."
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("bun" = 2, "long pig" = 4)
-	foodtypes = MEAT | GRAIN | GROSS
+	foodtypes = MEAT | GRAIN | GORE
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/burger/human/CheckParts(list/parts_list)
@@ -49,7 +49,7 @@
 	name = "corgi burger"
 	desc = "You monster."
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 6)
-	foodtypes = GRAIN | MEAT | GROSS
+	foodtypes = GRAIN | MEAT | GORE
 	venue_value = FOOD_PRICE_EXOTIC
 
 
@@ -59,7 +59,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 6)
 	icon_state = "appendixburger"
 	tastes = list("bun" = 4, "grass" = 2)
-	foodtypes = GRAIN | MEAT | GROSS
+	foodtypes = GRAIN | MEAT | GORE
 	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/burger/fish
@@ -137,7 +137,7 @@
 	icon_state = "brainburger"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/medicine/mannitol = 6, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/nutriment/protein = 6)
 	tastes = list("bun" = 4, "brains" = 2)
-	foodtypes = GRAIN | MEAT | GROSS
+	foodtypes = GRAIN | MEAT | GORE
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/burger/ghost
@@ -316,7 +316,7 @@
 	desc = "Pretty much what you'd expect..."
 	icon_state = "ratburger"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
-	foodtypes = GRAIN | MEAT | GROSS
+	foodtypes = GRAIN | MEAT | GORE
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/burger/baseball
@@ -325,7 +325,7 @@
 	icon_state = "baseball"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	foodtypes = GRAIN | GROSS
-	custom_price = PAYCHECK_ASSISTANT * 0.8
+	custom_price = PAYCHECK_CREW * 0.8
 	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/burger/baconburger
@@ -335,7 +335,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("bacon" = 4, "bun" = 2)
 	foodtypes = GRAIN | MEAT
-	custom_premium_price = PAYCHECK_ASSISTANT * 1.6
+	custom_premium_price = PAYCHECK_CREW * 1.6
 	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/burger/empoweredburger
@@ -353,7 +353,7 @@
 	icon_state = "catburger"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("bun" = 4, "meat" = 2, "cat" = 2)
-	foodtypes = GRAIN | MEAT | GROSS
+	foodtypes = GRAIN | MEAT | GORE
 
 /obj/item/food/burger/crab
 	name = "crab burger"
@@ -428,8 +428,8 @@
 
 /obj/item/food/burger/crazy/process(delta_time) // DIT EES HORRIBLE
 	if(DT_PROB(2.5, delta_time))
-		var/datum/effect_system/smoke_spread/bad/green/smoke = new
-		smoke.set_up(0, src)
+		var/datum/effect_system/fluid_spread/smoke/bad/green/smoke = new
+		smoke.set_up(0, holder = src, location = src)
 		smoke.start()
 
 // empty burger you can customize

@@ -47,6 +47,11 @@
 	mood_change = -2
 	timeout = 4 MINUTES
 
+/datum/mood_event/cascade // Big boi delamination
+	description = "The engineers have finally done it, we are all going to die..."
+	mood_change = -8
+	timeout = 5 MINUTES
+
 /datum/mood_event/depression_minimal
 	description = "I feel a bit down."
 	mood_change = -10
@@ -92,10 +97,9 @@
 	timeout = 2 MINUTES
 
 /datum/mood_event/table/add_effects()
-	if(isfelinid(owner))
+	if(isfelinid(owner)) //Holy snowflake batman!
 		var/mob/living/carbon/human/H = owner
-		H.dna.species.start_wagging_tail(H)
-		addtimer(CALLBACK(H.dna.species, /datum/species.proc/stop_wagging_tail, H), 3 SECONDS)
+		SEND_SIGNAL(H, COMSIG_ORGAN_WAG_TAIL, TRUE, 3 SECONDS)
 		description = "They want to play on the table!"
 		mood_change = 2
 
@@ -106,7 +110,7 @@
 
 /datum/mood_event/table_limbsmash/add_effects(obj/item/bodypart/banged_limb)
 	if(banged_limb)
-		description = "My fucking [banged_limb.name], man that hurts..."
+		description = "My fucking [banged_limb.plaintext_zone], man that hurts..."
 
 /datum/mood_event/brain_damage
 	mood_change = -3
@@ -370,3 +374,18 @@
 	description = "If I'm not good at video games, can I truly call myself a gamer?"
 	mood_change = -10
 	timeout = 10 MINUTES
+
+/datum/mood_event/lost_52_card_pickup
+	description = "This is really embarrassing! I'm ashamed to pick up all these cards off the floor..."
+	mood_change = -3
+	timeout = 3 MINUTES
+
+/datum/mood_event/russian_roulette_lose
+	description = "I gambled my life and lost! I guess this is the end..."
+	mood_change = -20
+	timeout = 10 MINUTES
+
+/datum/mood_event/bad_touch_bear_hug
+	description = "I just got squeezed way too hard."
+	mood_change = -1
+	timeout = 2 MINUTES

@@ -11,6 +11,7 @@
 	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_THEATRE)
 	wreckage = /obj/structure/mecha_wreckage/honker
 	mecha_flags = CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
+	mech_type = EXOSUIT_MODULE_HONK
 	max_equip_by_category = list(
 		MECHA_UTILITY = 2,
 		MECHA_POWER = 1,

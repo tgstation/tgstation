@@ -10,7 +10,7 @@ GLOBAL_PROTECT(href_token)
 #define RESULT_2FA_ID 2
 
 /datum/admins
-	var/datum/admin_rank/rank
+	var/list/datum/admin_rank/ranks
 
 	var/target
 	var/name = "nobody's admin datum (no rank)" //Makes for better runtimes
@@ -29,6 +29,9 @@ GLOBAL_PROTECT(href_token)
 
 	var/href_token
 
+	/// Link from the database pointing to the admin's feedback forum
+	var/cached_feedback_link
+
 	var/deadmined
 
 	var/datum/filter_editor/filteriffic
@@ -43,7 +46,7 @@ GLOBAL_PROTECT(href_token)
 	/// A lazylist of tagged datums, for quick reference with the View Tags verb
 	var/list/tagged_datums
 
-/datum/admins/New(datum/admin_rank/R, ckey, force_active = FALSE, protected)
+/datum/admins/New(list/datum/admin_rank/ranks, ckey, force_active = FALSE, protected)
 	if(IsAdminAdvancedProcCall())
 		var/msg = " has tried to elevate permissions!"
 		message_admins("[key_name_admin(usr)][msg]")
@@ -55,21 +58,21 @@ GLOBAL_PROTECT(href_token)
 	if(!ckey)
 		QDEL_IN(src, 0)
 		CRASH("Admin datum created without a ckey")
-	if(!istype(R))
+	if(!istype(ranks))
 		QDEL_IN(src, 0)
-		CRASH("Admin datum created without a rank")
+		CRASH("Admin datum created with invalid ranks: [ranks] ([json_encode(ranks)])")
 	target = ckey
-	name = "[ckey]'s admin datum ([R])"
-	rank = R
+	name = "[ckey]'s admin datum ([join_admin_ranks(ranks)])"
+	src.ranks = ranks
 	admin_signature = "Nanotrasen Officer #[rand(0,9)][rand(0,9)][rand(0,9)]"
 	href_token = GenerateToken()
 	if(!CONFIG_GET(flag/forbid_admin_profiling))
-		if(R.rights & R_DEBUG) //grant profile access, assuming admin profile access is enabled
+		if(rank_flags() & R_DEBUG) //grant profile access, assuming admin profile access is enabled
 			world.SetConfig("APP/admin", ckey, "role=admin")
 	//only admins with +ADMIN start admined
 	if(protected)
 		GLOB.protected_admins[target] = src
-	if (force_active || (R.rights & R_AUTOADMIN))
+	if (force_active || (rank_flags() & R_AUTOADMIN))
 		activate()
 	else
 		deactivate()
@@ -161,25 +164,52 @@ GLOBAL_PROTECT(href_token)
 	if(owner)
 		GLOB.admins -= owner
 		owner.remove_admin_verbs()
-		owner.init_verbs()
 		owner.holder = null
 		owner = null
 
+/// Returns the feedback forum thread for the admin holder's owner, as according to DB.
+/datum/admins/proc/feedback_link()
+	// This intentionally does not follow the 10-second maximum TTL rule,
+	// as this can be reloaded through the Reload-Admins verb.
+	if (cached_feedback_link == NO_FEEDBACK_LINK)
+		return null
+
+	if (!isnull(cached_feedback_link))
+		return cached_feedback_link
+
+	if (!SSdbcore.IsConnected())
+		return FALSE
+
+	var/datum/db_query/feedback_query = SSdbcore.NewQuery("SELECT feedback FROM [format_table_name("admin")] WHERE ckey = '[owner.ckey]'")
+
+	if(!feedback_query.Execute())
+		log_sql("Error retrieving feedback link for [src]")
+		qdel(feedback_query)
+		return FALSE
+
+	if(!feedback_query.NextRow())
+		qdel(feedback_query)
+		return FALSE // no feedback link exists
+
+	cached_feedback_link = feedback_query.item[1] || NO_FEEDBACK_LINK
+	qdel(feedback_query)
+
+	return cached_feedback_link
+
 /datum/admins/proc/check_for_rights(rights_required)
-	if(rights_required && !(rights_required & rank.rights))
+	if(rights_required && !(rights_required & rank_flags()))
 		return FALSE
 	return TRUE
-
 
 /datum/admins/proc/check_if_greater_rights_than_holder(datum/admins/other)
 	if(!other)
 		return TRUE //they have no rights
-	if(rank.rights == R_EVERYTHING)
+	if(rank_flags() == R_EVERYTHING)
 		return TRUE //we have all the rights
 	if(src == other)
 		return TRUE //you always have more rights than yourself
-	if(rank.rights != other.rank.rights)
-		if( (rank.rights & other.rank.rights) == other.rank.rights )
+	if(rank_flags() != other.rank_flags())
+		if( (rank_flags() & other.rank_flags()) == other.rank_flags() )
 			return TRUE //we have all the rights they have and more
 	return FALSE
 
@@ -330,6 +360,28 @@ GLOBAL_PROTECT(href_token)
 			html = span_admin("[span_prefix("ADMIN 2FA:")] You have the ability to verify [key_name_admin(client)] by using the Permissions Panel."),
 			confidential = TRUE,
 		)
+
+/// Get the rank name of the admin
+/datum/admins/proc/rank_names()
+	return join_admin_ranks(ranks)
+
+/// Get the rank flags of the admin
+/datum/admins/proc/rank_flags()
+	var/combined_flags = NONE
+
+	for (var/datum/admin_rank/rank as anything in ranks)
+		combined_flags |= rank.rights
+
+	return combined_flags
+
+/// Get the permissions this admin is allowed to edit on other ranks
+/datum/admins/proc/can_edit_rights_flags()
+	var/combined_flags = NONE
+
+	for (var/datum/admin_rank/rank as anything in ranks)
+		combined_flags |= rank.can_edit_rights
+
+	return combined_flags
 
 /datum/admins/vv_edit_var(var_name, var_value)
 	return FALSE //nice try trialmin

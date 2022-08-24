@@ -474,18 +474,18 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	var/name
 
 /datum/asset/json/send(client)
-	return SSassets.transport.send_assets(client, "data/[name].json")
+	return SSassets.transport.send_assets(client, "[name].json")
 
 /datum/asset/json/get_url_mappings()
 	return list(
-		"[name].json" = SSassets.transport.get_asset_url("data/[name].json"),
+		"[name].json" = SSassets.transport.get_asset_url("[name].json"),
 	)
 
 /datum/asset/json/register()
 	var/filename = "data/[name].json"
 	fdel(filename)
 	text2file(json_encode(generate()), filename)
-	SSassets.transport.register_asset(filename, fcopy_rsc(filename))
+	SSassets.transport.register_asset("[name].json", fcopy_rsc(filename))
 	fdel(filename)
 
 /// Returns the data that will be JSON encoded

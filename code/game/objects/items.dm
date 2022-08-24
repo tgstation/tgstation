@@ -1,4 +1,5 @@
 GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/effects/fire.dmi', "fire"))
+GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons/effects/welding_effect.dmi', "welding_sparks", GASFIRE_LAYER, ABOVE_LIGHTING_PLANE))
 
 /// Anything you can pick up and hold.
 /obj/item
@@ -123,8 +124,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 	///What body parts are covered by the clothing when you wear it
 	var/body_parts_covered = 0
-	/// How likely a disease or chemical is to get through a piece of clothing
-	var/permeability_coefficient = 1
 	/// for electrical admittance/conductance (electrocution checks and shit)
 	var/siemens_coefficient = 1
 	/// How much clothing is slowing you down. Negative values speeds you up
@@ -222,9 +221,15 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(species_exception)
 		species_exception = string_list(species_exception)
 
+	if(sharpness && force > 5) //give sharp objects butchering functionality, for consistency
+		AddComponent(/datum/component/butchering, speed = 8 SECONDS * toolspeed)
+
 	. = ..()
+
+	// Handle adding item associated actions
 	for(var/path in actions_types)
-		new path(src)
+		add_item_action(path)
+
 	actions_types = null
 
 	if(force_string)
@@ -251,9 +256,54 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(ismob(loc))
 		var/mob/m = loc
 		m.temporarilyRemoveItemFromInventory(src, TRUE)
-	for(var/X in actions)
-		qdel(X)
+
+	// Handle cleaning up our actions list
+	for(var/datum/action/action as anything in actions)
+		remove_item_action(action)
+
 	return ..()
+
+/// Called when an action associated with our item is deleted
+/obj/item/proc/on_action_deleted(datum/source)
+	SIGNAL_HANDLER
+
+	if(!(source in actions))
+		CRASH("An action ([source.type]) was deleted that was associated with an item ([src]), but was not found in the item's actions list.")
+
+	LAZYREMOVE(actions, source)
+
+/// Adds an item action to our list of item actions.
+/// Item actions are actions linked to our item, that are granted to mobs who equip us.
+/// This also ensures that the actions are properly tracked in the actions list and removed if they're deleted.
+/// Can be be passed a typepath of an action or an instance of an action.
+/obj/item/proc/add_item_action(action_or_action_type)
+
+	var/datum/action/action
+	if(ispath(action_or_action_type, /datum/action))
+		action = new action_or_action_type(src)
+	else if(istype(action_or_action_type, /datum/action))
+		action = action_or_action_type
+	else
+		CRASH("item add_item_action got a type or instance of something that wasn't an action.")
+
+	LAZYADD(actions, action)
+	RegisterSignal(action, COMSIG_PARENT_QDELETING, .proc/on_action_deleted)
+	if(ismob(loc))
+		// We're being held or are equipped by someone while adding an action?
+		// Then they should also probably be granted the action, given it's in a correct slot
+		var/mob/holder = loc
+		give_item_action(action, holder, holder.get_slot_by_item(src))
+
+	return action
+
+/// Removes an instance of an action from our list of item actions.
+/obj/item/proc/remove_item_action(datum/action/action)
+	if(!action)
+		return
+
+	UnregisterSignal(action, COMSIG_PARENT_QDELETING)
+	LAZYREMOVE(actions, action)
+	qdel(action)
 
 /// Called if this item is supposed to be a steal objective item objective. Only done at mapload
 /obj/item/proc/add_stealing_item_objective()
@@ -272,12 +322,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 /obj/item/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
 		atom_destruction(MELEE)
-
-/obj/item/ComponentInitialize()
-	. = ..()
-
-	if(sharpness && force > 5) //give sharp objects butchering functionality, for consistency
-		AddComponent(/datum/component/butchering, 80 * toolspeed)
 
 /**Makes cool stuff happen when you suicide with an item
  *
@@ -342,10 +386,14 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 			. += "[src] is made of cold-resistant materials."
 		if(resistance_flags & FIRE_PROOF)
 			. += "[src] is made of fire-retardant materials."
-
-	if(!user.research_scanner)
 		return
 
+/obj/item/examine_more(mob/user)
+	. = ..()
+	if(HAS_TRAIT(user, TRAIT_RESEARCH_SCANNER))
+		. += research_scan(user)
+
+/obj/item/proc/research_scan(mob/user)
 	/// Research prospects, including boostable nodes and point values. Deliver to a console to know whether the boosts have already been used.
 	var/list/research_msg = list("<font color='purple'>Research prospects:</font> ")
 	///Separator between the items on the list
@@ -379,7 +427,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	else
 		research_msg += "None"
 	research_msg += "."
-	. += research_msg.Join()
+	return research_msg.Join()
 
 /obj/item/interact(mob/user)
 	add_fingerprint(user)
@@ -493,7 +541,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 
 	//If the item is in a storage item, take it out
-	SEND_SIGNAL(loc, COMSIG_TRY_STORAGE_TAKE, src, user.loc, TRUE)
+	loc.atom_storage?.attempt_remove(src, user.loc, silent = TRUE)
 	if(QDELETED(src)) //moving it out of the storage to the floor destroyed it.
 		return
 
@@ -528,7 +576,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		return
 
 	//If the item is in a storage item, take it out
-	SEND_SIGNAL(loc, COMSIG_TRY_STORAGE_TAKE, src, user.loc, TRUE)
+	loc.atom_storage?.attempt_remove(src, user.loc, silent = TRUE)
 	if(QDELETED(src)) //moving it out of the storage to the floor destroyed it.
 		return
 
@@ -584,9 +632,11 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 /// Called when a mob drops an item.
 /obj/item/proc/dropped(mob/user, silent = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.Remove(user)
+
+	// Remove any item actions we temporary gave out.
+	for(var/datum/action/action_item_has as anything in actions)
+		action_item_has.Remove(user)
+
 	if(item_flags & DROPDEL && !QDELETED(src))
 		qdel(src)
 	item_flags &= ~IN_INVENTORY
@@ -630,10 +680,11 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	visual_equipped(user, slot, initial)
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	SEND_SIGNAL(user, COMSIG_MOB_EQUIPPED_ITEM, src, slot)
-	for(var/X in actions)
-		var/datum/action/A = X
-		if(item_action_slot_check(slot, user)) //some items only give their actions buttons when in a specific slot.
-			A.Grant(user)
+
+	// Give out actions our item has to people who equip it.
+	for(var/datum/action/action as anything in actions)
+		give_item_action(action, user, slot)
+
 	item_flags |= IN_INVENTORY
 	if(!initial)
 		if(equip_sound && (slot_flags & slot))
@@ -642,7 +693,19 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 			playsound(src, pickup_sound, PICKUP_SOUND_VOLUME, ignore_walls = FALSE)
 	user.update_equipment_speed_mods()
 
-///sometimes we only want to grant the item's action if it's equipped in a specific slot.
+/// Gives one of our item actions to a mob, when equipped to a certain slot
+/obj/item/proc/give_item_action(datum/action/action, mob/to_who, slot)
+	// Some items only give their actions buttons when in a specific slot.
+	if(!item_action_slot_check(slot, to_who))
+		// There is a chance we still have our item action currently,
+		// and are moving it from a "valid slot" to an "invalid slot".
+		// So call Remove() here regardless, even if excessive.
+		action.Remove(to_who)
+		return
+
+	action.Grant(to_who)
+
+/// Sometimes we only want to grant the item's action if it's equipped in a specific slot.
 /obj/item/proc/item_action_slot_check(slot, mob/user)
 	if(slot == ITEM_SLOT_BACKPACK || slot == ITEM_SLOT_LEGCUFFED) //these aren't true slots, so avoid granting actions there
 		return FALSE
@@ -686,6 +749,9 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
  *Checks before we get to here are: mob is alive, mob is not restrained, stunned, asleep, resting, laying, item is on the mob.
  */
 /obj/item/proc/ui_action_click(mob/user, actiontype)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_UI_ACTION_CLICK, user, actiontype) & COMPONENT_ACTION_HANDLED)
+		return
+
 	attack_self(user)
 
 ///This proc determines if and at what an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
@@ -699,35 +765,37 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	else
 		return
 
-/obj/item/on_exit_storage(datum/component/storage/concrete/master_storage)
+/obj/item/on_exit_storage(datum/storage/master_storage)
 	. = ..()
-	var/atom/location = master_storage.real_location()
+	var/atom/location = master_storage.real_location?.resolve()
 	do_drop_animation(location)
 
 /obj/item/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(hit_atom && !QDELETED(hit_atom))
-		SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
-		if(get_temperature() && isliving(hit_atom))
-			var/mob/living/L = hit_atom
-			L.IgniteMob()
-		var/itempush = 1
-		if(w_class < 4)
-			itempush = 0 //too light to push anything
-		if(istype(hit_atom, /mob/living)) //Living mobs handle hit sounds differently.
-			var/volume = get_volume_by_throwforce_and_or_w_class()
-			if (throwforce > 0)
-				if (mob_throw_hit_sound)
-					playsound(hit_atom, mob_throw_hit_sound, volume, TRUE, -1)
-				else if(hitsound)
-					playsound(hit_atom, hitsound, volume, TRUE, -1)
-				else
-					playsound(hit_atom, 'sound/weapons/genhit.ogg',volume, TRUE, -1)
+	if(QDELETED(hit_atom))
+		return
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum) & COMPONENT_MOVABLE_IMPACT_NEVERMIND)
+		return
+	if(get_temperature() && isliving(hit_atom))
+		var/mob/living/L = hit_atom
+		L.ignite_mob()
+	var/itempush = 1
+	if(w_class < 4)
+		itempush = 0 //too light to push anything
+	if(isliving(hit_atom)) //Living mobs handle hit sounds differently.
+		var/volume = get_volume_by_throwforce_and_or_w_class()
+		if (throwforce > 0)
+			if (mob_throw_hit_sound)
+				playsound(hit_atom, mob_throw_hit_sound, volume, TRUE, -1)
+			else if(hitsound)
+				playsound(hit_atom, hitsound, volume, TRUE, -1)
 			else
-				playsound(hit_atom, 'sound/weapons/throwtap.ogg', 1, volume, -1)
-
+				playsound(hit_atom, 'sound/weapons/genhit.ogg',volume, TRUE, -1)
 		else
-			playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE)
-		return hit_atom.hitby(src, 0, itempush, throwingdatum=throwingdatum)
+			playsound(hit_atom, 'sound/weapons/throwtap.ogg', 1, volume, -1)
+
+	else
+		playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE)
+	return hit_atom.hitby(src, 0, itempush, throwingdatum=throwingdatum)
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
 	if(HAS_TRAIT(src, TRAIT_NODROP))
@@ -748,8 +816,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 /obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/storage
 	if(!newLoc)
 		return FALSE
-	if(SEND_SIGNAL(loc, COMSIG_CONTAINS_STORAGE))
-		return SEND_SIGNAL(loc, COMSIG_TRY_STORAGE_TAKE, src, newLoc, TRUE)
+	if(loc.atom_storage)
+		return loc.atom_storage.attempt_remove(src, newLoc, silent = TRUE)
 	return FALSE
 
 /// Returns the icon used for overlaying the object on a belt
@@ -765,29 +833,29 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/mob/owner = loc
 	var/flags = slot_flags
 	if(flags & ITEM_SLOT_OCLOTHING)
-		owner.update_inv_wear_suit()
+		owner.update_worn_oversuit()
 	if(flags & ITEM_SLOT_ICLOTHING)
-		owner.update_inv_w_uniform()
+		owner.update_worn_undersuit()
 	if(flags & ITEM_SLOT_GLOVES)
-		owner.update_inv_gloves()
+		owner.update_worn_gloves()
 	if(flags & ITEM_SLOT_EYES)
-		owner.update_inv_glasses()
+		owner.update_worn_glasses()
 	if(flags & ITEM_SLOT_EARS)
 		owner.update_inv_ears()
 	if(flags & ITEM_SLOT_MASK)
-		owner.update_inv_wear_mask()
+		owner.update_worn_mask()
 	if(flags & ITEM_SLOT_HEAD)
-		owner.update_inv_head()
+		owner.update_worn_head()
 	if(flags & ITEM_SLOT_FEET)
-		owner.update_inv_shoes()
+		owner.update_worn_shoes()
 	if(flags & ITEM_SLOT_ID)
-		owner.update_inv_wear_id()
+		owner.update_worn_id()
 	if(flags & ITEM_SLOT_BELT)
-		owner.update_inv_belt()
+		owner.update_worn_belt()
 	if(flags & ITEM_SLOT_BACK)
-		owner.update_inv_back()
+		owner.update_worn_back()
 	if(flags & ITEM_SLOT_NECK)
-		owner.update_inv_neck()
+		owner.update_worn_neck()
 
 ///Returns the temperature of src. If you want to know if an item is hot use this proc.
 /obj/item/proc/get_temperature()
@@ -900,7 +968,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 /obj/item/MouseEntered(location, control, params)
 	. = ..()
-	if(get(src, /mob) == usr && !QDELETED(src))
+	if(((get(src, /mob) == usr) || loc?.atom_storage || (item_flags & IN_STORAGE)) && !QDELETED(src)) //nullspace exists.
 		var/mob/living/L = usr
 		if(usr.client.prefs.read_preference(/datum/preference/toggle/enable_tooltips))
 			var/timedelay = usr.client.prefs.read_preference(/datum/preference/numeric/tooltip_delay) / 100
@@ -913,16 +981,16 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 /obj/item/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
 	. = ..()
-	remove_filter("hover_outline") //get rid of the hover effect in case the mouse exit isn't called if someone drags and drops an item and somthing goes wrong
+	remove_filter(HOVER_OUTLINE_FILTER) //get rid of the hover effect in case the mouse exit isn't called if someone drags and drops an item and somthing goes wrong
 
 /obj/item/MouseExited()
 	deltimer(tip_timer) //delete any in-progress timer if the mouse is moved off the item before it finishes
 	closeToolTip(usr)
-	remove_filter("hover_outline")
+	remove_filter(HOVER_OUTLINE_FILTER)
 
 /obj/item/proc/apply_outline(outline_color = null)
-	if(get(src, /mob) != usr || QDELETED(src) || isobserver(usr)) //cancel if the item isn't in an inventory, is being deleted, or if the person hovering is a ghost (so that people spectating you don't randomly make your items glow)
-		return
+	if(((get(src, /mob) != usr) && !loc?.atom_storage && !(item_flags & IN_STORAGE)) || QDELETED(src) || isobserver(usr)) //cancel if the item isn't in an inventory, is being deleted, or if the person hovering is a ghost (so that people spectating you don't randomly make your items glow)
+		return FALSE
 	var/theme = lowertext(usr.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
 	if(!outline_color) //if we weren't provided with a color, take the theme's color
 		switch(theme) //yeah it kinda has to be this way
@@ -945,7 +1013,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(color)
 		outline_color = COLOR_WHITE //if the item is recolored then the outline will be too, let's make the outline white so it becomes the same color instead of some ugly mix of the theme and the tint
 
-	add_filter("hover_outline", 1, list("type" = "outline", "size" = 1, "color" = outline_color))
+	add_filter(HOVER_OUTLINE_FILTER, 1, list("type" = "outline", "size" = 1, "color" = outline_color))
 
 /// Called when a mob tries to use the item as a tool. Handles most checks.
 /obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount=0, volume=0, datum/callback/extra_checks)
@@ -1037,7 +1105,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		var/hand_index = M.get_held_index_of_item(src)
 		if(hand_index)
 			M.held_items[hand_index] = null
-			M.update_inv_hands()
+			M.update_held_items()
 			if(M.client)
 				M.client.screen -= src
 			layer = initial(layer)
@@ -1109,6 +1177,9 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 ///For when you want to add/update the embedding on an item. Uses the vars in [/obj/item/var/embedding], and defaults to config values for values that aren't set. Will automatically detach previous embed elements on this item.
 /obj/item/proc/updateEmbedding()
+	SHOULD_CALL_PARENT(TRUE)
+
+	SEND_SIGNAL(src, COMSIG_ITEM_EMBEDDING_UPDATE)
 	if(!LAZYLEN(embedding))
 		disableEmbedding()
 		return
@@ -1271,7 +1342,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	return
 
 /// Whether or not this item can be put into a storage item through attackby
-/obj/item/proc/attackby_storage_insert(datum/component/storage, atom/storage_holder, mob/user)
+/obj/item/proc/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
 	return TRUE
 
 /obj/item/proc/do_pickup_animation(atom/target)
@@ -1309,6 +1380,9 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 /obj/item/proc/do_drop_animation(atom/moving_from)
 	if(!istype(loc, /turf))
+		return
+
+	if(!istype(moving_from))
 		return
 
 	var/turf/current_turf = get_turf(src)
@@ -1352,7 +1426,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		attack_image = image('icons/effects/effects.dmi', attacked_atom, visual_effect_icon, attacked_atom.layer + 0.1)
 	else if(used_item)
 		attack_image = image(icon = used_item, loc = attacked_atom, layer = attacked_atom.layer + 0.1)
-		attack_image.plane = attacked_atom.plane
+		attack_image.plane = attacked_atom.plane + 1
 
 		// Scale the icon.
 		attack_image.transform *= 0.4
@@ -1394,3 +1468,15 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 /obj/item/proc/set_painting_tool_color(chosen_color)
 	SEND_SIGNAL(src, COMSIG_PAINTING_TOOL_SET_COLOR, chosen_color)
+
+/// Triggered from a silver slime reaction, sends a signal for the listener in component/edible
+/obj/item/proc/mark_silver_slime_reaction()
+	SIGNAL_HANDLER
+	SEND_SIGNAL(src, COMSIG_FOOD_SILVER_SPAWNED)
+
+/**
+ * Returns null if this object cannot be used to interact with physical writing mediums such as paper.
+ * Returns a list of key attributes for this object interacting with paper otherwise.
+ */
+/obj/item/proc/get_writing_implement_details()
+	return null

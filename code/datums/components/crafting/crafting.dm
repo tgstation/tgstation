@@ -46,6 +46,7 @@
 				CAT_DRINK = CAT_NONE,
 				CAT_CLOTHING = CAT_NONE,
 				CAT_ATMOSPHERIC = CAT_NONE,
+				CAT_STRUCTURE = CAT_NONE,
 			)
 
 	var/cur_category = CAT_NONE
@@ -160,7 +161,7 @@
 	var/list/present_qualities = list()
 
 	for(var/obj/item/contained_item in source.contents)
-		if(contained_item.GetComponent(/datum/component/storage))
+		if(contained_item.atom_storage)
 			for(var/obj/item/subcontained_item in contained_item.contents)
 				available_tools[subcontained_item.type] = TRUE
 				if(subcontained_item.tool_behaviour)
@@ -331,7 +332,7 @@
 			. += RG
 			Deletion -= RG
 			continue
-		else if(istype(part, /obj/item/stack))
+		else if(isstack(part))
 			var/obj/item/stack/ST = locate(part) in Deletion
 			if(ST.amount > partlist[part])
 				ST.amount = partlist[part]
@@ -349,7 +350,7 @@
 		Deletion.Cut(Deletion.len)
 		// Snowflake handling of reagent containers and storage atoms.
 		// If we consumed them in our crafting, we should dump their contents out before qdeling them.
-		if(istype(DL, /obj/item/reagent_containers))
+		if(is_reagent_container(DL))
 			var/obj/item/reagent_containers/container = DL
 			container.reagents.expose(container.loc, TOUCH)
 		else if(istype(DL, /obj/item/storage))

@@ -41,7 +41,7 @@
 	. = ..()
 	if(locate(/obj/structure/barricade) in get_turf(mover))
 		return TRUE
-	else if(istype(mover, /obj/projectile))
+	else if(isprojectile(mover))
 		if(!anchored)
 			return TRUE
 		var/obj/projectile/proj = mover
@@ -123,7 +123,7 @@
 	anchored = FALSE
 	max_integrity = 180
 	proj_pass_rate = 20
-	armor = list(MELEE = 10, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 10, BIO = 100, FIRE = 10, ACID = 0)
+	armor = list(MELEE = 10, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 10, BIO = 0, FIRE = 10, ACID = 0)
 
 	var/deploy_time = 40
 	var/deploy_message = TRUE

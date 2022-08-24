@@ -225,13 +225,13 @@
 	mob_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	products = list(
 		/obj/item/clothing/head/helmet/skull = 150,
-		/obj/item/clothing/mask/bandana/color/skull/black = 50,
+		/obj/item/clothing/mask/bandana/skull/black = 50,
 		/obj/item/food/cookie/sugar/spookyskull = 10,
 		/obj/item/instrument/trombone/spectral = 10000,
 		/obj/item/shovel/serrated = 150
 	)
 	wanted_items = list(
-		/obj/item/reagent_containers/food/condiment/milk = 1000,
+		/obj/item/reagent_containers/condiment/milk = 1000,
 		/obj/item/stack/sheet/bone = 420
 	)
 	buyphrase = "Bone appetit!"

@@ -1,5 +1,5 @@
 /obj/item/clothing/suit
-	icon = 'icons/obj/clothing/suits.dmi'
+	icon = 'icons/obj/clothing/suits/default.dmi'
 	name = "suit"
 	var/fire_resist = T0C+100
 	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
@@ -21,7 +21,7 @@
 
 	if(damaged_clothes)
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damaged[blood_overlay_type]")
-	if(HAS_BLOOD_DNA(src))
+	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
 		. += mutable_appearance('icons/effects/blood.dmi', "[blood_overlay_type]blood")
 
 	var/mob/living/carbon/human/M = loc
@@ -37,7 +37,7 @@
 	..()
 	if(ismob(loc))
 		var/mob/M = loc
-		M.update_inv_wear_suit()
+		M.update_worn_oversuit()
 
 /**
  * Wrapper proc to apply shielding through AddComponent().

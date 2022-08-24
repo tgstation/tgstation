@@ -58,6 +58,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define IS_PLAYER_COLORABLE_1 (1<<21)
 /// Whether or not this atom has contextual screentips when hovered OVER
 #define HAS_CONTEXTUAL_SCREENTIPS_1 (1<<22)
+// Whether or not this atom is storing contents for a disassociated storage object
+#define HAS_DISASSOCIATED_STORAGE_1 (1<<23)
 
 // Update flags for [/atom/proc/update_appearance]
 /// Update the atom's name
@@ -280,3 +282,16 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define SPACEVINE_HEAT_RESISTANT (1 << 0)
 /// Is the spacevine / flower bud cold resistant
 #define SPACEVINE_COLD_RESISTANT (1 << 1)
+
+// Flags for flora structures
+#define FLORA_HERBAL (1 << 0)
+#define FLORA_WOODEN (1 << 1)
+#define FLORA_STONE (1 << 2)
+
+// Bitflags for emotes, used in var/emote_type of the emote datum
+/// Is the emote audible
+#define EMOTE_AUDIBLE (1<<0)
+/// Is the emote visible
+#define EMOTE_VISIBLE (1<<1)
+/// Is it an emote that should be shown regardless of blindness/deafness
+#define EMOTE_IMPORTANT (1<<2)

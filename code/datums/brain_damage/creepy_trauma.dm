@@ -34,7 +34,7 @@
 	//antag stuff//
 	antagonist.forge_objectives(obsession.mind)
 	antagonist.greet()
-	RegisterSignal(owner, COMSIG_CARBON_HUG, .proc/on_hug)
+	RegisterSignal(owner, COMSIG_CARBON_HELPED, .proc/on_hug)
 
 /datum/brain_trauma/special/obsessed/on_life(delta_time, times_fired)
 	if(!obsession || obsession.stat == DEAD)
@@ -49,7 +49,7 @@
 	else
 		viewing = FALSE
 	if(viewing)
-		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "creeping", /datum/mood_event/creeping, obsession.name)
+		owner.add_mood_event("creeping", /datum/mood_event/creeping, obsession.name)
 		total_time_creeping += delta_time SECONDS
 		time_spent_away = 0
 		if(attachedobsessedobj)//if an objective needs to tick down, we can do that since traumas coexist with the antagonist datum
@@ -60,9 +60,9 @@
 /datum/brain_trauma/special/obsessed/proc/out_of_view()
 	time_spent_away += 20
 	if(time_spent_away > 1800) //3 minutes
-		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "creeping", /datum/mood_event/notcreepingsevere, obsession.name)
+		owner.add_mood_event("creeping", /datum/mood_event/notcreepingsevere, obsession.name)
 	else
-		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "creeping", /datum/mood_event/notcreeping, obsession.name)
+		owner.add_mood_event("creeping", /datum/mood_event/notcreeping, obsession.name)
 
 /datum/brain_trauma/special/obsessed/on_lose()
 	..()
@@ -80,7 +80,8 @@
 			to_chat(owner, span_warning("Being near [obsession] makes you nervous and you begin to stutter..."))
 		owner.set_timed_status_effect(6 SECONDS, /datum/status_effect/speech/stutter, only_if_higher = TRUE)
 
-/datum/brain_trauma/special/obsessed/proc/on_hug(datum/source, mob/living/hugger, mob/living/hugged)
+/// Singal proc for [COMSIG_CARBON_HELPED], when our obsessed helps (hugs) our obsession, increases hug count
+/datum/brain_trauma/special/obsessed/proc/on_hug(datum/source, mob/living/hugged)
 	SIGNAL_HANDLER
 
 	if(hugged != obsession)
@@ -103,7 +104,7 @@
 			to_chat(owner, span_userdanger("You feel your heart lurching in your chest..."))
 		if(81 to 100)
 			INVOKE_ASYNC(owner, /mob.proc/emote, "cough")
-			owner.dizziness += 10
+			owner.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/dizziness)
 			owner.adjust_disgust(5)
 			to_chat(owner, span_userdanger("You gag and swallow a bit of bile..."))
 

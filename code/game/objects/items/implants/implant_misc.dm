@@ -2,7 +2,7 @@
 	name = "firearms authentication implant"
 	desc = "Lets you shoot your guns."
 	icon_state = "auth"
-	activated = FALSE
+	actions_types = null
 
 /obj/item/implant/weapons_auth/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -31,7 +31,6 @@
 
 /obj/item/implant/radio
 	name = "internal radio implant"
-	activated = TRUE
 	var/obj/item/radio/radio
 	var/radio_key
 	var/subspace_transmission = FALSE
@@ -89,4 +88,3 @@
 /obj/item/implanter/radio/syndicate
 	name = "implanter (internal syndicate radio)"
 	imp_type = /obj/item/implant/radio/syndicate
-

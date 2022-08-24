@@ -13,26 +13,6 @@
  * where they target the "dangerous" modules
  */
 
-/// returns a number for the damage multiplier for this relative angle/dir
-/obj/vehicle/sealed/mecha/proc/get_armour_facing(relative_dir)
-	switch(relative_dir)
-		if(180) // BACKSTAB!
-			return facing_modifiers[MECHA_BACK_ARMOUR]
-		if(0, 45) // direct or 45 degrees off
-			return facing_modifiers[MECHA_FRONT_ARMOUR]
-	return facing_modifiers[MECHA_SIDE_ARMOUR] //if its not a front hit or back hit then assume its from the side
-
-///tries to deal internal damaget depending on the damage amount
-/obj/vehicle/sealed/mecha/proc/try_deal_internal_damage(damage)
-	if(damage < internal_damage_threshold)
-		return
-	if(!prob(internal_damage_probability))
-		return
-	var/internal_damage_to_deal = possible_int_damage
-	internal_damage_to_deal &= ~mecha_flags
-	if(internal_damage_to_deal)
-		set_internal_damage(pick(bitfield_to_list(internal_damage_to_deal)))
-
 /// tries to damage mech equipment depending on damage and where is being targetted
 /obj/vehicle/sealed/mecha/proc/try_damage_component(damage, def_zone)
 	if(damage < component_damage_threshold)
@@ -45,24 +25,31 @@
 			gear = equip_by_category[MECHA_R_ARM]
 	if(!gear)
 		return
-	var/brokenstatus = gear.get_integrity()
+	var/component_health = gear.get_integrity()
 	// always leave at least 1 health
-	brokenstatus--
-	var/damage_to_deal = min(brokenstatus, damage)
-	if(!damage_to_deal)
+	var/damage_to_deal = min(component_health - 1, damage)
+	if(damage_to_deal <= 0)
 		return
+
 	gear.take_damage(damage_to_deal)
+	if(gear.get_integrity() <= 1)
+		to_chat(occupants, "[icon2html(src, occupants)][span_danger("[gear] is critically damaged!")]")
+		playsound(src, gear.destroy_sound, 50)
 
-/obj/vehicle/sealed/mecha/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
-	. = ..()
-	if(. && atom_integrity > 0)
-		spark_system.start()
-		try_deal_internal_damage(.)
-		if(. >= 5 || prob(33))
-			to_chat(occupants, "[icon2html(src, occupants)][span_userdanger("Taking damage!")]")
-		log_message("Took [.] points of damage. Damage type: [damage_type]", LOG_MECHA)
+/obj/vehicle/sealed/mecha/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
+	var/damage_taken = ..()
+	if(damage_taken <= 0 || atom_integrity < 0)
+		return damage_taken
 
-/obj/vehicle/sealed/mecha/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir, armour_penentration)
+	spark_system?.start()
+	try_deal_internal_damage(damage_taken)
+	if(damage_taken >= 5 || prob(33))
+		to_chat(occupants, "[icon2html(src, occupants)][span_userdanger("Taking damage!")]")
+	log_message("Took [damage_taken] points of damage. Damage type: [damage_type]", LOG_MECHA)
+
+	return damage_taken
+
+/obj/vehicle/sealed/mecha/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir, armour_penetration)
 	. = ..()
 	if(attack_dir)
 		var/facing_modifier = get_armour_facing(abs(dir2angle(dir) - dir2angle(attack_dir)))
@@ -133,7 +120,13 @@
 		return BULLET_ACT_HIT
 	log_message("Hit by projectile. Type: [hitting_projectile]([hitting_projectile.damage_type]).", LOG_MECHA, color="red")
 	// yes we *have* to run the armor calc proc here I love tg projectile code too
-	try_damage_component(run_atom_armor(hitting_projectile.damage, hitting_projectile.damage_type, hitting_projectile.damage_type, 0, REVERSE_DIR(hitting_projectile.dir), hitting_projectile.armour_penetration), hitting_projectile.def_zone)
+	try_damage_component(run_atom_armor(
+		damage_amount = hitting_projectile.damage,
+		damage_type = hitting_projectile.damage_type,
+		damage_flag = hitting_projectile.armor_flag,
+		attack_dir = REVERSE_DIR(hitting_projectile.dir),
+		armour_penetration = hitting_projectile.armour_penetration,
+	), hitting_projectile.def_zone)
 	return ..()
 
 /obj/vehicle/sealed/mecha/ex_act(severity, target)
@@ -181,15 +174,11 @@
 		take_damage(30 / severity, BURN, ENERGY, 1)
 	log_message("EMP detected", LOG_MECHA, color="red")
 
-	if(istype(src, /obj/vehicle/sealed/mecha/combat)) //todo this stupid mouse icon should be a flag
-		mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse-disable.dmi'
-		for(var/occus in occupants)
-			var/mob/living/occupant = occus
-			occupant.update_mouse_pointer()
 	if(!equipment_disabled && LAZYLEN(occupants)) //prevent spamming this message with back-to-back EMPs
 		to_chat(occupants, span_warning("Error -- Connection to equipment control unit has been lost."))
 	addtimer(CALLBACK(src, /obj/vehicle/sealed/mecha.proc/restore_equipment), 3 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 	equipment_disabled = TRUE
+	set_mouse_pointer()
 
 /obj/vehicle/sealed/mecha/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > max_temperature
@@ -197,6 +186,15 @@
 /obj/vehicle/sealed/mecha/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	log_message("Exposed to dangerous temperature.", LOG_MECHA, color="red")
 	take_damage(5, BURN, 0, 1)
+
+/obj/vehicle/sealed/mecha/fire_act() //Check if we should ignite the pilot of an open-canopy mech
+	. = ..()
+	if(enclosed || mecha_flags & SILICON_PILOT)
+		return
+	for(var/mob/living/cookedalive as anything in occupants)
+		if(cookedalive.fire_stacks < 5)
+			cookedalive.adjust_fire_stacks(1)
+			cookedalive.ignite_mob()
 
 /obj/vehicle/sealed/mecha/attackby_secondary(obj/item/weapon, mob/user, params)
 	if(istype(weapon, /obj/item/mecha_parts))
@@ -273,11 +271,26 @@
 		var/obj/item/mecha_parts/P = W
 		P.try_attach_part(user, src, FALSE)
 		return
-	. = ..()
-	log_message("Attacked by [W]. Attacker - [user], Damage - [.]", LOG_MECHA)
-	if(isliving(user))
-		var/mob/living/living_user = user
-		try_damage_component(., living_user.zone_selected)
+
+	return ..()
+
+/obj/vehicle/sealed/mecha/attacked_by(obj/item/attacking_item, mob/living/user)
+	if(!attacking_item.force)
+		return
+
+	var/damage_taken = take_damage(attacking_item.force * attacking_item.demolition_mod, attacking_item.damtype, MELEE, 1)
+	try_damage_component(damage_taken, user.zone_selected)
+
+	var/hit_verb = length(attacking_item.attack_verb_simple) ? "[pick(attacking_item.attack_verb_simple)]" : "hit"
+	user.visible_message(
+		span_danger("[user] [hit_verb][plural_s(hit_verb)] [src] with [attacking_item][damage_taken ? "." : ", without leaving a mark!"]"),
+		span_danger("You [hit_verb] [src] with [attacking_item][damage_taken ? "." : ", without leaving a mark!"]"),
+		span_hear("You hear a [hit_verb]."),
+		COMBAT_MESSAGE_RANGE,
+	)
+
+	log_combat(user, src, "attacked", attacking_item)
+	log_message("Attacked by [user]. Item - [attacking_item], Damage - [damage_taken]", LOG_MECHA)
 
 /obj/vehicle/sealed/mecha/wrench_act(mob/living/user, obj/item/I)
 	..()
@@ -302,19 +315,34 @@
 		to_chat(user, span_notice("You close the hatch to the power unit."))
 
 /obj/vehicle/sealed/mecha/welder_act(mob/living/user, obj/item/W)
-	. = ..()
 	if(user.combat_mode)
 		return
 	. = TRUE
-	if(atom_integrity < max_integrity)
-		if(!W.use_tool(src, user, 0, volume=50, amount=1))
-			return
-		user.visible_message(span_notice("[user] repairs some damage to [name]."), span_notice("You repair some damage to [src]."))
-		atom_integrity += min(10, max_integrity-atom_integrity)
-		if(atom_integrity == max_integrity)
-			to_chat(user, span_notice("It looks to be fully repaired now."))
+	if(LAZYFIND(repairing_mobs, user))
+		balloon_alert(user, "you're already repairing it!")
 		return
-	to_chat(user, span_warning("[src] is at full integrity!"))
+	if(atom_integrity >= max_integrity)
+		balloon_alert(user, "it's not damaged!")
+		return
+	if(!W.tool_start_check(user, amount=1))
+		return
+	LAZYADD(repairing_mobs, user)
+	user.balloon_alert_to_viewers("started welding [src]", "started repairing [src]")
+	audible_message(span_hear("You hear welding."))
+	var/did_the_thing
+	while(atom_integrity < max_integrity)
+		if(W.use_tool(src, user, 2.5 SECONDS, volume=50, amount=1))
+			did_the_thing = TRUE
+			atom_integrity += min(10, (max_integrity - atom_integrity))
+			audible_message(span_hear("You hear welding."))
+		else
+			break
+	if(did_the_thing)
+		user.balloon_alert_to_viewers("[(atom_integrity >= max_integrity) ? "fully" : "partially"] repaired [src]")
+	else
+		user.balloon_alert_to_viewers("stopped welding [src]", "interrupted the repair!")
+	LAZYREMOVE(repairing_mobs, user)
+
 
 /obj/vehicle/sealed/mecha/proc/full_repair(charge_cell)
 	atom_integrity = max_integrity
@@ -343,28 +371,53 @@
 			visual_effect_icon = ATTACK_EFFECT_MECHTOXIN
 	..()
 
-/obj/vehicle/sealed/mecha/atom_destruction()
-	if(wreckage)
-		var/mob/living/silicon/ai/AI
-		for(var/crew in occupants)
-			if(isAI(crew))
-				if(AI)
-					var/mob/living/silicon/ai/unlucky_ais = crew
-					unlucky_ais.gib()
-					continue
-				AI = crew
-		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, AI)
-		for(var/obj/item/mecha_parts/mecha_equipment/E in flat_equipment)
-			if(E.detachable && prob(30))
-				WR.crowbar_salvage += E
-				E.detach(WR) //detaches from src into WR
-				E.activated = TRUE
+
+/obj/vehicle/sealed/mecha/proc/ammo_resupply(obj/item/mecha_ammo/A, mob/user,fail_chat_override = FALSE)
+	if(!A.rounds)
+		if(!fail_chat_override)
+			to_chat(user, span_warning("This box of ammo is empty!"))
+		return FALSE
+	var/ammo_needed
+	var/found_gun
+	for(var/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/gun in flat_equipment)
+		ammo_needed = 0
+
+		if(!istype(gun, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic) && gun.ammo_type == A.ammo_type)
+			continue
+		found_gun = TRUE
+		if(A.direct_load)
+			ammo_needed = initial(gun.projectiles) - gun.projectiles
+		else
+			ammo_needed = gun.projectiles_cache_max - gun.projectiles_cache
+
+		if(!ammo_needed)
+			continue
+		if(ammo_needed < A.rounds)
+			if(A.direct_load)
+				gun.projectiles = gun.projectiles + ammo_needed
 			else
-				E.detach(loc)
-				qdel(E)
-		if(cell)
-			WR.crowbar_salvage += cell
-			cell.forceMove(WR)
-			cell.charge = rand(0, cell.charge)
-			cell = null
-	. = ..()
+				gun.projectiles_cache = gun.projectiles_cache + ammo_needed
+			playsound(get_turf(user),A.load_audio,50,TRUE)
+			to_chat(user, span_notice("You add [ammo_needed] [A.ammo_type][ammo_needed > 1?"s":""] to the [gun.name]"))
+			A.rounds = A.rounds - ammo_needed
+			if(A.custom_materials)
+				A.set_custom_materials(A.custom_materials, A.rounds / initial(A.rounds))
+			A.update_name()
+			return TRUE
+
+		if(A.direct_load)
+			gun.projectiles = gun.projectiles + A.rounds
+		else
+			gun.projectiles_cache = gun.projectiles_cache + A.rounds
+		playsound(get_turf(user),A.load_audio,50,TRUE)
+		to_chat(user, span_notice("You add [A.rounds] [A.ammo_type][A.rounds > 1?"s":""] to the [gun.name]"))
+		A.rounds = 0
+		A.set_custom_materials(list(/datum/material/iron=2000))
+		A.update_name()
+		return TRUE
+	if(!fail_chat_override)
+		if(found_gun)
+			to_chat(user, span_notice("You can't fit any more ammo of this type!"))
+		else
+			to_chat(user, span_notice("None of the equipment on this exosuit can use this ammo!"))
+	return FALSE

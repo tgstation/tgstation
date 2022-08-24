@@ -156,11 +156,11 @@
 	var/list/SPECIALS = list(
 		/area/shuttle,
 		/area/centcom,
-		/area/asteroid,
-		/area/tdome,
-		/area/wizard_station,
-		/area/hilbertshotel,
-		/area/hilbertshotelstorage
+		/area/centcom/asteroid,
+		/area/centcom/tdome,
+		/area/centcom/wizard_station,
+		/area/misc/hilbertshotel,
+		/area/misc/hilbertshotelstorage
 	)
 	for (var/type in SPECIALS)
 		if ( istype(A,type) )
@@ -200,7 +200,7 @@
 	rename_area(A, str)
 
 	to_chat(usr, span_notice("You rename the '[prevname]' to '[str]'."))
-	log_game("[key_name(usr)] has renamed [prevname] to [str]")
+	usr.log_message("has renamed [prevname] to [str]", LOG_GAME)
 	A.update_areasize()
 	interact()
 	return TRUE

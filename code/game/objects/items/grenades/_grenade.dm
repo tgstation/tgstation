@@ -214,7 +214,9 @@
 	if(damage && attack_type == PROJECTILE_ATTACK && hit_projectile.damage_type != STAMINA && prob(15))
 		owner.visible_message(span_danger("[attack_text] hits [owner]'s [src], setting it off! What a shot!"))
 		var/turf/source_turf = get_turf(src)
-		log_game("A projectile ([hitby]) detonated a grenade held by [key_name(owner)] at [COORD(source_turf)]")
+		var/logmsg = "held a grenade detonated by a projectile ([hitby]) at [COORD(source_turf)]"
+		owner.log_message(logmsg, LOG_GAME)
+		owner.log_message(logmsg, LOG_VICTIM)
 		message_admins("A projectile ([hitby]) detonated a grenade held by [key_name_admin(owner)] at [ADMIN_COORDJMP(source_turf)]")
 		detonate()
 

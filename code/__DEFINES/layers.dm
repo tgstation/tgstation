@@ -56,6 +56,7 @@
 #define GAS_PIPE_VISIBLE_LAYER 2.47 //layer = initial(layer) + piping_layer / 1000 in atmospherics/update_icon() to determine order of pipe overlap
 #define GAS_FILTER_LAYER 2.48
 #define GAS_PUMP_LAYER 2.49
+#define PLUMBING_PIPE_VISIBILE_LAYER 2.495//layer = initial(layer) + ducting_layer / 3333 in atmospherics/handle_layer() to determine order of duct overlap
 #define LOW_OBJ_LAYER 2.5
 ///catwalk overlay of /turf/open/floor/plating/catwalk_floor
 #define CATWALK_LAYER 2.51
@@ -69,7 +70,8 @@
 #define BELOW_OPEN_DOOR_LAYER 2.6
 #define BLASTDOOR_LAYER 2.65
 #define OPEN_DOOR_LAYER 2.7
-#define DOOR_HELPER_LAYER 2.71 //keep this above OPEN_DOOR_LAYER
+#define DOOR_ACCESS_HELPER_LAYER 2.71 //keep this above OPEN_DOOR_LAYER, special layer used for /obj/effect/mapping_helpers/airlock/access
+#define DOOR_HELPER_LAYER 2.72 //keep this above DOOR_ACCESS_HELPER_LAYER and OPEN_DOOR_LAYER since the others tend to have tiny sprites that tend to be covered up.
 #define PROJECTILE_HIT_THRESHHOLD_LAYER 2.75 //projectiles won't hit objects at or below this layer if possible
 #define TABLE_LAYER 2.8
 #define GATEWAY_UNDERLAY_LAYER 2.85
@@ -126,8 +128,6 @@
 #define GHOST_PLANE 80
 #define POINT_PLANE 90
 
-#define RAD_TEXT_PLANE 90
-
 //---------- LIGHTING -------------
 ///Normal 1 per turf dynamic lighting underlays
 #define LIGHTING_PLANE 100
@@ -161,6 +161,9 @@
 
 ///---------------- MISC -----------------------
 
+///Pipecrawling images
+#define PIPECRAWL_IMAGES_PLANE 180
+
 ///AI Camera Static
 #define CAMERA_STATIC_PLANE 200
 
@@ -184,11 +187,8 @@
 #define RUNECHAT_PLANE 501
 /// Plane for balloon text (text that fades up)
 #define BALLOON_CHAT_PLANE 502
-
-//-------------------- Rendering ---------------------
-#define RENDER_PLANE_GAME 990
-#define RENDER_PLANE_NON_GAME 995
-#define RENDER_PLANE_MASTER 999
+/// Bubble for typing indicators
+#define TYPING_LAYER 500
 
 //-------------------- HUD ---------------------
 //HUD layer defines
@@ -204,8 +204,14 @@
 ///Layer for screentips
 #define SCREENTIP_LAYER 4
 
-///Plane of the "splash" icon used that shows on the lobby screen. Nothing should ever be above this.
-#define SPLASHSCREEN_PLANE 9999
+///Plane of the "splash" icon used that shows on the lobby screen. only render plate planes should be above this
+#define SPLASHSCREEN_PLANE 9900
+
+//-------------------- Rendering ---------------------
+#define RENDER_PLANE_GAME 9990
+#define RENDER_PLANE_NON_GAME 9995
+#define RENDER_PLANE_MASTER 9999
+//----------------------------------------------------
 
 #define LOBBY_BACKGROUND_LAYER 3
 #define LOBBY_BUTTON_LAYER 4

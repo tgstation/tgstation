@@ -50,12 +50,6 @@
 /datum/customer_data/proc/can_use(datum/venue/venue)
 	return TRUE
 
-/// Gets the order of this customer.
-/// You want to override this if you have dynamic orders, such as the moth tourists requesting the chef's clothes.
-/// If the list of orders are static, just modify orderable_objects.
-/datum/customer_data/proc/get_order(datum/venue/venue)
-	return pick_weight(orderable_objects[venue.venue_type])
-
 /datum/customer_data/proc/get_overlays(mob/living/simple_animal/robot_customer/customer)
 	return
 
@@ -87,6 +81,7 @@
 			/obj/item/food/burger/baconburger = 10,
 			/obj/item/food/pancakes = 4,
 			/obj/item/food/eggsausage = 5,
+			/datum/custom_order/icecream = 14,
 		),
 		VENUE_BAR = list(
 			/datum/reagent/consumable/ethanol/b52 = 6,
@@ -123,9 +118,10 @@
 			/obj/item/food/pizza/margherita = 2,
 			/obj/item/food/lasagna = 4,
 			/obj/item/food/cannoli = 3,
-			/obj/item/food/salad/risotto =5,
+			/obj/item/food/salad/risotto = 5,
 			/obj/item/food/eggplantparm = 3,
 			/obj/item/food/cornuto = 2,
+			/datum/custom_order/icecream = 10,
 		),
 		VENUE_BAR = list(
 			/datum/reagent/consumable/ethanol/fanciulli = 5,
@@ -161,6 +157,7 @@
 			/obj/item/food/soup/onion = 4,
 			/obj/item/food/pie/berryclafoutis = 2,
 			/obj/item/food/omelette = 15,
+			/datum/custom_order/icecream = 6,
 		),
 		VENUE_BAR = list(
 			/datum/reagent/consumable/ethanol/champagne = 10,
@@ -206,6 +203,8 @@
 			/obj/item/food/chawanmushi = 4,
 			/obj/item/food/muffin/berry = 2,
 			/obj/item/food/beef_stroganoff = 2,
+			/datum/custom_order/icecream = 4,
+			/obj/item/food/fish_poke = 5,
 		),
 		VENUE_BAR = list(
 			/datum/reagent/consumable/ethanol/sake = 8,
@@ -247,6 +246,7 @@
 			/obj/item/food/chawanmushi = 4,
 			/obj/item/food/meatbun = 4,
 			/obj/item/food/beef_stroganoff = 2,
+			/obj/item/food/meat_poke = 4,
 		),
 		VENUE_BAR = list(
 			/datum/reagent/consumable/ethanol/beer = 14,
@@ -273,12 +273,9 @@
 
 	speech_sound = 'sound/creatures/tourist/tourist_talk_moth.ogg'
 
-	// Always asks for the clothes that you have on, but this is a fallback.
 	orderable_objects = list(
 		VENUE_RESTAURANT = list(
-			/obj/item/clothing/head/chefhat = 3,
-			/obj/item/clothing/shoes/sneakers/black = 3,
-			/obj/item/clothing/gloves/color/black = 1,
+			/datum/custom_order/moth_clothing = 1,
 		),
 	)
 
@@ -292,27 +289,12 @@
 // If it takes any more effort, it loses a bit of the comedy.
 // Therefore, only show up if it's reasonable for that gag to happen.
 /datum/customer_data/moth/can_use(datum/venue/venue)
-	return !isnull(get_dynamic_order(venue))
-
-/datum/customer_data/moth/proc/get_dynamic_order(datum/venue/venue)
 	var/mob/living/carbon/buffet = venue.restaurant_portal?.turned_on_portal?.resolve()
 	if (!istype(buffet))
-		return
-
-	var/list/orderable = list()
-
-	if (!QDELETED(buffet.head))
-		orderable[buffet.head] = 5
-
-	if (!QDELETED(buffet.gloves))
-		orderable[buffet.gloves] = 5
-
-	if (!QDELETED(buffet.shoes))
-		orderable[buffet.shoes] = 1
-
-	if (orderable.len)
-		var/datum/order = pick_weight(orderable)
-		return order.type
+		return FALSE
+	if(QDELETED(buffet.head) && QDELETED(buffet.gloves) && QDELETED(buffet.shoes))
+		return FALSE
+	return TRUE
 
 /datum/customer_data/moth/proc/get_wings(mob/living/simple_animal/robot_customer/customer)
 	var/customer_ref = WEAKREF(customer)
@@ -346,12 +328,6 @@
 
 	return overlays
 
-/datum/customer_data/moth/get_order(datum/venue/venue)
-	var/dynamic_order = get_dynamic_order(venue)
-
-	// Fall back to basic clothing.
-	return dynamic_order || ..()
-
 /datum/customer_data/mexican
 	base_icon_state = "mexican"
 	prefix_file = "strings/names/mexican_prefix.txt"
@@ -369,6 +345,7 @@
 			/obj/item/food/pie/dulcedebatata = 2,
 			/obj/item/food/cubannachos = 3,
 			/obj/item/food/stuffedlegion = 1,
+			/datum/custom_order/icecream = 2,
 		),
 		VENUE_BAR = list(
 			/datum/reagent/consumable/ethanol/whiskey = 6,
@@ -412,6 +389,7 @@
 			/obj/item/food/full_english = 2,
 			/obj/item/food/soup/indian_curry = 3,
 			/obj/item/food/beef_wellington_slice = 2,
+			/datum/custom_order/icecream = 8
 		),
 		VENUE_BAR = list(
 			/datum/reagent/consumable/ethanol/ale = 10,

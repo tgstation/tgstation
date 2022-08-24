@@ -142,7 +142,7 @@
 	pixel_y = -32
 	},
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/glass/mortar{
+/obj/item/reagent_containers/cup/mortar{
 	pixel_y = 8
 	},
 /obj/item/pestle,
@@ -309,9 +309,9 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "eu" = (
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /obj/machinery/light/small/directional/south,
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/grass,
@@ -456,7 +456,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "gO" = (
-/obj/structure/flora/ausbushes/leafybush,
+/obj/structure/flora/bush/leavy/style_random,
 /turf/open/misc/asteroid,
 /area/shuttle/escape)
 "gW" = (
@@ -517,8 +517,8 @@
 /turf/open/space/basic,
 /area/shuttle/escape)
 "hW" = (
-/obj/structure/flora/ausbushes/leafybush,
-/obj/structure/flora/ausbushes/reedbush,
+/obj/structure/flora/bush/leavy/style_random,
+/obj/structure/flora/bush/reed/style_random,
 /obj/machinery/camera/directional/south{
 	c_tag = "Monastery Asteroid Primary Entrance";
 	network = list("ss13","monastery")
@@ -556,7 +556,7 @@
 	dir = 2;
 	icon_state = "left";
 	name = "Curator Desk Door";
-	req_access_txt = "37"
+	req_access = list("library")
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -564,13 +564,9 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"io" = (
-/obj/structure/lattice,
-/turf/closed/mineral,
-/area/shuttle/escape)
 "it" = (
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "iw" = (
@@ -734,7 +730,7 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "ka" = (
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/ferny/style_random,
 /obj/machinery/camera/directional/south{
 	c_tag = "Monastery Asteroid Starboard Aft";
 	network = list("ss13","monastery")
@@ -1082,7 +1078,7 @@
 	base_state = "left";
 	icon_state = "left";
 	name = "Secure Art Exhibit";
-	req_access_txt = "37"
+	req_access = list("library")
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -1287,7 +1283,7 @@
 	dir = 1;
 	icon_state = "right";
 	name = "Coffin Storage";
-	req_one_access_txt = "22"
+	req_access = list("chapel_office")
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -1364,7 +1360,7 @@
 	pixel_y = -32
 	},
 /obj/machinery/light/dim/directional/south,
-/obj/item/reagent_containers/food/drinks/trophy{
+/obj/item/reagent_containers/cup/glass/trophy{
 	pixel_y = 10
 	},
 /turf/open/floor/iron/dark,
@@ -1621,10 +1617,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "xm" = (
-/obj/machinery/shower{
-	dir = 8;
-	pixel_y = -4
-	},
+/obj/machinery/shower/directional/west,
 /obj/machinery/light/small/directional/west,
 /obj/item/bikehorn/rubberducky,
 /turf/open/floor/iron/showroomfloor,
@@ -1664,7 +1657,7 @@
 /obj/machinery/door/window/left/directional/east{
 	dir = 1;
 	name = "Coffin Storage";
-	req_one_access_txt = "22"
+	req_access = list("chapel_office")
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -1705,9 +1698,9 @@
 /area/shuttle/escape)
 "yA" = (
 /obj/machinery/door/morgue{
-	name = "Private Exhibit";
-	req_access_txt = "37"
+	name = "Private Exhibit"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/service/library,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
@@ -1717,7 +1710,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "yC" = (
-/obj/structure/flora/ausbushes,
+/obj/structure/flora/bush,
 /obj/effect/turf_decal/sand,
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -1731,9 +1724,9 @@
 /obj/structure/closet{
 	name = "beekeeping wardrobe"
 	},
-/obj/item/clothing/suit/beekeeper_suit,
-/obj/item/clothing/suit/beekeeper_suit,
-/obj/item/clothing/suit/beekeeper_suit,
+/obj/item/clothing/suit/utility/beekeeper_suit,
+/obj/item/clothing/suit/utility/beekeeper_suit,
+/obj/item/clothing/suit/utility/beekeeper_suit,
 /obj/item/clothing/head/beekeeper_head,
 /obj/item/clothing/head/beekeeper_head,
 /obj/item/clothing/head/beekeeper_head,
@@ -1744,12 +1737,12 @@
 /area/shuttle/escape)
 "yP" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/condiment/saltshaker{
 	layer = 3.1;
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/food/condiment/peppermill{
+/obj/item/reagent_containers/condiment/peppermill{
 	pixel_x = 5;
 	pixel_y = 6
 	},
@@ -1809,8 +1802,8 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "zB" = (
-/obj/structure/flora/ausbushes/pointybush,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/pointy/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "zE" = (
@@ -1825,7 +1818,7 @@
 /area/shuttle/escape)
 "zP" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/mug/tea,
+/obj/item/reagent_containers/cup/glass/mug/tea,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "zQ" = (
@@ -1842,8 +1835,8 @@
 /turf/open/floor/iron/grimy,
 /area/shuttle/escape)
 "zX" = (
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/pointy/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Ab" = (
@@ -1859,7 +1852,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Ac" = (
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Ad" = (
@@ -1918,7 +1911,7 @@
 /turf/open/misc/asteroid,
 /area/shuttle/escape)
 "AM" = (
-/obj/structure/flora/tree/jungle/small,
+/obj/structure/flora/tree/jungle/small/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "AW" = (
@@ -1946,8 +1939,8 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "Bp" = (
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /obj/structure/beebox,
 /obj/item/queen_bee/bought,
 /turf/open/floor/grass,
@@ -2028,8 +2021,8 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Cn" = (
-/obj/item/reagent_containers/glass/bucket,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 9
 	},
@@ -2066,8 +2059,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "CN" = (
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "CR" = (
@@ -2079,7 +2072,7 @@
 "Dc" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/machinery/light/small/directional/west,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /obj/structure/cable,
 /turf/open/floor/grass,
 /area/shuttle/escape)
@@ -2113,7 +2106,7 @@
 /turf/open/floor/iron/chapel,
 /area/shuttle/escape)
 "Dt" = (
-/obj/structure/flora/ausbushes,
+/obj/structure/flora/bush,
 /turf/open/misc/asteroid,
 /area/shuttle/escape)
 "Dv" = (
@@ -2175,12 +2168,12 @@
 /area/shuttle/escape)
 "Eb" = (
 /obj/structure/water_source/puddle,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "En" = (
-/obj/structure/flora/ausbushes/sunnybush,
+/obj/structure/flora/bush/sunny/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Ep" = (
@@ -2217,7 +2210,7 @@
 "ED" = (
 /obj/machinery/door/window/right/directional/north{
 	name = "Secure Art Exhibit";
-	req_access_txt = "37"
+	req_access = list("library")
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -2227,9 +2220,9 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "ET" = (
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "EU" = (
@@ -2245,7 +2238,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Ff" = (
-/obj/structure/flora/ausbushes/genericbush,
+/obj/structure/flora/bush/generic/style_random,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/grass,
 /area/shuttle/escape)
@@ -2265,7 +2258,7 @@
 /area/shuttle/escape)
 "Fm" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/bottle/holywater{
+/obj/item/reagent_containers/cup/glass/bottle/holywater{
 	pixel_x = -2;
 	pixel_y = 2
 	},
@@ -2278,11 +2271,11 @@
 /area/shuttle/escape)
 "Fx" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/condiment/saltshaker{
 	pixel_x = 3;
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/food/condiment/peppermill,
+/obj/item/reagent_containers/condiment/peppermill,
 /obj/item/storage/box/ingredients/wildcard{
 	layer = 3.1
 	},
@@ -2307,8 +2300,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "FK" = (
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "FO" = (
@@ -2379,13 +2372,13 @@
 /turf/open/misc/asteroid,
 /area/shuttle/escape)
 "GN" = (
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "GU" = (
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Hc" = (
@@ -2432,8 +2425,8 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "HS" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Ig" = (
@@ -2511,9 +2504,9 @@
 /turf/open/space/basic,
 /area/shuttle/escape)
 "IR" = (
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/pale/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "IT" = (
@@ -2573,8 +2566,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Jv" = (
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /obj/machinery/camera/directional/north{
 	c_tag = "Monastery Garden";
 	network = list("ss13","monastery")
@@ -2633,10 +2626,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "JX" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "JZ" = (
@@ -2674,8 +2664,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Kn" = (
-/obj/structure/flora/ausbushes/leafybush,
-/obj/structure/flora/ausbushes/reedbush,
+/obj/structure/flora/bush/leavy/style_random,
+/obj/structure/flora/bush/reed/style_random,
 /turf/open/misc/asteroid,
 /area/shuttle/escape)
 "KE" = (
@@ -2723,9 +2713,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Ll" = (
-/obj/structure/sign/warning/vacuum/external{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/north,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -2868,7 +2856,7 @@
 /area/shuttle/escape)
 "Nf" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/condiment/flour,
 /obj/item/kitchen/rollingpin,
 /obj/item/knife/kitchen,
 /obj/machinery/light/small/directional/south,
@@ -2962,9 +2950,7 @@
 /area/shuttle/escape)
 "Oi" = (
 /obj/machinery/light/small/directional/west,
-/obj/structure/sign/warning/vacuum/external{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/west,
 /obj/machinery/camera/directional/west{
 	c_tag = "Monastery Cemetery";
 	network = list("ss13","monastery")
@@ -2997,7 +2983,7 @@
 "OH" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Monastery Maintenance";
-	req_one_access_txt = "22;24;10;11;37"
+	req_access = list("service","maint_tunnels")
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -3034,7 +3020,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Pe" = (
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/ferny/style_random,
 /turf/open/misc/asteroid,
 /area/shuttle/escape)
 "Pp" = (
@@ -3136,7 +3122,7 @@
 "Qs" = (
 /obj/structure/table/wood,
 /obj/item/newspaper,
-/obj/item/reagent_containers/food/drinks/coffee,
+/obj/item/reagent_containers/cup/glass/coffee,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Qt" = (
@@ -3247,9 +3233,9 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Rz" = (
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/grass,
 /area/shuttle/escape)
@@ -3402,7 +3388,7 @@
 /area/shuttle/escape)
 "SR" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/bottle/wine{
+/obj/item/reagent_containers/cup/glass/bottle/wine{
 	pixel_y = 8
 	},
 /turf/open/floor/iron/dark,
@@ -3439,7 +3425,7 @@
 /obj/machinery/door/window/right/directional/north{
 	dir = 2;
 	name = "Curator Desk Door";
-	req_access_txt = "37"
+	req_access = list("library")
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -3494,7 +3480,7 @@
 /area/shuttle/escape)
 "Tx" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/trophy{
+/obj/item/reagent_containers/cup/glass/trophy{
 	pixel_y = 8
 	},
 /turf/open/floor/carpet,
@@ -3511,10 +3497,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "TJ" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "TR" = (
@@ -3707,7 +3690,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Wl" = (
-/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Wo" = (
@@ -3744,10 +3727,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "WJ" = (
-/obj/machinery/shower{
-	dir = 8;
-	pixel_y = -4
-	},
+/obj/machinery/shower/directional/west,
 /obj/item/soap/homemade,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
@@ -3781,7 +3761,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Xm" = (
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Xs" = (
@@ -3826,7 +3806,7 @@
 /area/shuttle/escape)
 "XK" = (
 /obj/structure/closet/crate/bin,
-/obj/item/reagent_containers/glass/rag,
+/obj/item/reagent_containers/cup/rag,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -3904,8 +3884,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "YD" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "YE" = (
@@ -3960,7 +3940,7 @@
 "Zh" = (
 /obj/machinery/door/window/brigdoor{
 	dir = 4;
-	req_one_access_txt = "63"
+	req_access = list("security")
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
@@ -5313,7 +5293,7 @@ Ho
 Ho
 Ho
 Ho
-io
+Ho
 JG
 JG
 JG
@@ -5400,7 +5380,7 @@ JG
 JG
 JG
 Ho
-io
+Ho
 Ho
 Ho
 Ho
@@ -5473,9 +5453,9 @@ JG
 Ho
 Ho
 Ho
-io
 Ho
-io
+Ho
+Ho
 JG
 PB
 JG
@@ -5568,7 +5548,7 @@ PB
 JG
 Ho
 Ho
-io
+Ho
 Ho
 Ho
 Ho
@@ -6147,7 +6127,7 @@ zE
 PB
 PB
 PB
-io
+Ho
 Ho
 Ho
 JG
@@ -6556,7 +6536,7 @@ nr
 PB
 PB
 PB
-io
+Ho
 Ho
 Ho
 Pb
@@ -6800,7 +6780,7 @@ PB
 PB
 PB
 PB
-io
+Ho
 Ho
 Ho
 Ho
@@ -7036,7 +7016,7 @@ JG
 PB
 Ho
 Ho
-io
+Ho
 Ho
 PB
 JG
@@ -7115,14 +7095,14 @@ JG
 PB
 JG
 Ho
-io
 Ho
 Ho
 Ho
 Ho
-io
 Ho
-io
+Ho
+Ho
+Ho
 Ho
 Ho
 Ho
@@ -7194,7 +7174,7 @@ Ho
 JG
 JG
 JG
-io
+Ho
 Ho
 Ho
 Ho

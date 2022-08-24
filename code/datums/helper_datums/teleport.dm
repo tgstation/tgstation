@@ -90,6 +90,7 @@
 
 	if(ismob(teleatom))
 		var/mob/M = teleatom
+		teleatom.log_message("teleported from [loc_name(curturf)] to [loc_name(destturf)].", LOG_GAME, log_globally = FALSE)
 		M.cancel_camera()
 
 	SEND_SIGNAL(teleatom, COMSIG_MOVABLE_POST_TELEPORT)
@@ -140,9 +141,10 @@
 		return
 
 	var/list/floor_gases = floor_gas_mixture.gases
+	var/list/gases_to_check = list(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/plasma)
 	var/trace_gases
 	for(var/id in floor_gases)
-		if(id in GLOB.hardcoded_gases)
+		if(id in gases_to_check)
 			continue
 		trace_gases = TRUE
 		break

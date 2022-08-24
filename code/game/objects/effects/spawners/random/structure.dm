@@ -6,7 +6,7 @@
 	name = "crate spawner"
 	icon_state = "crate_secure"
 	loot = list(
-		/obj/effect/spawner/random/structure/crate_loot = 745,
+		/obj/effect/spawner/random/structure/crate_loot = 744,
 		/obj/structure/closet/crate/trashcart/filled = 75,
 		/obj/effect/spawner/random/trash/moisture_trap = 50,
 		/obj/effect/spawner/random/trash/hobo_squat = 30,
@@ -14,6 +14,7 @@
 		/obj/effect/spawner/random/trash/mess = 30,
 		/obj/item/kirbyplants/fern = 20,
 		/obj/structure/closet/crate/decorations = 15,
+		/obj/structure/destructible/cult/pants_altar = 1,
 	)
 
 /obj/effect/spawner/random/structure/crate_abandoned
@@ -100,6 +101,13 @@
 		/obj/structure/closet/crate/science = 1,
 	)
 
+/obj/effect/spawner/random/structure/crate_empty/Initialize(mapload)
+	var/obj/structure/closet/crate/peek_a_boo = ..()
+	if(istype(peek_a_boo))
+		peek_a_boo.opened = prob(50)
+
+	return INITIALIZE_HINT_QDEL
+
 /obj/effect/spawner/random/structure/crate_loot
 	name = "lootcrate spawner"
 	icon_state = "crate"
@@ -125,6 +133,13 @@
 		/obj/structure/closet/cabinet = 150,
 		/obj/structure/closet/acloset = 1,
 	)
+
+/obj/effect/spawner/random/structure/closet_empty/Initialize(mapload)
+	var/obj/structure/closet/peek_a_boo = ..()
+	if(istype(peek_a_boo))
+		peek_a_boo.opened = prob(50)
+
+	return INITIALIZE_HINT_QDEL
 
 /obj/effect/spawner/random/structure/closet_maintenance
 	name = "maintenance closet spawner"
@@ -210,8 +225,23 @@
 /obj/effect/spawner/random/structure/billboard/roadsigns //also pretty much only unifunctionally useful for gas stations
 	name = "\improper Gas Station billboard spawner"
 	loot = list(
-		/obj/structure/billboard/roadsign/two = 25,
-		/obj/structure/billboard/roadsign/twothousand = 25,
-		/obj/structure/billboard/roadsign/twomillion = 25,
-		/obj/structure/billboard/roadsign/error = 25,
+		/obj/structure/billboard/roadsign/two,
+		/obj/structure/billboard/roadsign/twothousand,
+		/obj/structure/billboard/roadsign/twomillion,
+		/obj/structure/billboard/roadsign/error,
+	)
+
+/obj/effect/spawner/random/structure/steam_vent
+	name = "steam vent spawner"
+	loot = list(
+		/obj/structure/steam_vent,
+		/obj/structure/steam_vent/fast,
+	)
+
+/obj/effect/spawner/random/structure/musician/piano/random_piano
+	name = "random piano spawner"
+	icon_state = "piano"
+	loot = list(
+		/obj/structure/musician/piano,
+		/obj/structure/musician/piano/minimoog,
 	)

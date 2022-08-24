@@ -98,11 +98,6 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 	params = NONE
 	return ..()
 
-//prevents shuttles attempting to rotate this since it messes up sprites
-/obj/machinery/gravity_generator/shuttleRotate(rotation, params)
-	params = NONE
-	return ..()
-
 /obj/machinery/door/airlock/shuttleRotate(rotation, params)
 	. = ..()
 	if(cyclelinkeddir && (params & ROTATE_DIR))

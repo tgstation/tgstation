@@ -48,13 +48,13 @@
 	var/list/seen_atoms = view(7, owner)
 	if(LAZYLEN(trigger_objs))
 		for(var/obj/O in seen_atoms)
-			if(is_type_in_typecache(O, trigger_objs) || (phobia_type == "blood" && HAS_BLOOD_DNA(O)))
+			if(is_type_in_typecache(O, trigger_objs) || (phobia_type == "blood" && GET_ATOM_BLOOD_DNA_LENGTH(O)))
 				freak_out(O)
 				return
 		for(var/mob/living/carbon/human/HU in seen_atoms) //check equipment for trigger items
 			for(var/X in HU.get_all_worn_items() | HU.held_items)
 				var/obj/I = X
-				if(!QDELETED(I) && (is_type_in_typecache(I, trigger_objs) || (phobia_type == "blood" && HAS_BLOOD_DNA(I))))
+				if(!QDELETED(I) && (is_type_in_typecache(I, trigger_objs) || (phobia_type == "blood" && GET_ATOM_BLOOD_DNA_LENGTH(I))))
 					freak_out(I)
 					return
 
@@ -111,21 +111,21 @@
 		if(1)
 			to_chat(owner, span_warning("You are paralyzed with fear!"))
 			owner.Stun(70)
-			owner.Jitter(8)
+			owner.set_timed_status_effect(16 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 		if(2)
 			owner.emote("scream")
-			owner.Jitter(5)
+			owner.set_timed_status_effect(10 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 			owner.say("AAAAH!!", forced = "phobia")
 			if(reason)
 				owner.pointed(reason)
 		if(3)
 			to_chat(owner, span_warning("You shut your eyes in terror!"))
-			owner.Jitter(5)
+			owner.set_timed_status_effect(10 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 			owner.blind_eyes(10)
 		if(4)
-			owner.dizziness += 10
-			owner.add_confusion(10)
-			owner.Jitter(10)
+			owner.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/dizziness)
+			owner.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/confusion)
+			owner.set_timed_status_effect(20 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 			owner.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/speech/stutter)
 
 // Defined phobia types for badminry, not included in the RNG trauma pool to avoid diluting.

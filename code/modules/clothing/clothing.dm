@@ -38,8 +38,6 @@
 	/// Trait modification, lazylist of traits to add/take away, on equipment/drop in the correct slot
 	var/list/clothing_traits
 
-	var/pocket_storage_component_path
-
 	/// How much clothing damage has been dealt to each of the limbs of the clothing, assuming it covers more than one limb
 	var/list/damage_by_parts
 	/// How much integrity is in a specific limb before that limb is disabled (for use in [/obj/item/clothing/proc/take_damage_zone], and only if we cover multiple zones.) Set to 0 to disable shredding.
@@ -51,12 +49,10 @@
 	var/obj/item/food/clothing/moth_snack
 
 /obj/item/clothing/Initialize(mapload)
-	if((clothing_flags & VOICEBOX_TOGGLABLE))
+	if(clothing_flags & VOICEBOX_TOGGLABLE)
 		actions_types += /datum/action/item_action/toggle_voice_box
 	. = ..()
 	AddElement(/datum/element/venue_price, FOOD_PRICE_CHEAP)
-	if(ispath(pocket_storage_component_path))
-		LoadComponent(pocket_storage_component_path)
 	if(can_be_bloody && ((body_parts_covered & FEET) || (flags_inv & HIDESHOES)))
 		LoadComponent(/datum/component/bloodysoles)
 	if(!icon_state)
@@ -82,7 +78,7 @@
 	// sigh, ok, so it's not ACTUALLY infinite nutrition. this is so you can eat clothes more than...once.
 	// bite_consumption limits how much you actually get, and the take_damage in after eat makes sure you can't abuse this.
 	// ...maybe this was a mistake after all.
-	food_reagents = list(/datum/reagent/consumable/nutriment = INFINITY)
+	food_reagents = list(/datum/reagent/consumable/nutriment/cloth_fibers = INFINITY)
 	tastes = list("dust" = 1, "lint" = 1)
 	foodtypes = CLOTH
 
@@ -112,6 +108,8 @@
 
 /obj/item/clothing/attack(mob/living/M, mob/living/user, params)
 	if(user.combat_mode || !ismoth(M) || ispickedupmob(src))
+		return ..()
+	if(clothing_flags & INEDIBLE_CLOTHING)
 		return ..()
 	if(isnull(moth_snack))
 		moth_snack = new
@@ -237,7 +235,7 @@
 		return
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	for(var/trait in clothing_traits)
-		REMOVE_TRAIT(user, trait, "[CLOTHING_TRAIT] [REF(src)]")
+		REMOVE_TRAIT(user, trait, "[CLOTHING_TRAIT]_[REF(src)]")
 
 
 	if(LAZYLEN(user_vars_remembered))
@@ -255,7 +253,7 @@
 		if(iscarbon(user) && LAZYLEN(zones_disabled))
 			RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/bristle, override = TRUE)
 		for(var/trait in clothing_traits)
-			ADD_TRAIT(user, trait, "[CLOTHING_TRAIT] [REF(src)]")
+			ADD_TRAIT(user, trait, "[CLOTHING_TRAIT]_[REF(src)]")
 		if (LAZYLEN(user_vars_to_edit))
 			for(var/variable in user_vars_to_edit)
 				if(variable in user.vars)
@@ -287,20 +285,19 @@
 			if(30 to 59)
 				. += span_danger("The [zone_name] is partially shredded.")
 
-	var/datum/component/storage/pockets = GetComponent(/datum/component/storage)
-	if(pockets)
+	if(atom_storage)
 		var/list/how_cool_are_your_threads = list("<span class='notice'>")
-		if(pockets.attack_hand_interact)
+		if(atom_storage.attack_hand_interact)
 			how_cool_are_your_threads += "[src]'s storage opens when clicked.\n"
 		else
 			how_cool_are_your_threads += "[src]'s storage opens when dragged to yourself.\n"
-		if (pockets.can_hold?.len) // If pocket type can hold anything, vs only specific items
-			how_cool_are_your_threads += "[src] can store [pockets.max_items] <a href='?src=[REF(src)];show_valid_pocket_items=1'>item\s</a>.\n"
+		if (atom_storage.can_hold?.len) // If pocket type can hold anything, vs only specific items
+			how_cool_are_your_threads += "[src] can store [atom_storage.max_slots] <a href='?src=[REF(src)];show_valid_pocket_items=1'>item\s</a>.\n"
 		else
-			how_cool_are_your_threads += "[src] can store [pockets.max_items] item\s that are [weight_class_to_text(pockets.max_w_class)] or smaller.\n"
-		if(pockets.quickdraw)
+			how_cool_are_your_threads += "[src] can store [atom_storage.max_slots] item\s that are [weight_class_to_text(atom_storage.max_specific_storage)] or smaller.\n"
+		if(atom_storage.quickdraw)
 			how_cool_are_your_threads += "You can quickly remove an item from [src] using Right-Click.\n"
-		if(pockets.silent)
+		if(atom_storage.silent)
 			how_cool_are_your_threads += "Adding or removing items from [src] makes no noise.\n"
 		how_cool_are_your_threads += "</span>"
 		. += how_cool_are_your_threads.Join()
@@ -455,6 +452,8 @@ BLIND     // can't see anything
 	new /obj/effect/decal/cleanable/shreds(get_turf(src), name)
 
 /obj/item/clothing/atom_destruction(damage_flag)
+	if(damage_flag in list(ACID, FIRE))
+		return ..()
 	if(damage_flag == BOMB)
 		//so the shred survives potential turf change from the explosion.
 		addtimer(CALLBACK(src, .proc/_spawn_shreds), 1)
@@ -466,7 +465,7 @@ BLIND     // can't see anything
 			var/mob/living/possessing_mob = loc
 			possessing_mob.visible_message(span_danger("[src] is consumed until naught but shreds remains!"), span_boldwarning("[src] falls apart into little bits!"))
 		deconstruct(FALSE)
-	else if(!(damage_flag in list(ACID, FIRE)))
+	else
 		body_parts_covered = NONE
 		slot_flags = NONE
 		update_clothes_damaged_state(CLOTHING_SHREDDED)
@@ -479,8 +478,7 @@ BLIND     // can't see anything
 				M.visible_message(span_danger("[src] fall[p_s()] apart, completely shredded!"), vision_distance = COMBAT_MESSAGE_RANGE)
 		name = "shredded [initial(name)]" // change the name -after- the message, not before.
 		update_appearance()
-	else
-		..()
+	SEND_SIGNAL(src, COMSIG_ATOM_DESTRUCTION, damage_flag)
 
 /// If we're a clothing with at least 1 shredded/disabled zone, give the wearer a periodic heads up letting them know their clothes are damaged
 /obj/item/clothing/proc/bristle(mob/living/L)

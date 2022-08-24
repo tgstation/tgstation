@@ -3,6 +3,28 @@
 // Wabbajack statue, a sleeping frog statue that shoots bolts of change if
 // living carbons are put on its altar/tables
 
+/obj/machinery/power/emitter/energycannon
+	name = "Energy Cannon"
+	desc = "A heavy duty industrial laser."
+	icon = 'icons/obj/singularity.dmi'
+	icon_state = "emitter_+a"
+	base_icon_state = "emitter_+a"
+	anchored = TRUE
+	density = TRUE
+	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF
+
+	use_power = NO_POWER_USE
+	idle_power_usage = 0
+	active_power_usage = 0
+
+	active = TRUE
+	locked = TRUE
+	welded = TRUE
+
+/obj/machinery/power/emitter/energycannon/RefreshParts()
+	SHOULD_CALL_PARENT(FALSE)
+	return
+
 /obj/machinery/power/emitter/energycannon/magical
 	name = "wabbajack statue"
 	desc = "Who am I? What is my purpose in life? What do I mean by who am I?"
@@ -348,7 +370,7 @@
 
 	if(payees[AM] < threshold) //Suggestions for those with no arms/simple animals.
 		var/armless
-		if(!ishuman(AM) && !istype(AM, /mob/living/simple_animal/slime))
+		if(!ishuman(AM) && !isslime(AM))
 			armless = TRUE
 		else
 			var/mob/living/carbon/human/H = AM
@@ -372,7 +394,7 @@
 			var/obj/item/holochip/HC = new /obj/item/holochip(AM.loc) //Change is made in holocredits exclusively.
 			HC.credits = payees[AM]
 			HC.name = "[HC.credits] credit holochip"
-			if(istype(AM, /mob/living/carbon/human))
+			if(ishuman(AM))
 				var/mob/living/carbon/human/H = AM
 				if(!H.put_in_hands(HC))
 					AM.pulling = HC

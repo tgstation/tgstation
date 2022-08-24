@@ -12,7 +12,7 @@
 	icon = 'icons/obj/doors/mineral_doors.dmi'
 	icon_state = "metal"
 	max_integrity = 200
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 10, BIO = 100, FIRE = 50, ACID = 50)
+	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 10, BIO = 0, FIRE = 50, ACID = 50)
 	can_atmos_pass = ATMOS_PASS_DENSITY
 	rad_insulation = RAD_MEDIUM_INSULATION
 	material_flags = MATERIAL_EFFECTS
@@ -233,9 +233,6 @@
 	max_integrity = 300
 	light_range = 2
 
-/obj/structure/mineral_door/uranium/ComponentInitialize()
-	return
-
 /obj/structure/mineral_door/sandstone
 	name = "sandstone door"
 	icon_state = "sandstone"
@@ -331,9 +328,6 @@
 			return TRUE
 
 	return ..()
-
-/obj/structure/mineral_door/paperframe/ComponentInitialize()
-	return
 
 /obj/structure/mineral_door/paperframe/Destroy()
 	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))

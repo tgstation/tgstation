@@ -368,13 +368,14 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 			reason = "You ran out of fuel, and drift, slowly, into a star."
 			if(obj_flags & EMAGGED)
 				gamer.adjust_fire_stacks(5)
-				gamer.IgniteMob() //flew into a star, so you're on fire
+				gamer.ignite_mob() //flew into a star, so you're on fire
 				to_chat(gamer, span_userdanger("You feel an immense wave of heat emanate from the arcade machine. Your skin bursts into flames."))
 
 	if(obj_flags & EMAGGED)
 		to_chat(gamer, span_userdanger("You're never going to make it to Orion..."))
 		gamer.death()
 		obj_flags &= ~EMAGGED //removes the emagged status after you lose
+		gamer.log_message("lost a Realism Mode Orion Trail game, changing the machine back to normal.", LOG_GAME)
 		gameStatus = ORION_STATUS_START
 		name = "The Orion Trail"
 		desc = "Learn how our ancestors got to Orion, and have fun in the process!"
@@ -481,7 +482,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	if(obj_flags & EMAGGED)
 		new /obj/item/orion_ship(loc)
 		message_admins("[ADMIN_LOOKUPFLW(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
-		log_game("[key_name(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
+		usr.log_message("made it to Orion on an emagged machine and got an explosive toy ship.", LOG_GAME)
 	else
 		prizevend(user)
 	obj_flags &= ~EMAGGED
@@ -492,6 +493,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	if(obj_flags & EMAGGED)
 		return
 	to_chat(user, span_notice("You override the cheat code menu and skip to Cheat #[rand(1, 50)]: Realism Mode."))
+	user.log_message("emagged [src], activating Realism Mode.", LOG_GAME)
 	name = "The Orion Trail: Realism Edition"
 	desc = "Learn how our ancestors got to Orion, and try not to die in the process!"
 	newgame()
@@ -542,5 +544,18 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	visible_message(span_userdanger("[src] explodes!"))
 	explosion(src, devastation_range = 2, heavy_impact_range = 4, light_impact_range = 8, flame_range = 16)
 	qdel(src)
+
+/obj/singularity/orion
+	move_self = FALSE
+
+/obj/singularity/orion/Initialize(mapload)
+	. = ..()
+
+	var/datum/component/singularity/singularity = singularity_component.resolve()
+	singularity?.grav_pull = 1
+
+/obj/singularity/orion/process(delta_time)
+	if(DT_PROB(0.5, delta_time))
+		mezzer()
 
 #undef ORION_TRAIL_WINTURN

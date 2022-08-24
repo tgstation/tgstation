@@ -108,8 +108,8 @@
 	if(special) //aheals
 		return
 
-	if(istype(new_organ, /obj/item/organ/eyes))
-		var/obj/item/organ/eyes/new_eyes = new_organ
+	if(istype(new_organ, /obj/item/organ/internal/eyes))
+		var/obj/item/organ/internal/eyes/new_eyes = new_organ
 		if(new_eyes.tint < TINT_BLIND) //unless you added unworking eyes (flashlight eyes), this is removing burden
 			update_burden(FALSE)
 		return
@@ -122,8 +122,8 @@
 	if(special) //aheals
 		return
 
-	if(istype(old_organ, /obj/item/organ/eyes))
-		var/obj/item/organ/eyes/old_eyes = old_organ
+	if(istype(old_organ, /obj/item/organ/internal/eyes))
+		var/obj/item/organ/internal/eyes/old_eyes = old_organ
 		if(old_eyes.tint < TINT_BLIND) //unless you were already blinded by them (flashlight eyes), this is adding burden!
 			update_burden(TRUE)
 

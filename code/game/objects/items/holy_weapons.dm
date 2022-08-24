@@ -1,130 +1,3 @@
-// CHAPLAIN CUSTOM ARMORS //
-
-/obj/item/clothing/head/helmet/chaplain/clock
-	name = "forgotten helmet"
-	desc = "It has the unyielding gaze of a god eternally forgotten."
-	icon_state = "clockwork_helmet"
-	inhand_icon_state = "clockwork_helmet_inhand"
-	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 0, FIRE = 80, ACID = 80)
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	strip_delay = 8 SECONDS
-	dog_fashion = null
-
-/obj/item/clothing/suit/armor/riot/chaplain/clock
-	name = "forgotten armour"
-	desc = "It sounds like hissing steam, ticking cogs, gone silent, It looks like a dead machine, trying to tick with life."
-	icon_state = "clockwork_cuirass"
-	inhand_icon_state = "clockwork_cuirass_inhand"
-	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
-	slowdown = 0
-	clothing_flags = NONE
-
-/obj/item/clothing/head/helmet/chaplain
-	name = "crusader helmet"
-	desc = "Deus Vult."
-	icon_state = "knight_templar"
-	inhand_icon_state = "knight_templar"
-	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 0, FIRE = 80, ACID = 80)
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	strip_delay = 80
-	dog_fashion = null
-
-/obj/item/clothing/suit/armor/riot/chaplain
-	name = "crusader armour"
-	desc = "God wills it!"
-	icon_state = "knight_templar"
-	inhand_icon_state = "knight_templar"
-	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
-	slowdown = 0
-	clothing_flags = NONE
-
-/obj/item/clothing/suit/armor/riot/chaplain/studentuni
-	name = "student robe"
-	desc = "The uniform of a bygone institute of learning."
-	icon_state = "studentuni"
-	inhand_icon_state = "studentuni"
-	body_parts_covered = ARMS|CHEST
-
-/obj/item/clothing/head/helmet/chaplain/cage
-	name = "cage"
-	desc = "A cage that restrains the will of the self, allowing one to see the profane world for what it is."
-	flags_inv = NONE
-	icon_state = "cage"
-	inhand_icon_state = "cage"
-	worn_y_offset = 7
-
-/obj/item/clothing/head/helmet/chaplain/ancient
-	name = "ancient helmet"
-	desc = "None may pass!"
-	icon_state = "knight_ancient"
-	inhand_icon_state = "knight_ancient"
-
-/obj/item/clothing/suit/armor/riot/chaplain/ancient
-	name = "ancient armour"
-	desc = "Defend the treasure..."
-	icon_state = "knight_ancient"
-	inhand_icon_state = "knight_ancient"
-
-/obj/item/clothing/suit/armor/riot/chaplain/witchhunter
-	name = "witchunter garb"
-	desc = "This worn outfit saw much use back in the day."
-	icon_state = "witchhunter"
-	inhand_icon_state = "witchhunter"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-
-/obj/item/clothing/head/helmet/chaplain/witchunter_hat
-	name = "witchunter hat"
-	desc = "This hat saw much use back in the day."
-	icon_state = "witchhunterhat"
-	inhand_icon_state = "witchhunterhat"
-	flags_cover = HEADCOVERSEYES
-	flags_inv = HIDEEYES
-
-/obj/item/clothing/head/helmet/chaplain/adept
-	name = "adept hood"
-	desc = "Its only heretical when others do it."
-	icon_state = "crusader"
-	inhand_icon_state = "crusader"
-	flags_cover = HEADCOVERSEYES
-	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
-
-/obj/item/clothing/suit/armor/riot/chaplain/adept
-	name = "adept robes"
-	desc = "The ideal outfit for burning the unfaithful."
-	icon_state = "crusader"
-	inhand_icon_state = "crusader"
-
-/obj/item/clothing/suit/hooded/chaplain_hoodie
-	name = "follower hoodie"
-	desc = "Hoodie made for acolytes of the chaplain."
-	icon_state = "chaplain_hoodie"
-	inhand_icon_state = "chaplain_hoodie"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
-	hoodtype = /obj/item/clothing/head/hooded/chaplain_hood
-
-/obj/item/clothing/head/hooded/chaplain_hood
-	name = "follower hood"
-	desc = "Hood made for acolytes of the chaplain."
-	icon_state = "chaplain_hood"
-	body_parts_covered = HEAD
-	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
-
-/obj/item/clothing/suit/hooded/chaplain_hoodie/leader
-	name = "leader hoodie"
-	desc = "Now you're ready for some 50 dollar bling water."
-	icon_state = "chaplain_hoodie_leader"
-	inhand_icon_state = "chaplain_hoodie_leader"
-	hoodtype = /obj/item/clothing/head/hooded/chaplain_hood/leader
-
-/obj/item/clothing/head/hooded/chaplain_hood/leader
-	name = "leader hood"
-	desc = "I mean, you don't /have/ to seek bling water. I just think you should."
-	icon_state = "chaplain_hood_leader"
-
-
 // CHAPLAIN NULLROD AND CUSTOM WEAPONS //
 
 /obj/item/nullrod
@@ -176,12 +49,13 @@
 
 	var/obj/effect/rune/target_rune = target
 	if(target_rune.log_when_erased)
-		log_game("[target_rune.cultist_name] rune erased by [key_name(user)] using a null rod.")
+		user.log_message("erased [target_rune.cultist_name] rune using a null rod", LOG_GAME)
 		message_admins("[ADMIN_LOOKUPFLW(user)] erased a [target_rune.cultist_name] rune with a null rod.")
 	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
 
 /obj/item/nullrod/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!"))
+
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/nullrod/godhand
@@ -376,7 +250,11 @@
 
 /obj/item/nullrod/scythe/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 70, 110) //the harvest gives a high bonus chance
+	AddComponent(/datum/component/butchering, \
+	speed = 7 SECONDS, \
+	effectiveness = 110, \
+	)
+	//the harvest gives a high bonus chance
 
 /obj/item/nullrod/scythe/vibro
 	name = "high frequency blade"
@@ -432,7 +310,7 @@
 	attack_verb_simple = list("saw", "tear", "lacerate", "cut", "chop", "dice")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
 	tool_behaviour = TOOL_SAW
-	toolspeed = 0.5 //faster than normal saw
+	toolspeed = 0.5 //same speed as an active chainsaw
 	chaplain_spawnable = FALSE //prevents being pickable as a chaplain weapon (it has 30 force)
 
 /obj/item/nullrod/hammer
@@ -473,7 +351,12 @@
 /obj/item/nullrod/chainsaw/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
-	AddComponent(/datum/component/butchering, 30, 100, 0, hitsound)
+	AddComponent(/datum/component/butchering, \
+	speed = 3 SECONDS, \
+	effectiveness = 100, \
+	bonus_modifier = 0, \
+	butcher_sound = hitsound, \
+	)
 
 /obj/item/nullrod/clown
 	name = "clown dagger"
@@ -572,7 +455,10 @@
 /obj/item/nullrod/armblade/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
-	AddComponent(/datum/component/butchering, 80, 70)
+	AddComponent(/datum/component/butchering, \
+	speed = 8 SECONDS, \
+	effectiveness = 70, \
+	)
 
 /obj/item/nullrod/armblade/tentacle
 	name = "unholy blessing"
@@ -637,7 +523,10 @@
 /obj/item/nullrod/tribal_knife/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
-	AddComponent(/datum/component/butchering, 50, 100)
+	AddComponent(/datum/component/butchering, \
+	speed = 5 SECONDS, \
+	effectiveness = 100, \
+	)
 
 /obj/item/nullrod/tribal_knife/Destroy()
 	STOP_PROCESSING(SSobj, src)

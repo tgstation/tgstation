@@ -5,6 +5,8 @@
 	weight = -1 //forces it to be called, regardless of weight
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
+	category = EVENT_CATEGORY_HOLIDAY
+	description = "Gives everyone treats, and turns Ian and Poly into their festive versions."
 
 /datum/round_event/spooky/start()
 	..()
@@ -53,5 +55,5 @@
 		/obj/item/food/candy,
 		/obj/item/food/candiedapple,
 		/obj/item/food/chocolatebar,
-		/obj/item/organ/brain ) // OH GOD THIS ISN'T CANDY!
+		/obj/item/organ/internal/brain ) // OH GOD THIS ISN'T CANDY!
 		new type(src)

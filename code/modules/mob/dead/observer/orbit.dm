@@ -39,11 +39,6 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 			update_static_data(usr, ui)
 			return TRUE
 
-/datum/orbit_menu/ui_assets()
-	return list(
-		get_asset_datum(/datum/asset/simple/orbit),
-	)
-
 /datum/orbit_menu/ui_static_data(mob/user)
 	var/list/new_mob_pois = SSpoints_of_interest.get_mob_pois(CALLBACK(src, .proc/validate_mob_poi), append_dead_role = FALSE)
 	var/list/new_other_pois = SSpoints_of_interest.get_other_pois()

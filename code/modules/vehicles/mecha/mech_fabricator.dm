@@ -181,6 +181,8 @@
 					category_override += "H.O.N.K"
 				if(mech_types & EXOSUIT_MODULE_PHAZON)
 					category_override += "Phazon"
+				if(mech_types & EXOSUIT_MODULE_SAVANNAH)
+					category_override += "Savannah-Ivanov"
 
 		else if(ispath(built_item, /obj/item/borg_restart_board))
 			sub_category += "All Cyborgs" //Otherwise the restart board shows in the "parts" category, which seems dumb

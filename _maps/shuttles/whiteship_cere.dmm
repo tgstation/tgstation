@@ -7,7 +7,7 @@
 /area/shuttle/abandoned)
 "ac" = (
 /obj/machinery/door/airlock/titanium{
-	name = "mech bay external airlock"
+	name = "Mech Bay External Airlock"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/docking_port/mobile{
@@ -97,7 +97,7 @@
 /area/shuttle/abandoned)
 "aq" = (
 /obj/machinery/door/airlock/titanium{
-	name = "mech bay"
+	name = "Mech Bay"
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
@@ -303,7 +303,7 @@
 /area/shuttle/abandoned)
 "aN" = (
 /obj/machinery/door/airlock/titanium{
-	name = "cockpit"
+	name = "Cockpit"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/blue,

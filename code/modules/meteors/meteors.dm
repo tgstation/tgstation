@@ -127,12 +127,12 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 	GLOB.meteor_list -= src
 	return ..()
 
-/obj/effect/meteor/Moved(atom/OldLoc, Dir, Forced = FALSE)
+/obj/effect/meteor/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(QDELETED(src))
 		return
 
-	if(OldLoc != loc)//If did move, ram the turf we get in
+	if(old_loc != loc)//If did move, ram the turf we get in
 		var/turf/T = get_turf(loc)
 		ram_turf(T)
 
@@ -143,7 +143,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 		qdel(src)
 		return
 
-/obj/effect/meteor/Process_Spacemove()
+/obj/effect/meteor/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	return TRUE //Keeps us from drifting for no reason
 
 /obj/effect/meteor/Bump(atom/A)
@@ -221,7 +221,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 				continue
 			var/dist = get_dist(M.loc, src.loc)
 			shake_camera(M, dist > 20 ? 2 : 4, dist > 20 ? 1 : 3)
-			M.playsound_local(src.loc, null, 50, 1, random_frequency, 10, S = meteor_sound)
+			M.playsound_local(src.loc, null, 50, 1, random_frequency, 10, sound_to_use = meteor_sound)
 
 ///////////////////////
 //Meteor types
@@ -298,7 +298,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 	hits = 2
 	heavy = TRUE
 	meteorsound = 'sound/effects/blobattack.ogg'
-	meteordrop = list(/obj/item/food/meat/slab/human, /obj/item/food/meat/slab/human/mutant, /obj/item/organ/heart, /obj/item/organ/lungs, /obj/item/organ/tongue, /obj/item/organ/appendix/)
+	meteordrop = list(/obj/item/food/meat/slab/human, /obj/item/food/meat/slab/human/mutant, /obj/item/organ/internal/heart, /obj/item/organ/internal/lungs, /obj/item/organ/internal/tongue, /obj/item/organ/internal/appendix/)
 	var/meteorgibs = /obj/effect/gibspawner/generic
 	threat = 2
 
@@ -309,7 +309,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 			meteordrop += pick(subtypesof(path))
 
 	for(var/path in meteordrop)
-		if(path == /obj/item/organ/tongue)
+		if(path == /obj/item/organ/internal/tongue)
 			meteordrop -= path
 			meteordrop += pick(typesof(path))
 	return ..()
@@ -330,11 +330,11 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 //Meaty Ore Xeno edition
 /obj/effect/meteor/meaty/xeno
 	color = "#5EFF00"
-	meteordrop = list(/obj/item/food/meat/slab/xeno, /obj/item/organ/tongue/alien)
+	meteordrop = list(/obj/item/food/meat/slab/xeno, /obj/item/organ/internal/tongue/alien)
 	meteorgibs = /obj/effect/gibspawner/xeno
 
 /obj/effect/meteor/meaty/xeno/Initialize(mapload)
-	meteordrop += subtypesof(/obj/item/organ/alien)
+	meteordrop += subtypesof(/obj/item/organ/internal/alien)
 	return ..()
 
 /obj/effect/meteor/meaty/xeno/ram_turf(turf/T)

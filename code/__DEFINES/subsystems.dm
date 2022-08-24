@@ -63,6 +63,10 @@
 ///Empty ID define
 #define TIMER_ID_NULL -1
 
+/// Used to trigger object removal from a processing list
+#define PROCESS_KILL 26
+
+
 //! ## Initialization subsystem
 
 ///New should not call Initialize
@@ -87,9 +91,6 @@
 
 ///Call qdel on the atom after intialization
 #define INITIALIZE_HINT_QDEL 2
-
-///Call qdel with a force of TRUE after initialization
-#define INITIALIZE_HINT_QDEL_FORCE 3
 
 ///type and all subtypes should always immediately call Initialize in New()
 #define INITIALIZE_IMMEDIATE(X) ##X/New(loc, ...){\
@@ -118,6 +119,7 @@
 #define INIT_ORDER_INSTRUMENTS 82
 #define INIT_ORDER_GREYSCALE 81
 #define INIT_ORDER_VIS 80
+#define INIT_ORDER_SECURITY_LEVEL 79 // We need to load before events so that it has a security level to choose from.
 #define INIT_ORDER_DISCORD 78
 #define INIT_ORDER_ACHIEVEMENTS 77
 #define INIT_ORDER_STATION 74 //This is high priority because it manipulates a lot of the subsystems that will initialize after it.
@@ -174,6 +176,7 @@
 #define FIRE_PRIORITY_GARBAGE 15
 #define FIRE_PRIORITY_DATABASE 16
 #define FIRE_PRIORITY_WET_FLOORS 20
+#define FIRE_PRIORITY_FLUIDS 20
 #define FIRE_PRIORITY_AIR 20
 #define FIRE_PRIORITY_NPC 20
 #define FIRE_PRIORITY_NPC_MOVEMENT 21
@@ -202,6 +205,7 @@
 #define FIRE_PRIORITY_TIMER 700
 #define FIRE_PRIORITY_SOUND_LOOPS 800
 #define FIRE_PRIORITY_SPEECH_CONTROLLER 900
+#define FIRE_PRIORITY_DELAYED_VERBS 950
 #define FIRE_PRIORITY_INPUT 1000 // This must always always be the max highest priority. Player input must never be lost.
 
 
@@ -258,6 +262,7 @@
 	* * callback the callback to call on timer finish
 	* * wait deciseconds to run the timer for
 	* * flags flags for this timer, see: code\__DEFINES\subsystems.dm
+	* * timer_subsystem the subsystem to insert this timer into
 */
 #define addtimer(args...) _addtimer(args, file = __FILE__, line = __LINE__)
 
@@ -301,7 +306,7 @@
 
 // Subsystem delta times or tickrates, in seconds. I.e, how many seconds in between each process() call for objects being processed by that subsystem.
 // Only use these defines if you want to access some other objects processing delta_time, otherwise use the delta_time that is sent as a parameter to process()
-#define SSFLUIDS_DT (SSfluids.wait/10)
+#define SSFLUIDS_DT (SSplumbing.wait/10)
 #define SSMACHINES_DT (SSmachines.wait/10)
 #define SSMOBS_DT (SSmobs.wait/10)
 #define SSOBJ_DT (SSobj.wait/10)

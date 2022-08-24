@@ -73,7 +73,7 @@
 	icon = 'icons/obj/food/frozen_treats.dmi'
 	icon_state = "flavorless_sc"
 	w_class = WEIGHT_CLASS_SMALL
-	trash_type = /obj/item/reagent_containers/food/drinks/sillycup //We dont eat paper cups
+	trash_type = /obj/item/reagent_containers/cup/glass/sillycup //We dont eat paper cups
 	food_reagents = list(/datum/reagent/water = 11) // We dont get food for water/juices
 	tastes = list("ice" = 1, "water" = 1)
 	foodtypes = SUGAR //We use SUGAR as a base line to act in as junkfood, other wise we use fruit
@@ -292,12 +292,12 @@
 	food_reagents = list(/datum/reagent/consumable/hot_coco = 4, /datum/reagent/consumable/cream = 2, /datum/reagent/consumable/vanilla = 3, /datum/reagent/consumable/sugar = 2)
 	overlay_state = "jumbo"
 
-/obj/item/food/popsicle/nogga_black
-	name = "nogga black"
-	desc = "A salty licorice icecream recently reintroduced due to all records of the controversy being lost to time. Those who cannot remember the past are doomed to repeat it."
+/obj/item/food/popsicle/licorice_creamsicle
+	name = "Void Bar™"
+	desc = "A salty licorice icecream. A salty frozen treat."
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/salt = 1,  /datum/reagent/consumable/cream = 2, /datum/reagent/consumable/vanilla = 1, /datum/reagent/consumable/sugar = 4)
 	tastes = list("salty liquorice")
-	overlay_state = "nogga_black"
+	overlay_state = "licorice_creamsicle"
 
 /obj/item/food/cornuto
 	name = "cornuto"

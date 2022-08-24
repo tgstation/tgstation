@@ -3,20 +3,20 @@
 	name = "\improper Jellyperson"
 	plural_form = "Jellypeople"
 	id = SPECIES_JELLYPERSON
-	default_color = "00FF90"
 	say_mod = "chirps"
 	species_traits = list(MUTCOLORS,EYECOLOR,NOBLOOD)
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
+		TRAIT_LITERATE,
 		TRAIT_TOXINLOVER,
 	)
-	mutantlungs = /obj/item/organ/lungs/slime
+	mutantlungs = /obj/item/organ/internal/lungs/slime
 	meat = /obj/item/food/meat/slab/human/mutant/slime
 	exotic_blood = /datum/reagent/toxin/slimejelly
 	damage_overlay_type = ""
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
-	liked_food = MEAT
+	liked_food = MEAT | BUGS
 	toxic_food = NONE
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
@@ -150,7 +150,6 @@
 	name = "\improper Slimeperson"
 	plural_form = "Slimepeople"
 	id = SPECIES_SLIMEPERSON
-	default_color = "00FFFF"
 	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
 	hair_color = "mutcolor"
 	hair_alpha = 150
@@ -445,7 +444,15 @@
 	name = "Luminescent"
 	plural_form = null
 	id = SPECIES_LUMINESCENT
-	examine_limb_id = SPECIES_JELLYPERSON
+	examine_limb_id = SPECIES_LUMINESCENT
+	bodypart_overrides = list(
+		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/luminescent,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/luminescent,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/luminescent,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/luminescent,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/luminescent,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/luminescent,
+	)
 	var/glow_intensity = LUMINESCENT_DEFAULT_GLOW
 	var/obj/effect/dummy/luminescent_glow/glow
 	var/obj/item/slime_extract/current_extract
@@ -546,7 +553,7 @@
 /datum/action/innate/integrate_extract/Activate()
 	var/mob/living/carbon/human/H = owner
 	var/datum/species/jelly/luminescent/species = target
-	if(!is_species(H, /datum/species/jelly/luminescent) || !species)
+	if(!isluminescent(H) || !species)
 		return
 	CHECK_DNA_AND_SPECIES(H)
 
@@ -607,7 +614,7 @@
 /datum/action/innate/use_extract/Activate()
 	var/mob/living/carbon/human/H = owner
 	var/datum/species/jelly/luminescent/species = H.dna.species
-	if(!is_species(H, /datum/species/jelly/luminescent) || !species)
+	if(!isluminescent(H) || !species)
 		return
 	CHECK_DNA_AND_SPECIES(H)
 

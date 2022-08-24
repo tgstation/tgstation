@@ -165,18 +165,21 @@ Charged extracts:
 	effect_desc = "Lets you choose what slime species you want to be."
 
 /obj/item/slimecross/charged/green/do_effect(mob/user)
-	var/mob/living/carbon/human/H = user
-	if(!istype(H))
+	var/mob/living/carbon/human/human_user = user
+	if(!istype(human_user))
 		to_chat(user, span_warning("You must be a humanoid to use this!"))
 		return
-	var/racechoice = tgui_input_list(H, "Choose your slime subspecies", "Slime Selection", sort_list(subtypesof(/datum/species/jelly), /proc/cmp_typepaths_asc))
+	var/list/choice_list = list()
+	for(var/datum/species/species_type as anything in subtypesof(/datum/species/jelly))
+		choice_list[initial(species_type.name)] = species_type
+	var/racechoice = tgui_input_list(human_user, "Choose your slime subspecies", "Slime Selection", sort_list(choice_list))
 	if(isnull(racechoice))
 		to_chat(user, span_notice("You decide not to become a slime for now."))
 		return
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
-	H.set_species(racechoice, icon_update=1)
-	H.visible_message(span_warning("[H] suddenly shifts form as [src] dissolves into [H.p_their()] skin!"))
+	human_user.set_species(choice_list[racechoice], icon_update=1)
+	human_user.visible_message(span_warning("[human_user] suddenly shifts form as [src] dissolves into [human_user.p_their()] skin!"))
 	..()
 
 /obj/item/slimecross/charged/pink

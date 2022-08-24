@@ -10,6 +10,8 @@
 #define BEE_POLLINATE_PEST_CHANCE 33
 #define BEE_POLLINATE_POTENCY_CHANCE 50
 
+#define BEE_FOODGROUPS RAW | MEAT | GORE | BUGS
+
 /mob/living/simple_animal/hostile/bee
 	name = "bee"
 	desc = "Buzzy buzzy bee, stingy sti- Ouch!"
@@ -75,7 +77,7 @@
 	var/list/reee = list(/datum/reagent/consumable/nutriment/vitamin = 5)
 	if(beegent)
 		reee[beegent.type] = 5
-	holder.AddComponent(/datum/component/edible, reee, null, RAW | MEAT | GROSS, 10, 0, list("bee"), null, 10)
+	holder.AddComponent(/datum/component/edible, reee, null, BEE_FOODGROUPS, 10, 0, list("bee"), null, 10)
 	L.visible_message(span_warning("[L] scoops up [src]!"))
 	L.put_in_hands(holder)
 
@@ -290,14 +292,40 @@
 		return TRUE
 	return FALSE
 
+/mob/living/simple_animal/hostile/bee/consider_wakeup()
+	// If bees are chilling in their nest, they're not actively looking for targets.
+	if (!beehome || loc == beehome)
+		return ..()
+
+	idle = min(100, idle + 1)
+	if(idle >= BEE_IDLE_ROAMING && prob(BEE_PROB_GOROAM))
+		toggle_ai(AI_ON)
+		forceMove(beehome.drop_location())
+
 /obj/item/queen_bee
 	name = "queen bee"
 	desc = "She's the queen of bees, BZZ BZZ!"
 	icon_state = "queen_item"
 	inhand_icon_state = ""
 	icon = 'icons/mob/bees.dmi'
+	/// The actual mob that our bee item corresponds to
 	var/mob/living/simple_animal/hostile/bee/queen/queen
 
+/obj/item/queen_bee/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_QUEEN_BEE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
+/obj/item/queen_bee/Destroy()
+	QDEL_NULL(queen)
+	return ..()
+
+/obj/item/queen_bee/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == queen)
+		queen = null
+		// the bee should not exist without a bee.
+		if(!QDELETED(src))
+			qdel(src)
 
 /obj/item/queen_bee/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers/syringe))
@@ -330,26 +358,11 @@
 	qdel(src)
 	return TOXLOSS
 
-/obj/item/queen_bee/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_QUEEN_BEE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+/obj/item/queen_bee/bought
 
 /obj/item/queen_bee/bought/Initialize(mapload)
 	. = ..()
 	queen = new(src)
-
-/obj/item/queen_bee/Destroy()
-	QDEL_NULL(queen)
-	return ..()
-
-/mob/living/simple_animal/hostile/bee/consider_wakeup()
-	if (beehome && loc == beehome) // If bees are chilling in their nest, they're not actively looking for targets
-		idle = min(100, ++idle)
-		if(idle >= BEE_IDLE_ROAMING && prob(BEE_PROB_GOROAM))
-			toggle_ai(AI_ON)
-			forceMove(beehome.drop_location())
-	else
-		..()
 
 /mob/living/simple_animal/hostile/bee/short
 	desc = "These bees seem unstable and won't survive for long."
@@ -367,7 +380,7 @@
 
 /obj/item/trash/bee/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/edible, list(/datum/reagent/consumable/nutriment/vitamin = 5), null, RAW | MEAT | GROSS, 10, 0, list("bee"), null, 10)
+	AddComponent(/datum/component/edible, list(/datum/reagent/consumable/nutriment/vitamin = 5), null, BEE_FOODGROUPS, 10, 0, list("bee"), null, 10)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_QUEEN_BEE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /obj/item/trash/bee/update_overlays()
@@ -375,3 +388,5 @@
 	var/mutable_appearance/body_overlay = mutable_appearance(icon = icon, icon_state = "bee_item_overlay")
 	body_overlay.color = beegent ? beegent.color : BEE_DEFAULT_COLOUR
 	. += body_overlay
+
+#undef BEE_FOODGROUPS

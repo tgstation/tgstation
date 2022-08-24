@@ -19,7 +19,7 @@
 	var/list/codes // assoc. list of transponder codes
 	var/codes_txt = "" // codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"
 
-	req_one_access = list(ACCESS_ENGINE, ACCESS_ROBOTICS)
+	req_one_access = list(ACCESS_ENGINEERING, ACCESS_ROBOTICS)
 
 /obj/machinery/navbeacon/Initialize(mapload)
 	. = ..()
@@ -96,7 +96,7 @@
 	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return // prevent intraction when T-scanner revealed
 
-	else if (istype(I, /obj/item/card/id) || istype(I, /obj/item/modular_computer/tablet))
+	else if (isidcard(I) || istype(I, /obj/item/modular_computer/tablet))
 		if(open)
 			if (src.allowed(user))
 				src.locked = !src.locked

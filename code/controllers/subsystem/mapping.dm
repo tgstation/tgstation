@@ -40,12 +40,23 @@ SUBSYSTEM_DEF(mapping)
 	// Z-manager stuff
 	var/station_start  // should only be used for maploading-related tasks
 	var/space_levels_so_far = 0
-	var/list/z_list
+	///list of all z level datums in the order of their z (z level 1 is at index 1, etc.)
+	var/list/datum/space_level/z_list
+	///list of all z level indices that form multiz connections and whether theyre linked up or down.
+	///list of lists, inner lists are of the form: list("up or down link direction" = TRUE)
+	var/list/multiz_levels = list()
 	var/datum/space_level/transit
 	var/datum/space_level/empty_space
 	var/num_of_res_levels = 1
 	/// True when in the process of adding a new Z-level, global locking
 	var/adding_new_zlevel = FALSE
+
+	///shows the default gravity value for each z level. recalculated when gravity generators change.
+	///associative list of the form: list("[z level num]" = max generator gravity in that z level OR the gravity level trait)
+	var/list/gravity_by_z_level = list()
+
+	/// list of traits and their associated z leves
+	var/list/z_trait_levels = list()
 
 /datum/controller/subsystem/mapping/New()
 	..()
@@ -66,6 +77,7 @@ SUBSYSTEM_DEF(mapping)
 			config = old_config
 	initialize_biomes()
 	loadWorld()
+	determine_fake_sale()
 	repopulate_sorted_areas()
 	process_teleport_locs() //Sets up the wizard teleport locations
 	preloadTemplates()
@@ -84,12 +96,6 @@ SUBSYSTEM_DEF(mapping)
 	if(CONFIG_GET(flag/roundstart_away))
 		createRandomZlevel(prob(CONFIG_GET(number/config_gateway_chance)))
 
-	// Load the virtual reality hub
-	if(CONFIG_GET(flag/virtual_reality))
-		to_chat(world, span_boldannounce("Loading virtual reality..."))
-		load_new_z_level("_maps/RandomZLevels/VR/vrhub.dmm", "Virtual Reality Hub")
-		to_chat(world, span_boldannounce("Virtual reality loaded."))
-
 	loading_ruins = TRUE
 	setup_ruins()
 	loading_ruins = FALSE
@@ -105,7 +111,47 @@ SUBSYSTEM_DEF(mapping)
 	generate_station_area_list()
 	initialize_reserved_level(transit.z_value)
 	SSticker.OnRoundstart(CALLBACK(src, .proc/spawn_maintenance_loot))
+	generate_z_level_linkages()
+	calculate_default_z_level_gravities()
+
 	return ..()
+
+/datum/controller/subsystem/mapping/proc/calculate_default_z_level_gravities()
+	for(var/z_level in 1 to length(z_list))
+		calculate_z_level_gravity(z_level)
+
+/datum/controller/subsystem/mapping/proc/generate_z_level_linkages()
+	for(var/z_level in 1 to length(z_list))
+		generate_linkages_for_z_level(z_level)
+
+/datum/controller/subsystem/mapping/proc/generate_linkages_for_z_level(z_level)
+	if(!isnum(z_level) || z_level <= 0)
+		return FALSE
+
+	if(multiz_levels.len < z_level)
+		multiz_levels.len = z_level
+
+	var/linked_down = level_trait(z_level, ZTRAIT_DOWN)
+	var/linked_up = level_trait(z_level, ZTRAIT_UP)
+	multiz_levels[z_level] = list()
+	if(linked_down)
+		multiz_levels[z_level]["[DOWN]"] = TRUE
+	if(linked_up)
+		multiz_levels[z_level]["[UP]"] = TRUE
+
+/datum/controller/subsystem/mapping/proc/calculate_z_level_gravity(z_level_number)
+	if(!isnum(z_level_number) || z_level_number < 1)
+		return FALSE
+
+	var/max_gravity = 0
+
+	for(var/obj/machinery/gravity_generator/main/grav_gen as anything in GLOB.gravity_generators["[z_level_number]"])
+		max_gravity = max(grav_gen.setting, max_gravity)
+
+	max_gravity = max_gravity || level_trait(z_level_number, ZTRAIT_GRAVITY) || 0//just to make sure no nulls
+	gravity_by_z_level["[z_level_number]"] = max_gravity
+	return max_gravity
+
 
 /**
  * ##setup_ruins
@@ -188,6 +234,13 @@ Used by the AI doomsday and the self-destruct nuke.
 		var/turf/open/floor/circuit/C = N
 		C.update_appearance()
 
+/datum/controller/subsystem/mapping/proc/determine_fake_sale()
+	if(length(SSmapping.levels_by_all_traits(list(ZTRAIT_STATION, ZTRAIT_NOPARALLAX))))
+		GLOB.arcade_prize_pool += /obj/item/stack/tile/fakeice/loaded
+	else
+		GLOB.arcade_prize_pool += /obj/item/stack/tile/fakespace/loaded
+
+
 /datum/controller/subsystem/mapping/Recover()
 	flags |= SS_NO_INIT
 	initialized = SSmapping.initialized
@@ -212,6 +265,7 @@ Used by the AI doomsday and the self-destruct nuke.
 	clearing_reserved_turfs = SSmapping.clearing_reserved_turfs
 
 	z_list = SSmapping.z_list
+	multiz_levels = SSmapping.multiz_levels
 
 #define INIT_ANNOUNCE(X) to_chat(world, span_boldannounce("[X]")); log_world(X)
 /datum/controller/subsystem/mapping/proc/LoadGroup(list/errorList, name, path, files, list/traits, list/default_traits, silent = FALSE)
@@ -309,7 +363,7 @@ Used by the AI doomsday and the self-destruct nuke.
 GLOBAL_LIST_EMPTY(the_station_areas)
 
 /datum/controller/subsystem/mapping/proc/generate_station_area_list()
-	var/static/list/station_areas_blacklist = typecacheof(list(/area/space, /area/mine, /area/ruin, /area/asteroid/nearstation))
+	var/static/list/station_areas_blacklist = typecacheof(list(/area/space, /area/mine, /area/ruin, /area/centcom/asteroid/nearstation))
 	for(var/area/A in world)
 		if (is_type_in_typecache(A, station_areas_blacklist))
 			continue
@@ -386,24 +440,25 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 /datum/controller/subsystem/mapping/proc/mapvote()
 	if(map_voted || SSmapping.next_map_config) //If voted or set by other means.
 		return
-	if(SSvote.mode) //Theres already a vote running, default to rotation.
+	if(SSvote.current_vote) //Theres already a vote running, default to rotation.
 		maprotate()
-	SSvote.initiate_vote("map", "automatic map rotation")
+		return
+	SSvote.initiate_vote(/datum/vote/map_vote, "automatic map rotation", forced = TRUE)
 
-/datum/controller/subsystem/mapping/proc/changemap(datum/map_config/VM)
-	if(!VM.MakeNextMap())
+/datum/controller/subsystem/mapping/proc/changemap(datum/map_config/change_to)
+	if(!change_to.MakeNextMap())
 		next_map_config = load_default_map_config()
-		message_admins("Failed to set new map with next_map.json for [VM.map_name]! Using default as backup!")
+		message_admins("Failed to set new map with next_map.json for [change_to.map_name]! Using default as backup!")
 		return
 
-	if (VM.config_min_users > 0 && GLOB.clients.len < VM.config_min_users)
-		message_admins("[VM.map_name] was chosen for the next map, despite there being less current players than its set minimum population range!")
-		log_game("[VM.map_name] was chosen for the next map, despite there being less current players than its set minimum population range!")
-	if (VM.config_max_users > 0 && GLOB.clients.len > VM.config_max_users)
-		message_admins("[VM.map_name] was chosen for the next map, despite there being more current players than its set maximum population range!")
-		log_game("[VM.map_name] was chosen for the next map, despite there being more current players than its set maximum population range!")
+	if (change_to.config_min_users > 0 && GLOB.clients.len < change_to.config_min_users)
+		message_admins("[change_to.map_name] was chosen for the next map, despite there being less current players than its set minimum population range!")
+		log_game("[change_to.map_name] was chosen for the next map, despite there being less current players than its set minimum population range!")
+	if (change_to.config_max_users > 0 && GLOB.clients.len > change_to.config_max_users)
+		message_admins("[change_to.map_name] was chosen for the next map, despite there being more current players than its set maximum population range!")
+		log_game("[change_to.map_name] was chosen for the next map, despite there being more current players than its set maximum population range!")
 
-	next_map_config = VM
+	next_map_config = change_to
 	return TRUE
 
 /datum/controller/subsystem/mapping/proc/preloadTemplates(path = "_maps/templates/") //see master controller setup

@@ -33,22 +33,25 @@
 	var/two_hand_force = 34
 	var/hacked = FALSE
 	var/list/possible_colors = list("red", "blue", "green", "purple")
-	var/wielded = FALSE // track wielded status on item
 
-/obj/item/dualsaber/ComponentInitialize()
+/obj/item/dualsaber/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=force, force_wielded=two_hand_force, wieldsound='sound/weapons/saberon.ogg', unwieldsound='sound/weapons/saberoff.ogg')
+	AddComponent(/datum/component/two_handed, \
+		force_unwielded = force, \
+		force_wielded = two_hand_force, \
+		wieldsound = 'sound/weapons/saberon.ogg', \
+		unwieldsound = 'sound/weapons/saberoff.ogg', \
+		wield_callback = CALLBACK(src, .proc/on_wield), \
+		unwield_callback = CALLBACK(src, .proc/on_unwield), \
+	)
 
 /// Triggered on wield of two handed item
 /// Specific hulk checks due to reflection chance for balance issues and switches hitsounds.
 /obj/item/dualsaber/proc/on_wield(obj/item/source, mob/living/carbon/user)
-	SIGNAL_HANDLER
-
 	if(user?.has_dna())
 		if(user.dna.check_mutation(/datum/mutation/human/hulk))
 			to_chat(user, span_warning("You lack the grace to wield this!"))
 			return COMPONENT_TWOHANDED_BLOCK_WIELD
-	wielded = TRUE
 	w_class = w_class_on
 	hitsound = 'sound/weapons/blade1.ogg'
 	START_PROCESSING(SSobj, src)
@@ -58,9 +61,6 @@
 /// Triggered on unwield of two handed item
 /// switch hitsounds
 /obj/item/dualsaber/proc/on_unwield(obj/item/source, mob/living/carbon/user)
-	SIGNAL_HANDLER
-
-	wielded = FALSE
 	w_class = initial(w_class)
 	hitsound = SFX_SWING_HIT
 	STOP_PROCESSING(SSobj, src)
@@ -68,18 +68,18 @@
 
 
 /obj/item/dualsaber/get_sharpness()
-	return wielded * sharpness
+	return HAS_TRAIT(src, TRAIT_WIELDED) && sharpness
 
 /obj/item/dualsaber/update_icon_state()
-	icon_state = wielded ? "dualsaber[saber_color][wielded]" : "dualsaber0"
+	icon_state = HAS_TRAIT(src, TRAIT_WIELDED) ? "dualsaber[saber_color][HAS_TRAIT(src, TRAIT_WIELDED)]" : "dualsaber0"
 	return ..()
 
 /obj/item/dualsaber/suicide_act(mob/living/carbon/user)
-	if(wielded)
+	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		user.visible_message(span_suicide("[user] begins spinning way too fast! It looks like [user.p_theyre()] trying to commit suicide!"))
 
 		var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)//stole from chainsaw code
-		var/obj/item/organ/brain/B = user.getorganslot(ORGAN_SLOT_BRAIN)
+		var/obj/item/organ/internal/brain/B = user.getorganslot(ORGAN_SLOT_BRAIN)
 		B.organ_flags &= ~ORGAN_VITAL //this cant possibly be a good idea
 		var/randdir
 		for(var/i in 1 to 24)//like a headless chicken!
@@ -100,8 +100,6 @@
 
 /obj/item/dualsaber/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 	if(LAZYLEN(possible_colors))
 		saber_color = pick(possible_colors)
 		switch(saber_color)
@@ -122,14 +120,17 @@
 	if(user.has_dna())
 		if(user.dna.check_mutation(/datum/mutation/human/hulk))
 			to_chat(user, span_warning("You grip the blade too hard and accidentally drop it!"))
-			if(wielded)
+			if(HAS_TRAIT(src, TRAIT_WIELDED))
 				user.dropItemToGround(src, force=TRUE)
 				return
 	..()
-	if(wielded && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(40))
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
+		return
+
+	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(40))
 		impale(user)
 		return
-	if(wielded && prob(50))
+	if(prob(50))
 		INVOKE_ASYNC(src, .proc/jedi_spin, user)
 
 /obj/item/dualsaber/proc/jedi_spin(mob/living/user)
@@ -137,18 +138,18 @@
 
 /obj/item/dualsaber/proc/impale(mob/living/user)
 	to_chat(user, span_warning("You twirl around a bit before losing your balance and impaling yourself on [src]."))
-	if(wielded)
+	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		user.take_bodypart_damage(20,25,check_armor = TRUE)
 	else
 		user.adjustStaminaLoss(25)
 
 /obj/item/dualsaber/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(wielded)
+	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		return ..()
 	return 0
 
 /obj/item/dualsaber/process()
-	if(wielded)
+	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		if(hacked)
 			set_light_color(pick(COLOR_SOFT_RED, LIGHT_COLOR_GREEN, LIGHT_COLOR_LIGHT_CYAN, LIGHT_COLOR_LAVENDER))
 		open_flame()
@@ -156,12 +157,12 @@
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/dualsaber/IsReflect()
-	if(wielded)
+	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		return 1
 
 /obj/item/dualsaber/ignition_effect(atom/A, mob/user)
 	// same as /obj/item/melee/energy, mostly
-	if(!wielded)
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		return ""
 	var/in_mouth = ""
 	if(iscarbon(user))

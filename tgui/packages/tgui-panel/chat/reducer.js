@@ -13,9 +13,7 @@ export const initialState = {
   version: 5,
   currentPageId: mainPage.id,
   scrollTracking: true,
-  pages: [
-    mainPage.id,
-  ],
+  pages: [mainPage.id],
   pageById: {
     [mainPage.id]: mainPage,
   },
@@ -74,7 +72,7 @@ export const chatReducer = (state = initialState, action) => {
   }
   if (type === updateMessageCount.type) {
     const countByType = payload;
-    const pages = state.pages.map(id => state.pageById[id]);
+    const pages = state.pages.map((id) => state.pageById[id]);
     const currentPage = state.pageById[state.currentPageId];
     const nextPageById = { ...state.pageById };
     for (let page of pages) {
@@ -170,7 +168,7 @@ export const chatReducer = (state = initialState, action) => {
       },
     };
     delete nextState.pageById[pageId];
-    nextState.pages = nextState.pages.filter(id => id !== pageId);
+    nextState.pages = nextState.pages.filter((id) => id !== pageId);
     if (nextState.pages.length === 0) {
       nextState.pages.push(mainPage.id);
       nextState.pageById[mainPage.id] = mainPage;

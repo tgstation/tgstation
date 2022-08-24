@@ -1,7 +1,7 @@
 ///Returns location. Returns null if no location was found.
-/proc/get_teleport_loc(turf/location,mob/target,distance = 1, density = FALSE, errorx = 0, errory = 0, eoffsetx = 0, eoffsety = 0)
+/proc/get_teleport_loc(turf/location, mob/target, distance = 1, density_check = FALSE, closed_turf_check = FALSE, errorx = 0, errory = 0, eoffsetx = 0, eoffsety = 0)
 /*
-Location where the teleport begins, target that will teleport, distance to go, density checking 0/1(yes/no).
+Location where the teleport begins, target that will teleport, distance to go, density checking 0/1(yes/no), closed turf checking.
 Random error in tile placement x, error in tile placement y, and block offset.
 Block offset tells the proc how to place the box. Behind teleport location, relative to starting location, forward, etc.
 Negative values for offset are accepted, think of it in relation to North, -x is west, -y is south. Error defaults to positive.
@@ -63,8 +63,10 @@ Turf and target are separate in case you want to teleport some distance from a t
 		return
 
 	if(!errorx && !errory)//If errorx or y were not specified.
-		if(density&&destination.density)
+		if(density_check && destination.density)
 			return
+		if(closed_turf_check && isclosedturf(destination))
+			return//If closed was specified.
 		if(destination.x>world.maxx || destination.x<1)
 			return
 		if(destination.y>world.maxy || destination.y<1)
@@ -83,8 +85,10 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 	//Now to find a box from center location and make that our destination.
 	for(var/turf/current_turf in block(locate(center.x + b1xerror, center.y + b1yerror, location.z), locate(center.x + b2xerror, center.y + b2yerror, location.z)))
-		if(density && current_turf.density)
+		if(density_check && current_turf.density)
 			continue//If density was specified.
+		if(closed_turf_check && isclosedturf(current_turf))
+			continue//If closed was specified.
 		if(current_turf.x > world.maxx || current_turf.x < 1)
 			continue//Don't want them to teleport off the map.
 		if(current_turf.y > world.maxy || current_turf.y < 1)
@@ -207,6 +211,11 @@ Turf and target are separate in case you want to teleport some distance from a t
 	if(!istype(checked_atom))
 		return
 
+	//Find coordinates
+	var/turf/atom_turf = get_turf(checked_atom) //use checked_atom's turfs, as it's coords are the same as checked_atom's AND checked_atom's coords are lost if it is inside another atom
+	if(!atom_turf)
+		return null
+
 	//Find checked_atom's matrix so we can use it's X/Y pixel shifts
 	var/matrix/atom_matrix = matrix(checked_atom.transform)
 
@@ -225,12 +234,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/rough_x = round(round(pixel_x_offset, world.icon_size) / world.icon_size)
 	var/rough_y = round(round(pixel_y_offset, world.icon_size) / world.icon_size)
 
-	//Find coordinates
-	var/turf/atom_turf = get_turf(checked_atom) //use checked_atom's turfs, as it's coords are the same as checked_atom's AND checked_atom's coords are lost if it is inside another atom
-	if(!atom_turf)
-		return null
-	var/final_x = atom_turf.x + rough_x
-	var/final_y = atom_turf.y + rough_y
+	var/final_x = clamp(atom_turf.x + rough_x, 1, world.maxx)
+	var/final_y = clamp(atom_turf.y + rough_y, 1, world.maxy)
 
 	if(final_x || final_y)
 		return locate(final_x, final_y, atom_turf.z)
@@ -385,3 +390,20 @@ Turf and target are separate in case you want to teleport some distance from a t
 			if(rail.dir == test_dir || is_fulltile)
 				return FALSE
 	return TRUE
+
+/**
+ * Checks whether or not a particular typepath or subtype of it is present on a turf
+ *
+ * Returns TRUE if an instance of the desired type or a subtype of it is found
+ * Returns FALSE if the type is not found, or if no turf is supplied
+ *
+ * Arguments:
+ * * location - The turf to be checked for the desired type
+ * * type_to_find - The typepath whose presence you are checking for
+ */
+/proc/is_type_on_turf(turf/location, type_to_find)
+	if(!location)
+		return FALSE
+	if(locate(type_to_find) in location)
+		return TRUE
+	return FALSE

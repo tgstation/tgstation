@@ -1,0 +1,5 @@
+author: "RandomGamer123"
+delete-after: True
+changes: 
+  - bugfix: "Asimov supremacy shows up as a human perk for default servers"
+  - config: "Added a config option to make Asimov supremacy show up as a perk for humans even if the default lawset is not Asimov (intended for use with Asimov variants, notably Asimov++)"

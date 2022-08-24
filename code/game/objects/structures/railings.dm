@@ -8,7 +8,7 @@
 	anchored = TRUE
 	pass_flags_self = LETPASSTHROW|PASSSTRUCTURE
 	/// armor more or less consistent with grille. max_integrity about one time and a half that of a grille.
-	armor = list(MELEE = 50, BULLET = 70, LASER = 70, ENERGY = 100, BOMB = 10, BIO = 100, FIRE = 0, ACID = 0)
+	armor = list(MELEE = 50, BULLET = 70, LASER = 70, ENERGY = 100, BOMB = 10, BIO = 0, FIRE = 0, ACID = 0)
 	max_integrity = 75
 
 	var/climbable = TRUE
@@ -85,9 +85,9 @@
 		return . || mover.throwing || mover.movement_type & (FLYING | FLOATING)
 	return TRUE
 
-/obj/structure/railing/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
-	if (to_dir & dir)
-		return FALSE
+/obj/structure/railing/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller, no_id = FALSE)
+	if(!(to_dir & dir))
+		return TRUE
 	return ..()
 
 /obj/structure/railing/proc/on_exit(datum/source, atom/movable/leaving, direction)

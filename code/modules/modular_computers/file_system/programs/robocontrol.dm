@@ -6,15 +6,14 @@
 	program_icon_state = "robot"
 	extended_desc = "A remote controller used for giving basic commands to non-sentient robots."
 	requires_ntnet = TRUE
-	size = 12
+	size = 6
 	tgui_id = "NtosRoboControl"
 	program_icon = "robot"
 	///Number of simple robots on-station.
 	var/botcount = 0
 	///Access granted by the used to summon robots.
 	var/list/current_access = list()
-	///Whether or not this is the cartridge program version.
-	var/cart_mode = FALSE
+	///List of all ping types you can annoy drones with.
 	var/list/drone_ping_types = list(
 		"Low",
 		"Medium",
@@ -29,23 +28,18 @@
 	var/list/botlist = list()
 	var/list/mulelist = list()
 
-	var/obj/item/computer_hardware/hard_drive/role/job_disk = computer ? computer.all_components[MC_HDD_JOB] : null
 	var/obj/item/computer_hardware/card_slot/card_slot = computer ? computer.all_components[MC_CARD] : null
 	data["have_id_slot"] = !!card_slot
 	if(computer)
 		var/obj/item/card/id/id_card = card_slot ? card_slot.stored_card : ""
 		data["id_owner"] = id_card
-	if(cart_mode && job_disk)
-		data["id_owner"] = "JOB DISK OVERRIDE"
 
 	botcount = 0
 
 	for(var/mob/living/simple_animal/bot/simple_bot as anything in GLOB.bots_list)
 		if(simple_bot.z != zlevel || !(simple_bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED)) //Only non-emagged bots on the same Z-level are detected!
 			continue
-		if(computer && !simple_bot.check_access(user) && !cart_mode) // Only check Bots we can access)
-			continue
-		if(!(simple_bot.bot_type in job_disk.bot_access) && cart_mode)
+		if(computer && !simple_bot.check_access(user)) // Only check Bots we can access)
 			continue
 		var/list/newbot = list(
 			"name" = simple_bot.name,
@@ -143,6 +137,9 @@
 		if("changedroneaccess")
 			if(!computer || !card_slot || !id_card)
 				to_chat(current_user, span_notice("No ID found, authorization failed."))
+				return
+			if(isdrone(current_user))
+				to_chat(current_user, span_notice("You can't free yourself."))
 				return
 			if(!(ACCESS_CE in id_card.access))
 				to_chat(current_user, span_notice("Required access not found on ID."))

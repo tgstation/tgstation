@@ -288,9 +288,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/structure/sign/warning/vacuum/external{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "iz" = (
@@ -385,9 +383,7 @@
 "kM" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/turf_decal/delivery,
-/obj/structure/sign/warning/explosives{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/explosives/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "kO" = (
@@ -458,11 +454,8 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/shower{
-	dir = 8;
-	name = "emergency shower";
-	pixel_x = -6;
-	pixel_y = -7
+/obj/machinery/shower/directional/west{
+	name = "emergency shower"
 	},
 /obj/structure/window/reinforced{
 	dir = 1
@@ -529,11 +522,8 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced,
-/obj/machinery/shower{
-	dir = 8;
-	name = "emergency shower";
-	pixel_x = -6;
-	pixel_y = -4
+/obj/machinery/shower/directional/west{
+	name = "emergency shower"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/mineral/titanium,
@@ -543,7 +533,7 @@
 /obj/item/food/burger/chicken{
 	pixel_x = -3
 	},
-/obj/item/reagent_containers/food/drinks/soda_cans/cola{
+/obj/item/reagent_containers/cup/soda_cans/cola{
 	pixel_x = 9;
 	pixel_y = 7
 	},
@@ -579,17 +569,17 @@
 /area/shuttle/escape)
 "pg" = (
 /obj/structure/table,
-/obj/item/reagent_containers/glass/bottle/epinephrine{
+/obj/item/reagent_containers/cup/bottle/epinephrine{
 	pixel_x = 6
 	},
-/obj/item/reagent_containers/glass/bottle/multiver{
+/obj/item/reagent_containers/cup/bottle/multiver{
 	pixel_x = -3
 	},
-/obj/item/reagent_containers/glass/bottle/epinephrine{
+/obj/item/reagent_containers/cup/bottle/epinephrine{
 	pixel_x = -3;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/glass/bottle/multiver{
+/obj/item/reagent_containers/cup/bottle/multiver{
 	pixel_x = 6;
 	pixel_y = 8
 	},
@@ -669,7 +659,7 @@
 /area/shuttle/escape)
 "qM" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/drinks/flask,
+/obj/item/reagent_containers/cup/glass/flask,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "qW" = (
@@ -697,7 +687,7 @@
 	},
 /obj/item/grown/bananapeel,
 /obj/item/bikehorn,
-/obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "sj" = (
@@ -727,7 +717,7 @@
 /obj/structure/rack,
 /obj/item/skub,
 /obj/effect/turf_decal/delivery,
-/obj/item/reagent_containers/food/drinks/bottle/hooch,
+/obj/item/reagent_containers/cup/glass/bottle/hooch,
 /obj/item/clothing/head/foilhat,
 /obj/structure/sign/poster/random/directional/west,
 /turf/open/floor/mineral/titanium,
@@ -782,7 +772,7 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Brig"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "vL" = (
@@ -794,7 +784,7 @@
 /obj/structure/rack,
 /obj/item/soap,
 /obj/item/soap,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -867,9 +857,7 @@
 /turf/open/floor/sepia,
 /area/shuttle/escape)
 "xI" = (
-/obj/structure/sink{
-	dir = 1
-	},
+/obj/structure/sink/directional/north,
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
@@ -1000,9 +988,7 @@
 /obj/structure/window/reinforced/tinted{
 	dir = 8
 	},
-/obj/structure/sign/warning/vacuum{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/vacuum/directional/north,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Cz" = (
@@ -1095,9 +1081,7 @@
 /obj/structure/window/reinforced/tinted{
 	dir = 4
 	},
-/obj/structure/sign/warning/vacuum{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/vacuum/directional/north,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "Fv" = (
@@ -1245,15 +1229,15 @@
 /area/shuttle/escape)
 "MT" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/bottle/rum{
+/obj/item/reagent_containers/cup/glass/bottle/rum{
 	pixel_x = -5;
 	pixel_y = 7
 	},
-/obj/item/reagent_containers/food/drinks/bottle/amaretto{
+/obj/item/reagent_containers/cup/glass/bottle/amaretto{
 	pixel_x = 7;
 	pixel_y = 5
 	},
-/obj/item/reagent_containers/food/drinks/bottle/whiskey{
+/obj/item/reagent_containers/cup/glass/bottle/whiskey{
 	pixel_y = 4
 	},
 /turf/open/floor/carpet/royalblue,
@@ -1334,15 +1318,15 @@
 /area/shuttle/escape)
 "Pu" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/drinkingglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass{
 	pixel_x = 3;
 	pixel_y = 12
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass{
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass{
 	pixel_x = 6;
 	pixel_y = 2
 	},
@@ -1359,7 +1343,7 @@
 	},
 /obj/machinery/status_display/evac/directional/north,
 /obj/item/storage/box/drinkingglasses,
-/obj/item/reagent_containers/food/drinks/shaker,
+/obj/item/reagent_containers/cup/glass/shaker,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "PM" = (
@@ -1397,9 +1381,7 @@
 "QY" = (
 /obj/structure/chair/stool/directional/north,
 /obj/effect/turf_decal/siding/wood,
-/obj/structure/sign/departments/security{
-	pixel_y = -32
-	},
+/obj/structure/sign/departments/security/directional/south,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "Ru" = (
@@ -1536,7 +1518,7 @@
 	pixel_x = -2;
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/food/drinks/soda_cans/canned_laughter{
+/obj/item/reagent_containers/cup/soda_cans/canned_laughter{
 	pixel_x = 7
 	},
 /turf/open/floor/wood,
@@ -1547,9 +1529,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "XW" = (
-/obj/structure/sign/departments/medbay/alt{
-	pixel_y = -32
-	},
+/obj/structure/sign/departments/medbay/alt/directional/south,
 /obj/machinery/light/directional/south,
 /obj/structure/closet/crate/bin,
 /obj/structure/window/reinforced/tinted{
