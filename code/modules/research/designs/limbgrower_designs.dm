@@ -133,6 +133,14 @@
 	build_path = /obj/item/organ/external/tail/cat
 	category = list(SPECIES_HUMAN)
 
+/datum/design/fox_tail
+	name = "Fox Tail"
+	id = "foxtail"
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 20)
+	build_path = /obj/item/organ/external/tail/fox
+	category = list(SPECIES_HUMAN, RND_CATEGORY_INITIAL)
+
 /datum/design/cat_ears
 	name = "Cat Ears"
 	id = "catears"
@@ -140,6 +148,14 @@
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
 	build_path = /obj/item/organ/internal/ears/cat
 	category = list(SPECIES_HUMAN)
+
+/datum/design/fox_ears
+	name = "Fox Ears"
+	id = "foxears"
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
+	build_path = /obj/item/organ/internal/ears/fox
+	category = list(SPECIES_HUMAN, RND_CATEGORY_INITIAL)
 
 /datum/design/plasmaman_lungs
 	name = "Plasma Filter"
