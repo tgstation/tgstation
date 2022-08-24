@@ -418,9 +418,6 @@
 	stun_duration = 4 SECONDS
 	reveal_duration = 6 SECONDS
 
-	/// Static list of types that, if our haunted items are smacked with one of these, they will stop being haunted.
-	var/static/list/types_which_dispell_us = list(/obj/item/nullrod, /obj/item/storage/book/bible)
-
 /datum/action/cooldown/spell/aoe/revenant/haunt_object/get_things_to_cast_on(atom/center)
 	var/list/things = list()
 	for(var/obj/item/nearby_item in range(aoe_radius, center))
