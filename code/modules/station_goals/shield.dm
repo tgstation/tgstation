@@ -64,7 +64,7 @@
 /obj/machinery/computer/sat_control/proc/toggle(id)
 	var/turf/current_turf = get_turf(src)
 	for(var/obj/machinery/satellite/S in GLOB.machines)
-		if(S.id == id && is_valid_z_level(get_turf(Z), current_turf))
+		if(S.id == id && is_valid_z_level(get_turf(S), current_turf))
 			S.toggle()
 
 /obj/machinery/computer/sat_control/ui_data()
