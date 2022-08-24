@@ -181,6 +181,21 @@
 
 ////////////////////////////////////////////MEATS AND ALIKE////////////////////////////////////////////
 
+/obj/item/food/meat/slab/pig
+	name = "raw pork"
+	icon_state = "pig_meat"
+	tastes = list("pig" = 1)
+	foodtypes = MEAT | RAW | GROSS
+
+/obj/item/food/meat/slab/pig/MakeGrillable()
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain/pig, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
+
+/obj/item/food/meat/steak/plain/pig
+	name = "pork chops"
+	icon_state = "pigsteak"
+	tastes = list("pig" = 1)
+	foodtypes = MEAT | GROSS
+
 /obj/item/food/tempeh
 	name = "raw tempeh block"
 	desc = "Fungus fermented soybean cake, warm to the touch."
@@ -209,9 +224,9 @@
 //add an icon for blends
 /obj/item/food/tempehstarter
 	name = "tempeh starter"
-	desc = "a mix of soy and joy, it's warm, it's moving?."
+	desc = "A mix of soy and joy. It's warm... and moving?"
 	icon = 'icons/obj/food/food.dmi'
-	icon_state = "tempeh"
+	icon_state = "tempehstarter"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("nutty" = 2, "bland" = 2)
 	foodtypes = VEGETABLES | GROSS

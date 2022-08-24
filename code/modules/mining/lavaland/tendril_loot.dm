@@ -585,7 +585,7 @@
 
 /obj/item/clothing/gloves/gauntlets/proc/rocksmash(mob/living/carbon/human/H, atom/A, proximity)
 	SIGNAL_HANDLER
-	if(!istype(A, /turf/closed/mineral))
+	if(!ismineralturf(A))
 		return
 	A.attackby(src, H)
 	return COMPONENT_CANCEL_ATTACK_CHAIN

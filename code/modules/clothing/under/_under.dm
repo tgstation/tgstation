@@ -231,7 +231,7 @@
 	set category = "Object"
 	set src in usr
 	var/mob/M = usr
-	if (istype(M, /mob/dead/))
+	if (isdead(M))
 		return
 	if (!can_use(M))
 		return

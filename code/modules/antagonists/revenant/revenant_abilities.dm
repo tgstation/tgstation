@@ -157,7 +157,7 @@
 
 /datum/action/cooldown/spell/aoe/revenant/New(Target)
 	. = ..()
-	if(!istype(target, /mob/living/simple_animal/revenant))
+	if(!isrevenant(target))
 		stack_trace("[type] was given to a non-revenant mob, please don't.")
 		qdel(src)
 		return
@@ -171,7 +171,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	if(!istype(owner, /mob/living/simple_animal/revenant))
+	if(!isrevenant(owner))
 		stack_trace("[type] was owned by a non-revenant mob, please don't.")
 		return FALSE
 

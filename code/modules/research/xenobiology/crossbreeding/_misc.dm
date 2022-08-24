@@ -193,7 +193,7 @@ Slimecrossing Items
 			to_chat(user, span_warning("[M] refused to enter the device."))
 			return
 	else
-		if(istype(M, /mob/living/simple_animal/hostile) && !("neutral" in M.faction))
+		if(ishostile(M) && !("neutral" in M.faction))
 			to_chat(user, span_warning("This creature is too aggressive to capture."))
 			return
 	to_chat(user, span_notice("You store [M] in the capture device."))

@@ -22,7 +22,7 @@
 	var/amount_to_cool = 200
 
 /datum/action/cooldown/spell/pointed/abyssal_gaze/is_valid_target(atom/cast_on)
-	return iscarbon(target)
+	return iscarbon(cast_on)
 
 /datum/action/cooldown/spell/pointed/abyssal_gaze/cast(mob/living/carbon/cast_on)
 	. = ..()

@@ -159,7 +159,7 @@
 
 /datum/mutation/human/honorbound/proc/thrown_guilt(datum/source, atom/movable/thrown_movable, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
-	if(istype(thrown_movable, /obj/item))
+	if(isitem(thrown_movable))
 		var/mob/living/honorbound = source
 		var/obj/item/thrown_item = thrown_movable
 		var/mob/thrown_by = thrown_item.thrownby?.resolve()

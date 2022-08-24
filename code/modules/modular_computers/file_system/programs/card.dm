@@ -141,7 +141,7 @@
 				return card_slot.try_eject(user)
 			else
 				var/obj/item/I = user.get_active_held_item()
-				if(istype(I, /obj/item/card/id))
+				if(isidcard(I))
 					return card_slot.try_insert(I, user)
 		// Eject the ID being modified.
 		if("PRG_ejectmodid")
@@ -152,7 +152,7 @@
 				return card_slot2.try_eject(user)
 			else
 				var/obj/item/I = user.get_active_held_item()
-				if(istype(I, /obj/item/card/id))
+				if(isidcard(I))
 					return card_slot2.try_insert(I, user)
 			return TRUE
 		// Used to fire someone. Wipes all access from their card and modifies their assignment.

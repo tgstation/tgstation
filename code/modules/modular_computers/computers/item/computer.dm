@@ -657,7 +657,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 /obj/item/modular_computer/attackby(obj/item/attacking_item, mob/user, params)
 	// Check for ID first
-	if(istype(attacking_item, /obj/item/card/id) && InsertID(attacking_item))
+	if(isidcard(attacking_item) && InsertID(attacking_item))
 		return
 
 	// Insert a PAI.

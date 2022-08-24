@@ -56,4 +56,10 @@
 	REMOVE_TRAIT(user, TRAIT_SIXTHSENSE, MAGIC_TRAIT)
 	to_chat(user, span_notice("The veil to the underworld closes shut. You feel your senses returning to normal."))
 
+/obj/item/toy/cards/deck/tarot/haunted/dropped(mob/living/carbon/user, silent)
+	. = ..()
+	if(wielded)
+		REMOVE_TRAIT(user, TRAIT_SIXTHSENSE, MAGIC_TRAIT)
+		to_chat(user, span_notice("The veil to the underworld closes shut. You feel your senses returning to normal."))
+
 #undef TAROT_GHOST_TIMER

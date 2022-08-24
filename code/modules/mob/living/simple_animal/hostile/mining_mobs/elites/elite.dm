@@ -35,7 +35,7 @@
 
 //Prevents elites from attacking members of their faction (can't hurt themselves either) and lets them mine rock with an attack despite not being able to smash walls.
 /mob/living/simple_animal/hostile/asteroid/elite/AttackingTarget()
-	if(istype(target, /mob/living/simple_animal/hostile))
+	if(ishostile(target))
 		var/mob/living/simple_animal/hostile/M = target
 		if(faction_check_mob(M))
 			return FALSE
@@ -54,7 +54,7 @@
 	if(ismineralturf(target))
 		var/turf/closed/mineral/M = target
 		M.gets_drilled()
-	if(istype(target, /obj/vehicle/sealed/mecha))
+	if(ismecha(target))
 		var/obj/vehicle/sealed/mecha/M = target
 		M.take_damage(50, BRUTE, MELEE, 1)
 

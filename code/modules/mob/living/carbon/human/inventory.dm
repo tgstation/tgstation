@@ -351,7 +351,7 @@
 			to_chat(src, span_warning("You can't fit [thing] into your [equipped_item.name]!"))
 		return
 	if(thing) // put thing in storage item
-		if(!equipped_item.atom_storage?.attempt_insert(equipped_item, thing, src))
+		if(!equipped_item.atom_storage?.attempt_insert(thing, src))
 			to_chat(src, span_warning("You can't fit [thing] into your [equipped_item.name]!"))
 		return
 	var/atom/real_location = storage.real_location?.resolve()

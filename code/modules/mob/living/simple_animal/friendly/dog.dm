@@ -322,7 +322,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	if (!.)
 		return FALSE
 
-	if (!istype(equipping, /obj/item/card/id))
+	if (!isidcard(equipping))
 		to_chat(user, span_warning("You can't pin [equipping] to [source]!"))
 		return FALSE
 

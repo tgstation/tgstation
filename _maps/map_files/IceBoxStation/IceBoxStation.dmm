@@ -2871,7 +2871,7 @@
 /turf/closed/wall,
 /area/station/maintenance/department/medical/morgue)
 "aUE" = (
-/obj/structure/window/reinforced/tinted/frosted{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/item/book/manual/wiki/cytology{
@@ -3126,7 +3126,7 @@
 /turf/open/floor/iron,
 /area/mine/production)
 "aYv" = (
-/obj/structure/window/reinforced/tinted/frosted{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/structure/table,
@@ -19105,10 +19105,10 @@
 /area/station/engineering/atmos)
 "fKP" = (
 /obj/machinery/shower/directional/north,
-/obj/structure/window/reinforced/tinted{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced/tinted{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/machinery/door/window/left/directional/north{
@@ -19875,7 +19875,7 @@
 /area/station/command/heads_quarters/captain)
 "fXf" = (
 /obj/machinery/shower/directional/north,
-/obj/structure/window/reinforced/tinted{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
 /obj/machinery/door/window/left/directional/north{
@@ -26234,7 +26234,7 @@
 /area/station/commons/locker)
 "hYO" = (
 /obj/machinery/shower/directional/north,
-/obj/structure/window/reinforced/tinted{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/machinery/door/window/left/directional/north{
@@ -30631,7 +30631,7 @@
 /turf/closed/wall,
 /area/station/maintenance/starboard/lesser)
 "jrf" = (
-/obj/structure/window/reinforced/tinted/frosted{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/structure/rack,
@@ -63932,7 +63932,7 @@
 /turf/closed/wall/r_wall,
 /area/station/medical/treatment_center)
 "tHt" = (
-/obj/structure/window/reinforced/tinted/frosted{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -69132,14 +69132,14 @@
 /turf/open/floor/iron/textured,
 /area/station/medical/medbay/central)
 "vnQ" = (
-/obj/structure/window/reinforced/tinted/frosted{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
 /obj/structure/chair/sofa/right,
 /turf/open/floor/carpet/blue,
 /area/station/security/prison/work)
 "vnT" = (
-/obj/structure/window/reinforced/tinted/frosted{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
 /obj/structure/table/wood,
@@ -69641,7 +69641,7 @@
 /turf/open/floor/wood,
 /area/station/security/prison/rec)
 "vwI" = (
-/obj/structure/window/reinforced/tinted{
+/obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/effect/spawner/random/medical/patient_stretcher,
@@ -69725,7 +69725,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/break_room)
 "vxM" = (
-/obj/structure/window/reinforced/tinted/frosted{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
 /obj/structure/table/wood,
@@ -71934,7 +71934,7 @@
 /turf/open/floor/iron,
 /area/station/science/research)
 "wha" = (
-/obj/structure/window/reinforced/tinted{
+/obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/rack,
