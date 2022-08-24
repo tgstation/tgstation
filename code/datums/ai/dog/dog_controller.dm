@@ -98,10 +98,9 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/living_pawn = pawn
-	var/pronounce = pawn.gender == "male" ? "his" : "her"
-	var/additional_text = HAS_TRAIT(user, TRAIT_NAIVE) ? "Maybe bring a heater?" : "It looks like a corpse."
+	var/additional_text = HAS_TRAIT(user, TRAIT_NAIVE) ? "It looks like [living_pawn.p_they()] are sleeping." : "It looks like a corpse."
 	if(living_pawn.stat == DEAD)
-		to_chat(user, span_warning("Touching [pawn], you feel [pronounce] cold skin through the fur. [additional_text]"))
+		to_chat(user, span_warning("Touching [living_pawn], you feel [living_pawn.p_their()] cold skin through the fur. [additional_text]"))
 		return
 	if(user.combat_mode)
 		unfriend(user)
