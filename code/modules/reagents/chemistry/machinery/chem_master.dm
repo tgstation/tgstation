@@ -9,7 +9,7 @@
 	desc = "Used to separate chemicals and distribute them in a variety of forms."
 	density = TRUE
 	layer = BELOW_OBJ_LAYER
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "mixer0"
 	base_icon_state = "mixer"
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.2
