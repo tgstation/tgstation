@@ -7704,7 +7704,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
-/obj/item/radio/intercom/prison/directional/east,
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 8
 	},
