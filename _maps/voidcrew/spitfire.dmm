@@ -28,7 +28,7 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/exam_room)
 "co" = (
-/obj/effect/turf_decal/tile/blue/half{
+/obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -69,7 +69,7 @@
 /turf/open/floor/iron/dark,
 /area/station/cargo/office)
 "dP" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2{
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -150,7 +150,7 @@
 /area/station/command/bridge)
 "iH" = (
 /obj/machinery/chem_master,
-/obj/effect/turf_decal/tile/yellow/anticorner{
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -216,7 +216,7 @@
 /area/station/medical/surgery)
 "kT" = (
 /obj/machinery/chem_heater,
-/obj/effect/turf_decal/tile/yellow/anticorner{
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -229,7 +229,7 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/surgery)
 "kZ" = (
-/obj/effect/turf_decal/tile/blue/anticorner,
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
 /turf/open/floor/iron/dark,
 /area/station/medical/exam_room)
 "lw" = (
@@ -240,7 +240,7 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/surgery)
 "lA" = (
-/obj/effect/turf_decal/tile/blue/half,
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /obj/machinery/light,
 /turf/open/floor/iron/dark,
 /area/station/medical/exam_room)
@@ -394,6 +394,7 @@
 "rL" = (
 /obj/machinery/duct,
 /obj/effect/turf_decal/tile/brown/anticorner,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/cargo/office)
 "rN" = (
@@ -470,7 +471,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/command/bridge)
 "ur" = (
-/obj/effect/turf_decal/tile/blue/half{
+/obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -498,7 +499,7 @@
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/primary)
 "vd" = (
-/obj/effect/turf_decal/tile/blue/half{
+/obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -520,7 +521,7 @@
 /turf/open/floor/carpet/neon/simple/red,
 /area/station/commons/dorms)
 "vY" = (
-/obj/effect/turf_decal/tile/blue/half{
+/obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -555,7 +556,7 @@
 "yX" = (
 /obj/structure/closet/secure_closet/engineering_personal,
 /obj/item/wrench/combat,
-/obj/effect/turf_decal/tile/blue/anticorner{
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -600,10 +601,10 @@
 /turf/open/floor/iron/dark,
 /area/station/cargo/office)
 "BI" = (
-/obj/effect/turf_decal/tile/blue/half{
+/obj/structure/closet/crate/freezer/blood,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
-/obj/structure/closet/crate/freezer/blood,
 /turf/open/floor/iron/dark,
 /area/station/medical/exam_room)
 "BK" = (
@@ -667,7 +668,7 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/exam_room)
 "Ej" = (
-/obj/effect/turf_decal/tile/blue/half{
+/obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -701,7 +702,7 @@
 /turf/open/floor/iron/dark,
 /area/station/cargo/office)
 "FQ" = (
-/obj/effect/turf_decal/tile/blue/half{
+/obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -739,7 +740,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue/anticorner{
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
 	},
 /obj/machinery/firealarm/directional/north,
@@ -781,7 +782,7 @@
 /turf/open/floor/carpet/neon/simple/red,
 /area/station/commons/dorms)
 "It" = (
-/obj/effect/turf_decal/tile/blue/anticorner{
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
 	},
 /obj/structure/closet/secure_closet/engineering_electrical,
@@ -799,7 +800,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/station/commons/storage/primary)
 "Jv" = (
-/obj/effect/turf_decal/tile/blue/half{
+/obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
 /obj/structure/table/glass,
@@ -836,7 +837,7 @@
 /area/station/cargo/office)
 "KM" = (
 /obj/structure/window/reinforced/survival_pod,
-/obj/effect/turf_decal/tile/blue/anticorner,
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "Lm" = (
@@ -876,12 +877,7 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/surgery)
 "ME" = (
-/obj/effect/turf_decal/tile/blue/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue/half{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/medical/exam_room)
 "MY" = (
@@ -916,7 +912,7 @@
 	pixel_x = -24
 	},
 /obj/structure/sink/directional/east,
-/obj/effect/turf_decal/tile/blue/anticorner{
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -951,7 +947,7 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/surgery)
 "QH" = (
-/obj/effect/turf_decal/tile/blue/half,
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/station/medical/exam_room)
 "Ru" = (
@@ -989,7 +985,7 @@
 /turf/open/floor/plating,
 /area/station/cargo/office)
 "SI" = (
-/obj/effect/turf_decal/tile/yellow/half{
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -1000,18 +996,13 @@
 /turf/open/floor/plating,
 /area/station/medical/exam_room)
 "Tm" = (
-/obj/effect/turf_decal/tile/blue/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue/half{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/medical/exam_room)
 "Tu" = (
 /obj/structure/window/reinforced/survival_pod,
-/obj/effect/turf_decal/tile/blue/anticorner{
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -1109,6 +1100,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/medical/exam_room)
 "Xt" = (
@@ -1129,7 +1121,6 @@
 /obj/effect/turf_decal/tile/brown/half{
 	dir = 1
 	},
-/obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/cargo/office)
 "Ys" = (
@@ -1138,20 +1129,14 @@
 "Yz" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/blue/half{
+/obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "YN" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
 /obj/structure/table/optable,
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
 /turf/open/floor/iron/dark,
 /area/station/medical/exam_room)
 "YX" = (
@@ -1161,7 +1146,7 @@
 /turf/open/floor/iron/dark,
 /area/station/cargo/office)
 "Zn" = (
-/obj/effect/turf_decal/tile/blue/half{
+/obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
 /obj/machinery/light{

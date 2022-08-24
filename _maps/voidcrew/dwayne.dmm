@@ -75,7 +75,7 @@
 "bW" = (
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/station/external)
+/area/station/commons)
 "dl" = (
 /obj/structure/frame/computer{
 	anchored = 1;
@@ -415,7 +415,7 @@
 /obj/machinery/power/tracker,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/station/medical)
 "lh" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "mining_ship_starboard"
@@ -811,17 +811,13 @@
 /area/station/commons)
 "xx" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/firealarm{
-	pixel_y = -28
-	},
+/obj/machinery/firealarm/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/open/floor/iron/dark,
 /area/station/engineering)
 "xz" = (
 /obj/structure/cable,
-/obj/machinery/firealarm{
-	pixel_y = -28
-	},
+/obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
@@ -913,9 +909,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical)
 "Aj" = (
-/obj/machinery/firealarm{
-	pixel_y = -28
-	},
+/obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/tile/yellow/half,
 /obj/effect/turf_decal/trimline/neutral/warning,
 /obj/machinery/autolathe,
@@ -1354,7 +1348,7 @@
 /obj/machinery/power/solar,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/station/medical)
 "Px" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/cable,
@@ -1388,7 +1382,7 @@
 /obj/structure/cable,
 /obj/machinery/power/solar,
 /turf/open/floor/plating/airless,
-/area/station/external)
+/area/station/commons)
 "RT" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4

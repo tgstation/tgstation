@@ -1,9 +1,9 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "as" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/layer4,
 /obj/structure/disposalpipe/junction{
 	dir = 4
 	},
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2,
 /turf/open/floor/engine/airless,
 /area/station/cargo/miningoffice)
 "ay" = (
@@ -37,10 +37,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/kitchen/coldroom)
 "bQ" = (
-/obj/machinery/newscaster{
-	pixel_x = -30;
-	pixel_y = 30
-	},
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "ce" = (
@@ -74,10 +71,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/machinery/light_switch{
-	pixel_x = -24;
-	pixel_y = 24
-	},
 /obj/machinery/holopad,
 /turf/open/floor/iron/freezer,
 /area/station/service/kitchen/coldroom)
@@ -124,9 +117,7 @@
 /area/station/command/bridge)
 "cY" = (
 /obj/machinery/door/window/right/directional/east,
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 30
-	},
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/commons/toilet)
 "da" = (
@@ -175,9 +166,7 @@
 /area/station/maintenance/central)
 "dM" = (
 /obj/machinery/vending/dinnerware,
-/obj/machinery/firealarm{
-	pixel_y = -28
-	},
+/obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/tile/neutral/half{
 	dir = 1
 	},
@@ -618,7 +607,6 @@
 /turf/open/floor/carpet/neon/simple/red,
 /area/station/service/bar)
 "om" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes{
 	dir = 8
 	},
@@ -670,9 +658,7 @@
 "qa" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/firealarm{
-	pixel_y = -28
-	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/central)
 "qc" = (
@@ -843,9 +829,7 @@
 /area/station/maintenance/central)
 "vj" = (
 /obj/structure/closet/secure_closet/freezer/fridge/open,
-/obj/machinery/firealarm{
-	pixel_y = -28
-	},
+/obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark,
 /area/station/service/kitchen/coldroom)
@@ -914,9 +898,7 @@
 "wn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/newscaster{
-	pixel_y = -30
-	},
+/obj/machinery/newscaster/directional/south,
 /obj/structure/chair/sofa/right{
 	dir = 1
 	},
@@ -1043,9 +1025,7 @@
 /turf/open/floor/iron/freezer,
 /area/station/service/kitchen/coldroom)
 "zQ" = (
-/obj/machinery/firealarm{
-	pixel_y = -28
-	},
+/obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
@@ -1128,9 +1108,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/obj/machinery/newscaster{
-	pixel_y = -30
-	},
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron,
 /area/station/commons/toilet)
 "AW" = (
@@ -1208,8 +1186,6 @@
 /area/station/cargo/miningoffice)
 "CL" = (
 /obj/machinery/gibber,
-/obj/machinery/power/apc/auto_name/directional/west,
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/service/kitchen/coldroom)
 "CV" = (
@@ -1305,10 +1281,7 @@
 /area/station/service/hydroponics)
 "Ee" = (
 /obj/structure/sink/kitchen/directional/east,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -30;
-	pixel_y = -30
-	},
+/obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/turf_decal/tile/neutral/half{
 	dir = 4
 	},
@@ -1441,6 +1414,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron/freezer,
 /area/station/service/kitchen/coldroom)
 "GZ" = (
@@ -1513,9 +1487,7 @@
 /area/station/commons/toilet)
 "Jg" = (
 /obj/machinery/hydroponics/constructable,
-/obj/machinery/firealarm{
-	pixel_y = -28
-	},
+/obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -1528,9 +1500,7 @@
 "Jj" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/box/drinkingglasses,
-/obj/machinery/firealarm{
-	pixel_y = -28
-	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "Jw" = (
@@ -1669,9 +1639,7 @@
 /turf/open/floor/iron/white,
 /area/station/command/bridge)
 "Mz" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -30
-	},
+/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "MI" = (
@@ -1709,6 +1677,7 @@
 	pixel_y = -28
 	},
 /obj/machinery/icecream_vat,
+/obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/service/kitchen/coldroom)
 "Ng" = (
@@ -1794,9 +1763,7 @@
 	pixel_x = -5;
 	pixel_y = -4
 	},
-/obj/machinery/newscaster{
-	pixel_x = -30
-	},
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/commons/toilet)
 "PL" = (
@@ -1806,6 +1773,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/box,
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "PX" = (
@@ -1888,9 +1856,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/service/hydroponics)
 "Rq" = (
-/obj/machinery/firealarm{
-	pixel_y = -28
-	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/wood,
 /area/station/commons)
 "Sa" = (
@@ -1927,9 +1893,8 @@
 /turf/open/floor/iron,
 /area/station/commons/toilet)
 "SB" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = 28
+/obj/machinery/firealarm/directional/north{
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
@@ -2159,11 +2124,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
-"Yx" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/carpet/neon/simple/red,
-/area/station/service/bar)
 "Yz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2419,7 +2379,7 @@ UB
 MI
 lJ
 dQ
-Yx
+jx
 OB
 DX
 Iz
@@ -2441,7 +2401,7 @@ gN
 lp
 xp
 jx
-Yx
+jx
 OV
 wn
 uR

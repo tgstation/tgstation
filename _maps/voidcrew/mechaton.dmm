@@ -52,6 +52,11 @@
 /obj/structure/lattice/catwalk,
 /turf/open/floor/plating,
 /area/station/external)
+"ey" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/stripes/box,
+/turf/open/floor/iron/dark,
+/area/station/hallway/primary/central)
 "eC" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/ore_box,
@@ -66,9 +71,6 @@
 /area/station/hallway/primary/central)
 "fr" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/dark,
@@ -166,12 +168,9 @@
 /area/station/science/robotics)
 "iM" = (
 /obj/machinery/ore_silo,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -26
-	},
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/cargo/miningoffice)
 "iV" = (
@@ -307,7 +306,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "ps" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2,
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2,
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "pH" = (
@@ -392,14 +391,11 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "sT" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -26
-	},
 /obj/machinery/light/small,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "uM" = (
@@ -637,6 +633,14 @@
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
+"BV" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/noslip,
+/area/station/hallway/primary/central)
 "Co" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -710,6 +714,7 @@
 "DK" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/firealarm/directional/south,
+/obj/effect/turf_decal/stripes/box,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "Ej" = (
@@ -740,13 +745,13 @@
 /turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "EI" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/noslip,
-/area/station/hallway/primary/central)
+/turf/open/floor/iron/dark,
+/area/station/science/robotics)
 "Fl" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -857,11 +862,11 @@
 /turf/open/floor/carpet/neon/simple/purple,
 /area/station/command/bridge)
 "Jm" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/noslip,
 /area/station/hallway/primary/central)
 "Js" = (
@@ -1496,14 +1501,14 @@ Ql
 Rp
 CL
 PK
-IX
+ey
 Na
-yP
-IX
+Jm
+ey
 bz
 YO
 Tq
-bf
+EI
 ZK
 "}
 (12,1,1) = {"
@@ -1530,7 +1535,7 @@ iM
 PK
 pR
 vq
-EI
+yP
 Vc
 bz
 VG
@@ -1544,9 +1549,9 @@ Wf
 pK
 Gg
 PK
-IX
+ey
 iB
-Jm
+yP
 DK
 bz
 ge
@@ -1578,7 +1583,7 @@ Md
 PK
 pN
 iB
-yP
+BV
 BK
 bz
 HO

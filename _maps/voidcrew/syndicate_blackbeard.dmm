@@ -305,6 +305,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor/iron,
 /area/station/engineering)
+"pA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/plastitanium,
+/area/station/cargo)
 "pU" = (
 /obj/machinery/microwave,
 /obj/structure/table,
@@ -732,6 +736,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/primary/central)
+"LO" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium,
+/area/station/cargo)
 "Mc" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/hatch{
@@ -1533,11 +1541,11 @@ TQ
 TQ
 im
 pU
-CP
 sd
+pA
 tn
+LO
 rY
-CP
 CP
 im
 TQ

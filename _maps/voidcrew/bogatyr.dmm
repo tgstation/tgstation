@@ -196,6 +196,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/station/cargo/miningoffice)
 "la" = (
@@ -670,7 +671,6 @@
 	desc = "A little bit of nature contained in a pot. It looks dead, and reeks of potato liquor.";
 	name = "potted plant"
 	},
-/obj/structure/cable,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/maintenance/central)

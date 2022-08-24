@@ -7,7 +7,7 @@
 /turf/open/floor/plating,
 /area/station/service/cafeteria)
 "as" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/layer2,
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2,
 /turf/open/floor/plating/airless,
 /area/station/cargo/miningoffice)
 "ay" = (
@@ -95,9 +95,7 @@
 /area/station/commons)
 "cY" = (
 /obj/machinery/door/window/right/directional/east,
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 30
-	},
+/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/service/cafeteria)
 "dl" = (
@@ -216,10 +214,6 @@
 /area/station/cargo)
 "hB" = (
 /obj/structure/sink/kitchen/directional/east,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -30;
-	pixel_y = -30
-	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "hG" = (
@@ -579,9 +573,7 @@
 /turf/open/floor/carpet/red,
 /area/station/service/cafeteria)
 "pg" = (
-/obj/machinery/firealarm{
-	pixel_y = -28
-	},
+/obj/machinery/firealarm/directional/south,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/service/cafeteria)
@@ -615,20 +607,17 @@
 /area/station/maintenance)
 "pR" = (
 /obj/machinery/chem_master/condimaster,
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "pU" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -30
-	},
+/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/carpet/red,
 /area/station/service/cafeteria)
 "qa" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/firealarm{
-	pixel_y = -28
-	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance)
 "qg" = (
@@ -726,9 +715,7 @@
 "uB" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/box/drinkingglasses,
-/obj/machinery/firealarm{
-	pixel_y = -28
-	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/wood,
 /area/station/service/cafeteria)
 "uM" = (
@@ -782,9 +769,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "vj" = (
-/obj/machinery/firealarm{
-	pixel_y = -28
-	},
+/obj/machinery/firealarm/directional/south,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -907,10 +892,7 @@
 /turf/open/floor/carpet/black,
 /area/station/service/cafeteria)
 "zE" = (
-/obj/machinery/newscaster{
-	pixel_x = -30;
-	pixel_y = 30
-	},
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "zP" = (
@@ -942,9 +924,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/obj/machinery/newscaster{
-	pixel_y = -30
-	},
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/carpet/red,
 /area/station/service/cafeteria)
 "Bd" = (
@@ -1065,9 +1045,7 @@
 /turf/open/floor/wood,
 /area/station/service/cafeteria)
 "Eu" = (
-/obj/machinery/firealarm{
-	pixel_y = -28
-	},
+/obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/box,
 /obj/machinery/vending/dinnerware,
 /turf/open/floor/iron/dark,
@@ -1219,12 +1197,6 @@
 "IO" = (
 /obj/structure/table/wood/poker,
 /turf/open/floor/carpet/black,
-/area/station/service/cafeteria)
-"IW" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/turf/open/floor/carpet/red,
 /area/station/service/cafeteria)
 "Jh" = (
 /obj/machinery/light,
@@ -1398,9 +1370,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/machinery/newscaster{
-	pixel_x = -30
-	},
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/service/cafeteria)
 "OD" = (
@@ -1517,9 +1487,7 @@
 /turf/open/floor/catwalk_floor,
 /area/station/cargo)
 "Rq" = (
-/obj/machinery/firealarm{
-	pixel_y = -28
-	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/commons)
 "Rx" = (
@@ -1554,9 +1522,8 @@
 /turf/open/floor/carpet,
 /area/station/service/cafeteria)
 "SB" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = 28
+/obj/machinery/firealarm/directional/north{
+	dir = 1
 	},
 /obj/effect/turf_decal/stripes{
 	dir = 9
@@ -1729,9 +1696,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/cargo)
 "VA" = (
-/obj/machinery/newscaster{
-	pixel_y = -30
-	},
+/obj/machinery/newscaster/directional/south,
 /obj/structure/chair/stool/directional/west,
 /turf/open/floor/carpet/red,
 /area/station/service/cafeteria)
@@ -1749,10 +1714,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "Wv" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -26
-	},
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/cargo)
 "WP" = (
@@ -2075,7 +2037,7 @@ vZ
 Kh
 Tr
 dQ
-IW
+jx
 Tr
 dQ
 xX
@@ -2098,7 +2060,7 @@ Tr
 Yx
 Yx
 lp
-IW
+jx
 jx
 xS
 xS
@@ -2122,7 +2084,7 @@ IO
 Bg
 kg
 Bg
-IW
+jx
 Pa
 JF
 cl
@@ -2179,7 +2141,7 @@ vZ
 vZ
 aa
 Tr
-IW
+jx
 eV
 eV
 ZF
@@ -2200,7 +2162,7 @@ vZ
 vZ
 aa
 Tr
-IW
+jx
 eV
 zD
 DO
@@ -2221,7 +2183,7 @@ vZ
 vZ
 Kh
 dl
-IW
+jx
 ZT
 zD
 wF
@@ -2274,7 +2236,7 @@ xe
 xe
 vv
 Vm
-Wv
+sy
 ZI
 sy
 Ap
@@ -2295,7 +2257,7 @@ hB
 pR
 vv
 Ap
-sy
+Wv
 QH
 na
 Ap

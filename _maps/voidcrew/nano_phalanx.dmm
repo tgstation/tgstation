@@ -298,9 +298,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
 /obj/machinery/camera/directional/east,
-/obj/machinery/firealarm{
-	pixel_x = 26
-	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/engine,
 /area/station/security/brig)
 "dy" = (
@@ -324,9 +322,7 @@
 	},
 /area/station/hallway/primary/fore)
 "dM" = (
-/obj/machinery/firealarm{
-	pixel_x = 26
-	},
+/obj/machinery/firealarm/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/service/cafeteria)
@@ -593,9 +589,7 @@
 /turf/open/floor/engine,
 /area/station/ai_monitored/security/armory)
 "hs" = (
-/obj/machinery/firealarm{
-	pixel_x = -26
-	},
+/obj/machinery/firealarm/directional/south,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -632,9 +626,7 @@
 /obj/machinery/camera{
 	dir = 6
 	},
-/obj/machinery/firealarm{
-	pixel_x = 26
-	},
+/obj/machinery/firealarm/directional/south,
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/security/brig)
@@ -879,9 +871,8 @@
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/station/medical/surgery)
 "kU" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = 26
+/obj/machinery/firealarm/directional/north{
+	dir = 1
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -1368,9 +1359,7 @@
 /turf/open/floor/carpet/black,
 /area/station/service/chapel/office)
 "sd" = (
-/obj/machinery/firealarm{
-	pixel_x = 26
-	},
+/obj/machinery/firealarm/directional/south,
 /obj/machinery/computer/operating{
 	dir = 8
 	},
@@ -1654,9 +1643,7 @@
 /obj/item/pickaxe,
 /obj/item/pickaxe,
 /obj/item/pickaxe,
-/obj/machinery/firealarm{
-	pixel_y = -26
-	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "wA" = (
@@ -2276,9 +2263,7 @@
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/station/medical/surgery)
 "FM" = (
-/obj/machinery/firealarm{
-	pixel_x = 26
-	},
+/obj/machinery/firealarm/directional/south,
 /obj/machinery/chem_heater,
 /obj/structure/sign/warning/explosives/directional/south,
 /turf/open/floor/mineral/titanium/tiled/purple,
@@ -2542,9 +2527,7 @@
 /area/station/science/research)
 "Kl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/firealarm{
-	pixel_y = -26
-	},
+/obj/machinery/firealarm/directional/south,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
@@ -3379,9 +3362,7 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "Xp" = (
-/obj/machinery/firealarm{
-	pixel_y = 26
-	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "Xq" = (

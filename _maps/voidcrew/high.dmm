@@ -209,9 +209,8 @@
 /area/station/cargo/office)
 "eB" = (
 /obj/structure/filingcabinet,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = 26
+/obj/machinery/firealarm/directional/north{
+	dir = 1
 	},
 /obj/machinery/light{
 	dir = 4
@@ -977,10 +976,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 26
-	},
 /obj/structure/tank_dispenser,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
@@ -1014,9 +1009,8 @@
 /turf/open/floor/wood,
 /area/station/commons)
 "uP" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -26
+/obj/machinery/firealarm/directional/east{
+	dir = 8
 	},
 /turf/open/floor/bamboo,
 /area/station/commons/dorms)
@@ -1199,9 +1193,8 @@
 /obj/effect/turf_decal/siding/red{
 	dir = 8
 	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -28
+/obj/machinery/firealarm/directional/east{
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1274,10 +1267,6 @@
 /obj/item/pickaxe/mini,
 /obj/item/storage/bag/ore,
 /obj/item/storage/bag/ore,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 26
-	},
 /turf/open/floor/iron/dark,
 /area/station/cargo/office)
 "Al" = (
@@ -1461,9 +1450,8 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = 26
+/obj/machinery/firealarm/directional/north{
+	dir = 1
 	},
 /turf/open/floor/carpet/neon/simple/red,
 /area/station/commons/lounge)
@@ -1575,9 +1563,8 @@
 /turf/open/floor/carpet/neon/simple/blue,
 /area/station/command/bridge)
 "FY" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = 26
+/obj/machinery/firealarm/directional/north{
+	dir = 1
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
@@ -1914,9 +1901,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 32
-	},
+/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "LM" = (
@@ -1960,8 +1945,16 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/cargo/office)
+"Mk" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/firealarm/directional/east,
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos)
 "Ml" = (
 /obj/structure/chair/wood{
 	dir = 4
@@ -3018,7 +3011,7 @@ cE
 JT
 wQ
 kv
-kv
+Mk
 uj
 mT
 Cy

@@ -43,9 +43,6 @@
 /obj/machinery/light/small,
 /turf/open/floor/iron,
 /area/station/medical)
-"da" = (
-/turf/template_noop,
-/area/station/external)
 "dE" = (
 /obj/structure/window/reinforced/spawner/east,
 /obj/structure/window/reinforced/spawner/north,
@@ -168,10 +165,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
-"mw" = (
-/obj/structure/fans/tiny,
-/turf/open/floor/engine,
-/area/station/science)
 "np" = (
 /turf/open/floor/iron,
 /area/station/command/bridge)
@@ -398,6 +391,7 @@
 /area/station/science)
 "xW" = (
 /obj/machinery/door/airlock/research/glass/incinerator,
+/obj/structure/fans/tiny,
 /turf/open/floor/iron,
 /area/station/science)
 "xZ" = (
@@ -566,13 +560,6 @@
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/station/medical)
-"KJ" = (
-/obj/machinery/power/shuttle/engine/electric{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/template_noop)
 "La" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -819,15 +806,15 @@ fo
 fo
 fo
 fo
-da
+fo
 fo
 PX
-KJ
 PX
-KJ
+PX
+PX
 fJ
 fo
-da
+fo
 fo
 fo
 fo
@@ -951,7 +938,7 @@ pf
 ss
 tC
 tC
-mw
+tC
 tC
 ss
 NB

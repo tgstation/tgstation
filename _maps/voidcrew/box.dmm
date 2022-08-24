@@ -87,11 +87,8 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -26
-	},
 /obj/effect/turf_decal/tile/neutral/anticorner,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/medical)
 "aw" = (
@@ -100,7 +97,7 @@
 	name = "Medbay"
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons)
+/area/station/cargo)
 "az" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -232,6 +229,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/plating,
 /area/station/engineering)
 "aX" = (
@@ -314,10 +312,8 @@
 "bl" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 32
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/plating,
 /area/station/engineering)
 "bm" = (
@@ -332,9 +328,8 @@
 /turf/open/floor/plating,
 /area/station/engineering)
 "bo" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
+/obj/machinery/firealarm/directional/north{
+	dir = 1
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -538,12 +533,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/medical)
-"bW" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/white,
-/area/station/medical)
 "bX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
@@ -638,10 +627,6 @@
 /obj/machinery/light/small/built{
 	dir = 8
 	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -26
-	},
 /obj/machinery/button/door{
 	id = "whiteship_windows";
 	name = "Windows Blast Door Control";
@@ -662,6 +647,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "cn" = (
@@ -699,11 +685,9 @@
 /turf/open/floor/plating,
 /area/station/engineering)
 "cs" = (
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/cable,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/plating,
 /area/station/engineering)
 "ct" = (
@@ -828,7 +812,7 @@
 	name = "Medbay"
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons)
+/area/station/cargo)
 "cI" = (
 /obj/machinery/light/built,
 /obj/structure/cable,
@@ -853,9 +837,7 @@
 	dir = 8
 	},
 /obj/machinery/vending/wardrobe/medi_wardrobe,
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/commons)
 "cM" = (
@@ -876,9 +858,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/freezer,
 /area/station/commons)
 "cO" = (
@@ -901,7 +881,7 @@
 "cQ" = (
 /obj/machinery/smartfridge/chemistry/preloaded,
 /turf/closed/wall/mineral/titanium,
-/area/station/commons)
+/area/station/cargo)
 "cR" = (
 /obj/structure/filingcabinet/medical,
 /turf/open/floor/iron/dark,
@@ -1031,7 +1011,7 @@
 "dl" = (
 /obj/machinery/smartfridge/organ,
 /turf/closed/wall/mineral/titanium,
-/area/station/commons)
+/area/station/cargo)
 "dm" = (
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/closet/secure_closet/chief_medical,
@@ -1226,13 +1206,10 @@
 /area/station/medical)
 "nC" = (
 /obj/machinery/iv_drip,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
 /obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 4
 	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/medical)
 "nQ" = (
@@ -1428,10 +1405,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -26
-	},
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/white,
 /area/station/cargo)
 "Jq" = (
@@ -1569,9 +1543,7 @@
 /turf/open/floor/iron/white,
 /area/station/cargo)
 "ZO" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 32
-	},
+/obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -1910,7 +1882,7 @@ ab
 ab
 aw
 cH
-nQ
+ab
 wG
 dr
 Bh
@@ -2027,7 +1999,7 @@ bb
 kZ
 UN
 ck
-bW
+bs
 ck
 Dr
 cK

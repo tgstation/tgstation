@@ -72,9 +72,8 @@
 /area/station/medical/treatment_center)
 "co" = (
 /obj/structure/table/reinforced,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = -24
+/obj/machinery/firealarm/directional/west{
+	dir = 4
 	},
 /obj/item/areaeditor,
 /turf/open/floor/carpet/neon/simple/red,
@@ -106,9 +105,6 @@
 	},
 /turf/open/floor/carpet/neon/simple/red,
 /area/station/commons/dorms)
-"cW" = (
-/turf/template_noop,
-/area/station/service/hydroponics)
 "cX" = (
 /obj/machinery/vending/cigarette/syndicate,
 /turf/open/floor/iron/dark,
@@ -143,9 +139,8 @@
 /obj/machinery/washing_machine,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = -24
+/obj/machinery/firealarm/directional/west{
+	dir = 4
 	},
 /turf/open/floor/carpet/neon/simple/red,
 /area/station/commons/dorms)
@@ -170,9 +165,6 @@
 /obj/item/clothing/under/syndicate/bloodred/sleepytime,
 /turf/open/floor/carpet/neon/simple/red,
 /area/station/commons/dorms)
-"dW" = (
-/turf/closed/wall,
-/area/template_noop)
 "dZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -1040,9 +1032,8 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = -24
+/obj/machinery/firealarm/directional/west{
+	dir = 4
 	},
 /turf/open/floor/circuit,
 /area/station/engineering/main)
@@ -1279,7 +1270,7 @@
 /turf/closed/wall,
 /area/station/maintenance/port)
 "Gt" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2{
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -1561,7 +1552,7 @@ ZB
 ZB
 ZB
 ZB
-cW
+ZB
 zB
 kM
 nf
@@ -1579,7 +1570,7 @@ ZB
 ZB
 ZB
 ZB
-dW
+Zq
 Zq
 Zq
 Zq
@@ -1598,7 +1589,7 @@ ZB
 ZB
 ZB
 ZB
-dW
+Zq
 Zq
 pu
 hy

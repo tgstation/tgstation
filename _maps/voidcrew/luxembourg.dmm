@@ -320,7 +320,7 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
 "hd" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2{
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -922,9 +922,8 @@
 "xm" = (
 /obj/structure/bed/pod,
 /obj/item/bedsheet/syndie,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
+/obj/machinery/firealarm/directional/north{
+	dir = 1
 	},
 /turf/open/floor/carpet/donk,
 /area/station/commons/dorms)
@@ -1060,10 +1059,7 @@
 /obj/item/storage/toolbox/syndicate,
 /obj/item/storage/toolbox/syndicate,
 /obj/item/storage/toolbox/syndicate,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "Dt" = (
@@ -1291,13 +1287,10 @@
 	suit_type = /obj/item/clothing/suit/space/syndicate/surplus
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 26
-	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 6
 	},
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/cargo/miningoffice)
 "Ml" = (
@@ -1609,11 +1602,8 @@
 /turf/open/floor/carpet/donk,
 /area/station/commons/dorms)
 "Xe" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
 /obj/item/banner/cargo/mundane,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/station/command/bridge)
 "Xk" = (
@@ -1966,7 +1956,7 @@ TW
 Be
 GM
 PR
-bL
+TW
 vd
 vp
 da
@@ -1989,7 +1979,7 @@ bR
 TW
 TW
 TW
-TW
+bL
 no
 no
 of

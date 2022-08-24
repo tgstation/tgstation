@@ -236,9 +236,7 @@
 /obj/structure/railing,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 32
-	},
+/obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/landmark/start/security_officer,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -332,7 +330,7 @@
 /turf/open/floor/pod/light,
 /area/station/cargo/miningoffice)
 "oQ" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2{
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
 	dir = 8
 	},
 /turf/open/floor/engine/hull,
@@ -457,9 +455,8 @@
 /turf/open/floor/mineral/plastitanium,
 /area/station/security/brig)
 "sI" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
+/obj/machinery/firealarm/directional/north{
+	dir = 1
 	},
 /obj/effect/turf_decal/stripes{
 	dir = 6
@@ -872,9 +869,8 @@
 /obj/structure/curtain/bounty,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/bedsheet/brown,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 26
+/obj/machinery/firealarm/directional/west{
+	dir = 4
 	},
 /turf/open/floor/pod/light,
 /area/station/commons/lounge)
@@ -941,9 +937,7 @@
 /area/station/cargo/miningoffice)
 "Ie" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 32
-	},
+/obj/structure/extinguisher_cabinet/directional/south,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/pod/light,
 /area/station/cargo/miningoffice)
@@ -1058,6 +1052,7 @@
 "Mp" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/machinery/atmospherics/components/binary/pump/on/layer4,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "MC" = (
@@ -1112,6 +1107,7 @@
 "Ol" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/machinery/atmospherics/components/binary/pump/on/layer4,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)
 "Oo" = (

@@ -97,7 +97,6 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/station/command/bridge)
 "fH" = (
-/obj/structure/sign/nanotrasen,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/commons)
 "fU" = (
@@ -164,9 +163,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/station/command/bridge)
 "ka" = (
-/obj/machinery/firealarm{
-	pixel_y = -26
-	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/station/medical)
 "kd" = (
@@ -220,9 +217,8 @@
 /area/station/commons)
 "pD" = (
 /obj/machinery/suit_storage_unit/standard_unit,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 26
+/obj/machinery/firealarm/directional/west{
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/station/commons)
@@ -420,9 +416,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small,
-/obj/machinery/firealarm{
-	pixel_y = -26
-	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/mineral/titanium/yellow,
 /area/station/command/bridge)
 "Du" = (
@@ -444,9 +438,6 @@
 	dir = 1
 	},
 /obj/machinery/cryopod,
-/obj/machinery/computer/cryopod{
-	pixel_x = 32
-	},
 /turf/open/floor/mineral/titanium/purple,
 /area/station/commons)
 "Ej" = (
@@ -500,6 +491,9 @@
 /area/station/command/bridge)
 "Jy" = (
 /obj/machinery/cryopod,
+/obj/machinery/computer/cryopod{
+	pixel_y = -32
+	},
 /turf/open/floor/mineral/titanium/purple,
 /area/station/commons)
 "JH" = (
@@ -586,9 +580,8 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/station/command/bridge)
 "Rw" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = -24
+/obj/machinery/firealarm/directional/west{
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
 /area/station/commons)
@@ -702,9 +695,7 @@
 	pixel_y = -10
 	},
 /obj/item/storage/toolbox/mechanical,
-/obj/machinery/firealarm{
-	pixel_y = -26
-	},
+/obj/machinery/firealarm/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/purple/visible,
 /turf/open/floor/mineral/titanium/yellow,
 /area/station/engineering)

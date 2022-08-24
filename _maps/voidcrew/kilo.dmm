@@ -81,6 +81,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/plating,
 /area/station/cargo/office)
 "aJ" = (
@@ -160,9 +161,8 @@
 	specialfunctions = 4
 	},
 /obj/structure/sign/warning/xeno_mining/directional/north,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 26
+/obj/machinery/firealarm/directional/west{
+	dir = 4
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -399,10 +399,6 @@
 /obj/structure/tank_dispenser/oxygen,
 /obj/effect/turf_decal/trimline/neutral/warning,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 26
-	},
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/mineral/plastitanium,
 /area/station/cargo/miningoffice)
@@ -536,7 +532,6 @@
 /obj/machinery/computer/cryopod{
 	pixel_y = 32
 	},
-/obj/item/bedsheet/random,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/wood,
@@ -775,10 +770,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/greenglow,
-/obj/structure/extinguisher_cabinet{
-	dir = 4;
-	pixel_x = 27
-	},
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/mineral/titanium/yellow,
 /area/station/cargo/miningoffice)
 "io" = (
@@ -787,9 +779,8 @@
 	color = "#c45c57";
 	dir = 1
 	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -26
+/obj/machinery/firealarm/directional/east{
+	dir = 8
 	},
 /obj/machinery/light/small{
 	dir = 8
@@ -893,9 +884,8 @@
 	pixel_x = -9;
 	pixel_y = 4
 	},
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = 26
+/obj/machinery/firealarm/directional/north{
+	dir = 1
 	},
 /obj/item/areaeditor,
 /turf/open/floor/mineral/plastitanium,
@@ -936,9 +926,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/trash/syndi_cakes,
 /obj/item/organ/internal/stomach,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 26
+/obj/machinery/firealarm/directional/west{
+	dir = 4
 	},
 /obj/machinery/light_switch{
 	dir = 1;
@@ -1018,6 +1007,7 @@
 /obj/structure/cable,
 /obj/machinery/shower/directional/south,
 /obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/mineral/titanium/yellow,
 /area/station/cargo/miningoffice)
 "sD" = (
@@ -1293,9 +1283,7 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = -32
 	},
-/obj/machinery/firealarm{
-	pixel_y = -26
-	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/plating,
 /area/station/cargo/office)
 "Cv" = (
@@ -1457,10 +1445,10 @@
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -26
+/obj/machinery/firealarm/directional/east{
+	dir = 8
 	},
+/obj/structure/sign/poster/contraband/random/directional/south,
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "KM" = (
@@ -1515,10 +1503,6 @@
 /obj/machinery/suit_storage_unit/mining/eva,
 /turf/open/floor/mineral/plastitanium,
 /area/station/cargo/miningoffice)
-"MI" = (
-/obj/structure/sign/poster/contraband/random,
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/station/commons)
 "MY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/status_display/evac{
@@ -1542,10 +1526,6 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -26
-	},
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -1562,6 +1542,7 @@
 /obj/item/clothing/head/cowboy_hat_brown,
 /obj/item/clothing/head/cowboy_hat_brown,
 /obj/item/clothing/head/cowboy_hat_brown,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/station/commons)
 "NI" = (
@@ -1712,9 +1693,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -30
-	},
+/obj/structure/sign/poster/contraband/random/directional/east,
 /turf/open/floor/plating,
 /area/station/cargo/office)
 "Uv" = (
@@ -2153,7 +2132,7 @@ cP
 bL
 bX
 Ud
-MI
+mz
 cV
 hS
 wh
@@ -2183,7 +2162,7 @@ Jf
 aK
 bZ
 Kz
-MI
+mz
 cX
 ig
 zH

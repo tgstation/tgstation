@@ -100,15 +100,15 @@
 /area/station/maintenance/aft)
 "hU" = (
 /obj/effect/turf_decal/tile/blue/anticorner,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
+/obj/machinery/firealarm/directional/north{
+	dir = 1
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/fax{
 	name = "Box Ship Fax Machine";
 	fax_name = "Box Fax"
 	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "jl" = (
@@ -221,9 +221,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "nr" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
 /obj/machinery/light{
 	dir = 8
 	},
@@ -397,9 +394,9 @@
 	name = "Blast Door Control";
 	pixel_x = 24
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/suit_storage_unit/security,
 /obj/effect/turf_decal/bot_red,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "xm" = (
@@ -438,9 +435,7 @@
 "AC" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/cable,
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering)
 "AR" = (
@@ -475,7 +470,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 10
 	},
-/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2{
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -595,9 +590,8 @@
 /obj/item/pickaxe,
 /obj/item/storage/bag/ore,
 /obj/item/mining_scanner,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = -24
+/obj/machinery/firealarm/directional/west{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
@@ -692,6 +686,12 @@
 "Ob" = (
 /turf/closed/wall/mineral/titanium,
 /area/station/maintenance/aft)
+"Od" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "Oo" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/engineering)
@@ -727,19 +727,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/closed/wall/mineral/titanium,
 /area/station/engineering)
-"RO" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/airalarm/directional/east,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
 "RS" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/cargo/miningoffice)
 "RV" = (
 /obj/effect/turf_decal/tile/red,
-/obj/machinery/stasis,
+/obj/machinery/stasis{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "Sx" = (
@@ -765,9 +760,8 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = -24
+/obj/machinery/firealarm/directional/west{
+	dir = 4
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -845,15 +839,17 @@
 /area/station/cargo/miningoffice)
 "VO" = (
 /obj/machinery/airalarm/directional/east,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
+/obj/machinery/firealarm/directional/north{
+	dir = 1
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
@@ -864,6 +860,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
 /area/station/security/brig)
 "Wz" = (
@@ -905,7 +902,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/station/security/brig)
 "XD" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/security/brig)
 "XG" = (
@@ -926,13 +923,10 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "Yx" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
 /obj/effect/turf_decal/tile/red,
 /obj/machinery/recharger,
 /obj/structure/table/reinforced,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "YA" = (
@@ -955,6 +949,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "ZQ" = (
@@ -1205,7 +1200,7 @@ Oo
 HK
 Gl
 ec
-nS
+Od
 nS
 Dj
 mV
@@ -1228,7 +1223,7 @@ wU
 wy
 gz
 sO
-RO
+HS
 HS
 QH
 MJ

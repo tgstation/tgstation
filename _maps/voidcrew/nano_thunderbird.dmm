@@ -133,7 +133,7 @@
 /turf/open/floor/plating,
 /area/station/cargo/miningoffice)
 "hm" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2,
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2,
 /turf/open/floor/plating,
 /area/station/security/brig)
 "hx" = (
@@ -595,9 +595,6 @@
 /turf/open/floor/mineral/titanium,
 /area/station/ai_monitored/security/armory)
 "KW" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
 /obj/structure/chair/sofa/corner,
 /turf/open/floor/mineral/titanium,
 /area/station/commons/dorms)
@@ -607,6 +604,12 @@
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium,
 /area/station/hallway/primary/central)
+"Lo" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/station/commons/dorms)
 "LK" = (
 /obj/machinery/power/smes/engineering{
 	dir = 4
@@ -1108,7 +1111,7 @@ uF
 SC
 Iv
 Iv
-dB
+Iv
 KW
 cM
 dS
@@ -1130,7 +1133,7 @@ Dd
 Dd
 dB
 dB
-Iv
+Lo
 Iv
 oO
 "}

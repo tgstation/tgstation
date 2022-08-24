@@ -1431,7 +1431,7 @@
 /turf/open/floor/carpet/orange,
 /area/station/service/library)
 "QD" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2{
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
 	dir = 1
 	},
 /turf/open/floor/plating,
