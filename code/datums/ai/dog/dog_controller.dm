@@ -97,6 +97,10 @@
 /datum/ai_controller/dog/proc/on_attack_hand(datum/source, mob/living/user)
 	SIGNAL_HANDLER
 
+	var/mob/living/living_pawn = pawn
+	if(living_pawn.stat == DEAD)
+		to_chat(user, span_warning("When you touch [pawn], you feel a dead cold from their body."))
+		return
 	if(user.combat_mode)
 		unfriend(user)
 	else
