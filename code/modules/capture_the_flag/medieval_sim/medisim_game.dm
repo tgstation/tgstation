@@ -58,7 +58,7 @@
 /obj/item/ctf/red/medisim
 	name = "\improper Redfield Castle Fair Maiden"
 	desc = "Protect your maiden, and capture theirs!"
-	icon = 'icons/obj/plushes.dmi'
+	icon = 'icons/obj/toy/plushes.dmi'
 	icon_state = "plushie_nuke"
 	force = 0
 	game_area = /area/shuttle/escape
@@ -67,7 +67,7 @@
 /obj/item/ctf/blue/medisim
 	name = "\improper Bluesworth Hold Fair Maiden"
 	desc = "Protect your maiden, and capture theirs!"
-	icon = 'icons/obj/plushes.dmi'
+	icon = 'icons/obj/toy/plushes.dmi'
 	icon_state = "plushie_slime"
 	force = 0
 	game_area = /area/shuttle/escape

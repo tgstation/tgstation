@@ -4,7 +4,7 @@
 /obj/item/toy/singlecard
 	name = "card"
 	desc = "A playing card used to play card games like poker."
-	icon = 'icons/obj/playing_cards.dmi'
+	icon = 'icons/obj/toy/playing_cards.dmi'
 	icon_state = "sc_Ace of Spades_nanotrasen"
 	w_class = WEIGHT_CLASS_TINY
 	worn_icon_state = "card"

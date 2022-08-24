@@ -1,7 +1,7 @@
 /obj/item/toy/cards/cardhand
 	name = "hand of cards"
 	desc = "A number of cards not in a deck, customarily held in ones hand."
-	icon = 'icons/obj/playing_cards.dmi'
+	icon = 'icons/obj/toy/playing_cards.dmi'
 	icon_state = "none"
 	w_class = WEIGHT_CLASS_TINY
 	worn_icon_state = "card"
