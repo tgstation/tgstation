@@ -91,7 +91,7 @@
 /turf/open/floor/plating,
 /area/centcom/mafia)
 "B" = (
-/obj/structure/showcase,
+/obj/structure/showcase/katana,
 /turf/open/misc/beach/sand,
 /area/centcom/mafia)
 "S" = (
