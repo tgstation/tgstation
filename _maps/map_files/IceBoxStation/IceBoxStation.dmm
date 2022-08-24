@@ -35105,6 +35105,7 @@
 /obj/effect/turf_decal/tile/blue,
 /obj/structure/cable,
 /obj/machinery/light/directional/south,
+/obj/structure/closet/secure_closet/psychology,
 /turf/open/floor/iron/white,
 /area/station/medical/psychology)
 "kJI" = (
@@ -58968,11 +58969,6 @@
 	pixel_y = -22
 	},
 /obj/machinery/newscaster/directional/east,
-/obj/structure/table/wood,
-/obj/machinery/fax{
-	name = "Psychology Office Fax Machine";
-	fax_name = "Psychology Office"
-	},
 /turf/open/floor/iron/white,
 /area/station/medical/psychology)
 "sfY" = (
@@ -62884,7 +62880,11 @@
 	dir = 8
 	},
 /obj/item/radio/intercom/directional/south,
-/obj/structure/closet/secure_closet/psychology,
+/obj/structure/table/wood,
+/obj/machinery/fax{
+	name = "Psychology Office Fax Machine";
+	fax_name = "Psychology Office"
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/psychology)
 "tta" = (
