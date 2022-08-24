@@ -143,7 +143,7 @@
 				halitem.icon_state = "revolver"
 				halitem.name = "Revolver"
 			if(2) //c4
-				halitem.icon = 'icons/obj/grenade.dmi'
+				halitem.icon = 'icons/obj/weapons/grenade.dmi'
 				halitem.icon_state = "plastic-explosive0"
 				halitem.name = "C4"
 				if(prob(25))
@@ -161,7 +161,7 @@
 				halitem.icon_state = "emag"
 				halitem.name = "Cryptographic Sequencer"
 			if(6) //flashbang
-				halitem.icon = 'icons/obj/grenade.dmi'
+				halitem.icon = 'icons/obj/weapons/grenade.dmi'
 				halitem.icon_state = "flashbang1"
 				halitem.name = "Flashbang"
 		feedback_details += "Type: [halitem.name]"
