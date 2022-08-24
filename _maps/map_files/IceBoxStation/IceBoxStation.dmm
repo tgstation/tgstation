@@ -30392,8 +30392,8 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
 "jlP" = (
-/obj/machinery/light/small/directional/west,
 /obj/machinery/recharge_station,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
 "jlV" = (
@@ -44256,14 +44256,14 @@
 /obj/structure/toilet{
 	pixel_y = 8
 	},
-/obj/machinery/light/small/directional/west,
 /obj/effect/landmark/start/hangover,
-/obj/machinery/button/door/directional/north{
+/obj/machinery/button/door/directional/west{
 	id = "Toilet1";
 	name = "Lock Control";
-	normaldoorcontrol = 1;
-	specialfunctions = 4
+	specialfunctions = 4;
+	normaldoorcontrol = 1
 	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
 "nCs" = (
@@ -57120,15 +57120,15 @@
 /obj/structure/toilet{
 	pixel_y = 8
 	},
-/obj/machinery/light/small/directional/west,
 /obj/effect/landmark/blobstart,
 /obj/effect/landmark/start/hangover,
-/obj/machinery/button/door/directional/north{
+/obj/machinery/button/door/directional/west{
 	id = "Toilet2";
 	name = "Lock Control";
-	normaldoorcontrol = 1;
-	specialfunctions = 4
+	specialfunctions = 4;
+	normaldoorcontrol = 1
 	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
 "rCu" = (
