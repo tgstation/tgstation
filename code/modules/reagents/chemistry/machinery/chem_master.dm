@@ -25,7 +25,7 @@
 	/// Decides what UI to show. If TRUE shows UI of CondiMaster, if FALSE - ChemMaster
 	var/condi = FALSE
 	/// Path for the broken machine sprite
-	var/broken_icon_state = "_b"
+	var/depowered_icon_state = "_nopower"
 	/// Currently selected pill style
 	var/chosen_pill_style = 1
 	/// Currently selected condiment bottle style
@@ -113,8 +113,8 @@
 		bottle = null
 
 /obj/machinery/chem_master/update_icon_state()
-	if(machine_stat & BROKEN)
-		icon_state = "[base_icon_state][beaker ? 1 : 0][broken_icon_state]"
+	if(machine_stat & NOPOWER)
+		icon_state = "[base_icon_state][beaker ? 1 : 0][depowered_icon_state]"
 	else
 		icon_state = "[base_icon_state][beaker ? 1 : 0]"
 	return ..()
