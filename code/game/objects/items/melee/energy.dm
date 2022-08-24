@@ -1,5 +1,5 @@
 /obj/item/melee/energy
-	icon = 'icons/obj/transforming_energy.dmi'
+	icon = 'icons/obj/weapons/transforming_energy.dmi'
 	max_integrity = 200
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 30)
 	attack_verb_continuous = list("hits", "taps", "pokes")

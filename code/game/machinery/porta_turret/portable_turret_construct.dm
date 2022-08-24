@@ -10,7 +10,7 @@
 
 /obj/machinery/porta_turret_construct
 	name = "turret frame"
-	icon = 'icons/obj/turrets.dmi'
+	icon = 'icons/obj/weapons/turrets.dmi'
 	icon_state = "turret_frame"
 	desc = "An unfinished covered turret frame."
 	anchored = FALSE

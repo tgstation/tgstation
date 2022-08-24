@@ -379,7 +379,7 @@
 
 /obj/machinery/power/emitter/prototype
 	name = "Prototype Emitter"
-	icon = 'icons/obj/turrets.dmi'
+	icon = 'icons/obj/weapons/turrets.dmi'
 	icon_state = "proto_emitter"
 	base_icon_state = "proto_emitter"
 	icon_state_on = "proto_emitter_+a"

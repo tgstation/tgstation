@@ -149,11 +149,11 @@
 				if(prob(25))
 					halitem.icon_state = "plasticx40"
 			if(3) //sword
-				halitem.icon = 'icons/obj/transforming_energy.dmi'
+				halitem.icon = 'icons/obj/weapons/transforming_energy.dmi'
 				halitem.icon_state = "e_sword"
 				halitem.name = "energy sword"
 			if(4) //stun baton
-				halitem.icon = 'icons/obj/items_and_weapons.dmi'
+				halitem.icon = 'icons/obj/weapons/items_and_weapons.dmi'
 				halitem.icon_state = "stunbaton"
 				halitem.name = "Stun Baton"
 			if(5) //emag
