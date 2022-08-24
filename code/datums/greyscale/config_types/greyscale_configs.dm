@@ -234,7 +234,7 @@
 
 /datum/greyscale_config/plush_lizard
 	name = "Plushie Lizard"
-	icon_file = 'icons/obj/toy/plushes.dmi'
+	icon_file = 'icons/obj/toys/plushes.dmi'
 	json_config = 'code/datums/greyscale/json_configs/plushie_lizard.json'
 
 /datum/greyscale_config/flower_simple

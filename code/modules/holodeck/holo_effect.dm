@@ -25,7 +25,7 @@
 
 // Generates a holodeck-tracked card deck
 /obj/effect/holodeck_effect/cards
-	icon = 'icons/obj/toy/playing_cards.dmi'
+	icon = 'icons/obj/toys/playing_cards.dmi'
 	icon_state = "deck_syndicate_full"
 
 /obj/effect/holodeck_effect/cards/activate(obj/machinery/computer/holodeck/holodeck)

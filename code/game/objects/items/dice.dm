@@ -2,7 +2,7 @@
 /obj/item/storage/dice
 	name = "bag of dice"
 	desc = "Contains all the luck you'll ever need."
-	icon = 'icons/obj/toy/dice.dmi'
+	icon = 'icons/obj/toys/dice.dmi'
 	icon_state = "dicebag"
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -50,7 +50,7 @@
 /obj/item/dice
 	name = "die"
 	desc = "A die with six sides. Basic and serviceable."
-	icon = 'icons/obj/toy/dice.dmi'
+	icon = 'icons/obj/toys/dice.dmi'
 	icon_state = "d6"
 	w_class = WEIGHT_CLASS_TINY
 	var/sides = 6

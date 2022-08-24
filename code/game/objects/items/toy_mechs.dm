@@ -12,7 +12,7 @@
 #define MAX_BATTLE_LENGTH 50
 
 /obj/item/toy/mecha
-	icon = 'icons/obj/toy/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "fivestarstoy"
 	verb_say = "beeps"
 	verb_ask = "beeps"
