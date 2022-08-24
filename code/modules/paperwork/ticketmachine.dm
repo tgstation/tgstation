@@ -17,7 +17,8 @@
 	var/ticket_number = 0
 	///What ticket number are we currently serving?
 	var/current_number = 0
-	var/max_number = 100 //At this point, you need to refill it.
+	///At this point, you need to refill it.
+	var/max_number = 100
 	var/cooldown = 5 SECONDS
 	var/ready = TRUE
 	var/id = "ticket_machine_default" //For buttons
@@ -66,6 +67,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 		tickets.Cut()
 	update_appearance()
 
+///Increments the counter by one, if there is a ticket after the current one we are serving.
+///If we have a current ticket, remove it from the top of our tickets list and replace it with the next one if applicable
 /obj/machinery/ticket_machine/proc/increment()
 	if(current_number > ticket_number)
 		return
@@ -239,9 +242,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 	var/owner_ref // A ref to our owner. Doesn't need to be weak because mobs have unique refs
 	var/obj/machinery/ticket_machine/source
 
-/obj/item/ticket_machine_ticket/New(loc, number)
+/obj/item/ticket_machine_ticket/New(loc, num)
 	. = ..()
-	src.number = number
+	number = num
 	name += " #[number]"
 	saved_maptext = MAPTEXT(number)
 	maptext = saved_maptext
