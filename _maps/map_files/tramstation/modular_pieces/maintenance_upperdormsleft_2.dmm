@@ -54,10 +54,6 @@
 /obj/effect/turf_decal/weather,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/aft)
-"G" = (
-/obj/modular_map_root/tramstation/maintenance_upperdormsleft/attachment,
-/turf/template_noop,
-/area/template_noop)
 "I" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
 /area/station/maintenance/port/aft)
@@ -215,7 +211,7 @@ D
 D
 D
 a
-G
+D
 D
 D
 D

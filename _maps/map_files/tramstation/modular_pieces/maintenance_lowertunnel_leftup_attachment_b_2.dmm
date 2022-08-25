@@ -53,7 +53,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/port/central)
+/area/template_noop)
 "K" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -81,12 +81,12 @@ a
 M
 M
 a
-u
-u
+K
+d
 a
 h
 u
-A
+a
 "}
 (3,1,1) = {"
 M
@@ -97,27 +97,27 @@ u
 a
 q
 u
-F
+A
 "}
 (4,1,1) = {"
 M
 M
 a
-u
+v
 u
 z
 u
 u
-A
+F
 "}
 (5,1,1) = {"
 M
 M
 a
-K
-d
 a
-v
+a
+a
+a
 a
 A
 "}

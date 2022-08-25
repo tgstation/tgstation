@@ -3,38 +3,38 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating,
-/area/space)
+/area/station/maintenance/starboard/central)
 "b" = (
 /turf/closed/wall/rock/porous,
-/area/space)
+/area/station/maintenance/starboard/central)
 "q" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
-/area/space)
+/area/station/maintenance/starboard/central)
 "u" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/girder,
 /obj/item/stack/sheet/iron,
 /turf/open/floor/plating,
-/area/space)
+/area/station/maintenance/starboard/central)
 "E" = (
 /obj/item/stack/ore/glass,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
-/area/space)
+/area/station/maintenance/starboard/central)
 "P" = (
 /turf/open/misc/asteroid,
-/area/space)
+/area/station/maintenance/starboard/central)
 "X" = (
 /obj/modular_map_connector,
 /turf/closed/wall/rock/porous,
-/area/space)
+/area/station/maintenance/starboard/central)
 "Y" = (
 /turf/closed/wall,
-/area/space)
+/area/station/maintenance/starboard/central)
 "Z" = (
 /turf/template_noop,
-/area/space)
+/area/template_noop)
 
 (1,1,1) = {"
 Z

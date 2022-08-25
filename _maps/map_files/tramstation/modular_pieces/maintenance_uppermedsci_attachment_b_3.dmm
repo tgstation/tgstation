@@ -10,13 +10,6 @@
 /obj/item/mop,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/science)
-"j" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet,
-/obj/effect/spawner/random/maintenance/three,
-/obj/effect/spawner/random/engineering/flashlight,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/science)
 "p" = (
 /turf/template_noop,
 /area/template_noop)
@@ -36,6 +29,9 @@
 /area/station/maintenance/department/science)
 "K" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet,
+/obj/effect/spawner/random/maintenance/three,
+/obj/effect/spawner/random/engineering/flashlight,
 /obj/structure/sign/poster/official/tactical_game_cards{
 	pixel_y = 32
 	},
@@ -80,23 +76,23 @@ T
 Q
 "}
 (3,1,1) = {"
-A
+p
 z
 z
 W
 Q
 "}
 (4,1,1) = {"
-p
-j
+A
+z
 a
 b
 Q
 "}
 (5,1,1) = {"
 p
-p
-p
-p
-p
+Q
+Q
+Q
+Q
 "}

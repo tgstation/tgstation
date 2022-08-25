@@ -33,7 +33,7 @@
 	},
 /obj/modular_map_connector,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/port/central)
+/area/template_noop)
 "H" = (
 /turf/closed/wall/rock/porous,
 /area/station/maintenance/port/central)
@@ -81,7 +81,7 @@ w
 P
 e
 e
-X
+a
 "}
 (3,1,1) = {"
 X
@@ -92,7 +92,7 @@ a
 O
 S
 e
-D
+X
 "}
 (4,1,1) = {"
 X
@@ -103,7 +103,7 @@ a
 k
 e
 e
-X
+D
 "}
 (5,1,1) = {"
 X
@@ -111,8 +111,8 @@ X
 X
 X
 a
-e
-e
-e
+M
+a
+a
 X
 "}

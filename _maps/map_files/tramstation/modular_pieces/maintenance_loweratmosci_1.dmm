@@ -148,10 +148,6 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
-"sc" = (
-/obj/modular_map_root/tramstation/maintenance_loweratmosci/attachment_a,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/starboard/lesser)
 "sC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -410,7 +406,6 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 "Qp" = (
-/obj/modular_map_root/tramstation/maintenance_loweratmosci/attachment_b,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 "Qy" = (
@@ -704,7 +699,7 @@ kw
 kw
 kw
 kw
-sc
+Qp
 wT
 kw
 kw

@@ -56,7 +56,6 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "kP" = (
-/obj/modular_map_root/tramstation/maintenance_upperbridgeright/attachment_b,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "mj" = (
@@ -335,10 +334,6 @@
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
-"Zk" = (
-/obj/modular_map_root/tramstation/maintenance_upperbridgeright/attachment_a,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/security)
 "Zs" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/vehicle/ridden/secway,
@@ -545,7 +540,7 @@ Uh
 Uh
 ka
 Fd
-Zk
+kP
 Cy
 Cy
 Cy

@@ -213,11 +213,6 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
-"aF" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/modular_map_root/tramstation/maintenance_lowerdorm/attachment_a,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/crew_quarters/dorms)
 "aG" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall,
@@ -297,7 +292,6 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
 "aU" = (
-/obj/modular_map_root/tramstation/maintenance_lowerdorm/attachment_b,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/lesser)
 "aW" = (
@@ -811,7 +805,7 @@ ab
 ab
 am
 am
-aF
+aq
 am
 am
 "}

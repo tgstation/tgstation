@@ -55,10 +55,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/aft)
-"J" = (
-/obj/modular_map_root/tramstation/maintenance_upperdormsleft/attachment,
-/turf/template_noop,
-/area/template_noop)
 "L" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
@@ -207,7 +203,7 @@ a
 a
 a
 I
-J
+a
 a
 a
 a

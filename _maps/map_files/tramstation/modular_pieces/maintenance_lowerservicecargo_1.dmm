@@ -250,10 +250,6 @@
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
-"Oz" = (
-/obj/modular_map_root/tramstation/maintenance_lowerservicecargo/attachment_b,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/starboard/greater)
 "OD" = (
 /obj/item/shovel,
 /turf/open/misc/asteroid/airless,
@@ -319,7 +315,6 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "XV" = (
-/obj/modular_map_root/tramstation/maintenance_lowerservicecargo/attachment_a,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "Yw" = (
@@ -475,7 +470,7 @@ hj
 hj
 hj
 hj
-Oz
+XV
 TW
 Vv
 hj

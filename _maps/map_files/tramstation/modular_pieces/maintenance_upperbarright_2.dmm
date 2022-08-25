@@ -63,10 +63,6 @@
 /obj/effect/spawner/random/trash/food_packaging,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
-"u" = (
-/obj/modular_map_root/tramstation/maintenance_upperbarright/attachment_b,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/cargo)
 "v" = (
 /obj/effect/spawner/random/trash/cigbutt,
 /turf/open/misc/asteroid,
@@ -162,7 +158,6 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "S" = (
-/obj/modular_map_root/tramstation/maintenance_upperbarright/attachment_a,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "T" = (
@@ -533,7 +528,7 @@ k
 k
 k
 k
-u
+S
 T
 a
 k

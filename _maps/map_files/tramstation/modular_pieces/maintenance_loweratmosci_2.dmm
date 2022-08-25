@@ -92,10 +92,6 @@
 "hl" = (
 /turf/closed/wall,
 /area/station/maintenance/starboard/lesser)
-"hm" = (
-/obj/item/stack/ore/iron,
-/turf/open/misc/asteroid,
-/area/mine/explored)
 "hG" = (
 /obj/item/stack/ore/glass,
 /turf/open/misc/asteroid,
@@ -450,7 +446,6 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
 "Kx" = (
-/obj/modular_map_root/tramstation/maintenance_loweratmosci/attachment_a,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 "Kz" = (
@@ -511,10 +506,6 @@
 /obj/item/crowbar,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
-"NP" = (
-/obj/modular_map_root/tramstation/maintenance_loweratmosci/attachment_b,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/starboard/lesser)
 "OD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -535,10 +526,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
-"PG" = (
-/obj/item/shovel,
-/turf/open/misc/asteroid,
-/area/mine/explored)
 "Qg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -1564,7 +1551,7 @@ Jk
 Jk
 Jk
 Jk
-ty
+Jk
 ty
 hl
 QK
@@ -1595,7 +1582,7 @@ Jk
 Jk
 Jk
 Jk
-ty
+Jk
 ty
 hl
 bP
@@ -1625,8 +1612,8 @@ Jk
 Jk
 Jk
 Jk
-ty
-ty
+Jk
+Jk
 ty
 ft
 rw
@@ -1655,9 +1642,9 @@ Jk
 Jk
 Jk
 Jk
-ty
-PG
-ty
+Jk
+Jk
+Jk
 ty
 ft
 rw
@@ -1686,9 +1673,9 @@ Jk
 Jk
 Jk
 Jk
-ty
-hm
-pU
+Jk
+Jk
+Jk
 ty
 GF
 QK
@@ -1718,12 +1705,12 @@ Jk
 Jk
 Jk
 Jk
-ty
-bs
+Jk
+Jk
 bs
 Kz
 QK
-NP
+Kx
 ty
 ty
 Jk
@@ -1750,7 +1737,7 @@ Jk
 Jk
 Jk
 Jk
-ty
+Jk
 gk
 Kz
 QK

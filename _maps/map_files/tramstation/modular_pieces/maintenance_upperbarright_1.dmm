@@ -24,10 +24,6 @@
 "i" = (
 /turf/closed/wall,
 /area/station/maintenance/department/cargo)
-"k" = (
-/obj/modular_map_root/tramstation/maintenance_upperbarright/attachment_b,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/cargo)
 "m" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -94,7 +90,6 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "H" = (
-/obj/modular_map_root/tramstation/maintenance_upperbarright/attachment_a,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "I" = (
@@ -467,7 +462,7 @@ S
 S
 S
 S
-k
+H
 q
 i
 S

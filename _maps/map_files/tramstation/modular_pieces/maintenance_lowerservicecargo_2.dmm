@@ -250,10 +250,6 @@
 "HJ" = (
 /turf/open/misc/asteroid,
 /area/station/maintenance/starboard/greater)
-"Ie" = (
-/obj/modular_map_root/tramstation/maintenance_lowerservicecargo/attachment_a,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/starboard/greater)
 "Ix" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/girder,
@@ -408,7 +404,6 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "Xc" = (
-/obj/modular_map_root/tramstation/maintenance_lowerservicecargo/attachment_b,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "Xr" = (
@@ -722,7 +717,7 @@ BF
 BF
 YT
 rF
-Ie
+Xc
 BF
 uP
 uP

@@ -38,7 +38,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/port/central)
+/area/template_noop)
 "L" = (
 /obj/item/stack/ore/glass,
 /turf/open/misc/asteroid/dug,
@@ -77,7 +77,7 @@ e
 A
 D
 D
-a
+o
 "}
 (3,1,1) = {"
 S
@@ -88,7 +88,7 @@ e
 V
 A
 D
-H
+a
 "}
 (4,1,1) = {"
 S
@@ -99,7 +99,7 @@ A
 A
 D
 D
-a
+H
 "}
 (5,1,1) = {"
 S

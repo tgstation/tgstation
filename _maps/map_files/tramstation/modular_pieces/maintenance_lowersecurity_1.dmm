@@ -3,7 +3,6 @@
 /turf/template_noop,
 /area/template_noop)
 "e" = (
-/obj/modular_map_root/tramstation/maintenance_lowersecurity/attachment,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
 "g" = (

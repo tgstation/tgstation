@@ -112,7 +112,6 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/lesser)
 "mo" = (
-/obj/modular_map_root/tramstation/maintenance_lowerdorm/attachment_b,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/lesser)
 "mw" = (
@@ -211,11 +210,6 @@
 "uZ" = (
 /turf/open/misc/asteroid,
 /area/mine/explored)
-"vF" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/modular_map_root/tramstation/maintenance_lowerdorm/attachment_a,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/crew_quarters/dorms)
 "vZ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -980,7 +974,7 @@ tI
 tI
 Ii
 Ii
-vF
+Ya
 Ii
 Ii
 "}

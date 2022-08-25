@@ -118,10 +118,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
-"W" = (
-/obj/modular_map_root/tramstation/maintenance_upperdormsright/attachment,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
 "X" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -129,9 +125,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/duct,
 /turf/open/floor/catwalk_floor,
-/area/station/maintenance/department/medical)
-"Y" = (
-/turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
 
 (1,1,1) = {"
@@ -298,7 +291,7 @@ a
 a
 a
 a
-Y
+N
 z
 z
 z
@@ -321,7 +314,7 @@ S
 N
 N
 N
-W
+N
 N
 N
 N

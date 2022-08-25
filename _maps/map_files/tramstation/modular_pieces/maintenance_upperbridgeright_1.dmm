@@ -48,10 +48,6 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
-"i" = (
-/obj/modular_map_root/tramstation/maintenance_upperbridgeright/attachment_b,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/security)
 "k" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -119,7 +115,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
 "s" = (
-/obj/modular_map_root/tramstation/maintenance_upperbridgeright/attachment_a,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "t" = (
@@ -860,7 +855,7 @@ a
 a
 a
 a
-i
+s
 J
 Q
 Z

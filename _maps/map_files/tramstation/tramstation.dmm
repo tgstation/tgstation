@@ -3240,6 +3240,10 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction/engineering)
+"bsB" = (
+/obj/modular_map_root/tramstation/maintenance_upperdormsleft/attachment,
+/turf/open/floor/iron/vaporwave,
+/area/mine/explored)
 "bsE" = (
 /obj/structure/table/glass,
 /obj/item/storage/secure/briefcase,
@@ -3805,6 +3809,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
+"bBQ" = (
+/obj/modular_map_root/tramstation/maintenance_uppermedsci/attachment_a,
+/turf/open/floor/iron/vaporwave,
+/area/mine/explored)
 "bBX" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 4
@@ -8947,6 +8955,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
+"dnl" = (
+/obj/modular_map_root/tramstation/maintenance_upperbridgeright/attachment_b,
+/turf/open/floor/iron/vaporwave,
+/area/mine/explored)
 "dnp" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/door/airlock/external{
@@ -12778,6 +12790,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/commons/lounge)
+"eDl" = (
+/obj/modular_map_root/tramstation/maintenance_lowerdorm/attachment_b,
+/turf/open/floor/iron/vaporwave,
+/area/mine/explored)
 "eDo" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/engine,
@@ -13228,6 +13244,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
+"eMV" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
 "eMY" = (
 /obj/structure/table,
 /turf/open/floor/iron,
@@ -19961,6 +19981,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
+"hkZ" = (
+/obj/modular_map_root/tramstation/maintenance_upperdormsright/attachment,
+/turf/open/floor/iron/vaporwave,
+/area/mine/explored)
 "hlc" = (
 /turf/closed/wall/r_wall,
 /area/station/science/xenobiology)
@@ -21612,6 +21636,10 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"hTf" = (
+/obj/modular_map_root/tramstation/maintenance_uppermedsci/attachment_b,
+/turf/open/floor/iron/vaporwave,
+/area/mine/explored)
 "hTo" = (
 /obj/structure/cable,
 /obj/machinery/firealarm/directional/east,
@@ -22834,6 +22862,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/science/robotics/mechbay)
+"ioQ" = (
+/obj/modular_map_root/tramstation/maintenance_upperbarright/attachment_a,
+/turf/open/floor/iron/vaporwave,
+/area/mine/explored)
 "ipe" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/green/visible{
 	dir = 8
@@ -25548,7 +25580,6 @@
 /turf/open/floor/plating,
 /area/station/cargo/lobby)
 "jnG" = (
-/obj/machinery/drone_dispenser,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
@@ -27240,6 +27271,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
+"jTH" = (
+/obj/modular_map_root/tramstation/maintenance_loweratmosci/attachment_a,
+/turf/open/floor/iron/vaporwave,
+/area/mine/explored)
 "jTN" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 1
@@ -28859,6 +28894,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
+"kvJ" = (
+/obj/modular_map_root/tramstation/maintenance_upperbridgeright/attachment_a,
+/turf/open/floor/iron/vaporwave,
+/area/mine/explored)
 "kwe" = (
 /obj/structure/ladder,
 /turf/open/floor/iron/grimy,
@@ -33000,6 +33039,11 @@
 /obj/structure/table,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
+"lTI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/drone_dispenser,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
 "lTP" = (
 /obj/structure/stairs/south,
 /turf/open/floor/iron/stairs/medium{
@@ -35432,6 +35476,10 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/lockers)
+"mJC" = (
+/obj/modular_map_root/tramstation/maintenance_upperbarright/attachment_b,
+/turf/open/floor/iron/vaporwave,
+/area/mine/explored)
 "mJK" = (
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
@@ -35531,6 +35579,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
+"mLH" = (
+/obj/modular_map_root/tramstation/maintenance_lowercargosci/attachment_b,
+/turf/open/floor/iron/vaporwave,
+/area/mine/explored)
 "mLL" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/machinery/door/firedoor,
@@ -40016,6 +40068,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"oxq" = (
+/obj/modular_map_root/tramstation/maintenance_lowerdorm/attachment_a,
+/turf/open/floor/iron/vaporwave,
+/area/mine/explored)
 "oxs" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /obj/structure/disposalpipe/segment{
@@ -40523,6 +40579,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
+"oGV" = (
+/obj/modular_map_root/tramstation/maintenance_lowertunnel_leftup/attachment_b,
+/turf/open/floor/iron/vaporwave,
+/area/mine/explored)
 "oGY" = (
 /obj/structure/toilet{
 	pixel_y = 8
@@ -43182,6 +43242,11 @@
 /obj/effect/spawner/random/entertainment/deck,
 /turf/open/floor/iron/dark,
 /area/station/commons/lounge)
+"pBy" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/central)
 "pBT" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Office"
@@ -45502,6 +45567,10 @@
 	},
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
+"qrD" = (
+/obj/modular_map_root/tramstation/maintenance_lowerservicecargo/attachment_a,
+/turf/open/floor/iron/vaporwave,
+/area/mine/explored)
 "qrL" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -47253,6 +47322,10 @@
 /obj/structure/fluff/tram_rail/floor,
 /turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/tram/left)
+"qXc" = (
+/obj/modular_map_root/tramstation/maintenance_lowerservicecargo/attachment_b,
+/turf/open/floor/iron/vaporwave,
+/area/mine/explored)
 "qXA" = (
 /obj/effect/turf_decal/trimline/brown/filled/corner,
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
@@ -50837,6 +50910,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
+"shN" = (
+/obj/modular_map_root/tramstation/maintenance_lowertunnel_leftup/attachment_a,
+/turf/open/floor/iron/vaporwave,
+/area/mine/explored)
 "shR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
@@ -52306,6 +52383,10 @@
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
+"sMH" = (
+/obj/modular_map_root/tramstation/maintenance_loweratmosci/attachment_b,
+/turf/open/floor/iron/vaporwave,
+/area/mine/explored)
 "sMM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/yellow/warning{
@@ -59998,6 +60079,10 @@
 /obj/item/flashlight/flare,
 /turf/open/misc/asteroid,
 /area/station/medical/chemistry)
+"vzL" = (
+/obj/modular_map_root/tramstation/maintenance_lowersecurity/attachment,
+/turf/open/floor/iron/vaporwave,
+/area/mine/explored)
 "vzO" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -63631,6 +63716,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/commons/fitness)
+"wRk" = (
+/obj/modular_map_root/tramstation/maintenance_lowercargosci/attachment_a,
+/turf/open/floor/iron/vaporwave,
+/area/mine/explored)
 "wRw" = (
 /obj/structure/cable/multilayer/multiz,
 /obj/effect/turf_decal/stripes/box,
@@ -83953,7 +84042,7 @@ afH
 afH
 dhe
 dhe
-dhe
+oxq
 dhe
 dhe
 dhe
@@ -85703,7 +85792,7 @@ dhe
 dhe
 dhe
 dhe
-dhe
+oGV
 afH
 dhe
 dhe
@@ -91871,7 +91960,7 @@ dhe
 dhe
 dhe
 dhe
-dhe
+shN
 afH
 dhe
 dhe
@@ -92868,7 +92957,7 @@ dhe
 dhe
 dhe
 dhe
-dhe
+vzL
 dhe
 dhe
 dhe
@@ -93709,7 +93798,7 @@ dhe
 dhe
 dhe
 dhe
-dhe
+eDl
 afH
 jIG
 czi
@@ -103174,7 +103263,7 @@ dhe
 dhe
 dhe
 dhe
-dhe
+qXc
 afH
 dhe
 dhe
@@ -103214,7 +103303,7 @@ afH
 afH
 afH
 afH
-afH
+jTH
 afH
 mwK
 ulS
@@ -104718,7 +104807,7 @@ dhe
 dhe
 dhe
 afH
-dhe
+qrD
 dhe
 dhe
 dhe
@@ -110401,8 +110490,8 @@ afH
 afH
 afH
 afH
-afH
-afH
+eMV
+lTI
 oys
 fkB
 fkB
@@ -110658,8 +110747,8 @@ afH
 afH
 afH
 afH
-afH
-afH
+pBy
+pBy
 pJg
 aEU
 sVC
@@ -110673,9 +110762,9 @@ lxW
 kxB
 dhe
 dhe
-dhe
 afH
-dhe
+afH
+sMH
 dhe
 dhe
 hlc
@@ -110930,9 +111019,9 @@ hYu
 kxB
 dhe
 dhe
-dhe
 afH
-dhe
+afH
+afH
 dhe
 dhe
 hlc
@@ -111185,13 +111274,13 @@ sPp
 nYZ
 hnW
 mwK
-dhe
-dhe
-dhe
 afH
-dhe
-dhe
-dhe
+afH
+afH
+afH
+afH
+afH
+afH
 mwK
 mwK
 hlc
@@ -111442,14 +111531,14 @@ kwg
 sNo
 hnW
 mwK
-dhe
-dhe
-dhe
 afH
-dhe
-dhe
-dhe
-dhe
+afH
+afH
+afH
+afH
+afH
+afH
+afH
 mwK
 fNY
 cif
@@ -111956,14 +112045,14 @@ kWP
 lNi
 tMG
 mwK
-dhe
-dhe
-dhe
 afH
-dhe
-dhe
-dhe
-dhe
+afH
+afH
+afH
+afH
+afH
+afH
+afH
 mwK
 mwf
 qrL
@@ -112213,13 +112302,13 @@ sPp
 oyL
 oTo
 mwK
-dhe
-dhe
-dhe
 afH
-dhe
-dhe
-dhe
+afH
+afH
+afH
+afH
+afH
+afH
 mwK
 mwK
 hlc
@@ -113739,7 +113828,7 @@ qxm
 afH
 afH
 afH
-afH
+wRk
 oys
 lQA
 mDS
@@ -114750,7 +114839,7 @@ pHM
 qxm
 dhe
 dhe
-dhe
+mLH
 afH
 qxm
 qxm
@@ -147167,7 +147256,7 @@ tdx
 tdx
 tdx
 afH
-dhe
+bsB
 dhe
 dhe
 dhe
@@ -156882,8 +156971,8 @@ afH
 afH
 afH
 afH
-dhe
-dhe
+afH
+kvJ
 dhe
 dhe
 ltw
@@ -158218,7 +158307,7 @@ dhe
 dhe
 dhe
 dhe
-afH
+dhe
 afH
 afH
 afH
@@ -158475,7 +158564,7 @@ dhe
 dhe
 dhe
 dhe
-afH
+dhe
 afH
 dhe
 dhe
@@ -158732,7 +158821,7 @@ dhe
 dhe
 dhe
 dhe
-afH
+dhe
 afH
 dhe
 dhe
@@ -159201,7 +159290,7 @@ dhe
 dhe
 dhe
 dhe
-dhe
+dnl
 afH
 dhe
 dhe
@@ -159244,7 +159333,7 @@ dhe
 dhe
 dhe
 dhe
-dhe
+hkZ
 dhe
 dhe
 afH
@@ -170549,7 +170638,7 @@ whz
 whz
 afH
 afH
-afH
+bBQ
 afH
 dhe
 dhe
@@ -173081,7 +173170,7 @@ dhe
 dhe
 dhe
 dhe
-dhe
+mJC
 afH
 dhe
 dhe
@@ -173379,7 +173468,7 @@ wYP
 syn
 soq
 afH
-dhe
+hTf
 dhe
 dhe
 dhe
@@ -173604,7 +173693,7 @@ dhe
 dhe
 dhe
 dhe
-dhe
+ioQ
 dhe
 lZW
 cLq

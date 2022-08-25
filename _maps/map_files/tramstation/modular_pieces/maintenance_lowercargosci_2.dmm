@@ -119,7 +119,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
 "BY" = (
-/turf/open/misc/asteroid/dug,
+/turf/open/misc/asteroid{
+	icon_state = "asteroid_dug"
+	},
 /area/station/maintenance/starboard/central)
 "CD" = (
 /obj/structure/disposalpipe/segment{
@@ -248,10 +250,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
-"SY" = (
-/obj/modular_map_root/tramstation/maintenance_lowercargosci/attachment_a,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/starboard/central)
 "Tg" = (
 /turf/template_noop,
 /area/station/maintenance/starboard/central)
@@ -312,10 +310,6 @@
 "ZI" = (
 /obj/item/pickaxe/rusted,
 /turf/open/misc/asteroid,
-/area/station/maintenance/starboard/central)
-"ZT" = (
-/obj/modular_map_root/tramstation/maintenance_lowercargosci/attachment_b,
-/turf/closed/wall,
 /area/station/maintenance/starboard/central)
 
 (1,1,1) = {"
@@ -836,7 +830,7 @@ nJ
 mi
 Vf
 mi
-SY
+mi
 nJ
 nJ
 "}
@@ -935,7 +929,7 @@ nJ
 nJ
 eY
 eY
-ZT
+NO
 YX
 nJ
 nJ

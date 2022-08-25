@@ -103,10 +103,6 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
-"w" = (
-/obj/modular_map_root/tramstation/maintenance_lowercargosci/attachment_a,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/starboard/central)
 "x" = (
 /turf/template_noop,
 /area/template_noop)
@@ -158,10 +154,6 @@
 "E" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/maintenance/starboard/central)
-"F" = (
-/obj/modular_map_root/tramstation/maintenance_lowercargosci/attachment_b,
-/turf/closed/wall,
 /area/station/maintenance/starboard/central)
 "G" = (
 /obj/structure/disposalpipe/segment,
@@ -771,7 +763,7 @@ x
 k
 C
 k
-w
+k
 x
 x
 "}
@@ -870,7 +862,7 @@ x
 x
 S
 S
-F
+u
 a
 x
 x

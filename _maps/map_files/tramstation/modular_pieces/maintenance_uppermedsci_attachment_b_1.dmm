@@ -71,20 +71,9 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/science)
-"N" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/science)
 "W" = (
 /turf/template_noop,
 /area/template_noop)
-"X" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/rack,
-/obj/effect/spawner/random/maintenance/four,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/science)
 "Z" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Science Storage"
@@ -105,7 +94,7 @@ a
 (2,1,1) = {"
 W
 z
-X
+C
 F
 a
 "}
@@ -119,22 +108,22 @@ a
 (4,1,1) = {"
 W
 u
-C
-N
+u
+H
 a
 "}
 (5,1,1) = {"
 Z
 u
-u
-u
+J
+j
 a
 "}
 (6,1,1) = {"
 W
-J
-j
-H
+a
+a
+a
 a
 "}
 (7,1,1) = {"

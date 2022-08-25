@@ -163,10 +163,6 @@
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
-"Cb" = (
-/obj/modular_map_root/tramstation/maintenance_uppermedsci/attachment_a,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
 "Cf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -249,7 +245,6 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/medical)
 "NN" = (
-/obj/modular_map_root/tramstation/maintenance_uppermedsci/attachment_b,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
 "ON" = (
@@ -711,7 +706,7 @@ KH
 Ms
 aT
 Ms
-Cb
+NN
 Ms
 Ms
 KH

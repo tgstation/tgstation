@@ -16,18 +16,6 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/science)
-"g" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/science)
-"i" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/chair/plastic{
-	dir = 4
-	},
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/science)
 "o" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/reagent_dispensers/watertank,
@@ -101,23 +89,23 @@ a
 "}
 (4,1,1) = {"
 x
+c
 R
-g
-R
+B
 a
 "}
 (5,1,1) = {"
 Z
 R
-i
-B
+b
+o
 a
 "}
 (6,1,1) = {"
 x
-c
-b
-o
+a
+a
+a
 a
 "}
 (7,1,1) = {"

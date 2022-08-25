@@ -189,7 +189,6 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
 "P" = (
-/obj/modular_map_root/tramstation/maintenance_lowersecurity/attachment,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
 "R" = (

@@ -12,7 +12,6 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/medical)
 "c" = (
-/obj/modular_map_root/tramstation/maintenance_uppermedsci/attachment_b,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/science)
 "f" = (
@@ -26,7 +25,6 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
 "j" = (
-/obj/modular_map_root/tramstation/maintenance_uppermedsci/attachment_a,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
 "k" = (
@@ -862,10 +860,10 @@ Z
 Z
 V
 U
-Z
-Z
-Z
-Z
+U
+U
+U
+U
 Z
 Z
 Z
@@ -889,10 +887,10 @@ Z
 Z
 Z
 V
-U
-U
-U
-U
+V
+k
+V
+V
 U
 Z
 Z
@@ -916,9 +914,9 @@ Z
 Z
 Z
 Z
-V
-V
-k
+Z
+Z
+Z
 V
 V
 U
