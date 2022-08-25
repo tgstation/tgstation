@@ -26727,7 +26727,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "jzC" = (
-/obj/machinery/door/firedoor/border_only/closed{
+/obj/machinery/door/window/right/directional/north{
 	dir = 8;
 	name = "Animal Pen A"
 	},
@@ -66721,7 +66721,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "xyI" = (
-/obj/machinery/door/firedoor/border_only/closed{
+/obj/machinery/door/window/left/directional/south{
 	dir = 8;
 	name = "Animal Pen B"
 	},
