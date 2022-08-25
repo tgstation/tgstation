@@ -308,6 +308,9 @@
 /obj/machinery/sleeper/syndie/fullupgrade
 	circuit = /obj/item/circuitboard/machine/sleeper/fullupgrade
 
+/obj/machinery/sleeper/self_control
+	controls_inside = TRUE
+
 /obj/machinery/sleeper/old
 	icon_state = "oldpod"
 	base_icon_state = "oldpod"

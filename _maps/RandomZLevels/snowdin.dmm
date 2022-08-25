@@ -1865,7 +1865,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/dorm)
 "fw" = (
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/self_control{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -9312,7 +9312,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/cave)
 "EN" = (
-/obj/machinery/sleeper/syndie{
+/obj/machinery/sleeper/old{
 	dir = 1
 	},
 /obj/effect/turf_decal/bot_white,
@@ -9324,7 +9324,7 @@
 /area/awaymission/snowdin/cave)
 "EP" = (
 /obj/effect/turf_decal/bot_white,
-/obj/machinery/sleeper/syndie{
+/obj/machinery/sleeper/self_control{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
