@@ -1,8 +1,4 @@
 //Anomalies, used for events. Note that these DO NOT work by themselves; their procs are called by the event datum.
-
-/// Chance of taking a step per second
-#define ANOMALY_MOVECHANCE 45
-
 /obj/effect/anomaly
 	name = "anomaly"
 	desc = "A mysterious anomaly, seen commonly only in the region of space that the station orbits..."
@@ -554,5 +550,3 @@
 		hallucination_max_duration = 300 SECONDS,
 		optional_messages = messages,
 	)
-
-#undef ANOMALY_MOVECHANCE

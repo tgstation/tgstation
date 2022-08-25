@@ -78,11 +78,11 @@
 	if(!isliving(hit_atom))
 		return
 	var/mob/living/hit_living = hit_atom
-	if(hit_living != parent.hallucinator || hit_living.stat != DEAD)
+	if(hit_living != parent.hallucinator || hit_living.stat == DEAD)
 		return
 	hit_living.Paralyze(10 SECONDS)
 	hit_living.visible_message(
-		span_danger("[hit_living] flails around wildly."),
+		span_warning("[hit_living] flails around wildly."),
 		span_userdanger("[name] pounces on you!"),
 	)
 
@@ -92,7 +92,7 @@
 	image_state = "alienh_leap"
 	image_pixel_x = -32
 	image_pixel_y = -32
-	update_icon()
+	update_appearance(UPDATE_ICON)
 
 /// Resets our icon to our initial state.
 /obj/effect/client_image_holder/hallucination/xeno/proc/set_unleaping()
@@ -100,4 +100,4 @@
 	image_state = initial(image_state)
 	image_pixel_x = initial(image_pixel_x)
 	image_pixel_y = initial(image_pixel_y)
-	update_icon()
+	update_appearance(UPDATE_ICON)

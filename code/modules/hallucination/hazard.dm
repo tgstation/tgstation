@@ -75,6 +75,7 @@
 
 /obj/effect/client_image_holder/hallucination/danger/chasm/on_hallucinator_entered(mob/living/afflicted)
 	to_chat(afflicted, span_userdanger("You fall into the chasm!"))
+	afflicted.visible_message(span_warning("[afflicted] falls to the ground suddenly!"), ignored_mobs = afflicted)
 	afflicted.Paralyze(4 SECONDS)
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, afflicted, span_notice("...It's surprisingly shallow.")), 1.5 SECONDS)
 	QDEL_IN(src, 3 SECONDS)
@@ -94,7 +95,7 @@
 	return ..()
 
 /obj/effect/client_image_holder/hallucination/danger/anomaly/process(delta_time)
-	if(DT_PROB(45, delta_time))
+	if(DT_PROB(ANOMALY_MOVECHANCE, delta_time))
 		step(src, pick(GLOB.alldirs))
 
 /obj/effect/client_image_holder/hallucination/danger/anomaly/on_hallucinator_entered(mob/living/afflicted)
