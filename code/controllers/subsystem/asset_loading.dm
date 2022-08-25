@@ -10,9 +10,9 @@ SUBSYSTEM_DEF(asset_loading)
 
 /datum/controller/subsystem/asset_loading/fire(resumed)
 	while(length(generate_queue))
-		var/datum/asset/lad = generate_queue[generate_queue.len]
+		var/datum/asset/to_load = generate_queue[generate_queue.len]
 
-		lad.queued_generation()
+		to_load.queued_generation()
 
 		if(MC_TICK_CHECK)
 			return

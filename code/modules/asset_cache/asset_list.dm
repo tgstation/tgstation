@@ -12,8 +12,8 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	return GLOB.asset_datums[type] || new type()
 
 /proc/get_asset_datum(type)
-	var/datum/asset/ass_et = GLOB.asset_datums[type] || new type()
-	return ass_et.ensure_ready()
+	var/datum/asset/loaded_asset = GLOB.asset_datums[type] || new type()
+	return loaded_asset.ensure_ready()
 
 /datum/asset
 	var/_abstract = /datum/asset
@@ -175,9 +175,9 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	if(fully_generated)
 		return
 	while(length(to_generate))
-		var/list/arg_lads = to_generate[to_generate.len]
+		var/list/stored_args = to_generate[to_generate.len]
 		to_generate.len--
-		queuedInsert(arglist(arg_lads))
+		queuedInsert(arglist(stored_args))
 		// I await my deathsquad MSO
 		if(yield && MC_TICK_CHECK_FOR(SSasset_loading))
 			return
@@ -197,7 +197,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		write_to_cache()
 	fully_generated = TRUE
 	// If we were ever in there, remove ourselves
-	SSasset_loading -= src
+	SSasset_loading.generate_queue -= src
 
 /datum/asset/spritesheet/queued_generation()
 	realize_spritesheets(yield = TRUE)
