@@ -84,13 +84,25 @@
 	UnregisterSignal(owner, COMSIG_MOB_SAY)
 	UnregisterSignal(owner, COMSIG_MOB_CLICKON)
 
-/datum/mutation/human/hulk/proc/handle_speech(original_message, wrapped_message)
+/datum/mutation/human/hulk/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 
-	var/message = wrapped_message[1]
+	var/message = speech_args[SPEECH_MESSAGE]
 	if(message)
 		message = "[replacetext(message, ".", "!")]!!"
-	wrapped_message[1] = message
+		var/list/ork_words = strings("ork_replacement.json", "ork")
+		for(var/key in ork_words)
+			var/value = ork_words[key]
+			if(islist(value))
+				value = pick(value)
+			if(uppertext(key) == key)
+				value = uppertext(value)
+			if(capitalize(key) == key)
+				value = capitalize(value)
+			message = replacetextEx(message,regex("\b[REGEX_QUOTE(key)]\b","ig"), value)
+		message = trim(message)
+
+	speech_args[SPEECH_MESSAGE] = message
 	return COMPONENT_UPPERCASE_SPEECH
 
 /// How many steps it takes to throw the mob
