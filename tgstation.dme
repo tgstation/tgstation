@@ -1343,6 +1343,7 @@
 #include "code\game\machinery\scan_gate.dm"
 #include "code\game\machinery\sheetifier.dm"
 #include "code\game\machinery\shieldgen.dm"
+#include "code\game\machinery\sleeper.dm"
 #include "code\game\machinery\slotmachine.dm"
 #include "code\game\machinery\spaceheater.dm"
 #include "code\game\machinery\stasis.dm"
