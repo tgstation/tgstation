@@ -9312,7 +9312,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/cave)
 "EN" = (
-/obj/machinery/sleeper/old{
+/obj/machinery/sleeper/self_control{
 	dir = 1
 	},
 /obj/effect/turf_decal/bot_white,
