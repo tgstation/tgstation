@@ -238,7 +238,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 	var/owner_ref // A ref to our owner. Doesn't need to be weak because mobs have unique refs
 	var/obj/machinery/ticket_machine/source
 
-/obj/item/ticket_machine_ticket/Initialize(loc, num)
+/obj/item/ticket_machine_ticket/Initialize(mapload, num)
 	. = ..()
 	number = num
 	if(!isnull(num))
