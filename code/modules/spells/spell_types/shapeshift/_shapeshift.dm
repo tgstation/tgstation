@@ -1,5 +1,7 @@
 /datum/action/cooldown/spell/shapeshift
+	button_icon_state = "shapeshift"
 	school = SCHOOL_TRANSMUTATION
+	cooldown_time = 10 SECONDS
 
 	/// Whehter we revert to our human form on death.
 	var/revert_on_death = TRUE
@@ -158,6 +160,18 @@
 		stack_trace("shapeshift holder created outside mob/living")
 		return INITIALIZE_HINT_QDEL
 	stored = caster
+
+	// Transfer the Shapeshift spell over, if we actually own it
+	if(source.owner == caster)
+		source.Grant(shape)
+
+	// Also transfer over any actions bound to them specifically - this leaves behind item actions and similar
+	// (Mindbound actions are automatically tranferred over, so we don't need to worry about it)
+	for(var/datum/action/bodybound_action as anything in caster.actions)
+		if(bodybound_action.target != caster)
+			continue
+		bodybound_action.Grant(shape)
+
 	if(stored.mind)
 		stored.mind.transfer_to(shape)
 	stored.forceMove(src)
@@ -219,6 +233,18 @@
 	UnregisterSignal(shape, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
 	UnregisterSignal(stored, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
 	restoring = TRUE
+
+	// Give Shapeshift back to the OG, if we actually own it
+	// (Shapeshift into mindswap may change the action's owner)
+	if(!QDELETED(source) && source.owner == shape)
+		source.Grant(stored)
+
+	// Also transfer their bodybound actions back
+	for(var/datum/action/bodybound_action as anything in shape.actions)
+		if(bodybound_action.target != stored)
+			continue
+		bodybound_action.Grant(stored)
+
 	stored.forceMove(shape.loc)
 	stored.notransform = FALSE
 	if(shape.mind)

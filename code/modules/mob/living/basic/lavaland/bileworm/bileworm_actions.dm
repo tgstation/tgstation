@@ -13,7 +13,10 @@
 	var/turf/unburrow_turf = get_unburrow_turf(burrower, target)
 	if(!unburrow_turf) // means all the turfs nearby are station turfs or something, not lavaland
 		to_chat(burrower, span_warning("Couldn't burrow anywhere near the target!"))
-		return //just put it on cooldown and let the other ability reactivate, you couldn't burrow and that's okay.
+		if(burrower.ai_controller?.ai_status == AI_STATUS_ON)
+			//this is a valid reason to give up on a target
+			burrower.ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] = null
+		return
 	playsound(burrower, 'sound/effects/break_stone.ogg', 50, TRUE)
 	new /obj/effect/temp_visual/mook_dust(get_turf(burrower))
 	burrower.status_flags |= GODMODE

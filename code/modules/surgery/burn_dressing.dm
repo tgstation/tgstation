@@ -146,6 +146,6 @@
 
 /datum/surgery_step/dress/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, fail_prob = 0)
 	..()
-	if(istype(tool, /obj/item/stack))
+	if(isstack(tool))
 		var/obj/item/stack/used_stack = tool
 		used_stack.use(1)

@@ -169,7 +169,7 @@
 				var/turf/T
 				for(var/i in 1 to 10)
 					if(prob(15))
-						shuttle_spawns.Add(/obj/item/reagent_containers/glass/bottle)
+						shuttle_spawns.Add(/obj/item/reagent_containers/cup/bottle)
 					else if(prob(15))
 						shuttle_spawns.Add(/obj/item/reagent_containers/syringe)
 					else if(prob(25))
@@ -177,8 +177,8 @@
 					T = pick_n_take(empty_shuttle_turfs)
 					new infected_assistant(T)
 				shuttle_spawns.Add(/obj/structure/closet/crate)
-				shuttle_spawns.Add(/obj/item/reagent_containers/glass/bottle/pierrot_throat)
-				shuttle_spawns.Add(/obj/item/reagent_containers/glass/bottle/magnitis)
+				shuttle_spawns.Add(/obj/item/reagent_containers/cup/bottle/pierrot_throat)
+				shuttle_spawns.Add(/obj/item/reagent_containers/cup/bottle/magnitis)
 
 			if(DEPARTMENT_RESUPPLY)
 				var/list/crate_types = list(

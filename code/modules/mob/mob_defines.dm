@@ -176,13 +176,6 @@
 	///Calls relay_move() to whatever this is set to when the mob tries to move
 	var/atom/movable/remote_control
 
-	/**
-	  * The sound made on death
-	  *
-	  * leave null for no sound. used for *deathgasp
-	  */
-	var/deathsound
-
 	///the current turf being examined in the stat panel
 	var/turf/listed_turf = null
 

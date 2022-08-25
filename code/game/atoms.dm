@@ -272,8 +272,8 @@
 	// The integrity to max_integrity ratio is still preserved.
 	set_custom_materials(custom_materials)
 
-	ComponentInitialize()
-	InitializeAIController()
+	if(ispath(ai_controller))
+		ai_controller = new ai_controller(src)
 
 	return INITIALIZE_HINT_NORMAL
 
@@ -290,10 +290,6 @@
  */
 /atom/proc/LateInitialize()
 	set waitfor = FALSE
-
-/// Put your [AddComponent] calls here
-/atom/proc/ComponentInitialize()
-	return
 
 /**
  * Top level of the destroy chain for most atoms
@@ -1026,32 +1022,10 @@
 	return
 
 /**
- * Implement the behaviour for when a user click drags a storage object to your atom
+ * If someone's trying to dump items onto our atom, where should they be dumped to?
  *
- * This behaviour is usually to mass transfer, but this is no longer a used proc as it just
- * calls the underyling /datum/component/storage dump act if a component exists
- *
- * TODO these should be purely component items that intercept the atom clicks higher in the
- * call chain
+ * Return a loc to place objects, or null to stop dumping.
  */
-/atom/proc/storage_contents_dump_act(obj/item/src_object, mob/user)
-	if(src_object.atom_storage)
-		to_chat(user, span_notice("You start dumping out the contents of \the [src_object] into \the [src]."))
-
-		if(!do_after(user, 20, target = src))
-			return FALSE
-
-		src_object.atom_storage.handle_mass_transfer(user, src, /* override = */ TRUE)
-
-		atom_storage.orient_to_hud(user)
-		src_object.atom_storage?.orient_to_hud(user)
-		user.active_storage?.refresh_views()
-
-		return TRUE
-
-	return FALSE
-
-///Get the best place to dump the items contained in the source storage item?
 /atom/proc/get_dumping_location()
 	return null
 
@@ -1947,16 +1921,6 @@
 	if(!source && ignore_stealthed_admins && client?.holder?.fakekey)
 		return list()
 	return ..()
-
-/**
-* Instantiates the AI controller of this atom. Override this if you want to assign variables first.
-*
-* This will work fine without manually passing arguments.
-
-+*/
-/atom/proc/InitializeAIController()
-	if(ispath(ai_controller))
-		ai_controller = new ai_controller(src)
 
 /atom/MouseEntered(location, control, params)
 	SSmouse_entered.hovers[usr.client] = src

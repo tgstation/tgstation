@@ -36,7 +36,7 @@
 	return(FIRELOSS)
 
 /obj/item/clothing/head/chefhat/relaymove(mob/living/user, direction)
-	if(!istype(user, /mob/living/simple_animal/mouse) || !isliving(loc) || !prob(mouse_control_probability))
+	if(!ismouse(user) || !isliving(loc) || !prob(mouse_control_probability))
 		return
 	var/mob/living/L = loc
 	if(L.incapacitated(IGNORE_RESTRAINTS)) //just in case
@@ -105,7 +105,7 @@
 
 	create_storage(type = /datum/storage/pockets/small/fedora/detective)
 
-	new /obj/item/reagent_containers/food/drinks/flask/det(src)
+	new /obj/item/reagent_containers/cup/glass/flask/det(src)
 
 /obj/item/clothing/head/fedora/det_hat/examine(mob/user)
 	. = ..()

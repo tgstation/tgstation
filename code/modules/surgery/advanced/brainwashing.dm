@@ -41,7 +41,7 @@
 /datum/surgery_step/brainwash/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	objective = tgui_input_text(user, "Choose the objective to imprint on your victim's brain", "Brainwashing")
 	if(!objective)
-		return -1
+		return SURGERY_STEP_FAIL
 	display_results(user, target, span_notice("You begin to brainwash [target]..."),
 		span_notice("[user] begins to fix [target]'s brain."),
 		span_notice("[user] begins to perform surgery on [target]'s brain."))

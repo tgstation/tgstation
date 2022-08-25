@@ -148,8 +148,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	// apply materials properly from the default custom_materials value
 	set_custom_materials(custom_materials)
 
-	ComponentInitialize()
-
 	if(uses_integrity)
 		atom_integrity = max_integrity
 
@@ -453,24 +451,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/Bless()
 	new /obj/effect/blessing(src)
-
-/turf/storage_contents_dump_act(atom/src_object, mob/user)
-	. = ..()
-	if(.)
-		return
-	if(!src_object.atom_storage)
-		return
-	var/atom/resolve_parent = src_object.atom_storage.real_location?.resolve()
-	if(!resolve_parent)
-		return FALSE
-	if(length(resolve_parent.contents))
-		to_chat(user, span_notice("You start dumping out the contents of [src_object]..."))
-		if(!do_after(user, 20, target=resolve_parent))
-			return FALSE
-
-	src_object.atom_storage.remove_all(src)
-
-	return TRUE
 
 //////////////////////////////
 //Distance procs

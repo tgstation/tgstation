@@ -28,10 +28,11 @@
 	if(isnum(variant))
 		variant = rand(1,3)
 	RegisterSignal(src, COMSIG_ATOM_EXPOSE_REAGENT, .proc/on_expose_reagent)
+	RegisterSignal(src, COMSIG_STORAGE_DUMP_CONTENT, .proc/on_storage_dump)
 
 /obj/machinery/griddle/Destroy()
 	QDEL_NULL(grill_loop)
-	. = ..()
+	return ..()
 
 /obj/machinery/griddle/crowbar_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -76,7 +77,6 @@
 		I.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)
 		to_chat(user, span_notice("You place [I] on [src]."))
 		AddToGrill(I, user)
-		update_appearance()
 	else
 		return ..()
 
@@ -99,6 +99,7 @@
 	RegisterSignal(item_to_grill, COMSIG_GRILL_COMPLETED, .proc/GrillCompleted)
 	RegisterSignal(item_to_grill, COMSIG_PARENT_QDELETING, .proc/ItemRemovedFromGrill)
 	update_grill_audio()
+	update_appearance()
 
 /obj/machinery/griddle/proc/ItemRemovedFromGrill(obj/item/I)
 	SIGNAL_HANDLER
@@ -127,9 +128,24 @@
 	default_unfasten_wrench(user, tool, time = 2 SECONDS)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-///Override to prevent storage dumping onto the griddle until I figure out how to navigate the mess that is storage code to allow me to nicely move the dumped objects onto the griddle.
-/obj/machinery/griddle/get_dumping_location()
-	return
+/obj/machinery/griddle/proc/on_storage_dump(datum/source, obj/item/storage_source, mob/user)
+	SIGNAL_HANDLER
+
+	for(var/obj/item/to_dump in storage_source)
+		if(to_dump.loc != storage_source)
+			continue
+		if(griddled_objects.len >= max_items)
+			break
+
+		if(!storage_source.atom_storage.attempt_remove(to_dump, src, silent = TRUE))
+			continue
+
+		to_dump.pixel_x = to_dump.base_pixel_x + rand(-5, 5)
+		to_dump.pixel_y = to_dump.base_pixel_y + rand(-5, 5)
+		AddToGrill(to_dump, user)
+
+	to_chat(user, span_notice("You dump out [storage_source] onto [src]."))
+	return STORAGE_DUMP_HANDLED
 
 /obj/machinery/griddle/process(delta_time)
 	..()

@@ -59,7 +59,7 @@
 	if(!holder)
 		return FALSE
 
-	if(!istype(I, /obj/item/card/id))
+	if(!isidcard(I))
 		return FALSE
 
 	if(stored_card)

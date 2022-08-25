@@ -123,7 +123,7 @@
 "cm" = (
 /obj/structure/table/optable,
 /obj/item/storage/backpack/explorer,
-/obj/item/reagent_containers/food/drinks/soda_cans/cola,
+/obj/item/reagent_containers/cup/soda_cans/cola,
 /obj/item/restraints/handcuffs/cable/zipties/used,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/powered/graveyard_shuttle)
@@ -227,7 +227,7 @@
 /area/ruin/unpowered/elephant_graveyard)
 "lK" = (
 /obj/structure/cable,
-/obj/item/reagent_containers/glass/bottle/frostoil{
+/obj/item/reagent_containers/cup/bottle/frostoil{
 	desc = "A small bottle. Contains cold sauce. There's a label on here: APPLY ON SEVERE BURNS.";
 	volume = 10
 	},
@@ -620,7 +620,7 @@
 "XY" = (
 /obj/structure/table,
 /obj/structure/cable,
-/obj/item/reagent_containers/glass/bottle/plasma{
+/obj/item/reagent_containers/cup/bottle/plasma{
 	volume = 25
 	},
 /turf/open/misc/asteroid/basalt/wasteland,
