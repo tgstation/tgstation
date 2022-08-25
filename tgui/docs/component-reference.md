@@ -667,7 +667,7 @@ to perform some sort of action), there is a way to do that:
 - `label: string|InfernoNode` - Item label.
 - `labelWrap: boolean` - Lets the label wrap and makes it not take the minimum width.
 - `labelColor: string` - Sets the color of the label.
-- `color: string` - Sets the color of the text.
+- `color: string` - Sets the color of the content text.
 - `textAlign: string` - Align the content text.
   - `left` (default)
   - `center`
