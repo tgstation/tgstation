@@ -849,7 +849,7 @@
 		))
 
 /obj/item/storage/belt/saddlepouch
-	name = "saddlepack"
+	name = "saddlepouch"
 	desc = "A set of pouches specifically designed to be either carried on a belt or saddled on a mount and seamlessly transfered between the two."
 	icon_state = "saddlepack"
 
