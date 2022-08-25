@@ -305,6 +305,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 	if(istype(sacrificial, /mob/living/basic/sheep))
 		var/mob/living/basic/sheep/sacrificial_lamb = sacrificial
+		if(sacrificial_lamb.cult_converted)
+			for(var/cultists in invokers)
+				to_chat(cultists, span_cultitalic("[sacrificial] has already been sacrificed!"))
+				return FALSE
 		for(var/cultists in invokers)
 			to_chat(cultists, span_cultitalic("This feels a bit too cliché, don't you think?"))
 		sacrificial_lamb.cult_time()
