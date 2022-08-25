@@ -43,10 +43,10 @@
 			return TRUE
 		if("edit_message")
 			var/old_message = trophy.message
-			var/new_message = tgui_input_text(user, "New trophy message?", "Message Editing", trophy.message)
+			var/new_message = tgui_input_text(user, "New trophy message?", "Message Editing", trophy.message, max_length = MAX_BROADCAST_LEN)
 			if(!new_message)
 				return
-			trophy.message = trim(html_encode(new_message), MAX_BROADCAST_LEN)
+			trophy.message = new_message
 			log_admin("[key_name(user)] has edited the message of trophy made by [trophy.placer_key] from \"[old_message]\" to \"[new_message]\".")
 			return TRUE
 		if("edit_path")
@@ -54,6 +54,6 @@
 			var/new_path = tgui_input_text(user, "New trophy path?", "Path Editing", trophy.path)
 			if(!new_path)
 				return
-			trophy.path = trim(html_encode(new_path))
+			trophy.path = new_path
 			log_admin("[key_name(user)] has edited the item path of trophy made by [trophy.placer_key] from \"[old_path]\" to \"[new_path]\".")
 			return TRUE
