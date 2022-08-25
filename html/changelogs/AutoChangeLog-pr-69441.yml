@@ -1,0 +1,4 @@
+author: "Jackal-boop"
+delete-after: True
+changes: 
+  - bugfix: "a mining intercom being the incorrect type"
