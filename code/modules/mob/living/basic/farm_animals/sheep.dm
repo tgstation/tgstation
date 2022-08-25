@@ -4,6 +4,7 @@
 	icon = 'icons/mob/sheep.dmi'
 	icon_state = "sheep"
 	icon_dead = "sheep_dead"
+	base_icon_state = "sheep"
 	gender = FEMALE
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST
 	speak_emote = list("baas","bleats")
@@ -25,22 +26,25 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 	blood_volume = BLOOD_VOLUME_NORMAL
 	ai_controller = /datum/ai_controller/basic_controller/sheep
-	var/cult_converted //were we sacrificed by cultists?
+
+	/// Were we sacrificed by cultists?
+	var/cult_converted = FALSE
 
 /mob/living/basic/sheep/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/mob_harvest, /obj/item/razor, /obj/item/food/grown/grass, /obj/item/stack/sheet/cotton/wool, "soft wool", 10, 3 MINUTES, 30 SECONDS, 5 SECONDS)
-	RegisterSignal(src, COMSIG_LIVING_HARVEST_UPDATE, .proc/update_harvest_icon)
+	AddComponent(/datum/component/mob_harvest, \
+		harvest_tool = /obj/item/razor, \
+		fed_item = /obj/item/food/grown/grass, \
+		produced_item_typepath = /obj/item/stack/sheet/cotton/wool, \
+		produced_item_desc = "soft wool", \
+		max_ready = 10, \
+		item_generation_wait = 3 MINUTES, \
+		item_reduction_time = 30 SECONDS, \
+		item_harvest_time = 5 SECONDS, \
+		item_harvest_sound = 'sound/surgery/scalpel1.ogg', \
+	)
 	update_appearance(UPDATE_ICON)
-
-/mob/living/basic/sheep/proc/update_harvest_icon()
-	SIGNAL_HANDLER
-	update_appearance(UPDATE_ICON)
-
-/mob/living/basic/sheep/update_icon_state()
-	. = ..()
-	var/datum/component/mob_harvest/harvest_comp = GetComponent(/datum/component/mob_harvest)
-	icon_state = "[initial(icon_state)][harvest_comp.amount_ready < 1 ? "_harvested" : null]"
+	RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, .proc/on_sacrificed)
 
 /mob/living/basic/sheep/update_overlays()
 	. = ..()
@@ -49,24 +53,33 @@
 	if(cult_converted)
 		. += "hat"
 
-/mob/living/basic/sheep/proc/cult_time()
+/// Signal proc for [COMSIG_LIVING_CULT_SACRIFICED] to have special interaction with sacrificing a lamb
+/mob/living/basic/sheep/proc/on_sacrificed(datum/source, list/invokers)
+	SIGNAL_HANDLER
+
 	if(cult_converted)
-		return
+		for(var/mob/living/cultist as anything in invokers)
+			to_chat(cultist, span_cultitalic("[src] has already been sacrificed!"))
+		return STOP_SACRIFICE
+
+	for(var/mob/living/cultist as anything in invokers)
+		to_chat(cultist, span_cultitalic("This feels a bit too cliché, don't you think?"))
+
 	cult_converted = TRUE
-	say("BAAAAAAAAH!")
+	INVOKE_ASYNC(src, /atom/movable.proc/say, "BAAAAAAAAH!")
 	update_appearance(UPDATE_ICON)
+	return STOP_SACRIFICE
 
 /mob/living/basic/sheep/vv_edit_var(vname, vval)
-	if(vname == NAMEOF(src, cult_converted))
-		if(vval == cult_converted)
-			return FALSE
-		if(vval)
-			cult_time()
-		..()
-		if(!cult_converted)
-			update_appearance(UPDATE_ICON)
-		return TRUE
-	return ..()
+	if(vname != NAMEOF(src, cult_converted))
+		return ..()
+
+	if(vval == cult_converted)
+		return FALSE
+	. = ..()
+	if(.)
+		update_appearance(UPDATE_ICON)
+	return .
 
 /datum/ai_controller/basic_controller/sheep
 	ai_traits = STOP_MOVING_WHEN_PULLED
