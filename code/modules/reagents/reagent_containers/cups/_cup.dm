@@ -202,7 +202,7 @@
 /obj/item/reagent_containers/cup/beaker
 	name = "beaker"
 	desc = "A beaker. It can hold up to 50 units."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "beaker"
 	inhand_icon_state = "beaker"
 	worn_icon_state = "beaker"
@@ -219,7 +219,7 @@
 /obj/item/reagent_containers/cup/beaker/jar
 	name = "honey jar"
 	desc = "A jar for honey. It can hold up to 50 units of sweet delight."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "vapour"
 
 /obj/item/reagent_containers/cup/beaker/large
@@ -381,7 +381,7 @@
 	name = "pestle"
 	desc = "An ancient, simple tool used in conjunction with a mortar to grind or juice items."
 	w_class = WEIGHT_CLASS_SMALL
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "pestle"
 	force = 7
 

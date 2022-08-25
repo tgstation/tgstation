@@ -226,7 +226,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 /obj/item/food/urinalcake
 	name = "urinal cake"
 	desc = "The noble urinal cake, protecting the station's pipes from the station's pee. Do not eat."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "urinalcake"
 	w_class = WEIGHT_CLASS_TINY
 	food_reagents = list(/datum/reagent/chlorine = 3, /datum/reagent/ammonia = 1)

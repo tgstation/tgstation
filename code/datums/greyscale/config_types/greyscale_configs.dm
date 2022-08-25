@@ -234,7 +234,7 @@
 
 /datum/greyscale_config/plush_lizard
 	name = "Plushie Lizard"
-	icon_file = 'icons/obj/plushes.dmi'
+	icon_file = 'icons/obj/toys/plushes.dmi'
 	json_config = 'code/datums/greyscale/json_configs/plushie_lizard.json'
 
 /datum/greyscale_config/flower_simple
@@ -249,22 +249,22 @@
 
 /datum/greyscale_config/cleric_mace
 	name = "Base Cleric Mace"
-	icon_file = 'icons/obj/items/cleric_mace.dmi'
+	icon_file = 'icons/obj/weapons/cleric_mace.dmi'
 	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace.json'
 
 /datum/greyscale_config/cleric_mace_lefthand
 	name = "Base Held Cleric Mace, Left"
-	icon_file = 'icons/obj/items/cleric_mace.dmi'
+	icon_file = 'icons/obj/weapons/cleric_mace.dmi'
 	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_lefthand.json'
 
 /datum/greyscale_config/cleric_mace_righthand
 	name = "Base Held Cleric Mace, Right"
-	icon_file = 'icons/obj/items/cleric_mace.dmi'
+	icon_file = 'icons/obj/weapons/cleric_mace.dmi'
 	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_righthand.json'
 
 /datum/greyscale_config/cleric_mace_worn
 	name = "Base Worn Cleric Mace"
-	icon_file = 'icons/obj/items/cleric_mace.dmi'
+	icon_file = 'icons/obj/weapons/cleric_mace.dmi'
 	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_worn.json'
 
 /datum/greyscale_config/cleric_mace/gold
@@ -284,22 +284,22 @@
 
 /datum/greyscale_config/cleric_mace_worn/gold
 	name = "Gold Worn Cleric Mace"
-	icon_file = 'icons/obj/items/cleric_mace.dmi'
+	icon_file = 'icons/obj/weapons/cleric_mace.dmi'
 	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_worn_gold.json'
 
 /datum/greyscale_config/ceremonial_blade
 	name = "Base Ceremonial Blade"
-	icon_file = 'icons/obj/items/ritual_weapon.dmi'
+	icon_file = 'icons/obj/weapons/ritual_weapon.dmi'
 	json_config = 'code/datums/greyscale/json_configs/items/ceremonial_blade.json'
 
 /datum/greyscale_config/ceremonial_blade_lefthand
 	name = "Base Held Ceremonial Blade, Left"
-	icon_file = 'icons/obj/items/ritual_weapon.dmi'
+	icon_file = 'icons/obj/weapons/ritual_weapon.dmi'
 	json_config = 'code/datums/greyscale/json_configs/items/ceremonial_blade_lefthand.json'
 
 /datum/greyscale_config/ceremonial_blade_righthand
 	name = "Base Held Ceremonial Blade, Right"
-	icon_file = 'icons/obj/items/ritual_weapon.dmi'
+	icon_file = 'icons/obj/weapons/ritual_weapon.dmi'
 	json_config = 'code/datums/greyscale/json_configs/items/ceremonial_blade_righthand.json'
 
 /datum/greyscale_config/beret
@@ -332,42 +332,42 @@
 
 /datum/greyscale_config/giftdeliverybox
 	name = "Gift Box"
-	icon_file = 'icons/obj/storage.dmi'
+	icon_file = 'icons/obj/storage/storage.dmi'
 	json_config = 'code/datums/greyscale/json_configs/giftdeliverybox.json'
 
 /datum/greyscale_config/giftdeliverycloset
 	name = "Gift Closet"
-	icon_file = 'icons/obj/storage.dmi'
+	icon_file = 'icons/obj/storage/storage.dmi'
 	json_config = 'code/datums/greyscale/json_configs/giftdeliverycloset.json'
 
 /datum/greyscale_config/giftdeliverycrate
 	name = "Gift Crate"
-	icon_file = 'icons/obj/storage.dmi'
+	icon_file = 'icons/obj/storage/storage.dmi'
 	json_config = 'code/datums/greyscale/json_configs/giftdeliverycrate.json'
 
 /datum/greyscale_config/giftdeliverypackage5
 	name = "Gift Package 5 (Biggest)"
-	icon_file = 'icons/obj/storage.dmi'
+	icon_file = 'icons/obj/storage/storage.dmi'
 	json_config = 'code/datums/greyscale/json_configs/giftdeliverypackage5.json'
 
 /datum/greyscale_config/giftdeliverypackage4
 	name = "Gift Package 4"
-	icon_file = 'icons/obj/storage.dmi'
+	icon_file = 'icons/obj/storage/storage.dmi'
 	json_config = 'code/datums/greyscale/json_configs/giftdeliverypackage4.json'
 
 /datum/greyscale_config/giftdeliverypackage3
 	name = "Gift Package 3"
-	icon_file = 'icons/obj/storage.dmi'
+	icon_file = 'icons/obj/storage/storage.dmi'
 	json_config = 'code/datums/greyscale/json_configs/giftdeliverypackage3.json'
 
 /datum/greyscale_config/giftdeliverypackage2
 	name = "Gift Package 2"
-	icon_file = 'icons/obj/storage.dmi'
+	icon_file = 'icons/obj/storage/storage.dmi'
 	json_config = 'code/datums/greyscale/json_configs/giftdeliverypackage2.json'
 
 /datum/greyscale_config/giftdeliverypackage1
 	name = "Gift Package 1 (Smallest)"
-	icon_file = 'icons/obj/storage.dmi'
+	icon_file = 'icons/obj/storage/storage.dmi'
 	json_config = 'code/datums/greyscale/json_configs/giftdeliverypackage1.json'
 
 /datum/greyscale_config/wrap_paper

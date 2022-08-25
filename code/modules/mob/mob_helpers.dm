@@ -67,12 +67,12 @@
 		if(limb_zone in blacklisted_parts)
 			continue
 		if(even_weights)
-			limbs += limb_zone[1]
+			limbs[limb_zone] = 1
 			continue
 		if(limb_zone == BODY_ZONE_CHEST || limb_zone == BODY_ZONE_HEAD)
-			limbs += limb_zone[1]
+			limbs[limb_zone] = 1
 		else
-			limbs += limb_zone[4]
+			limbs[limb_zone] = 4
 
 	if(base_zone && !(check_zone(base_zone) in limbs))
 		base_zone = null //check if the passed zone is infact valid

@@ -1,0 +1,5 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - bugfix: "cooked pig meat is no longer GROSS, raw pig meat is GORE instead of GROSS"
+  - code_imp: "meat.dm has been split into several different files"
