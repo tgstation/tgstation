@@ -1,0 +1,9 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes: 
+  - bugfix: "Returning a recursive table from lua will no longer crash the server."
+  - bugfix: "Running an empty string as lua code will no longer crash the server."
+  - qol: "`args`, `contents`, `vis_contents`, and `vis_locs` lists are now directly accessible through lua scripting."
+  - qol: "In lua scripting, datums have a `vars` field and lists have a `entries` field. These fields allow you to access and modify the vars of a datum and the entries of a list, respectively, by index, instead of needing to use the `get_var` and `set_var` methods on datums, and the `get` and `set` methods on lists."
+  - bugfix: "Fixed repeat lua chunks not being viewable through the admin message href."
+  - qol: "In the lua UI, strings will be wrapped in double quotes and have their own double quotes escaped, to distinguish them from nulls, functions, threads, and DM resources."

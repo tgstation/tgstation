@@ -1,7 +1,7 @@
 /obj/item/melee/baton
 	name = "police baton"
 	desc = "A wooden truncheon for beating criminal scum. Left click to stun, right click to harm."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "classic_baton"
 	inhand_icon_state = "classic_baton"
 	worn_icon_state = "classic_baton"
@@ -271,7 +271,7 @@
 /obj/item/conversion_kit
 	name = "conversion kit"
 	desc = "A strange box containing wood working tools and an instruction paper to turn stun batons into something else."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "uk"
 	custom_price = PAYCHECK_COMMAND * 4.5
 
@@ -348,7 +348,7 @@
 /obj/item/melee/baton/telescopic/contractor_baton
 	name = "contractor baton"
 	desc = "A compact, specialised baton assigned to Syndicate contractors. Applies light electrical shocks to targets."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "contractor_baton"
 	worn_icon_state = "contractor_baton"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'

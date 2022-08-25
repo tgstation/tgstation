@@ -1,7 +1,7 @@
 /obj/item/hypernoblium_crystal
 	name = "Hypernoblium Crystal"
 	desc = "Crystalized oxygen and hypernoblium to pressureproof your clothes."
-	icon = 'icons/obj/atmos.dmi'
+	icon = 'icons/obj/atmospherics/atmos.dmi'
 	icon_state = "hypernoblium_crystal"
 	var/uses = 2
 

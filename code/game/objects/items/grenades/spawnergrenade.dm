@@ -1,7 +1,7 @@
 /obj/item/grenade/spawnergrenade
 	desc = "It will unleash an unspecified anomaly in the surrounding vicinity."
 	name = "delivery grenade"
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/weapons/grenade.dmi'
 	icon_state = "delivery"
 	inhand_icon_state = "flashbang"
 	var/spawner_type = null // must be an object path

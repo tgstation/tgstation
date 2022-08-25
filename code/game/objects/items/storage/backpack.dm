@@ -36,7 +36,7 @@
 /obj/item/bag_of_holding_inert
 	name = "inert bag of holding"
 	desc = "What is currently a just an unwieldly block of metal with a slot ready to accept a bluespace anomaly core."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "brokenpack"
 	inhand_icon_state = "brokenpack"
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
