@@ -333,6 +333,10 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	else
 		to_generate += list(args.Copy())
 
+// LEMON NOTE
+// A GOON CODER SAYS BAD ICON ERRORS CAN BE THROWN BY THE "ICON CACHE"
+// APPERANTLY IT MAKES ICONS IMMUTABLE
+// LOOK INTO USING THE MUTABLE APPEARANCE PATTERN HERE
 /datum/asset/spritesheet/proc/queuedInsert(sprite_name, icon/I, icon_state="", dir=SOUTH, frame=1, moving=FALSE)
 	I = icon(I, icon_state=icon_state, dir=dir, frame=frame, moving=moving)
 	if (!I || !length(icon_states(I)))  // that direction or state doesn't exist
@@ -348,8 +352,11 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	if (size)
 		var/position = size[SPRSZ_COUNT]++
 		var/icon/sheet = size[SPRSZ_ICON]
+		var/icon/sheet_copy = icon(sheet)
 		size[SPRSZ_STRIPPED] = null
-		sheet.Insert(I, icon_state=sprite_name)
+		sheet_copy.Insert(I, icon_state=sprite_name)
+		size[SPRSZ_ICON] = sheet_copy
+		
 		sprites[sprite_name] = list(size_id, position)
 	else
 		sizes[size_id] = size = list(1, I, null)
