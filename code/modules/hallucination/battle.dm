@@ -125,8 +125,8 @@
 /datum/hallucination/battle/e_sword/start()
 	var/turf/source = random_far_turf()
 
-	hallucinator.playsound_local(source, 'sound/weapons/saberon.ogg',15, 1)
-	addtimer(CALLBACK(src, .proc/stab_loop, source, rand(4, 8)), 0.2 SECONDS)
+	hallucinator.playsound_local(source, 'sound/weapons/saberon.ogg', 15, 1)
+	addtimer(CALLBACK(src, .proc/stab_loop, source, rand(4, 8)), CLICK_CD_MELEE)
 	return TRUE
 
 /// The main sound loop of someone being esworded.

@@ -40,6 +40,7 @@
 	/// The image that represents our projectile itself
 	var/image/fake_bullet
 
+	var/hal_icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	var/hal_icon_state
 	var/hal_fire_sound
 	var/hal_hitsound
@@ -79,7 +80,7 @@
 	if(hal_fire_sound)
 		parent.hallucinator.playsound_local(get_turf(src), hal_fire_sound, 60, TRUE)
 
-	fake_bullet = image('icons/obj/weapons/guns/projectiles.dmi', src, hal_icon_state, ABOVE_MOB_LAYER)
+	fake_bullet = image(hal_icon, src, hal_icon_state, ABOVE_MOB_LAYER)
 	parent.hallucinator.client?.images += fake_bullet
 	return ..()
 
@@ -211,6 +212,10 @@
 	hit_duration_wall = 10
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 
+	ricochets_max = 50
+	ricochet_chance = 80
+	reflectable = REFLECT_NORMAL // No idea if this works
+
 /obj/projectile/hallucination/laser/apply_effect_to_hallucinator(mob/living/afflicted)
 	afflicted.adjustStaminaLoss(20)
 	afflicted.blur_eyes(2)
@@ -227,7 +232,7 @@
 	hal_impact_effect_wall = null
 
 /obj/projectile/hallucination/taser/apply_effect_to_hallucinator(mob/living/afflicted)
-	afflicted.Paralyze(100)
+	afflicted.Paralyze(10 SECONDS)
 	afflicted.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/stutter)
 	if(HAS_TRAIT(afflicted, TRAIT_HULK))
 		afflicted.say(pick(
@@ -253,8 +258,12 @@
 	hit_duration = 4
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 
+	ricochets_max = 50
+	ricochet_chance = 80
+	reflectable = REFLECT_NORMAL // No idea if this works
+
 /obj/projectile/hallucination/disabler/apply_effect_to_hallucinator(mob/living/afflicted)
-	afflicted.adjustStaminaLoss(25)
+	afflicted.adjustStaminaLoss(30)
 
 /obj/projectile/hallucination/ebow
 	name = "bolt"
@@ -267,9 +276,10 @@
 	hal_impact_effect_wall = null
 
 /obj/projectile/hallucination/ebow/apply_effect_to_hallucinator(mob/living/afflicted)
-	afflicted.Paralyze(10 SECONDS)
-	afflicted.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/speech/stutter)
-	afflicted.adjustStaminaLoss(8)
+	afflicted.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/speech/slurring)
+	afflicted.Knockdown(1 SECONDS)
+	afflicted.adjustStaminaLoss(75) // 60 stam + 15 tox
+	afflicted.blur_eyes(10)
 
 /obj/projectile/hallucination/change
 	name = "bolt of change"

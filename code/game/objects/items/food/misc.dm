@@ -474,7 +474,7 @@
 		to_chat(victim, span_warning("[pick("You hear faint whispers.", "You smell ash.", "You feel hot.", "You hear a roar in the distance.")]"))
 
 /obj/item/food/bubblegum/bubblegum/suicide_act(mob/user)
-	// Maybe the hallucination lines should just be a global list or a define or string list something.
+	// Maybe the hallucination lines should just be a global list or a define or something.
 	var/datum/hallucination/oh_yeah/to_steal_lines_from = new(user)
 	user.say(";[pick(to_steal_lines_from.hallucination_lines)]")
 	qdel(to_steal_lines_from)

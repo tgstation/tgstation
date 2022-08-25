@@ -69,11 +69,14 @@
 	// Log the message
 	feedback_details += "Type: [is_radio ? "Radio" : "Talk"], Source: [speaker.real_name], Message: [chosen]"
 
+	var/plus_runechat = hallucinator.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat)
+
 	// Display the message
-	if(!is_radio && !hallucinator.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
+	if(!is_radio && !plus_runechat)
 		var/image/speech_overlay = image('icons/mob/talk.dmi', speaker, "default0", layer = ABOVE_MOB_LAYER)
 		INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, speech_overlay, list(hallucinator.client), 30)
-	if (hallucinator.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
+
+	if(plus_runechat)
 		hallucinator.create_chat_message(speaker, understood_language, chosen, spans)
 
 	// And actually show them the message, for real.

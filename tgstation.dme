@@ -3012,7 +3012,7 @@
 #include "code\modules\food_and_drinks\restaurant\customers\_customer.dm"
 #include "code\modules\forensics\_forensics.dm"
 #include "code\modules\forensics\forensics_helpers.dm"
-#include "code\modules\hallucinations\_hallucination.dm"
+#include "code\modules\hallucination\_hallucination.dm"
 #include "code\modules\hallucination\battle.dm"
 #include "code\modules\hallucination\body.dm"
 #include "code\modules\hallucination\bolted_airlocks.dm"

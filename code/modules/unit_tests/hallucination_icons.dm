@@ -28,7 +28,7 @@ TEST_FOCUS(/datum/unit_test/hallucination_icons)
 		if(!icon_exists(right_icon, icon_state))
 			Fail("Hallucination [hallucination] had an invalid icon_state ([icon_state]) in its right icon file ([right_icon]).")
 
-	// Test preset delusion hallucinations for invalid hallucinated item setups
+	// Test preset delusion hallucinations for invalid image setups
 	for(var/datum/hallucination/delusion/preset/hallucination as anything in subtypesof(/datum/hallucination/delusion/preset))
 		var/icon = initial(hallucination.delusion_icon_file)
 		var/icon_state = initial(hallucination.delusion_icon_state)

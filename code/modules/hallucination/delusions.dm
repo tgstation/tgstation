@@ -110,9 +110,8 @@
 	custom_name,
 )
 
-	// If we weren't given any custom things, just use a random delusion type's settings
 	if(!custom_icon_file || !custom_icon_state)
-		stack_trace("[type] was created without any custom icon information passed.")
+		stack_trace("Custom delusion hallucination was created without any custom icon information passed.")
 
 	src.delusion_icon_file = custom_icon_file
 	src.delusion_icon_state = custom_icon_state

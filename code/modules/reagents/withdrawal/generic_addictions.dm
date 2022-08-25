@@ -210,14 +210,17 @@
 /datum/addiction/medicine/withdrawal_stage_2_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
 	var/datum/hallucination/fake_health_doll/hallucination = health_doll_ref?.resolve()
-	if(hallucination)
-		if(DT_PROB(10, delta_time))
-			hallucination.add_fake_limb(severity = 1)
-			return
+	if(QDELETED(hallucination))
+		health_doll_ref = null
+		return
 
-		if(DT_PROB(5, delta_time))
-			hallucination.increment_fake_damage()
-			return
+	if(DT_PROB(10, delta_time))
+		hallucination.add_fake_limb(severity = 1)
+		return
+
+	if(DT_PROB(5, delta_time))
+		hallucination.increment_fake_damage()
+		return
 
 /datum/addiction/medicine/withdrawal_enters_stage_3(mob/living/carbon/affected_carbon)
 	. = ..()
@@ -226,7 +229,7 @@
 /datum/addiction/medicine/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
 	var/datum/hallucination/fake_health_doll/hallucination = health_doll_ref?.resolve()
-	if(hallucination && DT_PROB(5, delta_time))
+	if(!QDELETED(hallucination) && DT_PROB(5, delta_time))
 		hallucination.increment_fake_damage()
 		return
 

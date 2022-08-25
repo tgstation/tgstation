@@ -75,6 +75,8 @@ GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weig
 		CRASH("get_random_valid_hallucination_subtype - get_random_valid_hallucination_subtype passed not a hallucination subtype.")
 
 	for(var/datum/hallucination/hallucination_type as anything in shuffle(subtypesof(passed_type)))
+		if(initial(hallucination_type.abstract_hallucination_parent) == hallucination_type)
+			continue
 		if(initial(hallucination_type.random_hallucination_weight) <= 0)
 			continue
 
