@@ -106,3 +106,6 @@
 #define COMSIG_LIVING_SHAPESHIFTED "living_shapeshifted"
 /// From /datum/status_effect/shapechange_mob/after_unchange(): (mob/living/caster)
 #define COMSIG_LIVING_UNSHAPESHIFTED "living_unshapeshifted"
+
+/// From /datum/component/mob_harvest: (amount_ready)
+#define COMSIG_LIVING_HARVEST_UPDATE "living_harvest_update"

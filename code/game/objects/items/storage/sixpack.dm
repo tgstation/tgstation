@@ -1,7 +1,7 @@
 /obj/item/storage/cans
 	name = "can ring"
 	desc = "Holds up to six drink cans, and select bottles."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "canholder"
 	inhand_icon_state = "cola"
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'

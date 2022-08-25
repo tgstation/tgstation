@@ -1,5 +1,5 @@
 /obj/item/delivery
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	var/giftwrapped = 0
 	var/sort_tag = 0
 	var/obj/item/paper/note

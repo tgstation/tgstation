@@ -499,6 +499,15 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	loom_result = /obj/item/stack/sheet/durathread
 	grind_results = list()
 
+/obj/item/stack/sheet/cotton/wool
+	name = "raw wool bundle"
+	desc = "A bundle of raw wool ready to be spun on the loom."
+	singular_name = "raw wool ball"
+	icon_state = "sheet-wool"
+	merge_type = /obj/item/stack/sheet/cotton/wool
+	loom_result = /obj/item/stack/sheet/cloth
+	grind_results = list()
+
 /*
  * Cardboard
  */
