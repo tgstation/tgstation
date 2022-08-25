@@ -41,12 +41,14 @@
 		var/mob/M = loc
 		M.update_worn_gloves()
 
-/obj/item/clothing/gloves/wirecutter_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(!cut_type)
+/obj/item/clothing/gloves/attackby(obj/item/I, mob/user, params)
+	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
+		if(!cut_type)
+			return
+		if(icon_state != initial(icon_state))
+			return // We don't want to cut dyed gloves.
+		to_chat(user, "<span class='notice'>You cut the fingers off of [src].</span>")
+		qdel(src)
+		user.put_in_hands(new cut_type)
+	else
 		return
-	if(icon_state != initial(icon_state))
-		return // We don't want to cut dyed gloves.
-	new cut_type(drop_location())
-	qdel(src)
-	return TRUE
