@@ -42,13 +42,14 @@
 		M.update_worn_gloves()
 
 /obj/item/clothing/gloves/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
-		if(!cut_type)
+	if(do_after(user, 3 SECONDS, target=src))
+		if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
+			if(!cut_type)
+				return
+			if(icon_state != initial(icon_state))
+				return // We don't want to cut dyed gloves.
+			balloon_alert(user, "cut fingertips off")
+			qdel(src)
+			user.put_in_hands(new cut_type)
+		else
 			return
-		if(icon_state != initial(icon_state))
-			return // We don't want to cut dyed gloves.
-		to_chat(user, span_notice("You cut the fingertips off of [src]."))
-		qdel(src)
-		user.put_in_hands(new cut_type)
-	else
-		return
