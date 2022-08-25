@@ -4736,11 +4736,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/service/cafe)
-"IH" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
-/turf/open/floor/plating,
-/area/ruin/space/ks13/engineering/sb_bow_solars_control)
 "II" = (
 /obj/item/shard,
 /obj/structure/grille/broken,
@@ -5660,7 +5655,6 @@
 /turf/open/floor/plating,
 /area/ruin/space/ks13/security/court)
 "NA" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 4
 	},
@@ -15775,7 +15769,7 @@ aa
 xS
 pR
 pR
-IH
+xS
 VB
 gx
 DU
@@ -15888,7 +15882,7 @@ aa
 xS
 VB
 IK
-IH
+xS
 pR
 HC
 DU
@@ -16001,7 +15995,7 @@ Uk
 ud
 zC
 IK
-IH
+xS
 IK
 VB
 DU

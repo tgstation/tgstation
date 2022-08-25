@@ -287,3 +287,22 @@
 
 /obj/item/food/pie/frenchsilkpie/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/pieslice/frenchsilk, 5)
+
+/obj/item/food/pie/shepherds_pie
+	name = "shepherds pie"
+	desc = "A dish of minced meat and mixed vegetables baked under a layer of creamy mashed potatoes. Sliceable."
+	icon_state = "shepherds_pie"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 40, /datum/reagent/consumable/nutriment/vitamin = 12, /datum/reagent/consumable/nutriment/protein = 20)
+	tastes = list("juicy meat" = 2, "mashed potatoes" = 2, "baked veggies" = 2)
+	foodtypes = MEAT | DAIRY | VEGETABLES
+
+/obj/item/food/pieslice/shepherds_pie
+	name = "shepherds pie slice"
+	desc = "A messy slice of shepherds pie, made of minced meat and mixed vegetables baked under a layer of creamy mashed potatoes. Dangerously tasty."
+	icon_state = "shepherds_pie_slice"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 3, /datum/reagent/consumable/nutriment/protein = 5)
+	tastes = list("juicy meat" = 1, "mashed potatoes" = 1, "baked veggies" = 1)
+	foodtypes = MEAT | DAIRY | VEGETABLES
+
+/obj/item/food/pie/shepherds_pie/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/pieslice/shepherds_pie, 4)

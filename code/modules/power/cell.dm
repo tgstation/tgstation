@@ -121,6 +121,19 @@
 		return
 	. += mutable_appearance('icons/obj/power.dmi', "cell-[charge_light_type]-o[(percent() >= 99.5) ? 2 : 1]")
 
+/obj/item/stock_parts/cell/vv_edit_var(vname, vval)
+	if(vname == NAMEOF(src, charge))
+		charge = clamp(vval, 0, maxcharge)
+		return TRUE
+	if(vname == NAMEOF(src, maxcharge))
+		if(charge > vval)
+			charge = vval
+	if(vname == NAMEOF(src, corrupted) && vval && !corrupted)
+		corrupt(TRUE)
+		return TRUE
+	return ..()
+
+
 /obj/item/stock_parts/cell/proc/percent() // return % charge of cell
 	return 100 * charge / maxcharge
 
@@ -185,10 +198,10 @@
 	explosion(src, devastation_range = range_devastation, heavy_impact_range = range_heavy, light_impact_range = range_light, flash_range = range_flash)
 	qdel(src)
 
-/obj/item/stock_parts/cell/proc/corrupt()
+/obj/item/stock_parts/cell/proc/corrupt(force)
 	charge /= 2
 	maxcharge = max(maxcharge/2, chargerate)
-	if (prob(10))
+	if (force || prob(10))
 		rigged = TRUE //broken batterys are dangerous
 		corrupted = TRUE
 
