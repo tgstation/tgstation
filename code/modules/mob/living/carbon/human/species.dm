@@ -602,6 +602,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			blush_overlay.color = COLOR_BLUSH_PINK
 			standing += blush_overlay
 
+		// tears
+		if (HAS_TRAIT(species_human, TRAIT_CRYING))
+			var/mutable_appearance/tears_overlay = mutable_appearance('icons/mob/human_face.dmi', "tears", -BODY_ADJ_LAYER) //should appear behind the eyes
+			//tears_overlay.color = COLOR_NAVY
+			standing += tears_overlay
+
 	// organic body markings
 	if(HAS_MARKINGS in species_traits)
 		var/obj/item/bodypart/chest/chest = species_human.get_bodypart(BODY_ZONE_CHEST)

@@ -1,12 +1,36 @@
 /datum/emote/living/carbon/human
 	mob_type_allowed_typecache = list(/mob/living/carbon/human)
 
+#define CRY_DURATION 5.2 SECONDS
+
 /datum/emote/living/carbon/human/cry
 	key = "cry"
 	key_third_person = "cries"
 	message = "cries."
 	message_mime = "sobs silently."
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+	/// Timer for the visual effect to wear off
+	var/visual_timer = TIMER_ID_NULL
+
+/datum/emote/living/carbon/human/cry/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	if(. && isliving(user))
+		var/mob/living/living_user = user
+		ADD_TRAIT(living_user, TRAIT_CRYING, "[type]")
+		living_user.update_body()
+
+		// Use a timer to remove the effect after the defined duration has passed
+		var/list/key_emotes = GLOB.emote_list["cry"]
+		for(var/datum/emote/living/carbon/human/cry/living_emote in key_emotes)
+			// The existing timer restarts if it's already running
+			visual_timer = addtimer(CALLBACK(living_emote, .proc/end_visual, living_user), CRY_DURATION, TIMER_UNIQUE | TIMER_OVERRIDE)
+
+/datum/emote/living/carbon/human/cry/proc/end_visual(mob/living/living_user)
+	if(!QDELETED(living_user))
+		REMOVE_TRAIT(living_user, TRAIT_CRYING, "[type]")
+		living_user.update_body()
+
+#undef CRY_DURATION
 
 /datum/emote/living/carbon/human/dap
 	key = "dap"
