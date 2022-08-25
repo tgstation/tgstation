@@ -41877,7 +41877,6 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/item/paper_bin/carbon,
 /obj/item/pen,
-/obj/structure/table,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
@@ -79000,7 +78999,6 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "tHS" = (
-/obj/structure/table,
 /obj/structure/table,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,

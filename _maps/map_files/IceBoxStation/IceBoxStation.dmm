@@ -8225,8 +8225,6 @@
 	},
 /obj/machinery/light/cold/directional/north,
 /obj/structure/table,
-/obj/structure/table,
-/obj/structure/table,
 /obj/item/food/grown/carrot{
 	pixel_x = 6;
 	pixel_y = 7
@@ -8304,7 +8302,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "cxc" = (
-/obj/structure/table,
 /obj/structure/table,
 /obj/item/clothing/gloves/color/fyellow,
 /obj/item/storage/toolbox/electrical{
