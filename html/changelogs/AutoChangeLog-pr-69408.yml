@@ -1,0 +1,5 @@
+author: "vincentiusvin"
+delete-after: True
+changes: 
+  - spellcheck: "fixed a typo in NT Frontier under medical partner"
+  - qol: "the ordnance experiments will give you more information on how to do them from the UI."
