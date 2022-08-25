@@ -245,12 +245,18 @@ Primarily used in reagents/reaction_agents
 		creation_purity = src.creation_purity
 	return creation_purity / normalise_num_to
 
-/proc/pretty_string_from_reagent_list(list/reagent_list)
+/proc/pretty_string_from_reagent_list(list/reagent_list, names_only, join_text = " | ", final_and, capitalize_names)
 	//Convert reagent list to a printable string for logging etc
 	var/list/rs = list()
+	var/reagents_left = reagent_list.len
+	var/intial_list_length = reagents_left
 	for (var/datum/reagent/R in reagent_list)
-		rs += "[R.name], [R.volume]"
+		reagents_left--
+		if(final_and && intial_list_length > 1 && reagents_left == 0)
+			rs += "and [capitalize_names ? capitalize(R.name) : R.name][names_only ? null : ", [R.volume]"]"
+		else
+			rs += "[capitalize_names ? capitalize(R.name) : R.name][names_only ? null : ", [R.volume]"]"
 
-	return rs.Join(" | ")
+	return rs.Join(join_text)
 
 

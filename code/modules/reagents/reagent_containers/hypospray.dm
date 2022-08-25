@@ -139,25 +139,7 @@
 /obj/item/reagent_containers/hypospray/medipen/examine()
 	. = ..()
 	if(length(reagents?.reagent_list))
-		var/reagent_text = ""
-
-		if(length(reagents.reagent_list) == 1)
-			var/datum/reagent/first = reagents.reagent_list[1]
-			reagent_text = first.name
-
-		else
-			var/len = length(reagents.reagent_list)
-			var/list/reagent_names_list = list()
-			for(var/i in 1 to (len - 2))
-				var/datum/reagent/reagent_object = reagents.reagent_list[i]
-				reagent_names_list += "[reagent_object.name], "
-			var/datum/reagent/last_reagent = reagents.reagent_list[len]
-			var/datum/reagent/second_to_last_reagent = reagents.reagent_list[len - 1]
-			reagent_names_list += "[second_to_last_reagent.name], and [last_reagent.name]"
-			reagent_text = reagent_names_list.Join("")
-
-		. += span_notice("There\'s a small LCD screen on the side of the medipen which reads, 'WARNING: This medipen contains [reagent_text]. Do not use if allergic to any listed chemicals.' in small text.") //cheapskates at nanotrasen couldnt ball out for LED
-
+		. += span_notice("There\'s a small LCD screen on the side of the medipen which reads, 'WARNING: This medipen contains [pretty_string_from_reagent_list(reagents.reagent_list, TRUE, ", ", TRUE, TRUE)]. Do not use if allergic to any listed chemicals.' in small text.") //cheapskates at nanotrasen couldnt ball out for LED
 	else
 		. += span_notice("There\'s a blank LCD screen on the side of the medipen.")
 
