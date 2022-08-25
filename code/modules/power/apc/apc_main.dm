@@ -456,7 +456,7 @@
 			alarm_manager.send_alarm(ALARM_POWER)
 			if(!nightshift_lights || (nightshift_lights && !low_power_nightshift_lights))
 				low_power_nightshift_lights = TRUE
-				addtimer(CALLBACK(src, .proc/set_nightshift, TRUE), 0)
+				INVOKE_ASYNC(src, .proc/set_nightshift, TRUE)
 		else if(cell.percent() < 15 && long_term_power < 0) // <15%, turn off lighting & equipment
 			equipment = autoset(equipment, AUTOSET_OFF)
 			lighting = autoset(lighting, AUTOSET_OFF)
@@ -464,7 +464,7 @@
 			alarm_manager.send_alarm(ALARM_POWER)
 			if(!nightshift_lights || (nightshift_lights && !low_power_nightshift_lights))
 				low_power_nightshift_lights = TRUE
-				addtimer(CALLBACK(src, .proc/set_nightshift, TRUE), 0)
+				INVOKE_ASYNC(src, .proc/set_nightshift, TRUE)
 		else if(cell.percent() < 30 && long_term_power < 0) // <30%, turn off equipment
 			equipment = autoset(equipment, AUTOSET_OFF)
 			lighting = autoset(lighting, AUTOSET_ON)
@@ -472,7 +472,7 @@
 			alarm_manager.send_alarm(ALARM_POWER)
 			if(!nightshift_lights || (nightshift_lights && !low_power_nightshift_lights))
 				low_power_nightshift_lights = TRUE
-				addtimer(CALLBACK(src, .proc/set_nightshift, TRUE), 0)
+				INVOKE_ASYNC(src, .proc/set_nightshift, TRUE)
 		else // otherwise all can be on
 			equipment = autoset(equipment, AUTOSET_ON)
 			lighting = autoset(lighting, AUTOSET_ON)
@@ -480,7 +480,7 @@
 			if(nightshift_lights && low_power_nightshift_lights)
 				low_power_nightshift_lights = FALSE
 				if(!SSnightshift.nightshift_active)
-					addtimer(CALLBACK(src, .proc/set_nightshift, FALSE), 0)
+					INVOKE_ASYNC(src, .proc/set_nightshift, FALSE)
 			if(cell.percent() > 75)
 				alarm_manager.clear_alarm(ALARM_POWER)
 
