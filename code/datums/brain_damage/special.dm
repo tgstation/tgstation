@@ -422,4 +422,7 @@
 	var/mob/victim = pick(who_sees_us)
 	forceMove(get_step_towards(src, victim))
 	if(prob(5))
-		to_chat(victim, span_name("[name]</span> exclaims, \"<span class='robotic'>Level 10 infraction alert!\""))
+		var/beepskys_cry = "Level 10 infraction alert!"
+		to_chat(victim, "<span class='name'>[name]</span> exclaims, \"<span class='robotic'>[beepskys_cry]</span>\"")
+		if(victim.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
+			victim.create_chat_message(src, raw_message = beepskys_cry, spans = list("robotic"))
