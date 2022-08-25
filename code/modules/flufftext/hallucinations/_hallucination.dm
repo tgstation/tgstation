@@ -11,7 +11,7 @@
 		qdel(new_hallucination)
 		return
 
-	investigate_log("was afflicted with a hallucination of type [type] by [source]. [new_hallucination.feedback_details]", INVESTIGATE_HALLUCINATIONS)
+	investigate_log("was afflicted with a hallucination of type [type] by: [source]. ([new_hallucination.feedback_details])", INVESTIGATE_HALLUCINATIONS)
 	return new_hallucination
 
 /**
@@ -39,7 +39,7 @@
 		if(length(optional_messages))
 			to_chat(nearby_living, pick(optional_messages))
 
-/// A global list of all ongoing hallucinations.
+/// A global list of all ongoing hallucinations, primarily for easy access to be able to stop (delete) hallucinations.
 GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 
 /**

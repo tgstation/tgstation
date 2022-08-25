@@ -33,7 +33,7 @@
 		return FALSE
 
 	var/mob/living/carbon/human/who_has_the_item = pick(mob_pool)
-	feedback_details += ", Mob: [who_has_the_item.real_name]"
+	feedback_details += "Mob: [who_has_the_item.real_name]"
 
 	if(who_has_the_item.get_empty_held_index_for_side(LEFT_HANDS))
 		generated_image = generate_fake_image(who_has_the_item, file = left_hand_file)

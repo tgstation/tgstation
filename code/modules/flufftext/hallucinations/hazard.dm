@@ -34,11 +34,12 @@
 /obj/effect/client_image_holder/hallucination/danger/Initialize(mapload, list/mobs_which_see_us, datum/hallucination/parent)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = .proc/atom_touched_holder,
+		COMSIG_ATOM_EXITED, .proc/atom_touched_holder,
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-/obj/effect/client_image_holder/hallucination/danger/proc/on_entered(datum/source, atom/movable/entered)
+/obj/effect/client_image_holder/hallucination/danger/proc/atom_touched_holder(datum/source, atom/movable/entered)
 	SIGNAL_HANDLER
 
 	if(!(entered in who_sees_us))
