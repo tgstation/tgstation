@@ -11,3 +11,6 @@
 
 ///from SSshuttle when the supply shuttle starts spawning orders : ()
 #define COMSIG_SUPPLY_SHUTTLE_BUY "supply_shuttle_buy"
+
+///from GLOB.data_core when someone is injected into the manifest: (datum/datacore/source, mob/living/carbon/human/injected_human, list/new_records)
+#define COMSIG_MANIFEST_INJECTED(ref) "manifest_injected_[ref]"

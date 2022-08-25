@@ -25,6 +25,19 @@
 	rpg_title = "Defeated Miniboss"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
+/datum/job/prisoner/after_spawn(mob/living/spawned, client/player_client)
+	. = ..()
+	RegisterSignal(GLOB.data_core, COMSIG_MANIFEST_INJECTED(REF(spawned)), .proc/add_pref_crime)
+
+/datum/job/prisoner/proc/add_pref_crime(datum/datacore/source, mob/living/carbon/human/injected_human, list/new_records)
+	UnregisterSignal(source, COMSIG_MANIFEST_INJECTED(REF(injected_human)))
+	var/crime_name = injected_human.client?.prefs?.read_preference(/datum/preference/choiced/prisoner_crime)
+	if(!crime_name)
+		return
+	var/datum/data/record/target_record = new_records["sec"]
+	var/crime_description = GLOB.crimename2desc[crime_name]
+	var/datum/data/crime/past_crime = source.createCrimeEntry(crime_name, crime_description, "Central Command", "Consult Legal.")
+	source.addCrime(target_record.fields["id"], past_crime)
 
 /datum/outfit/job/prisoner
 	name = "Prisoner"
@@ -50,11 +63,3 @@
 	var/list/tattoo = pick(SSpersistence.prison_tattoos_to_use)
 	tatted_limb.AddComponent(/datum/component/tattoo, tattoo["story"])
 	SSpersistence.prison_tattoos_to_use -= tattoo
-
-	var/crime_name = new_prisoner.client?.prefs?.read_preference(/datum/preference/choiced/prisoner_crime)
-	var/datum/data/record/target_record = find_record("name", new_prisoner.name, GLOB.data_core.security)
-	if(!crime_name || !target_record)
-		return
-	var/crime_description = GLOB.crimename2desc[crime_name]
-	var/crime = GLOB.data_core.createCrimeEntry(crime_name, crime_description, "Central Command", "Consult Legal")
-	GLOB.data_core.addCrime(target_record.fields["id"], crime)

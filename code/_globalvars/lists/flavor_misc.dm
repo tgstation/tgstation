@@ -196,6 +196,7 @@ GLOBAL_LIST_INIT(prisoner_crimes, list(
 	"Abhorrent Criminal Negligence",
 	"Attempted Development of Cloning",
 	"Attempted Murder",
+	"Classified",
 	"Corporate Espionage",
 	"Counterfeiting",
 	"Enemy of the Corporation",
@@ -204,6 +205,7 @@ GLOBAL_LIST_INIT(prisoner_crimes, list(
 	"Identity Theft",
 	"Murder",
 	"Mutiny",
+	"Other",
 	"Tampering of Artificial Intelligence",
 	"Worship of Blacklisted Deities",
 ))
@@ -212,6 +214,7 @@ GLOBAL_LIST_INIT(crimename2desc, list(
 	"Abhorrent Criminal Negligence" = "Incompetently risked numerous lives.",
 	"Attempted Development of Cloning" = "Attempted illegal research in the cloning sphere. Cloning, cloning construction, and cloning-related R&D was outlawed in 2560.",
 	"Attempted Murder" = "Attempted to maliciously kill someone.",
+	"Classified" = "Consult Legal.",
 	"Corporate Espionage" = "Conducted espionage against Nanotrasen for commercial purposes.",
 	"Counterfeiting" = "Engaged in widespread fraud.",
 	"Enemy of the Corporation" = "Acted as, or knowingly aided, an enemy of Nanotrasen.",
@@ -220,6 +223,7 @@ GLOBAL_LIST_INIT(crimename2desc, list(
 	"Identity Theft of High-Ranking Figure" = "Impersonated a high-ranking figure.",
 	"Murder" = "Maliciously killed someone.",
 	"Mutiny" = "Attempted to overthrow/subvert Chain of Command.",
+	"Other" = "Consult Legal.",
 	"Tampering of Artificial Intelligence" = "Uploaded malicious, negligent, or otherwise blacklisted directives to an Artificial Intelligence.",
 	"Worship of Blacklisted Deities" = "Practiced worship of blacklisted deities.",
 ))
