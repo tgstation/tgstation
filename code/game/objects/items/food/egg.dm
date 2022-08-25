@@ -4,6 +4,7 @@
 /obj/item/food/chocolateegg
 	name = "chocolate egg"
 	desc = "Such, sweet, fattening food."
+	icon = 'icons/obj/food/egg.dmi'
 	icon_state = "chocolateegg"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/coco = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("chocolate" = 4, "sweetness" = 1)
