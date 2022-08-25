@@ -25,3 +25,35 @@
 /datum/trophy_manager/ui_data(mob/user)
 	. = list()
 	.["trophies"] = SSpersistence.trophy_ui_data()
+
+/datum/trophy_manager/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	if(..())
+		return
+	if (!check_rights(R_ADMIN))
+		return
+	var/mob/user = usr
+	var/datum/trophy_data/trophy = locate(params["ref"]) in SSpersistence.saved_trophies
+	if(!trophy)
+		return
+	switch(action)
+		if("delete")
+			SSpersistence.saved_trophies -= trophy
+			log_admin("[key_name(user)] has deleted a trophy made by [trophy.placer_key].")
+			message_admins(span_notice("[key_name_admin(user)] has deleted trophy made by [trophy.placer_key]."))
+			return TRUE
+		if("edit_message")
+			var/old_message = trophy.message
+			var/new_message = tgui_input_text(user, "New trophy message?", "Message Editing", trophy.message)
+			if(!new_message)
+				return
+			trophy.message = trim(html_encode(new_message), MAX_BROADCAST_LEN)
+			log_admin("[key_name(user)] has edited the message of trophy made by [trophy.placer_key] from \"[old_message]\" to \"[new_message]\".")
+			return TRUE
+		if("edit_path")
+			var/old_path = trophy.path
+			var/new_path = tgui_input_text(user, "New trophy path?", "Path Editing", trophy.path)
+			if(!new_path)
+				return
+			trophy.path = trim(html_encode(new_path))
+			log_admin("[key_name(user)] has edited the item path of trophy made by [trophy.placer_key] from \"[old_path]\" to \"[new_path]\".")
+			return TRUE

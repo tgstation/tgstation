@@ -1,6 +1,6 @@
 import { decodeHtmlEntities } from 'common/string';
 import { useBackend } from '../backend';
-import { Table } from '../components';
+import { Button, Table } from '../components';
 import { Window } from '../layouts';
 
 export const TrophyAdminPanel = (props, context) => {
@@ -12,8 +12,11 @@ export const TrophyAdminPanel = (props, context) => {
         <Table>
           <Table.Row header>
             <Table.Cell color="label">Path</Table.Cell>
+            <Table.Cell color="label"></Table.Cell>
             <Table.Cell color="label">Message</Table.Cell>
+            <Table.Cell color="label"></Table.Cell>
             <Table.Cell color="label">Placer Key</Table.Cell>
+            <Table.Cell color="label"></Table.Cell>
           </Table.Row>
           {!!trophies &&
             trophies.map((trophy) => (
@@ -25,6 +28,15 @@ export const TrophyAdminPanel = (props, context) => {
                   }}>
                   {decodeHtmlEntities(trophy.path)}
                 </Table.Cell>
+                <Table.Cell>
+                  <Button
+                    icon="edit"
+                    tooltip={'Edit path'}
+                    tooltipPosition="bottom"
+                    onClick={() =>
+                      act('edit_path', { ref: trophy.ref })
+                    }></Button>
+                </Table.Cell>
                 <Table.Cell
                   style={{
                     'word-break': 'break-all',
@@ -32,12 +44,28 @@ export const TrophyAdminPanel = (props, context) => {
                   }}>
                   {decodeHtmlEntities(trophy.message)}
                 </Table.Cell>
+                <Table.Cell>
+                  <Button
+                    icon="edit"
+                    tooltip={'Edit message'}
+                    tooltipPosition="bottom"
+                    onClick={() =>
+                      act('edit_message', { ref: trophy.ref })
+                    }></Button>
+                </Table.Cell>
                 <Table.Cell
                   style={{
                     'word-break': 'break-all',
                     'word-wrap': 'break-word',
                   }}>
                   {decodeHtmlEntities(trophy.placer_key)}
+                </Table.Cell>
+                <Table.Cell>
+                  <Button
+                    icon="trash"
+                    tooltip={'Delete trophy'}
+                    tooltipPosition="bottom"
+                    onClick={() => act('delete', { ref: trophy.ref })}></Button>
                 </Table.Cell>
               </Table.Row>
             ))}
