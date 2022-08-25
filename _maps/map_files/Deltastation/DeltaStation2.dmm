@@ -3833,7 +3833,10 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "aXN" = (
-/turf/open/floor/iron/white,
+/obj/effect/turf_decal/trimline/yellow/warning,
+/turf/open/floor/iron/white/smooth_edge{
+	dir = 1
+	},
 /area/station/commons/fitness/recreation)
 "aXP" = (
 /obj/structure/filingcabinet/chestdrawer,
@@ -4728,19 +4731,6 @@
 /obj/machinery/vending/wardrobe/medi_wardrobe,
 /turf/open/floor/iron,
 /area/station/medical/storage)
-"bit" = (
-/obj/effect/turf_decal/box/white,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/white{
-	dir = 8
-	},
-/turf/open/floor/iron/dark/side{
-	dir = 8
-	},
-/area/station/commons/fitness/recreation)
 "biF" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -16426,6 +16416,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/maintenance/port/aft)
+"eav" = (
+/obj/effect/turf_decal/trimline/yellow/line{
+	dir = 8
+	},
+/turf/open/floor/iron/white/smooth_edge{
+	dir = 4
+	},
+/area/station/commons/fitness/recreation)
 "eaE" = (
 /obj/structure/closet/secure_closet/brig{
 	name = "Prisoner Locker"
@@ -23424,12 +23422,12 @@
 /area/station/engineering/atmos/pumproom)
 "fNX" = (
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/turf/open/floor/iron/dark,
+/obj/effect/turf_decal/tile/neutral/full,
+/turf/open/floor/iron/dark/smooth_large,
 /area/station/security/warden)
 "fNY" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -24915,6 +24913,14 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/security/detectives_office)
+"gkT" = (
+/obj/effect/turf_decal/trimline/yellow/line{
+	dir = 4
+	},
+/turf/open/floor/iron/white/smooth_edge{
+	dir = 8
+	},
+/area/station/commons/fitness/recreation)
 "gkW" = (
 /obj/structure/table/wood,
 /obj/item/storage/briefcase,
@@ -27542,7 +27548,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/smooth_large,
 /area/station/security/warden)
 "gUa" = (
 /obj/effect/spawner/random/trash/grille_or_waste,
@@ -71317,7 +71323,10 @@
 /area/station/service/barber)
 "rDp" = (
 /obj/effect/landmark/start/hangover,
-/turf/open/floor/iron/white,
+/obj/effect/turf_decal/trimline/yellow/warning,
+/turf/open/floor/iron/white/smooth_edge{
+	dir = 1
+	},
 /area/station/commons/fitness/recreation)
 "rDt" = (
 /obj/effect/turf_decal/stripes/line,
@@ -72673,11 +72682,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
-"rTP" = (
-/obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
-/obj/structure/punching_bag,
-/turf/open/floor/iron/white,
-/area/station/commons/fitness/recreation)
 "rTT" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -73586,6 +73590,12 @@
 /obj/machinery/meter,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
+"sdT" = (
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 1
+	},
+/turf/open/floor/iron/white/smooth_edge,
+/area/station/commons/fitness/recreation)
 "sdU" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/kirbyplants/random,
@@ -78130,11 +78140,19 @@
 /turf/open/floor/wood,
 /area/station/service/theater)
 "tlJ" = (
-/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
+/obj/structure/punching_bag,
+/obj/effect/turf_decal/trimline/yellow,
+/obj/effect/turf_decal/trimline/yellow/mid_joiner,
+/obj/effect/turf_decal/trimline/yellow/mid_joiner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/yellow/mid_joiner{
 	dir = 8
 	},
-/obj/structure/punching_bag,
-/turf/open/floor/iron/white,
+/obj/effect/turf_decal/trimline/yellow/mid_joiner{
+	dir = 1
+	},
+/turf/open/floor/iron/white/textured_large,
 /area/station/commons/fitness/recreation)
 "tlK" = (
 /obj/structure/table/wood,
@@ -91949,6 +91967,13 @@
 /obj/effect/spawner/random/entertainment/lighter,
 /turf/open/floor/plating,
 /area/station/medical/abandoned)
+"wzh" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
+/obj/structure/sign/poster/random/directional/north,
+/turf/open/floor/iron,
+/area/station/commons/dorms)
 "wzl" = (
 /obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/tile/red{
@@ -150437,7 +150462,7 @@ rmG
 yaI
 yaI
 yaI
-geF
+wzh
 cVT
 nXH
 rrt
@@ -153253,7 +153278,7 @@ baK
 svh
 kMS
 sPZ
-aXN
+eav
 cOU
 hJG
 tcq
@@ -153509,7 +153534,7 @@ nsd
 uKg
 mel
 kMS
-aXN
+sdT
 tlJ
 aXN
 hJG
@@ -153766,8 +153791,8 @@ gXO
 ueV
 mel
 kMS
-aXN
-rTP
+sdT
+tlJ
 rDp
 hJG
 gHm
@@ -154024,7 +154049,7 @@ ljs
 mel
 kMS
 icf
-aXN
+gkT
 tNE
 hJG
 tcq
@@ -154286,7 +154311,7 @@ twN
 aek
 unz
 bUl
-bit
+bUl
 bUl
 weQ
 rib
