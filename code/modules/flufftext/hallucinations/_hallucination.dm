@@ -214,7 +214,7 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 	regenerate_image()
 
 // If we move for some reason, regenerate our image
-/obj/effect/client_image_holder/Moved(atom/OldLoc, Dir)
+/obj/effect/client_image_holder/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(!loc)
 		return

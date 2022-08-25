@@ -52,7 +52,7 @@ GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weig
 /// Gets a random subtype of the passed hallucination type that has a random_hallucination_weight > 0.
 /proc/get_random_valid_hallucination_subtype(passed_type)
 	if(!ispath(passed_type, /datum/hallucination))
-		CRASH("[type] - get_random_valid_hallucination_subtype passed not a hallucination subtype.")
+		CRASH("get_random_valid_hallucination_subtype - get_random_valid_hallucination_subtype passed not a hallucination subtype.")
 
 	for(var/datum/hallucination/hallucination_type as anything in shuffle(subtypesof(passed_type)))
 		if(initial(hallucination_type.random_hallucination_weight) <= 0)

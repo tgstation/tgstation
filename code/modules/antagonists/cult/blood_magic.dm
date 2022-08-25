@@ -239,7 +239,7 @@
 
 /datum/action/innate/cult/blood_spell/horror/do_ability(mob/living/caller, params, mob/living/carbon/human/clicked_on)
 
-	clicked_on.hallucination = max(clicked_on.hallucination, 120)
+	clicked_on.apply_status_effect(/datum/status_effect/hallucination, 240 SECONDS)
 	SEND_SOUND(caller, sound('sound/effects/ghost.ogg', FALSE, TRUE, 50))
 
 	var/image/sparkle_image = image('icons/effects/cult/effects.dmi', clicked_on, "bloodsparkles", ABOVE_MOB_LAYER)

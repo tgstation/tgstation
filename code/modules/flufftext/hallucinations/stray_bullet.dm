@@ -282,7 +282,7 @@
 	hal_impact_effect_wall = null
 
 /obj/projectile/hallucination/change/apply_effect_to_hallucinator(mob/living/afflicted)
-	var/picked_delusion = get_random_valid_hallucination_subtype(/datum/hallucination/delusion/preset))
+	var/picked_delusion = get_random_valid_hallucination_subtype(/datum/hallucination/delusion/preset)
 	if(!picked_delusion)
 		CRASH("[name] hallucination couldn't find a hallucination subtype.")
 

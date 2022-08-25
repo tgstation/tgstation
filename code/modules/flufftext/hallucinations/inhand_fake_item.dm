@@ -56,7 +56,7 @@
 /datum/hallucination/fake_item/revolver/make_fake_item(where_to_put_it)
 	var/obj/item/hallucinated/hallucinated_item = ..()
 	hallucinated_item.name = ".357 revolver"
-	hallucinated_item.icon = 'icons/obj/guns/ballistic.dmi'
+	hallucinated_item.icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	hallucinated_item.icon_state = "revolver"
 	return hallucinated_item
 
@@ -66,7 +66,7 @@
 /datum/hallucination/fake_item/esword/make_fake_item(where_to_put_it)
 	var/obj/item/hallucinated/hallucinated_item = ..()
 	hallucinated_item.name = "energy sword"
-	hallucinated_item.icon = 'icons/obj/transforming_energy.dmi'
+	hallucinated_item.icon = 'icons/obj/weapons/transforming_energy.dmi'
 	if(where_to_put_it != ui_storage1 && where_to_put_it != ui_storage2 && prob(40)) // meh
 		hallucinated_item.icon_state = "e_sword_on_red"
 		hallucinator.playsound_local(get_turf(hallucinator), 'sound/weapons/saberon.ogg', 35, TRUE)
@@ -81,7 +81,7 @@
 /datum/hallucination/fake_item/baton/make_fake_item(where_to_put_it)
 	var/obj/item/hallucinated/hallucinated_item = ..()
 	hallucinated_item.name = "stun baton"
-	hallucinated_item.icon = 'icons/obj/items_and_weapons.dmi'
+	hallucinated_item.icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	if(where_to_put_it != ui_belt && prob(30))
 		hallucinated_item.icon_state = "stunbaton_active"
 		hallucinator.playsound_local(get_turf(hallucinator), SFX_SPARKS, 75, TRUE, -1)
@@ -111,7 +111,7 @@
 /datum/hallucination/fake_item/flashbang/make_fake_item(where_to_put_it)
 	var/obj/item/hallucinated/hallucinated_item = ..()
 	hallucinated_item.name = "flashbang"
-	hallucinated_item.icon = 'icons/obj/grenade.dmi'
+	hallucinated_item.icon = 'icons/obj/weapons/grenade.dmi'
 	if(prob(15))
 		hallucinated_item.icon_state = "flashbang_active"
 		hallucinator.playsound_local(get_turf(hallucinator), 'sound/weapons/armbomb.ogg', 60, TRUE)

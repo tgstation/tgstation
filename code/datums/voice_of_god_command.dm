@@ -161,7 +161,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	trigger = "see\\s*the\\s*truth|hallucinate"
 
 /datum/voice_of_god_command/hallucinate/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
-	var/picked_delusion = get_random_valid_hallucination_subtype(/datum/hallucination/delusion/preset))
+	var/picked_delusion = get_random_valid_hallucination_subtype(/datum/hallucination/delusion/preset)
 	if(!picked_delusion)
 		CRASH("[type] command couldn't find a hallucination subtype.")
 

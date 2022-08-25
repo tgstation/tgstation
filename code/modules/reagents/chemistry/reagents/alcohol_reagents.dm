@@ -803,7 +803,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		. = TRUE
 		drinker.adjustStaminaLoss(-10 * REM * delta_time, 0)
 		if(DT_PROB(10, delta_time))
-			drinker.cause_hallucination(get_random_valid_hallucination_subtype(/datum/hallucination/nearby_fake_item)), name)
+			drinker.cause_hallucination(get_random_valid_hallucination_subtype(/datum/hallucination/nearby_fake_item), name)
 		if(DT_PROB(5, delta_time))
 			drinker.cause_hallucination(/datum/hallucination/stray_bullet, name)
 
