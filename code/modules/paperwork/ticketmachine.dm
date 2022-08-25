@@ -70,15 +70,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 ///Increments the counter by one, if there is a ticket after the current one we are serving.
 ///If we have a current ticket, remove it from the top of our tickets list and replace it with the next one if applicable
 /obj/machinery/ticket_machine/proc/increment()
-	if(current_number > ticket_number)
-		return
 	if(!(obj_flags & EMAGGED) && current_ticket)
 		current_ticket.audible_message(span_notice("\the [current_ticket] disperses!"), hearing_distance = SAMETILE_MESSAGE_RANGE)
 		tickets.Cut(1,2)
 		QDEL_NULL(current_ticket)
-	if(!current_ticket && LAZYLEN(tickets))
+	if(LAZYLEN(tickets))
 		current_ticket = tickets[1]
-	if(current_ticket)
 		current_number++ //Increment the one we're serving.
 		playsound(src, 'sound/misc/announce_dig.ogg', 50, FALSE)
 		say("Now serving [current_ticket]!")
