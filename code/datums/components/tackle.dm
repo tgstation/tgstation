@@ -310,7 +310,7 @@
 		attack_mod += 2
 
 	if(HAS_TRAIT(sacker, TRAIT_TACKLING_WINGED_ATTACKER))
-		var/obj/item/organ/external/wings/moth/sacker_moth_wing
+		var/obj/item/organ/external/wings/moth/sacker_moth_wing = sacker.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
 		if(!sacker_moth_wing || sacker_moth_wing.burnt)
 			attack_mod -= 2
 	var/obj/item/organ/external/wings/sacker_wing = sacker.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
