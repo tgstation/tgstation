@@ -106,7 +106,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 		if(M.buffer && !istype(M.buffer, /obj/machinery/ticket_machine))
 			return
 		var/obj/item/assembly/control/ticket_machine/controller = device
-		controller.linked = WEAKREF(M.buffer)
+		controller.ticket_machine_ref = WEAKREF(M.buffer)
 		id = null
 		controller.id = null
 		to_chat(user, span_warning("You've linked [src] to [M.buffer]."))
@@ -114,8 +114,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 /obj/item/assembly/control/ticket_machine
 	name = "ticket machine controller"
 	desc = "A remote controller for the HoP's ticket machine."
-	///To whom are we linked?
-	var/datum/weakref/linked
+	///Weakref to our ticket machine
+	var/datum/weakref/ticket_machine_ref
 
 /obj/item/assembly/control/ticket_machine/Initialize(mapload)
 	..()
@@ -128,8 +128,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 /obj/item/assembly/control/ticket_machine/proc/find_machine()
 	for(var/obj/machinery/ticket_machine/ticketsplease in GLOB.machines)
 		if(ticketsplease.id == id)
-			linked = WEAKREF(ticketsplease)
-	if(linked)
+			ticket_machine_ref = WEAKREF(ticketsplease)
+	if(ticket_machine_ref)
 		return TRUE
 	else
 		return FALSE
@@ -137,14 +137,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 /obj/item/assembly/control/ticket_machine/activate(mob/activator)
 	if(cooldown)
 		return
-	if(!linked)
+	if(!ticket_machine_ref)
 		return
-	var/obj/machinery/ticket_machine/machine = linked.resolve()
+	var/obj/machinery/ticket_machine/machine = ticket_machine_ref.resolve()
 	if(!machine)
 		return
 	cooldown = TRUE
 	machine.increment()
-	if(machine.current_ticket == null)
+	if(isnull(machine.current_ticket))
 		to_chat(activator, span_notice("The button light indicates that there are no more tickets to be processed."))
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10)
 
@@ -211,7 +211,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 100, FALSE)
 	ticket_number++
 	to_chat(user, span_notice("You take a ticket from [src], looks like you're number [ticket_number] in queue..."))
-	var/obj/item/ticket_machine_ticket/theirticket = new /obj/item/ticket_machine_ticket(get_turf(src), ticket_number)
+	var/obj/item/ticket_machine_ticket/theirticket = new (get_turf(src), ticket_number)
 	theirticket.source = src
 	theirticket.owner_ref = user_ref
 	user.put_in_hands(theirticket)
@@ -224,7 +224,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 		user.dropItemToGround(theirticket)
 		user.adjust_fire_stacks(1)
 		user.ignite_mob()
-		return
 	update_appearance()
 
 /obj/item/ticket_machine_ticket
@@ -242,17 +241,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 	var/owner_ref // A ref to our owner. Doesn't need to be weak because mobs have unique refs
 	var/obj/machinery/ticket_machine/source
 
-/obj/item/ticket_machine_ticket/New(loc, num)
+/obj/item/ticket_machine_ticket/Initialize(loc, num)
 	. = ..()
 	number = num
-	if(number != null) // dont make a zero ticket or ill cry
-		name += " #[number]"
-		saved_maptext = MAPTEXT(number)
+	if(!isnull(num))
+		name += " #[num]"
+		saved_maptext = MAPTEXT(num)
 		maptext = saved_maptext
 
 /obj/item/ticket_machine_ticket/examine(mob/user)
 	. = ..()
-	if(number != null)
+	if(!isnull(number))
 		. += span_notice("The ticket reads shimmering text that tells you that you are number [number] in queue.")
 		if(source)
 			. += span_notice("Below that, you can see that you are [number - source.current_number] spot\s away from being served.")
@@ -266,11 +265,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 		return
 
 	return ..()
-
-// ???????????????
-/obj/item/paper/extinguish()
-	..()
-	update_appearance()
 
 /obj/item/ticket_machine_ticket/Destroy()
 	if(source)
