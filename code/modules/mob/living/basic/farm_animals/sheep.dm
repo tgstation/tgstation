@@ -3,7 +3,6 @@
 	desc = "Known for their soft wool and use in sacrifical rituals. Big fan of grass."
 	icon = 'icons/mob/sheep.dmi'
 	icon_state = "sheep"
-	icon_state = "sheep"
 	icon_dead = "sheep_dead"
 	gender = FEMALE
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST

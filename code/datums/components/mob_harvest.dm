@@ -42,6 +42,19 @@
 	item_generation_time = item_generation_wait
 	START_PROCESSING(SSobj, src)
 
+/datum/component/mob_harvest/vv_edit_var(var_name, var_value)
+	var/amount_changed
+	if(var_name == NAMEOF(src, max_ready))
+		var_value = max(0, var_value) //no negatives allowed
+		if(amount_ready != min(amount_ready, var_value)) //check to max sure max_ready isn't lower than the amount ready.
+			amount_ready = var_value
+			amount_changed = TRUE
+	if(var_name == NAMEOF(src, amount_ready) && var_value != amount_ready)
+		amount_changed = TRUE
+	. = ..()
+	if(amount_changed)
+		SEND_SIGNAL(parent, COMSIG_LIVING_HARVEST_UPDATE, amount_ready)
+
 /datum/component/mob_harvest/process(delta_time)
 	///only track time if we aren't dead and have room for more items
 	var/mob/living/harvest_mob = parent
