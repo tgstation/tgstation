@@ -34,6 +34,11 @@
  * Doesn't call parent, see [/atom/proc/Initialize].
  * When adding new stuff to /atom/Initialize, /turf/Initialize, etc
  * don't just add it here unless space actually needs it.
+ *
+ * There is a lot of work that is intentionally not done because it is not currently used.
+ * This includes stuff like smoothing, blocking camera visibility, etc.
+ * If you are facing some odd bug with specifically space, check if it's something that was
+ * intentionally ommitted from this implementation.
  */
 /turf/open/space/Initialize(mapload)
 	SHOULD_CALL_PARENT(FALSE)
