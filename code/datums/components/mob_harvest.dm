@@ -81,8 +81,13 @@
 /datum/component/mob_harvest/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
-	if(!iscarbon(parent)) // Only do update_icon_state business on non-carbon mobs
+
+	// Only do update_icon_state business on non-carbon mobs
+	if(!iscarbon(parent))
 		RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON_STATE, .proc/on_update_icon_state)
+
+		var/mob/living/living_parent = parent
+		living_parent.update_appearance(UPDATE_ICON_STATE)
 
 /datum/component/mob_harvest/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_PARENT_EXAMINE, COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_UPDATE_ICON_STATE))
@@ -118,6 +123,9 @@
 		return
 
 	var/mob/living/living_parent = parent
+	if(living_parent.stat == DEAD)
+		return
+
 	living_parent.icon_state = "[living_parent.base_icon_state || initial(living_parent.icon_state)][amount_ready < 1 ? "_harvested" : ""]"
 
 /**

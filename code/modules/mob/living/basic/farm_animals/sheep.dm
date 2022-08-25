@@ -43,7 +43,6 @@
 		item_harvest_time = 5 SECONDS, \
 		item_harvest_sound = 'sound/surgery/scalpel1.ogg', \
 	)
-	update_appearance(UPDATE_ICON)
 	RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, .proc/on_sacrificed)
 
 /mob/living/basic/sheep/update_overlays()
@@ -79,7 +78,6 @@
 	. = ..()
 	if(.)
 		update_appearance(UPDATE_ICON)
-	return .
 
 /datum/ai_controller/basic_controller/sheep
 	ai_traits = STOP_MOVING_WHEN_PULLED
