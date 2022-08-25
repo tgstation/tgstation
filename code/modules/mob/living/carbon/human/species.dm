@@ -605,7 +605,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		// tears
 		if (HAS_TRAIT(species_human, TRAIT_CRYING))
 			var/mutable_appearance/tears_overlay = mutable_appearance('icons/mob/human_face.dmi', "tears", -BODY_ADJ_LAYER) //should appear behind the eyes
-			tears_overlay.color = COLOR_CYAN
+			tears_overlay.color = COLOR_DARK_CYAN
 			standing += tears_overlay
 
 	// organic body markings
