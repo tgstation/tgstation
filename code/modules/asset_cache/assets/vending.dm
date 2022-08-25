@@ -1,5 +1,6 @@
 /datum/asset/spritesheet/vending
 	name = "vending"
+	load_immediately = TRUE
 
 /datum/asset/spritesheet/vending/create_spritesheets()
 	for (var/k in GLOB.vending_products)
