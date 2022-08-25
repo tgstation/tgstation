@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes: 
-  - qol: "Adds contextual screentips to explain whether you are going to destroy, remove, or place a trap into a poster."
