@@ -88,11 +88,20 @@
 	UNSETEMPTY(fov_traits)
 	update_fov()
 
+//did you know you can subtype /image and /mutable_appearance?
+/image/fov_image
+	icon = 'icons/effects/fov/fov_effects.dmi'
+	layer = FOV_EFFECTS_LAYER
+	appearance_flags = RESET_COLOR | RESET_TRANSFORM
+	plane = FULLSCREEN_PLANE
+
 /// Plays a visual effect representing a sound cue for people with vision obstructed by FOV or blindness
-/proc/play_fov_effect(atom/center, range, icon_state, dir = SOUTH, ignore_self = FALSE, angle = 0)
+/proc/play_fov_effect(atom/center, range, icon_state, dir = SOUTH, ignore_self = FALSE, angle = 0, list/override_list)
 	var/turf/anchor_point = get_turf(center)
-	var/image/fov_image
-	for(var/mob/living/living_mob in get_hearers_in_view(range, center))
+	var/image/fov_image/fov_image
+	var/list/clients_shown
+
+	for(var/mob/living/living_mob in override_list || get_hearers_in_view(range, center))
 		var/client/mob_client = living_mob.client
 		if(!mob_client)
 			continue
@@ -101,18 +110,22 @@
 		if(living_mob.in_fov(center, ignore_self))
 			continue
 		if(!fov_image) //Make the image once we found one recipient to receive it
-			fov_image = image(icon = 'icons/effects/fov/fov_effects.dmi', icon_state = icon_state, loc = anchor_point)
-			fov_image.plane = FULLSCREEN_PLANE
-			fov_image.layer = FOV_EFFECTS_LAYER
+			fov_image = new()
+			fov_image.loc = anchor_point
+			fov_image.icon_state = icon_state
 			fov_image.dir = dir
-			fov_image.appearance_flags = RESET_COLOR | RESET_TRANSFORM
 			if(angle)
 				var/matrix/matrix = new
 				matrix.Turn(angle)
 				fov_image.transform = matrix
 			fov_image.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		LAZYADD(clients_shown, mob_client)
+
 		mob_client.images += fov_image
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/remove_image_from_client, fov_image, mob_client), 30)
+		//when added as an image mutable_appearances act identically. we just make it an MA becuase theyre faster to change appearance
+
+	if(clients_shown)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/remove_images_from_clients, fov_image, clients_shown), 30)
 
 /atom/movable/screen/fov_blocker
 	icon = 'icons/effects/fov/field_of_view.dmi'

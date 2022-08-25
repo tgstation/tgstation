@@ -218,12 +218,13 @@
 	theme = /datum/mod_theme/ninja
 	applied_cell = /obj/item/stock_parts/cell/ninja
 	initial_modules = list(
+		/obj/item/mod/module/storage,
 		/obj/item/mod/module/noslip,
+		/obj/item/mod/module/status_readout,
 		/obj/item/mod/module/stealth/ninja,
 		/obj/item/mod/module/dispenser/ninja,
 		/obj/item/mod/module/dna_lock/reinforced,
 		/obj/item/mod/module/emp_shield/pulse,
-		/obj/item/mod/module/status_readout,
 	)
 
 /obj/item/mod/control/pre_equipped/prototype

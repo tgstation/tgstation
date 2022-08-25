@@ -1,0 +1,16 @@
+{
+	"beanie": [
+		{
+			"type": "icon_state",
+			"icon_state": "beanie_stripe",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "beanie_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	]
+}

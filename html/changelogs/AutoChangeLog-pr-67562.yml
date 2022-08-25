@@ -1,5 +1,0 @@
-author: "Guillaume Prata"
-delete-after: True
-changes: 
-  - rscadd: "Gravity generator blackout is a new random event to spice the rounds."
-  - balance: "High intensity gravitational anomalies that don't get neutralized in time will trigger a gravity generator blackout."

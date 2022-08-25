@@ -28,13 +28,13 @@
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 	RegisterSignal(target, COMSIG_ATOM_EMAG_ACT, .proc/on_emag)
 	RegisterSignal(target, COMSIG_CLOSET_POST_OPEN, .proc/on_post_open)
-	ADD_TRAIT(target, TRAIT_BANNED_FROM_CARGO_SHUTTLE, src)
+	ADD_TRAIT(target, TRAIT_BANNED_FROM_CARGO_SHUTTLE, REF(src))
 	//registers pre_open when appropriate
 	area_check(target)
 
 /datum/element/deliver_first/Detach(datum/target)
 	. = ..()
-	REMOVE_TRAIT(target, TRAIT_BANNED_FROM_CARGO_SHUTTLE, src)
+	REMOVE_TRAIT(target, TRAIT_BANNED_FROM_CARGO_SHUTTLE, REF(src))
 	UnregisterSignal(target, list(
 		COMSIG_PARENT_EXAMINE,
 		COMSIG_MOVABLE_MOVED,

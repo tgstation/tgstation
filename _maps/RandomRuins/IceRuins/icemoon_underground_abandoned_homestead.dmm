@@ -22,9 +22,7 @@
 /obj/structure/table/bronze{
 	color = "#666666"
 	},
-/obj/structure/sink/kitchen{
-	pixel_y = 24
-	},
+/obj/structure/sink/kitchen/directional/south,
 /obj/item/plate,
 /turf/open/floor/wood/large{
 	initial_gas_mix = "ICEMOON_ATMOS"
@@ -34,13 +32,6 @@
 /obj/structure/flora/tree/dead/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
-"hM" = (
-/obj/structure/barricade/wooden/crude/snow,
-/turf/open/floor/wood{
-	icon_state = "wood-broken7";
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
-/area/ruin/powered/shuttle)
 "kj" = (
 /obj/structure/railing{
 	color = "#8a7453";
@@ -97,19 +88,12 @@
 	color = "#666666"
 	},
 /obj/item/knife/hunting,
-/obj/item/reagent_containers/food/drinks/mug/coco{
+/obj/item/reagent_containers/cup/glass/mug/coco{
 	desc = "Still hot!";
 	pixel_x = 6;
 	pixel_y = 11
 	},
 /turf/open/floor/wood/large{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
-/area/ruin/powered/shuttle)
-"uA" = (
-/obj/structure/barricade/wooden/snowed,
-/turf/open/floor/wood{
-	icon_state = "wood-broken6";
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
@@ -254,8 +238,8 @@
 /area/ruin/powered/shuttle)
 "Hy" = (
 /obj/structure/barricade/wooden/crude/snow,
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood{
-	icon_state = "wood-broken";
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
@@ -325,7 +309,7 @@
 	color = "#8a7453";
 	dir = 1
 	},
-/obj/item/reagent_containers/glass/bucket/wooden,
+/obj/item/reagent_containers/cup/bucket/wooden,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "RO" = (
@@ -361,17 +345,10 @@
 /obj/machinery/hydroponics/soil,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
-"Ux" = (
-/obj/structure/barricade/wooden/snowed,
-/turf/open/floor/wood{
-	icon_state = "wood-broken3";
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
-/area/ruin/powered/shuttle)
 "Vf" = (
 /obj/structure/barricade/wooden/snowed,
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood{
-	icon_state = "wood-broken";
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
@@ -434,7 +411,7 @@ Sv
 ol
 ol
 ol
-hM
+Hy
 ol
 mq
 mq
@@ -550,7 +527,7 @@ ol
 cP
 Hv
 ng
-uA
+Vf
 zd
 bf
 bf
@@ -616,7 +593,7 @@ Ht
 ol
 ol
 ol
-Ux
+Vf
 ol
 ol
 ol

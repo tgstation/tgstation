@@ -30,12 +30,6 @@ modules = ["maintenance_miningsolar_1.dmm", "maintenance_miningsolar_2.dmm", "ma
 [rooms.maintenance_miningsolar_attachment]
 modules = ["maintenance_miningsolar_attachment_1.dmm", "maintenance_miningsolar_attachment_2.dmm", "generic_wall_blocker.dmm"]
 
-[rooms.maintenance_miningsolar_cavetunnel]
-modules = ["maintenance_miningsolar_cavetunnel_1.dmm", "maintenance_miningsolar_cavetunnel_2.dmm"]
-
-[rooms.maintenance_miningsolar_cavetunnel_attachment]
-modules = ["maintenance_miningsolar_cavetunnel_attachment_1.dmm", "maintenance_miningsolar_cavetunnel_attachment_2.dmm", "generic_asteroid_blocker.dmm"]
-
 # Maintenance storage area above the lower floor tram workshop.
 [rooms.maintenance_storagebig]
 modules = ["maintenance_storagebig_1.dmm", "maintenance_storagebig_2.dmm", "maintenance_storagebig_3.dmm"]
@@ -51,22 +45,16 @@ modules = ["maintenance_science_west_1.dmm", "maintenance_science_west_2.dmm"]
 [rooms.maintenance_science_west_attachment]
 modules = ["maintenance_science_west_attachment_1.dmm", "maintenance_science_west_attachment_2.dmm", "maintenance_science_west_attachment_3.dmm"]
 
-# Ladder between maintenance of cargo and the civilian wing.
-[rooms.maintenance_midladder]
-modules = ["maintenance_midladder_1.dmm", "maintenance_midladder_2.dmm"]
-
-[rooms.maintenance_midladder_upper]
-modules = ["maintenance_midladder_upper_1.dmm", "maintenance_midladder_upper_2.dmm"]
-
-[rooms.maintenance_midladder_upper_attachment]
-modules = ["maintenance_midladder_upper_attachment_1.dmm", "maintenance_midladder_upper_attachment_2.dmm"]
+# Ladder between maintenance of cargo and the service wing.
+[rooms.maintenance_barladder]
+modules = ["maintenance_barladder_1.dmm", "maintenance_barladder_2.dmm"]
 
 # Maintenance shaft connecting between the security and civilian wing.
-[rooms.maintenance_security_long]
-modules = ["maintenance_security_long_1.dmm", "maintenance_security_long_2.dmm"]
+[rooms.maintenance_security]
+modules = ["maintenance_security_1.dmm", "maintenance_security_2.dmm"]
 
-[rooms.maintenance_security_long_attachment]
-modules = ["maintenance_security_long_attachment_1.dmm", "maintenance_security_long_attachment_2.dmm"]
+[rooms.maintenance_security_attachment]
+modules = ["maintenance_security_attachment_1.dmm", "maintenance_security_attachment_2.dmm"]
 
 # Maintenance rooms underneath the arrivals wing.
 [rooms.maintenance_lowarrivals]

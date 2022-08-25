@@ -51,7 +51,7 @@
 
 /datum/component/wet_floor/proc/update_overlay()
 	var/intended
-	if(!istype(parent, /turf/open/floor))
+	if(!isfloorturf(parent))
 		intended = generic_turf_overlay
 	else
 		switch(highest_strength)
@@ -127,8 +127,7 @@
 	decrease = max(0, decrease)
 	if((is_wet() & TURF_WET_ICE) && t > T0C) //Ice melts into water!
 		for(var/obj/O in T.contents)
-			if(O.obj_flags & FROZEN)
-				O.make_unfrozen()
+			O.unfreeze()
 		add_wet(TURF_WET_WATER, max_time_left())
 		dry(null, TURF_WET_ICE)
 	dry(null, ALL, FALSE, decrease)

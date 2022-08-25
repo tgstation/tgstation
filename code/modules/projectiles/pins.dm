@@ -17,13 +17,13 @@
 
 /obj/item/firing_pin/New(newloc)
 	..()
-	if(istype(newloc, /obj/item/gun))
+	if(isgun(newloc))
 		gun = newloc
 
 /obj/item/firing_pin/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
 	if(proximity_flag)
-		if(istype(target, /obj/item/gun))
+		if(isgun(target))
 			var/obj/item/gun/G = target
 			var/obj/item/firing_pin/old_pin = G.pin
 			if(old_pin && (force_replace || old_pin.pin_removeable))
@@ -247,7 +247,7 @@
 	..()
 
 /obj/item/firing_pin/paywall/attackby(obj/item/M, mob/user, params)
-	if(istype(M, /obj/item/card/id))
+	if(isidcard(M))
 		var/obj/item/card/id/id = M
 		if(!id.registered_account)
 			to_chat(user, span_warning("ERROR: Identification card lacks registered bank account!"))

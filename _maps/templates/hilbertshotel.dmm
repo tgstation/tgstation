@@ -119,11 +119,7 @@
 /area/misc/hilbertshotel)
 "A" = (
 /obj/structure/mirror/directional/west,
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 2
-	},
+/obj/structure/sink/directional/east,
 /turf/open/indestructible/hoteltile,
 /area/misc/hilbertshotel)
 "B" = (
@@ -131,9 +127,7 @@
 /turf/open/indestructible/hotelwood,
 /area/misc/hilbertshotel)
 "C" = (
-/obj/machinery/shower{
-	dir = 8
-	},
+/obj/machinery/shower/directional/west,
 /turf/open/indestructible/hoteltile,
 /area/misc/hilbertshotel)
 "D" = (
@@ -230,9 +224,7 @@
 /area/misc/hilbertshotel)
 "U" = (
 /obj/structure/table/reinforced,
-/obj/structure/sink/kitchen{
-	dir = 1
-	},
+/obj/structure/sink/kitchen/directional/north,
 /obj/machinery/light/small/directional/south,
 /turf/open/indestructible/hotelwood,
 /area/misc/hilbertshotel)

@@ -28,6 +28,7 @@
 		processing |= target
 
 /datum/element/obj_regen/Detach(obj/target)
+	. = ..()
 	UnregisterSignal(target, COMSIG_ATOM_TAKE_DAMAGE)
 	processing -= target
 	if(!length(processing))

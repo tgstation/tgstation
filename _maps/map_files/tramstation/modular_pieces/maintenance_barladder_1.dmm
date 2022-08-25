@@ -1,0 +1,158 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"d" = (
+/obj/structure/holosign/barrier/atmos/sturdy,
+/turf/open/misc/asteroid/airless,
+/area/station/maintenance/starboard/greater)
+"k" = (
+/obj/structure/holosign/barrier/atmos/sturdy,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
+"p" = (
+/turf/open/misc/asteroid/airless,
+/area/mine/explored)
+"s" = (
+/obj/structure/holosign/barrier/atmos/sturdy,
+/turf/open/misc/asteroid/airless,
+/area/mine/explored)
+"v" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/airless,
+/area/mine/explored)
+"z" = (
+/obj/structure/ladder,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
+"B" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
+"C" = (
+/turf/template_noop,
+/area/template_noop)
+"O" = (
+/obj/modular_map_connector,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/structure/barricade/wooden,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
+"P" = (
+/turf/open/misc/asteroid/airless,
+/area/station/maintenance/starboard/greater)
+"R" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/airless,
+/area/station/maintenance/starboard/greater)
+"T" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
+"U" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"W" = (
+/turf/closed/wall,
+/area/station/maintenance/starboard/greater)
+"Z" = (
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+
+(1,1,1) = {"
+C
+W
+W
+W
+W
+W
+C
+C
+C
+C
+W
+"}
+(2,1,1) = {"
+W
+W
+U
+Z
+T
+W
+W
+C
+C
+C
+W
+"}
+(3,1,1) = {"
+W
+U
+Z
+T
+T
+d
+P
+p
+p
+p
+W
+"}
+(4,1,1) = {"
+W
+U
+B
+z
+T
+k
+R
+p
+v
+s
+O
+"}
+(5,1,1) = {"
+W
+U
+B
+T
+T
+k
+P
+p
+p
+W
+W
+"}
+(6,1,1) = {"
+W
+W
+U
+Z
+Z
+W
+W
+p
+p
+p
+W
+"}
+(7,1,1) = {"
+C
+W
+W
+W
+W
+W
+C
+C
+C
+C
+W
+"}

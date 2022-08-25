@@ -17,6 +17,7 @@
 	item = /obj/item/gun/ballistic/automatic/pistol/toy/riot
 	cost = 2
 	surplus = 10
+	purchasable_from = ~UPLINK_NUKE_OPS
 
 // Low progression cost
 
@@ -27,7 +28,7 @@
 	progression_minimum = 10 MINUTES
 	item = /obj/item/gun/ballistic/automatic/pistol
 	cost = 7
-	purchasable_from = ~UPLINK_CLOWN_OPS
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/dangerous/throwingweapons
 	name = "Box of Throwing Weapons"
@@ -56,6 +57,7 @@
 	progression_minimum = 20 MINUTES
 	item = /obj/item/melee/powerfist
 	cost = 6
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/dangerous/rapid
 	name = "Gloves of the North Star"

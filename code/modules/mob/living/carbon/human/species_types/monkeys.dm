@@ -25,17 +25,16 @@
 	)
 	inherent_traits = list(
 		TRAIT_CAN_STRIP,
-		TRAIT_VENTCRAWLER_NUDE,
-		TRAIT_PRIMITIVE,
-		TRAIT_WEAK_SOUL,
 		TRAIT_GUN_NATURAL,
-		//TRAIT_LITERATE, monkeys shouldn't be able to read or write
+		//TRAIT_LITERATE,
+		TRAIT_PRIMITIVE,
+		TRAIT_VENTCRAWLER_NUDE,
+		TRAIT_WEAK_SOUL,
 	)
 	no_equip = list(
 		ITEM_SLOT_OCLOTHING,
 		ITEM_SLOT_GLOVES,
 		ITEM_SLOT_FEET,
-		ITEM_SLOT_ICLOTHING,
 		ITEM_SLOT_SUITSTORE,
 	)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN | SLIME_EXTRACT
@@ -94,7 +93,7 @@
 		var/obj/item/bodypart/affecting = null
 		if(ishuman(victim))
 			var/mob/living/carbon/human/human_victim = victim
-			affecting = human_victim.get_bodypart(pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+			affecting = human_victim.get_bodypart(human_victim.get_random_valid_zone(even_weights = TRUE))
 		var/armor = victim.run_armor_check(affecting, MELEE)
 		if(prob(25))
 			victim.visible_message(span_danger("[user]'s bite misses [victim]!"),

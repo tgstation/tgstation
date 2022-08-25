@@ -152,7 +152,7 @@
 	has_electronics = APC_ELECTRONICS_SECURED
 	// is starting with a power cell installed, create it and set its charge level
 	if(cell_type)
-		cell = new cell_type
+		cell = new cell_type(src)
 		cell.charge = start_charge * cell.maxcharge / 100 // (convert percentage to actual value)
 
 	var/area/our_area = get_area(loc)
@@ -206,10 +206,14 @@
 		disconnect_terminal()
 	. = ..()
 
-/obj/machinery/power/apc/handle_atom_del(atom/atom_to_check)
-	if(atom_to_check == cell)
+/obj/machinery/power/apc/handle_atom_del(atom/deleting_atom)
+	if(deleting_atom == cell)
 		cell = null
+		charging = APC_NOT_CHARGING
 		update_appearance()
+		if(!QDELING(src))
+			SStgui.update_uis(src)
+	return ..()
 
 /obj/machinery/power/apc/examine(mob/user)
 	. = ..()
@@ -328,7 +332,7 @@
 			toggle_breaker(usr)
 			. = TRUE
 		if("toggle_nightshift")
-			toggle_nightshift_lights()
+			toggle_nightshift_lights(usr)
 			. = TRUE
 		if("charge")
 			chargemode = !chargemode
@@ -365,13 +369,14 @@
 				malfvacate()
 		if("reboot")
 			failure_timer = 0
+			force_update = FALSE
 			update_appearance()
 			update()
 		if("emergency_lighting")
 			emergency_lights = !emergency_lights
 			for(var/obj/machinery/light/L in area)
-				if(!initial(L.no_emergency)) //If there was an override set on creation, keep that override
-					L.no_emergency = emergency_lights
+				if(!initial(L.no_low_power)) //If there was an override set on creation, keep that override
+					L.no_low_power = emergency_lights
 					INVOKE_ASYNC(L, /obj/machinery/light/.proc/update, FALSE)
 				CHECK_TICK
 	return TRUE
@@ -384,8 +389,6 @@
 	if(!area || !area.requires_power)
 		return
 	if(failure_timer)
-		update()
-		queue_icon_update()
 		failure_timer--
 		force_update = TRUE
 		return
@@ -515,7 +518,7 @@
 	// update icon & area power if anything changed
 
 	if(last_lt != lighting || last_eq != equipment || last_en != environ || force_update)
-		force_update = 0
+		force_update = FALSE
 		queue_icon_update()
 		update()
 	else if(last_ch != charging)

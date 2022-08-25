@@ -227,12 +227,3 @@
 		inhand_icon_state = downsprite
 		to_chat(user, span_notice("You lower the ear flaps on the ushanka."))
 	earflaps = !earflaps
-
-
-/obj/item/clothing/head/ushanka/soviet
-	name = "soviet ushanka"
-	desc = "For the union!"
-	icon_state = "sovietushankadown"
-	inhand_icon_state = "sovietushankadown"
-	upsprite = "sovietushankaup"
-	downsprite = "sovietushankadown"

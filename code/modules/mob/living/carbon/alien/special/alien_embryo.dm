@@ -60,12 +60,16 @@
 		return
 	if(++stage < 6)
 		INVOKE_ASYNC(src, .proc/RefreshInfectionImage)
-		addtimer(CALLBACK(src, .proc/advance_embryo_stage), growth_time)
+		var/slowdown = 1
+		if(ishuman(owner))
+			var/mob/living/carbon/human/baby_momma = owner
+			slowdown = baby_momma.reagents.has_reagent(/datum/reagent/medicine/spaceacillin) ? 2 : 1 // spaceacillin doubles the time it takes to grow
+		addtimer(CALLBACK(src, .proc/advance_embryo_stage), growth_time*slowdown)
 
 /obj/item/organ/internal/body_egg/alien_embryo/egg_process()
 	if(stage == 6 && prob(50))
 		for(var/datum/surgery/S in owner.surgeries)
-			if(S.location == BODY_ZONE_CHEST && istype(S.get_surgery_step(), /datum/surgery_step/manipulate_organs))
+			if(S.location == BODY_ZONE_CHEST && istype(S.get_surgery_step(), /datum/surgery_step/manipulate_organs/internal))
 				AttemptGrow(0)
 				return
 		AttemptGrow()

@@ -142,9 +142,9 @@
 	alert_type = NONE
 
 /datum/status_effect/wound/on_creation(mob/living/new_owner, incoming_wound)
-	. = ..()
 	linked_wound = incoming_wound
 	linked_limb = linked_wound.limb
+	return ..()
 
 /datum/status_effect/wound/on_remove()
 	linked_wound = null

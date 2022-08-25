@@ -388,7 +388,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		if("toggleWanted")
 			alert = FALSE
 			viewing_wanted = TRUE
-			update_overlays()
+			update_appearance()
 			return TRUE
 
 		if("setCriminalName")
@@ -601,7 +601,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
  */
 /obj/machinery/newscaster/proc/remove_alert()
 	alert = FALSE
-	update_overlays()
+	update_appearance()
 
 /**
  * When a new feed message is made that will alert all newscasters, this causes the newscasters to sent out a spoken message as well as create a sound.

@@ -131,6 +131,9 @@
 /// log telecomms messages
 /datum/config_entry/flag/log_telecomms
 
+/// log speech indicators(started/stopped speaking)
+/datum/config_entry/flag/log_speech_indicators
+
 /// log certain expliotable parrots and other such fun things in a JSON file of twitter valid phrases.
 /datum/config_entry/flag/log_twitter
 
@@ -623,3 +626,10 @@
 /datum/config_entry/flag/forbid_all_profiling
 
 /datum/config_entry/flag/forbid_admin_profiling
+
+
+/datum/config_entry/flag/morgue_cadaver_disable_nonhumans
+
+/datum/config_entry/number/morgue_cadaver_other_species_probability
+
+/datum/config_entry/string/morgue_cadaver_override_species

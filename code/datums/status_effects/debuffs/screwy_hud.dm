@@ -44,15 +44,15 @@
 
 /datum/status_effect/grouped/screwy_hud/fake_dead
 	id = "fake_hud_dead"
-	priority = 3 // death is absolute
+	priority = 100 // death is absolute
 	override_icon = "health7"
 
 /datum/status_effect/grouped/screwy_hud/fake_crit
 	id = "fake_hud_crit"
-	priority = 2 // crit is almost death, and death is absolute
+	priority = 90 // crit is almost death, and death is absolute
 	override_icon = "health6"
 
 /datum/status_effect/grouped/screwy_hud/fake_healthy
 	id = "fake_hud_healthy"
-	priority = 1 // fully healthy is the opposite of death, which is absolute
+	priority = 10 // fully healthy is the opposite of death, which is absolute
 	override_icon = "health0"

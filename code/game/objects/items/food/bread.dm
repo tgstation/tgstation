@@ -38,7 +38,7 @@
 	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/bread/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
 
 /obj/item/food/bread/plain/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/plain, 5, 30, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/plain, 5, 3 SECONDS, table_required = TRUE)
 
 /obj/item/food/breadslice/plain
 	name = "bread slice"
@@ -85,7 +85,7 @@
 
 
 /obj/item/food/bread/meat/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/meat, 5, 30, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/meat, 5, 3 SECONDS, table_required = TRUE)
 
 /obj/item/food/breadslice/meat
 	name = "meatbread slice"
@@ -103,7 +103,7 @@
 	tastes = list("bread" = 10, "meat" = 10)
 
 /obj/item/food/bread/sausage/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/sausage, 5, 30, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/sausage, 5, 3 SECONDS, table_required = TRUE)
 
 /obj/item/food/breadslice/sausage
 	name = "sausagebread slice"
@@ -122,7 +122,7 @@
 	foodtypes = GRAIN | MEAT
 
 /obj/item/food/bread/xenomeat/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/xenomeat, 5, 30, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/xenomeat, 5, 3 SECONDS, table_required = TRUE)
 
 /obj/item/food/breadslice/xenomeat
 	name = "xenomeatbread slice"
@@ -140,7 +140,7 @@
 	foodtypes = GRAIN | MEAT | TOXIC
 
 /obj/item/food/bread/spidermeat/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/spidermeat, 5, 30, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/spidermeat, 5, 3 SECONDS, table_required = TRUE)
 
 /obj/item/food/breadslice/spidermeat
 	name = "spider meat bread slice"
@@ -158,7 +158,7 @@
 	foodtypes = GRAIN | FRUIT
 
 /obj/item/food/bread/banana/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/banana, 5, 30, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/banana, 5, 3 SECONDS, table_required = TRUE)
 
 /obj/item/food/breadslice/banana
 	name = "banana-nut bread slice"
@@ -177,7 +177,7 @@
 	venue_value = FOOD_PRICE_TRASH
 
 /obj/item/food/bread/tofu/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/tofu, 5, 30, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/tofu, 5, 3 SECONDS, table_required = TRUE)
 
 /obj/item/food/breadslice/tofu
 	name = "tofubread slice"
@@ -195,7 +195,7 @@
 	foodtypes = GRAIN | DAIRY
 
 /obj/item/food/bread/creamcheese/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/creamcheese, 5, 30, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/creamcheese, 5, 3 SECONDS, table_required = TRUE)
 
 /obj/item/food/breadslice/creamcheese
 	name = "cream cheese bread slice"
@@ -209,7 +209,7 @@
 	desc = "It's bread, customized to your wildest dreams."
 
 /obj/item/food/bread/empty/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/empty, 5, 30, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/empty, 5, 3 SECONDS, table_required = TRUE)
 
 /obj/item/food/bread/mimana
 	name = "mimana bread"
@@ -220,7 +220,7 @@
 	foodtypes = GRAIN | FRUIT
 
 /obj/item/food/bread/mimana/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/mimana, 5, 30, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/mimana, 5, 3 SECONDS, table_required = TRUE)
 
 /obj/item/food/breadslice/mimana
 	name = "mimana bread slice"
@@ -291,16 +291,16 @@
 	foodtypes = GRAIN | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/butterdog/ComponentInitialize()
+/obj/item/food/butterdog/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/slippery, 80)
+	AddComponent(/datum/component/slippery, 8 SECONDS)
 
 /obj/item/food/raw_frenchtoast
 	name = "raw french toast"
 	desc = "A slice of bread soaked in a beaten egg mixture. Put it on a griddle to start cooking!."
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "raw_frenchtoast"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2,)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("raw egg" = 2, "soaked bread" = 1)
 	foodtypes = GRAIN | RAW | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
@@ -313,8 +313,32 @@
 	desc = "A slice of bread soaked in an egg mixture and grilled until golden-brown. Drizzled with syrup!."
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "frenchtoast"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2,)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("french toast" = 1, "syrup" = 1, "golden deliciousness" = 1)
 	foodtypes = GRAIN | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
+
+/obj/item/food/raw_breadstick
+	name = "raw breadstick"
+	desc = "An uncooked strip of dough in the shape of a breadstick."
+	icon = 'icons/obj/food/burgerbread.dmi'
+	icon_state = "raw_breadstick"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
+	tastes = list("raw dough" = 1)
+	foodtypes = GRAIN | DAIRY
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/raw_breadstick/MakeBakeable()
+	AddComponent(/datum/component/bakeable, /obj/item/food/breadstick, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)
+
+/obj/item/food/breadstick
+	name = "breadstick"
+	desc = "A delicious, buttery breadstick. Highly addictive, but oh-so worth it."
+	icon = 'icons/obj/food/burgerbread.dmi'
+	icon_state = "breadstick"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
+	tastes = list("fluffy bread" = 1, "butter" = 2)
+	foodtypes = GRAIN | DAIRY
+	w_class = WEIGHT_CLASS_SMALL
+	burns_in_oven = TRUE

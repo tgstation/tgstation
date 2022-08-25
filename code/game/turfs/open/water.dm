@@ -29,6 +29,10 @@
 	base_icon_state = "water"
 	baseturfs = /turf/open/water/beach
 
+/turf/open/water/beach/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/lazy_fishing_spot, FISHING_SPOT_PRESET_BEACH)
+
 //Same turf, but instead used in the Beach Biodome
 /turf/open/water/beach/biodome
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS

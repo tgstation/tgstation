@@ -5,9 +5,9 @@
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
-		TRAIT_NOHUNGER,
-		TRAIT_NOBREATH,
 		TRAIT_LITERATE,
+		TRAIT_NOBREATH,
+		TRAIT_NOHUNGER,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutant_bodyparts = list("wings" = "None")
@@ -157,7 +157,7 @@
 
 /obj/item/organ/internal/brain/dullahan
 	decoy_override = TRUE
-	organ_flags = 0
+	organ_flags = NONE
 
 /obj/item/organ/internal/tongue/dullahan
 	zone = "abstract"

@@ -157,7 +157,7 @@
 	"<span class='italics>You hear organic matter ripping and tearing!</span>")
 
 	qdel(blade)
-	target.update_inv_hands()
+	target.update_held_items()
 
 /datum/action/changeling/sting/extract_dna
 	name = "Extract DNA Sting"

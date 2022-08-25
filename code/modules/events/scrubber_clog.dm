@@ -4,6 +4,8 @@
 	weight = 25
 	max_occurrences = 3
 	earliest_start = 5 MINUTES
+	category = EVENT_CATEGORY_ENTITIES
+	description = "Harmless mobs climb out of a scrubber."
 
 /datum/round_event/scrubber_clog
 	announceWhen = 10
@@ -124,6 +126,7 @@
 	weight = 12
 	max_occurrences = 3
 	earliest_start = 10 MINUTES
+	description = "Dangerous mobs climb out of a scrubber."
 
 /datum/round_event/scrubber_clog/major/setup()
 	. = ..()
@@ -148,6 +151,7 @@
 	min_players = 15
 	max_occurrences = 1
 	earliest_start = 25 MINUTES
+	description = "Really dangerous mobs climb out of a scrubber."
 
 /datum/round_event/scrubber_clog/critical
 	maximum_spawns = 3
@@ -172,6 +176,7 @@
 	typepath = /datum/round_event/scrubber_clog/strange
 	weight = 5
 	max_occurrences = 1
+	description = "Strange mobs climb out of a scrubber, harmfulness varies."
 
 /datum/round_event/scrubber_clog/strange
 	maximum_spawns = 3

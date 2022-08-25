@@ -24,7 +24,7 @@
 "s" = (
 /obj/structure/holosign/barrier/atmos,
 /obj/effect/turf_decal/sand/plating,
-/turf/open/space/basic,
+/turf/open/floor/plating/airless,
 /area/station/maintenance/port/central)
 "w" = (
 /obj/effect/decal/cleanable/dirt,

@@ -197,6 +197,12 @@ MINIMAL_ACCESS_THRESHOLD 20
 ## Comment this out this to make security officers spawn in departmental security posts
 #SEC_START_BRIG
 
+## This variable is how you may configure "Scaling Access" for Departmental Security Officers.
+## Set to 0/commented out for "off", Departmental Security Officers will never get additional room-specific access (beyond general departmental doors).
+## Set to 1 if you want to enable "Scaling Access", where Departmental Security Officers will get access to most rooms within a department depending on how many security officers there are relative to the number of people on a station.
+## Set to 2 if you want Departmental Security Officers to always have access to all rooms in a department.
+DEPSEC_ACCESS_LEVEL 1
+
 
 ## GHOST INTERACTION ###
 ## Uncomment to let ghosts spin chairs. You may be wondering why this is a config option. Don't ask.
@@ -217,7 +223,23 @@ NEAR_DEATH_EXPERIENCE
 ## Set to 1 for "custom", silicons will start with the custom laws defined in silicon_laws.txt. (If silicon_laws.txt is empty, the AI will spawn with asimov and Custom boards will auto-delete.)
 ## Set to 2 for "random", silicons will start with a random lawset picked from random laws specified below.
 ## Set to 3 for "weighted random", using values in "silicon_weights.txt", a law will be selected, with weights specifed in that file.
+## Set to 4 for "specified", silicons will start with an existing lawset. (If no specified lawset is identified, the AI will spawn with asimov.)
+
+
 DEFAULT_LAWS 0
+
+## SILICON ASIMOV SUPERIORITY OVERRIDE ###
+## This makes "Asimov Superiority" show up as a perk for humans in the character creation menu even if asimov is not the default lawset, such as when used with asimov++
+## Uncomment this out to make "Asimov Superiority" show up as a perk for humans
+# SILICON_ASIMOV_SUPERIORITY_OVERRIDE
+
+## SPECIFIED LAWS ##
+## ------------------------------------------------------------------------------------------
+## These control what lawset the AI will use, edit the specified law to an *existing* lawset to make it the default.
+## See datums\ai_laws.dm for the full law lists
+## IE, SPECIFIED_LAWS asimovpp, SPECIFIED_LAWS robocop, SPECIFIED_LAWS antimov
+
+SPECIFIED_LAWS asimovpp
 
 ## RANDOM LAWS ##
 ## ------------------------------------------------------------------------------------------
@@ -370,6 +392,24 @@ ROUNDSTART_RACES ethereal
 ## Races defined here will not cause existing characters to be reset to human if they currently have a non-roundstart species defined.
 #ROUNDSTART_NO_HARD_CHECK felinid
 
+## Disable roundstart species morgue cadavers?
+## Cadavers in the morgue at the start of the round will be randomly picked from all enabled ROUNDSTART_RACES
+## Recommended to leave this commented out so nonhuman species will have viable replacement bodies / organs when they die.
+# MORGUE_CADAVER_DISABLE_NONHUMANS
+
+## Morgue Cadaver Species Probability
+## The probability for nonhuman cadavers to spawn in the morgue.
+## Only used if MORGUE_CADAVER_DISABLE_NONHUMANS is commented out
+## If left undefined, defaults to 50%.
+MORGUE_CADAVER_OTHER_SPECIES_PROBABILITY 50
+
+## A single specific Species ID to supplement human morgue cadavers.
+## Set MORGUE_CADAVER_OTHER_SPECIES_PROBABILITY to determine the chances between being a human and this specific species.
+## Only used if MORGUE_CADAVER_DISABLE_NONHUMANS is commented out
+## Prob = 100 means all corpses will be this race.
+#MORGUE_CADAVER_OVERRIDE_SPECIES lizard
+
+
 ##Overflow job. Default is assistant
 OVERFLOW_JOB Assistant
 
@@ -470,10 +510,12 @@ MAXFINE 2000
 ## How many played hours of DRONE_REQUIRED_ROLE required to be a Maintenance Done
 #DRONE_ROLE_PLAYTIME 14
 
-## Uncomment to enable SDQL spells
-## Warning: SDQL is a powerful tool and can break many things or expose security sensitive information.
-## Giving players access to it has major security concerns, be careful and deliberate when using this feature.
-#SDQL_SPELLS
-
 ## Whether native FoV is enabled for all people.
 #NATIVE_FOV
+
+## Whether circuit sounds are allowed to be played or not.
+#DISALLOW_CIRCUIT_SOUNDS
+
+## Comment if you wish to enable title music playing at the lobby screen. This flag is disabled by default to facilitate better code testing on local machines.
+## Do keep in mind that this flag will not affect individual player's preferences: if they opt-out on your server, it will never play for them.
+DISALLOW_TITLE_MUSIC

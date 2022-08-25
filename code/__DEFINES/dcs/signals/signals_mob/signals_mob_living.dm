@@ -43,8 +43,6 @@
 
 ///from base of element/bane/activate(): (item/weapon, mob/user)
 #define COMSIG_LIVING_BANED "living_baned"
-///Sent when bloodcrawl ends in mob/living/phasein(): (phasein_decal)
-#define COMSIG_LIVING_AFTERPHASEIN "living_phasein"
 
 ///from base of mob/living/death(): (gibbed)
 #define COMSIG_LIVING_DEATH "living_death"
@@ -96,3 +94,8 @@
 
 ///From obj/item/toy/crayon/spraycan
 #define COMSIG_LIVING_MOB_PAINTED "living_mob_painted"
+///From mob/living/proc/wabbajack_act
+#define COMSIG_LIVING_WABBAJACKED "living_wabbajacked"
+
+/// From /datum/component/mob_harvest: (amount_ready)
+#define COMSIG_LIVING_HARVEST_UPDATE "living_harvest_update"

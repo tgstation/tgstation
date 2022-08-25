@@ -139,11 +139,10 @@
 		return
 	. = COMPONENT_CANCEL_ATTACK_CHAIN
 	var/mob/living/carbon/jedi = user
-	var/datum/component/mood/insaneinthemembrane = jedi.GetComponent(/datum/component/mood)
-	if(insaneinthemembrane.sanity < 15)
+	if(jedi.mob_mood.sanity < 15)
 		return //they've already seen it and are about to die, or are just too insane to care
 	to_chat(jedi, span_userdanger("OH GOD! NONE OF IT IS REAL! NONE OF IT IS REEEEEEEEEEEEEEEEEEEEEEEEAL!"))
-	insaneinthemembrane.sanity = 0
+	jedi.mob_mood.sanity = 0
 	for(var/lore in typesof(/datum/brain_trauma/severe))
 		jedi.gain_trauma(lore)
 	addtimer(CALLBACK(src, .proc/deranged, jedi), 10 SECONDS)
@@ -163,7 +162,7 @@
 /obj/item/scrying
 	name = "scrying orb"
 	desc = "An incandescent orb of otherworldly energy, merely holding it gives you vision and hearing beyond mortal means, and staring into it lets you see the entire universe."
-	icon = 'icons/obj/guns/projectiles.dmi'
+	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state ="bluespace"
 	throw_speed = 3
 	throw_range = 7
@@ -306,17 +305,12 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "whistle"
 
-	/// Cooldown between whistle uses.
-	COOLDOWN_DECLARE(whistle_cooldown)
 	/// Person using the warp whistle
 	var/mob/living/whistler
 
 /obj/item/warp_whistle/attack_self(mob/user)
-	if(!COOLDOWN_FINISHED(src, whistle_cooldown))
-		to_chat(user, span_warning("[src] is still on cooldown!"))
-		return
 	if(whistler)
-		to_chat(user, span_warning("[src] is already warping."))
+		to_chat(user, span_warning("[src] is on cooldown."))
 		return
 
 	whistler = user
@@ -324,7 +318,6 @@
 	var/turf/spawn_location = locate(user.x + pick(-7, 7), user.y, user.z)
 	playsound(current_turf,'sound/magic/warpwhistle.ogg', 200, TRUE)
 	new /obj/effect/temp_visual/teleporting_tornado(spawn_location, src)
-	COOLDOWN_START(src, whistle_cooldown, 4 SECONDS)
 
 ///Teleporting tornado, spawned by warp whistle, teleports the user if they manage to pick them up.
 /obj/effect/temp_visual/teleporting_tornado
@@ -335,7 +328,7 @@
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE
 	randomdir = FALSE
-	duration = 10 SECONDS
+	duration = 8 SECONDS
 	movement_type = PHASING
 
 	/// Reference to the whistle
@@ -376,5 +369,6 @@
 /// Destroy the tornado and teleport everyone on it away.
 /obj/effect/temp_visual/teleporting_tornado/Destroy()
 	if(whistle)
+		whistle.whistler = null
 		whistle = null
 	return ..()

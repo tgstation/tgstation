@@ -68,6 +68,7 @@
  * * user - the heretic which we're applying things to
  */
 /datum/heretic_knowledge/proc/on_gain(mob/user)
+	return
 
 /**
  * Called when the knowledge is removed from a mob,
@@ -77,6 +78,7 @@
  * * user - the heretic which we're removing things from
  */
 /datum/heretic_knowledge/proc/on_lose(mob/user)
+	return
 
 /**
  * Determines if a heretic can actually attempt to invoke the knowledge as a ritual.
@@ -168,23 +170,26 @@
  */
 /datum/heretic_knowledge/spell
 	abstract_parent_type = /datum/heretic_knowledge/spell
-	/// The proc holder spell we add to the heretic. Type-path, becomes an instance via on_research().
-	var/obj/effect/proc_holder/spell/spell_to_add
+	/// Spell path we add to the heretic. Type-path.
+	var/datum/action/cooldown/spell/spell_to_add
+	/// The spell we actually created.
+	var/datum/weakref/created_spell_ref
 
-/datum/heretic_knowledge/spell/Destroy(force, ...)
-	if(istype(spell_to_add))
-		QDEL_NULL(spell_to_add)
-	return ..()
-
-/datum/heretic_knowledge/spell/on_research(mob/user)
-	spell_to_add = new spell_to_add()
+/datum/heretic_knowledge/spell/Destroy()
+	QDEL_NULL(created_spell_ref)
 	return ..()
 
 /datum/heretic_knowledge/spell/on_gain(mob/user)
-	user.mind.AddSpell(spell_to_add)
+	// Added spells are tracked on the body, and not the mind,
+	// because we handle heretic mind transfers
+	// via the antag datum (on_gain and on_lose).
+	var/datum/action/cooldown/spell/created_spell = created_spell_ref?.resolve() || new spell_to_add(user)
+	created_spell.Grant(user)
+	created_spell_ref = WEAKREF(created_spell)
 
 /datum/heretic_knowledge/spell/on_lose(mob/user)
-	user.mind.RemoveSpell(spell_to_add)
+	var/datum/action/cooldown/spell/created_spell = created_spell_ref?.resolve()
+	created_spell?.Remove(user)
 
 /*
  * A knowledge subtype for knowledge that can only
@@ -241,6 +246,10 @@
 		if(initial(final_knowledge_type.route) == route)
 			continue
 		banned_knowledge += final_knowledge_type
+
+/datum/heretic_knowledge/limited_amount/starting/on_research(mob/user)
+	. = ..()
+	SSblackbox.record_feedback("tally", "heretic_path_taken", 1, route)
 
 /*
  * A knowledge subtype for heretic knowledge
@@ -373,7 +382,7 @@
 /datum/heretic_knowledge/curse/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	fingerprints = list()
 	for(var/atom/requirements as anything in atoms)
-		fingerprints[GET_ATOM_FINGERPRINTS(requirements)] = 1
+		fingerprints |= GET_ATOM_FINGERPRINTS(requirements)
 	list_clear_nulls(fingerprints)
 
 	// No fingerprints? No ritual
@@ -396,7 +405,7 @@
 		loc.balloon_alert(user, "ritual failed, no fingerprints!")
 		return FALSE
 
-	var/chosen_mob = tgui_input_list(user, "Select the person you wish to curse", "Eldritch Curse", sort_list(compiled_list, /proc/cmp_mob_realname_dsc))
+	var/chosen_mob = tgui_input_list(user, "Select the person you wish to curse", "Eldritch Curse", sort_list(compiled_list))
 	if(isnull(chosen_mob))
 		return FALSE
 
@@ -458,7 +467,7 @@
 	summoned.ghostize(FALSE)
 	summoned.key = picked_candidate.key
 
-	log_game("[key_name(user)] created a [summoned.name], controlled by [key_name(picked_candidate)].")
+	user.log_message("created a [summoned.name], controlled by [key_name(picked_candidate)].", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(user)] created a [summoned.name], [ADMIN_LOOKUPFLW(summoned)].")
 
 	var/datum/antagonist/heretic_monster/heretic_monster = summoned.mind.add_antag_datum(/datum/antagonist/heretic_monster)
@@ -626,7 +635,7 @@
 		human_user.physiology.brute_mod *= 0.5
 		human_user.physiology.burn_mod *= 0.5
 
-
+	SSblackbox.record_feedback("tally", "heretic_ascended", 1, route)
 	log_heretic_knowledge("[key_name(user)] completed their final ritual at [worldtime2text()].")
 	return TRUE
 

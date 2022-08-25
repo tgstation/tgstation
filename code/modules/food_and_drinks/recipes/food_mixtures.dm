@@ -23,6 +23,17 @@
 	mob_react = FALSE
 	reaction_flags = REACTION_INSTANT
 
+/datum/chemical_reaction/food/candycorn
+	required_reagents = list(/datum/reagent/consumable/cornoil = 5)
+	required_catalysts = list(/datum/reagent/consumable/sugar = 5)
+	mob_react = FALSE
+	reaction_flags = REACTION_INSTANT
+
+/datum/chemical_reaction/food/candycorn/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i in 1 to created_volume)
+		new /obj/item/food/candy_corn(location)
+
 /datum/chemical_reaction/food/tofu/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to created_volume)
@@ -161,7 +172,7 @@
 
 /datum/chemical_reaction/food/ricebowl
 	required_reagents = list(/datum/reagent/consumable/rice = 10, /datum/reagent/water = 10)
-	required_container = /obj/item/reagent_containers/glass/bowl
+	required_container = /obj/item/reagent_containers/cup/bowl
 	mix_message = "The rice absorbs the water."
 	reaction_flags = REACTION_INSTANT
 
@@ -220,7 +231,7 @@
 /datum/chemical_reaction/food/curd_cheese/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
-		new /obj/item/food/curd_cheese(location)
+		new /obj/item/food/cheese/curd_cheese(location)
 
 /datum/chemical_reaction/food/mozzarella
 	required_reagents = list(/datum/reagent/consumable/milk = 10, /datum/reagent/consumable/cream = 10)
@@ -232,7 +243,7 @@
 /datum/chemical_reaction/food/mozzarella/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
-		new /obj/item/food/mozzarella(location)
+		new /obj/item/food/cheese/mozzarella(location)
 
 /datum/chemical_reaction/food/cornmeal_batter
 	results = list(/datum/reagent/consumable/cornmeal_batter = 35)
@@ -261,3 +272,7 @@
 	results = list(/datum/reagent/consumable/quality_oil = 2)
 	mix_message = "The cooking oil dilutes the quality oil- how delightfully devilish..."
 	reaction_flags = REACTION_INSTANT
+
+/datum/chemical_reaction/food/quality_oil
+	results = list(/datum/reagent/consumable/quality_oil = 2)
+	required_reagents = list(/datum/reagent/consumable/olivepaste = 4, /datum/reagent/water = 1)

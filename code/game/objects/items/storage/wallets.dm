@@ -5,17 +5,15 @@
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
 	slot_flags = ITEM_SLOT_ID
-	component_type = /datum/component/storage/concrete/wallet
 
 	var/obj/item/card/id/front_id = null
 	var/list/combined_access
 	var/cached_flat_icon
 
-/obj/item/storage/wallet/ComponentInitialize()
+/obj/item/storage/wallet/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage/concrete/wallet)
-	STR.max_items = 4
-	STR.set_holdable(list(
+	atom_storage.max_slots = 4
+	atom_storage.set_holdable(list(
 		/obj/item/stack/spacecash,
 		/obj/item/holochip,
 		/obj/item/card,
@@ -43,7 +41,7 @@
 
 /obj/item/storage/wallet/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(istype(gone, /obj/item/card/id))
+	if(isidcard(gone))
 		refreshID()
 
 /**
@@ -88,7 +86,7 @@
 
 /obj/item/storage/wallet/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	if(istype(arrived, /obj/item/card/id))
+	if(isidcard(arrived))
 		refreshID()
 
 /obj/item/storage/wallet/update_overlays()

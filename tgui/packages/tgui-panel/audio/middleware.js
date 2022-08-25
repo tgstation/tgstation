@@ -6,7 +6,7 @@
 
 import { AudioPlayer } from './player';
 
-export const audioMiddleware = store => {
+export const audioMiddleware = (store) => {
   const player = new AudioPlayer();
   player.onPlay(() => {
     store.dispatch({ type: 'audio/playing' });
@@ -14,7 +14,7 @@ export const audioMiddleware = store => {
   player.onStop(() => {
     store.dispatch({ type: 'audio/stopped' });
   });
-  return next => action => {
+  return (next) => (action) => {
     const { type, payload } = action;
     if (type === 'audio/playMusic') {
       const { url, ...options } = payload;

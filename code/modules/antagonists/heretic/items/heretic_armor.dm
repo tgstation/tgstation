@@ -60,8 +60,12 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	// slightly worse than normal cult robes
 	armor = list(MELEE = 30, BULLET = 30, LASER = 30,ENERGY = 30, BOMB = 15, BIO = 0, FIRE = 0, ACID = 0)
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/void_cloak
 	alternative_mode = TRUE
+	
+/obj/item/clothing/suit/hooded/cultrobes/void/Initialize(mapload)
+	. = ..()
+	
+	create_storage(type = /datum/storage/pockets/void_cloak)
 
 /obj/item/clothing/suit/hooded/cultrobes/void/Initialize(mapload)
 	. = ..()

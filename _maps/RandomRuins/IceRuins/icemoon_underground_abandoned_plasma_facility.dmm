@@ -767,10 +767,7 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
 "lc" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12
-	},
+/obj/structure/sink/directional/east,
 /obj/structure/mirror/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/blacklight/directional/south,
@@ -1499,11 +1496,11 @@
 /area/ruin/plasma_facility/commons)
 "wQ" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/condiment/saltshaker{
 	pixel_x = 9;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/food/condiment/peppermill{
+/obj/item/reagent_containers/condiment/peppermill{
 	pixel_x = 9;
 	pixel_y = 3
 	},
@@ -1884,10 +1881,8 @@
 /area/icemoon/underground/explored)
 "EZ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sink{
-	pixel_y = 20
-	},
-/obj/item/reagent_containers/glass/bucket,
+/obj/structure/sink/directional/south,
+/obj/item/reagent_containers/cup/bucket,
 /obj/item/mop/advanced,
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/operations)
@@ -1947,9 +1942,7 @@
 /obj/item/soap/homemade{
 	pixel_y = 2
 	},
-/obj/machinery/shower{
-	dir = 1
-	},
+/obj/machinery/shower/directional/north,
 /obj/structure/curtain,
 /turf/open/floor/iron/freezer,
 /area/ruin/plasma_facility/commons)
@@ -2125,7 +2118,7 @@
 /area/ruin/plasma_facility/operations)
 "Jv" = (
 /obj/structure/bed/maint,
-/obj/item/reagent_containers/food/drinks/bottle/beer{
+/obj/item/reagent_containers/cup/glass/bottle/beer{
 	pixel_x = -5;
 	pixel_y = 12
 	},
@@ -2809,11 +2802,8 @@
 /area/ruin/plasma_facility/commons)
 "TD" = (
 /obj/structure/table/reinforced,
-/obj/structure/sink/kitchen{
-	dir = 8;
-	pixel_x = 11
-	},
-/obj/item/reagent_containers/food/condiment/rice{
+/obj/structure/sink/kitchen/directional/west,
+/obj/item/reagent_containers/condiment/rice{
 	pixel_x = -6;
 	pixel_y = 11
 	},
@@ -3021,10 +3011,7 @@
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/commons)
 "XU" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12
-	},
+/obj/structure/sink/directional/east,
 /obj/structure/mirror/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -3094,7 +3081,7 @@
 	dir = 8
 	},
 /obj/item/paper/crumpled/bloody{
-	info = "I've sealed the place off. I'm taking the last snowtreader to look for help. Please, if you find this place, leave. It's not safe here. We made them angry."
+	default_raw_text = "I've sealed the place off. I'm taking the last snowtreader to look for help. Please, if you find this place, leave. It's not safe here. We made them angry."
 	},
 /turf/open/floor/iron/edge{
 	dir = 1

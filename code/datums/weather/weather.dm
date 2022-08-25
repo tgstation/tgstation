@@ -59,11 +59,15 @@
 	/// Since it's above everything else, this is the layer used by default. TURF_LAYER is below mobs and walls if you need to use that.
 	var/overlay_layer = AREA_LAYER
 	/// Plane for the overlay
-	var/overlay_plane = ABOVE_LIGHTING_PLANE
+	var/overlay_plane = AREA_PLANE
 	/// If the weather has no purpose other than looks
 	var/aesthetic = FALSE
 	/// Used by mobs (or movables containing mobs, such as enviro bags) to prevent them from being affected by the weather.
 	var/immunity_type
+	/// If this bit of weather should also draw an overlay that's uneffected by lighting onto the area
+	/// Taken from weather_glow.dmi
+	var/use_glow = TRUE
+	var/mutable_appearance/current_glow
 
 	/// The stage of the weather, from 1-4
 	var/stage = END_STAGE
@@ -224,23 +228,37 @@
  *
  */
 /datum/weather/proc/update_areas()
+	var/using_icon_state = ""
+	switch(stage)
+		if(STARTUP_STAGE)
+			using_icon_state = telegraph_overlay
+		if(MAIN_STAGE)
+			using_icon_state = weather_overlay
+		if(WIND_DOWN_STAGE)
+			using_icon_state = end_overlay
+		if(END_STAGE)
+			using_icon_state = ""
+
+	var/mutable_appearance/glow_overlay = mutable_appearance('icons/effects/glow_weather.dmi', using_icon_state, overlay_layer, ABOVE_LIGHTING_PLANE, 100)
 	for(var/V in impacted_areas)
 		var/area/N = V
-		N.layer = overlay_layer
-		N.plane = overlay_plane
-		N.icon = 'icons/effects/weather_effects.dmi'
-		N.color = weather_color
-		switch(stage)
-			if(STARTUP_STAGE)
-				N.icon_state = telegraph_overlay
-			if(MAIN_STAGE)
-				N.icon_state = weather_overlay
-			if(WIND_DOWN_STAGE)
-				N.icon_state = end_overlay
-			if(END_STAGE)
-				N.color = null
-				N.icon_state = ""
-				N.icon = 'icons/area/areas_misc.dmi'
-				N.layer = initial(N.layer)
-				N.plane = initial(N.plane)
-				N.set_opacity(FALSE)
+		if(current_glow)
+			N.overlays -= current_glow
+		if(stage == END_STAGE)
+			N.color = null
+			N.icon_state = using_icon_state
+			N.icon = 'icons/area/areas_misc.dmi'
+			N.layer = initial(N.layer)
+			N.plane = initial(N.plane)
+			N.set_opacity(FALSE)
+		else
+			N.layer = overlay_layer
+			N.plane = overlay_plane
+			N.icon = 'icons/effects/weather_effects.dmi'
+			N.icon_state = using_icon_state
+			N.color = weather_color
+			if(use_glow)
+				N.overlays += glow_overlay
+
+	current_glow = glow_overlay
+

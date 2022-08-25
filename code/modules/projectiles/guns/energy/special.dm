@@ -5,13 +5,17 @@
 	inhand_icon_state = null //so the human update icon uses the icon_state instead.
 	worn_icon_state = null
 	shaded_charge = TRUE
-	can_flashlight = TRUE
 	w_class = WEIGHT_CLASS_HUGE
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
-	flight_x_offset = 17
-	flight_y_offset = 9
+
+/obj/item/gun/energy/ionrifle/add_seclight_point()
+	AddComponent(/datum/component/seclite_attachable, \
+		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
+		light_overlay = "flight", \
+		overlay_x = 17, \
+		overlay_y = 9)
 
 /obj/item/gun/energy/ionrifle/emp_act(severity)
 	return
@@ -22,8 +26,11 @@
 	icon_state = "ioncarbine"
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BELT
-	flight_x_offset = 18
-	flight_y_offset = 11
+
+/obj/item/gun/energy/ionrifle/carbine/add_seclight_point()
+	. = ..()
+	// We use the same overlay as the parent, so we can just let the component inherit the correct offsets here
+	AddComponent(/datum/component/seclite_attachable, overlay_x = 18, overlay_y = 11)
 
 /obj/item/gun/energy/decloner
 	name = "biological demolecularisor"
@@ -51,6 +58,7 @@
 	modifystate = 1
 	ammo_x_offset = 1
 	selfcharge = 1
+	gun_flags = NOT_A_REAL_GUN
 
 /obj/item/gun/energy/meteorgun
 	name = "meteor gun"
@@ -97,6 +105,7 @@
 	force = 12
 	sharpness = SHARP_EDGED
 	can_charge = FALSE
+	gun_flags = NOT_A_REAL_GUN
 
 	heat = 3800
 	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg')
@@ -104,10 +113,15 @@
 	toolspeed = 0.7 //plasmacutters can be used as welders, and are faster than standard welders
 	var/charge_weld = 25 //amount of charge used up to start action (multiplied by amount) and per progress_flash_divisor ticks of welding
 
-/obj/item/gun/energy/plasmacutter/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/butchering, 25, 105, 0, 'sound/weapons/plasma_cutter.ogg')
+/obj/item/gun/energy/plasmacutter/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
+	. = ..()
+	AddComponent(/datum/component/butchering, \
+		speed = 2.5 SECONDS, \
+		effectiveness = 105, \
+		bonus_modifier = 0, \
+		butcher_sound = 'sound/weapons/plasma_cutter.ogg', \
+	)
 	AddElement(/datum/element/tool_flash, 1)
 
 /obj/item/gun/energy/plasmacutter/examine(mob/user)
@@ -160,8 +174,11 @@
 	return (!QDELETED(cell) && cell.use(amount ? amount * charge_weld : charge_weld))
 
 /obj/item/gun/energy/plasmacutter/use_tool(atom/target, mob/living/user, delay, amount=1, volume=0, datum/callback/extra_checks)
+
 	if(amount)
+		target.add_overlay(GLOB.welding_sparks)
 		. = ..()
+		target.cut_overlay(GLOB.welding_sparks)
 	else
 		. = ..(amount=1)
 
@@ -188,6 +205,7 @@
 	var/obj/effect/portal/p_blue
 	var/obj/effect/portal/p_orange
 	var/firing_core = FALSE
+	gun_flags = NOT_A_REAL_GUN
 
 /obj/item/gun/energy/wormhole_projector/examine(mob/user)
 	. = ..()
@@ -288,15 +306,15 @@
 	name = "cyborg lmg"
 	desc = "An LMG that fires 3D-printed flechettes. They are slowly resupplied using the cyborg's internal power source."
 	icon_state = "l6_cyborg"
-	icon = 'icons/obj/guns/ballistic.dmi'
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	cell_type = "/obj/item/stock_parts/cell/secborg"
 	ammo_type = list(/obj/item/ammo_casing/energy/c3dbullet)
 	can_charge = FALSE
 	use_cyborg_cell = TRUE
 
-/obj/item/gun/energy/printer/ComponentInitialize()
-	. = ..()
+/obj/item/gun/energy/printer/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
+	. = ..()
 	AddComponent(/datum/component/automatic_fire, 0.3 SECONDS)
 
 /obj/item/gun/energy/printer/emp_act()
@@ -326,6 +344,7 @@
 	automatic_charge_overlays = FALSE
 	var/power = 4
 	var/firing_core = FALSE
+	gun_flags = NOT_A_REAL_GUN
 
 /obj/item/gun/energy/gravity_gun/attackby(obj/item/C, mob/user)
 	if(istype(C, /obj/item/assembly/signaler/anomaly/grav))

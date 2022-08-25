@@ -187,7 +187,7 @@
 	else
 		ui_header = "ntnrc_idle.gif"
 
-/datum/computer_file/program/chatclient/run_program(mob/living/user)
+/datum/computer_file/program/chatclient/on_start(mob/living/user)
 	. = ..()
 	if(!.)
 		return

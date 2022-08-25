@@ -47,6 +47,8 @@ SUBSYSTEM_DEF(throwing)
 	var/datum/weakref/initial_target
 	///The turf that the target was on, if it's not a turf itself.
 	var/turf/target_turf
+	///The turf that we were thrown from.
+	var/turf/starting_turf
 	///If the target happens to be a carbon and that carbon has a body zone aimed at, this is carried on here.
 	var/target_zone
 	///The initial direction of the thrower of the thrownthing for building the trajectory of the throw.
@@ -93,6 +95,7 @@ SUBSYSTEM_DEF(throwing)
 	. = ..()
 	src.thrownthing = thrownthing
 	RegisterSignal(thrownthing, COMSIG_PARENT_QDELETING, .proc/on_thrownthing_qdel)
+	src.starting_turf = get_turf(thrownthing)
 	src.target_turf = get_turf(target)
 	if(target_turf != target)
 		src.initial_target = WEAKREF(target)

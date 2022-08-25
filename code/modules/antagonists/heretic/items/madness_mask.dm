@@ -58,7 +58,7 @@
 		if(human_in_range.is_blind())
 			continue
 
-		SEND_SIGNAL(human_in_range, COMSIG_HERETIC_MASK_ACT, rand(-2, -20) * delta_time)
+		human_in_range.mob_mood.direct_sanity_drain(rand(-2, -20) * delta_time)
 
 		if(DT_PROB(60, delta_time))
 			human_in_range.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/hallucination, max_duration = 240 SECONDS)

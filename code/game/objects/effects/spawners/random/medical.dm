@@ -34,7 +34,7 @@
 		/obj/item/organ/internal/heart/gland/slime = 4,
 		/obj/item/organ/internal/heart/gland/trauma = 4,
 		/obj/item/organ/internal/heart/gland/electric = 3,
-		/obj/item/organ/regenerative_core = 2,
+		/obj/item/organ/internal/regenerative_core = 2,
 		/obj/item/organ/internal/heart/gland/ventcrawling = 1,
 		/obj/item/organ/internal/body_egg/alien_embryo = 1,
 	)

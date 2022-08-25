@@ -243,3 +243,12 @@
 	)
 	result = /obj/item/food/cake/fruit
 	subcategory = CAT_CAKE
+
+/datum/crafting_recipe/food/plumcake
+	name = "Plum cake"
+	reqs = list(
+		/obj/item/food/cake/plain = 1,
+		/obj/item/food/grown/plum = 2
+	)
+	result = /obj/item/food/cake/plum
+	subcategory = CAT_CAKE

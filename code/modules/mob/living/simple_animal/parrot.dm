@@ -84,6 +84,9 @@
 	//Headset for Poly to yell at engineers :)
 	var/obj/item/radio/headset/ears = null
 
+	//Wheter the Parrot should come with a headset
+	var/spawn_headset = TRUE
+
 	//The thing the parrot is currently interested in. This gets used for items the parrot wants to pick up, mobs it wants to steal from,
 	//mobs it wants to attack or mobs that have attacked it
 	var/atom/movable/parrot_interest = null
@@ -110,14 +113,6 @@
 
 /mob/living/simple_animal/parrot/Initialize(mapload)
 	. = ..()
-	if(!ears)
-		var/headset = pick(/obj/item/radio/headset/headset_sec, \
-						/obj/item/radio/headset/headset_eng, \
-						/obj/item/radio/headset/headset_med, \
-						/obj/item/radio/headset/headset_sci, \
-						/obj/item/radio/headset/headset_cargo)
-		ears = new headset(src)
-
 	parrot_sleep_dur = parrot_sleep_max //In case someone decides to change the max without changing the duration var
 
 	add_verb(src, list(/mob/living/simple_animal/parrot/proc/steal_from_ground, \
@@ -129,6 +124,15 @@
 
 	AddElement(/datum/element/strippable, GLOB.strippable_parrot_items)
 	AddElement(/datum/element/simple_flying)
+	if(!spawn_headset)
+		return
+	if(!ears)
+		var/headset = pick(/obj/item/radio/headset/headset_sec, \
+						/obj/item/radio/headset/headset_eng, \
+						/obj/item/radio/headset/headset_med, \
+						/obj/item/radio/headset/headset_sci, \
+						/obj/item/radio/headset/headset_cargo)
+		ears = new headset(src)
 
 /mob/living/simple_animal/parrot/examine(mob/user)
 	. = ..()
@@ -476,7 +480,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		if(!held_item && !parrot_perch) //If we've got nothing to do.. look for something to do.
 			var/atom/movable/AM = search_for_perch_and_item() //This handles checking through lists so we know it's either a perch or stealable item
 			if(AM)
-				if(istype(AM, /obj/item) || isliving(AM)) //If stealable item
+				if(isitem(AM) || isliving(AM)) //If stealable item
 					parrot_interest = AM
 					manual_emote("turns and flies towards [parrot_interest].")
 					parrot_state = PARROT_SWOOP | PARROT_STEAL
@@ -639,7 +643,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		//Skip items we already stole or are wearing or are too big
 		if(parrot_perch && AM.loc == parrot_perch.loc || AM.loc == src)
 			continue
-		if(istype(AM, /obj/item))
+		if(isitem(AM))
 			var/obj/item/I = AM
 			if(I.w_class < WEIGHT_CLASS_SMALL)
 				item = I
@@ -673,7 +677,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		if(parrot_perch && AM.loc == parrot_perch.loc || AM.loc == src)
 			continue
 
-		if(istype(AM, /obj/item))
+		if(isitem(AM))
 			var/obj/item/I = AM
 			if(I.w_class <= WEIGHT_CLASS_SMALL)
 				return I
@@ -783,7 +787,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 
 	if(!drop_gently)
-		if(istype(held_item, /obj/item/grenade))
+		if(isgrenade(held_item))
 			var/obj/item/grenade/G = held_item
 			G.forceMove(drop_location())
 			G.detonate()
@@ -816,7 +820,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	to_chat(src, span_warning("There is no perch nearby to sit on!"))
 	return
 
-/mob/living/simple_animal/parrot/Moved(oldLoc, dir)
+/mob/living/simple_animal/parrot/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(. && !stat && client && parrot_state == PARROT_PERCH)
 		parrot_state = PARROT_WANDER
@@ -880,6 +884,8 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	to_chat(src, span_notice("You will now [combat_mode ? "Harm" : "Help"] others."))
 	return
 
+/mob/living/simple_animal/parrot/natural
+	spawn_headset = FALSE
 /*
  * Sub-types
  */

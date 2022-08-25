@@ -50,16 +50,15 @@
 /area/centcom/ctf)
 "bc" = (
 /obj/structure/sign/poster/random/directional/west,
-/turf/open/floor/wood{
-	icon_state = "wood-broken"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
 /area/centcom/ctf)
 "bd" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/bar,
-/obj/item/reagent_containers/food/drinks/drinkingglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass{
 	pixel_x = 4;
 	pixel_y = 5
 	},
@@ -447,17 +446,16 @@
 /turf/open/floor/iron,
 /area/centcom/ctf)
 "iv" = (
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = -9;
 	pixel_y = -4
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass,
 /obj/structure/table/wood{
 	resistance_flags = 64
 	},
-/turf/open/floor/wood{
-	icon_state = "wood-broken7"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
 /area/centcom/ctf)
 "iy" = (
 /obj/effect/turf_decal/trimline/red/line{
@@ -487,9 +485,8 @@
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "iQ" = (
-/turf/open/floor/wood{
-	icon_state = "wood-broken4"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
 /area/centcom/ctf)
 "iW" = (
 /obj/effect/turf_decal/stripes/line{
@@ -944,7 +941,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/bar,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
 /obj/structure/table/wood{
 	resistance_flags = 64
 	},
@@ -1034,7 +1031,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/bar,
-/obj/item/reagent_containers/food/drinks/bottle/cognac,
+/obj/item/reagent_containers/cup/glass/bottle/cognac,
 /obj/structure/table/reinforced/ctf,
 /turf/open/floor/iron,
 /area/centcom/ctf)
@@ -1470,7 +1467,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/bar,
-/obj/item/reagent_containers/food/drinks/bottle/absinthe,
+/obj/item/reagent_containers/cup/glass/bottle/absinthe,
 /obj/structure/table/reinforced/ctf,
 /turf/open/floor/iron,
 /area/centcom/ctf)
@@ -1486,7 +1483,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/bar,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
 /obj/structure/table/reinforced/ctf,
 /turf/open/floor/iron,
 /area/centcom/ctf)
@@ -1531,7 +1528,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "EJ" = (
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass,
 /obj/structure/table/wood{
 	resistance_flags = 64
 	},
@@ -1666,11 +1663,6 @@
 	},
 /obj/effect/turf_decal/siding/yellow,
 /turf/open/floor/iron/dark,
-/area/centcom/ctf)
-"Ie" = (
-/turf/open/floor/wood{
-	icon_state = "wood-broken5"
-	},
 /area/centcom/ctf)
 "Ij" = (
 /obj/effect/turf_decal/trimline/red/line{
@@ -1839,11 +1831,6 @@
 "KL" = (
 /obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/misc/grass,
-/area/centcom/ctf)
-"KN" = (
-/turf/open/floor/wood{
-	icon_state = "wood-broken6"
-	},
 /area/centcom/ctf)
 "KV" = (
 /obj/effect/turf_decal/siding/white,
@@ -2113,7 +2100,7 @@
 /turf/open/floor/iron,
 /area/centcom/ctf)
 "Rj" = (
-/obj/item/reagent_containers/food/condiment/saltshaker,
+/obj/item/reagent_containers/condiment/saltshaker,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/bus/passable{
 	resistance_flags = 64
@@ -2171,14 +2158,14 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/bar,
-/obj/item/reagent_containers/food/drinks/drinkingglass,
+/obj/item/reagent_containers/cup/glass/drinkingglass,
 /obj/structure/table/wood{
 	resistance_flags = 64
 	},
 /turf/open/floor/iron,
 /area/centcom/ctf)
 "RX" = (
-/obj/item/reagent_containers/food/drinks/drinkingglass/filled/cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/cola,
 /obj/structure/table/wood{
 	resistance_flags = 64
 	},
@@ -2265,7 +2252,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/bar,
-/obj/item/reagent_containers/food/drinks/bottle/gin,
+/obj/item/reagent_containers/cup/glass/bottle/gin,
 /obj/structure/table/reinforced/ctf,
 /turf/open/floor/iron,
 /area/centcom/ctf)
@@ -3963,7 +3950,7 @@ vX
 dO
 RU
 Dm
-Ie
+iQ
 iv
 Am
 Kh
@@ -4188,7 +4175,7 @@ BH
 BH
 xf
 Bx
-KN
+iQ
 ql
 ql
 bs

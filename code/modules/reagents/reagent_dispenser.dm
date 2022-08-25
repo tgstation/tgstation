@@ -1,7 +1,7 @@
 /obj/structure/reagent_dispensers
 	name = "Dispenser"
 	desc = "..."
-	icon = 'icons/obj/chemical_tanks.dmi'
+	icon = 'icons/obj/medical/chemical_tanks.dmi'
 	icon_state = "water"
 	density = TRUE
 	anchored = FALSE
@@ -19,6 +19,8 @@
 	var/openable = FALSE
 	///Is this dispenser slowly leaking its reagent?
 	var/leaking = FALSE
+	///How much reagent to leak
+	var/amount_to_leak = 10
 
 /obj/structure/reagent_dispensers/Initialize(mapload)
 	. = ..()
@@ -78,21 +80,26 @@
 	else
 		qdel(src)
 
+/obj/structure/reagent_dispensers/proc/tank_leak()
+	if(leaking && reagents && reagents.total_volume >= amount_to_leak)
+		reagents.expose(get_turf(src), TOUCH, amount_to_leak / max(amount_to_leak, reagents.total_volume))
+		reagents.remove_reagent(reagent_id, amount_to_leak)
+		return TRUE
+	return FALSE
+
 /obj/structure/reagent_dispensers/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(!openable)
 		return FALSE
 	leaking = !leaking
 	balloon_alert(user, "[leaking ? "opened" : "closed"] [src]'s tap")
-	log_game("[key_name(user)] [leaking ? "opened" : "closed"] [src]")
-	if(leaking && reagents)
-		reagents.expose(get_turf(src), TOUCH, 10 / max(10, reagents.total_volume))
+	user.log_message("[leaking ? "opened" : "closed"] [src].", LOG_GAME)
+	tank_leak()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/structure/reagent_dispensers/Moved(atom/OldLoc, Dir)
+/obj/structure/reagent_dispensers/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
-	if(leaking && reagents)
-		reagents.expose(get_turf(src), TOUCH, 10 / max(10, reagents.total_volume))
+	tank_leak()
 
 /obj/structure/reagent_dispensers/watertank
 	name = "water tank"
@@ -162,7 +169,7 @@
 	if(!do_after(user, 2 SECONDS, target = src))
 		return
 	user.balloon_alert_to_viewers("detached rig")
-	log_message("[key_name(user)] detached [rig] from [src]", LOG_GAME)
+	user.log_message("detached [rig] from [src].", LOG_GAME)
 	if(!user.put_in_hands(rig))
 		rig.forceMove(get_turf(user))
 	rig = null
@@ -296,7 +303,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 		to_chat(user, span_warning("There aren't any cups left!"))
 		return
 	user.visible_message(span_notice("[user] takes a cup from [src]."), span_notice("You take a paper cup from [src]."))
-	var/obj/item/reagent_containers/food/drinks/sillycup/S = new(get_turf(src))
+	var/obj/item/reagent_containers/cup/glass/sillycup/S = new(get_turf(src))
 	user.put_in_hands(S)
 	paper_cups--
 
@@ -372,7 +379,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 	if(!reagents.total_volume)
 		return
 
-	var/mutable_appearance/tank_color = mutable_appearance('icons/obj/chemical_tanks.dmi', "tank_chem_overlay")
+	var/mutable_appearance/tank_color = mutable_appearance('icons/obj/medical/chemical_tanks.dmi', "tank_chem_overlay")
 	tank_color.color = mix_color_from_reagents(reagents.reagent_list)
 	. += tank_color
 

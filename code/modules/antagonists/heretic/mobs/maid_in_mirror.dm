@@ -15,14 +15,14 @@
 	melee_damage_lower = 12
 	melee_damage_upper = 16
 	sight = SEE_MOBS | SEE_OBJS | SEE_TURFS
-	deathmessage = "shatters and vanishes, releasing a gust of cold air."
+	death_message = "shatters and vanishes, releasing a gust of cold air."
 	loot = list(
 		/obj/item/shard,
 		/obj/effect/decal/cleanable/ash,
 		/obj/item/clothing/suit/armor,
 		/obj/item/organ/internal/lungs,
 	)
-	spells_to_add = list(/obj/effect/proc_holder/spell/targeted/mirror_walk)
+	actions_to_add = list(/datum/action/cooldown/spell/jaunt/mirror_walk)
 
 	/// Whether we take damage when we're examined
 	var/weak_on_examine = TRUE
@@ -40,6 +40,9 @@
 /mob/living/simple_animal/hostile/heretic_summon/maid_in_the_mirror/examine(mob/user)
 	. = ..()
 	if(!weak_on_examine)
+		return
+
+	if(!isliving(user) || user.stat == DEAD)
 		return
 
 	if(IS_HERETIC_OR_MONSTER(user) || user == src)

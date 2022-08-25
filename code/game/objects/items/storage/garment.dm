@@ -1,6 +1,6 @@
 /obj/item/storage/bag/garment
 	name = "garment bag"
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "garment_bag"
 	desc = "A bag for storing extra clothes and shoes."
 	slot_flags = NONE
@@ -30,15 +30,14 @@
 	name = "chief engineer's garment bag"
 	desc = "A bag for storing extra clothes and shoes. This one belongs to the chief engineer."
 
-/obj/item/storage/bag/garment/ComponentInitialize()
+/obj/item/storage/bag/garment/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.display_numerical_stacking = FALSE
-	STR.max_combined_w_class = 200
-	STR.max_items = 15
-	STR.insert_preposition = "in"
-	STR.set_holdable(list(
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.numerical_stacking = FALSE
+	atom_storage.max_total_storage = 200
+	atom_storage.max_slots = 15
+	atom_storage.insert_preposition = "in"
+	atom_storage.set_holdable(list(
 		/obj/item/clothing,
 	))
 
@@ -48,7 +47,7 @@
 	new /obj/item/clothing/under/rank/captain/parade(src)
 	new /obj/item/clothing/suit/armor/vest/capcarapace(src)
 	new /obj/item/clothing/suit/armor/vest/capcarapace/captains_formal(src)
-	new /obj/item/clothing/suit/capjacket(src)
+	new /obj/item/clothing/suit/jacket/capjacket(src)
 	new /obj/item/clothing/glasses/sunglasses/gar/giga(src)
 	new /obj/item/clothing/gloves/color/captain(src)
 	new /obj/item/clothing/head/caphat(src)
@@ -101,8 +100,10 @@
 
 /obj/item/storage/bag/garment/chief_medical/PopulateContents()
 	new /obj/item/clothing/head/beret/medical/cmo(src)
+	new /obj/item/clothing/head/surgerycap/cmo(src)
 	new /obj/item/clothing/under/rank/medical/chief_medical_officer(src)
 	new /obj/item/clothing/under/rank/medical/chief_medical_officer/skirt(src)
+	new /obj/item/clothing/under/rank/medical/chief_medical_officer/scrubs(src)
 	new /obj/item/clothing/suit/toggle/labcoat/cmo(src)
 	new /obj/item/clothing/gloves/color/latex/nitrile(src)
 	new /obj/item/clothing/neck/cloak/cmo(src)
@@ -119,4 +120,3 @@
 	new /obj/item/clothing/neck/cloak/ce(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/engineering/ce(src)
-

@@ -8,8 +8,8 @@
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
-		TRAIT_TOXINLOVER,
 		TRAIT_LITERATE,
+		TRAIT_TOXINLOVER,
 	)
 	mutantlungs = /obj/item/organ/internal/lungs/slime
 	meat = /obj/item/food/meat/slab/human/mutant/slime
@@ -553,7 +553,7 @@
 /datum/action/innate/integrate_extract/Activate()
 	var/mob/living/carbon/human/H = owner
 	var/datum/species/jelly/luminescent/species = target
-	if(!is_species(H, /datum/species/jelly/luminescent) || !species)
+	if(!isluminescent(H) || !species)
 		return
 	CHECK_DNA_AND_SPECIES(H)
 
@@ -614,7 +614,7 @@
 /datum/action/innate/use_extract/Activate()
 	var/mob/living/carbon/human/H = owner
 	var/datum/species/jelly/luminescent/species = H.dna.species
-	if(!is_species(H, /datum/species/jelly/luminescent) || !species)
+	if(!isluminescent(H) || !species)
 		return
 	CHECK_DNA_AND_SPECIES(H)
 

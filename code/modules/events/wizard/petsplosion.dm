@@ -5,6 +5,7 @@
 	max_occurrences = 1 //Exponential growth is nothing to sneeze at!
 	earliest_start = 0 MINUTES
 	var/mobs_to_dupe = 0
+	description = "Rapidly multiplies the animals on the station."
 
 /datum/round_event_control/wizard/petsplosion/preRunEvent()
 	for(var/mob/living/simple_animal/F in GLOB.alive_mob_list)

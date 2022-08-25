@@ -71,7 +71,7 @@
  *
  * If we, or the item we're located in, is subject to the charge spell, gain some charge back
  */
-/obj/item/stock_parts/cell/proc/on_magic_charge(datum/source, obj/effect/proc_holder/spell/targeted/charge/spell, mob/living/caster)
+/obj/item/stock_parts/cell/proc/on_magic_charge(datum/source, datum/action/cooldown/spell/charge/spell, mob/living/caster)
 	SIGNAL_HANDLER
 
 	// This shouldn't be running if we're not being held by a mob,
@@ -120,6 +120,19 @@
 	if((charge < 0.01) || !charge_light_type)
 		return
 	. += mutable_appearance('icons/obj/power.dmi', "cell-[charge_light_type]-o[(percent() >= 99.5) ? 2 : 1]")
+
+/obj/item/stock_parts/cell/vv_edit_var(vname, vval)
+	if(vname == NAMEOF(src, charge))
+		charge = clamp(vval, 0, maxcharge)
+		return TRUE
+	if(vname == NAMEOF(src, maxcharge))
+		if(charge > vval)
+			charge = vval
+	if(vname == NAMEOF(src, corrupted) && vval && !corrupted)
+		corrupt(TRUE)
+		return TRUE
+	return ..()
+
 
 /obj/item/stock_parts/cell/proc/percent() // return % charge of cell
 	return 100 * charge / maxcharge
@@ -178,16 +191,17 @@
 		return
 
 	message_admins("[ADMIN_LOOKUPFLW(usr)] has triggered a rigged/corrupted power cell explosion at [AREACOORD(T)].")
-	log_game("[key_name(usr)] has triggered a rigged/corrupted power cell explosion at [AREACOORD(T)].")
+	usr.log_message("triggered a rigged/corrupted power cell explosion", LOG_GAME)
+	usr.log_message("triggered a rigged/corrupted power cell explosion", LOG_VICTIM, log_globally = FALSE)
 
 	//explosion(T, 0, 1, 2, 2)
 	explosion(src, devastation_range = range_devastation, heavy_impact_range = range_heavy, light_impact_range = range_light, flash_range = range_flash)
 	qdel(src)
 
-/obj/item/stock_parts/cell/proc/corrupt()
+/obj/item/stock_parts/cell/proc/corrupt(force)
 	charge /= 2
 	maxcharge = max(maxcharge/2, chargerate)
-	if (prob(10))
+	if (force || prob(10))
 		rigged = TRUE //broken batterys are dangerous
 		corrupted = TRUE
 
@@ -255,7 +269,7 @@
 /obj/item/stock_parts/cell/get_part_rating()
 	return maxcharge * 10 + charge
 
-/obj/item/stock_parts/cell/attackby_storage_insert(datum/component/storage, atom/storage_holder, mob/user)
+/obj/item/stock_parts/cell/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
 	var/obj/item/mod/control/mod = storage_holder
 	return !(istype(mod) && mod.open)
 
@@ -380,9 +394,9 @@
 	maxcharge = 50000
 	ratingdesc = FALSE
 
-/obj/item/stock_parts/cell/infinite/abductor/ComponentInitialize()
-	. = ..()
+/obj/item/stock_parts/cell/infinite/abductor/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
+	return ..()
 
 /obj/item/stock_parts/cell/potato
 	name = "potato battery"
@@ -402,9 +416,9 @@
 	desc = "An EMP-proof cell."
 	maxcharge = 500
 
-/obj/item/stock_parts/cell/emproof/ComponentInitialize()
-	. = ..()
+/obj/item/stock_parts/cell/emproof/Initialize(mapload)
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF)
+	return ..()
 
 /obj/item/stock_parts/cell/emproof/empty
 	empty = TRUE

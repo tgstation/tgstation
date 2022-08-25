@@ -79,7 +79,7 @@
 	if(hal_fire_sound)
 		parent.hallucinator.playsound_local(get_turf(src), hal_fire_sound, 60, TRUE)
 
-	fake_bullet = image('icons/obj/guns/projectiles.dmi', src, hal_icon_state, ABOVE_MOB_LAYER)
+	fake_bullet = image('icons/obj/weapons/guns/projectiles.dmi', src, hal_icon_state, ABOVE_MOB_LAYER)
 	parent.hallucinator.client?.images += fake_bullet
 	return ..()
 

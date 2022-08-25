@@ -40,8 +40,8 @@ Difficulty: Extremely Hard
 	achievement_type = /datum/award/achievement/boss/demonic_miner_kill
 	crusher_achievement_type = /datum/award/achievement/boss/demonic_miner_crusher
 	score_achievement_type = /datum/award/score/demonic_miner_score
-	deathmessage = "falls to the ground, decaying into plasma particles."
-	deathsound = SFX_BODYFALL
+	death_message = "falls to the ground, decaying into plasma particles."
+	death_sound = SFX_BODYFALL
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	/// If the demonic frost miner is in its enraged state
 	var/enraged = FALSE
@@ -49,30 +49,45 @@ Difficulty: Extremely Hard
 	var/enraging = FALSE
 	/// Frost orbs ability
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/shrapnel/frost_orbs
+	/// Hard version of frost orbs
+	var/datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/shrapnel/strong/hard_frost_orbs
 	/// Snowball Machine gun Ability
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/snowball_machine_gun
+	/// Hard Snowball Machine gun Ability
+	var/datum/action/cooldown/mob_cooldown/direct_and_aoe/hard_snowball_machine_gun
 	/// Ice Shotgun Ability
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/pattern/ice_shotgun
+	/// Hard Ice Shotgun Ability
+	var/datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/pattern/circular/hard_ice_shotgun
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Initialize(mapload)
 	. = ..()
 	frost_orbs = new /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/shrapnel()
+	hard_frost_orbs = new /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/shrapnel/strong()
 	snowball_machine_gun = new /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire()
+	hard_snowball_machine_gun = new /datum/action/cooldown/mob_cooldown/direct_and_aoe()
 	ice_shotgun = new /datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/pattern()
+	hard_ice_shotgun = new /datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/pattern/circular()
 	frost_orbs.Grant(src)
+	hard_frost_orbs.Grant(src)
 	snowball_machine_gun.Grant(src)
+	hard_snowball_machine_gun.Grant(src)
 	ice_shotgun.Grant(src)
+	hard_ice_shotgun.Grant(src)
 	for(var/obj/structure/frost_miner_prism/prism_to_set in GLOB.frost_miner_prisms)
 		prism_to_set.set_prism_light(LIGHT_COLOR_BLUE, 5)
-	RegisterSignal(src, COMSIG_ABILITY_STARTED, .proc/start_attack)
+	RegisterSignal(src, COMSIG_MOB_ABILITY_STARTED, .proc/start_attack)
 	AddElement(/datum/element/knockback, 7, FALSE, TRUE)
 	AddElement(/datum/element/lifesteal, 50)
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Destroy()
 	QDEL_NULL(frost_orbs)
+	QDEL_NULL(hard_frost_orbs)
 	QDEL_NULL(snowball_machine_gun)
+	QDEL_NULL(hard_snowball_machine_gun)
 	QDEL_NULL(ice_shotgun)
+	QDEL_NULL(hard_ice_shotgun)
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/OpenFire()
@@ -84,33 +99,19 @@ Difficulty: Extremely Hard
 	switch(chosen_attack)
 		if(1)
 			if(easy_attack)
-				frost_orbs.shot_count = 8
-				frost_orbs.shot_delay = 10
 				frost_orbs.Trigger(target = target)
 			else
-				frost_orbs.shot_count = 16
-				frost_orbs.shot_delay = 5
-				frost_orbs.Trigger(target = target)
+				hard_frost_orbs.Trigger(target = target)
 		if(2)
 			if(easy_attack)
-				snowball_machine_gun.shot_count = 60
-				snowball_machine_gun.default_projectile_spread = 45
 				snowball_machine_gun.Trigger(target = target)
-			else if(ice_shotgun.IsAvailable())
-				ice_shotgun.shot_angles = list(list(-180, -140, -100, -60, -20, 20, 60, 100, 140), list(-160, -120, -80, -40, 0, 40, 80, 120, 160))
-				INVOKE_ASYNC(ice_shotgun, /datum/action/proc/Trigger, target)
-				snowball_machine_gun.shot_count = 5 * 8
-				snowball_machine_gun.default_projectile_spread = 5
-				snowball_machine_gun.StartCooldown(0)
-				snowball_machine_gun.Trigger(target = target)
+			else
+				hard_snowball_machine_gun.Trigger(target = target)
 		if(3)
 			if(easy_attack)
-				// static lists? remind me later
-				ice_shotgun.shot_angles = list(list(-40, -20, 0, 20, 40), list(-30, -10, 10, 30))
 				ice_shotgun.Trigger(target = target)
 			else
-				ice_shotgun.shot_angles = list(list(0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330), list(-30, -15, 0, 15, 30))
-				ice_shotgun.Trigger(target = target)
+				hard_ice_shotgun.Trigger(target = target)
 
 /// Pre-ability usage stuff
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/start_attack(mob/living/owner, datum/action/cooldown/activated)
@@ -191,8 +192,10 @@ Difficulty: Extremely Hard
 	icon_state = "ice_1"
 	damage = 20
 	armour_penetration = 100
-	speed = 10
-	homing_turn_speed = 30
+	speed = 1
+	pixel_speed_multiplier = 0.1
+	range = 500
+	homing_turn_speed = 3
 	damage_type = BURN
 
 /obj/projectile/colossus/frost_orb/on_hit(atom/target, blocked = FALSE)
@@ -205,7 +208,9 @@ Difficulty: Extremely Hard
 	icon_state = "nuclear_particle"
 	damage = 5
 	armour_penetration = 100
-	speed = 3
+	speed = 1
+	pixel_speed_multiplier = 0.333
+	range = 150
 	damage_type = BRUTE
 	explode_hit_objects = FALSE
 
@@ -214,7 +219,9 @@ Difficulty: Extremely Hard
 	icon_state = "ice_2"
 	damage = 15
 	armour_penetration = 100
-	speed = 3
+	speed = 1
+	pixel_speed_multiplier = 0.333
+	range = 150
 	damage_type = BRUTE
 
 /obj/projectile/colossus/ice_blast/on_hit(atom/target, blocked = FALSE)
@@ -290,7 +297,7 @@ Difficulty: Extremely Hard
 	SIGNAL_HANDLER
 
 	var/turf/T = get_turf(loc)
-	if(!on || istype(T, /turf/closed) || istype(T, change_turf))
+	if(!on || isclosedturf(T) || istype(T, change_turf))
 		return
 	var/reset_turf = T.type
 	T.ChangeTurf(change_turf, flags = CHANGETURF_INHERIT_AIR)
@@ -373,7 +380,7 @@ Difficulty: Extremely Hard
 /obj/structure/frost_miner_prism
 	name = "frost miner light prism"
 	desc = "A magical crystal enhanced by a demonic presence."
-	icon = 'icons/obj/slimecrossing.dmi'
+	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
 	icon_state = "lightprism"
 	density = FALSE
 	anchored = TRUE

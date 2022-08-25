@@ -111,7 +111,7 @@
 	if(affected_human.gender == MALE)
 		to_chat(affected_human, span_warning("Your chin itches."))
 		affected_human.facial_hairstyle = "Beard (Full)"
-		affected_human.update_hair()
+		affected_human.update_body_parts()
 	//Only like gross food
 	affected_human.dna?.species.liked_food = GROSS
 	affected_human.dna?.species.disliked_food = NONE
@@ -135,11 +135,11 @@
 	var/turf/T = get_turf(affected_human)
 	var/lums = T.get_lumcount()
 	if(lums > 0.5)
-		SEND_SIGNAL(affected_human, COMSIG_ADD_MOOD_EVENT, "too_bright", /datum/mood_event/bright_light)
+		affected_human.add_mood_event("too_bright", /datum/mood_event/bright_light)
 		affected_human.adjust_timed_status_effect(6 SECONDS, /datum/status_effect/dizziness, max_duration = 80 SECONDS)
 		affected_human.adjust_timed_status_effect(0.5 SECONDS * delta_time, /datum/status_effect/confusion, max_duration = 20 SECONDS)
 	else
-		SEND_SIGNAL(affected_carbon, COMSIG_CLEAR_MOOD_EVENT, "too_bright")
+		affected_carbon.clear_mood_event("too_bright")
 
 /datum/addiction/maintenance_drugs/end_withdrawal(mob/living/carbon/affected_carbon)
 	. = ..()

@@ -10,7 +10,7 @@ type Objective = {
   complete: BooleanLike;
   was_uncompleted: BooleanLike;
   reward: number;
-}
+};
 
 type Info = {
   antag_name: string;
@@ -20,14 +20,9 @@ type Info = {
 
 export const AntagInfoBrother = (props, context) => {
   const { data } = useBackend<Info>(context);
-  const {
-    antag_name,
-    brothers,
-  } = data;
+  const { antag_name, brothers } = data;
   return (
-    <Window
-      width={620}
-      height={250}>
+    <Window width={620} height={250}>
       <Window.Content>
         <Section scrollable fill>
           <Stack vertical>
@@ -46,21 +41,17 @@ export const AntagInfoBrother = (props, context) => {
 
 const ObjectivePrintout = (props, context) => {
   const { data } = useBackend<Info>(context);
-  const {
-    objectives,
-  } = data;
+  const { objectives } = data;
   return (
     <Stack vertical>
-      <Stack.Item bold>
-        Your objectives:
-      </Stack.Item>
+      <Stack.Item bold>Your objectives:</Stack.Item>
       <Stack.Item>
-        {!objectives && "None!"
-        || objectives.map(objective => (
-          <Stack.Item key={objective.count}>
-            #{objective.count}: {objective.explanation}
-          </Stack.Item>
-        )) }
+        {(!objectives && 'None!') ||
+          objectives.map((objective) => (
+            <Stack.Item key={objective.count}>
+              #{objective.count}: {objective.explanation}
+            </Stack.Item>
+          ))}
       </Stack.Item>
     </Stack>
   );

@@ -3,6 +3,7 @@
 	objectives = list(
 		/datum/traitor_objective/locate_weakpoint = 1,
 	)
+	weight = OBJECTIVE_WEIGHT_TINY
 
 /datum/traitor_objective/locate_weakpoint
 	name = "Triangulate station's structural weakpoint and detonate an explosive charge nearby."
@@ -18,25 +19,62 @@
 	var/obj/item/weakpoint_locator/locator
 	/// Reference to the ES8 explosive (if we sent one)
 	var/obj/item/grenade/c4/es8/shatter_charge
-	/// Locations we have to use the locator in
-	var/list/triangulation_locations
 	/// Have we located the weakpoint yet?
 	var/weakpoint_found = FALSE
+	/// Weakpoint scan areas and the weakpoint itself
+	var/list/weakpoint_areas
 
 /datum/traitor_objective/locate_weakpoint/generate_objective(datum/mind/generating_for, list/possible_duplicates)
-	////if(handler.get_completion_progression(/datum/traitor_objective) < progression_objectives_minimum)
-	////	return FALSE
-
-	if(!SStraitor.station_weakpoints || !LAZYLEN(SStraitor.station_weakpoints)) //This means that the weakpoint has already been hit
+	if(handler.get_completion_progression(/datum/traitor_objective) < progression_objectives_minimum)
 		return FALSE
 
-	var/area/weakpoint_area1 = SStraitor.station_weakpoints[1]
-	var/area/weakpoint_area2 = SStraitor.station_weakpoints[2]
+	if(SStraitor.taken_objectives_by_type[/datum/traitor_objective/locate_weakpoint])
+		for(var/datum/traitor_objective/locate_weakpoint/weakpoint_objective in SStraitor.taken_objectives_by_type[type])
+			if(weakpoint_objective.objective_state == OBJECTIVE_STATE_COMPLETED)
+				return FALSE
+
+			if(weakpoint_areas)
+				continue
+
+			weakpoint_areas = weakpoint_objective.weakpoint_areas.Copy()
+			for(var/weakpoint in weakpoint_areas)
+				weakpoint_areas[weakpoint] = TRUE
+
+	if(!weakpoint_areas)
+		weakpoint_areas = list()
+		/// List of high-security areas that we pick required ones from
+		var/list/allowed_areas = typecacheof(list(/area/station/command,
+			/area/station/comms,
+			/area/station/engineering,
+			/area/station/science,
+			/area/station/security,
+		))
+
+		var/list/blacklisted_areas = typecacheof(list(/area/station/engineering/hallway,
+			/area/station/engineering/lobby,
+			/area/station/engineering/storage,
+			/area/station/science/lobby,
+			/area/station/science/ordnance/bomb,
+			/area/station/security/prison,
+		))
+
+		var/list/possible_areas = GLOB.the_station_areas.Copy()
+		for(var/area/possible_area as anything in possible_areas)
+			if(!is_type_in_typecache(possible_area, allowed_areas) || initial(possible_area.outdoors) || is_type_in_typecache(possible_area, blacklisted_areas))
+				possible_areas -= possible_area
+
+		for(var/i in 1 to 3)
+			weakpoint_areas[pick_n_take(possible_areas)] = TRUE
+
+	var/area/weakpoint_area1 = weakpoint_areas[1]
+	var/area/weakpoint_area2 = weakpoint_areas[2]
 	replace_in_name("%AREA1%", initial(weakpoint_area1.name))
 	replace_in_name("%AREA2%", initial(weakpoint_area2.name))
-	triangulation_locations = list(SStraitor.station_weakpoints[1] = TRUE, SStraitor.station_weakpoints[2] = TRUE)
-	RegisterSignal(generating_for, COMSIG_GLOB_TRAITOR_OBJECTIVE_COMPLETED, .proc/on_global_obj_completed)
+	RegisterSignal(SSdcs, COMSIG_GLOB_TRAITOR_OBJECTIVE_COMPLETED, .proc/on_global_obj_completed)
 	return TRUE
+
+/datum/traitor_objective/locate_weakpoint/ungenerate_objective()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_TRAITOR_OBJECTIVE_COMPLETED)
 
 /datum/traitor_objective/locate_weakpoint/proc/on_global_obj_completed(datum/source, datum/traitor_objective/objective)
 	SIGNAL_HANDLER
@@ -58,8 +96,9 @@
 			if(locator)
 				return
 			locator = new(user.drop_location())
-			user.put_in_hands(locator)
+			user.put_in_hands(locator, weakpoint_areas[1], weakpoint_areas[2])
 			locator.balloon_alert(user, "the weakpoint locator materializes in your hand")
+
 		if("shatter_charge")
 			if(shatter_charge)
 				return
@@ -69,40 +108,22 @@
 
 /datum/traitor_objective/locate_weakpoint/proc/weakpoint_located()
 	description = "Structural weakpoint has been located in %AREA%. Detonate an ES8 explosive charge there to create a shockwave that will severely damage the station."
-	var/area/weakpoint_area = SStraitor.station_weakpoints[3]
+	var/area/weakpoint_area = weakpoint_areas[3]
 	replace_in_name("%AREA%", initial(weakpoint_area.name))
 	weakpoint_found = TRUE
 
 /datum/traitor_objective/locate_weakpoint/proc/create_shockwave(center_x, center_y, center_z)
-	var/severity = list(EXPLODE_LIGHT, EXPLODE_LIGHT, EXPLODE_LIGHT, EXPLODE_LIGHT, EXPLODE_HEAVY, EXPLODE_HEAVY, EXPLODE_DEVASTATE) //Can't use pick_weight because explode defines are numbers
-	var/wave_amount = rand(5, 8)
-	var/list/bombed_turfs = list()
-	for(var/i in 1 to wave_amount)
-		var/wave_angle = rand(-10, 10) + 360 / wave_amount * i
-		var/wave_distance = rand(17, 25)
-		var/turf/tentacle_ending = locate(clamp(center_x + round(cos(wave_angle) * wave_distance), 1, world.maxx), clamp(center_y + round(sin(wave_angle) * wave_distance), 1, world.maxy), center_z)
-		if(!tentacle_ending) //WUT
-			continue
-
-		var/turf/epicenter = locate(center_x, center_y, center_z)
-		for(var/turf/line_turf in get_line(epicenter, tentacle_ending))
-			for(var/turf/bomb_turf in range(1, line_turf))
-				if((bomb_turf in bombed_turfs) || bomb_turf == epicenter)
-					continue
-				bombed_turfs += bomb_turf
-				var/turf_severity = pick(severity)
-				EX_ACT(line_turf, turf_severity)
-				for(var/atom/victim in line_turf)
-					EX_ACT(victim, turf_severity - 1)
-
-		explosion(tentacle_ending, devastation_range = 1, heavy_impact_range = 3, light_impact_range = 5, explosion_cause = src)
-
+	var/turf/epicenter = locate(center_x, center_y, center_z)
+	var/lowpop = (length(GLOB.clients) <= CONFIG_GET(number/minimal_access_threshold))
+	if(lowpop)
+		explosion(epicenter, devastation_range = 2, heavy_impact_range = 4, light_impact_range = 6, explosion_cause = src)
+	else
+		explosion(epicenter, devastation_range = 3, heavy_impact_range = 6, light_impact_range = 9, explosion_cause = src)
 	priority_announce(
 				"Attention crew, it appears that a high-power explosive charge has been detonated in your station's weakpoint, causing severe structural damage.",
 				"[command_name()] High-Priority Update"
 				)
 
-	SStraitor.station_weakpoints = null //Gone
 	succeed_objective()
 
 /obj/item/weakpoint_locator
@@ -118,12 +139,10 @@
 	throw_speed = 3
 	throw_range = 5
 
-/obj/item/weakpoint_locator/Initialize(mapload)
+/obj/item/weakpoint_locator/Initialize(mapload, area/area1, area/area2)
 	. = ..()
-	var/area/weakpoint_area1 = SStraitor.station_weakpoints[1]
-	var/area/weakpoint_area2 = SStraitor.station_weakpoints[2]
-	desc = replacetext(desc, "%AREA1%", initial(weakpoint_area1.name))
-	desc = replacetext(desc, "%AREA2%", initial(weakpoint_area2.name))
+	desc = replacetext(desc, "%AREA1%", initial(area1.name))
+	desc = replacetext(desc, "%AREA2%", initial(area2.name))
 
 /obj/item/weakpoint_locator/attack_self(mob/living/user, modifiers)
 	. = ..()
@@ -140,12 +159,12 @@
 		return
 
 	var/area/user_area = get_area(user)
-	if(!(user_area.type in objective.triangulation_locations))
+	if(!(user_area.type in objective.weakpoint_areas))
 		balloon_alert(user, "invalid area!")
 		playsound(user, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 		return
 
-	if(!objective.triangulation_locations[user_area.type])
+	if(!objective.weakpoint_areas[user_area.type])
 		balloon_alert(user, "already scanned here!")
 		playsound(user, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 		return
@@ -156,18 +175,18 @@
 	for(var/mob/living/silicon/ai/ai_player in GLOB.player_list)
 		to_chat(ai_player, alertstr)
 
-	if(!do_after(user, 3 SECONDS, src, IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE | IGNORE_HELD_ITEM | IGNORE_INCAPACITATED | IGNORE_SLOWDOWNS, extra_checks = CALLBACK(src, .proc/scan_checks, user, user_area, objective)))
+	if(!do_after(user, 30 SECONDS, src, IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE | IGNORE_HELD_ITEM | IGNORE_INCAPACITATED | IGNORE_SLOWDOWNS, extra_checks = CALLBACK(src, .proc/scan_checks, user, user_area, objective)))
 		playsound(user, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 		return
 
 	playsound(user, 'sound/machines/ding.ogg', 100, TRUE)
-	objective.triangulation_locations[user_area.type] = FALSE
-	for(var/area/scan_area in objective.triangulation_locations)
-		if(objective.triangulation_locations[scan_area])
+	objective.weakpoint_areas[user_area.type] = FALSE
+	for(var/area/scan_area in objective.weakpoint_areas)
+		if(objective.weakpoint_areas[scan_area])
 			say("Next scanning location is [initial(scan_area.name)]")
 			return
 
-	var/area/weakpoint_location = SStraitor.station_weakpoints[3]
+	var/area/weakpoint_location = objective.weakpoint_areas[3]
 	to_chat(user, span_notice("Scan finished. Structural weakpoint located in [initial(weakpoint_location.name)]."))
 	objective.weakpoint_located()
 
@@ -175,7 +194,7 @@
 	if(get_area(user) != user_area)
 		return FALSE
 
-	if(parent_objective.objective_state == OBJECTIVE_STATE_FAILED || parent_objective.objective_state == OBJECTIVE_STATE_INVALID)
+	if(parent_objective.objective_state != OBJECTIVE_STATE_ACTIVE)
 		return FALSE
 
 	var/atom/current_loc = loc
@@ -234,16 +253,20 @@
 		return
 
 	var/area/target_area = get_area(target)
-	if (target_area.type != SStraitor.station_weakpoints[3])
-		var/area/weakpoint_area = SStraitor.station_weakpoints[3]
+	if (target_area.type != objective.weakpoint_areas[3])
+		var/area/weakpoint_area = objective.weakpoint_areas[3]
 		to_chat(user, span_warning("[src] can only be detonated in [initial(weakpoint_area.name)]."))
+		return
+
+	if(!isfloorturf(target) && !iswallturf(target))
+		to_chat(user, span_warning("[src] can only be planted on a wall or the floor!"))
 		return
 
 	return ..()
 
 /obj/item/grenade/c4/es8/detonate(mob/living/lanced_by)
 	var/area/target_area = get_area(target)
-	if (target_area.type != SStraitor.station_weakpoints[3])
+	if (target_area.type != objective.weakpoint_areas[3])
 		var/obj/item/grenade/c4/es8/new_bomb = new(target.drop_location())
 		new_bomb.balloon_alert_to_viewers("invalid location!")
 		target.cut_overlay(plastic_overlay, TRUE)

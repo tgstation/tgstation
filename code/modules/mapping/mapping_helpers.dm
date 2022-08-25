@@ -97,7 +97,6 @@
 	..()
 	return late ? INITIALIZE_HINT_LATELOAD : INITIALIZE_HINT_QDEL
 
-
 //airlock helpers
 /obj/effect/mapping_helpers/airlock
 	layer = DOOR_HELPER_LAYER
@@ -189,13 +188,13 @@
 	else
 		airlock.locked = TRUE
 
-
 /obj/effect/mapping_helpers/airlock/unres
 	name = "airlock unrestricted side helper"
 	icon_state = "airlock_unres_helper"
 
 /obj/effect/mapping_helpers/airlock/unres/payload(obj/machinery/door/airlock/airlock)
 	airlock.unres_sides ^= dir
+	airlock.unres_sensor = TRUE
 
 /obj/effect/mapping_helpers/airlock/abandoned
 	name = "airlock abandoned helper"
@@ -447,28 +446,84 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	name = "Dead Body placer"
 	late = TRUE
 	icon_state = "deadbodyplacer"
+	var/admin_spawned
 	var/bodycount = 2 //number of bodies to spawn
+
+/obj/effect/mapping_helpers/dead_body_placer/Initialize(mapload)
+	. = ..()
+	if(mapload)
+		return
+	admin_spawned = TRUE
 
 /obj/effect/mapping_helpers/dead_body_placer/LateInitialize()
 	var/area/a = get_area(src)
 	var/list/trays = list()
 	for (var/i in a.contents)
 		if (istype(i, /obj/structure/bodycontainer/morgue))
+			if(admin_spawned)
+				var/obj/structure/bodycontainer/morgue/early_morgue_tray = i
+				if(early_morgue_tray.connected.loc != early_morgue_tray)
+					continue
 			trays += i
 	if(!trays.len)
-		log_mapping("[src] at [x],[y] could not find any morgues.")
+		if(admin_spawned)
+			message_admins("[src] spawned at [ADMIN_VERBOSEJMP(src)] failed to find a closed morgue to spawn a body!")
+		else
+			log_mapping("[src] at [x],[y] could not find any morgues.")
 		return
+
+	var/reuse_trays = (trays.len < bodycount) //are we going to spawn more trays than bodies?
+
+	var/use_species = CONFIG_GET(flag/morgue_cadaver_disable_nonhumans)
+	var/species_probability = CONFIG_GET(number/morgue_cadaver_other_species_probability)
+	var/override_species = CONFIG_GET(string/morgue_cadaver_override_species)
+	var/list/usable_races
+	if(use_species)
+		usable_races = GLOB.roundstart_races.Copy()
+		usable_races -= SPECIES_ETHEREAL //they revive on death which is bad juju
+		LAZYREMOVE(usable_races, SPECIES_HUMAN)
+		if(!usable_races)
+			stack_trace("morgue_cadaver_disable_nonhumans. THERE ARE NO VALID NONHUMANS ENABLED")
+		if(override_species)
+			stack_trace("WARNING: BOTH use_all_roundstart_races_for_cadavers & morgue_cadaver_override_species CONFIGS ENABLED. morgue_cadaver_override_species BEING OVERRIDEN.")
+	else if(override_species)
+		usable_races += override_species
+
 	for (var/i = 1 to bodycount)
-		var/obj/structure/bodycontainer/morgue/j = pick(trays)
-		var/mob/living/carbon/human/h = new /mob/living/carbon/human(j, 1)
-		h.death()
-		for (var/part in h.internal_organs) //randomly remove organs from each body, set those we keep to be in stasis
+		var/obj/structure/bodycontainer/morgue/morgue_tray = reuse_trays ? pick(trays) : pick_n_take(trays)
+		var/obj/structure/closet/body_bag/body_bag = new(morgue_tray.loc)
+		var/mob/living/carbon/human/new_human = new /mob/living/carbon/human(morgue_tray.loc, 1)
+
+		var/species_to_pick
+		if(LAZYLEN(usable_races))
+			if(!species_probability)
+				species_probability = 50
+				stack_trace("WARNING: morgue_cadaver_other_species_probability CONFIG SET TO 0% WHEN SPAWNING. DEFAULTING TO [species_probability]%.")
+			if(prob(species_probability))
+				species_to_pick = pick(usable_races)
+				var/datum/species/new_human_species = GLOB.species_list[species_to_pick]
+				if(new_human_species)
+					new_human.set_species(new_human_species)
+					new_human_species.randomize_features(new_human)
+					new_human.fully_replace_character_name(new_human.real_name, new_human_species.random_name(new_human.gender, TRUE, TRUE))
+				else
+					stack_trace("failed to spawn cadaver with species ID [species_to_pick]") //if it's invalid they'll just be a human, so no need to worry too much aside from yelling at the server owner lol.
+
+		body_bag.insert(new_human, TRUE)
+		body_bag.close()
+		body_bag.handle_tag("[new_human.real_name][species_to_pick ? " - [capitalize(species_to_pick)]" : " - Human"]")
+		body_bag.forceMove(morgue_tray)
+
+		new_human.death() //here lies the mans, rip in pepperoni.
+		for (var/part in new_human.internal_organs) //randomly remove organs from each body, set those we keep to be in stasis
 			if (prob(40))
 				qdel(part)
 			else
 				var/obj/item/organ/O = part
 				O.organ_flags |= ORGAN_FROZEN
-		j.update_appearance()
+
+		morgue_tray.update_appearance()
+
 	qdel(src)
 
 
@@ -563,7 +618,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		else if(isopenturf(thing))
 			if(locate(/obj/structure/bed/dogbed/ian) in thing)
 				new /obj/item/clothing/head/festive(thing)
-				var/obj/item/reagent_containers/food/drinks/bottle/champagne/iandrink = new(thing)
+				var/obj/item/reagent_containers/cup/glass/bottle/champagne/iandrink = new(thing)
 				iandrink.name = "dog champagne"
 				iandrink.pixel_y += 8
 				iandrink.pixel_x += 8
@@ -602,7 +657,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 			var/obj/item/paper/paper = new /obj/item/paper(src)
 			if(note_name)
 				paper.name = note_name
-			paper.info = "[note_info]"
+			paper.add_raw_text("[note_info]")
+			paper.update_appearance()
 			found_airlock.note = paper
 			paper.forceMove(found_airlock)
 			found_airlock.update_appearance()
@@ -618,6 +674,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
  * ## trapdoor placer!
  *
  * This places an unlinked trapdoor in the tile its on (so someone with a remote needs to link it up first)
+ * Pre-mapped trapdoors (unlike player-made ones) are not conspicuous by default so nothing stands out with them
  * Admins may spawn this in the round for additional trapdoors if they so desire
  * if YOU want to learn more about trapdoors, read about the component at trapdoor.dm
  * note: this is not a turf subtype because the trapdoor needs the type of the turf to turn back into
@@ -629,7 +686,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 /obj/effect/mapping_helpers/trapdoor_placer/LateInitialize()
 	var/turf/component_target = get_turf(src)
-	component_target.AddComponent(/datum/component/trapdoor, starts_open = FALSE)
+	component_target.AddComponent(/datum/component/trapdoor, starts_open = FALSE, conspicuous = FALSE)
 	qdel(src)
 
 /obj/effect/mapping_helpers/ztrait_injector
@@ -700,3 +757,35 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	json_cache[json_url] = json_data
 	query_in_progress = FALSE
 	return json_data
+
+/obj/effect/mapping_helpers/broken_floor
+	name = "broken floor"
+	icon = 'icons/turf/damaged.dmi'
+	icon_state = "damaged1"
+	late = TRUE
+	layer = ABOVE_NORMAL_TURF_LAYER
+
+/obj/effect/mapping_helpers/broken_floor/Initialize(mapload)
+	.=..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/mapping_helpers/broken_floor/LateInitialize()
+	var/turf/open/floor/floor = get_turf(src)
+	floor.break_tile()
+	qdel(src)
+
+/obj/effect/mapping_helpers/burnt_floor
+	name = "burnt floor"
+	icon = 'icons/turf/damaged.dmi'
+	icon_state = "floorscorched1"
+	late = TRUE
+	layer = ABOVE_NORMAL_TURF_LAYER
+
+/obj/effect/mapping_helpers/burnt_floor/Initialize(mapload)
+	.=..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/mapping_helpers/burnt_floor/LateInitialize()
+	var/turf/open/floor/floor = get_turf(src)
+	floor.burn_tile()
+	qdel(src)

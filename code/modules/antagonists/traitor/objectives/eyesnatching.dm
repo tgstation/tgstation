@@ -72,13 +72,13 @@
 				continue
 
 		var/mob/living/carbon/human/targets_current = possible_target.current
-		if(!targets_current.getorgan(/obj/item/organ/eyes))
+		if(!targets_current.getorgan(/obj/item/organ/internal/eyes))
 			continue
 
-		possible_targets += targets_current
+		possible_targets += possible_target
 
 	for(var/datum/traitor_objective/eyesnatching/objective as anything in possible_duplicates)
-		possible_targets -= objective.victim
+		possible_targets -= objective.victim?.mind
 
 	if(try_target_late_joiners)
 		var/list/all_possible_targets = possible_targets.Copy()
@@ -92,15 +92,15 @@
 	if(!possible_targets.len)
 		return FALSE //MISSION FAILED, WE'LL GET EM NEXT TIME
 
-	victim = pick(possible_targets)
-	var/datum/mind/victim_mind = victim.mind
+	var/datum/mind/victim_mind = pick(possible_targets)
+	victim = victim_mind.current
 
 	replace_in_name("%TARGET%", victim_mind.name)
 	replace_in_name("%JOB TITLE%", victim_mind.assigned_role.title)
 	RegisterSignal(victim, COMSIG_CARBON_LOSE_ORGAN, .proc/check_eye_removal)
 	AddComponent(/datum/component/traitor_objective_register, victim, fail_signals = COMSIG_PARENT_QDELETING)
 
-/datum/traitor_objective/eyesnatching/proc/check_eye_removal(datum/source, obj/item/organ/eyes/removed)
+/datum/traitor_objective/eyesnatching/proc/check_eye_removal(datum/source, obj/item/organ/internal/eyes/removed)
 	SIGNAL_HANDLER
 
 	if(!istype(removed))
@@ -128,7 +128,7 @@
 /obj/item/eyesnatcher
 	name = "portable eyeball extractor"
 	desc = "An overly complicated device that can pierce target's skull and extract their eyeballs if enough brute force is applied."
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/medical/surgery.dmi'
 	icon_state = "eyesnatcher"
 	base_icon_state = "eyesnatcher"
 	inhand_icon_state = "hypo"
@@ -148,7 +148,7 @@
 	if(!istype(victim) || !victim.Adjacent(user)) //No TK use
 		return ..()
 
-	var/obj/item/organ/eyes/eyeballies = victim.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/eyeballies = victim.getorganslot(ORGAN_SLOT_EYES)
 	var/obj/item/bodypart/head/head = victim.get_bodypart(BODY_ZONE_HEAD)
 
 	if(!eyeballies || victim.is_eyes_covered())
@@ -200,7 +200,7 @@
 	desc += " It has been used up."
 	update_icon()
 
-/obj/item/eyesnatcher/proc/eyeballs_exist(obj/item/organ/eyes/eyeballies, obj/item/bodypart/head, mob/living/carbon/human/victim)
+/obj/item/eyesnatcher/proc/eyeballs_exist(obj/item/organ/internal/eyes/eyeballies, obj/item/bodypart/head/head, mob/living/carbon/human/victim)
 	if(!eyeballies || QDELETED(eyeballies))
 		return FALSE
 
@@ -213,7 +213,7 @@
 	if(eyeballies.owner != victim)
 		return FALSE
 
-	if(head.owner != victim || head.eyes != eyes)
+	if(head.owner != victim || head.eyes != eyeballies)
 		return FALSE
 
 	return TRUE

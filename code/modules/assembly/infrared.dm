@@ -128,7 +128,7 @@
 	. = ..()
 	refreshBeam()
 
-/obj/item/assembly/infra/Moved()
+/obj/item/assembly/infra/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	var/t = dir
 	. = ..()
 	setDir(t)
@@ -217,7 +217,7 @@
 
 /obj/effect/beam/i_beam
 	name = "infrared beam"
-	icon = 'icons/obj/guns/projectiles.dmi'
+	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "ibeam"
 	anchored = TRUE
 	density = FALSE

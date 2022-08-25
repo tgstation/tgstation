@@ -40,7 +40,7 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/simple_animal/sloth)
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "slowly smiles!")
 	// If someone adds non-cargo sloths to maps we'll have a problem but we're fine for now
-	if(!GLOB.cargo_sloth && mapload)
+	if(!GLOB.cargo_sloth && mapload && is_station_level(z))
 		GLOB.cargo_sloth = src
 
 /mob/living/simple_animal/sloth/Destroy()

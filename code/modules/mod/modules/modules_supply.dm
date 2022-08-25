@@ -12,6 +12,7 @@
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
 	incompatible_modules = list(/obj/item/mod/module/gps)
 	cooldown_time = 0.5 SECONDS
+	allowed_inactive = TRUE
 
 /obj/item/mod/module/gps/Initialize(mapload)
 	. = ..()
@@ -141,7 +142,7 @@
 		return
 	if(!mod.wearer.Adjacent(target))
 		return
-	if(istype(target, /turf/closed/mineral))
+	if(ismineralturf(target))
 		var/turf/closed/mineral/mineral_turf = target
 		mineral_turf.gets_drilled(mod.wearer)
 		drain_power(use_power_cost)
@@ -154,7 +155,7 @@
 
 /obj/item/mod/module/drill/proc/bump_mine(mob/living/carbon/human/bumper, atom/bumped_into, proximity)
 	SIGNAL_HANDLER
-	if(!istype(bumped_into, /turf/closed/mineral) || !drain_power(use_power_cost))
+	if(!ismineralturf(bumped_into) || !drain_power(use_power_cost))
 		return
 	var/turf/closed/mineral/mineral_turf = bumped_into
 	mineral_turf.gets_drilled(mod.wearer)
@@ -172,6 +173,7 @@
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
 	incompatible_modules = list(/obj/item/mod/module/orebag)
 	cooldown_time = 0.5 SECONDS
+	allowed_inactive = TRUE
 	/// The ores stored in the bag.
 	var/list/ores = list()
 
@@ -495,7 +497,6 @@
 	ADD_TRAIT(mod.wearer, TRAIT_HANDS_BLOCKED, MOD_TRAIT)
 	ADD_TRAIT(mod.wearer, TRAIT_FORCED_STANDING, MOD_TRAIT)
 	ADD_TRAIT(mod.wearer, TRAIT_NOSLIPALL, MOD_TRAIT)
-	mod.wearer.add_movespeed_mod_immunities(MOD_TRAIT, /datum/movespeed_modifier/turf_slowdown)
 	mod.wearer.RemoveElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	mod.wearer.AddElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
 	mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/sphere)
@@ -567,6 +568,12 @@
 	light_color = COLOR_LIGHT_ORANGE
 	ammo_type = /obj/structure/mining_bomb
 
+/obj/projectile/bullet/reusable/mining_bomb/handle_drop()
+	if(dropped)
+		return
+	dropped = TRUE
+	new ammo_type(get_turf(src), firer)
+
 /obj/structure/mining_bomb
 	name = "mining bomb"
 	desc = "A bomb. Why are you examining this?"
@@ -589,26 +596,30 @@
 	/// Image overlaid on explosion.
 	var/static/image/explosion_image
 
-/obj/structure/mining_bomb/Initialize(mapload)
+/obj/structure/mining_bomb/Initialize(mapload, atom/movable/firer)
 	. = ..()
 	if(!explosion_image)
 		explosion_image = image('icons/effects/96x96.dmi', "judicial_explosion")
 		explosion_image.pixel_x = -32
 		explosion_image.pixel_y = -32
 		explosion_image.plane = ABOVE_GAME_PLANE
-	addtimer(CALLBACK(src, .proc/prime), prime_time)
+	addtimer(CALLBACK(src, .proc/prime, firer), prime_time)
 
-/obj/structure/mining_bomb/proc/prime()
+/obj/structure/mining_bomb/proc/prime(atom/movable/firer)
 	add_overlay(explosion_image)
-	addtimer(CALLBACK(src, .proc/boom), explosion_time)
+	addtimer(CALLBACK(src, .proc/boom, firer), explosion_time)
 
-/obj/structure/mining_bomb/proc/boom()
+/obj/structure/mining_bomb/proc/boom(atom/movable/firer)
 	visible_message(span_danger("[src] explodes!"))
 	playsound(src, 'sound/magic/magic_missile.ogg', 200, vary = TRUE)
 	for(var/turf/closed/mineral/rock in circle_range_turfs(src, 2))
 		rock.gets_drilled()
 	for(var/mob/living/mob in range(1, src))
 		mob.apply_damage(12 * (ishostile(mob) ? fauna_boost : 1), BRUTE, spread_damage = TRUE)
+		if(!ishostile(mob) || !firer)
+			continue
+		var/mob/living/simple_animal/hostile/hostile_mob = mob
+		hostile_mob.GiveTarget(firer)
 	for(var/obj/object in range(1, src))
 		object.take_damage(damage, BRUTE, BOMB)
 	qdel(src)

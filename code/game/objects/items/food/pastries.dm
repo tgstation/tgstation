@@ -116,7 +116,7 @@
 	name = "fortune cookie"
 	desc = "A true prophecy in each cookie!"
 	icon_state = "fortune_cookie"
-	trash_type = /obj/item/paper
+	trash_type = /obj/item/paperslip
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	tastes = list("cookie" = 1)
 	foodtypes = GRAIN | SUGAR
@@ -131,9 +131,14 @@
 	if (fortune)
 		fortune.forceMove(drop_location)
 		return fortune
-	// Otherwise, make a blank page.
-	var/out_paper = new trash_type(drop_location)
-	return out_paper
+		
+	// Otherwise, use a generic one
+	var/obj/item/paperslip/fortune_slip = new trash_type(drop_location)
+	fortune_slip.name = "fortune slip"	
+	// if someone adds lottery tickets in the future, be sure to add random numbers to this
+	fortune_slip.desc = pick(GLOB.wisdoms)
+	
+	return fortune_slip
 
 /obj/item/food/fortunecookie/MakeLeaveTrash()
 	if(trash_type)
@@ -301,3 +306,47 @@
 	icon_state = "icecream_cone_chocolate"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/coco = 1)
 	ingredients = list(/datum/reagent/consumable/flour, /datum/reagent/consumable/sugar, /datum/reagent/consumable/coco)
+
+/obj/item/food/cookie/peanut_butter
+	name = "peanut butter cookie"
+	desc = "A tasty, chewy peanut butter cookie."
+	icon_state = "peanut_butter_cookie"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/peanut_butter = 5)
+	tastes = list("peanut butter" = 2, "cookie" = 1)
+	foodtypes = GRAIN | JUNKFOOD | NUTS
+
+/obj/item/food/raw_brownie_batter
+	name = "raw brownie batter"
+	desc = "A sticky mixture of raw brownie batter, cook it in the oven!"
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "raw_brownie_batter"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 4)
+	tastes = list("raw brownie batter" = 1)
+	foodtypes = GRAIN | JUNKFOOD | SUGAR | BREAKFAST
+
+/obj/item/food/raw_brownie_batter/MakeBakeable()
+	AddComponent(/datum/component/bakeable, /obj/item/food/brownie_sheet, rand(20 SECONDS, 30 SECONDS), TRUE, TRUE)
+
+/obj/item/food/brownie_sheet
+	name = "brownie sheet"
+	desc = "An uncut sheet of cooked brownie, use a knife to cut it!."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "brownie_sheet"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/sugar = 12)
+	tastes = list("brownie" = 1, "chocolatey goodness" = 1)
+	foodtypes = GRAIN | JUNKFOOD | SUGAR
+	w_class = WEIGHT_CLASS_SMALL
+	burns_in_oven = TRUE
+
+/obj/item/food/brownie_sheet/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/brownie, 4, 3 SECONDS, table_required = TRUE)
+
+/obj/item/food/brownie
+	name = "brownie"
+	desc = "A square slice of delicious, chewy brownie. Often the target of potheads."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "brownie"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/sugar = 3)
+	tastes = list("brownie" = 1, "chocolatey goodness" = 1)
+	foodtypes = GRAIN | JUNKFOOD | SUGAR
+	w_class = WEIGHT_CLASS_SMALL

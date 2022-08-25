@@ -4,6 +4,8 @@
 	weight = 2
 	min_players = 15
 	earliest_start = 30 MINUTES
+	category = EVENT_CATEGORY_ENTITIES
+	description = "Syndicate troops pour out of portals."
 
 /datum/round_event/portal_storm/syndicate_shocktroop
 	boss_types = list(/mob/living/simple_animal/hostile/syndicate/melee/space/stormtrooper = 2)
@@ -15,6 +17,8 @@
 	typepath = /datum/round_event/portal_storm/portal_storm_narsie
 	weight = 0
 	max_occurrences = 0
+	category = EVENT_CATEGORY_ENTITIES
+	description = "Nar'sie constructs pour out of portals."
 
 /datum/round_event/portal_storm/portal_storm_narsie
 	boss_types = list(/mob/living/simple_animal/hostile/construct/artificer/hostile = 6)
@@ -36,7 +40,7 @@
 	var/mutable_appearance/storm
 
 /datum/round_event/portal_storm/setup()
-	storm = mutable_appearance('icons/obj/tesla_engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
+	storm = mutable_appearance('icons/obj/engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
 	storm.plane = ABOVE_GAME_PLANE
 	storm.color = "#00FF00"
 

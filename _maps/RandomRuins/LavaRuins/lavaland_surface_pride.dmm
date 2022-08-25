@@ -9,13 +9,16 @@
 /obj/structure/stone_tile/block/burnt{
 	dir = 8
 	},
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/weak,
 /area/ruin/powered/pride)
 "i" = (
 /obj/structure/mirror/directional/east,
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/weak,
 /area/ruin/powered/pride)
 "j" = (
+/obj/structure/mirror/magic/pride{
+	pixel_y = -6
+	},
 /turf/closed/wall/mineral/silver,
 /area/ruin/powered/pride)
 "k" = (
@@ -34,7 +37,7 @@
 "q" = (
 /obj/structure/mirror/directional/east,
 /obj/structure/stone_tile/surrounding_tile,
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/weak,
 /area/ruin/powered/pride)
 "r" = (
 /turf/open/floor/mineral/silver,
@@ -48,32 +51,23 @@
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 8
 	},
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/weak,
 /area/ruin/powered/pride)
 "u" = (
 /obj/structure/stone_tile/block/burnt{
 	dir = 4
 	},
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/weak,
 /area/ruin/powered/pride)
-"x" = (
-/obj/structure/stone_tile/burnt{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "y" = (
 /obj/structure/stone_tile/center,
 /obj/structure/stone_tile/surrounding,
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/weak,
 /area/ruin/powered/pride)
 "z" = (
 /obj/structure/stone_tile/center,
 /obj/structure/stone_tile/surrounding/burnt,
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/weak,
 /area/ruin/powered/pride)
 "B" = (
 /obj/structure/stone_tile/center,
@@ -84,24 +78,11 @@
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 8
 	},
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/weak,
 /area/ruin/powered/pride)
 "G" = (
 /turf/closed/wall/mineral/cult,
 /area/ruin/powered/pride)
-"H" = (
-/obj/structure/mirror/magic/pride{
-	pixel_y = 26
-	},
-/turf/open/floor/mineral/silver,
-/area/ruin/powered/pride)
-"J" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile,
-/turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "K" = (
 /obj/structure/mirror/directional/east,
 /obj/structure/stone_tile/center,
@@ -112,20 +93,20 @@
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 8
 	},
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/weak,
 /area/ruin/powered/pride)
 "N" = (
 /obj/structure/stone_tile/center,
 /obj/structure/stone_tile/surrounding/burnt,
 /obj/machinery/door/airlock/cult/unruned/friendly,
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/weak,
 /area/ruin/powered/pride)
 "O" = (
 /obj/structure/mirror/directional/west,
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 8
 	},
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/weak,
 /area/ruin/powered/pride)
 "R" = (
 /obj/structure/mirror/directional/west,
@@ -137,7 +118,7 @@
 	dir = 8
 	},
 /obj/structure/stone_tile/surrounding_tile,
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/weak,
 /area/ruin/powered/pride)
 "S" = (
 /obj/structure/stone_tile/block,
@@ -147,17 +128,17 @@
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 1
 	},
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/weak,
 /area/ruin/powered/pride)
 "U" = (
 /obj/structure/stone_tile/block{
 	dir = 8
 	},
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/weak,
 /area/ruin/powered/pride)
 "X" = (
 /obj/structure/mirror/directional/west,
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/weak,
 /area/ruin/powered/pride)
 "Y" = (
 /turf/closed/indestructible/riveted/boss,
@@ -166,7 +147,7 @@
 /obj/structure/stone_tile/block{
 	dir = 4
 	},
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/weak,
 /area/ruin/powered/pride)
 
 (1,1,1) = {"
@@ -208,7 +189,7 @@ X
 X
 X
 G
-x
+c
 a
 "}
 (4,1,1) = {"
@@ -230,7 +211,7 @@ c
 c
 G
 j
-H
+r
 S
 y
 z
@@ -264,7 +245,7 @@ i
 i
 i
 Y
-J
+c
 a
 "}
 (8,1,1) = {"

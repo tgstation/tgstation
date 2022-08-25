@@ -24,7 +24,7 @@
 /area/shuttle/escape)
 "eR" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/shaker,
+/obj/item/reagent_containers/cup/glass/shaker,
 /obj/item/storage/box/drinkingglasses,
 /turf/open/floor/wood,
 /area/shuttle/escape)
@@ -312,7 +312,7 @@
 "Yr" = (
 /obj/structure/table/wood/poker,
 /obj/item/storage/box/drinkingglasses,
-/obj/item/reagent_containers/food/drinks/bottle/whiskey,
+/obj/item/reagent_containers/cup/glass/bottle/whiskey,
 /obj/machinery/light/directional/south,
 /turf/open/floor/wood,
 /area/shuttle/escape)

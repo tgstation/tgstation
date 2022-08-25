@@ -59,7 +59,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/expose_obj(obj/exposed_obj, reac_volume)
 	if(istype(exposed_obj, /obj/item/paper))
 		var/obj/item/paper/paperaffected = exposed_obj
-		paperaffected.clearpaper()
+		paperaffected.clear_paper()
 		to_chat(usr, span_notice("[paperaffected]'s ink washes away."))
 	if(istype(exposed_obj, /obj/item/book))
 		if(reac_volume >= 5)
@@ -1029,7 +1029,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A cold refreshment."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/demonsblood //Prevents the imbiber from being dragged into a pool of blood by a slaughter demon.
+/datum/reagent/consumable/ethanol/demonsblood
 	name = "Demon's Blood"
 	description = "AHHHH!!!!"
 	color = "#820000" // rgb: 130, 0, 0
@@ -1041,7 +1041,34 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Just looking at this thing makes the hair at the back of your neck stand up."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/devilskiss //If eaten by a slaughter demon, the demon will regret it.
+/datum/reagent/consumable/ethanol/demonsblood/on_mob_metabolize(mob/living/metabolizer)
+	. = ..()
+	RegisterSignal(metabolizer, COMSIG_LIVING_BLOOD_CRAWL_PRE_CONSUMED, .proc/pre_bloodcrawl_consumed)
+
+/datum/reagent/consumable/ethanol/demonsblood/on_mob_end_metabolize(mob/living/metabolizer)
+	. = ..()
+	UnregisterSignal(metabolizer, COMSIG_LIVING_BLOOD_CRAWL_PRE_CONSUMED)
+
+/// Prevents the imbiber from being dragged into a pool of blood by a slaughter demon.
+/datum/reagent/consumable/ethanol/demonsblood/proc/pre_bloodcrawl_consumed(
+	mob/living/source,
+	datum/action/cooldown/spell/jaunt/bloodcrawl/crawl,
+	mob/living/jaunter,
+	obj/effect/decal/cleanable/blood,
+)
+
+	SIGNAL_HANDLER
+
+	var/turf/jaunt_turf = get_turf(jaunter)
+	jaunt_turf.visible_message(
+		span_warning("Something prevents [source] from entering [blood]!"),
+		blind_message = span_notice("You hear a splash and a thud.")
+	)
+	to_chat(jaunter, span_warning("A strange force is blocking [source] from entering!"))
+
+	return COMPONENT_STOP_CONSUMPTION
+
+/datum/reagent/consumable/ethanol/devilskiss
 	name = "Devil's Kiss"
 	description = "Creepy time!"
 	color = "#A68310" // rgb: 166, 131, 16
@@ -1052,6 +1079,41 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Devils Kiss"
 	glass_desc = "Creepy time!"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/devilskiss/on_mob_metabolize(mob/living/metabolizer)
+	. = ..()
+	RegisterSignal(metabolizer, COMSIG_LIVING_BLOOD_CRAWL_CONSUMED, .proc/on_bloodcrawl_consumed)
+
+/datum/reagent/consumable/ethanol/devilskiss/on_mob_end_metabolize(mob/living/metabolizer)
+	. = ..()
+	UnregisterSignal(metabolizer, COMSIG_LIVING_BLOOD_CRAWL_CONSUMED)
+
+/// If eaten by a slaughter demon, the demon will regret it.
+/datum/reagent/consumable/ethanol/devilskiss/proc/on_bloodcrawl_consumed(
+	mob/living/source,
+	datum/action/cooldown/spell/jaunt/bloodcrawl/crawl,
+	mob/living/jaunter,
+)
+
+	SIGNAL_HANDLER
+
+	. = COMPONENT_STOP_CONSUMPTION
+
+	to_chat(jaunter, span_boldwarning("AAH! THEIR FLESH! IT BURNS!"))
+	jaunter.apply_damage(25, BRUTE, wound_bonus = CANT_WOUND)
+
+	for(var/obj/effect/decal/cleanable/nearby_blood in range(1, get_turf(source)))
+		if(!nearby_blood.can_bloodcrawl_in())
+			continue
+		source.forceMove(get_turf(nearby_blood))
+		source.visible_message(span_warning("[nearby_blood] violently expels [source]!"))
+		crawl.exit_blood_effect(source)
+		return
+
+	// Fuck it, just eject them, thanks to some split second cleaning
+	source.forceMove(get_turf(source))
+	source.visible_message(span_warning("[source] appears from nowhere, covered in blood!"))
+	crawl.exit_blood_effect(source)
 
 /datum/reagent/consumable/ethanol/vodkatonic
 	name = "Vodka and Tonic"
@@ -1934,7 +1996,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/between_the_sheets
 	name = "Between the Sheets"
-	description = "A provocatively named classic. Funny enough, doctors recommend drinking it before taking a nap."
+	description = "A provocatively named classic. Funny enough, doctors recommend drinking it before taking a nap while underneath bedsheets."
 	color = "#F4C35A"
 	boozepwr = 55
 	quality = DRINK_GOOD
@@ -1947,16 +2009,25 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/between_the_sheets/on_mob_life(mob/living/drinker, delta_time, times_fired)
 	..()
-	if(drinker.IsSleeping())
-		if(drinker.getBruteLoss() && drinker.getFireLoss()) //If you are damaged by both types, slightly increased healing but it only heals one. The more the merrier wink wink.
-			if(prob(50))
-				drinker.adjustBruteLoss(-0.25 * REM * delta_time)
-			else
-				drinker.adjustFireLoss(-0.25 * REM * delta_time)
-		else if(drinker.getBruteLoss()) //If you have only one, it still heals but not as well.
-			drinker.adjustBruteLoss(-0.2 * REM * delta_time)
-		else if(drinker.getFireLoss())
-			drinker.adjustFireLoss(-0.2 * REM * delta_time)
+	var/is_between_the_sheets = FALSE
+	for(var/obj/item/bedsheet/bedsheet in range(drinker.loc, 0))
+		if(bedsheet.loc != drinker.loc) // bedsheets in your backpack/neck don't count
+			continue
+		is_between_the_sheets = TRUE
+		break
+
+	if(!drinker.IsSleeping() || !is_between_the_sheets)
+		return
+
+	if(drinker.getBruteLoss() && drinker.getFireLoss()) //If you are damaged by both types, slightly increased healing but it only heals one. The more the merrier wink wink.
+		if(prob(50))
+			drinker.adjustBruteLoss(-0.25 * REM * delta_time)
+		else
+			drinker.adjustFireLoss(-0.25 * REM * delta_time)
+	else if(drinker.getBruteLoss()) //If you have only one, it still heals but not as well.
+		drinker.adjustBruteLoss(-0.2 * REM * delta_time)
+	else if(drinker.getFireLoss())
+		drinker.adjustFireLoss(-0.2 * REM * delta_time)
 
 /datum/reagent/consumable/ethanol/kamikaze
 	name = "Kamikaze"
@@ -2326,12 +2397,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(metabolizer.age > 70)
 			metabolizer.facial_hair_color = "#cccccc"
 			metabolizer.hair_color = "#cccccc"
-			metabolizer.update_hair()
+			metabolizer.update_body_parts()
 			if(metabolizer.age > 100)
 				metabolizer.become_nearsighted(type)
 				if(metabolizer.gender == MALE)
 					metabolizer.facial_hairstyle = "Beard (Very Long)"
-					metabolizer.update_hair()
+					metabolizer.update_body_parts()
 
 				if(metabolizer.age > 969) //Best not let people get older than this or i might incur G-ds wrath
 					metabolizer.visible_message(span_notice("[metabolizer] becomes older than any man should be.. and crumbles into dust!"))
@@ -2578,7 +2649,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/drunken_espatier/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	SEND_SIGNAL(drinker, COMSIG_ADD_MOOD_EVENT, "numb", /datum/mood_event/narcotic_medium, name) //comfortably numb
+	drinker.add_mood_event("numb", /datum/mood_event/narcotic_medium, name) //comfortably numb
 	..()
 
 /datum/reagent/consumable/ethanol/drunken_espatier/on_mob_metabolize(mob/living/drinker)
@@ -2636,7 +2707,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/triumphal_arch/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	if(islizard(drinker))
-		SEND_SIGNAL(drinker, COMSIG_ADD_MOOD_EVENT, "triumph", /datum/mood_event/memories_of_home, name)
+		drinker.add_mood_event("triumph", /datum/mood_event/memories_of_home, name)
 	..()
 
 /datum/reagent/consumable/ethanol/the_juice
@@ -2837,3 +2908,29 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		drinker.adjust_timed_status_effect(4 SECONDS * REM * delta_time, /datum/status_effect/hallucination, max_duration = 48 SECONDS)
 
 	..()
+
+/datum/reagent/consumable/ethanol/plumwine
+	name = "Plum wine"
+	description = "Plums turned into wine."
+	color = "#8a0421"
+	nutriment_factor = 1 * REAGENTS_METABOLISM
+	boozepwr = 20
+	taste_description = "a poet's love and undoing"
+	glass_icon_state = "plumwineglass"
+	glass_name = "plum wine"
+	glass_desc = "Looks like an evening of writing fine poetry."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_STOCK
+
+/datum/reagent/consumable/ethanol/the_hat
+	name = "The Hat"
+	description = "A fancy drink, usually served in a man's hat."
+	color = "#b90a5c"
+	boozepwr = 80
+	quality = DRINK_NICE
+	taste_description = "something perfumy"
+	glass_icon_state = "thehatglass"
+	glass_name = "The Hat"
+	glass_desc ="A single plum floating in perfume, served in a man's hat."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_STOCK

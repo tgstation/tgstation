@@ -118,7 +118,6 @@
 		user.visible_message(span_notice("You manage to put [O] on [src], you can now ride [p_them()]."))
 		qdel(O)
 		saddled = TRUE
-		can_buckle = TRUE
 		buckle_lying = 0
 		add_overlay("goliath_saddled")
 		AddElement(/datum/element/ridable, /datum/component/riding/creature/goliath)

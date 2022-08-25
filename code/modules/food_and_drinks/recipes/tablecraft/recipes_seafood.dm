@@ -80,3 +80,40 @@
 	)
 	result = /obj/item/food/spicyfiletsushiroll
 	subcategory = CAT_SEAFOOD
+
+/datum/crafting_recipe/food/nigiri_sushi
+	name ="Nigiri sushi"
+	reqs = list(
+		/obj/item/food/seaweedsheet = 1,
+		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/food/fishmeat = 1,
+		/datum/reagent/consumable/soysauce = 2
+	)
+	result = /obj/item/food/nigiri_sushi
+	subcategory = CAT_SEAFOOD
+
+/datum/crafting_recipe/food/meat_poke
+	name ="Meat poke"
+	reqs = list(
+		/obj/item/food/seaweedsheet = 1,
+		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/food/meat/cutlet = 3,
+		/obj/item/food/grown/cabbage = 1,
+		/obj/item/food/tofu = 1,
+		/datum/reagent/consumable/soysauce = 1
+	)
+	result = /obj/item/food/meat_poke
+	subcategory = CAT_SEAFOOD
+
+/datum/crafting_recipe/food/fish_poke
+	name ="Fish poke"
+	reqs = list(
+		/obj/item/food/seaweedsheet = 1,
+		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/food/fishmeat = 1,
+		/obj/item/food/grown/cabbage = 1,
+		/obj/item/food/tofu = 1,
+		/datum/reagent/consumable/soysauce = 1
+	)
+	result = /obj/item/food/fish_poke
+	subcategory = CAT_SEAFOOD

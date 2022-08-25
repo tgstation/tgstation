@@ -8,7 +8,7 @@
 	// This outfit is used by the assets SS, which is ran before the atoms SS
 	if(SSatoms.initialized == INITIALIZATION_INSSATOMS)
 		prisoner.w_uniform?.update_greyscale()
-		prisoner.update_inv_w_uniform()
+		prisoner.update_worn_undersuit()
 	if(visualsOnly)
 		return
 	prisoner.fully_replace_character_name(null,"NTP #CC-0[rand(111,999)]") //same as the lavaland prisoner transport, but this time they are from CC, or CentCom
@@ -24,13 +24,15 @@
 /datum/outfit/waldo
 	name = "Waldo"
 	uniform = /obj/item/clothing/under/pants/jeans
-	suit = /obj/item/clothing/suit/striped_sweater
-	head = /obj/item/clothing/head/beanie/waldo
+	suit = /obj/item/clothing/suit/costume/striped_sweater
+	head = /obj/item/clothing/head/waldo
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	ears = /obj/item/radio/headset
 	glasses = /obj/item/clothing/glasses/regular/circle
 
 /datum/outfit/waldo/post_equip(mob/living/carbon/human/equipped_on, visualsOnly=FALSE)
+	equipped_on.w_uniform?.update_greyscale()
+	equipped_on.update_worn_undersuit()
 	if(visualsOnly)
 		return
 	equipped_on.fully_replace_character_name(null,"Waldo")
@@ -43,8 +45,7 @@
 	equipped_on.hair_color = "#000000"
 	equipped_on.facial_hair_color = equipped_on.hair_color
 	equipped_on.update_body()
-	if(equipped_on.mind)
-		equipped_on.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
+
 	var/list/no_drops = list()
 	no_drops += equipped_on.get_item_by_slot(ITEM_SLOT_FEET)
 	no_drops += equipped_on.get_item_by_slot(ITEM_SLOT_ICLOTHING)
@@ -53,6 +54,9 @@
 	no_drops += equipped_on.get_item_by_slot(ITEM_SLOT_EYES)
 	for(var/obj/item/trait_needed as anything in no_drops)
 		ADD_TRAIT(trait_needed, TRAIT_NODROP, CURSED_ITEM_TRAIT(trait_needed.type))
+
+	var/datum/action/cooldown/spell/aoe/knock/waldos_key = new(equipped_on.mind || equipped_on)
+	waldos_key.Grant(equipped_on)
 
 /datum/outfit/synthetic
 	name = "Factory Error Synth"
@@ -230,7 +234,7 @@
 
 /obj/item/card/id/advanced/bountyhunter
 	assignment = "Bounty Hunter"
-	icon_state = "card_flames" //oh SHIT
+	icon_state = "card_flame" //oh SHIT
 	trim = /datum/id_trim/bounty_hunter
 
 /datum/outfit/bountyarmor/ert

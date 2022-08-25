@@ -122,19 +122,6 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_four)
-"aE" = (
-/obj/structure/destructible/cult/item_dispenser/archives,
-/obj/item/stack/sheet/runed_metal{
-	amount = 25
-	},
-/obj/item/coin/antagtoken,
-/obj/item/book/granter/spell/summonitem{
-	name = "\proper an extremely flamboyant book"
-	},
-/turf/open/floor/engine/cult{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid/level_four)
 "aF" = (
 /obj/structure/barricade/wooden{
 	desc = "A forcefield meant to block off areas. Time has aged this forcefield into a weakened state, you could probably smash through it.";
@@ -414,52 +401,36 @@
 /turf/closed/mineral/random/low_chance,
 /area/awaymission/caves/bmp_asteroid/level_two)
 "cn" = (
-/turf/open/floor/iron{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
+/turf/open/floor/iron,
 /area/awaymission/caves/research)
 "cp" = (
 /obj/structure/table,
-/turf/open/floor/iron{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
+/turf/open/floor/iron,
 /area/awaymission/caves/research)
 "cr" = (
-/turf/open/floor/plating{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
+/turf/open/floor/plating,
 /area/awaymission/caves/research)
 "cs" = (
 /obj/item/shard,
-/turf/open/floor/plating{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
+/turf/open/floor/plating,
 /area/awaymission/caves/research)
 "ct" = (
 /obj/item/shard,
 /obj/item/stack/rods,
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/iron{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
+/turf/open/floor/iron,
 /area/awaymission/caves/research)
 "cu" = (
 /obj/effect/decal/cleanable/blood/gibs,
-/turf/open/floor/iron{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
+/turf/open/floor/iron,
 /area/awaymission/caves/research)
 "cv" = (
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/iron{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
+/turf/open/floor/iron,
 /area/awaymission/caves/research)
 "cw" = (
 /obj/item/stack/rods,
-/turf/open/floor/plating{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
+/turf/open/floor/plating,
 /area/awaymission/caves/research)
 "cx" = (
 /turf/open/floor/iron/dark{
@@ -468,42 +439,24 @@
 /area/awaymission/caves/bmp_asteroid)
 "cA" = (
 /obj/effect/decal/remains/xeno,
-/turf/open/floor/plating{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
+/turf/open/floor/plating,
 /area/awaymission/caves/research)
 "cB" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/xenoblood,
-/turf/open/floor/plating{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
+/turf/open/floor/plating,
 /area/awaymission/caves/research)
 "cC" = (
 /obj/structure/table,
 /obj/item/restraints/handcuffs/cable,
 /obj/item/restraints/handcuffs/cable,
-/turf/open/floor/iron{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
+/turf/open/floor/iron,
 /area/awaymission/caves/research)
 "cD" = (
 /obj/effect/decal/remains/human,
-/turf/open/floor/iron{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/research)
-"cE" = (
-/obj/structure/sign/warning/vacuum{
-	name = "\improper LOW AIR AREA";
-	pixel_x = 32
-	},
-/obj/item/stack/rods,
-/turf/open/floor/iron{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
+/turf/open/floor/iron,
 /area/awaymission/caves/research)
 "cF" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -527,30 +480,22 @@
 "cN" = (
 /obj/machinery/door/window/left/directional/east,
 /obj/effect/decal/cleanable/xenoblood/xgibs,
-/turf/open/floor/plating{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
+/turf/open/floor/plating,
 /area/awaymission/caves/research)
 "cO" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/machinery/door/window/left/directional/east,
-/turf/open/floor/plating{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
+/turf/open/floor/plating,
 /area/awaymission/caves/research)
 "cP" = (
 /obj/machinery/door/airlock/external/ruin,
-/turf/open/floor/plating{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
+/turf/open/floor/plating,
 /area/awaymission/caves/research)
 "cR" = (
 /obj/effect/landmark/awaystart,
-/turf/open/floor/plating{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
+/turf/open/floor/plating,
 /area/awaymission/caves/research)
 "cS" = (
 /obj/machinery/door/window{
@@ -558,9 +503,7 @@
 	dir = 4;
 	icon_state = "right"
 	},
-/turf/open/floor/plating{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
+/turf/open/floor/plating,
 /area/awaymission/caves/research)
 "cT" = (
 /obj/structure/window/reinforced,
@@ -569,23 +512,17 @@
 	dir = 4;
 	icon_state = "right"
 	},
-/turf/open/floor/plating{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
+/turf/open/floor/plating,
 /area/awaymission/caves/research)
 "cV" = (
 /obj/effect/decal/cleanable/xenoblood/xgibs,
-/turf/open/floor/plating{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
+/turf/open/floor/plating,
 /area/awaymission/caves/research)
 "cW" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plating{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
+/turf/open/floor/plating,
 /area/awaymission/caves/research)
 "cX" = (
 /obj/structure/table,
@@ -596,18 +533,7 @@
 /area/awaymission/caves/research)
 "cY" = (
 /obj/structure/glowshroom/single,
-/turf/open/floor/iron{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/research)
-"cZ" = (
-/obj/structure/sign/warning/vacuum{
-	name = "\improper LOW AIR AREA";
-	pixel_x = 32
-	},
-/turf/open/floor/iron{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
+/turf/open/floor/iron,
 /area/awaymission/caves/research)
 "db" = (
 /obj/structure/table,
@@ -619,9 +545,7 @@
 /area/awaymission/caves/research)
 "dd" = (
 /obj/structure/closet/emcloset,
-/turf/open/floor/iron{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
+/turf/open/floor/iron,
 /area/awaymission/caves/research)
 "df" = (
 /obj/structure/closet/secure_closet/miner{
@@ -630,9 +554,7 @@
 /obj/item/grenade/syndieminibomb/concussion,
 /obj/item/grenade/syndieminibomb/concussion,
 /obj/item/grenade/syndieminibomb/concussion,
-/turf/open/floor/iron{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
+/turf/open/floor/iron,
 /area/awaymission/caves/research)
 "dg" = (
 /obj/effect/bump_teleporter{
@@ -830,17 +752,10 @@
 /obj/item/stack/sheet/iron,
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
-"ec" = (
-/turf/open/floor/wood{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/northblock)
 "ed" = (
 /obj/structure/bed,
 /obj/effect/landmark/awaystart,
-/turf/open/floor/wood{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
+/turf/open/floor/wood,
 /area/awaymission/caves/northblock)
 "ee" = (
 /obj/structure/girder,
@@ -851,19 +766,19 @@
 "eg" = (
 /obj/effect/decal/cleanable/robot_debris/old,
 /turf/open/floor/iron,
-/area/awaymission/caves/bmp_asteroid)
+/area/awaymission/caves/listeningpost)
 "eh" = (
 /obj/structure/table,
 /obj/item/radio,
 /obj/item/radio,
 /turf/open/floor/iron,
-/area/awaymission/caves/bmp_asteroid)
+/area/awaymission/caves/listeningpost)
 "ei" = (
 /obj/structure/table,
 /obj/item/paper_bin,
 /obj/item/pen,
-/turf/open/floor/plating,
-/area/awaymission/caves/bmp_asteroid)
+/turf/open/floor/iron,
+/area/awaymission/caves/listeningpost)
 "ej" = (
 /turf/open/floor/plating,
 /area/awaymission/caves/bmp_asteroid)
@@ -873,7 +788,7 @@
 	},
 /mob/living/simple_animal/hostile/mining_drone,
 /turf/open/floor/plating,
-/area/awaymission/caves/bmp_asteroid)
+/area/awaymission/caves/listeningpost)
 "el" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/item/gun/energy/laser/captain/scattershot,
@@ -881,21 +796,15 @@
 /area/awaymission/caves/northblock)
 "em" = (
 /obj/structure/closet/secure_closet/personal,
-/turf/open/floor/wood{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
+/turf/open/floor/wood,
 /area/awaymission/caves/northblock)
 "en" = (
 /obj/effect/decal/cleanable/shreds,
-/turf/open/floor/wood{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
+/turf/open/floor/wood,
 /area/awaymission/caves/northblock)
 "eo" = (
 /obj/item/stack/rods,
-/turf/open/floor/wood{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
+/turf/open/floor/wood,
 /area/awaymission/caves/northblock)
 "ep" = (
 /turf/open/floor/plating{
@@ -905,7 +814,7 @@
 "er" = (
 /obj/structure/chair/stool/directional/south,
 /turf/open/floor/plating,
-/area/awaymission/caves/bmp_asteroid)
+/area/awaymission/caves/listeningpost)
 "es" = (
 /obj/structure/window{
 	dir = 8
@@ -913,7 +822,7 @@
 /obj/structure/window,
 /mob/living/simple_animal/hostile/mining_drone,
 /turf/open/floor/plating,
-/area/awaymission/caves/bmp_asteroid)
+/area/awaymission/caves/listeningpost)
 "et" = (
 /obj/effect/decal/cleanable/shreds,
 /turf/open/floor/plating{
@@ -928,27 +837,23 @@
 /obj/item/mining_scanner,
 /obj/item/mining_scanner,
 /turf/open/floor/iron,
-/area/awaymission/caves/bmp_asteroid)
+/area/awaymission/caves/listeningpost)
 "ex" = (
 /obj/structure/closet/secure_closet/miner,
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/survivalcapsule,
 /obj/item/extinguisher/mini,
 /turf/open/floor/iron,
-/area/awaymission/caves/bmp_asteroid)
+/area/awaymission/caves/listeningpost)
 "ey" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/iron,
-/area/awaymission/caves/bmp_asteroid)
+/area/awaymission/caves/listeningpost)
 "eA" = (
 /obj/structure/table,
 /obj/item/paper/fluff/awaymissions/caves/work_notice,
 /turf/open/floor/iron,
-/area/awaymission/caves/bmp_asteroid)
-"eB" = (
-/obj/structure/barricade/wooden,
-/turf/open/floor/iron,
-/area/awaymission/caves/bmp_asteroid)
+/area/awaymission/caves/listeningpost)
 "eC" = (
 /obj/structure/table,
 /obj/item/gps/mining,
@@ -957,17 +862,13 @@
 /obj/item/clothing/glasses/meson,
 /obj/item/clothing/glasses/meson,
 /turf/open/floor/iron,
-/area/awaymission/caves/bmp_asteroid)
+/area/awaymission/caves/listeningpost)
 "eD" = (
 /obj/structure/closet/secure_closet/miner,
 /obj/item/survivalcapsule,
 /obj/item/extinguisher/mini,
 /turf/open/floor/iron,
-/area/awaymission/caves/bmp_asteroid)
-"eE" = (
-/obj/effect/landmark/awaystart,
-/turf/open/floor/iron,
-/area/awaymission/caves/bmp_asteroid)
+/area/awaymission/caves/listeningpost)
 "eF" = (
 /turf/closed/wall,
 /area/awaymission/caves/listeningpost)
@@ -977,7 +878,7 @@
 "eH" = (
 /obj/machinery/vending/sustenance,
 /turf/open/floor/iron,
-/area/awaymission/caves/bmp_asteroid)
+/area/awaymission/caves/listeningpost)
 "eI" = (
 /obj/structure/closet/crate/trashcart,
 /obj/item/switchblade,
@@ -997,7 +898,7 @@
 "eL" = (
 /obj/machinery/vending/sovietsoda,
 /turf/open/floor/iron,
-/area/awaymission/caves/bmp_asteroid)
+/area/awaymission/caves/listeningpost)
 "eN" = (
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/iron,
@@ -1019,11 +920,11 @@
 "eR" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/iron,
-/area/awaymission/caves/bmp_asteroid)
+/area/awaymission/caves/listeningpost)
 "eT" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/iron,
-/area/awaymission/caves/bmp_asteroid)
+/area/awaymission/caves/listeningpost)
 "eU" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical,
@@ -1119,12 +1020,6 @@
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
-"fL" = (
-/obj/structure/sign/departments/exam_room{
-	pixel_y = 32
-	},
-/turf/open/floor/iron,
-/area/awaymission/caves/bmp_asteroid)
 "fN" = (
 /obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
@@ -1138,13 +1033,6 @@
 "fT" = (
 /obj/machinery/iv_drip,
 /turf/open/floor/iron,
-/area/awaymission/caves/bmp_asteroid)
-"fU" = (
-/obj/effect/landmark/awaystart,
-/turf/open/floor/plating/elevatorshaft{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7";
-	name = "elevator flooring"
-	},
 /area/awaymission/caves/bmp_asteroid)
 "fW" = (
 /obj/structure/girder,
@@ -1178,7 +1066,7 @@
 /area/awaymission/caves/bmp_asteroid)
 "gf" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/drinks/drinkingglass,
+/obj/item/reagent_containers/cup/glass/drinkingglass,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "gg" = (
@@ -1260,7 +1148,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "gy" = (
-/obj/item/reagent_containers/food/drinks/drinkingglass,
+/obj/item/reagent_containers/cup/glass/drinkingglass,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "gz" = (
@@ -1421,18 +1309,16 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
-"kw" = (
-/obj/structure/sign/warning/xeno_mining{
-	pixel_y = -32
-	},
-/turf/open/misc/asteroid/basalt{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid/level_two)
 "kE" = (
 /mob/living/simple_animal/hostile/giant_spider/hunter,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
+"kL" = (
+/obj/structure/sign/warning/xeno_mining/directional/south,
+/turf/open/misc/asteroid/basalt{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
+/area/awaymission/caves/bmp_asteroid/level_two)
 "lp" = (
 /obj/machinery/light/small/directional/west,
 /obj/structure/table,
@@ -1443,7 +1329,7 @@
 "lE" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
-/area/awaymission/caves/bmp_asteroid)
+/area/awaymission/caves/listeningpost)
 "ml" = (
 /mob/living/simple_animal/hostile/asteroid/fugu,
 /turf/open/misc/asteroid/basalt{
@@ -1576,6 +1462,16 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
+"uo" = (
+/obj/machinery/light/small/directional/west,
+/obj/structure/sign/warning/pods/directional/west{
+	desc = "A warning sign which warns of potential mech traffic to and from different levels of the mine.";
+	name = "\improper MECH TUNNEL PASSAGE A2 TO A1"
+	},
+/turf/open/misc/asteroid/basalt{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
+/area/awaymission/caves/bmp_asteroid/level_two)
 "uN" = (
 /obj/structure/spider/stickyweb,
 /obj/machinery/sleeper{
@@ -1583,6 +1479,22 @@
 	},
 /mob/living/simple_animal/hostile/giant_spider/hunter,
 /turf/open/floor/iron,
+/area/awaymission/caves/bmp_asteroid)
+"uO" = (
+/obj/structure/sign/warning/pods/directional/east{
+	desc = "A warning sign which warns of potential mech traffic to and from different levels of the mine.";
+	name = "\improper MECH TUNNEL PASSAGE A2 TO B1"
+	},
+/obj/machinery/light/small/built/directional/east,
+/turf/open/misc/asteroid/basalt{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
+/area/awaymission/caves/bmp_asteroid/level_two)
+"vR" = (
+/obj/structure/sign/departments/medbay/directional/west,
+/turf/open/misc/asteroid/basalt{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
 /area/awaymission/caves/bmp_asteroid)
 "vU" = (
 /obj/structure/noticeboard/directional/north,
@@ -1617,6 +1529,12 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_four)
+"yg" = (
+/obj/structure/sign/warning/vacuum/directional/east{
+	name = "\improper LOW AIR AREA"
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/research)
 "yS" = (
 /obj/structure/closet/crate,
 /obj/item/paper/fluff/awaymissions/caves/shipment_receipt,
@@ -1640,12 +1558,6 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
-"zn" = (
-/obj/effect/landmark/awaystart,
-/turf/open/misc/asteroid/basalt{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid)
 "zH" = (
 /obj/structure/flora/rock/style_random,
 /turf/open/misc/asteroid/basalt{
@@ -1687,6 +1599,16 @@
 /area/awaymission/caves/bmp_asteroid/level_four)
 "AZ" = (
 /obj/structure/girder,
+/turf/open/misc/asteroid/basalt{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
+/area/awaymission/caves/bmp_asteroid)
+"Bb" = (
+/obj/structure/sign/warning/pods/directional/west{
+	desc = "A warning sign which warns of potential mech traffic to and from different levels of the mine.";
+	name = "\improper MECH TUNNEL PASSAGE A1 TO A2"
+	},
+/obj/machinery/light/small/directional/west,
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -1764,6 +1686,19 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
+"Dw" = (
+/obj/structure/destructible/cult/item_dispenser/archives,
+/obj/item/stack/sheet/runed_metal{
+	amount = 25
+	},
+/obj/item/coin/antagtoken,
+/obj/item/book/granter/action/spell/summonitem{
+	name = "\proper an extremely flamboyant book"
+	},
+/turf/open/floor/engine/cult{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
+/area/awaymission/caves/bmp_asteroid/level_four)
 "DH" = (
 /obj/structure/closet/crate/miningcar{
 	name = "Mining cart"
@@ -1775,17 +1710,6 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
-"DO" = (
-/obj/structure/sign/warning/pods{
-	desc = "A warning sign which warns of potential mech traffic to and from different levels of the mine.";
-	name = "\improper MECH TUNNEL PASSAGE A1 TO A2";
-	pixel_x = -32
-	},
-/obj/machinery/light/small/directional/west,
-/turf/open/misc/asteroid/basalt{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid)
 "Fj" = (
 /obj/item/toy/beach_ball{
 	name = "\proper wilson";
@@ -1797,9 +1721,7 @@
 /area/awaymission/caves/bmp_asteroid/level_two)
 "FI" = (
 /obj/machinery/light/directional/south,
-/turf/open/floor/iron{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
+/turf/open/floor/iron,
 /area/awaymission/caves/research)
 "FS" = (
 /obj/machinery/light/small/built/directional/north,
@@ -1820,7 +1742,7 @@
 	name = "rusted suit storage unit"
 	},
 /turf/open/floor/iron,
-/area/awaymission/caves/bmp_asteroid)
+/area/awaymission/caves/listeningpost)
 "HK" = (
 /obj/structure/destructible/cult/pylon,
 /turf/open/misc/asteroid/basalt{
@@ -1829,6 +1751,23 @@
 /area/awaymission/caves/bmp_asteroid/level_three)
 "Ik" = (
 /obj/item/stack/rods,
+/turf/open/misc/asteroid/basalt{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
+/area/awaymission/caves/bmp_asteroid/level_three)
+"Iz" = (
+/obj/structure/sign/warning/vacuum/directional/east{
+	name = "\improper LOW AIR AREA"
+	},
+/obj/item/stack/rods,
+/turf/open/floor/iron,
+/area/awaymission/caves/research)
+"IE" = (
+/obj/machinery/light/small/built/directional/east,
+/obj/structure/sign/warning/pods/directional/east{
+	desc = "A warning sign which warns of potential mech traffic to and from different levels of the mine.";
+	name = "\improper MECH TUNNEL PASSAGE B1 TO A2"
+	},
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -1851,29 +1790,16 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
-"Jp" = (
-/obj/machinery/light/small/built/directional/east,
-/obj/structure/sign/warning/pods{
-	desc = "A warning sign which warns of potential mech traffic to and from different levels of the mine.";
-	name = "\improper MECH TUNNEL PASSAGE B1 TO A2";
-	pixel_x = 32
-	},
-/turf/open/misc/asteroid/basalt{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid/level_three)
 "JD" = (
 /obj/structure/ore_box,
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
-"Kh" = (
-/obj/machinery/light/small/built/directional/west,
-/turf/open/floor/wood{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/northblock)
+"Kq" = (
+/obj/structure/sign/departments/exam_room/directional/north,
+/turf/open/floor/iron,
+/area/awaymission/caves/bmp_asteroid)
 "KY" = (
 /obj/structure/table,
 /obj/item/paper/crumpled/awaymissions/caves/unsafe_area,
@@ -1881,14 +1807,6 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
-"Ls" = (
-/obj/structure/sign/departments/medbay{
-	pixel_x = -32
-	},
-/turf/open/misc/asteroid/basalt{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid)
 "Ly" = (
 /obj/structure/closet/crate/miningcar{
 	name = "Mining cart"
@@ -1951,9 +1869,7 @@
 /obj/machinery/light/directional/north,
 /obj/structure/filingcabinet,
 /obj/item/paper/fluff/awaymissions/caves/omega,
-/turf/open/floor/iron{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
+/turf/open/floor/iron,
 /area/awaymission/caves/research)
 "NX" = (
 /obj/effect/decal/cleanable/blood/gibs/old,
@@ -1969,9 +1885,7 @@
 /area/awaymission/caves/bmp_asteroid/level_four)
 "OE" = (
 /obj/machinery/light/directional/west,
-/turf/open/floor/plating{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
+/turf/open/floor/plating,
 /area/awaymission/caves/research)
 "OJ" = (
 /mob/living/simple_animal/hostile/retaliate/bat{
@@ -1997,24 +1911,13 @@
 	name = "rusted suit storage unit"
 	},
 /turf/open/floor/iron,
-/area/awaymission/caves/bmp_asteroid)
+/area/awaymission/caves/listeningpost)
 "Rm" = (
 /obj/effect/decal/remains/human,
 /turf/open/misc/asteroid/basalt/lava{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_four)
-"Rp" = (
-/obj/structure/sign/warning/pods{
-	desc = "A warning sign which warns of potential mech traffic to and from different levels of the mine.";
-	name = "\improper MECH TUNNEL PASSAGE A2 TO B1";
-	pixel_x = 32
-	},
-/obj/machinery/light/small/built/directional/east,
-/turf/open/misc/asteroid/basalt{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid/level_two)
 "Ry" = (
 /obj/structure/grille,
 /obj/structure/barricade/wooden,
@@ -2078,17 +1981,6 @@
 /obj/item/reagent_containers/blood/o_plus,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
-"WL" = (
-/obj/machinery/light/small/directional/west,
-/obj/structure/sign/warning/pods{
-	desc = "A warning sign which warns of potential mech traffic to and from different levels of the mine.";
-	name = "\improper MECH TUNNEL PASSAGE A2 TO A1";
-	pixel_x = -32
-	},
-/turf/open/misc/asteroid/basalt{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid/level_two)
 "Xs" = (
 /mob/living/simple_animal/hostile/giant_spider/hunter,
 /turf/open/misc/asteroid/basalt{
@@ -6202,10 +6094,10 @@ bL
 BK
 BK
 BK
-DO
+Bb
 BK
 BK
-DO
+Bb
 Mq
 BK
 BK
@@ -6686,7 +6578,7 @@ bL
 BK
 BK
 BK
-zn
+BK
 BK
 BK
 BK
@@ -7473,7 +7365,7 @@ dI
 dM
 dT
 dI
-Kh
+Mk
 em
 du
 BK
@@ -7730,7 +7622,7 @@ dt
 dQ
 dQ
 dt
-ec
+dy
 en
 ee
 BK
@@ -7747,7 +7639,7 @@ dW
 FS
 fB
 dW
-fL
+Kq
 ev
 dX
 bL
@@ -9545,7 +9437,7 @@ dW
 BK
 cx
 cx
-Ls
+vR
 BK
 BK
 BK
@@ -10045,13 +9937,13 @@ bL
 bL
 bL
 bL
-dX
-dX
-dW
-dW
-dW
-dW
-dW
+eG
+eG
+eF
+eF
+eF
+eF
+eF
 bL
 bL
 bL
@@ -10302,13 +10194,13 @@ bL
 bL
 bL
 bL
-dX
+eG
 ex
 eD
 eD
 eD
 eD
-dX
+eG
 bL
 bL
 bL
@@ -10559,13 +10451,13 @@ bL
 bL
 bL
 bL
-dW
+eF
 ey
-ev
-ev
-ev
+eJ
+eJ
+eJ
 eR
-dX
+eG
 bL
 bL
 bL
@@ -10798,10 +10690,10 @@ bL
 ch
 cp
 cn
-cE
+Iz
 cn
 cn
-cZ
+yg
 cn
 df
 ch
@@ -10816,13 +10708,13 @@ bL
 bL
 bL
 bL
-dX
+eG
 Gt
-eE
-ev
-ev
+eO
+eJ
+eJ
 PS
-dX
+eG
 bL
 bL
 bL
@@ -11073,13 +10965,13 @@ bL
 bL
 bL
 bL
-dX
+eG
 eA
-ev
-ev
-ev
+eJ
+eJ
+eJ
 eT
-dW
+eF
 bL
 BK
 BK
@@ -11330,12 +11222,12 @@ bL
 bL
 bL
 bL
-dX
-ev
-ev
-ev
-ev
-ev
+eG
+eJ
+eJ
+eJ
+eJ
+eJ
 eF
 eG
 eG
@@ -11584,15 +11476,15 @@ bL
 BK
 BK
 bL
-dW
-dX
-dX
-dX
-eB
-dW
+eF
+eG
+eG
+eG
+eW
+eF
 eH
 eL
-ev
+eJ
 eW
 eN
 eJ
@@ -11841,11 +11733,11 @@ bL
 BK
 BK
 bL
-dW
+eF
 eg
 lE
-ev
-ev
+eJ
+eJ
 eF
 eF
 eF
@@ -12098,11 +11990,11 @@ bL
 BK
 BK
 bL
-dX
+eG
 eh
-ej
+fm
 eg
-ev
+eJ
 eF
 eI
 lp
@@ -12355,11 +12247,11 @@ bL
 BK
 BK
 bL
-dX
+eG
 ei
 er
-ej
-ev
+fm
+eJ
 eG
 eJ
 eN
@@ -12612,11 +12504,11 @@ bL
 BK
 BK
 bL
-dX
-ej
-ej
-ev
-ev
+eG
+fm
+fm
+eJ
+eJ
 eG
 eJ
 eO
@@ -12869,7 +12761,7 @@ bL
 BK
 BK
 bL
-dW
+eF
 ek
 es
 ew
@@ -13126,11 +13018,11 @@ bL
 BK
 BK
 BK
-dW
-dW
-dX
-dX
-dW
+eF
+eF
+eG
+eG
+eF
 eF
 eK
 eP
@@ -14173,7 +14065,7 @@ BK
 BK
 fJ
 fQ
-fU
+fQ
 fQ
 fQ
 fJ
@@ -17614,7 +17506,7 @@ hq
 hq
 hq
 hq
-Jp
+IE
 ak
 ac
 ac
@@ -17868,7 +17760,7 @@ ah
 ah
 hq
 hq
-Jp
+IE
 hq
 hq
 aJ
@@ -53457,7 +53349,7 @@ oI
 bR
 oI
 cf
-kw
+kL
 bR
 oI
 bK
@@ -53721,10 +53613,10 @@ oI
 bK
 bK
 bK
-WL
+uo
 oI
 oI
-WL
+uo
 oI
 oI
 oI
@@ -59737,7 +59629,7 @@ ad
 ax
 aC
 ao
-aE
+Dw
 ax
 ao
 ao
@@ -62704,7 +62596,7 @@ aa
 aa
 bK
 bK
-Rp
+uO
 oI
 oI
 oI
@@ -62964,7 +62856,7 @@ bK
 bQ
 oI
 oI
-Rp
+uO
 oI
 oI
 oI

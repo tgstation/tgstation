@@ -28,8 +28,9 @@
 	var/disgust_metabolism = 1
 
 	///The rate that the stomach will transfer reagents to the body
-	var/metabolism_efficiency = 0.05 // the lowest we should go is 0.05
+	var/metabolism_efficiency = 0.05 // the lowest we should go is 0.025
 
+	var/operated = FALSE //whether the stomach's been repaired with surgery and can be fixed again or not
 
 /obj/item/organ/internal/stomach/Initialize(mapload)
 	. = ..()
@@ -43,7 +44,7 @@
 	. = ..()
 
 	//Manage species digestion
-	if(istype(owner, /mob/living/carbon/human))
+	if(ishuman(owner))
 		var/mob/living/carbon/human/humi = owner
 		if(!(organ_flags & ORGAN_FAILING))
 			handle_hunger(humi, delta_time, times_fired)
@@ -125,23 +126,22 @@
 			to_chat(human, span_notice("You feel fit again!"))
 			REMOVE_TRAIT(human, TRAIT_FAT, OBESITY)
 			human.remove_movespeed_modifier(/datum/movespeed_modifier/obesity)
-			human.update_inv_w_uniform()
-			human.update_inv_wear_suit()
+			human.update_worn_undersuit()
+			human.update_worn_oversuit()
 	else
 		if(human.overeatduration >= (200 SECONDS))
 			to_chat(human, span_danger("You suddenly feel blubbery!"))
 			ADD_TRAIT(human, TRAIT_FAT, OBESITY)
 			human.add_movespeed_modifier(/datum/movespeed_modifier/obesity)
-			human.update_inv_w_uniform()
-			human.update_inv_wear_suit()
+			human.update_worn_undersuit()
+			human.update_worn_oversuit()
 
 	// nutrition decrease and satiety
 	if (human.nutrition > 0 && human.stat != DEAD)
 		// THEY HUNGER
 		var/hunger_rate = HUNGER_FACTOR
-		var/datum/component/mood/mood = human.GetComponent(/datum/component/mood)
-		if(mood && mood.sanity > SANITY_DISTURBED)
-			hunger_rate *= max(1 - 0.002 * mood.sanity, 0.5) //0.85 to 0.75
+		if(human.mob_mood && human.mob_mood.sanity > SANITY_DISTURBED)
+			hunger_rate *= max(1 - 0.002 * human.mob_mood.sanity, 0.5) //0.85 to 0.75
 		// Whether we cap off our satiety or move it towards 0
 		if(human.satiety > MAX_SATIETY)
 			human.satiety = MAX_SATIETY
@@ -243,22 +243,22 @@
 	switch(disgust)
 		if(0 to DISGUST_LEVEL_GROSS)
 			disgusted.clear_alert(ALERT_DISGUST)
-			SEND_SIGNAL(disgusted, COMSIG_CLEAR_MOOD_EVENT, "disgust")
+			disgusted.clear_mood_event("disgust")
 		if(DISGUST_LEVEL_GROSS to DISGUST_LEVEL_VERYGROSS)
 			disgusted.throw_alert(ALERT_DISGUST, /atom/movable/screen/alert/gross)
-			SEND_SIGNAL(disgusted, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/gross)
+			disgusted.add_mood_event("disgust", /datum/mood_event/gross)
 		if(DISGUST_LEVEL_VERYGROSS to DISGUST_LEVEL_DISGUSTED)
 			disgusted.throw_alert(ALERT_DISGUST, /atom/movable/screen/alert/verygross)
-			SEND_SIGNAL(disgusted, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/verygross)
+			disgusted.add_mood_event("disgust", /datum/mood_event/verygross)
 		if(DISGUST_LEVEL_DISGUSTED to INFINITY)
 			disgusted.throw_alert(ALERT_DISGUST, /atom/movable/screen/alert/disgusted)
-			SEND_SIGNAL(disgusted, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/disgusted)
+			disgusted.add_mood_event("disgust", /datum/mood_event/disgusted)
 
 /obj/item/organ/internal/stomach/Remove(mob/living/carbon/stomach_owner, special = 0)
 	if(ishuman(stomach_owner))
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.clear_alert(ALERT_DISGUST)
-		SEND_SIGNAL(human_owner, COMSIG_CLEAR_MOOD_EVENT, "disgust")
+		human_owner.clear_mood_event("disgust")
 		human_owner.clear_alert(ALERT_NUTRITION)
 
 	return ..()
@@ -299,7 +299,7 @@
 	organ_flags = ORGAN_SYNTHETIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
 	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
-	metabolism_efficiency = 0.35 // not as good at digestion
+	metabolism_efficiency = 0.035 // not as good at digestion
 
 /obj/item/organ/internal/stomach/cybernetic/tier2
 	name = "cybernetic stomach"

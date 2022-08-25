@@ -151,11 +151,7 @@
 /area/misc/hilbertshotel)
 "aI" = (
 /obj/structure/mirror/directional/west,
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 2
-	},
+/obj/structure/sink/directional/east,
 /turf/open/indestructible/hoteltile,
 /area/misc/hilbertshotel)
 "aJ" = (
@@ -168,9 +164,7 @@
 /turf/open/indestructible/hoteltile,
 /area/misc/hilbertshotel)
 "aK" = (
-/obj/machinery/shower{
-	dir = 8
-	},
+/obj/machinery/shower/directional/west,
 /turf/open/indestructible/hoteltile,
 /area/misc/hilbertshotel)
 "aL" = (
@@ -223,9 +217,7 @@
 /area/misc/hilbertshotel)
 "aT" = (
 /obj/structure/table/reinforced,
-/obj/structure/sink/kitchen{
-	dir = 1
-	},
+/obj/structure/sink/kitchen/directional/north,
 /obj/machinery/light/small/directional/south,
 /turf/open/indestructible/hotelwood,
 /area/misc/hilbertshotel)
@@ -266,18 +258,12 @@
 /area/misc/hilbertshotel)
 "bb" = (
 /obj/structure/mirror/directional/west,
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 2
-	},
+/obj/structure/sink/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible/hoteltile,
 /area/misc/hilbertshotel)
 "bd" = (
-/obj/machinery/shower{
-	dir = 8
-	},
+/obj/machinery/shower/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible/hoteltile,
 /area/misc/hilbertshotel)

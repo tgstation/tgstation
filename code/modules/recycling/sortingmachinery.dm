@@ -1,5 +1,5 @@
 /obj/item/delivery
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	var/giftwrapped = 0
 	var/sort_tag = 0
 	var/obj/item/paper/note
@@ -205,7 +205,7 @@
 	if(!attempt_pre_unwrap_contents(user))
 		return
 	unwrap_contents()
-	post_unwrap_contents(user)
+	post_unwrap_contents()
 
 /**
  * # Wrapped up items small enough to carry.
@@ -336,7 +336,7 @@
 
 /obj/item/sales_tagger/attackby(obj/item/item, mob/living/user, params)
 	. = ..()
-	if(istype(item, /obj/item/card/id))
+	if(isidcard(item))
 		var/obj/item/card/id/potential_acc = item
 		if(potential_acc.registered_account)
 			if(payments_acc == potential_acc.registered_account)

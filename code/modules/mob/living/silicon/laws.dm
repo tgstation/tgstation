@@ -18,7 +18,7 @@
 /mob/living/silicon/proc/post_lawchange(announce = TRUE)
 	throw_alert(ALERT_NEW_LAW, /atom/movable/screen/alert/newlaw)
 	if(announce && last_lawchange_announce != world.time)
-		to_chat(src, "<b>Your laws have been changed.</b>")
+		to_chat(src, span_boldannounce("Your laws have been changed."))
 		// lawset modules cause this function to be executed multiple times in a tick, so we wait for the next tick in order to be able to see the entire lawset
 		addtimer(CALLBACK(src, .proc/show_laws), 0)
 		addtimer(CALLBACK(src, .proc/deadchat_lawchange), 0)

@@ -25,7 +25,6 @@ at the cost of risking a vicious bite.**/
 		/obj/item/restraints/handcuffs/cable/pink = 1,
 		/obj/item/restraints/handcuffs/alien = 2,
 		/obj/item/coin/bananium = 9,
-		/obj/item/fish/ratfish = 10,
 		/obj/item/knife/butcher = 5,
 		/obj/item/coin/mythril = 1,
 	)
@@ -40,6 +39,13 @@ at the cost of risking a vicious bite.**/
 	if(prob(75))
 		var/picked_item = pick_weight(loot_table)
 		hidden_item = new picked_item(src)
+
+	var/datum/fish_source/moisture_trap/fish_source = new
+	if(prob(50)) // 50% chance there's another item to fish out of there
+		var/picked_item = pick_weight(loot_table)
+		fish_source.fish_table[picked_item] = 5
+		fish_source.fish_counts[picked_item] = 1;
+	AddComponent(/datum/component/fishing_spot, fish_source)
 
 
 /obj/structure/moisture_trap/Destroy()
@@ -87,7 +93,7 @@ at the cost of risking a vicious bite.**/
 	if(iscyborg(user) || isalien(user) || !CanReachInside(user))
 		return ..()
 	add_fingerprint(user)
-	if(istype(I, /obj/item/reagent_containers))
+	if(is_reagent_container(I))
 		if(istype(I, /obj/item/food/monkeycube))
 			var/obj/item/food/monkeycube/cube = I
 			cube.Expand()
@@ -212,7 +218,7 @@ at the cost of risking a vicious bite.**/
 	visible_message(span_danger("[src] emits a flash of light and creates... pants?"))
 	for(var/mob/living/viewing_mob in viewers(7, src))
 		viewing_mob.flash_act()
-	var/obj/item/clothing/under/pants/altar/pants = new(get_turf(src))
+	var/obj/item/clothing/under/pants/slacks/altar/pants = new(get_turf(src))
 	pants.add_atom_colour(pants_color, ADMIN_COLOUR_PRIORITY)
 	COOLDOWN_START(src, use_cooldown, use_cooldown_duration)
 	addtimer(CALLBACK(src, /atom.proc/update_icon), 1 MINUTES + 0.1 SECONDS)
@@ -225,10 +231,11 @@ at the cost of risking a vicious bite.**/
 		return FALSE
 	return TRUE
 
-/obj/item/clothing/under/pants/altar
+/obj/item/clothing/under/pants/slacks/altar
 	name = "strange pants"
-	desc = "A pair of pants. They do not look natural. They smell like fresh blood."
-	icon_state = "whitepants"
+	desc = "A pair of pants. They do not look or feel natural, and smell like fresh blood."
+	greyscale_colors = "#ffffff#ffffff#ffffff"
+	flags_1 = NONE //If IS_PLAYER_COLORABLE gets added color-changing support (i.e. spraycans), these won't end up getting it too. Plus, it already has its own recolor.
 
 #undef ALTAR_INACTIVE
 #undef ALTAR_STAGEONE

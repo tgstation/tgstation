@@ -24,17 +24,21 @@
 /mob/living/carbon/human/species/monkey/angry/Initialize(mapload)
 	. = ..()
 	if(prob(10))
-		var/obj/item/clothing/head/helmet/justice/escape/helmet = new(src)
-		equip_to_slot_or_del(helmet,ITEM_SLOT_HEAD)
-		helmet.attack_self(src) // todo encapsulate toggle
+		INVOKE_ASYNC(src, .proc/give_ape_escape_helmet)
 
+/// Gives our funny monkey an Ape Escape hat reference
+/mob/living/carbon/human/species/monkey/angry/proc/give_ape_escape_helmet()
+	var/obj/item/clothing/head/helmet/justice/escape/helmet = new(src)
+	equip_to_slot_or_del(helmet, ITEM_SLOT_HEAD)
+	helmet.attack_self(src) // todo encapsulate toggle
 
 GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/punpun)
 
-/mob/living/carbon/human/species/monkey/punpun //except for a few special persistence features, pun pun is just a normal monkey
+/mob/living/carbon/human/species/monkey/punpun
 	name = "Pun Pun" //C A N O N
 	unique_name = FALSE
 	use_random_name = FALSE
+	ai_controller = /datum/ai_controller/monkey/pun_pun
 	/// If we had one of the rare names in a past life
 	var/ancestor_name
 	/// The number of times Pun Pun has died since he was last gibbed
@@ -73,6 +77,7 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 		equip_to_slot_or_del(new relic_hat, ITEM_SLOT_HEAD)
 	if(relic_mask)
 		equip_to_slot_or_del(new relic_mask, ITEM_SLOT_MASK)
+	equip_to_slot_or_del(new /obj/item/clothing/under/suit/waiter(src), ITEM_SLOT_ICLOTHING)
 
 /mob/living/carbon/human/species/monkey/punpun/Destroy()
 	if(GLOB.the_one_and_only_punpun == src)
@@ -123,7 +128,7 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 		file_data["relic_hat"] = null
 		file_data["relic_mask"] = null
 	else
-		file_data["ancestor_name"] = ancestor_name ? ancestor_name : name
+		file_data["ancestor_name"] = ancestor_name ? ancestor_name : real_name
 		file_data["ancestor_chain"] = dead ? ancestor_chain + 1 : ancestor_chain
 		file_data["relic_hat"] = head ? head.type : null
 		file_data["relic_mask"] = wear_mask ? wear_mask.type : null
