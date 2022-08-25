@@ -98,7 +98,7 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/living_pawn = pawn
-	var/additional_text = HAS_TRAIT(user, TRAIT_NAIVE) ? "It looks like [living_pawn.p_they()] [living_pawn.p_are()] sleeping." : "[living_pawn.p_they(capitalized = TRUE)] seem[living_pawn.p_s()] to be dead."
+	var/additional_text = HAS_TRAIT(user, TRAIT_NAIVE) ? "It looks like [living_pawn.p_theyre()] sleeping." : "[living_pawn.p_they(capitalized = TRUE)] seem[living_pawn.p_s()] to be dead."
 	if(living_pawn.stat == DEAD)
 		to_chat(user, span_warning("Touching [living_pawn], you feel [living_pawn.p_their()] cold skin through the fur. [additional_text]"))
 		return
