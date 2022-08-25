@@ -798,3 +798,61 @@
       head of staff role.
   tralezab:
   - rscadd: You can now ask critters their name with voice of god. Their ACTUAL name.
+2022-08-25:
+  ArcaneMusic:
+  - imageadd: Resprites many of the grenades used and made in-game.
+  Echriser:
+  - qol: Added a holopad to Mining Labor Camp.
+  Jacquerel:
+  - qol: Adds contextual screentips to explain whether you are going to destroy, remove,
+      or place a trap into a poster.
+  - bugfix: Midround traitors can happen again.
+  Jolly:
+  - bugfix: On KS13, the northern most solar room no longer has duped windows.
+  PositiveEntropy:
+  - bugfix: Fixes faxes playing the "fax_contain" animation and makes it actually
+      use the "fax_receive" animation when receiving.
+  - imageadd: Resprites fax machines!
+  RandomGamer123:
+  - bugfix: Asimov supremacy shows up as a human perk for default servers
+  - config: Added a config option to make Asimov supremacy show up as a perk for humans
+      even if the default lawset is not Asimov (intended for use with Asimov variants,
+      notably Asimov++)
+  - bugfix: Storage implant stacking (and the implant being rejected when you hit
+      the limit of 4 slots) now works
+  ShizCalev:
+  - rscadd: Space ants will now turn into space fire ants when burned with fire.
+  Tastyfish:
+  - rscadd: Added a new lift indicator for the public elevator.
+  - imageadd: Added standalone sprites for the new lift indicator.
+  Y0SH1M4S73R:
+  - bugfix: Returning a recursive table from lua will no longer crash the server.
+  - bugfix: Running an empty string as lua code will no longer crash the server.
+  - qol: '`args`, `contents`, `vis_contents`, and `vis_locs` lists are now directly
+      accessible through lua scripting.'
+  - qol: In lua scripting, datums have a `vars` field and lists have a `entries` field.
+      These fields allow you to access and modify the vars of a datum and the entries
+      of a list, respectively, by index, instead of needing to use the `get_var` and
+      `set_var` methods on datums, and the `get` and `set` methods on lists.
+  - bugfix: Fixed repeat lua chunks not being viewable through the admin message href.
+  - qol: In the lua UI, strings will be wrapped in double quotes and have their own
+      double quotes escaped, to distinguish them from nulls, functions, threads, and
+      DM resources.
+  dragomagol:
+  - bugfix: cooked pig meat is no longer GROSS, raw pig meat is GORE instead of GROSS
+  - code_imp: meat.dm has been split into several different files
+  san7890:
+  - bugfix: On IceBoxStation, the door bolt buttons in the restrooms next to the recreational
+      room should no longer violate the laws of physics (or clip) with the toilet
+      lid.
+  - bugfix: On IceBoxStation, the Psychologist's Locker should now be accessible once
+      again.
+  - bugfix: Nanotrasen smoothed out some hiccups, so Security Departmental Order Crates
+      should now open in more parts of the brig.
+  scriptis:
+  - spellcheck: the syndicate no longer use secuirty shutters
+  - bugfix: tesla blast works again
+  vincentiusvin:
+  - spellcheck: fixed a typo in NT Frontier under medical partner
+  - qol: the ordnance experiments will give you more information on how to do them
+      from the UI.

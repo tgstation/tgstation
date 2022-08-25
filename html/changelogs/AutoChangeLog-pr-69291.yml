@@ -1,4 +1,0 @@
-author: "RandomGamer123"
-delete-after: True
-changes: 
-  - bugfix: "Storage implant stacking (and the implant being rejected when you hit the limit of 4 slots) now works"
