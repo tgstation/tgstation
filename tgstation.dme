@@ -2990,7 +2990,6 @@
 #include "code\modules\flufftext\hallucinations\station_message.dm"
 #include "code\modules\flufftext\hallucinations\stray_bullet.dm"
 #include "code\modules\flufftext\hallucinations\xeno_attack.dm"
-#include "code\modules\food_and_drinks\food.dm"
 #include "code\modules\food_and_drinks\pizzabox.dm"
 #include "code\modules\food_and_drinks\plate.dm"
 #include "code\modules\food_and_drinks\kitchen_machinery\deep_fryer.dm"

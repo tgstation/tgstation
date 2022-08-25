@@ -6,118 +6,111 @@
 
 	/// A flag of slots this fake item can appear in.
 	var/valid_slots = ITEM_SLOT_HANDS|ITEM_SLOT_BELT|ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET
+	/// What item should we use as a template, grabbing its icon and icon state and name?
+	var/obj/item/template_item_type
 
 /datum/hallucination/fake_item/start()
 	var/list/slots_free = list()
 	if(valid_slots & ITEM_SLOT_HANDS)
 		for(var/hand in hallucinator.get_empty_held_indexes())
-			slots_free += ui_hand_position(hand)
+			slots_free[ITEM_SLOT_HANDS] = ui_hand_position(hand)
 
 	if(ishuman(hallucinator))
 		var/mob/living/carbon/human/human_hallucinator = hallucinator
 		if((valid_slots & ITEM_SLOT_BELT) && !human_hallucinator.belt)
-			slots_free += ui_belt
+			slots_free[ITEM_SLOT_BELT] = ui_belt
 		if((valid_slots & ITEM_SLOT_LPOCKET) && !human_hallucinator.l_store)
-			slots_free += ui_storage1
+			slots_free[ITEM_SLOT_LPOCKET] = ui_storage1
 		if((valid_slots & ITEM_SLOT_RPOCKET) && !human_hallucinator.r_store)
-			slots_free += ui_storage2
+			slots_free[ITEM_SLOT_RPOCKET] = ui_storage2
 
 	if(!length(slots_free))
 		return FALSE
 
-	var/obj/item/hallucinated/hallucinated_item = make_fake_item(pick(slots_free))
+	var/picked_slot = pick(slots_free)
+	var/obj/item/hallucinated/hallucinated_item = make_fake_item(slots_free[picked_slot], picked_slot)
 	feedback_details += "Item Type: [hallucinated_item.name]"
 
 	hallucinator.client?.screen += hallucinated_item
 	QDEL_IN(src, rand(15 SECONDS, 35 SECONDS))
 	return TRUE
 
-/datum/hallucination/fake_item/proc/make_fake_item(where_to_put_it)
+/datum/hallucination/fake_item/proc/make_fake_item(where_to_put_it, equip_flags)
 	var/obj/item/hallucinated/hallucinated_item = new(hallucinator, src)
 	hallucinated_item.screen_loc = where_to_put_it
+
+	hallucinated_item.name = initial(template_item_type.name)
+	hallucinated_item.desc = initial(template_item_type.desc)
+	hallucinated_item.icon = initial(template_item_type.icon)
+	hallucinated_item.icon_state = initial(template_item_type.icon_state)
+	hallucinated_item.w_class = initial(template_item_type.w_class) // Not strictly necessary, but keen eyed people will notice
+
 	return hallucinated_item
 
 /datum/hallucination/fake_item/c4
+	template_item_type = /obj/item/grenade/c4
 
-/datum/hallucination/fake_item/c4/make_fake_item(where_to_put_it)
-	var/obj/item/hallucinated/hallucinated_item = ..()
-	hallucinated_item.name = "C-4 charge"
-	hallucinated_item.icon = 'icons/obj/grenade.dmi'
-	hallucinated_item.w_class = WEIGHT_CLASS_SMALL
-	if(prob(25))
-		hallucinated_item.icon_state = "plasticx40"
-	else
-		hallucinated_item.icon_state = "plastic-explosive0"
-	return hallucinated_item
+/datum/hallucination/fake_item/c4/make_fake_item(where_to_put_it, equip_flags)
+	if(prob(50))
+		template_item_type = /obj/item/grenade/c4/x4
+	return ..()
 
 /datum/hallucination/fake_item/revolver
+	template_item_type = /obj/item/gun/ballistic/revolver
 	valid_slots = ITEM_SLOT_HANDS|ITEM_SLOT_BELT
 
-/datum/hallucination/fake_item/revolver/make_fake_item(where_to_put_it)
-	var/obj/item/hallucinated/hallucinated_item = ..()
-	hallucinated_item.name = ".357 revolver"
-	hallucinated_item.icon = 'icons/obj/weapons/guns/ballistic.dmi'
-	hallucinated_item.icon_state = "revolver"
-	return hallucinated_item
-
 /datum/hallucination/fake_item/esword
+	template_item_type = /obj/item/melee/energy/sword/saber
 	valid_slots = ITEM_SLOT_HANDS|ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET
 
-/datum/hallucination/fake_item/esword/make_fake_item(where_to_put_it)
+/datum/hallucination/fake_item/esword/make_fake_item(where_to_put_it, equip_flags)
+	// Make the item via parent call
 	var/obj/item/hallucinated/hallucinated_item = ..()
-	hallucinated_item.name = "energy sword"
-	hallucinated_item.icon = 'icons/obj/weapons/transforming_energy.dmi'
-	if(where_to_put_it != ui_storage1 && where_to_put_it != ui_storage2 && prob(40)) // meh
-		hallucinated_item.icon_state = "e_sword_on_red"
+
+	// If we were placed in our mob's hands there's a 40% chance to make it appear active
+	if((equip_flags & ITEM_SLOT_HANDS) && prob(40))
+		var/obj/item/melee/energy/sword/saber/sabre_color = pick(subtypesof(/obj/item/melee/energy/sword/saber))
+		// Yes this can break if someone changes esword icon stuff
+		hallucinated_item.icon_state = "[hallucinated_item.icon_state]_on_[initial(sabre_color.sword_color_icon)]"
 		hallucinator.playsound_local(get_turf(hallucinator), 'sound/weapons/saberon.ogg', 35, TRUE)
-	else
-		hallucinated_item.icon_state = "e_sword"
 
 	return hallucinated_item
 
 /datum/hallucination/fake_item/baton
+	template_item_type = /obj/item/melee/baton/security/loaded
 	valid_slots = ITEM_SLOT_HANDS|ITEM_SLOT_BELT
 
-/datum/hallucination/fake_item/baton/make_fake_item(where_to_put_it)
+/datum/hallucination/fake_item/baton/make_fake_item(where_to_put_it, equip_flags)
 	var/obj/item/hallucinated/hallucinated_item = ..()
-	hallucinated_item.name = "stun baton"
-	hallucinated_item.icon = 'icons/obj/weapons/items_and_weapons.dmi'
-	if(where_to_put_it != ui_belt && prob(30))
-		hallucinated_item.icon_state = "stunbaton_active"
+
+	// If we were placed in our mob's hands there's a 30% chance to make it appear active
+	if((equip_flags & ITEM_SLOT_HANDS) && prob(30))
+		// Yes this can break if someone changes baton icon stuff
+		hallucinated_item.icon_state = "[hallucinated_item.icon_state]_active"
 		hallucinator.playsound_local(get_turf(hallucinator), SFX_SPARKS, 75, TRUE, -1)
-	else
-		hallucinated_item.icon_state = "stunbaton"
 
 	return hallucinated_item
 
 /datum/hallucination/fake_item/emag
+	template_item_type = /obj/item/card/emag
 	valid_slots = ITEM_SLOT_HANDS|ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET
 
-/datum/hallucination/fake_item/emag/make_fake_item(where_to_put_it)
-	var/obj/item/hallucinated/hallucinated_item = ..()
-	hallucinated_item.icon = 'icons/obj/card.dmi'
+/datum/hallucination/fake_item/emag/make_fake_item(where_to_put_it, equip_flags)
 	if(prob(50))
-		hallucinated_item.name = "cryptographic sequencer"
-		hallucinated_item.icon_state = "emag"
-	else
-		hallucinated_item.name = "airlock authentication override card"
-		hallucinated_item.icon_state = "doorjack"
-
-	return hallucinated_item
+		template_item_type  = /obj/item/card/emag/doorjack
+	return ..()
 
 /datum/hallucination/fake_item/flashbang
+	template_item_type  = /obj/item/grenade/flashbang
 	valid_slots = ITEM_SLOT_HANDS
 
-/datum/hallucination/fake_item/flashbang/make_fake_item(where_to_put_it)
+/datum/hallucination/fake_item/flashbang/make_fake_item(where_to_put_it, equip_flags)
 	var/obj/item/hallucinated/hallucinated_item = ..()
-	hallucinated_item.name = "flashbang"
-	hallucinated_item.icon = 'icons/obj/weapons/grenade.dmi'
 	if(prob(15))
-		hallucinated_item.icon_state = "flashbang_active"
+		// Yes this can break if someone changse grenade icon stuff
+		hallucinated_item.icon_state = "[hallucinated_item.icon_state]_active"
 		hallucinator.playsound_local(get_turf(hallucinator), 'sound/weapons/armbomb.ogg', 60, TRUE)
 		to_chat(hallucinator, span_warning("You prime [hallucinated_item]! 5 seconds!"))
-	else
-		hallucinated_item.icon_state = "flashbang"
 
 	return hallucinated_item
 
@@ -125,7 +118,7 @@
 	name = "mirage"
 	plane = ABOVE_HUD_PLANE
 	interaction_flags_item = NONE
-	item_flags = ABSTRACT | DROPDEL
+	item_flags = ABSTRACT | DROPDEL | EXAMINE_SKIP | HAND_ITEM | NOBLUDGEON // Most of these flags don't matter, but better safe than sorry
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	/// The hallucination that created us.
 	var/datum/hallucination/parent

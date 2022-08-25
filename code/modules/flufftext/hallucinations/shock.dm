@@ -2,8 +2,14 @@
 /datum/hallucination/shock
 	random_hallucination_weight = 1
 
+	var/electrocution_icon = 'icons/mob/human.dmi'
+	var/electrocution_icon_state = "electrocuted_base"
 	var/image/shock_image
 	var/image/electrocution_skeleton_anim
+
+/datum/hallucination/shock/New(mob/living/hallucinator)
+	electrocution_icon_state = ishuman(hallucinator) ? "electrocuted_base" : "electrocuted_generic"
+	return ..()
 
 /datum/hallucination/shock/Destroy()
 	if(shock_image)
@@ -21,7 +27,7 @@
 	shock_image.color = rgb(0, 0, 0)
 	shock_image.override = TRUE
 
-	electrocution_skeleton_anim = image('icons/mob/human.dmi', hallucinator, icon_state = "electrocuted_base", layer = ABOVE_MOB_LAYER)
+	electrocution_skeleton_anim = image(electrocution_icon, hallucinator, icon_state = electrocution_icon_state, layer = ABOVE_MOB_LAYER)
 	electrocution_skeleton_anim.appearance_flags |= RESET_COLOR|KEEP_APART
 
 	to_chat(hallucinator, span_userdanger("You feel a powerful shock course through your body!"))
