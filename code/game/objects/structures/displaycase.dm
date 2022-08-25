@@ -349,7 +349,7 @@
 		data["showpiece_name"] = capitalize(format_text(showpiece.name))
 		var/base64 = icon2base64(icon(showpiece.icon, showpiece.icon_state))
 		data["showpiece_icon"] = base64
-		data["showpiece_description"] = trophy_message ? trophy_message : null
+		data["showpiece_description"] = trophy_message ? format_text(trophy_message) : null
 	return data
 
 /obj/structure/displaycase/trophy/ui_act(action, params)
