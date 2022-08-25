@@ -30,8 +30,14 @@
 	REMOVE_TRAIT(owner, TRAIT_NOSOFTCRIT, type)
 
 /datum/status_effect/unholy_determination/tick()
+	// If a person is legcuffed they get a healing bonus since it's harder to dodge
+	var/healing_legcuff_bonus = 0
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		healing_legcuff_bonus = human_owner.legcuffed ? 2 : 0
+
 	// The amount we heal of each damage type per tick. If we're missing legs we heal better because we can't dodge.
-	var/healing_amount = 1 + (2 - owner.usable_legs)
+	var/healing_amount = 1 + (2 - owner.usable_legs) + healing_legcuff_bonus
 
 	// In softcrit you're, strong enough to stay up.
 	if(owner.health <= owner.crit_threshold && owner.health >= owner.hardcrit_threshold)
