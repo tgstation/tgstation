@@ -9,7 +9,7 @@
 
 /obj/item/stack/ore
 	name = "rock"
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/ore.dmi'
 	icon_state = "ore"
 	inhand_icon_state = "ore"
 	full_w_class = WEIGHT_CLASS_BULKY
