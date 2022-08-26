@@ -347,7 +347,7 @@
 
 	var/reacting = our_air.react(src)
 	if(our_excited_group)
-		our_excited_group.turf_reactions |= reacting
+		our_excited_group.turf_reactions |= reacting //Adds the flag to turf_reactions so excited groups can check for them before dismantling.
 
 	update_visuals()
 	if(!consider_superconductivity(starting = TRUE) && !active_hotspot && !(reacting & (REACTING | STOP_REACTIONS)))
