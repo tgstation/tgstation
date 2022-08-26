@@ -211,9 +211,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
@@ -6542,6 +6539,9 @@
 "caL" = (
 /obj/structure/closet/cardboard,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
 "caN" = (
@@ -8325,6 +8325,9 @@
 /area/station/hallway/primary/central/fore)
 "cyv" = (
 /obj/structure/displaycase/trophy,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/station/service/library)
 "cyT" = (
@@ -8380,6 +8383,9 @@
 	specialfunctions = 4
 	},
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/station/commons/locker)
 "czH" = (
@@ -9608,6 +9614,7 @@
 /area/station/engineering/atmos)
 "cUT" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
 "cUY" = (
@@ -9934,6 +9941,9 @@
 	},
 /obj/effect/landmark/start/hangover,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/station/commons/locker)
 "cYy" = (
@@ -10003,6 +10013,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/start/detective,
 /obj/structure/cable,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "daG" = (
@@ -11538,6 +11554,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "duU" = (
@@ -13375,6 +13397,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/qm)
 "dXN" = (
@@ -14199,6 +14224,9 @@
 "elc" = (
 /obj/effect/landmark/event_spawn,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/fore)
 "ele" = (
@@ -14832,6 +14860,9 @@
 /obj/machinery/light/directional/west,
 /obj/machinery/airalarm/directional/west,
 /obj/item/paper_bin,
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hos)
 "etD" = (
@@ -15152,6 +15183,7 @@
 	melee_damage_upper = 25;
 	name = "hungry show bear"
 	},
+/obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
 "eyv" = (
@@ -18549,12 +18581,7 @@
 /area/station/maintenance/solars/port/aft)
 "fun" = (
 /obj/structure/cable,
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
+/obj/effect/turf_decal/siding/wood/end,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/captain/private)
@@ -20039,6 +20066,9 @@
 "fMB" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/blood/old,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
 "fMF" = (
@@ -20527,6 +20557,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
 "fST" = (
@@ -21246,6 +21279,10 @@
 	c_tag = "Detective's Office";
 	name = "detective camera"
 	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "gel" = (
@@ -22918,6 +22955,9 @@
 	normaldoorcontrol = 1;
 	specialfunctions = 4
 	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/station/commons/locker)
 "gDl" = (
@@ -23022,6 +23062,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/shard,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/station/cargo/warehouse)
 "gDT" = (
@@ -24903,6 +24946,9 @@
 	name = "Cabin 3 Privacy Lock";
 	normaldoorcontrol = 1;
 	specialfunctions = 4
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
 	},
 /turf/open/floor/wood,
 /area/station/commons/locker)
@@ -27030,6 +27076,9 @@
 "hIs" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /mob/living/simple_animal/hostile/retaliate/ghost,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/fore)
 "hIS" = (
@@ -30937,6 +30986,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
 "iIp" = (
@@ -31885,6 +31937,9 @@
 /obj/structure/table/wood,
 /obj/item/clipboard,
 /obj/item/camera,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/fore)
 "iVH" = (
@@ -33322,6 +33377,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/fore)
 "jrh" = (
@@ -33659,6 +33717,9 @@
 "jzh" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
 	},
 /turf/open/floor/wood,
 /area/station/service/library)
@@ -34423,6 +34484,9 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
 "jJN" = (
@@ -34808,6 +34872,9 @@
 	name = "Cabin 4 Privacy Lock";
 	normaldoorcontrol = 1;
 	specialfunctions = 4
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
 	},
 /turf/open/floor/wood,
 /area/station/commons/locker)
@@ -36354,6 +36421,10 @@
 "kqs" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "kqD" = (
@@ -37585,6 +37656,10 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/port/greater)
 "kJH" = (
@@ -38779,6 +38854,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/qm)
@@ -40158,6 +40236,9 @@
 /obj/machinery/computer/prisoner/management{
 	dir = 4
 	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hos)
 "lsW" = (
@@ -40384,6 +40465,9 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/duct,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "lvP" = (
@@ -43749,6 +43833,9 @@
 	color = "#c45c57"
 	},
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/fore)
 "mvm" = (
@@ -44142,8 +44229,11 @@
 /area/station/command/bridge)
 "mBW" = (
 /obj/structure/sign/warning/electric_shock/directional/north,
-/obj/effect/turf_decal/stripes/corner,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
 "mBX" = (
@@ -44430,6 +44520,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
 "mFQ" = (
@@ -44818,6 +44911,13 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/execution/education)
+"mLD" = (
+/obj/structure/displaycase/trophy,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/station/service/library)
 "mLE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -45204,6 +45304,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
 "mQu" = (
@@ -45697,6 +45800,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/sign/poster/contraband/random/directional/north,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
 /area/station/cargo/warehouse)
 "mXI" = (
@@ -46553,6 +46657,10 @@
 /area/station/hallway/primary/fore)
 "nlA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "nlR" = (
@@ -46892,6 +47000,9 @@
 "nqX" = (
 /obj/structure/sign/poster/contraband/random/directional/east,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
 "nqZ" = (
@@ -47054,6 +47165,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
 "ntf" = (
@@ -48546,6 +48658,9 @@
 /obj/machinery/modular_computer/console/preset/id{
 	dir = 1
 	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hos)
 "nPz" = (
@@ -49142,6 +49257,10 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "oaF" = (
@@ -51812,11 +51931,8 @@
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "oPr" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 1
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -52604,6 +52720,7 @@
 /area/station/engineering/atmos/pumproom)
 "paM" = (
 /obj/structure/cable,
+/obj/effect/turf_decal/siding/wood/end,
 /turf/open/floor/wood,
 /area/station/maintenance/port/greater)
 "paN" = (
@@ -53219,6 +53336,7 @@
 	pixel_y = 4
 	},
 /obj/item/pen,
+/obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/fore)
 "pjX" = (
@@ -54060,6 +54178,9 @@
 /area/station/security/checkpoint/customs)
 "pvH" = (
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/fore)
 "pvK" = (
@@ -54205,6 +54326,9 @@
 	department = "Head of Security's Desk";
 	departmentType = 5;
 	name = "Head of Security's Requests Console"
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hos)
@@ -54461,6 +54585,7 @@
 /obj/effect/decal/cleanable/blood/gibs/limb,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
 "pCF" = (
@@ -57425,6 +57550,18 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
+"qsJ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/station/security/detectives_office)
 "qth" = (
 /obj/structure/closet/secure_closet/security/science,
 /obj/item/crowbar,
@@ -57508,6 +57645,9 @@
 "quy" = (
 /obj/machinery/light/small/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /turf/open/floor/wood,
@@ -58572,6 +58712,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
 "qMA" = (
@@ -59629,6 +59772,9 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/hangover,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/station/service/library)
 "rbk" = (
@@ -61089,6 +61235,9 @@
 /obj/structure/closet/secure_closet/personal,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/station/cargo/warehouse)
 "rvD" = (
@@ -62302,6 +62451,9 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
 "rNg" = (
@@ -62677,6 +62829,10 @@
 "rRx" = (
 /obj/machinery/computer/med_data,
 /obj/machinery/newscaster/directional/north,
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "rRz" = (
@@ -62953,6 +63109,9 @@
 	dir = 8
 	},
 /obj/item/stack/cable_coil/cut,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/station/cargo/warehouse)
 "rVw" = (
@@ -63060,6 +63219,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/station/service/library)
 "rYh" = (
@@ -63502,6 +63664,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/effect/landmark/xeno_spawn,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
 "sex" = (
@@ -63833,6 +63998,7 @@
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
 "sjo" = (
@@ -65270,8 +65436,8 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/brig)
 "sGF" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 6
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 4
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/qm)
@@ -67587,9 +67753,6 @@
 /turf/open/misc/asteroid,
 /area/station/hallway/secondary/exit/departure_lounge)
 "tlJ" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -67597,6 +67760,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/cable,
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
 "tlL" = (
@@ -67926,6 +68093,13 @@
 /obj/structure/cable,
 /obj/item/book/manual/wiki/detective,
 /obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "tpp" = (
@@ -68918,8 +69092,8 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/siding/wood{
-	dir = 9
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 1
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/qm)
@@ -69581,6 +69755,9 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/blood/gibs/limb,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
 "tOr" = (
@@ -69988,6 +70165,7 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/fore)
 "tVt" = (
@@ -70830,6 +71008,7 @@
 /obj/item/radio/intercom/directional/north,
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
 /area/station/maintenance/port/greater)
 "ufQ" = (
@@ -71014,6 +71193,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/station/commons/locker)
 "uib" = (
@@ -71072,6 +71254,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/xeno_spawn,
+/obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
 "uiX" = (
@@ -72073,6 +72256,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
 "uyl" = (
@@ -72565,6 +72751,9 @@
 /obj/item/clothing/head/that{
 	pixel_x = 1;
 	pixel_y = 6
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
 	},
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
@@ -73638,6 +73827,9 @@
 	loot = list(/obj/effect/mob_spawn/corpse/human/russian);
 	name = "Russian Mobster"
 	},
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/port/greater)
 "uYw" = (
@@ -73894,6 +74086,9 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hos)
 "vbc" = (
@@ -74397,6 +74592,9 @@
 /area/station/maintenance/disposal/incinerator)
 "viu" = (
 /obj/machinery/computer/security/hos{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /turf/open/floor/wood,
@@ -75918,6 +76116,7 @@
 	pixel_y = 6;
 	req_access = list("detective")
 	},
+/obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "vCM" = (
@@ -78643,6 +78842,9 @@
 	name = "Space Blast Door Toggle";
 	pixel_x = 8
 	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hos)
 "woc" = (
@@ -79255,6 +79457,9 @@
 	dir = 8
 	},
 /obj/machinery/holopad,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/qm)
 "wwG" = (
@@ -79296,6 +79501,9 @@
 	},
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
 	},
 /turf/open/floor/wood,
 /area/station/service/library)
@@ -81696,6 +81904,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
 "xha" = (
@@ -84517,6 +84728,7 @@
 	},
 /obj/item/newspaper,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
 /area/station/maintenance/port/greater)
 "xVK" = (
@@ -110778,7 +110990,7 @@ nIx
 pqB
 fPj
 igl
-cyv
+mLD
 oCI
 kHR
 kHR
@@ -110817,7 +111029,7 @@ pqD
 tpl
 duM
 cZW
-duM
+qsJ
 vlJ
 srW
 hkq
