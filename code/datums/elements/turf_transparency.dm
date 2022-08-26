@@ -201,7 +201,6 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 ///Updates the viscontents or underlays below this tile.
 /datum/element/turf_z_transparency/proc/update_multi_z(turf/our_turf)
 	var/turf/below_turf = our_turf.below()
-	// lemon todo: register for changeturf here, or on the z pillar datum
 	if(below_turf) // If we actually have something below us, display it.
 		for(var/turf/partner in range(1, below_turf))
 			// We use our z here to ensure the pillar is actually on our level
