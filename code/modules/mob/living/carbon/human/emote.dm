@@ -1,7 +1,7 @@
 /datum/emote/living/carbon/human
 	mob_type_allowed_typecache = list(/mob/living/carbon/human)
 
-#define CRY_DURATION 10 SECONDS
+#define CRY_DURATION 12.8 SECONDS
 
 /datum/emote/living/carbon/human/cry
 	key = "cry"
