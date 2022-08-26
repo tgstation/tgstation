@@ -35,16 +35,10 @@
 
 /obj/item/ai_module/attack_self(mob/user as mob)
 	..()
-	var/examine_laws = display_laws()
-	to_chat(user, examine_block(examine_laws))
+	to_chat(user, examine_block(display_laws()))
 
-///what this module should do if it is mapload spawning on a unique AI station trait round.
-/obj/item/ai_module/proc/handle_unique_ai()
-	return SHOULD_QDEL_MODULE //instead of the roundstart bid to un-unique the AI, there will be a research requirement for it.
-
-/// Show the laws for the module.
+/// Returns a text display of the laws for the module.
 /obj/item/ai_module/proc/display_laws()
-	/// Used to assemble the laws to show to an examining user.
 	var/assembled_laws
 
 	if(laws.len)
@@ -53,6 +47,10 @@
 			assembled_laws += "\"[law]\"<br>"
 
 	return assembled_laws
+
+///what this module should do if it is mapload spawning on a unique AI station trait round.
+/obj/item/ai_module/proc/handle_unique_ai()
+	return SHOULD_QDEL_MODULE //instead of the roundstart bid to un-unique the AI, there will be a research requirement for it.
 
 //The proc other things should be calling
 /obj/item/ai_module/proc/install(datum/ai_laws/law_datum, mob/user)
