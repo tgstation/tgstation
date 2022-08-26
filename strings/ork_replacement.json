@@ -50,6 +50,8 @@
 	  "maintenance": "tunnel",
 	  "maint":"tunnel",
 	  "singularity": "space hole",
-	  "supermatter": "angry rock"
+	  "supermatter": "angry rock",
+	  "war": "WAAAGH!",
+	  "hos": "nob"
 	}
   }
