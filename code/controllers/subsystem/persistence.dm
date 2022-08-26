@@ -283,7 +283,7 @@ SUBSYSTEM_DEF(persistence)
 /// Puts trophies into trophy cases.
 /datum/controller/subsystem/persistence/proc/set_up_trophies()
 
-	var/valid_trophies = list()
+	var/list/valid_trophies = list()
 
 	for(var/datum/trophy_data/data in saved_trophies)
 
@@ -297,7 +297,10 @@ SUBSYSTEM_DEF(persistence)
 		valid_trophies += data
 
 	for(var/obj/structure/displaycase/trophy/trophy_case in GLOB.trophy_cases)
-		if (trophy_case.showpiece)
+		if(!valid_trophies.len)
+			break
+		
+		if(trophy_case.showpiece)
 			continue
 
 		var/datum/trophy_data/chosen_trophy = pick_n_take(valid_trophies)
