@@ -1639,8 +1639,8 @@
 
 /obj/item/storage/box/hero/etherealwarden/PopulateContents()
 	new /obj/item/clothing/suit/hooded/ethereal_raincoat/trailwarden(src)
-	new /obj/item/storage/belt/saddlepouch(src)
-	new /obj/item/storage/belt/saddlepouch(src)
+	new /obj/item/clothing/under/ethereal_tunic/trailwarden(src)
+	new /obj/item/storage/backpack/saddlepack(src)
 
 /obj/item/storage/box/holy/clock
 	name = "Forgotten kit"
