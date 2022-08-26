@@ -20,7 +20,7 @@
 
 /obj/item/clothing/under/ethereal_tunic/update_overlays()
 	. = ..()
-		. += emissive_appearance('icons/obj/clothing/under/ethereal.dmi', "eth_tunic_emissive", alpha = src.alpha)
+	. += emissive_appearance('icons/obj/clothing/under/ethereal.dmi', "eth_tunic_emissive", alpha = src.alpha)
 
 /obj/item/clothing/under/ethereal_tunic/trailwarden
 	name = "trailwarden tunic"
