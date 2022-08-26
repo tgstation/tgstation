@@ -335,7 +335,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 // LEMON NOTE
 // A GOON CODER SAYS BAD ICON ERRORS CAN BE THROWN BY THE "ICON CACHE"
-// APPERANTLY IT MAKES ICONS IMMUTABLE
+// APPARENTLY IT MAKES ICONS IMMUTABLE
 // LOOK INTO USING THE MUTABLE APPEARANCE PATTERN HERE
 /datum/asset/spritesheet/proc/queuedInsert(sprite_name, icon/I, icon_state="", dir=SOUTH, frame=1, moving=FALSE)
 	I = icon(I, icon_state=icon_state, dir=dir, frame=frame, moving=moving)
