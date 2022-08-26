@@ -6015,7 +6015,6 @@
 /turf/open/floor/iron,
 /area/ruin/space/ks13/security/court)
 "Ps" = (
-/obj/structure/table,
 /obj/machinery/light/small/directional/east,
 /obj/item/circuitboard/machine/smes,
 /obj/structure/table,

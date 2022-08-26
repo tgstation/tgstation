@@ -1,5 +1,0 @@
-author: "PositiveEntropy"
-delete-after: True
-changes: 
-  - bugfix: "Fixes faxes playing the \"fax_contain\" animation and makes it actually use the \"fax_receive\" animation when receiving."
-  - imageadd: "Resprites fax machines!"

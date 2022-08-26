@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - bugfix: "Nanotrasen smoothed out some hiccups, so Security Departmental Order Crates should now open in more parts of the brig."

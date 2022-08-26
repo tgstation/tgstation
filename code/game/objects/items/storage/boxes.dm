@@ -1568,6 +1568,18 @@
 		new /obj/item/food/fishmeat/moonfish(src)
 	new /obj/item/food/fishmeat/gunner_jellyfish(src)
 
+/obj/item/storage/box/ingredients/salads
+	theme_name = "salads"
+
+/obj/item/storage/box/ingredients/salads/PopulateContents()
+	new /obj/item/food/grown/onion/red(src)
+	new /obj/item/food/grown/onion/red(src)
+	new /obj/item/food/grown/cabbage(src)
+	new /obj/item/food/grown/tomato(src)
+	new /obj/item/food/grown/carrot(src)
+	new /obj/item/food/grown/olive(src)
+	new /obj/item/reagent_containers/condiment/quality_oil(src)
+
 /obj/item/storage/box/ingredients/random
 	theme_name = "random"
 	desc = "This box should not exist, contact the proper authorities."

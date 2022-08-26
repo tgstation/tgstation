@@ -11,6 +11,9 @@ GLOBAL_LIST_INIT(preset_fish_sources,init_fishing_configurations())
 	var/datum/fish_source/lavaland/lava_preset = new
 	.[FISHING_SPOT_PRESET_LAVALAND_LAVA] = lava_preset
 
+	var/datum/fish_source/chasm/chasm_preset = new
+	.[FISHING_SPOT_PRESET_CHASM] = chasm_preset
+
 /// Where the fish actually come from - every fishing spot has one assigned but multiple fishing holes can share single source, ie single shared one for ocean/lavaland river
 /datum/fish_source
 	/// Fish catch weight table - these are relative weights
@@ -87,7 +90,7 @@ GLOBAL_LIST_INIT(preset_fish_sources,init_fishing_configurations())
 			reward_path = FISHING_DUD //Ran out of these since rolling (multiple fishermen on same source most likely)
 	if(ispath(reward_path))
 		if(ispath(reward_path,/obj/item))
-			var/obj/item/reward = new reward_path
+			var/obj/item/reward = new reward_path(get_turf(fisherman))
 			if(ispath(reward_path,/obj/item/fish))
 				var/obj/item/fish/caught_fish = reward
 				caught_fish.randomize_weight_and_size()
