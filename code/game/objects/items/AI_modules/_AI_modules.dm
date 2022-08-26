@@ -40,7 +40,7 @@
 /// Returns a text display of the laws for the module.
 /obj/item/ai_module/proc/display_laws()
 	// Used to assemble the laws to show to an examining user.
-	var/assembled_laws
+	var/assembled_laws = ""
 
 	if(laws.len)
 		assembled_laws += "<B>Programmed Law[(laws.len > 1) ? "s" : ""]:</B><br>"
