@@ -109,8 +109,9 @@
 	switch(air.temperature)
 		if(-INFINITY to WATER_VAPOR_DEPOSITION_POINT)
 			if(location?.freeze_turf())
-				SET_REACTION_RESULTS(0)
-			. = REACTING
+				air.gases[/datum/gas/water_vapor][MOLES] -= MOLES_GAS_VISIBLE
+				SET_REACTION_RESULTS(MOLES_GAS_VISIBLE)
+				. = REACTING
 		if(WATER_VAPOR_DEPOSITION_POINT to WATER_VAPOR_CONDENSATION_POINT)
 			location.water_vapor_gas_act()
 			air.gases[/datum/gas/water_vapor][MOLES] -= MOLES_GAS_VISIBLE
