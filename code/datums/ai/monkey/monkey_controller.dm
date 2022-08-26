@@ -184,6 +184,10 @@ have ways of interacting with a specific mob and control it.
 	var/mob/living/living_pawn = pawn
 	if(!IS_DEAD_OR_INCAP(living_pawn) && isliving(crossed))
 		var/mob/living/in_the_way_mob = crossed
+		if(iscarbon(in_the_way_mob) && !in_the_way_mob.combat_mode)
+			return
+		if(in_the_way_mob.pass_flags == PASSTABLE || PASSMOB)
+			return
 		in_the_way_mob.knockOver(living_pawn)
 		return
 
