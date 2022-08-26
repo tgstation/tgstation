@@ -12086,7 +12086,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/engine/atmos)
 "cMM" = (
-/obj/machinery/door_timer{
+/obj/machinery/status_display/door_timer{
 	id = "medsci-cell";
 	name = "Med-Sci Cell";
 	pixel_y = -32
@@ -37019,7 +37019,7 @@
 "iXM" = (
 /obj/structure/cable,
 /obj/item/kirbyplants/random,
-/obj/machinery/door_timer{
+/obj/machinery/status_display/door_timer{
 	id = "engcell";
 	name = "Engineering Cell";
 	pixel_y = 32
@@ -72744,7 +72744,7 @@
 /area/station/engineering/atmos/storage/gas)
 "rNV" = (
 /obj/item/kirbyplants/random,
-/obj/machinery/door_timer{
+/obj/machinery/status_display/door_timer{
 	id = "brig1";
 	name = "Cell 1";
 	pixel_x = -32
@@ -78116,7 +78116,7 @@
 /area/station/maintenance/department/chapel)
 "tbZ" = (
 /obj/item/kirbyplants/random,
-/obj/machinery/door_timer{
+/obj/machinery/status_display/door_timer{
 	id = "brig2";
 	name = "Cell 2";
 	pixel_x = -32
@@ -83875,7 +83875,7 @@
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/psychology)
 "uxC" = (
-/obj/machinery/door_timer{
+/obj/machinery/status_display/door_timer{
 	id = "cargocell";
 	name = "Cargo Cell";
 	pixel_x = -32;
