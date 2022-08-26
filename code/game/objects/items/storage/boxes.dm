@@ -1646,7 +1646,7 @@
 	new /obj/item/stack/sheet/glass/fifty(src)
 
 /obj/item/storage/box/hero/etherealwarden
-	name = "Ethereal Trail Warden - 2450's."
+	name = "Ethereal Trailwarden - 2450's."
 	desc = "Many fantastical stories are told of valiant trail wardens, even by offworlders who, thanks to their guidance, avoided an untimely demise while traveling the sometimes treacherous roads of Sprout. In truth their job entails far more walking and fixing roads than slaying dragons, but it is no less important and well respected: keeping the roads and trails safe and well maintained is for many settlements a matter of survival."
 
 /obj/item/storage/box/hero/etherealwarden/PopulateContents()
