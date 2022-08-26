@@ -60,7 +60,7 @@
 	gib_anim = "gibbed-m"
 
 	payday_modifier = 1.5
-	non_player_species = TRUE
+	ai_controlled_species = TRUE
 
 
 
