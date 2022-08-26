@@ -1,0 +1,5 @@
+author: "Tastyfish"
+delete-after: True
+changes: 
+  - rscadd: "Status displays are now a bit more colorful and have gapless marquee text."
+  - refactor: "Brig door timers were massively refactored behind the scenes. Door control should still work as before but be mindful."
