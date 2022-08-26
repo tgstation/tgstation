@@ -2962,6 +2962,7 @@
 #include "code\modules\fishing\aquarium\aquarium.dm"
 #include "code\modules\fishing\aquarium\aquarium_kit.dm"
 #include "code\modules\fishing\fish\_fish.dm"
+#include "code\modules\fishing\fish\chasm_detritus.dm"
 #include "code\modules\fishing\fish\fish_types.dm"
 #include "code\modules\fishing\sources\_fish_source.dm"
 #include "code\modules\fishing\sources\source_types.dm"

@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - qol: "APCs will now automatically set the lights in an area to low power mode when they are below 30% (same % as when equipment power turns off) to conserve additional power."

@@ -506,14 +506,17 @@
 				continue
 			if(methods)
 				r_to_send += reagent
-			remove_reagent(reagent.type, transfer_amount)
-			var/list/reagent_qualities = list(REAGENT_TRANSFER_AMOUNT = transfer_amount, REAGENT_PURITY = reagent.purity)
-			transfer_log[reagent.type] = reagent_qualities
 
 		if(isorgan(target_atom))
 			R.expose_multiple(r_to_send, target, methods, part, show_message)
 		else
 			R.expose_multiple(r_to_send, target_atom, methods, part, show_message)
+
+		for(var/datum/reagent/reagent as anything in r_to_send)
+			var/transfer_amount = reagent.volume * part
+			remove_reagent(reagent.type, transfer_amount)
+			var/list/reagent_qualities = list(REAGENT_TRANSFER_AMOUNT = transfer_amount, REAGENT_PURITY = reagent.purity)
+			transfer_log[reagent.type] = reagent_qualities
 
 	else
 		var/to_transfer = amount
