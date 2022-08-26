@@ -110,6 +110,10 @@ have ways of interacting with a specific mob and control it.
 	for(var/obj/item/item in oview(2, living_pawn))
 		nearby_items += item
 
+	for(var/obj/item/item in living_pawn.held_items) // If we've got some garbage in out hands thats going to stop us from effectivly attacking, we should get rid of it.
+		if(item.force < 2)
+			living_pawn.dropItemToGround(item)
+
 	weapon = GetBestWeapon(src, nearby_items, living_pawn.held_items)
 
 	var/pickpocket = FALSE
@@ -119,6 +123,9 @@ have ways of interacting with a specific mob and control it.
 			continue
 		pickpocket = TRUE
 		weapon = held_weapon
+
+	if(weapon.force < 2) // or bite does 2 damage on avarage, no point in settling for anything less
+		return FALSE
 
 	if(!weapon || (weapon in living_pawn.held_items))
 		return FALSE
