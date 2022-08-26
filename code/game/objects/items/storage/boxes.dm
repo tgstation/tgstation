@@ -683,7 +683,7 @@
 /obj/item/storage/box/snappops
 	name = "snap pop box"
 	desc = "Eight wrappers of fun! Ages 8 and up. Not suitable for children."
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "spbox"
 	illustration = ""
 
@@ -738,7 +738,7 @@
 
 /obj/item/storage/box/lights
 	name = "box of replacement bulbs"
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	illustration = "light"
 	desc = "This box is shaped on the inside so that only light tubes and bulbs fit."
 	inhand_icon_state = "syringe_kit"
@@ -1567,6 +1567,18 @@
 		new /obj/item/food/fishmeat/armorfish(src)
 		new /obj/item/food/fishmeat/moonfish(src)
 	new /obj/item/food/fishmeat/gunner_jellyfish(src)
+
+/obj/item/storage/box/ingredients/salads
+	theme_name = "salads"
+
+/obj/item/storage/box/ingredients/salads/PopulateContents()
+	new /obj/item/food/grown/onion/red(src)
+	new /obj/item/food/grown/onion/red(src)
+	new /obj/item/food/grown/cabbage(src)
+	new /obj/item/food/grown/tomato(src)
+	new /obj/item/food/grown/carrot(src)
+	new /obj/item/food/grown/olive(src)
+	new /obj/item/reagent_containers/condiment/quality_oil(src)
 
 /obj/item/storage/box/ingredients/random
 	theme_name = "random"

@@ -95,7 +95,7 @@
 		photo_path = deter_path
 
 /datum/computer_file/program/messenger/ui_state(mob/user)
-	if(istype(user, /mob/living/silicon))
+	if(issilicon(user))
 		return GLOB.reverse_contained_state
 	return GLOB.default_state
 

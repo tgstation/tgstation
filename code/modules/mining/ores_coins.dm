@@ -9,7 +9,7 @@
 
 /obj/item/stack/ore
 	name = "rock"
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/ore.dmi'
 	icon_state = "ore"
 	inhand_icon_state = "ore"
 	full_w_class = WEIGHT_CLASS_BULKY
@@ -255,7 +255,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	return ..()
 
 /obj/item/gibtonite/attackby(obj/item/I, mob/user, params)
-	if(!wires && istype(I, /obj/item/assembly/igniter))
+	if(!wires && isigniter(I))
 		user.visible_message(span_notice("[user] attaches [I] to [src]."), span_notice("You attach [I] to [src]."))
 		wires = new /datum/wires/explosive/gibtonite(src)
 		attacher = key_name(user)

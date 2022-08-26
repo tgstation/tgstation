@@ -211,7 +211,7 @@
 		wearer.update_worn_head()
 		wearer.update_worn_mask()
 		wearer.update_worn_glasses()
-		wearer.update_hair()
+		wearer.update_body_parts()
 
 /// Finishes the suit's activation, starts processing
 /obj/item/mod/control/proc/finish_activation(on)

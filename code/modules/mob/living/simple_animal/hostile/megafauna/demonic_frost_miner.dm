@@ -297,7 +297,7 @@ Difficulty: Extremely Hard
 	SIGNAL_HANDLER
 
 	var/turf/T = get_turf(loc)
-	if(!on || istype(T, /turf/closed) || istype(T, change_turf))
+	if(!on || isclosedturf(T) || istype(T, change_turf))
 		return
 	var/reset_turf = T.type
 	T.ChangeTurf(change_turf, flags = CHANGETURF_INHERIT_AIR)
@@ -380,7 +380,7 @@ Difficulty: Extremely Hard
 /obj/structure/frost_miner_prism
 	name = "frost miner light prism"
 	desc = "A magical crystal enhanced by a demonic presence."
-	icon = 'icons/obj/slimecrossing.dmi'
+	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
 	icon_state = "lightprism"
 	density = FALSE
 	anchored = TRUE

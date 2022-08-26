@@ -2,7 +2,7 @@
 /// See /datum/weakref's documentation for more information.
 /proc/WEAKREF(datum/input)
 	if(istype(input) && !QDELETED(input))
-		if(istype(input, /datum/weakref))
+		if(isweakref(input))
 			return input
 
 		if(!input.weak_reference)

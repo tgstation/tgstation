@@ -21,7 +21,7 @@
 /obj/item/toy/crayon
 	name = "red crayon"
 	desc = "A colourful crayon. Looks tasty. Mmmm..."
-	icon = 'icons/obj/crayons.dmi'
+	icon = 'icons/obj/art/crayons.dmi'
 	icon_state = "crayonred"
 	worn_icon_state = "crayon"
 
@@ -74,7 +74,7 @@
 	var/post_noise = FALSE
 
 /obj/item/toy/crayon/proc/isValidSurface(surface)
-	return istype(surface, /turf/open/floor)
+	return isfloorturf(surface)
 
 /obj/item/toy/crayon/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is jamming [src] up [user.p_their()] nose and into [user.p_their()] brain. It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -543,7 +543,7 @@
 /obj/item/storage/crayons
 	name = "box of crayons"
 	desc = "A box of crayons for all your rune drawing needs."
-	icon = 'icons/obj/crayons.dmi'
+	icon = 'icons/obj/art/crayons.dmi'
 	icon_state = "crayonbox"
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/cardboard = 2000)
@@ -565,7 +565,7 @@
 /obj/item/storage/crayons/update_overlays()
 	. = ..()
 	for(var/obj/item/toy/crayon/crayon in contents)
-		. += mutable_appearance('icons/obj/crayons.dmi', crayon.crayon_color)
+		. += mutable_appearance('icons/obj/art/crayons.dmi', crayon.crayon_color)
 
 /obj/item/storage/crayons/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/toy/crayon))
@@ -626,7 +626,7 @@
 	post_noise = FALSE
 
 /obj/item/toy/crayon/spraycan/isValidSurface(surface)
-	return (istype(surface, /turf/open/floor) || istype(surface, /turf/closed/wall))
+	return (isfloorturf(surface) || iswallturf(surface))
 
 
 /obj/item/toy/crayon/spraycan/suicide_act(mob/user)
@@ -748,7 +748,7 @@
 	if(check_empty(user))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	if(istype(target, /obj/item/bodypart) && actually_paints)
+	if(isbodypart(target) && actually_paints)
 		var/obj/item/bodypart/limb = target
 		if(!IS_ORGANIC_LIMB(limb))
 			var/list/skins = list()
@@ -781,7 +781,7 @@
 /obj/item/toy/crayon/spraycan/update_overlays()
 	. = ..()
 	if(use_overlays)
-		var/mutable_appearance/spray_overlay = mutable_appearance('icons/obj/crayons.dmi', "[is_capped ? "spraycan_cap_colors" : "spraycan_colors"]")
+		var/mutable_appearance/spray_overlay = mutable_appearance('icons/obj/art/crayons.dmi', "[is_capped ? "spraycan_cap_colors" : "spraycan_colors"]")
 		spray_overlay.color = paint_color
 		. += spray_overlay
 
@@ -835,7 +835,7 @@
 	volume_multiplier = 5
 
 /obj/item/toy/crayon/spraycan/lubecan/isValidSurface(surface)
-	return istype(surface, /turf/open/floor)
+	return isfloorturf(surface)
 
 /obj/item/toy/crayon/spraycan/mimecan
 	name = "silent spraycan"

@@ -154,7 +154,7 @@
  */
 /obj/machinery/fax/proc/receive(obj/item/paper/paper, sender_name)
 	playsound(src, 'sound/machines/printer.ogg', 50, FALSE)
-	flick(paper_contain ? "fax_contain_receive" : "fax_contain", src)
+	flick(paper_contain ? "fax_contain_receive" : "fax_receive", src)
 	say("Received correspondence from [sender_name].")
 	history_add("Receive", sender_name)
 	paper.forceMove(drop_location())

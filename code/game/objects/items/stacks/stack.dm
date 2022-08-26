@@ -572,6 +572,10 @@
 		return FALSE
 	if(ismob(loc) && !inhand) // no merging with items that are on the mob
 		return FALSE
+	if(istype(loc, /obj/machinery)) // no merging items in machines that aren't both in componentparts
+		var/obj/machinery/machine = loc
+		if(!(src in machine.component_parts) || !(check in machine.component_parts))
+			return FALSE
 	return TRUE
 
 /**

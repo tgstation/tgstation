@@ -4,7 +4,7 @@
 /obj/item/storage/photo_album
 	name = "photo album"
 	desc = "A big book used to store photos and mementos."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "album"
 	inhand_icon_state = "album"
 	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
@@ -52,7 +52,7 @@
 			continue
 		var/obj/item/photo/old/P = load_photo_from_disk(i)
 		if(istype(P))
-			if(!atom_storage?.attempt_insert(src, P, null, TRUE))
+			if(!atom_storage?.attempt_insert(P, override = TRUE))
 				qdel(P)
 
 /obj/item/storage/photo_album/hos

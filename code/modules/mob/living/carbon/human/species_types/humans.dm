@@ -19,7 +19,7 @@
 /datum/species/human/prepare_human_for_preview(mob/living/carbon/human/human)
 	human.hairstyle = "Business Hair"
 	human.hair_color = "#bb9966" // brown
-	human.update_hair(is_creating = TRUE)
+	human.update_body_parts()
 
 /datum/species/human/randomize_features(mob/living/carbon/human/human_mob)
 	human_mob.skin_tone = random_skin_tone()
@@ -72,7 +72,7 @@
 /datum/species/human/create_pref_unique_perks()
 	var/list/to_add = list()
 
-	if(CONFIG_GET(number/default_laws) == 0) // Default lawset is set to Asimov
+	if(CONFIG_GET(number/default_laws) == 0 || CONFIG_GET(flag/silicon_asimov_superiority_override)) // Default lawset is set to Asimov
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "robot",

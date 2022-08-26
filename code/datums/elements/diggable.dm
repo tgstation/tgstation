@@ -10,8 +10,10 @@
 	var/action_text
 	/// What should we tell other people what the user did? (Eg: "Guy digs up the turf.")
 	var/action_text_third_person
+	/// Percentage chance of receiving a bonus worm
+	var/worm_chance
 
-/datum/element/diggable/Attach(datum/target, to_spawn, amount = 1, action_text = "dig up", action_text_third_person = "digs up")
+/datum/element/diggable/Attach(datum/target, to_spawn, amount = 1, worm_chance = 30, action_text = "dig up", action_text_third_person = "digs up")
 	. = ..()
 	if(!isturf(target))
 		return ELEMENT_INCOMPATIBLE
@@ -21,6 +23,7 @@
 
 	src.to_spawn = to_spawn
 	src.amount = amount
+	src.worm_chance = worm_chance
 	src.action_text = action_text
 	src.action_text_third_person = action_text_third_person
 
@@ -36,6 +39,8 @@
 
 	for(var/i in 1 to amount)
 		new to_spawn(source)
+	if (prob(worm_chance))
+		new /obj/item/food/bait/worm(source)
 
 	user.visible_message(
 		span_notice("[user] [action_text_third_person] [source]."),

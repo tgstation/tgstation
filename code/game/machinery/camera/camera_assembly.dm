@@ -176,7 +176,7 @@
 				update_appearance()
 				return
 
-			else if(istype(W, /obj/item/assembly/prox_sensor)) //motion sensing upgrade
+			else if(isprox(W)) //motion sensing upgrade
 				if(proxy_module)
 					to_chat(user, span_warning("[src] already contains a [proxy_module]!"))
 					return

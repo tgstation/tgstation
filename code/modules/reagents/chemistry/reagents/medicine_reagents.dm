@@ -857,26 +857,25 @@
 		return
 	if(iscarbon(exposed_mob) && !(methods & INGEST)) //simplemobs can still be splashed
 		return ..()
-	var/amount_to_revive = round((exposed_mob.getBruteLoss()+exposed_mob.getFireLoss())/20)
-	if(exposed_mob.getBruteLoss()+exposed_mob.getFireLoss() >= 200 || HAS_TRAIT(exposed_mob, TRAIT_HUSK) || reac_volume < amount_to_revive) //body will die from brute+burn on revive or you haven't provided enough to revive.
+	var/amount_to_revive = round((exposed_mob.getBruteLoss() + exposed_mob.getFireLoss()) / 20)
+	if(exposed_mob.getBruteLoss() + exposed_mob.getFireLoss() >= 200 || HAS_TRAIT(exposed_mob, TRAIT_HUSK) || reac_volume < amount_to_revive) //body will die from brute+burn on revive or you haven't provided enough to revive.
 		exposed_mob.visible_message(span_warning("[exposed_mob]'s body convulses a bit, and then falls still once more."))
 		exposed_mob.do_jitter_animation(10)
 		return
 	exposed_mob.visible_message(span_warning("[exposed_mob]'s body starts convulsing!"))
 	exposed_mob.notify_ghost_cloning("Your body is being revived with Strange Reagent!")
 	exposed_mob.do_jitter_animation(10)
-	var/excess_healing = 5*(reac_volume-amount_to_revive) //excess reagent will heal blood and organs across the board
+	var/excess_healing = 5 * (reac_volume - amount_to_revive) //excess reagent will heal blood and organs across the board
 	addtimer(CALLBACK(exposed_mob, /mob/living/carbon.proc/do_jitter_animation, 10), 40) //jitter immediately, then again after 4 and 8 seconds
 	addtimer(CALLBACK(exposed_mob, /mob/living/carbon.proc/do_jitter_animation, 10), 80)
 	addtimer(CALLBACK(exposed_mob, /mob/living.proc/revive, FALSE, FALSE, excess_healing), 79)
-	..()
+	return ..()
 
 /datum/reagent/medicine/strange_reagent/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	var/damage_at_random = rand(0, 250)/100 //0 to 2.5
 	M.adjustBruteLoss(damage_at_random * REM * delta_time, FALSE)
 	M.adjustFireLoss(damage_at_random * REM * delta_time, FALSE)
-	..()
-	. = TRUE
+	return ..()
 
 /datum/reagent/medicine/mannitol
 	name = "Mannitol"
@@ -1082,7 +1081,7 @@
 	var/mob/living/carbon/human/exposed_human = exposed_mob
 	exposed_human.hair_color = "#CC22FF"
 	exposed_human.facial_hair_color = "#CC22FF"
-	exposed_human.update_hair()
+	exposed_human.update_body_parts()
 
 /datum/reagent/medicine/regen_jelly/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjustBruteLoss(-1.5 * REM * delta_time, 0)
@@ -1453,7 +1452,7 @@
 		return
 	exposed_human.hair_color = "#9922ff"
 	exposed_human.facial_hair_color = "#9922ff"
-	exposed_human.update_hair()
+	exposed_human.update_body_parts()
 
 /datum/reagent/medicine/polypyr/overdose_process(mob/living/M, delta_time, times_fired)
 	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * REM * delta_time)
