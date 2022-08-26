@@ -1,0 +1,122 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/cargo)
+"e" = (
+/obj/item/stack/ore/glass,
+/obj/structure/girder,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/cargo)
+"h" = (
+/obj/structure/ore_box,
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/cargo)
+"i" = (
+/turf/template_noop,
+/area/template_noop)
+"k" = (
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"n" = (
+/turf/closed/wall/rock,
+/area/station/maintenance/department/cargo)
+"v" = (
+/obj/structure/closet/crate,
+/obj/effect/spawner/random/maintenance/three,
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/cargo)
+"y" = (
+/obj/item/stack/ore/glass,
+/turf/closed/wall,
+/area/station/maintenance/department/cargo)
+"B" = (
+/obj/item/shovel,
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/cargo)
+"F" = (
+/turf/closed/wall/rust,
+/area/station/maintenance/department/cargo)
+"R" = (
+/obj/modular_map_connector,
+/obj/effect/turf_decal/sand,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"S" = (
+/turf/closed/wall,
+/area/station/maintenance/department/cargo)
+"Y" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/cargo)
+"Z" = (
+/obj/item/stack/ore/glass,
+/obj/item/relic,
+/turf/open/misc/asteroid/dug,
+/area/station/maintenance/department/cargo)
+
+(1,1,1) = {"
+n
+a
+a
+B
+i
+"}
+(2,1,1) = {"
+h
+Z
+a
+a
+i
+"}
+(3,1,1) = {"
+v
+a
+a
+F
+i
+"}
+(4,1,1) = {"
+n
+Y
+a
+e
+i
+"}
+(5,1,1) = {"
+F
+Y
+a
+y
+i
+"}
+(6,1,1) = {"
+F
+k
+Y
+k
+S
+"}
+(7,1,1) = {"
+S
+k
+k
+k
+S
+"}
+(8,1,1) = {"
+i
+i
+i
+R
+i
+"}
