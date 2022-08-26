@@ -93,6 +93,8 @@
 	var/emergency_lights = FALSE
 	///Should the nighshift lights be on?
 	var/nightshift_lights = FALSE
+	///Tracks if lights channel was set to nightshift / reduced power usage mode automatically due to low power.
+	var/low_power_nightshift_lights = FALSE
 	///Time when the nightshift where turned on last, to prevent spamming
 	var/last_nightshift_switch = 0
 	///Stores the flags for the icon state
@@ -270,6 +272,7 @@
 		"malfStatus" = get_malf_status(user),
 		"emergencyLights" = !emergency_lights,
 		"nightshiftLights" = nightshift_lights,
+		"disable_nightshift_toggle" = low_power_nightshift_lights,
 
 		"powerChannels" = list(
 			list(
@@ -455,20 +458,33 @@
 			lighting = autoset(lighting, AUTOSET_FORCE_OFF)
 			environ = autoset(environ, AUTOSET_FORCE_OFF)
 			alarm_manager.send_alarm(ALARM_POWER)
+			if(!nightshift_lights || (nightshift_lights && !low_power_nightshift_lights))
+				low_power_nightshift_lights = TRUE
+				INVOKE_ASYNC(src, .proc/set_nightshift, TRUE)
 		else if(cell.percent() < 15 && long_term_power < 0) // <15%, turn off lighting & equipment
 			equipment = autoset(equipment, AUTOSET_OFF)
 			lighting = autoset(lighting, AUTOSET_OFF)
 			environ = autoset(environ, AUTOSET_ON)
 			alarm_manager.send_alarm(ALARM_POWER)
+			if(!nightshift_lights || (nightshift_lights && !low_power_nightshift_lights))
+				low_power_nightshift_lights = TRUE
+				INVOKE_ASYNC(src, .proc/set_nightshift, TRUE)
 		else if(cell.percent() < 30 && long_term_power < 0) // <30%, turn off equipment
 			equipment = autoset(equipment, AUTOSET_OFF)
 			lighting = autoset(lighting, AUTOSET_ON)
 			environ = autoset(environ, AUTOSET_ON)
 			alarm_manager.send_alarm(ALARM_POWER)
+			if(!nightshift_lights || (nightshift_lights && !low_power_nightshift_lights))
+				low_power_nightshift_lights = TRUE
+				INVOKE_ASYNC(src, .proc/set_nightshift, TRUE)
 		else // otherwise all can be on
 			equipment = autoset(equipment, AUTOSET_ON)
 			lighting = autoset(lighting, AUTOSET_ON)
 			environ = autoset(environ, AUTOSET_ON)
+			if(nightshift_lights && low_power_nightshift_lights)
+				low_power_nightshift_lights = FALSE
+				if(!SSnightshift.nightshift_active)
+					INVOKE_ASYNC(src, .proc/set_nightshift, FALSE)
 			if(cell.percent() > 75)
 				alarm_manager.clear_alarm(ALARM_POWER)
 
