@@ -3,7 +3,7 @@
  */
 /obj/item/photo
 	name = "photo"
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "photo"
 	inhand_icon_state = "paper"
 	w_class = WEIGHT_CLASS_TINY

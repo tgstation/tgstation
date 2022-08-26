@@ -1,4 +1,0 @@
-author: "dragomagol"
-delete-after: True
-changes: 
-  - code_imp: "split drinks_recipe into multiple files by category"
