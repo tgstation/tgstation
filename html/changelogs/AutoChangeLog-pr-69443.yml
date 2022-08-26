@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - balance: "Ghouls now appear dead to health scanners and other detections of life."
