@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Fixes some runtimes from loading maptemplates with random populated bookselves, who knows they might even spawn with books now."

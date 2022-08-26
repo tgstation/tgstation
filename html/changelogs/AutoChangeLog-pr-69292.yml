@@ -1,4 +1,0 @@
-author: "RandomGamer123"
-delete-after: True
-changes: 
-  - bugfix: "DNA consoles now use power for operations even if they aren't connected to a scanner (eg. printing mutators from a disk)"

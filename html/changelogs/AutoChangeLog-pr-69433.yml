@@ -1,4 +1,0 @@
-author: "Mooshimi"
-delete-after: True
-changes: 
-  - bugfix: "Replaced the directional firelocks on Metastation garden with windoors, so the fire alarm isn't triggered shift start."

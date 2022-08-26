@@ -856,3 +856,70 @@
   - spellcheck: fixed a typo in NT Frontier under medical partner
   - qol: the ordnance experiments will give you more information on how to do them
       from the UI.
+2022-08-26:
+  AIUNBOLT:
+  - rscadd: the express supply console now requires cargo access instead of quartermaster
+      access
+  Jackal-boop:
+  - bugfix: a mining intercom being the incorrect type
+  Jacquerel:
+  - bugfix: Any mob you can hold in your hand can now also be thrown.
+  JohnFulpWillard:
+  - bugfix: You can now break eggs into cups again.
+  MMMiracles:
+  - rscadd: Adds sheep! Buy one from cargo and use a razor to shear wool off it! Use
+      that wool on a loom and get cloth! Feed the sheep grass to make it grow back
+      the wool faster!
+  Melbert:
+  - bugfix: Fixes some runtimes from loading maptemplates with random populated bookselves,
+      who knows they might even spawn with books now.
+  - rscadd: 'Deltastation: The Locker Room and Dormitories have been flipped around
+      and redone to better fit with the new layout.'
+  - rscadd: 'Deltastation: Some rooms of Security have been widened and shifted around.'
+  - rscadd: 'Deltastation: Added a fourth escape pod by the holodeck.'
+  MidoriWroth:
+  - rscadd: Added 7 new types of various salads. Vegetarians rejoice!
+  - rscadd: Added a new ingredient order beacon box, 'Salads'. It contains many ingredients
+      for the new salads.
+  - rscadd: Added mashed potatoes
+  - rscadd: Added shepherds pie, because station dwellers gotta grow big and strong
+      somehow
+  - rscadd: Added Cullen skink
+  - rscadd: "Added pa\xE7oca, a Brazilian peanut dessert"
+  - rscadd: Cherry jelly has its own container, which can be made at a condi-master
+  - rscadd: Cherry jelly can be ordered at a produce console
+  - rscadd: Consuming jelly now actually nourishes you
+  - imageadd: Added sprites for all the new tasty foods
+  - bugfix: Removed some stacked tables in the Icebox kitchen
+  Mooshimi:
+  - spellcheck: Removes the security MODsuit's description of being shockproof, as
+      it's false advertising.
+  - bugfix: Replaced the directional firelocks on Metastation garden with windoors,
+      so the fire alarm isn't triggered shift start.
+  RandomGamer123:
+  - bugfix: Microwaves no longer spontaneously self-deconstruct if you try inserting
+      non-full stacks of glass or cable coil into them.
+  - bugfix: DNA consoles now use power for operations even if they aren't connected
+      to a scanner (eg. printing mutators from a disk)
+  ShizCalev:
+  - bugfix: Fixed a couple things not updating properly with vareditted & admin deleted
+      cells.
+  - qol: You can now directly interact with beakers inserted in a PanD.E.M.I.C. with
+      droppers and syringes!
+  Vanadiom:
+  - bugfix: Glorious revolutionary tinkers have noticed that the rags in molotovs
+      weren't burning during the flight and modified the assembly instructions so
+      you can finally set bourgeois scum on fire from afar again!
+  distributivgesetz:
+  - bugfix: HoPs all around the Spinward Sector scream in joy as their beloved ticket
+      machine finally rises back from the dead.
+  - qol: Add more examines to ticket machines and tickets, giving info about people's
+      spot in queue and so on.
+  - bugfix: Resolving weakrefs in VV should open a menu now instead of doing nothing.
+  san7890:
+  - rscadd: Nanotrasen has added a new vent and a new scrubber to MetaStation's Gravity
+      Generator Foyer.
+  timothymtorres:
+  - bugfix: Fix cult ghosts needing to breath
+  - bugfix: Fix chaplain's not being able to pick their bible cover while illiterate
+      or blind
