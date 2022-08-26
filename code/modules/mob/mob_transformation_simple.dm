@@ -41,14 +41,16 @@
 		desired_mob.real_name = src.real_name
 
 	if(has_dna() && desired_mob.has_dna())
-		var/mob/living/carbon/oldmob = src
-		var/mob/living/carbon/newmob = desired_mob
-		oldmob.dna.transfer_identity(newmob, transfer_species = FALSE)
-		newmob.updateappearance(mutcolor_update=1, mutations_overlay_update=1)
+		var/mob/living/carbon/old_mob = src
+		var/mob/living/carbon/new_mob = desired_mob
+		old_mob.dna.transfer_identity(new_mob, transfer_species = FALSE)
+		new_mob.updateappearance(mutcolor_update=1, mutations_overlay_update=1)
 	else if(ishuman(desired_mob) && (!ismonkey(desired_mob)))
+		var/mob/living/carbon/old_human
 		var/mob/living/carbon/human/new_human = desired_mob
-		client?.prefs.safe_transfer_prefs_to(new_human)
-		new_human.dna.update_dna_identity()
+		client?.prefs.safe_transfer_prefs_to(old_human)
+		old_human.dna.transfer_identity(new_human, transfer_species = FALSE)
+		new_human.updateappearance(mutcolor_update=1, mutations_overlay_update=1)
 
 	if(mind && isliving(desired_mob))
 		mind.transfer_to(desired_mob, 1) // second argument to force key move to new mob
