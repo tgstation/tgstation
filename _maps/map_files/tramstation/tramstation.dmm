@@ -14290,10 +14290,10 @@
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "eVQ" = (
-/obj/machinery/computer/camera_advanced/base_construction,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
+/obj/machinery/computer/camera_advanced/base_construction/aux,
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
 "eVY" = (
