@@ -360,6 +360,10 @@ All ShuttleMove procs go here
 /obj/docking_port/stationary/onShuttleMove()
 	return FALSE
 
+// Holy shit go away
+/obj/effect/abstract/z_holder/onShuttleMove()
+	return FALSE
+
 // Special movable stationary port, for your mothership shenanigans
 /obj/docking_port/stationary/movable/onShuttleMove(turf/newT, turf/oldT, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
 	if(!moving_dock.can_move_docking_ports || old_dock == src)
