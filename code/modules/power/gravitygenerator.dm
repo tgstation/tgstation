@@ -379,7 +379,10 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 	var/turf/T = get_turf(src)
 	var/sound/alert_sound = sound('sound/effects/alert.ogg')
 	for(var/mob/mobs as anything in GLOB.mob_list)
-		if(!is_valid_z_level(T, get_turf(mobs)))
+		var/turf/mob_turf = get_turf(mobs)
+		if(!istype(mob_turf))
+			continue
+		if(!is_valid_z_level(T, mob_turf))
 			continue
 		mobs.update_gravity(mobs.has_gravity())
 		if(mobs.client)
