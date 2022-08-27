@@ -321,6 +321,8 @@
 /obj/effect/decal/cleanable/ants/update_icon_state()
 	if(istype(src, /obj/effect/decal/cleanable/ants/fire)) //i fucking hate this but you're forced to call parent in update_icon_state()
 		return ..()
+	if(!(flags_1 & INITIALIZED_1))
+		return ..()
 
 	var/datum/component/caltrop/caltrop_comp = GetComponent(/datum/component/caltrop)
 	switch(caltrop_comp.max_damage)
