@@ -26,7 +26,3 @@
 	water_reagent = target_container.reagents.reagent_list[1]
 	TEST_ASSERT(istype(water_reagent), "Incorrect reagent type detected in target container: [water_reagent.type] (should be /datum/reagent/water).")
 	TEST_ASSERT_EQUAL(water_reagent.volume, 10, "Target container has [water_reagent.volume] reagent volume when 10 is expected.")
-
-/datum/unit_test/reagent_mob_expose/Destroy()
-	SSmobs.ignite()
-	return ..()
