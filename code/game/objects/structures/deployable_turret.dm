@@ -4,7 +4,7 @@
 /obj/machinery/deployable_turret
 	name = "machine gun turret"
 	desc = "While the trigger is held down, this gun will redistribute recoil to allow its user to easily shift targets."
-	icon = 'icons/obj/turrets.dmi'
+	icon = 'icons/obj/weapons/turrets.dmi'
 	icon_state = "machinegun"
 	can_buckle = TRUE
 	anchored = FALSE
@@ -229,7 +229,7 @@
 
 /obj/item/gun_control
 	name = "turret controls"
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
 	item_flags = ABSTRACT | NOBLUDGEON | DROPDEL

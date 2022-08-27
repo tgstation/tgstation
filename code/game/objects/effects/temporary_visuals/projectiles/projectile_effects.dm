@@ -1,6 +1,6 @@
 /obj/effect/projectile
 	name = "pew"
-	icon = 'icons/obj/guns/projectiles.dmi'
+	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "nothing"
 	layer = HITSCAN_PROJECTILE_LAYER
 	plane = GAME_PLANE_FOV_HIDDEN

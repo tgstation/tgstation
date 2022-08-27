@@ -238,18 +238,19 @@
 
 /datum/dynamic_ruleset/midround/from_living/autotraitor/trim_candidates()
 	..()
-	for(var/mob/living/player in living_players)
+	candidates = living_players
+	for(var/mob/living/player in candidates)
 		if(issilicon(player)) // Your assigned role doesn't change when you are turned into a silicon.
-			living_players -= player
+			candidates -= player
 		else if(is_centcom_level(player.z))
-			living_players -= player // We don't autotator people in CentCom
+			candidates -= player // We don't autotator people in CentCom
 		else if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
-			living_players -= player // We don't autotator people with roles already
+			candidates -= player // We don't autotator people with roles already
 
 /datum/dynamic_ruleset/midround/from_living/autotraitor/execute()
-	var/mob/M = pick(living_players)
+	var/mob/M = pick(candidates)
 	assigned += M
-	living_players -= M
+	candidates -= M
 	var/datum/antagonist/traitor/newTraitor = new
 	M.mind.add_antag_datum(newTraitor)
 	message_admins("[ADMIN_LOOKUPFLW(M)] was selected by the [name] ruleset and has been made into a midround traitor.")
@@ -914,59 +915,3 @@
 	message_admins("[ADMIN_LOOKUPFLW(obsessed)] has been made Obsessed by the midround ruleset.")
 	log_game("[key_name(obsessed)] was made Obsessed by the midround ruleset.")
 	return TRUE
-
-/// Thief ruleset
-/datum/dynamic_ruleset/midround/from_living/opportunist
-	name = "Opportunist"
-	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
-	antag_datum = /datum/antagonist/thief
-	antag_flag = ROLE_OPPORTUNIST
-	antag_flag_override = ROLE_THIEF
-	protected_roles = list(
-		JOB_CAPTAIN,
-		JOB_DETECTIVE,
-		JOB_HEAD_OF_SECURITY,
-		JOB_PRISONER,
-		JOB_SECURITY_OFFICER,
-		JOB_WARDEN,
-	)
-	restricted_roles = list(
-		JOB_AI,
-		JOB_CYBORG,
-		ROLE_POSITRONIC_BRAIN,
-	)
-	required_candidates = 1
-	weight = 2
-	cost = 3 //Worth less than obsessed, but there's more of them.
-	requirements = list(10,10,10,10,10,10,10,10,10,10)
-	repeatable = TRUE
-
-/datum/dynamic_ruleset/midround/from_living/opportunist/trim_candidates()
-	..()
-	candidates = living_players
-	for(var/mob/living/carbon/human/candidate in candidates)
-		if( \
-			//no bigger antagonists getting smaller role
-			candidate.mind && (candidate.mind.special_role || candidate.mind.antag_datums?.len > 0) \
-			//no dead people
-			|| candidate.stat == DEAD \
-			//no people who don't want it
-			|| !(ROLE_OPPORTUNIST in candidate.client?.prefs?.be_special) \
-			//no non-station crew
-			|| candidate.mind.assigned_role.faction != FACTION_STATION \
-			//stops thief being added to admins messing around on centcom
-			|| is_centcom_level(candidate.z) \
-		)
-			candidates -= candidate
-
-/datum/dynamic_ruleset/midround/from_living/opportunist/execute()
-	var/mob/living/carbon/human/thief = pick_n_take(candidates)
-	thief.mind.add_antag_datum(antag_datum)
-	message_admins("[ADMIN_LOOKUPFLW(thief)] has been made a Thief by the midround ruleset.")
-	log_game("[key_name(thief)] was made a Thief by the midround ruleset.")
-	return TRUE
-
-/// Probability the AI going malf will be accompanied by an ion storm announcement and some ion laws.
-#undef MALF_ION_PROB
-/// The probability to replace an existing law with an ion law instead of adding a new ion law.
-#undef REPLACE_LAW_WITH_ION_PROB

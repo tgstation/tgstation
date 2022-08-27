@@ -43,7 +43,7 @@
 		var/mutable_appearance/underlay_appearance = mutable_appearance(layer = TURF_LAYER, offset_spokesman = src, plane = FLOOR_PLANE)
 		if(fixed_underlay["space"])
 			underlay_appearance.icon = 'icons/turf/space.dmi'
-			underlay_appearance.icon_state = SPACE_ICON_STATE
+			underlay_appearance.icon_state = SPACE_ICON_STATE(x, y, z)
 			SET_PLANE(underlay_appearance, PLANE_SPACE, src)
 		else
 			underlay_appearance.icon = fixed_underlay["icon"]

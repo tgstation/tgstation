@@ -139,21 +139,21 @@
 		SET_PLANE_EXPLICIT(halitem, ABOVE_HUD_PLANE, C)
 		switch(rand(1,6))
 			if(1) //revolver
-				halitem.icon = 'icons/obj/guns/ballistic.dmi'
+				halitem.icon = 'icons/obj/weapons/guns/ballistic.dmi'
 				halitem.icon_state = "revolver"
 				halitem.name = "Revolver"
 			if(2) //c4
-				halitem.icon = 'icons/obj/grenade.dmi'
+				halitem.icon = 'icons/obj/weapons/grenade.dmi'
 				halitem.icon_state = "plastic-explosive0"
 				halitem.name = "C4"
 				if(prob(25))
 					halitem.icon_state = "plasticx40"
 			if(3) //sword
-				halitem.icon = 'icons/obj/transforming_energy.dmi'
+				halitem.icon = 'icons/obj/weapons/transforming_energy.dmi'
 				halitem.icon_state = "e_sword"
 				halitem.name = "energy sword"
 			if(4) //stun baton
-				halitem.icon = 'icons/obj/items_and_weapons.dmi'
+				halitem.icon = 'icons/obj/weapons/items_and_weapons.dmi'
 				halitem.icon_state = "stunbaton"
 				halitem.name = "Stun Baton"
 			if(5) //emag
@@ -161,7 +161,7 @@
 				halitem.icon_state = "emag"
 				halitem.name = "Cryptographic Sequencer"
 			if(6) //flashbang
-				halitem.icon = 'icons/obj/grenade.dmi'
+				halitem.icon = 'icons/obj/weapons/grenade.dmi'
 				halitem.icon_state = "flashbang1"
 				halitem.name = "Flashbang"
 		feedback_details += "Type: [halitem.name]"

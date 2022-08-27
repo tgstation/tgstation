@@ -12,7 +12,7 @@
 
 /// This is a visual helper that shows the occupant inside the cryo cell.
 /atom/movable/visual/cryo_occupant
-	icon = 'icons/obj/cryogenics.dmi'
+	icon = 'icons/obj/medical/cryogenics.dmi'
 	// Must be tall, otherwise the filter will consider this as a 32x32 tile
 	// and will crop the head off.
 	icon_state = "mask_bg"
@@ -29,7 +29,7 @@
 	// Alpha masking
 	// It will follow this as the animation goes, but that's no problem as the "mask" icon state
 	// already accounts for this.
-	add_filter("alpha_mask", 1, list("type" = "alpha", "icon" = icon('icons/obj/cryogenics.dmi', "mask"), "y" = -22))
+	add_filter("alpha_mask", 1, list("type" = "alpha", "icon" = icon('icons/obj/medical/cryogenics.dmi', "mask"), "y" = -22))
 	RegisterSignal(parent, COMSIG_MACHINERY_SET_OCCUPANT, .proc/on_set_occupant)
 	RegisterSignal(parent, COMSIG_CRYO_SET_ON, .proc/on_set_on)
 
@@ -69,7 +69,7 @@
 /// Cryo cell
 /obj/machinery/atmospherics/components/unary/cryo_cell
 	name = "cryo cell"
-	icon = 'icons/obj/cryogenics.dmi'
+	icon = 'icons/obj/medical/cryogenics.dmi'
 	icon_state = "pod-off"
 	density = TRUE
 	max_integrity = 350

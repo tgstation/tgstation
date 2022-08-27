@@ -416,7 +416,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 
 				var/list/storm_appearances = list()
 				for(var/offset in 0 to SSmapping.max_plane_offset)
-					var/mutable_appearance/storm = mutable_appearance('icons/obj/tesla_engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
+					var/mutable_appearance/storm = mutable_appearance('icons/obj/engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
 					SET_PLANE_W_SCALAR(storm, ABOVE_GAME_PLANE, offset)
 					storm.color = prefs["color"]["value"]
 					storm_appearances += storm

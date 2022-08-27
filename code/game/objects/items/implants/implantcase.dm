@@ -4,7 +4,7 @@
 /obj/item/implantcase
 	name = "implant case"
 	desc = "A glass case containing an implant."
-	icon = 'icons/obj/syringe.dmi'
+	icon = 'icons/obj/medical/syringe.dmi'
 	icon_state = "implantcase-0"
 	inhand_icon_state = "implantcase"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'

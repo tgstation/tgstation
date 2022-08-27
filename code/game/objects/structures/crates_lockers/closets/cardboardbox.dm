@@ -72,7 +72,7 @@
 
 /// Does the MGS ! animation
 /atom/proc/do_alert_animation()
-	var/image/alert_image = image('icons/obj/closet.dmi', src, "cardboard_special", layer+1)
+	var/image/alert_image = image('icons/obj/storage/closet.dmi', src, "cardboard_special", layer+1)
 	SET_PLANE_EXPLICIT(alert_image, ABOVE_LIGHTING_PLANE, src)
 	flick_overlay_view(alert_image, src, 0.8 SECONDS)
 	alert_image.alpha = 0

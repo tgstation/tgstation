@@ -303,6 +303,17 @@ structure_check() searches for nearby cultist structures required for the invoca
 		log_game("Offer rune with [sacrificial] on it failed - tried sacrificing pAI.")
 		return FALSE
 
+	if(istype(sacrificial, /mob/living/basic/sheep))
+		var/mob/living/basic/sheep/sacrificial_lamb = sacrificial
+		if(sacrificial_lamb.cult_converted)
+			for(var/cultists in invokers)
+				to_chat(cultists, span_cultitalic("[sacrificial] has already been sacrificed!"))
+				return FALSE
+		for(var/cultists in invokers)
+			to_chat(cultists, span_cultitalic("This feels a bit too cliché, don't you think?"))
+		sacrificial_lamb.cult_time()
+		return
+
 	var/big_sac = FALSE
 	if((((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || C.cult_team.is_sacrifice_target(sacrificial.mind)) && length(invokers) < 3)
 		for(var/M in invokers)
@@ -847,12 +858,16 @@ structure_check() searches for nearby cultist structures required for the invoca
 			log_game("Manifest rune failed - no nearby ghosts")
 			return list()
 		var/mob/dead/observer/ghost_to_spawn = pick(ghosts_on_rune)
+
+		// Dear god, why is /mob/living/carbon/human/cult_ghost not a simple mob or species
+		// someone please fix this at some point -TimT August 2022
 		var/mob/living/carbon/human/cult_ghost/new_human = new(T)
 		new_human.real_name = ghost_to_spawn.real_name
 		new_human.alpha = 150 //Makes them translucent
 		new_human.equipOutfit(/datum/outfit/ghost_cultist) //give them armor
 		new_human.apply_status_effect(/datum/status_effect/cultghost) //ghosts can't summon more ghosts
 		new_human.set_invis_see(SEE_INVISIBLE_OBSERVER)
+		ADD_TRAIT(new_human, TRAIT_NOBREATH, INNATE_TRAIT)
 		ghosts++
 		playsound(src, 'sound/magic/exit_blood.ogg', 50, TRUE)
 		visible_message(span_warning("A cloud of red mist forms above [src], and from within steps... a [new_human.gender == FEMALE ? "wo":""]man."))

@@ -135,10 +135,6 @@
 	else
 		to_be_destroyed = FALSE
 
-/turf/open/burn()
-	if(!active_hotspot) //Might not even be needed since excited groups are no longer cringe
-		..()
-
 /turf/temperature_expose(datum/gas_mixture/air, exposed_temperature)
 	atmos_expose(air, exposed_temperature)
 

@@ -1,7 +1,7 @@
 /obj/item/reagent_containers/dropper
 	name = "dropper"
 	desc = "A dropper. Holds up to 5 units."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "dropper0"
 	worn_icon_state = "pen"
 	amount_per_transfer_from_this = 5

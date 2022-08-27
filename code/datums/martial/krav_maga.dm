@@ -129,7 +129,7 @@
 	if(check_streak(attacker, defender))
 		return TRUE
 	log_combat(attacker, defender, "punched")
-	var/obj/item/bodypart/affecting = defender.get_bodypart(ran_zone(attacker.zone_selected))
+	var/obj/item/bodypart/affecting = defender.get_bodypart(defender.get_random_valid_zone(attacker.zone_selected))
 	var/picked_hit_type = pick("punch", "kick")
 	var/bonus_damage = 0
 	if(defender.body_position == LYING_DOWN)

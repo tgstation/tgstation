@@ -132,7 +132,8 @@
 /turf/open/floor/grass/Initialize(mapload)
 	. = ..()
 	spawniconchange()
-	AddElement(/datum/element/diggable, /obj/item/stack/ore/glass, 2, "uproot", "uproots")
+	AddElement(/datum/element/diggable, /obj/item/stack/ore/glass, 2, worm_chance = 50, \
+		action_text = "uproot", action_text_third_person = "uproots")
 
 /turf/open/floor/grass/proc/spawniconchange()
 	icon_state = "grass[rand(0,3)]"
@@ -170,7 +171,7 @@
 
 /turf/open/floor/fake_snow/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/diggable, /obj/item/stack/tile/mineral/snow, 2)
+	AddElement(/datum/element/diggable, /obj/item/stack/tile/mineral/snow, 2, worm_chance = 0)
 
 /turf/open/floor/fake_snow/setup_broken_states()
 	return list("snow_dug")
@@ -197,7 +198,7 @@
 
 /turf/open/floor/fakebasalt/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/diggable, /obj/item/stack/ore/glass/basalt, 2)
+	AddElement(/datum/element/diggable, /obj/item/stack/ore/glass/basalt, 2, worm_chance = 0)
 	if(prob(15))
 		icon_state = "basalt[rand(0, 12)]"
 		set_basalt_light(src)
@@ -787,10 +788,10 @@
 
 /turf/open/floor/fakespace/Initialize(mapload)
 	. = ..()
-	icon_state = SPACE_ICON_STATE
+	icon_state = SPACE_ICON_STATE(x, y, z)
 
 /turf/open/floor/fakespace/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = 'icons/turf/space.dmi'
-	underlay_appearance.icon_state = SPACE_ICON_STATE
+	underlay_appearance.icon_state = SPACE_ICON_STATE(x, y, z)
 	SET_PLANE(underlay_appearance, PLANE_SPACE, src)
 	return TRUE

@@ -1342,7 +1342,7 @@
 	target.visible_message(span_danger("[shover] shoves [target.name] into [name]!"),
 		span_userdanger("You're shoved into [name] by [shover]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
 	to_chat(src, span_danger("You shove [target.name] into [name]!"))
-	log_combat(src, target, "shoved", "into [name]")
+	log_combat(shover, target, "shoved", addition = "into [name]")
 	return COMSIG_CARBON_SHOVE_HANDLED
 
 // Checks to see how many hands this person has to sign with.

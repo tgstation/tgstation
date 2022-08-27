@@ -38,7 +38,7 @@
 	if(QDELETED(source) || !mod.wearer || newloc == mod.wearer || !mod.wearer.s_store)
 		return
 	to_chat(mod.wearer, span_notice("[src] tries to store [mod.wearer.s_store] inside itself."))
-	atom_storage?.attempt_insert(src, mod.wearer.s_store, mod.wearer, TRUE)
+	atom_storage?.attempt_insert(mod.wearer.s_store, mod.wearer, override = TRUE)
 
 /obj/item/mod/module/storage/large_capacity
 	name = "MOD expanded storage module"
