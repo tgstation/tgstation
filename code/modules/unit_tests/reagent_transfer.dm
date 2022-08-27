@@ -2,8 +2,8 @@
 /datum/unit_test/reagent_transfer
 
 /datum/unit_test/reagent_transfer/Run()
-	var/datum/reagents/source_reagents = allocate(/datum/reagents)
-	var/datum/reagents/target_reagents = allocate(/datum/reagents)
+	var/datum/reagents/source_reagents = allocate(/datum/reagents, 100)
+	var/datum/reagents/target_reagents = allocate(/datum/reagents, 100)
 
 	// Quick test to make sure reagents add properly.
 	source_reagents.add_reagent(/datum/reagent/water, 10)
