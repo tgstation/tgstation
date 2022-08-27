@@ -39,7 +39,6 @@ have ways of interacting with a specific mob and control it.
 		/datum/ai_planning_subtree/punpun_shenanigans,
 	)
 	idle_behavior = /datum/idle_behavior/idle_monkey/pun_pun
-	crossed_immune = TRUE
 
 /datum/ai_controller/monkey/angry
 
