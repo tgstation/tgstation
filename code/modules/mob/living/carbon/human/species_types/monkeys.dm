@@ -191,6 +191,7 @@
 	desc = "This wad of meat is small, but has enlaged occipital lobes for spotting bananas."
 	organ_traits = list(TRAIT_CAN_STRIP, TRAIT_PRIMITIVE) // No literacy or advanced tool usage.
 	actions_types = list(/datum/action/item_action/organ_action/toggle_trip)
+	/// Will this monkey stumble if they are crossed by a simple mob or a carbon in combat mode? Toggable by monkeys with clients, and is messed automatically set to true by monkey AI.
 	var/tripping = TRUE
 
 /datum/action/item_action/organ_action/toggle_trip
@@ -223,13 +224,13 @@
 
 /obj/item/organ/internal/brain/primate/proc/on_crossed(datum/source, atom/movable/crossed)
 	SIGNAL_HANDLER
-	var/mob/living/living_primate = owner
 	if(!tripping)
 		return
-	if(!IS_DEAD_OR_INCAP(living_primate) && isliving(crossed))
-		var/mob/living/in_the_way_mob = crossed
-		if(iscarbon(in_the_way_mob) && !in_the_way_mob.combat_mode)
-			return
-		if(in_the_way_mob.pass_flags == PASSTABLE)
-			return
-		in_the_way_mob.knockOver(living_primate)
+	if(IS_DEAD_OR_INCAP(owner) || !isliving(crossed))
+		return
+	var/mob/living/in_the_way_mob = crossed
+	if(iscarbon(in_the_way_mob) && !in_the_way_mob.combat_mode)
+		return
+	if(in_the_way_mob.pass_flags == PASSTABLE)
+		return
+	in_the_way_mob.knockOver(owner)
