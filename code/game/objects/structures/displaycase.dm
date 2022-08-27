@@ -16,20 +16,12 @@
 	var/custom_glass_overlay = FALSE ///If we have a custom glass overlay to use.
 	var/obj/item/electronics/airlock/electronics
 	var/start_showpiece_type = null //add type for items on display
-	var/list/start_showpieces = list() //Takes sublists in the form of list("type" = /obj/item/bikehorn, "trophy_message" = "henk")
-	var/trophy_message = ""
 	var/glass_fix = TRUE
 	///Represents a signel source of screaming when broken
 	var/datum/alarm_handler/alarm_manager
 
 /obj/structure/displaycase/Initialize(mapload)
 	. = ..()
-	if(start_showpieces.len && !start_showpiece_type)
-		var/list/showpiece_entry = pick(start_showpieces)
-		if (showpiece_entry && showpiece_entry["type"])
-			start_showpiece_type = showpiece_entry["type"]
-			if (showpiece_entry["trophy_message"])
-				trophy_message = showpiece_entry["trophy_message"]
 	if(start_showpiece_type)
 		showpiece = new start_showpiece_type (src)
 	update_appearance()
@@ -60,8 +52,6 @@
 		. += span_notice("Hooked up with an anti-theft system.")
 	if(showpiece)
 		. += span_notice("There's \a [showpiece] inside.")
-	if(trophy_message)
-		. += "The plaque reads:\n [trophy_message]"
 
 /obj/structure/displaycase/proc/dump()
 	if(QDELETED(showpiece))
@@ -296,6 +286,8 @@
 	var/holographic_showpiece = FALSE
 	///are we about to edit
 	var/historian_mode = FALSE
+	///the trophy message
+	var/trophy_message = ""
 
 /obj/structure/displaycase/trophy/Initialize(mapload)
 	. = ..()
