@@ -128,7 +128,7 @@
 #define ACCESS_CHAPEL_OFFICE "chapel_office"
 /// Access to the chapel's crematorium.
 #define ACCESS_CREMATORIUM "crematorium"
-/// Access to the curator's private rooms in the Library, as well as access both into and out of the Library via Maintenance.
+/// Access to the curator's private rooms in the Library and the trophy display cases, as well as access both into and out of the Library via Maintenance.
 #define ACCESS_LIBRARY "library"
 /// Access to the Bar, the Bar's Backroom, the bar sign, the bar robot portal, and the bar's vending machines. Some other bar-things too.
 #define ACCESS_BAR "bar"

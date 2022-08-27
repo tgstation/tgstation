@@ -280,6 +280,7 @@
 	name = "trophy display case"
 	desc = "Store your trophies of accomplishment in here, and they will stay forever."
 	integrity_failure = 0
+	req_access = list(ACCESS_LIBRARY)
 	///the key of the player who placed the item in the case
 	var/placer_key = ""
 	///is the trophy a hologram, not a real item placed by a player?
