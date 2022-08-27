@@ -40,6 +40,8 @@
 	return 1
 
 /obj/item/assembly/proc/on_attach()
+	if(!holder && connected)
+		holder = connected.holder
 
 //Call this when detaching it from a device. handles any special functions that need to be updated ex post facto
 /obj/item/assembly/proc/on_detach()
@@ -135,9 +137,9 @@
 	return ui_interact(user)
 
 /obj/item/assembly/ui_host(mob/user)
-	if(holder)
-		return holder
-	return src
+	if(connected)
+		return connected.holder
+	return holder?.master || holder || src
 
 /obj/item/assembly/ui_state(mob/user)
 	return GLOB.hands_state

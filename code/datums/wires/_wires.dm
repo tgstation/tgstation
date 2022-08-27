@@ -184,6 +184,7 @@
 		assemblies[color] = S
 		S.forceMove(holder)
 		S.connected = src
+		S.on_attach()
 		return S
 
 /datum/wires/proc/detach_assembly(color)
@@ -191,6 +192,10 @@
 	if(S && istype(S))
 		assemblies -= color
 		S.connected = null
+		if(S.holder == holder)
+			S.on_detach()
+			if(S.holder == holder)
+				S.holder = null
 		S.forceMove(holder.drop_location())
 		return S
 

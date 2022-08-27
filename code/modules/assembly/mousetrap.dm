@@ -8,18 +8,58 @@
 	var/armed = FALSE
 	drop_sound = 'sound/items/handling/component_drop.ogg'
 	pickup_sound = 'sound/items/handling/component_pickup.ogg'
+	var/obj/item/host = null
+	var/turf/host_turf = null
 
-	///if we are attached to an assembly holder, we attach a connect_loc element to ourselves that listens to this from the holder
-	var/static/list/holder_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
-	)
+/obj/item/assembly/mousetrap/proc/update_host(var/force = FALSE)
+	var/obj/item/newhost
+	if(connected)
+		newhost = connected.holder // this won't actually do anything unless someone makes opening a wiring panel call on_found (which would be boss)
+	else
+		newhost = holder?.master || holder || src
+	// ok look
+	// previously this wasn't working and thus no concern, but I made mousetraps work with wires
+	// specifically in step-on-the-mousetrap mode, ie, when you enter its turf
+	// and as a consequence, you can put a mousetrap in door wires and it will be set off
+	// the first time someone walks through a door (enters the door's loc)
+	// that's an interesting mechanic (bolt open a door for example) but it's not appropriate for a mousetrap
+	// similarly if used on say an apc's wires it would go into effect when someone walked by it.  Not appropriate.
+	// other assemblies could be made to do something similar instead.
+	// mousetrap assemblies will still receive on-found notifications when you open a wiring panel
+	// and (whether reasonable or not) mousetraps that do this do still trigger wires
+	// the point is for now step-on-mousetrap mode should only work on items
+	// maybe it should never have been an assembly in the first place.
+	if(!istype(newhost,/obj/item))
+		if(host)
+			UnregisterSignal(host,COMSIG_MOVABLE_MOVED)
+			host = src
+		if(isturf(host_turf))
+			UnregisterSignal(host_turf,COMSIG_ATOM_ENTERED)
+			host_turf = null
+		return
+	if((newhost != host) || force)
+		if(host)
+			UnregisterSignal(host,COMSIG_MOVABLE_MOVED)
+		host = newhost
+		RegisterSignal(host,COMSIG_MOVABLE_MOVED,.proc/holder_movement)
+	if((host_turf != host.loc) || force)
+		if(isturf(host_turf))
+			UnregisterSignal(host_turf,COMSIG_ATOM_ENTERED)
+			host_turf = null
+
+		if(isturf(host.loc))
+			host_turf = host.loc
+			RegisterSignal(host_turf,COMSIG_ATOM_ENTERED,.proc/on_entered)
+		else
+			host_turf = null
+
+/obj/item/assembly/mousetrap/holder_movement()
+	. = ..()
+	update_host()
 
 /obj/item/assembly/mousetrap/Initialize(mapload)
 	. = ..()
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
+	update_host(TRUE)
 
 /obj/item/assembly/mousetrap/examine(mob/user)
 	. = ..()
@@ -47,22 +87,22 @@
 
 /obj/item/assembly/mousetrap/on_attach()
 	. = ..()
-	AddComponent(/datum/component/connect_loc_behalf, holder, holder_connections)
+	update_host()
 
 /obj/item/assembly/mousetrap/on_detach()
 	. = ..()
-	qdel(GetComponent(/datum/component/connect_loc_behalf))
+	update_host()
 
 /obj/item/assembly/mousetrap/proc/triggered(mob/target, type = "feet")
 	if(!armed)
 		return
+	armed = FALSE // moved to the top because you could trigger it more than once under some circumstances
+	update_appearance()
 	var/obj/item/bodypart/affecting = null
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(HAS_TRAIT(H, TRAIT_PIERCEIMMUNE))
 			playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
-			armed = FALSE
-			update_appearance()
 			pulse(FALSE)
 			return FALSE
 		switch(type)
@@ -89,8 +129,6 @@
 	else if(isregalrat(target))
 		visible_message(span_boldannounce("Skreeeee!")) //He's simply too large to be affected by a tiny mouse trap.
 	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
-	armed = FALSE
-	update_appearance()
 	pulse(FALSE)
 
 

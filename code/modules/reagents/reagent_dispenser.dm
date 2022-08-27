@@ -21,6 +21,24 @@
 	var/leaking = FALSE
 	///How much reagent to leak
 	var/amount_to_leak = 10
+	//an assembly attached to the tank - for flammable tanks
+	var/obj/item/assembly_holder/rig = null
+	//whether it accepts assemblies or not
+	var/accepts_rig = FALSE
+	//overlay of attached assemblies
+	var/mutable_appearance/assembliesoverlay
+	/// The last person to rig this fuel tank - Stored with the object. Only the last person matters for investigation
+	var/last_rigger = ""
+
+/obj/structure/reagent_dispensers/IsSpecialAssembly()
+	return accepts_rig
+
+/obj/structure/reagent_dispensers/Destroy()
+	QDEL_NULL(rig)
+	return ..()
+/obj/structure/reagent_dispensers/proc/rig_boom()
+	log_bomber(last_rigger, "rigged [src] exploded", src)
+	boom()
 
 /obj/structure/reagent_dispensers/Initialize(mapload)
 	. = ..()
@@ -37,6 +55,12 @@
 			. += span_notice("Its tap looks like it could be <b>wrenched</b> open.")
 		else
 			. += span_warning("Its tap is <b>wrenched</b> open!")
+	if(accepts_rig && get_dist(user, src) <= 2)
+		if(rig)
+			. += span_warning("There is some kind of device <b>rigged</b> to the tank!")
+		else
+			. += span_notice("It looks like you could <b>rig</b> a device to the tank.")
+
 
 /obj/structure/reagent_dispensers/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
@@ -47,6 +71,30 @@
 /obj/structure/reagent_dispensers/attackby(obj/item/W, mob/user, params)
 	if(W.is_refillable())
 		return FALSE //so we can refill them via their afterattack.
+	if(istype(W, /obj/item/assembly_holder) && accepts_rig)
+		if(rig)
+			user.balloon_alert("another device is in the way!")
+			return ..()
+		var/obj/item/assembly_holder/holder = W
+		if(!(locate(/obj/item/assembly/igniter) in holder.assemblies))
+			return ..()
+
+		user.balloon_alert_to_viewers("attaching rig...")
+		add_fingerprint(user)
+		if(!do_after(user, 2 SECONDS, target = src) || !user.transferItemToLoc(holder, src))
+			return
+		rig = holder
+		holder.master = src
+		holder.on_attach()
+		assembliesoverlay = holder
+		assembliesoverlay.pixel_x += 6
+		assembliesoverlay.pixel_y += 1
+		add_overlay(assembliesoverlay)
+		RegisterSignal(src, COMSIG_IGNITER_ACTIVATE, .proc/rig_boom)
+		log_bomber(user, "attached [holder.name] to ", src)
+		last_rigger = user
+		user.balloon_alert_to_viewers("attached rig")
+		return
 
 	if(istype(W, /obj/item/stack/sheet/iron) && can_be_tanked)
 		var/obj/item/stack/sheet/iron/metal_stack = W
@@ -62,6 +110,32 @@
 
 	return ..()
 
+/obj/structure/reagent_dispensers/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == rig)
+		rig = null
+
+/obj/structure/reagent_dispensers/attack_hand(mob/user, list/modifiers)
+	. = ..()
+	if(. || !rig)
+		return
+	// mousetrap rigs only make sense if you can set them off, can't step on them
+	// If you see a mousetrap-rigged fuel tank, just leave it alone
+	rig.on_found()
+	if(QDELETED(src))
+		return
+	user.balloon_alert_to_viewers("detaching rig...")
+	if(!do_after(user, 2 SECONDS, target = src))
+		return
+	user.balloon_alert_to_viewers("detached rig")
+	user.log_message("detached [rig] from [src].", LOG_GAME)
+	if(!user.put_in_hands(rig))
+		rig.forceMove(get_turf(user))
+	rig = null
+	last_rigger = null
+	cut_overlays(assembliesoverlay)
+	UnregisterSignal(src, COMSIG_IGNITER_ACTIVATE)
+
 /obj/structure/reagent_dispensers/Initialize(mapload)
 	create_reagents(tank_volume, DRAINABLE | AMOUNT_VISIBLE)
 	if(reagent_id)
@@ -69,8 +143,36 @@
 	. = ..()
 
 /obj/structure/reagent_dispensers/proc/boom()
-	visible_message(span_danger("\The [src] ruptures!"))
-	chem_splash(loc, null, 5, list(reagents))
+	var/datum/reagent/fuel/volatiles = reagents.has_reagent(/datum/reagent/fuel)
+	var/fuel_amt = 0
+	if(istype(volatiles) && volatiles.volume >= 25)
+		fuel_amt = volatiles.volume
+		reagents.del_reagent(/datum/reagent/fuel) // not actually used for the explosion
+	if(reagents.total_volume)
+		if(!fuel_amt)
+			visible_message(span_danger("\The [src] ruptures!"))
+		// Leave it up to future terrorists to figure out the best way to mix reagents with fuel for a useful boom here
+		chem_splash(loc, null, 2 + (reagents.total_volume + fuel_amt) / 1000, list(reagents), extra_heat=(fuel_amt / 50),adminlog=(fuel_amt<25))
+
+	if(fuel_amt) // with that done, actually explode
+		visible_message(span_danger("\The [src] explodes!"))
+		// old code for reference:
+		// standard fuel tank = 1000 units = heavy_impact_range = 1, light_impact_range = 5, flame_range = 5
+		// big fuel tank = 5000 units = devastation_range = 1, heavy_impact_range = 2, light_impact_range = 7, flame_range = 12
+		// It did not account for how much fuel was actually in the tank at all, just the size of the tank.
+		// I encourage others to better scale these numbers in the future.
+		// As it stands this is a minor nerf in exchange for an easy bombing technique working that has been broken for a while.
+		switch(volatiles.volume)
+			if(25 to 150)
+				explosion(src, light_impact_range = 1, flame_range = 2)
+			if(150 to 300)
+				explosion(src, light_impact_range = 2, flame_range = 3)
+			if(300 to 750)
+				explosion(src, heavy_impact_range = 1, light_impact_range = 3, flame_range = 5)
+			if(750 to 1500)
+				explosion(src, heavy_impact_range = 1, light_impact_range = 4, flame_range = 6)
+			if(1500 to INFINITY)
+				explosion(src, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 6, flame_range = 8)
 	qdel(src)
 
 /obj/structure/reagent_dispensers/deconstruct(disassembled = TRUE)
@@ -127,63 +229,13 @@
 	icon_state = "fuel"
 	reagent_id = /datum/reagent/fuel
 	openable = TRUE
-	//an assembly attached to the tank
-	var/obj/item/assembly_holder/rig = null
-	//whether it accepts assemblies or not
-	var/accepts_rig = TRUE
-	//overlay of attached assemblies
-	var/mutable_appearance/assembliesoverlay
-	/// The last person to rig this fuel tank - Stored with the object. Only the last person matters for investigation
-	var/last_rigger = ""
+	accepts_rig = TRUE
 
 /obj/structure/reagent_dispensers/fueltank/Initialize(mapload)
 	. = ..()
 
 	if(SSevents.holidays?[APRIL_FOOLS])
 		icon_state = "fuel_fools"
-
-/obj/structure/reagent_dispensers/fueltank/Destroy()
-	QDEL_NULL(rig)
-	return ..()
-
-/obj/structure/reagent_dispensers/fueltank/Exited(atom/movable/gone, direction)
-	. = ..()
-	if(gone == rig)
-		rig = null
-
-/obj/structure/reagent_dispensers/fueltank/examine(mob/user)
-	. = ..()
-	if(get_dist(user, src) <= 2)
-		if(rig)
-			. += span_warning("There is some kind of device <b>rigged</b> to the tank!")
-		else
-			. += span_notice("It looks like you could <b>rig</b> a device to the tank.")
-
-/obj/structure/reagent_dispensers/fueltank/attack_hand(mob/user, list/modifiers)
-	. = ..()
-	if(.)
-		return
-	if(!rig)
-		return
-	user.balloon_alert_to_viewers("detaching rig...")
-	if(!do_after(user, 2 SECONDS, target = src))
-		return
-	user.balloon_alert_to_viewers("detached rig")
-	user.log_message("detached [rig] from [src].", LOG_GAME)
-	if(!user.put_in_hands(rig))
-		rig.forceMove(get_turf(user))
-	rig = null
-	last_rigger = null
-	cut_overlays(assembliesoverlay)
-	UnregisterSignal(src, COMSIG_IGNITER_ACTIVATE)
-
-/obj/structure/reagent_dispensers/fueltank/boom()
-	explosion(src, heavy_impact_range = 1, light_impact_range = 5, flame_range = 5)
-	qdel(src)
-
-/obj/structure/reagent_dispensers/fueltank/proc/rig_boom()
-	log_bomber(last_rigger, "rigged fuel tank exploded", src)
-	boom()
 
 /obj/structure/reagent_dispensers/fueltank/blob_act(obj/structure/blob/B)
 	boom()
@@ -225,27 +277,7 @@
 			log_bomber(user, "detonated a", src, "via welding tool")
 			boom()
 		return
-	if(istype(I, /obj/item/assembly_holder) && accepts_rig)
-		if(rig)
-			user.balloon_alert("another device is in the way!")
-			return ..()
-		user.balloon_alert_to_viewers("attaching rig...")
-		if(!do_after(user, 2 SECONDS, target = src))
-			return
-		user.balloon_alert_to_viewers("attached rig")
-		var/obj/item/assembly_holder/holder = I
-		if(locate(/obj/item/assembly/igniter) in holder.assemblies)
-			rig = holder
-			if(!user.transferItemToLoc(holder, src))
-				return
-			log_bomber(user, "rigged [name] with [holder.name] for explosion", src)
-			last_rigger = user
-			assembliesoverlay = holder
-			assembliesoverlay.pixel_x += 6
-			assembliesoverlay.pixel_y += 1
-			add_overlay(assembliesoverlay)
-			RegisterSignal(src, COMSIG_IGNITER_ACTIVATE, .proc/rig_boom)
-		return
+
 	return ..()
 
 /obj/structure/reagent_dispensers/fueltank/large
@@ -253,10 +285,6 @@
 	desc = "A tank full of a high quantity of welding fuel. Keep away from open flames."
 	icon_state = "fuel_high"
 	tank_volume = 5000
-
-/obj/structure/reagent_dispensers/fueltank/large/boom()
-	explosion(src, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 7, flame_range = 12)
-	qdel(src)
 
 /// Wall mounted dispeners, like pepper spray or virus food. Not a normal tank, and shouldn't be able to be turned into a plumbed stationary one.
 /obj/structure/reagent_dispensers/wall
@@ -388,3 +416,4 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 	icon_state = "fuel_stationary"
 	desc = "A stationary, plumbed, fuel tank."
 	reagent_id = /datum/reagent/fuel
+	accepts_rig = TRUE

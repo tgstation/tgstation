@@ -36,13 +36,28 @@
 		scanning = FALSE
 	update_appearance()
 	return TRUE
+/obj/item/assembly/prox_sensor/dropped()
+	. = ..()
+	if(connected)
+		proximity_monitor.set_host(connected.holder,src)
+	else
+		proximity_monitor.set_host(holder?.master || holder || src, src)
+/obj/item/assembly/prox_sensor/on_attach()
+	. = ..()
+	if(connected)
+		proximity_monitor.set_host(connected.holder,src)
+	else
+		proximity_monitor.set_host(holder?.master || holder || src, src)
 
 /obj/item/assembly/prox_sensor/on_detach()
 	. = ..()
 	if(!.)
 		return
 	else
-		proximity_monitor.set_host(src, src)
+		if(connected)
+			proximity_monitor.set_host(connected.holder,src)
+		else
+			proximity_monitor.set_host(holder?.master || holder || src, src)
 
 /obj/item/assembly/prox_sensor/toggle_secure()
 	secured = !secured

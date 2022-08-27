@@ -36,6 +36,13 @@
 	update_appearance()
 	SSblackbox.record_feedback("tally", "assembly_made", 1, "[initial(A.name)]-[initial(A2.name)]")
 
+/obj/item/assembly_holder/proc/on_attach()
+	var/obj/item/newloc = loc
+	if(!newloc.IsSpecialAssembly() && !newloc.IsAssemblyHolder())
+		return
+	for(var/obj/item/assembly/assembly in assemblies)
+		assembly.on_attach()
+
 /**
  * Adds an assembly to the assembly holder
  *
@@ -149,9 +156,9 @@
 /obj/item/assembly_holder/proc/process_activation(obj/device, normal = TRUE, special = TRUE)
 	if(!device)
 		return FALSE
-	if(normal && LAZYLEN(assemblies) >= 2)
+	if(normal && assemblies.len >= 2)
 		for(var/obj/item/assembly/assembly as anything in assemblies)
-			if(LAZYACCESS(assemblies, assembly) != device)
+			if(assembly != device)
 				assembly.pulsed(FALSE)
 	if(master)
 		master.receive_signal()
