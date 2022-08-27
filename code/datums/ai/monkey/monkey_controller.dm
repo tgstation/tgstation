@@ -52,7 +52,8 @@ have ways of interacting with a specific mob and control it.
 	. = ..()
 	if(. & AI_CONTROLLER_INCOMPATIBLE)
 		return
-	set_trip_mode(mode = FALSE) // Pun Pun is no pushover
+	if(pawn)
+		set_trip_mode(mode = FALSE) // Pun Pun is no pushover
 
 /datum/ai_controller/monkey/TryPossessPawn(atom/new_pawn)
 	if(!isliving(new_pawn))
