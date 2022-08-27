@@ -41,6 +41,8 @@
 	var/failure_time = 0
 	///Do we effect the appearance of our mob. Used to save time in preference code
 	var/visual = TRUE
+	/// Traits that are given to the holder of the organ.
+	var/list/organ_traits = list()
 
 // Players can look at prefs before atoms SS init, and without this
 // they would not be able to see external organs, such as moth wings.
@@ -92,6 +94,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, .proc/on_owner_examine)
 	for(var/datum/action/action as anything in actions)
 		action.Grant(reciever)
+	for(var/trait in organ_traits)
+		ADD_TRAIT(reciever, trait, src)
 	return TRUE
 
 
@@ -108,6 +112,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	owner = null
 	for(var/datum/action/action as anything in actions)
 		action.Remove(organ_owner)
+	for(var/trait in organ_traits)
+		REMOVE_TRAIT(organ_owner, trait, src)
 
 	SEND_SIGNAL(src, COMSIG_ORGAN_REMOVED, organ_owner)
 	SEND_SIGNAL(organ_owner, COMSIG_CARBON_LOSE_ORGAN, src, special)

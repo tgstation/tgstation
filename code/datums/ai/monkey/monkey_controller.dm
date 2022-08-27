@@ -42,7 +42,6 @@ have ways of interacting with a specific mob and control it.
 		return AI_CONTROLLER_INCOMPATIBLE
 
 	var/mob/living/living_pawn = new_pawn
-	RegisterSignal(new_pawn, COMSIG_MOVABLE_CROSS, .proc/on_crossed)
 	RegisterSignal(new_pawn, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
 	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
 	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_PAW, .proc/on_attack_paw)
@@ -61,7 +60,6 @@ have ways of interacting with a specific mob and control it.
 
 /datum/ai_controller/monkey/UnpossessPawn(destroy)
 	UnregisterSignal(pawn, list(
-		COMSIG_MOVABLE_CROSS,
 		COMSIG_PARENT_ATTACKBY,
 		COMSIG_ATOM_ATTACK_HAND,
 		COMSIG_ATOM_ATTACK_PAW,
@@ -78,14 +76,12 @@ have ways of interacting with a specific mob and control it.
 
 	return ..() //Run parent at end
 
-// Stops sentient monkeys from being knocked over like weak dunces.
-/datum/ai_controller/monkey/on_sentience_gained()
-	. = ..()
-	UnregisterSignal(pawn, COMSIG_MOVABLE_CROSS)
-
 /datum/ai_controller/monkey/on_sentience_lost()
 	. = ..()
-	RegisterSignal(pawn, COMSIG_MOVABLE_CROSS, .proc/on_crossed)
+	var/mob/living/carbon/regressed_monkey = pawn
+	if(istype(regressed_monkey.getorganslot(ORGAN_SLOT_BRAIN), /obj/item/organ/internal/brain/primate)) // In case we are a monkey AI in a human brain by who was previously controlled by a client but it now not by some marvel
+		var/obj/item/organ/internal/brain/primate/monkeybrain = regressed_monkey.getorganslot(ORGAN_SLOT_BRAIN)
+		monkeybrain.tripping = TRUE // The monkey AI is weak and cowardly.
 
 /datum/ai_controller/monkey/able_to_run()
 	. = ..()
