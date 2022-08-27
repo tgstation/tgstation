@@ -9,6 +9,8 @@
 #define ITEM_IS_WORTHLESS_PHRASE "ITEM_IS_WORTHLESS_PHRASE"
 #define TRADER_HAS_ENOUGH_ITEM_PHRASE "TRADER_HAS_ENOUGH_ITEM_PHRASE"
 #define TRADER_LORE_PHRASE "TRADER_LORE_PHRASE"
+#define TRADER_NOT_BUYING_ANYTHING "TRADER_NOT_BUYING_ANYTHING"
+#define TRADER_NOT_SELLING_ANYTHING "TRADER_NOT_SELLING_ANYTHING"
 
 #define TRADER_PRODUCT_INFO_PRICE 1
 #define TRADER_PRODUCT_INFO_QUANTITY 2
@@ -112,26 +114,32 @@
 		TRADER_LORE_PHRASE = list(
 			"Hello! I am the test trader.",
 			"Oooooooo~!"
-		)
+		),
+		TRADER_NOT_BUYING_ANYTHING = list(
+			"I'm currently buying nothing at the moment."
+		),
+		TRADER_NOT_SELLING_ANYTHING = list(
+			"I'm currently selling nothing at the moment."
+		),
 	)
 	///The name of the currency that is used when buying or selling items
 	var/currency_name = "credits"
 
 ///Initializes the products and item demands of the trader
-/mob/living/simple_animal/hostile/retaliate/trader/Initialize()
+/mob/living/simple_animal/hostile/retaliate/trader/Initialize(mapload)
 	. = ..()
 	restock_products()
 	renew_item_demands()
 
 ///Returns a list of the starting price/quanity/fluff text about the product listings; products = initial(products) doesn't work so this exists mainly for restock_products()
 /mob/living/simple_animal/hostile/retaliate/trader/proc/initial_products()
-	return list(/obj/item/food/burger/ghost = list(200, INFINITY)
-				)
+	return list(/obj/item/food/burger/ghost = list(200, INFINITY),
+	)
 
 ///Returns a list of the starting price/quanity/fluff text about the wanted items; wanted_items = initial(wanted_items) doesn't work so this exists mainly for renew_item_demands()
 /mob/living/simple_animal/hostile/retaliate/trader/proc/initial_wanteds()
-	return list(/obj/item/ectoplasm = list(100, INFINITY, "")
-				)
+	return list(/obj/item/ectoplasm = list(100, INFINITY, ""),
+	)
 
 /**
  * Depending on the passed parameter/override, returns a randomly picked string out of a list
@@ -141,7 +149,10 @@
  * * say_text - (String) a define that matches the key of a entry in say_phrases
  */
 /mob/living/simple_animal/hostile/retaliate/trader/proc/return_trader_phrase(say_text)
-	return (length(say_phrases[say_text]) ? pick(say_phrases[say_text]) : "")
+	if(!length(say_phrases[say_text]))
+		return
+	return pick(say_phrases[say_text])
+	//return (length(say_phrases[say_text]) ? pick(say_phrases[say_text]) : "")
 
 ///Sets up the radials for the user and calls procs related to the actions the user wants to take
 /mob/living/simple_animal/hostile/retaliate/trader/interact(mob/user)
@@ -186,20 +197,21 @@
 	var/list/npc_options = list(
 		"Lore" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_lore"),
 		"Selling?" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_selling"),
-		"Buying?" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_buying")
+		"Buying?" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_buying"),
 	)
 	var/pick = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
-	if(pick == "Lore")
-		say(return_trader_phrase(TRADER_LORE_PHRASE))
-	if(pick == "Buying?")
-		trader_buys_what(user)
-	if(pick == "Selling?")
-		trader_sells_what(user)
+	switch(pick)
+		if("Lore")
+			say(return_trader_phrase(TRADER_LORE_PHRASE))
+		if("Buying?")
+			trader_buys_what(user)
+		if("Selling?")
+			trader_sells_what(user)
 
 ///Displays to the user what the trader is willing to buy and how much until a restock happens
 /mob/living/simple_animal/hostile/retaliate/trader/proc/trader_buys_what(mob/user)
 	if(!wanted_items.len)
-		to_chat(user, span_green("I'm currently buying nothing at the moment."))
+		say(return_trader_phrase(TRADER_NOT_BUYING_ANYTHING))
 		return
 	var/list/product_info
 	to_chat(user, span_green("I'm willing to buy the following; "))
@@ -214,7 +226,7 @@
 ///Displays to the user what the trader is selling and how much is in stock
 /mob/living/simple_animal/hostile/retaliate/trader/proc/trader_sells_what(mob/user)
 	if(!products.len)
-		to_chat(user, span_green("I'm currently selling nothing at the moment."))
+		say(return_trader_phrase(TRADER_NOT_SELLING_ANYTHING))
 		return
 	var/list/product_info
 	to_chat(user, span_green("I'm currently selling the following; "))
@@ -252,9 +264,9 @@
 	face_atom(user)
 	product_info = products[item_to_buy]
 	if(!product_info[TRADER_PRODUCT_INFO_QUANTITY])
-		to_chat(user, span_red("The item appears to be out of stock."))
+		say("[initial(item_to_buy.name)] appears to be out of stock.")
 		return
-	to_chat(user, span_notice("It will cost you [product_info[TRADER_PRODUCT_INFO_PRICE]] [currency_name] to buy \the [initial(item_to_buy.name)]. Are you sure you want to buy it?"))
+	say("It will cost you [product_info[TRADER_PRODUCT_INFO_PRICE]] [currency_name] to buy \the [initial(item_to_buy.name)]. Are you sure you want to buy it?")
 	var/list/npc_options = list(
 		"Yes" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_yes"),
 		"No" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no")
@@ -275,12 +287,11 @@
 ///Calculates the value of money in the hand of the buyer and spends it if it's sufficient
 /mob/living/simple_animal/hostile/retaliate/trader/proc/spend_buyer_offhand_money(mob/user, the_cost)
 	var/value = 0
-	var/obj/item/holochip/cash
-	cash = user.is_holding_item_of_type(/obj/item/holochip)
+	var/obj/item/holochip/cash = user.is_holding_item_of_type(/obj/item/holochip)
 	if(cash)
 		value += cash.credits
 	if((value >= the_cost) && cash)
-		cash.spend(the_cost)
+		return cash.spend(the_cost)
 		return TRUE
 	return FALSE //Purchase unsuccessful
 
@@ -292,9 +303,12 @@
  * * user - (Mob REF) The mob trying to sell something
  */
 /mob/living/simple_animal/hostile/retaliate/trader/proc/try_sell(mob/user)
-	var/obj/item/activehanditem = user.get_active_held_item()
-	var/obj/item/inactivehanditem = user.get_inactive_held_item()
-	if(!sell_item(user, activehanditem) && !sell_item(user, inactivehanditem))
+	var/sold_item = FALSE
+	for(var/obj/item/an_item in user.held_items)
+		if(sell_item(user, an_item))
+			sold_item = TRUE
+			break
+	if(!sold_item)
 		say(return_trader_phrase(ITEM_REJECTED_PHRASE))
 
 /**
@@ -331,13 +345,13 @@
 		say(return_trader_phrase(ITEM_IS_WORTHLESS_PHRASE))
 		return FALSE
 	say(return_trader_phrase(INTERESTED_PHRASE))
-	to_chat(user, span_notice("You will receive [cost] [currency_name] for each one of [selling]."))
+	say("You will receive [cost] [currency_name] for the [selling].")
 	var/list/npc_options = list(
 		"Yes" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_yes"),
-		"No" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no")
+		"No" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no"),
 	)
-	var/npc_result = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	face_atom(user)
+	var/npc_result = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(npc_result != "Yes")
 		say(return_trader_phrase(ITEM_SELLING_CANCELED_PHRASE))
 		return TRUE
@@ -446,7 +460,13 @@
 			"I'd really like a refreshing carton of milk!",
 			"I'm willing to play big prices for BONES! Need materials to make merch, eh?",
 			"It's a beautiful day outside. Birds are singing, Flowers are blooming... On days like these, kids like you... Should be buying my wares!"
-		)
+		),
+		TRADER_NOT_BUYING_ANYTHING = list(
+			"I'm currently buying nothing at the moment."
+		),
+		TRADER_NOT_SELLING_ANYTHING = list(
+			"I'm currently selling nothing at the moment."
+		),
 	)
 
 /mob/living/simple_animal/hostile/retaliate/trader/mrbones/initial_products()
@@ -455,11 +475,11 @@
 		/obj/item/clothing/mask/bandana/skull/black = list(50, INFINITY),
 		/obj/item/food/cookie/sugar/spookyskull = list(10, INFINITY),
 		/obj/item/instrument/trombone/spectral = list(10000, INFINITY),
-		/obj/item/shovel/serrated = list(150, INFINITY)
-				)
+		/obj/item/shovel/serrated = list(150, INFINITY),
+		)
 
 /mob/living/simple_animal/hostile/retaliate/trader/mrbones/initial_wanteds()
 	return list(
 		/obj/item/reagent_containers/condiment/milk = list(1000, INFINITY, ""),
-		/obj/item/stack/sheet/bone = list(420, INFINITY, ", per sheet of bone")
-				)
+		/obj/item/stack/sheet/bone = list(420, INFINITY, ", per sheet of bone"),
+		)
