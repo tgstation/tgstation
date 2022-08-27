@@ -169,7 +169,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	documentation = "Contains the screen object we use as a backdrop to catch clicks on portions of the screen that would otherwise contain nothing else. \
 		<br>Will always be below almost everything else"
 	plane = CLICKCATCHER_PLANE
-	multiz_scaled = FALSE
+	allows_offsetting = FALSE
 
 /atom/movable/screen/plane_master/clickcatcher/Initialize(mapload, datum/plane_master_group/home, offset)
 	. = ..()
@@ -313,6 +313,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
  * do not touch this unless you know what you are doing
  */
 // Lemon todo: blackness renders weird when you view down openspace, because of transforms and borders and such
+// This is a consequence of not using lummy's grouped transparency, but I couldn't get that to work without totally fucking up
+// Sight flags, and shooting vis_contents usage to the moon. So we're doin it different.
 // Look into lessening this, maybe mirror down all the time? idk
 /atom/movable/screen/plane_master/blackness
 	name = "Darkness"
@@ -478,19 +480,15 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	hide_plane(mymob)
 	return FALSE
 
-/atom/movable/screen/plane_master/excited_turfs
-	name = "Atmos excited turfs"
-	documentation = "Holds excited turf visualization images. Entirely a debug tool.\
-		<br>Images are created at init, and stuck in a turf's viscontents if a global debug toggle is enabled.\
-		<br>They're then displayed to the user by adding them to its images list, and showing the plane to our mob."
-	plane = ATMOS_GROUP_PLANE
+/atom/movable/screen/plane_master/high_game
+	name = "High Game"
+	documentation = "Holds anything that wants to be displayed above the rest of the game plane, and doesn't want to be clickable. \
+		<br>This includes atmos debug overlays, blind sound images, and mining scanners. \
+		<br>Really only exists for its layering potential, we don't use this for any vfx"
+	plane = HIGH_GAME_PLANE
 	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
-	start_hidden = TRUE
-
-/atom/movable/screen/plane_master/excited_turfs/Initialize(mapload, datum/plane_master_group/home, offset)
-	. = ..()
-	mirror_parent_hidden()
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /atom/movable/screen/plane_master/ghost
 	name = "Ghost"
@@ -501,13 +499,13 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
 
 /atom/movable/screen/plane_master/fullscreen
-	name = "Fullscreen alert"
+	name = "Fullscreen"
 	documentation = "Holds anything that applies to or above the full screen. \
-		<br>Note, it's still rendered underneath hud objects, but this lets us control the order that things like death/damage effects render in.\
-		<br>Also contains some effects that it maybe shouldn't, like the mineral scanner and fov blindness effects."
+		<br>Note, it's still rendered underneath hud objects, but this lets us control the order that things like death/damage effects render in."
 	plane = FULLSCREEN_PLANE
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	allows_offsetting = FALSE
 
 /atom/movable/screen/plane_master/runechat
 	name = "Runechat"

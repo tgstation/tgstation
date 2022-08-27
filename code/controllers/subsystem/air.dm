@@ -624,10 +624,10 @@ GLOBAL_LIST_EMPTY(colored_images)
 		GLOB.colored_turfs += list(add_to)
 		for(var/offset in 0 to SSmapping.max_plane_offset)
 			var/obj/effect/overlay/atmos_excited/suger_high = new()
-			SET_PLANE_W_SCALAR(suger_high, ATMOS_GROUP_PLANE, offset)
+			SET_PLANE_W_SCALAR(suger_high, HIGH_GAME_PLANE, offset)
 			add_to += suger_high
 			var/image/shiny = new('icons/effects/effects.dmi', suger_high, "atmos_top")
-			SET_PLANE_W_SCALAR(shiny, ATMOS_GROUP_PLANE, offset)
+			SET_PLANE_W_SCALAR(shiny, HIGH_GAME_PLANE, offset)
 			shiny.color = sharp_color
 			GLOB.colored_images += shiny
 
@@ -752,8 +752,7 @@ GLOBAL_LIST_EMPTY(colored_images)
 	#else
 	data["display_max"] = FALSE
 	#endif
-	for(var/atom/movable/screen/plane_master/plane in user.hud_used.get_true_plane_masters(ATMOS_GROUP_PLANE))
-		data["showing_user"] = (!plane.force_hidden)
+	data["showing_user"] = user.hud_used.atmos_debug_overlays
 	return data
 
 /datum/controller/subsystem/air/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -792,13 +791,9 @@ GLOBAL_LIST_EMPTY(colored_images)
 			return TRUE
 		if("toggle_user_display")
 			var/mob/user = ui.user
-			for(var/atom/movable/screen/plane_master/plane_master in user.hud_used.get_true_plane_masters(ATMOS_GROUP_PLANE))
-				if(plane_master.force_hidden)
-					if(user.client)
-						user.client.images += GLOB.colored_images
-					plane_master.unhide_plane(user)
-				else
-					if(user.client)
-						user.client.images -= GLOB.colored_images
-					plane_master.hide_plane(user)
+			user.hud_used.atmos_debug_overlays = !user.hud_used.atmos_debug_overlays
+			if(user.hud_used.atmos_debug_overlays)
+				user.client.images += GLOB.colored_images
+			else
+				user.client.images -= GLOB.colored_images
 			return TRUE

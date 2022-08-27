@@ -68,6 +68,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	/// had with a proc call, especially on one of the hottest procs in the
 	/// game (MouseEntered).
 	var/screentips_enabled = SCREENTIP_PREFERENCE_ENABLED
+	/// If this client is being shown atmos debug overlays or not
+	var/atmos_debug_overlays = FALSE
 
 	/// The color to use for the screentips.
 	/// This is updated by the preference for cheaper reads than would be

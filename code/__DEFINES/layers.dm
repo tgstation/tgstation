@@ -61,8 +61,8 @@
 ///AI Camera Static
 #define CAMERA_STATIC_PLANE 21
 
-///Debug Atmos Overlays
-#define ATMOS_GROUP_PLANE 22
+///Anything that wants to be part of the game plane, but also wants to draw above literally everything else
+#define HIGH_GAME_PLANE 22
 
 #define FULLSCREEN_PLANE 23
 
