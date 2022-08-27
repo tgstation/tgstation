@@ -23,7 +23,7 @@
 	/// List of valid exit points
 	var/list/exit_point_list
 
-/datum/action/cooldown/spell/jaunt/ethereal_jaunt/enter_jaunt(mob/living/jaunter)
+/datum/action/cooldown/spell/jaunt/ethereal_jaunt/enter_jaunt(mob/living/jaunter, turf/loc_override)
 	. = ..()
 	if(!.)
 		return
