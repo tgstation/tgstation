@@ -587,6 +587,9 @@
 	. = ..()
 	transmute_area()
 
+/**
+ * Transforms a turf in our prepared area.
+ */
 /obj/effect/anomaly/dimensional/proc/transmute_area()
 	if (!theme)
 		prepare_area()
@@ -599,6 +602,9 @@
 	theme.apply_theme(affected_turf)
 	target_turfs.Remove(affected_turf)
 
+/**
+ * Prepare a new area for transformation into a new theme.
+ */
 /obj/effect/anomaly/dimensional/proc/prepare_area()
 	var/datum/dimension_theme/themes = new()
 	theme = themes.get_random_theme()
@@ -610,12 +616,18 @@
 		if (theme.can_convert(turf))
 			target_turfs.Add(turf)
 
+/**
+ * Applies an overlay icon based on the current theme.
+ */
 /obj/effect/anomaly/dimensional/proc/apply_theme_icon()
 	overlays -= theme_icon
 	theme_icon = mutable_appearance(theme.icon, theme.icon_state, FLOAT_LAYER - 1, appearance_flags = appearance_flags | RESET_TRANSFORM)
 	theme_icon.blend_mode = BLEND_INSET_OVERLAY
 	overlays += theme_icon
 
+/**
+ * Moves the anomaly somewhere else and announces it.
+ */
 /obj/effect/anomaly/dimensional/proc/relocate()
 	var/datum/anomaly_placer/placer = new()
 	var/area/new_area = placer.findValidArea()
@@ -633,6 +645,12 @@
 	src.forceMove(pick(valid_turfs))
 	prepare_area()
 
+/**
+ * Returns true if the provided turf is valid to place an anomaly on.
+ *
+ * Arguments
+ * * tested - Turf to try landing on.
+ */
 /obj/effect/anomaly/dimensional/proc/is_valid_destination(turf/tested)
 	if (isspaceturf(tested))
 		return FALSE

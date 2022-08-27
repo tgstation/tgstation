@@ -32,10 +32,19 @@
 		var/datum/material/using_mat = GET_MATERIAL_REF(material)
 		window_colour = using_mat.greyscale_colors
 
+/**
+ * Returns a subtype of dimensional theme.
+ */
 /datum/dimension_theme/proc/get_random_theme()
 	var/subtype = pick(subtypesof(/datum/dimension_theme))
 	return new subtype()
 
+/**
+ * Applies themed transformation to the provided turf.
+ *
+ * Arguments
+ * * affected_turf - Turf to transform.
+ */
 /datum/dimension_theme/proc/apply_theme(turf/affected_turf)
 	if (!replace_turf(affected_turf))
 		return
@@ -45,6 +54,12 @@
 	if (material)
 		apply_materials(affected_turf)
 
+/**
+ * Returns true if you actually can transform the provided turf.
+ *
+ * Arguments
+ * * affected_turf - Turf to transform.
+ */
 /datum/dimension_theme/proc/can_convert(turf/affected_turf)
 	if (isspaceturf(affected_turf))
 		return FALSE
@@ -58,6 +73,12 @@
 		return TRUE
 	return FALSE
 
+/**
+ * Replaces the provided turf with a different one.
+ *
+ * Arguments
+ * * affected_turf - Turf to transform.
+ */
 /datum/dimension_theme/proc/replace_turf(turf/affected_turf)
 	if (isfloorturf(affected_turf))
 		if (isindestructiblefloor(affected_turf))
@@ -71,17 +92,27 @@
 	affected_turf.ChangeTurf(replace_walls)
 	return TRUE
 
+/**
+ * Replaces the provided floor turf with a different one.
+ *
+ * Arguments
+ * * affected_floor - Floor turf to transform.
+ */
 /datum/dimension_theme/proc/transform_floor(turf/open/floor/affected_floor)
 	if (replace_floors.len == 0)
 		return FALSE
 	affected_floor.ChangeTurf(pick_weight(replace_floors), flags = CHANGETURF_INHERIT_AIR)
 	return TRUE
 
-/datum/dimension_theme/proc/transform_wall(turf/closed/wall/affected_wall)
-
+/**
+ * Replaces the provided object with a different one.
+ *
+ * Arguments
+ * * object - Object to replace.
+ */
 /datum/dimension_theme/proc/replace_object(obj/object)
 	if (istype(object, /obj/structure/window))
-		replace_window(object)
+		transform_window(object)
 		return
 
 	var/replace_path = get_replacement_object_typepath(object)
@@ -91,13 +122,26 @@
 	new_object.setDir(object.dir)
 	qdel(object)
 
+/**
+ * Returns the typepath of an object to replace the provided object.
+ *
+ * Arguments
+ * * object - Object to transform.
+ */
 /datum/dimension_theme/proc/get_replacement_object_typepath(obj/object)
 	for (var/type in replace_objs)
 		if (istype(object, type))
 			return pick_weight(replace_objs[type])
 	return
 
-/datum/dimension_theme/proc/replace_window(obj/structure/window/window)
+/**
+ * Replaces a window with a different window and recolours it.
+ * This needs its own function because we only want to replace full tile windows.
+ *
+ * Arguments
+ * * object - Object to transform.
+ */
+/datum/dimension_theme/proc/transform_window(obj/structure/window/window)
 	if (!window.fulltile)
 		return
 	if (!replace_window)
@@ -116,12 +160,24 @@
 	/obj/structure/window, \
 	/obj/structure/sink,)
 
+/**
+ * Returns true if the provided object can have its material modified.
+ *
+ * Arguments
+ * * object - Object to transform.
+ */
 /datum/dimension_theme/proc/permit_replace_material(var/obj/object)
 	for (var/type in PERMITTED_MATERIAL_REPLACE_TYPES)
 		if (istype(object, type))
 			return TRUE
 	return FALSE
 
+/**
+ * Applies a new custom material to the contents of a provided turf.
+ *
+ * Arguments
+ * * affected_turf - Turf to transform.
+ */
 /datum/dimension_theme/proc/apply_materials(turf/affected_turf)
 	var/list/custom_materials = list(GET_MATERIAL_REF(material) = MINERAL_MATERIAL_AMOUNT)
 
@@ -153,19 +209,19 @@
 	sound = 'sound/items/bikehorn.ogg'
 
 /datum/dimension_theme/radioactive
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/ore.dmi'
 	icon_state = "Uranium ore"
 	material = /datum/material/uranium
 	sound = 'sound/items/welder.ogg'
 
 /datum/dimension_theme/meat
-	icon = 'icons/obj/food/food.dmi'
+	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "meat"
 	material = /datum/material/meat
 	sound = 'sound/items/eatfood.ogg'
 
 /datum/dimension_theme/pizza
-	icon = 'icons/obj/food/pizzaspaghetti.dmi'
+	icon = 'icons/obj/food/pizza.dmi'
 	icon_state = "pizzamargherita"
 	material = /datum/material/pizza
 	sound = 'sound/items/eatfood.ogg'
@@ -201,7 +257,7 @@
 	replace_walls = /turf/closed/wall/mineral/snow
 
 /datum/dimension_theme/lavaland
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "goliath_hide"
 	window_colour = "#860000"
 	replace_floors = list(/turf/open/floor/fakebasalt = 5, /turf/open/floor/fakepit = 1)
