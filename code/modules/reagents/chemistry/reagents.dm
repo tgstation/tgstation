@@ -248,7 +248,7 @@ Primarily used in reagents/reaction_agents
 /**
  * Input a reagent_list, outputs pretty readable text!
  * Default output will be formatted as
- * * water, 5 | silicon, 6 | soup, 4 | space lube, 8 		(zoop :DDD)
+ * * water, 5 | silicon, 6 | soup, 4 | space lube, 8
  *
  * * names_only will remove the amount displays, showing
  * * water | silicon | soup | space lube
@@ -267,15 +267,15 @@ Primarily used in reagents/reaction_agents
  * * * Water, Silicon, Soup, and Space Lube
  */
 /proc/pretty_string_from_reagent_list(list/reagent_list, names_only, join_text = " | ", final_and, capitalize_names)
-    //Convert reagent list to a printable string for logging etc
-    var/list/rs = list()
-    var/reagents_left = reagent_list.len
-    var/intial_list_length = reagents_left
-    for (var/datum/reagent/R in reagent_list)
-        reagents_left--
-        if(final_and && intial_list_length > 1 && reagents_left == 0)
-        	rs += "and [capitalize_names ? capitalize(R.name) : R.name][names_only ? null : ", [R.volume]"]"
-        else
-        	rs += "[capitalize_names ? capitalize(R.name) : R.name][names_only ? null : ", [R.volume]"]"
+	//Convert reagent list to a printable string for logging etc
+	var/list/rs = list()
+	var/reagents_left = reagent_list.len
+	var/intial_list_length = reagents_left
+	for (var/datum/reagent/R in reagent_list)
+		reagents_left--
+		if(final_and && intial_list_length > 1 && reagents_left == 0)
+			rs += "and [capitalize_names ? capitalize(R.name) : R.name][names_only ? null : ", [R.volume]"]"
+		else
+			rs += "[capitalize_names ? capitalize(R.name) : R.name][names_only ? null : ", [R.volume]"]"
 
-    return rs.Join(join_text)
+	return rs.Join(join_text)
