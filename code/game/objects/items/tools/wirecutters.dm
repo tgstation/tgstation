@@ -38,6 +38,8 @@
 		"cyan" = "#18a2d5",
 		"yellow" = "#d58c18"
 	)
+	///Do these wirecutters have tool degredation?
+	var/degrade_enabled = TRUE
 
 /obj/item/wirecutters/Initialize(mapload)
 	if(random_color)
@@ -58,6 +60,11 @@
 	playsound(loc, usesound, 50, TRUE, -1)
 	return (BRUTELOSS)
 
+/obj/item/wirecutters/ComponentInitialize()
+	. = ..()
+	if(degrade_enabled)
+		AddComponent(/datum/component/degrade)
+
 /obj/item/wirecutters/abductor
 	name = "alien wirecutters"
 	desc = "Extremely sharp wirecutters, made out of a silvery-green metal."
@@ -66,6 +73,8 @@
 	icon_state = "cutters"
 	toolspeed = 0.1
 	random_color = FALSE
+	degrade_enabled = FALSE
+
 
 /obj/item/wirecutters/cyborg
 	name = "powered wirecutters"
@@ -75,3 +84,4 @@
 	worn_icon_state = "cutters"
 	toolspeed = 0.5
 	random_color = FALSE
+	degrade_enabled = FALSE

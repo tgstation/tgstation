@@ -39,20 +39,24 @@
 	var/status = TRUE
 	/// The max amount of fuel the welder can hold
 	var/max_fuel = 20
+	/// Does this welding tool start empty? Used for empty subtypes for lathes.
+	var/start_empty = FALSE
 	/// Whether or not we're changing the icon based on fuel left.
 	var/change_icons = TRUE
 	/// Used in process(), dictates whether or not we're calling STOP_PROCESSING whilst we're not welding.
 	var/can_off_process = FALSE
 	/// When fuel was last removed.
 	var/burned_fuel_for = 0
-
+	/// What sound is played when the welder is lit?
 	var/activation_sound = 'sound/items/welderactivate.ogg'
+	/// What sound is played when the welder is extinguished?
 	var/deactivation_sound = 'sound/items/welderdeactivate.ogg'
 
 /obj/item/weldingtool/Initialize(mapload)
 	. = ..()
 	create_reagents(max_fuel)
-	reagents.add_reagent(/datum/reagent/fuel, max_fuel)
+	if(!start_empty)
+		reagents.add_reagent(/datum/reagent/fuel, max_fuel)
 	update_appearance()
 
 /obj/item/weldingtool/ComponentInitialize()
@@ -114,11 +118,6 @@
 	else
 		. = ..()
 	update_appearance()
-
-/obj/item/weldingtool/proc/explode()
-	var/plasmaAmount = reagents.get_reagent_amount(/datum/reagent/toxin/plasma)
-	dyn_explosion(src, plasmaAmount/5, explosion_cause = src) // 20 plasma in a standard welder has a 4 power explosion. no breaches, but enough to kill/dismember holder
-	qdel(src)
 
 /obj/item/weldingtool/use_tool(atom/target, mob/living/user, delay, amount, volume, datum/callback/extra_checks)
 	target.add_overlay(GLOB.welding_sparks)
@@ -182,16 +181,6 @@
 
 	update_appearance()
 
-/obj/item/weldingtool/proc/handle_fuel_and_temps(used = 0, mob/living/user)
-	use(used)
-	var/turf/location = get_turf(user)
-	location.hotspot_expose(700, 50, 1)
-
-/// Returns the amount of fuel in the welder
-/obj/item/weldingtool/proc/get_fuel()
-	return reagents.get_reagent_amount(/datum/reagent/fuel)
-
-
 /// Uses fuel from the welding tool.
 /obj/item/weldingtool/use(used = 0)
 	if(!isOn() || !check_fuel())
@@ -207,6 +196,44 @@
 	else
 		return FALSE
 
+/obj/item/weldingtool/examine(mob/user)
+	. = ..()
+	. += "It contains [get_fuel()] unit\s of fuel out of [max_fuel]."
+
+/obj/item/weldingtool/get_temperature()
+	return welding * heat
+
+/obj/item/weldingtool/ignition_effect(atom/ignitable_atom, mob/user)
+	if(use_tool(ignitable_atom, user, 0, amount=1))
+		return span_notice("[user] casually lights [ignitable_atom] with [src], what a badass.")
+	else
+		return ""
+
+/// If welding tool ran out of fuel during a construction task, construction fails.
+/obj/item/weldingtool/tool_use_check(mob/living/user, amount)
+	if(!isOn() || !check_fuel())
+		to_chat(user, span_warning("[src] has to be on to complete this task!"))
+		return FALSE
+
+	if(get_fuel() >= amount)
+		return TRUE
+	else
+		to_chat(user, span_warning("You need more welding fuel to complete this task!"))
+		return FALSE
+
+/obj/item/weldingtool/proc/handle_fuel_and_temps(used = 0, mob/living/user)
+	use(used)
+	var/turf/location = get_turf(user)
+	location.hotspot_expose(700, 50, 1)
+
+/// Returns the amount of fuel in the welder
+/obj/item/weldingtool/proc/get_fuel()
+	return reagents.get_reagent_amount(/datum/reagent/fuel)
+
+/obj/item/weldingtool/proc/explode()
+	var/plasmaAmount = reagents.get_reagent_amount(/datum/reagent/toxin/plasma)
+	dyn_explosion(src, plasmaAmount/5, explosion_cause = src) // 20 plasma in a standard welder has a 4 power explosion. no breaches, but enough to kill/dismember holder
+	qdel(src)
 
 /// Toggles the welding value.
 /obj/item/weldingtool/proc/set_welding(new_value)
@@ -215,7 +242,6 @@
 	. = welding
 	welding = new_value
 	set_light_on(welding)
-
 
 /// Turns off the welder if there is no more fuel (does this really need to be its own proc?)
 /obj/item/weldingtool/proc/check_fuel(mob/user)
@@ -256,29 +282,9 @@
 	hitsound = SFX_SWING_HIT
 	update_appearance()
 
-
-/obj/item/weldingtool/examine(mob/user)
-	. = ..()
-	. += "It contains [get_fuel()] unit\s of fuel out of [max_fuel]."
-
-/obj/item/weldingtool/get_temperature()
-	return welding * heat
-
 /// Returns whether or not the welding tool is currently on.
 /obj/item/weldingtool/proc/isOn()
 	return welding
-
-/// If welding tool ran out of fuel during a construction task, construction fails.
-/obj/item/weldingtool/tool_use_check(mob/living/user, amount)
-	if(!isOn() || !check_fuel())
-		to_chat(user, span_warning("[src] has to be on to complete this task!"))
-		return FALSE
-
-	if(get_fuel() >= amount)
-		return TRUE
-	else
-		to_chat(user, span_warning("You need more welding fuel to complete this task!"))
-		return FALSE
 
 /// Ran when the welder is attacked by a screwdriver.
 /obj/item/weldingtool/proc/flamethrower_screwdriver(obj/item/tool, mob/user)
@@ -309,11 +315,8 @@
 		else
 			to_chat(user, span_warning("You need one rod to start building a flamethrower!"))
 
-/obj/item/weldingtool/ignition_effect(atom/ignitable_atom, mob/user)
-	if(use_tool(ignitable_atom, user, 0, amount=1))
-		return span_notice("[user] casually lights [ignitable_atom] with [src], what a badass.")
-	else
-		return ""
+/obj/item/weldingtool/empty
+	start_empty = TRUE
 
 /obj/item/weldingtool/largetank
 	name = "industrial welding tool"
@@ -337,6 +340,8 @@
 		return
 	switched_on(user)
 
+/obj/item/weldingtool/largetank/empty
+	start_empty = TRUE
 
 /obj/item/weldingtool/mini
 	name = "emergency welding tool"
@@ -349,6 +354,9 @@
 
 /obj/item/weldingtool/mini/flamethrower_screwdriver()
 	return
+
+/obj/item/weldingtool/mini/empty
+	start_empty = TRUE
 
 /obj/item/weldingtool/abductor
 	name = "alien welding tool"

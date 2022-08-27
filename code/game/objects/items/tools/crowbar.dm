@@ -21,12 +21,20 @@
 	tool_behaviour = TOOL_CROWBAR
 	toolspeed = 1
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 30)
+	/// Does this crowbar open the door forcefully, doing damage and ignoring doorstate?
 	var/force_opens = FALSE
+	/// Does this crowbar have tool degredation?
+	var/degrade_enabled = TRUE
 
 /obj/item/crowbar/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1)
 	return (BRUTELOSS)
+
+/obj/item/crowbar/ComponentInitialize()
+	. = ..()
+	if(degrade_enabled)
+		AddComponent(/datum/component/degrade)
 
 /obj/item/crowbar/red
 	icon_state = "crowbar_red"
@@ -41,6 +49,7 @@
 	icon_state = "crowbar"
 	belt_icon_state = "crowbar_alien"
 	toolspeed = 0.1
+	degrade_enabled = FALSE
 
 
 /obj/item/crowbar/large
@@ -72,6 +81,7 @@
 	desc = "It's an old crowbar. Much larger than the pocket sized ones, carrying a lot more heft. They don't make 'em like they used to."
 	throwforce = 10
 	throw_speed = 2
+	degrade_enabled = FALSE //With a description like that, I have to, don't I?
 
 /obj/item/crowbar/large/old/Initialize()
 	. = ..()
@@ -92,6 +102,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
 	force_opens = TRUE
+	degrade_enabled = FALSE
 
 /obj/item/crowbar/power/Initialize(mapload)
 	. = ..()
@@ -123,6 +134,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	toolspeed = 0.5
 	force_opens = TRUE
+	degrade_enabled = FALSE
 
 /obj/item/crowbar/power/examine()
 	. = ..()
@@ -160,3 +172,4 @@
 	usesound = 'sound/items/jaws_pry.ogg'
 	force = 10
 	toolspeed = 0.5
+	degrade_enabled = FALSE

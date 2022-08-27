@@ -765,6 +765,7 @@
 #include "code\datums\components\curse_of_hunger.dm"
 #include "code\datums\components\customizable_reagent_holder.dm"
 #include "code\datums\components\deadchat_control.dm"
+#include "code\datums\components\degrade.dm"
 #include "code\datums\components\dejavu.dm"
 #include "code\datums\components\deployable.dm"
 #include "code\datums\components\drift.dm"

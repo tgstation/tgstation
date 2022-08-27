@@ -103,7 +103,7 @@
 	id = "welding_tool"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 70, /datum/material/glass = 20)
-	build_path = /obj/item/weldingtool
+	build_path = /obj/item/weldingtool/empty
 	category = list("initial","Tools","Tool Designs")
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -112,7 +112,7 @@
 	id = "mini_welding_tool"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 30, /datum/material/glass = 10)
-	build_path = /obj/item/weldingtool/mini
+	build_path = /obj/item/weldingtool/mini/empty
 	category = list("initial","Tools")
 
 /datum/design/screwdriver
@@ -927,7 +927,7 @@
 	id = "large_welding_tool"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 70, /datum/material/glass = 60)
-	build_path = /obj/item/weldingtool/largetank
+	build_path = /obj/item/weldingtool/largetank/empty
 	category = list("hacked", "Tools")
 
 /datum/design/handcuffs

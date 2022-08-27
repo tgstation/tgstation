@@ -9,3 +9,13 @@
 	icon_state = "wirebrush"
 	tool_behaviour = TOOL_RUSTSCRAPER
 	toolspeed = 1
+	///Does this wirebrush have tool degredation?
+	var/degrade_enabled = TRUE
+
+/obj/item/wirebrush/ComponentInitialize()
+	. = ..()
+	if(degrade_enabled)
+		AddComponent(/datum/component/degrade)
+
+
+

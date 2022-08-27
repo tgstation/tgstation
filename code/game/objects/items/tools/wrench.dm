@@ -22,11 +22,18 @@
 	tool_behaviour = TOOL_WRENCH
 	toolspeed = 1
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 30)
+	///Does this wrench have tool degredation?
+	var/degrade_enabled = TRUE
 
 /obj/item/wrench/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1)
 	return (BRUTELOSS)
+
+/obj/item/wrench/ComponentInitialize()
+	. = ..()
+	if(degrade_enabled)
+		AddComponent(/datum/component/degrade)
 
 /obj/item/wrench/abductor
 	name = "alien wrench"
@@ -37,6 +44,7 @@
 	custom_materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 1000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	usesound = 'sound/effects/empulse.ogg'
 	toolspeed = 0.1
+	degrade_enabled = FALSE
 
 
 /obj/item/wrench/medical
@@ -80,6 +88,7 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "wrench_cyborg"
 	toolspeed = 0.5
+	degrade_enabled = FALSE
 
 /obj/item/wrench/combat
 	name = "combat wrench"
@@ -89,6 +98,7 @@
 	attack_verb_continuous = list("devastates", "brutalizes", "commits a war crime against", "obliterates", "humiliates")
 	attack_verb_simple = list("devastate", "brutalize", "commit a war crime against", "obliterate", "humiliate")
 	tool_behaviour = null
+	degrade_enabled = FALSE
 
 /obj/item/wrench/combat/Initialize(mapload)
 	. = ..()

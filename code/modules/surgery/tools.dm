@@ -12,10 +12,18 @@
 	w_class = WEIGHT_CLASS_TINY
 	tool_behaviour = TOOL_RETRACTOR
 	toolspeed = 1
+	///Does this item have tool degredation?
+	var/degrade_enabled = TRUE
+
+/obj/item/retractor/ComponentInitialize()
+	. = ..()
+	if(degrade_enabled)
+		AddComponent(/datum/component/degrade, 40, 40)
 
 /obj/item/retractor/augment
 	desc = "Micro-mechanical manipulator for retracting stuff."
 	toolspeed = 0.5
+	degrade_enabled = FALSE
 
 
 /obj/item/hemostat
@@ -34,10 +42,18 @@
 	attack_verb_simple = list("attack", "pinch")
 	tool_behaviour = TOOL_HEMOSTAT
 	toolspeed = 1
+	///Does this item have tool degredation?
+	var/degrade_enabled = TRUE
+
+/obj/item/hemostat/ComponentInitialize()
+	. = ..()
+	if(degrade_enabled)
+		AddComponent(/datum/component/degrade, 100, 100)
 
 /obj/item/hemostat/augment
 	desc = "Tiny servos power a pair of pincers to stop bleeding."
 	toolspeed = 0.5
+	degrade_enabled = FALSE
 
 
 /obj/item/cautery
@@ -56,6 +72,13 @@
 	attack_verb_simple = list("burn")
 	tool_behaviour = TOOL_CAUTERY
 	toolspeed = 1
+	///Does this item have tool degredation?
+	var/degrade_enabled = TRUE
+
+/obj/item/cautery/ComponentInitialize()
+	. = ..()
+	if(degrade_enabled)
+		AddComponent(/datum/component/degrade)
 
 /obj/item/cautery/ignition_effect(atom/ignitable_atom, mob/user)
 	. = span_notice("[user] touches the end of [src] to \the [ignitable_atom], igniting it with a puff of smoke.")
@@ -63,6 +86,7 @@
 /obj/item/cautery/augment
 	desc = "A heated element that cauterizes wounds."
 	toolspeed = 0.5
+	degrade_enabled = FALSE
 
 /obj/item/cautery/advanced
 	name = "searing tool"
@@ -76,6 +100,7 @@
 	light_system = MOVABLE_LIGHT
 	light_range = 1
 	light_color = COLOR_SOFT_RED
+	degrade_enabled = FALSE
 
 /obj/item/cautery/advanced/Initialize(mapload)
 	. = ..()
@@ -125,10 +150,17 @@
 	sharpness = SHARP_POINTY
 	wound_bonus = 10
 	bare_wound_bonus = 10
+	///Does this item have tool degredation?
+	var/degrade_enabled = TRUE
 
 /obj/item/surgicaldrill/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/eyestab)
+
+/obj/item/surgicaldrill/ComponentInitialize()
+	. = ..()
+	if(degrade_enabled)
+		AddComponent(/datum/component/degrade)
 
 /obj/item/surgicaldrill/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] rams [src] into [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -142,6 +174,7 @@
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	w_class = WEIGHT_CLASS_SMALL
 	toolspeed = 0.5
+	degrade_enabled = FALSE
 
 
 /obj/item/scalpel
@@ -169,6 +202,8 @@
 	toolspeed = 1
 	wound_bonus = 10
 	bare_wound_bonus = 15
+	///Does this item have tool degredation?
+	var/degrade_enabled = TRUE
 
 /obj/item/scalpel/Initialize(mapload)
 	. = ..()
@@ -178,10 +213,13 @@
 	bonus_modifier = 0, \
 	)
 	AddElement(/datum/element/eyestab)
+	if(degrade_enabled)
+		AddComponent(/datum/component/degrade, 40, 40)
 
 /obj/item/scalpel/augment
 	desc = "Ultra-sharp blade attached directly to your bone for extra-accuracy."
 	toolspeed = 0.5
+	degrade_enabled = FALSE
 
 /obj/item/scalpel/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is slitting [user.p_their()] [pick("wrists", "throat", "stomach")] with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -212,6 +250,13 @@
 	toolspeed = 1
 	wound_bonus = 15
 	bare_wound_bonus = 10
+	///Does this item have tool degredation?
+	var/degrade_enabled = TRUE
+
+/obj/item/circular_saw/ComponentInitialize()
+	. = ..()
+	if(degrade_enabled)
+		AddComponent(/datum/component/degrade)
 
 /obj/item/circular_saw/Initialize(mapload)
 	. = ..()
@@ -227,6 +272,7 @@
 	desc = "A small but very fast spinning saw. It rips and tears until it is done."
 	w_class = WEIGHT_CLASS_SMALL
 	toolspeed = 0.5
+	degrade_enabled = FALSE
 
 
 /obj/item/surgical_drapes
@@ -286,6 +332,7 @@
 	light_range = 1
 	light_color = LIGHT_COLOR_GREEN
 	sharpness = SHARP_EDGED
+	degrade_enabled = FALSE
 
 /obj/item/scalpel/advanced/Initialize(mapload)
 	. = ..()
@@ -330,6 +377,7 @@
 	icon_state = "adv_retractor"
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
+	degrade_enabled = FALSE
 
 /obj/item/retractor/advanced/Initialize(mapload)
 	. = ..()
@@ -453,6 +501,13 @@
 	attack_verb_simple = list("correct", "properly set")
 	tool_behaviour = TOOL_BONESET
 	toolspeed = 1
+	///Does this item have tool degredation?
+	var/degrade_enabled = TRUE
+
+/obj/item/bonesetter/ComponentInitialize()
+	. = ..()
+	if(degrade_enabled)
+		AddComponent(/datum/component/degrade, 40, 40)
 
 /obj/item/blood_filter
 	name = "blood filter"
@@ -499,7 +554,6 @@
 				return
 			if(!(chem_id in whitelist))
 				whitelist[chem_id] = new_chem_name
-
 
 		if("remove")
 			var/chem_name = params["reagent"]
