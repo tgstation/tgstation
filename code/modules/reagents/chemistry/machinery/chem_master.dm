@@ -111,7 +111,7 @@
 		bottle = null
 
 /obj/machinery/chem_master/update_icon_state()
-	icon_state = "[base_icon_state][beaker ? 1 : 0][powered() ? null : "_nopower"]"
+	icon_state = "[base_icon_state][beaker ? 1 : 0][(machine_stat & BROKEN) ? "_b" : (powered() ? null : "_nopower")]"
 	return ..()
 
 /obj/machinery/chem_master/update_overlays()
