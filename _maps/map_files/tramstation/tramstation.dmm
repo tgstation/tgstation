@@ -20462,7 +20462,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},
-/obj/machinery/door_timer{
+/obj/machinery/status_display/door_timer{
 	id = "scicell";
 	name = "Science Cell";
 	pixel_y = 32
@@ -22789,14 +22789,8 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/tram/mid)
 "hWV" = (
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 3;
-	height = 5;
-	id = "mining_home";
-	name = "mining shuttle bay";
-	roundstart_template = /datum/map_template/shuttle/mining/box;
-	width = 7
+/obj/docking_port/stationary/mining_home{
+	dir = 4
 	},
 /turf/open/misc/asteroid/airless,
 /area/mine/explored)
@@ -32082,7 +32076,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "ldp" = (
-/obj/machinery/door_timer{
+/obj/machinery/status_display/door_timer{
 	id = "crgcell";
 	name = "Cargo Cell";
 	pixel_x = 32
@@ -38609,7 +38603,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmospherics_engine)
 "niv" = (
-/obj/machinery/door_timer{
+/obj/machinery/status_display/door_timer{
 	id = "medcell";
 	name = "Medical Cell";
 	pixel_y = 32
@@ -40190,7 +40184,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "nNP" = (
-/obj/machinery/door_timer{
+/obj/machinery/status_display/door_timer{
 	id = "engcell";
 	name = "Engineering Cell";
 	pixel_x = -32
@@ -53586,14 +53580,8 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/greater)
 "suI" = (
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 3;
-	height = 5;
-	id = "commonmining_home";
-	name = "SS13: Common Mining Dock";
-	roundstart_template = /datum/map_template/shuttle/mining_common/meta;
-	width = 7
+/obj/docking_port/stationary/mining_home/common{
+	dir = 4
 	},
 /turf/open/misc/asteroid/airless,
 /area/mine/explored)

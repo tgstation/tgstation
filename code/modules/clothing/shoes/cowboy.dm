@@ -22,10 +22,13 @@
 	RegisterSignal(user, COMSIG_LIVING_SLAM_TABLE, .proc/table_slam, override = TRUE)
 	if(slot == ITEM_SLOT_FEET)
 		for(var/mob/living/occupant in contents)
+			var/target_zone = user.get_random_valid_zone(blacklisted_parts = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM), even_weights = TRUE, bypass_warning = TRUE)
+			if(!target_zone) //we broke their legs right on off!
+				break
 			occupant.forceMove(user.drop_location())
 			user.visible_message(span_warning("[user] recoils as something slithers out of [src]."), span_userdanger("You feel a sudden stabbing pain in your [pick("foot", "toe", "ankle")]!"))
 			user.Knockdown(20) //Is one second paralyze better here? I feel you would fall on your ass in some fashion.
-			user.apply_damage(5, BRUTE, pick(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
+			user.apply_damage(5, BRUTE, target_zone)
 			if(istype(occupant, /mob/living/simple_animal/hostile/retaliate))
 				user.reagents.add_reagent(/datum/reagent/toxin, 7)
 
@@ -45,7 +48,7 @@
 
 /obj/item/clothing/shoes/cowboy/MouseDrop_T(mob/living/target, mob/living/user)
 	. = ..()
-	if(!(user.mobility_flags & MOBILITY_USE) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || target.stat == DEAD)
+	if(!(user.mobility_flags & MOBILITY_USE) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || !Adjacent(user) || !isliving(target) || !user.Adjacent(target) || target.stat == DEAD)
 		return
 	if(contents.len >= max_occupants)
 		to_chat(user, span_warning("[src] are full!"))

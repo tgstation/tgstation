@@ -40,8 +40,8 @@
 	flooded_turf.atmos_spawn_air("[gas_id]=[gas_amount];TEMP=[temp_amount || trigger_temperature]")
 
 	// Logging-related
-	var/admin_message = "[parent] ignited in [ADMIN_VERBOSEJMP(flooded_turf)]"
-	var/log_message = "ignited [parent]"
+	var/admin_message = "[flooded_turf] ignited in [ADMIN_VERBOSEJMP(flooded_turf)]"
+	var/log_message = "ignited [flooded_turf]"
 	if(user)
 		admin_message += " by [ADMIN_LOOKUPFLW(user)]"
 		user.log_message(log_message, LOG_ATTACK, log_globally = FALSE)//only individual log
