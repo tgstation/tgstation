@@ -59,16 +59,22 @@
 		// create a new datum without loading a map
 		return
 
-	bounds = parsed_bounds = list(1.#INF, 1.#INF, 1.#INF, -1.#INF, -1.#INF, -1.#INF)
-	var/stored_index = 1
+	src.bounds = parsed_bounds = list(1.#INF, 1.#INF, 1.#INF, -1.#INF, -1.#INF, -1.#INF)
+	// lists are structs don't you know :)
+	var/list/bounds = src.bounds
+	var/list/grid_models = src.grid_models
 
+	var/stored_index = 1
+	var/list/regexOutput
 	//multiz lool
 	while(dmmRegex.Find(tfile, stored_index))
 		stored_index = dmmRegex.next
+		// Datum var lookup is expensive, this isn't
+		regexOutput = dmmRegex.group
 
 		// "aa" = (/type{vars=blah})
-		if(dmmRegex.group[1]) // Model
-			var/key = dmmRegex.group[1]
+		if(regexOutput[1]) // Model
+			var/key = regexOutput[1]
 			if(grid_models[key]) // Duplicate model keys are ignored in DMMs
 				continue
 			if(key_len != length(key))
@@ -77,14 +83,14 @@
 				else
 					CRASH("Inconsistent key length in DMM")
 			if(!measureOnly)
-				grid_models[key] = dmmRegex.group[2]
+				grid_models[key] = regexOutput[2]
 
 		// (1,1,1) = {"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
-		else if(dmmRegex.group[3]) // Coords
+		else if(regexOutput[3]) // Coords
 			if(!key_len)
 				CRASH("Coords before model definition in DMM")
 
-			var/curr_x = text2num(dmmRegex.group[3])
+			var/curr_x = text2num(regexOutput[3])
 
 			if(curr_x < x_lower || curr_x > x_upper)
 				continue
@@ -93,44 +99,51 @@
 
 			gridSet.xcrd = curr_x
 			//position of the currently processed square
-			gridSet.ycrd = text2num(dmmRegex.group[4])
-			gridSet.zcrd = text2num(dmmRegex.group[5])
+			gridSet.ycrd = text2num(regexOutput[4])
+			gridSet.zcrd = text2num(regexOutput[5])
 
-			bounds[MAP_MINX] = min(bounds[MAP_MINX], clamp(gridSet.xcrd, x_lower, x_upper))
+			bounds[MAP_MINX] = min(bounds[MAP_MINX], curr_x)
 			bounds[MAP_MINZ] = min(bounds[MAP_MINZ], gridSet.zcrd)
 			bounds[MAP_MAXZ] = max(bounds[MAP_MAXZ], gridSet.zcrd)
 
-			var/list/gridLines = splittext(dmmRegex.group[6], "\n")
+			var/list/gridLines = splittext(regexOutput[6], "\n")
 			gridSet.gridLines = gridLines
 
 			var/leadingBlanks = 0
-			while(leadingBlanks < gridLines.len && gridLines[++leadingBlanks] == "")
+			while(leadingBlanks < length(gridLines) && gridLines[++leadingBlanks] == "")
 			if(leadingBlanks > 1)
 				gridLines.Cut(1, leadingBlanks) // Remove all leading blank lines.
 
-			if(!gridLines.len) // Skip it if only blank lines exist.
+			if(!length(gridLines)) // Skip it if only blank lines exist.
 				continue
 
 			gridSets += gridSet
 
-			if(gridLines.len && gridLines[gridLines.len] == "")
-				gridLines.Cut(gridLines.len) // Remove only one blank line at the end.
+			if(gridLines[length(gridLines)] == "")
+				gridLines.Cut(length(gridLines)) // Remove only one blank line at the end.
 
-			bounds[MAP_MINY] = min(bounds[MAP_MINY], clamp(gridSet.ycrd, y_lower, y_upper))
-			gridSet.ycrd += gridLines.len - 1 // Start at the top and work down
-			bounds[MAP_MAXY] = max(bounds[MAP_MAXY], clamp(gridSet.ycrd, y_lower, y_upper))
+			bounds[MAP_MINY] = min(bounds[MAP_MINY], gridSet.ycrd)
+			gridSet.ycrd += length(gridLines) - 1 // Start at the top and work down
+			bounds[MAP_MAXY] = max(bounds[MAP_MAXY], gridSet.ycrd)
 
-			var/maxx = gridSet.xcrd
-			if(gridLines.len) //Not an empty map
-				maxx = max(maxx, gridSet.xcrd + length(gridLines[1]) / key_len - 1)
+			var/maxx = curr_x
+			if(length(gridLines)) //Not an empty map
+				maxx = max(maxx, curr_x + length(gridLines[1]) / key_len - 1)
 
-			bounds[MAP_MAXX] = clamp(max(bounds[MAP_MAXX], maxx), x_lower, x_upper)
+			bounds[MAP_MAXX] = max(bounds[MAP_MAXX], maxx)
 		CHECK_TICK
 
 	// Indicate failure to parse any coordinates by nulling bounds
 	if(bounds[1] == 1.#INF)
-		bounds = null
-	parsed_bounds = bounds
+		src.bounds = null
+	else
+		// Clamp all our mins and maxes down to the proscribed limits
+		bounds[MAP_MINX] = clamp(bounds[MAP_MINX], x_lower, x_upper)
+		bounds[MAP_MAXX] = clamp(bounds[MAP_MAXX], x_lower, x_upper)
+		bounds[MAP_MINY] = clamp(bounds[MAP_MINY], y_lower, y_upper)
+		bounds[MAP_MAXY] = clamp(bounds[MAP_MAXY], y_lower, y_upper)
+
+	parsed_bounds = src.bounds
 
 /// Load the parsed map into the world. See [/proc/load_map] for arguments.
 /datum/parsed_map/proc/load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop)
