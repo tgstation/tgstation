@@ -9,7 +9,7 @@
 	desc = "Used to separate chemicals and distribute them in a variety of forms."
 	density = TRUE
 	layer = BELOW_OBJ_LAYER
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "mixer0"
 	base_icon_state = "mixer"
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.2
@@ -551,6 +551,8 @@
 			"cornoil" = list("icon_state" = "oliveoil", "icon_empty" = "", "name" = "corn oil bottle", "desc" = "A delicious oil used in cooking. Made from corn."),
 			"bbqsauce" = list("icon_state" = "bbqsauce", "icon_empty" = "", "name" = "bbq sauce bottle", "desc" = "Hand wipes not included."),
 			"peanut_butter" = list("icon_state" = "peanutbutter", "icon_empty" = "", "name" = "peanut butter jar", "desc" = "A creamy paste made from ground peanuts."),
+			"honey" = list("icon_state" = "honey", "icon_empty" = "", "name" = "honey bottle", "desc" = "A cheerful bear-shaped bottle of tasty honey."),
+			"cherryjelly" = list("icon_state" = "cherryjelly", "icon_empty" = "", "name" = "cherry jelly jar", "desc" = "A jar of super-sweet cherry jelly."),
 		)
 		var/list/carton_in_hand = list(
 			"inhand_icon_state" = "carton",

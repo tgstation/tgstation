@@ -43,7 +43,7 @@
 
 /obj/item/gun/energy/pulse/carbine/add_seclight_point()
 	AddComponent(/datum/component/seclite_attachable, \
-		light_overlay_icon = 'icons/obj/guns/flashlights.dmi', \
+		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
 		light_overlay = "flight", \
 		overlay_x = 18, \
 		overlay_y = 12)

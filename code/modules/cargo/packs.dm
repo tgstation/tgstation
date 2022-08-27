@@ -2169,6 +2169,14 @@
 	contains = list(/mob/living/basic/cow)
 	crate_name = "cow crate"
 
+/datum/supply_pack/critter/sheep
+	name = "Sheep Crate"
+	desc = "The sheep goes BAAAA!"
+	cost = CARGO_CRATE_VALUE * 6
+	access_view = ACCESS_HYDROPONICS
+	contains = list(/mob/living/basic/sheep)
+	crate_name = "sheep crate"
+
 /datum/supply_pack/critter/pig
 	name = "Pig Crate"
 	desc = "The pig goes oink!"

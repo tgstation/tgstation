@@ -9,7 +9,7 @@
  */
 /obj/item/tank
 	name = "tank"
-	icon = 'icons/obj/tank.dmi'
+	icon = 'icons/obj/atmospherics/tank.dmi'
 	icon_state = "generic"
 	lefthand_file = 'icons/mob/inhands/equipment/tanks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tanks_righthand.dmi'

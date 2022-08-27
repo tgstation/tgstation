@@ -4,7 +4,7 @@
 /obj/item/storage/photo_album
 	name = "photo album"
 	desc = "A big book used to store photos and mementos."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "album"
 	inhand_icon_state = "album"
 	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
