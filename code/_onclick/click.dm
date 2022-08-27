@@ -507,7 +507,6 @@
 	M.Scale(x1,y1)
 	transform = M
 
-// lemon todo: fix ghosts spawning in on the wrong plane
 /atom/movable/screen/click_catcher
 	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "catcher"

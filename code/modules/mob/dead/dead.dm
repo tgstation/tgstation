@@ -12,6 +12,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
+	SET_PLANE_IMPLICIT(src, plane)
 	tag = "mob_[next_mob_id++]"
 	add_to_mob_list()
 
