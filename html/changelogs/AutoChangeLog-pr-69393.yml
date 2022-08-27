@@ -1,5 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes: 
-  - refactor: "Refactored the manifest code to not rely on generating two photo of each character at roundstart. This means that the start of the game should be significantly faster."
-  - bugfix: "The images shown in the manifest no longer look crummy, and will instead look exactly like you'd expect them to!"
