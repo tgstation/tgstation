@@ -274,10 +274,8 @@ Primarily used in reagents/reaction_agents
     for (var/datum/reagent/R in reagent_list)
         reagents_left--
         if(final_and && intial_list_length > 1 && reagents_left == 0)
-            rs += "and [capitalize_names ? capitalize(R.name) : R.name][names_only ? null : ", [R.volume]"]"
+        	rs += "and [capitalize_names ? capitalize(R.name) : R.name][names_only ? null : ", [R.volume]"]"
         else
-            rs += "[capitalize_names ? capitalize(R.name) : R.name][names_only ? null : ", [R.volume]"]"
+        	rs += "[capitalize_names ? capitalize(R.name) : R.name][names_only ? null : ", [R.volume]"]"
 
     return rs.Join(join_text)
-
-
