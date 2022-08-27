@@ -95,7 +95,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	for(var/datum/action/action as anything in actions)
 		action.Grant(reciever)
 	for(var/trait in organ_traits)
-		ADD_TRAIT(reciever, trait, src)
+		ADD_TRAIT(reciever, trait, REF(src))
 	return TRUE
 
 
@@ -113,7 +113,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	for(var/datum/action/action as anything in actions)
 		action.Remove(organ_owner)
 	for(var/trait in organ_traits)
-		REMOVE_TRAIT(organ_owner, trait, src)
+		REMOVE_TRAIT(organ_owner, trait, REF(src))
 
 	SEND_SIGNAL(src, COMSIG_ORGAN_REMOVED, organ_owner)
 	SEND_SIGNAL(organ_owner, COMSIG_CARBON_LOSE_ORGAN, src, special)

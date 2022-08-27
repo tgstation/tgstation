@@ -214,17 +214,17 @@
 
 
 /obj/item/organ/internal/brain/primate/Insert(mob/living/carbon/primate, special = FALSE, drop_if_replaced = FALSE)
-	..()
+	. = ..()
 	RegisterSignal(primate, COMSIG_MOVABLE_CROSS, .proc/on_crossed)
 
 /obj/item/organ/internal/brain/primate/Remove(mob/living/carbon/primate, special = FALSE)
-	..()
 	RegisterSignal(primate, COMSIG_MOVABLE_CROSS, .proc/on_crossed)
+	return ..()
 
 /obj/item/organ/internal/brain/primate/proc/on_crossed(datum/source, atom/movable/crossed)
 	SIGNAL_HANDLER
 	var/mob/living/living_primate = owner
-	if(tripping == FALSE)
+	if(!tripping)
 		return
 	if(!IS_DEAD_OR_INCAP(living_primate) && isliving(crossed))
 		var/mob/living/in_the_way_mob = crossed
@@ -233,4 +233,3 @@
 		if(in_the_way_mob.pass_flags == PASSTABLE)
 			return
 		in_the_way_mob.knockOver(living_primate)
-		return
