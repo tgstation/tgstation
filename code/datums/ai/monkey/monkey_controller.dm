@@ -57,7 +57,6 @@ have ways of interacting with a specific mob and control it.
 		return AI_CONTROLLER_INCOMPATIBLE
 
 	var/mob/living/living_pawn = new_pawn
-	RegisterSignal(new_pawn, COMSIG_MOVABLE_CROSS, .proc/on_crossed)
 	RegisterSignal(new_pawn, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
 	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
 	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_PAW, .proc/on_attack_paw)
@@ -193,14 +192,6 @@ have ways of interacting with a specific mob and control it.
 		if(I.throwforce && I.throwforce < living_pawn.health && ishuman(thrown_by))
 			var/mob/living/carbon/human/H = thrown_by
 			retaliate(H)
-
-/datum/ai_controller/monkey/proc/on_crossed(datum/source, atom/movable/crossed)
-	SIGNAL_HANDLER
-	var/mob/living/living_pawn = pawn
-	if(!IS_DEAD_OR_INCAP(living_pawn) && isliving(crossed))
-		var/mob/living/in_the_way_mob = crossed
-		in_the_way_mob.knockOver(living_pawn)
-		return
 
 /datum/ai_controller/monkey/proc/on_startpulling(datum/source, atom/movable/puller, state, force)
 	SIGNAL_HANDLER
