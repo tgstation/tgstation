@@ -248,7 +248,7 @@ Primarily used in reagents/reaction_agents
 /**
  * Input a reagent_list, outputs pretty readable text!
  * Default output will be formatted as
- * * water, 5 | silicon, 6 | soup, 4 | space lube, 8
+ * * water, 5 | silicon, 6 | soup, 4 | space lube, 8 		(who the fuck has soup in a medipen???)
  *
  * * names_only will remove the amount displays, showing
  * * water | silicon | soup | space lube
