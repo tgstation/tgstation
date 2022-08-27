@@ -135,6 +135,7 @@
 #include "reagent_mod_procs.dm"
 #include "reagent_names.dm"
 #include "reagent_recipe_collisions.dm"
+#include "reagent_transfer.dm"
 #include "resist.dm"
 #include "say.dm"
 #include "screenshot_antag_icons.dm"
