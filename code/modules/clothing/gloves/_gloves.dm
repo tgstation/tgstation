@@ -41,19 +41,22 @@
 		var/mob/M = loc
 		M.update_worn_gloves()
 		
-/obj/item/clothing/gloves/proc/can_cut_with(obj/item/I, mob/user)
+/obj/item/clothing/gloves/proc/can_cut_with(obj/item/tool)
 	if(!cut_type)
 		return FALSE
 	if(icon_state != initial(icon_state))
 		return FALSE // We don't want to cut dyed gloves.
-	else
-		return TRUE
+	return TRUE
 
-/obj/item/clothing/gloves/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())	
-		if(do_after(user, 3 SECONDS, target=src, extra_checks = CALLBACK(src, .proc/can_cut_with, I, user)))
-			balloon_alert(user, "cut fingertips off")
-			qdel(src)
-			user.put_in_hands(new cut_type)
-		else
-			return
+/obj/item/clothing/gloves/attackby(obj/item/tool, mob/user, params)
+	if(tool.tool_behaviour != TOOL_WIRECUTTER && !tool.get_sharpness())
+		return
+	if (!can_cut_with(tool))
+		return
+	balloon_alert(user, "cutting off fingertips...")
+	
+	if(!do_after(user, 3 SECONDS, target=src, extra_checks = CALLBACK(src, .proc/can_cut_with, tool, user)))
+		return
+	balloon_alert(user, "cut fingertips off")
+	qdel(src)
+	user.put_in_hands(new cut_type)
