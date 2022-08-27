@@ -219,7 +219,7 @@
 	RegisterSignal(primate, COMSIG_MOVABLE_CROSS, .proc/on_crossed)
 
 /obj/item/organ/internal/brain/primate/Remove(mob/living/carbon/primate, special = FALSE)
-	RegisterSignal(primate, COMSIG_MOVABLE_CROSS, .proc/on_crossed)
+	UnregisterSignal(primate, COMSIG_MOVABLE_CROSS, .proc/on_crossed)
 	return ..()
 
 /obj/item/organ/internal/brain/primate/proc/on_crossed(datum/source, atom/movable/crossed)
