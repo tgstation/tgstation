@@ -157,7 +157,7 @@
 		to_chat(src, span_syndradio("You are not at liberty to do this! All agents are clandestine."))
 		return FALSE
 	var/mob/living/carbon/holder = get_holder()
-	if(!holder)
+	if(!iscarbon(holder))
 		balloon_alert(src, "not being carried")
 		return FALSE
 	balloon_alert(src, "requesting DNA sample")

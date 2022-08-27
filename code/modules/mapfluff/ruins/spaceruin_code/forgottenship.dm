@@ -20,17 +20,17 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 					/obj/item/healthanalyzer = 4,
 					/obj/item/reagent_containers/pill/patch/libital = 5,
 					/obj/item/reagent_containers/pill/patch/aiuri = 5,
-					/obj/item/reagent_containers/glass/bottle/multiver = 1,
-					/obj/item/reagent_containers/glass/bottle/syriniver = 1,
-					/obj/item/reagent_containers/glass/bottle/epinephrine = 3,
-					/obj/item/reagent_containers/glass/bottle/morphine = 3,
-					/obj/item/reagent_containers/glass/bottle/potass_iodide = 1,
-					/obj/item/reagent_containers/glass/bottle/salglu_solution = 3,
+					/obj/item/reagent_containers/cup/bottle/multiver = 1,
+					/obj/item/reagent_containers/cup/bottle/syriniver = 1,
+					/obj/item/reagent_containers/cup/bottle/epinephrine = 3,
+					/obj/item/reagent_containers/cup/bottle/morphine = 3,
+					/obj/item/reagent_containers/cup/bottle/potass_iodide = 1,
+					/obj/item/reagent_containers/cup/bottle/salglu_solution = 3,
 					/obj/item/reagent_containers/syringe/antiviral = 5,
 					/obj/item/reagent_containers/medigel/libital = 2,
 					/obj/item/reagent_containers/medigel/aiuri = 2,
 					/obj/item/reagent_containers/medigel/sterilizine = 1)
-	contraband = list(/obj/item/reagent_containers/glass/bottle/cold = 2,
+	contraband = list(/obj/item/reagent_containers/cup/bottle/cold = 2,
 					/obj/item/restraints/handcuffs = 4,
 					/obj/item/storage/backpack/duffelbag/syndie/surgery = 1,
 					/obj/item/storage/medkit/tactical = 1)
@@ -55,10 +55,10 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	name = "Old pamphlet"
 
 /obj/item/paper/fluff/ruins/forgottenship/password/Initialize(mapload)
-	. = ..()
 	default_raw_text = "Welcome to most advanced cruiser owned by Cyber Sun Industries!<br>You might notice, that this cruiser is equipped with 12 prototype laser turrets making any hostile boarding attempts futile.<br>Other facilities built on the ship are: Simple atmospheric system, Camera system with built-in X-ray visors and Safety module, enabling emergency engines in case of... you know, emergency.<br>Emergency system will bring you to nearest syndicate pod containing everything needed for human life.<br><br><b>In case of emergency, you must remember the pod-door activation code - [GLOB.fscpassword]</b><br><br>Cyber Sun Industries (C) 2484."
 	icon_state = "paper_words"
 	inhand_icon_state = "paper"
+	return ..()
 
 /obj/item/paper/fluff/ruins/forgottenship/powerissues
 	name = "Power issues"
@@ -80,7 +80,7 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	deconstructible = FALSE
 
-/obj/structure/fluff/empty_sleeper/syndicate/captain/ComponentInitialize()
+/obj/structure/fluff/empty_sleeper/syndicate/captain/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/gps, "Old Encrypted Signal")
 

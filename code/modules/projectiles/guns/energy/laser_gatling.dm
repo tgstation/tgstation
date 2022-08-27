@@ -4,7 +4,7 @@
 /obj/item/minigunpack
 	name = "backpack power source"
 	desc = "The massive external power source for the laser gatling gun."
-	icon = 'icons/obj/guns/minigun.dmi'
+	icon = 'icons/obj/weapons/guns/minigun.dmi'
 	icon_state = "holstered"
 	inhand_icon_state = "backpack"
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
@@ -46,7 +46,7 @@
 					to_chat(user, span_warning("You need a free hand to hold the gun!"))
 					return
 				update_appearance()
-				user.update_inv_back()
+				user.update_worn_back()
 		else
 			to_chat(user, span_warning("You are already holding the gun!"))
 	else
@@ -94,13 +94,13 @@
 	else
 		src.visible_message(span_warning("The [gun.name] snaps back onto the [name]!"))
 	update_appearance()
-	user.update_inv_back()
+	user.update_worn_back()
 
 
 /obj/item/gun/energy/minigun
 	name = "laser gatling gun"
 	desc = "An advanced laser cannon with an incredible rate of fire. Requires a bulky backpack power source to use."
-	icon = 'icons/obj/guns/minigun.dmi'
+	icon = 'icons/obj/weapons/guns/minigun.dmi'
 	icon_state = "minigun_spin"
 	inhand_icon_state = "minigun"
 	slowdown = 1

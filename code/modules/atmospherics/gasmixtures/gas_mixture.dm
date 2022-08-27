@@ -659,7 +659,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /// Do mind that the numbers can get very big and might hit BYOND's single point float limit.
 /datum/gas_mixture/proc/gas_pressure_quadratic(a, b, c, lower_limit, upper_limit)
 	var/solution
-	if(!IS_INF_OR_NAN(a) && !IS_INF_OR_NAN(b) && !IS_INF_OR_NAN(c))
+	if(IS_FINITE(a) && IS_FINITE(b) && IS_FINITE(c))
 		solution = max(SolveQuadratic(a, b, c))
 		if(solution > lower_limit && solution < upper_limit) //SolveQuadratic can return empty lists so be careful here
 			return solution
@@ -670,7 +670,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /// We use the slope of an approximate value to get closer to the root of a given equation.
 /datum/gas_mixture/proc/gas_pressure_approximate(a, b, c, lower_limit, upper_limit)
 	var/solution
-	if(!IS_INF_OR_NAN(a) && !IS_INF_OR_NAN(b) && !IS_INF_OR_NAN(c))
+	if(IS_FINITE(a) && IS_FINITE(b) && IS_FINITE(c))
 		// We start at the extrema of the equation, added by a number.
 		// This way we will hopefully always converge on the positive root, while starting at a reasonable number.
 		solution = (-b / (2 * a)) + 200

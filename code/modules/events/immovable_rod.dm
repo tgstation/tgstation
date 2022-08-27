@@ -14,6 +14,8 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	max_occurrences = 5
 	var/atom/special_target
 	var/force_looping = FALSE
+	category = EVENT_CATEGORY_SPACE
+	description = "The station passes through an immovable rod."
 
 /datum/round_event_control/immovable_rod/admin_setup()
 	if(!check_rights(R_FUN))

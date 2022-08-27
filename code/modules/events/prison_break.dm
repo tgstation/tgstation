@@ -3,6 +3,8 @@
 	typepath = /datum/round_event/grey_tide
 	max_occurrences = 2
 	min_players = 5
+	category = EVENT_CATEGORY_ENGINEERING
+	description = "Bolts open all doors in one or more departments."
 
 /datum/round_event/grey_tide
 	announceWhen = 50
@@ -53,7 +55,6 @@
 				if(temp.critical_machine) //Skip doors in critical positions, such as the SM chamber.
 					continue
 				temp.prison_open()
-			else if(istype(O, /obj/machinery/door_timer))
-				var/obj/machinery/door_timer/temp = O
+			else if(istype(O, /obj/machinery/status_display/door_timer))
+				var/obj/machinery/status_display/door_timer/temp = O
 				temp.timer_end(forced = TRUE)
-

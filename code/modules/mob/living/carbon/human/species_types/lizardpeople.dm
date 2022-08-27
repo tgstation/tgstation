@@ -30,10 +30,10 @@
 	meat = /obj/item/food/meat/slab/human/mutant/lizard
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
 	exotic_bloodtype = "L"
-	disliked_food = GRAIN | DAIRY | CLOTH
-	liked_food = GROSS | MEAT | SEAFOOD | NUTS | BUGS
+	disliked_food = GRAIN | DAIRY | CLOTH | GROSS
+	liked_food = GORE | MEAT | SEAFOOD | NUTS | BUGS
 	inert_mutation = /datum/mutation/human/firebreath
-	deathsound = 'sound/voice/lizard/deathsound.ogg'
+	death_sound = 'sound/voice/lizard/deathsound.ogg'
 	wings_icons = list("Dragon")
 	species_language_holder = /datum/language_holder/lizard
 	digitigrade_customization = DIGITIGRADE_OPTIONAL
@@ -68,11 +68,10 @@
 
 	return randname
 
-/datum/species/lizard/randomize_main_appearance_element(mob/living/carbon/human/human_mob)
-	var/tail = pick(GLOB.tails_list_lizard)
-	human_mob.dna.features["tail_lizard"] = tail
-	mutant_bodyparts["tail_lizard"] = tail
-	human_mob.update_body()
+
+/datum/species/lizard/randomize_features(mob/living/carbon/human/human_mob)
+	human_mob.dna.features["body_markings"] = pick(GLOB.body_markings_list)
+	randomize_external_organs(human_mob)
 
 /datum/species/lizard/get_scream_sound(mob/living/carbon/human/lizard)
 	return pick(

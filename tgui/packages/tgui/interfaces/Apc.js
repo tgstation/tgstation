@@ -222,6 +222,7 @@ const ApcContent = (props, context) => {
                 tooltip="Dim lights to reduce power consumption."
                 icon="lightbulb-o"
                 content={data.nightshiftLights ? 'Enabled' : 'Disabled'}
+                disabled={data.disable_nightshift_toggle}
                 onClick={() => act('toggle_nightshift')}
               />
             }

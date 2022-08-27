@@ -5,6 +5,8 @@
 	weight = -1 //forces it to be called, regardless of weight
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
+	category = EVENT_CATEGORY_HOLIDAY
+	description = "Gives everyone treats, and turns Ian and Poly into their festive versions."
 
 /datum/round_event/spooky/start()
 	..()
@@ -27,13 +29,13 @@
 /obj/item/food/cookie/sugar/spookyskull
 	name = "skull cookie"
 	desc = "Spooky! It's got delicious calcium flavouring!"
-	icon = 'icons/obj/halloween_items.dmi'
+	icon = 'icons/obj/holiday/halloween_items.dmi'
 	icon_state = "skeletoncookie"
 
 /obj/item/food/cookie/sugar/spookycoffin
 	name = "coffin cookie"
 	desc = "Spooky! It's got delicious coffee flavouring!"
-	icon = 'icons/obj/halloween_items.dmi'
+	icon = 'icons/obj/holiday/halloween_items.dmi'
 	icon_state = "coffincookie"
 
 //spooky items
@@ -41,7 +43,7 @@
 /obj/item/storage/spooky
 	name = "trick-o-treat bag"
 	desc = "A pumpkin-shaped bag that holds all sorts of goodies!"
-	icon = 'icons/obj/halloween_items.dmi'
+	icon = 'icons/obj/holiday/halloween_items.dmi'
 	icon_state = "treatbag"
 
 /obj/item/storage/spooky/Initialize(mapload)

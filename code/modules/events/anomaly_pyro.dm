@@ -4,6 +4,7 @@
 
 	max_occurrences = 5
 	weight = 20
+	description = "This anomaly sets things on fire, and creates a pyroclastic slime."
 
 /datum/round_event/anomaly/anomaly_pyro
 	startWhen = 3

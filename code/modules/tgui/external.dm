@@ -218,10 +218,18 @@
 				context = window_id)
 			SStgui.force_close_window(usr, window_id)
 			return TRUE
+
 	// Decode payload
 	var/payload
 	if(href_list["payload"])
-		payload = json_decode(href_list["payload"])
+		var/payload_text = href_list["payload"]
+
+		if (!rustg_json_is_valid(payload_text))
+			log_tgui(usr, "Error: Invalid JSON")
+			return TRUE
+
+		payload = json_decode(payload_text)
+
 	// Pass message to window
 	if(window)
 		window.on_message(type, payload, href_list)

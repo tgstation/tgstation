@@ -1,7 +1,7 @@
 
 /obj/item/organ
 	name = "organ"
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/medical/surgery.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
 	///The mob that owns this organ.
@@ -55,14 +55,14 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(organ_flags & ORGAN_EDIBLE)
 		AddComponent(/datum/component/edible,\
 			initial_reagents = food_reagents,\
-			foodtypes = RAW | MEAT | GROSS,\
+			foodtypes = RAW | MEAT | GORE,\
 			volume = reagent_vol,\
 			after_eat = CALLBACK(src, .proc/OnEatFrom))
 
 /obj/item/organ/forceMove(atom/destination, check_dest = TRUE)
 	if(check_dest && destination) //Nullspace is always a valid location for organs. Because reasons.
 		if(organ_flags & ORGAN_UNREMOVABLE) //If this organ is unremovable, it should delete itself if it tries to be moved to anything besides a bodypart.
-			if(!istype(destination, /obj/item/bodypart) && !iscarbon(destination))
+			if(!isbodypart(destination) && !iscarbon(destination))
 				qdel(src)
 				return //Don't move it out of nullspace if it's deleted.
 	return ..()

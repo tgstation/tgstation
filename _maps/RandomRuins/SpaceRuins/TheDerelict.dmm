@@ -332,11 +332,11 @@
 /area/ruin/space/ks13/engineering/atmos)
 "eL" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/bottle/beer/almost_empty{
+/obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty{
 	pixel_x = -7;
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/food/drinks/bottle/beer/almost_empty,
+/obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty,
 /turf/open/floor/plating,
 /area/ruin/space/ks13/command/bridge)
 "eM" = (
@@ -3700,11 +3700,11 @@
 /area/ruin/space/ks13/engineering/atmos)
 "Dj" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/bottle/vodka{
+/obj/item/reagent_containers/cup/glass/bottle/vodka{
 	pixel_x = 6;
 	pixel_y = 10
 	},
-/obj/item/reagent_containers/food/drinks/bottle/vodka{
+/obj/item/reagent_containers/cup/glass/bottle/vodka{
 	pixel_x = -7;
 	pixel_y = 13
 	},
@@ -4314,11 +4314,11 @@
 /area/ruin/space/ks13/tool_storage)
 "Gq" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/bottle/beer/almost_empty{
+/obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty{
 	pixel_x = -6;
 	pixel_y = 12
 	},
-/obj/item/reagent_containers/food/drinks/bottle/beer/almost_empty,
+/obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/command/bridge)
 "Gr" = (
@@ -4589,18 +4589,18 @@
 /area/ruin/space/ks13/science/ordnance)
 "HL" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = 8;
 	pixel_y = 9
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = 8
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = -7;
 	pixel_y = 9
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = -7
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -4736,11 +4736,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/service/cafe)
-"IH" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
-/turf/open/floor/plating,
-/area/ruin/space/ks13/engineering/sb_bow_solars_control)
 "II" = (
 /obj/item/shard,
 /obj/structure/grille/broken,
@@ -5660,7 +5655,6 @@
 /turf/open/floor/plating,
 /area/ruin/space/ks13/security/court)
 "NA" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 4
 	},
@@ -5767,10 +5761,10 @@
 /area/ruin/space/ks13/dorms)
 "Oe" = (
 /obj/structure/table,
-/obj/item/reagent_containers/glass/beaker{
+/obj/item/reagent_containers/cup/beaker{
 	pixel_x = -8
 	},
-/obj/item/reagent_containers/glass/beaker/large{
+/obj/item/reagent_containers/cup/beaker/large{
 	pixel_x = 5
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -6021,7 +6015,6 @@
 /turf/open/floor/iron,
 /area/ruin/space/ks13/security/court)
 "Ps" = (
-/obj/structure/table,
 /obj/machinery/light/small/directional/east,
 /obj/item/circuitboard/machine/smes,
 /obj/structure/table,
@@ -6549,7 +6542,7 @@
 /area/ruin/space/ks13/medical/medbay)
 "Sf" = (
 /obj/structure/table,
-/obj/item/reagent_containers/glass/beaker{
+/obj/item/reagent_containers/cup/beaker{
 	list_reagents = list(/datum/reagent/toxin/acid=50)
 	},
 /obj/item/paper/crumpled/bloody/ruins/thederelict/unfinished,
@@ -8089,11 +8082,11 @@
 /area/ruin/space/ks13/ai/vault)
 "ZC" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/glass/beaker{
+/obj/item/reagent_containers/cup/beaker{
 	pixel_x = 9;
 	pixel_y = 7
 	},
-/obj/item/reagent_containers/glass/beaker/large{
+/obj/item/reagent_containers/cup/beaker/large{
 	pixel_x = -4;
 	pixel_y = 4
 	},
@@ -15775,7 +15768,7 @@ aa
 xS
 pR
 pR
-IH
+xS
 VB
 gx
 DU
@@ -15888,7 +15881,7 @@ aa
 xS
 VB
 IK
-IH
+xS
 pR
 HC
 DU
@@ -16001,7 +15994,7 @@ Uk
 ud
 zC
 IK
-IH
+xS
 IK
 VB
 DU

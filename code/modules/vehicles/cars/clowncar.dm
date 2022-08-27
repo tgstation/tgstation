@@ -42,7 +42,7 @@
 		if(is_clown_job(H.mind?.assigned_role)) //Ensures only clowns can drive the car. (Including more at once)
 			add_control_flags(H, VEHICLE_CONTROL_DRIVE)
 			RegisterSignal(H, COMSIG_MOB_CLICKON, .proc/fire_cannon_at)
-			M.log_message("has entered [src] as a possible driver", LOG_ATTACK)
+			M.log_message("has entered [src] as a possible driver", LOG_GAME)
 			return
 	add_control_flags(M, VEHICLE_CONTROL_KIDNAPPED)
 
@@ -107,7 +107,7 @@
 		playsound(src, pick('sound/vehicles/clowncar_ram1.ogg', 'sound/vehicles/clowncar_ram2.ogg', 'sound/vehicles/clowncar_ram3.ogg'), 75)
 		log_combat(src, hittarget_living, "sucked up")
 		return
-	if(!istype(bumped, /turf/closed))
+	if(!isclosedturf(bumped))
 		return
 	visible_message(span_warning("[src] rams into [bumped] and crashes!"))
 	playsound(src, pick('sound/vehicles/clowncar_crash1.ogg', 'sound/vehicles/clowncar_crash2.ogg'), 75)
@@ -159,7 +159,7 @@
 			foam.start(log = TRUE)
 		if(3)
 			visible_message(span_danger("[user] presses one of the colorful buttons on [src], and the clown car turns on its singularity disguise system."))
-			icon = 'icons/obj/singularity.dmi'
+			icon = 'icons/obj/engine/singularity.dmi'
 			icon_state = "singularity_s1"
 			addtimer(CALLBACK(src, .proc/reset_icon), 10 SECONDS)
 		if(4)

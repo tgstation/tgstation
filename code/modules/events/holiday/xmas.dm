@@ -1,6 +1,6 @@
 /obj/item/toy/xmas_cracker
 	name = "xmas cracker"
-	icon = 'icons/obj/christmas.dmi'
+	icon = 'icons/obj/holiday/christmas.dmi'
 	icon_state = "cracker"
 	desc = "Directions for use: Requires two people, one to pull each end."
 	/// The crack state of the toy. If set to TRUE, you can no longer crack it by attacking.
@@ -75,6 +75,8 @@
 	weight = 20
 	max_occurrences = 1
 	earliest_start = 30 MINUTES
+	category = EVENT_CATEGORY_HOLIDAY
+	description = "Spawns santa, who shall roam the station, handing out gifts."
 
 /datum/round_event/santa
 	var/mob/living/carbon/human/santa //who is our santa?

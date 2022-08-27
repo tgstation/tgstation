@@ -1,14 +1,20 @@
 /datum/lua_editor
 	var/datum/lua_state/current_state
 
-	/// Code imported from the user's system
-	var/imported_code
-
 	/// Arguments for a function call or coroutine resume
 	var/list/arguments = list()
 
-	/// If set, the global table and the
-	var/show_debug_info = FALSE
+	/// If not set, the global table will not be shown in the lua editor
+	var/show_global_table = FALSE
+
+	/// The log page we are currently on
+	var/page = 0
+
+	/// If set, we will force the editor's modal to be this
+	var/force_modal
+
+	/// If set, we will force the editor to look at this chunk
+	var/force_view_chunk
 
 /datum/lua_editor/New(state, _quick_log_index)
 	. = ..()
@@ -39,16 +45,24 @@
 /datum/lua_editor/ui_data(mob/user)
 	var/list/data = list()
 	data["noStateYet"] = !current_state
-	data["showDebugInfo"] = show_debug_info
+	data["showGlobalTable"] = show_global_table
 	if(current_state)
-		if(current_state.log && show_debug_info)
-			data["stateLog"] = kvpify_list(refify_list(current_state.log))
+		if(current_state.log)
+			data["stateLog"] = kvpify_list(refify_list(current_state.log.Copy((page*50)+1, min((page+1)*50+1, current_state.log.len+1))))
+		data["page"] = page
+		data["pageCount"] = CEILING(current_state.log.len/50, 1)
 		data["tasks"] = current_state.get_tasks()
-		if(show_debug_info)
+		if(show_global_table)
 			current_state.get_globals()
 			data["globals"] = kvpify_list(refify_list(current_state.globals))
 	data["states"] = SSlua.states
 	data["callArguments"] = kvpify_list(refify_list(arguments))
+	if(force_modal)
+		data["forceModal"] = force_modal
+		force_modal = null
+	if(force_view_chunk)
+		data["forceViewChunk"] = force_view_chunk
+		force_view_chunk = null
 	return data
 
 /datum/lua_editor/proc/traverse_list(list/path, list/root, traversal_depth_offset = 0)
@@ -96,17 +110,20 @@
 			LAZYREMOVEASSOC(SSlua.editors, "\ref[current_state]", src)
 			current_state = new_state
 			LAZYADDASSOCLIST(SSlua.editors, "\ref[current_state]", src)
+			page = 0
 			return TRUE
 		if("switchState")
 			var/state_index = params["index"]
 			LAZYREMOVEASSOC(SSlua.editors, "\ref[current_state]", src)
 			current_state = SSlua.states[state_index]
 			LAZYADDASSOCLIST(SSlua.editors, "\ref[current_state]", src)
+			page = 0
 			return TRUE
 		if("runCode")
 			var/code = params["code"]
 			var/result = current_state.load_script(code)
-			current_state.log_result(result)
+			var/index_with_result = current_state.log_result(result)
+			message_admins("[key_name(usr)] executed [length(code)] bytes of lua code. [ADMIN_LUAVIEW_CHUNK(current_state, index_with_result)]")
 			return TRUE
 		if("moveArgUp")
 			var/list/path = params["path"]
@@ -191,8 +208,14 @@
 		if("clearArgs")
 			arguments.Cut()
 			return TRUE
-		if("toggleShowDebugInfo")
-			show_debug_info = !show_debug_info
+		if("toggleShowGlobalTable")
+			show_global_table = !show_global_table
+			return TRUE
+		if("nextPage")
+			page = min(page+1, CEILING(current_state.log.len/50, 1)-1)
+			return TRUE
+		if("previousPage")
+			page = max(page-1, 0)
 			return TRUE
 
 /datum/lua_editor/ui_close(mob/user)

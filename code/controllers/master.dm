@@ -167,7 +167,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 				continue
 			else
 				var/varval = Master.vars[varname]
-				if (istype(varval, /datum)) // Check if it has a type var.
+				if (isdatum(varval)) // Check if it has a type var.
 					var/datum/D = varval
 					msg += "\t [varname] = [D]([D.type])\n"
 				else

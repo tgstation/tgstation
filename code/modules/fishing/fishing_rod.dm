@@ -111,7 +111,7 @@
 	RegisterSignal(fishing_line_beam, COMSIG_PARENT_QDELETING, .proc/clear_line)
 	fishing_lines += fishing_line_beam
 	INVOKE_ASYNC(fishing_line_beam, /datum/beam/.proc/Start)
-	user.update_inv_hands()
+	user.update_held_items()
 	return fishing_line_beam
 
 /obj/item/fishing_rod/proc/clear_line(datum/source)
@@ -119,7 +119,7 @@
 	fishing_lines -= source
 	if(ismob(loc))
 		var/mob/user = loc
-		user.update_inv_hands()
+		user.update_held_items()
 
 /obj/item/fishing_rod/dropped(mob/user, silent)
 	. = ..()
@@ -142,7 +142,7 @@
 /// Checks what can be hooked
 /obj/item/fishing_rod/proc/can_be_hooked(atom/movable/target)
 	// Could be made dependent on actual hook, ie magnet to hook metallic items
-	return istype(target, /obj/item)
+	return isitem(target)
 
 /obj/item/fishing_rod/proc/clear_hooked_item()
 	SIGNAL_HANDLER
@@ -361,6 +361,20 @@
 		line = null
 	if(gone == hook)
 		hook = null
+
+/obj/item/fishing_rod/bone
+	name = "bone fishing rod"
+	desc = "A humble rod, made with whatever happened to be on hand."
+	icon_state = "fishing_rod_bone"
+
+/datum/crafting_recipe/bone_rod
+	name = "Bone Fishing Rod"
+	result = /obj/item/fishing_rod/bone
+	time = 5 SECONDS
+	reqs = list(/obj/item/stack/sheet/leather = 1,
+				/obj/item/stack/sheet/sinew = 2,
+				/obj/item/stack/sheet/bone = 2)
+	category = CAT_PRIMAL
 
 /obj/item/fishing_rod/master
 	name = "master fishing rod"

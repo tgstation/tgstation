@@ -22,11 +22,11 @@
 /obj/item/clothing/glasses/sunglasses/spy/equipped(mob/user, slot)
 	. = ..()
 	if(slot != ITEM_SLOT_EYES)
-		user.client.close_popup("spypopup")
+		user.client?.close_popup("spypopup")
 
 /obj/item/clothing/glasses/sunglasses/spy/dropped(mob/user)
 	. = ..()
-	user.client.close_popup("spypopup")
+	user.client?.close_popup("spypopup")
 
 /obj/item/clothing/glasses/sunglasses/spy/ui_action_click(mob/user)
 	show_to_user(user)
