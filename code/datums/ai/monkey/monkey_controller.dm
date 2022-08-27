@@ -29,9 +29,6 @@ have ways of interacting with a specific mob and control it.
 	)
 	idle_behavior = /datum/idle_behavior/idle_monkey
 
-	///Whether this AI is immune to being stunned by being crossed into.
-	var/crossed_immune = FALSE
-
 /datum/ai_controller/monkey/pun_pun
 	movement_delay = 0.7 SECONDS //pun pun moves slower so the bartender can keep track of them
 	planning_subtrees = list(
@@ -51,6 +48,12 @@ have ways of interacting with a specific mob and control it.
 	if(. & AI_CONTROLLER_INCOMPATIBLE)
 		return
 	blackboard[BB_MONKEY_AGGRESSIVE] = TRUE //Angry cunt
+
+/datum/ai_controller/monkey/pun_pun/TryPossessPawn(atom/new_pawn)
+	. = ..()
+	if(. & AI_CONTROLLER_INCOMPATIBLE)
+		return
+	set_trip_mode(mode = FALSE) // Pun Pun is no pushover
 
 /datum/ai_controller/monkey/TryPossessPawn(atom/new_pawn)
 	if(!isliving(new_pawn))
@@ -74,8 +77,6 @@ have ways of interacting with a specific mob and control it.
 	return ..() //Run parent at end
 
 /datum/ai_controller/monkey/UnpossessPawn(destroy)
-	if(!crossed_immune)
-		UnregisterSignal(pawn, COMSIG_MOVABLE_CROSS)
 
 	UnregisterSignal(pawn, list(
 		COMSIG_PARENT_ATTACKBY,
@@ -96,10 +97,7 @@ have ways of interacting with a specific mob and control it.
 
 /datum/ai_controller/monkey/on_sentience_lost()
 	. = ..()
-	var/mob/living/carbon/regressed_monkey = pawn
-	if(istype(regressed_monkey.getorganslot(ORGAN_SLOT_BRAIN), /obj/item/organ/internal/brain/primate)) // In case we are a monkey AI in a human brain by who was previously controlled by a client but it now not by some marvel
-		var/obj/item/organ/internal/brain/primate/monkeybrain = regressed_monkey.getorganslot(ORGAN_SLOT_BRAIN)
-		monkeybrain.tripping = TRUE // The monkey AI is weak and cowardly.
+	set_trip_mode(mode = TRUE)
 
 /datum/ai_controller/monkey/able_to_run()
 	var/mob/living/living_pawn = pawn
@@ -107,6 +105,12 @@ have ways of interacting with a specific mob and control it.
 	if(IS_DEAD_OR_INCAP(living_pawn))
 		return FALSE
 	return ..()
+
+/datum/ai_controller/monkey/proc/set_trip_mode(mode = TRUE)
+	var/mob/living/carbon/regressed_monkey = pawn
+	if(istype(regressed_monkey.getorganslot(ORGAN_SLOT_BRAIN), /obj/item/organ/internal/brain/primate)) // In case we are a monkey AI in a human brain by who was previously controlled by a client but it now not by some marvel
+		var/obj/item/organ/internal/brain/primate/monkeybrain = regressed_monkey.getorganslot(ORGAN_SLOT_BRAIN)
+		monkeybrain.tripping = mode
 
 ///re-used behavior pattern by monkeys for finding a weapon
 /datum/ai_controller/monkey/proc/TryFindWeapon()
