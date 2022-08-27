@@ -48,13 +48,6 @@ have ways of interacting with a specific mob and control it.
 		return
 	blackboard[BB_MONKEY_AGGRESSIVE] = TRUE //Angry cunt
 
-/datum/ai_controller/monkey/pun_pun/TryPossessPawn(atom/new_pawn)
-	. = ..()
-	if(. & AI_CONTROLLER_INCOMPATIBLE)
-		return
-	if(pawn)
-		set_trip_mode(mode = FALSE) // Pun Pun is no pushover
-
 /datum/ai_controller/monkey/TryPossessPawn(atom/new_pawn)
 	if(!isliving(new_pawn))
 		return AI_CONTROLLER_INCOMPATIBLE
