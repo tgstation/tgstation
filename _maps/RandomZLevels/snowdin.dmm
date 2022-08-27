@@ -1865,7 +1865,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/dorm)
 "fw" = (
-/obj/machinery/sleeper/self_control{
+/obj/machinery/sleeper{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
