@@ -18,6 +18,7 @@
 	density = TRUE
 	anchored = TRUE
 
+	///How well the engine affects the ship's speed.
 	var/engine_power = 1
 	///Construction state of the Engine.
 	var/engine_state = ENGINE_WELDED //welding shmelding //i love welding
@@ -49,6 +50,7 @@
 		return
 	var/obj/docking_port/mobile/port = connected_ship.resolve()
 	port.engine_list -= src
+	port.current_engines--
 	connected_ship = null
 
 //Ugh this is a lot of copypasta from emitters, welding need some boilerplate reduction
