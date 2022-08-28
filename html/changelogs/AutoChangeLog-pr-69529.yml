@@ -1,0 +1,4 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes: 
+  - bugfix: "Bluespace bodybags will no longer fold on themselves and delete everything inside of them when someone inside of them attempts to fold them."
