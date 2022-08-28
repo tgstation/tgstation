@@ -22,8 +22,8 @@
 
 	///What department to check to link our bank account to.
 	var/account_department = ACCOUNT_CAR
-	///Weakref of our bank account.
-	var/datum/weakref/bank_account_ref
+	///Bank account we're connected to.
+	var/datum/bank_account/synced_bank_account
 
 /obj/machinery/computer/bank_machine/Initialize(mapload)
 	. = ..()
@@ -32,13 +32,11 @@
 	radio.canhear_range = 0
 	radio.set_listening(FALSE)
 	radio.recalculateChannels()
-	var/datum/bank_account/department_account = SSeconomy.get_dep_account(account_department)
-	if(department_account)
-		bank_account_ref = WEAKREF(department_account)
+	synced_bank_account = SSeconomy.get_dep_account(account_department)
 
 /obj/machinery/computer/bank_machine/Destroy()
 	QDEL_NULL(radio)
-	bank_account_ref = null
+	synced_bank_account = null
 	return ..()
 
 /obj/machinery/computer/bank_machine/attackby(obj/item/weapon, mob/user, params)
@@ -50,32 +48,30 @@
 		var/obj/item/holochip/inserted_holochip = weapon
 		value = inserted_holochip.credits
 	if(value)
-		var/datum/bank_account/bank_account = bank_account_ref.resolve()
-		if(bank_account)
-			bank_account.adjust_money(value)
-			say("Credits deposited! The [bank_account.account_holder] is now [bank_account.account_balance] cr.")
+		if(synced_bank_account)
+			synced_bank_account.adjust_money(value)
+			say("Credits deposited! The [synced_bank_account.account_holder] is now [synced_bank_account.account_balance] cr.")
 		qdel(weapon)
 		return
 	return ..()
 
 /obj/machinery/computer/bank_machine/process(delta_time)
 	. = ..()
-	if(!siphoning)
+	if(!siphoning || !synced_bank_account)
 		return
 	if (machine_stat & (BROKEN | NOPOWER))
 		say("Insufficient power. Halting siphon.")
 		end_siphon()
 		return
 	var/siphon_am = 100 * delta_time
-	var/datum/bank_account/bank_account = bank_account_ref.resolve()
-	if(!bank_account.has_money(siphon_am))
-		say("[bank_account.account_holder] depleted. Halting siphon.")
+	if(!synced_bank_account.has_money(siphon_am))
+		say("[synced_bank_account.account_holder] depleted. Halting siphon.")
 		end_siphon()
 		return
 
 	playsound(src, 'sound/items/poster_being_created.ogg', 100, TRUE)
 	syphoning_credits += siphon_am
-	bank_account.adjust_money(-siphon_am)
+	synced_bank_account.adjust_money(-siphon_am)
 	if(next_warning < world.time && prob(15))
 		var/area/A = get_area(loc)
 		var/message = "[unauthorized ? "Unauthorized c" : "C"]redit withdrawal underway in [initial(A.name)][unauthorized ? "!!" : "..."]"
@@ -91,12 +87,8 @@
 
 /obj/machinery/computer/bank_machine/ui_data(mob/user)
 	var/list/data = list()
-	var/datum/bank_account/bank_account = bank_account_ref.resolve()
 
-	if(bank_account)
-		data["current_balance"] = bank_account.account_balance
-	else
-		data["current_balance"] = 0
+	data["current_balance"] = synced_bank_account?.account_balance || 0
 	data["siphoning"] = siphoning
 	data["station_name"] = station_name()
 
