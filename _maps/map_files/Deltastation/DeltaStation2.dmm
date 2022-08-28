@@ -13491,7 +13491,7 @@
 "diR" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
-	id = "pod_3_lavaland";
+	shuttle_id = "pod_3_lavaland";
 	name = "lavaland"
 	},
 /turf/open/space,

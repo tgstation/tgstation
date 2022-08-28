@@ -19,7 +19,7 @@
 	dir = 4;
 	dwidth = 3;
 	height = 12;
-	id = "huntership_home";
+	shuttle_id = "huntership_home";
 	name = "Deep Space";
 	width = 7
 	},

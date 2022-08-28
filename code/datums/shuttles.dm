@@ -10,6 +10,7 @@
 	 * you should set shuttle_id to be the same as port_id if you want them to be replacable.
 	 */
 	var/port_id
+	///ID of the shuttle, make sure it matches port_id if necessary.
 	var/shuttle_id
 
 	var/description

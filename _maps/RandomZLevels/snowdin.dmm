@@ -7559,7 +7559,7 @@
 	dir = 4;
 	dwidth = 3;
 	height = 6;
-	id = "snowdin_excavation_top";
+	shuttle_id = "snowdin_excavation_top";
 	name = "snowdin excavation top";
 	roundstart_template = /datum/map_template/shuttle/snowdin/excavation;
 	width = 6
@@ -7601,7 +7601,7 @@
 	dir = 4;
 	dwidth = 3;
 	height = 6;
-	id = "snowdin_excavation_down";
+	shuttle_id = "snowdin_excavation_down";
 	name = "snowdin excavation down";
 	width = 6
 	},
@@ -10775,7 +10775,7 @@
 	dir = 4;
 	dwidth = 2;
 	height = 5;
-	id = "snowdin_mining_top";
+	shuttle_id = "snowdin_mining_top";
 	name = "snowdin mining top";
 	roundstart_template = /datum/map_template/shuttle/snowdin/mining;
 	width = 5
@@ -10830,7 +10830,7 @@
 	dir = 4;
 	dwidth = 2;
 	height = 5;
-	id = "snowdin_mining_down";
+	shuttle_id = "snowdin_mining_down";
 	name = "snowdin mining bottom";
 	width = 5
 	},
