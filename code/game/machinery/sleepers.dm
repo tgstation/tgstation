@@ -63,9 +63,13 @@
 
 /obj/machinery/sleeper/RefreshParts()
 	. = ..()
+	var/matterbin_rating
 	for(var/obj/item/stock_parts/matter_bin/matterbins in component_parts)
-		efficiency = initial(efficiency) * matterbins.rating
-		min_health = initial(min_health) * matterbins.rating
+		matterbin_rating += matterbins.rating
+	efficiency = initial(efficiency) * matterbin_rating
+	min_health = initial(min_health) * matterbin_rating
+
+	LAZYNULL(available_chems)
 	for(var/obj/item/stock_parts/manipulator/manipulators in component_parts)
 		for(var/i in 1 to manipulators.rating)
 			available_chems |= possible_chems[i]
@@ -255,7 +259,7 @@
 			var/chem = text2path(params["chem"])
 			if(!is_operational || !mob_occupant || isnull(chem))
 				return
-			if(mob_occupant.health < min_health && !istype(chem, /datum/reagent/medicine/epinephrine))
+			if(mob_occupant.health < min_health && !ispath(chem, /datum/reagent/medicine/epinephrine))
 				return
 			if(inject_chem(chem, usr))
 				. = TRUE
@@ -289,7 +293,7 @@
 	return amount && occ_health
 
 /obj/machinery/sleeper/proc/reset_chem_buttons()
-	obj_flags |= ~EMAGGED
+	obj_flags &= ~EMAGGED
 	LAZYINITLIST(chem_buttons)
 	for(var/chem in available_chems)
 		chem_buttons[chem] = chem
