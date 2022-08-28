@@ -180,6 +180,31 @@
 	if(!animal_origin && ishuman(owner))
 		update_hair_and_lips()
 
+#define OFFSET_X 1
+#define OFFSET_Y 2
+
+/// Generates a list of overlays that the head should display for the given parent
+/obj/item/bodypart/head/proc/generate_body_overlay(mob/living/carbon/human/parent)
+	if(!istype(parent) || parent.get_bodypart(BODY_ZONE_HEAD) != src)
+		CRASH("Generating a body overlay for [src] targeting an invalid parent '[parent]'.")
+
+	var/list/overlays = list()
+
+	// Blush emote overlay
+	if (HAS_TRAIT(parent, TRAIT_BLUSHING)) // Caused by either the *blush emote or the "drunk" mood event
+		var/mutable_appearance/blush_overlay = mutable_appearance('icons/mob/human_face.dmi', "blush", -BODY_ADJ_LAYER) // Should appear behind the eyes
+		blush_overlay.color = COLOR_BLUSH_PINK
+		overlays += blush_overlay
+		if(OFFSET_FACE in parent.dna?.species.offset_features)
+			var/offset = parent.dna.species.offset_features[OFFSET_FACE]
+			blush_overlay.pixel_x += offset[OFFSET_X]
+			blush_overlay.pixel_y += offset[OFFSET_Y]
+
+	return overlays
+
+#undef OFFSET_X
+#undef OFFSET_Y
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
