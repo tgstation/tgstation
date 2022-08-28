@@ -56,9 +56,6 @@
 		set_greyscale(colors=list(screwdriver_colors[our_color]))
 	. = ..()
 	AddElement(/datum/element/eyestab)
-
-/obj/item/screwdriver/ComponentInitialize()
-	. = ..()
 	if(degrade_enabled)
 		AddComponent(/datum/component/degrade)
 

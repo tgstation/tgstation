@@ -12,7 +12,7 @@
 	///Does this wirebrush have tool degredation?
 	var/degrade_enabled = TRUE
 
-/obj/item/wirebrush/ComponentInitialize()
+/obj/item/wirebrush/Initialize(mapload)
 	. = ..()
 	if(degrade_enabled)
 		AddComponent(/datum/component/degrade)

@@ -30,7 +30,7 @@
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1)
 	return (BRUTELOSS)
 
-/obj/item/wrench/ComponentInitialize()
+/obj/item/wrench/Initialize(mapload)
 	. = ..()
 	if(degrade_enabled)
 		AddComponent(/datum/component/degrade)

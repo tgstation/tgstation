@@ -15,10 +15,10 @@
 	///Does this item have tool degredation?
 	var/degrade_enabled = TRUE
 
-/obj/item/retractor/ComponentInitialize()
+/obj/item/retractor/Initialize(mapload)
 	. = ..()
 	if(degrade_enabled)
-		AddComponent(/datum/component/degrade, 40, 40)
+		AddComponent(/datum/component/degrade, maximum_durability = 40, current_durability = 40)
 
 /obj/item/retractor/augment
 	desc = "Micro-mechanical manipulator for retracting stuff."
@@ -48,7 +48,7 @@
 /obj/item/hemostat/ComponentInitialize()
 	. = ..()
 	if(degrade_enabled)
-		AddComponent(/datum/component/degrade, 100, 100)
+		AddComponent(/datum/component/degrade, maximum_durability = 100, current_durability = 100)
 
 /obj/item/hemostat/augment
 	desc = "Tiny servos power a pair of pincers to stop bleeding."
@@ -214,7 +214,7 @@
 	)
 	AddElement(/datum/element/eyestab)
 	if(degrade_enabled)
-		AddComponent(/datum/component/degrade, 40, 40)
+		AddComponent(/datum/component/degrade, maximum_durability = 40, current_durability = 40)
 
 /obj/item/scalpel/augment
 	desc = "Ultra-sharp blade attached directly to your bone for extra-accuracy."
@@ -507,7 +507,7 @@
 /obj/item/bonesetter/ComponentInitialize()
 	. = ..()
 	if(degrade_enabled)
-		AddComponent(/datum/component/degrade, 40, 40)
+		AddComponent(/datum/component/degrade, maximum_durability = 40, current_durability = 40)
 
 /obj/item/blood_filter
 	name = "blood filter"

@@ -60,7 +60,7 @@
 	playsound(loc, usesound, 50, TRUE, -1)
 	return (BRUTELOSS)
 
-/obj/item/wirecutters/ComponentInitialize()
+/obj/item/wirecutters/Initialize(mapload)
 	. = ..()
 	if(degrade_enabled)
 		AddComponent(/datum/component/degrade)
