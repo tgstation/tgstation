@@ -132,6 +132,10 @@
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
 
+// Used for unit tests, do not delete
+/obj/item/food/hotdog/debug
+	eat_time = 0
+
 /obj/item/food/blt
 	name = "\improper BLT"
 	desc = "A classic bacon, lettuce, and tomato sandwich."
