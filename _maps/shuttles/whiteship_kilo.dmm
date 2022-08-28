@@ -23,7 +23,7 @@
 /obj/structure/closet/crate/trashcart/filled,
 /obj/item/bodypart/r_arm/robot/surplus{
 	name = "rusty robotic arm";
-	desc = "A rusted and decayed robotic arm. Probably still works... Probably."
+	desc = "It's rusted but still functional, at least for robots."
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
@@ -53,6 +53,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/machinery/portable_atmospherics/canister/air,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "ei" = (
@@ -80,7 +81,7 @@
 "eT" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/reagent_dispensers/watertank,
-/obj/item/reagent_containers/cup/bucket,
+/obj/item/reagent_containers/glass/bucket,
 /obj/item/mop,
 /obj/item/storage/bag/trash{
 	pixel_x = 6
@@ -756,7 +757,7 @@
 	name = "fridge"
 	},
 /obj/item/food/sausage,
-/obj/item/reagent_containers/cup/glass/bottle/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
 /obj/item/food/sandwich,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/siding/thinplating_new{
@@ -821,6 +822,7 @@
 	},
 /obj/effect/spawner/random/maintenance/three,
 /obj/item/wirebrush,
+/obj/item/stack/sheet/mineral/plasma/five,
 /obj/item/stack/sheet/mineral/plasma/five,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
@@ -889,13 +891,14 @@
 "OS" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/reagent_containers/cup/glass/drinkingglass/filled/cola{
+/obj/item/reagent_containers/food/drinks/drinkingglass/filled/cola{
 	pixel_y = 5;
 	pixel_x = 8
 	},
 /obj/item/plate/small{
 	pixel_x = -5
 	},
+/obj/item/storage/box/donkpockets,
 /turf/open/floor/bamboo,
 /area/shuttle/abandoned/bar)
 "OZ" = (
