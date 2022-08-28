@@ -8,7 +8,7 @@
 	var/finish_time //So countdown doesn't need to fiddle with timers
 	var/timing_id //if present we're timing
 	var/hand_activated = TRUE
-	icon = 'icons/obj/hourglass.dmi'
+	icon = 'icons/obj/toys/hourglass.dmi'
 	icon_state = "hourglass_idle"
 
 /obj/item/hourglass/Initialize(mapload)

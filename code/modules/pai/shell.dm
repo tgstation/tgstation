@@ -84,7 +84,7 @@
 		return FALSE
 	visible_message(span_notice("[src] deactivates its holochassis emitter and folds back into a compact card!"))
 	stop_pulling()
-	if(istype(loc, /obj/item/clothing/head/mob_holder))
+	if(ispickedupmob(loc))
 		var/obj/item/clothing/head/mob_holder/mob_head = loc
 		mob_head.release(display_messages = FALSE)
 	if(client)

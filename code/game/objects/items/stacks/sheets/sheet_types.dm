@@ -210,7 +210,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/stack/sheet/iron/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	if(istype(target, /turf/open))
+	if(isopenturf(target))
 		var/turf/open/build_on = target
 		if(!user.Adjacent(build_on))
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -499,6 +499,15 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	loom_result = /obj/item/stack/sheet/durathread
 	grind_results = list()
 
+/obj/item/stack/sheet/cotton/wool
+	name = "raw wool bundle"
+	desc = "A bundle of raw wool ready to be spun on the loom."
+	singular_name = "raw wool ball"
+	icon_state = "sheet-wool"
+	merge_type = /obj/item/stack/sheet/cotton/wool
+	loom_result = /obj/item/stack/sheet/cloth
+	grind_results = list()
+
 /*
  * Cardboard
  */
@@ -683,7 +692,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
  */
 /obj/item/stack/sheet/bone
 	name = "bones"
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "bone"
 	inhand_icon_state = "sheet-bone"
 	mats_per_unit = list(/datum/material/bone = MINERAL_MATERIAL_AMOUNT)

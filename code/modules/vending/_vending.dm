@@ -1285,7 +1285,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	if(loaded_items >= max_loaded_items)
 		say("There are too many items in stock.")
 		return
-	if(istype(I, /obj/item/stack))
+	if(isstack(I))
 		say("Loose items may cause problems, try to use it inside wrapping paper.")
 		return
 	if(I.custom_price)

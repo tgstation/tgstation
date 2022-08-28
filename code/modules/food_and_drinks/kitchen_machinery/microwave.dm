@@ -70,7 +70,7 @@
 			. += span_notice("\The [src] contains:")
 		var/list/items_counts = new
 		for(var/i in ingredients)
-			if(istype(i, /obj/item/stack))
+			if(isstack(i))
 				var/obj/item/stack/S = i
 				items_counts[S.name] += S.amount
 			else
