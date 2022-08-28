@@ -974,3 +974,11 @@
       (the corridor between the CMO's Office, Plumbing, and the Pharmacy).
   tralezab:
   - balance: Ghouls now appear dead to health scanners and other detections of life.
+2022-08-28:
+  Jolly:
+  - bugfix: On Tram, somewhere in maints, a missing windoor was readded. You're welcome.
+  Timberpoes:
+  - bugfix: Fixes reagent transfer not properly emptying the source of reagents when
+      transferring to a target.
+  optimumtact:
+  - balance: orks no longer shout their attacks over the radio
