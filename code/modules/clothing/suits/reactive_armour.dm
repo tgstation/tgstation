@@ -477,7 +477,13 @@
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
 
-/obj/item/clothing/suit/armor/reactive/barricade/proc/repulse_targets(mob/living/carbon/human/source)
+/**
+ * Returns a list of all atoms around the source which can be moved away from it.
+ *
+ * Arguments
+ * * source - Thing to try to move things away from.
+ */
+/obj/item/clothing/suit/armor/reactive/barricade/proc/repulse_targets(atom/source)
 	var/list/push_targets = list()
 	for (var/atom/movable/nearby_movable in view(1, source))
 		if(nearby_movable == source)
@@ -487,13 +493,21 @@
 		push_targets += nearby_movable
 	return push_targets
 
-/obj/item/clothing/suit/armor/reactive/barricade/proc/repulse(mob/living/carbon/human/victim, mob/living/carbon/human/source)
+/**
+ * Pushes something one tile away from the source.
+ *
+ * Arguments
+ * * victim - Thing being moved.
+ * * source - Thing to move it away from.
+ */
+/obj/item/clothing/suit/armor/reactive/barricade/proc/repulse(atom/movable/victim, atom/source)
 	var/dist_from_caster = get_dist(victim, source)
 
 	if(dist_from_caster == 0)
 		return
 
-	to_chat(victim, span_userdanger("You're thrown back by a wave of pressure!"))
+	if (isliving(victim))
+		to_chat(victim, span_userdanger("You're thrown back by a wave of pressure!"))
 	var/turf/throwtarget = get_edge_target_turf(source, get_dir(source, get_step_away(victim, source, 1)))
 	victim.safe_throw_at(throwtarget, 1, 1, source, force = MOVE_FORCE_EXTREMELY_STRONG)
 

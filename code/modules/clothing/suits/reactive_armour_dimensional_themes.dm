@@ -1,7 +1,10 @@
-
 #define MAX_BARRIERS 4
 #define MIN_BARRIERS 2
 
+/***
+ * Datum describing a 'theme' which transforms a 3x3 area's turfs when applied.
+ * It also creates a number of themed barriers in that area.
+ */
 /datum/armour_dimensional_theme
 	var/datum/material/material
 	var/turf/replace_floor = /turf/open/floor/material
@@ -9,6 +12,14 @@
 	var/obj/barricade = /obj/structure/table/greyscale
 	var/barricade_anchored = TRUE
 
+/**
+ * Applies a random dimensional theme effect centered around a provided point.
+ * This will transform floors and walls, as well as creating some themed barriers in that area.
+ *
+ * Arguments
+ * * source - The central turf to apply outwards from.
+ * * dangerous - If true this will pick a 'dangerous' theme.
+ */
 /datum/armour_dimensional_theme/proc/apply_random(turf/source, dangerous = FALSE)
 	var/theme_type
 	if (dangerous)
@@ -19,6 +30,13 @@
 	theme.apply(source)
 	qdel(theme)
 
+/**
+ * Transforms turfs around a source point into a new themed material.
+ * Also place some barriers in unoccupied areas.
+ *
+ * Arguments
+ * * source - The central turf to apply outwards from.
+*/
 /datum/armour_dimensional_theme/proc/apply(turf/source)
 	var/obj/effect/particle_effect/fluid/smoke/poof = new(source)
 	poof.lifetime = 2 SECONDS
@@ -27,6 +45,12 @@
 		convert_turf(target)
 	place_barriers(source, target_area)
 
+/**
+ * Returns a list of turfs which it is valid to apply changes to.
+ *
+ * Arguments
+ * * source - The central turf to check outwards from.
+ */
 /datum/armour_dimensional_theme/proc/get_target_area(turf/source)
 	var/list/target_area = RANGE_TURFS(1, source)
 	for (var/turf/check_turf as anything in target_area)
@@ -42,6 +66,12 @@
 
 	return target_area
 
+/**
+ * Changes a turf into a different turf
+ *
+ * Arguments
+ * * to_convert - Turf to convert.
+ */
 /datum/armour_dimensional_theme/proc/convert_turf(turf/to_convert)
 	if (isfloorturf(to_convert))
 		to_convert.ChangeTurf(replace_floor, flags = CHANGETURF_INHERIT_AIR)
@@ -52,6 +82,13 @@
 		var/list/custom_materials = list(GET_MATERIAL_REF(material) = MINERAL_MATERIAL_AMOUNT)
 		to_convert.set_custom_materials(custom_materials)
 
+/**
+ * Places a random amount of themed barriers in unoccupied spaces adjacent to a source tile.
+ *
+ * Arguments
+ * * source - Central tile to place barriers around.
+ * * target_area - Tiles which have had their materials converted, needs further culling to remove dense tiles.
+ */
 /datum/armour_dimensional_theme/proc/place_barriers(turf/source, list/target_area)
 	target_area -= source
 	for (var/turf/check_turf as anything in target_area)
@@ -69,6 +106,13 @@
 		target_area -= place_turf
 		to_place--
 
+/**
+ * Places a barrier at a specified turf.
+ *
+ * Arguments
+ * * source - Tile to place barrier upon.
+ * * materials - Custom material data to apply to the barrier.
+ */
 /datum/armour_dimensional_theme/proc/place_barrier(turf/source, list/materials)
 	var/obj/placed_barricade = new barricade(source)
 	if (barricade_anchored)
@@ -134,6 +178,7 @@
 	replace_floor = /turf/open/floor/fakebasalt
 	replace_wall = /turf/closed/wall/mineral/cult
 
+/// Replace the barrier spawning to instead create weak lava.
 /datum/armour_dimensional_theme/dangerous/lavaland/place_barrier(turf/source, list/materials)
 	source.ChangeTurf(/turf/open/lava/smooth/weak, flags = CHANGETURF_INHERIT_AIR)
 
