@@ -292,7 +292,6 @@
 		value += cash.credits
 	if((value >= the_cost) && cash)
 		return cash.spend(the_cost)
-		return TRUE
 	return FALSE //Purchase unsuccessful
 
 /**
