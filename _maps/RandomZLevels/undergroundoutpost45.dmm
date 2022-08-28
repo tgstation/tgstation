@@ -2120,10 +2120,9 @@
 	c_tag = "Hydroponics";
 	network = list("uo45")
 	},
-/obj/machinery/power/apc/highcap/ten_k{
+/obj/machinery/power/apc/highcap/ten_k/directional/south{
 	locked = 0;
-	name = "Hydroponics APC";
-	pixel_y = -25;
+	name = "UO45 Hydroponics APC";
 	start_charge = 100
 	},
 /obj/effect/turf_decal/tile/green,
@@ -4145,11 +4144,9 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "jV" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	dir = 1;
+/obj/machinery/power/apc/highcap/ten_k/directional/north{
 	locked = 0;
 	name = "UO45 Bar APC";
-	pixel_y = 25;
 	start_charge = 100
 	},
 /obj/effect/turf_decal/tile/bar,
@@ -5078,10 +5075,8 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "lH" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	locked = 0;
+/obj/machinery/power/apc/highcap/ten_k/directional/south{
 	name = "UO45 Research Division APC";
-	pixel_y = -25;
 	start_charge = 100
 	},
 /obj/structure/disposalpipe/segment{
@@ -5561,10 +5556,9 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "mE" = (
-/obj/machinery/power/apc/highcap/ten_k{
+/obj/machinery/power/apc/highcap/ten_k/directional/south{
 	locked = 0;
 	name = "UO45 Gateway APC";
-	pixel_y = -25;
 	start_charge = 100
 	},
 /obj/structure/rack,
@@ -7640,7 +7634,6 @@
 	layer = 2.9
 	},
 /obj/structure/closet/secure_closet/engineering_personal{
-	req_access = null;
 	req_access = list("away_maintenance")
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -7992,11 +7985,8 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/undergroundoutpost45/engineering)
 "rp" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	dir = 8;
+/obj/machinery/power/apc/highcap/ten_k/directional/west{
 	name = "UO45 Engineering APC";
-	pixel_x = -25;
-	req_access = list("away_maintenance");
 	start_charge = 100
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -8521,10 +8511,9 @@
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "sj" = (
-/obj/machinery/power/apc/highcap/ten_k{
+/obj/machinery/power/apc/highcap/ten_k/directional/south{
 	locked = 0;
 	name = "UO45 Mining APC";
-	pixel_y = -25;
 	start_charge = 100
 	},
 /obj/machinery/light/small/directional/south,
@@ -8535,7 +8524,6 @@
 	icon_state = "mining";
 	locked = 0;
 	name = "miner's equipment";
-	req_access = null;
 	req_access = list("away_maintenance")
 	},
 /obj/item/storage/backpack/satchel/eng,
@@ -10622,7 +10610,6 @@
 	},
 /obj/machinery/firealarm/directional/south,
 /obj/structure/closet/secure_closet/miner{
-	req_access = null;
 	req_access = list("away_maintenance")
 	},
 /obj/effect/decal/cleanable/dirt,
