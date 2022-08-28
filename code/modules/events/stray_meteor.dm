@@ -8,7 +8,7 @@
 	category = EVENT_CATEGORY_SPACE
 	description = "Throw a random meteor somewhere near the station."
 	///The selected meteor type if chosen through admin setup.
-	var/list/chosen_meteor = list()
+	var/obj/effect/meteor/chosen_meteor
 
 /datum/round_event_control/stray_meteor/admin_setup()
 	if(!check_rights(R_FUN))
@@ -16,7 +16,8 @@
 
 	var/list/meteor_list = list()
 	meteor_list += typesof(/obj/effect/meteor)
-	chosen_meteor += tgui_input_list(usr, "Too lazy for buildmode?","Throw meteor", meteor_list)
+	chosen_meteor = tgui_input_list(usr, "Too lazy for buildmode?","Throw meteor", meteor_list)
+
 
 /datum/round_event/stray_meteor
 	announceWhen = 1
@@ -25,7 +26,10 @@
 /datum/round_event/stray_meteor/start()
 	var/datum/round_event_control/stray_meteor/meteor_event = control
 	if(meteor_event.chosen_meteor)
-		spawn_meteor(meteor_event.chosen_meteor)
+		var/list/passed_meteor = list()
+		passed_meteor += meteor_event.chosen_meteor
+		spawn_meteor(passed_meteor)
+		meteor_event.chosen_meteor = null
 	else
 		spawn_meteor(GLOB.meteorsD)
 
