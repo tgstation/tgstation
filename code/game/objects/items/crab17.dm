@@ -30,6 +30,13 @@
 			var/datum/bank_account/B = i
 			B.being_dumped = TRUE
 		new /obj/effect/dumpeet_target(targetturf, L)
+
+		to_chat(user, span_notice("You have activated Protocol CRAB-17."))
+		message_admins("[ADMIN_LOOKUPFLW(user)] has activated Protocol CRAB-17.")
+		log_admin("[key_name(user)] has activated Protocol CRAB-17.")
+		user.log_message("activated Protocol CRAB-17.", LOG_GAME)
+		deadchat_broadcast("[user] has activated Protocol CRAB-17.", message_type=DEADCHAT_ANNOUNCEMENT)
+
 		dumped = TRUE
 
 /obj/structure/checkoutmachine
