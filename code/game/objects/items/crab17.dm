@@ -34,7 +34,6 @@
 		to_chat(user, span_notice("You have activated Protocol CRAB-17."))
 		message_admins("[user] has activated Protocol CRAB-17.")
 		user.log_message("activated Protocol CRAB-17.", LOG_GAME)
-		deadchat_broadcast("[user] has activated Protocol CRAB-17.", message_type=DEADCHAT_ANNOUNCEMENT)
 
 		dumped = TRUE
 
