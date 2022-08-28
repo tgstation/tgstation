@@ -166,7 +166,7 @@
  * Arguments
  * * object - Object to transform.
  */
-/datum/dimension_theme/proc/permit_replace_material(var/obj/object)
+/datum/dimension_theme/proc/permit_replace_material(obj/object)
 	for (var/type in PERMITTED_MATERIAL_REPLACE_TYPES)
 		if (istype(object, type))
 			return TRUE
