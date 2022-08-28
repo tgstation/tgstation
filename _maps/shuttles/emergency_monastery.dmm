@@ -970,8 +970,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "nK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/fulltile,
+/obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "nQ" = (

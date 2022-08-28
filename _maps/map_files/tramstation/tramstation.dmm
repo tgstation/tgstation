@@ -61303,8 +61303,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/engine_smes)
 "vfU" = (
-/obj/structure/cable,
-/obj/structure/grille,
+/obj/effect/spawner/structure/electrified_grille,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
 /area/mine/explored)

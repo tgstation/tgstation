@@ -369,3 +369,9 @@ again.
 		if(NORTHWEST)
 			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/plasma/spawner/north, /obj/structure/window/reinforced/plasma/spawner/west)
 	. = ..()
+
+/obj/effect/spawner/structure/electrified_grille
+	name = "electrified grill spawner"
+	icon = 'icons/obj/structures_spawners.dmi'
+	icon_state = "electrified_grille"
+	spawn_list = list(/obj/structure/grille, /obj/structure/cable)
