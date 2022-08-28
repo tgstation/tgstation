@@ -112,13 +112,6 @@
 		eye_right.color = eye_color_right
 		eye_left.color = eye_color_left
 
-	if(OFFSET_FACE in parent.dna?.species.offset_features)
-		var/offset = parent.dna.species.offset_features[OFFSET_FACE]
-		eye_left.pixel_x += offset[OFFSET_X]
-		eye_right.pixel_x += offset[OFFSET_X]
-		eye_left.pixel_y += offset[OFFSET_Y]
-		eye_right.pixel_y += offset[OFFSET_Y]
-
 	var/obscured = parent.check_obscured_slots(TRUE)
 	if(overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
 		eye_left.overlays += emissive_appearance(eye_left.icon, eye_left.icon_state, alpha = eye_left.alpha)
@@ -129,10 +122,12 @@
 		var/mutable_appearance/tears_overlay = mutable_appearance('icons/mob/human_face.dmi', "tears", -BODY_ADJ_LAYER)
 		tears_overlay.color = COLOR_DARK_CYAN
 		overlays += tears_overlay
-		if(OFFSET_FACE in parent.dna?.species.offset_features)
-			var/offset = parent.dna.species.offset_features[OFFSET_FACE]
-			tears_overlay.pixel_x += offset[OFFSET_X]
-			tears_overlay.pixel_y += offset[OFFSET_Y]
+
+	if(OFFSET_FACE in parent.dna?.species.offset_features)
+		var/offset = parent.dna.species.offset_features[OFFSET_FACE]
+		for(var/mutable_appearance/overlay in overlays)
+			overlay.pixel_x += offset[OFFSET_X]
+			overlay.pixel_y += offset[OFFSET_Y]
 
 	return overlays
 
