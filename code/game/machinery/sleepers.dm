@@ -69,7 +69,7 @@
 	efficiency = initial(efficiency) * matterbin_rating
 	min_health = initial(min_health) * matterbin_rating
 
-	LAZYNULL(available_chems)
+	available_chems.Cut()
 	for(var/obj/item/stock_parts/manipulator/manipulators in component_parts)
 		for(var/i in 1 to manipulators.rating)
 			available_chems |= possible_chems[i]
