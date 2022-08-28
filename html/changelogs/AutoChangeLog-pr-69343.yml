@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Toggling breakers via the power flow control console now actually works."

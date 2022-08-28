@@ -17800,26 +17800,6 @@
 	roundstart_template = /datum/map_template/shuttle/mining_common/meta;
 	width = 7
 	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 3;
-	height = 5;
-	shuttle_id = "commonmining_home";
-	name = "SS13: Common Mining Dock";
-	roundstart_template = /datum/map_template/shuttle/mining_common/meta;
-	width = 7
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/docking_port/stationary/mining_home/common{
-	dir = 4
-	},
 /turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "gjT" = (
@@ -68326,26 +68306,6 @@
 	name = "mining shuttle bay";
 	roundstart_template = /datum/map_template/shuttle/mining/box;
 	width = 7
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 3;
-	height = 5;
-	shuttle_id = "mining_home";
-	name = "mining shuttle bay";
-	roundstart_template = /datum/map_template/shuttle/mining/box;
-	width = 7
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/docking_port/stationary/mining_home{
-	dir = 4
 	},
 /turf/open/misc/asteroid/airless,
 /area/mine/explored)
