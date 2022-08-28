@@ -8,26 +8,32 @@ GLOBAL_VAR_INIT(tower_of_babel_triggered, FALSE)
 
 	deadchat_broadcast("The [span_name("Tower of Babel")] has stricken the station, people will struggle to communicate.", message_type=DEADCHAT_ANNOUNCEMENT)
 
-	for(var/mob/living/carbon/to_curse in GLOB.player_list)
+	for(var/mob/living/carbon/target in GLOB.player_list)
 		// wizards are not only immune but can speak all languages to taunt their victims over the radio
-		if(IS_WIZARD(to_curse))
-			to_curse.grant_all_languages()
-			to_curse.update_atom_languages() // double check if this is neccessary
-			to_chat(to_curse, span_reallybig(span_hypnophrase("You feel a magical force improving your speech patterns!")))
+		if(IS_WIZARD(target))
+			target.grant_all_languages()
+			target.update_atom_languages() // double check if this is neccessary
+			to_chat(target, span_reallybig(span_hypnophrase("You feel a magical force improving your speech patterns!")))
 			continue
 
-		if(to_curse.stat == DEAD)
+		if(target.stat == DEAD)
 			continue
-		var/turf/curse_turf = get_turf(to_curse)
+		var/turf/curse_turf = get_turf(target)
 		if(curse_turf && !is_station_level(curse_turf.z))
 			continue
 		if(to_curse.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND))
-			to_chat(to_curse, span_notice("You have a strange feeling for a moment, but then it passes."))
+			to_chat(target, span_notice("You have a strange feeling for a moment, but then it passes."))
 			continue
 
-		// it would be cool to make this into a spell or staff in the future
-		to_curse.playsound_local(get_turf(to_curse), 'sound/magic/curse.ogg', 40, 1)
-		to_chat(to_curse, span_reallybig(span_hypnophrase("You feel a magical force affecting your speech patterns!")))
-		to_curse.remove_all_languages()
-		to_curse.grant_language(pick(GLOB.all_languages))
-		to_curse.update_atom_languages() // double check if this is neccessary
+		curse_of_babel(target)
+
+// it would be cool to make this into a spell or staff in the future
+/proc/curse_of_babel(mob/living/carbon/to_curse)
+	if(!istype(to_curse))
+		return
+
+	to_curse.playsound_local(get_turf(to_curse), 'sound/magic/curse.ogg', 40, 1)
+	to_chat(to_curse, span_reallybig(span_hypnophrase("You feel a magical force affecting your speech patterns!")))
+	to_curse.remove_all_languages()
+	to_curse.grant_language(pick(GLOB.all_languages))
+	to_curse.update_atom_languages() // double check if this is neccessary

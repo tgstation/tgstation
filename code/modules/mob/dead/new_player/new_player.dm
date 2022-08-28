@@ -269,11 +269,7 @@
 			give_madness(humanc, GLOB.curse_of_madness_triggered)
 
 		if(GLOB.tower_of_babel_triggered)
-			humanc.playsound_local(get_turf(huamnc), 'sound/magic/curse.ogg', 40, 1)
-			to_chat(humanc, span_reallybig(span_hypnophrase("You feel a magical force affecting your speech patterns!")))
-			humanc.remove_all_languages()
-			humanc.grant_language(pick(GLOB.all_languages))
-			humanc.update_atom_languages() // double check if this is neccessary
+			curse_of_babel(humanc)
 
 	GLOB.joined_player_list += character.ckey
 
