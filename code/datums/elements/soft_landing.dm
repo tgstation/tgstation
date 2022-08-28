@@ -20,12 +20,12 @@
 /datum/element/soft_landing/proc/intercept_z_fall(atom/soft_object, falling_movables, levels)
 	SIGNAL_HANDLER
 
+	var/turf/falling_spot = get_turf(soft_object)
+
+	if(locate(/obj/structure/stairs) in falling_spot)
+		return FALL_INTERCEPTED | FALL_NO_MESSAGE
+
 	for(var/mob/living/falling_victim in falling_movables)
-		var/turf/falling_spot = get_turf(falling_victim)
-		
-		if(locate(/obj/structure/stairs) in falling_spot)
-			return FALL_INTERCEPTED | FALL_NO_MESSAGE
-		
 		if(soft_object == falling_victim)
 			to_chat(falling_victim, span_notice("Your fall is cushioned by your body to provide a soft landing!"))
 		else
