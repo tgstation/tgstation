@@ -1,0 +1,4 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - bugfix: "scotch and chocolate eggs will no longer appear as errors"
