@@ -97,5 +97,7 @@
 ///From mob/living/proc/wabbajack_act
 #define COMSIG_LIVING_WABBAJACKED "living_wabbajacked"
 
-/// From /datum/component/mob_harvest: (amount_ready)
-#define COMSIG_LIVING_HARVEST_UPDATE "living_harvest_update"
+///From /obj/effect/rune/convert/do_sacrifice() : (list/invokers)
+#define COMSIG_LIVING_CULT_SACRIFICED "living_cult_sacrificed"
+	/// Return to stop the sac from occurring
+	#define STOP_SACRIFICE (1<<0)
