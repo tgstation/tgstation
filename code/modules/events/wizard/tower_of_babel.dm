@@ -14,9 +14,11 @@ GLOBAL_VAR_INIT(tower_of_babel_triggered, FALSE)
 	deadchat_broadcast("The [span_name("Tower of Babel")] has stricken the station, people will struggle to communicate.", message_type=DEADCHAT_ANNOUNCEMENT)
 
 	for(var/mob/living/carbon/to_curse in GLOB.player_list)
-		if(IS_WIZARD(to_curse)) // wizards are not only immune but they also can now speak to anyone
+		// wizards are not only immune but can speak all languages to taunt their victims over the radio
+		if(IS_WIZARD(to_curse))
 			to_curse.grant_all_languages()
 			to_curse.update_atom_languages() // double check if this is neccessary
+			to_chat(to_curse, span_reallybig(span_hypnophrase("You feel a magical force improving your speech patterns!")))
 			continue
 
 		if(to_curse.stat == DEAD)
