@@ -123,6 +123,7 @@
 /obj/item/food/hotdog
 	name = "hotdog"
 	desc = "Fresh footlong ready to go down on."
+	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "hotdog"
 	bite_consumption = 3
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/ketchup = 3, /datum/reagent/consumable/nutriment/vitamin = 6)
@@ -130,9 +131,6 @@
 	foodtypes = GRAIN | MEAT //Ketchup is not a vegetable
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
-
-/obj/item/food/hotdog/debug
-	eat_time = 0
 
 /obj/item/food/blt
 	name = "\improper BLT"
