@@ -106,6 +106,7 @@
 
 	var/mutable_appearance/eye_left = mutable_appearance('icons/mob/human_face.dmi', "[eye_icon_state]_l", -BODY_LAYER)
 	var/mutable_appearance/eye_right = mutable_appearance('icons/mob/human_face.dmi', "[eye_icon_state]_r", -BODY_LAYER)
+	var/list/overlays = list(eye_left, eye_right)
 
 	if(EYECOLOR in parent.dna?.species.species_traits)
 		eye_right.color = eye_color_right
@@ -123,7 +124,17 @@
 		eye_left.overlays += emissive_appearance(eye_left.icon, eye_left.icon_state, alpha = eye_left.alpha)
 		eye_right.overlays += emissive_appearance(eye_right.icon, eye_right.icon_state, alpha = eye_right.alpha)
 
-	return list(eye_left, eye_right)
+	// tears
+	if (HAS_TRAIT(parent, TRAIT_CRYING)) //caused by the *cry emote
+		var/mutable_appearance/tears_overlay = mutable_appearance('icons/mob/human_face.dmi', "tears", -BODY_ADJ_LAYER)
+		tears_overlay.color = COLOR_DARK_CYAN
+		overlays += tears_overlay
+		if(OFFSET_FACE in parent.dna?.species.offset_features)
+			var/offset = parent.dna.species.offset_features[OFFSET_FACE]
+			tears_overlay.pixel_x += offset[OFFSET_X]
+			tears_overlay.pixel_x += offset[OFFSET_X]
+
+	return overlays
 
 #undef OFFSET_X
 #undef OFFSET_Y
