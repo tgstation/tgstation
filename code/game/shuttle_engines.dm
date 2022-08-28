@@ -46,11 +46,10 @@
  * Called on destroy and when we need to unsync an engine from their ship.
  */
 /obj/structure/shuttle/engine/proc/unsync_ship()
-	if(!connected_ship)
-		return
-	var/obj/docking_port/mobile/port = connected_ship.resolve()
-	port.engine_list -= src
-	port.current_engines--
+	var/obj/docking_port/mobile/port = connected_ship?.resolve()
+	if(port)
+		port.engine_list -= src
+		port.current_engines--
 	connected_ship = null
 
 //Ugh this is a lot of copypasta from emitters, welding need some boilerplate reduction
@@ -112,9 +111,7 @@
 /obj/structure/shuttle/engine/proc/alter_engine_power(mod)
 	if(!mod)
 		return
-	if(!connected_ship)
-		return
-	var/obj/docking_port/mobile/port = connected_ship.resolve()
+	var/obj/docking_port/mobile/port = connected_ship?.resolve()
 	if(port)
 		port.alter_engines(mod)
 
