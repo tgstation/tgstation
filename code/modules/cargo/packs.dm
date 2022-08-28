@@ -2522,6 +2522,26 @@
 		var/item = pick_n_take(L)
 		new item(C)
 
+/datum/supply_pack/costumes_toys/trekkie
+	name = "Trekkie Costume Crate"
+	desc = "Wear the scrapped concepts for Nanotrasen's jumpsuits, based off popular late-20th century Earth media! While they couldn't be used for the official jumpsuits due to copyright infringement, it's been assured that they can still legally be sold under the label of being 'failed designs'."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(
+		/obj/item/clothing/under/trek/command,
+		/obj/item/clothing/under/trek/command/next,
+		/obj/item/clothing/under/trek/command/voy,
+		/obj/item/clothing/under/trek/command/ent,
+		/obj/item/clothing/under/trek/engsec,
+		/obj/item/clothing/under/trek/engsec/next,
+		/obj/item/clothing/under/trek/engsec/voy,
+		/obj/item/clothing/under/trek/engsec/ent,
+		/obj/item/clothing/under/trek/medsci,
+		/obj/item/clothing/under/trek/medsci/next,
+		/obj/item/clothing/under/trek/medsci/voy,
+		/obj/item/clothing/under/trek/medsci/ent,
+	)
+	crate_type = /obj/structure/closet/crate/wooden
+
 /datum/supply_pack/costumes_toys/mafia
 	name = "Cosa Nostra Starter Pack"
 	desc = "This crate contains everything you need to set up your own ethnicity-based racketeering operation."
