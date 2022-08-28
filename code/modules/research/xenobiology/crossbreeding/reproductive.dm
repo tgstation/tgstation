@@ -40,7 +40,7 @@ Reproductive extracts:
 
 	if(istype(O, /obj/item/storage/bag/xeno))
 		var/list/inserted = list()
-		O.atom_storage.remove_type(/obj/item/food/monkeycube, src, feedAmount - length(contents), TRUE, FALSE, user, inserted)
+		O.atom_storage.remove_type(/obj/item/food/monkeycube, src, feedAmount - length(contents), FALSE, FALSE, user, inserted)
 		if(inserted.len)
 			to_chat(user, span_notice("You feed [length(inserted)] Monkey Cube[p_s()] to [src], and it pulses gently."))
 			playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
