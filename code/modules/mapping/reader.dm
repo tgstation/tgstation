@@ -23,8 +23,8 @@
 	/// Offset bounds. Same as parsed_bounds until load().
 	var/list/bounds
 
-	///any turf in this list is skipped inside of build_coordinate
-	var/list/turf_blacklist = list()
+	///any turf in this list is skipped inside of build_coordinate. Lazy assoc list
+	var/list/turf_blacklist
 
 	// raw strings used to represent regexes more accurately
 	// '' used to avoid confusing syntax highlighting
@@ -166,11 +166,14 @@
 /datum/parsed_map/proc/_load_impl(x_offset = 1, y_offset = 1, z_offset = world.maxz + 1, cropMap = FALSE, no_changeturf = FALSE, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE)
 	PRIVATE_PROC(TRUE)
 	var/list/modelCache = build_cache(no_changeturf)
-	var/list/areaCache = list()
 	var/space_key = modelCache[SPACE_KEY]
 	var/list/bounds
 	var/key_len = src.key_len
 	src.bounds = bounds = list(1.#INF, 1.#INF, 1.#INF, -1.#INF, -1.#INF, -1.#INF)
+
+	// Tell ss atoms that we're doing maploading
+	// We'll have to account for this in the following tick_checks so it doesn't overflow
+	SSatoms.map_loader_begin()
 
 	//used for sending the maxx and maxy expanded global signals at the end of this proc
 	var/has_expanded_world_maxx = FALSE
@@ -270,13 +273,17 @@
 						++turfsSkipped
 					#endif
 					ycrd--
-					//CHECK_TICK
+					//if(TICK_CHECK)
+						//SSatoms.map_loader_stop()
+						//stoplag()
+						//SSatoms.map_loader_begin()
 					continue
 
 				var/list/cache = modelCache[line]
 				if(!cache)
+					SSatoms.map_loader_stop()
 					CRASH("Undefined model key in DMM: [line]")
-				build_coordinate(areaCache, cache, locate(true_xcrd, ycrd, zcrd), no_afterchange, placeOnTop)
+				build_coordinate(cache, locate(true_xcrd, ycrd, zcrd), no_afterchange, placeOnTop)
 
 				// only bother with bounds that actually exist
 				if(!first_found)
@@ -284,7 +291,10 @@
 					first_y = ycrd
 				last_y = ycrd
 				ycrd--
-				//CHECK_TICK
+				//if(TICK_CHECK)
+						//SSatoms.map_loader_stop()
+						//stoplag()
+						//SSatoms.map_loader_begin()
 			// The x coord never changes, so this is safe
 			if(first_found)
 				first_x = true_xcrd
@@ -300,13 +310,17 @@
 						#ifdef TESTING
 							++turfsSkipped
 						#endif
-						//CHECK_TICK
+						//if(TICK_CHECK)
+							//SSatoms.map_loader_stop()
+							//stoplag()
+							//SSatoms.map_loader_begin()
 						++xcrd
 						continue
 					var/list/cache = modelCache[model_key]
 					if(!cache)
+						SSatoms.map_loader_stop()
 						CRASH("Undefined model key in DMM: [model_key]")
-					build_coordinate(areaCache, cache, locate(xcrd, ycrd, zcrd), no_afterchange, placeOnTop)
+					build_coordinate(cache, locate(xcrd, ycrd, zcrd), no_afterchange, placeOnTop)
 
 					// only bother with bounds that actually exist
 					if(!first_found)
@@ -315,10 +329,16 @@
 						first_y = ycrd
 					last_x = xcrd
 					last_y = ycrd
-					//CHECK_TICK
+					//if(TICK_CHECK)
+						//SSatoms.map_loader_stop()
+						//stoplag()
+						//SSatoms.map_loader_begin()
 					++xcrd
 				ycrd--
-				CHECK_TICK
+				//if(TICK_CHECK)
+					//SSatoms.map_loader_stop()
+					//stoplag()
+					//SSatoms.map_loader_begin()
 		bounds[MAP_MINX] = min(bounds[MAP_MINX], first_x)
 		bounds[MAP_MAXX] = max(bounds[MAP_MAXX], last_x)
 		bounds[MAP_MINY] = min(bounds[MAP_MINY], last_y)
@@ -326,6 +346,8 @@
 		bounds[MAP_MINZ] = min(bounds[MAP_MINZ], zcrd)
 		bounds[MAP_MAXZ] = max(bounds[MAP_MAXZ], zcrd)
 
+	// And we are done lads, call it off
+	SSatoms.map_loader_stop()
 	if(!no_changeturf)
 		for(var/turf/T as anything in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]), locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
 			//we do this after we load everything in. if we don't; we'll have weird atmos bugs regarding atmos adjacent turfs
@@ -341,6 +363,8 @@
 
 	return TRUE
 
+GLOBAL_LIST_EMPTY(map_model_default)
+
 /datum/parsed_map/proc/build_cache(no_changeturf, bad_paths=null)
 	if(modelCache && !bad_paths)
 		return modelCache
@@ -349,7 +373,7 @@
 	var/set_space = FALSE
 	// Use where a list is needed, but where it will not be modified
 	// Used here to remove the cost of needing to make a new list for each fields entry when it's set manually later
-	var/static/list/default_list = list()
+	var/static/list/default_list = GLOB.map_model_default
 	for(var/model_key in grid_models)
 		var/model = grid_models[model_key]
 		// This is safe because dmm strings will never actually newline
@@ -419,92 +443,88 @@
 
 		.[model_key] = list(members, members_attributes)
 
-/datum/parsed_map/proc/build_coordinate(list/areaCache, list/model, turf/crds, no_changeturf as num, placeOnTop as num)
+/datum/parsed_map/proc/build_coordinate(list/model, turf/crds, no_changeturf as num, placeOnTop as num)
+	// If we don't have a turf, nothing we will do next will actually acomplish anything, so just go back
+	// Note, this would actually drop area vvs in the tile, but like, why tho
+	if(!crds)
+		return
 	var/index
 	var/list/members = model[1]
 	var/list/members_attributes = model[2]
 
+	// We use static lists here because it's cheaper then passing them around
+	var/static/list/default_list = GLOB.map_model_default
+	var/static/list/area_cache = GLOB.areas_by_type
 	////////////////
 	//Instanciation
 	////////////////
 
-	for (var/turf_in_blacklist in turf_blacklist)
-		if (crds == turf_in_blacklist) //if the given turf is blacklisted, dont do anything with it
-			return
+	if(turf_blacklist?[crds])
+		return
 
 	//The next part of the code assumes there's ALWAYS an /area AND a /turf on a given tile
 	//first instance the /area and remove it from the members list
 	index = members.len
+	var/atom/instance
 	if(members[index] != /area/template_noop)
-		var/atype = members[index]
-		world.preloader_setup(members_attributes[index], atype)//preloader for assigning  set variables on atom creation
-		var/atom/instance = areaCache[atype]
+		if(members_attributes[index] != default_list)
+			world.preloader_setup(members_attributes[index], members[index])//preloader for assigning  set variables on atom creation
+		instance = area_cache[members[index]]
 		if (!instance)
-			instance = GLOB.areas_by_type[atype]
-			if (!instance)
-				instance = new atype(null)
-			areaCache[atype] = instance
-		if(crds)
-			instance.contents.Add(crds)
+			// Done here because it's cheaper then doing it in the outside check
+			var/area_type = members[index]
+			instance = new area_type(null)
+			if(!instance)
+				CRASH("[area_type] failed to be new'd, what'd you do?")
+			area_cache[area_type] = instance
 
-		if(GLOB.use_preloader && instance)
+		instance.contents.Add(crds)
+
+		if(GLOB.use_preloader)
 			world.preloader_load(instance)
 
-	//then instance the /turf and, if multiple tiles are presents, simulates the DMM underlays piling effect
+	// Index right before /area is /turf
+	index--
+	//then instance the /turf
+	//NOTE: this used to place any turfs before the last "underneath" it using .appearance and underlays
+	//We don't actually use this, and all it did was cost cpu, so we don't do this anymore
+	if(members[index] != /turf/template_noop)
+		if(members_attributes[index] != default_list)
+			world.preloader_setup(members_attributes[index], members[index])
 
-	var/first_turf_index = 1
-	while(!ispath(members[first_turf_index], /turf)) //find first /turf object in members
-		first_turf_index++
+		// Note: we make the assertion that the last path WILL be a turf. if it isn't, this will fail.
+		if(placeOnTop)
+			instance = crds.PlaceOnTop(null, members[index], CHANGETURF_DEFER_CHANGE | (no_changeturf ? CHANGETURF_SKIP : NONE))
+		else if(no_changeturf)
+			instance = create_atom(members[index], crds)//first preloader pass
+		else
+			instance = crds.ChangeTurf(members[index], null, CHANGETURF_DEFER_CHANGE)
 
-	//turn off base new Initialization until the whole thing is loaded
-	SSatoms.map_loader_begin()
-	//instanciate the first /turf
-	var/turf/T
-	if(members[first_turf_index] != /turf/template_noop)
-		T = instance_atom(members[first_turf_index],members_attributes[first_turf_index],crds,no_changeturf,placeOnTop)
-
-	if(T)
-		//if others /turf are presents, simulates the underlays piling effect
-		index = first_turf_index + 1
-		while(index <= members.len - 1) // Last item is an /area
-			var/underlay = T.appearance
-			T = instance_atom(members[index],members_attributes[index],crds,no_changeturf,placeOnTop)//instance new turf
-			T.underlays += underlay
-			index++
+		if(GLOB.use_preloader && instance)//second preloader pass, for those atoms that don't ..() in New()
+			world.preloader_load(instance)
+	//	if(TICK_CHECK)
+			//SSatoms.map_loader_stop()
+			//stoplag()
+			//SSatoms.map_loader_begin()
 
 	//finally instance all remainings objects/mobs
-	for(index in 1 to first_turf_index-1)
-		instance_atom(members[index],members_attributes[index],crds,no_changeturf,placeOnTop)
-	//Restore initialization to the previous value
-	SSatoms.map_loader_stop()
+	for(var/atom_index in 1 to index-1)
+		if(members_attributes[atom_index] != default_list)
+			world.preloader_setup(members_attributes[atom_index], members[atom_index])
+
+		// We make the assertion that only /atom s will be in this portion of the code. if that isn't true, this will fail
+		instance = create_atom(members[atom_index], crds)//first preloader pass
+
+		if(GLOB.use_preloader && instance)//second preloader pass, for those atoms that don't ..() in New()
+			world.preloader_load(instance)
+	//	if(TICK_CHECK)
+			//SSatoms.map_loader_stop()
+			//stoplag()
+			//SSatoms.map_loader_begin()
 
 ////////////////
 //Helpers procs
 ////////////////
-
-//Instance an atom at (x,y,z) and gives it the variables in attributes
-/datum/parsed_map/proc/instance_atom(path,list/attributes, turf/crds, no_changeturf, placeOnTop)
-	world.preloader_setup(attributes, path)
-
-	if(crds)
-		if(ispath(path, /turf))
-			if(placeOnTop)
-				. = crds.PlaceOnTop(null, path, CHANGETURF_DEFER_CHANGE | (no_changeturf ? CHANGETURF_SKIP : NONE))
-			else if(!no_changeturf)
-				. = crds.ChangeTurf(path, null, CHANGETURF_DEFER_CHANGE)
-			else
-				. = create_atom(path, crds)//first preloader pass
-		else
-			. = create_atom(path, crds)//first preloader pass
-
-	if(GLOB.use_preloader && .)//second preloader pass, for those atoms that don't ..() in New()
-		world.preloader_load(.)
-
-	//custom CHECK_TICK here because we don't want things created while we're sleeping to not initialize
-	//if(TICK_CHECK)
-		//SSatoms.map_loader_stop()
-		//stoplag()
-		//SSatoms.map_loader_begin()
 
 /datum/parsed_map/proc/create_atom(path, crds)
 	set waitfor = FALSE
@@ -614,7 +634,8 @@
 
 /datum/parsed_map/Destroy()
 	..()
-	turf_blacklist.Cut()
+	if(turf_blacklist)
+		turf_blacklist.Cut()
 	parsed_bounds.Cut()
 	bounds.Cut()
 	grid_models.Cut()
