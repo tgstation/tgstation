@@ -51,7 +51,7 @@
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/CanAttack(atom/the_target) // Gutlunch-specific version of CanAttack to handle stupid stat_exclusive = true crap so we don't have to do it for literally every single simple_animal/hostile except the two that spawn in lavaland
-	if(!the_target || !isturf(the_target.loc)) // bail out on invalids
+	if(!the_target || isturf(the_target)) //No trying to attack nulls or the floor
 		return FALSE
 
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
@@ -80,6 +80,14 @@
 	if(new_udder_volume == max_udder_volume)
 		add_overlay(gutlunch_full_overlay)
 	..()
+
+/mob/living/simple_animal/hostile/asteroid/gutlunch/ListTargetsLazy(_Z)//override to include wanted_objects as valid targets
+	. = ..()
+	for (var/I in view(vision_range, loc))
+		var/obj/O = I
+		if (is_type_in_typecache(O, wanted_objects))
+			if (isturf(O.loc))
+				. += O
 
 //Male gutlunch. They're smaller and more colorful!
 /mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck
