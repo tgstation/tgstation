@@ -192,6 +192,8 @@ GLOBAL_LIST_INIT(security_depts_prefs, sort_list(list(
 	SEC_DEPT_SUPPLY,
 )))
 
+/// Types of Crimes Prisoners will have on their record roundstart.
+/// (They also can choose Random, which picks from these options... randomly!)
 GLOBAL_LIST_INIT(prisoner_crimes, list(
 	"Abhorrent Criminal Negligence" = "Incompetently risked numerous lives.",
 	"Attempted Development of Cloning" = "Attempted illegal research in the cloning sphere. Cloning, cloning construction, and cloning-related R&D was outlawed in 2560.",
