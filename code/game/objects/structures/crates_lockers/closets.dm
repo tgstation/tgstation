@@ -221,7 +221,7 @@
 	for(var/obj/structure/closet/closet in T)
 		if(closet != src && !closet.wall_mounted)
 			if(user)
-				balloon_alert(user, "another closet is in the way!")
+				balloon_alert(user, "[closet.name] is in the way!")
 			return FALSE
 	for(var/mob/living/L in T)
 		if(L.anchored || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
