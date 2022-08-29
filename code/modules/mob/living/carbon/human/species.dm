@@ -561,9 +561,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/obj/item/bodypart/head/noggin = species_human.get_bodypart(BODY_ZONE_HEAD)
 
 	if(noggin && !(HAS_TRAIT(species_human, TRAIT_HUSK)))
-		for(var/head_overlay in noggin.generate_body_overlay(species_human))
-			standing += head_overlay
-
 		// lipstick
 		if(species_human.lip_style && (LIPS in species_traits))
 			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[species_human.lip_style]", -BODY_LAYER)
