@@ -62,5 +62,5 @@
 	
 /mob/living/simple_animal/hostile/asteroid/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
-	if(is_station_level(z) && istype(get_area(src), /area/station)
+	if(is_station_level(z) && istype(get_area(src), /area/station))
 		adjustHealth(-2)
