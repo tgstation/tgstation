@@ -11,6 +11,7 @@
 
 /datum/parsed_map
 	var/original_path
+	/// The length of a key in this file. This is promised by the standard to be static
 	var/key_len = 0
 	var/list/grid_models = list()
 	var/list/gridSets = list()
@@ -52,6 +53,9 @@
 
 /// Parse a map, possibly cropping it.
 /datum/parsed_map/New(tfile, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper=INFINITY, measureOnly=FALSE)
+	// This proc sleeps for like 6 seconds. why?
+	// Is it file accesses? if so, can those be done ahead of time, async to save on time here? I wonder.
+	// Love ya :)
 	if(isfile(tfile))
 		original_path = "[tfile]"
 		tfile = file2text(tfile)
@@ -63,6 +67,7 @@
 	// lists are structs don't you know :)
 	var/list/bounds = src.bounds
 	var/list/grid_models = src.grid_models
+	var/key_len = src.key_len
 
 	var/stored_index = 1
 	var/list/regexOutput
@@ -144,34 +149,46 @@
 		bounds[MAP_MAXY] = clamp(bounds[MAP_MAXY], y_lower, y_upper)
 
 	parsed_bounds = src.bounds
+	src.key_len = key_len
 
 /// Load the parsed map into the world. See [/proc/load_map] for arguments.
-/datum/parsed_map/proc/load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop)
+/datum/parsed_map/proc/load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, whitelist = FALSE)
+	if(!whitelist)
+		return
 	//How I wish for RAII
 	Master.StartLoadingMap()
 	. = _load_impl(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop)
 	Master.StopLoadingMap()
 
+GLOBAL_LIST_EMPTY(load_costs)
+GLOBAL_LIST_EMPTY(load_counts)
+//#define SET_COST(category)
 // Do not call except via load() above.
 /datum/parsed_map/proc/_load_impl(x_offset = 1, y_offset = 1, z_offset = world.maxz + 1, cropMap = FALSE, no_changeturf = FALSE, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE)
 	PRIVATE_PROC(TRUE)
-	var/list/areaCache = list()
 	var/list/modelCache = build_cache(no_changeturf)
+	var/list/areaCache = list()
 	var/space_key = modelCache[SPACE_KEY]
 	var/list/bounds
+	var/key_len = src.key_len
 	src.bounds = bounds = list(1.#INF, 1.#INF, 1.#INF, -1.#INF, -1.#INF, -1.#INF)
 
 	//used for sending the maxx and maxy expanded global signals at the end of this proc
 	var/has_expanded_world_maxx = FALSE
 	var/has_expanded_world_maxy = FALSE
-
+	var/y_relative_to_absolute = y_offset - 1
+	var/x_relative_to_absolute = x_offset - 1
 	for(var/datum/grid_set/gset as anything in gridSets)
-		var/ycrd = gset.ycrd + y_offset - 1
+		var/relative_x = gset.xcrd
+		var/relative_y = gset.ycrd
+		var/true_xcrd = relative_x + x_relative_to_absolute
+		var/ycrd = relative_y + y_relative_to_absolute
 		var/zcrd = gset.zcrd + z_offset - 1
 		if(!cropMap && ycrd > world.maxy)
 			world.maxy = ycrd // Expand Y here.  X is expanded in the loop below
 			has_expanded_world_maxy = TRUE
 		var/zexpansion = zcrd > world.maxz
+		var/no_afterchange = no_changeturf
 		if(zexpansion)
 			if(cropMap)
 				continue
@@ -180,49 +197,136 @@
 					world.incrementMaxZ()
 			if(!no_changeturf)
 				WARNING("Z-level expansion occurred without no_changeturf set, this may cause problems when /turf/AfterChange is called")
+				no_afterchange = TRUE
+		// Ok so like. something important
+		// We talk in "relative" coords here, so the coordinate system of the map datum
+		// This is so we can do offsets, but it is NOT the same as positions in game
+		// That's why there's some uses of - y_relative_to_absolute here, to turn absolute positions into relative ones
 
-		for(var/line in gset.gridLines)
-			if((ycrd - y_offset + 1) < y_lower || (ycrd - y_offset + 1) > y_upper) //Reverse operation and check if it is out of bounds of cropping.
-				--ycrd
+		// Skip Y coords that are above the smallest of the three params
+		// So maxy and y_upper get to act as thresholds, and relative_y can play
+		var/y_skip_above = min(world.maxy - y_relative_to_absolute, y_upper, relative_y)
+		// How many lines to skip because they'd be above the y cuttoff line
+		var/y_starting_skip = relative_y - y_skip_above
+		ycrd += y_starting_skip
+
+		// Y is the LOWEST it will ever be here, so we can easily set a threshold for how low to go
+		var/line_count = length(gset.gridLines)
+		var/lowest_y = relative_y - line_count
+		var/y_skip_below = max(1 - y_relative_to_absolute, y_lower, lowest_y)
+		var/y_ending_skip = y_skip_below - lowest_y
+
+		// Now we're gonna precompute the x thresholds
+		// We skip all the entries below the lower y, or 1
+		var/starting_x_delta = max(max(x_lower, 1 - x_relative_to_absolute) - relative_x, 0)
+		// The x loop counts by key length, so we gotta multiply here
+		var/x_starting_skip = starting_x_delta * key_len
+		true_xcrd += starting_x_delta
+
+		var/line_length = 0
+		if(line_count)
+			// This is promised as static, so we will treat it as such
+			line_length = length(gset.gridLines[1])
+		// We're gonna skip all the entries above the upper x, or maxx if cropMap is set
+		var/x_target = line_length - key_len + 1
+		var/x_step_count = ROUND_UP(x_target / key_len)
+		var/final_x = relative_x + (x_step_count - 1)
+		var/x_delta_with = x_upper
+		if(cropMap)
+			// Take our smaller crop threshold yes?
+			x_delta_with = min(x_delta_with, world.maxx)
+		if(final_x > x_delta_with)
+			// If our relative x is greater then X upper, well then we've gotta limit our expansion
+			var/delta = max(final_x - x_delta_with, 0)
+			x_step_count -= delta
+			final_x -= delta
+			x_target = x_step_count * key_len
+		if(final_x > world.maxx && !cropMap)
+			world.maxx = final_x
+			has_expanded_world_maxx = TRUE
+
+		// We're gonna track the first and last pairs of coords we find
+		// The first x is guarenteed to be the lowest, the first y the highest, and vis versa
+		// This is faster then doing mins and maxes inside the hot loop below
+		var/first_found = FALSE
+		var/first_x = 0
+		var/first_y = 0
+		var/last_x = 0
+		var/last_y = 0
+
+		// Everything following this line is VERY hot. How hot depends on the map format
+		// (Yes this does mean dmm is technically faster to parse. shut up)
+
+		// This is the "is this map tgm" check
+		if(key_len == line_length)
+			// Wanna clear something up about maps, talking in 255x255 here
+			// In the tgm format, each gridset contains 255 lines, each line representing one tile, with 255 total gridsets
+			// In the dmm format, each gridset contains 255 lines, each line representing one row of tiles, containing 255 * line length characters, with one gridset per z
+			// since this is the tgm branch any cutoff of x means we just shouldn't iterate this gridset
+			if(!x_step_count || x_starting_skip)
 				continue
-			if(ycrd <= world.maxy && ycrd >= 1)
-				var/xcrd = gset.xcrd + x_offset - 1
-				for(var/tpos = 1 to length(line) - key_len + 1 step key_len)
-					if((xcrd - x_offset + 1) < x_lower || (xcrd - x_offset + 1) > x_upper) //Same as above.
-						++xcrd
-						continue //X cropping.
-					if(xcrd > world.maxx)
-						if(cropMap)
-							break
-						else
-							world.maxx = xcrd
-							has_expanded_world_maxx = TRUE
+			for(var/i in 1 + y_starting_skip to line_count - y_ending_skip)
+				var/line = gset.gridLines[i]
+				if(line == space_key && no_afterchange)
+					#ifdef TESTING
+						++turfsSkipped
+					#endif
+					ycrd--
+					//CHECK_TICK
+					continue
 
-					if(xcrd >= 1)
-						var/model_key = copytext(line, tpos, tpos + key_len)
-						var/no_afterchange = no_changeturf || zexpansion
-						if(!no_afterchange || (model_key != space_key))
-							var/list/cache = modelCache[model_key]
-							if(!cache)
-								CRASH("Undefined model key in DMM: [model_key]")
-							build_coordinate(areaCache, cache, locate(xcrd, ycrd, zcrd), no_afterchange, placeOnTop)
+				var/list/cache = modelCache[line]
+				if(!cache)
+					CRASH("Undefined model key in DMM: [line]")
+				build_coordinate(areaCache, cache, locate(true_xcrd, ycrd, zcrd), no_afterchange, placeOnTop)
 
-							// only bother with bounds that actually exist
-							bounds[MAP_MINX] = min(bounds[MAP_MINX], xcrd)
-							bounds[MAP_MINY] = min(bounds[MAP_MINY], ycrd)
-							bounds[MAP_MINZ] = min(bounds[MAP_MINZ], zcrd)
-							bounds[MAP_MAXX] = max(bounds[MAP_MAXX], xcrd)
-							bounds[MAP_MAXY] = max(bounds[MAP_MAXY], ycrd)
-							bounds[MAP_MAXZ] = max(bounds[MAP_MAXZ], zcrd)
+				// only bother with bounds that actually exist
+				if(!first_found)
+					first_found = TRUE
+					first_y = ycrd
+				last_y = ycrd
+				ycrd--
+				//CHECK_TICK
+			// The x coord never changes, so this is safe
+			if(first_found)
+				first_x = true_xcrd
+		else
+			// This is the dmm parser, note the double loop
+			for(var/i in 1 + y_starting_skip to line_count - y_ending_skip)
+				var/line = gset.gridLines[i]
+
+				var/xcrd = true_xcrd
+				for(var/tpos in 1 + x_starting_skip to x_target step key_len)
+					var/model_key = copytext(line, tpos, tpos + key_len)
+					if(model_key == space_key && no_afterchange)
 						#ifdef TESTING
-						else
 							++turfsSkipped
 						#endif
-						CHECK_TICK
-					++xcrd
-			--ycrd
+						//CHECK_TICK
+						++xcrd
+						continue
+					var/list/cache = modelCache[model_key]
+					if(!cache)
+						CRASH("Undefined model key in DMM: [model_key]")
+					build_coordinate(areaCache, cache, locate(xcrd, ycrd, zcrd), no_afterchange, placeOnTop)
 
-		CHECK_TICK
+					// only bother with bounds that actually exist
+					if(!first_found)
+						first_found = TRUE
+						first_x = xcrd
+						first_y = ycrd
+					last_x = xcrd
+					last_y = ycrd
+					//CHECK_TICK
+					++xcrd
+				ycrd--
+				CHECK_TICK
+		bounds[MAP_MINX] = min(bounds[MAP_MINX], first_x)
+		bounds[MAP_MAXX] = max(bounds[MAP_MAXX], last_x)
+		bounds[MAP_MINY] = min(bounds[MAP_MINY], last_y)
+		bounds[MAP_MAXY] = max(bounds[MAP_MAXY], first_y)
+		bounds[MAP_MINZ] = min(bounds[MAP_MINZ], zcrd)
+		bounds[MAP_MAXZ] = max(bounds[MAP_MAXZ], zcrd)
 
 	if(!no_changeturf)
 		for(var/turf/T as anything in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]), locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
@@ -292,7 +396,7 @@
 			members_attributes.len++
 			members_attributes[index++] = fields
 
-			CHECK_TICK
+			//CHECK_TICK
 
 		//check and see if we can just skip this turf
 		//So you don't have to understand this horrid statement, we can do this if
@@ -400,10 +504,10 @@
 		world.preloader_load(.)
 
 	//custom CHECK_TICK here because we don't want things created while we're sleeping to not initialize
-	if(TICK_CHECK)
-		SSatoms.map_loader_stop()
-		stoplag()
-		SSatoms.map_loader_begin()
+	//if(TICK_CHECK)
+		//SSatoms.map_loader_stop()
+		//stoplag()
+		//SSatoms.map_loader_begin()
 
 /datum/parsed_map/proc/create_atom(path, crds)
 	set waitfor = FALSE
