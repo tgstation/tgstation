@@ -2632,7 +2632,7 @@
 /obj/docking_port/mobile/emergency{
 	dwidth = 40;
 	height = 43;
-	movement_force = list("KNOCKDOWN" = 3, "THROW" = 6);
+	movement_force = list("KNOCKDOWN"=3,"THROW"=6);
 	name = "\proper a monastery with engines strapped to it";
 	port_direction = 1;
 	width = 80

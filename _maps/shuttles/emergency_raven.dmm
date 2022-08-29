@@ -2075,7 +2075,6 @@
 	lethal = 1;
 	pixel_x = 5;
 	pixel_y = 32;
-	req_access = null;
 	req_access = list("command")
 	},
 /turf/open/floor/iron/dark,

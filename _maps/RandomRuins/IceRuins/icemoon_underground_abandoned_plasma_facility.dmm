@@ -2740,13 +2740,6 @@
 /obj/item/shard,
 /turf/open/floor/plating/icemoon,
 /area/icemoon/underground/explored)
-"RX" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	dir = 4
-	},
-/obj/structure/curtain/bounty,
-/turf/open/floor/plating/icemoon,
-/area/ruin/plasma_facility/commons)
 "Sd" = (
 /obj/structure/railing{
 	dir = 8
@@ -2863,12 +2856,6 @@
 /obj/item/chair/plastic,
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/operations)
-"UT" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/ruin/plasma_facility/commons)
 "Ve" = (
 /obj/structure/flora/tree/stump,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -3571,7 +3558,7 @@ AG
 vY
 vY
 XI
-RX
+ri
 Ea
 qW
 ri
@@ -3716,7 +3703,7 @@ BJ
 hK
 ZH
 wF
-UT
+Cm
 pn
 PB
 eC

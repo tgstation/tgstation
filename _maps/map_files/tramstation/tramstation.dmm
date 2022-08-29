@@ -45382,9 +45382,7 @@
 /turf/open/floor/engine,
 /area/station/maintenance/disposal/incinerator)
 "pDW" = (
-/obj/structure/sign/warning/radiation/rad_area/directional/north{
-	dir = 1
-	},
+/obj/structure/sign/warning/radiation/rad_area/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -64567,9 +64565,7 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
 "wpo" = (
-/obj/structure/sign/warning/radiation/rad_area/directional/north{
-	dir = 1
-	},
+/obj/structure/sign/warning/radiation/rad_area/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
