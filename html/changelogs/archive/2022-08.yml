@@ -982,3 +982,33 @@
       transferring to a target.
   optimumtact:
   - balance: orks no longer shout their attacks over the radio
+2022-08-29:
+  GoldenAlpharex:
+  - bugfix: Bluespace bodybags will no longer fold on themselves and delete everything
+      inside of them when someone inside of them attempts to fold them.
+  Melbert:
+  - code_imp: Updated some signal misuse in mob harvest component, and implemented
+      a signal in cult sacrifice code. I also changed the sound of sheep wool being
+      harvested from a welding tool sound to a scalpel sound while I was here
+  Mooshimi:
+  - bugfix: Chem Masters will now appear to be depowered when appropriate.
+  OrionTheFox:
+  - rscadd: Added a Trekkie Costume Crate! Now you can wear NT's scrapped jumpsuit
+      designs for only a small cost, all of which will go to NT's emergency anti-copyright
+      savings!
+  - imageadd: Updated the Trekkie uniforms to modern sprite standards, as well as
+      adding Voyager uniforms!
+  dragomagol:
+  - qol: coffeemakers now emit steam when they're brewing!
+  - bugfix: coffeemakers now have an icon when they're spawned/created
+  - bugfix: scotch and chocolate eggs will no longer appear as errors
+  - bugfix: Fixes gibtonite icons not appearing
+  sergeirocks100:
+  - qol: You can now cut the fingers off of black or insulated gloves with any sharp
+      object, instead of just wirecutters.
+  - qol: You now get a notice in chat when you cut the fingers off of gloves.
+  timothymtorres:
+  - qol: The floor is lava admin/wizard event can be ignored by floating mobs
+  - rscadd: Added new chems for plants.  Novaflowers now have Sulphuric Acid and Corpse
+      Flowers now have Fluorine.  Combine these chems with a Carbon Rose to create
+      foam effects on harvest.

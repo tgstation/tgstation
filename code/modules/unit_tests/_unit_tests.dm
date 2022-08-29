@@ -129,6 +129,7 @@
 #include "preferences.dm"
 #include "projectiles.dm"
 #include "quirks.dm"
+#include "range_return.dm"
 #include "rcd.dm"
 #include "reagent_id_typos.dm"
 #include "reagent_mod_expose.dm"
