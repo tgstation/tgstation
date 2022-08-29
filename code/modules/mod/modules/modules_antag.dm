@@ -222,6 +222,9 @@
 /obj/item/mod/module/insignia/chaplain
 	color = "#f0a00c"
 
+/obj/item/mod/module/insignia/miner
+	color = "#B18644"
+
 ///Anti Slip - Prevents you from slipping on water.
 /obj/item/mod/module/noslip
 	name = "MOD anti slip module"

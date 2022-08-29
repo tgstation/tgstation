@@ -634,3 +634,40 @@
 	var/obj/item/radio/headset = equipper.ears
 	headset.keyslot = new /obj/item/encryptionkey/heads/ce
 	headset.recalculateChannels()
+
+/datum/outfit/centcom/ert/miner
+	name = "Fauna Containment Specialist"
+
+	id = /obj/item/card/id/advanced/centcom/ert/miner
+	back = /obj/item/mod/control/pre_equipped/responsory/miner // we want to use a MODsuit here because fauna tend to depressurize space stations
+	backpack_contents = list(
+		/obj/item/storage/box/modkit = 1,
+		/obj/item/flashlight/seclite = 1,
+		/obj/item/knife/combat/survival = 1,
+		/obj/item/reagent_containers/hypospray/medipen/survival/luxury = 2,
+		/obj/item/mining_voucher = 1, //why not?
+	)
+	box = /obj/item/storage/box/survival/mining
+	mask = /obj/item/clothing/mask/gas/explorer
+	belt = /obj/item/gun/energy/recharge/kinetic_accelerator
+	uniform = /obj/item/clothing/under/rank/centcom/miner
+	glasses = /obj/item/clothing/glasses/hud/health/night //for true prowlers
+	l_pocket = /obj/item/borg/upgrade/modkit/indoors/ert
+	r_pocket = /obj/item/paper/fluff/centcom/ert/mining
+
+/obj/item/paper/fluff/centcom/ert/mining
+	name = "IMPORTANT: On Your Equipment"
+	default_raw_text = "<b>ATTN: FAUNA CONTAINMENT SPECIALIST - READ ALL INFORMATION THOROUGHLY</b>\
+	<br>\
+	<br>Hello, Fauna Containment Specialist. Your task is to remain <i>station-side</i> to eliminate the fauna threat that the crew is facing by the means available to you. Your gear has been specifically tailored for this task, and no others.<br> \
+	<br>It is of utmost importance that you know how to use it. Before you do anything at all, please insert the modkit in your left pocket (the one that this paper was not placed in).<br> \
+	<br>Your kinetic accelerator is able to accept this upgrade with absolutely <i>no</i> cost to you. To not apply it immediately is a completely foolish mistake. If you live, you will be reprimanded for not applying it.<br>\
+	<br>Unfortunately, space still isn't infinite. We've given you a box full of modkits that you can upgrade your accelerator with. Use your expertise, and hopefully you're able to adjust for the situation at hand.<br> \
+	<br> \
+	<br>You have a lot of expensive gear on you. Don't lose it. Finish the job. -Central Command"
+
+// Not particularly sure how one can sanely scale up the commander's gear so let's just give them fluff.
+/datum/outfit/centcom/ert/miner/commander
+	name = "Lead Containment Specialist"
+
+	mask = /obj/item/clothing/mask/gas/atmos/centcom // you get your brownie points. they still spawn with the mining internals box in case they wanna switch masks to blend in with the common folk

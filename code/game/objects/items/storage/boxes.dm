@@ -1793,3 +1793,15 @@
 										  /obj/item/food/canned/tomatoes = 5,
 										  /obj/item/food/canned/pine_nuts = 5))
 		new randomFood(src)
+
+// Box that comes with all modkits for a player to instantly customize their pKA. Have three of everything that you can stack.
+/obj/item/storage/box/modkit
+	name = "modkit box"
+	desc = "A box that contains all the modkits you could need to help fight fauna."
+
+/obj/item/storage/box/modkit/PopulateContents()
+	for(var/i in 1 to 2) //give them two of everything to allow for some stacking
+		new /obj/item/borg/upgrade/modkit/range(src)
+		new /obj/item/borg/upgrade/modkit/damage(src)
+		new /obj/item/borg/upgrade/modkit/cooldown(src)
+	new /obj/item/borg/upgrade/modkit/aoe/mobs(src)

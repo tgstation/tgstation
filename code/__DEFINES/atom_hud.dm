@@ -124,3 +124,4 @@
 #define SECHUD_RELIGIOUS_RESPONSE_OFFICER "hudreligiousresponseofficer"
 #define SECHUD_JANITORIAL_RESPONSE_OFFICER "hudjanitorialresponseofficer"
 #define SECHUD_ENTERTAINMENT_RESPONSE_OFFICER "hudentertainmentresponseofficer"
+#define SECHUD_FAUNA_CONTAINMENT_SPECIALIST "hudfaunacontainmentspecialist"

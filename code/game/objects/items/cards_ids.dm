@@ -1135,6 +1135,10 @@
 	registered_name = JOB_ERT_CLOWN
 	trim = /datum/id_trim/centcom/ert/clown
 
+/obj/item/card/id/advanced/centcom/ert/miner
+	registered_name = JOB_ERT_MINER
+	trim = /datum/id_trim/centcom/ert/miner
+
 /obj/item/card/id/advanced/black
 	name = "black identification card"
 	desc = "This card is telling you one thing and one thing alone. The person holding this card is an utter badass."

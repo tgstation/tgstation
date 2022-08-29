@@ -90,6 +90,14 @@
 /datum/antagonist/ert/medic/red
 	outfit = /datum/outfit/centcom/ert/medic/alert
 
+/datum/antagonist/ert/miner
+	role = "Fauna Containment Specialist"
+	outfit = /datum/outfit/centcom/ert/miner
+
+/datum/antagonist/ert/miner/commander
+	role = "Lead Containment Specialist"
+	outfit = /datum/outfit/centcom/ert/miner/commander
+
 /datum/antagonist/ert/commander
 	role = "Commander"
 	outfit = /datum/outfit/centcom/ert/commander

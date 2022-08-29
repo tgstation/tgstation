@@ -287,6 +287,10 @@
 	insignia_type = /obj/item/mod/module/insignia/chaplain
 	additional_module = /obj/item/mod/module/injector
 
+/obj/item/mod/control/pre_equipped/responsory/miner
+	insignia_type = /obj/item/mod/module/insignia/miner
+	additional_module = /obj/item/mod/module/gps
+
 /obj/item/mod/control/pre_equipped/responsory/inquisitory
 	applied_skin = "inquisitory"
 	initial_modules = list(

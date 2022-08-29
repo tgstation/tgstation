@@ -463,6 +463,11 @@
 /obj/item/borg/upgrade/modkit/indoors/modify_projectile(obj/projectile/kinetic/K)
 	K.pressure_decrease *= modifier
 
+// This is meant for Fauna Containment Specialists, who are primarily tasked to defeat fauna who make their way station-side.
+/obj/item/borg/upgrade/modkit/indoors/ert
+	name = "Critical Nanotrasen Pressure Penalty Override"
+	desc = "Don't pass this one up, it allows you to override the pressure penalty for your kinetic accelerator at zero cost to you!"
+	cost = 0
 
 //Trigger Guard
 /obj/item/borg/upgrade/modkit/trigger_guard

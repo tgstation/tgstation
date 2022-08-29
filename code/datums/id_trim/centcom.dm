@@ -193,3 +193,16 @@
 	. = ..()
 
 	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING) | (SSid_access.get_region_access_list(list(REGION_ALL_STATION)) - ACCESS_CHANGE_IDS)
+
+/// Trim for generic ERT miners. No universal ID card changing access.
+
+/datum/id_trim/centcom/ert/miner
+	assignment = JOB_ERT_MINER
+	trim_state = "trim_adventurer" //it looks cool and this isn't really a miner, but someone who just kills the fauna.
+	subdepartment_color = COLOR_CARGO_BROWN
+	sechud_icon_state = SECHUD_FAUNA_CONTAINMENT_SPECIALIST
+
+/datum/id_trim/centcom/ert/miner/New()
+	. = ..()
+
+	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING) | (SSid_access.get_region_access_list(list(REGION_ALL_STATION)) - ACCESS_CHANGE_IDS)

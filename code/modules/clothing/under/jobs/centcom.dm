@@ -60,3 +60,16 @@
 	name = "tactical engineering uniform"
 	desc = "A dark colored uniform worn by CentCom's regular military engineers."
 	icon_state = "military_eng"
+
+/obj/item/clothing/under/rank/centcom/miner
+	name = "tactical fauna containment uniform"
+	desc = "A dark colored uniform specifically designed for the containment and termination of highly dangerous fauna."
+	icon_state = "military_eng"
+	inhand_icon_state = "bl_suit"
+	// following matches the hooded explorer's suit values mixed with the base miner's uniform
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	cold_protection = CHEST|GROIN|LEGS|ARMS
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	heat_protection = CHEST|GROIN|LEGS|ARMS
+	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
+	armor = list(MELEE = 30, BULLET = 10, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 0, FIRE = 80, ACID = 50)

@@ -93,6 +93,16 @@
 	leader_role = /datum/antagonist/ert/intern/leader/unarmed
 	rename_team = "Unarmed Horde of Interns"
 
+// internally, we refer to this role as the "miner". however, their intended purpose is to kill miner fauna that have made their way on station. thus, we call them a Fauna Containment Specialist, which is more accurate to the purpose of their role.
+/datum/ert/miner
+	roles = list(/datum/antagonist/ert/miner)
+	leader_role = /datum/antagonist/ert/miner/commander
+	teamsize = 4
+	opendoors = FALSE
+	rename_team = "Fauna Containment Specialists"
+	mission = "Eliminate the threat of hostile wildlife station-side."
+	polldesc = "a Nanotrasen Fauna Containment Response Team"
+
 /datum/ert/erp
 	roles = list(/datum/antagonist/ert/security/party, /datum/antagonist/ert/clown/party, /datum/antagonist/ert/engineer/party, /datum/antagonist/ert/janitor/party)
 	leader_role = /datum/antagonist/ert/commander/party
