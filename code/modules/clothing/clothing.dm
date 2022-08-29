@@ -106,8 +106,10 @@
 	else
 		qdel(src)
 
-/obj/item/clothing/attack(mob/living/M, mob/living/user, params)
-	if(user.combat_mode || !ismoth(M) || ispickedupmob(src))
+/obj/item/clothing/attack(mob/living/target, mob/living/user, params)
+	if(user.combat_mode)
+		return ..()
+	if(!ismoth(target) || ispickedupmob(src))
 		return ..()
 	if(clothing_flags & INEDIBLE_CLOTHING)
 		return ..()
@@ -115,8 +117,7 @@
 		moth_snack = new
 		moth_snack.name = name
 		moth_snack.clothing = WEAKREF(src)
-	moth_snack.attack(M, user, params)
-
+	moth_snack.attack(target, user, params)
 /obj/item/clothing/attackby(obj/item/W, mob/user, params)
 	if(!istype(W, repairable_by))
 		return ..()

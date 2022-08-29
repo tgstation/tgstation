@@ -1480,3 +1480,28 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
  */
 /obj/item/proc/get_writing_implement_details()
 	return null
+
+/obj/item/proc/compare_zone_to_item_slot(zone)
+	switch(slot_flags)
+		if((ITEM_SLOT_ICLOTHING))
+			if(zone = BODY_ZONE_CHEST)
+				return TRUE
+		if((ITEM_SLOT_OCLOTHING))
+			if(zone = BODY_ZONE_CHEST)
+				return TRUE
+		if((ITEM_SLOT_BELT))
+			if(zone = BODY_ZONE_PRECISE_GROIN)
+				return TRUE
+		if((ITEM_SLOT_GLOVES))
+			if(zone = BODY_ZONE_R_ARM || BODY_ZONE_L_ARM)
+				return TRUE
+		if((ITEM_SLOT_HEAD))
+			if(zone = BODY_ZONE_HEAD)
+				return TRUE
+		if((ITEM_SLOT_MASK))
+			if(zone = BODY_ZONE_PRECISE_MOUTH)
+				return TRUE
+		if((ITEM_SLOT_LEG))
+			if(zone = BODY_ZONE_L_LEG || BODY_ZONE_R_LEG)
+				return TRUE
+	return FALSE
