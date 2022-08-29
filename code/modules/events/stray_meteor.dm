@@ -8,7 +8,7 @@
 	category = EVENT_CATEGORY_SPACE
 	description = "Throw a random meteor somewhere near the station."
 	///The selected meteor type if chosen through admin setup.
-	var/obj/effect/meteor/chosen_meteor
+	var/chosen_meteor
 
 /datum/round_event_control/stray_meteor/admin_setup()
 	if(!check_rights(R_FUN))
@@ -26,7 +26,7 @@
 /datum/round_event/stray_meteor/start()
 	var/datum/round_event_control/stray_meteor/meteor_event = control
 	if(meteor_event.chosen_meteor)
-		var/obj/chosen_meteor = meteor_event.chosen_meteor
+		var/chosen_meteor = meteor_event.chosen_meteor
 		var/list/passed_meteor = list()
 		passed_meteor += chosen_meteor
 		spawn_meteor(passed_meteor)
