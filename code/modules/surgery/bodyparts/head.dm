@@ -192,9 +192,7 @@
 #undef OFFSET_X
 #undef OFFSET_Y
 
-	if (is_blushing != HAS_TRAIT(owner, TRAIT_BLUSHING)) // Caused by either the *blush emote or the "drunk" mood event
-		is_blushing = HAS_TRAIT(owner, TRAIT_BLUSHING)
-		owner.update_body_parts()
+	is_blushing = HAS_TRAIT(owner, TRAIT_BLUSHING) // Caused by either the *blush emote or the "drunk" mood event
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
