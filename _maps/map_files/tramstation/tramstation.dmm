@@ -16069,10 +16069,6 @@
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/window/left/directional/south{
-	name = "Research Lab Desk";
-	req_access = list("science")
-	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 1;
 	id = "rndlab1";
@@ -16085,6 +16081,10 @@
 	},
 /obj/structure/desk_bell{
 	pixel_x = -7
+	},
+/obj/machinery/door/window/left/directional/south{
+	name = "Research Lab Desk";
+	req_access = list("science")
 	},
 /turf/open/floor/iron/white,
 /area/station/science/lab)
@@ -65152,14 +65152,14 @@
 /area/station/science/xenobiology)
 "wAe" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/north{
-	name = "Chemistry Desk";
-	req_access = list("pharmacy")
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "pharmacy_shutters_2";
 	name = "Pharmacy Shutters"
+	},
+/obj/machinery/door/window/left/directional/north{
+	name = "Chemistry Desk";
+	req_access = list("pharmacy")
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
