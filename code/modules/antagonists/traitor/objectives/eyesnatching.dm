@@ -128,7 +128,7 @@
 /obj/item/eyesnatcher
 	name = "portable eyeball extractor"
 	desc = "An overly complicated device that can pierce target's skull and extract their eyeballs if enough brute force is applied."
-	icon = 'icons/obj/medical/surgery.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "eyesnatcher"
 	base_icon_state = "eyesnatcher"
 	inhand_icon_state = "hypo"
