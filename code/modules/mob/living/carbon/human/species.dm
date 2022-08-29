@@ -254,6 +254,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///Was the species changed from its original type at the start of the round?
 	var/roundstart_changed = FALSE
 
+	/// This supresses the "dosen't appear to be himself" examine text for if the mob is run by an AI controller. Should be used on any NPC human subtypes. Monkeys are the prime example.
+	var/ai_controlled_species = FALSE
+
 ///////////
 // PROCS //
 ///////////
