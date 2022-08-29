@@ -46,10 +46,8 @@
 		old_mob.dna.transfer_identity(new_mob, transfer_species = FALSE)
 		new_mob.updateappearance(mutcolor_update=1, mutations_overlay_update=1)
 	else if(ishuman(desired_mob) && (!ismonkey(desired_mob)))
-		var/mob/living/carbon/old_human
 		var/mob/living/carbon/human/new_human = desired_mob
-		client?.prefs.safe_transfer_prefs_to(old_human)
-		old_human.dna.transfer_identity(new_human, transfer_species = FALSE)
+		client?.prefs.safe_transfer_prefs_to(new_human)
 		new_human.updateappearance(mutcolor_update=1, mutations_overlay_update=1)
 
 	if(mind && isliving(desired_mob))
