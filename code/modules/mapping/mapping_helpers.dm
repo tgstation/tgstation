@@ -474,7 +474,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 	var/reuse_trays = (trays.len < bodycount) //are we going to spawn more trays than bodies?
 
-	var/use_species = CONFIG_GET(flag/morgue_cadaver_disable_nonhumans)
+	var/use_species = !(CONFIG_GET(flag/morgue_cadaver_disable_nonhumans))
 	var/species_probability = CONFIG_GET(number/morgue_cadaver_other_species_probability)
 	var/override_species = CONFIG_GET(string/morgue_cadaver_override_species)
 	var/list/usable_races
@@ -485,7 +485,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		if(!usable_races)
 			stack_trace("morgue_cadaver_disable_nonhumans. THERE ARE NO VALID NONHUMANS ENABLED")
 		if(override_species)
-			stack_trace("WARNING: BOTH use_all_roundstart_races_for_cadavers & morgue_cadaver_override_species CONFIGS ENABLED. morgue_cadaver_override_species BEING OVERRIDEN.")
+			stack_trace("WARNING: BOTH morgue_cadaver_disable_nonhumans & morgue_cadaver_override_species CONFIGS ENABLED. morgue_cadaver_override_species BEING OVERRIDEN.")
 	else if(override_species)
 		usable_races += override_species
 
@@ -504,6 +504,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 				var/datum/species/new_human_species = GLOB.species_list[species_to_pick]
 				if(new_human_species)
 					new_human.set_species(new_human_species)
+					new_human_species = new_human.dna.species
 					new_human_species.randomize_features(new_human)
 					new_human.fully_replace_character_name(new_human.real_name, new_human_species.random_name(new_human.gender, TRUE, TRUE))
 				else
