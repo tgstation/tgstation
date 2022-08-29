@@ -59,3 +59,8 @@
 			visible_message(span_notice("The [T.name] [throw_message] [src.name]!"))
 			return
 	..()
+	
+/mob/living/simple_animal/hostile/asteroid/Life(delta_time = SSMOBS_DT, times_fired)
+	..()
+	if(is_station_level(z) && istype(get_area(src), /area/station)
+		adjustHealth(-2)
