@@ -32,7 +32,7 @@
 		new /obj/effect/dumpeet_target(targetturf, L)
 
 		to_chat(user, span_notice("You have activated Protocol CRAB-17."))
-		message_admins("[user] has activated Protocol CRAB-17.")
+		message_admins("[ADMIN_LOOKUPFLW(user)] has activated Protocol CRAB-17.")
 		user.log_message("activated Protocol CRAB-17.", LOG_GAME)
 
 		dumped = TRUE
