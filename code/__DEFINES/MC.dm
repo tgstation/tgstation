@@ -1,5 +1,4 @@
 #define MC_TICK_CHECK (MC_TICK_CHECK_FOR(src))
-#define MC_TICK_CHECK_FOR(subsystem) ( ( TICK_USAGE > Master.current_ticklimit || subsystem.state != SS_RUNNING ) ? subsystem.pause() : 0 )
 
 #define MC_SPLIT_TICK_INIT(phase_count) var/original_tick_limit = Master.current_ticklimit; var/split_tick_phases = ##phase_count
 #define MC_SPLIT_TICK \
