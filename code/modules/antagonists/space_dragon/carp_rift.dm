@@ -27,7 +27,7 @@
 			return
 	var/turf/rift_spawn_turf = get_turf(dragon)
 	if(isopenspaceturf(rift_spawn_turf))
-		dragon.balloon_alert(dragon, "needs stable ground!")
+		owner.balloon_alert(dragon, "needs stable ground!")
 		return
 	owner.balloon_alert(owner, "You begin to open a rift...")
 	if(!do_after(owner, 10 SECONDS, target = owner))
