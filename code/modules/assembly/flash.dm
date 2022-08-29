@@ -202,7 +202,7 @@
 
 	if(iscarbon(victim))
 		var/mob/living/carbon/carbon_victim = victim
-		if(carbon_victim.get_eye_protection() < 0) // If our flash protection is negative, then we gain flash hyper sensitivity.
+		if(carbon_victim.get_eye_protection() < -1) // If we have really bad flash sensitivity, usually due to really sensitive eyes, we get flashed from all directions
 			return DEVIATION_NONE
 
 	// Are they on the same tile? We'll return partial deviation. This may be someone flashing while lying down
