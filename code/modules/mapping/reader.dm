@@ -29,12 +29,14 @@
 	// raw strings used to represent regexes more accurately
 	// '' used to avoid confusing syntax highlighting
 	var/static/regex/dmmRegex = new(@'"([a-zA-Z]+)" = \(((?:.|\n)*?)\)\n(?!\t)|\((\d+),(\d+),(\d+)\) = \{"([a-zA-Z\n]*)"\}', "g")
-	var/static/regex/trimQuotesRegex = new(@'^[\s\n]+"?|"?[\s\n]+$|^"|"$', "g")
 	var/static/regex/trimRegex = new(@'^[\s\n]+|[\s\n]+$', "g")
 
 	#ifdef TESTING
 	var/turfsSkipped = 0
 	#endif
+
+//text trimming (both directions) helper macro
+#define TRIM_TEXT(text) (trim_reduced(text))
 
 /// Shortcut function to parse a map and apply it to the world.
 ///
@@ -160,9 +162,6 @@
 	. = _load_impl(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop)
 	Master.StopLoadingMap()
 
-GLOBAL_LIST_EMPTY(load_costs)
-GLOBAL_LIST_EMPTY(load_counts)
-//#define SET_COST(category)
 // Do not call except via load() above.
 /datum/parsed_map/proc/_load_impl(x_offset = 1, y_offset = 1, z_offset = world.maxz + 1, cropMap = FALSE, no_changeturf = FALSE, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE)
 	PRIVATE_PROC(TRUE)
@@ -212,12 +211,11 @@ GLOBAL_LIST_EMPTY(load_counts)
 
 		// Y is the LOWEST it will ever be here, so we can easily set a threshold for how low to go
 		var/line_count = length(gset.gridLines)
-		var/lowest_y = relative_y - line_count
-		var/y_skip_below = max(1 - y_relative_to_absolute, y_lower, lowest_y)
-		var/y_ending_skip = y_skip_below - lowest_y
+		var/lowest_y = relative_y - (line_count - 1) // -1 because we decrement at the end of the loop, not the start
+		var/y_ending_skip = max(max(y_lower, 1 - y_relative_to_absolute) - lowest_y, 0)
 
 		// Now we're gonna precompute the x thresholds
-		// We skip all the entries below the lower y, or 1
+		// We skip all the entries below the lower x, or 1
 		var/starting_x_delta = max(max(x_lower, 1 - x_relative_to_absolute) - relative_x, 0)
 		// The x loop counts by key length, so we gotta multiply here
 		var/x_starting_skip = starting_x_delta * key_len
@@ -348,77 +346,76 @@ GLOBAL_LIST_EMPTY(load_counts)
 		return modelCache
 	. = modelCache = list()
 	var/list/grid_models = src.grid_models
+	var/set_space = FALSE
+	// Use where a list is needed, but where it will not be modified
+	// Used here to remove the cost of needing to make a new list for each fields entry when it's set manually later
+	var/static/list/default_list = list()
 	for(var/model_key in grid_models)
 		var/model = grid_models[model_key]
-		var/list/members = list() //will contain all members (paths) in model (in our example : /turf/unsimulated/wall and /area/mine/explored)
-		var/list/members_attributes = list() //will contain lists filled with corresponding variables, if any (in our example : list(icon_state = "rock") and list())
+		// This is safe because dmm strings will never actually newline
+		// So we can parse things just fine
+		var/list/entries = splittext(model, ",\n")
+		//will contain all members (paths) in model (in our example : /turf/unsimulated/wall and /area/mine/explored)
+		var/list/members = new /list(length(entries))
+		//will contain lists filled with corresponding variables, if any (in our example : list(icon_state = "rock") and list())
+		//member attributes are rarish, so we could lazyinit this
+		var/list/members_attributes = new /list(length(entries))
 
 		/////////////////////////////////////////////////////////
 		//Constructing members and corresponding variables lists
 		////////////////////////////////////////////////////////
 
 		var/index = 1
-		var/old_position = 1
-		var/dpos
+		for(var/member_string in entries)
+			var/variables_start = 0
+			//findtext is a bit expensive, lets only do this if the last char of our string is a } (IE: we know we have vars)
+			//this saves about 25 miliseconds on my machine. Not a major optimization
+			if(member_string[length(member_string)] == "}")
+				variables_start = findtext(member_string, "{")
 
-		while(dpos != 0)
-			//finding next member (e.g /turf/unsimulated/wall{icon_state = "rock"} or /area/mine/explored)
-			dpos = find_next_delimiter_position(model, old_position, ",", "{", "}") //find next delimiter (comma here) that's not within {...}
-
-			var/full_def = trim_text(copytext(model, old_position, dpos)) //full definition, e.g : /obj/foo/bar{variables=derp}
-			var/variables_start = findtext(full_def, "{")
-			var/path_text = trim_text(copytext(full_def, 1, variables_start))
+			var/path_text = TRIM_TEXT(copytext(member_string, 1, variables_start))
 			var/atom_def = text2path(path_text) //path definition, e.g /obj/foo/bar
-			if(dpos)
-				old_position = dpos + length(model[dpos])
 
 			if(!ispath(atom_def, /atom)) // Skip the item if the path does not exist.  Fix your crap, mappers!
 				if(bad_paths)
 					LAZYOR(bad_paths[path_text], model_key)
 				continue
-			members.Add(atom_def)
+			members[index] = atom_def
 
 			//transform the variables in text format into a list (e.g {var1="derp"; var2; var3=7} => list(var1="derp", var2, var3=7))
-			var/list/fields = list()
-
+			var/list/fields = default_list
 			if(variables_start)//if there's any variable
-				full_def = copytext(full_def, variables_start + length(full_def[variables_start]), -length(copytext_char(full_def, -1))) //removing the last '}'
-				fields = readlist(full_def, ";")
-				if(fields.len)
-					if(!trim(fields[fields.len]))
-						--fields.len
-					for(var/I in fields)
-						var/value = fields[I]
-						if(istext(value))
-							fields[I] = apply_text_macros(value)
+				member_string = copytext(member_string, variables_start + length(member_string[variables_start]), -length(copytext_char(member_string, -1))) //removing the last '}'
+				fields = readlist(member_string, ";")
+				for(var/I in fields)
+					var/value = fields[I]
+					if(istext(value))
+						fields[I] = apply_text_macros(value)
 
 			//then fill the members_attributes list with the corresponding variables
-			members_attributes.len++
 			members_attributes[index++] = fields
-
 			//CHECK_TICK
 
 		//check and see if we can just skip this turf
 		//So you don't have to understand this horrid statement, we can do this if
-		// 1. no_changeturf is set
-		// 2. the space_key isn't set yet
+		// 1. the space_key isn't set yet
+		// 2. no_changeturf is set
 		// 3. there are exactly 2 members
 		// 4. with no attributes
 		// 5. and the members are world.turf and world.area
 		// Basically, if we find an entry like this: "XXX" = (/turf/default, /area/default)
 		// We can skip calling this proc every time we see XXX
-		if(no_changeturf \
-			&& !(.[SPACE_KEY]) \
+		if(!set_space \
+			&& no_changeturf \
 			&& members.len == 2 \
 			&& members_attributes.len == 2 \
 			&& length(members_attributes[1]) == 0 \
 			&& length(members_attributes[2]) == 0 \
 			&& (world.area in members) \
 			&& (world.turf in members))
-
+			set_space = TRUE
 			.[SPACE_KEY] = model_key
 			continue
-
 
 		.[model_key] = list(members, members_attributes)
 
@@ -513,15 +510,6 @@ GLOBAL_LIST_EMPTY(load_counts)
 	set waitfor = FALSE
 	. = new path (crds)
 
-//text trimming (both directions) helper proc
-//optionally removes quotes before and after the text (for variable name)
-/datum/parsed_map/proc/trim_text(what as text,trim_quotes=0)
-	if(trim_quotes)
-		return trimQuotesRegex.Replace(what, "")
-	else
-		return trimRegex.Replace(what, "")
-
-
 //find the position of the next delimiter,skipping whatever is comprised between opening_escape and closing_escape
 //returns 0 if reached the last delimiter
 /datum/parsed_map/proc/find_next_delimiter_position(text as text,initial_position as num, delimiter=",",opening_escape="\"",closing_escape="\"")
@@ -536,7 +524,6 @@ GLOBAL_LIST_EMPTY(load_counts)
 
 	return next_delimiter
 
-
 //build a list from variables in text form (e.g {var1="derp"; var2; var3=7} => list(var1="derp", var2, var3=7))
 //return the filled list
 /datum/parsed_map/proc/readlist(text as text, delimiter=",")
@@ -544,30 +531,49 @@ GLOBAL_LIST_EMPTY(load_counts)
 	if (!text)
 		return
 
-	var/position
-	var/old_position = 1
+	// If we're using a semi colon, we can do this as splittext rather then constant calls to find_next_delimiter_position
+	// This does make the code a bit harder to read, but saves a good bit of time so suck it up
+	var/using_semicolon = delimiter == ";"
+	if(using_semicolon)
+		var/list/line_entries = splittext(text, ";\n")
+		for(var/entry in line_entries)
+			// check if this is a simple variable (as in list(var1, var2)) or an associative one (as in list(var1="foo",var2=7))
+			var/equal_position = findtext(entry,"=")
+			// This could in theory happen if someone inserts an improper newline
+			// Let's be nice and kill it here rather then later, it'll save like 0.02 seconds if we don't need to run trims in build_cache
+			if(!equal_position)
+				continue
+			var/trim_left = TRIM_TEXT(copytext(entry,1,equal_position))
 
-	while(position != 0)
-		// find next delimiter that is not within  "..."
-		position = find_next_delimiter_position(text,old_position,delimiter)
-
-		// check if this is a simple variable (as in list(var1, var2)) or an associative one (as in list(var1="foo",var2=7))
-		var/equal_position = findtext(text,"=",old_position, position)
-
-		var/trim_left = trim_text(copytext(text,old_position,(equal_position ? equal_position : position)))
-		var/left_constant = delimiter == ";" ? trim_left : parse_constant(trim_left)
-		if(position)
-			old_position = position + length(text[position])
-
-		if(equal_position && !isnum(left_constant))
 			// Associative var, so do the association.
 			// Note that numbers cannot be keys - the RHS is dropped if so.
-			var/trim_right = trim_text(copytext(text, equal_position + length(text[equal_position]), position))
+			var/trim_right = TRIM_TEXT(copytext(entry, equal_position + length(entry[equal_position])))
 			var/right_constant = parse_constant(trim_right)
-			.[left_constant] = right_constant
+			.[trim_left] = right_constant
+	else
+		var/position
+		var/old_position = 1
+		while(position != 0)
+			// find next delimiter that is not within  "..."
+			position = find_next_delimiter_position(text,old_position,delimiter)
 
-		else  // simple var
-			. += list(left_constant)
+			// check if this is a simple variable (as in list(var1, var2)) or an associative one (as in list(var1="foo",var2=7))
+			var/equal_position = findtext(text,"=",old_position, position)
+			var/trim_left = TRIM_TEXT(copytext(text,old_position,(equal_position ? equal_position : position)))
+			var/left_constant = parse_constant(trim_left)
+			if(position)
+				old_position = position + length(text[position])
+			if(!left_constant) // damn newlines man. Exists to provide behavior consistency with the above loop. not a major cost becuase this path is cold
+				continue
+
+			if(equal_position && !isnum(left_constant))
+				// Associative var, so do the association.
+				// Note that numbers cannot be keys - the RHS is dropped if so.
+				var/trim_right = TRIM_TEXT(copytext(text, equal_position + length(text[equal_position]), position))
+				var/right_constant = parse_constant(trim_right)
+				.[left_constant] = right_constant
+			else  // simple var
+				. += list(left_constant)
 
 /datum/parsed_map/proc/parse_constant(text)
 	// number
@@ -577,7 +583,10 @@ GLOBAL_LIST_EMPTY(load_counts)
 
 	// string
 	if(text[1] == "\"")
-		return copytext(text, length(text[1]) + 1, findtext(text, "\"", length(text[1]) + 1))
+		// insert implied locate \" and length("\"") here
+		// It's a minimal timesave but it is a timesave
+		// Safe becuase we're guarenteed trimmed constants
+		return copytext(text, 2, -1)
 
 	// list
 	if(copytext(text, 1, 6) == "list(")//6 == length("list(") + 1
