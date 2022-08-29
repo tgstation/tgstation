@@ -25,19 +25,26 @@
 	rpg_title = "Defeated Miniboss"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
-/datum/job/prisoner/after_spawn(mob/living/spawned, client/player_client)
+/datum/job/prisoner/New()
 	. = ..()
-	RegisterSignal(GLOB.data_core, COMSIG_MANIFEST_INJECTED(REF(spawned)), .proc/add_pref_crime)
+	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/add_pref_crime)
 
-/datum/job/prisoner/proc/add_pref_crime(datum/datacore/source, mob/living/carbon/human/injected_human, list/new_records)
-	UnregisterSignal(source, COMSIG_MANIFEST_INJECTED(REF(injected_human)))
-	var/crime_name = injected_human.client?.prefs?.read_preference(/datum/preference/choiced/prisoner_crime)
+/datum/job/prisoner/proc/add_pref_crime(datum/source, mob/living/crewmember, rank)
+	SIGNAL_HANDLER
+	if(rank != title)
+		return //not a prisoner
+
+	var/crime_name = crewmember.client?.prefs?.read_preference(/datum/preference/choiced/prisoner_crime)
 	if(!crime_name)
 		return
-	var/datum/data/record/target_record = new_records["sec"]
-	var/crime_description = GLOB.crimename2desc[crime_name]
-	var/datum/data/crime/past_crime = source.createCrimeEntry(crime_name, crime_description, "Central Command", "Consult Legal.")
-	source.addCrime(target_record.fields["id"], past_crime)
+	if(crime_name == "Random")
+		crime_name = pick(assoc_to_keys(GLOB.prisoner_crimes))
+	var/datum/data/record/target_record = find_record("name", crewmember.real_name, GLOB.data_core.security)
+	var/crime_desc = GLOB.prisoner_crimes[crime_name]
+	target_record.fields["criminal"] = "Incarcerated"
+	var/datum/data/crime/past_crime = GLOB.data_core.createCrimeEntry(crime_name, crime_desc, "Central Command", "Indefinite.")
+	GLOB.data_core.addCrime(target_record.fields["id"], past_crime)
+	to_chat(crewmember, span_warning("You are imprisoned for \"[crime_name]\"."))
 
 /datum/outfit/job/prisoner
 	name = "Prisoner"

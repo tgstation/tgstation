@@ -219,7 +219,6 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 	set waitfor = FALSE
 	var/static/list/show_directions = list(SOUTH, WEST)
 	if(injected_human.mind?.assigned_role.job_flags & JOB_CREW_MANIFEST)
-		var/list/new_records = list()
 		var/assignment = injected_human.mind.assigned_role.title
 
 		var/static/record_id_num = 1001
@@ -259,7 +258,6 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		new_gen_record.fields["photo_front"] = photo_front
 		new_gen_record.fields["photo_side"] = photo_side
 		general += new_gen_record
-		new_records["gen"] = new_gen_record
 
 		//Medical Record
 		var/datum/data/record/new_med_record = new()
@@ -276,7 +274,6 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		new_med_record.fields["notes"] = injected_human.get_quirk_string(!medical, CAT_QUIRK_NOTES)
 		new_med_record.fields["notes_d"] = injected_human.get_quirk_string(medical, CAT_QUIRK_NOTES)
 		medical += new_med_record
-		new_records["med"] = new_med_record
 
 		//Security Record
 		var/datum/data/record/new_sec_record = new()
@@ -287,7 +284,6 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		new_sec_record.fields["crim"] = list()
 		new_sec_record.fields["notes"] = "No notes."
 		security += new_sec_record
-		new_records["sec"] = new_sec_record
 
 		//Locked Record
 		var/datum/data/record/new_lock_record = new()
@@ -312,9 +308,7 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		new_lock_record.fields["image"] = image
 		new_lock_record.fields["mindref"] = injected_human.mind
 		locked += new_lock_record
-		new_records["lock"] = new_lock_record
 
-		SEND_GLOBAL_SIGNAL(COMSIG_MANIFEST_INJECTED(REF(injected_human)), injected_human, new_records)
 	return
 
 /datum/datacore/proc/get_id_photo(mob/living/carbon/human/human, show_directions = list(SOUTH))
