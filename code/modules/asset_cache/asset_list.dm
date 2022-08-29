@@ -178,8 +178,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		var/list/stored_args = to_generate[to_generate.len]
 		to_generate.len--
 		queuedInsert(arglist(stored_args))
-		// I await my deathsquad MSO
-		if(yield && MC_TICK_CHECK_FOR(SSasset_loading))
+		if(yield && TICK_CHECK)
 			return
 
 	ensure_stripped()
