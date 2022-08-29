@@ -1,0 +1,4 @@
+author: "kawoppi"
+delete-after: True
+changes: 
+  - admin: "added logging for the rare Aurora Caelus oven ignition"
