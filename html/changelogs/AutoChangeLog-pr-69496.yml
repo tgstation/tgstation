@@ -1,0 +1,7 @@
+author: "itseasytosee"
+delete-after: True
+changes: 
+  - qol: "Monkeys wont trip over each other anymore, and will only trip if you run into them with combat mode on."
+  - qol: "Player monkeys can now opt in to tripping like a regular monkey."
+  - refactor: "Stores monkey tripping in the brain, rather than the AI controller"
+  - refactor: "Traits such as literacy and advanced tool use are now tied to the brain rather than the species"
