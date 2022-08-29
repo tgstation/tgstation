@@ -17,4 +17,4 @@
 	if (!..(preferences))
 		return FALSE
 
-	return TRUE
+	return istype(preferences.get_highest_priority_job(), /datum/job/prisoner)
