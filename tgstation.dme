@@ -2655,6 +2655,7 @@
 #include "code\modules\client\preferences\pixel_size.dm"
 #include "code\modules\client\preferences\playtime_reward_cloak.dm"
 #include "code\modules\client\preferences\preferred_map.dm"
+#include "code\modules\client\preferences\prisoner_crime.dm"
 #include "code\modules\client\preferences\random.dm"
 #include "code\modules\client\preferences\runechat.dm"
 #include "code\modules\client\preferences\scaling_method.dm"
