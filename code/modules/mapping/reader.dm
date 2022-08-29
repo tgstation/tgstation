@@ -162,6 +162,14 @@
 	. = _load_impl(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop)
 	Master.StopLoadingMap()
 
+/*
+#define MAPLOADING_CHECK_TICK \
+	if(TICK_CHECK) \
+		SSatoms.map_loader_stop(); \
+		stoplag(); \
+		SSatoms.map_loader_begin();
+*/
+#define MAPLOADING_CHECK_TICK
 // Do not call except via load() above.
 /datum/parsed_map/proc/_load_impl(x_offset = 1, y_offset = 1, z_offset = world.maxz + 1, cropMap = FALSE, no_changeturf = FALSE, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE)
 	PRIVATE_PROC(TRUE)
@@ -273,10 +281,7 @@
 						++turfsSkipped
 					#endif
 					ycrd--
-					//if(TICK_CHECK)
-						//SSatoms.map_loader_stop()
-						//stoplag()
-						//SSatoms.map_loader_begin()
+					//MAPLOADING_CHECK_TICK
 					continue
 
 				var/list/cache = modelCache[line]
@@ -291,10 +296,7 @@
 					first_y = ycrd
 				last_y = ycrd
 				ycrd--
-				//if(TICK_CHECK)
-						//SSatoms.map_loader_stop()
-						//stoplag()
-						//SSatoms.map_loader_begin()
+				MAPLOADING_CHECK_TICK
 			// The x coord never changes, so this is safe
 			if(first_found)
 				first_x = true_xcrd
@@ -310,10 +312,7 @@
 						#ifdef TESTING
 							++turfsSkipped
 						#endif
-						//if(TICK_CHECK)
-							//SSatoms.map_loader_stop()
-							//stoplag()
-							//SSatoms.map_loader_begin()
+						MAPLOADING_CHECK_TICK
 						++xcrd
 						continue
 					var/list/cache = modelCache[model_key]
@@ -329,16 +328,10 @@
 						first_y = ycrd
 					last_x = xcrd
 					last_y = ycrd
-					//if(TICK_CHECK)
-						//SSatoms.map_loader_stop()
-						//stoplag()
-						//SSatoms.map_loader_begin()
+					MAPLOADING_CHECK_TICK
 					++xcrd
 				ycrd--
-				//if(TICK_CHECK)
-					//SSatoms.map_loader_stop()
-					//stoplag()
-					//SSatoms.map_loader_begin()
+				MAPLOADING_CHECK_TICK
 		bounds[MAP_MINX] = min(bounds[MAP_MINX], first_x)
 		bounds[MAP_MAXX] = max(bounds[MAP_MAXX], last_x)
 		bounds[MAP_MINY] = min(bounds[MAP_MINY], last_y)
@@ -502,10 +495,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 
 		if(GLOB.use_preloader && instance)//second preloader pass, for those atoms that don't ..() in New()
 			world.preloader_load(instance)
-	//	if(TICK_CHECK)
-			//SSatoms.map_loader_stop()
-			//stoplag()
-			//SSatoms.map_loader_begin()
+	MAPLOADING_CHECK_TICK
 
 	//finally instance all remainings objects/mobs
 	for(var/atom_index in 1 to index-1)
@@ -517,10 +507,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 
 		if(GLOB.use_preloader && instance)//second preloader pass, for those atoms that don't ..() in New()
 			world.preloader_load(instance)
-	//	if(TICK_CHECK)
-			//SSatoms.map_loader_stop()
-			//stoplag()
-			//SSatoms.map_loader_begin()
+		MAPLOADING_CHECK_TICK
 
 ////////////////
 //Helpers procs
