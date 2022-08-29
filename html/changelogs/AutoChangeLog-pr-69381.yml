@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - bugfix: "On IceBoxStation, the Psychologist's Locker should now be accessible once again."

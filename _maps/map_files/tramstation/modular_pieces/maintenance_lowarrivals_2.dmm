@@ -24,7 +24,6 @@
 /obj/structure/table,
 /obj/structure/window/reinforced/spawner/west,
 /obj/effect/spawner/random/engineering/toolbox,
-/obj/effect/mapping_helpers/airlock/access/all/command/maintenance,
 /obj/machinery/door/window/left/directional/south,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/fore)
@@ -72,7 +71,7 @@
 /obj/structure/table,
 /obj/structure/window/reinforced/spawner/east,
 /obj/effect/spawner/random/engineering/toolbox,
-/obj/effect/mapping_helpers/airlock/access/all/command/maintenance/obj/machinery/door/window/right/directional/south,
+/obj/machinery/door/window/right/directional/south,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/fore)
 "H" = (

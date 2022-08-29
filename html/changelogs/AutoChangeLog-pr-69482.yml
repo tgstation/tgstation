@@ -1,0 +1,4 @@
+author: "Striders13"
+delete-after: True
+changes: 
+  - bugfix: "some windoors are no longer invisible due to being hidden below shutters"

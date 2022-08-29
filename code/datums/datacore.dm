@@ -19,15 +19,60 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 	var/list/fields = list()
 
 /datum/data/record/Destroy()
-	if(src in GLOB.data_core.medical)
-		GLOB.data_core.medical -= src
-	if(src in GLOB.data_core.security)
-		GLOB.data_core.security -= src
-	if(src in GLOB.data_core.general)
-		GLOB.data_core.general -= src
-	if(src in GLOB.data_core.locked)
-		GLOB.data_core.locked -= src
+	GLOB.data_core.medical -= src
+	GLOB.data_core.security -= src
+	GLOB.data_core.general -= src
+	GLOB.data_core.locked -= src
 	. = ..()
+
+/// A helper proc to get the front photo of a character from the record.
+/// Handles calling `get_photo()`, read its documentation for more information.
+/datum/data/record/proc/get_front_photo()
+	return get_photo("photo_front", SOUTH)
+
+/// A helper proc to get the side photo of a character from the record.
+/// Handles calling `get_photo()`, read its documentation for more information.
+/datum/data/record/proc/get_side_photo()
+	return get_photo("photo_side", WEST)
+
+/**
+ * You shouldn't be calling this directly, use `get_front_photo()` or `get_side_photo()`
+ * instead.
+ *
+ * This is the proc that handles either fetching (if it was already generated before) or
+ * generating (if it wasn't) the specified photo from the specified record. This is only
+ * intended to be used by records that used to try to access `fields["photo_front"]` or
+ * `fields["photo_side"]`, and will return an empty icon if there isn't any of the necessary
+ * fields.
+ *
+ * Arguments:
+ * * field_name - The name of the key in the `fields` list, of the record itself.
+ * * orientation - The direction in which you want the character appearance to be rotated
+ * in the outputed photo.
+ *
+ * Returns an empty `/icon` if there was no `character_appearance` entry in the `fields` list,
+ * returns the generated/cached photo otherwise.
+ */
+/datum/data/record/proc/get_photo(field_name, orientation)
+	if(fields[field_name])
+		return fields[field_name]
+
+	if(!fields["character_appearance"])
+		return new /icon()
+
+	var/mutable_appearance/character_appearance = fields["character_appearance"]
+	character_appearance.setDir(orientation)
+
+	var/icon/picture_image = getFlatIcon(character_appearance)
+
+	var/datum/picture/picture = new
+	picture.picture_name = "[fields["name"]]"
+	picture.picture_desc = "This is [fields["name"]]."
+	picture.picture_image = picture_image
+
+	var/obj/item/photo/photo = new(null, picture)
+	fields[field_name] = photo
+	return photo
 
 /datum/data/crime
 	name = "crime"
@@ -215,104 +260,91 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 	return dat
 
 
-/datum/datacore/proc/manifest_inject(mob/living/carbon/human/injected_human)
+/datum/datacore/proc/manifest_inject(mob/living/carbon/human/H)
 	set waitfor = FALSE
 	var/static/list/show_directions = list(SOUTH, WEST)
-	if(injected_human.mind?.assigned_role.job_flags & JOB_CREW_MANIFEST)
-		var/assignment = injected_human.mind.assigned_role.title
+	if(H.mind?.assigned_role.job_flags & JOB_CREW_MANIFEST)
+		var/assignment = H.mind.assigned_role.title
 
 		var/static/record_id_num = 1001
 		var/id = num2hex(record_id_num++,6)
-		var/image = get_id_photo(injected_human, show_directions)
-		var/datum/picture/pf = new
-		var/datum/picture/ps = new
-		pf.picture_name = "[injected_human]"
-		ps.picture_name = "[injected_human]"
-		pf.picture_desc = "This is [injected_human]."
-		ps.picture_desc = "This is [injected_human]."
-		pf.picture_image = icon(image, dir = SOUTH)
-		ps.picture_image = icon(image, dir = WEST)
-		var/obj/item/photo/photo_front = new(null, pf)
-		var/obj/item/photo/photo_side = new(null, ps)
+		// We need to compile the overlays now, otherwise we're basically copying an empty icon.
+		COMPILE_OVERLAYS(H)
+		var/mutable_appearance/character_appearance = new(H.appearance)
 
 		//These records should ~really~ be merged or something
 		//General Record
-		var/datum/data/record/new_gen_record = new()
-		new_gen_record.fields["id"] = id
-		new_gen_record.fields["name"] = injected_human.real_name
-		new_gen_record.fields["rank"] = assignment
-		new_gen_record.fields["trim"] = assignment
-		new_gen_record.fields["initial_rank"] = assignment
-		new_gen_record.fields["age"] = injected_human.age
-		new_gen_record.fields["species"] = injected_human.dna.species.name
-		new_gen_record.fields["fingerprint"] = md5(injected_human.dna.unique_identity)
-		new_gen_record.fields["p_stat"] = "Active"
-		new_gen_record.fields["m_stat"] = "Stable"
-		new_gen_record.fields["gender"] = injected_human.gender
-		if(injected_human.gender == "male")
-			new_gen_record.fields["gender"] = "Male"
-		else if(injected_human.gender == "female")
-			new_gen_record.fields["gender"] = "Female"
+		var/datum/data/record/G = new()
+		G.fields["id"] = id
+		G.fields["name"] = H.real_name
+		G.fields["rank"] = assignment
+		G.fields["trim"] = assignment
+		G.fields["initial_rank"] = assignment
+		G.fields["age"] = H.age
+		G.fields["species"] = H.dna.species.name
+		G.fields["fingerprint"] = md5(H.dna.unique_identity)
+		G.fields["p_stat"] = "Active"
+		G.fields["m_stat"] = "Stable"
+		G.fields["gender"] = H.gender
+		if(H.gender == "male")
+			G.fields["gender"] = "Male"
+		else if(H.gender == "female")
+			G.fields["gender"] = "Female"
 		else
-			new_gen_record.fields["gender"] = "Other"
-		new_gen_record.fields["photo_front"] = photo_front
-		new_gen_record.fields["photo_side"] = photo_side
-		general += new_gen_record
+			G.fields["gender"] = "Other"
+		G.fields["character_appearance"] = character_appearance
+		general += G
 
 		//Medical Record
-		var/datum/data/record/new_med_record = new()
-		new_med_record.fields["id"] = id
-		new_med_record.fields["name"] = injected_human.real_name
-		new_med_record.fields["blood_type"] = injected_human.dna.blood_type
-		new_med_record.fields["b_dna"] = injected_human.dna.unique_enzymes
-		new_med_record.fields["mi_dis"] = injected_human.get_quirk_string(!medical, CAT_QUIRK_MINOR_DISABILITY)
-		new_med_record.fields["mi_dis_d"] = injected_human.get_quirk_string(medical, CAT_QUIRK_MINOR_DISABILITY)
-		new_med_record.fields["ma_dis"] = injected_human.get_quirk_string(!medical, CAT_QUIRK_MAJOR_DISABILITY)
-		new_med_record.fields["ma_dis_d"] = injected_human.get_quirk_string(medical, CAT_QUIRK_MAJOR_DISABILITY)
-		new_med_record.fields["cdi"] = "None"
-		new_med_record.fields["cdi_d"] = "No diseases have been diagnosed at the moment."
-		new_med_record.fields["notes"] = injected_human.get_quirk_string(!medical, CAT_QUIRK_NOTES)
-		new_med_record.fields["notes_d"] = injected_human.get_quirk_string(medical, CAT_QUIRK_NOTES)
-		medical += new_med_record
+		var/datum/data/record/M = new()
+		M.fields["id"] = id
+		M.fields["name"] = H.real_name
+		M.fields["blood_type"] = H.dna.blood_type
+		M.fields["b_dna"] = H.dna.unique_enzymes
+		M.fields["mi_dis"] = H.get_quirk_string(!medical, CAT_QUIRK_MINOR_DISABILITY)
+		M.fields["mi_dis_d"] = H.get_quirk_string(medical, CAT_QUIRK_MINOR_DISABILITY)
+		M.fields["ma_dis"] = H.get_quirk_string(!medical, CAT_QUIRK_MAJOR_DISABILITY)
+		M.fields["ma_dis_d"] = H.get_quirk_string(medical, CAT_QUIRK_MAJOR_DISABILITY)
+		M.fields["cdi"] = "None"
+		M.fields["cdi_d"] = "No diseases have been diagnosed at the moment."
+		M.fields["notes"] = H.get_quirk_string(!medical, CAT_QUIRK_NOTES)
+		M.fields["notes_d"] = H.get_quirk_string(medical, CAT_QUIRK_NOTES)
+		medical += M
 
 		//Security Record
-		var/datum/data/record/new_sec_record = new()
-		new_sec_record.fields["id"] = id
-		new_sec_record.fields["name"] = injected_human.real_name
-		new_sec_record.fields["criminal"] = "None"
-		new_sec_record.fields["citation"] = list()
-		new_sec_record.fields["crim"] = list()
-		new_sec_record.fields["notes"] = "No notes."
-		security += new_sec_record
+		var/datum/data/record/S = new()
+		S.fields["id"] = id
+		S.fields["name"] = H.real_name
+		S.fields["criminal"] = "None"
+		S.fields["citation"] = list()
+		S.fields["crim"] = list()
+		S.fields["notes"] = "No notes."
+		security += S
 
 		//Locked Record
-		var/datum/data/record/new_lock_record = new()
-		new_lock_record.fields["id"] = md5("[injected_human.real_name][assignment]") //surely this should just be id, like the others?
-		new_lock_record.fields["name"] = injected_human.real_name
-		new_lock_record.fields["rank"] = assignment
-		new_lock_record.fields["trim"] = assignment
-		new_gen_record.fields["initial_rank"] = assignment
-		new_lock_record.fields["age"] = injected_human.age
-		new_lock_record.fields["gender"] = injected_human.gender
-		if(injected_human.gender == "male")
-			new_gen_record.fields["gender"] = "Male"
-		else if(injected_human.gender == "female")
-			new_gen_record.fields["gender"] = "Female"
+		var/datum/data/record/L = new()
+		L.fields["id"] = md5("[H.real_name][assignment]") //surely this should just be id, like the others?
+		L.fields["name"] = H.real_name
+		L.fields["rank"] = assignment
+		L.fields["trim"] = assignment
+		G.fields["initial_rank"] = assignment
+		L.fields["age"] = H.age
+		L.fields["gender"] = H.gender
+		if(H.gender == "male")
+			G.fields["gender"] = "Male"
+		else if(H.gender == "female")
+			G.fields["gender"] = "Female"
 		else
-			new_gen_record.fields["gender"] = "Other"
-		new_lock_record.fields["blood_type"] = injected_human.dna.blood_type
-		new_lock_record.fields["b_dna"] = injected_human.dna.unique_enzymes
-		new_lock_record.fields["identity"] = injected_human.dna.unique_identity
-		new_lock_record.fields["species"] = injected_human.dna.species.type
-		new_lock_record.fields["features"] = injected_human.dna.features
-		new_lock_record.fields["image"] = image
-		new_lock_record.fields["mindref"] = injected_human.mind
-		locked += new_lock_record
-
+			G.fields["gender"] = "Other"
+		L.fields["blood_type"] = H.dna.blood_type
+		L.fields["b_dna"] = H.dna.unique_enzymes
+		L.fields["identity"] = H.dna.unique_identity
+		L.fields["species"] = H.dna.species.type
+		L.fields["features"] = H.dna.features
+		L.fields["character_appearance"] = character_appearance
+		L.fields["mindref"] = H.mind
+		locked += L
 	return
-
-/datum/datacore/proc/get_id_photo(mob/living/carbon/human/human, show_directions = list(SOUTH))
-	return get_flat_existing_human_icon(human, show_directions)
 
 //Todo: Add citations to the prinout - you get them from sec record's "citation" field, same as "crim" (which is frankly a terrible fucking field name)
 ///Standardized printed records. SPRs. Like SATs but for bad guys who probably didn't actually finish school. Input the records and out comes a paper.

@@ -686,7 +686,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 /obj/item/suppressor
 	name = "suppressor"
 	desc = "A syndicate small-arms suppressor for maximum espionage."
-	icon = 'icons/obj/guns/ballistic.dmi'
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "suppressor"
 	w_class = WEIGHT_CLASS_TINY
 

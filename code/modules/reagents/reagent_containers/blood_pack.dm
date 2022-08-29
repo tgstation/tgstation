@@ -1,7 +1,7 @@
 /obj/item/reagent_containers/blood
 	name = "blood pack"
 	desc = "Contains blood used for transfusion. Must be attached to an IV drip."
-	icon = 'icons/obj/bloodpack.dmi'
+	icon = 'icons/obj/medical/bloodpack.dmi'
 	icon_state = "bloodpack"
 	volume = 200
 	var/blood_type = null
