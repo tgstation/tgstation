@@ -336,12 +336,14 @@
 				if(3)
 					dat += "<font size='4'><b>Security Record</b></font><br>"
 					if(istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1))
-						if(istype(active1.fields["photo_front"], /obj/item/photo))
-							var/obj/item/photo/P1 = active1.fields["photo_front"]
-							user << browse_rsc(P1.picture.picture_image, "photo_front")
-						if(istype(active1.fields["photo_side"], /obj/item/photo))
-							var/obj/item/photo/P2 = active1.fields["photo_side"]
-							user << browse_rsc(P2.picture.picture_image, "photo_side")
+						var/front_photo = active1.get_front_photo()
+						if(istype(front_photo, /obj/item/photo))
+							var/obj/item/photo/photo_front = front_photo
+							user << browse_rsc(photo_front.picture.picture_image, "photo_front")
+						var/side_photo = active1.get_side_photo()
+						if(istype(side_photo, /obj/item/photo))
+							var/obj/item/photo/photo_side = side_photo
+							user << browse_rsc(photo_side.picture.picture_image, "photo_side")
 						dat += {"<table><tr><td><table>
 						<tr><td>Name:</td><td><A href='?src=[REF(src)];choice=Edit Field;field=name'>&nbsp;[active1.fields["name"]]&nbsp;</A></td></tr>
 						<tr><td>ID:</td><td><A href='?src=[REF(src)];choice=Edit Field;field=id'>&nbsp;[active1.fields["id"]]&nbsp;</A></td></tr>
@@ -354,10 +356,10 @@
 						<tr><td>Physical Status:</td><td>&nbsp;[active1.fields["p_stat"]]&nbsp;</td></tr>
 						<tr><td>Mental Status:</td><td>&nbsp;[active1.fields["m_stat"]]&nbsp;</td></tr>
 						</table></td>
-						<td><table><td align = center><a href='?src=[REF(src)];choice=Edit Field;field=show_photo_front'><img src=photo_front height=80 width=80 border=4></a><br>
+						<td><table><td align = center><a href='?src=[REF(src)];choice=Edit Field;field=show_photo_front'><img src=photo_front height=96 width=96 border=4 style="-ms-interpolation-mode:nearest-neighbor"></a><br>
 						<a href='?src=[REF(src)];choice=Edit Field;field=print_photo_front'>Print photo</a><br>
 						<a href='?src=[REF(src)];choice=Edit Field;field=upd_photo_front'>Update front photo</a></td>
-						<td align = center><a href='?src=[REF(src)];choice=Edit Field;field=show_photo_side'><img src=photo_side height=80 width=80 border=4></a><br>
+						<td align = center><a href='?src=[REF(src)];choice=Edit Field;field=show_photo_side'><img src=photo_side height=96 width=96 border=4 style="-ms-interpolation-mode:nearest-neighbor"></a><br>
 						<a href='?src=[REF(src)];choice=Edit Field;field=print_photo_side'>Print photo</a><br>
 						<a href='?src=[REF(src)];choice=Edit Field;field=upd_photo_side'>Update side photo</a></td></table>
 						</td></tr></table></td></tr></table>"}
@@ -549,50 +551,11 @@ What a mess.*/
 
 			if("Print Record")
 				if(!( printing ))
-					printing = 1
-					GLOB.data_core.securityPrintCount++
-					playsound(loc, 'sound/items/poster_being_created.ogg', 100, TRUE)
+					printing = TRUE
+					playsound(src, 'sound/items/poster_being_created.ogg', 100, TRUE)
 					sleep(30)
-					var/obj/item/paper/printed_paper = new /obj/item/paper(loc)
-					var/final_paper_text = "<CENTER><B>Security Record - (SR-[GLOB.data_core.securityPrintCount])</B></CENTER><BR>"
-					if((istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1)))
-						final_paper_text += text("Name: [] ID: []<BR>\nGender: []<BR>\nAge: []<BR>", active1.fields["name"], active1.fields["id"], active1.fields["gender"], active1.fields["age"])
-						final_paper_text += "\nSpecies: [active1.fields["species"]]<BR>"
-						final_paper_text += text("\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>", active1.fields["fingerprint"], active1.fields["p_stat"], active1.fields["m_stat"])
-					else
-						final_paper_text += "<B>General Record Lost!</B><BR>"
-					if((istype(active2, /datum/data/record) && GLOB.data_core.security.Find(active2)))
-						final_paper_text += text("<BR>\n<CENTER><B>Security Data</B></CENTER><BR>\nCriminal Status: []", active2.fields["criminal"])
-
-						final_paper_text += "<BR>\n<BR>\nCrimes:<BR>\n"
-						final_paper_text +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
-<tr>
-<th>Crime</th>
-<th>Details</th>
-<th>Author</th>
-<th>Time Added</th>
-</tr>"}
-						for(var/datum/data/crime/c in active2.fields["crim"])
-							final_paper_text += "<tr><td>[c.crimeName]</td>"
-							final_paper_text += "<td>[c.crimeDetails]</td>"
-							final_paper_text += "<td>[c.author]</td>"
-							final_paper_text += "<td>[c.time]</td>"
-							final_paper_text += "</tr>"
-						final_paper_text += "</table>"
-
-						final_paper_text += text("<BR>\nImportant Notes:<BR>\n\t[]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", active2.fields["notes"])
-						var/counter = 1
-						while(active2.fields[text("com_[]", counter)])
-							final_paper_text += text("[]<BR>", active2.fields[text("com_[]", counter)])
-							counter++
-						printed_paper.name = text("SR-[] '[]'", GLOB.data_core.securityPrintCount, active1.fields["name"])
-					else
-						final_paper_text += "<B>Security Record Lost!</B><BR>"
-						printed_paper.name = text("SR-[] '[]'", GLOB.data_core.securityPrintCount, "Record Lost")
-					final_paper_text += "</TT>"
-					printed_paper.add_raw_text(final_paper_text)
-					printed_paper.update_appearance()
-					printing = null
+					print_security_record(active1, active2, loc)
+					printing = FALSE
 			if("Print Poster")
 				if(!( printing ))
 					var/wanted_name = tgui_input_text(usr, "Enter an alias for the criminal", "Print Wanted Poster", active1.fields["name"])
@@ -613,7 +576,7 @@ What a mess.*/
 							printing = 1
 							sleep(30)
 							if((istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1)))//make sure the record still exists.
-								var/obj/item/photo/photo = active1.fields["photo_front"]
+								var/obj/item/photo/photo = active1.get_front_photo()
 								new /obj/item/poster/wanted(loc, photo.picture.picture_image, wanted_name, info, headerText)
 							printing = 0
 			if("Print Missing")
@@ -630,7 +593,7 @@ What a mess.*/
 							printing = 1
 							sleep(30)
 							if((istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1)))//make sure the record still exists.
-								var/obj/item/photo/photo = active1.fields["photo_front"]
+								var/obj/item/photo/photo = active1.get_front_photo()
 								new /obj/item/poster/wanted/missing(loc, photo.picture.picture_image, missing_name, info, headerText)
 							printing = 0
 
@@ -793,10 +756,11 @@ What a mess.*/
 								return
 							active1.fields["species"] = t1
 					if("show_photo_front")
-						if(active1.fields["photo_front"])
-							if(istype(active1.fields["photo_front"], /obj/item/photo))
-								var/obj/item/photo/P = active1.fields["photo_front"]
-								P.show(usr)
+						if(active1)
+							var/front_photo = active1.get_front_photo()
+							if(istype(front_photo, /obj/item/photo))
+								var/obj/item/photo/photo = front_photo
+								photo.show(usr)
 					if("upd_photo_front")
 						var/obj/item/photo/photo = get_photo(usr)
 						if(photo)
@@ -810,15 +774,17 @@ What a mess.*/
 							I.Crop(dw/2, dh/2, w - dw/2, h - dh/2)
 							active1.fields["photo_front"] = photo
 					if("print_photo_front")
-						if(active1.fields["photo_front"])
-							if(istype(active1.fields["photo_front"], /obj/item/photo))
-								var/obj/item/photo/P = active1.fields["photo_front"]
-								print_photo(P.picture.picture_image, active1.fields["name"])
+						if(active1)
+							var/front_photo = active1.get_front_photo()
+							if(istype(front_photo, /obj/item/photo))
+								var/obj/item/photo/photo_front = front_photo
+								print_photo(photo_front.picture.picture_image, active1.fields["name"])
 					if("show_photo_side")
-						if(active1.fields["photo_side"])
-							if(istype(active1.fields["photo_side"], /obj/item/photo))
-								var/obj/item/photo/P = active1.fields["photo_side"]
-								P.show(usr)
+						if(active1)
+							var/side_photo = active1.get_side_photo()
+							if(istype(side_photo, /obj/item/photo))
+								var/obj/item/photo/photo = side_photo
+								photo.show(usr)
 					if("upd_photo_side")
 						var/obj/item/photo/photo = get_photo(usr)
 						if(photo)
@@ -832,10 +798,11 @@ What a mess.*/
 							I.Crop(dw/2, dh/2, w - dw/2, h - dh/2)
 							active1.fields["photo_side"] = photo
 					if("print_photo_side")
-						if(active1.fields["photo_side"])
-							if(istype(active1.fields["photo_side"], /obj/item/photo))
-								var/obj/item/photo/P = active1.fields["photo_side"]
-								print_photo(P.picture.picture_image, active1.fields["name"])
+						if(active1)
+							var/side_photo = active1.get_side_photo()
+							if(istype(side_photo, /obj/item/photo))
+								var/obj/item/photo/photo_side = side_photo
+								print_photo(photo_side.picture.picture_image, active1.fields["name"])
 					if("crim_add")
 						if(istype(active1, /datum/data/record))
 							var/t1 = tgui_input_text(usr, "Input crime names", "Security Records")

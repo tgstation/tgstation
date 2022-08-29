@@ -118,7 +118,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 			continue
 
 		if(L.flash_act(affect_silicon = 1))
-			L.log_message("was AOE flashed by an automated portable flasher",LOG_ATTACK)
+			L.log_message("was AOE flashed by an automated portable flasher", LOG_ATTACK)
 			L.Paralyze(strength)
 			flashed = TRUE
 
@@ -168,7 +168,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 	if (last_flash && world.time < last_flash + 150)
 		return
 
-	if(istype(AM, /mob/living/carbon))
+	if(iscarbon(AM))
 		var/mob/living/carbon/M = AM
 		if (M.m_intent != MOVE_INTENT_WALK && anchored)
 			flash()

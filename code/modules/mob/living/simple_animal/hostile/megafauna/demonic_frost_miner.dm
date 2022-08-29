@@ -40,8 +40,8 @@ Difficulty: Extremely Hard
 	achievement_type = /datum/award/achievement/boss/demonic_miner_kill
 	crusher_achievement_type = /datum/award/achievement/boss/demonic_miner_crusher
 	score_achievement_type = /datum/award/score/demonic_miner_score
-	deathmessage = "falls to the ground, decaying into plasma particles."
-	deathsound = SFX_BODYFALL
+	death_message = "falls to the ground, decaying into plasma particles."
+	death_sound = SFX_BODYFALL
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	/// If the demonic frost miner is in its enraged state
 	var/enraged = FALSE
@@ -297,7 +297,7 @@ Difficulty: Extremely Hard
 	SIGNAL_HANDLER
 
 	var/turf/T = get_turf(loc)
-	if(!on || istype(T, /turf/closed) || istype(T, change_turf))
+	if(!on || isclosedturf(T) || istype(T, change_turf))
 		return
 	var/reset_turf = T.type
 	T.ChangeTurf(change_turf, flags = CHANGETURF_INHERIT_AIR)
@@ -380,7 +380,7 @@ Difficulty: Extremely Hard
 /obj/structure/frost_miner_prism
 	name = "frost miner light prism"
 	desc = "A magical crystal enhanced by a demonic presence."
-	icon = 'icons/obj/slimecrossing.dmi'
+	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
 	icon_state = "lightprism"
 	density = FALSE
 	anchored = TRUE

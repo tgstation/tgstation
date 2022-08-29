@@ -39,14 +39,24 @@
 	..()
 	if(ismob(loc))
 		var/mob/M = loc
-		M.update_inv_gloves()
-
-/obj/item/clothing/gloves/wirecutter_act(mob/living/user, obj/item/I)
-	. = ..()
+		M.update_worn_gloves()
+		
+/obj/item/clothing/gloves/proc/can_cut_with(obj/item/tool)
 	if(!cut_type)
-		return
+		return FALSE
 	if(icon_state != initial(icon_state))
-		return // We don't want to cut dyed gloves.
-	new cut_type(drop_location())
-	qdel(src)
+		return FALSE // We don't want to cut dyed gloves.
 	return TRUE
+
+/obj/item/clothing/gloves/attackby(obj/item/tool, mob/user, params)
+	if(tool.tool_behaviour != TOOL_WIRECUTTER && !tool.get_sharpness())
+		return
+	if (!can_cut_with(tool))
+		return
+	balloon_alert(user, "cutting off fingertips...")
+	
+	if(!do_after(user, 3 SECONDS, target=src, extra_checks = CALLBACK(src, .proc/can_cut_with, tool)))
+		return
+	balloon_alert(user, "cut fingertips off")
+	qdel(src)
+	user.put_in_hands(new cut_type)

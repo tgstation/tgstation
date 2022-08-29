@@ -14,18 +14,18 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	var/pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/rped.ogg'
 	var/alt_sound = null
 
-/obj/item/storage/part_replacer/Initialize()
+/obj/item/storage/part_replacer/Initialize(mapload)
 	. = ..()
 	create_storage(type = /datum/storage/rped)
 
 /obj/item/storage/part_replacer/pre_attack(obj/attacked_object, mob/living/user, params)
-	if(!istype(attacked_object, /obj/machinery) && !istype(attacked_object, /obj/structure/frame/machine))
+	if(!ismachinery(attacked_object) && !istype(attacked_object, /obj/structure/frame/machine))
 		return ..()
 
 	if(!user.Adjacent(attacked_object)) // no TK upgrading.
 		return ..()
 
-	if(istype(attacked_object, /obj/machinery))
+	if(ismachinery(attacked_object))
 		var/obj/machinery/attacked_machinery = attacked_object
 
 		if(!attacked_machinery.component_parts)
@@ -47,13 +47,13 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	return TRUE
 
 /obj/item/storage/part_replacer/afterattack(obj/attacked_object, mob/living/user, adjacent, params)
-	if(!istype(attacked_object, /obj/machinery) && !istype(attacked_object, /obj/structure/frame/machine))
+	if(!ismachinery(attacked_object) && !istype(attacked_object, /obj/structure/frame/machine))
 		return ..()
 
 	if(adjacent)
 		return ..()
 
-	if(istype(attacked_object, /obj/machinery))
+	if(ismachinery(attacked_object))
 		var/obj/machinery/attacked_machinery = attacked_object
 
 		if(!attacked_machinery.component_parts)

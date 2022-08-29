@@ -13,7 +13,7 @@
 	var/icon_closed = "lockbox"
 	var/icon_broken = "lockbox+b"
 
-/obj/item/storage/lockbox/Initialize()
+/obj/item/storage/lockbox/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_total_storage = 14
@@ -96,7 +96,7 @@
 	icon_closed = "medalbox"
 	icon_broken = "medalbox+b"
 
-/obj/item/storage/lockbox/medal/Initialize()
+/obj/item/storage/lockbox/medal/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	atom_storage.max_slots = 10
@@ -169,12 +169,12 @@
 	name = "security medal box"
 	desc = "A locked box used to store medals to be given to members of the security department."
 	req_access = list(ACCESS_HOS)
-	
+
 /obj/item/storage/lockbox/medal/med
 	name = "medical medal box"
 	desc = "A locked box used to store medals to be given to members of the medical department."
 	req_access = list(ACCESS_CMO)
-	
+
 /obj/item/storage/lockbox/medal/med/PopulateContents()
 	new /obj/item/clothing/accessory/medal/med_medal(src)
 	new /obj/item/clothing/accessory/medal/med_medal2(src)
@@ -211,7 +211,7 @@
 /obj/item/storage/lockbox/order
 	name = "order lockbox"
 	desc = "A box used to secure small cargo orders from being looted by those who didn't order it. Yeah, cargo tech, that means you."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "secure"
 	inhand_icon_state = "sec-case"
 	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
@@ -225,7 +225,7 @@
 	buyer_account = _buyer_account
 
 /obj/item/storage/lockbox/order/attackby(obj/item/W, mob/user, params)
-	if(!istype(W, /obj/item/card/id))
+	if(!isidcard(W))
 		return ..()
 
 	var/obj/item/card/id/id_card = W
@@ -240,4 +240,3 @@
 	privacy_lock = atom_storage.locked
 	user.visible_message(span_notice("[user] [privacy_lock ? "" : "un"]locks [src]'s privacy lock."),
 					span_notice("You [privacy_lock ? "" : "un"]lock [src]'s privacy lock."))
-

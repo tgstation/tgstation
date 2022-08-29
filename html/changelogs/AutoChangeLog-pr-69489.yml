@@ -1,0 +1,4 @@
+author: "itseasytosee"
+delete-after: True
+changes: 
+  - bugfix: "Preforming surgery steps now requires the surgeon not to be in combat mode."

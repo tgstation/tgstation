@@ -7,6 +7,8 @@
 	//initialize limbs first
 	create_bodyparts()
 
+	setup_mood()
+
 	setup_human_dna()
 	prepare_huds() //Prevents a nasty runtime on human init
 
@@ -31,21 +33,27 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 	GLOB.human_list += src
 
+/mob/living/carbon/human/proc/setup_mood()
+	if (CONFIG_GET(flag/disable_human_mood))
+		return
+	if (isdummy(src))
+		return
+	mob_mood = new /datum/mood(src)
+
 /mob/living/carbon/human/proc/setup_human_dna()
 	//initialize dna. for spawned humans; overwritten by other code
 	create_dna(src)
 	randomize_human(src)
 	dna.initialize_dna()
 
-/mob/living/carbon/human/ComponentInitialize()
-	. = ..()
-	if(!CONFIG_GET(flag/disable_human_mood))
-		AddComponent(/datum/component/mood)
-
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)
 	QDEL_LIST(bioware)
 	GLOB.human_list -= src
+
+	if (mob_mood)
+		QDEL_NULL(mob_mood)
+
 	return ..()
 
 /mob/living/carbon/human/ZImpactDamage(turf/T, levels)
@@ -128,9 +136,9 @@
 				return
 			var/obj/item/photo/photo_from_record = null
 			if(href_list["photo_front"])
-				photo_from_record = target_record.fields["photo_front"]
+				photo_from_record = target_record.get_front_photo()
 			else if(href_list["photo_side"])
-				photo_from_record = target_record.fields["photo_side"]
+				photo_from_record = target_record.get_side_photo()
 			if(photo_from_record)
 				photo_from_record.show(human_user)
 			return
@@ -532,7 +540,7 @@
 			return FALSE
 
 		visible_message(span_notice("[src] performs CPR on [target.name]!"), span_notice("You perform CPR on [target.name]."))
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "saved_life", /datum/mood_event/saved_life)
+		add_mood_event("saved_life", /datum/mood_event/saved_life)
 		log_combat(src, target, "CPRed")
 
 		if (HAS_TRAIT(target, TRAIT_NOBREATH))
@@ -574,10 +582,10 @@
 
 	if(gloves)
 		if(gloves.wash(clean_types))
-			update_inv_gloves()
+			update_worn_gloves()
 	else if((clean_types & CLEAN_TYPE_BLOOD) && blood_in_hands > 0)
 		blood_in_hands = 0
-		update_inv_gloves()
+		update_worn_gloves()
 
 	return TRUE
 
@@ -615,12 +623,12 @@
 		. = TRUE
 
 	if(glasses && is_eyes_covered(FALSE, TRUE, TRUE) && glasses.wash(clean_types))
-		update_inv_glasses()
+		update_worn_glasses()
 		. = TRUE
 
 	var/obscured = check_obscured_slots()
 	if(wear_mask && !(obscured & ITEM_SLOT_MASK) && wear_mask.wash(clean_types))
-		update_inv_wear_mask()
+		update_worn_mask()
 		. = TRUE
 
 /**
@@ -631,18 +639,18 @@
 
 	// Wash equipped stuff that cannot be covered
 	if(wear_suit?.wash(clean_types))
-		update_inv_wear_suit()
+		update_worn_oversuit()
 		. = TRUE
 
 	if(belt?.wash(clean_types))
-		update_inv_belt()
+		update_worn_belt()
 		. = TRUE
 
 	// Check and wash stuff that can be covered
 	var/obscured = check_obscured_slots()
 
 	if(w_uniform && !(obscured & ITEM_SLOT_ICLOTHING) && w_uniform.wash(clean_types))
-		update_inv_w_uniform()
+		update_worn_undersuit()
 		. = TRUE
 
 	if(!is_mouth_covered() && clean_lips())
@@ -651,7 +659,7 @@
 	// Wash hands if exposed
 	if(!gloves && (clean_types & CLEAN_TYPE_BLOOD) && blood_in_hands > 0 && !(obscured & ITEM_SLOT_GLOVES))
 		blood_in_hands = 0
-		update_inv_gloves()
+		update_worn_gloves()
 		. = TRUE
 
 //Turns a mob black, flashes a skeleton overlay

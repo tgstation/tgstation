@@ -17,7 +17,7 @@
 
 /obj/item/clothing/head/helmet/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HEAD)
 
 /obj/item/clothing/head/helmet/sec
 
@@ -136,7 +136,7 @@
 	icon_state = "[initial(icon_state)][up ? "up" : ""]"
 	to_chat(user, span_notice("[up ? alt_toggle_message : toggle_message] \the [src]."))
 
-	user.update_inv_head()
+	user.update_worn_head()
 	if(iscarbon(user))
 		var/mob/living/carbon/carbon_user = user
 		carbon_user.head_update(src, forced = TRUE)
@@ -343,7 +343,7 @@
 
 /obj/item/clothing/head/helmet/rus_helmet/Initialize(mapload)
 	. = ..()
-	
+
 	create_storage(type = /datum/storage/pockets/helmet)
 
 /obj/item/clothing/head/helmet/rus_ushanka

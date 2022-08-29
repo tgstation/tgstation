@@ -1,0 +1,4 @@
+author: "Profakos"
+delete-after: True
+changes: 
+  - bugfix: "The aux base construction console is once again present on Tramstation"

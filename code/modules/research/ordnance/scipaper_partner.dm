@@ -42,7 +42,7 @@
 
 /datum/scientific_partner/medical
 	name = "Biological Research Division"
-	flufftext = "A collegiate of the best medical researchers Nanotrason employs. They seem to be interested in the biological effects of some more exotic gases. Especially stimulants and neurosupressants."
+	flufftext = "A collegiate of the best medical researchers Nanotrasen employs. They seem to be interested in the biological effects of some more exotic gases. Especially stimulants and neurosupressants."
 	accepted_experiments = list(
 		/datum/experiment/ordnance/gaseous/nitrous_oxide, 
 		/datum/experiment/ordnance/gaseous/bz,

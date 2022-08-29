@@ -20,7 +20,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_BULKY
 
-/obj/item/storage/bag/Initialize()
+/obj/item/storage/bag/Initialize(mapload)
 	. = ..()
 	atom_storage.allow_quick_gather = TRUE
 	atom_storage.allow_quick_empty = TRUE
@@ -41,7 +41,7 @@
 	///If true, can be inserted into the janitor cart
 	var/insertable = TRUE
 
-/obj/item/storage/bag/trash/Initialize()
+/obj/item/storage/bag/trash/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	atom_storage.max_total_storage = 30
@@ -84,7 +84,7 @@
 	inhand_icon_state = "bluetrashbag"
 	item_flags = NO_MAT_REDEMPTION
 
-/obj/item/storage/bag/trash/bluespace/Initialize()
+/obj/item/storage/bag/trash/bluespace/Initialize(mapload)
 	. = ..()
 	atom_storage.max_total_storage = 60
 	atom_storage.max_slots = 60
@@ -111,7 +111,7 @@
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_HUGE
 	atom_storage.max_total_storage = 50
-	atom_storage.numerical_stacking = TRUE 
+	atom_storage.numerical_stacking = TRUE
 	atom_storage.allow_quick_empty = TRUE
 	atom_storage.allow_quick_gather = TRUE
 	atom_storage.set_holdable(list(/obj/item/stack/ore))
@@ -151,7 +151,7 @@
 			if(box)
 				user.transferItemToLoc(thing, box)
 				show_message = TRUE
-			else if(atom_storage.attempt_insert(src, thing, user))
+			else if(atom_storage.attempt_insert(thing, user))
 				show_message = TRUE
 			else
 				if(!spam_protection)
@@ -178,7 +178,7 @@
 	desc = "A revolution in convenience, this satchel allows for huge amounts of ore storage. It's been outfitted with anti-malfunction safety measures."
 	icon_state = "satchel_bspace"
 
-/obj/item/storage/bag/ore/holding/Initialize()
+/obj/item/storage/bag/ore/holding/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = INFINITY
 	atom_storage.max_specific_storage = INFINITY
@@ -195,7 +195,7 @@
 	worn_icon_state = "plantbag"
 	resistance_flags = FLAMMABLE
 
-/obj/item/storage/bag/plants/Initialize()
+/obj/item/storage/bag/plants/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_total_storage = 100
@@ -253,7 +253,7 @@
 
 	var/capacity = 300; //the number of sheets it can carry.
 
-/obj/item/storage/bag/sheetsnatcher/Initialize()
+/obj/item/storage/bag/sheetsnatcher/Initialize(mapload)
 	. = ..()
 	atom_storage.allow_quick_empty = TRUE
 	atom_storage.allow_quick_gather = TRUE
@@ -288,7 +288,7 @@
 	worn_icon_state = "bookbag"
 	resistance_flags = FLAMMABLE
 
-/obj/item/storage/bag/books/Initialize()
+/obj/item/storage/bag/books/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_total_storage = 21
@@ -317,7 +317,7 @@
 	custom_materials = list(/datum/material/iron=3000)
 	custom_price = PAYCHECK_CREW * 0.6
 
-/obj/item/storage/bag/tray/Initialize()
+/obj/item/storage/bag/tray/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY //Plates are required bulky to keep them out of backpacks
 	atom_storage.set_holdable(list(
@@ -327,8 +327,8 @@
 		/obj/item/lighter,
 		/obj/item/organ,
 		/obj/item/plate,
-		/obj/item/reagent_containers/food,
-		/obj/item/reagent_containers/glass,
+		/obj/item/reagent_containers/condiment,
+		/obj/item/reagent_containers/cup,
 		/obj/item/rollingpaper,
 		/obj/item/storage/box/gum,
 		/obj/item/storage/box/matches,
@@ -398,22 +398,22 @@
 
 /obj/item/storage/bag/chemistry
 	name = "chemistry bag"
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "bag"
 	worn_icon_state = "chembag"
 	desc = "A bag for storing pills, patches, and bottles."
 	resistance_flags = FLAMMABLE
 
-/obj/item/storage/bag/chemistry/Initialize()
+/obj/item/storage/bag/chemistry/Initialize(mapload)
 	. = ..()
 	atom_storage.max_total_storage = 200
 	atom_storage.max_slots = 50
 	atom_storage.set_holdable(list(
 		/obj/item/reagent_containers/chem_pack,
 		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/food/drinks/waterbottle,
-		/obj/item/reagent_containers/glass/beaker,
-		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/cup/glass/waterbottle,
+		/obj/item/reagent_containers/cup/beaker,
+		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/medigel,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
@@ -425,13 +425,13 @@
 
 /obj/item/storage/bag/bio
 	name = "bio bag"
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "biobag"
 	worn_icon_state = "biobag"
 	desc = "A bag for the safe transportation and disposal of biowaste and other virulent materials."
 	resistance_flags = FLAMMABLE
 
-/obj/item/storage/bag/bio/Initialize()
+/obj/item/storage/bag/bio/Initialize(mapload)
 	. = ..()
 	atom_storage.max_total_storage = 200
 	atom_storage.max_slots = 25
@@ -442,8 +442,8 @@
 		/obj/item/organ,
 		/obj/item/reagent_containers/blood,
 		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/glass/beaker,
-		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/cup/beaker,
+		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/hypospray/medipen,
 		/obj/item/reagent_containers/syringe,
 		))
@@ -454,13 +454,13 @@
 
 /obj/item/storage/bag/xeno
 	name = "science bag"
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "xenobag"
 	worn_icon_state = "xenobag"
 	desc = "A bag for the storage and transport of anomalous materials."
 	resistance_flags = FLAMMABLE
 
-/obj/item/storage/bag/xeno/Initialize()
+/obj/item/storage/bag/xeno/Initialize(mapload)
 	. = ..()
 	atom_storage.max_total_storage = 200
 	atom_storage.max_slots = 25
@@ -471,8 +471,8 @@
 		/obj/item/organ,
 		/obj/item/petri_dish,
 		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/glass/beaker,
-		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/cup/beaker,
+		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/slime_extract,
 		/obj/item/swab,
@@ -491,7 +491,7 @@
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
 	resistance_flags = FLAMMABLE
 
-/obj/item/storage/bag/construction/Initialize()
+/obj/item/storage/bag/construction/Initialize(mapload)
 	. = ..()
 	atom_storage.max_total_storage = 100
 	atom_storage.max_slots = 50
@@ -500,7 +500,7 @@
 		/obj/item/assembly,
 		/obj/item/circuitboard,
 		/obj/item/electronics,
-		/obj/item/reagent_containers/glass/beaker,
+		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/stack/cable_coil,
 		/obj/item/stack/ore/bluespace_crystal,
 		/obj/item/stock_parts,
@@ -514,7 +514,7 @@
 	inhand_icon_state = "quiver"
 	worn_icon_state = "harpoon_quiver"
 
-/obj/item/storage/bag/harpoon_quiver/Initialize()
+/obj/item/storage/bag/harpoon_quiver/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_TINY
 	atom_storage.max_slots = 40

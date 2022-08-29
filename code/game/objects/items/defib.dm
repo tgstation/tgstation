@@ -6,7 +6,7 @@
 	name = "defibrillator"
 	desc = "A device that delivers powerful shocks to detachable paddles that resuscitate incapacitated patients. \
 	Has a rear bracket for attachments to wall mounts and medical cyborgs."
-	icon = 'icons/obj/defib.dmi'
+	icon = 'icons/obj/medical/defib.dmi'
 	icon_state = "defibunit"
 	inhand_icon_state = "defibunit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -320,7 +320,7 @@
 /obj/item/shockpaddles
 	name = "defibrillator paddles"
 	desc = "A pair of plastic-gripped paddles with flat metal surfaces that are used to deliver powerful electric shocks."
-	icon = 'icons/obj/defib.dmi'
+	icon = 'icons/obj/medical/defib.dmi'
 	icon_state = "defibpaddles0"
 	inhand_icon_state = "defibpaddles0"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -340,9 +340,9 @@
 	var/recharge_time = 6 SECONDS // Only applies to defibs that do not require a defibrilator. See: .proc/do_success
 	var/combat = FALSE //If it penetrates armor and gives additional functionality
 
-/obj/item/shockpaddles/ComponentInitialize()
+/obj/item/shockpaddles/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS|ITEM_SLOT_BACK)
 	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12)
 
 /obj/item/shockpaddles/Destroy()
@@ -636,7 +636,7 @@
 					H.emote("gasp")
 					H.set_timed_status_effect(200 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 					SEND_SIGNAL(H, COMSIG_LIVING_MINOR_SHOCK)
-					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "saved_life", /datum/mood_event/saved_life)
+					user.add_mood_event("saved_life", /datum/mood_event/saved_life)
 					log_combat(user, H, "revived", defib)
 				do_success()
 				return
@@ -658,7 +658,7 @@
 
 /obj/item/shockpaddles/cyborg
 	name = "cyborg defibrillator paddles"
-	icon = 'icons/obj/defib.dmi'
+	icon = 'icons/obj/medical/defib.dmi'
 	icon_state = "defibpaddles0"
 	inhand_icon_state = "defibpaddles0"
 	req_defib = FALSE
@@ -679,7 +679,7 @@
 	name = "syndicate defibrillator paddles"
 	desc = "A pair of paddles used to revive deceased operatives. They possess both the ability to penetrate armor and to deliver powerful or disabling shocks offensively."
 	combat = TRUE
-	icon = 'icons/obj/defib.dmi'
+	icon = 'icons/obj/medical/defib.dmi'
 	icon_state = "syndiepaddles0"
 	inhand_icon_state = "syndiepaddles0"
 	base_icon_state = "syndiepaddles"

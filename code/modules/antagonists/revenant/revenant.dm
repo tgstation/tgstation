@@ -482,7 +482,7 @@
 			return
 
 	message_admins("[key_of_revenant] has been [old_key == key_of_revenant ? "re":""]made into a revenant by reforming ectoplasm.")
-	revenant.log_message("was [old_key == key_of_revenant ? "re":""]made as a revenant by reforming ectoplasm.")
+	revenant.log_message("was [old_key == key_of_revenant ? "re":""]made as a revenant by reforming ectoplasm.", LOG_GAME)
 	visible_message(span_revenboldnotice("[src] suddenly rises into the air before fading away."))
 
 	revenant.essence = essence

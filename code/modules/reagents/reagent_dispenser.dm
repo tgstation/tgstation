@@ -1,7 +1,7 @@
 /obj/structure/reagent_dispensers
 	name = "Dispenser"
 	desc = "..."
-	icon = 'icons/obj/chemical_tanks.dmi'
+	icon = 'icons/obj/medical/chemical_tanks.dmi'
 	icon_state = "water"
 	density = TRUE
 	anchored = FALSE
@@ -303,7 +303,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 		to_chat(user, span_warning("There aren't any cups left!"))
 		return
 	user.visible_message(span_notice("[user] takes a cup from [src]."), span_notice("You take a paper cup from [src]."))
-	var/obj/item/reagent_containers/food/drinks/sillycup/S = new(get_turf(src))
+	var/obj/item/reagent_containers/cup/glass/sillycup/S = new(get_turf(src))
 	user.put_in_hands(S)
 	paper_cups--
 
@@ -379,7 +379,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 	if(!reagents.total_volume)
 		return
 
-	var/mutable_appearance/tank_color = mutable_appearance('icons/obj/chemical_tanks.dmi', "tank_chem_overlay")
+	var/mutable_appearance/tank_color = mutable_appearance('icons/obj/medical/chemical_tanks.dmi', "tank_chem_overlay")
 	tank_color.color = mix_color_from_reagents(reagents.reagent_list)
 	. += tank_color
 

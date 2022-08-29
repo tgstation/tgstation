@@ -5,10 +5,7 @@
 	say_mod = "flutters"
 	species_traits = list(LIPS, HAS_FLESH, HAS_BONE, HAS_MARKINGS, TRAIT_ANTENNAE)
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
 		TRAIT_CAN_USE_FLIGHT_POTION,
-		TRAIT_LITERATE,
 		TRAIT_TACKLING_WINGED_ATTACKER,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
@@ -20,7 +17,7 @@
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	meat = /obj/item/food/meat/slab/human/mutant/moth
 	liked_food = VEGETABLES | DAIRY | CLOTH
-	disliked_food = FRUIT | GROSS | BUGS
+	disliked_food = FRUIT | GROSS | BUGS | GORE
 	toxic_food = MEAT | RAW | SEAFOOD
 	mutanteyes = /obj/item/organ/internal/eyes/moth
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
@@ -67,13 +64,10 @@
 		return 10 //flyswatters deal 10x damage to moths
 	return 1
 
-/datum/species/moth/randomize_main_appearance_element(mob/living/carbon/human/human_mob)
-	var/wings = pick(GLOB.moth_wings_list)
-	mutant_bodyparts["wings"] = wings
-	mutant_bodyparts["moth_wings"] = wings
-	human_mob.dna.features["wings"] = wings
-	human_mob.dna.features["moth_wings"] = wings
-	human_mob.update_body()
+
+/datum/species/moth/randomize_features(mob/living/carbon/human/human_mob)
+	human_mob.dna.features["moth_markings"] = pick(GLOB.moth_markings_list)
+	randomize_external_organs(human_mob)
 
 /datum/species/moth/get_scream_sound(mob/living/carbon/human/human)
 	return 'sound/voice/moth/scream_moth.ogg'
