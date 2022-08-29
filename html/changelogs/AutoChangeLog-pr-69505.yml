@@ -1,5 +1,0 @@
-author: "dragomagol"
-delete-after: True
-changes: 
-  - qol: "coffeemakers now emit steam when they're brewing!"
-  - bugfix: "coffeemakers now have an icon when they're spawned/created"

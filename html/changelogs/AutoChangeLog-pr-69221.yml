@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes: 
-  - rscadd: "Added new chems for plants.  Novaflowers now have Sulphuric Acid and Corpse Flowers now have Fluorine.  Combine these chems with a Carbon Rose to create foam effects on harvest."
