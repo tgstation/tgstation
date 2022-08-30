@@ -55,6 +55,7 @@
 	AddElement(/datum/element/venue_price, FOOD_PRICE_CHEAP)
 	if(can_be_bloody && ((body_parts_covered & FEET) || (flags_inv & HIDESHOES)))
 		LoadComponent(/datum/component/bloodysoles)
+	AddElement(/datum/element/attack_equip)
 	if(!icon_state)
 		item_flags |= ABSTRACT
 
@@ -107,9 +108,7 @@
 		qdel(src)
 
 /obj/item/clothing/attack(mob/living/target, mob/living/user, params)
-	if(user.combat_mode)
-		return ..()
-	if(!ismoth(target) || ispickedupmob(src))
+	if(user.combat_mode || !ismoth(target) || ispickedupmob(src))
 		return ..()
 	if(clothing_flags & INEDIBLE_CLOTHING)
 		return ..()

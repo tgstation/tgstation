@@ -973,6 +973,7 @@
 #include "code\datums\elements\art.dm"
 #include "code\datums\elements\atmos_requirements.dm"
 #include "code\datums\elements\atmos_sensitive.dm"
+#include "code\datums\elements\attack_equip.dm"
 #include "code\datums\elements\backblast.dm"
 #include "code\datums\elements\bane.dm"
 #include "code\datums\elements\basic_body_temp_sensitive.dm"
