@@ -151,7 +151,7 @@
 	///any atom that uses integrity and can be damaged must set this to true, otherwise the integrity procs will throw an error
 	var/uses_integrity = FALSE
 
-	var/datum/armor/armor
+	// var/datum/armor/armor
 	VAR_PRIVATE/atom_integrity //defaults to max_integrity
 	var/max_integrity = 500
 	var/integrity_failure = 0 //0 if we have no special broken behavior, otherwise is a percentage of at what point the atom breaks. 0.5 being 50%
@@ -189,6 +189,9 @@
 		if(SSatoms.InitAtom(src, FALSE, args))
 			//we were deleted
 			return
+
+GLOBAL_LIST_EMPTY(aaaaaaa_init_costs)
+GLOBAL_LIST_EMPTY(aaaaaaa_init_count)
 
 /**
  * The primary method that objects are setup in SS13 with
@@ -229,51 +232,92 @@
  * * [/turf/open/space/proc/Initialize]
  */
 /atom/proc/Initialize(mapload, ...)
+	INIT_COST(GLOB.aaaaaaa_init_costs, GLOB.aaaaaaa_init_count)
+
 	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(TRUE)
+
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
 
+	SET_COST("INITIALIZED checks")
+
 	if(loc)
 		SEND_SIGNAL(loc, COMSIG_ATOM_INITIALIZED_ON, src) /// Sends a signal that the new atom `src`, has been created at `loc`
+		SET_COST("SEND_SIGNAL COMSIG_ATOM_INITIALIZED_ON")
+	else
+		SET_COST("if(loc) fail")
 
 	if(greyscale_config && greyscale_colors)
 		update_greyscale()
+		SET_COST("update_greyscale()")
+	else
+		SET_COST("greyscale_config fail")
 
 	//atom color stuff
 	if(color)
 		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
+		SET_COST("add_atom_colour()")
+	else
+		SET_COST("if(color) fail")
 
 	if (light_system == STATIC_LIGHT && light_power && light_range)
 		update_light()
+		SET_COST("update_light()")
+	else
+		SET_COST("if(light_system) fail")
 
 	if (length(smoothing_groups))
 		sortTim(smoothing_groups) //In case it's not properly ordered, let's avoid duplicate entries with the same values.
+		SET_COST("sortTim(smoothing_groups)")
+
 		SET_BITFLAG_LIST(smoothing_groups)
+		SET_COST("SET_BITFLAG_LIST(smoothing_groups)")
+	else
+		SET_COST("if(length(smoothing_groups)) fail")
+
 	if (length(canSmoothWith))
 		sortTim(canSmoothWith)
+		SET_COST("sortTim(canSmoothWith)")
+
 		if(canSmoothWith[length(canSmoothWith)] > MAX_S_TURF) //If the last element is higher than the maximum turf-only value, then it must scan turf contents for smoothing targets.
 			smoothing_flags |= SMOOTH_OBJ
-		SET_BITFLAG_LIST(canSmoothWith)
 
-	if(uses_integrity)
-		if (islist(armor))
-			armor = getArmor(arglist(armor))
-		else if (!armor)
-			armor = getArmor()
-		else if (!istype(armor, /datum/armor))
-			stack_trace("Invalid type [armor.type] found in .armor during /atom Initialize()")
-		atom_integrity = max_integrity
+		SET_COST("update smoothing_flags")
+
+		SET_BITFLAG_LIST(canSmoothWith)
+		SET_COST("SET_BITFLAG_LIST(canSmoothWith)")
+	else
+		SET_COST("if(length(canSmoothWith)) fail")
+
+	// if(uses_integrity)
+	// 	if (islist(armor))
+	// 		armor = getArmor(arglist(armor))
+	// 		SET_COST("armor = getArmor(arglist(armor))")
+	// 	else if (!armor)
+	// 		armor = getArmor()
+	// 		SET_COST("armor = getArmor()")
+	// 	else if (!istype(armor, /datum/armor))
+	// 		stack_trace("Invalid type [armor.type] found in .armor during /atom Initialize()")
+
+	// 	atom_integrity = max_integrity
+	// 	SET_COST("atom_integrity = max_integrity")
+	// else
+	// 	SET_COST("if(uses_integrity) fail")
 
 	// apply materials properly from the default custom_materials value
 	// This MUST come after atom_integrity is set above, as if old materials get removed,
 	// atom_integrity is checked against max_integrity and can BREAK the atom.
 	// The integrity to max_integrity ratio is still preserved.
 	set_custom_materials(custom_materials)
+	SET_COST("set_custom_materials(custom_materials)")
 
 	if(ispath(ai_controller))
 		ai_controller = new ai_controller(src)
+		SET_COST("ai_controller = new ai_controller(src)")
+	else
+		SET_COST("if(ispath(ai_controller)) fail")
 
 	return INITIALIZE_HINT_NORMAL
 
