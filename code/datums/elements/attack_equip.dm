@@ -1,3 +1,8 @@
+/**
+ * Attached to an item, when the item is used to attack a human, and the attacker isn't in combat mode, attempts to equip the item to the target after the normal delay.
+ *
+ * Uses the compare_zone_to_item_slot() proc to see if the attacker is targeting a valid slot.
+ */
 /datum/element/attack_equip
 
 /datum/element/attack_equip/Attach(datum/target)
