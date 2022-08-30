@@ -3400,6 +3400,7 @@
 #include "code\modules\mob\living\basic\health_adjustment.dm"
 #include "code\modules\mob\living\basic\bots\bot.dm"
 #include "code\modules\mob\living\basic\bots\bot_ai.dm"
+#include "code\modules\mob\living\basic\bots\hygienebot\hygienebot.dm"
 #include "code\modules\mob\living\basic\farm_animals\cows.dm"
 #include "code\modules\mob\living\basic\lavaland\bileworm\_bileworm.dm"
 #include "code\modules\mob\living\basic\lavaland\bileworm\bileworm_actions.dm"

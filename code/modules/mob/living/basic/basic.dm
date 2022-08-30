@@ -134,9 +134,9 @@
 	. = ..()
 	if(vname == NAMEOF(src, speed))
 		datum_flags |= DF_VAR_EDITED
-		set_varspeed(vval)
+		set_mob_speed(vval)
 
-/mob/living/basic/proc/set_varspeed(var_value)
+/mob/living/basic/proc/set_mob_speed(var_value)
 	speed = var_value
 	update_basic_mob_varspeed()
 

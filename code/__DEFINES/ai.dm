@@ -228,3 +228,8 @@
 
 #define BB_BOT_WAS_SUMMONED "BB_was_summoned"
 #define BB_BOT_CURRENT_PATROL_POINT "BB_current_patrol_point"
+
+///Hygiene bot keys
+#define BB_HYGIENE_BOT_TARGET "BB_hygiene_bot_target"
+#define BB_HYGIENE_BOT_ANGRY "BB_hygiene_bot_angry"
+#define BB_HYGIENE_BOT_PATIENCE "BB_hygiene_bot_patience"

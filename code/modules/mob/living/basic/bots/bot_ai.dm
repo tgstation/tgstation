@@ -36,10 +36,15 @@
 	if(bot_pawn.bot_mode_flags & BOT_MODE_AUTOPATROL)
 		if(!controller.blackboard[BB_BOT_CURRENT_PATROL_POINT])
 			controller.queue_behavior(/datum/ai_behavior/find_closest_patrol_point)
-		controller.queue_behavior(/datum/ai_behavior/move_to_next_patrol_point)
-	return SUBTREE_RETURN_FINISH_PLANNING
+		PatrolBehavior(controller, delta_time)
+
+		return SUBTREE_RETURN_FINISH_PLANNING
+
+/datum/ai_planning_subtree/core_bot_behaviors/proc/PatrolBehavior(datum/ai_controller/controller, delta_time)
+	controller.queue_behavior(/datum/ai_behavior/move_to_next_patrol_point)
 
 
+///Find the closest patrol point in the area!
 /datum/ai_behavior/find_closest_patrol_point
 	action_cooldown = 0
 
@@ -72,6 +77,8 @@
 		bot_pawn.speak("Disengaging patrol mode.")
 		finish_action(controller, FALSE)
 
+
+///Move to the next beacon in our area then finish
 /datum/ai_behavior/move_to_next_patrol_point
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
 	action_cooldown = 0
@@ -93,5 +100,7 @@
 			controller.blackboard[BB_BOT_CURRENT_PATROL_POINT] = NB
 			controller.current_movement_target = get_turf(NB)
 			break //We found it, no need to keep searching!
+
+	controller.CancelActions() //This is important because we are often performing permanent actions (e.g. looking for targets) while patrolling. Maybe we can think of a better solution for this in the future?
 
 
