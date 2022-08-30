@@ -664,6 +664,7 @@ to perform some sort of action), there is a way to do that:
 
 **Props:**
 
+- `className: string` - Applies a CSS class to the element.
 - `label: string|InfernoNode` - Item label.
 - `labelWrap: boolean` - Lets the label wrap and makes it not take the minimum width.
 - `labelColor: string` - Sets the color of the label.

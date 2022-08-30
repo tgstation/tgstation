@@ -1,0 +1,4 @@
+author: "Tastyfish"
+delete-after: True
+changes: 
+  - qol: "The Status Display app can now do everything the communications console status display screen can do."

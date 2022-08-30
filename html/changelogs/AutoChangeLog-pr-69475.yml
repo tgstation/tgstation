@@ -1,5 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - qol: "When you examine or use an AI Law Module in-hand, it should look a lot nicer as you read the laws that you're about to subject that poor silicon to."
-  - bugfix: "When ghosts examine AI Law Modules, they are now able to see the actual laws on the board."
