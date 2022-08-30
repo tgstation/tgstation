@@ -52,9 +52,9 @@
  * * picture - The picture name
  */
 /datum/computer_file/program/status/proc/post_picture(picture)
-	if (!(picture in initial(GLOB.status_display_approved_pictures)))
+	if (!(picture in GLOB.status_display_approved_pictures))
 		return
-	if(picture in initial(GLOB.status_display_state_pictures))
+	if(picture in GLOB.status_display_state_pictures)
 		post_status(picture)
 	else
 		post_status("alert", picture)
