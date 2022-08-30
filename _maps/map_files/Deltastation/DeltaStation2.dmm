@@ -12086,7 +12086,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/engine/atmos)
 "cMM" = (
-/obj/machinery/door_timer{
+/obj/machinery/status_display/door_timer{
 	id = "medsci-cell";
 	name = "Med-Sci Cell";
 	pixel_y = -32
@@ -15085,10 +15085,6 @@
 /obj/item/pen{
 	pixel_x = -6
 	},
-/obj/machinery/door/window/left/directional/south{
-	name = "Pharmacy Desk";
-	req_access = list("pharmacy")
-	},
 /obj/machinery/door/firedoor,
 /obj/structure/desk_bell{
 	pixel_x = 7;
@@ -15102,6 +15098,10 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/obj/machinery/door/window/left/directional/south{
+	name = "Pharmacy Desk";
+	req_access = list("pharmacy")
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/pharmacy)
@@ -29974,10 +29974,6 @@
 /area/station/hallway/secondary/entry)
 "hjk" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/west{
-	name = "Pharmacy Desk";
-	req_access = list("pharmacy")
-	},
 /obj/machinery/door/firedoor,
 /obj/structure/desk_bell{
 	pixel_x = 7;
@@ -30001,6 +29997,10 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/machinery/door/window/left/directional/west{
+	name = "Pharmacy Desk";
+	req_access = list("pharmacy")
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/pharmacy)
@@ -37019,7 +37019,7 @@
 "iXM" = (
 /obj/structure/cable,
 /obj/item/kirbyplants/random,
-/obj/machinery/door_timer{
+/obj/machinery/status_display/door_timer{
 	id = "engcell";
 	name = "Engineering Cell";
 	pixel_y = 32
@@ -72744,7 +72744,7 @@
 /area/station/engineering/atmos/storage/gas)
 "rNV" = (
 /obj/item/kirbyplants/random,
-/obj/machinery/door_timer{
+/obj/machinery/status_display/door_timer{
 	id = "brig1";
 	name = "Cell 1";
 	pixel_x = -32
@@ -78116,7 +78116,7 @@
 /area/station/maintenance/department/chapel)
 "tbZ" = (
 /obj/item/kirbyplants/random,
-/obj/machinery/door_timer{
+/obj/machinery/status_display/door_timer{
 	id = "brig2";
 	name = "Cell 2";
 	pixel_x = -32
@@ -80403,10 +80403,6 @@
 /area/station/security/checkpoint/customs/aft)
 "tFJ" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/south{
-	name = "Genetics Desk";
-	req_access = list("genetics")
-	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 1;
 	id = "genetics_shutters";
@@ -80427,6 +80423,10 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/door/window/left/directional/south{
+	name = "Genetics Desk";
+	req_access = list("genetics")
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "tFM" = (
@@ -83875,7 +83875,7 @@
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/psychology)
 "uxC" = (
-/obj/machinery/door_timer{
+/obj/machinery/status_display/door_timer{
 	id = "cargocell";
 	name = "Cargo Cell";
 	pixel_x = -32;
@@ -84655,10 +84655,6 @@
 "uHv" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/window/left/directional/south{
-	name = "Research Lab Desk";
-	req_access = list("science")
-	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 1;
 	id = "rndlab1";
@@ -84675,6 +84671,10 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/door/window/left/directional/south{
+	name = "Research Lab Desk";
+	req_access = list("science")
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/lab)
 "uHC" = (

@@ -1,0 +1,4 @@
+author: "twilightwanderer"
+delete-after: True
+changes: 
+  - bugfix: "Fax no longer blocks access to the card reader on the MetaStation in the QM's office."

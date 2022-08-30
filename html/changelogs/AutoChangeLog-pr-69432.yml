@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Reagents like Strange Reagent, Sulfuric Acid, blob reagents, and many others, now works again."

@@ -227,7 +227,7 @@ Firesuits and winter coats offer mild protection from the cold, allowing you to 
 Glass shards can be welded to make glass, and iron rods can be welded to make iron. Ores can be welded too, but this takes a lot of fuel.
 If you need to drag multiple people either to safety or to space, bring a locker or crate over and stuff them all in before hauling them off.
 You can grab someone by holding Ctrl and clicking on them, then upgrade the grab by Ctrl-clicking on them once more. An aggressive grab will momentarily stun someone, allow you to place them on a table by clicking on it, or throw them by toggling on throwing.
-Holding alt and left clicking a tile will allow you to see its contents in the top right window pane, which is much faster than right clicking.
+Holding alt and left clicking a tile will allow you to see its contents in the top right window pane, which is much faster than holding shift and right clicking.
 The resist button will allow you to resist out of handcuffs, being buckled to a chair or bed, out of locked lockers and more. Whenever you're stuck, try resisting!
 You can move an item out of the way by dragging it and then clicking on an adjacent tile with an empty hand.
 You can recolor certain items like jumpsuits and gloves in washing machines by also throwing in a crayon.

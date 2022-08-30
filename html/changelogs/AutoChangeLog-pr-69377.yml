@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes: 
+  - balance: "Sends a chat alert to those nearby when someone completes a stage of a hijack."
