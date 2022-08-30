@@ -15,7 +15,7 @@
 		return
 
 	var/list/meteor_list = list()
-	meteor_list += typesof(/obj/effect/meteor)
+	meteor_list += subtypesof(/obj/effect/meteor)
 	chosen_meteor = tgui_input_list(usr, "Too lazy for buildmode?","Throw meteor", meteor_list)
 
 
