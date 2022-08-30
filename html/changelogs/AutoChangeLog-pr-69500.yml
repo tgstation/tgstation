@@ -1,4 +1,0 @@
-author: "NamelessFairy"
-delete-after: True
-changes: 
-  - bugfix: "Updated the right click vs alt click tip to refer to shift right clicking instead of right clicking"

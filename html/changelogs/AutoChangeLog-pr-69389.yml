@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Anomalies will no longer spawn ontop of lava / plasma rivers."
