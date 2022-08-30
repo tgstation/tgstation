@@ -1244,8 +1244,8 @@
 	dir = 6
 	},
 /obj/machinery/fax{
-	name = "Psychology Office Fax Machine";
-	fax_name = "Psychology Office"
+	fax_name = "Psychology Office";
+	name = "Psychology Office Fax Machine"
 	},
 /turf/open/floor/wood/parquet,
 /area/station/medical/psychology)
@@ -5027,8 +5027,8 @@
 	},
 /obj/structure/table,
 /obj/machinery/fax{
-	name = "Service Fax Machine";
-	fax_name = "Service Hallway"
+	fax_name = "Service Hallway";
+	name = "Service Fax Machine"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
@@ -5423,9 +5423,6 @@
 	},
 /area/station/science/ordnance/bomb)
 "bXT" = (
-/obj/machinery/camera/autoname{
-	dir = 5
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -5433,6 +5430,10 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/effect/landmark/start/depsec/engineering,
 /obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/machinery/camera/directional/south{
+	c_tag = "Security Post - Engineering";
+	dir = 5
+	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
 "bXX" = (
@@ -6643,7 +6644,9 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "cxi" = (
-/obj/machinery/camera/directional/north,
+/obj/machinery/camera/directional/north{
+	c_tag = "Aft Port Starboard Solar Maintenance"
+	},
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
@@ -9747,6 +9750,7 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
 	},
+/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "dFJ" = (
@@ -10135,7 +10139,9 @@
 /obj/structure/table,
 /obj/item/analyzer,
 /obj/item/healthanalyzer,
-/obj/machinery/camera/autoname/directional/south,
+/obj/machinery/camera/directional/south{
+	c_tag = "Technology Storage"
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "dMu" = (
@@ -10602,7 +10608,6 @@
 	},
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/machinery/light/directional/east,
-/obj/machinery/camera/autoname/directional/east,
 /obj/structure/table/glass,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -10964,8 +10969,8 @@
 	req_access = list("brig_entrance")
 	},
 /obj/item/folder/red{
-	pixel_y = 2;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 2
 	},
 /obj/item/paper,
 /turf/open/floor/plating,
@@ -22369,8 +22374,8 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/table/wood,
 /obj/machinery/fax{
-	name = "Head of Personnel's Fax Machine";
-	fax_name = "Head of Personnel's Office"
+	fax_name = "Head of Personnel's Office";
+	name = "Head of Personnel's Fax Machine"
 	},
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hop)
@@ -22466,8 +22471,8 @@
 /obj/item/radio/intercom/directional/east,
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green{
-	pixel_y = 14;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 14
 	},
 /obj/item/folder/white{
 	pixel_x = 6;
@@ -22981,8 +22986,8 @@
 /obj/structure/table,
 /obj/effect/turf_decal/tile/brown/half/contrasted,
 /obj/machinery/fax{
-	name = "Cargo Office Fax Machine";
-	fax_name = "Cargo Office"
+	fax_name = "Cargo Office";
+	name = "Cargo Office Fax Machine"
 	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
@@ -27171,8 +27176,10 @@
 /area/station/hallway/primary/central)
 "jIY" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
-/obj/machinery/camera/autoname/directional/west,
 /obj/structure/displaycase/trophy,
+/obj/machinery/camera/directional/west{
+	c_tag = "Library - Book Showcase"
+	},
 /turf/open/floor/wood,
 /area/station/service/library)
 "jJd" = (
@@ -28680,10 +28687,12 @@
 "klf" = (
 /obj/item/folder,
 /obj/item/folder,
-/obj/machinery/camera/autoname/directional/south,
 /obj/structure/table/wood,
 /obj/item/taperecorder,
 /obj/item/tape,
+/obj/machinery/camera/directional/south{
+	c_tag = "Library - Curator's Desk"
+	},
 /turf/open/floor/wood,
 /area/station/service/library)
 "klj" = (
@@ -28943,8 +28952,8 @@
 /obj/structure/table/wood,
 /obj/machinery/keycard_auth/directional/south,
 /obj/machinery/fax{
-	name = "Quartermaster's Fax Machine";
-	fax_name = "Quartermaster's Office"
+	fax_name = "Quartermaster's Office";
+	name = "Quartermaster's Fax Machine"
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/qm)
@@ -32112,7 +32121,9 @@
 /area/station/security/lockers)
 "ltg" = (
 /obj/structure/chair/stool/directional/north,
-/obj/machinery/camera/autoname/directional/west,
+/obj/machinery/camera/directional/west{
+	c_tag = "Fore Starboard Solar Maintenance"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/fore)
 "ltm" = (
@@ -32347,7 +32358,9 @@
 /obj/item/radio/intercom/directional/east,
 /obj/machinery/light/small/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/camera/autoname/directional/east,
+/obj/machinery/camera/directional/east{
+	c_tag = "Technology Storage - Secure"
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "lxw" = (
@@ -42478,7 +42491,9 @@
 /area/station/commons/dorms)
 "pgJ" = (
 /obj/structure/chair/stool/directional/north,
-/obj/machinery/camera/autoname/directional/west,
+/obj/machinery/camera/directional/west{
+	c_tag = "Fore Port Solar Maintenance"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/fore)
 "pgM" = (
@@ -43651,8 +43666,8 @@
 /obj/machinery/newscaster/directional/west,
 /obj/structure/table,
 /obj/machinery/fax{
-	name = "Security Office Fax Machine";
-	fax_name = "Security Office"
+	fax_name = "Security Office";
+	name = "Security Office Fax Machine"
 	},
 /turf/open/floor/iron,
 /area/station/security/office)
@@ -45629,8 +45644,8 @@
 /obj/structure/table/wood,
 /obj/structure/cable,
 /obj/machinery/fax{
-	name = "Head of Security's Fax Machine";
-	fax_name = "Head of Security's Office"
+	fax_name = "Head of Security's Office";
+	name = "Head of Security's Fax Machine"
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hos)
@@ -49714,8 +49729,8 @@
 	},
 /obj/item/folder/white,
 /obj/item/pen{
-	pixel_y = 8;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = 8
 	},
 /obj/item/computer_hardware/hard_drive/portable/chemistry,
 /obj/item/computer_hardware/hard_drive/portable/medical,
@@ -53473,8 +53488,8 @@
 	network = list("ss13","medical")
 	},
 /obj/machinery/fax{
-	name = "Medical Fax Machine";
-	fax_name = "Medical"
+	fax_name = "Medical";
+	name = "Medical Fax Machine"
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/office)
@@ -53490,8 +53505,8 @@
 /obj/machinery/light_switch/directional/west,
 /obj/structure/table/wood,
 /obj/machinery/fax{
-	name = "Detective's Fax Machine";
-	fax_name = "Detective's Office"
+	fax_name = "Detective's Office";
+	name = "Detective's Fax Machine"
 	},
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office)
@@ -54212,10 +54227,12 @@
 /area/station/service/lawoffice)
 "teY" = (
 /obj/machinery/light/directional/east,
-/obj/machinery/camera/autoname/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/item/radio/intercom/directional/east,
+/obj/machinery/camera/directional/east{
+	c_tag = "Library - Fore Entrance"
+	},
 /turf/open/floor/carpet,
 /area/station/service/library)
 "tfg" = (
@@ -55430,8 +55447,8 @@
 /obj/structure/table/wood,
 /obj/structure/window/reinforced,
 /obj/machinery/fax{
-	name = "Captain's Fax Machine";
-	fax_name = "Captain's Office"
+	fax_name = "Captain's Office";
+	name = "Captain's Fax Machine"
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
@@ -55957,8 +55974,8 @@
 "tKR" = (
 /obj/structure/table/glass,
 /obj/machinery/fax{
-	name = "Research Division Fax Machine";
 	fax_name = "Research Division";
+	name = "Research Division Fax Machine";
 	pixel_x = 1
 	},
 /turf/open/floor/iron/white,
@@ -59405,6 +59422,7 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
 	},
+/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "uTI" = (
@@ -60067,8 +60085,8 @@
 	dir = 1
 	},
 /obj/machinery/fax{
-	name = "Chief Medical Officer's Fax Machine";
-	fax_name = "Chief Medical Officer's Office"
+	fax_name = "Chief Medical Officer's Office";
+	name = "Chief Medical Officer's Fax Machine"
 	},
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
@@ -61830,13 +61848,15 @@
 /obj/structure/closet/secure_closet/freezer/meat,
 /obj/machinery/light/small/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
-/obj/machinery/camera/autoname/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
 /obj/structure/window/reinforced{
 	dir = 1;
 	pixel_y = 4
+	},
+/obj/machinery/camera/directional/west{
+	c_tag = "Kitchen - Cold Room"
 	},
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/service/kitchen/coldroom)
@@ -65950,13 +65970,15 @@
 /area/station/hallway/primary/central)
 "xjC" = (
 /obj/machinery/firealarm/directional/south,
-/obj/machinery/camera/autoname/directional/south,
 /obj/structure/table/wood,
 /obj/item/paper_bin{
 	pixel_x = -2;
 	pixel_y = 4
 	},
 /obj/item/pen,
+/obj/machinery/camera/directional/south{
+	c_tag = "Library - Game Room"
+	},
 /turf/open/floor/wood,
 /area/station/service/library)
 "xjH" = (
@@ -67656,7 +67678,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/camera/autoname/directional/west,
+/obj/machinery/camera/directional/west{
+	c_tag = "Kitchen"
+	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "xPm" = (
@@ -67670,8 +67694,8 @@
 /obj/structure/cable,
 /obj/structure/table,
 /obj/machinery/fax{
-	name = "Research Director's Fax Machine";
-	fax_name = "Research Director's Office"
+	fax_name = "Research Director's Office";
+	name = "Research Director's Fax Machine"
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/rd)
@@ -67981,8 +68005,8 @@
 	req_access = list("lawyer")
 	},
 /obj/machinery/fax{
-	name = "Law Office Fax Machine";
-	fax_name = "Law Office"
+	fax_name = "Law Office";
+	name = "Law Office Fax Machine"
 	},
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
