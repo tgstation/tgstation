@@ -5,7 +5,8 @@
 	inhand_icon_state = "clown_shoes"
 	slowdown = SHOES_SLOWDOWN+1
 	var/enabled_waddle = TRUE
-	var/list/squeak_sound = list('sound/effects/clownstep1.ogg'=1,'sound/effects/clownstep2.ogg'=1) //allows clownshoe subtypes to have different sounds
+	///List of possible sounds for the squeak component to use, allows for different clown shoe subtypes to have different sounds.
+	var/list/squeak_sound = list('sound/effects/clownstep1.ogg'=1,'sound/effects/clownstep2.ogg'=1)
 	lace_time = 20 SECONDS // how the hell do these laces even work??
 	species_exception = list(/datum/species/golem/bananium)
 
