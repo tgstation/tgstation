@@ -453,13 +453,13 @@ BOMBCAP 20
 ## a less lootfilled or smaller or less round effecting ruin costs less to
 ## spawn, while the converse is true. Alter this number to affect the amount
 ## of ruins.
-LAVALAND_BUDGET 0
+LAVALAND_BUDGET 60
 
 ## Ice Moon Budget
-ICEMOON_BUDGET 0
+ICEMOON_BUDGET 90
 
 ## Space Ruin Budget
-Space_Budget 0
+Space_Budget 16
 
 ## Time in ds from when a player latejoins till the arrival shuttle docks at the station
 ## Must be at least 30. At least 55 recommended to be visually/aurally appropriate
