@@ -1,0 +1,7 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - rscadd: "Cows can now eat wheat by interacting with it on the ground, healing them a little."
+  - rscadd: "Cows controlled by AI will seek out the food they like and eat it."
+  - rscadd: "Even moonicorns."
+  - rscadd: "But not wisdom cows, who refuse to be tamed or show their weak side because of space station 13 socially enforced toxic wisdom cow standards"
