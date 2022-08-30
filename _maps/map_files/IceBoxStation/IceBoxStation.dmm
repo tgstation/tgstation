@@ -3268,7 +3268,9 @@
 /area/station/commons/locker)
 "baA" = (
 /obj/structure/cable,
-/obj/machinery/camera/autoname/directional/east,
+/obj/machinery/camera/directional/east{
+	c_tag = "Technical Storage - Secure"
+	},
 /turf/open/floor/iron,
 /area/station/engineering/storage/tech)
 "baE" = (
@@ -3733,8 +3735,11 @@
 "bif" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/camera/autoname/directional/east,
 /obj/structure/sign/warning/radiation/rad_area/directional/east,
+/obj/machinery/camera/directional/east{
+	c_tag = "Atmospherics - HFR Decontamination Chambers";
+	name = "atmospherics camera"
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/hfr_room)
 "bit" = (
@@ -5660,8 +5665,8 @@
 "bJg" = (
 /obj/structure/table/wood,
 /obj/machinery/fax{
-	name = "Captain's Fax Machine";
-	fax_name = "Captain's Office"
+	fax_name = "Captain's Office";
+	name = "Captain's Fax Machine"
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
@@ -6921,8 +6926,8 @@
 	dir = 8
 	},
 /obj/machinery/keycard_auth/directional/south,
-/obj/machinery/camera/autoname/directional/south{
-	c_tag = "Research Directors Office";
+/obj/machinery/camera/directional/south{
+	c_tag = "Research Director's Office";
 	network = list("ss13","rd")
 	},
 /turf/open/floor/iron,
@@ -7826,7 +7831,7 @@
 /area/station/maintenance/port/greater)
 "cpl" = (
 /obj/machinery/camera/directional/south{
-	c_tag = "Atmospherics Project Room East"
+	c_tag = "Atmospherics Storage Starboard"
 	},
 /turf/open/openspace,
 /area/station/engineering/atmos/storage)
@@ -11891,8 +11896,8 @@
 /obj/machinery/light/directional/east,
 /obj/structure/table,
 /obj/machinery/fax{
-	name = "Research Division Fax Machine";
 	fax_name = "Research Division";
+	name = "Research Division Fax Machine";
 	pixel_x = 1
 	},
 /turf/open/floor/iron/white/side{
@@ -14937,8 +14942,8 @@
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/structure/table/glass,
 /obj/machinery/fax{
-	name = "Medical Fax Machine";
-	fax_name = "Medical"
+	fax_name = "Medical";
+	name = "Medical Fax Machine"
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
@@ -16362,8 +16367,11 @@
 /area/station/engineering/main)
 "eTL" = (
 /obj/effect/turf_decal/trimline/yellow/filled/shrink_ccw,
-/obj/machinery/camera/autoname/directional/south,
 /obj/machinery/light/directional/south,
+/obj/machinery/camera/directional/south{
+	c_tag = "Atmospherics - HFR Aft";
+	name = "atmospherics camera"
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/hfr_room)
 "eTM" = (
@@ -18532,8 +18540,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/fax{
-	name = "Head of Security's Fax Machine";
-	fax_name = "Head of Security's Office"
+	fax_name = "Head of Security's Office";
+	name = "Head of Security's Fax Machine"
 	},
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/hos)
@@ -19667,9 +19675,11 @@
 	dir = 4
 	},
 /obj/structure/rack,
-/obj/machinery/camera/autoname/directional/north,
 /obj/item/pickaxe,
 /obj/item/toy/figure/chef,
+/obj/machinery/camera/directional/north{
+	c_tag = "Kitchen - Cold Room"
+	},
 /turf/open/floor/plating/snowed/coldroom,
 /area/station/service/kitchen/coldroom)
 "fUr" = (
@@ -19798,7 +19808,9 @@
 	dir = 4
 	},
 /obj/structure/sign/poster/random/directional/north,
-/obj/machinery/camera/autoname/directional/north,
+/obj/machinery/camera/directional/north{
+	c_tag = "Cafeteria Bow"
+	},
 /turf/open/floor/iron/white/smooth_large,
 /area/station/service/kitchen/diner)
 "fWw" = (
@@ -21043,8 +21055,8 @@
 	},
 /obj/structure/table,
 /obj/machinery/fax{
-	name = "Cargo Office Fax Machine";
-	fax_name = "Cargo Office"
+	fax_name = "Cargo Office";
+	name = "Cargo Office Fax Machine"
 	},
 /turf/open/floor/iron,
 /area/station/cargo/office)
@@ -21548,11 +21560,14 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/virology)
 "gzd" = (
-/obj/machinery/camera/autoname/directional/north,
 /obj/machinery/light/directional/north,
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 9
+	},
+/obj/machinery/camera/directional/north{
+	c_tag = "Atmospherics - HFR Bow";
+	name = "atmospherics camera"
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/hfr_room)
@@ -23333,7 +23348,9 @@
 /obj/structure/sign/poster/contraband/moffuchis_pizza{
 	pixel_x = 32
 	},
-/obj/machinery/camera/autoname/directional/east,
+/obj/machinery/camera/directional/east{
+	c_tag = "Kitchen"
+	},
 /turf/open/floor/iron/kitchen/diagonal,
 /area/station/service/kitchen)
 "haQ" = (
@@ -26120,8 +26137,8 @@
 /obj/machinery/firealarm/directional/south,
 /obj/structure/table/glass,
 /obj/machinery/fax{
-	name = "Chief Medical Officer's Fax Machine";
-	fax_name = "Chief Medical Officer's Office"
+	fax_name = "Chief Medical Officer's Office";
+	name = "Chief Medical Officer's Fax Machine"
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
@@ -41866,8 +41883,8 @@
 	dir = 4
 	},
 /obj/machinery/fax{
-	name = "Law Office Fax Machine";
-	fax_name = "Law Office"
+	fax_name = "Law Office";
+	name = "Law Office Fax Machine"
 	},
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
@@ -42742,7 +42759,7 @@
 	pixel_x = 32
 	},
 /obj/machinery/camera/motion/directional/east{
-	c_tag = "ai_upload East";
+	c_tag = "AI Upload East";
 	network = list("aiupload")
 	},
 /obj/item/folder/blue,
@@ -44227,8 +44244,8 @@
 /obj/machinery/button/door/directional/west{
 	id = "Toilet1";
 	name = "Lock Control";
-	specialfunctions = 4;
-	normaldoorcontrol = 1
+	normaldoorcontrol = 1;
+	specialfunctions = 4
 	},
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/freezer,
@@ -48799,8 +48816,10 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
-/obj/machinery/camera/autoname/directional/north,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/camera/directional/north{
+	c_tag = "Atmospherics Storage Bow"
+	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage)
 "oWk" = (
@@ -49741,8 +49760,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/fax{
-	name = "Detective's Fax Machine";
-	fax_name = "Detective's Office"
+	fax_name = "Detective's Office";
+	name = "Detective's Fax Machine"
 	},
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
@@ -50506,8 +50525,10 @@
 	dir = 8
 	},
 /obj/structure/chair,
-/obj/machinery/camera/autoname/directional/west,
 /obj/machinery/airalarm/directional/west,
+/obj/machinery/camera/directional/west{
+	c_tag = "Cafeteria Port"
+	},
 /turf/open/floor/iron/white/smooth_large,
 /area/station/service/kitchen/diner)
 "pxu" = (
@@ -51402,7 +51423,7 @@
 /area/station/hallway/primary/central/fore)
 "pMq" = (
 /obj/machinery/camera/directional/south{
-	c_tag = "Atmospherics Project Room West"
+	c_tag = "Atmospherics Storage Port"
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
 	dir = 4
@@ -51976,8 +51997,8 @@
 	},
 /obj/structure/table,
 /obj/machinery/fax{
-	name = "Head of Personnel's Fax Machine";
-	fax_name = "Head of Personnel's Office"
+	fax_name = "Head of Personnel's Office";
+	name = "Head of Personnel's Fax Machine"
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
@@ -52908,10 +52929,10 @@
 "qlw" = (
 /obj/machinery/disposal/bin,
 /obj/item/radio/intercom/prison/directional/north,
-/obj/machinery/camera/autoname/directional/north{
+/obj/structure/disposalpipe/trunk,
+/obj/machinery/camera/directional/north{
 	c_tag = "Security - Warden's Office"
 	},
-/obj/structure/disposalpipe/trunk,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/warden)
 "qlB" = (
@@ -57090,8 +57111,8 @@
 /obj/machinery/button/door/directional/west{
 	id = "Toilet2";
 	name = "Lock Control";
-	specialfunctions = 4;
-	normaldoorcontrol = 1
+	normaldoorcontrol = 1;
+	specialfunctions = 4
 	},
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/freezer,
@@ -57312,8 +57333,8 @@
 /obj/structure/cable,
 /obj/structure/table,
 /obj/machinery/fax{
-	name = "Quartermaster's Fax Machine";
-	fax_name = "Quartermaster's Office"
+	fax_name = "Quartermaster's Office";
+	name = "Quartermaster's Fax Machine"
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
@@ -57524,8 +57545,11 @@
 /area/station/medical/cryo)
 "rIF" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/camera/autoname/directional/south,
 /obj/effect/turf_decal/trimline/dark_blue/line,
+/obj/machinery/camera/directional/south{
+	c_tag = "Atmospherics Mixing Room Aft";
+	name = "atmospherics camera"
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/mix)
 "rIU" = (
@@ -62847,8 +62871,8 @@
 /obj/item/radio/intercom/directional/south,
 /obj/structure/table/wood,
 /obj/machinery/fax{
-	name = "Psychology Office Fax Machine";
-	fax_name = "Psychology Office"
+	fax_name = "Psychology Office";
+	name = "Psychology Office Fax Machine"
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/psychology)
@@ -63554,9 +63578,12 @@
 "tCF" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
-/obj/machinery/camera/autoname/directional/east,
 /obj/effect/turf_decal/trimline/dark_blue/line{
 	dir = 4
+	},
+/obj/machinery/camera/directional/east{
+	c_tag = "Atmospherics Mixing Room Starboard";
+	name = "atmospherics camera"
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/mix)
@@ -66654,7 +66681,7 @@
 	pixel_y = 3
 	},
 /obj/machinery/camera/directional/west{
-	c_tag = "Atmospherics - HFR";
+	c_tag = "Atmospherics - HFR Port";
 	name = "atmospherics camera"
 	},
 /turf/open/floor/iron/dark,
@@ -67666,7 +67693,9 @@
 "uQV" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
-/obj/machinery/camera/autoname/directional/north,
+/obj/machinery/camera/directional/north{
+	c_tag = "Technical Storage"
+	},
 /turf/open/floor/plating,
 /area/station/engineering/storage/tech)
 "uRi" = (
@@ -71160,8 +71189,8 @@
 /obj/item/radio/intercom/directional/north,
 /obj/structure/table/wood,
 /obj/machinery/fax{
-	name = "Service Fax Machine";
-	fax_name = "Service Hallway"
+	fax_name = "Service Hallway";
+	name = "Service Fax Machine"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
@@ -72118,7 +72147,7 @@
 "wjr" = (
 /obj/structure/table,
 /obj/machinery/camera/motion/directional/west{
-	c_tag = "ai_upload West";
+	c_tag = "AI Upload West";
 	network = list("aiupload")
 	},
 /obj/item/ai_module/supplied/freeform,
@@ -77117,8 +77146,8 @@
 /obj/machinery/airalarm/directional/north,
 /obj/structure/table,
 /obj/machinery/fax{
-	name = "Security Office Fax Machine";
-	fax_name = "Security Office"
+	fax_name = "Security Office";
+	name = "Security Office Fax Machine"
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/office)
@@ -77189,7 +77218,10 @@
 /area/station/hallway/secondary/entry)
 "xJw" = (
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
-/obj/machinery/camera/autoname/directional/south,
+/obj/machinery/camera/directional/south{
+	c_tag = "Atmospherics - Project Room";
+	name = "atmospherics camera"
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/project)
 "xJD" = (
@@ -77274,8 +77306,8 @@
 /obj/structure/table,
 /obj/machinery/light_switch/directional/north,
 /obj/machinery/fax{
-	name = "Research Director's Fax Machine";
-	fax_name = "Research Director's Office"
+	fax_name = "Research Director's Office";
+	name = "Research Director's Fax Machine"
 	},
 /turf/open/floor/iron/white/side{
 	dir = 1
