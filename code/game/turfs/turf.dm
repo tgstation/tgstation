@@ -126,7 +126,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 		QUEUE_SMOOTH(src)
 
-	visibilityChanged()
+	// visibilityChanged() will never hit any path with side effects during mapload
+	if (!mapload)
+		visibilityChanged()
 
 	for(var/atom/movable/content as anything in src)
 		Entered(content, null)
