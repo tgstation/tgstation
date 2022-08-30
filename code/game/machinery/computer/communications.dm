@@ -17,11 +17,6 @@
 	circuit = /obj/item/circuitboard/computer/communications
 	light_color = LIGHT_COLOR_BLUE
 
-	/// Valid status display pictures to choose from
-	var/static/list/approved_status_pictures = list("biohazard", "blank", "default", "lockdown", "redalert", "shuttle")
-	/// Status picture that are actually direct commands
-	var/static/list/state_status_pictures = list("blank", "shuttle")
-
 	/// If the battlecruiser has been called
 	var/static/battlecruiser_called = FALSE
 
@@ -367,9 +362,9 @@
 			if (!authenticated(usr))
 				return
 			var/picture = params["picture"]
-			if (!(picture in approved_status_pictures))
+			if (!(picture in GLOB.status_display_approved_pictures))
 				return
-			if(picture in state_status_pictures)
+			if(picture in GLOB.status_display_state_pictures)
 				post_status(picture)
 			else
 				post_status("alert", picture)

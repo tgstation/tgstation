@@ -52,11 +52,9 @@
  * * picture - The picture name
  */
 /datum/computer_file/program/status/proc/post_picture(picture)
-	var/static/obj/machinery/computer/communications/comm_prototype = /obj/machinery/computer/communications
-
-	if (!(picture in initial(comm_prototype.approved_status_pictures)))
+	if (!(picture in initial(GLOB.status_display_approved_pictures)))
 		return
-	if(picture in initial(comm_prototype.state_status_pictures))
+	if(picture in initial(GLOB.status_display_state_pictures))
 		post_status(picture)
 	else
 		post_status("alert", picture)
