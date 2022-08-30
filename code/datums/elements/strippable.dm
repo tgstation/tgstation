@@ -87,7 +87,7 @@
 /// Start the equipping process. This is the proc you should yield in.
 /// Returns TRUE/FALSE depending on if it is allowed.
 /datum/strippable_item/proc/start_equip(atom/source, obj/item/equipping, mob/user)
-	if(warn_dangerous_clothing && isclothing(source))
+	if (warn_dangerous_clothing && isclothing(source))
 		var/obj/item/clothing/clothing = source
 		if(clothing.clothing_flags & DANGEROUS_OBJECT)
 			source.visible_message(
@@ -447,7 +447,7 @@
 						return
 
 					// They equipped an item in the meantime
-					if(!isnull(strippable_item.get_item(owner)))
+					if (!isnull(strippable_item.get_item(owner)))
 						user.put_in_hands(held_item)
 						return
 
