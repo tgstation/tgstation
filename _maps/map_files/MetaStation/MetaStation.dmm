@@ -6645,7 +6645,7 @@
 /area/station/command/bridge)
 "cxi" = (
 /obj/machinery/camera/directional/north{
-	c_tag = "Aft Port Starboard Solar Maintenance"
+	c_tag = "Aft Port Solar Maintenance"
 	},
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
