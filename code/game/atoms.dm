@@ -139,9 +139,9 @@
 	var/bottom_left_corner
 	///Smoothing variable
 	var/bottom_right_corner
-	///What smoothing groups does this atom belongs to, to match canSmoothWith. If null, nobody can smooth with it.
+	///What smoothing groups does this atom belongs to, to match canSmoothWith. If null, nobody can smooth with it. Must be sorted.
 	var/list/smoothing_groups = null
-	///List of smoothing groups this atom can smooth with. If this is null and atom is smooth, it smooths only with itself.
+	///List of smoothing groups this atom can smooth with. If this is null and atom is smooth, it smooths only with itself. Must be sorted.
 	var/list/canSmoothWith = null
 	///Reference to atom being orbited
 	var/atom/orbit_target
@@ -151,7 +151,7 @@
 	///any atom that uses integrity and can be damaged must set this to true, otherwise the integrity procs will throw an error
 	var/uses_integrity = FALSE
 
-	// var/datum/armor/armor
+	var/datum/armor/armor
 	VAR_PRIVATE/atom_integrity //defaults to max_integrity
 	var/max_integrity = 500
 	var/integrity_failure = 0 //0 if we have no special broken behavior, otherwise is a percentage of at what point the atom breaks. 0.5 being 50%
@@ -269,8 +269,9 @@ GLOBAL_LIST_EMPTY(aaaaaaa_init_count)
 		SET_COST("if(light_system) fail")
 
 	if (length(smoothing_groups))
-		sortTim(smoothing_groups) //In case it's not properly ordered, let's avoid duplicate entries with the same values.
-		SET_COST("sortTim(smoothing_groups)")
+		#ifdef UNIT_TESTS
+		assert_sorted(smoothing_groups, "[type].smoothing_groups")
+		#endif
 
 		SET_BITFLAG_LIST(smoothing_groups)
 		SET_COST("SET_BITFLAG_LIST(smoothing_groups)")
@@ -278,8 +279,9 @@ GLOBAL_LIST_EMPTY(aaaaaaa_init_count)
 		SET_COST("if(length(smoothing_groups)) fail")
 
 	if (length(canSmoothWith))
-		sortTim(canSmoothWith)
-		SET_COST("sortTim(canSmoothWith)")
+		#ifdef UNIT_TESTS
+		assert_sorted(canSmoothWith, "[type].canSmoothWith")
+		#endif
 
 		if(canSmoothWith[length(canSmoothWith)] > MAX_S_TURF) //If the last element is higher than the maximum turf-only value, then it must scan turf contents for smoothing targets.
 			smoothing_flags |= SMOOTH_OBJ
@@ -291,20 +293,20 @@ GLOBAL_LIST_EMPTY(aaaaaaa_init_count)
 	else
 		SET_COST("if(length(canSmoothWith)) fail")
 
-	// if(uses_integrity)
-	// 	if (islist(armor))
-	// 		armor = getArmor(arglist(armor))
-	// 		SET_COST("armor = getArmor(arglist(armor))")
-	// 	else if (!armor)
-	// 		armor = getArmor()
-	// 		SET_COST("armor = getArmor()")
-	// 	else if (!istype(armor, /datum/armor))
-	// 		stack_trace("Invalid type [armor.type] found in .armor during /atom Initialize()")
+	if(uses_integrity)
+		if (islist(armor))
+			armor = getArmor(arglist(armor))
+			SET_COST("armor = getArmor(arglist(armor))")
+		else if (!armor)
+			armor = getArmor()
+			SET_COST("armor = getArmor()")
+		else if (!istype(armor, /datum/armor))
+			stack_trace("Invalid type [armor.type] found in .armor during /atom Initialize()")
 
-	// 	atom_integrity = max_integrity
-	// 	SET_COST("atom_integrity = max_integrity")
-	// else
-	// 	SET_COST("if(uses_integrity) fail")
+		atom_integrity = max_integrity
+		SET_COST("atom_integrity = max_integrity")
+	else
+		SET_COST("if(uses_integrity) fail")
 
 	// apply materials properly from the default custom_materials value
 	// This MUST come after atom_integrity is set above, as if old materials get removed,
