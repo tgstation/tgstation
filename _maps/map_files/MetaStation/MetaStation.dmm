@@ -29985,16 +29985,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
-"kHH" = (
-/obj/machinery/airalarm/directional/west,
-/obj/effect/turf_decal/bot{
-	dir = 1
-	},
-/obj/machinery/portable_atmospherics/canister,
-/turf/open/floor/iron{
-	dir = 1
-	},
-/area/station/engineering/atmos)
 "kHU" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/structure/disposalpipe/segment{
@@ -111196,8 +111186,8 @@ oFK
 wTs
 mHT
 mKR
-aGS
 mHT
+aGS
 mHT
 gXW
 nau
@@ -111454,7 +111444,7 @@ oqK
 mHT
 hQB
 hQB
-kHH
+hQB
 mHT
 egP
 gMt
