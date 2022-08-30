@@ -26,3 +26,11 @@
 		_counting[category] += 1;\
 		usage = TICK_USAGE; \
 	} while(FALSE)
+
+#define SET_COST_LINE \
+	do { \
+		var/cost = TICK_USAGE; \
+		_costs["[__LINE__ ]"] += TICK_DELTA_TO_MS(cost - usage);\
+		_counting["[__LINE__ ]"] += 1;\
+		usage = TICK_USAGE; \
+	} while(FALSE)
