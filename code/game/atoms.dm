@@ -173,15 +173,11 @@
  * if the preloader is being used and then call [InitAtom][/datum/controller/subsystem/atoms/proc/InitAtom] of which the ultimate
  * result is that the Intialize proc is called.
  *
- * We also generate a tag here if the DF_USE_TAG flag is set on the atom
  */
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
 	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		world.preloader_load(src)
-
-	if(datum_flags & DF_USE_TAG)
-		GenerateTag()
 
 	var/do_initialize = SSatoms.initialized
 	if(do_initialize != INITIALIZATION_INSSATOMS)
@@ -1564,6 +1560,7 @@
 
 ///Generate a tag for this atom
 /atom/proc/GenerateTag()
+	flags_1 |= DF_USE_TAG
 	return
 
 ///Connect this atom to a shuttle
