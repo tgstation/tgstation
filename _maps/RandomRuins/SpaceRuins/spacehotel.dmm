@@ -1796,11 +1796,11 @@
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/hotel)
 "qG" = (
-/obj/machinery/power/apc/highcap/five_k/directional/south,
-/obj/structure/cable,
-/obj/structure/sink/directional/west{
+/obj/machinery/power/apc/highcap/five_k/directional/south{
 	name = "Custodial APC"
 	},
+/obj/structure/cable,
+/obj/structure/sink/directional/west,
 /obj/item/reagent_containers/spray/cleaner,
 /turf/open/floor/catwalk_floor,
 /area/ruin/space/has_grav/hotel/custodial)
