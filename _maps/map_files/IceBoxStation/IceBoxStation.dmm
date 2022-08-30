@@ -19809,7 +19809,7 @@
 	},
 /obj/structure/sign/poster/random/directional/north,
 /obj/machinery/camera/directional/north{
-	c_tag = "Cafeteria Bow"
+	c_tag = "Diner Bow"
 	},
 /turf/open/floor/iron/white/smooth_large,
 /area/station/service/kitchen/diner)
@@ -50527,7 +50527,7 @@
 /obj/structure/chair,
 /obj/machinery/airalarm/directional/west,
 /obj/machinery/camera/directional/west{
-	c_tag = "Cafeteria Port"
+	c_tag = "Diner Port"
 	},
 /turf/open/floor/iron/white/smooth_large,
 /area/station/service/kitchen/diner)
