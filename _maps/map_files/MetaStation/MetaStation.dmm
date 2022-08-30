@@ -22373,8 +22373,8 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/table/wood,
 /obj/machinery/fax{
-	fax_name = "Head of Personnel's Office";
-	name = "Head of Personnel's Fax Machine"
+	name = "Head of Personnel's Fax Machine";
+	fax_name = "Head of Personnel's Office"
 	},
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hop)
@@ -22985,8 +22985,8 @@
 /obj/structure/table,
 /obj/effect/turf_decal/tile/brown/half/contrasted,
 /obj/machinery/fax{
-	fax_name = "Cargo Office";
-	name = "Cargo Office Fax Machine"
+	name = "Cargo Office Fax Machine";
+	fax_name = "Cargo Office"
 	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
@@ -28951,8 +28951,8 @@
 /obj/structure/table/wood,
 /obj/machinery/keycard_auth/directional/south,
 /obj/machinery/fax{
-	fax_name = "Quartermaster's Office";
-	name = "Quartermaster's Fax Machine"
+	name = "Quartermaster's Fax Machine";
+	fax_name = "Quartermaster's Office"
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/qm)
@@ -43665,8 +43665,8 @@
 /obj/machinery/newscaster/directional/west,
 /obj/structure/table,
 /obj/machinery/fax{
-	fax_name = "Security Office";
-	name = "Security Office Fax Machine"
+	name = "Security Office Fax Machine";
+	fax_name = "Security Office"
 	},
 /turf/open/floor/iron,
 /area/station/security/office)
@@ -45643,8 +45643,8 @@
 /obj/structure/table/wood,
 /obj/structure/cable,
 /obj/machinery/fax{
-	fax_name = "Head of Security's Office";
-	name = "Head of Security's Fax Machine"
+	name = "Head of Security's Fax Machine";
+	fax_name = "Head of Security's Office"
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hos)
@@ -53487,8 +53487,8 @@
 	network = list("ss13","medical")
 	},
 /obj/machinery/fax{
-	fax_name = "Medical";
-	name = "Medical Fax Machine"
+	name = "Medical Fax Machine";
+	fax_name = "Medical"
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/office)
@@ -53504,8 +53504,8 @@
 /obj/machinery/light_switch/directional/west,
 /obj/structure/table/wood,
 /obj/machinery/fax{
-	fax_name = "Detective's Office";
-	name = "Detective's Fax Machine"
+	name = "Detective's Fax Machine";
+	fax_name = "Detective's Office"
 	},
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office)
@@ -55446,8 +55446,8 @@
 /obj/structure/table/wood,
 /obj/structure/window/reinforced,
 /obj/machinery/fax{
-	fax_name = "Captain's Office";
-	name = "Captain's Fax Machine"
+	name = "Captain's Fax Machine";
+	fax_name = "Captain's Office"
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
@@ -55973,8 +55973,8 @@
 "tKR" = (
 /obj/structure/table/glass,
 /obj/machinery/fax{
-	fax_name = "Research Division";
 	name = "Research Division Fax Machine";
+	fax_name = "Research Division";
 	pixel_x = 1
 	},
 /turf/open/floor/iron/white,
@@ -60083,8 +60083,8 @@
 	dir = 1
 	},
 /obj/machinery/fax{
-	fax_name = "Chief Medical Officer's Office";
-	name = "Chief Medical Officer's Fax Machine"
+	name = "Chief Medical Officer's Fax Machine";
+	fax_name = "Chief Medical Officer's Office"
 	},
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
@@ -67692,8 +67692,8 @@
 /obj/structure/cable,
 /obj/structure/table,
 /obj/machinery/fax{
-	fax_name = "Research Director's Office";
-	name = "Research Director's Fax Machine"
+	name = "Research Director's Fax Machine";
+	fax_name = "Research Director's Office"
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/rd)
