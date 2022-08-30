@@ -1,4 +1,4 @@
-/datum/ai_controller/basic_controller/bot
+/datum/ai_controller/basic_controller/bot/hygiene
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
 	)
@@ -8,9 +8,9 @@
 		/datum/ai_planning_subtree/bileworm_attack,
 	)
 
-/datum/ai_planning_subtree/bileworm_attack
+/datum/ai_planning_subtree/bot_find_filthy_person
 
-/datum/ai_planning_subtree/bileworm_attack/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/bot_find_filthy_person/SelectBehaviors(datum/ai_controller/controller, delta_time)
 
 	var/atom/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
 	if(!target || QDELETED(target))

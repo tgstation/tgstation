@@ -8,4 +8,6 @@
 ///from [/datum/move_loop/process] (succeeded, visual_delay):
 #define COMSIG_MOVELOOP_POSTPROCESS "moveloop_postprocess"
 //from [/datum/move_loop/has_target/jps/recalculate_path] ():
-#define COMSIG_MOVELOOP_JPS_REPATH "moveloop_jps_repath"
+#define COMSIG_MOVELOOP_PRE_JPS_REPATH "moveloop_pre_jps_repath"
+//from [/datum/move_loop/has_target/jps/recalculate_path] (list/new_path):
+#define COMSIG_MOVELOOP_POST_JPS_REPATH "moveloop_post_jps_repath"

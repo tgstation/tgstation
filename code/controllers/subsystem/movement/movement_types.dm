@@ -394,8 +394,9 @@
 	if(!COOLDOWN_FINISHED(src, repath_cooldown))
 		return
 	COOLDOWN_START(src, repath_cooldown, repath_delay)
-	SEND_SIGNAL(src, COMSIG_MOVELOOP_JPS_REPATH)
+	SEND_SIGNAL(src, COMSIG_MOVELOOP_PRE_JPS_REPATH)
 	movement_path = get_path_to(moving, target, max_path_length, minimum_distance, id, simulated_only, avoid, skip_first)
+	SEND_SIGNAL(src, COMSIG_MOVELOOP_POST_JPS_REPATH, movement_path)
 
 /datum/move_loop/has_target/jps/move()
 	if(!length(movement_path))

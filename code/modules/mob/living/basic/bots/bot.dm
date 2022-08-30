@@ -65,18 +65,10 @@
 
 	///The type of data HUD the bot uses. Diagnostic by default.
 	var/data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC
-	var/datum/atom_hud/data/bot_path/path_hud
-	var/path_image_icon = 'icons/mob/aibots.dmi'
-	var/path_image_icon_state = "path_indicator"
-	var/path_image_color = "#FFFFFF"
 
 /mob/living/basic/bot/Initialize(mapload)
 	. = ..()
 	GLOB.basic_bots_list += src
-
-	path_hud = new /datum/atom_hud/data/bot_path()
-	for(var/hud in path_hud.hud_icons) // You get to see your own path
-		set_hud_image_active(hud, exclusive_hud = path_hud)
 
 	// Give bots a fancy new ID card that can hold any access.
 	access_card = new /obj/item/card/id/advanced/simple_bot(src)
@@ -101,14 +93,8 @@
 	if(!isnull(data_hud_type))
 		var/datum/atom_hud/datahud = GLOB.huds[data_hud_type]
 		datahud.show_to(src)
-	if(path_hud)
-		path_hud.add_atom_to_hud(src)
-		path_hud.show_to(src)
 
 /mob/living/basic/bot/Destroy()
-	if(path_hud)
-		QDEL_NULL(path_hud)
-		path_hud = null
 	GLOB.basic_bots_list -= src
 	if(paicard)
 		ejectpai()
@@ -124,7 +110,6 @@
 		return "Inactive"
 	else
 		return current_status_description
-	return
 
 /mob/living/basic/bot/proc/drop_part(obj/item/drop_item, dropzone)
 	var/obj/item/item_to_drop
