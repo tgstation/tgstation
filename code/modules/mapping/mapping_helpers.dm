@@ -479,7 +479,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/override_species = CONFIG_GET(string/morgue_cadaver_override_species)
 	var/list/usable_races
 	if(use_species)
-		usable_races = GLOB.roundstart_races.Copy()
+		var/list/temp_list = get_selectable_species()
+		usable_races = temp_list.Copy()
 		usable_races -= SPECIES_ETHEREAL //they revive on death which is bad juju
 		LAZYREMOVE(usable_races, SPECIES_HUMAN)
 		if(!usable_races)
