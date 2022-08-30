@@ -199,8 +199,8 @@
 	name = "pack of moonflower seeds"
 	desc = "These seeds grow into moonflowers."
 	icon_state = "seed-moonflower"
-	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
 	species = "moonflower"
 	plantname = "Moonflowers"
 	icon_grow = "moonflower-grow"
@@ -283,8 +283,8 @@
 	base_icon_state = "rose"
 	icon_state = "rose"
 	worn_icon_state = "rose"
-	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
 	slot_flags = ITEM_SLOT_HEAD | ITEM_SLOT_MASK
 	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	bite_consumption_mod = 2

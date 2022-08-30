@@ -688,8 +688,8 @@
 	desc = "A tool to help you write fictional devils!"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "demonomicon"
-	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/books_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/books_righthand.dmi'
 	messages = list("You must challenge the devil to a dance-off!", "The devils true name is Ian", "The devil hates salt!", "Would you like infinite power?", "Would you like infinite  wisdom?", " Would you like infinite healing?")
 	w_class = WEIGHT_CLASS_SMALL
 	recharge_time = 60
