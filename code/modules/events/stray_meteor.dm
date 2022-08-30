@@ -28,9 +28,8 @@
 	if(meteor_event.chosen_meteor)
 		var/chosen_meteor = meteor_event.chosen_meteor
 		var/list/passed_meteor = list()
-		passed_meteor += chosen_meteor
+		passed_meteor[chosen_meteor] = 1
 		spawn_meteor(passed_meteor)
-		meteor_event.chosen_meteor = null
 	else
 		spawn_meteor(GLOB.meteorsD)
 
