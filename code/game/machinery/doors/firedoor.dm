@@ -440,6 +440,8 @@
 	soundloop.stop()
 
 /obj/machinery/door/firedoor/proc/on_power_restore()
+	SIGNAL_HANDLER 
+	
 	correct_state()
 
 	if(is_playing_alarm)
