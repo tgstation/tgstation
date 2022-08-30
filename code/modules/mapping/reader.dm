@@ -138,7 +138,7 @@
 				maxx = max(maxx, curr_x + length(gridLines[1]) / key_len - 1)
 
 			bounds[MAP_MAXX] = max(bounds[MAP_MAXX], maxx)
-		//CHECK_TICK
+		CHECK_TICK
 
 	// Indicate failure to parse any coordinates by nulling bounds
 	if(bounds[1] == 1.#INF)
@@ -161,15 +161,12 @@
 	Master.StopLoadingMap()
 
 
-/*
 #define MAPLOADING_CHECK_TICK \
-	if(TICK_CHECK) \
+	if(TICK_CHECK) { \
 		SSatoms.map_loader_stop(); \
-				stoplag(); \
-		SSatoms.map_loader_begin();
-*/
-#define MAPLOADING_CHECK_TICK
-
+		stoplag(); \
+		SSatoms.map_loader_begin(); \
+	}
 //#define MAPLOADING_CHECK_TICK
 // Do not call except via load() above.
 /datum/parsed_map/proc/_load_impl(x_offset = 1, y_offset = 1, z_offset = world.maxz + 1, cropMap = FALSE, no_changeturf = FALSE, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE)
@@ -413,7 +410,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 
 			//then fill the members_attributes list with the corresponding variables
 			members_attributes[index++] = fields
-			//CHECK_TICK
+			CHECK_TICK
 
 		//check and see if we can just skip this turf
 		//So you don't have to understand this horrid statement, we can do this if
