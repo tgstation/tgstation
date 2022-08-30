@@ -3395,6 +3395,7 @@
 #include "code\modules\mob\living\init_signals.dm"
 #include "code\modules\mob\living\life.dm"
 #include "code\modules\mob\living\living.dm"
+#include "code\modules\mob\living\living_defense.dm"
 #include "code\modules\mob\living\living_defines.dm"
 #include "code\modules\mob\living\living_fov.dm"
 #include "code\modules\mob\living\living_movement.dm"
