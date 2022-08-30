@@ -9,14 +9,14 @@
 	. = ..()
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
-	RegisterSignal(target, COMSIG_ITEM_ATTACK, .proc/onItemAttack)
+	RegisterSignal(target, COMSIG_ITEM_ATTACK, .proc/on_item_attack)
 
 /datum/element/attack_equip/Detach(datum/source, ...)
 	. = ..()
 
 	UnregisterSignal(source, COMSIG_ITEM_ATTACK)
 
-/datum/element/attack_equip/proc/onItemAttack(obj/item/attire, mob/living/target, mob/living/user)
+/datum/element/attack_equip/proc/on_item_attack(obj/item/attire, mob/living/target, mob/living/user)
 	SIGNAL_HANDLER
 	if(user.combat_mode || !ishuman(target) || target == user)
 		return
