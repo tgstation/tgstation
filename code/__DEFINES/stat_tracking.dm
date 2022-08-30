@@ -13,5 +13,16 @@
 		STAT_ENTRY[STAT_ENTRY_COUNT] += STAT_INCR_AMOUNT;\
 	};\
 
+// Cost tracking macros, to be used in one proc
+#define INIT_COST(costs, counting) \
+	var/list/_costs = costs; \
+	var/list/_counting = counting; \
+	var/usage = TICK_USAGE;
 
-
+#define SET_COST(category) \
+	do { \
+		var/cost = TICK_USAGE; \
+		_costs[category] += TICK_DELTA_TO_MS(cost - usage);\
+		_counting[category] += 1;\
+		usage = TICK_USAGE; \
+	} while(FALSE)
