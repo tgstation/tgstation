@@ -26,4 +26,8 @@
 	src.master_name = master_name
 	update_static_data(owner.current)
 	var/datum/action/antag_info/info_button = info_button_ref?.resolve()
-	info_button?.Trigger()
+	if (!info_button)
+		return
+	if (!istype(info_button))
+		return
+	info_button.Trigger()
