@@ -138,7 +138,7 @@
 				maxx = max(maxx, curr_x + length(gridLines[1]) / key_len - 1)
 
 			bounds[MAP_MAXX] = max(bounds[MAP_MAXX], maxx)
-		CHECK_TICK
+		//CHECK_TICK
 
 	// Indicate failure to parse any coordinates by nulling bounds
 	if(bounds[1] == 1.#INF)
@@ -155,21 +155,22 @@
 
 /// Load the parsed map into the world. See [/proc/load_map] for arguments.
 /datum/parsed_map/proc/load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, whitelist = FALSE)
-	if(!whitelist)
-		return
 	//How I wish for RAII
 	Master.StartLoadingMap()
 	. = _load_impl(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop)
 	Master.StopLoadingMap()
 
+
 /*
 #define MAPLOADING_CHECK_TICK \
 	if(TICK_CHECK) \
 		SSatoms.map_loader_stop(); \
-		stoplag(); \
+				stoplag(); \
 		SSatoms.map_loader_begin();
 */
 #define MAPLOADING_CHECK_TICK
+
+//#define MAPLOADING_CHECK_TICK
 // Do not call except via load() above.
 /datum/parsed_map/proc/_load_impl(x_offset = 1, y_offset = 1, z_offset = world.maxz + 1, cropMap = FALSE, no_changeturf = FALSE, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE)
 	PRIVATE_PROC(TRUE)
@@ -281,7 +282,7 @@
 						++turfsSkipped
 					#endif
 					ycrd--
-					//MAPLOADING_CHECK_TICK
+					MAPLOADING_CHECK_TICK
 					continue
 
 				var/list/cache = modelCache[line]
@@ -300,6 +301,7 @@
 			// The x coord never changes, so this is safe
 			if(first_found)
 				first_x = true_xcrd
+				last_x = true_xcrd
 		else
 			// This is the dmm parser, note the double loop
 			for(var/i in 1 + y_starting_skip to line_count - y_ending_skip)
@@ -333,10 +335,10 @@
 				ycrd--
 				MAPLOADING_CHECK_TICK
 		bounds[MAP_MINX] = min(bounds[MAP_MINX], first_x)
-		bounds[MAP_MAXX] = max(bounds[MAP_MAXX], last_x)
 		bounds[MAP_MINY] = min(bounds[MAP_MINY], last_y)
-		bounds[MAP_MAXY] = max(bounds[MAP_MAXY], first_y)
 		bounds[MAP_MINZ] = min(bounds[MAP_MINZ], zcrd)
+		bounds[MAP_MAXX] = max(bounds[MAP_MAXX], last_x)
+		bounds[MAP_MAXY] = max(bounds[MAP_MAXY], first_y)
 		bounds[MAP_MAXZ] = max(bounds[MAP_MAXZ], zcrd)
 
 	// And we are done lads, call it off
