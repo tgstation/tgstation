@@ -679,6 +679,7 @@
 			fill.set_content(content, trusted = TRUE)
 			printed_book.gen_random_icon_state()
 			visible_message(span_notice("[src]'s printer hums as it produces a completely bound book. How did it do that?"))
+			log_paper("[key_name(usr)] has printed \"[title]\" by [author] from a book management console.")
 		break
 	qdel(query_library_print)
 
