@@ -437,6 +437,8 @@
 	return FALSE //No bumping to open, not even in mechs
 
 /obj/machinery/door/firedoor/proc/on_power_loss()
+	SIGNAL_HANDLER 
+	
 	soundloop.stop()
 
 /obj/machinery/door/firedoor/proc/on_power_restore()
