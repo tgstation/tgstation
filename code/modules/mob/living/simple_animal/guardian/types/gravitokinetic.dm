@@ -3,11 +3,11 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	damage_coeff = list(BRUTE = 0.75, BURN = 0.75, TOX = 0.75, CLONE = 0.75, STAMINA = 0, OXY = 0.75)
-	playstyle_string = "<span class='holoparasite'>As a <b>gravitokinetic</b> type, you can alt click to make the gravity on the ground stronger, and punching applies this effect to a target.</span>"
-	magic_fluff_string = "<span class='holoparasite'>..And draw the Singularity, an anomalous force of terror.</span>"
-	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Gravitokinetic modules loaded. Holoparasite swarm online.</span>"
-	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one! It's a gravitokinetic carp! Now do you understand the gravity of the situation?</span>"
-	miner_fluff_string = "<span class='holoparasite'>You encounter... Bananium, a master of gravity business.</span>"
+	playstyle_string = span_holoparasite("As a <b>gravitokinetic</b> type, you can alt click to make the gravity on the ground stronger, and punching applies this effect to a target.")
+	magic_fluff_string = span_holoparasite("..And draw the Singularity, an anomalous force of terror.")
+	tech_fluff_string = span_holoparasite("Boot sequence complete. Gravitokinetic modules loaded. Holoparasite swarm online.")
+	carp_fluff_string = span_holoparasite("CARP CARP CARP! Caught one! It's a gravitokinetic carp! Now do you understand the gravity of the situation?")
+	miner_fluff_string = span_holoparasite("You encounter... Bananium, a master of gravity business.")
 	var/list/gravito_targets = list()
 	var/gravity_power_range = 10 //how close the stand must stay to the target to keep the heavy gravity
 

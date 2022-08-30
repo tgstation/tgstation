@@ -4,11 +4,11 @@
 	melee_damage_upper = 15
 	range = 15 //worse for it due to how it leashes
 	damage_coeff = list(BRUTE = 0.4, BURN = 0.4, TOX = 0.4, CLONE = 0.4, STAMINA = 0, OXY = 0.4)
-	playstyle_string = "<span class='holoparasite'>As a <b>protector</b> type you cause your summoner to leash to you instead of you leashing to them and have two modes; Combat Mode, where you do and take medium damage, and Protection Mode, where you do and take almost no damage, but move slightly slower.</span>"
-	magic_fluff_string = "<span class='holoparasite'>..And draw the Guardian, a stalwart protector that never leaves the side of its charge.</span>"
-	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Protector modules loaded. Holoparasite swarm online.</span>"
-	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! You caught one! Wait, no... it caught you! The fisher has become the fishy.</span>"
-	miner_fluff_string = "<span class='holoparasite'>You encounter... Uranium, a very resistant guardian.</span>"
+	playstyle_string = span_holoparasite("As a <b>protector</b> type you cause your summoner to leash to you instead of you leashing to them and have two modes; Combat Mode, where you do and take medium damage, and Protection Mode, where you do and take almost no damage, but move slightly slower.")
+	magic_fluff_string = span_holoparasite("..And draw the Guardian, a stalwart protector that never leaves the side of its charge.")
+	tech_fluff_string = span_holoparasite("Boot sequence complete. Protector modules loaded. Holoparasite swarm online.")
+	carp_fluff_string = span_holoparasite("CARP CARP CARP! You caught one! Wait, no... it caught you! The fisher has become the fishy.")
+	miner_fluff_string = span_holoparasite("You encounter... Uranium, a very resistant guardian.")
 	toggle_button_type = /atom/movable/screen/guardian/toggle_mode
 	var/toggle = FALSE
 	var/mutable_appearance/shield_overlay

@@ -7,11 +7,11 @@
 	ranged_cooldown_time = 40
 	speed = -1
 	damage_coeff = list(BRUTE = 0.6, BURN = 0.6, TOX = 0.6, CLONE = 0.6, STAMINA = 0, OXY = 0.6)
-	playstyle_string = "<span class='holoparasite'>As a <b>charger</b> type you do medium damage, have medium damage resistance, move very fast, and can charge at a location, damaging any target hit and forcing them to drop any items they are holding.</span>"
-	magic_fluff_string = "<span class='holoparasite'>..And draw the Hunter, an alien master of rapid assault.</span>"
-	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Charge modules loaded. Holoparasite swarm online.</span>"
-	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one! It's a charger carp, that likes running at people. But it doesn't have any legs...</span>"
-	miner_fluff_string = "<span class='holoparasite'>You encounter... Titanium, a lightweight, agile fighter.</span>"
+	playstyle_string = span_holoparasite("As a <b>charger</b> type you do medium damage, have medium damage resistance, move very fast, and can charge at a location, damaging any target hit and forcing them to drop any items they are holding.")
+	magic_fluff_string = span_holoparasite("..And draw the Hunter, an alien master of rapid assault.")
+	tech_fluff_string = span_holoparasite("Boot sequence complete. Charge modules loaded. Holoparasite swarm online.")
+	carp_fluff_string = span_holoparasite("CARP CARP CARP! Caught one! It's a charger carp, that likes running at people. But it doesn't have any legs...")
+	miner_fluff_string = span_holoparasite("You encounter... Titanium, a lightweight, agile fighter.")
 	/// boolean on whether we are currently charging or not
 	var/charging = FALSE
 	/// holds a screen alert thrown out when charging

@@ -173,7 +173,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		mind.name = "[real_name]"
 	var/mob/living/summoner = weak_summoner?.resolve()
 	if(!summoner)
-		to_chat(src, "<span class='holoparasite bold'>For some reason, somehow, you have no summoner. Please report this bug immediately.</span>")
+		to_chat(src, span_holoparasite("For some reason, somehow, you have no summoner. Please report this bug immediately."))
 		return
 	to_chat(src, span_holoparasite("You are a <b>[real_name]</b>, bound to serve [summoner.real_name]."))
 	to_chat(src, span_holoparasite("You are capable of manifesting or recalling to your master with the buttons on your HUD. You will also find a button to communicate with [summoner.p_them()] privately there."))
@@ -457,7 +457,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	if(sender_key != key || !input) //guardian got reset, or did not enter anything
 		return
 
-	var/preliminary_message = "<span class='holoparasite bold'>[input]</span>" //apply basic color/bolding
+	var/preliminary_message = span_boldholoparasite(input) //apply basic color/bolding
 	var/my_message = "<font color=\"[guardiancolor]\"><b><i>[src]:</i></b></font> [preliminary_message]" //add source, color source with the guardian's color
 
 	to_chat(summoner, "<span class='say'>[my_message]</span>")
@@ -478,14 +478,14 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	if(!input)
 		return
 
-	var/preliminary_message = "<span class='holoparasite bold'>[input]</span>" //apply basic color/bolding
-	var/my_message = "<span class='holoparasite bold'><i>[src]:</i> [preliminary_message]</span>" //add source, color source with default grey...
+	var/preliminary_message = span_boldholoparasite(input) //apply basic color/bolding
+	var/my_message = span_boldholoparasite("<i>[src]:</i> [preliminary_message]") //add source, color source with default grey...
 
 	to_chat(src, "<span class='say'>[my_message]</span>")
 	var/list/guardians = hasparasites()
 	for(var/para in guardians)
 		var/mob/living/simple_animal/hostile/guardian/G = para
-		to_chat(G, "<span class='say'><font color=\"[G.guardiancolor]\"><b><i>[src]:</i></b></font> [preliminary_message]</span>" )
+		to_chat(G, "<span class='say'><font color=\"[G.guardiancolor]\"><b><i>[src]:</i></b></font> [preliminary_message]</span>")
 	for(var/M in GLOB.dead_mob_list)
 		var/link = FOLLOW_LINK(M, src)
 		to_chat(M, "<span class='say'>[link] [my_message]</span>")
@@ -530,7 +530,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 	var/mob/dead/observer/candidate = pick(ghost_candidates)
 	to_chat(chosen_guardian, span_holoparasite("Your user reset you, and your body was taken over by a ghost. Looks like they weren't happy with your performance."))
-	to_chat(src, "<span class='holoparasite bold'>Your <font color=\"[chosen_guardian.guardiancolor]\">[chosen_guardian.real_name]</font> has been successfully reset.</span>")
+	to_chat(src, span_boldholoparasite("Your <font color=\"[chosen_guardian.guardiancolor]\">[chosen_guardian.real_name]</font> has been successfully reset."))
 	message_admins("[key_name_admin(candidate)] has taken control of ([ADMIN_LOOKUPFLW(chosen_guardian)])")
 	chosen_guardian.ghostize(0)
 	chosen_guardian.guardianrecolor()
@@ -581,10 +581,10 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/used = FALSE
 	var/theme = "magic"
 	var/mob_name = "Guardian Spirit"
-	var/use_message = "<span class='holoparasite'>You shuffle the deck...</span>"
-	var/used_message = "<span class='holoparasite'>All the cards seem to be blank now.</span>"
-	var/failure_message = "<span class='holoparasite bold'>..And draw a card! It's...blank? Maybe you should try again later.</span>"
-	var/ling_failure = "<span class='holoparasite bold'>The deck refuses to respond to a souless creature such as you.</span>"
+	var/use_message = span_holoparasite("You shuffle the deck...")
+	var/used_message = span_holoparasite("All the cards seem to be blank now.")
+	var/failure_message = span_boldholoparasite("..And draw a card! It's...blank? Maybe you should try again later.")
+	var/ling_failure = span_boldholoparasite("The deck refuses to respond to a souless creature such as you.")
 	var/list/possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support", "Gravitokinetic")
 	var/random = TRUE
 	var/allowmultiple = FALSE
@@ -725,10 +725,10 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	icon_state = "combat_hypo"
 	theme = "tech"
 	mob_name = "Holoparasite"
-	use_message = "<span class='holoparasite'>You start to power on the injector...</span>"
-	used_message = "<span class='holoparasite'>The injector has already been used.</span>"
-	failure_message = "<span class='holoparasite bold'>...ERROR. BOOT SEQUENCE ABORTED. AI FAILED TO INTIALIZE. PLEASE CONTACT SUPPORT OR TRY AGAIN LATER.</span>"
-	ling_failure = "<span class='holoparasite bold'>The holoparasites recoil in horror. They want nothing to do with a creature like you.</span>"
+	use_message = span_holoparasite("You start to power on the injector...")
+	used_message = span_holoparasite("The injector has already been used.")
+	failure_message = span_boldholoparasite("...ERROR. BOOT SEQUENCE ABORTED. AI FAILED TO INTIALIZE. PLEASE CONTACT SUPPORT OR TRY AGAIN LATER.")
+	ling_failure = span_boldholoparasite("The holoparasites recoil in horror. They want nothing to do with a creature like you.")
 
 /obj/item/guardiancreator/tech/choose/traitor
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support", "Gravitokinetic")
@@ -807,10 +807,10 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	icon_state = "fishfingers"
 	theme = "carp"
 	mob_name = "Holocarp"
-	use_message = "<span class='holoparasite'>You put the fishsticks in your mouth...</span>"
-	used_message = "<span class='holoparasite'>Someone's already taken a bite out of these fishsticks! Ew.</span>"
-	failure_message = "<span class='holoparasite bold'>You couldn't catch any carp spirits from the seas of Lake Carp. Maybe there are none, maybe you fucked up.</span>"
-	ling_failure = "<span class='holoparasite bold'>Carp'sie seems to not have taken you as the chosen one. Maybe it's because of your horrifying origin.</span>"
+	use_message = span_holoparasite("You put the fishsticks in your mouth...")
+	used_message = span_holoparasite("Someone's already taken a bite out of these fishsticks! Ew.")
+	failure_message = span_boldholoparasite("You couldn't catch any carp spirits from the seas of Lake Carp. Maybe there are none, maybe you fucked up.")
+	ling_failure = span_boldholoparasite("Carp'sie seems to not have taken you as the chosen one. Maybe it's because of your horrifying origin.")
 	allowmultiple = TRUE
 
 /obj/item/guardiancreator/carp/choose
@@ -823,10 +823,10 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	icon_state = "dustyshard"
 	theme = "miner"
 	mob_name = "Power Miner"
-	use_message = "<span class='holoparasite'>You pierce your skin with the shard...</span>"
-	used_message = "<span class='holoparasite'>This shard seems to have lost all its' power...</span>"
-	failure_message = "<span class='holoparasite bold'>The shard hasn't reacted at all. Maybe try again later...</span>"
-	ling_failure = "<span class='holoparasite bold'>The power of the shard seems to not react with your horrifying, mutated body.</span>"
+	use_message = span_holoparasite("You pierce your skin with the shard...")
+	used_message = span_holoparasite("This shard seems to have lost all its' power...")
+	failure_message = span_boldholoparasite("The shard hasn't reacted at all. Maybe try again later...")
+	ling_failure = span_boldholoparasite("The power of the shard seems to not react with your horrifying, mutated body.")
 
 /obj/item/guardiancreator/miner/choose
 	random = FALSE
