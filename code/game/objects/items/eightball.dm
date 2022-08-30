@@ -2,7 +2,7 @@
 	name = "magic eightball"
 	desc = "A black ball with a stenciled number eight in white on the side. It seems full of dark liquid.\nThe instructions state that you should ask your question aloud, and then shake."
 
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "eightball"
 	w_class = WEIGHT_CLASS_TINY
 

@@ -2,7 +2,6 @@ GLOBAL_LIST_EMPTY(exp_to_update)
 GLOBAL_PROTECT(exp_to_update)
 
 #define IS_XP_LOCKED(job) (exp_requirements && ((exp_required_type_department && CONFIG_GET(flag/use_exp_restrictions_heads)) || (exp_required_type && CONFIG_GET(flag/use_exp_restrictions_other))))
-
 // Procs
 /datum/job/proc/required_playtime_remaining(client/C)
 	if(!C)
@@ -18,20 +17,20 @@ GLOBAL_PROTECT(exp_to_update)
 	var/isexempt = C.prefs.db_flags & DB_FLAG_EXEMPT
 	if(isexempt)
 		return 0
-	var/my_exp = C.calc_exp_type(get_exp_req_type()) // this value is returned in minutes via the DB.
-	var/job_requirement = get_exp_req_amount() // this value is returned in deciseconds.
-	if((my_exp * (1 MINUTES)) >= job_requirement) // The evaluation done here is done on the deciseconds level using the time defines.
+	var/my_exp = C.calc_exp_type(get_exp_req_type())
+	var/job_requirement = get_exp_req_amount()
+	if(my_exp >= job_requirement)
 		return 0
 	else
-		return (job_requirement - (my_exp * (1 MINUTES)))
+		return (job_requirement - my_exp)
 #undef IS_XP_LOCKED
 
 
 /datum/job/proc/get_exp_req_amount()
 	if(exp_required_type_department)
-		var/config_minimum_time = CONFIG_GET(number/use_exp_restrictions_heads_hours)
-		if(config_minimum_time)
-			return config_minimum_time * (1 HOURS)
+		var/uerhh = CONFIG_GET(number/use_exp_restrictions_heads_hours)
+		if(uerhh)
+			return uerhh * 60
 	return exp_requirements
 
 

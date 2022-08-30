@@ -20,6 +20,7 @@
 		"c-reader",
 		"circuit_imprinter",
 		"circuit_imprinter_offstation",
+		"coffeemaker",
 		"coffeepot",
 		"coffee_cartridge",
 		"conveyor_belt",
