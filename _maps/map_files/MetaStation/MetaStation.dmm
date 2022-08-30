@@ -28942,10 +28942,6 @@
 "koB" = (
 /obj/structure/table/wood,
 /obj/machinery/keycard_auth/directional/south,
-/obj/machinery/fax{
-	name = "Quartermaster's Fax Machine";
-	fax_name = "Quartermaster's Office"
-	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/qm)
 "koW" = (
@@ -35227,6 +35223,10 @@
 /area/station/command/bridge)
 "mCb" = (
 /obj/structure/table/wood,
+/obj/machinery/fax{
+	name = "Quartermaster's Fax Machine";
+	fax_name = "Quartermaster's Office"
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/qm)
 "mCi" = (
@@ -85714,7 +85714,7 @@ jLb
 tTa
 kQP
 fSw
-lnG
+mCb
 kQP
 dHc
 dHc
@@ -85971,7 +85971,7 @@ mmR
 kQP
 kQP
 apZ
-mCb
+lnG
 aEd
 ikJ
 kKr
