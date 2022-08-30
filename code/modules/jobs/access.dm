@@ -32,7 +32,7 @@
 		if(check_access(animal.access_card))
 			return TRUE
 	else if(isbrain(accessor) && istype(accessor.loc, /obj/item/mmi))
-		return TRUE //So can MMI if they... you know, grow up and get metal forklift arms and a flamethrower or something. (mecha)
+		return TRUE //Like with AI, MMI can also do whatever if they... you know, grow up and get metal forklift arms and a flamethrower or something. (mecha)
 	return FALSE
 
 /obj/item/proc/GetAccess()
