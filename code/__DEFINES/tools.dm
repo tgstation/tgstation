@@ -34,3 +34,12 @@
 
 /// When [TOOL_ACT_TOOLTYPE_SUCCESS] or [TOOL_ACT_SIGNAL_BLOCKING] are set
 #define TOOL_ACT_MELEE_CHAIN_BLOCKING (TOOL_ACT_TOOLTYPE_SUCCESS | TOOL_ACT_SIGNAL_BLOCKING)
+
+/// Temperature of the gas released and glove temperature protection required for power tools.
+#define TOOL_POWER_HEAT_TEMPERATURE 1000
+
+/// Returns a 75% co2 25% h2o [TOOL_POWER_HEAT_TEMPERATURE] Kelvin gasmixture string. Higher duration increases the amount of gas released. Power tools use this.
+#define TOOL_POWER_CONTAMINATE(duration) "co2=[(duration) / 5];water_vapor=[(duration) / 15];TEMP=[TOOL_POWER_HEAT_TEMPERATURE]"
+
+/// The divisor for the damage dealt from using power tools without heat resistant gloves.
+#define TOOL_POWER_HEAT_DAMAGE_DIVISOR 5

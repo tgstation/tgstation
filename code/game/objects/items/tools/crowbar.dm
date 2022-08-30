@@ -151,6 +151,28 @@
 
 	return ..()
 
+/obj/item/crowbar/power/use_tool(atom/target, mob/living/user, delay, amount, volume, datum/callback/extra_checks)
+	var/active_hand_index = user.active_hand_index
+	. = ..()
+	if(!.)
+		return .
+	if(!isopenturf(user.loc))
+		return .
+	var/turf/open/open_turf = user.loc
+	open_turf.atmos_spawn_air(TOOL_POWER_CONTAMINATE(delay))
+	var/damage_amount = delay / TOOL_POWER_HEAT_DAMAGE_DIVISOR
+	var/mob/living/carbon/human/human = user
+	if(istype(human) && human.gloves)
+		var/obj/item/clothing/gloves/gloves = human.gloves
+		damage_amount *= max(TOOL_POWER_HEAT_TEMPERATURE - gloves.max_heat_protection_temperature, 0) / TOOL_POWER_HEAT_TEMPERATURE
+		damage_amount *= !(HAS_TRAIT(user, TRAIT_RESISTHEAT) || HAS_TRAIT(user, TRAIT_RESISTHEATHANDS))
+	if(damage_amount)
+		var/obj/item/bodypart/affecting = human.get_bodypart("[(active_hand_index % 2 == 0) ? "r" : "l"]_arm")
+		if(affecting?.receive_damage(burn = damage_amount))
+			human.update_damage_overlays()
+			user.show_message(span_userdanger("\The [src] burns your hand!"))
+	return .
+
 /obj/item/crowbar/cyborg
 	name = "hydraulic crowbar"
 	desc = "A hydraulic prying tool, simple but powerful."
