@@ -1,0 +1,4 @@
+author: "itseasytosee"
+delete-after: True
+changes: 
+  - bugfix: "Monkeys won't stay on combat mode forever after getting pissed off."
