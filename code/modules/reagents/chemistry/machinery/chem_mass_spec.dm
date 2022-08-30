@@ -10,7 +10,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 \nLeft click with a beaker to add it to the input slot, Right click with a beaker to add it to the output slot. Alt + left/right click can let you quickly remove the corresponding beaker."}
 	density = TRUE
 	layer = BELOW_OBJ_LAYER
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "HPLC"
 	base_icon_state = "HPLC"
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.2

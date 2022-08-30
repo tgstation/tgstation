@@ -26,7 +26,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/machinery/porta_turret
 	name = "turret"
-	icon = 'icons/obj/turrets.dmi'
+	icon = 'icons/obj/weapons/turrets.dmi'
 	icon_state = "turretCover"
 	layer = OBJ_LAYER
 	invisibility = INVISIBILITY_OBSERVER //the turret is invisible if it's inside its cover
@@ -118,7 +118,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(has_cover)
 		cover = new /obj/machinery/porta_turret_cover(loc)
 		cover.parent_turret = src
-		var/mutable_appearance/base = mutable_appearance('icons/obj/turrets.dmi', "basedark")
+		var/mutable_appearance/base = mutable_appearance('icons/obj/weapons/turrets.dmi', "basedark")
 		base.layer = NOT_HIGH_OBJ_LAYER
 		underlays += base
 	if(!has_cover)

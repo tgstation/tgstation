@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - code_imp: "Bank machines can now use anyone's bank account, rather than limited to the Cargo budget, though it is set to the Cargo budget by default."

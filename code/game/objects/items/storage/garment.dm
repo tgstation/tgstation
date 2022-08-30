@@ -1,6 +1,6 @@
 /obj/item/storage/bag/garment
 	name = "garment bag"
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "garment_bag"
 	desc = "A bag for storing extra clothes and shoes."
 	slot_flags = NONE

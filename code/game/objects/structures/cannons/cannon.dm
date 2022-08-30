@@ -8,7 +8,7 @@
 	desc = "Holemaker Deluxe: A sporty model with a good stop power. Any cannon enthusiast should be expected to start here."
 	density = TRUE
 	anchored = TRUE
-	icon = 'icons/obj/cannons.dmi'
+	icon = 'icons/obj/weapons/cannons.dmi'
 	icon_state = "falconet_patina"
 	max_integrity = 300
 	///whether the cannon can be unwrenched from the ground.

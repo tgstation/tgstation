@@ -894,7 +894,7 @@
 		stack_trace("[template_projectile] is not a valid projectile.")
 		return FALSE
 
-	chameleon_projectile_vars = list("name" = "practice laser", "icon" = 'icons/obj/guns/projectiles.dmi', "icon_state" = "laser")
+	chameleon_projectile_vars = list("name" = "practice laser", "icon" = 'icons/obj/weapons/guns/projectiles.dmi', "icon_state" = "laser")
 
 	var/default_state = isnull(template_projectile.icon_state) ? "laser" : template_projectile.icon_state
 
