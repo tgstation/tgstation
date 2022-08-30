@@ -2169,6 +2169,14 @@
 	contains = list(/mob/living/basic/cow)
 	crate_name = "cow crate"
 
+/datum/supply_pack/critter/sheep
+	name = "Sheep Crate"
+	desc = "The sheep goes BAAAA!"
+	cost = CARGO_CRATE_VALUE * 6
+	access_view = ACCESS_HYDROPONICS
+	contains = list(/mob/living/basic/sheep)
+	crate_name = "sheep crate"
+
 /datum/supply_pack/critter/pig
 	name = "Pig Crate"
 	desc = "The pig goes oink!"
@@ -2513,6 +2521,26 @@
 	for(var/i in 1 to num_contained)
 		var/item = pick_n_take(L)
 		new item(C)
+
+/datum/supply_pack/costumes_toys/trekkie
+	name = "Trekkie Costume Crate"
+	desc = "Wear the scrapped concepts for Nanotrasen's jumpsuits, based off popular late-20th century Earth media! While they couldn't be used for the official jumpsuits due to copyright infringement, it's been assured that they can still legally be sold under the label of being 'failed designs'."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(
+		/obj/item/clothing/under/trek/command,
+		/obj/item/clothing/under/trek/command/next,
+		/obj/item/clothing/under/trek/command/voy,
+		/obj/item/clothing/under/trek/command/ent,
+		/obj/item/clothing/under/trek/engsec,
+		/obj/item/clothing/under/trek/engsec/next,
+		/obj/item/clothing/under/trek/engsec/voy,
+		/obj/item/clothing/under/trek/engsec/ent,
+		/obj/item/clothing/under/trek/medsci,
+		/obj/item/clothing/under/trek/medsci/next,
+		/obj/item/clothing/under/trek/medsci/voy,
+		/obj/item/clothing/under/trek/medsci/ent,
+	)
+	crate_type = /obj/structure/closet/crate/wooden
 
 /datum/supply_pack/costumes_toys/mafia
 	name = "Cosa Nostra Starter Pack"

@@ -3,7 +3,7 @@
 /obj/item/sparkler
 	name = "sparkler"
 	desc = "A little stick coated with metal powder and barium nitrate, burns with a pleasing sparkle."
-	icon = 'icons/obj/holiday_misc.dmi'
+	icon = 'icons/obj/holiday/holiday_misc.dmi'
 	icon_state = "sparkler"
 	w_class = WEIGHT_CLASS_TINY
 	heat = 1000
@@ -62,7 +62,7 @@
 /obj/item/grenade/firecracker
 	name = "large firecracker"
 	desc = "Outlawed in most of the sector. Doubles as an excellent finger remover."
-	icon = 'icons/obj/holiday_misc.dmi'
+	icon = 'icons/obj/holiday/holiday_misc.dmi'
 	icon_state = "firecracker"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'

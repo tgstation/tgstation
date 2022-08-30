@@ -40,7 +40,7 @@
 /obj/item/electropack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/clothing/head/helmet))
 		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit(user)
-		A.icon = 'icons/obj/assemblies.dmi'
+		A.icon = 'icons/obj/assemblies/assemblies.dmi'
 
 		if(!user.transferItemToLoc(W, A))
 			to_chat(user, span_warning("[W] is stuck to your hand, you cannot attach it to [src]!"))

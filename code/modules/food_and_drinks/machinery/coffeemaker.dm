@@ -1,8 +1,8 @@
 /obj/machinery/coffeemaker
 	name = "coffeemaker"
 	desc = "A Modello 3 Coffeemaker that brews coffee and holds it at the perfect temperature of 176 fahrenheit. Made by Piccionaia Home Appliances."
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "coffeemaker11"
+	icon = 'icons/obj/medical/chemical.dmi'
+	icon_state = "coffeemaker_nopot_nocart"
 	base_icon_state = "coffeemaker"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/coffeemaker
@@ -141,7 +141,7 @@
 	update_appearance()
 
 /obj/machinery/coffeemaker/update_icon_state()
-	icon_state = "[base_icon_state][!!coffeepot][!!cartridge]"
+	icon_state = "[base_icon_state][coffeepot ? "_pot" : "_nopot"][cartridge ? "_cart": "_nocart"]"
 	return ..()
 
 /obj/machinery/coffeemaker/proc/replace_pot(mob/living/user, obj/item/reagent_containers/cup/coffeepot/new_coffeepot)
@@ -309,15 +309,24 @@
 	user.put_in_hands(new_pack)
 	creamer_packs--
 
+///Updates the smoke state to something else, setting particles if relevant
+/obj/machinery/coffeemaker/proc/toggle_steam()
+	QDEL_NULL(particles)
+	if(brewing)
+		particles = new /particles/smoke/steam/mild()
+		particles.position = list(-6, 0, 0)
+
 /obj/machinery/coffeemaker/proc/operate_for(time, silent = FALSE)
 	brewing = TRUE
 	if(!silent)
 		playsound(src, 'sound/machines/coffeemaker_brew.ogg', 20, vary = TRUE)
+	toggle_steam()
 	use_power(active_power_usage * time * 0.1) // .1 needed here to convert time (in deciseconds) to seconds such that watts * seconds = joules
 	addtimer(CALLBACK(src, .proc/stop_operating), time / speed)
 
 /obj/machinery/coffeemaker/proc/stop_operating()
 	brewing = FALSE
+	toggle_steam()
 
 /obj/machinery/coffeemaker/proc/brew()
 	power_change()

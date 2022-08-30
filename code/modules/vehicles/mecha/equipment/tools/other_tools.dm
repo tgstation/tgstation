@@ -494,8 +494,7 @@
 		name = existing_equip.name
 		icon = existing_equip.icon
 		icon_state = existing_equip.icon_state
-		existing_equip.detach()
-		existing_equip.Destroy()
+		qdel(existing_equip)
 		user.visible_message(span_notice("[user] hollows out [src] and puts something in."), span_notice("You attach the concealed weapon bay to [mech] within the shell of [src]."))
 	else
 		user.visible_message(span_notice("[user] attaches [src] to [mech]."), span_notice("You attach [src] to [mech]."))
