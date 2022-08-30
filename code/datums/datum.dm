@@ -271,6 +271,5 @@
 ///Really just don't use this, you don't need it, global lists will do just fine MOST of the time
 ///We really only use it for mobs to make id'ing people easier
 /datum/proc/GenerateTag()
-	flags_1 |= DF_USE_TAG
-	return
+	datum_flags |= DF_USE_TAG
 
