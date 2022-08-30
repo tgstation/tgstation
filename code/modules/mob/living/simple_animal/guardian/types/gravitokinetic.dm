@@ -19,6 +19,10 @@
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/AttackingTarget()
 	. = ..()
+	var/mob/living/summoner = weak_summoner?.resolve()
+	if(!summoner)
+		host_deleted()
+		return
 	if(isliving(target) && target != src && target != summoner)
 		to_chat(src, "[span_danger("<B>Your punch has applied heavy gravity to [target]!")]</B>")
 		add_gravity(target, 5)
@@ -44,6 +48,10 @@
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/Manifest(forced)
 	. = ..()
+	var/mob/living/summoner = weak_summoner?.resolve()
+	if(!summoner)
+		host_deleted()
+		return
 	//just make sure to reapply a gravity immunity wherever you summon. it can be overridden but not by you at least
 	summoner.AddElement(/datum/element/forced_gravity, 1)
 	AddElement(/datum/element/forced_gravity, 1)

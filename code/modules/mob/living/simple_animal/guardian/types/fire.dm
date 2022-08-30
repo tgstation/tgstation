@@ -23,30 +23,41 @@
 
 /mob/living/simple_animal/hostile/guardian/fire/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
-	if(summoner)
-		summoner.extinguish_mob()
-		summoner.adjust_fire_stacks(-10 * delta_time)
+	var/mob/living/summoner = weak_summoner?.resolve()
+	if(!summoner)
+		host_deleted()
+		return
+	summoner.extinguish_mob()
+	summoner.adjust_fire_stacks(-10 * delta_time)
 
 /mob/living/simple_animal/hostile/guardian/fire/AttackingTarget()
 	. = ..()
+	var/mob/living/summoner = weak_summoner?.resolve()
+	if(!summoner)
+		host_deleted()
+		return
 	if(. && ishuman(target) && target != summoner)
 		new /datum/hallucination/delusion(target,TRUE,"custom",200,0, icon_state,icon)
 
-/mob/living/simple_animal/hostile/guardian/fire/proc/on_entered(datum/source, AM as mob|obj)
+/mob/living/simple_animal/hostile/guardian/fire/proc/on_entered(datum/source, atom/movable)
 	SIGNAL_HANDLER
-	collision_ignite(AM)
+	collision_ignite(movable)
 
-/mob/living/simple_animal/hostile/guardian/fire/Bumped(atom/movable/AM)
+/mob/living/simple_animal/hostile/guardian/fire/Bumped(atom/movable)
 	..()
-	collision_ignite(AM)
+	collision_ignite(movable)
 
-/mob/living/simple_animal/hostile/guardian/fire/Bump(AM as mob|obj)
+/mob/living/simple_animal/hostile/guardian/fire/Bump(atom/movable)
 	..()
-	collision_ignite(AM)
+	collision_ignite(movable)
 
-/mob/living/simple_animal/hostile/guardian/fire/proc/collision_ignite(AM as mob|obj)
-	if(isliving(AM))
-		var/mob/living/M = AM
+/mob/living/simple_animal/hostile/guardian/fire/proc/collision_ignite(atom/movable)
+	var/mob/living/summoner = weak_summoner?.resolve()
+	if(!summoner)
+		host_deleted()
+		return
+	if(isliving(movable))
+		var/mob/living/M = movable
 		if(!hasmatchingsummoner(M) && M != summoner && M.fire_stacks < 7)
 			M.set_fire_stacks(7)
 			M.ignite_mob()

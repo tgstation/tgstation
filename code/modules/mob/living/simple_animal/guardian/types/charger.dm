@@ -12,7 +12,9 @@
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Charge modules loaded. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one! It's a charger carp, that likes running at people. But it doesn't have any legs...</span>"
 	miner_fluff_string = "<span class='holoparasite'>You encounter... Titanium, a lightweight, agile fighter.</span>"
-	var/charging = 0
+	/// boolean on whether we are currently charging or not
+	var/charging = FALSE
+	/// holds a screen alert thrown out when charging
 	var/atom/movable/screen/alert/chargealert
 
 /mob/living/simple_animal/hostile/guardian/charger/Life(delta_time = SSMOBS_DT, times_fired)
@@ -33,11 +35,11 @@
 		Shoot(A)
 
 /mob/living/simple_animal/hostile/guardian/charger/Shoot(atom/targeted_atom)
-	charging = 1
+	charging = TRUE
 	throw_at(targeted_atom, range, 1, src, FALSE, TRUE, callback = CALLBACK(src, .proc/charging_end))
 
 /mob/living/simple_animal/hostile/guardian/charger/proc/charging_end()
-	charging = 0
+	charging = FALSE
 
 /mob/living/simple_animal/hostile/guardian/charger/Move()
 	if(charging)
@@ -52,23 +54,30 @@
 	if(!charging)
 		return ..()
 
-	else if(hit_atom)
-		if(isliving(hit_atom) && hit_atom != summoner)
-			var/mob/living/L = hit_atom
-			var/blocked = FALSE
-			if(hasmatchingsummoner(hit_atom)) //if the summoner matches don't hurt them
-				blocked = TRUE
-			if(ishuman(hit_atom))
-				var/mob/living/carbon/human/H = hit_atom
-				if(H.check_shields(src, 90, "[name]", attack_type = THROWN_PROJECTILE_ATTACK))
-					blocked = TRUE
-			if(!blocked)
-				L.drop_all_held_items()
-				L.visible_message(span_danger("[src] slams into [L]!"), span_userdanger("[src] slams into you!"))
-				L.apply_damage(20, BRUTE)
-				playsound(get_turf(L), 'sound/effects/meteorimpact.ogg', 100, TRUE)
-				shake_camera(L, 4, 3)
-				shake_camera(src, 2, 3)
+	if(!hit_atom)
+		return
 
-		charging = 0
+	var/mob/living/summoner = weak_summoner?.resolve()
+	if(!summoner)
+		host_deleted()
+		return
+
+	if(isliving(hit_atom) && hit_atom != summoner)
+		var/mob/living/hit_living = hit_atom
+		var/blocked = FALSE
+		if(hasmatchingsummoner(hit_atom)) //if the summoner matches don't hurt them
+			blocked = TRUE
+		if(ishuman(hit_atom))
+			var/mob/living/carbon/human/hit_human = hit_atom
+			if(hit_human.check_shields(src, 90, "[name]", attack_type = THROWN_PROJECTILE_ATTACK))
+				blocked = TRUE
+		if(!blocked)
+			hit_living.drop_all_held_items()
+			hit_living.visible_message(span_danger("[src] slams into [hit_living]!"), span_userdanger("[src] slams into you!"))
+			hit_living.apply_damage(20, BRUTE)
+			playsound(get_turf(hit_living), 'sound/effects/meteorimpact.ogg', 100, TRUE)
+			shake_camera(hit_living, 4, 3)
+			shake_camera(src, 2, 3)
+
+	charging = FALSE
 

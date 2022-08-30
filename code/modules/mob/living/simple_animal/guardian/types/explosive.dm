@@ -25,6 +25,10 @@
 
 /mob/living/simple_animal/hostile/guardian/bomb/AttackingTarget()
 	. = ..()
+	var/mob/living/summoner = weak_summoner?.resolve()
+	if(!summoner)
+		host_deleted()
+		return
 	if(. && prob(40) && isliving(target))
 		var/mob/living/M = target
 		if(!M.anchored && M != summoner && !hasmatchingsummoner(M))
@@ -39,6 +43,10 @@
 
 /mob/living/simple_animal/hostile/guardian/bomb/AltClickOn(atom/movable/A)
 	if(!istype(A))
+		return
+	var/mob/living/summoner = weak_summoner?.resolve()
+	if(!summoner)
+		host_deleted()
 		return
 	if(loc == summoner)
 		to_chat(src, span_danger("<B>You must be manifested to create bombs!</B>"))
@@ -56,6 +64,10 @@
 /mob/living/simple_animal/hostile/guardian/bomb/proc/kaboom(atom/source, mob/living/explodee)
 	SIGNAL_HANDLER
 	if(!istype(explodee))
+		return
+	var/mob/living/summoner = weak_summoner?.resolve()
+	if(!summoner)
+		host_deleted()
 		return
 	if(explodee == src || explodee == summoner || hasmatchingsummoner(explodee))
 		return

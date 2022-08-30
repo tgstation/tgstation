@@ -30,29 +30,33 @@
 	var/toggle = FALSE
 
 /mob/living/simple_animal/hostile/guardian/ranged/ToggleMode()
-	if(loc == summoner)
-		if(toggle)
-			ranged = initial(ranged)
-			melee_damage_lower = initial(melee_damage_lower)
-			melee_damage_upper = initial(melee_damage_upper)
-			obj_damage = initial(obj_damage)
-			environment_smash = initial(environment_smash)
-			alpha = 255
-			range = initial(range)
-			to_chat(src, "[span_danger("<B>You switch to combat mode.")]</B>")
-			toggle = FALSE
-		else
-			ranged = 0
-			melee_damage_lower = 0
-			melee_damage_upper = 0
-			obj_damage = 0
-			environment_smash = ENVIRONMENT_SMASH_NONE
-			alpha = 45
-			range = 255
-			to_chat(src, "[span_danger("<B>You switch to scout mode.")]</B>")
-			toggle = TRUE
-	else
+	var/mob/living/summoner = weak_summoner?.resolve()
+	if(!summoner)
+		host_deleted()
+		return
+	if(loc != summoner)
 		to_chat(src, "[span_danger("<B>You have to be recalled to toggle modes!")]</B>")
+		return
+	if(toggle)
+		ranged = initial(ranged)
+		melee_damage_lower = initial(melee_damage_lower)
+		melee_damage_upper = initial(melee_damage_upper)
+		obj_damage = initial(obj_damage)
+		environment_smash = initial(environment_smash)
+		alpha = 255
+		range = initial(range)
+		to_chat(src, "[span_danger("<B>You switch to combat mode.")]</B>")
+		toggle = FALSE
+	else
+		ranged = 0
+		melee_damage_lower = 0
+		melee_damage_upper = 0
+		obj_damage = 0
+		environment_smash = ENVIRONMENT_SMASH_NONE
+		alpha = 45
+		range = 255
+		to_chat(src, "[span_danger("<B>You switch to scout mode.")]</B>")
+		toggle = TRUE
 
 /mob/living/simple_animal/hostile/guardian/ranged/Shoot(atom/targeted_atom)
 	. = ..()
@@ -86,8 +90,7 @@
 	set desc = "Set an invisible snare that will alert you when living creatures walk over it. Max of 5"
 	if(length(snares) < 6)
 		var/turf/snare_loc = get_turf(loc)
-		var/obj/effect/snare/S = new /obj/effect/snare(snare_loc)
-		S.spawner = src
+		var/obj/effect/snare/S = new /obj/effect/snare(snare_loc, src)
 		S.name = "[get_area(snare_loc)] snare ([rand(1, 1000)])"
 		snares |= S
 		to_chat(src, "[span_danger("<B>Surveillance snare deployed!")]</B>")
@@ -108,23 +111,31 @@
 /obj/effect/snare
 	name = "snare"
 	desc = "You shouldn't be seeing this!"
-	var/mob/living/simple_animal/hostile/guardian/spawner
+	var/datum/weakref/weak_spawner
 	invisibility = INVISIBILITY_ABSTRACT
 
-/obj/effect/snare/Initialize(mapload)
+/obj/effect/snare/Initialize(mapload, spawner)
 	. = ..()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	weak_spawner = WEAKREF(spawner)
 
-/obj/effect/snare/proc/on_entered(datum/source, AM as mob|obj)
+/obj/effect/snare/proc/on_entered(datum/source, atom/movable/movable)
 	SIGNAL_HANDLER
-	if(isliving(AM) && spawner && spawner.summoner && AM != spawner && !spawner.hasmatchingsummoner(AM))
-		to_chat(spawner.summoner, "[span_danger("<B>[AM] has crossed surveillance snare, [name].")]</B>")
-		var/list/guardians = spawner.summoner.hasparasites()
+	var/mob/living/simple_animal/hostile/guardian/spawner = weak_spawner?.resolve()
+	if(!spawner)
+		return
+	var/mob/living/summoner = spawner.weak_summoner?.resolve()
+	if(!summoner)
+		spawner.host_deleted()
+		return
+	if(isliving(movable) && movable != spawner && !spawner.hasmatchingsummoner(movable))
+		to_chat(summoner, "[span_danger("<B>[movable] has crossed surveillance snare, [name].")]</B>")
+		var/list/guardians = summoner.hasparasites()
 		for(var/para in guardians)
-			to_chat(para, "[span_danger("<B>[AM] has crossed surveillance snare, [name].")]</B>")
+			to_chat(para, "[span_danger("<B>[movable] has crossed surveillance snare, [name].")]</B>")
 
 /obj/effect/snare/singularity_act()
 	return

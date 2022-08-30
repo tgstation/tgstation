@@ -57,17 +57,20 @@
 		toggle = TRUE
 
 /mob/living/simple_animal/hostile/guardian/protector/snapback() //snap to what? snap to the guardian!
-	if(summoner)
-		if(get_dist(get_turf(summoner),get_turf(src)) <= range)
-			return
+	var/mob/living/summoner = weak_summoner?.resolve()
+	if(!summoner)
+		host_deleted()
+		return
+	if(get_dist(get_turf(summoner),get_turf(src)) <= range)
+		return
+	else
+		if(istype(summoner.loc, /obj/effect))
+			to_chat(src, span_holoparasite("You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]!"))
+			visible_message(span_danger("\The [src] jumps back to its user."))
+			Recall(TRUE)
 		else
-			if(istype(summoner.loc, /obj/effect))
-				to_chat(src, span_holoparasite("You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]!"))
-				visible_message(span_danger("\The [src] jumps back to its user."))
-				Recall(TRUE)
-			else
-				to_chat(summoner, span_holoparasite("You moved out of range, and were pulled back! You can only move [range] meters from <font color=\"[guardiancolor]\"><b>[real_name]</b></font>!"))
-				summoner.visible_message(span_danger("\The [summoner] jumps back to [summoner.p_their()] protector."))
-				new /obj/effect/temp_visual/guardian/phase/out(get_turf(summoner))
-				summoner.forceMove(get_turf(src))
-				new /obj/effect/temp_visual/guardian/phase(get_turf(summoner))
+			to_chat(summoner, span_holoparasite("You moved out of range, and were pulled back! You can only move [range] meters from <font color=\"[guardiancolor]\"><b>[real_name]</b></font>!"))
+			summoner.visible_message(span_danger("\The [summoner] jumps back to [summoner.p_their()] protector."))
+			new /obj/effect/temp_visual/guardian/phase/out(get_turf(summoner))
+			summoner.forceMove(get_turf(src))
+			new /obj/effect/temp_visual/guardian/phase(get_turf(summoner))

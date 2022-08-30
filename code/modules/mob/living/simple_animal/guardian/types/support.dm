@@ -29,6 +29,10 @@
 
 /mob/living/simple_animal/hostile/guardian/healer/AttackingTarget()
 	. = ..()
+	var/mob/living/summoner = weak_summoner?.resolve()
+	if(!summoner)
+		host_deleted()
+		return
 	if(is_deployed() && toggle && iscarbon(target))
 		var/mob/living/carbon/C = target
 		C.adjustBruteLoss(-5)
@@ -44,26 +48,29 @@
 			med_hud_set_status()
 
 /mob/living/simple_animal/hostile/guardian/healer/ToggleMode()
-	if(src.loc == summoner)
-		if(toggle)
-			set_combat_mode(TRUE)
-			speed = 0
-			damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
-			melee_damage_lower = 15
-			melee_damage_upper = 15
-			to_chat(src, "[span_danger("<B>You switch to combat mode.")]</B>")
-			toggle = FALSE
-		else
-			set_combat_mode(FALSE)
-			speed = 1
-			damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-			melee_damage_lower = 0
-			melee_damage_upper = 0
-			to_chat(src, "[span_danger("<B>You switch to healing mode.")]</B>")
-			toggle = TRUE
-	else
+	var/mob/living/summoner = weak_summoner?.resolve()
+	if(!summoner)
+		host_deleted()
+		return
+	if(src.loc != summoner)
 		to_chat(src, "[span_danger("<B>You have to be recalled to toggle modes!")]</B>")
-
+		return
+	if(toggle)
+		set_combat_mode(TRUE)
+		speed = 0
+		damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
+		melee_damage_lower = 15
+		melee_damage_upper = 15
+		to_chat(src, "[span_danger("<B>You switch to combat mode.")]</B>")
+		toggle = FALSE
+	else
+		set_combat_mode(FALSE)
+		speed = 1
+		damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+		melee_damage_lower = 0
+		melee_damage_upper = 0
+		to_chat(src, "[span_danger("<B>You switch to healing mode.")]</B>")
+		toggle = TRUE
 
 /mob/living/simple_animal/hostile/guardian/healer/verb/Beacon()
 	set name = "Place Bluespace Beacon"
@@ -108,6 +115,10 @@
 	qdel(src)
 
 /mob/living/simple_animal/hostile/guardian/healer/AltClickOn(atom/movable/A)
+	var/mob/living/summoner = weak_summoner?.resolve()
+	if(!summoner)
+		host_deleted()
+		return
 	if(!istype(A))
 		return
 	if(src.loc == summoner)

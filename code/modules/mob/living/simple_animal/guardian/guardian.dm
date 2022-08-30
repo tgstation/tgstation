@@ -53,14 +53,15 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/list/guardian_overlays[GUARDIAN_TOTAL_LAYERS]
 	var/reset = 0 //if the summoner has reset the guardian already
 	var/cooldown = 0
-	var/mob/living/summoner
+	/// weakref to our summon which SHOULD be a living mob.
+	var/datum/weakref/weak_summoner
 	var/range = 10 //how far from the user the spirit can be
 	var/toggle_button_type = /atom/movable/screen/guardian/toggle_mode/inactive //what sort of toggle button the hud uses
-	var/playstyle_string = "<span class='holoparasite bold'>You are a Guardian without any type. You shouldn't exist!</span>"
-	var/magic_fluff_string = "<span class='holoparasite'>You draw the Coder, symbolizing bugs and errors. This shouldn't happen! Submit a bug report!</span>"
-	var/tech_fluff_string = "<span class='holoparasite'>BOOT SEQUENCE COMPLETE. ERROR MODULE LOADED. THIS SHOULDN'T HAPPEN. Submit a bug report!</span>"
-	var/carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP SOME SORT OF HORRIFIC BUG BLAME THE CODERS CARP CARP CARP</span>"
-	var/miner_fluff_string = "<span class='holoparasite'>You encounter... Mythril, it shouldn't exist... Submit a bug report!</span>"
+	var/playstyle_string = span_holoparasite("You are a Guardian without any type. You shouldn't exist!")
+	var/magic_fluff_string = span_holoparasite("You draw the Coder, symbolizing bugs and errors. This shouldn't happen! Submit a bug report!")
+	var/tech_fluff_string = span_holoparasite("BOOT SEQUENCE COMPLETE. ERROR MODULE LOADED. THIS SHOULDN'T HAPPEN. Submit a bug report!")
+	var/carp_fluff_string = span_holoparasite("CARP CARP CARP SOME SORT OF HORRIFIC BUG BLAME THE CODERS CARP CARP CARP")
+	var/miner_fluff_string = span_holoparasite("You encounter... Mythril, it shouldn't exist... Submit a bug report!")
 	///Are we forced to not be able to manifest/recall?
 	var/locked = FALSE
 
@@ -69,25 +70,57 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	updatetheme(theme)
 	AddElement(/datum/element/simple_flying)
 	. = ..()
-
-/mob/living/simple_animal/hostile/guardian/med_hud_set_health()
-	if(summoner)
-		var/image/holder = hud_list[HEALTH_HUD]
-		holder.icon_state = "hud[RoundHealth(summoner)]"
-
-/mob/living/simple_animal/hostile/guardian/med_hud_set_status()
-	if(summoner)
-		var/image/holder = hud_list[STATUS_HUD]
-		var/icon/I = icon(icon, icon_state, dir)
-		holder.pixel_y = I.Height() - world.icon_size
-		if(summoner.stat == DEAD)
-			holder.icon_state = "huddead"
-		else
-			holder.icon_state = "hudhealthy"
+	//we are always spawned inside our new summoner
+	weak_summoner = WEAKREF(loc)
+	register_to_summoner(loc)
 
 /mob/living/simple_animal/hostile/guardian/Destroy()
 	GLOB.parasites -= src
+	var/mob/living/summoner = weak_summoner?.resolve()
+	if(summoner)
+		unregister_from_summoner(summoner)
 	return ..()
+
+/mob/living/simple_animal/hostile/guardian/proc/register_to_summoner(mob/living/new_summoner)
+	RegisterSignal(new_summoner, COMSIG_LIVING_WABBAJACKED, .proc/on_summoner_wabbajacked)
+
+/mob/living/simple_animal/hostile/guardian/proc/unregister_from_summoner(mob/living/old_summoner)
+	UnregisterSignal(old_summoner, COMSIG_LIVING_WABBAJACKED)
+
+/mob/living/simple_animal/hostile/guardian/proc/on_summoner_wabbajacked(mob/living/old_mob, mob/living/new_mob)
+	SIGNAL_HANDLER
+	unregister_from_summoner(old_mob)
+	register_to_summoner(new_mob)
+	weak_summoner = WEAKREF(new_mob)
+	Recall()
+	to_chat(src, span_holoparasite("Your summoner has changed form!"))
+
+/mob/living/simple_animal/hostile/guardian/proc/host_deleted()
+	to_chat(src, span_danger("Your summoner has died!"))
+	visible_message(span_danger("<B>[src] dies along with its user!</B>"))
+	death(TRUE)
+	qdel(src)
+
+/mob/living/simple_animal/hostile/guardian/med_hud_set_health()
+	var/mob/living/summoner = weak_summoner?.resolve()
+	if(!summoner)
+		host_deleted()
+		return
+	var/image/holder = hud_list[HEALTH_HUD]
+	holder.icon_state = "hud[RoundHealth(summoner)]"
+
+/mob/living/simple_animal/hostile/guardian/med_hud_set_status()
+	var/mob/living/summoner = weak_summoner?.resolve()
+	if(!summoner)
+		host_deleted()
+		return
+	var/image/holder = hud_list[STATUS_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	if(summoner.stat == DEAD)
+		holder.icon_state = "huddead"
+	else
+		holder.icon_state = "hudhealthy"
 
 /mob/living/simple_animal/hostile/guardian/proc/updatetheme(theme) //update the guardian's theme
 	if(!theme)
@@ -138,6 +171,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		return FALSE
 	if(mind)
 		mind.name = "[real_name]"
+	var/mob/living/summoner = weak_summoner?.resolve()
 	if(!summoner)
 		to_chat(src, "<span class='holoparasite bold'>For some reason, somehow, you have no summoner. Please report this bug immediately.</span>")
 		return
@@ -176,27 +210,25 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	update_health_hud() //we need to update all of our health displays to match our summoner and we can't practically give the summoner a hook to do it
 	med_hud_set_health()
 	med_hud_set_status()
-	if(!QDELETED(summoner))
-		if(summoner.stat == DEAD)
-			forceMove(summoner.loc)
-			to_chat(src, span_danger("Your summoner has died!"))
-			visible_message(span_danger("<B>\The [src] dies along with its user!</B>"))
-			summoner.visible_message(span_danger("<B>[summoner]'s body is completely consumed by the strain of sustaining [src]!</B>"))
-			for(var/obj/item/W in summoner)
-				if(!summoner.dropItemToGround(W))
-					qdel(W)
-			summoner.dust()
-			death(TRUE)
-			qdel(src)
-	else
+	var/mob/living/summoner = weak_summoner?.resolve()
+	if(!summoner)
+		host_deleted()
+		return
+	if(summoner.stat == DEAD)
+		forceMove(summoner.loc)
 		to_chat(src, span_danger("Your summoner has died!"))
-		visible_message(span_danger("<B>[src] dies along with its user!</B>"))
+		visible_message(span_danger("<B>\The [src] dies along with its user!</B>"))
+		summoner.visible_message(span_danger("<B>[summoner]'s body is completely consumed by the strain of sustaining [src]!</B>"))
+		for(var/obj/item/W in summoner)
+			if(!summoner.dropItemToGround(W))
+				qdel(W)
+		summoner.dust()
 		death(TRUE)
 		qdel(src)
-	snapback()
 
 /mob/living/simple_animal/hostile/guardian/get_status_tab_items()
 	. += ..()
+	var/mob/living/summoner = weak_summoner?.resolve()
 	if(summoner)
 		var/resulthealth
 		if(iscarbon(summoner))
@@ -212,23 +244,29 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	snapback()
 
 /mob/living/simple_animal/hostile/guardian/proc/snapback()
-	if(summoner)
-		if(get_dist(get_turf(summoner),get_turf(src)) <= range)
-			return
-		else
-			to_chat(src, span_holoparasite("You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]!"))
-			visible_message(span_danger("\The [src] jumps back to its user."))
-			if(istype(summoner.loc, /obj/effect))
-				Recall(TRUE)
-			else
-				new /obj/effect/temp_visual/guardian/phase/out(loc)
-				forceMove(summoner.loc)
-				new /obj/effect/temp_visual/guardian/phase(loc)
+	var/mob/living/summoner = weak_summoner?.resolve()
+	if(!summoner)
+		host_deleted()
+		return
+	if(get_dist(get_turf(summoner),get_turf(src)) <= range)
+		return
+	to_chat(src, span_holoparasite("You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]!"))
+	visible_message(span_danger("\The [src] jumps back to its user."))
+	if(istype(summoner.loc, /obj/effect))
+		Recall(TRUE)
+		return
+	new /obj/effect/temp_visual/guardian/phase/out(loc)
+	forceMove(summoner.loc)
+	new /obj/effect/temp_visual/guardian/phase(loc)
 
 /mob/living/simple_animal/hostile/guardian/canSuicide()
 	return FALSE
 
 /mob/living/simple_animal/hostile/guardian/proc/is_deployed()
+	var/mob/living/summoner = weak_summoner?.resolve()
+	if(!summoner)
+		host_deleted()
+		return FALSE
 	return loc != summoner
 
 /mob/living/simple_animal/hostile/guardian/AttackingTarget()
@@ -241,11 +279,16 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/death()
 	drop_all_held_items()
 	..()
+	var/mob/living/summoner = weak_summoner?.resolve()
 	if(summoner)
-		to_chat(summoner, "[span_danger("<B>Your [name] died somehow!")]</B>")
+		to_chat(summoner, span_bolddanger("Your [name] died somehow!"))
 		summoner.dust()
 
 /mob/living/simple_animal/hostile/guardian/update_health_hud()
+	var/mob/living/summoner = weak_summoner?.resolve()
+	if(!summoner)
+		host_deleted()
+		return
 	if(summoner && hud_used?.healths)
 		var/resulthealth
 		if(iscarbon(summoner))
@@ -256,18 +299,21 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /mob/living/simple_animal/hostile/guardian/adjustHealth(amount, updating_health = TRUE, forced = FALSE) //The spirit is invincible, but passes on damage to the summoner
 	. = amount
-	if(summoner)
-		if(loc == summoner)
-			return FALSE
-		summoner.adjustBruteLoss(amount)
-		if(amount > 0)
-			to_chat(summoner, "[span_danger("<B>Your [name] is under attack! You take damage!")]</B>")
-			summoner.visible_message(span_danger("<B>Blood sprays from [summoner] as [src] takes damage!</B>"))
-			switch(summoner.stat)
-				if(UNCONSCIOUS, HARD_CRIT)
-					to_chat(summoner, "[span_danger("<B>Your body can't take the strain of sustaining [src] in this condition, it begins to fall apart!")]</B>")
-					summoner.adjustCloneLoss(amount * 0.5) //dying hosts take 50% bonus damage as cloneloss
-		update_health_hud()
+	var/mob/living/summoner = weak_summoner?.resolve()
+	if(!summoner)
+		host_deleted()
+		return
+	if(loc == summoner)
+		return FALSE
+	summoner.adjustBruteLoss(amount)
+	if(amount > 0)
+		to_chat(summoner, "[span_danger("<B>Your [name] is under attack! You take damage!")]</B>")
+		summoner.visible_message(span_danger("<B>Blood sprays from [summoner] as [src] takes damage!</B>"))
+		switch(summoner.stat)
+			if(UNCONSCIOUS, HARD_CRIT)
+				to_chat(summoner, "[span_danger("<B>Your body can't take the strain of sustaining [src] in this condition, it begins to fall apart!")]</B>")
+				summoner.adjustCloneLoss(amount * 0.5) //dying hosts take 50% bonus damage as cloneloss
+	update_health_hud()
 
 /mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
 	switch(severity)
@@ -280,9 +326,12 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			adjustBruteLoss(30)
 
 /mob/living/simple_animal/hostile/guardian/gib()
-	if(summoner)
-		to_chat(summoner, "[span_danger("<B>Your [src] was blown up!")]</B>")
-		summoner.gib()
+	var/mob/living/summoner = weak_summoner?.resolve()
+	if(!summoner)
+		host_deleted()
+		return
+	to_chat(summoner, "[span_danger("<B>Your [src] was blown up!")]</B>")
+	summoner.gib()
 	ghostize()
 	qdel(src)
 
@@ -350,6 +399,10 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 //MANIFEST, RECALL, TOGGLE MODE/LIGHT, SHOW TYPE
 
 /mob/living/simple_animal/hostile/guardian/proc/Manifest(forced)
+	var/mob/living/summoner = weak_summoner?.resolve()
+	if(!summoner)
+		host_deleted()
+		return
 	if(istype(summoner.loc, /obj/effect) || (cooldown > world.time && !forced) || locked)
 		return FALSE
 	if(loc == summoner)
@@ -361,7 +414,11 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	return FALSE
 
 /mob/living/simple_animal/hostile/guardian/proc/Recall(forced)
-	if(!summoner || loc == summoner || (cooldown > world.time && !forced) || locked)
+	var/mob/living/summoner = weak_summoner?.resolve()
+	if(!summoner)
+		host_deleted()
+		return
+	if(loc == summoner || (cooldown > world.time && !forced) || locked)
 		return FALSE
 	new /obj/effect/temp_visual/guardian/phase/out(loc)
 
@@ -391,24 +448,27 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 //COMMUNICATION
 
 /mob/living/simple_animal/hostile/guardian/proc/Communicate()
-	if(summoner)
-		var/sender_key = key
-		var/input = tgui_input_text(src, "Enter a message to tell your summoner", "Guardian")
-		if(sender_key != key || !input) //guardian got reset, or did not enter anything
-			return
+	var/mob/living/summoner = weak_summoner?.resolve()
+	if(!summoner)
+		host_deleted()
+		return
+	var/sender_key = key
+	var/input = tgui_input_text(src, "Enter a message to tell your summoner", "Guardian")
+	if(sender_key != key || !input) //guardian got reset, or did not enter anything
+		return
 
-		var/preliminary_message = "<span class='holoparasite bold'>[input]</span>" //apply basic color/bolding
-		var/my_message = "<font color=\"[guardiancolor]\"><b><i>[src]:</i></b></font> [preliminary_message]" //add source, color source with the guardian's color
+	var/preliminary_message = "<span class='holoparasite bold'>[input]</span>" //apply basic color/bolding
+	var/my_message = "<font color=\"[guardiancolor]\"><b><i>[src]:</i></b></font> [preliminary_message]" //add source, color source with the guardian's color
 
-		to_chat(summoner, "<span class='say'>[my_message]</span>")
-		var/list/guardians = summoner.hasparasites()
-		for(var/para in guardians)
-			to_chat(para, "<span class='say'>[my_message]</span>")
-		for(var/M in GLOB.dead_mob_list)
-			var/link = FOLLOW_LINK(M, src)
-			to_chat(M, "<span class='say'>[link] [my_message]</span>")
+	to_chat(summoner, "<span class='say'>[my_message]</span>")
+	var/list/guardians = summoner.hasparasites()
+	for(var/para in guardians)
+		to_chat(para, "<span class='say'>[my_message]</span>")
+	for(var/M in GLOB.dead_mob_list)
+		var/link = FOLLOW_LINK(M, src)
+		to_chat(M, "<span class='say'>[link] [my_message]</span>")
 
-		src.log_talk(input, LOG_SAY, tag="guardian")
+	src.log_talk(input, LOG_SAY, tag="guardian")
 
 /mob/living/proc/guardian_comm()
 	set name = "Communicate"
@@ -494,14 +554,22 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /mob/living/proc/hasparasites() //returns a list of guardians the mob is a summoner for
 	. = list()
-	for(var/P in GLOB.parasites)
-		var/mob/living/simple_animal/hostile/guardian/G = P
-		if(G.summoner == src)
-			. += G
 
-/mob/living/simple_animal/hostile/guardian/proc/hasmatchingsummoner(mob/living/simple_animal/hostile/guardian/G) //returns 1 if the summoner matches the target's summoner
-	return (istype(G) && G.summoner == summoner)
+	for(var/mob/living/simple_animal/hostile/guardian/parasite as anything in GLOB.parasites)
+		var/mob/living/summoner = parasite.weak_summoner?.resolve()
+		if(summoner == src)
+			. += parasite
 
+/mob/living/simple_animal/hostile/guardian/proc/hasmatchingsummoner(mob/living/simple_animal/hostile/guardian/holopara) //returns 1 if the summoner matches the target's summoner
+	if(!istype(holopara))
+		return FALSE
+	var/mob/living/our_summoner = weak_summoner?.resolve()
+	if(!our_summoner)
+		return FALSE
+	var/mob/living/their_summoner = holopara.weak_summoner?.resolve()
+	if(!their_summoner)
+		return FALSE
+	return our_summoner == their_summoner
 
 ////////Creation
 
@@ -603,7 +671,6 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		return
 	var/mob/living/simple_animal/hostile/guardian/G = new pickedtype(user, theme)
 	G.name = mob_name
-	G.summoner = user
 	G.key = candidate.key
 	G.mind.enslave_mind_to_creator(user)
 	G.copy_languages(user, LANGUAGE_MASTER) // make sure holoparasites speak same language as master

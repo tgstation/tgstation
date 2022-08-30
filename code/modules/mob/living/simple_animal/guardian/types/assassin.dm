@@ -25,6 +25,10 @@
 /mob/living/simple_animal/hostile/guardian/assassin/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	updatestealthalert()
+	var/mob/living/summoner = weak_summoner?.resolve()
+	if(!summoner)
+		host_deleted()
+		return
 	if(loc == summoner && toggle)
 		ToggleMode(0)
 
@@ -65,6 +69,10 @@
 		updatestealthalert()
 		toggle = FALSE
 	else if(stealthcooldown <= world.time)
+		var/mob/living/summoner = weak_summoner?.resolve()
+		if(!summoner)
+			host_deleted()
+			return
 		if(src.loc == summoner)
 			to_chat(src, "[span_danger("<B>You have to be manifested to enter stealth!")]</B>")
 			return

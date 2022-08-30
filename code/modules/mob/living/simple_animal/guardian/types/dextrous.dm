@@ -30,13 +30,21 @@
 		return ..()
 
 /mob/living/simple_animal/hostile/guardian/dextrous/Recall(forced)
-	if(!summoner || loc == summoner || (cooldown > world.time && !forced))
+	var/mob/living/summoner = weak_summoner?.resolve()
+	if(!summoner)
+		host_deleted()
+		return
+	if(loc == summoner || (cooldown > world.time && !forced))
 		return FALSE
 	drop_all_held_items()
 	return ..() //lose items, then return
 
 /mob/living/simple_animal/hostile/guardian/dextrous/snapback()
-	if(summoner && !(get_dist(get_turf(summoner),get_turf(src)) <= range))
+	var/mob/living/summoner = weak_summoner?.resolve()
+	if(!summoner)
+		host_deleted()
+		return
+	if(!(get_dist(get_turf(summoner),get_turf(src)) <= range))
 		drop_all_held_items()
 		..() //lose items, then return
 

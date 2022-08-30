@@ -56,7 +56,12 @@
 		return FALSE
 	if(isguardian(cast_on))
 		var/mob/living/simple_animal/hostile/guardian/stand = cast_on
-		if(stand.summoner && stand.summoner == owner)
+		var/mob/living/summoner = stand.weak_summoner?.resolve()
+		if(!summoner)
+			//sorry infinite health unlinked stand- mind transfer spell snitched on you
+			stand.host_deleted()
+			return FALSE
+		if(summoner == owner)
 			to_chat(owner, span_warning("Swapping minds with your own guardian would just put you back into your own head!"))
 			return FALSE
 
@@ -83,8 +88,13 @@
 	var/mob/living/to_swap = cast_on
 	if(isguardian(cast_on))
 		var/mob/living/simple_animal/hostile/guardian/stand = cast_on
-		if(stand.summoner)
-			to_swap = stand.summoner
+		var/mob/living/summoner = stand.weak_summoner?.resolve()
+		if(!summoner)
+			//sorry infinite health unlinked stand- mind transfer spell snitched on you
+			stand.host_deleted()
+			return FALSE
+		if(summoner)
+			to_swap = summoner
 
 	var/datum/mind/mind_to_swap = to_swap.mind
 	if(to_swap.can_block_magic(antimagic_flags) \
