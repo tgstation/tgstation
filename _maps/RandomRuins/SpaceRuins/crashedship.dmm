@@ -383,7 +383,9 @@
 /obj/machinery/porta_turret{
 	dir = 8;
 	installation = /obj/item/gun/energy/lasercannon;
-	set_obj_flags = "EMAGGED"
+	},
+/obj/effect/mapping_helpers/atom_injector/emag{
+	target_type = /obj/machinery/porta_turret
 	},
 /obj/effect/turf_decal/trimline/brown/filled/warning{
 	dir = 1
@@ -484,8 +486,10 @@
 /obj/effect/turf_decal/trimline/brown/line,
 /obj/machinery/porta_turret{
 	dir = 8;
-	installation = /obj/item/gun/energy/lasercannon;
-	set_obj_flags = "EMAGGED"
+	installation = /obj/item/gun/energy/lasercannon
+	},
+/obj/effect/mapping_helpers/atom_injector/emag{
+	target_type = /obj/machinery/porta_turret
 	},
 /turf/open/floor/plating/airless,
 /area/awaymission/bmpship/midship)
@@ -1065,8 +1069,10 @@
 	},
 /obj/machinery/porta_turret{
 	dir = 8;
-	installation = /obj/item/gun/energy/lasercannon;
-	set_obj_flags = "EMAGGED"
+	installation = /obj/item/gun/energy/lasercannon
+	},
+/obj/effect/mapping_helpers/atom_injector/emag{
+	target_type = /obj/machinery/porta_turret
 	},
 /turf/open/floor/plating/airless,
 /area/awaymission/bmpship/midship)

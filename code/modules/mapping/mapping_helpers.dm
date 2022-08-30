@@ -283,6 +283,14 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/atom_injector/proc/generate_stack_trace()
 	. = "[name] found no targets at ([x], [y], [z]). First Match Only: [first_match_only ? "true" : "false"] target type: [target_type] | target name: [target_name]"
 
+/obj/effect/mapping_helpers/atom_injector/emag
+
+/obj/effect/mapping_helpers/atom_injector/emag/inject(atom/target)
+	if(!isobj(target))
+		return
+	var/obj/obj_target = target
+	obj_target.obj_flags |= EMAGGED
+	
 ///This helper applies components to things on the map directly.
 /obj/effect/mapping_helpers/atom_injector/component_injector
 	name = "Component Injector"

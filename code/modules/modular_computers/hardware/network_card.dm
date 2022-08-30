@@ -3,7 +3,6 @@
 	desc = "A basic wireless network card for usage with standard NTNet frequencies."
 	power_usage = 50
 	icon_state = "radio_mini"
-	network_id = NETWORK_CARDS // Network we are on
 	var/hardware_id = null // Identification ID. Technically MAC address of this device. Can't be changed by user.
 	var/identification_string = "" // Identification string, technically nickname seen in the network. Can be set by user.
 	var/long_range = 0
@@ -11,6 +10,9 @@
 	malfunction_probability = 1
 	device_type = MC_NET
 
+/obj/item/computer_hardware/network_card/Initialize(mapload)
+	. = ..()
+	init_network_id(NETWORK_CARDS)
 
 /obj/item/computer_hardware/network_card/diagnostics(mob/user)
 	..()
