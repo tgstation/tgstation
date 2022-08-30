@@ -120,3 +120,14 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 	hidden = TRUE
 	experimental = TRUE
+
+/datum/techweb_node/sleepertech
+	id = "sleepertech"
+	display_name = "Sleeper Unit Construction"
+	description = "The technological peak of medical equipment within human space."
+	prereq_ids = list("adv_biotech", "adv_engi")
+	design_ids = list("sleeper")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	discount_experiments = list(
+		/datum/experiment/dissection/xenomorph = 3000, // To be changed if and when we decide what to do with research and experisci
+	)

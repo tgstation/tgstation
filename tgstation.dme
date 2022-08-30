@@ -4698,6 +4698,7 @@
 #include "voidcrew\_HELPERS\data_huds.dm"
 #include "voidcrew\_strings\star_names.dm"
 #include "voidcrew\edits\jobs.dm"
+#include "voidcrew\edits\sleeper.dm"
 #include "voidcrew\edits\techwebs.dm"
 #include "voidcrew\mapping\_mapping.dm"
 #include "voidcrew\mapping\areas.dm"
