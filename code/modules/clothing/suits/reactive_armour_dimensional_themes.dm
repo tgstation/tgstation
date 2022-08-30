@@ -63,6 +63,9 @@
 		if (isindestructiblewall(check_turf))
 			target_area -= check_turf
 			continue
+		if (check_turf.holodeck_compatible)
+			target_area -= check_turf
+			continue
 
 	return target_area
 
@@ -92,8 +95,9 @@
 /datum/armour_dimensional_theme/proc/place_barriers(turf/source, list/target_area)
 	target_area -= source
 	for (var/turf/check_turf as anything in target_area)
-		if (check_turf.density)
-			target_area -= check_turf
+		if (!check_turf.is_blocked_turf(exclude_mobs = TRUE))
+			continue
+		target_area -= check_turf
 
 	var/to_place = rand(MIN_BARRIERS, MAX_BARRIERS)
 	var/list/custom_materials = list()
@@ -145,8 +149,8 @@
 	replace_floor = /turf/open/floor/glass
 
 /datum/armour_dimensional_theme/safe/secure
-	replace_wall = /turf/closed/wall/r_wall
-	replace_floor = /turf/open/floor/engine
+	replace_wall = /turf/closed/wall/mineral/plastitanium/nodiagonal
+	replace_floor = /turf/open/floor/mineral/plastitanium
 	barricade = /obj/structure/holosign/barrier
 
 /datum/armour_dimensional_theme/safe/meat

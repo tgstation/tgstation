@@ -14,7 +14,6 @@
 	var/obj/effect/anomaly/anomaly_path = /obj/effect/anomaly/flux
 	announceWhen = 1
 
-
 /datum/round_event/anomaly/setup()
 	impact_area = placer.findValidArea()
 
@@ -22,9 +21,9 @@
 	priority_announce("Localized energetic flux wave detected on long range scanners. Expected location of impact: [impact_area.name].", "Anomaly Alert")
 
 /datum/round_event/anomaly/start()
-	var/turf/T = pick(get_area_turfs(impact_area))
+	var/turf/anomaly_turf = placer.findValidTurf(impact_area)
 	var/newAnomaly
-	if(T)
-		newAnomaly = new anomaly_path(T)
+	if(anomaly_turf)
+		newAnomaly = new anomaly_path(anomaly_turf)
 	if (newAnomaly)
 		announce_to_ghosts(newAnomaly)

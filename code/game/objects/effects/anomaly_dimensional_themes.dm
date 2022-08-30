@@ -66,6 +66,8 @@
 	if (isfloorturf(affected_turf))
 		if (isindestructiblefloor(affected_turf))
 			return FALSE
+		if (affected_turf.holodeck_compatible)
+			return FALSE
 		return replace_floors.len > 0
 	if (iswallturf(affected_turf))
 		if (isindestructiblewall(affected_turf))
@@ -82,6 +84,8 @@
 /datum/dimension_theme/proc/replace_turf(turf/affected_turf)
 	if (isfloorturf(affected_turf))
 		if (isindestructiblefloor(affected_turf))
+			return FALSE
+		if (affected_turf.holodeck_compatible)
 			return FALSE
 		return transform_floor(affected_turf)
 
@@ -314,7 +318,6 @@
 	icon_state = "lbulb"
 	material = /datum/material/glass
 	replace_floors = list(/turf/open/floor/light = 1)
-	replace_walls = /turf/closed/wall
 
 /datum/dimension_theme/disco/transform_floor(turf/open/floor/affected_floor)
 	. = ..()

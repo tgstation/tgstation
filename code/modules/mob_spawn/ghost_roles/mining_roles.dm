@@ -238,7 +238,6 @@
 
 	spawned_human.mind.add_antag_datum(/datum/antagonist/ashwalker, team)
 
-	ADD_TRAIT(spawned_human, TRAIT_PRIMITIVE, ROUNDSTART_TRAIT)
 	spawned_human.remove_language(/datum/language/common)
 	team.players_spawned += (spawned_human.key)
 	eggshell.egg = null

@@ -974,3 +974,77 @@
       (the corridor between the CMO's Office, Plumbing, and the Pharmacy).
   tralezab:
   - balance: Ghouls now appear dead to health scanners and other detections of life.
+2022-08-28:
+  Jolly:
+  - bugfix: On Tram, somewhere in maints, a missing windoor was readded. You're welcome.
+  Timberpoes:
+  - bugfix: Fixes reagent transfer not properly emptying the source of reagents when
+      transferring to a target.
+  optimumtact:
+  - balance: orks no longer shout their attacks over the radio
+2022-08-29:
+  GoldenAlpharex:
+  - bugfix: Bluespace bodybags will no longer fold on themselves and delete everything
+      inside of them when someone inside of them attempts to fold them.
+  Melbert:
+  - code_imp: Updated some signal misuse in mob harvest component, and implemented
+      a signal in cult sacrifice code. I also changed the sound of sheep wool being
+      harvested from a welding tool sound to a scalpel sound while I was here
+  Mooshimi:
+  - bugfix: Chem Masters will now appear to be depowered when appropriate.
+  OrionTheFox:
+  - rscadd: Added a Trekkie Costume Crate! Now you can wear NT's scrapped jumpsuit
+      designs for only a small cost, all of which will go to NT's emergency anti-copyright
+      savings!
+  - imageadd: Updated the Trekkie uniforms to modern sprite standards, as well as
+      adding Voyager uniforms!
+  dragomagol:
+  - qol: coffeemakers now emit steam when they're brewing!
+  - bugfix: coffeemakers now have an icon when they're spawned/created
+  - bugfix: scotch and chocolate eggs will no longer appear as errors
+  - bugfix: Fixes gibtonite icons not appearing
+  sergeirocks100:
+  - qol: You can now cut the fingers off of black or insulated gloves with any sharp
+      object, instead of just wirecutters.
+  - qol: You now get a notice in chat when you cut the fingers off of gloves.
+  timothymtorres:
+  - qol: The floor is lava admin/wizard event can be ignored by floating mobs
+  - rscadd: Added new chems for plants.  Novaflowers now have Sulphuric Acid and Corpse
+      Flowers now have Fluorine.  Combine these chems with a Carbon Rose to create
+      foam effects on harvest.
+2022-08-30:
+  Mooshimi:
+  - bugfix: Tramstation robotics gets its shutters button, but it's not on a desk
+      so you can't crush people what's the point?
+  NamelessFairy:
+  - bugfix: Updated the right click vs alt click tip to refer to shift right clicking
+      instead of right clicking
+  Profakos:
+  - bugfix: The aux base construction console is once again present on Tramstation
+  ShizCalev:
+  - bugfix: Anomalies will no longer spawn ontop of lava / plasma rivers.
+  Striders13:
+  - bugfix: some windoors are no longer invisible due to being hidden below shutters
+  itseasytosee:
+  - qol: Monkeys wont trip over each other anymore, and will only trip if you run
+      into them with combat mode on.
+  - qol: Player monkeys can now opt in to tripping like a regular monkey.
+  - refactor: Stores monkey tripping in the brain, rather than the AI controller
+  - refactor: Traits such as literacy and advanced tool use are now tied to the brain
+      rather than the species
+  - bugfix: Monkeys have found absolution. They now once again "seem like themselves"
+  - bugfix: Butchering now properly requires you to be in combat mode.
+  - bugfix: Monkeys will no longer attack with items worse than their basic bite.
+  - bugfix: Preforming surgery steps now requires the surgeon not to be in combat
+      mode.
+  kawoppi:
+  - admin: added logging for the rare Aurora Caelus oven ignition
+  san7890:
+  - qol: When you examine or use an AI Law Module in-hand, it should look a lot nicer
+      as you read the laws that you're about to subject that poor silicon to.
+  - bugfix: When ghosts examine AI Law Modules, they are now able to see the actual
+      laws on the board.
+  timothymtorres:
+  - qol: Add logging when Protocol CRAB-17 is used.
+  tralezab:
+  - rscadd: Prisoners can now select their crime in their character preferences.

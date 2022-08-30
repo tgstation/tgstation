@@ -631,34 +631,11 @@
 /obj/effect/anomaly/dimensional/proc/relocate()
 	var/datum/anomaly_placer/placer = new()
 	var/area/new_area = placer.findValidArea()
-
-	var/list/valid_turfs = list()
-	for (var/turf/try_turf as anything in get_area_turfs(new_area))
-		if (!is_valid_destination(try_turf))
-			continue
-		valid_turfs += try_turf
-
-	if (!valid_turfs.len)
-		CRASH("Dimensional anomaly attempted to reach invalid location [new_area].")
+	var/turf/new_turf = placer.findValidTurf(new_area)
 
 	priority_announce("Dimensional instability relocated. Expected location: [new_area.name].", "Anomaly Alert")
-	src.forceMove(pick(valid_turfs))
+	src.forceMove(new_turf)
 	prepare_area()
-
-/**
- * Returns true if the provided turf is valid to place an anomaly on.
- *
- * Arguments
- * * tested - Turf to try landing on.
- */
-/obj/effect/anomaly/dimensional/proc/is_valid_destination(turf/tested)
-	if (isspaceturf(tested))
-		return FALSE
-	if (tested.density)
-		return FALSE
-	if (tested.is_blocked_turf(exclude_mobs = TRUE))
-		return FALSE
-	return TRUE
 
 /obj/effect/temp_visual/transmute_tile_flash
 	icon = 'icons/effects/effects.dmi'

@@ -5,6 +5,7 @@
 	min_players = 10
 	max_occurrences = 5
 	weight = 20
+	description = "This anomaly replaces the materials of the surrounding area."
 
 /datum/round_event/anomaly/anomaly_dimensional
 	startWhen = 10
