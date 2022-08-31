@@ -429,7 +429,8 @@
 		if(excess > lastused_total) // if power excess recharge the cell
 										// by the same amount just used
 			cell.give(cellused)
-			add_load(cellused WATTS) // add the load used to recharge the cell
+			if(cell) //make sure the cell didn't expode and actually used power.
+				add_load(cellused WATTS) // add the load used to recharge the cell
 
 
 		else // no excess, and not enough per-apc
