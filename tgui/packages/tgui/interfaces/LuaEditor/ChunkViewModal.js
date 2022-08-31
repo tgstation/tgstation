@@ -7,7 +7,9 @@ export const ChunkViewModal = (props, context) => {
   const [, setModal] = useLocalState(context, 'modal');
   const [viewedChunk, setViewedChunk] = useLocalState(context, 'viewedChunk');
   return (
-    <Modal height="600px" width="500px">
+    <Modal
+      height={`${window.innerHeight * 0.8}px`}
+      width={`${window.innerWidth * 0.5}px`}>
       <Section
         fill
         scrollable

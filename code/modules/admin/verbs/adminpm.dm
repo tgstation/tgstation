@@ -450,6 +450,20 @@
 
 	// Ok by this point the recipient has to be an admin, and this is either an admin on admin event, or a player replying to an admin
 
+	// You're replying to a ticket that is closed. Bad move. You must have started replying before the close, and then got input()'d
+	// Lets be nice and pass this off to a new ticket, as we recomend above
+	if(!ticket)
+		to_chat(src,
+			type = MESSAGE_TYPE_ADMINPM,
+			html = span_danger("Error: Admin-PM-Send: Attempted to send a reply to a closed ticket."),
+			confidential = TRUE)
+		to_chat(src,
+			type = MESSAGE_TYPE_ADMINPM,
+			html = span_notice("Relaying message to a new admin help."),
+			confidential = TRUE)
+		GLOB.admin_help_ui_handler.perform_adminhelp(src, raw_message, FALSE)
+		return FALSE
+
 	// Let's play some music for the admin, only if they want it tho
 	if(sound_prefs & SOUND_ADMINHELP)
 		SEND_SOUND(recipient, sound('sound/effects/adminhelp.ogg'))
@@ -550,8 +564,8 @@
 		return
 
 	var/client/recipient = ambiguious_recipient
-	// The ckey of our recipient
-	var/recipient_key = recipient?.ckey
+	// The key of our recipient
+	var/recipient_key = recipient?.key
 	// Shows the recipient's ckey and the name of any mob it might be possessing
 	var/recipient_name = key_name(recipient)
 	// Shows the recipient's ckey/name embedded inside a clickable link to reply to this message

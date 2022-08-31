@@ -22,7 +22,7 @@
 	/// If we're off the station's Z-level
 	var/far_from_home = FALSE
 
-/obj/item/kheiral_cuffs/Initialize()
+/obj/item/kheiral_cuffs/Initialize(mapload)
 	. = ..()
 	update_icon(UPDATE_OVERLAYS)
 	RegisterSignal(src, COMSIG_MOVABLE_Z_CHANGED, .proc/check_z)

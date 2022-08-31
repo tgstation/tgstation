@@ -78,7 +78,7 @@
 /obj/item/reagent_containers/borghypo
 	name = "cyborg hypospray"
 	desc = "An advanced chemical synthesizer and injection system, designed for heavy-duty medical equipment."
-	icon = 'icons/obj/syringe.dmi'
+	icon = 'icons/obj/medical/syringe.dmi'
 	inhand_icon_state = "hypo"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
@@ -215,9 +215,12 @@
 		if(reagent.name == action)
 			selected_reagent = reagent
 			. = TRUE
-			playsound(loc, 'sound/effects/pop.ogg', 50, FALSE)
 
-			var/mob/living/silicon/robot/cyborg = src.loc
+			var/mob/living/silicon/robot/cyborg = loc
+			if(istype(loc, /obj/item/robot_model))
+				var/obj/item/robot_model/container_model = loc
+				cyborg = container_model.robot
+			playsound(cyborg, 'sound/effects/pop.ogg', 50, FALSE)
 			balloon_alert(cyborg, "dispensing [selected_reagent.name]")
 			break
 

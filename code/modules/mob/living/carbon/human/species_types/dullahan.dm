@@ -3,9 +3,6 @@
 	id = SPECIES_DULLAHAN
 	species_traits = list(EYECOLOR, HAIR, FACEHAIR, LIPS, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
-		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
 		TRAIT_NOHUNGER,
 	)
@@ -157,7 +154,7 @@
 
 /obj/item/organ/internal/brain/dullahan
 	decoy_override = TRUE
-	organ_flags = 0
+	organ_flags = NONE
 
 /obj/item/organ/internal/tongue/dullahan
 	zone = "abstract"

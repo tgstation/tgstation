@@ -6,6 +6,8 @@
 	earliest_start = 20 MINUTES
 	min_players = 20
 	dynamic_should_hijack = TRUE
+	category = EVENT_CATEGORY_INVASION
+	description = "A space ninja infiltrates the station."
 
 /datum/round_event/ghost_role/space_ninja
 	minimum_required = 1
@@ -36,7 +38,7 @@
 	ninja.mind.add_antag_datum(/datum/antagonist/ninja)
 	spawned_mobs += ninja
 	message_admins("[ADMIN_LOOKUPFLW(ninja)] has been made into a space ninja by an event.")
-	log_game("[key_name(ninja)] was spawned as a ninja by an event.")
+	ninja.log_message("was spawned as a ninja by an event.", LOG_GAME)
 
 	return SUCCESSFUL_SPAWN
 

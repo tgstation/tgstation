@@ -167,7 +167,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 				continue
 			else
 				var/varval = Master.vars[varname]
-				if (istype(varval, /datum)) // Check if it has a type var.
+				if (isdatum(varval)) // Check if it has a type var.
 					var/datum/D = varval
 					msg += "\t [varname] = [D]([D.type])\n"
 				else
@@ -241,7 +241,10 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 			if (subsystem.flags & SS_NO_INIT || subsystem.initialized) //Don't init SSs with the correspondig flag or if they already are initialzized
 				continue
 			current_initializing_subsystem = subsystem
-			subsystem.Initialize(REALTIMEOFDAY)
+
+			rustg_time_reset(SS_INIT_TIMER_KEY)
+			subsystem.Initialize()
+
 			CHECK_TICK
 		current_initializing_subsystem = null
 		init_stage_completed = current_init_stage

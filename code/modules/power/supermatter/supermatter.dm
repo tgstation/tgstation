@@ -17,7 +17,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal
 	name = "supermatter crystal"
 	desc = "A strangely translucent and iridescent crystal."
-	icon = 'icons/obj/supermatter.dmi'
+	icon = 'icons/obj/engine/supermatter.dmi'
 	icon_state = "darkmatter"
 	density = TRUE
 	anchored = TRUE
@@ -40,10 +40,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	///The amount of damage we have currently
 	var/damage = 0
-	/// The damage we had before this cycle. 
+	/// The damage we had before this cycle.
 	/// Used to limit the damage we can take each cycle, and to check if we are currently taking damage or healing.
 	var/damage_archived = 0
-	
+
 	///The point at which we consider the supermatter to be [SUPERMATTER_STATUS_WARNING]
 	var/warning_point = 50
 	var/warning_channel = RADIO_CHANNEL_ENGINEERING
@@ -117,6 +117,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/zauker = ZAUKER_TRANSMIT_MODIFIER,
 		/datum/gas/hypernoblium = HYPERNOBLIUM_TRANSMIT_MODIFIER,
 		/datum/gas/antinoblium = ANTINOBLIUM_TRANSMIT_MODIFIER,
+		/datum/gas/freon = FREON_TRANSMIT_MODIFIER,
+		/datum/gas/water_vapor = H20_TRANSMIT_MODIFIER,
 	)
 	///The list of gases mapped against their heat penaltys. We use it to determin molar and heat output
 	var/list/gas_heat = list(
@@ -250,7 +252,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///Do we show this crystal in the CIMS modular program
 	var/include_in_cims = TRUE
 
-	var/freonbonus = 0
 	///Hue shift of the zaps color based on the power of the crystal
 	var/hue_angle_shift = 0
 	///Reference to the warp effect
@@ -267,7 +268,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	/// How we are delaminating.
 	var/datum/sm_delam/delamination_strategy
-	/// Whether the sm is forced in a specific delamination_strategy or not. All truthy values means it's forced. 
+	/// Whether the sm is forced in a specific delamination_strategy or not. All truthy values means it's forced.
 	/// Only values greater or equal to the current one can change the strat.
 	var/delam_priority = SM_DELAM_PRIO_NONE
 
@@ -440,9 +441,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		step_towards(movable_atom,center)
 
 /**
- * Count down, spout some messages, and then execute the delam itself. 
+ * Count down, spout some messages, and then execute the delam itself.
  * We guard for last second delam strat changes here, mostly because some have diff messages.
- * 
+ *
  * By last second changes, we mean that it's possible for say, a tesla delam to
  * just explode normally if at the absolute last second it loses power and switches to default one.
  * Even after countdown is already in progress.
@@ -453,7 +454,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(final_countdown) // We're already doing it go away
 		stack_trace("[src] told to delaminate again while it's already delaminating.")
 		return
-	
+
 	final_countdown = TRUE
 	update_appearance()
 
@@ -469,10 +470,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	for(var/i in SUPERMATTER_COUNTDOWN_TIME to 0 step -10)
 		if(last_delamination_strategy != delamination_strategy)
 			count_down_messages = delamination_strategy.count_down_messages()
+			last_delamination_strategy = delamination_strategy
 
 		var/message
 		var/healed = FALSE
-		
+
 		if(damage < explosion_point) // Cutting it a bit close there engineers
 			message = count_down_messages[2]
 			healed = TRUE
@@ -485,7 +487,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			message = "[i*0.1]..."
 
 		radio.talk_into(src, message, emergency_channel)
-		
+
 		if(healed)
 			final_countdown = FALSE
 			update_appearance()
@@ -563,7 +565,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(target_type > LIVING)
 			continue
 
-		if(istype(test, /mob/living/))
+		if(isliving(test))
 			var/mob/living/alive = test
 			if(!(HAS_TRAIT(alive, TRAIT_TESLA_SHOCKIMMUNE)) && !(alive.flags_1 & SHOCKED_1) && alive.stat != DEAD && prob(20))//let's not hit all the engineers with every beam and/or segment of the arc
 				if(target_type != LIVING)
@@ -574,7 +576,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(target_type > MACHINERY)
 			continue
 
-		if(istype(test, /obj/machinery/))
+		if(ismachinery(test))
 			var/obj/machinery/machine = test
 			if(!(machine.obj_flags & BEING_SHOCKED) && prob(40))
 				if(target_type != MACHINERY)
@@ -585,7 +587,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(target_type > OBJECT)
 			continue
 
-		if(istype(test, /obj/))
+		if(isobj(test))
 			var/obj/object = test
 			if(!(object.obj_flags & BEING_SHOCKED))
 				if(target_type != OBJECT)
@@ -692,7 +694,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	icon_state = "darkmatter"
 
 /obj/overlay/psy
-	icon = 'icons/obj/supermatter.dmi'
+	icon = 'icons/obj/engine/supermatter.dmi'
 	icon_state = "psy"
 	layer = FLOAT_LAYER - 1
 

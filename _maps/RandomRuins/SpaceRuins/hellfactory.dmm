@@ -106,8 +106,8 @@
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
-/obj/item/reagent_containers/glass/beaker/large,
-/obj/item/reagent_containers/glass/beaker/large,
+/obj/item/reagent_containers/cup/beaker/large,
+/obj/item/reagent_containers/cup/beaker/large,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "au" = (
@@ -507,7 +507,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/reagent_containers/food/drinks/flask,
+/obj/item/reagent_containers/cup/glass/flask,
 /obj/item/stack/sheet/glass,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
@@ -595,7 +595,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced,
-/obj/item/reagent_containers/food/drinks/shaker,
+/obj/item/reagent_containers/cup/glass/shaker,
 /obj/item/stack/sheet/cardboard,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
@@ -678,10 +678,7 @@
 /area/ruin/space/has_grav/hellfactory)
 "cm" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/highcap/ten_k{
-	dir = 1;
-	pixel_y = 25
-	},
+/obj/machinery/power/apc/highcap/ten_k/directional/north,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "cn" = (
@@ -943,10 +940,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "wv" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	dir = 1;
-	pixel_y = 25
-	},
+/obj/machinery/power/apc/highcap/ten_k/directional/north,
 /obj/structure/cable,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hellfactoryoffice)

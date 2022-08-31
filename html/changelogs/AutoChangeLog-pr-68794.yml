@@ -1,4 +1,0 @@
-author: "GoblinBackwards"
-delete-after: True
-changes: 
-  - bugfix: "Fixes heretic curses always failing and saying the items had no fingerprints."

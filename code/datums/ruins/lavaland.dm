@@ -250,3 +250,11 @@
 	suffix = "lavaland_surface_elephant_graveyard.dmm"
 	allow_duplicates = FALSE
 	cost = 10
+
+/datum/map_template/ruin/lavaland/bileworm_nest
+	name = "Bileworm Nest"
+	id = "bileworm_nest"
+	description = "A small sanctuary from the harsh wilderness... if you're a bileworm, that is."
+	cost = 5
+	suffix = "lavaland_surface_bileworm_nest.dmm"
+	allow_duplicates = FALSE

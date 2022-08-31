@@ -1,4 +1,0 @@
-author: "Tastyfish"
-delete-after: True
-changes: 
-  - qol: "Searching within a material stack's recipes now searches the categorized recipes as well."

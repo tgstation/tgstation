@@ -38,8 +38,6 @@
 	/// Trait modification, lazylist of traits to add/take away, on equipment/drop in the correct slot
 	var/list/clothing_traits
 
-	var/pocket_storage_component_path
-
 	/// How much clothing damage has been dealt to each of the limbs of the clothing, assuming it covers more than one limb
 	var/list/damage_by_parts
 	/// How much integrity is in a specific limb before that limb is disabled (for use in [/obj/item/clothing/proc/take_damage_zone], and only if we cover multiple zones.) Set to 0 to disable shredding.
@@ -55,8 +53,6 @@
 		actions_types += /datum/action/item_action/toggle_voice_box
 	. = ..()
 	AddElement(/datum/element/venue_price, FOOD_PRICE_CHEAP)
-	if(ispath(pocket_storage_component_path))
-		LoadComponent(pocket_storage_component_path)
 	if(can_be_bloody && ((body_parts_covered & FEET) || (flags_inv & HIDESHOES)))
 		LoadComponent(/datum/component/bloodysoles)
 	if(!icon_state)
@@ -238,7 +234,7 @@
 		return
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	for(var/trait in clothing_traits)
-		REMOVE_TRAIT(user, trait, "[CLOTHING_TRAIT] [REF(src)]")
+		REMOVE_TRAIT(user, trait, "[CLOTHING_TRAIT]_[REF(src)]")
 
 
 	if(LAZYLEN(user_vars_remembered))
@@ -256,7 +252,7 @@
 		if(iscarbon(user) && LAZYLEN(zones_disabled))
 			RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/bristle, override = TRUE)
 		for(var/trait in clothing_traits)
-			ADD_TRAIT(user, trait, "[CLOTHING_TRAIT] [REF(src)]")
+			ADD_TRAIT(user, trait, "[CLOTHING_TRAIT]_[REF(src)]")
 		if (LAZYLEN(user_vars_to_edit))
 			for(var/variable in user_vars_to_edit)
 				if(variable in user.vars)

@@ -40,7 +40,7 @@
 
 /mob/living/simple_animal/hostile/hivebot/Initialize(mapload)
 	. = ..()
-	deathmessage = "[src] blows apart!"
+	death_message = "[src] blows apart!"
 
 /mob/living/simple_animal/hostile/hivebot/Aggro()
 	. = ..()
@@ -114,7 +114,7 @@
 	foam.Grant(src)
 
 /mob/living/simple_animal/hostile/hivebot/mechanic/AttackingTarget()
-	if(istype(target, /obj/machinery))
+	if(ismachinery(target))
 		var/obj/machinery/fixable = target
 		if(fixable.get_integrity() >= fixable.max_integrity)
 			to_chat(src, span_warning("Diagnostics indicate that this machine is at peak integrity."))
