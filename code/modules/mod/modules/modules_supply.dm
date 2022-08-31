@@ -305,7 +305,7 @@
 	icon_state = "magnet_loader"
 	module_type = MODULE_ACTIVE
 	removable = FALSE
-	use_power_cost = DEFAULT_CHARGE_DRAIN*3
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 3
 	incompatible_modules = list(/obj/item/mod/module/magnet)
 	cooldown_time = 1.5 SECONDS
 	overlay_state_active = "module_magnet"
@@ -472,8 +472,8 @@
 	icon_state = "sphere"
 	module_type = MODULE_ACTIVE
 	removable = FALSE
-	active_power_cost = DEFAULT_CHARGE_DRAIN*0.5
-	use_power_cost = DEFAULT_CHARGE_DRAIN*3
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 3
 	incompatible_modules = list(/obj/item/mod/module/sphere_transform)
 	cooldown_time = 1.25 SECONDS
 	/// Time it takes us to complete the animation.

@@ -204,7 +204,10 @@
 	idle_power_cost = linked_bodybag ? (DEFAULT_CHARGE_DRAIN * 3) : 0
 	return ..()
 
-/obj/item/mod/module/criminalcapture/on_suit_deactivation(deleting)
+/obj/item/mod/module/criminalcapture/on_deactivation(display_message, deleting)
+	. = ..()
+	if(!.)
+		return
 	if(!linked_bodybag)
 		return
 	packup()
@@ -216,7 +219,7 @@
 	if(!mod.wearer.Adjacent(target))
 		return
 	if(target == linked_bodybag)
-		playsound(src, 'sound/items/zip.ogg', 25, TRUE)
+		playsound(src, 'sound/machines/ding.ogg', 25, TRUE)
 		if(!do_after(mod.wearer, packup_time, target = target))
 			balloon_alert(mod.wearer, "interrupted!")
 		packup()
@@ -226,9 +229,11 @@
 	var/turf/target_turf = get_turf(target)
 	if(target_turf.is_blocked_turf(exclude_mobs = TRUE))
 		return
-	playsound(src, 'sound/items/zip.ogg', 25, TRUE)
+	playsound(src, 'sound/machines/ding.ogg', 25, TRUE)
 	if(!do_after(mod.wearer, capture_time, target = target))
 		balloon_alert(mod.wearer, "interrupted!")
+		return
+	if(linked_bodybag)
 		return
 	linked_bodybag = new bodybag_type(target_turf)
 	linked_bodybag.take_contents()
@@ -241,7 +246,7 @@
 		return
 	playsound(linked_bodybag, 'sound/weapons/egloves.ogg', 80, TRUE)
 	apply_wibbly_filters(linked_bodybag)
-	animate(linked_bodybag, 0.5 SECONDS, alpha = 0, flags = ANIMATION_PARALLEL)
+	animate(linked_bodybag, 0.5 SECONDS, alpha = 50, flags = ANIMATION_PARALLEL)
 	addtimer(CALLBACK(src, .proc/delete_bag, linked_bodybag), 0.5 SECONDS)
 	linked_bodybag = null
 
@@ -367,7 +372,7 @@
 		return
 	balloon_alert(mod.wearer, "readying sonar...")
 	playsound(mod.wearer, 'sound/mecha/skyfall_power_up.ogg', vol = 20, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
-	if(!do_after(mod.wearer, 1.1 SECONDS))
+	if(!do_after(mod.wearer, 1.1 SECONDS, target = mod))
 		return
 	var/creatures_detected = 0
 	for(var/mob/living/creature in range(9, mod.wearer))

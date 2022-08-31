@@ -1357,6 +1357,48 @@
 	build_path = /obj/item/mod/module/holster
 	department_type = MODULE_SECURITY
 
+/datum/design/module/mod_sonar
+	name = "MOD Module: Active Sonar"
+	id = "mod_sonar"
+	materials = list(/datum/material/titanium = 250, /datum/material/glass = 1000, /datum/material/gold = 500, /datum/material/uranium = 250)
+	build_path = /obj/item/mod/module/active_sonar
+	department_type = MODULE_SECURITY
+
+/datum/design/module/projectile_dampener
+	name = "MOD Module: Projectile Dampener"
+	id = "mod_projectile_dampener"
+	materials = list(/datum/material/iron = 1000, /datum/material/bluespace = 500)
+	build_path = /obj/item/mod/module/projectile_dampener
+	department_type = MODULE_SECURITY
+
+/datum/design/module/surgicalprocessor
+	name = "MOD Module: Surgical Processor"
+	id = "mod_surgicalprocessor"
+	materials = list(/datum/material/titanium = 250, /datum/material/glass = 1000, /datum/material/silver = 1500)
+	build_path = /obj/item/mod/module/surgical_processor
+	department_type = MODULE_MEDICAL
+
+/datum/design/module/threadripper
+	name = "MOD Module: Thread Ripper"
+	id = "mod_threadripper"
+	materials = list(/datum/material/titanium = 250, /datum/material/plastic = 1000, /datum/material/silver = 1500)
+	build_path = /obj/item/mod/module/thread_ripper
+	department_type = MODULE_MEDICAL
+
+/datum/design/module/defibrillator
+	name = "MOD Module: Defibrillator"
+	id = "mod_defib"
+	materials = list(/datum/material/titanium = 250, /datum/material/diamond = 1000, /datum/material/silver = 1500)
+	build_path = /obj/item/mod/module/defibrillator
+	department_type = MODULE_MEDICAL
+
+/datum/design/module/patienttransport
+	name = "MOD Module: Patient Transport"
+	id = "mod_patienttransport"
+	materials = list(/datum/material/iron = 1000, /datum/material/bluespace = 1000)
+	build_path = /obj/item/mod/module/criminalcapture/patienttransport
+	department_type = MODULE_MEDICAL
+
 //MODsuit bepis modules
 
 /datum/design/module/disposal
@@ -1388,17 +1430,3 @@
 	materials = list(/datum/material/iron = 2500, /datum/material/glass = 2000, /datum/material/uranium = 1000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/mod/module/anomaly_locked/kinesis
 	department_type = MODULE_ENGINEERING
-
-/datum/design/module/mod_sonar
-	name = "MOD Module: Active Sonar"
-	id = "mod_sonar"
-	materials = list(/datum/material/titanium = 250, /datum/material/glass = 1000, /datum/material/gold = 500, /datum/material/uranium = 250)
-	build_path = /obj/item/mod/module/active_sonar
-	department_type = MODULE_SECURITY
-
-/datum/design/module/projectile_dampener
-	name = "MOD Module: Projectile Dampener"
-	id = "mod_projectile_dampener"
-	materials = list(/datum/material/iron = 1000, /datum/material/bluespace = 500)
-	build_path = /obj/item/mod/module/projectile_dampener
-	department_type = MODULE_SECURITY

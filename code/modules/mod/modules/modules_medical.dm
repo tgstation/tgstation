@@ -216,8 +216,12 @@
 ///Patrient Transport - Generates hardlight bags you can put people in.
 /obj/item/mod/module/criminalcapture/patienttransport
 	name = "MOD patient transport module"
-	desc = "A modified version of the security criminal capture module, this module creates hardlight bags to \
-		safely transfer patients throughout hostile environments."
+	desc = "A module built into the forearm of the suit. Countless waves of mostly-lost mining teams being sent to \
+		Indecipheries and other hazardous locations have taught the DeForest Medical Company many lessons. \
+		Physical bodybags are difficult to store, hard to deploy, and even worse to keep intact in tough scenarios. \
+		Enter the hardlight transport bag. Summonable with merely a gesture, weightless, and immunized against \
+		any extreme scenario the wearer could think of, this bag is perfectly designed for \
+		transport of any body in any environment, any time."
 	icon_state = "patient_transport"
 	bodybag_type = /obj/structure/closet/body_bag/environmental/hardlight
 	capture_time = 1.5 SECONDS
@@ -226,12 +230,16 @@
 ///Defibrillator - Gives the suit an extendable pair of shock paddles.
 /obj/item/mod/module/defibrillator
 	name = "MOD defibrillator module"
-	desc = "A modified form of the standard defibrillator, this pair of shock paddles can resuscitate people suffering from \
-		symptoms such as... death. The ride never ends."
+	desc = "A module built into the gauntlets of the suit; commonly known as the 'Healing Hands' by medical professionals. \
+		The user places their palms above the patient. Onboard computers in the suit calculate the necessary voltage, \
+		and a modded targeting computer determines the best position for the user to push. \
+		Twenty five pounds of force are applied to the patient's skin. Shocks travel from the suit's gloves \
+		and counter-shock the heart, and the wearer returns to Medical a hero. Don't you even think about using it as a weapon; \
+		regulations on manufacture and software locks expressly forbid it."
 	icon_state = "defibrillator"
 	module_type = MODULE_ACTIVE
 	complexity = 2
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 10
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 25
 	device = /obj/item/shockpaddles/mod
 	incompatible_modules = list(/obj/item/mod/module/defibrillator)
 	cooldown_time = 0.5 SECONDS
@@ -250,14 +258,95 @@
 	name = "MOD defibrillator paddles"
 	req_defib = FALSE
 
-///Thread Ripper - Temporarily rips apart clothing to make it not cover the body
+///Thread Ripper - Temporarily rips apart clothing to make it not cover the body.
 /obj/item/mod/module/thread_ripper
 	name = "MOD thread ripper module"
-	desc = "A custom built tool to temporarily tear apart the fabric in clothing, allowing for use of medical tools just \
-		like on bare flesh."
+	desc = "A custom-built module integrated with the suit's wrist. The thread ripper is built from \
+		recent technology dating back to the start of 2562, after an attempt by a well-known Nanotrasen researcher to \
+		expand on the rapid-tailoring technology found in Autodrobes. Rather than being capable of creating \
+		any fabric pattern under the suns, the thread ripper is capable of rapid disassembly of them. \
+		Anything from kevlar-weave, to leather, to durathread can be quickly pulled open to the wearer's specification \
+		and sewn back together, a development commonly utilized by Medical workers to obtain easy access for \
+		surgery, defibrillation, or injection of chemicals to ease patients into not worrying about their \
+		brand-name fashion being marred."
 	icon_state = "thread_ripper"
 	module_type = MODULE_ACTIVE
 	complexity = 2
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
+	use_power_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/thread_ripper)
 	cooldown_time = 1.5 SECONDS
+	overlay_state_inactive = "module_threadripper"
+	/// An associated list of ripped clothing and the body part covering slots they covered before
+	var/list/ripped_clothing = list()
+
+/obj/item/mod/module/thread_ripper/on_select_use(atom/target)
+	. = ..()
+	if(!.)
+		return
+	if(!mod.wearer.Adjacent(target) || !iscarbon(target))
+		return
+	var/mob/living/carbon/carbon_target = target
+	if(length(ripped_clothing))
+		balloon_alert(mod.wearer, "already ripped!")
+		return
+	balloon_alert(mod.wearer, "ripping clothing...")
+	playsound(src, 'sound/items/zip.ogg', 25, TRUE, frequency = -1)
+	if(!do_after(mod.wearer, 1.5 SECONDS, target = carbon_target))
+		balloon_alert(mod.wearer, "interrupted!")
+		return
+	var/target_zones = body_zone2cover_flags(mod.wearer.zone_selected)
+	for(var/obj/item/clothing as anything in carbon_target.get_all_worn_items())
+		if(!clothing)
+			continue
+		var/shared_flags = target_zones & clothing.body_parts_covered
+		if(shared_flags)
+			ripped_clothing[clothing] = shared_flags
+			clothing.body_parts_covered &= ~shared_flags
+
+/obj/item/mod/module/thread_ripper/on_process(delta_time)
+	. = ..()
+	if(!.)
+		return
+	if(!length(ripped_clothing))
+		return
+	var/zipped = FALSE
+	for(var/obj/item/clothing as anything in ripped_clothing)
+		if(QDELETED(clothing))
+			ripped_clothing -= clothing
+			continue
+		if(mod.wearer.CanReach(clothing, view_only = TRUE))
+			continue
+		zipped = TRUE
+		clothing.body_parts_covered |= ripped_clothing[clothing]
+		ripped_clothing -= clothing
+	if(zipped)
+		playsound(src, 'sound/items/zip.ogg', 25, TRUE)
+		balloon_alert(mod.wearer, "clothing mended")
+
+/obj/item/mod/module/thread_ripper/on_suit_deactivation(deleting)
+	if(!length(ripped_clothing))
+		return
+	for(var/obj/item/clothing as anything in ripped_clothing)
+		if(QDELETED(clothing))
+			ripped_clothing -= clothing
+			continue
+		clothing.body_parts_covered |= ripped_clothing[clothing]
+	ripped_clothing = list()
+	if(!deleting)
+		playsound(src, 'sound/items/zip.ogg', 25, TRUE)
+
+///Surgical Processor - Lets you do advanced surgeries portably.
+/obj/item/mod/module/surgical_processor
+	name = "MOD surgical processor module"
+	desc = "A module using an onboard surgical computer which can be connected to other computers to download and \
+		perform advanced surgeries on the go."
+	icon_state = "surgical_processor"
+	module_type = MODULE_ACTIVE
+	complexity = 2
+	active_power_cost = DEFAULT_CHARGE_DRAIN
+	device = /obj/item/surgical_processor/mod
+	incompatible_modules = list(/obj/item/mod/module/surgical_processor)
+	cooldown_time = 0.5 SECONDS
+
+/obj/item/surgical_processor/mod
+	name = "MOD surgical processor"

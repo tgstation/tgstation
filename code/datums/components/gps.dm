@@ -168,7 +168,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 			gpstag = a
 			. = TRUE
 			log_game("[key_name(usr)] renamed [parentasatom] to \"global positioning system ([gpstag])\".")
-			parentasatom.name = "global positioning system ([gpstag])"
+			parentasatom.name = "[initial(parentasatom.name)] ([gpstag])"
 
 		if("power")
 			toggletracking(usr)
