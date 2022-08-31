@@ -2,6 +2,7 @@
 	name = "wizard hat"
 	desc = "Strange-looking hat-wear that most certainly belongs to a real magic user."
 	icon_state = "wizard"
+	inhand_icon_state = "wizhat"
 	armor = list(MELEE = 30, BULLET = 20, LASER = 20, ENERGY = 30, BOMB = 20, BIO = 100, FIRE = 100, ACID = 100,  WOUND = 20)
 	strip_delay = 50
 	equip_delay_other = 50

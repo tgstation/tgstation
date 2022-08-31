@@ -79,12 +79,12 @@
 
 /datum/greyscale_config/jumpsuit_inhand_left
 	name = "Held Jumpsuit, Left"
-	icon_file = 'icons/mob/inhands/clothing_lefthand.dmi'
+	icon_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
 	json_config = 'code/datums/greyscale/json_configs/jumpsuit_inhand.json'
 
 /datum/greyscale_config/jumpsuit_inhand_right
 	name = "Held Jumpsuit, Right"
-	icon_file = 'icons/mob/inhands/clothing_righthand.dmi'
+	icon_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	json_config = 'code/datums/greyscale/json_configs/jumpsuit_inhand.json'
 
 /datum/greyscale_config/jumpsuit_prison
@@ -99,12 +99,12 @@
 
 /datum/greyscale_config/jumpsuit_prison_inhand_left
 	name = "Held Prison Jumpsuit, Left"
-	icon_file = 'icons/mob/inhands/clothing_lefthand.dmi'
+	icon_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
 	json_config = 'code/datums/greyscale/json_configs/jumpsuit_prison_inhand.json'
 
 /datum/greyscale_config/jumpsuit_prison_inhand_right
 	name = "Held Prison Jumpsuit, Right"
-	icon_file = 'icons/mob/inhands/clothing_righthand.dmi'
+	icon_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	json_config = 'code/datums/greyscale/json_configs/jumpsuit_prison_inhand.json'
 
 /datum/greyscale_config/tablet

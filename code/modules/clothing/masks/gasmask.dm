@@ -309,6 +309,7 @@
 	name = "owl mask"
 	desc = "Twoooo!"
 	icon_state = "owl"
+	inhand_icon_state = "owl_mask"
 	clothing_flags = MASKINTERNALS
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
