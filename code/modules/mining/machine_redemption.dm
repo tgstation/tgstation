@@ -367,6 +367,7 @@
 		return
 	var/image/ore_input
 	var/image/ore_output
+
 	switch(input_dir)
 		if(NORTH)
 			ore_input = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_n")
@@ -390,5 +391,14 @@
 			ore_output.pixel_x = 32
 	ore_input.color = COLOR_MODERATE_BLUE
 	ore_output.color = COLOR_SECURITY_RED
+	var/mutable_appearance/light_in = emissive_appearance(ore_input.icon, ore_input.icon_state, alpha = ore_input.alpha)
+	light_in.pixel_y = ore_input.pixel_y
+	light_in.pixel_x = ore_input.pixel_x
+	var/mutable_appearance/light_out = emissive_appearance(ore_output.icon, ore_output.icon_state, alpha = ore_output.alpha)
+	light_out.pixel_y = ore_output.pixel_y
+	light_out.pixel_x = ore_output.pixel_x
 	. += ore_input
 	. += ore_output
+	. += light_in
+	. += light_out
+
