@@ -25,9 +25,9 @@
 
 	src.master_name = master_name
 	update_static_data(owner.current)
+	INVOKE_ASYNC(src, .proc/display_panel)
+
+/// Shows the info panel, moved out into its own proc for signal handling reasons.
+/datum/antagonist/shade_minion/proc/display_panel()
 	var/datum/action/antag_info/info_button = info_button_ref?.resolve()
-	if (!info_button)
-		return
-	if (!istype(info_button))
-		return
-	info_button.Trigger()
+	info_button?.Trigger()
