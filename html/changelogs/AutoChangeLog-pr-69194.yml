@@ -1,0 +1,11 @@
+author: "Fikou, thgvr, Snakebitten"
+delete-after: True
+changes: 
+  - balance: "makes the standard quick carry modsuit module have nitrile level carrying speed instead of latex level"
+  - qol: "environmental bodybags are now always pressurized"
+  - rscadd: "adds a medical version of the prisoner capture modsuit module, for patient transport, prisoner capture and patient transport now use new medical/security hardlight bodybags, medical one deploying them faster. and security one being able to be locked down. when you move too far out of range the holobag dissipates"
+  - rscadd: "adds a defibrillator modsuit module, extends shock paddles"
+  - rscadd: "adds a thread ripper modsuit module, this module temporarily rips away the matter of clothing, to allow stuff like injections, surgery, defibrillation etc through it"
+  - rscadd: "adds a surgery processor modsuit module, essentially a portable surgery computer like borgs have"
+  - bugfix: "fixes a bug where you can unwield defibrillator paddles just after starting the do_after to defib onehanded"
+  - bugfix: "fixes a bug where the modsuit gps would have a broken name when renamed"
