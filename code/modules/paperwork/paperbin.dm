@@ -35,6 +35,10 @@
 			bin_pen = pen
 	update_appearance()
 
+/obj/item/paper_bin/Destroy()
+	QDEL_LIST(paper_stack)
+	return ..()
+
 /// Returns a fresh piece of paper
 /obj/item/paper_bin/proc/generate_paper()
 	var/obj/item/paper/paper = new papertype
@@ -141,7 +145,9 @@
 /obj/item/paper_bin/update_overlays()
 	. = ..()
 
-	var/static/reference_paper = new /obj/item/paper
+	var/static/reference_paper
+	if (isnull(reference_paper))
+		reference_paper = new /obj/item/paper
 
 	if(bin_pen)
 		pen_overlay = mutable_appearance(bin_pen.icon, bin_pen.icon_state)
