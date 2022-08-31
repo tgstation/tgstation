@@ -109,7 +109,6 @@
 	T.forge_brother_objectives()
 	new_owner.add_antag_datum(/datum/antagonist/brother,T)
 	bro.add_antag_datum(/datum/antagonist/brother, T)
-	T.update_name()
 	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner)] and [key_name_admin(bro)] into blood brothers.")
 	log_admin("[key_name(admin)] made [key_name(new_owner)] and [key_name(bro)] into blood brothers.")
 
