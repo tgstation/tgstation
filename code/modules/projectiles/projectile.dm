@@ -157,6 +157,8 @@
 	var/decayedRange //stores original range
 	var/reflect_range_decrease = 5 //amount of original range that falls off when reflecting, so it doesn't go forever
 	var/reflectable = NONE // Can it be reflected or not?
+	var/penetrate_mining_mobs = FALSE //Will this ignore the damage reduction applied to mining mobs (penetration also happens if BURN or +30 damage)
+	
 	// Status effects applied on hit
 	var/stun = 0
 	var/knockdown = 0
