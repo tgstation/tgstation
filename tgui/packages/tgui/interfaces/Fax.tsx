@@ -9,6 +9,7 @@ type FaxData = {
   fax_name: string;
   has_paper: string;
   syndicate_network: boolean;
+  notify_admins: boolean;
   fax_history: FaxHistory[];
 };
 
@@ -17,6 +18,7 @@ type FaxInfo = {
   fax_id: string;
   has_paper: boolean;
   syndicate_network: boolean;
+  notify_admins: boolean;
 };
 
 type FaxHistory = {
@@ -66,7 +68,7 @@ export const Fax = (props, context) => {
                 key={fax.fax_id}
                 title={fax.fax_name}
                 disabled={!data.has_paper}
-                color={fax.syndicate_network ? 'red' : 'blue'}
+                color={fax.syndicate_network ? 'red' : (fax.notify_admins) ? 'green' : 'blue'}
                 onClick={() =>
                   act('send', {
                     id: fax.fax_id,

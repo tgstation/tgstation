@@ -92,6 +92,7 @@
 		fax_data["has_paper"] = !!FAX.paper_contain
 		// Hacked doesn't mean on the syndicate network.
 		fax_data["syndicate_network"] = FAX.syndicate_network
+		fax_data["notify_admins"] = FAX.notify_admins_on_recieve
 		data["faxes"] += list(fax_data)
 
 	// Own data
@@ -99,6 +100,7 @@
 	data["fax_name"] = fax_name
 	// In this case, we don't care if the fax is hacked or in the syndicate's network. The main thing is to check the visibility of other faxes.
 	data["syndicate_network"] = (syndicate_network || (obj_flags & EMAGGED))
+	data["notify_admins"] = notify_admins_on_recieve
 	data["has_paper"] = !!paper_contain
 	data["fax_history"] = fax_history
 	return data
