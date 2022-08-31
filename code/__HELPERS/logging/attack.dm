@@ -19,7 +19,7 @@
 
 	var/mob/living/living_target = target
 	var/hp = istype(living_target) ? " (NEWHP: [living_target.health]) " : ""
-	var/integrity = (!isturf(target) && !istype(living_target)) ? "(NEWINT: [target.get_integrity()])" : ""
+	var/integrity = (!isturf(target) && !istype(living_target)) ? " (NEWINT: [target.get_integrity()])" : ""
 
 	var/sobject = ""
 	if(object)
