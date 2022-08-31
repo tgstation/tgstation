@@ -2,7 +2,7 @@
 
 /obj/machinery/portable_atmospherics
 	name = "portable_atmospherics"
-	icon = 'icons/obj/atmos.dmi'
+	icon = 'icons/obj/atmospherics/atmos.dmi'
 	use_power = NO_POWER_USE
 	max_integrity = 250
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 60, ACID = 30)
@@ -16,7 +16,7 @@
 	var/obj/item/tank/holding
 	///Volume (in L) of the inside of the machine
 	var/volume = 0
-	///Used to track if anything of note has happen while running process_atmos(). 
+	///Used to track if anything of note has happen while running process_atmos().
 	///Treat it as a process_atmos() scope var, we just declare it here to pass it between parent calls.
 	///Should be false on start of every process_atmos() proc, since true means we'll process again next tick.
 	var/excited = FALSE

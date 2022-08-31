@@ -154,16 +154,16 @@
 	target.update_appearance()
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
-/obj/item/reagent_containers/cup/attackby(obj/item/I, mob/user, params)
-	var/hotness = I.get_temperature()
+/obj/item/reagent_containers/cup/attackby(obj/item/attacking_item, mob/user, params)
+	var/hotness = attacking_item.get_temperature()
 	if(hotness && reagents)
 		reagents.expose_temperature(hotness)
-		to_chat(user, span_notice("You heat [name] with [I]!"))
+		to_chat(user, span_notice("You heat [name] with [attacking_item]!"))
 		return
 
 	//Cooling method
-	if(istype(I, /obj/item/extinguisher))
-		var/obj/item/extinguisher/extinguisher = I
+	if(istype(attacking_item, /obj/item/extinguisher))
+		var/obj/item/extinguisher/extinguisher = attacking_item
 		if(extinguisher.safety)
 			return
 		if (extinguisher.reagents.total_volume < 1)
@@ -171,22 +171,21 @@
 			return
 		var/cooling = (0 - reagents.chem_temp) * extinguisher.cooling_power * 2
 		reagents.expose_temperature(cooling)
-		to_chat(user, span_notice("You cool the [name] with the [I]!"))
+		to_chat(user, span_notice("You cool the [name] with the [attacking_item]!"))
 		playsound(loc, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
 		extinguisher.reagents.remove_all(1)
 		return
 
-	if(istype(I, /obj/item/food/egg)) //breaking eggs
-		var/obj/item/food/egg/E = I
+	if(istype(attacking_item, /obj/item/food/egg)) //breaking eggs
+		var/obj/item/food/egg/attacking_egg = attacking_item
 		if(!reagents)
 			return
 		if(reagents.total_volume >= reagents.maximum_volume)
 			to_chat(user, span_notice("[src] is full."))
 		else
-			to_chat(user, span_notice("You break [E] in [src]."))
-			for(var/datum/reagent/consumable/egg_reagents in E.food_reagents)
-				reagents.add_reagent(egg_reagents)
-			qdel(E)
+			to_chat(user, span_notice("You break [attacking_egg] in [src]."))
+			attacking_egg.reagents.trans_to(src, attacking_egg.reagents.total_volume, transfered_by = user)
+			qdel(attacking_egg)
 		return
 
 	return ..()
@@ -202,7 +201,7 @@
 /obj/item/reagent_containers/cup/beaker
 	name = "beaker"
 	desc = "A beaker. It can hold up to 50 units."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "beaker"
 	inhand_icon_state = "beaker"
 	worn_icon_state = "beaker"
@@ -219,7 +218,7 @@
 /obj/item/reagent_containers/cup/beaker/jar
 	name = "honey jar"
 	desc = "A jar for honey. It can hold up to 50 units of sweet delight."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "vapour"
 
 /obj/item/reagent_containers/cup/beaker/large
@@ -381,7 +380,7 @@
 	name = "pestle"
 	desc = "An ancient, simple tool used in conjunction with a mortar to grind or juice items."
 	w_class = WEIGHT_CLASS_SMALL
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "pestle"
 	force = 7
 
