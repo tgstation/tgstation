@@ -17,7 +17,6 @@
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | LONG_GLIDE
 	density = FALSE
-	explosion_block = EXPLOSION_BLOCK_PROC
 	divable = FALSE
 	///List of bitflags for supply pods, see: code\__DEFINES\obj_flags.dm
 	var/pod_flags = NONE
@@ -60,9 +59,6 @@
 	var/shrapnel_magnitude = 3
 	var/list/reverse_option_list = list("Mobs"=FALSE,"Objects"=FALSE,"Anchored"=FALSE,"Underfloor"=FALSE,"Wallmounted"=FALSE,"Floors"=FALSE,"Walls"=FALSE, "Mecha"=FALSE)
 	var/list/turfs_in_cargo = list()
-
-/obj/structure/closet/supplypod/GetExplosionBlock()
-	return density ? 0 : INFINITY //Makes us explosion proof until we've hit the ground.
 
 /obj/structure/closet/supplypod/bluespacepod
 	style = STYLE_BLUESPACE
@@ -237,6 +233,7 @@
 /obj/structure/closet/supplypod/proc/preOpen() //Called before the open_pod() proc. Handles anything that occurs right as the pod lands.
 	var/turf/turf_underneath = get_turf(src)
 	var/list/B = explosionSize //Mostly because B is more readable than explosionSize :p
+	resistance_flags = initial(resistance_flags)
 	set_density(TRUE) //Density is originally false so the pod doesn't block anything while it's still falling through the air
 	AddComponent(/datum/component/pellet_cloud, projectile_type=shrapnel_type, magnitude=shrapnel_magnitude)
 	if(effectShrapnel)
@@ -588,6 +585,7 @@
 	if (ispath(podParam)) //We can pass either a path for a pod (as expressconsoles do), or a reference to an instantiated pod (as the centcom_podlauncher does)
 		podParam = new podParam() //If its just a path, instantiate it
 	pod = podParam
+	pod.resistance_flags |= (INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF)
 	if (!pod.effectStealth)
 		helper = new (drop_location(), pod)
 		alpha = 255
