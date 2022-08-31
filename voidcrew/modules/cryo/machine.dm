@@ -24,6 +24,11 @@
 	icon_state = open_state
 	return INITIALIZE_HINT_LATELOAD //Gotta populate the cryopod computer GLOB first
 
+/obj/machinery/cryopod/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+	. = ..()
+	linked_ship = port
+	linked_ship.spawn_points += src
+
 /obj/machinery/cryopod/Destroy()
 	if(linked_ship)
 		linked_ship.spawn_points -= src
@@ -77,8 +82,3 @@
 
 /obj/machinery/cryopod/relaymove(mob/user)
 	container_resist_act(user)
-
-/obj/machinery/cryopod/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
-	. = ..()
-	linked_ship = port
-	linked_ship.spawn_points += src

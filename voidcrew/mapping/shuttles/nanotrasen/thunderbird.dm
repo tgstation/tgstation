@@ -2,6 +2,7 @@
 	name = "Thunderbird-class Emergency military vessel"
 	suffix = "nano_thunderbird"
 	short_name = "Thunderbird-Class"
+	faction_prefix = NANOTRASEN_SHIP
 
 	job_slots = list(
 		list(

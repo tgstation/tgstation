@@ -2,6 +2,7 @@
 	name = "Bead-class Corporate Frigate"
 	suffix = "nano_bead"
 	short_name = "Bead-Class"
+	faction_prefix = NANOTRASEN_SHIP
 
 	job_slots = list(
 		list(

@@ -25,7 +25,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	resistance_flags = INDESTRUCTIBLE|LAVA_PROOF|FIRE_PROOF|UNACIDABLE|ACID_PROOF
 
 	/// The ship object representing the ship that this console is on.
-//	var/obj/structure/overmap/ship/simulated/linked_ship //voidcrew todo: ship functionality
+//	var/obj/structure/overmap/ship/linked_ship //voidcrew todo: ship functionality
 
 /obj/machinery/computer/cryopod/Initialize()
 	. = ..()

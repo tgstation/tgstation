@@ -2,6 +2,7 @@
 	name = "Geneva-class Search and Rescue Vessel"
 	suffix = "syndicate_geneva"
 	short_name = "Geneva-class"
+	faction_prefix = SYNDICATE_SHIP
 
 	job_slots = list(
 		list(

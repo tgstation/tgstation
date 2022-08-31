@@ -23,6 +23,9 @@ SUBSYSTEM_DEF(overmap)
 	/// List of all events
 	var/list/events = list()
 
+	///List of all simulated ships
+	var/list/simulated_ships = list()
+
 /datum/controller/subsystem/overmap/Initialize(start_timeofday)
 	create_map()
 	setup_sun()

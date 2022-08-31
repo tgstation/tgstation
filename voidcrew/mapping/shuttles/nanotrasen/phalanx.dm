@@ -2,6 +2,7 @@
 	name = "Phalanx-Class Super Battlecruiser"
 	suffix = "nano_phalanx"
 	short_name = "Phalanx-Class"
+	faction_prefix = NANOTRASEN_SHIP
 
 	job_slots = list(
 		list(

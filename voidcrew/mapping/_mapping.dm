@@ -11,10 +11,10 @@
 	var/list/syn_ship_list = list()
 
 /datum/controller/subsystem/mapping/Initialize(timeofday)
-	. = ..()
 	if(initialized)
 		return
 	load_ship_templates()
+	return ..()
 /*
 /datum/controller/subsystem/mapping/loadWorld()
 	InitializeDefaultZLevels()
@@ -36,9 +36,9 @@
 		ship_purchase_list["[initial(shuttles.faction_prefix)] [initial(shuttles.name)] ([initial(shuttles.cost)] credits)"] = shuttles
 
 		switch(initial(shuttles.faction_prefix))
-			if("NT-C")
+			if(NANOTRASEN_SHIP)
 				nt_ship_list[initial(shuttles.name)] = shuttles
-			if("SYN-C")
+			if(SYNDICATE_SHIP)
 				syn_ship_list[initial(shuttles.name)] = shuttles
 
 
