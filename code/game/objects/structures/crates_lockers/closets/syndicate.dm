@@ -97,7 +97,10 @@
 	desc = "It's an emergency storage closet for repairs."
 	storage_capacity = 60 // This is gonna be used for debug.
 
-/obj/structure/closet/syndicate/resources/everything/PopulateContents()
+// A lot of this stuff is objective items, and it's also only used for debugging, so init times don't matter here.
+/obj/structure/closet/syndicate/resources/everything/populate_contents_immediate()
+	. = ..()
+
 	var/list/resources = list(
 	/obj/item/stack/sheet/iron,
 	/obj/item/stack/sheet/glass,

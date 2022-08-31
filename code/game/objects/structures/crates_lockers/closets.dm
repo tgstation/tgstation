@@ -75,6 +75,7 @@
 		addtimer(CALLBACK(src, .proc/take_contents, TRUE), 0)
 	. = ..()
 	update_appearance()
+	populate_contents_immediate()
 	var/static/list/loc_connections = list(
 		COMSIG_CARBON_DISARM_COLLIDE = .proc/locker_carbon,
 		COMSIG_ATOM_MAGICALLY_UNLOCKED = .proc/on_magic_unlock,
@@ -83,6 +84,11 @@
 
 //USE THIS TO FILL IT, NOT INITIALIZE OR NEW
 /obj/structure/closet/proc/PopulateContents()
+	return
+
+/// Populate the closet with stuff that needs to be added before it is opened.
+/// This is useful for things like traitor objectives.
+/obj/structure/closet/proc/populate_contents_immediate()
 	return
 
 /obj/structure/closet/Destroy()
