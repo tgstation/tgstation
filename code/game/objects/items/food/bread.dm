@@ -284,9 +284,9 @@
 		begin_swordplay(user)
 
 /obj/item/food/baguette/proc/begin_swordplay(mob/user)
-	visible_message( \
-		span_notice("[user] begins wielding [src] like a sword!"), \
-		span_notice("You begin wielding [src] like a sword, with a firm grip on the bottom as an imaginary handle.") \
+	visible_message(
+		span_notice("[user] begins wielding [src] like a sword!"),
+		span_notice("You begin wielding [src] like a sword, with a firm grip on the bottom as an imaginary handle.")
 	)
 	attack_verb_continuous = list("slashes", "cuts")
 	attack_verb_simple = list("slash", "cut")
