@@ -325,9 +325,16 @@
 
 	if(ismob(firer))
 		log_combat(firer, L, "shot", src, reagent_note)
-	else
-		L.log_message("has been shot by [firer] with [src]", LOG_ATTACK, color="orange")
+		return BULLET_ACT_HIT
 
+	if(ismecha(firer))
+		var/obj/vehicle/sealed/mecha/chassis = firer
+		var/mob/occupant = chassis.occupants[1]
+
+		log_combat(occupant, L, "shot", src, "from [chassis] [chassis.occupants.len > 1 ? "with multiple occupants" : ""] [reagent_note]")
+		return BULLET_ACT_HIT
+
+	L.log_message("has been shot by [firer] with [src]", LOG_ATTACK, color="orange")
 	return BULLET_ACT_HIT
 
 /obj/projectile/proc/vol_by_damage()
