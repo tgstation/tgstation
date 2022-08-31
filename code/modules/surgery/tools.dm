@@ -245,30 +245,48 @@
 
 
 /obj/item/surgical_processor //allows medical cyborgs to scan and initiate advanced surgeries
-	name = "\improper Surgical Processor"
+	name = "surgical processor"
 	desc = "A device for scanning and initiating surgeries from a disk or operating computer."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "spectrometer"
 	item_flags = NOBLUDGEON
-	var/list/advanced_surgeries = list()
+	var/list/loaded_surgeries = list()
 
-/obj/item/surgical_processor/afterattack(obj/item/design_holder, mob/user, proximity)
+/obj/item/surgical_processor/equipped(mob/user, slot, initial)
 	. = ..()
-	if(!proximity)
+	if(slot != ITEM_SLOT_HANDS)
+		UnregisterSignal(user, COMSIG_SURGERY_STARTING)
 		return
-	if(istype(design_holder, /obj/item/disk/surgery))
-		to_chat(user, span_notice("You load the surgery protocol from [design_holder] into [src]."))
-		var/obj/item/disk/surgery/surgery_disk = design_holder
-		if(do_after(user, 10, target = design_holder))
-			advanced_surgeries |= surgery_disk.surgeries
-		return TRUE
-	if(istype(design_holder, /obj/machinery/computer/operating))
-		to_chat(user, span_notice("You copy surgery protocols from [design_holder] into [src]."))
-		var/obj/machinery/computer/operating/OC = design_holder
-		if(do_after(user, 10, target = design_holder))
-			advanced_surgeries |= OC.advanced_surgeries
-		return TRUE
-	return
+	RegisterSignal(user, COMSIG_SURGERY_STARTING, .proc/check_surgery)
+
+/obj/item/surgical_processor/dropped(mob/user, silent)
+	. = ..()
+	UnregisterSignal(user, COMSIG_SURGERY_STARTING)
+
+/obj/item/surgical_processor/afterattack(atom/design_holder, mob/user, proximity)
+	if(!proximity)
+		return ..()
+	if(!istype(design_holder, /obj/item/disk/surgery) && !istype(design_holder, /obj/machinery/computer/operating))
+		return ..()
+	balloon_alert(user, "copying designs...")
+	playsound(src, 'sound/machines/terminal_processing.ogg', 25, TRUE)
+	if(do_after(user, 1 SECONDS, target = design_holder))
+		if(istype(design_holder, /obj/item/disk/surgery))
+			var/obj/item/disk/surgery/surgery_disk = design_holder
+			loaded_surgeries |= surgery_disk.surgeries
+		else
+			var/obj/machinery/computer/operating/surgery_computer = design_holder
+			loaded_surgeries |= surgery_computer.advanced_surgeries
+		playsound(src, 'sound/machines/terminal_success.ogg', 25, TRUE)
+	return TRUE
+
+/obj/item/surgical_processor/proc/check_surgery(mob/user, datum/surgery/surgery, mob/patient)
+	SIGNAL_HANDLER
+
+	if(surgery.replaced_by in loaded_surgeries)
+		return COMPONENT_CANCEL_SURGERY
+	if(surgery.type in loaded_surgeries)
+		return COMPONENT_FORCE_SURGERY
 
 /obj/item/scalpel/advanced
 	name = "laser scalpel"
