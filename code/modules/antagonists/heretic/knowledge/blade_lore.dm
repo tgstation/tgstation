@@ -322,7 +322,7 @@
 		return
 
 	// We want to make sure that the offhand blade increases their hits to crit by one, just about
-	// So, let's do some quick math. Yes this'll be inaccurate if their mainhand blade is buffed (whetstone), no I don't care
+	// So, let's do some quick math. Yes this'll be inaccurate if their mainhand blade is modified (whetstone), no I don't care
 	// Find how much force we need to detract from the second blade
 	var/offand_force_decrement = 0
 	var/hits_to_crit_on_average = ROUND_UP(100 / (blade.force * 2))

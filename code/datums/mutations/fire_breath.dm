@@ -74,7 +74,7 @@
 	living_cast_on.setDir(original_dir)
 
 /datum/action/cooldown/spell/cone/staggered/fire_breath/calculate_cone_shape(current_level)
-	// This makes the cone shoot out into a 3 wide column of flames to matter the distance
+	// This makes the cone shoot out into a 3 wide column of flames no matter the distance
 	return 3
 
 /datum/action/cooldown/spell/cone/staggered/fire_breath/do_turf_cone_effect(turf/target_turf, atom/caster, level)

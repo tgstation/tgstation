@@ -1,7 +1,9 @@
 // Shoots out in a wave-like, what rust heretics themselves get
 /datum/action/cooldown/spell/cone/staggered/entropic_plume
 	name = "Entropic Plume"
-	desc = "Spews forth a disorienting plume that causes enemies to strike each other, briefly blinds them(increasing with range) and poisons them(decreasing with range). Also spreads rust in the path of the plume."
+	desc = "Spews forth a disorienting plume that causes enemies to strike each other, \
+		briefly blinds them (increasing with range) and poisons them (decreasing with range). \
+		Also spreads rust in the path of the plume."
 	background_icon_state = "bg_ecult"
 	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "entropic_plume"

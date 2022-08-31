@@ -19,7 +19,7 @@
 	return TRUE
 
 /datum/status_effect/void_chill/on_remove()
-	owner.remove_atom_colour(COLOR_BLUE_LIGHT, TEMPORARY_COLOUR_PRIORITY)
+	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_BLUE_LIGHT)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/void_chill, update = TRUE)
 
 /datum/status_effect/void_chill/tick()

@@ -16,7 +16,7 @@
 	if(!ishuman(cast_on))
 		return FALSE
 	var/mob/living/carbon/human/human_cast_on = cast_on
-	if(!human_cast_on.mind || !human_cast_on.mob_mood || IS_HERETIC_OR_MONSTER(cast_on))
+	if(!human_cast_on.mind || !human_cast_on.mob_mood || IS_HERETIC_OR_MONSTER(human_cast_on))
 		return FALSE
 	return TRUE
 
@@ -26,9 +26,7 @@
 		span_danger("The spell bounces off of you!"),
 	)
 
-/datum/action/cooldown/spell/touch/mad_touch/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
-	to_chat(caster, span_warning("[human_victim.name] has been cursed!"))
-	if (isliving(target))
-		var/mob/living/target_mob = target
-		target_mob.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
+/datum/action/cooldown/spell/touch/mad_touch/cast_on_hand_hit(obj/item/melee/touch_attack/hand, mob/living/carbon/human/victim, mob/living/carbon/caster)
+	to_chat(caster, span_warning("[victim.name] has been cursed!"))
+	victim.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
 	return TRUE

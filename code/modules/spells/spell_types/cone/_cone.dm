@@ -112,8 +112,7 @@
  * Return a number - the TOTAL width of the cone at the passed level.
  */
 /datum/action/cooldown/spell/cone/proc/calculate_cone_shape(current_level)
-	// By default, our width scales linearly (3 -> 5 -> 7 -> 9, and so on).
-	// Override to implement formulas on a per-cone-spell basis
+	// Default formula: (1 (innate) -> 3 -> 5 -> 5 -> 7 -> 7 -> 9 -> 9 -> ...)
 	return current_level + (current_level % 2) + 1
 
 /**
