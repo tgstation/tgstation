@@ -263,14 +263,6 @@
 /proc/_turn(dir, angle)
 	return turn(dir, angle)
 
-/// For some reason, an atom's contents are a kind of list that auxtools can't work with as a list
-/// This proc returns a copy of contents that is an ordinary list
-/proc/_contents(atom/thing)
-	var/list/ret = list()
-	if(istype(thing))
-		ret += thing.contents
-	return ret
-
 /// Auxtools REALLY doesn't know how to handle filters as values;
 /// when passed as arguments to auxtools-called procs, they aren't simply treated as nulls -
 /// they don't even count towards the length of args.

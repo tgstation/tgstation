@@ -101,12 +101,13 @@
 		/obj/structure/closet/crate/science = 1,
 	)
 
-/obj/effect/spawner/random/structure/crate_empty/Initialize(mapload)
+/obj/effect/spawner/random/structure/crate_empty/make_item(spawn_loc, type_path_to_make)
 	var/obj/structure/closet/crate/peek_a_boo = ..()
 	if(istype(peek_a_boo))
 		peek_a_boo.opened = prob(50)
+		peek_a_boo.update_appearance()
 
-	return INITIALIZE_HINT_QDEL
+	return peek_a_boo
 
 /obj/effect/spawner/random/structure/crate_loot
 	name = "lootcrate spawner"
@@ -134,12 +135,13 @@
 		/obj/structure/closet/acloset = 1,
 	)
 
-/obj/effect/spawner/random/structure/closet_empty/Initialize(mapload)
+/obj/effect/spawner/random/structure/closet_empty/make_item(spawn_loc, type_path_to_make)
 	var/obj/structure/closet/peek_a_boo = ..()
 	if(istype(peek_a_boo))
 		peek_a_boo.opened = prob(50)
+		peek_a_boo.update_appearance()
 
-	return INITIALIZE_HINT_QDEL
+	return peek_a_boo
 
 /obj/effect/spawner/random/structure/closet_maintenance
 	name = "maintenance closet spawner"

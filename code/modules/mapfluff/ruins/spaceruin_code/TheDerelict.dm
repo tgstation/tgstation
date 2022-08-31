@@ -172,6 +172,6 @@
 /obj/structure/fluff/oldturret
 	name = "broken turret"
 	desc = "An obsolete model of turret, long non-functional."
-	icon = 'icons/obj/turrets.dmi'
+	icon = 'icons/obj/weapons/turrets.dmi'
 	icon_state = "turretCover"
 	density = TRUE
