@@ -256,6 +256,9 @@
 	if (!string_targets.len)
 		return FALSE
 
+	if (prob(1))
+		message += " Sent from my PDA"
+
 	var/datum/signal/subspace/messaging/tablet_msg/signal = new(computer, list(
 		"name" = fake_name || computer.saved_identification,
 		"job" = fake_job || computer.saved_job,
