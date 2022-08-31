@@ -141,7 +141,7 @@
 	response_harm_continuous = "takes a bite out of"
 	response_harm_simple = "take a bite out of"
 	attacked_sound = 'sound/items/eatfood.ogg'
-	deathmessage = "loses its false life and collapses!"
+	death_message = "loses its false life and collapses!"
 	butcher_results = list(/obj/item/food/butter = 6, /obj/item/food/meat/slab = 3, /obj/item/organ/internal/brain = 1, /obj/item/organ/internal/heart = 1)
 	attack_sound = 'sound/weapons/slap.ogg'
 	attack_vis_effect = ATTACK_EFFECT_DISARM
@@ -165,16 +165,17 @@
 
 /mob/living/simple_animal/hostile/bear/butter/CheckParts(list/parts) //Borrowed code from Cak, allows the brain used to actually control the bear.
 	..()
-	var/obj/item/organ/internal/brain/B = locate(/obj/item/organ/internal/brain) in contents
-	if(!B || !B.brainmob || !B.brainmob.mind)
+	var/obj/item/organ/internal/brain/candidate = locate(/obj/item/organ/internal/brain) in contents
+	if(!candidate || !candidate.brainmob || !candidate.brainmob.mind)
 		return
-	B.brainmob.mind.transfer_to(src)
-	to_chat(src, "<span class='big bold'>You are a butter bear!</span><b> You're a mostly harmless bear/butter hybrid that everyone loves. People can take bites out of you if they're hungry, but you regenerate health \
+	candidate.brainmob.mind.transfer_to(src)
+	to_chat(src, "[span_boldbig("You are a butter bear!")]<b> You're a mostly harmless bear/butter hybrid that everyone loves. People can take bites out of you if they're hungry, but you regenerate health \
 	so quickly that it generally doesn't matter. You're remarkably resilient to any damage besides this and it's hard for you to really die at all. You should go around and bring happiness and \
 	free butter to the station!</b>")
-	var/new_name = sanitize_name(tgui_input_text(src, "Enter your name, or press \"Cancel\" to stick with Terrygold.", "Name Change"))
+	var/default_name = "Terrygold"
+	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(src, "You are the [name]. Would you like to change your name to something else?", "Name change", default_name, MAX_NAME_LEN)), cap_after_symbols = FALSE)
 	if(new_name)
-		to_chat(src, span_notice("Your name is now <b>\"new_name\"</b>!"))
+		to_chat(src, span_notice("Your name is now <b>[new_name]</b>!"))
 		name = new_name
 
 /mob/living/simple_animal/hostile/bear/butter/AttackingTarget() //Makes the butter bear's attacks against vertical targets slip said targets

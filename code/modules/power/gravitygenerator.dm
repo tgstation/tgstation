@@ -445,7 +445,7 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 /// Gravity generator instruction guide
 /obj/item/paper/guides/jobs/engi/gravity_gen
 	name = "paper- 'Generate your own gravity!'"
-	info = {"<h1>Gravity Generator Instructions For Dummies</h1>
+	default_raw_text = {"<h1>Gravity Generator Instructions For Dummies</h1>
 	<p>Surprisingly, gravity isn't that hard to make! All you have to do is inject deadly radioactive minerals into a ball of
 	energy and you have yourself gravity! You can turn the machine on or off when required.
 	The generator produces a very harmful amount of gravity when enabled, so don't stay close for too long.</p>

@@ -538,11 +538,11 @@
 /area/shuttle/abandoned/bridge)
 "bI" = (
 /obj/structure/table/reinforced/rglass,
-/obj/item/reagent_containers/food/drinks/colocup{
+/obj/item/reagent_containers/cup/glass/colocup{
 	pixel_x = -1;
 	pixel_y = 13
 	},
-/obj/item/reagent_containers/food/drinks/colocup{
+/obj/item/reagent_containers/cup/glass/colocup{
 	pixel_x = 10;
 	pixel_y = 9
 	},
@@ -557,7 +557,7 @@
 /obj/item/clothing/shoes/jackboots,
 /obj/item/clothing/gloves/fingerless,
 /obj/item/clothing/under/syndicate/coldres,
-/obj/item/clothing/neck/stripedbluescarf,
+/obj/item/clothing/neck/large_scarf/blue,
 /obj/item/clothing/head/beret/centcom_formal,
 /obj/item/clothing/suit/armor/vest,
 /obj/effect/turf_decal/bot_white,
@@ -591,19 +591,19 @@
 /area/shuttle/abandoned/engine)
 "bO" = (
 /obj/structure/rack,
-/obj/item/reagent_containers/food/drinks/waterbottle/large{
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
 	pixel_x = -5;
 	pixel_y = 7
 	},
-/obj/item/reagent_containers/food/drinks/waterbottle/large{
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
 	pixel_x = -1;
 	pixel_y = 7
 	},
-/obj/item/reagent_containers/food/drinks/waterbottle/large{
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
 	pixel_x = 4;
 	pixel_y = 7
 	},
-/obj/item/reagent_containers/food/drinks/waterbottle/large{
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
 	pixel_x = 8;
 	pixel_y = 7
 	},
@@ -1137,7 +1137,7 @@
 	pixel_x = 6;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/drinks/bottle/sake{
+/obj/item/reagent_containers/cup/glass/bottle/sake{
 	pixel_x = -7;
 	pixel_y = 4
 	},
@@ -1161,7 +1161,7 @@
 /area/shuttle/abandoned/bridge)
 "sE" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/reagent_containers/glass/maunamug{
+/obj/item/reagent_containers/cup/maunamug{
 	pixel_x = 7;
 	pixel_y = 8
 	},
@@ -1437,11 +1437,11 @@
 	pixel_x = -4;
 	pixel_y = 10
 	},
-/obj/item/reagent_containers/food/drinks/bottle/sake{
+/obj/item/reagent_containers/cup/glass/bottle/sake{
 	pixel_x = 10;
 	pixel_y = 13
 	},
-/obj/item/reagent_containers/food/drinks/bottle/sake{
+/obj/item/reagent_containers/cup/glass/bottle/sake{
 	pixel_x = 9;
 	pixel_y = 4
 	},

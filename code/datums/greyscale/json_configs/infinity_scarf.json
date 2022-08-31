@@ -1,0 +1,10 @@
+{
+	"infinity_scarf": [
+		{
+			"type": "icon_state",
+			"icon_state": "infinity_scarf",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

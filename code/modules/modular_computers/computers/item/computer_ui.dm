@@ -222,7 +222,6 @@
 				if("eject")
 					usr.put_in_hands(inserted_pai)
 					to_chat(usr, span_notice("You remove [inserted_pai] from the [name]."))
-					inserted_pai.slotted = FALSE
 					inserted_pai = null
 				if("interact")
 					inserted_pai.attack_self(usr)

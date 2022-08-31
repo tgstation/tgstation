@@ -8,11 +8,11 @@
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the captain"
+	supervisors = SUPERVISOR_CAPTAIN
 	selection_color = "#ffddf0"
 	req_admin_notify = 1
 	minimal_player_age = 7
-	exp_requirements = 180
+	exp_requirements = 3 HOURS
 	exp_required_type = EXP_TYPE_CREW
 	exp_required_type_department = EXP_TYPE_MEDICAL
 	exp_granted_type = EXP_TYPE_CREW
@@ -55,7 +55,7 @@
 
 	id = /obj/item/card/id/advanced/silver
 	id_trim = /datum/id_trim/job/chief_medical_officer
-	uniform = /obj/item/clothing/under/rank/medical/chief_medical_officer
+	uniform = /obj/item/clothing/under/rank/medical/chief_medical_officer/scrubs
 	suit = /obj/item/clothing/suit/toggle/labcoat/cmo
 	suit_store = /obj/item/flashlight/pen/paramedic
 	backpack_contents = list(
@@ -63,6 +63,7 @@
 		)
 	belt = /obj/item/modular_computer/tablet/pda/heads/cmo
 	ears = /obj/item/radio/headset/heads/cmo
+	head = /obj/item/clothing/head/surgerycap/cmo
 	shoes = /obj/item/clothing/shoes/sneakers/blue
 	l_pocket = /obj/item/pinpointer/crew
 	l_hand = /obj/item/storage/medkit/surgery

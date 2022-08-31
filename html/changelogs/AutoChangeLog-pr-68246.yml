@@ -1,5 +1,0 @@
-author: "CoffeeDragon16"
-delete-after: True
-changes: 
-  - bugfix: "xenomorph corrosive acid will once again not target mobs"
-  - bugfix: "xenomorph limbs will no longer be examined as human limbs"

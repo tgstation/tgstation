@@ -122,7 +122,7 @@
 		return FALSE
 	if(!SSmapping.level_trait(T.z,ZTRAIT_STATION))
 		return FALSE
-	if(!istype(T, /turf/open/floor))
+	if(!isfloorturf(T))
 		return FALSE
 	return TRUE
 
@@ -424,7 +424,7 @@ That prevents a few funky behaviors.
 		to_chat(user, "[span_boldnotice("Transfer successful")]: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 		card.AI = null
 		AI.battery = circuit.battery
-		if(core_mmi.braintype == "Android")
+		if(core_mmi && core_mmi.braintype == "Android")
 			AI.posibrain_inside = TRUE
 		else
 			AI.posibrain_inside = FALSE

@@ -8,7 +8,7 @@
 	// This outfit is used by the assets SS, which is ran before the atoms SS
 	if(SSatoms.initialized == INITIALIZATION_INSSATOMS)
 		prisoner.w_uniform?.update_greyscale()
-		prisoner.update_inv_w_uniform()
+		prisoner.update_worn_undersuit()
 	if(visualsOnly)
 		return
 	prisoner.fully_replace_character_name(null,"NTP #CC-0[rand(111,999)]") //same as the lavaland prisoner transport, but this time they are from CC, or CentCom
@@ -25,12 +25,14 @@
 	name = "Waldo"
 	uniform = /obj/item/clothing/under/pants/jeans
 	suit = /obj/item/clothing/suit/costume/striped_sweater
-	head = /obj/item/clothing/head/beanie/waldo
+	head = /obj/item/clothing/head/waldo
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	ears = /obj/item/radio/headset
 	glasses = /obj/item/clothing/glasses/regular/circle
 
 /datum/outfit/waldo/post_equip(mob/living/carbon/human/equipped_on, visualsOnly=FALSE)
+	equipped_on.w_uniform?.update_greyscale()
+	equipped_on.update_worn_undersuit()
 	if(visualsOnly)
 		return
 	equipped_on.fully_replace_character_name(null,"Waldo")

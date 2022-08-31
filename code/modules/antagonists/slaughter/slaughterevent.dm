@@ -6,6 +6,8 @@
 	earliest_start = 1 HOURS
 	min_players = 20
 	dynamic_should_hijack = TRUE
+	category = EVENT_CATEGORY_ENTITIES
+	description = "Spawns a slaughter demon, to hunt by travelling through pools of blood."
 
 /datum/round_event/ghost_role/slaughter
 	minimum_required = 1
@@ -42,6 +44,6 @@
 		Use your Blood Crawl ability near a pool of blood to manifest and wreak havoc."))
 	SEND_SOUND(S, 'sound/magic/demon_dies.ogg')
 	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a slaughter demon by an event.")
-	log_game("[key_name(S)] was spawned as a slaughter demon by an event.")
+	S.log_message("was spawned as a slaughter demon by an event.", LOG_GAME)
 	spawned_mobs += S
 	return SUCCESSFUL_SPAWN

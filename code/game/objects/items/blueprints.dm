@@ -200,7 +200,7 @@
 	rename_area(A, str)
 
 	to_chat(usr, span_notice("You rename the '[prevname]' to '[str]'."))
-	log_game("[key_name(usr)] has renamed [prevname] to [str]")
+	usr.log_message("has renamed [prevname] to [str]", LOG_GAME)
 	A.update_areasize()
 	interact()
 	return TRUE

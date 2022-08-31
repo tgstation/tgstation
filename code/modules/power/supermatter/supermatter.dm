@@ -12,10 +12,6 @@
 #define OBJECT (LOWEST + 1)
 #define LOWEST (1)
 
-#define CASCADING_ADMIN "Admin"
-#define CASCADING_CRITICAL_GAS "Critical gas point"
-#define CASCADING_DESTAB_CRYSTAL "Destabilizing crystal"
-
 GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal
@@ -38,30 +34,27 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/static/gl_uid = 1
 	///Tracks the bolt color we are using
 	var/zap_icon = DEFAULT_ZAP_ICON_STATE
-	///The portion of the gasmix we're on that we should remove
-	var/gasefficency = 0.15
 
 	///Are we exploding?
 	var/final_countdown = FALSE
 
 	///The amount of damage we have currently
 	var/damage = 0
-	///The damage we had before this cycle. Used to limit the damage we can take each cycle, and for safe_alert
+	/// The damage we had before this cycle.
+	/// Used to limit the damage we can take each cycle, and to check if we are currently taking damage or healing.
 	var/damage_archived = 0
-	///Our "Shit is no longer fucked" message. We send it when damage is less then damage_archived
-	var/safe_alert = "Crystalline hyperstructure returning to safe operating parameters."
-	///The point at which we should start sending messeges about the damage to the engi channels.
+
+	///The point at which we consider the supermatter to be [SUPERMATTER_STATUS_WARNING]
 	var/warning_point = 50
-	///The alert we send when we've reached warning_point
-	var/warning_alert = "Danger! Crystal hyperstructure integrity faltering!"
-	///The point at which we start sending messages to the common channel
-	var/emergency_point = 700
-	///The alert we send when we've reached emergency_point
-	var/emergency_alert = "CRYSTAL DELAMINATION IMMINENT."
-	///The point at which we delam
+	var/warning_channel = RADIO_CHANNEL_ENGINEERING
+	///The point at which we consider the supermatter to be [SUPERMATTER_STATUS_DANGER]
+	///Spawns anomalies when more damaged than this too.
+	var/danger_point = 550
+	///The point at which we consider the supermatter to be [SUPERMATTER_STATUS_EMERGENCY]
+	var/emergency_point = 675
+	var/emergency_channel = null // Need null to actually broadcast, lol.
+	///The point at which we delam [SUPERMATTER_STATUS_DELAMINATING]
 	var/explosion_point = 900
-	///When we pass this amount of damage we start shooting bolts
-	var/damage_penalty_point = 550
 
 	///A scaling value that affects the severity of explosions.
 	var/explosion_power = 35
@@ -124,6 +117,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/zauker = ZAUKER_TRANSMIT_MODIFIER,
 		/datum/gas/hypernoblium = HYPERNOBLIUM_TRANSMIT_MODIFIER,
 		/datum/gas/antinoblium = ANTINOBLIUM_TRANSMIT_MODIFIER,
+		/datum/gas/freon = FREON_TRANSMIT_MODIFIER,
+		/datum/gas/water_vapor = H20_TRANSMIT_MODIFIER,
+		/datum/gas/carbon_dioxide = CO2_TRANSMIT_MODIFIER,
 	)
 	///The list of gases mapped against their heat penaltys. We use it to determin molar and heat output
 	var/list/gas_heat = list(
@@ -220,20 +216,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/obj/item/radio/radio
 	///The key our internal radio uses
 	var/radio_key = /obj/item/encryptionkey/headset_eng
-	///The engineering channel
-	var/engineering_channel = "Engineering"
-	///The common channel
-	var/common_channel = null
 
 	///Boolean used for logging if we've been powered
 	var/has_been_powered = FALSE
-	///Boolean used for logging if we've passed the emergency point
-	var/has_reached_emergency = FALSE
 
 	///An effect we show to admins and ghosts the percentage of delam we're at
 	var/obj/effect/countdown/supermatter/countdown
 
-	///Used along with a global var to track if we can give out the sm sliver stealing objective
+	///Only main engines can have their sliver stolen, can trigger cascades, and can spawn stationwide anomalies.
 	var/is_main_engine = FALSE
 	///Our soundloop
 	var/datum/looping_sound/supermatter/soundloop
@@ -263,17 +253,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///Do we show this crystal in the CIMS modular program
 	var/include_in_cims = TRUE
 
-	var/freonbonus = 0
-	///Can the crystal trigger the station wide anomaly spawn?
-	var/anomaly_event = TRUE
 	///Hue shift of the zaps color based on the power of the crystal
 	var/hue_angle_shift = 0
-	///If an admin wants a sure cascade with the delamination just set this to true (don't be a badmin)
-	var/admin_cascade = FALSE
-	///Do we have a destabilizing crystal attached?
-	var/has_destabilizing_crystal = FALSE
-	///Has the cascade been triggered?
-	var/cascade_initiated = FALSE
 	///Reference to the warp effect
 	var/atom/movable/supermatter_warp_effect/warp
 	///The power threshold required to transform the powerloss function into a linear function from a cubic function.
@@ -281,9 +262,21 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///The offset of the linear powerloss function set so the transition is differentiable.
 	var/powerloss_linear_offset = 0
 
+	///The portion of the gasmix we're on that we should remove
+	var/absorption_ratio = 0.15
+	/// The gasmix we just recently absorbed. Tile's air multiplied by absorption_ratio
+	var/datum/gas_mixture/absorbed_gasmix
+
+	/// How we are delaminating.
+	var/datum/sm_delam/delamination_strategy
+	/// Whether the sm is forced in a specific delamination_strategy or not. All truthy values means it's forced.
+	/// Only values greater or equal to the current one can change the strat.
+	var/delam_priority = SM_DELAM_PRIO_NONE
+
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)
 	. = ..()
 	uid = gl_uid++
+	set_delam(SM_DELAM_PRIO_NONE, /datum/sm_delam/explosive)
 	SSair.start_processing_machine(src)
 	countdown = new(src)
 	countdown.start()
@@ -297,7 +290,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		GLOB.main_supermatter_engine = src
 
 	AddElement(/datum/element/bsa_blocker)
-	RegisterSignal(src, COMSIG_ATOM_BSA_BEAM, .proc/call_delamination_event)
+	RegisterSignal(src, COMSIG_ATOM_BSA_BEAM, .proc/force_delam)
 
 	var/static/list/loc_connections = list(
 		COMSIG_TURF_INDUSTRIAL_LIFT_ENTER = .proc/tram_contents_consume,
@@ -344,8 +337,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/immune = HAS_TRAIT(user, TRAIT_MADNESS_IMMUNE) || (user.mind && HAS_TRAIT(user.mind, TRAIT_MADNESS_IMMUNE))
 	if(isliving(user) && !immune && (get_dist(user, src) < HALLUCINATION_RANGE(power)))
 		. += span_danger("You get headaches just from looking at it.")
-	if(cascade_initiated)
-		. += span_bolddanger("The crystal is vibrating at immense speeds, warping space around it!")
+	. += delamination_strategy.examine(src)
+	return .
 
 // SupermatterMonitor UI for ghosts only. Inherited attack_ghost will call this.
 /obj/machinery/power/supermatter_crystal/ui_interact(mob/user, datum/tgui/ui)
@@ -371,7 +364,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	data["SM_power"] = power
 	data["SM_ambienttemp"] = air.temperature
 	data["SM_ambientpressure"] = air.return_pressure()
-	data["SM_bad_moles_amount"] = MOLE_PENALTY_THRESHOLD / gasefficency
+	data["SM_bad_moles_amount"] = MOLE_PENALTY_THRESHOLD / absorption_ratio
 	data["SM_moles"] = 0
 	data["SM_uid"] = uid
 	var/area/active_supermatter_area = get_area(src)
@@ -396,6 +389,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	return data
 
+/// Encodes the current state of the supermatter.
 /obj/machinery/power/supermatter_crystal/proc/get_status()
 	var/turf/local_turf = get_turf(src)
 	if(!local_turf)
@@ -403,37 +397,19 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/datum/gas_mixture/air = local_turf.return_air()
 	if(!air)
 		return SUPERMATTER_ERROR
-
-	var/integrity = get_integrity_percent()
-	if(integrity < SUPERMATTER_DELAM_PERCENT)
+	if(final_countdown)
 		return SUPERMATTER_DELAMINATING
-
-	if(integrity < SUPERMATTER_EMERGENCY_PERCENT)
+	if(damage >= emergency_point)
 		return SUPERMATTER_EMERGENCY
-
-	if(integrity < SUPERMATTER_DANGER_PERCENT)
+	if(damage >= danger_point)
 		return SUPERMATTER_DANGER
-
-	if((integrity < SUPERMATTER_WARNING_PERCENT) || (air.temperature > CRITICAL_TEMPERATURE))
+	if(damage >= warning_point)
 		return SUPERMATTER_WARNING
-
-	if(air.temperature > (CRITICAL_TEMPERATURE * 0.8))
+	if(absorbed_gasmix.temperature > (T0C + HEAT_PENALTY_THRESHOLD) * 0.8)
 		return SUPERMATTER_NOTIFY
-
-	if(power > 5)
+	if(power)
 		return SUPERMATTER_NORMAL
 	return SUPERMATTER_INACTIVE
-
-/obj/machinery/power/supermatter_crystal/proc/alarm()
-	switch(get_status())
-		if(SUPERMATTER_DELAMINATING)
-			playsound(src, 'sound/misc/bloblarm.ogg', 100, FALSE, 40, 30, falloff_distance = 10)
-		if(SUPERMATTER_EMERGENCY)
-			playsound(src, 'sound/machines/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
-		if(SUPERMATTER_DANGER)
-			playsound(src, 'sound/machines/engine_alert2.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
-		if(SUPERMATTER_WARNING)
-			playsound(src, 'sound/machines/terminal_alert.ogg', 75)
 
 /obj/machinery/power/supermatter_crystal/proc/get_integrity_percent()
 	var/integrity = damage / explosion_point
@@ -443,93 +419,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/update_overlays()
 	. = ..()
-	if(final_countdown && !cascade_initiated)
-		. += "casuality_field"
+	. += delamination_strategy.overlays(src)
+	return .
 
-/obj/machinery/power/supermatter_crystal/proc/countdown()
-	set waitfor = FALSE
-
-	if(final_countdown) // We're already doing it go away
-		return
-	final_countdown = TRUE
-	update_appearance()
-
-	var/cascading = cascade_initiated
-
-	var/speaking = "[emergency_alert] The supermatter has reached critical integrity failure."
-
-	if(cascading)
-		speaking += " Harmonic frequency limits exceeded. Causality destabilization field could not be engaged."
-	else
-		speaking += " Emergency causality destabilization field has been activated."
-
-	radio.talk_into(src, speaking, common_channel, language = get_selected_language())
-	for(var/i in SUPERMATTER_COUNTDOWN_TIME to 0 step -10)
-		if(damage < explosion_point) // Cutting it a bit close there engineers
-			if(cascading)
-				radio.talk_into(src, "[safe_alert] Harmonic frequency restored within emergency bounds. Anti-resonance filter initiated.", common_channel)
-			else
-				radio.talk_into(src, "[safe_alert] Failsafe has been disengaged.", common_channel)
-			final_countdown = FALSE
-			update_appearance()
-			return
-		else if((i % 50) != 0 && i > 50) // A message once every 5 seconds until the final 5 seconds which count down individualy
-			sleep(10)
-			continue
-		else if(i > 50)
-			if(cascading)
-				speaking = "[DisplayTimeText(i, TRUE)] remain before resonance-induced stabilization."
-			else
-				speaking = "[DisplayTimeText(i, TRUE)] remain before causality stabilization."
-		else
-			speaking = "[i*0.1]..."
-		radio.talk_into(src, speaking, common_channel)
-		sleep(1 SECONDS)
-
-	delamination_event()
-
-/obj/machinery/power/supermatter_crystal/proc/delamination_event()
-	var/can_spawn_anomalies = is_station_level(loc.z) && is_main_engine && anomaly_event
-
-	var/is_cascading = cascade_initiated
-
-	new /datum/supermatter_delamination(power, combined_gas, get_turf(src), explosion_power, gasmix_power_ratio, can_spawn_anomalies, is_cascading)
-	qdel(src)
-
-//this is here to eat arguments
-/obj/machinery/power/supermatter_crystal/proc/call_delamination_event()
+/obj/machinery/power/supermatter_crystal/proc/force_delam()
 	SIGNAL_HANDLER
-	delamination_event()
-
-/**
- * Checks if and why the supermatter is in a state where it can cascade
- *
- * Returns: cause of the cascade, for logging
- */
-/obj/machinery/power/supermatter_crystal/proc/check_cascade_requirements()
-	if(admin_cascade)
-		return CASCADING_ADMIN
-
-	if(!anomaly_event)
-		return FALSE
-
-	if(has_destabilizing_crystal)
-		return CASCADING_DESTAB_CRYSTAL
-
-	var/critical_gas_exceeded = TRUE
-	var/list/required_gases = list(/datum/gas/hypernoblium, /datum/gas/antinoblium)
-	if(environment_total_moles < MOLE_PENALTY_THRESHOLD)
-		critical_gas_exceeded = FALSE
-	else
-		for(var/gas_path in required_gases)
-			if(gas_comp[gas_path] < 0.4)
-				critical_gas_exceeded = FALSE
-				break
-
-	if(critical_gas_exceeded)
-		return CASCADING_CRITICAL_GAS
-
-	return FALSE
+	investigate_log("was forcefully delaminated", INVESTIGATE_ENGINE)
+	INVOKE_ASYNC(delamination_strategy, /datum/sm_delam/proc/delaminate, src)
 
 /obj/machinery/power/supermatter_crystal/proc/supermatter_pull(turf/center, pull_range = 3)
 	playsound(center, 'sound/weapons/marauder.ogg', 100, TRUE, extrarange = pull_range - world.view)
@@ -544,6 +440,62 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			if(pulled_mob.mob_negates_gravity())
 				continue //You can't pull someone nailed to the deck
 		step_towards(movable_atom,center)
+
+/**
+ * Count down, spout some messages, and then execute the delam itself.
+ * We guard for last second delam strat changes here, mostly because some have diff messages.
+ *
+ * By last second changes, we mean that it's possible for say, a tesla delam to
+ * just explode normally if at the absolute last second it loses power and switches to default one.
+ * Even after countdown is already in progress.
+ */
+/obj/machinery/power/supermatter_crystal/proc/count_down()
+	set waitfor = FALSE
+
+	if(final_countdown) // We're already doing it go away
+		stack_trace("[src] told to delaminate again while it's already delaminating.")
+		return
+
+	final_countdown = TRUE
+	update_appearance()
+
+	var/datum/sm_delam/last_delamination_strategy = delamination_strategy
+	var/list/count_down_messages = delamination_strategy.count_down_messages()
+
+	radio.talk_into(
+		src,
+		count_down_messages[1],
+		emergency_channel
+	)
+
+	for(var/i in SUPERMATTER_COUNTDOWN_TIME to 0 step -10)
+		if(last_delamination_strategy != delamination_strategy)
+			count_down_messages = delamination_strategy.count_down_messages()
+			last_delamination_strategy = delamination_strategy
+
+		var/message
+		var/healed = FALSE
+
+		if(damage < explosion_point) // Cutting it a bit close there engineers
+			message = count_down_messages[2]
+			healed = TRUE
+		else if((i % 50) != 0 && i > 50) // A message once every 5 seconds until the final 5 seconds which count down individualy
+			sleep(1 SECONDS)
+			continue
+		else if(i > 50)
+			message = "[DisplayTimeText(i, TRUE)] [count_down_messages[3]]"
+		else
+			message = "[i*0.1]..."
+
+		radio.talk_into(src, message, emergency_channel)
+
+		if(healed)
+			final_countdown = FALSE
+			update_appearance()
+			return // delam averted
+		sleep(1 SECONDS)
+
+	delamination_strategy.delaminate(src)
 
 /proc/supermatter_anomaly_gen(turf/anomalycenter, type = FLUX_ANOMALY, anomalyrange = 5, has_changed_lifespan = TRUE)
 	var/turf/local_turf = pick(orange(anomalyrange, anomalycenter))
@@ -614,7 +566,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(target_type > LIVING)
 			continue
 
-		if(istype(test, /mob/living/))
+		if(isliving(test))
 			var/mob/living/alive = test
 			if(!(HAS_TRAIT(alive, TRAIT_TESLA_SHOCKIMMUNE)) && !(alive.flags_1 & SHOCKED_1) && alive.stat != DEAD && prob(20))//let's not hit all the engineers with every beam and/or segment of the arc
 				if(target_type != LIVING)
@@ -625,7 +577,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(target_type > MACHINERY)
 			continue
 
-		if(istype(test, /obj/machinery/))
+		if(ismachinery(test))
 			var/obj/machinery/machine = test
 			if(!(machine.obj_flags & BEING_SHOCKED) && prob(40))
 				if(target_type != MACHINERY)
@@ -636,7 +588,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(target_type > OBJECT)
 			continue
 
-		if(istype(test, /obj/))
+		if(isobj(test))
 			var/obj/object = test
 			if(!(object.obj_flags & BEING_SHOCKED))
 				if(target_type != OBJECT)
@@ -713,13 +665,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	base_icon_state = "darkmatter_shard"
 	icon_state = "darkmatter_shard"
 	anchored = FALSE
-	gasefficency = 0.125
+	absorption_ratio = 0.125
 	explosion_power = 12
 	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE_UPPER
 	moveable = TRUE
 	psyOverlay = /obj/overlay/psy/shard
-	anomaly_event = FALSE
 
 /obj/machinery/power/supermatter_crystal/shard/engine
 	name = "anchored supermatter shard"
@@ -758,10 +709,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	icon_state = "light"
 	pixel_x = -176
 	pixel_y = -176
-
-#undef CASCADING_ADMIN
-#undef CASCADING_CRITICAL_GAS
-#undef CASCADING_DESTAB_CRYSTAL
 
 #undef BIKE
 #undef COIL

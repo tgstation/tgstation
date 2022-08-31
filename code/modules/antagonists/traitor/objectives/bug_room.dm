@@ -25,7 +25,7 @@
 		JOB_CHIEF_ENGINEER = /area/station/command/heads_quarters/ce,
 		JOB_HEAD_OF_PERSONNEL = /area/station/command/heads_quarters/hop,
 		JOB_CAPTAIN = /area/station/command/heads_quarters/captain, // For head roles so that they can still get this objective.
-		JOB_QUARTERMASTER = /area/station/cargo/qm,
+		JOB_QUARTERMASTER = /area/station/command/heads_quarters/qm,
 	)
 	var/datum/job/target_office
 	var/requires_head_as_supervisor = TRUE

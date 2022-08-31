@@ -1,4 +1,0 @@
-author: "jlsnow301 MooCow"
-delete-after: True
-changes: 
-  - bugfix: "Adding items to dispenser shells no longer damages the dispenser"

@@ -160,7 +160,7 @@
 	for(var/iterator in 1 to goodie_count)
 		var/target_good = pick_weight(goodies)
 		var/atom/movable/target_atom = new target_good(src)
-		body.log_message("[key_name(body)] received [target_atom.name] in the mail ([target_good])", LOG_GAME)
+		body.log_message("received [target_atom.name] in the mail ([target_good])", LOG_GAME)
 
 	return TRUE
 
@@ -268,7 +268,7 @@
 	worn_icon_state = "mailbag"
 	resistance_flags = FLAMMABLE
 
-/obj/item/storage/bag/mail/Initialize()
+/obj/item/storage/bag/mail/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_total_storage = 42
@@ -286,15 +286,15 @@
 	var/nuclear_option_odds = 0.1
 
 /obj/item/paper/fluff/junkmail_redpill/Initialize(mapload)
-	. = ..()
 	if(!prob(nuclear_option_odds)) // 1 in 1000 chance of getting 2 random nuke code characters.
-		info = "<i>You need to escape the simulation. Don't forget the numbers, they help you remember:</i> '[rand(0,9)][rand(0,9)][rand(0,9)]...'"
-		return
+		add_raw_text("<i>You need to escape the simulation. Don't forget the numbers, they help you remember:</i> '[rand(0,9)][rand(0,9)][rand(0,9)]...'")
+		return ..()
 	var/code = random_nukecode()
 	for(var/obj/machinery/nuclearbomb/selfdestruct/self_destruct in GLOB.nuke_list)
 		self_destruct.r_code = code
 	message_admins("Through junkmail, the self-destruct code was set to \"[code]\".")
-	info = "<i>You need to escape the simulation. Don't forget the numbers, they help you remember:</i> '[code[rand(1,5)]][code[rand(1,5)]]...'"
+	add_raw_text("<i>You need to escape the simulation. Don't forget the numbers, they help you remember:</i> '[code[rand(1,5)]][code[rand(1,5)]]...'")
+	return ..()
 
 /obj/item/paper/fluff/junkmail_redpill/true //admin letter enabling players to brute force their way through the nuke code if they're so inclined.
 	nuclear_option_odds = 100
@@ -304,5 +304,5 @@
 	icon_state = "paper_words"
 
 /obj/item/paper/fluff/junkmail_generic/Initialize(mapload)
-	. = ..()
-	info = pick(GLOB.junkmail_messages)
+	default_raw_text = pick(GLOB.junkmail_messages)
+	return ..()

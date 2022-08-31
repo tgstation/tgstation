@@ -166,7 +166,7 @@
 
 /obj/structure/closet/wardrobe/mixed/PopulateContents()
 	if(prob(40))
-		new /obj/item/clothing/suit/jacket(src)
+		new /obj/item/clothing/suit/jacket/bomber(src)
 	new /obj/item/clothing/under/color/white(src)
 	new /obj/item/clothing/under/color/jumpskirt/white(src)
 	new /obj/item/clothing/under/color/blue(src)

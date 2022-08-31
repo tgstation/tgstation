@@ -50,6 +50,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///The alpha used by the hair. 255 is completely solid, 0 is invisible.
 	var/hair_alpha = 255
 
+	///Examine text when the person has brute damage.
+	var/brute_damage_desc = DEFAULT_BRUTE_EXAMINE_TEXT
+	///Examine text when the person has burn damage.
+	var/burn_damage_desc = DEFAULT_BURN_EXAMINE_TEXT
+	///Examine text when the person has cellular damage.
+	var/cellular_damage_desc = DEFAULT_CLONE_EXAMINE_TEXT
 	///This is used for children, it will determine their default limb ID for use of examine. See [/mob/living/carbon/human/proc/examine].
 	var/examine_limb_id
 	///Never, Optional, or Forced digi legs?
@@ -135,8 +141,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/fixed_mut_color = ""
 	///Special mutation that can be found in the genepool exclusively in this species. Dont leave empty or changing species will be a headache
 	var/inert_mutation = /datum/mutation/human/dwarfism
-	///Used to set the mob's deathsound upon species change
-	var/deathsound
+	///Used to set the mob's death_sound upon species change
+	var/death_sound
 	///Sounds to override barefeet walking
 	var/list/special_step_sounds
 	///Special sound for grabbing
@@ -413,6 +419,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			// organ.Insert will qdel any current organs in that slot, so we don't need to.
 			replacement.Insert(C, TRUE, FALSE)
 
+/datum/species/proc/worn_items_fit_body_check(mob/living/carbon/wearer)
+	for(var/obj/item/equipped_item in wearer.get_all_worn_items())
+		var/equipped_item_slot = wearer.get_slot_by_item(equipped_item)
+		if(!can_equip(equipped_item, equipped_item_slot, H = wearer,  bypass_equip_delay_self = TRUE, ignore_equipped = TRUE))
+			wearer.dropItemToGround(equipped_item)
+
 /**
  * Proc called when a carbon becomes this species.
  *
@@ -428,10 +440,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	// Drop the items the new species can't wear
 	if((AGENDER in species_traits))
 		C.gender = PLURAL
-	for(var/slot_id in no_equip)
-		var/obj/item/thing = C.get_item_by_slot(slot_id)
-		if(thing && (!thing.species_exception || !is_type_in_list(src,thing.species_exception)))
-			C.dropItemToGround(thing)
 	if(C.hud_used)
 		C.hud_used.update_locked_slots()
 
@@ -440,6 +448,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	replace_body(C, src)
 	regenerate_organs(C, old_species, visual_only = C.visual_only_organs)
+
+	INVOKE_ASYNC(src, .proc/worn_items_fit_body_check, C)
 
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
 		C.dna.blood_type = exotic_bloodtype
@@ -779,7 +789,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 ///Proc that will randomise the hair, or primary appearance element (i.e. for moths wings) of a species' associated mob
 /datum/species/proc/randomize_main_appearance_element(mob/living/carbon/human/human_mob)
 	human_mob.hairstyle = random_hairstyle(human_mob.gender)
-	human_mob.update_hair()
+	human_mob.update_body_parts()
 
 ///Proc that will randomise the underwear (i.e. top, pants and socks) of a species' associated mob
 /datum/species/proc/randomize_active_underwear(mob/living/carbon/human/human_mob)
@@ -787,6 +797,19 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	human_mob.underwear = random_underwear(human_mob.gender)
 	human_mob.socks = random_socks(human_mob.gender)
 	human_mob.update_body()
+
+///Proc that will randomize all the external organs (i.e. horns, frills, tails etc.) of a species' associated mob
+/datum/species/proc/randomize_external_organs(mob/living/carbon/human/human_mob)
+	for(var/obj/item/organ/external/organ_path as anything in external_organs)
+		var/obj/item/organ/external/randomized_organ = human_mob.getorgan(organ_path)
+		if(randomized_organ)
+			var/new_look = pick(randomized_organ.get_global_feature_list())
+			human_mob.dna.features["[randomized_organ.feature_key]"] = new_look
+			mutant_bodyparts["[randomized_organ.feature_key]"] = new_look
+
+///Proc that randomizes all the appearance elements (external organs, markings, hair etc.) of a species' associated mob. Function set by child procs
+/datum/species/proc/randomize_features(mob/living/carbon/human/human_mob)
+	return
 
 /datum/species/proc/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
 	if(HAS_TRAIT(H, TRAIT_NOBREATH))
@@ -800,14 +823,15 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE)
+/datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE)
 	if(slot in no_equip)
 		if(!I.species_exception || !is_type_in_list(src, I.species_exception))
 			return FALSE
 
 	// if there's an item in the slot we want, fail
-	if(H.get_item_by_slot(slot))
-		return FALSE
+	if(!ignore_equipped)
+		if(H.get_item_by_slot(slot))
+			return FALSE
 
 	// this check prevents us from equipping something to a slot it doesn't support, WITH the exceptions of storage slots (pockets, suit storage, and backpacks)
 	// we don't require having those slots defined in the item's slot_flags, so we'll rely on their own checks further down
@@ -873,6 +897,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_ICLOTHING)
+			var/obj/item/bodypart/chest = H.get_bodypart(BODY_ZONE_CHEST)
+			if(chest && (chest.bodytype & BODYTYPE_MONKEY))
+				if(!(I.supports_variations_flags & CLOTHING_MONKEY_VARIATION))
+					if(!disable_warning)
+						to_chat(H, span_warning("[I] doesn't fit your [chest.name]!"))
+					return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_ID)
 			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
@@ -963,7 +993,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(!chem.overdosed && chem.overdose_threshold && chem.volume >= chem.overdose_threshold)
 		chem.overdosed = TRUE
 		chem.overdose_start(H)
-		log_game("[key_name(H)] has started overdosing on [chem.name] at [chem.volume] units.")
+		H.log_message("has started overdosing on [chem.name] at [chem.volume] units.", LOG_GAME)
 
 /datum/species/proc/check_species_weakness(obj/item, mob/living/attacker)
 	return 1 //This is not a boolean, it's the multiplier for the damage that the user takes from the item. The force of the item is multiplied by this value
@@ -1021,7 +1051,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return
 	target.facial_hairstyle = "Shaved"
 	target.hairstyle = "Bald"
-	target.update_hair()
+	target.update_body_parts()
 
 //////////////////
 // ATTACK PROCS //
@@ -1084,7 +1114,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 		var/damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
 
-		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
+		var/obj/item/bodypart/affecting = target.get_bodypart(target.get_random_valid_zone(user.zone_selected))
 
 		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
 		if(user.dna.species.punchdamagelow)
@@ -1261,13 +1291,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(bloody) //Apply blood
 				if(human.wear_mask)
 					human.wear_mask.add_mob_blood(human)
-					human.update_inv_wear_mask()
+					human.update_worn_mask()
 				if(human.head)
 					human.head.add_mob_blood(human)
-					human.update_inv_head()
+					human.update_worn_head()
 				if(human.glasses && prob(33))
 					human.glasses.add_mob_blood(human)
-					human.update_inv_glasses()
+					human.update_worn_glasses()
 
 		if(BODY_ZONE_CHEST)
 			if(human.stat == CONSCIOUS && !weapon.get_sharpness() && armor_block < 50)
@@ -1279,10 +1309,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(bloody)
 				if(human.wear_suit)
 					human.wear_suit.add_mob_blood(human)
-					human.update_inv_wear_suit()
+					human.update_worn_oversuit()
 				if(human.w_uniform)
 					human.w_uniform.add_mob_blood(human)
-					human.update_inv_w_uniform()
+					human.update_worn_undersuit()
 
 	/// Triggers force say events
 	if(weapon.force > 10 || weapon.force >= 5 && prob(33))
@@ -1303,7 +1333,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			BP = def_zone
 		else
 			if(!def_zone)
-				def_zone = ran_zone(def_zone)
+				def_zone = H.get_random_valid_zone(def_zone)
 			BP = H.get_bodypart(check_zone(def_zone))
 			if(!BP)
 				BP = H.bodyparts[1]
@@ -1485,8 +1515,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	// Body temperature is too hot, and we do not have resist traits
 	if(bodytemp > bodytemp_heat_damage_limit && !HAS_TRAIT(humi, TRAIT_RESISTHEAT))
 		// Clear cold mood and apply hot mood
-		SEND_SIGNAL(humi, COMSIG_CLEAR_MOOD_EVENT, "cold")
-		SEND_SIGNAL(humi, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
+		humi.clear_mood_event("cold")
+		humi.add_mood_event("hot", /datum/mood_event/hot)
 
 		//Remove any slowdown from the cold.
 		humi.remove_movespeed_modifier(/datum/movespeed_modifier/cold)
@@ -1502,8 +1532,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	// Body temperature is too cold, and we do not have resist traits
 	else if(bodytemp < bodytemp_cold_damage_limit && !HAS_TRAIT(humi, TRAIT_RESISTCOLD))
 		// clear any hot moods and apply cold mood
-		SEND_SIGNAL(humi, COMSIG_CLEAR_MOOD_EVENT, "hot")
-		SEND_SIGNAL(humi, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
+		humi.clear_mood_event("hot")
+		humi.add_mood_event("cold", /datum/mood_event/cold)
 		// Apply cold slow down
 		humi.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/cold, multiplicative_slowdown = ((bodytemp_cold_damage_limit - humi.bodytemperature) / COLD_SLOWDOWN_FACTOR))
 		// Display alerts based how cold it is
@@ -1521,8 +1551,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	else if (old_bodytemp > bodytemp_heat_damage_limit || old_bodytemp < bodytemp_cold_damage_limit)
 		humi.clear_alert(ALERT_TEMPERATURE)
 		humi.remove_movespeed_modifier(/datum/movespeed_modifier/cold)
-		SEND_SIGNAL(humi, COMSIG_CLEAR_MOOD_EVENT, "cold")
-		SEND_SIGNAL(humi, COMSIG_CLEAR_MOOD_EVENT, "hot")
+		humi.clear_mood_event("cold")
+		humi.clear_mood_event("hot")
 
 	// Store the old bodytemp for future checking
 	humi.old_bodytemperature = bodytemp
@@ -1698,9 +1728,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * former_tail_owner - the mob that was once a species with a tail and now is a different species
  */
 /datum/species/proc/clear_tail_moodlets(mob/living/carbon/human/former_tail_owner)
-	SEND_SIGNAL(former_tail_owner, COMSIG_CLEAR_MOOD_EVENT, "tail_lost")
-	SEND_SIGNAL(former_tail_owner, COMSIG_CLEAR_MOOD_EVENT, "tail_balance_lost")
-	SEND_SIGNAL(former_tail_owner, COMSIG_CLEAR_MOOD_EVENT, "wrong_tail_regained")
+	former_tail_owner.clear_mood_event("tail_lost")
+	former_tail_owner.clear_mood_event("tail_balance_lost")
+	former_tail_owner.clear_mood_event("wrong_tail_regained")
 
 ///////////////
 //FLIGHT SHIT//

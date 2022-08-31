@@ -93,12 +93,12 @@
 #define ui_palette_scroll_offset(north_offset) ("WEST+1:8,NORTH-[6+north_offset]:28")
 
 //Middle right (status indicators)
-#define ui_healthdoll "EAST-1:28,CENTER-2:13"
-#define ui_health "EAST-1:28,CENTER-1:15"
-#define ui_internal "EAST-1:28,CENTER+1:17"
-#define ui_mood "EAST-1:28,CENTER:17"
-#define ui_spacesuit "EAST-1:28,CENTER-4:10"
-#define ui_stamina "EAST-1:28,CENTER-3:10"
+#define ui_healthdoll "EAST-1:28,CENTER-2:17"
+#define ui_health "EAST-1:28,CENTER-1:19"
+#define ui_internal "EAST-1:28,CENTER+1:21"
+#define ui_mood "EAST-1:28,CENTER:21"
+#define ui_spacesuit "EAST-1:28,CENTER-4:14"
+#define ui_stamina "EAST-1:28,CENTER-3:14"
 
 //Pop-up inventory
 #define ui_shoes "WEST+1:8,SOUTH:5"
@@ -177,12 +177,12 @@
 #define ui_pai_chassis "SOUTH:6,WEST+2"
 #define ui_pai_rest "SOUTH:6,WEST+3"
 #define ui_pai_light "SOUTH:6,WEST+4"
-#define ui_pai_newscaster "SOUTH:6,WEST+5"
-#define ui_pai_host_monitor "SOUTH:6,WEST+6"
-#define ui_pai_crew_manifest "SOUTH:6,WEST+7"
-#define ui_pai_state_laws "SOUTH:6,WEST+8"
+#define ui_pai_state_laws "SOUTH:6,WEST+5"
+#define ui_pai_crew_manifest "SOUTH:6,WEST+6"
+#define ui_pai_host_monitor "SOUTH:6,WEST+7"
+#define ui_pai_internal_gps "SOUTH:6,WEST+8"
 #define ui_pai_mod_int "SOUTH:6,WEST+9"
-#define ui_pai_internal_gps "SOUTH:6,WEST+10"
+#define ui_pai_newscaster "SOUTH:6,WEST+10"
 #define ui_pai_take_picture "SOUTH:6,WEST+11"
 #define ui_pai_view_images "SOUTH:6,WEST+12"
 #define ui_pai_radio "SOUTH:6,WEST+13"
@@ -211,3 +211,9 @@
 #define SCRN_OBJ_IN_LIST "list"
 /// In the collapseable palette
 #define SCRN_OBJ_IN_PALETTE "palette"
+
+///Inserted first in the list
+#define SCRN_OBJ_INSERT_FIRST "first"
+
+/// The filter name for the hover outline
+#define HOVER_OUTLINE_FILTER "hover_outline"

@@ -7,10 +7,10 @@
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the head of security"
+	supervisors = SUPERVISOR_HOS
 	selection_color = "#ffeeee"
 	minimal_player_age = 7
-	exp_requirements = 300
+	exp_requirements = 5 HOURS
 	exp_required_type = EXP_TYPE_CREW
 	exp_granted_type = EXP_TYPE_CREW
 
@@ -39,8 +39,8 @@
 		/obj/item/storage/belt/holster/detective/full = 1
 	)
 
-	family_heirlooms = list(/obj/item/reagent_containers/food/drinks/bottle/whiskey)
-	rpg_title = "Thiefcatcher"
+	family_heirlooms = list(/obj/item/reagent_containers/cup/glass/bottle/whiskey)
+	rpg_title = "Thiefcatcher" //I guess they caught them all rip thief...
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
 

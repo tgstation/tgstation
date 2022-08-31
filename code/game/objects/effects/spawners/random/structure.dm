@@ -101,6 +101,13 @@
 		/obj/structure/closet/crate/science = 1,
 	)
 
+/obj/effect/spawner/random/structure/crate_empty/Initialize(mapload)
+	var/obj/structure/closet/crate/peek_a_boo = ..()
+	if(istype(peek_a_boo))
+		peek_a_boo.opened = prob(50)
+
+	return INITIALIZE_HINT_QDEL
+
 /obj/effect/spawner/random/structure/crate_loot
 	name = "lootcrate spawner"
 	icon_state = "crate"
@@ -126,6 +133,13 @@
 		/obj/structure/closet/cabinet = 150,
 		/obj/structure/closet/acloset = 1,
 	)
+
+/obj/effect/spawner/random/structure/closet_empty/Initialize(mapload)
+	var/obj/structure/closet/peek_a_boo = ..()
+	if(istype(peek_a_boo))
+		peek_a_boo.opened = prob(50)
+
+	return INITIALIZE_HINT_QDEL
 
 /obj/effect/spawner/random/structure/closet_maintenance
 	name = "maintenance closet spawner"
@@ -211,17 +225,17 @@
 /obj/effect/spawner/random/structure/billboard/roadsigns //also pretty much only unifunctionally useful for gas stations
 	name = "\improper Gas Station billboard spawner"
 	loot = list(
-		/obj/structure/billboard/roadsign/two = 25,
-		/obj/structure/billboard/roadsign/twothousand = 25,
-		/obj/structure/billboard/roadsign/twomillion = 25,
-		/obj/structure/billboard/roadsign/error = 25,
+		/obj/structure/billboard/roadsign/two,
+		/obj/structure/billboard/roadsign/twothousand,
+		/obj/structure/billboard/roadsign/twomillion,
+		/obj/structure/billboard/roadsign/error,
 	)
 
 /obj/effect/spawner/random/structure/steam_vent
 	name = "steam vent spawner"
 	loot = list(
-		/obj/structure/steam_vent = 50,
-		/obj/structure/steam_vent/fast = 50,
+		/obj/structure/steam_vent,
+		/obj/structure/steam_vent/fast,
 	)
 
 /obj/effect/spawner/random/structure/musician/piano/random_piano

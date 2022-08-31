@@ -57,8 +57,15 @@
 	icon_state = "down"
 	anchored = FALSE
 	resistance_flags = NONE
+	///The item it spawns when it's folded up.
 	var/foldabletype = /obj/item/roller
 
+/obj/structure/bed/roller/Initialize(mapload)
+	. = ..()
+	AddElement( \
+		/datum/element/contextual_screentip_bare_hands, \
+		rmb_text = "Fold up", \
+	)
 
 /obj/structure/bed/roller/examine(mob/user)
 	. = ..()

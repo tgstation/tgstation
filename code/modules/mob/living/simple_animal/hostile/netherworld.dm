@@ -99,8 +99,8 @@
 	attack_verb_simple = "lacerate"
 	speed = -0.5
 	var/static/list/migo_sounds
-	deathmessage = "wails as its form turns into a pulpy mush."
-	deathsound = 'sound/voice/hiss6.ogg'
+	death_message = "wails as its form turns into a pulpy mush."
+	death_sound = 'sound/voice/hiss6.ogg'
 	phaser = FALSE
 
 /mob/living/simple_animal/hostile/netherworld/migo/Initialize(mapload)
@@ -135,7 +135,7 @@
 	melee_damage_upper = 10
 	attack_verb_continuous = "punches"
 	attack_verb_simple = "punch"
-	deathmessage = "falls apart into a fine dust."
+	death_message = "falls apart into a fine dust."
 	phaser = FALSE
 
 /obj/structure/spawner/nether

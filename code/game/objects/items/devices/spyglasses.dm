@@ -22,11 +22,11 @@
 /obj/item/clothing/glasses/sunglasses/spy/equipped(mob/user, slot)
 	. = ..()
 	if(slot != ITEM_SLOT_EYES)
-		user.client.close_popup("spypopup")
+		user.client?.close_popup("spypopup")
 
 /obj/item/clothing/glasses/sunglasses/spy/dropped(mob/user)
 	. = ..()
-	user.client.close_popup("spypopup")
+	user.client?.close_popup("spypopup")
 
 /obj/item/clothing/glasses/sunglasses/spy/ui_action_click(mob/user)
 	show_to_user(user)
@@ -102,7 +102,7 @@
 	name = "Espionage For Dummies"
 	color = "#FFFF00"
 	desc = "An eye gougingly yellow pamphlet with a badly designed image of a detective on it. the subtext says \" The Latest way to violate privacy guidelines!\" "
-	info = @{"
+	default_raw_text = @{"
 
 Thank you for your purchase of the Nerd Co SpySpeks <small>tm</small>, this paper will be your quick-start guide to violating the privacy of your crewmates in three easy steps!<br><br>Step One: Nerd Co SpySpeks <small>tm</small> upon your face. <br>
 Step Two: Place the included "ProfitProtektor <small>tm</small>" camera assembly in a place of your choosing - make sure to make heavy use of it's inconspicous design!

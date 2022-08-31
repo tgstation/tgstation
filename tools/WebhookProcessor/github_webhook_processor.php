@@ -763,9 +763,8 @@ function checkchangelog($payload, $compile = true) {
 				}
 				break;
 			case 'balance':
-			case 'rebalance':
 				if($item != 'rebalanced something'){
-					$tags[] = 'Balance/Rebalance';
+					$tags[] = 'Balance';
 					$currentchangelogblock[] = array('type' => 'balance', 'body' => $item);
 				}
 				break;

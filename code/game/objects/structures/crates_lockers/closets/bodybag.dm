@@ -22,6 +22,20 @@
 	var/tagged = FALSE // so closet code knows to put the tag overlay back
 	can_install_electronics = FALSE
 
+/obj/structure/closet/body_bag/Initialize(mapload)
+	. = ..()
+	var/static/list/tool_behaviors = list(
+		TOOL_WIRECUTTER = list(
+			SCREENTIP_CONTEXT_RMB = "Remove Tag",
+		),
+	)
+	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+	AddElement( \
+		/datum/element/contextual_screentip_bare_hands, \
+		rmb_text = "Fold up", \
+	)
+	AddElement(/datum/element/contextual_screentip_sharpness, lmb_text = "Remove Tag")
+
 /obj/structure/closet/body_bag/Destroy()
 	// If we have a stored bag, and it's in nullspace (not in someone's hand), delete it.
 	if (foldedbag_instance && !foldedbag_instance.loc)
@@ -37,20 +51,19 @@
 			return
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
-		if(t)
-			name = "[initial(name)] - [t]"
-			tagged = TRUE
-			update_appearance()
-		else
-			name = initial(name)
+		handle_tag("[t ? t : initial(name)]")
 		return
 	if(!tagged)
 		return
 	if(interact_tool.tool_behaviour == TOOL_WIRECUTTER || interact_tool.get_sharpness())
 		to_chat(user, span_notice("You cut the tag off [src]."))
-		name = "body bag"
-		tagged = FALSE
-		update_appearance()
+		handle_tag()
+
+///Handles renaming of the bodybag's examine tag.
+/obj/structure/closet/body_bag/proc/handle_tag(tag_name)
+	name = tag_name ? "[initial(name)] - [tag_name]" : initial(name)
+	tagged = !!tag_name
+	update_appearance()
 
 /obj/structure/closet/body_bag/update_overlays()
 	. = ..()
@@ -86,7 +99,7 @@
 		to_chat(the_folder, span_warning("You wrestle with [src], but it won't fold while unzipped."))
 		return
 	for(var/content_thing in contents)
-		if(istype(content_thing, /mob) || istype(content_thing, /obj))
+		if(istype(content_thing, /mob) || isobj(content_thing))
 			to_chat(the_folder, span_warning("There are too many things inside of [src] to fold it up!"))
 			return
 	// toto we made it!
@@ -295,7 +308,7 @@
 	user.visible_message(span_notice("[user] [sinched ? null : "un"]sinches [src]."),
 							span_notice("You [sinched ? null : "un"]sinch [src]."),
 							span_hear("You hear stretching followed by metal clicking from [src]."))
-	log_game("[key_name(user)] [sinched ? "sinched":"unsinched"] secure environmental bag [src] at [AREACOORD(src)]")
+	user.log_message("[sinched ? "sinched":"unsinched"] secure environmental bag [src]", LOG_GAME)
 	update_appearance()
 
 /obj/structure/closet/body_bag/environmental/prisoner/pressurized

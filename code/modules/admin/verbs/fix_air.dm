@@ -10,7 +10,7 @@
 	if(check_rights(R_ADMIN,1))
 		var/range=input("Enter range:","Num",2) as num
 		message_admins("[key_name_admin(usr)] fixed air with range [range] in area [T.loc.name]")
-		log_game("[key_name_admin(usr)] fixed air with range [range] in area [T.loc.name]")
+		usr.log_message("fixed air with range [range] in area [T.loc.name]", LOG_ADMIN)
 		var/datum/gas_mixture/GM = new
 		for(var/turf/open/F in range(range,T))
 			if(F.blocks_air)

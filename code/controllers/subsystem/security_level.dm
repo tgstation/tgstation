@@ -68,23 +68,21 @@ SUBSYSTEM_DEF(security_level)
  */
 /datum/controller/subsystem/security_level/proc/announce_security_level(datum/security_level/selected_level)
 	if(selected_level.number_level > current_security_level.number_level) // We are elevating to this level.
-		minor_announce(selected_level.elevating_to_announcemnt, "Attention! Security level elevated to [selected_level.name]:")
+		minor_announce(selected_level.elevating_to_announcemnt, "Attention! Security level elevated to [selected_level.name]:", sound_override = selected_level.sound)
 	else // Going down
-		minor_announce(selected_level.lowering_to_announcement, "Attention! Security level lowered to [selected_level.name]:")
-	if(selected_level.sound)
-		sound_to_playing_players(selected_level.sound)
+		minor_announce(selected_level.lowering_to_announcement, "Attention! Security level lowered to [selected_level.name]:", sound_override = selected_level.sound)
 
 /**
  * Returns the current security level as a number
  */
 /datum/controller/subsystem/security_level/proc/get_current_level_as_number()
-	return current_security_level ? current_security_level.number_level : SEC_LEVEL_GREEN //Send a response in case the subsystem hasn't finished setting up yet
+	return ((!initialized || !current_security_level) ? SEC_LEVEL_GREEN : current_security_level.number_level) //Send the default security level in case the subsystem hasn't finished initializing yet
 
 /**
  * Returns the current security level as text
  */
 /datum/controller/subsystem/security_level/proc/get_current_level_as_text()
-	return current_security_level ? current_security_level.name : "green"
+	return ((!initialized || !current_security_level) ? "green" : current_security_level.name)
 
 /**
  * Converts a text security level to a number

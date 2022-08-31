@@ -332,11 +332,11 @@
 /area/ruin/space/ks13/engineering/atmos)
 "eL" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/bottle/beer/almost_empty{
+/obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty{
 	pixel_x = -7;
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/food/drinks/bottle/beer/almost_empty,
+/obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty,
 /turf/open/floor/plating,
 /area/ruin/space/ks13/command/bridge)
 "eM" = (
@@ -2320,7 +2320,7 @@
 "vV" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/paicard,
+/obj/item/pai_card,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/science/rnd)
 "vY" = (
@@ -3700,11 +3700,11 @@
 /area/ruin/space/ks13/engineering/atmos)
 "Dj" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/bottle/vodka{
+/obj/item/reagent_containers/cup/glass/bottle/vodka{
 	pixel_x = 6;
 	pixel_y = 10
 	},
-/obj/item/reagent_containers/food/drinks/bottle/vodka{
+/obj/item/reagent_containers/cup/glass/bottle/vodka{
 	pixel_x = -7;
 	pixel_y = 13
 	},
@@ -4314,11 +4314,11 @@
 /area/ruin/space/ks13/tool_storage)
 "Gq" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/bottle/beer/almost_empty{
+/obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty{
 	pixel_x = -6;
 	pixel_y = 12
 	},
-/obj/item/reagent_containers/food/drinks/bottle/beer/almost_empty,
+/obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/command/bridge)
 "Gr" = (
@@ -4589,18 +4589,18 @@
 /area/ruin/space/ks13/science/ordnance)
 "HL" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = 8;
 	pixel_y = 9
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = 8
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = -7;
 	pixel_y = 9
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = -7
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -5767,10 +5767,10 @@
 /area/ruin/space/ks13/dorms)
 "Oe" = (
 /obj/structure/table,
-/obj/item/reagent_containers/glass/beaker{
+/obj/item/reagent_containers/cup/beaker{
 	pixel_x = -8
 	},
-/obj/item/reagent_containers/glass/beaker/large{
+/obj/item/reagent_containers/cup/beaker/large{
 	pixel_x = 5
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -6549,7 +6549,7 @@
 /area/ruin/space/ks13/medical/medbay)
 "Sf" = (
 /obj/structure/table,
-/obj/item/reagent_containers/glass/beaker{
+/obj/item/reagent_containers/cup/beaker{
 	list_reagents = list(/datum/reagent/toxin/acid=50)
 	},
 /obj/item/paper/crumpled/bloody/ruins/thederelict/unfinished,
@@ -7325,12 +7325,12 @@
 /area/ruin/space/ks13/service/hydro)
 "VG" = (
 /obj/structure/closet/crate,
-/obj/item/clothing/head/beanie/rasta,
+/obj/item/clothing/head/rasta,
 /obj/item/clothing/head/beanie/black,
 /obj/item/clothing/head/beanie/christmas,
 /obj/item/clothing/head/beanie/darkblue,
 /obj/item/clothing/head/beanie/red,
-/obj/item/clothing/head/beanie/waldo,
+/obj/item/clothing/head/waldo,
 /obj/item/clothing/head/bearpelt,
 /obj/item/clothing/head/beret,
 /obj/item/clothing/head/bomb_hood,
@@ -8089,11 +8089,11 @@
 /area/ruin/space/ks13/ai/vault)
 "ZC" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/glass/beaker{
+/obj/item/reagent_containers/cup/beaker{
 	pixel_x = 9;
 	pixel_y = 7
 	},
-/obj/item/reagent_containers/glass/beaker/large{
+/obj/item/reagent_containers/cup/beaker/large{
 	pixel_x = -4;
 	pixel_y = 4
 	},

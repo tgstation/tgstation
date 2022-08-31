@@ -33,7 +33,10 @@
 /obj/item/melee/energy/Initialize(mapload)
 	. = ..()
 	make_transformable()
-	AddComponent(/datum/component/butchering, _speed = 5 SECONDS, _butcher_sound = active_hitsound)
+	AddComponent(/datum/component/butchering, \
+	speed = 5 SECONDS, \
+	butcher_sound = active_hitsound, \
+	)
 
 /obj/item/melee/energy/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -259,7 +262,7 @@
 	to_chat(user, span_warning("RNBW_ENGAGE"))
 	if(force >= active_force)
 		icon_state = "[initial(icon_state)]_on_rainbow"
-		user.update_inv_hands()
+		user.update_held_items()
 
 /obj/item/melee/energy/sword/pirate
 	name = "energy cutlass"

@@ -236,7 +236,7 @@
 		else
 			icon_state = "purple"
 			change_glass_color(user, /datum/client_colour/glass_colour/purple)
-	user.update_inv_glasses()
+	user.update_worn_glasses()
 
 /obj/item/clothing/glasses/hud/toggle/thermal/emp_act(severity)
 	. = ..()

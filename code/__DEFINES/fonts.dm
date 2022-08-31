@@ -7,10 +7,10 @@
 #define CRAYON_FONT "Comic Sans MS"
 /// Font used by printers
 #define PRINTER_FONT "Times New Roman"
-/// Font used when a player signs their name
-#define SIGNFONT "Times New Roman"
 /// Font used by charcoal pens
 #define CHARCOAL_FONT "Candara"
+/// Font used when signing on paper.
+#define SIGNATURE_FONT "Segoe Script"
 
 //pda fonts
 #define MONO "Monospaced"

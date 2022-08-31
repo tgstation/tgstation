@@ -8,7 +8,7 @@
 
 	var/button_icon_state
 	var/appearance_cache
-
+	var/mutable_appearance/button_overlay
 	/// Where we are currently placed on the hud. SCRN_OBJ_DEFAULT asks the linked action what it thinks
 	var/location = SCRN_OBJ_DEFAULT
 	/// A unique bitflag, combined with the name of our linked action this lets us persistently remember any user changes to our position

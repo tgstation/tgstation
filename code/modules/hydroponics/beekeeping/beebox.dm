@@ -18,7 +18,7 @@
 /mob/living/carbon/human/bee_friendly()
 	if(dna && dna.species && dna.species.id == SPECIES_PODPERSON) //bees pollinate plants, duh.
 		return 1
-	if (wear_suit && head && istype(wear_suit, /obj/item/clothing) && istype(head, /obj/item/clothing))
+	if (wear_suit && head && isclothing(wear_suit) && isclothing(head))
 		var/obj/item/clothing/CS = wear_suit
 		var/obj/item/clothing/CH = head
 		if (CS.clothing_flags & CH.clothing_flags & THICKMATERIAL)

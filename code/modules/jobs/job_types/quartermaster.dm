@@ -9,7 +9,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	minimal_player_age = 7
-	supervisors = "the captain"
+	supervisors = SUPERVISOR_CAPTAIN
 	selection_color = "#d7b088"
 	exp_required_type_department = EXP_TYPE_SUPPLY
 	exp_granted_type = EXP_TYPE_CREW

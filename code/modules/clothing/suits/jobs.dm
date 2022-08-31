@@ -7,11 +7,12 @@
 	name = "apron"
 	desc = "A basic blue apron."
 	icon_state = "apron"
+	icon = 'icons/obj/clothing/suits/utility.dmi'
 	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
 	inhand_icon_state = "apron"
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST|GROIN
-	allowed = list(/obj/item/reagent_containers/spray/plantbgone, /obj/item/plant_analyzer, /obj/item/seeds, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/beaker, /obj/item/cultivator, /obj/item/reagent_containers/spray/pestspray, /obj/item/hatchet, /obj/item/storage/bag/plants, /obj/item/graft, /obj/item/secateurs, /obj/item/geneshears)
+	allowed = list(/obj/item/reagent_containers/spray/plantbgone, /obj/item/plant_analyzer, /obj/item/seeds, /obj/item/reagent_containers/cup/bottle, /obj/item/reagent_containers/cup/beaker, /obj/item/cultivator, /obj/item/reagent_containers/spray/pestspray, /obj/item/hatchet, /obj/item/storage/bag/plants, /obj/item/graft, /obj/item/secateurs, /obj/item/geneshears)
 	species_exception = list(/datum/species/golem)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
 
@@ -29,13 +30,14 @@
 	icon_state = "capjacket"
 	inhand_icon_state = "bio_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
-	allowed = list(/obj/item/disk, /obj/item/stamp, /obj/item/reagent_containers/food/drinks/flask, /obj/item/melee, /obj/item/storage/lockbox/medal, /obj/item/assembly/flash/handheld, /obj/item/storage/box/matches, /obj/item/lighter, /obj/item/clothing/mask/cigarette, /obj/item/storage/fancy/cigarettes, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
+	allowed = list(/obj/item/disk, /obj/item/stamp, /obj/item/reagent_containers/cup/glass/flask, /obj/item/melee, /obj/item/storage/lockbox/medal, /obj/item/assembly/flash/handheld, /obj/item/storage/box/matches, /obj/item/lighter, /obj/item/clothing/mask/cigarette, /obj/item/storage/fancy/cigarettes, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 
 //Chef
 /obj/item/clothing/suit/toggle/chef
 	name = "chef's apron"
 	desc = "An apron-jacket used by a high class chef."
 	icon_state = "chef"
+	icon = 'icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
 	inhand_icon_state = "chef"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
@@ -99,6 +101,7 @@
 	name = "hazard vest"
 	desc = "A high-visibility vest used in work zones."
 	icon_state = "hazard"
+	icon = 'icons/obj/clothing/suits/utility.dmi'
 	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
 	inhand_icon_state = "hazard"
 	blood_overlay_type = "armor"
@@ -116,6 +119,7 @@
 	name = "blue suit jacket"
 	desc = "A snappy dress jacket."
 	icon_state = "suitjacket_blue"
+	icon = 'icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
 	inhand_icon_state = "suitjacket_blue"
 	blood_overlay_type = "coat"
@@ -147,20 +151,8 @@
 	species_exception = list(/datum/species/golem)
 	greyscale_config = /datum/greyscale_config/suspenders
 	greyscale_config_worn = /datum/greyscale_config/suspenders/worn
-	greyscale_colors = "#ff0000"
+	greyscale_colors = "#972A2A"
 	flags_1 = IS_PLAYER_COLORABLE_1
-
-/obj/item/clothing/suit/toggle/suspenders/blue
-	name = "blue suspenders"
-	desc = "The symbol of hard labor and dirty jobs."
-	icon = 'icons/obj/clothing/belts.dmi'
-	greyscale_colors = "#0000ff"
-
-/obj/item/clothing/suit/toggle/suspenders/gray
-	name = "gray suspenders"
-	desc = "The symbol of hard labor and dirty jobs."
-	icon = 'icons/obj/clothing/belts.dmi'
-	greyscale_colors = "#888888"
 
 //Security
 /obj/item/clothing/suit/jacket/officer/blue
@@ -220,8 +212,8 @@
 		/obj/item/flashlight/pen,
 		/obj/item/healthanalyzer,
 		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/glass/beaker,
-		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/cup/beaker,
+		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/storage/pill_bottle,
@@ -246,6 +238,7 @@
 	name = "techpriest robes"
 	desc = "For those who REALLY love their toasters."
 	icon_state = "techpriest"
+	icon = 'icons/obj/clothing/suits/costume.dmi'
 	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
 	inhand_icon_state = "techpriest"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
