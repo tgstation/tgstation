@@ -314,7 +314,7 @@
 		if(QDELETED(clothing))
 			ripped_clothing -= clothing
 			continue
-		if(mod.wearer.CanReach(clothing, view_only = TRUE))
+		if(mod.wearer.CanReach(clothing))
 			continue
 		zipped = TRUE
 		clothing.body_parts_covered |= ripped_clothing[clothing]

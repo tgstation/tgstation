@@ -182,9 +182,8 @@
 	desc = "The private security that had orders to take in people dead were quite \
 		happy with their space-proofed suit, but for those who wanted to bring back \
 		whomever their targets were still breathing needed a way to \"share\" the \
-		space-proofing. And thus: criminal capture! Creates a prisoner transport bag \
-		around the apprehended that has breathable atmos and even stabilizes critical \
-		conditions."
+		space-proofing. And thus: criminal capture! Creates a hardlight prisoner transport bag \
+		around the apprehended that has breathable atmospheric conditions."
 	icon_state = "criminal_capture"
 	module_type = MODULE_ACTIVE
 	complexity = 2

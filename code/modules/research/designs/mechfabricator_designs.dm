@@ -1399,6 +1399,13 @@
 	build_path = /obj/item/mod/module/criminalcapture/patienttransport
 	department_type = MODULE_MEDICAL
 
+/datum/design/module/criminalcapture
+	name = "MOD Module: Criminal Capture"
+	id = "mod_criminalcapture"
+	materials = list(/datum/material/iron = 1000, /datum/material/bluespace = 1000)
+	build_path = /obj/item/mod/module/criminalcapture
+	department_type = MODULE_SECURITY
+
 //MODsuit bepis modules
 
 /datum/design/module/disposal
