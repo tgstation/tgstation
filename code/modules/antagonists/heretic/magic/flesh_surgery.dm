@@ -16,6 +16,7 @@
 	antimagic_flags = MAGIC_RESISTANCE
 
 	hand_path = /obj/item/melee/touch_attack/flesh_surgery
+	can_cast_on_self = TRUE
 
 	/// If used on an organ, how much percent of the organ's HP do we restore
 	var/organ_percent_healing = 0.5
@@ -23,6 +24,9 @@
 	var/monster_brute_healing = 10
 	/// If used on a heretic mob, how much burn do we heal
 	var/monster_burn_healing = 5
+
+/datum/action/cooldown/spell/touch/flesh_surgery/is_valid_target(atom/cast_on)
+	return isliving(cast_on) || isorgan(cast_on)
 
 /datum/action/cooldown/spell/touch/flesh_surgery/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
 	if(isorgan(victim))

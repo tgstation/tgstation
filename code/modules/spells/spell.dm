@@ -211,6 +211,7 @@
 /**
  * Check if the target we're casting on is a valid target.
  * For self-casted spells, the target being checked (cast_on) is the caster.
+ * For click_to_activate spells, the target being checked is the clicked atom.
  *
  * Return TRUE if cast_on is valid, FALSE otherwise
  */

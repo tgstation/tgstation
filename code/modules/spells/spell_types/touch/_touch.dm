@@ -1,3 +1,11 @@
+/**
+ * ## Touch Spell
+ *
+ * Touch spells are spells which function through the power of an item attack.
+ * Instead of the spell triggering when the caster presses the button, instead
+ * pressing the button will give them a hand object. The spell's effects are cast
+ * when the hand object makes contact with something.
+ */
 /datum/action/cooldown/spell/touch
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_HANDS_BLOCKED
 	sound = 'sound/items/welder.ogg'
@@ -12,6 +20,8 @@
 	var/draw_message = span_notice("You channel the power of the spell to your hand.")
 	/// The message displayed upon willingly dropping / deleting / cancelling the touch hand before using it
 	var/drop_message = span_notice("You draw the power out of your hand.")
+	/// If TRUE, the caster can willingly hit themselves with the hand
+	var/can_cast_on_self = FALSE
 
 /datum/action/cooldown/spell/touch/Destroy()
 	// If we have an owner, the hand is cleaned up in Remove(), which Destroy() calls.
@@ -22,6 +32,10 @@
 /datum/action/cooldown/spell/touch/Remove(mob/living/remove_from)
 	remove_hand(remove_from)
 	return ..()
+
+// PreActivate is overridden to not check is_valid_target on the caster, as it makes less sense.
+/datum/action/cooldown/spell/touch/PreActivate(atom/target)
+	return Activate(target)
 
 /datum/action/cooldown/spell/touch/UpdateButton(atom/movable/screen/movable/action_button/button, status_only = FALSE, force = FALSE)
 	. = ..()
@@ -42,6 +56,9 @@
 	. = ..()
 	if(!.)
 		return FALSE
+	// Currently, hard checks for carbons.
+	// If someone wants to add support for simplemobs
+	// adminbussed to have hands, go for it
 	if(!iscarbon(owner))
 		return FALSE
 	var/mob/living/carbon/carbon_owner = owner
@@ -49,8 +66,9 @@
 		return FALSE
 	return TRUE
 
+// Checks if the mob slapped with the hand is a valid target.
 /datum/action/cooldown/spell/touch/is_valid_target(atom/cast_on)
-	return iscarbon(cast_on)
+	return isliving(cast_on)
 
 /**
  * Creates a new hand_path hand and equips it to the caster.
@@ -59,6 +77,8 @@
  * Otherwise, registers signals and returns TRUE.
  */
 /datum/action/cooldown/spell/touch/proc/create_hand(mob/living/carbon/cast_on)
+	SHOULD_CALL_PARENT(TRUE)
+
 	var/obj/item/melee/touch_attack/new_hand = new hand_path(cast_on, src)
 	if(!cast_on.put_in_hands(new_hand, del_on_fail = TRUE))
 		reset_spell_cooldown()
@@ -80,6 +100,8 @@
  * If reset_cooldown_after is FALSE, we will instead just start the spell's cooldown
  */
 /datum/action/cooldown/spell/touch/proc/remove_hand(mob/living/hand_owner, reset_cooldown_after = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
+
 	if(!QDELETED(attached_hand))
 		unregister_hand_signals()
 		hand_owner?.temporarilyRemoveItemFromInventory(attached_hand)
@@ -134,7 +156,7 @@
 
 	if(!proximity_flag)
 		return
-	if(!can_cast_spell(feedback = FALSE))
+	if(!can_hit_with_hand(victim, caster))
 		return
 
 	INVOKE_ASYNC(src, .proc/do_hand_hit, source, victim, caster)
@@ -149,18 +171,32 @@
 
 	if(!proximity_flag)
 		return
-	if(!can_cast_spell(feedback = FALSE))
+	if(!can_hit_with_hand(victim, caster))
 		return
 
 	INVOKE_ASYNC(src, .proc/do_secondary_hand_hit, source, victim, caster)
 	return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
 
+/// Checks if the passed victim can be cast on by the caster.
+/datum/action/cooldown/spell/touch/proc/can_hit_with_hand(atom/victim, mob/caster)
+	if(!can_cast_on_self && victim == caster)
+		return FALSE
+	if(!is_valid_target(victim))
+		return FALSE
+	if(!can_cast_spell(feedback = FALSE))
+		return FALSE
+
+	return TRUE
+
 /**
  * Calls cast_on_hand_hit() from the caster onto the victim.
+ * It's worth noting that victim will be guaranteed to be whatever checks are implemented in is_valid_target by this point.
  *
  * Implements checks for antimagic.
  */
 /datum/action/cooldown/spell/touch/proc/do_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
+	SHOULD_NOT_OVERRIDE(TRUE) // Don't put effects here, put them in cast_on_hand_hit
+
 	SEND_SIGNAL(src, COMSIG_SPELL_TOUCH_HAND_HIT, victim, caster, hand)
 
 	var/mob/mob_victim = victim
@@ -176,10 +212,13 @@
 
 /**
  * Calls do_secondary_hand_hit() from the caster onto the victim.
- *
+ * It's worth noting that victim will be guaranteed to be whatever checks are implemented in is_valid_target by this point.
+
  * Does NOT check for antimagic on its own. Implement your own checks if you want the r-click to abide by it.
  */
 /datum/action/cooldown/spell/touch/proc/do_secondary_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
+	SHOULD_NOT_OVERRIDE(TRUE) // Don't put effects here, put them in cast_on_secondary_hand_hit
+
 	var/secondary_result = cast_on_secondary_hand_hit(hand, victim, caster)
 	switch(secondary_result)
 		// Continue will remove the hand here and stop
@@ -272,7 +311,7 @@
 	if(!iscarbon(user)) //Look ma, no hands
 		return TRUE
 	if(!(user.mobility_flags & MOBILITY_USE))
-		to_chat(user, span_warning("You can't reach out!"))
+		user.balloon_alert(user, "can't reach out!")
 		return TRUE
 	return ..()
 

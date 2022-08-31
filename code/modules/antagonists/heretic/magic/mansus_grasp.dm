@@ -16,6 +16,9 @@
 
 	hand_path = /obj/item/melee/touch_attack/mansus_fist
 
+/datum/action/cooldown/spell/touch/mansus_grasp/is_valid_target(atom/cast_on)
+	return TRUE // This baby can hit anything
+
 /datum/action/cooldown/spell/touch/mansus_grasp/can_cast_spell(feedback = TRUE)
 	return ..() && !!IS_HERETIC(owner)
 
@@ -26,7 +29,7 @@
 	)
 
 /datum/action/cooldown/spell/touch/mansus_grasp/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
-	if(victim == caster || !isliving(victim))
+	if(!isliving(victim))
 		return FALSE
 
 	if(SEND_SIGNAL(caster, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, victim) & COMPONENT_BLOCK_HAND_USE)
@@ -43,9 +46,6 @@
 	return TRUE
 
 /datum/action/cooldown/spell/touch/mansus_grasp/cast_on_secondary_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
-	if(victim == caster)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 	if(isliving(victim)) // if it's a living mob, go with our normal afterattack
 		return SECONDARY_ATTACK_CALL_NORMAL
 
