@@ -1,0 +1,2 @@
+/obj/structure/chair/sofa/corp/right{dir=1} : /obj/structure/chair/sofa/corp/left{@OLD}
+/obj/structure/chair/sofa/corp/left{dir=1} : /obj/structure/chair/sofa/corp/right{@OLD}
