@@ -4,6 +4,8 @@
 /// If a map vote is called before the emergency shuttle leaves the station, the players can call another vote to re-run the vote on the shuttle leaving.
 /datum/vote/rock_the_vote
 	name = "Rock the Vote"
+	override_question = "Rock the Vote?"
+	contains_vote_in_name = TRUE //lol
 	default_choices = list(
 		CHOICE_TO_ROCK,
 		CHOICE_NOT_TO_ROCK,
