@@ -18,7 +18,8 @@
 	var/starget = key_name(target)
 
 	var/mob/living/living_target = target
-	var/hp = istype(living_target) ? " (NEWHP: [living_target.health]) " : "(NEWINT: [target.get_integrity()])"
+	var/hp = istype(living_target) ? " (NEWHP: [living_target.health]) " : ""
+	var/integrity = (!isturf(target) && !istype(living_target)) ? "(NEWINT: [target.get_integrity()])" : ""
 
 	var/sobject = ""
 	if(object)
@@ -27,7 +28,7 @@
 	if(addition)
 		saddition = " [addition]"
 
-	var/postfix = "[sobject][saddition][hp]"
+	var/postfix = "[sobject][saddition][hp][integrity]"
 
 	var/message = "[what_done] [starget][postfix]"
 	user.log_message(message, LOG_ATTACK, color="red")
