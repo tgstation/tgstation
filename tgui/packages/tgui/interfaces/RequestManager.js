@@ -81,6 +81,7 @@ export const RequestManager = (props, context) => {
 
 const displayTypeMap = {
   'request_prayer': 'PRAYER',
+  'request_fax': 'FAX',
   'request_centcom': 'CENTCOM',
   'request_syndicate': 'SYNDICATE',
   'request_nuke': 'NUKE CODE',

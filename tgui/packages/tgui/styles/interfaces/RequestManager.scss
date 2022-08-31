@@ -8,6 +8,7 @@
 @use '../functions.scss';
 
 $color-prayer: colors.bg(colors.$purple) !default;
+$color-fax: colors.bg(colors.$white) !default;
 $color-centcom: colors.bg(colors.$yellow) !default;
 $color-syndicate: colors.bg(colors.$red) !default;
 $color-nuke: colors.bg(colors.$yellow) !default;
@@ -19,12 +20,17 @@ $text-color: base.$color-fg !default;
 .RequestManager__request_centcom,
 .RequestManager__request_nuke,
 .RequestManager__request_prayer,
+.RequestManager__request_fax,
 .RequestManager__request_syndicate {
   margin-right: 0.5rem;
 }
 
 .RequestManager__request_prayer {
   color: $color-prayer;
+}
+
+.RequestManager__request_fax {
+  color: $color-fax;
 }
 
 .RequestManager__request_centcom {

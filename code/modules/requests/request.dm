@@ -6,6 +6,8 @@
 #define REQUEST_SYNDICATE "request_syndicate"
 /// Requests for the nuke code
 #define REQUEST_NUKE "request_nuke"
+/// Requests from faxes
+#define REQUEST_FAX "request_fax"
 
 /**
  * # Request

@@ -56,6 +56,10 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 		if(is_chaplain && admin.prefs.chat_toggles & CHAT_PRAYER && admin.prefs.toggles & SOUND_PRAYERS)
 			SEND_SOUND(admin, sound('sound/effects/pray.ogg'))
 
+//TODO document
+/datum/request_manager/proc/fax_request(client/C, message)
+	request_for_client(C, REQUEST_FAX, message)
+
 /**
  * Creates a request for a Centcom message
  *
