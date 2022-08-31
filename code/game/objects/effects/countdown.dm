@@ -31,6 +31,8 @@
 		forceMove(loc_turf)
 
 /obj/effect/countdown/proc/retry_attach()
+	SIGNAL_HANDLER
+
 	var/turf/loc_turf = get_turf(attached_to)
 	if(!loc_turf)
 		return
