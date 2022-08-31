@@ -370,6 +370,7 @@
 	. = ..()
 	if(isliving(target))
 		target.add_mood_event(REF(src), /datum/mood_event/sapped)
+		curse_of_babel(target) // saps your ability to communicate as well
 
 /obj/projectile/magic/necropotence
 	name = "bolt of necropotence"
