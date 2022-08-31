@@ -27,7 +27,7 @@
 		return
 	
 	if(!hascall(object, proc_name))
-		to_chat(target_client, "<font color='red'>Error: callproc_datum(): type [object.type] has no proc named [proc_name].</font>", confidential = TRUE)
+		to_chat(target_client, "span_warning(Error: callproc_datum(): type [object.type] has no proc named [proc_name].)", confidential = TRUE)
 		return
 
 	if(!object || !is_valid_src(object))
