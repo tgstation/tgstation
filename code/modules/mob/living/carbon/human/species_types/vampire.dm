@@ -23,7 +23,7 @@
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutant_bodyparts = list("wings" = "None")
-	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 	exotic_bloodtype = "U"
 	use_skintones = TRUE
 	mutantheart = /obj/item/organ/internal/heart/vampire
