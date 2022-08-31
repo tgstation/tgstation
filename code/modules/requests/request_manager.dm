@@ -3,7 +3,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 /**
  * # Request Manager
  *
- * Handles all player requests (prayers, centcom requests, syndicate requests)
+ * Handles all player requests (prayers, notified faxes, centcom requests, syndicate requests)
  * that occur in the duration of a round.
  */
 /datum/request_manager
@@ -56,7 +56,13 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 		if(is_chaplain && admin.prefs.chat_toggles & CHAT_PRAYER && admin.prefs.toggles & SOUND_PRAYERS)
 			SEND_SOUND(admin, sound('sound/effects/pray.ogg'))
 
-//TODO document
+/**
+ * Creates a fax request
+ *
+ * Arguments:
+ * * C - The client who sent the fax
+ * * message - The fax notification
+ */
 /datum/request_manager/proc/fax_request(client/C, message)
 	request_for_client(C, REQUEST_FAX, message)
 
