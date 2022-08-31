@@ -283,7 +283,8 @@
 	. = ..()
 	if(!.)
 		return
-	if(!mod.wearer.Adjacent(target) || !iscarbon(target))
+	if(!mod.wearer.Adjacent(target) || !iscarbon(target) || target == mod.wearer)
+		balloon_alert(mod.wearer, "invalid target!")
 		return
 	var/mob/living/carbon/carbon_target = target
 	if(length(ripped_clothing))
