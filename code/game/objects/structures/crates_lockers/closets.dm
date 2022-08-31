@@ -84,7 +84,7 @@
 
 //USE THIS TO FILL IT, NOT INITIALIZE OR NEW
 /obj/structure/closet/proc/PopulateContents()
-	return
+	SEND_SIGNAL(src, COMSIG_CLOSET_POPULATE_CONTENTS)
 
 /// Populate the closet with stuff that needs to be added before it is opened.
 /// This is useful for things like traitor objectives.

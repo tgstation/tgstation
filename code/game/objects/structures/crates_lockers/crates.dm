@@ -113,12 +113,31 @@
 
 /obj/structure/closet/crate/maint/Initialize(mapload)
 	..()
+
+	var/static/list/possible_crates = list(
+		/obj/structure/closet/crate = 20,
+		/obj/structure/closet/crate/wooden = 1,
+		/obj/structure/closet/crate/internals = 1,
+		/obj/structure/closet/crate/medical = 1,
+		/obj/structure/closet/crate/freezer = 1,
+		/obj/structure/closet/crate/radiation = 1,
+		/obj/structure/closet/crate/hydroponics = 1,
+		/obj/structure/closet/crate/engineering = 1,
+		/obj/structure/closet/crate/engineering/electrical = 1,
+		/obj/structure/closet/crate/science = 1,
+	)
+
+	var/crate_path = pick_weight(possible_crates)
+
+	var/obj/structure/closet/crate = new crate_path(loc)
+	crate.RegisterSignal(crate, COMSIG_CLOSET_POPULATE_CONTENTS, /obj/structure/closet/.proc/populate_with_random_maint_loot)
+
 	return INITIALIZE_HINT_QDEL
 
-/obj/structure/closet/crate/maint/PopulateContents()
-	. = ..()
-	new /obj/effect/spawner/random/structure/crate_empty(loc)
-	for(var/i in 1 to rand(2,6))
+/obj/structure/closet/proc/populate_with_random_maint_loot()
+	SIGNAL_HANDLER
+
+	for (var/i in 1 to rand(2,6))
 		new /obj/effect/spawner/random/maintenance(src)
 
 /obj/structure/closet/crate/trashcart/Initialize(mapload)
