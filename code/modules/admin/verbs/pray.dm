@@ -50,6 +50,15 @@
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Prayer") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
+/// Used by fax machines if they are set to notify admins upon receiving a fax
+/proc/fax_request(obj/machinery/fax/sending_machine, obj/machinery/fax/receiving_machine, mob/sender)
+	var/msg = "sent a message from the [sanitize(sending_machine.fax_name)] fax machine to the [sanitize(receiving_machine.fax_name)] fax machine"
+	GLOB.requests.fax_request(sender.client, msg)
+	var/turf/machine_location = get_turf(receiving_machine)
+	msg +=  " [ADMIN_JMP(machine_location)]"
+	msg = span_adminnotice("<b><font color=white>FAX:</font>[ADMIN_FULLMONTY(sender)] </b> [msg]")
+	to_chat(GLOB.admins, msg, confidential = TRUE)
+
 /// Used by communications consoles to message CentCom
 /proc/message_centcom(text, mob/sender)
 	var/msg = copytext_char(sanitize(text), 1, MAX_MESSAGE_LEN)

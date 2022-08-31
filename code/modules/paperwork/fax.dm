@@ -144,11 +144,7 @@
 			flick("fax_send", src)
 			playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, FALSE)
 			if (FAX.notify_admins_on_recieve)
-				var/turf/machine_location = get_turf(FAX)
-				var/msg = "sent a message from the [sanitize(fax_name)] fax machine to the [sanitize(FAX.fax_name)] fax machine [ADMIN_JMP(machine_location)]."
-				GLOB.requests.fax_request(usr.client, msg)
-				msg = span_adminnotice("<b><font color=orange>FAX:</font>[ADMIN_FULLMONTY(usr)] </b> [msg]")
-				to_chat(GLOB.admins, msg, confidential = TRUE)
+				fax_request(src, FAX, usr)
 			return TRUE
 	return FALSE
 
