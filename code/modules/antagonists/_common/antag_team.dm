@@ -3,7 +3,7 @@ GLOBAL_LIST_EMPTY(antagonist_teams)
 //A barebones antagonist team.
 /datum/team
 	///Name of the entire Team
-	var/name = "team"
+	var/name = "\improper Team"
 	///What members are considered in the roundend report (ex: 'cultists')
 	var/member_name = "member"
 	///Whether the team shows up in the roundend report.

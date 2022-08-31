@@ -148,7 +148,7 @@ GLOBAL_LIST_INIT(possible_abductor_names, list("Alpha","Beta","Gamma","Delta","E
 			H.equipOutfit(/datum/outfit/abductor/scientist)
 
 /datum/team/abductor_team
-	member_name = "abductor"
+	member_name = "\improper Abductor"
 	var/team_number
 	var/static/team_count = 1
 	///List of all brainwashed victims' minds

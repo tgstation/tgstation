@@ -604,7 +604,7 @@
 
 		//remove the team's individual antag reports, if the team actually shows up in the report.
 		for(var/datum/mind/team_minds as anything in active_teams.members)
-			if(!isnull(team_minds.mind.antag_datums)) // is_special_character passes if they have a special role instead of an antag
+			if(!isnull(team_minds.antag_datums)) // is_special_character passes if they have a special role instead of an antag
 				all_antagonists -= team_minds.antag_datums
 
 		result += active_teams.roundend_report()
