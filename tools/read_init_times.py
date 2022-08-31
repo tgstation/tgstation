@@ -25,4 +25,5 @@ for (type, time) in sorted(init_times_per_type.items(), key = lambda x: x[1], re
     except IOError as error:
         # Prevents broken pipe error if you do something like `read_init_times.py init_times.json | head`
         if error.errno == errno.EPIPE:
+            sys.stderr.close()
             sys.exit(0)
