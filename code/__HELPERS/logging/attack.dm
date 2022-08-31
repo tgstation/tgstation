@@ -18,7 +18,7 @@
 	var/starget = key_name(target)
 
 	var/mob/living/living_target = target
-	var/hp = istype(living_target) ? " (NEWHP: [living_target.health]) " : ""
+	var/hp = istype(living_target) ? " (NEWHP: [living_target.health]) " : "(NEWINT: [target.get_integrity()])"
 
 	var/sobject = ""
 	if(object)
