@@ -314,7 +314,8 @@
 		if(QDELETED(clothing))
 			ripped_clothing -= clothing
 			continue
-		if(mod.wearer.CanReach(clothing))
+		var/mob/living/carbon/clothing_wearer = clothing.loc
+		if(istype(clothing_wearer) && mod.wearer.Adjacent(clothing_wearer) && !clothing_wearer.is_holding(clothing))
 			continue
 		zipped = TRUE
 		clothing.body_parts_covered |= ripped_clothing[clothing]
