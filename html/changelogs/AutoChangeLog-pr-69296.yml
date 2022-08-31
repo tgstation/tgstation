@@ -1,0 +1,4 @@
+author: "RandomGamer123"
+delete-after: True
+changes: 
+  - bugfix: "Stray cargo event pods now don't runtime if a canister supply pack is chosen, meaning that you should actually see them in the pods now"

@@ -289,6 +289,9 @@
 	min_val = 0
 	max_val = 4
 
+/// Controls if Asimov Superiority appears as a perk for humans even if standard Asimov isn't the default AI lawset
+/datum/config_entry/flag/silicon_asimov_superiority_override
+
 /datum/config_entry/number/silicon_max_law_amount
 	default = 12
 	min_val = 0

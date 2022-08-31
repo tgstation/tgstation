@@ -1,0 +1,1 @@
+/obj/machinery/door_timer : /obj/machinery/status_display/door_timer{@OLD}

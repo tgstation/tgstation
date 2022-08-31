@@ -6,7 +6,7 @@
 /obj/machinery/power/emitter/energycannon
 	name = "Energy Cannon"
 	desc = "A heavy duty industrial laser."
-	icon = 'icons/obj/singularity.dmi'
+	icon = 'icons/obj/engine/singularity.dmi'
 	icon_state = "emitter_+a"
 	base_icon_state = "emitter_+a"
 	anchored = TRUE

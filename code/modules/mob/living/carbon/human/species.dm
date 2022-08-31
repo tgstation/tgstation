@@ -179,7 +179,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///Species-only traits. Can be found in [code/__DEFINES/DNA.dm]
 	var/list/species_traits = list()
 	///Generic traits tied to having the species.
-	var/list/inherent_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_LITERATE)
+	var/list/inherent_traits = list()
 	/// List of biotypes the mob belongs to. Used by diseases.
 	var/inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	///List of factions the mob gain upon gaining this species.
@@ -253,6 +253,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	///Was the species changed from its original type at the start of the round?
 	var/roundstart_changed = FALSE
+
+	/// This supresses the "dosen't appear to be himself" examine text for if the mob is run by an AI controller. Should be used on any NPC human subtypes. Monkeys are the prime example.
+	var/ai_controlled_species = FALSE
 
 ///////////
 // PROCS //
@@ -1114,7 +1117,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 		var/damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
 
-		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
+		var/obj/item/bodypart/affecting = target.get_bodypart(target.get_random_valid_zone(user.zone_selected))
 
 		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
 		if(user.dna.species.punchdamagelow)
@@ -1333,7 +1336,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			BP = def_zone
 		else
 			if(!def_zone)
-				def_zone = ran_zone(def_zone)
+				def_zone = H.get_random_valid_zone(def_zone)
 			BP = H.get_bodypart(check_zone(def_zone))
 			if(!BP)
 				BP = H.bodyparts[1]

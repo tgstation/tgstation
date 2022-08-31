@@ -462,9 +462,8 @@
 		SpinAnimation(4,2)
 		if(flip_cooldown <= world.time)
 			if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(40))
-				to_chat(user, span_userdanger("While trying to flip [src] you pull the trigger and accidentaly shoot yourself!"))
-				var/flip_mistake = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_CHEST)
-				process_fire(user, user, FALSE, flip_mistake)
+				to_chat(user, span_userdanger("While trying to flip [src] you pull the trigger and accidentally shoot yourself!"))
+				process_fire(user, user, FALSE, user.get_random_valid_zone(even_weights = TRUE))
 				user.dropItemToGround(src, TRUE)
 				return
 			flip_cooldown = (world.time + 30)
@@ -687,7 +686,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 /obj/item/suppressor
 	name = "suppressor"
 	desc = "A syndicate small-arms suppressor for maximum espionage."
-	icon = 'icons/obj/guns/ballistic.dmi'
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "suppressor"
 	w_class = WEIGHT_CLASS_TINY
 
