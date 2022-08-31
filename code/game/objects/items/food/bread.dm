@@ -259,6 +259,16 @@
 	/// whether this is in fake swordplay mode or not
 	var/fake_swordplay = FALSE
 
+/obj/item/food/baguette/Initialize()
+  . = ..()
+  register_context()
+
+/obj/item/food/baguette/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+  . = ..()
+  if (user.mind?.miming && held_item == src)
+    context[SCREENTIP_CONTEXT_RMB] = "Toggle Swordplay"
+    return CONTEXTUAL_SCREENTIP_SET
+
 /obj/item/food/baguette/examine(mob/user)
 	var/examine_list = ..()
 	if(user.mind?.miming)
@@ -268,7 +278,10 @@
 	. = ..()
 	if(!user.mind?.miming)
 		return
-	fake_swordplay ? end_swordplay(user) : begin_swordplay(user)
+	if(fake_swordplay)
+		end_swordplay(user)
+	else
+		begin_swordplay(user)
 
 /obj/item/food/baguette/proc/begin_swordplay(mob/user)
 	visible_message( \
