@@ -68,14 +68,13 @@
 	var/obj/item/electronics/airlock/electronics
 	var/can_install_electronics = TRUE
 
+	var/contents_initialized = FALSE
+
 /obj/structure/closet/Initialize(mapload)
 	if(mapload && !opened) // if closed, any item at the crate's loc is put in the contents
 		addtimer(CALLBACK(src, .proc/take_contents, TRUE), 0)
 	. = ..()
 	update_appearance()
-	PopulateContents()
-	if(QDELETED(src)) //It turns out populate contents has a 1 in 100 chance of qdeling src on /obj/structure/closet/emcloset
-		return //Why
 	var/static/list/loc_connections = list(
 		COMSIG_CARBON_DISARM_COLLIDE = .proc/locker_carbon,
 		COMSIG_ATOM_MAGICALLY_UNLOCKED = .proc/on_magic_unlock,
@@ -231,6 +230,10 @@
 	return TRUE
 
 /obj/structure/closet/dump_contents()
+	if (!contents_initialized)
+		contents_initialized = TRUE
+		PopulateContents()
+
 	var/atom/L = drop_location()
 	for(var/atom/movable/AM in src)
 		AM.forceMove(L)
