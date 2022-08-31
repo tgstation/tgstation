@@ -2,8 +2,6 @@
 /// Also checks that nothing inside that isn't immediate is a steal objective.
 /datum/unit_test/closets
 
-TEST_FOCUS(/datum/unit_test/closets)
-
 /datum/unit_test/closets/Run()
 	var/list/all_closets = subtypesof(/obj/structure/closet)
 	//Supply pods. They are sent, crashed, opened and never closed again. They also cause exceptions in nullspace.
