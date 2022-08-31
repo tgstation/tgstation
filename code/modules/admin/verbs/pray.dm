@@ -56,7 +56,7 @@
 	GLOB.requests.fax_request(sender.client, msg)
 	var/turf/machine_location = get_turf(receiving_machine)
 	msg +=  " [ADMIN_JMP(machine_location)]"
-	msg = span_adminnotice("<b><font color=white>FAX:</font>[ADMIN_FULLMONTY(sender)] </b> [msg]")
+	msg = span_adminnotice("<b><font color=orange>FAX:</font>[ADMIN_FULLMONTY(sender)] </b> [msg]")
 	to_chat(GLOB.admins, msg, confidential = TRUE)
 
 /// Used by communications consoles to message CentCom
