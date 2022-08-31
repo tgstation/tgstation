@@ -17,6 +17,7 @@
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | LONG_GLIDE
 	density = FALSE
+	explosion_block = EXPLOSION_BLOCK_PROC
 	divable = FALSE
 	///List of bitflags for supply pods, see: code\__DEFINES\obj_flags.dm
 	var/pod_flags = NONE
@@ -59,6 +60,9 @@
 	var/shrapnel_magnitude = 3
 	var/list/reverse_option_list = list("Mobs"=FALSE,"Objects"=FALSE,"Anchored"=FALSE,"Underfloor"=FALSE,"Wallmounted"=FALSE,"Floors"=FALSE,"Walls"=FALSE, "Mecha"=FALSE)
 	var/list/turfs_in_cargo = list()
+
+/obj/structure/closet/supplypod/GetExplosionBlock()
+	return density ? 0 : INFINITY //Makes us explosion proof until we've hit the ground.
 
 /obj/structure/closet/supplypod/bluespacepod
 	style = STYLE_BLUESPACE
