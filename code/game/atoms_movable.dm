@@ -95,13 +95,13 @@
 	var/contents_pressure_protection = 0
 
 /mutable_appearance/emissive_blocker
-	color = EM_BLOCK_COLOR
-	appearance_flags = EMISSIVE_APPEARANCE_FLAGS
 
 /mutable_appearance/emissive_blocker/New()
 	. = ..()
 	// Need to do this here because it's overriden by the parent call
 	plane = EMISSIVE_PLANE
+	color = EM_BLOCK_COLOR
+	appearance_flags = EMISSIVE_APPEARANCE_FLAGS
 
 /atom/movable/Initialize(mapload)
 	. = ..()
@@ -110,6 +110,7 @@
 			var/static/mutable_appearance/emissive_blocker/blocker = new()
 			blocker.icon = icon
 			blocker.icon_state = icon_state
+			blocker.alpha = alpha
 			blocker.dir = dir
 			blocker.appearance_flags |= appearance_flags
 			// Ok so this is really cursed, but I want to set with this blocker cheaply while
