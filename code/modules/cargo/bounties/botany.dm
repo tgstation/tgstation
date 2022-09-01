@@ -223,5 +223,5 @@
 	return !!B.burning
 
 /datum/bounty/item/botany/cucumber
-	name = "Cucambers"
+	name = "Cucumbers"
 	wanted_types = list(/obj/item/seeds/cucumber = TRUE)
