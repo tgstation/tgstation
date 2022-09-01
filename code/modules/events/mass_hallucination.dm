@@ -105,7 +105,7 @@
 
 				picked_hallucination = pick(generic_hallucinations)
 
-		if(!picked_hallucination)
+		if(!picked_hallucination) // melbert todo bugtest
 			CRASH("[type] couldn't find a hallucination to play. (Got: [picked_hallucination], Picked category: [category_to_pick_from])")
 
 	var/list/hallucination_args = list(picked_hallucination, "mass hallucination")
