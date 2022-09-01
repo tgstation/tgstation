@@ -43,29 +43,25 @@
 		return FALSE
 	return TRUE
 
-/datum/action/cooldown/spell/pointed/mind_transfer/is_valid_target(atom/cast_on)
+/datum/action/cooldown/spell/pointed/mind_transfer/is_valid_target(mob/living/living_target)
 	. = ..()
 	if(!.)
 		return FALSE
 
-	if(!isliving(cast_on))
+	if(!isliving(living_target))
 		to_chat(owner, span_warning("You can only swap minds with living beings!"))
 		return FALSE
-	if(is_type_in_typecache(cast_on, blacklisted_mobs))
+	if(is_type_in_typecache(living_target, blacklisted_mobs))
 		to_chat(owner, span_warning("This creature is too [pick("powerful", "strange", "arcane", "obscene")] to control!"))
 		return FALSE
-	if(isguardian(cast_on))
-		var/mob/living/simple_animal/hostile/guardian/stand = cast_on
-		if(stand.summoner && stand.summoner == owner)
-			to_chat(owner, span_warning("Swapping minds with your own guardian would just put you back into your own head!"))
-			return FALSE
-
-	var/mob/living/living_target = cast_on
 	if(living_target.stat == DEAD)
 		to_chat(owner, span_warning("You don't particularly want to be dead!"))
 		return FALSE
 	if(!living_target.mind)
 		to_chat(owner, span_warning("[living_target.p_theyve(TRUE)] doesn't appear to have a mind to swap into!"))
+		return FALSE
+	if(!living_target.getorganslot(ORGAN_SLOT_BRAIN))
+		to_chat(owner, span_warning("[living_target.p_theyve(TRUE)] doesn't appear to have a brain to swap into!"))
 		return FALSE
 	if(!living_target.key && target_requires_key)
 		to_chat(owner, span_warning("[living_target.p_theyve(TRUE)] appear[living_target.p_s()] to be catatonic! \
