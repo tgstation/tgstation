@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes: 
+  - qol: "Newly created Shades will be told much more clearly that they're supposed to be bound to their master, if they have one."
