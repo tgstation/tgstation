@@ -8,7 +8,7 @@
 /obj/machinery/iv_drip
 	name = "\improper IV drip"
 	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers. Blood packs are injected at twice the displayed rate. Right-Click to detach the IV or the attached container."
-	icon = 'icons/obj/iv_drip.dmi'
+	icon = 'icons/obj/medical/iv_drip.dmi'
 	icon_state = "iv_drip"
 	base_icon_state = "iv_drip"
 	anchored = FALSE
@@ -27,8 +27,7 @@
 	///Typecache of containers we accept
 	var/static/list/drip_containers = typecacheof(list(
 		/obj/item/reagent_containers/blood,
-		/obj/item/reagent_containers/food,
-		/obj/item/reagent_containers/glass,
+		/obj/item/reagent_containers/cup,
 		/obj/item/reagent_containers/chem_pack,
 	))
 	// If the blood draining tab should be greyed out
@@ -101,7 +100,7 @@
 	if(!target_reagents)
 		return
 
-	var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/iv_drip.dmi', "reagent")
+	var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/medical/iv_drip.dmi', "reagent")
 	var/percent = round((target_reagents.total_volume / target_reagents.maximum_volume) * 100)
 	switch(percent)
 		if(0 to 9)
@@ -319,7 +318,7 @@
 /obj/machinery/iv_drip/saline/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
 	. = ..()
-	reagent_container = new /obj/item/reagent_containers/glass/saline(src)
+	reagent_container = new /obj/item/reagent_containers/cup/saline(src)
 
 /obj/machinery/iv_drip/saline/eject_beaker()
 	return

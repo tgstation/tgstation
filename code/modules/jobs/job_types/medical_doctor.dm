@@ -31,7 +31,7 @@
 		/obj/item/scalpel/advanced = 6,
 		/obj/item/retractor/advanced = 6,
 		/obj/item/cautery/advanced = 6,
-		/obj/item/reagent_containers/glass/bottle/formaldehyde = 6,
+		/obj/item/reagent_containers/cup/bottle/formaldehyde = 6,
 		/obj/effect/spawner/random/medical/organs = 5,
 		/obj/effect/spawner/random/medical/memeorgans = 1
 	)
@@ -67,6 +67,8 @@
 	suit_store = /obj/item/tank/internals/oxygen
 	back = /obj/item/mod/control/pre_equipped/medical
 	suit = null
+	head = null
+	uniform = /obj/item/clothing/under/rank/medical/doctor
 	mask = /obj/item/clothing/mask/breath/medical
 	r_pocket = /obj/item/flashlight/pen
 	internals_slot = ITEM_SLOT_SUITSTORE

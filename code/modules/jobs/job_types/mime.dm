@@ -25,7 +25,7 @@
 	mail_goodies = list(
 		/obj/item/food/baguette = 15,
 		/obj/item/food/cheese/wheel = 10,
-		/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing = 10,
+		/obj/item/reagent_containers/cup/glass/bottle/bottleofnothing = 10,
 		/obj/item/book/mimery = 1,
 	)
 	rpg_title = "Fool"
@@ -51,7 +51,7 @@
 	suit = /obj/item/clothing/suit/toggle/suspenders
 	backpack_contents = list(
 		/obj/item/book/mimery = 1,
-		/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing = 1,
+		/obj/item/reagent_containers/cup/glass/bottle/bottleofnothing = 1,
 		/obj/item/stamp/mime = 1,
 		)
 	belt = /obj/item/modular_computer/tablet/pda/mime

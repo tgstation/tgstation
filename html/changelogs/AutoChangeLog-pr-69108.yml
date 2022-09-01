@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Either ladders will no longer show screentips relating to \"warping\", or fake teleportation runes will no longer show screentips related to \"climbing\". Honestly not sure but one of them was wrong"

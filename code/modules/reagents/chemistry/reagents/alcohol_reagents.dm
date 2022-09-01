@@ -2015,10 +2015,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			continue
 		is_between_the_sheets = TRUE
 		break
-		
+
 	if(!drinker.IsSleeping() || !is_between_the_sheets)
 		return
-	
+
 	if(drinker.getBruteLoss() && drinker.getFireLoss()) //If you are damaged by both types, slightly increased healing but it only heals one. The more the merrier wink wink.
 		if(prob(50))
 			drinker.adjustBruteLoss(-0.25 * REM * delta_time)
@@ -2397,12 +2397,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(metabolizer.age > 70)
 			metabolizer.facial_hair_color = "#cccccc"
 			metabolizer.hair_color = "#cccccc"
-			metabolizer.update_hair(is_creating = TRUE)
+			metabolizer.update_body_parts()
 			if(metabolizer.age > 100)
 				metabolizer.become_nearsighted(type)
 				if(metabolizer.gender == MALE)
 					metabolizer.facial_hairstyle = "Beard (Very Long)"
-					metabolizer.update_hair(is_creating = TRUE)
+					metabolizer.update_body_parts()
 
 				if(metabolizer.age > 969) //Best not let people get older than this or i might incur G-ds wrath
 					metabolizer.visible_message(span_notice("[metabolizer] becomes older than any man should be.. and crumbles into dust!"))
@@ -2914,7 +2914,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_STOCK
 
-/datum/reagent/consumable/ethanol/thehat
+/datum/reagent/consumable/ethanol/the_hat
 	name = "The Hat"
 	description = "A fancy drink, usually served in a man's hat."
 	color = "#b90a5c"

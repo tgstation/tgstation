@@ -121,7 +121,7 @@
 		w_items += I.w_class
 		to_chat(user, span_notice("You carefully place [I] into the cistern."))
 
-	else if(istype(I, /obj/item/reagent_containers) && !user.combat_mode)
+	else if(is_reagent_container(I) && !user.combat_mode)
 		if (!open)
 			return
 		if(istype(I, /obj/item/food/monkeycube))
@@ -226,7 +226,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 /obj/item/food/urinalcake
 	name = "urinal cake"
 	desc = "The noble urinal cake, protecting the station's pipes from the station's pee. Do not eat."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "urinalcake"
 	w_class = WEIGHT_CLASS_TINY
 	food_reagents = list(/datum/reagent/chlorine = 3, /datum/reagent/ammonia = 1)
@@ -360,7 +360,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		to_chat(user, span_warning("Someone's already washing here!"))
 		return
 
-	if(istype(O, /obj/item/reagent_containers))
+	if(is_reagent_container(O))
 		var/obj/item/reagent_containers/RG = O
 		if(reagents.total_volume <= 0)
 			to_chat(user, span_notice("\The [src] is dry."))
@@ -414,14 +414,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 
 	if(istype(O, /obj/item/stack/medical/gauze))
 		var/obj/item/stack/medical/gauze/G = O
-		new /obj/item/reagent_containers/glass/rag(src.loc)
+		new /obj/item/reagent_containers/cup/rag(src.loc)
 		to_chat(user, span_notice("You tear off a strip of gauze and make a rag."))
 		G.use(1)
 		return
 
 	if(istype(O, /obj/item/stack/sheet/cloth))
 		var/obj/item/stack/sheet/cloth/cloth = O
-		new /obj/item/reagent_containers/glass/rag(loc)
+		new /obj/item/reagent_containers/cup/rag(loc)
 		to_chat(user, span_notice("You tear off a strip of cloth and make a rag."))
 		cloth.use(1)
 		return
@@ -604,7 +604,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 		to_chat(user, span_warning("Someone's already washing here!"))
 		return
 
-	if(istype(O, /obj/item/reagent_containers))
+	if(is_reagent_container(O))
 		var/obj/item/reagent_containers/container = O
 		if(container.is_refillable())
 			if(!container.reagents.holder_full())
@@ -634,14 +634,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 
 	if(istype(O, /obj/item/stack/medical/gauze))
 		var/obj/item/stack/medical/gauze/G = O
-		new /obj/item/reagent_containers/glass/rag(loc)
+		new /obj/item/reagent_containers/cup/rag(loc)
 		to_chat(user, span_notice("You tear off a strip of gauze and make a rag."))
 		G.use(1)
 		return
 
 	if(istype(O, /obj/item/stack/sheet/cloth))
 		var/obj/item/stack/sheet/cloth/cloth = O
-		new /obj/item/reagent_containers/glass/rag(loc)
+		new /obj/item/reagent_containers/cup/rag(loc)
 		to_chat(user, span_notice("You tear off a strip of cloth and make a rag."))
 		cloth.use(1)
 		return

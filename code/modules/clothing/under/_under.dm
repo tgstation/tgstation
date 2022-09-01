@@ -61,7 +61,7 @@
 	..()
 	if(ismob(loc))
 		var/mob/M = loc
-		M.update_inv_w_uniform()
+		M.update_worn_undersuit()
 	if(damaged_state == CLOTHING_SHREDDED && has_sensor > NO_SENSORS)
 		has_sensor = BROKEN_SENSORS
 	else if(damaged_state == CLOTHING_PRISTINE && has_sensor == BROKEN_SENSORS)
@@ -100,14 +100,14 @@
 		var/mob/living/carbon/human/H = user
 		if(H.dna.species.bodytype & BODYTYPE_DIGITIGRADE)
 			adjusted = DIGITIGRADE_STYLE
-		H.update_inv_w_uniform()
+		H.update_worn_undersuit()
 
 	if(attached_accessory && slot != ITEM_SLOT_HANDS && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		attached_accessory.on_uniform_equip(src, user)
 		H.fan_hud_set_fandom()
 		if(attached_accessory.above_suit)
-			H.update_inv_wear_suit()
+			H.update_worn_oversuit()
 
 /obj/item/clothing/under/equipped(mob/living/user, slot)
 	..()
@@ -122,7 +122,7 @@
 			var/mob/living/carbon/human/H = user
 			H.fan_hud_set_fandom()
 			if(attached_accessory.above_suit)
-				H.update_inv_wear_suit()
+				H.update_worn_oversuit()
 	..()
 
 /mob/living/carbon/human/update_suit_sensors()
@@ -131,7 +131,7 @@
 
 /mob/living/carbon/human/proc/update_sensor_list()
 	var/obj/item/clothing/under/U = w_uniform
-	if(istype(U) && U.has_sensor > 0 && U.sensor_mode)
+	if(istype(U) && U.has_sensor > NO_SENSORS && U.sensor_mode)
 		GLOB.suit_sensors_list |= src
 	else
 		GLOB.suit_sensors_list -= src
@@ -170,8 +170,8 @@
 		return
 
 	var/mob/living/carbon/human/holder = loc
-	holder.update_inv_w_uniform()
-	holder.update_inv_wear_suit()
+	holder.update_worn_undersuit()
+	holder.update_worn_oversuit()
 	holder.fan_hud_set_fandom()
 
 /obj/item/clothing/under/proc/remove_accessory(mob/user)
@@ -197,8 +197,8 @@
 		return
 
 	var/mob/living/carbon/human/holder = loc
-	holder.update_inv_w_uniform()
-	holder.update_inv_wear_suit()
+	holder.update_worn_undersuit()
+	holder.update_worn_oversuit()
 	holder.fan_hud_set_fandom()
 
 
@@ -231,7 +231,7 @@
 	set category = "Object"
 	set src in usr
 	var/mob/M = usr
-	if (istype(M, /mob/dead/))
+	if (isdead(M))
 		return
 	if (!can_use(M))
 		return
@@ -255,13 +255,13 @@
 	sensor_mode = modes.Find(switchMode) - 1
 	if (loc == usr)
 		switch(sensor_mode)
-			if(0)
+			if(SENSOR_OFF)
 				to_chat(usr, span_notice("You disable your suit's remote sensing equipment."))
-			if(1)
+			if(SENSOR_LIVING)
 				to_chat(usr, span_notice("Your suit will now only report whether you are alive or dead."))
-			if(2)
+			if(SENSOR_VITALS)
 				to_chat(usr, span_notice("Your suit will now only report your exact vital lifesigns."))
-			if(3)
+			if(SENSOR_COORDS)
 				to_chat(usr, span_notice("Your suit will now report your exact vital lifesigns as well as your coordinate position."))
 
 	if(ishuman(loc))
@@ -299,7 +299,7 @@
 		to_chat(usr, span_notice("You adjust the suit back to normal."))
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
-		H.update_inv_w_uniform()
+		H.update_worn_undersuit()
 		H.update_body()
 
 /obj/item/clothing/under/proc/toggle_jumpsuit_adjust()
@@ -321,8 +321,7 @@
 				return adjusted
 			for(var/zone in list(BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)) // ugly check to make sure we don't reenable protection on a disabled part
 				if(damage_by_parts[zone] > limb_integrity)
-					for(var/part in body_zone2cover_flags(zone))
-						body_parts_covered &= part
+					body_parts_covered &= body_zone2cover_flags(zone)
 	return adjusted
 
 /obj/item/clothing/under/rank

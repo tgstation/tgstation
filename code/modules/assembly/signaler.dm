@@ -3,8 +3,8 @@
 	desc = "Used to remotely activate devices. Allows for syncing when using a secure signaler on another."
 	icon_state = "signaller"
 	inhand_icon_state = "signaler"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	custom_materials = list(/datum/material/iron=400, /datum/material/glass=120)
 	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
 	attachable = TRUE
@@ -226,7 +226,7 @@
 	return
 
 /obj/item/assembly/signaler/internal/can_interact(mob/user)
-	if(istype(user, /mob/living/silicon/pai))
+	if(ispAI(user))
 		return TRUE
 	. = ..()
 

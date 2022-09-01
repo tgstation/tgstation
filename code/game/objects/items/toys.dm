@@ -38,13 +38,13 @@
 /obj/item/toy/waterballoon
 	name = "water balloon"
 	desc = "A translucent balloon. There's nothing in it."
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "waterballoon-e"
 	inhand_icon_state = "balloon-empty"
 
 /obj/item/toy/waterballoon/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
 	create_reagents(10)
 
 /obj/item/toy/waterballoon/attack(mob/living/carbon/human/M, mob/user)
@@ -67,7 +67,7 @@
 			update_appearance()
 
 /obj/item/toy/waterballoon/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/reagent_containers/glass))
+	if(istype(I, /obj/item/reagent_containers/cup))
 		if(I.reagents)
 			if(I.reagents.total_volume <= 0)
 				to_chat(user, span_warning("[I] is empty."))
@@ -115,11 +115,11 @@
 /obj/item/toy/balloon
 	name = "balloon"
 	desc = "No birthday is complete without it."
-	icon = 'icons/obj/balloons.dmi'
+	icon = 'icons/obj/toys/balloons.dmi'
 	icon_state = "balloon"
 	inhand_icon_state = "balloon"
-	lefthand_file = 'icons/mob/inhands/balloons_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/balloons_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/balloons_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/balloons_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	throwforce = 0
 	throw_speed = 3
@@ -206,7 +206,7 @@
 /obj/item/toy/captainsaid
 	name = "\improper Captain's Aid"
 	desc = "Every captain's greatest ally when exploring the vast emptiness of space, now with a color display!"
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "captainsaid_off"
 	/// List of modes it can cycle through
 	var/list/modes = list(
@@ -246,7 +246,7 @@
 /obj/item/toy/spinningtoy
 	name = "gravitational singularity"
 	desc = "\"Singulo\" brand spinning toy."
-	icon = 'icons/obj/singularity.dmi'
+	icon = 'icons/obj/engine/singularity.dmi'
 	icon_state = "singularity_s1"
 	item_flags = NO_PIXEL_RANDOM_DROP
 
@@ -299,7 +299,7 @@
 /obj/item/toy/gun
 	name = "cap gun"
 	desc = "Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps."
-	icon = 'icons/obj/guns/ballistic.dmi'
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "revolver"
 	inhand_icon_state = "gun"
 	worn_icon_state = "gun"
@@ -360,7 +360,7 @@
 /obj/item/toy/ammo/gun
 	name = "capgun ammo"
 	desc = "Make sure to recyle the box in an autolathe when it gets empty."
-	icon = 'icons/obj/guns/ammo.dmi'
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
 	icon_state = "357OLD-7"
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=10)
@@ -381,7 +381,7 @@
 	name = "toy sword"
 	desc = "A cheap, plastic replica of an energy sword. Realistic sounds! Ages 8 and up."
 	icon_state = "e_sword"
-	icon = 'icons/obj/transforming_energy.dmi'
+	icon = 'icons/obj/weapons/transforming_energy.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
@@ -450,7 +450,7 @@
 /obj/item/toy/foamblade
 	name = "foam armblade"
 	desc = "It says \"Sternside Changs #1 fan\" on it."
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "foamblade"
 	inhand_icon_state = "arm_blade"
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
@@ -463,7 +463,7 @@
 /obj/item/toy/windup_toolbox
 	name = "windup toolbox"
 	desc = "A replica toolbox that rumbles when you turn the key."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "green"
 	inhand_icon_state = "artistic_toolbox"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
@@ -548,7 +548,7 @@
 /obj/item/toy/katana
 	name = "replica katana"
 	desc = "Woefully underpowered in D20."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "katana"
 	inhand_icon_state = "katana"
 	worn_icon_state = "katana"
@@ -569,7 +569,7 @@
 /obj/item/toy/snappop
 	name = "snap pop"
 	desc = "Wow!"
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "snappop"
 	w_class = WEIGHT_CLASS_TINY
 	var/ash_type = /obj/effect/decal/cleanable/ash
@@ -625,7 +625,7 @@
 /obj/item/toy/talking
 	name = "talking action figure"
 	desc = "A generic action figure modeled after nothing in particular."
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "owlprize"
 	w_class = WEIGHT_CLASS_SMALL
 	var/cooldown = FALSE
@@ -688,8 +688,8 @@
 	desc = "A tool to help you write fictional devils!"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "demonomicon"
-	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/books_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/books_righthand.dmi'
 	messages = list("You must challenge the devil to a dance-off!", "The devils true name is Ian", "The devil hates salt!", "Would you like infinite power?", "Would you like infinite  wisdom?", " Would you like infinite healing?")
 	w_class = WEIGHT_CLASS_SMALL
 	recharge_time = 60
@@ -724,7 +724,7 @@
 /obj/item/toy/nuke
 	name = "\improper Nuclear Fission Explosive toy"
 	desc = "A plastic model of a Nuclear Fission Explosive."
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "nuketoyidle"
 	w_class = WEIGHT_CLASS_SMALL
 	var/cooldown = 0
@@ -766,7 +766,7 @@
 /obj/item/toy/minimeteor
 	name = "\improper Mini-Meteor"
 	desc = "Relive the excitement of a meteor shower! SweetMeat-eor Co. is not responsible for any injuries, headaches or hearing loss caused by Mini-Meteor."
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "minimeteor"
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -795,7 +795,7 @@
 /obj/item/toy/redbutton
 	name = "big red button"
 	desc = "A big, plastic red button. Reads 'From HonkCo Pranks!' on the back."
-	icon = 'icons/obj/assemblies.dmi'
+	icon = 'icons/obj/assemblies/assemblies.dmi'
 	icon_state = "bigred"
 	w_class = WEIGHT_CLASS_SMALL
 	var/cooldown = 0
@@ -820,7 +820,7 @@
 /obj/item/toy/snowball
 	name = "snowball"
 	desc = "A compact ball of snow. Good for throwing at people."
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "snowball"
 	throwforce = 20 //the same damage as a disabler shot
 	damtype = STAMINA //maybe someday we can add stuffing rocks (or perhaps ore?) into snowballs to make them deal brute damage
@@ -853,7 +853,7 @@
 /obj/item/toy/beach_ball/baseball
 	name = "baseball"
 	desc = "Enter the world of concussions and become who you were destined to be."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "baseball"
 	inhand_icon_state = "baseball"
 	throw_range = 9
@@ -865,7 +865,7 @@
 /obj/item/toy/clockwork_watch
 	name = "steampunk watch"
 	desc = "A stylish steampunk watch made out of thousands of tiny cogwheels."
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "dread_ipad"
 	worn_icon_state = "dread_ipad"
 	slot_flags = ITEM_SLOT_BELT
@@ -901,7 +901,7 @@
  * Xenomorph action figure
  */
 /obj/item/toy/toy_xeno
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "toy_xeno"
 	name = "xenomorph action figure"
 	desc = "MEGA presents the new Xenos Isolated action figure! Comes complete with realistic sounds! Pull back string to use."
@@ -927,7 +927,7 @@
 /obj/item/toy/cattoy
 	name = "toy mouse"
 	desc = "A colorful toy mouse!"
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "toy_mouse"
 	w_class = WEIGHT_CLASS_SMALL
 	var/cooldown = 0
@@ -939,7 +939,7 @@
  */
 /obj/item/toy/figure
 	name = "\improper Non-Specific Action Figure action figure"
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "nuketoy"
 	var/cooldown = 0
 	var/toysay = "What the fuck did you do?"
@@ -1162,7 +1162,7 @@
 /obj/item/toy/dummy
 	name = "ventriloquist dummy"
 	desc = "It's a dummy, dummy."
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "puppet"
 	inhand_icon_state = "puppet"
 	var/doll_name = "Dummy"
@@ -1205,7 +1205,7 @@
 /obj/item/toy/brokenradio
 	name = "broken radio"
 	desc = "An old radio that produces nothing but static when turned on."
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "broken_radio"
 	w_class = WEIGHT_CLASS_SMALL
 	var/cooldown = 0
@@ -1222,7 +1222,7 @@
 /obj/item/toy/braintoy
 	name = "squeaky brain"
 	desc = "A Mr. Monstrous brand toy made to imitate a human brain in smell and texture."
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/medical/surgery.dmi'
 	icon_state = "brain-old"
 	var/cooldown = 0
 
@@ -1274,7 +1274,7 @@
 /obj/item/toy/foamfinger
 	name = "foam finger"
 	desc = "root for the home team! wait, does this station even have a sports team?"
-	icon = 'icons/obj/guns/ballistic.dmi'
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "foamfinger"
 	inhand_icon_state = "foamfinger_inhand"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
@@ -1329,7 +1329,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 /obj/item/toy/intento
 	name = "\improper Intento"
 	desc = "Fundamentally useless for all intentsive purposes."
-	icon = 'icons/obj/intents.dmi'
+	icon = 'icons/obj/toys/intents.dmi'
 	icon_state = "blank"
 	/// Current sequence of intents
 	var/list/current_sequence = list()

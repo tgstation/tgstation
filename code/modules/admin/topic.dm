@@ -903,7 +903,7 @@
 			return
 		var/obj/item/new_item = new H.dna.species.species_cookie(H)
 		if(H.put_in_hands(new_item))
-			H.update_inv_hands()
+			H.update_held_items()
 		else
 			qdel(new_item)
 			log_admin("[key_name(H)] has their hands full, so they did not receive their [new_item.name], spawned by [key_name(src.owner)].")

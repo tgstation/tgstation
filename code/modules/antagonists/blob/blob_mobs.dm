@@ -91,7 +91,7 @@
 	var/spanned_message = say_quote(message)
 	var/rendered = "<font color=\"#EE4000\"><b>\[Blob Telepathy\] [real_name]</b> [spanned_message]</font>"
 	for(var/M in GLOB.mob_list)
-		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
+		if(isovermind(M) || isblobmonster(M))
 			to_chat(M, rendered)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)
@@ -140,12 +140,12 @@
 		add_cell_sample()
 
 /mob/living/simple_animal/hostile/blob/blobspore/Life(delta_time = SSMOBS_DT, times_fired)
-	if(!is_zombie && isturf(src.loc))
+	if(!is_zombie && isturf(loc))
 		for(var/mob/living/carbon/human/H in view(src,1)) //Only for corpse right next to/on same tile
 			if(!is_weak && H.stat == DEAD)
 				Zombify(H)
 				break
-	if(factory && z != factory.z)
+	if(!is_valid_z_level(get_turf(src), get_turf(factory)))
 		death()
 	return ..()
 
@@ -188,7 +188,7 @@
 	icon = H.icon
 	icon_state = "zombie"
 	H.hairstyle = null
-	H.update_hair(is_creating = TRUE)
+	H.update_body_parts()
 	H.forceMove(src)
 	oldguy = H
 	update_icons()

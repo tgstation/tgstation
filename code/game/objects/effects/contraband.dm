@@ -14,6 +14,14 @@
 
 /obj/item/poster/Initialize(mapload, obj/structure/sign/poster/new_poster_structure)
 	. = ..()
+
+	var/static/list/hovering_item_typechecks = list(
+		/obj/item/shard = list(
+			SCREENTIP_CONTEXT_LMB = "Booby trap poster",
+		),
+	)
+	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
+
 	poster_structure = new_poster_structure
 	if(!new_poster_structure && poster_type)
 		poster_structure = new poster_type(src)
@@ -87,6 +95,7 @@
 
 /obj/structure/sign/poster/Initialize(mapload)
 	. = ..()
+	register_context()
 	if(random_basetype)
 		randomise(random_basetype)
 	if(!ruined)
@@ -95,6 +104,23 @@
 		desc = "A large piece of space-resistant printed paper. [desc]"
 
 	AddElement(/datum/element/beauty, 300)
+
+/// Adds contextual screentips
+/obj/structure/sign/poster/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if (!held_item)
+		if (ruined)
+			return .
+		context[SCREENTIP_CONTEXT_LMB] = "Rip up poster"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if (held_item.tool_behaviour == TOOL_WIRECUTTER)
+		if (ruined)
+			context[SCREENTIP_CONTEXT_LMB] = "Clean up remnants"
+			return CONTEXTUAL_SCREENTIP_SET
+		context[SCREENTIP_CONTEXT_LMB] = "Take down poster"
+		return CONTEXTUAL_SCREENTIP_SET
+	return .
 
 /obj/structure/sign/poster/proc/randomise(base_type)
 	var/list/poster_types = subtypesof(base_type)

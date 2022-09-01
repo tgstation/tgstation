@@ -368,7 +368,7 @@
 	src.simulated_only = simulated_only
 	src.avoid = avoid
 	src.skip_first = skip_first
-	if(istype(id, /obj/item/card/id))
+	if(isidcard(id))
 		RegisterSignal(id, COMSIG_PARENT_QDELETING, .proc/handle_no_id) //I prefer erroring to harddels. If this breaks anything consider making id info into a datum or something
 
 /datum/move_loop/has_target/jps/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, obj/item/card/id/id, simulated_only, turf/avoid, skip_first)

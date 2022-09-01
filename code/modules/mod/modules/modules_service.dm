@@ -36,7 +36,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(!istype(target, /obj/item))
+	if(!isitem(target))
 		return
 	if(!isturf(target.loc))
 		balloon_alert(mod.wearer, "must be on the floor!")

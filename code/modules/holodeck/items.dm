@@ -54,7 +54,7 @@
 
 /obj/item/toy/beach_ball/holoball
 	name = "basketball"
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "basketball"
 	inhand_icon_state = "basketball"
 	desc = "Here's your chance, do your dance at the Space Jam."

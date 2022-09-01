@@ -121,7 +121,9 @@
 # Kapu1178
 
 /code/modules/surgery/bodyparts/ @Kapu1178
+/code/modules/surgery/organs/ @Kapu1178
 /code/modules/mob/living/carbon/carbon_update_icons.dm @Kapu1178
+/code/modules/mob/living/carbon/human/human_update_icons.dm @Kapu1178
 
 # MrStonedOne
 
@@ -146,6 +148,11 @@
 /code/__DEFINES/reactions.dm @Pickle-Coding
 /code/modules/atmospherics/ @Pickle-Coding
 /code/modules/power/ @Pickle-Coding
+
+# Time-Green
+
+/code/modules/plumbing/ @Time-Green
+/code/modules/surgery/organs/external/ @Time-Green
 
 # MULTIPLE OWNERS
 

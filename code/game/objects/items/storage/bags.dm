@@ -151,7 +151,7 @@
 			if(box)
 				user.transferItemToLoc(thing, box)
 				show_message = TRUE
-			else if(atom_storage.attempt_insert(src, thing, user))
+			else if(atom_storage.attempt_insert(thing, user))
 				show_message = TRUE
 			else
 				if(!spam_protection)
@@ -327,8 +327,8 @@
 		/obj/item/lighter,
 		/obj/item/organ,
 		/obj/item/plate,
-		/obj/item/reagent_containers/food,
-		/obj/item/reagent_containers/glass,
+		/obj/item/reagent_containers/condiment,
+		/obj/item/reagent_containers/cup,
 		/obj/item/rollingpaper,
 		/obj/item/storage/box/gum,
 		/obj/item/storage/box/matches,
@@ -398,7 +398,7 @@
 
 /obj/item/storage/bag/chemistry
 	name = "chemistry bag"
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "bag"
 	worn_icon_state = "chembag"
 	desc = "A bag for storing pills, patches, and bottles."
@@ -411,9 +411,9 @@
 	atom_storage.set_holdable(list(
 		/obj/item/reagent_containers/chem_pack,
 		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/food/drinks/waterbottle,
-		/obj/item/reagent_containers/glass/beaker,
-		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/cup/glass/waterbottle,
+		/obj/item/reagent_containers/cup/beaker,
+		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/medigel,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
@@ -425,7 +425,7 @@
 
 /obj/item/storage/bag/bio
 	name = "bio bag"
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "biobag"
 	worn_icon_state = "biobag"
 	desc = "A bag for the safe transportation and disposal of biowaste and other virulent materials."
@@ -442,8 +442,8 @@
 		/obj/item/organ,
 		/obj/item/reagent_containers/blood,
 		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/glass/beaker,
-		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/cup/beaker,
+		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/hypospray/medipen,
 		/obj/item/reagent_containers/syringe,
 		))
@@ -454,7 +454,7 @@
 
 /obj/item/storage/bag/xeno
 	name = "science bag"
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "xenobag"
 	worn_icon_state = "xenobag"
 	desc = "A bag for the storage and transport of anomalous materials."
@@ -471,8 +471,8 @@
 		/obj/item/organ,
 		/obj/item/petri_dish,
 		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/glass/beaker,
-		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/cup/beaker,
+		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/slime_extract,
 		/obj/item/swab,
@@ -500,7 +500,7 @@
 		/obj/item/assembly,
 		/obj/item/circuitboard,
 		/obj/item/electronics,
-		/obj/item/reagent_containers/glass/beaker,
+		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/stack/cable_coil,
 		/obj/item/stack/ore/bluespace_crystal,
 		/obj/item/stock_parts,

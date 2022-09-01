@@ -7,7 +7,7 @@
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/shuttle)
 "bW" = (
-/obj/item/reagent_containers/glass/bucket/wooden,
+/obj/item/reagent_containers/cup/bucket/wooden,
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle)
 "cI" = (

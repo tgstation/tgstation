@@ -24,4 +24,4 @@ export PYTHON_VERSION=3.7.9
 export AUXLUA_REPO=tgstation/auxlua
 
 #auxlua git tag
-export AUXLUA_VERSION=1.0.0
+export AUXLUA_VERSION=1.2.1

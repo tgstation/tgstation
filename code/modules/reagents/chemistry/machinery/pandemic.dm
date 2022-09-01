@@ -3,7 +3,7 @@
 	name = "PanD.E.M.I.C 2200"
 	desc = "Used to work with viruses."
 	density = TRUE
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "pandemic0"
 	icon_keyboard = null
 	base_icon_state = "pandemic"
@@ -20,6 +20,27 @@
 /obj/machinery/computer/pandemic/Initialize(mapload)
 	. = ..()
 	update_appearance()
+
+
+	var/static/list/hovering_item_typechecks = list(
+		/obj/item/reagent_containers/dropper = list(
+			SCREENTIP_CONTEXT_LMB = "Use dropper",
+		),
+
+		/obj/item/reagent_containers/syringe = list(
+			SCREENTIP_CONTEXT_LMB = "Inject sample",
+			SCREENTIP_CONTEXT_RMB = "Draw sample"
+		),
+	)
+
+	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
+
+	AddElement( \
+		/datum/element/contextual_screentip_bare_hands, \
+		lmb_text = "Open interface", \
+		rmb_text = "Remove beaker", \
+	)
+
 
 /obj/machinery/computer/pandemic/Destroy()
 	QDEL_NULL(beaker)
@@ -58,13 +79,26 @@
 	return ..()
 
 /obj/machinery/computer/pandemic/attackby(obj/item/held_item, mob/user, params)
-	if(!istype(held_item, /obj/item/reagent_containers) || held_item.item_flags & ABSTRACT || !held_item.is_open_container())
+	//Advanced science! Percision instruments (eg droppers and syringes) are precise enough to modify the loaded sample!
+	if(istype(held_item, /obj/item/reagent_containers/dropper) || istype(held_item, /obj/item/reagent_containers/syringe))
+		if(!beaker)
+			balloon_alert(user, "no beaker!")
+			return ..()
+		var/list/modifiers = params2list(params)
+		if(istype(held_item, /obj/item/reagent_containers/syringe) && LAZYACCESS(modifiers, RIGHT_CLICK))
+			held_item.afterattack_secondary(beaker, user, Adjacent(user), params)
+		else
+			held_item.afterattack(beaker, user, Adjacent(user), params)
+		SStgui.update_uis(src)
+		return TRUE
+
+	if(!is_reagent_container(held_item) || held_item.item_flags & ABSTRACT || !held_item.is_open_container())
 		return ..()
 	. = TRUE //no afterattack
 	if(machine_stat & (NOPOWER|BROKEN))
 		return ..()
 	if(beaker)
-		balloon_alert(user, "pandemic full")
+		balloon_alert(user, "pandemic full!")
 		return ..()
 	if(!user.transferItemToLoc(held_item, src))
 		return ..()
@@ -166,7 +200,7 @@
 	use_power(active_power_usage)
 	adv_disease = adv_disease.Copy()
 	var/list/data = list("viruses" = list(adv_disease))
-	var/obj/item/reagent_containers/glass/bottle/bottle = new(drop_location())
+	var/obj/item/reagent_containers/cup/bottle/bottle = new(drop_location())
 	bottle.name = "[adv_disease.name] culture bottle"
 	bottle.desc = "A small bottle. Contains [adv_disease.agent] culture in synthblood medium."
 	bottle.reagents.add_reagent(/datum/reagent/blood, 20, data)
@@ -188,7 +222,7 @@
 	use_power(active_power_usage)
 	var/id = index
 	var/datum/disease/disease = SSdisease.archive_diseases[id]
-	var/obj/item/reagent_containers/glass/bottle/bottle = new(drop_location())
+	var/obj/item/reagent_containers/cup/bottle/bottle = new(drop_location())
 	bottle.name = "[disease.name] vaccine bottle"
 	bottle.reagents.add_reagent(/datum/reagent/vaccine, 15, list(id))
 	wait = TRUE

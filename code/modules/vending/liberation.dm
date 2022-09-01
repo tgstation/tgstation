@@ -10,7 +10,7 @@
 		/obj/item/food/burger/plain = 5, //O say can you see, by the dawn's early light
 		/obj/item/food/burger/baseball = 3, //What so proudly we hailed at the twilight's last gleaming
 		/obj/item/food/fries = 5, //Whose broad stripes and bright stars through the perilous fight
-		/obj/item/reagent_containers/food/drinks/bottle/beer/light = 10, //O'er the ramparts we watched, were so gallantly streaming?
+		/obj/item/reagent_containers/cup/glass/bottle/beer/light = 10, //O'er the ramparts we watched, were so gallantly streaming?
 		/obj/item/gun/ballistic/automatic/pistol/deagle/gold = 2,
 		/obj/item/gun/ballistic/automatic/pistol/deagle/camo = 2,
 		/obj/item/gun/ballistic/automatic/pistol/m1911 = 2,

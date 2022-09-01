@@ -69,8 +69,8 @@
 		/obj/item/healthanalyzer,
 		/obj/item/dnainjector,
 		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/glass/beaker,
-		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/cup/beaker,
+		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/medigel,
@@ -256,6 +256,7 @@
 	name = "combat medical kit"
 	desc = "I hope you've got insurance."
 	icon_state = "medkit_tactical"
+	inhand_icon_state = "medkit-tactical"
 	damagetype_healed = "all"
 
 /obj/item/storage/medkit/tactical/Initialize(mapload)
@@ -310,7 +311,7 @@
 	name = "pill bottle"
 	desc = "It's an airtight container for storing medication."
 	icon_state = "pill_canister"
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	inhand_icon_state = "contsolid"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
@@ -572,7 +573,7 @@
 		var/obj/item/organ/internal/int_organ = I
 		int_organ.organ_flags |= ORGAN_FROZEN
 		return
-	if(istype(I, /obj/item/bodypart))
+	if(isbodypart(I))
 		var/obj/item/bodypart/B = I
 		for(var/obj/item/organ/internal/int_organ in B.contents)
 			int_organ.organ_flags |= ORGAN_FROZEN
@@ -584,13 +585,13 @@
 		var/obj/item/organ/internal/int_organ = I
 		int_organ.organ_flags &= ~ORGAN_FROZEN
 		return
-	if(istype(I, /obj/item/bodypart))
+	if(isbodypart(I))
 		var/obj/item/bodypart/B = I
 		for(var/obj/item/organ/internal/int_organ in B.contents)
 			int_organ.organ_flags &= ~ORGAN_FROZEN
 
 /obj/item/storage/organbox/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/reagent_containers) && I.is_open_container())
+	if(is_reagent_container(I) && I.is_open_container())
 		var/obj/item/reagent_containers/RC = I
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transfered_by = user)
 		if(units)

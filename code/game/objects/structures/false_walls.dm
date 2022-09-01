@@ -313,7 +313,7 @@
 	mineral = /obj/item/stack/sheet/mineral/bamboo
 	walltype = /turf/closed/wall/mineral/bamboo
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_BAMBOO_WALLS)
+	smoothing_groups = list(SMOOTH_GROUP_BAMBOO_WALLS, SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_BAMBOO_WALLS)
 
 /obj/structure/falsewall/iron
@@ -374,7 +374,7 @@
 	base_icon_state = "materialwall"
 	walltype = /turf/closed/wall/material
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_MATERIAL_WALLS)
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_MATERIAL_WALLS, SMOOTH_GROUP_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_MATERIAL_WALLS)
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 

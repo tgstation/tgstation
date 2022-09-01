@@ -6,7 +6,7 @@
 /obj/structure/easel
 	name = "easel"
 	desc = "Only for the finest of art!"
-	icon = 'icons/obj/artstuff.dmi'
+	icon = 'icons/obj/art/artstuff.dmi'
 	icon_state = "easel"
 	density = TRUE
 	resistance_flags = FLAMMABLE
@@ -38,7 +38,7 @@
 /obj/item/canvas
 	name = "canvas"
 	desc = "Draw out your soul on this canvas!"
-	icon = 'icons/obj/artstuff.dmi'
+	icon = 'icons/obj/art/artstuff.dmi'
 	icon_state = "11x11"
 	flags_1 = UNPAINTABLE_1
 	resistance_flags = FLAMMABLE
@@ -303,7 +303,7 @@
 	else if(istype(painting_implement, /obj/item/pen))
 		var/obj/item/pen/pen = painting_implement
 		return pen.colour
-	else if(istype(painting_implement, /obj/item/soap) || istype(painting_implement, /obj/item/reagent_containers/glass/rag))
+	else if(istype(painting_implement, /obj/item/soap) || istype(painting_implement, /obj/item/reagent_containers/cup/rag))
 		return canvas_color
 
 /// Generates medium description
@@ -318,7 +318,7 @@
 		return "Crayon on canvas"
 	else if(istype(painting_implement, /obj/item/pen))
 		return "Ink on canvas"
-	else if(istype(painting_implement, /obj/item/soap) || istype(painting_implement, /obj/item/reagent_containers/glass/rag))
+	else if(istype(painting_implement, /obj/item/soap) || istype(painting_implement, /obj/item/reagent_containers/cup/rag))
 		return //These are just for cleaning, ignore them
 	else
 		return "Unknown medium"
@@ -404,7 +404,7 @@
 /obj/item/canvas/thirtysix_twentyfour/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/item_scaling, 1, 0.8)
-	icon = 'icons/obj/artstuff_64x64.dmi'
+	icon = 'icons/obj/art/artstuff_64x64.dmi'
 	icon_state = "36x24"
 
 /obj/item/canvas/fortyfive_twentyseven
@@ -427,13 +427,13 @@
 /obj/item/canvas/fortyfive_twentyseven/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/item_scaling, 1, 0.7)
-	icon = 'icons/obj/artstuff_64x64.dmi'
+	icon = 'icons/obj/art/artstuff_64x64.dmi'
 	icon_state = "45x27"
 
 /obj/item/wallframe/painting
 	name = "painting frame"
 	desc = "The perfect showcase for your favorite deathtrap memories."
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/signs.dmi'
 	custom_materials = list(/datum/material/wood = 2000)
 	flags_1 = NONE
 	icon_state = "frame-empty"
@@ -443,7 +443,7 @@
 /obj/structure/sign/painting
 	name = "Painting"
 	desc = "Art or \"Art\"? You decide."
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/signs.dmi'
 	icon_state = "frame-empty"
 	base_icon_state = "frame"
 	custom_materials = list(/datum/material/wood = 2000)
@@ -647,7 +647,7 @@
 	our_frame.finalize_size()
 
 /obj/structure/sign/painting/large
-	icon = 'icons/obj/artstuff_64x64.dmi'
+	icon = 'icons/obj/art/artstuff_64x64.dmi'
 	custom_materials = list(/datum/material/wood = 4000)
 	accepted_canvas_types = list(
 		/obj/item/canvas/thirtysix_twentyfour,
@@ -754,7 +754,7 @@
 /obj/item/paint_palette
 	name = "paint palette"
 	desc = "paintbrush included"
-	icon = 'icons/obj/artstuff.dmi'
+	icon = 'icons/obj/art/artstuff.dmi'
 	icon_state = "palette"
 	lefthand_file = 'icons/mob/inhands/equipment/palette_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/palette_righthand.dmi'

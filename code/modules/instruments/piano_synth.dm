@@ -127,8 +127,8 @@
 /obj/item/circuit_component/synth/unregister_shell(atom/movable/shell)
 	if(synth.song.music_player == src)
 		synth.song.stop_playing()
-	synth = null
 	UnregisterSignal(synth, list(COMSIG_INSTRUMENT_START, COMSIG_INSTRUMENT_END, COMSIG_INSTRUMENT_SHOULD_STOP_PLAYING))
+	synth = null
 	return ..()
 
 /obj/item/circuit_component/synth/proc/start_playing(datum/port/input/port)

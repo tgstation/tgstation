@@ -1,0 +1,31 @@
+2022-09-01:
+  Fikou, thgvr, Snakebitten:
+  - balance: makes the standard quick carry modsuit module have nitrile level carrying
+      speed instead of latex level
+  - qol: environmental bodybags are now always pressurized
+  - rscadd: adds a medical version of the prisoner capture modsuit module, for patient
+      transport, prisoner capture and patient transport now use new medical/security
+      hardlight bodybags, medical one deploying them faster. and security one being
+      able to be locked down. when you move too far out of range the holobag dissipates
+  - rscadd: adds a defibrillator modsuit module, extends shock paddles
+  - rscadd: adds a thread ripper modsuit module, this module temporarily rips away
+      the matter of clothing, to allow stuff like injections, surgery, defibrillation
+      etc through it
+  - rscadd: adds a surgery processor modsuit module, essentially a portable surgery
+      computer like borgs have
+  - bugfix: fixes a bug where you can unwield defibrillator paddles just after starting
+      the do_after to defib onehanded
+  - bugfix: fixes a bug where the modsuit gps would have a broken name when renamed
+  ORCACommander:
+  - bugfix: fixed High capacity inheritance structure
+  RandomGamer123:
+  - bugfix: Stray cargo event pods now don't runtime if a canister supply pack is
+      chosen, meaning that you should actually see them in the pods now
+  coldud13:
+  - bugfix: Increases PDA immersion
+  san7890:
+  - bugfix: An APC and a Television Monitor in MetaStation Engineering Hallway will
+      no longer conflict visually.
+  scriptis:
+  - rscadd: techfab inspect blocks
+  - refactor: techfabs (and circuit imprinters, and protolathes) now use tgui

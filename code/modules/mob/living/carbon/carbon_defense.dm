@@ -59,7 +59,7 @@
 	return TRUE
 
 /mob/living/carbon/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
-	if(!skipcatch && can_catch_item() && istype(AM, /obj/item) && !HAS_TRAIT(AM, TRAIT_UNCATCHABLE) && isturf(AM.loc))
+	if(!skipcatch && can_catch_item() && isitem(AM) && !HAS_TRAIT(AM, TRAIT_UNCATCHABLE) && isturf(AM.loc))
 		var/obj/item/I = AM
 		I.attack_hand(src)
 		if(get_active_held_item() == I) //if our attack_hand() picks up the item...
@@ -78,7 +78,7 @@
 		var/zone_hit_chance = 80
 		if(body_position == LYING_DOWN) // half as likely to hit a different zone if they're on the ground
 			zone_hit_chance += 10
-		affecting = get_bodypart(ran_zone(user.zone_selected, zone_hit_chance))
+		affecting = get_bodypart(get_random_valid_zone(user.zone_selected, zone_hit_chance))
 	if(!affecting) //missing limb? we select the first bodypart (you can never have zero, because of chest)
 		affecting = bodyparts[1]
 	SEND_SIGNAL(I, COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
@@ -96,13 +96,13 @@
 				if(affecting.body_zone == BODY_ZONE_HEAD)
 					if(wear_mask)
 						wear_mask.add_mob_blood(src)
-						update_inv_wear_mask()
+						update_worn_mask()
 					if(wear_neck)
 						wear_neck.add_mob_blood(src)
-						update_inv_neck()
+						update_worn_neck()
 					if(head)
 						head.add_mob_blood(src)
-						update_inv_head()
+						update_worn_head()
 
 		return TRUE //successful attack
 
@@ -228,7 +228,7 @@
 		return dam_zone
 	var/obj/item/bodypart/affecting
 	if(dam_zone && attacker.client)
-		affecting = get_bodypart(ran_zone(dam_zone))
+		affecting = get_bodypart(get_random_valid_zone(dam_zone))
 	else
 		var/list/things_to_ruin = shuffle(bodyparts.Copy())
 		for(var/B in things_to_ruin)
@@ -438,22 +438,34 @@
 			add_mood_event("tailpulled", /datum/mood_event/tailpulled)
 
 	else
-		helper.visible_message(span_notice("[helper] hugs [src] to make [p_them()] feel better!"), \
-					null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(helper, src))
-		to_chat(helper, span_notice("You hug [src] to make [p_them()] feel better!"))
-		to_chat(src, span_notice("[helper] hugs you to make you feel better!"))
+		if (helper.grab_state >= GRAB_AGGRESSIVE)
+			helper.visible_message(span_notice("[helper] embraces [src] in a tight bear hug!"), \
+						null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(helper, src))
+			to_chat(helper, span_notice("You wrap [src] into a tight bear hug!"))
+			to_chat(src, span_notice("[helper] squeezes you super tightly in a firm bear hug!"))
+		else
+			helper.visible_message(span_notice("[helper] hugs [src] to make [p_them()] feel better!"), \
+						null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(helper, src))
+			to_chat(helper, span_notice("You hug [src] to make [p_them()] feel better!"))
+			to_chat(src, span_notice("[helper] hugs you to make you feel better!"))
 
 		// Warm them up with hugs
 		share_bodytemperature(helper)
 
 		// No moodlets for people who hate touches
 		if(!HAS_TRAIT(src, TRAIT_BADTOUCH))
-			if(bodytemperature > helper.bodytemperature)
-				if(!HAS_TRAIT(helper, TRAIT_BADTOUCH))
-					helper.add_mood_event("hug", /datum/mood_event/warmhug, src) // Hugger got a warm hug (Unless they hate hugs)
-				add_mood_event("hug", /datum/mood_event/hug) // Receiver always gets a mood for being hugged
+			if (helper.grab_state >= GRAB_AGGRESSIVE)
+				add_mood_event("hug", /datum/mood_event/bear_hug)
 			else
-				add_mood_event("hug", /datum/mood_event/warmhug, helper) // You got a warm hug
+				if(bodytemperature > helper.bodytemperature)
+					if(!HAS_TRAIT(helper, TRAIT_BADTOUCH))
+						helper.add_mood_event("hug", /datum/mood_event/warmhug, src) // Hugger got a warm hug (Unless they hate hugs)
+					add_mood_event("hug", /datum/mood_event/hug) // Receiver always gets a mood for being hugged
+				else
+					add_mood_event("hug", /datum/mood_event/warmhug, helper) // You got a warm hug
+		else
+			if (helper.grab_state >= GRAB_AGGRESSIVE)
+				add_mood_event("hug", /datum/mood_event/bad_touch_bear_hug)
 
 		// Let people know if they hugged someone really warm or really cold
 		if(helper.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
@@ -707,7 +719,7 @@
 /obj/item/hand_item/self_grasp/proc/grasp_limb(obj/item/bodypart/grasping_part)
 	user = grasping_part.owner
 	if(!istype(user))
-		stack_trace("[src] attempted to try_grasp() with [istype(user, /datum) ? user.type : isnull(user) ? "null" : user] user")
+		stack_trace("[src] attempted to try_grasp() with [isdatum(user) ? user.type : isnull(user) ? "null" : user] user")
 		qdel(src)
 		return
 

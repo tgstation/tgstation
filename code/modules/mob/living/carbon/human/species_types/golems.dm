@@ -4,11 +4,8 @@
 	id = SPECIES_GOLEM
 	species_traits = list(NOBLOOD,NOTRANSSTING, MUTCOLORS,NO_UNDERWEAR, NO_DNA_COPY)
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
 		TRAIT_CHUNKYFINGERS,
 		TRAIT_GENELESS,
-		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
 		TRAIT_NODISMEMBER,
 		TRAIT_NOFIRE,
@@ -112,11 +109,8 @@
 	//Can burn and takes damage from heat
 	//no RESISTHEAT, NOFIRE
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
 		TRAIT_CHUNKYFINGERS,
 		TRAIT_GENELESS,
-		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
 		TRAIT_NODISMEMBER,
 		TRAIT_PIERCEIMMUNE,
@@ -323,11 +317,8 @@
 	meat = /obj/item/stack/sheet/mineral/wood
 	//Can burn and take damage from heat
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
 		TRAIT_CHUNKYFINGERS,
 		TRAIT_GENELESS,
-		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
 		TRAIT_NODISMEMBER,
 		TRAIT_PIERCEIMMUNE,
@@ -513,7 +504,7 @@
 /datum/species/golem/bluespace/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
 	..()
 	var/obj/item/I
-	if(istype(AM, /obj/item))
+	if(isitem(AM))
 		I = AM
 		if(I.thrownby == WEAKREF(H)) //No throwing stuff at yourself to trigger the teleport
 			return 0
@@ -592,12 +583,9 @@
 	fixed_mut_color = "#ffff00"
 	say_mod = "honks"
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
 		TRAIT_CHUNKYFINGERS,
 		TRAIT_CLUMSY,
 		TRAIT_GENELESS,
-		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
 		TRAIT_NODISMEMBER,
 		TRAIT_NOFIRE,
@@ -671,7 +659,7 @@
 /datum/species/golem/bananium/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
 	..()
 	var/obj/item/I
-	if(istype(AM, /obj/item))
+	if(isitem(AM))
 		I = AM
 		if(I.thrownby == WEAKREF(H)) //No throwing stuff at yourself to make bananas
 			return 0
@@ -701,11 +689,8 @@
 	info_text = "As a <span class='danger'>Runic Golem</span>, you possess eldritch powers granted by the Elder Goddess Nar'Sie."
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES) //no mutcolors
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
 		TRAIT_CHUNKYFINGERS,
 		TRAIT_GENELESS,
-		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
 		TRAIT_NODISMEMBER,
 		TRAIT_NOFIRE,
@@ -901,7 +886,7 @@
 	desc = "It emits a strange aura, as if there was still life within it..."
 	max_integrity = 50
 	armor = list(MELEE = 90, BULLET = 90, LASER = 25, ENERGY = 80, BOMB = 50, BIO = 0, FIRE = -50, ACID = -50)
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "pile_bandages"
 	resistance_flags = FLAMMABLE
 

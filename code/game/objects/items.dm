@@ -4,7 +4,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 /// Anything you can pick up and hold.
 /obj/item
 	name = "item"
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 	pass_flags_self = PASSITEM
 
@@ -781,7 +781,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 	var/itempush = 1
 	if(w_class < 4)
 		itempush = 0 //too light to push anything
-	if(istype(hit_atom, /mob/living)) //Living mobs handle hit sounds differently.
+	if(isliving(hit_atom)) //Living mobs handle hit sounds differently.
 		var/volume = get_volume_by_throwforce_and_or_w_class()
 		if (throwforce > 0)
 			if (mob_throw_hit_sound)
@@ -833,29 +833,29 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 	var/mob/owner = loc
 	var/flags = slot_flags
 	if(flags & ITEM_SLOT_OCLOTHING)
-		owner.update_inv_wear_suit()
+		owner.update_worn_oversuit()
 	if(flags & ITEM_SLOT_ICLOTHING)
-		owner.update_inv_w_uniform()
+		owner.update_worn_undersuit()
 	if(flags & ITEM_SLOT_GLOVES)
-		owner.update_inv_gloves()
+		owner.update_worn_gloves()
 	if(flags & ITEM_SLOT_EYES)
-		owner.update_inv_glasses()
+		owner.update_worn_glasses()
 	if(flags & ITEM_SLOT_EARS)
 		owner.update_inv_ears()
 	if(flags & ITEM_SLOT_MASK)
-		owner.update_inv_wear_mask()
+		owner.update_worn_mask()
 	if(flags & ITEM_SLOT_HEAD)
-		owner.update_inv_head()
+		owner.update_worn_head()
 	if(flags & ITEM_SLOT_FEET)
-		owner.update_inv_shoes()
+		owner.update_worn_shoes()
 	if(flags & ITEM_SLOT_ID)
-		owner.update_inv_wear_id()
+		owner.update_worn_id()
 	if(flags & ITEM_SLOT_BELT)
-		owner.update_inv_belt()
+		owner.update_worn_belt()
 	if(flags & ITEM_SLOT_BACK)
-		owner.update_inv_back()
+		owner.update_worn_back()
 	if(flags & ITEM_SLOT_NECK)
-		owner.update_inv_neck()
+		owner.update_worn_neck()
 
 ///Returns the temperature of src. If you want to know if an item is hot use this proc.
 /obj/item/proc/get_temperature()
@@ -1105,7 +1105,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 		var/hand_index = M.get_held_index_of_item(src)
 		if(hand_index)
 			M.held_items[hand_index] = null
-			M.update_inv_hands()
+			M.update_held_items()
 			if(M.client)
 				M.client.screen -= src
 			layer = initial(layer)
