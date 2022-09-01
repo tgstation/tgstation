@@ -319,11 +319,10 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=15, /obj/effect/meteor
 	..()
 
 	var/start_turf = get_turf(src)
-	var/startZ = z
 
 	while(cluster_count > 0)
 		var/startSide = pick(GLOB.cardinals)
-		var/turf/destination = spaceDebrisStartLoc(startSide, startZ)
+		var/turf/destination = spaceDebrisStartLoc(startSide, z)
 		new /obj/effect/meteor/cluster_fragment(start_turf, destination)
 		cluster_count--
 
