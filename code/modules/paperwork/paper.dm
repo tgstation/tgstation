@@ -652,7 +652,7 @@
 /// Get a single string representing the text on a page
 /obj/item/paper/proc/get_raw_text()
 	var/paper_contents = ""
-	for(var/datum/paper_input/line in raw_text_inputs)
+	for(var/datum/paper_input/line as anything in raw_text_inputs)
 		paper_contents += line.raw_text + "/"
 	return paper_contents
 
