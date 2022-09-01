@@ -77,6 +77,8 @@
 		base_icon_state = "sus"
 		desc += " This one looks a bit sus..."
 
+	RegisterSignal(src, COMSIG_MACHINERY_POWER_RESTORED, .proc/on_power_restore)
+	RegisterSignal(src, COMSIG_MACHINERY_POWER_LOST, .proc/on_power_loss)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/door/firedoor/LateInitialize()
@@ -340,7 +342,7 @@
 	active = TRUE
 	alarm_type = code
 	add_as_source()
-	update_icon() //Sets the door lights even if the door doesn't move.
+	update_appearance(UPDATE_ICON) //Sets the door lights even if the door doesn't move.
 	correct_state()
 
 /// Adds this fire door as a source of trouble to all of its areas
@@ -367,7 +369,7 @@
 	remove_as_source()
 	soundloop.stop()
 	is_playing_alarm = FALSE
-	update_icon() //Sets the door lights even if the door doesn't move.
+	update_appearance(UPDATE_ICON) //Sets the door lights even if the door doesn't move.
 	correct_state()
 
 /**
@@ -385,7 +387,7 @@
 	soundloop.stop()
 	is_playing_alarm = FALSE
 	remove_as_source()
-	update_icon() //Sets the door lights even if the door doesn't move.
+	update_appearance(UPDATE_ICON) //Sets the door lights even if the door doesn't move.
 	correct_state()
 
 	/// Please be called 3 seconds after the LAST open, rather then 3 seconds after the first
@@ -434,14 +436,14 @@
 /obj/machinery/door/firedoor/bumpopen(mob/living/user)
 	return FALSE //No bumping to open, not even in mechs
 
-/obj/machinery/door/firedoor/power_change()
-	. = ..()
-	update_icon()
+/obj/machinery/door/firedoor/proc/on_power_loss()
+	SIGNAL_HANDLER 
+	
+	soundloop.stop()
 
-	if(machine_stat & NOPOWER)
-		soundloop.stop()
-		return
-
+/obj/machinery/door/firedoor/proc/on_power_restore()
+	SIGNAL_HANDLER 
+	
 	correct_state()
 
 	if(is_playing_alarm)
@@ -689,7 +691,7 @@
 			light_xoffset = 2
 		if(WEST)
 			light_xoffset = -2
-	update_icon()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/door/firedoor/border_only/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()

@@ -2106,7 +2106,7 @@
 "fJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("deepo2" = "Oxygen Supply");
+	atmos_chambers = list("deepo2"="Oxygen Supply");
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -2426,7 +2426,7 @@
 "gC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("deepn2" = "Nitrogen Supply");
+	atmos_chambers = list("deepn2"="Nitrogen Supply");
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -2505,8 +2505,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage)
 "gR" = (
-/obj/structure/grille,
-/obj/structure/cable,
+/obj/effect/spawner/structure/electrified_grille,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "gT" = (

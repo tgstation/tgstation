@@ -124,7 +124,7 @@
 	if(istype(techweb_to_publish, /datum/techweb/science))
 		var/datum/bank_account/dept_budget = SSeconomy.get_dep_account(ACCOUNT_SCI)
 		if(dept_budget)
-			dept_budget.adjust_money(gains[SCIPAPER_FUNDING_INDEX] * 1000)
+			dept_budget.adjust_money(gains[SCIPAPER_FUNDING_INDEX] * SCIPAPER_GAIN_TO_MONEY)
 
 /**
  * Clones into a new paper type.

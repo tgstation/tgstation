@@ -7,18 +7,24 @@ GLOBAL_VAR_INIT(meteor_wave_delay, 625) //minimum wait between waves in tenths o
 
 //Meteors probability of spawning during a given wave
 GLOBAL_LIST_INIT(meteors_normal, list(/obj/effect/meteor/dust=3, /obj/effect/meteor/medium=8, /obj/effect/meteor/big=3, \
-						  /obj/effect/meteor/flaming=1, /obj/effect/meteor/irradiated=3)) //for normal meteor event
+						  /obj/effect/meteor/flaming=1, /obj/effect/meteor/irradiated=3, /obj/effect/meteor/carp=1, /obj/effect/meteor/bluespace=1, \
+						  /obj/effect/meteor/banana=1, /obj/effect/meteor/emp = 1)) //for normal meteor event
 
-GLOBAL_LIST_INIT(meteors_threatening, list(/obj/effect/meteor/medium=4, /obj/effect/meteor/big=8, \
-						  /obj/effect/meteor/flaming=3, /obj/effect/meteor/irradiated=3)) //for threatening meteor event
+GLOBAL_LIST_INIT(meteors_threatening, list(/obj/effect/meteor/medium=4, /obj/effect/meteor/big=8, /obj/effect/meteor/flaming=3, \
+						  /obj/effect/meteor/irradiated=3, /obj/effect/meteor/cluster=1, /obj/effect/meteor/carp=1, /obj/effect/meteor/bluespace=2, /obj/effect/meteor/emp = 2)) //for threatening meteor event
 
 GLOBAL_LIST_INIT(meteors_catastrophic, list(/obj/effect/meteor/medium=5, /obj/effect/meteor/big=75, \
-						  /obj/effect/meteor/flaming=10, /obj/effect/meteor/irradiated=10, /obj/effect/meteor/tunguska = 1)) //for catastrophic meteor event
+						  /obj/effect/meteor/flaming=10, /obj/effect/meteor/irradiated=10, /obj/effect/meteor/cluster=8, /obj/effect/meteor/tunguska=1, \
+						  /obj/effect/meteor/carp=2, /obj/effect/meteor/bluespace=10, /obj/effect/meteor/emp = 8)) //for catastrophic meteor event
 
 GLOBAL_LIST_INIT(meteorsB, list(/obj/effect/meteor/meaty=5, /obj/effect/meteor/meaty/xeno=1)) //for meaty ore event
 
 GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust event
 
+GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=15, /obj/effect/meteor/big=10, \
+						  /obj/effect/meteor/flaming=25, /obj/effect/meteor/irradiated=30, /obj/effect/meteor/carp=25, /obj/effect/meteor/bluespace=30, \
+						  /obj/effect/meteor/banana=25, /obj/effect/meteor/meaty=10, /obj/effect/meteor/meaty/xeno=8, /obj/effect/meteor/emp = 30, \
+						  /obj/effect/meteor/cluster=20, /obj/effect/meteor/tunguska=1)) //for stray meteor event (bigger numbers for a bit finer weighting)
 
 ///////////////////////////////
 //Meteor spawning global procs
@@ -114,6 +120,9 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 	var/atom/dest
 	///Lifetime in seconds
 	var/lifetime = DEFAULT_METEOR_LIFETIME
+
+	///Used by Stray Meteor event to indicate meteor type (the type of sensor that "detected" it) in announcement
+	var/signature = "motion"
 
 /obj/effect/meteor/Initialize(mapload, turf/target)
 	. = ..()
@@ -264,12 +273,14 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 //Flaming meteor
 /obj/effect/meteor/flaming
 	name = "flaming meteor"
+	desc = "An veritable shooting star, both beautiful and frightening. You should probably keep your distance from this."
 	icon_state = "flaming"
 	hits = 5
 	heavy = TRUE
 	meteorsound = 'sound/effects/bamf.ogg'
 	meteordrop = list(/obj/item/stack/ore/plasma)
 	threat = 20
+	signature = "thermal"
 
 /obj/effect/meteor/flaming/meteor_effect()
 	..()
@@ -278,17 +289,125 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 //Radiation meteor
 /obj/effect/meteor/irradiated
 	name = "glowing meteor"
+	desc = "An irradiated chunk of space rock. You could probably stop and appreciate its incandescent green glow, if it weren't moving so fast."
 	icon_state = "glowing"
 	heavy = TRUE
 	meteordrop = list(/obj/item/stack/ore/uranium)
 	threat = 15
-
+	signature = "radiation"
 
 /obj/effect/meteor/irradiated/meteor_effect()
 	..()
 	explosion(src, light_impact_range = 4, flash_range = 3, adminlog = FALSE)
 	new /obj/effect/decal/cleanable/greenglow(get_turf(src))
 	radiation_pulse(src, max_range = 3, threshold = RAD_MEDIUM_INSULATION, chance = 80)
+
+//Cluster meteor
+/obj/effect/meteor/cluster
+	name = "cluster meteor"
+	desc = "A cluster of densely packed rocks, with a volatile core. You should probably get out of the way."
+	icon_state = "sharp"
+	hits = 9
+	heavy = TRUE
+	meteorsound = 'sound/effects/break_stone.ogg'
+	threat = 25
+	signature = "ordnance"
+	///Number of fragmentation meteors to be spawned
+	var/cluster_count = 8
+
+/obj/effect/meteor/cluster/meteor_effect()
+	..()
+
+	var/start_turf = get_turf(src)
+
+	while(cluster_count > 0)
+		var/startSide = pick(GLOB.cardinals)
+		var/turf/destination = spaceDebrisStartLoc(startSide, z)
+		new /obj/effect/meteor/cluster_fragment(start_turf, destination)
+		cluster_count--
+
+	explosion(src, heavy_impact_range = 2, light_impact_range = 3, flash_range = 4, adminlog = FALSE)
+
+/obj/effect/meteor/cluster_fragment
+	name = "cluster meteor fragment"
+	desc = "A fast-moving fragment of exploded cluster-rock."
+	icon_state = "dust"
+
+//frozen carp "meteor"
+/obj/effect/meteor/carp
+	name = "frozen carp"
+	icon_state = "carp"
+	desc = "Am I glad he's frozen in there, and that we're out here."
+	hits = 4
+	meteorsound = 'sound/effects/ethereal_revive_fail.ogg'
+	meteordrop = list(/mob/living/simple_animal/hostile/carp)
+	dropamt = 1
+	threat = 5
+	signature = "fishing and trawling"
+
+/obj/effect/meteor/carp/Initialize(mapload)
+	if(prob(2))
+		meteordrop = list(/mob/living/simple_animal/hostile/carp/megacarp) //hehe
+	return ..()
+
+//bluespace meteor
+/obj/effect/meteor/bluespace
+	name = "bluespace meteor"
+	desc = "A large geode containing bluespace dust at its core, hurtling through space. That's the stuff the crew are here to research. How convenient for them."
+	icon_state = "bluespace"
+	dropamt = 3
+	hits = 12
+	meteordrop = list(/obj/item/stack/ore/bluespace_crystal)
+	threat = 15
+	signature = "bluespace flux"
+
+/obj/effect/meteor/bluespace/Bump()
+	..()
+	if(prob(35))
+		do_teleport(src, get_turf(src), 6, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
+
+/obj/effect/meteor/banana
+	name = "bananium meteor"
+	desc = "Maybe it's a chunk blasted off of the legendary Clown Planet... How annoying."
+	icon_state = "bananium"
+	dropamt = 4
+	hits = 175 //Honks everything, including space tiles. Depending on the angle/how much stuff it hits, there's a fair chance that it will spare the station from the actual explosion
+	meteordrop = list(/obj/item/stack/ore/bananium)
+	meteorsound = 'sound/items/bikehorn.ogg'
+	threat = 15
+	movement_type = PHASING
+	signature = "comedy"
+
+/obj/effect/meteor/banana/meteor_effect()
+	..()
+	playsound(src, 'sound/items/AirHorn.ogg', 100, TRUE, -1)
+	for(var/atom/movable/object in view(4, get_turf(src)))
+		var/turf/throwtarget = get_edge_target_turf(get_turf(src), get_dir(get_turf(src), get_step_away(object, get_turf(src))))
+		object.safe_throw_at(throwtarget, 5, 1, force = MOVE_FORCE_STRONG)
+
+/obj/effect/meteor/banana/ram_turf(turf/bumped)
+	for(var/mob/living/slipped in get_turf(bumped))
+		slipped.slip(100, slipped.loc,- GALOSHES_DONT_HELP|SLIDE, 0, FALSE)
+		slipped.visible_message(span_warning("[src] honks [slipped] to the floor!"), span_userdanger("[src] harmlessly passes through you, knocking you over."))
+	get_hit()
+
+/obj/effect/meteor/emp
+	name = "electromagnetically charged meteor"
+	desc = "It radiates with captive energy, ready to be let loose upon the world."
+	icon_state = "bluespace"
+	hits = 6
+	threat = 10
+	signature = "electromagnetic interference"
+
+/obj/effect/meteor/emp/Move()
+	. = ..()
+	if(.)
+		new /obj/effect/temp_visual/impact_effect/ion(get_turf(src))
+
+/obj/effect/meteor/emp/meteor_effect()
+	..()
+	playsound(src, 'sound/weapons/zapbang.ogg', 100, TRUE, -1)
+	empulse(src, 3, 8)
 
 //Meaty Ore
 /obj/effect/meteor/meaty
@@ -301,6 +420,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 	meteordrop = list(/obj/item/food/meat/slab/human, /obj/item/food/meat/slab/human/mutant, /obj/item/organ/internal/heart, /obj/item/organ/internal/lungs, /obj/item/organ/internal/tongue, /obj/item/organ/internal/appendix/)
 	var/meteorgibs = /obj/effect/gibspawner/generic
 	threat = 2
+	signature = "culinary material"
 
 /obj/effect/meteor/meaty/Initialize(mapload)
 	for(var/path in meteordrop)
@@ -332,6 +452,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 	color = "#5EFF00"
 	meteordrop = list(/obj/item/food/meat/slab/xeno, /obj/item/organ/internal/tongue/alien)
 	meteorgibs = /obj/effect/gibspawner/xeno
+	signature = "exotic culinary material"
 
 /obj/effect/meteor/meaty/xeno/Initialize(mapload)
 	meteordrop += subtypesof(/obj/item/organ/internal/alien)
@@ -352,6 +473,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 	meteorsound = 'sound/effects/bamf.ogg'
 	meteordrop = list(/obj/item/stack/ore/plasma)
 	threat = 50
+	signature = "armageddon"
 
 /obj/effect/meteor/tunguska/Move()
 	. = ..()

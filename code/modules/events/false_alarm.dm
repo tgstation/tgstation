@@ -25,8 +25,8 @@
 	return ..() && length(gather_false_events())
 
 /datum/round_event/falsealarm
-	announceWhen = 0
-	endWhen = 1
+	announce_when = 0
+	end_when = 1
 	fakeable = FALSE
 
 /datum/round_event/falsealarm/announce(fake)

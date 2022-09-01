@@ -1,0 +1,4 @@
+author: "Jackal-boop"
+delete-after: True
+changes: 
+  - bugfix: "fixed the HFR fuel input part saying that it can only take tritium and hydrogen"

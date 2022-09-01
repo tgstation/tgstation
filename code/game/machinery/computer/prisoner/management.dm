@@ -32,10 +32,10 @@
 			dat += text("<A href='?src=[REF(src)];id=insert'>Insert Prisoner ID.</A><br>")
 		dat += "<H3>Prisoner Implant Management</H3>"
 		dat += "<HR>Chemical Implants<BR>"
-		var/turf/Tr = null
+		var/turf/current_turf = get_turf(src)
 		for(var/obj/item/implant/chem/C in GLOB.tracked_chem_implants)
-			Tr = get_turf(C)
-			if((Tr) && (Tr.z != src.z))
+			var/turf/implant_turf = get_turf(C)
+			if(!is_valid_z_level(current_turf, implant_turf))
 				continue//Out of range
 			if(!C.imp_in)
 				continue
@@ -49,13 +49,13 @@
 		for(var/obj/item/implant/tracking/T in GLOB.tracked_implants)
 			if(!isliving(T.imp_in))
 				continue
-			Tr = get_turf(T)
-			if((Tr) && (Tr.z != src.z))
+			var/turf/implant_turf = get_turf(T)
+			if(!is_valid_z_level(current_turf, implant_turf))
 				continue//Out of range
 
 			var/loc_display = "Unknown"
 			var/mob/living/M = T.imp_in
-			if(is_station_level(Tr.z) && !isspaceturf(M.loc))
+			if(is_station_level(implant_turf.z) && !isspaceturf(M.loc))
 				var/turf/mob_loc = get_turf(M)
 				loc_display = mob_loc.loc
 

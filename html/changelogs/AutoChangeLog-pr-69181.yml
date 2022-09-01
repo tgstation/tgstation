@@ -1,0 +1,13 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - balance: "Heretic: Curses have been reworked. You can now curse any member of the crew, granted they're not too far away. If you additionally provide an item in the ritual containing a sample of the target's blood or fingerprints, the curse's duration will be increased and have its range uncapped."
+  - balance: "Heretic: The Curse of Corrosion has been nerfed slightly due to this rework, and can no longer cause vital organs to fail."
+  - balance: "Heretic: The Living Heart should now provide better directions, and had its cooldown halved to 4 seconds."
+  - balance: "Heretic: Leeching Walk (rust healing) now restores lost blood."
+  - balance: "Heretic: If you apply Amok (Entropic Plume) to someone holding a gun, they'll try to shoot it at people nearby."
+  - bugfix: "Entropic Plume's effect now blinds, as it should."
+  - bugfix: "Entropic Plume no longer sometimes applies the stink effect forever."
+  - bugfix: "Entropic Plume no longer always applies the lowest amount of poison, and properly scales on distance."
+  - bugfix: "Fixed an exploit which allowed people to figure out if a Heretic's heart was a previously a Living Heart after being removed."
+  - bugfix: "If a heretic is fully healed by something (such as ahealed), they'll not lose their living heart"

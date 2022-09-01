@@ -1,4 +1,0 @@
-author: "ORCACommander"
-delete-after: True
-changes: 
-  - bugfix: "fixed High capacity inheritance structure"

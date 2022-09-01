@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes: 
+  - code_imp: "Removes erroneous code from bananium meteor. This should not affect players in any way."
