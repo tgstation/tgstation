@@ -70,7 +70,7 @@ GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weig
 	popup.open()
 
 /// Gets a random subtype of the passed hallucination type that has a random_hallucination_weight > 0.
-/proc/get_random_valid_hallucination_subtype(passed_type)
+/proc/get_random_valid_hallucination_subtype(passed_type = /datum/hallucination)
 	if(!ispath(passed_type, /datum/hallucination))
 		CRASH("get_random_valid_hallucination_subtype - get_random_valid_hallucination_subtype passed not a hallucination subtype.")
 
@@ -83,6 +83,21 @@ GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weig
 		return hallucination_type
 
 	return null
+
+/// Helper to give the passed mob the ability to select a hallucination from the list of all hallucination subtypes.
+/proc/select_hallucination_type(mob/user, message = "Select a hallucination subtype", title = "Choose Hallucination")
+	var/static/list/hallucinations
+	if(!hallucinations)
+		hallucinations = typesof(/datum/hallucination)
+		for(var/datum/hallucination/hallucination_type as anything in hallucinations)
+			if(initial(hallucination_type.abstract_hallucination_parent) == hallucination_type)
+				hallucinations -= hallucination_type
+
+	var/chosen = tgui_input_list(user, message, title, hallucinations)
+	if(!chosen || !ispath(chosen, /datum/hallucination))
+		return null
+
+	return chosen
 
 /datum/status_effect/hallucination
 	id = "hallucination"

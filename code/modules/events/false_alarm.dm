@@ -7,7 +7,7 @@
 	category = EVENT_CATEGORY_BUREAUCRATIC
 	description = "Fakes an event announcement."
 
-/datum/round_event_control/falsealarm/admin_setup()
+/datum/round_event_control/falsealarm/admin_setup(mob/admin)
 	if(!check_rights(R_FUN))
 		return
 

@@ -145,7 +145,7 @@ Runs the event
 	return CANCEL_RANDOM_EVENT
 
 //Special admins setup
-/datum/round_event_control/proc/admin_setup()
+/datum/round_event_control/proc/admin_setup(mob/admin)
 	return
 
 /datum/round_event //NOTE: Times are measured in master controller ticks!
