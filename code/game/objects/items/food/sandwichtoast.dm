@@ -137,6 +137,7 @@
 /obj/item/food/danish_hotdog
 	name = "danish hotdog"
 	desc = "Appetizing bun, with a sausage in the middle, covered with sauce, fried onion and pickles rings"
+	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "danish_hotdog"
 	bite_consumption = 4
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/ketchup = 3, /datum/reagent/consumable/nutriment/vitamin = 7)
