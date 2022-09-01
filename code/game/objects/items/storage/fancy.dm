@@ -477,6 +477,7 @@
 	atom_storage.set_holdable(list(/obj/item/food/pickle))
 
 /obj/item/storage/fancy/pickles_jar/update_icon_state()
+	SHOULD_CALL_PARENT(FALSE)
 	if(!contents.len)
 		icon_state = "[base_icon_state]_empty"
 	else 
