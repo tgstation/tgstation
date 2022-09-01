@@ -391,10 +391,6 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=15, /obj/effect/meteor
 		slipped.visible_message(span_warning("[src] honks [slipped] to the floor!"), span_userdanger("[src] harmlessly passes through you, knocking you over."))
 	get_hit()
 
-/obj/effect/meteor/banana/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
-	..()
-	return
-
 /obj/effect/meteor/emp
 	name = "electromagnetically charged meteor"
 	desc = "It radiates with captive energy, ready to be let loose upon the world."
