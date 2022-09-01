@@ -26,7 +26,7 @@ SUBSYSTEM_DEF(assets)
 	for(var/type in typesof(/datum/asset))
 		var/datum/asset/A = type
 		if (type != initial(A._abstract))
-			get_asset_datum(type)
+			load_asset_datum(type)
 
 	transport.Initialize(cache)
 

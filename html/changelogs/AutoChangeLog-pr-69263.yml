@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes: 
+  - bugfix: "Fix slimepeople soft landing showing message for stairs and self"

@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Supplypods can no longer be destroyed by explosions BEFORE they land."

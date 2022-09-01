@@ -90,7 +90,7 @@
 			W.play_tool_sound(src)
 			balloon_alert(user, "board unfastened")
 		else
-			balloon_alert(user, "no board to faster!")
+			balloon_alert(user, "no board to fasten!")
 			return
 	update_appearance()
 
