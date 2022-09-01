@@ -8,9 +8,9 @@
 	description = "Harmless mobs climb out of a scrubber."
 
 /datum/round_event/scrubber_clog
-	announceWhen = 10
-	startWhen = 5
-	endWhen = 600
+	announce_when = 10
+	start_when = 5
+	end_when = 600
 
 	///Scrubber selected for the event.
 	var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber
@@ -37,7 +37,7 @@
 	RegisterSignal(scrubber, COMSIG_PARENT_QDELETING, .proc/scrubber_move)
 
 	spawned_mob = get_mob()
-	endWhen = rand(300, 600)
+	end_when = rand(300, 600)
 	maximum_spawns = rand(3, 5)
 	spawn_delay = rand(10, 15)
 
@@ -183,7 +183,7 @@
 
 /datum/round_event/scrubber_clog/strange/setup()
 	. = ..()
-	endWhen = rand(600, 720)
+	end_when = rand(600, 720)
 	spawn_delay = rand(6, 25) //Wide range, for maximum utility/comedy
 
 /datum/round_event/scrubber_clog/strange/announce()

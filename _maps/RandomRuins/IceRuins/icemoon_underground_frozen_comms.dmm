@@ -114,8 +114,9 @@
 	},
 /area/ruin/powered/shuttle)
 "sM" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/spawner/east,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 4
+	},
 /obj/item/shard,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating/icemoon,
@@ -227,8 +228,9 @@
 /area/icemoon/underground/explored)
 "CH" = (
 /obj/structure/window/reinforced/spawner,
-/obj/structure/grille,
-/obj/structure/window/reinforced/spawner/north,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 1
+	},
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
@@ -252,9 +254,9 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/powered/shuttle)
 "FP" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner/east,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
@@ -267,8 +269,9 @@
 	},
 /area/ruin/powered/shuttle)
 "GH" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/spawner/north,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 1
+	},
 /obj/item/shard,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating/icemoon,
@@ -296,8 +299,9 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Jt" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/spawner/east,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)

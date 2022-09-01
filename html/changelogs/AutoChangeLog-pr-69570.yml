@@ -1,0 +1,4 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes: 
+  - admin: "The lua function `SS13.await` can now await non-sleeping, but extremely expensive procs, such as `getFlatIcon`"

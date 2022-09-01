@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes: 
+  - spellcheck: "Fixed a typo when trying to fasten in an APC board before inserting it."

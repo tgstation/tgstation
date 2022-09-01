@@ -970,8 +970,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "nK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/fulltile,
+/obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "nQ" = (
@@ -2633,7 +2632,7 @@
 /obj/docking_port/mobile/emergency{
 	dwidth = 40;
 	height = 43;
-	movement_force = list("KNOCKDOWN" = 3, "THROW" = 6);
+	movement_force = list("KNOCKDOWN"=3,"THROW"=6);
 	name = "\proper a monastery with engines strapped to it";
 	port_direction = 1;
 	width = 80

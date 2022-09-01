@@ -234,7 +234,7 @@
 				computer.say("ERROR: Small crates may only be purchased by private accounts.")
 				return
 
-			if(!self_paid && ishuman(usr) && !account)
+			if(!requestonly && !self_paid && ishuman(usr) && !account)
 				var/obj/item/card/id/id_card = card_slot?.GetID()
 				account = SSeconomy.get_dep_account(id_card?.registered_account?.account_job.paycheck_department)
 

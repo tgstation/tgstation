@@ -149,9 +149,9 @@
 	return ..()
 
 /obj/vehicle/sealed/mecha/add_occupant(mob/M, control_flags)
-	RegisterSignal(M, COMSIG_LIVING_DEATH, .proc/mob_exit)
-	RegisterSignal(M, COMSIG_MOB_CLICKON, .proc/on_mouseclick)
-	RegisterSignal(M, COMSIG_MOB_SAY, .proc/display_speech_bubble)
+	RegisterSignal(M, COMSIG_LIVING_DEATH, .proc/mob_exit, TRUE)
+	RegisterSignal(M, COMSIG_MOB_CLICKON, .proc/on_mouseclick, TRUE)
+	RegisterSignal(M, COMSIG_MOB_SAY, .proc/display_speech_bubble, TRUE)
 	. = ..()
 	update_appearance()
 

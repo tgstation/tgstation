@@ -30,8 +30,8 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	icon_state = "bible"
 	inhand_icon_state = "bible"
 	worn_icon_state = "bible"
-	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/books_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/books_righthand.dmi'
 	var/mob/affecting = null
 	var/deity_name = "Christ"
 	force_string = "holy"

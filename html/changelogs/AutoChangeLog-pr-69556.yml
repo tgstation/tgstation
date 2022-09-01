@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "MMI piloted mecha can now open doors using access granted through the ID card reader!"
+  - bugfix: "Mecha will now properly open doors when approaching from unrestricted sides."
