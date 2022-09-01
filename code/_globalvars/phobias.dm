@@ -467,11 +467,6 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/reagent_containers/syringe,
 		/obj/machinery/iv_drip,
 	)),
-
-	"cucumbers" = typecacheof(list(
-		/obj/item/food/pickle,
-		/obj/item/food/grown/cucumber,
-	)),
 ))
 
 GLOBAL_LIST_INIT(phobia_turfs, list(

@@ -217,7 +217,3 @@
 /datum/brain_trauma/mild/phobia/blood
 	phobia_type = "blood"
 	random_gain = FALSE
-
-/datum/brain_trauma/mild/phobia/cucumbers
-	phobia_type = "cucumbers"
-	random_gain = FALSE
