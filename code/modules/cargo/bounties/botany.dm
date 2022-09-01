@@ -221,3 +221,7 @@
 		return FALSE
 	var/obj/structure/bonfire/B = O
 	return !!B.burning
+
+/datum/bounty/item/botany/cucumber
+	name = "Cucambers"
+	wanted_types = list(/obj/item/seeds/cucumber = TRUE)

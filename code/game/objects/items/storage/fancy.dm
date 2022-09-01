@@ -457,3 +457,35 @@
 /obj/item/storage/fancy/nugget_box/Initialize(mapload)
 	. = ..()
 	atom_storage.set_holdable(list(/obj/item/food/nugget))
+
+/*
+ * Pickles Jar
+ */
+
+/obj/item/storage/fancy/pickles_jar
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "pickles_full"
+	base_icon_state = "pickles"
+	name = "pickles"
+	desc = "A jar for containing pickles."
+	spawn_type = /obj/item/food/pickle
+	spawn_count = 10
+	contents_tag = "pickle"
+
+/obj/item/storage/fancy/pickles_jar/Initialize(mapload)
+	. = ..()
+	atom_storage.set_holdable(list(/obj/item/food/pickle))
+
+/obj/item/storage/fancy/pickles_jar/update_icon_state()
+	SHOULD_CALL_PARENT(FALSE)
+	return
+
+/obj/item/storage/fancy/pickles_jar/update_overlays()
+	. = ..()
+	if(!contents.len)
+		. += "[base_icon_state]_empty"
+	else 
+		if(contents.len < 5)
+			. += "[base_icon_state]_[contents.len]"
+		else	
+			. += base_icon_state
