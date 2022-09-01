@@ -697,6 +697,7 @@
 /obj/item/food/fried_chicken
 	name = "fried chicken"
 	desc = "A juicy hunk of chicken meat, fried to perfection."
+	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "fried_chicken1"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("chicken" = 3, "fried batter" = 1)
@@ -724,6 +725,7 @@
 /obj/item/food/beef_wellington
 	name = "beef wellington"
 	desc = "A luxurious log of beef, covered in a fine mushroom duxelle and pancetta ham, then bound in puff pastry."
+	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "beef_wellington"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 21, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("beef" = 3, "mushrooms" = 1, "pancetta" = 1)
@@ -737,6 +739,7 @@
 /obj/item/food/beef_wellington_slice
 	name = "beef wellington slice"
 	desc = "A slice of beef wellington, topped with a rich gravy. Simply delicious."
+	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "beef_wellington_slice"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 7, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("beef" = 3, "mushrooms" = 1, "pancetta" = 1)
@@ -747,6 +750,7 @@
 /obj/item/food/full_english
 	name = "full english breakfast"
 	desc = "A hearty plate with all the trimmings, representing the pinnacle of the breakfast art."
+	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "full_english"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("sausage" = 1, "bacon" = 1, "egg" = 1, "tomato" = 1, "mushrooms" = 1, "bread" = 1, "beans" = 1)
