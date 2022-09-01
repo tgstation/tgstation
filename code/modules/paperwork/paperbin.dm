@@ -65,6 +65,7 @@
 /obj/item/paper_bin/fire_act(exposed_temperature, exposed_volume)
 	if(total_paper > 0)
 		total_paper = 0
+		QDEL_LIST(paper_stack)
 		update_appearance()
 
 	..()
