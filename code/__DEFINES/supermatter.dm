@@ -101,6 +101,7 @@
 #define BIOSCRAMBLER_ANOMALY "bioscrambler_anomaly"
 #define HALLUCINATION_ANOMALY "hallucination_anomaly"
 #define VORTEX_ANOMALY "vortex_anomaly"
+#define DIMENSIONAL_ANOMALY "dimensional_anomaly"
 
 #define SUPERMATTER_COUNTDOWN_TIME 30 SECONDS
 
