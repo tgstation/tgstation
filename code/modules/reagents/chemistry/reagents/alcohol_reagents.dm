@@ -2937,6 +2937,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Hey, someone forgot the herb and... the cucumber in my cocktail!"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/gin_garden/on_mob_life(mob/living/carbon/doll, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/gin_garden/on_mob_life(mob/living/carbon/doll, delta_time, times_fired)
 	doll.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, doll.get_body_temp_normal())
 	..()
