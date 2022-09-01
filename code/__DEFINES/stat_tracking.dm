@@ -34,8 +34,8 @@
 		var/cost = TICK_USAGE; \
 		_costs[category] += TICK_DELTA_TO_MS(cost - usage);\
 		_counting[category] += 1;\
-		usage = TICK_USAGE; \
-	} while(FALSE)
+	} while(FALSE) \
+	usage = TICK_USAGE;
 
 #define SET_COST_LINE \
 	do { \
