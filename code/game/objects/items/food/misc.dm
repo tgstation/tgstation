@@ -925,7 +925,7 @@
 	desc = "Slightly shriveled darkish cucumber. Smelling something sour, but incredibly inviting."
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = "pickle"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/medicine/antihol = 2)
 	tastes = list("pickle" = 1, "spices" = 1, "salt water" = 2)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
