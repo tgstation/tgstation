@@ -564,5 +564,5 @@
 	mix_message = "The drink starts to smell perfumy..."
 
 /datum/chemical_reaction/drink/gin_garden
-	results = list(/datum/reagent/consumable/gin_garden = 15)
+	results = list(/datum/reagent/consumable/ethanol/gin_garden = 15)
 	required_reagents = list(/datum/reagent/consumable/lemonjuice = 1, /datum/reagent/consumable/sugar = 1, /datum/reagent/consumable/ethanol/gin = 3, /datum/reagent/consumable/cucumberjuice = 3, /datum/reagent/consumable/sol_dry = 5, /datum/reagent/consumable/ice = 2)
