@@ -2898,6 +2898,7 @@
 #include "code\modules\events\processor_overload.dm"
 #include "code\modules\events\radiation_storm.dm"
 #include "code\modules\events\scrubber_clog.dm"
+#include "code\modules\events\scrubber_overflow.dm"
 #include "code\modules\events\sentience.dm"
 #include "code\modules\events\shuttle_catastrophe.dm"
 #include "code\modules\events\shuttle_insurance.dm"

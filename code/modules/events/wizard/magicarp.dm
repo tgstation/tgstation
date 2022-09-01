@@ -7,11 +7,11 @@
 	description = "Summons a school of carps with magic projectiles."
 
 /datum/round_event/wizard/magicarp
-	announceWhen = 3
-	startWhen = 50
+	announce_when = 3
+	start_when = 50
 
 /datum/round_event/wizard/magicarp/setup()
-	startWhen = rand(40, 60)
+	start_when = rand(40, 60)
 
 /datum/round_event/wizard/magicarp/announce(fake)
 	priority_announce("Unknown magical entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
