@@ -110,8 +110,9 @@
 	desc = "Shake loose a few banana peels."
 	cooldown_time = 8 SECONDS
 	button_icon_state = "rustle"
-	icon_icon = 'icons/mob/actions/actions_clown.dmi'
+	button_icon = 'icons/mob/actions/actions_clown.dmi'
 	background_icon_state = "bg_nature"
+	overlay_icon_state = "bg_nature_border"
 	///which type of peel to spawn
 	var/banana_type = /obj/item/grown/bananapeel
 	///How many peels to spawn
@@ -138,10 +139,11 @@
 /datum/action/cooldown/exquisite_bunch
 	name = "Exquisite Bunch"
 	desc = "Pluck your finest bunch of bananas from your head. This bunch is especially nutrious to monkeykind. A gentle tap will trigger an explosive ripening process."
-	icon_icon = 'icons/obj/hydroponics/harvest.dmi'
+	button_icon = 'icons/obj/hydroponics/harvest.dmi'
 	cooldown_time = 60 SECONDS
 	button_icon_state = "banana_bunch"
 	background_icon_state = "bg_nature"
+	overlay_icon_state = "bg_nature_border"
 	///If we are currently activating our ability.
 	var/activating = FALSE
 
@@ -474,7 +476,8 @@
 	name = "Regurgitate"
 	desc = "Regurgitates a single item from the depths of your pouch."
 	background_icon_state = "bg_changeling"
-	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	overlay_icon_state = "bg_changeling_border"
+	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "regurgitate"
 	check_flags = AB_CHECK_CONSCIOUS
 	melee_cooldown_time = 0 SECONDS

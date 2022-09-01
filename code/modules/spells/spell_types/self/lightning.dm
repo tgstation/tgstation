@@ -3,6 +3,7 @@
 	desc = "Charge up a tesla arc and release it at random nearby targets! \
 		You can move freely while it charges. The arc jumps between targets and can knock them down."
 	button_icon_state = "lightning"
+	active_overlay_icon_state = "bg_spell_border_active_yellow"
 
 	cooldown_time = 30 SECONDS
 	cooldown_reduction_per_rank = 6.75 SECONDS
@@ -26,6 +27,9 @@
 /datum/action/cooldown/spell/tesla/Remove(mob/living/remove_from)
 	reset_tesla(remove_from)
 	return ..()
+
+/datum/action/cooldown/spell/tesla/is_action_active(atom/movable/screen/movable/action_button/current_button)
+	return currently_channeling
 
 /datum/action/cooldown/spell/tesla/set_statpanel_format()
 	. = ..()
@@ -58,6 +62,7 @@
 	playsound(get_turf(cast_on), charge_sound, 50, FALSE)
 
 	currently_channeling = TRUE
+	build_all_button_icons(UPDATE_BUTTON_STATUS)
 	if(!do_after(cast_on, channel_time, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_HELD_ITEM)))
 		reset_tesla(cast_on)
 		return . | SPELL_CANCEL_CAST
@@ -70,6 +75,7 @@
 /datum/action/cooldown/spell/tesla/proc/reset_tesla(atom/to_reset)
 	to_reset.cut_overlay(halo)
 	currently_channeling = FALSE
+	build_all_button_icons(UPDATE_BUTTON_STATUS)
 
 /datum/action/cooldown/spell/tesla/cast(atom/cast_on)
 	. = ..()

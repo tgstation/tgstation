@@ -4,7 +4,8 @@
 	name = "Invisible Box"
 	desc = "The mime's performance transmutates a box into physical reality."
 	background_icon_state = "bg_mime"
-	icon_icon = 'icons/mob/actions/actions_mime.dmi'
+	overlay_icon_state = "bg_mime_border"
+	button_icon = 'icons/mob/actions/actions_mime.dmi'
 	button_icon_state = "invisible_box"
 	panel = "Mime"
 	sound = null

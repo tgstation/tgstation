@@ -31,7 +31,9 @@
 	name = "Shield"
 	desc = "This spell creates a temporary forcefield to shield yourself and allies from incoming fire."
 	background_icon_state = "bg_demon"
-	icon_icon = 'icons/mob/actions/actions_cult.dmi'
+	overlay_icon_state = "bg_demon_border"
+
+	button_icon = 'icons/mob/actions/actions_cult.dmi'
 	button_icon_state = "cultforcewall"
 
 	cooldown_time = 40 SECONDS
@@ -43,7 +45,8 @@
 	name = "Invisible Blockade"
 	desc = "Form an invisible three tile wide blockade."
 	background_icon_state = "bg_mime"
-	icon_icon = 'icons/mob/actions/actions_mime.dmi'
+	overlay_icon_state = "bg_mime_border"
+	button_icon = 'icons/mob/actions/actions_mime.dmi'
 	button_icon_state = "invisible_blockade"
 	panel = "Mime"
 	sound = null

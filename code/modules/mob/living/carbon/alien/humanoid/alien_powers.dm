@@ -10,7 +10,8 @@ Doesn't work on other aliens/AI.*/
 	name = "Alien Power"
 	panel = "Alien"
 	background_icon_state = "bg_alien"
-	icon_icon = 'icons/mob/actions/actions_xeno.dmi'
+	overlay_icon_state = "bg_alien_border"
+	button_icon = 'icons/mob/actions/actions_xeno.dmi'
 	button_icon_state = "spell_default"
 	check_flags = AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS
 	melee_cooldown_time = 0 SECONDS
@@ -258,7 +259,7 @@ Doesn't work on other aliens/AI.*/
 	to_chat(on_who, span_notice("You prepare your neurotoxin gland. <B>Left-click to fire at a target!</B>"))
 
 	button_icon_state = "alien_neurotoxin_1"
-	UpdateButtons()
+	build_all_button_icons()
 	on_who.update_icons()
 
 /datum/action/cooldown/alien/acid/neurotoxin/unset_click_ability(mob/on_who, refund_cooldown = TRUE)
@@ -270,7 +271,7 @@ Doesn't work on other aliens/AI.*/
 		to_chat(on_who, span_notice("You empty your neurotoxin gland."))
 
 	button_icon_state = "alien_neurotoxin_0"
-	UpdateButtons()
+	build_all_button_icons()
 	on_who.update_icons()
 
 /datum/action/cooldown/alien/acid/neurotoxin/InterceptClickOn(mob/living/caller, params, atom/target)
@@ -413,7 +414,7 @@ Doesn't work on other aliens/AI.*/
 	vessel.stored_plasma = max(vessel.stored_plasma + amount,0)
 	vessel.stored_plasma = min(vessel.stored_plasma, vessel.max_plasma) //upper limit of max_plasma, lower limit of 0
 	for(var/datum/action/cooldown/alien/ability in actions)
-		ability.UpdateButtons()
+		ability.build_all_button_icons()
 	return TRUE
 
 /mob/living/carbon/alien/adjustPlasma(amount)

@@ -966,7 +966,7 @@
 /datum/action/innate/mafia_panel
 	name = "Mafia Panel"
 	desc = "Use this to play."
-	icon_icon = 'icons/obj/mafia.dmi'
+	button_icon = 'icons/obj/mafia.dmi'
 	button_icon_state = "board"
 	var/datum/mafia_controller/parent
 

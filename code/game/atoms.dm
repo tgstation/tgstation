@@ -1615,7 +1615,7 @@
 
 /obj/item/update_filters()
 	. = ..()
-	update_action_buttons()
+	update_item_action_buttons()
 
 /atom/proc/get_filter(name)
 	if(filter_data && filter_data[name])

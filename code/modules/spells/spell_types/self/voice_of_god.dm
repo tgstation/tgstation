@@ -1,7 +1,7 @@
 /datum/action/cooldown/spell/voice_of_god
 	name = "Voice of God"
 	desc = "Speak with an incredibly compelling voice, forcing listeners to obey your commands."
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "voice_of_god"
 	sound = 'sound/magic/clockwork/invoke_general.ogg'
 

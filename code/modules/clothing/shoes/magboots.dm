@@ -44,7 +44,7 @@
 	user.update_worn_shoes() //so our mob-overlays update
 	user.update_gravity(user.has_gravity())
 	user.update_equipment_speed_mods() //we want to update our speed so we arent running at max speed in regular magboots
-	update_action_buttons()
+	update_item_action_buttons()
 
 /obj/item/clothing/shoes/magboots/examine(mob/user)
 	. = ..()

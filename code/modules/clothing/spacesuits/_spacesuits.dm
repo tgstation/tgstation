@@ -212,7 +212,7 @@
 	if(toggler)
 		to_chat(toggler, span_notice("You turn [thermal_on ? "on" : "off"] [src]'s thermal regulator."))
 
-	update_action_buttons()
+	update_item_action_buttons()
 
 /obj/item/clothing/suit/space/ui_action_click(mob/user, actiontype)
 	toggle_spacesuit(user)

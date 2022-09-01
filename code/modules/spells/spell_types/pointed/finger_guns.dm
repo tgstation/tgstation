@@ -3,7 +3,8 @@
 	desc = "Shoot up to three mimed bullets from your fingers that damage and mute their targets. \
 		Can't be used if you have something in your hands."
 	background_icon_state = "bg_mime"
-	icon_icon = 'icons/mob/actions/actions_mime.dmi'
+	overlay_icon_state = "bg_mime_border"
+	button_icon = 'icons/mob/actions/actions_mime.dmi'
 	button_icon_state = "finger_guns0"
 	panel = "Mime"
 	sound = null
@@ -19,7 +20,6 @@
 	antimagic_flags = NONE
 	spell_max_level = 1
 
-	base_icon_state = "finger_guns"
 	active_msg = "You draw your fingers!"
 	deactive_msg = "You put your fingers at ease. Another time."
 	cast_range = 20

@@ -887,6 +887,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		UnregisterSignal(target, COMSIG_MOVABLE_Z_CHANGED)
 		LAZYREMOVE(target.observers, src)
 
+		// Handle acations
+		for(var/datum/action/action as anything in target.actions)
+			action.HideFrom(src)
+		UnregisterSignal(target, list(COMSIG_MOB_GRANTED_ACTION, COMSIG_MOB_REMOVED_ACTION))
+
 /mob/dead/observer/verb/observe()
 	set name = "Observe"
 	set category = "Ghost"
@@ -932,6 +937,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			mob_eye.hud_used.show_hud(mob_eye.hud_used.hud_version, src)
 			observetarget = mob_eye
 
+			// Handle actions
+			for(var/datum/action/action as anything in mob_eye.actions)
+				action.GiveAction(src)
+			RegisterSignal(mob_eye, COMSIG_MOB_GRANTED_ACTION, .proc/on_observing_action_granted)
+			RegisterSignal(mob_eye, COMSIG_MOB_REMOVED_ACTION, .proc/on_observing_action_removed)
+
 /mob/dead/observer/proc/on_observing_z_changed(datum/source, turf/old_turf, turf/new_turf)
 	SIGNAL_HANDLER
 
@@ -939,6 +950,16 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		sight = null //we dont want ghosts to see through walls in secret areas
 	else
 		sight = initial(sight)
+
+/mob/dead/observer/proc/on_observing_action_granted(mob/living/source, datum/action/action)
+	SIGNAL_HANDLER
+
+	action.GiveAction(src)
+
+/mob/dead/observer/proc/on_observing_action_removed(mob/living/source, datum/action/action)
+	SIGNAL_HANDLER
+
+	action.HideFrom(src)
 
 /mob/dead/observer/verb/register_pai_candidate()
 	set category = "Ghost"

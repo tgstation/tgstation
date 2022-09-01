@@ -2,7 +2,7 @@
 /datum/action/cooldown/spell/list_target/telepathy
 	name = "Telepathy"
 	desc = "Telepathically transmits a message to the target."
-	icon_icon = 'icons/mob/actions/actions_revenant.dmi'
+	button_icon = 'icons/mob/actions/actions_revenant.dmi'
 	button_icon_state = "r_transmit"
 
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC

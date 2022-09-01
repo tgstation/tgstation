@@ -1,6 +1,6 @@
 /datum/action/cooldown/mob_cooldown/fire_breath
 	name = "Fire Breath"
-	icon_icon = 'icons/obj/wizard.dmi'
+	button_icon = 'icons/obj/wizard.dmi'
 	button_icon_state = "fireball"
 	desc = "Allows you to shoot fire towards a target."
 	cooldown_time = 3 SECONDS
@@ -44,7 +44,7 @@
 
 /datum/action/cooldown/mob_cooldown/fire_breath/mass_fire
 	name = "Mass Fire"
-	icon_icon = 'icons/effects/fire.dmi'
+	button_icon = 'icons/effects/fire.dmi'
 	button_icon_state = "1"
 	desc = "Allows you to shoot fire in all directions."
 	cooldown_time = 3 SECONDS

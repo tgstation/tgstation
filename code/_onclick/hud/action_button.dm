@@ -1,14 +1,16 @@
-#define ACTION_BUTTON_DEFAULT_BACKGROUND "default"
-
 /atom/movable/screen/movable/action_button
 	var/datum/action/linked_action
 	var/datum/hud/our_hud
 	var/actiontooltipstyle = ""
 	screen_loc = null
 
-	var/button_icon_state
-	var/appearance_cache
+	/// The icon state of our active overlay, used to prevent re-applying identical overlays
+	var/active_overlay_icon_state
+	/// The icon state of our active underlay, used to prevent re-applying identical underlays
+	var/active_underlay_icon_state
+	/// The overlay we have overtop our button
 	var/mutable_appearance/button_overlay
+
 	/// Where we are currently placed on the hud. SCRN_OBJ_DEFAULT asks the linked action what it thinks
 	var/location = SCRN_OBJ_DEFAULT
 	/// A unique bitflag, combined with the name of our linked action this lets us persistently remember any user changes to our position
@@ -29,15 +31,17 @@
 	return ..()
 
 /atom/movable/screen/movable/action_button/proc/can_use(mob/user)
+	if(isobserver(user))
+		var/mob/dead/observer/dead_mob = user
+		if(dead_mob.observetarget) // Observers can only click on action buttons if they're not observing something
+			return FALSE
+
 	if(linked_action)
 		if(linked_action.viewers[user.hud_used])
 			return TRUE
 		return FALSE
-	else if (isobserver(user))
-		var/mob/dead/observer/O = user
-		return !O.observetarget
-	else
-		return TRUE
+
+	return TRUE
 
 /atom/movable/screen/movable/action_button/Click(location,control,params)
 	if (!can_use(usr))
@@ -149,15 +153,24 @@
 	. = list()
 	.["bg_icon"] = ui_style
 	.["bg_state"] = "template"
+	.["bg_state_active"] = "template_active"
 
-//see human and alien hud for specific implementations.
+/**
+ * Updates all action buttons this mob has.
+ *
+ * Arguments:
+ * * update_flags - Which flags of the action should we update
+ * * force - Force buttons update even if the given button icon state has not changed
+ */
+/mob/proc/update_mob_action_buttons(update_flags = ALL, force = FALSE)
+	for(var/datum/action/current_action as anything in actions)
+		current_action.build_all_button_icons(update_flags, force)
 
-/mob/proc/update_action_buttons_icon(status_only = FALSE)
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtons(status_only)
-
-//This is the proc used to update all the action buttons.
+/**
+ * Quote, "This is the proc used to update all the action buttons."
+ *
+ * How is it different than the above one? I don't know.
+ */
 /mob/proc/update_action_buttons(reload_screen)
 	if(!hud_used || !client)
 		return
@@ -167,7 +180,7 @@
 
 	for(var/datum/action/action as anything in actions)
 		var/atom/movable/screen/movable/action_button/button = action.viewers[hud_used]
-		action.UpdateButtons()
+		action.build_all_button_icons()
 		if(reload_screen)
 			client.screen += button
 

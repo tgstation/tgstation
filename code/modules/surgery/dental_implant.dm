@@ -24,7 +24,7 @@
 
 	var/datum/action/item_action/hands_free/activate_pill/pill_action = new(tool)
 	pill_action.name = "Activate [tool.name]"
-	pill_action.UpdateButtons()
+	pill_action.build_all_button_icons()
 	pill_action.target = tool
 	pill_action.Grant(target) //The pill never actually goes in an inventory slot, so the owner doesn't inherit actions from it
 

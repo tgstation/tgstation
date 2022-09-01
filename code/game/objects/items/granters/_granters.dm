@@ -103,4 +103,4 @@
 	// Action goes on the mind as the user actually learns the thing in your brain
 	var/datum/action/new_action = new granted_action(user.mind || user)
 	new_action.Grant(user)
-	new_action.UpdateButtons()
+	new_action.build_all_button_icons()

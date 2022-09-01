@@ -247,7 +247,7 @@
 	name = "Vomit"
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "vomit"
-	icon_icon = 'icons/mob/simple/animal.dmi'
+	button_icon = 'icons/mob/simple/animal.dmi'
 	cooldown_time = 250
 
 /datum/action/cooldown/vomit/Activate(atom/target)

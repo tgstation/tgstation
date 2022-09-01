@@ -1,6 +1,6 @@
 /datum/action/cooldown/mob_cooldown/projectile_attack
 	name = "Projectile Attack"
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "sniper_zoom"
 	desc = "Fires a set of projectiles at a selected target."
 	cooldown_time = 1.5 SECONDS
@@ -53,7 +53,7 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire
 	name = "Rapid Fire"
-	icon_icon = 'icons/obj/weapons/guns/energy.dmi'
+	button_icon = 'icons/obj/weapons/guns/energy.dmi'
 	button_icon_state = "kineticgun"
 	desc = "Fires projectiles repeatedly at a given target."
 	cooldown_time = 1.5 SECONDS
@@ -75,7 +75,7 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/shrapnel
 	name = "Shrapnel Fire"
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "sniper_zoom"
 	desc = "Fires projectiles that will split into shrapnel after a period of time."
 	cooldown_time = 6 SECONDS
@@ -110,7 +110,7 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots
 	name = "Spiral Shots"
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "sniper_zoom"
 	desc = "Fires projectiles in a spiral pattern."
 	cooldown_time = 3 SECONDS
@@ -151,7 +151,7 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/random_aoe
 	name = "All Directions"
-	icon_icon = 'icons/effects/effects.dmi'
+	button_icon = 'icons/effects/effects.dmi'
 	button_icon_state = "at_shield2"
 	desc = "Fires projectiles in all directions."
 	cooldown_time = 3 SECONDS
@@ -173,7 +173,7 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast
 	name = "Shotgun Fire"
-	icon_icon = 'icons/obj/weapons/guns/ballistic.dmi'
+	button_icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	button_icon_state = "shotgun"
 	desc = "Fires projectiles in a shotgun pattern."
 	cooldown_time = 2 SECONDS
@@ -221,7 +221,7 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots
 	name = "Directional Shots"
-	icon_icon = 'icons/obj/weapons/guns/ballistic.dmi'
+	button_icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	button_icon_state = "pistol"
 	desc = "Fires projectiles in specific directions."
 	cooldown_time = 4 SECONDS
@@ -266,7 +266,7 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/kinetic_accelerator
 	name = "Fire Kinetic Accelerator"
-	icon_icon = 'icons/obj/weapons/guns/energy.dmi'
+	button_icon = 'icons/obj/weapons/guns/energy.dmi'
 	button_icon_state = "kineticgun"
 	desc = "Fires a kinetic accelerator projectile at the target."
 	cooldown_time = 1.5 SECONDS

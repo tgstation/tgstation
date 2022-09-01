@@ -246,7 +246,7 @@
 		apply_fingerprints(H)
 		if(internals_slot)
 			H.internal = H.get_item_by_slot(internals_slot)
-			H.update_action_buttons_icon()
+			H.update_mob_action_buttons()
 		if(implants)
 			for(var/implant_type in implants)
 				var/obj/item/implant/I = SSwardrobe.provide_type(implant_type, H)

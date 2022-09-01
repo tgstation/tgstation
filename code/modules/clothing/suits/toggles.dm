@@ -51,7 +51,7 @@
 		if(alternative_mode)
 			QDEL_NULL(hood)
 
-	update_action_buttons()
+	update_item_action_buttons()
 
 /obj/item/clothing/suit/hooded/dropped()
 	..()
@@ -78,7 +78,7 @@
 			hood_up = TRUE
 			icon_state = "[initial(icon_state)]_t"
 			H.update_worn_oversuit()
-			update_action_buttons()
+			H.update_mob_action_buttons()
 	else
 		RemoveHood()
 

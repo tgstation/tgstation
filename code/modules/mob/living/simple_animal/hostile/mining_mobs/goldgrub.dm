@@ -51,6 +51,7 @@
 
 /datum/action/innate/goldgrub
 	background_icon_state = "bg_default"
+	overlay_icon_state = "bg_default_border"
 
 /datum/action/innate/goldgrub/spitore
 	name = "Spit Ore"

@@ -1,6 +1,6 @@
 /datum/action/cooldown/mob_cooldown/transform_weapon
 	name = "Transform Weapon"
-	icon_icon = 'icons/obj/lavaland/artefacts.dmi'
+	button_icon = 'icons/obj/lavaland/artefacts.dmi'
 	button_icon_state = "cleaving_saw"
 	desc = "Transform weapon into a different state."
 	cooldown_time = 5 SECONDS

@@ -40,7 +40,7 @@
 
 	organ_parent.icon = 'icons/obj/eldritch.dmi'
 	organ_parent.icon_state = "living_heart"
-	action.UpdateButtons()
+	action.build_all_button_icons()
 
 /datum/component/living_heart/Destroy(force, silent)
 	QDEL_NULL(action)
@@ -77,7 +77,7 @@
 	name = "Living Heartbeat"
 	desc = "LMB: Chose one of your sacrifice targets to track. RMB: Repeats last target you chose to track."
 	check_flags = AB_CHECK_CONSCIOUS
-	background_icon_state = "bg_ecult"
+	background_icon_state = "bg_heretic"
 	/// The real name of the last mob we tracked
 	var/last_tracked_name
 	/// Whether the target radial is currently opened.

@@ -61,7 +61,7 @@ Slimecrossing Armor
 
 /datum/action/item_action/change_prism_colour
 	name = "Adjust Prismatic Lens"
-	icon_icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	button_icon = 'icons/obj/xenobiology/slimecrossing.dmi'
 	button_icon_state = "prismcolor"
 
 /datum/action/item_action/change_prism_colour/Trigger(trigger_flags)
@@ -75,7 +75,7 @@ Slimecrossing Armor
 
 /datum/action/item_action/place_light_prism
 	name = "Fabricate Light Prism"
-	icon_icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	button_icon = 'icons/obj/xenobiology/slimecrossing.dmi'
 	button_icon_state = "lightprism"
 
 /datum/action/item_action/place_light_prism/Trigger(trigger_flags)

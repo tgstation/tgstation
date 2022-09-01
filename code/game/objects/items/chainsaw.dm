@@ -64,7 +64,7 @@
 	toolspeed = on ? 0.5 : initial(toolspeed) //Turning it on halves the speed
 	if(src == user.get_active_held_item()) //update inhands
 		user.update_held_items()
-	update_action_buttons()
+	update_item_action_buttons()
 
 /obj/item/chainsaw/doomslayer
 	name = "THE GREAT COMMUNICATOR"

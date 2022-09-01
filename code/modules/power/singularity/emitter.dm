@@ -457,7 +457,7 @@
 		for(var/obj/item/item in buckled_mob.held_items)
 			if(istype(item, /obj/item/turret_control))
 				qdel(item)
-		UpdateButtons()
+		build_all_button_icons()
 		return
 	playsound(proto_emitter,'sound/mecha/mechmove01.ogg', 50, TRUE)
 	name = "Switch to Automatic Firing"
@@ -474,7 +474,7 @@
 		else //Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
 			var/obj/item/turret_control/turret_control = new /obj/item/turret_control()
 			buckled_mob.put_in_hands(turret_control)
-	UpdateButtons()
+	build_all_button_icons()
 
 
 /obj/item/turret_control

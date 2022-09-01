@@ -3,6 +3,8 @@
 	name = "Summon Rune"
 	desc = "Summons a rune"
 	background_icon_state = "bg_demon"
+	overlay_icon_state = "bg_demon_border"
+
 	var/obj/effect/rune/rune_type
 	var/cooldown = 0
 	var/base_cooldown = 1800
@@ -56,8 +58,8 @@
 			R4 = new rune_center_type(T, scribe_time, rune_color)
 
 		cooldown = base_cooldown + world.time
-		owner.update_action_buttons_icon()
-		addtimer(CALLBACK(owner, /mob.proc/update_action_buttons_icon), base_cooldown)
+		owner.update_mob_action_buttons()
+		addtimer(CALLBACK(owner, /mob.proc/update_mob_action_buttons), base_cooldown)
 		var/list/health
 		if(damage_interrupt && isliving(owner))
 			var/mob/living/L = owner
@@ -77,7 +79,7 @@
 			if(R4)
 				qdel(R4)
 			cooldown = 0
-			owner.update_action_buttons_icon()
+			owner.update_mob_action_buttons()
 
 //teleport rune
 /datum/action/innate/cult/create_rune/tele

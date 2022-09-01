@@ -124,7 +124,7 @@
 				playsound(T,'sound/magic/blind.ogg', 200, TRUE, -4)
 				new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, user)
 				beacon = new/obj/effect/hierophant(T)
-				user.update_action_buttons_icon()
+				user.update_mob_action_buttons()
 				user.visible_message(span_hierophant_warning("[user] places a strange machine beneath [user.p_their()] feet!"), \
 				"[span_hierophant("You detach the hierophant beacon, allowing you to teleport yourself and any allies to it at any time!")]\n\
 				[span_notice("You can remove the beacon to place it again by striking it with the club.")]")
@@ -142,7 +142,7 @@
 		to_chat(user, span_warning("You don't have enough space to teleport from here!"))
 		return
 	teleporting = TRUE //start channel
-	user.update_action_buttons_icon()
+	user.update_mob_action_buttons()
 	user.visible_message(span_hierophant_warning("[user] starts to glow faintly..."))
 	beacon.icon_state = "hierophant_tele_on"
 	var/obj/effect/temp_visual/hierophant/telegraph/edge/TE1 = new /obj/effect/temp_visual/hierophant/telegraph/edge(user.loc)
@@ -153,7 +153,7 @@
 		if(T.is_blocked_turf(TRUE))
 			teleporting = FALSE
 			to_chat(user, span_warning("The beacon is blocked by something, preventing teleportation!"))
-			user.update_action_buttons_icon()
+			user.update_mob_action_buttons()
 			beacon.icon_state = "hierophant_tele_off"
 			return
 		new /obj/effect/temp_visual/hierophant/telegraph(T, user)
@@ -163,14 +163,14 @@
 		if(!do_after(user, 3, target = user) || !user || !beacon || QDELETED(beacon)) //no walking away shitlord
 			teleporting = FALSE
 			if(user)
-				user.update_action_buttons_icon()
+				user.update_mob_action_buttons()
 			if(beacon)
 				beacon.icon_state = "hierophant_tele_off"
 			return
 		if(T.is_blocked_turf(TRUE))
 			teleporting = FALSE
 			to_chat(user, span_warning("The beacon is blocked by something, preventing teleportation!"))
-			user.update_action_buttons_icon()
+			user.update_mob_action_buttons()
 			beacon.icon_state = "hierophant_tele_off"
 			return
 		user.log_message("teleported self from [AREACOORD(source)] to [beacon].", LOG_GAME)
@@ -192,7 +192,7 @@
 		beacon.icon_state = "hierophant_tele_off"
 	teleporting = FALSE
 	if(user)
-		user.update_action_buttons_icon()
+		user.update_mob_action_buttons()
 
 /obj/item/hierophant_club/proc/teleport_mob(turf/source, mob/teleporting, turf/target, mob/user)
 	var/turf/turf_to_teleport_to = get_step(target, get_dir(source, teleporting)) //get position relative to caster

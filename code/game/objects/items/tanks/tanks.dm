@@ -72,7 +72,7 @@
 		else
 			to_chat(H, span_notice("You open [src] valve."))
 		H.internal = src
-	H.update_action_buttons_icon()
+	H.update_mob_action_buttons()
 
 
 /obj/item/tank/Initialize(mapload)

@@ -2,7 +2,8 @@
 	name = "Shadow Walk"
 	desc = "Grants unlimited movement in darkness."
 	background_icon_state = "bg_alien"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	overlay_icon_state = "bg_alien_border"
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "ninja_cloak"
 
 	spell_requirements = NONE

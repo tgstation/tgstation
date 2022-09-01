@@ -31,6 +31,8 @@
 	name = "Paralysing Smoke"
 	desc = "This spell spawns a cloud of paralysing smoke."
 	background_icon_state = "bg_cult"
+	overlay_icon_state = "bg_cult_border"
+
 
 	cooldown_time = 20 SECONDS
 

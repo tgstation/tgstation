@@ -205,7 +205,7 @@
 		remove_paddles(user)
 
 	update_power()
-	update_action_buttons()
+	update_item_action_buttons()
 
 
 /obj/item/defibrillator/equipped(mob/user, slot)

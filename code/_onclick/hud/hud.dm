@@ -239,18 +239,23 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	hud_version = display_hud_version
 	persistent_inventory_update(screenmob)
-	screenmob.update_action_buttons(1)
 	reorganize_alerts(screenmob)
 	screenmob.reload_fullscreen()
 	update_parallax_pref(screenmob)
+	// Updates the observer's action buttons, kind of pointless
+	screenmob.update_action_buttons(TRUE)
 
 	// ensure observers get an accurate and up-to-date view
 	if (!viewmob)
 		plane_masters_update()
 		for(var/M in mymob.observers)
 			show_hud(hud_version, M)
-	else if (viewmob.hud_used)
-		viewmob.hud_used.plane_masters_update()
+	else
+		if(viewmob.hud_used)
+			viewmob.hud_used.plane_masters_update()
+		// melbert todo figure dis out
+		// for(var/datum/action/action as anything in mymob.actions)
+		// 	action.ShowTo(viewmob)
 
 	return TRUE
 

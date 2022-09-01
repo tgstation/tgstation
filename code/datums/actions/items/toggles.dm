@@ -40,10 +40,10 @@
 
 /datum/action/item_action/toggle_spacesuit
 	name = "Toggle Suit Thermal Regulator"
-	icon_icon = 'icons/mob/actions/actions_spacesuit.dmi'
+	button_icon = 'icons/mob/actions/actions_spacesuit.dmi'
 	button_icon_state = "thermal_off"
 
-/datum/action/item_action/toggle_spacesuit/UpdateButton(atom/movable/screen/movable/action_button/button, status_only = FALSE, force)
+/datum/action/item_action/toggle_spacesuit/apply_button_icon(atom/movable/screen/movable/action_button/button, force)
 	var/obj/item/clothing/suit/space/suit = target
 	if(istype(suit))
 		button_icon_state = "thermal_[suit.thermal_on ? "on" : "off"]"
@@ -83,30 +83,18 @@
 /datum/action/item_action/wheelys
 	name = "Toggle Wheels"
 	desc = "Pops out or in your shoes' wheels."
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "wheelys"
 
 /datum/action/item_action/kindle_kicks
 	name = "Activate Kindle Kicks"
 	desc = "Kick you feet together, activating the lights in your Kindle Kicks."
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "kindleKicks"
 
 /datum/action/item_action/storage_gather_mode
 	name = "Switch gathering mode"
 	desc = "Switches the gathering mode of a storage object."
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
-	button_icon_state = "storage_gather_switch"
-
-/datum/action/item_action/storage_gather_mode/ApplyIcon(atom/movable/screen/movable/action_button/current_button)
-	. = ..()
-	var/obj/item/item_target = target
-	var/old_layer = item_target.layer
-	var/old_plane = item_target.plane
-	item_target.layer = FLOAT_LAYER //AAAH
-	item_target.plane = FLOAT_PLANE //^ what that guy said
-	current_button.cut_overlays()
-	current_button.add_overlay(target)
-	item_target.layer = old_layer
-	item_target.plane = old_plane
-	current_button.appearance_cache = item_target.appearance
+	background_icon = 'icons/mob/actions/actions_items.dmi'
+	background_icon_state = "storage_gather_switch"
+	overlay_icon_state = "bg_tech_border"

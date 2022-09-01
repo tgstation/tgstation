@@ -7,7 +7,9 @@
 	name = "Blood Crawl"
 	desc = "Allows you to phase in and out of existance via pools of blood."
 	background_icon_state = "bg_demon"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	overlay_icon_state = "bg_demon_border"
+
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "bloodcrawl"
 
 	spell_requirements = NONE

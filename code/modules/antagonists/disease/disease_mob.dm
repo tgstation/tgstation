@@ -426,7 +426,7 @@ the new instance inside the host to be updated to the template's stats.
 
 /datum/action/innate/disease_adapt
 	name = "Adaptation Menu"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "disease_menu"
 
 /datum/action/innate/disease_adapt/Activate()

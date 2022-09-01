@@ -45,7 +45,7 @@
 	chassis.damtype = new_damtype
 	button_icon_state = "mech_damtype_[new_damtype]"
 	playsound(chassis, 'sound/mecha/mechmove01.ogg', 50, TRUE)
-	UpdateButtons()
+	build_all_button_icons()
 
 /datum/action/vehicle/sealed/mecha/mech_toggle_phasing
 	name = "Toggle Phasing"
@@ -57,4 +57,4 @@
 	chassis.phasing = chassis.phasing ? "" : "phasing"
 	button_icon_state = "mech_phasing_[chassis.phasing ? "on" : "off"]"
 	chassis.balloon_alert(owner, "[chassis.phasing ? "enabled" : "disabled"] phasing")
-	UpdateButtons()
+	build_all_button_icons()

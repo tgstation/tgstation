@@ -250,8 +250,9 @@
 /datum/action/innate/imaginary_join
 	name = "Join"
 	desc = "Join your owner, following them from inside their mind."
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	background_icon_state = "bg_revenant"
+	overlay_icon_state = "bg_revenant_border"
 	button_icon_state = "join"
 
 /datum/action/innate/imaginary_join/Activate()
@@ -261,8 +262,9 @@
 /datum/action/innate/imaginary_hide
 	name = "Hide"
 	desc = "Hide yourself from your owner's sight."
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	background_icon_state = "bg_revenant"
+	overlay_icon_state = "bg_revenant_border"
 	button_icon_state = "hide"
 
 /datum/action/innate/imaginary_hide/proc/update_status()
@@ -275,7 +277,7 @@
 		name = "Hide"
 		desc = "Hide yourself from your owner's sight."
 		button_icon_state = "hide"
-	UpdateButtons()
+	build_all_button_icons()
 
 /datum/action/innate/imaginary_hide/Activate()
 	var/mob/camera/imaginary_friend/I = owner

@@ -838,7 +838,7 @@
 	else
 		clear_alert(ALERT_HANDCUFFED)
 		clear_mood_event("handcuffed")
-	update_action_buttons_icon() //some of our action buttons might be unusable when we're handcuffed.
+	update_mob_action_buttons() //some of our action buttons might be unusable when we're handcuffed.
 	update_worn_handcuffs()
 	update_hud_handcuffed()
 

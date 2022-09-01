@@ -208,8 +208,9 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	cooldown_time = 6 SECONDS
 	melee_cooldown_time = 0 SECONDS
-	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	background_icon_state = "bg_clock"
+	overlay_icon_state = "bg_clock_border"
 	button_icon_state = "coffer"
 
 /datum/action/cooldown/domain/proc/domain()
@@ -239,9 +240,10 @@
 	name = "Raise Army"
 	desc = "Raise an army out of the hordes of mice and pests crawling around the maintenance shafts."
 	check_flags = AB_CHECK_CONSCIOUS
-	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "riot"
 	background_icon_state = "bg_clock"
+	overlay_icon_state = "bg_clock_border"
 	cooldown_time = 8 SECONDS
 	melee_cooldown_time = 0 SECONDS
 

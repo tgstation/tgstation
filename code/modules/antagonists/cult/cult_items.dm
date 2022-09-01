@@ -246,7 +246,7 @@ Striking a noncultist, however, will tear their flesh."}
 /datum/action/innate/dash/cult
 	name = "Rend the Veil"
 	desc = "Use the sword to shear open the flimsy fabric of this reality and teleport to your target."
-	icon_icon = 'icons/mob/actions/actions_cult.dmi'
+	button_icon = 'icons/mob/actions/actions_cult.dmi'
 	button_icon_state = "phaseshift"
 	dash_sound = 'sound/magic/enter_blood.ogg'
 	recharge_sound = 'sound/magic/exit_blood.ogg'
@@ -266,6 +266,8 @@ Striking a noncultist, however, will tear their flesh."}
 	name = "Geometer's Fury"
 	desc = "You draw on the power of the sword's ancient runes, spinning it wildly around you as you become immune to most attacks."
 	background_icon_state = "bg_demon"
+	overlay_icon_state = "bg_demon_border"
+
 	button_icon_state = "sintouch"
 	var/cooldown = 0
 	var/mob/living/carbon/human/holder
@@ -290,14 +292,14 @@ Striking a noncultist, however, will tear their flesh."}
 	sword.block_chance = 100
 	sword.slowdown += 1.5
 	addtimer(CALLBACK(src, .proc/stop_spinning), 50)
-	holder.update_action_buttons_icon()
+	holder.update_mob_action_buttons()
 
 /datum/action/innate/cult/spin2win/proc/stop_spinning()
 	sword.spinning = FALSE
 	sword.block_chance = 50
 	sword.slowdown -= 1.5
 	sleep(sword.spin_cooldown)
-	holder.update_action_buttons_icon()
+	holder.update_mob_action_buttons()
 
 /obj/item/restraints/legcuffs/bola/cult
 	name = "\improper Nar'Sien bola"
@@ -804,6 +806,8 @@ Striking a noncultist, however, will tear their flesh."}
 	name = "Bloody Bond"
 	desc = "Call the bloody halberd back to your hand!"
 	background_icon_state = "bg_demon"
+	overlay_icon_state = "bg_demon_border"
+
 	button_icon_state = "bloodspear"
 	default_button_position = "6:157,4:-2"
 	var/obj/item/melee/cultblade/halberd/halberd

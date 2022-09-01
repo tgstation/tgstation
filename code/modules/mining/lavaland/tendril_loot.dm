@@ -750,7 +750,8 @@
 	name = "Scan"
 	desc = "Scan an enemy, to get their location and stagger them, increasing their time between attacks."
 	background_icon_state = "bg_clock"
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	overlay_icon_state = "bg_clock_border"
+	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "scan"
 
 	click_to_activate = TRUE

@@ -218,7 +218,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	for(var/occupant in chassis.occupants)
 		var/datum/action/button = chassis.occupant_actions[occupant][/datum/action/vehicle/sealed/mecha/mech_defense_mode]
 		button.button_icon_state = "mech_defense_mode_[chassis.defense_mode ? "on" : "off"]"
-		button.UpdateButtons()
+		button.build_all_button_icons()
 
 	set_light_on(chassis.defense_mode)
 

@@ -43,8 +43,11 @@
 	name = "Spell"
 	desc = "A wizard spell."
 	background_icon_state = "bg_spell"
-	icon_icon = 'icons/mob/actions/actions_spells.dmi'
+	button_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = "spell_default"
+	overlay_icon_state = "bg_spell_border"
+	base_overlay_icon_state = "bg_spell_border"
+	active_overlay_icon_state = "bg_spell_border_active_red"
 	check_flags = AB_CHECK_CONSCIOUS
 	panel = "Spells"
 	melee_cooldown_time = 0 SECONDS
@@ -96,10 +99,10 @@
 
 	// Register some signals so our button's icon stays up to date
 	if(spell_requirements & SPELL_REQUIRES_OFF_CENTCOM)
-		RegisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED, .proc/update_icon_on_signal)
+		RegisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED, .proc/update_status_on_signal)
 	if(spell_requirements & (SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_WIZARD_GARB))
-		RegisterSignal(owner, COMSIG_MOB_EQUIPPED_ITEM, .proc/update_icon_on_signal)
-	RegisterSignal(owner, list(COMSIG_MOB_ENTER_JAUNT, COMSIG_MOB_AFTER_EXIT_JAUNT), .proc/update_icon_on_signal)
+		RegisterSignal(owner, COMSIG_MOB_EQUIPPED_ITEM, .proc/update_status_on_signal)
+	RegisterSignal(owner, list(COMSIG_MOB_ENTER_JAUNT, COMSIG_MOB_AFTER_EXIT_JAUNT), .proc/update_status_on_signal)
 	owner.client?.stat_panel.send_message("check_spells")
 
 /datum/action/cooldown/spell/Remove(mob/living/remove_from)
@@ -244,7 +247,7 @@
 	// And then proceed with the aftermath of the cast
 	// Final effects that happen after all the casting is done can go here
 	after_cast(cast_on)
-	UpdateButtons()
+	build_all_button_icons()
 
 	return TRUE
 
@@ -369,7 +372,7 @@
 /datum/action/cooldown/spell/proc/reset_spell_cooldown()
 	SEND_SIGNAL(src, COMSIG_SPELL_CAST_RESET)
 	next_use_time -= cooldown_time // Basically, ensures that the ability can be used now
-	UpdateButtons()
+	build_all_button_icons()
 
 /**
  * Levels the spell up a single level, reducing the cooldown.
@@ -423,4 +426,4 @@
 			spell_title = "Ludicrous "
 
 	name = "[spell_title][initial(name)]"
-	UpdateButtons()
+	build_all_button_icons()
