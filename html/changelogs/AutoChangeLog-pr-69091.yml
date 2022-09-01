@@ -1,0 +1,10 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "Wabbajacking a shapeshifted mob no longer runtimes horribly. When a shapeshifted mob is wabbajacked, they'll now be removed from their shapeshift and stunned."
+  - bugfix: "Transforming via a shapeshift should no longer rob you of your hearing / runechat awareness."
+  - bugfix: "Shapeshifting plays nicer with holoparasites."
+  - bugfix: "Being polymorphed from a xeno to a non-xeno correctly makes you a non-xeno"
+  - refactor: "Refactored shapeshifting, the shapeshift holder is now a status effect instead of an object."
+  - refactor: "Heretic worm form is a shapeshift spell now, this might have some minor behavioral changes but should overall be the same."
+  - refactor: "Refactored Wabbajack (+ cursed pool). Overall a bit more clean / consistent behavior."
