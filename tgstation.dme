@@ -4343,6 +4343,7 @@
 #include "code\modules\spells\spell_types\self\stop_time.dm"
 #include "code\modules\spells\spell_types\self\summonitem.dm"
 #include "code\modules\spells\spell_types\self\voice_of_god.dm"
+#include "code\modules\spells\spell_types\shapeshift\_shape_status.dm"
 #include "code\modules\spells\spell_types\shapeshift\_shapeshift.dm"
 #include "code\modules\spells\spell_types\shapeshift\dragon.dm"
 #include "code\modules\spells\spell_types\shapeshift\polar_bear.dm"
