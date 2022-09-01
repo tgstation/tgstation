@@ -72,13 +72,23 @@
 			span_userdanger("\A [new_wall] [rises_message] beneath your feet and slams into you!"),
 		)
 		living_mob.apply_damage(10, BRUTE, wound_bonus = 10)
-		var/list/turfs_by_us = get_adjacent_open_turfs(cast_on)
-		if(!length(turfs_by_us))
-			living_mob.Paralyze(5 SECONDS)
-			continue
-
 		living_mob.Knockdown(5 SECONDS)
-		living_mob.throw_at(pick(turfs_by_us), 1, 3, owner)
+		living_mob.SpinAnimation(5, 1)
+
+		// If we're a multiz map send them to the next floor
+		var/turf/above_us = get_step_multiz(cast_on, UP)
+		if(above_us)
+			living_mob.forceMove(above_us)
+
+		else
+			var/list/turfs_by_us = get_adjacent_open_turfs(cast_on)
+			// If there is no side by us, hardstun them
+			if(!length(turfs_by_us))
+				living_mob.Paralyze(5 SECONDS)
+				continue
+
+			// If there's an open turf throw them to the side
+			living_mob.throw_at(pick(turfs_by_us), 1, 3, thrower = owner, spin = FALSE)
 
 	if(!message_shown)
 		new_wall.visible_message(span_warning("\A [new_wall] [rises_message]!"))
