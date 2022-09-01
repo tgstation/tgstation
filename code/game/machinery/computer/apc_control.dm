@@ -47,7 +47,7 @@
 	restoring = FALSE
 
 /obj/machinery/computer/apc_control/proc/connect_apc(obj/machinery/power/apc/apc, mob/user)
-	if(!apc)
+	if(isnull(apc))
 		return
 	if(apc.remote_control_user)
 		to_chat(user, span_warning("\The [apc] is being controlled by someone else!"))
@@ -115,8 +115,6 @@
 	. = ..()
 	if(.)
 		return
-
-
 
 	switch(action)
 		if("log-in")

@@ -262,7 +262,7 @@
 		"chargingStatus" = charging,
 		"totalLoad" = display_power(lastused_total),
 		"coverLocked" = coverlocked,
-		"remoteAccess" = user == remote_control_user,
+		"remoteAccess" = (user == remote_control_user),
 		"siliconUser" = user.has_unlimited_silicon_privilege,
 		"malfStatus" = get_malf_status(user),
 		"emergencyLights" = !emergency_lights,
@@ -319,7 +319,7 @@
 
 /obj/machinery/power/apc/proc/disconnect_remote_access()
 	// nothing to disconnect from
-	if(!remote_control_user)
+	if(isnull(remote_control_user))
 		return
 	locked = TRUE
 	say("Remote access canceled. Interface locked.")
