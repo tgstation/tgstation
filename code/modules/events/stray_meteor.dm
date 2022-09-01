@@ -20,7 +20,7 @@
 
 
 /datum/round_event/stray_meteor
-	announceWhen = 1
+	announce_when = 1
 	fakeable = FALSE //Already faked by meteors that miss
 
 /datum/round_event/stray_meteor/start()
