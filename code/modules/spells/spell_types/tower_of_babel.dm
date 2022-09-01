@@ -21,7 +21,7 @@ GLOBAL_VAR_INIT(tower_of_babel_triggered, FALSE)
 		var/turf/curse_turf = get_turf(target)
 		if(curse_turf && !is_station_level(curse_turf.z))
 			continue
-		if(to_curse.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND))
+		if(target.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND))
 			to_chat(target, span_notice("You have a strange feeling for a moment, but then it passes."))
 			continue
 
