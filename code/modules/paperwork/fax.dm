@@ -1,7 +1,7 @@
 /obj/machinery/fax
 	name = "Fax Machine"
 	desc = "Bluespace technologies on the application of bureaucracy."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/fax.dmi'
 	icon_state = "fax"
 	density = TRUE
 	power_channel = AREA_USAGE_EQUIP
@@ -12,12 +12,32 @@
 	var/fax_id
 	/// The name of the fax displayed in the list. Not necessarily unique to some EMAG jokes.
 	var/fax_name
-	/// A reference to an `/obj/item/paper` inside the copier, if one is inserted. Otherwise null.
-	var/obj/item/paper/paper_contain
+	/// True if the fax machine should be visible to other fax machines in general.
+	var/visible_to_network = TRUE
 	/// Necessary to hide syndicate faxes from the general list. Doesn't mean he's EMAGGED!
 	var/syndicate_network = FALSE
 	/// This is where the dispatch and reception history for each fax is stored.
 	var/list/fax_history = list()
+
+	/// List of types which should always be allowed to be faxed
+	var/static/list/allowed_types = list(/obj/item/paper, /obj/item/photo, /obj/item/tcgcard, /obj/item/stack/sheet/cardboard,)
+	/// List of types which should be allowed to be faxed if hacked
+	var/static/list/exotic_types = list(/obj/item/food/pizzaslice, /obj/item/food/root_flatbread, /obj/item/throwing_star, \
+		/obj/item/card, /obj/item/stack/sheet/iron, /obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/cloth, \
+		/obj/item/stack/sheet/runed_metal, /obj/item/stack/sheet/bronze, /obj/item/stack/sheet/pizza, /obj/item/stack/sheet/hauntium, \
+		/obj/item/stack/sheet/glass, /obj/item/stack/sheet/rglass, /obj/item/stack/sheet/plasmaglass, /obj/item/stack/sheet/plasmarglass, \
+		/obj/item/stack/sheet/titaniumglass, /obj/item/stack/sheet/plastitaniumglass, /obj/item/stack/sheet/mineral/uranium,)
+	/// A weak reference to an inserted object.
+	var/datum/weakref/loaded_item
+
+	/// World ticks the machine is electified for.
+	var/seconds_electrified = MACHINE_NOT_ELECTRIFIED
+	/// If true we will eject faxes at speed rather than sedately place them into a tray.
+	var/hurl_contents = FALSE
+	/// If true you can fax things which strictly speaking are not paper.
+	var/allow_exotic_faxes = FALSE
+	/// If true, the fax machine is jammed and needs cleaning
+	var/jammed = FALSE
 
 /obj/machinery/fax/Initialize(mapload)
 	. = ..()
@@ -25,21 +45,51 @@
 		fax_id = SSnetworks.assign_random_name()
 	if (!fax_name)
 		fax_name = "Unregistered fax " + fax_id
+	wires = new /datum/wires/fax(src)
+	register_context()
 
 /obj/machinery/fax/Destroy()
-	QDEL_NULL(paper_contain)
+	QDEL_NULL(loaded_item)
+	QDEL_NULL(wires)
 	return ..()
 
-/obj/machinery/fax/update_icon_state()
-	if(paper_contain)
-		icon_state = "fax_contain"
-	else
-		icon_state = "fax"
+/obj/machinery/fax/update_overlays()
+	. = ..()
+	if (panel_open)
+		. += "fax_panel"
+	var/obj/item/loaded = loaded_item?.resolve()
+	if (loaded)
+		var/mutable_appearance/overlay = mutable_appearance(icon, find_overlay_state(loaded, "contain"))
+		colour_material_overlay(loaded, overlay)
+		. += overlay
+
+/obj/machinery/fax/examine()
+	. = ..()
+	if(jammed)
+		. += span_notice("Its output port is jammed and needs cleaning.")
+
+/obj/machinery/fax/process(delta_time)
+	if(machine_stat & (BROKEN|NOPOWER))
+		return PROCESS_KILL
+
+	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
+		seconds_electrified -= delta_time
+
+/obj/machinery/fax/_try_interact(mob/user)
+	if(seconds_electrified && !(machine_stat & NOPOWER))
+		if(shock(user, 100))
+			return
 	return ..()
 
-//Emag does not bring you into the syndicate network, but makes it visible to you.
+/***
+ * Emag the device if the panel is open.
+ * Emag does not bring you into the syndicate network, but makes it visible to you.
+ */
 /obj/machinery/fax/emag_act(mob/user)
-	if(!(obj_flags & EMAGGED))
+	if (!panel_open && !allow_exotic_faxes)
+		balloon_alert(user, "open panel first!")
+		return
+	if (!(obj_flags & EMAGGED))
 		obj_flags |= EMAGGED
 		playsound(src, 'sound/creatures/dog/growl2.ogg', 50, FALSE)
 		to_chat(user, span_warning("An image appears on [src] screen for a moment with Ian in the cap of a Syndicate officer."))
@@ -49,10 +99,24 @@
 	default_unfasten_wrench(user, tool)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-// Using the multi-tool causes the fax network name to be renamed
+/**
+ * Open and close the wire panel.
+ */
+/obj/machinery/fax/screwdriver_act(mob/living/user, obj/item/screwdriver)
+	if(..())
+		return TRUE
+	default_deconstruction_screwdriver(user, icon_state, icon_state, screwdriver)
+	update_appearance()
+	return TRUE
+
+/**
+ * Using the multi-tool with the panel closed causes the fax network name to be renamed.
+ */
 /obj/machinery/fax/multitool_act(mob/living/user, obj/item/I)
+	if (panel_open)
+		return
 	var/new_fax_name = tgui_input_text(user, "Enter a new name for the fax machine.", "New Fax Name", , 128)
-	if(!new_fax_name)
+	if (!new_fax_name)
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 	if (new_fax_name != fax_name)
 		if (fax_name_exist(new_fax_name))
@@ -64,13 +128,67 @@
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/fax/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/paper))
-		if(!paper_contain)
-			paper_contain = item
+	if (jammed && clear_jam(item, user))
+		return
+	if (panel_open)
+		if (is_wire_tool(item))
+			wires.interact(user)
+		return
+	if (can_load_item(item))
+		if (!loaded_item?.resolve())
+			loaded_item = WEAKREF(item)
 			item.forceMove(src)
 			update_appearance()
 		return
 	return ..()
+
+/**
+ * Attempts to clean out a jammed machine using a passed item.
+ * Returns true if successful.
+ */
+/obj/machinery/fax/proc/clear_jam(obj/item/item, mob/user)
+	if (istype(item, /obj/item/reagent_containers/spray))
+		var/obj/item/reagent_containers/spray/clean_spray = item
+		if(!clean_spray.reagents.has_reagent(/datum/reagent/space_cleaner, clean_spray.amount_per_transfer_from_this))
+			return FALSE
+		clean_spray.reagents.remove_reagent(/datum/reagent/space_cleaner, clean_spray.amount_per_transfer_from_this, 1)
+		playsound(loc, 'sound/effects/spray3.ogg', 50, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
+		user.visible_message(span_notice("[user] cleans \the [src]."), span_notice("You clean \the [src]."))
+		jammed = FALSE
+		return TRUE
+	if (istype(item, /obj/item/soap) || istype(item, /obj/item/reagent_containers/cup/rag))
+		var/cleanspeed = 50
+		if (istype(item, /obj/item/soap))
+			var/obj/item/soap/used_soap = item
+			cleanspeed = used_soap.cleanspeed
+		user.visible_message(span_notice("[user] starts to clean \the [src]."), span_notice("You start to clean \the [src]..."))
+		if (do_after(user, cleanspeed, target = src))
+			user.visible_message(span_notice("[user] cleans \the [src]."), span_notice("You clean \the [src]."))
+			jammed = FALSE
+		return TRUE
+	return FALSE
+
+/**
+ * Returns true if an item can be loaded into the fax machine.
+ */
+/obj/machinery/fax/proc/can_load_item(obj/item/item)
+	if(!is_allowed_type(item))
+		return FALSE
+	if (!istype(item, /obj/item/stack))
+		return TRUE
+	var/obj/item/stack/stack_item = item
+	return stack_item.amount == 1
+
+/**
+ * Returns true if an item is of a type which can currently be loaded into this fax machine.
+ * This list expands if you snip a particular wire.
+ */
+/obj/machinery/fax/proc/is_allowed_type(obj/item/item)
+	if (is_type_in_list(item, allowed_types))
+		return TRUE
+	if (!allow_exotic_faxes)
+		return FALSE
+	return is_type_in_list(item, exotic_types)
 
 /obj/machinery/fax/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -87,7 +205,8 @@
 		var/list/fax_data = list()
 		fax_data["fax_name"] = FAX.fax_name
 		fax_data["fax_id"] = FAX.fax_id
-		fax_data["has_paper"] = !!FAX.paper_contain
+		fax_data["visible"] = FAX.visible_to_network
+		fax_data["has_paper"] = !!FAX.loaded_item?.resolve()
 		// Hacked doesn't mean on the syndicate network.
 		fax_data["syndicate_network"] = FAX.syndicate_network
 		data["faxes"] += list(fax_data)
@@ -95,9 +214,10 @@
 	// Own data
 	data["fax_id"] = fax_id
 	data["fax_name"] = fax_name
+	data["visible"] = visible_to_network
 	// In this case, we don't care if the fax is hacked or in the syndicate's network. The main thing is to check the visibility of other faxes.
 	data["syndicate_network"] = (syndicate_network || (obj_flags & EMAGGED))
-	data["has_paper"] = !!paper_contain
+	data["has_paper"] = !!loaded_item?.resolve()
 	data["fax_history"] = fax_history
 	return data
 
@@ -109,15 +229,20 @@
 	switch(action)
 		// Pulls the paper out of the fax machine
 		if("remove")
-			var/obj/item/paper/paper = paper_contain
-			paper.forceMove(drop_location())
-			paper_contain = null
+			var/obj/item/loaded = loaded_item?.resolve()
+			if (!loaded)
+				return
+			loaded.forceMove(drop_location())
+			loaded_item = null
 			playsound(src, 'sound/machines/eject.ogg', 50, FALSE)
 			update_appearance()
 			return TRUE
 		if("send")
-			if(send(paper_contain, params["id"]))
-				paper_contain = null
+			var/obj/item/loaded = loaded_item?.resolve()
+			if (!loaded)
+				return
+			if(send(loaded, params["id"]))
+				loaded_item = null
 				update_appearance()
 				return TRUE
 		if("history_clear")
@@ -127,37 +252,109 @@
 /**
  * The procedure for sending a paper to another fax machine.
  *
- * The object is called inside /obj/machinery/fax to send the paper to another fax machine.
+ * The object is called inside /obj/machinery/fax to send the thing to another fax machine.
  * The procedure searches among all faxes for the desired fax ID and calls proc/receive() on that fax.
- * If the paper is sent successfully, it returns TRUE.
+ * If the item is sent successfully, it returns TRUE.
  * Arguments:
- * * paper - The object of the paper to be sent.
- * * id - The network ID of the fax machine you want to send the paper to.
+ * * loaded - The object to be sent.
+ * * id - The network ID of the fax machine you want to send the item to.
  */
-/obj/machinery/fax/proc/send(obj/item/paper/paper, id)
+/obj/machinery/fax/proc/send(obj/item/loaded, id)
 	for(var/obj/machinery/fax/FAX in GLOB.machines)
-		if (FAX.fax_id == id)
-			FAX.receive(paper, fax_name)
-			history_add("Send", FAX.fax_name)
-			flick("fax_send", src)
-			playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, FALSE)
-			return TRUE
+		if (FAX.fax_id != id)
+			continue
+		if (FAX.jammed)
+			do_sparks(5, TRUE, src)
+			balloon_alert(usr, "destination port jammed")
+			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			return FALSE
+		FAX.receive(loaded, fax_name)
+		history_add("Send", FAX.fax_name)
+		INVOKE_ASYNC(src, .proc/animate_object_travel, loaded, "fax_receive", find_overlay_state(loaded, "send"))
+		playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, FALSE)
+		return TRUE
 	return FALSE
 
 /**
  * Procedure for accepting papers from another fax machine.
  *
- * The procedure is called in proc/send() of the other fax. It receives a paper object and "prints" it.
+ * The procedure is called in proc/send() of the other fax. It receives a paper-like object and "prints" it.
  * Arguments:
- * * paper - The object of the paper to be printed.
+ * * loaded - The object to be printed.
  * * sender_name - The sender's name, which will be displayed in the message and recorded in the history of operations.
  */
-/obj/machinery/fax/proc/receive(obj/item/paper/paper, sender_name)
+/obj/machinery/fax/proc/receive(obj/item/loaded, sender_name)
 	playsound(src, 'sound/machines/printer.ogg', 50, FALSE)
-	flick(paper_contain ? "fax_contain_receive" : "fax_receive", src)
+	INVOKE_ASYNC(src, .proc/animate_object_travel, loaded, "fax_receive", find_overlay_state(loaded, "receive"))
 	say("Received correspondence from [sender_name].")
 	history_add("Receive", sender_name)
-	paper.forceMove(drop_location())
+	addtimer(CALLBACK(src, .proc/vend_item, loaded), 1.9 SECONDS)
+
+/**
+ * Procedure for animating an object entering or leaving the fax machine.
+ * Arguments:
+ * * item - The object which is travelling.
+ * * animation_state - An icon state to apply to the fax machine.
+ * * overlay_state - An icon state to apply as an overlay to the fax machine.
+ */
+/obj/machinery/fax/proc/animate_object_travel(obj/item/item, animation_state, overlay_state)
+	icon_state = animation_state
+	var/mutable_appearance/overlay = mutable_appearance(icon, overlay_state)
+	colour_material_overlay(item, overlay)
+	overlays += overlay
+	sleep(2 SECONDS)
+	icon_state = "fax"
+	overlays -= overlays
+
+/**
+ * Sets the overlay colour and alpha to match a material colour and alpha.
+ * Arguments:
+ * * item - Object to imitate.
+ * * overlay - Overlay to mutate.
+ */
+/obj/machinery/fax/proc/colour_material_overlay(obj/item/item, mutable_appearance/overlay)
+	if (!istype(item, /obj/item/stack))
+		return
+	var/obj/item/stack/stack_item = item
+	var/datum/material/material = GET_MATERIAL_REF(stack_item.material_type)
+	overlay.color = material.color
+	overlay.alpha = material.alpha
+
+/**
+ * Returns an appropriate icon state to represent a passed item.
+ * Arguments:
+ * * item - Item to interrogate.
+ * * state_prefix - Icon state action prefix to mutate.
+ */
+/obj/machinery/fax/proc/find_overlay_state(obj/item/item, state_prefix)
+	if (istype(item, /obj/item/paper))
+		return "[state_prefix]_paper"
+	if (istype(item, /obj/item/photo))
+		return "[state_prefix]_photo"
+	if (istype(item, /obj/item/card))
+		return "[state_prefix]_id"
+	if (istype(item, /obj/item/food))
+		return "[state_prefix]_food"
+	if (istype(item, /obj/item/throwing_star))
+		return "[state_prefix]_star"
+	if (istype(item, /obj/item/tcgcard))
+		return "[state_prefix]_tcg"
+	return "[state_prefix]_sheet"
+
+/**
+ * Actually vends an item out of the fax machine.
+ * Moved into its own proc to allow a delay for the animation.
+ * This will either deposit the item on the fax machine, or throw it if you have hacked a wire.
+ * Arguments:
+ * * vend - Item to vend from the fax machine.
+ */
+/obj/machinery/fax/proc/vend_item(obj/item/vend)
+	vend.forceMove(drop_location())
+	if (hurl_contents)
+		vend.throw_at(get_edge_target_turf(drop_location(), pick(GLOB.alldirs)), rand(1, 4), EMBED_THROWSPEED_THRESHOLD)
+	if (is_type_in_list(vend, exotic_types) && prob(20))
+		do_sparks(5, TRUE, src)
+		jammed = TRUE
 
 /**
  * A procedure that makes entries in the history of fax transactions.
@@ -175,7 +372,7 @@
 	history_data["history_time"] = station_time_timestamp()
 	fax_history += list(history_data)
 
-// Clears the history of fax operations.
+/// Clears the history of fax operations.
 /obj/machinery/fax/proc/history_clear()
 	fax_history = null
 
@@ -191,3 +388,70 @@
 		if (FAX.fax_name == new_fax_name)
 			return TRUE
 	return FALSE
+
+/**
+ * Attempts to shock the passed user, returns true if they are shocked.
+ *
+ * Arguments:
+ * * user - the user to shock
+ * * chance - probability the shock happens
+ */
+/obj/machinery/fax/proc/shock(mob/living/user, chance)
+	if(!istype(user) || machine_stat & (BROKEN|NOPOWER))
+		return FALSE
+	if(!prob(chance))
+		return FALSE
+	do_sparks(5, TRUE, src)
+	var/check_range = TRUE
+	return electrocute_mob(user, get_area(src), src, 0.7, check_range)
+
+
+/obj/machinery/fax/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if (!held_item)
+		if (!panel_open)
+			context[SCREENTIP_CONTEXT_LMB] = "Open interface."
+			return CONTEXTUAL_SCREENTIP_SET
+		context[SCREENTIP_CONTEXT_LMB] = "Manipulate wires."
+		return CONTEXTUAL_SCREENTIP_SET
+
+	switch (held_item.tool_behaviour)
+		if (TOOL_SCREWDRIVER)
+			if (panel_open)
+				context[SCREENTIP_CONTEXT_LMB] = "Close maintenance panel."
+				return CONTEXTUAL_SCREENTIP_SET
+			context[SCREENTIP_CONTEXT_LMB] = "Open maintenance panel."
+			return CONTEXTUAL_SCREENTIP_SET
+		if (TOOL_WRENCH)
+			if (anchored)
+				context[SCREENTIP_CONTEXT_LMB] = "Unsecure."
+				return CONTEXTUAL_SCREENTIP_SET
+			context[SCREENTIP_CONTEXT_LMB] = "Secure."
+			return CONTEXTUAL_SCREENTIP_SET
+		if (TOOL_MULTITOOL)
+			if (panel_open)
+				context[SCREENTIP_CONTEXT_LMB] = "Pulse wires."
+				return CONTEXTUAL_SCREENTIP_SET
+			context[SCREENTIP_CONTEXT_LMB] = "Rename in network."
+			return CONTEXTUAL_SCREENTIP_SET
+		if (TOOL_WIRECUTTER)
+			if (!panel_open)
+				return .
+			context[SCREENTIP_CONTEXT_LMB] = "Manipulate wires."
+			return CONTEXTUAL_SCREENTIP_SET
+
+	if (jammed && is_type_in_list(held_item, list(/obj/item/reagent_containers/spray, /obj/item/soap, /obj/item/reagent_containers/cup/rag)))
+		context[SCREENTIP_CONTEXT_LMB] = "Clean output tray."
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if (panel_open)
+		if (istype(held_item, /obj/item/card/emag))
+			context[SCREENTIP_CONTEXT_LMB] = "Remove network safeties."
+			return CONTEXTUAL_SCREENTIP_SET
+		return .
+
+	if (is_allowed_type(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Insert into fax machine."
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return .
