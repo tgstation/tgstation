@@ -760,33 +760,6 @@
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
-"ce" = (
-/obj/machinery/door/airlock/external/glass/ruin{
-	id_tag = "piratestarboardexternal"
-	},
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/docking_port/mobile/pirate{
-	dwidth = 11;
-	height = 16;
-	launch_status = 0;
-	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
-	name = "Pirate Ship";
-	port_direction = 2;
-	width = 17
-	},
-/obj/docking_port/stationary{
-	dwidth = 11;
-	height = 16;
-	shuttle_id = "pirateship_home";
-	name = "Deep Space";
-	width = 17
-	},
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/turf/open/floor/plating,
-/area/shuttle/pirate)
 "df" = (
 /obj/machinery/porta_turret/syndicate/energy{
 	dir = 4;
@@ -867,14 +840,6 @@
 /obj/structure/frame/machine,
 /obj/item/wrench,
 /turf/open/floor/plating/airless,
-/area/shuttle/pirate)
-"ey" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "piratebridge"
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/plasma/plastitanium,
-/turf/open/floor/plating,
 /area/shuttle/pirate)
 "ez" = (
 /obj/structure/window/reinforced,
@@ -1002,10 +967,44 @@
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/wood,
 /area/shuttle/pirate)
+"DJ" = (
+/obj/machinery/door/airlock/external/glass/ruin{
+	id_tag = "piratestarboardexternal"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/docking_port/mobile/pirate{
+	dwidth = 11;
+	height = 16;
+	launch_status = 0;
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
+	name = "Pirate Ship";
+	port_direction = 2;
+	width = 17
+	},
+/obj/docking_port/stationary{
+	dwidth = 11;
+	height = 16;
+	shuttle_id = "pirateship_home";
+	name = "Deep Space";
+	width = 17
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
 "ED" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"FX" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "piratebridge"
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "Gk" = (
@@ -1162,7 +1161,7 @@ af
 af
 af
 af
-ey
+FX
 ay
 Oe
 OL
@@ -1195,8 +1194,8 @@ aR
 af
 af
 af
-ey
-ey
+FX
+FX
 aj
 aj
 aj
@@ -1212,8 +1211,8 @@ aJ
 (7,1,1) = {"
 af
 af
-ey
-ey
+FX
+FX
 aC
 aW
 aj
@@ -1230,7 +1229,7 @@ aj
 (8,1,1) = {"
 af
 af
-ey
+FX
 ab
 ae
 bf
@@ -1248,7 +1247,7 @@ aH
 (9,1,1) = {"
 af
 af
-ey
+FX
 ac
 ag
 am
@@ -1266,7 +1265,7 @@ aK
 (10,1,1) = {"
 af
 af
-ey
+FX
 ad
 ah
 an
@@ -1284,8 +1283,8 @@ er
 (11,1,1) = {"
 af
 af
-ey
-ey
+FX
+FX
 al
 aB
 aj
@@ -1303,8 +1302,8 @@ aj
 af
 af
 af
-ey
-ey
+FX
+FX
 aj
 aj
 aj
@@ -1315,7 +1314,7 @@ ED
 aS
 bZ
 bo
-ce
+DJ
 "}
 (13,1,1) = {"
 af
@@ -1342,7 +1341,7 @@ af
 af
 af
 af
-ey
+FX
 eE
 bC
 bJ

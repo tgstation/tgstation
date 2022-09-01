@@ -1,9 +1,8 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ae" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/highcap/five_k{
-	name = "Guest Room APC";
-	pixel_y = -25
+/obj/machinery/power/apc/highcap/five_k/directional/south{
+	name = "Guest Room APC"
 	},
 /turf/open/floor/carpet/purple,
 /area/ruin/space/has_grav/hotel/guestroom/room_5)
@@ -99,10 +98,8 @@
 	},
 /area/ruin/space/has_grav/hotel/workroom)
 "bj" = (
-/obj/machinery/power/apc/highcap/five_k{
-	dir = 1;
-	name = "Guest Room APC";
-	pixel_y = 25
+/obj/machinery/power/apc/highcap/five_k/directional/north{
+	name = "Guest Room APC"
 	},
 /obj/structure/cable,
 /turf/open/floor/wood/parquet,
@@ -192,9 +189,8 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/machinery/power/apc/highcap/five_k{
-	name = "Dock APC";
-	pixel_y = -25
+/obj/machinery/power/apc/highcap/five_k/directional/south{
+	name = "Dock APC"
 	},
 /obj/structure/cable,
 /obj/structure/chair{
@@ -803,9 +799,8 @@
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/hotel/bar)
 "hT" = (
-/obj/machinery/power/apc/highcap/five_k{
-	name = "Kitchen APC";
-	pixel_y = -25
+/obj/machinery/power/apc/highcap/five_k/directional/south{
+	name = "Kitchen APC"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
@@ -1382,9 +1377,8 @@
 /turf/open/floor/iron/sepia,
 /area/ruin/space/has_grav/hotel/pool)
 "mh" = (
-/obj/machinery/power/apc/highcap/five_k{
-	name = "Guest Room APC";
-	pixel_y = -25
+/obj/machinery/power/apc/highcap/five_k/directional/south{
+	name = "Guest Room APC"
 	},
 /obj/structure/cable,
 /turf/open/floor/carpet/red,
@@ -1802,9 +1796,8 @@
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/hotel)
 "qG" = (
-/obj/machinery/power/apc/highcap/five_k{
-	name = "Custodial APC";
-	pixel_y = -25
+/obj/machinery/power/apc/highcap/five_k/directional/south{
+	name = "Custodial APC"
 	},
 /obj/structure/cable,
 /obj/structure/sink/directional/west,
@@ -2922,10 +2915,8 @@
 "EJ" = (
 /obj/structure/table/wood/fancy/purple,
 /obj/item/paper_bin,
-/obj/machinery/power/apc/highcap/five_k{
-	dir = 1;
-	name = "Guest Room APC";
-	pixel_y = 25
+/obj/machinery/power/apc/highcap/five_k/directional/north{
+	name = "Guest Room APC"
 	},
 /obj/structure/cable,
 /obj/item/pen,
@@ -3070,10 +3061,8 @@
 /area/ruin/space/has_grav/hotel)
 "Gd" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/highcap/five_k{
-	dir = 1;
-	name = "Power Storage APC";
-	pixel_y = 25
+/obj/machinery/power/apc/highcap/five_k/directional/north{
+	name = "Power Storage APC"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
@@ -3535,9 +3524,8 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hotel)
 "MQ" = (
-/obj/machinery/power/apc/highcap/five_k{
-	name = "Pool APC";
-	pixel_y = -25
+/obj/machinery/power/apc/highcap/five_k/directional/south{
+	name = "Pool Room APC"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/freezer,
@@ -3708,9 +3696,8 @@
 /area/ruin/space/has_grav/hotel)
 "OW" = (
 /obj/structure/table/wood/fancy/orange,
-/obj/machinery/power/apc/highcap/five_k{
-	name = "Guest Room APC";
-	pixel_y = -25
+/obj/machinery/power/apc/highcap/five_k/directional/south{
+	name = "Guest Room APC"
 	},
 /obj/structure/cable,
 /turf/open/floor/carpet/royalblue,
@@ -4260,9 +4247,8 @@
 /area/template_noop)
 "VM" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/machinery/power/apc/highcap/five_k{
-	name = "Staff Room APC";
-	pixel_y = -25
+/obj/machinery/power/apc/highcap/five_k/directional/south{
+	name = "Staff Room APC"
 	},
 /obj/structure/cable,
 /obj/item/gps/spaceruin{
@@ -4568,9 +4554,8 @@
 "YE" = (
 /obj/structure/table/wood/fancy/royalblue,
 /obj/item/paper_bin,
-/obj/machinery/power/apc/highcap/five_k{
-	name = "Guest Room APC";
-	pixel_y = -25
+/obj/machinery/power/apc/highcap/five_k/directional/south{
+	name = "Guest Room APC"
 	},
 /obj/structure/cable,
 /obj/item/pen,

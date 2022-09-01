@@ -41,6 +41,8 @@
 	var/failure_time = 0
 	///Do we effect the appearance of our mob. Used to save time in preference code
 	var/visual = TRUE
+	/// Traits that are given to the holder of the organ.
+	var/list/organ_traits = list()
 
 // Players can look at prefs before atoms SS init, and without this
 // they would not be able to see external organs, such as moth wings.
@@ -90,6 +92,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	owner = reciever
 	moveToNullspace()
 	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, .proc/on_owner_examine)
+	update_organ_traits(reciever)
 	for(var/datum/action/action as anything in actions)
 		action.Grant(reciever)
 	return TRUE
@@ -108,10 +111,26 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	owner = null
 	for(var/datum/action/action as anything in actions)
 		action.Remove(organ_owner)
+	for(var/trait in organ_traits)
+		REMOVE_TRAIT(organ_owner, trait, REF(src))
 
 	SEND_SIGNAL(src, COMSIG_ORGAN_REMOVED, organ_owner)
 	SEND_SIGNAL(organ_owner, COMSIG_CARBON_LOSE_ORGAN, src, special)
 
+/// Updates the traits of the organ on the specific organ it is called on. Should be called anytime an organ is given a trait while it is already in a body.
+/obj/item/organ/proc/update_organ_traits()
+	for(var/trait in organ_traits)
+		ADD_TRAIT(owner, trait, REF(src))
+
+/// Add a trait to an organ that it will give its owner.
+/obj/item/organ/proc/add_organ_trait(trait)
+	organ_traits += trait
+	update_organ_traits()
+
+/// Removes a trait from an organ, and by extension, its owner.
+/obj/item/organ/proc/remove_organ_trait(trait)
+	organ_traits -= trait
+	REMOVE_TRAIT(owner, trait, REF(src))
 
 /obj/item/organ/proc/on_owner_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER

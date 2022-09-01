@@ -3,10 +3,7 @@
 	id = SPECIES_SNAIL
 	species_traits = list(MUTCOLORS, NO_UNDERWEAR, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
 		TRAIT_NOSLIPALL,
-		TRAIT_LITERATE,
 	)
 	attack_verb = "slap"
 	attack_effect = ATTACK_EFFECT_DISARM

@@ -61,7 +61,7 @@
 	trim_state = "trim_bartender"
 	department_color = COLOR_SERVICE_LIME
 	subdepartment_color = COLOR_SERVICE_LIME
-	access = list(ACCESS_BAR)
+	access = list(ACCESS_BAR, ACCESS_KITCHEN)
 
 /// Trim for various Centcom corpses.
 /datum/id_trim/centcom/corpse/bridge_officer

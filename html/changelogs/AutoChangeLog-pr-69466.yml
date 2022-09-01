@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - code_imp: "Updated some signal misuse in mob harvest component, and implemented a signal in cult sacrifice code. I also changed the sound of sheep wool being harvested from a welding tool sound to a scalpel sound while I was here"
