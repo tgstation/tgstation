@@ -25,6 +25,7 @@
 	var/datum/storage/modstorage = mod.create_storage(max_specific_storage = max_w_class, max_total_storage = max_combined_w_class, max_slots = max_items)
 	modstorage.set_real_location(src)
 	atom_storage.locked = FALSE
+	RegisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP, .proc/on_chestplate_unequip)
 
 /obj/item/mod/module/storage/on_uninstall(deleting = FALSE)
 	var/datum/storage/modstorage = mod.atom_storage

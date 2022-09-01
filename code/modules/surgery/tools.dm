@@ -263,6 +263,10 @@
 	. = ..()
 	UnregisterSignal(user, COMSIG_SURGERY_STARTING)
 
+/obj/item/surgical_processor/cyborg_unequip(mob/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_SURGERY_STARTING)
+
 /obj/item/surgical_processor/afterattack(atom/design_holder, mob/user, proximity)
 	if(!proximity)
 		return ..()
