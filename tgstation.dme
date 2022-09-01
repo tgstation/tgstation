@@ -4268,6 +4268,7 @@
 #include "code\modules\spells\spell.dm"
 #include "code\modules\spells\spell_types\madness_curse.dm"
 #include "code\modules\spells\spell_types\right_and_wrong.dm"
+#include "code\modules\spells\spell_types\tower_of_babel.dm"
 #include "code\modules\spells\spell_types\aoe_spell\_aoe_spell.dm"
 #include "code\modules\spells\spell_types\aoe_spell\area_conversion.dm"
 #include "code\modules\spells\spell_types\aoe_spell\knock.dm"
