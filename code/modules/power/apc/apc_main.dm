@@ -451,15 +451,18 @@
 	else
 		main_status = APC_HAS_POWER
 
+	var/cellused
 	if(cell && !shorted)
 		// draw power from cell as before to power the area
-		var/cellused = min(cell.charge, lastused_total JOULES) // clamp deduction to a max, amount left in cell
+		cellused = min(cell.charge, lastused_total JOULES) // clamp deduction to a max, amount left in cell
 		cell.use(cellused)
 
+	if(cell && !shorted) //need to check to make sure the cell is still there since rigged/corrupted cells can randomly explode after use().
 		if(excess > lastused_total) // if power excess recharge the cell
 										// by the same amount just used
 			cell.give(cellused)
-			add_load(cellused WATTS) // add the load used to recharge the cell
+			if(cell) //make sure the cell didn't expode and actually used power.
+				add_load(cellused WATTS) // add the load used to recharge the cell
 
 
 		else // no excess, and not enough per-apc
@@ -476,6 +479,7 @@
 				lighting = autoset(lighting, AUTOSET_FORCE_OFF)
 				environ = autoset(environ, AUTOSET_FORCE_OFF)
 
+	if(cell && !shorted) //need to check to make sure the cell is still there since rigged/corrupted cells can randomly explode after give().
 
 		// set channels depending on how much charge we have left
 
