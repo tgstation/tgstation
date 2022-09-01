@@ -40,6 +40,7 @@
 			ears.Insert(target_human, drop_if_replaced = FALSE)
 		else
 			mutantears = /obj/item/organ/internal/ears
+	carbon_being.gain_trauma(/datum/brain_trauma/mild/phobia/cucumbers, TRAUMA_RESILIENCE_MAGIC)
 	return ..()
 
 /datum/species/human/felinid/randomize_features(mob/living/carbon/human/human_mob)
@@ -177,6 +178,12 @@
 			SPECIES_PERK_ICON = "shower",
 			SPECIES_PERK_NAME = "Hydrophobia",
 			SPECIES_PERK_DESC = "Felinids don't like getting soaked with water.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "seedling",
+			SPECIES_PERK_NAME = "Cucumberphobia",
+			SPECIES_PERK_DESC = "Felinids don't like see cucumbers.",
 		),
 	)
 
