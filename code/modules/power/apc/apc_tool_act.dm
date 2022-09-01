@@ -215,7 +215,7 @@
 	else if(machine_stat & (BROKEN|MAINT))
 		balloon_alert(user, "nothing happens!")
 	else
-		if(allowed(usr) && !wires.is_cut(WIRE_IDSCAN) && !malfhack)
+		if(allowed(usr) && !wires.is_cut(WIRE_IDSCAN) && !malfhack && !remote_control_user)
 			locked = !locked
 			balloon_alert(user, "APC [ locked ? "locked" : "unlocked"]")
 			update_appearance()

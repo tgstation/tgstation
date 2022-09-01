@@ -294,7 +294,7 @@
 /area/shuttle/pirate)
 "aB" = (
 /obj/machinery/light/small/directional/east,
-/obj/machinery/computer/monitor/secret{
+/obj/machinery/computer/monitor{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,

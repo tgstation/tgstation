@@ -11265,7 +11265,7 @@
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "BN" = (
-/obj/machinery/computer/monitor/secret{
+/obj/machinery/computer/monitor{
 	dir = 1;
 	name = "primary power monitoring console"
 	},
@@ -11354,7 +11354,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "De" = (
-/obj/machinery/computer/monitor/secret{
+/obj/machinery/computer/monitor{
 	name = "primary power monitoring console"
 	},
 /obj/structure/sign/warning/no_smoking/directional/west,
