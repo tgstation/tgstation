@@ -302,7 +302,7 @@
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/pickles_jar
-	name = "Pickles Jar"
+	name = "Jar of pickles"
 	reqs = list(
 		/obj/item/reagent_containers/cup/beaker/large = 1,
 		/obj/item/food/grown/cucumber = 10,

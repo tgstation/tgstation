@@ -128,7 +128,7 @@
 
 
 /datum/orderable_item/pickles
-	name = "Pickles Jar"
+	name = "Jar of pickles"
 	category_index = CATEGORY_FRUITS_VEGGIES
 	item_instance = /obj/item/storage/fancy/pickles_jar
 	cost_per_order = 60

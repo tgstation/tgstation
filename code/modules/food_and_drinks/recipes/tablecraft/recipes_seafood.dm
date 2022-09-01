@@ -101,7 +101,7 @@
 		/obj/item/food/grown/cabbage = 1,
 		/obj/item/food/tofu = 1,
 		/datum/reagent/consumable/soysauce = 1,
-		/obj/item/food/grown/cucumber = 1
+		/obj/item/food/grown/cucumber = 1,
 	)
 	result = /obj/item/food/meat_poke
 	subcategory = CAT_SEAFOOD
@@ -115,7 +115,7 @@
 		/obj/item/food/grown/cabbage = 1,
 		/obj/item/food/tofu = 1,
 		/datum/reagent/consumable/soysauce = 1,
-		/obj/item/food/grown/cucumber = 1
+		/obj/item/food/grown/cucumber = 1,
 	)
 	result = /obj/item/food/fish_poke
 	subcategory = CAT_SEAFOOD

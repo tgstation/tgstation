@@ -459,7 +459,7 @@
 	atom_storage.set_holdable(list(/obj/item/food/nugget))
 
 /*
- * Pickles Jar
+ * Jar of pickles
  */
 
 /obj/item/storage/fancy/pickles_jar

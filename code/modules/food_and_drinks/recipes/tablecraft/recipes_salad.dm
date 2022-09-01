@@ -130,7 +130,7 @@
 		/obj/item/food/onion_slice/red = 2,
 		/obj/item/food/cheese/wedge = 1,
 		/datum/reagent/consumable/quality_oil = 5,
-		/obj/item/food/grown/cucumber = 1
+		/obj/item/food/grown/cucumber = 1,
 	)
 	result = /obj/item/food/salad/greek_salad
 	subcategory = CAT_SALAD

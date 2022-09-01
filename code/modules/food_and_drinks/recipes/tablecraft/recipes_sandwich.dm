@@ -69,7 +69,7 @@
 		/obj/item/food/bun = 1,
 		/obj/item/food/sausage = 1,
 		/obj/item/food/pickle = 1,
-		/obj/item/food/grown/onion = 1
+		/obj/item/food/grown/onion = 1,
 	)
 	result = /obj/item/food/danish_hotdog
 	subcategory = CAT_SANDWICH

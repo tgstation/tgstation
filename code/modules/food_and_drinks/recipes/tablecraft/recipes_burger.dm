@@ -238,7 +238,7 @@
 		/obj/item/food/boiledegg = 1,
 		/obj/item/food/meat/bacon = 1,
 		/obj/item/food/bun = 1,
-		/obj/item/food/pickle = 1
+		/obj/item/food/pickle = 1,
 
 	)
 	result = /obj/item/food/burger/superbite
