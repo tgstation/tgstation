@@ -45383,9 +45383,7 @@
 /turf/open/floor/engine,
 /area/station/maintenance/disposal/incinerator)
 "pDW" = (
-/obj/structure/sign/warning/radiation/rad_area/directional/north{
-	dir = 1
-	},
+/obj/structure/sign/warning/radiation/rad_area/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -61307,8 +61305,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/engine_smes)
 "vfU" = (
-/obj/structure/cable,
-/obj/structure/grille,
+/obj/effect/spawner/structure/electrified_grille,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
 /area/mine/explored)
@@ -64572,9 +64569,7 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
 "wpo" = (
-/obj/structure/sign/warning/radiation/rad_area/directional/north{
-	dir = 1
-	},
+/obj/structure/sign/warning/radiation/rad_area/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
