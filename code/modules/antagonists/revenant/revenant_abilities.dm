@@ -413,9 +413,9 @@
 	max_targets = 7
 	aoe_radius = 5
 
-	unlock_amount = 50
-	cast_amount = 40
-	stun_duration = 4 SECONDS
+	unlock_amount = 30 // Similar to overload lights
+	cast_amount = 50 // but has a longer lasting effect
+	stun_duration = 3 SECONDS
 	reveal_duration = 6 SECONDS
 
 /datum/action/cooldown/spell/aoe/revenant/haunt_object/get_things_to_cast_on(atom/center)
