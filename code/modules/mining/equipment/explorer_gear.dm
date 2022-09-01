@@ -74,6 +74,7 @@
 	. += span_notice("You could fit this into a box if you adjusted it.")
 
 /obj/item/clothing/mask/gas/explorer/folded
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/clothing/mask/gas/explorer/folded/Initialize(mapload)
 	. = ..()
