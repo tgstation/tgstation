@@ -8,7 +8,7 @@
 /datum/sm_delam/proc/effect_irradiate(obj/machinery/power/supermatter_crystal/sm)
 	var/turf/sm_turf = get_turf(sm)
 	for (var/mob/living/victim in range(20, sm))
-		if(victim.z != sm_turf.z)
+		if(!is_valid_z_level(get_turf(victim), sm_turf))
 			continue
 		SSradiation.irradiate(victim)
 	return TRUE
@@ -17,7 +17,7 @@
 /datum/sm_delam/proc/effect_demoralize(obj/machinery/power/supermatter_crystal/sm)
 	var/turf/sm_turf = get_turf(sm)
 	for(var/mob/living/victim as anything in GLOB.alive_mob_list)
-		if(!istype(victim) || victim.z != sm_turf.z)
+		if(!istype(victim) || !is_valid_z_level(get_turf(victim), sm_turf))
 			continue
 		if(ishuman(victim))
 			//Hilariously enough, running into a closet should make you get hit the hardest.
@@ -25,11 +25,10 @@
 			human.hallucination += max(50, min(300, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(victim, sm) + 1)) ) )
 
 	for(var/mob/victim as anything in GLOB.player_list)
-		var/turf/mob_turf = get_turf(victim)
-		if(sm_turf.z != mob_turf.z)
+		if(!is_valid_z_level(get_turf(victim), sm_turf))
 			continue
 		SEND_SOUND(victim, 'sound/magic/charge.ogg')
-		if (victim.z != sm_turf.z)
+		if(!is_valid_z_level(get_turf(victim), sm_turf))
 			to_chat(victim, span_boldannounce("You hold onto \the [victim.loc] as hard as you can, as reality distorts around you. You feel safe."))
 			continue
 		to_chat(victim, span_boldannounce("You feel reality distort for a moment..."))
