@@ -105,6 +105,7 @@
 #include "code\__DEFINES\lighting.dm"
 #include "code\__DEFINES\living.dm"
 #include "code\__DEFINES\logging.dm"
+#include "code\__DEFINES\loot.dm"
 #include "code\__DEFINES\machines.dm"
 #include "code\__DEFINES\magic.dm"
 #include "code\__DEFINES\maps.dm"

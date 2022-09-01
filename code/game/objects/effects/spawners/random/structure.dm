@@ -85,6 +85,12 @@
 		/obj/structure/tank_holder/extinguisher/advanced = 1,
 	)
 
+
+/obj/effect/spawner/random/structure/crate_empty
+	name = "empty crate spawner"
+	icon_state = "crate"
+	loot = RANDOM_CRATE_LOOT
+
 /obj/effect/spawner/random/structure/crate_empty/make_item(spawn_loc, type_path_to_make)
 	var/obj/structure/closet/crate/peek_a_boo = ..()
 	if(istype(peek_a_boo))
