@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - qol: "Windows from outside the station now get the RCD reconstruction benefits, just like walls and floors."
