@@ -2,7 +2,7 @@
 #define OXYGEN_HEAT_PENALTY 1
 #define PLUOXIUM_HEAT_PENALTY -0.5 //Better then co2, worse then n2
 #define TRITIUM_HEAT_PENALTY 10
-#define CO2_HEAT_PENALTY 6
+#define CO2_HEAT_PENALTY 2
 #define NITROGEN_HEAT_PENALTY -1.5
 #define BZ_HEAT_PENALTY 5
 #define H2O_HEAT_PENALTY 12 //This'll get made slowly over time, I want my spice rock spicy god damnit
@@ -30,7 +30,6 @@
 #define HYPERNOBLIUM_TRANSMIT_MODIFIER 3
 #define H20_TRANSMIT_MODIFIER -2.5
 #define FREON_TRANSMIT_MODIFIER -30
-#define CO2_TRANSMIT_MODIFIER 10
 
 #define N2O_HEAT_RESISTANCE 6          //Higher == Gas makes the crystal more resistant against heat damage.
 #define HYDROGEN_HEAT_RESISTANCE 2 // just a bit of heat resistance to spice it up
@@ -102,6 +101,7 @@
 #define BIOSCRAMBLER_ANOMALY "bioscrambler_anomaly"
 #define HALLUCINATION_ANOMALY "hallucination_anomaly"
 #define VORTEX_ANOMALY "vortex_anomaly"
+#define DIMENSIONAL_ANOMALY "dimensional_anomaly"
 
 #define SUPERMATTER_COUNTDOWN_TIME 30 SECONDS
 
@@ -125,11 +125,11 @@
 
 /// Means it's not forced, sm decides itself by checking the [/datum/sm_delam/proc/can_select]
 #define SM_DELAM_PRIO_NONE 0
-/// In-game factors like the destabilizing crystal [/obj/item/destabilizing_crystal]. 
+/// In-game factors like the destabilizing crystal [/obj/item/destabilizing_crystal].
 /// Purged when SM heals to 100
 #define SM_DELAM_PRIO_IN_GAME 1
 
-/// Purge the current forced delam and make it zero again (back to normal). 
+/// Purge the current forced delam and make it zero again (back to normal).
 /// Needs to be higher priority than current forced_delam though.
 #define SM_DELAM_STRATEGY_PURGE null
 
@@ -141,7 +141,7 @@
 #define SUPERMATTER_INACTIVE 0
 /// Normal operation
 #define SUPERMATTER_NORMAL 1
-/// Ambient temp 80% of the default temp for SM to take damage. 
+/// Ambient temp 80% of the default temp for SM to take damage.
 #define SUPERMATTER_NOTIFY 2
 /// Integrity below [/obj/machinery/power/supermatter_crystal/var/warning_point]. Start complaining on comms.
 #define SUPERMATTER_WARNING 3

@@ -499,6 +499,15 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	loom_result = /obj/item/stack/sheet/durathread
 	grind_results = list()
 
+/obj/item/stack/sheet/cotton/wool
+	name = "raw wool bundle"
+	desc = "A bundle of raw wool ready to be spun on the loom."
+	singular_name = "raw wool ball"
+	icon_state = "sheet-wool"
+	merge_type = /obj/item/stack/sheet/cotton/wool
+	loom_result = /obj/item/stack/sheet/cloth
+	grind_results = list()
+
 /*
  * Cardboard
  */
@@ -628,8 +637,8 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	inhand_icon_state = "sheet-brass"
 	icon = 'icons/obj/stack_objects.dmi'
 	mats_per_unit = list(/datum/material/bronze = MINERAL_MATERIAL_AMOUNT)
-	lefthand_file = 'icons/mob/inhands/misc/sheets_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/sheets_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/sheets_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/sheets_righthand.dmi'
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	sheettype = "bronze"
 	force = 5
@@ -683,7 +692,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
  */
 /obj/item/stack/sheet/bone
 	name = "bones"
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "bone"
 	inhand_icon_state = "sheet-bone"
 	mats_per_unit = list(/datum/material/bone = MINERAL_MATERIAL_AMOUNT)

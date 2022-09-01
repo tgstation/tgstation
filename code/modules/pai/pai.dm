@@ -225,6 +225,8 @@
 		ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
 	desc = "A pAI hard-light holographics emitter. This one appears in the form of a [chassis]."
 
+	RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, .proc/on_cult_sacrificed)
+
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
 	return TRUE
@@ -416,3 +418,11 @@
 	playsound(src, "sound/machines/buzz-two.ogg", 30, TRUE)
 	qdel(src)
 	return TRUE
+
+/// Signal proc for [COMSIG_LIVING_CULT_SACRIFICED] to give a funny message when a pai is attempted to be sac'd
+/mob/living/silicon/pai/proc/on_cult_sacrificed(datum/source, list/invokers)
+	SIGNAL_HANDLER
+
+	for(var/mob/living/cultist as anything in invokers)
+		to_chat(cultist, span_cultitalic("You don't think this is what Nar'Sie had in mind when She asked for blood sacrifices..."))
+	return STOP_SACRIFICE

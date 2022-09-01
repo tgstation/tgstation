@@ -295,12 +295,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return FALSE
 	var/datum/antagonist/cult/C = first_invoker.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 	if(!C)
-		return
+		return FALSE
 
-	if(ispAI(sacrificial))
-		for(var/M in invokers)
-			to_chat(M, span_cultitalic("You don't think this is what Nar'Sie had in mind when She asked for blood sacrifices..."))
-		log_game("Offer rune with [sacrificial] on it failed - tried sacrificing pAI.")
+	if(SEND_SIGNAL(sacrificial, COMSIG_LIVING_CULT_SACRIFICED, invokers) & STOP_SACRIFICE)
 		return FALSE
 
 	var/big_sac = FALSE
@@ -847,12 +844,17 @@ structure_check() searches for nearby cultist structures required for the invoca
 			log_game("Manifest rune failed - no nearby ghosts")
 			return list()
 		var/mob/dead/observer/ghost_to_spawn = pick(ghosts_on_rune)
+
+		// Dear god, why is /mob/living/carbon/human/cult_ghost not a simple mob or species
+		// someone please fix this at some point -TimT August 2022
 		var/mob/living/carbon/human/cult_ghost/new_human = new(T)
 		new_human.real_name = ghost_to_spawn.real_name
 		new_human.alpha = 150 //Makes them translucent
 		new_human.equipOutfit(/datum/outfit/ghost_cultist) //give them armor
 		new_human.apply_status_effect(/datum/status_effect/cultghost) //ghosts can't summon more ghosts
 		new_human.see_invisible = SEE_INVISIBLE_OBSERVER
+		ADD_TRAIT(new_human, TRAIT_NOBREATH, INNATE_TRAIT)
+
 		ghosts++
 		playsound(src, 'sound/magic/exit_blood.ogg', 50, TRUE)
 		visible_message(span_warning("A cloud of red mist forms above [src], and from within steps... a [new_human.gender == FEMALE ? "wo":""]man."))
@@ -967,10 +969,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 	empulse(T, 0.42*(intensity), 1)
 
 	var/list/images = list()
-	var/zmatch = T.z
 	var/datum/atom_hud/sec_hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	for(var/mob/living/M in GLOB.alive_mob_list)
-		if(M.z != zmatch)
+		if(!is_valid_z_level(T, get_turf(M)))
 			continue
 		if(ishuman(M))
 			if(!IS_CULTIST(M))

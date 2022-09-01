@@ -17,7 +17,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal
 	name = "supermatter crystal"
 	desc = "A strangely translucent and iridescent crystal."
-	icon = 'icons/obj/supermatter.dmi'
+	icon = 'icons/obj/engine/supermatter.dmi'
 	icon_state = "darkmatter"
 	density = TRUE
 	anchored = TRUE
@@ -119,7 +119,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/antinoblium = ANTINOBLIUM_TRANSMIT_MODIFIER,
 		/datum/gas/freon = FREON_TRANSMIT_MODIFIER,
 		/datum/gas/water_vapor = H20_TRANSMIT_MODIFIER,
-		/datum/gas/carbon_dioxide = CO2_TRANSMIT_MODIFIER,
 	)
 	///The list of gases mapped against their heat penaltys. We use it to determin molar and heat output
 	var/list/gas_heat = list(
@@ -515,6 +514,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			new /obj/effect/anomaly/bhole(local_turf, 20, FALSE)
 		if(BIOSCRAMBLER_ANOMALY)
 			new /obj/effect/anomaly/bioscrambler(local_turf, null, FALSE)
+		if(DIMENSIONAL_ANOMALY)
+			new /obj/effect/anomaly/dimensional(local_turf, null, FALSE)
 
 /obj/machinery/proc/supermatter_zap(atom/zapstart = src, range = 5, zap_str = 4000, zap_flags = ZAP_SUPERMATTER_FLAGS, list/targets_hit = list(), zap_cutoff = 1500, power_level = 0, zap_icon = DEFAULT_ZAP_ICON_STATE, color = null)
 	if(QDELETED(zapstart))
@@ -695,7 +696,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	icon_state = "darkmatter"
 
 /obj/overlay/psy
-	icon = 'icons/obj/supermatter.dmi'
+	icon = 'icons/obj/engine/supermatter.dmi'
 	icon_state = "psy"
 	layer = FLOAT_LAYER - 1
 

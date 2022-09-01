@@ -40,7 +40,7 @@
 	var/mutable_appearance/storm
 
 /datum/round_event/portal_storm/setup()
-	storm = mutable_appearance('icons/obj/tesla_engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
+	storm = mutable_appearance('icons/obj/engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
 	storm.plane = ABOVE_GAME_PLANE
 	storm.color = "#00FF00"
 

@@ -52,7 +52,11 @@
 		pack_type = pick(possible_pack_types)
 	else
 		pack_type = pick(stray_spawnable_supply_packs)
-	var/datum/supply_pack/SP = new pack_type
+	var/datum/supply_pack/SP
+	if(ispath(pack_type, /datum/supply_pack))
+		SP = new pack_type
+	else  // treat this as a supply pack id and resolving it with SSshuttle
+		SP = SSshuttle.supply_packs[pack_type] 
 	var/obj/structure/closet/crate/crate = SP.generate(null)
 	if(crate) //empty supply packs are a thing! get memed on.
 		crate.locked = FALSE //Unlock secure crates

@@ -28,6 +28,12 @@
 	juice_results = list(/datum/reagent/consumable/banana = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/bananahonk
 
+/obj/item/food/grown/banana/Initialize(mapload)
+	. = ..()
+	if(prob(1))
+		AddComponent(/datum/component/boomerang, boomerang_throw_range = throw_range + 4, thrower_easy_catch_enabled = TRUE)
+		desc += " The curve on this one looks particularly acute."
+
 /obj/item/food/grown/banana/generate_trash(atom/location)
 	. = ..()
 	var/obj/item/grown/bananapeel/peel = .
@@ -53,8 +59,8 @@
 	seed = /obj/item/seeds/banana
 	name = "banana peel"
 	desc = "A peel from a banana."
-	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
 	icon_state = "banana_peel"
 	inhand_icon_state = "banana_peel"
 	w_class = WEIGHT_CLASS_TINY
