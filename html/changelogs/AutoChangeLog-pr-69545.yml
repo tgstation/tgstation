@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "bodybags / crates will now be explicit about what is ontop of them if you can't close them due to other bodybags / crates being in the same tile."
