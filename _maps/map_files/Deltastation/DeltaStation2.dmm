@@ -11879,6 +11879,11 @@
 "cJX" = (
 /obj/structure/table/reinforced,
 /obj/machinery/status_display/evac/directional/west,
+/obj/effect/spawner/random/food_or_drink/donkpockets{
+	pixel_y = -1
+	},
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
+/obj/effect/spawner/random/food_or_drink/snack,
 /turf/open/floor/wood,
 /area/station/engineering/break_room)
 "cKa" = (
@@ -23005,12 +23010,15 @@
 /area/station/hallway/primary/central/fore)
 "fxM" = (
 /obj/effect/turf_decal/stripes/white/line,
-/obj/item/kirbyplants/random,
 /obj/machinery/light/directional/west,
 /obj/structure/sign/directions/upload{
 	pixel_x = -31;
 	pixel_y = -6;
 	dir = 8
+	},
+/obj/structure/table/reinforced,
+/obj/item/storage/fancy/donut_box{
+	pixel_y = 4
 	},
 /turf/open/floor/wood,
 /area/station/engineering/break_room)
@@ -26701,7 +26709,19 @@
 /area/station/engineering/atmos/hfr_room)
 "gsf" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/fancy/donut_box,
+/obj/item/storage/box/matches{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/obj/item/lighter,
+/obj/item/lighter{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/machinery/fax{
+	fax_name = "Engineering Lobby";
+	name = "Engineering Lobby Fax Machine"
+	},
 /turf/open/floor/wood,
 /area/station/engineering/break_room)
 "gsy" = (
@@ -31805,6 +31825,11 @@
 /obj/machinery/telecomms/receiver/preset_left,
 /turf/open/floor/circuit/green/telecomms/mainframe,
 /area/station/tcommsat/server)
+"hHJ" = (
+/obj/effect/turf_decal/stripes/white/line,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/station/engineering/break_room)
 "hHQ" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
@@ -36972,11 +36997,6 @@
 /obj/machinery/status_display/evac/directional/east,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 4
-	},
-/obj/structure/table/reinforced,
-/obj/machinery/fax{
-	fax_name = "Engineering Lobby";
-	name = "Engineering Lobby Fax Machine"
 	},
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
@@ -50459,8 +50479,8 @@
 /area/station/maintenance/fore)
 "miE" = (
 /obj/effect/turf_decal/stripes/white/line,
-/obj/item/kirbyplants/random,
 /obj/machinery/light/directional/east,
+/obj/machinery/photocopier,
 /turf/open/floor/wood,
 /area/station/engineering/break_room)
 "miK" = (
@@ -56650,8 +56670,15 @@
 "nJT" = (
 /obj/structure/table/reinforced,
 /obj/machinery/airalarm/directional/north,
-/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
-/obj/effect/spawner/random/food_or_drink/snack,
+/obj/item/storage/box/matches{
+	pixel_x = 2;
+	pixel_y = 5
+	},
+/obj/item/lighter,
+/obj/item/lighter{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /turf/open/floor/wood,
 /area/station/engineering/break_room)
 "nJV" = (
@@ -58147,14 +58174,10 @@
 /area/station/hallway/secondary/entry)
 "odk" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/box/matches{
-	pixel_x = -3;
-	pixel_y = 5
-	},
-/obj/item/lighter,
-/obj/item/lighter{
-	pixel_x = 3;
-	pixel_y = 3
+/obj/effect/spawner/random/entertainment/cigarette_pack,
+/obj/effect/spawner/random/entertainment/cigarette_pack{
+	pixel_y = 2;
+	pixel_x = 3
 	},
 /turf/open/floor/wood,
 /area/station/engineering/break_room)
@@ -91196,6 +91219,7 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
 	},
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "wkp" = (
@@ -98671,7 +98695,6 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/machinery/photocopier,
 /turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
@@ -121977,7 +122000,7 @@ cKK
 vQj
 mzO
 agA
-uzb
+hHJ
 tgl
 uLv
 fiB
