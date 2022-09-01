@@ -47,7 +47,7 @@
 2338212 = 18 # Barhandar
 2520037 = 9 # flufflycthu1u
 2544323 = 128 # optimumtact
-2676196 = 39 # Profakos
+2676196 = 34 # Profakos
 2704742 = 6 # avosirenfal
 2732029 = 6 # Caiggas
 2839035 = 5 # Wer6
@@ -111,7 +111,7 @@
 5909770 = 6 # Alek2ander
 5988156 = 22 # WJohn
 6071161 = 11 # ChuckTheSheep
-6209658 = 1625 # ShizCalev
+6209658 = 1649 # ShizCalev
 6238888 = 13 # SailorDave
 6282424 = 7 # lzimann
 6293118 = 23 # Poojawa
@@ -148,7 +148,7 @@
 7435066 = 3 # as334
 7476885 = 15 # robbym
 7479888 = 13 # antropod
-7483112 = 12 # Jacquerel
+7483112 = 13 # Jacquerel
 7497261 = 3 # gbfree
 7501474 = 40 # Time-Green
 7543955 = 5 # Owai-Seek
@@ -286,7 +286,7 @@
 18168689 = 9 # Polyphynx
 18170896 = 3 # MidoriWroth
 18234833 = 10 # uraniummeltdown
-18253120 = 38 # ma44
+18253120 = 48 # ma44
 18406892 = 1 # anconfuzedrock
 18459142 = 7 # Citinited
 18462134 = 4 # Jimmius
@@ -429,7 +429,7 @@
 30943236 = 9 # PeterMorrison1
 31044876 = 12 # Cenrus
 31083792 = 7 # shrimpboom8
-31096837 = 324 # RandomGamer123
+31096837 = 327 # RandomGamer123
 31149809 = 0 # Metroidlover
 31166707 = 7 # Orchian
 31222036 = 16 # praisenarsie
@@ -547,7 +547,7 @@
 40742162 = 6 # Bytube
 40847847 = 37 # necromanceranne
 40966850 = 6 # CMOisLing
-40974010 = 43 # tralezab
+40974010 = 40 # tralezab
 41054578 = 9 # Unit2E
 41128909 = 5 # Deepfreeze2k
 41167212 = 7 # Baby1991
@@ -618,7 +618,7 @@
 47011211 = -18 # BeloneX
 47049538 = 4 # Lainwright-Lazuli
 47064429 = -1 # CursedBirb
-47086570 = 40 # IndieanaJones
+47086570 = 34 # IndieanaJones
 47089551 = 7 # AvalonHunter
 47149121 = 5 # dee-dubya
 47158596 = 26 # InsaneRed
@@ -629,7 +629,7 @@
 47338680 = -1 # BlueMemesauce
 47342933 = 3 # yeeyeh
 47435736 = 4 # emptyexpression
-47710522 = 19 # distributivgesetz
+47710522 = 22 # distributivgesetz
 47812760 = 6 # KwinOriginal
 47932666 = -1 # Mouseofthecake
 48196179 = 8 # Detective-Google
@@ -664,7 +664,7 @@
 51559502 = 6 # Naloacisamazing
 51800976 = 37 # uomo91
 51841793 = 5 # Investigator77
-51863163 = 520 # MrMelbert
+51863163 = 528 # MrMelbert
 51925758 = 77 # interestingusernam3
 51932756 = 76 # ArcaneDefence
 52075484 = 5 # Timmeye
@@ -700,7 +700,7 @@
 54726037 = 5 # recurracy
 55065395 = 9 # Rodey125
 55070076 = -9 # Randomguy523
-55374212 = 26 # GuillaumePrata
+55374212 = 21 # GuillaumePrata
 55415991 = 18 # spessbandit
 55540334 = 3 # PolishUser
 55666666 = 99 # itseasytosee
@@ -724,7 +724,7 @@
 58013024 = 1 # Pickle-Coding
 58029438 = 4 # TheObserver-sys
 58045821 = 224 # GoldenAlpharex
-58055496 = 570 # LemonInTheDark
+58055496 = 582 # LemonInTheDark
 58074918 = -1 # Sylphet
 58124831 = -92 # EOBGames
 58342752 = 4 # TheLordME
@@ -789,7 +789,7 @@
 66538683 = 7 # TaG2e
 66576896 = 101 # Maurukas
 66637090 = 11 # LordVollkorn
-66640614 = 211 # dragomagol
+66640614 = 207 # dragomagol
 66705879 = -4 # OmegaDarkPotato
 66877125 = 7 # JoeyHaas
 66910879 = 7 # Quietly12
@@ -931,6 +931,7 @@
 106692773 = 3 # RimiNosha
 108888588 = -2 # Sucy-Manbavaran
 109872269 = -2 # Ekaterina-von-Russland
+110272328 = 3 # out-of-phaze
 110635252 = 9 # CapybaraExtravagante
 110736853 = 3 # spessmanturtle
 111551669 = -5 # AIUNBOLT
