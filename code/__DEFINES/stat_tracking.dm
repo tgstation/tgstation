@@ -19,6 +19,16 @@
 	var/list/_counting = counting; \
 	var/usage = TICK_USAGE;
 
+// Cost tracking macro for global lists, prevents erroring if GLOB has not yet been initialized
+#define INIT_COST_GLOBAL(costs, counting) \
+	var/static/list/hidden_static_list_for_fun1 = list(); \
+	var/static/list/hidden_static_list_for_fun2 = list(); \
+	if(GLOB){\
+		costs = hidden_static_list_for_fun1; \
+		counting = hidden_static_list_for_fun2 ; \
+	} \
+	INIT_COST(hidden_static_list_for_fun1, hidden_static_list_for_fun2)
+
 #define SET_COST(category) \
 	do { \
 		var/cost = TICK_USAGE; \
