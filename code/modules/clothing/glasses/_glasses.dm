@@ -61,7 +61,7 @@
 			if(H.glasses == src)
 				to_chat(H, span_danger("[src] overloads and blinds you!"))
 				H.flash_act(visual = 1)
-				H.blind_eyes(3)
+				H.adjust_blindness(3)
 				H.blur_eyes(5)
 				eyes.applyOrganDamage(5)
 
