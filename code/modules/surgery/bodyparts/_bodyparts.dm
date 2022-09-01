@@ -719,20 +719,13 @@
 	if(animal_origin)
 		if(IS_ORGANIC_LIMB(src))
 
-			// it used to be that all animal parts were in the same file, and selection between them was done entirely dynamically via iconstates
-			// however:
-			// 1. this forced all animal parts into the same folder, which is ugly and annoying
-			// 2. it was only ever implemented for monkeys and xenos, so there wasnt much point in not just doing a check
-			// 3. if you want to do a fancy dynamic system, it's probably better anyway to keep a ref to the relevant file and/or state in
-			//    the mob datum in question anyway (ie, /simplemob/yourmobhere/var/limb_icons), rather than semi-hardcoding the file and icon name like this.
-
-			if (animal_origin == MONKEY_BODYPART)						// <- this is what currently selects between xenos and monkeys
+			if (animal_origin == MONKEY_BODYPART)
 				limb.icon = 'icons/mob/species/monkey/bodyparts.dmi'
 			else
 				limb.icon = 'icons/mob/species/alien/bodyparts.dmi'
 			
 			if(limb_id == "husk")
-				limb.icon_state = "[animal_origin]_husk_[body_zone]"	// <- this used to be entirely what selected between xenos and monkeys
+				limb.icon_state = "[animal_origin]_husk_[body_zone]"
 			else
 				limb.icon_state = "[animal_origin]_[body_zone]"
 		else
