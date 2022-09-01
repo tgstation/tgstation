@@ -5,6 +5,4 @@
 	silent = TRUE
 
 /datum/antagonist/sentient_creature/get_preview_icon()
-	var/icon/corgi = icon('icons/mob/pets.dmi', "corgi")
-	corgi.Blend(COLOR_LIGHT_PINK, ICON_MULTIPLY)
-	return corgi
+	return icon('icons/mob/pets.dmi', "corgi")
