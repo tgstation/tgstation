@@ -155,6 +155,7 @@
 	var/list/mob/dead/candidates = poll_candidates_for_mob(
 		"Do you want to play as a Cargorilla?",
 		jobban_type = ROLE_SENTIENCE,
+		be_special_flag = ROLE_SENTIENCE,
 		poll_time = 30 SECONDS,
 		target_mob = src,
 	)
