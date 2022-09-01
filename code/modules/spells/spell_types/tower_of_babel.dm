@@ -7,12 +7,13 @@ GLOBAL_VAR_INIT(tower_of_babel_triggered, FALSE)
 		user.log_message("has stricken the station with the Tower of Babel!", LOG_GAME)
 
 	deadchat_broadcast("The [span_name("Tower of Babel")] has stricken the station, people will struggle to communicate.", message_type=DEADCHAT_ANNOUNCEMENT)
+	GLOB.tower_of_babel_triggered = TRUE // So latejoiners are also afflicted
 
 	for(var/mob/living/carbon/target in GLOB.player_list)
 		// wizards are not only immune but can speak all languages to taunt their victims over the radio
 		if(IS_WIZARD(target))
 			target.grant_all_languages()
-			target.update_atom_languages() // double check if this is neccessary
+			//target.update_atom_languages() // double check if this is neccessary
 			to_chat(target, span_reallybig(span_hypnophrase("You feel a magical force improving your speech patterns!")))
 			continue
 
@@ -35,5 +36,7 @@ GLOBAL_VAR_INIT(tower_of_babel_triggered, FALSE)
 	to_curse.playsound_local(get_turf(to_curse), 'sound/magic/curse.ogg', 40, 1)
 	to_chat(to_curse, span_reallybig(span_hypnophrase("You feel a magical force affecting your speech patterns!")))
 	to_curse.remove_all_languages()
-	to_curse.grant_language(pick(GLOB.all_languages))
-	to_curse.update_atom_languages() // double check if this is neccessary
+	var/random_language = pick(GLOB.all_languages)
+	to_curse.grant_language(random_language)
+	to_curse.remove_blocked_language(random_language, LANGUAGE_ALL)
+	//to_curse.update_atom_languages() // double check if this is neccessary
