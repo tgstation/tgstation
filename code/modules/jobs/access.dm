@@ -32,7 +32,10 @@
 		if(check_access(animal.access_card))
 			return TRUE
 	else if(isbrain(accessor) && istype(accessor.loc, /obj/item/mmi))
-		return TRUE //Like with AI, MMI can also do whatever if they... you know, grow up and get metal forklift arms and a flamethrower or something. (mecha)
+		var/obj/item/mmi/brain_mmi = accessor.loc
+		if(ismecha(brain_mmi.loc))
+			var/obj/vehicle/sealed/mecha/big_stompy_robot = brain_mmi.loc
+			return check_access_list(big_stompy_robot.operation_req_access)
 	return FALSE
 
 /obj/item/proc/GetAccess()
