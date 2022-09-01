@@ -276,7 +276,7 @@
 				var/line = gset.gridLines[i]
 				if(line == space_key && no_afterchange)
 					#ifdef TESTING
-						++turfsSkipped
+					++turfsSkipped
 					#endif
 					ycrd--
 					MAPLOADING_CHECK_TICK
@@ -309,7 +309,7 @@
 					var/model_key = copytext(line, tpos, tpos + key_len)
 					if(model_key == space_key && no_afterchange)
 						#ifdef TESTING
-							++turfsSkipped
+						++turfsSkipped
 						#endif
 						MAPLOADING_CHECK_TICK
 						++xcrd
