@@ -18,6 +18,7 @@
 
 /datum/round_event/ghost_role/blob
 	announce_chance = 0
+	announce_when = 15
 	role_name = "blob overmind"
 	fakeable = TRUE
 
