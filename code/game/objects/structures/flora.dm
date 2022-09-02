@@ -327,10 +327,10 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 /obj/structure/flora/tree/Initialize(mapload)
 	. = ..()
 
-	AddComponent(/datum/component/seethrough, GetSeeThroughMap())
+	AddComponent(/datum/component/seethrough, get_seethrough_map())
 
 ///Return a see_through_map, examples in seethrough.dm
-/obj/structure/flora/tree/proc/GetSeeThroughMap()
+/obj/structure/flora/tree/proc/get_seethrough_map()
 	return SEE_THROUGH_MAP_DEFAULT
 
 /obj/structure/flora/tree/harvest(mob/living/user)
@@ -390,8 +390,9 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 	pixel_x = -48
 	pixel_y = -20
 
-/obj/structure/flora/tree/jungle/GetSeeThroughMap()
-	return SEE_THROUGH_MAP_PAN_SHAPE
+/obj/structure/flora/tree/jungle/get_seethrough_map()
+	return SEE_THROUGH_MAP_THREE_X_THREE
+
 /obj/structure/flora/tree/jungle/style_2
 	icon_state = "tree2"
 /obj/structure/flora/tree/jungle/style_3
@@ -412,8 +413,8 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 	icon = 'icons/obj/flora/jungletreesmall.dmi'
 	icon_state = "tree1"
 
-/obj/structure/flora/tree/jungle/small/GetSeeThroughMap()
-	return SEE_THROUGH_MAP_DEFAULT
+/obj/structure/flora/tree/jungle/small/get_seethrough_map()
+	return SEE_THROUGH_MAP_THREE_X_TWO
 
 /obj/structure/flora/tree/jungle/small/style_2
 	icon_state = "tree2"
@@ -439,7 +440,7 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 	icon = 'icons/obj/flora/pinetrees.dmi'
 	icon_state = "pine_1"
 
-/obj/structure/flora/tree/pine/GetSeeThroughMap()
+/obj/structure/flora/tree/pine/get_seethrough_map()
 	return SEE_THROUGH_MAP_DEFAULT_TWO_TALL
 
 /obj/structure/flora/tree/pine/style_2

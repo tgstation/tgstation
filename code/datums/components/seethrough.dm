@@ -11,24 +11,33 @@
 	var/target_alpha
 	///How long our fase in/out takes
 	var/animation_time
+	///After we somehow moved (because ss13 is godless and does not respect anything), how long do we need to stand still to feel safe to setup our "behind" area again
+	var/perimeter_reset_timer
 
-///Pass a list with lists of coordinates. There's a few templates in seethrough.dm.
-/datum/component/seethrough/Initialize(list/relative_turf_coords, target_alpha = 100, animation_time = 0.5 SECONDS)
+/**Pass a list with lists of coordinates. There's a few templates in seethrough.dm. Layout example is also below:
+* list/relative_turf_coords = list(
+*	list(relative_x, relative_y, relative_z),
+*	list(relative_x2, relative_y2, relative_z2)
+*	)
+* Relative z is there because the turf finder algorithm needs it, and while it works, I can't think of a reason why you would ever need this to be anything but 0
+*/
+/datum/component/seethrough/Initialize(list/relative_turf_coords, target_alpha = 100, animation_time = 0.5 SECONDS, perimeter_reset_timer = 10 SECONDS)
 	. = ..()
 
-	if(!isatom(parent))
+	if(!isatom(parent) || !LAZYLEN(relative_turf_coords))
 		return COMPONENT_INCOMPATIBLE
 
 	src.relative_turf_coords = relative_turf_coords
 	src.target_alpha = target_alpha
 	src.animation_time = animation_time
+	src.perimeter_reset_timer = perimeter_reset_timer
 
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/DismantlePerimeter)
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/dismantle_perimeter)
 
-	SetupPerimeter(parent)
+	setup_perimeter(parent)
 
 ///Loop through a list with relative coordinate lists to mark those tiles and hide our parent when someone enters those tiles
-/datum/component/seethrough/proc/SetupPerimeter(atom/parent)
+/datum/component/seethrough/proc/setup_perimeter(atom/parent)
 	watched_turfs = list()
 
 	for(var/list/coordinates as anything in relative_turf_coords)
@@ -37,13 +46,13 @@
 		if(isnull(target))
 			continue
 
-		RegisterSignal(target, COMSIG_ATOM_ENTERED, .proc/ObscureTo)
-		RegisterSignal(target, COMSIG_ATOM_EXITED, .proc/ExposeTo)
+		RegisterSignal(target, COMSIG_ATOM_ENTERED, .proc/on_entered)
+		RegisterSignal(target, COMSIG_ATOM_EXITED, .proc/on_exited)
 
 		watched_turfs.Add(target)
 
 ///Someone entered one of our tiles, so sent an override overlay and a cute animation to make us fade out a bit
-/datum/component/seethrough/proc/ObscureTo(atom/source, atom/movable/entered)
+/datum/component/seethrough/proc/on_entered(atom/source, atom/movable/entered)
 	SIGNAL_HANDLER
 
 	if(!ismob(entered))
@@ -70,9 +79,10 @@
 	animate(user_overlay, alpha = target_alpha, time = animation_time)
 
 	tricked_clients[mob.client] = user_overlay
+	RegisterSignal(mob.client, COMSIG_PARENT_QDELETING, .proc/on_client_disconnect)
 
 ///Remove the screen object and make us appear solid to the client again
-/datum/component/seethrough/proc/ExposeTo(atom/source, atom/movable/exited, direction)
+/datum/component/seethrough/proc/on_exited(atom/source, atom/movable/exited, direction)
 	SIGNAL_HANDLER
 
 	if(!ismob(exited))
@@ -89,22 +99,41 @@
 
 	//Check if we're being 'tricked'
 	if(tricked_clients.Find(mob.client))
-		animate(tricked_clients[mob.client], alpha = 255, time = animation_time)
+		var/image/trickery_image = tricked_clients[mob.client]
+		animate(trickery_image, alpha = 255, time = animation_time)
 		tricked_clients.Remove(mob.client)
+		UnregisterSignal(mob.client, COMSIG_PARENT_QDELETING)
 
 		//after playing the fade-in animation, remove the screen obj
-		addtimer(CALLBACK(src, /datum/component/seethrough.proc/ClearImage, tricked_clients[mob.client], mob.client), animation_time)
+		addtimer(CALLBACK(src, /datum/component/seethrough/proc/clear_image, trickery_image, mob.client), animation_time)
 
-///Unrout ourselves
-/datum/component/seethrough/proc/DismantlePerimeter()
+///Unrout ourselves after we somehow moved, and start a timer so we can re-restablish our behind area after standing still for a bit
+/datum/component/seethrough/proc/dismantle_perimeter()
 	SIGNAL_HANDLER
 
 	for(var/turf in watched_turfs)
 		UnregisterSignal(turf, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED))
 
 	watched_turfs = null
+	clear_all_images()
 
-///Remove a screen object from a client
-/datum/component/seethrough/proc/ClearImage(image/removee, client/remove_from)
+	//Timer override, so if our atom keeps moving the timer is reset until they stop for X time
+	addtimer(CALLBACK(src, /datum/component/seethrough/proc/setup_perimeter, parent), perimeter_reset_timer, TIMER_OVERRIDE | TIMER_UNIQUE)
+
+///Remove a screen image from a client
+/datum/component/seethrough/proc/clear_image(image/removee, client/remove_from)
 	remove_from.images -= removee
 
+/datum/component/seethrough/proc/clear_all_images()
+	for(var/client/client in tricked_clients)
+		var/image/trickery_image = tricked_clients[client]
+		client.images -= trickery_image
+		UnregisterSignal(client, COMSIG_PARENT_QDELETING)
+
+	tricked_clients.Cut()
+
+/datum/component/seethrough/proc/on_client_disconnect(client/source)
+	SIGNAL_HANDLER
+
+	tricked_clients.Remove(source)
+	UnregisterSignal(source, COMSIG_PARENT_QDELETING)
