@@ -36,8 +36,6 @@
 	var/fitting = "tube"
 	///Count of number of times switched on/off, this is used to calculate the probability the light burns out
 	var/switchcount = 0
-	///True if rigged to explode
-	var/rigged = FALSE
 	///Cell reference
 	var/obj/item/stock_parts/cell/cell
 	///If true, this fixture generates a very weak cell at roundstart
@@ -190,10 +188,7 @@
 		var/matching = light && brightness_set == light.light_range && power_set == light.light_power && color_set == light.light_color
 		if(!matching)
 			switchcount++
-			if(rigged)
-				if(status == LIGHT_OK && trigger)
-					explode()
-			else if( prob( min(60, (switchcount**2)*0.01) ) )
+			if( prob( min(60, (switchcount**2)*0.01) ) )
 				if(trigger)
 					burn_out()
 			else
@@ -315,15 +310,12 @@
 			to_chat(user, span_notice("You insert [light_object]."))
 		status = light_object.status
 		switchcount = light_object.switchcount
-		rigged = light_object.rigged
 		brightness = light_object.brightness
 		on = has_power()
 		update()
 
 		qdel(light_object)
 
-		if(on && rigged)
-			explode()
 		return
 
 	// attempt to stick weapon into light socket
@@ -543,7 +535,6 @@
 /obj/machinery/light/proc/drop_light_tube(mob/user)
 	var/obj/item/light/light_object = new light_type()
 	light_object.status = status
-	light_object.rigged = rigged
 	light_object.brightness = brightness
 
 	// light item inherits the switchcount, then zero it
@@ -614,16 +605,6 @@
 /obj/machinery/light/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	if(prob(max(0, exposed_temperature - 673)))   //0% at <400C, 100% at >500C
 		break_light_tube()
-
-// explode the light
-
-/obj/machinery/light/proc/explode()
-	set waitfor = 0
-	break_light_tube() // break it first to give a warning
-	sleep(2)
-	explosion(src, light_impact_range = 2, flash_range = -1)
-	sleep(1)
-	qdel(src)
 
 /obj/machinery/light/proc/on_light_eater(obj/machinery/light/source, datum/light_eater)
 	SIGNAL_HANDLER

@@ -9,8 +9,6 @@
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/glass=100)
 	grind_results = list(/datum/reagent/silicon = 5, /datum/reagent/nitrogen = 10) //Nitrogen is used as a cheaper alternative to argon in incandescent lighbulbs
-	///True if rigged to explode
-	var/rigged = FALSE
 	///How much light it gives off
 	var/brightness = 2
 	///LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
@@ -95,16 +93,7 @@
 
 /obj/item/light/create_reagents(max_vol, flags)
 	. = ..()
-	RegisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), .proc/on_reagent_change)
 	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, .proc/on_reagents_del)
-
-/**
- * Handles rigging the cell if it contains enough plasma.
- */
-/obj/item/light/proc/on_reagent_change(datum/reagents/holder, ...)
-	SIGNAL_HANDLER
-	rigged = (reagents.has_reagent(/datum/reagent/toxin/plasma, LIGHT_REAGENT_CAPACITY)) ? TRUE : FALSE //has_reagent returns the reagent datum, we don't want to hold a reference to prevent hard dels
-	return NONE
 
 /**
  * Handles the reagent holder datum being deleted for some reason. Probably someone making pizza lights.
@@ -134,6 +123,5 @@
 		status = LIGHT_BROKEN
 		force = 5
 		playsound(src.loc, 'sound/effects/glasshit.ogg', 75, TRUE)
-		if(rigged)
-			atmos_spawn_air("plasma=5") //5u of plasma are required to rig a light bulb/tube
+		//PUT SOMETHING HERE TO HANDLE DROPPING REAGENTS ON BREAK
 		update()
