@@ -36097,7 +36097,6 @@
 	name = "science camera";
 	network = list("ss13","rd")
 	},
-/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/server)
 "kkV" = (
