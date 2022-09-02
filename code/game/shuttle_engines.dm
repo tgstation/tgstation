@@ -1,7 +1,8 @@
 #define ENGINE_UNWRENCHED 0
 #define ENGINE_WRENCHED 1
 #define ENGINE_WELDED 2
-#define ENGINE_WELDTIME 200
+///How long it takes to weld/unweld an engine in place.
+#define ENGINE_WELDTIME (20 SECONDS)
 
 /obj/structure/shuttle
 	name = "shuttle"
