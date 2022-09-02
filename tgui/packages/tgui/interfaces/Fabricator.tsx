@@ -140,8 +140,8 @@ export const Fabricator = (props, context) => {
         <Stack vertical fill>
           <Stack.Item grow>
             <Stack fill>
-              <Stack.Item>
-                <Section fill title="Categories">
+              <Stack.Item width={'200px'}>
+                <Section fill title="Categories" style={{ 'overflow': 'auto' }}>
                   <Tabs vertical>
                     <Tabs.Tab
                       fluid
