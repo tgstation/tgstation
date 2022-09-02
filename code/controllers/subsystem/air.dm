@@ -521,7 +521,7 @@ SUBSYSTEM_DEF(air)
 /datum/controller/subsystem/air/proc/setup_allturfs()
 	var/list/turfs_to_init = block(locate(1, 1, 1), locate(world.maxx, world.maxy, world.maxz))
 	var/list/active_turfs = src.active_turfs
-	var/times_fired = ++src.times_fired
+	times_fired++
 
 	// Clear active turfs - faster than removing every single turf in the world
 	// one-by-one, and Initalize_Atmos only ever adds `src` back in.
@@ -531,13 +531,16 @@ SUBSYSTEM_DEF(air)
 		active.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_VIBRANT_LIME)
 	#endif
 	active_turfs.Cut()
+	var/time = 0
 
-	for(var/thing in turfs_to_init)
-		var/turf/T = thing
-		if (T.blocks_air)
+	for(var/turf/T as anything in turfs_to_init)
+		if (!T.init_air)
 			continue
-		T.Initalize_Atmos(times_fired)
-		CHECK_TICK
+		// We pass the tick as the current step so if we sleep the step changes
+		// This way we can make setting up adjacent turfs O(n) rather then O(n^2)
+		T.Initalize_Atmos(time)
+		if(CHECK_TICK)
+			time++
 
 	if(active_turfs.len)
 		var/starting_ats = active_turfs.len
@@ -561,8 +564,8 @@ SUBSYSTEM_DEF(air)
 
 			active_turfs += new_turfs_to_check
 			turfs_to_check = new_turfs_to_check
-
 		while (turfs_to_check.len)
+
 		var/ending_ats = active_turfs.len
 		for(var/thing in excited_groups)
 			var/datum/excited_group/EG = thing
