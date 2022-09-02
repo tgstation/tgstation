@@ -502,7 +502,7 @@
 	adjust_bodytemperature((maxbodytemp + (fire_handler.stacks * 12)) * 0.5 * delta_time)
 
 /mob/living/simple_animal/update_fire_overlay(stacks, on_fire, last_icon_state, suffix = "")
-	var/mutable_appearance/fire_overlay = mutable_appearance('icons/mob/onfire.dmi', "generic_fire")
+	var/mutable_appearance/fire_overlay = mutable_appearance('icons/mob/effects/onfire.dmi', "generic_fire")
 	if(on_fire && isnull(last_icon_state))
 		add_overlay(fire_overlay)
 		return fire_overlay
