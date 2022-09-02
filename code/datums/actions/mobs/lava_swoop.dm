@@ -23,6 +23,7 @@
 	REMOVE_TRAIT(M, TRAIT_NOFIRE, REF(src))
 
 /datum/action/cooldown/mob_cooldown/lava_swoop/Activate(atom/target_atom)
+	StartCooldown(360 SECONDS, 360 SECONDS)
 	attack_sequence(target_atom)
 	StartCooldown()
 
@@ -148,9 +149,9 @@
 		drakewalls += new /obj/effect/temp_visual/drakewall(T) // no people with lava immunity can just run away from the attack for free
 	var/list/indestructible_turfs = list()
 	for(var/turf/T in RANGE_TURFS(2, center))
-		if(istype(T, /turf/open/indestructible))
+		if(isindestructiblefloor(T))
 			continue
-		if(!istype(T, /turf/closed/indestructible))
+		if(!isindestructiblewall(T))
 			T.ChangeTurf(/turf/open/misc/asteroid/basalt/lava_land_surface, flags = CHANGETURF_INHERIT_AIR)
 		else
 			indestructible_turfs += T
@@ -181,7 +182,7 @@
 		for(var/turf/T in turfs)
 			if(!(T in empty))
 				new /obj/effect/temp_visual/lava_warning(T)
-			else if(!istype(T, /turf/closed/indestructible))
+			else if(!isindestructiblewall(T))
 				new /obj/effect/temp_visual/lava_safe(T)
 		amount--
 		SLEEP_CHECK_DEATH(2.4 SECONDS, owner)

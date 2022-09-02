@@ -22,6 +22,7 @@
 	var/list/charging = list()
 
 /datum/action/cooldown/mob_cooldown/charge/Activate(atom/target_atom)
+	StartCooldown(360 SECONDS, 360 SECONDS)
 	charge_sequence(owner, target_atom, charge_delay, charge_past)
 	StartCooldown()
 
@@ -46,9 +47,9 @@
 	charging += charger
 	actively_moving = FALSE
 	SEND_SIGNAL(owner, COMSIG_STARTED_CHARGE)
-	RegisterSignal(charger, COMSIG_MOVABLE_BUMP, .proc/on_bump)
-	RegisterSignal(charger, COMSIG_MOVABLE_PRE_MOVE, .proc/on_move)
-	RegisterSignal(charger, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	RegisterSignal(charger, COMSIG_MOVABLE_BUMP, .proc/on_bump, TRUE)
+	RegisterSignal(charger, COMSIG_MOVABLE_PRE_MOVE, .proc/on_move, TRUE)
+	RegisterSignal(charger, COMSIG_MOVABLE_MOVED, .proc/on_moved, TRUE)
 	DestroySurroundings(charger)
 	charger.setDir(dir)
 	do_charge_indicator(charger, target)

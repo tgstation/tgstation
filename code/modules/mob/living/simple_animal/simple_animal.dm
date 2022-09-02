@@ -79,6 +79,13 @@
 	///This damage is taken when atmos doesn't fit all the requirements above.
 	var/unsuitable_atmos_damage = 1
 
+	///Whether or not this mob is flammable
+	var/flammable = FALSE
+	///How quickly should fire stacks on this mob diminish?
+	var/fire_stack_removal_speed = -5
+	///How fast the mob's temperature normalizes. The greater the value, the slower their temperature normalizes. Should always be greater than 0.
+	var/temperature_normalization_speed = 5
+
 	//Defaults to zero so Ian can still be cuddly. Moved up the tree to living! This allows us to bypass some hardcoded stuff.
 	melee_damage_lower = 0
 	melee_damage_upper = 0
@@ -129,7 +136,6 @@
 	var/list/loot = list()
 	///Causes mob to be deleted on death, useful for mobs that spawn lootable corpses.
 	var/del_on_death = 0
-	var/deathmessage = ""
 
 	var/allow_movement_on_non_turfs = FALSE
 
@@ -367,9 +373,9 @@
 		if(abs(temp_delta) > 5)
 			if(temp_delta < 0)
 				if(!on_fire)
-					adjust_bodytemperature(clamp(temp_delta * delta_time / 10, temp_delta, 0))
+					adjust_bodytemperature(clamp(temp_delta * delta_time / temperature_normalization_speed, temp_delta, 0))
 			else
-				adjust_bodytemperature(clamp(temp_delta * delta_time / 10, 0, temp_delta))
+				adjust_bodytemperature(clamp(temp_delta * delta_time / temperature_normalization_speed, 0, temp_delta))
 
 	if(!environment_air_is_safe() && unsuitable_atmos_damage)
 		adjustHealth(unsuitable_atmos_damage * delta_time)
@@ -430,12 +436,6 @@
 		verb_say = pick(speak_emote)
 	return ..()
 
-
-/mob/living/simple_animal/emote(act, m_type=1, message = null, intentional = FALSE, force_silence = FALSE)
-	if(stat)
-		return FALSE
-	return ..()
-
 /mob/living/simple_animal/proc/set_varspeed(var_value)
 	speed = var_value
 	update_simplemob_varspeed()
@@ -462,9 +462,6 @@
 	drop_loot()
 	if(dextrous)
 		drop_all_held_items()
-	if(!gibbed)
-		if(deathsound || deathmessage || !del_on_death)
-			emote("deathgasp")
 	if(del_on_death)
 		..()
 		//Prevent infinite loops if the mob Destroy() is overridden in such
@@ -497,10 +494,29 @@
 	return TRUE
 
 /mob/living/simple_animal/ignite_mob()
-	return FALSE
+	if(!flammable)
+		return FALSE
+	return ..()
+
+/mob/living/simple_animal/on_fire_stack(delta_time, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
+	adjust_bodytemperature((maxbodytemp + (fire_handler.stacks * 12)) * 0.5 * delta_time)
+
+/mob/living/simple_animal/update_fire_overlay(stacks, on_fire, last_icon_state, suffix = "")
+	var/mutable_appearance/fire_overlay = mutable_appearance('icons/mob/onfire.dmi', "generic_fire")
+	if(on_fire && isnull(last_icon_state))
+		add_overlay(fire_overlay)
+		return fire_overlay
+	else if(!on_fire && !isnull(last_icon_state))
+		cut_overlay(fire_overlay)
+		return null
+	else if(on_fire && !isnull(last_icon_state))
+		return last_icon_state
+	return null
 
 /mob/living/simple_animal/extinguish_mob()
-	return
+	if(!flammable)
+		return
+	return ..()
 
 /mob/living/simple_animal/revive(full_heal = FALSE, admin_revive = FALSE)
 	. = ..()
@@ -617,9 +633,9 @@
 
 /mob/living/simple_animal/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE, ignore_animation = TRUE)
 	. = ..()
-	update_inv_hands()
+	update_held_items()
 
-/mob/living/simple_animal/update_inv_hands()
+/mob/living/simple_animal/update_held_items()
 	if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 		for(var/obj/item/I in held_items)
 			var/index = get_held_index_of_item(I)

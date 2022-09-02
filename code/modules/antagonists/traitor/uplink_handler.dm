@@ -72,7 +72,7 @@
 
 	return TRUE
 
-/datum/uplink_handler/proc/purchase_item(mob/user, datum/uplink_item/to_purchase)
+/datum/uplink_handler/proc/purchase_item(mob/user, datum/uplink_item/to_purchase, atom/movable/source)
 	if(!can_purchase_item(user, to_purchase))
 		return
 
@@ -80,7 +80,7 @@
 		item_stock[to_purchase] = to_purchase.limited_stock
 
 	telecrystals -= to_purchase.cost
-	to_purchase.purchase(user, src)
+	to_purchase.purchase(user, src, source)
 
 	if(to_purchase in item_stock)
 		item_stock[to_purchase] -= 1

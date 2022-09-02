@@ -379,7 +379,10 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 	var/turf/T = get_turf(src)
 	var/sound/alert_sound = sound('sound/effects/alert.ogg')
 	for(var/mob/mobs as anything in GLOB.mob_list)
-		if(mobs.z != z && !(SSmapping.level_trait(z, ZTRAITS_STATION) && SSmapping.level_trait(mobs.z, ZTRAITS_STATION)))
+		var/turf/mob_turf = get_turf(mobs)
+		if(!istype(mob_turf))
+			continue
+		if(!is_valid_z_level(T, mob_turf))
 			continue
 		mobs.update_gravity(mobs.has_gravity())
 		if(mobs.client)
@@ -445,7 +448,7 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 /// Gravity generator instruction guide
 /obj/item/paper/guides/jobs/engi/gravity_gen
 	name = "paper- 'Generate your own gravity!'"
-	info = {"<h1>Gravity Generator Instructions For Dummies</h1>
+	default_raw_text = {"<h1>Gravity Generator Instructions For Dummies</h1>
 	<p>Surprisingly, gravity isn't that hard to make! All you have to do is inject deadly radioactive minerals into a ball of
 	energy and you have yourself gravity! You can turn the machine on or off when required.
 	The generator produces a very harmful amount of gravity when enabled, so don't stay close for too long.</p>

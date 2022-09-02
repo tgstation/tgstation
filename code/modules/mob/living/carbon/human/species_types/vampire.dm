@@ -18,9 +18,6 @@
 		BLOOD_CLANS,
 	)
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
-		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
 		TRAIT_NOHUNGER,
 	)
@@ -59,9 +56,6 @@
 	vampire.blood_volume -= 0.125 * delta_time
 	if(vampire.blood_volume <= BLOOD_VOLUME_SURVIVE)
 		to_chat(vampire, span_danger("You ran out of blood!"))
-		var/obj/shapeshift_holder/holder = locate() in vampire
-		if(holder)
-			holder.shape.dust() //vampires do not have batform anymore, but this would still lead to very weird stuff with other shapeshift holders
 		vampire.dust()
 	var/area/A = get_area(vampire)
 	if(istype(A, /area/station/service/chapel))

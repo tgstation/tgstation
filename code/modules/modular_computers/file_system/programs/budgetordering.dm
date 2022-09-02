@@ -187,7 +187,7 @@
 				SSshuttle.shuttle_loan.loan_shuttle()
 				computer.say("The supply shuttle has been loaned to CentCom.")
 				computer.investigate_log("[key_name(usr)] accepted a shuttle loan event.", INVESTIGATE_CARGO)
-				log_game("[key_name(usr)] accepted a shuttle loan event.")
+				usr.log_message("accepted a shuttle loan event.", LOG_GAME)
 				. = TRUE
 		if("add")
 			var/id = text2path(params["id"])
@@ -234,7 +234,7 @@
 				computer.say("ERROR: Small crates may only be purchased by private accounts.")
 				return
 
-			if(!self_paid && ishuman(usr) && !account)
+			if(!requestonly && !self_paid && ishuman(usr) && !account)
 				var/obj/item/card/id/id_card = card_slot?.GetID()
 				account = SSeconomy.get_dep_account(id_card?.registered_account?.account_job.paycheck_department)
 

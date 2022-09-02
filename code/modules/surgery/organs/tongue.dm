@@ -1,7 +1,7 @@
 /obj/item/organ/internal/tongue
 	name = "tongue"
 	desc = "A fleshy muscle mostly used for lying."
-	icon_state = "tonguenormal"
+	icon_state = "tongue"
 	visual = FALSE
 	zone = BODY_ZONE_PRECISE_MOUTH
 	slot = ORGAN_SLOT_TONGUE
@@ -46,7 +46,7 @@
 /obj/item/organ/internal/tongue/proc/modify_speech(datum/source, list/speech_args)
 	return speech_args[SPEECH_MESSAGE]
 
-/obj/item/organ/internal/tongue/Insert(mob/living/carbon/tongue_owner, special = 0)
+/obj/item/organ/internal/tongue/Insert(mob/living/carbon/tongue_owner, special = FALSE, drop_if_replaced = TRUE)
 	..()
 	if(say_mod && tongue_owner.dna && tongue_owner.dna.species)
 		tongue_owner.dna.species.say_mod = say_mod
@@ -63,7 +63,7 @@
 	if(!sense_of_taste)
 		ADD_TRAIT(tongue_owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
 
-/obj/item/organ/internal/tongue/Remove(mob/living/carbon/tongue_owner, special = 0)
+/obj/item/organ/internal/tongue/Remove(mob/living/carbon/tongue_owner, special = FALSE)
 	. = ..()
 	if(say_mod && tongue_owner.dna && tongue_owner.dna.species)
 		tongue_owner.dna.species.say_mod = initial(tongue_owner.dna.species.say_mod)
@@ -188,7 +188,7 @@
 /obj/item/organ/internal/tongue/fly
 	name = "proboscis"
 	desc = "A freakish looking meat tube that apparently can take in liquids."
-	icon_state = "tonguefly"
+	icon = 'icons/obj/medical/organs/fly_organs.dmi'
 	say_mod = "buzzes"
 	taste_sensitivity = 25 // you eat vomit, this is a mercy
 	modifies_speech = TRUE
@@ -446,7 +446,7 @@
 	// The timerid for our tonal indicator
 	var/tonal_timerid
 
-/obj/item/organ/internal/tongue/tied/Insert(mob/living/carbon/signer)
+/obj/item/organ/internal/tongue/tied/Insert(mob/living/carbon/signer, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	signer.verb_ask = "signs"
 	signer.verb_exclaim = "signs"
@@ -457,7 +457,7 @@
 	ADD_TRAIT(signer, TRAIT_SIGN_LANG, ORGAN_TRAIT)
 	REMOVE_TRAIT(signer, TRAIT_MUTE, ORGAN_TRAIT)
 
-/obj/item/organ/internal/tongue/tied/Remove(mob/living/carbon/speaker, special = 0)
+/obj/item/organ/internal/tongue/tied/Remove(mob/living/carbon/speaker, special = FALSE)
 	..()
 	speaker.verb_ask = initial(speaker.verb_ask)
 	speaker.verb_exclaim = initial(speaker.verb_exclaim)

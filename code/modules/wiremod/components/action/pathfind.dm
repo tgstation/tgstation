@@ -57,7 +57,7 @@
 		return
 
 	var/atom/path_id = id_card.value
-	if(path_id && !istype(path_id, /obj/item/card/id))
+	if(path_id && !isidcard(path_id))
 		path_id = null
 		failed.set_output(COMPONENT_SIGNAL)
 		reason_failed.set_output("Object marked is not an ID! Using no ID instead.")

@@ -14,6 +14,14 @@
 
 /obj/item/poster/Initialize(mapload, obj/structure/sign/poster/new_poster_structure)
 	. = ..()
+
+	var/static/list/hovering_item_typechecks = list(
+		/obj/item/shard = list(
+			SCREENTIP_CONTEXT_LMB = "Booby trap poster",
+		),
+	)
+	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
+
 	poster_structure = new_poster_structure
 	if(!new_poster_structure && poster_type)
 		poster_structure = new poster_type(src)
@@ -31,6 +39,20 @@
 		name = "[name] - [poster_structure.original_name]"
 		//If the poster structure is being deleted something has gone wrong, kill yourself off too
 		RegisterSignal(poster_structure, COMSIG_PARENT_QDELETING, .proc/react_to_deletion)
+
+/obj/item/poster/attackby(obj/item/I, mob/user, params)
+	if(!istype(I, /obj/item/shard))
+		return ..()
+
+	if (poster_structure.trap?.resolve())
+		to_chat(user, span_warning("This poster is already booby-trapped!"))
+		return
+
+	if(!user.transferItemToLoc(I, poster_structure))
+		return
+
+	poster_structure.trap = WEAKREF(I)
+	to_chat(user, span_notice("You conceal the [I.name] inside the rolled up poster."))
 
 /obj/item/poster/Destroy()
 	poster_structure = null
@@ -68,9 +90,12 @@
 	var/poster_item_desc = "This hypothetical poster item should not exist, let's be honest here."
 	var/poster_item_icon_state = "rolled_poster"
 	var/poster_item_type = /obj/item/poster
+	///A sharp shard of material can be hidden inside of a poster, attempts to embed when it is torn down.
+	var/datum/weakref/trap
 
 /obj/structure/sign/poster/Initialize(mapload)
 	. = ..()
+	register_context()
 	if(random_basetype)
 		randomise(random_basetype)
 	if(!ruined)
@@ -79,6 +104,23 @@
 		desc = "A large piece of space-resistant printed paper. [desc]"
 
 	AddElement(/datum/element/beauty, 300)
+
+/// Adds contextual screentips
+/obj/structure/sign/poster/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if (!held_item)
+		if (ruined)
+			return .
+		context[SCREENTIP_CONTEXT_LMB] = "Rip up poster"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if (held_item.tool_behaviour == TOOL_WIRECUTTER)
+		if (ruined)
+			context[SCREENTIP_CONTEXT_LMB] = "Clean up remnants"
+			return CONTEXTUAL_SCREENTIP_SET
+		context[SCREENTIP_CONTEXT_LMB] = "Take down poster"
+		return CONTEXTUAL_SCREENTIP_SET
+	return .
 
 /obj/structure/sign/poster/proc/randomise(base_type)
 	var/list/poster_types = subtypesof(base_type)
@@ -98,7 +140,6 @@
 	poster_item_icon_state = initial(selected.poster_item_icon_state)
 	ruined = initial(selected.ruined)
 
-
 /obj/structure/sign/poster/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WIRECUTTER)
 		I.play_tool_sound(src, 100)
@@ -115,14 +156,33 @@
 		return
 	if(ruined)
 		return
+
 	visible_message(span_notice("[user] rips [src] in a single, decisive motion!") )
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 100, TRUE)
+	spring_trap(user)
 
 	var/obj/structure/sign/poster/ripped/R = new(loc)
 	R.pixel_y = pixel_y
 	R.pixel_x = pixel_x
 	R.add_fingerprint(user)
 	qdel(src)
+
+/obj/structure/sign/poster/proc/spring_trap(mob/user)
+	var/obj/item/shard/payload = trap?.resolve()
+	if (!payload)
+		return
+
+	to_chat(user, span_warning("There's something sharp behind this! What the hell?"))
+	if(!can_embed_trap(user) || !payload.tryEmbed(user.get_active_hand(), TRUE))
+		visible_message(span_notice("A [payload.name] falls from behind the poster.") )
+		payload.forceMove(user.drop_location())
+	else
+		SEND_SIGNAL(src, COMSIG_POSTER_TRAP_SUCCEED, user)
+
+/obj/structure/sign/poster/proc/can_embed_trap(mob/living/carbon/human/user)
+	if (!istype(user))
+		return FALSE
+	return (!user.gloves && !HAS_TRAIT(user, TRAIT_PIERCEIMMUNE))
 
 /obj/structure/sign/poster/proc/roll_and_drop(loc)
 	pixel_x = 0
@@ -169,11 +229,14 @@
 			return
 
 		if(iswallturf(src) && user && user.loc == temp_loc) //Let's check if everything is still there
-			to_chat(user, span_notice("You place the poster!"))
+			D.on_placed_poster(user)
 			return
 
 	to_chat(user, span_notice("The poster falls down!"))
 	D.roll_and_drop(get_turf(user))
+
+/obj/structure/sign/poster/proc/on_placed_poster(mob/user)
+	to_chat(user, span_notice("You place the poster!"))
 
 // Various possible posters follow
 

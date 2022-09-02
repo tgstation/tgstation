@@ -181,11 +181,11 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 			log_game("Legion took damage while the necropolis gate was closed and released itself.")
 		else
 			message_admins("[user ? ADMIN_LOOKUPFLW(user):"Unknown"] has released Legion!")
-			log_game("[user ? key_name(user) : "Unknown"] released Legion.")
+			user.log_message("released Legion.", LOG_GAME)
 
 		var/sound/legion_sound = sound('sound/creatures/legion_spawn.ogg')
 		for(var/mob/M in GLOB.player_list)
-			if(M.z == z)
+			if(is_valid_z_level(get_turf(M), T))
 				to_chat(M, span_userdanger("Discordant whispers flood your mind in a thousand voices. Each one speaks your name, over and over. Something horrible has been released."))
 				M.playsound_local(T, null, 100, FALSE, 0, FALSE, pressure_affected = FALSE, sound_to_use = legion_sound)
 				flash_color(M, flash_color = "#FF0000", flash_time = 50)
@@ -266,7 +266,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	if(!islava(T) && !ischasm(T)) //nothing to sink or fall into
 		return
 	var/obj/item/I
-	if(istype(AM, /obj/item))
+	if(isitem(AM))
 		I = AM
 	var/mob/living/L
 	if(isliving(AM))

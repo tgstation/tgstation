@@ -185,7 +185,6 @@
 "bo" = (
 /obj/machinery/airalarm/directional/north{
 	pixel_y = 23;
-	req_access = null;
 	req_access = list("syndicate")
 	},
 /obj/effect/turf_decal/tile/bar,
@@ -352,7 +351,6 @@
 /obj/machinery/light/directional/east,
 /obj/machinery/airalarm/directional/east{
 	pixel_x = 23;
-	req_access = null;
 	req_access = list("syndicate")
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -495,7 +493,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "bS" = (
-/obj/machinery/computer/monitor/secret,
+/obj/machinery/computer/monitor,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -519,7 +517,6 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/machinery/airalarm/directional/north{
 	pixel_y = 23;
-	req_access = null;
 	req_access = list("syndicate")
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -617,7 +614,6 @@
 /obj/machinery/airalarm/unlocked{
 	dir = 1;
 	pixel_y = 23;
-	req_access = null;
 	req_access = list("syndicate")
 	},
 /obj/effect/mapping_helpers/burnt_floor,
@@ -868,9 +864,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cD" = (
-/obj/machinery/mineral/processing_unit_console{
-	machinedir = 8
-	},
+/obj/machinery/mineral/processing_unit_console,
 /turf/closed/wall,
 /area/awaymission/moonoutpost19/syndicate)
 "cE" = (
@@ -945,11 +939,10 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cK" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	name = "Worn-out APC";
-	pixel_y = -25;
-	req_access = list("syndicate");
-	start_charge = 0
+/obj/machinery/power/apc/highcap/ten_k/directional/south{
+	locked = 0;
+	name = "Worn Out APC";
+	start_charge = 100
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -1035,7 +1028,6 @@
 "cS" = (
 /obj/machinery/airalarm/directional/east{
 	pixel_x = 23;
-	req_access = null;
 	req_access = list("syndicate")
 	},
 /obj/machinery/light/broken/directional/east,
@@ -1161,9 +1153,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "df" = (
-/obj/machinery/mineral/stacking_unit_console{
-	machinedir = 8
-	},
+/obj/machinery/mineral/stacking_unit_console,
 /turf/closed/wall,
 /area/awaymission/moonoutpost19/syndicate)
 "dg" = (
@@ -1186,7 +1176,6 @@
 /obj/structure/chair/wood,
 /obj/machinery/airalarm/directional/west{
 	pixel_x = -23;
-	req_access = null;
 	req_access = list("syndicate")
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -1211,7 +1200,6 @@
 "dk" = (
 /obj/machinery/airalarm/directional/east{
 	pixel_x = 23;
-	req_access = null;
 	req_access = list("syndicate")
 	},
 /turf/open/floor/wood{
@@ -2133,7 +2121,7 @@
 /obj/item/reagent_containers/spray/pepper,
 /obj/item/grenade/flashbang,
 /obj/item/storage/belt/security,
-/obj/item/reagent_containers/food/drinks/bottle/beer{
+/obj/item/reagent_containers/cup/glass/bottle/beer{
 	pixel_x = -3;
 	pixel_y = -2
 	},
@@ -2444,7 +2432,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "gA" = (
-/obj/machinery/computer/monitor/secret{
+/obj/machinery/computer/monitor{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -2499,11 +2487,9 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "gG" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	dir = 4;
+/obj/machinery/power/apc/highcap/ten_k/directional/east{
 	locked = 0;
-	name = "Worn-out APC";
-	pixel_x = 25;
+	name = "Worn Out APC";
 	start_charge = 100
 	},
 /obj/effect/turf_decal/tile/purple,
@@ -3109,7 +3095,7 @@
 /area/awaymission/moonoutpost19/research)
 "ic" = (
 /obj/structure/rack,
-/obj/item/paicard{
+/obj/item/pai_card{
 	pixel_x = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -3625,10 +3611,10 @@
 "jm" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/reagent_containers/food/condiment/peppermill{
+/obj/item/reagent_containers/condiment/peppermill{
 	pixel_x = 3
 	},
-/obj/item/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/condiment/saltshaker{
 	pixel_x = -3
 	},
 /obj/machinery/door/poddoor/shutters{
@@ -3801,11 +3787,9 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "jH" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	dir = 1;
+/obj/machinery/power/apc/highcap/ten_k/directional/north{
 	locked = 0;
-	name = "Worn-out APC";
-	pixel_y = 25;
+	name = "Worn Out APC";
 	start_charge = 100
 	},
 /obj/structure/cable,
@@ -3878,7 +3862,7 @@
 /obj/item/book/manual/wiki/barman_recipes{
 	pixel_y = 5
 	},
-/obj/item/reagent_containers/food/drinks/shaker,
+/obj/item/reagent_containers/cup/glass/shaker,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -4047,7 +4031,7 @@
 "kn" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/reagent_containers/glass/rag{
+/obj/item/reagent_containers/cup/rag{
 	pixel_y = 5
 	},
 /obj/machinery/door/poddoor/shutters{
@@ -4822,9 +4806,9 @@
 	name = "kitchen Cabinet";
 	req_access = list("away_maintenance")
 	},
-/obj/item/reagent_containers/food/condiment/flour,
-/obj/item/reagent_containers/food/condiment/flour,
-/obj/item/reagent_containers/food/condiment/sugar,
+/obj/item/reagent_containers/condiment/flour,
+/obj/item/reagent_containers/condiment/flour,
+/obj/item/reagent_containers/condiment/sugar,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/showroomfloor{
 	heat_capacity = 1e+006;
@@ -4852,9 +4836,9 @@
 	name = "refrigerator";
 	req_access = list("away_maintenance")
 	},
-/obj/item/reagent_containers/food/condiment/milk,
-/obj/item/reagent_containers/food/condiment/milk,
-/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/condiment/milk,
+/obj/item/reagent_containers/condiment/milk,
+/obj/item/reagent_containers/condiment/milk,
 /obj/item/storage/fancy/egg_box,
 /turf/open/floor/iron/showroomfloor{
 	heat_capacity = 1e+006;
@@ -4964,15 +4948,15 @@
 /area/awaymission/moonoutpost19/arrivals)
 "mE" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/bottle/whiskey{
+/obj/item/reagent_containers/cup/glass/bottle/whiskey{
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass{
 	pixel_x = 6;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass{
 	pixel_x = 3
 	},
 /turf/open/floor/iron/dark,

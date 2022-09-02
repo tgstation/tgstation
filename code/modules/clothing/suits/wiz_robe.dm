@@ -58,6 +58,7 @@
 /obj/item/clothing/suit/wizrobe
 	name = "wizard robe"
 	desc = "A magnificent, gem-lined robe that seems to radiate power."
+	icon = 'icons/obj/clothing/suits/wizard.dmi'
 	icon_state = "wizard"
 	worn_icon = 'icons/mob/clothing/suits/wizard.dmi'
 	inhand_icon_state = "wizrobe"
@@ -171,5 +172,5 @@
 /obj/item/wizard_armour_charge
 	name = "battlemage shield charges"
 	desc = "A powerful rune that will increase the number of hits a suit of battlemage armour can take before failing.."
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "electricity2"
+	icon = 'icons/effects/anomalies.dmi'
+	icon_state = "flux"

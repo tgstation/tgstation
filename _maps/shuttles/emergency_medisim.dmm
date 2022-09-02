@@ -87,17 +87,17 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "fW" = (
-/obj/item/reagent_containers/glass/bottle/epinephrine{
+/obj/item/reagent_containers/cup/bottle/epinephrine{
 	pixel_x = 6
 	},
-/obj/item/reagent_containers/glass/bottle/multiver{
+/obj/item/reagent_containers/cup/bottle/multiver{
 	pixel_x = -3
 	},
-/obj/item/reagent_containers/glass/bottle/epinephrine{
+/obj/item/reagent_containers/cup/bottle/epinephrine{
 	pixel_x = -3;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/glass/bottle/multiver{
+/obj/item/reagent_containers/cup/bottle/multiver{
 	pixel_x = 6;
 	pixel_y = 8
 	},
@@ -155,10 +155,10 @@
 /area/shuttle/escape/simulation)
 "he" = (
 /obj/structure/rack,
-/obj/item/reagent_containers/food/drinks/soda_cans/tonic,
-/obj/item/reagent_containers/food/drinks/soda_cans/tonic,
-/obj/item/reagent_containers/food/drinks/soda_cans/tonic,
-/obj/item/reagent_containers/food/drinks/soda_cans/tonic,
+/obj/item/reagent_containers/cup/soda_cans/tonic,
+/obj/item/reagent_containers/cup/soda_cans/tonic,
+/obj/item/reagent_containers/cup/soda_cans/tonic,
+/obj/item/reagent_containers/cup/soda_cans/tonic,
 /turf/open/floor/iron/chapel{
 	dir = 4
 	},
@@ -1119,9 +1119,9 @@
 /area/shuttle/escape/simulation)
 "SC" = (
 /obj/structure/rack,
-/obj/item/reagent_containers/food/drinks/soda_cans/cola,
-/obj/item/reagent_containers/food/drinks/soda_cans/cola,
-/obj/item/reagent_containers/food/drinks/soda_cans/cola,
+/obj/item/reagent_containers/cup/soda_cans/cola,
+/obj/item/reagent_containers/cup/soda_cans/cola,
+/obj/item/reagent_containers/cup/soda_cans/cola,
 /turf/open/floor/iron/chapel,
 /area/shuttle/escape/simulation)
 "TE" = (

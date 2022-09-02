@@ -131,6 +131,10 @@
 		/obj/item/wrench/drone,
 		/obj/item/weldingtool/drone,
 		/obj/item/wirecutters/drone,
+		/obj/item/multitool/drone,
+		/obj/item/pipe_dispenser,
+		/obj/item/t_scanner,
+		/obj/item/analyzer,
 	)
 	/// whitelisted drone items, recursive/includes descendants
 	var/list/drone_item_whitelist_recursive = list(
@@ -189,8 +193,8 @@
 	ADD_TRAIT(src, TRAIT_LITERATE, INNATE_TRAIT)
 
 	listener = new(list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z))
-	RegisterSignal(listener, COMSIG_ALARM_TRIGGERED, .proc/alarm_triggered)
-	RegisterSignal(listener, COMSIG_ALARM_CLEARED, .proc/alarm_cleared)
+	RegisterSignal(listener, COMSIG_ALARM_LISTENER_TRIGGERED, .proc/alarm_triggered)
+	RegisterSignal(listener, COMSIG_ALARM_LISTENER_CLEARED, .proc/alarm_cleared)
 	listener.RegisterSignal(src, COMSIG_LIVING_DEATH, /datum/alarm_listener/proc/prevent_alarm_changes)
 	listener.RegisterSignal(src, COMSIG_LIVING_REVIVE, /datum/alarm_listener/proc/allow_alarm_changes)
 

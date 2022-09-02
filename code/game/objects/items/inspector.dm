@@ -150,8 +150,11 @@
 	characters += GLOB.alphabet_upper
 	characters += GLOB.numerals
 
-	info = random_string(rand(180,220), characters)
-	info += "[prob(50) ? "=" : "=="]" //Based64 encoding
+	var/report_text = random_string(rand(180,220), characters)
+	report_text += "[prob(50) ? "=" : "=="]" //Based64 encoding
+
+	add_raw_text(report_text)
+	update_appearance()
 
 /obj/item/paper/report/examine(mob/user)
 	. = ..()
@@ -159,7 +162,7 @@
 		. += span_notice("\The [src] contains data on [scanned_area.name].")
 	else if(scanned_area)
 		. += span_notice("\The [src] contains data on a vague area on station, you should throw it away.")
-	else if(get_info_length())
+	else if(get_total_length())
 		icon_state = "slipfull"
 		. += span_notice("Wait a minute, this isn't an encrypted inspection report! You should throw it away.")
 	else
@@ -349,7 +352,8 @@
 				new_info += pick_list_replacements(CLOWN_NONSENSE_FILE, "non-honk-clown-words")
 			if(1000)
 				new_info += pick_list_replacements(CLOWN_NONSENSE_FILE, "rare")
-	info += new_info.Join()
+	add_raw_text(new_info.Join())
+	update_appearance()
 
 /obj/item/paper/fake_report/examine(mob/user)
 	. = ..()
@@ -357,7 +361,7 @@
 		. += span_notice("\The [src] contains no data on [scanned_area.name].")
 	else if(scanned_area)
 		. += span_notice("\The [src] contains no data on a vague area on station, you should throw it away.")
-	else if(get_info_length())
+	else if(get_total_length())
 		. += span_notice("Wait a minute, this isn't an encrypted inspection report! You should throw it away.")
 	else
 		. += span_notice("Wait a minute, this thing's blank! You should throw it away.")

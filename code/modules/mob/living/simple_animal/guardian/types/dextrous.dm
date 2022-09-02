@@ -43,7 +43,7 @@
 //SLOT HANDLING BULLSHIT FOR INTERNAL STORAGE
 /mob/living/simple_animal/hostile/guardian/dextrous/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
 	if(..())
-		update_inv_hands()
+		update_held_items()
 		if(I == internal_storage)
 			internal_storage = null
 			update_inv_internal_storage()

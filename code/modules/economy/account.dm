@@ -151,7 +151,7 @@
 		return
 	for(var/obj/A in bank_cards)
 		var/icon_source = A
-		if(istype(A, /obj/item/card/id))
+		if(isidcard(A))
 			var/obj/item/card/id/id_card = A
 			icon_source = id_card.get_cached_flat_icon()
 		var/mob/card_holder = recursive_loc_check(A, /mob)

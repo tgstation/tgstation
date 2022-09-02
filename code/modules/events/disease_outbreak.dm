@@ -4,9 +4,11 @@
 	max_occurrences = 1
 	min_players = 10
 	weight = 5
+	category = EVENT_CATEGORY_HEALTH
+	description = "A classic or advanced disease will infect some crewmembers."
 
 /datum/round_event/disease_outbreak
-	announceWhen = 15
+	announce_when = 15
 
 	var/virus_type
 
@@ -17,7 +19,7 @@
 	priority_announce("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", ANNOUNCER_OUTBREAK7)
 
 /datum/round_event/disease_outbreak/setup()
-	announceWhen = rand(15, 30)
+	announce_when = rand(15, 30)
 
 
 /datum/round_event/disease_outbreak/start()
@@ -71,5 +73,5 @@
 			for(var/datum/symptom/S in A.symptoms)
 				name_symptoms += S.name
 			message_admins("An event has triggered a random advanced virus outbreak on [ADMIN_LOOKUPFLW(H)]! It has these symptoms: [english_list(name_symptoms)]")
-			log_game("An event has triggered a random advanced virus outbreak on [key_name(H)]! It has these symptoms: [english_list(name_symptoms)]")
+			log_game("An event has triggered a random advanced virus outbreak on [key_name(H)]! It has these symptoms: [english_list(name_symptoms)].")
 		break

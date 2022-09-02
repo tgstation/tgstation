@@ -20,7 +20,7 @@ We're simply starting out with our definition of what we're modifying. Any atom 
 
 Next, we'll want to define the AI Controller. This is the "brain" of the AI. It starts as a type, but is turned into an instance once the object is instanced.
 
-### Object Declaraction
+### Object Declaration
 
 For clarity, i've included all the variables we're going to set up but haven't yet as nulls. In reality, some of these are always expected to be something and you should take a look at the base controller for which.
 

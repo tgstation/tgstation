@@ -298,7 +298,7 @@
 /area/shuttle/escape)
 "aN" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/food/drinks/bottle/wine,
+/obj/item/reagent_containers/cup/glass/bottle/wine,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},

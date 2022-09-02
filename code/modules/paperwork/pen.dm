@@ -99,7 +99,7 @@
 	name = "Charcoal Stylus"
 	result = /obj/item/pen/charcoal
 	reqs = list(/obj/item/stack/sheet/mineral/wood = 1, /datum/reagent/ash = 30)
-	time = 30
+	time = 3 SECONDS
 	category = CAT_PRIMAL
 
 /obj/item/pen/fountain/captain
@@ -123,7 +123,11 @@
 
 /obj/item/pen/fountain/captain/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 200, 115) //the pen is mightier than the sword
+	AddComponent(/datum/component/butchering, \
+	speed = 20 SECONDS, \
+	effectiveness = 115, \
+	)
+	//the pen is mightier than the sword
 
 /obj/item/pen/fountain/captain/reskin_obj(mob/M)
 	..()
@@ -204,6 +208,14 @@
 			to_chat(user, span_notice("You have successfully reset [O]'s name and description."))
 			O.renamedByPlayer = FALSE
 
+/obj/item/pen/get_writing_implement_details()
+	return list(
+		interaction_mode = MODE_WRITING,
+		font = font,
+		color = colour,
+		use_bold = FALSE,
+	)
+
 /*
  * Sleepypens
  */
@@ -251,7 +263,10 @@
 
 /obj/item/pen/edagger/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, _speed = 6 SECONDS, _butcher_sound = 'sound/weapons/blade1.ogg')
+	AddComponent(/datum/component/butchering, \
+	speed = 6 SECONDS, \
+	butcher_sound = 'sound/weapons/blade1.ogg', \
+	)
 	AddComponent(/datum/component/transforming, \
 		force_on = 18, \
 		throwforce_on = 35, \

@@ -2,6 +2,8 @@
 	name = "Gravity Generator Blackout"
 	typepath = /datum/round_event/gravity_generator_blackout
 	weight = 30
+	category = EVENT_CATEGORY_ENGINEERING
+	description = "Turns off the gravity generator."
 
 /datum/round_event_control/gravity_generator_blackout/canSpawnEvent()
 	var/station_generator_exists = FALSE
@@ -13,9 +15,9 @@
 		return FALSE
 
 /datum/round_event/gravity_generator_blackout
-	announceWhen = 1
-	startWhen = 1
-	announceChance = 33
+	announce_when = 1
+	start_when = 1
+	announce_chance = 33
 
 /datum/round_event/gravity_generator_blackout/announce(fake)
 	priority_announce("Gravnospheric anomalies detected near [station_name()]. Manual reset of generators is required.", "Anomaly Alert", ANNOUNCER_GRANOMALIES)

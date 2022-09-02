@@ -4,6 +4,7 @@
   "version": "4.3.0",
   "dependencies": {
     "@popperjs/core": "^2.9.3",
+    "@types/marked": "^4.0.3",
     "common": "workspace:*",
     "dateformat": "^4.5.1",
     "dompurify": "^2.3.1",

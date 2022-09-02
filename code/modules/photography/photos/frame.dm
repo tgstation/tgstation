@@ -3,7 +3,7 @@
 /obj/item/wallframe/picture
 	name = "picture frame"
 	desc = "The perfect showcase for your favorite deathtrap memories."
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/signs.dmi'
 	custom_materials = list(/datum/material/wood = 2000)
 	flags_1 = 0
 	icon_state = "frame-overlay"
@@ -63,7 +63,7 @@
 /obj/structure/sign/picture_frame
 	name = "picture frame"
 	desc = "Every time you look it makes you laugh."
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/signs.dmi'
 	icon_state = "frame-overlay"
 	custom_materials = list(/datum/material/wood = 2000)
 	var/obj/item/photo/framed
@@ -197,7 +197,7 @@
 	var/portrait_state
 	var/portrait_desc
 
-/obj/structure/sign/picture_frame/portrait/Initialize()
+/obj/structure/sign/picture_frame/portrait/Initialize(mapload)
 	. = ..()
 	switch(rand(1,4))
 		if(1) // Deempisi
@@ -265,7 +265,7 @@
 	del_id_on_destroy = TRUE
 
 ///Generates a persistence id unique to the current map. Every bar should feel a little bit different after all.
-/obj/structure/sign/picture_frame/portrait/bar/Initialize()
+/obj/structure/sign/picture_frame/portrait/bar/Initialize(mapload)
 	if(SSmapping.config.map_path != CUSTOM_MAP_PATH) //skip adminloaded custom maps.
 		persistence_id = "frame_bar_[SSmapping.config.map_name]"
 	return ..()

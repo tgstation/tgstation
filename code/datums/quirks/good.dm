@@ -20,14 +20,12 @@
 	medical_record_text = "Patient was administered the Apathy Evaluation Scale but did not bother to complete it."
 
 /datum/quirk/apathetic/add()
-	var/datum/component/mood/mood = quirk_holder.GetComponent(/datum/component/mood)
-	if(mood)
-		mood.mood_modifier -= 0.2
+	if (quirk_holder.mob_mood)
+		quirk_holder.mob_mood.mood_modifier -= 0.2
 
 /datum/quirk/apathetic/remove()
-	var/datum/component/mood/mood = quirk_holder.GetComponent(/datum/component/mood)
-	if(mood)
-		mood.mood_modifier += 0.2
+	if (quirk_holder.mob_mood)
+		quirk_holder.mob_mood.mood_modifier += 0.2
 
 /datum/quirk/drunkhealing
 	name = "Drunken Resilience"

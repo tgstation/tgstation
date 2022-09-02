@@ -29,7 +29,7 @@
 	/// What this container folds up into when it's empty.
 	var/obj/fold_result = /obj/item/stack/sheet/cardboard
 
-/obj/item/storage/fancy/Initialize()
+/obj/item/storage/fancy/Initialize(mapload)
 	. = ..()
 
 	atom_storage.max_slots = spawn_count
@@ -60,7 +60,7 @@
 	if(contents.len)
 		return
 	new fold_result(user.drop_location())
-	to_chat(user, span_notice("You fold the [src] into [initial(fold_result.name)]."))
+	balloon_alert(user, "folded")
 	user.put_in_active_hand(fold_result)
 	qdel(src)
 
@@ -93,7 +93,7 @@
 	custom_premium_price = PAYCHECK_COMMAND * 1.75
 	contents_tag = "donut"
 
-/obj/item/storage/fancy/donut_box/Initialize()
+/obj/item/storage/fancy/donut_box/Initialize(mapload)
 	. = ..()
 	atom_storage.set_holdable(list(/obj/item/food/donut))
 
@@ -132,15 +132,15 @@
 	inhand_icon_state = "eggbox"
 	icon_state = "eggbox"
 	base_icon_state = "eggbox"
-	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
 	name = "egg box"
 	desc = "A carton for containing eggs."
 	spawn_type = /obj/item/food/egg
 	spawn_count = 12
 	contents_tag = "egg"
 
-/obj/item/storage/fancy/egg_box/Initialize()
+/obj/item/storage/fancy/egg_box/Initialize(mapload)
 	. = ..()
 	atom_storage.set_holdable(list(/obj/item/food/egg))
 
@@ -166,7 +166,7 @@
 /obj/item/storage/fancy/candle_box/attack_self(mob/user)
 	if(!contents.len)
 		new fold_result(user.drop_location())
-		to_chat(user, span_notice("You fold the [src] into [initial(fold_result.name)]."))
+		balloon_alert(user, "folded")
 		user.put_in_active_hand(fold_result)
 		qdel(src)
 
@@ -202,7 +202,7 @@
 	if(contents.len != 0 || !spawn_coupon)
 		return ..()
 
-	to_chat(user, span_notice("You rip the back off \the [src] and get a coupon!"))
+	balloon_alert(user, "ooh, free coupon")
 	var/obj/item/coupon/attached_coupon = new
 	user.put_in_hands(attached_coupon)
 	attached_coupon.generate(rigged_omen)
@@ -213,7 +213,7 @@
 	atom_storage.max_slots = 0
 	return
 
-/obj/item/storage/fancy/cigarettes/Initialize()
+/obj/item/storage/fancy/cigarettes/Initialize(mapload)
 	. = ..()
 	atom_storage.quickdraw = TRUE
 	atom_storage.set_holdable(list(/obj/item/clothing/mask/cigarette, /obj/item/lighter))
@@ -359,7 +359,7 @@
 	spawn_count = 10
 	custom_price = PAYCHECK_LOWER
 
-/obj/item/storage/fancy/rollingpapers/Initialize()
+/obj/item/storage/fancy/rollingpapers/Initialize(mapload)
 	. = ..()
 	atom_storage.set_holdable(list(/obj/item/rollingpaper))
 
@@ -390,7 +390,7 @@
 	spawn_coupon = FALSE
 	display_cigs = FALSE
 
-/obj/item/storage/fancy/cigarettes/cigars/Initialize()
+/obj/item/storage/fancy/cigarettes/cigars/Initialize(mapload)
 	. = ..()
 	atom_storage.set_holdable(list(/obj/item/clothing/mask/cigarette/cigar))
 
@@ -433,13 +433,13 @@
 	inhand_icon_state = "chocolatebox"
 	icon_state = "chocolatebox"
 	base_icon_state = "chocolatebox"
-	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
 	contents_tag = "chocolate"
 	spawn_type = /obj/item/food/tinychocolate
 	spawn_count = 8
 
-/obj/item/storage/fancy/heart_box/Initialize()
+/obj/item/storage/fancy/heart_box/Initialize(mapload)
 	. = ..()
 	atom_storage.set_holdable(list(/obj/item/food/tinychocolate))
 
@@ -454,6 +454,6 @@
 	spawn_type = /obj/item/food/nugget
 	spawn_count = 6
 
-/obj/item/storage/fancy/nugget_box/Initialize()
+/obj/item/storage/fancy/nugget_box/Initialize(mapload)
 	. = ..()
 	atom_storage.set_holdable(list(/obj/item/food/nugget))

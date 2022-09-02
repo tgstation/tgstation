@@ -37,7 +37,7 @@
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		stranger_backseat.key = C.key
-		log_game("[key_name(stranger_backseat)] became [key_name(owner)]'s split personality.")
+		stranger_backseat.log_message("became [key_name(owner)]'s split personality.", LOG_GAME)
 		message_admins("[ADMIN_LOOKUPFLW(stranger_backseat)] became [ADMIN_LOOKUPFLW(owner)]'s split personality.")
 	else
 		qdel(src)
@@ -81,7 +81,7 @@
 	if(!current_backseat.client) //Make sure we never switch to a logged off mob.
 		return
 
-	log_game("[key_name(current_backseat)] assumed control of [key_name(owner)] due to [src]. (Original owner: [current_controller == OWNER ? owner.key : current_backseat.key])")
+	current_backseat.log_message("assumed control of [key_name(owner)] due to [src]. (Original owner: [current_controller == OWNER ? owner.key : current_backseat.key])", LOG_GAME)
 	to_chat(owner, span_userdanger("You feel your control being taken away... your other personality is in charge now!"))
 	to_chat(current_backseat, span_userdanger("You manage to take control of your body!"))
 

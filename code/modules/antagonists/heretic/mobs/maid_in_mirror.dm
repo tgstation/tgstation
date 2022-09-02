@@ -15,7 +15,7 @@
 	melee_damage_lower = 12
 	melee_damage_upper = 16
 	sight = SEE_MOBS | SEE_OBJS | SEE_TURFS
-	deathmessage = "shatters and vanishes, releasing a gust of cold air."
+	death_message = "shatters and vanishes, releasing a gust of cold air."
 	loot = list(
 		/obj/item/shard,
 		/obj/effect/decal/cleanable/ash,

@@ -3,9 +3,6 @@
 //Can hear deadchat, but are NOT normal ghosts and do NOT have x-ray vision
 //Admin-spawn or random event
 
-#define INVISIBILITY_REVENANT 50
-#define REVENANT_NAME_FILE "revenant_names.json"
-
 /mob/living/simple_animal/revenant
 	name = "revenant"
 	desc = "A malevolent spirit."
@@ -95,6 +92,9 @@
 
 	var/datum/action/cooldown/spell/aoe/revenant/malfunction/shuttle_go_emag = new(src)
 	shuttle_go_emag.Grant(src)
+
+	var/datum/action/cooldown/spell/aoe/revenant/haunt_object/toolbox_go_bonk = new(src)
+	toolbox_go_bonk.Grant(src)
 
 	RegisterSignal(src, COMSIG_LIVING_BANED, .proc/on_baned)
 	random_revenant_name()
@@ -482,7 +482,7 @@
 			return
 
 	message_admins("[key_of_revenant] has been [old_key == key_of_revenant ? "re":""]made into a revenant by reforming ectoplasm.")
-	log_game("[key_of_revenant] was [old_key == key_of_revenant ? "re":""]made as a revenant by reforming ectoplasm.")
+	revenant.log_message("was [old_key == key_of_revenant ? "re":""]made as a revenant by reforming ectoplasm.", LOG_GAME)
 	visible_message(span_revenboldnotice("[src] suddenly rises into the air before fading away."))
 
 	revenant.essence = essence

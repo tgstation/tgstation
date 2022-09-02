@@ -4,12 +4,9 @@
 	say_mod = "states"
 	species_traits = list(NOBLOOD, NO_DNA_COPY, NOTRANSSTING)
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
 		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_GENELESS,
 		TRAIT_LIMBATTACHMENT,
-		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
 		TRAIT_NOCLONELOSS,
 		TRAIT_NOFIRE,
@@ -23,6 +20,9 @@
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_TOXIMMUNE,
 	)
+	brute_damage_desc = ROBOTIC_BRUTE_EXAMINE_TEXT
+	burn_damage_desc = ROBOTIC_BURN_EXAMINE_TEXT
+
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	meat = null
 	damage_overlay_type = "synth"

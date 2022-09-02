@@ -4,8 +4,8 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "megaphone"
 	inhand_icon_state = "megaphone"
-	lefthand_file = 'icons/mob/inhands/misc/megaphone_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/megaphone_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/megaphone_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/megaphone_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	siemens_coefficient = 1
 	var/spamcheck = 0

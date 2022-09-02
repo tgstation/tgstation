@@ -39,10 +39,10 @@
 /datum/component/omen/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/check_accident)
 	RegisterSignal(parent, COMSIG_LIVING_STATUS_KNOCKDOWN, .proc/check_slip)
-	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, .proc/check_bless)
+	RegisterSignal(parent, COMSIG_CARBON_MOOD_UPDATE, .proc/check_bless)
 
 /datum/component/omen/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_LIVING_STATUS_KNOCKDOWN, COMSIG_MOVABLE_MOVED, COMSIG_ADD_MOOD_EVENT))
+	UnregisterSignal(parent, list(COMSIG_LIVING_STATUS_KNOCKDOWN, COMSIG_MOVABLE_MOVED, COMSIG_CARBON_MOOD_UPDATE))
 
 /**
  * check_accident() is called each step we take
@@ -112,7 +112,7 @@
 	if(permanent)
 		return
 
-	if(category != "blessing")
+	if (!("blessing" in our_guy.mob_mood.mood_events))
 		return
 
 	qdel(src)
