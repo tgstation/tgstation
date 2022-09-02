@@ -1,6 +1,6 @@
 import { BooleanLike } from '../../common/react';
 import { useBackend } from '../backend';
-import { Box, Button, Section, Flex, Stack, Divider } from '../components';
+import { Box, Button, Section, Flex, Stack } from '../components';
 import { Window } from '../layouts';
 
 type CTFPanelData =
