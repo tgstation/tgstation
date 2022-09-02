@@ -70,7 +70,7 @@
 
 
 /obj/item/organ/internal/appendix/get_availability(datum/species/owner_species)
-	return !(TRAIT_NOHUNGER in owner_species.inherent_traits || NOBLOOD in owner_species.species_traits)
+	return !((TRAIT_NOHUNGER in owner_species.inherent_traits) || (NOBLOOD in owner_species.species_traits))
 
 /obj/item/organ/internal/appendix/Remove(mob/living/carbon/organ_owner, special = FALSE)
 	REMOVE_TRAIT(organ_owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
