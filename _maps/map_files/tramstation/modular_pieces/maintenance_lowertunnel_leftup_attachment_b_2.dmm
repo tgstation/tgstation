@@ -16,6 +16,18 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
+"l" = (
+/obj/modular_map_connector,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
 "q" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/reagent_dispensers/fueltank,
@@ -41,18 +53,6 @@
 /area/station/maintenance/port/central)
 "A" = (
 /turf/template_noop,
-/area/template_noop)
-"F" = (
-/obj/modular_map_connector,
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Maintenance Hatch"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 1
-	},
-/turf/open/floor/iron/smooth,
 /area/template_noop)
 "K" = (
 /obj/effect/decal/cleanable/dirt,
@@ -108,7 +108,7 @@ u
 z
 u
 u
-F
+l
 "}
 (5,1,1) = {"
 M

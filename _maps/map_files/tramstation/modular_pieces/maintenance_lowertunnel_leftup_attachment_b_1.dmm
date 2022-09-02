@@ -22,18 +22,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
-"D" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Maintenance Hatch"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 1
-	},
-/obj/modular_map_connector,
-/turf/open/floor/iron/smooth,
-/area/template_noop)
 "H" = (
 /turf/closed/wall/rock/porous,
 /area/station/maintenance/port/central)
@@ -55,6 +43,18 @@
 "S" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/chair/plastic,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
+"U" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 1
+	},
+/obj/modular_map_connector,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
 "X" = (
@@ -103,7 +103,7 @@ a
 k
 e
 e
-D
+U
 "}
 (5,1,1) = {"
 X

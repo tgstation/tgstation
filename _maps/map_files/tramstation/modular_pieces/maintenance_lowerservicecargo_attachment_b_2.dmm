@@ -19,13 +19,6 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
-"e" = (
-/obj/structure/chair/plastic{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/starboard/greater)
 "g" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -39,19 +32,15 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/greater)
-"h" = (
+"m" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/xeno_spawn,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
 /turf/open/floor/catwalk_floor,
-/area/station/maintenance/starboard/greater)
-"p" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/effect/spawner/random/clothing/costume,
-/turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "q" = (
 /obj/structure/table,
@@ -67,10 +56,13 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "x" = (
+/obj/structure/chair/plastic{
+	dir = 8
+	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/effect/spawner/random/clothing/costume,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "y" = (
@@ -94,11 +86,10 @@
 "D" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
 /area/template_noop)
-"H" = (
-/obj/structure/chair/plastic{
-	dir = 8
-	},
+"N" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet,
+/obj/effect/spawner/random/clothing/costume,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "P" = (
@@ -113,12 +104,22 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/greater)
+"U" = (
+/obj/structure/chair/plastic{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
 "W" = (
 /obj/structure/table,
 /obj/item/trash/candle,
 /obj/structure/life_candle{
-	pixel_y = 4;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/food_or_drink/booze,
@@ -164,19 +165,19 @@ a
 a
 P
 Q
-e
+U
 y
 "}
 (7,1,1) = {"
 a
-x
-h
+N
+m
 q
 y
 "}
 (8,1,1) = {"
 a
-p
+N
 Q
 W
 y
@@ -185,7 +186,7 @@ y
 a
 s
 Q
-H
+x
 y
 "}
 (10,1,1) = {"

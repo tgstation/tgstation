@@ -16,6 +16,18 @@
 /obj/item/pickaxe/silver,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
+"g" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Cargo Storage"
+	},
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
 "h" = (
 /obj/item/stack/ore/iron,
 /turf/open/misc/asteroid,
@@ -63,19 +75,6 @@
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/cargo)
-"B" = (
-/obj/modular_map_root/tramstation/maintenance_upperbarright/attachment_b,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Cargo Storage"
-	},
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 1
-	},
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "C" = (
@@ -238,7 +237,7 @@ r
 r
 a
 C
-B
+g
 r
 "}
 (14,1,1) = {"
