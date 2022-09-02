@@ -21,7 +21,7 @@
 	///Whether this sleeper can be deconstructed and drop the board, if its on mapload.
 	var/deconstructable = FALSE
 	///Message sent when a user enters the machine.
-	var/enter_message = "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
+	var/enter_message = span_boldnotice("You feel cool air surround you. You go numb as your senses turn inward.")
 
 	///List of currently available chems.
 	var/list/available_chems = list()
