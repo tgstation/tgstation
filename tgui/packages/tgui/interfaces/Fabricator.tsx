@@ -2,7 +2,6 @@ import { useBackend, useSharedState } from '../backend';
 import { Stack, Section, Button, Input, Icon, Tabs, Dimmer } from '../components';
 import { Window } from '../layouts';
 import { Material, MaterialAmount, MaterialFormatting, Materials, MATERIAL_KEYS } from './common/Materials';
-import { Fragment } from 'inferno';
 import { sortBy } from 'common/collections';
 
 type MaterialMap = Partial<Record<keyof typeof MATERIAL_KEYS, number>>;
@@ -95,11 +94,6 @@ export const Fabricator = (props, context) => {
     'search_text',
     ''
   );
-  const [displayMatCost, setDisplayMatCost] = useSharedState(
-    context,
-    'display_material_cost',
-    true
-  );
 
   // Sort the designs by name.
   const sortedDesigns = sortBy((design: Design) => design.name)(
@@ -135,7 +129,7 @@ export const Fabricator = (props, context) => {
   const namedCategories = Object.keys(categoryCounts).sort();
 
   return (
-    <Window title={data.fab_name} width={670} height={700}>
+    <Window title={data.fab_name} width={670} height={600}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item grow>
@@ -175,17 +169,10 @@ export const Fabricator = (props, context) => {
                   title="Designs"
                   fill
                   buttons={
-                    <Fragment>
-                      <Button.Checkbox
-                        onClick={() => setDisplayMatCost(!displayMatCost)}
-                        checked={displayMatCost}>
-                        Display Material Costs
-                      </Button.Checkbox>
-                      <Button
-                        content="R&D Sync"
-                        onClick={() => act('sync_rnd')}
-                      />
-                    </Fragment>
+                    <Button
+                      content="R&D Sync"
+                      onClick={() => act('sync_rnd')}
+                    />
                   }>
                   <Stack vertical fill>
                     <Stack.Item>
@@ -320,11 +307,6 @@ const PrintButton = (props: PrintButtonProps, context) => {
   const { act, data } = useBackend<FabricatorData>(context);
   const { design, quantity, available } = props;
 
-  const [displayMatCost] = useSharedState(
-    context,
-    'display_material_cost',
-    true
-  );
   const canPrint = !Object.entries(design.cost).some(
     ([material, amount]) =>
       !available[material] || amount * quantity > (available[material] ?? 0)
@@ -336,17 +318,11 @@ const PrintButton = (props: PrintButtonProps, context) => {
         !canPrint ? 'Fabricator__PrintAmount--disabled' : ''
       }`}
       tooltip={
-        displayMatCost && (
-          <MaterialCost
-            design={design}
-            amount={quantity}
-            available={available}
-          />
-        )
+        <MaterialCost design={design} amount={quantity} available={available} />
       }
       color={'transparent'}
       onClick={() => act('build', { ref: design.id, amount: quantity })}>
-      x{quantity}
+      &times;{quantity}
     </Button>
   );
 };
@@ -355,11 +331,6 @@ const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
   const { act, data } = useBackend<FabricatorData>(context);
   const { design, available } = props;
 
-  const [displayMatCost] = useSharedState(
-    context,
-    'display_material_cost',
-    true
-  );
   const canPrint = !Object.entries(design.cost).some(
     ([material, amount]) =>
       !available[material] || amount > (available[material] ?? 0)
@@ -384,13 +355,7 @@ const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
             }`}
             fluid
             tooltip={
-              displayMatCost && (
-                <MaterialCost
-                  design={design}
-                  amount={1}
-                  available={available}
-                />
-              )
+              <MaterialCost design={design} amount={1} available={available} />
             }
             onClick={() => act('build', { ref: design.id, amount: 1 })}>
             {design.name}
