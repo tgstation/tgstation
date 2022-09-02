@@ -11,13 +11,13 @@ const SentientCreature: Antagonist = {
 	  `,
 
     multiline`
-		This is a blanket preference. The more bening ones include random human 
+		This is a blanket preference. The more benign ones include random human 
 		level intelligence events, the cargorilla, and creatures uplifted via sentience 
 		potions. The less friendly ones include the regal rat, and the boosted 
-		mining elite mobs. A mixed case is mobs travelling on emergency shuttles.
+		mining elite mobs.
 	  `,
   ],
-  category: Category.Other,
+  category: Category.Midround,
 };
 
 export default SentientCreature;

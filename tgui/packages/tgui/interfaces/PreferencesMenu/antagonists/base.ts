@@ -32,5 +32,4 @@ export enum Category {
   Roundstart,
   Midround,
   Latejoin,
-  Other,
 }
