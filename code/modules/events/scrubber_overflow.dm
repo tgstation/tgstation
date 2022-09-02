@@ -96,7 +96,6 @@
 	min_players = 25
 	max_occurrences = 1
 	earliest_start = 35 MINUTES
-	category = EVENT_CATEGORY_ENGINEERING
 	description = "The scrubbers release a tide of moderately harmless froth."
 
 /datum/round_event/scrubber_overflow/threatening
@@ -110,7 +109,6 @@
 	min_players = 35
 	max_occurrences = 1
 	earliest_start = 45 MINUTES
-	category = EVENT_CATEGORY_ENGINEERING
 	description = "The scrubbers release a tide of mildly harmless froth."
 
 /datum/round_event/scrubber_overflow/catastrophic
