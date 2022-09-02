@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Brought a portion of the admin deadsay command up to date. Revenants and EOR players will now see admin deadchat messages in their chat tab."

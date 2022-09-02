@@ -10,6 +10,8 @@
 //#define SEE_INVISIBLE_LEVEL_TWO 45 //currently unused
 //#define INVISIBILITY_LEVEL_TWO 45 //currently unused
 
+#define INVISIBILITY_REVENANT 50
+
 #define INVISIBILITY_OBSERVER 60
 #define SEE_INVISIBLE_OBSERVER 60
 
@@ -28,4 +30,3 @@
 #define VISOR_VISIONFLAGS (1<<2) //all following flags only matter for glasses
 #define VISOR_DARKNESSVIEW (1<<3)
 #define VISOR_INVISVIEW (1<<4)
-

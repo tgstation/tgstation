@@ -96,8 +96,8 @@
 //jaunter tunnel
 /obj/effect/portal/jaunt_tunnel
 	name = "jaunt tunnel"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "bhole3"
+	icon = 'icons/effects/anomalies.dmi'
+	icon_state = "vortex"
 	desc = "A stable hole in the universe made by a wormhole jaunter. Turbulent doesn't even begin to describe how rough passage through one of these is, but at least it will always get you somewhere near a beacon."
 	mech_sized = TRUE //save your ripley
 	innate_accuracy_penalty = 6

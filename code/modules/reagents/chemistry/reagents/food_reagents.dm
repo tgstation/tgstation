@@ -380,6 +380,7 @@
 		if (!(pepper_proof)) // you need both eye and mouth protection
 			if(prob(5))
 				victim.emote("scream")
+			victim.emote("cry")
 			victim.blur_eyes(5) // 10 seconds
 			victim.blind_eyes(3) // 6 seconds
 			victim.set_timed_status_effect(5 SECONDS, /datum/status_effect/confusion, only_if_higher = TRUE)
