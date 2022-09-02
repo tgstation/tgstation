@@ -64,7 +64,7 @@
 
 /datum/design/jackhammer
 	name = "Sonic Jackhammer"
-	desc = "Essentially a handheld planet-cracker. Can drill through walls with ease as well."
+	desc = "Essentially a handheld planet-cracker. Rock walls cower in fear when they hear one of these."
 	id = "jackhammer"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 6000, /datum/material/glass = 2000, /datum/material/silver = 2000, /datum/material/diamond = 6000)
