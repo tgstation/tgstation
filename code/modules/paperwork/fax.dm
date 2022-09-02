@@ -22,7 +22,7 @@
 	/// List of types which should always be allowed to be faxed
 	var/static/list/allowed_types = list(/obj/item/paper, /obj/item/photo, /obj/item/tcgcard, /obj/item/stack/sheet/cardboard,)
 	/// List of types which should be allowed to be faxed if hacked
-	var/static/list/exotic_types = list(/obj/item/food/pizzaslice, /obj/item/food/root_flatbread,
+	var/static/list/exotic_types = list(/obj/item/food/pizzaslice, /obj/item/food/root_flatbread, \
 		/obj/item/throwing_star, /obj/item/stack/spacecash, /obj/item/holochip, /obj/item/card, \
 		/obj/item/stack/sheet/iron, /obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/cloth, \
 		/obj/item/stack/sheet/runed_metal, /obj/item/stack/sheet/bronze, /obj/item/stack/sheet/pizza, /obj/item/stack/sheet/hauntium, \
@@ -125,6 +125,7 @@
 			if (syndicate_network != TRUE && obj_flags != EMAGGED)
 				to_chat(user, span_warning("There is already a fax machine with this name on the network."))
 				return TOOL_ACT_TOOLTYPE_SUCCESS
+		user.log_message("renamed [fax_name] (fax machine) to [new_fax_name].", LOG_GAME)
 		fax_name = new_fax_name
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
@@ -242,13 +243,25 @@
 			var/obj/item/loaded = loaded_item?.resolve()
 			if (!loaded)
 				return
-			if(send(loaded, params["id"]))
+			var/destination = params["id"]
+			if(send(loaded, destination))
+				log_fax(loaded, destination, params["name"])
 				loaded_item = null
 				update_appearance()
 				return TRUE
 		if("history_clear")
 			history_clear()
 			return TRUE
+
+/obj/machinery/fax/proc/log_fax(var/obj/item/sent, var/destination_id, var/name)
+	if (istype(sent, /obj/item/paper))
+		var/obj/item/paper/sent_paper = sent
+		log_paper("[usr] has sent a fax with the message \"[sent_paper.get_raw_text()]\" to [name]/[destination_id].")
+		return
+	if (istype(sent, /obj/item/throwing_star))
+		log_attack("[usr] has faxed [sent] to [name]/[destination_id].]")
+		return
+	log_game("[usr] has faxed [sent] to [name]/[destination_id].]")
 
 /**
  * The procedure for sending a paper to another fax machine.

@@ -21,7 +21,7 @@ Slimecrossing Mobs
 	/// If TRUE, we self-delete (remove ourselves) the next time we turn back into a human
 	var/remove_on_restore = FALSE
 
-/datum/action/cooldown/spell/shapeshift/slime_form/restore_form(mob/living/shape)
+/datum/action/cooldown/spell/shapeshift/slime_form/do_unshapeshift(mob/living/caster)
 	. = ..()
 	if(!.)
 		return

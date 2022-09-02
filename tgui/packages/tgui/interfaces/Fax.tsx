@@ -78,6 +78,7 @@ export const Fax = (props, context) => {
                 onClick={() =>
                   act('send', {
                     id: fax.fax_id,
+                    name: fax.fax_name,
                   })
                 }>
                 {fax.fax_name}

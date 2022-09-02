@@ -127,7 +127,7 @@
 		return
 
 	if(action == "switch_camera")
-		var/c_tag = format_text(params["name"])
+		var/c_tag = params["name"]
 		var/list/cameras = get_available_cameras()
 		var/obj/machinery/camera/selected_camera = cameras[c_tag]
 		active_camera = selected_camera
@@ -303,7 +303,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 
 	INVOKE_ASYNC(src, /atom.proc/interact, usr)
 
-///Sets the monitor's icon to the selected state, and says an announcement 
+///Sets the monitor's icon to the selected state, and says an announcement
 /obj/machinery/computer/security/telescreen/entertainment/proc/notify(on, announcement)
 	if(on && icon_state == icon_state_off)
 		icon_state = icon_state_on
@@ -354,7 +354,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 		"Spears! Camera! Action! LIVE NOW!")
 	/// List of phrases the entertainment console may say when the show ends
 	var/list/tv_enders = list("Thank you for tuning in to the slaughter!",
-		"What a show! And we guarantee next one will be bigger!", 
+		"What a show! And we guarantee next one will be bigger!",
 		"Celebrate the results with Thundermerch!",
 		"This show was brought to you by Nanotrasen.")
 
