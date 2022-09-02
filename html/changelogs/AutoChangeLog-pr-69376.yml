@@ -1,6 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - code_imp: "The time between the round starting and the game like, actually starting has been reduced by 66%"
-  - refactor: "I've slightly changed how ban caches are generated, admins please let me know if anything goes fuckey"
-  - server: "I'm using the blocking_query_timeout config. Make sure it's up to date and all."

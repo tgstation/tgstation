@@ -1,5 +1,0 @@
-author: "vincentiusvin"
-delete-after: True
-changes: 
-  - balance: "CO2 powerloss inhibition now works immediately based on gas composition instead of slowly ramping up."
-  - refactor: "refactored how the SM fetches it's gas info and data. No changes expected except for the co2 thing."

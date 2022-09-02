@@ -1,7 +1,0 @@
-author: "distributivgesetz"
-delete-after: True
-changes: 
-  - bugfix: "Fixed runtime when using AmpCheck without connecting the console with a wire."
-  - bugfix: "Fixed a few runtimes that could occur when using APC controller consoles."
-  - qol: "Sucked soul out of APC controller code and UI."
-  - rscdel: "Removed \"secret\" power monitor console."

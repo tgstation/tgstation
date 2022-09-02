@@ -1,5 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - rscadd: "Shadowpeople now heal from their brains! Their brain-tumor-thingy!"
-  - code_imp: "split up surgery.dmi"
