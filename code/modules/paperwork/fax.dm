@@ -22,7 +22,7 @@
 	/// List of types which should always be allowed to be faxed
 	var/static/list/allowed_types = list(/obj/item/paper, /obj/item/photo, /obj/item/tcgcard, /obj/item/stack/sheet/cardboard,)
 	/// List of types which should be allowed to be faxed if hacked
-	var/static/list/exotic_types = list(/obj/item/food/pizzaslice, /obj/item/food/root_flatbread, \
+	var/static/list/exotic_types = list(/obj/item/food/pizzaslice, /obj/item/food/root_flatbread, /obj/item/food/salami, \
 		/obj/item/throwing_star, /obj/item/stack/spacecash, /obj/item/holochip, /obj/item/card, \
 		/obj/item/stack/sheet/iron, /obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/cloth, \
 		/obj/item/stack/sheet/runed_metal, /obj/item/stack/sheet/bronze, /obj/item/stack/sheet/pizza, /obj/item/stack/sheet/hauntium, \
@@ -253,7 +253,14 @@
 			history_clear()
 			return TRUE
 
-/obj/machinery/fax/proc/log_fax(var/obj/item/sent, var/destination_id, var/name)
+/**
+ * Records logs of bureacratic action
+ * Arguments:
+ * * sent - The object being sent
+ * * destination_id - The unique ID of the fax machine
+ * * name - The friendly name of the fax machine, but these can be spoofed so the ID is also required
+ */
+/obj/machinery/fax/proc/log_fax(obj/item/sent, destination_id, name)
 	if (istype(sent, /obj/item/paper))
 		var/obj/item/paper/sent_paper = sent
 		log_paper("[usr] has sent a fax with the message \"[sent_paper.get_raw_text()]\" to [name]/[destination_id].")
