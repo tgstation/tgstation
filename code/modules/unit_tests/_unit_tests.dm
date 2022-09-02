@@ -87,6 +87,7 @@
 #include "crayons.dm"
 #include "create_and_destroy.dm"
 #include "designs.dm"
+#include "dcs_get_id_from_elements.dm"
 #include "dummy_spawn.dm"
 #include "dynamic_ruleset_sanity.dm"
 #include "egg_glands.dm"
