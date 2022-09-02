@@ -2319,6 +2319,7 @@
 #include "code\modules\antagonists\nukeop\equipment\nuclear_bomb\self_destruct.dm"
 #include "code\modules\antagonists\nukeop\equipment\nuclear_bomb\syndicate_nuke.dm"
 #include "code\modules\antagonists\pirate\pirate.dm"
+#include "code\modules\antagonists\revenant\haunted_item.dm"
 #include "code\modules\antagonists\revenant\revenant.dm"
 #include "code\modules\antagonists\revenant\revenant_abilities.dm"
 #include "code\modules\antagonists\revenant\revenant_antag.dm"
