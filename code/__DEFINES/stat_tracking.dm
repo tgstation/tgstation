@@ -37,7 +37,7 @@
 	} while(FALSE) \
 	usage = TICK_USAGE;
 
-#define SET_COST_LINE \
+#define SET_COST_LINE(...) \
 	do { \
 		var/cost = TICK_USAGE; \
 		_costs["[__LINE__ ]"] += TICK_DELTA_TO_MS(cost - usage);\
