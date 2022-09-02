@@ -1,4 +1,0 @@
-author: "itseasytosee"
-delete-after: True
-changes: 
-  - admin: "Fixed quick admin spawned humans from observes not keeping preferences (sorry)"

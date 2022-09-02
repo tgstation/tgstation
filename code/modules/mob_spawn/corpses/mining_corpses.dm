@@ -65,12 +65,13 @@
 	mask = /obj/item/clothing/mask/gas/explorer
 	shoes = /obj/item/clothing/shoes/workboots/mining
 
-/datum/outfit/consumed_miner/pre_equip(mob/living/carbon/human/ashwalker, visualsOnly = FALSE)
+/datum/outfit/consumed_miner/pre_equip(mob/living/carbon/human/miner, visualsOnly = FALSE)
 	var/regular_uniform = FALSE
 	if(visualsOnly)
 		regular_uniform = TRUE //assume human
 	else
 		var/new_species_type = pick_weight(list(/datum/species/human = 70, /datum/species/lizard = 26, /datum/species/fly = 2, /datum/species/plasmaman = 2))
+		miner.set_species(new_species_type)
 		if(new_species_type != /datum/species/plasmaman)
 			regular_uniform = TRUE
 		else

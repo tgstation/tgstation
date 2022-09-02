@@ -886,7 +886,7 @@
 /area/shuttle/escape)
 "cV" = (
 /obj/machinery/light/directional/north,
-/obj/machinery/computer/monitor/secret,
+/obj/machinery/computer/monitor,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},

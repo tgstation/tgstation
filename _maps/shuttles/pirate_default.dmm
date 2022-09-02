@@ -292,24 +292,6 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/pirate)
-"aB" = (
-/obj/machinery/light/small/directional/east,
-/obj/machinery/computer/monitor/secret{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm/all_access{
-	pixel_y = -24
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/pirate)
 "aC" = (
 /obj/machinery/shuttle_scrambler,
 /obj/effect/decal/cleanable/dirt,
@@ -841,6 +823,13 @@
 /obj/item/wrench,
 /turf/open/floor/plating/airless,
 /area/shuttle/pirate)
+"ey" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "piratebridge"
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
 "ez" = (
 /obj/structure/window/reinforced,
 /obj/structure/frame/machine,
@@ -913,6 +902,24 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
+"sP" = (
+/obj/machinery/light/small/directional/east,
+/obj/machinery/computer/monitor{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm/all_access{
+	pixel_y = -24
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
 "vB" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -967,44 +974,10 @@
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/wood,
 /area/shuttle/pirate)
-"DJ" = (
-/obj/machinery/door/airlock/external/glass/ruin{
-	id_tag = "piratestarboardexternal"
-	},
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/docking_port/mobile/pirate{
-	dwidth = 11;
-	height = 16;
-	launch_status = 0;
-	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
-	name = "Pirate Ship";
-	port_direction = 2;
-	width = 17
-	},
-/obj/docking_port/stationary{
-	dwidth = 11;
-	height = 16;
-	shuttle_id = "pirateship_home";
-	name = "Deep Space";
-	width = 17
-	},
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/turf/open/floor/plating,
-/area/shuttle/pirate)
 "ED" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/tank_dispenser/oxygen,
-/turf/open/floor/plating,
-/area/shuttle/pirate)
-"FX" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "piratebridge"
-	},
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "Gk" = (
@@ -1090,6 +1063,33 @@
 	},
 /turf/open/floor/wood,
 /area/shuttle/pirate)
+"TU" = (
+/obj/machinery/door/airlock/external/glass/ruin{
+	id_tag = "piratestarboardexternal"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/docking_port/mobile/pirate{
+	dwidth = 11;
+	height = 16;
+	launch_status = 0;
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
+	name = "Pirate Ship";
+	port_direction = 2;
+	width = 17
+	},
+/obj/docking_port/stationary{
+	dwidth = 11;
+	height = 16;
+	shuttle_id = "pirateship_home";
+	name = "Deep Space";
+	width = 17
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
 "Ur" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/effect/decal/cleanable/dirt,
@@ -1161,7 +1161,7 @@ af
 af
 af
 af
-FX
+ey
 ay
 Oe
 OL
@@ -1194,8 +1194,8 @@ aR
 af
 af
 af
-FX
-FX
+ey
+ey
 aj
 aj
 aj
@@ -1211,8 +1211,8 @@ aJ
 (7,1,1) = {"
 af
 af
-FX
-FX
+ey
+ey
 aC
 aW
 aj
@@ -1229,7 +1229,7 @@ aj
 (8,1,1) = {"
 af
 af
-FX
+ey
 ab
 ae
 bf
@@ -1247,7 +1247,7 @@ aH
 (9,1,1) = {"
 af
 af
-FX
+ey
 ac
 ag
 am
@@ -1265,7 +1265,7 @@ aK
 (10,1,1) = {"
 af
 af
-FX
+ey
 ad
 ah
 an
@@ -1283,10 +1283,10 @@ er
 (11,1,1) = {"
 af
 af
-FX
-FX
+ey
+ey
 al
-aB
+sP
 aj
 ek
 bA
@@ -1302,8 +1302,8 @@ aj
 af
 af
 af
-FX
-FX
+ey
+ey
 aj
 aj
 aj
@@ -1314,7 +1314,7 @@ ED
 aS
 bZ
 bo
-DJ
+TU
 "}
 (13,1,1) = {"
 af
@@ -1341,7 +1341,7 @@ af
 af
 af
 af
-FX
+ey
 eE
 bC
 bJ

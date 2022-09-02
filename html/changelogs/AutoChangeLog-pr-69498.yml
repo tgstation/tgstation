@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "NT Messenger having their ringtone off will now get their messages displayed in chat again."
