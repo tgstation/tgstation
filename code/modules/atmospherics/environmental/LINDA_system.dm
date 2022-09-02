@@ -102,6 +102,8 @@
 
 /atom/proc/air_update_turf(update = FALSE, remove = FALSE)
 	var/turf/T = get_turf(loc)
+	if(!T)
+		return
 	T.air_update_turf(update, remove)
 
 /**
