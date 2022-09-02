@@ -6,8 +6,8 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_mod"
 	inhand_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	desc = "An AI Module for programming laws to an AI."
 	flags_1 = CONDUCT_1
 	force = 5

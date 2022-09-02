@@ -1,0 +1,175 @@
+2022-09-01:
+  Fikou, thgvr, Snakebitten:
+  - balance: makes the standard quick carry modsuit module have nitrile level carrying
+      speed instead of latex level
+  - qol: environmental bodybags are now always pressurized
+  - rscadd: adds a medical version of the prisoner capture modsuit module, for patient
+      transport, prisoner capture and patient transport now use new medical/security
+      hardlight bodybags, medical one deploying them faster. and security one being
+      able to be locked down. when you move too far out of range the holobag dissipates
+  - rscadd: adds a defibrillator modsuit module, extends shock paddles
+  - rscadd: adds a thread ripper modsuit module, this module temporarily rips away
+      the matter of clothing, to allow stuff like injections, surgery, defibrillation
+      etc through it
+  - rscadd: adds a surgery processor modsuit module, essentially a portable surgery
+      computer like borgs have
+  - bugfix: fixes a bug where you can unwield defibrillator paddles just after starting
+      the do_after to defib onehanded
+  - bugfix: fixes a bug where the modsuit gps would have a broken name when renamed
+  ORCACommander:
+  - bugfix: fixed High capacity inheritance structure
+  RandomGamer123:
+  - bugfix: Stray cargo event pods now don't runtime if a canister supply pack is
+      chosen, meaning that you should actually see them in the pods now
+  coldud13:
+  - bugfix: Increases PDA immersion
+  san7890:
+  - bugfix: An APC and a Television Monitor in MetaStation Engineering Hallway will
+      no longer conflict visually.
+  scriptis:
+  - rscadd: techfab inspect blocks
+  - refactor: techfabs (and circuit imprinters, and protolathes) now use tgui
+2022-09-02:
+  Guillaume Prata:
+  - balance: Anyone with wings or a wagging lizard tail will have a small bonus to
+      their tacklling offense/defense.
+  - balance: Moths and lizards that lose their wings/tail will have worse tackling
+      values instead.
+  - balance: Fly people don't take splatting themselves on windows/walls easily and
+      have a higher chance to get a bad result from that.
+  IndieanaJones:
+  - rscadd: Spiders can now be caught on fire
+  - rscadd: Spiders take significant damage from fly swatters and stamina damage from
+      pesticide
+  - balance: Spiders have been re-balanced. Their toxins can no longer kill but they
+      are not as susceptible to freezing
+  - balance: General stats of spider broodmothers have been buffed with more health,
+      damage, and faster web and egg placement
+  - balance: Flesh spiders cannot regenerate whilst on fire
+  - balance: Simplemobs change their internal temperature twice as fast
+  - bugfix: Basic mobs no longer glitchily catch on fire.
+  Jackal-boop:
+  - bugfix: fixed the HFR fuel input part saying that it can only take tritium and
+      hydrogen
+  Jacquerel:
+  - rscadd: A new kind of anomaly which transforms the area into some other kind of
+      material.
+  - bugfix: Supermatter delaminations can spawn bioscramblers again.
+  - qol: Newly created Shades will be told much more clearly that they're supposed
+      to be bound to their master, if they have one.
+  JohnFulpWillard:
+  - bugfix: NT Messenger having their ringtone off will now get their messages displayed
+      in chat again.
+  LemonInTheDark:
+  - code_imp: The time between the round starting and the game like, actually starting
+      has been reduced by 66%
+  - refactor: I've slightly changed how ban caches are generated, admins please let
+      me know if anything goes fuckey
+  - server: I'm using the blocking_query_timeout config. Make sure it's up to date
+      and all.
+  Melbert:
+  - bugfix: Wabbajacking a shapeshifted mob no longer runtimes horribly. When a shapeshifted
+      mob is wabbajacked, they'll now be removed from their shapeshift and stunned.
+  - bugfix: Transforming via a shapeshift should no longer rob you of your hearing
+      / runechat awareness.
+  - bugfix: Shapeshifting plays nicer with holoparasites.
+  - bugfix: Being polymorphed from a xeno to a non-xeno correctly makes you a non-xeno
+  - refactor: Refactored shapeshifting, the shapeshift holder is now a status effect
+      instead of an object.
+  - refactor: Heretic worm form is a shapeshift spell now, this might have some minor
+      behavioral changes but should overall be the same.
+  - refactor: Refactored Wabbajack (+ cursed pool). Overall a bit more clean / consistent
+      behavior.
+  - balance: 'Heretic: Curses have been reworked. You can now curse any member of
+      the crew, granted they''re not too far away. If you additionally provide an
+      item in the ritual containing a sample of the target''s blood or fingerprints,
+      the curse''s duration will be increased and have its range uncapped.'
+  - balance: 'Heretic: The Curse of Corrosion has been nerfed slightly due to this
+      rework, and can no longer cause vital organs to fail.'
+  - balance: 'Heretic: The Living Heart should now provide better directions, and
+      had its cooldown halved to 4 seconds.'
+  - balance: 'Heretic: Leeching Walk (rust healing) now restores lost blood.'
+  - balance: 'Heretic: If you apply Amok (Entropic Plume) to someone holding a gun,
+      they''ll try to shoot it at people nearby.'
+  - bugfix: Entropic Plume's effect now blinds, as it should.
+  - bugfix: Entropic Plume no longer sometimes applies the stink effect forever.
+  - bugfix: Entropic Plume no longer always applies the lowest amount of poison, and
+      properly scales on distance.
+  - bugfix: Fixed an exploit which allowed people to figure out if a Heretic's heart
+      was a previously a Living Heart after being removed.
+  - bugfix: If a heretic is fully healed by something (such as ahealed), they'll not
+      lose their living heart
+  Mothblocks:
+  - qol: Windows from outside the station now get the RCD reconstruction benefits,
+      just like walls and floors.
+  Profakos:
+  - balance: Heads are no longer tasked to kill their own pets
+  RandomGamer123:
+  - bugfix: Putting a budget card into NIRN now gives the proper error message if
+      you are trying to buy something privately, and treat you as a normal cargo request
+      order by someone without any permissions otherwise
+  - bugfix: NIRN orders should now charge the department that bought it only if a
+      head of staff ordered it
+  Rhials:
+  - code_imp: Removes erroneous code from bananium meteor. This should not affect
+      players in any way.
+  - spellcheck: Fixed a typo when trying to fasten in an APC board before inserting
+      it.
+  Sealed101:
+  - bugfix: Fixed autonamed/newly-built security cameras in areas using \improper
+      in their name showing up as static in security camera consoles. No, this is
+      the first attempt to do so, why do you ask?
+  ShizCalev:
+  - bugfix: bodybags / crates will now be explicit about what is ontop of them if
+      you can't close them due to other bodybags / crates being in the same tile.
+  - bugfix: Monkeys can now actually resist things!
+  - bugfix: Headless humans can no longer receive facial creampies.
+  - bugfix: MMI piloted mecha can now open doors using access granted through the
+      ID card reader!
+  - bugfix: Mecha will now properly open doors when approaching from unrestricted
+      sides.
+  - bugfix: Supplypods can no longer be destroyed by explosions BEFORE they land.
+  - qol: 'Added multi-z support to: Wizard teleporting, AI law upload computers, chemical
+      / tracking implants, robotics control consoles, camera bugs, blob spores, and
+      the apocalypse rune''s visual effects.'
+  Y0SH1M4S73R:
+  - bugfix: Fixes a couple of hard-deletes related to lua signal handlers.
+  - admin: The lua function `SS13.await` can now await non-sleeping, but extremely
+      expensive procs, such as `getFlatIcon`
+  distributivgesetz:
+  - bugfix: Fixed runtime when using AmpCheck without connecting the console with
+      a wire.
+  - bugfix: Fixed a few runtimes that could occur when using APC controller consoles.
+  - qol: Sucked soul out of APC controller code and UI.
+  - rscdel: Removed "secret" power monitor console.
+  dragomagol:
+  - rscadd: Re-adds the scrubber overflow event as a random event
+  - bugfix: Fried chicken, beef wellington, corned beef, full english, spider eggs,
+      spiderlings, and hot dogs should have their proper items
+  itseasytosee:
+  - admin: Fixed quick admin spawned humans from observes not keeping preferences
+      (sorry)
+  kawoppi:
+  - rscadd: added an animation for using the *cry emote
+  - rscadd: getting peppersprayed causes you to cry
+  - code_imp: the blush overlay is now affected by the face offset
+  ma44:
+  - code_imp: Trader NPCs have been given some needed frontend and backend changes
+  timothymtorres:
+  - bugfix: Fix legion dead miners not spawning species
+  - bugfix: Fix slimepeople soft landing showing message for stairs and self
+  - qol: heretic sacrifices will drop their legcuffs before entering the minigame
+      (bolas, bear traps)
+  - bugfix: Fix space bartender not having access to kitchen locker in away mission
+  tralezab:
+  - bugfix: Monkeys can correctly find weapons again
+  - rscadd: Shadowpeople now heal from their brains! Their brain-tumor-thingy!
+  - code_imp: split up surgery.dmi
+  vincentiusvin:
+  - balance: CO2 powerloss inhibition now works immediately based on gas composition
+      instead of slowly ramping up.
+  - refactor: refactored how the SM fetches it's gas info and data. No changes expected
+      except for the co2 thing.
+  - balance: nerfs scipaper paper publication money across the board
+  - balance: nerfs scipaper ghost writing partner.
+  - bugfix: fixed plasma mat ignition spitting room temperature plasma.

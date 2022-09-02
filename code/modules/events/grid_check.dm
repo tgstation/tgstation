@@ -7,8 +7,8 @@
 	description = "Turns off all APCs for a while, or until they are manually rebooted."
 
 /datum/round_event/grid_check
-	announceWhen = 1
-	startWhen = 1
+	announce_when = 1
+	start_when = 1
 
 /datum/round_event/grid_check/announce(fake)
 	if(fake || (GLOB.power_failure_message_cooldown > world.time))
