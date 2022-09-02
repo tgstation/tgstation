@@ -8,8 +8,8 @@
 	description = "This anomaly replaces the materials of the surrounding area."
 
 /datum/round_event/anomaly/anomaly_dimensional
-	startWhen = 10
-	announceWhen = 3
+	start_when = 10
+	announce_when = 3
 	anomaly_path = /obj/effect/anomaly/dimensional
 
 /datum/round_event/anomaly/anomaly_dimensional/announce(fake)

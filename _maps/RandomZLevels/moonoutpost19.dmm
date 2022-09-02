@@ -493,7 +493,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "bS" = (
-/obj/machinery/computer/monitor/secret,
+/obj/machinery/computer/monitor,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -2432,7 +2432,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "gA" = (
-/obj/machinery/computer/monitor/secret{
+/obj/machinery/computer/monitor{
 	dir = 1
 	},
 /obj/structure/cable,

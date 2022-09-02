@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes: 
-  - rscadd: "A new kind of anomaly which transforms the area into some other kind of material."
-  - bugfix: "Supermatter delaminations can spawn bioscramblers again."

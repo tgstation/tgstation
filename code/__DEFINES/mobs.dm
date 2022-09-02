@@ -484,6 +484,16 @@
 //Wabbacjack staff projectiles
 #define WABBAJACK (1<<6)
 
+// Randomization keys for calling wabbajack with.
+// Note the contents of these keys are important, as they're displayed to the player
+// Ex: (You turn into a "monkey", You turn into a "xenomorph")
+#define WABBAJACK_MONKEY "monkey"
+#define WABBAJACK_ROBOT "robot"
+#define WABBAJACK_SLIME "slime"
+#define WABBAJACK_XENO "xenomorph"
+#define WABBAJACK_HUMAN "humanoid"
+#define WABBAJACK_ANIMAL "animal"
+
 // Reasons a defibrilation might fail
 #define DEFIB_POSSIBLE (1<<0)
 #define DEFIB_FAIL_SUICIDE (1<<1)

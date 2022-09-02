@@ -1,0 +1,6 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - admin: "the admin modsuit now has the advanced jetpack instead of the normal one"
+  - bugfix: "fixes modsuit chestplate unequipping no longer retracting the suit storage item"
+  - bugfix: "fixes modsuits breaking when going into gulag"

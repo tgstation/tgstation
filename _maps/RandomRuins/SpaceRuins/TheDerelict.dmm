@@ -432,7 +432,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/ai/vault)
 "gx" = (
-/obj/machinery/computer/monitor/secret{
+/obj/machinery/computer/monitor{
 	dir = 4
 	},
 /obj/structure/cable,

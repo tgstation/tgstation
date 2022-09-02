@@ -12,7 +12,7 @@
 	var/area/impact_area
 	var/datum/anomaly_placer/placer = new()
 	var/obj/effect/anomaly/anomaly_path = /obj/effect/anomaly/flux
-	announceWhen = 1
+	announce_when = 1
 
 /datum/round_event/anomaly/setup()
 	impact_area = placer.findValidArea()

@@ -4960,7 +4960,7 @@
 /turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "ns" = (
-/obj/machinery/computer/monitor/secret,
+/obj/machinery/computer/monitor,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/engineering)
@@ -6569,7 +6569,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/cavern2)
 "sv" = (
-/obj/machinery/computer/monitor/secret{
+/obj/machinery/computer/monitor{
 	dir = 8
 	},
 /obj/structure/cable,
@@ -6839,7 +6839,7 @@
 /turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "uj" = (
-/obj/machinery/computer/monitor/secret,
+/obj/machinery/computer/monitor,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/cavern1)
@@ -7257,7 +7257,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
 "wJ" = (
-/obj/machinery/computer/monitor/secret,
+/obj/machinery/computer/monitor,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
@@ -8563,7 +8563,7 @@
 	},
 /area/awaymission/snowdin/cave)
 "Br" = (
-/obj/machinery/computer/monitor/secret,
+/obj/machinery/computer/monitor,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/minipost)
 "Bs" = (
@@ -10916,7 +10916,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
 "KH" = (
-/obj/machinery/computer/monitor/secret{
+/obj/machinery/computer/monitor{
 	dir = 1
 	},
 /obj/structure/cable,

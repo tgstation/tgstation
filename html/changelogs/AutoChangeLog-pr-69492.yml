@@ -1,6 +1,0 @@
-author: "kawoppi"
-delete-after: True
-changes: 
-  - rscadd: "added an animation for using the *cry emote"
-  - rscadd: "getting peppersprayed causes you to cry"
-  - code_imp: "the blush overlay is now affected by the face offset"
