@@ -24,13 +24,13 @@
 	var/engine_state = ENGINE_WELDED //welding shmelding //i love welding
 
 	///The mobile ship we are connected to.
-	var/datum/weakref/connected_ship
+	var/datum/weakref/connected_ship_ref
 
 /obj/structure/shuttle/engine/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	. = ..()
 	if(!port)
 		return FALSE
-	connected_ship = WEAKREF(port)
+	connected_ship_ref = WEAKREF(port)
 	port.engine_list += src
 	port.current_engines++
 	if(mapload)
@@ -46,11 +46,11 @@
  * Called on destroy and when we need to unsync an engine from their ship.
  */
 /obj/structure/shuttle/engine/proc/unsync_ship()
-	var/obj/docking_port/mobile/port = connected_ship?.resolve()
+	var/obj/docking_port/mobile/port = connected_ship_ref?.resolve()
 	if(port)
 		port.engine_list -= src
 		port.current_engines--
-	connected_ship = null
+	connected_ship_ref = null
 
 //Ugh this is a lot of copypasta from emitters, welding need some boilerplate reduction
 /obj/structure/shuttle/engine/can_be_unfasten_wrench(mob/user, silent)
@@ -111,7 +111,7 @@
 /obj/structure/shuttle/engine/proc/alter_engine_power(mod)
 	if(!mod)
 		return
-	var/obj/docking_port/mobile/port = connected_ship?.resolve()
+	var/obj/docking_port/mobile/port = connected_ship_ref?.resolve()
 	if(port)
 		port.alter_engines(mod)
 
