@@ -284,12 +284,12 @@
 			return
 
 		balloon_alert(user, "constructing barricade...")
+		playsound(src, 'sound/items/hammering_wood.ogg', 50, TRUE)
 		if(!do_after(user, 5 SECONDS, target = src) || !plank.use(2) || (locate(/obj/structure/barricade/wooden/crude) in loc))
 			return
 
 		balloon_alert(user, "barricade constructed")
 		// mak sure this gets converted to an .ogg (since it's a .wav) and then credit it to soundcloud (public domain)
-		playsound(src, 'sound/items/hammering_wood.ogg', 50, TRUE)
 		var/obj/structure/barricade/wooden/crude/barricade = new (loc)
 		transfer_fingerprints_to(barricade)
 		return TRUE
