@@ -860,11 +860,7 @@
 	if(timeLeft() > 1 HOURS)
 		return "Hyperspace"
 	else
-		var/obj/docking_port/stationary/dst
-		if(mode == SHUTTLE_RECALL)
-			dst = previous
-		else
-			dst = destination
+		var/obj/docking_port/stationary/dst = (mode == SHUTTLE_RECALL) ? previous : destination
 		return "In transit to [dst?.name || "unknown location"]"
 
 /obj/docking_port/mobile/proc/getStatusText()
