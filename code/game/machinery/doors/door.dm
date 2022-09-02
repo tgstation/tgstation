@@ -284,7 +284,7 @@
 			return
 
 		balloon_alert(user, "constructing barricade...")
-		if(!do_after(user, 5 SECONDS, target = src) || !plank.use(2) || (locate(/obj/structure/barricade/wooden/crude) in loc) ))
+		if(!do_after(user, 5 SECONDS, target = src) || !plank.use(2) || (locate(/obj/structure/barricade/wooden/crude) in loc))
 			return
 
 		balloon_alert(user, "barricade constructed")
