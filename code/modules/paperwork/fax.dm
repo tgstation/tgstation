@@ -22,8 +22,9 @@
 	/// List of types which should always be allowed to be faxed
 	var/static/list/allowed_types = list(/obj/item/paper, /obj/item/photo, /obj/item/tcgcard, /obj/item/stack/sheet/cardboard,)
 	/// List of types which should be allowed to be faxed if hacked
-	var/static/list/exotic_types = list(/obj/item/food/pizzaslice, /obj/item/food/root_flatbread, /obj/item/throwing_star, \
-		/obj/item/card, /obj/item/stack/sheet/iron, /obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/cloth, \
+	var/static/list/exotic_types = list(/obj/item/food/pizzaslice, /obj/item/food/root_flatbread,
+		/obj/item/throwing_star, /obj/item/stack/spacecash, /obj/item/holochip, /obj/item/card, \
+		/obj/item/stack/sheet/iron, /obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/cloth, \
 		/obj/item/stack/sheet/runed_metal, /obj/item/stack/sheet/bronze, /obj/item/stack/sheet/pizza, /obj/item/stack/sheet/hauntium, \
 		/obj/item/stack/sheet/glass, /obj/item/stack/sheet/rglass, /obj/item/stack/sheet/plasmaglass, /obj/item/stack/sheet/plasmarglass, \
 		/obj/item/stack/sheet/titaniumglass, /obj/item/stack/sheet/plastitaniumglass, /obj/item/stack/sheet/mineral/uranium,)
@@ -316,6 +317,8 @@
 	if (!istype(item, /obj/item/stack))
 		return
 	var/obj/item/stack/stack_item = item
+	if (!stack_item.material_type)
+		return
 	var/datum/material/material = GET_MATERIAL_REF(stack_item.material_type)
 	overlay.color = material.color
 	overlay.alpha = material.alpha
@@ -331,6 +334,8 @@
 		return "[state_prefix]_paper"
 	if (istype(item, /obj/item/photo))
 		return "[state_prefix]_photo"
+	if (iscash(item))
+		return "[state_prefix]_cash"
 	if (istype(item, /obj/item/card))
 		return "[state_prefix]_id"
 	if (istype(item, /obj/item/food))
@@ -410,48 +415,48 @@
 	. = ..()
 	if (!held_item)
 		if (!panel_open)
-			context[SCREENTIP_CONTEXT_LMB] = "Open interface."
+			context[SCREENTIP_CONTEXT_LMB] = "Open interface"
 			return CONTEXTUAL_SCREENTIP_SET
-		context[SCREENTIP_CONTEXT_LMB] = "Manipulate wires."
+		context[SCREENTIP_CONTEXT_LMB] = "Manipulate wires"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	switch (held_item.tool_behaviour)
 		if (TOOL_SCREWDRIVER)
 			if (panel_open)
-				context[SCREENTIP_CONTEXT_LMB] = "Close maintenance panel."
+				context[SCREENTIP_CONTEXT_LMB] = "Close maintenance panel"
 				return CONTEXTUAL_SCREENTIP_SET
-			context[SCREENTIP_CONTEXT_LMB] = "Open maintenance panel."
+			context[SCREENTIP_CONTEXT_LMB] = "Open maintenance panel"
 			return CONTEXTUAL_SCREENTIP_SET
 		if (TOOL_WRENCH)
 			if (anchored)
-				context[SCREENTIP_CONTEXT_LMB] = "Unsecure."
+				context[SCREENTIP_CONTEXT_LMB] = "Unsecure"
 				return CONTEXTUAL_SCREENTIP_SET
-			context[SCREENTIP_CONTEXT_LMB] = "Secure."
+			context[SCREENTIP_CONTEXT_LMB] = "Secure"
 			return CONTEXTUAL_SCREENTIP_SET
 		if (TOOL_MULTITOOL)
 			if (panel_open)
-				context[SCREENTIP_CONTEXT_LMB] = "Pulse wires."
+				context[SCREENTIP_CONTEXT_LMB] = "Pulse wires"
 				return CONTEXTUAL_SCREENTIP_SET
-			context[SCREENTIP_CONTEXT_LMB] = "Rename in network."
+			context[SCREENTIP_CONTEXT_LMB] = "Rename in network"
 			return CONTEXTUAL_SCREENTIP_SET
 		if (TOOL_WIRECUTTER)
 			if (!panel_open)
 				return .
-			context[SCREENTIP_CONTEXT_LMB] = "Manipulate wires."
+			context[SCREENTIP_CONTEXT_LMB] = "Manipulate wires"
 			return CONTEXTUAL_SCREENTIP_SET
 
 	if (jammed && is_type_in_list(held_item, list(/obj/item/reagent_containers/spray, /obj/item/soap, /obj/item/reagent_containers/cup/rag)))
-		context[SCREENTIP_CONTEXT_LMB] = "Clean output tray."
+		context[SCREENTIP_CONTEXT_LMB] = "Clean output tray"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	if (panel_open)
 		if (istype(held_item, /obj/item/card/emag))
-			context[SCREENTIP_CONTEXT_LMB] = "Remove network safeties."
+			context[SCREENTIP_CONTEXT_LMB] = "Remove network safeties"
 			return CONTEXTUAL_SCREENTIP_SET
 		return .
 
 	if (is_allowed_type(held_item))
-		context[SCREENTIP_CONTEXT_LMB] = "Insert into fax machine."
+		context[SCREENTIP_CONTEXT_LMB] = "Insert into fax machine"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	return .
