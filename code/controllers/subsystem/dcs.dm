@@ -38,17 +38,18 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 		var/value
 		if(istext(key))
 			value = arguments[key]
-		if(!(istext(key) || isnum(key)))
+		else if (isnum(key))
+			key = "[key]"
+		else
 			key = REF(key)
-		key = "[key]" // Key is stringified so numbers dont break things
 		if(!isnull(value))
 			if(!(istext(value) || isnum(value)))
 				value = REF(value)
-			named_arguments["[key]"] = value
+			named_arguments[key] = value
 		else
-			fullid += "[key]"
+			fullid += key
 
 	if(length(named_arguments))
-		named_arguments = sort_list(named_arguments)
+		named_arguments = sortTim(named_arguments, /proc/cmp_text_asc)
 		fullid += named_arguments
 	return list2params(fullid)
