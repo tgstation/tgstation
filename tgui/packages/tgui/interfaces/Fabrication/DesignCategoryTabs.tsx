@@ -64,7 +64,7 @@ export const DesignCategoryTabs = (props: DesignCategoryTabsProps, context) => {
 
   categories.unshift({
     key: ALL_CATEGORY,
-    displayName: `All Recipes (${totalRecipes})`,
+    displayName: `All Designs (${totalRecipes})`,
   });
 
   return (
