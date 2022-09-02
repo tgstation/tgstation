@@ -23,7 +23,7 @@ GLOBAL_VAR_INIT(tower_of_babel_triggered, FALSE)
 		if(curse_turf && !is_station_level(curse_turf.z))
 			continue
 		if(target.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND))
-			to_chat(target, span_notice("You have a strange feeling for a moment, but then it passes."))
+			to_chat(target, span_notidce("You have a strange feeling for a moment, but then it passes."))
 			continue
 
 		curse_of_babel(target)
@@ -33,10 +33,20 @@ GLOBAL_VAR_INIT(tower_of_babel_triggered, FALSE)
 	if(!istype(to_curse))
 		return
 
-	to_curse.playsound_local(get_turf(to_curse), 'sound/magic/curse.ogg', 40, 1)
-	to_chat(to_curse, span_reallybig(span_hypnophrase("You feel a magical force affecting your speech patterns!")))
-	to_curse.remove_all_languages()
 	var/random_language = pick(GLOB.all_languages)
-	to_curse.grant_language(random_language)
+	to_curse.grant_language(random_language, source=LANGUAGE_CURSE_OF_BABEL)
+	// block every language except the randomized one one
+	to_curse.add_blocked_language(GLOB.all_languages - random_language, LANGUAGE_CURSE_OF_BABEL)
+
+	// this lets us bypass tongue language restrictions except for people who have a tongue disability
+	// (mute, have no tongue, tongue tied, etc.) curse of babel shouldn't let people speak
+	// who had that ability disabled initially
+	ADD_TRAIT(to_curse, TRAIT_CURSE_OF_BABEL, MAGIC_TRAIT)
+
+
+	//to_curse.remove_all_languages()
 	to_curse.remove_blocked_language(random_language, LANGUAGE_ALL)
 	//to_curse.update_atom_languages() // double check if this is neccessary
+
+	to_curse.playsound_local(get_turf(to_curse), 'sound/magic/curse.ogg', 40, 1)
+	to_chat(to_curse, span_reallybig(span_hypnophrase("You feel a magical force affecting your speech patterns!")))
