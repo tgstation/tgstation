@@ -1,8 +1,10 @@
-import { useBackend, useSharedState } from '../backend';
-import { Stack, Section, Button, Input, Icon, Tabs, Dimmer } from '../components';
+import { useBackend, useLocalState, useSharedState } from '../backend';
+import { Stack, Section, Button, Input, Icon, Tabs, Dimmer, Flex } from '../components';
 import { Window } from '../layouts';
-import { Material, MaterialAmount, MaterialFormatting, Materials, MATERIAL_KEYS } from './common/Materials';
+import { Material, MaterialAmount, MaterialFormatting, MATERIAL_KEYS, MaterialIcon } from './common/Materials';
 import { sortBy } from 'common/collections';
+import { formatSiUnit } from '../format';
+import { Component, createRef } from 'inferno';
 
 type MaterialMap = Partial<Record<keyof typeof MATERIAL_KEYS, number>>;
 
@@ -227,11 +229,10 @@ export const Fabricator = (props, context) => {
           </Stack.Item>
           <Stack.Item>
             <Section>
-              <Materials
+              <MaterialBar
                 materials={sortBy((a: Material) => a.name)(
                   data.materials ?? []
                 )}
-                onEject={(ref, amount) => act('remove_mat', { ref, amount })}
               />
             </Section>
           </Stack.Item>
@@ -371,3 +372,163 @@ const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
     </div>
   );
 };
+
+interface MaterialBarProps {
+  materials: Material[];
+}
+
+const MaterialBar = (props: MaterialBarProps, context) => {
+  const { materials } = props;
+
+  return (
+    <Flex wrap>
+      {materials.map((material) => (
+        <Flex.Item key={material.name} grow={1} shrink={1}>
+          <MaterialCounter material={material} />
+        </Flex.Item>
+      ))}
+    </Flex>
+  );
+};
+
+interface MaterialCounterProps {
+  material: Material;
+}
+
+const MaterialCounter = (props: MaterialCounterProps, context) => {
+  const { material } = props;
+  const { act } = useBackend<FabricatorData>(context);
+
+  const [hovering, setHovering] = useLocalState(
+    context,
+    `MaterialCounter${material.name}`,
+    false
+  );
+
+  return (
+    <div
+      onMouseEnter={() => setHovering(true)}
+      onMouseLeave={() => setHovering(false)}
+      className={`MaterialDock ${hovering ? 'MaterialDock--active' : ''}`}>
+      <Stack vertial direction={'column-reverse'}>
+        <Flex
+          direction="column"
+          textAlign="center"
+          onClick={() => act('remove_mat', { ref: material.ref, amount: 1 })}>
+          <Flex.Item>
+            <MaterialIcon material={material.name} />
+          </Flex.Item>
+          <Flex.Item>
+            <AnimatedQuantityLabel targetValue={material.amount} />
+          </Flex.Item>
+        </Flex>
+        {hovering && (
+          <div className={'MaterialDock__Dock'}>
+            <Flex vertical direction={'column-reverse'}>
+              <EjectButton
+                material={material}
+                available={material.amount}
+                amount={5}
+              />
+              <EjectButton
+                material={material}
+                available={material.amount}
+                amount={10}
+              />
+              <EjectButton
+                material={material}
+                available={material.amount}
+                amount={25}
+              />
+              <EjectButton
+                material={material}
+                available={material.amount}
+                amount={50}
+              />
+            </Flex>
+          </div>
+        )}
+      </Stack>
+    </div>
+  );
+};
+
+interface EjectButtonProps {
+  material: Material;
+  available: number;
+  amount: number;
+}
+
+const EjectButton = (props: EjectButtonProps, context) => {
+  const { amount, available, material } = props;
+  const { act } = useBackend<FabricatorData>(context);
+
+  return (
+    <Button
+      fluid
+      color={'transparent'}
+      onClick={() => act('remove_mat', { ref: material.ref, amount })}
+      className={`Fabricator__PrintAmount ${
+        amount * 2_000 > available ? 'Fabricator__PrintAmount--disabled' : ''
+      }`}>
+      &times;{amount}
+    </Button>
+  );
+};
+
+interface AnimatedLabelProps {
+  targetValue: number;
+}
+
+class AnimatedQuantityLabel extends Component<AnimatedLabelProps> {
+  protected ref = createRef<HTMLSpanElement>();
+  protected interval?: NodeJS.Timeout;
+  protected currentValue: number = 0;
+
+  constructor(props: AnimatedLabelProps) {
+    super(props);
+
+    this.currentValue = props.targetValue;
+  }
+
+  componentWillUnmount() {
+    this.stopTicking();
+  }
+
+  shouldComponentUpdate(newProps: AnimatedLabelProps) {
+    if (newProps.targetValue !== this.props.targetValue) {
+      this.startTicking();
+    }
+
+    return false;
+  }
+
+  protected startTicking() {
+    this.stopTicking();
+
+    this.interval = setInterval(() => this.tick(), 100);
+  }
+
+  protected stopTicking() {
+    this.interval ?? clearInterval(this.interval);
+  }
+
+  protected tick() {
+    const { currentValue } = this;
+    const { targetValue } = this.props;
+
+    this.currentValue = currentValue * 0.875 + targetValue * 0.125;
+
+    if (Math.abs(targetValue - currentValue) < 1) {
+      this.stopTicking();
+    }
+
+    if (this.ref.current) {
+      this.ref.current.innerText = formatSiUnit(this.currentValue, 0);
+    }
+  }
+
+  render() {
+    return <span ref={this.ref}>{formatSiUnit(this.currentValue, 0)}</span>;
+  }
+}
