@@ -60,10 +60,7 @@
 
 	var/mob/mob = entered
 
-	if(!mob.client)
-		return
-
-	if(mob.client in tricked_clients)
+	if(!mob.client || mob.client in tricked_clients)
 		return
 
 	var/image/user_overlay = new(parent)
