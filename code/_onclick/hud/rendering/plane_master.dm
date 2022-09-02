@@ -107,6 +107,15 @@
 	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 
+/atom/movable/screen/plane_master/game_world_above_transparent
+	name = "above game world transparent plane master"
+	plane = ABOVE_GAME_TRANSPARENT_PLANE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+	render_relay_plane = GAME_PLANE
+	appearance_flags = PLANE_MASTER
+	blend_mode = BLEND_OVERLAY
+
 /atom/movable/screen/plane_master/massive_obj
 	name = "massive object plane master"
 	plane = MASSIVE_OBJ_PLANE
@@ -293,3 +302,5 @@
 	name = "splashscreen plane"
 	plane = SPLASHSCREEN_PLANE
 	render_relay_plane = RENDER_PLANE_NON_GAME
+
+

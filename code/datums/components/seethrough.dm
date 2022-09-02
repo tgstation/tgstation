@@ -66,6 +66,8 @@
 	var/image/user_overlay = new(parent)
 	user_overlay.loc = parent
 	user_overlay.override = TRUE
+	//Special plane so we can click through the overlay
+	user_overlay.plane = ABOVE_GAME_TRANSPARENT_PLANE
 
 	//These are inherited, but we already use the atom's loc so we end up at double the pixel offset
 	user_overlay.pixel_x = 0
