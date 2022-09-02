@@ -72,7 +72,6 @@
 #define NOTRANSSTING 7
 #define NOZOMBIE 8
 #define NO_UNDERWEAR 9
-#define NOSTOMACH 10
 #define NO_DNA_COPY 11
 #define DRINKSBLOOD 12
 
