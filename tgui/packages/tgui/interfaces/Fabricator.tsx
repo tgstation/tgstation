@@ -135,7 +135,7 @@ export const Fabricator = (props, context) => {
   const namedCategories = Object.keys(categoryCounts).sort();
 
   return (
-    <Window title={data.fab_name} width={670} height={768}>
+    <Window title={data.fab_name} width={670} height={700}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item grow>
