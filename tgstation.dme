@@ -2560,6 +2560,7 @@
 #include "code\modules\capture_the_flag\ctf_game.dm"
 #include "code\modules\capture_the_flag\ctf_map_loading.dm"
 #include "code\modules\capture_the_flag\ctf_panel.dm"
+#include "code\modules\capture_the_flag\ctf_voting.dm"
 #include "code\modules\capture_the_flag\medieval_sim\medisim_classes.dm"
 #include "code\modules\capture_the_flag\medieval_sim\medisim_game.dm"
 #include "code\modules\cards\cardhand.dm"
