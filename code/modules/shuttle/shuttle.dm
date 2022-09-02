@@ -487,8 +487,6 @@
 	highlight("#0f0")
 	#endif
 
-	return INITIALIZE_HINT_LATELOAD //we need to load engines first
-
 // Called after the shuttle is loaded from template, so we make sure they know it's from mapload.
 /obj/docking_port/mobile/proc/linkup(obj/docking_port/stationary/dock)
 	for(var/area/place as anything in shuttle_areas)
