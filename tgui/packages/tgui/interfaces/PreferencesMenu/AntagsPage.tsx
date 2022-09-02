@@ -202,7 +202,6 @@ export const AntagsPage = () => {
         name="Latejoin"
         antagonists={antagsByCategory.get(Category.Latejoin)!}
       />
-
     </Box>
   );
 };
