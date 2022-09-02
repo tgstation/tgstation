@@ -10,3 +10,10 @@
 
 #define OVERMAP_NORTH_SIDE_COORD (world.maxy)
 #define OVERMAP_SOUTH_SIDE_COORD OVERMAP_NORTH_SIDE_COORD - (OVERMAP_SIZE - 1)
+
+//Possible ship states
+#define OVERMAP_SHIP_IDLE "idle"
+#define OVERMAP_SHIP_FLYING "flying"
+#define OVERMAP_SHIP_ACTING "acting"
+#define OVERMAP_SHIP_DOCKING "docking"
+#define OVERMAP_SHIP_UNDOCKING "undocking"

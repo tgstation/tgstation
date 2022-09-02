@@ -15,7 +15,7 @@
 	light_color = LIGHT_COLOR_FLARE
 
 	/// The ship we reside on for ease of access
-//	var/obj/structure/overmap/ship/current_ship //voidcrew todo: ship functionality
+	var/obj/structure/overmap/ship/current_ship //voidcrew todo: ship functionality
 	/// All users currently using this
 	var/list/concurrent_users = list()
 	/// Is this console view only? I.E. cant dock/etc

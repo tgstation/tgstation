@@ -4807,4 +4807,5 @@
 #include "voidcrew\modules\shuttle\engine\liquid.dm"
 #include "voidcrew\modules\shuttle\engine\void.dm"
 #include "voidcrew\modules\shuttle\helm\_helm.dm"
+#include "voidcrew\modules\teams\_team.dm"
 // END_INCLUDE
