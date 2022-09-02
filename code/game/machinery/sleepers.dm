@@ -327,7 +327,7 @@
 	circuit = /obj/item/circuitboard/machine/sleeper/party
 	controls_inside = TRUE
 	deconstructable = TRUE
-	enter_message = "<span class='notice'><b>You're surrounded by some funky music inside the chamber. You zone out as you feel waves of krunk vibe within you.</b></span>"
+	enter_message = span_boldnotice("You're surrounded by some funky music inside the chamber. You zone out as you feel waves of krunk vibe within you.")
 
 	//Exclusively uses non-lethal, "fun" chems. At an obvious downside.
 	possible_chems = list(
