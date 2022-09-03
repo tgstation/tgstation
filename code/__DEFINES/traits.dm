@@ -645,6 +645,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// trait that prevents AI controllers from planning detached from ai_status to prevent weird state stuff.
 #define TRAIT_AI_PAUSED "TRAIT_AI_PAUSED"
 
+/// this is used to bypass tongue language restrictions but not tongue disabilities
+#define TRAIT_CURSE_OF_BABEL "curse_of_babel"
+
 //Medical Categories for quirks
 #define CAT_QUIRK_ALL 0
 #define CAT_QUIRK_NOTES 1
