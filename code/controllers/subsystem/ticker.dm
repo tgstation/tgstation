@@ -264,7 +264,7 @@ SUBSYSTEM_DEF(ticker)
 
 	log_world("Game start took [(world.timeofday - init_start)/10]s")
 	round_start_time = world.time
-	INVOKE_ASYNC(SSdbcore, /datum/controller/subsystem/dbcore/proc/SetRoundStart)
+	SSdbcore.SetRoundStart()
 
 	to_chat(world, span_notice("<B>Welcome to [station_name()], enjoy your stay!</B>"))
 	SEND_SOUND(world, sound(SSstation.announcer.get_rand_welcome_sound()))

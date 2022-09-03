@@ -479,7 +479,6 @@
 #include "code\controllers\subsystem\assets.dm"
 #include "code\controllers\subsystem\atoms.dm"
 #include "code\controllers\subsystem\augury.dm"
-#include "code\controllers\subsystem\ban_cache.dm"
 #include "code\controllers\subsystem\blackbox.dm"
 #include "code\controllers\subsystem\blackmarket.dm"
 #include "code\controllers\subsystem\chat.dm"

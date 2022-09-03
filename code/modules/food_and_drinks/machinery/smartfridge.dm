@@ -13,7 +13,7 @@
 	var/base_build_path = /obj/machinery/smartfridge
 	/// Maximum number of items that can be loaded into the machine
 	var/max_n_of_items = 1500
-	/// If the AI is allowed to retrieve items within the machine
+	/// If the AI is allowed to retrive items within the machine
 	var/allow_ai_retrieve = FALSE
 	/// List of items that the machine starts with upon spawn
 	var/list/initial_contents
