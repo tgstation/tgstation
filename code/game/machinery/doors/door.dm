@@ -284,7 +284,7 @@
 			return
 
 		balloon_alert(user, "constructing barricade...")
-		playsound(src, 'sound/items/hammering_wood.ogg', 50, TRUE)
+		playsound(src, 'sound/items/hammering_wood.ogg', 50, vary = TRUE)
 		if(!do_after(user, 5 SECONDS, target = src) || !plank.use(2) || (locate(/obj/structure/barricade/wooden/crude) in loc))
 			return
 
