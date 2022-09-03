@@ -135,8 +135,7 @@
 	for(var/obj/item/organ/organ_being_healed as anything in breather.internal_organs)
 		organ_being_healed.applyOrganDamage(-0.5 * REM * delta_time)
 
-	..()
-	return TRUE
+	return ..()
 
 /datum/reagent/zauker
 	name = "Zauker"
