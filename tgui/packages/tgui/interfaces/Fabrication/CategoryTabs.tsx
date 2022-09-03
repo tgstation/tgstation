@@ -4,7 +4,7 @@ import { Stack, Section, Tabs } from '../../components';
 /**
  * A single category in a category tab list.
  */
-export interface Category {
+export type Category = {
   /**
    * The human-readable name of this category.
    */
@@ -14,12 +14,12 @@ export interface Category {
    * The key used to identify this category.
    */
   key: string;
-}
+};
 
 /**
  * The properties of a category tab list.
  */
-export interface CategoryTabsProps {
+export type CategoryTabsProps = {
   /**
    * The current key of the selected category.
    */
@@ -34,7 +34,7 @@ export interface CategoryTabsProps {
    * Invoked with a category's key when a new category is selected.
    */
   onCategorySelected?: (newCategory: string) => void;
-}
+};
 
 /**
  * A tab list used for category selection.

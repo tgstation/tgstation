@@ -4,12 +4,12 @@ import { formatSiUnit } from '../../format';
 /**
  * The properties of an animated quantity label.
  */
-export interface AnimatedQuantityLabelProps {
+export type AnimatedQuantityLabelProps = {
   /**
    * The target value to approach.
    */
   targetValue: number;
-}
+};
 
 /**
  * Quantity labels are animated at roughly 60 frames per second.

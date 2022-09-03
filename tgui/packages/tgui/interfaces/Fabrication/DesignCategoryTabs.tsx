@@ -16,7 +16,7 @@ const BLACKLISTED_CATEGORIES: Record<string, boolean> = {
   'hacked': true,
 };
 
-export interface DesignCategoryTabsProps {
+export type DesignCategoryTabsProps = {
   /**
    * The designs to generate categories from.
    */
@@ -31,7 +31,7 @@ export interface DesignCategoryTabsProps {
    * Invoked when the user selects a new category.
    */
   onCategorySelected?: (newCategory: string) => void;
-}
+};
 
 /**
  * A list of tabs generated on the fly from a number of techfab designs.

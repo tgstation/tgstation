@@ -2,7 +2,7 @@ import { Design, MaterialMap } from './Types';
 import { Stack } from '../../components';
 import { MaterialAmount, MATERIAL_KEYS, MaterialFormatting } from '../common/Materials';
 
-export interface DesignCostListProps {
+export type DesignCostListProps = {
   /**
    * The design being printed.
    */
@@ -17,7 +17,7 @@ export interface DesignCostListProps {
    * The materials available to complete the job.
    */
   available: MaterialMap;
-}
+};
 
 /**
  * A horizontal sequence of material costs, indicating the effect of queueing

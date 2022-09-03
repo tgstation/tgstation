@@ -21,7 +21,7 @@ const MINERAL_RARITY: Record<MaterialName, number> = {
   'plastic': 2,
 };
 
-export interface MineralAccessBarProps {
+export type MineralAccessBarProps = {
   /**
    * All materials currently available to the user.
    */
@@ -31,7 +31,7 @@ export interface MineralAccessBarProps {
    * Invoked when the user requests that a material be ejected.
    */
   onEjectRequested?: (material: Material, quantity: number) => void;
-}
+};
 
 /**
  * A bottom-docked bar for viewing and ejecting materials from local storage or
@@ -59,10 +59,10 @@ export const MineralAccessBar = (props: MineralAccessBarProps, context) => {
   );
 };
 
-interface MineralCounterProps {
+type MineralCounterProps = {
   material: Material;
   onEjectRequested: (quantity: number) => void;
-}
+};
 
 const MineralCounter = (props: MineralCounterProps, context) => {
   const { material, onEjectRequested } = props;
@@ -125,12 +125,12 @@ const MineralCounter = (props: MineralCounterProps, context) => {
   );
 };
 
-interface EjectButtonProps {
+type EjectButtonProps = {
   material: Material;
   available: number;
   amount: number;
   onEject: (quantity: number) => void;
-}
+};
 
 const EjectButton = (props: EjectButtonProps, context) => {
   const { amount, available, material, onEject } = props;

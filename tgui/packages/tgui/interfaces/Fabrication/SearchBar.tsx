@@ -3,7 +3,7 @@ import { Stack, Input, Icon } from '../../components';
 /**
  * The properties of a search bar.
  */
-export interface SearchBarProps {
+export type SearchBarProps = {
   /**
    * The hint displayed in the search bar when it is empty.
    */
@@ -18,7 +18,7 @@ export interface SearchBarProps {
    * Invoked whenever the search text is changed by the user.
    */
   onSearchTextChanged: (newSearchText: string) => void;
-}
+};
 
 /**
  * A simple, stylized search bar.
