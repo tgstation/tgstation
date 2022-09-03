@@ -34,19 +34,6 @@
 	/// If some inconsiderate jerk has had their blood spilled on this window, thus making it cleanable
 	var/bloodied = FALSE
 
-/obj/structure/window/examine(mob/user)
-	. = ..()
-	switch(state)
-		if(WINDOW_SCREWED_TO_FRAME)
-			. += span_notice("The window is <b>screwed</b> to the frame.")
-		if(WINDOW_IN_FRAME)
-			. += span_notice("The window is <i>unscrewed</i> but <b>pried</b> into the frame.")
-		if(WINDOW_OUT_OF_FRAME)
-			if (anchored)
-				. += span_notice("The window is <b>screwed</b> to the floor.")
-			else
-				. += span_notice("The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.")
-
 /obj/structure/window/Initialize(mapload, direct)
 	. = ..()
 	if(direct)
@@ -61,6 +48,7 @@
 
 	if(fulltile)
 		setDir()
+		AddElement(/datum/element/can_barricade)
 
 	//windows only block while reinforced and fulltile, so we'll use the proc
 	real_explosion_block = explosion_block
@@ -70,7 +58,6 @@
 	RegisterSignal(src, COMSIG_OBJ_PAINTED, .proc/on_painted)
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM, AfterRotation = CALLBACK(src,.proc/AfterRotation))
-	register_context()
 
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_EXIT = .proc/on_exit,
@@ -79,12 +66,18 @@
 	if (flags_1 & ON_BORDER_1)
 		AddElement(/datum/element/connect_loc, loc_connections)
 
-/obj/structure/window/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	if(istype(held_item, /obj/item/stack/sheet/mineral/wood) && Adjacent(user) && fulltile)
-		context[SCREENTIP_CONTEXT_LMB] = "Construct barricade"
-		return CONTEXTUAL_SCREENTIP_SET
-
-	return NONE
+/obj/structure/window/examine(mob/user)
+	. = ..()
+	switch(state)
+		if(WINDOW_SCREWED_TO_FRAME)
+			. += span_notice("The window is <b>screwed</b> to the frame.")
+		if(WINDOW_IN_FRAME)
+			. += span_notice("The window is <i>unscrewed</i> but <b>pried</b> into the frame.")
+		if(WINDOW_OUT_OF_FRAME)
+			if (anchored)
+				. += span_notice("The window is <b>screwed</b> to the floor.")
+			else
+				. += span_notice("The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.")
 
 /obj/structure/window/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
@@ -272,27 +265,6 @@
 /obj/structure/window/attackby(obj/item/I, mob/living/user, params)
 	if(!can_be_reached(user))
 		return TRUE //skip the afterattack
-
-	if(!user.combat_mode && istype(I, /obj/item/stack/sheet/mineral/wood))
-		var/obj/item/stack/sheet/mineral/wood/plank = I
-
-		if(plank.get_amount() < PLANK_BARRICADE_AMOUNT)
-			balloon_alert(user, "need two [plank] sheets!")
-			return
-
-		if(!fulltile)
-			balloon_alert(user, "need fulltile window!")
-			return
-
-		balloon_alert(user, "constructing barricade...")
-		playsound(src, 'sound/items/hammering_wood.ogg', 50, vary = TRUE)
-		if(!do_after(user, 5 SECONDS, target = src) || !plank.use(2) || (locate(/obj/structure/barricade/wooden/crude) in loc))
-			return
-
-		balloon_alert(user, "barricade constructed")
-		var/obj/structure/barricade/wooden/crude/barricade = new (loc)
-		barricade.add_fingerprint(user)
-		return TRUE
 
 	add_fingerprint(user)
 	return ..()
