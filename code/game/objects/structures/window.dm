@@ -80,7 +80,7 @@
 		AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/window/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	if(istype(held_item, /obj/item/stack/sheet/mineral/wood) && Adjacent(user))
+	if(istype(held_item, /obj/item/stack/sheet/mineral/wood) && Adjacent(user) && fulltile)
 		context[SCREENTIP_CONTEXT_LMB] = "Construct barricade"
 		return CONTEXTUAL_SCREENTIP_SET
 
@@ -278,6 +278,10 @@
 
 		if(plank.get_amount() < PLANK_BARRICADE_AMOUNT)
 			balloon_alert(user, "need two [plank] sheets!")
+			return
+
+		if(!fulltile)
+			balloon_alert(user, "need fulltile window!")
 			return
 
 		balloon_alert(user, "constructing barricade...")
