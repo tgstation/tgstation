@@ -203,14 +203,12 @@
 
 			target.status = L2.status
 			target.switchcount = L2.switchcount
-			target.rigged = (obj_flags & EMAGGED ? 1 : 0)
 			target.brightness = L2.brightness
 			target.on = target.has_power()
 			target.update()
 			qdel(L2)
-
-			if(target.on && target.rigged)
-				target.explode()
+						//From my understanding the light replaced would rig lights placed into light sockets, despite them not having any plasma in them. Infinite plasma dupe??
+						//Anyways, add func here to add 10 plasma to the light reagent holder when emagged as a replacement for the rigging functionality
 			return
 
 		else
