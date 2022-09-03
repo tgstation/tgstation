@@ -5,7 +5,7 @@
 
 //Do not spawn
 /mob/living/simple_animal/hostile/blob
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/mob/nonhuman-player/blob.dmi'
 	pass_flags = PASSBLOB
 	faction = list(ROLE_BLOB)
 	bubble_icon = "blob"
@@ -236,7 +236,7 @@
 		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 	if(is_zombie)
 		copy_overlays(oldguy, TRUE)
-		var/mutable_appearance/blob_head_overlay = mutable_appearance('icons/mob/blob.dmi', "blob_head")
+		var/mutable_appearance/blob_head_overlay = mutable_appearance('icons/mob/nonhuman-player/blob.dmi', "blob_head")
 		if(overmind)
 			blob_head_overlay.color = overmind.blobstrain.complementary_color
 		color = initial(color)//looks better.
@@ -323,7 +323,7 @@
 
 	if(damagesources)
 		adjustHealth(maxHealth * BLOBMOB_BLOBBERNAUT_HEALTH_DECAY * damagesources * delta_time) //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
-		var/image/I = new('icons/mob/blob.dmi', src, "nautdamage", MOB_LAYER+0.01)
+		var/image/I = new('icons/mob/nonhuman-player/blob.dmi', src, "nautdamage", MOB_LAYER+0.01)
 		I.appearance_flags = RESET_COLOR
 		if(overmind)
 			I.color = overmind.blobstrain.complementary_color

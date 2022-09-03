@@ -104,8 +104,8 @@
 	if(!istype(parent) || parent.getorgan(/obj/item/organ/internal/eyes) != src)
 		CRASH("Generating a body overlay for [src] targeting an invalid parent '[parent]'.")
 
-	var/mutable_appearance/eye_left = mutable_appearance('icons/mob/human_face.dmi', "[eye_icon_state]_l", -BODY_LAYER)
-	var/mutable_appearance/eye_right = mutable_appearance('icons/mob/human_face.dmi', "[eye_icon_state]_r", -BODY_LAYER)
+	var/mutable_appearance/eye_left = mutable_appearance('icons/mob/species/human/human_face.dmi', "[eye_icon_state]_l", -BODY_LAYER)
+	var/mutable_appearance/eye_right = mutable_appearance('icons/mob/species/human/human_face.dmi', "[eye_icon_state]_r", -BODY_LAYER)
 	var/list/overlays = list(eye_left, eye_right)
 
 	if(EYECOLOR in parent.dna?.species.species_traits)
@@ -119,7 +119,7 @@
 
 	// Cry emote overlay
 	if (HAS_TRAIT(parent, TRAIT_CRYING)) // Caused by the *cry emote
-		var/mutable_appearance/tears_overlay = mutable_appearance('icons/mob/human_face.dmi', "tears", -BODY_ADJ_LAYER)
+		var/mutable_appearance/tears_overlay = mutable_appearance('icons/mob/species/human/human_face.dmi', "tears", -BODY_ADJ_LAYER)
 		tears_overlay.color = COLOR_DARK_CYAN
 		overlays += tears_overlay
 
@@ -321,7 +321,7 @@
 
 /obj/item/organ/internal/eyes/robotic/glow/Initialize(mapload)
 	. = ..()
-	mob_overlay = image('icons/mob/human_face.dmi', "eyes_glow_gs")
+	mob_overlay = image('icons/mob/species/human/human_face.dmi', "eyes_glow_gs")
 
 /obj/item/organ/internal/eyes/robotic/glow/Destroy()
 	terminate_effects()

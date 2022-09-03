@@ -1,6 +1,6 @@
 /obj/structure/blob/special/core
 	name = "blob core"
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/mob/nonhuman-player/blob.dmi'
 	icon_state = "blank_blob"
 	desc = "A huge, pulsating yellow mass."
 	max_integrity = BLOB_CORE_MAX_HP
@@ -43,11 +43,11 @@
 
 /obj/structure/blob/special/core/update_overlays()
 	. = ..()
-	var/mutable_appearance/blob_overlay = mutable_appearance('icons/mob/blob.dmi', "blob")
+	var/mutable_appearance/blob_overlay = mutable_appearance('icons/mob/nonhuman-player/blob.dmi', "blob")
 	if(overmind)
 		blob_overlay.color = overmind.blobstrain.color
 	. += blob_overlay
-	. += mutable_appearance('icons/mob/blob.dmi', "blob_core_overlay")
+	. += mutable_appearance('icons/mob/nonhuman-player/blob.dmi', "blob_core_overlay")
 
 /obj/structure/blob/special/core/update_icon()
 	. = ..()

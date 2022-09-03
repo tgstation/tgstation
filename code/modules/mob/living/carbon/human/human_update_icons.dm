@@ -151,7 +151,7 @@ There are several things that need to be remembered:
 		var/icon_file
 
 		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))
-			icon_file = 'icons/mob/mob.dmi'
+			icon_file = 'icons/mob/simple/mob.dmi'
 
 		id_overlay = wear_id.build_worn_icon(default_layer = ID_LAYER, default_icon_file = icon_file)
 
@@ -532,7 +532,7 @@ There are several things that need to be remembered:
 	remove_overlay(LEGCUFF_LAYER)
 	clear_alert("legcuffed")
 	if(legcuffed)
-		overlays_standing[LEGCUFF_LAYER] = mutable_appearance('icons/mob/mob.dmi', "legcuff1", -LEGCUFF_LAYER)
+		overlays_standing[LEGCUFF_LAYER] = mutable_appearance('icons/mob/simple/mob.dmi', "legcuff1", -LEGCUFF_LAYER)
 		apply_overlay(LEGCUFF_LAYER)
 		throw_alert("legcuffed", /atom/movable/screen/alert/restrained/legcuffed, new_master = src.legcuffed)
 
@@ -798,7 +798,7 @@ generate/load female uniform sprites matching all previously decided variables
 	if(HD && !(HAS_TRAIT(src, TRAIT_HUSK)))
 		// lipstick
 		if(lip_style && (LIPS in dna.species.species_traits))
-			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[lip_style]", -BODY_LAYER)
+			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/species/human/human_face.dmi', "lips_[lip_style]", -BODY_LAYER)
 			lip_overlay.color = lip_color
 			if(OFFSET_FACE in dna.species.offset_features)
 				lip_overlay.pixel_x += dna.species.offset_features[OFFSET_FACE][1]
@@ -811,7 +811,7 @@ generate/load female uniform sprites matching all previously decided variables
 			if(parent_eyes)
 				add_overlay(parent_eyes.generate_body_overlay(src))
 			else
-				var/mutable_appearance/missing_eyes = mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER)
+				var/mutable_appearance/missing_eyes = mutable_appearance('icons/mob/species/human/human_face.dmi', "eyes_missing", -BODY_LAYER)
 				if(OFFSET_FACE in dna.species.offset_features)
 					missing_eyes.pixel_x += dna.species.offset_features[OFFSET_FACE][1]
 					missing_eyes.pixel_y += dna.species.offset_features[OFFSET_FACE][2]
