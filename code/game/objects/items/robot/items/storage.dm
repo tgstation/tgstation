@@ -132,7 +132,6 @@
 	. = ..()
 	var/mutable_appearance/arm = mutable_appearance(icon = icon, icon_state = "borg_beaker_apparatus_arm")
 	if(stored)
-		COMPILE_OVERLAYS(stored)
 		stored.pixel_x = 0
 		stored.pixel_y = 0
 		var/mutable_appearance/stored_copy = new /mutable_appearance(stored)
@@ -209,7 +208,6 @@
 	icon_state = null // hides the original icon (otherwise it's drawn underneath)
 	var/mutable_appearance/bag
 	if(stored)
-		COMPILE_OVERLAYS(stored)
 		var/mutable_appearance/stored_organ = new /mutable_appearance(stored)
 		stored_organ.layer = FLOAT_LAYER
 		stored_organ.plane = FLOAT_PLANE
@@ -247,7 +245,6 @@
 	. = ..()
 	var/mutable_appearance/arm = mutable_appearance(icon, "borg_hardware_apparatus_arm1")
 	if(stored)
-		COMPILE_OVERLAYS(stored)
 		stored.pixel_x = -3
 		stored.pixel_y = 0
 		if(!istype(stored, /obj/item/circuitboard))

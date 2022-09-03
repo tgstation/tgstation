@@ -24,24 +24,22 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define CONDUCT_1 (1<<1)
 /// For machines and structures that should not break into parts, eg, holodeck stuff
 #define NODECONSTRUCT_1 (1<<2)
-/// atom queued to SSoverlay
-#define OVERLAY_QUEUED_1 (1<<3)
 /// item has priority to check when entering or leaving
-#define ON_BORDER_1 (1<<4)
+#define ON_BORDER_1 (1<<3)
 ///Whether or not this atom shows screentips when hovered over
-#define NO_SCREENTIPS_1 (1<<5)
+#define NO_SCREENTIPS_1 (1<<4)
 /// Prevent clicking things below it on the same turf eg. doors/ fulltile windows
-#define PREVENT_CLICK_UNDER_1 (1<<6)
+#define PREVENT_CLICK_UNDER_1 (1<<5)
 ///specifies that this atom is a hologram that isnt real
-#define HOLOGRAM_1 (1<<7)
+#define HOLOGRAM_1 (1<<6)
 /// Prevents mobs from getting chainshocked by teslas and the supermatter
-#define SHOCKED_1 (1<<8)
+#define SHOCKED_1 (1<<7)
 ///Whether /atom/Initialize() has already run for the object
-#define INITIALIZED_1 (1<<9)
+#define INITIALIZED_1 (1<<8)
 /// was this spawned by an admin? used for stat tracking stuff.
-#define ADMIN_SPAWNED_1 (1<<10)
+#define ADMIN_SPAWNED_1 (1<<9)
 /// should not get harmed if this gets caught by an explosion?
-#define PREVENT_CONTENTS_EXPLOSION_1 (1<<11)
+#define PREVENT_CONTENTS_EXPLOSION_1 (1<<10)
 /// Should this object be paintable with very dark colors?
 #define ALLOW_DARK_PAINTS_1 (1<<14)
 /// Should this object be unpaintable?
