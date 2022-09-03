@@ -16,5 +16,5 @@
 	rpg_title = "Aç Alfa Gri Kurt"
 
 /datum/job/pug/after_spawn(mob/living/spawned, client/player_client)
-    . = ..()
-    spawned.apply_pref_name(/datum/preference/name/pug, player_client)
+	. = ..()
+	spawned.apply_pref_name(/datum/preference/name/pug, player_client)

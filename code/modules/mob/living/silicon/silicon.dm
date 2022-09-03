@@ -9,7 +9,7 @@
 	see_in_dark = NIGHTVISION_FOV_RANGE
 	bubble_icon = "machine"
 	mob_biotypes = MOB_ROBOTIC
-	deathsound = 'sound/voice/borg_deathsound.ogg'
+	death_sound = 'sound/voice/borg_deathsound.ogg'
 	speech_span = SPAN_ROBOT
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	examine_cursor_icon = null
@@ -83,13 +83,13 @@
 	modularInterface.layer = ABOVE_HUD_PLANE
 	modularInterface.plane = ABOVE_HUD_PLANE
 	modularInterface.saved_identification = real_name || name
-	if(istype(src, /mob/living/silicon/robot))
+	if(iscyborg(src))
 		modularInterface.saved_job = "Cyborg"
 		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/robot)
-	if(istype(src, /mob/living/silicon/ai))
+	if(isAI(src))
 		modularInterface.saved_job = "AI"
 		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/ai)
-	if(istype(src, /mob/living/silicon/pai))
+	if(ispAI(src))
 		modularInterface.saved_job = "pAI Messenger"
 		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/ai)
 

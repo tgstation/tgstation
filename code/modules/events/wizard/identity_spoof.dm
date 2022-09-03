@@ -3,6 +3,7 @@
 	weight = 5
 	typepath = /datum/round_event/wizard/identity_spoof
 	max_occurrences = 1
+	description = "Makes everyone dressed up like a wizard."
 
 /datum/round_event_control/wizard/identity_spoof/canSpawnEvent(players_amt)
 	. = ..()

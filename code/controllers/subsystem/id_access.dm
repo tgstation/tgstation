@@ -456,6 +456,9 @@ SUBSYSTEM_DEF(id_access)
 	id_card.trim_state_override = null
 	id_card.trim_assignment_override = null
 	id_card.sechud_icon_state_override = null
+	id_card.department_color_override = null
+	id_card.department_state_override = null
+	id_card.subdepartment_color_override = null
 
 /**
  * Adds the accesses associated with a trim to an ID card.

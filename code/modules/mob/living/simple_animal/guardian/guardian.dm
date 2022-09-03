@@ -168,7 +168,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		to_chat(src, span_warning("Not a valid name, please try again."))
 		guardianrename()
 		return
-	visible_message(span_notice("Your new name [span_name("[new_name]")] anchors itself in your mind."))
+	to_chat(src, span_notice("Your new name [span_name("[new_name]")] anchors itself in your mind."))
 	fully_replace_character_name(null, new_name)
 
 /mob/living/simple_animal/hostile/guardian/Life(delta_time = SSMOBS_DT, times_fired) //Dies if the summoner dies
@@ -298,7 +298,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/index = get_held_index_of_item(I)
 	if(index)
 		held_items[index] = null
-		update_inv_hands()
+		update_held_items()
 
 	if(I.pulledby)
 		I.pulledby.stop_pulling()
@@ -318,7 +318,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		cut_overlay(I)
 		guardian_overlays[cache_index] = null
 
-/mob/living/simple_animal/hostile/guardian/update_inv_hands()
+/mob/living/simple_animal/hostile/guardian/update_held_items()
 	remove_overlay(GUARDIAN_HANDS_LAYER)
 	var/list/hands_overlays = list()
 	var/obj/item/l_hand = get_item_for_held_index(1)
@@ -345,7 +345,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	apply_overlay(GUARDIAN_HANDS_LAYER)
 
 /mob/living/simple_animal/hostile/guardian/regenerate_icons()
-	update_inv_hands()
+	update_held_items()
 
 //MANIFEST, RECALL, TOGGLE MODE/LIGHT, SHOW TYPE
 
@@ -508,7 +508,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /obj/item/guardiancreator
 	name = "enchanted deck of tarot cards"
 	desc = "An enchanted deck of tarot cards, rumored to be a source of unimaginable power."
-	icon = 'icons/obj/playing_cards.dmi'
+	icon = 'icons/obj/toys/playing_cards.dmi'
 	icon_state = "deck_tarot_full"
 	var/used = FALSE
 	var/theme = "magic"
@@ -608,7 +608,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	G.mind.enslave_mind_to_creator(user)
 	G.copy_languages(user, LANGUAGE_MASTER) // make sure holoparasites speak same language as master
 	G.update_atom_languages()
-	log_game("[key_name(user)] has summoned [key_name(G)], a [guardiantype] holoparasite.")
+	user.log_message("has summoned [key_name(G)], a [guardiantype] holoparasite.", LOG_GAME)
+	G.log_message("was summoned as a [guardiantype] holoparsite.", LOG_GAME)
 	switch(theme)
 		if("tech")
 			to_chat(user, "[G.tech_fluff_string]")
@@ -653,7 +654,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /obj/item/guardiancreator/tech
 	name = "holoparasite injector"
 	desc = "It contains an alien nanoswarm of unknown origin. Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, it requires an organic host as a home base and source of fuel."
-	icon = 'icons/obj/syringe.dmi'
+	icon = 'icons/obj/medical/syringe.dmi'
 	icon_state = "combat_hypo"
 	theme = "tech"
 	mob_name = "Holoparasite"
@@ -674,7 +675,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /obj/item/paper/guides/antag/guardian
 	name = "Holoparasite Guide"
-	info = {"<b>A list of Holoparasite Types</b><br>
+	default_raw_text = {"<b>A list of Holoparasite Types</b><br>
 
 <br>
 <b>Assassin</b>: Does medium damage and takes full damage, but can enter stealth, causing its next attack to do massive damage and ignore armor. However, it becomes briefly unable to recall after attacking from stealth.<br>
@@ -699,7 +700,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /obj/item/paper/guides/antag/guardian/wizard
 	name = "Guardian Guide"
-	info = {"<b>A list of Guardian Types</b><br>
+	default_raw_text = {"<b>A list of Guardian Types</b><br>
 
 <br>
 <b>Assassin</b>: Does medium damage and takes full damage, but can enter stealth, causing its next attack to do massive damage and ignore armor. However, it becomes briefly unable to recall after attacking from stealth.<br>

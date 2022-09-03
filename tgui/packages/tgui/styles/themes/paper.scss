@@ -17,7 +17,7 @@
 );
 @use '../base.scss' with (
   $color-fg: #000000,
-  $color-bg: #ffffff,
+  $color-bg: #dfdfdf,
   $color-bg-grad-spread: 0%,
 );
 
@@ -48,7 +48,10 @@ $font-size: 24px;
   );
 
   // Layouts
-  @include meta.load-css('../layouts/Layout.scss');
+  @include meta.load-css(
+    '../layouts/Layout.scss',
+    $with: ('scrollbar-color-multiplier': -1)
+  );
   @include meta.load-css('../layouts/Window.scss');
   @include meta.load-css(
     '../layouts/TitleBar.scss',
@@ -143,6 +146,10 @@ $font-size: 24px;
       line-height: 17px;
       overflow: visible;
     }
+  }
+
+  .Section__title {
+    border-bottom: none;
   }
 
   .paper-field {

@@ -77,7 +77,7 @@
 	organ_owner.med_hud_set_status()
 	..()
 
-/obj/item/organ/internal/appendix/Insert(mob/living/carbon/organ_owner, special = FALSE)
+/obj/item/organ/internal/appendix/Insert(mob/living/carbon/organ_owner, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	if(.)
 		if(inflamation_stage)

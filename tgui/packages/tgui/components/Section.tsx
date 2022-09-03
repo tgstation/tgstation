@@ -21,23 +21,32 @@ type SectionProps = BoxProps & {
   level?: boolean;
   /** @deprecated Please use `scrollable` property */
   overflowY?: any;
+  /** @member Allows external control of scrolling. */
+  scrollableRef?: RefObject<HTMLDivElement>;
+  /** @member Callback function for the `scroll` event */
+  onScroll?: (this: GlobalEventHandlers, ev: Event) => any;
 };
 
 export class Section extends Component<SectionProps> {
   scrollableRef: RefObject<HTMLDivElement>;
   scrollable: boolean;
+  onScroll?: (this: GlobalEventHandlers, ev: Event) => any;
   scrollableHorizontal: boolean;
 
   constructor(props) {
     super(props);
-    this.scrollableRef = createRef();
+    this.scrollableRef = props.scrollableRef || createRef();
     this.scrollable = props.scrollable;
+    this.onScroll = props.onScroll;
     this.scrollableHorizontal = props.scrollableHorizontal;
   }
 
   componentDidMount() {
     if (this.scrollable || this.scrollableHorizontal) {
       addScrollableNode(this.scrollableRef.current);
+      if (this.onScroll && this.scrollableRef.current) {
+        this.scrollableRef.current.onscroll = this.onScroll;
+      }
     }
   }
 
@@ -57,6 +66,7 @@ export class Section extends Component<SectionProps> {
       scrollable,
       scrollableHorizontal,
       children,
+      onScroll,
       ...rest
     } = this.props;
     const hasTitle = canRender(title) || canRender(buttons);
@@ -80,7 +90,10 @@ export class Section extends Component<SectionProps> {
           </div>
         )}
         <div className="Section__rest">
-          <div ref={this.scrollableRef} className="Section__content">
+          <div
+            ref={this.scrollableRef}
+            onScroll={onScroll}
+            className="Section__content">
             {children}
           </div>
         </div>

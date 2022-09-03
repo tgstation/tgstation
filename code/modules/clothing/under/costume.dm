@@ -252,55 +252,39 @@
 	random_sensor = FALSE
 	can_adjust = FALSE
 
+/obj/item/clothing/under/costume/buttondown
+	gender = PLURAL
+	body_parts_covered = GROIN|LEGS
+	female_sprite_flags = NO_FEMALE_UNIFORM
+	custom_price = PAYCHECK_CREW
+	icon = 'icons/obj/clothing/under/shorts_pants_shirts.dmi'
+	worn_icon = 'icons/mob/clothing/under/shorts_pants_shirts.dmi'
+	species_exception = list(/datum/species/golem)
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/buttondown/slacks
+	name = "buttondown shirt with slacks"
+	desc = "A fancy buttondown shirt with slacks."
+	icon_state = "buttondown_slacks"
+	greyscale_config = /datum/greyscale_config/buttondown_slacks
+	greyscale_config_worn = /datum/greyscale_config/buttondown_slacks_worn
+	greyscale_colors = "#EEEEEE#EE8E2E#222227#D8D39C"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/under/costume/buttondown/shorts
+	name = "buttondown shirt with shorts"
+	desc = "A fancy buttondown shirt with shorts."
+	icon_state = "buttondown_shorts"
+	greyscale_config = /datum/greyscale_config/buttondown_shorts
+	greyscale_config_worn = /datum/greyscale_config/buttondown_shorts_worn
+	greyscale_colors = "#EEEEEE#EE8E2E#222227#D8D39C"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
 /obj/item/clothing/under/costume/jackbros
 	name = "jack bros outfit"
 	desc = "For when it's time to hee some hos."
 	icon_state = "JackFrostUniform"
 	inhand_icon_state = "JackFrostUniform"
-	can_adjust = FALSE
-
-/obj/item/clothing/under/costume/yakuza
-	name = "tojo clan pants"
-	desc = "For those long nights under the traffic cone."
-	icon_state = "MajimaPants"
-	inhand_icon_state = "MajimaPants"
-	can_adjust = FALSE
-
-/obj/item/clothing/under/costume/dutch
-	name = "dutch's suit"
-	desc = "You can feel a <b>god damn plan</b> coming on."
-	icon_state = "DutchUniform"
-	inhand_icon_state = "DutchUniform"
-	can_adjust = FALSE
-
-/obj/item/clothing/under/costume/irs
-	name = "internal revenue service outfit"
-	icon_state = "irs_jumpsuit"
-	inhand_icon_state = "irs_jumpsuit"
-	can_adjust = FALSE
-
-/obj/item/clothing/under/costume/osi
-	name = "O.S.I. jumpsuit"
-	icon_state = "osi_jumpsuit"
-	inhand_icon_state = "osi_jumpsuit"
-	can_adjust = FALSE
-
-/obj/item/clothing/under/costume/tmc
-	name = "Lost MC clothing"
-	icon_state = "tmc_jumpsuit"
-	inhand_icon_state = "tmc_jumpsuit"
-	can_adjust = FALSE
-
-/obj/item/clothing/under/costume/pg
-	name = "powder ganger prison jumpsuit"
-	icon_state = "pg_jumpsuit"
-	inhand_icon_state = "pg_jumpsuit"
-	can_adjust = FALSE
-
-/obj/item/clothing/under/costume/driscoll
-	name = "O'Driscoll outfit"
-	icon_state = "driscoll_jumpsuit"
-	inhand_icon_state = "driscoll_jumpsuit"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/deckers
@@ -309,53 +293,14 @@
 	inhand_icon_state = "decker_jumpsuit"
 	can_adjust = FALSE
 
-/obj/item/clothing/under/costume/morningstar
-	name = "Morningstar suit"
-	icon_state = "morningstar_jumpsuit"
-	inhand_icon_state = "morningstar_jumpsuit"
+/obj/item/clothing/under/costume/football_suit
+	name = "football uniform"
+	icon_state = "football_suit"
 	can_adjust = FALSE
-
-/obj/item/clothing/under/costume/saints
-	name = "Saints outfit"
-	icon_state = "saints_jumpsuit"
-	inhand_icon_state = "saints_jumpsuit"
-	can_adjust = FALSE
-
-/obj/item/clothing/under/costume/phantom
-	name = "Phantom Thief outfit"
-	icon_state = "phantom_jumpsuit"
-	inhand_icon_state = "phantom_jumpsuit"
-	can_adjust = FALSE
-
-/obj/item/clothing/under/costume/allies
-	name = "allies tanktop"
-	icon_state = "allies_uniform"
-	inhand_icon_state = "allies_uniform"
-	can_adjust = FALSE
-
-/obj/item/clothing/under/costume/soviet_families
-	name = "soviet conscript uniform"
-	icon_state = "soviet_uniform"
-	inhand_icon_state = "soviet_uniform"
-	can_adjust = FALSE
-
-/obj/item/clothing/under/costume/yuri
-	name = "yuri initiate jumpsuit"
-	icon_state = "yuri_uniform"
-	inhand_icon_state = "yuri_uniform"
-	can_adjust = FALSE
-
-/obj/item/clothing/under/costume/sybil_slickers
-	name = "sybil slickers uniform"
-	icon_state = "football_blue"
-	inhand_icon_state = "football_blue"
-	can_adjust = FALSE
-
-/obj/item/clothing/under/costume/basil_boys
-	name = "basil boys uniform"
-	icon_state = "football_red"
-	inhand_icon_state = "football_red"
-	can_adjust = FALSE
+	greyscale_config = /datum/greyscale_config/football_suit
+	greyscale_config_worn = /datum/greyscale_config/football_suit_worn
+	greyscale_colors = "#D74722"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/under/costume/swagoutfit
 	name = "Swag outfit"
@@ -376,3 +321,29 @@
 	desc = "The worst part of having a mental illness is people expect you to behave as if you don't."
 	icon_state = "joker"
 	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/yuri
+	name = "yuri initiate jumpsuit"
+	icon_state = "yuri_uniform"
+	inhand_icon_state = "yuri_uniform"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/dutch
+	name = "dutch's suit"
+	desc = "You can feel a <b>god damn plan</b> coming on."
+	icon_state = "DutchUniform"
+	inhand_icon_state = "DutchUniform"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/osi
+	name = "O.S.I. jumpsuit"
+	icon_state = "osi_jumpsuit"
+	inhand_icon_state = "osi_jumpsuit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/tmc
+	name = "Lost MC clothing"
+	icon_state = "tmc_jumpsuit"
+	inhand_icon_state = "tmc_jumpsuit"
+	can_adjust = FALSE
+

@@ -42,13 +42,13 @@
 
 	id_trim = /datum/id_trim/job/worker
 	uniform = /obj/item/clothing/under/pants/jeans
-	suit = /obj/item/clothing/under/rank/engineering/engineer/hazard
+	suit = /obj/item/clothing/suit/hazardvest
 	backpack_contents = list(
 		/obj/item/stack/sheet/iron/fifty = 1,
 		/obj/item/stack/sheet/plasteel/fifty = 1,
 		/obj/item/stack/sheet/mineral/wood/fifty = 1,
 		/obj/item/stack/sheet/glass/fifty = 1,
-		/obj/item/reagent_containers/food/drinks/soda_cans/cola = 1,
+		/obj/item/reagent_containers/cup/soda_cans/cola = 1,
 		)
 	belt = /obj/item/storage/belt/utility/full/engi
 	ears = /obj/item/radio/headset/headset_eng

@@ -17,7 +17,7 @@
 
 /datum/antagonist/ntagent/greet()
 	. = ..()
-	to_chat(owner, span_boldannounce("Sen bir Nanotrasen ajanısın. Amacın istasyonda bir tehlike söz konusu olursa o tehlikenin peşine düşmektir. Onun dışında istasyonda mesleğini yerine getirmek zorundasın. Eğer üstünde olmaması gereken bir şey ile security e yakalanırsan asla ve asla Nanotrasen ajanı olduğunu söylememelisin. Unutma ajan, ölmekte görevinin bir parçası."))
+	to_chat(owner, span_boldannounce("Sen bir Nanotrasen ajanısın. Amacın istasyonda bir tehlike söz konusu olursa o tehlikenin peşine düşmektir. Onun dışında istasyonda mesleğini yerine getirmek zorundasın. Eğer üstünde olmaması gereken bir şey ile security e yakalanırsan asla ve asla Nanotrasen ajanı olduğunu söylememelisin. Unutma ajan, ölmek de görevinin bir parçası."))
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/nanoagent.ogg', 200, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
 /datum/antagonist/ntagent/proc/ntagent_equipt_items(mob/living/carbon/human/ntagent = owner.current)

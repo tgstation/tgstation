@@ -99,7 +99,7 @@
 	name = "Charcoal Stylus"
 	result = /obj/item/pen/charcoal
 	reqs = list(/obj/item/stack/sheet/mineral/wood = 1, /datum/reagent/ash = 30)
-	time = 30
+	time = 3 SECONDS
 	category = CAT_PRIMAL
 
 /obj/item/pen/fountain/captain
@@ -207,6 +207,14 @@
 
 			to_chat(user, span_notice("You have successfully reset [O]'s name and description."))
 			O.renamedByPlayer = FALSE
+
+/obj/item/pen/get_writing_implement_details()
+	return list(
+		interaction_mode = MODE_WRITING,
+		font = font,
+		color = colour,
+		use_bold = FALSE,
+	)
 
 /*
  * Sleepypens

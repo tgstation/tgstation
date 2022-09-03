@@ -89,6 +89,7 @@
 			however if that fails, you may need to be stitched back together. \
 			Comes with 4 charges, recharges randomly. Warranty null and void if exposed to an electromagnetic pulse."
 	item = /obj/item/storage/box/syndie_kit/syndicate_teleporter
+	purchasable_from = ~UPLINK_NANO
 	cost = 8
 
 /datum/uplink_item/device_tools/thermalnano
@@ -116,6 +117,7 @@
 	item = /obj/item/camera_bug
 	cost = 1
 	surplus = 90
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/device_tools/military_belt
 	name = "Chest Rig"
@@ -149,6 +151,7 @@
 	cost = 4
 	purchasable_from = ~UPLINK_NANO
 	restricted = TRUE
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/device_tools/frame/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	. = ..()
@@ -200,7 +203,7 @@
 			and wavelength, which controls the delay before the effect kicks in."
 	item = /obj/item/healthanalyzer/rad_laser
 	cost = 3
-
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/device_tools/suspiciousphone
 	name = "Protocol CRAB-17 Phone"
@@ -285,6 +288,7 @@
 	item = /obj/item/sbeacondrop
 	purchasable_from = ~UPLINK_NANO
 	cost = 10
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/device_tools/powersink
 	name = "Power Sink"

@@ -1,5 +1,0 @@
-author: "Ekaterina-von-Russland"
-delete-after: True
-changes: 
-  - bugfix: "fixes the stress experiment"
-  - balance: "changes the stress experiment to allow values 2% below or above the target integrity"

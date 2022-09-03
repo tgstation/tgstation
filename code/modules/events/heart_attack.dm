@@ -4,6 +4,8 @@
 	weight = 20
 	max_occurrences = 2
 	min_players = 40 // To avoid shafting lowpop
+	category = EVENT_CATEGORY_HEALTH
+	description = "A random crewmember's heart gives out."
 
 /datum/round_event/heart_attack/start()
 	var/list/heart_attack_contestants = list()

@@ -93,6 +93,8 @@
 	var/emergency_lights = FALSE
 	///Should the nighshift lights be on?
 	var/nightshift_lights = FALSE
+	///Tracks if lights channel was set to nightshift / reduced power usage mode automatically due to low power.
+	var/low_power_nightshift_lights = FALSE
 	///Time when the nightshift where turned on last, to prevent spamming
 	var/last_nightshift_switch = 0
 	///Stores the flags for the icon state
@@ -152,7 +154,7 @@
 	has_electronics = APC_ELECTRONICS_SECURED
 	// is starting with a power cell installed, create it and set its charge level
 	if(cell_type)
-		cell = new cell_type
+		cell = new cell_type(src)
 		cell.charge = start_charge * cell.maxcharge / 100 // (convert percentage to actual value)
 
 	var/area/our_area = get_area(loc)
@@ -206,10 +208,14 @@
 		disconnect_terminal()
 	. = ..()
 
-/obj/machinery/power/apc/handle_atom_del(atom/atom_to_check)
-	if(atom_to_check == cell)
+/obj/machinery/power/apc/handle_atom_del(atom/deleting_atom)
+	if(deleting_atom == cell)
 		cell = null
+		charging = APC_NOT_CHARGING
 		update_appearance()
+		if(!QDELING(src))
+			SStgui.update_uis(src)
+	return ..()
 
 /obj/machinery/power/apc/examine(mob/user)
 	. = ..()
@@ -266,6 +272,7 @@
 		"malfStatus" = get_malf_status(user),
 		"emergencyLights" = !emergency_lights,
 		"nightshiftLights" = nightshift_lights,
+		"disable_nightshift_toggle" = low_power_nightshift_lights,
 
 		"powerChannels" = list(
 			list(
@@ -365,6 +372,7 @@
 				malfvacate()
 		if("reboot")
 			failure_timer = 0
+			force_update = FALSE
 			update_appearance()
 			update()
 		if("emergency_lighting")
@@ -384,8 +392,6 @@
 	if(!area || !area.requires_power)
 		return
 	if(failure_timer)
-		update()
-		queue_icon_update()
 		failure_timer--
 		force_update = TRUE
 		return
@@ -452,20 +458,33 @@
 			lighting = autoset(lighting, AUTOSET_FORCE_OFF)
 			environ = autoset(environ, AUTOSET_FORCE_OFF)
 			alarm_manager.send_alarm(ALARM_POWER)
+			if(!nightshift_lights || (nightshift_lights && !low_power_nightshift_lights))
+				low_power_nightshift_lights = TRUE
+				INVOKE_ASYNC(src, .proc/set_nightshift, TRUE)
 		else if(cell.percent() < 15 && long_term_power < 0) // <15%, turn off lighting & equipment
 			equipment = autoset(equipment, AUTOSET_OFF)
 			lighting = autoset(lighting, AUTOSET_OFF)
 			environ = autoset(environ, AUTOSET_ON)
 			alarm_manager.send_alarm(ALARM_POWER)
+			if(!nightshift_lights || (nightshift_lights && !low_power_nightshift_lights))
+				low_power_nightshift_lights = TRUE
+				INVOKE_ASYNC(src, .proc/set_nightshift, TRUE)
 		else if(cell.percent() < 30 && long_term_power < 0) // <30%, turn off equipment
 			equipment = autoset(equipment, AUTOSET_OFF)
 			lighting = autoset(lighting, AUTOSET_ON)
 			environ = autoset(environ, AUTOSET_ON)
 			alarm_manager.send_alarm(ALARM_POWER)
+			if(!nightshift_lights || (nightshift_lights && !low_power_nightshift_lights))
+				low_power_nightshift_lights = TRUE
+				INVOKE_ASYNC(src, .proc/set_nightshift, TRUE)
 		else // otherwise all can be on
 			equipment = autoset(equipment, AUTOSET_ON)
 			lighting = autoset(lighting, AUTOSET_ON)
 			environ = autoset(environ, AUTOSET_ON)
+			if(nightshift_lights && low_power_nightshift_lights)
+				low_power_nightshift_lights = FALSE
+				if(!SSnightshift.nightshift_active)
+					INVOKE_ASYNC(src, .proc/set_nightshift, FALSE)
 			if(cell.percent() > 75)
 				alarm_manager.clear_alarm(ALARM_POWER)
 
@@ -515,7 +534,7 @@
 	// update icon & area power if anything changed
 
 	if(last_lt != lighting || last_eq != equipment || last_en != environ || force_update)
-		force_update = 0
+		force_update = FALSE
 		queue_icon_update()
 		update()
 	else if(last_ch != charging)

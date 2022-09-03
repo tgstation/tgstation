@@ -1,7 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - qol: "Ladders now take left/right clicks to go up or down. Radial menus for them should only show up when you reach the floor above or below but the ladder goes beyond it, so that you don't have to bother clicking a sprite covered by that of your mob."
-  - qol: "Added contextual screen info (shows up top-center of the screen when hovering your cursor over the object) and similar information when examining the ladder."
-  - qol: "Improved messages for using ladders. They also make use of balloon messages now."
-  - balance: "Climbing up or down a ladder now takes 1 second by default. Less spammable, barely more immersive."

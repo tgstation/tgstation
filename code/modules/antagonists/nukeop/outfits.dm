@@ -25,25 +25,26 @@
 
 	id_trim = /datum/id_trim/chameleon/operative/nuke_leader
 
-/datum/outfit/syndicate/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/syndicate/post_equip(mob/living/carbon/human/nukie, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
-	var/obj/item/radio/R = H.ears
-	R.set_frequency(FREQ_SYNDICATE)
-	R.freqlock = TRUE
+	var/obj/item/radio/radio = nukie.ears
+	radio.set_frequency(FREQ_SYNDICATE)
+	radio.freqlock = TRUE
 	if(command_radio)
-		R.command = TRUE
+		radio.command = TRUE
+		radio.use_command = TRUE
 
 	if(ispath(uplink_type, /obj/item/uplink/nuclear) || tc) // /obj/item/uplink/nuclear understands 0 tc
-		var/obj/item/U = new uplink_type(H, H.key, tc)
-		H.equip_to_slot_or_del(U, ITEM_SLOT_BACKPACK)
+		var/obj/item/uplink = new uplink_type(nukie, nukie.key, tc)
+		nukie.equip_to_slot_or_del(uplink, ITEM_SLOT_BACKPACK)
 
-	var/obj/item/implant/weapons_auth/W = new/obj/item/implant/weapons_auth(H)
-	W.implant(H)
-	var/obj/item/implant/explosive/E = new/obj/item/implant/explosive(H)
-	E.implant(H)
-	H.faction |= ROLE_SYNDICATE
-	H.update_icons()
+	var/obj/item/implant/weapons_auth/weapons_implant = new/obj/item/implant/weapons_auth(nukie)
+	weapons_implant.implant(nukie)
+	var/obj/item/implant/explosive/explosive_implant = new/obj/item/implant/explosive(nukie)
+	explosive_implant.implant(nukie)
+	nukie.faction |= ROLE_SYNDICATE
+	nukie.update_icons()
 
 /datum/outfit/syndicate/full
 	name = "Syndicate Operative - Full Kit"
@@ -87,7 +88,7 @@
 /datum/outfit/syndicate/reinforcement/cybersun
 	name = "Syndicate Operative - Cybersun Reinforcement"
 	uniform = /obj/item/clothing/under/syndicate/combat
-	suit = /obj/item/clothing/suit/jacket/det_suit/dark
+	suit = /obj/item/clothing/suit/jacket/oversized
 	gloves = /obj/item/clothing/gloves/fingerless
 	glasses = /obj/item/clothing/glasses/sunglasses
 	mask = /obj/item/clothing/mask/cigarette/cigar

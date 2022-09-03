@@ -64,8 +64,9 @@
 /obj/item/uplink/nano/Initialize(mapload)
 	. = ..()
 	var/datum/component/nanouplink/hidden_uplink = GetComponent(/datum/component/nanouplink)
-	hidden_uplink.allow_restricted = FALSE
-	
+	if(hidden_uplink)
+		hidden_uplink.allow_restricted = FALSE
+
 /obj/item/uplink/clownop
 	uplink_flag = UPLINK_CLOWN_OPS
 

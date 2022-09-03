@@ -17,6 +17,7 @@
 	item = /obj/item/gun/ballistic/automatic/pistol/toy/riot
 	cost = 2
 	surplus = 10
+	purchasable_from = ~UPLINK_NUKE_OPS
 
 // Low progression cost
 

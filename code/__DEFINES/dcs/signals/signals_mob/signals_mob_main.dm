@@ -147,3 +147,6 @@
 #define COMSIG_MOB_AUTOMUTE_CHECK "client_automute_check" // The check is performed by the client.
 	/// Prevents the automute system checking this client for repeated messages.
 	#define WAIVE_AUTOMUTE_CHECK (1<<0)
+
+///from living/flash_act(), when a mob is successfully flashed.
+#define COMSIG_MOB_FLASHED "mob_flashed"

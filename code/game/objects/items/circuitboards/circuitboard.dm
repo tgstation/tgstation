@@ -19,6 +19,8 @@
 	var/build_path = null
 	///determines if the circuit board originated from a vendor off station or not.
 	var/onstation = TRUE
+	///determines if the board requires specific levels of parts. (ie specifically a femto menipulator vs generic manipulator)
+	var/specific_parts = FALSE
 
 /obj/item/circuitboard/Initialize(mapload)
 	if(name_extension)
@@ -116,10 +118,14 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 			if(initial(stack_path.singular_name))
 				component_name = initial(stack_path.singular_name) //e.g. "glass sheet" vs. "glass"
 
-		else if(ispath(component_path, /obj/item/stock_parts))
+		else if(ispath(component_path, /obj/item/stock_parts) && !specific_parts)
 			var/obj/item/stock_parts/stock_part = component_path
 			if(initial(stock_part.base_name))
 				component_name = initial(stock_part.base_name)
+		else if(ispath(component_path, /obj/item/stock_parts))
+			var/obj/item/stock_parts/stock_part = component_path
+			if(initial(stock_part.name))
+				component_name = initial(stock_part.name)
 
 		nice_list += list("[component_amount] [component_name]\s")
 
