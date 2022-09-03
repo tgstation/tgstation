@@ -138,6 +138,8 @@
 	COOLDOWN_START(src, hit_cooldown, hit_cooldown_time)
 
 /obj/item/mod/module/anomaly_locked/kinesis/proc/can_grab(atom/target)
+	if(mod.wearer == target)
+		return FALSE
 	if(!ismovable(target))
 		return FALSE
 	if(iseffect(target))

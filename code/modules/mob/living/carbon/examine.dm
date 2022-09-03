@@ -6,7 +6,7 @@
 	var/t_has = p_have()
 	var/t_is = p_are()
 
-	. = list("<span class='info'>This is [icon2html(src, user)] \a <EM>[src]</EM>!>")
+	. = list("<span class='info'>This is [icon2html(src, user)] \a <EM>[src]</EM>!")
 	var/obscured = check_obscured_slots()
 
 	if (handcuffed)

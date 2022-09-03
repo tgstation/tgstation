@@ -173,3 +173,25 @@
   - balance: nerfs scipaper paper publication money across the board
   - balance: nerfs scipaper ghost writing partner.
   - bugfix: fixed plasma mat ignition spitting room temperature plasma.
+2022-09-03:
+  Fikou:
+  - admin: the admin modsuit now has the advanced jetpack instead of the normal one
+  - bugfix: fixes modsuit chestplate unequipping no longer retracting the suit storage
+      item
+  - bugfix: fixes modsuits breaking when going into gulag
+  Ghommie:
+  - bugfix: Brought a portion of the admin deadsay command up to date. Revenants and
+      EOR players will now see admin deadchat messages in their chat tab.
+  Melbert:
+  - rscadd: Revenants have a new spell available. Haunt Object, it allows them to
+      cause nearby loose items to lift off the ground and start attacking people!
+      The objects will return to peace after a few minutes, or if someone dispels
+      them with a null rod or bible.
+  Rhials:
+  - spellcheck: Just to clarify, sonic jackhammers do NOT go through walls. Their
+      printing design text has been modified to reflect this.
+  dragomagol:
+  - admin: fax messages and book printings are now logged in paper.log
+  - admin: renaming fax machines is logged in game log
+  san7890:
+  - bugfix: Surgery tables are now no longer transparent.
