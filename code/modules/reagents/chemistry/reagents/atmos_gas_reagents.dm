@@ -55,8 +55,7 @@
 	breather.adjustFireLoss(-2 * REM * delta_time, FALSE)
 	breather.adjustToxLoss(-5 * REM * delta_time, FALSE)
 	breather.adjustBruteLoss(-2 * REM * delta_time, FALSE)
-	..()
-	return TRUE
+	return ..()
 
 /datum/reagent/hypernoblium
 	name = "Hyper-Noblium"
