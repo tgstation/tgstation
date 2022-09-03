@@ -289,7 +289,6 @@
 			return
 
 		balloon_alert(user, "barricade constructed")
-		// mak sure this gets converted to an .ogg (since it's a .wav) and then credit it to soundcloud (public domain)
 		var/obj/structure/barricade/wooden/crude/barricade = new (loc)
 		transfer_fingerprints_to(barricade)
 		return TRUE
