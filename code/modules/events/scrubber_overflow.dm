@@ -20,8 +20,8 @@
 		/datum/reagent/carbon,
 		/datum/reagent/consumable/flour,
 		/datum/reagent/space_cleaner,
-		/datum/reagent/carpet/royal/blue
-		/datum/reagent/carpet/orange
+		/datum/reagent/carpet/royal/blue,
+		/datum/reagent/carpet/orange,
 		/datum/reagent/consumable/nutriment,
 		/datum/reagent/consumable/condensedcapsaicin,
 		/datum/reagent/drug/mushroomhallucinogen,
@@ -34,9 +34,9 @@
 		/datum/reagent/water/holywater,
 		/datum/reagent/consumable/ethanol,
 		/datum/reagent/consumable/hot_coco,
-		/datum/reagent/consumable/yoghurt
-		/datum/reagent/consumable/tinlux
-		/datum/reagent/hydrogen_peroxide
+		/datum/reagent/consumable/yoghurt,
+		/datum/reagent/consumable/tinlux,
+		/datum/reagent/hydrogen_peroxide,
 		/datum/reagent/bluespace,
 		/datum/reagent/pax,
 		/datum/reagent/consumable/laughter,
