@@ -24,17 +24,17 @@ export class AnimatedQuantityLabel extends Component<AnimatedQuantityLabelProps>
   /**
    * The inner `<span/>` being updated sixty times per second.
    */
-  protected ref = createRef<HTMLSpanElement>();
+  ref = createRef<HTMLSpanElement>();
 
   /**
    * The interval being used to update the inner span.
    */
-  protected interval?: NodeJS.Timeout;
+  interval?: NodeJS.Timeout;
 
   /**
    * The current value. This values approaches the target value.
    */
-  protected currentValue: number = 0;
+  currentValue: number = 0;
 
   constructor(props: AnimatedQuantityLabelProps) {
     super(props);
@@ -63,7 +63,7 @@ export class AnimatedQuantityLabel extends Component<AnimatedQuantityLabelProps>
    * Starts animating the inner span. If the inner span is already animating,
    * this is a no-op.
    */
-  protected startTicking() {
+  startTicking() {
     if (this.interval !== undefined) {
       return;
     }
@@ -74,7 +74,7 @@ export class AnimatedQuantityLabel extends Component<AnimatedQuantityLabelProps>
   /**
    * Stops animating the inner span.
    */
-  protected stopTicking() {
+  stopTicking() {
     if (this.interval !== undefined) {
       clearInterval(this.interval);
 
@@ -85,7 +85,7 @@ export class AnimatedQuantityLabel extends Component<AnimatedQuantityLabelProps>
   /**
    * Steps forward one frame.
    */
-  protected tick() {
+  tick() {
     const { currentValue } = this;
     const { targetValue } = this.props;
 
@@ -103,7 +103,7 @@ export class AnimatedQuantityLabel extends Component<AnimatedQuantityLabelProps>
   /**
    * Returns the inner text of the span.
    */
-  protected getText() {
+  getText() {
     return formatSiUnit(this.currentValue, 0);
   }
 
