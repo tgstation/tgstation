@@ -41,10 +41,7 @@
 	var/obj/machinery/fax/machine = holder
 	switch(wire)
 		if(WIRE_SHOCK)
-			if(mend)
-				machine.seconds_electrified = MACHINE_NOT_ELECTRIFIED
-			else
-				machine.seconds_electrified = MACHINE_ELECTRIFIED_PERMANENT
+			machine.seconds_electrified = (mend) ? MACHINE_NOT_ELECTRIFIED : MACHINE_ELECTRIFIED_PERMANENT
 		if(WIRE_SIGNAL)
 			machine.visible_to_network = mend
 		if(WIRE_THROW)

@@ -13,7 +13,7 @@
 	/// The name of the fax displayed in the list. Not necessarily unique to some EMAG jokes.
 	var/fax_name
 	/// A weak reference to an inserted object.
-	var/datum/weakref/loaded_item
+	var/datum/weakref/loaded_item_ref
 	/// True if the fax machine should be visible to other fax machines in general.
 	var/visible_to_network = TRUE
 	/// Necessary to hide syndicate faxes from the general list. Doesn't mean he's EMAGGED!
@@ -29,10 +29,21 @@
 	/// If true, the fax machine is jammed and needs cleaning
 	var/jammed = FALSE
 	/// List of types which should always be allowed to be faxed
-	var/static/list/allowed_types = list(/obj/item/paper, /obj/item/photo, /obj/item/tcgcard,)
+	var/static/list/allowed_types = list(
+		/obj/item/paper,
+		/obj/item/photo,
+		/obj/item/tcgcard
+	)
 	/// List of types which should be allowed to be faxed if hacked
-	var/static/list/exotic_types = list(/obj/item/food/pizzaslice, /obj/item/food/root_flatbread, /obj/item/food/salami, \
-		/obj/item/throwing_star, /obj/item/stack/spacecash, /obj/item/holochip, /obj/item/card,)
+	var/static/list/exotic_types = list(
+		/obj/item/food/pizzaslice,
+		/obj/item/food/root_flatbread,
+		/obj/item/food/salami,
+		/obj/item/throwing_star,
+		/obj/item/stack/spacecash,
+		/obj/item/holochip,
+		/obj/item/card
+	)
 
 /obj/machinery/fax/Initialize(mapload)
 	. = ..()
@@ -44,7 +55,7 @@
 	register_context()
 
 /obj/machinery/fax/Destroy()
-	QDEL_NULL(loaded_item)
+	QDEL_NULL(loaded_item_ref)
 	QDEL_NULL(wires)
 	return ..()
 
@@ -52,7 +63,7 @@
 	. = ..()
 	if (panel_open)
 		. += "fax_panel"
-	var/obj/item/loaded = loaded_item?.resolve()
+	var/obj/item/loaded = loaded_item_ref?.resolve()
 	if (loaded)
 		. += mutable_appearance(icon, find_overlay_state(loaded, "contain"))
 
@@ -61,10 +72,14 @@
 	if(jammed)
 		. += span_notice("Its output port is jammed and needs cleaning.")
 
-/obj/machinery/fax/process(delta_time)
-	if(machine_stat & (BROKEN|NOPOWER))
-		return PROCESS_KILL
 
+/obj/machinery/fax/on_set_is_operational(old_value)
+	if (old_value == FALSE)
+		START_PROCESSING(SSmachines, src)
+		return
+	STOP_PROCESSING(SSmachines, src)
+
+/obj/machinery/fax/process(delta_time)
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
 		seconds_electrified -= delta_time
 
@@ -128,8 +143,8 @@
 			wires.interact(user)
 		return
 	if (can_load_item(item))
-		if (!loaded_item?.resolve())
-			loaded_item = WEAKREF(item)
+		if (!loaded_item_ref?.resolve())
+			loaded_item_ref = WEAKREF(item)
 			item.forceMove(src)
 			update_appearance()
 		return
@@ -199,7 +214,7 @@
 		fax_data["fax_name"] = FAX.fax_name
 		fax_data["fax_id"] = FAX.fax_id
 		fax_data["visible"] = FAX.visible_to_network
-		fax_data["has_paper"] = !!FAX.loaded_item?.resolve()
+		fax_data["has_paper"] = !!FAX.loaded_item_ref?.resolve()
 		// Hacked doesn't mean on the syndicate network.
 		fax_data["syndicate_network"] = FAX.syndicate_network
 		data["faxes"] += list(fax_data)
@@ -210,7 +225,7 @@
 	data["visible"] = visible_to_network
 	// In this case, we don't care if the fax is hacked or in the syndicate's network. The main thing is to check the visibility of other faxes.
 	data["syndicate_network"] = (syndicate_network || (obj_flags & EMAGGED))
-	data["has_paper"] = !!loaded_item?.resolve()
+	data["has_paper"] = !!loaded_item_ref?.resolve()
 	data["fax_history"] = fax_history
 	return data
 
@@ -222,22 +237,22 @@
 	switch(action)
 		// Pulls the paper out of the fax machine
 		if("remove")
-			var/obj/item/loaded = loaded_item?.resolve()
+			var/obj/item/loaded = loaded_item_ref?.resolve()
 			if (!loaded)
 				return
 			loaded.forceMove(drop_location())
-			loaded_item = null
+			loaded_item_ref = null
 			playsound(src, 'sound/machines/eject.ogg', 50, FALSE)
 			update_appearance()
 			return TRUE
 		if("send")
-			var/obj/item/loaded = loaded_item?.resolve()
+			var/obj/item/loaded = loaded_item_ref?.resolve()
 			if (!loaded)
 				return
 			var/destination = params["id"]
 			if(send(loaded, destination))
 				log_fax(loaded, destination, params["name"])
-				loaded_item = null
+				loaded_item_ref = null
 				update_appearance()
 				return TRUE
 		if("history_clear")
