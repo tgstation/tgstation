@@ -1,0 +1,4 @@
+author: "itseasytosee"
+delete-after: True
+changes: 
+  - bugfix: "Fixed balistic helmet sprites with flashlights looking weird"
