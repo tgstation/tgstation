@@ -9,7 +9,6 @@
 	/// Timer ID for when we're deleted
 	var/del_timer_id
 
-///Creates a specified doll hallucination, or picks one randomly
 /datum/hallucination/fake_health_doll/New(mob/living/hallucinator, duration = 50 SECONDS)
 	src.duration = duration
 	return ..()
@@ -74,7 +73,8 @@
 	owner.hud_used.healthdoll.add_overlay(fake_overlay)
 	return COMPONENT_OVERRIDE_BODYPART_HEALTH_HUD
 
+/// Signal proc for [COMSIG_BODYPART_CHECKED_FOR_INJURY]. Our bodyparts look a lot more wounded than they actually are.
 /datum/hallucination/fake_health_doll/proc/on_bodypart_checked(obj/item/bodypart/source, mob/living/carbon/examiner, list/check_list, list/limb_damage)
 	SIGNAL_HANDLER
 
-	limb_damage[1] = bodyparts[source] * 0.2 * source.max_damage
+	limb_damage[BRUTE] = bodyparts[source] * 0.2 * source.max_damage
