@@ -151,5 +151,4 @@
 	breather.adjustOxyLoss(1 * REM * delta_time, FALSE)
 	breather.adjustFireLoss(2 * REM * delta_time, FALSE)
 	breather.adjustToxLoss(2 * REM * delta_time, FALSE)
-	..()
-	return TRUE
+	return ..()
