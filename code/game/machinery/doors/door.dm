@@ -279,7 +279,7 @@
 	if(!user.combat_mode && istype(I, /obj/item/stack/sheet/mineral/wood))
 		var/obj/item/stack/sheet/mineral/wood/plank = I
 
-		if(!plank.get_amount() >= 2)
+		if(plank.get_amount() < 2)
 			balloon_alert(user, "need two [plank] sheets!")
 			return
 
