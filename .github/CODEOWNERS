@@ -171,6 +171,8 @@
 /tools/LinuxOneShot/ @Cyberboss @MrStonedOne
 /tools/tgs4_scripts/ @Cyberboss @MrStonedOne
 
+/tools/WebhookProcessor/ @BraveMole @TiviPlus
+
 # SIC SEMPER TYRANNIS
 
 /code/modules/hydroponics/grown/citrus.dm @optimumtact
