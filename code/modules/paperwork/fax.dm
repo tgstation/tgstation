@@ -12,25 +12,14 @@
 	var/fax_id
 	/// The name of the fax displayed in the list. Not necessarily unique to some EMAG jokes.
 	var/fax_name
+	/// A weak reference to an inserted object.
+	var/datum/weakref/loaded_item
 	/// True if the fax machine should be visible to other fax machines in general.
 	var/visible_to_network = TRUE
 	/// Necessary to hide syndicate faxes from the general list. Doesn't mean he's EMAGGED!
 	var/syndicate_network = FALSE
 	/// This is where the dispatch and reception history for each fax is stored.
 	var/list/fax_history = list()
-
-	/// List of types which should always be allowed to be faxed
-	var/static/list/allowed_types = list(/obj/item/paper, /obj/item/photo, /obj/item/tcgcard, /obj/item/stack/sheet/cardboard,)
-	/// List of types which should be allowed to be faxed if hacked
-	var/static/list/exotic_types = list(/obj/item/food/pizzaslice, /obj/item/food/root_flatbread, /obj/item/food/salami, \
-		/obj/item/throwing_star, /obj/item/stack/spacecash, /obj/item/holochip, /obj/item/card, \
-		/obj/item/stack/sheet/iron, /obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/cloth, \
-		/obj/item/stack/sheet/runed_metal, /obj/item/stack/sheet/bronze, /obj/item/stack/sheet/pizza, /obj/item/stack/sheet/hauntium, \
-		/obj/item/stack/sheet/glass, /obj/item/stack/sheet/rglass, /obj/item/stack/sheet/plasmaglass, /obj/item/stack/sheet/plasmarglass, \
-		/obj/item/stack/sheet/titaniumglass, /obj/item/stack/sheet/plastitaniumglass, /obj/item/stack/sheet/mineral/uranium,)
-	/// A weak reference to an inserted object.
-	var/datum/weakref/loaded_item
-
 	/// World ticks the machine is electified for.
 	var/seconds_electrified = MACHINE_NOT_ELECTRIFIED
 	/// If true we will eject faxes at speed rather than sedately place them into a tray.
@@ -39,6 +28,11 @@
 	var/allow_exotic_faxes = FALSE
 	/// If true, the fax machine is jammed and needs cleaning
 	var/jammed = FALSE
+	/// List of types which should always be allowed to be faxed
+	var/static/list/allowed_types = list(/obj/item/paper, /obj/item/photo, /obj/item/tcgcard,)
+	/// List of types which should be allowed to be faxed if hacked
+	var/static/list/exotic_types = list(/obj/item/food/pizzaslice, /obj/item/food/root_flatbread, /obj/item/food/salami, \
+		/obj/item/throwing_star, /obj/item/stack/spacecash, /obj/item/holochip, /obj/item/card,)
 
 /obj/machinery/fax/Initialize(mapload)
 	. = ..()
@@ -60,9 +54,7 @@
 		. += "fax_panel"
 	var/obj/item/loaded = loaded_item?.resolve()
 	if (loaded)
-		var/mutable_appearance/overlay = mutable_appearance(icon, find_overlay_state(loaded, "contain"))
-		colour_material_overlay(loaded, overlay)
-		. += overlay
+		. += mutable_appearance(icon, find_overlay_state(loaded, "contain"))
 
 /obj/machinery/fax/examine()
 	. = ..()
@@ -76,7 +68,7 @@
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
 		seconds_electrified -= delta_time
 
-/obj/machinery/fax/_try_interact(mob/user)
+/obj/machinery/fax/attack_hand(mob/user, list/modifiers)
 	if(seconds_electrified && !(machine_stat & NOPOWER))
 		if(shock(user, 100))
 			return
@@ -104,8 +96,7 @@
  * Open and close the wire panel.
  */
 /obj/machinery/fax/screwdriver_act(mob/living/user, obj/item/screwdriver)
-	if(..())
-		return TRUE
+	. = ..()
 	default_deconstruction_screwdriver(user, icon_state, icon_state, screwdriver)
 	update_appearance()
 	return TRUE
@@ -265,9 +256,6 @@
 		var/obj/item/paper/sent_paper = sent
 		log_paper("[usr] has sent a fax with the message \"[sent_paper.get_raw_text()]\" to [name]/[destination_id].")
 		return
-	if (istype(sent, /obj/item/throwing_star))
-		log_attack("[usr] has faxed [sent] to [name]/[destination_id].]")
-		return
 	log_game("[usr] has faxed [sent] to [name]/[destination_id].]")
 
 /**
@@ -321,27 +309,17 @@
 /obj/machinery/fax/proc/animate_object_travel(obj/item/item, animation_state, overlay_state)
 	icon_state = animation_state
 	var/mutable_appearance/overlay = mutable_appearance(icon, overlay_state)
-	colour_material_overlay(item, overlay)
 	overlays += overlay
-	sleep(2 SECONDS)
-	icon_state = "fax"
-	overlays -= overlays
+	addtimer(CALLBACK(src, .proc/travel_animation_complete, overlay), 2 SECONDS)
 
 /**
- * Sets the overlay colour and alpha to match a material colour and alpha.
+ * Called when the travel animation should end. Reset animation and overlay states.
  * Arguments:
- * * item - Object to imitate.
- * * overlay - Overlay to mutate.
+ * * remove_overlay - Overlay to remove.
  */
-/obj/machinery/fax/proc/colour_material_overlay(obj/item/item, mutable_appearance/overlay)
-	if (!istype(item, /obj/item/stack))
-		return
-	var/obj/item/stack/stack_item = item
-	if (!stack_item.material_type)
-		return
-	var/datum/material/material = GET_MATERIAL_REF(stack_item.material_type)
-	overlay.color = material.color
-	overlay.alpha = material.alpha
+/obj/machinery/fax/proc/travel_animation_complete(mutable_appearance/remove_overlay)
+	icon_state = "fax"
+	overlays -= remove_overlay
 
 /**
  * Returns an appropriate icon state to represent a passed item.
@@ -364,7 +342,7 @@
 		return "[state_prefix]_star"
 	if (istype(item, /obj/item/tcgcard))
 		return "[state_prefix]_tcg"
-	return "[state_prefix]_sheet"
+	return "[state_prefix]_paper"
 
 /**
  * Actually vends an item out of the fax machine.
