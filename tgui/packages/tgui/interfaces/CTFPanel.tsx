@@ -91,9 +91,9 @@ export const CTFPanel = (props, context) => {
                 color={data.voted ? 'bad' : 'good'}
                 onClick={() => {
                   if (data.voted) {
-                    act('vote');
-                  } else {
                     act('unvote');
+                  } else {
+                    act('vote');
                   }
                 }}>
                 {data.voted ? 'Unvote for CTF' : 'Vote for CTF'}
