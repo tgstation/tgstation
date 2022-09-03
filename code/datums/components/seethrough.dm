@@ -14,19 +14,16 @@
 	///After we somehow moved (because ss13 is godless and does not respect anything), how long do we need to stand still to feel safe to setup our "behind" area again
 	var/perimeter_reset_timer
 
-/**Pass a list with lists of coordinates. There's a few templates in seethrough.dm. Layout example is also below:
-* list/relative_turf_coords = list(
-*	list(relative_x, relative_y, relative_z),
-*	list(relative_x2, relative_y2, relative_z2)
-*	)
-* Relative z is there because the turf finder algorithm needs it, and while it works, I can't think of a reason why you would ever need this to be anything but 0
-*/
-/datum/component/seethrough/Initialize(list/relative_turf_coords, target_alpha = 100, animation_time = 0.5 SECONDS, perimeter_reset_timer = 10 SECONDS)
+///see_through_map is a define pointing to a specific map. It's basically defining the area which is considered behind. See see_through_maps.dm for a list of maps
+/datum/component/seethrough/Initialize(see_through_map = SEE_THROUGH_MAP_DEFAULT, target_alpha = 100, animation_time = 0.5 SECONDS, perimeter_reset_timer = 2 SECONDS)
 	. = ..()
+
+	relative_turf_coords = GLOB.see_through_maps[see_through_map]
 
 	if(!isatom(parent) || !LAZYLEN(relative_turf_coords))
 		return COMPONENT_INCOMPATIBLE
 
+	relative_turf_coords = GLOB.see_through_maps[see_through_map]
 	src.relative_turf_coords = relative_turf_coords
 	src.target_alpha = target_alpha
 	src.animation_time = animation_time
