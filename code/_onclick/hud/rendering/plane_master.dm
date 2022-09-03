@@ -107,9 +107,9 @@
 	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 
-/atom/movable/screen/plane_master/game_world_above_transparent
-	name = "above game world transparent plane master"
-	plane = ABOVE_GAME_TRANSPARENT_PLANE
+/atom/movable/screen/plane_master/game_world_above_no_mouse
+	name = "above game world no mouse plane master"
+	plane = ABOVE_GAME_NO_MOUSE_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 	render_relay_plane = GAME_PLANE

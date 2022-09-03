@@ -67,7 +67,7 @@
 	user_overlay.loc = parent
 	user_overlay.override = TRUE
 	//Special plane so we can click through the overlay
-	user_overlay.plane = ABOVE_GAME_TRANSPARENT_PLANE
+	user_overlay.plane = ABOVE_GAME_NO_MOUSE_PLANE
 
 	//These are inherited, but we already use the atom's loc so we end up at double the pixel offset
 	user_overlay.pixel_x = 0
@@ -97,7 +97,7 @@
 		return
 
 	//Check if we're being 'tricked'
-	if(tricked_clients.Find(mob.client))
+	if(mob.client in tricked_clients)
 		var/image/trickery_image = tricked_clients[mob.client]
 		animate(trickery_image, alpha = 255, time = animation_time)
 		tricked_clients.Remove(mob.client)

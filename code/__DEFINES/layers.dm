@@ -29,7 +29,8 @@
 #define GAME_PLANE_UPPER -5
 #define GAME_PLANE_UPPER_FOV_HIDDEN -4
 
-#define ABOVE_GAME_TRANSPARENT_PLANE -3
+///Slightly above the game plane but does not catch mouse clicks. Useful for certain visuals that should be clicked through, like seethrough trees
+#define ABOVE_GAME_NO_MOUSE_PLANE -3
 #define ABOVE_GAME_PLANE -2
 
 // PLANE_SPACE layer(s)
