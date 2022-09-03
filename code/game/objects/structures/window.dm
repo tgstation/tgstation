@@ -265,6 +265,23 @@
 	if(!can_be_reached(user))
 		return TRUE //skip the afterattack
 
+	if(!user.combat_mode && istype(I, /obj/item/stack/sheet/mineral/wood))
+		var/obj/item/stack/sheet/mineral/wood/plank = I
+
+		if(plank.get_amount() < PLANK_BARRICADE_AMOUNT)
+			balloon_alert(user, "need two [plank] sheets!")
+			return
+
+		balloon_alert(user, "constructing barricade...")
+		playsound(src, 'sound/items/hammering_wood.ogg', 50, vary = TRUE)
+		if(!do_after(user, 5 SECONDS, target = src) || !plank.use(2) || (locate(/obj/structure/barricade/wooden/crude) in loc))
+			return
+
+		balloon_alert(user, "barricade constructed")
+		var/obj/structure/barricade/wooden/crude/barricade = new (loc)
+		barricade.add_fingerprint(user)
+		return TRUE
+
 	add_fingerprint(user)
 	return ..()
 

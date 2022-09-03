@@ -279,7 +279,7 @@
 	if(!user.combat_mode && istype(I, /obj/item/stack/sheet/mineral/wood))
 		var/obj/item/stack/sheet/mineral/wood/plank = I
 
-		if(plank.get_amount() < 2)
+		if(plank.get_amount() < PLANK_BARRICADE_AMOUNT)
 			balloon_alert(user, "need two [plank] sheets!")
 			return
 
@@ -290,7 +290,7 @@
 
 		balloon_alert(user, "barricade constructed")
 		var/obj/structure/barricade/wooden/crude/barricade = new (loc)
-		transfer_fingerprints_to(barricade)
+		barricade.add_fingerprint(user)
 		return TRUE
 	else if(I.item_flags & NOBLUDGEON || user.combat_mode)
 		return ..()
