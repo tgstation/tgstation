@@ -49,3 +49,157 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 		nearby_living.adjust_timed_status_effect(hallucination_duration * dist, /datum/status_effect/hallucination, max_duration = hallucination_max_duration)
 		if(length(optional_messages))
 			to_chat(nearby_living, pick(optional_messages))
+
+/// Global weighted list of all hallucinations that can show up randomly.
+GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weighted_list())
+
+/// Generates the global weighted list of random hallucinations.
+/proc/generate_hallucination_weighted_list()
+	var/list/weighted_list = list()
+
+	for(var/datum/hallucination/hallucination_type as anything in typesof(/datum/hallucination))
+		if(hallucination_type == initial(hallucination_type.abstract_hallucination_parent))
+			continue
+		var/weight = initial(hallucination_type.random_hallucination_weight)
+		if(weight <= 0)
+			continue
+
+		weighted_list[hallucination_type] = weight
+
+	return weighted_list
+
+/// Debug proc for getting the total weight of the random_hallucination_weighted_list
+/proc/debug_hallucination_weighted_list()
+	var/total_weight = 0
+	for(var/datum/hallucination/hallucination_type as anything in GLOB.random_hallucination_weighted_list)
+		total_weight += GLOB.random_hallucination_weighted_list[hallucination_type]
+
+	to_chat(usr, span_boldnotice("The total weight of the hallucination weighted list is [total_weight]."))
+	return total_weight
+
+/// Debug verb for getting the weight of each distinct type within the random_hallucination_weighted_list
+/client/proc/debug_hallucination_weighted_list_per_type()
+	set name = "Show Hallucination Weights"
+	set category = "Debug"
+
+	var/header = "<tr><th>Type</th> <th>Weight</th> <th>Percent</th>"
+
+	var/total_weight = debug_hallucination_weighted_list()
+	var/list/all_weights = list()
+	var/datum/hallucination/last_type
+	var/last_type_weight = 0
+	for(var/datum/hallucination/hallucination_type as anything in GLOB.random_hallucination_weighted_list)
+		var/this_weight = GLOB.random_hallucination_weighted_list[hallucination_type]
+		// Last_type is the abstract parent of the last hallucination type we iterated over
+		if(last_type)
+			// If this hallucination is the same path as the last type (subtype), add it to the total of the last type weight
+			if(ispath(hallucination_type, last_type))
+				last_type_weight += this_weight
+				continue
+
+			// Otherwise we moved onto the next hallucination subtype so we can stop
+			else
+				all_weights["<tr><td>[last_type]</td> <td>[last_type_weight] / [total_weight]</td> <td>[round(100 * (last_type_weight / total_weight), 0.01)]% chance</td></tr>"] = last_type_weight
+
+		// Set last_type to the abstract parent of this hallucination
+		last_type = initial(hallucination_type.abstract_hallucination_parent)
+		// If last_type is the base hallucination it has no distinct subtypes so we can total it up immediately
+		if(last_type == /datum/hallucination)
+			all_weights["<tr><td>[hallucination_type]</td> <td>[this_weight] / [total_weight]</td> <td>[round(100 * (this_weight / total_weight), 0.01)]% chance</td></tr>"] = this_weight
+			last_type = null
+
+		// Otherwise we start the weight sum for the next entry here
+		else
+			last_type_weight = this_weight
+
+	// Sort by weight descending, where weight is the values (not the keys). We assoc_to_keys later to get JUST the text
+	all_weights = sortTim(all_weights, /proc/cmp_numeric_dsc, associative = TRUE)
+
+	var/page_style = "<style>table, th, td {border: 1px solid black;border-collapse: collapse;}</style>"
+	var/page_contents = "[page_style]<table style=\"width:100%\">[header][jointext(assoc_to_keys(all_weights), "")]</table>"
+	var/datum/browser/popup = new(mob, "hallucinationdebug", "Hallucination Weights", 600, 400)
+	popup.set_content(page_contents)
+	popup.open()
+
+/// Gets a random subtype of the passed hallucination type that has a random_hallucination_weight > 0.
+/// If no subtype is passed, it will get any random hallucination subtype that is not abstract and has weight > 0.
+/// This can be used instead of picking from the global weighted list to just get a random valid hallucination.
+/proc/get_random_valid_hallucination_subtype(passed_type = /datum/hallucination)
+	if(!ispath(passed_type, /datum/hallucination))
+		CRASH("get_random_valid_hallucination_subtype - get_random_valid_hallucination_subtype passed not a hallucination subtype.")
+
+	for(var/datum/hallucination/hallucination_type as anything in shuffle(subtypesof(passed_type)))
+		if(initial(hallucination_type.abstract_hallucination_parent) == hallucination_type)
+			continue
+		if(initial(hallucination_type.random_hallucination_weight) <= 0)
+			continue
+
+		return hallucination_type
+
+	return null
+
+/// Helper to give the passed mob the ability to select a hallucination from the list of all hallucination subtypes.
+/proc/select_hallucination_type(mob/user, message = "Select a hallucination subtype", title = "Choose Hallucination")
+	var/static/list/hallucinations
+	if(!hallucinations)
+		hallucinations = typesof(/datum/hallucination)
+		for(var/datum/hallucination/hallucination_type as anything in hallucinations)
+			if(initial(hallucination_type.abstract_hallucination_parent) == hallucination_type)
+				hallucinations -= hallucination_type
+
+	var/chosen = tgui_input_list(user, message, title, hallucinations)
+	if(!chosen || !ispath(chosen, /datum/hallucination))
+		return null
+
+	return chosen
+
+/// Helper to give the passed mob the ability to create a delusion hallucination (even a custom one).
+/// Returns a list of arguments - pass these to cause_hallucination to cause the desired hallucination (be sure to wrap in argslist)
+/proc/create_delusion(mob/user)
+	var/static/list/delusions
+	if(!delusions)
+		delusions = typesof(/datum/hallucination/delusion)
+		for(var/datum/hallucination/delusion_type as anything in delusions)
+			if(initial(delusion_type.abstract_hallucination_parent) == delusion_type)
+				delusions -= delusion_type
+
+	var/chosen = tgui_input_list(user, "Select a delusion type. Custom will allow for custom icon entry.", "Select Delusion", delusions)
+	if(!chosen || !ispath(chosen, /datum/hallucination/delusion))
+		return
+
+	var/list/delusion_args = list()
+	var/static/list/options = list("Yes", "No")
+	var/duration = tgui_input_number(user, "How long should it last in deciseconds?", "Give Delusion", max_value = INFINITY, min_value = 1 SECONDS, default = 30 SECONDS)
+	var/affects_us = (tgui_alert(user, "Should the mob see themselves as the delusion?", "Give Delusion", options) == "Yes")
+	var/affects_others = (tgui_alert(user, "Should the mob see everyone else delusion?", "Give Delusion", options) == "Yes")
+	var/skip_nearby = (tgui_alert(user, "Should the mob only see people outside of their view as the delusion?", "Give Delusion", options) == "Yes")
+	var/play_wabbajack = (tgui_alert(user, "Play the wabbajack sound when it's done?", "Give Delusion", options) == "Yes")
+
+	delusion_args = list(
+		chosen,
+		"forced delusion",
+		duration = duration,
+		affects_us = affects_us,
+		affects_others = affects_others,
+		skip_nearby = skip_nearby,
+		play_wabbajack = play_wabbajack,
+	)
+
+	if(ispath(chosen, /datum/hallucination/delusion/custom))
+		var/custom_file = input(user, "Pick file for custom delusion:", "File") as null|file
+		if(!custom_file)
+			return
+
+		var/custom_icon_state = tgui_input_text(user, "What icon state do you wanna use from the file?", "Icon State")
+		if(!custom_icon_state)
+			return
+
+		var/custom_name = tgui_input_text(user, "What name should it show up as?", "Name")
+
+		delusion_args += list(
+			custom_file = custom_file,
+			custom_icon_state = custom_icon_state,
+			custom_name = custom_name,
+		)
+
+	return delusion_args

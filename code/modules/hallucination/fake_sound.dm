@@ -10,22 +10,23 @@
 	var/sound_type
 
 /datum/hallucination/fake_sound/start()
-	var/sound_to_play = islist(sound_type) ? pick(sound_type) : sound_type
-	var/turf/source = random_far_turf()
-	play_fake_sound(source, sound_to_play)
-
+	play_fake_sound(random_far_turf())
 	qdel(src)
 	return TRUE
 
 /// Actually plays the fake sound.
 /datum/hallucination/fake_sound/proc/play_fake_sound(turf/source, sound_to_play)
+	// If no sound to play is provided, use our sound type
+	sound_to_play ||= islist(sound_type) ? pick(sound_type) : sound_type
+	// Play the sound using our vars for our hallucinator (duh)
 	hallucinator.playsound_local(source, sound_to_play, volume, sound_vary)
 
 /// Used to queue additional, delayed fake sounds via a callback.
 /datum/hallucination/fake_sound/proc/queue_fake_sound(turf/source, sound_to_play, volume_override, vary_override, delay)
 	if(!delay)
-		CRASH("[type] tried a delayed fake sound without a timer.")
+		CRASH("[type] queued a fake sound without a timer.")
 
+	// Queue the sound to be played with a timer on the mob, not the datum, because we'll probably get qdel'd
 	addtimer(CALLBACK(hallucinator, /mob/.proc/playsound_local, source, sound_to_play, volume_override || volume, vary_override || sound_vary), delay)
 
 /datum/hallucination/fake_sound/normal
@@ -66,6 +67,8 @@
 	sound_type = 'sound/voice/beepsky/freeze.ogg'
 
 /datum/hallucination/fake_sound/normal/mech
+	volume = 40
+	sound_type = 'sound/mecha/mechstep.ogg'
 	/// The turf the mech started walking from.
 	var/turf/mech_source
 	/// What dir is the mech walking?
@@ -90,10 +93,10 @@
 		return
 
 	if(prob(75))
-		hallucinator.playsound_local(mech_source, 'sound/mecha/mechstep.ogg', 40, TRUE)
+		play_fake_sound(mech_source)
 		mech_source = get_step(mech_source, mech_dir)
 	else
-		hallucinator.playsound_local(mech_source, 'sound/mecha/mechturn.ogg', 40, TRUE)
+		play_fake_sound(mech_source)
 		mech_dir = pick(GLOB.cardinals)
 
 	if(--steps_left <= 0)

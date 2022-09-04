@@ -70,7 +70,6 @@
 /obj/effect/client_image_holder
 	invisibility = INVISIBILITY_OBSERVER
 	anchored = TRUE
-	var/mob/living/carbon/target = null
 
 	/// A list of mobs which can see us.
 	var/list/mob/who_sees_us

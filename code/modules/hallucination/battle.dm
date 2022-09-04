@@ -119,7 +119,7 @@
 	else
 		addtimer(CALLBACK(src, .proc/harmbaton_loop, source), rand(CLICK_CD_MELEE, CLICK_CD_MELEE + 4))
 
-/// A hallucination of someone unsheathing an energy sword, going to down, and sheathing it again.
+/// A hallucination of someone unsheathing an energy sword, going to town, and sheathing it again.
 /datum/hallucination/battle/e_sword
 
 /datum/hallucination/battle/e_sword/start()
@@ -145,7 +145,7 @@
 	if(stabs_remaining == 4)
 		hallucinator.playsound_local(source, SFX_BODYFALL, 25, TRUE)
 
-	addtimer(CALLBACK(src, .proc/stab_loop, source, --stabs_remaining), rand(CLICK_CD_MELEE, CLICK_CD_MELEE + 6))
+	addtimer(CALLBACK(src, .proc/stab_loop, source, stabs_remaining - 1), rand(CLICK_CD_MELEE, CLICK_CD_MELEE + 6))
 
 /// A hallucination of a syndicate bomb ticking down.
 /datum/hallucination/battle/bomb
