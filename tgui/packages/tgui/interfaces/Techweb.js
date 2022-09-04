@@ -98,7 +98,7 @@ const TechwebStart = (props, context) => {
     return (
       <Modal width="25em" align="center" className="Techweb__LockedModal">
         <div>
-          <b>No research node found, please synchronize the console.</b>
+          <b>No research techweb found, please synchronize the console.</b>
         </div>
       </Modal>
     );
