@@ -308,13 +308,14 @@
 	var/datum/antagonist/A = has_antag_datum(datum_type)
 	if(A)
 		A.on_removal()
+		log_game("[key_name(src)] has lost antag datum [A.name]([A.type]).")
 		return TRUE
-
 
 /datum/mind/proc/remove_all_antag_datums() //For the Lazy amongst us.
 	for(var/a in antag_datums)
 		var/datum/antagonist/A = a
 		A.on_removal()
+	log_game("[key_name(src)] has lost all antag datum.")
 
 /datum/mind/proc/has_antag_datum(datum_type, check_subtypes = TRUE)
 	if(!datum_type)
