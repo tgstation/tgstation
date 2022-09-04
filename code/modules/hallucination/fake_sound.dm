@@ -166,7 +166,7 @@
 		'sound/ambience/antag/ecult_op.ogg',
 		'sound/ambience/antag/ling_aler.ogg',
 		'sound/ambience/antag/malf.ogg',
-		//'sound/ambience/antag/new_clock.ogg', // Too loud, otherwise I would
+		//'sound/ambience/antag/new_clock.ogg', // This one's much louder than the others, otherwise I would
 		'sound/ambience/antag/ops.ogg',
 		'sound/ambience/antag/tatoralert.ogg',
 	)
@@ -189,6 +189,8 @@
 
 /datum/hallucination/fake_sound/weird/curse_sound
 	volume = 40
+	sound_vary = FALSE
+	no_source = TRUE
 	sound_type = 'sound/magic/curse.ogg'
 
 /datum/hallucination/fake_sound/weird/game_over
@@ -201,13 +203,13 @@
 
 /datum/hallucination/fake_sound/weird/highlander
 	sound_vary = FALSE
-	sound_type = 'sound/misc/highlander.ogg'
 	no_source = TRUE
+	sound_type = 'sound/misc/highlander.ogg'
 
 /datum/hallucination/fake_sound/weird/hyperspace
 	sound_vary = FALSE
-	sound_type = 'sound/runtime/hyperspace/hyperspace_begin.ogg'
 	no_source = TRUE
+	sound_type = 'sound/runtime/hyperspace/hyperspace_begin.ogg'
 
 /datum/hallucination/fake_sound/weird/laugher
 	sound_type = list(
@@ -238,9 +240,12 @@
 		'sound/magic/teleport_diss.ogg',
 	)
 
-/datum/hallucination/fake_sound/weird/summon_sound
+/datum/hallucination/fake_sound/weird/spell/just_jaunt // A few antags use jaunts, so this sound specifically is fun to isolate
+	sound_type = 'sound/magic/ethereal_enter.ogg'
+
+/datum/hallucination/fake_sound/weird/summon_sound // Heretic circle sound, notably
 	volume = 75
-	sound_type = 'sound/magic/castsummon.ogg' // Heretic circle sound
+	sound_type = 'sound/magic/castsummon.ogg'
 
 /datum/hallucination/fake_sound/weird/tesloose
 	volume = 35
