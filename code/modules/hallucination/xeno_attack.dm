@@ -65,7 +65,7 @@
 
 /// The xeno hallucination that goes with the xeno attack hallucination.
 /obj/effect/client_image_holder/hallucination/xeno
-	image_icon = 'icons/mob/alien.dmi'
+	image_icon = icons/mob/nonhuman-player/alien.dmi'
 	image_state = "alienh_pounce"
 
 /obj/effect/client_image_holder/hallucination/xeno/Initialize(mapload, list/mobs_which_see_us, datum/hallucination/parent)

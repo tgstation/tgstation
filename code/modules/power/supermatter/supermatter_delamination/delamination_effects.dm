@@ -17,7 +17,7 @@
 /datum/sm_delam/proc/effect_demoralize(obj/machinery/power/supermatter_crystal/sm)
 	var/turf/sm_turf = get_turf(sm)
 	for(var/mob/living/victim as anything in GLOB.alive_mob_list)
-		if(!istype(victim) || !is_valid_z_level(get_turf(victim), sm_turf))
+		if(!istype(victim) || issilicon(victim) || !is_valid_z_level(get_turf(victim), sm_turf))
 			continue
 
 		//Hilariously enough, running into a closet should make you get hit the hardest.

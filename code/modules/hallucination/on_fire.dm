@@ -10,7 +10,7 @@
 	var/stage = 0
 
 	/// What icon file to use for our hallucinator
-	var/fire_icon = 'icons/mob/onfire.dmi'
+	var/fire_icon = 'icons/mob/effects/onfire.dmi'
 	/// What icon state to use for our hallucinator
 	var/fire_icon_state = "human_big_fire"
 	/// Our fire overlay we generate

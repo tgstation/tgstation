@@ -543,31 +543,16 @@
 	)
 
 /obj/effect/anomaly/hallucination/detonate()
-	var/turf/open/our_turf = get_turf(src)
-	if(istype(our_turf))
-		hallucination_pulse(our_turf, 10)
+	if(!isturf(loc))
+		return
 
-/obj/effect/anomaly/hallucination/proc/hallucination_pulse(turf/open/location, range)
-	for(var/mob/living/carbon/human/near in view(location, range))
-		// If they are immune to hallucinations.
-		if (HAS_TRAIT(near, TRAIT_MADNESS_IMMUNE) || (near.mind && HAS_TRAIT(near.mind, TRAIT_MADNESS_IMMUNE)))
-			continue
-
-		// Blind people don't get hallucinations.
-		if (near.is_blind())
-			continue
-
-		// Everyone else gets hallucinations.
-		var/dist = sqrt(1 / max(1, get_dist(near, location)))
-		near.hallucination += 50 * dist
-		near.hallucination = clamp(near.hallucination, 0, 150)
-		var/list/messages = list(
-			"You feel your conscious mind fall apart!",
-			"Reality warps around you!",
-			"Something's wispering around you!",
-			"You are going insane!",
-		)
-		to_chat(near, span_warning(pick(messages)))
+	visible_hallucination_pulse(
+		center = get_turf(src),
+		radius = 10,
+		hallucination_duration = 50 SECONDS,
+		hallucination_max_duration = 300 SECONDS,
+		optional_messages = messages,
+	)
 
 /////////////////////
 

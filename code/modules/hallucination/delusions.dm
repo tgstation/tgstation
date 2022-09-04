@@ -134,7 +134,7 @@
 	delusion_name = "???"
 
 /datum/hallucination/delusion/preset/monkey
-	delusion_icon_file = 'icons/mob/human.dmi'
+	delusion_icon_file = 'icons/mob/species/human/human.dmi'
 	delusion_icon_state = "monkey"
 	delusion_name = "monkey"
 
@@ -143,33 +143,33 @@
 	return ..()
 
 /datum/hallucination/delusion/preset/corgi
-	delusion_icon_file = 'icons/mob/pets.dmi'
+	delusion_icon_file = 'icons/mob/simple/pets.dmi'
 	delusion_icon_state = "corgi"
 	delusion_name = "corgi"
 
 /datum/hallucination/delusion/preset/carp
-	delusion_icon_file = 'icons/mob/carp.dmi'
+	delusion_icon_file = 'icons/mob/simple/carp.dmi'
 	delusion_icon_state = "carp"
 	delusion_name = "carp"
 
 /datum/hallucination/delusion/preset/skeleton
-	delusion_icon_file = 'icons/mob/human.dmi'
+	delusion_icon_file = 'icons/mob/species/human/human.dmi'
 	delusion_icon_state = "skeleton"
 	delusion_name = "skeleton"
 
 /datum/hallucination/delusion/preset/zombie
-	delusion_icon_file = 'icons/mob/human.dmi'
+	delusion_icon_file = 'icons/mob/species/human/human.dmi'
 	delusion_icon_state = "zombie"
 	delusion_name = "zombie"
 
 /datum/hallucination/delusion/preset/demon
-	delusion_icon_file = 'icons/mob/mob.dmi'
+	delusion_icon_file = 'icons/mob/simple/mob.dmi'
 	delusion_icon_state = "daemon"
 	delusion_name = "demon"
 
 /datum/hallucination/delusion/preset/cyborg
 	play_wabbajack = TRUE
-	delusion_icon_file = 'icons/mob/robots.dmi'
+	delusion_icon_file = 'icons/mob/silicon/robots.dmi'
 	delusion_icon_state = "robot"
 	delusion_name = "cyborg"
 
