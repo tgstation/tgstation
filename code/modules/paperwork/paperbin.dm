@@ -131,14 +131,13 @@
 
 /obj/item/paper_bin/examine(mob/user)
 	. = ..()
-	var/total_paper = LAZYLEN(papers)
 	if(total_paper)
 		. += "It contains [total_paper > 1 ? "[total_paper] papers" : "one paper"]."
 	else
 		. += "It doesn't contain anything."
 
 /obj/item/paper_bin/update_icon_state()
-	if(!LAZYLEN(papers))
+	if(total_paper < 1)
 		icon_state = "paper_bin0"
 	else
 		icon_state = "[initial(icon_state)]"
