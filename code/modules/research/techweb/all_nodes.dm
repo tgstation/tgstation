@@ -1649,7 +1649,7 @@
 /datum/techweb_node/decouverte
 	id = "mecha_decouverte"
 	display_name = "EXOSUIT: Decouverte"
-	description = "Decouverte exosuit designs (Definetely not Ripley! Trust me.)"
+	description = "Decouverte exosuit designs"
 	prereq_ids = list("engineering", "practical_bluespace")
 	design_ids = list(
 		"decouverte_chassis",

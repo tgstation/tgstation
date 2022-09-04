@@ -1,8 +1,8 @@
 ///Abuzer Mech, uzayda şimşek makkuin gibi gidiyo.
 /obj/vehicle/sealed/mecha/voyager/decouverte
-	desc = "A Voyager class exploration mech, combines quantum physics and bluespace technology to achieve immense speeds in a vaccum. Not advised to use in the station. R&D recommends using an exosuit drill when searching for ruins in space."
+	desc = "A Voyager class exploration mech, combines quantum physics and bluespace technology to achieve immense speeds in vaccum. Not advised to use in the station. R&D recommends using an exosuit drill when searching for ruins in space."
 	name = "\improper Decouverte"
-	base_icon_state = "deathripley"
+	base_icon_state = "decouverte"
 	allow_diagonal_movement = TRUE
 	max_temperature = 65000
 	max_integrity = 350
@@ -20,7 +20,7 @@
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 1,
 	)
-	wreckage = /obj/structure/mecha_wreckage/clarke
+	wreckage = /obj/structure/mecha_wreckage/decouverte
 	mech_type = EXOSUIT_MODULE_DECOUVERTE
 	enter_delay = 7 		//Sürücülerimizin uzayda meche girmeye çalışırken boğulmasını istemeyiz
 	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | OMNIDIRECTIONAL_ATTACKS
@@ -51,15 +51,15 @@
 	var/turf/T = get_turf(loc)
 
 	if(space_equipment_pressure_check(T))
-		diagonal_movement_2x()
+		diagonal_movement_2x()			//Sadece uzaydayken çağrılması için bunun altında. Umarım checklerde sıkıntı yaratmaz.
 		stepsound = 'sound/machines/clockcult/ocularwarden-dot1.ogg'	//Ses her stepte tekrarlandığı için kısa, jetpackimsi ve kullanılmayan bir ses gerekiyordu, o ses bu.
 		turnsound = 'sound/machines/clockcult/ocularwarden-dot2.ogg'
-		step_energy_drain = 1								 //Uzayda çok mesafe kat edileceği için step başı enerji harcaması düşük olması lazım
-		icon_state = "phazon"
+		step_energy_drain = 1								 //Uzayda çok mesafe kat edileceği için step başı enerji harcaması düşük olmalı.
+		icon_state = "decouverte-flight"
 
 	else
 		movedelay = bas_frene
-		stepsound = 'sound/mecha/powerloader_step.ogg'
+		stepsound = 'sound/mecha/powerloader_step.ogg'  //5 ay önce tgmc den getirmişler sesleri hmmmmmmm.
 		turnsound = 'sound/mecha/powerloader_turn2.ogg'
-		step_energy_drain = 15 							//Mech yavaş hareket ederken çok enerji harcıyor.
-		icon_state = "deathripley"
+		step_energy_drain = 15 							//İstasyonda çok yakıyor.
+		icon_state = "decouverte"

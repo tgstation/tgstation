@@ -154,6 +154,11 @@
 				/obj/item/mecha_parts/part/ripley_left_leg,
 				/obj/item/mecha_parts/part/ripley_right_leg)
 
+/obj/structure/mecha_wreckage/decouverte
+	name = "\improper Decouverte wreckage"
+	icon_state = "decouverte-broken"
+	desc = "Al kırdın kırdın."
+
 /obj/structure/mecha_wreckage/ripley/mk2
 	name = "\improper Ripley MK-II wreckage"
 	icon_state = "ripleymkii-broken"
