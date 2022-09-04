@@ -201,7 +201,7 @@
 /obj/machinery/plumbing/mixing_chamber/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "ChemReactionChamber", name)
+		ui = new(user, src, "ChemMixingChamber", name)
 		ui.open()
 
 /obj/machinery/plumbing/mixing_chamber/ui_data(mob/user)
@@ -220,8 +220,6 @@
 	data["ph"] = round(reagents.ph, 0.01)
 	data["targetTemp"] = target_temperature
 	data["isReacting"] = reagents.is_reacting
-	data["reagentAcidic"] = 9
-	data["reagentAlkaline"] = 5
 	return data
 
 /obj/machinery/plumbing/mixing_chamber/ui_act(action, params)
