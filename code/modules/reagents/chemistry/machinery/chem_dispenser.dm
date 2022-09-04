@@ -482,7 +482,7 @@
 		/datum/reagent/consumable/lemonjuice,
 		/datum/reagent/consumable/lemon_lime,
 		/datum/reagent/consumable/limejuice,
-		/datum/reagent/consumable/menthol
+		/datum/reagent/consumable/menthol,
 		/datum/reagent/consumable/orangejuice,
 		/datum/reagent/consumable/pineapplejuice,
 		/datum/reagent/consumable/pwr_game,
@@ -552,7 +552,7 @@
 	dispensable_reagents = list(
 		/datum/reagent/consumable/ethanol/absinthe,
 		/datum/reagent/consumable/ethanol/ale,
-		/datum/reagent/consumable/ethanol/applejack
+		/datum/reagent/consumable/ethanol/applejack,
 		/datum/reagent/consumable/ethanol/beer,
 		/datum/reagent/consumable/ethanol/cognac,
 		/datum/reagent/consumable/ethanol/creme_de_cacao,
