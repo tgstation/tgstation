@@ -27,7 +27,7 @@
 		CRASH("[type] queued a fake sound without a timer.")
 
 	// Queue the sound to be played with a timer on the mob, not the datum, because we'll probably get qdel'd
-	addtimer(CALLBACK(hallucinator, /mob/.proc/playsound_local, source, sound_to_play, volume_override || volume, vary_override || sound_vary), delay)
+	addtimer(CALLBACK(hallucinator, /mob/proc/playsound_local, source, sound_to_play, volume_override || volume, vary_override || sound_vary), delay)
 
 /datum/hallucination/fake_sound/normal
 	abstract_hallucination_parent = /datum/hallucination/fake_sound/normal
@@ -139,6 +139,21 @@
 	// Crowbarring it open.
 	queue_fake_sound(source, 'sound/machines/airlockforced.ogg', delay = hacking_time)
 
+/datum/hallucination/fake_sound/normal/steam
+	volume = 75
+	sound_type = 'sound/machines/steam_hiss.ogg'
+
+/datum/hallucination/fake_sound/normal/xeno
+	random_hallucination_weight = 2
+	volume = 25
+	sound_type = list(
+		'sound/voice/lowHiss1.ogg',
+		'sound/voice/lowHiss2.ogg',
+		'sound/voice/lowHiss3.ogg',
+		'sound/voice/lowHiss4.ogg',
+		SFX_HISS,
+	)
+
 /datum/hallucination/fake_sound/weird
 	abstract_hallucination_parent = /datum/hallucination/fake_sound/weird
 	random_hallucination_weight = 1
@@ -201,5 +216,5 @@
 
 /datum/hallucination/fake_sound/weird/tesloose/play_fake_sound(turf/source, sound_to_play)
 	. = ..()
-	for(var/next_shock in 1 to rand(2, 4))
+	for(var/next_shock in 1 to rand(2, 4)) //melbert todo: check this
 		queue_fake_sound(source, sound_to_play, volume_override = volume + (15 * next_shock), delay = 3 SECONDS * next_shock)

@@ -22,7 +22,8 @@
 
 		var/obj/item/storage/equipped_backpack = suspicious_personnel.get_item_by_slot(ITEM_SLOT_BACK)
 		if(istype(equipped_backpack))
-			// in the future, this could / should just draw from uplink items & theft items
+			// in the future, this could / should be de-harcoded and
+			// just draw from a pool uplink, theft, and antag item typepaths
 			var/static/list/stash_items = list(
 				".357 revovler",
 				"energy sword",

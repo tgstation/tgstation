@@ -61,6 +61,24 @@
 
 	return locate(hallucinator.x + x_offset, hallucinator.y + y_offset, hallucinator.z)
 
+/// Gets a random non-security member of the crew that is at least 8 tiles away.
+/datum/hallucination/proc/random_non_sec_crewmember()
+	var/list/possible_fakes = list()
+	for(var/datum/mind/possible_fake as anything in get_crewmember_minds())
+		// Sec won't make sense. (Neither will cap but we'll just let it slide)
+		if(possible_fake.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
+			continue
+		// Look for minds on the manifest in control of humans
+		var/mob/living/carbon/human/fake_body = possible_fake.current
+		if(!istype(fake_body) || fake_body == hallucinator)
+			continue
+		// This also won't make sense in most cases
+		if(get_dist(fake_body, hallucinator) < 8)
+			continue
+		possible_fakes += fake_body
+
+	return length(possible_fakes) ? pick(possible_fakes) : null
+
 /**
  * Simple effect that holds an image
  * to be shown to one or multiple clients only.
@@ -103,33 +121,30 @@
 
 	who_sees_us = list()
 	for(var/mob/seer as anything in mobs_which_see_us)
-		if(!seer.client)
-			return
-
-		show_image_to(seer)
-		who_sees_us += seer
-		RegisterSignal(seer, COMSIG_PARENT_QDELETING, .proc/remove_seer)
 		RegisterSignal(seer, COMSIG_MOB_LOGIN, .proc/show_image_to)
+		RegisterSignal(seer, COMSIG_PARENT_QDELETING, .proc/remove_seer)
+		who_sees_us += seer
+		show_image_to(seer)
 
 /obj/effect/client_image_holder/Destroy(force)
 	if(shown_image)
 		for(var/mob/seer as anything in who_sees_us)
-			seer.client?.images -= shown_image
+			remove_seer(seer)
 		shown_image = null
 
-	who_sees_us.Cut()
+	who_sees_us.Cut() // probably not needed but who knows
 	return ..()
 
 /// Signal proc to clean up references if people who see us are deleted.
 /obj/effect/client_image_holder/proc/remove_seer(mob/source)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(source, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(source, list(COMSIG_MOB_LOGIN, COMSIG_PARENT_QDELETING))
 	hide_image_from(source)
 	who_sees_us -= source
 
 	// No reason to exist, anymore
-	if(!length(who_sees_us))
+	if(!QDELETED(src) && !length(who_sees_us))
 		qdel(src)
 
 /// Generates the image which we take on.

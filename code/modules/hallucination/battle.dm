@@ -22,8 +22,7 @@
 	var/chance_to_fall = 80
 
 /datum/hallucination/battle/gun/start()
-	var/turf/source = random_far_turf()
-	fire_loop(source, rand(shots_to_fire_lower_range, shots_to_fire_upper_range))
+	fire_loop(random_far_turf(), rand(shots_to_fire_lower_range, shots_to_fire_upper_range))
 	return TRUE
 
 /// The main loop for gun based hallucinations.
@@ -117,7 +116,7 @@
 		qdel(src)
 
 	else
-		addtimer(CALLBACK(src, .proc/harmbaton_loop, source), rand(CLICK_CD_MELEE, CLICK_CD_MELEE + 4))
+		addtimer(CALLBACK(src, .proc/harmbaton_loop, source, hits_remaing), rand(CLICK_CD_MELEE, CLICK_CD_MELEE + 4))
 
 /// A hallucination of someone unsheathing an energy sword, going to town, and sheathing it again.
 /datum/hallucination/battle/e_sword

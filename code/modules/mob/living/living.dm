@@ -2374,6 +2374,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(!admin || !check_rights(NONE))
 		return
 
+	// Melbert todo: Doesnt' work, test
 	var/list/delusion_args = create_delusion(admin)
 	if(QDELETED(src) || !check_rights(NONE) || !length(delusion_args))
 		return

@@ -111,6 +111,7 @@
 
 	else if(hit_mob in view(parent.hallucinator))
 		to_chat(parent.hallucinator, span_danger("[hit_mob] is hit by \a [src] in the chest!"))
+		apply_effect_to_hit_mob(parent.hallucinator)
 
 	if(damage_type == BRUTE)
 		var/splatter_dir = dir
@@ -292,6 +293,7 @@
 	hal_impact_effect_wall = null
 
 /obj/projectile/hallucination/change/apply_effect_to_hallucinator(mob/living/afflicted)
+	// Future idea: Make it so any other mob hit appear to be polymorphed to the hallucinator
 	afflicted.cause_hallucination( \
 		get_random_valid_hallucination_subtype(/datum/hallucination/delusion/preset), \
 		"fake [name]", \

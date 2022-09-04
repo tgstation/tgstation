@@ -12,22 +12,23 @@
 	var/list/slots_free = list()
 	if(valid_slots & ITEM_SLOT_HANDS)
 		for(var/hand in hallucinator.get_empty_held_indexes())
-			slots_free[ITEM_SLOT_HANDS] = ui_hand_position(hand)
+			slots_free[ui_hand_position(hand)] = ITEM_SLOT_HANDS
 
-	if(ishuman(hallucinator))
-		var/mob/living/carbon/human/human_hallucinator = hallucinator
+	// These slots are human only, + they have to have a uniform
+	var/mob/living/carbon/human/human_hallucinator = hallucinator
+	if(istype(hallucinator) && human_hallucinator.w_uniform)
 		if((valid_slots & ITEM_SLOT_BELT) && !human_hallucinator.belt)
-			slots_free[ITEM_SLOT_BELT] = ui_belt
+			slots_free[ui_belt] = ITEM_SLOT_BELT
 		if((valid_slots & ITEM_SLOT_LPOCKET) && !human_hallucinator.l_store)
-			slots_free[ITEM_SLOT_LPOCKET] = ui_storage1
+			slots_free[ui_storage1] = ITEM_SLOT_LPOCKET
 		if((valid_slots & ITEM_SLOT_RPOCKET) && !human_hallucinator.r_store)
-			slots_free[ITEM_SLOT_RPOCKET] = ui_storage2
+			slots_free[ui_storage2] = ITEM_SLOT_RPOCKET
 
 	if(!length(slots_free))
 		return FALSE
 
-	var/picked_slot = pick(slots_free)
-	var/obj/item/hallucinated/hallucinated_item = make_fake_item(slots_free[picked_slot], picked_slot)
+	var/picked_space = pick(slots_free)
+	var/obj/item/hallucinated/hallucinated_item = make_fake_item(picked_space, slots_free[picked_space])
 	feedback_details += "Item Type: [hallucinated_item.name]"
 
 	hallucinator.client?.screen += hallucinated_item
