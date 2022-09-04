@@ -16,13 +16,19 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 	passed_args.Insert(1, src)
 
 	var/datum/hallucination/new_hallucination = new hallucination_type(arglist(passed_args))
+	// For some reason, we qdel'd in New, maybe something went wrong.
 	if(QDELETED(new_hallucination))
 		return
+	// It's not guaranteed that the hallucination passed can successfully be initiated.
+	// This means there may be cases where someone should have a hallucination but nothing happens,
+	// notably if you pass a randomly picked hallucination type into this.
+	// Maybe there should be a separate proc to reroll on failure?
 	if(!new_hallucination.start())
 		qdel(new_hallucination)
 		return
 
-	investigate_log("was afflicted with a hallucination of type [hallucination_type] by: [hallucination_source]. ([new_hallucination.feedback_details])", INVESTIGATE_HALLUCINATIONS)
+	investigate_log("was afflicted with a hallucination of type [hallucination_type] by: [hallucination_source]. \
+		([new_hallucination.feedback_details])", INVESTIGATE_HALLUCINATIONS)
 	return new_hallucination
 
 /**
