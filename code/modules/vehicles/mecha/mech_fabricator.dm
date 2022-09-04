@@ -212,6 +212,8 @@
 	buildable_parts = list()
 	final_sets += part_sets
 
+	if(!stored_research)
+		return
 	for(var/v in stored_research.researched_designs)
 		var/datum/design/D = SSresearch.techweb_design_by_id(v)
 		if(D.build_type & MECHFAB)

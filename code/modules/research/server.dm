@@ -23,10 +23,13 @@
 	var/working = TRUE
 	/// if TRUE, someone manually disabled us via console.
 	var/research_disabled = FALSE
+	///Connected techweb node the server is connected to.
+	var/datum/techweb/stored_research
 
 /obj/machinery/rnd/server/Initialize(mapload)
 	. = ..()
 	name += " [num2hex(rand(1,65535), -1)]" //gives us a random four-digit hex number as part of the name. Y'know, for fluff.
+	stored_research = SSresearch.science_tech
 	SSresearch.servers |= src
 
 /obj/machinery/rnd/server/Destroy()
@@ -142,8 +145,7 @@
 	dat += "</table></br>"
 
 	dat += "<b>Research Log</b></br>"
-	var/datum/techweb/stored_research = SSresearch.science_tech
-	if(length(stored_research.research_logs))
+	if(stored_research && length(stored_research.research_logs))
 		dat += "<table BORDER=\"1\">"
 		dat += "<tr><td><b>Entry</b></td><td><b>Research Name</b></td><td><b>Cost</b></td><td><b>Researcher Name</b></td><td><b>Console Location</b></td></tr>"
 		for(var/i=stored_research.research_logs.len, i>0, i--)

@@ -110,6 +110,8 @@
 	// Check that there is actually an experiment selected
 	if (selected_experiment == null && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE))
 		return
+	if (!linked_techweb)
+		return
 
 	// Determine if this experiment is actionable with this target
 	var/list/arguments = list(src)

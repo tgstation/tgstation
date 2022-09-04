@@ -51,6 +51,8 @@
 	return ..()
 
 /obj/machinery/computer/operating/proc/sync_surgeries()
+	if(!linked_techweb)
+		return
 	for(var/i in linked_techweb.researched_designs)
 		var/datum/design/surgery/D = SSresearch.techweb_design_by_id(i)
 		if(!istype(D))
