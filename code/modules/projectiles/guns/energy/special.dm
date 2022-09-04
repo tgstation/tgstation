@@ -41,7 +41,7 @@
 
 /obj/item/gun/energy/decloner/update_overlays()
 	. = ..()
-	var/obj/item/ammo_casing/energy/shot = ammo_generated[select]
+	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	if(!QDELETED(cell) && (cell.charge > shot.e_cost))
 		. += "decloner_spin"
 
@@ -234,8 +234,8 @@
 
 /obj/item/gun/energy/wormhole_projector/update_ammo_types()
 	. = ..()
-	for(var/i in 1 to ammo_generated.len)
-		var/obj/item/ammo_casing/energy/wormhole/W = ammo_generated[i]
+	for(var/i in 1 to ammo_type.len)
+		var/obj/item/ammo_casing/energy/wormhole/W = ammo_type[i]
 		if(istype(W))
 			W.gun = WEAKREF(src)
 			var/obj/projectile/beam/wormhole/WH = W.loaded_projectile

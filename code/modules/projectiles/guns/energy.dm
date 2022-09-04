@@ -10,7 +10,6 @@
 	///if the weapon has custom icons for individual ammo types it can switch between. ie disabler beams, taser, laser/lethals, ect.
 	var/modifystate = FALSE
 	var/list/ammo_type = list(/obj/item/ammo_casing/energy)
-	var/list/obj/item/ammo_casing/energy/ammo_generated
 	///The state of the select fire switch. Determines from the ammo_type list what kind of shot is fired next.
 	var/select = 1
 	///If the user can select the firemode through attack_self.
@@ -98,12 +97,12 @@
 /obj/item/gun/energy/proc/add_notes_energy()
 	var/list/readout = list()
 	// Make sure there is something to actually retrieve
-	if(!ammo_generated.len)
+	if(!ammo_type.len)
 		return
 	var/obj/projectile/exam_proj
-	readout += "\nStandard models of this projectile weapon have [span_warning("[ammo_generated.len] mode\s")]"
+	readout += "\nStandard models of this projectile weapon have [span_warning("[ammo_type.len] mode\s")]"
 	readout += "Our heroic interns have shown that one can theoretically stay standing after..."
-	for(var/obj/item/ammo_casing/energy/for_ammo as anything in ammo_generated)
+	for(var/obj/item/ammo_casing/energy/for_ammo as anything in ammo_type)
 		exam_proj = for_ammo.projectile_type
 		if(!ispath(exam_proj))
 			continue
@@ -118,13 +117,12 @@
 	return readout.Join("\n") // Sending over the singular string, rather than the whole list
 
 /obj/item/gun/energy/proc/update_ammo_types()
-	ammo_generated = list()
 	var/obj/item/ammo_casing/energy/shot
 	for (var/i in 1 to ammo_type.len)
 		var/shottype = ammo_type[i]
 		shot = new shottype(src)
-		ammo_generated += shot
-	shot = ammo_generated[select]
+		ammo_type[i] = shot
+	shot = ammo_type[select]
 	fire_sound = shot.fire_sound
 	fire_delay = shot.delay
 
@@ -152,27 +150,25 @@
 		update_appearance()
 
 /obj/item/gun/energy/attack_self(mob/living/user as mob)
-	if(ammo_generated.len > 1 && can_select)
+	if(ammo_type.len > 1 && can_select)
 		select_fire(user)
 
 /obj/item/gun/energy/can_shoot()
-	if(length(ammo_generated) < select)
-		return FALSE
-	var/obj/item/ammo_casing/energy/shot = ammo_generated[select]
+	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	return !QDELETED(cell) ? (cell.charge >= shot.e_cost) : FALSE
 
 /obj/item/gun/energy/recharge_newshot(no_cyborg_drain)
-	if (!length(ammo_generated) || !cell)
+	if (!ammo_type || !cell)
 		return
 	if(use_cyborg_cell && !no_cyborg_drain)
 		if(iscyborg(loc))
 			var/mob/living/silicon/robot/R = loc
 			if(R.cell)
-				var/obj/item/ammo_casing/energy/shot = ammo_generated[select] //Necessary to find cost of shot
+				var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
 				if(R.cell.use(shot.e_cost)) //Take power from the borg...
 					cell.give(shot.e_cost) //... to recharge the shot
 	if(!chambered)
-		var/obj/item/ammo_casing/energy/AC = ammo_generated[select]
+		var/obj/item/ammo_casing/energy/AC = ammo_type[select]
 		if(cell.charge >= AC.e_cost) //if there's enough power in the cell cell...
 			chambered = AC //...prepare a new shot based on the current ammo type selected
 			if(!chambered.loaded_projectile)
@@ -197,9 +193,9 @@
 
 /obj/item/gun/energy/proc/select_fire(mob/living/user)
 	select++
-	if (select > ammo_generated.len)
+	if (select > ammo_type.len)
 		select = 1
-	var/obj/item/ammo_casing/energy/shot = ammo_generated[select]
+	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	fire_sound = shot.fire_sound
 	fire_delay = shot.delay
 	if (shot.select_name && user)
@@ -217,8 +213,8 @@
 
 	var/ratio = get_charge_ratio()
 	var/temp_icon_to_use = initial(icon_state)
-	if(modifystate && length(ammo_generated) >= select)
-		var/obj/item/ammo_casing/energy/shot = ammo_generated[select]
+	if(modifystate)
+		var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 		temp_icon_to_use += "[shot.select_name]"
 
 	temp_icon_to_use += "[ratio]"
@@ -267,7 +263,7 @@
 		if(user.is_holding(src))
 			user.visible_message(span_suicide("[user] melts [user.p_their()] face off with [src]!"))
 			playsound(loc, fire_sound, 50, TRUE, -1)
-			var/obj/item/ammo_casing/energy/shot = ammo_generated[select]
+			var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 			cell.use(shot.e_cost)
 			update_appearance()
 			return(FIRELOSS)
@@ -291,11 +287,11 @@
 
 
 /obj/item/gun/energy/ignition_effect(atom/A, mob/living/user)
-	if(!can_shoot() || !ammo_generated[select])
+	if(!can_shoot() || !ammo_type[select])
 		shoot_with_empty_chamber()
 		. = ""
 	else
-		var/obj/item/ammo_casing/energy/E = ammo_generated[select]
+		var/obj/item/ammo_casing/energy/E = ammo_type[select]
 		var/obj/projectile/energy/loaded_projectile = E.loaded_projectile
 		if(!loaded_projectile)
 			. = ""

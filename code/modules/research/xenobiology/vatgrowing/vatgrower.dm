@@ -100,7 +100,7 @@
 			. += on_overlay
 		else
 			. += off_overlay
-	if(!reagents?.total_volume)
+	if(!reagents.total_volume)
 		return
 	var/reagentcolor = mix_color_from_reagents(reagents.reagent_list)
 	var/mutable_appearance/base_overlay = mutable_appearance(icon, "vat_reagent")

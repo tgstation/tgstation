@@ -57,7 +57,7 @@
 
 /obj/item/paperplane/update_overlays()
 	. = ..()
-	for(var/stamp in internalPaper?.stamp_cache)
+	for(var/stamp in internalPaper.stamp_cache)
 		. += "paperplane_[stamp]"
 
 /obj/item/paperplane/attack_self(mob/user)

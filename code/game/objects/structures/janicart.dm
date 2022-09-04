@@ -254,5 +254,5 @@
 		. += "cart_replacer"
 	if(signs)
 		. += "cart_sign[signs]"
-	if(reagents?.total_volume > 0)
+	if(reagents.total_volume > 0)
 		. += "cart_water"

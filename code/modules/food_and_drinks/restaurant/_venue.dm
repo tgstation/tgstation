@@ -142,17 +142,15 @@
 	layer = BELOW_OBJ_LAYER
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	///What venue is this portal for? Uses a typepath which is turned into an instance on Initialize
-	var/datum/venue/linked_venue
-	///Typepath to turn into linked venue at init
-	var/datum/venue/linked_path = /datum/venue
+	var/datum/venue/linked_venue = /datum/venue
 
 	/// A weak reference to the mob who turned on the portal
 	var/datum/weakref/turned_on_portal
 
 /obj/machinery/restaurant_portal/Initialize(mapload)
 	. = ..()
-	if(linked_path)
-		linked_venue = SSrestaurant.all_venues[linked_path]
+	if(linked_venue)
+		linked_venue = SSrestaurant.all_venues[linked_venue]
 		linked_venue.restaurant_portal = src
 
 /obj/machinery/restaurant_portal/Destroy()
@@ -163,7 +161,7 @@
 
 /obj/machinery/restaurant_portal/update_overlays()
 	. = ..()
-	if(!linked_venue?.open) //Any open venues
+	if(!linked_venue.open) //Any open venues
 		. += mutable_appearance(icon, "portal_door")
 
 /obj/machinery/restaurant_portal/attack_hand(mob/living/user)
@@ -239,12 +237,11 @@
 	icon_state = "eating_zone"
 	layer = BELOW_MOB_LAYER
 	use_vis_overlay = FALSE
-	var/datum/venue/linked_venue
-	var/datum/venue/linked_path = /datum/venue
+	var/datum/venue/linked_venue = /datum/venue
 
 /obj/structure/holosign/robot_seat/Initialize(mapload, loc, source_projector)
 	. = ..()
-	linked_venue = SSrestaurant.all_venues[linked_path]
+	linked_venue = SSrestaurant.all_venues[linked_venue]
 	linked_venue.linked_seats[src] += null
 
 /obj/structure/holosign/robot_seat/attack_holosign(mob/living/user, list/modifiers)

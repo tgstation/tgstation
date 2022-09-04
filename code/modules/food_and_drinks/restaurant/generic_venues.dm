@@ -51,14 +51,14 @@
 	qdel(ordered_food)
 
 /obj/machinery/restaurant_portal/restaurant
-	linked_path = /datum/venue/restaurant
+	linked_venue = /datum/venue/restaurant
 /obj/item/holosign_creator/robot_seat/restaurant
 	name = "restaurant seating indicator placer"
 	holosign_type = /obj/structure/holosign/robot_seat/restaurant
 
 /obj/structure/holosign/robot_seat/restaurant
 	name = "restaurant seating"
-	linked_path = /datum/venue/restaurant
+	linked_venue = /datum/venue/restaurant
 
 
 
@@ -128,7 +128,7 @@
 		return potential_drink.reagents.has_reagent(wanted_item, VENUE_BAR_MINIMUM_REAGENTS)
 
 /obj/machinery/restaurant_portal/bar
-	linked_path = /datum/venue/bar
+	linked_venue = /datum/venue/bar
 
 /obj/item/holosign_creator/robot_seat/bar
 	name = "bar seating indicator placer"
@@ -136,4 +136,4 @@
 
 /obj/structure/holosign/robot_seat/bar
 	name = "bar seating"
-	linked_path = /datum/venue/bar
+	linked_venue = /datum/venue/bar

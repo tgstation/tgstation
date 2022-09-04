@@ -40,19 +40,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 	luminosity = (machine_stat & NOPOWER) ? 0 : 1
 
 /obj/machinery/light_switch/update_icon_state()
-	set_light(area?.lightswitch ? 0 : light_on_range)
+	set_light(area.lightswitch ? 0 : light_on_range)
 	icon_state = "[base_icon_state]"
 	if(machine_stat & NOPOWER)
 		icon_state += "-nopower"
 		return ..()
-	icon_state += "[area?.lightswitch ? "-on" : "-off"]"
+	icon_state += "[area.lightswitch ? "-on" : "-off"]"
 	return ..()
 
 /obj/machinery/light_switch/update_overlays()
 	. = ..()
 	if(machine_stat & NOPOWER)
 		return ..()
-	. += emissive_appearance(icon, "[base_icon_state]-emissive[area?.lightswitch ? "-on" : "-off"]", src, alpha = src.alpha)
+	. += emissive_appearance(icon, "[base_icon_state]-emissive[area.lightswitch ? "-on" : "-off"]", src, alpha = src.alpha)
 
 /obj/machinery/light_switch/examine(mob/user)
 	. = ..()

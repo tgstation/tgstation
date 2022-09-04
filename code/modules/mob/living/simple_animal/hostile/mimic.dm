@@ -244,7 +244,7 @@ GLOBAL_LIST_INIT(mimic_blacklist, list(/obj/structure/table, /obj/structure/cabl
 /mob/living/simple_animal/hostile/mimic/copy/ranged/OpenFire(the_target)
 	if(Zapgun)
 		if(Zapgun.cell)
-			var/obj/item/ammo_casing/energy/shot = Zapgun.ammo_generated[Zapgun.select]
+			var/obj/item/ammo_casing/energy/shot = Zapgun.ammo_type[Zapgun.select]
 			if(Zapgun.cell.charge >= shot.e_cost)
 				Zapgun.cell.use(shot.e_cost)
 				Zapgun.update_appearance()

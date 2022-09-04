@@ -221,7 +221,7 @@
 	. = ..()
 	if(!fill_icon_thresholds)
 		return
-	if(!reagents?.total_volume)
+	if(!reagents.total_volume)
 		return
 
 	var/fill_name = fill_icon_state? fill_icon_state : icon_state

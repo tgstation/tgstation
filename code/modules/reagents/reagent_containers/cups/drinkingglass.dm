@@ -25,18 +25,18 @@
 	if(renamedByPlayer)
 		return
 	. = ..()
-	var/datum/reagent/largest_reagent = reagents?.get_master_reagent()
+	var/datum/reagent/largest_reagent = reagents.get_master_reagent()
 	name = largest_reagent?.glass_name || initial(name)
 
 /obj/item/reagent_containers/cup/glass/drinkingglass/update_desc(updates)
 	if(renamedByPlayer)
 		return
 	. = ..()
-	var/datum/reagent/largest_reagent = reagents?.get_master_reagent()
+	var/datum/reagent/largest_reagent = reagents.get_master_reagent()
 	desc = largest_reagent?.glass_desc || initial(desc)
 
 /obj/item/reagent_containers/cup/glass/drinkingglass/update_icon_state()
-	if(!reagents?.total_volume)
+	if(!reagents.total_volume)
 		icon_state = base_icon_state
 		return ..()
 
@@ -79,13 +79,13 @@
 	if(renamedByPlayer)
 		return
 	. = ..()
-	name = "[length(reagents?.reagent_list) ? "filled " : null]shot glass"
+	name = "[length(reagents.reagent_list) ? "filled " : null]shot glass"
 
 /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass/update_desc(updates)
 	if(renamedByPlayer)
 		return
 	. = ..()
-	if(!length(reagents?.reagent_list))
+	if(!length(reagents.reagent_list))
 		desc = "A shot glass - the universal symbol for bad decisions."
 	else
 		desc = "The challenge is not taking as many as you can, but guessing what it is before you pass out."

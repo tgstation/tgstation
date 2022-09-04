@@ -187,7 +187,7 @@
 
 /// Returns the amount of fuel in the welder
 /obj/item/weldingtool/proc/get_fuel()
-	return reagents?.get_reagent_amount(/datum/reagent/fuel)
+	return reagents.get_reagent_amount(/datum/reagent/fuel)
 
 
 /// Uses fuel from the welding tool.

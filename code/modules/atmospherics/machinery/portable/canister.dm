@@ -379,7 +379,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	if(connected_port)
 		. += mutable_appearance(canister_overlay_file, "can-connector")
 
-	var/air_pressure = air_contents?.return_pressure()
+	var/air_pressure = air_contents.return_pressure()
 
 	switch(air_pressure)
 		if((40 * ONE_ATMOSPHERE) to INFINITY)

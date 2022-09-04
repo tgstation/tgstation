@@ -274,7 +274,7 @@
 		var/obj/item/card/id/copied_card = picked_item
 
 		// If the outfit comes with a special trim override, we'll steal some stuff from that.
-		var/new_trim = initial(copied_card.trim_path)
+		var/new_trim = initial(copied_card.trim)
 
 		if(new_trim)
 			SSid_access.apply_trim_to_chameleon_card(agent_card, new_trim, TRUE)
@@ -313,7 +313,7 @@
 			return
 
 		// If the outfit comes with a special trim override, we'll use that. Otherwise, use the card's default trim. Failing that, no trim at all.
-		var/new_trim = initial(job_outfit.id_trim) ? initial(job_outfit.id_trim) : initial(copied_card.trim_path)
+		var/new_trim = initial(job_outfit.id_trim) ? initial(job_outfit.id_trim) : initial(copied_card.trim)
 
 		if(new_trim)
 			SSid_access.apply_trim_to_chameleon_card(agent_card, new_trim, FALSE)
@@ -861,8 +861,8 @@
 
 	else if(istype(gun_to_set, /obj/item/gun/energy))
 		var/obj/item/gun/energy/energy_gun = gun_to_set
-		if(length(energy_gun.ammo_generated))
-			var/obj/item/ammo_casing/energy_cartridge = energy_gun.ammo_generated[1]
+		if(islist(energy_gun.ammo_type) && energy_gun.ammo_type.len)
+			var/obj/item/ammo_casing/energy_cartridge = energy_gun.ammo_type[1]
 			set_chameleon_ammo(energy_cartridge)
 
 	else if(istype(gun_to_set, /obj/item/gun/syringe))

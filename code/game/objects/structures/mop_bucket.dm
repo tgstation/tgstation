@@ -27,5 +27,5 @@
 
 /obj/structure/mopbucket/update_overlays()
 	. = ..()
-	if(reagents?.total_volume > 0)
+	if(reagents.total_volume > 0)
 		. += "mopbucket_water"
