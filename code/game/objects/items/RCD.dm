@@ -1363,14 +1363,14 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	/obj/machinery/duct = 1,
 	/obj/machinery/plumbing/input = 5,
 	/obj/machinery/plumbing/output = 5,
-	/obj/machinery/plumbing/tank = 20, //replace with keg
 	/obj/machinery/plumbing/synthesizer/soda = 15,
 	/obj/machinery/plumbing/synthesizer/beer = 15,
-	/obj/machinery/plumbing/reaction_chamber = 15, //replace with mixing tank
+	/obj/machinery/plumbing/bottler = 50, //replace with drink pourer
+	/obj/machinery/plumbing/reaction_chamber/drink = 15, //replace with mixing tank
 
 	/obj/machinery/plumbing/layer_manifold = 5,
 	/obj/machinery/plumbing/acclimator = 10,
-	/obj/machinery/plumbing/bottler = 50, //replace with drink dispenser
+	/obj/machinery/plumbing/filter = 5,
 	/obj/machinery/plumbing/disposer = 10,
 	/obj/machinery/plumbing/fermenter = 30,
 	/obj/machinery/plumbing/grinder_chemical = 30,
