@@ -10,7 +10,7 @@
 	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, COMSIG_PARENT_ATTACKBY, .proc/barricade)
+	RegisterSignal(target, COMSIG_ITEM_PRE_ATTACK, .proc/barricade)
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
 	target.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
@@ -18,7 +18,7 @@
 
 
 /datum/element/can_barricade/Detach(atom/target)
-	UnregisterSignal(target, list(COMSIG_PARENT_ATTACKBY, COMSIG_PARENT_EXAMINE, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM))
+	UnregisterSignal(target, list(COMSIG_ITEM_PRE_ATTACK, COMSIG_PARENT_EXAMINE, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM))
 	// We don't remove HAS_CONTEXTUAL_SCREENTIPS_1, since there could be other stuff still hooked to it,
 	// and being set without signals is not dangerous, just less performant.
 	// A lot of things don't do this, perhaps make a proc that checks if any signals are still set, and if not,
@@ -38,17 +38,17 @@
 
 	if(plank.get_amount() < PLANK_BARRICADE_AMOUNT)
 		source.balloon_alert(user, "need two [plank] sheets!")
-		return // ??? COMPONENT_CANCEL_ATTACK_CHAIN
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	source.balloon_alert(user, "constructing barricade...")
 	playsound(src, 'sound/items/hammering_wood.ogg', 50, vary = TRUE)
 	if(!do_after(user, 5 SECONDS, target = source) || !plank.use(2) || (locate(/obj/structure/barricade/wooden/crude) in source.loc))
-		return
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	source.balloon_alert(user, "barricade constructed")
 	var/obj/structure/barricade/wooden/crude/barricade = new (source.loc)
 	barricade.add_fingerprint(user)
-	return //TRUE
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/element/can_barricade/proc/on_requesting_context_from_item(atom/source, list/context, obj/item/held_item, mob/user)
 	SIGNAL_HANDLER
