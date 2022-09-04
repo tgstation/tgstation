@@ -473,7 +473,7 @@
 
 	notify_ghosts("[name] has been activated!", source = src, action=NOTIFY_ORBIT, header = "CTF has been activated")
 
-/obj/machinery/capture_the_flag/proc/machine_reset(var/obj/machinery/capture_the_flag/CTF)
+/obj/machinery/capture_the_flag/proc/machine_reset(obj/machinery/capture_the_flag/CTF)
 	CTF.points = 0
 	CTF.control_points = 0
 	CTF.ctf_enabled = FALSE
