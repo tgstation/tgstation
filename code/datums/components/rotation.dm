@@ -35,11 +35,13 @@
 
 	src.rotation_flags = rotation_flags
 	src.AfterRotation = AfterRotation || CALLBACK(src, .proc/DefaultAfterRotation)
+	src.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 
 /datum/component/simple_rotation/proc/AddSignals()
 	RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/RotateLeft)
 	RegisterSignal(parent, COMSIG_CLICK_ALT_SECONDARY, .proc/RotateRight)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/ExamineMessage)
+	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, .proc/on_requesting_context_from_item)
 
 /datum/component/simple_rotation/proc/AddVerbs()
 	var/obj/rotated_obj = parent
@@ -56,7 +58,7 @@
 		rotated_obj.verbs -= /atom/movable/proc/SimpleRotateCounterclockwise
 
 /datum/component/simple_rotation/proc/RemoveSignals()
-	UnregisterSignal(parent, list(COMSIG_CLICK_ALT, COMSIG_CLICK_ALT_SECONDARY, COMSIG_PARENT_EXAMINE))
+	UnregisterSignal(parent, list(COMSIG_CLICK_ALT, COMSIG_CLICK_ALT_SECONDARY, COMSIG_PARENT_EXAMINE, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM))
 
 /datum/component/simple_rotation/RegisterWithParent()
 	AddVerbs()
@@ -174,3 +176,21 @@
 	var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
 	if(rotcomp)
 		rotcomp.Rotate(usr, ROTATION_FLIP)
+
+// maybe we don't need the item context proc but instead the hand one? since we don't need to check held_item
+/datum/component/simple_rotation/proc/on_requesting_context_from_item(atom/source, list/context, obj/item/held_item, mob/user)
+	SIGNAL_HANDLER
+	
+	var/rotation_screentip = FALSE
+	
+	if(CanBeRotated(user, ROTATION_CLOCKWISE) && CanUserRotate(user, ROTATION_CLOCKWISE))
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Rotate clockwise"
+		rotation_screentip = TRUE
+	if(CanBeRotated(user, ROTATION_COUNTERCLOCKWISE) && CanUserRotate(user, ROTATION_COUNTERCLOCKWISE))
+		context[SCREENTIP_CONTEXT_ALT_RMB] = "Rotate counterclockwise"		
+		rotation_screentip = TRUE
+		
+	if(rotation_screentip)
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE // should we return . ?
