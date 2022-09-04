@@ -4,8 +4,8 @@
 
 /datum/buildmode_mode/tweakcomps/show_help(client/target_client)
 	to_chat(target_client, span_notice("***********************************************************\n\
-		Right Mouse Button on buildmode button = Choose components rating\n\
-		Left Mouse Button on machinery = Sets components choosen rating.\n\
+		Right Mouse Button on buildmode button = Choose the rating of the components.\n\
+		Left Mouse Button on machinery = Sets the chosen rating of the components on the machinery.\n\
 		***********************************************************"))
 
 /datum/buildmode_mode/tweakcomps/change_settings(client/target_client)
@@ -19,7 +19,7 @@
 
 /datum/buildmode_mode/tweakcomps/handle_click(client/target_client, params, obj/machinery/object)
 	if(!ismachinery(object))
-		to_chat(target_client, span_warning("This object is not machinery!"))
+		to_chat(target_client, span_warning("This isn't machinery!"))
 		return
 	else
 		if(object.component_parts)
@@ -29,5 +29,5 @@
 			
 			SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Machine Upgrade", "[rating]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		else
-			to_chat(target_client, span_warning("That machinery don't have components"))
+			to_chat(target_client, span_warning("This machinery doesn't have components!"))
 			return
