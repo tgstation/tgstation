@@ -84,6 +84,9 @@
 
 //USE THIS TO FILL IT, NOT INITIALIZE OR NEW
 /obj/structure/closet/proc/PopulateContents()
+	SHOULD_CALL_PARENT(TRUE)
+	if(QDELETED(src))
+		stack_trace("Calling populate contents in destroy, what did YOU DO")
 	SEND_SIGNAL(src, COMSIG_CLOSET_POPULATE_CONTENTS)
 
 /// Populate the closet with stuff that needs to be added before it is opened.
