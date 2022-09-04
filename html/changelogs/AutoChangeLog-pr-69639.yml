@@ -1,7 +1,0 @@
-author: "Vishenka0704 and Ying-The-Pando"
-delete-after: True
-changes: 
-  - rscadd: "Cucumbers and pickles"
-  - rscadd: "Danish hot dog"
-  - balance: "add cucumbers in dishes where they need"
-  - qol: "add to bounty cubes, orders - new vegetables"

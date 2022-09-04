@@ -195,3 +195,22 @@
   - admin: renaming fax machines is logged in game log
   san7890:
   - bugfix: Surgery tables are now no longer transparent.
+2022-09-04:
+  Mickyan:
+  - rscadd: Added two new ethereal themed pieces of clothing, find them in your local
+      clothesmate
+  - rscadd: 'New curator bundle: Ethereal Trail Warden'
+  Mothblocks:
+  - rscdel: You can no longer see maint spawners before the round starts (but your
+      rounds start faster now :) )
+  - qol: CTF will now only load when players/admins request it, for performance.
+  Vishenka0704 and Ying-The-Pando:
+  - rscadd: Cucumbers and pickles
+  - rscadd: Danish hot dog
+  - balance: add cucumbers in dishes where they need
+  - qol: add to bounty cubes, orders - new vegetables
+  itseasytosee:
+  - bugfix: Fixed balistic helmet sprites with flashlights looking weird
+  skylord-a52:
+  - refactor: Reorganized the icons/mob folder and added a bunch of new subfolders
+      to make finding things easier.
