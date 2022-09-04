@@ -392,8 +392,8 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	icon = 'icons/obj/toys/tcgmisc.dmi'
 	icon_state = "binder"
 	inhand_icon_state = "album"
-	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/books_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/books_righthand.dmi'
 	resistance_flags = FLAMMABLE //burn your enemies' collections, for only you can Collect Them All!
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1

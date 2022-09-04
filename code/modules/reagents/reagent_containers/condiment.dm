@@ -11,8 +11,8 @@
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "emptycondiment"
 	inhand_icon_state = "beer" //Generic held-item sprite until unique ones are made.
-	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
 	reagent_flags = OPENCONTAINER
 	obj_flags = UNIQUE_RENAME
 	possible_transfer_amounts = list(1, 5, 10, 15, 20, 25, 30, 50)

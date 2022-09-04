@@ -16,7 +16,7 @@
 	if(loc != card)
 		visible_message(span_notice("[src] [resting? "lays down for a moment..." : "perks up from the ground."]"))
 
-/mob/living/silicon/pai/wabbajack()
+/mob/living/silicon/pai/wabbajack(what_to_randomize, change_flags = WABBAJACK)
 	if(length(possible_chassis) < 2)
 		return FALSE
 	var/holochassis = pick(possible_chassis - chassis)

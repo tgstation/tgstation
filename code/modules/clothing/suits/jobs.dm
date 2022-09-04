@@ -12,7 +12,20 @@
 	inhand_icon_state = "apron"
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST|GROIN
-	allowed = list(/obj/item/reagent_containers/spray/plantbgone, /obj/item/plant_analyzer, /obj/item/seeds, /obj/item/reagent_containers/cup/bottle, /obj/item/reagent_containers/cup/beaker, /obj/item/cultivator, /obj/item/reagent_containers/spray/pestspray, /obj/item/hatchet, /obj/item/storage/bag/plants, /obj/item/graft, /obj/item/secateurs, /obj/item/geneshears)
+	allowed = list(
+		/obj/item/cultivator,
+		/obj/item/geneshears,
+		/obj/item/graft,
+		/obj/item/hatchet,
+		/obj/item/plant_analyzer,
+		/obj/item/reagent_containers/cup/beaker,
+		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/spray/pestspray,
+		/obj/item/reagent_containers/spray/plantbgone,
+		/obj/item/secateurs,
+		/obj/item/seeds,
+		/obj/item/storage/bag/plants,
+	)
 	species_exception = list(/datum/species/golem)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
 
@@ -30,7 +43,20 @@
 	icon_state = "capjacket"
 	inhand_icon_state = "bio_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
-	allowed = list(/obj/item/disk, /obj/item/stamp, /obj/item/reagent_containers/cup/glass/flask, /obj/item/melee, /obj/item/storage/lockbox/medal, /obj/item/assembly/flash/handheld, /obj/item/storage/box/matches, /obj/item/lighter, /obj/item/clothing/mask/cigarette, /obj/item/storage/fancy/cigarettes, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
+	allowed = list(
+		/obj/item/assembly/flash/handheld,
+		/obj/item/clothing/mask/cigarette,
+		/obj/item/disk,
+		/obj/item/lighter,
+		/obj/item/melee,
+		/obj/item/reagent_containers/cup/glass/flask,
+		/obj/item/stamp,
+		/obj/item/storage/box/matches,
+		/obj/item/storage/fancy/cigarettes,
+		/obj/item/storage/lockbox/medal,
+		/obj/item/tank/internals/emergency_oxygen,
+		/obj/item/tank/internals/plasmaman,
+	)
 
 //Chef
 /obj/item/clothing/suit/toggle/chef
@@ -42,7 +68,11 @@
 	inhand_icon_state = "chef"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
 	body_parts_covered = CHEST|GROIN|ARMS
-	allowed = list(/obj/item/kitchen, /obj/item/knife/kitchen, /obj/item/storage/bag/tray)
+	allowed = list(
+		/obj/item/kitchen,
+		/obj/item/knife/kitchen,
+		/obj/item/storage/bag/tray,
+	)
 	toggle_noun = "sleeves"
 	species_exception = list(/datum/species/golem)
 
@@ -54,7 +84,11 @@
 	inhand_icon_state = "apronchef"
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST|GROIN
-	allowed = list(/obj/item/kitchen, /obj/item/knife/kitchen, /obj/item/storage/bag/tray)
+	allowed = list(
+		/obj/item/kitchen,
+		/obj/item/knife/kitchen,
+		/obj/item/storage/bag/tray,
+	)
 
 //Detective
 /obj/item/clothing/suit/jacket/det_suit
@@ -105,7 +139,15 @@
 	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
 	inhand_icon_state = "hazard"
 	blood_overlay_type = "armor"
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/t_scanner, /obj/item/radio, /obj/item/storage/bag/construction)
+	allowed = list(
+		/obj/item/fireaxe/metal_h2_axe,
+		/obj/item/flashlight,
+		/obj/item/radio,
+		/obj/item/storage/bag/construction,
+		/obj/item/tank/internals/emergency_oxygen,
+		/obj/item/tank/internals/plasmaman,
+		/obj/item/t_scanner,
+	)
 	resistance_flags = NONE
 	species_exception = list(/datum/species/golem)
 
@@ -204,22 +246,22 @@
 	desc = "A sterile blue surgical apron."
 	icon_state = "surgical"
 	allowed = list(
-		/obj/item/hemostat,
-		/obj/item/cautery,
-		/obj/item/scalpel,
-		/obj/item/surgical_drapes,
-		/obj/item/retractor,
 		/obj/item/bonesetter,
+		/obj/item/cautery,
 		/obj/item/flashlight/pen,
 		/obj/item/healthanalyzer,
+		/obj/item/hemostat,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/reagent_containers/syringe,
+		/obj/item/retractor,
+		/obj/item/scalpel,
+		/obj/item/surgical_drapes,
 		/obj/item/storage/pill_bottle,
 		/obj/item/tank/internals/emergency_oxygen,
-		)
+	)
 
 //Curator
 /obj/item/clothing/suit/jacket/curator
@@ -229,7 +271,11 @@
 	inhand_icon_state = "curator"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
-	allowed = list(/obj/item/tank/internals, /obj/item/melee/curator_whip, /obj/item/storage/bag/books)
+	allowed = list(
+		/obj/item/melee/curator_whip,
+		/obj/item/storage/bag/books,
+		/obj/item/tank/internals,
+	)
 	armor = list(MELEE = 25, BULLET = 10, LASER = 25, ENERGY = 35, BOMB = 0, BIO = 0, FIRE = 0, ACID = 45)
 	cold_protection = CHEST|ARMS
 	heat_protection = CHEST|ARMS

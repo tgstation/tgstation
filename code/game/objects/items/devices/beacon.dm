@@ -4,8 +4,8 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "beacon"
 	inhand_icon_state = "beacon"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	var/enabled = TRUE
 	var/renamed = FALSE
 

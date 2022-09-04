@@ -2,7 +2,7 @@
 	name = "Eldritch Demon"
 	real_name = "Eldritch Demon"
 	desc = "A horror from beyond this realm."
-	icon = 'icons/mob/eldritch_mobs.dmi'
+	icon = 'icons/mob/nonhuman-player/eldritch_mobs.dmi'
 	gender = NEUTER
 	mob_biotypes = NONE
 	attack_sound = 'sound/weapons/punch1.ogg'

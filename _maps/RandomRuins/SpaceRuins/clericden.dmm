@@ -22,8 +22,7 @@
 /turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "g" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/ruin/unpowered/no_grav)
 "h" = (
@@ -159,8 +158,7 @@
 /turf/open/floor/iron/dark/airless,
 /area/ruin/unpowered/no_grav)
 "K" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "L" = (
@@ -177,8 +175,7 @@
 /turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "O" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)

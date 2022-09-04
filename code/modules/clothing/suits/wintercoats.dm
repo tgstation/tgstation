@@ -365,6 +365,7 @@
 	allowed = list(
 		/obj/item/analyzer,
 		/obj/item/construction/rcd,
+		/obj/item/fireaxe/metal_h2_axe,
 		/obj/item/pipe_dispenser,
 		/obj/item/t_scanner,
 		/obj/item/storage/bag/construction,

@@ -8,8 +8,8 @@
 	icon_state = "camera"
 	inhand_icon_state = "camera"
 	worn_icon_state = "camera"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	light_system = MOVABLE_LIGHT //Used as a flash here.
 	light_range = 8
 	light_color = COLOR_WHITE

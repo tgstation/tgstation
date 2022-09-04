@@ -126,7 +126,7 @@
 	name = "\improper pug"
 	real_name = "pug"
 	desc = "They're a pug."
-	icon = 'icons/mob/pets.dmi'
+	icon = 'icons/mob/simple/pets.dmi'
 	icon_state = "pug"
 	icon_living = "pug"
 	icon_dead = "pug_dead"
@@ -148,7 +148,7 @@
 	name = "\improper bull terrier"
 	real_name = "bull terrier"
 	desc = "They're a bull terrier."
-	icon = 'icons/mob/pets.dmi'
+	icon = 'icons/mob/simple/pets.dmi'
 	icon_state = "bullterrier"
 	icon_living = "bullterrier"
 	icon_dead = "bullterrier_dead"
@@ -160,7 +160,7 @@
 /mob/living/simple_animal/pet/dog/corgi/exoticcorgi
 	name = "Exotic Corgi"
 	desc = "As cute as they are colorful!"
-	icon = 'icons/mob/pets.dmi'
+	icon = 'icons/mob/simple/pets.dmi'
 	icon_state = "corgigrey"
 	icon_living = "corgigrey"
 	icon_dead = "corgigrey_dead"
@@ -717,7 +717,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	icon_state = "breaddog"
 	icon_living = "breaddog"
 	icon_dead = "breaddog_dead"
-	head_icon = 'icons/mob/pets_held_head.dmi'
+	head_icon = 'icons/mob/clothing/head/pets_held_head.dmi'
 	health = 50
 	maxHealth = 50
 	gender = NEUTER

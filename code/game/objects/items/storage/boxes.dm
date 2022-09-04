@@ -1448,7 +1448,8 @@
 							  /obj/item/food/grown/soybeans,
 							  /obj/item/food/grown/corn,
 							  /obj/item/food/grown/mushroom/plumphelmet,
-							  /obj/item/food/grown/mushroom/chanterelle)
+							  /obj/item/food/grown/mushroom/chanterelle,
+							  /obj/item/food/grown/cucumber)
 		new randomFood(src)
 
 /obj/item/storage/box/ingredients/fiesta
@@ -1633,7 +1634,7 @@
 
 /obj/item/storage/box/hero/mothpioneer
 	name = "Mothic Fleet Pioneer - 2100's."
-	desc = "Some claim that the fleet engineers are directly responsible for most modern advancement in spacefaring design. Although the exact details of their past contributions are somewhat fuzzy, their ingenuity remains unmatched and unquestioned to this day."
+	desc = "Some claim that the fleet engineers are directly responsible for most modern advancements in spacefaring designs. Although the exact details of their past contributions are somewhat fuzzy, their ingenuity remains unmatched and unquestioned to this day."
 
 /obj/item/storage/box/hero/mothpioneer/PopulateContents()
 	new /obj/item/clothing/suit/mothcoat/original(src)
@@ -1644,6 +1645,15 @@
 	new /obj/item/crowbar(src)
 	new /obj/item/stack/sheet/iron/fifty(src)
 	new /obj/item/stack/sheet/glass/fifty(src)
+
+/obj/item/storage/box/hero/etherealwarden
+	name = "Ethereal Trailwarden - 2450's."
+	desc = "Many fantastical stories are told of valiant trail wardens, even by offworlders who, thanks to their guidance, avoided an untimely demise while traveling the sometimes treacherous roads of Sprout. In truth their job entails far more walking and fixing roads than slaying dragons, but it is no less important and well respected: keeping the roads and trails safe and well maintained is for many settlements a matter of survival."
+
+/obj/item/storage/box/hero/etherealwarden/PopulateContents()
+	new /obj/item/clothing/suit/hooded/ethereal_raincoat/trailwarden(src)
+	new /obj/item/clothing/under/ethereal_tunic/trailwarden(src)
+	new /obj/item/storage/backpack/saddlepack(src)
 
 /obj/item/storage/box/holy/clock
 	name = "Forgotten kit"

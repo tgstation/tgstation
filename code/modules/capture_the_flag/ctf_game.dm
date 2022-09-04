@@ -174,7 +174,28 @@
 	desc = "This is where a yellow banner used to play capture the flag \
 		would go."
 
+#define CTF_LOADING_UNLOADED 0
+#define CTF_LOADING_LOADING 1
+#define CTF_LOADING_LOADED 2
+
 /proc/toggle_id_ctf(user, activated_id, automated = FALSE)
+	var/static/loading = CTF_LOADING_UNLOADED
+	switch (loading)
+		if (CTF_LOADING_UNLOADED)
+			if (isnull(GLOB.ctf_spawner))
+				to_chat(user, span_boldwarning("Couldn't find a CTF spawner. Call a maintainer!"))
+				return
+
+			to_chat(user, span_notice("Loading CTF..."))
+
+			loading = CTF_LOADING_LOADING
+			GLOB.ctf_spawner.load_map()
+			loading = CTF_LOADING_LOADED
+		if (CTF_LOADING_LOADING)
+			to_chat(user, span_warning("CTF is loading!"))
+
+			return
+
 	var/ctf_enabled = FALSE
 	var/area/A
 	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
@@ -194,13 +215,17 @@
 	if(!automated)
 		notify_ghosts("CTF has been [ctf_enabled? "enabled" : "disabled"] in [A]!",'sound/effects/ghost2.ogg')
 
+#undef CTF_LOADING_UNLOADED
+#undef CTF_LOADING_LOADING
+#undef CTF_LOADING_LOADED
+
 /obj/machinery/capture_the_flag
 	name = "CTF Controller"
 	desc = "Used for running friendly games of capture the flag."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 	resistance_flags = INDESTRUCTIBLE
-	var/game_id = "centcom"
+	var/game_id = CTF_GHOST_CTF_GAME_ID
 
 	var/victory_rejoin_text = "<span class='userdanger'>Teams have been cleared. Click on the machines to vote to begin another round.</span>"
 	var/team = WHITE_TEAM
@@ -227,7 +252,6 @@
 	var/list/dead_barricades = list()
 
 	var/static/arena_reset = FALSE
-	var/static/list/people_who_want_to_play = list()
 	var/game_area = /area/centcom/ctf
 
 	/// This variable is needed because of ctf shitcode + we need to make sure we're deleting the current ctf landmark that spawned us in and not a new one.
@@ -306,15 +330,7 @@
 			if(CTF.game_id != game_id && CTF.ctf_enabled)
 				to_chat(user, span_warning("There is already an ongoing game in the [get_area(CTF)]!"))
 				return
-		people_who_want_to_play |= user.ckey
-		var/num = people_who_want_to_play.len
-		var/remaining = CTF_REQUIRED_PLAYERS - num
-		if(remaining <= 0)
-			people_who_want_to_play.Cut()
-			toggle_id_ctf(null, game_id)
-		else
-			to_chat(user, span_notice("CTF has been requested. [num]/[CTF_REQUIRED_PLAYERS] have readied up."))
-
+		get_ctf_voting_controller(game_id).vote(user)
 		return
 
 	if(!SSticker.HasRoundStarted())

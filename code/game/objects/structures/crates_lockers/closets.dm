@@ -68,14 +68,14 @@
 	var/obj/item/electronics/airlock/electronics
 	var/can_install_electronics = TRUE
 
+	var/contents_initialized = FALSE
+
 /obj/structure/closet/Initialize(mapload)
 	if(mapload && !opened) // if closed, any item at the crate's loc is put in the contents
 		addtimer(CALLBACK(src, .proc/take_contents, TRUE), 0)
 	. = ..()
 	update_appearance()
-	PopulateContents()
-	if(QDELETED(src)) //It turns out populate contents has a 1 in 100 chance of qdeling src on /obj/structure/closet/emcloset
-		return //Why
+	populate_contents_immediate()
 	var/static/list/loc_connections = list(
 		COMSIG_CARBON_DISARM_COLLIDE = .proc/locker_carbon,
 		COMSIG_ATOM_MAGICALLY_UNLOCKED = .proc/on_magic_unlock,
@@ -84,6 +84,11 @@
 
 //USE THIS TO FILL IT, NOT INITIALIZE OR NEW
 /obj/structure/closet/proc/PopulateContents()
+	SEND_SIGNAL(src, COMSIG_CLOSET_POPULATE_CONTENTS)
+
+/// Populate the closet with stuff that needs to be added before it is opened.
+/// This is useful for things like traitor objectives.
+/obj/structure/closet/proc/populate_contents_immediate()
 	return
 
 /obj/structure/closet/Destroy()
@@ -221,7 +226,7 @@
 	for(var/obj/structure/closet/closet in T)
 		if(closet != src && !closet.wall_mounted)
 			if(user)
-				balloon_alert(user, "another closet is in the way!")
+				balloon_alert(user, "[closet.name] is in the way!")
 			return FALSE
 	for(var/mob/living/L in T)
 		if(L.anchored || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
@@ -231,6 +236,10 @@
 	return TRUE
 
 /obj/structure/closet/dump_contents()
+	if (!contents_initialized)
+		contents_initialized = TRUE
+		PopulateContents()
+
 	var/atom/L = drop_location()
 	for(var/atom/movable/AM in src)
 		AM.forceMove(L)

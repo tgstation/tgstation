@@ -99,11 +99,6 @@
 				lighting_build_overlay()
 			else
 				lighting_clear_overlay()
-	//Inherit overlay of new area
-	if(old_area.lighting_effects)
-		cut_overlay(old_area.lighting_effects[GET_TURF_PLANE_OFFSET(src) + 1])
-	if(new_area.lighting_effects)
-		add_overlay(new_area.lighting_effects[GET_TURF_PLANE_OFFSET(src) + 1])
 
 /turf/proc/generate_missing_corners()
 	if (!lighting_corner_NE)

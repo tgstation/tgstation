@@ -194,7 +194,7 @@
 	for(var/option in model_list)
 		var/obj/item/robot_model/model = model_list[option]
 		var/model_icon = initial(model.cyborg_base_icon)
-		model_icons[option] = image(icon = 'icons/mob/robots.dmi', icon_state = model_icon)
+		model_icons[option] = image(icon = 'icons/mob/silicon/robots.dmi', icon_state = model_icon)
 
 	var/input_model = show_radial_menu(src, src, model_icons, radius = 42)
 	if(!input_model || model.type != /obj/item/robot_model)
@@ -1000,7 +1000,7 @@
 	var/fire_icon = "generic_fire[suffix]"
 
 	if(!GLOB.fire_appearances[fire_icon])
-		var/mutable_appearance/new_fire_overlay = mutable_appearance('icons/mob/onfire.dmi', fire_icon, -FIRE_LAYER)
+		var/mutable_appearance/new_fire_overlay = mutable_appearance('icons/mob/effects/onfire.dmi', fire_icon, -FIRE_LAYER)
 		new_fire_overlay.appearance_flags = RESET_COLOR
 		GLOB.fire_appearances[fire_icon] = new_fire_overlay
 

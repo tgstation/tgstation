@@ -23,5 +23,5 @@
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 
 /obj/item/gun/energy/laser/mounted/augment
-	icon = 'icons/obj/medical/surgery.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "arm_laser"

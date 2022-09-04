@@ -4,10 +4,10 @@
 	icon = 'icons/obj/aicards.dmi'
 	icon_state = "pai"
 	inhand_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	name = "personal AI device"
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	worn_icon_state = "electronic"

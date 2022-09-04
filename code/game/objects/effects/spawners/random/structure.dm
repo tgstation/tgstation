@@ -85,28 +85,19 @@
 		/obj/structure/tank_holder/extinguisher/advanced = 1,
 	)
 
+
 /obj/effect/spawner/random/structure/crate_empty
 	name = "empty crate spawner"
 	icon_state = "crate"
-	loot = list(
-		/obj/structure/closet/crate = 20,
-		/obj/structure/closet/crate/wooden = 1,
-		/obj/structure/closet/crate/internals = 1,
-		/obj/structure/closet/crate/medical = 1,
-		/obj/structure/closet/crate/freezer = 1,
-		/obj/structure/closet/crate/radiation = 1,
-		/obj/structure/closet/crate/hydroponics = 1,
-		/obj/structure/closet/crate/engineering = 1,
-		/obj/structure/closet/crate/engineering/electrical = 1,
-		/obj/structure/closet/crate/science = 1,
-	)
+	loot = RANDOM_CRATE_LOOT
 
-/obj/effect/spawner/random/structure/crate_empty/Initialize(mapload)
+/obj/effect/spawner/random/structure/crate_empty/make_item(spawn_loc, type_path_to_make)
 	var/obj/structure/closet/crate/peek_a_boo = ..()
 	if(istype(peek_a_boo))
 		peek_a_boo.opened = prob(50)
+		peek_a_boo.update_appearance()
 
-	return INITIALIZE_HINT_QDEL
+	return peek_a_boo
 
 /obj/effect/spawner/random/structure/crate_loot
 	name = "lootcrate spawner"
@@ -134,12 +125,13 @@
 		/obj/structure/closet/acloset = 1,
 	)
 
-/obj/effect/spawner/random/structure/closet_empty/Initialize(mapload)
+/obj/effect/spawner/random/structure/closet_empty/make_item(spawn_loc, type_path_to_make)
 	var/obj/structure/closet/peek_a_boo = ..()
 	if(istype(peek_a_boo))
 		peek_a_boo.opened = prob(50)
+		peek_a_boo.update_appearance()
 
-	return INITIALIZE_HINT_QDEL
+	return peek_a_boo
 
 /obj/effect/spawner/random/structure/closet_maintenance
 	name = "maintenance closet spawner"

@@ -3,7 +3,7 @@
 	name = "Maid in the Mirror"
 	real_name = "Maid in the Mirror"
 	desc = "A floating and flowing wisp of chilled air. Glancing at it causes it to shimmer slightly."
-	icon = 'icons/mob/mob.dmi'
+	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "stand"
 	icon_living = "stand" // Placeholder sprite
 	speak_emote = list("whispers")

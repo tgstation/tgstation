@@ -295,24 +295,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return FALSE
 	var/datum/antagonist/cult/C = first_invoker.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 	if(!C)
-		return
-
-	if(ispAI(sacrificial))
-		for(var/M in invokers)
-			to_chat(M, span_cultitalic("You don't think this is what Nar'Sie had in mind when She asked for blood sacrifices..."))
-		log_game("Offer rune with [sacrificial] on it failed - tried sacrificing pAI.")
 		return FALSE
 
-	if(istype(sacrificial, /mob/living/basic/sheep))
-		var/mob/living/basic/sheep/sacrificial_lamb = sacrificial
-		if(sacrificial_lamb.cult_converted)
-			for(var/cultists in invokers)
-				to_chat(cultists, span_cultitalic("[sacrificial] has already been sacrificed!"))
-				return FALSE
-		for(var/cultists in invokers)
-			to_chat(cultists, span_cultitalic("This feels a bit too cliché, don't you think?"))
-		sacrificial_lamb.cult_time()
-		return
+	if(SEND_SIGNAL(sacrificial, COMSIG_LIVING_CULT_SACRIFICED, invokers) & STOP_SACRIFICE)
+		return FALSE
 
 	var/big_sac = FALSE
 	if((((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || C.cult_team.is_sacrifice_target(sacrificial.mind)) && length(invokers) < 3)
@@ -982,16 +968,15 @@ structure_check() searches for nearby cultist structures required for the invoca
 	empulse(T, 0.42*(intensity), 1)
 
 	var/list/images = list()
-	var/zmatch = T.z
 	var/datum/atom_hud/sec_hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	for(var/mob/living/M in GLOB.alive_mob_list)
-		if(M.z != zmatch)
+		if(!is_valid_z_level(T, get_turf(M)))
 			continue
 		if(ishuman(M))
 			if(!IS_CULTIST(M))
 				sec_hud.hide_from(M)
 				addtimer(CALLBACK(GLOBAL_PROC, .proc/hudFix, M), duration)
-			var/image/A = image('icons/mob/cult.dmi',M,"cultist", ABOVE_MOB_LAYER)
+			var/image/A = image('icons/mob/nonhuman-player/cult.dmi',M,"cultist", ABOVE_MOB_LAYER)
 			A.override = 1
 			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/noncult, "human_apoc", A, NONE)
 			addtimer(CALLBACK(M,/atom/.proc/remove_alt_appearance,"human_apoc",TRUE), duration)
@@ -999,7 +984,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			SEND_SOUND(M, pick(sound('sound/ambience/antag/bloodcult.ogg'),sound('sound/voice/ghost_whisper.ogg'),sound('sound/misc/ghosty_wind.ogg')))
 		else
 			var/construct = pick("floater","artificer","behemoth")
-			var/image/B = image('icons/mob/mob.dmi',M,construct, ABOVE_MOB_LAYER)
+			var/image/B = image('icons/mob/simple/mob.dmi',M,construct, ABOVE_MOB_LAYER)
 			B.override = 1
 			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/noncult, "mob_apoc", B, NONE)
 			addtimer(CALLBACK(M,/atom/.proc/remove_alt_appearance,"mob_apoc",TRUE), duration)

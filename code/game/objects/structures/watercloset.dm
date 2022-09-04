@@ -443,6 +443,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		begin_reclamation()
 		return
 
+	if(istype(O, /obj/item/storage/fancy/pickles_jar))
+		if(O.contents.len)
+			to_chat(user, span_notice("Looks like there's something left in the jar"))
+			return
+		new /obj/item/reagent_containers/cup/beaker/large(loc)
+		to_chat(user, span_notice("You washed the jar, ridding it of the brine."))
+		qdel(O)
+		return
+
 	if(!istype(O))
 		return
 	if(O.item_flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.

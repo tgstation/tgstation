@@ -9,7 +9,6 @@ GLOBAL_DATUM(ctf_spawner, /obj/effect/landmark/ctf)
 	if(GLOB.ctf_spawner)
 		qdel(GLOB.ctf_spawner)
 	GLOB.ctf_spawner = src
-	INVOKE_ASYNC(src, .proc/load_map)
 
 /obj/effect/landmark/ctf/Destroy()
 	if(map_bounds)
@@ -30,6 +29,8 @@ GLOBAL_DATUM(ctf_spawner, /obj/effect/landmark/ctf)
 	return ..()
 
 /obj/effect/landmark/ctf/proc/load_map()
+	if (map_bounds)
+		return
 
 	var/list/map_options = subtypesof(/datum/map_template/ctf)
 	var/turf/spawn_area = get_turf(src)

@@ -13,7 +13,7 @@
 	response_harm_continuous = "punches"
 	response_harm_simple = "punch"
 	speak_chance = 1
-	icon = 'icons/mob/cult.dmi'
+	icon = 'icons/mob/nonhuman-player/cult.dmi'
 	speed = 0
 	combat_mode = TRUE
 	stop_automated_movement = 1

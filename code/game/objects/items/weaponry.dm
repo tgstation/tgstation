@@ -834,12 +834,16 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_simple = list("swat", "smack")
 	hitsound = 'sound/effects/snap.ogg'
 	w_class = WEIGHT_CLASS_SMALL
-	//Things in this list will be instantly splatted.  Flyman weakness is handled in the flyman species weakness proc.
+	/// Things in this list will be instantly splatted.  Flyman weakness is handled in the flyman species weakness proc.
+	var/list/splattable
+	/// Things in this list which take a lot more damage from the fly swatter, but not be necessarily killed by it.
 	var/list/strong_against
+	/// How much extra damage the fly swatter does against mobs it is strong against
+	var/extra_strength_damage = 24
 
 /obj/item/melee/flyswatter/Initialize(mapload)
 	. = ..()
-	strong_against = typecacheof(list(
+	splattable = typecacheof(list(
 		/mob/living/simple_animal/hostile/bee,
 		/mob/living/simple_animal/butterfly,
 		/mob/living/basic/cockroach,
@@ -848,24 +852,28 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		/mob/living/simple_animal/hostile/ant,
 		/obj/effect/decal/cleanable/ants,
 	))
+	strong_against = typecacheof(list(
+		/mob/living/simple_animal/hostile/giant_spider,
+	))
 
 
 /obj/item/melee/flyswatter/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
-	if(!proximity_flag)
-		return
-	if(!is_type_in_typecache(target, strong_against))
-		return
-	if (HAS_TRAIT(user, TRAIT_PACIFISM))
+	if(!proximity_flag || HAS_TRAIT(user, TRAIT_PACIFISM))
 		return
 
-	new /obj/effect/decal/cleanable/insectguts(target.drop_location())
-	to_chat(user, span_warning("You easily splat [target]."))
-	if(isliving(target))
-		var/mob/living/bug = target
-		bug.gib()
-	else
-		qdel(target)
+	if(is_type_in_typecache(target, splattable))
+		new /obj/effect/decal/cleanable/insectguts(target.drop_location())
+		to_chat(user, span_warning("You easily splat [target]."))
+		if(isliving(target))
+			var/mob/living/bug = target
+			bug.gib()
+		else
+			qdel(target)
+		return
+	if(is_type_in_typecache(target, strong_against) && isliving(target))
+		var/mob/living/living_target = target
+		living_target.adjustBruteLoss(extra_strength_damage)
 
 /obj/item/proc/can_trigger_gun(mob/living/user)
 	if(!user.can_use_guns(src))
