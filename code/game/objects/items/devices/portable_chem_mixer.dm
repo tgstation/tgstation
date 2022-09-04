@@ -67,7 +67,7 @@
 	return
 
 /obj/item/storage/portable_chem_mixer/update_icon_state()
-	if(!atom_storage?.locked)
+	if(!atom_storage.locked)
 		icon_state = "portablechemicalmixer_open"
 		return ..()
 	if(beaker)
