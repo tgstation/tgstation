@@ -1356,19 +1356,20 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 /obj/item/construction/plumbing/service
 	name = "brewery plumbing constructor"
 	desc = "A type of plumbing constructor designed to rapidly deploy the machines needed to make a brewery."
+	icon_state = "plumberer_service"
 	has_ammobar = TRUE
 
 /obj/item/construction/plumbing/service/set_plumbing_designs()
 	plumbing_design_types = list(
 	/obj/machinery/duct = 1,
 	/obj/machinery/plumbing/input = 5,
-	/obj/machinery/plumbing/output/tap = 5, //need sprite
-	/obj/machinery/plumbing/synthesizer/soda = 15, //need sprite
-	/obj/machinery/plumbing/synthesizer/beer = 15, //need sprite
-	/obj/machinery/plumbing/mixing_chamber = 15, //need sprite
+	/obj/machinery/plumbing/output/tap = 5,
+	/obj/machinery/plumbing/synthesizer/soda = 15,
+	/obj/machinery/plumbing/synthesizer/beer = 15,
+	/obj/machinery/plumbing/mixing_chamber = 15,
 	/obj/machinery/plumbing/buffer = 10,
 
-	/obj/machinery/plumbing/bottler/brewery = 50, //need sprite
+	/obj/machinery/plumbing/bottler = 50,
 	/obj/machinery/plumbing/tank = 20,
 	/obj/machinery/plumbing/filter = 5,
 	/obj/machinery/plumbing/layer_manifold = 5,

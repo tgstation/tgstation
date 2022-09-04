@@ -96,7 +96,4 @@
 		if(istype(AM, /obj/item/slimecross/industrial)) ///no need to move slimecross industrial things
 			reagents.trans_to(AM, wanted_amount, transfered_by = src, methods = INJECT)
 			return
-//Flavour reskin of bottler
-/obj/machinery/plumbing/bottler/brewery
-	name = "drink pourer"
-	desc = "Puts reagents into containers, like bottles and glasses in the tile facing the green light spot, they will exit on the red light spot if successfully filled."
+

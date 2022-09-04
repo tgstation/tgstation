@@ -107,6 +107,7 @@
 /obj/machinery/plumbing/synthesizer/soda
 	name = "soda synthesizer"
 	desc = "Produces a single chemical at a given volume. Must be plumbed."
+	icon_state = "synthesizer_soda"
 
 	//Copied from soda dispenser
 	dispensable_reagents = list(
@@ -138,6 +139,8 @@
 /obj/machinery/plumbing/synthesizer/beer
 	name = "beer synthesizer"
 	desc = "Produces a single chemical at a given volume. Must be plumbed."
+
+	icon_state = "synthesizer_booze"
 
 	//Copied from beer dispenser
 	dispensable_reagents = list(

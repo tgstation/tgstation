@@ -58,6 +58,7 @@
 	process_request(amount = MACHINE_REAGENT_TRANSFER, reagent = /datum/reagent/reaction_agent/basic_buffer, dir = dir)
 
 
+//DO BEFORE UPSTREAM: make this the base class and add the features with acid/base buffers in a subclass of that, instead of sister classes
 //Component for brew plumbing
 /datum/component/plumbing/mixing_chamber
 	demand_connects = NORTH
@@ -94,9 +95,8 @@
 	reagents.flags &= ~NO_REACT
 	reagents.handle_reactions()
 
-	chamber.emptying = TRUE //If we move this up, it'll instantly get turned off since any reaction always sets the reagent_total to zero. Other option is make the reaction update
-	//everything for every chemical removed, wich isn't a good option either.
-	chamber.on_reagent_change(reagents) //We need to check it now, because some reactions leave nothing left.
+	chamber.emptying = TRUE
+	chamber.on_reagent_change(reagents)
 
 
 
