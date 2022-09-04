@@ -4123,6 +4123,7 @@
 #include "code\modules\reagents\chemistry\machinery\reagentgrinder.dm"
 #include "code\modules\reagents\chemistry\machinery\smoke_machine.dm"
 #include "code\modules\reagents\chemistry\reagents\alcohol_reagents.dm"
+#include "code\modules\reagents\chemistry\reagents\atmos_gas_reagents.dm"
 #include "code\modules\reagents\chemistry\reagents\cat2_medicine_reagents.dm"
 #include "code\modules\reagents\chemistry\reagents\catalyst_reagents.dm"
 #include "code\modules\reagents\chemistry\reagents\drink_reagents.dm"
