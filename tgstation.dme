@@ -1241,6 +1241,7 @@
 #include "code\datums\wires\ecto_sniffer.dm"
 #include "code\datums\wires\emitter.dm"
 #include "code\datums\wires\explosive.dm"
+#include "code\datums\wires\fax.dm"
 #include "code\datums\wires\microwave.dm"
 #include "code\datums\wires\mod.dm"
 #include "code\datums\wires\mulebot.dm"
