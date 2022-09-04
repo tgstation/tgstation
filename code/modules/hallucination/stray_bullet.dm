@@ -111,7 +111,6 @@
 
 	else if(hit_mob in view(parent.hallucinator))
 		to_chat(parent.hallucinator, span_danger("[hit_mob] is hit by \a [src] in the chest!"))
-		apply_effect_to_hit_mob(parent.hallucinator)
 
 	if(damage_type == BRUTE)
 		var/splatter_dir = dir
