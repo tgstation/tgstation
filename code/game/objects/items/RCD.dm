@@ -1353,6 +1353,31 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		/obj/machinery/plumbing/growing_vat = 20
 	)
 
+/obj/item/construction/plumbing/service
+	name = "service plumbing constructor"
+	desc = "A type of plumbing constructor designed to rapidly deploy the machines needed to make a brewery."
+	has_ammobar = TRUE
+
+/obj/item/construction/plumbing/service/set_plumbing_designs()
+	plumbing_design_types = list(
+	// Note that the list MUST include fluid ducts.
+	/obj/machinery/duct = 1,
+	/obj/machinery/plumbing/input = 5,
+	/obj/machinery/plumbing/output = 5,
+	/obj/machinery/plumbing/tank = 20, //replace with keg
+	/obj/machinery/plumbing/synthesizer = 15, //replace with booze synth
+	//soda synth goes here
+	/obj/machinery/plumbing/reaction_chamber = 15, //replace with mixing tank
+
+	/obj/machinery/plumbing/layer_manifold = 5,
+	/obj/machinery/plumbing/acclimator = 10,
+	/obj/machinery/plumbing/bottler = 50, //replace with drink dispenser
+	/obj/machinery/plumbing/disposer = 10,
+	/obj/machinery/plumbing/fermenter = 30,
+	/obj/machinery/plumbing/grinder_chemical = 30,
+	//put juicer here
+	)
+
 
 /obj/item/rcd_upgrade
 	name = "RCD advanced design disk"

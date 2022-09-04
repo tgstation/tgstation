@@ -70,6 +70,7 @@
 		"turbine_part_rotor",
 		"turbine_part_stator",
 		"watering_can",
+
 	)
 
 /datum/techweb_node/mmi
@@ -219,6 +220,7 @@
 		"petri_dish",
 		"pillbottle",
 		"plumbing_rcd",
+		"plumbing_rcd_service",
 		"plumbing_rcd_sci",
 		"portable_chem_mixer",
 		"retractor",
