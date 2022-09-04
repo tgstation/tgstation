@@ -9,6 +9,8 @@
 
 	for(var/closet_type in all_closets)
 		var/obj/structure/closet/closet = allocate(closet_type)
+		if(QDELETED(closet))
+			continue
 
 		// Copy is necessary otherwise closet.contents - immediate_contents returns an empty list
 		var/list/immediate_contents = closet.contents.Copy()
