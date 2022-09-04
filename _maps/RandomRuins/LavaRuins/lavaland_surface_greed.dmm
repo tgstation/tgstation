@@ -39,7 +39,8 @@
 /area/ruin/powered/greed)
 "k" = (
 /obj/machinery/computer/arcade/battle,
-/obj/effect/mapping_helpers/atom_injector/emag{
+/obj/effect/mapping_helpers/atom_injector/obj_flag{
+	inject_flags = 1;
 	target_type = /obj/machinery/computer/arcade/battle
 	},
 /turf/open/floor/engine/cult,

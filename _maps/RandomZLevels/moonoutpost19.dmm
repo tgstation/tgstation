@@ -759,7 +759,8 @@
 	icon_state = "open";
 	name = "Dormitories"
 	},
-/obj/effect/mapping_helpers/atom_injector/emag{
+/obj/effect/mapping_helpers/atom_injector/obj_flag{
+	inject_flags = 1;
 	target_type = /obj/machinery/door/airlock
 	},
 /obj/item/stack/rods,
@@ -1058,7 +1059,8 @@
 	name = "Dorm 1";
 	opacity = 0
 	},
-/obj/effect/mapping_helpers/atom_injector/emag{
+/obj/effect/mapping_helpers/atom_injector/obj_flag{
+	inject_flags = 1;
 	target_type = /obj/machinery/door/airlock
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -1325,7 +1327,8 @@
 	icon_state = "open";
 	opacity = 0
 	},
-/obj/effect/mapping_helpers/atom_injector/emag{
+/obj/effect/mapping_helpers/atom_injector/obj_flag{
+	inject_flags = 1;
 	target_type = /obj/machinery/door/airlock
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
@@ -1416,7 +1419,8 @@
 	icon_state = "open";
 	opacity = 0
 	},
-/obj/effect/mapping_helpers/atom_injector/emag{
+/obj/effect/mapping_helpers/atom_injector/obj_flag{
+	inject_flags = 1;
 	target_type = /obj/machinery/door/airlock
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
@@ -1944,7 +1948,8 @@
 	name = "Xenobiology Lab";
 	opacity = 0
 	},
-/obj/effect/mapping_helpers/atom_injector/emag{
+/obj/effect/mapping_helpers/atom_injector/obj_flag{
+	inject_flags = 1;
 	target_type = /obj/machinery/door/airlock
 	},
 /obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
@@ -2914,7 +2919,8 @@
 	name = "Research Director's Office";
 	opacity = 0
 	},
-/obj/effect/mapping_helpers/atom_injector/emag{
+/obj/effect/mapping_helpers/atom_injector/obj_flag{
+	inject_flags = 1;
 	target_type = /obj/machinery/door/airlock
 	},
 /obj/effect/mapping_helpers/airlock/access/all/away/maintenance,

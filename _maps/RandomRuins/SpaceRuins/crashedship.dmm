@@ -384,7 +384,8 @@
 	dir = 8;
 	installation = /obj/item/gun/energy/lasercannon;
 	},
-/obj/effect/mapping_helpers/atom_injector/emag{
+/obj/effect/mapping_helpers/atom_injector/obj_flag{
+	inject_flags = 1;
 	target_type = /obj/machinery/porta_turret
 	},
 /obj/effect/turf_decal/trimline/brown/filled/warning{
@@ -488,7 +489,8 @@
 	dir = 8;
 	installation = /obj/item/gun/energy/lasercannon
 	},
-/obj/effect/mapping_helpers/atom_injector/emag{
+/obj/effect/mapping_helpers/atom_injector/obj_flag{
+	inject_flags = 1;
 	target_type = /obj/machinery/porta_turret
 	},
 /turf/open/floor/plating/airless,
@@ -1071,7 +1073,8 @@
 	dir = 8;
 	installation = /obj/item/gun/energy/lasercannon
 	},
-/obj/effect/mapping_helpers/atom_injector/emag{
+/obj/effect/mapping_helpers/atom_injector/obj_flag{
+	inject_flags = 1;
 	target_type = /obj/machinery/porta_turret
 	},
 /turf/open/floor/plating/airless,
