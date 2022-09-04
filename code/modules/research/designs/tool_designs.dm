@@ -144,7 +144,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/plumbing_rcd_service
-	name = "Service Plumbing Constructor"
+	name = "Brewery Plumbing Constructor"
 	id = "plumbing_rcd_service"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 75000, /datum/material/glass = 37500, /datum/material/plastic = 1000)

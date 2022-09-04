@@ -1354,7 +1354,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	)
 
 /obj/item/construction/plumbing/service
-	name = "brewing plumbing constructor"
+	name = "brewery plumbing constructor"
 	desc = "A type of plumbing constructor designed to rapidly deploy the machines needed to make a brewery."
 	has_ammobar = TRUE
 
