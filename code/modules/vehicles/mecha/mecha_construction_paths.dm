@@ -439,7 +439,7 @@
 
 /datum/component/construction/mecha/decouverte
 	result = /obj/vehicle/sealed/mecha/voyager/decouverte
-	base_icon = "fireripley"
+	base_icon = "decouverte"
 
 	circuit_control = /obj/item/circuitboard/mecha/decouverte/main
 	circuit_periph = /obj/item/circuitboard/mecha/decouverte/peripherals
