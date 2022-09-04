@@ -154,7 +154,7 @@ GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weig
 	return chosen
 
 /// Helper to give the passed mob the ability to create a delusion hallucination (even a custom one).
-/// Returns a list of arguments - pass these to cause_hallucination to cause the desired hallucination (be sure to wrap in argslist)
+/// Returns a list of arguments - pass these to _cause_hallucination to cause the desired hallucination
 /proc/create_delusion(mob/user)
 	var/static/list/delusions
 	if(!delusions)
@@ -169,16 +169,16 @@ GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weig
 
 	var/list/delusion_args = list()
 	var/static/list/options = list("Yes", "No")
-	var/duration = tgui_input_number(user, "How long should it last in deciseconds?", "Give Delusion", max_value = INFINITY, min_value = 1 SECONDS, default = 30 SECONDS)
-	var/affects_us = (tgui_alert(user, "Should the mob see themselves as the delusion?", "Give Delusion", options) == "Yes")
-	var/affects_others = (tgui_alert(user, "Should the mob see everyone else delusion?", "Give Delusion", options) == "Yes")
-	var/skip_nearby = (tgui_alert(user, "Should the mob only see people outside of their view as the delusion?", "Give Delusion", options) == "Yes")
-	var/play_wabbajack = (tgui_alert(user, "Play the wabbajack sound when it's done?", "Give Delusion", options) == "Yes")
+	var/duration = tgui_input_number(user, "How long should it last in seconds?", "Delusion: Duration", max_value = INFINITY, min_value = 1, default = 30)
+	var/affects_us = (tgui_alert(user, "Should they see themselves as the delusion?", "Delusion: Affects us", options) == "Yes")
+	var/affects_others = (tgui_alert(user, "Should they see everyone else delusion?", "Delusion: Affects others", options) == "Yes")
+	var/skip_nearby = (tgui_alert(user, "Should the delusion only affect people outside of their view?", "Delusion: Skip in view", options) == "Yes")
+	var/play_wabbajack = (tgui_alert(user, "Play the wabbajack sound when it happens?", "Delusion: Wabbajack sound", options) == "Yes")
 
 	delusion_args = list(
 		chosen,
 		"forced delusion",
-		duration = duration,
+		duration = duration * 1 SECONDS,
 		affects_us = affects_us,
 		affects_others = affects_others,
 		skip_nearby = skip_nearby,
@@ -186,15 +186,15 @@ GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weig
 	)
 
 	if(ispath(chosen, /datum/hallucination/delusion/custom))
-		var/custom_file = input(user, "Pick file for custom delusion:", "File") as null|file
+		var/custom_file = input(user, "Pick file for custom delusion:", "Custom Delusion: File") as null|file
 		if(!custom_file)
 			return
 
-		var/custom_icon_state = tgui_input_text(user, "What icon state do you wanna use from the file?", "Icon State")
+		var/custom_icon_state = tgui_input_text(user, "What icon state do you wanna use from the file?", "Custom Delusion: Icon State")
 		if(!custom_icon_state)
 			return
 
-		var/custom_name = tgui_input_text(user, "What name should it show up as?", "Name")
+		var/custom_name = tgui_input_text(user, "What name should it show up as? (Can be empty)", "Custom Delusion: Name")
 
 		delusion_args += list(
 			custom_file = custom_file,

@@ -2382,4 +2382,5 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	delusion_args[2] = "admin forced"
 	message_admins("[key_name_admin(admin)] gave [ADMIN_LOOKUPFLW(src)] a delusion hallucination. (Type: [delusion_args[1]])")
 	log_admin("[key_name(admin)] gave [src] a delusion hallucination. (Type: [delusion_args[1]])")
-	cause_hallucination(delusion_args)
+	// Not using the wrapper here because we already have a list / arglist
+	_cause_hallucination(delusion_args)

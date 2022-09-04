@@ -10,15 +10,14 @@
 	var/sound_type
 
 /datum/hallucination/fake_sound/start()
-	play_fake_sound(random_far_turf())
+	var/sound_to_play = islist(sound_type) ? pick(sound_type) : sound_type
+	play_fake_sound(random_far_turf(), sound_to_play)
+	feedback_details += "Sound: [sound_to_play]"
 	qdel(src)
 	return TRUE
 
 /// Actually plays the fake sound.
-/datum/hallucination/fake_sound/proc/play_fake_sound(turf/source, sound_to_play)
-	// If no sound to play is provided, use our sound type
-	sound_to_play ||= islist(sound_type) ? pick(sound_type) : sound_type
-	// Play the sound using our vars for our hallucinator (duh)
+/datum/hallucination/fake_sound/proc/play_fake_sound(turf/source, sound_to_play = sound_type)
 	hallucinator.playsound_local(source, sound_to_play, volume, sound_vary)
 
 /// Used to queue additional, delayed fake sounds via a callback.
@@ -143,17 +142,6 @@
 	volume = 75
 	sound_type = 'sound/machines/steam_hiss.ogg'
 
-/datum/hallucination/fake_sound/normal/xeno
-	random_hallucination_weight = 2
-	volume = 25
-	sound_type = list(
-		'sound/voice/lowHiss1.ogg',
-		'sound/voice/lowHiss2.ogg',
-		'sound/voice/lowHiss3.ogg',
-		'sound/voice/lowHiss4.ogg',
-		SFX_HISS,
-	)
-
 /datum/hallucination/fake_sound/weird
 	abstract_hallucination_parent = /datum/hallucination/fake_sound/weird
 	random_hallucination_weight = 1
@@ -167,6 +155,67 @@
 
 	return ..()
 
+/datum/hallucination/fake_sound/weird/antag
+	random_hallucination_weight = 0 // This one's a bit gamey, so I'll leave it disabled by default. Have fun badmins
+	volume = 90
+	sound_vary = FALSE
+	no_source = TRUE
+	sound_type = list(
+		'sound/ambience/antag/bloodcult.ogg',
+		'sound/ambience/antag/clockcultalr.ogg',
+		'sound/ambience/antag/ecult_op.ogg',
+		'sound/ambience/antag/ling_aler.ogg',
+		'sound/ambience/antag/malf.ogg',
+		//'sound/ambience/antag/new_clock.ogg', // Too loud, otherwise I would
+		'sound/ambience/antag/ops.ogg',
+		'sound/ambience/antag/tatoralert.ogg',
+	)
+
+/datum/hallucination/fake_sound/weird/chimp_event
+	volume = 90
+	sound_vary = FALSE
+	no_source = TRUE
+	sound_type = 'sound/ambience/antag/monkey.ogg'
+
+/datum/hallucination/fake_sound/weird/colossus
+	sound_type = 'sound/magic/clockwork/invoke_general.ogg'
+
+/datum/hallucination/fake_sound/weird/creepy
+
+/datum/hallucination/fake_sound/weird/creepy/New(mob/living/hallucinator)
+	. = ..()
+	//These sounds are (mostly) taken from Hidden: Source
+	sound_type = GLOB.creepy_ambience
+
+/datum/hallucination/fake_sound/weird/curse_sound
+	volume = 40
+	sound_type = 'sound/magic/curse.ogg'
+
+/datum/hallucination/fake_sound/weird/game_over
+	sound_vary = FALSE
+	sound_type = 'sound/misc/compiler-failure.ogg'
+
+/datum/hallucination/fake_sound/weird/hallelujah
+	sound_vary = FALSE
+	sound_type = 'sound/effects/pray_chaplain.ogg'
+
+/datum/hallucination/fake_sound/weird/highlander
+	sound_vary = FALSE
+	sound_type = 'sound/misc/highlander.ogg'
+	no_source = TRUE
+
+/datum/hallucination/fake_sound/weird/hyperspace
+	sound_vary = FALSE
+	sound_type = 'sound/runtime/hyperspace/hyperspace_begin.ogg'
+	no_source = TRUE
+
+/datum/hallucination/fake_sound/weird/laugher
+	sound_type = list(
+		'sound/voice/human/womanlaugh.ogg',
+		'sound/voice/human/manlaugh1.ogg',
+		'sound/voice/human/manlaugh2.ogg',
+	)
+
 /datum/hallucination/fake_sound/weird/phone
 	volume = 15
 	sound_vary = FALSE
@@ -178,37 +227,20 @@
 
 	return ..()
 
-/datum/hallucination/fake_sound/weird/hallelujah
-	sound_vary = FALSE
-	sound_type = 'sound/effects/pray_chaplain.ogg'
-
-/datum/hallucination/fake_sound/weird/hyperspace
-	sound_vary = FALSE
-	sound_type = 'sound/runtime/hyperspace/hyperspace_begin.ogg'
-	no_source = TRUE
-
-/datum/hallucination/fake_sound/weird/highlander
-	sound_vary = FALSE
-	sound_type = 'sound/misc/highlander.ogg'
-	no_source = TRUE
-
-/datum/hallucination/fake_sound/weird/game_over
-	sound_vary = FALSE
-	sound_type = 'sound/misc/compiler-failure.ogg'
-
-/datum/hallucination/fake_sound/weird/laugher
+/datum/hallucination/fake_sound/weird/spell
 	sound_type = list(
-		'sound/voice/human/womanlaugh.ogg',
-		'sound/voice/human/manlaugh1.ogg',
-		'sound/voice/human/manlaugh2.ogg',
+		'sound/magic/disintegrate.ogg',
+		'sound/magic/ethereal_enter.ogg',
+		'sound/magic/ethereal_exit.ogg',
+		'sound/magic/fireball.ogg',
+		'sound/magic/forcewall.ogg',
+		'sound/magic/teleport_app.ogg',
+		'sound/magic/teleport_diss.ogg',
 	)
 
-/datum/hallucination/fake_sound/weird/creepy
-
-/datum/hallucination/fake_sound/weird/creepy/New(mob/living/hallucinator)
-	. = ..()
-	//These sounds are (mostly) taken from Hidden: Source
-	sound_type = GLOB.creepy_ambience
+/datum/hallucination/fake_sound/weird/summon_sound
+	volume = 75
+	sound_type = 'sound/magic/castsummon.ogg' // Heretic circle sound
 
 /datum/hallucination/fake_sound/weird/tesloose
 	volume = 35
@@ -218,3 +250,17 @@
 	. = ..()
 	for(var/next_shock in 1 to rand(2, 4)) //melbert todo: check this
 		queue_fake_sound(source, sound_to_play, volume_override = volume + (15 * next_shock), delay = 3 SECONDS * next_shock)
+
+/datum/hallucination/fake_sound/weird/xeno
+	random_hallucination_weight = 2 // Some of these are ambience sounds too
+	volume = 25
+	sound_type = list(
+		'sound/voice/lowHiss1.ogg',
+		'sound/voice/lowHiss2.ogg',
+		'sound/voice/lowHiss3.ogg',
+		'sound/voice/lowHiss4.ogg',
+		'sound/voice/hiss1.ogg',
+		'sound/voice/hiss2.ogg',
+		'sound/voice/hiss3.ogg',
+		'sound/voice/hiss4.ogg',
+	)

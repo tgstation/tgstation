@@ -126,7 +126,8 @@
 		if(!is_station_level(hallucinating.z) && !hallucinating.client)
 			continue
 
-		hallucinating.cause_hallucination(hallucination_args)
+		// Not using the wrapper here because we already have a list / arglist
+		hallucinating._cause_hallucination(hallucination_args)
 
 /datum/round_event/mass_hallucination/end()
 	var/datum/round_event_control/mass_hallucination/our_controller = control
