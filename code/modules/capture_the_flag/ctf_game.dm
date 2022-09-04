@@ -189,7 +189,10 @@
 			to_chat(user, span_notice("Loading CTF..."))
 
 			loading = CTF_LOADING_LOADING
-			GLOB.ctf_spawner.load_map()
+			if(!GLOB.ctf_spawner.load_map(user))
+				to_chat(user, span_warning("CTF loading was cancelled"))
+				loading = CTF_LOADING_UNLOADED
+				return
 			loading = CTF_LOADING_LOADED
 		if (CTF_LOADING_LOADING)
 			to_chat(user, span_warning("CTF is loading!"))
@@ -445,18 +448,12 @@
 			for(var/obj/item/ctf/W in competitor)
 				competitor.dropItemToGround(W)
 			competitor.dust()
-	for(var/obj/machinery/control_point/control in GLOB.machines)
-		control.icon_state = "dominator"
-		control.controlling = null
+	control_point_reset()
 	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
 		if(CTF.game_id != game_id)
 			continue
 		if(CTF.ctf_enabled == TRUE)
-			CTF.points = 0
-			CTF.control_points = 0
-			CTF.ctf_enabled = FALSE
-			CTF.team_members = list()
-			CTF.arena_reset = FALSE
+			machine_reset(CTF)
 
 /obj/machinery/capture_the_flag/proc/toggle_ctf()
 	if(!ctf_enabled)
@@ -476,7 +473,19 @@
 
 	notify_ghosts("[name] has been activated!", source = src, action=NOTIFY_ORBIT, header = "CTF has been activated")
 
-/obj/machinery/capture_the_flag/proc/reset_the_arena()
+/obj/machinery/capture_the_flag/proc/machine_reset(var/obj/machinery/capture_the_flag/CTF)
+	CTF.points = 0
+	CTF.control_points = 0
+	CTF.ctf_enabled = FALSE
+	CTF.team_members = list()
+	CTF.arena_reset = FALSE
+
+/obj/machinery/capture_the_flag/proc/control_point_reset()
+	for(var/obj/machinery/control_point/control in GLOB.machines)
+		control.icon_state = "dominator"
+		control.controlling = null
+
+/obj/machinery/capture_the_flag/proc/unload()
 	if(!ctf_landmark)
 		return
 
@@ -485,8 +494,6 @@
 
 
 /obj/machinery/capture_the_flag/proc/stop_ctf()
-	ctf_enabled = FALSE
-	arena_reset = FALSE
 	var/area/A = get_area(src)
 	for(var/_competitor in GLOB.mob_living_list)
 		var/mob/living/competitor = _competitor
@@ -495,7 +502,8 @@
 	team_members.Cut()
 	spawned_mobs.Cut()
 	recently_dead_ckeys.Cut()
-	reset_the_arena()
+	control_point_reset()
+	machine_reset(src)
 
 /obj/machinery/capture_the_flag/proc/instagib_mode()
 	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
