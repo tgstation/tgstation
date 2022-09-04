@@ -214,15 +214,19 @@
 
 	//speech bubble
 	if(owner.client)
-	// Todo: needs to update on move
 		var/mutable_appearance/MA = mutable_appearance('icons/mob/effects/talk.dmi', src, "default[say_test(message)]", FLY_LAYER)
 		SET_PLANE_EXPLICIT(MA, ABOVE_GAME_PLANE, src)
 		MA.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 		INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, MA, list(owner.client), 30)
+		LAZYADD(update_on_z, say_popup)
+		addtimer(CALLBACK(src, .proc/clear_saypopup, say_popup), 3.5 SECONDS)
 
 	for(var/mob/M in GLOB.dead_mob_list)
 		var/link = FOLLOW_LINK(M, owner)
 		to_chat(M, "[link] [dead_rendered]")
+
+/mob/camera/imaginary_friend/proc/clear_saypopup(image/say_popup)
+	LAZYREMOVE(update_on_z, say_popup)
 
 /mob/camera/imaginary_friend/Move(NewLoc, Dir = 0)
 	if(world.time < move_delay)
