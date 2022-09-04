@@ -31,7 +31,6 @@ SUBSYSTEM_DEF(ban_cache)
 	var/ckey_string = "'[look_for.Join("','")]'"
 	var/datum/db_query/query_batch_ban_cache = SSdbcore.NewQuery(
 		"SELECT ckey, role, applies_to_admins FROM [format_table_name("ban")] WHERE ckey IN ([ckey_string]) AND unbanned_datetime IS NULL AND (expiration_time IS NULL OR expiration_time > NOW())",
-		list("ckeys" = look_for.Join(","))
 	)
 
 	var/succeeded = query_batch_ban_cache.Execute()
