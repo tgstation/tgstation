@@ -8,7 +8,7 @@
 /datum/sm_delam/proc/effect_irradiate(obj/machinery/power/supermatter_crystal/sm)
 	var/turf/sm_turf = get_turf(sm)
 	for (var/mob/living/victim in range(20, sm))
-		if(victim.z != sm_turf.z)
+		if(!is_valid_z_level(get_turf(victim), sm_turf))
 			continue
 		SSradiation.irradiate(victim)
 	return TRUE
@@ -17,7 +17,7 @@
 /datum/sm_delam/proc/effect_demoralize(obj/machinery/power/supermatter_crystal/sm)
 	var/turf/sm_turf = get_turf(sm)
 	for(var/mob/living/victim as anything in GLOB.alive_mob_list)
-		if(!istype(victim) || victim.z != sm_turf.z)
+		if(!istype(victim) || !is_valid_z_level(get_turf(victim), sm_turf))
 			continue
 		if(ishuman(victim))
 			//Hilariously enough, running into a closet should make you get hit the hardest.
@@ -25,21 +25,22 @@
 			human.hallucination += max(50, min(300, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(victim, sm) + 1)) ) )
 
 	for(var/mob/victim as anything in GLOB.player_list)
-		var/turf/mob_turf = get_turf(victim)
-		if(sm_turf.z != mob_turf.z)
+		if(!is_valid_z_level(get_turf(victim), sm_turf))
 			continue
 		SEND_SOUND(victim, 'sound/magic/charge.ogg')
-		if (victim.z != sm_turf.z)
+		if(!is_valid_z_level(get_turf(victim), sm_turf))
 			to_chat(victim, span_boldannounce("You hold onto \the [victim.loc] as hard as you can, as reality distorts around you. You feel safe."))
 			continue
 		to_chat(victim, span_boldannounce("You feel reality distort for a moment..."))
-		SEND_SIGNAL(victim, COMSIG_ADD_MOOD_EVENT, "delam", /datum/mood_event/delam)
+		if (isliving(victim))
+			var/mob/living/living_victim = victim
+			living_victim.add_mood_event("delam", /datum/mood_event/delam)
 	return TRUE
 
 /// Spawns anomalies all over the station. Half instantly, the other half over time.
 /datum/sm_delam/proc/effect_anomaly(obj/machinery/power/supermatter_crystal/sm)
 	var/anomalies = 10
-	var/list/anomaly_types = list(GRAVITATIONAL_ANOMALY = 55, HALLUCINATION_ANOMALY = 45, DELIMBER_ANOMALY = 35, FLUX_ANOMALY = 25, PYRO_ANOMALY = 5, VORTEX_ANOMALY = 1)
+	var/list/anomaly_types = list(GRAVITATIONAL_ANOMALY = 55, HALLUCINATION_ANOMALY = 45, DIMENSIONAL_ANOMALY = 35, BIOSCRAMBLER_ANOMALY = 35, FLUX_ANOMALY = 25, PYRO_ANOMALY = 5, VORTEX_ANOMALY = 1)
 	var/list/anomaly_places = GLOB.generic_event_spawns
 
 	// Spawns this many anomalies instantly. Spawns the rest with callbacks.
@@ -48,7 +49,7 @@
 	for(var/i in 1 to anomalies)
 		var/anomaly_to_spawn = pick_weight(anomaly_types)
 		var/anomaly_location = pick_n_take(anomaly_places)
-		
+
 		if(i < cutoff_point)
 			supermatter_anomaly_gen(anomaly_location, anomaly_to_spawn, has_changed_lifespan = FALSE)
 			continue
@@ -143,8 +144,9 @@
 /datum/sm_delam/proc/effect_cascade_demoralize()
 	for(var/mob/player as anything in GLOB.player_list)
 		if(!isdead(player))
+			var/mob/living/living_player = player
 			to_chat(player, span_boldannounce("Everything around you is resonating with a powerful energy. This can't be good."))
-			SEND_SIGNAL(player, COMSIG_ADD_MOOD_EVENT, "cascade", /datum/mood_event/cascade)
+			living_player.add_mood_event("cascade", /datum/mood_event/cascade)
 		SEND_SOUND(player, 'sound/magic/charge.ogg')
 
 /datum/sm_delam/proc/effect_emergency_state()
@@ -178,7 +180,7 @@
 		Rapid expansion of crystal mass proportional to rising gravitational force. \
 		Matter collapse due to gravitational pull foreseeable.",
 		"Nanotrasen Star Observation Association")
-	
+
 	sleep(25 SECONDS)
 
 	priority_announce("[Gibberish("All attempts at evacuation have now ceased, and all assets have been retrieved from your sector.\n \
@@ -194,7 +196,7 @@
 		minor_announce(shuttle_msg, "Emergency Shuttle", TRUE)
 		SSshuttle.emergency.setTimer(15 SECONDS)
 		return
-	
+
 	sleep(10 SECONDS)
 
 	SSticker.news_report = SUPERMATTER_CASCADE

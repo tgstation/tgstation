@@ -1,0 +1,25 @@
+# Glasses to cups
+/obj/item/reagent_containers/glass/@SUBTYPES : /obj/item/reagent_containers/cup/@SUBTYPES {@OLD}
+
+# Foods
+/obj/item/reagent_containers/food/drinks/@SUBTYPES : /obj/item/reagent_containers/cup/glass/@SUBTYPES {@OLD}
+/obj/item/reagent_containers/food/condiment/@SUBTYPES : /obj/item/reagent_containers/condiment/@SUBTYPES {@OLD}
+
+# Sodas
+/obj/item/reagent_containers/cup/glass/soda_cans/@SUBTYPES : /obj/item/reagent_containers/cup/soda_cans/@SUBTYPES {@OLD}
+/obj/item/reagent_containers/food/drinks/soda_cans/@SUBTYPES : /obj/item/reagent_containers/cup/soda_cans/@SUBTYPES {@OLD}
+
+# Juices
+/obj/item/reagent_containers/food/drinks/glass/bottle/tomatojuice : /obj/item/reagent_containers/cup/glass/bottle/juice/tomatojuice {@OLD}
+/obj/item/reagent_containers/food/drinks/glass/bottle/orangejuice : /obj/item/reagent_containers/cup/glass/bottle/juice/orangejuice {@OLD}
+/obj/item/reagent_containers/food/drinks/glass/bottle/cream : /obj/item/reagent_containers/cup/glass/bottle/juice/cream {@OLD}
+/obj/item/reagent_containers/food/drinks/glass/bottle/limejuice : /obj/item/reagent_containers/cup/glass/bottle/juice/limejuice {@OLD}
+/obj/item/reagent_containers/food/drinks/glass/bottle/pineapplejuice : /obj/item/reagent_containers/cup/glass/bottle/juice/pineapplejuice {@OLD}
+/obj/item/reagent_containers/food/drinks/glass/bottle/menthol : /obj/item/reagent_containers/cup/glass/bottle/juice/menthol {@OLD}
+
+/obj/item/reagent_containers/cup/glass/bottle/tomatojuice : /obj/item/reagent_containers/cup/glass/bottle/juice/tomatojuice {@OLD}
+/obj/item/reagent_containers/cup/glass/bottle/orangejuice : /obj/item/reagent_containers/cup/glass/bottle/juice/orangejuice {@OLD}
+/obj/item/reagent_containers/cup/glass/bottle/cream : /obj/item/reagent_containers/cup/glass/bottle/juice/cream {@OLD}
+/obj/item/reagent_containers/cup/glass/bottle/limejuice : /obj/item/reagent_containers/cup/glass/bottle/juice/limejuice {@OLD}
+/obj/item/reagent_containers/cup/glass/bottle/pineapplejuice : /obj/item/reagent_containers/cup/glass/bottle/juice/pineapplejuice {@OLD}
+/obj/item/reagent_containers/cup/glass/bottle/menthol : /obj/item/reagent_containers/cup/glass/bottle/juice/menthol {@OLD}

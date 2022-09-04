@@ -1,7 +1,7 @@
 /obj/item/food/soup
 	w_class = WEIGHT_CLASS_NORMAL
 	icon = 'icons/obj/food/soupsalad.dmi'
-	trash_type = /obj/item/reagent_containers/glass/bowl
+	trash_type = /obj/item/reagent_containers/cup/bowl
 	bite_consumption = 5
 	max_volume = 80
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
@@ -55,7 +55,7 @@
 	name = "wing fang chu"
 	desc = "A savory dish of alien wing wang in soy."
 	icon_state = "wingfangchu"
-	trash_type = /obj/item/reagent_containers/glass/bowl
+	trash_type = /obj/item/reagent_containers/cup/bowl
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 9, /datum/reagent/consumable/soysauce = 10, /datum/reagent/consumable/nutriment/vitamin = 7)
 	tastes = list("soy" = 1)
 	foodtypes = MEAT
@@ -157,7 +157,7 @@
 	icon_state = "eyeballsoup"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/tomatojuice = 10, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/liquidgibs = 3)
 	tastes = list("tomato" = 1, "squirming" = 1)
-	foodtypes = MEAT | GROSS
+	foodtypes = MEAT | GORE
 
 /obj/item/food/soup/miso
 	name = "misosoup"
@@ -306,4 +306,11 @@
 	food_reagents = list (/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("creamy vegetables"= 2, "sausage" = 1)
 	foodtypes = VEGETABLES | MEAT | GRAIN | BREAKFAST
-	
+
+/obj/item/food/soup/cullen_skink
+	name = "cullen skink"
+	desc = "A thick Scottish soup made of smoked fish, potatoes and onions."
+	icon_state = "cullen_skink"
+	food_reagents = list (/datum/reagent/consumable/nutriment = 12, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/nutriment/protein = 6)
+	tastes = list("creamy broth"= 1, "fish" = 1, "vegetables" = 1)
+	foodtypes = VEGETABLES | SEAFOOD | DAIRY

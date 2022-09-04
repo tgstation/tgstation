@@ -34,8 +34,8 @@
 	var/safe_plasma_min = 0
 	///How much breath partial pressure is a safe amount of plasma. 0 means that we are immune to plasma.
 	var/safe_plasma_max = 0.05
-	var/SA_para_min = 1 //Sleeping agent
-	var/SA_sleep_min = 5 //Sleeping agent
+	var/n2o_para_min = 1 //Sleeping agent
+	var/n2o_sleep_min = 5 //Sleeping agent
 	var/BZ_trip_balls_min = 1 //BZ gas
 	var/BZ_brain_damage_min = 10 //Give people some room to play around without killing the station
 	var/gas_stimulation_min = 0.002 //nitrium and Freon
@@ -265,15 +265,23 @@
 
 	if(breath) // If there's some other shit in the air lets deal with it here.
 
+	// Pluoxium
+		var/pluoxium_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/pluoxium][MOLES])
+		if(pluoxium_pp > gas_stimulation_min)
+			var/existing = breather.reagents.get_reagent_amount(/datum/reagent/pluoxium)
+			breather.reagents.add_reagent(/datum/reagent/pluoxium, max(0, 1 - existing))
+		gas_breathed = breath_gases[/datum/gas/pluoxium][MOLES]
+		breath_gases[/datum/gas/pluoxium][MOLES] -= gas_breathed
+
 	// N2O
 
-		var/SA_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrous_oxide][MOLES])
-		if(SA_pp > SA_para_min) // Enough to make us stunned for a bit
+		var/n2o_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrous_oxide][MOLES])
+		if(n2o_pp > n2o_para_min) // Enough to make us stunned for a bit
 			breather.throw_alert(ALERT_TOO_MUCH_N2O, /atom/movable/screen/alert/too_much_n2o)
 			breather.Unconscious(60) // 60 gives them one second to wake up and run away a bit!
-			if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
+			if(n2o_pp > n2o_sleep_min) // Enough to make us sleep as well
 				breather.Sleeping(min(breather.AmountSleeping() + 100, 200))
-		else if(SA_pp > 0.01) // There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
+		else if(n2o_pp > 0.01) // There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 			breather.clear_alert(ALERT_TOO_MUCH_N2O)
 			if(prob(20))
 				n2o_euphoria = EUPHORIA_ACTIVE
@@ -360,14 +368,6 @@
 		gas_breathed = breath_gases[/datum/gas/healium][MOLES]
 		breath_gases[/datum/gas/healium][MOLES]-=gas_breathed
 
-	//Pluoxium
-		var/pluoxium_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/pluoxium][MOLES])
-		if(pluoxium_pp > gas_stimulation_min)
-			var/existing = breather.reagents.get_reagent_amount(/datum/reagent/pluoxium)
-			breather.reagents.add_reagent(/datum/reagent/pluoxium, max(0, 1 - existing))
-		gas_breathed = breath_gases[/datum/gas/pluoxium][MOLES]
-		breath_gases[/datum/gas/pluoxium][MOLES] -= gas_breathed
-
 	// Proto Nitrate
 		// Inert
 	// Zauker
@@ -421,28 +421,28 @@
 			switch(miasma_pp)
 				if(0.25 to 5)
 					// At lower pp, give out a little warning
-					SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
+					owner.clear_mood_event("smell")
 					if(prob(5))
 						to_chat(owner, span_notice("There is an unpleasant smell in the air."))
 				if(5 to 15)
 					//At somewhat higher pp, warning becomes more obvious
 					if(prob(15))
 						to_chat(owner, span_warning("You smell something horribly decayed inside this room."))
-						SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/bad_smell)
+						owner.add_mood_event("smell", /datum/mood_event/disgust/bad_smell)
 				if(15 to 30)
 					//Small chance to vomit. By now, people have internals on anyway
 					if(prob(5))
 						to_chat(owner, span_warning("The stench of rotting carcasses is unbearable!"))
-						SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
+						owner.add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
 						owner.vomit()
 				if(30 to INFINITY)
 					//Higher chance to vomit. Let the horror start
 					if(prob(15))
 						to_chat(owner, span_warning("The stench of rotting carcasses is unbearable!"))
-						SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
+						owner.add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
 						owner.vomit()
 				else
-					SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
+					owner.clear_mood_event("smell")
 
 			// In a full miasma atmosphere with 101.34 pKa, about 10 disgust per breath, is pretty low compared to threshholds
 			// Then again, this is a purely hypothetical scenario and hardly reachable
@@ -452,12 +452,12 @@
 
 		// Clear out moods when no miasma at all
 		else
-			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
+			owner.clear_mood_event("smell")
 
 		if (n2o_euphoria == EUPHORIA_ACTIVE || healium_euphoria == EUPHORIA_ACTIVE)
-			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "chemical_euphoria", /datum/mood_event/chemical_euphoria)
+			owner.add_mood_event("chemical_euphoria", /datum/mood_event/chemical_euphoria)
 		else if (n2o_euphoria == EUPHORIA_INACTIVE && healium_euphoria == EUPHORIA_INACTIVE)
-			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
+			owner.clear_mood_event("chemical_euphoria")
 		// Activate mood on first flag, remove on second, do nothing on third.
 
 		handle_breath_temperature(breath, breather)

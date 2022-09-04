@@ -157,7 +157,7 @@
 		to_chat(src, span_syndradio("You are not at liberty to do this! All agents are clandestine."))
 		return FALSE
 	var/mob/living/carbon/holder = get_holder()
-	if(!holder)
+	if(!iscarbon(holder))
 		balloon_alert(src, "not being carried")
 		return FALSE
 	balloon_alert(src, "requesting DNA sample")
@@ -210,7 +210,7 @@
 		if(!resolved_master)
 			balloon_alert(src, "cannot locate master")
 			return FALSE
-		if(src.z != resolved_master.z)
+		if(!is_valid_z_level(get_turf(src), get_turf(resolved_master)))
 			balloon_alert(src, "master out of range")
 			return FALSE
 		host_scan.attack(resolved_master, src)

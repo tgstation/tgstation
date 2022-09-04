@@ -10,6 +10,7 @@
  */
 
 /obj/item/clothing/suit/utility
+	icon = 'icons/obj/clothing/suits/utility.dmi'
 	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
 
 /obj/item/clothing/suit/utility/fire
@@ -19,7 +20,13 @@
 	inhand_icon_state = "ro_suit"
 	w_class = WEIGHT_CLASS_BULKY
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/extinguisher, /obj/item/crowbar)
+	allowed = list(
+		/obj/item/crowbar,
+		/obj/item/extinguisher,
+		/obj/item/flashlight,
+		/obj/item/fireaxe/metal_h2_axe,
+		/obj/item/tank/internals,
+	)
 	slowdown = 1
 	armor = list(MELEE = 15, BULLET = 5, LASER = 20, ENERGY = 20, BOMB = 20, BIO = 50, FIRE = 100, ACID = 50)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
@@ -142,7 +149,11 @@
 	w_class = WEIGHT_CLASS_BULKY
 	clothing_flags = THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/geiger_counter)
+	allowed = list(
+		/obj/item/flashlight,
+		/obj/item/geiger_counter,
+		/obj/item/tank/internals,
+		)
 	slowdown = 1.5
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 60, FIRE = 30, ACID = 30)
 	strip_delay = 60

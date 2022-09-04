@@ -92,7 +92,7 @@
 /area/ruin/unpowered/no_grav)
 "aC" = (
 /obj/structure/fluff/bus/passable,
-/obj/item/reagent_containers/food/condiment/saltshaker,
+/obj/item/reagent_containers/condiment/saltshaker,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/airless{
 	icon_state = "bus"
@@ -186,12 +186,12 @@
 /turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "uO" = (
-/obj/item/reagent_containers/glass/rag,
+/obj/item/reagent_containers/cup/rag,
 /turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "wc" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/coffee,
+/obj/item/reagent_containers/cup/glass/coffee,
 /turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "wD" = (
@@ -272,7 +272,7 @@
 /area/ruin/unpowered/no_grav)
 "Nm" = (
 /obj/effect/decal/cleanable/food/salt,
-/obj/item/reagent_containers/food/condiment/saltshaker,
+/obj/item/reagent_containers/condiment/saltshaker,
 /turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "Qd" = (

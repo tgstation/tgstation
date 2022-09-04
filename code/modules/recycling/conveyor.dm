@@ -210,6 +210,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		set_operating(FALSE)
 		return FALSE
 
+	update_appearance()
 	// If we're on, start conveying so moveloops on our tile can be refreshed if they stopped for some reason
 	if(operating != CONVEYOR_OFF)
 		for(var/atom/movable/movable in get_turf(src))

@@ -3,7 +3,7 @@ import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { pureComponentHooks } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Chart, ColorBox, Flex, Icon, LabeledList, ProgressBar, Section, Table } from '../components';
+import { Box, Button, Chart, ColorBox, Flex, Icon, LabeledList, ProgressBar, Section, Table, Dimmer, Stack } from '../components';
 import { Window } from '../layouts';
 
 const PEAK_DRAW = 500000;
@@ -53,6 +53,18 @@ export const PowerMonitorContent = (props, context) => {
   ])(data.areas);
   return (
     <>
+      {areas.length === 0 && (
+        <Dimmer>
+          <Stack>
+            <Stack.Item>
+              <Icon name="plug-circle-exclamation" size={2} />
+            </Stack.Item>
+            <Stack.Item>
+              <h1>No powernet found!</h1>
+            </Stack.Item>
+          </Stack>
+        </Dimmer>
+      )}
       <Flex mx={-0.5} mb={1}>
         <Flex.Item mx={0.5} width="200px">
           <Section>

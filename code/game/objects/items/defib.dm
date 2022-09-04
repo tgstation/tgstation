@@ -6,7 +6,7 @@
 	name = "defibrillator"
 	desc = "A device that delivers powerful shocks to detachable paddles that resuscitate incapacitated patients. \
 	Has a rear bracket for attachments to wall mounts and medical cyborgs."
-	icon = 'icons/obj/defib.dmi'
+	icon = 'icons/obj/medical/defib.dmi'
 	icon_state = "defibunit"
 	inhand_icon_state = "defibunit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -44,13 +44,12 @@
 	. = ..()
 	paddles = new paddle_type(src)
 	update_power()
-	return
+	RegisterSignal(paddles, COMSIG_DEFIBRILLATOR_SUCCESS, .proc/on_defib_success)
 
 /obj/item/defibrillator/loaded/Initialize(mapload) //starts with hicap
 	. = ..()
 	cell = new(src)
 	update_power()
-	return
 
 /obj/item/defibrillator/examine(mob/user)
 	. = ..()
@@ -259,6 +258,12 @@
 	paddles.update_appearance()
 	update_power()
 
+/obj/item/defibrillator/proc/on_defib_success(obj/item/shockpaddles/source)
+	deductcharge(source.revivecost)
+	source.cooldown = TRUE
+	cooldowncheck()
+	return COMPONENT_DEFIB_STOP
+
 /obj/item/defibrillator/compact
 	name = "compact defibrillator"
 	desc = "A belt-equipped defibrillator that can be rapidly deployed."
@@ -320,7 +325,7 @@
 /obj/item/shockpaddles
 	name = "defibrillator paddles"
 	desc = "A pair of plastic-gripped paddles with flat metal surfaces that are used to deliver powerful electric shocks."
-	icon = 'icons/obj/defib.dmi'
+	icon = 'icons/obj/medical/defib.dmi'
 	icon_state = "defibpaddles0"
 	inhand_icon_state = "defibpaddles0"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -340,9 +345,9 @@
 	var/recharge_time = 6 SECONDS // Only applies to defibs that do not require a defibrilator. See: .proc/do_success
 	var/combat = FALSE //If it penetrates armor and gives additional functionality
 
-/obj/item/shockpaddles/ComponentInitialize()
+/obj/item/shockpaddles/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS|ITEM_SLOT_BACK)
 	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12)
 
 /obj/item/shockpaddles/Destroy()
@@ -377,14 +382,16 @@
 			visible_message(span_notice("[src] snap back into [defib]."))
 		snap_back()
 
-/obj/item/shockpaddles/proc/recharge(time)
-	if(req_defib || !time)
+/obj/item/shockpaddles/proc/recharge(time = 0)
+	if(req_defib)
 		return
 	cooldown = TRUE
 	update_appearance()
-	sleep(time)
-	var/turf/T = get_turf(src)
-	T.audible_message(span_notice("[src] beeps: Unit is recharged."))
+	addtimer(CALLBACK(src, .proc/finish_recharge), time)
+
+/obj/item/shockpaddles/proc/finish_recharge()
+	var/turf/current_turf = get_turf(src)
+	current_turf.audible_message(span_notice("[src] beeps: Unit is recharged."))
 	playsound(src, 'sound/machines/defib_ready.ogg', 50, FALSE)
 	cooldown = FALSE
 	update_appearance()
@@ -484,12 +491,9 @@
 		busy = FALSE
 
 	update_appearance()
-	if(req_defib)
-		defib.deductcharge(revivecost)
-		cooldown = TRUE
-		defib.cooldowncheck()
-	else
-		recharge(recharge_time)
+	if(SEND_SIGNAL(src, COMSIG_DEFIBRILLATOR_SUCCESS) & COMPONENT_DEFIB_STOP)
+		return
+	recharge(recharge_time)
 
 /// Called whenever the paddles fail to shock something after a do_x proc
 /obj/item/shockpaddles/proc/do_cancel()
@@ -528,7 +532,7 @@
 		span_warning("You overcharge the paddles and begin to place them onto [H]'s chest..."))
 	busy = TRUE
 	update_appearance()
-	if(do_after(user, 1.5 SECONDS, H))
+	if(do_after(user, 1.5 SECONDS, H, extra_checks = CALLBACK(src, .proc/is_wielded)))
 		user.visible_message(span_notice("[user] places [src] on [H]'s chest."),
 			span_warning("You place [src] on [H]'s chest and begin to charge them."))
 		var/turf/T = get_turf(defib)
@@ -537,7 +541,7 @@
 			T.audible_message(span_warning("\The [defib] lets out an urgent beep and lets out a steadily rising hum..."))
 		else
 			user.audible_message(span_warning("[src] let out an urgent beep."))
-		if(do_after(user, 1.5 SECONDS, H)) //Takes longer due to overcharging
+		if(do_after(user, 1.5 SECONDS, H, extra_checks = CALLBACK(src, .proc/is_wielded))) //Takes longer due to overcharging
 			if(!H)
 				do_cancel()
 				return
@@ -568,11 +572,11 @@
 	user.visible_message(span_warning("[user] begins to place [src] on [H]'s chest."), span_warning("You begin to place [src] on [H]'s chest..."))
 	busy = TRUE
 	update_appearance()
-	if(do_after(user, 3 SECONDS, H)) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
+	if(do_after(user, 3 SECONDS, H, extra_checks = CALLBACK(src, .proc/is_wielded))) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
 		user.visible_message(span_notice("[user] places [src] on [H]'s chest."), span_warning("You place [src] on [H]'s chest."))
 		playsound(src, 'sound/machines/defib_charge.ogg', 75, FALSE)
 		var/obj/item/organ/internal/heart = H.getorgan(/obj/item/organ/internal/heart)
-		if(do_after(user, 2 SECONDS, H)) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
+		if(do_after(user, 2 SECONDS, H, extra_checks = CALLBACK(src, .proc/is_wielded))) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
 			if((!combat && !req_defib) || (req_defib && !defib.combat))
 				for(var/obj/item/clothing/C in H.get_equipped_items())
 					if((C.body_parts_covered & CHEST) && (C.clothing_flags & THICKMATERIAL)) //check to see if something is obscuring their chest.
@@ -636,7 +640,7 @@
 					H.emote("gasp")
 					H.set_timed_status_effect(200 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 					SEND_SIGNAL(H, COMSIG_LIVING_MINOR_SHOCK)
-					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "saved_life", /datum/mood_event/saved_life)
+					user.add_mood_event("saved_life", /datum/mood_event/saved_life)
 					log_combat(user, H, "revived", defib)
 				do_success()
 				return
@@ -656,9 +660,12 @@
 				playsound(src, 'sound/machines/defib_failed.ogg', 50, FALSE)
 	do_cancel()
 
+/obj/item/shockpaddles/proc/is_wielded()
+	return HAS_TRAIT(src, TRAIT_WIELDED)
+
 /obj/item/shockpaddles/cyborg
 	name = "cyborg defibrillator paddles"
-	icon = 'icons/obj/defib.dmi'
+	icon = 'icons/obj/medical/defib.dmi'
 	icon_state = "defibpaddles0"
 	inhand_icon_state = "defibpaddles0"
 	req_defib = FALSE
@@ -679,7 +686,7 @@
 	name = "syndicate defibrillator paddles"
 	desc = "A pair of paddles used to revive deceased operatives. They possess both the ability to penetrate armor and to deliver powerful or disabling shocks offensively."
 	combat = TRUE
-	icon = 'icons/obj/defib.dmi'
+	icon = 'icons/obj/medical/defib.dmi'
 	icon_state = "syndiepaddles0"
 	inhand_icon_state = "syndiepaddles0"
 	base_icon_state = "syndiepaddles"

@@ -293,7 +293,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/shuttle/pirate)
 "nh" = (
-/obj/machinery/computer/monitor/secret{
+/obj/machinery/computer/monitor{
 	dir = 8
 	},
 /turf/open/floor/iron/dark/side{
@@ -582,19 +582,19 @@
 "Gy" = (
 /obj/structure/table/glass,
 /obj/machinery/light/small/directional/west,
-/obj/item/reagent_containers/food/drinks/bottle/patron{
+/obj/item/reagent_containers/cup/glass/bottle/patron{
 	pixel_x = -5;
 	pixel_y = 16
 	},
-/obj/item/reagent_containers/food/drinks/bottle/cognac{
+/obj/item/reagent_containers/cup/glass/bottle/cognac{
 	pixel_x = -10;
 	pixel_y = 7
 	},
-/obj/item/reagent_containers/food/drinks/bottle/grappa{
+/obj/item/reagent_containers/cup/glass/bottle/grappa{
 	pixel_x = 10;
 	pixel_y = 15
 	},
-/obj/item/reagent_containers/food/drinks/bottle/vodka{
+/obj/item/reagent_containers/cup/glass/bottle/vodka{
 	pixel_x = 2;
 	pixel_y = 4
 	},
@@ -628,14 +628,14 @@
 /area/shuttle/pirate)
 "Jc" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/food/drinks/drinkingglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass{
 	pixel_x = -8
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass{
 	pixel_x = 9;
 	pixel_y = 9
 	},
-/obj/item/reagent_containers/food/drinks/bottle/wine{
+/obj/item/reagent_containers/cup/glass/bottle/wine{
 	pixel_y = 6
 	},
 /obj/machinery/newscaster/directional/west,
@@ -733,29 +733,29 @@
 /area/shuttle/pirate)
 "Oo" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/food/drinks/bottle/tequila{
+/obj/item/reagent_containers/cup/glass/bottle/tequila{
 	pixel_x = 10;
 	pixel_y = 10
 	},
-/obj/item/reagent_containers/food/drinks/bottle/hcider{
+/obj/item/reagent_containers/cup/glass/bottle/hcider{
 	layer = 3.1;
 	pixel_x = -6;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/food/drinks/bottle/rum{
+/obj/item/reagent_containers/cup/glass/bottle/rum{
 	layer = 3.2;
 	pixel_x = -15;
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/food/drinks/shaker{
+/obj/item/reagent_containers/cup/glass/shaker{
 	pixel_x = 1;
 	pixel_y = 13
 	},
-/obj/item/reagent_containers/food/drinks/bottle/gin{
+/obj/item/reagent_containers/cup/glass/bottle/gin{
 	pixel_x = -10;
 	pixel_y = 15
 	},
-/obj/item/reagent_containers/food/drinks/bottle/wine{
+/obj/item/reagent_containers/cup/glass/bottle/wine{
 	layer = 3.1;
 	pixel_x = 3;
 	pixel_y = 5
@@ -944,7 +944,7 @@
 /area/shuttle/pirate)
 "Xw" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/food/drinks/drinkingglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass{
 	pixel_x = 9;
 	pixel_y = 9
 	},
@@ -958,7 +958,7 @@
 	pixel_y = 9
 	},
 /obj/item/lighter,
-/obj/item/reagent_containers/food/drinks/drinkingglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass{
 	pixel_x = -8
 	},
 /turf/open/floor/carpet/royalblack,

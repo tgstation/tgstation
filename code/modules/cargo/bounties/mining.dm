@@ -54,7 +54,7 @@
 	name = "Mushroom Bowl"
 	description = "Lieutenant Jeb dropped his favorite mushroom bowl. Cheer him up by shipping a new one, will you?"
 	reward = CARGO_CRATE_VALUE * 15 //5x mushroom shavings
-	wanted_types = list(/obj/item/reagent_containers/glass/bowl/mushroom_bowl = TRUE)
+	wanted_types = list(/obj/item/reagent_containers/cup/bowl/mushroom_bowl = TRUE)
 
 /datum/bounty/item/mining/inocybe_mushroom
 	name = "Mushroom Caps"

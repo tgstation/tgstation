@@ -44,6 +44,7 @@ GLOBAL_PROTECT(lua_usr)
 		&& !(result["name"] == "input" && (result["status"] == "finished" || length(result["param"]))))
 		return
 	var/append_to_log = TRUE
+	var/index_of_log
 	if(log.len)
 		for(var/index in log.len to max(log.len - MAX_LOG_REPEAT_LOOKBACK, 1) step -1)
 			var/list/entry = log[index]
@@ -53,12 +54,17 @@ GLOBAL_PROTECT(lua_usr)
 				&& ((entry["param"] == result["param"]) || deep_compare_list(entry["param"], result["param"])))
 				if(!entry["repeats"])
 					entry["repeats"] = 0
+				index_of_log = index
 				entry["repeats"]++
 				append_to_log = FALSE
 				break
 	if(append_to_log)
-		log += list(weakrefify_list(result))
-	INVOKE_ASYNC(src, .proc/update_editors)
+		if(islist(result["param"]))
+			result["param"] = weakrefify_list(encode_text_and_nulls(result["param"]))
+		log += list(result)
+		index_of_log = log.len
+	INVOKE_ASYNC(src, /datum/lua_state.proc/update_editors)
+	return index_of_log
 
 /datum/lua_state/proc/load_script(script)
 	GLOB.IsLuaCall = TRUE
@@ -76,13 +82,24 @@ GLOBAL_PROTECT(lua_usr)
 	result["chunk"] = script
 	check_if_slept(result)
 
-	message_admins("[key_name(usr)] executed [length(script)] bytes of lua code. [ADMIN_LUAVIEW_CHUNK(src, log.len)]")
 	log_lua("[key_name(usr)] executed the following lua code:\n<code>[script]</code>")
 
 	return result
 
 /datum/lua_state/proc/call_function(function, ...)
 	var/call_args = length(args) > 1 ? args.Copy(2) : list()
+	if(islist(function))
+		var/list/new_function_path = list()
+		for(var/path_element in function)
+			if(isweakref(path_element))
+				var/datum/weakref/weak_ref = path_element
+				var/resolved = weak_ref.hard_resolve()
+				if(!resolved)
+					return list("status" = "errored", "param" = "Weakref in function path ([weak_ref] \ref[weak_ref]) resolved to null.", "name" = jointext(function, "."))
+				new_function_path += resolved
+			else
+				new_function_path += path_element
+		function = new_function_path
 	var/msg = "[key_name(usr)] called the lua function \"[function]\" with arguments: [english_list(call_args)]"
 	log_lua(msg)
 
@@ -94,7 +111,7 @@ GLOBAL_PROTECT(lua_usr)
 	GLOB.lua_usr = tmp_usr
 
 	if(isnull(result))
-		result = list("status" = "errored", "param" = "__lua_call returned null (it may have runtimed - check the runtime logs)", "name" = "input")
+		result = list("status" = "errored", "param" = "__lua_call returned null (it may have runtimed - check the runtime logs)", "name" = islist(function) ? jointext(function, ".") : function)
 	if(istext(result))
 		result = list("status" = "errored", "param" = result, "name" = islist(function) ? jointext(function, ".") : function)
 	check_if_slept(result)
@@ -113,7 +130,7 @@ GLOBAL_PROTECT(lua_usr)
 	GLOB.IsLuaCall = FALSE
 
 	if(isnull(result))
-		result = list("status" = "errored", "param" = "__lua_awaken returned null (it may have runtimed - check the runtime logs)", "name" = "input")
+		result = list("status" = "errored", "param" = "__lua_awaken returned null (it may have runtimed - check the runtime logs)", "name" = "An attempted awaken")
 	if(istext(result))
 		result = list("status" = "errored", "param" = result, "name" = "An attempted awaken")
 	check_if_slept(result)
@@ -130,14 +147,14 @@ GLOBAL_PROTECT(lua_usr)
 	GLOB.IsLuaCall = FALSE
 
 	if(isnull(result))
-		result = list("status" = "errored", "param" = "__lua_resume returned null (it may have runtimed - check the runtime logs)", "name" = "input")
+		result = list("status" = "errored", "param" = "__lua_resume returned null (it may have runtimed - check the runtime logs)", "name" = "An attempted resume")
 	if(istext(result))
 		result = list("status" = "errored", "param" = result, "name" = "An attempted resume")
 	check_if_slept(result)
 	return result
 
 /datum/lua_state/proc/get_globals()
-	globals = weakrefify_list(__lua_get_globals(internal_id))
+	globals = weakrefify_list(encode_text_and_nulls(__lua_get_globals(internal_id)))
 
 /datum/lua_state/proc/get_tasks()
 	return __lua_get_tasks(internal_id)

@@ -265,6 +265,18 @@
  * Returns a bool about whether or not the user should play a sound when performing the emote.
  */
 /datum/emote/proc/should_play_sound(mob/user, intentional = FALSE)
+	if(emote_type & EMOTE_AUDIBLE && !muzzle_ignore)
+		if(user.is_muzzled())
+			return FALSE
+		if(HAS_TRAIT(user, TRAIT_MUTE))
+			return FALSE
+		if(ishuman(user))
+			var/mob/living/carbon/human/loud_mouth = user
+			if(loud_mouth.mind?.miming) // vow of silence prevents outloud noises
+				return FALSE
+			if(!loud_mouth.getorganslot(ORGAN_SLOT_TONGUE))
+				return FALSE
+
 	if(only_forced_audio && intentional)
 		return FALSE
 	return TRUE

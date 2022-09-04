@@ -299,7 +299,7 @@
 			O.mmi = W //and give the real mmi to the borg.
 			O.updatename(brainmob.client)
 			brainmob.mind.transfer_to(O)
-			brainmob.mind.add_memory(MEMORY_BORGED, list(DETAIL_PROTAGONIST = user), story_value = STORY_VALUE_OKAY, memory_flags = MEMORY_SKIP_UNCONSCIOUS)
+			O.mind.add_memory(MEMORY_BORGED, list(DETAIL_PROTAGONIST = user), story_value = STORY_VALUE_OKAY, memory_flags = MEMORY_SKIP_UNCONSCIOUS)
 			playsound(O.loc, 'sound/voice/liveagain.ogg', 75, TRUE)
 
 			if(O.mind && O.mind.special_role)
@@ -310,8 +310,8 @@
 			forceMove(O)
 			O.robot_suit = src
 
-			user.log_message("put the MMI/posibrain of [key_name(M.brainmob)] into a cyborg shell at [AREACOORD(src)]", LOG_GAME)
-			M.brainmob.log_message("was put into a cyborg shell at [AREACOORD(src)] by [key_name(user)]", LOG_GAME, log_globally = FALSE)
+			user.log_message("put the MMI/posibrain of [key_name(M.brainmob)] into a cyborg shell", LOG_GAME)
+			M.brainmob.log_message("was put into a cyborg shell by [key_name(user)]", LOG_GAME, log_globally = FALSE)
 
 			if(!locomotion)
 				O.set_lockcharge(TRUE)

@@ -17,7 +17,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal
 	name = "supermatter crystal"
 	desc = "A strangely translucent and iridescent crystal."
-	icon = 'icons/obj/supermatter.dmi'
+	icon = 'icons/obj/engine/supermatter.dmi'
 	icon_state = "darkmatter"
 	density = TRUE
 	anchored = TRUE
@@ -40,10 +40,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	///The amount of damage we have currently
 	var/damage = 0
-	/// The damage we had before this cycle. 
+	/// The damage we had before this cycle.
 	/// Used to limit the damage we can take each cycle, and to check if we are currently taking damage or healing.
 	var/damage_archived = 0
-	
+
 	///The point at which we consider the supermatter to be [SUPERMATTER_STATUS_WARNING]
 	var/warning_point = 50
 	var/warning_channel = RADIO_CHANNEL_ENGINEERING
@@ -62,105 +62,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/lastwarning = 0
 	///Refered to as eer on the moniter. This value effects gas output, heat, damage, and radiation.
 	var/power = 0
-	///Determines the rate of positve change in gas comp values
-	var/gas_change_rate = 0.05
-	///The list of gases we will be interacting with in process_atoms()
-	var/list/gases_we_care_about = list(
-		/datum/gas/oxygen,
-		/datum/gas/water_vapor,
-		/datum/gas/plasma,
-		/datum/gas/carbon_dioxide,
-		/datum/gas/nitrous_oxide,
-		/datum/gas/nitrogen,
-		/datum/gas/pluoxium,
-		/datum/gas/tritium,
-		/datum/gas/bz,
-		/datum/gas/freon,
-		/datum/gas/hydrogen,
-		/datum/gas/healium,
-		/datum/gas/proto_nitrate,
-		/datum/gas/zauker,
-		/datum/gas/miasma,
-		/datum/gas/hypernoblium,
-		/datum/gas/antinoblium,
-	)
-	///The list of gases mapped against their current comp. We use this to calculate different values the supermatter uses, like power or heat resistance. It doesn't perfectly match the air around the sm, instead moving up at a rate determined by gas_change_rate per call. Ranges from 0 to 1
-	var/list/gas_comp = list(
-		/datum/gas/oxygen = 0,
-		/datum/gas/water_vapor = 0,
-		/datum/gas/plasma = 0,
-		/datum/gas/carbon_dioxide = 0,
-		/datum/gas/nitrous_oxide = 0,
-		/datum/gas/nitrogen = 0,
-		/datum/gas/pluoxium = 0,
-		/datum/gas/tritium = 0,
-		/datum/gas/bz = 0,
-		/datum/gas/freon = 0,
-		/datum/gas/hydrogen = 0,
-		/datum/gas/healium = 0,
-		/datum/gas/proto_nitrate = 0,
-		/datum/gas/zauker = 0,
-		/datum/gas/hypernoblium = 0,
-		/datum/gas/antinoblium = 0,
-	)
-	///The list of gases mapped against their transmit values. We use it to determine the effect different gases have on the zaps
-	var/list/gas_trans = list(
-		/datum/gas/oxygen = OXYGEN_TRANSMIT_MODIFIER,
-		/datum/gas/water_vapor = H2O_TRANSMIT_MODIFIER,
-		/datum/gas/plasma = PLASMA_TRANSMIT_MODIFIER,
-		/datum/gas/pluoxium = PLUOXIUM_TRANSMIT_MODIFIER,
-		/datum/gas/tritium = TRITIUM_TRANSMIT_MODIFIER,
-		/datum/gas/bz = BZ_TRANSMIT_MODIFIER,
-		/datum/gas/hydrogen = HYDROGEN_TRANSMIT_MODIFIER,
-		/datum/gas/healium = HEALIUM_TRANSMIT_MODIFIER,
-		/datum/gas/proto_nitrate = PROTO_NITRATE_TRANSMIT_MODIFIER,
-		/datum/gas/zauker = ZAUKER_TRANSMIT_MODIFIER,
-		/datum/gas/hypernoblium = HYPERNOBLIUM_TRANSMIT_MODIFIER,
-		/datum/gas/antinoblium = ANTINOBLIUM_TRANSMIT_MODIFIER,
-	)
-	///The list of gases mapped against their heat penaltys. We use it to determin molar and heat output
-	var/list/gas_heat = list(
-		/datum/gas/oxygen = OXYGEN_HEAT_PENALTY,
-		/datum/gas/water_vapor = H2O_HEAT_PENALTY,
-		/datum/gas/plasma = PLASMA_HEAT_PENALTY,
-		/datum/gas/carbon_dioxide = CO2_HEAT_PENALTY,
-		/datum/gas/nitrogen = NITROGEN_HEAT_PENALTY,
-		/datum/gas/pluoxium = PLUOXIUM_HEAT_PENALTY,
-		/datum/gas/tritium = TRITIUM_HEAT_PENALTY,
-		/datum/gas/bz = BZ_HEAT_PENALTY,
-		/datum/gas/freon = FREON_HEAT_PENALTY,
-		/datum/gas/hydrogen = HYDROGEN_HEAT_PENALTY,
-		/datum/gas/healium = HEALIUM_HEAT_PENALTY,
-		/datum/gas/proto_nitrate = PROTO_NITRATE_HEAT_PENALTY,
-		/datum/gas/zauker = ZAUKER_HEAT_PENALTY,
-		/datum/gas/hypernoblium = HYPERNOBLIUM_HEAT_PENALTY,
-		/datum/gas/antinoblium = ANTINOBLIUM_HEAT_PENALTY,
-	)
-	///The list of gases mapped against their heat resistance. We use it to moderate heat damage.
-	var/list/gas_resist = list(
-		/datum/gas/nitrous_oxide = N2O_HEAT_RESISTANCE,
-		/datum/gas/hydrogen = HYDROGEN_HEAT_RESISTANCE,
-		/datum/gas/proto_nitrate = PROTO_NITRATE_HEAT_RESISTANCE,
-	)
-	///The list of gases mapped against their powermix ratio
-	var/list/gas_powermix = list(
-		/datum/gas/oxygen = 1,
-		/datum/gas/water_vapor = 1,
-		/datum/gas/plasma = 1,
-		/datum/gas/carbon_dioxide = 1,
-		/datum/gas/nitrogen = -1,
-		/datum/gas/pluoxium = -1,
-		/datum/gas/tritium = 1,
-		/datum/gas/bz = 1,
-		/datum/gas/freon = -1,
-		/datum/gas/hydrogen = 1,
-		/datum/gas/healium = 1,
-		/datum/gas/proto_nitrate = 1,
-		/datum/gas/zauker = 1,
-		/datum/gas/miasma = 0.5,
-		/datum/gas/antinoblium = 1,
-		/datum/gas/hypernoblium = -1,
-	)
+	///The list of gases mapped against their current comp. We use this to calculate different values the supermatter uses, like power or heat resistance. Ranges from 0 to 1
+	var/list/gas_percentage
 	///The last air sample's total molar count, will always be above or equal to 0
 	var/combined_gas = 0
 	///Total mole count of the environment we are in
@@ -250,7 +153,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///Do we show this crystal in the CIMS modular program
 	var/include_in_cims = TRUE
 
-	var/freonbonus = 0
 	///Hue shift of the zaps color based on the power of the crystal
 	var/hue_angle_shift = 0
 	///Reference to the warp effect
@@ -267,7 +169,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	/// How we are delaminating.
 	var/datum/sm_delam/delamination_strategy
-	/// Whether the sm is forced in a specific delamination_strategy or not. All truthy values means it's forced. 
+	/// Whether the sm is forced in a specific delamination_strategy or not. All truthy values means it's forced.
 	/// Only values greater or equal to the current one can change the strat.
 	var/delam_priority = SM_DELAM_PRIO_NONE
 
@@ -440,9 +342,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		step_towards(movable_atom,center)
 
 /**
- * Count down, spout some messages, and then execute the delam itself. 
+ * Count down, spout some messages, and then execute the delam itself.
  * We guard for last second delam strat changes here, mostly because some have diff messages.
- * 
+ *
  * By last second changes, we mean that it's possible for say, a tesla delam to
  * just explode normally if at the absolute last second it loses power and switches to default one.
  * Even after countdown is already in progress.
@@ -453,7 +355,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(final_countdown) // We're already doing it go away
 		stack_trace("[src] told to delaminate again while it's already delaminating.")
 		return
-	
+
 	final_countdown = TRUE
 	update_appearance()
 
@@ -469,10 +371,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	for(var/i in SUPERMATTER_COUNTDOWN_TIME to 0 step -10)
 		if(last_delamination_strategy != delamination_strategy)
 			count_down_messages = delamination_strategy.count_down_messages()
+			last_delamination_strategy = delamination_strategy
 
 		var/message
 		var/healed = FALSE
-		
+
 		if(damage < explosion_point) // Cutting it a bit close there engineers
 			message = count_down_messages[2]
 			healed = TRUE
@@ -485,7 +388,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			message = "[i*0.1]..."
 
 		radio.talk_into(src, message, emergency_channel)
-		
+
 		if(healed)
 			final_countdown = FALSE
 			update_appearance()
@@ -512,6 +415,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			new /obj/effect/anomaly/bhole(local_turf, 20, FALSE)
 		if(BIOSCRAMBLER_ANOMALY)
 			new /obj/effect/anomaly/bioscrambler(local_turf, null, FALSE)
+		if(DIMENSIONAL_ANOMALY)
+			new /obj/effect/anomaly/dimensional(local_turf, null, FALSE)
 
 /obj/machinery/proc/supermatter_zap(atom/zapstart = src, range = 5, zap_str = 4000, zap_flags = ZAP_SUPERMATTER_FLAGS, list/targets_hit = list(), zap_cutoff = 1500, power_level = 0, zap_icon = DEFAULT_ZAP_ICON_STATE, color = null)
 	if(QDELETED(zapstart))
@@ -563,7 +468,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(target_type > LIVING)
 			continue
 
-		if(istype(test, /mob/living/))
+		if(isliving(test))
 			var/mob/living/alive = test
 			if(!(HAS_TRAIT(alive, TRAIT_TESLA_SHOCKIMMUNE)) && !(alive.flags_1 & SHOCKED_1) && alive.stat != DEAD && prob(20))//let's not hit all the engineers with every beam and/or segment of the arc
 				if(target_type != LIVING)
@@ -574,7 +479,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(target_type > MACHINERY)
 			continue
 
-		if(istype(test, /obj/machinery/))
+		if(ismachinery(test))
 			var/obj/machinery/machine = test
 			if(!(machine.obj_flags & BEING_SHOCKED) && prob(40))
 				if(target_type != MACHINERY)
@@ -585,7 +490,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(target_type > OBJECT)
 			continue
 
-		if(istype(test, /obj/))
+		if(isobj(test))
 			var/obj/object = test
 			if(!(object.obj_flags & BEING_SHOCKED))
 				if(target_type != OBJECT)
@@ -692,7 +597,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	icon_state = "darkmatter"
 
 /obj/overlay/psy
-	icon = 'icons/obj/supermatter.dmi'
+	icon = 'icons/obj/engine/supermatter.dmi'
 	icon_state = "psy"
 	layer = FLOAT_LAYER - 1
 

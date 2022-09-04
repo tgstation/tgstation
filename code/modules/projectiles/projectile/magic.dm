@@ -162,13 +162,17 @@
 	damage = 0
 	damage_type = BURN
 	nodamage = TRUE
+	/// If set, this projectile will only do a certain wabbajack effect
+	var/set_wabbajack_effect
+	/// If set, this projectile will only pass certain changeflags to wabbajack
+	var/set_wabbajack_changeflags
 
 /obj/projectile/magic/change/on_hit(atom/target)
 	. = ..()
 
 	if(isliving(target))
 		var/mob/living/victim = target
-		victim.wabbajack()
+		victim.wabbajack(set_wabbajack_effect, set_wabbajack_changeflags)
 
 	if(istype(target, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/plant_tray = target
@@ -210,7 +214,7 @@
 				return
 		else
 			var/obj/O = src
-			if(istype(O, /obj/item/gun))
+			if(isgun(O))
 				new /mob/living/simple_animal/hostile/mimic/copy/ranged(drop_location(), src, owner)
 			else
 				new /mob/living/simple_animal/hostile/mimic/copy(drop_location(), src, owner)
@@ -369,7 +373,7 @@
 /obj/projectile/magic/sapping/on_hit(mob/living/target)
 	. = ..()
 	if(isliving(target))
-		SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, REF(src), /datum/mood_event/sapped)
+		target.add_mood_event(REF(src), /datum/mood_event/sapped)
 
 /obj/projectile/magic/necropotence
 	name = "bolt of necropotence"

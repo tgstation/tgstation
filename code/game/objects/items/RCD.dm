@@ -107,7 +107,7 @@ RLD
 		matter += load
 		playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 		loaded = TRUE
-	else if(istype(O, /obj/item/stack))
+	else if(isstack(O))
 		loaded = loadwithsheets(O, user)
 	if(loaded)
 		to_chat(user, span_notice("[src] now holds [matter]/[max_matter] matter-units."))

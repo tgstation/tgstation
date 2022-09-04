@@ -11,26 +11,24 @@
 	key = "blush"
 	key_third_person = "blushes"
 	message = "blushes."
-	/// Timer for the blush visual to wear off
-	var/blush_timer = TIMER_ID_NULL
 
 /datum/emote/living/blush/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
-	if(. && isliving(user))
-		var/mob/living/living_user = user
-		ADD_TRAIT(living_user, TRAIT_BLUSHING, "[type]")
-		living_user.update_body()
+	if(. && ishuman(user)) // Give them a visual blush effect if they're human
+		var/mob/living/carbon/human/human_user = user
+		ADD_TRAIT(human_user, TRAIT_BLUSHING, "[type]")
+		human_user.update_body_parts()
 
 		// Use a timer to remove the blush effect after the BLUSH_DURATION has passed
 		var/list/key_emotes = GLOB.emote_list["blush"]
 		for(var/datum/emote/living/blush/living_emote in key_emotes)
-			// The existing timer restarts if it's already running
-			blush_timer = addtimer(CALLBACK(living_emote, .proc/end_blush, living_user), BLUSH_DURATION, TIMER_UNIQUE | TIMER_OVERRIDE)
+			// The existing timer restarts if it is already running
+			addtimer(CALLBACK(living_emote, .proc/end_blush, human_user), BLUSH_DURATION, TIMER_UNIQUE | TIMER_OVERRIDE)
 
-/datum/emote/living/blush/proc/end_blush(mob/living/living_user)
-	if(!QDELETED(living_user))
-		REMOVE_TRAIT(living_user, TRAIT_BLUSHING, "[type]")
-		living_user.update_body()
+/datum/emote/living/blush/proc/end_blush(mob/living/carbon/human/human_user)
+	if(!QDELETED(human_user))
+		REMOVE_TRAIT(human_user, TRAIT_BLUSHING, "[type]")
+		human_user.update_body_parts()
 
 #undef BLUSH_DURATION
 
@@ -50,12 +48,14 @@
 	key = "burp"
 	key_third_person = "burps"
 	message = "burps."
+	message_mime = "acts out a burp."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /datum/emote/living/choke
 	key = "choke"
 	key_third_person = "chokes"
 	message = "chokes!"
+	message_mime = "chokes silently!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /datum/emote/living/cross
@@ -68,6 +68,7 @@
 	key = "chuckle"
 	key_third_person = "chuckles"
 	message = "chuckles."
+	message_mime = "acts out chuckling."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /datum/emote/living/collapse
@@ -86,6 +87,7 @@
 	key = "cough"
 	key_third_person = "coughs"
 	message = "coughs!"
+	message_mime = "acts out an exaggerated cough!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE , intentional)
@@ -113,18 +115,15 @@
 	cooldown = (15 SECONDS)
 	stat_allowed = HARD_CRIT
 
-/datum/emote/living/deathgasp/run_emote(mob/user, params, type_override, intentional)
-	var/mob/living/simple_animal/S = user
-	if(istype(S) && S.deathmessage)
-		message_simple = S.deathmessage
+/datum/emote/living/deathgasp/run_emote(mob/living/user, params, type_override, intentional)
+	if(user.death_message)
+		message_simple = user.death_message
 	. = ..()
 	message_simple = initial(message_simple)
-	if(. && user.deathsound)
-		if(isliving(user))
-			var/mob/living/L = user
-			if(!L.can_speak_vocal() || L.oxyloss >= 50)
-				return //stop the sound if oxyloss too high/cant speak
-		playsound(user, user.deathsound, 200, TRUE, TRUE)
+	if(. && user.death_sound)
+		if(!user.can_speak_vocal() || user.oxyloss >= 50)
+			return //stop the sound if oxyloss too high/cant speak
+		playsound(user, user.death_sound, 200, TRUE, TRUE)
 
 /datum/emote/living/drool
 	key = "drool"
@@ -179,12 +178,14 @@
 	key = "gag"
 	key_third_person = "gags"
 	message = "gags."
+	message_mime = "gags silently."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /datum/emote/living/gasp
 	key = "gasp"
 	key_third_person = "gasps"
 	message = "gasps!"
+	message_mime = "gasps silently!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	stat_allowed = HARD_CRIT
 
@@ -305,6 +306,7 @@
 	key = "pout"
 	key_third_person = "pouts"
 	message = "pouts."
+	message_mime = "pouts silently."
 
 /datum/emote/living/scream
 	key = "scream"
@@ -338,6 +340,7 @@
 	key = "sigh"
 	key_third_person = "sighs"
 	message = "sighs."
+	message_mime = "acts out an exaggerated silent sigh."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /datum/emote/living/sit
@@ -354,6 +357,7 @@
 	key = "sneeze"
 	key_third_person = "sneezes"
 	message = "sneezes."
+	message_mime = "acts out an exaggerated silent sneeze."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /datum/emote/living/smug
@@ -365,6 +369,7 @@
 	key = "sniff"
 	key_third_person = "sniffs"
 	message = "sniffs."
+	message_mime = "sniffs silently."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /datum/emote/living/snore
@@ -454,6 +459,7 @@
 	key = "yawn"
 	key_third_person = "yawns"
 	message = "yawns."
+	message_mime = "acts out an exaggerated silent yawn."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	cooldown = 3 SECONDS
 
@@ -502,6 +508,7 @@
 	key = "gurgle"
 	key_third_person = "gurgles"
 	message = "makes an uncomfortable gurgle."
+	message_mime = "gurgles silently and uncomfortably."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /datum/emote/living/custom

@@ -257,8 +257,8 @@
 	icon = 'icons/obj/solar.dmi'
 	icon_state = "sp_base"
 	inhand_icon_state = "electropack"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY // Pretty big!
 	anchored = FALSE
 	var/tracker = 0
@@ -300,7 +300,10 @@
 			to_chat(user, span_warning("You can't secure [src] here."))
 			return
 		set_anchored(!anchored)
-		user.visible_message(span_notice("[user] [anchored ? null : "un"]wrenches the solar assembly into place."), span_notice("You [anchored ? null : "un"]wrench the solar assembly into place."))
+		user.visible_message(
+			span_notice("[user] [anchored ? null : "un"]wrenches the solar assembly [anchored ? "into place" : null]."),
+			span_notice("You [anchored ? null : "un"]wrench the solar assembly [anchored ? "into place" : null]."),
+		)
 		W.play_tool_sound(src, 75)
 		return TRUE
 

@@ -1,6 +1,6 @@
 // AI (i.e. game AI, not the AI player) controlled bots
 /mob/living/simple_animal/bot
-	icon = 'icons/mob/aibots.dmi'
+	icon = 'icons/mob/silicon/aibots.dmi'
 	layer = MOB_LAYER
 	gender = NEUTER
 	mob_biotypes = MOB_ROBOTIC
@@ -105,7 +105,7 @@
 	///The type of data HUD the bot uses. Diagnostic by default.
 	var/data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC
 	var/datum/atom_hud/data/bot_path/path_hud
-	var/path_image_icon = 'icons/mob/aibots.dmi'
+	var/path_image_icon = 'icons/mob/silicon/aibots.dmi'
 	var/path_image_icon_state = "path_indicator"
 	var/path_image_color = "#FFFFFF"
 	var/reset_access_timer_id
@@ -907,14 +907,14 @@ Pass a positive integer as an argument to override a bot's default speed.
 				bot_cover_flags |= (BOT_COVER_EMAGGED|BOT_COVER_HACKED|BOT_COVER_LOCKED)
 				to_chat(usr, span_warning("You overload [src]'s [hackables]."))
 				message_admins("Safety lock of [ADMIN_LOOKUPFLW(src)] was disabled by [ADMIN_LOOKUPFLW(usr)] in [ADMIN_VERBOSEJMP(src)]")
-				usr.log_message("disabled safety lock of [src] in [AREACOORD(src)].", LOG_GAME)
+				usr.log_message("disabled safety lock of [src]", LOG_GAME)
 				bot_reset()
 			else if(!(bot_cover_flags & BOT_COVER_HACKED))
 				to_chat(usr, span_boldannounce("You fail to repair [src]'s [hackables]."))
 			else
 				bot_cover_flags &= ~(BOT_COVER_EMAGGED|BOT_COVER_HACKED)
 				to_chat(usr, span_notice("You reset the [src]'s [hackables]."))
-				usr.log_message("re-enabled safety lock of [src] in [AREACOORD(src)].", LOG_GAME)
+				usr.log_message("re-enabled safety lock of [src]", LOG_GAME)
 				bot_reset()
 		if("eject_pai")
 			if(paicard)

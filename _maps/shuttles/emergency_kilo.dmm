@@ -569,7 +569,7 @@
 /obj/item/reagent_containers/hypospray/medipen{
 	pixel_y = -6
 	},
-/obj/item/reagent_containers/glass/bottle/multiver,
+/obj/item/reagent_containers/cup/bottle/multiver,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "cY" = (

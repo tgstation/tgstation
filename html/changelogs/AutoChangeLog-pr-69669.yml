@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes: 
+  - bugfix: "Creating shades with soulstones won't affect the chance of midround antagonist spawns."

@@ -294,7 +294,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "aW" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/soda_cans/cola,
+/obj/item/reagent_containers/cup/soda_cans/cola,
 /turf/open/floor/iron/grimy{
 	heat_capacity = 1e+006
 	},
@@ -1449,7 +1449,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -1527,9 +1527,9 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "dO" = (
-/obj/item/reagent_containers/food/condiment/milk,
-/obj/item/reagent_containers/food/condiment/milk,
-/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/condiment/milk,
+/obj/item/reagent_containers/condiment/milk,
+/obj/item/reagent_containers/condiment/milk,
 /obj/item/storage/fancy/egg_box,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/secure_closet/freezer{
@@ -1987,7 +1987,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "eS" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
@@ -2120,10 +2120,9 @@
 	c_tag = "Hydroponics";
 	network = list("uo45")
 	},
-/obj/machinery/power/apc/highcap/ten_k{
+/obj/machinery/power/apc/highcap/ten_k/directional/south{
 	locked = 0;
-	name = "Hydroponics APC";
-	pixel_y = -25;
+	name = "UO45 Hydroponics APC";
 	start_charge = 100
 	},
 /obj/effect/turf_decal/tile/green,
@@ -2247,7 +2246,7 @@
 /obj/item/shovel/spade,
 /obj/item/wrench,
 /obj/item/screwdriver,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
@@ -2682,7 +2681,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/glass/beaker{
+/obj/item/reagent_containers/cup/beaker{
 	pixel_x = 5
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2830,11 +2829,11 @@
 "hb" = (
 /obj/machinery/light/small/directional/east,
 /obj/structure/table/glass,
-/obj/item/reagent_containers/glass/beaker/large{
+/obj/item/reagent_containers/cup/beaker/large{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/glass/beaker{
+/obj/item/reagent_containers/cup/beaker{
 	pixel_x = 8;
 	pixel_y = 2
 	},
@@ -2931,7 +2930,7 @@
 "hn" = (
 /obj/structure/table,
 /obj/item/stack/package_wrap,
-/obj/item/reagent_containers/glass/rag,
+/obj/item/reagent_containers/cup/rag,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -2961,7 +2960,7 @@
 "hq" = (
 /obj/structure/table,
 /obj/item/stack/package_wrap,
-/obj/item/reagent_containers/food/condiment/enzyme{
+/obj/item/reagent_containers/condiment/enzyme{
 	layer = 5
 	},
 /turf/open/floor/iron/cafeteria{
@@ -3211,10 +3210,10 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "hR" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/condiment/saltshaker{
 	pixel_x = -3
 	},
-/obj/item/reagent_containers/food/condiment/peppermill{
+/obj/item/reagent_containers/condiment/peppermill{
 	pixel_x = 3
 	},
 /turf/open/floor/iron/cafeteria{
@@ -3399,7 +3398,7 @@
 "io" = (
 /obj/structure/table,
 /obj/item/book/manual/wiki/barman_recipes,
-/obj/item/reagent_containers/food/drinks/shaker,
+/obj/item/reagent_containers/cup/glass/shaker,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -3552,7 +3551,7 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "iG" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/drinks/drinkingglass,
+/obj/item/reagent_containers/cup/glass/drinkingglass,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -3782,9 +3781,9 @@
 	name = "kitchen Cabinet";
 	req_access = list("away_maintenance")
 	},
-/obj/item/reagent_containers/food/condiment/flour,
-/obj/item/reagent_containers/food/condiment/flour,
-/obj/item/reagent_containers/food/condiment/sugar,
+/obj/item/reagent_containers/condiment/flour,
+/obj/item/reagent_containers/condiment/flour,
+/obj/item/reagent_containers/condiment/sugar,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/cafeteria{
 	dir = 5;
@@ -3949,7 +3948,7 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "jx" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -4145,11 +4144,9 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "jV" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	dir = 1;
+/obj/machinery/power/apc/highcap/ten_k/directional/north{
 	locked = 0;
 	name = "UO45 Bar APC";
-	pixel_y = 25;
 	start_charge = 100
 	},
 /obj/effect/turf_decal/tile/bar,
@@ -5078,10 +5075,8 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "lH" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	locked = 0;
+/obj/machinery/power/apc/highcap/ten_k/directional/south{
 	name = "UO45 Research Division APC";
-	pixel_y = -25;
 	start_charge = 100
 	},
 /obj/structure/disposalpipe/segment{
@@ -5207,10 +5202,10 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "lT" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/condiment/saltshaker{
 	pixel_x = -3
 	},
-/obj/item/reagent_containers/food/condiment/peppermill{
+/obj/item/reagent_containers/condiment/peppermill{
 	pixel_x = 3
 	},
 /obj/effect/turf_decal/tile/bar,
@@ -5561,10 +5556,9 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "mE" = (
-/obj/machinery/power/apc/highcap/ten_k{
+/obj/machinery/power/apc/highcap/ten_k/directional/south{
 	locked = 0;
 	name = "UO45 Gateway APC";
-	pixel_y = -25;
 	start_charge = 100
 	},
 /obj/structure/rack,
@@ -7640,7 +7634,6 @@
 	layer = 2.9
 	},
 /obj/structure/closet/secure_closet/engineering_personal{
-	req_access = null;
 	req_access = list("away_maintenance")
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -7992,11 +7985,8 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/undergroundoutpost45/engineering)
 "rp" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	dir = 8;
+/obj/machinery/power/apc/highcap/ten_k/directional/west{
 	name = "UO45 Engineering APC";
-	pixel_x = -25;
-	req_access = list("away_maintenance");
 	start_charge = 100
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -8521,10 +8511,9 @@
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "sj" = (
-/obj/machinery/power/apc/highcap/ten_k{
+/obj/machinery/power/apc/highcap/ten_k/directional/south{
 	locked = 0;
 	name = "UO45 Mining APC";
-	pixel_y = -25;
 	start_charge = 100
 	},
 /obj/machinery/light/small/directional/south,
@@ -8535,7 +8524,6 @@
 	icon_state = "mining";
 	locked = 0;
 	name = "miner's equipment";
-	req_access = null;
 	req_access = list("away_maintenance")
 	},
 /obj/item/storage/backpack/satchel/eng,
@@ -10622,7 +10610,6 @@
 	},
 /obj/machinery/firealarm/directional/south,
 /obj/structure/closet/secure_closet/miner{
-	req_access = null;
 	req_access = list("away_maintenance")
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -11278,7 +11265,7 @@
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "BN" = (
-/obj/machinery/computer/monitor/secret{
+/obj/machinery/computer/monitor{
 	dir = 1;
 	name = "primary power monitoring console"
 	},
@@ -11367,7 +11354,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "De" = (
-/obj/machinery/computer/monitor/secret{
+/obj/machinery/computer/monitor{
 	name = "primary power monitoring console"
 	},
 /obj/structure/sign/warning/no_smoking/directional/west,

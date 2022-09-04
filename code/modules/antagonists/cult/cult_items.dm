@@ -347,6 +347,7 @@ Striking a noncultist, however, will tear their flesh."}
 	name = "ancient cultist robes"
 	desc = "A ragged, dusty set of robes. Strange letters line the inside."
 	icon_state = "cultrobes"
+	icon = 'icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	inhand_icon_state = "cultrobes"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
@@ -394,6 +395,7 @@ Striking a noncultist, however, will tear their flesh."}
 	name = "magus robes"
 	desc = "A set of armored robes worn by the followers of Nar'Sie."
 	icon_state = "magusred"
+	icon = 'icons/obj/clothing/suits/wizard.dmi'
 	worn_icon = 'icons/mob/clothing/suits/wizard.dmi'
 	inhand_icon_state = "magusred"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
@@ -515,7 +517,7 @@ Striking a noncultist, however, will tear their flesh."}
 		user.Paralyze(100)
 		user.blind_eyes(30)
 
-/obj/item/reagent_containers/glass/beaker/unholywater
+/obj/item/reagent_containers/cup/beaker/unholywater
 	name = "flask of unholy water"
 	desc = "Toxic to nonbelievers; reinvigorating to the faithful - this flask may be sipped or thrown."
 	icon = 'icons/obj/drinks.dmi'
@@ -676,7 +678,7 @@ Striking a noncultist, however, will tear their flesh."}
 		to_chat(user, "That doesn't seem to do anything useful.")
 		return
 
-	if(!istype(A, /obj/item))
+	if(!isitem(A))
 		..()
 		to_chat(user, span_warning("\The [src] can only transport items!"))
 		return
@@ -731,13 +733,16 @@ Striking a noncultist, however, will tear their flesh."}
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/datum/action/innate/cult/halberd/halberd_act
 
-/obj/item/melee/cultblade/halberd/ComponentInitialize()
+/obj/item/melee/cultblade/halberd/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, \
-	speed = 10 SECONDS, \
-	effectiveness = 90, \
+		speed = 10 SECONDS, \
+		effectiveness = 90, \
 	)
-	AddComponent(/datum/component/two_handed, force_unwielded=17, force_wielded=24)
+	AddComponent(/datum/component/two_handed, \
+		force_unwielded = 17, \
+		force_wielded = 24, \
+	)
 
 /obj/item/melee/cultblade/halberd/update_icon_state()
 	icon_state = HAS_TRAIT(src, TRAIT_WIELDED) ? "[base_icon_state]1" : "[base_icon_state]0"
@@ -882,9 +887,9 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/blood_beam
 	name = "\improper magical aura"
 	desc = "Sinister looking aura that distorts the flow of reality around it."
-	icon = 'icons/obj/items_and_weapons.dmi'
-	lefthand_file = 'icons/mob/inhands/misc/touchspell_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/touchspell_righthand.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	lefthand_file = 'icons/mob/inhands/items/touchspell_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/touchspell_righthand.dmi'
 	icon_state = "disintegrate"
 	inhand_icon_state = "disintegrate"
 	item_flags = ABSTRACT | DROPDEL
@@ -1012,7 +1017,7 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/item/shield/mirror/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(IS_CULTIST(owner))
-		if(istype(hitby, /obj/projectile))
+		if(isprojectile(hitby))
 			var/obj/projectile/P = hitby
 			if(P.damage_type == BRUTE || P.damage_type == BURN)
 				if(P.damage >= 30)
