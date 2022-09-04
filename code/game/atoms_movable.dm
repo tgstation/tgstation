@@ -110,7 +110,6 @@
 			var/static/mutable_appearance/emissive_blocker/blocker = new()
 			blocker.icon = icon
 			blocker.icon_state = icon_state
-			blocker.alpha = alpha
 			blocker.dir = dir
 			blocker.appearance_flags |= appearance_flags
 			// Ok so this is really cursed, but I want to set with this blocker cheaply while
