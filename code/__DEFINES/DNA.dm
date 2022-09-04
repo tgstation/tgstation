@@ -72,6 +72,7 @@
 #define NOTRANSSTING 7
 #define NOZOMBIE 8
 #define NO_UNDERWEAR 9
+#define NOSTOMACH 10
 #define NO_DNA_COPY 11
 #define DRINKSBLOOD 12
 
@@ -95,7 +96,7 @@
 #define BLOOD_CLANS 21
 /// Stops species from spawning with tongue. Doesn't actually make the species able to talk with no tongue
 #define NO_TONGUE 22
-
+#define NOAPPENDIX 23
 
 //organ slots
 #define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"
