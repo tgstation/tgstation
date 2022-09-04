@@ -1354,18 +1354,17 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	)
 
 /obj/item/construction/plumbing/service
-	name = "service plumbing constructor"
+	name = "brewing plumbing constructor"
 	desc = "A type of plumbing constructor designed to rapidly deploy the machines needed to make a brewery."
 	has_ammobar = TRUE
 
 /obj/item/construction/plumbing/service/set_plumbing_designs()
 	plumbing_design_types = list(
-	// Note that the list MUST include fluid ducts.
 	/obj/machinery/duct = 1,
 	/obj/machinery/plumbing/input = 5,
 	/obj/machinery/plumbing/output = 5,
 	/obj/machinery/plumbing/tank = 20, //replace with keg
-	/obj/machinery/plumbing/synthesizer/soda = 15, //replace with booze synth
+	/obj/machinery/plumbing/synthesizer/soda = 15,
 	/obj/machinery/plumbing/synthesizer/beer = 15,
 	/obj/machinery/plumbing/reaction_chamber = 15, //replace with mixing tank
 
