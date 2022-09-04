@@ -14,20 +14,20 @@
 	var/fax_name
 	/// A weak reference to an inserted object.
 	var/datum/weakref/loaded_item_ref
-	/// True if the fax machine should be visible to other fax machines in general.
-	var/visible_to_network = TRUE
-	/// Necessary to hide syndicate faxes from the general list. Doesn't mean he's EMAGGED!
-	var/syndicate_network = FALSE
-	/// This is where the dispatch and reception history for each fax is stored.
-	var/list/fax_history = list()
 	/// World ticks the machine is electified for.
 	var/seconds_electrified = MACHINE_NOT_ELECTRIFIED
+	/// If true, the fax machine is jammed and needs cleaning
+	var/jammed = FALSE
+	/// Necessary to hide syndicate faxes from the general list. Doesn't mean he's EMAGGED!
+	var/syndicate_network = FALSE
+	/// True if the fax machine should be visible to other fax machines in general.
+	var/visible_to_network = TRUE
 	/// If true we will eject faxes at speed rather than sedately place them into a tray.
 	var/hurl_contents = FALSE
 	/// If true you can fax things which strictly speaking are not paper.
 	var/allow_exotic_faxes = FALSE
-	/// If true, the fax machine is jammed and needs cleaning
-	var/jammed = FALSE
+	/// This is where the dispatch and reception history for each fax is stored.
+	var/list/fax_history = list()
 	/// List of types which should always be allowed to be faxed
 	var/static/list/allowed_types = list(
 		/obj/item/paper,

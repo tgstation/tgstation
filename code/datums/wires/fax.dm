@@ -5,10 +5,11 @@
 /datum/wires/fax/New(atom/holder)
 	wires = list(WIRE_SHOCK, WIRE_SIGNAL, WIRE_THROW, WIRE_LOADCHECK,)
 	add_duds(1)
-	..()
+	return ..()
 
 /datum/wires/fax/interactable(mob/user)
-	if(!..())
+	. = ..()
+	if(!.)
 		return FALSE
 	var/obj/machinery/fax/machine = holder
 	if(!issilicon(user) && machine.seconds_electrified && machine.shock(user, 100))
