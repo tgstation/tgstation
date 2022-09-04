@@ -7,15 +7,24 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 /// Causes a hallucination of a certain type to the mob.
 /// Use the wrapper for named argument support, don't use this.
 /mob/living/proc/_cause_hallucination(list/raw_args)
+	if(!length(raw_args))
+		CRASH("cause_hallucination called with no arguments.")
+
 	var/datum/hallucination/hallucination_type = raw_args[1] // first arg is the type always
 	if(!ispath(hallucination_type))
 		CRASH("cause_hallucination was given a non-hallucination type.")
 
 	var/hallucination_source = raw_args[2] // and second arg, the source
-	var/list/passed_args = raw_args.Copy(3)
-	passed_args.Insert(1, src)
+	var/datum/hallucination/new_hallucination
 
-	var/datum/hallucination/new_hallucination = new hallucination_type(arglist(passed_args))
+	if(length(raw_args) > 2)
+		var/list/passed_args = raw_args.Copy(3)
+		passed_args.Insert(1, src)
+
+		new_hallucination = new hallucination_type(arglist(passed_args))
+	else
+		new_hallucination = new hallucination_type(src)
+
 	// For some reason, we qdel'd in New, maybe something went wrong.
 	if(QDELETED(new_hallucination))
 		return
@@ -192,8 +201,8 @@ GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weig
 	)
 
 	if(ispath(chosen, /datum/hallucination/delusion/custom))
-		var/custom_file = input(user, "Pick file for custom delusion:", "Custom Delusion: File") as null|file
-		if(!custom_file)
+		var/custom_icon_file = input(user, "Pick file for custom delusion:", "Custom Delusion: File") as null|file
+		if(!custom_icon_file)
 			return
 
 		var/custom_icon_state = tgui_input_text(user, "What icon state do you wanna use from the file?", "Custom Delusion: Icon State")
@@ -203,7 +212,7 @@ GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weig
 		var/custom_name = tgui_input_text(user, "What name should it show up as? (Can be empty)", "Custom Delusion: Name")
 
 		delusion_args += list(
-			custom_file = custom_file,
+			custom_icon_file = custom_icon_file,
 			custom_icon_state = custom_icon_state,
 			custom_name = custom_name,
 		)

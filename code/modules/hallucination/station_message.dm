@@ -48,6 +48,7 @@
 	)
 
 /datum/hallucination/station_message/heretic/start()
+	// Unfortunately, this will not be synced if mass hallucinated
 	var/mob/living/carbon/human/totally_real_heretic = random_non_sec_crewmember()
 	if(!totally_real_heretic)
 		return FALSE
@@ -63,6 +64,7 @@
 /datum/hallucination/station_message/cult_summon
 
 /datum/hallucination/station_message/cult_summon/start()
+	// Same, will not be synced if mass hallucinated
 	var/mob/living/carbon/human/totally_real_cult_leader = random_non_sec_crewmember()
 	if(!totally_real_cult_leader)
 		return FALSE

@@ -95,7 +95,6 @@
 
 /// Used for making custom delusions.
 /datum/hallucination/delusion/custom
-	abstract_hallucination_parent = /datum/hallucination/delusion/custom
 	random_hallucination_weight = 0
 
 /datum/hallucination/delusion/custom/New(

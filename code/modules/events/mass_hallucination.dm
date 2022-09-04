@@ -105,7 +105,7 @@
 
 				picked_hallucination = pick(generic_hallucinations)
 
-		if(!picked_hallucination) // melbert todo bugtest
+		if(!picked_hallucination)
 			CRASH("[type] couldn't find a hallucination to play. (Got: [picked_hallucination], Picked category: [category_to_pick_from])")
 
 	var/list/hallucination_args = list(picked_hallucination, "mass hallucination")
@@ -123,7 +123,7 @@
 		// Hallucinations can have side effects on mobs, like being stunned,
 		// so we'll play the hallucination to clientless mobs as well.
 		// Unless the mob is off the station z-level. It's unlikely anyone will notice.
-		if(!is_station_level(hallucinating.z) && !hallucinating.client)
+		if(hallucinating.z != 0 && !is_station_level(hallucinating.z) && !hallucinating.client)
 			continue
 
 		// Not using the wrapper here because we already have a list / arglist
