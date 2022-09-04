@@ -10,6 +10,8 @@
 	for (var/mob/living/victim in range(20, sm))
 		if(!is_valid_z_level(get_turf(victim), sm_turf))
 			continue
+		if(victim.z == 0)
+			continue
 		SSradiation.irradiate(victim)
 	return TRUE
 
@@ -18,6 +20,8 @@
 	var/turf/sm_turf = get_turf(sm)
 	for(var/mob/living/victim as anything in GLOB.alive_mob_list)
 		if(!istype(victim) || !is_valid_z_level(get_turf(victim), sm_turf))
+			continue
+		if(victim.z == 0)
 			continue
 		if(ishuman(victim))
 			//Hilariously enough, running into a closet should make you get hit the hardest.
