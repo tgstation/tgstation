@@ -636,5 +636,3 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield-flash"
 	duration = 3
-
-#undef ANOMALY_MOVECHANCE

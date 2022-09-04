@@ -129,7 +129,7 @@
 	delusion_name = "..."
 
 /datum/hallucination/delusion/preset/curse
-	delusion_icon_file = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	delusion_icon_file = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	delusion_icon_state = "curseblob"
 	delusion_name = "???"
 

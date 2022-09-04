@@ -100,6 +100,6 @@
 /// Fake bubblegum hallucination effect for the oh yeah hallucination
 /obj/effect/client_image_holder/hallucination/bubblegum
 	name = "Bubblegum"
-	image_icon = 'icons/mob/lavaland/96x96megafauna.dmi'
+	image_icon = 'icons/mob/simple/lavaland/96x96megafauna.dmi'
 	image_state = "bubblegum"
 	image_pixel_x = -32

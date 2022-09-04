@@ -65,7 +65,7 @@
 
 /// The xeno hallucination that goes with the xeno attack hallucination.
 /obj/effect/client_image_holder/hallucination/xeno
-	image_icon = icons/mob/nonhuman-player/alien.dmi'
+	image_icon = 'icons/mob/nonhuman-player/alien.dmi'
 	image_state = "alienh_pounce"
 
 /obj/effect/client_image_holder/hallucination/xeno/Initialize(mapload, list/mobs_which_see_us, datum/hallucination/parent)
@@ -88,7 +88,7 @@
 
 /// Sets our icon to look like we're leaping.
 /obj/effect/client_image_holder/hallucination/xeno/proc/set_leaping()
-	image_icon = 'icons/mob/alienleap.dmi'
+	image_icon = 'icons/mob/nonhuman-player/alienleap.dmi'
 	image_state = "alienh_leap"
 	image_pixel_x = -32
 	image_pixel_y = -32
