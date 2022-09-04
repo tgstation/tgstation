@@ -222,8 +222,7 @@
 
 /obj/item/dice/update_overlays()
 	. = ..()
-	if(result)
-		. += "[icon_state]-[result]"
+	. += "[icon_state]-[result]"
 
 /obj/item/dice/microwave_act(obj/machinery/microwave/M)
 	if(microwave_riggable)

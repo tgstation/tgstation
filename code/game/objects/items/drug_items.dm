@@ -42,7 +42,7 @@
 
 /obj/item/reagent_containers/cup/blastoff_ampoule/update_icon_state()
 	. = ..()
-	if(!reagents?.total_volume)
+	if(!reagents.total_volume)
 		icon_state = "[base_icon_state]_empty"
 	else if(spillable)
 		icon_state = "[base_icon_state]_open"

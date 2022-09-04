@@ -137,7 +137,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	SET_PLANE(current_image, PLANE_TO_TRUE(current_image.plane), new_turf)
 
 /obj/effect/hallucination/simple/proc/Show(update=1)
-	if(!active || !target)
+	if(!active)
 		return
 	if(target.client)
 		target.client.images.Remove(current_image)

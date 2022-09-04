@@ -723,7 +723,7 @@
 				limb.icon = 'icons/mob/species/monkey/bodyparts.dmi'
 			else
 				limb.icon = 'icons/mob/species/alien/bodyparts.dmi'
-			
+
 			if(limb_id == "husk")
 				limb.icon_state = "[animal_origin]_husk_[body_zone]"
 			else

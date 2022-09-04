@@ -94,18 +94,16 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
 /obj/item/tcgcard/update_name(updates)
 	. = ..()
-	var/datum/card/template = extract_datum()
-	if(!flipped && template)
+	if(!flipped)
+		var/datum/card/template = extract_datum()
 		name = template.name
 	else
 		name = "Trading Card"
 
 /obj/item/tcgcard/update_desc(updates)
 	. = ..()
-	var/datum/card/template = extract_datum()
-	if(!template)
-		return
 	if(!flipped)
+		var/datum/card/template = extract_datum()
 		desc = "<i>[template.desc]</i>"
 	else
 		desc = "It's the back of a trading card... no peeking!"

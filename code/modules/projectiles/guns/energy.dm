@@ -36,7 +36,7 @@
 	var/dead_cell = FALSE
 
 /obj/item/gun/energy/fire_sounds()
-	var/obj/item/ammo_casing/energy/shot = ammo_generated[select]
+	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	var/batt_percent = FLOOR(clamp(cell.charge / cell.maxcharge, 0, 1) * 100, 1)
 	// What percentage of the full battery a shot will expend
 	var/shot_cost_percent = 0

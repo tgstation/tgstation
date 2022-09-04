@@ -41,8 +41,6 @@
 
 /obj/item/gun/energy/decloner/update_overlays()
 	. = ..()
-	if(!ammo_generated)
-		return
 	var/obj/item/ammo_casing/energy/shot = ammo_generated[select]
 	if(!QDELETED(cell) && (cell.charge > shot.e_cost))
 		. += "decloner_spin"

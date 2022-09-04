@@ -108,7 +108,7 @@
 
 /obj/item/reagent_containers/cup/maunamug/update_overlays()
 	. = ..()
-	if(!reagents?.total_volume || reagents.chem_temp < 400)
+	if(!reagents.total_volume || reagents.chem_temp < 400)
 		return
 
 	var/intensity = (reagents.chem_temp - 400) * 1 / 600 //Get the opacity of the incandescent overlay. Ranging from 400 to 1000

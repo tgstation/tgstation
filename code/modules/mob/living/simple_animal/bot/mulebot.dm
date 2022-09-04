@@ -204,9 +204,6 @@
 
 /mob/living/simple_animal/bot/mulebot/update_icon_state() //if you change the icon_state names, please make sure to update /datum/wires/mulebot/on_pulse() as well. <3
 	. = ..()
-	if(!wires)
-		icon_state = initial(icon_state)
-		return
 	icon_state = "[base_icon][(bot_mode_flags & BOT_MODE_ON) ? wires.is_cut(WIRE_AVOIDANCE) : 0]"
 
 /mob/living/simple_animal/bot/mulebot/update_overlays()
