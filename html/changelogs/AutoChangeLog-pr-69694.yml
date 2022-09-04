@@ -1,0 +1,6 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - balance: "the scrubber overflow event now only triggers for half of scrubbers"
+  - balance: "removed peaceborg tire, peaceborg confuse, morphine, space drugs, acid, mindbreaker, rotatium and plant-b-gone from the scrubber \"safer\" reagents list"
+  - balance: "added orange carpet, royal blue carpet, blue glitter, yoghurt, tinea luxor, hydrogen peroxide, gravitum, and yuck to the \"safer\" reagents list"
