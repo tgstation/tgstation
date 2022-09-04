@@ -23,13 +23,10 @@
 	var/working = TRUE
 	/// if TRUE, someone manually disabled us via console.
 	var/research_disabled = FALSE
-	///Connected techweb node the server is connected to.
-	var/datum/techweb/stored_research
 
 /obj/machinery/rnd/server/Initialize(mapload)
 	. = ..()
 	name += " [num2hex(rand(1,65535), -1)]" //gives us a random four-digit hex number as part of the name. Y'know, for fluff.
-	stored_research = SSresearch.science_tech
 	SSresearch.servers |= src
 
 /obj/machinery/rnd/server/Destroy()
@@ -101,13 +98,15 @@
 	desc = "Used to manage access to research and manufacturing databases."
 	icon_screen = "rdcomp"
 	icon_keyboard = "rd_key"
-	var/screen = 0
-	var/obj/machinery/rnd/server/temp_server
-	var/list/servers = list()
-	var/list/consoles = list()
-	req_access = list(ACCESS_RD)
-	var/badmin = 0
 	circuit = /obj/item/circuitboard/computer/rdservercontrol
+	req_access = list(ACCESS_RD)
+	var/list/servers = list()
+	///Connected techweb node the server is connected to.
+	var/datum/techweb/stored_research
+
+/obj/machinery/computer/rdservercontrol/Initialize(mapload, obj/item/circuitboard/C)
+	. = ..()
+	stored_research = SSresearch.science_tech
 
 /obj/machinery/computer/rdservercontrol/Topic(href, href_list)
 	if(..())
@@ -130,7 +129,9 @@
 
 	dat += "<b>Connected Servers:</b>"
 	dat += "<table><tr><td style='width:25%'><b>Server</b></td><td style='width:25%'><b>Status</b></td><td style='width:25%'><b>Control</b></td>"
-	for(var/obj/machinery/rnd/server/server in GLOB.machines)
+	for(var/obj/machinery/rnd/server/server as anything in SSresearch.servers)
+		if(server.stored_research != stored_research) //not on our servers
+			continue
 		var/server_info = ""
 
 		var/status_text = server.get_status_text()
@@ -148,7 +149,7 @@
 	if(stored_research && length(stored_research.research_logs))
 		dat += "<table BORDER=\"1\">"
 		dat += "<tr><td><b>Entry</b></td><td><b>Research Name</b></td><td><b>Cost</b></td><td><b>Researcher Name</b></td><td><b>Console Location</b></td></tr>"
-		for(var/i=stored_research.research_logs.len, i>0, i--)
+		for(var/i = stored_research.research_logs.len, i>0, i--)
 			dat += "<tr><td>[i]</td>"
 			for(var/j in stored_research.research_logs[i])
 				dat += "<td>[j]</td>"
