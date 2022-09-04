@@ -3,7 +3,6 @@
 	desc = "A Voyager class exploration mech, combines quantum physics and bluespace technology to achieve immense speeds in vaccum. Not advised to use in the station. R&D recommends using an exosuit drill when searching for ruins in space."
 	name = "\improper Decouverte"
 	base_icon_state = "decouverte"
-	allow_diagonal_movement = TRUE
 	max_temperature = 65000
 	max_integrity = 350
 	lights_power = 7

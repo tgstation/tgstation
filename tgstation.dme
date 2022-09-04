@@ -4536,6 +4536,7 @@
 #include "code\modules\vehicles\mecha\mecha_parts.dm"
 #include "code\modules\vehicles\mecha\mecha_ui.dm"
 #include "code\modules\vehicles\mecha\mecha_wreckage.dm"
+#include "code\modules\vehicles\mecha\voyager\voyager.dm"
 #include "code\modules\vehicles\mecha\combat\combat.dm"
 #include "code\modules\vehicles\mecha\combat\durand.dm"
 #include "code\modules\vehicles\mecha\combat\gygax.dm"
