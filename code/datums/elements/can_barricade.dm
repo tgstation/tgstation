@@ -1,7 +1,7 @@
 #define PLANK_BARRICADE_AMOUNT 2
 
 /datum/element/can_barricade
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
+	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
 
 /datum/element/can_barricade/Attach(atom/target)
