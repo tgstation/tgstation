@@ -178,21 +178,20 @@
 
 
 /obj/item/stock_parts/cell/proc/explode()
-	var/turf/T = get_turf(src.loc)
-	if (charge==0)
+	if(!charge)
 		return
 	var/range_devastation = -1 //round(charge/11000)
 	var/range_heavy = round(sqrt(charge)/60)
 	var/range_light = round(sqrt(charge)/30)
 	var/range_flash = range_light
-	if (range_light==0)
+	if(!range_light)
 		rigged = FALSE
 		corrupt()
 		return
 
-	message_admins("[ADMIN_LOOKUPFLW(usr)] has triggered a rigged/corrupted power cell explosion at [AREACOORD(T)].")
-	usr.log_message("triggered a rigged/corrupted power cell explosion", LOG_GAME)
-	usr.log_message("triggered a rigged/corrupted power cell explosion", LOG_VICTIM, log_globally = FALSE)
+	message_admins("[ADMIN_LOOKUPFLW(usr)] has triggered a rigged/corrupted power cell explosion at [AREACOORD(loc)].")
+	usr?.log_message("triggered a rigged/corrupted power cell explosion", LOG_GAME)
+	usr?.log_message("triggered a rigged/corrupted power cell explosion", LOG_VICTIM, log_globally = FALSE)
 
 	//explosion(T, 0, 1, 2, 2)
 	explosion(src, devastation_range = range_devastation, heavy_impact_range = range_heavy, light_impact_range = range_light, flash_range = range_flash)

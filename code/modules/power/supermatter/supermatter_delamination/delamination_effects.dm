@@ -10,6 +10,8 @@
 	for (var/mob/living/victim in range(20, sm))
 		if(!is_valid_z_level(get_turf(victim), sm_turf))
 			continue
+		if(victim.z == 0)
+			continue
 		SSradiation.irradiate(victim)
 	return TRUE
 
@@ -19,16 +21,19 @@
 	for(var/mob/living/victim as anything in GLOB.alive_mob_list)
 		if(!istype(victim) || !is_valid_z_level(get_turf(victim), sm_turf))
 			continue
+		if(victim.z == 0)
+			continue
 
 		//Hilariously enough, running into a closet should make you get hit the hardest.
 		var/hallucination_amount = max(100 SECONDS, min(600 SECONDS, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(victim, src) + 1))))
 		victim.adjust_timed_status_effect(hallucination_amount, /datum/status_effect/hallucination)
 
 	for(var/mob/victim as anything in GLOB.player_list)
-		if(!is_valid_z_level(get_turf(victim), sm_turf))
+		var/turf/victim_turf = get_turf(victim)
+		if(!is_valid_z_level(victim_turf, sm_turf))
 			continue
-		SEND_SOUND(victim, 'sound/magic/charge.ogg')
-		if(!is_valid_z_level(get_turf(victim), sm_turf))
+		victim.playsound_local(victim_turf, 'sound/magic/charge.ogg')
+		if(victim.z == 0) //victim is inside an object, this is to maintain an old bug turned feature with lockers n shit i guess. tg issue #69687
 			to_chat(victim, span_boldannounce("You hold onto \the [victim.loc] as hard as you can, as reality distorts around you. You feel safe."))
 			continue
 		to_chat(victim, span_boldannounce("You feel reality distort for a moment..."))
