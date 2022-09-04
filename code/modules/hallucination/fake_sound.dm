@@ -142,6 +142,11 @@
 	volume = 75
 	sound_type = 'sound/machines/steam_hiss.ogg'
 
+/datum/hallucination/fake_sound/normal/flash
+	random_hallucination_weight = 2 // "it's revs"
+	volume = 90
+	sound_type = 'sound/weapons/flash.ogg'
+
 /datum/hallucination/fake_sound/weird
 	abstract_hallucination_parent = /datum/hallucination/fake_sound/weird
 	random_hallucination_weight = 1
