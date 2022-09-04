@@ -1068,16 +1068,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 				return TRUE
 			return FALSE
 
-/atom/proc/count_adjacencies()
-	var/number_of_atmos_adjacent_turf_lists = 0
-	var/number_of_adjacent_turfs = 0
-	for(var/turf/turf_to_check)
-		if(turf_to_check.atmos_adjacent_turfs)
-			number_of_atmos_adjacent_turf_lists++
-			number_of_adjacent_turfs += length(turf_to_check.atmos_adjacent_turfs)
-
-	message_admins("there are [number_of_atmos_adjacent_turf_lists] atmos adjacent turf lists, and [number_of_adjacent_turfs] elements of all of those lists")
-
 /obj/item/construction/rld/mini
 	name = "mini-rapid-light-device (MRLD)"
 	desc = "A device used to rapidly provide lighting sources to an area. Reload with iron, plasteel, glass or compressed matter cartridges."
