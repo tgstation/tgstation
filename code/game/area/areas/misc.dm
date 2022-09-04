@@ -20,7 +20,12 @@
 /area/space/Initialize(mapload)
 	. = ..()
 
-	add_overlay(GLOB.fullbright_overlay)
+	add_overlay(GLOB.fullbright_overlays)
+	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, .proc/on_offset_increase)
+
+/area/space/proc/on_offset_increase(datum/source)
+	SIGNAL_HANDLER
+	add_overlay(GLOB.fullbright_overlays)
 
 /area/space/nearstation
 	icon_state = "space_near"
