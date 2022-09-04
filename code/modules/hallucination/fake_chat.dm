@@ -41,25 +41,26 @@
 	// If we didn't have a preset one, let's make one up.
 	if(!chosen)
 		if(is_radio)
-			chosen = pick(list("Help!", \
-				"[pick_list_replacements(HALLUCINATION_FILE, "people")] is [pick_list_replacements(HALLUCINATION_FILE, "accusations")]!", \
-				"[pick_list_replacements(HALLUCINATION_FILE, "threat")] in [pick_list_replacements(HALLUCINATION_FILE, "location")][prob(50)?"!":"!!"]", \
-				"[pick("Where's [hallucinator.first_name()]?", "Set [hallucinator.first_name()] to arrest!")]", \
-				"[pick("C","Ai, c","Someone c","Rec")]all the shuttle!", \
-				"AI [pick("rogue", "is dead")]!!", \
+			chosen = pick(list("Help!",
+				"[pick_list_replacements(HALLUCINATION_FILE, "people")] is [pick_list_replacements(HALLUCINATION_FILE, "accusations")]!",
+				"[pick_list_replacements(HALLUCINATION_FILE, "threat")] in [pick_list_replacements(HALLUCINATION_FILE, "location")][prob(50)?"!":"!!"]",
+				"[pick("Where's [hallucinator.first_name()]?", "Set [hallucinator.first_name()] to arrest!")]",
+				"[pick("C","Ai, c","Someone c","Rec")]all the shuttle!",
+				"AI [pick("rogue", "is dead")]!!",
+				"Borgs rogue!",
 			))
 		else
-			chosen = pick(list("[pick_list_replacements(HALLUCINATION_FILE, "suspicion")]", \
-				"[pick_list_replacements(HALLUCINATION_FILE, "conversation")]", \
-				"[pick_list_replacements(HALLUCINATION_FILE, "greetings")][hallucinator.first_name()]!", \
-				"[pick_list_replacements(HALLUCINATION_FILE, "getout")]", \
-				"[pick_list_replacements(HALLUCINATION_FILE, "weird")]", \
-				"[pick_list_replacements(HALLUCINATION_FILE, "didyouhearthat")]", \
-				"[pick_list_replacements(HALLUCINATION_FILE, "doubt")]", \
-				"[pick_list_replacements(HALLUCINATION_FILE, "aggressive")]", \
-				"[pick_list_replacements(HALLUCINATION_FILE, "help")]!!", \
-				"[pick_list_replacements(HALLUCINATION_FILE, "escape")]", \
-				"I'm infected, [pick_list_replacements(HALLUCINATION_FILE, "infection_advice")]!", \
+			chosen = pick(list("[pick_list_replacements(HALLUCINATION_FILE, "suspicion")]",
+				"[pick_list_replacements(HALLUCINATION_FILE, "conversation")]",
+				"[pick_list_replacements(HALLUCINATION_FILE, "greetings")][hallucinator.first_name()]!",
+				"[pick_list_replacements(HALLUCINATION_FILE, "getout")]",
+				"[pick_list_replacements(HALLUCINATION_FILE, "weird")]",
+				"[pick_list_replacements(HALLUCINATION_FILE, "didyouhearthat")]",
+				"[pick_list_replacements(HALLUCINATION_FILE, "doubt")]",
+				"[pick_list_replacements(HALLUCINATION_FILE, "aggressive")]",
+				"[pick_list_replacements(HALLUCINATION_FILE, "help")]!!",
+				"[pick_list_replacements(HALLUCINATION_FILE, "escape")]",
+				"I'm infected, [pick_list_replacements(HALLUCINATION_FILE, "infection_advice")]!",
 			))
 
 		chosen = capitalize(chosen)

@@ -89,6 +89,7 @@
 		"HELP HER",
 		"HELP THEM",
 		"HELP US",
+		"HELP MAINT",
 		"HELP YOURSELF"
 	],
 
@@ -109,34 +110,40 @@
 	],
 
 	"people": [
-		"Captain",
-		"Hos",
-		"Cmo",
-		"Rd",
-		"Ce",
-		"Hop",
-		"Janitor",
+		"%TARGETNAME%",
 		"AI",
-		"Viro",
+		"Borg",
+		"Captain",
+		"Ce",
+		"Cmo",
+		"Geneticist",
+		"Hop",
+		"Hos",
+		"Janitor",
 		"Qm",
-		"%TARGETNAME%"
+		"Rd",
+		"Robo",
+		"Viro"
 	],
 
 	"accusations": [
-		"dead",
-		"rogue",
-		"cult",
+		"a changeling",
 		"a cultist",
-		"clockcult",
-		"a clock cultist",
-		"a revhead",
-		"a rev",
 		"a gang leader",
-		"a gangster",
-		"a traitor",
-		"a tator",
+		"a heretic",
 		"a ling",
-		"a changeling"
+		"a rev",
+		"a revhead",
+		"a tator",
+		"a traitor",
+		"a wizard",
+		"bad",
+		"cult",
+		"dead",
+		"mindswapped",
+		"rogue",
+		"the traitor",
+		"the wizard"
 	],
 
 	"threat": [
@@ -144,6 +151,7 @@
 		"Wizard",
 		"Blob",
 		"Ling",
+		"Changeling",
 		"Ops",
 		"Spiders",
 		"Xenos",
@@ -153,6 +161,7 @@
 		"Blue APC",
 		"I hear flashing",
 		"Help",
+		"Heretics",
 		"%TARGETNAME%"
 	],
 
