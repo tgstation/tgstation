@@ -6,8 +6,11 @@
 #define SEE_THROUGH_MAP_THREE_X_THREE "3x3"
 ///2 tiles above the atom
 #define SEE_THROUGH_MAP_DEFAULT_TWO_TALL "default_two_tall"
-///two rows of three tiles above the item (small but thick trees love these)
+///two rows of three tiles above the atom (small but thick trees love these)
 #define SEE_THROUGH_MAP_THREE_X_TWO "3x2"
+///One row of three tiles above the atom, but offset one tile to the left because of how billboards work
+#define SEE_THROUGH_MAP_BILLBOARD "billboard"
+
 
 /**global statics for the see_through_component coordinate maps
 * For ease of use, include a comment in the shape of the coordinate map, where O is nothing, X is a hidden tile and A is the object
@@ -31,6 +34,7 @@ GLOBAL_LIST_INIT(see_through_maps, list(
 		list(-1, 2, 0), list(0, 2, 0), list(1, 2, 0),
 		list(-1, 1, 0), list(0, 1, 0), list(1, 1, 0)
 	),
+
 	// X
 	// X
 	// A
@@ -38,12 +42,19 @@ GLOBAL_LIST_INIT(see_through_maps, list(
 	/*----------------*/list(0, 2, 0),
 	/*----------------*/list(0, 1, 0)
 	),
+
 	// XXX
 	// XXX
 	// OAO
 	SEE_THROUGH_MAP_THREE_X_TWO = list(
 		list(-1, 2, 0), list(0, 2, 0), list(1, 2, 0),
 		list(-1, 1, 0), list(0, 1, 0), list(1, 1, 0)
+	),
+
+	/// XXX
+	/// OAO
+	SEE_THROUGH_MAP_BILLBOARD = list(
+		list(0, 1, 0), list(1, 1, 0), list(2, 1, 0)
 	)
 ))
 
