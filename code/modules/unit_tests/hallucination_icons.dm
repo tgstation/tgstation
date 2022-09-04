@@ -7,8 +7,6 @@
  */
 /datum/unit_test/hallucination_icons
 
-TEST_FOCUS(/datum/unit_test/hallucination_icons)
-
 /datum/unit_test/hallucination_icons/Run()
 
 	// Test nearby_fake_item hallucinations for invalid image setups
