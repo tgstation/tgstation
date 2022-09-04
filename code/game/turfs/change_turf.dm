@@ -327,8 +327,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/energy = 0
 	var/heat_cap = 0
 
-	for(var/t in turf_list)
-		var/turf/open/T = t
+	for(var/turf/open/T as anything in turf_list)
 		//Cache?
 		var/datum/gas_mixture/turf/mix = T.air
 		//"borrowing" this code from merge(), I need to play with the temp portion. Lets expand it out

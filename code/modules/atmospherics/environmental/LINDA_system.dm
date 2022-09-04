@@ -65,8 +65,8 @@
 		if(canpass && CANATMOSPASS(current_turf, src, (direction & (UP|DOWN))) && !(blocks_air || current_turf.blocks_air))
 			LAZYINITLIST(atmos_adjacent_turfs)
 			LAZYINITLIST(current_turf.atmos_adjacent_turfs)
-			atmos_adjacent_turfs[current_turf] = TRUE
-			current_turf.atmos_adjacent_turfs[src] = TRUE
+			atmos_adjacent_turfs += current_turf
+			current_turf.atmos_adjacent_turfs += src
 		else
 			if (atmos_adjacent_turfs)
 				atmos_adjacent_turfs -= current_turf
@@ -103,7 +103,7 @@
 
 		for (var/check_direction in GLOB.cardinals_multiz)
 			var/turf/secondary_turf = get_step(checked_turf, check_direction)
-			if(!checked_turf.atmos_adjacent_turfs || !checked_turf.atmos_adjacent_turfs[secondary_turf])
+			if(!checked_turf.atmos_adjacent_turfs || !(secondary_turf in checked_turf.atmos_adjacent_turfs))
 				continue
 
 			if (adjacent_turfs[secondary_turf])
