@@ -1365,8 +1365,8 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	/obj/machinery/plumbing/input = 5,
 	/obj/machinery/plumbing/output = 5,
 	/obj/machinery/plumbing/tank = 20, //replace with keg
-	/obj/machinery/plumbing/synthesizer = 15, //replace with booze synth
-	//soda synth goes here
+	/obj/machinery/plumbing/synthesizer/soda = 15, //replace with booze synth
+	/obj/machinery/plumbing/synthesizer/beer = 15,
 	/obj/machinery/plumbing/reaction_chamber = 15, //replace with mixing tank
 
 	/obj/machinery/plumbing/layer_manifold = 5,
