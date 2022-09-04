@@ -96,9 +96,30 @@
 
 /atom/movable/Initialize(mapload)
 	. = ..()
-	if(blocks_emissive)
-		// Gotta do it to ya, so our blockers get tracked by the overlays system
-		update_appearance()
+	switch(blocks_emissive)
+		if(EMISSIVE_BLOCK_GENERIC)
+			var/mutable_appearance/gen_emissive_blocker = emissive_blocker(icon, icon_state, src, alpha = src.alpha, appearance_flags = src.appearance_flags)
+			gen_emissive_blocker.dir = dir
+			overlays += gen_emissive_blocker
+			if(managed_overlays)
+				if(length(managed_overlays))
+					managed_overlays += gen_emissive_blocker
+				else
+					managed_overlays = list(managed_overlays, gen_emissive_blocker)
+			else
+				managed_overlays = gen_emissive_blocker
+		if(EMISSIVE_BLOCK_UNIQUE)
+			if(!em_block && !QDELETED(src))
+				render_target = ref(src)
+				em_block = new(src, render_target)
+			overlays += em_block
+			if(managed_overlays)
+				if(length(managed_overlays))
+					managed_overlays += em_block
+				else
+					managed_overlays = list(managed_overlays, em_block)
+			else
+				managed_overlays = em_block
 	if(opacity)
 		AddElement(/datum/element/light_blocking)
 	switch(light_system)
