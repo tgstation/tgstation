@@ -240,7 +240,7 @@
 	if (!cell)
 		return PROCESS_KILL
 	if(has_power())
-		if (cell.charge == cell.maxcharge && )
+		if (cell.charge == cell.maxcharge)
 			return PROCESS_KILL
 		cell.charge = min(cell.maxcharge, cell.charge + LIGHT_EMERGENCY_POWER_USE) //Recharge emergency power automatically while not using it
 	if(low_power_mode && !use_emergency_power(LIGHT_EMERGENCY_POWER_USE))
