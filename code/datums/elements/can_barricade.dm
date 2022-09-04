@@ -1,3 +1,5 @@
+#define PLANK_BARRICADE_AMOUNT 2
+
 /datum/element/can_barricade
 	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
 	id_arg_index = 2
@@ -56,3 +58,5 @@
 		return CONTEXTUAL_SCREENTIP_SET
 
 	return NONE // should we return . ?
+
+#undef PLANK_BARRICADE_AMOUNT
