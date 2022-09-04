@@ -1368,7 +1368,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	/obj/machinery/plumbing/synthesizer/beer = 15,
 	/obj/machinery/plumbing/mixing_chamber = 15,
 	/obj/machinery/plumbing/buffer = 10,
-
 	/obj/machinery/plumbing/bottler = 50,
 	/obj/machinery/plumbing/tank = 20,
 	/obj/machinery/plumbing/filter = 5,
@@ -1376,11 +1375,8 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	/obj/machinery/plumbing/acclimator = 10,
 	/obj/machinery/plumbing/fermenter = 30,
 	/obj/machinery/plumbing/grinder_chemical = 30,
-
 	/obj/machinery/plumbing/disposer = 10,
 	/obj/machinery/plumbing/sender = 20,
-
-
 	)
 
 

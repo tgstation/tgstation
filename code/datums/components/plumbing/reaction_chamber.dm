@@ -97,7 +97,3 @@
 
 	chamber.emptying = TRUE
 	chamber.on_reagent_change(reagents)
-
-
-
-
