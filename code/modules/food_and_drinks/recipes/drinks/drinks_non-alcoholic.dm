@@ -158,3 +158,7 @@
 	results = list(/datum/reagent/consumable/vanilla_dream = 3)
 	required_reagents = list(/datum/reagent/consumable/vanilla = 1, /datum/reagent/consumable/milk = 1, /datum/reagent/consumable/cream = 1)
 
+/datum/chemical_reaction/drink/cucumberlemonade
+	results = list(/datum/reagent/consumable/cucumberlemonade = 5)
+	required_reagents = list(/datum/reagent/consumable/lemon_lime = 3, /datum/reagent/consumable/cucumberjuice = 2, /datum/reagent/consumable/ice = 1)
+

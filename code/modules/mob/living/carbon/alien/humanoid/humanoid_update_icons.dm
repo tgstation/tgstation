@@ -59,11 +59,11 @@
 /mob/living/carbon/alien/humanoid/update_worn_handcuffs()
 	remove_overlay(HANDCUFF_LAYER)
 	var/cuff_icon = "aliencuff"
-	var/dmi_file = 'icons/mob/alien.dmi'
+	var/dmi_file = 'icons/mob/nonhuman-player/alien.dmi'
 
 	if(mob_size == MOB_SIZE_LARGE)
 		cuff_icon = "aliencuff_[caste]"
-		dmi_file = 'icons/mob/alienqueen.dmi'
+		dmi_file = 'icons/mob/nonhuman-player/alienqueen.dmi'
 
 	if(handcuffed)
 		var/mutable_appearance/handcuff_overlay = mutable_appearance(dmi_file, cuff_icon, -HANDCUFF_LAYER)
