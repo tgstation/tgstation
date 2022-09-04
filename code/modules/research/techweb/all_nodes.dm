@@ -70,7 +70,6 @@
 		"turbine_part_rotor",
 		"turbine_part_stator",
 		"watering_can",
-
 	)
 
 /datum/techweb_node/mmi
