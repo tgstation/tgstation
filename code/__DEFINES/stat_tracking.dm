@@ -13,5 +13,34 @@
 		STAT_ENTRY[STAT_ENTRY_COUNT] += STAT_INCR_AMOUNT;\
 	};\
 
+// Cost tracking macros, to be used in one proc
+#define INIT_COST(costs, counting) \
+	var/list/_costs = costs; \
+	var/list/_counting = counting; \
+	var/usage = TICK_USAGE;
 
+// Cost tracking macro for global lists, prevents erroring if GLOB has not yet been initialized
+#define INIT_COST_GLOBAL(costs, counting) \
+	var/static/list/hidden_static_list_for_fun1 = list(); \
+	var/static/list/hidden_static_list_for_fun2 = list(); \
+	if(GLOB){\
+		costs = hidden_static_list_for_fun1; \
+		counting = hidden_static_list_for_fun2 ; \
+	} \
+	INIT_COST(hidden_static_list_for_fun1, hidden_static_list_for_fun2)
 
+#define SET_COST(category) \
+	do { \
+		var/cost = TICK_USAGE; \
+		_costs[category] += TICK_DELTA_TO_MS(cost - usage);\
+		_counting[category] += 1;\
+	} while(FALSE) \
+	usage = TICK_USAGE;
+
+#define SET_COST_LINE(...) \
+	do { \
+		var/cost = TICK_USAGE; \
+		_costs["[__LINE__ ]"] += TICK_DELTA_TO_MS(cost - usage);\
+		_counting["[__LINE__ ]"] += 1;\
+		usage = TICK_USAGE; \
+	} while(FALSE)

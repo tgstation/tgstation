@@ -122,12 +122,17 @@
 	if(!HAS_TRAIT(our_turf, TRAIT_RUSTY))
 		return
 
+	// Heals all damage + Stamina
 	source.adjustBruteLoss(-2, FALSE)
 	source.adjustFireLoss(-2, FALSE)
-	source.adjustToxLoss(-2, FALSE, forced = TRUE)
+	source.adjustToxLoss(-2, FALSE, forced = TRUE) // Slimes are people to
 	source.adjustOxyLoss(-0.5, FALSE)
 	source.adjustStaminaLoss(-2)
-	source.AdjustAllImmobility(-5)
+	// Reduces duration of stuns/etc
+	source.AdjustAllImmobility(-0.5 SECONDS)
+	// Heals blood loss
+	if(source.blood_volume < BLOOD_VOLUME_NORMAL)
+		source.blood_volume += 2.5 * delta_time
 
 /datum/heretic_knowledge/mark/rust_mark
 	name = "Mark of Rust"

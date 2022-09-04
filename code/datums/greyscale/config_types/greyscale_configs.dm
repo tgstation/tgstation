@@ -35,7 +35,7 @@
 
 /datum/greyscale_config/carp
 	name = "Space Carp"
-	icon_file = 'icons/mob/carp.dmi'
+	icon_file = 'icons/mob/simple/carp.dmi'
 	json_config = 'code/datums/greyscale/json_configs/carp.json'
 
 /datum/greyscale_config/carp/disk_mouth
@@ -453,6 +453,26 @@
 	icon_file = 'icons/mob/clothing/suits/moth.dmi'
 	json_config = 'code/datums/greyscale/json_configs/moth_coat_winter_worn.json'
 
+/datum/greyscale_config/eth_raincoat
+	name = "Ethereal Raincoat"
+	icon_file = 'icons/obj/clothing/suits/ethereal.dmi'
+	json_config = 'code/datums/greyscale/json_configs/eth_raincoat.json'
+
+/datum/greyscale_config/eth_raincoat_worn
+	name = "Worn Ethereal Raincoat"
+	icon_file = 'icons/mob/clothing/suits/ethereal.dmi'
+	json_config = 'code/datums/greyscale/json_configs/eth_raincoat_worn.json'
+
+/datum/greyscale_config/eth_tunic
+	name = "Ethereal Tunic"
+	icon_file = 'icons/obj/clothing/under/ethereal.dmi'
+	json_config = 'code/datums/greyscale/json_configs/eth_tunic.json'
+
+/datum/greyscale_config/eth_tunic_worn
+	name = "Worn Ethereal Tunic"
+	icon_file = 'icons/mob/clothing/under/ethereal.dmi'
+	json_config = 'code/datums/greyscale/json_configs/eth_tunic_worn.json'
+
 /datum/greyscale_config/bandana
 	name = "Bandana"
 	icon_file = 'icons/obj/clothing/masks.dmi'
@@ -820,6 +840,17 @@
 	icon_file = 'icons/mob/clothing/suits/jacket.dmi'
 	json_config = 'code/datums/greyscale/json_configs/fancy_coat_worn.json'
 
+/datum/greyscale_config/trek
+	name = "Trek Uniform"
+	icon_file = 'icons/obj/clothing/under/trek.dmi'
+	json_config = 'code/datums/greyscale/json_configs/trek.json'
+	//All Trek uniforms are different icon_states in the same json so we dont have seperate jsons for all the different types
+
+/datum/greyscale_config/trek/worn
+	name = "Worn Trek Uniform"
+	icon_file = 'icons/mob/clothing/under/trek.dmi'
+	//The worn json is exactly the same, so it's easier to just inherit it (EXPERIMENTAL - SUCCESS. TODO: REMOVE ALL (duplicate-of-obj)_WORN CONFIGS)
+
 /datum/greyscale_config/encryptionkey_basic
 	name = "Basic Encryptionkey"
 	icon_file = 'icons/obj/radio.dmi'
@@ -829,7 +860,6 @@
 	name = "Block Encryptionkey"
 	icon_file = 'icons/obj/radio.dmi'
 	json_config = 'code/datums/greyscale/json_configs/encryptionkey_cube.json'
-
 
 /datum/greyscale_config/encryptionkey_research
 	name = "Research Encryptionkey"

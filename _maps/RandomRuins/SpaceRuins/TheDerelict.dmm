@@ -432,7 +432,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/ai/vault)
 "gx" = (
-/obj/machinery/computer/monitor/secret{
+/obj/machinery/computer/monitor{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -6015,7 +6015,6 @@
 /turf/open/floor/iron,
 /area/ruin/space/ks13/security/court)
 "Ps" = (
-/obj/structure/table,
 /obj/machinery/light/small/directional/east,
 /obj/item/circuitboard/machine/smes,
 /obj/structure/table,

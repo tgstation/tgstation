@@ -403,7 +403,7 @@
 /obj/effect/client_image_holder/securitron
 	name = "Securitron"
 	desc = "The LAW is coming."
-	image_icon = 'icons/mob/aibots.dmi'
+	image_icon = 'icons/mob/silicon/aibots.dmi'
 	image_state = "secbot-c"
 
 /obj/effect/client_image_holder/securitron/Initialize(mapload)

@@ -65,10 +65,10 @@ function SS13.register_signal(datum, signal, func, make_easy_clear_function)
 	end
 	local callback = SS13.new("/datum/callback", SS13.state, "call_function_return_first")
 	callback:call_proc("RegisterSignal", datum, signal, "Invoke")
-	local path = { "SS13", "signal_handlers", datum, signal, callback, "func" }
+	local path = { "SS13", "signal_handlers", dm.global_proc("WEAKREF", datum), signal, dm.global_proc("WEAKREF", callback), "func" }
 	callback.vars.arguments = { path }
 	if not SS13.signal_handlers[datum]["_cleanup"] then
-		local cleanup_path = { "SS13", "signal_handlers", datum, "_cleanup", "func" }
+		local cleanup_path = { "SS13", "signal_handlers", dm.global_proc("WEAKREF", datum), "_cleanup", "func" }
 		local cleanup_callback = SS13.new("/datum/callback", SS13.state, "call_function_return_first", cleanup_path)
 		cleanup_callback:call_proc("RegisterSignal", datum, "parent_qdeleting", "Invoke")
 		SS13.signal_handlers[datum]["_cleanup"] = {
@@ -180,7 +180,7 @@ function SS13.set_timeout(time, func, timer)
 		dm.global_proc("qdel", callback)
 		func()
 	end
-	local path = { "SS13", "timeouts", callback }
+	local path = { "SS13", "timeouts", dm.global_proc("WEAKREF", callback) }
 	callback.vars.arguments = { path }
 end
 

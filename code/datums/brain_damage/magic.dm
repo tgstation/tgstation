@@ -122,5 +122,5 @@
 /obj/effect/client_image_holder/stalker_phantom
 	name = "???"
 	desc = "It's coming closer..."
-	image_icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	image_icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	image_state = "curseblob"

@@ -136,9 +136,9 @@
 				return
 			var/obj/item/photo/photo_from_record = null
 			if(href_list["photo_front"])
-				photo_from_record = target_record.fields["photo_front"]
+				photo_from_record = target_record.get_front_photo()
 			else if(href_list["photo_side"])
-				photo_from_record = target_record.fields["photo_side"]
+				photo_from_record = target_record.get_side_photo()
 			if(photo_from_record)
 				photo_from_record.show(human_user)
 			return

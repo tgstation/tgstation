@@ -93,6 +93,8 @@
 	var/emergency_lights = FALSE
 	///Should the nighshift lights be on?
 	var/nightshift_lights = FALSE
+	///Tracks if lights channel was set to nightshift / reduced power usage mode automatically due to low power.
+	var/low_power_nightshift_lights = FALSE
 	///Time when the nightshift where turned on last, to prevent spamming
 	var/last_nightshift_switch = 0
 	///Stores the flags for the icon state
@@ -102,7 +104,7 @@
 	///Used to stop process from updating the icons too much
 	var/icon_update_needed = FALSE
 	///Reference to our remote control
-	var/obj/machinery/computer/apc_control/remote_control = null
+	var/mob/remote_control_user = null
 	///Represents a signel source of power alarms for this apc
 	var/datum/alarm_handler/alarm_manager
 	/// Offsets the object by APC_PIXEL_OFFSET (defined in apc_defines.dm) pixels in the direction we want it placed in. This allows the APC to be embedded in a wall, yet still inside an area (like mapping).
@@ -266,10 +268,12 @@
 		"chargingStatus" = charging,
 		"totalLoad" = display_power(lastused_total),
 		"coverLocked" = coverlocked,
-		"siliconUser" = user.has_unlimited_silicon_privilege || user.using_power_flow_console(),
+		"remoteAccess" = (user == remote_control_user),
+		"siliconUser" = user.has_unlimited_silicon_privilege,
 		"malfStatus" = get_malf_status(user),
 		"emergencyLights" = !emergency_lights,
 		"nightshiftLights" = nightshift_lights,
+		"disable_nightshift_toggle" = low_power_nightshift_lights,
 
 		"powerChannels" = list(
 			list(
@@ -306,9 +310,35 @@
 	)
 	return data
 
+/obj/machinery/power/apc/proc/connect_remote_access(mob/remote_user)
+	if(opened)
+		return
+	remote_control_user = remote_user
+	ui_interact(remote_user)
+	remote_user.log_message("remotely accessed [src].", LOG_GAME)
+	say("Remote access detected.[locked ? " Interface unlocked." : ""]")
+	to_chat(remote_control_user, span_danger("[icon2html(src, remote_control_user)] Connected to [src]."))
+	if(locked)
+		playsound(src, 'sound/machines/terminal_on.ogg', 25, FALSE)
+		locked = FALSE
+	playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
+	update_appearance()
+
+/obj/machinery/power/apc/proc/disconnect_remote_access()
+	// nothing to disconnect from
+	if(isnull(remote_control_user))
+		return
+	locked = TRUE
+	say("Remote access canceled. Interface locked.")
+	to_chat(remote_control_user, span_danger("[icon2html(src, remote_control_user)] Disconnected from [src]."))
+	playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
+	playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
+	update_appearance()
+	remote_control_user = null
+
 /obj/machinery/power/apc/ui_status(mob/user)
 	. = ..()
-	if(!QDELETED(remote_control) && user == remote_control.operator)
+	if(!QDELETED(remote_control_user) && user == remote_control_user)
 		. = UI_INTERACTIVE
 
 /obj/machinery/power/apc/ui_act(action, params)
@@ -319,7 +349,7 @@
 	switch(action)
 		if("lock")
 			if(usr.has_unlimited_silicon_privilege)
-				if((obj_flags & EMAGGED) || (machine_stat & (BROKEN|MAINT)))
+				if((obj_flags & EMAGGED) || (machine_stat & (BROKEN|MAINT)) || remote_control_user)
 					to_chat(usr, span_warning("The APC does not respond to the command!"))
 				else
 					locked = !locked
@@ -381,6 +411,11 @@
 				CHECK_TICK
 	return TRUE
 
+/obj/machinery/power/apc/ui_close(mob/user)
+	. = ..()
+	if(user == remote_control_user)
+		disconnect_remote_access()
+
 /obj/machinery/power/apc/process()
 	if(icon_update_needed)
 		update_appearance()
@@ -416,15 +451,18 @@
 	else
 		main_status = APC_HAS_POWER
 
+	var/cellused
 	if(cell && !shorted)
 		// draw power from cell as before to power the area
-		var/cellused = min(cell.charge, lastused_total JOULES) // clamp deduction to a max, amount left in cell
+		cellused = min(cell.charge, lastused_total JOULES) // clamp deduction to a max, amount left in cell
 		cell.use(cellused)
 
+	if(cell && !shorted) //need to check to make sure the cell is still there since rigged/corrupted cells can randomly explode after use().
 		if(excess > lastused_total) // if power excess recharge the cell
 										// by the same amount just used
 			cell.give(cellused)
-			add_load(cellused WATTS) // add the load used to recharge the cell
+			if(cell) //make sure the cell didn't expode and actually used power.
+				add_load(cellused WATTS) // add the load used to recharge the cell
 
 
 		else // no excess, and not enough per-apc
@@ -441,6 +479,7 @@
 				lighting = autoset(lighting, AUTOSET_FORCE_OFF)
 				environ = autoset(environ, AUTOSET_FORCE_OFF)
 
+	if(cell && !shorted) //need to check to make sure the cell is still there since rigged/corrupted cells can randomly explode after give().
 
 		// set channels depending on how much charge we have left
 
@@ -455,20 +494,33 @@
 			lighting = autoset(lighting, AUTOSET_FORCE_OFF)
 			environ = autoset(environ, AUTOSET_FORCE_OFF)
 			alarm_manager.send_alarm(ALARM_POWER)
+			if(!nightshift_lights || (nightshift_lights && !low_power_nightshift_lights))
+				low_power_nightshift_lights = TRUE
+				INVOKE_ASYNC(src, .proc/set_nightshift, TRUE)
 		else if(cell.percent() < 15 && long_term_power < 0) // <15%, turn off lighting & equipment
 			equipment = autoset(equipment, AUTOSET_OFF)
 			lighting = autoset(lighting, AUTOSET_OFF)
 			environ = autoset(environ, AUTOSET_ON)
 			alarm_manager.send_alarm(ALARM_POWER)
+			if(!nightshift_lights || (nightshift_lights && !low_power_nightshift_lights))
+				low_power_nightshift_lights = TRUE
+				INVOKE_ASYNC(src, .proc/set_nightshift, TRUE)
 		else if(cell.percent() < 30 && long_term_power < 0) // <30%, turn off equipment
 			equipment = autoset(equipment, AUTOSET_OFF)
 			lighting = autoset(lighting, AUTOSET_ON)
 			environ = autoset(environ, AUTOSET_ON)
 			alarm_manager.send_alarm(ALARM_POWER)
+			if(!nightshift_lights || (nightshift_lights && !low_power_nightshift_lights))
+				low_power_nightshift_lights = TRUE
+				INVOKE_ASYNC(src, .proc/set_nightshift, TRUE)
 		else // otherwise all can be on
 			equipment = autoset(equipment, AUTOSET_ON)
 			lighting = autoset(lighting, AUTOSET_ON)
 			environ = autoset(environ, AUTOSET_ON)
+			if(nightshift_lights && low_power_nightshift_lights)
+				low_power_nightshift_lights = FALSE
+				if(!SSnightshift.nightshift_active)
+					INVOKE_ASYNC(src, .proc/set_nightshift, FALSE)
 			if(cell.percent() > 75)
 				alarm_manager.clear_alarm(ALARM_POWER)
 

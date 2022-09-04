@@ -45,7 +45,7 @@
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/mutation/human/hulk/proc/scream_attack(mob/living/carbon/human/source)
-	source.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced="hulk")
+	source.say("WAAAAAAAAAAAAAAGH!", forced="hulk")
 
 /**
  *Checks damage of a hulk's arm and applies bone wounds as necessary.

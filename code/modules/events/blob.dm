@@ -17,7 +17,7 @@
 	return ..()
 
 /datum/round_event/ghost_role/blob
-	announceChance = 0
+	announce_chance = 0
 	role_name = "blob overmind"
 	fakeable = TRUE
 

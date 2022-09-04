@@ -53,25 +53,33 @@
 		return TRUE
 	if(istype(I, /obj/item/paper_bin))
 		var/obj/item/paper_bin/bin = I
-		if(LAZYLEN(bin.papers))
+		if(bin.total_paper > 0)
 			if(stored_paper >= max_paper)
 				balloon_alert(user, "it's full!")
 				return FALSE
 			/// Number of sheets we're adding
 			var/num_to_add = 0
-			for(var/obj/item/paper/the_paper as anything in bin.papers) // Search for the first blank sheet of paper, then toss it in
-				if(the_paper.get_total_length()) // Uh oh, paper has words!
+
+			for(var/obj/item/paper/paper_in_stack as anything in bin.paper_stack) // Search for the first blank sheet of paper, then toss it in
+				if(paper_in_stack.get_total_length()) // Uh oh, paper has words!
 					continue
-				if(istype(the_paper, /obj/item/paper/carbon)) // Add both the carbon, and the copy
-					var/obj/item/paper/carbon/carbon_paper = the_paper
+				if(istype(paper_in_stack, /obj/item/paper/carbon)) // Add both the carbon, and the copy
+					var/obj/item/paper/carbon/carbon_paper = paper_in_stack
 					if(!carbon_paper.copied && ((max_paper - stored_paper) >= 2)) // See if there's room for both
 						num_to_add = 2
 				else
 					num_to_add = 1
-				LAZYREMOVE(bin.papers, the_paper)
-				qdel(the_paper)
+				bin.paper_stack -= paper_in_stack
+				bin.total_paper -= 1
+				qdel(paper_in_stack)
 				stored_paper += num_to_add
 				break // All full!
+
+			if (num_to_add == 0 && bin.total_paper > 0)
+				bin.total_paper -= 1
+				num_to_add = 1
+				stored_paper += 1
+
 			bin.update_appearance()
 			if(!num_to_add)
 				balloon_alert(user, "everything is written on!")

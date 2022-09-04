@@ -1,4 +1,0 @@
-author: "distributivgesetz"
-delete-after: True
-changes: 
-  - bugfix: "Resolving weakrefs in VV should open a menu now instead of doing nothing."

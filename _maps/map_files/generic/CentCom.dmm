@@ -6552,21 +6552,11 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/evacuation)
 "sW" = (
-/obj/structure/showcase{
-	desc = "A strange machine supposedly from another world. The Wizard Federation has been meddling with it for years.";
-	icon = 'icons/obj/machines/telecomms.dmi';
-	icon_state = "processor";
-	name = "byond random number generator"
-	},
+/obj/structure/showcase/machinery/rng,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "sX" = (
-/obj/structure/showcase{
-	desc = "A historical figure of great importance to the wizard federation. He spent his long life learning magic, stealing artifacts, and harassing idiots with swords. May he rest forever, Rodney.";
-	icon = 'icons/mob/mob.dmi';
-	icon_state = "nim";
-	name = "wizard of yendor showcase"
-	},
+/obj/structure/showcase/wizard,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "sY" = (
@@ -8930,7 +8920,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/machinery/computer/monitor/secret{
+/obj/machinery/computer/monitor{
 	dir = 1
 	},
 /obj/structure/cable,

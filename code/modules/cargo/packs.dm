@@ -1420,6 +1420,16 @@
 	crate_name = "raw bioscrambler anomaly"
 	crate_type = /obj/structure/closet/crate/secure/science
 
+/datum/supply_pack/science/raw_dimensional_anomaly
+	name = "Raw Dimensional Anomaly"
+	desc = "The raw core of a dimensional anomaly, ready to be implosion-compressed into a powerful artifact."
+	cost = CARGO_CRATE_VALUE * 10
+	access = ACCESS_ORDNANCE
+	access_view = ACCESS_ORDNANCE
+	contains = list(/obj/item/raw_anomaly_core/dimensional)
+	crate_name = "raw dimensional anomaly"
+	crate_type = /obj/structure/closet/crate/secure/science
+
 
 /datum/supply_pack/science/robotics
 	name = "Robotics Assembly Crate"
@@ -2025,7 +2035,8 @@
 					/obj/item/seeds/rose,
 					/obj/item/seeds/chanter,
 					/obj/item/seeds/potato,
-					/obj/item/seeds/sugarcane)
+					/obj/item/seeds/sugarcane,
+					/obj/item/seeds/cucumber)
 	crate_name = "seeds crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
@@ -2040,7 +2051,8 @@
 					/obj/item/food/grown/carrot,
 					/obj/item/food/grown/mushroom/chanterelle,
 					/obj/item/food/grown/onion,
-					/obj/item/food/grown/pumpkin)
+					/obj/item/food/grown/pumpkin,
+					/obj/item/food/grown/cucumber)
 	crate_name = "food crate"
 
 /datum/supply_pack/organic/grill
@@ -2521,6 +2533,26 @@
 	for(var/i in 1 to num_contained)
 		var/item = pick_n_take(L)
 		new item(C)
+
+/datum/supply_pack/costumes_toys/trekkie
+	name = "Trekkie Costume Crate"
+	desc = "Wear the scrapped concepts for Nanotrasen's jumpsuits, based off popular late-20th century Earth media! While they couldn't be used for the official jumpsuits due to copyright infringement, it's been assured that they can still legally be sold under the label of being 'failed designs'."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(
+		/obj/item/clothing/under/trek/command,
+		/obj/item/clothing/under/trek/command/next,
+		/obj/item/clothing/under/trek/command/voy,
+		/obj/item/clothing/under/trek/command/ent,
+		/obj/item/clothing/under/trek/engsec,
+		/obj/item/clothing/under/trek/engsec/next,
+		/obj/item/clothing/under/trek/engsec/voy,
+		/obj/item/clothing/under/trek/engsec/ent,
+		/obj/item/clothing/under/trek/medsci,
+		/obj/item/clothing/under/trek/medsci/next,
+		/obj/item/clothing/under/trek/medsci/voy,
+		/obj/item/clothing/under/trek/medsci/ent,
+	)
+	crate_type = /obj/structure/closet/crate/wooden
 
 /datum/supply_pack/costumes_toys/mafia
 	name = "Cosa Nostra Starter Pack"

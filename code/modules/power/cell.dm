@@ -13,8 +13,8 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "cell"
 	inhand_icon_state = "cell"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	force = 5
 	throwforce = 5
 	throw_speed = 2
@@ -429,7 +429,7 @@
 /obj/item/stock_parts/cell/emproof/slime
 	name = "EMP-proof slime core"
 	desc = "A yellow slime core infused with plasma. Its organic nature makes it immune to EMPs."
-	icon = 'icons/mob/slimes.dmi'
+	icon = 'icons/mob/simple/slimes.dmi'
 	icon_state = "yellow slime extract"
 	custom_materials = null
 	maxcharge = 5000

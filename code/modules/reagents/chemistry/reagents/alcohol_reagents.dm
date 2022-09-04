@@ -2934,3 +2934,17 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc ="A single plum floating in perfume, served in a man's hat."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_STOCK
+
+/datum/reagent/consumable/ethanol/gin_garden
+	name = "Gin Garden"
+	description = "Excellent cooling alcoholic drink with not so ordinary taste."
+	color = "#6cd87a" 
+	taste_description = "light gin with sweet ginger and cucumber"
+	glass_icon_state = "gin_garden"
+	glass_name = "gin garden"
+	glass_desc = "Hey, someone forgot the herb and... the cucumber in my cocktail!"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/gin_garden/on_mob_life(mob/living/carbon/doll, delta_time, times_fired)
+	doll.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, doll.get_body_temp_normal())
+	..()
