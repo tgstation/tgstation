@@ -1273,7 +1273,7 @@
 
 /datum/reagent/cyborg_mutation_nanomachines
 	name = "Nanomachines"
-	description = "Microscopic construction robots."
+	description = "Microscopic construction robots. Nanomachines son!"
 	color = "#535E66" // rgb: 83, 94, 102
 	taste_description = "sludge"
 	penetrates_skin = NONE
@@ -1722,7 +1722,7 @@
 	..()
 
 /datum/reagent/plantnutriment/eznutriment
-	name = "E-Z-Nutrient"
+	name = "E-Z Nutrient"
 	description = "Contains electrolytes. It's what plants crave."
 	color = "#376400" // RBG: 50, 100, 0
 	tox_prob = 5
@@ -1899,7 +1899,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/carpet/royal
-	name = "Royal Carpet?"
+	name = "Royal Carpet"
 	description = "For those that break the game and need to make an issue report."
 
 /datum/reagent/carpet/royal/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
