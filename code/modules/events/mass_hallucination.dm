@@ -14,30 +14,30 @@
 
 /datum/round_event_control/mass_hallucination/admin_setup(mob/admin)
 	if(!check_rights(R_FUN))
-		return CANCEL_RANDOM_EVENT
+		return ADMIN_CANCEL_EVENT
 
 	var/force = tgui_alert(usr, "Do you want to force a hallucination?", name, list("Yes", "No", "Cancel"))
 	if(force == "Cancel")
-		return CANCEL_RANDOM_EVENT
+		return ADMIN_CANCEL_EVENT
 	if(force != "Yes")
 		return
 
 	var/force_what = tgui_alert(usr, "Generic hallucination or Custom configured delusion? (Delusions are those which make people appear as other mobs)", name, list("Hallucination", "Custom Delusion", "Cancel"))
 	switch(force_what)
 		if("Cancel")
-			return CANCEL_RANDOM_EVENT
+			return ADMIN_CANCEL_EVENT
 
 		if("Hallucination")
 			var/chosen = select_hallucination_type(admin, "What hallucination should be forced for [name]?", name)
 			if(!chosen || !check_rights(R_FUN))
-				return CANCEL_RANDOM_EVENT
+				return ADMIN_CANCEL_EVENT
 
 			admin_forced_hallucination = chosen
 
 		if("Custom Delusion")
 			var/list/chosen_args = create_delusion(admin)
 			if(!length(chosen_args) || !check_rights(R_FUN))
-				return CANCEL_RANDOM_EVENT
+				return ADMIN_CANCEL_EVENT
 
 			admin_forced_hallucination = chosen_args[1]
 			admin_forced_args = chosen_args.Copy(3)

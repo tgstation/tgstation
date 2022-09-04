@@ -8,13 +8,7 @@
 	/// if TRUE, we will also send one of the hallucination lines when we start.
 	var/haunt_them = FALSE
 	/// if haunt_them is TRUE, they will also be shown one of these lines when the hallucination occurs
-	var/static/list/hallucination_lines = list(
-		"I AM IMMORTAL.",
-		"I SHALL TAKE YOUR WORLD.",
-		"I SEE YOU.",
-		"YOU CANNOT ESCAPE ME FOREVER.",
-		"NOTHING CAN HOLD ME.",
-	)
+	var/static/list/hallucination_lines = BUBBLEGUM_HALLUCINATION_LINES
 
 /datum/hallucination/oh_yeah/New(mob/living/hallucinator, source = "an external source", haunt_them = FALSE)
 	src.haunt_them = haunt_them
@@ -52,7 +46,7 @@
 		hallucinator.playsound_local(wall_source, 'sound/effects/meteorimpact.ogg', 150, TRUE)
 
 	if(haunt_them)
-		to_chat(hallucinator, span_bold(span_colossus(pick(hallucination_lines))))
+		to_chat(hallucinator, pick(hallucination_lines))
 
 	var/obj/effect/client_image_holder/hallucination/bubblegum/fake_bubbles = new(wall_source, hallucinator, src)
 	addtimer(CALLBACK(src, .proc/charge_loop, fake_bubbles, target_landing_turf), 1 SECONDS)

@@ -203,3 +203,12 @@ GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weig
 		)
 
 	return delusion_args
+
+/// Lines the bubblegum hallucinatoin uses when it pops up
+#define BUBBLEGUM_HALLUCINATION_LINES list( \
+		span_colossus("I AM IMMORTAL."), \
+		span_colossus("I SHALL TAKE YOUR WORLD."), \
+		span_colossus("I SEE YOU."), \
+		span_colossus("YOU CANNOT ESCAPE ME FOREVER."), \
+		span_colossus("NOTHING CAN HOLD ME."), \
+	)

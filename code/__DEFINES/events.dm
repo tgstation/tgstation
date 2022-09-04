@@ -30,3 +30,5 @@
 #define EVENT_CATEGORY_SPACE "Space Threats"
 ///Events summoned by a wizard
 #define EVENT_CATEGORY_WIZARD "Wizard"
+
+#define ADMIN_CANCEL_EVENT "cancel event"

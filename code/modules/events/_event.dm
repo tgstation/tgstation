@@ -144,7 +144,8 @@ Runs the event
 	SIGNAL_HANDLER
 	return CANCEL_RANDOM_EVENT
 
-//Special admins setup
+/// Any special things admins can do while triggering this event to "improve" it.
+/// Return [ADMIN_CANCEL_EVENT] to stop the event from actually happening after all
 /datum/round_event_control/proc/admin_setup(mob/admin)
 	return
 
