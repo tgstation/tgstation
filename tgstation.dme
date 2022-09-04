@@ -311,6 +311,7 @@
 #include "code\__HELPERS\game.dm"
 #include "code\__HELPERS\global_lists.dm"
 #include "code\__HELPERS\guid.dm"
+#include "code\__HELPERS\hallucinations.dm"
 #include "code\__HELPERS\heap.dm"
 #include "code\__HELPERS\hearted.dm"
 #include "code\__HELPERS\honkerblast.dm"

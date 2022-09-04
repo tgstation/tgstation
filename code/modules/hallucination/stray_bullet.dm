@@ -292,14 +292,14 @@
 	hal_impact_effect_wall = null
 
 /obj/projectile/hallucination/change/apply_effect_to_hallucinator(mob/living/afflicted)
-	afflicted.cause_hallucination(
-		/* type = */get_random_valid_hallucination_subtype(/datum/hallucination/delusion/preset),
-		/* source = */"fake [name]",
-		/* duration = */30 SECONDS,
-		/* affects_us = */TRUE,
-		/* affects_others = */FALSE,
-		/* skip_nearby = */FALSE,
-		/* play_wabbajack = */TRUE,
+	afflicted.cause_hallucination( \
+		get_random_valid_hallucination_subtype(/datum/hallucination/delusion/preset), \
+		"fake [name]", \
+		duration = 30 SECONDS, \
+		affects_us = TRUE, \
+		affects_others = FALSE, \
+		skip_nearby = FALSE, \
+		play_wabbajack = TRUE, \
 	)
 
 /obj/projectile/hallucination/death
@@ -313,4 +313,4 @@
 	hal_impact_effect_wall = null
 
 /obj/projectile/hallucination/death/apply_effect_to_hallucinator(mob/living/afflicted)
-	afflicted.cause_hallucination(/datum/hallucination/death, source = "fake [name]")
+	afflicted.cause_hallucination(/datum/hallucination/death, "fake [name]")

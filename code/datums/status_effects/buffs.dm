@@ -378,14 +378,14 @@
 	. = ..()
 	to_chat(owner, "<span class='reallybig redtext'>RIP AND TEAR</span>")
 	SEND_SOUND(owner, sound('sound/hallucinations/veryfar_noise.ogg'))
-	owner.cause_hallucination(
-		/datum/hallucination/delusion/preset/demon,
-		/* source = */"[id] status effect",
-		/* duration = */duration,
-		/* affects_us = */FALSE,
-		/* affects_others = */TRUE,
-		/* skip_nearby = */FALSE,
-		/* play_wabbajack = */FALSE,
+	owner.cause_hallucination( \
+		/datum/hallucination/delusion/preset/demon, \
+		"[id] status effect", \
+		duration = duration, \
+		affects_us = FALSE, \
+		affects_others = TRUE, \
+		skip_nearby = FALSE, \
+		play_wabbajack = FALSE, \
 	)
 
 	owner.drop_all_held_items()

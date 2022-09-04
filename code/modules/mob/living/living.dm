@@ -2362,7 +2362,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(!chosen || QDELETED(src) || !check_rights(NONE))
 		return
 
-	if(!cause_hallucination(chosen, "admin forced"))
+	if(!cause_hallucination(chosen, "admin forced by [key_name_admin(admin)]"))
 		to_chat(admin, "That hallucination ([chosen]) could not be run - it may be invalid with this type of mob or has no effects.")
 		return
 
@@ -2381,4 +2381,4 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	delusion_args[2] = "admin forced"
 	message_admins("[key_name_admin(admin)] gave [ADMIN_LOOKUPFLW(src)] a delusion hallucination. (Type: [delusion_args[1]])")
 	log_admin("[key_name(admin)] gave [src] a delusion hallucination. (Type: [delusion_args[1]])")
-	cause_hallucination(arglist(delusion_args))
+	cause_hallucination(delusion_args)

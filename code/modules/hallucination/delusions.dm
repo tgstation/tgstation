@@ -70,7 +70,7 @@
 	// The delusion shouldn not include anyone in view of us
 	if(skip_nearby)
 		for(var/mob/living/carbon/human/nearby_human in view(hallucinator))
-			if(nearby_human == hallucinator)
+			if(nearby_human == hallucinator) // Already handled by affects_us
 				continue
 			funny_looking_mobs -= nearby_human
 
@@ -202,11 +202,11 @@
 	delusion_args = list(
 		chosen,
 		"forced delusion",
-		duration,
-		affects_us,
-		affects_others,
-		skip_nearby,
-		play_wabbajack,
+		duration = duration,
+		affects_us = affects_us,
+		affects_others = affects_others,
+		skip_nearby = skip_nearby,
+		play_wabbajack = play_wabbajack,
 	)
 
 	if(ispath(chosen, /datum/hallucination/delusion/custom))
@@ -221,9 +221,9 @@
 		var/custom_name = tgui_input_text(user, "What name should it show up as?", "Name")
 
 		delusion_args += list(
-			custom_file,
-			custom_icon_state,
-			custom_name,
+			custom_file = custom_file,
+			custom_icon_state = custom_icon_state,
+			custom_name = custom_name,
 		)
 
 	return delusion_args

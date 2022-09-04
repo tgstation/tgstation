@@ -167,13 +167,14 @@
 	. = ..()
 	if(!ishuman(affected_carbon))
 		return
-	var/datum/hallucination/health_doll = affected_carbon.cause_hallucination(
-		/datum/hallucination/fake_health_doll,
-		"medicine addiction",
-		/* specific_limb = */null,
-		/* severity = */1,
-		/* duration = */120 MINUTES,
+	var/datum/hallucination/health_doll = affected_carbon.cause_hallucination( \
+		/datum/hallucination/fake_health_doll, \
+		"medicine addiction", \
+		severity = 1, \
+		duration = 120 MINUTES, \
 	)
+	if(!health_doll)
+		return
 	health_doll_ref = WEAKREF(health_doll)
 
 /datum/addiction/medicine/withdrawal_stage_1_process(mob/living/carbon/affected_carbon, delta_time)
@@ -200,11 +201,13 @@
 	if(!length(possibilities))
 		return
 
-	var/datum/hallucination/fake_alert = affected_carbon.cause_hallucination(
-		pick(possibilities),
-		"medicine addiction",
-		/* duration = */120 MINUTES,
+	var/datum/hallucination/fake_alert = affected_carbon.cause_hallucination( \
+		pick(possibilities), \
+		"medicine addiction", \
+		duration = 120 MINUTES, \
 	)
+	if(!fake_alert)
+		return
 	fake_alert_ref = WEAKREF(fake_alert)
 
 /datum/addiction/medicine/withdrawal_stage_2_process(mob/living/carbon/affected_carbon, delta_time)

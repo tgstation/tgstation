@@ -71,11 +71,11 @@
 				picked_hallucination = get_random_valid_hallucination_subtype(/datum/hallucination/delusion/preset)
 				// The delusion will affect everyone BUT the hallucinator.
 				other_args = list(
-					/* duration = */30 SECONDS,
-					/* skip_nearby = */FALSE,
-					/* affects_us = */FALSE,
-					/* affects_others = */TRUE,
-					/* play_wabbajack = */FALSE,
+					duration = 30 SECONDS,
+					skip_nearby = FALSE,
+					affects_us = FALSE,
+					affects_others = TRUE,
+					play_wabbajack = FALSE,
 				)
 
 			if(5)
@@ -83,11 +83,11 @@
 				picked_hallucination = get_random_valid_hallucination_subtype(/datum/hallucination/delusion/preset)
 				// The delusion will affect only the hallucinator.
 				other_args = list(
-					/* duration = */45 SECONDS,
-					/* skip_nearby = */FALSE,
-					/* affects_us = */TRUE,
-					/* affects_others = */FALSE,
-					/* play_wabbajack = */TRUE,
+					duration = 45 SECONDS,
+					skip_nearby = FALSE,
+					affects_us = TRUE,
+					affects_others = FALSE,
+					play_wabbajack = TRUE,
 				)
 
 			if(6 to 10)
@@ -126,7 +126,7 @@
 		if(!is_station_level(hallucinating.z) && !hallucinating.client)
 			continue
 
-		hallucinating.cause_hallucination(arglist(hallucination_args))
+		hallucinating.cause_hallucination(hallucination_args)
 
 /datum/round_event/mass_hallucination/end()
 	var/datum/round_event_control/mass_hallucination/our_controller = control

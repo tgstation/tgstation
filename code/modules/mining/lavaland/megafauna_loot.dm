@@ -278,7 +278,7 @@
 	var/mob/living/carbon/wearer = loc
 	if(istype(wearer) && DT_PROB(1, delta_time)) //cursed by bubblegum
 		if(prob(7.5))
-			wearer.cause_hallucination(/datum/hallucination/oh_yeah, source = "H.E.C.K suit")
+			wearer.cause_hallucination(/datum/hallucination/oh_yeah, "H.E.C.K suit")
 		else
 			to_chat(wearer, span_warning("[pick("You hear faint whispers.","You smell ash.","You feel hot.","You hear a roar in the distance.")]"))
 

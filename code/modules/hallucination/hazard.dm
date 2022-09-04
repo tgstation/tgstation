@@ -62,7 +62,7 @@
 
 /obj/effect/client_image_holder/hallucination/danger/lava/on_hallucinator_entered(mob/living/afflicted)
 	afflicted.adjustStaminaLoss(20)
-	afflicted.cause_hallucination(/datum/hallucination/fire, source = "fake lava hallucination")
+	afflicted.cause_hallucination(/datum/hallucination/fire, "fake lava hallucination")
 
 /obj/effect/client_image_holder/hallucination/danger/chasm
 	name = "chasm"
@@ -99,4 +99,4 @@
 		step(src, pick(GLOB.alldirs))
 
 /obj/effect/client_image_holder/hallucination/danger/anomaly/on_hallucinator_entered(mob/living/afflicted)
-	afflicted.cause_hallucination(/datum/hallucination/shock, source = "fake anomaly hallucination")
+	afflicted.cause_hallucination(/datum/hallucination/shock, "fake anomaly hallucination")

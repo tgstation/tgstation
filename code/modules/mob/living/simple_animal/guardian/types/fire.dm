@@ -36,16 +36,16 @@
 	if(target == summoner)
 		return
 	var/mob/living/living_target = target
-	living_target.cause_hallucination(
-		/* type = *//datum/hallucination/delusion/custom,
-		/* source = */"fire holoparasite ([src], owned by [summoner])",
-		/* duration = */20 SECONDS,
-		/* affects_us = */TRUE,
-		/* affects_others = */TRUE,
-		/* skip_nearby = */FALSE,
-		/* play_wabbajack = */FALSE,
-		/* custom_icon_file = */icon,
-		/* custom_icon_state = */icon_state,
+	living_target.cause_hallucination( \
+		/datum/hallucination/delusion/custom, \
+		"fire holoparasite ([key_name(src)], owned by [key_name(summoner)])", \
+		duration = 20 SECONDS, \
+		affects_us = TRUE, \
+		affects_others = TRUE, \
+		skip_nearby = FALSE, \
+		play_wabbajack = FALSE, \
+		custom_icon_file = icon, \
+		custom_icon_state = icon_state, \
 	)
 
 /mob/living/simple_animal/hostile/guardian/fire/proc/on_entered(datum/source, AM as mob|obj)

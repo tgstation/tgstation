@@ -61,11 +61,11 @@
 		if(prob(50))
 			to_chat(owner, span_hypnophrase("<i>...[lowertext(hypnotic_phrase)]...</i>"))
 		else
-			owner.cause_hallucination(
-				/datum/hallucination/chat,
-				/* source = */"hypnosis",
-				/* force_radio = */TRUE,
-				/* specific_message = */span_hypnophrase("[hypnotic_phrase]"),
+			owner.cause_hallucination( \
+				/datum/hallucination/chat, \
+				"hypnosis", \
+				force_radio = TRUE, \
+				specific_message = span_hypnophrase("[hypnotic_phrase]"), \
 			)
 
 /datum/brain_trauma/hypnosis/handle_hearing(datum/source, list/hearing_args)

@@ -471,7 +471,7 @@
 	if(prob(95)) //cursed by bubblegum
 		return
 	if(prob(15))
-		victim.cause_hallucination(/datum/hallucination/oh_yeah, source = "bubblegum bubblegum")
+		victim.cause_hallucination(/datum/hallucination/oh_yeah, "bubblegum bubblegum")
 	else
 		to_chat(victim, span_warning("[pick("You hear faint whispers.", "You smell ash.", "You feel hot.", "You hear a roar in the distance.")]"))
 
