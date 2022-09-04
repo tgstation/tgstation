@@ -65,8 +65,8 @@
 		if(canpass && CANATMOSPASS(current_turf, src, (direction & (UP|DOWN))) && !(blocks_air || current_turf.blocks_air))
 			LAZYINITLIST(atmos_adjacent_turfs)
 			LAZYINITLIST(current_turf.atmos_adjacent_turfs)
-			atmos_adjacent_turfs += current_turf
-			current_turf.atmos_adjacent_turfs += src
+			atmos_adjacent_turfs |= current_turf
+			current_turf.atmos_adjacent_turfs |= src
 		else
 			if (atmos_adjacent_turfs)
 				atmos_adjacent_turfs -= current_turf
