@@ -13,7 +13,7 @@
 	if(!check_rights_for(target_client, R_DEBUG))
 		return
 
-	proc_name = input("Proc name, eg: fake_blood","Proc:", null) as text|null
+	proc_name = input("Proc name, eg: fake_blood", "Proc:", null) as text|null
 	if(!proc_name)
 		return
 
@@ -30,7 +30,7 @@
 		to_chat(target_client, "<font color='red'>Error: callproc_datum(): type [object.type] has no proc named [proc_name].</font>", confidential = TRUE)
 		return
 
-	if(!object || !is_valid_src(object))
+	if(!is_valid_src(object))
 		to_chat(target_client, span_warning("Error: callproc_datum(): owner of proc no longer exists."), confidential = TRUE)
 		return
 
@@ -42,6 +42,6 @@
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Atom ProcCall") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	var/returnval = WrapAdminProcCall(object, proc_name, proc_args) // Pass the lst as an argument list to the proc
-	. = target_client.get_callproc_returnval(returnval,proc_name)
+	. = target_client.get_callproc_returnval(returnval, proc_name)
 	if(.)
 		to_chat(target_client, ., confidential = TRUE)
