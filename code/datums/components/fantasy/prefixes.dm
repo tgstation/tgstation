@@ -144,3 +144,21 @@
 /datum/fantasy_affix/venomous/remove(datum/component/fantasy/comp)
 	var/obj/item/master = comp.parent
 	master.RemoveElement(/datum/element/venomous)
+
+
+/datum/fantasy_affix/soul_stealer
+	name = "soul-stealing"
+	placement = AFFIX_PREFIX
+	alignment = AFFIX_GOOD
+
+/datum/fantasy_affix/soul_stealer/validate(obj/item/attached)
+	return attached.force //don't apply to things that just bap people
+
+/datum/fantasy_affix/soul_stealer/apply(datum/component/fantasy/comp, newName)
+	var/obj/item/master = comp.parent
+	master.AddComponent(/datum/component/soul_stealer)
+	return "soul-[pick("stealing", "hungering", "devouring")] [newName]"
+
+/datum/fantasy_affix/soul_stealer/remove(datum/component/fantasy/comp)
+	var/obj/item/master = comp.parent
+	master.RemoveComponent(/datum/component/soul_stealer)
