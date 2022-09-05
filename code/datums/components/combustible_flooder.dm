@@ -78,11 +78,11 @@
 		flood(user, thing.get_temperature())
 
 /// Shot by something
-/datum/component/combustible_flooder/proc/projectile_react(datum/source, obj/projectile/projectile)
+/datum/component/combustible_flooder/proc/projectile_react(datum/source, obj/projectile/shot)
 	SIGNAL_HANDLER
 
-	if(projectile.damage_type == BURN && !projectile.nodamage)
-		flood(projectile.firer, 2500)
+	if((shot.damage_type == BURN || istype(shot, /obj/projectile/plasma)) && !shot.nodamage)
+		flood(shot.firer, 2500)
 
 /// Welder check. Here because tool_act is higher priority than attackby.
 /datum/component/combustible_flooder/proc/welder_react(datum/source, mob/user, obj/item/tool)
