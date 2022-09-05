@@ -85,18 +85,19 @@
 	. = ..()
 	if(.)
 		return
-	. = TRUE
 	switch(action)
 		if("remove")
 			var/reagent = get_chem_id(params["chem"])
 			if(reagent)
 				required_reagents.Remove(reagent)
+				. = TRUE
 		if("add")
 			var/input_reagent = get_chem_id(params["chem"])
 			if(input_reagent && !required_reagents.Find(input_reagent))
 				var/input_amount = text2num(params["amount"])
 				if(input_amount)
 					required_reagents[input_reagent] = input_amount
+					. = TRUE
 		if("temperature")
 			var/target = params["target"]
 			if(text2num(target) != null)
@@ -140,7 +141,7 @@
 		alkaline_beaker.reagents.trans_to(reagents, 1 * delta_time)
 	if(reagents.is_reacting && reagents.ph > acidic_limit)
 		acidic_beaker.reagents.trans_to(reagents, 1 * delta_time)
-	. = ..()
+	..()
 
 /obj/machinery/plumbing/reaction_chamber/chem/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -149,34 +150,21 @@
 		ui.open()
 
 /obj/machinery/plumbing/reaction_chamber/chem/ui_data(mob/user)
-	var/list/data = list()
-
-	var/list/reagents_data = list()
-	for(var/datum/reagent/required_reagent as anything in required_reagents) //make a list where the key is text, because that looks alot better in the ui than a typepath
-		var/list/reagent_data = list()
-		reagent_data["name"] = initial(required_reagent.name)
-		reagent_data["required_reagent"] = required_reagents[required_reagent]
-		reagents_data += list(reagent_data)
-
-	data["reagents"] = reagents_data
-	data["emptying"] = emptying
-	data["temperature"] = round(reagents.chem_temp, 0.1)
-	data["ph"] = round(reagents.ph, 0.01)
-	data["targetTemp"] = target_temperature
-	data["isReacting"] = reagents.is_reacting
-	data["reagentAcidic"] = acidic_limit
-	data["reagentAlkaline"] = alkaline_limit
-	return data
+	. = ..()
+	.["ph"] = round(reagents.ph, 0.01)
+	.["reagentAcidic"] = acidic_limit
+	.["reagentAlkaline"] = alkaline_limit
+	return .
 
 /obj/machinery/plumbing/reaction_chamber/chem/ui_act(action, params)
-	if(.)
+	. = ..()
+	if (.)
 		return
-	. = TRUE
 	switch(action)
 		if("acidic")
 			acidic_limit = round(text2num(params["target"]))
+			. = TRUE
 		if("alkaline")
 			alkaline_limit = round(text2num(params["target"]))
-
-	. = ..()
+			. = TRUE
 
