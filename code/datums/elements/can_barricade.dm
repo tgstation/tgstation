@@ -59,6 +59,6 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Construct barricade"
 		return CONTEXTUAL_SCREENTIP_SET
 
-	return NONE // should we return . ?
+	return NONE
 
 #undef PLANK_BARRICADE_AMOUNT
