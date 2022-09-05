@@ -126,8 +126,6 @@ DEFINE_BITFIELD(smoothing_junction, list(
 	else
 		CRASH("smooth_icon called for [src] with smoothing_flags == [smoothing_flags]")
 	SEND_SIGNAL(src, COMSIG_ATOM_SMOOTHED_ICON)
-	update_appearance(~UPDATE_SMOOTHING)
-
 
 /atom/proc/corners_diagonal_smooth(adjacencies)
 	switch(adjacencies)
