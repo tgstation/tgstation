@@ -30204,7 +30204,7 @@
 "kOq" = (
 /obj/machinery/airalarm/server{
 	dir = 8;
-	pixel_x = -22
+	pixel_x = -24
 	},
 /obj/machinery/light/small/directional/west,
 /obj/machinery/camera/directional/west{
