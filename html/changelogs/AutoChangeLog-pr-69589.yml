@@ -1,0 +1,5 @@
+author: "VexingRaven"
+delete-after: True
+changes: 
+  - rscadd: "The Research Department Server Room on Kilo Station now has an air alarm and ventilation."
+  - bugfix: "The Research Department Server Room on Kilo Station no longer has an atmosphere alert at start of shift."
