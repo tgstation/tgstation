@@ -78,7 +78,6 @@
 	data["reagents"] = reagents_data
 	data["emptying"] = emptying
 	data["temperature"] = round(reagents.chem_temp, 0.1)
-	data["ph"] = round(reagents.ph, 0.01)
 	data["targetTemp"] = target_temperature
 	data["isReacting"] = reagents.is_reacting
 	return data
@@ -171,30 +170,14 @@
 	return data
 
 /obj/machinery/plumbing/reaction_chamber/chem/ui_act(action, params)
-	. = ..()
 	if(.)
 		return
 	. = TRUE
 	switch(action)
-		if("remove")
-			var/reagent = get_chem_id(params["chem"])
-			if(reagent)
-				required_reagents.Remove(reagent)
-		if("add")
-			var/input_reagent = get_chem_id(params["chem"])
-			if(input_reagent && !required_reagents.Find(input_reagent))
-				var/input_amount = text2num(params["amount"])
-				if(input_amount)
-					required_reagents[input_reagent] = input_amount
-		if("temperature")
-			var/target = params["target"]
-			if(text2num(target) != null)
-				target = text2num(target)
-				. = TRUE
-			if(.)
-				target_temperature = clamp(target, 0, 1000)
 		if("acidic")
 			acidic_limit = round(text2num(params["target"]))
 		if("alkaline")
 			alkaline_limit = round(text2num(params["target"]))
+
+	. = ..()
 
