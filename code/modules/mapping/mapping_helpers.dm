@@ -484,9 +484,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		usable_races -= SPECIES_ETHEREAL //they revive on death which is bad juju
 		LAZYREMOVE(usable_races, SPECIES_HUMAN)
 		if(!usable_races)
-			stack_trace("morgue_cadaver_disable_nonhumans. THERE ARE NO VALID NONHUMANS ENABLED")
+			notice("morgue_cadaver_disable_nonhumans. There are no valid roundstart nonhuman races enabled. Defaulting to humans only!")
 		if(override_species)
-			stack_trace("WARNING: BOTH morgue_cadaver_disable_nonhumans & morgue_cadaver_override_species CONFIGS ENABLED. morgue_cadaver_override_species BEING OVERRIDEN.")
+			warning("morgue_cadaver_override_species BEING OVERRIDEN since morgue_cadaver_disable_nonhumans is disabled.")
 	else if(override_species)
 		usable_races += override_species
 
