@@ -24,15 +24,15 @@
 /datum/component/soul_stealer/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_notice("[parent] will steal the soul of anyone it defeats in battle.")
+	examine_list += span_notice("It will steal the soul of anyone it defeats in battle.")
 
 	switch(souls.len)
 		if(0)
-			examine_list += span_notice("[parent] has not consumed any souls yet.")
+			examine_list += span_notice("It has not consumed any souls yet.")
 		if(1 to 9)
-			examine_list += span_notice("There are <b>[souls.len]</b> souls trapped within [parent].")
+			examine_list += span_notice("There are <b>[souls.len]</b> souls trapped within it.")
 		if(10 to INFINITY)
-			examine_list += span_notice("A staggering <b>[souls.len]</b> souls have been claimed by [parent]! It hungers for more!")
+			examine_list += span_notice("A staggering <b>[souls.len]</b> souls have been claimed by it! And it hungers for more!")
 
 /datum/component/soul_stealer/proc/on_afterattack(obj/item/source, atom/target, mob/living/user, proximity_flag, click_parameters)
 	SIGNAL_HANDLER

@@ -54,9 +54,9 @@
 		examine_list += span_warning("...Of which you are currently doing right now!")
 		return
 	if(COOLDOWN_FINISHED(src, spin_cooldown))
-		examine_list += span_notice("It has a [DisplayTimeText(spin_cooldown_time)] cooldown.")
+		examine_list += span_notice("It has a cooldown of [DisplayTimeText(spin_cooldown_time)].")
 	else
-		examine_list += span_notice("It will be ready to spin again in [DisplayTimeText(COOLDOWN_TIMELEFT(src, spin_cooldown))]")
+		examine_list += span_notice("It will be ready to spin again in [DisplayTimeText(COOLDOWN_TIMELEFT(src, spin_cooldown))].")
 
 /datum/component/right_click_spin2win/proc/on_attack_secondary(obj/item/source, mob/living/victim, mob/living/user, params)
 	SIGNAL_HANDLER
