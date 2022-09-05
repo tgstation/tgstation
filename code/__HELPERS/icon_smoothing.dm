@@ -314,7 +314,7 @@ DEFINE_BITFIELD(smoothing_junction, list(
 						}; \
 					}; \
 					if(smooth_obj) { \
-						for(var/obj/thing in neighbor) { \
+						for(var/atom/movable/thing as anything in neighbor) { \
 							var/thing_smoothing_groups = thing.smoothing_groups; \
 							if(!thing.anchored || isnull(thing_smoothing_groups)) { \
 								continue; \
