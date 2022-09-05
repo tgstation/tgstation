@@ -48,7 +48,11 @@
 		add_base_lighting()
 
 /area/proc/remove_base_lighting()
-	cut_overlay(lighting_effects)
+	var/list/z_offsets = SSmapping.z_level_to_plane_offset
+	for(var/turf/T in src)
+		if(z_offsets[T.z])
+			T.cut_overlay(lighting_effects[z_offsets[T.z] + 1])
+	cut_overlay(lighting_effects[1])
 	QDEL_LIST(lighting_effects)
 	area_has_base_lighting = FALSE
 
@@ -63,7 +67,14 @@
 		lighting_effect.color = base_lighting_color
 		lighting_effect.appearance_flags = RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR
 		lighting_effects += lighting_effect
-	add_overlay(lighting_effects)
+	add_overlay(lighting_effects[1])
+	var/list/z_offsets = SSmapping.z_level_to_plane_offset
 	for(var/turf/T in src)
 		T.luminosity = 1
+		// This outside loop is EXTREMELY hot because it's run by space tiles. Don't want no part in that
+		// We will only add overlays to turfs not on the first z layer, because that's a significantly lesser portion
+		// And we need to do them separate, or lighting will go fuckey
+		if(z_offsets[T.z])
+			T.add_overlay(lighting_effects[z_offsets[T.z] + 1])
+
 	area_has_base_lighting = TRUE

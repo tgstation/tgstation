@@ -5,8 +5,8 @@
 	requires_power = TRUE
 	always_unpowered = TRUE
 	static_lighting = FALSE
-	area_has_base_lighting = FALSE
 
+	base_lighting_alpha = 255
 	power_light = FALSE
 	power_equip = FALSE
 	power_environ = FALSE
@@ -16,16 +16,6 @@
 	flags_1 = CAN_BE_DIRTY_1
 	sound_environment = SOUND_AREA_SPACE
 	ambient_buzz = null //Space is deafeningly quiet
-
-/area/space/Initialize(mapload)
-	. = ..()
-
-	add_overlay(GLOB.fullbright_overlays)
-	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, .proc/on_offset_increase)
-
-/area/space/proc/on_offset_increase(datum/source)
-	SIGNAL_HANDLER
-	add_overlay(GLOB.fullbright_overlays)
 
 /area/space/nearstation
 	icon_state = "space_near"

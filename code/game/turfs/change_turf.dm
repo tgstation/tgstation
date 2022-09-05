@@ -145,6 +145,12 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		for(var/turf/open/space/space_tile in RANGE_TURFS(1, src))
 			space_tile.update_starlight()
 
+	// We will only run this logic if the tile is not on the prime z layer, since we use area overlays to cover that
+	if(SSmapping.z_level_to_plane_offset[z])
+		var/area/thisarea = get_area(W)
+		if(thisarea.lighting_effects)
+			W.add_overlay(thisarea.lighting_effects[SSmapping.z_level_to_plane_offset[z]])
+
 	QUEUE_SMOOTH_NEIGHBORS(src)
 	QUEUE_SMOOTH(src)
 

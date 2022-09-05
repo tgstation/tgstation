@@ -141,7 +141,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	our_area.minimum_z = min(our_area.minimum_z, z)
 	our_area.maximum_z = max(our_area.maximum_z, z)
 
-	if(our_area.area_has_base_lighting && always_lit) //Only provide your own lighting if the area doesn't for you
+	if(!our_area.area_has_base_lighting && always_lit) //Only provide your own lighting if the area doesn't for you
 		var/mutable_appearance/overlay = GLOB.fullbright_overlays[GET_TURF_PLANE_OFFSET(src) + 1]
 		add_overlay(overlay)
 
