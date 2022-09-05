@@ -19,12 +19,12 @@
 /datum/component/simple_rotation
 	/// Additional stuff to do after rotation
 	var/datum/callback/AfterRotation
-	/// Rotation flags for special behavior 
+	/// Rotation flags for special behavior
 	var/rotation_flags = NONE
 
 /**
  * Adds the ability to rotate an object by Alt-click or using Right-click verbs.
- * 
+ *
  * args:
  * * rotation_flags (optional) Bitflags that determine behavior for rotation (defined at the top of this file)
  * * AfterRotation (optional) Callback proc that is used after the object is rotated (sound effects, balloon alerts, etc.)
@@ -33,9 +33,11 @@
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
+	var/atom/movable/source = parent
+	source.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
+
 	src.rotation_flags = rotation_flags
 	src.AfterRotation = AfterRotation || CALLBACK(src, .proc/DefaultAfterRotation)
-	src.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 
 /datum/component/simple_rotation/proc/AddSignals()
 	RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/RotateLeft)
@@ -87,7 +89,6 @@
 
 /datum/component/simple_rotation/proc/ExamineMessage(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	examine_list += span_notice("Alt + Right-click to rotate it clockwise. Alt + Left-click to rotate it counterclockwise.")
 	if(rotation_flags & ROTATION_REQUIRE_WRENCH)
 		examine_list += span_notice("This requires a wrench to be rotated.")
 
@@ -105,7 +106,7 @@
 	if(!istype(user))
 		CRASH("[src] is being rotated without a user of the wrong type: [user.type]")
 	if(!isnum(degrees))
-		CRASH("[src] is being rotated without providing the amount of degrees needed") 
+		CRASH("[src] is being rotated without providing the amount of degrees needed")
 
 	if(!CanBeRotated(user, degrees) || !CanUserRotate(user, degrees))
 		return
@@ -114,17 +115,17 @@
 	rotated_obj.setDir(turn(rotated_obj.dir, degrees))
 	if(rotation_flags & ROTATION_REQUIRE_WRENCH)
 		playsound(rotated_obj, 'sound/items/ratchet.ogg', 50, TRUE)
-		
+
 	AfterRotation.Invoke(user, degrees)
 
 /datum/component/simple_rotation/proc/CanUserRotate(mob/user, degrees)
 	if(isliving(user) && user.canUseTopic(parent, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return TRUE
 	if((rotation_flags & ROTATION_GHOSTS_ALLOWED) && isobserver(user) && CONFIG_GET(flag/ghost_interaction))
-		return TRUE	
+		return TRUE
 	return FALSE
 
-/datum/component/simple_rotation/proc/CanBeRotated(mob/user, degrees)
+/datum/component/simple_rotation/proc/CanBeRotated(mob/user, degrees, silent=FALSE)
 	var/obj/rotated_obj = parent
 
 	if(rotation_flags & ROTATION_REQUIRE_WRENCH)
@@ -132,12 +133,13 @@
 			return FALSE
 		var/obj/item/tool = user.get_active_held_item()
 		if(!tool || tool.tool_behaviour != TOOL_WRENCH)
-			rotated_obj.balloon_alert(user, "need a wrench!")
+			if(!silent)
+				rotated_obj.balloon_alert(user, "need a wrench!")
 			return FALSE
 	if(!(rotation_flags & ROTATION_IGNORE_ANCHORED) && rotated_obj.anchored)
-		if(istype(rotated_obj, /obj/structure/window))
+		if(istype(rotated_obj, /obj/structure/window) && !silent)
 			rotated_obj.balloon_alert(user, "need to unscrew!")
-		else
+		else if(!silent)
 			rotated_obj.balloon_alert(user, "need to unwrench!")
 		return FALSE
 
@@ -146,12 +148,13 @@
 		var/obj/structure/window/rotated_window = rotated_obj
 		var/fulltile = istype(rotated_window) ? rotated_window.fulltile : FALSE
 		if(!valid_window_location(rotated_obj.loc, target_dir, is_fulltile = fulltile))
-			rotated_obj.balloon_alert(user, "can't rotate in that direction!")
+			if(!silent)
+				rotated_obj.balloon_alert(user, "can't rotate in that direction!")
 			return FALSE
 	return TRUE
 
 /datum/component/simple_rotation/proc/DefaultAfterRotation(mob/user, degrees)
-	return 
+	return
 
 /atom/movable/proc/SimpleRotateClockwise()
 	set name = "Rotate Clockwise"
@@ -180,17 +183,17 @@
 // maybe we don't need the item context proc but instead the hand one? since we don't need to check held_item
 /datum/component/simple_rotation/proc/on_requesting_context_from_item(atom/source, list/context, obj/item/held_item, mob/user)
 	SIGNAL_HANDLER
-	
+
 	var/rotation_screentip = FALSE
-	
-	if(CanBeRotated(user, ROTATION_CLOCKWISE) && CanUserRotate(user, ROTATION_CLOCKWISE))
-		context[SCREENTIP_CONTEXT_ALT_LMB] = "Rotate clockwise"
+
+	if(CanBeRotated(user, ROTATION_CLOCKWISE, silent=TRUE) && CanUserRotate(user, ROTATION_CLOCKWISE))
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Rotate counterclockwise"
 		rotation_screentip = TRUE
-	if(CanBeRotated(user, ROTATION_COUNTERCLOCKWISE) && CanUserRotate(user, ROTATION_COUNTERCLOCKWISE))
-		context[SCREENTIP_CONTEXT_ALT_RMB] = "Rotate counterclockwise"		
+	if(CanBeRotated(user, ROTATION_COUNTERCLOCKWISE, silent=TRUE) && CanUserRotate(user, ROTATION_COUNTERCLOCKWISE))
+		context[SCREENTIP_CONTEXT_ALT_RMB] = "Rotate clockwise"
 		rotation_screentip = TRUE
-		
+
 	if(rotation_screentip)
 		return CONTEXTUAL_SCREENTIP_SET
 
-	return NONE // should we return . ?
+	return NONE
