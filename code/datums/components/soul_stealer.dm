@@ -34,22 +34,26 @@
 		if(10 to INFINITY)
 			examine_list += span_notice("A staggering <b>[souls.len]</b> souls have been claimed by [parent]! It hungers for more!")
 
-/datum/component/soul_stealer/proc/on_afterattack(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
+/datum/component/soul_stealer/proc/on_afterattack(obj/item/source, atom/target, mob/living/user, proximity_flag, click_parameters)
 	SIGNAL_HANDLER
 
 	if(!proximity_flag)
 		return
 
 	if(ishuman(target))
-		var/mob/living/carbon/human/victim = target
-		if(victim.stat != CONSCIOUS)
-			var/obj/item/soulstone/soulstone = new /obj/item/soulstone(parent)
-			soulstone.attack(victim, user)
-			if(!LAZYLEN(soulstone.contents))
-				qdel(soulstone)
-				return
-			souls += soulstone
+		INVOKE_ASYNC(src, .proc/try_capture, target, user)
+
 	if(istype(target, /obj/structure/constructshell) && souls.len)
 		var/obj/item/soulstone/soulstone = souls[1]
 		INVOKE_ASYNC(soulstone, /obj/item/soulstone/proc/transfer_to_construct, target, user)
 		///soulstone will be deleted from souls if successful
+
+/datum/component/soul_stealer/proc/try_capture(mob/living/carbon/human/victim, mob/living/captor)
+	if(victim.stat == CONSCIOUS)
+		return
+	var/obj/item/soulstone/soulstone = new /obj/item/soulstone(parent)
+	soulstone.attack(victim, captor)
+	if(!LAZYLEN(soulstone.contents))
+		qdel(soulstone)
+		return
+	souls += soulstone
