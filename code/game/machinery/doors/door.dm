@@ -92,10 +92,6 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Open"
 		return CONTEXTUAL_SCREENTIP_SET
 
-	if(istype(held_item, /obj/item/stack/sheet/mineral/wood) && Adjacent(user))
-		context[SCREENTIP_CONTEXT_LMB] = "Construct barricade"
-		return CONTEXTUAL_SCREENTIP_SET
-
 /obj/machinery/door/check_access_list(list/access_list)
 	if(red_alert_access && SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
 		return TRUE
