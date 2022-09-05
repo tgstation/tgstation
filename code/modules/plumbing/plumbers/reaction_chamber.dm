@@ -1,5 +1,4 @@
 ///a reaction chamber for plumbing. pretty much everything can react, but this one keeps the reagents separated and only reacts under your given terms
-//base class is a simpler reaction chamber for bartenders
 /obj/machinery/plumbing/reaction_chamber
 	name = "mixing chamber"
 	desc = "Keeps chemicals separated until given conditions are met."
@@ -106,7 +105,7 @@
 			if(.)
 				target_temperature = clamp(target, 0, 1000)
 
-//Chemistry version of reaction chamber that allows for acid and base usage
+///Chemistry version of reaction chamber that allows for acid and base buffers to be used while reacting
 /obj/machinery/plumbing/reaction_chamber/chem
 	name = "reaction chamber"
 
