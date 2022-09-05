@@ -65,6 +65,11 @@ if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/cable,\n[^)]*?/obj/structure/cabl
     echo -e "${RED}ERROR: Found multiple cables on the same tile, please remove them.${NC}"
     st=1
 fi;
+if grep -Pzo '"\w+" = \(\n[^)]*?/turf,\n[^)]*?/turf,\n[^)]*?/area/.+?\)' _maps/**/*.dmm;	then
+	echo
+    echo -e "${RED}ERROR: Found multiple /turfs on the same tile. We do not support turf stacking, please remove them.${NC}"
+    st=1
+fi;
 if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/lattice[/\w]*?,\n[^)]*?/obj/structure/lattice[/\w]*?,\n[^)]*?/area/.+?\)' _maps/**/*.dmm;	then
 	echo
     echo -e "${RED}ERROR: Found multiple lattices on the same tile, please remove them.${NC}"
