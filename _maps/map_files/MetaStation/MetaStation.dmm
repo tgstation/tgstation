@@ -3665,7 +3665,7 @@
 /area/space/nearstation)
 "bnr" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/structure/chair/sofa/corp/left{
+/obj/structure/chair/sofa/corp/right{
 	dir = 1
 	},
 /obj/machinery/light_switch/directional/south,
@@ -32416,7 +32416,7 @@
 /area/station/medical/chemistry)
 "lxC" = (
 /obj/item/radio/intercom/directional/south,
-/obj/structure/chair/sofa/corp/right{
+/obj/structure/chair/sofa/corp/left{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -43787,7 +43787,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
-/obj/structure/chair/sofa/corp/right{
+/obj/structure/chair/sofa/corp/left{
 	dir = 1
 	},
 /obj/machinery/airalarm/directional/south,
@@ -47473,7 +47473,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/abandoned)
 "qQu" = (
-/obj/structure/chair/sofa/corp/left{
+/obj/structure/chair/sofa/corp/right{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral{
