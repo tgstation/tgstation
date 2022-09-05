@@ -71,13 +71,15 @@
 	var/list/z_traits = SSmapping.multiz_levels[z]
 	for(var/direction in GLOB.cardinals_multiz)
 		// Yes this is a reimplementation of get_step_mutliz. It's faster tho. fuck you
+		// Oh also yes UP and DOWN do just point to +1 and -1 and not z offsets
+		// Multiz is shitcode welcome home
 		var/turf/current_turf = (direction & (UP|DOWN)) ? \
 			(direction & UP) ? \
 				(z_traits["16"]) ? \
-					(get_step(locate(x, y, z + z_traits["16"]), NONE)) : \
+					(get_step(locate(x, y, z + 1), NONE)) : \
 				(null) : \
 				(z_traits["32"]) ? \
-					(get_step(locate(x, y, z + z_traits["32"]), NONE)) : \
+					(get_step(locate(x, y, z - 1), NONE)) : \
 				(null) : \
 			(get_step(src, direction))
 		if(!isopenturf(current_turf)) // not interested in you brother
