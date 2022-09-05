@@ -33,7 +33,7 @@
 	var/datum/antagonist/A = has_antag_datum(datum_type)
 	if(A)
 		A.on_removal()
-		current.log_message("[key_name(src)] has lost antag datum [A.name]([A.type]).", LOG_GAME)
+		current.log_message("has lost antag datum [A.name]([A.type]).", LOG_GAME)
 		return TRUE
 
 /datum/mind/proc/remove_all_antag_datums() //For the Lazy amongst us.
