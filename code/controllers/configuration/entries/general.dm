@@ -164,6 +164,14 @@
 /// allow votes to change map
 /datum/config_entry/flag/allow_vote_map
 
+/// allow players to vote to re-do the map vote
+/datum/config_entry/flag/allow_rock_the_vote
+
+/// the number of times we allow players to rock the vote
+/datum/config_entry/number/max_rocking_votes
+	default = 1
+	min_val = 1
+
 /// minimum time between voting sessions (deciseconds, 10 minute default)
 /datum/config_entry/number/vote_delay
 	default = 6000
@@ -176,8 +184,8 @@
 	integer = FALSE
 	min_val = 0
 
-/// If disabled, no-voters will automatically have their votes added to certain vote options
-/// (For eample: restart votes will default to "no restart", map votes will default to their preferred map / default map)
+/// If disabled, non-voters will automatically have their votes added to certain vote options
+/// (For example: restart votes will default to "no restart", map votes will default to their preferred map / default map, rocking the vote will default to "no")
 /datum/config_entry/flag/default_no_vote
 
 /// Prevents dead people from voting.

@@ -9,7 +9,12 @@ SUBSYSTEM_DEF(mapping)
 	var/datum/map_config/config
 	var/datum/map_config/next_map_config
 
+	/// Has the map for the next round been voted for already?
 	var/map_voted = FALSE
+	/// Has the map for the next round been deliberately chosen by an admin?
+	var/map_force_chosen = FALSE
+	/// Has the map vote been rocked?
+	var/map_vote_rocked = FALSE
 
 	var/list/map_templates = list()
 
