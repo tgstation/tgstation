@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Admin event spawned blobs will no longer immediately announce when the event is triggered."
+  - bugfix: "Admin events which poll candidates from ghosts will no longer announce the event if the event failed to spawn a mob."
