@@ -152,7 +152,11 @@
 	alignment = AFFIX_GOOD
 
 /datum/fantasy_affix/soul_stealer/validate(obj/item/attached)
-	return attached.force //don't apply to things that just bap people
+	if(attached.force)
+		return FALSE
+	if(attached.atom_storage)
+		return FALSE
+	return TRUE
 
 /datum/fantasy_affix/soul_stealer/apply(datum/component/fantasy/comp, newName)
 	var/obj/item/master = comp.parent

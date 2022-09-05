@@ -74,6 +74,7 @@
 /datum/component/right_click_spin2win/proc/start_spinning(mob/living/spinning_user)
 	//user will always exist for the start
 	spinning = TRUE
+	spinning_user.changeNext_move(5 SECONDS)
 	if(on_spin_callback)
 		on_spin_callback.Invoke(spinning_user)
 	if(start_spin_message)
@@ -82,7 +83,7 @@
 	playsound(spinning_user, 'sound/weapons/fwoosh.ogg', 75, FALSE)
 	stop_spinning_timer_id = addtimer(CALLBACK(src, .proc/stop_spinning, spinning_user), 5 SECONDS)
 	START_PROCESSING(SSprocessing, src)
-
+ 
 /datum/component/right_click_spin2win/proc/stop_spinning(mob/living/user)
 	//user might not exist for the end
 	STOP_PROCESSING(SSprocessing, src)
@@ -92,16 +93,15 @@
 		var/message = replacetext(end_spin_message, "%USER", user)
 		user.visible_message(message)
 	if(on_unspin_callback)
-		on_unspin_callback.Invoke(user)
+		on_unspin_callback.Invoke(user, 5 SECONDS)
 	COOLDOWN_START(src, spin_cooldown, spin_cooldown_time)
 	spinning = FALSE
 
 /datum/component/right_click_spin2win/process(delta_time)
 	var/obj/item/spinning_item = parent
 	if(!isliving(spinning_item.loc))
-		. = ..()
 		stop_spinning()
-		return
+		return PROCESS_KILL
 	var/mob/living/item_owner = spinning_item.loc
 	playsound(item_owner, 'sound/weapons/fwoosh.ogg', 75, FALSE)
 	for(var/mob/living/victim in orange(1, item_owner))

@@ -35,7 +35,7 @@
 		/datum/component/right_click_spin2win, \
 		spin_cooldown_time = 25 SECONDS, \
 		on_spin_callback = CALLBACK(src, .proc/on_spin), \
-		on_unspin_callback = null, \
+		on_unspin_callback = CALLBACK(src, .proc/on_unspin), \
 		start_spin_message = span_danger("%USER begins swinging the sword around with inhuman strength!"), \
 		end_spin_message = span_warning("%USER's inhuman strength dissipates and the sword's runes grow cold!") \
 	)
@@ -47,6 +47,12 @@
 	user.spin(duration, 1)
 	animate(user, color = oldcolor, time = duration, easing = EASE_IN)
 	addtimer(CALLBACK(user, /atom/proc/update_atom_colour), duration)
+	block_chance = 100
+	sword.slowdown += 1.5
+
+/obj/item/cult_bastard/proc/on_unspin(mob/living/user)
+	block_chance = 50
+	slowdown -= 1.5
 
 /obj/item/cult_bastard/can_be_pulled(user)
 	return FALSE
