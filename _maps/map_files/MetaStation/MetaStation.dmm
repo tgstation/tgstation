@@ -3665,7 +3665,7 @@
 /area/space/nearstation)
 "bnr" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/structure/chair/sofa/corp/right{
+/obj/structure/chair/sofa/corp/left{
 	dir = 1
 	},
 /obj/machinery/light_switch/directional/south,
@@ -47473,7 +47473,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/abandoned)
 "qQu" = (
-/obj/structure/chair/sofa/corp/right{
+/obj/structure/chair/sofa/corp/left{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral{

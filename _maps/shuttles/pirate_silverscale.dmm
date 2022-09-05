@@ -540,6 +540,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"CH" = (
+/obj/structure/chair/sofa/corp/left{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
 "CP" = (
 /obj/machinery/power/smes/engineering{
 	charge = 1e+006
@@ -1001,7 +1007,7 @@
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "ZU" = (
-/obj/structure/chair/sofa/corp/right{
+/obj/structure/chair/sofa/corp/left{
 	dir = 1
 	},
 /obj/machinery/light/directional/east,
@@ -1183,7 +1189,7 @@ HD
 HD
 Ut
 fT
-Aj
+CH
 xs
 hu
 JV

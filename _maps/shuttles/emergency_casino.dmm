@@ -317,7 +317,7 @@
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "jE" = (
-/obj/structure/chair/sofa/corp/right{
+/obj/structure/chair/sofa/corp/left{
 	dir = 1
 	},
 /turf/open/floor/carpet/royalblue,

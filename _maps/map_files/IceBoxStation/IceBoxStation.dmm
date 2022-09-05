@@ -1291,6 +1291,12 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/office)
+"auN" = (
+/obj/structure/chair/sofa/corp/left{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/station/hallway/secondary/service)
 "auT" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/closet/secure_closet/contraband/armory,
@@ -35936,6 +35942,13 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
+"kVM" = (
+/obj/structure/chair/sofa/corp/left{
+	dir = 1
+	},
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/iron,
+/area/station/engineering/lobby)
 "kWa" = (
 /obj/structure/fireplace,
 /turf/open/floor/plating,
@@ -182284,7 +182297,7 @@ mdZ
 xDr
 esn
 agt
-ihG
+auN
 mdZ
 xvc
 doJ
@@ -240430,7 +240443,7 @@ rSC
 rSC
 rSC
 tGH
-akz
+kVM
 sCA
 rSP
 uKM
