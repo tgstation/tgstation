@@ -19,7 +19,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list( \
 		time = 4 SECONDS, \
 		one_per_turf = TRUE, \
 		on_floor = TRUE, \
-		desc = span_cultbold("Altar: Can make Eldritch Whetstones, Construct Shells, and Flasks of Unholy Water."), \
+		desc = span_cultbold("Altar: Can make Eldritch Whetstones and Flasks of Unholy Water."), \
 		required_noun = "runed metal sheet", \
 	), \
 	new /datum/stack_recipe/radial( \

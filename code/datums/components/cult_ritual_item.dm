@@ -345,7 +345,10 @@
 	if(!check_if_in_ritual_site(cultist, cult_team))
 		return FALSE
 	if(sac_objective && !sac_objective.check_completion())
-		to_chat(cultist, span_warning("The sacrifice is not complete. The portal would lack the power to open if you tried!"))
+		to_chat(cultist, span_warning("The vital sacrifice is not complete. The portal would lack the power to open if you tried!"))
+		return FALSE
+	if(length(GLOB.sacrificed) < 9)
+		to_chat(cultist, span_warning("The required foundation of sacrifice is not complete. You need to sacrifice [9 - length(GLOB.sacrificed)] more souls!"))
 		return FALSE
 	if(summon_objective.check_completion())
 		to_chat(cultist, span_cultlarge("\"I am already here. There is no need to try to summon me now.\""))

@@ -302,15 +302,12 @@
 	construct_spells = list(
 		/datum/action/cooldown/spell/conjure/cult_floor,
 		/datum/action/cooldown/spell/conjure/cult_wall,
-		/datum/action/cooldown/spell/conjure/soulstone,
-		/datum/action/cooldown/spell/conjure/construct/lesser,
 		/datum/action/cooldown/spell/aoe/magic_missile/lesser,
 		/datum/action/innate/cult/create_rune/revive,
 	)
 	playstyle_string = "<b>You are an Artificer. You are incredibly weak and fragile, \
 		but you are able to construct fortifications, use magic missile, and repair allied constructs, shades, \
-		and yourself (by clicking on them). Additionally, <i>and most important of all,</i> you can create new constructs \
-		by producing soulstones to capture souls, and shells to place those soulstones into.</b>"
+		and yourself (by clicking on them)."
 
 	can_repair = TRUE
 	can_repair_self = TRUE
@@ -368,8 +365,6 @@
 	theme = THEME_HOLY
 	loot = list(/obj/item/ectoplasm/angelic)
 	construct_spells = list(
-		/datum/action/cooldown/spell/conjure/soulstone/purified,
-		/datum/action/cooldown/spell/conjure/construct/lesser,
 		/datum/action/cooldown/spell/aoe/magic_missile/lesser,
 		/datum/action/innate/cult/create_rune/revive,
 	)
@@ -379,8 +374,6 @@
 	construct_spells = list(
 		/datum/action/cooldown/spell/conjure/cult_floor,
 		/datum/action/cooldown/spell/conjure/cult_wall,
-		/datum/action/cooldown/spell/conjure/soulstone/mystic,
-		/datum/action/cooldown/spell/conjure/construct/lesser,
 		/datum/action/cooldown/spell/aoe/magic_missile/lesser,
 		/datum/action/innate/cult/create_rune/revive,
 	)
@@ -389,8 +382,6 @@
 	construct_spells = list(
 		/datum/action/cooldown/spell/conjure/cult_floor,
 		/datum/action/cooldown/spell/conjure/cult_wall,
-		/datum/action/cooldown/spell/conjure/soulstone/noncult,
-		/datum/action/cooldown/spell/conjure/construct/lesser,
 		/datum/action/cooldown/spell/aoe/magic_missile/lesser,
 		/datum/action/innate/cult/create_rune/revive,
 	)

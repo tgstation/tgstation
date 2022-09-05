@@ -199,11 +199,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 	..()
 	qdel(src)
 
-//Rite of Offering: Converts or sacrifices a target.
+//Rite of Offering: Sacrifices a target.
 /obj/effect/rune/convert
 	cultist_name = "Offer"
-	cultist_desc = "offers a noncultist above it to Nar'Sie, either converting them or sacrificing them."
-	req_cultists_text = "2 for conversion, 3 for living sacrifices and sacrifice targets."
+	cultist_desc = "offers a live noncultist above it to Nar'Sie, sacrificing them."
+	req_cultists_text = "3 for living sacrifices and sacrifice targets, all remaining cultists if not enough cultists available."
 	invocation = "Mah'weyh pleggh at e'ntrath!"
 	icon_state = "3"
 	color = RUNE_COLOR_OFFER
@@ -234,62 +234,16 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/mob/living/F = invokers[1]
 	var/datum/antagonist/cult/C = F.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 	var/datum/team/cult/Cult_team = C.cult_team
-	var/is_convertable = is_convertable_to_cult(L,C.cult_team)
-	if(L.stat != DEAD && is_convertable)
-		invocation = "Mah'weyh pleggh at e'ntrath!"
-		..()
-		if(is_convertable)
-			do_convert(L, invokers)
-	else
+	if(L.stat != DEAD) // live sacrifices only
 		invocation = "Barhah hra zar'garis!"
 		..()
-		do_sacrifice(L, invokers)
+		do_sacrifice(L, invokers, Cult_team)
 	animate(src, color = oldcolor, time = 5)
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 5)
-	Cult_team.check_size() // Triggers the eye glow or aura effects if the cult has grown large enough relative to the crew
+	Cult_team.check_size() // Triggers the eye glow or aura effects if the cult has done enough sacrifices.
 	rune_in_use = FALSE
 
-/obj/effect/rune/convert/proc/do_convert(mob/living/convertee, list/invokers)
-	if(length(invokers) < 2)
-		for(var/M in invokers)
-			to_chat(M, span_warning("You need at least two invokers to convert [convertee]!"))
-		log_game("Offer rune with [convertee] on it failed - tried conversion with one invoker.")
-		return FALSE
-	if(convertee.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, charge_cost = 0)) //No charge_cost because it can be spammed
-		for(var/M in invokers)
-			to_chat(M, span_warning("Something is shielding [convertee]'s mind!"))
-		log_game("Offer rune with [convertee] on it failed - convertee had anti-magic.")
-		return FALSE
-	var/brutedamage = convertee.getBruteLoss()
-	var/burndamage = convertee.getFireLoss()
-	if(brutedamage || burndamage)
-		convertee.adjustBruteLoss(-(brutedamage * 0.75))
-		convertee.adjustFireLoss(-(burndamage * 0.75))
-	convertee.visible_message("<span class='warning'>[convertee] writhes in pain \
-	[brutedamage || burndamage ? "even as [convertee.p_their()] wounds heal and close" : "as the markings below [convertee.p_them()] glow a bloody red"]!</span>", \
-	span_cultlarge("<i>AAAAAAAAAAAAAA-</i>"))
-	convertee.mind?.add_antag_datum(/datum/antagonist/cult)
-	convertee.Unconscious(100)
-	new /obj/item/melee/cultblade/dagger(get_turf(src))
-	convertee.mind.special_role = ROLE_CULTIST
-	to_chat(convertee, "<span class='cult italic'><b>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible, truth. The veil of reality has been ripped away \
-	and something evil takes root.</b></span>")
-	to_chat(convertee, "<span class='cult italic'><b>Assist your new compatriots in their dark dealings. Your goal is theirs, and theirs is yours. You serve the Geometer above all else. Bring it back.\
-	</b></span>")
-	if(ishuman(convertee))
-		var/mob/living/carbon/human/H = convertee
-		H.uncuff()
-		H.remove_status_effect(/datum/status_effect/speech/slurring/cult)
-		H.remove_status_effect(/datum/status_effect/speech/stutter)
-
-		if(prob(1) || SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
-			H.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in.")
-	if(isshade(convertee))
-		convertee.icon_state = "shade_cult"
-		convertee.name = convertee.real_name
-	return TRUE
-
-/obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers)
+/obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers, datum/team/cult/Cult_team)
 	var/mob/living/first_invoker = invokers[1]
 	if(!first_invoker)
 		return FALSE
@@ -299,12 +253,20 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 	if(SEND_SIGNAL(sacrificial, COMSIG_LIVING_CULT_SACRIFICED, invokers) & STOP_SACRIFICE)
 		return FALSE
-
-	var/big_sac = FALSE
-	if((((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || C.cult_team.is_sacrifice_target(sacrificial.mind)) && length(invokers) < 3)
+	var/amt_alive_cultists = 0
+	for(var/mob/living/live_cultist in Cult_team.members)
+		if(live_cultist.stat != DEAD && ishuman(live_cultist)) // constructs dont count
+			amt_alive_cultists++
+	if(!(length(invokers) >= 3 || amt_alive_cultists < 3 && length(invokers) == amt_alive_cultists))
 		for(var/M in invokers)
-			to_chat(M, span_cultitalic("[sacrificial] is too greatly linked to the world! You need three acolytes!"))
-		log_game("Offer rune with [sacrificial] on it failed - not enough acolytes and target is living or sac target")
+			to_chat(M, span_cultitalic("[sacrificial] is too greatly linked to the world! You need either three acolytes or what remains of your cult, which is [amt_alive_cultists] acolytes!"))
+		return FALSE
+	var/big_sac = FALSE
+	// Suicides get to count as a legit sacrifice to prevent fucking the cult over by killing yourself right before they sacrifice you.
+	if(ishuman(sacrificial) && sacrificial.stat == DEAD && !sacrificial.suiciding && !C.cult_team.is_sacrifice_target(sacrificial.mind))
+		for(var/M in invokers)
+			to_chat(M, span_cultitalic("[sacrificial]'s soul has passed on and they aren't important enough to our God to offer!"))
+		log_game("Offer rune with [sacrificial] on it failed - target isn't objective sac target or is dead")
 		return FALSE
 	if(sacrificial.mind)
 		LAZYADD(GLOB.sacrificed, WEAKREF(sacrificial.mind))
@@ -314,8 +276,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 				sac_objective.clear_sacrifice()
 				sac_objective.update_explanation_text()
 				big_sac = TRUE
-	else
-		LAZYADD(GLOB.sacrificed, WEAKREF(sacrificial))
 
 	new /obj/effect/temp_visual/cult/sac(get_turf(src))
 	for(var/M in invokers)
@@ -325,22 +285,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			if(ishuman(sacrificial) || iscyborg(sacrificial))
 				to_chat(M, span_cultlarge("\"I accept this sacrifice.\""))
 			else
-				to_chat(M, span_cultlarge("\"I accept this meager sacrifice.\""))
-
-	if(iscyborg(sacrificial))
-		var/construct_class = show_radial_menu(first_invoker, sacrificial, GLOB.construct_radial_images, require_near = TRUE, tooltips = TRUE)
-		if(QDELETED(sacrificial) || !construct_class)
-			return FALSE
-		sacrificial.grab_ghost()
-		make_new_construct_from_class(construct_class, THEME_CULT, sacrificial, first_invoker, TRUE, get_turf(src))
-		var/mob/living/silicon/robot/sacriborg = sacrificial
-		sacrificial.log_message("was sacrificed as a cyborg.", LOG_GAME)
-		sacriborg.mmi = null
-		qdel(sacrificial)
-		return TRUE
-	var/obj/item/soulstone/stone = new /obj/item/soulstone(get_turf(src))
-	if(sacrificial.mind && !sacrificial.suiciding)
-		stone.capture_soul(sacrificial, first_invoker, TRUE)
+				to_chat(M, span_cultlarge("\"This meager sacrifice does not fufill me! I only want live, sentient humanoids!\""))
 
 	if(sacrificial)
 		playsound(sacrificial, 'sound/magic/disintegrate.ogg', 100, TRUE)
@@ -495,9 +440,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 //Ritual of Dimensional Rending: Calls forth the avatar of Nar'Sie upon the station.
 /obj/effect/rune/narsie
 	cultist_name = "Nar'Sie"
-	cultist_desc = "tears apart dimensional barriers, calling forth the Geometer. Requires 9 invokers."
+	cultist_desc = "tears apart dimensional barriers, calling forth the Geometer. Requires 9 invokers, or the remains of the cult if all 9 aren't available."
 	invocation = "TOK-LYR RQA-NAP G'OLT-ULOFT!!"
-	req_cultists = 9
+	req_cultists_text = "9 cultists, all remaining cultists if not enough cultists available."
+	req_cultists = 1
 	icon = 'icons/effects/96x96.dmi'
 	color = RUNE_COLOR_DARKRED
 	icon_state = "rune_large"
@@ -525,6 +471,15 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return
 	var/mob/living/user = invokers[1]
 	var/datum/antagonist/cult/user_antag = user.mind.has_antag_datum(/datum/antagonist/cult, TRUE)
+	var/datum/team/cult/Cult_team = user_antag.cult_team
+	var/amt_alive_cultists = 0
+	for(var/mob/living/live_cultist in Cult_team.members)
+		if(live_cultist.stat != DEAD && ishuman(live_cultist)) // constructs dont count
+			amt_alive_cultists++
+	if(!(length(invokers) >= 9 || amt_alive_cultists < 9 && length(invokers) == amt_alive_cultists))
+		for(var/M in invokers)
+			to_chat(M, span_cultitalic("You have only [length(invokers)] acolytes! You need either 9 acolytes, or what remains of your cult, which is [amt_alive_cultists] acolytes!"))
+		return FALSE
 	var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team.objectives
 	var/area/place = get_area(src)
 	if(!(place in summon_objective.summon_spots))

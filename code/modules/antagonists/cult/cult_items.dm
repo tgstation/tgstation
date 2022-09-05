@@ -169,13 +169,6 @@ Striking a noncultist, however, will tear their flesh."}
 	QDEL_NULL(linked_action)
 	return ..()
 
-/obj/item/cult_bastard/examine(mob/user)
-	. = ..()
-	if(length(contents))
-		. += "<b>There are [length(contents)] souls trapped within the sword's core.</b>"
-	else
-		. += "The sword appears to be quite lifeless."
-
 /obj/item/cult_bastard/can_be_pulled(user)
 	return FALSE
 
@@ -229,19 +222,6 @@ Striking a noncultist, however, will tear their flesh."}
 		return
 	if(!proximity)
 		return
-	if(ishuman(target))
-		var/mob/living/carbon/human/human_target = target
-		if(human_target.stat != CONSCIOUS)
-			var/obj/item/soulstone/stone = new /obj/item/soulstone(src)
-			stone.attack(human_target, user)
-			if(!LAZYLEN(stone.contents))
-				qdel(stone)
-	if(istype(target, /obj/structure/constructshell) && length(contents))
-		var/obj/item/soulstone/stone = contents[1]
-		if(!istype(stone))
-			stone.forceMove(drop_location())
-		else if(!stone.transfer_to_construct(target, user) && !(locate(/mob/living/simple_animal/shade) in stone))
-			qdel(stone)
 
 /datum/action/innate/dash/cult
 	name = "Rend the Veil"

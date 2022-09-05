@@ -13,9 +13,9 @@
 #define MAX_BLOODCHARGE 4
 #define RUNELESS_MAX_BLOODCHARGE 1
 /// percent before rise
-#define CULT_RISEN 0.2
+#define CULT_RISEN 0.5
 /// percent before ascend
-#define CULT_ASCENDENT 0.4
+#define CULT_ASCENDENT 1
 #define BLOOD_HALBERD_COST 150
 #define BLOOD_BARRAGE_COST 300
 #define BLOOD_BEAM_COST 500

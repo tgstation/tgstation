@@ -275,24 +275,17 @@
 /datum/team/cult/proc/check_size()
 	if(cult_ascendent)
 		return
-	var/alive = 0
-	var/cultplayers = 0
-	for(var/I in GLOB.player_list)
-		var/mob/M = I
-		if(M.stat != DEAD)
-			if(IS_CULTIST(M))
-				++cultplayers
-			else
-				++alive
-	var/ratio = cultplayers/alive
+	var/needed_sacrifices = 9
+	var/current_sacrifices = length(GLOB.sacrificed)
+	var/ratio = current_sacrifices/needed_sacrifices
 	if(ratio > CULT_RISEN && !cult_risen)
 		for(var/datum/mind/mind as anything in members)
 			if(mind.current)
 				SEND_SOUND(mind.current, 'sound/hallucinations/i_see_you2.ogg')
-				to_chat(mind.current, span_cultlarge(span_warning("The veil weakens as your cult grows, your eyes begin to glow...")))
+				to_chat(mind.current, span_cultlarge(span_warning("The veil weakens as your sacrifice count grows, your eyes begin to glow...")))
 				mind.current.AddElement(/datum/element/cult_eyes)
 		cult_risen = TRUE
-		log_game("The blood cult has risen with [cultplayers] players.")
+		log_game("The blood cult has risen with [current_sacrifices] sacrifices.")
 
 	if(ratio > CULT_ASCENDENT && !cult_ascendent)
 		for(var/datum/mind/mind as anything in members)
@@ -301,7 +294,7 @@
 				to_chat(mind.current, span_cultlarge(span_warning("Your cult is ascendent and the red harvest approaches - you cannot hide your true nature for much longer!!")))
 				mind.current.AddElement(/datum/element/cult_halo)
 		cult_ascendent = TRUE
-		log_game("The blood cult has ascended with [cultplayers] players.")
+		log_game("The blood cult has ascended with [current_sacrifices] sacrifices.")
 
 /datum/team/cult/proc/make_image(datum/objective/sacrifice/sac_objective)
 	var/datum/job/job_of_sacrifice = sac_objective.target.assigned_role

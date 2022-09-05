@@ -179,7 +179,7 @@
 
 /datum/action/innate/cult/blood_spell/construction
 	name = "Twisted Construction"
-	desc = "Empowers your hand to corrupt certain metalic objects.<br><u>Converts:</u><br>Plasteel into runed metal<br>50 metal into a construct shell<br>Living cyborgs into constructs after a delay<br>Cyborg shells into construct shells<br>Purified soulstones (and any shades inside) into cultist soulstones<br>Airlocks into brittle runed airlocks after a delay (harm intent)"
+	desc = "Empowers your hand to corrupt certain metalic objects.<br><u>Converts:</u><br>Plasteel into runed metal<br>Living cyborgs into constructs after a delay<br>Airlocks into brittle runed airlocks after a delay (harm intent)"
 	button_icon_state = "transmute"
 	magic_path = "/obj/item/melee/blood_magic/construction"
 	health_cost = 12
@@ -524,7 +524,7 @@
 	. = ..()
 
 
-//Construction: Converts 50 iron to a construct shell, plasteel to runed metal, airlock to brittle runed airlock, a borg to a construct, or borg shell to a construct shell
+//Construction: Converts plasteel to runed metal, airlock to brittle runed airlock, or a borg to a construct
 /obj/item/melee/blood_magic/construction
 	name = "Twisting Aura"
 	desc = "Corrupts certain metalic objects on contact."
@@ -536,10 +536,7 @@
 	. = ..()
 	. += {"<u>A sinister spell used to convert:</u>\n
 	Plasteel into runed metal\n
-	[IRON_TO_CONSTRUCT_SHELL_CONVERSION] iron into a construct shell\n
 	Living cyborgs into constructs after a delay\n
-	Cyborg shells into construct shells\n
-	Purified soulstones (and any shades inside) into cultist soulstones\n
 	Airlocks into brittle runed airlocks after a delay (harm intent)"}
 
 /obj/item/melee/blood_magic/construction/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
@@ -548,17 +545,7 @@
 			to_chat(user, span_cultitalic("You are already invoking twisted construction!"))
 			return
 		var/turf/T = get_turf(target)
-		if(istype(target, /obj/item/stack/sheet/iron))
-			var/obj/item/stack/sheet/candidate = target
-			if(candidate.use(IRON_TO_CONSTRUCT_SHELL_CONVERSION))
-				uses--
-				to_chat(user, span_warning("A dark cloud emanates from your hand and swirls around the iron, twisting it into a construct shell!"))
-				new /obj/structure/constructshell(T)
-				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
-			else
-				to_chat(user, span_warning("You need [IRON_TO_CONSTRUCT_SHELL_CONVERSION] iron to produce a construct shell!"))
-				return
-		else if(istype(target, /obj/item/stack/sheet/plasteel))
+		if(istype(target, /obj/item/stack/sheet/plasteel))
 			var/obj/item/stack/sheet/plasteel/candidate = target
 			var/quantity = candidate.amount
 			if(candidate.use(quantity))
@@ -594,12 +581,6 @@
 					channeling = FALSE
 					candidate.color = prev_color
 					return
-			else
-				uses--
-				to_chat(user, span_warning("A dark cloud emanates from you hand and swirls around [candidate] - twisting it into a construct shell!"))
-				new /obj/structure/constructshell(T)
-				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
-				qdel(candidate)
 		else if(istype(target,/obj/machinery/door/airlock))
 			channeling = TRUE
 			playsound(T, 'sound/machines/airlockforced.ogg', 50, TRUE)
@@ -616,12 +597,6 @@
 			else
 				channeling = FALSE
 				return
-		else if(istype(target,/obj/item/soulstone))
-			var/obj/item/soulstone/candidate = target
-			if(candidate.corrupt())
-				uses--
-				to_chat(user, span_warning("You corrupt [candidate]!"))
-				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
 		else
 			to_chat(user, span_warning("The spell will not work on [target]!"))
 			return

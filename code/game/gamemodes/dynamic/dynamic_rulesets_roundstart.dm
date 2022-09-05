@@ -323,7 +323,7 @@
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
 	)
-	required_candidates = 2
+	required_candidates = 9
 	weight = 3
 	cost = 20
 	requirements = list(100,90,80,60,40,30,10,10,10,10)
@@ -331,14 +331,9 @@
 	antag_cap = list("denominator" = 20, "offset" = 1)
 	var/datum/team/cult/main_cult
 
-/datum/dynamic_ruleset/roundstart/bloodcult/ready(population, forced = FALSE)
-	required_candidates = get_antag_cap(population)
-	return ..()
-
 /datum/dynamic_ruleset/roundstart/bloodcult/pre_execute(population)
 	. = ..()
-	var/cultists = get_antag_cap(population)
-	for(var/cultists_number = 1 to cultists)
+	for(var/cultists_number = 1 to required_candidates)
 		if(candidates.len <= 0)
 			break
 		var/mob/M = pick_n_take(candidates)

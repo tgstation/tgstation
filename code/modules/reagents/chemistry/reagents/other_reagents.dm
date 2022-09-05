@@ -274,9 +274,6 @@
 
 /datum/reagent/water/holywater/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
-	if(IS_CULTIST(exposed_mob))
-		to_chat(exposed_mob, span_userdanger("A vile holiness begins to spread its shining tendrils through your mind, purging the Geometer of Blood's influence!"))
-
 /datum/reagent/water/holywater/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(M.blood_volume)
 		M.blood_volume += 0.1 * REM * delta_time // water is good for you!
@@ -285,25 +282,10 @@
 
 	data["misc"] += delta_time SECONDS * REM
 	M.adjust_timed_status_effect(4 SECONDS * delta_time, /datum/status_effect/jitter, max_duration = 20 SECONDS)
-	if(IS_CULTIST(M))
-		for(var/datum/action/innate/cult/blood_magic/BM in M.actions)
-			to_chat(M, span_cultlarge("Your blood rites falter as holy water scours your body!"))
-			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
-				qdel(BS)
 	if(data["misc"] >= (25 SECONDS)) // 10 units
 		M.adjust_timed_status_effect(4 SECONDS * delta_time, /datum/status_effect/speech/stutter, max_duration = 20 SECONDS)
 		M.set_timed_status_effect(10 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
-		if(IS_CULTIST(M) && DT_PROB(10, delta_time))
-			M.say(pick("Av'te Nar'Sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"), forced = "holy water")
-			if(prob(10))
-				M.visible_message(span_danger("[M] starts having a seizure!"), span_userdanger("You have a seizure!"))
-				M.Unconscious(12 SECONDS)
-				to_chat(M, "<span class='cultlarge'>[pick("Your blood is your bond - you are nothing without it", "Do not forget your place", \
-				"All that power, and you still fail?", "If you cannot scour this poison, I shall scour your meager life!")].</span>")
 	if(data["misc"] >= (1 MINUTES)) // 24 units
-		if(IS_CULTIST(M))
-			M.mind.remove_antag_datum(/datum/antagonist/cult)
-			M.Unconscious(100)
 		M.remove_status_effect(/datum/status_effect/jitter)
 		M.remove_status_effect(/datum/status_effect/speech/stutter)
 		holder.remove_reagent(type, volume) // maybe this is a little too perfect and a max() cap on the statuses would be better??
