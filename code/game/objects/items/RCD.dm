@@ -1163,7 +1163,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	/obj/machinery/plumbing/output = 5,
 	/obj/machinery/plumbing/tank = 20,
 	/obj/machinery/plumbing/synthesizer = 15,
-	/obj/machinery/plumbing/reaction_chamber = 15,
+	/obj/machinery/plumbing/reaction_chamber/chem = 15,
 	/obj/machinery/plumbing/buffer = 10,
 	//Above are the most common machinery which is shown on the first cycle. Keep new additions below THIS line, unless they're probably gonna be needed alot
 	/obj/machinery/plumbing/layer_manifold = 5,
@@ -1366,7 +1366,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	/obj/machinery/plumbing/output/tap = 5,
 	/obj/machinery/plumbing/synthesizer/soda = 15,
 	/obj/machinery/plumbing/synthesizer/beer = 15,
-	/obj/machinery/plumbing/mixing_chamber = 15,
+	/obj/machinery/plumbing/reaction_chamber = 15,
 	/obj/machinery/plumbing/buffer = 10,
 	/obj/machinery/plumbing/bottler = 50,
 	/obj/machinery/plumbing/tank = 20,
