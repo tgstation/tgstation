@@ -54,45 +54,6 @@ DEFINE_BITFIELD(smoothing_junction, list(
 #define DEFAULT_UNDERLAY_ICON_STATE "plating"
 
 
-#define SET_ADJ_IN_DIR(source, junction, direction, direction_flag) \
-	do { \
-		var/turf/neighbor = get_step(source, direction); \
-		if(!neighbor) { \
-			if(source.smoothing_flags & SMOOTH_BORDER) { \
-				junction |= direction_flag; \
-			}; \
-		}; \
-		else { \
-			if(!isnull(neighbor.smoothing_groups)) { \
-				for(var/target in source.canSmoothWith) { \
-					if(!(source.canSmoothWith[target] & neighbor.smoothing_groups[target])) { \
-						continue; \
-					}; \
-					junction |= direction_flag; \
-					break; \
-				}; \
-			}; \
-			if(!(junction & direction_flag) && source.smoothing_flags & SMOOTH_OBJ) { \
-				for(var/obj/thing in neighbor) { \
-					if(!thing.anchored || isnull(thing.smoothing_groups)) { \
-						continue; \
-					}; \
-					for(var/target in source.canSmoothWith) { \
-						if(!(source.canSmoothWith[target] & thing.smoothing_groups[target])) { \
-							continue; \
-						}; \
-						junction |= direction_flag; \
-						break; \
-					}; \
-					if(junction & direction_flag) { \
-						break; \
-					}; \
-				}; \
-			}; \
-		}; \
-	} while(FALSE)
-
-
 ///Scans all adjacent turfs to find targets to smooth with.
 /atom/proc/calculate_adjacencies()
 	. = NONE
@@ -319,7 +280,6 @@ DEFINE_BITFIELD(smoothing_junction, list(
 
 	return NO_ADJ_FOUND
 
-
 /**
  * Basic smoothing proc. The atom checks for adjacent directions to smooth with and changes the icon_state based on that.
  *
@@ -329,8 +289,50 @@ DEFINE_BITFIELD(smoothing_junction, list(
 /atom/proc/bitmask_smooth()
 	var/new_junction = NONE
 
+	// cache for sanic speed
+	var/canSmoothWith = src.canSmoothWith
+
+	var/smooth_border = (smoothing_flags & SMOOTH_BORDER)
+	var/smooth_obj = (smoothing_flags & SMOOTH_OBJ)
+
+	#define SET_ADJ_IN_DIR(direction, direction_flag) \
+		set_adj_in_dir: { \
+			do { \
+				var/turf/neighbor = get_step(src, direction); \
+				if(isnull(neighbor)) { \
+					if(smooth_border) { \
+						new_junction |= direction_flag; \
+					}; \
+				} else { \
+					var/neighbor_smoothing_groups = neighbor.smoothing_groups; \
+					if(!isnull(neighbor_smoothing_groups)) { \
+						for(var/target in canSmoothWith) { \
+							if(canSmoothWith[target] & neighbor_smoothing_groups[target]) { \
+								new_junction |= direction_flag; \
+								break set_adj_in_dir; \
+							}; \
+						}; \
+					}; \
+					if(smooth_obj) { \
+						for(var/obj/thing in neighbor) { \
+							var/thing_smoothing_groups = thing.smoothing_groups; \
+							if(!thing.anchored || isnull(thing_smoothing_groups)) { \
+								continue; \
+							}; \
+							for(var/target in canSmoothWith) { \
+								if(canSmoothWith[target] & thing_smoothing_groups[target]) { \
+									new_junction |= direction_flag; \
+									break set_adj_in_dir; \
+								}; \
+							}; \
+						}; \
+					}; \
+				}; \
+			} while(FALSE) \
+		}
+
 	for(var/direction in GLOB.cardinals) //Cardinal case first.
-		SET_ADJ_IN_DIR(src, new_junction, direction, direction)
+		SET_ADJ_IN_DIR(direction, direction)
 
 	if(!(new_junction & (NORTH|SOUTH)) || !(new_junction & (EAST|WEST)))
 		set_smoothed_icon_state(new_junction)
@@ -338,19 +340,21 @@ DEFINE_BITFIELD(smoothing_junction, list(
 
 	if(new_junction & NORTH_JUNCTION)
 		if(new_junction & WEST_JUNCTION)
-			SET_ADJ_IN_DIR(src, new_junction, NORTHWEST, NORTHWEST_JUNCTION)
+			SET_ADJ_IN_DIR(NORTHWEST, NORTHWEST_JUNCTION)
 
 		if(new_junction & EAST_JUNCTION)
-			SET_ADJ_IN_DIR(src, new_junction, NORTHEAST, NORTHEAST_JUNCTION)
+			SET_ADJ_IN_DIR(NORTHEAST, NORTHEAST_JUNCTION)
 
 	if(new_junction & SOUTH_JUNCTION)
 		if(new_junction & WEST_JUNCTION)
-			SET_ADJ_IN_DIR(src, new_junction, SOUTHWEST, SOUTHWEST_JUNCTION)
+			SET_ADJ_IN_DIR(SOUTHWEST, SOUTHWEST_JUNCTION)
 
 		if(new_junction & EAST_JUNCTION)
-			SET_ADJ_IN_DIR(src, new_junction, SOUTHEAST, SOUTHEAST_JUNCTION)
+			SET_ADJ_IN_DIR(SOUTHEAST, SOUTHEAST_JUNCTION)
 
 	set_smoothed_icon_state(new_junction)
+
+	#undef SET_ADJ_IN_DIR
 
 
 ///Changes the icon state based on the new junction bitmask. Returns the old junction value.
