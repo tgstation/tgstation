@@ -19,8 +19,8 @@
 	RegisterSignal(cqc_user, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
 
 /datum/martial_art/cqc/on_remove(mob/living/cqc_user)
-	. = ..()
 	UnregisterSignal(cqc_user, COMSIG_PARENT_ATTACKBY)
+	. = ..()
 
 ///Signal from getting attacked with an item, for a special interaction with touch spells
 /datum/martial_art/cqc/proc/on_attackby(mob/living/cqc_user, obj/item/attack_weapon, mob/attacker, params)
@@ -30,7 +30,7 @@
 		return
 	if(!can_use(cqc_user))
 		return
-	cqc_user.visible_message( 
+	cqc_user.visible_message(
 		span_danger("[cqc_user] twists [attacker]'s arm, sending their [attack_weapon] back towards them!"),
 		span_userdanger("Making sure to avoid [attacker]'s [attack_weapon], you twist their arm to send it right back at them!"),
 	)

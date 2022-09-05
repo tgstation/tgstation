@@ -20,12 +20,12 @@
 	target.faction |= "carp" //:D
 
 /datum/martial_art/the_sleeping_carp/on_remove(mob/living/target)
-	. = ..()
 	REMOVE_TRAIT(target, TRAIT_NOGUNS, SLEEPING_CARP_TRAIT)
 	REMOVE_TRAIT(target, TRAIT_HARDLY_WOUNDED, SLEEPING_CARP_TRAIT)
 	REMOVE_TRAIT(target, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
 	UnregisterSignal(target, COMSIG_PARENT_ATTACKBY)
 	target.faction -= "carp" //:(
+	. = ..()
 
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/A, mob/living/D)
 	if(findtext(streak,STRONG_PUNCH_COMBO))
@@ -123,9 +123,9 @@
 		return FALSE
 	var/datum/dna/dna = carp_user.has_dna()
 	if(dna?.check_mutation(/datum/mutation/human/hulk)) //NO HULK
-		return BULLET_ACT_HIT
+		return FALSE
 	if(!isturf(carp_user.loc)) //NO MOTHERFLIPPIN MECHS!
-		return BULLET_ACT_HIT
+		return FALSE
 	return TRUE
 
 /datum/martial_art/the_sleeping_carp/on_projectile_hit(mob/living/carp_user, obj/projectile/P, def_zone)
