@@ -288,7 +288,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	return copy
 
 ///Copies variables from sample, moles multiplicated by partial
-///Returns: 1 if we are mutable, 0 otherwise
+///Returns: TRUE if we are mutable, FALSE otherwise
 /datum/gas_mixture/proc/copy_from(datum/gas_mixture/sample, partial = 1)
 	var/list/cached_gases = gases //accessing datum vars is slower than proc vars
 	var/list/sample_gases = sample.gases
@@ -301,41 +301,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		ASSERT_GAS(id,src)
 		cached_gases[id][MOLES] = sample_gases[id][MOLES] * partial
 
-	return 1
-
-///Copies all gas info from the turf into the gas list along with temperature
-///Returns: TRUE if we are mutable, FALSE otherwise
-/datum/gas_mixture/proc/copy_from_turf(turf/model)
-	parse_gas_string(model.initial_gas_mix)
-
-	//acounts for changes in temperature
-	var/turf/model_parent = model.parent_type
-	if(model.temperature != initial(model.temperature) || model.temperature != initial(model_parent.temperature))
-		temperature = model.temperature
-
 	return TRUE
-
-///Copies variables from a particularly formatted string.
-///Returns: 1 if we are mutable, 0 otherwise
-/datum/gas_mixture/proc/parse_gas_string(gas_string)
-	gas_string = SSair.preprocess_gas_string(gas_string)
-
-	var/list/gases = src.gases
-	var/list/gas = params2list(gas_string)
-	if(gas["TEMP"])
-		temperature = text2num(gas["TEMP"])
-		temperature_archived = temperature
-		gas -= "TEMP"
-	else // if we do not have a temp in the new gas mix lets assume room temp.
-		temperature = T20C
-	gases.Cut()
-	for(var/id in gas)
-		var/path = id
-		if(!ispath(path))
-			path = gas_id2path(path) //a lot of these strings can't have embedded expressions (especially for mappers), so support for IDs needs to stick around
-		ADD_GAS(path, gases)
-		gases[path][MOLES] = text2num(gas[id])
-	return 1
 
 /// Performs air sharing calculations between two gas_mixtures
 /// share() is communitive, which means A.share(B) needs to be the same as B.share(A)

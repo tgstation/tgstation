@@ -36,6 +36,9 @@ SUBSYSTEM_DEF(air)
 	var/list/gas_reactions = list()
 	var/list/atmos_gen
 	var/list/planetary = list() //Lets cache static planetary mixes
+	/// List of gas string -> canonical gas mixture
+	var/list/strings_to_mix = list()
+
 
 	//Special functions lists
 	var/list/turf/active_super_conductivity = list()
@@ -665,6 +668,38 @@ GLOBAL_LIST_EMPTY(colored_images)
 	for(var/T in subtypesof(/datum/atmosphere))
 		var/datum/atmosphere/atmostype = T
 		atmos_gen[initial(atmostype.id)] = new atmostype
+
+/// Takes a gas string, returns the matching mutable gas_mixture
+/datum/controller/subsystem/air/proc/parse_gas_string(gas_string)
+	var/datum/gas_mixture/cached = strings_to_mix[gas_string]
+	if(cached)
+		if(istype(cached, /datum/gas_mixture/immutable))
+			return cached
+		return cached.copy()
+
+	var/datum/gas_mixture/canonical_mix = new()
+	// We set here so any future key changes don't fuck us
+	strings_to_mix[gas_string] = canonical_mix
+	gas_string = preprocess_gas_string(gas_string)
+
+	var/list/gases = canonical_mix.gases
+	var/list/gas = params2list(gas_string)
+	if(gas["TEMP"])
+		canonical_mix.temperature = text2num(gas["TEMP"])
+		canonical_mix.temperature_archived = canonical_mix.temperature
+		gas -= "TEMP"
+	else // if we do not have a temp in the new gas mix lets assume room temp.
+		canonical_mix.temperature = T20C
+	for(var/id in gas)
+		var/path = id
+		if(!ispath(path))
+			path = gas_id2path(path) //a lot of these strings can't have embedded expressions (especially for mappers), so support for IDs needs to stick around
+		ADD_GAS(path, gases)
+		gases[path][MOLES] = text2num(gas[id])
+
+	if(istype(canonical_mix, /datum/gas_mixture/immutable))
+		return canonical_mix
+	return canonical_mix.copy()
 
 /datum/controller/subsystem/air/proc/preprocess_gas_string(gas_string)
 	if(!atmos_gen)
