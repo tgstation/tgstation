@@ -116,6 +116,7 @@
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 10, /datum/reagent/toxin/formaldehyde = 3, /datum/reagent/medicine/coagulant = 2)
 	custom_price = PAYCHECK_CREW
 	custom_premium_price = PAYCHECK_COMMAND
+	var/old_text
 
 /obj/item/reagent_containers/hypospray/medipen/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins to choke on \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -138,10 +139,16 @@
 
 /obj/item/reagent_containers/hypospray/medipen/examine()
 	. = ..()
-	if(reagents?.reagent_list.len)
-		. += span_notice("It is currently loaded.")
+	if (old_text)     //if old_text = true have the old examine text, if otherwise have the new examine text
+		if (length(reagents?.reagent_list))
+			. += span_notice("It is loaded.")
+		else
+			. += span_notice("It is spent.")
 	else
-		. += span_notice("It is spent.")
+		if(length(reagents?.reagent_list))
+			. += span_notice("There\'s a small LCD screen on the side of the medipen which reads, 'WARNING: This medipen contains [pretty_string_from_reagent_list(reagents.reagent_list, TRUE, ", ", TRUE, TRUE)]. Do not use if allergic to any listed chemicals.' in small text.") //cheapskates at nanotrasen couldnt ball out for LED
+		else
+			. += span_notice("There\'s a blank LCD screen on the side of the medipen.")
 
 /obj/item/reagent_containers/hypospray/medipen/stimpack //goliath kiting
 	name = "stimpack medipen"
@@ -276,6 +283,7 @@
 	inhand_icon_state = "snail"
 	base_icon_state = "snail"
 	list_reagents = list(/datum/reagent/snail = 10)
+	old_text = TRUE
 
 /obj/item/reagent_containers/hypospray/medipen/magillitis
 	name = "experimental autoinjector"
@@ -296,6 +304,7 @@
 	list_reagents = list(/datum/reagent/drug/pumpup = 15)
 	icon_state = "maintenance"
 	base_icon_state = "maintenance"
+	old_text = TRUE
 
 /obj/item/reagent_containers/hypospray/medipen/ekit
 	name = "emergency first-aid autoinjector"
