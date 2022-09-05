@@ -67621,11 +67621,6 @@
 	icon_state = "map-right-MS";
 	pixel_y = 32
 	},
-/obj/item/paper_bin{
-	pixel_x = 1;
-	pixel_y = 9
-	},
-/obj/item/pen,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "xFF" = (
