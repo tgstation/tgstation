@@ -1,0 +1,6 @@
+author: "scriptis"
+delete-after: True
+changes: 
+  - qol: "techfab tgui now supports old-school bulk sheet ejection"
+  - qol: "techfab tgui no longer overflows its window if you have six million categories"
+  - qol: "techfab tgui no longer consumes your screen's free real estate on an unprecedented scale"
