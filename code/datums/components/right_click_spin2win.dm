@@ -82,11 +82,14 @@
 		spinning_user.visible_message(message)
 	playsound(spinning_user, 'sound/weapons/fwoosh.ogg', 75, FALSE)
 	stop_spinning_timer_id = addtimer(CALLBACK(src, .proc/stop_spinning, spinning_user), 5 SECONDS)
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_spin_equipped)
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_spin_dropped)
 	START_PROCESSING(SSprocessing, src)
- 
+
 /datum/component/right_click_spin2win/proc/stop_spinning(mob/living/user)
 	//user might not exist for the end
 	STOP_PROCESSING(SSprocessing, src)
+	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 	deltimer(stop_spinning_timer_id)
 	playsound(user, 'sound/weapons/fwoosh.ogg', 75, FALSE)
 	if(user && end_spin_message)
@@ -106,3 +109,14 @@
 	playsound(item_owner, 'sound/weapons/fwoosh.ogg', 75, FALSE)
 	for(var/mob/living/victim in orange(1, item_owner))
 		spinning_item.attack(victim, item_owner)
+
+/datum/component/right_click_spin2win/proc/on_spin_dropped(datum/source, mob/user)
+	SIGNAL_HANDLER
+
+	stop_spinning(user)
+
+/datum/component/right_click_spin2win/proc/on_spin_equipped(datum/source, mob/equipper, slot)
+	SIGNAL_HANDLER
+
+	if(slot != ITEM_SLOT_HANDS)
+		stop_spinning(equipper)

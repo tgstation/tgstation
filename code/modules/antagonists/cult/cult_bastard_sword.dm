@@ -48,7 +48,7 @@
 	animate(user, color = oldcolor, time = duration, easing = EASE_IN)
 	addtimer(CALLBACK(user, /atom/proc/update_atom_colour), duration)
 	block_chance = 100
-	sword.slowdown += 1.5
+	slowdown += 1.5
 
 /obj/item/cult_bastard/proc/on_unspin(mob/living/user)
 	block_chance = 50
