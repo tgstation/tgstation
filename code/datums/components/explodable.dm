@@ -58,7 +58,7 @@
 	SIGNAL_HANDLER
 	if(!(I.item_flags & IN_STORAGE))
 		return
-	
+
 	check_if_detonate(I)
 
 /datum/component/explodable/proc/explodable_impact(datum/source, atom/hit_atom, datum/thrownthing/throwingdatum)
@@ -85,10 +85,10 @@
 		return COMPONENT_BLOCK_TOOL_ATTACK
 
 /// Shot by something
-/datum/component/explodable/proc/projectile_react(datum/source, obj/projectile/projectile)
+/datum/component/explodable/proc/projectile_react(datum/source, obj/projectile/shot)
 	SIGNAL_HANDLER
 
-	if(projectile.damage_type == BURN && !projectile.nodamage)
+	if((shot.damage_type == BURN || istype(shot, /obj/projectile/plasma)) && !shot.nodamage)
 		detonate()
 
 ///Called when you attack a specific body part of the thing this is equipped on. Useful for exploding pants.

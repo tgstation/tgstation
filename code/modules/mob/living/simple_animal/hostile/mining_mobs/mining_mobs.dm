@@ -45,7 +45,7 @@
 /mob/living/simple_animal/hostile/asteroid/bullet_act(obj/projectile/shot)//Reduces damage from most projectiles to curb off-screen kills
 	if(!stat)
 		Aggro()
-	if(shot.damage < 30 && shot.damage_type != BRUTE || !shot.penetrate_mining_mobs)
+	if(shot.damage < 30 && shot.damage_type != BRUTE)
 		shot.damage = (shot.damage / 3)
 		visible_message(span_danger("[shot] has a reduced effect on [src]!"))
 	..()
