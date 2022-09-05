@@ -79,7 +79,7 @@
 	if(start_spin_message)
 		var/message = replacetext(start_spin_message, "%USER", spinning_user)
 		spinning_user.visible_message(message)
-	playsound(user, 'sound/weapons/fwoosh.ogg', 75, FALSE)
+	playsound(spinning_user, 'sound/weapons/fwoosh.ogg', 75, FALSE)
 	stop_spinning_timer_id = addtimer(CALLBACK(src, .proc/stop_spinning, spinning_user), 5 SECONDS)
 	START_PROCESSING(SSprocessing, src)
 
@@ -97,12 +97,12 @@
 	spinning = FALSE
 
 /datum/component/right_click_spin2win/process(delta_time)
-	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, FALSE)
 	var/obj/item/spinning_item = parent
 	if(!isliving(spinning_item.loc))
 		. = ..()
 		stop_spinning()
 		return
 	var/mob/living/item_owner = spinning_item.loc
-	for(var/mob/living/victim in orange(1,owner))
+	playsound(item_owner, 'sound/weapons/fwoosh.ogg', 75, FALSE)
+	for(var/mob/living/victim in orange(1, item_owner))
 		spinning_item.attack(victim, item_owner)

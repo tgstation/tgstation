@@ -10,11 +10,11 @@
 	armour_penetration = 45
 	throw_speed = 1
 	throw_range = 3
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	light_color = "#ff0000"
-	attack_verb = list("cleaved", "slashed", "torn", "hacked", "ripped", "diced", "carved")
+	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
+	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	icon_state = "cultbastard"
-	item_state = "cultbastard"
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
@@ -31,13 +31,13 @@
 	AddComponent(/datum/component/butchering, 50, 80)
 	AddComponent(/datum/component/two_handed, require_twohands = TRUE)
 	AddComponent(/datum/component/soul_stealer)
-	AddComponent(
-		/datum/component/right_click_spin2win,
-		spin_cooldown_time = 25 SECONDS,
-		on_spin_callback = CALLBACK(src, .proc/on_spin),
-		on_unspin_callback = null,
-		start_spin_message = span_danger("%USER begins swinging [parent] around with inhuman strength!"),
-		end_spin_message = span_warning("%USER's inhuman strength dissipates and the sword's runes grow cold!")
+	AddComponent( \
+		/datum/component/right_click_spin2win, \
+		spin_cooldown_time = 25 SECONDS, \
+		on_spin_callback = CALLBACK(src, .proc/on_spin), \
+		on_unspin_callback = null, \
+		start_spin_message = span_danger("%USER begins swinging the sword around with inhuman strength!"), \
+		end_spin_message = span_warning("%USER's inhuman strength dissipates and the sword's runes grow cold!") \
 	)
 
 /obj/item/cult_bastard/proc/on_spin(mob/living/user, duration)
@@ -53,7 +53,7 @@
 
 /obj/item/cult_bastard/pickup(mob/living/user)
 	. = ..()
-	if(!iscultist(user))
+	if(!IS_CULTIST(user))
 		if(!IS_HERETIC(user))
 			to_chat(user, "<span class='cultlarge'>\"I wouldn't advise that.\"</span>")
 			force = 5
@@ -84,43 +84,3 @@
 	playsound(src, 'sound/weapons/parry.ogg', 75, 1)
 	owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
 	return TRUE
-
-/obj/item/cult_bastard/attack_secondary(mob/living/victim, mob/living/user, params)
-	. = ..()
-
-
-/datum/action/innate/cult/spin2win
-	name = "Geometer's Fury"
-	desc = "You draw on the power of the sword's ancient runes, spinning it wildly around you as you become immune to most attacks."
-	background_icon_state = "bg_demon"
-	button_icon_state = "sintouch"
-	var/cooldown = 0
-	var/mob/living/carbon/human/holder
-	var/obj/item/twohanded/required/cult_bastard/sword
-
-/datum/action/innate/cult/spin2win/Grant(mob/user, obj/bastard)
-	. = ..()
-	sword = bastard
-	holder = user
-
-/datum/action/innate/cult/spin2win/IsAvailable()
-	if(iscultist(holder) && cooldown <= world.time)
-		return TRUE
-	return FALSE
-
-/datum/action/innate/cult/spin2win/Activate()
-	cooldown = world.time + sword.spin_cooldown
-	holder.changeNext_move(50)
-	holder.apply_status_effect(/datum/status_effect/sword_spin)
-	sword.spinning = TRUE
-	sword.block_chance = 100
-	sword.slowdown += 1.5
-	addtimer(CALLBACK(src, .proc/stop_spinning), 5 SECONDS)
-	holder.update_action_buttons_icon()
-
-/datum/action/innate/cult/spin2win/proc/stop_spinning()
-	sword.spinning = FALSE
-	sword.block_chance = 50
-	sword.slowdown -= 1.5
-	sleep(sword.spin_cooldown)
-	holder.update_action_buttons_icon()

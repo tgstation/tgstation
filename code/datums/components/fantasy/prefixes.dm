@@ -156,9 +156,5 @@
 
 /datum/fantasy_affix/soul_stealer/apply(datum/component/fantasy/comp, newName)
 	var/obj/item/master = comp.parent
-	master.AddComponent(/datum/component/soul_stealer)
+	comp.appliedComponents += master.AddComponent(/datum/component/soul_stealer)
 	return "soul-[pick("stealing", "hungering", "devouring")] [newName]"
-
-/datum/fantasy_affix/soul_stealer/remove(datum/component/fantasy/comp)
-	var/obj/item/master = comp.parent
-	master.RemoveComponent(/datum/component/soul_stealer)
