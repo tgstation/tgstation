@@ -58,7 +58,6 @@
 	SIGNAL_HANDLER
 	if(!(I.item_flags & IN_STORAGE))
 		return
-
 	check_if_detonate(I)
 
 /datum/component/explodable/proc/explodable_impact(datum/source, atom/hit_atom, datum/thrownthing/throwingdatum)
