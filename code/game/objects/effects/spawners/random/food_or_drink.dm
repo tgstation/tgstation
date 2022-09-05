@@ -33,6 +33,7 @@
 		/obj/item/seeds/chanter,
 		/obj/item/seeds/potato,
 		/obj/item/seeds/sugarcane,
+		/obj/item/seeds/cucumber,
 	)
 
 /obj/effect/spawner/random/food_or_drink/seed_rare

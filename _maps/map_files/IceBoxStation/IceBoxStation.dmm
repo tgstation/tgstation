@@ -310,13 +310,6 @@
 /area/station/hallway/secondary/service)
 "agH" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/right/directional/east{
-	base_state = "left";
-	dir = 2;
-	icon_state = "left";
-	name = "Robotics Desk";
-	req_access = list("robotics")
-	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 1;
 	id = "robotics";
@@ -325,6 +318,13 @@
 /obj/machinery/door/firedoor,
 /obj/structure/desk_bell{
 	pixel_x = 7
+	},
+/obj/machinery/door/window/right/directional/east{
+	base_state = "left";
+	dir = 2;
+	icon_state = "left";
+	name = "Robotics Desk";
+	req_access = list("robotics")
 	},
 /turf/open/floor/plating,
 /area/station/science/robotics/lab)
@@ -501,7 +501,7 @@
 /turf/closed/wall/r_wall,
 /area/station/medical/morgue)
 "akz" = (
-/obj/structure/chair/sofa/corp/right{
+/obj/structure/chair/sofa/corp/left{
 	dir = 1
 	},
 /obj/effect/landmark/start/hangover,
@@ -1292,7 +1292,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/office)
 "auN" = (
-/obj/structure/chair/sofa/corp/left{
+/obj/structure/chair/sofa/corp/right{
 	dir = 1
 	},
 /turf/open/floor/wood,
@@ -5668,8 +5668,8 @@
 "bJg" = (
 /obj/structure/table/wood,
 /obj/machinery/fax{
-	name = "Captain's Fax Machine";
-	fax_name = "Captain's Office"
+	fax_name = "Captain's Office";
+	name = "Captain's Fax Machine"
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
@@ -7612,7 +7612,7 @@
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "clR" = (
-/obj/structure/chair/sofa/corp/right{
+/obj/structure/chair/sofa/corp/left{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -11788,7 +11788,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "dwS" = (
-/obj/machinery/door_timer{
+/obj/machinery/status_display/door_timer{
 	id = "Cell 3";
 	name = "Cell 3";
 	pixel_x = -32
@@ -11917,8 +11917,8 @@
 /obj/machinery/light/directional/east,
 /obj/structure/table,
 /obj/machinery/fax{
-	name = "Research Division Fax Machine";
 	fax_name = "Research Division";
+	name = "Research Division Fax Machine";
 	pixel_x = 1
 	},
 /turf/open/floor/iron/white/side{
@@ -14973,8 +14973,8 @@
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/structure/table/glass,
 /obj/machinery/fax{
-	name = "Medical Fax Machine";
-	fax_name = "Medical"
+	fax_name = "Medical";
+	name = "Medical Fax Machine"
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
@@ -18614,8 +18614,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/fax{
-	name = "Head of Security's Fax Machine";
-	fax_name = "Head of Security's Office"
+	fax_name = "Head of Security's Office";
+	name = "Head of Security's Fax Machine"
 	},
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/hos)
@@ -21139,8 +21139,8 @@
 	},
 /obj/structure/table,
 /obj/machinery/fax{
-	name = "Cargo Office Fax Machine";
-	fax_name = "Cargo Office"
+	fax_name = "Cargo Office";
+	name = "Cargo Office Fax Machine"
 	},
 /turf/open/floor/iron,
 /area/station/cargo/office)
@@ -21207,7 +21207,7 @@
 	},
 /area/station/command/heads_quarters/rd)
 "gqZ" = (
-/obj/machinery/door_timer{
+/obj/machinery/status_display/door_timer{
 	id = "Cell 2";
 	name = "Cell 2";
 	pixel_x = -32
@@ -26224,8 +26224,8 @@
 /obj/machinery/firealarm/directional/south,
 /obj/structure/table/glass,
 /obj/machinery/fax{
-	name = "Chief Medical Officer's Fax Machine";
-	fax_name = "Chief Medical Officer's Office"
+	fax_name = "Chief Medical Officer's Office";
+	name = "Chief Medical Officer's Fax Machine"
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
@@ -26901,7 +26901,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/security/execution/transfer)
 "ihG" = (
-/obj/structure/chair/sofa/corp/right{
+/obj/structure/chair/sofa/corp/left{
 	dir = 1
 	},
 /turf/open/floor/wood,
@@ -36088,7 +36088,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "kVM" = (
-/obj/structure/chair/sofa/corp/left{
+/obj/structure/chair/sofa/corp/right{
 	dir = 1
 	},
 /obj/effect/landmark/start/hangover,
@@ -42036,8 +42036,8 @@
 	dir = 4
 	},
 /obj/machinery/fax{
-	name = "Law Office Fax Machine";
-	fax_name = "Law Office"
+	fax_name = "Law Office";
+	name = "Law Office Fax Machine"
 	},
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
@@ -44425,8 +44425,8 @@
 /obj/machinery/button/door/directional/west{
 	id = "Toilet1";
 	name = "Lock Control";
-	specialfunctions = 4;
-	normaldoorcontrol = 1
+	normaldoorcontrol = 1;
+	specialfunctions = 4
 	},
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/freezer,
@@ -46296,7 +46296,7 @@
 "odf" = (
 /obj/structure/cable,
 /obj/item/reagent_containers/cup/glass/bottle/hooch,
-/obj/machinery/power/apc/five_k/directional/north,
+/obj/machinery/power/apc/highcap/five_k/directional/north,
 /turf/open/floor/plating,
 /area/mine/storage)
 "odi" = (
@@ -49969,8 +49969,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/fax{
-	name = "Law Office Fax Machine";
-	fax_name = "Law Office"
+	name = "Detective's Fax Machine";
+	fax_name = "Detective's Office"
 	},
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
@@ -52210,8 +52210,8 @@
 	},
 /obj/structure/table,
 /obj/machinery/fax{
-	name = "Head of Personnel's Fax Machine";
-	fax_name = "Head of Personnel's Office"
+	fax_name = "Head of Personnel's Office";
+	name = "Head of Personnel's Fax Machine"
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
@@ -57369,8 +57369,8 @@
 /obj/machinery/button/door/directional/west{
 	id = "Toilet2";
 	name = "Lock Control";
-	specialfunctions = 4;
-	normaldoorcontrol = 1
+	normaldoorcontrol = 1;
+	specialfunctions = 4
 	},
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/freezer,
@@ -57594,8 +57594,8 @@
 /obj/structure/cable,
 /obj/structure/table,
 /obj/machinery/fax{
-	name = "Quartermaster's Fax Machine";
-	fax_name = "Quartermaster's Office"
+	fax_name = "Quartermaster's Office";
+	name = "Quartermaster's Fax Machine"
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
@@ -63153,8 +63153,8 @@
 /obj/item/radio/intercom/directional/south,
 /obj/structure/table/wood,
 /obj/machinery/fax{
-	name = "Psychology Office Fax Machine";
-	fax_name = "Psychology Office"
+	fax_name = "Psychology Office";
+	name = "Psychology Office Fax Machine"
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/psychology)
@@ -65435,7 +65435,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "ubo" = (
-/obj/machinery/door_timer{
+/obj/machinery/status_display/door_timer{
 	id = "Cell 1";
 	name = "Cell 1";
 	pixel_x = -32
@@ -65675,17 +65675,17 @@
 /area/station/security/prison/mess)
 "ueQ" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/right/directional/south{
-	dir = 4;
-	name = "Genetics Desk";
-	req_access = list("genetics")
-	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 8;
 	id = "gene_desk_shutters";
 	name = "Genetics Shutters"
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/window/right/directional/south{
+	dir = 4;
+	name = "Genetics Desk";
+	req_access = list("genetics")
+	},
 /turf/open/floor/plating,
 /area/station/science/genetics)
 "ueS" = (
@@ -67865,13 +67865,6 @@
 	dir = 8;
 	name = "Reception Window"
 	},
-/obj/machinery/door/window/brigdoor{
-	base_state = "rightsecure";
-	dir = 4;
-	icon_state = "rightsecure";
-	name = "Head of Personnel's Desk";
-	req_access = list("hop")
-	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 8;
 	id = "hop";
@@ -67882,6 +67875,13 @@
 	},
 /obj/structure/desk_bell{
 	pixel_x = 7
+	},
+/obj/machinery/door/window/brigdoor{
+	base_state = "rightsecure";
+	dir = 4;
+	icon_state = "rightsecure";
+	name = "Head of Personnel's Desk";
+	req_access = list("hop")
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
@@ -69419,13 +69419,6 @@
 /area/mine/living_quarters)
 "vnG" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/right/directional/east{
-	base_state = "left";
-	dir = 8;
-	icon_state = "left";
-	name = "Robotics Desk";
-	req_access = list("robotics")
-	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 4;
 	id = "robotics2";
@@ -69434,6 +69427,13 @@
 /obj/item/folder/white,
 /obj/item/pen,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/window/right/directional/east{
+	base_state = "left";
+	dir = 8;
+	icon_state = "left";
+	name = "Robotics Desk";
+	req_access = list("robotics")
+	},
 /turf/open/floor/plating,
 /area/station/science/robotics/lab)
 "vnN" = (
@@ -71506,8 +71506,8 @@
 /obj/item/radio/intercom/directional/north,
 /obj/structure/table/wood,
 /obj/machinery/fax{
-	name = "Service Fax Machine";
-	fax_name = "Service Hallway"
+	fax_name = "Service Hallway";
+	name = "Service Fax Machine"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
@@ -75910,12 +75910,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/structure/statue{
-	desc = "A lifelike statue of a horrifying monster.";
-	dir = 8;
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi';
-	icon_state = "goliath";
-	name = "goliath"
+/obj/structure/statue/goliath{
+	dir = 8
 	},
 /turf/open/floor/iron/white,
 /area/mine/living_quarters)
@@ -77511,8 +77507,8 @@
 /obj/machinery/airalarm/directional/north,
 /obj/structure/table,
 /obj/machinery/fax{
-	name = "Security Office Fax Machine";
-	fax_name = "Security Office"
+	fax_name = "Security Office";
+	name = "Security Office Fax Machine"
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/office)
@@ -77668,8 +77664,8 @@
 /obj/structure/table,
 /obj/machinery/light_switch/directional/north,
 /obj/machinery/fax{
-	name = "Research Director's Fax Machine";
-	fax_name = "Research Director's Office"
+	fax_name = "Research Director's Office";
+	name = "Research Director's Fax Machine"
 	},
 /turf/open/floor/iron/white/side{
 	dir = 1

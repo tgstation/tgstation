@@ -1,0 +1,4 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes: 
+  - bugfix: "Fixed the orientation of the left and right end of corporate sofas when facing North. Their behavior is no longer swapped compared to other sofas."

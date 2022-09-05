@@ -12,11 +12,6 @@
 /mob/proc/adjust_drowsyness(amount)
 	drowsyness = max(drowsyness + amount, 0)
 
-
-///Blind a mobs eyes by amount
-/mob/proc/blind_eyes(amount)
-	adjust_blindness(amount)
-
 /**
  * Adjust a mobs blindness by an amount
  *

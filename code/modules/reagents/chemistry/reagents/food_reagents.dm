@@ -380,8 +380,9 @@
 		if (!(pepper_proof)) // you need both eye and mouth protection
 			if(prob(5))
 				victim.emote("scream")
+			victim.emote("cry")
 			victim.blur_eyes(5) // 10 seconds
-			victim.blind_eyes(3) // 6 seconds
+			victim.adjust_blindness(3) // 6 seconds
 			victim.set_timed_status_effect(5 SECONDS, /datum/status_effect/confusion, only_if_higher = TRUE)
 			victim.Knockdown(3 SECONDS)
 			victim.add_movespeed_modifier(/datum/movespeed_modifier/reagent/pepperspray)
@@ -710,7 +711,7 @@
 	else
 		if(!exposed_mob.eye_blurry)
 			to_chat(exposed_mob, span_warning("Tears well up in your eyes!"))
-		exposed_mob.blind_eyes(2)
+		exposed_mob.adjust_blindness(2)
 		exposed_mob.blur_eyes(5)
 
 /datum/reagent/consumable/tearjuice/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -719,7 +720,7 @@
 		M.blur_eyes(4 * REM * delta_time)
 		if(DT_PROB(5, delta_time))
 			to_chat(M, span_warning("Your eyes sting!"))
-			M.blind_eyes(2)
+			M.adjust_blindness(2)
 
 
 /datum/reagent/consumable/nutriment/stabilized

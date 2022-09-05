@@ -162,13 +162,17 @@
 	damage = 0
 	damage_type = BURN
 	nodamage = TRUE
+	/// If set, this projectile will only do a certain wabbajack effect
+	var/set_wabbajack_effect
+	/// If set, this projectile will only pass certain changeflags to wabbajack
+	var/set_wabbajack_changeflags
 
 /obj/projectile/magic/change/on_hit(atom/target)
 	. = ..()
 
 	if(isliving(target))
 		var/mob/living/victim = target
-		victim.wabbajack()
+		victim.wabbajack(set_wabbajack_effect, set_wabbajack_changeflags)
 
 	if(istype(target, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/plant_tray = target

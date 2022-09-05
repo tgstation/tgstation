@@ -1,4 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes: 
-  - bugfix: "Improved performance of space turf initializations, lowering init times by tens of seconds."

@@ -49,7 +49,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "cE" = (
-/obj/structure/chair/sofa/corp/right{
+/obj/structure/chair/sofa/corp/left{
 	dir = 1
 	},
 /obj/machinery/light/directional/west,
@@ -293,7 +293,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/shuttle/pirate)
 "nh" = (
-/obj/machinery/computer/monitor/secret{
+/obj/machinery/computer/monitor{
 	dir = 8
 	},
 /turf/open/floor/iron/dark/side{
@@ -511,7 +511,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "Aj" = (
-/obj/structure/chair/sofa/corp/right{
+/obj/structure/chair/sofa/corp/left{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -541,7 +541,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "CH" = (
-/obj/structure/chair/sofa/corp/left{
+/obj/structure/chair/sofa/corp/right{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -1007,7 +1007,7 @@
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "ZU" = (
-/obj/structure/chair/sofa/corp/left{
+/obj/structure/chair/sofa/corp/right{
 	dir = 1
 	},
 /obj/machinery/light/directional/east,

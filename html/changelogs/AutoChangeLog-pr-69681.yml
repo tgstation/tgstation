@@ -1,0 +1,4 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes: 
+  - admin: "The lua function \"loadstring\" has been added, allowing you to compile a string of lua code into a function that runs that code."

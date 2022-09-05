@@ -157,6 +157,31 @@ if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/stairs[/\w]*?,\n[^)]*?/turf/open/
     echo -e "${RED}ERROR: Found a staircase on top of a gen_turf. Please replace the gen_turf with a proper turf.${NC}"
     st=1
 fi;
+if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/grille,\n[^)]*?/obj/structure/cable,\n[^)]*?/area/.+\)' _maps/**/*.dmm;	then
+	echo
+    echo -e "${RED}ERROR: Found a grille above a cable. Please replace with the proper structure spawner.${NC}"
+    st=1
+fi;
+if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/cable,\n[^)]*?/obj/structure/grille,\n[^)]*?/area/.+\)' _maps/**/*.dmm;	then
+	echo
+    echo -e "${RED}ERROR: Found a grille above a cable. Please replace with the proper structure spawner.${NC}"
+    st=1
+fi;
+if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/grille,\n[^)]*?/obj/structure/window/reinforced/fulltile/ice,\n[^)]*?/area/.+\)' _maps/**/*.dmm;	then
+	echo
+    echo -e "${RED}ERROR: Found grille above a fulltile ice window. Please replace it with the proper structure spawner.${NC}"
+    st=1
+fi;
+if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/grille,\n[^)]*?/obj/structure/window[/\w]*?fulltile,\n[^)]*?/area/.+\)' _maps/**/*.dmm;	then
+	echo
+    echo -e "${RED}ERROR: Found grille above a fulltile window. Please replace it with the proper structure spawner.${NC}"
+    st=1
+fi;
+if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/grille,\n[^)]*?/obj/structure/window/reinforced/plasma/plastitanium,\n[^)]*?/area/.+\)' _maps/**/*.dmm;	then
+	echo
+    echo -e "${RED}ERROR: Found grille above a fulltile plastitanium window. Please replace it with the proper structure spawner.${NC}"
+    st=1
+fi;
 if grep -Pzo '/obj/machinery/conveyor/inverted[/\w]*?\{\n[^}]*?dir = [1248];[^}]*?\},?\n' _maps/**/*.dmm;	then
 	echo
     echo -e "${RED}ERROR: Found an inverted conveyor belt with a cardinal dir. Please replace it with a normal conveyor belt.${NC}"
@@ -219,6 +244,11 @@ done < <(find . -type f -name '*.dm')
 
 echo -e "${BLUE}Checking for common mistakes...${NC}"
 
+if grep -P 'addtimer\((?=.*TIMER_OVERRIDE)(?!.*TIMER_UNIQUE).*\)' code/**/*.dm; then
+	echo
+    echo -e "${RED}ERROR: TIMER_OVERRIDE used without TIMER_UNIQUE.${NC}"
+    st=1
+fi;
 if grep -P '^/*var/' code/**/*.dm; then
 	echo
     echo -e "${RED}ERROR: Unmanaged global var use detected in code, please use the helpers.${NC}"

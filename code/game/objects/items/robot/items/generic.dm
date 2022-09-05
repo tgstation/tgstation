@@ -10,7 +10,7 @@
 #define HARM_ALARM_SAFETY_COOLDOWN (20 SECONDS)
 
 /obj/item/borg
-	icon = 'icons/mob/robot_items.dmi'
+	icon = 'icons/mob/silicon/robot_items.dmi'
 
 /obj/item/borg/stun
 	name = "electrically-charged arm"
