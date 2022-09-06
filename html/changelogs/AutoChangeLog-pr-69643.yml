@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "Police hats no longer turn you bald while worn, and no longer act like helmets, since they're caps."
