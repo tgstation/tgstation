@@ -207,3 +207,5 @@ aux*.pdb
 
 # Screenshot tests
 /artifacts
+.vs/slnx.sqlite
+.vs/VSWorkspaceState.json
