@@ -14,6 +14,7 @@
 	light_color = "#ff0000"
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
+	icon = 'icons/obj/cult/items_and_weapons.dmi'
 	icon_state = "cultbastard"
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'

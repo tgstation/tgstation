@@ -297,7 +297,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(!C)
 		return FALSE
 
-	if(SEND_SIGNAL(sacrificial, COMSIG_LIVING_CULT_SACRIFICED, invokers) & STOP_SACRIFICE)
+	var/signal_result = SEND_SIGNAL(sacrificial, COMSIG_LIVING_CULT_SACRIFICED, invokers)
+	if(signal_result & STOP_SACRIFICE)
 		return FALSE
 
 	var/big_sac = FALSE
@@ -306,12 +307,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 			to_chat(M, span_cultitalic("[sacrificial] is too greatly linked to the world! You need three acolytes!"))
 		log_game("Offer rune with [sacrificial] on it failed - not enough acolytes and target is living or sac target")
 		return FALSE
-	var/datum/antagonist/heretic/heretic_datum
+
 	if(sacrificial.mind)
 		LAZYADD(GLOB.sacrificed, WEAKREF(sacrificial.mind))
-		heretic_datum = sacrificial.mind.has_antag_datum(/datum/antagonist/heretic)
-		if(heretic_datum)
-			new /obj/item/cult_bastard(sacrificial.loc)
 		for(var/datum/objective/sacrifice/sac_objective in C.cult_team.objectives)
 			if(sac_objective.target == sacrificial.mind)
 				sac_objective.sacced = TRUE
@@ -322,13 +320,13 @@ structure_check() searches for nearby cultist structures required for the invoca
 		LAZYADD(GLOB.sacrificed, WEAKREF(sacrificial))
 
 	new /obj/effect/temp_visual/cult/sac(get_turf(src))
-	for(var/invoker in invokers)
-		if(big_sac)
-			to_chat(invoker, span_cultlarge("\"Yes! This is the one I desire! You have done well.\""))
-		else
-			if(heretic_datum)
-				to_chat(invoker, span_cultlarge("\"A follower of the forgotten gods! You must be rewarded for such a valuable sacrifice.\""))
-			else if(ishuman(sacrificial) || iscyborg(sacrificial))
+
+	if(!(signal_result & SILENCE_SACRIFICE_MESSAGE))
+		for(var/invoker in invokers)
+			if(big_sac)
+				to_chat(invoker, span_cultlarge("\"Yes! This is the one I desire! You have done well.\""))
+				continue
+			if(ishuman(sacrificial) || iscyborg(sacrificial))
 				to_chat(invoker, span_cultlarge("\"I accept this sacrifice.\""))
 			else
 				to_chat(invoker, span_cultlarge("\"I accept this meager sacrifice.\""))
