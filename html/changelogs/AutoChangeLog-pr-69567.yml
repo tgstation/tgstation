@@ -1,0 +1,6 @@
+author: "Addust"
+delete-after: True
+changes: 
+  - rscadd: "Kilo whiteship now has bangin donks, bolt button, and its bridge now has atmospherics systems."
+  - bugfix: "Kilo whiteship crew quarters air alarm now exists, meaning that vents won't be fucky"
+  - bugfix: "Kilo whiteship engine APC is rewired"
