@@ -295,3 +295,16 @@
 	new /mob/living/simple_animal/hostile/zombie(loc)
 	QDEL_IN(src, 30)
 	playsound(get_turf(L), 'sound/voice/ghost_whisper.ogg', 70, ignore_walls = TRUE, use_reverb = TRUE)
+
+/obj/structure/trap/imp/
+	name = "imp trap"
+	desc = "Yerde ne olduğunu anlamlandıramadığın bir şey var. Çok yaklaşmaman iyi olur."
+
+/obj/structure/trap/imp/trap_effect(mob/living/L)
+
+	visible_message(span_danger("<B>Cehennem sıcağını hissediyorsun!"))
+	L.Paralyze(10)
+	new	/mob/living/simple_animal/hostile/imp(loc)
+	QDEL_IN(src, 30)
+	playsound(get_turf(L), SFX_DESECRATION, 70, ignore_walls = TRUE)
+
