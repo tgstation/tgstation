@@ -165,15 +165,13 @@ export class NumberInput extends Component {
       displayValue = intermediateValue;
     }
 
+    // prettier-ignore
     const contentElement = (
       <div className="NumberInput__content" unselectable={Byond.IS_LTE_IE8}>
         {
-          // prettier-ignore
-          animated && !dragging && !suppressingFlicker ? (
-            <AnimatedNumber value={displayValue} format={format} />
-          ) : (
-            format ? format(displayValue) : displayValue
-          )
+          (animated && !dragging && !suppressingFlicker) ?
+            (<AnimatedNumber value={displayValue} format={format} />) :
+            (format ? format(displayValue) : displayValue)
         }
 
         {unit ? ' ' + unit : ''}
