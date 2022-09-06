@@ -481,11 +481,11 @@
 	var/obj/item/bodypart/prostheticRA
 	var/obj/item/bodypart/prostheticLL
 	var/obj/item/bodypart/prostheticRL
-	if(TRUE)
-		prostheticLA = new/obj/item/bodypart/l_arm/robot/surplus(quirk_holder)
-		prostheticRA = new/obj/item/bodypart/r_arm/robot/surplus(quirk_holder)
-		prostheticLL = new/obj/item/bodypart/l_leg/robot/surplus(quirk_holder)
-		prostheticRL = new/obj/item/bodypart/r_leg/robot/surplus(quirk_holder)
+
+	prostheticLA = new/obj/item/bodypart/l_arm/robot/surplus(quirk_holder)
+	prostheticRA = new/obj/item/bodypart/r_arm/robot/surplus(quirk_holder)
+	prostheticLL = new/obj/item/bodypart/l_leg/robot/surplus(quirk_holder)
+	prostheticRL = new/obj/item/bodypart/r_leg/robot/surplus(quirk_holder)
 
 	prostheticLA.replace_limb(human_holder)
 	prostheticRA.replace_limb(human_holder)
