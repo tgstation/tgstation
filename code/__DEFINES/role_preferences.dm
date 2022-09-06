@@ -27,7 +27,6 @@
 #define ROLE_MALF_MIDROUND "Malf AI (Midround)"
 #define ROLE_NIGHTMARE "Nightmare"
 #define ROLE_NINJA "Space Ninja"
-#define ROLE_OBSESSED "Obsessed"
 #define ROLE_OPERATIVE_MIDROUND "Operative (Midround)"
 #define ROLE_REV_HEAD "Head Revolutionary"
 #define ROLE_SENTIENT_DISEASE "Sentient Disease"
@@ -124,7 +123,6 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_MALF_MIDROUND = 0,
 	ROLE_NIGHTMARE = 0,
 	ROLE_NINJA = 0,
-	ROLE_OBSESSED = 0,
 	ROLE_OPERATIVE_MIDROUND = 14,
 	ROLE_REVENANT = 0,
 	ROLE_SENTIENT_DISEASE = 0,

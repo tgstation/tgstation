@@ -71,7 +71,7 @@
 
 /datum/award/achievement/mafia/thoughtfeeder
 	name = "Thoughtfeeder Victory"
-	desc = "Clown's best friend. And Obsessed. And fugitive? Whose side are you on?!"
+	desc = "Clown's best friend. And fugitive? Whose side are you on?!"
 	database_id = MAFIA_MEDAL_THOUGHTFEEDER
 	icon = "mafia"
 

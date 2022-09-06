@@ -179,24 +179,6 @@
 	mood_change = -3
 	timeout = 2 MINUTES
 
-/datum/mood_event/notcreeping
-	description = "The voices are not happy, and they painfully contort my thoughts into getting back on task."
-	mood_change = -6
-	timeout = 3 SECONDS
-	hidden = TRUE
-
-/datum/mood_event/notcreepingsevere//not hidden since it's so severe
-	description = "THEY NEEEEEEED OBSESSIONNNN!!"
-	mood_change = -30
-	timeout = 3 SECONDS
-
-/datum/mood_event/notcreepingsevere/add_effects(name)
-	var/list/unstable = list(name)
-	for(var/i in 1 to rand(3,5))
-		unstable += copytext_char(name, -1)
-	var/unhinged = uppertext(unstable.Join(""))//example Tinea Luxor > TINEA LUXORRRR (with randomness in how long that slur is)
-	description = "THEY NEEEEEEED [unhinged]!!"
-
 /datum/mood_event/sapped
 	description = "Some unexplainable sadness is consuming me..."
 	mood_change = -15

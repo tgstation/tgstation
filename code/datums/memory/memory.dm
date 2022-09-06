@@ -148,10 +148,6 @@
 
 	var/atom/something = pick(something_pool) //Pick a something for the potential something line
 
-	var/datum/antagonist/obsessed/creeper = memorizer_mind.has_antag_datum(/datum/antagonist/obsessed)
-	if(creeper && creeper.trauma.obsession)
-		crew_member = creeper.trauma.obsession //ALWAYS ENGRAVE MY OBSESSION!
-
 	var/list/crew_members = list()
 	for(var/mob/living/carbon/human/potential_crew_member as anything in GLOB.player_list)
 		if(potential_crew_member?.mind?.assigned_role.job_flags & JOB_CREW_MEMBER)
