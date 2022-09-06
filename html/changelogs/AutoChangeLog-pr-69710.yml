@@ -1,0 +1,7 @@
+author: "NamelessFairy"
+delete-after: True
+changes: 
+  - admin: "When admins start CTF they can now choose which map is played or choose random as its always been"
+  - admin: "Admins can no-longer permanently break CTF by unloading the map accidentally"
+  - spellcheck: "Fixed a typo in the Map Description for CTF Cruiser"
+  - bugfix: "CTF can now be reloaded after being unloaded"
