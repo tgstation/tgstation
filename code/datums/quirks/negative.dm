@@ -2,7 +2,7 @@
 
 /datum/quirk/badback
 	name = "Bad Back"
-	desc = "Thanks to your poor posture, backpacks and other bags never sit right on your back. More evenly weighted objects are fine, though."
+	desc = "Thanks to your poor posture, backpacks and other bags never sit right on your back. More evently weighted objects are fine, though."
 	icon = "hiking"
 	value = -8
 	mood_quirk = TRUE
@@ -98,7 +98,7 @@
 	 */
 /datum/quirk/item_quirk/brainproblems
 	name = "Brain Tumor"
-	desc = "You have a little friend in your brain that is slowly destroying it. Better bring some Mannitol!"
+	desc = "You have a little friend in your brain that is slowly destroying it. Better bring some mannitol!"
 	icon = "brain"
 	value = -12
 	gain_text = "<span class='danger'>You feel smooth.</span>"
@@ -201,7 +201,7 @@
 
 	var/obj/family_heirloom = heirloom?.resolve()
 	if(!family_heirloom)
-		to_chat(quirk_holder, "<span class='boldnotice'>A wave of existential dread runs over you as you realize your precious family heirloom is missing. Perhaps the Gods will show mercy on your cursed soul?</span>")
+		to_chat(quirk_holder, "<span class='boldnotice'>A wave of existential dread runs over you as you realise your precious family heirloom is missing. Perhaps the Gods will show mercy on your cursed soul?</span>")
 		return
 	family_heirloom.AddComponent(/datum/component/heirloom, quirk_holder.mind, family_name)
 
@@ -232,7 +232,7 @@
 	mob_trait = TRAIT_EASILY_WOUNDED
 	gain_text = "<span class='danger'>You feel frail.</span>"
 	lose_text = "<span class='notice'>You feel sturdy again.</span>"
-	medical_record_text = "Patient is absurdly easy to injure. Please take all due diligence to avoid possible malpractice suits."
+	medical_record_text = "Patient is absurdly easy to injure. Please take all due dilligence to avoid possible malpractice suits."
 	hardcore_value = 4
 
 /datum/quirk/heavy_sleeper
@@ -308,7 +308,7 @@
 
 /datum/quirk/nyctophobia
 	name = "Nyctophobia"
-	desc = "As far as you can remember, you've always been afraid of the dark. While in the dark without a light source, you instinctively act careful, and constantly feel a sense of dread."
+	desc = "As far as you can remember, you've always been afraid of the dark. While in the dark without a light source, you instinctually act careful, and constantly feel a sense of dread."
 	icon = "lightbulb"
 	value = -3
 	medical_record_text = "Patient demonstrates a fear of the dark. (Seriously?)"
@@ -417,7 +417,7 @@
 	icon = "user-secret"
 	value = -4
 	mob_trait = TRAIT_PROSOPAGNOSIA
-	medical_record_text = "Patient suffers from Prosopagnosia and cannot recognize faces."
+	medical_record_text = "Patient suffers from prosopagnosia and cannot recognize faces."
 	hardcore_value = 5
 
 
@@ -456,10 +456,11 @@
 /datum/quirk/prosthetic_limb/post_add()
 	to_chat(quirk_holder, "<span class='boldannounce'>Your [slot_string] has been replaced with a surplus prosthetic. It is fragile and will easily come apart under duress. Additionally, \
 	you need to use a welding tool and cables to repair it, instead of bruise packs and ointment.</span>")
-
+//==========================================================================================================
 /datum/quirk/prosthetic_limbs
 	name = "Prosthetic Limbs"
 	desc = "Oops! All Prosthetics!"
+	icon = "tg-prosthetic-leg"
 	value = -8
 	medical_record_text = "During physical examination, patient was found to have all prosthetic limbs"
 	hardcore_value = 6
@@ -497,6 +498,7 @@
 	to_chat(quirk_holder, "<span class='boldannounce'>All your limbs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. Additionally, \
 	you need to use a welding tool and cables to repair them, instead of bruise packs and ointment.</span>")
 
+//===============================================================================================================
 /datum/quirk/pushover
 	name = "Pushover"
 	desc = "Your first instinct is always to let people push you around. Resisting out of grabs will take conscious effort."
@@ -531,7 +533,7 @@
 	if(!quirk_holder.mind || quirk_holder.mind.special_role)
 		return
 	to_chat(quirk_holder, "<span class='big bold info'>Please note that your dissociation syndrome does NOT give you the right to attack people or otherwise cause any interference to \
-	the round. You are not an antagonist, and the rules will treat you the same as other crew members.</span>")
+	the round. You are not an antagonist, and the rules will treat you the same as other crewmembers.</span>")
 
 /datum/quirk/social_anxiety
 	name = "Social Anxiety"
@@ -576,7 +578,7 @@
 		for(var/word in message_split)
 			if(prob(max(5,(nearby_people*12.5*moodmod))) && word != message_split[1]) //Minimum 1/20 chance of filler
 				new_message += pick("uh,","erm,","um,")
-				if(prob(min(5,(0.05*(nearby_people*12.5)*moodmod)))) //Max 1 in 20 chance of cutoff after a successful filler roll, for 50% odds in a 15 word sentence
+				if(prob(min(5,(0.05*(nearby_people*12.5)*moodmod)))) //Max 1 in 20 chance of cutoff after a succesful filler roll, for 50% odds in a 15 word sentence
 					quirker.silent = max(3, quirker.silent)
 					to_chat(quirker, span_danger("You feel self-conscious and stop talking. You need a moment to recover!"))
 					break
@@ -598,7 +600,7 @@
 				new/obj/item/food/spaghetti/pastatomato(get_turf(quirker)) //now that's what I call spaghetti code
 		else
 			to_chat(quirk_holder, span_warning("You think that wouldn't add much to the conversation and decide not to say it."))
-			if(prob(min(25,(0.25*(nearby_people*12.75)*moodmod)))) //Max 25% chance of silence stacks after successful not talking roll
+			if(prob(min(25,(0.25*(nearby_people*12.75)*moodmod)))) //Max 25% chance of silence stacks after succesful not talking roll
 				to_chat(quirker, span_danger("You retreat into yourself. You <i>really</i> don't feel up to talking."))
 				quirker.silent = max(5, quirker.silent)
 		speech_args[SPEECH_MESSAGE] = pick("Uh.","Erm.","Um.")
