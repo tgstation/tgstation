@@ -270,6 +270,28 @@
 /obj/structure/trap/flashbang/trap_effect(mob/living/L)
 	to_chat(L, span_danger("<B>Çarpılıyorsun ve gözlerin acıyor.</B>"))
 	L.electrocute_act(5, src, flags = SHOCK_NOGLOVES)
-	explosion(src, flash_range = 7, adminlog = FALSE)
+	explosion(src, light_impact_range = 5, flash_range = 7, adminlog = FALSE)
 	playsound(get_turf(L), 'sound/voice/human/hihiha.ogg', 100,)
 
+/obj/structure/trap/wall
+	name = "wall trap"
+	desc = "Yerde ne olduğunu anlamlandıramadığın bir şey var. Çok yaklaşmaman iyi olur."
+
+/obj/structure/trap/wall/trap_effect(mob/living/L)
+	visible_message(span_warning("Duvarlar hareket ediyor!"))
+	playsound(get_turf(L), 'sound/machines/clockcult/brass_skewer.ogg', 100, ignore_walls = TRUE, use_reverb = TRUE)
+	var/turf/T = src.loc
+	addtimer(CALLBACK(T, T.PlaceOnTop(/turf/closed/wall, flags = CHANGETURF_INHERIT_AIR),), 5 SECONDS)
+	QDEL_IN(src, 10)
+/obj/structure/trap/zombie
+	name = "zombie trap"
+	desc = "Yerde ne olduğunu anlamlandıramadığın bir şey var. Çok yaklaşmaman iyi olur."
+
+/obj/structure/trap/zombie/trap_effect(mob/living/L)
+
+	to_chat(L, span_danger("<B>Yerden zombiler çıkıyor!</B>"))
+	L.Paralyze(5)
+	new /mob/living/simple_animal/hostile/zombie(loc)
+	new /mob/living/simple_animal/hostile/zombie(loc)
+	QDEL_IN(src, 30)
+	playsound(get_turf(L), 'sound/voice/ghost_whisper.ogg', 70, ignore_walls = TRUE, use_reverb = TRUE)
