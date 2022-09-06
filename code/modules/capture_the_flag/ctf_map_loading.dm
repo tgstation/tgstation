@@ -42,7 +42,7 @@ GLOBAL_DATUM(ctf_spawner, /obj/effect/landmark/ctf)
 		for(var/datum/map_template/ctf/map as anything in map_options)
 			var/mapname = initial(map.name)
 			map_choices[mapname] = map
-		chosen_map = tgui_input_list(user, "Select a map", "Choose Map",list("Random")|sort_list(map_choices))
+		chosen_map = tgui_input_list(user, "Select a map", "Choose CTF Map",list("Random")|sort_list(map_choices))
 		if (isnull(chosen_map))
 			return FALSE;
 		else

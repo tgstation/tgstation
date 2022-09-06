@@ -178,8 +178,21 @@
 #define CTF_LOADING_LOADING 1
 #define CTF_LOADING_LOADED 2
 
-/proc/toggle_id_ctf(user, activated_id, automated = FALSE)
+/proc/toggle_id_ctf(user, activated_id, automated = FALSE, unload = FALSE)
 	var/static/loading = CTF_LOADING_UNLOADED
+	if(unload == TRUE)
+		log_admin("[key_name_admin(user)] is attempting to unload CTF.")
+		message_admins("[key_name_admin(user)] is attempting to unload CTF.")
+		if(loading == CTF_LOADING_UNLOADED)
+			to_chat(user, span_warning("CTF cannot be unloaded if it was not loaded in the first place"))
+			return
+		to_chat(user, span_warning("CTF is being unloaded"))
+		for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
+			CTF.unload()
+		log_admin("[key_name_admin(user)] has unloaded CTF.")
+		message_admins("[key_name_admin(user)] has unloaded CTF.")
+		loading = CTF_LOADING_UNLOADED
+		return
 	switch (loading)
 		if (CTF_LOADING_UNLOADED)
 			if (isnull(GLOB.ctf_spawner))
@@ -490,6 +503,7 @@
 		return
 
 	if(ctf_landmark == GLOB.ctf_spawner)
+		stop_ctf()
 		new /obj/effect/landmark/ctf(get_turf(GLOB.ctf_spawner))
 
 
