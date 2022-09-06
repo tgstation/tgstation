@@ -9237,8 +9237,8 @@
 /turf/open/floor/iron/smooth,
 /area/mine/eva)
 "cKn" = (
-/mob/living/simple_animal/bot/secbot/beepsky,
 /obj/effect/mapping_helpers/broken_floor,
+/mob/living/simple_animal/bot/secbot/beepsky,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "cKp" = (
@@ -12930,8 +12930,8 @@
 	dir = 8
 	},
 /obj/structure/table/wood,
-/mob/living/carbon/human/species/monkey/punpun,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/mob/living/carbon/human/species/monkey/punpun,
 /turf/open/floor/iron,
 /area/station/service/bar)
 "dOY" = (
@@ -36581,9 +36581,6 @@
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "lfL" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
 	dir = 4
@@ -36591,6 +36588,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
 "lgg" = (
@@ -46059,7 +46057,7 @@
 /area/station/science/xenobiology)
 "ocF" = (
 /mob/living/simple_animal/hostile/retaliate/goat{
-	atmos_requirements = list("min_oxy"=1,"max_oxy"=0,"min_plas"=0,"max_plas"=1,"min_co2"=0,"max_co2"=5,"min_n2"=0,"max_n2"=0);
+	atmos_requirements = list("min_oxy" = 1, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0);
 	desc = "Not known for their pleasant disposition. This one seems a bit more hardy to the cold.";
 	minbodytemp = 150;
 	name = "Snowy Pete"
@@ -65128,6 +65126,7 @@
 /turf/open/floor/iron/textured,
 /area/station/security/brig)
 "ubq" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
 "ubE" = (
@@ -75735,11 +75734,11 @@
 /turf/open/floor/iron/dark/smooth_half,
 /area/station/security/office)
 "xlH" = (
+/obj/effect/mapping_helpers/broken_floor,
 /mob/living/simple_animal/mouse/white{
 	desc = "This mouse smells faintly of alcohol.";
 	name = "Mik"
 	},
-/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
 /area/station/maintenance/fore)
 "xlL" = (
