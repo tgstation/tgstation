@@ -43,8 +43,11 @@
 	RefreshParts()
 	update_icon(UPDATE_OVERLAYS)
 
-	RegisterSignal(stored_research, COMSIG_TECHWEB_ADD_DESIGN, .proc/update_designs)
-	RegisterSignal(stored_research, COMSIG_TECHWEB_REMOVE_DESIGN, .proc/update_designs)
+	RegisterSignal(
+		stored_research,
+		list(COMSIG_TECHWEB_ADD_DESIGN, COMSIG_TECHWEB_REMOVE_DESIGN),
+		.proc/update_designs
+	)
 
 /obj/machinery/rnd/production/Destroy()
 	materials = null
@@ -53,6 +56,8 @@
 
 /// Updates the list of designs this fabricator can print.
 /obj/machinery/rnd/production/proc/update_designs()
+	SIGNAL_HANDLER
+
 	cached_designs.Cut()
 
 	for(var/design_id in stored_research.researched_designs)
@@ -61,13 +66,13 @@
 		if((isnull(allowed_department_flags) || (design.departmental_flags & allowed_department_flags)) && (design.build_type & allowed_buildtypes))
 			cached_designs |= design
 
-	update_static_data(usr)
+	update_static_data_for_all_viewers()
 
 /obj/machinery/rnd/production/RefreshParts()
 	. = ..()
 
 	calculate_efficiency()
-	update_static_data(usr)
+	update_static_data_for_all_viewers()
 
 /obj/machinery/rnd/production/ui_assets(mob/user)
 	return list(

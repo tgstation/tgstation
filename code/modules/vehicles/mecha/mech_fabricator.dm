@@ -73,8 +73,11 @@
 	rmat = AddComponent(/datum/component/remote_materials, "mechfab", mapload && link_on_init, mat_container_flags=BREAKDOWN_FLAGS_LATHE)
 	RefreshParts() //Recalculating local material sizes if the fab isn't linked
 	update_menu_tech()
-	RegisterSignal(stored_research, COMSIG_TECHWEB_ADD_DESIGN, .proc/update_menu_tech)
-	RegisterSignal(stored_research, COMSIG_TECHWEB_REMOVE_DESIGN, .proc/update_menu_tech)
+	RegisterSignal(
+		stored_research,
+		list(COMSIG_TECHWEB_ADD_DESIGN, COMSIG_TECHWEB_REMOVE_DESIGN),
+		.proc/update_menu_tech
+	)
 	return ..()
 
 /obj/machinery/mecha_part_fabricator/RefreshParts()
@@ -106,7 +109,7 @@
 		var/new_build_time = (new_const_time / last_const_time) * const_time_left
 		build_finish = world.time + new_build_time
 
-	update_static_data(usr)
+	update_static_data_for_all_viewers()
 
 /obj/machinery/mecha_part_fabricator/examine(mob/user)
 	. = ..()
@@ -210,6 +213,8 @@
  * Updates the `final_sets` and `buildable_parts` for the current mecha fabricator.
  */
 /obj/machinery/mecha_part_fabricator/proc/update_menu_tech()
+	SIGNAL_HANDLER
+
 	final_sets = list()
 	buildable_parts = list()
 	final_sets += part_sets
@@ -234,7 +239,7 @@
 
 				buildable_parts[cat] += list(part)
 
-	update_static_data(usr)
+	update_static_data_for_all_viewers()
 
 /**
  * Intended to be called when an item starts printing.
