@@ -18,8 +18,13 @@
 	var/starget = key_name(target)
 
 	var/mob/living/living_target = target
-	var/hp = istype(living_target) ? " (NEWHP: [living_target.health]) " : ""
-	var/integrity = (!isturf(target) && !istype(living_target)) ? " (NEWINT: [target.get_integrity()])" : ""
+var/hp
+var/integrity
+
+if(istype(living_target)
+	hp = " (NEWHP: [living_target.health]) "
+else if(!isturf(target))
+	integrity = " (NEWINT: [target.get_integrity()]) "
 
 	var/sobject = ""
 	if(object)
