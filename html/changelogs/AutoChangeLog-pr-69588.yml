@@ -1,0 +1,7 @@
+author: "Addust"
+delete-after: True
+changes: 
+  - rscadd: "Tram whiteship now has named airlocks"
+  - rscadd: "Tram whiteship bridge and crew quarters areas are split, new APCs added"
+  - bugfix: "no more shuttle engine rotation fuckery on tram whiteship"
+  - bugfix: "no more firelock fuckery on tram whiteship"
