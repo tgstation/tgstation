@@ -249,3 +249,36 @@
       mindbreaker, rotatium and plant-b-gone from the scrubber "safer" reagents list
   - balance: added orange carpet, royal blue carpet, blue glitter, yoghurt, tinea
       luxor, hydrogen peroxide, gravitum, and yuck to the "safer" reagents list
+2022-09-06:
+  GoldenAlpharex:
+  - bugfix: Fixed the orientation of the left and right end of corporate sofas when
+      facing North. Their behavior is no longer swapped compared to other sofas.
+  Rhials:
+  - bugfix: The shrink ray now spawns with an abductor firing pin instead of a normal
+      one.
+  ShizCalev:
+  - bugfix: Admin event spawned blobs will no longer immediately announce when the
+      event is triggered.
+  - bugfix: Admin events which poll candidates from ghosts will no longer announce
+      the event if the event failed to spawn a mob.
+  VexingRaven:
+  - rscadd: The Research Department Server Room on Kilo Station now has an air alarm
+      and ventilation.
+  - bugfix: The Research Department Server Room on Kilo Station no longer has an atmosphere
+      alert at start of shift.
+  Y0SH1M4S73R:
+  - admin: The lua function "loadstring" has been added, allowing you to compile a
+      string of lua code into a function that runs that code.
+  san7890:
+  - rscadd: Don't like the map everyone else voted for? Rock the vote! You can now
+      trigger a new map vote after one has already been selected!
+  - config: Server operators may decide if they wish to allow players to rock the
+      vote, as well as set the number of times they may rock the vote during a given
+      shift.
+  scriptis:
+  - qol: techfab tgui now supports old-school bulk sheet ejection
+  - qol: techfab tgui no longer overflows its window if you have six million categories
+  - qol: techfab tgui no longer consumes your screen's free real estate on an unprecedented
+      scale
+  tralezab:
+  - balance: Sleeping carp deflects hand spells, CQC reflects hand spells
