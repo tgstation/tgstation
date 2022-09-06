@@ -1,0 +1,4 @@
+author: "Pepsilawn"
+delete-after: True
+changes: 
+  - admin: "Added proper logging to antagonist datum removal"
