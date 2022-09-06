@@ -76,9 +76,16 @@
 	RegisterSignal(
 		stored_research,
 		list(COMSIG_TECHWEB_ADD_DESIGN, COMSIG_TECHWEB_REMOVE_DESIGN),
-		.proc/update_menu_tech
+		.proc/on_techweb_update
 	)
 	return ..()
+
+/obj/machinery/mecha_part_fabricator/proc/on_techweb_update()
+	SIGNAL_HANDLER
+
+	// We're probably going to get more than one update (design) at a time, so batch
+	// them together.
+	addtimer(CALLBACK(src, .proc/update_menu_tech), 0.25 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /obj/machinery/mecha_part_fabricator/RefreshParts()
 	. = ..()
@@ -213,8 +220,6 @@
  * Updates the `final_sets` and `buildable_parts` for the current mecha fabricator.
  */
 /obj/machinery/mecha_part_fabricator/proc/update_menu_tech()
-	SIGNAL_HANDLER
-
 	final_sets = list()
 	buildable_parts = list()
 	final_sets += part_sets

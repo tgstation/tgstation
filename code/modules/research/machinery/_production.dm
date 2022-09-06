@@ -46,7 +46,7 @@
 	RegisterSignal(
 		stored_research,
 		list(COMSIG_TECHWEB_ADD_DESIGN, COMSIG_TECHWEB_REMOVE_DESIGN),
-		.proc/update_designs
+		.proc/on_techweb_update
 	)
 
 /obj/machinery/rnd/production/Destroy()
@@ -54,10 +54,15 @@
 	cached_designs = null
 	return ..()
 
-/// Updates the list of designs this fabricator can print.
-/obj/machinery/rnd/production/proc/update_designs()
+/obj/machinery/rnd/production/proc/on_techweb_update()
 	SIGNAL_HANDLER
 
+	// We're probably going to get more than one update (design) at a time, so batch
+	// them together.
+	addtimer(CALLBACK(src, .proc/update_designs), 0.25 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+
+/// Updates the list of designs this fabricator can print.
+/obj/machinery/rnd/production/proc/update_designs()
 	cached_designs.Cut()
 
 	for(var/design_id in stored_research.researched_designs)
