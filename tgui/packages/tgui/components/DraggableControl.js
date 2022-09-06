@@ -6,7 +6,7 @@
 
 import { clamp } from 'common/math';
 import { pureComponentHooks } from 'common/react';
-import { Component, createRef, Fragment } from 'inferno';
+import { Component, createRef } from 'inferno';
 import { AnimatedNumber } from './AnimatedNumber';
 
 const DEFAULT_UPDATE_RATE = 400;
