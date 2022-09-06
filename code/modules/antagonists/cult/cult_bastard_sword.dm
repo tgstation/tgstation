@@ -22,6 +22,8 @@
 	inhand_y_dimension = 64
 	actions_types = list()
 	item_flags = SLOWS_WHILE_IN_HAND
+	///are we using our right click ability yet, mr krabs?
+	var/spinning = FALSE
 
 /obj/item/cult_bastard/Initialize()
 	. = ..()
@@ -47,10 +49,12 @@
 	addtimer(CALLBACK(user, /atom/proc/update_atom_colour), duration)
 	block_chance = 100
 	slowdown += 1.5
+	spinning = TRUE
 
 /obj/item/cult_bastard/proc/on_unspin(mob/living/user)
 	block_chance = 50
 	slowdown -= 1.5
+	spinning = FALSE
 
 /obj/item/cult_bastard/can_be_pulled(user)
 	return FALSE
@@ -63,7 +67,6 @@
 			force = 5
 			return
 		else
-
 			to_chat(user, span_cultlarge("\"You cling to the Forgotten Gods, as if you're more than their pawn.\""))
 			to_chat(user, span_userdanger("A horrible force yanks at your arm!"))
 			user.emote("scream")
