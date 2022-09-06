@@ -6,7 +6,7 @@
 
 import { clamp } from 'common/math';
 import { pureComponentHooks } from 'common/react';
-import { Component, createRef } from 'inferno';
+import { Component, createRef, Fragment } from 'inferno';
 import { AnimatedNumber } from './AnimatedNumber';
 
 const DEFAULT_UPDATE_RATE = 400;
@@ -174,24 +174,19 @@ export class DraggableControl extends Component {
     if (dragging || suppressingFlicker) {
       displayValue = intermediateValue;
     }
-    // Setup a display element
-    // Shows a formatted number based on what we are currently doing
-    // with the draggable surface.
-    const renderDisplayElement = (value) => value + (unit ? ' ' + unit : '');
     // prettier-ignore
     const displayElement = (
-      animated && !dragging && !suppressingFlicker && (
-        <AnimatedNumber
-          value={displayValue}
-          format={format}>
-          {renderDisplayElement}
-        </AnimatedNumber>
-      ) || (
-        renderDisplayElement(format
-          ? format(displayValue)
-          : displayValue)
-      )
+      <>
+        {
+          (animated && !dragging && !suppressingFlicker) ?
+            (<AnimatedNumber value={displayValue} format={format} />) :
+            (format ? format(displayValue) : displayValue)
+        }
+
+        { (unit ? ' ' + unit : '') }
+      </>
     );
+
     // Setup an input element
     // Handles direct input via the keyboard
     const inputElement = (

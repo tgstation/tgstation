@@ -164,19 +164,19 @@ export class NumberInput extends Component {
     if (dragging || suppressingFlicker) {
       displayValue = intermediateValue;
     }
-    // IE8: Use an "unselectable" prop because "user-select" doesn't work.
-    const renderContentElement = (value) => (
+
+    const contentElement = (
       <div className="NumberInput__content" unselectable={Byond.IS_LTE_IE8}>
-        {value + (unit ? ' ' + unit : '')}
+        {animated && !dragging && !suppressingFlicker ? (
+          <AnimatedNumber value={displayValue} format={format} />
+        ) : (
+          value
+        )}
+
+        {unit ? ' ' + unit : ''}
       </div>
     );
-    const contentElement =
-      (animated && !dragging && !suppressingFlicker && (
-        <AnimatedNumber value={displayValue} format={format}>
-          {renderContentElement}
-        </AnimatedNumber>
-      )) ||
-      renderContentElement(format ? format(displayValue) : displayValue);
+
     return (
       <Box
         className={classes([

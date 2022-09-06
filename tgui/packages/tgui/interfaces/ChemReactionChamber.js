@@ -1,7 +1,7 @@
 import { useBackend, useLocalState } from '../backend';
 import { AnimatedNumber, Box, Button, Input, LabeledList, NumberInput, Section, RoundGauge, Stack } from '../components';
 import { Window } from '../layouts';
-import { round, toFixed } from 'common/math';
+import { round } from 'common/math';
 
 export const ChemReactionChamber = (props, context) => {
   const { act, data } = useBackend(context);
@@ -64,15 +64,16 @@ export const ChemReactionChamber = (props, context) => {
                     <Stack.Item grow>
                       <AnimatedNumber
                         value={temperature}
-                        format={(value) => toFixed(value) + ' K'}
+                        significantFigures={2}
                       />
+                      {' K'}
                     </Stack.Item>
                     <Stack.Item grow>
                       <RoundGauge
                         value={ph}
                         minValue={0}
                         maxValue={14}
-                        format={() => null}
+                        format={() => ''}
                         position="absolute"
                         size={1.5}
                         top={0.5}

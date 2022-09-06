@@ -86,10 +86,7 @@ const CargoStatus = (props, context) => {
       title={department}
       buttons={
         <Box inline bold>
-          <AnimatedNumber
-            value={points}
-            format={(value) => formatMoney(value)}
-          />
+          <AnimatedNumber value={points} format={formatMoney} />
           {' credits'}
         </Box>
       }>

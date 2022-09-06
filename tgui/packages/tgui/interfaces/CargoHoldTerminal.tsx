@@ -21,7 +21,7 @@ export const CargoHoldTerminal = (props, context) => {
           <LabeledList>
             <LabeledList.Item label="Current Cargo Value">
               <Box inline bold>
-                <AnimatedNumber value={Math.round(points)} /> credits
+                <AnimatedNumber value={points} /> credits
               </Box>
             </LabeledList.Item>
           </LabeledList>

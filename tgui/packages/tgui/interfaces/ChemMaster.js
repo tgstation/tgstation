@@ -38,7 +38,11 @@ const ChemMasterContent = (props, context) => {
           !!data.isBeakerLoaded && (
             <>
               <Box inline color="label" mr={2}>
-                <AnimatedNumber value={beakerCurrentVolume} initial={0} />
+                <AnimatedNumber
+                  value={beakerCurrentVolume}
+                  initial={0}
+                  significantFigures={2}
+                />
                 {` / ${beakerMaxVolume} units`}
               </Box>
               <Button
@@ -131,7 +135,11 @@ const ChemicalBufferEntry = (props, context) => {
   return (
     <Table.Row key={chemical.id}>
       <Table.Cell color="label">
-        <AnimatedNumber value={chemical.volume} initial={0} />
+        <AnimatedNumber
+          value={chemical.volume}
+          initial={0}
+          significantFigures={2}
+        />
         {` units of ${chemical.name}`}
       </Table.Cell>
       <Table.Cell collapsing>
