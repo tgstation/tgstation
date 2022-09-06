@@ -1,11 +1,18 @@
 /// A global list of all ongoing hallucinations, primarily for easy access to be able to stop (delete) hallucinations.
 GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 
-/// Wrapper for _cause_hallucination to use named arguments
+// Macro wrapper for _cause_hallucination so we can cheat in named arguments, like AddComponent.
+/**
+ * Causes a hallucination of a certain type to the mob.
+ *
+ * First argument is always the type of halllucination, a /datum/hallucination, required.
+ * second argument is always the key source of the hallucination, used for admin logging, required.
+ *
+ * Additionally, named arguments are supported for passing them forward to the created hallucination's new().
+ */
 #define cause_hallucination(arguments...) _cause_hallucination(list(##arguments))
 
-/// Causes a hallucination of a certain type to the mob.
-/// Use the wrapper for named argument support, don't use this.
+/// Unless you need this for an explicit reason, use the cause_hallucination wrapper.
 /mob/living/proc/_cause_hallucination(list/raw_args)
 	if(!length(raw_args))
 		CRASH("cause_hallucination called with no arguments.")
