@@ -160,7 +160,7 @@
 				use_power(power_used)
 
 			var/atom/A = new dispense_type(loc)
-			A.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
+			A.atom_flags |= (atom_flags & ADMIN_SPAWNED)
 
 			if(create_sound)
 				playsound(src, create_sound, 50, TRUE)
@@ -241,7 +241,7 @@
 		playsound(src, break_sound, 50, TRUE)
 
 /obj/machinery/drone_dispenser/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(atom_flags & NODECONSTRUCT))
 		new /obj/item/stack/sheet/iron(loc, 5)
 	qdel(src)
 

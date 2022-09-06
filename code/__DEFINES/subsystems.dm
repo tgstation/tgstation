@@ -95,7 +95,7 @@
 ///type and all subtypes should always immediately call Initialize in New()
 #define INITIALIZE_IMMEDIATE(X) ##X/New(loc, ...){\
 	..();\
-	if(!(flags_1 & INITIALIZED_1)) {\
+	if(!(atom_flags & INITIALIZED)) {\
 		var/previous_initialized_value = SSatoms.initialized;\
 		SSatoms.initialized = INITIALIZATION_INNEW_MAPLOAD;\
 		args[1] = TRUE;\
@@ -255,7 +255,7 @@
 				AA.copy_overlays(A, TRUE);\
 			}\
 		}\
-		A.flags_1 &= ~OVERLAY_QUEUED_1;\
+		A.atom_flags &= ~OVERLAY_QUEUED;\
 	} while (FALSE)
 
 /**

@@ -18,7 +18,7 @@ The areas used here are STRICTLY on the CC Z level.
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
 	area_flags = UNIQUE_AREA | NOTELEPORT
-	flags_1 = NONE
+	atom_flags = NONE
 
 // This is just to define the category
 /area/centcom/central_command_areas
@@ -134,7 +134,7 @@ The areas used here are STRICTLY on the CC Z level.
 	static_lighting = TRUE
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	flags_1 = NONE
+	atom_flags = NONE
 
 /area/centcom/tdome/arena
 	name = "Thunderdome Arena"
@@ -175,7 +175,7 @@ The areas used here are STRICTLY on the CC Z level.
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
 	area_flags = UNIQUE_AREA | NOTELEPORT
-	flags_1 = NONE
+	atom_flags = NONE
 	network_root_id = "MAGIC_NET"
 
 //Abductors
@@ -187,7 +187,7 @@ The areas used here are STRICTLY on the CC Z level.
 	static_lighting = FALSE
 	base_lighting_alpha = 255
 	has_gravity = STANDARD_GRAVITY
-	flags_1 = NONE
+	atom_flags = NONE
 	network_root_id = "ALIENS"
 
 //Syndicates
@@ -197,7 +197,7 @@ The areas used here are STRICTLY on the CC Z level.
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
 	area_flags = UNIQUE_AREA | NOTELEPORT
-	flags_1 = NONE
+	atom_flags = NONE
 	ambience_index = AMBIENCE_DANGER
 	network_root_id = SYNDICATE_NETWORK_ROOT
 
@@ -241,7 +241,7 @@ The areas used here are STRICTLY on the CC Z level.
 	static_lighting = FALSE
 	base_lighting_alpha = 255
 	has_gravity = STANDARD_GRAVITY
-	flags_1 = NONE
+	atom_flags = NONE
 
 /area/centcom/ctf/control_room
 	name = "Control Room A"
@@ -287,7 +287,7 @@ The areas used here are STRICTLY on the CC Z level.
 	has_gravity = STANDARD_GRAVITY
 	area_flags = UNIQUE_AREA
 	ambience_index = AMBIENCE_MINING
-	flags_1 = CAN_BE_DIRTY_1
+	atom_flags = CAN_BE_DIRTY
 	sound_environment = SOUND_AREA_ASTEROID
 	min_ambience_cooldown = 70 SECONDS
 	max_ambience_cooldown = 220 SECONDS

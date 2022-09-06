@@ -560,7 +560,7 @@
 
 /obj/structure/table/reinforced/ctf
 	resistance_flags = INDESTRUCTIBLE
-	flags_1 = NODECONSTRUCT_1
+	atom_flags = NODECONSTRUCT
 
 /obj/effect/ctf
 	density = FALSE

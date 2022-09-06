@@ -100,7 +100,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		return ..()
 
 /obj/structure/bodycontainer/deconstruct(disassembled = TRUE)
-	if (!(flags_1 & NODECONSTRUCT_1))
+	if (!(atom_flags & NODECONSTRUCT))
 		new /obj/item/stack/sheet/iron (loc, 5)
 	recursive_organ_check(src)
 	qdel(src)

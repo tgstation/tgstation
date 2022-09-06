@@ -6,7 +6,7 @@
 	layer = ABOVE_OBJ_LAYER //Just above doors
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	anchored = TRUE //initially is 0 for tile smoothing
-	flags_1 = ON_BORDER_1
+	atom_flags = ON_BORDER
 	max_integrity = 50
 	can_be_unanchored = TRUE
 	resistance_flags = ACID_PROOF
@@ -66,7 +66,7 @@
 	real_explosion_block = explosion_block
 	explosion_block = EXPLOSION_BLOCK_PROC
 
-	flags_1 |= ALLOW_DARK_PAINTS_1
+	atom_flags |= ALLOW_DARK_PAINTS
 	RegisterSignal(src, COMSIG_OBJ_PAINTED, .proc/on_painted)
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM, AfterRotation = CALLBACK(src,.proc/AfterRotation))
@@ -75,7 +75,7 @@
 		COMSIG_ATOM_EXIT = .proc/on_exit,
 	)
 
-	if (flags_1 & ON_BORDER_1)
+	if (atom_flags & ON_BORDER)
 		AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/window/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
@@ -199,7 +199,7 @@
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/window/screwdriver_act(mob/living/user, obj/item/tool)
-	if(flags_1 & NODECONSTRUCT_1)
+	if(atom_flags & NODECONSTRUCT)
 		return
 
 	switch(state)
@@ -229,7 +229,7 @@
 /obj/structure/window/wrench_act(mob/living/user, obj/item/tool)
 	if(anchored)
 		return FALSE
-	if((flags_1 & NODECONSTRUCT_1) || (reinf && state >= RWINDOW_FRAME_BOLTED))
+	if((atom_flags & NODECONSTRUCT) || (reinf && state >= RWINDOW_FRAME_BOLTED))
 		return FALSE
 
 	to_chat(user, span_notice("You begin to disassemble [src]..."))
@@ -244,7 +244,7 @@
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/window/crowbar_act(mob/living/user, obj/item/tool)
-	if(!anchored || (flags_1 & NODECONSTRUCT_1))
+	if(!anchored || (atom_flags & NODECONSTRUCT))
 		return FALSE
 
 	switch(state)
@@ -322,7 +322,7 @@
 		return
 	if(!disassembled)
 		playsound(src, break_sound, 70, TRUE)
-		if(!(flags_1 & NODECONSTRUCT_1))
+		if(!(atom_flags & NODECONSTRUCT))
 			for(var/obj/item/shard/debris in spawnDebris(drop_location()))
 				transfer_fingerprints_to(debris) // transfer fingerprints to shards only
 	qdel(src)
@@ -502,7 +502,7 @@
 /obj/structure/window/reinforced/crowbar_act(mob/living/user, obj/item/tool)
 	if(!anchored)
 		return FALSE
-	if((flags_1 & NODECONSTRUCT_1) || (state != WINDOW_OUT_OF_FRAME))
+	if((atom_flags & NODECONSTRUCT) || (state != WINDOW_OUT_OF_FRAME))
 		return FALSE
 	to_chat(user, span_notice("You begin to lever the window back into the frame..."))
 	if(tool.use_tool(src, user, 10 SECONDS, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
@@ -623,7 +623,7 @@
 	base_icon_state = "window"
 	max_integrity = 100
 	fulltile = TRUE
-	flags_1 = PREVENT_CLICK_UNDER_1
+	atom_flags = PREVENT_CLICK_UNDER
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_WINDOW_FULLTILE)
 	canSmoothWith = list(SMOOTH_GROUP_WINDOW_FULLTILE)
@@ -638,7 +638,7 @@
 	base_icon_state = "plasma_window"
 	max_integrity = 300
 	fulltile = TRUE
-	flags_1 = PREVENT_CLICK_UNDER_1
+	atom_flags = PREVENT_CLICK_UNDER
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_WINDOW_FULLTILE)
 	canSmoothWith = list(SMOOTH_GROUP_WINDOW_FULLTILE)
@@ -654,7 +654,7 @@
 	state = RWINDOW_SECURE
 	max_integrity = 1000
 	fulltile = TRUE
-	flags_1 = PREVENT_CLICK_UNDER_1
+	atom_flags = PREVENT_CLICK_UNDER
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_WINDOW_FULLTILE)
 	canSmoothWith = list(SMOOTH_GROUP_WINDOW_FULLTILE)
@@ -670,7 +670,7 @@
 	base_icon_state = "reinforced_window"
 	max_integrity = 150
 	fulltile = TRUE
-	flags_1 = PREVENT_CLICK_UNDER_1
+	atom_flags = PREVENT_CLICK_UNDER
 	state = RWINDOW_SECURE
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_WINDOW_FULLTILE)
@@ -686,7 +686,7 @@
 	icon_state = "tinted_window-0"
 	base_icon_state = "tinted_window"
 	fulltile = TRUE
-	flags_1 = PREVENT_CLICK_UNDER_1
+	atom_flags = PREVENT_CLICK_UNDER
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_WINDOW_FULLTILE)
 	canSmoothWith = list(SMOOTH_GROUP_WINDOW_FULLTILE)
@@ -710,7 +710,7 @@
 	wtype = "shuttle"
 	reinf = TRUE
 	fulltile = TRUE
-	flags_1 = PREVENT_CLICK_UNDER_1
+	atom_flags = PREVENT_CLICK_UNDER
 	reinf = TRUE
 	heat_resistance = 1600
 	armor = list(MELEE = 90, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 0, FIRE = 80, ACID = 100)
@@ -750,7 +750,7 @@
 	max_integrity = 1200
 	wtype = "shuttle"
 	fulltile = TRUE
-	flags_1 = PREVENT_CLICK_UNDER_1
+	atom_flags = PREVENT_CLICK_UNDER
 	heat_resistance = 1600
 	armor = list(MELEE = 95, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 0, FIRE = 80, ACID = 100)
 	smoothing_flags = SMOOTH_BITMASK
@@ -784,7 +784,7 @@
 	opacity = TRUE
 	max_integrity = 15
 	fulltile = TRUE
-	flags_1 = PREVENT_CLICK_UNDER_1
+	atom_flags = PREVENT_CLICK_UNDER
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_PAPERFRAME)
 	canSmoothWith = list(SMOOTH_GROUP_PAPERFRAME)
@@ -873,7 +873,7 @@
 	smoothing_groups = list(SMOOTH_GROUP_WINDOW_FULLTILE, SMOOTH_GROUP_WINDOW_FULLTILE_BRONZE)
 	canSmoothWith = list(SMOOTH_GROUP_WINDOW_FULLTILE_BRONZE)
 	fulltile = TRUE
-	flags_1 = PREVENT_CLICK_UNDER_1
+	atom_flags = PREVENT_CLICK_UNDER
 	max_integrity = 50
 	glass_amount = 2
 

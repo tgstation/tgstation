@@ -11,7 +11,7 @@
 	desc = "The remains of a monstrous war machine."
 	icon = 'icons/obj/lavaland/dead_ratvar.dmi'
 	icon_state = "dead_ratvar"
-	flags_1 = ON_BORDER_1
+	atom_flags = ON_BORDER
 	appearance_flags = LONG_GLIDE
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE

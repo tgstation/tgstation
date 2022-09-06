@@ -245,7 +245,7 @@
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL | NOBLUDGEON
-	flags_1 = NONE
+	atom_flags = NONE
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = NONE
 	pinless = TRUE

@@ -437,13 +437,13 @@
 	return FALSE //No bumping to open, not even in mechs
 
 /obj/machinery/door/firedoor/proc/on_power_loss()
-	SIGNAL_HANDLER 
-	
+	SIGNAL_HANDLER
+
 	soundloop.stop()
 
 /obj/machinery/door/firedoor/proc/on_power_restore()
-	SIGNAL_HANDLER 
-	
+	SIGNAL_HANDLER
+
 	correct_state()
 
 	if(is_playing_alarm)
@@ -640,7 +640,7 @@
 		correct_state() //So we should re-evaluate our state
 
 /obj/machinery/door/firedoor/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(atom_flags & NODECONSTRUCT))
 		var/turf/targetloc = get_turf(src)
 		if(disassembled || prob(40))
 			var/obj/structure/firelock_frame/unbuilt_lock = new assemblytype(targetloc)
@@ -667,7 +667,7 @@
 /obj/machinery/door/firedoor/border_only
 	icon = 'icons/obj/doors/edge_Doorfire.dmi'
 	can_crush = FALSE
-	flags_1 = ON_BORDER_1
+	atom_flags = ON_BORDER
 	can_atmos_pass = ATMOS_PASS_PROC
 
 /obj/machinery/door/firedoor/border_only/closed

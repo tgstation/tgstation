@@ -52,7 +52,7 @@
 	icon_state = "death"
 	inhand_icon_state = "death"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	fire_resist = T0C+5200
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
@@ -492,7 +492,7 @@
 	greyscale_config = /datum/greyscale_config/football_armor
 	greyscale_config_worn = /datum/greyscale_config/football_armor_worn
 	greyscale_colors = "#D74722"
-	flags_1 = IS_PLAYER_COLORABLE_1
+	atom_flags = IS_PLAYER_COLORABLE
 
 /obj/item/clothing/suit/costume/joker
 	name = "comedian coat"

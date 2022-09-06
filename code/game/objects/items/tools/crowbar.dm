@@ -6,7 +6,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	usesound = 'sound/items/crowbar.ogg'
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	slot_flags = ITEM_SLOT_BELT
 	force = 5
 	throwforce = 7

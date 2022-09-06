@@ -263,7 +263,7 @@
 	anchored = FALSE
 	density = TRUE
 	req_access = list(ACCESS_TELEPORTER)
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	use_power = NO_POWER_USE
 	max_integrity = 300
 	var/active = FALSE

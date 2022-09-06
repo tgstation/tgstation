@@ -112,7 +112,7 @@
 	volume = 15
 	ignore_flags = 1 //so you can medipen through spacesuits
 	reagent_flags = DRAWABLE
-	flags_1 = null
+	atom_flags = null
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 10, /datum/reagent/toxin/formaldehyde = 3, /datum/reagent/medicine/coagulant = 2)
 	custom_price = PAYCHECK_CREW
 	custom_premium_price = PAYCHECK_COMMAND

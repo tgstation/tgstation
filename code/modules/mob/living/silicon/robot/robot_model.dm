@@ -14,7 +14,7 @@
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	///Host of this model
 	var/mob/living/silicon/robot/robot
 	///Icon of the module selection screen

@@ -137,7 +137,7 @@
 		return cpu.screwdriver_act(user, tool)
 
 /obj/machinery/modular_computer/attackby(obj/item/W as obj, mob/living/user)
-	if (!user.combat_mode && cpu && !(flags_1 & NODECONSTRUCT_1))
+	if (!user.combat_mode && cpu && !(atom_flags & NODECONSTRUCT))
 		return cpu.attackby(W, user)
 	return ..()
 

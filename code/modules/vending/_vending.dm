@@ -258,7 +258,7 @@
 
 /obj/machinery/vending/deconstruct(disassembled = TRUE)
 	if(!refill_canister) //the non constructable vendors drop metal instead of a machine frame.
-		if(!(flags_1 & NODECONSTRUCT_1))
+		if(!(atom_flags & NODECONSTRUCT))
 			new /obj/item/stack/sheet/iron(loc, 3)
 		qdel(src)
 	else
@@ -361,7 +361,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		R.custom_price = round(initial(temp.custom_price) * SSeconomy.inflation_value())
 		R.custom_premium_price = round(initial(temp.custom_premium_price) * SSeconomy.inflation_value())
 		R.age_restricted = initial(temp.age_restricted)
-		R.colorable = !!(initial(temp.greyscale_config) && initial(temp.greyscale_colors) && (initial(temp.flags_1) & IS_PLAYER_COLORABLE_1))
+		R.colorable = !!(initial(temp.greyscale_config) && initial(temp.greyscale_colors) && (initial(temp.atom_flags) & IS_PLAYER_COLORABLE))
 		R.category = product_to_category[typepath]
 		recordlist += R
 
@@ -825,7 +825,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 /obj/machinery/vending/exchange_parts(mob/user, obj/item/storage/part_replacer/W)
 	if(!istype(W))
 		return FALSE
-	if((flags_1 & NODECONSTRUCT_1) && !W.works_from_distance)
+	if((atom_flags & NODECONSTRUCT) && !W.works_from_distance)
 		return FALSE
 	if(!component_parts || !refill_canister)
 		return FALSE
@@ -1279,7 +1279,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 /obj/machinery/vending/custom/canLoadItem(obj/item/I, mob/user)
 	. = FALSE
-	if(I.flags_1 & HOLOGRAM_1)
+	if(I.atom_flags & HOLOGRAM)
 		say("This vendor cannot accept nonexistent items.")
 		return
 	if(loaded_items >= max_loaded_items)

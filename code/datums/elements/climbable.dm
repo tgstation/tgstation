@@ -36,7 +36,7 @@
 /datum/element/climbable/proc/can_climb(atom/source, mob/user)
 	var/dir_step = get_dir(user, source.loc)
 	//To jump over a railing you have to be standing next to it, not far behind it.
-	if(source.flags_1 & ON_BORDER_1 && user.loc != source.loc && (dir_step & source.dir) == source.dir)
+	if(source.atom_flags & ON_BORDER && user.loc != source.loc && (dir_step & source.dir) == source.dir)
 		return FALSE
 	return TRUE
 
@@ -91,7 +91,7 @@
 	var/same_loc = climbed_thing.loc == user.loc
 	// on-border objects can be vaulted over and into the next turf.
 	// The reverse dir check is for when normal behavior should apply instead (e.g. John Doe hops east of a railing facing west, ending on the same turf as it).
-	if(climbed_thing.flags_1 & ON_BORDER_1 && (same_loc || !(dir_step & REVERSE_DIR(climbed_thing.dir))))
+	if(climbed_thing.atom_flags & ON_BORDER && (same_loc || !(dir_step & REVERSE_DIR(climbed_thing.dir))))
 		//it can be vaulted over in two different cardinal directions. we choose one.
 		if(ISDIAGONALDIR(climbed_thing.dir) && same_loc)
 			if(params) //we check the icon x and y parameters of the click-drag to determine step_dir.

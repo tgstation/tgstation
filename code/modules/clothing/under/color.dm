@@ -12,7 +12,7 @@
 	inhand_icon_state = "jumpsuit"
 	worn_icon_state = "jumpsuit"
 	worn_icon = 'icons/mob/clothing/under/color.dmi'
-	flags_1 = IS_PLAYER_COLORABLE_1
+	atom_flags = IS_PLAYER_COLORABLE
 
 /obj/item/clothing/under/color/jumpskirt
 	body_parts_covered = CHEST|GROIN|ARMS
@@ -225,7 +225,7 @@
 	greyscale_config_inhand_right = null
 	greyscale_config_worn = null
 	can_adjust = FALSE
-	flags_1 = NONE
+	atom_flags = NONE
 
 /obj/item/clothing/under/color/jumpskirt/rainbow
 	name = "rainbow jumpskirt"
@@ -237,4 +237,4 @@
 	greyscale_config_inhand_right = null
 	greyscale_config_worn = null
 	can_adjust = FALSE
-	flags_1 = NONE
+	atom_flags = NONE

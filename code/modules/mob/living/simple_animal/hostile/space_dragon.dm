@@ -42,7 +42,7 @@
 	health_doll_icon = "spacedragon"
 	obj_damage = 50
 	environment_smash = ENVIRONMENT_SMASH_NONE
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	atom_flags = PREVENT_CONTENTS_EXPLOSION
 	melee_damage_upper = 35
 	melee_damage_lower = 35
 	mob_size = MOB_SIZE_LARGE

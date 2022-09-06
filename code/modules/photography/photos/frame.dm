@@ -5,7 +5,7 @@
 	desc = "The perfect showcase for your favorite deathtrap memories."
 	icon = 'icons/obj/signs.dmi'
 	custom_materials = list(/datum/material/wood = 2000)
-	flags_1 = 0
+	atom_flags = 0
 	icon_state = "frame-overlay"
 	result_path = /obj/structure/sign/picture_frame
 	var/obj/item/photo/displayed
@@ -171,7 +171,7 @@
 		. += framed
 
 /obj/structure/sign/picture_frame/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(atom_flags & NODECONSTRUCT))
 		var/obj/item/wallframe/picture/F = new /obj/item/wallframe/picture(loc)
 		if(framed)
 			F.displayed = framed

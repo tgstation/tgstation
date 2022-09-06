@@ -25,7 +25,7 @@
 				to_chat(affected_mob, span_danger("You feel a slight shock course through your body."))
 			if(DT_PROB(1, delta_time))
 				for(var/obj/nearby_object in orange(2, affected_mob))
-					if(nearby_object.anchored || !(nearby_object.flags_1 & CONDUCT_1))
+					if(nearby_object.anchored || !(nearby_object.atom_flags & CONDUCT))
 						continue
 					var/move_dir = get_dir(nearby_object, affected_mob)
 					nearby_object.Move(get_step(nearby_object, move_dir), move_dir)
@@ -41,7 +41,7 @@
 				to_chat(affected_mob, span_danger("You feel like clowning around."))
 			if(DT_PROB(2, delta_time))
 				for(var/obj/nearby_object in orange(4, affected_mob))
-					if(nearby_object.anchored || !(nearby_object.flags_1 & CONDUCT_1))
+					if(nearby_object.anchored || !(nearby_object.atom_flags & CONDUCT))
 						continue
 					for(var/i in 1 to rand(1, 2))
 						var/move_dir = get_dir(nearby_object, affected_mob)
@@ -61,7 +61,7 @@
 				to_chat(affected_mob, span_danger("You query upon the nature of miracles."))
 			if(DT_PROB(4, delta_time))
 				for(var/obj/nearby_object in orange(6, affected_mob))
-					if(nearby_object.anchored || !(nearby_object.flags_1 & CONDUCT_1))
+					if(nearby_object.anchored || !(nearby_object.atom_flags & CONDUCT))
 						continue
 					for(var/i in 1 to rand(1, 3))
 						var/move_dir = get_dir(nearby_object, affected_mob)

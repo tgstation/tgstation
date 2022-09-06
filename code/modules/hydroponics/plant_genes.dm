@@ -523,7 +523,7 @@
 	if(!.)
 		return
 
-	our_plant.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
+	our_plant.atom_flags |= HAS_CONTEXTUAL_SCREENTIPS
 	RegisterSignal(our_plant, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, .proc/on_requesting_context_from_item)
 	RegisterSignal(our_plant, COMSIG_PARENT_ATTACKBY, .proc/make_battery)
 

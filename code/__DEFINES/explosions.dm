@@ -23,7 +23,7 @@
 
 /// A wrapper for [/atom/proc/ex_act] to ensure that the explosion propagation and attendant signal are always handled.
 #define EX_ACT(target, args...)\
-	if(!(target.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)) { \
+	if(!(target.atom_flags & PREVENT_CONTENTS_EXPLOSION)) { \
 		target.contents_explosion(##args);\
 	};\
 	SEND_SIGNAL(target, COMSIG_ATOM_EX_ACT, ##args);\

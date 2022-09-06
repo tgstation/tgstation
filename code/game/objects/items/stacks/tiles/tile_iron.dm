@@ -7,7 +7,7 @@
 	force = 6
 	mats_per_unit = list(/datum/material/iron=500)
 	throwforce = 10
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	turf_type = /turf/open/floor/iron
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 70)
 	resistance_flags = FIRE_PROOF

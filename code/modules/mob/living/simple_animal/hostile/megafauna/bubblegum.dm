@@ -289,7 +289,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/grant_achievement(medaltype,scoretype)
 	. = ..()
-	if(!(flags_1 & ADMIN_SPAWNED_1))
+	if(!(atom_flags & ADMIN_SPAWNED))
 		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_BUBBLEGUM] = TRUE
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/AttackingTarget()

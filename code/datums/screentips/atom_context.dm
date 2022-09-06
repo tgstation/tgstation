@@ -3,7 +3,7 @@
 /// `add_context()` will *not* be called unless this is run.
 /// This is not necessary for Type-B interactions, as you can just apply the flag and register to the signal yourself.
 /atom/proc/register_context()
-	flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
+	atom_flags |= HAS_CONTEXTUAL_SCREENTIPS
 	RegisterSignal(src, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, .proc/add_context)
 
 /// Creates a "Type-B" contextual screentip interaction.

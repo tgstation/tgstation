@@ -67,7 +67,7 @@
 
 		new_turf = gen_turf.ChangeTurf(new_turf, initial(new_turf.baseturfs), CHANGETURF_DEFER_CHANGE)
 
-		new_turf.flags_1 |= stored_flags
+		new_turf.atom_flags |= stored_flags
 
 		if(!closed)//Open turfs have some special behavior related to spawning flora and mobs.
 

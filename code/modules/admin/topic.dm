@@ -1210,7 +1210,7 @@
 							O = new path(target)
 
 						if(!QDELETED(O))
-							O.flags_1 |= ADMIN_SPAWNED_1
+							O.atom_flags |= ADMIN_SPAWNED
 							if(obj_dir)
 								O.setDir(obj_dir)
 							if(obj_name)

@@ -9,7 +9,7 @@
 
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
 
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
 	usesound = 'sound/effects/spray2.ogg'

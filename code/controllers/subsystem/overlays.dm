@@ -115,7 +115,7 @@ SUBSYSTEM_DEF(overlays)
 		else
 			if(isloc(overlay))
 				var/atom/A = overlay
-				if (A.flags_1 & OVERLAY_QUEUED_1)
+				if (A.atom_flags & OVERLAY_QUEUED)
 					COMPILE_OVERLAYS(A)
 			appearance_bro.appearance = overlay //this works for images and atoms too!
 			if(!ispath(overlay))
@@ -124,8 +124,8 @@ SUBSYSTEM_DEF(overlays)
 			new_overlays += appearance_bro.appearance
 	return new_overlays
 
-#define NOT_QUEUED_ALREADY (!(flags_1 & OVERLAY_QUEUED_1))
-#define QUEUE_FOR_COMPILE flags_1 |= OVERLAY_QUEUED_1; SSoverlays.queue += src;
+#define NOT_QUEUED_ALREADY (!(atom_flags & OVERLAY_QUEUED))
+#define QUEUE_FOR_COMPILE atom_flags |= OVERLAY_QUEUED; SSoverlays.queue += src;
 /atom/proc/cut_overlays()
 	LAZYINITLIST(remove_overlays)
 	remove_overlays = overlays.Copy()

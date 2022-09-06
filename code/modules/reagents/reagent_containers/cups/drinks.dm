@@ -48,7 +48,7 @@
 	custom_materials = list(/datum/material/iron=100)
 	possible_transfer_amounts = list(5)
 	volume = 5
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	spillable = TRUE
 	resistance_flags = FIRE_PROOF
 	isGlass = FALSE

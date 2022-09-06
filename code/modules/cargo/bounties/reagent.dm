@@ -11,7 +11,7 @@
 		return FALSE
 	if(!O.reagents || !O.reagents.has_reagent(wanted_reagent.type))
 		return FALSE
-	if(O.flags_1 & HOLOGRAM_1)
+	if(O.atom_flags & HOLOGRAM)
 		return FALSE
 	return shipped_volume < required_volume
 

@@ -25,14 +25,14 @@
 
 /obj/structure/statue/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(flags_1 & NODECONSTRUCT_1)
+	if(atom_flags & NODECONSTRUCT)
 		return FALSE
 	default_unfasten_wrench(user, tool)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(atom_flags & NODECONSTRUCT))
 		if(W.tool_behaviour == TOOL_WELDER)
 			if(!W.tool_start_check(user, amount=0))
 				return FALSE
@@ -50,7 +50,7 @@
 	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/structure/statue/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(atom_flags & NODECONSTRUCT))
 		var/amount_mod = disassembled ? 0 : -2
 		for(var/mat in custom_materials)
 			var/datum/material/custom_material = GET_MATERIAL_REF(mat)
@@ -264,7 +264,7 @@
 	inhand_icon_state = "screwdriver_nuke"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	slot_flags = ITEM_SLOT_BELT
 	force = 5
 	w_class = WEIGHT_CLASS_TINY

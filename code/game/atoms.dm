@@ -15,8 +15,8 @@
 	///If non-null, overrides a/an/some in all cases
 	var/article
 
-	///First atom flags var
-	var/flags_1 = NONE
+	///Atom flags
+	var/atom_flags = NONE
 	///Intearaction flags
 	var/interaction_flags_atom = NONE
 
@@ -232,9 +232,9 @@
 	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(flags_1 & INITIALIZED_1)
+	if(atom_flags & INITIALIZED)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
-	flags_1 |= INITIALIZED_1
+	atom_flags |= INITIALIZED
 
 	if(loc)
 		SEND_SIGNAL(loc, COMSIG_ATOM_INITIALIZED_ON, src) /// Sends a signal that the new atom `src`, has been created at `loc`
@@ -1170,7 +1170,7 @@
  * At the atom level, if you edit a var named "color" it will add the atom colour with
  * admin level priority to the atom colours list
  *
- * Also, if GLOB.Debug2 is FALSE, it sets the [ADMIN_SPAWNED_1] flag on [flags_1][/atom/var/flags_1], which signifies
+ * Also, if GLOB.Debug2 is FALSE, it sets the [ADMIN_SPAWNED] flag on [atom_flags][/atom/var/atom_flags], which signifies
  * the object has been admin edited
  */
 /atom/vv_edit_var(var_name, var_value)
@@ -1217,7 +1217,7 @@
 		return
 
 	if(!GLOB.Debug2)
-		flags_1 |= ADMIN_SPAWNED_1
+		atom_flags |= ADMIN_SPAWNED
 
 	. = ..()
 
@@ -1951,7 +1951,7 @@
 		return
 
 	var/screentips_enabled = active_hud.screentips_enabled
-	if(screentips_enabled == SCREENTIP_PREFERENCE_DISABLED || flags_1 & NO_SCREENTIPS_1)
+	if(screentips_enabled == SCREENTIP_PREFERENCE_DISABLED || atom_flags & NO_SCREENTIPS)
 		active_hud.screentip_text.maptext = ""
 		return
 
@@ -1965,7 +1965,7 @@
 	if (isliving(user) || isovermind(user) || isaicamera(user))
 		var/obj/item/held_item = user.get_active_held_item()
 
-		if (flags_1 & HAS_CONTEXTUAL_SCREENTIPS_1 || held_item?.item_flags & ITEM_HAS_CONTEXTUAL_SCREENTIPS)
+		if (atom_flags & HAS_CONTEXTUAL_SCREENTIPS || held_item?.item_flags & ITEM_HAS_CONTEXTUAL_SCREENTIPS)
 			var/list/context = list()
 
 			var/contextual_screentip_returns = \

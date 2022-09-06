@@ -86,7 +86,7 @@
 	name = ""
 	icon = 'icons/misc/pic_in_pic.dmi'
 	icon_state = "room_background"
-	flags_1 = NOJAUNT
+	atom_flags = NOJAUNT
 
 /area/centcom/ai_multicam_room
 	name = "ai_multicam_room"
@@ -96,7 +96,7 @@
 	base_lighting_alpha = 255
 	area_flags = NOTELEPORT | HIDDEN_AREA | UNIQUE_AREA
 	ambientsounds = null
-	flags_1 = NONE
+	atom_flags = NONE
 
 GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 

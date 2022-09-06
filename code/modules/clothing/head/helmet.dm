@@ -130,7 +130,7 @@
 
 	cooldown = world.time
 	up = !up
-	flags_1 ^= visor_flags
+	atom_flags ^= visor_flags
 	flags_inv ^= visor_flags_inv
 	flags_cover ^= visor_flags_cover
 	icon_state = "[initial(icon_state)][up ? "up" : ""]"

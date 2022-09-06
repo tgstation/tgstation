@@ -194,7 +194,7 @@
 	greyscale_config = /datum/greyscale_config/suspenders
 	greyscale_config_worn = /datum/greyscale_config/suspenders/worn
 	greyscale_colors = "#972A2A"
-	flags_1 = IS_PLAYER_COLORABLE_1
+	atom_flags = IS_PLAYER_COLORABLE
 
 //Security
 /obj/item/clothing/suit/jacket/officer/blue

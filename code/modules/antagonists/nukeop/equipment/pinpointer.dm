@@ -69,7 +69,7 @@
 /obj/item/pinpointer/syndicate_cyborg // Cyborg pinpointers just look for a random operative.
 	name = "cyborg syndicate pinpointer"
 	desc = "An integrated tracking device, jury-rigged to search for living Syndicate operatives."
-	flags_1 = NONE
+	atom_flags = NONE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /obj/item/pinpointer/syndicate_cyborg/Initialize(mapload)

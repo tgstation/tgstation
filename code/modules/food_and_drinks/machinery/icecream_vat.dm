@@ -176,7 +176,7 @@
 	return
 
 /obj/machinery/icecream_vat/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(atom_flags & NODECONSTRUCT))
 		new /obj/item/stack/sheet/iron(loc, 4)
 	qdel(src)
 

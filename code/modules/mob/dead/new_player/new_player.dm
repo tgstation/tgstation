@@ -1,5 +1,5 @@
 /mob/dead/new_player
-	flags_1 = NONE
+	atom_flags = NONE
 	invisibility = INVISIBILITY_ABSTRACT
 	density = FALSE
 	stat = DEAD

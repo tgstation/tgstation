@@ -60,7 +60,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 		var/turf/T = get_turf(L)
 		if(!T || !is_station_level(T.z))
 			continue
-		if((L in GLOB.player_list) || L.mind || (L.flags_1 & HOLOGRAM_1))
+		if((L in GLOB.player_list) || L.mind || (L.atom_flags & HOLOGRAM))
 			continue
 		if(is_type_in_typecache(L, GLOB.high_priority_sentience))
 			hi_pri += L

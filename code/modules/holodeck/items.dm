@@ -45,7 +45,7 @@
 
 	//if any REAL cards have been inserted into the deck they are moved outside before destroying it
 	for(var/obj/item/toy/singlecard/card in cards)
-		if(card.flags_1 & HOLOGRAM_1)
+		if(card.atom_flags & HOLOGRAM)
 			continue
 		cards -= card
 		card.forceMove(drop_location())
@@ -190,7 +190,7 @@
 	eventstarted = TRUE
 
 	for(var/obj/structure/window/W in currentarea)
-		if(W.flags_1&NODECONSTRUCT_1) // Just in case: only holo-windows
+		if(W.atom_flags&NODECONSTRUCT) // Just in case: only holo-windows
 			qdel(W)
 
 	for(var/mob/M in currentarea)

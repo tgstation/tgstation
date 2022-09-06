@@ -120,7 +120,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	return ..() // then go ahead and delete the cable
 
 /obj/structure/cable/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(atom_flags & NODECONSTRUCT))
 		new /obj/item/stack/cable_coil(drop_location(), 1)
 	qdel(src)
 
@@ -422,7 +422,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	throw_speed = 3
 	throw_range = 5
 	mats_per_unit = list(/datum/material/iron=10, /datum/material/glass=5)
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb_continuous = list("whips", "lashes", "disciplines", "flogs")
 	attack_verb_simple = list("whip", "lash", "discipline", "flog")

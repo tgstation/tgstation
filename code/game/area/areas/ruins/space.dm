@@ -15,7 +15,7 @@
 /area/ruin/solars
 	requires_power = FALSE
 	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
-	flags_1 = NONE
+	atom_flags = NONE
 	ambience_index = AMBIENCE_ENGI
 	airlock_wires = /datum/wires/airlock/engineering
 	sound_environment = SOUND_AREA_SPACE

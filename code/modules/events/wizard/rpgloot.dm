@@ -80,7 +80,7 @@ GLOBAL_DATUM(rpgloot_controller, /datum/rpgloot_controller)
 	for(var/obj/item/fantasy_item in world)
 		CHECK_TICK
 
-		if(!(fantasy_item.flags_1 & INITIALIZED_1) || QDELETED(fantasy_item))
+		if(!(fantasy_item.atom_flags & INITIALIZED) || QDELETED(fantasy_item))
 			continue
 
 		fantasy_item.AddComponent(/datum/component/fantasy)

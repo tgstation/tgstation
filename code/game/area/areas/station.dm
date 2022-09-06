@@ -658,7 +658,7 @@
 	mood_message = "Being in the chapel brings me peace."
 	mood_trait = TRAIT_SPIRITUAL
 	ambience_index = AMBIENCE_HOLY
-	flags_1 = NONE
+	atom_flags = NONE
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
 /area/station/service/chapel/monastery
@@ -852,7 +852,7 @@
 	icon_state = "panels"
 	requires_power = FALSE
 	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
-	flags_1 = NONE
+	atom_flags = NONE
 	ambience_index = AMBIENCE_ENGI
 	airlock_wires = /datum/wires/airlock/engineering
 	sound_environment = SOUND_AREA_SPACE

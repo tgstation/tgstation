@@ -6,7 +6,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "reverse_bear_trap"
 	slot_flags = ITEM_SLOT_HEAD
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	resistance_flags = FIRE_PROOF | UNACIDABLE
 	w_class = WEIGHT_CLASS_NORMAL
 	max_integrity = 300

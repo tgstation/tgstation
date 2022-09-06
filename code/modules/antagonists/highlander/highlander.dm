@@ -73,7 +73,7 @@
 
 	sword = new(H)
 	if(!GLOB.highlander_controller)
-		sword.flags_1 |= ADMIN_SPAWNED_1 //To prevent announcing
+		sword.atom_flags |= ADMIN_SPAWNED //To prevent announcing
 	sword.pickup(H) //For the stun shielding
 	H.put_in_hands(sword)
 

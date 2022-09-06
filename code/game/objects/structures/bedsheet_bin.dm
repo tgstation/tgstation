@@ -65,7 +65,7 @@ LINEN BINS
 
 /obj/item/bedsheet/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
-		if (!(flags_1 & HOLOGRAM_1))
+		if (!(atom_flags & HOLOGRAM))
 			var/obj/item/stack/sheet/cloth/shreds = new (get_turf(src), stack_amount)
 			if(!QDELETED(shreds)) //stacks merged
 				transfer_fingerprints_to(shreds)
@@ -553,7 +553,7 @@ LINEN BINS
 	..()
 
 /obj/structure/bedsheetbin/screwdriver_act(mob/living/user, obj/item/tool)
-	if(flags_1 & NODECONSTRUCT_1)
+	if(atom_flags & NODECONSTRUCT)
 		return FALSE
 	if(amount)
 		to_chat(user, span_warning("The [src] must be empty first!"))

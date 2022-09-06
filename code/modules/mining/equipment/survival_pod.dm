@@ -6,7 +6,7 @@
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
-	flags_1 = CAN_BE_DIRTY_1
+	atom_flags = CAN_BE_DIRTY
 
 //Survival Capsule
 /obj/item/survivalcapsule
@@ -166,7 +166,7 @@
 
 /obj/item/gps/computer/wrench_act(mob/living/user, obj/item/I)
 	..()
-	if(flags_1 & NODECONSTRUCT_1)
+	if(atom_flags & NODECONSTRUCT)
 		return TRUE
 
 	user.visible_message(span_warning("[user] disassembles [src]."),
@@ -203,7 +203,7 @@
 	light_color = COLOR_VERY_PALE_LIME_GREEN
 	max_n_of_items = 10
 	pixel_y = -4
-	flags_1 = NODECONSTRUCT_1
+	atom_flags = NODECONSTRUCT
 
 /obj/machinery/smartfridge/survival_pod/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)

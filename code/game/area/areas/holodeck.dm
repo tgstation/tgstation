@@ -5,7 +5,7 @@
 	static_lighting = FALSE
 
 	base_lighting_alpha = 255
-	flags_1 = NONE
+	atom_flags = NONE
 	sound_environment = SOUND_ENVIRONMENT_PADDED_CELL
 
 	var/obj/machinery/computer/holodeck/linked

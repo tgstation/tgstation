@@ -124,7 +124,7 @@ Then the player gets the profit from selling his own wasted time.
 		return FALSE
 	if(!get_cost(O, apply_elastic))
 		return FALSE
-	if(O.flags_1 & HOLOGRAM_1)
+	if(O.atom_flags & HOLOGRAM)
 		return FALSE
 	return TRUE
 

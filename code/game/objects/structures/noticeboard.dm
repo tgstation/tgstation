@@ -105,7 +105,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/noticeboard, 32)
 	icon_state = "nboard0[notices]"
 
 /obj/structure/noticeboard/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(atom_flags & NODECONSTRUCT))
 		new /obj/item/stack/sheet/iron (loc, 1)
 	for(var/obj/item/content in contents)
 		remove_item(content)

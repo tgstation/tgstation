@@ -11,7 +11,7 @@
 	righthand_file = 'icons/mob/inhands/items/books_righthand.dmi'
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_SMALL
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	atom_flags = PREVENT_CONTENTS_EXPLOSION
 	var/persistence_id
 
 /obj/item/storage/photo_album/Initialize(mapload)

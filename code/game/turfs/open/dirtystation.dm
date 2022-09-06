@@ -10,7 +10,7 @@
 /turf/open/floor/proc/MakeDirty()
 	// We start with a 1/3 chance of having this proc called by Initialize()
 
-	if(!(flags_1 & CAN_BE_DIRTY_1))
+	if(!(atom_flags & CAN_BE_DIRTY))
 		return
 
 	if(locate(/obj/structure/grille) in contents)
@@ -18,7 +18,7 @@
 
 	var/area/A = get_area(src)
 
-	if(A && !(A.flags_1 & CAN_BE_DIRTY_1))
+	if(A && !(A.atom_flags & CAN_BE_DIRTY))
 		return
 
 	//The code below here isn't exactly optimal, but because of the individual decals that each area uses it's still applicable.

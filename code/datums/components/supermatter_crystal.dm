@@ -245,7 +245,7 @@
 		if(is_clown_job(consumed_mob.mind?.assigned_role))
 			damage_increase += rand(-300, 300) // HONK
 		consume_returns(matter_increase, damage_increase)
-	else if(consumed_object.flags_1 & SUPERMATTER_IGNORES_1)
+	else if(consumed_object.atom_flags & SUPERMATTER_IGNORES)
 		return
 	else if(isobj(consumed_object))
 		if(!iseffect(consumed_object))

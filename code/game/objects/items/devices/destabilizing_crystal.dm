@@ -5,7 +5,7 @@
 	icon = 'icons/obj/engine/supermatter.dmi'
 	icon_state = "destabilizing_crystal"
 	w_class = WEIGHT_CLASS_NORMAL
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	item_flags = NO_PIXEL_RANDOM_DROP
 	throwforce = 5
 	throw_speed = 1

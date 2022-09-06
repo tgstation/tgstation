@@ -18,7 +18,7 @@
 	inhand_icon_state = "buildpipe"
 	icon = 'icons/mob/augmentation/augments.dmi'
 	icon_static = 'icons/mob/augmentation/augments.dmi'
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	icon_state = "borg_l_arm"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
@@ -44,7 +44,7 @@
 	icon_static = 'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
 	limb_id = BODYPART_TYPE_ROBOTIC
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	icon_state = "borg_r_arm"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
@@ -70,7 +70,7 @@
 	icon_static = 'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
 	limb_id = BODYPART_TYPE_ROBOTIC
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	icon_state = "borg_l_leg"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
@@ -96,7 +96,7 @@
 	icon_static =  'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
 	limb_id = BODYPART_TYPE_ROBOTIC
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	icon_state = "borg_r_leg"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
@@ -121,7 +121,7 @@
 	icon_static =  'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
 	limb_id = BODYPART_TYPE_ROBOTIC
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	icon_state = "borg_chest"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
@@ -230,7 +230,7 @@
 	icon_static = 'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
 	limb_id = BODYPART_TYPE_ROBOTIC
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	icon_state = "borg_head"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE

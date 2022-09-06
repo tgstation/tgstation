@@ -85,7 +85,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 
 /obj/structure/fireaxecabinet/atom_break(damage_flag)
 	. = ..()
-	if(!broken && !(flags_1 & NODECONSTRUCT_1))
+	if(!broken && !(atom_flags & NODECONSTRUCT))
 		update_appearance()
 		broken = TRUE
 		playsound(src, 'sound/effects/glassbr3.ogg', 100, TRUE)
@@ -93,7 +93,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 		new /obj/item/shard(loc)
 
 /obj/structure/fireaxecabinet/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(atom_flags & NODECONSTRUCT))
 		if(fireaxe && loc)
 			fireaxe.forceMove(loc)
 			fireaxe = null

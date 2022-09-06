@@ -87,7 +87,7 @@
 
 /obj/structure/sink/oil_well/attackby(obj/item/O, mob/living/user, params)
 	flick("puddle-oil-splash",src)
-	if(O.tool_behaviour == TOOL_SHOVEL && !(flags_1 & NODECONSTRUCT_1)) //attempt to deconstruct the puddle with a shovel
+	if(O.tool_behaviour == TOOL_SHOVEL && !(atom_flags & NODECONSTRUCT)) //attempt to deconstruct the puddle with a shovel
 		to_chat(user, "You fill in the oil well with soil.")
 		O.play_tool_sound(src)
 		deconstruct()

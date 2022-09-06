@@ -7,7 +7,7 @@
 	greyscale_colors = "#4e7cc7"
 	greyscale_config = /datum/greyscale_config/eth_tunic
 	greyscale_config_worn = /datum/greyscale_config/eth_tunic_worn
-	flags_1 = IS_PLAYER_COLORABLE_1
+	atom_flags = IS_PLAYER_COLORABLE
 
 /obj/item/clothing/under/ethereal_tunic/Initialize(mapload)
 	. = ..()

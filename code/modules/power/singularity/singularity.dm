@@ -39,7 +39,7 @@
 	/// How long it's been since the singulo last acted, in seconds
 	var/time_since_act = 0
 
-	flags_1 = SUPERMATTER_IGNORES_1
+	atom_flags = SUPERMATTER_IGNORES
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	obj_flags = CAN_BE_HIT | DANGEROUS_POSSESSION
 

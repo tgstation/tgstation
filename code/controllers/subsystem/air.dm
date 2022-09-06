@@ -498,7 +498,7 @@ SUBSYSTEM_DEF(air)
 		active_turfs += T
 		if(currentpart == SSAIR_ACTIVETURFS)
 			currentrun += T
-	else if(T.flags_1 & INITIALIZED_1)
+	else if(T.atom_flags & INITIALIZED)
 		for(var/turf/S in T.atmos_adjacent_turfs)
 			add_to_active(S, TRUE)
 	else if(map_loading)

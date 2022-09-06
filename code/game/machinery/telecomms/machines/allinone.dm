@@ -14,7 +14,7 @@
 
 /obj/machinery/telecomms/allinone/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	flags_1 = NODECONSTRUCT_1
+	atom_flags = NODECONSTRUCT
 
 /obj/machinery/telecomms/allinone/Initialize(mapload)
 	. = ..()

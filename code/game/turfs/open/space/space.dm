@@ -45,9 +45,9 @@
 	icon_state = SPACE_ICON_STATE(x, y, z)
 	air = space_gas
 
-	if(flags_1 & INITIALIZED_1)
+	if(atom_flags & INITIALIZED)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
-	flags_1 |= INITIALIZED_1
+	atom_flags |= INITIALIZED
 
 	var/area/our_area = loc
 	if(our_area.area_has_base_lighting && always_lit) //Only provide your own lighting if the area doesn't for you

@@ -128,7 +128,7 @@
 	return TRUE
 
 /obj/machinery/meter/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(atom_flags & NODECONSTRUCT))
 		new /obj/item/pipe_meter(loc)
 	. = ..()
 

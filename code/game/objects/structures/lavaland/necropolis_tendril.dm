@@ -54,7 +54,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 	if(GLOB.tendrils.len>1)
 		last_tendril = FALSE
 
-	if(last_tendril && !(flags_1 & ADMIN_SPAWNED_1))
+	if(last_tendril && !(atom_flags & ADMIN_SPAWNED))
 		if(SSachievements.achievements_enabled)
 			for(var/mob/living/L in view(7,src))
 				if(L.stat || !L.client)

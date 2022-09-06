@@ -249,7 +249,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	icon_state = "bluespace"
 	base_icon_state = "bluespace"
 	baseturfs = /turf/open/space/bluespace
-	flags_1 = NOJAUNT
+	atom_flags = NOJAUNT
 	explosion_block = INFINITY
 	var/obj/item/hilbertshotel/parentSphere
 

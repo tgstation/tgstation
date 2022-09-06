@@ -124,7 +124,7 @@
 		part.desc = "[part.desc] [theme.desc]"
 		part.armor = getArmor(arglist(theme.armor))
 		part.resistance_flags = theme.resistance_flags
-		part.flags_1 |= theme.atom_flags //flags like initialization or admin spawning are here, so we cant set, have to add
+		part.atom_flags |= theme.atom_flags //flags like initialization or admin spawning are here, so we cant set, have to add
 		part.heat_protection = NONE
 		part.cold_protection = NONE
 		part.max_heat_protection_temperature = theme.max_heat_protection_temperature

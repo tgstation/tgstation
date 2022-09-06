@@ -83,7 +83,7 @@
 	return ..()
 
 /obj/structure/toilet/deconstruct()
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(atom_flags & NODECONSTRUCT))
 		for(var/obj/toilet_item in contents)
 			toilet_item.forceMove(drop_location())
 		if(buildstacktype)
@@ -104,7 +104,7 @@
 			cistern = !cistern
 			update_appearance()
 		return COMPONENT_CANCEL_ATTACK_CHAIN
-	else if(I.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
+	else if(I.tool_behaviour == TOOL_WRENCH && !(atom_flags&NODECONSTRUCT))
 		I.play_tool_sound(src)
 		deconstruct()
 		return TRUE
@@ -396,7 +396,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 		return
 
-	if(O.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
+	if(O.tool_behaviour == TOOL_WRENCH && !(atom_flags&NODECONSTRUCT))
 		O.play_tool_sound(src)
 		deconstruct()
 		return
@@ -473,7 +473,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		return ..()
 
 /obj/structure/sink/deconstruct()
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(atom_flags & NODECONSTRUCT))
 		drop_materials()
 		if(has_water_reclaimer)
 			new /obj/item/stock_parts/water_recycler(drop_location())
@@ -549,7 +549,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	return TRUE
 
 /obj/structure/sinkframe/deconstruct()
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(atom_flags & NODECONSTRUCT))
 		drop_materials()
 	return ..()
 

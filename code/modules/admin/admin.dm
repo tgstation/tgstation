@@ -70,7 +70,7 @@
 	else
 		for(var/i in 1 to amount)
 			var/atom/A = new chosen(T)
-			A.flags_1 |= ADMIN_SPAWNED_1
+			A.atom_flags |= ADMIN_SPAWNED
 
 	log_admin("[key_name(usr)] spawned [amount] x [chosen] at [AREACOORD(usr)]")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn Atom") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -97,7 +97,7 @@
 		))
 		//we need to set the admin spawn flag for the spawned items so we do it outside of the podspawn proc
 		var/atom/A = new chosen(pod)
-		A.flags_1 |= ADMIN_SPAWNED_1
+		A.atom_flags |= ADMIN_SPAWNED
 
 	log_admin("[key_name(usr)] pod-spawned [chosen] at [AREACOORD(usr)]")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Podspawn Atom") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

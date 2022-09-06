@@ -2,7 +2,7 @@
 	icon_state = "floor"
 	holodeck_compatible = TRUE
 	thermal_conductivity = 0
-	flags_1 = NONE
+	atom_flags = NONE
 	var/direction = SOUTH
 
 /turf/open/floor/holofloor/attackby(obj/item/I, mob/living/user)

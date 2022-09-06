@@ -134,7 +134,7 @@
 	greyscale_colors = "#E3C937#782A81"
 	greyscale_config = /datum/greyscale_config/fancy_hat
 	greyscale_config_worn = /datum/greyscale_config/fancy_hat_worn
-	flags_1 = IS_PLAYER_COLORABLE_1
+	atom_flags = IS_PLAYER_COLORABLE
 
 /obj/item/clothing/head/football_helmet
 	name = "football helmet"
@@ -142,7 +142,7 @@
 	greyscale_colors = "#D74722"
 	greyscale_config = /datum/greyscale_config/football_helmet
 	greyscale_config_worn = /datum/greyscale_config/football_helmet_worn
-	flags_1 = IS_PLAYER_COLORABLE_1
+	atom_flags = IS_PLAYER_COLORABLE
 
 /obj/item/clothing/head/tv_head
 	name = "television helmet"

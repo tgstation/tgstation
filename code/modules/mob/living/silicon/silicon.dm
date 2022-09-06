@@ -11,7 +11,7 @@
 	mob_biotypes = MOB_ROBOTIC
 	death_sound = 'sound/voice/borg_deathsound.ogg'
 	speech_span = SPAN_ROBOT
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	atom_flags = PREVENT_CONTENTS_EXPLOSION
 	examine_cursor_icon = null
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/last_lawchange_announce = 0

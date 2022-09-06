@@ -134,7 +134,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	inhand_icon_state = "sheet-metal"
 	mats_per_unit = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
 	throwforce = 10
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/iron
 	grind_results = list(/datum/reagent/iron = 20)
@@ -258,7 +258,7 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	mats_per_unit = list(/datum/material/alloy/plasteel=MINERAL_MATERIAL_AMOUNT)
 	material_type = /datum/material/alloy/plasteel
 	throwforce = 10
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 80)
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/plasteel

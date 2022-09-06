@@ -146,7 +146,7 @@
 	///How many seconds remain until the door is no longer electrified. -1/MACHINE_ELECTRIFIED_PERMANENT = permanently electrified until someone fixes it.
 	var/secondsElectrified = MACHINE_NOT_ELECTRIFIED
 
-	flags_1 = HTML_USE_INITAL_ICON_1
+	atom_flags = HTML_USE_INITAL_ICON
 	rad_insulation = RAD_MEDIUM_INSULATION
 
 	network_id = NETWORK_DOOR_AIRLOCKS
@@ -1172,7 +1172,7 @@
 	update_freelook_sight()
 	sleep(4)
 	set_density(FALSE)
-	flags_1 &= ~PREVENT_CLICK_UNDER_1
+	atom_flags &= ~PREVENT_CLICK_UNDER
 	air_update_turf(TRUE, FALSE)
 	sleep(1)
 	layer = OPEN_DOOR_LAYER
@@ -1217,12 +1217,12 @@
 	layer = CLOSED_DOOR_LAYER
 	if(air_tight)
 		set_density(TRUE)
-		flags_1 |= PREVENT_CLICK_UNDER_1
+		atom_flags |= PREVENT_CLICK_UNDER
 		air_update_turf(TRUE, TRUE)
 	sleep(1)
 	if(!air_tight)
 		set_density(TRUE)
-		flags_1 |= PREVENT_CLICK_UNDER_1
+		atom_flags |= PREVENT_CLICK_UNDER
 		air_update_turf(TRUE, TRUE)
 	sleep(4)
 	if(dangerous_close)
@@ -1375,7 +1375,7 @@
 
 /obj/machinery/door/airlock/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	if((damage_amount >= atom_integrity) && (damage_flag == BOMB))
-		flags_1 |= NODECONSTRUCT_1  //If an explosive took us out, don't drop the assembly
+		atom_flags |= NODECONSTRUCT  //If an explosive took us out, don't drop the assembly
 	. = ..()
 	if(atom_integrity < (0.75 * max_integrity))
 		update_appearance()
@@ -1391,7 +1391,7 @@
 	assembly.update_appearance()
 
 /obj/machinery/door/airlock/deconstruct(disassembled = TRUE, mob/user)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(atom_flags & NODECONSTRUCT))
 		var/obj/structure/door_assembly/A
 		if(assemblytype)
 			A = new assemblytype(loc)

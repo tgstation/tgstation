@@ -38,7 +38,7 @@
 				I.forceMove(src)
 
 /obj/structure/filingcabinet/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(atom_flags & NODECONSTRUCT))
 		new /obj/item/stack/sheet/iron(loc, 2)
 		for(var/obj/item/I in src)
 			I.forceMove(loc)

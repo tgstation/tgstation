@@ -28,7 +28,7 @@
 	greyscale_config = /datum/greyscale_config/ties
 	greyscale_config_worn = /datum/greyscale_config/ties_worn
 	greyscale_colors = "#4d4e4e"
-	flags_1 = IS_PLAYER_COLORABLE_1
+	atom_flags = IS_PLAYER_COLORABLE
 	/// All ties start untied unless otherwise specified
 	var/is_tied = FALSE
 	/// How long it takes to tie the tie
@@ -217,7 +217,7 @@
 	greyscale_colors = "#EEEEEE#EEEEEE"
 	greyscale_config = /datum/greyscale_config/scarf
 	greyscale_config_worn = /datum/greyscale_config/scarf_worn
-	flags_1 = IS_PLAYER_COLORABLE_1
+	atom_flags = IS_PLAYER_COLORABLE
 
 /obj/item/clothing/neck/scarf/black
 	name = "black scarf"
@@ -271,7 +271,7 @@
 	greyscale_colors = "#C6C6C6#EEEEEE"
 	greyscale_config = /datum/greyscale_config/large_scarf
 	greyscale_config_worn = /datum/greyscale_config/large_scarf_worn
-	flags_1 = IS_PLAYER_COLORABLE_1
+	atom_flags = IS_PLAYER_COLORABLE
 
 /obj/item/clothing/neck/large_scarf/red
 	name = "large red scarf"
@@ -299,7 +299,7 @@
 	greyscale_colors = "#EEEEEE"
 	greyscale_config = /datum/greyscale_config/infinity_scarf
 	greyscale_config_worn = /datum/greyscale_config/infinity_scarf_worn
-	flags_1 = IS_PLAYER_COLORABLE_1
+	atom_flags = IS_PLAYER_COLORABLE
 
 /obj/item/clothing/neck/petcollar
 	name = "pet collar"

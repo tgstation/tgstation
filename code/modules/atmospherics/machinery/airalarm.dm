@@ -828,7 +828,7 @@
 	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/machinery/airalarm/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(atom_flags & NODECONSTRUCT))
 		new /obj/item/stack/sheet/iron(loc, 2)
 		var/obj/item/I = new /obj/item/electronics/airalarm(loc)
 		if(!disassembled)

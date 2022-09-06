@@ -209,8 +209,8 @@
 	if(should_drop)
 		remove_all(get_turf(resolve_parent))
 
-	resolve_location.flags_1 &= ~HAS_DISASSOCIATED_STORAGE_1
-	real.flags_1 |= HAS_DISASSOCIATED_STORAGE_1
+	resolve_location.atom_flags &= ~HAS_DISASSOCIATED_STORAGE
+	real.atom_flags |= HAS_DISASSOCIATED_STORAGE
 
 	UnregisterSignal(resolve_location, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED))
 

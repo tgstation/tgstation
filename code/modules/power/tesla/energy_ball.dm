@@ -27,7 +27,7 @@
 	pixel_x = -32
 	pixel_y = -32
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
-	flags_1 = SUPERMATTER_IGNORES_1
+	atom_flags = SUPERMATTER_IGNORES
 
 	var/energy
 	var/target
@@ -290,7 +290,7 @@
 
 		else if(isliving(A))
 			var/mob/living/L = A
-			if(L.stat != DEAD && !(HAS_TRAIT(L, TRAIT_TESLA_SHOCKIMMUNE)) && !(L.flags_1 & SHOCKED_1))
+			if(L.stat != DEAD && !(HAS_TRAIT(L, TRAIT_TESLA_SHOCKIMMUNE)) && !(L.atom_flags & SHOCKED))
 				closest_type = LIVING
 				closest_atom = A
 

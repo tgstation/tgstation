@@ -30,7 +30,7 @@
 
 /obj/effect/holodeck_effect/cards/activate(obj/machinery/computer/holodeck/holodeck)
 	var/obj/item/toy/cards/deck/syndicate/holographic/deck = new(loc, holodeck)
-	deck.flags_1 |= HOLOGRAM_1
+	deck.atom_flags |= HOLOGRAM
 	return deck
 
 /obj/effect/holodeck_effect/sparks/activate(obj/machinery/computer/holodeck/HC)
@@ -49,7 +49,7 @@
 	var/static/banned_books = list(/obj/item/book/manual/random, /obj/item/book/manual/nuclear, /obj/item/book/manual/wiki)
 	var/newtype = pick(subtypesof(/obj/item/book/manual) - banned_books)
 	var/obj/item/book/manual/to_spawn = new newtype(loc)
-	to_spawn.flags_1 |= (HOLOGRAM_1 | NODECONSTRUCT_1)
+	to_spawn.atom_flags |= (HOLOGRAM | NODECONSTRUCT)
 	return to_spawn
 
 /obj/effect/holodeck_effect/mobspawner
@@ -60,7 +60,7 @@
 	if(islist(mobtype))
 		mobtype = pick(mobtype)
 	our_mob = new mobtype(loc)
-	our_mob.flags_1 |= HOLOGRAM_1
+	our_mob.atom_flags |= HOLOGRAM
 
 	// these vars are not really standardized but all would theoretically create stuff on death
 	for(var/v in list("butcher_results","corpse","weapon1","weapon2","blood_volume") & our_mob.vars)

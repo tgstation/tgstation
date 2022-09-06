@@ -64,7 +64,7 @@ Striking a noncultist, however, will tear their flesh."}
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_BULKY
 	force = 30 // whoever balanced this got beat in the head by a bible too many times good lord
@@ -110,7 +110,7 @@ Striking a noncultist, however, will tear their flesh."}
 	name = "eldritch sword"
 	force = 19 //can't break normal airlocks
 	item_flags = NEEDS_PERMIT | DROPDEL
-	flags_1 = NONE
+	atom_flags = NONE
 	block_chance = 25 //these dweebs don't get full block chance, because they're free cultists
 
 /obj/item/melee/cultblade/ghost/Initialize(mapload)

@@ -587,7 +587,7 @@
 	if(contents.len > 0)
 		to_chat(user, span_warning("You can't fold down [src] with crayons inside!"))
 		return
-	if(flags_1 & HOLOGRAM_1)
+	if(atom_flags & HOLOGRAM)
 		return
 
 	var/obj/item/stack/sheet/cardboard/cardboard = new /obj/item/stack/sheet/cardboard(user.drop_location())
@@ -712,11 +712,11 @@
 		return .
 
 
-	if(isobj(target) && !(target.flags_1 & UNPAINTABLE_1))
+	if(isobj(target) && !(target.atom_flags & UNPAINTABLE))
 		if(actually_paints)
 			var/color_is_dark = is_color_dark(paint_color)
 
-			if (color_is_dark && !(target.flags_1 & ALLOW_DARK_PAINTS_1))
+			if (color_is_dark && !(target.atom_flags & ALLOW_DARK_PAINTS))
 				to_chat(user, span_warning("A color that dark on an object like this? Surely not..."))
 				return FALSE
 

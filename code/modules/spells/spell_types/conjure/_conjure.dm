@@ -39,7 +39,7 @@
 		else
 			var/atom/summoned_object = new summoned_object_type(spawn_place)
 
-			summoned_object.flags_1 |= ADMIN_SPAWNED_1
+			summoned_object.atom_flags |= ADMIN_SPAWNED
 			if(summon_lifespan > 0)
 				QDEL_IN(summoned_object, summon_lifespan)
 

@@ -241,7 +241,7 @@
 		. += span_notice("Ctrl-Click the APC to switch the breaker [ operating ? "off" : "on"].")
 
 /obj/machinery/power/apc/deconstruct(disassembled = TRUE)
-	if(flags_1 & NODECONSTRUCT_1)
+	if(atom_flags & NODECONSTRUCT)
 		return
 	if(!(machine_stat & BROKEN))
 		set_broken()

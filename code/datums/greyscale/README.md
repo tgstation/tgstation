@@ -97,14 +97,14 @@ If you want your item to be colorable in a vending machine (or other places if t
 ```c
 /obj/item/clothing/head/beret
 	...
-	flags_1 = IS_PLAYER_COLORABLE_1
+	atom_flags = IS_PLAYER_COLORABLE
 ```
-However, **be extremely careful**, as this *requires* that you put *all* of the object's `flags_1` flags in that statement all over again. It's ugly, I know, but there's no
+However, **be extremely careful**, as this *requires* that you put *all* of the object's `atom_flags` flags in that statement all over again. It's ugly, I know, but there's no
 better way to do this with BYOND just yet. You can put multiple flags like this (not real flags):
 ```c
 /obj/item/clothing/head/beret
 	...
-	flags_1 = IS_PLAYER_COLORABLE_1 | THIS_IS_A_FAKE_FLAG | THIS_IS_ANOTHER_FAKE_FLAG
+	atom_flags = IS_PLAYER_COLORABLE | THIS_IS_A_FAKE_FLAG | THIS_IS_ANOTHER_FAKE_FLAG
 ```
 
 ## Debugging

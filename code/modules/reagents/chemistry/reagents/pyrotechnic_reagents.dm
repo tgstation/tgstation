@@ -123,7 +123,7 @@
 
 /datum/reagent/gunpowder/proc/on_ex_act(atom/source, severity, target)
 	SIGNAL_HANDLER
-	if(source.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)
+	if(source.atom_flags & PREVENT_CONTENTS_EXPLOSION)
 		return
 	var/location = get_turf(holder.my_atom)
 	var/datum/effect_system/reagents_explosion/e = new()

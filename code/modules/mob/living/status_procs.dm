@@ -606,16 +606,16 @@
 		update_movespeed()
 
 /**
- * Sets the [SHOCKED_1] flag on this mob.
+ * Sets the [SHOCKED] flag on this mob.
  */
 /mob/living/proc/set_shocked()
-	flags_1 |= SHOCKED_1
+	atom_flags |= SHOCKED
 
 /**
- * Unsets the [SHOCKED_1] flag on this mob.
+ * Unsets the [SHOCKED] flag on this mob.
  */
 /mob/living/proc/reset_shocked()
-	flags_1 &= ~ SHOCKED_1
+	atom_flags &= ~ SHOCKED
 
 /**
  * Adjusts a timed status effect on the mob,taking into account any existing timed status effects.

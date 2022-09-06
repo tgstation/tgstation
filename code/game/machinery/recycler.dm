@@ -221,7 +221,7 @@
 	name = "dangerous old crusher"
 	obj_flags = CAN_BE_HIT | EMAGGED
 	crush_damage = 120
-	flags_1 = NODECONSTRUCT_1
+	atom_flags = NODECONSTRUCT
 
 /obj/item/paper/guides/recycler
 	name = "paper - 'garbage duty instructions'"

@@ -14,7 +14,7 @@
 	armor = list(MELEE = 30, BULLET = 50, LASER = 50, ENERGY = 100, BOMB = 100, BIO = 0, FIRE = 100, ACID = 80)
 	anchored = TRUE //So it cant slide around after landing
 	anchorable = FALSE
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	atom_flags = PREVENT_CONTENTS_EXPLOSION
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | LONG_GLIDE
 	density = FALSE
 	divable = FALSE

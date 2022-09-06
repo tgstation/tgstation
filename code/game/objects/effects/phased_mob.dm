@@ -1,7 +1,7 @@
 /obj/effect/dummy/phased_mob
 	name = "water"
 	anchored = TRUE
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	atom_flags = PREVENT_CONTENTS_EXPLOSION
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	invisibility = INVISIBILITY_OBSERVER
 	movement_type = FLOATING
@@ -81,7 +81,7 @@
 		return
 	var/area/destination_area = newloc.loc
 	movedelay = world.time + movespeed
-	if(newloc.flags_1 & NOJAUNT)
+	if(newloc.atom_flags & NOJAUNT)
 		to_chat(user, span_warning("Some strange aura is blocking the way."))
 		return
 	if(destination_area.area_flags & NOTELEPORT || SSmapping.level_trait(newloc.z, ZTRAIT_NOPHASE))

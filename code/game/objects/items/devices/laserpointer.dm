@@ -6,7 +6,7 @@
 	inhand_icon_state = "pen"
 	worn_icon_state = "pen"
 	var/pointer_icon_state
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=500, /datum/material/glass=500)

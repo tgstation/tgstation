@@ -165,8 +165,8 @@
 	if(occupant_typecache)
 		occupant_typecache = typecacheof(occupant_typecache)
 
-	if((resistance_flags & INDESTRUCTIBLE) && component_parts){ // This is needed to prevent indestructible machinery still blowing up. If an explosion occurs on the same tile as the indestructible machinery without the PREVENT_CONTENTS_EXPLOSION_1 flag, /datum/controller/subsystem/explosions/proc/propagate_blastwave will call ex_act on all movable atoms inside the machine, including the circuit board and component parts. However, if those parts get deleted, the entire machine gets deleted, allowing for INDESTRUCTIBLE machines to be destroyed. (See #62164 for more info)
-		flags_1 |= PREVENT_CONTENTS_EXPLOSION_1
+	if((resistance_flags & INDESTRUCTIBLE) && component_parts){ // This is needed to prevent indestructible machinery still blowing up. If an explosion occurs on the same tile as the indestructible machinery without the PREVENT_CONTENTS_EXPLOSION flag, /datum/controller/subsystem/explosions/proc/propagate_blastwave will call ex_act on all movable atoms inside the machine, including the circuit board and component parts. However, if those parts get deleted, the entire machine gets deleted, allowing for INDESTRUCTIBLE machines to be destroyed. (See #62164 for more info)
+		atom_flags |= PREVENT_CONTENTS_EXPLOSION
 	}
 
 	return INITIALIZE_HINT_LATELOAD
@@ -718,7 +718,7 @@
 	update_current_power_usage()
 
 /obj/machinery/proc/default_pry_open(obj/item/crowbar)
-	. = !(state_open || panel_open || is_operational || (flags_1 & NODECONSTRUCT_1)) && crowbar.tool_behaviour == TOOL_CROWBAR
+	. = !(state_open || panel_open || is_operational || (atom_flags & NODECONSTRUCT)) && crowbar.tool_behaviour == TOOL_CROWBAR
 	if(!.)
 		return
 	crowbar.play_tool_sound(src, 50)
@@ -726,14 +726,14 @@
 	open_machine()
 
 /obj/machinery/proc/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel = 0, custom_deconstruct = FALSE)
-	. = (panel_open || ignore_panel) && !(flags_1 & NODECONSTRUCT_1) && crowbar.tool_behaviour == TOOL_CROWBAR
+	. = (panel_open || ignore_panel) && !(atom_flags & NODECONSTRUCT) && crowbar.tool_behaviour == TOOL_CROWBAR
 	if(!. || custom_deconstruct)
 		return
 	crowbar.play_tool_sound(src, 50)
 	deconstruct(TRUE)
 
 /obj/machinery/deconstruct(disassembled = TRUE)
-	if(flags_1 & NODECONSTRUCT_1)
+	if(atom_flags & NODECONSTRUCT)
 		return ..() //Just delete us, no need to call anything else.
 
 	on_deconstruction()
@@ -777,7 +777,7 @@
 
 /obj/machinery/atom_break(damage_flag)
 	. = ..()
-	if(!(machine_stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
+	if(!(machine_stat & BROKEN) && !(atom_flags & NODECONSTRUCT))
 		set_machine_stat(machine_stat | BROKEN)
 		SEND_SIGNAL(src, COMSIG_MACHINERY_BROKEN, damage_flag)
 		update_appearance()
@@ -812,7 +812,7 @@
 	return ..()
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
-	if((flags_1 & NODECONSTRUCT_1) || screwdriver.tool_behaviour != TOOL_SCREWDRIVER)
+	if((atom_flags & NODECONSTRUCT) || screwdriver.tool_behaviour != TOOL_SCREWDRIVER)
 		return FALSE
 
 	screwdriver.play_tool_sound(src, 50)
@@ -842,7 +842,7 @@
 	return SUCCESSFUL_UNFASTEN
 
 /obj/proc/default_unfasten_wrench(mob/user, obj/item/wrench, time = 20) //try to unwrench an object in a WONDERFUL DYNAMIC WAY
-	if((flags_1 & NODECONSTRUCT_1) || wrench.tool_behaviour != TOOL_WRENCH)
+	if((atom_flags & NODECONSTRUCT) || wrench.tool_behaviour != TOOL_WRENCH)
 		return CANT_UNFASTEN
 
 	var/turf/ground = get_turf(src)
@@ -879,7 +879,7 @@
 	if(!istype(replacer_tool))
 		return FALSE
 
-	if((flags_1 & NODECONSTRUCT_1) && !replacer_tool.works_from_distance)
+	if((atom_flags & NODECONSTRUCT) && !replacer_tool.works_from_distance)
 		return FALSE
 
 	var/shouldplaysound = 0

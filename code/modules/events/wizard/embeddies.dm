@@ -68,7 +68,7 @@ GLOBAL_DATUM(global_funny_embedding, /datum/global_funny_embedding)
 /datum/global_funny_embedding/proc/handle_current_items()
 	for(var/obj/item/embed_item in world)
 		CHECK_TICK
-		if(!(embed_item.flags_1 & INITIALIZED_1))
+		if(!(embed_item.atom_flags & INITIALIZED))
 			continue
 		if(!embed_item.embedding)
 			embed_item.embedding = embed_type

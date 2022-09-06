@@ -149,7 +149,7 @@
 		var/ghost_role = tgui_alert(usr, "Become [prompt_name]? (Warning, You can no longer be revived!)",, list("Yes", "No"))
 		if(ghost_role != "Yes" || !loc || QDELETED(user))
 			return
-	if(!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER) && !(flags_1 & ADMIN_SPAWNED_1))
+	if(!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER) && !(atom_flags & ADMIN_SPAWNED))
 		to_chat(user, span_warning("An admin has temporarily disabled non-admin ghost roles!"))
 		return
 	if(!uses) //just in case

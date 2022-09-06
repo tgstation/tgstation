@@ -437,7 +437,7 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 	name = "xmas tree"
 	desc = "A wondrous decorated Christmas tree."
 	icon_state = "pine_c"
-	flags_1 = NODECONSTRUCT_1 //protected by the christmas spirit
+	atom_flags = NODECONSTRUCT //protected by the christmas spirit
 
 /obj/structure/flora/tree/pine/xmas/presents
 	icon_state = "pinepresents"

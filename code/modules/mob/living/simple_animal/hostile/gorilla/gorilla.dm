@@ -134,7 +134,7 @@
 	AddComponent(/datum/component/crate_carrier)
 
 /mob/living/simple_animal/hostile/gorilla/cargo_domestic/attack_ghost(mob/user)
-	if(being_polled_for || mind || client || (flags_1 & ADMIN_SPAWNED_1))
+	if(being_polled_for || mind || client || (atom_flags & ADMIN_SPAWNED))
 		return ..()
 
 	if(is_banned_from(user.ckey, list(ROLE_SENTIENCE, ROLE_SYNDICATE)))

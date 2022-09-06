@@ -6,7 +6,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	worn_icon_state = "singularity_hammer"
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	slot_flags = ITEM_SLOT_BACK
 	force = 5
 	throwforce = 15
@@ -73,7 +73,7 @@
 	worn_icon_state = "mjolnir"
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	slot_flags = ITEM_SLOT_BACK
 	force = 5
 	throwforce = 30

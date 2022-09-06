@@ -46,15 +46,15 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 				B.setup_device()
 
 	if(holoitem)
-		O.flags_1 |= HOLOGRAM_1
+		O.atom_flags |= HOLOGRAM
 		for(var/atom/thing in O)
-			thing.flags_1 |= HOLOGRAM_1
+			thing.atom_flags |= HOLOGRAM
 		if(ismachinery(O))
 			var/obj/machinery/M = O
 			for(var/atom/contained_atom in M.component_parts)
-				contained_atom.flags_1 |= HOLOGRAM_1
+				contained_atom.atom_flags |= HOLOGRAM
 			if(M.circuit)
-				M.circuit.flags_1 |= HOLOGRAM_1
+				M.circuit.atom_flags |= HOLOGRAM
 
 	if(ismob(O)) //Overlays are carried over despite disallowing them, if a fix is found remove this.
 		var/mob/M = O

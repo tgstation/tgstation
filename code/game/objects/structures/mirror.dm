@@ -77,7 +77,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 
 /obj/structure/mirror/atom_break(damage_flag, mapload)
 	. = ..()
-	if(broken || (flags_1 & NODECONSTRUCT_1))
+	if(broken || (atom_flags & NODECONSTRUCT))
 		return
 	icon_state = "mirror_broke"
 	if(!mapload)
@@ -87,7 +87,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	broken = TRUE
 
 /obj/structure/mirror/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(atom_flags & NODECONSTRUCT))
 		if(!disassembled)
 			new /obj/item/shard( src.loc )
 	qdel(src)

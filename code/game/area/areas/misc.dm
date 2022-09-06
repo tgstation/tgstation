@@ -13,7 +13,7 @@
 	area_flags = UNIQUE_AREA | NO_ALERTS
 	outdoors = TRUE
 	ambience_index = AMBIENCE_SPACE
-	flags_1 = CAN_BE_DIRTY_1
+	atom_flags = CAN_BE_DIRTY
 	sound_environment = SOUND_AREA_SPACE
 	ambient_buzz = null //Space is deafeningly quiet
 

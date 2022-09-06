@@ -12,7 +12,7 @@
 	area_flags = NO_ALERTS
 	icon = 'icons/area/areas_station.dmi'
 	icon_state = "shuttle"
-	flags_1 = CAN_BE_DIRTY_1
+	atom_flags = CAN_BE_DIRTY
 	area_limited_icon_smoothing = /area/shuttle
 	sound_environment = SOUND_ENVIRONMENT_ROOM
 
@@ -161,7 +161,7 @@
 	name = "Emergency Shuttle"
 	area_flags = BLOBS_ALLOWED
 	area_limited_icon_smoothing = /area/shuttle/escape
-	flags_1 = CAN_BE_DIRTY_1
+	atom_flags = CAN_BE_DIRTY
 	area_flags = NO_ALERTS | CULT_PERMITTED
 
 /area/shuttle/escape/backup

@@ -11,7 +11,7 @@
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	can_adjust = FALSE
 	species_exception = list(/datum/species/golem)
-	flags_1 = IS_PLAYER_COLORABLE_1
+	atom_flags = IS_PLAYER_COLORABLE
 
 /obj/item/clothing/under/jeanshorts
 	name = "jean shorts"
@@ -22,7 +22,7 @@
 	greyscale_config = /datum/greyscale_config/jeanshorts
 	greyscale_config_worn = /datum/greyscale_config/jeanshorts_worn
 	greyscale_colors = "#787878#723E0E#4D7EAC"
-	flags_1 = IS_PLAYER_COLORABLE_1
+	atom_flags = IS_PLAYER_COLORABLE
 
 /obj/item/clothing/under/shorts/red
 	name = "athletic shorts"

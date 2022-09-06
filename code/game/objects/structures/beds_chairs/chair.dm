@@ -43,7 +43,7 @@
 
 /obj/structure/chair/deconstruct(disassembled)
 	// If we have materials, and don't have the NOCONSTRUCT flag
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(atom_flags & NODECONSTRUCT))
 		if(buildstacktype)
 			new buildstacktype(loc,buildstackamount)
 		else
@@ -61,7 +61,7 @@
 	qdel(src)
 
 /obj/structure/chair/attackby(obj/item/W, mob/user, params)
-	if(flags_1 & NODECONSTRUCT_1)
+	if(atom_flags & NODECONSTRUCT)
 		return . = ..()
 	if(istype(W, /obj/item/assembly/shock_kit) && !HAS_TRAIT(src, TRAIT_ELECTRIFIED_BUCKLE))
 		electrify_self(W, user)
@@ -90,7 +90,7 @@
 
 
 /obj/structure/chair/wrench_act_secondary(mob/living/user, obj/item/weapon)
-	if(flags_1&NODECONSTRUCT_1)
+	if(atom_flags&NODECONSTRUCT)
 		return TRUE
 	..()
 	weapon.play_tool_sound(src)
@@ -272,7 +272,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool, 0)
 /obj/structure/chair/MouseDrop(over_object, src_location, over_location)
 	. = ..()
 	if(over_object == usr && Adjacent(usr))
-		if(!item_chair || has_buckled_mobs() || src.flags_1 & NODECONSTRUCT_1)
+		if(!item_chair || has_buckled_mobs() || src.atom_flags & NODECONSTRUCT)
 			return
 		if(!usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
 			return
@@ -345,7 +345,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 		if(istype(A, /obj/structure/chair))
 			to_chat(user, span_warning("There is already a chair here!"))
 			return
-		if(A.density && !(A.flags_1 & ON_BORDER_1))
+		if(A.density && !(A.atom_flags & ON_BORDER))
 			to_chat(user, span_warning("There is already something here!"))
 			return
 
@@ -488,7 +488,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	icon_state = null
 	buildstacktype = null
 	item_chair = null
-	flags_1 = NODECONSTRUCT_1
+	atom_flags = NODECONSTRUCT
 	alpha = 0
 
 /obj/structure/chair/mime/post_buckle_mob(mob/living/M)

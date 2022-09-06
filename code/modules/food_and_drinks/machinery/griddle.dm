@@ -36,7 +36,7 @@
 
 /obj/machinery/griddle/crowbar_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(flags_1 & NODECONSTRUCT_1)
+	if(atom_flags & NODECONSTRUCT)
 		return
 	if(default_deconstruction_crowbar(I, ignore_panel = TRUE))
 		return
@@ -94,7 +94,7 @@
 /obj/machinery/griddle/proc/AddToGrill(obj/item/item_to_grill, mob/user)
 	vis_contents += item_to_grill
 	griddled_objects += item_to_grill
-	item_to_grill.flags_1 |= IS_ONTOP_1
+	item_to_grill.atom_flags |= IS_ONTOP
 	RegisterSignal(item_to_grill, COMSIG_MOVABLE_MOVED, .proc/ItemMoved)
 	RegisterSignal(item_to_grill, COMSIG_GRILL_COMPLETED, .proc/GrillCompleted)
 	RegisterSignal(item_to_grill, COMSIG_PARENT_QDELETING, .proc/ItemRemovedFromGrill)
@@ -103,7 +103,7 @@
 
 /obj/machinery/griddle/proc/ItemRemovedFromGrill(obj/item/I)
 	SIGNAL_HANDLER
-	I.flags_1 &= ~IS_ONTOP_1
+	I.atom_flags &= ~IS_ONTOP
 	griddled_objects -= I
 	vis_contents -= I
 	UnregisterSignal(I, list(COMSIG_GRILL_COMPLETED, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))

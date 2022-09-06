@@ -235,7 +235,7 @@ at the cost of risking a vicious bite.**/
 	name = "strange pants"
 	desc = "A pair of pants. They do not look or feel natural, and smell like fresh blood."
 	greyscale_colors = "#ffffff#ffffff#ffffff"
-	flags_1 = NONE //If IS_PLAYER_COLORABLE gets added color-changing support (i.e. spraycans), these won't end up getting it too. Plus, it already has its own recolor.
+	atom_flags = NONE //If IS_PLAYER_COLORABLE gets added color-changing support (i.e. spraycans), these won't end up getting it too. Plus, it already has its own recolor.
 
 #undef ALTAR_INACTIVE
 #undef ALTAR_STAGEONE
@@ -294,7 +294,7 @@ at the cost of risking a vicious bite.**/
 		return TRUE
 
 /obj/structure/steam_vent/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(atom_flags & NODECONSTRUCT))
 		new /obj/item/stack/sheet/iron(loc, 1)
 		new /obj/item/stock_parts/water_recycler(loc, 1)
 	qdel(src)

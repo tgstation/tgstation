@@ -79,7 +79,7 @@
 			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
 
 /obj/structure/displaycase/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(atom_flags & NODECONSTRUCT))
 		dump()
 		if(!disassembled)
 			new /obj/item/shard(drop_location())
@@ -88,7 +88,7 @@
 
 /obj/structure/displaycase/atom_break(damage_flag)
 	. = ..()
-	if(!broken && !(flags_1 & NODECONSTRUCT_1))
+	if(!broken && !(atom_flags & NODECONSTRUCT))
 		set_density(FALSE)
 		broken = TRUE
 		new /obj/item/shard(drop_location())
@@ -584,7 +584,7 @@
 
 /obj/structure/displaycase/forsale/atom_break(damage_flag)
 	. = ..()
-	if(!broken && !(flags_1 & NODECONSTRUCT_1))
+	if(!broken && !(atom_flags & NODECONSTRUCT))
 		broken = TRUE
 		playsound(src, SFX_SHATTER, 70, TRUE)
 		update_appearance()

@@ -9,7 +9,7 @@
 	icon_state = "detective"
 	inhand_icon_state = "gun"
 	worn_icon_state = "gun"
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=2000)
 	w_class = WEIGHT_CLASS_NORMAL

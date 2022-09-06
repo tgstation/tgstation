@@ -170,7 +170,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	broken_state = "snow_dug"
 	initial_gas_mix = FROZEN_ATMOS
 	slowdown = 2
-	flags_1 = NONE
+	atom_flags = NONE
 	planetary_atmos = TRUE
 	bullet_sizzle = TRUE
 	bullet_bounce_sound = null

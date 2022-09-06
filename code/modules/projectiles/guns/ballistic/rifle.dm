@@ -203,7 +203,7 @@
 	slot_flags = null
 	can_bayonet = FALSE
 	item_flags = NEEDS_PERMIT | DROPDEL | ABSTRACT | NOBLUDGEON
-	flags_1 = NONE
+	atom_flags = NONE
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 	show_bolt_icon = FALSE //It's a magic hand, not a rifle
 

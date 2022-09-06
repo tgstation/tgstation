@@ -106,7 +106,7 @@
 	for(var/turf/next_step as anything in (get_line(user_turf, target) - user_turf))
 		if(first_step)
 			for(var/obj/blocker in user_turf)
-				if(!blocker.density || !(blocker.flags_1 & ON_BORDER_1))
+				if(!blocker.density || !(blocker.atom_flags & ON_BORDER))
 					continue
 				if(blocker.CanPass(dummy, get_dir(user_turf, next_step)))
 					continue

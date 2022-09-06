@@ -133,7 +133,7 @@
 	armour_penetration = 100
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_NORMAL
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	light_color = LIGHT_COLOR_LIGHT_CYAN
 
 	active_force = 150

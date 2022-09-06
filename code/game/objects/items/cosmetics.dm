@@ -106,7 +106,7 @@
 	desc = "The latest and greatest power razor born from the science of shaving."
 	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "razor"
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/razor/suicide_act(mob/living/carbon/user)

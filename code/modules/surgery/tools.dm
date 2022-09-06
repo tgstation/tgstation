@@ -6,7 +6,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	custom_materials = list(/datum/material/iron = 6000, /datum/material/glass = 3000, /datum/material/silver = 3000)
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_TINY
 	tool_behaviour = TOOL_RETRACTOR
@@ -25,7 +25,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	custom_materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500, /datum/material/silver = 2500)
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb_continuous = list("attacks", "pinches")
@@ -46,7 +46,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	custom_materials = list(/datum/material/iron = 2500, /datum/material/glass = 750, /datum/material/silver = 1250)
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb_continuous = list("burns")
@@ -112,7 +112,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 6000, /datum/material/silver = 5000)
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	item_flags = SURGICAL_TOOL
 	force = 15
 	demolition_mod = 0.5
@@ -150,7 +150,7 @@
 	icon_state = "scalpel"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	item_flags = SURGICAL_TOOL
 	force = 10
 	demolition_mod = 0.25
@@ -195,7 +195,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	mob_throw_hit_sound = 'sound/weapons/pierce.ogg'
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	item_flags = SURGICAL_TOOL
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
@@ -386,7 +386,7 @@
 	desc = "A type of heavy duty surgical shears used for achieving a clean separation between limb and patient. Keeping the patient still is imperative to be able to secure and align the shears."
 	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "shears"
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	item_flags = SURGICAL_TOOL
 	toolspeed = 1
 	force = 12
@@ -469,7 +469,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	custom_materials = list(/datum/material/iron = 5000,  /datum/material/glass = 2500, /datum/material/silver = 2500)
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb_continuous = list("corrects", "properly sets")

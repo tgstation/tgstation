@@ -82,7 +82,7 @@
 		return
 	directional_opacity = NONE
 	for(var/atom/movable/opacity_source as anything in opacity_sources)
-		if(opacity_source.flags_1 & ON_BORDER_1)
+		if(opacity_source.atom_flags & ON_BORDER)
 			directional_opacity |= opacity_source.dir
 		else //If fulltile and opaque, then the whole tile blocks view, no need to continue checking.
 			directional_opacity = ALL_CARDINALS

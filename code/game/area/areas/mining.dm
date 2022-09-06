@@ -16,7 +16,7 @@
 	power_equip = FALSE
 	power_light = FALSE
 	outdoors = TRUE
-	flags_1 = NONE
+	atom_flags = NONE
 	ambience_index = AMBIENCE_MINING
 	area_flags = VALID_TERRITORY | UNIQUE_AREA | NO_ALERTS | CULT_PERMITTED
 	sound_environment = SOUND_AREA_STANDARD_STATION
@@ -32,7 +32,7 @@
 	power_equip = FALSE
 	power_light = FALSE
 	outdoors = TRUE
-	flags_1 = NONE
+	atom_flags = NONE
 	ambience_index = AMBIENCE_MINING
 	area_flags = VALID_TERRITORY | UNIQUE_AREA | NO_ALERTS | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED
 	map_generator = /datum/map_generator/cave_generator
@@ -160,7 +160,7 @@
 	icon = 'icons/area/areas_station.dmi'
 	icon_state = "mining"
 	has_gravity = STANDARD_GRAVITY
-	flags_1 = NONE
+	atom_flags = NONE
 	area_flags = VALID_TERRITORY | UNIQUE_AREA | FLORA_ALLOWED
 	sound_environment = SOUND_AREA_LAVALAND
 	ambient_buzz = 'sound/ambience/magma.ogg'
@@ -216,7 +216,7 @@
 	icon = 'icons/area/areas_station.dmi'
 	icon_state = "mining"
 	has_gravity = STANDARD_GRAVITY
-	flags_1 = NONE
+	atom_flags = NONE
 	area_flags = UNIQUE_AREA | FLORA_ALLOWED
 	sound_environment = SOUND_AREA_ICEMOON
 	ambient_buzz = 'sound/ambience/magma.ogg'

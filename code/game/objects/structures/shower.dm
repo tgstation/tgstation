@@ -184,7 +184,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 
 /obj/machinery/shower/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(flags_1 & NODECONSTRUCT_1)
+	if(atom_flags & NODECONSTRUCT)
 		return
 
 	I.play_tool_sound(src)

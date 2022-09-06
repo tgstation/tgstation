@@ -3,7 +3,7 @@
 	name = "pickaxe"
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "pickaxe"
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	force = 15
 	throwforce = 10
@@ -71,7 +71,7 @@
 /obj/item/pickaxe/drill/cyborg
 	name = "cyborg mining drill"
 	desc = "An integrated electric mining drill."
-	flags_1 = NONE
+	atom_flags = NONE
 
 /obj/item/pickaxe/drill/cyborg/Initialize(mapload)
 	. = ..()
@@ -115,7 +115,7 @@
 	icon_state = "shovel"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	slot_flags = ITEM_SLOT_BELT
 	force = 8
 	throwforce = 4
@@ -175,7 +175,7 @@
 	icon_state = "trench_tool"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	force = 15
 	throwforce = 6
 	w_class = WEIGHT_CLASS_SMALL

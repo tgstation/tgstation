@@ -79,7 +79,7 @@
 	var/obj/machinery/power/emitter/energycannon/magical/our_statue
 	var/list/mob/living/sleepers = list()
 	var/never_spoken = TRUE
-	flags_1 = NODECONSTRUCT_1
+	atom_flags = NODECONSTRUCT
 
 /obj/structure/table/abductor/wabbajack/Initialize(mapload)
 	. = ..()
@@ -214,7 +214,7 @@
 
 /obj/structure/table/wood/shuttle_bar
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	flags_1 = NODECONSTRUCT_1
+	atom_flags = NODECONSTRUCT
 	max_integrity = 1000
 	var/boot_dir = 1
 

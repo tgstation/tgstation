@@ -11,7 +11,7 @@
 	desc = "A vending machine restock cart."
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	force = 7
 	throwforce = 10
 	throw_speed = 1

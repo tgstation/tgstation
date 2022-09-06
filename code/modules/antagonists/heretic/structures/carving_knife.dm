@@ -5,7 +5,7 @@
 		but only few can evoke the dangers that lurk beneath reality."
 	icon = 'icons/obj/eldritch.dmi'
 	icon_state = "rune_carver"
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_SMALL
 	wound_bonus = 20

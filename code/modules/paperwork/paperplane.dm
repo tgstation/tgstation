@@ -25,7 +25,7 @@
 	pixel_y = base_pixel_y + rand(-8, 8)
 	if(newPaper)
 		internalPaper = newPaper
-		flags_1 = newPaper.flags_1
+		atom_flags = newPaper.atom_flags
 		color = newPaper.color
 		newPaper.forceMove(src)
 	else

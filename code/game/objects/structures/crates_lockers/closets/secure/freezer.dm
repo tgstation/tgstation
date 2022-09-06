@@ -1,6 +1,6 @@
 /obj/structure/closet/secure_closet/freezer
 	icon_state = "freezer"
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	atom_flags = PREVENT_CONTENTS_EXPLOSION
 	door_anim_squish = 0.22
 	door_anim_angle = 123
 	door_anim_time = 4
@@ -29,7 +29,7 @@
 	if(jones)
 		return ..()
 	jones = TRUE
-	flags_1 &= ~PREVENT_CONTENTS_EXPLOSION_1
+	atom_flags &= ~PREVENT_CONTENTS_EXPLOSION
 
 /obj/structure/closet/secure_closet/freezer/empty
 	name = "empty freezer"

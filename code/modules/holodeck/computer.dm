@@ -274,7 +274,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 			continue
 
 		RegisterSignal(holo_atom, COMSIG_PARENT_QDELETING, .proc/remove_from_holo_lists)
-		holo_atom.flags_1 |= HOLOGRAM_1
+		holo_atom.atom_flags |= HOLOGRAM
 
 		if(isholoeffect(holo_atom))//activates holo effects and transfers them from the spawned list into the effects list
 			var/obj/effect/holodeck_effect/holo_effect = holo_atom
@@ -294,12 +294,12 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 			holo_object.resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 			if(isstructure(holo_object))
-				holo_object.flags_1 |= NODECONSTRUCT_1
+				holo_object.atom_flags |= NODECONSTRUCT
 				continue
 
 			if(ismachinery(holo_object))
 				var/obj/machinery/holo_machine = holo_object
-				holo_machine.flags_1 |= NODECONSTRUCT_1
+				holo_machine.atom_flags |= NODECONSTRUCT
 				holo_machine.power_change()
 
 				if(istype(holo_machine, /obj/machinery/button))

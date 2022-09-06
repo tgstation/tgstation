@@ -6,7 +6,7 @@
 	gender = NEUTER
 	plane = GAME_PLANE //makes the graffiti visible over a wall.
 	mergeable_decal = FALSE
-	flags_1 = ALLOW_DARK_PAINTS_1
+	atom_flags = ALLOW_DARK_PAINTS
 	var/do_icon_rotate = TRUE
 	var/rotation = 0
 	var/paint_colour = "#FFFFFF"

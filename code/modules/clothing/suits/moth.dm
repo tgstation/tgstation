@@ -5,7 +5,7 @@
 	greyscale_config = /datum/greyscale_config/mothcoat
 	greyscale_config_worn = /datum/greyscale_config/mothcoat_worn
 	greyscale_colors = "#eaeaea"
-	flags_1 = IS_PLAYER_COLORABLE_1
+	atom_flags = IS_PLAYER_COLORABLE
 	flags_inv = HIDEMUTWINGS
 	body_parts_covered = CHEST
 	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/flashlight/lantern) //lamp
@@ -16,7 +16,7 @@
 
 /obj/item/clothing/suit/mothcoat/original/Initialize(mapload)
 	. = ..()
-	
+
 	create_storage(type = /datum/storage/pockets)
 
 /obj/item/clothing/suit/mothcoat/winter

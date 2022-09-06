@@ -4,7 +4,7 @@
 	icon_screen = "tram"
 	icon_keyboard = "atmos_key"
 	circuit = /obj/item/circuitboard/computer/tram_controls
-	flags_1 = NODECONSTRUCT_1 | SUPERMATTER_IGNORES_1
+	atom_flags = NODECONSTRUCT | SUPERMATTER_IGNORES
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 	light_range = 0 //we dont want to spam SSlighting with source updates every movement

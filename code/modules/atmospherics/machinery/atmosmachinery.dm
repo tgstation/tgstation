@@ -434,7 +434,7 @@
  * Called by wrench_act(), create a pipe fitting and remove the pipe
  */
 /obj/machinery/atmospherics/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(atom_flags & NODECONSTRUCT))
 		if(can_unwrench)
 			var/obj/item/pipe/stored = new construction_type(loc, null, dir, src, pipe_color)
 			stored.set_piping_layer(piping_layer)

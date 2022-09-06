@@ -721,7 +721,7 @@
 			smart_animal.sentience_act()
 		to_chat(dumb_mob, span_warning("All at once it makes sense: you know what you are and who you are! Self awareness is yours!"))
 		to_chat(dumb_mob, span_userdanger("You are grateful to be self aware and owe [user.real_name] a great debt. Serve [user.real_name], and assist [user.p_them()] in completing [user.p_their()] goals at any cost."))
-		if(dumb_mob.flags_1 & HOLOGRAM_1) //Check to see if it's a holodeck creature
+		if(dumb_mob.atom_flags & HOLOGRAM) //Check to see if it's a holodeck creature
 			to_chat(dumb_mob, span_userdanger("You also become depressingly aware that you are not a real creature, but instead a holoform. Your existence is limited to the parameters of the holodeck."))
 		to_chat(user, span_notice("[dumb_mob] accepts [src] and suddenly becomes attentive and aware. It worked!"))
 		dumb_mob.copy_languages(user, LANGUAGE_MASTER)
@@ -1041,7 +1041,7 @@
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 7
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	max_amount = 60
 	turf_type = /turf/open/floor/bluespace
 	merge_type = /obj/item/stack/tile/bluespace
@@ -1058,7 +1058,7 @@
 	throwforce = 10
 	throw_speed = 0.1
 	throw_range = 28
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	max_amount = 60
 	turf_type = /turf/open/floor/sepia
 	merge_type = /obj/item/stack/tile/sepia

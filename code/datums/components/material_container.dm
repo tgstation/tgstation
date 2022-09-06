@@ -116,7 +116,7 @@
 		return
 	if(I.item_flags & ABSTRACT)
 		return
-	if((I.flags_1 & HOLOGRAM_1) || (I.item_flags & NO_MAT_REDEMPTION) || (tc && !is_type_in_typecache(I, tc)))
+	if((I.atom_flags & HOLOGRAM) || (I.item_flags & NO_MAT_REDEMPTION) || (tc && !is_type_in_typecache(I, tc)))
 		if(!(mat_container_flags & MATCONTAINER_SILENT))
 			to_chat(user, span_warning("[parent] won't accept [I]!"))
 		return

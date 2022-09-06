@@ -68,7 +68,7 @@
 	name = "arrow"
 	desc = "Stabby Stabman!"
 	icon_state = "arrow"
-	flags_1 = NONE
+	atom_flags = NONE
 	throwforce = 1
 	projectile_type = /obj/projectile/bullet/reusable/arrow
 	firing_effect_type = null

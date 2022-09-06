@@ -357,7 +357,7 @@
 		return open(user)
 
 /obj/structure/closet/deconstruct(disassembled = TRUE)
-	if (!(flags_1 & NODECONSTRUCT_1))
+	if (!(atom_flags & NODECONSTRUCT))
 		if(ispath(material_drop) && material_drop_amount)
 			new material_drop(loc, material_drop_amount)
 		if (electronics)
@@ -369,7 +369,7 @@
 
 /obj/structure/closet/atom_break(damage_flag)
 	. = ..()
-	if(!broken && !(flags_1 & NODECONSTRUCT_1))
+	if(!broken && !(atom_flags & NODECONSTRUCT))
 		bust_open()
 
 /obj/structure/closet/attackby(obj/item/W, mob/user, params)

@@ -14,7 +14,7 @@
 	max_integrity = 350
 	armor = list(MELEE = 30, BULLET = 30, LASER = 20, ENERGY = 20, BOMB = 10, BIO = 0, FIRE = 80, ACID = 70)
 	can_atmos_pass = ATMOS_PASS_DENSITY
-	flags_1 = PREVENT_CLICK_UNDER_1
+	atom_flags = PREVENT_CLICK_UNDER
 	receive_ricochet_chance_mod = 0.8
 	damage_deflection = 10
 
@@ -55,9 +55,9 @@
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(2, 1, src)
 	if(density)
-		flags_1 |= PREVENT_CLICK_UNDER_1
+		atom_flags |= PREVENT_CLICK_UNDER
 	else
-		flags_1 &= ~PREVENT_CLICK_UNDER_1
+		atom_flags &= ~PREVENT_CLICK_UNDER
 
 	//doors only block while dense though so we have to use the proc
 	real_explosion_block = explosion_block
@@ -347,7 +347,7 @@
 	set_opacity(0)
 	sleep(5)
 	set_density(FALSE)
-	flags_1 &= ~PREVENT_CLICK_UNDER_1
+	atom_flags &= ~PREVENT_CLICK_UNDER
 	sleep(5)
 	layer = initial(layer)
 	update_appearance()
@@ -377,7 +377,7 @@
 	layer = closingLayer
 	sleep(5)
 	set_density(TRUE)
-	flags_1 |= PREVENT_CLICK_UNDER_1
+	atom_flags |= PREVENT_CLICK_UNDER
 	sleep(5)
 	update_appearance()
 	if(visible && !glass)

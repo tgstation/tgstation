@@ -78,7 +78,7 @@
 	name = "fleshy restraints"
 	desc = "Used by mega arachnids to immobilize their prey."
 	item_flags = DROPDEL
-	flags_1 = NONE
+	atom_flags = NONE
 	icon_state = "flesh_snare"
 	armed = TRUE
 

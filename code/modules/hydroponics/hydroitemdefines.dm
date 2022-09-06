@@ -421,7 +421,7 @@
 	inhand_icon_state = "cultivator"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	force = 5
 	throwforce = 7
 	w_class = WEIGHT_CLASS_SMALL
@@ -442,7 +442,7 @@
 	attack_verb_simple = list("slash", "slice", "bash", "claw")
 	hitsound = null
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 1.5)
-	flags_1 = NONE
+	atom_flags = NONE
 	resistance_flags = FLAMMABLE
 
 /obj/item/cultivator/rake/Initialize(mapload)
@@ -472,7 +472,7 @@
 	inhand_icon_state = "hatchet"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	force = 12
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 15
@@ -501,7 +501,7 @@
 	desc = "A crude axe blade upon a short wooden handle."
 	icon_state = "woodhatchet"
 	custom_materials = null
-	flags_1 = NONE
+	atom_flags = NONE
 
 /obj/item/scythe
 	icon_state = "scythe0"
@@ -514,7 +514,7 @@
 	throw_speed = 2
 	throw_range = 3
 	w_class = WEIGHT_CLASS_BULKY
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	armour_penetration = 20
 	slot_flags = ITEM_SLOT_BACK
 	attack_verb_continuous = list("chops", "slices", "cuts", "reaps")
@@ -563,7 +563,7 @@
 	worn_icon_state = "cutters"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	force = 5
 	throwforce = 6
 	w_class = WEIGHT_CLASS_SMALL
@@ -613,7 +613,7 @@
 	worn_icon_state = "cutters"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	force = 10
 	throwforce = 8
 	w_class = WEIGHT_CLASS_SMALL

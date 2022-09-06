@@ -168,7 +168,7 @@
 	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/structure/frame/computer/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(atom_flags & NODECONSTRUCT))
 		if(state == 4)
 			new /obj/item/shard(drop_location())
 			new /obj/item/shard(drop_location())

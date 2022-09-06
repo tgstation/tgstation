@@ -488,7 +488,7 @@
 	name = "thermoncle"
 	desc = "Never before has seeing through walls felt so gentlepersonly."
 	icon_state = "thermoncle"
-	flags_1 = null //doesn't protect eyes because it's a monocle, duh
+	atom_flags = null //doesn't protect eyes because it's a monocle, duh
 
 /obj/item/clothing/glasses/thermal/monocle/examine(mob/user) //Different examiners see a different description!
 	if(user.gender == MALE)

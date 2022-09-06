@@ -98,7 +98,7 @@
 	greyscale_config = /datum/greyscale_config/waistcoat
 	greyscale_config_worn = /datum/greyscale_config/waistcoat_worn
 	greyscale_colors = "#414344"
-	flags_1 = IS_PLAYER_COLORABLE_1
+	atom_flags = IS_PLAYER_COLORABLE
 
 /obj/item/clothing/accessory/vest_sheriff
 	name = "sheriff vest"

@@ -46,7 +46,7 @@
 		attack_verb_simple = parent_deck.attack_verb_simple
 
 		if(parent_deck.holodeck)
-			flags_1 |= HOLOGRAM_1
+			atom_flags |= HOLOGRAM
 			parent_deck.holodeck.spawned += src
 
 	register_context()

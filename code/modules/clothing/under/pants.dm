@@ -15,7 +15,7 @@
 	greyscale_config = /datum/greyscale_config/slacks
 	greyscale_config_worn = /datum/greyscale_config/slacks_worn
 	greyscale_colors = "#575757#3E3E3E#75634F"
-	flags_1 = IS_PLAYER_COLORABLE_1
+	atom_flags = IS_PLAYER_COLORABLE
 
 /obj/item/clothing/under/pants/jeans
 	name = "jeans"
@@ -24,7 +24,7 @@
 	greyscale_config = /datum/greyscale_config/jeans
 	greyscale_config_worn = /datum/greyscale_config/jeans_worn
 	greyscale_colors = "#787878#723E0E#4D7EAC"
-	flags_1 = IS_PLAYER_COLORABLE_1
+	atom_flags = IS_PLAYER_COLORABLE
 
 /obj/item/clothing/under/pants/track
 	name = "track pants"

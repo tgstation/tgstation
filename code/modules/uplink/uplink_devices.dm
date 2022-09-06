@@ -14,7 +14,7 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	dog_fashion = /datum/dog_fashion/back
 
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	slot_flags = ITEM_SLOT_BELT
 	throw_speed = 3
 	throw_range = 7

@@ -251,7 +251,7 @@
 	icon_state = "shuttle_wall-0"
 	base_icon_state = "shuttle_wall"
 	explosion_block = 3
-	flags_1 = CAN_BE_DIRTY_1
+	atom_flags = CAN_BE_DIRTY
 	flags_ricochet = RICOCHET_SHINY | RICOCHET_HARD
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	hardness = 40 //6 on moh's scale

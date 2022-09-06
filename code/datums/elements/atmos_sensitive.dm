@@ -23,10 +23,10 @@
 	var/atom/us = source
 	us.RemoveElement(/datum/element/connect_loc, pass_on)
 	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
-	if(us.flags_1 & ATMOS_IS_PROCESSING_1)
+	if(us.atom_flags & ATMOS_IS_PROCESSING)
 		us.atmos_end()
 		SSair.atom_process -= us
-		us.flags_1 &= ~ATMOS_IS_PROCESSING_1
+		us.atom_flags &= ~ATMOS_IS_PROCESSING
 	return ..()
 
 /datum/element/atmos_sensitive/proc/react_to_move(datum/source, atom/movable/oldloc, direction, forced)
@@ -39,14 +39,14 @@
 /atom/proc/check_atmos_process(datum/source, datum/gas_mixture/air, exposed_temperature)
 	SIGNAL_HANDLER
 	if(should_atmos_process(air, exposed_temperature))
-		if(flags_1 & ATMOS_IS_PROCESSING_1)
+		if(atom_flags & ATMOS_IS_PROCESSING)
 			return
 		SSair.atom_process += src
-		flags_1 |= ATMOS_IS_PROCESSING_1
-	else if(flags_1 & ATMOS_IS_PROCESSING_1)
+		atom_flags |= ATMOS_IS_PROCESSING
+	else if(atom_flags & ATMOS_IS_PROCESSING)
 		atmos_end()
 		SSair.atom_process -= src
-		flags_1 &= ~ATMOS_IS_PROCESSING_1
+		atom_flags &= ~ATMOS_IS_PROCESSING
 
 /atom/proc/process_exposure()
 	var/turf/open/spot = loc
@@ -54,12 +54,12 @@
 		//If you end up in a locker or a wall reconsider your life decisions
 		atmos_end()
 		SSair.atom_process -= src
-		flags_1 &= ~ATMOS_IS_PROCESSING_1
+		atom_flags &= ~ATMOS_IS_PROCESSING
 		return
 	if(!should_atmos_process(spot.air, spot.air.temperature)) //Things can change without a tile becoming active
 		atmos_end()
 		SSair.atom_process -= src
-		flags_1 &= ~ATMOS_IS_PROCESSING_1
+		atom_flags &= ~ATMOS_IS_PROCESSING
 		return
 	atmos_expose(spot.air, spot.air.temperature)
 
@@ -67,7 +67,7 @@
 	if(!should_atmos_process(air, air.temperature))
 		atmos_end()
 		SSair.atom_process -= src
-		flags_1 &= ~ATMOS_IS_PROCESSING_1
+		atom_flags &= ~ATMOS_IS_PROCESSING
 		return
 	atmos_expose(air, air.temperature)
 

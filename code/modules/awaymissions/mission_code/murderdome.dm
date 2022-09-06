@@ -1,11 +1,11 @@
 
 /obj/structure/window/reinforced/fulltile/indestructible
 	name = "robust window"
-	flags_1 = PREVENT_CLICK_UNDER_1 | NODECONSTRUCT_1
+	atom_flags = PREVENT_CLICK_UNDER | NODECONSTRUCT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/structure/grille/indestructible
-	flags_1 = CONDUCT_1 | NODECONSTRUCT_1
+	atom_flags = CONDUCT | NODECONSTRUCT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/effect/spawner/structure/window/reinforced/indestructible

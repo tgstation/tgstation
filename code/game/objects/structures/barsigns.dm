@@ -44,7 +44,7 @@
 
 /obj/structure/sign/barsign/atom_break(damage_flag)
 	. = ..()
-	if(!broken && !(flags_1 & NODECONSTRUCT_1))
+	if(!broken && !(atom_flags & NODECONSTRUCT))
 		broken = TRUE
 
 /obj/structure/sign/barsign/deconstruct(disassembled = TRUE)

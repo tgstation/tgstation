@@ -135,7 +135,7 @@
 	greyscale_config = /datum/greyscale_config/beret
 	greyscale_config_worn = /datum/greyscale_config/beret/worn
 	greyscale_colors = "#972A2A"
-	flags_1 = IS_PLAYER_COLORABLE_1
+	atom_flags = IS_PLAYER_COLORABLE
 
 
 //Security
@@ -264,7 +264,7 @@
 	armor = list(MELEE = 35, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 20, ACID = 50, WOUND = 4)
 	strip_delay = 60
 	dog_fashion = null
-	flags_1 = NONE
+	atom_flags = NONE
 
 
 /obj/item/clothing/head/beret/sec/navywarden
@@ -284,7 +284,7 @@
 	name = "science beret"
 	desc = "A science-themed beret for our hardworking scientists."
 	greyscale_colors = "#8D008F"
-	flags_1 = NONE
+	atom_flags = NONE
 
 /obj/item/clothing/head/beret/science/fancy
 	desc = "A science-themed beret for our hardworking scientists. This one comes with a fancy badge!"
@@ -300,7 +300,7 @@
 	name = "medical beret"
 	desc = "A medical-flavored beret for the doctor in you!"
 	greyscale_colors = "#FFFFFF"
-	flags_1 = NONE
+	atom_flags = NONE
 
 /obj/item/clothing/head/beret/medical/paramedic
 	name = "paramedic beret"
@@ -339,13 +339,13 @@
 	name = "engineering beret"
 	desc = "Might not protect you from radiation, but definitely will protect you from looking unfashionable!"
 	greyscale_colors = "#FFBC30"
-	flags_1 = NONE
+	atom_flags = NONE
 
 /obj/item/clothing/head/beret/atmos
 	name = "atmospheric beret"
 	desc = "While \"pipes\" and \"style\" might not rhyme, this beret sure makes you feel like they should!"
 	greyscale_colors = "#FFDE15"
-	flags_1 = NONE
+	atom_flags = NONE
 
 
 //Cargo
@@ -354,7 +354,7 @@
 	name = "cargo beret"
 	desc = "No need to compensate when you can wear this beret!"
 	greyscale_colors = "#c99840"
-	flags_1 = NONE
+	atom_flags = NONE
 
 
 //Curator

@@ -66,7 +66,7 @@
 	icon_state = "plasma"
 	worn_icon_state = "plasmatank"
 	tank_holder_icon_state = null
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	slot_flags = null //they have no straps!
 	force = 8
 
@@ -147,7 +147,7 @@
 	worn_icon_state = "emergency"
 	tank_holder_icon_state = "holder_emergency"
 	worn_icon = null
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	force = 4

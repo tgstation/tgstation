@@ -878,7 +878,7 @@
 	worn_icon_state = "card_grey"
 
 	wildcard_slots = WILDCARD_LIMIT_GREY
-	flags_1 = UNPAINTABLE_1
+	atom_flags = UNPAINTABLE
 
 	/// An overlay icon state for when the card is assigned to a name. Usually manifests itself as a little scribble to the right of the job icon.
 	var/assigned_icon_state = "assigned"

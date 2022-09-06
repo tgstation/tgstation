@@ -12,7 +12,7 @@
 	smoothing_groups = list(SMOOTH_GROUP_ALIEN_NEST)
 	canSmoothWith = list(SMOOTH_GROUP_ALIEN_NEST)
 	buildstacktype = null
-	flags_1 = NODECONSTRUCT_1
+	atom_flags = NODECONSTRUCT
 	bolts = FALSE
 	var/static/mutable_appearance/nest_overlay = mutable_appearance('icons/mob/nonhuman-player/alien.dmi', "nestoverlay", LYING_MOB_LAYER)
 

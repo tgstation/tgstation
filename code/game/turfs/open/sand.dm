@@ -2,7 +2,7 @@
 	name = "beach"
 	desc = "Sandy."
 	icon = 'icons/misc/beach.dmi'
-	flags_1 = NONE
+	atom_flags = NONE
 	bullet_bounce_sound = null
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND

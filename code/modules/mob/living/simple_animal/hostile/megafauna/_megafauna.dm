@@ -27,7 +27,7 @@
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
 	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	mouse_opacity = MOUSE_OPACITY_OPAQUE // Easier to click on in melee, they're giant targets anyway
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	atom_flags = PREVENT_CONTENTS_EXPLOSION
 	/// Crusher loot dropped when the megafauna is killed with a crusher
 	var/list/crusher_loot
 	/// Achievement given to surrounding players when the megafauna is killed
@@ -91,7 +91,7 @@
 	if(crusher_dmg && crusher_loot && crusher_dmg.total_damage >= maxHealth * 0.6)
 		spawn_crusher_loot()
 		crusher_kill = TRUE
-	if(true_spawn && !(flags_1 & ADMIN_SPAWNED_1))
+	if(true_spawn && !(atom_flags & ADMIN_SPAWNED))
 		var/tab = "megafauna_kills"
 		if(crusher_kill)
 			tab = "megafauna_kills_crusher"
@@ -170,7 +170,7 @@
 
 /// Grants medals and achievements to surrounding players
 /mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype, scoretype, crusher_kill, list/grant_achievement = list())
-	if(!achievement_type || (flags_1 & ADMIN_SPAWNED_1) || !SSachievements.achievements_enabled) //Don't award medals if the medal type isn't set
+	if(!achievement_type || (atom_flags & ADMIN_SPAWNED) || !SSachievements.achievements_enabled) //Don't award medals if the medal type isn't set
 		return FALSE
 	if(!grant_achievement.len)
 		for(var/mob/living/L in view(7,src))

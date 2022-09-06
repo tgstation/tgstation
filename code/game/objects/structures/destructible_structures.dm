@@ -6,7 +6,7 @@
 
 /obj/structure/destructible/deconstruct(disassembled = TRUE)
 	if(!disassembled)
-		if(!(flags_1 & NODECONSTRUCT_1))
+		if(!(atom_flags & NODECONSTRUCT))
 			if(islist(debris))
 				for(var/I in debris)
 					for(var/i in 1 to debris[I])

@@ -7,7 +7,7 @@
 	icon = 'icons/mecha/mech_construct.dmi'
 	icon_state = "blank"
 	w_class = WEIGHT_CLASS_GIGANTIC
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 
 /obj/item/mecha_parts/proc/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right = FALSE) //For attaching parts to a finished mech
 	if(!user.transferItemToLoc(src, M))
@@ -341,7 +341,7 @@
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	force = 5
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0

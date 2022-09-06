@@ -3,7 +3,7 @@
 	desc = "Basic railing meant to protect idiots like you from falling."
 	icon = 'icons/obj/fluff.dmi'
 	icon_state = "railing"
-	flags_1 = ON_BORDER_1
+	atom_flags = ON_BORDER
 	density = TRUE
 	anchored = TRUE
 	pass_flags_self = LETPASSTHROW|PASSSTRUCTURE
@@ -26,7 +26,7 @@
 	if(climbable)
 		AddElement(/datum/element/climbable)
 
-	if(density && flags_1 & ON_BORDER_1) // blocks normal movement from and to the direction it's facing.
+	if(density && atom_flags & ON_BORDER) // blocks normal movement from and to the direction it's facing.
 		var/static/list/loc_connections = list(
 			COMSIG_ATOM_EXIT = .proc/on_exit,
 		)
@@ -63,7 +63,7 @@
 		return TRUE
 
 /obj/structure/railing/deconstruct(disassembled)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(atom_flags & NODECONSTRUCT))
 		var/obj/item/stack/rods/rod = new /obj/item/stack/rods(drop_location(), 3)
 		transfer_fingerprints_to(rod)
 	return ..()
@@ -71,7 +71,7 @@
 ///Implements behaviour that makes it possible to unanchor the railing.
 /obj/structure/railing/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(flags_1&NODECONSTRUCT_1)
+	if(atom_flags&NODECONSTRUCT)
 		return
 	to_chat(user, span_notice("You begin to [anchored ? "unfasten the railing from":"fasten the railing to"] the floor..."))
 	if(I.use_tool(src, user, volume = 75, extra_checks = CALLBACK(src, .proc/check_anchored, anchored)))

@@ -7,7 +7,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/bombs_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
 	item_flags = NOBLUDGEON
-	flags_1 = NONE
+	atom_flags = NONE
 	det_time = 10
 	display_timer = FALSE
 	w_class = WEIGHT_CLASS_SMALL

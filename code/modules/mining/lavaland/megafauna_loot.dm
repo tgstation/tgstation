@@ -266,7 +266,7 @@
 	greyscale_colors = "#4d4d4d#808080"
 	greyscale_config = /datum/greyscale_config/heck_suit
 	greyscale_config_worn = /datum/greyscale_config/heck_suit/worn
-	flags_1 = IS_PLAYER_COLORABLE_1
+	atom_flags = IS_PLAYER_COLORABLE
 
 /obj/item/clothing/suit/hooded/hostile_environment/Initialize(mapload)
 	. = ..()
@@ -301,7 +301,7 @@
 	greyscale_colors = "#4d4d4d#808080#ff3300"
 	greyscale_config = /datum/greyscale_config/heck_helmet
 	greyscale_config_worn = /datum/greyscale_config/heck_helmet/worn
-	flags_1 = IS_PLAYER_COLORABLE_1
+	atom_flags = IS_PLAYER_COLORABLE
 
 /obj/item/clothing/head/hooded/hostile_environment/Initialize(mapload)
 	. = ..()
@@ -609,7 +609,7 @@
 	inhand_icon_state = "spectral"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_BULKY
 	force = 1

@@ -1,5 +1,5 @@
 /*
-	These defines are specific to the atom/flags_1 bitmask
+	These defines are specific to the atom/atom_flags bitmask
 */
 #define ALL (~0) //For convenience.
 #define NONE 0
@@ -19,47 +19,47 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 // scroll down before changing the numbers on these
 
 /// Is this object currently processing in the atmos object list?
-#define ATMOS_IS_PROCESSING_1 (1<<0)
+#define ATMOS_IS_PROCESSING (1<<0)
 /// conducts electricity (metal etc.)
-#define CONDUCT_1 (1<<1)
+#define CONDUCT (1<<1)
 /// For machines and structures that should not break into parts, eg, holodeck stuff
-#define NODECONSTRUCT_1 (1<<2)
+#define NODECONSTRUCT (1<<2)
 /// atom queued to SSoverlay
-#define OVERLAY_QUEUED_1 (1<<3)
+#define OVERLAY_QUEUED (1<<3)
 /// item has priority to check when entering or leaving
-#define ON_BORDER_1 (1<<4)
+#define ON_BORDER (1<<4)
 ///Whether or not this atom shows screentips when hovered over
-#define NO_SCREENTIPS_1 (1<<5)
+#define NO_SCREENTIPS (1<<5)
 /// Prevent clicking things below it on the same turf eg. doors/ fulltile windows
-#define PREVENT_CLICK_UNDER_1 (1<<6)
+#define PREVENT_CLICK_UNDER (1<<6)
 ///specifies that this atom is a hologram that isnt real
-#define HOLOGRAM_1 (1<<7)
+#define HOLOGRAM (1<<7)
 /// Prevents mobs from getting chainshocked by teslas and the supermatter
-#define SHOCKED_1 (1<<8)
+#define SHOCKED (1<<8)
 ///Whether /atom/Initialize() has already run for the object
-#define INITIALIZED_1 (1<<9)
+#define INITIALIZED (1<<9)
 /// was this spawned by an admin? used for stat tracking stuff.
-#define ADMIN_SPAWNED_1 (1<<10)
+#define ADMIN_SPAWNED (1<<10)
 /// should not get harmed if this gets caught by an explosion?
-#define PREVENT_CONTENTS_EXPLOSION_1 (1<<11)
+#define PREVENT_CONTENTS_EXPLOSION (1<<11)
 /// Should this object be paintable with very dark colors?
-#define ALLOW_DARK_PAINTS_1 (1<<14)
+#define ALLOW_DARK_PAINTS (1<<14)
 /// Should this object be unpaintable?
-#define UNPAINTABLE_1 (1<<15)
+#define UNPAINTABLE (1<<15)
 /// Is the thing currently spinning?
-#define IS_SPINNING_1 (1<<16)
-#define IS_ONTOP_1 (1<<17)
-#define SUPERMATTER_IGNORES_1 (1<<18)
+#define IS_SPINNING (1<<16)
+#define IS_ONTOP (1<<17)
+#define SUPERMATTER_IGNORES (1<<18)
 /// If a turf can be made dirty at roundstart. This is also used in areas.
-#define CAN_BE_DIRTY_1 (1<<19)
+#define CAN_BE_DIRTY (1<<19)
 /// Should we use the initial icon for display? Mostly used by overlay only objects
-#define HTML_USE_INITAL_ICON_1 (1<<20)
+#define HTML_USE_INITAL_ICON (1<<20)
 /// Can players recolor this in-game via vendors (and maybe more if support is added)?
-#define IS_PLAYER_COLORABLE_1 (1<<21)
+#define IS_PLAYER_COLORABLE (1<<21)
 /// Whether or not this atom has contextual screentips when hovered OVER
-#define HAS_CONTEXTUAL_SCREENTIPS_1 (1<<22)
+#define HAS_CONTEXTUAL_SCREENTIPS (1<<22)
 // Whether or not this atom is storing contents for a disassociated storage object
-#define HAS_DISASSOCIATED_STORAGE_1 (1<<23)
+#define HAS_DISASSOCIATED_STORAGE (1<<23)
 
 // Update flags for [/atom/proc/update_appearance]
 /// Update the atom's name

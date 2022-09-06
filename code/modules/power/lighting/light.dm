@@ -336,13 +336,13 @@
 		deconstruct()
 		return
 	to_chat(user, span_userdanger("You stick \the [tool] into the light socket!"))
-	if(has_power() && (tool.flags_1 & CONDUCT_1))
+	if(has_power() && (tool.atom_flags & CONDUCT))
 		do_sparks(3, TRUE, src)
 		if (prob(75))
 			electrocute_mob(user, get_area(src), src, (rand(7,10) * 0.1), TRUE)
 
 /obj/machinery/light/deconstruct(disassembled = TRUE)
-	if(flags_1 & NODECONSTRUCT_1)
+	if(atom_flags & NODECONSTRUCT)
 		qdel(src)
 		return
 	var/obj/structure/light_construct/new_light = null
@@ -377,7 +377,7 @@
 	..()
 	if(status != LIGHT_BROKEN && status != LIGHT_EMPTY)
 		return
-	if(!on || !(attacking_object.flags_1 & CONDUCT_1))
+	if(!on || !(attacking_object.atom_flags & CONDUCT))
 		return
 	if(prob(12))
 		electrocute_mob(user, get_area(src), src, 0.3, TRUE)

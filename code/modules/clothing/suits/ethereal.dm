@@ -7,7 +7,7 @@
 	greyscale_config = /datum/greyscale_config/eth_raincoat
 	greyscale_config_worn = /datum/greyscale_config/eth_raincoat_worn
 	greyscale_colors = "#4e7cc7"
-	flags_1 = IS_PLAYER_COLORABLE_1
+	atom_flags = IS_PLAYER_COLORABLE
 	body_parts_covered = CHEST|GROIN|ARMS
 	hoodtype = /obj/item/clothing/head/hooded/ethereal_rainhood
 

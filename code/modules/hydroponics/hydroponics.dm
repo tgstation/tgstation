@@ -1125,7 +1125,7 @@
 	circuit = null
 	density = FALSE
 	use_power = NO_POWER_USE
-	flags_1 = NODECONSTRUCT_1
+	atom_flags = NODECONSTRUCT
 	unwrenchable = FALSE
 	self_sustaining_overlay_icon_state = null
 	maxnutri = 15

@@ -234,7 +234,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	lit = TRUE
 
-	if(!(flags_1 & INITIALIZED_1))
+	if(!(atom_flags & INITIALIZED))
 		update_icon()
 		return
 
@@ -665,7 +665,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	inhand_icon_state = "zippo"
 	worn_icon_state = "lighter"
 	w_class = WEIGHT_CLASS_TINY
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	slot_flags = ITEM_SLOT_BELT
 	heat = 1500
 	resistance_flags = FIRE_PROOF
@@ -918,7 +918,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	greyscale_colors = "#2e2e2e"
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_TINY
-	flags_1 = IS_PLAYER_COLORABLE_1
+	atom_flags = IS_PLAYER_COLORABLE
 
 	/// The capacity of the vape.
 	var/chem_volume = 100
@@ -1082,32 +1082,32 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/vape/red
 	greyscale_colors = "#A02525"
-	flags_1 = NONE
+	atom_flags = NONE
 
 /obj/item/clothing/mask/vape/blue
 	greyscale_colors = "#294A98"
-	flags_1 = NONE
+	atom_flags = NONE
 
 /obj/item/clothing/mask/vape/purple
 	greyscale_colors = "#9900CC"
-	flags_1 = NONE
+	atom_flags = NONE
 
 /obj/item/clothing/mask/vape/green
 	greyscale_colors = "#3D9829"
-	flags_1 = NONE
+	atom_flags = NONE
 
 /obj/item/clothing/mask/vape/yellow
 	greyscale_colors = "#DAC20E"
-	flags_1 = NONE
+	atom_flags = NONE
 
 /obj/item/clothing/mask/vape/orange
 	greyscale_colors = "#da930e"
-	flags_1 = NONE
+	atom_flags = NONE
 
 /obj/item/clothing/mask/vape/black
 	greyscale_colors = "#2e2e2e"
-	flags_1 = NONE
+	atom_flags = NONE
 
 /obj/item/clothing/mask/vape/white
 	greyscale_colors = "#DCDCDC"
-	flags_1 = NONE
+	atom_flags = NONE

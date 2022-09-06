@@ -58,7 +58,7 @@
 /obj/item/storage/box/attack_self(mob/user)
 	..()
 
-	if(!foldable || (flags_1 & HOLOGRAM_1))
+	if(!foldable || (atom_flags & HOLOGRAM))
 		return
 	if(contents.len)
 		balloon_alert(user, "items inside!")

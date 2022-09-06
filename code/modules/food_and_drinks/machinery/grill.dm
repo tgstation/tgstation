@@ -118,7 +118,7 @@
 /obj/machinery/grill/deconstruct(disassembled = TRUE)
 	if(grilled_item)
 		finish_grill()
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(atom_flags & NODECONSTRUCT))
 		new /obj/item/stack/sheet/iron(loc, 5)
 		new /obj/item/stack/rods(loc, 5)
 	..()

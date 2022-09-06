@@ -81,7 +81,7 @@
 	smoothing = _smoothing
 
 	RegisterSignal(target,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/apply_overlay, TRUE)
-	if(target.flags_1 & INITIALIZED_1)
+	if(target.atom_flags & INITIALIZED)
 		target.update_appearance(UPDATE_OVERLAYS) //could use some queuing here now maybe.
 	else
 		RegisterSignal(target,COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE,.proc/late_update_icon, TRUE)

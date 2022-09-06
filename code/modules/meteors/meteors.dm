@@ -202,7 +202,7 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=15, /obj/effect/meteor
 
 /obj/effect/meteor/examine(mob/user)
 	. = ..()
-	if(!(flags_1 & ADMIN_SPAWNED_1) && isliving(user))
+	if(!(atom_flags & ADMIN_SPAWNED) && isliving(user))
 		user.client.give_award(/datum/award/achievement/misc/meteor_examine, user)
 
 /obj/effect/meteor/attackby(obj/item/I, mob/user, params)

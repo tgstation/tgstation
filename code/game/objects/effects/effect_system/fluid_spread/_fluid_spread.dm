@@ -91,7 +91,7 @@
 
 /obj/effect/particle_effect/fluid/Initialize(mapload, datum/fluid_group/group, obj/effect/particle_effect/fluid/source)
 	// We don't pass on explosions. Don't wanna set off a chain reaction in our reagents
-	flags_1 |= PREVENT_CONTENTS_EXPLOSION_1
+	atom_flags |= PREVENT_CONTENTS_EXPLOSION
 	. = ..()
 	if(!group)
 		group = source?.group || new

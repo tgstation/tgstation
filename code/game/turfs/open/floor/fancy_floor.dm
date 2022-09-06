@@ -104,7 +104,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_BAMBOO_FLOOR)
 	canSmoothWith = list(SMOOTH_GROUP_BAMBOO_FLOOR)
-	flags_1 = NONE
+	atom_flags = NONE
 	footstep = FOOTSTEP_WOOD
 	barefootstep = FOOTSTEP_WOOD_BAREFOOT
 	clawfootstep = FOOTSTEP_WOOD_CLAW
@@ -118,7 +118,7 @@
 	desc = "You can't tell if this is real grass or just cheap plastic imitation."
 	icon_state = "grass0"
 	floor_tile = /obj/item/stack/tile/grass
-	flags_1 = NONE
+	atom_flags = NONE
 	bullet_bounce_sound = null
 	footstep = FOOTSTEP_GRASS
 	barefootstep = FOOTSTEP_GRASS
@@ -156,7 +156,7 @@
 	icon = 'icons/turf/snow.dmi'
 	desc = "Looks cold."
 	icon_state = "snow"
-	flags_1 = NONE
+	atom_flags = NONE
 	floor_tile = null
 	initial_gas_mix = FROZEN_ATMOS
 	bullet_bounce_sound = null
@@ -188,7 +188,7 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "basalt"
 	floor_tile = /obj/item/stack/tile/basalt
-	flags_1 = NONE
+	atom_flags = NONE
 	bullet_bounce_sound = null
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND
@@ -213,7 +213,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET)
 	canSmoothWith = list(SMOOTH_GROUP_CARPET)
-	flags_1 = NONE
+	atom_flags = NONE
 	bullet_bounce_sound = null
 	footstep = FOOTSTEP_CARPET
 	barefootstep = FOOTSTEP_CARPET_BAREFOOT

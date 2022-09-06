@@ -287,7 +287,7 @@
 	name = "Prophet's Hat"
 	desc = "A religious-looking hat."
 	icon_state = null
-	flags_1 = 0
+	atom_flags = 0
 	armor = list(MELEE = 60, BULLET = 60, LASER = 60, ENERGY = 60, BOMB = 70, BIO = 50, FIRE = 60, ACID = 60) //religion protects you from disease, honk.
 	worn_y_offset = 6
 

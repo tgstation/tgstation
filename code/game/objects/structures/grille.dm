@@ -10,7 +10,7 @@
 	density = TRUE
 	anchored = TRUE
 	pass_flags_self = PASSGRILLE
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	armor = list(MELEE = 50, BULLET = 70, LASER = 70, ENERGY = 100, BOMB = 10, BIO = 0, FIRE = 0, ACID = 0)
 	max_integrity = 50
@@ -269,7 +269,7 @@
 /obj/structure/grille/deconstruct(disassembled = TRUE)
 	if(!loc) //if already qdel'd somehow, we do nothing
 		return
-	if(!(flags_1&NODECONSTRUCT_1))
+	if(!(atom_flags&NODECONSTRUCT))
 		var/obj/R = new rods_type(drop_location(), rods_amount)
 		transfer_fingerprints_to(R)
 		qdel(src)
@@ -277,7 +277,7 @@
 
 /obj/structure/grille/atom_break()
 	. = ..()
-	if(!broken && !(flags_1 & NODECONSTRUCT_1))
+	if(!broken && !(atom_flags & NODECONSTRUCT))
 		icon_state = "brokengrille"
 		set_density(FALSE)
 		atom_integrity = 20

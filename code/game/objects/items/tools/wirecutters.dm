@@ -10,7 +10,7 @@
 
 	greyscale_config = /datum/greyscale_config/wirecutters
 
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	slot_flags = ITEM_SLOT_BELT
 	force = 6
 	throw_speed = 3

@@ -11,7 +11,7 @@
 	integrity_failure = 0
 	armor = list(MELEE = 20, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 10, BIO = 0, FIRE = 70, ACID = 100)
 	visible = FALSE
-	flags_1 = ON_BORDER_1
+	atom_flags = ON_BORDER
 	opacity = FALSE
 	pass_flags_self = PASSGLASS
 	can_atmos_pass = ATMOS_PASS_PROC
@@ -27,7 +27,7 @@
 
 /obj/machinery/door/window/Initialize(mapload, set_dir, unres_sides)
 	. = ..()
-	flags_1 &= ~PREVENT_CLICK_UNDER_1
+	atom_flags &= ~PREVENT_CLICK_UNDER
 	if(set_dir)
 		setDir(set_dir)
 	if(LAZYLEN(req_access))
@@ -249,7 +249,7 @@
 
 
 /obj/machinery/door/window/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1) && !disassembled)
+	if(!(atom_flags & NODECONSTRUCT) && !disassembled)
 		for(var/obj/fragment in debris)
 			fragment.forceMove(get_turf(src))
 			transfer_fingerprints_to(fragment)
@@ -279,7 +279,7 @@
 
 /obj/machinery/door/window/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(flags_1 & NODECONSTRUCT_1)
+	if(atom_flags & NODECONSTRUCT)
 		return
 	if(density || operating)
 		to_chat(user, span_warning("You need to open the door to access the maintenance panel!"))
@@ -292,7 +292,7 @@
 
 /obj/machinery/door/window/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(flags_1 & NODECONSTRUCT_1)
+	if(atom_flags & NODECONSTRUCT)
 		return
 	if(!panel_open || density || operating)
 		return

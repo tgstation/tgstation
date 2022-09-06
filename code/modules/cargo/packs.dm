@@ -69,7 +69,7 @@
 	if (admin_spawned)
 		for(var/item in contains)
 			var/atom/A = new item(C)
-			A.flags_1 |= ADMIN_SPAWNED_1
+			A.atom_flags |= ADMIN_SPAWNED
 	else
 		for(var/item in contains)
 			new item(C)

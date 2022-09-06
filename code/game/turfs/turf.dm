@@ -98,9 +98,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
  */
 /turf/Initialize(mapload)
 	SHOULD_CALL_PARENT(FALSE)
-	if(flags_1 & INITIALIZED_1)
+	if(atom_flags & INITIALIZED)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
-	flags_1 |= INITIALIZED_1
+	atom_flags |= INITIALIZED
 
 	// by default, vis_contents is inherited from the turf that was here before
 	vis_contents.Cut()
@@ -190,7 +190,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		return
 	visibilityChanged()
 	QDEL_LIST(blueprint_data)
-	flags_1 &= ~INITIALIZED_1
+	atom_flags &= ~INITIALIZED
 	requires_activation = FALSE
 	..()
 
@@ -254,7 +254,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		return TRUE
 
 	for(var/atom/movable/atom_content as anything in contents)
-		if(atom_content.density && !(atom_content.flags_1 & ON_BORDER_1) && !HAS_TRAIT(atom_content, TRAIT_CLIMBABLE))
+		if(atom_content.density && !(atom_content.atom_flags & ON_BORDER) && !HAS_TRAIT(atom_content, TRAIT_CLIMBABLE))
 			return TRUE
 	return FALSE
 
@@ -383,7 +383,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 						return FALSE
 					continue
 				else
-					if(!firstbump || ((thing.layer > firstbump.layer || thing.flags_1 & ON_BORDER_1) && !(firstbump.flags_1 & ON_BORDER_1)))
+					if(!firstbump || ((thing.layer > firstbump.layer || thing.atom_flags & ON_BORDER) && !(firstbump.atom_flags & ON_BORDER)))
 						firstbump = thing
 	if(QDELETED(mover)) //Mover deleted from Cross/CanPass/Bump, do not proceed.
 		return FALSE
@@ -445,7 +445,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
-		if(O.flags_1 & INITIALIZED_1)
+		if(O.atom_flags & INITIALIZED)
 			SEND_SIGNAL(O, COMSIG_OBJ_HIDE, underfloor_accessibility < UNDERFLOOR_VISIBLE)
 
 // override for space turfs, since they should never hide anything
@@ -455,7 +455,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 // Removes all signs of lattice on the pos of the turf -Donkieyo
 /turf/proc/RemoveLattice()
 	var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
-	if(L && (L.flags_1 & INITIALIZED_1))
+	if(L && (L.atom_flags & INITIALIZED))
 		qdel(L)
 
 /turf/proc/Bless()

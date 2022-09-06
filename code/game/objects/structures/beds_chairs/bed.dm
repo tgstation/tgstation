@@ -32,7 +32,7 @@
 		. += span_notice("It's held together by a couple of <b>bolts</b>.")
 
 /obj/structure/bed/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(atom_flags & NODECONSTRUCT))
 		if(buildstacktype)
 			new buildstacktype(loc,buildstackamount)
 	..()
@@ -41,7 +41,7 @@
 	return attack_hand(user, modifiers)
 
 /obj/structure/bed/wrench_act_secondary(mob/living/user, obj/item/weapon)
-	if(flags_1&NODECONSTRUCT_1)
+	if(atom_flags&NODECONSTRUCT)
 		return TRUE
 	..()
 	weapon.play_tool_sound(src)

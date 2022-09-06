@@ -17,7 +17,7 @@ SUBSYSTEM_DEF(icon_smooth)
 		smooth_queue_cache.len--
 		if(QDELETED(smoothing_atom) || !(smoothing_atom.smoothing_flags & SMOOTH_QUEUED))
 			continue
-		if(smoothing_atom.flags_1 & INITIALIZED_1)
+		if(smoothing_atom.atom_flags & INITIALIZED)
 			smoothing_atom.smooth_icon()
 		else
 			deferred += smoothing_atom

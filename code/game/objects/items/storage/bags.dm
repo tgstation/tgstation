@@ -312,7 +312,7 @@
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 5
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=3000)
 	custom_price = PAYCHECK_CREW * 0.6

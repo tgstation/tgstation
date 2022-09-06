@@ -197,7 +197,7 @@
 	// Tactical combat emote-spinning should not counter intended gameplay mechanics.
 	// This trumps same-loc checks to discourage floor spinning in general to counter flashes.
 	// In short, combat spinning is silly and you should feel silly for doing it.
-	if(victim.flags_1 & IS_SPINNING_1)
+	if(victim.atom_flags & IS_SPINNING)
 		return DEVIATION_NONE
 
 	if(HAS_TRAIT(victim, TRAIT_FLASH_SENSITIVE)) //If your eyes are sensitive and can be flashed from any direction.

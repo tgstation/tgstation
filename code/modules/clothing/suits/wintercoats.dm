@@ -482,7 +482,7 @@
 	greyscale_config = /datum/greyscale_config/winter_coats
 	greyscale_config_worn = /datum/greyscale_config/winter_coats/worn
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/custom
-	flags_1 = IS_PLAYER_COLORABLE_1
+	atom_flags = IS_PLAYER_COLORABLE
 
 //In case colors are changed after initialization
 /obj/item/clothing/suit/hooded/wintercoat/custom/set_greyscale(list/colors, new_config, new_worn_config, new_inhand_left, new_inhand_right)

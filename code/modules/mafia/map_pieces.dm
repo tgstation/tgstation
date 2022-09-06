@@ -34,7 +34,7 @@
 	base_lighting_alpha = 255
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	flags_1 = NONE
+	atom_flags = NONE
 	area_flags = BLOCK_SUICIDE | UNIQUE_AREA
 
 /datum/map_template/mafia

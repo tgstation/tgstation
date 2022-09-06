@@ -27,7 +27,7 @@
 	throw_speed = 3
 	throw_range = 5
 	custom_materials = list(/datum/material/iron=80)
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	attack_verb_continuous = list("attacks", "stabs", "pokes")
 	attack_verb_simple = list("attack", "stab", "poke")
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -124,7 +124,7 @@
 	desc = "Just be careful your food doesn't melt the spoon first."
 	icon_state = "spoon"
 	w_class = WEIGHT_CLASS_TINY
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	force = 2
 	throw_speed = 3
 	throw_range = 5

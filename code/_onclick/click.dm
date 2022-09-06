@@ -38,17 +38,17 @@
  * Note that this proc can be overridden, and is in the case of screen objects.
  */
 /atom/Click(location, control, params)
-	if(flags_1 & INITIALIZED_1)
+	if(atom_flags & INITIALIZED)
 		SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, usr)
 
 		usr.ClickOn(src, params)
 
 /atom/DblClick(location,control,params)
-	if(flags_1 & INITIALIZED_1)
+	if(atom_flags & INITIALIZED)
 		usr.DblClickOn(src,params)
 
 /atom/MouseWheel(delta_x,delta_y,location,control,params)
-	if(flags_1 & INITIALIZED_1)
+	if(atom_flags & INITIALIZED)
 		usr.MouseWheelOn(src, delta_x, delta_y, params)
 
 /**
@@ -154,7 +154,7 @@
 	// In a storage item with a disassociated storage parent
 	var/obj/item/item_atom = A
 	if(istype(item_atom))
-		if((item_atom.item_flags & IN_STORAGE) && (item_atom.loc.flags_1 & HAS_DISASSOCIATED_STORAGE_1))
+		if((item_atom.item_flags & IN_STORAGE) && (item_atom.loc.atom_flags & HAS_DISASSOCIATED_STORAGE))
 			UnarmedAttack(item_atom, TRUE, modifiers)
 
 	//Standard reach turf to turf or reaching inside storage
@@ -180,7 +180,7 @@
 			else
 				RangedAttack(A,modifiers)
 
-/// Is the atom obscured by a PREVENT_CLICK_UNDER_1 object above it
+/// Is the atom obscured by a PREVENT_CLICK_UNDER object above it
 /atom/proc/IsObscured()
 	SHOULD_BE_PURE(TRUE)
 	if(!isturf(loc)) //This only makes sense for things directly on turfs for now
@@ -189,14 +189,14 @@
 	if(!T)
 		return FALSE
 	for(var/atom/movable/AM in T)
-		if(AM.flags_1 & PREVENT_CLICK_UNDER_1 && AM.density && AM.layer > layer)
+		if(AM.atom_flags & PREVENT_CLICK_UNDER && AM.density && AM.layer > layer)
 			return TRUE
 	return FALSE
 
 /turf/IsObscured()
 	for(var/item in src)
 		var/atom/movable/AM = item
-		if(AM.flags_1 & PREVENT_CLICK_UNDER_1)
+		if(AM.atom_flags & PREVENT_CLICK_UNDER)
 			return TRUE
 	return FALSE
 
@@ -219,7 +219,7 @@
 			if(closed[target] || isarea(target))  // avoid infinity situations
 				continue
 
-			if(isturf(target) || isturf(target.loc) || (target in direct_access) || (ismovable(target) && target.flags_1 & IS_ONTOP_1) || target.loc?.atom_storage) //Directly accessible atoms
+			if(isturf(target) || isturf(target.loc) || (target in direct_access) || (ismovable(target) && target.atom_flags & IS_ONTOP) || target.loc?.atom_storage) //Directly accessible atoms
 				if(Adjacent(target) || (tool && CheckToolReach(src, target, tool.reach))) //Adjacent or reaching attacks
 					return TRUE
 

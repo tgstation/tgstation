@@ -488,7 +488,7 @@ GLOBAL_LIST_EMPTY(species_list)
 	for(var/j in 1 to amount)
 		X = new spawn_type(arglist(new_args))
 		if (admin_spawn)
-			X.flags_1 |= ADMIN_SPAWNED_1
+			X.atom_flags |= ADMIN_SPAWNED
 	return X //return the last mob spawned
 
 /proc/spawn_and_random_walk(spawn_type, target, amount, walk_chance=100, max_walk=3, always_max_walk=FALSE, admin_spawn=FALSE)
@@ -509,7 +509,7 @@ GLOBAL_LIST_EMPTY(species_list)
 			X = new spawn_type(T)
 
 		if (admin_spawn)
-			X.flags_1 |= ADMIN_SPAWNED_1
+			X.atom_flags |= ADMIN_SPAWNED
 
 		spawned_mobs[j] = X
 
@@ -909,9 +909,9 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 /mob/dview/Initialize(mapload) //Properly prevents this mob from gaining huds or joining any global lists
 	SHOULD_CALL_PARENT(FALSE)
-	if(flags_1 & INITIALIZED_1)
+	if(atom_flags & INITIALIZED)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
-	flags_1 |= INITIALIZED_1
+	atom_flags |= INITIALIZED
 	return INITIALIZE_HINT_NORMAL
 
 /mob/dview/Destroy(force = FALSE)

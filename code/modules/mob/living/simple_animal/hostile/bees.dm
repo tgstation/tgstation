@@ -71,7 +71,7 @@
 	add_cell_sample()
 
 /mob/living/simple_animal/hostile/bee/mob_pickup(mob/living/L)
-	if(flags_1 & HOLOGRAM_1)
+	if(atom_flags & HOLOGRAM)
 		return
 	var/obj/item/clothing/head/mob_holder/destructible/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
 	var/list/reee = list(/datum/reagent/consumable/nutriment/vitamin = 5)
@@ -93,7 +93,7 @@
 	if(beehome)
 		beehome.bees -= src
 		beehome = null
-	if((flags_1 & HOLOGRAM_1))
+	if((atom_flags & HOLOGRAM))
 		return ..()
 	var/obj/item/trash/bee/bee_to_eat = new(loc)
 	bee_to_eat.pixel_x = pixel_x

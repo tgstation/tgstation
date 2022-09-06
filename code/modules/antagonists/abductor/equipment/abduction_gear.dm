@@ -611,7 +611,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	breakouttime = 45 SECONDS
 	trashtype = /obj/item/restraints/handcuffs/energy/used
-	flags_1 = NONE
+	atom_flags = NONE
 
 /obj/item/restraints/handcuffs/energy/used
 	item_flags = DROPDEL

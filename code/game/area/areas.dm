@@ -83,7 +83,7 @@
 	///Used to decide what the maximum time between ambience is
 	var/max_ambience_cooldown = 60 SECONDS
 
-	flags_1 = CAN_BE_DIRTY_1
+	atom_flags = CAN_BE_DIRTY
 
 	var/list/cameras
 

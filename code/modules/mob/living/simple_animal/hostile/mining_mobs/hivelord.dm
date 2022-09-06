@@ -43,7 +43,7 @@
 	if(world.time >= ranged_cooldown)
 		var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new brood_type(src.loc)
 
-		A.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
+		A.atom_flags |= (atom_flags & ADMIN_SPAWNED)
 		A.GiveTarget(target)
 		A.friends = friends
 		A.faction = faction.Copy()

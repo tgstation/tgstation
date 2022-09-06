@@ -4,7 +4,7 @@
 	var/i = 0
 	while(i < length(.))
 		var/atom/checked_atom = .[++i]
-		if(checked_atom.flags_1 & ignore_flag_1)
+		if(checked_atom.atom_flags & ignore_flag_1)
 			continue
 		. += checked_atom.contents
 

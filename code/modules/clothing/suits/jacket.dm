@@ -16,7 +16,7 @@
 	greyscale_config = /datum/greyscale_config/sweater
 	greyscale_config_worn = /datum/greyscale_config/sweater_worn
 	greyscale_colors = "#414344"
-	flags_1 = IS_PLAYER_COLORABLE_1
+	atom_flags = IS_PLAYER_COLORABLE
 
 /obj/item/clothing/suit/jacket/oversized
 	name = "oversized jacket"
@@ -25,7 +25,7 @@
 	greyscale_config = /datum/greyscale_config/jacket_oversized
 	greyscale_config_worn = /datum/greyscale_config/jacket_oversized_worn
 	greyscale_colors = "#414344"
-	flags_1 = IS_PLAYER_COLORABLE_1
+	atom_flags = IS_PLAYER_COLORABLE
 
 /obj/item/clothing/suit/jacket/fancy
 	name = "fancy fur coat"
@@ -38,7 +38,7 @@
 	greyscale_config = /datum/greyscale_config/fancy_coat
 	greyscale_config_worn = /datum/greyscale_config/fancy_coat_worn
 	greyscale_colors = "#EDE3DC#414344"
-	flags_1 = IS_PLAYER_COLORABLE_1
+	atom_flags = IS_PLAYER_COLORABLE
 
 /obj/item/clothing/suit/jacket/bomber
 	name = "bomber jacket"

@@ -100,7 +100,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	return ..() // then go ahead and delete the pipe_cleaner
 
 /obj/structure/pipe_cleaner/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(atom_flags & NODECONSTRUCT))
 		var/turf/T = get_turf(loc)
 		if(T)
 			stored.forceMove(T)
@@ -190,7 +190,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	throw_speed = 3
 	throw_range = 5
 	mats_per_unit = list(/datum/material/iron=10, /datum/material/glass=5)
-	flags_1 = CONDUCT_1
+	atom_flags = CONDUCT
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb_continuous = list("whips", "lashes", "disciplines", "flogs")
 	attack_verb_simple = list("whip", "lash", "discipline", "flog")

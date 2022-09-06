@@ -268,7 +268,7 @@
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_AFFECT_STATISTICS
 
 /obj/structure/door_assembly/door_assembly_material/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(atom_flags & NODECONSTRUCT))
 		var/turf/T = get_turf(src)
 		for(var/material in custom_materials)
 			var/datum/material/material_datum = material

@@ -14,7 +14,7 @@
 
 
 /obj/structure/frame/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(atom_flags & NODECONSTRUCT))
 		new /obj/item/stack/sheet/iron(loc, 5)
 		if(circuit)
 			circuit.forceMove(loc)
@@ -305,7 +305,7 @@
 		return ..()
 
 /obj/structure/frame/machine/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(atom_flags & NODECONSTRUCT))
 		if(state >= 2)
 			new /obj/item/stack/cable_coil(loc , 5)
 		for(var/X in components)
