@@ -531,5 +531,3 @@ DEFINE_BITFIELD(smoothing_junction, list(
 
 #undef DEFAULT_UNDERLAY_ICON
 #undef DEFAULT_UNDERLAY_ICON_STATE
-
-#undef SET_ADJ_IN_DIR
