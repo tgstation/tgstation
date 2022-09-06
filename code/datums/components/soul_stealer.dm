@@ -5,7 +5,8 @@
  * Used in the cult bastard sword!
  */
 /datum/component/soul_stealer
-	var/list/souls = list()
+	/// weakref list of soulstones captured by this item.
+	var/list/weak_souls = list()
 
 /datum/component/soul_stealer/Initialize()
 	if(!isitem(parent))
@@ -24,6 +25,9 @@
 
 	examine_list += span_notice("It will steal the soul of anyone it defeats in battle.")
 
+	//clears out any weakrefs that do not exist anymore
+	var/list/souls = recursive_list_resolve(weak_souls)
+
 	switch(souls.len)
 		if(0)
 			examine_list += span_notice("It has not consumed any souls yet.")
@@ -41,6 +45,8 @@
 	if(ishuman(target))
 		INVOKE_ASYNC(src, .proc/try_capture, target, user)
 
+	var/list/souls = recursive_list_resolve(weak_souls)
+
 	if(istype(target, /obj/structure/constructshell) && souls.len)
 		var/obj/item/soulstone/soulstone = souls[1]
 		INVOKE_ASYNC(soulstone, /obj/item/soulstone/proc/transfer_to_construct, target, user)
@@ -54,4 +60,4 @@
 	if(!LAZYLEN(soulstone.contents))
 		qdel(soulstone)
 		return
-	souls += soulstone
+	weak_souls += WEAKREF(soulstone)
