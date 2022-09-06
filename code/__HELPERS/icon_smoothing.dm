@@ -297,11 +297,7 @@ DEFINE_BITFIELD(smoothing_junction, list(
 		set_adj_in_dir: { \
 			do { \
 				var/turf/neighbor = get_step(src, direction); \
-				if(isnull(neighbor)) { \
-					if(smooth_border) { \
-						new_junction |= direction_flag; \
-					}; \
-				} else { \
+				if(neighbor) { \
 					var/neighbor_smoothing_groups = neighbor.smoothing_groups; \
 					if(!isnull(neighbor_smoothing_groups)) { \
 						for(var/target in canSmoothWith) { \
@@ -325,6 +321,8 @@ DEFINE_BITFIELD(smoothing_junction, list(
 							}; \
 						}; \
 					}; \
+				} else if (smooth_border) { \
+					new_junction |= direction_flag; \
 				}; \
 			} while(FALSE) \
 		}
