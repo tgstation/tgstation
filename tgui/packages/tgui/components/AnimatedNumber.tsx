@@ -4,6 +4,7 @@
  * @license MIT
  */
 
+import { clamp, toFixed } from 'common/math';
 import { Component, createRef } from 'inferno';
 
 const isSafeNumber = (value: number) => {
@@ -27,23 +28,22 @@ export type AnimatedNumberProps = {
   initial?: number;
 
   /**
-   * If provided, a function that formats the inner string. By default, the
-   * number itself, rounded off to `significantFigures`.
+   * If provided, a function that formats the inner string. By default,
+   * attempts to match the numeric precision of `value`.
    */
   format?: (value: number) => string;
-
-  /**
-   * If provided, the number of decimal places to render. By default, zero
-   * significant figures (no decimal places). If `format` is present, this does
-   * nothing.
-   */
-  significantFigures?: number;
 };
 
 /**
  * Animated numbers are animated at roughly 60 frames per second.
  */
 const SIXTY_HZ = 1_000.0 / 60.0;
+
+/**
+ * The exponential moving average coefficient. Larger values result in a faster
+ * convergence.
+ */
+const Q = 0.8333;
 
 /**
  * A small number.
@@ -94,11 +94,6 @@ export class AnimatedNumber extends Component<AnimatedNumberProps> {
   }
 
   shouldComponentUpdate(newProps: AnimatedNumberProps) {
-    if (!isSafeNumber(newProps.value)) {
-      // If the new value isn't safe, don't even bother.
-      return false;
-    }
-
     if (newProps.value !== this.props.value) {
       // The target value has been adjusted; start animating if we aren't
       // already.
@@ -144,9 +139,17 @@ export class AnimatedNumber extends Component<AnimatedNumberProps> {
     const { currentValue } = this;
     const { value } = this.props;
 
-    this.currentValue += (value - currentValue) / SIXTY_HZ;
+    if (isSafeNumber(value)) {
+      // Converge towards the value.
+      this.currentValue = currentValue * Q + value * (1 - Q);
+    } else {
+      // If the value is unsafe, we're never going to converge, so stop ticking.
+      this.stopTicking();
+    }
 
     if (Math.abs(value - this.currentValue) < EPSILON) {
+      // We're about as close as we're going to get--snap to the value and
+      // stop ticking.
       this.currentValue = value;
       this.stopTicking();
     }
@@ -161,11 +164,21 @@ export class AnimatedNumber extends Component<AnimatedNumberProps> {
    * Gets the inner text of the span.
    */
   getText() {
-    const { format, significantFigures } = this.props;
+    const { props, currentValue } = this;
+    const { format, value } = props;
 
-    return format
-      ? format(this.currentValue)
-      : this.currentValue.toFixed(significantFigures ?? 0);
+    if (!isSafeNumber(value)) {
+      return String(value);
+    }
+
+    if (format) {
+      return format(this.currentValue);
+    }
+
+    const fraction = String(value).split('.')[1];
+    const precision = fraction ? fraction.length : 0;
+
+    return toFixed(currentValue, clamp(precision, 0, 8));
   }
 
   render() {
