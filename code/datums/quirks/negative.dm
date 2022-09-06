@@ -420,8 +420,6 @@
 	medical_record_text = "Patient suffers from prosopagnosia and cannot recognize faces."
 	hardcore_value = 5
 
-
-
 /datum/quirk/prosthetic_limb
 	name = "Prosthetic Limb"
 	desc = "An accident caused you to lose one of your limbs. Because of this, you now have a random prosthetic!"
@@ -456,49 +454,7 @@
 /datum/quirk/prosthetic_limb/post_add()
 	to_chat(quirk_holder, "<span class='boldannounce'>Your [slot_string] has been replaced with a surplus prosthetic. It is fragile and will easily come apart under duress. Additionally, \
 	you need to use a welding tool and cables to repair it, instead of bruise packs and ointment.</span>")
-//==========================================================================================================
-/datum/quirk/prosthetic_limbs
-	name = "Prosthetic Limbs"
-	desc = "Oops! All Prosthetics!"
-	icon = "tg-prosthetic-leg"
-	value = -8
-	medical_record_text = "During physical examination, patient was found to have all prosthetic limbs"
-	hardcore_value = 6
 
-/datum/quirk/prosthetic_limbs/add_unique()
-	var/limb_slotLA = BODY_ZONE_L_ARM
-	var/limb_slotRA = BODY_ZONE_R_ARM
-	var/limb_slotLL = BODY_ZONE_L_LEG
-	var/limb_slotRL = BODY_ZONE_R_LEG
-
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/obj/item/bodypart/old_LA = human_holder.get_bodypart(limb_slotLA)
-	var/obj/item/bodypart/old_RA = human_holder.get_bodypart(limb_slotRA)
-	var/obj/item/bodypart/old_LL = human_holder.get_bodypart(limb_slotLL)
-	var/obj/item/bodypart/old_RL = human_holder.get_bodypart(limb_slotRL)
-
-	var/obj/item/bodypart/prostheticLA
-	var/obj/item/bodypart/prostheticRA
-	var/obj/item/bodypart/prostheticLL
-	var/obj/item/bodypart/prostheticRL
-	if(TRUE)
-		prostheticLA = new/obj/item/bodypart/l_arm/robot/surplus(quirk_holder)
-		prostheticRA = new/obj/item/bodypart/r_arm/robot/surplus(quirk_holder)
-		prostheticLL = new/obj/item/bodypart/l_leg/robot/surplus(quirk_holder)
-		prostheticRL = new/obj/item/bodypart/r_leg/robot/surplus(quirk_holder)
-
-	prostheticLA.replace_limb(human_holder)
-	prostheticRA.replace_limb(human_holder)
-	prostheticLL.replace_limb(human_holder)
-	prostheticRL.replace_limb(human_holder)
-	qdel(old_LA, old_RA, old_LL, old_RL)
-	human_holder.regenerate_icons()
-
-/datum/quirk/prosthetic_limbs/post_add()
-	to_chat(quirk_holder, "<span class='boldannounce'>All your limbs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. Additionally, \
-	you need to use a welding tool and cables to repair them, instead of bruise packs and ointment.</span>")
-
-//===============================================================================================================
 /datum/quirk/pushover
 	name = "Pushover"
 	desc = "Your first instinct is always to let people push you around. Resisting out of grabs will take conscious effort."
