@@ -210,21 +210,14 @@ export const ChemDispenser = (props, context) => {
               </Box>
               {beakerContents.map((chemical) => (
                 <Box key={chemical.name} color="label">
-                  <AnimatedNumber
-                    initial={0}
-                    value={chemical.volume}
-                    significantFigures={2}
-                  />{' '}
-                  units of {chemical.name}
+                  <AnimatedNumber initial={0} value={chemical.volume} /> units
+                  of {chemical.name}
                 </Box>
               ))}
               {beakerContents.length > 0 && !!data.showpH && (
                 <Box>
                   pH:
-                  <AnimatedNumber
-                    value={data.beakerCurrentpH}
-                    significantFigures={2}
-                  />
+                  <AnimatedNumber value={data.beakerCurrentpH} />
                 </Box>
               )}
             </LabeledList.Item>

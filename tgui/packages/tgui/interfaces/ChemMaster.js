@@ -131,11 +131,7 @@ const ChemicalBufferEntry = (props, context) => {
   return (
     <Table.Row key={chemical.id}>
       <Table.Cell color="label">
-        <AnimatedNumber
-          value={chemical.volume}
-          initial={0}
-          significantFigures={2}
-        />
+        <AnimatedNumber value={chemical.volume} initial={0} />
         {` units of ${chemical.name}`}
       </Table.Cell>
       <Table.Cell collapsing>
