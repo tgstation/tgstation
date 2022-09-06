@@ -156,7 +156,7 @@ export class AnimatedNumber extends Component<AnimatedNumberProps> {
 
     if (this.ref.current) {
       // Directly update the inner span, without bothering inferno.
-      this.ref.current.innerText = this.getText();
+      this.ref.current.textContent = this.getText();
     }
   }
 
