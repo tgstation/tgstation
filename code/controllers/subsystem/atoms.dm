@@ -108,7 +108,7 @@ SUBSYSTEM_DEF(atoms)
 		count = 0
 		#endif
 
-		for(var/atom/A as anything in world)
+		for(var/atom/A in world)
 			if(!(A.flags_1 & INITIALIZED_1))
 				PROFILE_INIT_ATOM_BEGIN()
 				InitAtom(A, FALSE, mapload_arg)
