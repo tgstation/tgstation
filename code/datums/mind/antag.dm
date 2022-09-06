@@ -40,7 +40,7 @@
 	for(var/a in antag_datums)
 		var/datum/antagonist/A = a
 		A.on_removal()
-	current.log_message("[key_name(src)] has lost all antag datums.", LOG_GAME)
+	current.log_message("has lost all antag datums.", LOG_GAME)
 
 /datum/mind/proc/has_antag_datum(datum_type, check_subtypes = TRUE)
 	if(!datum_type)
