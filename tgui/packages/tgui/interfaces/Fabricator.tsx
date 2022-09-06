@@ -63,14 +63,7 @@ export const Fabricator = (props, context) => {
                       ? 'All Designs'
                       : selectedCategory
                   }
-                  fill
-                  buttons={
-                    <Button
-                      color={'transparent'}
-                      onClick={() => act('sync_rnd')}>
-                      <Icon name="refresh" /> Sync Research
-                    </Button>
-                  }>
+                  fill>
                   <Stack vertical fill>
                     <Stack.Item>
                       <Section>

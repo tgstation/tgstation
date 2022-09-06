@@ -43,6 +43,9 @@
 	RefreshParts()
 	update_icon(UPDATE_OVERLAYS)
 
+	RegisterSignal(stored_research, COMSIG_TECHWEB_ADD_DESIGN, .proc/update_designs)
+	RegisterSignal(stored_research, COMSIG_TECHWEB_REMOVE_DESIGN, .proc/update_designs)
+
 /obj/machinery/rnd/production/Destroy()
 	materials = null
 	cached_designs = null
@@ -59,8 +62,6 @@
 			cached_designs |= design
 
 	update_static_data(usr)
-
-	say("Successfully synchronized with R&D server.")
 
 /obj/machinery/rnd/production/RefreshParts()
 	. = ..()
@@ -133,9 +134,6 @@
 				return
 
 			eject_sheets(material, params["amount"])
-
-		if("sync_rnd")
-			update_designs()
 
 		if("build")
 			user_try_print_id(params["ref"], params["amount"])
