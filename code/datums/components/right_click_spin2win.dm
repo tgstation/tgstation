@@ -36,13 +36,16 @@
 	src.start_spin_message = start_spin_message
 	src.end_spin_message = end_spin_message
 
-/datum/component/right_click_spin2win/RegisterWithParent()
+/datum/component/right_click_spin2win/Destroy(force, silent)
+	QDEL_NULL(on_spin_callback)
+	QDEL_NULL(on_unspin_callback)
 	. = ..()
+
+/datum/component/right_click_spin2win/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SECONDARY, .proc/on_attack_secondary)
 
 /datum/component/right_click_spin2win/UnregisterFromParent()
-	. = ..()
 	UnregisterSignal(parent, list(COMSIG_PARENT_EXAMINE, COMSIG_ITEM_ATTACK_SECONDARY))
 
 ///signal called on parent being examined

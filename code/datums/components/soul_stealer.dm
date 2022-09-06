@@ -12,12 +12,10 @@
 		return COMPONENT_INCOMPATIBLE
 
 /datum/component/soul_stealer/RegisterWithParent()
-	. = ..()
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, .proc/on_afterattack)
 
 /datum/component/soul_stealer/UnregisterFromParent()
-	. = ..()
 	UnregisterSignal(parent, list(COMSIG_PARENT_EXAMINE, COMSIG_ITEM_AFTERATTACK))
 
 ///signal called on parent being examined
