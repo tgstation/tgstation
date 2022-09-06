@@ -294,7 +294,7 @@
  * * obj/machinery/atmospherics/target - the machinery we want to connect to
  */
 /obj/machinery/atmospherics/proc/check_connectable_color(obj/machinery/atmospherics/target)
-	if(lowertext(target.pipe_color) == lowertext(pipe_color) || ((target.pipe_flags | pipe_flags) & PIPING_ALL_COLORS) || lowertext(target.pipe_color) == lowertext(COLOR_VERY_LIGHT_GRAY) || lowertext(pipe_color) == lowertext(COLOR_VERY_LIGHT_GRAY))
+	if(target.pipe_color == pipe_color || ((target.pipe_flags | pipe_flags) & PIPING_ALL_COLORS) || target.pipe_color == COLOR_VERY_LIGHT_GRAY || pipe_color == COLOR_VERY_LIGHT_GRAY)
 		return TRUE
 	return FALSE
 
@@ -467,8 +467,7 @@
 /obj/machinery/atmospherics/on_construction(obj_color, set_layer = PIPING_LAYER_DEFAULT)
 	if(can_unwrench)
 		add_atom_colour(obj_color, FIXED_COLOUR_PRIORITY)
-		pipe_color = obj_color
-	update_name()
+		set_pipe_color(obj_color)
 	set_piping_layer(set_layer)
 	atmos_init()
 	var/list/nodes = pipeline_expansion()
@@ -588,3 +587,8 @@
  */
 /obj/machinery/atmospherics/proc/paint(paint_color)
 	return FALSE
+
+/// Setter for pipe color, so we can ensure it's all uniform and save cpu time
+/obj/machinery/atmospherics/proc/set_pipe_color(pipe_colour)
+	src.pipe_color = uppertext(pipe_colour)
+	update_name()
