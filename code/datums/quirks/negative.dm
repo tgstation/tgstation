@@ -459,8 +459,7 @@
 
 /datum/quirk/prosthetic_limbs
 	name = "Prosthetic Limbs"
-	desc = "Oops! All Prosthetics! Due to some truly cruel cosmic punishment, all your limbs have been taken from you."
-	icon = "tg-prosthetic-full"
+	desc = "Oops! All Prosthetics!"
 	value = -8
 	medical_record_text = "During physical examination, patient was found to have all prosthetic limbs"
 	hardcore_value = 6
