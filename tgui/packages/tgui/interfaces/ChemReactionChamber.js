@@ -1,7 +1,7 @@
 import { useBackend, useLocalState } from '../backend';
 import { AnimatedNumber, Box, Button, Input, LabeledList, NumberInput, Section, RoundGauge, Stack } from '../components';
 import { Window } from '../layouts';
-import { round } from 'common/math';
+import { round, toFixed } from 'common/math';
 
 export const ChemReactionChamber = (props, context) => {
   const { act, data } = useBackend(context);
