@@ -38,11 +38,7 @@ const ChemMasterContent = (props, context) => {
           !!data.isBeakerLoaded && (
             <>
               <Box inline color="label" mr={2}>
-                <AnimatedNumber
-                  value={beakerCurrentVolume}
-                  initial={0}
-                  significantFigures={2}
-                />
+                <AnimatedNumber value={beakerCurrentVolume} initial={0} />
                 {` / ${beakerMaxVolume} units`}
               </Box>
               <Button

@@ -128,7 +128,7 @@ export const RoundGauge = (props) => {
           </g>
         </svg>
       </div>
-      <AnimatedNumber value={value} format={format} />
+      <AnimatedNumber value={value} format={format} size={size} />
     </Box>
   );
 };

@@ -50,7 +50,7 @@ const CargoExpressContent = (props, context) => {
         title="Cargo Express"
         buttons={
           <Box inline bold>
-            <AnimatedNumber value={points} />
+            <AnimatedNumber value={Math.round(points)} />
             {' credits'}
           </Box>
         }>

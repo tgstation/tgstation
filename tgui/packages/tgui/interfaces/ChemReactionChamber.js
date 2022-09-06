@@ -64,16 +64,15 @@ export const ChemReactionChamber = (props, context) => {
                     <Stack.Item grow>
                       <AnimatedNumber
                         value={temperature}
-                        significantFigures={2}
+                        format={(value) => toFixed(value) + ' K'}
                       />
-                      {' K'}
                     </Stack.Item>
                     <Stack.Item grow>
                       <RoundGauge
                         value={ph}
                         minValue={0}
                         maxValue={14}
-                        format={() => ''}
+                        format={() => null}
                         position="absolute"
                         size={1.5}
                         top={0.5}

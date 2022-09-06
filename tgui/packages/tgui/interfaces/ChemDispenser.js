@@ -197,7 +197,6 @@ export const ChemDispenser = (props, context) => {
                     <AnimatedNumber
                       initial={0}
                       value={data.beakerCurrentVolume}
-                      significantFigures={2}
                     />
                     /{data.beakerMaxVolume} units
                   </>
