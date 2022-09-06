@@ -74,8 +74,7 @@
 	ADD_TRAIT(tongue_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 
 /obj/item/organ/internal/tongue/could_speak_language(language)
-	// the curse of babel needs to bypass the tongue language restrictions without giving omnitongue
-	return HAS_TRAIT(tongue_owner, TRAIT_CURSE_OF_BABEL) || is_type_in_typecache(language, languages_possible)
+	return is_type_in_typecache(language, languages_possible)
 
 /obj/item/organ/internal/tongue/get_availability(datum/species/owner_species)
 	return !(NO_TONGUE in owner_species.species_traits)

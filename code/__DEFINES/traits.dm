@@ -646,7 +646,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_AI_PAUSED "TRAIT_AI_PAUSED"
 
 /// this is used to bypass tongue language restrictions but not tongue disabilities
-#define TRAIT_CURSE_OF_BABEL "curse_of_babel"
+#define TRAIT_TOWER_OF_BABEL "tower_of_babel"
 
 //Medical Categories for quirks
 #define CAT_QUIRK_ALL 0
