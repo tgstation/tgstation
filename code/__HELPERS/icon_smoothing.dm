@@ -363,36 +363,46 @@ DEFINE_BITFIELD(smoothing_junction, list(
 
 
 /turf/closed/set_smoothed_icon_state(new_junction)
-	. = ..()
-	if(smoothing_flags & SMOOTH_DIAGONAL_CORNERS)
-		switch(new_junction)
-			if(
-				NORTH_JUNCTION|WEST_JUNCTION,
-				NORTH_JUNCTION|EAST_JUNCTION,
-				SOUTH_JUNCTION|WEST_JUNCTION,
-				SOUTH_JUNCTION|EAST_JUNCTION,
-				NORTH_JUNCTION|WEST_JUNCTION|NORTHWEST_JUNCTION,
-				NORTH_JUNCTION|EAST_JUNCTION|NORTHEAST_JUNCTION,
-				SOUTH_JUNCTION|WEST_JUNCTION|SOUTHWEST_JUNCTION,
-				SOUTH_JUNCTION|EAST_JUNCTION|SOUTHEAST_JUNCTION
-				)
-				icon_state = "[base_icon_state]-[smoothing_junction]-d"
-				if(!fixed_underlay && new_junction != .) // Mutable underlays?
-					var/junction_dir = reverse_ndir(smoothing_junction)
-					var/turned_adjacency = REVERSE_DIR(junction_dir)
-					var/turf/neighbor_turf = get_step(src, turned_adjacency & (NORTH|SOUTH))
-					var/mutable_appearance/underlay_appearance = mutable_appearance(layer = TURF_LAYER, plane = FLOOR_PLANE)
+	// Avoid calling ..() here to avoid setting icon_state twice, which is expensive given how hot this proc is
+	. = smoothing_junction
+	smoothing_junction = new_junction
+
+	if (!(smoothing_flags & SMOOTH_DIAGONAL_CORNERS))
+		icon_state = "[base_icon_state]-[smoothing_junction]"
+		return .
+
+	switch(new_junction)
+		if(
+			NORTH_JUNCTION|WEST_JUNCTION,
+			NORTH_JUNCTION|EAST_JUNCTION,
+			SOUTH_JUNCTION|WEST_JUNCTION,
+			SOUTH_JUNCTION|EAST_JUNCTION,
+			NORTH_JUNCTION|WEST_JUNCTION|NORTHWEST_JUNCTION,
+			NORTH_JUNCTION|EAST_JUNCTION|NORTHEAST_JUNCTION,
+			SOUTH_JUNCTION|WEST_JUNCTION|SOUTHWEST_JUNCTION,
+			SOUTH_JUNCTION|EAST_JUNCTION|SOUTHEAST_JUNCTION,
+		)
+			icon_state = "[base_icon_state]-[smoothing_junction]-d"
+			if(new_junction == . || fixed_underlay) // Mutable underlays?
+				return .
+
+			var/junction_dir = reverse_ndir(smoothing_junction)
+			var/turned_adjacency = REVERSE_DIR(junction_dir)
+			var/turf/neighbor_turf = get_step(src, turned_adjacency & (NORTH|SOUTH))
+			var/mutable_appearance/underlay_appearance = mutable_appearance(layer = TURF_LAYER, plane = FLOOR_PLANE)
+			if(!neighbor_turf.get_smooth_underlay_icon(underlay_appearance, src, turned_adjacency))
+				neighbor_turf = get_step(src, turned_adjacency & (EAST|WEST))
+
+				if(!neighbor_turf.get_smooth_underlay_icon(underlay_appearance, src, turned_adjacency))
+					neighbor_turf = get_step(src, turned_adjacency)
+
 					if(!neighbor_turf.get_smooth_underlay_icon(underlay_appearance, src, turned_adjacency))
-						neighbor_turf = get_step(src, turned_adjacency & (EAST|WEST))
-
-						if(!neighbor_turf.get_smooth_underlay_icon(underlay_appearance, src, turned_adjacency))
-							neighbor_turf = get_step(src, turned_adjacency)
-
-							if(!neighbor_turf.get_smooth_underlay_icon(underlay_appearance, src, turned_adjacency))
-								if(!get_smooth_underlay_icon(underlay_appearance, src, turned_adjacency)) //if all else fails, ask our own turf
-									underlay_appearance.icon = DEFAULT_UNDERLAY_ICON
-									underlay_appearance.icon_state = DEFAULT_UNDERLAY_ICON_STATE
-					underlays += underlay_appearance
+						if(!get_smooth_underlay_icon(underlay_appearance, src, turned_adjacency)) //if all else fails, ask our own turf
+							underlay_appearance.icon = DEFAULT_UNDERLAY_ICON
+							underlay_appearance.icon_state = DEFAULT_UNDERLAY_ICON_STATE
+			underlays += underlay_appearance
+		else
+			icon_state = "[base_icon_state]-[smoothing_junction]"
 
 /turf/open/floor/set_smoothed_icon_state(new_junction)
 	if(broken || burnt)
