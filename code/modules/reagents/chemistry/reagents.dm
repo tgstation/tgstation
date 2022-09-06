@@ -263,19 +263,19 @@ Primarily used in reagents/reaction_agents
  * * capitalize_names will result in
  * * Water, 5 | Silicon, 6 | Soup, 4 | Space lube, 8
  *
- * * * use (reagent_list, TRUE, ", ", TRUE, TRUE) for the formatting
+ * * * use (reagents.reagent_list, names_only, join_text = ", ", final_and, capitalize_names) for the formatting
  * * * Water, Silicon, Soup, and Space Lube
  */
-/proc/pretty_string_from_reagent_list(list/reagent_list, names_only, join_text = " | ", final_and, capitalize_names)
+/proc/reagent_strings(list/reagent_list, names_only, join_text = " | ", final_and, capitalize_names)
 	//Convert reagent list to a printable string for logging etc
 	var/list/rs = list()
 	var/reagents_left = reagent_list.len
 	var/intial_list_length = reagents_left
-	for (var/datum/reagent/R in reagent_list)
+	for (var/datum/reagent/reagent as anything in reagent_list)
 		reagents_left--
 		if(final_and && intial_list_length > 1 && reagents_left == 0)
-			rs += "and [capitalize_names ? capitalize(R.name) : R.name][names_only ? null : ", [R.volume]"]"
+			rs += "and [capitalize_names ? capitalize(reagent.name) : reagent.name][names_only ? null : ", [reagent.volume]"]"
 		else
-			rs += "[capitalize_names ? capitalize(R.name) : R.name][names_only ? null : ", [R.volume]"]"
+			rs += "[capitalize_names ? capitalize(reagent.name) : reagent.name][names_only ? null : ", [reagent.volume]"]"
 
 	return rs.Join(join_text)
