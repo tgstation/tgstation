@@ -299,7 +299,7 @@ DEFINE_BITFIELD(smoothing_junction, list(
 				var/turf/neighbor = get_step(src, direction); \
 				if(neighbor) { \
 					var/neighbor_smoothing_groups = neighbor.smoothing_groups; \
-					if(!isnull(neighbor_smoothing_groups)) { \
+					if(neighbor_smoothing_groups) { \
 						for(var/target in canSmoothWith) { \
 							if(canSmoothWith[target] & neighbor_smoothing_groups[target]) { \
 								new_junction |= direction_flag; \
