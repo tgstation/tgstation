@@ -94,7 +94,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	var/mob/living/carbon/target = null
 
 /obj/effect/hallucination/simple
-	var/image_icon = 'icons/mob/alien.dmi'
+	var/image_icon = 'icons/mob/nonhuman-player/alien.dmi'
 	var/image_state = "alienh_pounce"
 	var/px = 0
 	var/py = 0

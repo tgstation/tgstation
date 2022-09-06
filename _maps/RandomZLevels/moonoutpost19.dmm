@@ -185,7 +185,6 @@
 "bo" = (
 /obj/machinery/airalarm/directional/north{
 	pixel_y = 23;
-	req_access = null;
 	req_access = list("syndicate")
 	},
 /obj/effect/turf_decal/tile/bar,
@@ -352,7 +351,6 @@
 /obj/machinery/light/directional/east,
 /obj/machinery/airalarm/directional/east{
 	pixel_x = 23;
-	req_access = null;
 	req_access = list("syndicate")
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -495,7 +493,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "bS" = (
-/obj/machinery/computer/monitor/secret,
+/obj/machinery/computer/monitor,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -519,7 +517,6 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/machinery/airalarm/directional/north{
 	pixel_y = 23;
-	req_access = null;
 	req_access = list("syndicate")
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -617,7 +614,6 @@
 /obj/machinery/airalarm/unlocked{
 	dir = 1;
 	pixel_y = 23;
-	req_access = null;
 	req_access = list("syndicate")
 	},
 /obj/effect/mapping_helpers/burnt_floor,
@@ -943,11 +939,10 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cK" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	name = "Worn-out APC";
-	pixel_y = -25;
-	req_access = list("syndicate");
-	start_charge = 0
+/obj/machinery/power/apc/highcap/ten_k/directional/south{
+	locked = 0;
+	name = "Worn Out APC";
+	start_charge = 100
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -1033,7 +1028,6 @@
 "cS" = (
 /obj/machinery/airalarm/directional/east{
 	pixel_x = 23;
-	req_access = null;
 	req_access = list("syndicate")
 	},
 /obj/machinery/light/broken/directional/east,
@@ -1182,7 +1176,6 @@
 /obj/structure/chair/wood,
 /obj/machinery/airalarm/directional/west{
 	pixel_x = -23;
-	req_access = null;
 	req_access = list("syndicate")
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -1207,7 +1200,6 @@
 "dk" = (
 /obj/machinery/airalarm/directional/east{
 	pixel_x = 23;
-	req_access = null;
 	req_access = list("syndicate")
 	},
 /turf/open/floor/wood{
@@ -2440,7 +2432,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "gA" = (
-/obj/machinery/computer/monitor/secret{
+/obj/machinery/computer/monitor{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -2495,11 +2487,9 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "gG" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	dir = 4;
+/obj/machinery/power/apc/highcap/ten_k/directional/east{
 	locked = 0;
-	name = "Worn-out APC";
-	pixel_x = 25;
+	name = "Worn Out APC";
 	start_charge = 100
 	},
 /obj/effect/turf_decal/tile/purple,
@@ -3797,11 +3787,9 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "jH" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	dir = 1;
+/obj/machinery/power/apc/highcap/ten_k/directional/north{
 	locked = 0;
-	name = "Worn-out APC";
-	pixel_y = 25;
+	name = "Worn Out APC";
 	start_charge = 100
 	},
 /obj/structure/cable,

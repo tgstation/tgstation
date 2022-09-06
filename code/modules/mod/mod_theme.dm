@@ -120,10 +120,11 @@
 	slowdown_inactive = 1.5
 	slowdown_active = 1
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/construction/rcd,
+		/obj/item/fireaxe/metal_h2_axe,
+		/obj/item/flashlight,
 		/obj/item/storage/bag/construction,
+		/obj/item/tank/internals,
 	)
 	skins = list(
 		"engineering" = list(
@@ -168,11 +169,12 @@
 	slowdown_inactive = 1.5
 	slowdown_active = 1
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/analyzer,
-		/obj/item/t_scanner,
+		/obj/item/fireaxe/metal_h2_axe,
+		/obj/item/flashlight,
 		/obj/item/pipe_dispenser,
+		/obj/item/t_scanner,
+		/obj/item/tank/internals,
 	)
 	skins = list(
 		"atmospheric" = list(
@@ -220,14 +222,15 @@
 	slowdown_active = 0.5
 	inbuilt_modules = list(/obj/item/mod/module/magboot/advanced)
 	allowed_suit_storage = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/analyzer,
-		/obj/item/t_scanner,
-		/obj/item/pipe_dispenser,
 		/obj/item/construction/rcd,
-		/obj/item/storage/bag/construction,
+		/obj/item/fireaxe/metal_h2_axe,
+		/obj/item/flashlight,
 		/obj/item/melee/baton/telescopic,
+		/obj/item/pipe_dispenser,
+		/obj/item/storage/bag/construction,
+		/obj/item/t_scanner,
+		/obj/item/tank/internals,
 	)
 	skins = list(
 		"advanced" = list(

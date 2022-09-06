@@ -1,0 +1,5 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - rscadd: "Don't like the map everyone else voted for? Rock the vote! You can now trigger a new map vote after one has already been selected!"
+  - config: "Server operators may decide if they wish to allow players to rock the vote, as well as set the number of times they may rock the vote during a given shift."

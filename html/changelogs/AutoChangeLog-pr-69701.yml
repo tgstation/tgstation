@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes: 
+  - bugfix: "The shrink ray now spawns with an abductor firing pin instead of a normal one."

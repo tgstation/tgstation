@@ -1420,6 +1420,16 @@
 	crate_name = "raw bioscrambler anomaly"
 	crate_type = /obj/structure/closet/crate/secure/science
 
+/datum/supply_pack/science/raw_dimensional_anomaly
+	name = "Raw Dimensional Anomaly"
+	desc = "The raw core of a dimensional anomaly, ready to be implosion-compressed into a powerful artifact."
+	cost = CARGO_CRATE_VALUE * 10
+	access = ACCESS_ORDNANCE
+	access_view = ACCESS_ORDNANCE
+	contains = list(/obj/item/raw_anomaly_core/dimensional)
+	crate_name = "raw dimensional anomaly"
+	crate_type = /obj/structure/closet/crate/secure/science
+
 
 /datum/supply_pack/science/robotics
 	name = "Robotics Assembly Crate"
@@ -2025,7 +2035,8 @@
 					/obj/item/seeds/rose,
 					/obj/item/seeds/chanter,
 					/obj/item/seeds/potato,
-					/obj/item/seeds/sugarcane)
+					/obj/item/seeds/sugarcane,
+					/obj/item/seeds/cucumber)
 	crate_name = "seeds crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
@@ -2040,7 +2051,8 @@
 					/obj/item/food/grown/carrot,
 					/obj/item/food/grown/mushroom/chanterelle,
 					/obj/item/food/grown/onion,
-					/obj/item/food/grown/pumpkin)
+					/obj/item/food/grown/pumpkin,
+					/obj/item/food/grown/cucumber)
 	crate_name = "food crate"
 
 /datum/supply_pack/organic/grill

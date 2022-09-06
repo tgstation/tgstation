@@ -22,9 +22,9 @@
 		TRAIT_NODISMEMBER,
 		TRAIT_NOHUNGER,
 	)
-	mutanteyes = /obj/item/organ/internal/eyes/night_vision/nightmare
+
 	mutantheart = /obj/item/organ/internal/heart/nightmare
-	mutantbrain = /obj/item/organ/internal/brain/nightmare
+	mutantbrain = /obj/item/organ/internal/brain/shadow/nightmare
 
 /datum/species/shadow/nightmare/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()

@@ -1048,3 +1048,38 @@
   - qol: Add logging when Protocol CRAB-17 is used.
   tralezab:
   - rscadd: Prisoners can now select their crime in their character preferences.
+2022-08-31:
+  CPTANT:
+  - balance: Regular windows now have 50 melee armor and take 3 deconstruction steps.
+  - balance: Metastation has new windows
+  JohnFulpWillard:
+  - code_imp: Bank machines can now use anyone's bank account, rather than limited
+      to the Cargo budget, though it is set to the Cargo budget by default.
+  Melbert:
+  - qol: The statue spawner mapping helper spawns its statues anchored
+  - code_imp: Remove some hardcoding from random loot spawners
+  Mothblocks:
+  - qol: Subsystem initialization times now show to 2 decimal points.
+  Tastyfish:
+  - qol: The Status Display app can now do everything the communications console status
+      display screen can do.
+  itseasytosee:
+  - bugfix: The monkey and human rudimentary transform commands now function as intended.
+  - bugfix: Monkeys won't stay on combat mode forever after getting pissed off.
+  necromanceranne:
+  - balance: Sends a chat alert to those nearby when someone completes a stage of
+      a hijack.
+  san7890:
+  - rscdel: There is no longer an air alarm in the central island of atmospherics
+      on MetaStation.
+  tralezab:
+  - rscadd: Cows can now eat wheat by interacting with it on the ground, healing them
+      a little.
+  - rscadd: Cows controlled by AI will seek out the food they like and eat it.
+  - rscadd: Even moonicorns.
+  - rscadd: But not wisdom cows, who refuse to be tamed or show their weak side because
+      of space station 13 socially enforced toxic wisdom cow standards
+  - balance: Space Dragons can no longer place rifts on open space
+  twilightwanderer:
+  - bugfix: Fax no longer blocks access to the card reader on the MetaStation in the
+      QM's office.

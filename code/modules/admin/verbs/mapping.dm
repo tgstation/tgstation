@@ -301,9 +301,9 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 		var/datum/job/JB = new job
 		switch(JB.title)
 			if(JOB_AI)
-				final.Insert(icon('icons/mob/ai.dmi', "ai", SOUTH, 1), "AI")
+				final.Insert(icon('icons/mob/silicon/ai.dmi', "ai", SOUTH, 1), "AI")
 			if(JOB_CYBORG)
-				final.Insert(icon('icons/mob/robots.dmi', "robot", SOUTH, 1), "Cyborg")
+				final.Insert(icon('icons/mob/silicon/robots.dmi', "robot", SOUTH, 1), "Cyborg")
 			else
 				for(var/obj/item/I in D)
 					qdel(I)

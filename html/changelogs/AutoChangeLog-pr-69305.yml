@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - qol: "The statue spawner mapping helper spawns its statues anchored"
-  - code_imp: "Remove some hardcoding from random loot spawners"
