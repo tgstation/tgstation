@@ -515,7 +515,7 @@ Striking a noncultist, however, will tear their flesh."}
 		user.dropItemToGround(src, TRUE)
 		user.set_timed_status_effect(1 MINUTES, /datum/status_effect/dizziness, only_if_higher = TRUE)
 		user.Paralyze(100)
-		user.blind_eyes(30)
+		user.adjust_blindness(30)
 
 /obj/item/reagent_containers/cup/beaker/unholywater
 	name = "flask of unholy water"

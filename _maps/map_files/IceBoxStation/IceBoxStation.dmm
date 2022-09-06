@@ -501,7 +501,7 @@
 /turf/closed/wall/r_wall,
 /area/station/medical/morgue)
 "akz" = (
-/obj/structure/chair/sofa/corp/right{
+/obj/structure/chair/sofa/corp/left{
 	dir = 1
 	},
 /obj/effect/landmark/start/hangover,
@@ -1292,7 +1292,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/office)
 "auN" = (
-/obj/structure/chair/sofa/corp/left{
+/obj/structure/chair/sofa/corp/right{
 	dir = 1
 	},
 /turf/open/floor/wood,
@@ -7601,7 +7601,7 @@
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "clR" = (
-/obj/structure/chair/sofa/corp/right{
+/obj/structure/chair/sofa/corp/left{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -26797,7 +26797,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/security/execution/transfer)
 "ihG" = (
-/obj/structure/chair/sofa/corp/right{
+/obj/structure/chair/sofa/corp/left{
 	dir = 1
 	},
 /turf/open/floor/wood,
@@ -35943,7 +35943,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "kVM" = (
-/obj/structure/chair/sofa/corp/left{
+/obj/structure/chair/sofa/corp/right{
 	dir = 1
 	},
 /obj/effect/landmark/start/hangover,
@@ -75528,12 +75528,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/structure/statue{
-	desc = "A lifelike statue of a horrifying monster.";
-	dir = 8;
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi';
-	icon_state = "goliath";
-	name = "goliath"
+/obj/structure/statue/goliath{
+	dir = 8
 	},
 /turf/open/floor/iron/white,
 /area/mine/living_quarters)

@@ -921,3 +921,13 @@
 	tastes = list("peanuts" = 1, "sweetness" = 1)
 	foodtypes = NUTS | SUGAR
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/pickle
+	name = "pickle"
+	desc = "Slightly shriveled darkish cucumber. Smelling something sour, but incredibly inviting."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "pickle"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/medicine/antihol = 2)
+	tastes = list("pickle" = 1, "spices" = 1, "salt water" = 2)
+	foodtypes = VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL

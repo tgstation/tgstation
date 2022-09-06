@@ -19,37 +19,37 @@
 		/datum/reagent/carbon,
 		/datum/reagent/consumable/flour,
 		/datum/reagent/space_cleaner,
+		/datum/reagent/carpet/royal/blue,
+		/datum/reagent/carpet/orange,
 		/datum/reagent/consumable/nutriment,
 		/datum/reagent/consumable/condensedcapsaicin,
 		/datum/reagent/drug/mushroomhallucinogen,
 		/datum/reagent/lube,
+		/datum/reagent/glitter/blue,
 		/datum/reagent/glitter/pink,
 		/datum/reagent/cryptobiolin,
-		/datum/reagent/toxin/plantbgone,
 		/datum/reagent/blood,
 		/datum/reagent/medicine/c2/multiver,
-		/datum/reagent/drug/space_drugs,
-		/datum/reagent/medicine/morphine,
 		/datum/reagent/water/holywater,
 		/datum/reagent/consumable/ethanol,
 		/datum/reagent/consumable/hot_coco,
-		/datum/reagent/toxin/acid,
-		/datum/reagent/toxin/mindbreaker,
-		/datum/reagent/toxin/rotatium,
+		/datum/reagent/consumable/yoghurt,
+		/datum/reagent/consumable/tinlux,
+		/datum/reagent/hydrogen_peroxide,
 		/datum/reagent/bluespace,
 		/datum/reagent/pax,
 		/datum/reagent/consumable/laughter,
 		/datum/reagent/concentrated_barbers_aid,
 		/datum/reagent/baldium,
 		/datum/reagent/colorful_reagent,
-		/datum/reagent/peaceborg/confuse,
-		/datum/reagent/peaceborg/tire,
 		/datum/reagent/consumable/salt,
 		/datum/reagent/consumable/ethanol/beer,
 		/datum/reagent/hair_dye,
 		/datum/reagent/consumable/sugar,
 		/datum/reagent/glitter/white,
+		/datum/reagent/gravitum,
 		/datum/reagent/growthserum,
+		/datum/reagent/yuck,
 	)
 	//needs to be chemid unit checked at some point
 
@@ -64,6 +64,8 @@
 		if(!is_station_level(scrubber_turf.z))
 			continue
 		if(temp_vent.welded)
+			continue
+		if(!prob(50))
 			continue
 		scrubbers += temp_vent
 

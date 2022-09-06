@@ -65787,7 +65787,7 @@
 /turf/closed/wall/r_wall,
 /area/station/engineering/break_room)
 "wLd" = (
-/obj/structure/chair/sofa/corp/left{
+/obj/structure/chair/sofa/corp/right{
 	dir = 1
 	},
 /turf/open/floor/wood/large,

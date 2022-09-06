@@ -195,3 +195,90 @@
   - admin: renaming fax machines is logged in game log
   san7890:
   - bugfix: Surgery tables are now no longer transparent.
+2022-09-04:
+  Mickyan:
+  - rscadd: Added two new ethereal themed pieces of clothing, find them in your local
+      clothesmate
+  - rscadd: 'New curator bundle: Ethereal Trail Warden'
+  Mothblocks:
+  - rscdel: You can no longer see maint spawners before the round starts (but your
+      rounds start faster now :) )
+  - qol: CTF will now only load when players/admins request it, for performance.
+  Vishenka0704 and Ying-The-Pando:
+  - rscadd: Cucumbers and pickles
+  - rscadd: Danish hot dog
+  - balance: add cucumbers in dishes where they need
+  - qol: add to bounty cubes, orders - new vegetables
+  itseasytosee:
+  - bugfix: Fixed balistic helmet sprites with flashlights looking weird
+  skylord-a52:
+  - refactor: Reorganized the icons/mob folder and added a bunch of new subfolders
+      to make finding things easier.
+2022-09-05:
+  Arturlang:
+  - code_imp: Removes a unnecesary function blind_eyes
+  Guillaume Prata:
+  - balance: Metal Hydrogen axe was reworked. It now work as a crowbar, can be stored
+      on most engineering/atmos suits and deal less damage than the default fireaxe
+      (15) against mobs while still doing the same damage (30) to structures or machinery.
+  - balance: 'The pluoxium reagent won''t heal suffocation damage and instead will
+      slowly heals organ damage if the target is sleeping. Hint: Cryotubes.'
+  Jacquerel:
+  - rscadd: You can now send photos or trading cards through the fax machine.
+  - rscadd: You can now hack the wires of a fax machine to have it throw items harder
+      or accept additional flat input items such as material sheets, ID cards, and
+      pizza slices.
+  - qol: Screentips should tell you what using a particular item on a fax machine
+      will do.
+  - bugfix: Creating shades with soulstones won't affect the chance of midround antagonist
+      spawns.
+  Melbert:
+  - bugfix: Nightmares heal in darkness again
+  - bugfix: Blade heretics and cauterizing slashes should actually help blood loss
+  ShizCalev:
+  - bugfix: Hiding inside lockers/objects when the SM delams will protect you from
+      it's effects again.
+  Time-Green:
+  - bugfix: fixes infinite locker timer runtiming
+  dragomagol:
+  - imageadd: landmark icon sprites have been updated!
+  - bugfix: owl masks and wizard hats now use their proper inhands!
+  - bugfix: surprise eggs once again have a sprite
+  - balance: the scrubber overflow event now only triggers for half of scrubbers
+  - balance: removed peaceborg tire, peaceborg confuse, morphine, space drugs, acid,
+      mindbreaker, rotatium and plant-b-gone from the scrubber "safer" reagents list
+  - balance: added orange carpet, royal blue carpet, blue glitter, yoghurt, tinea
+      luxor, hydrogen peroxide, gravitum, and yuck to the "safer" reagents list
+2022-09-06:
+  GoldenAlpharex:
+  - bugfix: Fixed the orientation of the left and right end of corporate sofas when
+      facing North. Their behavior is no longer swapped compared to other sofas.
+  Rhials:
+  - bugfix: The shrink ray now spawns with an abductor firing pin instead of a normal
+      one.
+  ShizCalev:
+  - bugfix: Admin event spawned blobs will no longer immediately announce when the
+      event is triggered.
+  - bugfix: Admin events which poll candidates from ghosts will no longer announce
+      the event if the event failed to spawn a mob.
+  VexingRaven:
+  - rscadd: The Research Department Server Room on Kilo Station now has an air alarm
+      and ventilation.
+  - bugfix: The Research Department Server Room on Kilo Station no longer has an atmosphere
+      alert at start of shift.
+  Y0SH1M4S73R:
+  - admin: The lua function "loadstring" has been added, allowing you to compile a
+      string of lua code into a function that runs that code.
+  san7890:
+  - rscadd: Don't like the map everyone else voted for? Rock the vote! You can now
+      trigger a new map vote after one has already been selected!
+  - config: Server operators may decide if they wish to allow players to rock the
+      vote, as well as set the number of times they may rock the vote during a given
+      shift.
+  scriptis:
+  - qol: techfab tgui now supports old-school bulk sheet ejection
+  - qol: techfab tgui no longer overflows its window if you have six million categories
+  - qol: techfab tgui no longer consumes your screen's free real estate on an unprecedented
+      scale
+  tralezab:
+  - balance: Sleeping carp deflects hand spells, CQC reflects hand spells

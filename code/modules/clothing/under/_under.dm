@@ -2,6 +2,8 @@
 	name = "under"
 	icon = 'icons/obj/clothing/under/default.dmi'
 	worn_icon = 'icons/mob/clothing/under/default.dmi'
+	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	slot_flags = ITEM_SLOT_ICLOTHING
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 0, ACID = 0, WOUND = 5)

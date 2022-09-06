@@ -3830,8 +3830,8 @@
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/cobweb,
 /obj/machinery/light/small/directional/north,
-/obj/item/radio/intercom/directional/north,
 /obj/machinery/light_switch/directional/west,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/science/server)
 "bhH" = (
@@ -30386,6 +30386,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/genetics)
 "iBi" = (
@@ -42057,6 +42059,9 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/server)
 "lWg" = (
@@ -56640,6 +56645,7 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/server)
 "qhC" = (
@@ -70518,7 +70524,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
-/obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/science/server)
 "ucm" = (
@@ -76338,6 +76343,8 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/rd,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/science/server)
 "vJc" = (
@@ -82738,6 +82745,10 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/server)
 "xvy" = (
