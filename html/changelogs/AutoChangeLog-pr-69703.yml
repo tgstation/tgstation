@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Fixes an SQL query so that role banned players are now correctly banned from their roles again."
