@@ -39,8 +39,12 @@ map tramstation
 	votable
 endmap
 
+map maze
+endmap
+
 map runtimestation
 endmap
 
 map multiz_debug
 endmap
+
