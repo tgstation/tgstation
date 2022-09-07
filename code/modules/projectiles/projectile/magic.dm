@@ -370,7 +370,7 @@
 	. = ..()
 	if(iscarbon(target))
 		if(curse_of_babel(target))
-			target.add_mood_event(REF(src), /datum/mood_event/tower_of_babel)
+			target.add_mood_event("curse_of_babel", /datum/mood_event/tower_of_babel)
 
 /obj/projectile/magic/necropotence
 	name = "bolt of necropotence"

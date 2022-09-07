@@ -42,7 +42,8 @@ GLOBAL_DATUM(tower_of_babel, /datum/tower_of_babel)
 	curse_of_babel(new_crewmember)
 
 /proc/curse_of_babel(mob/living/carbon/to_curse)
-	if(!iscarbon(to_curse)) // silicon mobs are immune
+	// silicon mobs are immune
+	if(!iscarbon(to_curse))
 		return
 
 	if(to_curse.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND) || HAS_TRAIT(to_curse, TRAIT_TOWER_OF_BABEL))
@@ -59,7 +60,7 @@ GLOBAL_DATUM(tower_of_babel, /datum/tower_of_babel)
 	to_curse.add_mood_event("curse_of_babel", /datum/mood_event/tower_of_babel)
 
 	to_curse.emote("mumble")
-	to_curse.say(";Nimrod, the Tower of Babel has fallen!"), forced = "tower of babel")
+	to_curse.say(";Nimrod, the Tower of Babel has fallen!", forced = "tower of babel")
 
 	to_curse.playsound_local(get_turf(to_curse), 'sound/magic/magic_block_mind.ogg', 75, vary = TRUE) // sound of creepy whispers
 	to_chat(to_curse, span_reallybig(span_hypnophrase("You feel a magical force affecting your speech patterns!")))
@@ -77,9 +78,10 @@ GLOBAL_DATUM(tower_of_babel, /datum/tower_of_babel)
 	// if user is affected by tower of babel, we remove the blocked languages
 	to_cure.remove_blocked_language(GLOB.all_languages, source = LANGUAGE_BABEL)
 	to_cure.remove_language(GLOB.all_languages, source = LANGUAGE_BABEL)
-	to_cure.get_selected_language()
+	to_cure.update_atom_languages()
+	//to_cure.get_selected_language()  update_atom_languages already does this?
 
-	to_curse.clear_mood_event("curse_of_babel")
+	to_cure.clear_mood_event("curse_of_babel")
 
 	REMOVE_TRAIT(to_cure, TRAIT_TOWER_OF_BABEL, TRAUMA_TRAIT)
 	to_chat(to_cure, span_reallybig(span_hypnophrase("You feel the magical force affecting your speech patterns fade away...")))
