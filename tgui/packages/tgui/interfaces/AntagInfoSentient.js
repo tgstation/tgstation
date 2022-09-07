@@ -14,15 +14,22 @@ export const AntagInfoSentient = (props, context) => {
               You are a sentient creature!
             </Stack.Item>
             <Stack.Item>
-				<BlockQuote>
-				All at once it makes sense: you know what you are and who you are! Self awareness is yours!
-				{
-					!!enslaved_to && (' You are grateful to be self aware and owe ' + enslaved_to + ' a great debt. Serve ' + enslaved_to + ', and assist ' + p_them + ' in completing ' + p_their + ' goals at any cost.')
-				}
-				{
-					!!holographic && (' You also become depressingly aware that you are not a real creature, but instead a holoform. Your existence is limited to the parameters of the holodeck.')
-				}
-				</BlockQuote>
+              <BlockQuote>
+                All at once it makes sense: you know what you are and who you
+                are! Self awareness is yours!
+                {!!enslaved_to &&
+                  ' You are grateful to be self aware and owe ' +
+                    enslaved_to +
+                    ' a great debt. Serve ' +
+                    enslaved_to +
+                    ', and assist ' +
+                    p_them +
+                    ' in completing ' +
+                    p_their +
+                    ' goals at any cost.'}
+                {!!holographic &&
+                  ' You also become depressingly aware that you are not a real creature, but instead a holoform. Your existence is limited to the parameters of the holodeck.'}
+              </BlockQuote>
             </Stack.Item>
           </Stack>
         </Section>
