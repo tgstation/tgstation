@@ -64584,7 +64584,7 @@
 /area/station/science/robotics/lab)
 "tSs" = (
 /obj/item/flashlight/lantern{
-	light_on = 1
+	on = 1
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
