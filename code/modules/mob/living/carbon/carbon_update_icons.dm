@@ -401,6 +401,8 @@
 	. += "-[body_zone]"
 	if(should_draw_greyscale && draw_color)
 		. += "-[draw_color]"
+	if(HAS_TRAIT(owner, TRAIT_INVISIBLE_MAN))
+		. += "-invisible"
 	for(var/obj/item/organ/external/external_organ as anything in external_organs)
 		if(!external_organ.can_draw_on_bodypart(owner))
 			continue
