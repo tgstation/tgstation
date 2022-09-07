@@ -1,6 +1,8 @@
 /datum/buildmode_mode/proccall
 	key = "proccall"
+	///The procedure itself, which we will call in the future. For example "qdel"
 	var/proc_name = null
+	///The list of arguments for the procedure. They may not be. They are selected in the same way in the game, and can be a datum, and other types.
 	var/list/proc_args = null
 
 /datum/buildmode_mode/proccall/show_help(client/target_client)
