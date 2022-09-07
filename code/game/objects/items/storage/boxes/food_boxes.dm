@@ -5,6 +5,7 @@
 	desc = "<B>Instructions:</B> <I>Heat in microwave. Product will stay perpetually warmed with cutting edge Donk Co. technology.</I>"
 	icon_state = "donkpocketbox"
 	illustration = null
+	/// What type of donk pocket are we gonna cram into this box?
 	var/donktype = /obj/item/food/donkpocket
 
 /obj/item/storage/box/donkpockets/PopulateContents()

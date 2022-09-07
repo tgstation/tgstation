@@ -182,8 +182,8 @@
 
 /obj/item/storage/box/actionfigure/PopulateContents()
 	for(var/i in 1 to 4)
-		var/randomFigure = pick(subtypesof(/obj/item/toy/figure))
-		new randomFigure(src)
+		var/random_figure = pick(subtypesof(/obj/item/toy/figure))
+		new random_figure(src)
 
 /obj/item/storage/box/tail_pin
 	name = "pin the tail on the corgi supplies"

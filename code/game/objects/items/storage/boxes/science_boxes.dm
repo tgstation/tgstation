@@ -37,6 +37,7 @@
 	desc = "Drymate brand monkey cubes. Just add water!"
 	icon_state = "monkeycubebox"
 	illustration = null
+	/// Which type of cube are we spawning in this box?
 	var/cube_type = /obj/item/food/monkeycube
 
 /obj/item/storage/box/monkeycubes/Initialize(mapload)

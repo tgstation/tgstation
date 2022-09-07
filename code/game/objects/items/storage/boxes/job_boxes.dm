@@ -6,8 +6,11 @@
 	desc = "A box with the bare essentials of ensuring the survival of you and others."
 	icon_state = "internals"
 	illustration = "emergencytank"
+	/// What type of mask are we going to use for this box?
 	var/mask_type = /obj/item/clothing/mask/breath
+	/// Which internals tank are we going to use for this box?
 	var/internal_type = /obj/item/tank/internals/emergency_oxygen
+	/// What medipen should be present in this box?
 	var/medipen_type = /obj/item/reagent_containers/hypospray/medipen
 
 /obj/item/storage/box/survival/PopulateContents()
