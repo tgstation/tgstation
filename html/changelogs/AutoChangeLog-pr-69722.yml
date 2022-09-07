@@ -1,4 +1,0 @@
-author: "Jackal-boop"
-delete-after: True
-changes: 
-  - bugfix: "fixed the cucumber seeds not being in the correct spot in the megaseed list"

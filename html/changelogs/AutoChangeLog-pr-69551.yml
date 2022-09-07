@@ -1,4 +1,0 @@
-author: "Wallem"
-delete-after: True
-changes: 
-  - qol: "The ORM now has color-coded lights showing which side is the input and output. Blue for input, red for output."

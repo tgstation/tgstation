@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - qol: "Scrubber surge events now have cockroaches popping out of dangerous vents, rather than every vent possibly having them."
-  - bugfix: "More dangerous scrubbers now properly shoot out more foam."
