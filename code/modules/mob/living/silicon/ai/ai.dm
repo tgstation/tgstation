@@ -15,7 +15,7 @@
 /mob/living/silicon/ai
 	name = "AI"
 	real_name = "AI"
-	icon = 'icons/mob/ai.dmi'
+	icon = 'icons/mob/silicon/ai.dmi'
 	icon_state = "ai"
 	move_resist = MOVE_FORCE_OVERPOWERING
 	density = TRUE
@@ -163,7 +163,7 @@
 	INVOKE_ASYNC(src, .proc/set_core_display_icon)
 
 
-	holo_icon = getHologramIcon(icon('icons/mob/ai.dmi',"default"))
+	holo_icon = getHologramIcon(icon('icons/mob/silicon/ai.dmi',"default"))
 
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
@@ -693,19 +693,19 @@
 
 		if("Animal")
 			var/list/icon_list = list(
-			"bear" = 'icons/mob/animal.dmi',
-			"carp" = 'icons/mob/carp.dmi',
-			"chicken" = 'icons/mob/animal.dmi',
-			"corgi" = 'icons/mob/pets.dmi',
-			"cow" = 'icons/mob/animal.dmi',
-			"crab" = 'icons/mob/animal.dmi',
-			"fox" = 'icons/mob/pets.dmi',
-			"goat" = 'icons/mob/animal.dmi',
-			"cat" = 'icons/mob/pets.dmi',
-			"cat2" = 'icons/mob/pets.dmi',
-			"poly" = 'icons/mob/animal.dmi',
-			"pug" = 'icons/mob/pets.dmi',
-			"spider" = 'icons/mob/animal.dmi'
+			"bear" = 'icons/mob/simple/animal.dmi',
+			"carp" = 'icons/mob/simple/carp.dmi',
+			"chicken" = 'icons/mob/simple/animal.dmi',
+			"corgi" = 'icons/mob/simple/pets.dmi',
+			"cow" = 'icons/mob/simple/animal.dmi',
+			"crab" = 'icons/mob/simple/animal.dmi',
+			"fox" = 'icons/mob/simple/pets.dmi',
+			"goat" = 'icons/mob/simple/animal.dmi',
+			"cat" = 'icons/mob/simple/pets.dmi',
+			"cat2" = 'icons/mob/simple/pets.dmi',
+			"poly" = 'icons/mob/simple/animal.dmi',
+			"pug" = 'icons/mob/simple/pets.dmi',
+			"spider" = 'icons/mob/simple/animal.dmi'
 			)
 
 			input = tgui_input_list(usr, "Select a hologram", "Hologram", sort_list(icon_list))
@@ -725,11 +725,11 @@
 					holo_icon = getHologramIcon(icon(icon_list[input], input))
 		else
 			var/list/icon_list = list(
-				"default" = 'icons/mob/ai.dmi',
-				"floating face" = 'icons/mob/ai.dmi',
-				"xeno queen" = 'icons/mob/alien.dmi',
-				"horror" = 'icons/mob/ai.dmi',
-				"clock" = 'icons/mob/ai.dmi'
+				"default" = 'icons/mob/silicon/ai.dmi',
+				"floating face" = 'icons/mob/silicon/ai.dmi',
+				"xeno queen" = 'icons/mob/nonhuman-player/alien.dmi',
+				"horror" = 'icons/mob/silicon/ai.dmi',
+				"clock" = 'icons/mob/silicon/ai.dmi'
 				)
 
 			input = tgui_input_list(usr, "Select a hologram", "Hologram", sort_list(icon_list))

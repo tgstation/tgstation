@@ -139,9 +139,9 @@
 	var/bottom_left_corner
 	///Smoothing variable
 	var/bottom_right_corner
-	///What smoothing groups does this atom belongs to, to match canSmoothWith. If null, nobody can smooth with it.
+	///What smoothing groups does this atom belongs to, to match canSmoothWith. If null, nobody can smooth with it. Must be sorted.
 	var/list/smoothing_groups = null
-	///List of smoothing groups this atom can smooth with. If this is null and atom is smooth, it smooths only with itself.
+	///List of smoothing groups this atom can smooth with. If this is null and atom is smooth, it smooths only with itself. Must be sorted.
 	var/list/canSmoothWith = null
 	///Reference to atom being orbited
 	var/atom/orbit_target
@@ -173,15 +173,11 @@
  * if the preloader is being used and then call [InitAtom][/datum/controller/subsystem/atoms/proc/InitAtom] of which the ultimate
  * result is that the Intialize proc is called.
  *
- * We also generate a tag here if the DF_USE_TAG flag is set on the atom
  */
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
 	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		world.preloader_load(src)
-
-	if(datum_flags & DF_USE_TAG)
-		GenerateTag()
 
 	var/do_initialize = SSatoms.initialized
 	if(do_initialize != INITIALIZATION_INSSATOMS)
@@ -231,6 +227,7 @@
 /atom/proc/Initialize(mapload, ...)
 	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(TRUE)
+
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
@@ -249,12 +246,20 @@
 		update_light()
 
 	if (length(smoothing_groups))
-		sortTim(smoothing_groups) //In case it's not properly ordered, let's avoid duplicate entries with the same values.
+		#ifdef UNIT_TESTS
+		assert_sorted(smoothing_groups, "[type].smoothing_groups")
+		#endif
+
 		SET_BITFLAG_LIST(smoothing_groups)
+
 	if (length(canSmoothWith))
-		sortTim(canSmoothWith)
+		#ifdef UNIT_TESTS
+		assert_sorted(canSmoothWith, "[type].canSmoothWith")
+		#endif
+
 		if(canSmoothWith[length(canSmoothWith)] > MAX_S_TURF) //If the last element is higher than the maximum turf-only value, then it must scan turf contents for smoothing targets.
 			smoothing_flags |= SMOOTH_OBJ
+
 		SET_BITFLAG_LIST(canSmoothWith)
 
 	if(uses_integrity)
@@ -264,6 +269,7 @@
 			armor = getArmor()
 		else if (!istype(armor, /datum/armor))
 			stack_trace("Invalid type [armor.type] found in .armor during /atom Initialize()")
+
 		atom_integrity = max_integrity
 
 	// apply materials properly from the default custom_materials value
@@ -1562,12 +1568,8 @@
 /atom/proc/analyzer_act_secondary(mob/living/user, obj/item/tool)
 	return
 
-///Generate a tag for this atom
-/atom/proc/GenerateTag()
-	return
-
 ///Connect this atom to a shuttle
-/atom/proc/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+/atom/proc/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	return
 
 /atom/proc/add_filter(name,priority,list/params)

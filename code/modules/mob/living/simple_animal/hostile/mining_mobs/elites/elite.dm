@@ -6,7 +6,7 @@
 /mob/living/simple_animal/hostile/asteroid/elite
 	name = "elite"
 	desc = "An elite monster, found in one of the strange tumors on lavaland."
-	icon = 'icons/mob/lavaland/lavaland_elites.dmi'
+	icon = 'icons/mob/simple/lavaland/lavaland_elites.dmi'
 	faction = list("boss")
 	robust_searching = TRUE
 	ranged_ignores_vision = TRUE

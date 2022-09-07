@@ -3239,7 +3239,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/computer/monitor/secret{
+/obj/machinery/computer/monitor{
 	dir = 4
 	},
 /turf/open/floor/plating,

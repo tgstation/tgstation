@@ -2,6 +2,8 @@
 /obj/item/clothing/glasses
 	name = "glasses"
 	icon = 'icons/obj/clothing/glasses.dmi'
+	lefthand_file = 'icons/mob/inhands/clothing/glasses_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/glasses_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	flags_cover = GLASSESCOVERSEYES
 	slot_flags = ITEM_SLOT_EYES
@@ -61,7 +63,7 @@
 			if(H.glasses == src)
 				to_chat(H, span_danger("[src] overloads and blinds you!"))
 				H.flash_act(visual = 1)
-				H.blind_eyes(3)
+				H.adjust_blindness(3)
 				H.blur_eyes(5)
 				eyes.applyOrganDamage(5)
 

@@ -4,7 +4,7 @@
 	desc = "A revolting, pulsating pile of flesh."
 	speak_emote = list("gurgles")
 	emote_hear = list("gurgles")
-	icon = 'icons/mob/animal.dmi'
+	icon = 'icons/mob/simple/animal.dmi'
 	icon_state = "morph"
 	icon_living = "morph"
 	icon_dead = "morph_dead"

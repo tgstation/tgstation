@@ -1,0 +1,6 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a runtime preventing nonhuman cadavers from spawning properly."
+  - config: "Cadaver spawners will no longer yell at you when morgue_cadaver_other_species_probability is blank."
+  - config: "morgue_cadaver_disable_nonhumans will now properly disable nonhuman races! (It was reversed, woops.)"

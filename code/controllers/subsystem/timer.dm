@@ -578,7 +578,10 @@ SUBSYSTEM_DEF(timer)
 		stack_trace("addtimer called with a callback assigned to a qdeleted object. In the future such timers will not \
 			be supported and may refuse to run or run with a 0 wait")
 
-	wait = max(CEILING(wait, world.tick_lag), world.tick_lag)
+	if (flags & TIMER_CLIENT_TIME) // REALTIMEOFDAY has a resolution of 1 decisecond
+		wait = max(CEILING(wait, 1), 1) // so if we use tick_lag timers may be inserted in the "past"
+	else
+		wait = max(CEILING(wait, world.tick_lag), world.tick_lag)
 
 	if(wait >= INFINITY)
 		CRASH("Attempted to create timer with INFINITY delay")
@@ -607,7 +610,7 @@ SUBSYSTEM_DEF(timer)
 						. = hash_timer.id
 					return
 	else if(flags & TIMER_OVERRIDE)
-		stack_trace("TIMER_OVERRIDE used without TIMER_UNIQUE")
+		stack_trace("TIMER_OVERRIDE used without TIMER_UNIQUE") //this is also caught by grep.
 
 	var/datum/timedevent/timer = new(callback, wait, flags, timer_subsystem, hash, file && "[file]:[line]")
 	return timer.id
