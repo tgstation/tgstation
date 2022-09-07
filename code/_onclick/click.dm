@@ -412,10 +412,10 @@
 	A.AltClick(src)
 
 /atom/proc/AltClick(mob/user)
-	if(!can_interact(user))
-		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_CLICK_ALT, user) & COMPONENT_CANCEL_CLICK_ALT)
 		return
+	if(!can_interact(user))
+		return FALSE
 	var/turf/T = get_turf(src)
 	if(T && (isturf(loc) || isturf(src)) && user.TurfAdjacent(T) && !HAS_TRAIT(user, TRAIT_MOVE_VENTCRAWLING))
 		user.listed_turf = T
@@ -430,10 +430,10 @@
 
 ///The base proc of when something is right clicked on when alt is held
 /atom/proc/alt_click_secondary(mob/user)
-	if(!can_interact(user))
-		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_CLICK_ALT_SECONDARY, user) & COMPONENT_CANCEL_CLICK_ALT_SECONDARY)
 		return
+	if(!can_interact(user))
+		return FALSE
 	if(isobserver(user) && user.client && check_rights_for(user.client, R_DEBUG))
 		user.client.toggle_tag_datum(src)
 		return
