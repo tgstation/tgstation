@@ -461,11 +461,6 @@
 
 	. = ..()
 
-	if(hasPower() && unres_sides)
-		set_light(2, 1)
-	else
-		set_light(0)
-
 /obj/machinery/door/airlock/update_icon_state()
 	. = ..()
 	switch(airlock_state)
@@ -534,21 +529,13 @@
 		. += get_airlock_overlay("sealed", overlays_file, em_block = TRUE)
 
 	if(hasPower() && unres_sides)
-		if(unres_sides & NORTH)
-			var/image/I = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_n")
-			I.pixel_y = 32
-			. += I
-		if(unres_sides & SOUTH)
-			var/image/I = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_s")
-			I.pixel_y = -32
-			. += I
-		if(unres_sides & EAST)
-			var/image/I = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_e")
-			I.pixel_x = 32
-			. += I
-		if(unres_sides & WEST)
-			var/image/I = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_w")
-			I.pixel_x = -32
+		for(var/heading in list(NORTH,SOUTH,EAST,WEST))
+			if(!(unres_sides & heading))
+				continue
+			var/image/I = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_[heading]")
+			I.plane = ABOVE_LIGHTING_PLANE
+			I.pixel_y = round((75.1085 * sin(57.29577 * ((0.959476 * heading) + 2.09713))) + 25.6243) //32 if [heading] is NORTH, -32 if SOUTH, and 0 for the rest
+			I.pixel_x = round(41.7909 - (73.8279 * sin(57.29577 * ((1.93816 * heading) + 4.94674)))) //32 if [heading] is EAST, -32 if WEST, and 0 for the rest
 			. += I
 
 /obj/machinery/door/airlock/do_animate(animation)
