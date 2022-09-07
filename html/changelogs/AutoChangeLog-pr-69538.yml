@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - balance: "Xenomorph abilities require being mobile to use."
+  - balance: "Neurotoxin spit can no longer be used if you're muzzled."
