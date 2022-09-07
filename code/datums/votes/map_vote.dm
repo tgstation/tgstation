@@ -1,5 +1,6 @@
 /datum/vote/map_vote
 	name = "Map"
+	message = "Vote for next round's map!"
 
 /datum/vote/map_vote/New()
 	. = ..()
@@ -52,13 +53,11 @@
 		return TRUE
 
 	if(!CONFIG_GET(flag/allow_vote_map))
-		if(by_who)
-			to_chat(by_who, span_warning("Map voting is disabled."))
+		message = "Map voting is disabled by server configuration settings."
 		return FALSE
 
 	if(SSmapping.map_voted)
-		if(by_who)
-			to_chat(by_who, span_warning("The next map has already been selected."))
+		message = "The next map has already been selected."
 		return FALSE
 
 	return TRUE
