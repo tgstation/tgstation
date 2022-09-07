@@ -253,13 +253,13 @@ SUBSYSTEM_DEF(shuttle)
 
 /datum/controller/subsystem/shuttle/proc/getShuttle(id)
 	for(var/obj/docking_port/mobile/M in mobile_docking_ports)
-		if(M.id == id)
+		if(M.shuttle_id == id)
 			return M
 	WARNING("couldn't find shuttle with id: [id]")
 
 /datum/controller/subsystem/shuttle/proc/getDock(id)
 	for(var/obj/docking_port/stationary/S in stationary_docking_ports)
-		if(S.id == id)
+		if(S.shuttle_id == id)
 			return S
 	WARNING("couldn't find dock with id: [id]")
 
@@ -492,7 +492,7 @@ SUBSYSTEM_DEF(shuttle)
 		return DOCKING_BLOCKED
 	var/obj/docking_port/stationary/docked_at = shuttle_port.get_docked()
 	var/destination = dock_home
-	if(docked_at && docked_at.id == dock_home)
+	if(docked_at && docked_at.shuttle_id == dock_home)
 		destination = dock_away
 	if(timed)
 		if(shuttle_port.request(getDock(destination)))
@@ -601,7 +601,7 @@ SUBSYSTEM_DEF(shuttle)
 	A.contents = proposal.reserved_turfs
 	var/obj/docking_port/stationary/transit/new_transit_dock = new(midpoint)
 	new_transit_dock.reserved_area = proposal
-	new_transit_dock.name = "Transit for [M.id]/[M.name]"
+	new_transit_dock.name = "Transit for [M.shuttle_id]/[M.name]"
 	new_transit_dock.owner = M
 	new_transit_dock.assigned_area = A
 
@@ -908,7 +908,7 @@ SUBSYSTEM_DEF(shuttle)
 		var/timeleft = M.timeLeft(1)
 		var/list/L = list()
 		L["name"] = M.name
-		L["id"] = M.id
+		L["id"] = M.shuttle_id
 		L["timer"] = M.timer
 		L["timeleft"] = M.getTimerStr()
 		if (timeleft > 1 HOURS)
@@ -950,7 +950,7 @@ SUBSYSTEM_DEF(shuttle)
 			if(params["type"] == "mobile")
 				for(var/i in mobile_docking_ports)
 					var/obj/docking_port/mobile/M = i
-					if(M.id == params["id"])
+					if(M.shuttle_id == params["id"])
 						user.forceMove(get_turf(M))
 						. = TRUE
 						break
@@ -958,7 +958,7 @@ SUBSYSTEM_DEF(shuttle)
 		if("fly")
 			for(var/i in mobile_docking_ports)
 				var/obj/docking_port/mobile/M = i
-				if(M.id == params["id"])
+				if(M.shuttle_id == params["id"])
 					. = TRUE
 					M.admin_fly_shuttle(user)
 					break
@@ -966,7 +966,7 @@ SUBSYSTEM_DEF(shuttle)
 		if("fast_travel")
 			for(var/i in mobile_docking_ports)
 				var/obj/docking_port/mobile/M = i
-				if(M.id == params["id"] && M.timer && M.timeLeft(1) >= 50)
+				if(M.shuttle_id == params["id"] && M.timer && M.timeLeft(1) >= 50)
 					M.setTimer(50)
 					. = TRUE
 					message_admins("[key_name_admin(usr)] fast travelled [M]")

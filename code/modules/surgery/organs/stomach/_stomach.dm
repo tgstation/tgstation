@@ -206,7 +206,7 @@
 		human.remove_movespeed_modifier(/datum/movespeed_modifier/hunger)
 
 /obj/item/organ/internal/stomach/get_availability(datum/species/owner_species)
-	return !(NOSTOMACH in owner_species.inherent_traits)
+	return !((TRAIT_NOHUNGER in owner_species.inherent_traits) || (NOSTOMACH in owner_species.species_traits))
 
 /obj/item/organ/internal/stomach/proc/handle_disgust(mob/living/carbon/human/disgusted, delta_time, times_fired)
 	var/old_disgust = disgusted.old_disgust
@@ -266,6 +266,7 @@
 /obj/item/organ/internal/stomach/bone
 	desc = "You have no idea what this strange ball of bones does."
 	metabolism_efficiency = 0.025 //very bad
+	organ_traits = list(TRAIT_NOHUNGER)
 	/// How much [BRUTE] damage milk heals every second
 	var/milk_brute_healing = 2.5
 	/// How much [BURN] damage milk heals every second
@@ -288,6 +289,7 @@
 /obj/item/organ/internal/stomach/bone/plasmaman
 	name = "digestive crystal"
 	icon_state = "stomach-p"
+	organ_traits = list()
 	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
 	metabolism_efficiency = 0.06
 	milk_burn_healing = 0

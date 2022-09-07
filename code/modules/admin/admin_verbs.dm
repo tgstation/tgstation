@@ -175,6 +175,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/map_template_load,
 	/client/proc/map_template_upload,
 	/client/proc/jump_to_ruin,
+	/client/proc/unload_ctf,
 	/client/proc/clear_dynamic_transit,
 	/client/proc/run_empty_query,
 	/client/proc/toggle_medal_disable,
