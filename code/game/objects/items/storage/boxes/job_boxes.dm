@@ -130,7 +130,7 @@
 	icon_state = "hugbox_black"
 	illustration = "heart_black"
 
-// clown box & honkbot assembly
+// clown box, we also use this for the honk bot assembly
 /obj/item/storage/box/clown
 	name = "clown box"
 	desc = "A colorful cardboard box for the clown"

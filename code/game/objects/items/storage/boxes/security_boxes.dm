@@ -267,6 +267,7 @@
 	new /obj/item/toy/snappop(src)
 
 /obj/item/storage/box/fireworks/dangerous
+	desc = "This box has a small label on it stating that it's from the Gorlex Marauders. Contains an assortment of \"fireworks\"."
 
 /obj/item/storage/box/fireworks/dangerous/PopulateContents()
 	for(var/i in 1 to 3)
@@ -279,7 +280,7 @@
 
 /obj/item/storage/box/firecrackers
 	name = "box of firecrackers"
-	desc = "A box filled with illegal firecracker. You wonder who still makes these."
+	desc = "A box filled with illegal firecrackers. You wonder who still makes these."
 	icon_state = "syndiebox"
 	illustration = "firecracker"
 
@@ -289,7 +290,7 @@
 
 /obj/item/storage/box/sparklers
 	name = "box of sparklers"
-	desc = "A box of NT brand sparklers, burns hot even in the cold of space-winter."
+	desc = "A box of Nanotrasen brand sparklers, burns hot even in the cold of space-winter."
 	illustration = "sparkler"
 
 /obj/item/storage/box/sparklers/PopulateContents()
