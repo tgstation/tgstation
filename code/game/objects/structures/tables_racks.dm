@@ -40,7 +40,6 @@
 	. = ..()
 	if(_buildstack)
 		buildstack = _buildstack
-		desc = "A square table, fashioned out of [buildstack]. What will they think of next?"
 	AddElement(/datum/element/climbable)
 
 	var/static/list/loc_connections = list(
@@ -326,6 +325,7 @@
 	return COMSIG_CARBON_SHOVE_HANDLED
 
 /obj/structure/table/greyscale
+	desc = "A four legged table, fashioned out of suboptimal table construction material."
 	icon = 'icons/obj/smooth_structures/table_greyscale.dmi'
 	icon_state = "table_greyscale-0"
 	base_icon_state = "table_greyscale"
