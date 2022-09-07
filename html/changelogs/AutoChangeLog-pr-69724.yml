@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a runtime when all alive players are converted to cultists that prevented them from getting their cool halo/eye effects."
