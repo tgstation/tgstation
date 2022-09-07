@@ -1,8 +1,8 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "bD" = (
 /obj/item/clothing/suit/hooded/cultrobes{
-	step_x = 1;
-	step_y = 31
+	pixel_x = 1;
+	pixel_y = 31
 	},
 /turf/open/indestructible/necropolis/air,
 /area/station)
@@ -220,8 +220,8 @@
 /area/station)
 "IG" = (
 /obj/item/clothing/suit/hooded/cultrobes{
-	step_x = 2;
-	step_y = 31
+	pixel_x = 2;
+	pixel_y = 31
 	},
 /turf/open/indestructible/necropolis/air,
 /area/station)
@@ -259,8 +259,8 @@
 /area/space)
 "MW" = (
 /obj/item/clothing/suit/hooded/cultrobes{
-	step_x = 31;
-	step_y = 31
+	pixel_x = 31;
+	pixel_y = 31
 	},
 /turf/open/indestructible/necropolis/air,
 /area/station)
