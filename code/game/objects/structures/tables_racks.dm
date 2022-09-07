@@ -40,6 +40,7 @@
 	. = ..()
 	if(_buildstack)
 		buildstack = _buildstack
+		desc = "A square table, fashioned out of [buildstack]. What will they think of next?"
 	AddElement(/datum/element/climbable)
 
 	var/static/list/loc_connections = list(
