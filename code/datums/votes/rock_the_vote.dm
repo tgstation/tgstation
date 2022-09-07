@@ -56,6 +56,7 @@
 		message = "Rocking the vote is disabled because an admin has forcibly set the map!"
 		return FALSE
 
+	message = initial(message)
 	return TRUE
 
 /datum/vote/rock_the_vote/finalize_vote(winning_option)

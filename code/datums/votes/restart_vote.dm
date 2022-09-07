@@ -41,10 +41,13 @@
 		message = "Restart voting is disabled by server configuration settings."
 		return FALSE
 
-	// We still want players to be able to vote to restart even if valid admins are online. Let's update the message just so that the player is aware.
+	// We still want players to be able to vote to restart even if valid admins are online. Let's update the message just so that the player is aware of this fact.
+	// We don't want to lock-out the vote though, so we'll return TRUE.
 	if(admins_present())
 		message = "Regardless of the results of this vote, the round will not restart because an admin is online."
+		return TRUE
 
+	message = initial(message)
 	return TRUE
 
 /datum/vote/restart_vote/get_vote_result(list/non_voters)

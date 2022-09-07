@@ -80,6 +80,7 @@
 			message = "A vote was initiated recently. You must wait [DisplayTimeText(next_allowed_time - world.time)] before a new vote can be started!"
 			return FALSE
 
+	message = initial(message)
 	return TRUE
 
 /**

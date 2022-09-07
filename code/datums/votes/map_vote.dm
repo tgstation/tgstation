@@ -60,6 +60,7 @@
 		message = "The next map has already been selected."
 		return FALSE
 
+	message = initial(message)
 	return TRUE
 
 /datum/vote/map_vote/get_vote_result(list/non_voters)
