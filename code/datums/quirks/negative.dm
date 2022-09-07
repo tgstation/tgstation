@@ -98,7 +98,7 @@
 	 */
 /datum/quirk/item_quirk/brainproblems
 	name = "Brain Tumor"
-	desc = "You have a little friend in your brain that is slowly destroying it. Better bring some Mannitol!"
+	desc = "You have a little friend in your brain that is slowly destroying it. Better bring some mannitol!"
 	icon = "brain"
 	value = -12
 	gain_text = "<span class='danger'>You feel smooth.</span>"
