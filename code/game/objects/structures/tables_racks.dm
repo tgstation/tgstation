@@ -62,6 +62,12 @@
 		AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 		register_context()
 
+	if(custom_materials && ispath(type, /obj/structure/table) && (custom_materials != initial(custom_materials)))
+		var/list/materials_list = list()
+		for(var/datum/material/current_material as anything in custom_materials)
+			materials_list += "[current_material.name]"
+		desc = "A square [(materials_list.len > 1) ? "amagamation" : "peice"] of [english_list(materials_list)] on four legs. It can not move."
+
 /obj/structure/table/examine(mob/user)
 	. = ..()
 	. += deconstruction_hints(user)
