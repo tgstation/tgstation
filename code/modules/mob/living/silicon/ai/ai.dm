@@ -339,23 +339,24 @@
 
 /mob/living/silicon/ai/can_interact_with(atom/A, treat_mob_as_adjacent)
 	. = ..()
-	var/turf/ai_turf = get_turf(src)
-	var/turf/target_turf = get_turf(A)
 	if (.)
 		return
+	var/turf/ai_turf = get_turf(src)
+	var/turf/target_turf = get_turf(A)
 
-	if(!target)
+	if(!target_turf)
 		return
 
 	if (!is_valid_z_level(ai_turf, target_turf))
 		return FALSE
 
 	if (istype(loc, /obj/item/aicard))
-		if (!ai || !target)
+		if (!ai_turf)
 			return FALSE
-		return ISINRANGE(target.x, ai.x - interaction_range, ai.x + interaction_range) && ISINRANGE(target.y, ai.y - interaction_range, ai.y + interaction_range)
+		return ISINRANGE(target_turf.x, ai_turf.x - interaction_range, ai_turf.x + interaction_range) \
+			&& ISINRANGE(target_turf.y, ai_turf.y - interaction_range, ai_turf.y + interaction_range)
 	else
-		return GLOB.cameranet.checkTurfVis(get_turf(A))
+		return GLOB.cameranet.checkTurfVis(target_turf)
 
 /mob/living/silicon/ai/cancel_camera()
 	view_core()
