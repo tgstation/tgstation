@@ -103,3 +103,15 @@
 	icon_state = "captain_parade"
 	inhand_icon_state = "by_suit"
 	can_adjust = FALSE
+
+/obj/item/clothing/under/misc/syndicate_souvenir
+	name = "syndicate souvenir tee"
+	desc = "I got KIDNAPPED by a SYNDICATE OPERATIVE and ALL I GOT was this lousy T-SHIRT!"
+	icon = 'icons/obj/clothing/under/syndicate_souvenir.dmi'
+	worn_icon = 'icons/mob/clothing/under/syndicate_souvenir.dmi'
+	icon_state = "syndicate_souvenir"
+	inhand_icon_state = "syndicate_souvenir"
+	random_sensor = FALSE
+	sensor_mode = NO_SENSORS
+	can_adjust = FALSE
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
