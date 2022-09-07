@@ -186,7 +186,7 @@
 		to_chat(user, span_warning("You don't want to harm other living beings!"))
 		return
 
-	if(!force)
+	if(!force && !HAS_TRAIT(src, TRAIT_NO_TAP_SOUND))
 		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), TRUE, -1)
 	else if(hitsound)
 		playsound(loc, hitsound, get_clamped_volume(), TRUE, extrarange = stealthy_audio ? SILENCED_SOUND_EXTRARANGE : -1, falloff_distance = 0)
