@@ -417,7 +417,7 @@
 	icon = "user-secret"
 	value = -4
 	mob_trait = TRAIT_PROSOPAGNOSIA
-	medical_record_text = "Patient suffers from Prosopagnosia and cannot recognize faces."
+	medical_record_text = "Patient suffers from prosopagnosia and cannot recognize faces."
 	hardcore_value = 5
 
 
