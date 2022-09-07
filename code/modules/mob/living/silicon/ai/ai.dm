@@ -337,17 +337,17 @@
 		if(C)
 			C.post_status("shuttle")
 
-/mob/living/silicon/ai/can_interact_with(atom/A)
+/mob/living/silicon/ai/can_interact_with(atom/A, treat_mob_as_adjacent)
 	. = ..()
-	var/turf/ai = get_turf(src)
-	var/turf/target = get_turf(A)
+	var/turf/ai_turf = get_turf(src)
+	var/turf/target_turf = get_turf(A)
 	if (.)
 		return
 
 	if(!target)
 		return
 
-	if ((ai.z != target.z) && !is_station_level(ai.z))
+	if (!is_valid_z_level(ai_turf, target_turf))
 		return FALSE
 
 	if (istype(loc, /obj/item/aicard))
