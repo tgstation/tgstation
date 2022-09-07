@@ -83,7 +83,7 @@ GLOBAL_LIST_EMPTY(antagonist_teams)
 
 	return list
 
-//Builds section for the team
+/// Builds section for the team
 /datum/team/proc/antag_listing_entry()
 	//NukeOps:
 	// Jim (Status) FLW PM TP
