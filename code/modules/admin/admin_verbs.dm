@@ -760,12 +760,12 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	log_admin("[src] re-adminned themselves.")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Readmin")
 
-/client/proc/populate_world(amount = 50 as num)
+/client/proc/populate_world(amount = 50)
 	set name = "Populate World"
 	set category = "Debug"
 	set desc = "(\"Amount of mobs to create\") Populate the world with test mobs."
 
-	for (var/i = 1 to amount)
+	for (var/i in 1 to amount)
 		var/turf/tile = get_safe_random_station_turf()
 		var/mob/living/carbon/human/hooman = new(tile)
 		hooman.equipOutfit(pick(subtypesof(/datum/outfit)))
