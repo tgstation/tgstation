@@ -229,7 +229,7 @@
 
 /datum/quirk/monochromatic
 	name = "Monochromacy"
-	desc = "You suffer from full colorblindness, and perceive nearly the entire world in blacks and whites."
+	desc = "You suffer from full colorblindness, and perceive nearly the entire world in shades of gray."
 	icon = "adjust"
 	value = 0
 	medical_record_text = "Patient is afflicted with almost complete color blindness."
@@ -244,31 +244,6 @@
 
 /datum/quirk/monochromatic/remove()
 	quirk_holder.remove_client_colour(/datum/client_colour/monochrome)
-
-/datum/quirk/phobia
-	name = "Phobia"
-	desc = "You are irrationally afraid of something."
-	icon = "spider"
-	value = 0
-	medical_record_text = "Patient has an irrational fear of something."
-	var/phobia
-
-/datum/quirk/phobia/add()
-	phobia = phobia || quirk_holder.client?.prefs?.read_preference(/datum/preference/choiced/phobia)
-
-	if(phobia)
-		var/mob/living/carbon/human/human_holder = quirk_holder
-		human_holder.gain_trauma(new /datum/brain_trauma/mild/phobia(phobia), TRAUMA_RESILIENCE_ABSOLUTE)
-
-/datum/quirk/phobia/post_add()
-	if(!phobia)
-		var/mob/living/carbon/human/human_holder = quirk_holder
-		phobia = human_holder.client.prefs.read_preference(/datum/preference/choiced/phobia)
-		human_holder.gain_trauma(new /datum/brain_trauma/mild/phobia(phobia), TRAUMA_RESILIENCE_ABSOLUTE)
-
-/datum/quirk/phobia/remove()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	human_holder.cure_trauma_type(/datum/brain_trauma/mild/phobia, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/shifty_eyes
 	name = "Shifty Eyes"

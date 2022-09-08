@@ -51,8 +51,7 @@
 			human_owner.eye_color_right = eye_color_right
 		else
 			eye_color_right = human_owner.eye_color_right
-		if(HAS_TRAIT(human_owner, TRAIT_NIGHT_VISION) && !lighting_alpha)
-			lighting_alpha = LIGHTING_PLANE_ALPHA_NV_TRAIT
+
 	eye_owner.update_tint()
 	owner.update_sight()
 	if(eye_owner.has_dna() && ishuman(eye_owner))
@@ -71,8 +70,7 @@
 			affected_human.eye_color_right = eye_color_right
 		else
 			eye_color_right = affected_human.eye_color_right
-		if(HAS_TRAIT(affected_human, TRAIT_NIGHT_VISION) && !lighting_alpha)
-			lighting_alpha = LIGHTING_PLANE_ALPHA_NV_TRAIT
+
 	owner.update_tint()
 	owner.update_sight()
 	if(call_update && owner.has_dna() && ishuman(owner))

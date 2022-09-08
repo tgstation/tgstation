@@ -900,3 +900,28 @@
 	mob_trait = TRAIT_ILLITERATE
 	medical_record_text = "Patient is not literate."
 	hardcore_value = 8
+
+/datum/quirk/phobia
+	name = "Phobia"
+	desc = "You are irrationally afraid of something."
+	icon = "spider"
+	value = -2
+	medical_record_text = "Patient has an irrational fear of something."
+	var/phobia
+
+/datum/quirk/phobia/add()
+	phobia = phobia || quirk_holder.client?.prefs?.read_preference(/datum/preference/choiced/phobia)
+
+	if(phobia)
+		var/mob/living/carbon/human/human_holder = quirk_holder
+		human_holder.gain_trauma(new /datum/brain_trauma/mild/phobia(phobia), TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/quirk/phobia/post_add()
+	if(!phobia)
+		var/mob/living/carbon/human/human_holder = quirk_holder
+		phobia = human_holder.client.prefs.read_preference(/datum/preference/choiced/phobia)
+		human_holder.gain_trauma(new /datum/brain_trauma/mild/phobia(phobia), TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/quirk/phobia/remove()
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	human_holder.cure_trauma_type(/datum/brain_trauma/mild/phobia, TRAUMA_RESILIENCE_ABSOLUTE)

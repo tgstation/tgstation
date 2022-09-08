@@ -148,10 +148,10 @@
 
 /datum/quirk/night_vision
 	name = "Night Vision"
-	desc = "You can see slightly more clearly in full darkness than most people."
+	desc = "You can see a little more clearly in full darkness than most people."
 	icon = "eye"
 	value = 4
-	mob_trait = TRAIT_NIGHT_VISION
+	mob_trait = TRAIT_QUIRK_NIGHT_VISION
 	gain_text = "<span class='notice'>The shadows seem a little less dark.</span>"
 	lose_text = "<span class='danger'>Everything seems a little darker.</span>"
 	medical_record_text = "Patient's eyes show above-average acclimation to darkness."
@@ -167,7 +167,7 @@
 	var/obj/item/organ/internal/eyes/eyes = human_quirk_holder.getorgan(/obj/item/organ/internal/eyes)
 	if(!eyes || eyes.lighting_alpha)
 		return
-	// We've either added or removed TRAIT_NIGHT_VISION before calling this proc. Just refresh the eyes.
+	// We've either added or removed TRAIT_QUIRK_NIGHT_VISION before calling this proc. Just refresh the eyes.
 	eyes.refresh()
 
 /datum/quirk/selfaware
@@ -182,7 +182,7 @@
 	name = "Skittish"
 	desc = "You're easy to startle, and hide frequently. Run into a closed locker to jump into it, as long as you have access. You can walk to avoid this."
 	icon = "trash"
-	value = 8
+	value = 6
 	mob_trait = TRAIT_SKITTISH
 	medical_record_text = "Patient demonstrates a high aversion to danger and has described hiding in containers out of fear."
 
@@ -190,7 +190,7 @@
 	name = "Spiritual"
 	desc = "You hold a spiritual belief, whether in God, nature or the arcane rules of the universe. You gain comfort from the presence of holy people, and believe that your prayers are more special than others. Being in the chapel makes you happy."
 	icon = "bible"
-	value = 4
+	value = 2
 	mob_trait = TRAIT_SPIRITUAL
 	gain_text = "<span class='notice'>You have faith in a higher power.</span>"
 	lose_text = "<span class='danger'>You lose faith!</span>"
