@@ -98,7 +98,7 @@
 	 */
 /datum/quirk/item_quirk/brainproblems
 	name = "Brain Tumor"
-	desc = "You have a little friend in your brain that is slowly destroying it. Better bring some Mannitol!"
+	desc = "You have a little friend in your brain that is slowly destroying it. Better bring some mannitol!"
 	icon = "brain"
 	value = -12
 	gain_text = "<span class='danger'>You feel smooth.</span>"
@@ -417,7 +417,7 @@
 	icon = "user-secret"
 	value = -4
 	mob_trait = TRAIT_PROSOPAGNOSIA
-	medical_record_text = "Patient suffers from Prosopagnosia and cannot recognize faces."
+	medical_record_text = "Patient suffers from prosopagnosia and cannot recognize faces."
 	hardcore_value = 5
 
 
