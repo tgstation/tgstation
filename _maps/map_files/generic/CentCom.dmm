@@ -15708,6 +15708,12 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
+"TC" = (
+/obj/structure/sign/poster/contraband/syndicate_recruitment{
+	pixel_x = 4
+	},
+/turf/closed/wall/mineral/wood,
+/area/centcom/central_command_areas/holding)
 "TE" = (
 /obj/structure/chair/comfy/brown{
 	color = "#596479";
@@ -41451,7 +41457,7 @@ fO
 fO
 eZ
 YC
-fO
+TC
 fO
 fO
 fO
