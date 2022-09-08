@@ -202,6 +202,15 @@
 	triggered(null)
 
 
+/obj/item/assembly/mousetrap/Destroy()
+	if(host)
+		UnregisterSignal(host,COMSIG_MOVABLE_MOVED)
+		host = null
+	if(isturf(host_turf))
+		UnregisterSignal(host_turf,COMSIG_ATOM_ENTERED)
+		host_turf = null
+	return ..()
+
 /obj/item/assembly/mousetrap/armed
 	icon_state = "mousetraparmed"
 	armed = TRUE
