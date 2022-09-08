@@ -44,7 +44,7 @@
 	// We still want players to be able to vote to restart even if valid admins are online. Let's update the message just so that the player is aware of this fact.
 	// We don't want to lock-out the vote though, so we'll return TRUE.
 	if(admins_present())
-		message = "Regardless of the results of this vote, the round will not restart because an admin is online."
+		message = "Regardless of the results of this vote, the round will not automatically restart because an admin is online."
 		return TRUE
 
 	message = initial(message)
