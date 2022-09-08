@@ -311,11 +311,14 @@
 	},
 /turf/open/indestructible/necropolis/air,
 /area/station)
+"NN" = (
+/obj/effect/landmark/observer_start,
+/turf/open/indestructible/necropolis/air,
+/area/space)
 "Od" = (
-/obj/machinery/power/apc/ten_k/directional/south,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/engineering/gravity_generator)
+/obj/effect/landmark/blobstart,
+/turf/open/space/basic,
+/area/space)
 "Oz" = (
 /obj/structure/closet/syndicate,
 /obj/item/clothing/suit/hooded/bee_costume,
@@ -352579,7 +352582,7 @@ xA
 xA
 xA
 Dw
-xA
+NN
 xA
 Dw
 xA
@@ -392300,7 +392303,7 @@ yP
 yP
 yP
 yP
-yP
+Od
 yP
 yP
 yP
@@ -420812,7 +420815,7 @@ AV
 AV
 AV
 VP
-Od
+VP
 GE
 Dw
 xA
