@@ -11,7 +11,7 @@
 	var/obj/item/host = null
 	var/turf/host_turf = null
 
-/obj/item/assembly/mousetrap/proc/update_host(var/force = FALSE)
+/obj/item/assembly/mousetrap/proc/update_host(force = FALSE)
 	var/obj/item/newhost
 	if(connected)
 		newhost = connected.holder // this won't actually do anything unless someone makes opening a wiring panel call on_found (which would be boss)
