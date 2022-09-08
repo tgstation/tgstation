@@ -70,7 +70,7 @@
 		var/mob/living/mob_victim = victim
 
 		if(iscarbon(mob_victim))
-			context[SCREENTIP_CONTEXT_LMB] = "Extract Organ"
+			context[SCREENTIP_CONTEXT_LMB] = "Extract organ"
 			. = CONTEXTUAL_SCREENTIP_SET
 
 		if(IS_HERETIC_MONSTER(mob_victim))
@@ -80,7 +80,7 @@
 	else if(isorgan(victim))
 		// RMB or LMB both work but we'll just show RMB
 		// to be consistent about "RMB = heal"
-		context[SCREENTIP_CONTEXT_RMB] = "Heal Organ"
+		context[SCREENTIP_CONTEXT_RMB] = "Heal organ"
 		. = CONTEXTUAL_SCREENTIP_SET
 
 	return .
