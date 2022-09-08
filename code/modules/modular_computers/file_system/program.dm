@@ -149,14 +149,27 @@
 
 // This attempts to retrieve header data for UIs. If implementing completely new device of different type than existing ones
 // always include the device here in this proc. This proc basically relays the request to whatever is running the program.
+/**
+ * This attempts to retrieve header data for UIs.
+ *
+ * If implementing completely new device of different type than existing ones
+ * always include the device here in this proc. This proc basically relays the request to whatever is running the program.
+ **/
 /datum/computer_file/program/proc/get_header_data()
 	if(computer)
 		return computer.get_header_data()
 	return list()
 
-// This is performed on program startup. May be overridden to add extra logic. Remember to include ..() call. Return 1 on success, 0 on failure.
-// When implementing new program based device, use this to run the program.
+/**
+ * Called on program startup.
+ *
+ * May be overridden to add extra logic. Remember to include ..() call. Return 1 on success, 0 on failure.
+ * When implementing new program based device, use this to run the program.
+ * Arguments:
+ * * user - The mob that started the program
+ **/
 /datum/computer_file/program/proc/on_start(mob/living/user)
+	SHOULD_CALL_PARENT(TRUE)
 	if(can_run(user, 1))
 		if(requires_ntnet)
 			var/obj/item/card/id/ID
@@ -182,8 +195,15 @@
 /datum/computer_file/program/proc/run_emag()
 	return FALSE
 
-// Use this proc to kill the program. Designed to be implemented by each program if it requires on-quit logic, such as the NTNRC client.
+/**
+ * Kills the running program
+ *
+ * Use this proc to kill the program. Designed to be implemented by each program if it requires on-quit logic, such as the NTNRC client.
+ * Arguments:
+ * * forced - Boolean to determine if this was a forced close. Should be TRUE if the user did not willingly close the program.
+ **/
 /datum/computer_file/program/proc/kill_program(forced = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
 	program_state = PROGRAM_STATE_KILLED
 	if(requires_ntnet)
 		var/obj/item/card/id/ID
