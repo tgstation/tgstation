@@ -16,6 +16,7 @@
 	can_atmos_pass = ATMOS_PASS_DENSITY
 	density = TRUE
 	anchored = TRUE
+	use_power = NO_POWER_USE
 
 	///How well the engine affects the ship's speed.
 	var/engine_power = 1
