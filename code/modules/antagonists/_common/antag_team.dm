@@ -93,8 +93,8 @@ GLOBAL_LIST_EMPTY(antagonist_teams)
 	var/list/parts = list()
 	parts += "<b>[antag_listing_name()]</b><br>"
 	parts += "<table cellspacing=5>"
-	for(var/datum/antagonist/A in get_team_antags())
-		parts += A.antag_listing_entry()
+	for(var/datum/antagonist/antag_entry as anything in get_team_antags())
+		parts += antag_entry.antag_listing_entry()
 	parts += "</table>"
 	return parts.Join()
 

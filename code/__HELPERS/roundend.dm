@@ -589,8 +589,8 @@
 	var/list/all_teams = list()
 	var/list/all_antagonists = list()
 
-	for(var/datum/team/teams as anything in GLOB.antagonist_teams)
-		all_teams |= teams
+	for(var/datum/team/team as anything in GLOB.antagonist_teams)
+		all_teams |= team
 
 	for(var/datum/antagonist/antagonists as anything in GLOB.antagonists)
 		if(!antagonists.owner)
