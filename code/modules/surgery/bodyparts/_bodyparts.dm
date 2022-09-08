@@ -12,6 +12,8 @@
 	VAR_PROTECTED/icon_static = 'icons/mob/species/human/bodyparts.dmi'
 	///The icon for husked limbs
 	VAR_PROTECTED/icon_husk = 'icons/mob/species/human/bodyparts.dmi'
+	///The icon for invisible limbs
+	VAR_PROTECTED/icon_invisible = 'icons/mob/species/human/bodyparts.dmi'
 	///The type of husk for building an iconstate
 	var/husk_type = "humanoid"
 	layer = BELOW_MOB_LAYER //so it isn't hidden behind objects when on the floor
@@ -760,7 +762,7 @@
 	//END HUSK SHIIIIT
 	//invisibility
 	if(is_invisible)
-		limb.icon = icon_static
+		limb.icon = icon_invisible
 		limb.icon_state = "invisible_[body_zone]"
 		. += limb
 		return .
