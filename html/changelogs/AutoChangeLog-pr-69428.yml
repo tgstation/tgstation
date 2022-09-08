@@ -1,0 +1,4 @@
+author: "Vishenka0704"
+delete-after: True
+changes: 
+  - rscadd: "Added \"ProcCall\" & \"Tweak Components Rating\" modes in buildmode"
