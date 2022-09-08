@@ -23,7 +23,6 @@
 	. += create_table_notices(list(
 		"reagent",
 		"volume",
-		"purity",
 		))
 
 /obj/item/circuit_component/reagentscanner/populate_ports()
@@ -41,6 +40,5 @@
 		var/list/entry = list()
 		entry["reagent"] = reagent.name
 		entry["volume"] = reagent.volume
-		entry["purity"] = reagent.purity
 		new_table += list(entry)
 	result.set_output(new_table)
