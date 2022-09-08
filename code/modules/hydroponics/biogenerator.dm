@@ -150,7 +150,7 @@
 
 /obj/machinery/biogenerator/AltClick(mob/living/user)
 	. = ..()
-	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) && can_interact(user))
+	if(user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE) && can_interact(user))
 		eject_beaker(user)
 
 /**

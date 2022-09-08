@@ -119,7 +119,7 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(!can_interact(user) || !user.canUseTopic(src, !issilicon(user), FALSE, NO_TK))
+	if(!can_interact(user) || !user.canUseTopic(src, !issilicon(user), FALSE, no_tk = TRUE))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(brewing)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

@@ -96,7 +96,7 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(!ishuman(user) || !user.canUseTopic(src, BE_CLOSE))
+	if(!ishuman(user) || !user.canUseTopic(src, be_close = TRUE))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(has_buckled_mobs())
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

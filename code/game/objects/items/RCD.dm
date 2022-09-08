@@ -370,7 +370,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	set category = "Object"
 	set src in view(1)
 
-	if(!usr.canUseTopic(src, BE_CLOSE))
+	if(!usr.canUseTopic(src, be_close = TRUE))
 		return
 
 	toggle_window_glass(usr)
@@ -380,7 +380,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	set category = "Object"
 	set src in view(1)
 
-	if(!usr.canUseTopic(src, BE_CLOSE))
+	if(!usr.canUseTopic(src, be_close = TRUE))
 		return
 
 	toggle_window_size(usr)

@@ -443,7 +443,7 @@
 /obj/item/healthanalyzer/AltClick(mob/user)
 	..()
 
-	if(!user.canUseTopic(src, BE_CLOSE) || !user.can_read(src) || user.is_blind())
+	if(!user.canUseTopic(src, be_close = TRUE) || !user.can_read(src) || user.is_blind())
 		return
 
 	mode = !mode

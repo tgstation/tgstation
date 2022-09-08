@@ -133,7 +133,7 @@
 	toggle_helmet_light(user)
 
 /obj/item/clothing/head/hardhat/weldhat/AltClick(mob/user)
-	if(user.canUseTopic(src, BE_CLOSE))
+	if(user.canUseTopic(src, be_close = TRUE))
 		toggle_welding_screen(user)
 
 /obj/item/clothing/head/hardhat/weldhat/ui_action_click(mob/user, actiontype)

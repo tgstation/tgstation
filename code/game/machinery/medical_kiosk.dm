@@ -127,7 +127,7 @@
 	return ..()
 
 /obj/machinery/medical_kiosk/AltClick(mob/living/carbon/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+	if(!istype(user) || !user.canUseTopic(src, be_close = TRUE))
 		return
 	if(!scanner_wand)
 		to_chat(user, span_warning("The scanner wand is currently removed from the machine."))

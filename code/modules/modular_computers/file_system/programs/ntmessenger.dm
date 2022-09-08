@@ -218,7 +218,7 @@
 
 	if (!t || !sending_and_receiving)
 		return
-	if(!U.canUseTopic(computer, BE_CLOSE))
+	if(!U.canUseTopic(computer, be_close = TRUE))
 		return
 	return sanitize(t)
 
@@ -373,7 +373,7 @@
 	if(computer.active_program != src)
 		if(!computer.open_program(usr, src))
 			return
-	if(!href_list["close"] && usr.canUseTopic(computer, BE_CLOSE, FALSE, NO_TK))
+	if(!href_list["close"] && usr.canUseTopic(computer, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		switch(href_list["choice"])
 			if("Message")
 				send_message(usr, list(locate(href_list["target"])))

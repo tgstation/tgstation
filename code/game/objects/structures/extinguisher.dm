@@ -110,7 +110,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 	return attack_hand(user, modifiers)
 
 /obj/structure/extinguisher_cabinet/AltClick(mob/living/user)
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
+	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, FALSE, TRUE))
 		return
 	toggle_cabinet(user)
 
