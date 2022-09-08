@@ -121,26 +121,12 @@
 	circuit = /obj/item/circuitboard/machine/engine/heater
 	engine_power = 0 // todo make these into 2x1 parts
 
-/obj/machinery/power/shuttle_engine/platform
-	name = "engine platform"
-	icon_state = "platform"
-	desc = "A platform for engine components."
-	circuit = /obj/item/circuitboard/machine/engine/platform
-	engine_power = 0
-
 /obj/machinery/power/shuttle_engine/propulsion
 	name = "propulsion engine"
 	icon_state = "propulsion"
 	desc = "A standard reliable bluespace engine used by many forms of shuttles."
 	circuit = /obj/item/circuitboard/machine/engine/propulsion
 	opacity = TRUE
-
-/obj/machinery/power/shuttle_engine/propulsion/in_wall
-	name = "in-wall propulsion engine"
-	icon_state = "propulsion_w"
-	density = FALSE
-	opacity = FALSE
-	smoothing_groups = list()
 
 /obj/machinery/power/shuttle_engine/propulsion/left
 	name = "left propulsion engine"
@@ -166,11 +152,12 @@
 	name = "right burst engine"
 	icon_state = "burst_r"
 
-/obj/machinery/power/shuttle_engine/router
-	name = "engine router"
-	icon_state = "router"
-	desc = "Redirects around energized particles in engine structures."
-	circuit = /obj/item/circuitboard/machine/engine/router
+/obj/machinery/power/shuttle_engine/propulsion/in_wall
+	name = "in-wall propulsion engine"
+	icon_state = "propulsion_w"
+	density = FALSE
+	opacity = FALSE
+	smoothing_groups = list()
 
 /obj/machinery/power/shuttle_engine/large
 	name = "engine"

@@ -12,14 +12,6 @@
 	name = "Shuttle Engine Heater"
 	build_path = /obj/machinery/power/shuttle_engine/heater
 
-/obj/item/circuitboard/machine/engine/platform
-	name = "Shuttle Engine Platform"
-	build_path = /obj/machinery/power/shuttle_engine/platform
-
 /obj/item/circuitboard/machine/engine/propulsion
 	name = "Shuttle Engine Propulsion"
 	build_path = /obj/machinery/power/shuttle_engine/propulsion
-
-/obj/item/circuitboard/machine/engine/router
-	name = "Shuttle Engine Router"
-	build_path = /obj/machinery/power/shuttle_engine/router

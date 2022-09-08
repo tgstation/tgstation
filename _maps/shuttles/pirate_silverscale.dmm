@@ -115,7 +115,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "eK" = (
-/obj/machinery/power/shuttle_engine/router,
+/obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "eU" = (
