@@ -766,10 +766,10 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	set desc = "(\"Amount of mobs to create\") Populate the world with test mobs."
 
 	for (var/i = 1 to amount)
-		var/tile = get_safe_random_station_turf()
+		var/turf/tile = get_safe_random_station_turf()
 		var/mob/living/carbon/human/hooman = new(tile)
 		hooman.equipOutfit(pick(subtypesof(/datum/outfit)))
-		testing("Spawned test mob at [COORD(tile)]")
+		testing("Spawned test mob at [get_area_name(tile, TRUE)] ([tile.x],[tile.y],[tile.z])")
 
 /client/proc/toggle_AI_interact()
 	set name = "Toggle Admin AI Interact"
