@@ -105,7 +105,7 @@
 	var/datum/station_alert/alert_control
 	///remember AI's last location
 	var/atom/lastloc
-	interaction_range = null
+	interaction_range = INFINITY
 
 	var/atom/movable/screen/ai/modpc/interfaceButton
 	///whether its mmi is a posibrain or regular mmi when going ai mob to ai core structure

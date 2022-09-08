@@ -963,8 +963,6 @@
 		return TRUE
 
 	//range check
-	if(interaction_range == null) //null = "you have no set range" aka "unlimited range", used for the AI and AI cards when they are allowed to interact
-		return TRUE
 	if(!interaction_range) // If you don't have extra length, GO AWAY
 		return FALSE
 	var/turf/our_turf = get_turf(src)
