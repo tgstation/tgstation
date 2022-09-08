@@ -16,7 +16,7 @@ SUBSYSTEM_DEF(lag_switch)
 	/// Cooldown between say verb uses when slowmode is enabled
 	var/slowmode_cooldown = 3 SECONDS
 
-/datum/controller/subsystem/lag_switch/Initialize(start_timeofday)
+/datum/controller/subsystem/lag_switch/Initialize()
 	for(var/i in 1 to measures.len)
 		measures[i] = FALSE
 	var/auto_switch_pop = CONFIG_GET(number/auto_lag_switch_pop)

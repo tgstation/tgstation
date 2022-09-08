@@ -130,7 +130,7 @@ SUBSYSTEM_DEF(persistent_paintings)
 		"supermatter" = PATRONAGE_LEGENDARY_FRAME
 			)
 
-/datum/controller/subsystem/persistent_paintings/Initialize(start_timeofday)
+/datum/controller/subsystem/persistent_paintings/Initialize()
 	var/json_file = file("data/paintings.json")
 	if(fexists(json_file))
 		var/list/raw_data = update_format(json_decode(file2text(json_file)))

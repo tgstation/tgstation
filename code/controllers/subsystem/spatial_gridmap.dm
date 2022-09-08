@@ -102,7 +102,7 @@ SUBSYSTEM_DEF(spatial_grid)
 	///how many pregenerated /mob/oranges_ear instances currently exist. this should hopefully never exceed its starting value
 	var/number_of_oranges_ears = NUMBER_OF_PREGENERATED_ORANGES_EARS
 
-/datum/controller/subsystem/spatial_grid/Initialize(start_timeofday)
+/datum/controller/subsystem/spatial_grid/Initialize()
 	. = ..()
 
 	cells_on_x_axis = SPATIAL_GRID_CELLS_PER_SIDE(world.maxx)

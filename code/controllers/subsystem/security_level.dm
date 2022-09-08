@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(security_level)
 	/// A list of initialised security level datums.
 	var/list/available_levels = list()
 
-/datum/controller/subsystem/security_level/Initialize(start_timeofday)
+/datum/controller/subsystem/security_level/Initialize()
 	. = ..()
 	for(var/iterating_security_level_type in subtypesof(/datum/security_level))
 		var/datum/security_level/new_security_level = new iterating_security_level_type

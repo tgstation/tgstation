@@ -254,17 +254,28 @@
 /// Called after the config has been loaded or reloaded.
 /datum/controller/subsystem/proc/OnConfigLoad()
 
-//used to initialize the subsystem AFTER the map has loaded
-/datum/controller/subsystem/Initialize()
+/**
+ * Used to initialize the subsystem.
+ * failed - Optional: If true, tell everyone that the subsystem failed to init and cancel firing.
+ */
+/datum/controller/subsystem/Initialize(failed = FALSE)
 	initialized = TRUE
-	SEND_SIGNAL(src, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+
+	if(!failed)
+		SEND_SIGNAL(src, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+	else
+		can_fire = FALSE
 
 	var/time = rustg_time_milliseconds(SS_INIT_TIMER_KEY)
 	var/seconds = round(time / 1000, 0.01)
 
-	var/msg = "Initialized [name] subsystem within [seconds] second[seconds == 1 ? "" : "s"]!"
-	to_chat(world, span_boldannounce("[msg]"))
-	log_world(msg)
+	var/message_prefix = !failed ? "Initialized [name] subsystem within" : "Failed to initialize [name] subsystem after"
+	var/message = "[message_prefix] [seconds] second[seconds == 1 ? "" : "s"]!"
+	var/chat_message = !failed ? span_boldannounce(message) : span_boldwarning(message)
+
+	to_chat(world, chat_message)
+	log_world(message)
+
 	SSblackbox.record_feedback("tally", "subsystem_initialize", time, name)
 	return seconds
 

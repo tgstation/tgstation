@@ -19,7 +19,7 @@ SUBSYSTEM_DEF(wiremod_composite)
 			continue
 		templates[initial(type.datatype)] = new type()
 
-/datum/controller/subsystem/wiremod_composite/Initialize(start_timeofday)
+/datum/controller/subsystem/wiremod_composite/Initialize()
 	. = ..()
 	for(var/type in templates)
 		var/datum/circuit_composite_template/template = templates[type]

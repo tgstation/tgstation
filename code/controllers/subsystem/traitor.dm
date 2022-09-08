@@ -40,7 +40,7 @@ SUBSYSTEM_DEF(traitor)
 	/// A list of all existing objectives by type
 	var/list/all_objectives_by_type = list()
 
-/datum/controller/subsystem/traitor/Initialize(start_timeofday)
+/datum/controller/subsystem/traitor/Initialize()
 	. = ..()
 	category_handler = new()
 	traitor_debug_panel = new(category_handler)

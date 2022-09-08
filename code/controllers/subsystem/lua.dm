@@ -23,7 +23,6 @@ SUBSYSTEM_DEF(lua)
 
 /datum/controller/subsystem/lua/Initialize(start_timeofday)
 	try
-
 		// Initialize the auxtools library
 		AUXTOOLS_CHECK(AUXLUA)
 
@@ -35,13 +34,10 @@ SUBSYSTEM_DEF(lua)
 		return ..()
 	catch(var/exception/e)
 		// Something went wrong, best not allow the subsystem to run
-		initialized = SSLUA_INIT_FAILED
-		can_fire = FALSE
-		var/time = (REALTIMEOFDAY - start_timeofday) / 10
-		var/msg = "Failed to initialize [name] subsystem after [time] seconds!"
-		to_chat(world, span_boldwarning("[msg]"))
+		. = ..(failed = TRUE)
+
 		warning(e.name)
-		return time
+		initialized = SSLUA_INIT_FAILED
 
 /datum/controller/subsystem/lua/OnConfigLoad()
 	// Read the paths from the config file

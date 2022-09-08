@@ -51,7 +51,7 @@ SUBSYSTEM_DEF(fluids)
 	/// Whether the subsystem has resumed processing fluid effects.
 	var/resumed_effect_processing
 
-/datum/controller/subsystem/fluids/Initialize(start_timeofday)
+/datum/controller/subsystem/fluids/Initialize()
 	initialize_waits()
 	initialize_spread_carousel()
 	initialize_effect_carousel()

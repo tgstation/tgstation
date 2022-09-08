@@ -6,7 +6,7 @@ SUBSYSTEM_DEF(sun)
 	var/azimuth_mod = 1 ///multiplier against base_rotation
 	var/base_rotation = 6 ///base rotation in degrees per fire
 
-/datum/controller/subsystem/sun/Initialize(start_timeofday)
+/datum/controller/subsystem/sun/Initialize()
 	azimuth = rand(0, 359)
 	azimuth_mod = round(rand(50, 200)/100, 0.01) // 50% - 200% of standard rotation
 	if(prob(50))

@@ -38,7 +38,7 @@ SUBSYSTEM_DEF(wardrobe)
 	/// How many items would we make just by loading the master list once?
 	var/one_go_master = 0
 
-/datum/controller/subsystem/wardrobe/Initialize(start_timeofday)
+/datum/controller/subsystem/wardrobe/Initialize()
 	. = ..()
 	setup_callbacks()
 	load_outfits()
