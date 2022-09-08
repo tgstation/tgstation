@@ -137,11 +137,6 @@
 /obj/machinery/light/no_nightlight/directional/west,
 /turf/open/indestructible/necropolis/air,
 /area/station)
-"vH" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor,
-/area/space)
 "xe" = (
 /obj/structure/closet/syndicate,
 /obj/item/clothing/suit/hooded/cultrobes,
@@ -415795,7 +415790,7 @@ yP
 yP
 yP
 yP
-vH
+OC
 yP
 Dw
 xA
