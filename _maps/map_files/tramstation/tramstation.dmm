@@ -36451,8 +36451,14 @@
 /area/station/ai_monitored/security/armory)
 "mzJ" = (
 /obj/structure/table,
-/obj/item/ai_module/reset,
+/obj/item/ai_module/reset{
+	pixel_x = 2
+	},
 /obj/machinery/airalarm/directional/north,
+/obj/item/ai_module/supplied/freeform{
+	pixel_y = 7;
+	pixel_x = -2
+	},
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "mzQ" = (
