@@ -336,3 +336,34 @@
   tralezab:
   - rscdel: Vampires, Dullahans, and Nightmares can no longer be found in certain
       magic mirrors.
+2022-09-08:
+  JohnFulpWillard:
+  - balance: Xenomorph abilities require being mobile to use.
+  - balance: Neurotoxin spit can no longer be used if you're muzzled.
+  Pepsilawn:
+  - bugfix: The mining station now requires Mining access for proper access instead
+      of Mining EVA, minus the one airlock leading to Mining EVA
+  Pickle-Coding:
+  - bugfix: Water vapour electrolysis and hypernoblium electrolysis now respects heat
+      capacity changes.
+  ShizCalev:
+  - bugfix: Fixed a runtime preventing nonhuman cadavers from spawning properly.
+  - config: Cadaver spawners will no longer yell at you when morgue_cadaver_other_species_probability
+      is blank.
+  - config: morgue_cadaver_disable_nonhumans will now properly disable nonhuman races!
+      (It was reversed, woops.)
+  - bugfix: Fixed a runtime when all alive players are converted to cultists that
+      prevented them from getting their cool halo/eye effects.
+  YakumoChen:
+  - bugfix: 'Icebox: Moved a vent hidden under a disposal bin slightly to make it
+      visible'
+  itseasytosee:
+  - spellcheck: Fixed a typo in monkey trip toggling.
+  scriptis:
+  - qol: techfabs, protolathes, circuit imprinters, and exosuit fabricators now automatically
+      r&d sync
+  - qol: the full window refresh time is now one second instead of five seconds
+  - bugfix: refreshing windows ("please wait...") no longer hang for up to twice as
+      long as they should
+  tralezab:
+  - rscadd: Mimes can now hold a baguette like a sword by right clicking it
