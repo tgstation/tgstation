@@ -778,7 +778,7 @@
 	cost = CARGO_CRATE_VALUE * 6
 	access = ACCESS_CE
 	access_view = ACCESS_CE
-	contains = list(/obj/structure/shuttle/engine/propulsion/burst/cargo)
+	contains = list(/obj/machinery/power/shuttle_engine/propulsion/burst/cargo)
 	crate_name = "shuttle engine crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
 	special = TRUE

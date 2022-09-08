@@ -383,7 +383,7 @@
 	///List of all areas our shuttle holds.
 	var/list/shuttle_areas = list()
 	///List of all currently used engines that propels us.
-	var/list/obj/structure/shuttle/engine/engine_list = list()
+	var/list/obj/machinery/power/shuttle_engine/engine_list = list()
 
 	///used as a timer (if you want time left to complete move, use timeLeft proc)
 	var/timer
@@ -945,7 +945,7 @@
 				source = distant_source
 			else
 				var/closest_dist = 10000
-				for(var/obj/structure/shuttle/engine/engines as anything in engine_list)
+				for(var/obj/machinery/power/shuttle_engine/engines as anything in engine_list)
 					var/dist_near = get_dist(zlevel_mobs, engines)
 					if(dist_near < closest_dist)
 						source = engines

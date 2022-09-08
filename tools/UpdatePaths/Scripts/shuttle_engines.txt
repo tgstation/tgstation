@@ -1,0 +1,2 @@
+/obj/structure/shuttle/engine : /obj/machinery/power/shuttle_engine{@old}
+/obj/structure/shuttle : @DELETE
