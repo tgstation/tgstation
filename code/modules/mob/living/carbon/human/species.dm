@@ -1086,11 +1086,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				span_danger("You start stealing [target]'s [item_to_strip.name]..."))
 			to_chat(target, span_userdanger("[user] starts stealing your [item_to_strip.name]!"))
 			if (do_after(user, item_to_strip.strip_delay, target))
-				target.dropItemToGround(item_to_strip, TRUE)
-				user.put_in_hands(item_to_strip)
-				user.visible_message(span_warning("[user] stole [target]'s [item_to_strip.name]!"), \
-					span_notice("You stole [target]'s [item_to_strip.name]!"))
-				to_chat(target, span_userdanger("[user] stole your [item_to_strip.name]!"))
+				if(target.dropItemToGround(item_to_strip))
+					user.put_in_hands(item_to_strip)
+					user.visible_message(span_warning("[user] stole [target]'s [item_to_strip.name]!"), \
+						span_notice("You stole [target]'s [item_to_strip.name]!"))
+					to_chat(target, span_userdanger("[user] stole your [item_to_strip.name]!"))
 		target.grabbedby(user)
 		return TRUE
 
