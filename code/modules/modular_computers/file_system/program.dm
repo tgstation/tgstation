@@ -147,8 +147,6 @@
 		to_chat(user, span_danger("\The [computer] flashes an \"Access Denied\" warning."))
 	return FALSE
 
-// This attempts to retrieve header data for UIs. If implementing completely new device of different type than existing ones
-// always include the device here in this proc. This proc basically relays the request to whatever is running the program.
 /**
  * This attempts to retrieve header data for UIs.
  *
