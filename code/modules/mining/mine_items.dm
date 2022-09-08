@@ -124,7 +124,7 @@
 
 /obj/docking_port/stationary/mining_home
 	name = "SS13: Mining Dock"
-	id = "mining_home"
+	shuttle_id = "mining_home"
 	roundstart_template = /datum/map_template/shuttle/mining/delta
 	width = 7
 	dwidth = 3
@@ -136,7 +136,7 @@
 
 /obj/docking_port/stationary/mining_home/common
 	name = "SS13: Common Mining Dock"
-	id = "commonmining_home"
+	shuttle_id = "commonmining_home"
 	roundstart_template = /datum/map_template/shuttle/mining_common/meta
 
 /obj/docking_port/stationary/mining_home/common/kilo

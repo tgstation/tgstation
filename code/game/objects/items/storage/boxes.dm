@@ -147,7 +147,7 @@
 
 // Mining survival box
 /obj/item/storage/box/survival/mining
-	mask_type = /obj/item/clothing/mask/gas/explorer
+	mask_type = /obj/item/clothing/mask/gas/explorer/folded
 
 /obj/item/storage/box/survival/mining/PopulateContents()
 	..()

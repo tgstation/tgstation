@@ -1,0 +1,6 @@
+author: "dopamiin and tattle"
+delete-after: True
+changes: 
+  - rscadd: "Distant meowing can be heard from the restricted section of station AutoDrobes."
+  - soundadd: "A small cat meow designed to be played about three times in one second, deafening innocent crew."
+  - imageadd: "Cute cat slipper sprites."

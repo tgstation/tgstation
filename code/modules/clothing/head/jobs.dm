@@ -177,6 +177,10 @@
 	strip_delay = 60
 	dog_fashion = /datum/dog_fashion/head/warden
 
+/obj/item/clothing/head/warden/police
+	name = "police officer's hat"
+	desc = "A police officer's hat. This hat emphasizes that you are THE LAW."
+
 /obj/item/clothing/head/warden/red
 	name = "warden's hat"
 	desc = "A warden's red hat. Looking at it gives you the feeling of wanting to keep people in cells for as long as possible."
