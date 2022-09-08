@@ -270,7 +270,8 @@
 /obj/structure/trap/flashbang/trap_effect(mob/living/L)
 	to_chat(L, span_danger("<B>Çarpılıyorsun ve gözlerin acıyor.</B>"))
 	L.electrocute_act(5, src, flags = SHOCK_NOGLOVES)
-	explosion(src, light_impact_range = 5, flash_range = 7, adminlog = FALSE)
+	L.Paralyze(30)
+	explosion(src, flash_range = 7, adminlog = FALSE)
 	playsound(get_turf(L), 'sound/voice/human/hihiha.ogg', 100,)
 
 /obj/structure/trap/wall
@@ -308,3 +309,14 @@
 	QDEL_IN(src, 30)
 	playsound(get_turf(L), SFX_DESECRATION, 70, ignore_walls = TRUE)
 
+/obj/structure/trap/blindeye
+	name = "blind trap"
+	desc = "Yerde ne olduğunu anlamlandıramadığın bir şey var. Çok yaklaşmaman iyi olur."
+
+/obj/structure/trap/blind/trap_effect(mob/living/L)
+
+	to_chat(L, span_danger("<B>Gözlerin acıyor!</B>"))
+	L.Paralyze(10)
+	L.become_blind(15)
+	playsound(get_turf(L), SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
+	addtimer(CALLBACK(L, /mob/living/proc/cure_blind,), 30 SECONDS)
