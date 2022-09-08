@@ -20,9 +20,9 @@
 		/obj/item/pen = 15) //don't worry, pouring some alcohol on their open brain will get that chance to 100
 	repeatable = TRUE
 	time = 100 //long and complicated
-	preop_sound = 'sound/surgery/hemostat1.ogg'
-	success_sound = 'sound/surgery/hemostat1.ogg'
-	failure_sound = 'sound/surgery/organ2.ogg'
+	preop_sound = SURGERY_SOUND_HEMOSTAT
+	success_sound = SURGERY_SOUND_HEMOSTAT
+	failure_sound = SURGERY_SOUND_ORGAN_TWO
 
 /datum/surgery/brain_surgery/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/internal/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)

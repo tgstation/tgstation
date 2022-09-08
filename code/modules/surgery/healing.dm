@@ -40,8 +40,8 @@
 		/obj/item/pen = 55)
 	repeatable = TRUE
 	time = 25
-	success_sound = 'sound/surgery/retractor2.ogg'
-	failure_sound = 'sound/surgery/organ2.ogg'
+	success_sound = SURGERY_SOUND_RETRACTOR_TWO
+	failure_sound = SURGERY_SOUND_ORGAN_TWO
 	var/brutehealing = 0
 	var/burnhealing = 0
 	var/brute_multiplier = 0 //multiplies the damage that the patient has. if 0 the patient wont get any additional healing from the damage he has.

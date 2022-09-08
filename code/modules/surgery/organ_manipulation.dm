@@ -74,8 +74,8 @@
 	implements = list(
 		/obj/item/organ = 100,
 		/obj/item/borg/apparatus/organ_storage = 100)
-	preop_sound = 'sound/surgery/organ2.ogg'
-	success_sound = 'sound/surgery/organ1.ogg'
+	preop_sound = SURGERY_SOUND_ORGAN_TWO
+	success_sound = SURGERY_SOUND_ORGAN_ONE
 
 	var/implements_extract = list(TOOL_HEMOSTAT = 100, TOOL_CROWBAR = 55, /obj/item/kitchen/fork = 35)
 	var/current_type
@@ -102,8 +102,8 @@
 		tool = target_organ
 	if(isorgan(tool))
 		current_type = "insert"
-		preop_sound = 'sound/surgery/hemostat1.ogg'
-		success_sound = 'sound/surgery/organ2.ogg'
+		preop_sound = SURGERY_SOUND_HEMOSTAT
+		success_sound = SURGERY_SOUND_ORGAN_TWO
 		target_organ = tool
 		if(target_zone != target_organ.zone || target.getorganslot(target_organ.slot))
 			to_chat(user, span_warning("There is no room for [target_organ] in [target]'s [parse_zone(target_zone)]!"))

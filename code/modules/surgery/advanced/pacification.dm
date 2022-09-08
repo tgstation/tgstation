@@ -26,9 +26,9 @@
 		TOOL_SCREWDRIVER = 35,
 		/obj/item/pen = 15)
 	time = 40
-	preop_sound = 'sound/surgery/hemostat1.ogg'
-	success_sound = 'sound/surgery/hemostat1.ogg'
-	failure_sound = 'sound/surgery/organ2.ogg'
+	preop_sound = SURGERY_SOUND_HEMOSTAT
+	success_sound = SURGERY_SOUND_HEMOSTAT
+	failure_sound = SURGERY_SOUND_ORGAN_TWO
 
 /datum/surgery_step/pacify/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, span_notice("You begin to pacify [target]..."),

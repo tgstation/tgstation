@@ -16,3 +16,15 @@
 
 /// When the surgery step fails :(
 #define SURGERY_STEP_FAIL -1
+
+// Surgery Sounds
+#define SURGERY_SOUND_CAUTERY_ONE 'sound/surgery/cautery1.ogg'
+#define SURGERY_SOUND_CAUTERY_TWO 'sound/surgery/cautery2.ogg'
+#define SURGERY_SOUND_HEMOSTAT 'sound/surgery/hemostat1.ogg'
+#define SURGERY_SOUND_ORGAN_ONE 'sound/surgery/organ1.ogg'
+#define SURGERY_SOUND_ORGAN_TWO 'sound/surgery/organ2.ogg'
+#define SURGERY_SOUND_RETRACTOR_ONE 'sound/surgery/retractor1.ogg'
+#define SURGERY_SOUND_RETRACTOR_TWO 'sound/surgery/retractor2.ogg'
+#define SURGERY_SOUND_SAW 'sound/surgery/saw.ogg'
+#define SURGERY_SOUND_SCALPEL_ONE 'sound/surgery/scalpel1.ogg'
+#define SURGERY_SOUND_SCALPEL_TWO 'sound/surgery/scalpel2.ogg'

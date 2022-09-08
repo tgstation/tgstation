@@ -41,7 +41,7 @@
 		item_generation_wait = 3 MINUTES, \
 		item_reduction_time = 30 SECONDS, \
 		item_harvest_time = 5 SECONDS, \
-		item_harvest_sound = 'sound/surgery/scalpel1.ogg', \
+		item_harvest_sound = SURGERY_SOUND_SCALPEL_ONE, \
 	)
 	RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, .proc/on_sacrificed)
 

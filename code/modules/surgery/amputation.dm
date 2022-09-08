@@ -24,8 +24,8 @@
 		/obj/item/hatchet = 40,
 		/obj/item/knife/butcher = 25)
 	time = 64
-	preop_sound = 'sound/surgery/scalpel1.ogg'
-	success_sound = 'sound/surgery/organ2.ogg'
+	preop_sound = SURGERY_SOUND_SCALPEL_ONE
+	success_sound = SURGERY_SOUND_ORGAN_TWO
 
 /datum/surgery_step/sever_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, span_notice("You begin to sever [target]'s [parse_zone(target_zone)]..."),

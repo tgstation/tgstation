@@ -32,9 +32,9 @@
 		TOOL_WIRECUTTER = 40)
 	time = 30
 	repeatable = TRUE
-	preop_sound = 'sound/surgery/scalpel1.ogg'
-	success_sound = 'sound/surgery/retractor2.ogg'
-	failure_sound = 'sound/surgery/organ1.ogg'
+	preop_sound = SURGERY_SOUND_SCALPEL_ONE
+	success_sound = SURGERY_SOUND_RETRACTOR_TWO
+	failure_sound = SURGERY_SOUND_ORGAN_ONE
 	/// How much sanitization is added per step
 	var/sanitization_added = 0.5
 	/// How much infestation is removed per step (positive number)

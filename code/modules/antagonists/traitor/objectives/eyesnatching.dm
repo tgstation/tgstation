@@ -192,7 +192,7 @@
 
 	to_chat(user, span_notice("You successfully extract [victim]'s eyeballs using [src]."))
 	victim.emote("scream")
-	playsound(victim, 'sound/surgery/retractor2.ogg', 100, TRUE)
+	playsound(victim, SURGERY_SOUND_RETRACTOR_TWO, 100, TRUE)
 	playsound(victim, 'sound/effects/pop.ogg', 100, TRAIT_MUTE)
 	eyeballies.Remove(victim)
 	eyeballies.forceMove(get_turf(victim))
