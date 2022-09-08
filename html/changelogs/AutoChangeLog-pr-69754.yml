@@ -1,0 +1,4 @@
+author: "VexingRaven"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a malfunctioning lantern on Ice Box and the Syndicate Listening Station."
