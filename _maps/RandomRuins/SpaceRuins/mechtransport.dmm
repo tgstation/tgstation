@@ -181,7 +181,7 @@
 /turf/template_noop,
 /area/ruin/space/has_grav/powered/mechtransport)
 "X" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /turf/template_noop,
 /area/ruin/space/has_grav/powered/mechtransport)
 

@@ -24,7 +24,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_fighter3)
 "g" = (
-/obj/structure/shuttle/engine/propulsion/burst,
+/obj/machinery/power/shuttle_engine/propulsion/burst,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/sbc_fighter3)
 "n" = (

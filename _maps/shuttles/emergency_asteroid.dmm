@@ -42,13 +42,13 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "am" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "an" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,

@@ -6,13 +6,13 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "c" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "d" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 1
 	},
 /obj/structure/window/reinforced,

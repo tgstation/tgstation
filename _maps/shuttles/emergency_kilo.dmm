@@ -507,7 +507,7 @@
 /area/shuttle/escape)
 "cK" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "cL" = (
@@ -534,7 +534,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
 "cT" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
@@ -596,7 +596,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "dc" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -606,12 +606,12 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "dd" = (
-/obj/structure/shuttle/engine/propulsion/left,
+/obj/machinery/power/shuttle_engine/propulsion/left,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "de" = (
-/obj/structure/shuttle/engine/propulsion/right,
+/obj/machinery/power/shuttle_engine/propulsion/right,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)

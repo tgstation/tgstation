@@ -769,7 +769,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/shuttle/escape)
 "QW" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -812,7 +812,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Tf" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "Tg" = (

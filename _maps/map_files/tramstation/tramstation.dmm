@@ -34878,7 +34878,7 @@
 	icon_state = "plating"
 	},
 /obj/structure/tramwall/titanium,
-/obj/structure/shuttle/engine/propulsion/in_wall/tram{
+/obj/machinery/power/shuttle_engine/propulsion/in_wall/tram{
 	dir = 4;
 	pixel_x = 32
 	},
@@ -43358,7 +43358,7 @@
 	icon_state = "plating"
 	},
 /obj/structure/tramwall/titanium,
-/obj/structure/shuttle/engine/propulsion/in_wall/tram{
+/obj/machinery/power/shuttle_engine/propulsion/in_wall/tram{
 	dir = 8;
 	pixel_x = -32
 	},
@@ -65667,7 +65667,7 @@
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 8
 	},
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	desc = "A standard reliable bluespace engine used by many forms of shuttles. This one has the bluespace core removed.";
 	name = "inactive propulsion engine"
 	},

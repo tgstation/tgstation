@@ -30,7 +30,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "af" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
 	},
 /turf/template_noop,
@@ -86,7 +86,7 @@
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "as" = (
-/obj/structure/shuttle/engine/huge{
+/obj/machinery/power/shuttle_engine/huge{
 	dir = 8
 	},
 /turf/template_noop,

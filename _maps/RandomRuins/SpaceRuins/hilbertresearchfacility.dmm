@@ -120,7 +120,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "dA" = (
 /obj/structure/grille/broken,
-/obj/structure/shuttle/engine/propulsion/burst{
+/obj/machinery/power/shuttle_engine/propulsion/burst{
 	anchored = 0;
 	dir = 1
 	},
@@ -236,7 +236,7 @@
 /obj/structure/window/reinforced/survival_pod{
 	dir = 1
 	},
-/obj/structure/shuttle/engine/propulsion/in_wall/tram{
+/obj/machinery/power/shuttle_engine/propulsion/in_wall/tram{
 	dir = 4;
 	pixel_x = 32
 	},
@@ -1002,7 +1002,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced/survival_pod,
-/obj/structure/shuttle/engine/propulsion/in_wall/tram{
+/obj/machinery/power/shuttle_engine/propulsion/in_wall/tram{
 	dir = 4;
 	pixel_x = 32
 	},
@@ -1012,7 +1012,7 @@
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "xO" = (
-/obj/structure/shuttle/engine/propulsion/burst{
+/obj/machinery/power/shuttle_engine/propulsion/burst{
 	anchored = 0;
 	dir = 8
 	},
@@ -1639,7 +1639,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced/survival_pod,
-/obj/structure/shuttle/engine/propulsion/in_wall/tram{
+/obj/machinery/power/shuttle_engine/propulsion/in_wall/tram{
 	dir = 8;
 	pixel_x = -32
 	},
@@ -2355,7 +2355,7 @@
 /obj/structure/window/reinforced/survival_pod{
 	dir = 1
 	},
-/obj/structure/shuttle/engine/propulsion/in_wall/tram{
+/obj/machinery/power/shuttle_engine/propulsion/in_wall/tram{
 	dir = 8;
 	pixel_x = -32
 	},

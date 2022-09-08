@@ -14,7 +14,7 @@
 	},
 /area/awaymission/research/interior/engineering)
 "ah" = (
-/obj/structure/shuttle/engine/propulsion/right{
+/obj/machinery/power/shuttle_engine/propulsion/right{
 	dir = 1
 	},
 /turf/open/space,
@@ -24,7 +24,7 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
 "aj" = (
-/obj/structure/shuttle/engine/propulsion/left{
+/obj/machinery/power/shuttle_engine/propulsion/left{
 	dir = 1
 	},
 /turf/open/space,
@@ -39,7 +39,7 @@
 /area/awaymission/research/interior/engineering)
 "am" = (
 /obj/structure/window/reinforced,
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 1
 	},
 /obj/structure/window/reinforced{
@@ -52,7 +52,7 @@
 /area/awaymission/research/interior/engineering)
 "ao" = (
 /obj/structure/window/reinforced,
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 1
 	},
 /obj/structure/window/reinforced{
@@ -3166,7 +3166,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/research/exterior)
 "mf" = (
-/obj/structure/shuttle/engine/propulsion/burst{
+/obj/machinery/power/shuttle_engine/propulsion/burst{
 	dir = 4
 	},
 /turf/closed/wall/mineral/titanium/interior,

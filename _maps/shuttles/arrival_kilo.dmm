@@ -100,7 +100,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/arrival)
 "n" = (
-/obj/structure/shuttle/engine/propulsion/left{
+/obj/machinery/power/shuttle_engine/propulsion/left{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -109,7 +109,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "o" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /obj/effect/spawner/structure/window/reinforced/shuttle,
@@ -166,7 +166,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/arrival)
 "u" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -283,7 +283,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/arrival)
 "G" = (
-/obj/structure/shuttle/engine/propulsion/right{
+/obj/machinery/power/shuttle_engine/propulsion/right{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{

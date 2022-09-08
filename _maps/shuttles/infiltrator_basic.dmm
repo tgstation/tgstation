@@ -542,7 +542,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/syndicate/medical)
 "cr" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/window/reinforced/survival_pod{
 	dir = 1
@@ -560,7 +560,7 @@
 /turf/open/floor/circuit/red,
 /area/shuttle/syndicate/engineering)
 "cu" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/window/reinforced/survival_pod{
 	dir = 1
@@ -568,22 +568,22 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/medical)
 "cv" = (
-/obj/structure/shuttle/engine/propulsion/left,
+/obj/machinery/power/shuttle_engine/propulsion/left,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/hallway)
 "cw" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/hallway)
 "cx" = (
-/obj/structure/shuttle/engine/propulsion/right,
+/obj/machinery/power/shuttle_engine/propulsion/right,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/hallway)
 "cy" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/window/reinforced/survival_pod{
 	dir = 1
@@ -591,32 +591,32 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/engineering)
 "cz" = (
-/obj/structure/shuttle/engine/propulsion/left,
+/obj/machinery/power/shuttle_engine/propulsion/left,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/medical)
 "cA" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/medical)
 "cB" = (
-/obj/structure/shuttle/engine/propulsion/right,
+/obj/machinery/power/shuttle_engine/propulsion/right,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/medical)
 "cE" = (
-/obj/structure/shuttle/engine/propulsion/left,
+/obj/machinery/power/shuttle_engine/propulsion/left,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/engineering)
 "cF" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/engineering)
 "cG" = (
-/obj/structure/shuttle/engine/propulsion/right,
+/obj/machinery/power/shuttle_engine/propulsion/right,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/engineering)

@@ -91,7 +91,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "hB" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,

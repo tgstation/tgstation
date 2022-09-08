@@ -14,13 +14,13 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/transport)
 "e" = (
-/obj/structure/shuttle/engine/propulsion/left{
+/obj/machinery/power/shuttle_engine/propulsion/left{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "f" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /obj/structure/window/reinforced,
@@ -38,7 +38,7 @@
 /turf/open/floor/pod/light,
 /area/shuttle/transport)
 "j" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -74,7 +74,7 @@
 /turf/open/floor/pod/light,
 /area/shuttle/transport)
 "o" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /obj/structure/window/reinforced{

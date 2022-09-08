@@ -149,14 +149,14 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "bv" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bx" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /obj/structure/window/reinforced{
 	dir = 8;
 	layer = 2.9
@@ -172,7 +172,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "bC" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced{
 	dir = 4;
 	layer = 2.9
@@ -470,7 +470,7 @@
 /turf/open/space/basic,
 /area/shuttle/escape)
 "hC" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /obj/structure/window/reinforced{
 	dir = 4;
 	layer = 2.9
@@ -683,7 +683,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "jt" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -697,7 +697,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "jG" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -1088,7 +1088,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "pr" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -2842,7 +2842,7 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "Nb" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /obj/structure/window/reinforced{
 	dir = 4;
 	layer = 2.9
@@ -3008,7 +3008,7 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "Pb" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -3433,7 +3433,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Tc" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Tf" = (
@@ -3512,7 +3512,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Ua" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -3634,7 +3634,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "VE" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "VF" = (
@@ -3865,7 +3865,7 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "Ye" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /obj/structure/window/reinforced{
 	dir = 4
 	},

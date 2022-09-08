@@ -246,7 +246,7 @@
 /area/shuttle/mining/large)
 "D" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /turf/open/floor/plating,
 /area/shuttle/mining/large)
 "E" = (
@@ -255,7 +255,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/mining/large)
 "F" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/mining/large)
 "G" = (

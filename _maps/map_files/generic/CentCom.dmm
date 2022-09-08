@@ -11280,7 +11280,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/expansion_chemicalwarfare)
 "Gz" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	resistance_flags = 3
 	},
 /obj/structure/window/reinforced{
@@ -11433,7 +11433,7 @@
 /turf/open/floor/iron,
 /area/centcom/syndicate_mothership/control)
 "GX" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/space,
 /area/centcom/wizard_station)
 "GZ" = (
@@ -12586,26 +12586,26 @@
 /turf/closed/wall/mineral/titanium,
 /area/centcom/central_command_areas/evacuation/ship)
 "KI" = (
-/obj/structure/shuttle/engine/propulsion/right{
+/obj/machinery/power/shuttle_engine/propulsion/right{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/centcom/central_command_areas/evacuation/ship)
 "KJ" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/centcom/central_command_areas/evacuation/ship)
 "KK" = (
-/obj/structure/shuttle/engine/propulsion/left{
+/obj/machinery/power/shuttle_engine/propulsion/left{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/centcom/central_command_areas/evacuation/ship)
 "KN" = (
 /obj/structure/window/reinforced,
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,

@@ -4599,7 +4599,7 @@
 /turf/open/floor/plating,
 /area/awaymission/moonoutpost19/arrivals)
 "lD" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 4
 	},
 /obj/structure/window/reinforced{
@@ -5775,7 +5775,7 @@
 	},
 /area/awaymission/moonoutpost19/main)
 "rq" = (
-/obj/structure/shuttle/engine/propulsion/burst/right{
+/obj/machinery/power/shuttle_engine/propulsion/burst/right{
 	dir = 4
 	},
 /turf/open/misc/asteroid{
@@ -6381,7 +6381,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "Zx" = (
-/obj/structure/shuttle/engine/propulsion/burst/left{
+/obj/machinery/power/shuttle_engine/propulsion/burst/left{
 	dir = 4
 	},
 /turf/open/misc/asteroid{

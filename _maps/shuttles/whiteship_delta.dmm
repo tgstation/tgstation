@@ -211,7 +211,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/bar)
 "ay" = (
-/obj/structure/shuttle/engine/propulsion/left{
+/obj/machinery/power/shuttle_engine/propulsion/left{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -220,7 +220,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -334,7 +334,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bar)
 "aM" = (
-/obj/structure/shuttle/engine/propulsion/right{
+/obj/machinery/power/shuttle_engine/propulsion/right{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,

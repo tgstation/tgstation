@@ -153,7 +153,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_corvette)
 "at" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /obj/structure/window/reinforced/survival_pod{
@@ -226,7 +226,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_corvette)
 "aC" = (
-/obj/structure/shuttle/engine/propulsion/burst{
+/obj/machinery/power/shuttle_engine/propulsion/burst{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,

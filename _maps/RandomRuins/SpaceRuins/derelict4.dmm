@@ -40,7 +40,7 @@
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/space/has_grav)
 "l" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,

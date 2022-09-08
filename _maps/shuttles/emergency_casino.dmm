@@ -1000,7 +1000,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Dv" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /obj/structure/window/reinforced/plasma{
@@ -1144,7 +1144,7 @@
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "Ih" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,

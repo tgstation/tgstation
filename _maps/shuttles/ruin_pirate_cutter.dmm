@@ -142,7 +142,7 @@
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "jU" = (
-/obj/structure/shuttle/engine/propulsion/burst{
+/obj/machinery/power/shuttle_engine/propulsion/burst{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -634,7 +634,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)
 "HD" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -724,7 +724,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)
 "Nx" = (
-/obj/structure/shuttle/engine/propulsion/burst/right{
+/obj/machinery/power/shuttle_engine/propulsion/burst/right{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -745,7 +745,7 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/caravan/pirate)
 "Pn" = (
-/obj/structure/shuttle/engine/propulsion/burst/left{
+/obj/machinery/power/shuttle_engine/propulsion/burst/left{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,

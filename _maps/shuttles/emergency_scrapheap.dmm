@@ -360,21 +360,21 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bm" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bn" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bo" = (

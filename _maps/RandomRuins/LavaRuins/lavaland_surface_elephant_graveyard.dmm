@@ -69,7 +69,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/graveyard_shuttle)
 "bE" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window{
 	dir = 1
 	},
@@ -201,7 +201,7 @@
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "jx" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/powered/graveyard_shuttle)
 "jK" = (

@@ -252,7 +252,7 @@
 /turf/open/floor/plating,
 /area/shuttle/caravan/freighter1)
 "mo" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -428,7 +428,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter1)
 "vt" = (
-/obj/structure/shuttle/engine/propulsion/burst{
+/obj/machinery/power/shuttle_engine/propulsion/burst{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -732,13 +732,13 @@
 	},
 /area/shuttle/caravan/freighter1)
 "KC" = (
-/obj/structure/shuttle/engine/propulsion/burst/right{
+/obj/machinery/power/shuttle_engine/propulsion/burst/right{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter1)
 "KX" = (
-/obj/structure/shuttle/engine/propulsion/burst/left{
+/obj/machinery/power/shuttle_engine/propulsion/burst/left{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
