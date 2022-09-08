@@ -10,8 +10,6 @@ If you plan on making your own SVG, i suggest Inkscape, as it is free and pretty
 3. In ..\tgstation\tgui\packages\tgfont\dist you will find 3 files that were generated, a .css, .eot and a .WOFF2 file. Copy and replace all 3 of these files to
     the following directory -> ..\tgstation\tgui\packages\tgfont\static
 
-4. Then we run/double click the BUILD.bat file in ..\tgstation\
-
 Now your SVG will be able to be used in the game.
 
 NOTE; Be sure when you reference your icon that you prefix it with "tg-", otherwise it will not find it.
