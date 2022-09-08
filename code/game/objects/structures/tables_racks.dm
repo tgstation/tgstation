@@ -336,7 +336,7 @@
 	var/list/materials_list = list()
 	for(var/datum/material/current_material as anything in materials)
 		materials_list += "[current_material.name]"
-	desc = "A square [(materials_list.len > 1) ? "amagamation" : "peice"] of [english_list(materials_list)] on four legs. It can not move."
+	desc = "A square [(materials_list.len > 1) ? "amalgamation" : "piece"] of [english_list(materials_list)] on four legs. It can not move."
 
 ///Table on wheels
 /obj/structure/table/rolling
