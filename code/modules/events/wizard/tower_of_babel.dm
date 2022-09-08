@@ -7,6 +7,5 @@
 	description = "Everyone forgets their current languages and gains a randomized one"
 
 /datum/round_event/wizard/tower_of_babel/start()
-	GLOB.tower_of_babel_triggered = TRUE // So latejoiners are also afflicted.
-	tower_of_babel()
+	GLOB.tower_of_babel = new /datum/tower_of_babel()
 

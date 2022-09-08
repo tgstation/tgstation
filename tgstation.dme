@@ -2029,6 +2029,7 @@
 #include "code\modules\admin\smites\brain_damage.dm"
 #include "code\modules\admin\smites\bread.dm"
 #include "code\modules\admin\smites\bsa.dm"
+#include "code\modules\admin\smites\curse_of_babel.dm"
 #include "code\modules\admin\smites\dock_pay.dm"
 #include "code\modules\admin\smites\fake_bwoink.dm"
 #include "code\modules\admin\smites\fat.dm"

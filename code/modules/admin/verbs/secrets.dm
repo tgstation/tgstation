@@ -310,12 +310,17 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 
 			summon_magic(holder, survivor_probability)
 
-		if("tower_of_babel")
+		if("towerOfBabel")
 			if(!is_funmin)
 				return
 			if(tgui_alert(usr,"Would you like to randomize language for everyone?",,list("Yes","No")) == "Yes")
 				SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Tower of babel"))
-				tower_of_babel(holder)
+				holder.tower_of_babel()
+
+		if("cureTowerOfBabel")
+			if(!is_funmin)
+				return
+			holder.tower_of_babel_undo()
 
 		if("events")
 			if(!is_funmin)
