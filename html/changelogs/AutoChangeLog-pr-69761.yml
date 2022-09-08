@@ -1,0 +1,4 @@
+author: "NamelessFairy"
+delete-after: True
+changes: 
+  - bugfix: "The bar shuttle now has correctly orientated stools"
