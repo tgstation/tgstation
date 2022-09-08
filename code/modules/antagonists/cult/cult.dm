@@ -202,6 +202,17 @@
 		if(istype(o, /obj/item/melee/cultblade/dagger) || istype(o, /obj/item/stack/sheet/runed_metal))
 			qdel(o)
 
+/datum/antagonist/cult/antag_panel_objectives()
+	. = ..()
+
+	. += "<br>"
+	. += "<i><b>Team Objectives:</b></i><br>"
+	var/obj_count = 1
+	for (var/datum/objective/objective as anything in cult_team.objectives)
+		. += "<B>[obj_count]</B>: [objective.explanation_text] <br>"
+		obj_count++
+
+
 /datum/antagonist/cult/master
 	ignore_implant = TRUE
 	show_in_antagpanel = FALSE //Feel free to add this later
