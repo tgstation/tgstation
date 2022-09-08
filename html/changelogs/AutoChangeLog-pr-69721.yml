@@ -1,0 +1,9 @@
+author: "Sealed101"
+delete-after: True
+changes: 
+  - rscdel: "Metastation: removed two excess cameras in Service Hallway and Hydroponics"
+  - qol: "Solar Maintenance cameras are now grouped up in one place on the console's list, several other cameras grouped up with their respective department group"
+  - qol: "tweaks to some cameras' c_tags for easier use (i.e. Tech Storage cameras are now clearly signed as Secure and non-secure)"
+  - bugfix: "Armory - Exterior camera fixed to actually appear on console lists"
+  - bugfix: "two AI Minisat Exterior cameras fixed to be on the minisat network to actually appear on console lists"
+  - spellcheck: "AI Upload cameras edited to not be lowercase (ai_upload -> AI Upload)"
