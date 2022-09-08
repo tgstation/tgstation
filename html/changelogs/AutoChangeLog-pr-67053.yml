@@ -1,0 +1,6 @@
+author: "Wallem"
+delete-after: True
+changes: 
+  - imageadd: "Ties have now been GAGS-ified"
+  - rscadd: "Ties now must be manually tied, allowing for both a classic and a \"I just woke up\" look."
+  - imagedel: "Removed inherent ties from several outfits."

@@ -10,7 +10,7 @@ GLOBAL_DATUM(tower_of_babel, /datum/tower_of_babel)
 		badmin.log_message("has stricken the station with the Tower of Babel!", LOG_GAME)
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/handle_new_player)
-	deadchat_broadcast("The [span_name("Tower of Babel")] has stricken the station, people will struggle to communicate.", message_type=DEADCHAT_ANNOUNCEMENT)
+	deadchat_broadcast("The [span_name("Towher of Babel")] has stricken the station, people will struggle to communicate.", message_type=DEADCHAT_ANNOUNCEMENT)
 
 	for(var/mob/living/carbon/target in GLOB.player_list)
 		if(IS_WIZARD(target) && !badmin)

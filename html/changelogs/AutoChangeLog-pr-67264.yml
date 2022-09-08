@@ -1,0 +1,4 @@
+author: "Son-of-Space"
+delete-after: True
+changes: 
+  - bugfix: "Detectives no longer have access to gear lockers by default across all maps"

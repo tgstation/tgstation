@@ -1,0 +1,9 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes: 
+  - bugfix: "Fixes most, if not all harddels related to lua."
+  - bugfix: "Fixed lua signal handlers for COMSIG_PARENT_QDELETED."
+  - qol: "The lua editor UI will warn when a state's global table has been corrupted or shadowed."
+  - qol: "Internal auxlua errors will provide more verbose error messages."
+  - bugfix: "Possibly fixed chat by way of removing seemingly unrelated code that turns out to have been unnecessary in the first place."
+  - bugfix: "In lua, if you shadow the global table (_G), you will no longer be prevented from running any further code, and as such, can unshadow the global table."

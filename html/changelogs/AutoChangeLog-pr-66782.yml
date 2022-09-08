@@ -1,0 +1,6 @@
+author: "Pickle-Coding"
+delete-after: True
+changes: 
+  - bugfix: "Fixes freon fires being too efficient in oxygen deficient environments."
+  - bugfix: "Fixes freon fires hotspots not working properly."
+  - rscadd: "Freon can now react in any gasmixture, instead of just turfs, but can't create hot ice if it's not in a turf."

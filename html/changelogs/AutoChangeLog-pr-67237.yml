@@ -1,0 +1,4 @@
+author: "FernandoJ8"
+delete-after: True
+changes: 
+  - bugfix: "Hair dye spray now properly updates your sprite after being used"

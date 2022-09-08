@@ -1,0 +1,5 @@
+author: "jlsnow301"
+delete-after: True
+changes: 
+  - qol: "The genetics console is a bit easier to use with scrolling mutations and tabs."
+  - admin: "Added an debug data disk to test mutations."

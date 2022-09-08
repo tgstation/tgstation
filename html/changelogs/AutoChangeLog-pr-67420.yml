@@ -1,0 +1,5 @@
+author: "Son-of-Space"
+delete-after: True
+changes: 
+  - bugfix: "The APC in TramStation's Experimentor room is now accessible."
+  - bugfix: "A floating intercom was removed from the same experimentor room"

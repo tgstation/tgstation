@@ -1,0 +1,4 @@
+author: "Guillaume Prata"
+delete-after: True
+changes: 
+  - balance: "Metal Hydrogen axe was reworked. It now work as a crowbar, can be stored on most engineering/atmos suits and deal less damage than the default fireaxe (15) against mobs while still doing the same damage (30) to structures or machinery."

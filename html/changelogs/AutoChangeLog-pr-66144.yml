@@ -1,0 +1,5 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - rscadd: "You should now be able to rotate bedsheets on yourself as you take restful sleeps."
+  - bugfix: "Nanotrasen will no longer place bedsheets the wrong way on beds."

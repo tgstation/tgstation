@@ -1,0 +1,4 @@
+author: "Son-of-Space"
+delete-after: True
+changes: 
+  - bugfix: "The trash driver on MetaStation now fires trash off the z level again"

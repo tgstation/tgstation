@@ -2673,6 +2673,16 @@
 					/obj/item/book/random)
 	crate_type = /obj/structure/closet/crate/wooden
 
+/datum/supply_pack/misc/book_language
+	name = "Language Book Crate"
+	desc = "A selection of books that give fluency in several different languages."
+	cost = CARGO_CRATE_VALUE * 5
+	access_view = ACCESS_LIBRARY
+	contains = list(/obj/item/language_manual/roundstart_species
+					/obj/item/language_manual/roundstart_species,
+					/obj/item/language_manual/roundstart_species)
+	crate_type = /obj/structure/closet/crate/wooden
+
 /datum/supply_pack/misc/commandkeys
 	name = "Command Encryption Key Crate"
 	desc = "A pack of encryption keys that give access to the command radio network. Nanotrasen reminds unauthorized employees not to eavesdrop in on secure communications channels, or at least to keep heckling of the command staff to a minimum."

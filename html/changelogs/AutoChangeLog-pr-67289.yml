@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes: 
+  - bugfix: "Moved meta hallway air alarm so it wont get blocked by firelocks"

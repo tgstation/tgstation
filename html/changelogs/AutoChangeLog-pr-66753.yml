@@ -1,0 +1,5 @@
+author: "Son-of-Space"
+delete-after: True
+changes: 
+  - bugfix: "Fixed several inconsistent or niche access requirements on IceBoxStation"
+  - qol: "Replaced all access requirement vars on doors with mapping helpers on IceBoxStation"

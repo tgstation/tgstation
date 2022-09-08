@@ -1,0 +1,5 @@
+author: "Zytolg"
+delete-after: True
+changes: 
+  - qol: "Xenosat Touchups. Employees may now monitor hazardous life forms at a new and conveniently located desk."
+  - bugfix: "The Xenosat should now feature 0 Diagonal Walls, once again becoming a symmetrical Pill shape."

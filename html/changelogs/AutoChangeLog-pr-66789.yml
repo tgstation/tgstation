@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - bugfix: "Directional windows, firelocks, and other border objects will now properly block incoming ballistic fire"
