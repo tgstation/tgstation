@@ -1,9 +1,3 @@
-/obj/machinery/sleep_console
-	name = "sleeper console"
-	icon = 'icons/obj/machines/sleeper.dmi'
-	icon_state = "console"
-	density = FALSE
-
 /obj/machinery/sleeper
 	name = "sleeper"
 	desc = "An enclosed machine used to stabilize and heal patients."
@@ -15,25 +9,52 @@
 	state_open = TRUE
 	circuit = /obj/item/circuitboard/machine/sleeper
 
-	var/efficiency = 1
-	var/min_health = -25
-	var/list/available_chems
-	var/controls_inside = FALSE
-	var/list/possible_chems = list(
-		list(/datum/reagent/medicine/epinephrine, /datum/reagent/medicine/morphine, /datum/reagent/medicine/c2/convermol, /datum/reagent/medicine/c2/libital, /datum/reagent/medicine/c2/aiuri),
-		list(/datum/reagent/medicine/oculine,/datum/reagent/medicine/inacusiate),
-		list(/datum/reagent/medicine/c2/multiver, /datum/reagent/medicine/mutadone, /datum/reagent/medicine/mannitol, /datum/reagent/medicine/salbutamol, /datum/reagent/medicine/pen_acid),
-		list(/datum/reagent/medicine/omnizine)
-	)
-	var/list/chem_buttons //Used when emagged to scramble which chem is used, eg: mutadone -> morphine
-	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
-	var/enter_message = "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
 	payment_department = ACCOUNT_MED
 	fair_market_price = 5
 
+	///How much chems is allowed to be in a patient at once, before we force them to wait for the reagent to process.
+	var/efficiency = 1
+	///The minimum damage required to use any chem other than Epinephrine.
+	var/min_health = -25
+	///Whether the machine can be operated by the person inside of it.
+	var/controls_inside = FALSE
+	///Whether this sleeper can be deconstructed and drop the board, if its on mapload.
+	var/deconstructable = FALSE
+	///Message sent when a user enters the machine.
+	var/enter_message = span_boldnotice("You feel cool air surround you. You go numb as your senses turn inward.")
+
+	///List of currently available chems.
+	var/list/available_chems = list()
+	///Used when emagged to scramble which chem is used, eg: mutadone -> morphine
+	var/list/chem_buttons
+	///All chems this sleeper will get, depending on the parts inside.
+	var/list/possible_chems = list(
+		list(
+			/datum/reagent/medicine/epinephrine,
+			/datum/reagent/medicine/morphine,
+			/datum/reagent/medicine/c2/convermol,
+			/datum/reagent/medicine/c2/libital,
+			/datum/reagent/medicine/c2/aiuri,
+		),
+		list(
+			/datum/reagent/medicine/oculine,
+			/datum/reagent/medicine/inacusiate,
+		),
+		list(
+			/datum/reagent/medicine/c2/multiver,
+			/datum/reagent/medicine/mutadone,
+			/datum/reagent/medicine/mannitol,
+			/datum/reagent/medicine/salbutamol,
+			/datum/reagent/medicine/pen_acid,
+		),
+		list(
+			/datum/reagent/medicine/omnizine,
+		),
+	)
+
 /obj/machinery/sleeper/Initialize(mapload)
 	. = ..()
-	if(mapload)
+	if(mapload && !deconstructable)
 		LAZYREMOVE(component_parts, circuit)
 		QDEL_NULL(circuit)
 	occupant_typecache = GLOB.typecache_living
@@ -42,18 +63,17 @@
 
 /obj/machinery/sleeper/RefreshParts()
 	. = ..()
-	var/E
-	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		E += B.rating
-	var/I
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		I += M.rating
+	var/matterbin_rating
+	for(var/obj/item/stock_parts/matter_bin/matterbins in component_parts)
+		matterbin_rating += matterbins.rating
+	efficiency = initial(efficiency) * matterbin_rating
+	min_health = initial(min_health) * matterbin_rating
 
-	efficiency = initial(efficiency)* E
-	min_health = initial(min_health) * E
-	available_chems = list()
-	for(var/i in 1 to I)
-		available_chems |= possible_chems[i]
+	available_chems.Cut()
+	for(var/obj/item/stock_parts/manipulator/manipulators in component_parts)
+		for(var/i in 1 to manipulators.rating)
+			available_chems |= possible_chems[i]
+
 	reset_chem_buttons()
 
 /obj/machinery/sleeper/update_icon_state()
@@ -77,12 +97,12 @@
 /obj/machinery/sleeper/open_machine()
 	if(!state_open && !panel_open)
 		flick("[initial(icon_state)]-anim", src)
-		..()
+	return ..()
 
 /obj/machinery/sleeper/close_machine(mob/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		flick("[initial(icon_state)]-anim", src)
-		..(user)
+		..()
 		var/mob/living/mob_occupant = occupant
 		if(mob_occupant && mob_occupant.stat != DEAD)
 			to_chat(mob_occupant, "[enter_message]")
@@ -98,28 +118,25 @@
 /obj/machinery/sleeper/MouseDrop_T(mob/target, mob/user)
 	if(HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !ISADVANCEDTOOLUSER(user))
 		return
-
 	close_machine(target)
 
-
 /obj/machinery/sleeper/screwdriver_act(mob/living/user, obj/item/I)
-	. = TRUE
-	if(..())
-		return
+	. = ..()
 	if(occupant)
 		to_chat(user, span_warning("[src] is currently occupied!"))
-		return
+		return TRUE
 	if(state_open)
 		to_chat(user, span_warning("[src] must be closed to [panel_open ? "close" : "open"] its maintenance hatch!"))
-		return
+		return TRUE
 	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
-		return
+		return TRUE
 	return FALSE
 
 /obj/machinery/sleeper/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(default_change_direction_wrench(user, I))
 		return TRUE
+	return FALSE
 
 /obj/machinery/sleeper/crowbar_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -127,6 +144,7 @@
 		return TRUE
 	if(default_deconstruction_crowbar(I))
 		return TRUE
+	return FALSE
 
 /obj/machinery/sleeper/default_pry_open(obj/item/I) //wew
 	. = !(state_open || panel_open || (flags_1 & NODECONSTRUCT_1)) && I.tool_behaviour == TOOL_CROWBAR
@@ -161,21 +179,27 @@
 
 /obj/machinery/sleeper/process()
 	..()
-	check_nap_violations()
-	use_power(active_power_usage)
+	use_power(idle_power_usage)
 
 /obj/machinery/sleeper/nap_violation(mob/violator)
+	. = ..()
 	open_machine()
 
 /obj/machinery/sleeper/ui_data()
 	var/list/data = list()
-	data["occupied"] = occupant ? 1 : 0
+	data["occupied"] = !!occupant
 	data["open"] = state_open
 
 	data["chems"] = list()
 	for(var/chem in available_chems)
 		var/datum/reagent/R = GLOB.chemical_reagents_list[chem]
-		data["chems"] += list(list("name" = R.name, "id" = R.type, "allowed" = chem_allowed(chem)))
+		data["chems"] += list(
+			list(
+				"name" = R.name,
+				"id" = R.type,
+				"allowed" = chem_allowed(chem),
+			),
+		)
 
 	data["occupant"] = list()
 	var/mob/living/mob_occupant = occupant
@@ -208,7 +232,13 @@
 			for(var/datum/reagent/R in mob_occupant.reagents.reagent_list)
 				if(R.chemical_flags & REAGENT_INVISIBLE) //Don't show hidden chems
 					continue
-				data["occupant"]["reagents"] += list(list("name" = R.name, "volume" = R.volume))
+				data["occupant"]["reagents"] += list(
+					list(
+						"name" = R.name,
+						"volume" = R.volume,
+					),
+				)
+
 	return data
 
 /obj/machinery/sleeper/ui_act(action, params)
@@ -229,16 +259,23 @@
 			var/chem = text2path(params["chem"])
 			if(!is_operational || !mob_occupant || isnull(chem))
 				return
-			if(mob_occupant.health < min_health && chem != /datum/reagent/medicine/epinephrine)
+			if(mob_occupant.health < min_health && !ispath(chem, /datum/reagent/medicine/epinephrine))
 				return
 			if(inject_chem(chem, usr))
 				. = TRUE
-				if(scrambled_chems && prob(5))
+				if((obj_flags & EMAGGED) && prob(5))
 					to_chat(usr, span_warning("Chemical system re-route detected, results may not be as expected!"))
 
 /obj/machinery/sleeper/emag_act(mob/user)
-	scramble_chem_buttons()
+	if(obj_flags & EMAGGED)
+		return
+
 	to_chat(user, span_warning("You scramble the sleeper's user interface!"))
+	obj_flags |= EMAGGED
+
+	var/list/av_chem = available_chems.Copy()
+	for(var/chem in av_chem)
+		chem_buttons[chem] = pick_n_take(av_chem) //no dupes, allow for random buttons to still be correct
 
 /obj/machinery/sleeper/proc/inject_chem(chem, mob/user)
 	if((chem in available_chems) && chem_allowed(chem))
@@ -256,25 +293,27 @@
 	return amount && occ_health
 
 /obj/machinery/sleeper/proc/reset_chem_buttons()
-	scrambled_chems = FALSE
+	obj_flags &= ~EMAGGED
 	LAZYINITLIST(chem_buttons)
 	for(var/chem in available_chems)
 		chem_buttons[chem] = chem
 
-/obj/machinery/sleeper/proc/scramble_chem_buttons()
-	scrambled_chems = TRUE
-	var/list/av_chem = available_chems.Copy()
-	for(var/chem in av_chem)
-		chem_buttons[chem] = pick_n_take(av_chem) //no dupes, allow for random buttons to still be correct
-
-
+/**
+ * Syndicate version
+ * Can be controlled from the inside and can be deconstructed.
+ */
 /obj/machinery/sleeper/syndie
 	icon_state = "sleeper_s"
 	base_icon_state = "sleeper_s"
 	controls_inside = TRUE
+	deconstructable = TRUE
 
+///Fully upgraded variant, the circuit using tier 4 parts.
 /obj/machinery/sleeper/syndie/fullupgrade
 	circuit = /obj/item/circuitboard/machine/sleeper/fullupgrade
+
+/obj/machinery/sleeper/self_control
+	controls_inside = TRUE
 
 /obj/machinery/sleeper/old
 	icon_state = "oldpod"
@@ -286,24 +325,41 @@
 	icon_state = "partypod"
 	base_icon_state = "partypod"
 	circuit = /obj/item/circuitboard/machine/sleeper/party
-	var/leddit = FALSE //Get it like reddit and lead alright fine
-
 	controls_inside = TRUE
+	deconstructable = TRUE
+	enter_message = span_boldnotice("You're surrounded by some funky music inside the chamber. You zone out as you feel waves of krunk vibe within you.")
+
+	//Exclusively uses non-lethal, "fun" chems. At an obvious downside.
 	possible_chems = list(
-		list(/datum/reagent/consumable/ethanol/beer, /datum/reagent/consumable/laughter),
-		list(/datum/reagent/spraytan,/datum/reagent/barbers_aid),
-		list(/datum/reagent/colorful_reagent,/datum/reagent/hair_dye),
-		list(/datum/reagent/drug/space_drugs,/datum/reagent/baldium)
-	)//Exclusively uses non-lethal, "fun" chems. At an obvious downside.
+		list(
+			/datum/reagent/consumable/ethanol/beer,
+			/datum/reagent/consumable/laughter,
+		),
+		list(
+			/datum/reagent/spraytan,
+			/datum/reagent/barbers_aid,
+		),
+		list(
+			/datum/reagent/colorful_reagent,
+			/datum/reagent/hair_dye,
+		),
+		list(
+			/datum/reagent/drug/space_drugs,
+			/datum/reagent/baldium,
+		),
+	)
+	///Chemicals that need to have a touch or vapor reaction to be applied, not the standard chamber reaction.
 	var/spray_chems = list(
-		/datum/reagent/spraytan, /datum/reagent/hair_dye, /datum/reagent/baldium, /datum/reagent/barbers_aid
-	)//Chemicals that need to have a touch or vapor reaction to be applied, not the standard chamber reaction.
-	enter_message = "<span class='notice'><b>You're surrounded by some funky music inside the chamber. You zone out as you feel waves of krunk vibe within you.</b></span>"
+		/datum/reagent/spraytan,
+		/datum/reagent/hair_dye,
+		/datum/reagent/baldium,
+		/datum/reagent/barbers_aid,
+	)
 
 /obj/machinery/sleeper/party/inject_chem(chem, mob/user)
-	if(leddit)
-		occupant.reagents.add_reagent(/datum/reagent/toxin/leadacetate, 4) //You're injecting chemicals into yourself from a recalled, decrepit medical machine. What did you expect?
-	else if (prob(20))
+	if(obj_flags & EMAGGED)
+		occupant.reagents.add_reagent(/datum/reagent/toxin/leadacetate, 4)
+	else if (prob(20)) //You're injecting chemicals into yourself from a recalled, decrepit medical machine. What did you expect?
 		occupant.reagents.add_reagent(/datum/reagent/toxin/leadacetate, rand(1,3))
 	if(chem in spray_chems)
 		var/datum/reagents/holder = new()
@@ -313,8 +369,4 @@
 		if(user)
 			log_combat(user, occupant, "sprayed [chem] into", addition = "via [src]")
 		return TRUE
-	..()
-
-/obj/machinery/sleeper/party/emag_act(mob/user)
-	..()
-	leddit = TRUE
+	return ..()
