@@ -253,9 +253,9 @@
 
 /obj/structure/trap/teleport/trap_effect(mob/living/L)
 	to_chat(L, span_danger("<B>Vücudunun fiziksel evrenden bağının koptuğunu hissediyorsun!</B>"))
-	var/turf/safe_turf = find_safe_turf(zlevels = z, extended_safety_checks = TRUE)
+	var/turf/safe_turf = find_safe_turf()
 	playsound(get_turf(L), SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
-	do_teleport(L, safe_turf, channel = TELEPORT_CHANNEL_MAGIC)
+	do_teleport(L, safe_turf, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE)
 	L.playsound_local(get_turf(L), 'sound/hallucinations/i_see_you1.ogg', 50, 1)
 	playsound(get_turf(L), 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 	playsound(get_turf(L), SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)

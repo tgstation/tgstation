@@ -9,12 +9,18 @@
 	name = "trap spawner safe"
 	desc = "guvenli"
 	icon_state = "trap_safe"
-	spawn_loot_chance = 50
+	spawn_loot_chance = 10
 	loot = list(
 
-			/obj/structure/trap/chill = 8,
-			/obj/structure/trap/stun = 2,
-
+			/obj/structure/trap/chill = 10,
+			/obj/structure/trap/stun = 8,
+			/obj/structure/trap/fire = 10,
+			/obj/structure/trap/blind = 10,
+			/obj/structure/trap/damage = 5,
+			/obj/structure/trap/zombie = 12,
+			/obj/structure/trap/imp = 12,
+			/obj/structure/trap/wall = 20,
+			/obj/structure/trap/flashbang = 15,
 
 	)
 
@@ -27,3 +33,16 @@
 	name = "trap spawner deadly"
 	desc = "ölümcül"
 	icon_state = "trap_deadly"
+	loot = list(
+
+			/obj/structure/trap/chill = 10,
+			/obj/structure/trap/stun = 8,
+			/obj/structure/trap/fire = 10,
+			/obj/structure/trap/blind = 10,
+			/obj/structure/trap/damage = 5,
+			/obj/structure/trap/zombie = 12,
+			/obj/structure/trap/imp = 12,
+			/obj/structure/trap/wall = 20,
+			/obj/structure/trap/flashbang = 15,
+
+	)
