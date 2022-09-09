@@ -204,6 +204,12 @@
 	var/datum/action/cooldown/spell/fire_cascade/big/screen_wide_fire_spell = new(user.mind)
 	screen_wide_fire_spell.Grant(user)
 
+	var/datum/action/cooldown/spell/charged/fire_blast/existing_beam_spell = locate() in user.actions
+	if(existing_beam_spell)
+		existing_beam_spell.max_bounces *= 2 // Double beams
+		existing_beam_spell.beam_duration *= 0.66 // Faster beams
+		existing_beam_spell.cooldown_time *= 0.66 // Lower cooldown
+
 	user.client?.give_award(/datum/award/achievement/misc/ash_ascension, user)
 	for(var/trait in traits_to_apply)
 		ADD_TRAIT(user, trait, MAGIC_TRAIT)

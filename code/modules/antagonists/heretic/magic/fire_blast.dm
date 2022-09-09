@@ -9,7 +9,7 @@
 	sound = 'sound/magic/fireball.ogg'
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 40 SECONDS
+	cooldown_time = 45 SECONDS
 
 	invocation = "V'LC'N!"
 	invocation_type = INVOCATION_SHOUT
@@ -17,10 +17,6 @@
 
 	/// The max number of chains between mobs
 	var/max_bounces = 4
-	/// How much each blast does in burn damage
-	var/blast_burn_damage = 20
-	/// How much firestacks each blast applies
-	var/blast_firestacks = 2
 	/// How long the beam visual lasts, also used to determine time between jumps
 	var/beam_duration = 2 SECONDS
 
@@ -37,7 +33,9 @@
 
 /datum/action/cooldown/spell/charged/fire_blast/proc/send_fire_beam(atom/origin, mob/living/carbon/to_blast, bounces = 4)
 	// Send a beam from the origin to the hit mob
-	origin.Beam(to_blast, icon_state = "solar_beam", time = beam_duration)
+	origin.Beam(to_blast, icon_state = "solar_beam", time = beam_duration, beam_type = /obj/effect/ebeam/fire)
+	// Next beam will happen in about half the duration of the beam
+	var/next_beam_happens_in = beam_duration / 2
 
 	// If they block the magic, the chain wont necessarily stop, but likely will
 	// (due to them not catching on fire)
@@ -46,17 +44,16 @@
 			span_warning("[to_blast] absorbs the spell, remaining unharmed!"),
 			span_userdanger("You absorb the spell, remaining unharmed!"),
 		)
+		// Apply status effect but with no overlay
+		to_blast.apply_status_effect(/datum/status_effect/fire_blasted, -1)
 
 	// Otherwise, if unblocked apply the damage and set them up
 	else
-		to_blast.apply_damage(blast_burn_damage, BURN)
-		to_blast.adjust_fire_stacks(blast_firestacks)
+		to_blast.apply_damage(20, BURN)
+		to_blast.adjust_fire_stacks(3)
 		to_blast.ignite_mob()
-
-	// Next beam will happen in about half the duration of the beam
-	var/next_beam_happens_in = beam_duration / 2
-	// Apply the fire blast status effect to show they got blasted
-	to_blast.apply_status_effect(/datum/status_effect/fire_blasted, next_beam_happens_in * 0.75)
+		// Apply the fire blast status effect to show they got blasted
+		to_blast.apply_status_effect(/datum/status_effect/fire_blasted, next_beam_happens_in * 0.75)
 
 	playsound(to_blast, sound, 50, TRUE, -1)
 	// No more bounces left. Stop here
@@ -83,6 +80,8 @@
 			continue
 		if(to_check.has_status_effect(/datum/status_effect/fire_blasted)) // Already blasted
 			continue
+		if(IS_HERETIC_OR_MONSTER(to_check))
+			continue
 		if(!length(get_path_to(center, to_check, max_distance = 5, simulated_only = FALSE)))
 			continue
 
@@ -103,7 +102,7 @@
 	duration = 5 SECONDS
 	/// An appearance we apply below the mob to show they've been blasted
 	var/image/warning_sign
-	/// How long does the animation of the appearance last?
+	/// How long does the animation of the appearance last? If 0 or negative, we make no overlay
 	var/animate_duration = 0.75 SECONDS
 
 /datum/status_effect/fire_blasted/on_creation(mob/living/new_owner, animate_duration = 0.75 SECONDS)
@@ -111,7 +110,7 @@
 	return ..()
 
 /datum/status_effect/fire_blasted/on_apply()
-	if(owner.on_fire) // Melbert todo: This kinda sucks I think
+	if(owner.on_fire && animate_duration > 0 SECONDS) // Melbert todo: This kinda sucks I think
 		warning_sign = image(icon = 'icons/effects/effects.dmi', icon_state = "blessed", layer = BELOW_MOB_LAYER)
 		if(warning_sign)
 			warning_sign.alpha = 0
@@ -140,3 +139,33 @@
 
 	owner.cut_overlay(warning_sign)
 	warning_sign = null
+
+// The beam fireblast spits out, causes people to walk through it to be on fire
+/obj/effect/ebeam/fire
+	name = "fire beam"
+
+/obj/effect/ebeam/fire/Initialize(mapload)
+	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+	if(!isturf(loc))
+		return
+
+	for(var/mob/living/living_mob in loc)
+		on_entered(entered = living_mob)
+
+/obj/effect/ebeam/fire/proc/on_entered(datum/source, atom/movable/entered)
+	SIGNAL_HANDLER
+
+	if(!isliving(entered))
+		return
+	var/mob/living/living_entered = entered
+	if(IS_HERETIC_OR_MONSTER(living_entered) || living_entered.has_status_effect(/datum/status_effect/fire_blasted))
+		return
+	living_entered.apply_damage(10, BURN)
+	living_entered.adjust_fire_stacks(2)
+	living_entered.ignite_mob()
+	living_entered.apply_status_effect(/datum/status_effect/fire_blasted, -1) // No overlay, just the status
