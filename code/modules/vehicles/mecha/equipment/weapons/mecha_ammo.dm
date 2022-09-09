@@ -17,7 +17,7 @@
 
 /obj/item/mecha_ammo/update_desc()
 	. = ..()
-	desc = rounds ? initial(desc) : "An exosuit ammuniton box that has since been emptied. Please recycle."
+	desc = rounds ? initial(desc) : "An exosuit ammuniton box that has since been emptied. It can be safely folded for recycling."
 
 /obj/item/mecha_ammo/update_icon_state()
 	icon_state = rounds ? initial(icon_state) : "empty"
