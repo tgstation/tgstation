@@ -1,6 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes: 
-  - bugfix: "Monkey mind magnification helmets once again poll all ghosts"
-  - rscadd: "Added a preference for sentience creatures, which means people can toggle eligibility to sentience potions, and boosted lavaland tumors. Cargorilla, Regal Rat and Shuttle Creatures use this preference now."
-  - rscadd: "Added several separate notification preferences for creatures"

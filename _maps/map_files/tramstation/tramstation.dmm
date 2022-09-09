@@ -6000,6 +6000,7 @@
 	},
 /obj/structure/window/reinforced/spawner/east,
 /obj/structure/window/reinforced/spawner/west,
+/obj/item/ai_module/reset/purge,
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "ckH" = (
@@ -20495,6 +20496,7 @@
 	},
 /obj/structure/window/reinforced/spawner/east,
 /obj/structure/window/reinforced/spawner/west,
+/obj/item/ai_module/supplied/freeform,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "hwM" = (
@@ -34871,6 +34873,10 @@
 /obj/structure/table,
 /obj/item/ai_module/reset,
 /obj/machinery/airalarm/directional/north,
+/obj/item/ai_module/supplied/freeform{
+	pixel_x = 2;
+	pixel_y = 3
+	},
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "mzQ" = (
