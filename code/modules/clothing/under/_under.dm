@@ -238,33 +238,46 @@
 	if (!can_use(M))
 		return
 	if(has_sensor == LOCKED_SENSORS)
-		to_chat(usr, "The controls are locked.")
+		to_chat(M, "The controls are locked.")
 		return
 	if(has_sensor == BROKEN_SENSORS)
-		to_chat(usr, "The sensors have shorted out!")
+		to_chat(M, "The sensors have shorted out!")
 		return
 	if(has_sensor <= NO_SENSORS)
-		to_chat(usr, "This suit does not have any sensors.")
+		to_chat(M, "This suit does not have any sensors.")
 		return
 
 	var/list/modes = list("Off", "Binary vitals", "Exact vitals", "Tracking beacon")
 	var/switchMode = tgui_input_list(M, "Select a sensor mode", "Suit Sensors", modes, modes[sensor_mode + 1])
 	if(isnull(switchMode))
 		return
-	if(get_dist(usr, src) > 1)
-		to_chat(usr, span_warning("You have moved too far away!"))
+
+	if (!can_use(M)) //make sure they didn't hold the window open.
+		return
+	if(get_dist(M, src) > 1)
+		to_chat(M, span_warning("You have moved too far away!"))
+		return
+
+	if(has_sensor == LOCKED_SENSORS)
+		to_chat(M, "The controls are locked.")
+		return
+	if(has_sensor == BROKEN_SENSORS)
+		to_chat(M, "The sensors have shorted out!")
+		return
+	if(has_sensor <= NO_SENSORS)
+		to_chat(M, "This suit does not have any sensors.")
 		return
 	sensor_mode = modes.Find(switchMode) - 1
-	if (loc == usr)
+	if (loc == M)
 		switch(sensor_mode)
 			if(SENSOR_OFF)
-				to_chat(usr, span_notice("You disable your suit's remote sensing equipment."))
+				to_chat(M, span_notice("You disable your suit's remote sensing equipment."))
 			if(SENSOR_LIVING)
-				to_chat(usr, span_notice("Your suit will now only report whether you are alive or dead."))
+				to_chat(M, span_notice("Your suit will now only report whether you are alive or dead."))
 			if(SENSOR_VITALS)
-				to_chat(usr, span_notice("Your suit will now only report your exact vital lifesigns."))
+				to_chat(M, span_notice("Your suit will now only report your exact vital lifesigns."))
 			if(SENSOR_COORDS)
-				to_chat(usr, span_notice("Your suit will now report your exact vital lifesigns as well as your coordinate position."))
+				to_chat(M, span_notice("Your suit will now report your exact vital lifesigns as well as your coordinate position."))
 
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
