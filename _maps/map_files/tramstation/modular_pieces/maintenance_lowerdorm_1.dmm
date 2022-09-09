@@ -177,12 +177,8 @@
 /turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "az" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/decal/cleanable/dirt,
 /obj/modular_map_connector,
-/turf/open/floor/catwalk_floor,
+/turf/template_noop,
 /area/station/maintenance/department/crew_quarters/dorms)
 "aA" = (
 /obj/effect/decal/cleanable/dirt,
@@ -326,6 +322,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/firecloset,
 /turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"Fv" = (
+/turf/template_noop,
 /area/station/maintenance/department/crew_quarters/dorms)
 "NB" = (
 /obj/effect/decal/cleanable/dirt,
@@ -777,10 +776,10 @@ aQ
 "}
 (14,1,1) = {"
 az
-ab
-ab
-ab
-ab
+Fv
+Fv
+Fv
+Fv
 ab
 ab
 ab

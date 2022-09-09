@@ -29867,6 +29867,13 @@
 /obj/structure/table,
 /turf/open/floor/iron,
 /area/station/security/brig)
+"kNc" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor,
+/area/mine/explored)
 "kNe" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -32977,10 +32984,12 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/greater)
 "lRr" = (
-/obj/modular_map_root/tramstation{
-	key = "maintenance_lowerdorm"
-	},
-/turf/open/floor/iron/vaporwave,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/obj/modular_map_connector,
+/turf/open/floor/catwalk_floor,
 /area/mine/explored)
 "lRu" = (
 /obj/effect/turf_decal/stripes/line,
@@ -66469,6 +66478,13 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
+"xPT" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/mine/explored)
 "xPU" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
@@ -84076,16 +84092,16 @@ dhe
 afH
 afH
 afH
-afH
-afH
-afH
-afH
-afH
+xPT
+xPT
+xPT
+xPT
+xPT
 lRr
-afH
-afH
-afH
-afH
+kNc
+kNc
+kNc
+kNc
 afH
 afH
 afH

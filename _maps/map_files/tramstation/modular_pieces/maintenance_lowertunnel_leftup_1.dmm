@@ -118,6 +118,9 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/fore)
+"qW" = (
+/turf/template_noop,
+/area/station/maintenance/port/fore)
 "rE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -507,11 +510,11 @@ nd
 Dt
 oN
 HD
-HD
-HD
-HD
-HD
-HD
+qW
+qW
+qW
+qW
+qW
 Dh
 Dh
 Dh

@@ -370,6 +370,9 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/fore)
+"IT" = (
+/turf/template_noop,
+/area/station/maintenance/port/fore)
 "JC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/ore_box,
@@ -595,11 +598,11 @@ km
 YK
 zI
 vs
-vs
-vs
-vs
-vs
-vs
+IT
+IT
+IT
+IT
+IT
 Sz
 Sz
 Sz
