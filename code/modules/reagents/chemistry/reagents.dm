@@ -274,8 +274,8 @@ Primarily used in reagents/reaction_agents
 	for (var/datum/reagent/reagent as anything in reagent_list)
 		reagents_left--
 		if(final_and && intial_list_length > 1 && reagents_left == 0)
-			rs += "and [capitalize_names ? capitalize(reagent.name) : reagent.name][names_only ? null : ", [reagent.volume]"]"
+			reagent_strings += "and [capitalize_names ? capitalize(reagent.name) : reagent.name][names_only ? null : ", [reagent.volume]"]"
 		else
-			rs += "[capitalize_names ? capitalize(reagent.name) : reagent.name][names_only ? null : ", [reagent.volume]"]"
+			reagent_strings += "[capitalize_names ? capitalize(reagent.name) : reagent.name][names_only ? null : ", [reagent.volume]"]"
 
-	return rs.Join(join_text)
+	return reagent_strings.Join(join_text)
