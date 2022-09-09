@@ -146,7 +146,7 @@
 		return
 	var/obj/item/hand_item/stealer/stealing_hand = new(user)
 	if (user.put_in_hands(stealing_hand))
-		to_chat(user, span_notice("You prepare your hand to grab."))
+		balloon_alert(user, "preparing to steal shoes")
 	else
 		qdel(stealing_hand)
 		to_chat(user, span_warning("You're incapable of readjusting your grabbing hand right now!"))
