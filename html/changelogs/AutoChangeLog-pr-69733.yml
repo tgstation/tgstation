@@ -1,4 +1,0 @@
-author: "lizardqueenlexi"
-delete-after: True
-changes: 
-  - bugfix: "fixed a bug causing the process of slicing food to erase most of the food's reagents"
