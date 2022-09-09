@@ -7,12 +7,6 @@
 /obj/machinery/teleport/station,
 /turf/open/indestructible/necropolis/air,
 /area/station/command/teleporter)
-"bp" = (
-/obj/machinery/power/apc/highcap/ten_k/directional/north{
-	cell_type = /obj/item/stock_parts/cell/infinite
-	},
-/turf/open/indestructible/necropolis/air,
-/area/station/command/teleporter)
 "bD" = (
 /obj/item/clothing/suit/hooded/cultrobes{
 	pixel_x = 1;
@@ -434068,7 +434062,7 @@ xA
 Dw
 yP
 rs
-bp
+Zy
 Zy
 Zy
 Zy
@@ -442544,7 +442538,7 @@ yP
 yP
 yP
 rs
-bp
+Zy
 Zy
 Zy
 Zy
