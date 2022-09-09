@@ -1,3 +1,4 @@
+///Gives a Human lizard-incompatible shoes, then changes their species over to see if they drop the now incompatible shoes.
 /datum/unit_test/species_change_clothing
 
 /datum/unit_test/species_change_clothing/Run()
