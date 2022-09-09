@@ -1080,17 +1080,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(attacker_style?.grab_act(user,target) == MARTIAL_ATTACK_SUCCESS)
 		return TRUE
 	else
-		if (target.body_position == LYING_DOWN && (user.zone_selected == BODY_ZONE_L_LEG || user.zone_selected == BODY_ZONE_R_LEG) && target.shoes && istype(user.get_active_held_item(), /obj/item/hand_item/stealer))
-			var/obj/item/item_to_strip = target.shoes
-			user.visible_message(span_warning("[user] starts stealing [target]'s [item_to_strip.name]!"), \
-				span_danger("You start stealing [target]'s [item_to_strip.name]..."))
-			to_chat(target, span_userdanger("[user] starts stealing your [item_to_strip.name]!"))
-			if (do_after(user, item_to_strip.strip_delay, target))
-				if(target.dropItemToGround(item_to_strip))
-					user.put_in_hands(item_to_strip)
-					user.visible_message(span_warning("[user] stole [target]'s [item_to_strip.name]!"), \
-						span_notice("You stole [target]'s [item_to_strip.name]!"))
-					to_chat(target, span_userdanger("[user] stole your [item_to_strip.name]!"))
 		target.grabbedby(user)
 		return TRUE
 
