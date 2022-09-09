@@ -309,7 +309,7 @@
 	QDEL_IN(src, 30)
 	playsound(get_turf(L), SFX_DESECRATION, 70, ignore_walls = TRUE)
 
-/obj/structure/trap/blindeye
+/obj/structure/trap/blind
 	name = "blind trap"
 	desc = "Yerde ne olduğunu anlamlandıramadığın bir şey var. Çok yaklaşmaman iyi olur."
 
