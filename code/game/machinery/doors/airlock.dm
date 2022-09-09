@@ -547,7 +547,7 @@
 				if (WEST)
 					floorlight.pixel_x = -32
 					floorlight.pixel_y = 0
-			. += I
+			. += floorlight
 
 /obj/machinery/door/airlock/do_animate(animation)
 	switch(animation)
