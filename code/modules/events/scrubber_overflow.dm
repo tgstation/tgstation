@@ -4,7 +4,7 @@
 	weight = 10
 	max_occurrences = 3
 	min_players = 10 MINUTES
-	category = EVENT_CATEGORY_ENGINEERING
+	category = EVENT_CATEGORY_JANITORIAL
 	description = "The scrubbers release a tide of mostly harmless froth."
 
 /datum/round_event/scrubber_overflow
