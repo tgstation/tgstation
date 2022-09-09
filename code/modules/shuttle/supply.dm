@@ -222,13 +222,13 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 	var/datum/export_report/ex = new
 
-	for(var/place in shuttle_areas)
-		var/area/shuttle/shuttle_area = place
+	for(var/area/shuttle/shuttle_area as anything in shuttle_areas)
 		for(var/atom/movable/AM in shuttle_area)
 			if(iscameramob(AM))
 				continue
-			if(!AM.anchored)
-				export_item_and_contents(AM, export_categories , dry_run = FALSE, external_report = ex)
+			if(AM.anchored)
+				continue
+			export_item_and_contents(AM, export_categories, dry_run = FALSE, external_report = ex)
 
 	if(ex.exported_atoms)
 		ex.exported_atoms += "." //ugh
