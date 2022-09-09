@@ -41,7 +41,7 @@ Difficulty: Hard
 	health_doll_icon = "bubblegum"
 	friendly_verb_continuous = "stares down"
 	friendly_verb_simple = "stare down"
-	icon = 'icons/mob/lavaland/96x96megafauna.dmi'
+	icon = 'icons/mob/simple/lavaland/96x96megafauna.dmi'
 	speak_emote = list("gurgles")
 	armour_penetration = 40
 	melee_damage_lower = 40

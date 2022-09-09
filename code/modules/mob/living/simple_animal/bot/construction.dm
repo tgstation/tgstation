@@ -1,7 +1,7 @@
 //Bot Construction
 
 /obj/item/bot_assembly
-	icon = 'icons/mob/aibots.dmi'
+	icon = 'icons/mob/silicon/aibots.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 3
 	throw_speed = 2

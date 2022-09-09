@@ -331,6 +331,13 @@
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	buildstack = null //No buildstack, so generate from mat datums
 
+/obj/structure/table/greyscale/set_custom_materials(list/materials, multiplier)
+	. = ..()
+	var/list/materials_list = list()
+	for(var/datum/material/current_material as anything in custom_materials)
+		materials_list += "[current_material.name]"
+	desc = "A square [(materials_list.len > 1) ? "amalgamation" : "piece"] of [english_list(materials_list)] on four legs. It can not move."
+
 ///Table on wheels
 /obj/structure/table/rolling
 	name = "Rolling table"
@@ -671,8 +678,8 @@
 /obj/structure/table/optable
 	name = "operating table"
 	desc = "Used for advanced medical procedures."
-	icon = 'icons/obj/medical/organs/organs.dmi'
-	icon_state = "optable"
+	icon = 'icons/obj/medical/surgery_table.dmi'
+	icon_state = "surgery_table"
 	buildstack = /obj/item/stack/sheet/mineral/silver
 	smoothing_flags = NONE
 	smoothing_groups = null

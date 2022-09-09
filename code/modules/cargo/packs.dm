@@ -2035,7 +2035,8 @@
 					/obj/item/seeds/rose,
 					/obj/item/seeds/chanter,
 					/obj/item/seeds/potato,
-					/obj/item/seeds/sugarcane)
+					/obj/item/seeds/sugarcane,
+					/obj/item/seeds/cucumber)
 	crate_name = "seeds crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
@@ -2050,7 +2051,8 @@
 					/obj/item/food/grown/carrot,
 					/obj/item/food/grown/mushroom/chanterelle,
 					/obj/item/food/grown/onion,
-					/obj/item/food/grown/pumpkin)
+					/obj/item/food/grown/pumpkin,
+					/obj/item/food/grown/cucumber)
 	crate_name = "food crate"
 
 /datum/supply_pack/organic/grill

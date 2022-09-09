@@ -300,3 +300,15 @@
 	)
 	result = /obj/item/food/pacoca
 	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/pickles_jar
+	name = "Jar of pickles"
+	reqs = list(
+		/obj/item/reagent_containers/cup/beaker/large = 1,
+		/obj/item/food/grown/cucumber = 10,
+		/datum/reagent/water = 10,
+		/datum/reagent/consumable/salt = 10,
+	)
+	result = /obj/item/storage/fancy/pickles_jar
+	category = CAT_FOOD
+	subcategory = CAT_MISCFOOD

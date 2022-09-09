@@ -135,6 +135,9 @@
 				/obj/item/clothing/suit/mothcoat/winter = 3,
 				/obj/item/clothing/head/mothcap = 3,
 
+				/obj/item/clothing/suit/hooded/ethereal_raincoat = 3,
+				/obj/item/clothing/under/ethereal_tunic = 3,
+
 				/obj/item/clothing/suit/costume/ianshirt = 1,
 				/obj/item/clothing/head/irs = 20,
 				/obj/item/clothing/head/tmc = 20,

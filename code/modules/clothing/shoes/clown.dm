@@ -5,6 +5,8 @@
 	inhand_icon_state = "clown_shoes"
 	slowdown = SHOES_SLOWDOWN+1
 	var/enabled_waddle = TRUE
+	///List of possible sounds for the squeak component to use, allows for different clown shoe subtypes to have different sounds.
+	var/list/squeak_sound = list('sound/effects/clownstep1.ogg'=1,'sound/effects/clownstep2.ogg'=1)
 	lace_time = 20 SECONDS // how the hell do these laces even work??
 	species_exception = list(/datum/species/golem/bananium)
 
@@ -12,7 +14,7 @@
 	. = ..()
 
 	create_storage(type = /datum/storage/pockets/shoes/clown)
-	LoadComponent(/datum/component/squeak, list('sound/effects/clownstep1.ogg'=1,'sound/effects/clownstep2.ogg'=1), 50, falloff_exponent = 20) //die off quick please
+	LoadComponent(/datum/component/squeak, squeak_sound, 50, falloff_exponent = 20) //die off quick please
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
 
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/living/user, slot)
@@ -46,3 +48,9 @@
 	name = "jester shoes"
 	desc = "A court jester's shoes, updated with modern squeaking technology."
 	icon_state = "jester_shoes"
+
+/obj/item/clothing/shoes/clown_shoes/meown_shoes
+	name = "meown shoes"
+	desc = "The adorable sound they make when you walk will mean making friends is more likely."
+	icon_state = "meown_shoes"
+	squeak_sound = list('sound/effects/meowstep1.ogg'=1) //mew mew mew mew

@@ -2,7 +2,7 @@
 /mob/living/simple_animal/bot/cleanbot
 	name = "\improper Cleanbot"
 	desc = "A little cleaning robot, he looks so excited!"
-	icon = 'icons/mob/aibots.dmi'
+	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "cleanbot0"
 	pass_flags = PASSMOB | PASSFLAPS
 	density = FALSE

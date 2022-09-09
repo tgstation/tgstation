@@ -10,7 +10,6 @@
 	new /obj/item/computer_hardware/hard_drive/portable/command/ce(src)
 	new /obj/item/radio/headset/heads/ce(src)
 	new /obj/item/megaphone/command(src)
-	new /obj/item/areaeditor/blueprints(src)
 	new /obj/item/holosign_creator/atmos(src)
 	new /obj/item/assembly/flash/handheld(src)
 	new /obj/item/door_remote/chief_engineer(src)
@@ -20,6 +19,11 @@
 	new /obj/item/storage/photo_album/ce(src)
 	new /obj/item/storage/box/skillchips/engineering(src)
 
+/obj/structure/closet/secure_closet/engineering_chief/populate_contents_immediate()
+	. = ..()
+
+	// Traitor steal objective
+	new /obj/item/areaeditor/blueprints(src)
 
 /obj/structure/closet/secure_closet/engineering_electrical
 	name = "electrical supplies locker"

@@ -7,7 +7,7 @@
  */
 
 /obj/effect/hallucination/simple/xeno
-	image_icon = 'icons/mob/alien.dmi'
+	image_icon = 'icons/mob/nonhuman-player/alien.dmi'
 	image_state = "alienh_pounce"
 
 /obj/effect/hallucination/simple/xeno/Initialize(mapload, mob/living/carbon/T)
@@ -59,11 +59,11 @@
 				to_chat(target, span_notice("[xeno.name] begins climbing into the ventilation system..."))
 				stage = XENO_ATTACK_STAGE_FINISH
 			if (XENO_ATTACK_STAGE_LEAP_AT_PUMP to XENO_ATTACK_STAGE_CLIMB)
-				xeno.update_icon(ALL, "alienh_leap", 'icons/mob/alienleap.dmi', -32, -32)
+				xeno.update_icon(ALL, "alienh_leap", 'icons/mob/nonhuman-player/alienleap.dmi', -32, -32)
 				xeno.throw_at(pump_location, 7, 1, spin = FALSE, diagonals_first = TRUE)
 				stage = XENO_ATTACK_STAGE_CLIMB
 			if (XENO_ATTACK_STAGE_LEAP_AT_TARGET to XENO_ATTACK_STAGE_LEAP_AT_PUMP)
-				xeno.update_icon(ALL, "alienh_leap", 'icons/mob/alienleap.dmi', -32, -32)
+				xeno.update_icon(ALL, "alienh_leap", 'icons/mob/nonhuman-player/alienleap.dmi', -32, -32)
 				xeno.throw_at(target, 7, 1, spin = FALSE, diagonals_first = TRUE)
 				stage = XENO_ATTACK_STAGE_LEAP_AT_PUMP
 
@@ -80,7 +80,7 @@
 #undef XENO_ATTACK_STAGE_FINISH
 
 /obj/effect/hallucination/simple/clown
-	image_icon = 'icons/mob/animal.dmi'
+	image_icon = 'icons/mob/simple/animal.dmi'
 	image_state = "clown"
 
 /obj/effect/hallucination/simple/clown/Initialize(mapload, mob/living/carbon/T, duration)
@@ -93,7 +93,7 @@
 
 /obj/effect/hallucination/simple/bubblegum
 	name = "Bubblegum"
-	image_icon = 'icons/mob/lavaland/96x96megafauna.dmi'
+	image_icon = 'icons/mob/simple/lavaland/96x96megafauna.dmi'
 	image_state = "bubblegum"
 	px = -32
 

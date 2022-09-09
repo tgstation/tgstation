@@ -6,7 +6,7 @@
 /mob/living/simple_animal/revenant
 	name = "revenant"
 	desc = "A malevolent spirit."
-	icon = 'icons/mob/mob.dmi'
+	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "revenant_idle"
 	var/icon_idle = "revenant_idle"
 	var/icon_reveal = "revenant_revealed"
