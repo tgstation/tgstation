@@ -5,7 +5,7 @@
  */
 /area/station
 	/// The mobile port attached to this area
-	var/obj/docking_port/mobile/station_ship
+	var/obj/docking_port/mobile/voidcrew/station_ship
 
 /area/station/Initialize(mapload)
 	. = ..()

@@ -1,4 +1,8 @@
-/obj/docking_port/mobile
+/obj/docking_port/mobile/voidcrew
+	width = 12
+	dwidth = 5
+	height = 7
+
 	///The linked overmap object, if there is one
 	var/obj/structure/overmap/ship/current_ship //voidcrew todo: ship functionality, this is never linked!!
 	///List of spawn points on the ship.
@@ -9,7 +13,7 @@
  *
  * Returns a list of all the living humans on the ship, as long as they have a mind and a client.
  */
-/obj/docking_port/mobile/proc/get_all_humans()
+/obj/docking_port/mobile/voidcrew/proc/get_all_humans()
 	var/list/humans_to_add = list()
 	var/list/all_turfs = return_ordered_turfs(x, y, z, dir)
 	for(var/turf/turf as anything in all_turfs)
@@ -28,7 +32,7 @@
  *
  * Delete all of the areas, and delete any cryopods
  */
-/obj/docking_port/mobile/proc/mothball()
+/obj/docking_port/mobile/voidcrew/proc/mothball()
 	if(length(get_all_humans()) > 0)
 		return
 	var/obj/docking_port/stationary/current_dock = get_docked()

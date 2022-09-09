@@ -29,13 +29,65 @@
 	///holding jump timer ID
 	var/jump_timer
 
-/obj/machinery/computer/helm/Initialize(mapload, obj/item/circuitboard/C)
+/obj/machinery/computer/helm/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
-	return INITIALIZE_HINT_LATELOAD
+	if (!current_ship)
+		CRASH("There is no ship attached to this console. You broke something.")
+
+	ui = SStgui.try_update_ui(user, src, ui)
+	current_ship.update_screen()
+
+	if(!ui)
+		user.client.register_map_obj(current_ship.cam_screen)
+		for (var/plane in current_ship.cam_plane_masters)
+			user.client.register_map_obj(plane)
+		user.client.register_map_obj(current_ship.cam_background)
+
+		ui = new(user, src, "HelmComputer", name)
+		ui.open()
+
+/obj/machinery/computer/helm/ui_act(action, list/params)
+	. = ..()
+
+	switch(action)
+		if ("north")
+			current_ship.apply_thrust(y = 1)
+		if ("northeast")
+			current_ship.apply_thrust(x = 1, y = 1)
+		if ("east")
+			current_ship.apply_thrust(x = 1)
+		if ("southeast")
+			current_ship.apply_thrust(x = 1, y = -1)
+		if ("south")
+			current_ship.apply_thrust(y = -1)
+		if ("southwest")
+			current_ship.apply_thrust(x = -1, y = -1)
+		if ("west")
+			current_ship.apply_thrust(x = -1)
+		if ("northwest")
+			current_ship.apply_thrust(x = -1, y = 1)
+		if ("reset")
+			current_ship.reset_thrust()
+
+/obj/machinery/computer/helm/ui_data(mob/user)
+	var/list/data = list()
+
+	data["thrust"] = current_ship.calculate_thrust()
+
+	return data
+
+/obj/machinery/computer/helm/ui_static_data(mob/user)
+	var/list/data = list()
+
+	data["mapRef"] = current_ship.map_name
+
+	return data
+
+/*
 
 /obj/machinery/computer/helm/LateInitialize()
 	. = ..()
-/* //voidcrew todo: ship functionality
+ //voidcrew todo: ship functionality
 	reload_ship()
 
 /obj/machinery/computer/helm/proc/calibrate_jump(inline = FALSE)
@@ -93,11 +145,15 @@
  * This proc manually rechecks that the helm computer is connected to a proper ship
  */
 /obj/machinery/computer/helm/proc/reload_ship()
-	var/obj/docking_port/mobile/port = SSshuttle.get_containing_shuttle(src)
+	var/obj/docking_port/mobile/voidcrew/port = SSshuttle.get_containing_shuttle(src)
 	if(port?.current_ship)
 		current_ship = port.current_ship
 		return TRUE
+*/
 
+
+
+/*
 /obj/machinery/computer/helm/ui_interact(mob/user, datum/tgui/ui)
 	if(current_ship.is_player_in_crew(user) || !isliving(user) || isAdminGhostAI(user))
 		if(jump_state != JUMP_STATE_OFF)
@@ -132,62 +188,10 @@
 		say("ERROR: Unrecognized bio-signature detected")
 		return
 
-/obj/machinery/computer/helm/ui_data(mob/user)
-	var/list/data = list()
-	data["integrity"] = current_ship.integrity
-	data["calibrating"] = calibrating
-	data["otherInfo"] = list()
-	for (var/obj/structure/overmap/object as anything in current_ship.close_overmap_objects)
-		var/list/other_data = list(
-			name = object.name,
-			integrity = object.integrity,
-			ref = REF(object)
-		)
-		data["otherInfo"] += list(other_data)
+*/
 
-	var/turf/T = get_turf(current_ship)
-	data["x"] = T.x
-	data["y"] = T.y
-	data["state"] = current_ship.state
-	data["docked"] = isturf(current_ship.loc) ? FALSE : TRUE
-	data["heading"] = dir2text(current_ship.get_heading()) || "None"
-	data["speed"] = current_ship.get_speed()
-	data["eta"] = current_ship.get_eta()
-	data["est_thrust"] = current_ship.est_thrust
-	data["engineInfo"] = list()
-	for(var/obj/machinery/power/shuttle/engine/E in current_ship.shuttle.engine_list)
-		var/list/engine_data
-		if(!E.thruster_active)
-			engine_data = list(
-				name = E.name,
-				fuel = 0,
-				maxFuel = 100,
-				enabled = E.enabled,
-				ref = REF(E)
-			)
-		else
-			engine_data = list(
-				name = E.name,
-				fuel = E.return_fuel(),
-				maxFuel = E.return_fuel_cap(),
-				enabled = E.enabled,
-				ref = REF(E)
-			)
-		data["engineInfo"] += list(engine_data)
 
-	return data
-
-/obj/machinery/computer/helm/ui_static_data(mob/user)
-	var/list/data = list()
-	data["isViewer"] = viewer
-	data["mapRef"] = current_ship.map_name
-	data["shipInfo"] = list(
-		name = current_ship.name,
-		class = current_ship.source_template?.name,
-		mass = current_ship.mass,
-		sensor_range = current_ship.sensor_range
-	)
-	data["canFly"] = TRUE
+/*
 
 /obj/machinery/computer/helm/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -271,19 +275,6 @@
 					return
 				say(current_ship.undock())
 				return
-
-/obj/machinery/computer/helm/ui_close(mob/user)
-	var/user_ref = REF(user)
-	var/is_living = isliving(user)
-	// Living creature or not, we remove you anyway.
-	concurrent_users -= user_ref
-	// Unregister map objects
-	if(current_ship)
-		user.client?.clear_map(current_ship.map_name)
-	// Turn off the console
-	if(length(concurrent_users) == 0 && is_living)
-		playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
-		use_power(0)
 */
 /obj/machinery/computer/helm/viewscreen
 	name = "ship viewscreen"

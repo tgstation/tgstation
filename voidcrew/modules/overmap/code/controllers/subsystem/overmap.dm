@@ -67,7 +67,18 @@ SUBSYSTEM_DEF(overmap)
 			radius_tiles[i] += turf
 			unsorted_turfs -= turf
 
-/datum/controller/subsystem/overmap/proc/get_unused_overmap_square(radius, thing_not_to_have = /obj/structure/overmap, tries = MAX_OVERMAP_PLACEMENT_ATTEMPTS, force = FALSE)
+/datum/controller/subsystem/overmap/proc/get_unused_overmap_square(thing_not_to_have = /obj/structure/overmap, tries = MAX_OVERMAP_PLACEMENT_ATTEMPTS, force = FALSE)
+	var/turf/turf_to_return
+	for (var/_ in 1 to tries)
+		turf_to_return = pick(block(locate(OVERMAP_LEFT_SIDE_COORD + 1, OVERMAP_SOUTH_SIDE_COORD + 1, OVERMAP_Z_LEVEL), locate(OVERMAP_RIGHT_SIDE_COORD - 1, OVERMAP_NORTH_SIDE_COORD - 1, OVERMAP_Z_LEVEL))) // todo : see if this is expensive
+		if (locate(thing_not_to_have) in turf_to_return)
+			continue
+		return turf_to_return
+	if (!force)
+		turf_to_return = null
+	return turf_to_return
+
+/datum/controller/subsystem/overmap/proc/get_unused_overmap_square_in_radius(radius, thing_not_to_have = /obj/structure/overmap, tries = MAX_OVERMAP_PLACEMENT_ATTEMPTS, force = FALSE)
 	if (!radius)
 		radius = rand(2, length(radius_tiles) / 2)
 
@@ -95,7 +106,7 @@ SUBSYSTEM_DEF(overmap)
 			break // can't fit anymore in
 		var/selected_orbit = text2num(pick(orbits))
 
-		var/turf/turf_for_event = get_unused_overmap_square(selected_orbit)
+		var/turf/turf_for_event = get_unused_overmap_square_in_radius(selected_orbit)
 		if (!turf_for_event || !istype(turf_for_event))
 			orbits -= "[selected_orbit]" // this one is full
 			continue
@@ -118,7 +129,7 @@ SUBSYSTEM_DEF(overmap)
 			break // can't fit anymore in
 		var/selected_orbit = text2num(pick(orbits))
 
-		var/turf/turf_for_planet = get_unused_overmap_square(selected_orbit)
+		var/turf/turf_for_planet = get_unused_overmap_square_in_radius(selected_orbit)
 		if (!turf_for_planet || !istype(turf_for_planet))
 			orbits -= "[selected_orbit]" // this one is full
 			continue

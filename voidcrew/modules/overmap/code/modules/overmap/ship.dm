@@ -1,5 +1,6 @@
 #define SHIP_RUIN (10 MINUTES)
 #define SHIP_DELETE (10 MINUTES)
+#define SHIP_VIEW_RANGE 4
 
 /obj/structure/overmap/ship
 	name = "overmap vessel"
@@ -12,7 +13,7 @@
 	 * Template
 	 */
 	///The docking port of the linked shuttle
-	var/obj/docking_port/mobile/shuttle
+	var/obj/docking_port/mobile/voidcrew/shuttle
 	///The map template the shuttle was spawned from, if it was indeed created from a template. CAN BE NULL (ex. custom-built ships).
 	var/datum/map_template/shuttle/voidcrew/source_template
 
@@ -46,12 +47,116 @@
 	///Voidcrew-unique team we link everyone's mind to.
 	var/datum/team/voidcrew/ship_team
 
+	/**
+	 * Movement stuff
+	 */
+	var/y_thrust = 0
+	var/x_thrust = 0
+	/**
+	 * Stuff needed to render the map
+	 */
+	/// Name of the map
+	var/map_name
+	/// Actual screen of the map
+	var/atom/movable/screen/map_view/cam_screen
+	/// List of plane masters used by the screen
+	var/list/cam_plane_masters = list()
+	/// Backgroudn of the screen
+	var/atom/movable/screen/background/cam_background
+
 /obj/structure/overmap/ship/Initialize(mapload)
 	. = ..()
 	ship_team = new()
 	ship_team.name = faction_prefix
 
 	display_name = "[faction_prefix] [name]"
+
+	map_name = "overmap_[REF(src)]_map"
+	cam_screen = new
+	cam_screen.name = "screen"
+	cam_screen.assigned_map = map_name
+	cam_screen.del_on_map_removal = FALSE
+	cam_screen.screen_loc = "[map_name]:1,1"
+	for(var/plane in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/blackness)
+		var/atom/movable/screen/plane_master/instance = new plane()
+		if(instance.blend_mode_override)
+			instance.blend_mode = instance.blend_mode_override
+		instance.assigned_map = map_name
+		instance.del_on_map_removal = FALSE
+		instance.screen_loc = "[map_name]:CENTER"
+		cam_plane_masters += instance
+	cam_background = new
+	cam_background.assigned_map = map_name
+	cam_background.del_on_map_removal = FALSE
+
+/obj/structure/overmap/ship/Destroy()
+	QDEL_NULL(cam_screen)
+	QDEL_NULL(cam_plane_masters)
+	QDEL_NULL(cam_background)
+	return ..()
+
+/// Updates the screen for the helm console
+/obj/structure/overmap/ship/proc/update_screen()
+	var/list/visible_turfs = list()
+
+	var/list/visible_things = view(SHIP_VIEW_RANGE, src)
+
+	for(var/turf/visible_turf in visible_things)
+		visible_turfs += visible_turf
+
+	var/list/bbox = get_bbox_of_atoms(visible_turfs)
+	var/size_x = bbox[3] - bbox[1] + 1
+	var/size_y = bbox[4] - bbox[2] + 1
+
+	cam_screen.vis_contents = visible_turfs
+	cam_background.icon_state = "clear"
+	cam_background.fill_rect(1, 1, size_x, size_y)
+
+/// Resets the ships thrust back to zero
+/obj/structure/overmap/ship/proc/reset_thrust()
+	if (abs(x_thrust) > 1)
+		x_thrust += (1 * ((x_thrust > 0) ? -1 : 1))
+	else
+		x_thrust = 0
+
+	if (abs(y_thrust) > 1)
+		y_thrust += (1 * ((y_thrust > 0) ? -1 : 1))
+	else
+		y_thrust = 0
+
+/// Move the ship object
+/obj/structure/overmap/ship/proc/try_move()
+	var/x_dir = (x_thrust > 0) ? 1 : -1
+	var/y_dir = (y_thrust > 0) ? 1 : -1
+	if (!x_thrust)
+		x_dir = 0
+	if (!y_thrust)
+		y_dir = 0
+
+	Move(locate(x + x_dir, y + y_dir, z))
+
+/// Apply thrust to the ship object
+/obj/structure/overmap/ship/proc/apply_thrust(x = 0, y = 0)
+	if (x_thrust == 0 && y_thrust == 0)
+		addtimer(CALLBACK(src, .proc/do_move), 0.5 SECONDS)
+	x_thrust += x
+	y_thrust += y
+
+/// Fires the ship move loop
+/obj/structure/overmap/ship/proc/do_move()
+	if (x_thrust == 0 && y_thrust == 0)
+		return
+
+	try_move()
+	update_screen()
+	addtimer(CALLBACK(src, .proc/do_move), (1 / calculate_thrust()) SECONDS)
+
+/// Calculates the current thrust of the ship
+/obj/structure/overmap/ship/proc/calculate_thrust()
+	return sqrt((x_thrust ** 2) + (y_thrust ** 2))
+
+/obj/structure/overmap/ship/newtonian_move(direction, instant, start_delay)
+	return // we don't want ships to endlessly drift in space
 
 /**
   * Bastardized version of GLOB.manifest.manifest_inject, but used per ship
@@ -118,7 +223,7 @@
 			deletion_timer = addtimer(CALLBACK(src, .proc/destroy_ship), SHIP_DELETE, (TIMER_STOPPABLE|TIMER_UNIQUE))
 		if(OVERMAP_SHIP_IDLE, OVERMAP_SHIP_DOCKING)
 			message_admins("\[SHUTTLE]: [display_name] has been queued for ruin conversion in [SHIP_RUIN / 600] minutes! [ADMIN_COORDJMP(shuttle.loc)]")
-			deletion_timer = addtimer(CALLBACK(shuttle, /obj/docking_port/mobile/.proc/mothball), SHIP_RUIN, (TIMER_STOPPABLE|TIMER_UNIQUE))
+			deletion_timer = addtimer(CALLBACK(shuttle, /obj/docking_port/mobile/voidcrew/.proc/mothball), SHIP_RUIN, (TIMER_STOPPABLE|TIMER_UNIQUE))
 
 /obj/structure/overmap/ship/proc/end_deletion_timer()
 	deltimer(deletion_timer)
@@ -126,4 +231,4 @@
 
 #undef SHIP_RUIN
 #undef SHIP_DELETE
-
+#undef SHIP_VIEW_RANGE

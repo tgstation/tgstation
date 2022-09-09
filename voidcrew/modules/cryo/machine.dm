@@ -17,7 +17,7 @@
 	/// The linked control computer.
 	var/datum/weakref/control_computer
 
-	var/obj/docking_port/mobile/linked_ship
+	var/obj/docking_port/mobile/voidcrew/linked_ship
 
 /obj/machinery/cryopod/Initialize()
 	. = ..()

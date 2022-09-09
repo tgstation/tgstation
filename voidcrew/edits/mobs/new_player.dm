@@ -24,7 +24,7 @@
 			return LateChoices()
 
 		to_chat(usr, span_danger("Your [initial(template.name)] is being prepared. Please be patient!"))
-		var/obj/docking_port/mobile/target = SSshuttle.load_template(new template) //voidcrew todo: make ships spawn properly
+		var/obj/docking_port/mobile/voidcrew/target = SSshuttle.create_ship(template)
 		if(!istype(target))
 			to_chat(usr, span_danger("There was an error loading the ship. Please contact admins!"))
 			return

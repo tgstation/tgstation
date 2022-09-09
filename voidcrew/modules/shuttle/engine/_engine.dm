@@ -88,7 +88,7 @@
 		return
 /* //voidcrew todo: ship functionality
 	if(SSshuttle.is_in_shuttle_bounds(src))
-		var/obj/docking_port/mobile/ship = SSshuttle.get_containing_shuttle(src)
+		var/obj/docking_port/mobile/voidcrew/ship = SSshuttle.get_containing_shuttle(src)
 		if(ship)
 			ship.alter_engines(mod, src)
 */

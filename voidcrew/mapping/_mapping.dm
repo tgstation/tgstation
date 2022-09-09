@@ -11,8 +11,6 @@
 	var/list/syn_ship_list = list()
 
 /datum/controller/subsystem/mapping/Initialize(timeofday)
-	if(initialized)
-		return
 	load_ship_templates()
 	return ..()
 /*
@@ -31,6 +29,8 @@
 */
 /datum/controller/subsystem/mapping/proc/load_ship_templates()
 	SHOULD_CALL_PARENT(TRUE)
+	if(ship_purchase_list.len) //don't build repeatedly
+		return
 
 	for(var/datum/map_template/shuttle/voidcrew/shuttles as anything in subtypesof(/datum/map_template/shuttle/voidcrew))
 		ship_purchase_list["[initial(shuttles.faction_prefix)] [initial(shuttles.name)] ([initial(shuttles.cost)] credits)"] = shuttles
