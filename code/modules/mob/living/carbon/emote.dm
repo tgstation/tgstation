@@ -149,7 +149,7 @@
 		balloon_alert(user, "preparing to steal shoes")
 	else
 		qdel(stealing_hand)
-		to_chat(user, span_warning("You're incapable of readjusting your grabbing hand right now!"))
+		balloon_alert(user, "you can't prepare to steal shoes!")
 
 /datum/emote/living/carbon/tail
 	key = "tail"
