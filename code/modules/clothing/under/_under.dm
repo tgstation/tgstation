@@ -56,7 +56,7 @@
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
 
-	toggle()
+	toggle(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/clothing/under/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
@@ -228,11 +228,11 @@
 	if(attached_accessory)
 		. += "\A [attached_accessory] is attached to it."
 
-/obj/item/clothing/under/verb/toggle()
+/obj/item/clothing/under/verb/toggle(mob/user)
 	set name = "Adjust Suit Sensors"
 	set category = "Object"
 	set src in usr
-	var/mob/M = usr
+	var/mob/M = ismob(user) ? user : usr
 	if (isdead(M))
 		return
 	if (!can_use(M))
