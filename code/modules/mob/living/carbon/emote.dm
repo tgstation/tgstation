@@ -134,6 +134,23 @@
 		qdel(N)
 		to_chat(user, span_warning("You're incapable of slapping in your current state."))
 
+/datum/emote/living/carbon/steal
+	key = "steal"
+	key_third_person = "steals"
+	hands_use_check = TRUE
+	cooldown = 3 SECONDS
+
+/datum/emote/living/carbon/steal/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	if (!.)
+		return
+	var/obj/item/hand_item/stealer/stealing_hand = new(user)
+	if (user.put_in_hands(stealing_hand))
+		to_chat(user, span_notice("You prepare your hand to grab."))
+	else
+		qdel(stealing_hand)
+		to_chat(user, span_warning("You're incapable of readjusting your grabbing hand right now!"))
+
 /datum/emote/living/carbon/tail
 	key = "tail"
 	message = "waves their tail."

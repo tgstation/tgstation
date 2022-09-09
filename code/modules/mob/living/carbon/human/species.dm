@@ -1080,7 +1080,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(attacker_style?.grab_act(user,target) == MARTIAL_ATTACK_SUCCESS)
 		return TRUE
 	else
-		if (target.body_position == LYING_DOWN && (user.zone_selected == BODY_ZONE_L_LEG || user.zone_selected == BODY_ZONE_R_LEG) && target.shoes && istype(user.get_active_held_item(), /obj/item/hand_item/slapper))
+		if (target.body_position == LYING_DOWN && (user.zone_selected == BODY_ZONE_L_LEG || user.zone_selected == BODY_ZONE_R_LEG) && target.shoes && istype(user.get_active_held_item(), /obj/item/hand_item/stealer))
 			var/obj/item/item_to_strip = target.shoes
 			user.visible_message(span_warning("[user] starts stealing [target]'s [item_to_strip.name]!"), \
 				span_danger("You start stealing [target]'s [item_to_strip.name]..."))

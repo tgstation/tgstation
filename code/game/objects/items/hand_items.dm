@@ -347,6 +347,14 @@
 		taker.add_mood_event("high_five", /datum/mood_event/high_five)
 	qdel(src)
 
+/obj/item/hand_item/stealer
+	name = "steal"
+	desc = "Your filthy little fingers are ready to commit crimes."
+	icon_state = "latexballon"
+	inhand_icon_state = "nothing"
+	attack_verb_continuous = list("steals")
+	attack_verb_simple = list("steal")
+
 /obj/item/hand_item/kisser
 	name = "kiss"
 	desc = "I want you all to know, everyone and anyone, to seal it with a kiss."
