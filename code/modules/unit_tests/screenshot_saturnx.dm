@@ -17,7 +17,7 @@
 	COMPILE_OVERLAYS(thing)
 
 	for (var/direction in GLOB.cardinals)
-		var/icon/partial = getFlatIcon(thing, defdir = direction, no_anim = TRUE)
+		var/icon/partial = getFlatIcon(thing, defdir = direction)
 		output.Insert(partial, dir = direction)
 
 	return output
