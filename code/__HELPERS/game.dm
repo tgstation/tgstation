@@ -139,7 +139,7 @@
 ///Get active players who are playing in the round
 /proc/get_active_player_count(alive_check = 0, afk_check = 0, human_check = 0)
 	var/active_players = 0
-	for(var/i = 1; i <= GLOB.player_list.len; i++)
+	for(var/i in 1 to GLOB.player_list.len)
 		var/mob/player_mob = GLOB.player_list[i]
 		if(!player_mob?.client)
 			continue

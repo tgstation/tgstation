@@ -37,7 +37,7 @@
 
 /datum/symptom/New()
 	var/list/S = SSdisease.list_symptoms
-	for(var/i = 1; i <= S.len; i++)
+	for (var/i in 1 to S.len)
 		if(type == S[i])
 			id = "[i]"
 			return

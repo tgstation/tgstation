@@ -219,7 +219,7 @@
 
 /datum/chemical_reaction/food/mothic_pizza_dough/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= created_volume, i++)
+	for (var/i in 1 to created_volume)
 		new /obj/item/food/mothic_pizza_dough(location)
 
 /datum/chemical_reaction/food/curd_cheese
@@ -230,7 +230,7 @@
 
 /datum/chemical_reaction/food/curd_cheese/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= created_volume, i++)
+	for (var/i in 1 to created_volume)
 		new /obj/item/food/cheese/curd_cheese(location)
 
 /datum/chemical_reaction/food/mozzarella
@@ -242,7 +242,7 @@
 
 /datum/chemical_reaction/food/mozzarella/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= created_volume, i++)
+	for (var/i in 1 to created_volume)
 		new /obj/item/food/cheese/mozzarella(location)
 
 /datum/chemical_reaction/food/cornmeal_batter
@@ -258,7 +258,7 @@
 
 /datum/chemical_reaction/food/cornbread/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= created_volume, i++)
+	for (var/i in 1 to created_volume)
 		new /obj/item/food/bread/corn(location)
 
 /datum/chemical_reaction/food/yoghurt

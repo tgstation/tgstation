@@ -79,14 +79,12 @@
 		plush_child.bad_news(src)
 		plush_child = null
 
-	var/i
 	var/obj/item/toy/plush/P
-	for(i=1, i<=scorned.len, i++)
+	for (var/i in 1 to scorned.len)
 		P = scorned[i]
 		P.bad_news(src)
 	scorned = null
-
-	for(i=1, i<=scorned_by.len, i++)
+	for (var/i in 1 to scroned_by.len)
 		P = scorned_by[i]
 		P.bad_news(src)
 	scorned_by = null

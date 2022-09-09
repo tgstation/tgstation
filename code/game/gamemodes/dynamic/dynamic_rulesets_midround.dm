@@ -139,7 +139,7 @@
 	if(candidates.len < required_applicants)
 		mode.executed_rules -= src
 		return
-	for (var/i = 1, i <= required_candidates, i++)
+	for (var/i in 1 to required_candidates)
 		if(candidates.len <= 0)
 			break
 		var/mob/applicant = pick(candidates)

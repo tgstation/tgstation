@@ -77,8 +77,7 @@
 /obj/structure/sign/poster/wanted/proc/print_across_top(icon/poster_icon, text, color)
 	var/textLen = min(length(text), 7)
 	var/startX = 16 - (2*textLen)
-	var/i
-	for(i=1; i <= textLen, i++)
+	for (var/i in 1 to textLen)
 		var/letter = uppertext(text[i])
 		var/icon/letter_icon = icon("icon" = 'icons/misc/Font_Minimal.dmi', "icon_state" = letter)
 		letter_icon.Shift(EAST, startX) //16 - (2*n)
