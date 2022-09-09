@@ -4961,6 +4961,12 @@
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
+"bRp" = (
+/obj/modular_map_root/tramstation{
+	key = "maintenance_uppermedsci"
+	},
+/turf/open/misc/asteroid/airless,
+/area/mine/explored)
 "bRs" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -89776,7 +89782,7 @@ dhe
 dhe
 dhe
 dhe
-dhe
+bRp
 dhe
 dhe
 dhe

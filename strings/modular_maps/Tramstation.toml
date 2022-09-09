@@ -70,3 +70,7 @@ modules = ["maintenance_laundry_1.dmm", "maintenance_laundry_2.dmm"]
 # Maintenance rooms east of the bar
 [rooms.maintenance_bar]
 modules = ["maintenance_bar_1.dmm", "maintenance_bar_2.dmm"]
+
+# Maintenance rooms between science and medical.
+[rooms.maintenance_uppermedsci]
+modules = ["maintenance_uppermedsci_1.dmm", "maintenance_uppermedsci_2.dmm"]
