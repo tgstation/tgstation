@@ -240,6 +240,22 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/security/court)
+"cR" = (
+/obj/machinery/computer/monitor{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/power/apc/unlocked{
+	dir = 8;
+	environ = 0;
+	equipment = 0;
+	lighting = 0;
+	name = "Aft Solar APC";
+	pixel_x = -25;
+	start_charge = 0
+	},
+/turf/open/floor/iron,
+/area/ruin/space/ks13/engineering/sb_bow_solars_control)
 "de" = (
 /obj/structure/girder/reinforced,
 /turf/open/floor/plating/airless,
@@ -431,22 +447,6 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/ai/vault)
-"gx" = (
-/obj/machinery/computer/monitor{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/power/apc/unlocked{
-	dir = 8;
-	environ = 0;
-	equipment = 0;
-	lighting = 0;
-	name = "Aft Solar APC";
-	pixel_x = -25;
-	start_charge = 0
-	},
-/turf/open/floor/iron,
-/area/ruin/space/ks13/engineering/sb_bow_solars_control)
 "gy" = (
 /obj/structure/chair{
 	dir = 1
@@ -1252,17 +1252,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/central)
-"pU" = (
-/obj/docking_port/stationary{
-	dir = 2;
-	dwidth = 11;
-	height = 22;
-	id = "whiteship_z4";
-	name = "KSS13: Derelict";
-	width = 35
-	},
-/turf/template_noop,
-/area/space/nearstation)
 "pW" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -2496,6 +2485,17 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/command/bridge)
+"wV" = (
+/obj/docking_port/stationary{
+	dir = 2;
+	dwidth = 11;
+	height = 22;
+	shuttle_id = "whiteship_z4";
+	name = "KSS13: Derelict";
+	width = 35
+	},
+/turf/template_noop,
+/area/space/nearstation)
 "wX" = (
 /obj/machinery/light/directional/north,
 /obj/structure/closet/crate,
@@ -11672,7 +11672,7 @@ NW
 aa
 aa
 aa
-pU
+wV
 aa
 aa
 aa
@@ -15770,7 +15770,7 @@ pR
 pR
 xS
 VB
-gx
+cR
 DU
 yz
 yz

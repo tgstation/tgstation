@@ -1,0 +1,4 @@
+author: "AnturK"
+delete-after: True
+changes: 
+  - bugfix: "Fishing should be now more consistent about win/failure."

@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Blade heretics and cauterizing slashes should actually help blood loss"

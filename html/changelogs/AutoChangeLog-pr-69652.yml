@@ -1,4 +1,0 @@
-author: "Arturlang"
-delete-after: True
-changes: 
-  - code_imp: "Removes a unnecesary function blind_eyes"
