@@ -15,17 +15,14 @@
 /turf/open/floor/mineral/bananium,
 /area/station/commons)
 "dr" = (
-/obj/effect/spawner/structure/window/reinforced/indestructible,
-/obj/structure/grille,
 /obj/docking_port/mobile/voidcrew{
 	dir = 2
 	},
-/obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/command/bridge)
 "dW" = (
-/obj/effect/spawner/structure/window/reinforced/indestructible,
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/command/bridge)
 "fx" = (
@@ -36,9 +33,9 @@
 /turf/open/floor/mineral/bananium,
 /area/station/commons)
 "fL" = (
-/obj/structure/grille,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/obj/item/areaeditor,
+/obj/structure/table/wood/fancy/royalblue,
+/turf/open/floor/wood,
 /area/station/command/bridge)
 "gc" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on{
@@ -77,11 +74,10 @@
 /turf/open/floor/mineral/bananium,
 /area/station/commons)
 "kz" = (
-/obj/item/areaeditor,
+/obj/structure/table/wood/fancy/royalblue,
 /turf/open/floor/wood,
 /area/station/command/bridge)
 "lc" = (
-/obj/structure/chair/comfy/shuttle,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -93,9 +89,8 @@
 /turf/open/floor/wood,
 /area/station/command/bridge)
 "mU" = (
-/obj/structure/grille,
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/mineral/bananium,
+/turf/open/floor/plating,
 /area/station/commons)
 "mV" = (
 /obj/structure/cable,
@@ -460,8 +455,7 @@
 /turf/open/floor/mineral/bananium,
 /area/station/commons)
 "NI" = (
-/obj/structure/window/reinforced/fulltile,
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow,
 /turf/open/floor/plating,
 /area/station/commons)
@@ -541,6 +535,12 @@
 /obj/machinery/seed_extractor,
 /turf/open/floor/mineral/bananium,
 /area/station/commons)
+"TK" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/station/command/bridge)
 "TV" = (
 /obj/item/food/egg,
 /obj/item/food/egg,
@@ -763,10 +763,9 @@
 /turf/open/floor/mineral/bananium,
 /area/station/commons)
 "Zr" = (
-/obj/structure/grille,
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
-/turf/open/floor/mineral/bananium,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
 /area/station/commons)
 "Zw" = (
 /obj/machinery/door/poddoor{
@@ -1368,8 +1367,8 @@ YY
 YY
 "}
 (23,1,1) = {"
-YY
-fL
+dW
+dW
 gN
 gN
 gN
@@ -1395,8 +1394,8 @@ YY
 "}
 (24,1,1) = {"
 dr
-fL
 hv
+TK
 lc
 ns
 gc
@@ -1446,8 +1445,8 @@ YY
 YY
 "}
 (26,1,1) = {"
-YY
-fL
+dW
+dW
 gN
 gN
 gN

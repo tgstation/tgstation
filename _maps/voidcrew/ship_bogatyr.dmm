@@ -57,8 +57,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/station/science)
 "cD" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/cargo/miningoffice)
 "cL" = (
@@ -290,8 +289,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/station/medical)
 "pG" = (
-/obj/structure/window/reinforced/fulltile,
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor{
 	id = "bogatyr_windows"
 	},
@@ -321,8 +319,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/maintenance/central)
 "qC" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor{
 	id = "bogatyr_windows"
 	},
@@ -1097,8 +1094,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/station/medical)
 "WR" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor{
 	id = "bogatyr_bridge"
 	},

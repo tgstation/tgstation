@@ -9,38 +9,26 @@ export const HelmComputer = (props, context) => {
     <Window width={500} height={630} theme="retro">
       <Window.Content>
         <Section>
-         <Stack vertical align="left">
+          <Stack vertical align="left">
             <Stack.Item>
               <Button
                 icon="arrow-left"
                 iconRotation={45}
                 onClick={() => act('northwest')}
-                />
-              <Button
-                icon="arrow-up"
-                onClick={() => act('north')}
-                />
+              />
+              <Button icon="arrow-up" onClick={() => act('north')} />
               <Button
                 icon="arrow-up"
                 iconRotation={45}
                 onClick={() => act('northeast')}
-                />
+              />
             </Stack.Item>
-         </Stack>
+          </Stack>
           <Stack vertical align="left">
             <Stack.Item>
-              <Button
-                icon="arrow-left"
-                onClick={() => act('west')}
-                />
-              <Button
-                icon="circle"
-                onClick={() => act('reset')}
-                />
-              <Button
-                icon="arrow-right"
-                onClick={() => act('east')}
-                />
+              <Button icon="arrow-left" onClick={() => act('west')} />
+              <Button icon="circle" onClick={() => act('reset')} />
+              <Button icon="arrow-right" onClick={() => act('east')} />
             </Stack.Item>
           </Stack>
           <Stack vertical align="left">
@@ -49,19 +37,15 @@ export const HelmComputer = (props, context) => {
                 icon="arrow-down"
                 iconRotation={45}
                 onClick={() => act('southwest')}
-                />
-              <Button
-                icon="arrow-down"
-                onClick={() => act('south')}
-                />
+              />
+              <Button icon="arrow-down" onClick={() => act('south')} />
               <Button
                 icon="arrow-right"
                 iconRotation={45}
                 onClick={() => act('southeast')}
-                />
+              />
             </Stack.Item>
           </Stack>
-
         </Section>
         <Section fill>
           <ByondUi

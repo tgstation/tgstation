@@ -445,8 +445,7 @@
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/station/science/research)
 "fa" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/service/chapel)
 "fb" = (
@@ -2719,8 +2718,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "MU" = (
-/obj/structure/window/reinforced/fulltile,
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/commons/dorms)
 "MZ" = (

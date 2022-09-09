@@ -947,8 +947,7 @@
 /turf/open/floor/plating,
 /area/station/cargo)
 "Rd" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "Rn" = (
