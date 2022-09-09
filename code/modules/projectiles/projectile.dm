@@ -322,7 +322,7 @@
 		reagent_note = "REAGENTS: [pretty_string_from_reagent_list(reagents.reagent_list)]"
 
 	if(ismob(firer))
-		log_combat(firer, L, "shot", src, (reagent_note ? "containing [reagent_note]" : null))
+		log_combat(firer, L, "shot", src, reagent_note)
 		return BULLET_ACT_HIT
 
 	if(isvehicle(firer))
