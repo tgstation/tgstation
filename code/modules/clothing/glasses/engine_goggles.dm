@@ -6,6 +6,10 @@
 #define MODE_SHUTTLE "shuttle"
 #define MODE_PIPE_CONNECTABLE "connectable"
 #define MODE_ATMOS_THERMAL "atmospheric thermal"
+#define TEMP_SHADE_CYAN 273.15
+#define TEMP_SHADE_GREEN 283.15
+#define TEMP_SHADE_YELLOW 300
+#define TEMP_SHADE_RED 500
 
 /obj/item/clothing/glasses/meson/engine
 	name = "engineering scanner goggles"
@@ -167,22 +171,6 @@
 
 	modes = list(MODE_NONE = MODE_ATMOS_THERMAL, MODE_ATMOS_THERMAL = MODE_NONE)
 
-/obj/item/clothing/glasses/meson/engine/atmos_imaging/toggle_mode(mob/user, voluntary)
-	mode = modes[mode]
-	to_chat(user, "<span class='[voluntary ? "notice":"warning"]'>[voluntary ? "You turn the goggles":"The goggles turn"] [mode ? "to [mode] mode":"off"][voluntary ? ".":"!"]</span>")
-	switch(mode)
-		if(MODE_ATMOS_THERMAL)
-			change_glass_color(user, /datum/client_colour/glass_colour/lightorange)
-		if(MODE_NONE)
-			change_glass_color(user, initial(glass_colour_type))
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.glasses == src)
-			H.update_sight()
-
-	update_appearance()
-	update_action_buttons()
-
 /obj/item/clothing/glasses/meson/engine/atmos_imaging/update_icon_state()
 	icon_state = inhand_icon_state = "trayson-[mode]"
 	return ..()
@@ -196,10 +184,6 @@
 	if(mode == MODE_ATMOS_THERMAL)
 		atmos_thermal(user)
 
-#define TEMP_SHADE_CYAN 273.15
-#define TEMP_SHADE_GREEN 283.15
-#define TEMP_SHADE_YELLOW 300
-#define TEMP_SHADE_RED 500
 
 /proc/atmos_thermal(mob/viewer, range = 4, duration = 10)
 	if(!ismob(viewer) || !viewer.client)
@@ -212,19 +196,19 @@
 		var/image/pic = image('icons/turf/overlays.dmi', open, "greyOverlay", ABOVE_ALL_MOB_LAYER)
 		// Lower than TEMP_SHADE_CYAN should be deep blue
 		switch(temp)
-			if(TCMB to TEMP_SHADE_CYAN)
+			if(-INFINITY to TEMP_SHADE_CYAN)
 				pic.color = COLOR_STRONG_BLUE
 			// Between TEMP_SHADE_CYAN and TEMP_SHADE_GREEN
-			if(274.15 to TEMP_SHADE_GREEN)
+			if(TEMP_SHADE_CYAN to TEMP_SHADE_GREEN)
 				pic.color = BlendRGB(COLOR_DARK_CYAN, COLOR_LIME, max(round((temp - TEMP_SHADE_CYAN)/(TEMP_SHADE_GREEN - TEMP_SHADE_CYAN), 0.01), 0))
 			// Between TEMP_SHADE_GREEN and TEMP_SHADE_YELLOW
-			if(284.15 to TEMP_SHADE_YELLOW)
+			if(TEMP_SHADE_GREEN to TEMP_SHADE_YELLOW)
 				pic.color = BlendRGB(COLOR_LIME, COLOR_YELLOW, clamp(round((temp-TEMP_SHADE_GREEN)/(TEMP_SHADE_YELLOW - TEMP_SHADE_GREEN), 0.01), 0, 1))
 			// Between TEMP_SHADE_YELLOW and TEMP_SHADE_RED
-			if(301 to TEMP_SHADE_RED)
+			if(TEMP_SHADE_YELLOW to TEMP_SHADE_RED)
 				pic.color = BlendRGB(COLOR_YELLOW, COLOR_RED, clamp(round((temp-TEMP_SHADE_YELLOW)/(TEMP_SHADE_RED - TEMP_SHADE_YELLOW), 0.01), 0, 1))
 			// Over TEMP_SHADE_RED should be red
-			if(501 to FUSION_MAXIMUM_TEMPERATURE)
+			if(TEMP_SHADE_RED to INFINITY)
 				pic.color = COLOR_RED
 		pic.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		pic.alpha = 200
@@ -237,3 +221,7 @@
 #undef MODE_SHUTTLE
 #undef MODE_PIPE_CONNECTABLE
 #undef MODE_ATMOS_THERMAL
+#undef TEMP_SHADE_CYAN
+#undef TEMP_SHADE_GREEN
+#undef TEMP_SHADE_YELLOW
+#undef TEMP_SHADE_RED
