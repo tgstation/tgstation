@@ -50,6 +50,8 @@
 
 /// Updates the list of designs this fabricator can print.
 /obj/machinery/rnd/production/proc/update_designs()
+	if(!stored_research)
+		return
 	cached_designs.Cut()
 
 	for(var/design_id in stored_research.researched_designs)
