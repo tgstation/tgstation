@@ -84,7 +84,7 @@
 		P = scorned[i]
 		P.bad_news(src)
 	scorned = null
-	for (var/i in 1 to scroned_by.len)
+	for (var/i in 1 to scorned_by.len)
 		P = scorned_by[i]
 		P.bad_news(src)
 	scorned_by = null
