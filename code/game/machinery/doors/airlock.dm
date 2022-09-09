@@ -532,10 +532,21 @@
 		for(var/heading in list(NORTH,SOUTH,EAST,WEST))
 			if(!(unres_sides & heading))
 				continue
-			var/image/I = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_[heading]")
-			I.plane = ABOVE_LIGHTING_PLANE
-			I.pixel_y = round((75.1085 * sin(57.29577 * ((0.959476 * heading) + 2.09713))) + 25.6243) //32 if [heading] is NORTH, -32 if SOUTH, and 0 for the rest
-			I.pixel_x = round(41.7909 - (73.8279 * sin(57.29577 * ((1.93816 * heading) + 4.94674)))) //32 if [heading] is EAST, -32 if WEST, and 0 for the rest
+			var/image/floorlight = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_[heading]")
+			floorlight.plane = ABOVE_LIGHTING_PLANE
+			switch (heading)
+				if (NORTH)
+					floorlight.pixel_x = 0
+					floorlight.pixel_y = 32
+				if (SOUTH)
+					floorlight.pixel_x = 0
+					floorlight.pixel_y = -32
+				if (EAST)
+					floorlight.pixel_x = 32
+					floorlight.pixel_y = 0
+				if (WEST)
+					floorlight.pixel_x = -32
+					floorlight.pixel_y = 0
 			. += I
 
 /obj/machinery/door/airlock/do_animate(animation)
