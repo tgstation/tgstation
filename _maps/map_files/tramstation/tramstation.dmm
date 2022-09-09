@@ -3241,7 +3241,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction/engineering)
 "bsB" = (
-/obj/modular_map_root/tramstation/maintenance_upperdormsleft/attachment,
+/obj/modular_map_root/tramstation{
+	key = "maintenance_upperdormsleft_attachment"
+	},
 /turf/open/floor/iron/vaporwave,
 /area/mine/explored)
 "bsE" = (
@@ -3810,7 +3812,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "bBQ" = (
-/obj/modular_map_root/tramstation/maintenance_uppermedsci/attachment_a,
+/obj/modular_map_root/tramstation{
+	key = "maintenance_uppermedsci_attachment_a"
+	},
 /turf/open/floor/iron/vaporwave,
 /area/mine/explored)
 "bBX" = (
@@ -5494,7 +5498,9 @@
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 4
 	},
-/obj/modular_map_root/tramstation/maintenance_lowerservicecargo,
+/obj/modular_map_root/tramstation{
+	key = "maintenance_lowerservicecargo"
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/greater)
 "cdy" = (
@@ -7460,7 +7466,9 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
-/obj/modular_map_root/tramstation/maintenance_uppermedsci,
+/obj/modular_map_root/tramstation{
+	key = "maintenance_uppermedsci"
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/medical)
 "cIQ" = (
@@ -8956,7 +8964,9 @@
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "dnl" = (
-/obj/modular_map_root/tramstation/maintenance_upperbridgeright/attachment_b,
+/obj/modular_map_root/tramstation{
+	key = "maintenance_upperbridgeright_attachment_b"
+	},
 /turf/open/floor/iron/vaporwave,
 /area/mine/explored)
 "dnp" = (
@@ -12057,7 +12067,9 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint)
 "eol" = (
-/obj/modular_map_root/tramstation/maintenance_upperbridgeright,
+/obj/modular_map_root/tramstation{
+	key = "maintenance_upperbridgeright"
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/security)
 "eoG" = (
@@ -12791,7 +12803,9 @@
 /turf/open/floor/iron/dark,
 /area/station/commons/lounge)
 "eDl" = (
-/obj/modular_map_root/tramstation/maintenance_lowerdorm/attachment_b,
+/obj/modular_map_root/tramstation{
+	key = "maintenance_lowerdorm_attachment_b"
+	},
 /turf/open/floor/iron/vaporwave,
 /area/mine/explored)
 "eDo" = (
@@ -12984,7 +12998,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/unres,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/obj/modular_map_root/tramstation/maintenance_upperdormsright,
+/obj/modular_map_root/tramstation{
+	key = "maintenance_upperdormsright"
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/commons/fitness/recreation)
 "eFQ" = (
@@ -19982,7 +19998,9 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "hkZ" = (
-/obj/modular_map_root/tramstation/maintenance_upperdormsright/attachment,
+/obj/modular_map_root/tramstation{
+	key = "maintenance_upperdormsright_attachment"
+	},
 /turf/open/floor/iron/vaporwave,
 /area/mine/explored)
 "hlc" = (
@@ -21637,7 +21655,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "hTf" = (
-/obj/modular_map_root/tramstation/maintenance_uppermedsci/attachment_b,
+/obj/modular_map_root/tramstation{
+	key = "maintenance_uppermedsci_attachment_b"
+	},
 /turf/open/floor/iron/vaporwave,
 /area/mine/explored)
 "hTo" = (
@@ -22863,7 +22883,9 @@
 /turf/open/floor/iron,
 /area/station/science/robotics/mechbay)
 "ioQ" = (
-/obj/modular_map_root/tramstation/maintenance_upperbarright/attachment_a,
+/obj/modular_map_root/tramstation{
+	key = "maintenance_upperbarright_attachment_a"
+	},
 /turf/open/floor/iron/vaporwave,
 /area/mine/explored)
 "ipe" = (
@@ -27272,7 +27294,9 @@
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
 "jTH" = (
-/obj/modular_map_root/tramstation/maintenance_loweratmosci/attachment_a,
+/obj/modular_map_root/tramstation{
+	key = "maintenance_loweratmosci_attachment_a"
+	},
 /turf/open/floor/iron/vaporwave,
 /area/mine/explored)
 "jTN" = (
@@ -28895,7 +28919,9 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "kvJ" = (
-/obj/modular_map_root/tramstation/maintenance_upperbridgeright/attachment_a,
+/obj/modular_map_root/tramstation{
+	key = "maintenance_upperbridgeright_attachment_a"
+	},
 /turf/open/floor/iron/vaporwave,
 /area/mine/explored)
 "kwe" = (
@@ -31613,7 +31639,9 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
-/obj/modular_map_root/tramstation/maintenance_lowersecurity,
+/obj/modular_map_root/tramstation{
+	key = "maintenance_lowersecurity"
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
 "lsx" = (
@@ -32947,7 +32975,9 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/greater)
 "lRr" = (
-/obj/modular_map_root/tramstation/maintenance_lowerdorm,
+/obj/modular_map_root/tramstation{
+	key = "maintenance_lowerdorm"
+	},
 /turf/open/floor/iron/vaporwave,
 /area/mine/explored)
 "lRu" = (
@@ -34356,7 +34386,9 @@
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 4
 	},
-/obj/modular_map_root/tramstation/maintenance_upperbarright,
+/obj/modular_map_root/tramstation{
+	key = "maintenance_upperbarright"
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "mqQ" = (
@@ -35477,7 +35509,9 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/lockers)
 "mJC" = (
-/obj/modular_map_root/tramstation/maintenance_upperbarright/attachment_b,
+/obj/modular_map_root/tramstation{
+	key = "maintenance_upperbarright_attachment_b"
+	},
 /turf/open/floor/iron/vaporwave,
 /area/mine/explored)
 "mJK" = (
@@ -35580,7 +35614,9 @@
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "mLH" = (
-/obj/modular_map_root/tramstation/maintenance_lowercargosci/attachment_b,
+/obj/modular_map_root/tramstation{
+	key = "maintenance_lowercargosci_attachment_b"
+	},
 /turf/open/floor/iron/vaporwave,
 /area/mine/explored)
 "mLL" = (
@@ -35693,7 +35729,9 @@
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
-/obj/modular_map_root/tramstation/maintenance_lowercargosci,
+/obj/modular_map_root/tramstation{
+	key = "maintenance_lowercargosci"
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/central)
 "mNp" = (
@@ -37212,7 +37250,9 @@
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/any/service/library,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
-/obj/modular_map_root/tramstation/maintenance_upperdormsleft,
+/obj/modular_map_root/tramstation{
+	key = "maintenance_upperdormsleft"
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/service/library/lounge)
 "npm" = (
@@ -38485,7 +38525,9 @@
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
-/obj/modular_map_root/tramstation/maintenance_loweratmosci,
+/obj/modular_map_root/tramstation{
+	key = "maintenance_loweratmosci"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "nRj" = (
@@ -40069,7 +40111,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "oxq" = (
-/obj/modular_map_root/tramstation/maintenance_lowerdorm/attachment_a,
+/obj/modular_map_root/tramstation{
+	key = "maintenance_lowerdorm_attachment_a"
+	},
 /turf/open/floor/iron/vaporwave,
 /area/mine/explored)
 "oxs" = (
@@ -40580,7 +40624,9 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "oGV" = (
-/obj/modular_map_root/tramstation/maintenance_lowertunnel_leftup/attachment_b,
+/obj/modular_map_root/tramstation{
+	key = "maintenance_lowertunnel_leftup_attachment_b"
+	},
 /turf/open/floor/iron/vaporwave,
 /area/mine/explored)
 "oGY" = (
@@ -45568,7 +45614,9 @@
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
 "qrD" = (
-/obj/modular_map_root/tramstation/maintenance_lowerservicecargo/attachment_a,
+/obj/modular_map_root/tramstation{
+	key = "maintenance_lowerservicecargo_attachment_a"
+	},
 /turf/open/floor/iron/vaporwave,
 /area/mine/explored)
 "qrL" = (
@@ -47326,7 +47374,9 @@
 /turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/tram/left)
 "qXc" = (
-/obj/modular_map_root/tramstation/maintenance_lowerservicecargo/attachment_b,
+/obj/modular_map_root/tramstation{
+	key = "maintenance_lowerservicecargo_attachment_b"
+	},
 /turf/open/floor/iron/vaporwave,
 /area/mine/explored)
 "qXA" = (
@@ -50914,7 +50964,9 @@
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "shN" = (
-/obj/modular_map_root/tramstation/maintenance_lowertunnel_leftup/attachment_a,
+/obj/modular_map_root/tramstation{
+	key = "maintenance_lowertunnel_leftup_attachment_a"
+	},
 /turf/open/floor/iron/vaporwave,
 /area/mine/explored)
 "shR" = (
@@ -52387,7 +52439,9 @@
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
 "sMH" = (
-/obj/modular_map_root/tramstation/maintenance_loweratmosci/attachment_b,
+/obj/modular_map_root/tramstation{
+	key = "maintenance_loweratmosci_attachment_b"
+	},
 /turf/open/floor/iron/vaporwave,
 /area/mine/explored)
 "sMM" = (
@@ -60082,7 +60136,9 @@
 /turf/open/misc/asteroid,
 /area/station/medical/chemistry)
 "vzL" = (
-/obj/modular_map_root/tramstation/maintenance_lowersecurity/attachment,
+/obj/modular_map_root/tramstation{
+	key = "maintenance_lowersecurity_attachment"
+	},
 /turf/open/floor/iron/vaporwave,
 /area/mine/explored)
 "vzO" = (
@@ -63100,7 +63156,9 @@
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Tunnel Access Hatch"
 	},
-/obj/modular_map_root/tramstation/maintenance_lowertunnel_leftup,
+/obj/modular_map_root/tramstation{
+	key = "maintenance_lowertunnel_leftup"
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/central)
 "wGd" = (
@@ -63719,7 +63777,9 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness)
 "wRk" = (
-/obj/modular_map_root/tramstation/maintenance_lowercargosci/attachment_a,
+/obj/modular_map_root/tramstation{
+	key = "maintenance_lowercargosci_attachment_a"
+	},
 /turf/open/floor/iron/vaporwave,
 /area/mine/explored)
 "wRw" = (
@@ -158821,7 +158881,7 @@ dhe
 dhe
 dhe
 dhe
-dhe
+hkZ
 dhe
 dhe
 afH
@@ -159335,7 +159395,7 @@ dhe
 dhe
 dhe
 dhe
-hkZ
+dhe
 dhe
 dhe
 afH
