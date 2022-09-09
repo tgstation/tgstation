@@ -19,14 +19,14 @@
 		if ("spawncontainer")
 			var/containerdata = json_decode(href_list["container"])
 			var/obj/item/reagent_containers/container = beaker_panel_create_container(containerdata, get_turf(usr))
-			usr.log_message("spawned a [container] containing [reagent_strings(container.reagents.reagent_list)]", LOG_GAME)
+			usr.log_message("spawned a [container] containing [pretty_string_from_reagent_list(container.reagents.reagent_list)]", LOG_GAME)
 		if ("spawngrenade")
 			var/obj/item/grenade/chem_grenade/grenade = new(get_turf(usr))
 			var/containersdata = json_decode(href_list["containers"])
 			var/reagent_string
 			for (var/i in 1 to 2)
 				grenade.beakers += beaker_panel_create_container(containersdata[i], grenade)
-				reagent_string += " ([grenade.beakers[i].name] [i] : " + reagent_strings(grenade.beakers[i].reagents.reagent_list) + ");"
+				reagent_string += " ([grenade.beakers[i].name] [i] : " + pretty_string_from_reagent_list(grenade.beakers[i].reagents.reagent_list) + ");"
 			grenade.stage_change(GRENADE_READY)
 			var/grenadedata = json_decode(href_list["grenadedata"])
 			switch (href_list["grenadetype"])

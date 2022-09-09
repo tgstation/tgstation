@@ -423,7 +423,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/medical/cr
 		beaker = I
 		user.visible_message(span_notice("[user] places [I] in [src]."), \
 							span_notice("You place [I] in [src]."))
-		var/reagentlist = reagent_strings(I.reagents.reagent_list)
+		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
 		user.log_message("added an [I] to cryo containing [reagentlist].", LOG_GAME)
 		return
 	return ..()

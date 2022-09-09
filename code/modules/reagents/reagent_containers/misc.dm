@@ -143,7 +143,7 @@
 		return
 	if(iscarbon(A) && reagents?.total_volume)
 		var/mob/living/carbon/C = A
-		var/reagentlist = reagent_strings(reagents)
+		var/reagentlist = pretty_string_from_reagent_list(reagents)
 		var/log_object = "containing [reagentlist]"
 		if(user.combat_mode && !C.is_mouth_covered())
 			reagents.trans_to(C, reagents.total_volume, transfered_by = user, methods = INGEST)

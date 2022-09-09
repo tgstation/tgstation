@@ -266,9 +266,9 @@ Primarily used in reagents/reaction_agents
  * * * use (reagents.reagent_list, names_only, join_text = ", ", final_and, capitalize_names) for the formatting
  * * * Water, Silicon, Soup, and Space Lube
  */
-/proc/reagent_strings(list/reagent_list, names_only, join_text = " | ", final_and, capitalize_names)
+/proc/pretty_string_from_reagent_list(list/reagent_list, names_only, join_text = " | ", final_and, capitalize_names)
 	//Convert reagent list to a printable string for logging etc
-	var/list/rs = list()
+	var/list/reagent_strings = list()
 	var/reagents_left = reagent_list.len
 	var/intial_list_length = reagents_left
 	for (var/datum/reagent/reagent as anything in reagent_list)

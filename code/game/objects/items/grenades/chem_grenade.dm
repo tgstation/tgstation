@@ -145,7 +145,7 @@
 			beaker.forceMove(drop_location())
 			if(!beaker.reagents)
 				continue
-			var/reagent_list = reagent_strings(beaker.reagents)
+			var/reagent_list = pretty_string_from_reagent_list(beaker.reagents)
 			user.log_message("removed [beaker] ([reagent_list]) from [src]", LOG_GAME)
 		beakers = list()
 		to_chat(user, span_notice("You open the [initial(name)] assembly and remove the payload."))
@@ -173,7 +173,7 @@
 					return
 				to_chat(user, span_notice("You add [item] to the [initial(name)] assembly."))
 				beakers += item
-				var/reagent_list = reagent_strings(item.reagents)
+				var/reagent_list = pretty_string_from_reagent_list(item.reagents)
 				user.log_message("inserted [item] ([reagent_list]) into [src]", LOG_GAME)
 			else
 				to_chat(user, span_warning("[item] is empty!"))
@@ -205,7 +205,7 @@
 	for(var/obj/exploded_beaker in beakers)
 		if(!exploded_beaker.reagents)
 			continue
-		reagent_string += " ([exploded_beaker.name] [beaker_number++] : " + reagent_strings(exploded_beaker.reagents.reagent_list) + ");"
+		reagent_string += " ([exploded_beaker.name] [beaker_number++] : " + pretty_string_from_reagent_list(exploded_beaker.reagents.reagent_list) + ");"
 	if(landminemode)
 		log_bomber(user, "activated a proxy", src, "containing:[reagent_string]", message_admins = !dud_flags)
 	else
