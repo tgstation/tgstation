@@ -73,7 +73,7 @@
 
 /obj/item/light/Initialize(mapload)
 	. = ..()
-	create_reagents(LIGHT_REAGENT_CAPACITY, INJECTABLE | DRAINABLE | SEALED_CONTAINER)
+	create_reagents(LIGHT_REAGENT_CAPACITY, INJECTABLE | DRAINABLE | SEALED_CONTAINER | TRANSPARENT)
 	AddComponent(/datum/component/caltrop, min_damage = force)
 	update()
 	var/static/list/loc_connections = list(
