@@ -65,9 +65,6 @@
 	if(. & SPELL_CANCEL_CAST)
 		return
 
-	// Always no feedback, it's handled at the end of cast
-	. |= SPELL_NO_FEEDBACK
-
 	to_chat(cast_on, channel_message)
 
 	if(charge_sound_instance)
@@ -77,14 +74,13 @@
 		cast_on.add_overlay(charge_overlay_instance)
 
 	currently_channeling = TRUE
-	UpdateButtons()
+	UpdateButtons(status_only = TRUE)
 	if(!do_after(cast_on, channel_time, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_HELD_ITEM)))
 		stop_channel_effect(cast_on)
 		return . | SPELL_CANCEL_CAST
 
 /datum/action/cooldown/spell/charged/cast(atom/cast_on)
 	. = ..()
-	spell_feedback()
 	stop_channel_effect(cast_on)
 
 /datum/action/cooldown/spell/charged/set_statpanel_format()
@@ -106,4 +102,57 @@
 		playsound(for_who, sound(null, repeat = 0, channel = CHANNEL_CHARGED_SPELL), 50, FALSE)
 
 	currently_channeling = FALSE
-	UpdateButtons()
+	UpdateButtons(status_only = TRUE)
+
+/**
+ * ### Channelled "Beam" spells
+ *
+ * Channelled spells that pick a random target from nearby atoms to cast a spell on.
+ * Commonly used for beams, hence the name, but nothing's stopping projectiles or whatever from working.
+ *
+ * If no targets are nearby, cancels the spell and refunds the cooldown.
+ */
+/datum/action/cooldown/spell/charged/beam
+	/// The radius around the caster to find a target.
+	var/target_radius = 5
+	/// The maximum number of bounces the beam will go before stopping.
+	var/max_beam_bounces = 1
+	/// Who's our initial beam target? Set in before cast, used in cast.
+	var/atom/initial_target
+
+/datum/action/cooldown/spell/charged/beam/Destroy()
+	initial_target = null // This like shouuld never hang references but I've seen some cursed things so let's be safe
+	return ..()
+
+/datum/action/cooldown/spell/charged/beam/before_cast(atom/cast_on)
+	. = ..()
+	if(. & SPELL_CANCEL_CAST)
+		return
+
+	initial_target = get_target(cast_on)
+	if(isnull(first_target))
+		cast_on.balloon_alert(cast_on, "no targets nearby!")
+		stop_channel_effect(cast_on)
+		return . | SPELL_CANCEL_CAST
+
+/datum/action/cooldown/spell/charged/beam/cast(atom/cast_on)
+	. = ..()
+	send_beam(initial_target, first_target, max_beam_bounces)
+	initial_target = null
+
+/datum/action/cooldown/spell/charged/beam/proc/send_beam(atom/origin, atom/to_beam, bounces)
+	SHOULD_CALL_PARENT(FALSE)
+	CRASH("[type] did not implement send_beam and either has no effects or implemented the spell incorrectly.")
+
+/datum/action/cooldown/spell/charged/beam/proc/get_target(atom/center)
+	var/list/things = list()
+	for(var/atom/nearby_thing in range(target_radius, center))
+		if(nearby_thing == owner || nearby_thing == center)
+			continue
+
+		things += nearby_thing
+
+	if(!length(things))
+		return null
+
+	return pick(things)

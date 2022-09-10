@@ -1,4 +1,4 @@
-/datum/action/cooldown/spell/charged/fire_blast
+/datum/action/cooldown/spell/charged/beam/fire_blast
 	name = "Volcano Blast"
 	desc = "Charge up a blast of fire that chains between nearby targets, setting them ablaze. \
 		Targets already on fire will take priority. If the target fails to catch ablaze, or \
@@ -14,61 +14,45 @@
 	invocation = "V'LC'N!"
 	invocation_type = INVOCATION_SHOUT
 	channel_time = 5 SECONDS
+	target_radius = 5
+	max_beam_bounces = 4
 
-	/// The max number of chains between mobs
-	var/max_bounces = 4
 	/// How long the beam visual lasts, also used to determine time between jumps
 	var/beam_duration = 2 SECONDS
 
-/datum/action/cooldown/spell/charged/fire_blast/cast(atom/cast_on)
-	var/mob/living/carbon/to_blast_first = get_target_with_priority(cast_on)
-	if(isnull(to_blast_first))
-		cast_on.balloon_alert(cast_on, "no targets nearby!")
-		reset_spell_cooldown()
-		stop_channel_effect(cast_on)
-		return
-
-	send_fire_beam(cast_on, to_blast_first, max_bounces)
-	return ..()
-
-/**
- * Sends a fire beam from [origin] to [to_blast].
- * Dealing damage and igniting the target mob if they have no antimagic.
- * Recursive, the number of recursions dictated by the bounces parameter.
- */
-/datum/action/cooldown/spell/charged/fire_blast/proc/send_fire_beam(atom/origin, mob/living/carbon/to_blast, bounces = 4)
+/datum/action/cooldown/spell/charged/beam/fire_blast/send_beam(atom/origin, mob/living/carbon/to_beam, bounces = 4)
 	// Send a beam from the origin to the hit mob
-	origin.Beam(to_blast, icon_state = "solar_beam", time = beam_duration, beam_type = /obj/effect/ebeam/fire)
+	origin.Beam(to_beam, icon_state = "solar_beam", time = beam_duration, beam_type = /obj/effect/ebeam/fire)
 
 	// If they block the magic, the chain wont necessarily stop, but likely will
 	// (due to them not catching on fire)
-	if(to_blast.can_block_magic(antimagic_flags))
-		to_blast.visible_message(
-			span_warning("[to_blast] absorbs the spell, remaining unharmed!"),
+	if(to_beam.can_block_magic(antimagic_flags))
+		to_beam.visible_message(
+			span_warning("[to_beam] absorbs the spell, remaining unharmed!"),
 			span_userdanger("You absorb the spell, remaining unharmed!"),
 		)
 		// Apply status effect but with no overlay
-		to_blast.apply_status_effect(/datum/status_effect/fire_blasted)
+		to_beam.apply_status_effect(/datum/status_effect/fire_blasted)
 
 	// Otherwise, if unblocked apply the damage and set them up
 	else
-		to_blast.apply_damage(20, BURN, wound_bonus = 5)
-		to_blast.adjust_fire_stacks(3)
-		to_blast.ignite_mob()
+		to_beam.apply_damage(20, BURN, wound_bonus = 5)
+		to_beam.adjust_fire_stacks(3)
+		to_beam.ignite_mob()
 		// Apply the fire blast status effect to show they got blasted
-		to_blast.apply_status_effect(/datum/status_effect/fire_blasted, next_beam_happens_in * 0.1.5)
+		to_beam.apply_status_effect(/datum/status_effect/fire_blasted, next_beam_happens_in * 0.1.5)
 
 	// We can keep bouncing, try to continue the chain
 	if(bounces >= 1)
-		playsound(to_blast, sound, 50, vary = TRUE, extrarange = -1)
+		playsound(to_beam, sound, 50, vary = TRUE, extrarange = -1)
 		// Chain continues shortly after. If they extinguish themselves in this time, the chain will stop anyways.
-		addtimer(CALLBACK(src, .proc/continue_beam, to_blast, bounces), beam_duration * 0.5)
+		addtimer(CALLBACK(src, .proc/continue_beam, to_beam, bounces), beam_duration * 0.5)
 
 	else
-		playsound(to_blast, sound, 50, vary = TRUE, frequency = 12000)
+		playsound(to_beam, sound, 50, vary = TRUE, frequency = 12000)
 		// We hit the maximum chain length, apply a bonus for managing it
-		new /obj/effect/temp_visual/fire_blast_bonus(to_blast.loc)
-		for(var/mob/living/nearby_living in range(1, to_blast))
+		new /obj/effect/temp_visual/fire_blast_bonus(to_beam.loc)
+		for(var/mob/living/nearby_living in range(1, to_beam))
 			if(IS_HERETIC_OR_MONSTER(nearby_living) || nearby_living == owner)
 				continue
 			nearby_living.Knockdown(0.8 SECONDS)
@@ -77,32 +61,32 @@
 			nearby_living.ignite_mob()
 
 /// Timer callback to continue the chain, calling send_fire_bream recursively.
-/datum/action/cooldown/spell/charged/fire_blast/proc/continue_beam(mob/living/carbon/to_blast, bounces)
+/datum/action/cooldown/spell/charged/beam/fire_blast/proc/continue_beam(mob/living/carbon/beamed, bounces)
 	// We will only continue the chain if we exist, are still on fire, and still have the status effect
-	if(QDELETED(to_blast) || !to_blast.on_fire || !to_blast.has_status_effect(/datum/status_effect/fire_blasted))
+	if(QDELETED(beamed) || !to_beam.beamed || !beamed.has_status_effect(/datum/status_effect/fire_blasted))
 		return
 	// We fulfilled the conditions, get the next target
-	var/mob/living/carbon/to_blast_next = get_target_with_priority(to_blast)
-	if(isnull(to_blast_next)) // No target = no chain
+	var/mob/living/carbon/to_beam_next = get_target_with_priority(beamed)
+	if(isnull(to_beam_next)) // No target = no chain
 		return
 
 	// Chain again! Recursively
-	send_fire_beam(to_blast, to_blast_next, bounces - 1)
+	cast_on_target(beamed, to_beam_next, bounces - 1)
 
 /// Pick a carbon mob in a radius around us that we can reach.
 /// Mobs on fire will have priority and be targeted over others.
 /// Returns null or a carbon mob.
-/datum/action/cooldown/spell/charged/fire_blast/proc/get_target_with_priority(atom/center, radius = 5)
+/datum/action/cooldown/spell/charged/beam/fire_blast/get_target(atom/center)
 	var/list/possibles = list()
 	var/list/priority_possibles = list()
-	for(var/mob/living/carbon/to_check in view(radius, center))
+	for(var/mob/living/carbon/to_check in view(target_radius, center))
 		if(to_check == center || to_check == owner)
 			continue
 		if(to_check.has_status_effect(/datum/status_effect/fire_blasted)) // Already blasted
 			continue
 		if(IS_HERETIC_OR_MONSTER(to_check))
 			continue
-		if(!length(get_path_to(center, to_check, max_distance = radius, simulated_only = FALSE)))
+		if(!length(get_path_to(center, to_check, max_distance = target_radius, simulated_only = FALSE)))
 			continue
 
 		possibles += to_check
