@@ -110,7 +110,7 @@
 		return
 	if(!holder.my_atom)
 		return
-	if((holder.flags & SEALED_CONTAINER) && (holder.chem_temp < 750)) //FIND A BETTER NUMBER
+	if((holder.flags & SEALED_CONTAINER) && (holder.chem_temp < 650))
 		return
 	var/atom/A = holder.my_atom
 	A.atmos_spawn_air("plasma=[volume];TEMP=[holder.chem_temp]")
