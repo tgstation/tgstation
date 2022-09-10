@@ -543,7 +543,7 @@ SUBSYSTEM_DEF(air)
 		// This way we can make setting up adjacent turfs O(n) rather then O(n^2)
 		T.Initalize_Atmos(time)
 		if(CHECK_TICK)
-			time++
+			time--
 
 	if(active_turfs.len)
 		var/starting_ats = active_turfs.len
