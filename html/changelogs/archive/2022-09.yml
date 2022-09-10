@@ -407,3 +407,26 @@
   lizardqueenlexi:
   - bugfix: fixed a bug causing the process of slicing food to erase most of the food's
       reagents
+2022-09-10:
+  567Turtle:
+  - qol: Changes how the medipens examine text works
+  AnturK:
+  - bugfix: Fishing should be now more consistent about win/failure.
+  Dmeto:
+  - qol: Reagent scanner circuit component now ouputs to a table list.
+  JohnFulpWillard:
+  - bugfix: Mining station's access was reverted, and Curators once again can access
+      it. Supply security officers also once again only have access to it during elevated
+      access.
+  - qol: '''Mining'' access is now named ''Mining Dock'' while ''Mining EVA'' is now
+      named ''Mining Outpost'', to better reflect what they are.'
+  - qol: Syndicate sleepers (the ones in the nukie base outpost) now drops their board
+      on deconstruction.
+  - bugfix: SaturnX now properly turns you invisible again.
+  ShizCalev:
+  - bugfix: Tables built out of custom materials (ie meat) will no longer say that
+      they are built from iron in their description.
+  SpaceSmithers:
+  - bugfix: Tramstation's AI Upload is now equipped with the proper modules.
+  scriptis:
+  - refactor: animated numbers now animate at 60 fps
