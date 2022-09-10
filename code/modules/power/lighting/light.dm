@@ -315,7 +315,7 @@
 			to_chat(user, span_notice("You replace [light_object]."))
 		else
 			to_chat(user, span_notice("You insert [light_object]."))
-		if(length(light_object.reagents.reagents_list))
+		if(length(light_object.reagents.reagent_list))
 			create_reagents(LIGHT_REAGENT_CAPACITY)
 			light_object.reagents.copy_to(reagents, amount=LIGHT_REAGENT_CAPACITY, no_react=FALSE)
 			light_object.reagents.Destroy()
