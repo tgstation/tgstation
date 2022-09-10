@@ -89,7 +89,7 @@
 	if(!(moving_mob.movement_type & (FLYING|FLOATING)) || moving_mob.buckled)
 		playsound(src, 'sound/effects/glass_step.ogg', HAS_TRAIT(moving_mob, TRAIT_LIGHT_STEP) ? 30 : 50, TRUE)
 		if(status == LIGHT_BURNED || status == LIGHT_OK)
-			shatter()
+			shatter(moving_mob)
 
 /obj/item/light/create_reagents(max_vol, flags)
 	. = ..()
@@ -105,17 +105,19 @@
 
 /obj/item/light/attack(mob/living/M, mob/living/user, def_zone)
 	..()
-	shatter()
+	shatter(M)
 
 /obj/item/light/attack_atom(obj/O, mob/living/user, params)
 	..()
-	shatter()
+	shatter(O)
 
-/obj/item/light/proc/shatter()
+/obj/item/light/proc/shatter(var/target)
 	if(status == LIGHT_OK || status == LIGHT_BURNED)
 		visible_message(span_danger("[src] shatters."),span_hear("You hear a small glass object shatter."))
 		status = LIGHT_BROKEN
 		force = 5
-		playsound(src.loc, 'sound/effects/glasshit.ogg', 75, TRUE)
-		//PUT SOMETHING HERE TO HANDLE DROPPING REAGENTS ON BREAK
+		playsound(loc, 'sound/effects/glasshit.ogg', 75, TRUE)
+		if(length(reagents.reagent_list))
+			visible_message(span_danger("The contents of [src] splash onto you as you step on it!"),span_hear("You feel the contents of [src] splash onto you as you step on it!."))
+			reagents.expose(target, TOUCH)
 		update()

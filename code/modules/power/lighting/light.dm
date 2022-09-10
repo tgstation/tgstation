@@ -314,7 +314,7 @@
 		else
 			to_chat(user, span_notice("You insert [light_object]."))
 		if(length(light_object.reagents.reagent_list))
-			create_reagents(LIGHT_REAGENT_CAPACITY, SEALED_CONTAINER)
+			create_reagents(LIGHT_REAGENT_CAPACITY, SEALED_CONTAINER | TRANSPARENT)
 			light_object.reagents.copy_to(reagents, amount=LIGHT_REAGENT_CAPACITY, no_react=FALSE)
 			light_object.reagents.Destroy()
 		status = light_object.status

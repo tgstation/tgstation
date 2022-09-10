@@ -204,11 +204,12 @@
 			target.status = L2.status
 			target.switchcount = L2.switchcount
 			target.brightness = L2.brightness
+			if(obj_flags & EMAGGED)
+				target.create_reagents(20, SEALED_CONTAINER | TRANSPARENT) //LIGHT_REAGENT_CAPACITY can't be accessed from here. Look for a not magic-number solution to this please
+				target.reagents.add_reagent(/datum/reagent/toxin/plasma, 10)
 			target.on = target.has_power()
 			target.update()
 			qdel(L2)
-						//From my understanding the light replaced would rig lights placed into light sockets, despite them not having any plasma in them. Infinite plasma dupe??
-						//Anyways, add func here to add 10 plasma to the light reagent holder when emagged as a replacement for the rigging functionality
 			return
 
 		else
