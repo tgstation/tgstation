@@ -87,12 +87,8 @@ SUBSYSTEM_DEF(statpanels)
 			if(update_actions && num_fires % default_wait == 0)
 				set_action_tabs(target, target_mob)
 
-			var/turf/listed_turf = target_mob?.listed_turf
-			// If we have atoms to process, do that
-			if(listed_turf && length(target?.obj_window.atoms_to_imagify))
-				generate_object_images(target)
-
 			// Handle the examined turf of the stat panel, if it's been long enough, or if we've generated new images for it
+			var/turf/listed_turf = target_mob?.listed_turf
 			if(listed_turf && num_fires % default_wait == 0)
 				if(target.stat_tab == listed_turf.name || !(listed_turf.name in target.panel_tabs))
 					set_turf_examine_tab(target, target_mob)
@@ -191,11 +187,12 @@ SUBSYSTEM_DEF(statpanels)
 	/// Set the atoms we're meant to display
 	var/datum/object_window_info/obj_window = target.obj_window
 	obj_window.atoms_to_show = atoms_to_display
+	START_PROCESSING(SSobj_tab_items, obj_window)
 	refresh_client_obj_view(target)
 
 /datum/controller/subsystem/statpanels/proc/refresh_client_obj_view(client/refresh)
 	var/list/turf_items = return_object_images(refresh)
-	if(!length(turf_items))
+	if(!length(turf_items) || !refresh.mob?.listed_turf)
 		return
 	refresh.stat_panel.send_message("update_listedturf", turf_items)
 
@@ -233,33 +230,6 @@ SUBSYSTEM_DEF(statpanels)
 	return turf_items
 
 #undef OBJ_IMAGE_LOADING
-
-/// Takes a client, attempts to generate object images for it
-/// We will update the client with any improvements we make when we're done
-/datum/controller/subsystem/statpanels/proc/generate_object_images(client/generate_for)
-	// Cache the datum access for sonic speed
-	var/datum/object_window_info/obj_window = generate_for.obj_window
-	var/list/to_make = obj_window.atoms_to_imagify
-	var/list/newly_seen = obj_window.atoms_to_images
-	var/index = 0
-	for(index in 1 to length(to_make))
-		var/atom/thing = to_make[index]
-
-		var/generated_string
-		if(ismob(thing) || length(thing.overlays) > 2)
-			generated_string = costly_icon2html(thing, generate_for, sourceonly=TRUE)
-		else
-			generated_string = icon2html(thing, generate_for, sourceonly=TRUE)
-
-		newly_seen[thing] = generated_string
-		if(MC_TICK_CHECK)
-			to_make.Cut(1, index + 1)
-			index = 0
-			break
-	// If we've not cut yet, do it now
-	if(index)
-		to_make.Cut(1, index + 1)
-	refresh_client_obj_view(generate_for)
 
 /datum/controller/subsystem/statpanels/proc/generate_mc_data()
 	mc_data = list(
@@ -357,7 +327,36 @@ SUBSYSTEM_DEF(statpanels)
 	atoms_to_imagify = null
 	parent.obj_window = null
 	parent = null
+	STOP_PROCESSING(SSobj_tab_items, src)
 	return ..()
+
+/// Takes a client, attempts to generate object images for it
+/// We will update the client with any improvements we make when we're done
+/datum/object_window_info/process(delta_time)
+	// Cache the datum access for sonic speed
+	var/list/to_make = atoms_to_imagify
+	var/list/newly_seen = atoms_to_images
+	var/index = 0
+	for(index in 1 to length(to_make))
+		var/atom/thing = to_make[index]
+
+		var/generated_string
+		if(ismob(thing) || length(thing.overlays) > 2)
+			generated_string = costly_icon2html(thing, parent, sourceonly=TRUE)
+		else
+			generated_string = icon2html(thing, parent, sourceonly=TRUE)
+
+		newly_seen[thing] = generated_string
+		if(TICK_CHECK)
+			to_make.Cut(1, index + 1)
+			index = 0
+			break
+	// If we've not cut yet, do it now
+	if(index)
+		to_make.Cut(1, index + 1)
+	SSstatpanels.refresh_client_obj_view(parent)
+	if(!length(to_make))
+		return PROCESS_KILL
 
 /datum/object_window_info/proc/start_turf_tracking()
 	if(actively_tracking)
