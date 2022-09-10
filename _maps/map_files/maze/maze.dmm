@@ -2,9 +2,7 @@
 "ax" = (
 /obj/structure/window/reinforced/fulltile/indestructible,
 /turf/open/indestructible/hierophant,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "aP" = (
 /obj/machinery/teleport/station,
 /turf/open/indestructible/necropolis/air,
@@ -13,18 +11,14 @@
 /obj/item/claymore,
 /obj/item/melee/energy/sword/saber/green,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "bD" = (
 /obj/item/clothing/suit/hooded/cultrobes{
 	pixel_x = 1;
 	pixel_y = 31
 	},
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "cb" = (
 /obj/item/stock_parts/cell/empty,
 /turf/open/floor/iron,
@@ -32,15 +26,11 @@
 "cs" = (
 /obj/machinery/light/no_nightlight/directional/north,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "dh" = (
 /obj/item/storage/medkit/fire,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "el" = (
 /obj/structure/closet/syndicate,
 /obj/item/flashlight/lantern,
@@ -68,21 +58,15 @@
 /obj/item/flashlight/lantern,
 /obj/item/flashlight/lantern,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "er" = (
 /obj/item/toy/figure/clown,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "eK" = (
 /obj/structure/closet,
 /turf/closed/indestructible/necropolis,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "fj" = (
 /obj/machinery/computer/teleporter,
 /turf/open/indestructible/necropolis/air,
@@ -94,45 +78,31 @@
 "fM" = (
 /mob/living/simple_animal/hostile/retaliate/clown/mutant,
 /turf/open/floor/mineral/bananium,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "fQ" = (
 /obj/structure/window/reinforced/fulltile/indestructible,
 /obj/structure/window/reinforced/fulltile/indestructible,
 /turf/open/indestructible/hierophant,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "fS" = (
 /obj/item/gun/energy/laser,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "gq" = (
 /mob/living/simple_animal/hostile/retaliate/clown/clownhulk/honcmunculus,
 /turf/open/floor/mineral/bananium,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "gt" = (
 /obj/machinery/teleport/station,
 /turf/open/indestructible/hierophant,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "gz" = (
 /turf/closed/wall,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "hN" = (
 /obj/structure/closet,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "iM" = (
 /obj/structure/closet/syndicate,
 /obj/item/clothing/suit/hooded/cultrobes,
@@ -144,15 +114,11 @@
 /obj/item/clothing/suit/chaplainsuit/clownpriest,
 /obj/item/reagent_containers/hypospray/medipen/snail,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "kc" = (
 /obj/effect/landmark/latejoin,
 /turf/closed/indestructible/necropolis,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "kB" = (
 /obj/machinery/teleport/station,
 /turf/open/floor/iron,
@@ -173,9 +139,7 @@
 /obj/item/storage/belt/utility/chief/full,
 /obj/structure/ladder,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "mX" = (
 /obj/machinery/power/smes/magical,
 /obj/structure/cable,
@@ -183,9 +147,7 @@
 /area/station/engineering/gravity_generator)
 "oi" = (
 /turf/closed/indestructible/fakedoor,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "oo" = (
 /obj/machinery/gravity_generator/main,
 /turf/open/floor/iron,
@@ -204,15 +166,11 @@
 /obj/item/clothing/head/bomb_hood,
 /obj/item/clothing/suit/chaplainsuit/clownpriest,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "pA" = (
 /obj/item/claymore,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "pZ" = (
 /obj/structure/closet/syndicate,
 /obj/item/clothing/suit/hooded/cultrobes,
@@ -227,24 +185,18 @@
 /obj/item/clothing/head/crown,
 /obj/item/reagent_containers/hypospray/medipen/magillitis,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "ra" = (
 /mob/living/simple_animal/hostile/retaliate/clown/longface,
 /turf/open/floor/mineral/bananium,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "rs" = (
 /turf/closed/indestructible/necropolis,
 /area/station/command/teleporter)
 "se" = (
 /mob/living/simple_animal/hostile/retaliate/clown/honkling,
 /turf/open/floor/mineral/bananium,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "sj" = (
 /obj/machinery/power/energy_accumulator/tesla_coil,
 /turf/open/floor/iron,
@@ -262,15 +214,11 @@
 /obj/item/clothing/mask/russian_balaclava,
 /obj/item/clothing/suit/chaplainsuit/clownpriest,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "uY" = (
 /mob/living/simple_animal/hostile/retaliate/clown/banana,
 /turf/open/floor/mineral/bananium,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "vd" = (
 /turf/open/floor/iron,
 /area/station/engineering/supermatter)
@@ -283,20 +231,14 @@
 "vG" = (
 /obj/machinery/light/no_nightlight/directional/west,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "vH" = (
 /turf/open/floor/mineral/bananium,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "wu" = (
 /obj/item/gun/energy/laser/hellgun,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "xe" = (
 /obj/structure/closet/syndicate,
 /obj/item/clothing/suit/hooded/cultrobes,
@@ -306,21 +248,15 @@
 /obj/item/clothing/mask/muzzle,
 /obj/item/reagent_containers/hypospray/medipen/magillitis,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "xk" = (
 /mob/living/simple_animal/hostile/retaliate/clown,
 /turf/open/floor/mineral/bananium,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "xA" = (
 /obj/effect/spawner/random/trap/deadly,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "yn" = (
 /obj/structure/ladder,
 /turf/open/floor/iron,
@@ -338,27 +274,19 @@
 "yS" = (
 /mob/living/simple_animal/hostile/retaliate/clown/fleshclown,
 /turf/open/floor/mineral/bananium,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "yY" = (
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "zx" = (
 /obj/item/toy/figure/clown,
 /turf/open/floor/mineral/bananium,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "zH" = (
 /obj/effect/spawner/random/trap/deadly,
 /obj/item/storage/medkit/fire,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "Ag" = (
 /obj/structure/closet/secure_closet/armory3,
 /obj/item/gun/energy/recharge/kinetic_accelerator,
@@ -372,29 +300,21 @@
 /obj/item/gun/energy/recharge/kinetic_accelerator,
 /obj/item/gun/energy/recharge/kinetic_accelerator,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "Aj" = (
 /obj/structure/ladder,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "AM" = (
 /obj/item/knife/butcher,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "AV" = (
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "Bs" = (
 /turf/open/space/basic,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "Cm" = (
 /obj/structure/closet,
 /obj/item/crowbar,
@@ -421,9 +341,7 @@
 /obj/item/crowbar,
 /obj/item/knife/butcher,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "CK" = (
 /obj/machinery/power/emitter{
 	dir = 8
@@ -443,53 +361,34 @@
 "Dn" = (
 /mob/living/simple_animal/hostile/retaliate/clown/lube,
 /turf/open/floor/mineral/bananium,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "Do" = (
 /turf/open/indestructible/hierophant,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
-"Dw" = (
-/turf/closed/indestructible/necropolis,
-/area/space)
+/area/station/maintenance/fore/greater)
 "DG" = (
 /turf/open/lava/smooth/airless,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "DH" = (
 /obj/structure/cable,
 /turf/closed/indestructible/necropolis,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "DI" = (
 /obj/effect/mob_spawn/ghost_role/venus_human_trap,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "Ex" = (
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton,
 /turf/open/floor/mineral/bananium,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "Fa" = (
 /obj/item/storage/belt/utility/chief/full,
 /obj/item/melee/energy/sword/saber/purple,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "Gs" = (
 /obj/item/clothing/mask/facehugger,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "GE" = (
 /turf/closed/indestructible/riveted,
 /area/station/engineering/gravity_generator)
@@ -505,23 +404,17 @@
 /obj/item/clothing/mask/balaclava,
 /obj/item/reagent_containers/hypospray/medipen/magillitis,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "IC" = (
 /turf/closed/indestructible/necropolis,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "IG" = (
 /obj/item/clothing/suit/hooded/cultrobes{
 	pixel_x = 2;
 	pixel_y = 31
 	},
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "IL" = (
 /obj/structure/ladder,
 /turf/open/space/basic,
@@ -529,15 +422,11 @@
 "Ja" = (
 /obj/machinery/light/no_nightlight/directional/south,
 /turf/open/floor/mineral/bananium,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "Jc" = (
 /obj/machinery/teleport/hub,
 /turf/open/indestructible/hierophant,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "JH" = (
 /obj/structure/closet/syndicate,
 /obj/item/clothing/suit/hooded/bee_costume,
@@ -548,32 +437,22 @@
 /obj/item/clothing/head/syndicatefake,
 /obj/item/clothing/suit/hazardvest,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "JP" = (
 /obj/item/melee/energy/sword/saber/blue,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "Kd" = (
 /mob/living/simple_animal/hostile/retaliate/clown/clownhulk,
 /turf/open/floor/mineral/bananium,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "KG" = (
 /turf/open/lava,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "Lp" = (
 /obj/machinery/computer/teleporter,
 /turf/open/indestructible/hierophant,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "LH" = (
 /obj/structure/closet/secure_closet/armory3,
 /obj/item/kinetic_crusher,
@@ -582,43 +461,31 @@
 /obj/item/kinetic_crusher,
 /obj/item/kinetic_crusher,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "LQ" = (
 /obj/structure/fans/tiny/invisible,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "Mb" = (
 /obj/item/reagent_containers/hypospray/medipen/survival/luxury,
 /obj/item/reagent_containers/hypospray/medipen/survival/luxury,
 /obj/item/reagent_containers/hypospray/medipen/survival/luxury,
 /obj/item/reagent_containers/hypospray/medipen/survival/luxury,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "MG" = (
 /turf/closed/indestructible/riveted/boss,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "MR" = (
 /turf/open/indestructible/necropolis,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "MW" = (
 /obj/item/clothing/suit/hooded/cultrobes{
 	pixel_x = 31;
 	pixel_y = 31
 	},
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "Nu" = (
 /obj/item/stack/cable_coil/five,
 /obj/item/stack/cable_coil/five,
@@ -628,9 +495,7 @@
 "NN" = (
 /obj/effect/landmark/observer_start,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "Od" = (
 /obj/effect/landmark/blobstart,
 /turf/open/space/basic,
@@ -642,9 +507,7 @@
 /obj/item/clothing/mask/balaclava,
 /obj/item/reagent_containers/hypospray/medipen/magillitis,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "OC" = (
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
@@ -656,15 +519,11 @@
 "Pm" = (
 /obj/item/storage/belt/utility/chief/full,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "Py" = (
 /obj/machinery/light/no_nightlight/directional/north,
 /turf/open/floor/mineral/bananium,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "Qf" = (
 /obj/structure/closet,
 /obj/item/crowbar,
@@ -690,20 +549,14 @@
 /obj/item/crowbar,
 /obj/item/knife/butcher,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "RJ" = (
 /turf/open/openspace/icemoon/keep_below,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "RV" = (
 /obj/item/hatchet,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "SF" = (
 /obj/structure/closet/syndicate,
 /obj/item/flashlight/lantern,
@@ -732,22 +585,16 @@
 /obj/item/flashlight/lantern,
 /obj/machinery/light/no_nightlight/directional/east,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "SP" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "Ti" = (
 /obj/effect/landmark/latejoin,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "TN" = (
 /obj/structure/closet/syndicate,
 /obj/item/clothing/suit/hooded/cultrobes,
@@ -756,15 +603,11 @@
 /obj/item/clothing/head/chefhat,
 /obj/item/clothing/head/bearpelt,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "TR" = (
 /obj/item/storage/medkit/brute,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "Uw" = (
 /obj/structure/closet/syndicate,
 /obj/item/clothing/suit/hooded/cultrobes,
@@ -774,14 +617,10 @@
 /obj/item/clothing/mask/gondola,
 /obj/item/reagent_containers/hypospray/medipen/magillitis,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "UD" = (
 /turf/open/lava/smooth/lava_land_surface,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "UJ" = (
 /obj/item/electronics/apc,
 /turf/open/floor/iron,
@@ -790,21 +629,15 @@
 /obj/effect/landmark/latejoin,
 /obj/machinery/light/no_nightlight/directional/east,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "Vy" = (
 /mob/living/simple_animal/hostile/megafauna/hierophant,
 /turf/open/indestructible/hierophant,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "VK" = (
 /obj/structure/window/plasma/fulltile,
 /turf/open/floor/mineral/bananium,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "VP" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -813,16 +646,12 @@
 /obj/effect/spawner/random/trap/deadly,
 /obj/item/storage/medkit/brute,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "WD" = (
 /obj/item/chainsaw,
 /obj/structure/ladder,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "YT" = (
 /obj/structure/closet/syndicate,
 /obj/item/clothing/suit/hooded/cultrobes,
@@ -832,9 +661,7 @@
 /obj/item/clothing/mask/balaclava,
 /obj/item/clothing/mask/gondola,
 /turf/open/indestructible/necropolis/air,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 "Zo" = (
 /obj/machinery/computer/teleporter,
 /turf/open/floor/iron,
@@ -847,9 +674,7 @@
 	name = "tracking beacon"
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/maintenance/central/greater{
-	name = "Buraya Isinlan"
-	})
+/area/station/maintenance/fore/greater)
 
 (1,1,1) = {"
 yP
@@ -344445,7 +344270,7 @@ OC
 OC
 yP
 yP
-Dw
+IC
 yY
 yY
 yY
