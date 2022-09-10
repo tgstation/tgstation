@@ -2263,6 +2263,7 @@
 #include "code\modules\antagonists\heretic\magic\eldritch_emplosion.dm"
 #include "code\modules\antagonists\heretic\magic\eldritch_shapeshift.dm"
 #include "code\modules\antagonists\heretic\magic\eldritch_telepathy.dm"
+#include "code\modules\antagonists\heretic\magic\electricity_jaunt.dm"
 #include "code\modules\antagonists\heretic\magic\expand_sight.dm"
 #include "code\modules\antagonists\heretic\magic\fire_blast.dm"
 #include "code\modules\antagonists\heretic\magic\flesh_ascension.dm"

@@ -40,7 +40,7 @@
 		to_beam.adjust_fire_stacks(3)
 		to_beam.ignite_mob()
 		// Apply the fire blast status effect to show they got blasted
-		to_beam.apply_status_effect(/datum/status_effect/fire_blasted, next_beam_happens_in * 0.1.5)
+		to_beam.apply_status_effect(/datum/status_effect/fire_blasted, beam_duration * 0.5)
 
 	// We can keep bouncing, try to continue the chain
 	if(bounces >= 1)
@@ -63,15 +63,15 @@
 /// Timer callback to continue the chain, calling send_fire_bream recursively.
 /datum/action/cooldown/spell/charged/beam/fire_blast/proc/continue_beam(mob/living/carbon/beamed, bounces)
 	// We will only continue the chain if we exist, are still on fire, and still have the status effect
-	if(QDELETED(beamed) || !to_beam.beamed || !beamed.has_status_effect(/datum/status_effect/fire_blasted))
+	if(QDELETED(beamed) || !beamed.on_fire || !beamed.has_status_effect(/datum/status_effect/fire_blasted))
 		return
 	// We fulfilled the conditions, get the next target
-	var/mob/living/carbon/to_beam_next = get_target_with_priority(beamed)
+	var/mob/living/carbon/to_beam_next = get_target(beamed)
 	if(isnull(to_beam_next)) // No target = no chain
 		return
 
 	// Chain again! Recursively
-	cast_on_target(beamed, to_beam_next, bounces - 1)
+	send_beam(beamed, to_beam_next, bounces - 1)
 
 /// Pick a carbon mob in a radius around us that we can reach.
 /// Mobs on fire will have priority and be targeted over others.

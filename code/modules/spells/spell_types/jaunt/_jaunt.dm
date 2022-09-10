@@ -95,10 +95,6 @@
 	SEND_SIGNAL(unjaunter, COMSIG_MOB_AFTER_EXIT_JAUNT, src)
 	return TRUE
 
-/// Simple helper to check if the passed mob is currently jaunting or not
-/datum/action/cooldown/spell/jaunt/proc/is_jaunting(mob/living/user)
-	return istype(user.loc, /obj/effect/dummy/phased_mob)
-
 /datum/action/cooldown/spell/jaunt/Remove(mob/living/remove_from)
 	exit_jaunt(remove_from)
 	return ..()

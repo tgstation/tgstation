@@ -206,7 +206,7 @@
 
 	var/datum/action/cooldown/spell/charged/beam/fire_blast/existing_beam_spell = locate() in user.actions
 	if(existing_beam_spell)
-		existing_beam_spell.max_bounces *= 2 // Double beams
+		existing_beam_spell.max_beam_bounces *= 2 // Double beams
 		existing_beam_spell.beam_duration *= 0.66 // Faster beams
 		existing_beam_spell.cooldown_time *= 0.66 // Lower cooldown
 

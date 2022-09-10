@@ -130,14 +130,14 @@
 		return
 
 	initial_target = get_target(cast_on)
-	if(isnull(first_target))
+	if(isnull(initial_target))
 		cast_on.balloon_alert(cast_on, "no targets nearby!")
 		stop_channel_effect(cast_on)
 		return . | SPELL_CANCEL_CAST
 
 /datum/action/cooldown/spell/charged/beam/cast(atom/cast_on)
 	. = ..()
-	send_beam(initial_target, first_target, max_beam_bounces)
+	send_beam(cast_on, initial_target, max_beam_bounces)
 	initial_target = null
 
 /datum/action/cooldown/spell/charged/beam/proc/send_beam(atom/origin, atom/to_beam, bounces)
