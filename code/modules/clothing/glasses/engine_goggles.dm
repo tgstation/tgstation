@@ -163,7 +163,7 @@
 
 
 /obj/item/clothing/glasses/meson/engine/atmos_imaging
-	name = "atmospheric thermal imaging goggles"
+	name = "Atmospheric thermal imaging goggles"
 	desc = "Goggles used by Atmospheric Technician to see the thermal energy of gasses in open areas"
 	icon_state = "trayson-radiation"
 	inhand_icon_state = "trayson-meson"
