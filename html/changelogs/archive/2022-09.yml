@@ -367,3 +367,66 @@
       long as they should
   tralezab:
   - rscadd: Mimes can now hold a baguette like a sword by right clicking it
+2022-09-09:
+  GoldenAlpharex:
+  - bugfix: Corporate sofa corners have been exorcised and will no longer engulf anyone
+      that sits on them while they're in the L orientation.
+  LemonInTheDark:
+  - bugfix: Hey, we support byond version 514.1587 now. You can upgrade if you'd like.
+      I hope.
+  Mickyan:
+  - bugfix: You can no longer adjust ethereal tunics, causing a missing icon error
+  NamelessFairy:
+  - bugfix: The bar shuttle now has correctly orientated stools
+  Profakos:
+  - bugfix: Monkey mind magnification helmets once again poll all ghosts
+  - rscadd: Added a preference for sentience creatures, which means people can toggle
+      eligibility to sentience potions, and boosted lavaland tumors. Cargorilla, Regal
+      Rat and Shuttle Creatures use this preference now.
+  - rscadd: Added several separate notification preferences for creatures
+  Sealed101:
+  - rscdel: 'Metastation: removed two excess cameras in Service Hallway and Hydroponics'
+  - qol: Solar Maintenance cameras are now grouped up in one place on the console's
+      list, several other cameras grouped up with their respective department group
+  - qol: tweaks to some cameras' c_tags for easier use (i.e. Tech Storage cameras
+      are now clearly signed as Secure and non-secure)
+  - bugfix: Armory - Exterior camera fixed to actually appear on console lists
+  - bugfix: two AI Minisat Exterior cameras fixed to be on the minisat network to
+      actually appear on console lists
+  - spellcheck: AI Upload cameras edited to not be lowercase (ai_upload -> AI Upload)
+  VexingRaven:
+  - bugfix: Fixed a malfunctioning lantern on Ice Box and the Syndicate Listening
+      Station.
+  Vishenka0704:
+  - rscadd: Added "ProcCall" & "Tweak Components Rating" modes in buildmode
+  dopamiin and tattle:
+  - rscadd: Distant meowing can be heard from the restricted section of station AutoDrobes.
+  - soundadd: A small cat meow designed to be played about three times in one second,
+      deafening innocent crew.
+  - imageadd: Cute cat slipper sprites.
+  lizardqueenlexi:
+  - bugfix: fixed a bug causing the process of slicing food to erase most of the food's
+      reagents
+2022-09-10:
+  567Turtle:
+  - qol: Changes how the medipens examine text works
+  AnturK:
+  - bugfix: Fishing should be now more consistent about win/failure.
+  Dmeto:
+  - qol: Reagent scanner circuit component now ouputs to a table list.
+  JohnFulpWillard:
+  - bugfix: Mining station's access was reverted, and Curators once again can access
+      it. Supply security officers also once again only have access to it during elevated
+      access.
+  - qol: '''Mining'' access is now named ''Mining Dock'' while ''Mining EVA'' is now
+      named ''Mining Outpost'', to better reflect what they are.'
+  - qol: Syndicate sleepers (the ones in the nukie base outpost) now drops their board
+      on deconstruction.
+  - bugfix: SaturnX now properly turns you invisible again.
+  ShizCalev:
+  - bugfix: Tables built out of custom materials (ie meat) will no longer say that
+      they are built from iron in their description.
+  SpaceSmithers:
+  - bugfix: Tramstation's AI Upload is now equipped with the proper modules.
+  scriptis:
+  - refactor: animated numbers now animate at 60 fps
