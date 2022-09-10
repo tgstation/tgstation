@@ -16,6 +16,9 @@
 ///If the holder is "alive" (i.e. mobs and organs) - If this flag is applied to a holder it will cause reagents to split upon addition to the object
 #define REAGENT_HOLDER_ALIVE (1<<9)
 
+///If the holder a sealed container - Used if you don't want reagent contents boiling out (plasma, specifically, in which case it only bursts out when at ignition temperatures)
+#define SEALED_CONTAINER (1<<10)
+
 // Is an open container for all intents and purposes.
 #define OPENCONTAINER (REFILLABLE | DRAINABLE | TRANSPARENT)
 

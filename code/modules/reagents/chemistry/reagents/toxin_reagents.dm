@@ -106,7 +106,7 @@
 /// Handles plasma boiling.
 /datum/reagent/toxin/plasma/proc/on_temp_change(datum/reagents/_holder, old_temp)
 	SIGNAL_HANDLER
-	if(holder.chem_temp < LIQUID_PLASMA_BP)
+	if(holder.chem_temp < LIQUID_PLASMA_BP || holder & SEALED_CONTAINER)
 		return
 	if(!holder.my_atom)
 		return

@@ -239,16 +239,14 @@
 		addtimer(CALLBACK(src, .proc/broken_sparks), delay, TIMER_UNIQUE | TIMER_NO_HASH_WAIT)
 
 /obj/machinery/light/process(delta_time)
-	src.visible_message("[delta_time]")
-	if(!cell)
+	if(!cell && !reagents)
 		return PROCESS_KILL
 	if(has_power())
 		if (cell.charge == cell.maxcharge && !reagents)
 			return PROCESS_KILL
 		cell.charge = min(cell.maxcharge, cell.charge + LIGHT_EMERGENCY_POWER_USE) //Recharge emergency power automatically while not using it
-		if(reagents)
-			reagents.adjust_thermal_energy(cell.maxcharge * reagents.total_volume * delta_time)
-			src.visible_message("[delta_time]")
+		if(reagents) //with most reagents coming out at 300, and with most meaningful reactions coming at 370+, this rate gives a few seconds of time to place it in and get out of dodge regardless of input.
+			reagents.adjust_thermal_energy(8 * reagents.total_volume * SPECIFIC_HEAT_DEFAULT * delta_time)
 			reagents.handle_reactions()
 	if(low_power_mode && !use_emergency_power(LIGHT_EMERGENCY_POWER_USE))
 		update(FALSE) //Disables emergency mode and sets the color to normal
@@ -316,7 +314,7 @@
 		else
 			to_chat(user, span_notice("You insert [light_object]."))
 		if(length(light_object.reagents.reagent_list))
-			create_reagents(LIGHT_REAGENT_CAPACITY)
+			create_reagents(LIGHT_REAGENT_CAPACITY, SEALED_CONTAINER)
 			light_object.reagents.copy_to(reagents, amount=LIGHT_REAGENT_CAPACITY, no_react=FALSE)
 			light_object.reagents.Destroy()
 		status = light_object.status
