@@ -4,9 +4,13 @@
 	var/mob/living/carbon/human/alice
 	var/mob/living/carbon/human/bob
 	var/mob/living/carbon/human/charlie
+	var/targetz = 5
 
 /datum/unit_test/chain_pull_through_space/New()
 	..()
+
+	if(SSmapping.empty_space)
+		targetz = SSmapping.empty_space.z_value
 
 	// Create a space tile that goes to another z-level
 	claimed_tile = run_loc_floor_bottom_left.type
@@ -14,7 +18,7 @@
 	space_tile = new(locate(run_loc_floor_bottom_left.x, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 	space_tile.destination_x = 100
 	space_tile.destination_y = 100
-	space_tile.destination_z = 5
+	space_tile.destination_z = targetz
 
 	// Create our list of humans, all adjacent to one another
 	alice = new(locate(run_loc_floor_bottom_left.x + 2, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
