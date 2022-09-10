@@ -174,6 +174,8 @@
 		var/color_set = bulb_colour
 		if(color)
 			color_set = color
+		if(reagents)
+			START_PROCESSING(SSmachines, src)
 		var/area/local_area = get_area(src)
 		if (local_area?.fire)
 			color_set = bulb_low_power_colour
@@ -236,13 +238,18 @@
 		var/delay = rand(BROKEN_SPARKS_MIN, BROKEN_SPARKS_MAX)
 		addtimer(CALLBACK(src, .proc/broken_sparks), delay, TIMER_UNIQUE | TIMER_NO_HASH_WAIT)
 
-/obj/machinery/light/process()
-	if (!cell)
+/obj/machinery/light/process(delta_time)
+	src.visible_message("[delta_time]")
+	if(!cell)
 		return PROCESS_KILL
 	if(has_power())
 		if (cell.charge == cell.maxcharge && !reagents)
 			return PROCESS_KILL
 		cell.charge = min(cell.maxcharge, cell.charge + LIGHT_EMERGENCY_POWER_USE) //Recharge emergency power automatically while not using it
+		if(reagents)
+			reagents.adjust_thermal_energy(cell.maxcharge * reagents.total_volume * delta_time)
+			src.visible_message("[delta_time]")
+			reagents.handle_reactions()
 	if(low_power_mode && !use_emergency_power(LIGHT_EMERGENCY_POWER_USE))
 		update(FALSE) //Disables emergency mode and sets the color to normal
 
@@ -308,7 +315,7 @@
 			to_chat(user, span_notice("You replace [light_object]."))
 		else
 			to_chat(user, span_notice("You insert [light_object]."))
-		if(light_object.reagents)
+		if(length(light_object.reagents.reagents_list))
 			create_reagents(LIGHT_REAGENT_CAPACITY)
 			light_object.reagents.copy_to(reagents, amount=LIGHT_REAGENT_CAPACITY, no_react=FALSE)
 			light_object.reagents.Destroy()
@@ -537,7 +544,7 @@
 	update()
 
 /obj/machinery/light/proc/drop_light_tube(mob/user)
-	var/obj/item/light/light_object = new light_type() //This is where the reagent holder would be moved back onto the light_object and removed from the machine
+	var/obj/item/light/light_object = new light_type()
 	if(reagents)
 		reagents.copy_to(light_object.reagents, amount=LIGHT_REAGENT_CAPACITY, no_react=TRUE)
 		reagents.Destroy()
