@@ -100,13 +100,7 @@
  */
 /obj/item/light/proc/on_reagents_del(datum/reagents/holder)
 	SIGNAL_HANDLER
-	UnregisterSignal(holder, list(
-		COMSIG_PARENT_QDELETING,
-		COMSIG_REAGENTS_NEW_REAGENT,
-		COMSIG_REAGENTS_ADD_REAGENT,
-		COMSIG_REAGENTS_REM_REAGENT,
-		COMSIG_REAGENTS_DEL_REAGENT,
-	))
+	UnregisterSignal(holder, list(COMSIG_PARENT_QDELETING))
 	return NONE
 
 /obj/item/light/attack(mob/living/M, mob/living/user, def_zone)
