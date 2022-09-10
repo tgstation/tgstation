@@ -1489,24 +1489,17 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 /obj/item/proc/compare_zone_to_item_slot(zone)
 	switch(slot_flags)
 		if(ITEM_SLOT_ICLOTHING, ITEM_SLOT_OCLOTHING, ITEM_SLOT_BACK)
-			if(zone == BODY_ZONE_CHEST)
-				return TRUE
+			return (zone == BODY_ZONE_CHEST)
 		if(ITEM_SLOT_BELT)
-			if(zone == BODY_ZONE_PRECISE_GROIN)
-				return TRUE
+			return (zone == BODY_ZONE_PRECISE_GROIN)
 		if(ITEM_SLOT_GLOVES)
-			if(zone == BODY_ZONE_R_ARM || zone == BODY_ZONE_L_ARM)
-				return TRUE
+			return (zone == BODY_ZONE_R_ARM || zone == BODY_ZONE_L_ARM)
 		if(ITEM_SLOT_HEAD, ITEM_SLOT_EARS, ITEM_SLOT_NECK)
-			if(zone == BODY_ZONE_HEAD)
-				return TRUE
+			return (zone == BODY_ZONE_HEAD)
 		if(ITEM_SLOT_MASK)
-			if(zone == BODY_ZONE_PRECISE_MOUTH)
-				return TRUE
+			return (zone == BODY_ZONE_PRECISE_MOUTH)
 		if(ITEM_SLOT_EYES)
-			if(zone == BODY_ZONE_PRECISE_EYES)
-				return TRUE
+			return (zone == BODY_ZONE_PRECISE_EYES)
 		if(ITEM_SLOT_FEET)
-			if(zone == BODY_ZONE_L_LEG || zone == BODY_ZONE_R_LEG)
-				return TRUE
+			return (zone == BODY_ZONE_L_LEG || zone == BODY_ZONE_R_LEG)
 	return FALSE
