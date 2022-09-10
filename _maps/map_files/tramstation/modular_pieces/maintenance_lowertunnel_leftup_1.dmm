@@ -364,6 +364,9 @@
 /obj/effect/spawner/random/trash/food_packaging,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/central)
+"SE" = (
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/port/fore)
 "TI" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -468,8 +471,8 @@ yC
 yC
 yC
 yC
-yC
 Kd
+Ox
 Ox
 uJ
 cx
@@ -506,10 +509,10 @@ nd
 nd
 nd
 nd
-nd
 Dt
 oN
 HD
+qW
 qW
 qW
 qW
@@ -541,12 +544,12 @@ Dh
 Dh
 Dh
 Dh
-nd
 Dh
 Dh
 Dh
 Dh
 Dh
+SE
 Dh
 Dh
 Dh

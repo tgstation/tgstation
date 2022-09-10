@@ -469,6 +469,9 @@
 /obj/effect/spawner/random/maintenance/four,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
+"WJ" = (
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/port/fore)
 "WY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -556,8 +559,8 @@ Hm
 Hm
 Hm
 Hm
-Hm
 gB
+hf
 hf
 oJ
 JC
@@ -594,10 +597,10 @@ km
 km
 km
 km
-km
 YK
 zI
 vs
+IT
 IT
 IT
 IT
@@ -629,12 +632,12 @@ Sz
 Sz
 Sz
 Sz
-km
 Sz
 Sz
 Sz
 Sz
 Sz
+WJ
 Sz
 Sz
 Sz
