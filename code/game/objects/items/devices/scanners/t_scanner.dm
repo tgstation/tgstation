@@ -42,17 +42,30 @@
 /obj/item/t_scanner/proc/scan()
 	t_ray_scan(loc)
 
-/proc/t_ray_scan(mob/viewer, flick_time = 8, distance = 3)
+/**
+ * Performs a t-ray scan, showing the viewer any nearby undertiles
+ *
+ * viewer - the mob seeing the tray
+ * flick_time - how long the scan lasts
+ * distance - the radius around to scan
+ * view_source - optional, around what atom do we look for undertiles. If not suppied, uses the viewer
+ */
+/proc/t_ray_scan(mob/viewer, flick_time = 0.8 SECONDS, distance = 3, atom/view_source)
 	if(!ismob(viewer) || !viewer.client)
 		return
-	var/list/t_ray_images = list()
-	for(var/obj/O in orange(distance, viewer) )
-		if(HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
-			var/image/I = new(loc = get_turf(O))
-			var/mutable_appearance/MA = new(O)
-			MA.alpha = 128
-			MA.dir = O.dir
-			I.appearance = MA
-			t_ray_images += I
-	if(t_ray_images.len)
-		flick_overlay(t_ray_images, list(viewer.client), flick_time)
+
+	var/list/all_t_ray_images = list()
+	for(var/obj/potential_undertile in orange(distance, view_source || viewer))
+		if(!HAS_TRAIT(potential_undertile, TRAIT_T_RAY_VISIBLE))
+			continue
+		var/image/t_ray_image = new(loc = get_turf(potential_undertile))
+		var/mutable_appearance/t_ray_mutable = new(potential_undertile)
+		t_ray_mutable.alpha = 128
+		t_ray_mutable.dir = potential_undertile.dir
+		t_ray_image.appearance = t_ray_mutable
+		all_t_ray_images += t_ray_image
+
+	if(!length(all_t_ray_images))
+		return
+
+	flick_overlay(all_t_ray_images, list(viewer.client), flick_time)

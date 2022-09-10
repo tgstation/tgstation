@@ -18,8 +18,8 @@
 	/// When we exit jaunt, this is how long the cooldown will be before we can re-enter.
 	var/cooldown_time_on_exit = 36 SECONDS
 
-	/// A cache of all nearby cabes when we are casted
-	var/list/obj/structure/cable/nearby_cables_cached = list()
+	/// A cache of all nearby turfs with cables in them when we are casted
+	var/list/turf/nearby_cables_cached = list()
 
 /datum/action/cooldown/spell/jaunt/electricity/New(Target, original)
 	. = ..()
@@ -34,7 +34,7 @@
 	if(. & SPELL_CANCEL_CAST)
 		return
 
-	find_nearby_cable(cast_on)
+	find_nearby_cable(get_turf(cast_on))
 
 	if(!length(nearby_cables_cached))
 		cast_on.balloon_alert(cast_on, "no nearby powered cables!")
@@ -42,13 +42,15 @@
 
 /datum/action/cooldown/spell/jaunt/electricity/cast(atom/cast_on)
 	. = ..()
-	var/obj/structure/cable/jaunting_into = pick(nearby_cables_cached)
+	// Find a turf to jaunt into, prioritize our caster's turf if it's a valid option
+	var/turf/below_the_caster = get_turf(cast_on)
+	var/turf/jaunting_into = (below_the_caster in nearby_cables_cached) ? below_the_caster : pick(nearby_cables_cached)
 	nearby_cables_cached.Cut()
 
 	if(is_jaunting(cast_on))
-		. = exit_jaunt(cast_on, get_turf(jaunting_into))
+		. = exit_jaunt(cast_on, jaunting_into)
 	else
-		. = enter_jaunt(cast_on, get_turf(jaunting_into))
+		. = enter_jaunt(cast_on, jaunting_into)
 
 	if(!.)
 		to_chat(cast_on, span_warning("You are unable to wire walk!"))
@@ -63,7 +65,7 @@
 	var/turf/wire_turf = get_turf(jaunter)
 	to_chat(jaunter, span_notice("In a spark of light, you melt into the cabling below [wire_turf]!"))
 	flash_nearby_witnesses(
-		center = wire_turf,
+		caster = jaunter,
 		flashed_message = span_warning("[jaunter] suddenly disappears in a spark of light!"),
 		immune_message = span_boldwarning("[jaunter] suddenly melts into [wire_turf], disappearing!"),
 	)
@@ -78,7 +80,7 @@
 	var/turf/wire_turf = get_turf(unjaunter)
 	to_chat(unjaunter, span_notice("In a spark of light, you reform from the cabling below [wire_turf]!"))
 	flash_nearby_witnesses(
-		center = wire_turf,
+		caster = unjaunter,
 		flashed_message = span_warning("[unjaunter] suddenly appears in a spark of light!"),
 		immune_message = span_boldwarning("[unjaunter] suddenly reforms out of [wire_turf], appearing out of nowhere!"),
 	)
@@ -86,12 +88,14 @@
 /**
  * Helper to flash every mob nearby the past center turf, providng messages depending on success.
  *
- * center - the center of the flash
+ * caster - the caster / center of the flash
  * flashed_message - message sent to all mobs affected by the flash
  * immune_message - message sent to all mbos immune to the flash (NOT blind mobs)
  */
-/datum/action/cooldown/spell/jaunt/electricity/proc/flash_nearby_witnesses(turf/center, flashed_message, immune_message)
-	for(var/mob/living/nearby_mob as anything in view(center))
+/datum/action/cooldown/spell/jaunt/electricity/proc/flash_nearby_witnesses(atom/caster, flashed_message, immune_message)
+	for(var/mob/living/nearby_mob in view(get_turf(caster)))
+		if(nearby_mob == caster || nearby_mob == owner)
+			continue
 		if(nearby_mob.is_blind()) // No messages for these guys
 			continue
 		if(nearby_mob.flash_act(2, affect_silicon = TRUE, visual = TRUE))
@@ -109,8 +113,17 @@
 	for(var/obj/structure/cable/cable in range(1, center))
 		if(!cable.powernet || cable.powernet.avail <= 0)
 			continue
+		var/turf/cable_turf = get_turf(cable)
+		// Multi layer cable support
+		// (Saves time checking for turf and area flags again rather than using list insert)
+		if(cable_turf in nearby_cables_cached)
+			continue
 
-		nearby_cables_cached += cable
+		var/area/cable_area = get_area(cable)
+		if((cable_turf.turf_flags & NOJAUNT) || (cable_area.area_flags & NOTELEPORT))
+			continue
+
+		nearby_cables_cached += cable_turf
 
 // Our electricity jaunt holder, which spits people out if a cable's unpowered
 /obj/effect/dummy/phased_mob/electricity
@@ -125,7 +138,12 @@
 	return ..()
 
 /obj/effect/dummy/phased_mob/electricity/process(delta_time)
-	if(check_turf_for_cable(get_turf(src)))
+	var/turf/current_turf = get_turf(src)
+	if(check_turf_for_cable(current_turf))
+		// t-ray scan to show things around us
+		t_ray_scan(jaunter, 1.5 SECONDS, 5, current_turf)
+
+		// heal stamina damage
 		if(isliving(jaunter))
 			var/mob/living/living_jaunter = jaunter
 			if(DT_PROB(10, delta_time) && living_jaunter.getStaminaLoss())
@@ -183,6 +201,8 @@
 		var/mob/living/living_jaunter = jaunter
 		living_jaunter.Paralyze(12 SECONDS)
 		living_jaunter.flash_act(10, length = 4 SECONDS)
+		living_jaunter.adjust_timed_status_effect(24 SECONDS, /datum/status_effect/jitter)
+		living_jaunter.adjust_timed_status_effect(24 SECONDS, /datum/status_effect/dizziness)
 
 	return ..()
 
