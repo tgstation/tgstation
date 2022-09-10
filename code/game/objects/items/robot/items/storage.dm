@@ -1,7 +1,7 @@
 /obj/item/borg/apparatus
 	name = "unknown storage apparatus"
 	desc = "This device seems nonfunctional."
-	icon = 'icons/mob/robot_items.dmi'
+	icon = 'icons/mob/silicon/robot_items.dmi'
 	icon_state = "hugmodule"
 	/// The item stored inside of this apparatus
 	var/obj/item/stored
@@ -188,7 +188,7 @@
 /obj/item/borg/apparatus/organ_storage
 	name = "organ storage bag"
 	desc = "A container for holding body parts."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "evidenceobj"
 	item_flags = SURGICAL_TOOL
 	storable = list(/obj/item/organ,

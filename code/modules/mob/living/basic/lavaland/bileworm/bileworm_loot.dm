@@ -5,7 +5,7 @@
 	name = "bileworm skin"
 	desc = "The slushy, squishy and slightly shiny skin of a postmortem bileworm."
 	singular_name = "bileworm skin piece"
-	icon = 'icons/mob/lavaland/bileworm.dmi'
+	icon = 'icons/mob/simple/lavaland/bileworm.dmi'
 	icon_state = "sheet-bileworm"
 	inhand_icon_state = "sheet-bileworm"
 	merge_type = /obj/item/stack/sheet/animalhide/bileworm
@@ -14,7 +14,7 @@
 
 /obj/item/crusher_trophy/bileworm_spewlet
 	name = "bileworm spewlet"
-	icon = 'icons/mob/lavaland/bileworm.dmi'
+	icon = 'icons/mob/simple/lavaland/bileworm.dmi'
 	icon_state = "bileworm_spewlet"
 	desc = "A baby bileworm. Suitable as a trophy for a kinetic crusher."
 	denied_type = /obj/item/crusher_trophy/bileworm_spewlet

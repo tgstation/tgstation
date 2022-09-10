@@ -48,6 +48,9 @@
 	if(forced)
 		return TRUE
 
+	if(SSmapping.map_vote_rocked)
+		return TRUE
+
 	if(!CONFIG_GET(flag/allow_vote_map))
 		if(by_who)
 			to_chat(by_who, span_warning("Map voting is disabled."))
@@ -85,3 +88,5 @@
 
 	SSmapping.changemap(winning_map)
 	SSmapping.map_voted = TRUE
+	if(SSmapping.map_vote_rocked)
+		SSmapping.map_vote_rocked = FALSE

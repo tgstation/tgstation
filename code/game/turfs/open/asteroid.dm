@@ -24,6 +24,8 @@
 	var/dug = FALSE
 	/// Icon state to use when broken
 	var/broken_state = "asteroid_dug"
+	/// Percentage chance of receiving a bonus worm
+	var/worm_chance = 30
 
 /turf/open/misc/asteroid/break_tile()
 	icon_state = broken_state
@@ -39,6 +41,8 @@
 /turf/open/misc/asteroid/proc/getDug()
 	dug = TRUE
 	new digResult(src, 5)
+	if (prob(worm_chance))
+		new /obj/item/food/bait/worm(src)
 	icon_state = "[base_icon_state]_dug"
 
 /// If the user can dig the turf
@@ -124,6 +128,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 
 /turf/open/misc/asteroid/basalt/airless
 	initial_gas_mix = AIRLESS_ATMOS
+	worm_chance = 0
 
 /turf/open/misc/asteroid/basalt/Initialize(mapload)
 	. = ..()
@@ -152,6 +157,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	initial_gas_mix = AIRLESS_ATMOS
 	baseturfs = /turf/open/misc/asteroid/airless
 	turf_type = /turf/open/misc/asteroid/airless
+	worm_chance = 0
 
 /turf/open/misc/asteroid/snow
 	gender = PLURAL
@@ -217,6 +223,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 
 /turf/open/misc/asteroid/snow/airless
 	initial_gas_mix = AIRLESS_ATMOS
+	worm_chance = 0
 
 /turf/open/misc/asteroid/snow/temperatre
 	initial_gas_mix = "o2=22;n2=82;TEMP=255.37"

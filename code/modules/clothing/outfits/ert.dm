@@ -436,7 +436,7 @@
 	suit_store = null
 	back = /obj/item/storage/backpack/ert/security
 	backpack_contents = list(
-		/obj/item/clothing/head/helmet/police = 1,
+		/obj/item/clothing/head/warden/police = 1,
 		/obj/item/storage/box/handcuffs = 1,
 		/obj/item/storage/box/survival/engineer = 1,
 	)

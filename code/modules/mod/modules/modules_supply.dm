@@ -142,7 +142,7 @@
 		return
 	if(!mod.wearer.Adjacent(target))
 		return
-	if(istype(target, /turf/closed/mineral))
+	if(ismineralturf(target))
 		var/turf/closed/mineral/mineral_turf = target
 		mineral_turf.gets_drilled(mod.wearer)
 		drain_power(use_power_cost)
@@ -155,7 +155,7 @@
 
 /obj/item/mod/module/drill/proc/bump_mine(mob/living/carbon/human/bumper, atom/bumped_into, proximity)
 	SIGNAL_HANDLER
-	if(!istype(bumped_into, /turf/closed/mineral) || !drain_power(use_power_cost))
+	if(!ismineralturf(bumped_into) || !drain_power(use_power_cost))
 		return
 	var/turf/closed/mineral/mineral_turf = bumped_into
 	mineral_turf.gets_drilled(mod.wearer)
@@ -305,7 +305,7 @@
 	icon_state = "magnet_loader"
 	module_type = MODULE_ACTIVE
 	removable = FALSE
-	use_power_cost = DEFAULT_CHARGE_DRAIN*3
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 3
 	incompatible_modules = list(/obj/item/mod/module/magnet)
 	cooldown_time = 1.5 SECONDS
 	overlay_state_active = "module_magnet"
@@ -472,8 +472,8 @@
 	icon_state = "sphere"
 	module_type = MODULE_ACTIVE
 	removable = FALSE
-	active_power_cost = DEFAULT_CHARGE_DRAIN*0.5
-	use_power_cost = DEFAULT_CHARGE_DRAIN*3
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 3
 	incompatible_modules = list(/obj/item/mod/module/sphere_transform)
 	cooldown_time = 1.25 SECONDS
 	/// Time it takes us to complete the animation.

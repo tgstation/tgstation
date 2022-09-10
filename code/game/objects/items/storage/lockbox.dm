@@ -211,7 +211,7 @@
 /obj/item/storage/lockbox/order
 	name = "order lockbox"
 	desc = "A box used to secure small cargo orders from being looted by those who didn't order it. Yeah, cargo tech, that means you."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "secure"
 	inhand_icon_state = "sec-case"
 	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
@@ -225,7 +225,7 @@
 	buyer_account = _buyer_account
 
 /obj/item/storage/lockbox/order/attackby(obj/item/W, mob/user, params)
-	if(!istype(W, /obj/item/card/id))
+	if(!isidcard(W))
 		return ..()
 
 	var/obj/item/card/id/id_card = W

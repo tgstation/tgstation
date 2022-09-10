@@ -1,7 +1,7 @@
 /obj/item/toy/plush
 	name = "plush"
 	desc = "This is the special coder plush, do not steal."
-	icon = 'icons/obj/plushes.dmi'
+	icon = 'icons/obj/toys/plushes.dmi'
 	icon_state = "debug"
 	worn_icon_state = "plushie"
 	attack_verb_continuous = list("thumps", "whomps", "bumps")
@@ -144,7 +144,7 @@
 			user.put_in_hands(grenade)
 			grenade = null
 		return
-	if(istype(I, /obj/item/grenade))
+	if(isgrenade(I))
 		if(stuffed)
 			to_chat(user, span_warning("You need to remove some stuffing first!"))
 			return
@@ -713,4 +713,16 @@
 	squeak_override = list(
 		'sound/weapons/egloves.ogg' = 2,
 		'sound/weapons/cablecuff.ogg' = 1,
+	)
+
+/obj/item/toy/plush/greek_cucumber
+	name = "cucumber greek"
+	desc = "A plushie depicting a large cucumber with eyes, it seems that according to the manufacturer of the toy, the human race will look like in the future."
+	icon_state = "cucumber"
+	inhand_icon_state = "cucumber"
+	attack_verb_continuous = list("squishуы", "creakes", "crunches")
+	attack_verb_simple = list("squish", "creak", "crunch")
+	squeak_override = list(
+		'sound/effects/slosh.ogg' = 1,
+		'sound/effects/splat.ogg' = 2
 	)

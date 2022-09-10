@@ -3,7 +3,6 @@
 	animate_movement = SLIDE_STEPS
 	speech_span = SPAN_ROBOT
 	var/obj_flags = CAN_BE_HIT
-	var/set_obj_flags // ONLY FOR MAPPING: Sets flags from a string list, handled in Initialize. Usage: set_obj_flags = "EMAGGED;!CAN_BE_HIT" to set EMAGGED and clear CAN_BE_HIT.
 
 	var/damtype = BRUTE
 	var/force = 0
@@ -48,35 +47,18 @@
 			return FALSE
 	return ..()
 
-/obj/Initialize(mapload)
-	. = ..()
-
-	if (set_obj_flags)
-		var/flagslist = splittext(set_obj_flags,";")
-		var/list/string_to_objflag = GLOB.bitfields["obj_flags"]
-		for (var/flag in flagslist)
-			if(flag[1] == "!")
-				flag = copytext(flag, length(flag[1]) + 1) // Get all but the initial !
-				obj_flags &= ~string_to_objflag[flag]
-			else
-				obj_flags |= string_to_objflag[flag]
-
-	if((obj_flags & ON_BLUEPRINTS) && isturf(loc))
-		var/turf/T = loc
-		T.add_blueprints_preround(src)
-
-	if(network_id)
-		var/area/A = get_area(src)
-		if(A)
-			if(!A.network_root_id)
-				log_telecomms("Area '[A.name]([REF(A)])' has no network network_root_id, force assigning in object [src]([REF(src)])")
-				SSnetworks.lookup_area_root_id(A)
-			network_id = NETWORK_NAME_COMBINE(A.network_root_id, network_id) // I regret nothing!!
-		else
-			log_telecomms("Created [src]([REF(src)] in nullspace, assuming network to be in station")
-			network_id = NETWORK_NAME_COMBINE(STATION_NETWORK_ROOT, network_id) // I regret nothing!!
-		AddComponent(/datum/component/ntnet_interface, network_id, id_tag)
-
+// Call this if you want to add your object to a network
+/obj/proc/init_network_id(network_id)
+	var/area/A = get_area(src)
+	if(A)
+		if(!A.network_root_id)
+			log_telecomms("Area '[A.name]([REF(A)])' has no network network_root_id, force assigning in object [src]([REF(src)])")
+			SSnetworks.lookup_area_root_id(A)
+		network_id = NETWORK_NAME_COMBINE(A.network_root_id, network_id) // I regret nothing!!
+	else
+		log_telecomms("Created [src]([REF(src)] in nullspace, assuming network to be in station")
+		network_id = NETWORK_NAME_COMBINE(STATION_NETWORK_ROOT, network_id) // I regret nothing!!
+	AddComponent(/datum/component/ntnet_interface, network_id, id_tag)
 
 /obj/Destroy(force)
 	if(!ismachinery(src))
@@ -399,25 +381,3 @@
 ///unfreezes this obj if its frozen
 /obj/proc/unfreeze()
 	SEND_SIGNAL(src, COMSIG_OBJ_UNFREEZE)
-
-/obj/storage_contents_dump_act(obj/item/src_object, mob/user)
-	. = ..()
-
-	if(.)
-		return
-
-	if(!src_object.atom_storage)
-		return
-
-	var/atom/resolve_location = src_object.atom_storage.real_location?.resolve()
-	if(!resolve_location)
-		return FALSE
-
-	if(length(resolve_location.contents))
-		to_chat(user, span_notice("You start dumping out the contents of [src_object]..."))
-		if(!do_after(user, 20, target=resolve_location))
-			return FALSE
-
-	src_object.atom_storage.remove_all(get_dumping_location())
-
-	return TRUE

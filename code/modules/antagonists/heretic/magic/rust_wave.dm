@@ -7,6 +7,7 @@
 	background_icon_state = "bg_ecult"
 	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "entropic_plume"
+	sound = 'sound/magic/forcewall.ogg'
 
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 30 SECONDS
@@ -29,10 +30,8 @@
 	if(victim.can_block_magic(antimagic_flags) || IS_HERETIC_OR_MONSTER(victim) || victim == caster)
 		return
 	victim.apply_status_effect(/datum/status_effect/amok)
-	victim.apply_status_effect(/datum/status_effect/cloudstruck, (level * 1 SECONDS))
-	if(iscarbon(victim))
-		var/mob/living/carbon/carbon_victim = victim
-		carbon_victim.reagents?.add_reagent(/datum/reagent/eldritch, min(1, 6 - level))
+	victim.apply_status_effect(/datum/status_effect/cloudstruck, level * 1 SECONDS)
+	victim.reagents?.add_reagent(/datum/reagent/eldritch, max(1, 6 - level))
 
 /datum/action/cooldown/spell/cone/staggered/entropic_plume/calculate_cone_shape(current_level)
 	// At the first level (that isn't level 1) we will be small

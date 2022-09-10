@@ -3,8 +3,8 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "soulstone"
 	inhand_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	layer = HIGH_OBJ_LAYER
 	desc = "A fragment of the legendary treasure known simply as the 'Soul Stone'. The shard still flickers with a fraction of the full artefact's power."
 	w_class = WEIGHT_CLASS_TINY
@@ -102,7 +102,7 @@
 
 	update_appearance()
 	for(var/mob/shade_to_deconvert in contents)
-		shade_to_deconvert.mind?.remove_antag_datum(/datum/antagonist/cult)
+		assign_master(shade_to_deconvert, exorcist)
 
 	exorcist.visible_message(span_notice("[exorcist] purifies [src]!"))
 	UnregisterSignal(src, COMSIG_BIBLE_SMACKED)
@@ -248,7 +248,7 @@
 	occupant.death()
 
 	target_toolbox.name = "soulful toolbox"
-	target_toolbox.icon = 'icons/obj/storage.dmi'
+	target_toolbox.icon = 'icons/obj/storage/storage.dmi'
 	target_toolbox.icon_state = "toolbox_blue_old"
 	target_toolbox.has_soul = TRUE
 	target_toolbox.has_latches = FALSE
@@ -327,9 +327,6 @@
 		return FALSE
 	shade.AddComponent(/datum/component/soulstoned, src)
 	update_appearance()
-	if(theme == THEME_HOLY)
-		for(var/mob/shade_to_deconvert in contents)
-			shade_to_deconvert.mind?.remove_antag_datum(/datum/antagonist/cult)
 
 	to_chat(shade, span_notice("Your soul has been captured by [src]. \
 		Its arcane energies are reknitting your ethereal form."))
@@ -337,6 +334,7 @@
 	if(user != shade)
 		to_chat(user, "[span_info("<b>Capture successful!</b>:")] [shade.real_name]'s soul \
 			has been captured and stored within [src].")
+		assign_master(shade, user)
 
 	return TRUE
 
@@ -398,11 +396,35 @@
 		else if(role_check(user))
 			to_chat(soulstone_spirit, span_bold("Your soul has been captured! You are now bound to [user.real_name]'s will. \
 				Help [user.p_them()] succeed in [user.p_their()] goals at all costs."))
+			assign_master(soulstone_spirit, user)
+
 		if(message_user)
 			to_chat(user, "[span_info("<b>Capture successful!</b>:")] [victim.real_name]'s soul has been ripped \
 				from [victim.p_their()] body and stored within [src].")
 
 	victim.dust(drop_items = TRUE)
+
+/**
+ * Assigns the bearer as the new master of a shade.
+ */
+/obj/item/soulstone/proc/assign_master(mob/shade, mob/user)
+	if (!shade || !user || !shade.mind)
+		return
+
+	// Cult shades get cult datum
+	if (user.mind.has_antag_datum(/datum/antagonist/cult))
+		shade.mind.remove_antag_datum(/datum/antagonist/shade_minion)
+		shade.mind.add_antag_datum(/datum/antagonist/cult)
+		return
+
+	// Only blessed soulstones can de-cult shades
+	if(theme == THEME_HOLY)
+		shade.mind.remove_antag_datum(/datum/antagonist/cult)
+
+	var/datum/antagonist/shade_minion/shade_datum = shade.mind.has_antag_datum(/datum/antagonist/shade_minion)
+	if (!shade_datum)
+		shade_datum = shade.mind.add_antag_datum(/datum/antagonist/shade_minion)
+	shade_datum.update_master(user.real_name)
 
 /**
  * Gets a ghost from dead chat to replace a missing player when a shade is created.

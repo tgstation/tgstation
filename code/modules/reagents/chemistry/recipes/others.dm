@@ -579,7 +579,7 @@
 /datum/chemical_reaction/monkey/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/mob/living/carbon/M = holder.my_atom
 	var/location = get_turf(M)
-	if(istype(M, /mob/living/carbon))
+	if(iscarbon(M))
 		if(ismonkey(M))
 			M.gib()
 		else

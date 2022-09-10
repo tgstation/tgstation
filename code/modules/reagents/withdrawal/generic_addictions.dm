@@ -111,7 +111,7 @@
 	if(affected_human.gender == MALE)
 		to_chat(affected_human, span_warning("Your chin itches."))
 		affected_human.facial_hairstyle = "Beard (Full)"
-		affected_human.update_hair(is_creating = TRUE)
+		affected_human.update_body_parts()
 	//Only like gross food
 	affected_human.dna?.species.liked_food = GROSS
 	affected_human.dna?.species.disliked_food = NONE

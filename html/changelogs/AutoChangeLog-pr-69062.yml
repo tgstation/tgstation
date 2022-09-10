@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes: 
-  - bugfix: "Departmentally ordered large crates (the big ones that need crowbars) now properly register that they need to be opened in their appropriate department, and provide proper payouts to the cargo budget upon delivery."

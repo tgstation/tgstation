@@ -121,7 +121,7 @@
 			var/mob/living/carbon/human/H = M
 			H.facial_hairstyle = "Shaved"
 			H.hairstyle = "Bald"
-			H.update_hair(is_creating = TRUE) // makes you loose hair as well
+			H.update_body_parts() // makes you loose hair as well
 			M.set_species(/datum/species/human/krokodil_addict)
 			M.adjustBruteLoss(50 * REM, 0) // holy shit your skin just FELL THE FUCK OFF
 	..()
@@ -674,13 +674,14 @@
 		animate(size = 0, time = 6 SECONDS, easing = CIRCULAR_EASING|EASE_IN)
 
 ///This proc turns the living mob passed as the arg "invisible_man"s invisible by giving him the invisible man trait and updating his body, this changes the sprite of all his organic limbs to a 1 alpha version.
-/datum/reagent/drug/saturnx/proc/turn_man_invisible(mob/living/carbon/invisible_man)
-	if(!invisible_man.getorganslot(ORGAN_SLOT_LIVER))
-		return
-	if(invisible_man.undergoing_liver_failure())
-		return
-	if(HAS_TRAIT(invisible_man, TRAIT_NOMETABOLISM))
-		return
+/datum/reagent/drug/saturnx/proc/turn_man_invisible(mob/living/carbon/invisible_man, requires_liver = TRUE)
+	if(requires_liver)
+		if(!invisible_man.getorganslot(ORGAN_SLOT_LIVER))
+			return
+		if(invisible_man.undergoing_liver_failure())
+			return
+		if(HAS_TRAIT(invisible_man, TRAIT_NOMETABOLISM))
+			return
 	if(invisible_man.has_status_effect(/datum/status_effect/grouped/stasis))
 		return
 
@@ -695,7 +696,7 @@
 	invisible_man.remove_from_all_data_huds()
 	invisible_man.sound_environment_override = SOUND_ENVIROMENT_PHASED
 
-/datum/reagent/drug/saturnx/on_mob_end_metabolize(mob/living/invisible_man)
+/datum/reagent/drug/saturnx/on_mob_end_metabolize(mob/living/carbon/invisible_man)
 	. = ..()
 	if(HAS_TRAIT(invisible_man, TRAIT_INVISIBLE_MAN))
 		invisible_man.add_to_all_human_data_huds() //Is this safe, what do you think, Floyd?
@@ -708,7 +709,6 @@
 			druggy_dna.species.species_traits -= NOBLOODOVERLAY
 
 	invisible_man.update_body()
-	invisible_man.update_hair()
 	invisible_man.sound_environment_override = NONE
 
 	if(!invisible_man.hud_used)

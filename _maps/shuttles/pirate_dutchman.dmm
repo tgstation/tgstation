@@ -108,12 +108,6 @@
 	},
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
-"aw" = (
-/obj/machinery/computer/monitor/secret{
-	dir = 8
-	},
-/turf/open/floor/carpet/royalblack/airless,
-/area/shuttle/pirate/flying_dutchman)
 "aB" = (
 /obj/structure/railing/corner{
 	color = "#4C3117";
@@ -745,33 +739,6 @@
 	},
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
-"LD" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 6
-	},
-/obj/machinery/light/floor,
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 11;
-	height = 16;
-	id = "pirateship_home";
-	name = "Deep Space";
-	width = 17
-	},
-/obj/docking_port/mobile/pirate{
-	dheight = 7;
-	dir = 8;
-	dwidth = 18;
-	height = 6;
-	launch_status = 0;
-	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
-	name = "Pirate Ship";
-	port_direction = 4;
-	preferred_direction = 8;
-	width = 13
-	},
-/turf/open/floor/wood/airless,
-/area/shuttle/pirate/flying_dutchman)
 "Ms" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/carpet/royalblack/airless,
@@ -789,6 +756,33 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/open/space/basic,
+/area/shuttle/pirate/flying_dutchman)
+"Op" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/machinery/light/floor,
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 11;
+	height = 16;
+	shuttle_id = "pirateship_home";
+	name = "Deep Space";
+	width = 17
+	},
+/obj/docking_port/mobile/pirate{
+	dheight = 7;
+	dir = 8;
+	dwidth = 18;
+	height = 6;
+	launch_status = 0;
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
+	name = "Pirate Ship";
+	port_direction = 4;
+	preferred_direction = 8;
+	width = 13
+	},
+/turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "OL" = (
 /obj/effect/turf_decal/siding/wood/corner{
@@ -946,6 +940,12 @@
 "Ys" = (
 /obj/effect/mob_spawn/ghost_role/human/pirate/skeleton,
 /turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"YJ" = (
+/obj/machinery/computer/monitor{
+	dir = 8
+	},
+/turf/open/floor/carpet/royalblack/airless,
 /area/shuttle/pirate/flying_dutchman)
 "ZL" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1324,7 +1324,7 @@ af
 af
 af
 zO
-LD
+Op
 WR
 vi
 WR
@@ -1340,7 +1340,7 @@ Gr
 WR
 EU
 bO
-aw
+YJ
 WR
 WR
 "}

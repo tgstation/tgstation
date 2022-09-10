@@ -33,6 +33,7 @@
 		/obj/item/seeds/chanter,
 		/obj/item/seeds/potato,
 		/obj/item/seeds/sugarcane,
+		/obj/item/seeds/cucumber,
 	)
 
 /obj/effect/spawner/random/food_or_drink/seed_rare
@@ -230,6 +231,7 @@
 		/obj/item/reagent_containers/condiment/vinegar = 1,
 		/obj/item/reagent_containers/condiment/peanut_butter = 1,
 		/obj/item/reagent_containers/condiment/quality_oil = 1,
+		/obj/item/reagent_containers/condiment/cherryjelly = 1,
 	)
 
 /obj/effect/spawner/random/food_or_drink/cups

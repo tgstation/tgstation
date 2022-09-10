@@ -180,12 +180,12 @@
 	. += span_info("Some <b>liquid plasma<b> could probably be scooped up with a <b>container</b>.")
 
 /turf/open/lava/plasma/attackby(obj/item/I, mob/user, params)
-	var/obj/item/reagent_containers/cup/C = I
-	if(C.reagents.total_volume >= C.volume)
-		to_chat(user, span_danger("[C] is full."))
+	if(!I.is_open_container())
+		return ..()
+	if(!I.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(5, 10)))
+		to_chat(user, span_warning("[I] is full."))
 		return
-	C.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(5, 10))
-	user.visible_message(span_notice("[user] scoops some plasma from the [src] with \the [C]."), span_notice("You scoop out some plasma from the [src] using \the [C]."))
+	user.visible_message(span_notice("[user] scoops some plasma from the [src] with [I]."), span_notice("You scoop out some plasma from the [src] using [I]."))
 
 /turf/open/lava/plasma/do_burn(atom/movable/burn_target, delta_time = 1)
 	. = TRUE
@@ -221,8 +221,8 @@
 		ADD_TRAIT(burn_limb, TRAIT_PLASMABURNT, name)
 		burn_human.update_body_parts()
 		burn_human.emote("scream")
-		burn_human.visible_message(span_warning("[burn_human]'s [burn_limb.name] melts down to the bone!"), \
-			span_userdanger("You scream out in pain as your [burn_limb.name] melts down to the bone, leaving an eerie plasma-like glow where flesh used to be!"))
+		burn_human.visible_message(span_warning("[burn_human]'s [burn_limb.plaintext_zone] melts down to the bone!"), \
+			span_userdanger("You scream out in pain as your [burn_limb.plaintext_zone] melts down to the bone, leaving an eerie plasma-like glow where flesh used to be!"))
 	if(!plasma_parts.len && !robo_parts.len) //a person with no potential organic limbs left AND no robotic limbs, time to turn them into a plasmaman
 		burn_human.ignite_mob()
 		burn_human.set_species(/datum/species/plasmaman)

@@ -3,7 +3,7 @@
 /mob/living/simple_animal/hostile/netherworld/statue
 	name = "statue" // matches the name of the statue with the flesh-to-stone spell
 	desc = "An incredibly lifelike marble carving. Its eyes seem to follow you..." // same as an ordinary statue with the added "eye following you" description
-	icon = 'icons/obj/statue.dmi'
+	icon = 'icons/obj/art/statue.dmi'
 	icon_state = "human_male"
 	icon_living = "human_male"
 	icon_dead = "human_male"
@@ -195,4 +195,4 @@
 	return things
 
 /datum/action/cooldown/spell/aoe/blindness/cast_on_thing_in_aoe(mob/living/victim, atom/caster)
-	victim.blind_eyes(4)
+	victim.adjust_blindness(4)

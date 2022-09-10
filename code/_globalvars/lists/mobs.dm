@@ -67,9 +67,9 @@ GLOBAL_LIST_EMPTY(mob_config_movespeed_type_lookup)
 GLOBAL_LIST_EMPTY(emote_list)
 
 GLOBAL_LIST_INIT(construct_radial_images, list(
-	CONSTRUCT_JUGGERNAUT = image(icon = 'icons/mob/cult.dmi', icon_state = "juggernaut"),
-	CONSTRUCT_WRAITH = image(icon = 'icons/mob/cult.dmi', icon_state = "wraith"),
-	CONSTRUCT_ARTIFICER = image(icon = 'icons/mob/cult.dmi', icon_state = "artificer")
+	CONSTRUCT_JUGGERNAUT = image(icon = 'icons/mob/nonhuman-player/cult.dmi', icon_state = "juggernaut"),
+	CONSTRUCT_WRAITH = image(icon = 'icons/mob/nonhuman-player/cult.dmi', icon_state = "wraith"),
+	CONSTRUCT_ARTIFICER = image(icon = 'icons/mob/nonhuman-player/cult.dmi', icon_state = "artificer")
 ))
 
 /proc/update_config_movespeed_type_lookup(update_mobs = TRUE)

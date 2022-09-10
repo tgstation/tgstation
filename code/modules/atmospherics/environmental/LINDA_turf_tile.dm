@@ -56,8 +56,7 @@
 
 /turf/open/Initialize(mapload)
 	if(!blocks_air)
-		air = new
-		air.copy_from_turf(src)
+		air = create_gas_mixture()
 		if(planetary_atmos)
 			if(!SSair.planetary[initial_gas_mix])
 				var/datum/gas_mixture/immutable/planetary/mix = new
@@ -74,6 +73,18 @@
 	return ..()
 
 /////////////////GAS MIXTURE PROCS///////////////////
+
+///Copies all gas info from the turf into a new gas_mixture, along with our temperature
+///Returns the created gas_mixture
+/turf/proc/create_gas_mixture()
+	var/datum/gas_mixture/mix = SSair.parse_gas_string(initial_gas_mix)
+
+	//acounts for changes in temperature
+	var/turf/parent = parent_type
+	if(temperature != initial(temperature) || temperature != initial(parent.temperature))
+		mix.temperature = temperature
+
+	return mix
 
 /turf/open/assume_air(datum/gas_mixture/giver) //use this for machines to adjust air
 	if(!giver)
@@ -100,8 +111,7 @@
 
 /turf/return_air()
 	RETURN_TYPE(/datum/gas_mixture)
-	var/datum/gas_mixture/copied_mixture = new
-	copied_mixture.copy_from_turf(src)
+	var/datum/gas_mixture/copied_mixture = create_gas_mixture()
 	return copied_mixture
 
 /turf/open/return_air()
@@ -134,10 +144,6 @@
 		max_fire_temperature_sustained = 0
 	else
 		to_be_destroyed = FALSE
-
-/turf/open/burn()
-	if(!active_hotspot) //Might not even be needed since excited groups are no longer cringe
-		..()
 
 /turf/temperature_expose(datum/gas_mixture/air, exposed_temperature)
 	atmos_expose(air, exposed_temperature)

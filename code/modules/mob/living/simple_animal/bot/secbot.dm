@@ -1,7 +1,7 @@
 /mob/living/simple_animal/bot/secbot
 	name = "\improper Securitron"
 	desc = "A little security robot. He looks less than thrilled."
-	icon = 'icons/mob/aibots.dmi'
+	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "secbot"
 	density = FALSE
 	anchored = FALSE
@@ -271,7 +271,7 @@
 		start_handcuffing(attack_target)
 
 /mob/living/simple_animal/bot/secbot/hitby(atom/movable/hitting_atom, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
-	if(istype(hitting_atom, /obj/item))
+	if(isitem(hitting_atom))
 		var/obj/item/item_hitby = hitting_atom
 		var/mob/thrown_by = item_hitby.thrownby?.resolve()
 		if(item_hitby.throwforce < src.health && thrown_by && ishuman(thrown_by))

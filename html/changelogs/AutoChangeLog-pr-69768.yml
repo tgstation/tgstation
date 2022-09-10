@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Tables built out of custom materials (ie meat) will no longer say that they are built from iron in their description."

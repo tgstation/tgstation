@@ -64,6 +64,7 @@
 		possible_heads -= objective.target.title
 	if(limited_to_department_head)
 		possible_heads = possible_heads & role.department_head
+	possible_heads -= role.title
 
 	if(!length(possible_heads))
 		return FALSE

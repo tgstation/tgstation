@@ -240,8 +240,8 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	GLOB.crematoriums -= src
 	return ..()
 
-/obj/structure/bodycontainer/crematorium/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
-	id = "[port.id]_[id]"
+/obj/structure/bodycontainer/crematorium/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+	id = "[port.shuttle_id]_[id]"
 
 /obj/structure/bodycontainer/crematorium/update_icon_state()
 	if(!connected || connected.loc != src)
