@@ -578,7 +578,7 @@
 "Dp" = (
 /obj/structure/table,
 /obj/item/flashlight/lantern/syndicate{
-	light_on = 1
+	on = 1
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
@@ -695,7 +695,7 @@
 	dir = 8;
 	dwidth = 4;
 	height = 5;
-	id = "caravansyndicate1_listeningpost";
+	shuttle_id = "caravansyndicate1_listeningpost";
 	name = "Syndicate Listening Post";
 	width = 9
 	},

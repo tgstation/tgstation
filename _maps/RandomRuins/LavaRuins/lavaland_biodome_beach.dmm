@@ -32,8 +32,10 @@
 /turf/open/floor/carpet/orange,
 /area/ruin/powered/beach)
 "aF" = (
-/obj/machinery/vending/boozeomat{
-	set_obj_flags = "EMAGGED"
+/obj/machinery/vending/boozeomat,
+/obj/effect/mapping_helpers/atom_injector/obj_flag{
+	inject_flags = 1;
+	target_type = /obj/machinery/vending/boozeomat
 	},
 /turf/open/floor/wood,
 /area/ruin/powered/beach)

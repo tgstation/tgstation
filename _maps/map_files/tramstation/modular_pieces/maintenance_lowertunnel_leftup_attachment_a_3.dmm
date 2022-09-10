@@ -1,0 +1,224 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall,
+/area/station/maintenance/port/central)
+"f" = (
+/turf/closed/wall/rock/porous,
+/area/station/maintenance/port/central)
+"h" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet,
+/obj/effect/spawner/random/maintenance/three,
+/obj/effect/spawner/random/engineering/tool,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
+"i" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
+"k" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"o" = (
+/turf/closed/wall/rust,
+/area/station/maintenance/port/central)
+"q" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/hobo_squat,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
+"u" = (
+/turf/template_noop,
+/area/template_noop)
+"w" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/template_noop)
+"x" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/modular_map_connector,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 1
+	},
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/port/central)
+"B" = (
+/turf/open/misc/asteroid/airless,
+/area/template_noop)
+"C" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/port/central)
+"H" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
+"I" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
+"N" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/moisture_trap,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
+"P" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/port/central)
+"R" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
+"Y" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/xeno_spawn,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/port/central)
+
+(1,1,1) = {"
+a
+o
+a
+a
+a
+u
+"}
+(2,1,1) = {"
+a
+q
+i
+a
+h
+u
+"}
+(3,1,1) = {"
+a
+I
+Y
+C
+P
+u
+"}
+(4,1,1) = {"
+f
+I
+R
+a
+P
+u
+"}
+(5,1,1) = {"
+f
+a
+a
+a
+P
+u
+"}
+(6,1,1) = {"
+w
+a
+N
+H
+P
+u
+"}
+(7,1,1) = {"
+w
+a
+a
+a
+P
+u
+"}
+(8,1,1) = {"
+w
+B
+B
+o
+P
+u
+"}
+(9,1,1) = {"
+w
+B
+B
+k
+P
+u
+"}
+(10,1,1) = {"
+w
+B
+B
+k
+P
+u
+"}
+(11,1,1) = {"
+B
+B
+B
+k
+P
+u
+"}
+(12,1,1) = {"
+B
+B
+B
+k
+P
+u
+"}
+(13,1,1) = {"
+B
+B
+B
+a
+P
+u
+"}
+(14,1,1) = {"
+B
+w
+B
+o
+P
+x
+"}
+(15,1,1) = {"
+B
+w
+w
+a
+a
+u
+"}
