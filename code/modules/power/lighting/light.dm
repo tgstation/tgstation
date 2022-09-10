@@ -240,7 +240,7 @@
 	if (!cell)
 		return PROCESS_KILL
 	if(has_power())
-		if (cell.charge == cell.maxcharge)
+		if (cell.charge == cell.maxcharge && !reagents)
 			return PROCESS_KILL
 		cell.charge = min(cell.maxcharge, cell.charge + LIGHT_EMERGENCY_POWER_USE) //Recharge emergency power automatically while not using it
 	if(low_power_mode && !use_emergency_power(LIGHT_EMERGENCY_POWER_USE))
@@ -308,9 +308,13 @@
 			to_chat(user, span_notice("You replace [light_object]."))
 		else
 			to_chat(user, span_notice("You insert [light_object]."))
+		if(light_object.reagents)
+			create_reagents(LIGHT_REAGENT_CAPACITY)
+			light_object.reagents.copy_to(reagents, amount=LIGHT_REAGENT_CAPACITY, no_react=FALSE)
+			light_object.reagents.Destroy()
 		status = light_object.status
 		switchcount = light_object.switchcount
-		brightness = light_object.brightness //Somewhere here you should transfer the reagent holder to the light machine?
+		brightness = light_object.brightness
 		on = has_power()
 		update()
 
@@ -534,6 +538,9 @@
 
 /obj/machinery/light/proc/drop_light_tube(mob/user)
 	var/obj/item/light/light_object = new light_type() //This is where the reagent holder would be moved back onto the light_object and removed from the machine
+	if(reagents)
+		reagents.copy_to(light_object.reagents, amount=LIGHT_REAGENT_CAPACITY, no_react=TRUE)
+		reagents.Destroy()
 	light_object.status = status
 	light_object.brightness = brightness
 
