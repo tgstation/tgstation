@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(sun)
 	azimuth_mod = round(rand(50, 200)/100, 0.01) // 50% - 200% of standard rotation
 	if(prob(50))
 		azimuth_mod *= -1
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/sun/fire(resumed = FALSE)
 	azimuth += azimuth_mod * base_rotation

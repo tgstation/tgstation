@@ -8,11 +8,11 @@ SUBSYSTEM_DEF(security_level)
 	var/list/available_levels = list()
 
 /datum/controller/subsystem/security_level/Initialize()
-	. = ..()
 	for(var/iterating_security_level_type in subtypesof(/datum/security_level))
 		var/datum/security_level/new_security_level = new iterating_security_level_type
 		available_levels[new_security_level.name] = new_security_level
 	current_security_level = available_levels[number_level_to_text(SEC_LEVEL_GREEN)]
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/security_level/fire(resumed)
 	if(!current_security_level.looping_sound) // No sound? No play.

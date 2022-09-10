@@ -142,7 +142,7 @@ SUBSYSTEM_DEF(persistent_paintings)
 	for(var/obj/structure/sign/painting/painting_frame as anything in painting_frames)
 		painting_frame.load_persistent()
 
-	return ..()
+	return SS_INIT_SUCCESS
 
 /**
  * Generates painting data ready to be consumed by ui.

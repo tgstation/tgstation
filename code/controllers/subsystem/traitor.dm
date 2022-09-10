@@ -41,7 +41,6 @@ SUBSYSTEM_DEF(traitor)
 	var/list/all_objectives_by_type = list()
 
 /datum/controller/subsystem/traitor/Initialize()
-	. = ..()
 	category_handler = new()
 	traitor_debug_panel = new(category_handler)
 
@@ -52,6 +51,7 @@ SUBSYSTEM_DEF(traitor)
 			if(!actual_typepath)
 				log_world("[configuration_path] has an invalid type ([typepath]) that doesn't exist in the codebase! Please correct or remove [typepath]")
 			configuration_data[actual_typepath] = data[typepath]
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/traitor/fire(resumed)
 	var/player_count = length(GLOB.alive_player_list)

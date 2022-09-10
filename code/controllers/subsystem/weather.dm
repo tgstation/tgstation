@@ -43,7 +43,7 @@ SUBSYSTEM_DEF(weather)
 			for(var/z in SSmapping.levels_by_trait(target_trait))
 				LAZYINITLIST(eligible_zlevels["[z]"])
 				eligible_zlevels["[z]"][W] = probability
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/weather/proc/update_z_level(datum/space_level/level)
 	var/z = level.z_value

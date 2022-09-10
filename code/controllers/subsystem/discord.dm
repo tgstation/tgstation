@@ -60,7 +60,7 @@ SUBSYSTEM_DEF(discord)
 		enabled = TRUE // Allows other procs to use this (Account linking, etc)
 	else
 		can_fire = FALSE // We dont want excess firing
-		return ..() // Cancel
+		return SS_INIT_NO_NEED
 
 	try
 		people_to_notify = json_decode(file2text(notify_file))
@@ -71,7 +71,7 @@ SUBSYSTEM_DEF(discord)
 		notifymsg += ", a new round is starting!"
 		send2chat(trim(notifymsg), CONFIG_GET(string/chat_new_game_notifications)) // Sends the message to the discord, using same config option as the roundstart notification
 	fdel(notify_file) // Deletes the file
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/discord/fire()
 	if(!enabled)

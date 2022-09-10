@@ -21,4 +21,4 @@ SUBSYSTEM_DEF(early_assets)
 
 		CHECK_TICK
 
-	return ..()
+	return SS_INIT_SUCCESS

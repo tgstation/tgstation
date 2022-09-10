@@ -27,7 +27,7 @@ PROCESSING_SUBSYSTEM_DEF(greyscale)
 		var/datum/greyscale_config/config = configurations[greyscale_type]
 		config.CrossVerify()
 
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/processing/greyscale/proc/RefreshConfigsFromFile()
 	for(var/i in configurations)

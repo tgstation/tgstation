@@ -10,7 +10,7 @@ SUBSYSTEM_DEF(ban_cache)
 
 /datum/controller/subsystem/ban_cache/Initialize()
 	generate_queries()
-	return ..()
+	return SS_INIT_SUCCESS
 
 /// Generates ban caches for any logged in clients. This ensures the amount of in-series ban checking we have to do that actually involves sleeps is VERY low
 /datum/controller/subsystem/ban_cache/proc/generate_queries()

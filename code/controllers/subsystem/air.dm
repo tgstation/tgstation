@@ -87,7 +87,7 @@ SUBSYSTEM_DEF(air)
 	return ..()
 
 
-/datum/controller/subsystem/air/Initialize(timeofday)
+/datum/controller/subsystem/air/Initialize()
 	map_loading = FALSE
 	gas_reactions = init_gas_reactions()
 	hotspot_reactions = init_hotspot_reactions()
@@ -98,7 +98,7 @@ SUBSYSTEM_DEF(air)
 	setup_turf_visuals()
 	process_adjacent_rebuild()
 	atmos_handbooks_init()
-	return ..()
+	return SS_INIT_SUCCESS
 
 
 /datum/controller/subsystem/air/fire(resumed = FALSE)

@@ -69,7 +69,7 @@ SUBSYSTEM_DEF(economy)
 	/// We need this on the subsystem because of yielding and such
 	var/temporary_total = 0
 
-/datum/controller/subsystem/economy/Initialize(timeofday)
+/datum/controller/subsystem/economy/Initialize()
 	//removes cargo from the split
 	var/budget_to_hand_out = round(budget_pool / department_accounts.len -1)
 	if(time2text(world.timeofday, "DDD") == SUNDAY)
@@ -79,7 +79,7 @@ SUBSYSTEM_DEF(economy)
 			new /datum/bank_account/department(dep_id, 0, player_account = FALSE)
 			continue
 		new /datum/bank_account/department(dep_id, budget_to_hand_out, player_account = FALSE)
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/economy/Recover()
 	generated_accounts = SSeconomy.generated_accounts

@@ -55,7 +55,7 @@ SUBSYSTEM_DEF(fluids)
 	initialize_waits()
 	initialize_spread_carousel()
 	initialize_effect_carousel()
-	return ..()
+	return SS_INIT_SUCCESS
 
 /**
  * Initializes the subsystem waits.

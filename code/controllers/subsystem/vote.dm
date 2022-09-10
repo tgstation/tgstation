@@ -27,7 +27,7 @@ SUBSYSTEM_DEF(vote)
 
 		possible_votes[vote.name] = vote
 
-	return ..()
+	return SS_INIT_SUCCESS
 
 
 // Called by master_controller
