@@ -11,14 +11,14 @@
 		if(!percent || percent < 0.4)
 			return FALSE
 	return TRUE
-	
-/datum/sm_delam/cascade/delam_progress(obj/machinery/power/supermatter_crystal/sm)	
+
+/datum/sm_delam/cascade/delam_progress(obj/machinery/power/supermatter_crystal/sm)
 	. = ..()
 	if(!.)
 		return FALSE
 	sm.radio.talk_into(
 		sm,
-		"DANGER: HYPERSTRUCTURE OSCILLATION FREQUENCY OUT OF BOUNDS.", 
+		"DANGER: HYPERSTRUCTURE OSCILLATION FREQUENCY OUT OF BOUNDS.",
 		sm.damage >= sm.emergency_point ? sm.emergency_channel : sm.warning_channel
 	)
 	var/list/messages = list(
@@ -64,6 +64,7 @@
 	var/obj/cascade_portal/rift = effect_evac_rift_start()
 	RegisterSignal(rift, COMSIG_PARENT_QDELETING, .proc/end_round_holder)
 	effect_crystal_mass(sm, rift)
+	SSsupermatter_cascade.can_fire = TRUE
 	SSsupermatter_cascade.cascade_initiated = TRUE
 	qdel(sm)
 
@@ -84,6 +85,8 @@
 	return messages
 
 /datum/sm_delam/cascade/proc/announce_cascade(obj/machinery/power/supermatter_crystal/sm)
+	if(QDELETED(sm))
+		return FALSE
 	if(!can_select(sm))
 		return FALSE
 	priority_announce("Attention: Long range anomaly scans indicate abnormal quantities of harmonic flux originating from \

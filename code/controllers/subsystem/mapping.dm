@@ -9,7 +9,12 @@ SUBSYSTEM_DEF(mapping)
 	var/datum/map_config/config
 	var/datum/map_config/next_map_config
 
+	/// Has the map for the next round been voted for already?
 	var/map_voted = FALSE
+	/// Has the map for the next round been deliberately chosen by an admin?
+	var/map_force_chosen = FALSE
+	/// Has the map vote been rocked?
+	var/map_vote_rocked = FALSE
 
 	var/list/map_templates = list()
 
@@ -110,7 +115,6 @@ SUBSYSTEM_DEF(mapping)
 	setup_map_transitions()
 	generate_station_area_list()
 	initialize_reserved_level(transit.z_value)
-	SSticker.OnRoundstart(CALLBACK(src, .proc/spawn_maintenance_loot))
 	generate_z_level_linkages()
 	calculate_default_z_level_gravities()
 
@@ -660,10 +664,3 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		isolated_ruins_z = add_new_zlevel("Isolated Ruins/Reserved", list(ZTRAIT_RESERVED = TRUE, ZTRAIT_ISOLATED_RUINS = TRUE))
 		initialize_reserved_level(isolated_ruins_z.z_value)
 	return isolated_ruins_z.z_value
-
-/datum/controller/subsystem/mapping/proc/spawn_maintenance_loot()
-	for(var/obj/effect/spawner/random/maintenance/spawner as anything in GLOB.maintenance_loot_spawners)
-		CHECK_TICK
-
-		spawner.spawn_loot()
-		qdel(spawner)

@@ -370,7 +370,7 @@
 /obj/machinery/proc/can_be_occupant(atom/movable/occupant_atom)
 	return occupant_typecache ? is_type_in_typecache(occupant_atom, occupant_typecache) : isliving(occupant_atom)
 
-/obj/machinery/proc/close_machine(atom/movable/target = null)
+/obj/machinery/proc/close_machine(atom/movable/target)
 	state_open = FALSE
 	set_density(TRUE)
 	if(!target)

@@ -1,6 +1,6 @@
 // AI (i.e. game AI, not the AI player) controlled bots
 /mob/living/simple_animal/bot
-	icon = 'icons/mob/aibots.dmi'
+	icon = 'icons/mob/silicon/aibots.dmi'
 	layer = MOB_LAYER
 	gender = NEUTER
 	mob_biotypes = MOB_ROBOTIC
@@ -105,7 +105,7 @@
 	///The type of data HUD the bot uses. Diagnostic by default.
 	var/data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC
 	var/datum/atom_hud/data/bot_path/path_hud
-	var/path_image_icon = 'icons/mob/aibots.dmi'
+	var/path_image_icon = 'icons/mob/silicon/aibots.dmi'
 	var/path_image_icon_state = "path_indicator"
 	var/path_image_color = "#FFFFFF"
 	var/reset_access_timer_id

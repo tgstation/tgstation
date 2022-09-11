@@ -14,10 +14,8 @@
 	var/visor_flags = 0 //flags that are added/removed when an item is adjusted up/down
 	var/visor_flags_inv = 0 //same as visor_flags, but for flags_inv
 	var/visor_flags_cover = 0 //same as above, but for flags_cover
-//what to toggle when toggled with weldingvisortoggle()
+	///What to toggle when toggled with weldingvisortoggle()
 	var/visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT | VISOR_VISIONFLAGS | VISOR_DARKNESSVIEW | VISOR_INVISVIEW
-	lefthand_file = 'icons/mob/inhands/clothing_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/clothing_righthand.dmi'
 	var/alt_desc = null
 	var/toggle_message = null
 	var/alt_toggle_message = null
@@ -206,8 +204,7 @@
 		RegisterSignal(C, COMSIG_MOVABLE_MOVED, .proc/bristle, override = TRUE)
 
 	zones_disabled++
-	for(var/i in body_zone2cover_flags(def_zone))
-		body_parts_covered &= ~i
+	body_parts_covered &= ~body_zone2cover_flags(def_zone)
 
 	if(body_parts_covered == NONE) // if there are no more parts to break then the whole thing is kaput
 		atom_destruction((damage_type == BRUTE ? MELEE : LASER)) // melee/laser is good enough since this only procs from direct attacks anyway and not from fire/bombs

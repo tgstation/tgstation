@@ -4,7 +4,7 @@
 /mob/living/simple_animal/hostile/gorilla
 	name = "Gorilla"
 	desc = "A ground-dwelling, predominantly herbivorous ape that inhabits the forests of central Africa."
-	icon = 'icons/mob/gorilla.dmi'
+	icon = 'icons/mob/simple/gorilla.dmi'
 	icon_state = "crawling"
 	icon_living = "crawling"
 	icon_dead = "dead"
@@ -118,7 +118,7 @@
 
 /mob/living/simple_animal/hostile/gorilla/cargo_domestic
 	name = "Cargorilla" // Overriden, normally
-	icon = 'icons/mob/cargorillia.dmi'
+	icon = 'icons/mob/simple/cargorillia.dmi'
 	desc = "Cargo's pet gorilla. They seem to have an 'I love Mom' tattoo."
 	maxHealth = 200
 	health = 200
@@ -154,9 +154,11 @@
 	being_polled_for = TRUE
 	var/list/mob/dead/candidates = poll_candidates_for_mob(
 		"Do you want to play as a Cargorilla?",
-		jobban_type = ROLE_SENTIENCE,
-		poll_time = 30 SECONDS,
-		target_mob = src,
+		ROLE_SENTIENCE,
+		ROLE_SENTIENCE,
+		30 SECONDS,
+		src,
+		POLL_IGNORE_CARGORILLA
 	)
 
 	being_polled_for = FALSE

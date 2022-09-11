@@ -9,7 +9,7 @@
 /mob/living/simple_animal/hostile/jungle/mook
 	name = "wanderer"
 	desc = "This unhealthy looking primitive is wielding a rudimentary hatchet, swinging it with wild abandon. One isn't much of a threat, but in numbers they can quickly overwhelm a superior opponent."
-	icon = 'icons/mob/jungle/mook.dmi'
+	icon = 'icons/mob/simple/jungle/mook.dmi'
 	icon_state = "mook"
 	icon_living = "mook"
 	icon_dead = "mook_dead"
@@ -217,7 +217,7 @@
 /obj/effect/temp_visual/mook_dust
 	name = "dust"
 	desc = "It's just a dust cloud!"
-	icon = 'icons/mob/jungle/mook.dmi'
+	icon = 'icons/mob/simple/jungle/mook.dmi'
 	icon_state = "mook_leap_cloud"
 	layer = BELOW_MOB_LAYER
 	plane = GAME_PLANE

@@ -16,7 +16,6 @@
 	pass_flags_self = PASSGLASS
 	can_atmos_pass = ATMOS_PASS_PROC
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
-	network_id = NETWORK_DOOR_AIRLOCKS
 	set_dir_on_move = FALSE
 	var/obj/item/electronics/airlock/electronics = null
 	var/reinf = 0
@@ -27,6 +26,7 @@
 
 /obj/machinery/door/window/Initialize(mapload, set_dir, unres_sides)
 	. = ..()
+	init_network_id(NETWORK_DOOR_AIRLOCKS)
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	if(set_dir)
 		setDir(set_dir)

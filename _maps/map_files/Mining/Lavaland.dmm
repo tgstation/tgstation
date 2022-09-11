@@ -408,7 +408,7 @@
 /turf/open/floor/iron/dark,
 /area/mine/production)
 "cK" = (
-/obj/structure/chair/sofa/corp/left{
+/obj/structure/chair/sofa/corp/right{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line,
@@ -2232,7 +2232,7 @@
 /obj/docking_port/stationary{
 	dwidth = 2;
 	height = 5;
-	id = "laborcamp_away";
+	shuttle_id = "laborcamp_away";
 	name = "labor camp";
 	width = 9
 	},
@@ -4111,7 +4111,7 @@
 	dir = 2;
 	dwidth = 11;
 	height = 22;
-	id = "whiteship_lavaland";
+	shuttle_id = "whiteship_lavaland";
 	name = "lavaland wastes";
 	width = 35
 	},
@@ -4945,7 +4945,7 @@
 	dir = 2;
 	dwidth = 3;
 	height = 10;
-	id = "mining_away";
+	shuttle_id = "mining_away";
 	name = "lavaland mine";
 	width = 7
 	},
@@ -5164,7 +5164,7 @@
 	dir = 4;
 	dwidth = 3;
 	height = 7;
-	id = "lavaland_common_away";
+	shuttle_id = "lavaland_common_away";
 	name = "Mining base public dock";
 	width = 7
 	},

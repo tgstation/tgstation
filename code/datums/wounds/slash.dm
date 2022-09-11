@@ -222,7 +222,7 @@
 	if(!lasgun.process_fire(victim, victim, TRUE, null, limb.body_zone))
 		return
 	victim.emote("scream")
-	blood_flow -= damage / (5 * self_penalty_mult) // 20 / 5 = 4 bloodflow removed, p good
+	adjust_blood_flow(-1 * (damage / (5 * self_penalty_mult))) // 20 / 5 = 4 bloodflow removed, p good
 	victim.visible_message(span_warning("The cuts on [victim]'s [limb.plaintext_zone] scar over!"))
 
 /// If someone is using either a cautery tool or something with heat to cauterize this cut

@@ -13,8 +13,8 @@
 	icon_state = "pizzabox"
 	base_icon_state = "pizzabox"
 	inhand_icon_state = "pizzabox"
-	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
 	custom_materials = list(/datum/material/cardboard = 2000)
 
 	var/open = FALSE

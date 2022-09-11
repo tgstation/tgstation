@@ -380,7 +380,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 			set_messages("", "")
 		if("message")
 			current_mode = SD_MESSAGE
-			set_messages(signal.data["msg1"] || "", signal.data["msg2"] || "")
+			set_messages(signal.data["top_text"] || "", signal.data["bottom_text"] || "")
 		if("alert")
 			current_mode = SD_PICTURE
 			last_picture = signal.data["picture_state"]
@@ -448,9 +448,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 		if(NAMEOF(src, shuttle_id))
 			update()
 
-/obj/machinery/status_display/shuttle/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+/obj/machinery/status_display/shuttle/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	if(port)
-		shuttle_id = port.id
+		shuttle_id = port.shuttle_id
 	update()
 
 
@@ -584,8 +584,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 	var/datum/signal/status_signal = new(list("command" = command_value))
 	switch(command_value)
 		if("message")
-			status_signal.data["msg1"] = message1.value
-			status_signal.data["msg2"] = message2.value
+			status_signal.data["top_text"] = message1.value
+			status_signal.data["bottom_text"] = message2.value
 		if("alert")
 			status_signal.data["picture_state"] = picture_map[picture.value]
 

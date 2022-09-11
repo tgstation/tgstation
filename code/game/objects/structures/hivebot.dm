@@ -1,7 +1,7 @@
 /obj/structure/hivebot_beacon
 	name = "beacon"
 	desc = "Some odd beacon thing."
-	icon = 'icons/mob/hivebot.dmi'
+	icon = 'icons/mob/simple/hivebot.dmi'
 	icon_state = "def_radar-off"
 	anchored = TRUE
 	density = TRUE

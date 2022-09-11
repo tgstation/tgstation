@@ -200,6 +200,9 @@
 /obj/machinery/computer/emergency_shuttle/proc/attempt_hijack_stage(mob/living/user)
 	if(!user.CanReach(src))
 		return
+	if(HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+		to_chat(user, span_warning("You need your hands free before you can manipulate [src]."))
+		return
 	if(!user?.mind?.get_hijack_speed())
 		to_chat(user, span_warning("You manage to open a user-mode shell on [src], and hundreds of lines of debugging output fly through your vision. It is probably best to leave this alone."))
 		return
@@ -228,6 +231,12 @@
 		user.log_message("has hijacked [src]. Hijack stage increased to stage [SSshuttle.emergency.hijack_status] out of [HIJACKED].", LOG_GAME)
 		. = TRUE
 		to_chat(user, span_notice("You reprogram some of [src]'s programming, putting it on timeout for [hijack_stage_cooldown/10] seconds."))
+		visible_message(
+			span_warning("[user.name] appears to be tampering with [src]."),
+			blind_message = span_hear("You hear someone tapping computer keys."),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+			ignored_mobs = user
+		)
 	hijack_hacking = FALSE
 
 /obj/machinery/computer/emergency_shuttle/proc/announce_hijack_stage()
@@ -293,7 +302,7 @@
 
 /obj/docking_port/mobile/emergency
 	name = "emergency shuttle"
-	id = "emergency"
+	shuttle_id = "emergency"
 
 	dwidth = 9
 	width = 22
@@ -561,17 +570,17 @@
 
 /obj/docking_port/mobile/pod
 	name = "escape pod"
-	id = "pod"
+	shuttle_id = "pod"
 	dwidth = 1
 	width = 3
 	height = 4
 	launch_status = UNLAUNCHED
 
 /obj/docking_port/mobile/pod/request(obj/docking_port/stationary/S)
-	var/obj/machinery/computer/shuttle/C = getControlConsole()
-	if(!istype(C, /obj/machinery/computer/shuttle/pod))
+	var/obj/machinery/computer/shuttle/connected_computer = get_control_console()
+	if(!istype(connected_computer, /obj/machinery/computer/shuttle/pod))
 		return ..()
-	if(SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED || (C && (C.obj_flags & EMAGGED)))
+	if(SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED || (connected_computer && (connected_computer.obj_flags & EMAGGED)))
 		if(launch_status == UNLAUNCHED)
 			launch_status = EARLY_LAUNCHED
 			return ..()
@@ -603,10 +612,10 @@
 	locked = FALSE
 	to_chat(user, span_warning("You fry the pod's alert level checking system."))
 
-/obj/machinery/computer/shuttle/pod/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+/obj/machinery/computer/shuttle/pod/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	. = ..()
 	if(port)
-		possible_destinations += ";[port.id]_lavaland"
+		possible_destinations += ";[port.shuttle_id]_lavaland"
 
 /**
  * Signal handler for checking if we should lock or unlock escape pods accordingly to a newly set security level
@@ -620,11 +629,11 @@
 
 	if(obj_flags & EMAGGED)
 		return
-	locked = new_level < SEC_LEVEL_RED
+	locked = (new_level < SEC_LEVEL_RED)
 
 /obj/docking_port/stationary/random
 	name = "escape pod"
-	id = "pod"
+	shuttle_id = "pod"
 	dwidth = 1
 	width = 3
 	height = 4
@@ -649,7 +658,7 @@
 			return
 
 	// Fallback: couldn't find anything
-	WARNING("docking port '[id]' could not be randomly placed in [target_area]: of [original_len] turfs, none were suitable")
+	WARNING("docking port '[shuttle_id]' could not be randomly placed in [target_area]: of [original_len] turfs, none were suitable")
 	return INITIALIZE_HINT_QDEL
 
 /obj/docking_port/stationary/random/icemoon
@@ -724,7 +733,7 @@
 /obj/item/storage/pod/AltClick(mob/user)
 	if(!can_interact(user))
 		return
-	..()
+	return ..()
 
 /obj/item/storage/pod/can_interact(mob/user)
 	if(!..())
@@ -736,7 +745,7 @@
 
 /obj/docking_port/mobile/emergency/backup
 	name = "backup shuttle"
-	id = "backup"
+	shuttle_id = "backup"
 	dwidth = 2
 	width = 8
 	height = 8
