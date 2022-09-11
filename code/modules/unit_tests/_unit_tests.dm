@@ -105,6 +105,7 @@
 #include "hydroponics_validate_genes.dm"
 #include "keybinding_init.dm"
 #include "knockoff_component.dm"
+#include "limbsanity.dm"
 #include "load_map_security.dm"
 #include "machine_disassembly.dm"
 #include "mapping.dm"
