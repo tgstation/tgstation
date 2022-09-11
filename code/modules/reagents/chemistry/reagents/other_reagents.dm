@@ -1899,7 +1899,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/carpet/royal
-	name = "Royal Carpet"
+	name = "Royal Carpet?"
 	description = "For those that break the game and need to make an issue report."
 
 /datum/reagent/carpet/royal/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
