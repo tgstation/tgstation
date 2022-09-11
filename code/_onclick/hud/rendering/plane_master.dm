@@ -52,6 +52,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	var/multiz_scaled = TRUE
 
 /atom/movable/screen/plane_master/Initialize(mapload, datum/plane_master_group/home, offset = 0)
+	. = ..()
 	src.offset = offset
 	true_alpha = alpha
 	real_plane = plane
@@ -64,7 +65,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	if(start_hidden)
 		hide_plane(home.our_hud?.mymob)
 	generate_render_relays()
-	return ..()
 
 /atom/movable/screen/plane_master/Destroy()
 	if(home)
