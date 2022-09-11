@@ -9,7 +9,12 @@ SUBSYSTEM_DEF(mapping)
 	var/datum/map_config/config
 	var/datum/map_config/next_map_config
 
+	/// Has the map for the next round been voted for already?
 	var/map_voted = FALSE
+	/// Has the map for the next round been deliberately chosen by an admin?
+	var/map_force_chosen = FALSE
+	/// Has the map vote been rocked?
+	var/map_vote_rocked = FALSE
 
 	var/list/map_templates = list()
 
@@ -36,6 +41,8 @@ SUBSYSTEM_DEF(mapping)
 	var/list/plane_offset_to_true
 	/// Assoc list of true string plane values to a list of all potential offset planess
 	var/list/true_to_offset_planes
+	/// Assoc list of string plane to the plane's offset value
+	var/list/plane_to_offset
 	/// List of planes that do not allow for offsetting
 	var/list/plane_offset_blacklist
 	/// List of render targets that do not allow for offsetting
@@ -94,10 +101,12 @@ SUBSYSTEM_DEF(mapping)
 			config = old_config
 	plane_offset_to_true = list()
 	true_to_offset_planes = list()
+	plane_to_offset = list()
 	// VERY special cases for FLOAT_PLANE, so it will be treated as expected by plane management logic
 	// Sorry :(
 	plane_offset_to_true["[FLOAT_PLANE]"] = FLOAT_PLANE
 	true_to_offset_planes["[FLOAT_PLANE]"] = list(FLOAT_PLANE)
+	plane_to_offset["[FLOAT_PLANE]"] = 0
 	plane_offset_blacklist = list()
 	render_offset_blacklist = list()
 	create_plane_offsets(0, 0)
@@ -763,6 +772,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 					continue
 
 			plane_offset_to_true[string_plane] = plane_to_use
+			plane_to_offset[string_plane] = plane_offset
 
 			if(!true_to_offset_planes[string_real])
 				true_to_offset_planes[string_real] = list()

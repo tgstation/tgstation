@@ -151,10 +151,9 @@
 	flags_1 = HTML_USE_INITAL_ICON_1
 	rad_insulation = RAD_MEDIUM_INSULATION
 
-	network_id = NETWORK_DOOR_AIRLOCKS
-
 /obj/machinery/door/airlock/Initialize(mapload)
 	. = ..()
+	init_network_id(NETWORK_DOOR_AIRLOCKS)
 	wires = set_wires()
 	if(frequency)
 		set_frequency(frequency)
@@ -186,9 +185,9 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/door/airlock/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+/obj/machinery/door/airlock/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	if(id_tag)
-		id_tag = "[port.id]_[id_tag]"
+		id_tag = "[port.shuttle_id]_[id_tag]"
 
 /obj/machinery/door/airlock/proc/update_other_id()
 	for(var/obj/machinery/door/airlock/Airlock in GLOB.airlocks)

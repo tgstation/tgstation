@@ -163,7 +163,7 @@
 /mob/living/silicon/ai/proc/ai_lose_power()
 	disconnect_shell()
 	setAiRestorePowerRoutine(POWER_RESTORATION_START)
-	blind_eyes(1)
+	adjust_blindness(1)
 	update_sight()
 	to_chat(src, span_alert("You've lost power!"))
 	addtimer(CALLBACK(src, .proc/start_RestorePowerRoutine), 20)

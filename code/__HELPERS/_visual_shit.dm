@@ -46,6 +46,8 @@
 
 /// Takes a plane, returns the canonical plane it represents
 #define PLANE_TO_TRUE(plane) ((SSmapping.plane_offset_to_true) ? SSmapping.plane_offset_to_true["[plane]"] : plane)
+/// Takes a plane, returns the offset it uses
+#define PLANE_TO_OFFSET(plane) ((SSmapping.plane_to_offset) ? SSmapping.plane_to_offset["[plane]"] : plane)
 /// Takes a true plane, returns the potential offset planes it could "hold"
 #define TRUE_PLANE_TO_OFFSETS(plane) ((SSmapping.true_to_offset_planes) ? SSmapping.true_to_offset_planes["[plane]"] : list(plane))
 

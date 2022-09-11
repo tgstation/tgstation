@@ -1,6 +1,8 @@
 /obj/item/clothing/suit
-	icon = 'icons/obj/clothing/suits/default.dmi'
 	name = "suit"
+	icon = 'icons/obj/clothing/suits/default.dmi'
+	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	var/fire_resist = T0C+100
 	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)

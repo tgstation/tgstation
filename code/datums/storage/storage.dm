@@ -542,7 +542,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	if(!force)
 		if(check_adjacent)
-			if(!user || !user.CanReach(destination) || !user.CanReach(parent))
+			if(!user || !user.CanReach(destination) || !user.CanReach(resolve_location))
 				return FALSE
 	var/list/taking = typecache_filter_list(resolve_location.contents, typecacheof(type))
 	if(taking.len > amount)

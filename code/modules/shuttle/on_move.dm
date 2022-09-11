@@ -380,4 +380,4 @@ All ShuttleMove procs go here
 	return TRUE
 
 /obj/docking_port/stationary/public_mining_dock/onShuttleMove(turf/newT, turf/oldT, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
-	id = "mining_public" //It will not move with the base, but will become enabled as a docking point.
+	shuttle_id = "mining_public" //It will not move with the base, but will become enabled as a docking point.

@@ -7,7 +7,6 @@
  * Has a lot of the creature game world logic, such as health etc
  */
 /mob
-	datum_flags = DF_USE_TAG
 	density = TRUE
 	layer = MOB_LAYER
 	plane = GAME_PLANE_FOV_HIDDEN

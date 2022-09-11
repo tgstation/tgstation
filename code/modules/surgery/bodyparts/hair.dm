@@ -25,6 +25,7 @@
 		if(mask.flags_inv & HIDEFACIALHAIR)
 			facial_hair_hidden = TRUE
 	///FACIAL HAIR CHECKS END
+
 	///HAIR CHECKS START
 	hair_hidden = FALSE
 	if(human_head_owner.head)
@@ -42,6 +43,10 @@
 		if(mask.flags_inv & HIDEHAIR)
 			hair_hidden = TRUE
 	///HAIR CHECKS END
+	//invisibility stuff
+	if(HAS_TRAIT(human_head_owner, TRAIT_INVISIBLE_MAN))
+		hair_hidden = TRUE
+		facial_hair_hidden = TRUE
 
 	if(!hair_hidden && !owner.getorganslot(ORGAN_SLOT_BRAIN) && !(NOBLOOD in species_flags_list))
 		show_debrained = TRUE

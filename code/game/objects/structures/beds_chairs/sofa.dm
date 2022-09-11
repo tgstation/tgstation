@@ -70,6 +70,9 @@
 /obj/structure/chair/sofa/corp/corner
 	icon_state = "corp_sofacorner"
 
+/obj/structure/chair/sofa/corp/corner/handle_layer() //only the armrest/back of this chair should cover the mob.
+	return
+
 // Ported from Skyrat
 /obj/structure/chair/sofa/bench
 	name = "bench"

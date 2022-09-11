@@ -685,6 +685,8 @@ mob/living/carbon/proc/visual_remove_overlay(cache_index)
 	. += "-[body_zone]"
 	if(should_draw_greyscale && draw_color)
 		. += "-[draw_color]"
+	if(is_invisible)
+		. += "-invisible"
 	for(var/obj/item/organ/external/external_organ as anything in external_organs)
 		if(!external_organ.can_draw_on_bodypart(owner))
 			continue

@@ -12,6 +12,8 @@
 	VAR_PROTECTED/icon_static = 'icons/mob/species/human/bodyparts.dmi'
 	///The icon for husked limbs
 	VAR_PROTECTED/icon_husk = 'icons/mob/species/human/bodyparts.dmi'
+	///The icon for invisible limbs
+	VAR_PROTECTED/icon_invisible = 'icons/mob/species/human/bodyparts.dmi'
 	///The type of husk for building an iconstate
 	var/husk_type = "humanoid"
 	layer = BELOW_MOB_LAYER //so it isn't hidden behind objects when on the floor
@@ -25,7 +27,10 @@
 	///Defines when a bodypart should not be changed. Example: BP_BLOCK_CHANGE_SPECIES prevents the limb from being overwritten on species gain
 	var/change_exempt_flags
 
+	///Whether the bodypart (and the owner) is husked.
 	var/is_husked = FALSE
+	///Whether the bodypart (and the owner) is invisible through invisibleman trait.
+	var/is_invisible = FALSE
 	///The ID of a species used to generate the icon. Needs to match the icon_state portion in the limbs file!
 	var/limb_id = SPECIES_HUMAN
 	//Defines what sprite the limb should use if it is also sexually dimorphic.
@@ -624,12 +629,17 @@
 /obj/item/bodypart/proc/update_limb(dropping_limb = FALSE, is_creating = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(HAS_TRAIT(owner, TRAIT_HUSK) && IS_ORGANIC_LIMB(src))
-		dmg_overlay_type = "" //no damage overlay shown when husked
-		is_husked = TRUE
-	else
-		dmg_overlay_type = initial(dmg_overlay_type)
-		is_husked = FALSE
+	if(IS_ORGANIC_LIMB(src))
+		if(HAS_TRAIT(owner, TRAIT_HUSK))
+			dmg_overlay_type = "" //no damage overlay shown when husked
+			is_husked = TRUE
+		else if(HAS_TRAIT(owner, TRAIT_INVISIBLE_MAN))
+			dmg_overlay_type = "" //no damage overlay shown when invisible since the wounds themselves are invisible.
+			is_invisible = TRUE
+		else
+			dmg_overlay_type = initial(dmg_overlay_type)
+			is_husked = FALSE
+			is_invisible = FALSE
 
 	if(!dropping_limb && owner.dna?.check_mutation(/datum/mutation/human/hulk))
 		mutation_color = "#00aa00"
@@ -751,6 +761,12 @@
 			. += aux
 		return .
 	//END HUSK SHIIIIT
+	//invisibility
+	if(is_invisible)
+		limb.icon = icon_invisible
+		limb.icon_state = "invisible_[body_zone]"
+		. += limb
+		return .
 
 	////This is the MEAT of limb icon code
 	limb.icon = icon_greyscale
