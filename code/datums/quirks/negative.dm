@@ -426,7 +426,7 @@
 	name = "Prosthetic Limb"
 	desc = "An accident caused you to lose one of your limbs. Because of this, you now have a random prosthetic!"
 	icon = "tg-prosthetic-leg"
-	value = -4
+	value = -3
 	var/slot_string = "limb"
 	medical_record_text = "During physical examination, patient was found to have a prosthetic limb."
 	hardcore_value = 3
@@ -449,36 +449,30 @@
 		if(BODY_ZONE_R_LEG)
 			prosthetic = new/obj/item/bodypart/r_leg/robot/surplus(quirk_holder)
 			slot_string = "right leg"
-	prosthetic.replace_limb(human_holder, special = TRUE)
-	qdel(old_part)
+	replace_body_part(human_holder, limb_slot, prosthetic)
 
 /datum/quirk/prosthetic_limb/post_add()
-	to_chat(quirk_holder, "<span class='boldannounce'>Your [slot_string] has been replaced with a surplus prosthetic. It is fragile and will easily come apart under duress. Additionally, \
-	you need to use a welding tool and cables to repair it, instead of bruise packs and ointment.</span>")
+	to_chat(quirk_holder, span_boldannounce("Your [slot_string] has been replaced with a surplus prosthetic. It is fragile and will easily come apart under duress. Additionally, \
+	you need to use a welding tool and cables to repair it, instead of bruise packs and ointment."))
 
 /datum/quirk/quadruple_amputee
 	name = "Quadruple Amputee"
 	desc = "Oops! All Prosthetics! Due to some truly cruel cosmic punishment, all your limbs have been taken from you."
 	icon = "tg-prosthetic-full"
-	value = -8
-	medical_record_text = "During physical examination, patient was found to have all prosthetic limbs"
+	value = -6
+	medical_record_text = "During physical examination, patient was found to have all prosthetic limbs."
 	hardcore_value = 6
 
 /datum/quirk/quadruple_amputee/add_unique()
-
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/list/zones = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-	var/list/prosthetics = list(/obj/item/bodypart/l_arm/robot/surplus, /obj/item/bodypart/r_arm/robot/surplus, /obj/item/bodypart/l_leg/robot/surplus, /obj/item/bodypart/r_leg/robot/surplus)
-	for(var/i in 1 to 4)
-		var/path = prosthetics[i]
-		var/obj/item/bodypart/prosthetic = new path
-		var/obj/item/bodypart/old_limbs = human_holder.get_bodypart(zones[i])
-		prosthetic.replace_limb(human_holder, special = TRUE)
-		qdel(old_limbs)
+	replace_body_part(human_holder, BODY_ZONE_L_ARM, new /obj/item/bodypart/l_arm/robot_surplus)
+	replace_body_part(human_holder, BODY_ZONE_R_ARM, new /obj/item/bodypart/r_arm/robot_surplus)
+	replace_body_part(human_holder, BODY_ZONE_L_LEG, new /obj/item/bodypart/l_leg/robot_surplus)
+	replace_body_part(human_holder, BODY_ZONE_R_LEG, new /obj/item/bodypart/r_leg/robot_surplus)
 
 /datum/quirk/quadruple_amputee/post_add()
-	to_chat(quirk_holder, "<span class='boldannounce'>All your limbs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. Additionally, \
-	you need to use a welding tool and cables to repair them, instead of bruise packs and ointment.</span>")
+	to_chat(quirk_holder, span_boldannounce("All your limbs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. Additionally, \
+	you need to use a welding tool and cables to repair them, instead of bruise packs and ointment.")
 
 /datum/quirk/pushover
 	name = "Pushover"

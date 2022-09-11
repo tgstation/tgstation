@@ -27,7 +27,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Bad Touch", "Friendly"),
 		list("Extrovert", "Introvert"),
 		list("Prosthetic Limb", "Quadruple Amputee"),
-		list("Quadruple Amputee", "Paraplegic"),
+		list("Quadruple Amputee", "Paraplegic","Frail"),
 	)
 
 /datum/controller/subsystem/processing/quirks/Initialize(timeofday)
