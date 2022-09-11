@@ -167,7 +167,6 @@
 		stoplag(); \
 		SSatoms.map_loader_begin(); \
 	}
-//#define MAPLOADING_CHECK_TICK
 // Do not call except via load() above.
 /datum/parsed_map/proc/_load_impl(x_offset = 1, y_offset = 1, z_offset = world.maxz + 1, cropMap = FALSE, no_changeturf = FALSE, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE)
 	PRIVATE_PROC(TRUE)

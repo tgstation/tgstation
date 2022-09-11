@@ -157,3 +157,5 @@
 
 				var/turf/place = locate(S.destination_x, S.destination_y, zdestination)
 				S.AddComponent(/datum/component/mirage_border, place, mirage_dir)
+
+#undef CHORDS_TO_1D
