@@ -399,7 +399,7 @@
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/paper_bin{
-	initial_paper = 20
+	total_paper = 20
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
