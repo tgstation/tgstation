@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes: 
+  - spellcheck: "fixes some internal typos related to the word \"auxillary\"."
