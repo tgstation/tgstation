@@ -205,7 +205,7 @@
 			target.switchcount = L2.switchcount
 			target.brightness = L2.brightness
 			if(obj_flags & EMAGGED)
-				target.create_reagents(20, SEALED_CONTAINER | TRANSPARENT) //LIGHT_REAGENT_CAPACITY can't be accessed from here. Look for a not magic-number solution to this please
+				target.create_reagents(LIGHT_REAGENT_CAPACITY, SEALED_CONTAINER | TRANSPARENT)
 				target.reagents.add_reagent(/datum/reagent/toxin/plasma, 10)
 			target.on = target.has_power()
 			target.update()
