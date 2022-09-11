@@ -1,7 +1,4 @@
-GLOBAL_LIST_EMPTY(ruin_cost)
-GLOBAL_LIST_EMPTY(ruin_count)
 /datum/map_template/ruin/proc/try_to_place(z, list/allowed_areas_typecache, turf/forced_turf, clear_below)
-	INIT_COST(GLOB.ruin_cost, GLOB.ruin_count)
 	var/sanity = forced_turf ? 1 : PLACEMENT_TRIES
 	if(SSmapping.level_trait(z,ZTRAIT_ISOLATED_RUINS))
 		return place_on_isolated_level(z)
