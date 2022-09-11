@@ -322,7 +322,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	density = TRUE
 	var/obj/structure/bodycontainer/connected = null
 	anchored = TRUE
-	pass_flags_self = LETPASSTHROW | PASSTABLE
+	pass_flags_self = PASSTABLE | LETPASSTHROW
 	max_integrity = 350
 
 /obj/structure/tray/Destroy()
