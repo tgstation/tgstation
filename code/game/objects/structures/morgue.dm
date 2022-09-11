@@ -322,7 +322,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	density = TRUE
 	var/obj/structure/bodycontainer/connected = null
 	anchored = TRUE
-	pass_flags_self = LETPASSTHROW
+	pass_flags_self = LETPASSTHROW | PASSTABLE
 	max_integrity = 350
 
 /obj/structure/tray/Destroy()
@@ -399,7 +399,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	name = "morgue tray"
 	desc = "Apply corpse before closing."
 	icon_state = "morguet"
-	pass_flags_self = LETPASSTHROW
+	pass_flags_self = LETPASSTHROW | PASSTABLE
 
 /obj/structure/tray/m_tray/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
