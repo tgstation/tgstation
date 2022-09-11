@@ -692,6 +692,9 @@
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	heretic_datum.ascended = TRUE
 
+	// Show the cool red gradiant in our UI
+	heretic_datum.update_static_data(user)
+
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		human_user.physiology.brute_mod *= 0.5
