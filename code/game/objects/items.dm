@@ -1503,3 +1503,36 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 		if(ITEM_SLOT_FEET)
 			return (zone == BODY_ZONE_L_LEG || zone == BODY_ZONE_R_LEG)
 	return FALSE
+
+/obj/item/proc/item_start_equip(atom/target, obj/item/equipping, mob/user, warn_dangerous = TRUE)
+
+	if(warn_dangerous && isclothing(target))
+		var/obj/item/clothing/clothing = target
+		if(clothing.clothing_flags & DANGEROUS_OBJECT)
+			target.visible_message(
+				span_danger("[user] tries to put [equipping] on [target]."),
+				span_userdanger("[user] tries to put [equipping] on you."),
+				ignored_mobs = user,
+			)
+
+		else
+			target.visible_message(
+				span_notice("[user] tries to put [equipping] on [target]."),
+				span_notice("[user] tries to put [equipping] on you."),
+				ignored_mobs = user,
+			)
+
+		if(ishuman(target))
+			var/mob/living/carbon/human/victim_human = target
+			if(victim_human.key && !victim_human.client) // AKA braindead
+				if(victim_human.stat <= SOFT_CRIT && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
+					var/list/new_entry = list(list(user.name, "tried equipping you with [equipping]", world.time))
+					LAZYADD(victim_human.afk_thefts, new_entry)
+
+			else if(victim_human.is_blind())
+				to_chat(target, span_userdanger("You feel someone trying to put something on you."))
+
+	to_chat(user, span_notice("You try to put [equipping] on [target]..."))
+
+	user.log_message("is putting [equipping] on [key_name(target)]", LOG_ATTACK, color="red")
+	target.log_message("is having [equipping] put on them by [key_name(user)]", LOG_VICTIM, color="orange", log_globally=FALSE)

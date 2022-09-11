@@ -28,11 +28,11 @@
 		return
 
 	if(attire.mob_can_equip(target, user,  attire.slot_flags, disable_warning = TRUE, bypass_equip_delay_self = TRUE))
-		INVOKE_ASYNC(src, .proc/start_equip, attire, sharp_dresser, user)
+		INVOKE_ASYNC(src, .proc/equip, attire, sharp_dresser, user)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 
-/datum/element/attack_equip/proc/start_equip(obj/item/attire, mob/living/carbon/human/sharp_dresser, mob/living/user)
+/datum/element/attack_equip/proc/equip(obj/item/attire, mob/living/carbon/human/sharp_dresser, mob/living/user)
 
 	if(HAS_TRAIT(attire, TRAIT_NODROP))
 		to_chat(user, span_warning("You can't put [attire] on [sharp_dresser], it's stuck to your hand!"))
