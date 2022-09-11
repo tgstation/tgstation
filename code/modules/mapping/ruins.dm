@@ -1,4 +1,7 @@
+GLOBAL_LIST_EMPTY(ruin_cost)
+GLOBAL_LIST_EMPTY(ruin_count)
 /datum/map_template/ruin/proc/try_to_place(z, list/allowed_areas_typecache, turf/forced_turf, clear_below)
+	INIT_COST(GLOB.ruin_cost, GLOB.ruin_count)
 	var/sanity = forced_turf ? 1 : PLACEMENT_TRIES
 	if(SSmapping.level_trait(z,ZTRAIT_ISOLATED_RUINS))
 		return place_on_isolated_level(z)
@@ -31,13 +34,15 @@
 		testing("Ruin \"[name]\" placed at ([central_turf.x], [central_turf.y], [central_turf.z])")
 
 		if(clear_below)
+			var/list/static/clear_below_typecache = typecacheof(list(
+				/obj/structure/spawner,
+				/mob/living/simple_animal,
+				/obj/structure/flora
+			))
 			for(var/turf/T as anything in affected_turfs)
-				for(var/obj/structure/spawner/nest in T)
-					qdel(nest)
-				for(var/mob/living/simple_animal/monster in T)
-					qdel(monster)
-				for(var/obj/structure/flora/plant in T)
-					qdel(plant)
+				for(var/atom/thing as anything in T)
+					if(clear_below_typecache[thing.type])
+						qdel(thing)
 
 		load(central_turf,centered = TRUE)
 		loaded++
