@@ -19,3 +19,5 @@
 		SSmapping.z_trait_levels[new_traits] += list(new_z)
 
 	set_linkage(new_traits[ZTRAIT_LINKAGE])
+	for(var/area/update in (GLOB.sortedAreas || world))
+		update.build_z_list(z_value)

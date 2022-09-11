@@ -15,13 +15,6 @@
 
 	var/area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 
-	/// Tracks the minimum ever seen z level inside this area
-	/// This value is not always accurate, but it always errs on the outside of correctness
-	/// So if you use this pair as a min and max range you'll never MISS anything
-	var/minimum_z = INFINITY
-	/// Tracks the maximum ever seen z level inside this area
-	var/maximum_z = 0
-
 	///Do we have an active fire alarm?
 	var/fire = FALSE
 	///A var for whether the area allows for detecting fires/etc. Disabled or enabled at a fire alarm, checked by fire locks.
@@ -116,6 +109,10 @@
 	var/list/air_vent_info = list()
 	var/list/air_scrub_info = list()
 
+	/// List of z levels we have, in the form index (z) -> TRUE/FALSE
+	/// Not guarenteed to overdraw, but it will always at LEAST be accurate
+	var/list/zs_we_have = new /list(100) // (100) because of init immediate, we need to have this filled as soon as possible
+
 /**
  * A list of teleport locations
  *
@@ -160,7 +157,11 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		GLOB.areas_by_type[type] = src
 	power_usage = new /list(AREA_USAGE_LEN) // Some atoms would like to use power in Initialize()
 	alarm_manager = new(src) // just in case
+	build_z_list(length(SSmapping.z_list))
 	return ..()
+
+/area/proc/build_z_list(new_z)
+	zs_we_have.len = max(zs_we_have.len, new_z)
 
 /*
  * Initalize this area

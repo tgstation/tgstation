@@ -252,8 +252,10 @@
 		var/list/mutable_appearance/overlays = list()
 		// List of offsets this area wants, based off its z range
 		var/list/offsets = list()
-		for(var/i_z in N.minimum_z to N.maximum_z)
-			offsets |= GET_Z_PLANE_OFFSET(i_z)
+		for(var/z_index in N.zs_we_have)
+			if(!N.zs_we_have[z_index])
+				continue
+			offsets |= GET_Z_PLANE_OFFSET(z_index)
 
 		// Now that we have all the offsets this area COULD be effecting, we give it overlays
 		for(var/offset in offsets)

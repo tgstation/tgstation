@@ -48,7 +48,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
  * range - the max range to check
  *
  * Returns a list of turfs, which is an area of isolated atmos
- */ 
+ */
 /proc/create_atmos_zone(turf/source, range = INFINITY)
 	var/counter = 1 // a counter which increment each loop
 	var/loops = 0
@@ -69,14 +69,14 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 				loops += 1
 				continue
 			if(length(connected_turfs) >= range)
-				return 
+				return
 			if(TURFS_CAN_SHARE(reference_turf, valid_turf))
-				loops = 0 
-				connected_turfs |= valid_turf//add that to the original list				
+				loops = 0
+				connected_turfs |= valid_turf//add that to the original list
 		if(loops >= 7)//if the loop has gone 7 consecutive times with no new turfs added, return the result. Number is arbitrary, subject to change
 			return
 		counter += 1 //increment by one so the next loop will start at the next position in the list
-				
+
 /proc/create_area(mob/creator)
 	// Passed into the above proc as list/break_if_found
 	var/static/list/area_or_turf_fail_types = typecacheof(list(
@@ -120,18 +120,13 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 	else
 		newA = area_choice
 
-	var/min_z = INFINITY
-	var/max_z = 0
+	var/list/zs_we_have = newA.zs_we_have
 	for(var/i in 1 to length(turfs))
 		var/turf/thing = turfs[i]
 		var/area/old_area = thing.loc
 		newA.contents += thing
 		thing.transfer_area_lighting(old_area, newA)
-		min_z = min(thing.z, min_z)
-		max_z = max(thing.z, max_z)
-
-	newA.minimum_z = min_z
-	newA.maximum_z = max_z
+		zs_we_have[thing.z] = TRUE
 
 	newA.reg_in_areas_in_z()
 
