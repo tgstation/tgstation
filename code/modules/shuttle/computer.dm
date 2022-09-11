@@ -5,6 +5,7 @@
 	icon_keyboard = "tech_key"
 	light_color = LIGHT_COLOR_CYAN
 	req_access = list()
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE
 	/// ID of the attached shuttle
 	var/shuttleId
 	/// Possible destinations of the attached shuttle
@@ -17,6 +18,8 @@
 	var/destination
 	/// If the console controls are locked
 	var/locked = FALSE
+	/// List of head revs who have already clicked through the warning about not using the console
+	var/static/list/dumb_rev_heads = list()
 	/// Authorization request cooldown to prevent request spam to admin staff
 	COOLDOWN_DECLARE(request_cooldown)
 
@@ -26,6 +29,36 @@
 
 /obj/machinery/computer/shuttle/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
+	if(is_station_level(user.z) && user.mind && IS_HEAD_REVOLUTIONARY(user) && !(user.mind in dumb_rev_heads))
+		to_chat(user, span_warning("You get a feeling that leaving the station might be a REALLY dumb idea..."))
+		dumb_rev_heads += user.mind
+		return
+	if (HAS_TRAIT(user, TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION) && !is_station_level(user.z))
+		to_chat(user, span_warning("You get the feeling you shouldn't mess with this."))
+		return
+	if(!user.can_read(src, check_for_light = FALSE))
+		to_chat(user, span_warning("You start mashing buttons at random!"))
+		if(do_after(user, 10 SECONDS, target = src))
+			var/obj/docking_port/mobile/mobile_docking_port = SSshuttle.getShuttle(shuttleId)
+			if(no_destination_swap)
+				if(mobile_docking_port.mode == SHUTTLE_RECHARGING)
+					to_chat(usr, span_warning("Shuttle engines are not ready for use."))
+					return
+				if(mobile_docking_port.mode != SHUTTLE_IDLE)
+					to_chat(usr, span_warning("Shuttle already in transit."))
+					return
+			var/list/destination = pick(get_valid_destinations())
+			switch(SSshuttle.moveShuttle(shuttleId, destination["id"], 1))
+				if(0)
+					say("Shuttle departing. Please stand away from the doors.")
+					log_shuttle("[key_name(usr)] has sent shuttle \"[mobile_docking_port]\" towards \"[destination["name"]]\", using [src].")
+					return TRUE
+				if(1)
+					to_chat(usr, span_warning("Invalid shuttle requested."))
+				else
+					to_chat(usr, span_warning("Unable to comply."))
+
+		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "ShuttleConsole", name)
@@ -33,15 +66,14 @@
 
 /obj/machinery/computer/shuttle/ui_data(mob/user)
 	var/list/data = list()
-	var/list/options = params2list(possible_destinations)
-	var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
-	data["docked_location"] = M ? M.get_status_text_tgui() : "Unknown"
+	var/obj/docking_port/mobile/mobile_docking_port = SSshuttle.getShuttle(shuttleId)
+	data["docked_location"] = mobile_docking_port ? mobile_docking_port.get_status_text_tgui() : "Unknown"
 	data["locations"] = list()
 	data["locked"] = locked
 	data["authorization_required"] = admin_controlled
-	data["timer_str"] = M ? M.getTimerStr() : "00:00"
+	data["timer_str"] = mobile_docking_port ? mobile_docking_port.getTimerStr() : "00:00"
 	data["destination"] = destination
-	if(!M)
+	if(!mobile_docking_port)
 		data["status"] = "Missing"
 		return data
 	if(admin_controlled)
@@ -49,7 +81,7 @@
 	else if(locked)
 		data["status"] = "Locked"
 	else
-		switch(M.mode)
+		switch(mobile_docking_port.mode)
 			if(SHUTTLE_IGNITING)
 				data["status"] = "Igniting"
 			if(SHUTTLE_IDLE)
@@ -58,16 +90,7 @@
 				data["status"] = "Recharging"
 			else
 				data["status"] = "In Transit"
-	for(var/obj/docking_port/stationary/S in SSshuttle.stationary_docking_ports)
-		if(!options.Find(S.port_destinations))
-			continue
-		if(!M.check_dock(S, silent = TRUE))
-			continue
-		var/list/location_data = list(
-			id = S.shuttle_id,
-			name = S.name
-		)
-		data["locations"] += list(location_data)
+	data["locations"] = get_valid_destinations()
 	if(length(data["locations"]) == 1)
 		for(var/location in data["locations"])
 			destination = location["id"]
@@ -85,6 +108,22 @@
  */
 /obj/machinery/computer/shuttle/proc/launch_check(mob/user)
 	return TRUE
+
+/obj/machinery/computer/shuttle/proc/get_valid_destinations()
+	var/list/destination_list = params2list(possible_destinations)
+	var/obj/docking_port/mobile/mobile_docking_port = SSshuttle.getShuttle(shuttleId)
+	var/list/valid_destinations = list()
+	for(var/obj/docking_port/stationary/stationary_docking_port in SSshuttle.stationary_docking_ports)
+		if(!destination_list.Find(stationary_docking_port.port_destinations))
+			continue
+		if(!mobile_docking_port.check_dock(stationary_docking_port, silent = TRUE))
+			continue
+		var/list/location_data = list(
+			id = stationary_docking_port.shuttle_id,
+			name = stationary_docking_port.name
+		)
+		valid_destinations += list(location_data)
+	return valid_destinations
 
 /obj/machinery/computer/shuttle/ui_act(action, params)
 	. = ..()
