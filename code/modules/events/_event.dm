@@ -134,7 +134,7 @@ Runs the event
 		log_game("Random Event triggering: [name] ([typepath]).")
 
 	if(alert_observers)
-		deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered!", "<b>[name]</b>.", message_type=DEADCHAT_ANNOUNCEMENT) //STOP ASSUMING IT'S BADMINS!
+		deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered!", "<b>[name]</b>", message_type=DEADCHAT_ANNOUNCEMENT) //STOP ASSUMING IT'S BADMINS!
 
 	SSblackbox.record_feedback("tally", "event_ran", 1, "[E]")
 	return E
