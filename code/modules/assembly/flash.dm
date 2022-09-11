@@ -1,5 +1,7 @@
 #define CONFUSION_STACK_MAX_MULTIPLIER 2
 
+#define FLASH_PROTECTION_SENSITIVE -1
+
 /// No deviation at all. Flashed from the front or front-left/front-right. Alternatively, flashed in direct view.
 #define DEVIATION_NONE 0
 /// Partial deviation. Flashed from the side. Alternatively, flashed out the corner of your eyes.
@@ -202,7 +204,7 @@
 
 	if(iscarbon(victim))
 		var/mob/living/carbon/carbon_victim = victim
-		if(carbon_victim.get_eye_protection() < -1) // If we have really bad flash sensitivity, usually due to really sensitive eyes, we get flashed from all directions
+		if(carbon_victim.get_eye_protection() < FLASH_PROTECTION_SENSITIVE) // If we have really bad flash sensitivity, usually due to really sensitive eyes, we get flashed from all directions
 			return DEVIATION_NONE
 
 	// Are they on the same tile? We'll return partial deviation. This may be someone flashing while lying down
@@ -418,3 +420,4 @@
 #undef DEVIATION_NONE
 #undef DEVIATION_PARTIAL
 #undef DEVIATION_FULL
+#undef FLASH_PROTECTION_SENSITIVE
