@@ -39,6 +39,9 @@
 	if(!user.can_read(src, check_for_light = FALSE)) //Illiterate mobs which aren't otherwise blocked from using computers will send the shuttle to a random valid destination
 		to_chat(user, span_warning("You start mashing buttons at random!"))
 		if(do_after(user, 10 SECONDS, target = src))
+			if(!allowed(usr))
+				to_chat(usr, span_danger("Access denied."))
+				return
 			var/obj/docking_port/mobile/mobile_docking_port = SSshuttle.getShuttle(shuttleId)
 			if(no_destination_swap)
 				if(mobile_docking_port.mode == SHUTTLE_RECHARGING)
