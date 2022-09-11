@@ -21,7 +21,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	density = TRUE
 	anchored = TRUE
 	max_integrity = 400
-	pass_flags_self = PASSSTRUCTURE | LETPASSTHROW
+	pass_flags_self = LETPASSTHROW | PASSSTRUCTURE
 	var/obj/structure/tray/connected = null
 	var/locked = FALSE
 	dir = SOUTH
