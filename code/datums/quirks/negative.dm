@@ -434,7 +434,6 @@
 /datum/quirk/prosthetic_limb/add_unique()
 	var/limb_slot = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/obj/item/bodypart/old_part = human_holder.get_bodypart(limb_slot)
 	var/obj/item/bodypart/prosthetic
 	switch(limb_slot)
 		if(BODY_ZONE_L_ARM)
@@ -465,14 +464,14 @@
 
 /datum/quirk/quadruple_amputee/add_unique()
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	replace_body_part(human_holder, BODY_ZONE_L_ARM, new /obj/item/bodypart/l_arm/robot_surplus)
-	replace_body_part(human_holder, BODY_ZONE_R_ARM, new /obj/item/bodypart/r_arm/robot_surplus)
-	replace_body_part(human_holder, BODY_ZONE_L_LEG, new /obj/item/bodypart/l_leg/robot_surplus)
-	replace_body_part(human_holder, BODY_ZONE_R_LEG, new /obj/item/bodypart/r_leg/robot_surplus)
+	replace_body_part(human_holder, BODY_ZONE_L_ARM, new/obj/item/bodypart/l_arm/robot/surplus(quirk_holder))
+	replace_body_part(human_holder, BODY_ZONE_R_ARM, new/obj/item/bodypart/r_arm/robot/surplus(quirk_holder))
+	replace_body_part(human_holder, BODY_ZONE_L_LEG, new/obj/item/bodypart/l_leg/robot/surplus(quirk_holder))
+	replace_body_part(human_holder, BODY_ZONE_R_LEG, new/obj/item/bodypart/r_leg/robot/surplus(quirk_holder))
 
 /datum/quirk/quadruple_amputee/post_add()
 	to_chat(quirk_holder, span_boldannounce("All your limbs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. Additionally, \
-	you need to use a welding tool and cables to repair them, instead of bruise packs and ointment.")
+	you need to use a welding tool and cables to repair them, instead of bruise packs and ointment."))
 
 /datum/quirk/pushover
 	name = "Pushover"
