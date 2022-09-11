@@ -50,9 +50,10 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/effect/abstract/z_holder/Destroy()
-	pillar.drawing_object -= show_for
+	if(pillar)
+		pillar.drawing_object -= show_for
+		pillar = null
 	show_for = null
-	pillar = null
 	return ..()
 
 /obj/effect/abstract/z_holder/proc/display(turf/display, datum/z_pillar/behalf_of)
