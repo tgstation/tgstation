@@ -21,7 +21,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	density = TRUE
 	anchored = TRUE
 	max_integrity = 400
-	pass_flags_self = LETPASSTHROW
+	pass_flags_self = PASSSTRUCTURE | LETPASSTHROW
 	var/obj/structure/tray/connected = null
 	var/locked = FALSE
 	dir = SOUTH
@@ -399,7 +399,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	name = "morgue tray"
 	desc = "Apply corpse before closing."
 	icon_state = "morguet"
-	pass_flags_self = LETPASSTHROW | PASSTABLE
+	pass_flags_self = PASSTABLE | LETPASSTHROW
 
 /obj/structure/tray/m_tray/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
