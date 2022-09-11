@@ -502,7 +502,7 @@
 	game_plane_master_controller.remove_filter("psilocybin_wave")
 
 /datum/reagent/drug/blastoff
-	name = "Blastoff"
+	name = "bLaStOoF"
 	description = "A drug for the hardcore party crowd said to enhance ones abilities on the dance floor.\nMost old heads refuse to touch this stuff, perhaps because memories of the luna discoteque incident are seared into their brains."
 	reagent_state = LIQUID
 	color = "#9015a9"
