@@ -235,8 +235,9 @@
 	var/list/speak_dejavu = list()
 
 /datum/brain_trauma/mild/mind_echo/handle_hearing(datum/source, list/hearing_args)
-	if(owner == hearing_args[HEARING_SPEAKER])
+	if(!owner.can_hear() || owner == hearing_args[HEARING_SPEAKER] || !owner.has_language(hearing_args[HEARING_LANGUAGE]))
 		return
+
 	if(hear_dejavu.len >= 5)
 		if(prob(25))
 			var/deja_vu = pick_n_take(hear_dejavu)

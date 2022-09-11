@@ -286,9 +286,7 @@
 	owner.remove_status_effect(/datum/status_effect/trance)
 
 /datum/brain_trauma/severe/hypnotic_trigger/handle_hearing(datum/source, list/hearing_args)
-	if(!owner.can_hear())
-		return
-	if(owner == hearing_args[HEARING_SPEAKER])
+	if(!owner.can_hear() || owner == hearing_args[HEARING_SPEAKER] || !owner.has_language(hearing_args[HEARING_LANGUAGE]))
 		return
 
 	var/regex/reg = new("(\\b[REGEX_QUOTE(trigger_phrase)]\\b)","ig")
@@ -307,7 +305,7 @@
 	scan_desc = "dyslexia"
 	gain_text = "<span class='warning'>You have trouble reading or writing...</span>"
 	lose_text = "<span class='notice'>Your suddenly remember how to read and write.</span>"
-	
+
 /datum/brain_trauma/severe/dyslexia/on_gain()
 	ADD_TRAIT(owner, TRAIT_ILLITERATE, TRAUMA_TRAIT)
 	..()

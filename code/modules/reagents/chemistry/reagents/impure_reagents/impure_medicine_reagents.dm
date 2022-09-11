@@ -810,4 +810,9 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/impurity/inacusiate/proc/owner_hear(datum/source, list/hearing_args)
 	SIGNAL_HANDLER
+
+	// don't skip messages that the owner says or can't understand (since they still make sounds)
+	if(!owner.can_hear())
+		return
+
 	hearing_args[HEARING_RAW_MESSAGE] = "<span class='[randomSpan]'>[hearing_args[HEARING_RAW_MESSAGE]]</span>"
