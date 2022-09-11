@@ -761,7 +761,6 @@
 			var/choice = show_radial_menu(user, src, skins, require_near = TRUE)
 			if(choice && (use_charges(user, 5, requires_full = FALSE) == 5))
 				playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
-				limb.icon = style_list_icons[choice]
 				limb.change_appearance(style_list_icons[choice], greyscale = FALSE)
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(target.color)
