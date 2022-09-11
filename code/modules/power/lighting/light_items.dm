@@ -111,7 +111,7 @@
 	..()
 	shatter(O)
 
-/obj/item/light/proc/shatter(var/target)
+/obj/item/light/proc/shatter(target)
 	if(status == LIGHT_OK || status == LIGHT_BURNED)
 		visible_message(span_danger("[src] shatters."),span_hear("You hear a small glass object shatter."))
 		status = LIGHT_BROKEN
