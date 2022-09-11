@@ -29,14 +29,14 @@
 
 /obj/machinery/computer/shuttle/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
-	if(is_station_level(user.z) && user.mind && IS_HEAD_REVOLUTIONARY(user) && !(user.mind in dumb_rev_heads))
+	if(is_station_level(user.z) && user.mind && IS_HEAD_REVOLUTIONARY(user) && !(user.mind in dumb_rev_heads)) //Rev heads will get a one-time warning that they shouldn't leave
 		to_chat(user, span_warning("You get a feeling that leaving the station might be a REALLY dumb idea..."))
 		dumb_rev_heads += user.mind
 		return
-	if (HAS_TRAIT(user, TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION) && !is_station_level(user.z))
+	if (HAS_TRAIT(user, TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION) && !is_station_level(user.z)) //Free golems and other mobs with this trait will not be able to use the shuttle from outside the station Z
 		to_chat(user, span_warning("You get the feeling you shouldn't mess with this."))
 		return
-	if(!user.can_read(src, check_for_light = FALSE))
+	if(!user.can_read(src, check_for_light = FALSE)) //Illiterate mobs which aren't otherwise blocked from using computers will send the shuttle to a random valid destination
 		to_chat(user, span_warning("You start mashing buttons at random!"))
 		if(do_after(user, 10 SECONDS, target = src))
 			var/obj/docking_port/mobile/mobile_docking_port = SSshuttle.getShuttle(shuttleId)
@@ -109,6 +109,10 @@
 /obj/machinery/computer/shuttle/proc/launch_check(mob/user)
 	return TRUE
 
+/**
+ * Returns a list of currently valid destinations for this shuttle console,
+ * taking into account its list of allowed destinations, their current state, and the shuttle's current location
+**/
 /obj/machinery/computer/shuttle/proc/get_valid_destinations()
 	var/list/destination_list = params2list(possible_destinations)
 	var/obj/docking_port/mobile/mobile_docking_port = SSshuttle.getShuttle(shuttleId)
