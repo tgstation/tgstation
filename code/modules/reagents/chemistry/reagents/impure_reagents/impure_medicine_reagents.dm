@@ -808,7 +808,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	to_chat(owner, span_notice("You start hearing things normally again."))
 	..()
 
-/datum/reagent/impurity/inacusiate/proc/owner_hear(datum/source, list/hearing_args)
+/datum/reagent/impurity/inacusiate/proc/owner_hear(mob/living/owner, list/hearing_args)
 	SIGNAL_HANDLER
 
 	// don't skip messages that the owner says or can't understand (since they still make sounds)
