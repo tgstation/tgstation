@@ -1,0 +1,4 @@
+author: "VexingRaven"
+delete-after: True
+changes: 
+  - bugfix: "Signalers on the default frequency work again"
