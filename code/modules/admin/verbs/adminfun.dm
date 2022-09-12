@@ -218,7 +218,7 @@
 	smite.effect(src, target)
 
 ///"Turns" people into bread. Really, we just add them to the contents of the bread food item.
-/proc/breadify(atom/movable/target, smite = FALSE)
+/proc/breadify(atom/movable/target)
 	var/obj/item/food/bread/plain/smite/tomb = new(get_turf(target))
 	target.forceMove(tomb)
 	target.AddComponent(/datum/component/itembound, tomb)
