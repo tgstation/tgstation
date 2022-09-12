@@ -673,8 +673,6 @@
 	if(should_draw_greyscale) //Should the limb be colored?
 		draw_color ||= (species_color) || (skin_tone && skintone2hex(skin_tone))
 
-	dmg_overlay_type = owner_species.damage_overlay_type
-
 	recolor_external_organs()
 	return TRUE
 
