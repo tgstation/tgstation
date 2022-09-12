@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - bugfix: "You can construct doors and stuff on ash tiles again. My bad, broke that one a long time back."

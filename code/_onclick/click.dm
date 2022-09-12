@@ -412,7 +412,7 @@
 	A.AltClick(src)
 
 /atom/proc/AltClick(mob/user)
-	if(!can_interact(user))
+	if(!user.can_interact_with(src))
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_CLICK_ALT, user) & COMPONENT_CANCEL_CLICK_ALT)
 		return
@@ -430,7 +430,7 @@
 
 ///The base proc of when something is right clicked on when alt is held
 /atom/proc/alt_click_secondary(mob/user)
-	if(!can_interact(user))
+	if(!user.can_interact_with(src))
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_CLICK_ALT_SECONDARY, user) & COMPONENT_CANCEL_CLICK_ALT_SECONDARY)
 		return

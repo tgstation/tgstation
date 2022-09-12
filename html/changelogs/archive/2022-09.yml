@@ -407,3 +407,56 @@
   lizardqueenlexi:
   - bugfix: fixed a bug causing the process of slicing food to erase most of the food's
       reagents
+2022-09-10:
+  567Turtle:
+  - qol: Changes how the medipens examine text works
+  AnturK:
+  - bugfix: Fishing should be now more consistent about win/failure.
+  Dmeto:
+  - qol: Reagent scanner circuit component now ouputs to a table list.
+  JohnFulpWillard:
+  - bugfix: Mining station's access was reverted, and Curators once again can access
+      it. Supply security officers also once again only have access to it during elevated
+      access.
+  - qol: '''Mining'' access is now named ''Mining Dock'' while ''Mining EVA'' is now
+      named ''Mining Outpost'', to better reflect what they are.'
+  - qol: Syndicate sleepers (the ones in the nukie base outpost) now drops their board
+      on deconstruction.
+  - bugfix: SaturnX now properly turns you invisible again.
+  ShizCalev:
+  - bugfix: Tables built out of custom materials (ie meat) will no longer say that
+      they are built from iron in their description.
+  SpaceSmithers:
+  - bugfix: Tramstation's AI Upload is now equipped with the proper modules.
+  scriptis:
+  - refactor: animated numbers now animate at 60 fps
+2022-09-12:
+  JohnFulpWillard:
+  - bugfix: Pirate ships now work again.
+  Nari Harimoto:
+  - bugfix: you can now rotate machines even when the room has no power again
+  - bugfix: if you enable the AIs ability to interact with machines while in an AI-Card,
+      they can now actually interact again
+  - bugfix: you can no longer open the UI for a syndie bomb and walk away and activate
+      it from range, it now checks if you actually can interact with it including
+      range before letting you activate it
+  Rhials:
+  - spellcheck: Fixes a typo in the cult heal spell feedback message.
+  - spellcheck: fixes some internal typos related to the word "auxillary".
+  ShizCalev:
+  - admin: Silenced grav generator admin warnings / logging messages when the round
+      is not currently in progress.
+  - bugfix: Fixed an exploit allowing you to toggle suit sensors while dead/restrained.
+  - bugfix: Projectiles fired by non-mob sources (IE turrets) now log reagents contained
+      after hitting a target.
+  - admin: Cleaned up projectile reagent logging a little.
+  - admin: Projectiles fired from mecha will now combat log on the target AND the
+      firer.
+  - admin: Mecha chassis logs will now contain the name/ckey of the person who fired
+      the mecha's weapon.
+  - admin: Projectiles fired from vehicles are now more likely to be combat logged
+      properly after hitting a target (this logs for all people with control of the
+      mecha which is a little messy with multi-seat mecha. Check the vehicle's logs
+      or a user's combat logs for the person that actually SHOT the projectile.)
+  Thunder12345:
+  - bugfix: Purged pointless punctuation from probabalistic phenomenon publications

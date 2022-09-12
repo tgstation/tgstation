@@ -1,0 +1,4 @@
+author: "dopamiin"
+delete-after: True
+changes: 
+  - bugfix: "pAIs and other pets that can be picked up no longer know shadow clone jutsu."
