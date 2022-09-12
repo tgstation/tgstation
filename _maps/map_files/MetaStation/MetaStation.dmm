@@ -50875,6 +50875,7 @@
 /area/station/hallway/primary/fore)
 "rYy" = (
 /obj/machinery/power/smes,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/aft)
 "rYA" = (
