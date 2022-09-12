@@ -357,18 +357,12 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 		return ..()
 
 /obj/item/shard/welder_act(mob/living/user, obj/item/I)
-	..()
 	if(I.use_tool(src, user, 0, volume=50))
-		var/obj/item/stack/sheet/NG = new weld_material(user.loc)
-		for(var/obj/item/stack/sheet/G in user.loc)
-			if(G == NG)
-				continue
-			if(G.amount >= G.max_amount)
-				continue
-			G.attackby(NG, user)
-		to_chat(user, span_notice("You add the newly-formed [NG.name] to the stack. It now contains [NG.amount] sheet\s."))
+		var/obj/item/stack/sheet/new_glass = new weld_material
+		to_chat(user, span_notice("You melt [src] down into [new_glass.name]."))
+		new_glass.forceMove(user.drop_location()) //stack merging is handled automatically.
 		qdel(src)
-	return TRUE
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/shard/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
