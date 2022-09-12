@@ -6,7 +6,6 @@
 	var/atom/movable/container
 	/// Detect any movement of the container
 	var/datum/movement_detector/move_tracker
-	/// Should we be actively preve
 
 /datum/component/itembound/Initialize(tomb)
 	if(!ismovable(parent))
