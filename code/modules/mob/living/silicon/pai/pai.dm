@@ -91,6 +91,7 @@
 		"lizard" = FALSE,
 		"duffel" = TRUE,
 		"crow" = TRUE,
+		"chicken" = FALSE,
 	)
 
 	var/emitterhealth = 20
