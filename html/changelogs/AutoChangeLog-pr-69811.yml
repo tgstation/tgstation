@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed an exploit allowing you to toggle suit sensors while dead/restrained."
