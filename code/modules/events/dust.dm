@@ -45,7 +45,7 @@
 
 /datum/round_event/space_dust/major_dust/tick()
 	if(ISMULTIPLE(activeFor, 3))
-		spawn_meteors(5, GLOB.meteorsC) //meteor list types defined in gamemode/meteor/meteors.dm
+		spawn_meteors(5, GLOB.meteorsC)
 
 /datum/round_event_control/sandstorm
 	name = "Sandstorm"
