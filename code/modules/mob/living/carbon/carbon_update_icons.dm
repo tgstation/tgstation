@@ -79,7 +79,7 @@
 /mob/living/carbon/update_body(is_creating = FALSE)
 	dna.species.handle_body(src) //This calls `handle_mutant_bodyparts` which calls `update_mutant_bodyparts()`. Don't double call!
 	update_body_parts(is_creating)
-	
+
 mob/living/carbon/proc/visual_remove_overlay(cache_index)
 	var/I = overlays_standing[cache_index]
 	if(I)
@@ -121,7 +121,7 @@ mob/living/carbon/proc/visual_remove_overlay(cache_index)
 		for(var/mutable_appearance/child_appearance as anything in appearance.overlays)
 			queue += child_appearance
 
-/atom/var/list/realized_overlays = list()
+/atom/var/list/realized_overlays
 
 /mutable_appearance/proc/realize_overlays()
 	realized_overlays = list()
@@ -141,7 +141,7 @@ mob/living/carbon/proc/visual_remove_overlay(cache_index)
 		for(var/mutable_appearance/child_appearance as anything in appearance.overlays)
 			queue += child_appearance
 
-/mutable_appearance/var/list/realized_overlays = list()
+/mutable_appearance/var/list/realized_overlays
 
 /proc/diff_appearances(mutable_appearance/first, mutable_appearance/second, iter = 0)
 	var/list/diffs = list()
