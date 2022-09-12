@@ -6931,7 +6931,8 @@
 	},
 /obj/machinery/keycard_auth/directional/south,
 /obj/machinery/camera/autoname/directional/south{
-	c_tag = "Research Director's Office"
+	c_tag = "Research Director's Office";
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/rd)
