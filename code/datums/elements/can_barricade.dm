@@ -35,7 +35,7 @@
 		return
 
 	if(plank.get_amount() < PLANK_BARRICADE_AMOUNT)
-		source.balloon_alert(user, "need two [plank] sheets!")
+		source.balloon_alert(user, "need [PLANK_BARRICADE_AMOUNT] [plank] sheets!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	source.balloon_alert(user, "constructing barricade...")
