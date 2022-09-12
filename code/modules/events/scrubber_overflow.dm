@@ -3,7 +3,7 @@
 	typepath = /datum/round_event/scrubber_overflow
 	weight = 10
 	max_occurrences = 3
-	min_players = 10 MINUTES
+	min_players = 10
 	category = EVENT_CATEGORY_JANITORIAL
 	description = "The scrubbers release a tide of mostly harmless froth."
 
