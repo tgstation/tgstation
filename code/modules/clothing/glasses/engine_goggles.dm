@@ -179,7 +179,7 @@
 
 
 
-/proc/atmos_thermal(mob/viewer, range = 4, duration = 10)
+/proc/atmos_thermal(mob/viewer, range = 5, duration = 10)
 	if(!ismob(viewer) || !viewer.client)
 		return
 	for(var/turf/open in view(range, viewer))
