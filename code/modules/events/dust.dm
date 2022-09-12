@@ -25,7 +25,6 @@
 	max_occurrences = 3
 	earliest_start = 25 MINUTES
 	category = EVENT_CATEGORY_SPACE
-	description = "A regular meteor wave."
 
 /datum/round_event/space_dust/major_dust
 	start_when = 6
