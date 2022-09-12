@@ -87,7 +87,7 @@
 
 /obj/structure/barricade/wooden/crowbar_act(mob/living/user, obj/item/tool)
 	balloon_alert(user, "deconstructing barricade...")
-	if(!tool.use_tool(src, user, 2 SECONDS, volume=100))
+	if(!tool.use_tool(src, user, 2 SECONDS, volume=50))
 		return
 	balloon_alert(user, "barricade deconstructed")
 	tool.play_tool_sound(src)
