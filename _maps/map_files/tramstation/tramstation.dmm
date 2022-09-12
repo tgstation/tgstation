@@ -882,6 +882,19 @@
 /obj/item/seeds/tower,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
+"asn" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/structure/table,
+/obj/item/storage/fancy/coffee_cart_rack{
+	pixel_x = -8
+	},
+/obj/item/reagent_containers/cup/glass/coffee{
+	pixel_y = 7;
+	pixel_x = 5
+	},
+/turf/open/floor/iron,
+/area/station/cargo/warehouse)
 "asP" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 8
@@ -15892,10 +15905,18 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
-/obj/item/kirbyplants/random,
 /obj/machinery/camera/directional/east{
 	c_tag = "Security - Main East";
 	network = list("ss13","Security")
+	},
+/obj/structure/table,
+/obj/item/storage/fancy/coffee_cart_rack{
+	pixel_y = 2;
+	pixel_x = 8
+	},
+/obj/item/food/donut/plain{
+	pixel_y = 6;
+	pixel_x = -4
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
@@ -23094,6 +23115,15 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
+/obj/structure/table/glass,
+/obj/item/storage/fancy/coffee_cart_rack{
+	pixel_y = 6;
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/cup/glass/coffee{
+	pixel_x = -4;
+	pixel_y = 4
+	},
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "irH" = (
@@ -27042,7 +27072,14 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/item/storage/fancy/coffee_cart_rack{
+	pixel_y = 6;
+	pixel_x = -8
+	},
+/obj/effect/spawner/random/food_or_drink/donkpockets{
+	pixel_y = 6;
+	pixel_x = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/break_room)
 "jMX" = (
@@ -27247,6 +27284,8 @@
 	},
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/machinery/airalarm/directional/east,
+/obj/structure/table/glass,
+/obj/machinery/coffeemaker,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "jQS" = (
@@ -31142,8 +31181,8 @@
 /area/station/commons/fitness/recreation)
 "lhA" = (
 /obj/structure/table/glass,
-/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
 /obj/structure/sign/calendar/directional/east,
+/obj/machinery/coffeemaker,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -32393,6 +32432,14 @@
 	department = "Bridge";
 	departmentType = 5;
 	name = "Bridge Requests Console"
+	},
+/obj/structure/table/glass,
+/obj/item/storage/fancy/coffee_cart_rack{
+	pixel_x = -7
+	},
+/obj/item/reagent_containers/cup/glass/coffee{
+	pixel_y = 4;
+	pixel_x = 8
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -35131,6 +35178,8 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/structure/table/reinforced,
+/obj/machinery/coffeemaker,
 /turf/open/floor/iron/dark,
 /area/station/medical/break_room)
 "mBg" = (
@@ -38663,6 +38712,7 @@
 	},
 /obj/structure/table,
 /obj/item/radio/intercom/directional/east,
+/obj/machinery/coffeemaker,
 /turf/open/floor/iron,
 /area/station/security/brig)
 "nRs" = (
@@ -43131,6 +43181,8 @@
 /obj/structure/disposalpipe/trunk/multiz/down{
 	dir = 2
 	},
+/obj/structure/table,
+/obj/machinery/coffeemaker,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "pwS" = (
@@ -54699,6 +54751,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 6
 	},
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron,
 /area/station/security/brig)
 "txR" = (
@@ -62265,6 +62318,7 @@
 	dir = 8
 	},
 /obj/structure/table/glass,
+/obj/machinery/coffeemaker,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "wlM" = (
@@ -67839,9 +67893,19 @@
 /area/station/command/heads_quarters/hop)
 "yky" = (
 /obj/structure/table/glass,
-/obj/item/paper_bin,
-/obj/item/pen,
+/obj/item/paper_bin{
+	pixel_y = 3;
+	pixel_x = 6
+	},
+/obj/item/pen{
+	pixel_x = 6;
+	pixel_y = 4
+	},
 /obj/structure/sign/clock/directional/east,
+/obj/item/storage/fancy/coffee_cart_rack{
+	pixel_y = 1;
+	pixel_x = -7
+	},
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -179327,7 +179391,7 @@ ehV
 dNS
 dNS
 dNS
-fCL
+asn
 nwM
 npM
 csX
