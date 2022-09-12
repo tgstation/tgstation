@@ -189,6 +189,11 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
+"uR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/blobstart,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
 "wj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -264,6 +269,11 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/girder,
 /turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"BC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 "Ew" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1261,7 +1271,7 @@ wT
 wT
 Ki
 Qy
-ra
+uR
 Mu
 Ki
 wT
@@ -1288,7 +1298,7 @@ kw
 kw
 kw
 kw
-ra
+BC
 ra
 RG
 yb

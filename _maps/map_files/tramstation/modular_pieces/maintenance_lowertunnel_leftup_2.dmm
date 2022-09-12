@@ -269,6 +269,11 @@
 "tN" = (
 /turf/open/misc/asteroid/airless,
 /area/template_noop)
+"ua" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/landmark/blobstart,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
 "ub" = (
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -382,6 +387,11 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
+"Is" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
 "IT" = (
 /turf/template_noop,
 /area/station/maintenance/department/crew_quarters/dorms)
@@ -1973,9 +1983,9 @@ tN
 Bk
 Cz
 aO
-Bc
+ua
 nN
-Bc
+Is
 Bk
 Cz
 aO

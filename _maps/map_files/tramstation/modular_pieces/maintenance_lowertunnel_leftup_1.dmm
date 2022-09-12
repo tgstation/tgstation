@@ -298,6 +298,11 @@
 "LZ" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
 /area/template_noop)
+"Mg" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
 "MK" = (
 /obj/modular_map_connector,
 /turf/open/floor/iron/smooth,
@@ -383,6 +388,11 @@
 "SE" = (
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
+"SH" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/landmark/blobstart,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
 "TI" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1887,9 +1897,9 @@ hb
 cj
 Ym
 IB
-zi
+Mg
 bk
-zi
+SH
 cj
 Ym
 IB

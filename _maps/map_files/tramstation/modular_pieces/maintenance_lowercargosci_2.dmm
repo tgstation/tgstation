@@ -177,6 +177,10 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/central)
+"Ii" = (
+/obj/effect/landmark/blobstart,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/central)
 "Kl" = (
 /obj/structure/girder,
 /turf/open/misc/asteroid,
@@ -220,6 +224,10 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"PB" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/central)
 "Qm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -864,7 +872,7 @@ nJ
 nJ
 nJ
 nJ
-Vf
+PB
 mi
 mi
 nJ
@@ -951,7 +959,7 @@ nJ
 nJ
 nJ
 nJ
-Vf
+Ii
 mi
 mi
 nJ

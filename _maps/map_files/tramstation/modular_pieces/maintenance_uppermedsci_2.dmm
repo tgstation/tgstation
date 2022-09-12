@@ -109,6 +109,18 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
+"uA" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/misc/asteroid,
+/area/template_noop)
+"uI" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/blobstart,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/medical)
 "vn" = (
 /turf/open/misc/asteroid{
 	icon_state = "asteroid_dug"
@@ -873,14 +885,14 @@ Gz
 Fk
 CG
 eO
-je
+uA
 Jt
 Gz
 Gz
 Gz
 aT
 ua
-NB
+uI
 KH
 KH
 KH

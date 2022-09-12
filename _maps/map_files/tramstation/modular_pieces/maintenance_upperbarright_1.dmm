@@ -21,6 +21,11 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
+"g" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/blobstart,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
 "i" = (
 /turf/closed/wall,
 /area/station/maintenance/department/cargo)
@@ -36,6 +41,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/cargo)
 "m" = (
@@ -258,7 +264,7 @@ S
 i
 x
 m
-x
+g
 x
 I
 i

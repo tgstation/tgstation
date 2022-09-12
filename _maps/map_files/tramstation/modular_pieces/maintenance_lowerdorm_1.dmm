@@ -323,6 +323,11 @@
 /obj/structure/closet/firecloset,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
+"ws" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/blobstart,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
 "Fv" = (
 /turf/template_noop,
 /area/station/maintenance/department/crew_quarters/dorms)
@@ -335,6 +340,7 @@
 "Ln" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
 "NB" = (
@@ -1393,7 +1399,7 @@ aL
 aL
 aL
 ab
-aq
+ws
 aq
 am
 "}

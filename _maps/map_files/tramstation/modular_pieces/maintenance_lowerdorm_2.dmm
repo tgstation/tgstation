@@ -260,6 +260,11 @@
 /obj/item/stack/ore/glass,
 /turf/open/misc/asteroid,
 /area/mine/explored)
+"yD" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/blobstart,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
 "zk" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -498,6 +503,7 @@
 "Yh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
 "Yw" = (
@@ -1562,7 +1568,7 @@ OI
 OI
 OI
 tI
-Ya
+yD
 Ya
 Ii
 "}

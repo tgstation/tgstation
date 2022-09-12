@@ -144,6 +144,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/sand/plating,
 /obj/item/clothing/head/hardhat,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "C" = (
@@ -163,6 +164,11 @@
 "F" = (
 /obj/structure/girder,
 /obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/central/greater)
+"G" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/landmark/blobstart,
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "H" = (
@@ -590,7 +596,7 @@ z
 z
 r
 N
-N
+G
 b
 r
 L

@@ -103,6 +103,10 @@
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/template_noop)
+"D" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/misc/asteroid/airless,
+/area/template_noop)
 "E" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -138,6 +142,14 @@
 /obj/item/storage/bag/ore,
 /turf/open/misc/asteroid/airless,
 /area/template_noop)
+"T" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/blobstart,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/medical)
 "U" = (
 /turf/closed/wall,
 /area/station/maintenance/department/science)
@@ -666,7 +678,7 @@ o
 o
 o
 o
-o
+D
 C
 O
 o
@@ -674,7 +686,7 @@ w
 w
 Y
 n
-B
+T
 Z
 Z
 Z
