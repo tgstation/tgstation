@@ -308,7 +308,7 @@ SUBSYSTEM_DEF(statpanels)
 	/// list of atoms to show to our client via the object tab, at least currently
 	var/list/atoms_to_show = list()
 	/// list of atom -> image string for objects we have had in the right click tab
-	/// this is our cachign
+	/// this is our caching
 	var/list/atoms_to_images = list()
 	/// list of atoms to turn into images for the object tab
 	var/list/atoms_to_imagify = list()
