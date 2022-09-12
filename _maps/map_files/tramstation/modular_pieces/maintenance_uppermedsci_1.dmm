@@ -14,6 +14,11 @@
 "c" = (
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/science)
+"e" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/science)
 "f" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/emcloset,
@@ -47,11 +52,18 @@
 /obj/effect/spawner/random/engineering/toolbox,
 /obj/effect/spawner/random/engineering/material_cheap,
 /obj/effect/spawner/random/engineering/flashlight,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
 "o" = (
 /turf/open/misc/asteroid/airless,
 /area/template_noop)
+"p" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/science)
 "r" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -946,7 +958,7 @@ Z
 Z
 Z
 V
-V
+p
 U
 Z
 Z
@@ -974,7 +986,7 @@ Z
 Z
 Z
 l
-V
+e
 Z
 Z
 Z
@@ -1002,7 +1014,7 @@ Z
 Z
 Z
 f
-V
+e
 Z
 Z
 Z

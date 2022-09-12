@@ -326,6 +326,17 @@
 "Fv" = (
 /turf/template_noop,
 /area/station/maintenance/department/crew_quarters/dorms)
+"Lb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/crew_quarters/dorms)
+"Ln" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/crew_quarters/dorms)
 "NB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/moisture_trap,
@@ -1178,8 +1189,8 @@ aL
 aL
 aL
 ab
-aq
-aq
+Ln
+Lb
 am
 "}
 (26,1,1) = {"

@@ -2,6 +2,13 @@
 "a" = (
 /turf/closed/wall,
 /area/station/maintenance/department/cargo)
+"b" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet,
+/obj/item/melee/baseball_bat,
+/obj/item/toy/beach_ball/baseball,
+/turf/open/floor/plating,
+/area/station/maintenance/department/cargo)
 "c" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -42,11 +49,22 @@
 "n" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
+/obj/effect/decal/cleanable/glass,
+/obj/item/shard,
 /turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"o" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/cargo)
 "p" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/cargo)
 "q" = (
@@ -65,6 +83,7 @@
 /area/station/maintenance/department/cargo)
 "v" = (
 /obj/effect/spawner/random/trash/cigbutt,
+/obj/item/shovel/spade,
 /turf/open/misc/asteroid,
 /area/station/maintenance/department/cargo)
 "x" = (
@@ -91,6 +110,22 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/firecloset,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"D" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty{
+	pixel_y = 6;
+	pixel_x = -7
+	},
+/obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty{
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty{
+	pixel_y = 11;
+	pixel_x = 8
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "E" = (
@@ -128,6 +163,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/spawner/random/trash/food_packaging,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/cargo)
 "K" = (
@@ -150,6 +186,16 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/ore_box,
 /turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"O" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"P" = (
+/obj/item/stack/sheet/bone,
+/obj/item/stack/ore/glass,
+/turf/open/misc/asteroid/dug,
 /area/station/maintenance/department/cargo)
 "Q" = (
 /obj/effect/decal/cleanable/dirt,
@@ -177,6 +223,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/cargo)
 "Z" = (
@@ -259,7 +306,7 @@ e
 i
 g
 r
-f
+b
 a
 a
 k
@@ -276,7 +323,7 @@ k
 k
 k
 k
-q
+P
 A
 a
 f
@@ -322,7 +369,7 @@ i
 A
 g
 T
-T
+O
 f
 a
 k
@@ -342,7 +389,7 @@ k
 x
 A
 a
-n
+D
 n
 a
 a
@@ -615,7 +662,7 @@ k
 k
 Y
 p
-E
+o
 E
 E
 k

@@ -61,7 +61,7 @@ modules = ["maintenance_lowerservicecargo_1.dmm", "maintenance_lowerservicecargo
 modules = ["maintenance_lowerservicecargo_attachment_a_1.dmm", "maintenance_lowerservicecargo_attachment_a_2.dmm", "maintenance_lowerservicecargo_attachment_a_3.dmm"]
 
 [rooms.maintenance_lowerservicecargo_attachment_b]
-modules = ["maintenance_lowerservicecargo_attachment_b_1.dmm", "maintenance_lowerservicecargo_attachment_b_2.dmm", "maintenance_lowerservicecargo_attachment_b_3.dmm"]
+modules = ["maintenance_lowerservicecargo_attachment_b_1.dmm", "maintenance_lowerservicecargo_attachment_b_2.dmm"]
 
 [rooms.maintenance_lowercargosci]
 modules = ["maintenance_lowercargosci_1.dmm", "maintenance_lowercargosci_2.dmm"]

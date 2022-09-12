@@ -24,6 +24,20 @@
 "i" = (
 /turf/closed/wall,
 /area/station/maintenance/department/cargo)
+"j" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/effect/spawner/random/engineering/toolbox,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"l" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/cargo)
 "m" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -43,6 +57,7 @@
 "o" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/cargo)
 "q" = (
@@ -75,6 +90,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/cargo)
 "C" = (
@@ -104,9 +120,17 @@
 /obj/structure/ore_box,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
+"K" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/maintenance/two,
+/obj/effect/spawner/random/engineering/flashlight,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
 "P" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
+/obj/item/wrench,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "S" = (
@@ -193,7 +217,7 @@ i
 x
 i
 Z
-x
+K
 i
 i
 S
@@ -276,7 +300,7 @@ S
 i
 x
 i
-P
+j
 P
 i
 i
@@ -549,7 +573,7 @@ S
 S
 B
 o
-C
+l
 C
 C
 S

@@ -15,7 +15,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
-/area/space)
+/area/station/maintenance/central/lesser)
 "bq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/duct,
@@ -87,6 +87,12 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "jb" = (
 /turf/open/misc/asteroid,
+/area/station/maintenance/department/crew_quarters/dorms)
+"kN" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
 "kW" = (
 /obj/machinery/duct,
@@ -170,7 +176,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/item/stack/ore/glass,
 /turf/open/floor/plating,
-/area/space)
+/area/station/maintenance/central/lesser)
 "sA" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
@@ -225,7 +231,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
-/area/space)
+/area/station/maintenance/central/lesser)
 "xl" = (
 /turf/closed/wall,
 /area/station/maintenance/central/lesser)
@@ -488,6 +494,11 @@
 "Ya" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"Yh" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
 "Yw" = (
 /turf/closed/wall/rust,
@@ -1347,8 +1358,8 @@ OI
 OI
 OI
 tI
-Ya
-Ya
+Yh
+kN
 Ii
 "}
 (26,1,1) = {"

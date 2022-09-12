@@ -161,6 +161,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/central)
+"H" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/central)
 "I" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -386,7 +393,7 @@ y
 y
 y
 y
-y
+H
 y
 B
 "}
