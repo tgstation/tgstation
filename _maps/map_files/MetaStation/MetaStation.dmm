@@ -601,7 +601,6 @@
 /area/station/security/courtroom)
 "amu" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/storage/box/drinkingglasses,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/neutral{
@@ -614,9 +613,11 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/effect/spawner/random/structure/crate_empty,
-/obj/effect/spawner/random/food_or_drink/donkpockets,
-/obj/effect/spawner/random/food_or_drink/cups,
+/obj/structure/table,
+/obj/machinery/fax{
+	fax_name = "Service Hallway";
+	name = "Service Fax Machine"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "amy" = (
@@ -5065,11 +5066,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/table,
-/obj/machinery/fax{
-	fax_name = "Service Hallway";
-	name = "Service Fax Machine"
-	},
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/effect/spawner/random/structure/crate_empty,
+/obj/item/storage/box/drinkingglasses,
+/obj/effect/spawner/random/food_or_drink/cups,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "bOH" = (
@@ -20736,10 +20736,7 @@
 "hGK" = (
 /obj/structure/table,
 /obj/structure/cable,
-/obj/machinery/fax{
-	name = "Kitchen Fax Machine";
-	fax_name = "Kitchen"
-	},
+/obj/item/book/manual/wiki/cooking_to_serve_man,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -66343,7 +66340,6 @@
 /obj/structure/cable,
 /obj/structure/table,
 /obj/item/storage/bag/tray,
-/obj/item/book/manual/wiki/cooking_to_serve_man,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "xqI" = (
