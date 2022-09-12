@@ -80,24 +80,17 @@
 
 	"help": [
 		"HELP HER",
-		"HELP HER",
-		"HELP HIM",
 		"HELP HIM",
 		"HELP MAINT",
 		"HELP ME",
-		"HELP ME",
-		"HELP THEM",
 		"HELP THEM",
 		"HELP US",
-		"HELP US",
-		"HELP YOURSELF"
 		"HELP YOURSELF",
-		"HELP"
 		"HELP",
 		"HELP",
-		"HELP",
-		"HELP",
-		"HELP",
+		"help",
+		"help",
+		"Help"
 	],
 
 	"escape": [
@@ -155,18 +148,14 @@
 
 	"threat": [
 		"%TARGETNAME%"
-		"%TARGETNAME%",
 		"Blob",
-		"Blue APC",
 		"Blue APC",
 		"Changeling",
 		"Cult",
 		"Harm",
-		"Harm",
-		"Help",
 		"Help",
 		"Heretics",
-		"I hear flashing",
+		"Heretic",
 		"I hear flashing",
 		"Ling",
 		"Ops",
