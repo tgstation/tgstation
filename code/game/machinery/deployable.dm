@@ -63,10 +63,9 @@
 /obj/structure/barricade/wooden/Initialize(mapload)
 	. = ..()
 
-	if(!(flags_1 & NODECONSTRUCT_1))
-		var/static/list/tool_behaviors = list(TOOL_CROWBAR = list(SCREENTIP_CONTEXT_LMB = "Deconstruct"))
-		AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
-		register_context()
+	var/static/list/tool_behaviors = list(TOOL_CROWBAR = list(SCREENTIP_CONTEXT_LMB = "Deconstruct"))
+	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+	register_context()
 
 /obj/structure/barricade/wooden/attackby(obj/item/I, mob/user)
 	if(istype(I,/obj/item/stack/sheet/mineral/wood))
