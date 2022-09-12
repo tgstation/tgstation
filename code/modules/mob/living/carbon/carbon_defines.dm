@@ -76,7 +76,7 @@
 		/obj/item/bodypart/r_arm,
 		/obj/item/bodypart/r_leg,
 		/obj/item/bodypart/l_leg,
-		)
+	)
 
 	/// A collection of arms (or actually whatever the fug /bodyparts you monsters use to wreck my systems)
 	var/list/hand_bodyparts = list()

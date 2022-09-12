@@ -450,6 +450,7 @@
 
 /obj/item/bodypart/r_leg/monkey
 	icon = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_state = "default_monkey_r_leg"
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = FALSE
