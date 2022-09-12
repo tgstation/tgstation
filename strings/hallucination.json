@@ -80,27 +80,24 @@
 
 	"help": [
 		"HELP HER",
-		"HELP HIM",
-		"HELP ME",
-		"HELP THEM",
-		"HELP US",
-		"HELP YOURSELF",
-		"HELP",
-		"HELP",
-		"HELP",
-		"HELP",
-<<<<<<< HEAD
-		"HELP",
-		"HELP ME",
-		"HELP HIM",
 		"HELP HER",
+		"HELP HIM",
+		"HELP HIM",
+		"HELP MAINT",
+		"HELP ME",
+		"HELP ME",
+		"HELP THEM",
 		"HELP THEM",
 		"HELP US",
-		"HELP MAINT",
+		"HELP US",
 		"HELP YOURSELF"
-=======
+		"HELP YOURSELF",
 		"HELP"
->>>>>>> master
+		"HELP",
+		"HELP",
+		"HELP",
+		"HELP",
+		"HELP",
 	],
 
 	"escape": [
@@ -122,47 +119,30 @@
 	"people": [
 		"%TARGETNAME%",
 		"AI",
-<<<<<<< HEAD
 		"Borg",
 		"Captain",
 		"Ce",
 		"Cmo",
 		"Geneticist",
-=======
-		"Captain",
-		"Ce",
-		"Cmo",
->>>>>>> master
 		"Hop",
 		"Hos",
 		"Janitor",
 		"Qm",
 		"Rd",
-<<<<<<< HEAD
 		"Robo",
-=======
->>>>>>> master
 		"Viro"
 	],
 
 	"accusations": [
 		"a changeling",
-<<<<<<< HEAD
 		"a cultist",
 		"a gang leader",
 		"a heretic",
-=======
-		"a clock cultist",
-		"a cultist",
-		"a gang leader",
-		"a gangster",
->>>>>>> master
 		"a ling",
 		"a rev",
 		"a revhead",
 		"a tator",
 		"a traitor",
-<<<<<<< HEAD
 		"a wizard",
 		"bad",
 		"cult",
@@ -171,39 +151,30 @@
 		"rogue",
 		"the traitor",
 		"the wizard"
-=======
-		"clockcult",
-		"cult",
-		"dead",
-		"rogue"
->>>>>>> master
 	],
 
 	"threat": [
+		"%TARGETNAME%"
 		"%TARGETNAME%",
 		"Blob",
 		"Blue APC",
+		"Blue APC",
+		"Changeling",
 		"Cult",
 		"Harm",
+		"Harm",
 		"Help",
+		"Help",
+		"Heretics",
+		"I hear flashing",
 		"I hear flashing",
 		"Ling",
-		"Changeling",
 		"Ops",
 		"Revenant",
 		"Spiders",
 		"Traitor",
-<<<<<<< HEAD
-		"Harm",
-		"Blue APC",
-		"I hear flashing",
-		"Help",
-		"Heretics",
-		"%TARGETNAME%"
-=======
 		"Wizard",
 		"Xenos"
->>>>>>> master
 	],
 
 	"location": [
