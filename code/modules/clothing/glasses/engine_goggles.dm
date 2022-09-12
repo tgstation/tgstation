@@ -5,7 +5,7 @@
 #define MODE_TRAY "t-ray"
 #define MODE_SHUTTLE "shuttle"
 #define MODE_PIPE_CONNECTABLE "connectable"
-#define MODE_ATMOS_THERMAL "atmospheric thermal"
+#define MODE_ATMOS_THERMAL "atmospheric-thermal"
 #define TEMP_SHADE_CYAN 273.15
 #define TEMP_SHADE_GREEN 283.15
 #define TEMP_SHADE_YELLOW 300
@@ -167,7 +167,7 @@
 /obj/item/clothing/glasses/meson/engine/atmos_imaging
 	name = "Atmospheric thermal imaging goggles"
 	desc = "Goggles used by Atmospheric Technician to see the thermal energy of gasses in open areas"
-	icon_state = "trayson-atmospheric-thermal"
+	icon_state = "trayson-"
 	inhand_icon_state = "trayson-meson"
 	glass_colour_type = /datum/client_colour/glass_colour/gray
 
