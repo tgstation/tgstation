@@ -532,8 +532,8 @@
 		for(var/heading in list(NORTH,SOUTH,EAST,WEST))
 			if(!(unres_sides & heading))
 				continue
-			var/image/floorlight = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_[heading]")
-			floorlight.plane = ABOVE_LIGHTING_PLANE
+			var/list/templist = get_airlock_overlay("unres_[heading]", overlays_file, em_block = FALSE)
+			var/image/floorlight = templist[2]
 			switch (heading)
 				if (NORTH)
 					floorlight.pixel_x = 0
