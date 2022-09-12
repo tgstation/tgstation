@@ -2,7 +2,7 @@
 	log_talk(message, LOG_SAY, tag="binary")
 
 	var/designation = "Default Cyborg"
-	var/span_class = "binarysay"
+	var/message_class = ""
 
 	if(issilicon(src))
 		var/mob/living/silicon/player = src
@@ -10,29 +10,32 @@
 
 	if(isAI(src))
 		// AIs are loud and ugly
-		span_class = "binarysay binarysay--aisay"
+		message_class = "binarysay--aisay"
 
-	var/quoted_message = say_quote(message)
+	var/quoted_message = say_quote(
+		message,
+		spans=list(message_class)
+	)
 
 	for(var/mob/M in GLOB.player_list)
 		if(M.binarycheck())
 			if(isAI(M))
 				to_chat(
 					M,
-					"<span class='[span_class]'>\
+					span_binarysay("\
 						Robotic Talk, \
 						<a href='?src=[REF(M)];track=[html_encode(name)]'>[span_name("[name] ([designation])")]</a> \
 						<span class='message'>[quoted_message]</span>\
-					</span>",
+					"),
 					avoid_highlighting = src == M
 				)
 			else
 				to_chat(
 					M,
-					"<span class='[span_class]'>\
+					span_binarysay("\
 						Robotic Talk, \
 						[span_name("[name]")] <span class='message'>[quoted_message]</span>\
-					</span>",
+					"),
 					avoid_highlighting = src == M
 				)
 
@@ -46,14 +49,12 @@
 				var/mob/living/silicon/ai/ai = src
 				following = ai.eyeobj
 
-			var/link = FOLLOW_LINK(M, following)
-
 			to_chat(
 				M,
-				"[link] <span class='[span_class]'>\
+				FOLLOW_LINK(M, following) + span_binarysay(" \
 					Robotic Talk, \
 					[span_name("[name]")] <span class='message'>[quoted_message]</span>\
-				</span>",
+				"),
 				avoid_highlighting = src == M
 			)
 
