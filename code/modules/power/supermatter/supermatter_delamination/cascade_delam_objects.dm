@@ -91,8 +91,6 @@
 
 /obj/crystal_mass/Destroy()
 	STOP_PROCESSING(SSsupermatter_cascade, src)
-	for (var/datum/light_source/light_source in light_sources)
-		qdel(light_source)
 	sm_comp = null
 	return ..()
 
