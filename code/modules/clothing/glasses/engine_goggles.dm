@@ -90,6 +90,8 @@
 			show_shuttle()
 		if(MODE_PIPE_CONNECTABLE)
 			show_connections()
+		if(MODE_ATMOS_THERMAL)
+			atmos_thermal(user)
 
 /obj/item/clothing/glasses/meson/engine/proc/show_shuttle()
 	var/mob/living/carbon/human/user = loc
@@ -175,14 +177,6 @@
 	icon_state = inhand_icon_state = "trayson-[mode]"
 	return ..()
 
-/obj/item/clothing/glasses/meson/engine/atmos_imaging/process()
-	if(!ishuman(loc))
-		return
-	var/mob/living/carbon/human/user = loc
-	if(user.glasses != src || !user.client)
-		return
-	if(mode == MODE_ATMOS_THERMAL)
-		atmos_thermal(user)
 
 
 /proc/atmos_thermal(mob/viewer, range = 4, duration = 10)
