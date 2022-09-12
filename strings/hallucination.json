@@ -88,8 +88,8 @@
 		"HELP YOURSELF",
 		"HELP",
 		"HELP",
-		"help",
-		"help",
+		"HELP",
+		"Help",
 		"Help"
 	],
 
@@ -147,7 +147,7 @@
 	],
 
 	"threat": [
-		"%TARGETNAME%"
+		"%TARGETNAME%",
 		"Blob",
 		"Blue APC",
 		"Changeling",

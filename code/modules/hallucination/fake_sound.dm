@@ -258,7 +258,7 @@
 
 /datum/hallucination/fake_sound/weird/tesloose/play_fake_sound(turf/source, sound_to_play)
 	. = ..()
-	for(var/next_shock in 1 to rand(2, 4)) //melbert todo: check this
+	for(var/next_shock in 1 to rand(2, 4))
 		queue_fake_sound(source, sound_to_play, volume_override = volume + (15 * next_shock), delay = 3 SECONDS * next_shock)
 
 /datum/hallucination/fake_sound/weird/xeno
