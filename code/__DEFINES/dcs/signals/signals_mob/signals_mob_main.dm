@@ -87,8 +87,10 @@
 	// #define SPEECH_SANITIZE 4
 	#define SPEECH_LANGUAGE 5
 	/* #define SPEECH_IGNORE_SPAM 6
-	#define SPEECH_FORCED 7 */
-	#define SPEECH_RANGE 8
+	#define SPEECH_FORCED 7
+	#define SPEECH_FILTERPROOF 8 */
+	#define SPEECH_RANGE 9
+	#define SPEECH_SAYMODE 10
 
 ///from /mob/say_dead(): (mob/speaker, message)
 #define COMSIG_MOB_DEADSAY "mob_deadsay"
