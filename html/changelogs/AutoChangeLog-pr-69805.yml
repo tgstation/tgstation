@@ -1,8 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Projectiles fired by non-mob sources (IE turrets) now log reagents contained after hitting a target."
-  - admin: "Cleaned up projectile reagent logging a little."
-  - admin: "Projectiles fired from mecha will now combat log on the target AND the firer."
-  - admin: "Mecha chassis logs will now contain the name/ckey of the person who fired the mecha's weapon."
-  - admin: "Projectiles fired from vehicles are now more likely to be combat logged properly after hitting a target (this logs for all people with control of the mecha which is a little messy with multi-seat mecha. Check the vehicle's logs or a user's combat logs for the person that actually SHOT the projectile.)"
