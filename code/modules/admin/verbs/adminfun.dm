@@ -221,8 +221,6 @@
 /proc/breadify(atom/movable/target, smite = FALSE)
 	var/obj/item/food/bread/plain/bread = new(get_turf(target))
 	target.forceMove(bread)
-	if(!ismob(target)) // sanity check
-		return
 	ADD_TRAIT(target, TRAIT_HANDS_BLOCKED, SMITE_TRAIT)
 
 /**
