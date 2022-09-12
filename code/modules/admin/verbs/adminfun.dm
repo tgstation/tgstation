@@ -217,9 +217,18 @@
 		return
 	smite.effect(src, target)
 
-/proc/breadify(atom/movable/target)
+/**
+ *  "Turns" people into bread. Really, we just add them to the contents of the bread food item.
+ *
+ * * smite - Are we calling this proc from the smite verb (on a mob)? If so, we need to do some extra stuff in order to ensure the mob can't engage in cursed activity while they are still stuck in the bread (such as holding themself).
+ */
+/proc/breadify(atom/movable/target, smite = FALSE)
 	var/obj/item/food/bread/plain/bread = new(get_turf(target))
 	target.forceMove(bread)
+	if(smite)
+		if(!ismob(target)) // sanity check
+			return
+		ADD_TRAIT(target, TRAIT_HANDS_BLOCKED, SMITE_TRAIT)
 
 /**
  * firing_squad is a proc for the :B:erforate smite to shoot each individual bullet at them, so that we can add actual delays without sleep() nonsense
