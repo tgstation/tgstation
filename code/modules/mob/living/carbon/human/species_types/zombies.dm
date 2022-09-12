@@ -144,6 +144,7 @@
 	if(bad_tongue)
 		var/obj/item/organ/internal/tongue/zombie/good_tongue = new()
 		bad_tongue.Remove(C)
+		qdel(bad_tongue)
 		good_tongue.Insert(C)
 
 // Your skin falls off
