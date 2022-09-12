@@ -334,9 +334,11 @@
 
 /obj/item/bodypart/head/larva
 	icon = 'icons/mob/species/alien/bodyparts.dmi'
+	icon_static = 'icons/mob/species/alien/bodyparts.dmi'
 	icon_state = "larva_head"
 	limb_id = BODYPART_ID_LARVA
 	is_dimorphic = FALSE
+	should_draw_greyscale = FALSE
 	px_x = 0
 	px_y = 0
 	dismemberable = 0

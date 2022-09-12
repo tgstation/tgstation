@@ -64,6 +64,7 @@
 	icon_state = "larva_chest"
 	limb_id = BODYPART_ID_LARVA
 	is_dimorphic = FALSE
+	should_draw_greyscale = FALSE
 	dismemberable = 0
 	max_damage = 50
 	bodytype = BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_ORGANIC
