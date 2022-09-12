@@ -20735,8 +20735,11 @@
 /area/station/medical/pharmacy)
 "hGK" = (
 /obj/structure/table,
-/obj/item/book/manual/wiki/cooking_to_serve_man,
 /obj/structure/cable,
+/obj/machinery/fax{
+	name = "Kitchen Fax Machine";
+	fax_name = "Kitchen"
+	},
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -62939,7 +62942,7 @@
 /obj/machinery/camera/directional/east{
 	c_tag = "Outer Vault";
 	name = "storage wing camera";
-	network = list("ss13", "vault")
+	network = list("ss13","vault")
 	},
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/trimline/brown/filled/corner,
@@ -64549,16 +64552,16 @@
 	req_access = list("kitchen")
 	},
 /obj/machinery/door/firedoor,
-/obj/item/paper,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "kitchen_service";
 	name = "Service Shutter"
 	},
-/obj/item/pen,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "wKu" = (
@@ -66340,6 +66343,7 @@
 /obj/structure/cable,
 /obj/structure/table,
 /obj/item/storage/bag/tray,
+/obj/item/book/manual/wiki/cooking_to_serve_man,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "xqI" = (

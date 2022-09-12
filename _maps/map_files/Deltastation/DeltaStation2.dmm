@@ -40377,11 +40377,13 @@
 "jKD" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/paper_bin,
-/obj/item/pen,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "cafe_counter";
 	name = "Kitchen Counter Shutters"
+	},
+/obj/machinery/fax{
+	name = "Kitchen Fax Machine";
+	fax_name = "Kitchen"
 	},
 /turf/open/floor/iron/white/smooth_corner{
 	dir = 4
@@ -97664,13 +97666,15 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "xNk" = (
-/obj/effect/landmark/start/hangover,
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "cafe_counter";
 	name = "Kitchen Counter Shutters"
 	},
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/white/smooth_corner{
 	dir = 8
 	},

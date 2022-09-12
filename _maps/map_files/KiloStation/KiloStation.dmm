@@ -18822,13 +18822,15 @@
 "fxP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/table,
-/obj/item/food/dough,
-/obj/item/kitchen/rollingpin,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/fax{
+	name = "Kitchen Fax Machine";
+	fax_name = "Kitchen"
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/kitchen)
 "fxQ" = (
@@ -70804,19 +70806,18 @@
 /area/station/hallway/primary/central)
 "ufD" = (
 /obj/structure/table,
+/obj/item/reagent_containers/cup/beaker,
 /obj/item/reagent_containers/condiment/enzyme{
 	pixel_x = -2;
 	pixel_y = 6
-	},
-/obj/item/reagent_containers/cup/beaker,
-/obj/item/food/pie/cream{
-	pixel_y = -4
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral,
+/obj/item/food/dough,
 /obj/effect/landmark/navigate_destination/kitchen,
+/obj/item/kitchen/rollingpin,
 /turf/open/floor/iron/dark,
 /area/station/service/kitchen)
 "ufE" = (
@@ -73252,6 +73253,9 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral,
+/obj/item/food/pie/cream{
+	pixel_y = -4
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/kitchen)
 "uRf" = (

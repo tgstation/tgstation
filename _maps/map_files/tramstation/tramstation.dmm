@@ -25963,6 +25963,17 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/ordnance)
+"jax" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "playerscantreadthis";
+	name = "Kitchen Counter Shutters"
+	},
+/obj/item/paper_bin,
+/obj/item/pen,
+/turf/open/floor/iron/checker,
+/area/station/service/kitchen)
 "jaH" = (
 /obj/structure/cable,
 /turf/open/floor/iron/showroomfloor,
@@ -44346,6 +44357,11 @@
 	pixel_x = -8
 	},
 /obj/machinery/firealarm/directional/east,
+/obj/machinery/fax{
+	name = "Kitchen Fax Machine";
+	fax_name = "Kitchen"
+	},
+/obj/structure/table,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "pnT" = (
@@ -168099,7 +168115,7 @@ hLp
 guL
 lNJ
 rvd
-fhg
+jax
 vJt
 mHc
 vxV
