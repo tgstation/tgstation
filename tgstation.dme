@@ -2905,7 +2905,6 @@
 #include "code\modules\events\heart_attack.dm"
 #include "code\modules\events\immovable_rod.dm"
 #include "code\modules\events\ion_storm.dm"
-#include "code\modules\events\major_dust.dm"
 #include "code\modules\events\market_crash.dm"
 #include "code\modules\events\mass_hallucination.dm"
 #include "code\modules\events\meateor_wave.dm"
