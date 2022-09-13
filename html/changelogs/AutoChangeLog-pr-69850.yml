@@ -1,0 +1,4 @@
+author: "YakumoChen"
+delete-after: True
+changes: 
+  - bugfix: "The holodeck crab can't be butchered for infinite crab meat anymore, so quit your animal abuse"
