@@ -1348,18 +1348,30 @@
 /mob/living/carbon/proc/check_signables_state()
 	var/obj/item/bodypart/left_arm = get_bodypart(BODY_ZONE_L_ARM)
 	var/obj/item/bodypart/right_arm = get_bodypart(BODY_ZONE_R_ARM)
-	var/empty_indexes = get_empty_held_indexes()
-	var/exit_right = (!right_arm || right_arm.bodypart_disabled)
-	var/exit_left = (!left_arm || left_arm.bodypart_disabled)
-	if(length(empty_indexes) == 0 || (length(empty_indexes) < 2 && (exit_left || exit_right)))//All existing hands full, can't sign
-		return SIGN_HANDS_FULL // These aren't booleans
-	if(exit_left && exit_right)//Can't sign with no arms!
-		return SIGN_ARMLESS
-	if(handcuffed) // Cuffed, usually will show visual effort to sign
-		return SIGN_CUFFED
+	var/available_hands = length(get_empty_held_indexes()) // missing or disabled arms will count as empty
+	var/no_right_hand = (!right_arm || right_arm.bodypart_disabled)
+	var/no_left_hand = (!left_arm || left_arm.bodypart_disabled)
+
+	// subtract these from our available_hands
+	if(no_right_hand)
+		available_hands -= 1
+	if(no_left_hand)
+		available_hands -= 1
+
+	// items like slappers/zombie claws/etc. should be ignored
+	for(var/obj/item/I in held_items)
+		if((I.obj_flags & ABSTRACT)
+			available_hands += 1
+
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(src, TRAIT_EMOTEMUTE))
 		return SIGN_TRAIT_BLOCKED
-	if(length(empty_indexes) == 1 || exit_left || exit_right) // One arm gone
+	else if(handcuffed) // Cuffed, usually will show visual effort to sign
+		return SIGN_CUFFED
+	else if(no_left_hand && no_right_hand) // Can't sign with no arms!
+		return SIGN_ARMLESS
+	else if(available_hands == 0)) // All existing hands full, can't sign
+		return SIGN_HANDS_FULL
+	else if(available_hands == 1) // Only one hand is empty
 		return SIGN_ONE_HAND
 
 /**
