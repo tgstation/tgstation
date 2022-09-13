@@ -4,7 +4,7 @@
 
 	var/datum/action/cooldown/mob_cooldown/ability = controller.blackboard[ability_key]
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
-	var/mob/living/target = weak_target.resolve()
+	var/mob/living/target = weak_target?.resolve()
 	if(!ability || QDELETED(target))
 		finish_action(controller, FALSE, ability_key, target_key)
 	var/mob/pawn = controller.pawn
@@ -14,7 +14,7 @@
 /datum/ai_behavior/try_mob_ability/finish_action(datum/ai_controller/controller, succeeded, ability_key, target_key)
 	. = ..()
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
-	var/mob/living/target = weak_target.resolve()
+	var/mob/living/target = weak_target?.resolve()
 	if(QDELETED(target) || target.stat >= UNCONSCIOUS)
 		controller.blackboard[target_key] = null
 
