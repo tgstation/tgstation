@@ -142,9 +142,11 @@
 			return FALSE
 		if(vval && !opened && open(null, TRUE))
 			datum_flags |= DF_VAR_EDITED
+			return TRUE
 		else if(!vval && opened && close(null))
 			datum_flags |= DF_VAR_EDITED
-		return TRUE
+			return TRUE
+		return FALSE
 	. = ..()
 	if(vname == NAMEOF(src, welded) && welded && !can_weld_shut)
 		can_weld_shut = TRUE
