@@ -1,4 +1,0 @@
-author: "Wallem"
-delete-after: True
-changes: 
-  - bugfix: "Fixes a bug where the tonal indictor for sign language would get stuck on your character for an extended period of time."

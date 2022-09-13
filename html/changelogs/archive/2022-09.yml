@@ -460,3 +460,27 @@
       or a user's combat logs for the person that actually SHOT the projectile.)
   Thunder12345:
   - bugfix: Purged pointless punctuation from probabalistic phenomenon publications
+2022-09-13:
+  CheeseWizard2:
+  - rscadd: 26 mime names to mime.txt
+  LemonInTheDark:
+  - bugfix: You can construct doors and stuff on ash tiles again. My bad, broke that
+      one a long time back.
+  Rhials:
+  - bugfix: Sleeping Carp bullet deflection works again
+  Sealed101:
+  - bugfix: 'Metastation: restored security access restrictions to Departures Security
+      Post'
+  Thunder12345:
+  - bugfix: Fax machines can no longer be shipped out on the cargo shuttle, preventing
+      a whole new realm of CentCom infiltration techniques from being applied.
+  VexingRaven:
+  - bugfix: Signalers on the default frequency work again
+  Wallem:
+  - bugfix: Fixes a bug where the tonal indictor for sign language would get stuck
+      on your character for an extended period of time.
+  dopamiin:
+  - bugfix: pAIs and other pets that can be picked up no longer know shadow clone
+      jutsu.
+  timothymtorres:
+  - bugfix: Fix book of babel not removing blocked languages properly
