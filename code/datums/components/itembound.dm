@@ -5,17 +5,17 @@
 	/// Detect any movement of the container
 	var/datum/movement_detector/move_tracker
 
-/datum/component/itembound/Initialize(container)
+/datum/component/itembound/Initialize(passed_container)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
-	src.container = container
+	container = passed_container
 	move_tracker = new(parent, CALLBACK(src, .proc/verify_containment))
 
 	ADD_TRAIT(parent, TRAIT_INCAPACITATED, SMITE_TRAIT)
 
 /// Ensure that when we move, we still are in the container. If not in the container, remove all the traits.
 /datum/component/itembound/proc/verify_containment()
-	if(container.contains(parent) || !QDELETED(container))
+	if(!QDELETED(container) && container.contains(parent))
 		return
 	REMOVE_TRAIT(parent, TRAIT_INCAPACITATED, SMITE_TRAIT)
 	qdel(src)
