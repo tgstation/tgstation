@@ -335,7 +335,7 @@
 	. = ..()
 	var/list/materials_list = list()
 	for(var/custom_material as anything in custom_materials)
-			var/datum/material/current_material = GET_MATERIAL_REF(custom_material)
+		var/datum/material/current_material = GET_MATERIAL_REF(custom_material)
 		materials_list += "[current_material.name]"
 	desc = "A square [(materials_list.len > 1) ? "amalgamation" : "piece"] of [english_list(materials_list)] on four legs. It can not move."
 
