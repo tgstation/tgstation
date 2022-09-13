@@ -15,7 +15,7 @@
 
 	var/datum/weakref/weak_target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
 	var/mob/living/target = weak_target.resolve()
-	if(!target || QDELETED(target))
+	if(QDELETED(target))
 		return
 
 	var/datum/action/cooldown/mob_cooldown/resurface = controller.blackboard[BB_BILEWORM_RESURFACE]
@@ -34,7 +34,7 @@
 
 	var/datum/weakref/weak_target = controller.blackboard[BB_BASIC_MOB_EXECUTION_TARGET]
 	var/mob/living/target = weak_target.resolve()
-	if(!target || QDELETED(target) || target.stat < UNCONSCIOUS)
+	if(QDELETED(target) || target.stat < UNCONSCIOUS)
 		return
 
 	controller.queue_behavior(/datum/ai_behavior/try_mob_ability, BB_BILEWORM_DEVOUR, BB_BASIC_MOB_EXECUTION_TARGET)

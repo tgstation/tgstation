@@ -15,7 +15,7 @@
 	. = ..()
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
 	var/mob/living/target = weak_target.resolve()
-	if(!target || QDELETED(target) || target.stat >= UNCONSCIOUS)
+	if(QDELETED(target) || target.stat >= UNCONSCIOUS)
 		controller.blackboard[target_key] = null
 
 ///subtype of normal mob ability that moves the target into a special execution targetting.
