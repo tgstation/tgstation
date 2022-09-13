@@ -219,7 +219,7 @@ SUBSYSTEM_DEF(economy)
  * * vendor: The object or structure medium that is charging the user. For Vending machines that's the machine, for payment component that's the parent, cargo that's the crate, etc.
  */
 /datum/controller/subsystem/economy/proc/track_purchase(datum/bank_account/account, price_to_use, vendor)
-	if(!account || !price_to_use || !vendor)
+	if(!account || isnull(price_to_use) || !vendor)
 		CRASH("Track purchases was missing an argument! (Account, Price, or Vendor.)")
 
 	audit_log += list(list(
