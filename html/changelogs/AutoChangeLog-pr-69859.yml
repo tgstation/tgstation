@@ -1,0 +1,11 @@
+author: "Sealed101"
+delete-after: True
+changes: 
+  - rscadd: "Icebox: added a camera to southern Cargo Bay"
+  - rscdel: "Icebox: removed several excess cameras (i.e. Courtroom, Primary Hallway, Prison Garden)"
+  - qol: "Icebox: grouped up cameras within their respective department (Medbay, RnD, Service)"
+  - qol: "Icebox: grouped up Solar Maintenance cameras as well as changing them to use North-South-East-West (you are on a planet, use the compass)"
+  - qol: "Icebox: cleaned up ambiguous camera names for easier listing in camera consoles"
+  - bugfix: "Icebox: fixed a floating camera in Fore Hallway outside Brig Access"
+  - bugfix: "Icebox: fixed several cameras lacking their respective network values"
+  - bugfix: "Icebox: restored a lost Interrogation Room Monitor outside of Interrogation Room"
