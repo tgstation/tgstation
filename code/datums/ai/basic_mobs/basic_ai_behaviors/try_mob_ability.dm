@@ -5,7 +5,7 @@
 	var/datum/action/cooldown/mob_cooldown/ability = controller.blackboard[ability_key]
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
 	var/mob/living/target = weak_target.resolve()
-	if(!ability || !target)
+	if(!ability || QDELETED(target))
 		finish_action(controller, FALSE, ability_key, target_key)
 	var/mob/pawn = controller.pawn
 	var/result = ability.InterceptClickOn(pawn, null, target)
