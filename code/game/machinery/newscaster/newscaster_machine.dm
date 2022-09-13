@@ -472,6 +472,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		return
 	return ..()
 
+///returns (machine_stat & broken)
 /obj/machinery/newscaster/proc/needs_repair()
 	return (machine_stat & BROKEN)
 
@@ -479,7 +480,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	if(user.combat_mode)
 		return
 	. = TOOL_ACT_TOOLTYPE_SUCCESS
-	if(!needs_repair())
+	if(!(machine_stat & BROKEN))
 		to_chat(user, span_notice("[src] does not need repairs."))
 		return
 	if(!tool.tool_start_check(user, amount=0))
@@ -498,7 +499,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	if(!tool.use_tool(src, user, 60, volume=50))
 		return
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-	if(machine_stat & BROKEN)
+	if((machine_stat & BROKEN))
 		to_chat(user, span_warning("The broken remains of [src] fall on the ground."))
 		new /obj/item/stack/sheet/iron(loc, 5)
 		new /obj/item/shard(loc)
