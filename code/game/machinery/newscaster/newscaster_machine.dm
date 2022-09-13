@@ -467,7 +467,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		if(!user.temporarilyRemoveItemFromInventory(I))
 			return
 		paper_remaining++
-		to_chat(user, span_notice("You insert the [I] into [src]! It now holds [paper_remaining] sheet\s of paper."))
+		to_chat(user, span_notice("You insert [I] into [src]! It now holds [paper_remaining] sheet\s of paper."))
 		qdel(I)
 		return
 	return ..()
