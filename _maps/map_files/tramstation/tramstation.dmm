@@ -1314,6 +1314,19 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
+"aEN" = (
+/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/end{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
 "aER" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
@@ -12954,16 +12967,10 @@
 /turf/open/floor/iron/dark,
 /area/station/security/execution/transfer)
 "eDY" = (
-/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/end{
-	dir = 1
-	},
-/turf/open/floor/plating,
+/obj/structure/ladder,
+/obj/machinery/light/small/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
 "eEm" = (
 /obj/effect/turf_decal/stripes/line{
@@ -22495,6 +22502,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/science/research)
+"ifS" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/medical)
 "ifU" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
@@ -26595,6 +26608,12 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/tram/mid)
+"jDD" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/structure/sign/warning/engine_safety/directional/east,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
 "jDN" = (
 /obj/structure/table/wood,
 /obj/item/storage/photo_album/chapel,
@@ -42980,9 +42999,15 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "puo" = (
-/obj/structure/ladder,
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/iron/smooth,
+/obj/structure/cable/multilayer/multiz,
+/obj/structure/sign/warning/electric_shock{
+	pixel_y = -32
+	},
+/obj/effect/turf_decal/stripes/end{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
 /area/station/maintenance/department/medical)
 "pup" = (
 /obj/effect/decal/cleanable/dirt,
@@ -44098,8 +44123,7 @@
 /area/station/hallway/secondary/entry)
 "pNF" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/medical)
 "pNI" = (
@@ -46799,14 +46823,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
 "qIE" = (
-/obj/structure/cable/multilayer/multiz,
-/obj/structure/sign/warning/electric_shock{
-	pixel_y = -32
-	},
-/obj/effect/turf_decal/stripes/end{
-	dir = 1
-	},
-/turf/open/floor/plating,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
 "qIG" = (
 /obj/effect/turf_decal/sand/plating,
@@ -46953,8 +46972,12 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "qKw" = (
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/storage/toolbox/electrical{
+	pixel_y = 5
+	},
+/turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
 "qKC" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -62174,15 +62197,11 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "wjd" = (
-/obj/machinery/door/airlock/engineering{
-	name = "Power Access Hatch"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/catwalk_floor,
-/area/station/maintenance/department/medical)
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/wrench,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
 "wjk" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
@@ -64508,8 +64527,10 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/warden)
 "wZv" = (
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/medical)
 "wZE" = (
@@ -64849,6 +64870,17 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/cargo/miningdock/oresilo)
+"xeq" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Power Access Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/medical)
 "xet" = (
 /obj/machinery/hydroponics/constructable,
 /turf/open/floor/grass,
@@ -106187,10 +106219,10 @@ dhe
 dhe
 dhe
 afH
-dhe
+afH
 mwK
-mwK
-mwK
+tNp
+iKF
 mwK
 dhe
 dhe
@@ -106445,9 +106477,9 @@ dhe
 dhe
 afH
 afH
-mwK
-tNp
-iKF
+vjz
+gVa
+mMl
 mwK
 dhe
 dhe
@@ -106702,9 +106734,9 @@ dhe
 dhe
 afH
 afH
-vjz
-gVa
-mMl
+mwK
+sRp
+ckW
 mwK
 dhe
 dhe
@@ -106958,10 +106990,10 @@ dhe
 dhe
 dhe
 afH
-afH
+dhe
 mwK
-sRp
-ckW
+jDD
+wjd
 mwK
 dhe
 dhe
@@ -171467,10 +171499,10 @@ dhe
 dhe
 dhe
 afH
-dhe
-dhe
-dhe
-dhe
+mBq
+mBq
+mBq
+mBq
 dhe
 dhe
 dhe
@@ -171725,8 +171757,8 @@ dhe
 dhe
 afH
 mBq
-mBq
-mBq
+ifS
+aEN
 mBq
 dhe
 dhe
@@ -171981,7 +172013,7 @@ dhe
 dhe
 dhe
 afH
-mBq
+xeq
 wZv
 eDY
 mBq
@@ -172238,7 +172270,7 @@ dhe
 dhe
 dhe
 afH
-wjd
+mBq
 pNF
 puo
 mBq
