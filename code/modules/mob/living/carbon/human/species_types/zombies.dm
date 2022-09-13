@@ -77,6 +77,24 @@
 /datum/species/zombie/infectious
 	name = "Infectious Zombie"
 	id = SPECIES_ZOMBIE_INFECTIOUS
+	inherent_traits = list(
+		TRAIT_EASILY_WOUNDED,
+		TRAIT_EASYDISMEMBER,
+		TRAIT_FAKEDEATH,
+		TRAIT_LIMBATTACHMENT,
+		TRAIT_NOBREATH,
+		TRAIT_NOCLONELOSS,
+		TRAIT_NODEATH,
+		TRAIT_NOHUNGER,
+		TRAIT_NOMETABOLISM,
+		TRAIT_RADIMMUNE,
+		TRAIT_RESISTCOLD,
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_TOXIMMUNE,
+		// all the above are normal traits for high functioning zombies
+		TRAIT_ILLITERATE,
+	)
 	examine_limb_id = SPECIES_ZOMBIE
 	mutanthands = /obj/item/zombie_hand
 	armor = 20 // 120 damage to KO a zombie, which kills it
