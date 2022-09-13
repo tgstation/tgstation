@@ -1360,16 +1360,16 @@
 
 	// items like slappers/zombie claws/etc. should be ignored
 	for(var/obj/item/I in held_items)
-		if((I.obj_flags & ABSTRACT)
+		if(I.obj_flags & ABSTRACT)
 			available_hands += 1
 
-	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(src, TRAIT_EMOTEMUTE))
-		return SIGN_TRAIT_BLOCKED
-	else if(handcuffed) // Cuffed, usually will show visual effort to sign
+	if(handcuffed) // Cuffed, usually will show visual effort to sign
 		return SIGN_CUFFED
 	else if(no_left_hand && no_right_hand) // Can't sign with no arms!
 		return SIGN_ARMLESS
-	else if(available_hands == 0)) // All existing hands full, can't sign
+	else if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(src, TRAIT_EMOTEMUTE))
+		return SIGN_TRAIT_BLOCKED
+	else if(available_hands == 0) // All existing hands full, can't sign
 		return SIGN_HANDS_FULL
 	else if(available_hands == 1) // Only one hand is empty
 		return SIGN_ONE_HAND
