@@ -580,7 +580,7 @@
 	var/obj/machinery/computer/shuttle/connected_computer = get_control_console()
 	if(!istype(connected_computer, /obj/machinery/computer/shuttle/pod))
 		return FALSE
-	if(!(SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED) || (connected_computer.obj_flags & EMAGGED))
+	if(!(SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED) || !(connected_computer.obj_flags & EMAGGED))
 		to_chat(usr, span_warning("Escape pods will only launch during \"Code Red\" security alert."))
 		return FALSE
 	if(launch_status == UNLAUNCHED)
