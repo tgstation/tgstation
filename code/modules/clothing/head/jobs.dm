@@ -232,7 +232,7 @@
 	. = ..()
 	UnregisterSignal(M, COMSIG_MOB_SAY)
 
-/obj/item/clothing/head/warden/drill/proc/handle_speech(datum/source, mob/speech_args)
+/obj/item/clothing/head/warden/drill/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(message[1] != "*")
