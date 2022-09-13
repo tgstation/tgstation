@@ -209,7 +209,7 @@
 	. += "<i><b>Team Objectives:</b></i><br>"
 	var/obj_count = 1
 	for (var/datum/objective/objective as anything in cult_team.objectives)
-		. += "<B>[obj_count]</B>: [objective.explanation_text] <br>"
+		. += "<B>[obj_count]</B>: [objective.explanation_text]<br>"
 		obj_count++
 
 
