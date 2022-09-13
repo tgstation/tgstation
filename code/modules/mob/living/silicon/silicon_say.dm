@@ -2,7 +2,7 @@
 	log_talk(message, LOG_SAY, tag="binary")
 
 	var/designation = "Default Cyborg"
-	var/message_class = ""
+	var/spans = list(SPAN_ROBOT)
 
 	if(issilicon(src))
 		var/mob/living/silicon/player = src
@@ -10,11 +10,11 @@
 
 	if(isAI(src))
 		// AIs are loud and ugly
-		message_class = "binarysay--aisay"
+		spans |= SPAN_COMMAND
 
 	var/quoted_message = say_quote(
 		message,
-		spans=list(message_class)
+		spans
 	)
 
 	for(var/mob/M in GLOB.player_list)
