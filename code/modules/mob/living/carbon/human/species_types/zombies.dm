@@ -138,15 +138,6 @@
 		infection = new()
 		infection.Insert(C)
 
-	// since tongue tied requires empty hands to speak, zombies cannot talk since
-	// they are holding claws (so we need to ditch the tongue if present)
-	var/obj/item/organ/internal/tongue/tied/bad_tongue = C.getorganslot(ORGAN_SLOT_TONGUE)
-	if(bad_tongue)
-		var/obj/item/organ/internal/tongue/zombie/good_tongue = new()
-		bad_tongue.Remove(C)
-		qdel(bad_tongue)
-		good_tongue.Insert(C)
-
 // Your skin falls off
 /datum/species/human/krokodil_addict
 	name = "\improper Human"
