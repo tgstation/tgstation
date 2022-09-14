@@ -190,6 +190,7 @@
 	description = "Airless and tileless version of the build you own shuttle kit if you want to start building the shuttle from zero."
 	admin_notes = "Doesn't start out with air or tiles so it isn't very habitable."
 	credit_cost = CARGO_CRATE_VALUE * 10
+	who_can_purchase = list(ACCESS_CAPTAIN, ACCESS_CE)
 
 /datum/map_template/shuttle/emergency/builder/post_load()
 	. = ..()
