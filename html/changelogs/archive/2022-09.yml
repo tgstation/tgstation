@@ -484,3 +484,42 @@
       jutsu.
   timothymtorres:
   - bugfix: Fix book of babel not removing blocked languages properly
+2022-09-14:
+  Axietheaxolotl, PositiveEntropy:
+  - imageadd: Resprites all of the captain's clothes!
+  Dmeto:
+  - bugfix: Reconnects Meta Engineering to Distro.
+  - bugfix: Places a missing wire under Meta's Starboard Aft Solars SMES.
+  GoblinBackwards:
+  - bugfix: Fixed bileworms being unable to act.
+  Jackraxxus:
+  - bugfix: The RD suit storage unit has an oxygen tank so that it can be on par with
+      other head of staff suit storages.
+  LemonInTheDark:
+  - bugfix: The preferences menu will work and display images again. Sorry :)
+  Sealed101:
+  - bugfix: Mafia Snow map now has glass external airlocks for the two top players,
+      allowing them to see the players directly oppoiste of them
+  - rscadd: 'Icebox: added a camera to southern Cargo Bay'
+  - rscdel: 'Icebox: removed several excess cameras (i.e. Courtroom, Primary Hallway,
+      Prison Garden)'
+  - qol: 'Icebox: grouped up cameras within their respective department (Medbay, RnD,
+      Service)'
+  - qol: 'Icebox: grouped up Solar Maintenance cameras as well as changing them to
+      use North-South-East-West (you are on a planet, use the compass)'
+  - qol: 'Icebox: cleaned up ambiguous camera names for easier listing in camera consoles'
+  - bugfix: 'Icebox: fixed a floating camera in Fore Hallway outside Brig Access'
+  - bugfix: 'Icebox: fixed several cameras lacking their respective network values'
+  - bugfix: 'Icebox: restored a lost Interrogation Room Monitor outside of Interrogation
+      Room'
+  ShizCalev:
+  - bugfix: Fixed a runtime when trying to injecting someone in a missing limb.
+  - bugfix: Fixed tackling not working properly if you didn't have a tail.
+  Tramz:
+  - rscadd: Adds a new holochassis for pAI, the chicken.
+  YakumoChen:
+  - bugfix: The holodeck crab can't be butchered for infinite crab meat anymore, so
+      quit your animal abuse
+  dragomagol:
+  - bugfix: scrubber overflow event is now properly categorized and has a description
+      in the trigger event menu

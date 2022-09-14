@@ -1,5 +1,0 @@
-author: "Dmeto"
-delete-after: True
-changes: 
-  - bugfix: "Reconnects Meta Engineering to Distro."
-  - bugfix: "Places a missing wire under Meta's Starboard Aft Solars SMES."
