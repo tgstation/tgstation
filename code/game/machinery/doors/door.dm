@@ -152,8 +152,10 @@
 			return
 		if(isliving(AM))
 			var/mob/living/M = AM
-			if(world.time - M.last_bumped <= 10)
-				return //Can bump-open one airlock per second. This is to prevent shock spam.
+			//Can bump-open maybe 3 airlocks per second. This is to prevent weird mass door openings
+			//While keeping things feeling snappy
+			if(world.time - M.last_bumped <= 0.3 SECONDS)
+				return
 			M.last_bumped = world.time
 			if(HAS_TRAIT(M, TRAIT_HANDS_BLOCKED) && !check_access(null) && !emergency)
 				return
