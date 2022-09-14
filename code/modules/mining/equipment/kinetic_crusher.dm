@@ -199,6 +199,12 @@
 		var/turf/closed/mineral/M = target_turf
 		new /obj/effect/temp_visual/kinetic_blast(M)
 		M.gets_drilled(firer)
+		if(iscarbon(firer))
+			var/mob/living/carbon/carbon_firer = firer
+			var/skill_modifier = 1
+			// If there is a mind, check for skill modifier to allow them to reload faster.
+			if(carbon_firer.mind)
+				skill_modifier = carbon_firer.mind.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER)
 	..()
 
 //trophies
