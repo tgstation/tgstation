@@ -1,5 +1,5 @@
 /datum/round_event_control/space_dust
-	name = "Minor Space Dust"
+	name = "Space Dust: Minor"
 	typepath = /datum/round_event/space_dust
 	weight = 200
 	max_occurrences = 1000
@@ -17,7 +17,7 @@
 	spawn_meteors(1, GLOB.meteorsC)
 
 /datum/round_event_control/space_dust/major_dust
-	name = "Major Space Dust"
+	name = "Space Dust: Major"
 	typepath = /datum/round_event/space_dust/major_dust
 	weight = 8
 	description = "The station is pelted by sand."
@@ -48,19 +48,39 @@
 		spawn_meteors(5, GLOB.meteorsC)
 
 /datum/round_event_control/sandstorm
-	name = "Sandstorm"
+	name = "Space Dust: Sandstorm"
 	typepath = /datum/round_event/sandstorm
-	weight = 0
-	max_occurrences = 0
-	earliest_start = 0 MINUTES
+	weight = 8
+	max_occurrences = 2
+	earliest_start = 30 MINUTES
 	category = EVENT_CATEGORY_SPACE
-	description = "The station is pelted by an extreme amount of sand for several minutes."
+	description = "A wave of space dust continually grinds down a side of the station."
 
 /datum/round_event/sandstorm
-	start_when = 1
+	start_when = 30
 	end_when = 150 // ~5 min
-	announce_when = 0
+	announce_when = 1
 	fakeable = FALSE
+	///Which direction the storm will come from.
+	var/start_side
+
+/datum/round_event/sandstorm/setup()
+	start_side = pick(GLOB.cardinals)
+
+/datum/round_event/sandstorm/announce(fake)
+	priority_announce("A large wave of space dust is approaching from the [start_side]. ", "Collision Alert") //Add mention of shield projectors, fix directional message
+
 
 /datum/round_event/sandstorm/tick()
-	spawn_meteors(10, GLOB.meteorsC)
+	for(var/i in 1 to 10)
+		var/turf/pickedstart
+		var/turf/pickedgoal
+		var/max_i = 10
+		while(!isspaceturf(pickedstart))
+			var/start_z = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
+			pickedstart = spaceDebrisStartLoc(start_side, start_z)
+			pickedgoal = spaceDebrisFinishLoc(start_side, start_z)
+			max_i--
+			if(max_i<=0)
+				break
+		new /obj/effect/meteor/dust(pickedstart, pickedgoal)
