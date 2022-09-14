@@ -20,10 +20,9 @@
 		C.parallax_layers.len = C.parallax_layers_max
 
 	C.screen |= (C.parallax_layers)
-	// We only draw from the main group here because as of now all submaps will have non existant relays
-	// And thus will just end up with weird fullwhite tiles
-	// If the relay thing is ever fixed, https://www.byond.com/forum/post/2797107, make sure we generate a set of parrallax layers for each group
-	// Cause of screen loc reasons
+	// We could do not do parallax for anything except the main plane group
+	// This could be changed, but it would require refactoring this whole thing
+	// And adding non client particular hooks for all the inputs, and I do not have the time I'm sorry :(
 	for(var/atom/movable/screen/plane_master/plane_master in screenmob.hud_used.get_true_plane_masters(PLANE_SPACE))
 		if(screenmob != mymob)
 			C.screen -= locate(/atom/movable/screen/plane_master/parallax_white) in C.screen

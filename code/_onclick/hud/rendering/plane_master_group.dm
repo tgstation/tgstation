@@ -122,19 +122,6 @@
 /// Holds plane masters for popups, like camera windows
 /datum/plane_master_group/popup
 
-/datum/plane_master_group/popup/get_plane_types()
-	var/list/types = ..()
-	// Don't show blackness, fucks up the screen. check if this is still needed post relays, thx
-	return types - /atom/movable/screen/plane_master/blackness
-
-/datum/plane_master_group/popup/prep_plane_instance(atom/movable/screen/plane_master/instance)
-	instance.del_on_map_removal = FALSE
-	// We set blendmode here because we aren't using relays, which would ordinarially handle the blending for us
-	// Don worry about it brother
-	if(instance.blend_mode_override)
-		instance.blend_mode = instance.blend_mode_override
-
-// Should really be using relays and show to and such, but https://www.byond.com/forum/post/2797107 and what it does to relays using CENTER break that
-// I hate it here
 /datum/plane_master_group/popup/show_plane(atom/movable/screen/plane_master/plane)
+	. = ..()
 	our_hud.mymob.client.register_map_obj(plane)

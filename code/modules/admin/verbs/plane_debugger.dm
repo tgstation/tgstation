@@ -107,17 +107,7 @@
 	for(var/key in our_groups)
 		groups += key
 
-	// Ok so like
-	// Right now, there are no groups except MAIN that actually uh, use relays
-	// You know, the thing this viewer is for
-	// It's becuase relays on submaps are hyper yorked https://www.byond.com/forum/post/2797107
-	// So um, we disable this feature for now. If lummy ever fixes it (Lummy fixed it) and we start using relay'd groups, and then do a major update to justify the client change, enable this
-	// Thanks, I love you, xoxo ~~Lemon
-#if (DM_VERSION >= 515)
-#warn hey brother are we ready for relay'd windows yet? if not bump this, otherwise see above comment
-#warn the bug is fixed already, just can't enable em yet cause of client versions
-#endif
-	data["enable_group_view"] = FALSE
+	data["enable_group_view"] = length(groups)
 	data["our_group"] = current_group
 	data["present_groups"] = groups
 
