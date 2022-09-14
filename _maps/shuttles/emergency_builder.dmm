@@ -1,7 +1,15 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/obj/structure/lattice/catwalk,
-/turf/template_noop,
+/obj/item/holosign_creator/atmos{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/obj/item/holosign_creator/atmos,
+/obj/item/holosign_creator/atmos{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "i" = (
 /obj/docking_port/mobile/emergency/shuttle_build{
@@ -13,11 +21,23 @@
 /obj/structure/lattice,
 /turf/template_noop,
 /area/shuttle/escape)
+"j" = (
+/obj/item/pipe_dispenser{
+	pixel_y = -2
+	},
+/obj/item/pipe_dispenser{
+	pixel_y = 2
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
 "k" = (
-/obj/item/storage/toolbox/electrical,
 /obj/item/clothing/gloves/color/yellow{
 	pixel_y = 8
 	},
+/obj/item/clothing/gloves/color/yellow{
+	pixel_y = 8
+	},
+/obj/item/storage/toolbox/electrical,
 /obj/item/storage/toolbox/electrical,
 /obj/item/multitool{
 	pixel_x = 2;
@@ -74,6 +94,7 @@
 	pixel_x = -6;
 	pixel_y = -6
 	},
+/obj/item/circuitboard/machine/autolathe,
 /obj/item/airlock_painter,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
@@ -114,6 +135,41 @@
 /obj/item/stack/sheet/mineral/titanium/fifty{
 	pixel_x = 3;
 	pixel_y = 3
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"s" = (
+/obj/item/clothing/suit/space/eva{
+	pixel_x = -8;
+	pixel_y = -2
+	},
+/obj/item/clothing/suit/space/eva{
+	pixel_x = -8;
+	pixel_y = -2
+	},
+/obj/item/clothing/suit/space/eva{
+	pixel_x = -8;
+	pixel_y = -2
+	},
+/obj/item/clothing/suit/space/eva{
+	pixel_x = -8;
+	pixel_y = -2
+	},
+/obj/item/clothing/head/helmet/space/eva{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/clothing/head/helmet/space/eva{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/clothing/head/helmet/space/eva{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/clothing/head/helmet/space/eva{
+	pixel_x = 2;
+	pixel_y = 2
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
@@ -170,15 +226,15 @@
 /area/shuttle/escape)
 
 (1,1,1) = {"
-a
 m
-S
-S
-S
-S
-S
-S
-S
+m
+m
+m
+m
+m
+m
+m
+m
 i
 m
 m
@@ -186,16 +242,16 @@ m
 m
 m
 m
-S
-S
-S
-S
-S
-S
-S
-S
 m
-a
+m
+m
+m
+m
+m
+m
+m
+m
+m
 "}
 (2,1,1) = {"
 m
@@ -375,7 +431,7 @@ S
 S
 m
 m
-m
+a
 k
 n
 m
@@ -403,7 +459,7 @@ m
 m
 m
 m
-m
+j
 l
 o
 m
@@ -431,7 +487,7 @@ S
 S
 m
 m
-m
+s
 N
 E
 m
@@ -618,15 +674,6 @@ m
 m
 "}
 (17,1,1) = {"
-a
-m
-S
-S
-S
-S
-S
-S
-S
 m
 m
 m
@@ -634,14 +681,23 @@ m
 m
 m
 m
-S
-S
-S
-S
-S
-S
-S
-S
 m
-a
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
 "}
