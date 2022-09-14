@@ -28,13 +28,13 @@
 	lose_text = "<span class='notice'>You suddenly remember how languages work.</span>"
 
 /datum/brain_trauma/severe/aphasia/on_gain()
-	owner.add_blocked_language(subtypesof(/datum/language/) - /datum/language/aphasia, LANGUAGE_APHASIA)
-	owner.grant_language(/datum/language/aphasia, TRUE, TRUE, LANGUAGE_APHASIA)
+	owner.add_blocked_language(subtypesof(/datum/language/) - /datum/language/zombie, LANGUAGE_APHASIA)
+	owner.grant_language(/datum/language/zombie, TRUE, TRUE, LANGUAGE_APHASIA)
 	..()
 
 /datum/brain_trauma/severe/aphasia/on_lose()
 	owner.remove_blocked_language(subtypesof(/datum/language/), LANGUAGE_APHASIA)
-	owner.remove_language(/datum/language/aphasia, TRUE, TRUE, LANGUAGE_APHASIA)
+	owner.remove_language(/datum/language/zombie, TRUE, TRUE, LANGUAGE_APHASIA)
 	..()
 
 /datum/brain_trauma/severe/blindness
@@ -307,7 +307,7 @@
 	scan_desc = "dyslexia"
 	gain_text = "<span class='warning'>You have trouble reading or writing...</span>"
 	lose_text = "<span class='notice'>Your suddenly remember how to read and write.</span>"
-	
+
 /datum/brain_trauma/severe/dyslexia/on_gain()
 	ADD_TRAIT(owner, TRAIT_ILLITERATE, TRAUMA_TRAIT)
 	..()

@@ -24,7 +24,7 @@
 		/datum/language/monkey,
 		/datum/language/narsie,
 		/datum/language/beachbum,
-		/datum/language/aphasia,
+		/datum/language/zombie,
 		/datum/language/piratespeak,
 		/datum/language/moffic,
 		/datum/language/sylvan,
@@ -200,7 +200,7 @@
 		/datum/language/monkey,
 		/datum/language/narsie,
 		/datum/language/beachbum,
-		/datum/language/aphasia,
+		/datum/language/zombie,
 		/datum/language/piratespeak,
 		/datum/language/moffic,
 		/datum/language/sylvan,
@@ -287,20 +287,36 @@
 	taste_sensitivity = 32
 
 /obj/item/organ/internal/tongue/zombie/modify_speech(datum/source, list/speech_args)
-	var/list/message_list = splittext(speech_args[SPEECH_MESSAGE], " ")
-	var/maxchanges = max(round(message_list.len / 1.5), 2)
+	var/mob/living/carbon/human/user = source
 
-	for(var/i = rand(maxchanges / 2, maxchanges), i > 0, i--)
-		var/insertpos = rand(1, message_list.len - 1)
-		var/inserttext = message_list[insertpos]
+	// no speech limitations when speaking zombie language
+	if(speech_args[SPEECH_LANGUAGE] == /datum/language/zombie)
+		return
+	// only high functioning zombies can bypass speech limitations
+	if(iszombie(user) && !is_species(user, /datum/species/zombie/infectious))
+		return
 
-		if(!(copytext(inserttext, -3) == "..."))//3 == length("...")
-			message_list[insertpos] = inserttext + "..."
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message)
+		// all occurrences of characters "eiou" (case-insensitive) are replaced with "r"
+		message = replacetext(message, regex(@"[eiou]", "ig"), "r")
+		// all characters other than "zhrgbmna .!?-" (case-insensitive) are stripped
+		message = replacetext(message, regex(@"[^zhrgbmna.!?-\s]", "ig"), "")
+		// multiple spaces are replaced with a single (whitespace is trimmed)
+		message = replacetext(message, regex(@"(\s+)", "g"), " ")
 
-		if(prob(20) && message_list.len > 3)
-			message_list.Insert(insertpos, "[pick("BRAINS", "Brains", "Braaaiinnnsss", "BRAAAIIINNSSS")]...")
+		var/list/old_words = splittext(message, " ")
+		var/list/new_words = list()
+		for(var/word in old_words)
+			// lower-case "r" at the end of words replaced with "rh"
+			word = replacetext(word, regex(@"\lr\b"), "rh")
+			// an "a" or "A" by itself will be replaced with "hra"
+			word = replacetext(word, regex(@"\b[Aa]\b"), "hra")
+			new_words += word
 
-	speech_args[SPEECH_MESSAGE] = jointext(message_list, " ")
+		message = new_words.Join(" ")
+		message = capitalize(message)
+		speech_args[SPEECH_MESSAGE] = message
 
 /obj/item/organ/internal/tongue/alien
 	name = "alien tongue"
@@ -341,7 +357,7 @@
 		/datum/language/monkey,
 		/datum/language/narsie,
 		/datum/language/beachbum,
-		/datum/language/aphasia,
+		/datum/language/zombie,
 		/datum/language/piratespeak,
 		/datum/language/moffic,
 		/datum/language/sylvan,
@@ -420,7 +436,7 @@
 		/datum/language/monkey,
 		/datum/language/narsie,
 		/datum/language/beachbum,
-		/datum/language/aphasia,
+		/datum/language/zombie,
 		/datum/language/piratespeak,
 		/datum/language/moffic,
 		/datum/language/sylvan,
