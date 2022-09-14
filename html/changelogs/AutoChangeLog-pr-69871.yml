@@ -1,0 +1,4 @@
+author: "scriptis"
+delete-after: True
+changes: 
+  - qol: "AIs are now loudmode in binary chat"
