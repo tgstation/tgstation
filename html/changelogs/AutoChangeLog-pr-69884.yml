@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed the Space Carp DNA harvest traitor objective not starting a carp migration when taken"
