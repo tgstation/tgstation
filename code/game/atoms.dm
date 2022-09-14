@@ -694,7 +694,7 @@
 
 	if(custom_materials)
 		var/list/materials_list = list()
-		for(var/custom_material as anything in custom_materials)
+		for(var/custom_material in custom_materials)
 			var/datum/material/current_material = GET_MATERIAL_REF(custom_material)
 			materials_list += "[current_material.name]"
 		. += "<u>It is made out of [english_list(materials_list)]</u>."
