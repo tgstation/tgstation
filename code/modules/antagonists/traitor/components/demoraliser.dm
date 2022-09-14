@@ -48,7 +48,7 @@
 		return
 	if (!should_demoralise(viewer))
 		return
-	if(!viewer.can_read(host, skip_literacy = !(moods.text_based), chat_messages = FALSE))
+	if(!viewer.can_read(host, TRUE, moods.text_based, FALSE))
 		return
 
 

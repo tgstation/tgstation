@@ -1188,8 +1188,8 @@
 	return mob_location.get_lumcount() > light_amount
 
 /// Can this mob read
-/mob/proc/can_read(atom/viewed_atom, check_for_light = TRUE, skip_literacy = FALSE, chat_messages = TRUE)
-	if(!skip_literacy && !is_literate())
+/mob/proc/can_read(atom/viewed_atom, check_for_light = TRUE, check_literacy = TRUE, chat_messages = TRUE)
+	if(check_literacy && !is_literate())
 		if(chat_messages)
 			to_chat(src, span_warning("You try to read [viewed_atom], but can't comprehend any of it."))
 		return FALSE
