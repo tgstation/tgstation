@@ -246,7 +246,7 @@ echo -e "${BLUE}Checking for common mistakes...${NC}"
 
 if grep -P 'to_chat\((?!.*,).*\)' code/**/*.dm; then
 	echo
-    echo -e "${RED}ERROR: TIMER_OVERRIDE used without TIMER_UNIQUE.${NC}"
+    echo -e "${RED}ERROR: to_chat() missing arguments.${NC}"
     st=1
 fi;
 if grep -P 'addtimer\((?=.*TIMER_OVERRIDE)(?!.*TIMER_UNIQUE).*\)' code/**/*.dm; then
