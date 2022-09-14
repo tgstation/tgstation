@@ -32,9 +32,9 @@
 		return FALSE
 	connected_ship_ref = WEAKREF(port)
 	port.engine_list += src
-	port.current_engines++
+	port.current_engine_power += engine_power
 	if(mapload)
-		port.initial_engines++
+		port.initial_engine_power += engine_power
 
 /obj/machinery/power/shuttle_engine/Destroy()
 	if(engine_state == ENGINE_WELDED)
@@ -49,7 +49,7 @@
 	var/obj/docking_port/mobile/port = connected_ship_ref?.resolve()
 	if(port)
 		port.engine_list -= src
-		port.current_engines--
+		port.current_engine_power -= initial(engine_power)
 	connected_ship_ref = null
 
 //Ugh this is a lot of copypasta from emitters, welding need some boilerplate reduction

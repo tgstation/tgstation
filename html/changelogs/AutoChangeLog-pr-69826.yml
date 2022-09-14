@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "Engines now calculate their thrust power as they used to, preventing edge cases of inconsistent shuttle call timers."

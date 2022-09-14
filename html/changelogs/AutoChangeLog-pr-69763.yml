@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - bugfix: "Players should now once again get the reason as to why they can not start any specific vote at any given time in the TGUI vote menu."

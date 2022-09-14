@@ -1,0 +1,4 @@
+author: "SpookyTheFox"
+delete-after: True
+changes: 
+  - bugfix: "fixed the name of the ammo printed from the lathe"

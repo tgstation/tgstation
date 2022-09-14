@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - qol: "Juice cartons now splash their reagents with right-click."

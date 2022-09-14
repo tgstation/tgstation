@@ -44,7 +44,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 
 /datum/round_event/ghost_role/sentience/spawn_role()
 	var/list/mob/dead/observer/candidates
-	candidates = get_candidates(ROLE_ALIEN, ROLE_ALIEN)
+	candidates = get_candidates(ROLE_SENTIENCE, ROLE_SENTIENCE)
 
 	// find our chosen mob to breathe life into
 	// Mobs have to be simple animals, mindless, on station, and NOT holograms.
