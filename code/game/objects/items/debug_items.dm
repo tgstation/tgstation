@@ -113,3 +113,10 @@
 			tool_behaviour = TOOL_ROLLINGPIN
 		if("Wire Brush")
 			tool_behaviour = TOOL_RUSTSCRAPER
+
+	if(tool_behaviour == TOOL_SCREWDRIVER)
+		AddElement(/datum/element/eyestab)
+	else
+		RemoveElement(/datum/element/eyestab)
+
+
