@@ -462,13 +462,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	. = ..()
 	update_appearance()
 
-/obj/machinery/newscaster/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/paper))
-		if(!user.temporarilyRemoveItemFromInventory(I))
+/obj/machinery/newscaster/attackby(obj/item/attacking_item, mob/living/user, params)
+	if(istype(attacking_item, /obj/item/paper))
+		if(!user.temporarilyRemoveItemFromInventory(attacking_item))
 			return
 		paper_remaining++
-		to_chat(user, span_notice("You insert [I] into [src]! It now holds [paper_remaining] sheet\s of paper."))
-		qdel(I)
+		to_chat(user, span_notice("You insert [attacking_item] into [src]! It now holds [paper_remaining] sheet\s of paper."))
+		qdel(attacking_item)
 		return
 	return ..()
 
@@ -485,12 +485,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		return
 	if(!tool.tool_start_check(user, amount=0))
 		return
-	user.visible_message(span_notice("[user] is repairing [src]."), \
-					span_notice("You begin repairing [src]..."), \
-					span_hear("You hear welding."))
+	user.balloon_alert_to_viewers("started welding...", "started repairing...")
+	audible_message(span_hear("You hear welding."))
 	if(!tool.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, .proc/needs_repair)))
+		user.balloon_alert_to_viewers("stopped welding [src]", "interrupted the repair!")
 		return
-	to_chat(user, span_notice("You repair [src]."))
+	user.balloon_alert_to_viewers("repaired [src]")
 	atom_integrity = max_integrity
 	set_machine_stat(machine_stat & ~BROKEN)
 
