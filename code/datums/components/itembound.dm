@@ -21,6 +21,7 @@
 	qdel(src)
 
 /datum/component/itembound/Destroy(force, silent)
+	container = null
 	QDEL_NULL(move_tracker)
 	return ..()
 
