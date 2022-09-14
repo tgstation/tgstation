@@ -184,6 +184,18 @@
 	var/datum/supply_pack/P = SSshuttle.supply_packs[/datum/supply_pack/engineering/shuttle_engine]
 	P.special_enabled = TRUE
 
+/datum/map_template/shuttle/emergency/builder
+	suffix = "builder"
+	name = "Advanced build your own shuttle kit"
+	description = "Airless and tileless version of the build you own shuttle kit if you want to start building the shuttle from zero."
+	admin_notes = "Doesn't start out with air or tiles so it isn't very habitable."
+	credit_cost = CARGO_CRATE_VALUE * 10
+
+/datum/map_template/shuttle/emergency/builder/post_load()
+	. = ..()
+	//enable buying engines from cargo
+	var/datum/supply_pack/P = SSshuttle.supply_packs[/datum/supply_pack/engineering/shuttle_engine]
+	P.special_enabled = TRUE
 
 /datum/map_template/shuttle/emergency/asteroid
 	suffix = "asteroid"

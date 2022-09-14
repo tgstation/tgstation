@@ -1,0 +1,647 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/shuttle/escape)
+"i" = (
+/obj/docking_port/mobile/emergency/shuttle_build{
+	height = 17;
+	name = "Builder emergency Shuttle";
+	port_direction = 4;
+	preferred_direction = 2
+	},
+/obj/structure/lattice,
+/turf/template_noop,
+/area/shuttle/escape)
+"k" = (
+/obj/item/storage/toolbox/electrical,
+/obj/item/clothing/gloves/color/yellow{
+	pixel_y = 8
+	},
+/obj/item/storage/toolbox/electrical,
+/obj/item/multitool{
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"l" = (
+/obj/item/storage/box/lights/mixed{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/obj/item/electronics/airalarm{
+	pixel_x = 8
+	},
+/obj/item/electronics/airalarm{
+	pixel_x = 8
+	},
+/obj/item/electronics/airalarm{
+	pixel_x = 8
+	},
+/obj/item/electronics/airalarm{
+	pixel_x = 8
+	},
+/obj/item/electronics/airlock{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/electronics/airlock{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/electronics/airlock{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/electronics/airlock{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/electronics/airlock{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/electronics/airlock{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/electronics/airlock{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/electronics/airlock{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/airlock_painter,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"m" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/shuttle/escape)
+"n" = (
+/obj/item/construction/rcd/loaded{
+	pixel_x = 2;
+	pixel_y = 4
+	},
+/obj/item/construction/rcd/loaded{
+	pixel_y = 2
+	},
+/obj/item/construction/rcd/loaded{
+	pixel_x = -2
+	},
+/obj/item/rcd_ammo,
+/obj/item/rcd_ammo,
+/obj/item/rcd_ammo,
+/obj/item/rcd_ammo,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"o" = (
+/obj/item/stack/sheet/mineral/titanium/fifty{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/stack/sheet/mineral/titanium/fifty{
+	pixel_x = -1;
+	pixel_y = -1
+	},
+/obj/item/stack/sheet/mineral/titanium/fifty{
+	pixel_x = 1;
+	pixel_y = 1
+	},
+/obj/item/stack/sheet/mineral/titanium/fifty{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"E" = (
+/obj/item/stack/sheet/iron/fifty{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/obj/item/stack/sheet/iron/fifty{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/stack/sheet/iron/fifty{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/stack/rods/fifty,
+/obj/item/stack/rods/fifty,
+/obj/item/stack/rods/fifty,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"N" = (
+/obj/item/stack/sheet/titaniumglass/fifty{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/stack/sheet/titaniumglass/fifty{
+	pixel_x = -1;
+	pixel_y = -1
+	},
+/obj/item/stack/sheet/glass/fifty{
+	pixel_x = 1;
+	pixel_y = 1
+	},
+/obj/item/stack/sheet/glass/fifty{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"S" = (
+/turf/template_noop,
+/area/shuttle/escape)
+"X" = (
+/obj/machinery/computer/emergency_shuttle{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+
+(1,1,1) = {"
+a
+m
+S
+S
+S
+S
+S
+S
+S
+i
+m
+m
+m
+m
+m
+m
+S
+S
+S
+S
+S
+S
+S
+S
+m
+a
+"}
+(2,1,1) = {"
+m
+m
+S
+S
+S
+S
+S
+S
+S
+m
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+m
+m
+"}
+(3,1,1) = {"
+S
+S
+S
+S
+S
+S
+S
+S
+S
+m
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+"}
+(4,1,1) = {"
+S
+S
+S
+S
+S
+S
+S
+S
+S
+m
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+"}
+(5,1,1) = {"
+S
+S
+S
+S
+S
+S
+S
+S
+S
+m
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+"}
+(6,1,1) = {"
+S
+S
+S
+S
+S
+S
+S
+m
+m
+m
+m
+m
+m
+m
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+"}
+(7,1,1) = {"
+S
+S
+S
+S
+S
+S
+S
+m
+m
+m
+m
+m
+m
+m
+m
+m
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+"}
+(8,1,1) = {"
+m
+S
+S
+S
+S
+S
+S
+m
+m
+m
+k
+n
+m
+m
+m
+m
+S
+S
+S
+S
+S
+S
+S
+S
+S
+m
+"}
+(9,1,1) = {"
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+l
+o
+m
+X
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+"}
+(10,1,1) = {"
+m
+S
+S
+S
+S
+S
+S
+m
+m
+m
+N
+E
+m
+m
+m
+m
+S
+S
+S
+S
+S
+S
+S
+S
+S
+m
+"}
+(11,1,1) = {"
+S
+S
+S
+S
+S
+S
+S
+m
+m
+m
+m
+m
+m
+m
+m
+m
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+"}
+(12,1,1) = {"
+S
+S
+S
+S
+S
+S
+S
+m
+m
+m
+m
+m
+m
+m
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+"}
+(13,1,1) = {"
+S
+S
+S
+S
+S
+S
+S
+S
+S
+m
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+"}
+(14,1,1) = {"
+S
+S
+S
+S
+S
+S
+S
+S
+S
+m
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+"}
+(15,1,1) = {"
+S
+S
+S
+S
+S
+S
+S
+S
+S
+m
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+"}
+(16,1,1) = {"
+m
+m
+S
+S
+S
+S
+S
+S
+S
+m
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+m
+m
+"}
+(17,1,1) = {"
+a
+m
+S
+S
+S
+S
+S
+S
+S
+m
+m
+m
+m
+m
+m
+m
+S
+S
+S
+S
+S
+S
+S
+S
+m
+a
+"}
