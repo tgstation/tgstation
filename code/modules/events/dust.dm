@@ -57,10 +57,9 @@
 	description = "A wave of space dust continually grinds down a side of the station."
 
 /datum/round_event/sandstorm
-	start_when = 30
-	end_when = 150 // ~5 min
+	start_when = 60
+	end_when = 140 // much shorter now (a little over a minute), but spread out over less time to make it less drawn out
 	announce_when = 1
-	fakeable = FALSE
 	///Which direction the storm will come from.
 	var/start_side
 	///Start side var, translated into a nautical direction for presentation in setup().
@@ -81,11 +80,10 @@
 /datum/round_event/sandstorm/announce(fake)
 	priority_announce("A large wave of space dust is approaching from the [start_side_text] side of the station. \
 						Engineering intervention and use of shield generators may be required to prevent serious \
-						damage to external fittings and fixtures.", "Collision Alert") //Add mention of shield projectors
-							// Inteded behavior is to give people a chance to set up shield projectors. Make it so that meteors take extra extra hits from touching shields.
+						damage to external fittings and fixtures.", "Collision Alert")
 
 /datum/round_event/sandstorm/tick()
-	for(var/i in 1 to 10)
+	for(var/i in 1 to 10) //That's about 800 pieces of space dust. Wowee!
 		var/turf/pickedstart
 		var/turf/pickedgoal
 		var/max_i = 10
@@ -96,4 +94,4 @@
 			max_i--
 			if(max_i<=0)
 				break
-		new /obj/effect/meteor/dust(pickedstart, pickedgoal) //Meteors are self-deleting on spawn. find out why.
+		new /obj/effect/meteor/dust(pickedstart, pickedgoal)
