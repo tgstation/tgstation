@@ -9,6 +9,8 @@
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	container = passed_container
+	if(QDELETED(container))
+		return
 	move_tracker = new(parent, CALLBACK(src, .proc/verify_containment))
 
 	ADD_TRAIT(parent, TRAIT_INCAPACITATED, SMITE_TRAIT)
