@@ -154,6 +154,10 @@
 	description = "I'm nervous and on edge and I can't stand still!!"
 	mood_change = -2
 
+/datum/mood_event/choke
+	description = "I CAN'T BREATH!!!"
+	mood_change = -10
+
 /datum/mood_event/vomit
 	description = "I just threw up. Gross."
 	mood_change = -2

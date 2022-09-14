@@ -162,7 +162,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/smoke_all = FALSE
 	/// How much damage this deals to the lungs per drag.
 	var/lung_harm = 1
-
+	/// If, when glorf'd, we will choke on this cig forever
+	var/choke_forever = FALSE
+	/// When choking, what is the maximum amount of time we COULD choke for
+	var/choke_time_max = 30 SECONDS // I am mean
 
 /obj/item/clothing/mask/cigarette/Initialize(mapload)
 	. = ..()
@@ -179,6 +182,21 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
+
+/obj/item/clothing/mask/cigarette/equipped(mob/equipee, slot)
+	. = ..()
+	if(slot != ITEM_SLOT_MASK)
+		UnregisterSignal(equipee, COMSIG_HUMAN_FORCESAY)
+		return
+	RegisterSignal(equipee, COMSIG_HUMAN_FORCESAY, .proc/on_forcesay)
+
+/obj/item/clothing/mask/cigarette/dropped(mob/dropee)
+	. = ..()
+	UnregisterSignal(dropee, COMSIG_HUMAN_FORCESAY)
+
+/obj/item/clothing/mask/cigarette/proc/on_forcesay(mob/living/source)
+	SIGNAL_HANDLER
+	source.apply_status_effect(/datum/status_effect/choke, src, lit, choke_forever ? -1 : rand(25 SECONDS, choke_time_max))
 
 /obj/item/clothing/mask/cigarette/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is huffing [src] as quickly as [user.p_they()] can! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer."))
@@ -430,6 +448,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoketime = 4 MINUTES
 	chem_volume = 50
 	list_reagents = null
+	choke_time_max = 40 SECONDS
 
 /obj/item/clothing/mask/cigarette/rollie/Initialize(mapload)
 	name = pick(list(
@@ -502,6 +521,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	heat = 473.15 // Lowered so that the sugar can be carmalized, but not burnt.
 	lung_harm = 0.5
 	list_reagents = list(/datum/reagent/consumable/sugar = 20)
+	choke_time_max = 70 SECONDS // This shit really is deadly
 
 /obj/item/clothing/mask/cigarette/candy/nicotine
 	desc = "For all ages*! Doesn't contain any* amount of nicotine. Health and safety risks can be read on the tip of the cigarette."
@@ -536,6 +556,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoketime = 11 MINUTES
 	chem_volume = 40
 	list_reagents = list(/datum/reagent/drug/nicotine = 25)
+	choke_time_max = 40 SECONDS
 
 /obj/item/clothing/mask/cigarette/cigar/cohiba
 	name = "\improper Cohiba Robusto cigar"
@@ -586,6 +607,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	chem_volume = 200 // So we can fit densified chemicals plants
 	list_reagents = null
 	w_class = WEIGHT_CLASS_SMALL
+	choke_forever = TRUE
 	///name of the stuff packed inside this pipe
 	var/packeditem
 

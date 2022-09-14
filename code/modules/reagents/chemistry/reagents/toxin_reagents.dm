@@ -174,6 +174,16 @@
 			C.emote("gasp")
 	..()
 
+/datum/reagent/toxin/lexorin/on_mob_metabolize(mob/living/L)
+	RegisterSignal(L, COMSIG_CARBON_ATTEMPT_BREATHE, .proc/block_breath)
+
+/datum/reagent/toxin/lexorin/on_mob_end_metabolize(mob/living/L)
+	UnregisterSignal(L, COMSIG_CARBON_ATTEMPT_BREATHE, .proc/block_breath)
+
+/datum/reagent/toxin/lexorin/proc/block_breath(mob/living/source)
+	SIGNAL_HANDLER
+	return COMSIG_CARBON_BLOCK_BREATH
+
 /datum/reagent/toxin/slimejelly
 	name = "Slime Jelly"
 	description = "A gooey semi-liquid produced from one of the deadliest lifeforms in existence. SO REAL."

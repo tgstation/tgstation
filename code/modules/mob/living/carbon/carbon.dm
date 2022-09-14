@@ -423,6 +423,8 @@
 	if((HAS_TRAIT(src, TRAIT_NOHUNGER) || HAS_TRAIT(src, TRAIT_TOXINLOVER)) && !force)
 		return TRUE
 
+	SEND_SIGNAL(src, COMSIG_CARBON_VOMITED, distance, force)
+	var/starting_dir = dir
 	if(nutrition < 100 && !blood && !force)
 		if(message)
 			visible_message(span_warning("[src] dry heaves!"), \
@@ -461,7 +463,7 @@
 		else
 			if(T)
 				T.add_vomit_floor(src, vomit_type, purge_ratio) //toxic barf looks different || call purge when doing detoxicfication to pump more chems out of the stomach.
-		T = get_step(T, dir)
+		T = get_step(T, starting_dir)
 		if (T?.is_blocked_turf())
 			break
 	return TRUE

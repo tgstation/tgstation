@@ -2,12 +2,14 @@
  * A datum for sounds that need to loop, with a high amount of configurability.
  */
 /datum/looping_sound
-	/// The source of the sound, or the recipient of the sound.
-	var/atom/parent
 	/// (list or soundfile) Since this can be either a list or a single soundfile you can have random sounds. May contain further lists but must contain a soundfile at the end.
 	var/mid_sounds
 	/// The length of time to wait between playing mid_sounds.
 	var/mid_length
+	/// Amount of time to add/take away from the mid length, randomly
+	var/mid_length_vary = 0
+	/// If we should always play each sound once per loop of all sounds. Weights here only really effect order, and could be disgarded
+	var/each_once = FALSE
 	/// Override for volume of start sound.
 	var/start_volume
 	/// (soundfile) Played before starting the mid_sounds loop.
@@ -26,26 +28,34 @@
 	var/vary = FALSE
 	/// The max amount of loops to run for.
 	var/max_loops
-	/// If true, plays directly to provided atoms instead of from them.
-	var/direct
 	/// The extra range of the sound in tiles, defaults to 0.
 	var/extra_range = 0
-	/// The ID of the timer that's used to loop the sounds.
-	var/timer_id
 	/// How much the sound will be affected by falloff per tile.
 	var/falloff_exponent
 	/// The falloff distance of the sound,
 	var/falloff_distance
-	/// Do we skip the starting sounds?
-	var/skip_starting_sounds = FALSE
 	/// Are the sounds affected by pressure? Defaults to TRUE.
 	var/pressure_affected = TRUE
 	/// Are the sounds subject to reverb? Defaults to TRUE.
 	var/use_reverb = TRUE
 	/// Are we ignoring walls? Defaults to TRUE.
 	var/ignore_walls = TRUE
+
+	// State stuff
+	/// The source of the sound, or the recipient of the sound.
+	var/atom/parent
+	/// The ID of the timer that's used to loop the sounds.
+	var/timer_id
 	/// Has the looping started yet?
 	var/loop_started = FALSE
+	/// If we're using cut_mid, this is the list we cut from
+	var/list/cut_list
+
+	// Args
+	/// Do we skip the starting sounds?
+	var/skip_starting_sounds = FALSE
+	/// If true, plays directly to provided atoms instead of from them.
+	var/direct
 
 /datum/looping_sound/New(_parent, start_immediately = FALSE, _direct = FALSE, _skip_starting_sounds = FALSE)
 	if(!mid_sounds)
@@ -108,6 +118,9 @@
 	if(max_loops && world.time >= start_time + mid_length * max_loops)
 		stop()
 		return
+	// If we have a timer, we're varying mid length, and this is happening while we're runnin mid_sounds
+	if(timer_id && mid_length_vary && start_time)
+		updatetimedelay(timer_id, mid_length + rand(-mid_length_vary, mid_length_vary))
 	if(!chance || prob(chance))
 		play(get_sound())
 
@@ -140,9 +153,40 @@
 
 /// Returns the sound we should now be playing.
 /datum/looping_sound/proc/get_sound(_mid_sounds)
-	. = _mid_sounds || mid_sounds
+	var/list/play_from = _mid_sounds || mid_sounds
+	if(!each_once)
+		. = play_from
+		while(!isfile(.) && !isnull(.))
+			. = pick_weight(.)
+		return .
+
+
+	if(!length(cut_list))
+		cut_list = shuffle(play_from.Copy())
+	var/list/tree = list()
+	. = cut_list
 	while(!isfile(.) && !isnull(.))
+		// Tree is a list of lists containign files
+		// If an entry in the tree goes to 0 length, we cut it from the list
+		tree += list(.)
 		. = pick_weight(.)
+
+	if(!isfile(.))
+		return
+
+	// Remove the sound file
+	tree[length(tree)] -= .
+
+	// Walk the tree bottom up, remove any lists that are empty
+	// Don't do anything for the topmost list, cause we do not care
+	for(var/i in length(tree) to 2 step -1)
+		var/list/branch = tree[i]
+		if(length(branch))
+			break
+		tree[i - 1] -= list(branch) // Remove the empty list
+	return .
+
+
 
 /// A proc that's there to handle delaying the main sounds if there's a start_sound, and simply starting the sound loop in general.
 /datum/looping_sound/proc/on_start()

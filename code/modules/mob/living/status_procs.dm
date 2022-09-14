@@ -773,3 +773,7 @@
 /mob/living/proc/get_drunk_amount()
 	var/datum/status_effect/inebriated/inebriation = has_status_effect(/datum/status_effect/inebriated)
 	return inebriation?.drunk_value || 0
+
+/// Helper to check if we seem to be alive or not
+/mob/living/proc/appears_alive()
+	return health >= 0 && !HAS_TRAIT(src, TRAIT_FAKEDEATH)
