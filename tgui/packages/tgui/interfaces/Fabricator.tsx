@@ -3,7 +3,7 @@ import { Stack, Section, Button, Icon, Dimmer } from '../components';
 import { Window } from '../layouts';
 import { Material, MaterialAmount, MaterialFormatting, MATERIAL_KEYS } from './common/Materials';
 import { sortBy } from 'common/collections';
-import { MineralAccessBar } from './Fabrication/MineralAccessBar';
+import { MaterialAccessBar } from './Fabrication/MineralAccessBar';
 import { SearchBar } from './Fabrication/SearchBar';
 import { DesignCategoryTabs } from './Fabrication/DesignCategoryTabs';
 import { FabricatorData, Design, MaterialMap } from './Fabrication/Types';
@@ -120,7 +120,7 @@ export const Fabricator = (props, context) => {
           </Stack.Item>
           <Stack.Item>
             <Section>
-              <MineralAccessBar
+              <MaterialAccessBar
                 availableMaterials={sortBy((a: Material) => a.name)(
                   data.materials ?? []
                 )}

@@ -39,6 +39,13 @@ export type Design = {
    * The categories the design should be present in.
    */
   categories?: string[];
+
+  /**
+   * The icon used to represent this design, generated in
+   * /datum/asset/spritesheet/research_designs, if any. **The image may not be
+   * 32x32; make sure to scale it accordingly.**
+   */
+  icon?: string;
 };
 
 /**

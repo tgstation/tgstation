@@ -25,11 +25,16 @@ Fabricator__Icon {
   position: relative;
   padding: 0.5em;
   border-radius: 0 0 0.25em 0.25em;
+  transition: opacity 0.5s ease-in-out;
 }
 
 .MaterialDock--active {
   background-color: #111;
   transition: background-color 0.125s ease-out;
+}
+
+.MaterialDock--disabled {
+  opacity: 0.5;
 }
 
 .MaterialDock__Dock {
