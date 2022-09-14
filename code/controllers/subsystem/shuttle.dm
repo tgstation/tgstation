@@ -821,7 +821,8 @@ SUBSYSTEM_DEF(shuttle)
  * Loads a shuttle template into the transit Z level, usually referred to elsewhere in the code as a shuttle preview.
  * Does not register the shuttle so it can't be used yet, that's handled in action_load()
  *
- * *
+ * Arguments:
+ * * loading_template - The shuttle template to load
  */
 /datum/controller/subsystem/shuttle/proc/load_template(datum/map_template/shuttle/loading_template)
 	. = FALSE
@@ -864,6 +865,9 @@ SUBSYSTEM_DEF(shuttle)
 	loading_template.post_load(preview_shuttle)
 	return TRUE
 
+/**
+ * Removes the preview_shuttle from the transit Z-level
+ */
 /datum/controller/subsystem/shuttle/proc/unload_preview()
 	if(preview_shuttle)
 		preview_shuttle.jumpToNullSpace()
