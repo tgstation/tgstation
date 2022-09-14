@@ -12,7 +12,8 @@
 
 		// Copy is necessary otherwise closet.contents - immediate_contents returns an empty list
 		var/list/immediate_contents = closet.contents.Copy()
-
+		if (QDELETED(closet))
+			continue
 		closet.PopulateContents()
 		var/contents_len = length(closet.contents)
 

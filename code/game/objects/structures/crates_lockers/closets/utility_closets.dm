@@ -21,9 +21,10 @@
 	anchored = TRUE
 
 /obj/structure/closet/emcloset/Initialize(mapload)
+	. = ..()
+
 	if (prob(1))
 		return INITIALIZE_HINT_QDEL
-	return ..()
 
 /obj/structure/closet/emcloset/PopulateContents()
 	..()
