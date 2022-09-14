@@ -1,0 +1,4 @@
+author: "KirbyDaMaster"
+delete-after: True
+changes: 
+  - bugfix: "Enabled flag for morgue body containers to allow you to interact with them while standing diagonally with the hatch open."
