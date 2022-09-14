@@ -238,6 +238,7 @@ SUBSYSTEM_DEF(vote)
 			"name" = vote_name,
 			"canBeInitiated" = vote.can_be_initiated(forced = is_lower_admin),
 			"config" = vote.is_config_enabled(),
+			"message" = vote.message,
 		)
 
 		if(vote == current_vote)
