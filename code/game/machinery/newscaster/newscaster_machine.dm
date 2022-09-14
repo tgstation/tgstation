@@ -488,7 +488,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	user.balloon_alert_to_viewers("started welding...", "started repairing...")
 	audible_message(span_hear("You hear welding."))
 	if(!tool.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, .proc/needs_repair)))
-		user.balloon_alert_to_viewers("stopped welding [src]", "interrupted the repair!")
+		user.balloon_alert_to_viewers("stopped welding!", "interrupted the repair!")
 		return
 	user.balloon_alert_to_viewers("repaired [src]")
 	atom_integrity = max_integrity
