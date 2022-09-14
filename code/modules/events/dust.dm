@@ -69,7 +69,7 @@
 
 /datum/round_event/sandstorm/announce(fake)
 	priority_announce("A large wave of space dust is approaching from the [start_side]. ", "Collision Alert") //Add mention of shield projectors, fix directional message
-
+																								// Inteded behavior is to give people a chance to set up shield projectors. Make it so that meteors take extra extra hits from touching shields.
 
 /datum/round_event/sandstorm/tick()
 	for(var/i in 1 to 10)
@@ -83,4 +83,4 @@
 			max_i--
 			if(max_i<=0)
 				break
-		new /obj/effect/meteor/dust(pickedstart, pickedgoal)
+		new /obj/effect/meteor/dust(pickedstart, pickedgoal) //Meteors are self-deleting on spawn. find out why.
