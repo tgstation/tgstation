@@ -37,8 +37,6 @@
 	var/maints_access_required = list(ACCESS_ROBOTICS)
 	///The Robot arm attached to this robot - has a 50% chance to drop on death.
 	var/robot_arm = /obj/item/bodypart/r_arm/robot
-	///People currently looking into a bot's UI panel.
-	var/list/users = list()
 	///The inserted (if any) pAI in this bot.
 	var/obj/item/pai_card/paicard
 	///The type of bot it is, for radio control.
@@ -231,7 +229,7 @@
 
 /mob/living/simple_animal/bot/death(gibbed)
 	explode()
-	..()
+	return ..()
 
 /mob/living/simple_animal/bot/proc/explode()
 	visible_message(span_boldnotice("[src] blows apart!"))
@@ -257,7 +255,7 @@
 		if(user)
 			log_combat(user, src, "emagged")
 		return
-	else //Bot is unlocked, but the maint panel has not been opened with a screwdriver yet.
+	else //Bot is unlocked, but the maint panel has not been opened with a screwdriver (or through the UI) yet.
 		to_chat(user, span_warning("You need to open maintenance panel first!"))
 
 /mob/living/simple_animal/bot/examine(mob/user)
@@ -525,7 +523,7 @@
 			continue
 
 		var/scan_result = process_scan(scan) //Some bots may require additional processing when a result is selected.
-		if(scan_result)
+		if(!isnull(scan_result))
 			return scan_result
 
 //When the scan finds a target, run bot specific processing to select it for the next step. Empty by default.
@@ -533,11 +531,14 @@
 	return scan_target
 
 /mob/living/simple_animal/bot/proc/check_bot(targ)
-	var/turf/T = get_turf(targ)
-	if(T)
-		for(var/C in T.contents)
-			if(istype(C,type) && (C != src)) //Is there another bot there already? If so, let's skip it so we dont all atack on top of eachother.
-				return TRUE //Let's abort if we find a bot so we dont have to keep rechecking
+	var/turf/target_turf = get_turf(targ)
+	if(!target_turf)
+		return FALSE
+	for(var/turf_contents in target_turf.contents)
+		//Is there another bot there already? If so, let's skip it so we dont all atack on top of eachother.
+		if(istype(turf_contents, type) && (turf_contents != src))
+			return TRUE //Let's abort if we find a bot so we dont have to keep rechecking
+	return FALSE
 
 /mob/living/simple_animal/bot/proc/add_to_ignore(subject)
 	if(ignore_list.len < 50) //This will help keep track of them, so the bot is always trying to reach a blocked spot.
@@ -643,6 +644,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	access_card.set_access(prev_access)
 	tries = 0
 	mode = BOT_IDLE
+	ignore_list = list()
 	diag_hud_set_botstat()
 	diag_hud_set_botmode()
 

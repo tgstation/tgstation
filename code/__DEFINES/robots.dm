@@ -184,3 +184,9 @@
 #define MEDBOT_STATIONARY_MODE (1<<1)
 ///Whether the bot will randomly speak from time to time. This will not actually prevent all speech.
 #define MEDBOT_SPEAK_MODE (1<<2)
+
+//cleanBOT defines on what to clean
+#define CLEANBOT_CLEAN_BLOOD (1<<0)
+#define CLEANBOT_CLEAN_TRASH (1<<1)
+#define CLEANBOT_CLEAN_PESTS (1<<2)
+#define CLEANBOT_CLEAN_DRAWINGS (1<<3)
