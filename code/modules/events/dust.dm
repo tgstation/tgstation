@@ -63,13 +63,26 @@
 	fakeable = FALSE
 	///Which direction the storm will come from.
 	var/start_side
+	///Start side var, translated into a nautical direction for presentation in setup().
+	var/start_side_text = "unknown"
 
 /datum/round_event/sandstorm/setup()
 	start_side = pick(GLOB.cardinals)
+	switch(start_side) //EOB mentioned the space maps (the only ones that can be hit by this event) using ship directions in the future. dir2text() would save lines but would acknowledge that we're using cardinals in space.
+		if(NORTH)
+			start_side_text = "fore"
+		if(SOUTH)
+			start_side_text = "aft"
+		if(EAST)
+			start_side_text = "starboard"
+		if(WEST)
+			start_side_text = "port"
 
 /datum/round_event/sandstorm/announce(fake)
-	priority_announce("A large wave of space dust is approaching from the [start_side]. ", "Collision Alert") //Add mention of shield projectors, fix directional message
-																								// Inteded behavior is to give people a chance to set up shield projectors. Make it so that meteors take extra extra hits from touching shields.
+	priority_announce("A large wave of space dust is approaching from the [start_side_text] side of the station. \
+						Engineering intervention and use of shield generators may be required to prevent serious \
+						damage to external fittings and fixtures.", "Collision Alert") //Add mention of shield projectors
+							// Inteded behavior is to give people a chance to set up shield projectors. Make it so that meteors take extra extra hits from touching shields.
 
 /datum/round_event/sandstorm/tick()
 	for(var/i in 1 to 10)
