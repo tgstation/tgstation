@@ -49,9 +49,12 @@
 				var/mob/living/silicon/ai/ai = src
 				following = ai.eyeobj
 
+			var/follow_link = FOLLOW_LINK(M, following)
+
 			to_chat(
 				M,
-				FOLLOW_LINK(M, following) + span_binarysay(" \
+				 span_binarysay("\
+				 	[follow_link] \
 					Robotic Talk, \
 					[span_name("[name]")] <span class='message'>[quoted_message]</span>\
 				"),
