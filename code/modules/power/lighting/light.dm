@@ -316,7 +316,6 @@
 		if(length(light_object.reagents.reagent_list))
 			create_reagents(LIGHT_REAGENT_CAPACITY, SEALED_CONTAINER | TRANSPARENT)
 			light_object.reagents.trans_to(reagents, LIGHT_REAGENT_CAPACITY)
-			QDEL_NULL(light_object.reagents)
 		status = light_object.status
 		switchcount = light_object.switchcount
 		brightness = light_object.brightness
