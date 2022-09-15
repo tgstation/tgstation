@@ -315,7 +315,7 @@
 			to_chat(user, span_notice("You insert [light_object]."))
 		if(length(light_object.reagents.reagent_list))
 			create_reagents(LIGHT_REAGENT_CAPACITY, SEALED_CONTAINER | TRANSPARENT)
-			light_object.reagents.copy_to(reagents, LIGHT_REAGENT_CAPACITY)
+			light_object.reagents.trans_to(reagents, LIGHT_REAGENT_CAPACITY)
 			QDEL_NULL(light_object.reagents)
 		status = light_object.status
 		switchcount = light_object.switchcount
@@ -544,7 +544,7 @@
 /obj/machinery/light/proc/drop_light_tube(mob/user)
 	var/obj/item/light/light_object = new light_type()
 	if(reagents)
-		reagents.copy_to(light_object.reagents, LIGHT_REAGENT_CAPACITY)
+		reagents.trans_to(light_object.reagents, LIGHT_REAGENT_CAPACITY)
 		QDEL_NULL(reagents)
 	light_object.status = status
 	light_object.brightness = brightness
