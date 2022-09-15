@@ -63,9 +63,9 @@
 	sleep(5 SECONDS)
 	var/obj/cascade_portal/rift = effect_evac_rift_start()
 	RegisterSignal(rift, COMSIG_PARENT_QDELETING, .proc/end_round_holder)
-	effect_crystal_mass(sm, rift)
 	SSsupermatter_cascade.can_fire = TRUE
 	SSsupermatter_cascade.cascade_initiated = TRUE
+	effect_crystal_mass(sm, rift)
 	qdel(sm)
 
 /datum/sm_delam/cascade/examine(obj/machinery/power/supermatter_crystal/sm)
@@ -85,6 +85,8 @@
 	return messages
 
 /datum/sm_delam/cascade/proc/announce_cascade(obj/machinery/power/supermatter_crystal/sm)
+	if(QDELETED(sm))
+		return FALSE
 	if(!can_select(sm))
 		return FALSE
 	priority_announce("Attention: Long range anomaly scans indicate abnormal quantities of harmonic flux originating from \

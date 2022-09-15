@@ -101,6 +101,7 @@
 
 /obj/machinery/door/firedoor/Destroy()
 	remove_from_areas()
+	unregister_adjacent_turfs(loc)
 	QDEL_NULL(soundloop)
 	return ..()
 
@@ -437,13 +438,13 @@
 	return FALSE //No bumping to open, not even in mechs
 
 /obj/machinery/door/firedoor/proc/on_power_loss()
-	SIGNAL_HANDLER 
-	
+	SIGNAL_HANDLER
+
 	soundloop.stop()
 
 /obj/machinery/door/firedoor/proc/on_power_restore()
-	SIGNAL_HANDLER 
-	
+	SIGNAL_HANDLER
+
 	correct_state()
 
 	if(is_playing_alarm)

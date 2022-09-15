@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - balance: "Things inside disposals pipes are now protected from weather (ashstorms, radstorms, ect.)"

@@ -11,8 +11,8 @@
 
 /datum/traitor_objective/final/space_dragon/on_objective_taken(mob/user)
 	. = ..()
-	var/datum/round_event/carp_migration/carp_event = locate(/datum/round_event_control/carp_migration) in SSevents.control
-	carp_event.start()
+	var/datum/round_event_control/carp_migration/carp_event = locate(/datum/round_event_control/carp_migration) in SSevents.control
+	carp_event.runEvent()
 
 /datum/traitor_objective/final/space_dragon/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	if(!can_take_final_objective())

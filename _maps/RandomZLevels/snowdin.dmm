@@ -9290,7 +9290,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/cave)
 "EN" = (
-/obj/machinery/sleeper/syndie{
+/obj/machinery/sleeper/self_control{
 	dir = 1
 	},
 /obj/effect/turf_decal/bot_white,
@@ -9302,7 +9302,7 @@
 /area/awaymission/snowdin/cave)
 "EP" = (
 /obj/effect/turf_decal/bot_white,
-/obj/machinery/sleeper/syndie{
+/obj/machinery/sleeper/self_control{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
