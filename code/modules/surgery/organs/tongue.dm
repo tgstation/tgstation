@@ -25,7 +25,6 @@
 		/datum/language/narsie,
 		/datum/language/beachbum,
 		/datum/language/aphasia,
-		/datum/language/zombie,
 		/datum/language/piratespeak,
 		/datum/language/moffic,
 		/datum/language/sylvan,
@@ -202,7 +201,6 @@
 		/datum/language/narsie,
 		/datum/language/beachbum,
 		/datum/language/aphasia,
-		/datum/language/zombie,
 		/datum/language/piratespeak,
 		/datum/language/moffic,
 		/datum/language/sylvan,
@@ -291,9 +289,6 @@
 /obj/item/organ/internal/tongue/zombie/modify_speech(datum/source, list/speech_args)
 	var/mob/living/carbon/human/user = source
 
-	// no speech limitations when speaking zombie language
-	if(speech_args[SPEECH_LANGUAGE] == /datum/language/zombie)
-		return
 	// only high functioning zombies can bypass speech limitations
 	if(iszombie(user) && !is_species(user, /datum/species/zombie/infectious))
 		return
@@ -360,7 +355,6 @@
 		/datum/language/narsie,
 		/datum/language/beachbum,
 		/datum/language/aphasia,
-		/datum/language/zombie,
 		/datum/language/piratespeak,
 		/datum/language/moffic,
 		/datum/language/sylvan,
@@ -440,7 +434,6 @@
 		/datum/language/narsie,
 		/datum/language/beachbum,
 		/datum/language/aphasia,
-		/datum/language/zombie,
 		/datum/language/piratespeak,
 		/datum/language/moffic,
 		/datum/language/sylvan,
