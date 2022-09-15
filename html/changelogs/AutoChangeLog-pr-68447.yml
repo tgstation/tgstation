@@ -1,0 +1,7 @@
+author: "RandomGamer123, idea by Pickle-Coding"
+delete-after: True
+changes: 
+  - rscadd: "You can now insert a hypernoblium crystal into portable atmospheric devices (ie. canisters, pumps, and scrubbers) to allow you to toggle reactions inside the can on and off, similar to how wrenching and unwrenching it on a connector did previously."
+  - rscadd: "The crystal once inserted cannot be removed without deconstructing the canister. However, hypernoblium crystals are now single-use items, and their cost has been halved to account for it."
+  - code_imp: "Variable names in canister, pump, and scrubber UI code have been changed to camel case for consistency."
+  - code_imp: "The canister UI has been slightly changed in terms of how it displays cell charge."

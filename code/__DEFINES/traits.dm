@@ -676,6 +676,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define QUIRK_TRAIT "quirk_trait"
 /// (B)admins only.
 #define ADMIN_TRAIT "admin"
+/// Any traits given through a smite.
+#define SMITE_TRAIT "smite"
 #define CHANGELING_TRAIT "changeling"
 #define CULT_TRAIT "cult"
 #define LICH_TRAIT "lich"

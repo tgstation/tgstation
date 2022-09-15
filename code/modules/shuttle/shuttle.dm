@@ -382,8 +382,15 @@
 
 	///List of all areas our shuttle holds.
 	var/list/shuttle_areas = list()
-	///List of all currently used engines that propels us.
+	///List of all engines connected to the shuttle.
 	var/list/obj/structure/shuttle/engine/engine_list = list()
+
+	///How fast the shuttle should be, taking engine thrust into account.
+	var/engine_coeff = 1
+	///How much engine power (thrust) the shuttle currently has.
+	var/current_engine_power = 0
+	///How much engine power (thrust) the shuttle starts with at mapload.
+	var/initial_engine_power = 0
 
 	///used as a timer (if you want time left to complete move, use timeLeft proc)
 	var/timer
@@ -411,16 +418,12 @@
 
 	var/launch_status = NOLAUNCH
 
+	var/list/ripples = list()
 	///Whether or not you want your ship to knock people down, and also whether it will throw them several tiles upon launching.
 	var/list/movement_force = list(
 		"KNOCKDOWN" = 3,
 		"THROW" = 0,
 	)
-
-	var/list/ripples = list()
-	var/engine_coeff = 1
-	var/current_engines = 0
-	var/initial_engines = 0
 
 	///if this shuttle can move docking ports other than the one it is docked at
 	var/can_move_docking_ports = FALSE
@@ -901,10 +904,11 @@
 // attempts to locate /obj/machinery/computer/shuttle with matching ID inside the shuttle
 /obj/docking_port/mobile/proc/get_control_console()
 	for(var/area/shuttle/shuttle_area as anything in shuttle_areas)
-		for(var/obj/machinery/computer/shuttle/shuttle_computers as anything in shuttle_area)
-			if(shuttle_computers.shuttleId != shuttle_id)
-				continue
-			return shuttle_computers
+		var/obj/machinery/computer/shuttle/shuttle_computer = locate(/obj/machinery/computer/shuttle) in shuttle_area
+		if(!shuttle_computer)
+			continue
+		if(shuttle_computer.shuttleId == shuttle_id)
+			return shuttle_computer
 	return null
 
 /obj/docking_port/mobile/proc/hyperspace_sound(phase, list/areas)
@@ -958,8 +962,8 @@
 	if(!mod)
 		return
 	var/old_coeff = engine_coeff
-	engine_coeff = get_engine_coeff(current_engines,mod)
-	current_engines = max(0, current_engines + mod)
+	engine_coeff = get_engine_coeff(mod)
+	current_engine_power = max(0, current_engine_power + mod)
 	if(in_flight())
 		var/delta_coeff = engine_coeff / old_coeff
 		modTimer(delta_coeff)
@@ -967,22 +971,22 @@
 // Double initial engines to get to 0.5 minimum
 // Lose all initial engines to get to 2
 //For 0 engine shuttles like BYOS 5 engines to get to doublespeed
-/obj/docking_port/mobile/proc/get_engine_coeff(current,engine_mod)
-	var/new_value = max(0, current + engine_mod)
-	if(new_value == initial_engines)
+/obj/docking_port/mobile/proc/get_engine_coeff(engine_mod)
+	var/new_value = max(0, current_engine_power + engine_mod)
+	if(new_value == initial_engine_power)
 		return 1
-	if(new_value > initial_engines)
-		var/delta = new_value - initial_engines
+	if(new_value > initial_engine_power)
+		var/delta = new_value - initial_engine_power
 		var/change_per_engine = (1 - ENGINE_COEFF_MIN) / ENGINE_DEFAULT_MAXSPEED_ENGINES // 5 by default
-		if(initial_engines > 0)
-			change_per_engine = (1 - ENGINE_COEFF_MIN) / initial_engines // or however many it had
-		return clamp(1 - delta * change_per_engine,ENGINE_COEFF_MIN,ENGINE_COEFF_MAX)
-	if(new_value < initial_engines)
-		var/delta = initial_engines - new_value
+		if(initial_engine_power > 0)
+			change_per_engine = (1 - ENGINE_COEFF_MIN) / initial_engine_power // or however many it had
+		return clamp(1 - delta * change_per_engine,ENGINE_COEFF_MIN, ENGINE_COEFF_MAX)
+	if(new_value < initial_engine_power)
+		var/delta = initial_engine_power - new_value
 		var/change_per_engine = 1 //doesn't really matter should not be happening for 0 engine shuttles
-		if(initial_engines > 0)
-			change_per_engine = (ENGINE_COEFF_MAX - 1) / initial_engines //just linear drop to max delay
-		return clamp(1 + delta * change_per_engine,ENGINE_COEFF_MIN,ENGINE_COEFF_MAX)
+		if(initial_engine_power > 0)
+			change_per_engine = (ENGINE_COEFF_MAX - 1) / initial_engine_power //just linear drop to max delay
+		return clamp(1 + delta * change_per_engine, ENGINE_COEFF_MIN, ENGINE_COEFF_MAX)
 
 
 /obj/docking_port/mobile/proc/in_flight()
