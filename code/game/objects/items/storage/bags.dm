@@ -209,6 +209,30 @@
 		))
 ////////
 
+// -----------------------------
+//          Mini Plant Bag
+// -----------------------------
+
+/obj/item/storage/bag/smallplants
+	name = "Small plant bag"
+	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon_state = "plantbag"
+	worn_icon_state = "plantbag"
+	resistance_flags = FLAMMABLE
+
+/obj/item/storage/bag/plants/Initialize(mapload)
+	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
+	atom_storage.max_total_storage = 25
+	atom_storage.max_slots = 25
+	atom_storage.set_holdable(list(
+		/obj/item/food/grown,
+		/obj/item/graft,
+		/obj/item/grown,
+		/obj/item/reagent_containers/honeycomb,
+		/obj/item/seeds,
+		))
+////////
 /obj/item/storage/bag/plants/portaseeder
 	name = "portable seed extractor"
 	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant."
