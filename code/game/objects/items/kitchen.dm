@@ -116,7 +116,7 @@
 
 /obj/item/kitchen/rollingpin/illegal
 	name = "illegal rolling pin"
-	desc = "a heavy metalic rolling pin to bash in those annoying ingredients"
+	desc = "A heavy metalic rolling pin to bash in those annoying ingredients"
 	icon_state = "metal_rolling_pin"
 	force = 12
 	custom_materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 1.5, /datum/material/plastic = MINERAL_MATERIAL_AMOUNT * 1.5)
