@@ -336,7 +336,7 @@ Key procs
 
 /datum/language_holder/skeleton
 	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
-								/datum/language/calcic = list(LANGUAGE_ATOM)) // skeles can understand zombie but not speak it
+								/datum/language/calcic = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
 							/datum/language/calcic = list(LANGUAGE_ATOM))
 
