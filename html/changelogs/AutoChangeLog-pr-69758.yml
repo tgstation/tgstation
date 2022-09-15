@@ -1,0 +1,4 @@
+author: "zxaber"
+delete-after: True
+changes: 
+  - balance: "Airlocks with an unrestricted side no longer function as a light source. The indicator will now be visible even in the dark."

@@ -507,7 +507,7 @@
 /obj/docking_port/stationary{
 	dwidth = 11;
 	height = 16;
-	shuttle_id = "pirateship_home";
+	shuttle_id = "pirate_home";
 	name = "Deep Space";
 	width = 17
 	},

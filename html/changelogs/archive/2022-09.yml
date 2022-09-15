@@ -407,3 +407,161 @@
   lizardqueenlexi:
   - bugfix: fixed a bug causing the process of slicing food to erase most of the food's
       reagents
+2022-09-10:
+  567Turtle:
+  - qol: Changes how the medipens examine text works
+  AnturK:
+  - bugfix: Fishing should be now more consistent about win/failure.
+  Dmeto:
+  - qol: Reagent scanner circuit component now ouputs to a table list.
+  JohnFulpWillard:
+  - bugfix: Mining station's access was reverted, and Curators once again can access
+      it. Supply security officers also once again only have access to it during elevated
+      access.
+  - qol: '''Mining'' access is now named ''Mining Dock'' while ''Mining EVA'' is now
+      named ''Mining Outpost'', to better reflect what they are.'
+  - qol: Syndicate sleepers (the ones in the nukie base outpost) now drops their board
+      on deconstruction.
+  - bugfix: SaturnX now properly turns you invisible again.
+  ShizCalev:
+  - bugfix: Tables built out of custom materials (ie meat) will no longer say that
+      they are built from iron in their description.
+  SpaceSmithers:
+  - bugfix: Tramstation's AI Upload is now equipped with the proper modules.
+  scriptis:
+  - refactor: animated numbers now animate at 60 fps
+2022-09-12:
+  JohnFulpWillard:
+  - bugfix: Pirate ships now work again.
+  Nari Harimoto:
+  - bugfix: you can now rotate machines even when the room has no power again
+  - bugfix: if you enable the AIs ability to interact with machines while in an AI-Card,
+      they can now actually interact again
+  - bugfix: you can no longer open the UI for a syndie bomb and walk away and activate
+      it from range, it now checks if you actually can interact with it including
+      range before letting you activate it
+  Rhials:
+  - spellcheck: Fixes a typo in the cult heal spell feedback message.
+  - spellcheck: fixes some internal typos related to the word "auxillary".
+  ShizCalev:
+  - admin: Silenced grav generator admin warnings / logging messages when the round
+      is not currently in progress.
+  - bugfix: Fixed an exploit allowing you to toggle suit sensors while dead/restrained.
+  - bugfix: Projectiles fired by non-mob sources (IE turrets) now log reagents contained
+      after hitting a target.
+  - admin: Cleaned up projectile reagent logging a little.
+  - admin: Projectiles fired from mecha will now combat log on the target AND the
+      firer.
+  - admin: Mecha chassis logs will now contain the name/ckey of the person who fired
+      the mecha's weapon.
+  - admin: Projectiles fired from vehicles are now more likely to be combat logged
+      properly after hitting a target (this logs for all people with control of the
+      mecha which is a little messy with multi-seat mecha. Check the vehicle's logs
+      or a user's combat logs for the person that actually SHOT the projectile.)
+  Thunder12345:
+  - bugfix: Purged pointless punctuation from probabalistic phenomenon publications
+2022-09-13:
+  CheeseWizard2:
+  - rscadd: 26 mime names to mime.txt
+  LemonInTheDark:
+  - bugfix: You can construct doors and stuff on ash tiles again. My bad, broke that
+      one a long time back.
+  Rhials:
+  - bugfix: Sleeping Carp bullet deflection works again
+  Sealed101:
+  - bugfix: 'Metastation: restored security access restrictions to Departures Security
+      Post'
+  Thunder12345:
+  - bugfix: Fax machines can no longer be shipped out on the cargo shuttle, preventing
+      a whole new realm of CentCom infiltration techniques from being applied.
+  VexingRaven:
+  - bugfix: Signalers on the default frequency work again
+  Wallem:
+  - bugfix: Fixes a bug where the tonal indictor for sign language would get stuck
+      on your character for an extended period of time.
+  dopamiin:
+  - bugfix: pAIs and other pets that can be picked up no longer know shadow clone
+      jutsu.
+  timothymtorres:
+  - bugfix: Fix book of babel not removing blocked languages properly
+2022-09-14:
+  Axietheaxolotl, PositiveEntropy:
+  - imageadd: Resprites all of the captain's clothes!
+  Dmeto:
+  - bugfix: Reconnects Meta Engineering to Distro.
+  - bugfix: Places a missing wire under Meta's Starboard Aft Solars SMES.
+  GoblinBackwards:
+  - bugfix: Fixed bileworms being unable to act.
+  Jackraxxus:
+  - bugfix: The RD suit storage unit has an oxygen tank so that it can be on par with
+      other head of staff suit storages.
+  LemonInTheDark:
+  - bugfix: The preferences menu will work and display images again. Sorry :)
+  Sealed101:
+  - bugfix: Mafia Snow map now has glass external airlocks for the two top players,
+      allowing them to see the players directly oppoiste of them
+  - rscadd: 'Icebox: added a camera to southern Cargo Bay'
+  - rscdel: 'Icebox: removed several excess cameras (i.e. Courtroom, Primary Hallway,
+      Prison Garden)'
+  - qol: 'Icebox: grouped up cameras within their respective department (Medbay, RnD,
+      Service)'
+  - qol: 'Icebox: grouped up Solar Maintenance cameras as well as changing them to
+      use North-South-East-West (you are on a planet, use the compass)'
+  - qol: 'Icebox: cleaned up ambiguous camera names for easier listing in camera consoles'
+  - bugfix: 'Icebox: fixed a floating camera in Fore Hallway outside Brig Access'
+  - bugfix: 'Icebox: fixed several cameras lacking their respective network values'
+  - bugfix: 'Icebox: restored a lost Interrogation Room Monitor outside of Interrogation
+      Room'
+  ShizCalev:
+  - bugfix: Fixed a runtime when trying to injecting someone in a missing limb.
+  - bugfix: Fixed tackling not working properly if you didn't have a tail.
+  Tramz:
+  - rscadd: Adds a new holochassis for pAI, the chicken.
+  YakumoChen:
+  - bugfix: The holodeck crab can't be butchered for infinite crab meat anymore, so
+      quit your animal abuse
+  dragomagol:
+  - bugfix: scrubber overflow event is now properly categorized and has a description
+      in the trigger event menu
+2022-09-15:
+  GoblinBackwards:
+  - bugfix: Fixed the Adjust Suit Sensors verb opening a list of all nearby mobs
+  JohnFulpWillard:
+  - bugfix: Engines now calculate their thrust power as they used to, preventing edge
+      cases of inconsistent shuttle call timers.
+  - qol: Juice cartons now splash their reagents with right-click.
+  KirbyDaMaster:
+  - bugfix: Enabled flag for morgue body containers to allow you to interact with
+      them while standing diagonally with the hatch open.
+  Profakos:
+  - bugfix: cyborg eye sockets no longer bleed
+  Rhials:
+  - admin: Stray Meteor trigger now gives the option to throw a random meteor instead
+      of selecting a specific one.
+  - code_imp: major_dust is now a space_dust subtype, rather than a meteor_wave subtype
+      orphaned in its own file.
+  ShizCalev:
+  - bugfix: Free vending machine purchases are now tracked by SSEconomy
+  - bugfix: Fixed examine messages stating what materials something is made out of
+      not working properly.
+  - bugfix: Fixed the Space Carp DNA harvest traitor objective not starting a carp
+      migration when taken
+  - spellcheck: Slightly reworded the examine text on bowls / customizable reagent
+      containers.
+  - bugfix: Fixed a runtime when removing beakers from a chem grenade with a wrench.
+  - bugfix: Fixed messages sometimes not showing properly when melting shards with
+      a welder.
+  - bugfix: Fixed glass generated from melting shards teleporting to someone when
+      using TK.
+  SpookyTheFox:
+  - bugfix: fixed the name of the ammo printed from the lathe
+  SuperNovaa41:
+  - rscadd: Shoe stealing is back! *shoesteal, and lie down, to take someone's shoes.
+  san7890:
+  - bugfix: Players should now once again get the reason as to why they can not start
+      any specific vote at any given time in the TGUI vote menu.
+  scriptis:
+  - qol: AIs are now loudmode in binary chat
+  skylord-a52:
+  - rscadd: The Syndicate is now branching off into cheap tourist merchandise -- collect
+      your limited edition t-shirt today by entering the nearest kidnapping pod!

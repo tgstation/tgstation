@@ -1,0 +1,5 @@
+author: "timothymtorres"
+delete-after: True
+changes: 
+  - rscadd: "Add planks used on doors creates crude barricades.  Can also be used on fulltile windows.  Barricades can now be crowbarred to disassemble them quickly."
+  - soundadd: "Add hammering_wood.ogg from soundcloud public domain to barricade and wooden wall construction."
