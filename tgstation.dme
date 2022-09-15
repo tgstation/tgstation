@@ -811,6 +811,7 @@
 #include "code\datums\components\igniter.dm"
 #include "code\datums\components\infective.dm"
 #include "code\datums\components\irradiated.dm"
+#include "code\datums\components\itembound.dm"
 #include "code\datums\components\itempicky.dm"
 #include "code\datums\components\jetpack.dm"
 #include "code\datums\components\jousting.dm"
